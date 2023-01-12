@@ -734,6 +734,9 @@ namespace Redemption.Globals.Player
             if (Player.FindBuffIndex(ModContent.BuffType<HolyFireDebuff>()) != -1 && damage == 10.0 && hitDirection == 0 && damageSource.SourceOtherIndex == 8)
                 damageSource = PlayerDeathReason.ByCustomReason(Player.name + " was too glorious");
 
+            if (Player.FindBuffIndex(ModContent.BuffType<EnsnaredDebuff>()) != -1 && damage == 10.0 && hitDirection == 0 && damageSource.SourceOtherIndex == 8)
+                damageSource = PlayerDeathReason.ByCustomReason(Player.name + " get consumed by the thorns");
+
             return true;
         }
     }

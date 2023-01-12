@@ -5,6 +5,7 @@ using Redemption.Buffs.Debuffs;
 using Redemption.Buffs.NPCBuffs;
 using Redemption.Dusts;
 using Redemption.Globals;
+using Redemption.Globals.NPC;
 using Redemption.Items.Accessories.HM;
 using Redemption.Items.Armor.Vanity;
 using Redemption.Items.Armor.Vanity.Intruder;
@@ -194,6 +195,7 @@ namespace Redemption.NPCs.Wasteland
         }
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
         {
+            bestiaryEntry.UIInfoProvider = new CustomCollectionInfoProvider(ContentSamples.NpcBestiaryCreditIdsByNpcNetIds[Type], false, 10);
             bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[]
             {
                 new FlavorTextBestiaryInfoElement(

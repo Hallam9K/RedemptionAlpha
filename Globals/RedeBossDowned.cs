@@ -38,6 +38,7 @@ namespace Redemption.Globals
         public static bool downedNebuleus;
         public static bool downedADD;
         public static int downedGGBossFirst;
+        public static bool downedFowlEmperor;
 
         public override void OnWorldLoad()
         {
@@ -71,6 +72,7 @@ namespace Redemption.Globals
             downedNebuleus = false;
             downedADD = false;
             downedGGBossFirst = 0;
+            downedFowlEmperor = false;
         }
 
         public override void OnWorldUnload()
@@ -105,6 +107,7 @@ namespace Redemption.Globals
             downedNebuleus = false;
             downedADD = false;
             downedGGBossFirst = 0;
+            downedFowlEmperor = false;
         }
 
         public override void SaveWorldData(TagCompound tag)
@@ -159,6 +162,8 @@ namespace Redemption.Globals
                 downed.Add("downedNebuleus");
             if (downedADD)
                 downed.Add("downedADD");
+            if (downedFowlEmperor)
+                downed.Add("downedFowlEmperor");
 
             tag["downed"] = downed;
             tag["erhanDeath"] = erhanDeath;
@@ -203,6 +208,7 @@ namespace Redemption.Globals
             downedNebuleus = downed.Contains("downedNebuleus");
             downedADD = downed.Contains("downedADD");
             downedGGBossFirst = tag.GetInt("downedGGBossFirst");
+            downedFowlEmperor = downed.Contains("downedFowlEmperor");
         }
 
         public override void NetSend(BinaryWriter writer)
@@ -237,6 +243,9 @@ namespace Redemption.Globals
             flags3[6] = downedNebuleus;
             flags3[7] = downedADD;
             writer.Write(flags3);
+            var flags4 = new BitsByte();
+            flags4[0] = downedFowlEmperor;
+            writer.Write(flags4);
 
             writer.Write(erhanDeath);
             writer.Write(slayerDeath);
@@ -275,6 +284,8 @@ namespace Redemption.Globals
             downedPZ = flags3[5];
             downedNebuleus = flags3[6];
             downedADD = flags3[7];
+            BitsByte flags4 = reader.ReadByte();
+            downedFowlEmperor = flags4[0];
 
             erhanDeath = reader.ReadInt32();
             slayerDeath = reader.ReadInt32();

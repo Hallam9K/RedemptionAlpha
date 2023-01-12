@@ -17,7 +17,6 @@ using Terraria.ModLoader;
 using Redemption.BaseExtension;
 using Redemption.Items.Materials.HM;
 using Redemption.Items.Usable.Potions;
-using Redemption.Items.Armor.Vanity;
 using Redemption.Items.Armor.Vanity.Intruder;
 
 namespace Redemption.NPCs.Wasteland
@@ -79,6 +78,7 @@ namespace Redemption.NPCs.Wasteland
             NPC.value = 800;
             NPC.knockBackResist = 0.4f;
             NPC.aiStyle = -1;
+            NPC.chaseable = false;
             SpawnModBiomes = new int[1] { ModContent.GetInstance<WastelandPurityBiome>().Type };
             Banner = NPC.type;
             BannerItem = ModContent.ItemType<MutatedLivingBloomBanner>();
@@ -98,6 +98,10 @@ namespace Redemption.NPCs.Wasteland
             NPC.TargetClosest();
             NPC.LookByVelocity();
             RegenCheck();
+            if (globalNPC.attacker is Player && AIState > ActionState.Wander)
+                NPC.chaseable = true;
+            else
+                NPC.chaseable = false;
 
             switch (AIState)
             {

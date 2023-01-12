@@ -1040,10 +1040,12 @@ namespace Redemption.Globals
             }
         }
 
-        public static void PlatformFallCheck(this Terraria.NPC npc, ref bool canJump, int yOffset = 12)
+        public static void PlatformFallCheck(this Terraria.NPC npc, ref bool canJump, int yOffset = 12, float playerY = 0)
         {
             Terraria.Player player = Main.player[npc.target];
-            if (npc.Center.Y + yOffset < player.Center.Y)
+            if (playerY == 0)
+                playerY = player.Center.Y;
+            if (npc.Center.Y + yOffset < playerY)
             {
                 canJump = true;
                 return;
@@ -1143,7 +1145,7 @@ namespace Redemption.Globals
                 {
                     //...attempt to jump if needed.
                     Vector2 newVec = BaseAI.AttemptJump(npc.position, npc.velocity, npc.width, npc.height,
-                        npc.direction, npc.directionY, maxJumpTilesX, maxJumpTilesY, moveSpeed, jumpUpPlatforms, Main.player[npc.target]);
+                        npc.direction, npc.directionY, maxJumpTilesX, maxJumpTilesY, moveSpeed, jumpUpPlatforms);
                     if (!npc.noTileCollide)
                     {
                         Collision.StepUp(ref npc.position, ref npc.velocity, npc.width, npc.height, ref npc.stepSpeed,

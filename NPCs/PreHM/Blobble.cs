@@ -14,6 +14,7 @@ using Redemption.Items.Placeable.Banners;
 using Redemption.Buffs.Debuffs;
 using Redemption.Buffs.NPCBuffs;
 using Redemption.Items.Usable;
+using Redemption.Globals.NPC;
 
 namespace Redemption.NPCs.PreHM
 {
@@ -220,6 +221,7 @@ namespace Redemption.NPCs.PreHM
 
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
         {
+            bestiaryEntry.UIInfoProvider = new CustomCollectionInfoProvider(ContentSamples.NpcBestiaryCreditIdsByNpcNetIds[Type], false, 25);
             bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[]
             {
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Times.DayTime,

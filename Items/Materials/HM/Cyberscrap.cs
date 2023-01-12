@@ -22,7 +22,6 @@ namespace Redemption.Items.Materials.HM
             Item.maxStack = 9999;
             Item.value = Item.buyPrice(0, 10, 0, 0);
             Item.rare = ItemRarityID.LightPurple;
-            Item.ammo = Item.type;
         }
         public override void AddRecipes()
         {

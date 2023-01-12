@@ -24,6 +24,9 @@ using Redemption.BaseExtension;
 using Terraria.GameContent.UI;
 using Redemption.UI;
 using Redemption.Projectiles.Misc;
+using Redemption.NPCs.PreHM;
+using Redemption.Projectiles.Magic;
+using Redemption.Items.Weapons.HM.Melee;
 
 namespace Redemption.NPCs.Bosses.Erhan
 {
@@ -243,6 +246,8 @@ namespace Redemption.NPCs.Bosses.Erhan
         private bool Spared;
         private Vector2 playerOrigin;
         public readonly Vector2 modifier = new(0, -200);
+        SoundStyle voice;
+        Texture2D bubble;
 
         public int ID { get => (int)NPC.ai[3]; set => NPC.ai[3] = value; }
 
@@ -251,8 +256,8 @@ namespace Redemption.NPCs.Bosses.Erhan
             if (NPC.target < 0 || NPC.target == 255 || Main.player[NPC.target].dead || !Main.player[NPC.target].active)
                 NPC.TargetClosest();
 
-            SoundStyle voice = CustomSounds.Voice4 with { Pitch = -0.2f };
-            Texture2D bubble = ModContent.Request<Texture2D>("Redemption/UI/TextBubble_Epidotra").Value;
+            voice = CustomSounds.Voice4 with { Pitch = -0.2f };
+            bubble = ModContent.Request<Texture2D>("Redemption/UI/TextBubble_Epidotra").Value;
 
             Player player = Main.player[NPC.target];
 
@@ -1098,7 +1103,50 @@ namespace Redemption.NPCs.Bosses.Erhan
                     break;
             }
         }
-
+        private bool egged;
+        private bool grenaded;
+        private bool bibled;
+        private bool blindJusted;
+        public override void OnHitByProjectile(Projectile projectile, int damage, float knockback, bool crit)
+        {
+            if (!egged && AIState is ActionState.Attacks && (projectile.type == ModContent.ProjectileType<ChickenEgg_Proj>() || projectile.type == ModContent.ProjectileType<GoldChickenEgg_Proj>()))
+            {
+                Dialogue d = new(NPC, "Thou shall not egg a priest!", Color.LightGoldenrodYellow, new Color(100, 86, 0), voice, 2, 100, 30, false, null, bubble, null, modifier);
+                TextBubbleUI.Visible = true;
+                TextBubbleUI.Add(d);
+                egged = true;
+            }
+            if (!grenaded && AIState is ActionState.Attacks && (projectile.type == ModContent.ProjectileType<HallowedHandGrenade_Proj>()))
+            {
+                string s = "Oh...[30] So that is how it's used'eth...";
+                if (Main.rand.NextBool())
+                    s = "What in God's name!?";
+                Dialogue d = new(NPC, s, Color.LightGoldenrodYellow, new Color(100, 86, 0), voice, 2, 100, 30, false, null, bubble, null, modifier);
+                TextBubbleUI.Visible = true;
+                TextBubbleUI.Add(d);
+                grenaded = true;
+            }
+            if (!bibled && AIState is ActionState.Attacks && (projectile.type == ModContent.ProjectileType<HolyBible_Ray>()))
+            {
+                string s = "How dare'eth![10] Doth thou use the sacred texts against me!?";
+                if (Main.rand.NextBool())
+                    s = "Cease this boondoggling bible betrayal!";
+                Dialogue d = new(NPC, s, Color.LightGoldenrodYellow, new Color(100, 86, 0), voice, 2, 100, 30, false, null, bubble, null, modifier);
+                TextBubbleUI.Visible = true;
+                TextBubbleUI.Add(d);
+                bibled = true;
+            }
+            if (!blindJusted && AIState is ActionState.Attacks && (projectile.type == ModContent.ProjectileType<BlindJustice_Proj>()))
+            {
+                string s = "F-Father!?[30] Nay, 'tis merely a weapon thief!";
+                if (Main.rand.NextBool())
+                    s = "Expel my father's weapon from thy grasp'eth this instant!";
+                Dialogue d = new(NPC, s, Color.LightGoldenrodYellow, new Color(100, 86, 0), voice, 2, 100, 30, false, null, bubble, null, modifier);
+                TextBubbleUI.Visible = true;
+                TextBubbleUI.Add(d);
+                blindJusted = true;
+            }
+        }
         public override bool CheckDead()
         {
             if (AIState is ActionState.Death)

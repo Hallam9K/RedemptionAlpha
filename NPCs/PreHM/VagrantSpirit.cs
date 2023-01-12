@@ -15,6 +15,7 @@ using Terraria.GameContent.ItemDropRules;
 using Terraria.GameContent.Bestiary;
 using Redemption.Items.Usable.Potions;
 using Redemption.BaseExtension;
+using Redemption.Globals.NPC;
 
 namespace Redemption.NPCs.PreHM
 {
@@ -202,6 +203,7 @@ namespace Redemption.NPCs.PreHM
         }
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
         {
+            bestiaryEntry.UIInfoProvider = new CustomCollectionInfoProvider(ContentSamples.NpcBestiaryCreditIdsByNpcNetIds[Type], false, 25);
             bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[]
             {
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Caverns,

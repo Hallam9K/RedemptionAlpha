@@ -75,6 +75,7 @@ namespace Redemption.NPCs.PreHM
             NPC.value = 20;
             NPC.knockBackResist = 0.5f;
             NPC.aiStyle = -1;
+            NPC.chaseable = false;
             Banner = NPC.type;
             BannerItem = ModContent.ItemType<LivingBloomBanner>();
         }
@@ -93,6 +94,10 @@ namespace Redemption.NPCs.PreHM
             NPC.TargetClosest();
             NPC.LookByVelocity();
             RegenCheck();
+            if (globalNPC.attacker is Player && AIState > ActionState.Wander)
+                NPC.chaseable = true;
+            else
+                NPC.chaseable = false;
 
             if (AITimer % 30 == 0)
             {

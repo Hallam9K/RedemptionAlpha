@@ -1,16 +1,13 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Redemption.Base;
 using Redemption.Buffs.Minions;
-using Redemption.Buffs.NPCBuffs;
-using Redemption.Dusts;
 using Redemption.Globals;
 using Redemption.NPCs.PreHM;
 using System;
-using System.Collections.Generic;
 using Terraria;
 using Terraria.Audio;
 using Terraria.GameContent;
+using Terraria.GameContent.UI;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -65,14 +62,71 @@ namespace Redemption.Projectiles.Minions
             }
             Projectile.LookByVelocity();
             if (Projectile.ai[1] == 0)
-                Projectile.rotation.SlowRotation(Projectile.velocity.ToRotation() + (Projectile.spriteDirection == -1 ? 0 : MathHelper.Pi), (float)Math.PI / 20);
+                Projectile.rotation = Projectile.velocity.X * 0.05f;
             Lighting.AddLight(Projectile.Center, .1f * Projectile.Opacity, .4f * Projectile.Opacity, .1f * Projectile.Opacity);
 
+            if (Main.rand.NextBool() && Projectile.velocity.Length() > 10)
+            {
+                int dust = Dust.NewDust(Projectile.position + Projectile.velocity, Projectile.width, Projectile.height, DustID.DryadsWard, Scale: 1.5f);
+                Main.dust[dust].velocity *= 0;
+                Main.dust[dust].noGravity = true;
+            }
+
+            if (Projectile.ai[1] == 2)
+            {
+                int nymphID = NPC.FindFirstNPC(ModContent.NPCType<ForestNymph>());
+                if (nymphID != -1)
+                {
+                    NPC nymph = Main.npc[nymphID];
+                    if (nymph.active && nymph.ai[0] >= 8)
+                    {
+                        if (Projectile.DistanceSQ(nymph.Center) >= 150 * 150)
+                            Projectile.Move(nymph.Center, 18, 20);
+                        else
+                            Projectile.velocity *= .9f;
+
+                        if (Projectile.localAI[0]++ == 30)
+                        {
+                            SoundEngine.PlaySound(CustomSounds.Pixie1, Projectile.position);
+                            CombatText.NewText(Projectile.getRect(), Color.LightGreen, "Hello!", false, true);
+                            nymph.LookAtEntity(Projectile);
+                        }
+                        if (Projectile.localAI[0] == 180)
+                        {
+                            Projectile.velocity = Projectile.Center.DirectionTo(owner.Center) * 6;
+                            SoundEngine.PlaySound(CustomSounds.Pixie3, Projectile.position);
+                            CombatText.NewText(Projectile.getRect(), Color.LightGreen, "Listen!", false, true);
+                            EmoteBubble.NewBubble(0, new WorldUIAnchor(Projectile), 120);
+                        }
+                        if (Projectile.localAI[0] >= 120 && Projectile.localAI[0] < 280)
+                        {
+                            Projectile.LookAtEntity(owner);
+                            Projectile.rotation.SlowRotation((owner.Center - Projectile.Center).ToRotation() + (Projectile.spriteDirection == 1 ? 0 : MathHelper.Pi), (float)Math.PI / 40);
+                        }
+                        else
+                        {
+                            Projectile.LookAtEntity(nymph);
+                            Projectile.rotation.SlowRotation((nymph.Center - Projectile.Center).ToRotation() + (Projectile.spriteDirection == 1 ? 0 : MathHelper.Pi), (float)Math.PI / 40);
+                        }
+                        if (Projectile.localAI[0] >= 340)
+                        {
+                            Projectile.ai[1] = 0;
+                            Projectile.localAI[0] = 0;
+                        }
+                    }
+                    else
+                    {
+                        Projectile.ai[1] = 0;
+                        Projectile.localAI[0] = 0;
+                    }
+                }
+                return;
+            }
             if (RedeHelper.ClosestNPC(ref target, 600, Projectile.Center, true, owner.MinionAttackTargetNPC) && target.type != ModContent.NPCType<ForestNymph>())
             {
                 if (Projectile.ai[1] == 1)
                 {
-                    Projectile.rotation.SlowRotation((target.Center - Projectile.Center).ToRotation() + (Projectile.spriteDirection == -1 ? 0 : MathHelper.Pi), (float)Math.PI / 40);
+                    Projectile.rotation.SlowRotation((target.Center - Projectile.Center).ToRotation() + (Projectile.spriteDirection == 1 ? 0 : MathHelper.Pi), (float)Math.PI / 40);
 
                     if (Projectile.DistanceSQ(target.Center) >= 40 * 40)
                         Projectile.Move(target.Center, 18, 20);
@@ -102,6 +156,7 @@ namespace Redemption.Projectiles.Minions
                     }
                     if (Projectile.localAI[0] >= 80)
                     {
+                        Projectile.velocity += Projectile.Center.DirectionTo(target.Center);
                         Projectile.ai[1] = 0;
                     }
                 }
@@ -131,10 +186,39 @@ namespace Redemption.Projectiles.Minions
             }
             else
             {
-                if (Projectile.velocity.Length() < 12)
+                Projectile.ai[1] = 0;
+                if (RedeWorld.alignment >= 1 && Projectile.localAI[1]++ % 60 == 0)
+                {
+                    int nymphID = NPC.FindFirstNPC(ModContent.NPCType<ForestNymph>());
+                    if (nymphID != -1)
+                    {
+                        NPC nymph = Main.npc[nymphID];
+                        if (nymph.active && nymph.ai[0] <= 2 && Projectile.DistanceSQ(nymph.Center) <= 500 * 500)
+                        {
+                            if (Projectile.DistanceSQ(nymph.Center) < 150 * 150)
+                            {
+                                Projectile.localAI[1] = 0;
+                                Projectile.localAI[0] = 0;
+                                Projectile.ai[1] = 2;
+                                if (nymph.ai[0] < 8)
+                                {
+                                    nymph.ai[1] = 0;
+                                    nymph.ai[2] = 0;
+                                    nymph.ai[0] = 8;
+                                }
+                            }
+                            else
+                                Projectile.Move(nymph.Center, 10, 20);
+                            return;
+                        }
+                    }
+                }
+                if (Projectile.velocity.Length() < 6)
                     Projectile.velocity *= 1.02f;
                 if (Projectile.DistanceSQ(owner.Center) >= 100 * 100)
                     Projectile.Move(owner.Center, Projectile.DistanceSQ(owner.Center) > 700 * 700 ? 22 : 12, 20);
+                else
+                    Projectile.velocity *= 0.98f;
             }
             if (Main.myPlayer == owner.whoAmI && Projectile.DistanceSQ(owner.Center) > 2000 * 2000)
             {
@@ -146,18 +230,23 @@ namespace Redemption.Projectiles.Minions
         public override bool PreDraw(ref Color lightColor)
         {
             Texture2D texture = TextureAssets.Projectile[Projectile.type].Value;
+            Texture2D glow = ModContent.Request<Texture2D>(Projectile.ModProjectile.Texture + "_Glow").Value;
             int height = texture.Height / 4;
             int y = height * Projectile.frame;
             Rectangle rect = new(0, y, texture.Width, height);
             Vector2 drawOrigin = new(texture.Width / 2, Projectile.height / 2);
             var effects = Projectile.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
+            Main.spriteBatch.End();
+            Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
 
             for (int k = 0; k < Projectile.oldPos.Length; k++)
             {
-                Vector2 drawPos = Projectile.oldPos[k] - Main.screenPosition + drawOrigin + new Vector2(0f, Projectile.gfxOffY);
-                Color color = Projectile.GetAlpha(Color.LightGreen) * ((Projectile.oldPos.Length - k) / (float)Projectile.oldPos.Length);
-                Main.EntitySpriteDraw(texture, drawPos, new Rectangle?(rect), color, Projectile.rotation, drawOrigin, Projectile.scale, effects, 0);
+                Vector2 drawPos = Projectile.oldPos[k] - Main.screenPosition + drawOrigin - new Vector2(8, 0) + new Vector2(0f, Projectile.gfxOffY);
+                Color color = Projectile.GetAlpha(Color.White) * ((Projectile.oldPos.Length - k) / (float)Projectile.oldPos.Length);
+                Main.EntitySpriteDraw(glow, drawPos, new Rectangle?(rect), color, Projectile.rotation, drawOrigin, Projectile.scale, effects, 0);
             }
+            Main.spriteBatch.End();
+            Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
 
             Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition, new Rectangle?(rect), Color.White * Projectile.Opacity, Projectile.rotation, drawOrigin, Projectile.scale, effects, 0);
             return false;

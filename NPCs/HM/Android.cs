@@ -87,6 +87,7 @@ namespace Redemption.NPCs.HM
             NPC.aiStyle = -1;
             NPC.value = 500;
             NPC.knockBackResist = 0.1f;
+            NPC.chaseable = false;
             Banner = NPC.type;
             BannerItem = ModContent.ItemType<AndroidBanner>();
         }
@@ -113,6 +114,10 @@ namespace Redemption.NPCs.HM
             RedeNPC globalNPC = NPC.Redemption();
             Texture2D bubble = ModContent.Request<Texture2D>("Redemption/UI/TextBubble_Epidotra").Value;
             SoundStyle voice = CustomSounds.Voice6 with { Pitch = 0.8f };
+            if (globalNPC.attacker is Player && AIState > ActionState.Scan)
+                NPC.chaseable = true;
+            else
+                NPC.chaseable = false;
 
             NPC.TargetClosest();
             if (AIState is not ActionState.RocketFist)
@@ -174,8 +179,8 @@ namespace Redemption.NPCs.HM
                         }
                     }
 
-                    NPC.PlatformFallCheck(ref NPC.Redemption().fallDownPlatform, 20);
-                    RedeHelper.HorizontallyMove(NPC, moveTo * 16, 0.4f, 1.2f, 12, 16, NPC.Center.Y > player.Center.Y);
+                    NPC.PlatformFallCheck(ref NPC.Redemption().fallDownPlatform, 20, moveTo.Y * 16);
+                    RedeHelper.HorizontallyMove(NPC, moveTo * 16, 0.4f, 1.2f, 12, 16, NPC.Center.Y > moveTo.Y * 16);
                     break;
 
                 case ActionState.Scan:

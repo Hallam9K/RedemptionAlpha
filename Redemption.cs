@@ -348,6 +348,9 @@ namespace Redemption
         public UserInterface YesNoUILayer;
         public YesNoUI YesNoUIElement;
 
+        public UserInterface ForestNymphTradeUILayer;
+        public ForestNymphTradeUI ForestNymphTradeUIElement;
+
         public static TrailManager TrailManager;
         public bool Initialized;
 
@@ -385,6 +388,10 @@ namespace Redemption
                 YesNoUILayer = new UserInterface();
                 YesNoUIElement = new YesNoUI();
                 YesNoUILayer.SetState(YesNoUIElement);
+
+                ForestNymphTradeUILayer = new UserInterface();
+                ForestNymphTradeUIElement = new ForestNymphTradeUI();
+                ForestNymphTradeUILayer.SetState(ForestNymphTradeUIElement);
             }
         }
         private void LoadTrailManager(On.Terraria.Main.orig_Update orig, Main self, GameTime gameTime)
@@ -551,6 +558,7 @@ namespace Redemption
                 AddInterfaceLayer(layers, NukeUILayer, NukeUIElement, MouseTextIndex + 4, NukeDetonationUI.Visible, "Nuke UI");
                 AddInterfaceLayer(layers, TextBubbleUILayer, TextBubbleUIElement, MouseTextIndex + 5, TextBubbleUI.Visible, "Text Bubble");
                 AddInterfaceLayer(layers, YesNoUILayer, YesNoUIElement, MouseTextIndex + 6, YesNoUI.Visible, "Yes No Choice");
+                AddInterfaceLayer(layers, ForestNymphTradeUILayer, ForestNymphTradeUIElement, MouseTextIndex + 7, ForestNymphTradeUI.Visible, "Nymph Trade");
             }
         }
 

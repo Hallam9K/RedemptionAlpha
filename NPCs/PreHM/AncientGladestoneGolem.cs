@@ -180,8 +180,8 @@ namespace Redemption.NPCs.PreHM
                         AIState = ActionState.Idle;
                     }
 
-                    NPC.PlatformFallCheck(ref NPC.Redemption().fallDownPlatform, 30);
-                    RedeHelper.HorizontallyMove(NPC, moveTo * 16, 0.1f, 1, 10, 2, NPC.Center.Y > player.Center.Y);
+                    NPC.PlatformFallCheck(ref NPC.Redemption().fallDownPlatform, 30, moveTo.Y * 16);
+                    RedeHelper.HorizontallyMove(NPC, moveTo * 16, 0.1f, 1, 10, 2, NPC.Center.Y > moveTo.Y * 16);
                     break;
 
                 case ActionState.Threatened:
@@ -333,13 +333,14 @@ namespace Redemption.NPCs.PreHM
         public override float SpawnChance(NPCSpawnInfo spawnInfo)
         {
             float baseChance = SpawnCondition.Cavern.Chance;
-            float multiplier = TileLists.AncientTileArray.Contains(Framing.GetTileSafely(spawnInfo.SpawnTileX, spawnInfo.SpawnTileY).TileType) ? .03f : 0.006f;
+            float multiplier = TileLists.AncientTileArray.Contains(Framing.GetTileSafely(spawnInfo.SpawnTileX, spawnInfo.SpawnTileY).TileType) ? .04f : 0.006f;
 
             return baseChance * multiplier;
         }
 
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
         {
+            bestiaryEntry.UIInfoProvider = new CustomCollectionInfoProvider(ContentSamples.NpcBestiaryCreditIdsByNpcNetIds[Type], false, 25);
             bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[]
             {
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Caverns,

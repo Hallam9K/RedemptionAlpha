@@ -35,6 +35,9 @@ using Terraria.Graphics.Shaders;
 using Terraria;
 using Redemption.NPCs.Bosses.ADD;
 using Redemption.Items.Accessories.PostML;
+using Redemption.NPCs.Bosses.FowlEmperor;
+using Redemption.NPCs.Friendly;
+using Redemption.Items.Weapons.PreHM.Summon;
 
 namespace Redemption.CrossMod
 {
@@ -43,6 +46,7 @@ namespace Redemption.CrossMod
         public static void PerformModSupport()
         {
             PerformBossChecklistSupport();
+            PerformCencusSupport();
         }
         private static void PerformBossChecklistSupport()
         {
@@ -401,6 +405,18 @@ namespace Redemption.CrossMod
                 DukeFishron = 16f;
                 LunaticCultist = 17f;
                 Moonlord = 18f;*/
+            }
+        }
+        private static void PerformCencusSupport()
+        {
+            if (ModLoader.TryGetMod("Census", out Mod censusMod))
+            {
+                censusMod.Call("TownNPCCondition", ModContent.NPCType<Zephos>(), "Have a suitable house in a Corruption world, after meeting him at the surface portal after the first night");
+                censusMod.Call("TownNPCCondition", ModContent.NPCType<Daerel>(), "Have a suitable house in a Crimson world, after meeting him at the surface portal after the first night");
+                censusMod.Call("TownNPCCondition", ModContent.NPCType<Fallen>(), "Defeat the Keeper and have a suitable house");
+                censusMod.Call("TownNPCCondition", ModContent.NPCType<Newb>(), "Dig up the dirt mound beneath the surface portal");
+                censusMod.Call("TownNPCCondition", ModContent.NPCType<TBot>(), "Defeat the Seed of Infection and have a suitable house");
+                censusMod.Call("TownNPCCondition", ModContent.NPCType<ForestNymph_Friendly>(), "Use the [i:" + ModContent.ItemType<KingsOakStaff>() + "] to gain a Forest Nymph's trust, requires positive alignment");
             }
         }
     }

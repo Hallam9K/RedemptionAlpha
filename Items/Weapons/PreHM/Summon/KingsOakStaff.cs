@@ -41,6 +41,7 @@ namespace Redemption.Items.Weapons.PreHM.Summon
 			Item.autoReuse = false;
 			Item.buffType = ModContent.BuffType<NaturePixieBuff>();
 			Item.shoot = ModContent.ProjectileType<NaturePixie>();
+            Item.shootSpeed = 2;
 			Item.mana = 6;
         }
         public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback)
@@ -64,7 +65,8 @@ namespace Redemption.Items.Weapons.PreHM.Summon
                     "'A staff made from the King's Oak - a great lone tree housing the souls of Timbervalley's past and present monarchs.\n" +
                     "The wellbeing of oak and king are connected as one, grounding their emotion and vigour within the roots of the kingdom;\n" +
                     "a bottomless well of strength for all who walk and grow.\n" +
-                    "Dancing orbs of light are often witnessed coming and going from the tree, said to be the embodiment of ardour between nature and man.'")
+                    "Dancing orbs of light are often witnessed coming and going from the tree, said to be the embodiment of ardour between nature and man.\n" +
+                    "These are known by many names - Faes, Fairies, Pixies - and are the companions of Forest Nymphs.'")
                 {
                     OverrideColor = Color.LightGray
                 };

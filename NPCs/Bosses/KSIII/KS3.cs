@@ -1623,6 +1623,8 @@ namespace Redemption.NPCs.Bosses.KSIII
                                             continue;
 
                                         int hitDirection = NPC.Center.X > target.Center.X ? -1 : 1;
+                                        if (!target.noKnockback)
+                                            target.velocity.X = 20 * NPC.spriteDirection;
                                         BaseAI.DamagePlayer(target, NPC.damage, 3, hitDirection, NPC);
                                     }
                                 }

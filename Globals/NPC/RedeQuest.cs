@@ -18,6 +18,7 @@ namespace Redemption.Globals
     {
         public static int[] wayfarerVars = new int[2];
         public static bool[] voltVars = new bool[4];
+        public static int forestNymphVar;
         public override void PostUpdateWorld()
         {
             #region Wayfarer Event
@@ -72,6 +73,7 @@ namespace Redemption.Globals
                 wayfarerVars[k] = 0;
             for (int k = 0; k < voltVars.Length; k++)
                 voltVars[k] = false;
+            forestNymphVar = 0;
         }
         public override void OnWorldUnload()
         {
@@ -79,6 +81,7 @@ namespace Redemption.Globals
                 wayfarerVars[k] = 0;
             for (int k = 0; k < voltVars.Length; k++)
                 voltVars[k] = false;
+            forestNymphVar = 0;
         }
         public override void SaveWorldData(TagCompound tag)
         {
@@ -92,6 +95,7 @@ namespace Redemption.Globals
             tag["lists"] = lists;
             for (int k = 0; k < wayfarerVars.Length; k++)
                 tag["WV" + k] = wayfarerVars[k];
+            tag["FNV"] = forestNymphVar;
         }
 
         public override void LoadWorldData(TagCompound tag)
@@ -102,6 +106,7 @@ namespace Redemption.Globals
 
             for (int k = 0; k < wayfarerVars.Length; k++)
                 wayfarerVars[k] = tag.GetInt("WV" + k);
+            forestNymphVar = tag.GetInt("FNV");
         }
 
         public override void NetSend(BinaryWriter writer)
@@ -113,6 +118,7 @@ namespace Redemption.Globals
 
             for (int k = 0; k < wayfarerVars.Length; k++)
                 writer.Write(wayfarerVars[k]);
+            writer.Write(forestNymphVar);
         }
 
         public override void NetReceive(BinaryReader reader)
@@ -123,6 +129,7 @@ namespace Redemption.Globals
 
             for (int k = 0; k < wayfarerVars.Length; k++)
                 wayfarerVars[k] = reader.ReadInt32();
+            forestNymphVar = reader.ReadInt32();
         }
     }
 }

@@ -33,7 +33,7 @@ namespace Redemption.NPCs.Bosses.KSIII
         public override void AI()
         {
             NPC npc = Main.npc[(int)Projectile.ai[0]];
-            if (!npc.active || (npc.type != ModContent.NPCType<KS3>() && npc.type != ModContent.NPCType<KS3_Clone>()))
+            if (!npc.active || npc.ai[0] == 10 || (npc.type != ModContent.NPCType<KS3>() && npc.type != ModContent.NPCType<KS3_Clone>()))
                 Projectile.Kill();
 
             Projectile.Center = npc.Center;

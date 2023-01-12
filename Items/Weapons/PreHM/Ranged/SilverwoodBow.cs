@@ -21,7 +21,7 @@ namespace Redemption.Items.Weapons.PreHM.Ranged
         {
             // Common Properties
             Item.width = 36;
-            Item.height = 58;
+            Item.height = 60;
             Item.rare = ItemRarityID.Orange;
             Item.value = Item.buyPrice(gold: 25);
 

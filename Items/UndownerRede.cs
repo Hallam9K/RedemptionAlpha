@@ -55,6 +55,7 @@ namespace Redemption.Items
             RedeBossDowned.ADDDeath = 0;
             player.Redemption().slayerStarRating = 0;
             RedeQuest.wayfarerVars[0] = 1;
+            RedeQuest.forestNymphVar = 0;
             RedeBossDowned.downedGGBossFirst = 0;
 
             if (Main.netMode == NetmodeID.Server)

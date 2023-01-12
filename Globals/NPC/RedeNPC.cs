@@ -653,7 +653,7 @@ namespace Redemption.Globals.NPC
                 npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<LegoBrick>(), 200));
             }
             if (npc.type is NPCID.Dandelion)
-                npcLoot.Add(ItemDropRule.Food(ModContent.ItemType<GiantDandelion>(), 10));
+                npcLoot.Add(ItemDropRule.Food(ModContent.ItemType<GiantDandelion>(), 5));
             if (npc.type is NPCID.MoonLordCore)
                 npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Keycard>()));
             if (npc.type is NPCID.Golem)

@@ -102,8 +102,8 @@ namespace Redemption.NPCs.Wasteland
                         AIState = ActionState.Idle;
                     }
 
-                    NPC.PlatformFallCheck(ref NPC.Redemption().fallDownPlatform, 20);
-                    RedeHelper.HorizontallyMove(NPC, moveTo * 16, 0.4f, 1.2f, 8, 8, NPC.Center.Y > player.Center.Y);
+                    NPC.PlatformFallCheck(ref NPC.Redemption().fallDownPlatform, 20, moveTo.Y * 16);
+                    RedeHelper.HorizontallyMove(NPC, moveTo * 16, 0.4f, 1.2f, 8, 8, NPC.Center.Y > moveTo.Y * 16);
                     break;
             }
         }
@@ -162,6 +162,7 @@ namespace Redemption.NPCs.Wasteland
         }
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
         {
+            bestiaryEntry.UIInfoProvider = new CustomCollectionInfoProvider(ContentSamples.NpcBestiaryCreditIdsByNpcNetIds[Type], false, 10);
             bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[]
             {
                 new FlavorTextBestiaryInfoElement(
