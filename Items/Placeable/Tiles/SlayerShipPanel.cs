@@ -1,4 +1,7 @@
-﻿using Redemption.Tiles.Tiles;
+﻿using Redemption.Items.Materials.HM;
+using Redemption.Tiles.Furniture.SlayerShip;
+using Redemption.Tiles.Tiles;
+using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Redemption.Items.Placeable.Tiles
@@ -16,7 +19,36 @@ namespace Redemption.Items.Placeable.Tiles
             Item.DefaultToPlaceableTile(ModContent.TileType<SlayerShipPanelTile>(), 0);
             Item.width = 16;
             Item.height = 16;
+            Item.rare = ItemRarityID.LightPurple;
             Item.maxStack = 9999;
 		}
+    }
+    public class SlayerShipPanel2 : ModItem
+	{
+        public override string Texture => "Redemption/Items/Placeable/Tiles/SlayerShipPanel";
+        public override void SetStaticDefaults()
+        {
+            DisplayName.SetDefault("Slayer's Ship Panel");
+            SacrificeTotal = 100;
+        }
+        public override void SetDefaults()
+		{
+            Item.DefaultToPlaceableTile(ModContent.TileType<SlayerShipPanelTile2>(), 0);
+            Item.width = 16;
+            Item.height = 16;
+            Item.rare = ItemRarityID.LightPurple;
+            Item.maxStack = 9999;
+        }
+        public override void AddRecipes()
+        {
+            CreateRecipe(20)
+                .AddIngredient(ModContent.ItemType<Cyberscrap>())
+                .AddTile(ModContent.TileType<SlayerFabricatorTile>())
+                .Register();
+            CreateRecipe()
+                .AddIngredient(ModContent.ItemType<SlayerShipPanelWall>(), 4)
+                .AddTile(ModContent.TileType<SlayerFabricatorTile>())
+                .Register();
+        }
     }
 }

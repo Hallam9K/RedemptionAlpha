@@ -5,6 +5,8 @@ using Redemption.Globals;
 using Redemption.Items.Materials.PreHM;
 using Redemption.NPCs.Friendly;
 using Terraria;
+using Terraria.DataStructures;
+using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -17,6 +19,8 @@ namespace Redemption.Items.Usable
             DisplayName.SetDefault("Chalice of Alignment");
             Tooltip.SetDefault("Tells you your current alignment"
                 + "\n[c/ffea9b:A sentient treasure, cursed with visions of what is yet to come]");
+            Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(4, 4));
+            ItemID.Sets.AnimatesAsSoul[Item.type] = true;
 
             SacrificeTotal = 1;
         }
@@ -24,8 +28,8 @@ namespace Redemption.Items.Usable
         private float glowRot = 0;
         public override void SetDefaults()
         {
-            Item.width = 48;
-            Item.height = 48;
+            Item.width = 82;
+            Item.height = 64;
             Item.maxStack = 1;
             Item.value = 22000;
             Item.noUseGraphic = true;
@@ -47,7 +51,6 @@ namespace Redemption.Items.Usable
                 .AddTile(TileID.DemonAltar)
                 .Register();
         }
-
         public override bool? UseItem(Player player)
         {
             CombatText.NewText(player.Hitbox, Color.DarkGoldenrod, RedeWorld.alignment, true, false);
@@ -86,6 +89,7 @@ namespace Redemption.Items.Usable
 
         public override void PostUpdate()
         {
+            Lighting.AddLight(Item.Center, Color.Lime.ToVector3() * 0.6f * Main.essScale);
             glowRot += 0.03f;
         }
 
@@ -103,7 +107,20 @@ namespace Redemption.Items.Usable
 
             spriteBatch.End();
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
-            return true;
+
+            Texture2D texture = TextureAssets.Item[Item.type].Value;
+            Texture2D textureGlow = ModContent.Request<Texture2D>(Item.ModItem.Texture + "_Glow").Value;
+            Rectangle frame;
+            if (Main.itemAnimations[Item.type] != null)
+                frame = Main.itemAnimations[Item.type].GetFrame(texture, Main.itemFrameCounter[whoAmI]);
+            else
+                frame = texture.Frame();
+
+            Vector2 origin2 = frame.Size() / 2f;
+
+            spriteBatch.Draw(texture, Item.Center - Main.screenPosition, frame, lightColor, rotation, origin2, scale, SpriteEffects.None, 0f);
+            spriteBatch.Draw(textureGlow, Item.Center - Main.screenPosition, frame, Color.White, rotation, origin2, scale, SpriteEffects.None, 0f);
+            return false;
         }
     }
 }

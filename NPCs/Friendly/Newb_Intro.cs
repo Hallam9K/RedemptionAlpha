@@ -12,6 +12,7 @@ using Redemption.Dusts;
 using Terraria.GameContent.UI;
 using Redemption.UI;
 using Terraria.GameContent;
+using System;
 
 namespace Redemption.NPCs.Friendly
 {
@@ -62,7 +63,7 @@ namespace Redemption.NPCs.Friendly
                         NPC.spriteDirection = 1;
                         if (!Main.dedServ)
                         {
-                            Dialogue d1 = new(NPC, "...", Color.White, Color.Gray, voice1, 1, 120, 60, true, bubble: bubble);
+                            Dialogue d1 = new(NPC, "...", Color.White, Color.Gray, voice1, 1, 30, 60, true, bubble: bubble);
 
                             TextBubbleUI.Visible = true;
                             TextBubbleUI.Add(d1);
@@ -77,11 +78,13 @@ namespace Redemption.NPCs.Friendly
                 case 1:
                     if (AITimer++ == 30 && !Main.dedServ)
                     {
-                        Dialogue d1 = new(NPC, "What do you think, Jo-", Color.White, Color.Gray, voice1, 3, 30, 100, true, bubble: bubble);
+                        DialogueChain chain = new();
+                        chain.Add(new(NPC, "What do you think, Jo-", Color.White, Color.Gray, voice1, 3, 30, 100, true, bubble: bubble, endID: 1)); // 187
+                        chain.OnEndTrigger += Chain_OnEndTrigger;
                         TextBubbleUI.Visible = true;
-                        TextBubbleUI.Add(d1);
+                        TextBubbleUI.Add(chain);
                     }
-                    if (AITimer >= 209)
+                    if (AITimer >= 1000)
                     {
                         EmoteBubble.NewBubble(3, new WorldUIAnchor(NPC), 60);
                         AITimer = 0;
@@ -95,15 +98,15 @@ namespace Redemption.NPCs.Friendly
                         DialogueChain chain = new();
                         chain.Add(new(NPC, "Who you?!", Color.White, Color.Gray, voice2, 3, 100, 0, false, bubble: bubble)) // 166
                              .Add(new(NPC, "Where am I?", Color.White, Color.Gray, voice2, 3, 100, 0, false, bubble: bubble)) // 166
-                             .Add(new(NPC, "Heyo, I'm Newb![60] Want to be friends?", Color.White, Color.Gray, voice2, 3, 100, 30, true, bubble: bubble)); // 196
-
+                             .Add(new(NPC, "Heyo, I'm Newb![60] Want to be friends?", Color.White, Color.Gray, voice2, 3, 100, 30, true, bubble: bubble, endID: 1)); // 196
+                        chain.OnEndTrigger += Chain_OnEndTrigger;
                         TextBubbleUI.Visible = true;
                         TextBubbleUI.Add(chain);
                     }
                     if (AITimer >= 30)
                         NPC.LookAtEntity(player);
 
-                    if (AITimer >= 530)
+                    if (AITimer >= 2000)
                     {
                         NPC.SetDefaults(ModContent.NPCType<Newb>());
                         NPC.GivenName = "Newb";
@@ -111,7 +114,8 @@ namespace Redemption.NPCs.Friendly
                     }
                     break;
             }
-
+            if (RedeConfigClient.Instance.CameraLockDisable)
+                return;
             player.RedemptionScreen().ScreenFocusPosition = NPC.Center;
             player.RedemptionScreen().lockScreen = true;
             player.RedemptionScreen().cutscene = true;
@@ -119,7 +123,10 @@ namespace Redemption.NPCs.Friendly
             Terraria.Graphics.Effects.Filters.Scene["MoR:FogOverlay"]?.GetShader().UseOpacity(1f).UseIntensity(1f).UseColor(Color.Black).UseImage(ModContent.Request<Texture2D>("Redemption/Effects/Vignette", AssetRequestMode.ImmediateLoad).Value);
             player.ManageSpecialBiomeVisuals("MoR:FogOverlay", true);
         }
-
+        private void Chain_OnEndTrigger(Dialogue dialogue, int ID)
+        {
+            AITimer = 2999;
+        }
         public override void FindFrame(int frameHeight)
         {
             if (Main.netMode != NetmodeID.Server)

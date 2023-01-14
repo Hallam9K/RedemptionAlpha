@@ -3,6 +3,8 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Redemption.BaseExtension;
+using ParticleLibrary;
+using Redemption.Particles;
 
 namespace Redemption.NPCs.Bosses.SeedOfInfection
 {
@@ -52,37 +54,41 @@ namespace Redemption.NPCs.Bosses.SeedOfInfection
     }
     public class StrangePortal2 : ModProjectile
     {
-        public override string Texture => "Redemption/NPCs/Bosses/SeedOfInfection/StrangePortal";
+        public override string Texture => "Redemption/Textures/PortalTex";
 
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Strange Portal");
-            Main.projFrames[Projectile.type] = 4;
+            ProjectileID.Sets.DrawScreenCheckFluff[Type] = 2400;
         }
         public override void SetDefaults()
         {
-            Projectile.width = 42;
-            Projectile.height = 42;
+            Projectile.width = 188;
+            Projectile.height = 188;
             Projectile.penetrate = -1;
             Projectile.hostile = false;
             Projectile.friendly = false;
             Projectile.tileCollide = false;
             Projectile.ignoreWater = true;
             Projectile.timeLeft = 80;
-            Projectile.alpha = 150;
+            Projectile.alpha = 50;
+        }
+        public override Color? GetAlpha(Color lightColor)
+        {
+            return Color.Green * Projectile.Opacity;
         }
         public override void AI()
         {
-            Projectile.scale++;
-            Projectile.alpha += 2;
+            Projectile.scale += 0.5f;
+            Projectile.alpha += 4;
             if (Projectile.alpha >= 255)
                 Projectile.Kill();
 
-            if (++Projectile.frameCounter >= 15)
+            if (Projectile.ai[1]++ % 12 == 0)
             {
-                Projectile.frameCounter = 0;
-                if (++Projectile.frame >= 4)
-                    Projectile.frame = 0;
+                Vector2 spawnPos = new Vector2(0f, -50f).RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(360f)));
+
+                ParticleManager.NewParticle(Projectile.Center, spawnPos.RotatedBy(Main.rand.NextFloat(-30f, 30f)), new AnglonPortal_EnergyGather(), Color.White, 1f, Projectile.Center.X, Projectile.Center.Y);
             }
 
             if (Projectile.ai[0] == 0)

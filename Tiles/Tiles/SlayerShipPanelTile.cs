@@ -28,4 +28,18 @@ namespace Redemption.Tiles.Tiles
         public override bool CanKillTile(int i, int j, ref bool blockDamaged) => false;
         public override bool CanExplode(int i, int j) => false;
     }
+    public class SlayerShipPanelTile2 : SlayerShipPanelTile
+    {
+        public override string Texture => "Redemption/Tiles/Tiles/SlayerShipPanelTile";
+        public override void SetStaticDefaults()
+        {
+            base.SetStaticDefaults();
+            Main.tileMerge[Type][ModContent.TileType<SlayerShipPanelTile>()] = true;
+            Main.tileMerge[ModContent.TileType<SlayerShipPanelTile>()][Type] = true;
+            ItemDrop = ModContent.ItemType<SlayerShipPanel2>();
+            MinPick = 100;
+            MineResist = 3f;
+        }
+        public override bool CanKillTile(int i, int j, ref bool blockDamaged) => true;
+    }
 }

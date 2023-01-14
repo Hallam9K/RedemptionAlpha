@@ -1303,7 +1303,7 @@ namespace Redemption.Globals
         }
         public static void LockMoveRadius(this Terraria.NPC npc, Terraria.Player player, int radius = 1000)
         {
-            if (npc.Distance(player.Center) > radius)
+            if (!RedeConfigClient.Instance.CameraLockDisable && npc.Distance(player.Center) > radius)
             {
                 Vector2 movement = npc.Center - player.Center;
                 float difference = movement.Length() - radius;

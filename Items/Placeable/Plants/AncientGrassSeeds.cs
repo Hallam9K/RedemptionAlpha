@@ -22,7 +22,7 @@ namespace Redemption.Items.Placeable.Plants
 
             Item.useStyle = ItemUseStyleID.Swing;
             Item.useAnimation = 15;
-            Item.useTime = 10;
+            Item.useTime = 15;
             Item.autoReuse = true;
             Item.useTurn = true;
             Item.createTile = ModContent.TileType<AncientGrassTile>();

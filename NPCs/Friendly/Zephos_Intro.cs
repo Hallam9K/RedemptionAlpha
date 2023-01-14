@@ -12,6 +12,7 @@ using Redemption.Dusts;
 using Terraria.GameContent.UI;
 using Redemption.UI;
 using Terraria.GameContent;
+using MonoMod.RuntimeDetour;
 
 namespace Redemption.NPCs.Friendly
 {
@@ -40,6 +41,7 @@ namespace Redemption.NPCs.Friendly
             NPC.dontTakeDamage = true;
             NPC.alpha = 255;
         }
+        private int Look;
         public override void AI()
         {
             if (NPC.target < 0 || NPC.target == 255 || Main.player[NPC.target].dead || !Main.player[NPC.target].active)
@@ -104,12 +106,13 @@ namespace Redemption.NPCs.Friendly
                     if (AITimer++ == 40 && !Main.dedServ)
                     {
                         EmoteBubble.NewBubble(1, new WorldUIAnchor(NPC), 120);
-                        Dialogue d1 = new(NPC, "Jeez,[10] bad landing.", Color.White, Color.Gray, voice, 3, 100, 30, true, bubble: bubble); // 194
-
+                        DialogueChain chain = new();
+                        chain.Add(new(NPC, "Jeez,[10] bad landing.", Color.White, Color.Gray, voice, 3, 100, 30, true, bubble: bubble, endID: 1)); // 187
+                        chain.OnEndTrigger += Chain_OnEndTrigger;
                         TextBubbleUI.Visible = true;
-                        TextBubbleUI.Add(d1);
+                        TextBubbleUI.Add(chain);
                     }
-                    if (AITimer >= 234)
+                    if (AITimer >= 1000)
                     {
                         ExtraFrames = 0;
                         ExtraTexs = 0;
@@ -123,38 +126,32 @@ namespace Redemption.NPCs.Friendly
                     {
                         DialogueChain chain = new();
                         chain.Add(new(NPC, "Ey Daerel,[10] know where we are?", Color.White, Color.Gray, voice, 3, 100, 0, false, bubble: bubble)) // 197
-                             .Add(new(NPC, "Uh..[30] Daerel?", Color.White, Color.Gray, voice, 3, 100, 0, false, bubble: bubble)) // 166
-                             .Add(new(NPC, "Oh,[10] hey there![10] Didn't notice you.", Color.White, Color.Gray, voice, 3, 100, 0, false, bubble: bubble)) // 219
+                             .Add(new(NPC, "[@a]Uh..[30] Daerel?", Color.White, Color.Gray, voice, 3, 100, 0, false, bubble: bubble)) // 166
+                             .Add(new(NPC, "[@b]Oh,[10] hey there![10] Didn't notice you.", Color.White, Color.Gray, voice, 3, 100, 0, false, bubble: bubble)) // 219
                              .Add(new(NPC, "You haven't happened upon a boy cloaked in black,[10] have you?", Color.White, Color.Gray, voice, 3, 100, 0, false, bubble: bubble)) // 287
                              .Add(new(NPC, "Guess he didn't jump in.[30] Oh well![10] I'll head back to get him.", Color.White, Color.Gray, voice, 3, 100, 0, false, bubble: bubble)) // 320
-                             .Add(new(NPC, "I'll come back once I find him,[10] so ya better have a place for us to stay!", Color.White, Color.Gray, voice, 3, 100, 30, true, bubble: bubble)); // 349
-
+                             .Add(new(NPC, "I'll come back once I find him,[10] so ya better have a place for us to stay!", Color.White, Color.Gray, voice, 3, 100, 30, true, bubble: bubble, endID: 1)); // 349
+                        chain.OnSymbolTrigger += Chain_OnSymbolTrigger;
+                        chain.OnEndTrigger += Chain_OnEndTrigger;
                         TextBubbleUI.Visible = true;
                         TextBubbleUI.Add(chain);
                     }
-                    if (AITimer >= 202 && AITimer % 30 == 0 && AITimer < 368)
+                    if (Look == 1 && AITimer % 30 == 0)
                         NPC.spriteDirection *= -1;
-                    if (AITimer == 202)
-                        EmoteBubble.NewBubble(87, new WorldUIAnchor(NPC), 197);
-                    if (AITimer >= 368)
+                    if (Look == 2)
                         NPC.LookAtEntity(player);
-                    if (AITimer == 368)
-                    {
-                        EmoteBubble.NewBubble(3, new WorldUIAnchor(NPC), 120);
-                        NPC.velocity.Y = -3;
-                    }
-                    if (AITimer == 1478 + 65)
+                    if (AITimer == 3000)
                     {
                         NPC.velocity.Y = -8;
                         NPC.velocity.X = -3;
                     }
-                    if (AITimer >= 1538 + 65)
+                    if (AITimer >= 3060)
                     {
                         NPC.noTileCollide = true;
                         NPC.Move(portal.Center, 20, 30);
                         NPC.alpha += 5;
                     }
-                    if (AITimer >= 1478 + 65)
+                    if (AITimer >= 3000)
                     {
                         NPC.rotation -= 0.1f;
                         NPC.velocity.X *= 0.99f;
@@ -180,13 +177,33 @@ namespace Redemption.NPCs.Friendly
                     }
                     break;
             }
-
+            if (RedeConfigClient.Instance.CameraLockDisable)
+                return;
             player.RedemptionScreen().ScreenFocusPosition = NPC.Center;
             player.RedemptionScreen().lockScreen = true;
             player.RedemptionScreen().cutscene = true;
             NPC.LockMoveRadius(player);
             Terraria.Graphics.Effects.Filters.Scene["MoR:FogOverlay"]?.GetShader().UseOpacity(1f).UseIntensity(1f).UseColor(Color.Black).UseImage(ModContent.Request<Texture2D>("Redemption/Effects/Vignette", AssetRequestMode.ImmediateLoad).Value);
             player.ManageSpecialBiomeVisuals("MoR:FogOverlay", true);
+        }
+        private void Chain_OnSymbolTrigger(Dialogue dialogue, string signature)
+        {
+            switch (signature)
+            {
+                case "a":
+                    Look = 1;
+                    EmoteBubble.NewBubble(87, new WorldUIAnchor(NPC), 166);
+                    break;
+                case "b":
+                    Look = 2;
+                    EmoteBubble.NewBubble(3, new WorldUIAnchor(NPC), 120);
+                    NPC.velocity.Y = -3;
+                    break;
+            }
+        }
+        private void Chain_OnEndTrigger(Dialogue dialogue, int ID)
+        {
+            AITimer = 2999;
         }
         private int ExtraFrames;
         private int ExtraTexs;

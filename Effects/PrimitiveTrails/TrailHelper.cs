@@ -1,9 +1,18 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Globals;
+using Redemption.Items.Weapons.HM.Melee;
+using Redemption.Items.Weapons.PostML.Melee;
+using Redemption.NPCs.Bosses.ADD;
+using Redemption.NPCs.Bosses.Gigapora;
 using Redemption.NPCs.Bosses.Keeper;
+using Redemption.NPCs.Bosses.KSIII;
+using Redemption.NPCs.Bosses.Neb;
+using Redemption.NPCs.Bosses.Neb.Phase2;
+using Redemption.NPCs.Friendly;
 using Redemption.Projectiles.Magic;
 using Redemption.Projectiles.Melee;
+using Redemption.Projectiles.Minions;
 using Redemption.Projectiles.Ranged;
 using ReLogic.Content;
 using System;
@@ -33,7 +42,7 @@ namespace Redemption.Effects.PrimitiveTrails
 
         public static void TryTrailKill(Projectile projectile)
         {
-            if (projectile.type == ModContent.ProjectileType<LunarShot_Proj>() || projectile.type == ModContent.ProjectileType<CantripEmber>() || projectile.type == ModContent.ProjectileType<CantripEmberS>() || projectile.type == ModContent.ProjectileType<KeeperSoulCharge>() || projectile.type == ModContent.ProjectileType<KeeperDreadCoil>() || projectile.type == ModContent.ProjectileType<WaterOrb>() || projectile.type == ModContent.ProjectileType<WaterOrbS>() || projectile.type == ModContent.ProjectileType<SoulScepterCharge>() || projectile.type == ModContent.ProjectileType<SoulScepterChargeS>() || projectile.type == ModContent.ProjectileType<Lightmass>() || projectile.type == ModContent.ProjectileType<IceBolt>() || projectile.type == ModContent.ProjectileType<EaglecrestSling_Proj>())
+            if (projectile.type == ModContent.ProjectileType<KeeperSoulCharge>() || projectile.type == ModContent.ProjectileType<KeeperDreadCoil>() || projectile.type == ModContent.ProjectileType<EaglecrestSling_Proj>() || projectile.type == ModContent.ProjectileType<CrystalGlaive_Proj>() || projectile.type == ModContent.ProjectileType<InfectiousGlaive_Proj>() || projectile.type == ModContent.ProjectileType<XeniumLance_Proj>() || projectile.type == ModContent.ProjectileType<DualcastBall>() || projectile.type == ModContent.ProjectileType<UkkoThunderwave>() || projectile.type == ModContent.ProjectileType<Gigapora_Fireball>() || projectile.type == ModContent.ProjectileType<ShieldCore_Bolt>() || projectile.type == ModContent.ProjectileType<ShieldCore_DualcastBall>() || projectile.type == ModContent.ProjectileType<ShadowBolt>() || projectile.type == ModContent.ProjectileType<KS3_EnergyBolt>() || projectile.type == ModContent.ProjectileType<CurvingStar>() || projectile.type == ModContent.ProjectileType<CurvingStar2>() || projectile.type == ModContent.ProjectileType<Neb_Start_Visual>() || projectile.type == ModContent.ProjectileType<StarFall_Proj2>() || projectile.type == ModContent.ProjectileType<StarFall_Proj>() || projectile.type == ModContent.ProjectileType<WraithSlayer_Slash>() || projectile.type == ModContent.ProjectileType<NebulaStar>() || projectile.type == ModContent.ProjectileType<NebulaSpark>() || projectile.type == ModContent.ProjectileType<MicroshieldCore_Bolt>())
                 RedeSystem.TrailManager.TryEndTrail(projectile, Math.Max(15f, projectile.velocity.Length() * 3f));
         }
 

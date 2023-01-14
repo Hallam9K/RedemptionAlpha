@@ -1,3 +1,4 @@
+using Redemption.Items.Placeable.Furniture.Lab;
 using Redemption.Tiles.Tiles;
 using Terraria;
 using Terraria.ID;
@@ -20,6 +21,13 @@ namespace Redemption.Items.Placeable.Tiles
             Item.maxStack = 9999;
             Item.rare = ItemRarityID.LightPurple;
             Item.value = Item.buyPrice(0, 0, 2, 0);
+        }
+        public override void AddRecipes()
+        {
+            CreateRecipe(2)
+                .AddIngredient(ModContent.ItemType<LabPlating>())
+                .AddTile(TileID.AdamantiteForge)
+                .Register();
         }
     }
 }

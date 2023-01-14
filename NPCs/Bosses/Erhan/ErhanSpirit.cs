@@ -292,11 +292,12 @@ namespace Redemption.NPCs.Bosses.Erhan
                                     {
                                         DialogueChain chain = new();
                                         chain.Add(new(NPC, "Thou may inquire,[10] how hath I returned...", Color.LightGoldenrodYellow, new Color(100, 86, 0), voice, 2, 100, 0, false, null, bubble, null, modifier)) // 190
-                                             .Add(new(NPC, "I am but the holiest of men,[10] thus the Lord has returned me to beat thine buttocks once more!", Color.LightGoldenrodYellow, new Color(100, 86, 0), voice, 2, 100, 30, true, null, bubble, null, modifier)); // 324
+                                             .Add(new(NPC, "I am but the holiest of men,[10] thus the Lord has returned me to beat thine buttocks once more!", Color.LightGoldenrodYellow, new Color(100, 86, 0), voice, 2, 100, 30, true, null, bubble, null, modifier, 1)); // 324
+                                        chain.OnEndTrigger += Chain_OnEndTrigger;
                                         TextBubbleUI.Visible = true;
                                         TextBubbleUI.Add(chain);
                                     }
-                                    if (AITimer >= 500)
+                                    if (AITimer >= 1000)
                                     {
                                         if (!Main.dedServ)
                                             Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/BossErhan");
@@ -824,6 +825,10 @@ namespace Redemption.NPCs.Bosses.Erhan
                     }
                     break;
             }
+        }
+        private void Chain_OnEndTrigger(Dialogue dialogue, int ID)
+        {
+            AITimer = 1000;
         }
         private int ArmFrameY;
         private int ArmType;

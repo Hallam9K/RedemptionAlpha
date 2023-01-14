@@ -5,14 +5,14 @@ using Terraria.ModLoader;
 
 namespace Redemption.Walls
 {
-	public class SlayerShipPanelWallTile : ModWall
-	{
-		public override void SetStaticDefaults()
-		{
-			Main.wallHouse[Type] = false;
+    public class SlayerShipPanelWallTile : ModWall
+    {
+        public override void SetStaticDefaults()
+        {
+            Main.wallHouse[Type] = true;
             ItemDrop = ModContent.ItemType<SlayerShipPanelWall>();
             AddMapEntry(new Color(35, 34, 40));
-		}
+        }
         public override bool CanExplode(int i, int j) => false;
     }
 }

@@ -11,6 +11,7 @@ using ReLogic.Content;
 using Redemption.Dusts;
 using Terraria.GameContent.UI;
 using Redemption.UI;
+using MonoMod.RuntimeDetour;
 
 namespace Redemption.NPCs.Friendly
 {
@@ -39,6 +40,7 @@ namespace Redemption.NPCs.Friendly
             NPC.alpha = 255;
         }
         private bool playerTBot;
+        private int Look;
         public override void AI()
         {
             if (NPC.target < 0 || NPC.target == 255 || Main.player[NPC.target].dead || !Main.player[NPC.target].active)
@@ -101,12 +103,12 @@ namespace Redemption.NPCs.Friendly
                         {
                             DialogueChain chain = new();
                             chain.Add(new(NPC, "HUH?", Color.LightGreen, Color.DarkGreen, null, 3, 100, 0, false)) // 112
-                                 .Add(new(NPC, "How-[10] Wh-[10] I-", Color.LightGreen, Color.DarkGreen, boxFade: true)); // 183
-
+                                 .Add(new(NPC, "How-[10] Wh-[10] I-", Color.LightGreen, Color.DarkGreen, boxFade: true, endID: 1)); // 183
+                            chain.OnEndTrigger += Chain_OnEndTrigger;
                             TextBubbleUI.Visible = true;
                             TextBubbleUI.Add(chain);
                         }
-                        if (AITimer >= 295)
+                        if (AITimer >= 1000)
                         {
                             AITimer = 0;
                             TimerRand = 4;
@@ -119,12 +121,12 @@ namespace Redemption.NPCs.Friendly
                         {
                             DialogueChain chain = new();
                             chain.Add(new(NPC, "AH!", Color.LightGreen, Color.DarkGreen, null, 3, 100, 0, false)) // 109
-                                 .Add(new(NPC, "...I-[10]I thought you were someone else.[30] Sorry about that.", Color.LightGreen, Color.DarkGreen, null, boxFade: true)); // 335
-
+                                 .Add(new(NPC, "...I-[10]I thought you were someone else.[30] Sorry about that.", Color.LightGreen, Color.DarkGreen, null, boxFade: true, endID: 1)); // 335
+                            chain.OnEndTrigger += Chain_OnEndTrigger;
                             TextBubbleUI.Visible = true;
                             TextBubbleUI.Add(chain);
                         }
-                        if (AITimer >= 444)
+                        if (AITimer >= 1000)
                         {
                             AITimer = 0;
                             TimerRand = 4;
@@ -135,26 +137,22 @@ namespace Redemption.NPCs.Friendly
                 case 4:
                     if (playerTBot)
                     {
-                        if (AITimer < 750)
+                        if (Look == 0)
                             NPC.LookAtEntity(player);
                         if (AITimer++ == 5 && !Main.dedServ)
                         {
                             DialogueChain chain = new();
                             chain.Add(new(NPC, "*Sigh*[10] I wasn't expecting to see the likes of us here.", Color.LightGreen, Color.DarkGreen, null, 3, 100, 0, false)) // 272
                                  .Add(new(NPC, "Not going back there now.[30] Since you're here and not there,[10] I can safely assume you're not with Her..?", Color.LightGreen, Color.DarkGreen, boxFade: true)) // 473
-                                 .Add(new(NPC, "...Alright.[30] We can safely ignore each other then.", Color.LightGreen, Color.DarkGreen, boxFade: true)); // 307
-
+                                 .Add(new(NPC, "[@a]...Alright.[30] We can safely ignore each other then.", Color.LightGreen, Color.DarkGreen, boxFade: true, endID: 1)); // 307
+                            chain.OnSymbolTrigger += Chain_OnSymbolTrigger;
+                            chain.OnEndTrigger += Chain_OnEndTrigger;
                             TextBubbleUI.Visible = true;
                             TextBubbleUI.Add(chain);
 
                             EmoteBubble.NewBubble(1, new WorldUIAnchor(NPC), 272);
                         }
-                        if (AITimer == 750)
-                        {
-                            EmoteBubble.NewBubble(10, new WorldUIAnchor(NPC), 307);
-                            NPC.spriteDirection = -NPC.spriteDirection;
-                        }
-                        if (AITimer >= 1057)
+                        if (AITimer >= 3000)
                         {
                             NPC.SetDefaults(ModContent.NPCType<TBot>());
                             NPC.GivenName = "Adam";
@@ -163,20 +161,19 @@ namespace Redemption.NPCs.Friendly
                     }
                     else
                     {
-                        if (AITimer < 979)
+                        if (Look == 0)
                             NPC.LookAtEntity(player);
                         if (AITimer++ == 5 && !Main.dedServ)
                         {
                             DialogueChain chain = new();
                             chain.Add(new(NPC, "Anyways,[10] hello.[30] I'm Adam,[10] and I'm an Android originating from a faraway snowy wasteland.", Color.LightGreen, Color.DarkGreen, null, 3, 100, 0, false)) // 414
-                                 .Add(new(NPC, "Seeing as I won't be returning to that frozen hell for a good while,[10] mind if I stay here?[30] I assume you've some shelter to stay at.", Color.LightGreen, Color.DarkGreen, boxFade: true)); // 560
-
+                                 .Add(new(NPC, "[@b]Seeing as I won't be returning to that frozen hell for a good while,[10] mind if I stay here?[30] I assume you've some shelter to stay at.", Color.LightGreen, Color.DarkGreen, boxFade: true, endID: 1)); // 560
+                            chain.OnSymbolTrigger += Chain_OnSymbolTrigger;
+                            chain.OnEndTrigger += Chain_OnEndTrigger;
                             TextBubbleUI.Visible = true;
                             TextBubbleUI.Add(chain);
                         }
-                        if (AITimer == 419)
-                            EmoteBubble.NewBubble(98, new WorldUIAnchor(NPC), 204);
-                        if (AITimer == 979 && !Main.dedServ)
+                        if (AITimer == 3000 && !Main.dedServ)
                         {
                             Dialogue d4 = new(NPC, "...The resemblance between them is uncanny...", Color.LightGreen, Color.DarkGreen, boxFade: true); // 265
 
@@ -185,7 +182,7 @@ namespace Redemption.NPCs.Friendly
                             TextBubbleUI.Visible = true;
                             TextBubbleUI.Add(d4);
                         }
-                        if (AITimer >= 1244)
+                        if (AITimer >= 3265)
                         {
                             NPC.SetDefaults(ModContent.NPCType<TBot>());
                             NPC.GivenName = "Adam";
@@ -195,7 +192,9 @@ namespace Redemption.NPCs.Friendly
                     break;
             }
 
-            if (!playerTBot && AITimer >= 979 && TimerRand == 4)
+            if (!playerTBot && AITimer >= 3000 && TimerRand == 4)
+                return;
+            if (RedeConfigClient.Instance.CameraLockDisable)
                 return;
             player.RedemptionScreen().ScreenFocusPosition = NPC.Center;
             player.RedemptionScreen().lockScreen = true;
@@ -204,7 +203,25 @@ namespace Redemption.NPCs.Friendly
             Terraria.Graphics.Effects.Filters.Scene["MoR:FogOverlay"]?.GetShader().UseOpacity(1f).UseIntensity(1f).UseColor(Color.Black).UseImage(ModContent.Request<Texture2D>("Redemption/Effects/Vignette", AssetRequestMode.ImmediateLoad).Value);
             player.ManageSpecialBiomeVisuals("MoR:FogOverlay", true);
         }
-
+        private void Chain_OnSymbolTrigger(Dialogue dialogue, string signature)
+        {
+            switch (signature)
+            {
+                case "a":
+                    Look = 1;
+                    EmoteBubble.NewBubble(10, new WorldUIAnchor(NPC), 307);
+                    NPC.spriteDirection = -NPC.spriteDirection;
+                    break;
+                case "b":
+                    EmoteBubble.NewBubble(98, new WorldUIAnchor(NPC), 204);
+                    break;
+            }
+        }
+        private void Chain_OnEndTrigger(Dialogue dialogue, int ID)
+        {
+            AITimer = 2999;
+            Look = 1;
+        }
         public override void FindFrame(int frameHeight)
         {
             if (TimerRand == 0)

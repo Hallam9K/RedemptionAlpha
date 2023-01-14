@@ -23,6 +23,7 @@ namespace Redemption.NPCs.Friendly
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Chalice of Alignment");
+            Main.npcFrameCount[Type] = 4;
             NPCID.Sets.NPCBestiaryDrawModifiers value = new(0) { Hide = true };
             NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, value);
         }
@@ -52,6 +53,7 @@ namespace Redemption.NPCs.Friendly
                 NPC.TargetClosest();
 
             Player player = Main.player[NPC.target];
+            Lighting.AddLight(NPC.Center, Color.Lime.ToVector3() * 0.6f * Main.essScale);
 
             if (NPC.alpha > 0)
                 NPC.alpha -= 2;
@@ -154,7 +156,8 @@ namespace Redemption.NPCs.Friendly
                     }
                     break;
             }
-
+            if (RedeConfigClient.Instance.CameraLockDisable)
+                return;
             player.RedemptionScreen().ScreenFocusPosition = NPC.Center;
             player.RedemptionScreen().lockScreen = true;
             player.RedemptionScreen().cutscene = true;
@@ -162,14 +165,24 @@ namespace Redemption.NPCs.Friendly
             Terraria.Graphics.Effects.Filters.Scene["MoR:FogOverlay"]?.GetShader().UseOpacity(2f).UseIntensity(1f).UseColor(Color.Black).UseImage(ModContent.Request<Texture2D>("Redemption/Effects/Vignette", AssetRequestMode.ImmediateLoad).Value);
             player.ManageSpecialBiomeVisuals("MoR:FogOverlay", true);
         }
+        public override void FindFrame(int frameHeight)
+        {
+            if (NPC.frameCounter++ >= 4)
+            {
+                NPC.frameCounter = 0;
+                NPC.frame.Y += frameHeight;
+                if (NPC.frame.Y > 3 * frameHeight)
+                    NPC.frame.Y = 0;
+            }
+        }
         private float drawTimer;
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
             Texture2D texture = TextureAssets.Npc[NPC.type].Value;
-            Vector2 origin = new(texture.Width / 2f, texture.Height / 2f);
+            Vector2 origin = NPC.frame.Size() / 2;
 
-            RedeDraw.DrawTreasureBagEffect(Main.spriteBatch, texture, ref drawTimer, NPC.Center - screenPos, null, NPC.GetAlpha(Color.White), NPC.rotation, origin, NPC.scale);
-            Main.spriteBatch.Draw(texture, NPC.Center - screenPos, null, NPC.GetAlpha(Color.White), NPC.rotation, origin, NPC.scale, 0, 0);
+            RedeDraw.DrawTreasureBagEffect(Main.spriteBatch, texture, ref drawTimer, NPC.Center - screenPos, NPC.frame, NPC.GetAlpha(Color.White), NPC.rotation, origin, NPC.scale);
+            Main.spriteBatch.Draw(texture, NPC.Center - screenPos, NPC.frame, NPC.GetAlpha(Color.White), NPC.rotation, origin, NPC.scale, 0, 0);
 
             Main.spriteBatch.End();
             Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);

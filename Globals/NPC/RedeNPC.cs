@@ -776,7 +776,7 @@ namespace Redemption.Globals.NPC
                     pool.Add(NPCID.HellArmoredBonesSword, 0.2f);
                 }
             }
-            if (spawnInfo.Player.RedemptionScreen().cutscene)
+            if (spawnInfo.Player.RedemptionScreen().cutscene && !RedeConfigClient.Instance.CameraLockDisable)
                 pool.Clear();
         }
     }

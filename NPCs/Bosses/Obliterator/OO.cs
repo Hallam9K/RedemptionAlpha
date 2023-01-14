@@ -221,6 +221,8 @@ namespace Redemption.NPCs.Bosses.Obliterator
         public readonly Vector2 modifier = new(-19, -300);
 
         public bool BeamAnimation;
+        public bool OverheatOverlay;
+        public bool OverheatArmRaise;
 
         public List<int> AttackList = new() { 0, 1, 2, 3, 4, 5, 6, 7 };
         public List<int> CopyList = null;
@@ -360,31 +362,24 @@ namespace Redemption.NPCs.Bosses.Obliterator
                             }
                             if (AITimer == 400 && !Main.dedServ)
                             {
-                                Dialogue d1 = new(NPC, "I guess I can't fool you twice,[10] huh.", Colors.RarityRed, Color.DarkRed, voice, 2, 100, 0, false, modifier: modifier); // 182
-                                Dialogue d2 = new(NPC, "So much for a surprise attack...", Colors.RarityRed, Color.DarkRed, voice, 2, 118, 0, false, modifier: modifier); // 182
-
-                                TextBubbleUI.Visible = true;
+                                Dialogue d1 = new(NPC, "So much for a surprise attack...", Colors.RarityRed, Color.DarkRed, voice, 2, 100, 0, false, modifier: modifier);
                                 if (RedeBossDowned.oblitDeath == 1)
-                                    TextBubbleUI.Add(d1);
-                                else
-                                    TextBubbleUI.Add(d2);
-                            }
-                            if (AITimer == 582 && !Main.dedServ)
-                            {
+                                    d1 = new(NPC, "I guess I can't fool you twice,[10] huh.", Colors.RarityRed, Color.DarkRed, voice, 2, 100, 0, false, modifier: modifier);
+
                                 DialogueChain chain = new();
-                                chain.Add(new(NPC, "Hang on,[10] I got a call from Girus.", Colors.RarityRed, Color.DarkRed, voice, 2, 100, 0, false, modifier: modifier)) // 166
+                                chain.Add(d1)
+                                     .Add(new(NPC, "[@a]Hang on,[10] I got a call from Girus.", Colors.RarityRed, Color.DarkRed, voice, 2, 100, 0, false, modifier: modifier)) // 166
                                      .Add(new(NPC, "'I wasted too much energy too quickly?'", Colors.RarityRed, Color.DarkRed, voice, 2, 100, 0, false, modifier: modifier)) // 178
                                      .Add(new(NPC, "'I'm an idiot?'", Colors.RarityRed, Color.DarkRed, voice, 2, 100, 0, false, modifier: modifier)) // 130
                                      .Add(new(NPC, "You're scrapping my personality drive after this fight?", Colors.RarityRed, Color.DarkRed, voice, 2, 100, 0, false, modifier: modifier)) // 210
-                                     .Add(new(NPC, "Ah well,[10] request accepted...", Colors.RarityRed, Color.DarkRed, voice, 2, 100, 0, false, modifier: modifier)) // 156
-                                     .Add(new(NPC, "Anyway...", Colors.RarityRed, Color.DarkRed, voice, 2, 100, 30, true, modifier: modifier)); // 148
-                                HeadFrameY = 2;
+                                     .Add(new(NPC, "[@b]Ah well,[10] request accepted...", Colors.RarityRed, Color.DarkRed, voice, 2, 100, 0, false, modifier: modifier)) // 156
+                                     .Add(new(NPC, "Anyway...", Colors.RarityRed, Color.DarkRed, voice, 2, 100, 30, true, modifier: modifier, endID: 1));
+                                chain.OnSymbolTrigger += Chain_OnSymbolTrigger;
+                                chain.OnEndTrigger += Chain_OnEndTrigger;
                                 TextBubbleUI.Visible = true;
                                 TextBubbleUI.Add(chain);
                             }
-                            if (AITimer == 1266)
-                                HeadFrameY = 0;
-                            if (AITimer > 1560)
+                            if (AITimer > 3000)
                             {
                                 if (!Main.dedServ)
                                     SoundEngine.PlaySound(CustomSounds.LabSafeS, NPC.position);
@@ -910,7 +905,7 @@ namespace Redemption.NPCs.Bosses.Obliterator
                 case ActionState.Overheat:
                     if (TimerRand == 1)
                     {
-                        if (AITimer >= 878 && AITimer <= 1206 && !RedeBossDowned.downedOmega3)
+                        if (OverheatArmRaise && !RedeBossDowned.downedOmega3)
                         {
                             ArmRot[0].SlowRotation(MathHelper.PiOver2 + ((1f + Main.rand.NextFloat(-0.05f, 0.05f)) * -NPC.spriteDirection) + RotFlip, MathHelper.Pi / 30);
                             ArmRot[1].SlowRotation(MathHelper.PiOver2 + ((1f + Main.rand.NextFloat(-0.05f, 0.05f)) * -NPC.spriteDirection) + RotFlip, MathHelper.Pi / 30);
@@ -933,7 +928,7 @@ namespace Redemption.NPCs.Bosses.Obliterator
                     Main.dust[dust].noGravity = true;
                     Main.dust[dust].velocity.X = 0;
                     Main.dust[dust].velocity.Y = -5;
-                    if ((TimerRand == 1 && AITimer >= (RedeBossDowned.downedOmega3 ? 196 : 878)) || TimerRand > 1)
+                    if ((TimerRand == 1 && OverheatOverlay) || TimerRand > 1)
                     {
                         player.RedemptionScreen().ScreenShakeIntensity = MathHelper.Max(3, player.RedemptionScreen().ScreenShakeIntensity);
                         Terraria.Graphics.Effects.Filters.Scene["MoR:FogOverlay"]?.GetShader().UseOpacity(0.5f).UseIntensity(0.6f).UseColor(Color.DarkRed).UseImage(ModContent.Request<Texture2D>("Redemption/Effects/Vignette", AssetRequestMode.ImmediateLoad).Value);
@@ -985,9 +980,11 @@ namespace Redemption.NPCs.Bosses.Obliterator
                                         chain.Add(new(NPC, "SYSTEM OVERLOAD...", Colors.RarityRed, Color.DarkRed, voice with { Pitch = -0.5f }, 2, 100, 0, false, modifier: modifier)) // 136
                                              .Add(new(NPC, "Overload?[30] Damn right I'm overloading!", Colors.RarityRed, Color.DarkRed, voice, 2, 100, 0, false, modifier: modifier)) // 204
                                              .Add(new(NPC, "My circuits are burning with energy![10] This is truly exhilarating!", Colors.RarityRed, Color.DarkRed, voice, 2, 100, 0, false, modifier: modifier)) // 238
-                                             .Add(new(NPC, "OVERHEATING...[10] OVERHEATING...[10] OVERHEATING...[10]", Colors.RarityRed, Color.DarkRed, voice with { Pitch = -0.5f }, 2, 100, 0, false, modifier: modifier)) // 218
-                                             .Add(new(NPC, "Hahaha.[30] HAHAHAHAHAHAHA!", Colors.RarityRed, Color.DarkRed, voice with { Pitch = 0.1f, PitchVariance = 0.1f }, 2, 100, 0, false, modifier: modifier)) // 156
-                                             .Add(new(NPC, "THE POWER OF THE SUN IN MY VERY CORE!", Colors.RarityRed, Color.DarkRed, voice with { Pitch = 0.3f, PitchVariance = 0.3f }, 2, 100, 30, true, modifier: modifier)); // 204
+                                             .Add(new(NPC, "[@d]OVERHEATING...[10] OVERHEATING...[10] OVERHEATING...[10]", Colors.RarityRed, Color.DarkRed, voice with { Pitch = -0.5f }, 2, 100, 0, false, modifier: modifier)) // 218
+                                             .Add(new(NPC, "Hahaha.[30] [@e]HAHAHAHAHAHAHA!", Colors.RarityRed, Color.DarkRed, voice with { Pitch = 0.1f, PitchVariance = 0.1f }, 2, 100, 0, false, modifier: modifier)) // 156
+                                             .Add(new(NPC, "THE POWER OF THE SUN IN MY VERY CORE!", Colors.RarityRed, Color.DarkRed, voice with { Pitch = 0.3f, PitchVariance = 0.3f }, 2, 100, 30, true, modifier: modifier, endID: 1)); // 204
+                                        chain.OnSymbolTrigger += Chain_OnSymbolTrigger;
+                                        chain.OnEndTrigger += Chain_OnEndTrigger;
                                         TextBubbleUI.Visible = true;
                                         TextBubbleUI.Add(chain);
                                     }
@@ -995,23 +992,14 @@ namespace Redemption.NPCs.Bosses.Obliterator
                                     {
                                         DialogueChain chain = new();
                                         chain.Add(new(NPC, "SYSTEM OVERLOAD...", Colors.RarityRed, Color.DarkRed, voice, 2, 100, 0, false, modifier: modifier)) // 136
-                                             .Add(new(NPC, "OVERHEATING...[10] OVERHEATING...[10] OVERHEATING...[10]", Colors.RarityRed, Color.DarkRed, voice, 2, 100, 0, false, modifier: modifier)); // 218
+                                             .Add(new(NPC, "[@d][@e]OVERHEATING...[10] OVERHEATING...[10] OVERHEATING...[10]", Colors.RarityRed, Color.DarkRed, voice, 2, 100, 0, false, modifier: modifier, endID: 1)); // 218
+                                        chain.OnSymbolTrigger += Chain_OnSymbolTrigger;
+                                        chain.OnEndTrigger += Chain_OnEndTrigger;
                                         TextBubbleUI.Visible = true;
                                         TextBubbleUI.Add(chain);
                                     }
                                 }
-                                if (AITimer == (RedeBossDowned.downedOmega3 ? 196 : 638))
-                                {
-                                    SoundEngine.PlaySound(SoundID.Item14, NPC.position);
-                                    RedeDraw.SpawnExplosion(NPC.Center, Color.IndianRed, DustID.LifeDrain, tex: ModContent.Request<Texture2D>("Redemption/Empty").Value);
-                                }
-                                if (AITimer == 878 && !RedeBossDowned.downedOmega3)
-                                {
-                                    player.RedemptionScreen().TimedZoom(new Vector2(1.2f, 1.2f), 80, 280);
-                                    HeadFrameY = 2;
-                                }
-
-                                if (AITimer > (RedeBossDowned.downedOmega3 ? 414 : 1238))
+                                if (AITimer > 3000)
                                 {
                                     HeadFrameY = 0;
                                     AITimer = 0;
@@ -1376,20 +1364,23 @@ namespace Redemption.NPCs.Bosses.Obliterator
                                         {
                                             DialogueChain chain = new();
                                             chain.Add(new(NPC, "CRITICAL CONDITION REACHED...[30] SELF DESTRUCTING...", Colors.RarityRed, Color.DarkRed, voice with { Pitch = -0.5f }, 2, 100, 0, false, modifier: modifier)) // 228
-                                                 .Add(new(NPC, "Is it getting hot in here[10] or is it just m-", Colors.RarityRed, Color.DarkRed, voice with { Pitch = 0.3f, PitchVariance = 0.3f }, 3, 3, 0, false, modifier: modifier)); // 124
+                                                 .Add(new(NPC, "Is it getting hot in here[10] or is it just m-[@c]", Colors.RarityRed, Color.DarkRed, voice with { Pitch = 0.3f, PitchVariance = 0.3f }, 3, 3, 0, false, modifier: modifier)); // 124
+                                            chain.OnSymbolTrigger += Chain_OnSymbolTrigger;
                                             TextBubbleUI.Visible = true;
                                             TextBubbleUI.Add(chain);
                                         }
                                         else
                                         {
                                             DialogueChain chain = new();
-                                            chain.Add(new(NPC, "CRITICAL CONDITION REACHED...[30] SELF DESTRUCTING...", Colors.RarityRed, Color.DarkRed, voice, 2, 100, 0, false, modifier: modifier)); // 228
+                                            chain.Add(new(NPC, "CRITICAL CONDITION REACHED...[30] SELF DESTRUCTING...", Colors.RarityRed, Color.DarkRed, voice, 2, 100, 0, false, modifier: modifier, endID: 1)); // 228
+                                            chain.OnSymbolTrigger += Chain_OnSymbolTrigger;
+                                            chain.OnEndTrigger += Chain_OnEndTrigger;
                                             TextBubbleUI.Visible = true;
                                             TextBubbleUI.Add(chain);
                                         }
                                     }
                                 }
-                                if (AITimer > (RedeBossDowned.downedOmega3 ? 678 : 804))
+                                if (AITimer > 3000)
                                 {
                                     NPC.velocity *= 0f;
                                     AITimer = 0;
@@ -1408,6 +1399,40 @@ namespace Redemption.NPCs.Bosses.Obliterator
                         NetMessage.SendData(MessageID.SyncNPC, number: NPC.whoAmI);
                     break;
             }
+        }
+        private void Chain_OnSymbolTrigger(Dialogue dialogue, string signature)
+        {
+            Player player = Main.player[NPC.target];
+            switch (signature)
+            {
+                case "a":
+                    HeadFrameY = 2;
+                    break;
+                case "b":
+                    HeadFrameY = 0;
+                    break;
+                case "c":
+                    AITimer = 3000;
+                    break;
+                case "d":
+                    SoundEngine.PlaySound(SoundID.Item14, NPC.position);
+                    RedeDraw.SpawnExplosion(NPC.Center, Color.IndianRed, DustID.LifeDrain, tex: ModContent.Request<Texture2D>("Redemption/Empty").Value);
+                    break;
+                case "e":
+                    OverheatOverlay = true;
+                    OverheatArmRaise = true;
+                    if (!RedeBossDowned.downedOmega3)
+                    {
+                        player.RedemptionScreen().TimedZoom(new Vector2(1.2f, 1.2f), 80, 280);
+                        HeadFrameY = 2;
+                    }
+                    break;
+            }
+        }
+        private void Chain_OnEndTrigger(Dialogue dialogue, int ID)
+        {
+            AITimer = 3000;
+            OverheatArmRaise = false;
         }
         public override void FindFrame(int frameHeight)
         {

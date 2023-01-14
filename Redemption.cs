@@ -440,7 +440,7 @@ namespace Redemption
         }
         public override void ModifyTransformMatrix(ref SpriteViewMatrix Transform)
         {
-            if (Main.gameMenu)
+            if (Main.gameMenu || RedeConfigClient.Instance.CameraLockDisable)
                 return;
 
             Player player = Main.LocalPlayer;

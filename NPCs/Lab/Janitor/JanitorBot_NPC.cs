@@ -116,6 +116,7 @@ namespace Redemption.NPCs.Lab.Janitor
 
             shop.item[nextSlot++].SetDefaults(ModContent.ItemType<LabPlating>());
             shop.item[nextSlot++].SetDefaults(ModContent.ItemType<LabPlatingWall>());
+            shop.item[nextSlot++].SetDefaults(ModContent.ItemType<HalogenLamp>());
             shop.item[nextSlot++].SetDefaults(ModContent.ItemType<LabPlatform>());
             shop.item[nextSlot++].SetDefaults(ModContent.ItemType<LabRail_L>());
             shop.item[nextSlot++].SetDefaults(ModContent.ItemType<LabRail_Mid>());

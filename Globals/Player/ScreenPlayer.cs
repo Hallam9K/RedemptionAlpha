@@ -29,6 +29,8 @@ namespace Redemption
         public float yeet2;
         public override void PostUpdate()
         {
+            if (RedeConfigClient.Instance.CameraLockDisable)
+                cutscene = false;
             if (cutscene)
             {
                 cutsceneEnd = true;
@@ -61,7 +63,7 @@ namespace Redemption
         }
         public override void UpdateEquips()
         {
-            if (cutscene)
+            if (cutscene && !RedeConfigClient.Instance.CameraLockDisable)
             {
                 for (int p = 0; p < Main.maxNPCs; p++)
                 {
@@ -83,13 +85,13 @@ namespace Redemption
         }
         public override bool CanUseItem(Item item)
         {
-            if (cutscene && item.damage > 0)
+            if (cutscene && item.damage > 0 && !RedeConfigClient.Instance.CameraLockDisable)
                 return false;
             return base.CanUseItem(item);
         }
         public override bool PreKill(double damage, int hitDirection, bool pvp, ref bool playSound, ref bool genGore, ref PlayerDeathReason damageSource)
         {
-            if (cutscene)
+            if (cutscene && !RedeConfigClient.Instance.CameraLockDisable)
             {
                 Player.statLife = 1;
                 return false;
