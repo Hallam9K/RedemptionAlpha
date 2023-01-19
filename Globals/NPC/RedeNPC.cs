@@ -43,8 +43,6 @@ using Redemption.NPCs.Bosses.Neb.Clone;
 using Redemption.Items.Donator.Lordfunnyman;
 using Terraria.GameContent.Bestiary;
 using Terraria.UI;
-using Redemption.Globals.World;
-using Redemption.NPCs.FowlMorning;
 
 namespace Redemption.Globals.NPC
 {
