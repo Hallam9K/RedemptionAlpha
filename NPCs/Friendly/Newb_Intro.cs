@@ -40,17 +40,19 @@ namespace Redemption.NPCs.Friendly
             NPC.aiStyle = -1;
             NPC.noGravity = false;
             NPC.dontTakeDamage = true;
+            bubble = ModContent.Request<Texture2D>("Redemption/UI/TextBubble_Epidotra").Value;
+            voice1 = CustomSounds.Voice3 with { Pitch = -0.8f };
+            voice2 = CustomSounds.Voice3 with { Pitch = -0.1f };
         }
-
+        private Texture2D bubble;
+        private SoundStyle voice1;
+        private SoundStyle voice2;
         public override void AI()
         {
             if (NPC.target < 0 || NPC.target == 255 || Main.player[NPC.target].dead || !Main.player[NPC.target].active)
                 NPC.TargetClosest();
 
             Player player = Main.player[NPC.target];
-            Texture2D bubble = ModContent.Request<Texture2D>("Redemption/UI/TextBubble_Epidotra").Value;
-            SoundStyle voice1 = CustomSounds.Voice3 with { Pitch = -0.8f };
-            SoundStyle voice2 = CustomSounds.Voice3 with { Pitch = -0.1f };
 
             switch (TimerRand)
             {

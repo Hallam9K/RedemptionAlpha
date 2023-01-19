@@ -128,7 +128,7 @@ namespace Redemption.NPCs.Friendly
         {
             var effects = NPC.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
 
-            spriteBatch.Draw(TextureAssets.Npc[NPC.type].Value, NPC.Center - screenPos, NPC.frame, NPC.GetAlpha(drawColor), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
+            spriteBatch.Draw(TextureAssets.Npc[NPC.type].Value, NPC.Center + new Vector2(0, 1) - screenPos, NPC.frame, NPC.GetAlpha(drawColor), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
             return false;
         }
 
@@ -357,6 +357,8 @@ namespace Redemption.NPCs.Friendly
                 shop.item[nextSlot++].SetDefaults(ModContent.ItemType<OphosNotes>());
 
             shop.item[nextSlot++].SetDefaults(ModContent.ItemType<KingChickenPainting>());
+            //if (RedeBossDowned.downedFowlEmperor)
+            //    shop.item[nextSlot++].SetDefaults(ModContent.ItemType<FowlEmperorPainting>());
             if (NPC.downedBoss1)
                 shop.item[nextSlot++].SetDefaults(ModContent.ItemType<PonderingTreesPainting>());
             if (NPC.downedBoss3)

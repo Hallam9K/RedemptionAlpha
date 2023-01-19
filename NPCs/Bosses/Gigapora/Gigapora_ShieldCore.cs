@@ -13,6 +13,8 @@ using Microsoft.Xna.Framework.Graphics;
 using Terraria.GameContent;
 using Redemption.Base;
 using System;
+using Terraria.Audio;
+using Redemption.Dusts;
 
 namespace Redemption.NPCs.Bosses.Gigapora
 {
@@ -26,7 +28,8 @@ namespace Redemption.NPCs.Bosses.Gigapora
             Idle,
             Rapidfire,
             Dualcast,
-            Zap
+            Zap,
+            Death
         }
 
         public ActionState AIState
@@ -83,21 +86,57 @@ namespace Redemption.NPCs.Bosses.Gigapora
             NPC.lifeMax = (int)(NPC.lifeMax * 0.75f * bossLifeScale);
             NPC.damage = (int)(NPC.damage * 0.6f);
         }
+        public override bool CheckDead()
+        {
+            if (AIState is ActionState.Death && godrayFade >= 1f)
+                return true;
+
+            SoundEngine.PlaySound(CustomSounds.OODashReady with { Volume = 1.5f, Pitch = -.3f }, NPC.position);
+            NPC.life = 1;
+            AIState = ActionState.Death;
+            AITimer = 0;
+            TimerRand = 0;
+            NPC.netUpdate = true;
+            return false;
+        }
         public override void OnKill()
         {
-            Item.NewItem(NPC.GetSource_Loot(), NPC.getRect(), ItemID.Heart);
-            NPC seg = Main.npc[(int)NPC.ai[0]];
-            if (seg.active && seg.type == ModContent.NPCType<Gigapora_BodySegment>())
+            if (AIState is ActionState.Death)
             {
-                seg.ai[0] = 2;
-                Main.npc[seg.whoAmI - 1].ai[0] = 2;
-                Main.npc[seg.whoAmI + 1].ai[0] = 2;
+                Item.NewItem(NPC.GetSource_Loot(), NPC.getRect(), ItemID.Heart);
+                NPC seg = Main.npc[(int)NPC.ai[0]];
+                if (seg.active && seg.type == ModContent.NPCType<Gigapora_BodySegment>())
+                {
+                    int steps = (int)NPC.Distance(seg.Center) / 8;
+                    for (int i = 0; i < steps; i++)
+                    {
+                        Dust dust = Dust.NewDustDirect(Vector2.Lerp(NPC.Center, seg.Center, (float)i / steps), 2, 2, ModContent.DustType<GlowDust>(), Scale: 2);
+                        dust.noGravity = true;
+                        Color dustColor = new(Color.OrangeRed.R, Color.OrangeRed.G, Color.OrangeRed.B) { A = 0 };
+                        dust.color = dustColor;
+                        dust.velocity = -seg.DirectionTo(dust.position) * 2;
+                    }
+                    SoundEngine.PlaySound(CustomSounds.MissileExplosion, seg.position);
+                    RedeDraw.SpawnExplosion(seg.Center, Color.OrangeRed, DustID.RedTorch);
+
+                    seg.ai[0] = 2;
+                    Main.npc[seg.whoAmI - 1].ai[0] = 2;
+                    Main.npc[seg.whoAmI + 1].ai[0] = 2;
+                    if (Main.npc[seg.whoAmI].ai[2] == 6)
+                        Main.npc[seg.whoAmI + 2].ai[0] = 2;
+                    if (Main.npc[seg.whoAmI].ai[2] == 1)
+                    {
+                        int drill = NPC.FindFirstNPC(ModContent.NPCType<Gigapora>());
+                        if (drill != -1 && Main.npc[drill].active)
+                            Main.npc[drill].ai[3] = 1;
+                    }
+                }
             }
         }
 
         public override void HitEffect(int hitDirection, double damage)
         {
-            if (NPC.life <= 0)
+            if (NPC.life <= 0 && AIState is ActionState.Death && godrayFade >= 1f)
             {
                 if (Main.netMode == NetmodeID.Server)
                     return;
@@ -119,6 +158,8 @@ namespace Redemption.NPCs.Bosses.Gigapora
         public override bool CanHitPlayer(Player target, ref int cooldownSlot) => false;
         public override bool? CanHitNPC(NPC target) => false;
         public override bool CheckActive() => false;
+        private float godrayFade;
+        private float godraySize;
         public override void AI()
         {
             Player player = Main.player[NPC.target];
@@ -141,8 +182,10 @@ namespace Redemption.NPCs.Bosses.Gigapora
                     }
                     break;
                 case ActionState.Idle:
-                    if (NPC.DistanceSQ(player.Center) >= 300 * 300)
-                        NPC.Move(Vector2.Zero, NPC.DistanceSQ(player.Center) > 700 * 700 ? 18 : 10, 60, true);
+                    if (NPC.DistanceSQ(player.Center) < 500 * 500)
+                        NPC.Move(Vector2.Zero, NPC.DistanceSQ(player.Center) < 300 * 300 ? 18 : 10, 60, true, true);
+                    else if (NPC.DistanceSQ(player.Center) >= 600 * 600)
+                        NPC.Move(Vector2.Zero, NPC.DistanceSQ(player.Center) > 1100 * 1100 ? 18 : 10, 60, true);
                     else
                         NPC.velocity *= 0.98f;
 
@@ -188,12 +231,28 @@ namespace Redemption.NPCs.Bosses.Gigapora
                         NPC.netUpdate = true;
                     }
                     break;
+                case ActionState.Death:
+                    NPC.velocity *= .8f;
+                    NPC.velocity = new Vector2(Main.rand.NextFloat(-2f, 2f), Main.rand.NextFloat(-2f, 2f));
+                    godrayFade += 0.01f;
+                    godraySize += 0.01f;
+                    if (godrayFade >= 1f)
+                    {
+                        SoundEngine.PlaySound(CustomSounds.MissileExplosion with { Pitch = .1f }, NPC.position);
+                        RedeDraw.SpawnExplosion(NPC.Center, Color.OrangeRed, DustID.RedTorch);
+                        NPC.dontTakeDamage = false;
+                        player.ApplyDamageToNPC(NPC, 9999, 0, 0, false);
+                        if (Main.netMode == NetmodeID.Server && NPC.whoAmI < Main.maxNPCs)
+                            NetMessage.SendData(MessageID.SyncNPC, number: NPC.whoAmI);
+                    }
+                    break;
             }
             OverlapCheck();
             if (NPC.ai[3] > 0)
             {
                 NPC.ai[3]++;
-                NPC.velocity *= 0.9f;
+                if (NPC.DistanceSQ(player.Center) >= 500 * 500)
+                    NPC.velocity *= 0.9f;
                 if (NPC.ai[3] >= 180)
                     NPC.ai[3] = 0;
             }
@@ -280,6 +339,15 @@ namespace Redemption.NPCs.Bosses.Gigapora
             spriteBatch.Draw(texture, NPC.Center - screenPos, NPC.frame, drawColor, NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
             spriteBatch.Draw(glowMask, NPC.Center - screenPos, NPC.frame, RedeColor.RedPulse, NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
 
+            if (godrayFade > 0)
+            {
+                float fluctuate = (float)Math.Abs(Math.Sin(Main.GlobalTimeWrappedHourly * 4.5f)) * 0.1f;
+                float modifiedScale = NPC.scale * (1 + fluctuate);
+
+                Color godrayColor = Color.Lerp(new Color(255, 255, 255), Color.OrangeRed * NPC.Opacity, 0.5f);
+                godrayColor.A = 0;
+                RedeDraw.DrawGodrays(Main.spriteBatch, NPC.Center - Main.screenPosition, godrayColor * godrayFade, 220 * modifiedScale * godraySize, 55 * modifiedScale * godraySize, 16);
+            }
             return false;
         }
 

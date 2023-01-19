@@ -6,6 +6,7 @@ using Redemption.Items.Armor.Vanity;
 using Redemption.Items.Materials.PreHM;
 using Redemption.Items.Placeable.Banners;
 using Redemption.NPCs.Friendly;
+using System.IO;
 using Terraria;
 using Terraria.GameContent;
 using Terraria.GameContent.ItemDropRules;
@@ -75,7 +76,18 @@ namespace Redemption.NPCs.PreHM
             Dust.NewDust(NPC.position + NPC.velocity, NPC.width, NPC.height, DustID.Bone,
                 NPC.velocity.X * 0.5f, NPC.velocity.Y * 0.5f);
         }
-
+        public override void SendExtraAI(BinaryWriter writer)
+        {
+            base.SendExtraAI(writer);
+            if (Main.netMode == NetmodeID.Server || Main.dedServ)
+                writer.Write(DanceType);
+        }
+        public override void ReceiveExtraAI(BinaryReader reader)
+        {
+            base.ReceiveExtraAI(reader);
+            if (Main.netMode == NetmodeID.MultiplayerClient)
+                DanceType = reader.ReadInt32();
+        }
         public override void AI()
         {
             Player player = Main.LocalPlayer;
@@ -89,6 +101,7 @@ namespace Redemption.NPCs.PreHM
                     DanceType = Main.rand.Next(6);
 
                     AIState = ActionState.Dancing;
+                    NPC.netUpdate = true;
                     break;
                 case ActionState.Dancing:
                     if (NPC.life < NPC.lifeMax)

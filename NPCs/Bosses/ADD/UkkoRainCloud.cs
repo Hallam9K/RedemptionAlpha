@@ -116,7 +116,7 @@ namespace Redemption.NPCs.Bosses.ADD
                         if (Main.rand.NextBool(3))
                         {
                             SoundEngine.PlaySound(CustomSounds.Zap2 with { Volume = .2f, PitchVariance = .1f }, Projectile.position);
-                            Projectile.NewProjectile(Projectile.GetSource_FromAI(), new Vector2(Projectile.Center.X + Main.rand.Next(-150, 151), Projectile.Center.Y + Main.rand.Next(50, 55)), new Vector2(0f, 2f), ModContent.ProjectileType<UkkoCloud_Thunder>(), RedeHelper.HostileProjDamage(85), 0, Projectile.owner, 0, 0);
+                            Projectile.NewProjectile(Projectile.GetSource_FromAI(), new Vector2(Projectile.Center.X + Main.rand.Next(-150, 151), Projectile.Center.Y + Main.rand.Next(50, 55)), new Vector2(0f, 2f), ModContent.ProjectileType<UkkoCloud_Thunder>(), NPCHelper.HostileProjDamage(85), 0, Projectile.owner, 0, 0);
                         }
                         if (++Projectile.localAI[1] >= 50)
                         {

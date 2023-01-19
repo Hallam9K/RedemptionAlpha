@@ -18,6 +18,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ModLoader.Utilities;
 using Redemption.BaseExtension;
+using System.IO;
 
 namespace Redemption.NPCs.PreHM
 {
@@ -117,6 +118,18 @@ namespace Redemption.NPCs.PreHM
             damage *= 2;
             return true;
         }
+        public override void SendExtraAI(BinaryWriter writer)
+        {
+            base.SendExtraAI(writer);
+            if (Main.netMode == NetmodeID.Server || Main.dedServ)
+                writer.WriteVector2(moveTo);
+        }
+        public override void ReceiveExtraAI(BinaryReader reader)
+        {
+            base.ReceiveExtraAI(reader);
+            if (Main.netMode == NetmodeID.MultiplayerClient)
+                moveTo = reader.ReadVector2();
+        }
         public override bool? CanFallThroughPlatforms() => NPC.Redemption().fallDownPlatform;
         public NPC npcTarget;
         public Vector2 moveTo;
@@ -124,6 +137,7 @@ namespace Redemption.NPCs.PreHM
         public override void OnSpawn(IEntitySource source)
         {
             TimerRand = Main.rand.Next(120, 280);
+            NPC.netUpdate = true;
         }
         public override void AI()
         {
@@ -144,6 +158,7 @@ namespace Redemption.NPCs.PreHM
                         AITimer = 0;
                         TimerRand = Main.rand.Next(120, 260);
                         AIState = ActionState.Wander;
+                        NPC.netUpdate = true;
                     }
 
                     if (NPC.Sight(player, 800, true, true))
@@ -153,12 +168,14 @@ namespace Redemption.NPCs.PreHM
                         moveTo = NPC.FindGround(15);
                         AITimer = 0;
                         AIState = ActionState.Threatened;
+                        NPC.netUpdate = true;
                     }
                     if (NPC.lavaWet && Main.rand.NextBool(250) && NPC.velocity.Y == 0)
                     {
                         AITimer = 0;
                         NPC.frame.Y = 0;
                         AIState = ActionState.PillarJump;
+                        NPC.netUpdate = true;
                     }
                     break;
 
@@ -170,6 +187,7 @@ namespace Redemption.NPCs.PreHM
                         moveTo = NPC.FindGround(15);
                         AITimer = 0;
                         AIState = ActionState.Threatened;
+                        NPC.netUpdate = true;
                     }
 
                     AITimer++;
@@ -178,10 +196,11 @@ namespace Redemption.NPCs.PreHM
                         AITimer = 0;
                         TimerRand = Main.rand.Next(120, 280);
                         AIState = ActionState.Idle;
+                        NPC.netUpdate = true;
                     }
 
                     NPC.PlatformFallCheck(ref NPC.Redemption().fallDownPlatform, 30, moveTo.Y * 16);
-                    RedeHelper.HorizontallyMove(NPC, moveTo * 16, 0.1f, 1, 10, 2, NPC.Center.Y > moveTo.Y * 16);
+                    NPCHelper.HorizontallyMove(NPC, moveTo * 16, 0.1f, 1, 10, 2, NPC.Center.Y > moveTo.Y * 16);
                     break;
 
                 case ActionState.Threatened:
@@ -197,7 +216,7 @@ namespace Redemption.NPCs.PreHM
                         runCooldown--;
 
                     NPC.PlatformFallCheck(ref NPC.Redemption().fallDownPlatform, 30);
-                    RedeHelper.HorizontallyMove(NPC, globalNPC.attacker.Center, 0.1f, 3, 10, 1, NPC.Center.Y > globalNPC.attacker.Center.Y);
+                    NPCHelper.HorizontallyMove(NPC, globalNPC.attacker.Center, 0.1f, 3, 10, 1, NPC.Center.Y > globalNPC.attacker.Center.Y);
 
                     NPC.DamageHostileAttackers(0, 7);
 
@@ -212,6 +231,7 @@ namespace Redemption.NPCs.PreHM
                             AIState = ActionState.PillarAttack;
                         else
                             AIState = ActionState.PillarJump;
+                        NPC.netUpdate = true;
                     }
                     break;
 
@@ -252,7 +272,6 @@ namespace Redemption.NPCs.PreHM
                             }
                             if (NPC.frame.Y == 7 * frameHeight)
                             {
-                                Player player = Main.player[NPC.target];
                                 SoundEngine.PlaySound(SoundID.Item14, NPC.position);
                                 Main.LocalPlayer.RedemptionScreen().ScreenShakeOrigin = NPC.Center;
                                 Main.LocalPlayer.RedemptionScreen().ScreenShakeIntensity += 6;

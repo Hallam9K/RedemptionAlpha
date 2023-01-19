@@ -28,8 +28,8 @@ namespace Redemption.Items.Weapons.PostML.Ranged
             Item.damage = 488;
             Item.noMelee = true;
             Item.DamageType = DamageClass.Ranged;
-            Item.width = 84;
-            Item.height = 32;
+            Item.width = 92;
+            Item.height = 40;
             Item.useTime = 15;
             Item.useAnimation = 45;
             Item.reuseDelay = 20;
@@ -57,7 +57,7 @@ namespace Redemption.Items.Weapons.PostML.Ranged
         }
         public override Vector2? HoldoutOffset()
         {
-            return new Vector2(-4, 0);
+            return new Vector2(-8, 0);
         }
         public override void AddRecipes()
         {

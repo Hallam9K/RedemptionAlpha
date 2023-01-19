@@ -16,6 +16,7 @@ using Redemption.Items.Weapons.HM.Melee;
 using Terraria.Audio;
 using System;
 using Redemption.UI;
+using Redemption.NPCs.PreHM;
 
 namespace Redemption.NPCs.Bosses.Cleaver
 {
@@ -92,8 +93,10 @@ namespace Redemption.NPCs.Bosses.Cleaver
             NPC.noTileCollide = true;
             NPC.chaseable = false;
             voice = CustomSounds.Voice6 with { Pitch = 0.4f };
+            bubble = ModContent.Request<Texture2D>("Redemption/UI/TextBubble_Omega").Value;
         }
         SoundStyle voice;
+        Texture2D bubble;
         public override void ModifyHitByItem(Player player, Item item, ref int damage, ref float knockback, ref bool crit)
         {
             if (item.DamageType == DamageClass.Melee)
@@ -237,8 +240,8 @@ namespace Redemption.NPCs.Bosses.Cleaver
                         if (AITimer == 60)
                         {
                             DialogueChain chain = new();
-                            chain.Add(new(NPC, "I came here to kick gum", Colors.RarityRed, Color.DarkRed, voice, 2, 100, 0, false))
-                                 .Add(new(NPC, "and chew ass...", Colors.RarityRed, Color.DarkRed, voice, 2, 100, 30, true, endID: 1));
+                            chain.Add(new(NPC, "I came here to kick gum", Colors.RarityRed, Color.DarkRed, voice, 2, 100, 0, false, null, bubble))
+                                 .Add(new(NPC, "and chew ass...", Colors.RarityRed, Color.DarkRed, voice, 2, 100, 30, true, null, bubble, endID: 1));
                             chain.OnEndTrigger += Chain_OnEndTrigger;
                             TextBubbleUI.Visible = true;
                             TextBubbleUI.Add(chain);
@@ -275,7 +278,7 @@ namespace Redemption.NPCs.Bosses.Cleaver
                         if (Funny && AITimer == 1 && !Main.dedServ)
                         {
                             DialogueChain chain = new();
-                            chain.Add(new(NPC, "...And I'm all out of ass.", Colors.RarityRed, Color.DarkRed, voice, 2, 100, 30, true));
+                            chain.Add(new(NPC, "...And I'm all out of ass.", Colors.RarityRed, Color.DarkRed, voice, 2, 100, 30, true, null, bubble));
                             TextBubbleUI.Visible = true;
                             TextBubbleUI.Add(chain);
                         }
@@ -660,7 +663,7 @@ namespace Redemption.NPCs.Bosses.Cleaver
                     if (AITimer == 180)
                     {
                         DialogueChain chain = new();
-                        chain.Add(new(NPC, "...Nah.", Colors.RarityRed, Color.DarkRed, voice, 1, 100, 0, false));
+                        chain.Add(new(NPC, "...Nah.", Colors.RarityRed, Color.DarkRed, voice, 1, 100, 0, false, null, bubble));
                         TextBubbleUI.Visible = true;
                         TextBubbleUI.Add(chain);
                     }

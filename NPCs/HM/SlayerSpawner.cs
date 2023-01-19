@@ -9,6 +9,7 @@ using Terraria.Audio;
 using ParticleLibrary;
 using Redemption.Particles;
 using Redemption.NPCs.Bosses.KSIII;
+using System.IO;
 
 namespace Redemption.NPCs.HM
 {
@@ -31,17 +32,29 @@ namespace Redemption.NPCs.HM
             NPC.dontTakeDamage = true;
             NPC.chaseable = false;
         }
+        public override void SendExtraAI(BinaryWriter writer)
+        {
+            base.SendExtraAI(writer);
+            if (Main.netMode == NetmodeID.Server || Main.dedServ)
+                writer.WriteVector2(Pos);
+        }
+        public override void ReceiveExtraAI(BinaryReader reader)
+        {
+            base.ReceiveExtraAI(reader);
+            if (Main.netMode == NetmodeID.MultiplayerClient)
+                Pos = reader.ReadVector2();
+        }
+        private Vector2 Pos;
         public override bool PreAI()
         {
             Player player = Main.player[RedeHelper.GetNearestAlivePlayer(NPC)];
-            Vector2 pos = Vector2.Zero;
             switch (player.Redemption().slayerStarRating)
             {
                 case 1:
                     if (NPC.ai[1]++ == 300)
                     {
                         for (int i = 0; i < 3; i++)
-                            SpawnAndroid(pos);
+                            SpawnAndroid(ref Pos);
                         NPC.active = false;
                     }
                     break;
@@ -49,8 +62,8 @@ namespace Redemption.NPCs.HM
                     if (NPC.ai[1]++ == 300)
                     {
                         for (int i = 0; i < Main.rand.Next(2, 4); i++)
-                            SpawnAndroid(pos);
-                        SpawnPrototypeSilver(pos);
+                            SpawnAndroid(ref Pos);
+                        SpawnPrototypeSilver(ref Pos);
                         NPC.active = false;
                     }
                     break;
@@ -58,16 +71,16 @@ namespace Redemption.NPCs.HM
                     if (NPC.ai[1]++ == 300)
                     {
                         for (int i = 0; i < 2; i++)
-                            SpawnAndroid(pos);
+                            SpawnAndroid(ref Pos);
                         for (int i = 0; i < 2; i++)
-                            SpawnPrototypeSilver(pos);
+                            SpawnPrototypeSilver(ref Pos);
                         NPC.active = false;
                     }
                     break;
                 case 4:
                     if (NPC.ai[1]++ == 300)
                     {
-                        SpawnSpacePaladin(pos);
+                        SpawnSpacePaladin(ref Pos);
                         NPC.active = false;
                     }
                     break;
@@ -89,10 +102,11 @@ namespace Redemption.NPCs.HM
             }
             return true;
         }
-        private void SpawnAndroid(Vector2 pos)
+        private void SpawnAndroid(ref Vector2 pos)
         {
-            pos = RedeHelper.FindGround(NPC, 18);
+            pos = NPCHelper.FindGround(NPC, 18);
             pos *= 16;
+            NPC.netUpdate = true;
             SoundEngine.PlaySound(SoundID.Item74 with { Pitch = 0.1f }, pos);
             DustHelper.DrawDustImage(pos - new Vector2(0, 22), DustID.Frost, 0.1f, "Redemption/Effects/DustImages/WarpShape", 2, true, 0);
             for (int k = 0; k < 20; k++)
@@ -109,10 +123,11 @@ namespace Redemption.NPCs.HM
             }
             RedeHelper.SpawnNPC(new EntitySource_SpawnNPC(), (int)pos.X, (int)pos.Y, ModContent.NPCType<Android>());
         }
-        private void SpawnPrototypeSilver(Vector2 pos)
+        private void SpawnPrototypeSilver(ref Vector2 pos)
         {
-            pos = RedeHelper.FindGround(NPC, 18);
+            pos = NPCHelper.FindGround(NPC, 18);
             pos *= 16;
+            NPC.netUpdate = true;
             SoundEngine.PlaySound(SoundID.Item74 with { Pitch = 0.1f }, pos);
             DustHelper.DrawDustImage(pos - new Vector2(0, 30), DustID.Frost, 0.12f, "Redemption/Effects/DustImages/WarpShape", 2, true, 0);
             for (int k = 0; k < 20; k++)
@@ -129,10 +144,11 @@ namespace Redemption.NPCs.HM
             }
             RedeHelper.SpawnNPC(new EntitySource_SpawnNPC(), (int)pos.X, (int)pos.Y, ModContent.NPCType<PrototypeSilver>());
         }
-        private void SpawnSpacePaladin(Vector2 pos)
+        private void SpawnSpacePaladin(ref Vector2 pos)
         {
-            pos = RedeHelper.FindGround(NPC, 18);
+            pos = NPCHelper.FindGround(NPC, 18);
             pos *= 16;
+            NPC.netUpdate = true;
             SoundEngine.PlaySound(SoundID.Item74 with { Pitch = 0.1f }, pos);
             DustHelper.DrawDustImage(pos - new Vector2(0, 64), DustID.Frost, 0.2f, "Redemption/Effects/DustImages/WarpShape", 2, true, 0);
             for (int k = 0; k < 30; k++)

@@ -17,6 +17,7 @@ using Redemption.Items.Materials.HM;
 using Redemption.Items.Usable.Potions;
 using Redemption.Items.Armor.Vanity;
 using Redemption.Items.Armor.Vanity.Intruder;
+using System.IO;
 
 namespace Redemption.NPCs.Wasteland
 {
@@ -76,7 +77,18 @@ namespace Redemption.NPCs.Wasteland
             Banner = NPC.type;
             BannerItem = ModContent.ItemType<SickenedBunnyBanner>();
         }
-
+        public override void SendExtraAI(BinaryWriter writer)
+        {
+            base.SendExtraAI(writer);
+            if (Main.netMode == NetmodeID.Server || Main.dedServ)
+                writer.WriteVector2(moveTo);
+        }
+        public override void ReceiveExtraAI(BinaryReader reader)
+        {
+            base.ReceiveExtraAI(reader);
+            if (Main.netMode == NetmodeID.MultiplayerClient)
+                moveTo = reader.ReadVector2();
+        }
         private Vector2 moveTo;
         private int runCooldown;
         public int hopCooldown;
@@ -98,12 +110,14 @@ namespace Redemption.NPCs.Wasteland
                         globalNPC.attacker = player;
                         moveTo = NPC.FindGround(20);
                         AITimer = 1;
+                        NPC.netUpdate = true;
                     }
                     if (gotNPC != -1 && NPC.Sight(Main.npc[gotNPC], 80, false, true))
                     {
                         globalNPC.attacker = Main.npc[gotNPC];
                         moveTo = NPC.FindGround(20);
                         AITimer = 1;
+                        NPC.netUpdate = true;
                     }
                     break;
 
@@ -117,11 +131,13 @@ namespace Redemption.NPCs.Wasteland
                         AITimer = 0;
                         TimerRand = Main.rand.Next(120, 260);
                         AIState = ActionState.Wander;
+                        NPC.netUpdate = true;
                     }
                     if (Main.rand.NextBool(500))
                     {
                         AITimer = 0;
                         AIState = ActionState.FakeDead;
+                        NPC.netUpdate = true;
                     }
                     SightCheck();
                     break;
@@ -135,10 +151,11 @@ namespace Redemption.NPCs.Wasteland
                         AITimer = 0;
                         TimerRand = Main.rand.Next(80, 120);
                         AIState = ActionState.Idle;
+                        NPC.netUpdate = true;
                     }
 
                     NPC.PlatformFallCheck(ref NPC.Redemption().fallDownPlatform, 20, moveTo.Y * 16);
-                    RedeHelper.HorizontallyMove(NPC, moveTo * 16, 0.4f, 1.4f, 12, 12, NPC.Center.Y > moveTo.Y * 16);
+                    NPCHelper.HorizontallyMove(NPC, moveTo * 16, 0.4f, 1.4f, 12, 12, NPC.Center.Y > moveTo.Y * 16);
                     break;
 
                 case ActionState.Alert:
@@ -162,7 +179,7 @@ namespace Redemption.NPCs.Wasteland
                     NPC.DamageHostileAttackers(0, 3);
 
                     NPC.PlatformFallCheck(ref NPC.Redemption().fallDownPlatform, 20);
-                    RedeHelper.HorizontallyMove(NPC, globalNPC.attacker.Center, 0.15f, 3f, 12, 12, NPC.Center.Y > globalNPC.attacker.Center.Y);
+                    NPCHelper.HorizontallyMove(NPC, globalNPC.attacker.Center, 0.15f, 3f, 12, 12, NPC.Center.Y > globalNPC.attacker.Center.Y);
                     break;
             }
         }
@@ -255,6 +272,7 @@ namespace Redemption.NPCs.Wasteland
                 moveTo = NPC.FindGround(20);
                 AITimer = 0;
                 AIState = ActionState.Alert;
+                NPC.netUpdate = true;
             }
             if (gotNPC != -1 && NPC.Sight(Main.npc[gotNPC], 800, true, true))
             {
@@ -262,6 +280,7 @@ namespace Redemption.NPCs.Wasteland
                 moveTo = NPC.FindGround(20);
                 AITimer = 0;
                 AIState = ActionState.Alert;
+                NPC.netUpdate = true;
             }
         }
 

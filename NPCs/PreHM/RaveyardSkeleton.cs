@@ -6,6 +6,7 @@ using Redemption.Items.Materials.PreHM;
 using Redemption.Items.Placeable.Banners;
 using Redemption.Items.Usable;
 using Redemption.NPCs.Friendly;
+using System.IO;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
@@ -87,6 +88,24 @@ namespace Redemption.NPCs.PreHM
                 NPC.alpha = 0;
             }
         }
+        public override void SendExtraAI(BinaryWriter writer)
+        {
+            base.SendExtraAI(writer);
+            if (Main.netMode == NetmodeID.Server || Main.dedServ)
+            {
+                writer.Write(DanceType);
+                writer.Write(DanceSpeed);
+            }
+        }
+        public override void ReceiveExtraAI(BinaryReader reader)
+        {
+            base.ReceiveExtraAI(reader);
+            if (Main.netMode == NetmodeID.MultiplayerClient)
+            {
+                DanceType = reader.ReadInt32();
+                DanceSpeed = reader.ReadInt32();
+            }
+        }
         public override void OnSpawn(IEntitySource source)
         {
             if (Main.rand.NextBool(4))
@@ -96,6 +115,7 @@ namespace Redemption.NPCs.PreHM
             DanceSpeed = Main.rand.Next(4, 11);
 
             AIState = TimerRand == 0 ? ActionState.Trumpet : ActionState.Dancing;
+            NPC.netUpdate = true;
         }
         public override void AI()
         {
@@ -120,6 +140,7 @@ namespace Redemption.NPCs.PreHM
                         (Main.npc[NPC.whoAmI].ModNPC as EpidotrianSkeleton).HasEyes = HasEyes;
                         TimerRand = Main.rand.Next(80, 280);
                         NPC.alpha = 0;
+                        NPC.netUpdate = true;
                     }
                     break;
             }

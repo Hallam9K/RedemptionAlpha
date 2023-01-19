@@ -27,6 +27,7 @@ namespace Redemption.Items.Usable.Potions
         {
             Item.DefaultToFood(24, 40, ModContent.BuffType<WellFed4>(), 10000, true);
             Item.value = 120;
+            Item.stack = 9999;
             Item.rare = ItemRarityID.Cyan;
         }
     }

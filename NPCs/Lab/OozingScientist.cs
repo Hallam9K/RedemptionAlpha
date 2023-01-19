@@ -16,6 +16,7 @@ using Redemption.BaseExtension;
 using Redemption.Items.Donator.Sneaklone;
 using Redemption.Items.Usable.Potions;
 using Redemption.Items.Usable;
+using System.IO;
 
 namespace Redemption.NPCs.Lab
 {
@@ -74,12 +75,24 @@ namespace Redemption.NPCs.Lab
             Banner = NPC.type;
             BannerItem = ModContent.ItemType<OozingScientistBanner>();
         }
-
+        public override void SendExtraAI(BinaryWriter writer)
+        {
+            base.SendExtraAI(writer);
+            if (Main.netMode == NetmodeID.Server || Main.dedServ)
+                writer.WriteVector2(moveTo);
+        }
+        public override void ReceiveExtraAI(BinaryReader reader)
+        {
+            base.ReceiveExtraAI(reader);
+            if (Main.netMode == NetmodeID.MultiplayerClient)
+                moveTo = reader.ReadVector2();
+        }
         private Vector2 moveTo;
         private int runCooldown;
         public override void OnSpawn(IEntitySource source)
         {
             TimerRand = Main.rand.Next(80, 280);
+            NPC.netUpdate = true;
         }
         public override void AI()
         {
@@ -105,6 +118,7 @@ namespace Redemption.NPCs.Lab
                         AITimer = 0;
                         TimerRand = Main.rand.Next(120, 260);
                         AIState = ActionState.Wander;
+                        NPC.netUpdate = true;
                     }
 
                     SightCheck();
@@ -119,10 +133,11 @@ namespace Redemption.NPCs.Lab
                         AITimer = 0;
                         TimerRand = Main.rand.Next(80, 280);
                         AIState = ActionState.Idle;
+                        NPC.netUpdate = true;
                     }
 
                     NPC.PlatformFallCheck(ref NPC.Redemption().fallDownPlatform, 20, moveTo.Y * 16);
-                    RedeHelper.HorizontallyMove(NPC, moveTo * 16, 0.4f, 1, 12, 8, NPC.Center.Y > moveTo.Y * 16);
+                    NPCHelper.HorizontallyMove(NPC, moveTo * 16, 0.4f, 1, 12, 8, NPC.Center.Y > moveTo.Y * 16);
                     break;
 
                 case ActionState.Alert:
@@ -140,7 +155,7 @@ namespace Redemption.NPCs.Lab
                     NPC.DamageHostileAttackers(0, 7);
 
                     NPC.PlatformFallCheck(ref NPC.Redemption().fallDownPlatform, 20);
-                    RedeHelper.HorizontallyMove(NPC, globalNPC.attacker.Center, 0.1f, 8f * (NPC.RedemptionNPCBuff().rallied ? 1.2f : 1f), 18, 8, NPC.Center.Y > globalNPC.attacker.Center.Y);
+                    NPCHelper.HorizontallyMove(NPC, globalNPC.attacker.Center, 0.1f, 8f * (NPC.RedemptionNPCBuff().rallied ? 1.2f : 1f), 18, 8, NPC.Center.Y > globalNPC.attacker.Center.Y);
 
                     break;
             }
@@ -218,6 +233,7 @@ namespace Redemption.NPCs.Lab
                 moveTo = NPC.FindGround(15);
                 AITimer = 0;
                 AIState = ActionState.Alert;
+                NPC.netUpdate = true;
             }
             if (gotNPC != -1 && NPC.Sight(Main.npc[gotNPC], 600, true, true))
             {
@@ -226,6 +242,7 @@ namespace Redemption.NPCs.Lab
                 moveTo = NPC.FindGround(15);
                 AITimer = 0;
                 AIState = ActionState.Alert;
+                NPC.netUpdate = true;
             }
         }
 

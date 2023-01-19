@@ -86,7 +86,7 @@ namespace Redemption.Items.Weapons.HM.Melee
 
                         if (Projectile.ai[0] >= 126 * SwingSpeed)
                         {
-                            player.velocity.Y += 1;
+                            player.velocity.Y += 2;
                             Point tileBelow = new Vector2(Projectile.Center.X, Projectile.Bottom.Y).ToTileCoordinates();
                             Point tileBelow2 = new Vector2(player.Center.X, player.Bottom.Y).ToTileCoordinates();
                             Tile tile = Framing.GetTileSafely(tileBelow.X, tileBelow.Y);

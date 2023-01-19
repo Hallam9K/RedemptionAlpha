@@ -43,6 +43,8 @@ using Redemption.NPCs.Bosses.Neb.Clone;
 using Redemption.Items.Donator.Lordfunnyman;
 using Terraria.GameContent.Bestiary;
 using Terraria.UI;
+using Redemption.Globals.World;
+using Redemption.NPCs.FowlMorning;
 
 namespace Redemption.Globals.NPC
 {
@@ -667,10 +669,13 @@ namespace Redemption.Globals.NPC
         }
         public override void EditSpawnRate(Terraria.Player player, ref int spawnRate, ref int maxSpawns)
         {
+            if (maxSpawns <= 0)
+                return;
             if (RedeWorld.blobbleSwarm)
             {
                 spawnRate = 10;
                 maxSpawns = 20;
+                return;
             }
             if (RedeWorld.SkeletonInvasion)
             {
@@ -690,10 +695,16 @@ namespace Redemption.Globals.NPC
         }
         public override void EditSpawnPool(IDictionary<int, float> pool, NPCSpawnInfo spawnInfo)
         {
+            if (spawnInfo.Player.RedemptionScreen().cutscene && !RedeConfigClient.Instance.CameraLockDisable)
+            {
+                pool.Clear();
+                return;
+            }
             if (RedeWorld.blobbleSwarm)
             {
                 pool.Clear();
                 pool.Add(ModContent.NPCType<Blobble>(), 10);
+                return;
             }
 
             if (RedeWorld.SkeletonInvasion && spawnInfo.Player.ZoneOverworldHeight && !spawnInfo.Player.ZoneTowerNebula && !spawnInfo.Player.ZoneTowerSolar && !spawnInfo.Player.ZoneTowerStardust && !spawnInfo.Player.ZoneTowerVortex)
@@ -776,8 +787,6 @@ namespace Redemption.Globals.NPC
                     pool.Add(NPCID.HellArmoredBonesSword, 0.2f);
                 }
             }
-            if (spawnInfo.Player.RedemptionScreen().cutscene && !RedeConfigClient.Instance.CameraLockDisable)
-                pool.Clear();
         }
     }
 }

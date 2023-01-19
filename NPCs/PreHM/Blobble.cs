@@ -15,6 +15,7 @@ using Redemption.Buffs.Debuffs;
 using Redemption.Buffs.NPCBuffs;
 using Redemption.Items.Usable;
 using Redemption.Globals.NPC;
+using System.IO;
 
 namespace Redemption.NPCs.PreHM
 {
@@ -99,7 +100,18 @@ namespace Redemption.NPCs.PreHM
             }
             Dust.NewDust(NPC.position + NPC.velocity, NPC.width, NPC.height, DustID.t_Slime, NPC.velocity.X * 0.5f, NPC.velocity.Y * 0.5f, 0, new Color(178, 203, 177), 2);
         }
-
+        public override void SendExtraAI(BinaryWriter writer)
+        {
+            base.SendExtraAI(writer);
+            if (Main.netMode == NetmodeID.Server || Main.dedServ)
+                writer.Write(Xvel);
+        }
+        public override void ReceiveExtraAI(BinaryReader reader)
+        {
+            base.ReceiveExtraAI(reader);
+            if (Main.netMode == NetmodeID.MultiplayerClient)
+                Xvel = reader.ReadInt32();
+        }
         public int Xvel;
         public override void OnSpawn(IEntitySource source)
         {
@@ -108,6 +120,7 @@ namespace Redemption.NPCs.PreHM
                 NPC.GivenName = "Serbble";
 
             TimerRand = Main.rand.Next(30, 120);
+            NPC.netUpdate = true;
         }
         public override void AI()
         {
@@ -130,6 +143,7 @@ namespace Redemption.NPCs.PreHM
                         AITimer = 0;
                         TimerRand = Main.rand.Next(30, 120);
                         AIState = ActionState.Bounce;
+                        NPC.netUpdate = true;
                     }
                     break;
 

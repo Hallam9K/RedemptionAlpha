@@ -22,6 +22,7 @@ using Redemption.Items.Weapons.HM.Ranged;
 using Redemption.Items.Armor.Vanity;
 using Redemption.Items.Armor.Vanity.Intruder;
 using Redemption.Projectiles.Hostile;
+using System.IO;
 
 namespace Redemption.NPCs.Wasteland
 {
@@ -44,7 +45,6 @@ namespace Redemption.NPCs.Wasteland
         public ref float AITimer => ref NPC.ai[1];
 
         public ref float TimerRand => ref NPC.ai[2];
-        public ref float Variant => ref NPC.ai[3];
         public override void SetStaticDefaults()
         {
             Main.npcFrameCount[NPC.type] = 10;
@@ -82,13 +82,24 @@ namespace Redemption.NPCs.Wasteland
             Banner = NPC.type;
             BannerItem = ModContent.ItemType<BloatedGhoulBanner>();
         }
-
+        public override void SendExtraAI(BinaryWriter writer)
+        {
+            base.SendExtraAI(writer);
+            if (Main.netMode == NetmodeID.Server || Main.dedServ)
+                writer.WriteVector2(moveTo);
+        }
+        public override void ReceiveExtraAI(BinaryReader reader)
+        {
+            base.ReceiveExtraAI(reader);
+            if (Main.netMode == NetmodeID.MultiplayerClient)
+                moveTo = reader.ReadVector2();
+        }
         private Vector2 moveTo;
         private int runCooldown;
         public override void OnSpawn(IEntitySource source)
         {
-            Variant = Main.rand.Next(2);
             TimerRand = Main.rand.Next(80, 120);
+            NPC.netUpdate = true;
         }
         public override void AI()
         {
@@ -112,6 +123,7 @@ namespace Redemption.NPCs.Wasteland
                         AITimer = 0;
                         TimerRand = Main.rand.Next(120, 260);
                         AIState = ActionState.Wander;
+                        NPC.netUpdate = true;
                     }
 
                     SightCheck();
@@ -126,10 +138,11 @@ namespace Redemption.NPCs.Wasteland
                         AITimer = 0;
                         TimerRand = Main.rand.Next(80, 120);
                         AIState = ActionState.Idle;
+                        NPC.netUpdate = true;
                     }
 
                     NPC.PlatformFallCheck(ref NPC.Redemption().fallDownPlatform, 20, moveTo.Y * 16);
-                    RedeHelper.HorizontallyMove(NPC, moveTo * 16, 0.4f, 1.3f, 16, 10, NPC.Center.Y > moveTo.Y * 16);
+                    NPCHelper.HorizontallyMove(NPC, moveTo * 16, 0.4f, 1.3f, 16, 10, NPC.Center.Y > moveTo.Y * 16);
                     break;
 
                 case ActionState.Alert:
@@ -149,13 +162,14 @@ namespace Redemption.NPCs.Wasteland
                         NPC.velocity.X *= 0f;
                         AITimer = 0;
                         AIState = ActionState.Explode;
+                        NPC.netUpdate = true;
                         return;
                     }
 
                     NPC.DamageHostileAttackers(0, 5);
 
                     NPC.PlatformFallCheck(ref NPC.Redemption().fallDownPlatform, 20);
-                    RedeHelper.HorizontallyMove(NPC, globalNPC.attacker.Center, 0.17f, 4.5f * (NPC.RedemptionNPCBuff().rallied ? 1.2f : 1), 16, 10, NPC.Center.Y > globalNPC.attacker.Center.Y);
+                    NPCHelper.HorizontallyMove(NPC, globalNPC.attacker.Center, 0.17f, 4.5f * (NPC.RedemptionNPCBuff().rallied ? 1.2f : 1), 16, 10, NPC.Center.Y > globalNPC.attacker.Center.Y);
                     break;
 
                 case ActionState.Explode:
@@ -261,6 +275,7 @@ namespace Redemption.NPCs.Wasteland
                 moveTo = NPC.FindGround(20);
                 AITimer = 0;
                 AIState = ActionState.Alert;
+                NPC.netUpdate = true;
             }
             if (gotNPC != -1 && NPC.Sight(Main.npc[gotNPC], 800, true, true))
             {
@@ -269,6 +284,7 @@ namespace Redemption.NPCs.Wasteland
                 moveTo = NPC.FindGround(20);
                 AITimer = 0;
                 AIState = ActionState.Alert;
+                NPC.netUpdate = true;
             }
         }
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)

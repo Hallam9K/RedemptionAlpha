@@ -201,7 +201,6 @@ namespace Redemption.NPCs.PreHM
                 _ => new Vector2(0, 0),
             };
         }
-        private Vector2 moveTo;
         private int runCooldown;
         private NPC defending;
         public override void OnSpawn(IEntitySource source)
@@ -210,6 +209,7 @@ namespace Redemption.NPCs.PreHM
             SetStats();
 
             TimerRand = Main.rand.Next(80, 280);
+            NPC.netUpdate = true;
         }
         public override bool? CanFallThroughPlatforms() => NPC.Redemption().fallDownPlatform;
         public override void AI()
@@ -273,6 +273,7 @@ namespace Redemption.NPCs.PreHM
                         AITimer = 0;
                         TimerRand = Main.rand.Next(120, 260);
                         AIState = ActionState.Wander;
+                        NPC.netUpdate = true;
                     }
 
                     SightCheck();
@@ -287,10 +288,11 @@ namespace Redemption.NPCs.PreHM
                         AITimer = 0;
                         TimerRand = Main.rand.Next(80, 280);
                         AIState = ActionState.Idle;
+                        NPC.netUpdate = true;
                     }
 
                     NPC.PlatformFallCheck(ref NPC.Redemption().fallDownPlatform, 20, moveTo.Y * 16);
-                    RedeHelper.HorizontallyMove(NPC, moveTo * 16, 0.4f, 0.9f * SpeedMultiplier, 6, 6, NPC.Center.Y > moveTo.Y * 16);
+                    NPCHelper.HorizontallyMove(NPC, moveTo * 16, 0.4f, 0.9f * SpeedMultiplier, 6, 6, NPC.Center.Y > moveTo.Y * 16);
                     break;
 
                 case ActionState.Defend:
@@ -300,6 +302,7 @@ namespace Redemption.NPCs.PreHM
                         TimerRand = Main.rand.Next(120, 240);
                         AITimer = 0;
                         AIState = ActionState.Wander;
+                        NPC.netUpdate = true;
                     }
 
                     if (!NPC.Sight(globalNPC.attacker, VisionRange, HasEyes, HasEyes, false, !HasEyes) && !NPC.Sight(defending, VisionRange, HasEyes, HasEyes, false))
@@ -315,6 +318,7 @@ namespace Redemption.NPCs.PreHM
                             NPC.velocity.Y = -2;
                             NPC.velocity.X = 5 * NPC.spriteDirection;
                             AITimer = 20;
+                            NPC.netUpdate = true;
                         }
                     }
                     if (AITimer > 0)
@@ -351,7 +355,7 @@ namespace Redemption.NPCs.PreHM
                             Gore.NewGore(NPC.GetSource_FromThis(), NPC.position, RedeHelper.Spread(1), ModContent.Find<ModGore>("Redemption/AncientCoinGore").Type, 1);
                     }
                     NPC.PlatformFallCheck(ref NPC.Redemption().fallDownPlatform, 20);
-                    RedeHelper.HorizontallyMove(NPC, moveTo, 0.2f,
+                    NPCHelper.HorizontallyMove(NPC, moveTo, 0.2f,
                         2.4f * SpeedMultiplier * (NPC.RedemptionNPCBuff().rallied ? 1.2f : 1), 6, 6, NPC.Center.Y > globalNPC.attacker.Center.Y);
                     break;
 
@@ -362,6 +366,7 @@ namespace Redemption.NPCs.PreHM
                         TimerRand = Main.rand.Next(120, 240);
                         AITimer = 0;
                         AIState = ActionState.Wander;
+                        NPC.netUpdate = true;
                     }
 
                     SightCheck();
@@ -384,6 +389,7 @@ namespace Redemption.NPCs.PreHM
                             NPC.velocity.Y = -2;
                             NPC.velocity.X = 5 * NPC.spriteDirection;
                             AITimer = 20;
+                            NPC.netUpdate = true;
                         }
                     }
                     if (AITimer > 0)
@@ -430,12 +436,14 @@ namespace Redemption.NPCs.PreHM
                         runCooldown = 0;
                         TimerRand = Main.rand.Next(120, 240);
                         AIState = ActionState.Wander;
+                        NPC.netUpdate = true;
                     }
                     if (globalNPC.attacker is Player attackerPlayer && (NPC.PlayerDead() || attackerPlayer.RedemptionPlayerBuff().skeletonFriendly))
                     {
                         runCooldown = 0;
                         TimerRand = Main.rand.Next(120, 240);
                         AIState = ActionState.Wander;
+                        NPC.netUpdate = true;
                     }
 
                     if (!NPC.Sight(globalNPC.attacker, VisionRange, HasEyes, HasEyes, false))
@@ -444,7 +452,7 @@ namespace Redemption.NPCs.PreHM
                         runCooldown--;
 
                     NPC.PlatformFallCheck(ref NPC.Redemption().fallDownPlatform, 20);
-                    RedeHelper.HorizontallyMove(NPC, new Vector2(globalNPC.attacker.Center.X < NPC.Center.X ? NPC.Center.X + 100 : NPC.Center.X - 100, NPC.Center.Y), 0.4f, 2.2f * SpeedMultiplier * (NPC.RedemptionNPCBuff().rallied ? 1.1f : 1), 12, 8, NPC.Center.Y > player.Center.Y);
+                    NPCHelper.HorizontallyMove(NPC, new Vector2(globalNPC.attacker.Center.X < NPC.Center.X ? NPC.Center.X + 100 : NPC.Center.X - 100, NPC.Center.Y), 0.4f, 2.2f * SpeedMultiplier * (NPC.RedemptionNPCBuff().rallied ? 1.1f : 1), 12, 8, NPC.Center.Y > player.Center.Y);
                     break;
             }
             if (Personality != PersonalityState.Greedy)
@@ -564,6 +572,7 @@ namespace Redemption.NPCs.PreHM
                     moveTo = NPC.FindGround(20);
                     AITimer = 0;
                     AIState = ActionState.Block;
+                    NPC.netUpdate = true;
                 }
                 if (AIState != ActionState.Retreat && NPC.RedemptionGuard().GuardBroken)
                 {
@@ -573,6 +582,7 @@ namespace Redemption.NPCs.PreHM
                     moveTo = NPC.FindGround(20);
                     AITimer = 0;
                     AIState = ActionState.Retreat;
+                    NPC.netUpdate = true;
                 }
             }
             if (defending == null && gotNPC != -1 && NPC.Sight(Main.npc[gotNPC], VisionRange, HasEyes, HasEyes, false))
@@ -580,6 +590,7 @@ namespace Redemption.NPCs.PreHM
                 defending = Main.npc[gotNPC];
                 AITimer = 0;
                 AIState = ActionState.Defend;
+                NPC.netUpdate = true;
             }
         }
         public void ChoosePersonality()

@@ -15,6 +15,7 @@ using Redemption.Items.Materials.PreHM;
 using Redemption.Items.Placeable.Banners;
 using Redemption.Items.Usable.Potions;
 using Redemption.Items.Weapons.HM.Ranged;
+using System.IO;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent;
@@ -117,11 +118,23 @@ namespace Redemption.NPCs.Wasteland
             npcLoot.Add(ItemDropRule.Common(ItemID.SlimeStaff, 1000));
             npcLoot.Add(ItemDropRule.Food(ModContent.ItemType<StarliteDonut>(), 150));
         }
-
+        public override void SendExtraAI(BinaryWriter writer)
+        {
+            base.SendExtraAI(writer);
+            if (Main.netMode == NetmodeID.Server || Main.dedServ)
+                writer.Write(Xvel);
+        }
+        public override void ReceiveExtraAI(BinaryReader reader)
+        {
+            base.ReceiveExtraAI(reader);
+            if (Main.netMode == NetmodeID.MultiplayerClient)
+                Xvel = reader.ReadInt32();
+        }
         public int Xvel;
         public override void OnSpawn(IEntitySource source)
         {
             TimerRand = Main.rand.Next(10, 60);
+            NPC.netUpdate = true;
         }
         public override void AI()
         {
@@ -146,15 +159,14 @@ namespace Redemption.NPCs.Wasteland
                         AITimer = 0;
                         TimerRand = Main.rand.Next(10, 60);
                         AIState = ActionState.Bounce;
+                        NPC.netUpdate = true;
                     }
                     break;
 
                 case ActionState.Bounce:
                     NPC.velocity.X = Xvel * NPC.spriteDirection;
                     if (NPC.collideY || NPC.velocity.Y == 0)
-                    {
                         AIState = ActionState.Idle;
-                    }
                     break;
             }
         }

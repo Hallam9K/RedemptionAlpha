@@ -9,6 +9,8 @@ using Redemption.Buffs.NPCBuffs;
 using Redemption.BaseExtension;
 using Terraria.GameContent.UI;
 using Terraria.Utilities;
+using System.IO;
+using Microsoft.Xna.Framework;
 
 namespace Redemption.NPCs.PreHM
 {
@@ -25,6 +27,28 @@ namespace Redemption.NPCs.PreHM
         public int HeadOffset;
         public int CoinsDropped;
         public string SoundString = "Skeleton";
+        public Vector2 moveTo;
+
+        public override void SendExtraAI(BinaryWriter writer)
+        {
+            base.SendExtraAI(writer);
+            if (Main.netMode == NetmodeID.Server || Main.dedServ)
+            {
+                writer.Write(HasEyes);
+                writer.Write(HeadType);
+                writer.WriteVector2(moveTo);
+            }
+        }
+        public override void ReceiveExtraAI(BinaryReader reader)
+        {
+            base.ReceiveExtraAI(reader);
+            if (Main.netMode == NetmodeID.MultiplayerClient)
+            {
+                HasEyes = reader.ReadBoolean();
+                HeadType = reader.ReadInt32();
+                moveTo = reader.ReadVector2();
+            }
+        }
 
         public ref float AITimer => ref NPC.ai[1];
 
@@ -215,6 +239,7 @@ namespace Redemption.NPCs.PreHM
                 SoundString = "GreedySkeleton";
             else if (Personality is PersonalityState.Soulful)
                 SoundString = "SoulfulSkeleton";
+            NPC.netUpdate = true;
         }
     }
 }

@@ -13,6 +13,7 @@ using Redemption.Items.Weapons.PreHM.Melee;
 using Redemption.Items.Weapons.PreHM.Ranged;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent;
@@ -156,7 +157,24 @@ namespace Redemption.NPCs.Minibosses.EaglecrestGolem
             NPC.lifeMax = (int)(NPC.lifeMax * 0.6f * bossLifeScale);
             NPC.damage = (int)(NPC.damage * 0.6f);
         }
-
+        public override void SendExtraAI(BinaryWriter writer)
+        {
+            base.SendExtraAI(writer);
+            if (Main.netMode == NetmodeID.Server || Main.dedServ)
+            {
+                writer.Write(AniFrameY);
+                writer.Write(summonTimer);
+            }
+        }
+        public override void ReceiveExtraAI(BinaryReader reader)
+        {
+            base.ReceiveExtraAI(reader);
+            if (Main.netMode == NetmodeID.MultiplayerClient)
+            {
+                AniFrameY = reader.ReadInt32();
+                summonTimer = reader.ReadInt32();
+            }
+        }
         private int AniFrameY;
         private int summonTimer;
         private float FlareTimer;
@@ -229,7 +247,7 @@ namespace Redemption.NPCs.Minibosses.EaglecrestGolem
                     }
 
                     NPC.PlatformFallCheck(ref NPC.Redemption().fallDownPlatform, 28);
-                    RedeHelper.HorizontallyMove(NPC, player.Center, moveInterval, moveSpeed, 12, 12, NPC.Center.Y > player.Center.Y);
+                    NPCHelper.HorizontallyMove(NPC, player.Center, moveInterval, moveSpeed, 12, 12, NPC.Center.Y > player.Center.Y);
                     break;
                 case ActionState.Roll:
                     if (!Collision.CanHit(NPC.Center, 0, 0, player.Center, 0, 0) || Collision.SolidCollision(new Vector2(NPC.Center.X, NPC.position.Y - NPC.height / 2 + 10), NPC.width, NPC.height))
@@ -263,7 +281,7 @@ namespace Redemption.NPCs.Minibosses.EaglecrestGolem
                         }
 
                         NPC.PlatformFallCheck(ref NPC.Redemption().fallDownPlatform, 28);
-                        RedeHelper.HorizontallyMove(NPC, player.Center, 0.12f, 10, 20, 30, NPC.Center.Y > player.Center.Y);
+                        NPCHelper.HorizontallyMove(NPC, player.Center, 0.12f, 10, 20, 30, NPC.Center.Y > player.Center.Y);
                     }
                     break;
                 case ActionState.Laser:

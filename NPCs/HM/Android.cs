@@ -27,6 +27,7 @@ using ParticleLibrary;
 using Redemption.Particles;
 using Terraria.GameContent.UI;
 using Redemption.Items.Usable;
+using System.IO;
 
 namespace Redemption.NPCs.HM
 {
@@ -91,7 +92,18 @@ namespace Redemption.NPCs.HM
             Banner = NPC.type;
             BannerItem = ModContent.ItemType<AndroidBanner>();
         }
-
+        public override void SendExtraAI(BinaryWriter writer)
+        {
+            base.SendExtraAI(writer);
+            if (Main.netMode == NetmodeID.Server || Main.dedServ)
+                writer.WriteVector2(moveTo);
+        }
+        public override void ReceiveExtraAI(BinaryReader reader)
+        {
+            base.ReceiveExtraAI(reader);
+            if (Main.netMode == NetmodeID.MultiplayerClient)
+                moveTo = reader.ReadVector2();
+        }
         private Vector2 moveTo;
         private int runCooldown;
         public override void OnSpawn(IEntitySource source)
@@ -106,14 +118,17 @@ namespace Redemption.NPCs.HM
             }
 
             TimerRand = Main.rand.Next(80, 120);
+            NPC.netUpdate = true;
         }
         private NPC closeNPC;
+        private Texture2D bubble;
+        private SoundStyle voice;
         public override void AI()
         {
             Player player = Main.player[NPC.target];
             RedeNPC globalNPC = NPC.Redemption();
-            Texture2D bubble = ModContent.Request<Texture2D>("Redemption/UI/TextBubble_Epidotra").Value;
-            SoundStyle voice = CustomSounds.Voice6 with { Pitch = 0.8f };
+            bubble = ModContent.Request<Texture2D>("Redemption/UI/TextBubble_Epidotra").Value;
+            voice = CustomSounds.Voice6 with { Pitch = 0.8f };
             if (globalNPC.attacker is Player && AIState > ActionState.Scan)
                 NPC.chaseable = true;
             else
@@ -135,6 +150,7 @@ namespace Redemption.NPCs.HM
                         AITimer = 0;
                         TimerRand = Main.rand.Next(120, 260);
                         AIState = ActionState.Wander;
+                        NPC.netUpdate = true;
                     }
                     if (Main.rand.NextBool(200) && BaseAI.HitTileOnSide(NPC, 3))
                     {
@@ -149,6 +165,7 @@ namespace Redemption.NPCs.HM
                             AITimer = 0;
                             AIState = ActionState.Scan;
                         }
+                        NPC.netUpdate = true;
                     }
 
                     SightCheck();
@@ -163,6 +180,7 @@ namespace Redemption.NPCs.HM
                         AITimer = 0;
                         TimerRand = Main.rand.Next(80, 120);
                         AIState = ActionState.Idle;
+                        NPC.netUpdate = true;
                     }
                     if (Main.rand.NextBool(200) && BaseAI.HitTileOnSide(NPC, 3))
                     {
@@ -171,16 +189,18 @@ namespace Redemption.NPCs.HM
                             TimerRand = 1;
                             AITimer = 0;
                             AIState = ActionState.Scan;
+                            NPC.netUpdate = true;
                         }
                         else if (RedeHelper.ClosestNPCToNPC(NPC, ref closeNPC, 100, NPC.Center))
                         {
                             AITimer = 0;
                             AIState = ActionState.Scan;
+                            NPC.netUpdate = true;
                         }
                     }
 
                     NPC.PlatformFallCheck(ref NPC.Redemption().fallDownPlatform, 20, moveTo.Y * 16);
-                    RedeHelper.HorizontallyMove(NPC, moveTo * 16, 0.4f, 1.2f, 12, 16, NPC.Center.Y > moveTo.Y * 16);
+                    NPCHelper.HorizontallyMove(NPC, moveTo * 16, 0.4f, 1.2f, 12, 16, NPC.Center.Y > moveTo.Y * 16);
                     break;
 
                 case ActionState.Scan:
@@ -195,6 +215,7 @@ namespace Redemption.NPCs.HM
                         AITimer = 0;
                         TimerRand = Main.rand.Next(120, 260);
                         AIState = ActionState.Wander;
+                        NPC.netUpdate = true;
                     }
                     if (AITimer == 10)
                         NPC.Shoot(NPC.Center + new Vector2(19 * NPC.spriteDirection, -4), ModContent.ProjectileType<Scan_Proj>(), 0, Vector2.Zero, true, CustomSounds.BallFire, NPC.whoAmI);
@@ -266,10 +287,11 @@ namespace Redemption.NPCs.HM
                         NPC.frameCounter = 0;
                         NPC.velocity.X = 0;
                         AIState = ActionState.RocketFist;
+                        NPC.netUpdate = true;
                     }
 
                     NPC.PlatformFallCheck(ref NPC.Redemption().fallDownPlatform, 20);
-                    RedeHelper.HorizontallyMove(NPC, globalNPC.attacker.Center, 0.15f, 2.6f, 12, 16, NPC.Center.Y > globalNPC.attacker.Center.Y);
+                    NPCHelper.HorizontallyMove(NPC, globalNPC.attacker.Center, 0.15f, 2.6f, 12, 16, NPC.Center.Y > globalNPC.attacker.Center.Y);
                     break;
 
                 case ActionState.RocketFist:
@@ -280,6 +302,7 @@ namespace Redemption.NPCs.HM
                         moveTo = NPC.FindGround(20);
                         TimerRand = Main.rand.Next(120, 260);
                         AIState = ActionState.Wander;
+                        NPC.netUpdate = true;
                     }
 
                     if (NPC.velocity.Y < 0)
@@ -305,6 +328,7 @@ namespace Redemption.NPCs.HM
                         moveTo = NPC.FindGround(20);
                         TimerRand = Main.rand.Next(120, 260);
                         AIState = ActionState.Wander;
+                        NPC.netUpdate = true;
                     }
 
                     AITimer++;
@@ -418,6 +442,7 @@ namespace Redemption.NPCs.HM
             choice.Add(2, 0.02f);
 
             Variant = choice;
+            NPC.netUpdate = true;
         }
         public void SightCheck()
         {
@@ -447,6 +472,7 @@ namespace Redemption.NPCs.HM
                     moveTo = NPC.FindGround(20);
                     AITimer = 0;
                     AIState = ActionState.Alert;
+                    NPC.netUpdate = true;
                 }
             }
         }

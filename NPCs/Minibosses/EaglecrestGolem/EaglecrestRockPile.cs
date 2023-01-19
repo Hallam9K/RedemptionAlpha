@@ -75,7 +75,7 @@ namespace Redemption.NPCs.Minibosses.EaglecrestGolem
             }
 
             NPC.PlatformFallCheck(ref NPC.Redemption().fallDownPlatform, 20);
-            RedeHelper.HorizontallyMove(NPC, player.Center, 0.07f, 3.8f + TimerRand, 18, 16, NPC.Center.Y > player.Center.Y);
+            NPCHelper.HorizontallyMove(NPC, player.Center, 0.07f, 3.8f + TimerRand, 18, 16, NPC.Center.Y > player.Center.Y);
         }
         public override bool? CanFallThroughPlatforms() => NPC.Redemption().fallDownPlatform;
         public override void FindFrame(int frameHeight)

@@ -94,6 +94,8 @@ namespace Redemption.NPCs.Bosses.Erhan
             NPC.HitSound = SoundID.NPCHit1;
             NPC.DeathSound = SoundID.NPCDeath1;
             NPC.dontTakeDamage = true;
+            voice = CustomSounds.Voice4 with { Pitch = -0.2f };
+            bubble = ModContent.Request<Texture2D>("Redemption/UI/TextBubble_Epidotra").Value;
             if (!Main.dedServ)
                 Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/BossErhan");
         }
@@ -256,9 +258,6 @@ namespace Redemption.NPCs.Bosses.Erhan
         {
             if (NPC.target < 0 || NPC.target == 255 || Main.player[NPC.target].dead || !Main.player[NPC.target].active)
                 NPC.TargetClosest();
-
-            voice = CustomSounds.Voice4 with { Pitch = -0.2f };
-            bubble = ModContent.Request<Texture2D>("Redemption/UI/TextBubble_Epidotra").Value;
 
             Player player = Main.player[NPC.target];
 
@@ -621,7 +620,7 @@ namespace Redemption.NPCs.Bosses.Erhan
                                 if (!Main.dedServ)
                                     SoundEngine.PlaySound(CustomSounds.Slice3, NPC.position);
                                 SoundEngine.PlaySound(SoundID.Item125, NPC.Center);
-                                int p = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<HolyPhalanx_Proj>(), RedeHelper.HostileProjDamage(NPC.damage), 3, Main.myPlayer, NPC.whoAmI, TimerRand * 60);
+                                int p = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<HolyPhalanx_Proj>(), NPCHelper.HostileProjDamage(NPC.damage), 3, Main.myPlayer, NPC.whoAmI, TimerRand * 60);
                                 Main.projectile[p].localAI[0] += TimerRand * 7;
                                 TimerRand++;
                             }
@@ -779,7 +778,7 @@ namespace Redemption.NPCs.Bosses.Erhan
                                 if (!Main.dedServ)
                                     SoundEngine.PlaySound(CustomSounds.Slice3, NPC.position);
                                 SoundEngine.PlaySound(SoundID.Item125, NPC.Center);
-                                int p = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<HolyPhalanx_Proj>(), RedeHelper.HostileProjDamage(NPC.damage), 3, Main.myPlayer, NPC.whoAmI, TimerRand2 * 60);
+                                int p = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<HolyPhalanx_Proj>(), NPCHelper.HostileProjDamage(NPC.damage), 3, Main.myPlayer, NPC.whoAmI, TimerRand2 * 60);
                                 Main.projectile[p].localAI[0] += TimerRand2 * 7;
                                 TimerRand2++;
                             }
@@ -1152,7 +1151,7 @@ namespace Redemption.NPCs.Bosses.Erhan
         {
             if (!egged && AIState is ActionState.Attacks && (projectile.type == ModContent.ProjectileType<ChickenEgg_Proj>() || projectile.type == ModContent.ProjectileType<GoldChickenEgg_Proj>()))
             {
-                Dialogue d = new(NPC, "Thou shall not egg a priest!", Color.LightGoldenrodYellow, new Color(100, 86, 0), voice, 2, 100, 30, false, null, bubble, null, modifier);
+                Dialogue d = new(NPC, "Thou shall not egg a priest!", Color.LightGoldenrodYellow, new Color(100, 86, 0), voice, 2, 100, 30, true, null, bubble, null, modifier);
                 TextBubbleUI.Visible = true;
                 TextBubbleUI.Add(d);
                 egged = true;
@@ -1162,7 +1161,7 @@ namespace Redemption.NPCs.Bosses.Erhan
                 string s = "Oh...[30] So that is how it's used'eth...";
                 if (Main.rand.NextBool())
                     s = "What in God's name!?";
-                Dialogue d = new(NPC, s, Color.LightGoldenrodYellow, new Color(100, 86, 0), voice, 2, 100, 30, false, null, bubble, null, modifier);
+                Dialogue d = new(NPC, s, Color.LightGoldenrodYellow, new Color(100, 86, 0), voice, 2, 100, 30, true, null, bubble, null, modifier);
                 TextBubbleUI.Visible = true;
                 TextBubbleUI.Add(d);
                 grenaded = true;
@@ -1172,7 +1171,7 @@ namespace Redemption.NPCs.Bosses.Erhan
                 string s = "How dare'eth![10] Doth thou use the sacred texts against me!?";
                 if (Main.rand.NextBool())
                     s = "Cease this boondoggling bible betrayal!";
-                Dialogue d = new(NPC, s, Color.LightGoldenrodYellow, new Color(100, 86, 0), voice, 2, 100, 30, false, null, bubble, null, modifier);
+                Dialogue d = new(NPC, s, Color.LightGoldenrodYellow, new Color(100, 86, 0), voice, 2, 100, 30, true, null, bubble, null, modifier);
                 TextBubbleUI.Visible = true;
                 TextBubbleUI.Add(d);
                 bibled = true;
@@ -1182,7 +1181,7 @@ namespace Redemption.NPCs.Bosses.Erhan
                 string s = "F-Father!?[30] Nay, 'tis merely a weapon thief!";
                 if (Main.rand.NextBool())
                     s = "Expel my father's weapon from thy grasp'eth this instant!";
-                Dialogue d = new(NPC, s, Color.LightGoldenrodYellow, new Color(100, 86, 0), voice, 2, 100, 30, false, null, bubble, null, modifier);
+                Dialogue d = new(NPC, s, Color.LightGoldenrodYellow, new Color(100, 86, 0), voice, 2, 100, 30, true, null, bubble, null, modifier);
                 TextBubbleUI.Visible = true;
                 TextBubbleUI.Add(d);
                 blindJusted = true;

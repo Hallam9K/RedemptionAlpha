@@ -50,6 +50,7 @@ namespace Redemption.Items.Weapons.PostML.Melee
         public float Timer;
         private float speed;
         private float SwingSpeed;
+        private Vector2 mouseOrig;
         public override void AI()
         {
             for (int k = Projectile.oldPos.Length - 1; k > 0; k--)
@@ -77,10 +78,17 @@ namespace Redemption.Items.Weapons.PostML.Melee
                         player.SetCompositeArmFront(true, Player.CompositeArmStretchAmount.Full, (player.Center - Projectile.Center).ToRotation() + MathHelper.PiOver2);
                         if (Timer++ == 0)
                         {
+                            mouseOrig = Main.MouseWorld;
                             SoundEngine.PlaySound(SoundID.Item71, player.position);
                             SoundEngine.PlaySound(CustomSounds.ElectricSlash, player.position);
                             startVector = RedeHelper.PolarVector(1, Projectile.velocity.ToRotation() - (MathHelper.PiOver2 * Projectile.spriteDirection));
                             speed = MathHelper.ToRadians(Main.rand.Next(2, 4));
+                        }
+                        if (Timer == (int)(4 * SwingSpeed))
+                        {
+                            Projectile.NewProjectile(Projectile.GetSource_FromAI(), player.Center,
+                                RedeHelper.PolarVector(17, (mouseOrig - player.Center).ToRotation()),
+                                ModContent.ProjectileType<UkonvasaraSword_Wave>(), 0, 0, Projectile.owner);
                         }
                         if (Timer < 5 * SwingSpeed)
                         {
@@ -110,6 +118,7 @@ namespace Redemption.Items.Weapons.PostML.Melee
                             Projectile.alpha = 255;
                             SoundEngine.PlaySound(SoundID.Item71, Projectile.position);
                             SoundEngine.PlaySound(CustomSounds.ElectricSlash, player.position);
+                            mouseOrig = Main.MouseWorld;
                             Projectile.ai[0]++;
                             Timer = 0;
                             Projectile.netUpdate = true;
@@ -117,6 +126,12 @@ namespace Redemption.Items.Weapons.PostML.Melee
                         break;
                     case 1:
                         player.SetCompositeArmFront(true, Player.CompositeArmStretchAmount.Full, (player.Center - Projectile.Center).ToRotation() + MathHelper.PiOver2);
+                        if (Timer == (int)(4 * SwingSpeed))
+                        {
+                            Projectile.NewProjectile(Projectile.GetSource_FromAI(), player.Center,
+                                RedeHelper.PolarVector(17, (mouseOrig - player.Center).ToRotation()),
+                                ModContent.ProjectileType<UkonvasaraSword_Wave>(), 0, 0, Projectile.owner, 1);
+                        }
                         if (Timer++ < 5 * SwingSpeed)
                         {
                             Rot -= speed / SwingSpeed * Projectile.spriteDirection;
@@ -145,6 +160,7 @@ namespace Redemption.Items.Weapons.PostML.Melee
                             Projectile.alpha = 255;
                             SoundEngine.PlaySound(SoundID.Item71, Projectile.position);
                             SoundEngine.PlaySound(CustomSounds.ElectricSlash, player.position);
+                            mouseOrig = Main.MouseWorld;
                             Projectile.ai[0]++;
                             Timer = 0;
                             Projectile.netUpdate = true;
@@ -152,6 +168,12 @@ namespace Redemption.Items.Weapons.PostML.Melee
                         break;
                     case 2:
                         player.SetCompositeArmFront(true, Player.CompositeArmStretchAmount.Full, (player.Center - Projectile.Center).ToRotation() + MathHelper.PiOver2);
+                        if (Timer == (int)(3 * SwingSpeed))
+                        {
+                            Projectile.NewProjectile(Projectile.GetSource_FromAI(), player.Center,
+                                RedeHelper.PolarVector(17, (mouseOrig - player.Center).ToRotation()),
+                                ModContent.ProjectileType<UkonvasaraSword_Wave>(), 0, 0, Projectile.owner);
+                        }
                         if (Timer++ < 4 * SwingSpeed)
                         {
                             Rot += speed / SwingSpeed * Projectile.spriteDirection;

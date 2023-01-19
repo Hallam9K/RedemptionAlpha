@@ -52,7 +52,7 @@ namespace Redemption.NPCs.Critters
                 case SpawnType.Small:
                     for (int i = 0; i < 2; i++)
                     {
-                        pos = RedeHelper.FindGround(NPC, 6);
+                        pos = NPCHelper.FindGround(NPC, 6);
                         RedeHelper.SpawnNPC(new EntitySource_SpawnNPC(), (int)pos.X * 16, (int)pos.Y * 16, ModContent.NPCType<Chicken>());
                     }
                     NPC.active = false;
@@ -60,7 +60,7 @@ namespace Redemption.NPCs.Critters
                 case SpawnType.Big:
                     for (int i = 0; i < Main.rand.Next(3, 5); i++)
                     {
-                        pos = RedeHelper.FindGround(NPC, 8);
+                        pos = NPCHelper.FindGround(NPC, 8);
                         RedeHelper.SpawnNPC(new EntitySource_SpawnNPC(), (int)pos.X * 16, (int)pos.Y * 16, ModContent.NPCType<Chicken>());
                     }
                     NPC.active = false;
@@ -112,7 +112,7 @@ namespace Redemption.NPCs.Critters
                 case SpawnType.Small:
                     for (int i = 0; i < 2; i++)
                     {
-                        pos = RedeHelper.FindGround(NPC, 5);
+                        pos = NPCHelper.FindGround(NPC, 5);
                         RedeHelper.SpawnNPC(new EntitySource_SpawnNPC(), (int)pos.X * 16, (int)pos.Y * 16, ModContent.NPCType<Kabucra>());
                     }
                     NPC.active = false;
@@ -120,7 +120,7 @@ namespace Redemption.NPCs.Critters
                 case SpawnType.Big:
                     for (int i = 0; i < Main.rand.Next(3, 5); i++)
                     {
-                        pos = RedeHelper.FindGround(NPC, 8);
+                        pos = NPCHelper.FindGround(NPC, 8);
                         RedeHelper.SpawnNPC(new EntitySource_SpawnNPC(), (int)pos.X * 16, (int)pos.Y * 16, ModContent.NPCType<Kabucra>());
                     }
                     NPC.active = false;

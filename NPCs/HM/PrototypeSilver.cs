@@ -23,6 +23,7 @@ using Redemption.Particles;
 using Terraria.GameContent.UI;
 using System;
 using Redemption.Items.Usable;
+using System.IO;
 
 namespace Redemption.NPCs.HM
 {
@@ -85,7 +86,18 @@ namespace Redemption.NPCs.HM
             Banner = NPC.type;
             BannerItem = ModContent.ItemType<PrototypeSilverBanner>();
         }
-
+        public override void SendExtraAI(BinaryWriter writer)
+        {
+            base.SendExtraAI(writer);
+            if (Main.netMode == NetmodeID.Server || Main.dedServ)
+                writer.WriteVector2(moveTo);
+        }
+        public override void ReceiveExtraAI(BinaryReader reader)
+        {
+            base.ReceiveExtraAI(reader);
+            if (Main.netMode == NetmodeID.MultiplayerClient)
+                moveTo = reader.ReadVector2();
+        }
         private Vector2 moveTo;
         private int runCooldown;
         private float shieldAlpha;
@@ -94,6 +106,7 @@ namespace Redemption.NPCs.HM
         public override void OnSpawn(IEntitySource source)
         {
             TimerRand = Main.rand.Next(80, 120);
+            NPC.netUpdate = true;
             NPC.Shoot(NPC.Center, ModContent.ProjectileType<PrototypeSilver_Shield>(), 0, Vector2.Zero, true, CustomSounds.ShieldActivate, NPC.whoAmI);
         }
         public override void AI()
@@ -121,6 +134,7 @@ namespace Redemption.NPCs.HM
                         AITimer = 0;
                         TimerRand = Main.rand.Next(120, 260);
                         AIState = ActionState.Wander;
+                        NPC.netUpdate = true;
                     }
 
                     SightCheck();
@@ -135,10 +149,11 @@ namespace Redemption.NPCs.HM
                         AITimer = 0;
                         TimerRand = Main.rand.Next(80, 120);
                         AIState = ActionState.Idle;
+                        NPC.netUpdate = true;
                     }
 
                     NPC.PlatformFallCheck(ref NPC.Redemption().fallDownPlatform, 20, moveTo.Y * 16);
-                    RedeHelper.HorizontallyMove(NPC, moveTo * 16, 0.4f, 0.8f, 8, 16, NPC.Center.Y > moveTo.Y * 16);
+                    NPCHelper.HorizontallyMove(NPC, moveTo * 16, 0.4f, 0.8f, 8, 16, NPC.Center.Y > moveTo.Y * 16);
                     break;
 
                 case ActionState.Alert:
@@ -194,6 +209,7 @@ namespace Redemption.NPCs.HM
                             NPC.frameCounter = 0;
                             NPC.velocity.X = 0;
                             AIState = ActionState.Grapple;
+                            NPC.netUpdate = true;
                         }
                     }
                     if (Main.rand.NextBool(100) && NPC.velocity.Y == 0 && NPC.DistanceSQ(globalNPC.attacker.Center) > 60 * 60)
@@ -202,10 +218,11 @@ namespace Redemption.NPCs.HM
                         AITimer = 0;
                         NPC.velocity.X = 0;
                         AIState = ActionState.Laser;
+                        NPC.netUpdate = true;
                     }
 
                     NPC.PlatformFallCheck(ref NPC.Redemption().fallDownPlatform, 20);
-                    RedeHelper.HorizontallyMove(NPC, globalNPC.attacker.Center, 0.15f, 2f, 8, 16, NPC.Center.Y > globalNPC.attacker.Center.Y);
+                    NPCHelper.HorizontallyMove(NPC, globalNPC.attacker.Center, 0.15f, 2f, 8, 16, NPC.Center.Y > globalNPC.attacker.Center.Y);
                     break;
 
                 case ActionState.Laser:
@@ -216,6 +233,7 @@ namespace Redemption.NPCs.HM
                         moveTo = NPC.FindGround(20);
                         TimerRand = Main.rand.Next(120, 260);
                         AIState = ActionState.Wander;
+                        NPC.netUpdate = true;
                     }
                     NPC.LookAtEntity(globalNPC.attacker);
 
@@ -261,6 +279,7 @@ namespace Redemption.NPCs.HM
                         moveTo = NPC.FindGround(20);
                         TimerRand = Main.rand.Next(120, 260);
                         AIState = ActionState.Wander;
+                        NPC.netUpdate = true;
                         break;
                     }
                     NPC.LookAtEntity(globalNPC.attacker);
@@ -296,6 +315,7 @@ namespace Redemption.NPCs.HM
                         moveTo = NPC.FindGround(20);
                         TimerRand = Main.rand.Next(120, 260);
                         AIState = ActionState.Wander;
+                        NPC.netUpdate = true;
                     }
 
                     AITimer++;
@@ -412,6 +432,7 @@ namespace Redemption.NPCs.HM
                     moveTo = NPC.FindGround(20);
                     AITimer = 0;
                     AIState = ActionState.Alert;
+                    NPC.netUpdate = true;
                 }
             }
         }

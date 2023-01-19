@@ -95,6 +95,7 @@ namespace Redemption.NPCs.HM
         public override void OnSpawn(IEntitySource source)
         {
             TimerRand = Main.rand.Next(80, 120);
+            NPC.netUpdate = true;
         }
         private readonly List<int> projBlocked = new();
         private Vector2 p;
@@ -136,6 +137,7 @@ namespace Redemption.NPCs.HM
                         AITimer = 0;
                         TimerRand = Main.rand.Next(120, 260);
                         AIState = ActionState.Wander;
+                        NPC.netUpdate = true;
                     }
 
                     SightCheck();
@@ -150,10 +152,11 @@ namespace Redemption.NPCs.HM
                         AITimer = 0;
                         TimerRand = Main.rand.Next(80, 120);
                         AIState = ActionState.Idle;
+                        NPC.netUpdate = true;
                     }
 
                     NPC.PlatformFallCheck(ref NPC.Redemption().fallDownPlatform, 30, moveTo.Y * 16);
-                    RedeHelper.HorizontallyMove(NPC, moveTo * 16, 0.4f, 0.6f, 28, 36, NPC.Center.Y > moveTo.Y * 16);
+                    NPCHelper.HorizontallyMove(NPC, moveTo * 16, 0.4f, 0.6f, 28, 36, NPC.Center.Y > moveTo.Y * 16);
                     break;
 
                 case ActionState.Alert:
@@ -201,6 +204,7 @@ namespace Redemption.NPCs.HM
                         AITimer = 0;
                         NPC.velocity.X = 0;
                         AIState = ActionState.Laser;
+                        NPC.netUpdate = true;
                     }
                     if (Main.rand.NextBool(150) && NPC.velocity.Y == 0 && NPC.DistanceSQ(globalNPC.attacker.Center) > 60 * 60)
                     {
@@ -209,10 +213,11 @@ namespace Redemption.NPCs.HM
                         AITimer = 0;
                         NPC.velocity.X = 0;
                         AIState = ActionState.Stomp;
+                        NPC.netUpdate = true;
                     }
 
                     NPC.PlatformFallCheck(ref NPC.Redemption().fallDownPlatform, 30);
-                    RedeHelper.HorizontallyMove(NPC, globalNPC.attacker.Center, 0.15f, 1.6f, 28, 36, NPC.Center.Y > globalNPC.attacker.Center.Y);
+                    NPCHelper.HorizontallyMove(NPC, globalNPC.attacker.Center, 0.15f, 1.6f, 28, 36, NPC.Center.Y > globalNPC.attacker.Center.Y);
                     break;
 
                 case ActionState.Laser:
@@ -223,6 +228,7 @@ namespace Redemption.NPCs.HM
                         moveTo = NPC.FindGround(20);
                         TimerRand = Main.rand.Next(120, 260);
                         AIState = ActionState.Wander;
+                        NPC.netUpdate = true;
                     }
                     NPC.LookAtEntity(globalNPC.attacker);
 
@@ -268,6 +274,7 @@ namespace Redemption.NPCs.HM
                         moveTo = NPC.FindGround(20);
                         TimerRand = Main.rand.Next(120, 260);
                         AIState = ActionState.Wander;
+                        NPC.netUpdate = true;
                     }
 
                     if (NPC.velocity.Y == 0)
@@ -313,7 +320,7 @@ namespace Redemption.NPCs.HM
                                     for (int i = 0; i < 8; i++)
                                     {
                                         int proj = Projectile.NewProjectile(NPC.GetSource_FromAI(), new Vector2(NPC.Center.X, NPC.Center.Y + 42),
-                                            RedeHelper.PolarVector(8, MathHelper.ToRadians(45) * i), ProjectileID.MartianTurretBolt, RedeHelper.HostileProjDamage(NPC.damage), 0, Main.myPlayer);
+                                            RedeHelper.PolarVector(8, MathHelper.ToRadians(45) * i), ProjectileID.MartianTurretBolt, NPCHelper.HostileProjDamage(NPC.damage), 0, Main.myPlayer);
                                         Main.projectile[proj].tileCollide = false;
                                         Main.projectile[proj].timeLeft = 200;
                                         Main.projectile[proj].netUpdate2 = true;
@@ -321,7 +328,7 @@ namespace Redemption.NPCs.HM
                                     for (int i = 0; i < 18; i++)
                                     {
                                         int proj = Projectile.NewProjectile(NPC.GetSource_FromAI(), new Vector2(NPC.Center.X, NPC.Center.Y + 42),
-                                            RedeHelper.PolarVector(7, MathHelper.ToRadians(20) * i), ProjectileID.MartianTurretBolt, RedeHelper.HostileProjDamage(NPC.damage), 0, Main.myPlayer);
+                                            RedeHelper.PolarVector(7, MathHelper.ToRadians(20) * i), ProjectileID.MartianTurretBolt, NPCHelper.HostileProjDamage(NPC.damage), 0, Main.myPlayer);
                                         Main.projectile[proj].tileCollide = false;
                                         Main.projectile[proj].timeLeft = 200;
                                         Main.projectile[proj].netUpdate2 = true;
@@ -363,6 +370,7 @@ namespace Redemption.NPCs.HM
                         moveTo = NPC.FindGround(20);
                         TimerRand = Main.rand.Next(120, 260);
                         AIState = ActionState.Wander;
+                        NPC.netUpdate = true;
                     }
 
                     AITimer++;
@@ -460,6 +468,7 @@ namespace Redemption.NPCs.HM
                     moveTo = NPC.FindGround(20);
                     AITimer = 0;
                     AIState = ActionState.Alert;
+                    NPC.netUpdate = true;
                 }
             }
         }

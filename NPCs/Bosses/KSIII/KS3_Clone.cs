@@ -802,14 +802,14 @@ namespace Redemption.NPCs.Bosses.KSIII
                                             {
                                                 for (int i = 0; i < 8; i++)
                                                 {
-                                                    int proj = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, RedeHelper.PolarVector(8, MathHelper.ToRadians(45) * i), ProjectileID.MartianTurretBolt, RedeHelper.HostileProjDamage((int)(NPC.damage * .85f)), 0, Main.myPlayer);
+                                                    int proj = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, RedeHelper.PolarVector(8, MathHelper.ToRadians(45) * i), ProjectileID.MartianTurretBolt, NPCHelper.HostileProjDamage((int)(NPC.damage * .85f)), 0, Main.myPlayer);
                                                     Main.projectile[proj].tileCollide = false;
                                                     Main.projectile[proj].timeLeft = 200;
                                                     Main.projectile[proj].netUpdate2 = true;
                                                 }
                                                 for (int i = 0; i < 18; i++)
                                                 {
-                                                    int proj = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, RedeHelper.PolarVector(7, MathHelper.ToRadians(20) * i), ProjectileID.MartianTurretBolt, RedeHelper.HostileProjDamage((int)(NPC.damage * .85f)), 0, Main.myPlayer);
+                                                    int proj = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, RedeHelper.PolarVector(7, MathHelper.ToRadians(20) * i), ProjectileID.MartianTurretBolt, NPCHelper.HostileProjDamage((int)(NPC.damage * .85f)), 0, Main.myPlayer);
                                                     Main.projectile[proj].tileCollide = false;
                                                     Main.projectile[proj].timeLeft = 200;
                                                     Main.projectile[proj].netUpdate2 = true;

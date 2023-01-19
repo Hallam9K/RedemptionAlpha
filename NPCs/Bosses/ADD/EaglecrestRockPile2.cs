@@ -76,7 +76,7 @@ namespace Redemption.NPCs.Bosses.ADD
                 AITimer = 1;
             }
             NPC.PlatformFallCheck(ref NPC.Redemption().fallDownPlatform, 20);
-            RedeHelper.HorizontallyMove(NPC, player.Center, 0.14f, 7f + TimerRand, 26, 30, NPC.Center.Y > player.Center.Y);
+            NPCHelper.HorizontallyMove(NPC, player.Center, 0.14f, 7f + TimerRand, 26, 30, NPC.Center.Y > player.Center.Y);
         }
         public override bool? CanFallThroughPlatforms() => NPC.Redemption().fallDownPlatform;
         public override void FindFrame(int frameHeight)

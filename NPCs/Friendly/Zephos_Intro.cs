@@ -13,6 +13,7 @@ using Terraria.GameContent.UI;
 using Redemption.UI;
 using Terraria.GameContent;
 using MonoMod.RuntimeDetour;
+using Redemption.Items.Usable;
 
 namespace Redemption.NPCs.Friendly
 {
@@ -40,8 +41,12 @@ namespace Redemption.NPCs.Friendly
             NPC.noGravity = false;
             NPC.dontTakeDamage = true;
             NPC.alpha = 255;
+            bubble = ModContent.Request<Texture2D>("Redemption/UI/TextBubble_Epidotra").Value;
+            voice = CustomSounds.Voice4 with { Pitch = 0.4f };
         }
         private int Look;
+        private Texture2D bubble;
+        private SoundStyle voice;
         public override void AI()
         {
             if (NPC.target < 0 || NPC.target == 255 || Main.player[NPC.target].dead || !Main.player[NPC.target].active)
@@ -49,8 +54,6 @@ namespace Redemption.NPCs.Friendly
 
             Player player = Main.player[NPC.target];
             NPC portal = Main.npc[(int)NPC.ai[3]];
-            Texture2D bubble = ModContent.Request<Texture2D>("Redemption/UI/TextBubble_Epidotra").Value;
-            SoundStyle voice = CustomSounds.Voice4 with { Pitch = 0.4f };
 
             if (NPC.alpha > 0 && TimerRand < 3)
                 NPC.alpha -= 10;
@@ -170,6 +173,7 @@ namespace Redemption.NPCs.Friendly
                                 Main.dust[dust].velocity *= 3f;
                             }
                             RedeQuest.wayfarerVars[0] = 2;
+                            Item.NewItem(NPC.GetSource_Loot(), NPC.getRect(), ModContent.ItemType<ChaliceFragments>());
                             NPC.active = false;
                             if (Main.netMode == NetmodeID.Server)
                                 NetMessage.SendData(MessageID.WorldData);

@@ -97,6 +97,7 @@ namespace Redemption.NPCs.PreHM
         public override void OnSpawn(IEntitySource source)
         {
             TimerRand = Main.rand.Next(180, 420);
+            NPC.netUpdate = true;
         }
         public override void AI()
         {
@@ -114,19 +115,13 @@ namespace Redemption.NPCs.PreHM
             {
                 NPC.velocity.Y += 0.03f;
                 if (NPC.velocity.Y > .7f)
-                {
                     NPC.ai[3] = 1;
-                    NPC.netUpdate = true;
-                }
             }
             else if (NPC.ai[3] == 1)
             {
                 NPC.velocity.Y -= 0.03f;
                 if (NPC.velocity.Y < -.7f)
-                {
                     NPC.ai[3] = 0;
-                    NPC.netUpdate = true;
-                }
             }
 
             switch (AIState)
@@ -149,6 +144,7 @@ namespace Redemption.NPCs.PreHM
                         AITimer = 0;
                         TimerRand = Main.rand.Next(180, 420);
                         AIState = ActionState.Vanish;
+                        NPC.netUpdate = true;
                     }
                     break;
 
@@ -157,9 +153,8 @@ namespace Redemption.NPCs.PreHM
                     if (NPC.alpha >= 255)
                     {
                         if (((player.ZoneOverworldHeight || player.ZoneSkyHeight) && !Main.LocalPlayer.RedemptionAbility().SpiritwalkerActive) || vanishCounter > 4)
-                        {
                             NPC.active = false;
-                        }
+
                         vanishCounter++;
                         NPC.position = new Vector2(player.Center.X + (600 * NPC.spriteDirection), player.Center.Y + Main.rand.Next(-400, 401));
                         NPC.LookAtEntity(player);

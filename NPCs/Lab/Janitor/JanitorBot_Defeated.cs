@@ -92,7 +92,7 @@ namespace Redemption.NPCs.Lab.Janitor
                                 NPC.netUpdate = true;
                             }
                             NPC.PlatformFallCheck(ref NPC.Redemption().fallDownPlatform, 20);
-                            RedeHelper.HorizontallyMove(NPC, moveTo, 0.4f, 1.4f, 12, 8, NPC.Center.Y > moveTo.Y);
+                            NPCHelper.HorizontallyMove(NPC, moveTo, 0.4f, 1.4f, 12, 8, NPC.Center.Y > moveTo.Y);
                         }
                     }
                     break;
@@ -118,7 +118,7 @@ namespace Redemption.NPCs.Lab.Janitor
                             NPC.netUpdate = true;
                         }
                         NPC.PlatformFallCheck(ref NPC.Redemption().fallDownPlatform, 20);
-                        RedeHelper.HorizontallyMove(NPC, moveTo, 0.4f, 1.4f, 12, 8, NPC.Center.Y > moveTo.Y);
+                        NPCHelper.HorizontallyMove(NPC, moveTo, 0.4f, 1.4f, 12, 8, NPC.Center.Y > moveTo.Y);
                     }
                     break;
                 case 2:

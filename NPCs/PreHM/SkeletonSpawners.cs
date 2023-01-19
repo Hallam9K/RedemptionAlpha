@@ -6,6 +6,7 @@ using Terraria.ModLoader.Utilities;
 using Terraria.Utilities;
 using Microsoft.Xna.Framework;
 using Terraria.DataStructures;
+using System.IO;
 
 namespace Redemption.NPCs.PreHM
 {
@@ -28,9 +29,25 @@ namespace Redemption.NPCs.PreHM
             NPC.lifeMax = 1;
             NPC.aiStyle = -1;
         }
-        public enum SpawnType
+        public enum SpawnType { Noble, Warden, Flagbearer, SmallGroup, Group, LargeGroup }
+        public SpawnType AIState
         {
-            Noble, Warden, Flagbearer, SmallGroup, Group, LargeGroup
+            get => (SpawnType)NPC.ai[0];
+            set => NPC.ai[0] = (int)value;
+        }
+        public ref float TypeNPC => ref NPC.ai[1];
+        private Vector2 Pos;
+        public override void SendExtraAI(BinaryWriter writer)
+        {
+            base.SendExtraAI(writer);
+            if (Main.netMode == NetmodeID.Server || Main.dedServ)
+                writer.WriteVector2(Pos);
+        }
+        public override void ReceiveExtraAI(BinaryReader reader)
+        {
+            base.ReceiveExtraAI(reader);
+            if (Main.netMode == NetmodeID.MultiplayerClient)
+                Pos = reader.ReadVector2();
         }
         public override bool PreAI()
         {
@@ -47,60 +64,72 @@ namespace Redemption.NPCs.PreHM
             NPCType.Add(ModContent.NPCType<SkeletonWarden>());
             NPCType.Add(ModContent.NPCType<EpidotrianSkeleton>());
 
-            Vector2 pos = Vector2.Zero;
-            switch ((SpawnType)SpawnChoice)
+            AIState = SpawnChoice;
+            NPC.netUpdate = true;
+            switch (AIState)
             {
                 case SpawnType.Noble:
                     NPC.SetDefaults(ModContent.NPCType<SkeletonNoble>());
                     (Main.npc[NPC.whoAmI].ModNPC as SkeletonNoble).ChoosePersonality();
                     (Main.npc[NPC.whoAmI].ModNPC as SkeletonNoble).SetStats();
                     NPC.ai[2] = Main.rand.Next(80, 280);
+                    NPC.netUpdate = true;
                     break;
                 case SpawnType.Warden:
                     NPC.SetDefaults(ModContent.NPCType<SkeletonWarden>());
                     (Main.npc[NPC.whoAmI].ModNPC as SkeletonWarden).ChoosePersonality();
                     (Main.npc[NPC.whoAmI].ModNPC as SkeletonWarden).SetStats();
                     NPC.ai[2] = Main.rand.Next(80, 280);
+                    NPC.netUpdate = true;
                     break;
                 case SpawnType.Flagbearer:
                     NPC.SetDefaults(ModContent.NPCType<SkeletonFlagbearer>());
                     (Main.npc[NPC.whoAmI].ModNPC as SkeletonFlagbearer).ChoosePersonality();
                     (Main.npc[NPC.whoAmI].ModNPC as SkeletonFlagbearer).SetStats();
                     NPC.ai[2] = Main.rand.Next(80, 280);
+                    NPC.netUpdate = true;
                     break;
                 case SpawnType.SmallGroup:
                     if (Main.rand.NextBool(2))
                     {
-                        pos = RedeHelper.FindGround(NPC, 10);
-                        RedeHelper.SpawnNPC(new EntitySource_SpawnNPC(), (int)pos.X * 16, (int)pos.Y * 16, ModContent.NPCType<SkeletonFlagbearer>());
+                        Pos = NPCHelper.FindGround(NPC, 10);
+                        NPC.netUpdate = true;
+                        RedeHelper.SpawnNPC(new EntitySource_SpawnNPC(), (int)Pos.X * 16, (int)Pos.Y * 16, ModContent.NPCType<SkeletonFlagbearer>());
                     }
                     for (int i = 0; i < 2; i++)
                     {
-                        pos = RedeHelper.FindGround(NPC, 5);
-                        RedeHelper.SpawnNPC(new EntitySource_SpawnNPC(), (int)pos.X * 16, (int)pos.Y * 16, NPCType);
+                        TypeNPC = NPCType;
+                        Pos = NPCHelper.FindGround(NPC, 5);
+                        NPC.netUpdate = true;
+                        RedeHelper.SpawnNPC(new EntitySource_SpawnNPC(), (int)Pos.X * 16, (int)Pos.Y * 16, (int)TypeNPC);
                     }
                     NPC.active = false;
                     break;
                 case SpawnType.Group:
                     if (!Main.rand.NextBool(3))
                     {
-                        pos = RedeHelper.FindGround(NPC, 10);
-                        RedeHelper.SpawnNPC(new EntitySource_SpawnNPC(), (int)pos.X * 16, (int)pos.Y * 16, ModContent.NPCType<SkeletonFlagbearer>());
+                        Pos = NPCHelper.FindGround(NPC, 10);
+                        NPC.netUpdate = true;
+                        RedeHelper.SpawnNPC(new EntitySource_SpawnNPC(), (int)Pos.X * 16, (int)Pos.Y * 16, ModContent.NPCType<SkeletonFlagbearer>());
                     }
                     for (int i = 0; i < 3; i++)
                     {
-                        pos = RedeHelper.FindGround(NPC, 8);
-                        RedeHelper.SpawnNPC(new EntitySource_SpawnNPC(), (int)pos.X * 16, (int)pos.Y * 16, NPCType);
+                        TypeNPC = NPCType;
+                        Pos = NPCHelper.FindGround(NPC, 8);
+                        NPC.netUpdate = true;
+                        RedeHelper.SpawnNPC(new EntitySource_SpawnNPC(), (int)Pos.X * 16, (int)Pos.Y * 16, (int)TypeNPC);
                     }
                     NPC.active = false;
                     break;
                 case SpawnType.LargeGroup:
-                    pos = RedeHelper.FindGround(NPC, 10);
-                    RedeHelper.SpawnNPC(new EntitySource_SpawnNPC(), (int)pos.X * 16, (int)pos.Y * 16, ModContent.NPCType<SkeletonFlagbearer>());
+                    Pos = NPCHelper.FindGround(NPC, 10);
+                    RedeHelper.SpawnNPC(new EntitySource_SpawnNPC(), (int)Pos.X * 16, (int)Pos.Y * 16, ModContent.NPCType<SkeletonFlagbearer>());
                     for (int i = 0; i < 5; i++)
                     {
-                        pos = RedeHelper.FindGround(NPC, 10);
-                        RedeHelper.SpawnNPC(new EntitySource_SpawnNPC(), (int)pos.X * 16, (int)pos.Y * 16, NPCType);
+                        TypeNPC = NPCType;
+                        Pos = NPCHelper.FindGround(NPC, 10);
+                        NPC.netUpdate = true;
+                        RedeHelper.SpawnNPC(new EntitySource_SpawnNPC(), (int)Pos.X * 16, (int)Pos.Y * 16, (int)TypeNPC);
                     }
                     NPC.active = false;
                     break;
@@ -133,9 +162,25 @@ namespace Redemption.NPCs.PreHM
             NPC.lifeMax = 1;
             NPC.aiStyle = -1;
         }
-        public enum SpawnType
+        public enum SpawnType { Normal, Wanderer, Assassin, Duelist, SmallGroup, Group, LargeGroup, Dance }
+        public SpawnType AIState
         {
-            Normal, Wanderer, Assassin, Duelist, SmallGroup, Group, LargeGroup, Dance
+            get => (SpawnType)NPC.ai[0];
+            set => NPC.ai[0] = (int)value;
+        }
+        public ref float TypeNPC => ref NPC.ai[1];
+        private Vector2 Pos;
+        public override void SendExtraAI(BinaryWriter writer)
+        {
+            base.SendExtraAI(writer);
+            if (Main.netMode == NetmodeID.Server || Main.dedServ)
+                writer.WriteVector2(Pos);
+        }
+        public override void ReceiveExtraAI(BinaryReader reader)
+        {
+            base.ReceiveExtraAI(reader);
+            if (Main.netMode == NetmodeID.MultiplayerClient)
+                Pos = reader.ReadVector2();
         }
         public override bool PreAI()
         {
@@ -156,7 +201,9 @@ namespace Redemption.NPCs.PreHM
             NPCType.Add(ModContent.NPCType<SkeletonDuelist>());
             NPCType.Add(ModContent.NPCType<EpidotrianSkeleton>());
 
-            switch ((SpawnType)choice)
+            AIState = choice;
+            NPC.netUpdate = true;
+            switch (AIState)
             {
                 case SpawnType.Normal:
                     NPC.SetDefaults(ModContent.NPCType<EpidotrianSkeleton>());
@@ -164,12 +211,14 @@ namespace Redemption.NPCs.PreHM
                     (Main.npc[NPC.whoAmI].ModNPC as EpidotrianSkeleton).SetStats();
                     NPC.ai[2] = Main.rand.Next(80, 280);
                     NPC.alpha = 0;
+                    NPC.netUpdate = true;
                     break;
                 case SpawnType.Wanderer:
                     NPC.SetDefaults(ModContent.NPCType<SkeletonWanderer>());
                     (Main.npc[NPC.whoAmI].ModNPC as SkeletonWanderer).ChoosePersonality();
                     (Main.npc[NPC.whoAmI].ModNPC as SkeletonWanderer).SetStats();
                     NPC.ai[2] = Main.rand.Next(80, 280);
+                    NPC.netUpdate = true;
                     break;
                 case SpawnType.Assassin:
                     NPC.SetDefaults(ModContent.NPCType<SkeletonAssassin>());
@@ -177,40 +226,49 @@ namespace Redemption.NPCs.PreHM
                     (Main.npc[NPC.whoAmI].ModNPC as SkeletonAssassin).SetStats();
                     NPC.ai[2] = Main.rand.Next(80, 280);
                     NPC.ai[0] = Main.rand.NextBool(2) ? 0 : 2;
+                    NPC.netUpdate = true;
                     break;
                 case SpawnType.Duelist:
                     NPC.SetDefaults(ModContent.NPCType<SkeletonDuelist>());
                     (Main.npc[NPC.whoAmI].ModNPC as SkeletonDuelist).ChoosePersonality();
                     (Main.npc[NPC.whoAmI].ModNPC as SkeletonDuelist).SetStats();
                     NPC.ai[2] = Main.rand.Next(80, 280);
+                    NPC.netUpdate = true;
                     break;
                 case SpawnType.SmallGroup:
                     for (int i = 0; i < Main.rand.Next(2, 4); i++)
                     {
-                        Vector2 pos = RedeHelper.FindGround(NPC, 5);
-                        RedeHelper.SpawnNPC(new EntitySource_SpawnNPC(), (int)pos.X * 16, (int)pos.Y * 16, NPCType);
+                        TypeNPC = NPCType;
+                        Pos = NPCHelper.FindGround(NPC, 5);
+                        NPC.netUpdate = true;
+                        RedeHelper.SpawnNPC(new EntitySource_SpawnNPC(), (int)Pos.X * 16, (int)Pos.Y * 16, (int)TypeNPC);
                     }
                     NPC.active = false;
                     break;
                 case SpawnType.Group:
                     for (int i = 0; i < Main.rand.Next(4, 6); i++)
                     {
-                        Vector2 pos = RedeHelper.FindGround(NPC, 8);
-                        RedeHelper.SpawnNPC(new EntitySource_SpawnNPC(), (int)pos.X * 16, (int)pos.Y * 16, NPCType);
+                        TypeNPC = NPCType;
+                        Pos = NPCHelper.FindGround(NPC, 8);
+                        NPC.netUpdate = true;
+                        RedeHelper.SpawnNPC(new EntitySource_SpawnNPC(), (int)Pos.X * 16, (int)Pos.Y * 16, (int)TypeNPC);
                     }
                     NPC.active = false;
                     break;
                 case SpawnType.LargeGroup:
                     for (int i = 0; i < Main.rand.Next(6, 8); i++)
                     {
-                        Vector2 pos = RedeHelper.FindGround(NPC, 10);
-                        RedeHelper.SpawnNPC(new EntitySource_SpawnNPC(), (int)pos.X * 16, (int)pos.Y * 16, NPCType);
+                        TypeNPC = NPCType;
+                        Pos = NPCHelper.FindGround(NPC, 10);
+                        NPC.netUpdate = true;
+                        RedeHelper.SpawnNPC(new EntitySource_SpawnNPC(), (int)Pos.X * 16, (int)Pos.Y * 16, (int)TypeNPC);
                     }
                     NPC.active = false;
                     break;
                 case SpawnType.Dance:
                     NPC.SetDefaults(ModContent.NPCType<DancingSkeleton>());
                     NPC.ai[3] = 1;
+                    NPC.netUpdate = true;
                     break;
             }
             return true;
@@ -242,9 +300,25 @@ namespace Redemption.NPCs.PreHM
             NPC.lifeMax = 1;
             NPC.aiStyle = -1;
         }
-        public enum SpawnType
+        public enum SpawnType { SmallGroup, Group, LargeGroup }
+        public SpawnType AIState
         {
-            SmallGroup, Group, LargeGroup
+            get => (SpawnType)NPC.ai[0];
+            set => NPC.ai[0] = (int)value;
+        }
+        public ref float TypeNPC => ref NPC.ai[1];
+        private Vector2 Pos;
+        public override void SendExtraAI(BinaryWriter writer)
+        {
+            base.SendExtraAI(writer);
+            if (Main.netMode == NetmodeID.Server || Main.dedServ)
+                writer.WriteVector2(Pos);
+        }
+        public override void ReceiveExtraAI(BinaryReader reader)
+        {
+            base.ReceiveExtraAI(reader);
+            if (Main.netMode == NetmodeID.MultiplayerClient)
+                Pos = reader.ReadVector2();
         }
         public override bool PreAI()
         {
@@ -255,36 +329,43 @@ namespace Redemption.NPCs.PreHM
 
             int NPCType = ModContent.NPCType<RaveyardSkeleton>();
 
-            Vector2 pos = Vector2.Zero;
+            AIState = SpawnChoice;
+            NPC.netUpdate = true;
             switch ((SpawnType)SpawnChoice)
             {
                 case SpawnType.SmallGroup:
-                    pos = RedeHelper.FindGround(NPC, 15);
-                    RedeHelper.SpawnNPC(new EntitySource_SpawnNPC(), (int)pos.X * 16, (int)pos.Y * 16, NPCType);
+                    Pos = NPCHelper.FindGround(NPC, 15);
+                    NPC.netUpdate = true;
+                    RedeHelper.SpawnNPC(new EntitySource_SpawnNPC(), (int)Pos.X * 16, (int)Pos.Y * 16, NPCType);
                     for (int i = 0; i < 2; i++)
                     {
-                        pos = RedeHelper.FindGround(NPC, 15);
-                        RedeHelper.SpawnNPC(new EntitySource_SpawnNPC(), (int)pos.X * 16, (int)pos.Y * 16, NPCType, ai2: 1);
+                        Pos = NPCHelper.FindGround(NPC, 15);
+                        NPC.netUpdate = true;
+                        RedeHelper.SpawnNPC(new EntitySource_SpawnNPC(), (int)Pos.X * 16, (int)Pos.Y * 16, NPCType, ai2: 1);
                     }
                     NPC.active = false;
                     break;
                 case SpawnType.Group:
-                    pos = RedeHelper.FindGround(NPC, 15);
-                    RedeHelper.SpawnNPC(new EntitySource_SpawnNPC(), (int)pos.X * 16, (int)pos.Y * 16, NPCType);
+                    Pos = NPCHelper.FindGround(NPC, 15);
+                    NPC.netUpdate = true;
+                    RedeHelper.SpawnNPC(new EntitySource_SpawnNPC(), (int)Pos.X * 16, (int)Pos.Y * 16, NPCType);
                     for (int i = 0; i < 3; i++)
                     {
-                        pos = RedeHelper.FindGround(NPC, 15);
-                        RedeHelper.SpawnNPC(new EntitySource_SpawnNPC(), (int)pos.X * 16, (int)pos.Y * 16, NPCType, ai2: 1);
+                        Pos = NPCHelper.FindGround(NPC, 15);
+                        NPC.netUpdate = true;
+                        RedeHelper.SpawnNPC(new EntitySource_SpawnNPC(), (int)Pos.X * 16, (int)Pos.Y * 16, NPCType, ai2: 1);
                     }
                     NPC.active = false;
                     break;
                 case SpawnType.LargeGroup:
-                    pos = RedeHelper.FindGround(NPC, 15);
-                    RedeHelper.SpawnNPC(new EntitySource_SpawnNPC(), (int)pos.X * 16, (int)pos.Y * 16, NPCType);
+                    Pos = NPCHelper.FindGround(NPC, 15);
+                    NPC.netUpdate = true;
+                    RedeHelper.SpawnNPC(new EntitySource_SpawnNPC(), (int)Pos.X * 16, (int)Pos.Y * 16, NPCType);
                     for (int i = 0; i < 5; i++)
                     {
-                        pos = RedeHelper.FindGround(NPC, 15);
-                        RedeHelper.SpawnNPC(new EntitySource_SpawnNPC(), (int)pos.X * 16, (int)pos.Y * 16, NPCType, ai2: 1);
+                        Pos = NPCHelper.FindGround(NPC, 15);
+                        NPC.netUpdate = true;
+                        RedeHelper.SpawnNPC(new EntitySource_SpawnNPC(), (int)Pos.X * 16, (int)Pos.Y * 16, NPCType, ai2: 1);
                     }
                     NPC.active = false;
                     break;

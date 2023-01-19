@@ -14,6 +14,7 @@ using Redemption.Projectiles.Hostile;
 using Redemption.Projectiles.Minions;
 using Redemption.UI;
 using System;
+using System.IO;
 using System.Linq;
 using Terraria;
 using Terraria.Audio;
@@ -159,6 +160,7 @@ namespace Redemption.NPCs.PreHM
 
             TimerRand = Main.rand.Next(80, 280);
             NPC.alpha = 0;
+            NPC.netUpdate = true;
         }
         public void Emotes()
         {
@@ -197,6 +199,32 @@ namespace Redemption.NPCs.PreHM
                 EmoteBubble.NewBubble(emoteID, new WorldUIAnchor(NPC), 120);
             }
         }
+        public override void SendExtraAI(BinaryWriter writer)
+        {
+            base.SendExtraAI(writer);
+            if (Main.netMode == NetmodeID.Server || Main.dedServ)
+            {
+                writer.Write(HairExtType);
+                writer.Write(HasHat);
+                writer.Write(EyeType);
+                writer.Write(HairType);
+                writer.Write(FlowerType);
+                writer.WriteVector2(moveTo);
+            }
+        }
+        public override void ReceiveExtraAI(BinaryReader reader)
+        {
+            base.ReceiveExtraAI(reader);
+            if (Main.netMode == NetmodeID.MultiplayerClient)
+            {
+                HairExtType = reader.ReadInt32();
+                HasHat = reader.ReadBoolean();
+                EyeType = reader.ReadInt32();
+                HairType = reader.ReadInt32();
+                FlowerType = reader.ReadInt32();
+                moveTo = reader.ReadVector2();
+            }
+        }
         private int YippieeTimer;
         public override void AI()
         {
@@ -226,6 +254,7 @@ namespace Redemption.NPCs.PreHM
                         AITimer = 0;
                         TimerRand = Main.rand.Next(120, 260);
                         AIState = ActionState.Wander;
+                        NPC.netUpdate = true;
                     }
                     if (Main.rand.NextBool(300) && Personality is PersonalityState.Jolly && BaseAI.HitTileOnSide(NPC, 3))
                         YippieeTimer = 1;
@@ -251,6 +280,7 @@ namespace Redemption.NPCs.PreHM
                         AITimer = 0;
                         TimerRand = Main.rand.Next(3000, 6000);
                         AIState = ActionState.Sleeping;
+                        NPC.netUpdate = true;
                     }
 
                     Emotes();
@@ -267,11 +297,12 @@ namespace Redemption.NPCs.PreHM
                         AITimer = 0;
                         TimerRand = Main.rand.Next(80, 280);
                         AIState = ActionState.Idle;
+                        NPC.netUpdate = true;
                     }
                     BaseAI.AttemptOpenDoor(NPC, ref doorVars[0], ref doorVars[1], ref doorVars[2], 80, 1, 10, interactDoorStyle: 2);
 
                     NPC.PlatformFallCheck(ref NPC.Redemption().fallDownPlatform, 20, moveTo.Y * 16);
-                    RedeHelper.HorizontallyMove(NPC, moveTo * 16, 0.4f, 1 * SpeedMultiplier, 12, 8, NPC.Center.Y > moveTo.Y * 16);
+                    NPCHelper.HorizontallyMove(NPC, moveTo * 16, 0.4f, 1 * SpeedMultiplier, 12, 8, NPC.Center.Y > moveTo.Y * 16);
                     break;
 
                 case ActionState.Alert:
@@ -286,6 +317,7 @@ namespace Redemption.NPCs.PreHM
                         AITimer = 0;
                         TimerRand = Main.rand.Next(120, 260);
                         AIState = ActionState.Wander;
+                        NPC.netUpdate = true;
                         break;
                     }
                     NPC.LookAtEntity(globalNPC.attacker);
@@ -362,6 +394,7 @@ namespace Redemption.NPCs.PreHM
                         AITimer = 0;
                         TimerRand = Main.rand.Next(120, 260);
                         AIState = ActionState.Wander;
+                        NPC.netUpdate = true;
                     }
                     EyeState = 0;
                     BaseAI.AttemptOpenDoor(NPC, ref doorVars[0], ref doorVars[1], ref doorVars[2], 80, 1, 10, interactDoorStyle: 2);
@@ -383,15 +416,16 @@ namespace Redemption.NPCs.PreHM
                     {
                         AITimer = 0;
                         AIState = ActionState.RootAtk;
+                        NPC.netUpdate = true;
                     }
 
                     NPC.PlatformFallCheck(ref NPC.Redemption().fallDownPlatform, 20);
                     if ((globalNPC.attacker is NPC attackerNPC && attackerNPC.life >= NPC.life) || Personality is PersonalityState.Shy)
                     {
-                        RedeHelper.HorizontallyMove(NPC, new Vector2(globalNPC.attacker.Center.X < NPC.Center.X ? NPC.Center.X + 100 : NPC.Center.X - 100, NPC.Center.Y), 0.2f, 2f * SpeedMultiplier, 12, 8, NPC.Center.Y > globalNPC.attacker.Center.Y);
+                        NPCHelper.HorizontallyMove(NPC, new Vector2(globalNPC.attacker.Center.X < NPC.Center.X ? NPC.Center.X + 100 : NPC.Center.X - 100, NPC.Center.Y), 0.2f, 2f * SpeedMultiplier, 12, 8, NPC.Center.Y > globalNPC.attacker.Center.Y);
                         break;
                     }
-                    RedeHelper.HorizontallyMove(NPC, globalNPC.attacker.Center, 0.2f, 2f * SpeedMultiplier, 12, 8, NPC.Center.Y > globalNPC.attacker.Center.Y);
+                    NPCHelper.HorizontallyMove(NPC, globalNPC.attacker.Center, 0.2f, 2f * SpeedMultiplier, 12, 8, NPC.Center.Y > globalNPC.attacker.Center.Y);
                     break;
 
                 case ActionState.Slash:
@@ -402,6 +436,7 @@ namespace Redemption.NPCs.PreHM
                         moveTo = NPC.FindGround(20);
                         TimerRand = Main.rand.Next(120, 260);
                         AIState = ActionState.Wander;
+                        NPC.netUpdate = true;
                     }
                     NPC.LookAtEntity(globalNPC.attacker);
                     Rectangle SlashHitbox = new((int)(NPC.spriteDirection == -1 ? NPC.Center.X - 50 : NPC.Center.X), (int)(NPC.Center.Y - 33), 50, 80);
@@ -445,6 +480,7 @@ namespace Redemption.NPCs.PreHM
                         moveTo = NPC.FindGround(20);
                         TimerRand = Main.rand.Next(120, 260);
                         AIState = ActionState.Wander;
+                        NPC.netUpdate = true;
                     }
                     EyeState = 1;
                     for (int i = 0; i < 2; i++)
@@ -511,6 +547,7 @@ namespace Redemption.NPCs.PreHM
                         AITimer = 0;
                         TimerRand = Main.rand.Next(120, 260);
                         AIState = ActionState.Idle;
+                        NPC.netUpdate = true;
                     }
                     if (AITimer % 300 == 0)
                         EmoteBubble.NewBubble(89, new WorldUIAnchor(NPC), 180);
@@ -521,6 +558,7 @@ namespace Redemption.NPCs.PreHM
                         AITimer = 0;
                         TimerRand = Main.rand.Next(120, 260);
                         AIState = ActionState.Idle;
+                        NPC.netUpdate = true;
                     }
                     break;
 
@@ -711,6 +749,7 @@ namespace Redemption.NPCs.PreHM
                     AITimer = 0;
                     TimerRand = 0;
                     AIState = ActionState.Alert;
+                    NPC.netUpdate = true;
                 }
             }
             if (gotNPC != -1 && NPC.Sight(Main.npc[gotNPC], VisionRange, EyeType != 4, EyeType != 4, false, EyeType == 4, headOffset: 30))
@@ -720,6 +759,7 @@ namespace Redemption.NPCs.PreHM
                 AITimer = 0;
                 TimerRand = 0;
                 AIState = ActionState.Alert;
+                NPC.netUpdate = true;
             }
         }
         public void ChoosePersonality()
@@ -750,6 +790,7 @@ namespace Redemption.NPCs.PreHM
             choice.Add(PersonalityState.Jolly, 3);
 
             Personality = choice;
+            NPC.netUpdate = true;
         }
         public void SetStats()
         {
@@ -787,6 +828,7 @@ namespace Redemption.NPCs.PreHM
                 VisionRange = 100;
             else
                 VisionRange = 600 + VisionIncrease;
+            NPC.netUpdate = true;
         }
         int regenTimer;
         public void RegenCheck()

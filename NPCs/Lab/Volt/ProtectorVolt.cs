@@ -256,7 +256,7 @@ namespace Redemption.NPCs.Lab.Volt
 
                     if (AITimer >= 40 && AITimer % (TimerRand == 0 ? 10 : 20) == 0 && Main.netMode != NetmodeID.MultiplayerClient)
                     {
-                        int proj = Projectile.NewProjectile(NPC.GetSource_FromAI(), GunOrigin, RedeHelper.PolarVector(TimerRand == 0 ? 14 : 15, gunRot), ProjectileID.MartianTurretBolt, RedeHelper.HostileProjDamage(NPC.damage), 0, Main.myPlayer);
+                        int proj = Projectile.NewProjectile(NPC.GetSource_FromAI(), GunOrigin, RedeHelper.PolarVector(TimerRand == 0 ? 14 : 15, gunRot), ProjectileID.MartianTurretBolt, NPCHelper.HostileProjDamage(NPC.damage), 0, Main.myPlayer);
                         Main.projectile[proj].tileCollide = false;
                         Main.projectile[proj].timeLeft = 200;
                         Main.projectile[proj].netUpdate2 = true;
