@@ -164,7 +164,7 @@ namespace Redemption.NPCs.Soulless
                                 NPC.netUpdate = true;
                             }
                             else
-                                RedeHelper.HorizontallyMove(NPC, new Vector2(447, 799) * 16, 0.4f, 1, 12, 12, NPC.Center.Y > player.Center.Y);
+                                NPCHelper.HorizontallyMove(NPC, new Vector2(447, 799) * 16, 0.4f, 1, 12, 12, NPC.Center.Y > player.Center.Y);
                             break;
                         case 1:
                             if (AITimer++ >= 30 && AITimer % 10 == 0 && AITimer < 90)
@@ -196,7 +196,7 @@ namespace Redemption.NPCs.Soulless
                                     NetMessage.SendData(MessageID.SyncNPC, number: NPC.whoAmI);
                             }
                             else
-                                RedeHelper.HorizontallyMove(NPC, new Vector2(534, 802) * 16, 0.4f, 1, 12, 12, NPC.Center.Y > player.Center.Y);
+                                NPCHelper.HorizontallyMove(NPC, new Vector2(534, 802) * 16, 0.4f, 1, 12, 12, NPC.Center.Y > player.Center.Y);
                             break;
                     }
                     break;
@@ -228,8 +228,8 @@ namespace Redemption.NPCs.Soulless
                     }
                     BaseAI.AttemptOpenDoor(NPC, ref doorVars[0], ref doorVars[1], ref doorVars[2], 80, 1, interactDoorStyle: 2);
 
-                    NPC.PlatformFallCheck(ref NPC.Redemption().fallDownPlatform, 20);
-                    RedeHelper.HorizontallyMove(NPC, moveTo * 16, 0.4f, 1, 12, 12, NPC.Center.Y > player.Center.Y);
+                    NPC.PlatformFallCheck(ref NPC.Redemption().fallDownPlatform, 20, moveTo.Y * 16);
+                    NPCHelper.HorizontallyMove(NPC, moveTo * 16, 0.4f, 1, 12, 12, NPC.Center.Y > moveTo.Y * 16);
                     break;
 
                 case ActionState.Alert:
@@ -288,7 +288,7 @@ namespace Redemption.NPCs.Soulless
                     }
 
                     NPC.PlatformFallCheck(ref NPC.Redemption().fallDownPlatform, 20);
-                    RedeHelper.HorizontallyMove(NPC, globalNPC.attacker.Center, 0.2f, 3.5f, 12, 12, NPC.Center.Y > globalNPC.attacker.Center.Y);
+                    NPCHelper.HorizontallyMove(NPC, globalNPC.attacker.Center, 0.2f, 3.5f, 12, 12, NPC.Center.Y > globalNPC.attacker.Center.Y);
                     break;
 
                 case ActionState.Slash:
@@ -477,8 +477,6 @@ namespace Redemption.NPCs.Soulless
         public override bool CanHitPlayer(Player target, ref int cooldownSlot) => false;
         public override void OnKill()
         {
-            for (int i = 0; i < 50; i++)
-                Main.BestiaryTracker.Kills.RegisterKill(NPC);
             for (int i = 0; i < 5; i++)
                 RedeHelper.SpawnNPC(NPC.GetSource_FromAI(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<ShadesoulNPC>(), Main.rand.NextFloat(0, 0.8f));
 
@@ -499,6 +497,7 @@ namespace Redemption.NPCs.Soulless
         }
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
         {
+            bestiaryEntry.UIInfoProvider = new CustomCollectionInfoProvider(ContentSamples.NpcBestiaryCreditIdsByNpcNetIds[Type], true, 1);
             bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[]
             {
                 new FlavorTextBestiaryInfoElement(

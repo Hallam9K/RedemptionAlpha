@@ -12,6 +12,7 @@ using Terraria.GameContent.Bestiary;
 using Redemption.Biomes;
 using ParticleLibrary;
 using Redemption.Particles;
+using Redemption.Globals.NPC;
 
 namespace Redemption.NPCs.Soulless
 {
@@ -139,8 +140,7 @@ namespace Redemption.NPCs.Soulless
                             NPC.alpha += 2;
                             if (NPC.alpha >= 255)
                             {
-                                for (int i = 0; i < 50; i++)
-                                    Main.BestiaryTracker.Kills.RegisterKill(NPC);
+                                Main.BestiaryTracker.Kills.RegisterKill(NPC);
                                 CombatText.NewText(NPC.getRect(), Color.GhostWhite, "Kliq...", true, false);
                                 NPC.active = false;
                             }
@@ -189,6 +189,7 @@ namespace Redemption.NPCs.Soulless
         }
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
         {
+            bestiaryEntry.UIInfoProvider = new CustomCollectionInfoProvider(ContentSamples.NpcBestiaryCreditIdsByNpcNetIds[Type], true, 1);
             bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[]
             {
                 new FlavorTextBestiaryInfoElement("Spirits of those freed of sorrow. They offer light to the misplaced and misfortuned, a miracle in the darkest depths. Their guidance, however, is seldom understood for newcomers, for the ancient tongue of which they speak has been lost to the ages.")

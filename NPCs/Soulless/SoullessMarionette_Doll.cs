@@ -12,6 +12,7 @@ using Redemption.Buffs.Debuffs;
 using Redemption.Buffs.NPCBuffs;
 using Redemption.Particles;
 using ParticleLibrary;
+using Redemption.Globals.NPC;
 
 namespace Redemption.NPCs.Soulless
 {
@@ -105,6 +106,7 @@ namespace Redemption.NPCs.Soulless
         }
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
         {
+            bestiaryEntry.UIInfoProvider = new CustomCollectionInfoProvider(ContentSamples.NpcBestiaryCreditIdsByNpcNetIds[Type], false, 10);
             bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[]
             {
                 new FlavorTextBestiaryInfoElement("A puppet on strings, bound by a cross. It wants to be free. Will you give it freedom? Will you cut the master's strings that hold their souls in stasis?"),

@@ -118,7 +118,7 @@ namespace Redemption.NPCs.Soulless
                         AIState = ActionState.Idle;
                     }
 
-                    RedeHelper.HorizontallyMove(NPC, moveTo * 16, 0.2f, 1.4f, 6, 6, false);
+                    NPCHelper.HorizontallyMove(NPC, moveTo * 16, 0.2f, 1.4f, 6, 6, false);
                     break;
 
                 case ActionState.Alert:
@@ -138,7 +138,7 @@ namespace Redemption.NPCs.Soulless
                     else if (runCooldown > 0)
                         runCooldown--;
 
-                    RedeHelper.HorizontallyMove(NPC, new Vector2(globalNPC.attacker.Center.X < NPC.Center.X ? NPC.Center.X + 100
+                    NPCHelper.HorizontallyMove(NPC, new Vector2(globalNPC.attacker.Center.X < NPC.Center.X ? NPC.Center.X + 100
                         : NPC.Center.X - 100, NPC.Center.Y), 0.2f, 3f, 8, 8, NPC.Center.Y > globalNPC.attacker.Center.Y);
                     break;
                 case ActionState.Hop:
