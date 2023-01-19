@@ -61,6 +61,7 @@ namespace Redemption.Items
             SoullessArea.soullessBools[2] = false;
             SoullessArea.soullessInts[0] = 0;
             SoullessArea.soullessInts[1] = 0;
+            RedeQuest.forestNymphVar = 0;
             RedeBossDowned.downedGGBossFirst = 0;
 
             if (Main.netMode == NetmodeID.Server)

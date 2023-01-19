@@ -365,6 +365,12 @@ namespace Redemption
         public UserInterface CyberTeleporterUILayer;
         public CyberTeleporterUI CyberTeleporterUIElement;
 
+        public UserInterface YesNoUILayer;
+        public YesNoUI YesNoUIElement;
+
+        public UserInterface ForestNymphTradeUILayer;
+        public ForestNymphTradeUI ForestNymphTradeUIElement;
+
         public static TrailManager TrailManager;
         public bool Initialized;
 
@@ -405,6 +411,14 @@ namespace Redemption
                 CyberTeleporterUILayer = new UserInterface();
                 CyberTeleporterUIElement = new CyberTeleporterUI();
                 CyberTeleporterUILayer.SetState(CyberTeleporterUIElement);
+
+                YesNoUILayer = new UserInterface();
+                YesNoUIElement = new YesNoUI();
+                YesNoUILayer.SetState(YesNoUIElement);
+
+                ForestNymphTradeUILayer = new UserInterface();
+                ForestNymphTradeUIElement = new ForestNymphTradeUI();
+                ForestNymphTradeUILayer.SetState(ForestNymphTradeUIElement);
             }
         }
         private void LoadTrailManager(On.Terraria.Main.orig_Update orig, Main self, GameTime gameTime)
@@ -510,7 +524,7 @@ namespace Redemption
         }
         public override void ModifyTransformMatrix(ref SpriteViewMatrix Transform)
         {
-            if (Main.gameMenu)
+            if (Main.gameMenu || RedeConfigClient.Instance.CameraLockDisable)
                 return;
 
             Player player = Main.LocalPlayer;
@@ -629,6 +643,8 @@ namespace Redemption
                 AddInterfaceLayer(layers, NukeUILayer, NukeUIElement, MouseTextIndex + 4, NukeDetonationUI.Visible, "Nuke UI");
                 AddInterfaceLayer(layers, CyberTeleporterUILayer, CyberTeleporterUIElement, MouseTextIndex + 5, CyberTeleporterUI.Visible, "Cyber Teleporter UI");
                 AddInterfaceLayer(layers, TextBubbleUILayer, TextBubbleUIElement, MouseTextIndex + 6, TextBubbleUI.Visible, "Text Bubble");
+                AddInterfaceLayer(layers, YesNoUILayer, YesNoUIElement, MouseTextIndex + 7, YesNoUI.Visible, "Yes No Choice");
+                AddInterfaceLayer(layers, ForestNymphTradeUILayer, ForestNymphTradeUIElement, MouseTextIndex + 8, ForestNymphTradeUI.Visible, "Nymph Trade");
             }
         }
 

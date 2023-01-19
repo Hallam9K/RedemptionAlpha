@@ -500,7 +500,6 @@ namespace Redemption.NPCs.Bosses.Thorn
                             NPC.Shoot(NPC.Center, ModContent.ProjectileType<ManaBarrier>(), 0, Vector2.Zero, true, SoundID.Item29, NPC.whoAmI);
                         }
                     }
-
                     if (AITimer >= 220)
                     {
                         barrierSpawn = true;

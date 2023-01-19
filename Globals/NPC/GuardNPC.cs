@@ -32,7 +32,7 @@ namespace Redemption.Globals.NPC
             if (npc.RedemptionNPCBuff().brokenArmor || npc.RedemptionNPCBuff().stunned || GuardPierce)
             {
                 vanillaDamage = true;
-                damage /= 2;
+                damage /= 4;
                 knockback /= 2;
                 GuardPierce = false;
                 return;

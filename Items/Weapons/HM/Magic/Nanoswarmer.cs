@@ -32,7 +32,7 @@ namespace Redemption.Items.Weapons.HM.Magic
             Item.noMelee = true;
             Item.knockBack = 0;
             Item.value = Item.sellPrice(0, 15, 0, 0);
-            Item.rare = ItemRarityID.Cyan;
+            Item.rare = ItemRarityID.LightPurple;
             Item.UseSound = SoundID.Item40;
             Item.autoReuse = true;
             Item.shoot = ModContent.ProjectileType<Nanite_Proj>();

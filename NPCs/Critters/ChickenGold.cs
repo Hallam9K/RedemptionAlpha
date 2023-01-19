@@ -210,7 +210,7 @@ namespace Redemption.NPCs.Critters
                         AIState = ActionState.Idle;
                     }
 
-                    RedeHelper.HorizontallyMove(NPC, moveTo * 16, 0.2f, 1, 6, 6, false);
+                    NPCHelper.HorizontallyMove(NPC, moveTo * 16, 0.2f, 1, 6, 6, false);
                     break;
 
                 case ActionState.Alert:
@@ -231,7 +231,7 @@ namespace Redemption.NPCs.Critters
                     if (Main.rand.NextBool(20) && NPC.velocity.Length() >= 2)
                         Dust.NewDust(NPC.position, NPC.width, NPC.height, ModContent.DustType<ChickenFeatherDust5>());
 
-                    RedeHelper.HorizontallyMove(NPC, new Vector2(globalNPC.attacker.Center.X < NPC.Center.X ? NPC.Center.X + 100
+                    NPCHelper.HorizontallyMove(NPC, new Vector2(globalNPC.attacker.Center.X < NPC.Center.X ? NPC.Center.X + 100
                         : NPC.Center.X - 100, NPC.Center.Y), 0.2f, 2.5f, 8, 8, NPC.Center.Y > globalNPC.attacker.Center.Y);
                     break;
             }

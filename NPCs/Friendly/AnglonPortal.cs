@@ -54,8 +54,10 @@ namespace Redemption.NPCs.Friendly
         {
             NPC.dontTakeDamage = true;
             NPC.rotation += .02f;
+            Player player = Main.player[NPC.target];
+            if (NPC.target < 0 || NPC.target == 255 || player.dead || !player.active)
+                NPC.TargetClosest();
 
-            Player player = Main.player[RedeHelper.GetNearestAlivePlayer(NPC)];
             if (RedeQuest.wayfarerVars[0] == 1 && NPC.DistanceSQ(player.Center) < 200 * 200)
             {
                 if (player.active && !player.dead && !RedeHelper.BossActive() && !NPC.AnyNPCs(ModContent.NPCType<Daerel_Intro>()) && !NPC.AnyNPCs(ModContent.NPCType<Zephos_Intro>()))

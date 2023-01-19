@@ -21,7 +21,7 @@ namespace Redemption.Items.Usable
         {
             Item.width = 14;
             Item.height = 24;
-            Item.rare = ItemRarityID.Cyan;
+            Item.rare = ItemRarityID.LightPurple;
             Item.maxStack = 1;
         }
     }

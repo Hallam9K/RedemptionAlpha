@@ -30,7 +30,7 @@ namespace Redemption.Items.Accessories.HM
         {
             Item.width = 30;
             Item.height = 32;
-            Item.rare = ItemRarityID.Lime;
+            Item.rare = ItemRarityID.Expert;
             Item.value = 80000;
             Item.damage = 40;
             Item.canBePlacedInVanityRegardlessOfConditions = true;

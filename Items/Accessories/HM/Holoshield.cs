@@ -31,7 +31,7 @@ namespace Redemption.Items.Accessories.HM
             Item.height = 26;
             Item.value = Item.sellPrice(0, 5, 0, 0);
             Item.canBePlacedInVanityRegardlessOfConditions = true;
-            Item.rare = ItemRarityID.Lime;
+            Item.rare = ItemRarityID.Pink;
             Item.accessory = true;
             Item.defense = 2;
         }

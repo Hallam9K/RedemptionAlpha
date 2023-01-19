@@ -29,6 +29,8 @@ namespace Redemption
         public float yeet2;
         public override void PostUpdate()
         {
+            if (RedeConfigClient.Instance.CameraLockDisable)
+                cutscene = false;
             if (cutscene)
             {
                 cutsceneEnd = true;
@@ -61,8 +63,21 @@ namespace Redemption
         }
         public override void UpdateEquips()
         {
-            if (cutscene)
+            if (cutscene && !RedeConfigClient.Instance.CameraLockDisable)
+            {
+                for (int p = 0; p < Main.maxNPCs; p++)
+                {
+                    NPC target = Main.npc[p];
+                    if (!target.active || target.boss || target.friendly || target.knockBackResist <= 0)
+                        continue;
+
+                    if (Player.DistanceSQ(target.Center) >= 500 * 500)
+                        continue;
+
+                    target.velocity -= RedeHelper.PolarVector(0.3f, (Player.Center - target.Center).ToRotation());
+                }
                 Player.wingTime = Player.wingTimeMax;
+            }
         }
         public override bool PreHurt(bool pvp, bool quiet, ref int damage, ref int hitDirection, ref bool crit, ref bool customDamage, ref bool playSound, ref bool genGore, ref PlayerDeathReason damageSource, ref int cooldownCounter)
         {
@@ -70,11 +85,13 @@ namespace Redemption
         }
         public override bool CanUseItem(Item item)
         {
-            return !cutscene;
+            if (cutscene && item.damage > 0 && !RedeConfigClient.Instance.CameraLockDisable)
+                return false;
+            return base.CanUseItem(item);
         }
         public override bool PreKill(double damage, int hitDirection, bool pvp, ref bool playSound, ref bool genGore, ref PlayerDeathReason damageSource)
         {
-            if (cutscene)
+            if (cutscene && !RedeConfigClient.Instance.CameraLockDisable)
             {
                 Player.statLife = 1;
                 return false;

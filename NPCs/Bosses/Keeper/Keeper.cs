@@ -180,20 +180,19 @@ namespace Redemption.NPCs.Bosses.Keeper
             {
                 Item.NewItem(NPC.GetSource_Loot(), NPC.getRect(), ModContent.ItemType<SorrowfulEssence>());
 
-                RedeWorld.alignment++;
                 for (int p = 0; p < Main.maxPlayers; p++)
                 {
                     Player player = Main.player[p];
                     if (!player.active)
                         continue;
 
-                    CombatText.NewText(player.getRect(), Color.Gold, "+1", true, false);
+                    CombatText.NewText(player.getRect(), Color.Gray, "+0", true, false);
 
                     if (!player.HasItem(ModContent.ItemType<AlignmentTeller>()))
                         continue;
 
                     if (!Main.dedServ)
-                        RedeSystem.Instance.ChaliceUIElement.DisplayDialogue("An undead... disgusting. Good thing you killed it.", 240, 30, 0, Color.DarkGoldenrod);
+                        RedeSystem.Instance.ChaliceUIElement.DisplayDialogue("An undead... Something tells me she isn't out of her misery just yet.", 240, 30, 0, Color.DarkGoldenrod);
 
                 }
             }

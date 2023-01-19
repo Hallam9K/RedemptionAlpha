@@ -116,7 +116,7 @@ namespace Redemption.Projectiles.Magic
             else if (Projectile.localAI[0] == 2)
                 Projectile.rotation += 0.02f;
 
-            Projectile.scale += 0.01f;
+            Projectile.scale += 0.02f;
             Projectile.scale = MathHelper.Clamp(Projectile.scale, 0, 1);
             if (Projectile.scale >= 1)
                 Projectile.velocity.Y += 0.2f;

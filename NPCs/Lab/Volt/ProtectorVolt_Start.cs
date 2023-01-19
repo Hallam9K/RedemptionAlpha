@@ -140,11 +140,12 @@ namespace Redemption.NPCs.Lab.Volt
                             chain.Add(new(NPC, "Hm? Are you supposed to be let through?", Colors.RarityYellow, new Color(100, 86, 0), voice, 2, 100, 0, false, modifier: modifier)) // 178
                                  .Add(new(NPC, "One second...", Colors.RarityYellow, new Color(100, 86, 0), voice, 2, 100, 0, false, modifier: modifier)) // 126
                                  .Add(new(NPC, ".[20].[20].[20]", Colors.RarityYellow, new Color(100, 86, 0), voice, 2, 100, 0, false, modifier: modifier)) // 166
-                                 .Add(new(NPC, "Everything seems to be in order.[30] Move along.", Colors.RarityYellow, new Color(100, 86, 0), voice, 2, 100, 30, true, modifier: modifier)); // 248
+                                 .Add(new(NPC, "Everything seems to be in order.[30] Move along.", Colors.RarityYellow, new Color(100, 86, 0), voice, 2, 100, 30, true, modifier: modifier, endID: 1)); // 248
+                            chain.OnEndTrigger += Chain_OnEndTrigger;
                             TextBubbleUI.Visible = true;
                             TextBubbleUI.Add(chain);
                         }
-                        if (AITimer > 758)
+                        if (AITimer > 2000)
                         {
                             if (!LabArea.labAccess[3])
                                 Item.NewItem(NPC.GetSource_Loot(), (int)NPC.position.X, (int)NPC.position.Y, NPC.width, NPC.height, ModContent.ItemType<ZoneAccessPanel4>());
@@ -175,6 +176,10 @@ namespace Redemption.NPCs.Lab.Volt
                         break;
                 }
             }
+        }
+        private void Chain_OnEndTrigger(Dialogue dialogue, int ID)
+        {
+            AITimer = 3000;
         }
         public override void FindFrame(int frameHeight)
         {

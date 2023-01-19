@@ -36,7 +36,7 @@ namespace Redemption.Items.Weapons.HM.Ranged
             Item.channel = true;
             Item.knockBack = 2;
             Item.value = Item.sellPrice(0, 10, 0, 0);
-            Item.rare = ItemRarityID.Cyan;
+            Item.rare = ItemRarityID.LightPurple;
             Item.UseSound = SoundID.Item41;
             Item.autoReuse = true;
             Item.shoot = ProjectileID.PurificationPowder;

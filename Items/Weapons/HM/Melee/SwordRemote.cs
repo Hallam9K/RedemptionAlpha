@@ -150,6 +150,7 @@ namespace Redemption.Items.Weapons.HM.Melee
             Projectile.width = 98;
             Projectile.height = 280;
             Projectile.penetrate = -1;
+            Projectile.DamageType = DamageClass.Default;
             Projectile.hostile = false;
             Projectile.friendly = false;
             Projectile.ignoreWater = true;

@@ -129,7 +129,7 @@ namespace Redemption.NPCs.Critters
 
                     if (RedeHelper.ClosestNPC(ref npcTarget, 100, NPC.Center) && npcTarget.damage > 0)
                     {
-                        RedeHelper.HorizontallyMove(NPC,
+                        NPCHelper.HorizontallyMove(NPC,
                             new Vector2(npcTarget.Center.X < NPC.Center.X ? NPC.Center.X + 50 : NPC.Center.X - 50,
                                 NPC.Center.Y), 0.5f, 3f, 4, 4, false);
                         return;
@@ -144,7 +144,7 @@ namespace Redemption.NPCs.Critters
                         AIState = ActionState.Idle;
                     }
 
-                    RedeHelper.HorizontallyMove(NPC, moveTo * 16, 0.5f, 3f, 6, 6, false);
+                    NPCHelper.HorizontallyMove(NPC, moveTo * 16, 0.5f, 3f, 6, 6, false);
                     break;
 
                 case ActionState.Hop:
@@ -180,7 +180,7 @@ namespace Redemption.NPCs.Critters
                         runCooldown--;
 
                     NPC.PlatformFallCheck(ref NPC.Redemption().fallDownPlatform, 20);
-                    RedeHelper.HorizontallyMove(NPC, globalNPC.attacker.Center, 0.5f, 3f, 6, 6, NPC.Center.Y > globalNPC.attacker.Center.Y);
+                    NPCHelper.HorizontallyMove(NPC, globalNPC.attacker.Center, 0.5f, 3f, 6, 6, NPC.Center.Y > globalNPC.attacker.Center.Y);
                     break;
             }
         }

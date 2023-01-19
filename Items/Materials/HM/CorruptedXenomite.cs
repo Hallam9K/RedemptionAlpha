@@ -23,7 +23,7 @@ namespace Redemption.Items.Materials.HM
             Item.height = 24;
             Item.maxStack = 9999;
             Item.value = Item.sellPrice(0, 1, 0, 0);
-            Item.rare = ItemRarityID.Red;
+            Item.rare = ItemRarityID.Yellow;
         }
         public override void PostUpdate()
         {

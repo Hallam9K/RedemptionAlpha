@@ -24,6 +24,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
             Projectile.width = 20;
             Projectile.height = 20;
             Projectile.alpha = 255;
+            Projectile.ArmorPenetration = 6;
             Projectile.usesIDStaticNPCImmunity = true;
             Projectile.idStaticNPCHitCooldown = 8;
             Projectile.Redemption().TechnicallyMelee = true;
@@ -42,11 +43,6 @@ namespace Redemption.Items.Weapons.PreHM.Melee
             player.itemAnimation = 2;
 
             Projectile.spriteDirection = player.direction;
-            if (Projectile.spriteDirection == 1)
-                Projectile.rotation = (Projectile.Center - player.Center).ToRotation() + MathHelper.PiOver4;
-            else
-                Projectile.rotation = (Projectile.Center - player.Center).ToRotation() - MathHelper.Pi - MathHelper.PiOver4;
-
             player.SetCompositeArmFront(true, Length >= 95 ? Player.CompositeArmStretchAmount.Full : Player.CompositeArmStretchAmount.Quarter, (player.Center - Projectile.Center).ToRotation() + MathHelper.PiOver2);
             if (Timer++ == 0 && Projectile.owner == Main.myPlayer)
             {
@@ -61,6 +57,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
                 Length *= 1.05f;
             else
                 Length *= 0.95f;
+            Length = MathHelper.Clamp(Length, 90, 100);
 
             vector = startVector.RotatedBy(Rot) * Length;
             if (Timer >= 8)
@@ -74,12 +71,14 @@ namespace Redemption.Items.Weapons.PreHM.Melee
                     Projectile.Kill();
             }
 
-            Length = MathHelper.Clamp(Length, 90, 100);
-
             if (Timer > 1)
                 Projectile.alpha = 0;
 
             Projectile.Center = player.MountedCenter + vector;
+            if (Projectile.spriteDirection == 1)
+                Projectile.rotation = (Projectile.Center - player.Center).ToRotation() + MathHelper.PiOver4;
+            else
+                Projectile.rotation = (Projectile.Center - player.Center).ToRotation() - MathHelper.Pi - MathHelper.PiOver4;
 
             if (!Main.rand.NextBool(3))
                 return false;
@@ -88,6 +87,24 @@ namespace Redemption.Items.Weapons.PreHM.Melee
             Main.dust[sparkle].velocity *= 0;
             Main.dust[sparkle].noGravity = true;
             return false;
+        }
+        public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
+        {
+            Player player = Main.player[Projectile.owner];
+            hitDirection = player.Center.X > target.Center.X ? -1 : 1;
+        }
+        public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox)
+        {
+            Vector2 unit = new Vector2(1f, 0).RotatedBy(Projectile.rotation + MathHelper.PiOver2 + MathHelper.PiOver4);
+            if (Projectile.spriteDirection != 1)
+                unit = new Vector2(1f, 0).RotatedBy(Projectile.rotation + MathHelper.PiOver2 - MathHelper.PiOver4);
+            float point = 0f;
+            // Run an AABB versus Line check to look for collisions
+            if (Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(), Projectile.Center - (unit * 4),
+                Projectile.Center + unit * 48, 12, ref point))
+                return true;
+            else
+                return false;
         }
         public override bool PreDraw(ref Color lightColor)
         {

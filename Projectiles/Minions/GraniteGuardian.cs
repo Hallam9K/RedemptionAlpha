@@ -21,11 +21,9 @@ namespace Redemption.Projectiles.Minions
         {
             DisplayName.SetDefault("Granite Guardian");
             Main.projFrames[Projectile.type] = 6;
-            Main.projPet[Projectile.type] = true;
 
             ProjectileID.Sets.MinionSacrificable[Projectile.type] = true;
             ProjectileID.Sets.CultistIsResistantTo[Projectile.type] = true;
-            ProjectileID.Sets.MinionTargettingFeature[Projectile.type] = true;
         }
 
         public override void SetDefaults()

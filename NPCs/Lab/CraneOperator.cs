@@ -156,7 +156,7 @@ namespace Redemption.NPCs.Lab
                         moveTo = new((RedeGen.LabVector.X + 114) * 16, (RedeGen.LabVector.Y + 156) * 16);
 
                         NPC.PlatformFallCheck(ref NPC.Redemption().fallDownPlatform, 20);
-                        RedeHelper.HorizontallyMove(NPC, moveTo, 0.4f, 1f, 8, 8, NPC.Center.Y > moveTo.Y);
+                        NPCHelper.HorizontallyMove(NPC, moveTo, 0.4f, 1f, 8, 8, NPC.Center.Y > moveTo.Y);
                     }
                     break;
             }

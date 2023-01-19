@@ -208,19 +208,13 @@ namespace Redemption.NPCs.Minibosses.SkullDigger
             {
                 NPC.velocity.Y += 0.03f;
                 if (NPC.velocity.Y > .5f)
-                {
                     floatTimer = true;
-                    NPC.netUpdate = true;
-                }
             }
             else if (floatTimer)
             {
                 NPC.velocity.Y -= 0.03f;
                 if (NPC.velocity.Y < -.5f)
-                {
                     floatTimer = false;
-                    NPC.netUpdate = true;
-                }
             }
 
             switch (AIState)
@@ -239,6 +233,7 @@ namespace Redemption.NPCs.Minibosses.SkullDigger
                                 if (!NPC.AnyNPCs(ModContent.NPCType<Keeper>()))
                                 {
                                     NPC.position = new Vector2(Main.rand.NextBool(2) ? player.Center.X - 180 : player.Center.X + 180, player.Center.Y);
+                                    NPC.netUpdate = true;
                                 }
                                 else if (!Main.dedServ)
                                     Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/BossKeeper");

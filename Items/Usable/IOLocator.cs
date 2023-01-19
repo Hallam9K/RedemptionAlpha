@@ -21,7 +21,7 @@ namespace Redemption.Items.Usable
         public override void SetDefaults()
         {
             Item.value = Item.buyPrice(0, 15, 50, 0);
-            Item.rare = ItemRarityID.Lime;
+            Item.rare = ItemRarityID.Pink;
             Item.width = 34;
             Item.height = 26;
         }

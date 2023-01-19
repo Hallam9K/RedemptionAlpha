@@ -19,8 +19,8 @@ namespace Redemption.Items.Weapons.PostML.Melee
         public override void SetDefaults()
         {
             // Common Properties
-            Item.width = 50;
-            Item.height = 50;
+            Item.width = 54;
+            Item.height = 82;
             Item.rare = ItemRarityID.Purple;
             Item.value = Item.sellPrice(0, 7, 50);
 

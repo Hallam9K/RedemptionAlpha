@@ -26,7 +26,7 @@ namespace Redemption.Items.Usable.Summons
             Item.width = 30;
             Item.height = 42;
             Item.maxStack = 1;
-            Item.rare = ItemRarityID.Cyan;
+            Item.rare = ItemRarityID.LightPurple;
             Item.value = Item.sellPrice(0, 25, 0, 0);
             Item.useAnimation = 45;
             Item.useTime = 45;

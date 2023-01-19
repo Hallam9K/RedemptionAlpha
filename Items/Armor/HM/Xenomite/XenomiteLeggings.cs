@@ -21,7 +21,7 @@ namespace Redemption.Items.Armor.HM.Xenomite
 			Item.width = 22;
 			Item.height = 18;
 			Item.sellPrice(silver: 30);
-			Item.rare = ItemRarityID.Lime;
+			Item.rare = ItemRarityID.Pink;
 			Item.defense = 10;
 		}
 

@@ -21,8 +21,7 @@ namespace Redemption.Items.Materials.HM
             Item.height = 28;
             Item.maxStack = 9999;
             Item.value = Item.buyPrice(0, 10, 0, 0);
-            Item.rare = ItemRarityID.Cyan;
-            Item.ammo = Item.type;
+            Item.rare = ItemRarityID.LightPurple;
         }
         public override void AddRecipes()
         {

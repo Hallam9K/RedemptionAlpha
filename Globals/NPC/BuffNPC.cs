@@ -289,7 +289,7 @@ namespace Redemption.Globals.NPC
                 if (npc.lifeRegen > 0)
                     npc.lifeRegen = 0;
 
-                npc.lifeRegen -= (int)(npc.velocity.Length() * 20);
+                npc.lifeRegen -= (int)(npc.velocity.Length() * 10);
 
                 if (damage < 6)
                     damage = 6;
@@ -330,7 +330,7 @@ namespace Redemption.Globals.NPC
                 if (npc.lifeRegen > 0)
                     npc.lifeRegen = 0;
 
-                npc.lifeRegen -= 400;
+                npc.lifeRegen -= 200;
                 if (damage < 10)
                     damage = 10;
             }

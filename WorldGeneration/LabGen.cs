@@ -29,6 +29,7 @@ using Redemption.Items.Weapons.HM.Magic;
 using Redemption.Items.Weapons.PostML.Melee;
 using System.Linq;
 using Redemption.Items.Weapons.PostML.Magic;
+using Redemption.Items.Placeable.Furniture.SlayerShip;
 
 namespace Redemption.WorldGeneration
 {
@@ -55,6 +56,8 @@ namespace Redemption.WorldGeneration
 
     public class AbandonedLab : MicroBiome
     {
+        public static List<int> labMainLoot;
+        public static List<int> labMainLoot2;
         public override bool Place(Point origin, StructureMap structures)
         {
             Mod mod = Redemption.Instance;
@@ -347,6 +350,13 @@ namespace Redemption.WorldGeneration
             GenUtils.ObjectPlace(origin.X + 148, origin.Y + 210, (ushort)ModContent.TileType<InfectedCorpse3Tile>(), 0, 1);
             GenUtils.ObjectPlace(origin.X + 168, origin.Y + 210, (ushort)ModContent.TileType<InfectedCorpse3Tile>());
 
+            labMainLoot = new List<int> {
+                ModContent.ItemType<GasMask>(), ModContent.ItemType<Holoshield>(), ModContent.ItemType<PrototypeAtomRifle>(), ModContent.ItemType<MiniWarhead>(), ModContent.ItemType<GravityHammer>(), ModContent.ItemType<TeslaGenerator>(), ModContent.ItemType<LightningRod>()
+            };
+            labMainLoot2 = new List<int> {
+                ModContent.ItemType<HazmatSuit>(), ModContent.ItemType<MysteriousXenomiteFragment>(),  ModContent.ItemType<EmptyMutagen>(), ModContent.ItemType<Hacksaw>(), ModContent.ItemType<DepletedCrossbow>(), ModContent.ItemType<TeslaCoil>()
+            };
+
             LabChest(origin.X + 183, origin.Y + 31);
             LabChest(origin.X + 204, origin.Y + 31);
             LabChest(origin.X + 199, origin.Y + 27);
@@ -456,7 +466,14 @@ namespace Redemption.WorldGeneration
                 int slot = 0;
                 Chest chest = Main.chest[PlacementSuccess];
 
-                chest.item[slot++].SetDefaults(Utils.Next(WorldGen.genRand, LabChestLoot));
+                if (labMainLoot2 == null || labMainLoot2.Count == 0)
+                    chest.item[slot++].SetDefaults(Utils.Next(WorldGen.genRand, LabChestLoot), false);
+                else
+                {
+                    int ID = labMainLoot2[Main.rand.Next(0, labMainLoot2.Count)];
+                    chest.item[slot++].SetDefaults(ID, false);
+                    labMainLoot2.Remove(ID);
+                }
 
                 chest.item[slot].SetDefaults(Utils.Next(WorldGen.genRand, LabChestLoot2));
                 chest.item[slot++].stack = WorldGen.genRand.Next(1, 3);
@@ -517,7 +534,14 @@ namespace Redemption.WorldGeneration
                 int slot = 0;
                 Chest chest = Main.chest[PlacementSuccess];
 
-                chest.item[slot++].SetDefaults(Utils.Next(WorldGen.genRand, LabChestLoot));
+                if (labMainLoot == null || labMainLoot.Count == 0)
+                    chest.item[slot++].SetDefaults(Utils.Next(WorldGen.genRand, LabChestLoot), false);
+                else
+                {
+                    int ID = labMainLoot[Main.rand.Next(0, labMainLoot.Count)];
+                    chest.item[slot++].SetDefaults(ID, false);
+                    labMainLoot.Remove(ID);
+                }
 
                 chest.item[slot].SetDefaults(Utils.Next(WorldGen.genRand, LabChestLoot2));
                 chest.item[slot++].stack = WorldGen.genRand.Next(1, 3);

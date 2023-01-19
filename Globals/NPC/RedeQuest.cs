@@ -20,6 +20,7 @@ namespace Redemption.Globals
         public static int[] wayfarerVars = new int[2];
         public static bool[] voltVars = new bool[4];
         public static int shadesoulVar;
+        public static int forestNymphVar;
         public override void PostUpdateWorld()
         {
             if (SubworldSystem.AnyActive<Redemption>())
@@ -88,6 +89,7 @@ namespace Redemption.Globals
             for (int k = 0; k < voltVars.Length; k++)
                 voltVars[k] = false;
             shadesoulVar = 0;
+            forestNymphVar = 0;
         }
         public override void OnWorldUnload()
         {
@@ -96,6 +98,7 @@ namespace Redemption.Globals
             for (int k = 0; k < voltVars.Length; k++)
                 voltVars[k] = false;
             shadesoulVar = 0;
+            forestNymphVar = 0;
         }
         public override void SaveWorldData(TagCompound tag)
         {
@@ -110,6 +113,7 @@ namespace Redemption.Globals
             for (int k = 0; k < wayfarerVars.Length; k++)
                 tag["WV" + k] = wayfarerVars[k];
             tag["shadesoulVar"] = shadesoulVar;
+            tag["FNV"] = forestNymphVar;
         }
 
         public override void LoadWorldData(TagCompound tag)
@@ -121,6 +125,7 @@ namespace Redemption.Globals
             for (int k = 0; k < wayfarerVars.Length; k++)
                 wayfarerVars[k] = tag.GetInt("WV" + k);
             shadesoulVar = tag.GetInt("shadesoulVar");
+            forestNymphVar = tag.GetInt("FNV");
         }
 
         public override void NetSend(BinaryWriter writer)
@@ -133,6 +138,7 @@ namespace Redemption.Globals
             for (int k = 0; k < wayfarerVars.Length; k++)
                 writer.Write(wayfarerVars[k]);
             writer.Write(shadesoulVar);
+            writer.Write(forestNymphVar);
         }
 
         public override void NetReceive(BinaryReader reader)
@@ -144,6 +150,7 @@ namespace Redemption.Globals
             for (int k = 0; k < wayfarerVars.Length; k++)
                 wayfarerVars[k] = reader.ReadInt32();
             shadesoulVar = reader.ReadInt32();
+            forestNymphVar = reader.ReadInt32();
         }
     }
 }

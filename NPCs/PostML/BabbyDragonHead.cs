@@ -47,7 +47,6 @@ namespace Redemption.NPCs.PostML
 
         public override bool PreAI()
         {
-            Player player = Main.player[NPC.target];
             NPC.spriteDirection = NPC.velocity.X > 0 ? -1 : 1;
             NPC.ai[1]++;
             if (NPC.ai[1] >= 1200)

@@ -119,6 +119,7 @@ namespace Redemption.Items.Weapons.HM.Magic
             Projectile.timeLeft = 600;
             Projectile.alpha = 255;
             Projectile.scale = 0.1f;
+            Projectile.extraUpdates = 1;
         }
         private float godrayFade;
         public Vector2 mark;
@@ -157,7 +158,7 @@ namespace Redemption.Items.Weapons.HM.Magic
                             Projectile.Kill();
                             Projectile.netUpdate = true;
                         }
-                        if (Projectile.localAI[0]++ % 9 == 0 && Projectile.scale < 3)
+                        if (Projectile.localAI[0]++ % 14 == 0 && Projectile.scale < 3)
                         {
                             int mana = player.inventory[player.selectedItem].mana;
                             if (BasePlayer.ReduceMana(player, mana / 10))
@@ -313,6 +314,7 @@ namespace Redemption.Items.Weapons.HM.Magic
             Projectile.tileCollide = false;
             Projectile.penetrate = -1;
             Projectile.timeLeft = 180;
+            Projectile.DamageType = DamageClass.Magic;
             Projectile.scale = Main.rand.NextFloat(0.4f, 0.6f);
         }
 

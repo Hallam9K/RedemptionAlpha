@@ -1,4 +1,6 @@
-﻿using Redemption.Walls;
+﻿using Redemption.Tiles.Furniture.SlayerShip;
+using Redemption.Walls;
+using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Redemption.Items.Placeable.Tiles
@@ -15,7 +17,15 @@ namespace Redemption.Items.Placeable.Tiles
             Item.DefaultToPlacableWall((ushort)ModContent.WallType<SlayerShipPanelWallTile>());
             Item.width = 24;
             Item.height = 24;
+            Item.rare = ItemRarityID.LightPurple;
             Item.maxStack = 9999;
-		}
+        }
+        public override void AddRecipes()
+        {
+            CreateRecipe(4)
+                .AddIngredient(ModContent.ItemType<SlayerShipPanel2>())
+                .AddTile(ModContent.TileType<SlayerFabricatorTile>())
+                .Register();
+        }
     }
 }

@@ -14,6 +14,8 @@ namespace Redemption.Projectiles.Magic
         {
             DisplayName.SetDefault("Giant Mask");
             Main.projFrames[Projectile.type] = 2;
+            ProjectileID.Sets.TrailCacheLength[Projectile.type] = 5;
+            ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
         }
 
         public override void SetDefaults()
@@ -28,8 +30,6 @@ namespace Redemption.Projectiles.Magic
             Projectile.ignoreWater = true;
             Projectile.alpha = 255;
             Projectile.timeLeft = 720;
-            ProjectileID.Sets.TrailCacheLength[Projectile.type] = 5;
-            ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
         }
 
         public Vector2[] maskPos = new Vector2[5];

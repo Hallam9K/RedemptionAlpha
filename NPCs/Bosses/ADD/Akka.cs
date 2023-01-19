@@ -318,7 +318,7 @@ namespace Redemption.NPCs.Bosses.ADD
                             AITimer++;
                             if (AITimer % 3 == 0 && AITimer < 60)
                             {
-                                int p = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center.X, NPC.Center.Y, Main.rand.NextFloat(-8f, 8f), Main.rand.NextFloat(-8f, 8f), ModContent.ProjectileType<AkkaPoisonBubble>(), RedeHelper.HostileProjDamage((int)(NPC.damage * 0.95f)), 1);
+                                int p = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center.X, NPC.Center.Y, Main.rand.NextFloat(-8f, 8f), Main.rand.NextFloat(-8f, 8f), ModContent.ProjectileType<AkkaPoisonBubble>(), NPCHelper.HostileProjDamage((int)(NPC.damage * 0.95f)), 1);
                                 Main.projectile[p].netUpdate = true;
                             }
                             if (AITimer >= 65)
@@ -340,7 +340,7 @@ namespace Redemption.NPCs.Bosses.ADD
                                     if (!Main.dedServ)
                                         SoundEngine.PlaySound(CustomSounds.Quake with { Volume = 1.4f, PitchVariance = 0.1f });
 
-                                    int p = Projectile.NewProjectile(NPC.GetSource_FromAI(), player.Center.X, player.Center.Y - 1000, 0f, 0f, ModContent.ProjectileType<AkkaIslandSummoner>(), RedeHelper.HostileProjDamage((int)(NPC.damage * 1.5f)), 1, Main.myPlayer);
+                                    int p = Projectile.NewProjectile(NPC.GetSource_FromAI(), player.Center.X, player.Center.Y - 1000, 0f, 0f, ModContent.ProjectileType<AkkaIslandSummoner>(), NPCHelper.HostileProjDamage((int)(NPC.damage * 1.5f)), 1, Main.myPlayer);
                                     Main.projectile[p].netUpdate = true;
                                 }
                                 if (AITimer >= 200)
@@ -447,7 +447,7 @@ namespace Redemption.NPCs.Bosses.ADD
                             }
                             if (AITimer == 25)
                             {
-                                Projectile.NewProjectile(NPC.GetSource_FromAI(), player.Center.X, player.Center.Y - 1000, 0f, 10f, ModContent.ProjectileType<Moonbeam>(), RedeHelper.HostileProjDamage((int)(NPC.damage * 0.98f)), 1, Main.myPlayer);
+                                Projectile.NewProjectile(NPC.GetSource_FromAI(), player.Center.X, player.Center.Y - 1000, 0f, 10f, ModContent.ProjectileType<Moonbeam>(), NPCHelper.HostileProjDamage((int)(NPC.damage * 0.98f)), 1, Main.myPlayer);
                             }
                             if (AITimer >= 70)
                             {

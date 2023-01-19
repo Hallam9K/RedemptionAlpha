@@ -19,7 +19,7 @@ namespace Redemption.Items.Weapons.PreHM.Magic
 
         public override void SetDefaults()
         {
-            Item.damage = 40;
+            Item.damage = 38;
             Item.DamageType = DamageClass.Magic;
             Item.mana = 7;
             Item.width = 30;
@@ -56,7 +56,7 @@ namespace Redemption.Items.Weapons.PreHM.Magic
         {
             CreateRecipe()
             .AddIngredient(ItemID.WaterBolt)
-            .AddIngredient(ModContent.ItemType<GathicCryoCrystal>(), 7)
+            .AddIngredient(ModContent.ItemType<GathicCryoCrystal>(), 5)
             .AddTile(TileID.Bookcases)
             .Register();
         }

@@ -28,6 +28,7 @@ namespace Redemption.Projectiles.Melee
             Projectile.tileCollide = false;
             Projectile.ignoreWater = true;
             Projectile.timeLeft = 600;
+            Projectile.DamageType = DamageClass.Melee;
             Projectile.Redemption().IsHammer = true;
             Projectile.hide = true;
         }

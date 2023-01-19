@@ -28,6 +28,7 @@ namespace Redemption.Projectiles.Ranged
             Projectile.DamageType = DamageClass.Ranged;
             Projectile.penetrate = 3;
             Projectile.timeLeft = 600;
+            Projectile.ignoreWater = true;
             Projectile.Redemption().EnergyBased = true;
         }
         private readonly int NUMPOINTS = 16;

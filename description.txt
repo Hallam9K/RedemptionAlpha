@@ -1,3 +1,6 @@
+Discord:
+https://discord.gg/VNneR3U
+
 This mod requires IQ above room temperature, if you want a mod you can mindlessly go through without much thought this isn't for you.
 
 THIS IS A BETA, THE FOLLOWING CONTENT IS PLANNED FOR 0.8 BUT NOT IN THIS BETA:
@@ -24,11 +27,11 @@ This beta does however have:
 
 Mod of Redemption is a lore-based mod (very scary) that adds a wide range of content.
 Currently, there are:
-- 875 Items
-- 152 NPCs/Enemies
+- 903 Items
+- 158 NPCs/Enemies
 - 11 Bosses
 - 7 Minibosses
-- 371 Tiles
+- 399 Tiles
 
 Credit to Thalzon for some of the enemy/boss designs & Pluto for Nebuleus' background
 

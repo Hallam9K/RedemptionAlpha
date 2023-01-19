@@ -21,8 +21,8 @@ namespace Redemption.Items.Weapons.PreHM.Ranged
             Item.value = 15;
             Item.rare = ItemRarityID.Blue;
             Item.useStyle = ItemUseStyleID.Swing;
-            Item.useAnimation = 25;
-            Item.useTime = 25;
+            Item.useAnimation = 35;
+            Item.useTime = 35;
             Item.UseSound = SoundID.Item1;
             Item.consumable = true;
             Item.noUseGraphic = true;

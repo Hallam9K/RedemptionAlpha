@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using MonoMod.RuntimeDetour;
 using Redemption.Globals;
 using Redemption.Items.Usable;
 using Redemption.UI;
@@ -38,13 +39,13 @@ namespace Redemption.NPCs.Lab.Janitor
             NPC.npcSlots = 0;
             NPC.netAlways = true;
         }
-
+        SoundStyle voice;
         public override void AI()
         {
             Player player = Main.player[RedeHelper.GetNearestAlivePlayer(NPC)];
             if (NPC.target < 0 || NPC.target == 255 || player.dead || !player.active)
                 NPC.TargetClosest();
-            SoundStyle voice = CustomSounds.Voice6 with { Pitch = 0.2f };
+            voice = CustomSounds.Voice6 with { Pitch = 0.2f };
             switch (State)
             {
                 case 0:
@@ -64,11 +65,12 @@ namespace Redemption.NPCs.Lab.Janitor
                         DialogueChain chain = new();
                         chain.Add(new(NPC, "...Why did you have to barge in through the ventilation shaft?", Colors.RarityYellow, new Color(100, 86, 0), voice, 2, 100, 0, false)) // 224
                              .Add(new(NPC, "Lost your access card huh?[30] Have mine and get out of my sight.", Colors.RarityYellow, new Color(100, 86, 0), voice, 2, 100, 0, false)) // 252
-                             .Add(new(NPC, "*Grumbles* Those darn careless bots losing their cards...", Colors.RarityYellow, new Color(100, 86, 0), voice, 2, 100, 30, true)); // 244
+                             .Add(new(NPC, "[@a]*Grumbles* Those darn careless bots losing their cards...", Colors.RarityYellow, new Color(100, 86, 0), voice, 2, 100, 30, true)); // 244
+                        chain.OnSymbolTrigger += Chain_OnSymbolTrigger;
                         TextBubbleUI.Visible = true;
                         TextBubbleUI.Add(chain);
                     }
-                    if (AITimer >= 506)
+                    if (AITimer >= 2000)
                     {
                         EmoteBubble.NewBubble(1, new WorldUIAnchor(NPC), 120);
 
@@ -91,19 +93,35 @@ namespace Redemption.NPCs.Lab.Janitor
                         DialogueChain chain = new();
                         chain.Add(new(NPC, "Oi![10] Don't go there,[10] the floor's wet.", Colors.RarityYellow, new Color(100, 86, 0), voice, 2, 100, 0, false)) // 172
                              .Add(new(NPC, ".[10].[10].[10]", Colors.RarityYellow, new Color(100, 86, 0), voice, 2, 100, 0, false)) // 136
-                             .Add(new(NPC, "Wait...[30] You're a trespasser!", Colors.RarityYellow, new Color(100, 86, 0), voice, 2, 100, 30, true)); // 216
+                             .Add(new(NPC, "[@b]Wait...[30] You're a trespasser!", Colors.RarityYellow, new Color(100, 86, 0), voice, 2, 100, 30, true, endID: 1)); // 216
+                        chain.OnSymbolTrigger += Chain_OnSymbolTrigger;
+                        chain.OnEndTrigger += Chain_OnEndTrigger;
                         TextBubbleUI.Visible = true;
                         TextBubbleUI.Add(chain);
                     }
-                    if (AITimer == 338)
-                        EmoteBubble.NewBubble(3, new WorldUIAnchor(NPC), 216);
-                    if (AITimer >= 544)
+                    if (AITimer >= 2000)
                     {
                         NPC.SetDefaults(ModContent.NPCType<JanitorBot>());
                         NPC.netUpdate = true;
                     }
                     break;
             }
+        }
+        private void Chain_OnSymbolTrigger(Dialogue dialogue, string signature)
+        {
+            switch (signature)
+            {
+                case "a":
+                    AITimer = 3000;
+                    break;
+                case "b":
+                    EmoteBubble.NewBubble(3, new WorldUIAnchor(NPC), 216);
+                    break;
+            }
+        }
+        private void Chain_OnEndTrigger(Dialogue dialogue, int ID)
+        {
+            AITimer = 3000;
         }
         public override void FindFrame(int frameHeight)
         {

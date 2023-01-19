@@ -17,8 +17,8 @@ using Terraria.ModLoader;
 using Redemption.BaseExtension;
 using Redemption.Items.Materials.HM;
 using Redemption.Items.Usable.Potions;
-using Redemption.Items.Armor.Vanity;
 using Redemption.Items.Armor.Vanity.Intruder;
+using System.IO;
 
 namespace Redemption.NPCs.Wasteland
 {
@@ -80,17 +80,30 @@ namespace Redemption.NPCs.Wasteland
             NPC.value = 800;
             NPC.knockBackResist = 0.4f;
             NPC.aiStyle = -1;
+            NPC.chaseable = false;
             SpawnModBiomes = new int[1] { ModContent.GetInstance<WastelandPurityBiome>().Type };
             Banner = NPC.type;
             BannerItem = ModContent.ItemType<MutatedLivingBloomBanner>();
         }
-
+        public override void SendExtraAI(BinaryWriter writer)
+        {
+            base.SendExtraAI(writer);
+            if (Main.netMode == NetmodeID.Server || Main.dedServ)
+                writer.WriteVector2(moveTo);
+        }
+        public override void ReceiveExtraAI(BinaryReader reader)
+        {
+            base.ReceiveExtraAI(reader);
+            if (Main.netMode == NetmodeID.MultiplayerClient)
+                moveTo = reader.ReadVector2();
+        }
         public NPC npcTarget;
         public Vector2 moveTo;
         public int runCooldown;
         public override void OnSpawn(IEntitySource source)
         {
             TimerRand = Main.rand.Next(80, 180);
+            NPC.netUpdate = true;
         }
         public override void AI()
         {
@@ -99,6 +112,10 @@ namespace Redemption.NPCs.Wasteland
             NPC.TargetClosest();
             NPC.LookByVelocity();
             RegenCheck();
+            if (globalNPC.attacker is Player && AIState > ActionState.Wander)
+                NPC.chaseable = true;
+            else
+                NPC.chaseable = false;
 
             switch (AIState)
             {
@@ -112,6 +129,7 @@ namespace Redemption.NPCs.Wasteland
                         AITimer = 0;
                         TimerRand = Main.rand.Next(120, 260);
                         AIState = ActionState.Wander;
+                        NPC.netUpdate = true;
                     }
 
                     if (NPC.ClosestNPCToNPC(ref npcTarget, 160, NPC.Center) && npcTarget.lifeMax > 5 && npcTarget.damage > 0 && !NPCLists.Plantlike.Contains(npcTarget.type) && !npcTarget.Redemption().invisible)
@@ -121,6 +139,7 @@ namespace Redemption.NPCs.Wasteland
                         AITimer = 0;
                         TimerRand = Main.rand.Next(120, 260);
                         AIState = ActionState.Threatened;
+                        NPC.netUpdate = true;
                     }
                     break;
 
@@ -132,6 +151,7 @@ namespace Redemption.NPCs.Wasteland
                         AITimer = 0;
                         TimerRand = Main.rand.Next(120, 260);
                         AIState = ActionState.Threatened;
+                        NPC.netUpdate = true;
                     }
 
                     AITimer++;
@@ -140,9 +160,10 @@ namespace Redemption.NPCs.Wasteland
                         AITimer = 0;
                         TimerRand = Main.rand.Next(120, 260);
                         AIState = ActionState.Idle;
+                        NPC.netUpdate = true;
                     }
 
-                    RedeHelper.HorizontallyMove(NPC, moveTo * 16, 0.4f, 1, 6, 4, false);
+                    NPCHelper.HorizontallyMove(NPC, moveTo * 16, 0.4f, 1, 6, 4, false);
                     break;
 
                 case ActionState.Threatened:
@@ -157,13 +178,14 @@ namespace Redemption.NPCs.Wasteland
                     else if (runCooldown > 0)
                         runCooldown--;
 
-                    RedeHelper.HorizontallyMove(NPC, new Vector2(globalNPC.attacker.Center.X < NPC.Center.X ? NPC.Center.X + 50 : NPC.Center.X - 50, NPC.Center.Y),
+                    NPCHelper.HorizontallyMove(NPC, new Vector2(globalNPC.attacker.Center.X < NPC.Center.X ? NPC.Center.X + 50 : NPC.Center.X - 50, NPC.Center.Y),
                         0.5f, 2, 6, 4, false);
 
                     if (Main.rand.NextBool(200) && NPC.velocity.Y == 0)
                     {
                         AITimer = 0;
                         AIState = ActionState.RootAttack;
+                        NPC.netUpdate = true;
                     }
                     break;
                 case ActionState.RootAttack:

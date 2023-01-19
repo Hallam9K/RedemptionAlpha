@@ -47,6 +47,8 @@ using Redemption.NPCs.Bosses.Neb;
 using Redemption.NPCs.Bosses.Neb.Phase2;
 using Redemption.NPCs.Bosses.Neb.Clone;
 using Redemption.Items.Donator.Lordfunnyman;
+using Terraria.GameContent.Bestiary;
+using Terraria.UI;
 using Terraria.ModLoader.Utilities;
 
 namespace Redemption.Globals.NPC
@@ -685,7 +687,7 @@ namespace Redemption.Globals.NPC
                 npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<LegoBrick>(), 200));
             }
             if (npc.type is NPCID.Dandelion)
-                npcLoot.Add(ItemDropRule.Food(ModContent.ItemType<GiantDandelion>(), 10));
+                npcLoot.Add(ItemDropRule.Food(ModContent.ItemType<GiantDandelion>(), 5));
             if (npc.type is NPCID.MoonLordCore)
                 npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Keycard>()));
             if (npc.type is NPCID.Golem)
@@ -699,10 +701,13 @@ namespace Redemption.Globals.NPC
         }
         public override void EditSpawnRate(Terraria.Player player, ref int spawnRate, ref int maxSpawns)
         {
+            if (maxSpawns <= 0)
+                return;
             if (RedeWorld.blobbleSwarm)
             {
                 spawnRate = 10;
                 maxSpawns = 20;
+                return;
             }
             if (RedeWorld.SkeletonInvasion)
             {
@@ -727,10 +732,16 @@ namespace Redemption.Globals.NPC
         }
         public override void EditSpawnPool(IDictionary<int, float> pool, NPCSpawnInfo spawnInfo)
         {
+            if (spawnInfo.Player.RedemptionScreen().cutscene && !RedeConfigClient.Instance.CameraLockDisable)
+            {
+                pool.Clear();
+                return;
+            }
             if (RedeWorld.blobbleSwarm)
             {
                 pool.Clear();
                 pool.Add(ModContent.NPCType<Blobble>(), 10);
+                return;
             }
             if (spawnInfo.Player.ZoneRockLayerHeight && Terraria.NPC.downedMoonlord)
             {
@@ -849,9 +860,6 @@ namespace Redemption.Globals.NPC
                 bool tileWall = Framing.GetTileSafely(spawnInfo.SpawnTileX, spawnInfo.SpawnTileY - 2).WallType != WallID.None;
                 pool.Add(ModContent.NPCType<Android>(), tileCheck && tileWall ? .01f : 0);
             }
-
-            if (spawnInfo.Player.RedemptionScreen().cutscene)
-                pool.Clear();
         }
     }
 }

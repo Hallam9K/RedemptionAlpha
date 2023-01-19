@@ -28,6 +28,7 @@ namespace Redemption.Items.Usable.Potions
         {
             Item.DefaultToFood(30, 18, BuffID.WellFed2, 21600);
             Item.value = Item.sellPrice(silver: 5);
+            Item.stack = 9999;
             Item.rare = ItemRarityID.Blue;
         }
 

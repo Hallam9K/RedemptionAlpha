@@ -111,7 +111,7 @@ namespace Redemption.NPCs.Critters
                         AIState = ActionState.Idle;
                     }
 
-                    RedeHelper.HorizontallyMove(NPC, moveTo * 16, 0.4f, 1.2f, 2, 2, false);
+                    NPCHelper.HorizontallyMove(NPC, moveTo * 16, 0.4f, 1.2f, 2, 2, false);
                     break;
 
                 case ActionState.Hop:

@@ -28,8 +28,8 @@ namespace Redemption.Items.Usable.Summons
             Item.useAnimation = 17;
             Item.useTime = 17;
             Item.consumable = true;
-            Item.width = 24;
-            Item.height = 38;
+            Item.width = 38;
+            Item.height = 40;
             Item.maxStack = 1;
             Item.value = Item.buyPrice(0, 10, 0, 0);
             Item.rare = ItemRarityID.Orange;

@@ -139,6 +139,18 @@ namespace Redemption.NPCs.Lab.Blisterface
                 if (NPC.Center.Y > (RedeGen.LabVector.Y + 191) * 16)
                     NPC.velocity.Y -= 0.1f;
             }
+            if (NPC.Center.X < (RedeGen.LabVector.X + 194) * 16)
+                NPC.velocity.X += 1f;
+            if (NPC.Center.X > (RedeGen.LabVector.X + 222) * 16)
+                NPC.velocity.X -= 1f;
+
+            if (NPC.Center.Y > (RedeGen.LabVector.Y + 196) * 16)
+            {
+
+                if (AITimer[0] > 0)
+                    AITimer[0] = 0;
+                NPC.velocity.Y = -3f;
+            }
             switch (AITimer[0])
             {
                 case 0:
@@ -184,7 +196,8 @@ namespace Redemption.NPCs.Lab.Blisterface
                     {
                         NPC.velocity.Y += 0.15f;
                     }
-                    if (AITimer[1] >= 180 && NPC.wet)
+                    Point water = NPC.Center.ToTileCoordinates();
+                    if (AITimer[1] >= 180 && Main.tile[water.X, water.Y].LiquidType == LiquidID.Water && Main.tile[water.X, water.Y].LiquidAmount > 0)
                     {
                         AITimer[1] = 0;
                         AITimer[0] = 0;

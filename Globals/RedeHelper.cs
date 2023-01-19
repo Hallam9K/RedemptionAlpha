@@ -369,7 +369,7 @@ namespace Redemption.Globals
         public static bool HeldItemCrit(this Projectile projectile)
         {
             Terraria.Player player = Main.player[projectile.owner];
-            float critChance = player.HeldItem.crit + 4 + player.GetCritChance(projectile.DamageType);
+            float critChance = player.HeldItem.crit + player.GetTotalCritChance(projectile.DamageType);
             ItemLoader.ModifyWeaponCrit(player.HeldItem, player, ref critChance);
             PlayerLoader.ModifyWeaponCrit(player, player.HeldItem, ref critChance);
             if (critChance >= 100 || Main.rand.Next(1, 101) <= critChance)
@@ -671,43 +671,25 @@ namespace Redemption.Globals
 
             return false;
         }
-        public static bool TargetCheck(this Terraria.NPC npc, int ID = 0, bool bool1 = false, bool bool2 = false)
+        /// <summary>
+        /// For spawning NPCs from NPCs without any extra stuff.
+        /// </summary>
+        public static void SpawnNPC(IEntitySource source, int posX, int posY, int npcType, float ai0 = 0, float ai1 = 0, float ai2 = 0,
+            float ai3 = 0)
         {
-            Terraria.Player player = Main.player[npc.target];
-            RedeNPC globalNPC = npc.Redemption();
-            if (globalNPC.attacker is Terraria.Player)
-                return false;
-
-            Terraria.NPC target = Main.npc[globalNPC.attacker.whoAmI];
-            if (!target.active || target.whoAmI == npc.whoAmI || target.dontTakeDamage || target.type == NPCID.OldMan)
-                return true;
-
-            switch (ID)
+            if (Main.netMode != NetmodeID.MultiplayerClient)
             {
-                case 1:
-                    if (NPCLists.Plantlike.Contains(target.type))
-                        return true;
-                    break;
-                case 2:
-                    if (player.RedemptionPlayerBuff().skeletonFriendly && NPCLists.SkeletonHumanoid.Contains(target.type))
-                        return true;
-                    break;
-                case 3:
-                    if (target.type == npc.type || target.type == ModContent.NPCType<PrototypeSilver>())
-                        return true;
-                    break;
+                int index = Terraria.NPC.NewNPC(source, posX, posY, npcType, 0, ai0, ai1, ai2, ai3);
+                if (Main.netMode == NetmodeID.Server && index < Main.maxNPCs)
+                {
+                    NetMessage.SendData(MessageID.SyncNPC, number: index);
+                }
             }
-            return false;
         }
-        public static bool ThreatenedCheck(this Terraria.NPC npc, ref int runCD, int runCDNum = 180, int ID = 0)
-        {
-            RedeNPC globalNPC = npc.Redemption();
-            if (globalNPC.attacker == null || !globalNPC.attacker.active || npc.TargetCheck(ID) || npc.PlayerDead() || npc.DistanceSQ(globalNPC.attacker.Center) > 1400 * 1400 || runCD > runCDNum)
-                return true;
-            return false;
-        }
+    }
+    public static class NPCHelper
+    {
         #region NPC Methods
-
         public static int HostileProjDamage(int damage)
         {
             damage /= 2;
@@ -743,22 +725,6 @@ namespace Redemption.Globals
             {
                 Projectile.NewProjectile(proj.GetSource_FromThis(), position, velocity, projType, damage / 4, 0,
                     Main.myPlayer, ai0, ai1);
-            }
-        }
-
-        /// <summary>
-        /// For spawning NPCs from NPCs without any extra stuff.
-        /// </summary>
-        public static void SpawnNPC(IEntitySource source, int posX, int posY, int npcType, float ai0 = 0, float ai1 = 0, float ai2 = 0,
-            float ai3 = 0)
-        {
-            if (Main.netMode != NetmodeID.MultiplayerClient)
-            {
-                int index = Terraria.NPC.NewNPC(source, posX, posY, npcType, 0, ai0, ai1, ai2, ai3);
-                if (Main.netMode == NetmodeID.Server && index < Main.maxNPCs)
-                {
-                    NetMessage.SendData(MessageID.SyncNPC, number: index);
-                }
             }
         }
 
@@ -912,7 +878,7 @@ namespace Redemption.Globals
         /// toPlayer makes the vector consider the player.Center for you.
         /// </summary>
         public static void Move(this Terraria.NPC npc, Vector2 vector, float speed, float turnResistance = 10f,
-            bool toPlayer = false)
+            bool toPlayer = false, bool reverse = false)
         {
             Terraria.Player player = Main.player[npc.target];
             Vector2 moveTo = toPlayer ? player.Center + vector : vector;
@@ -923,14 +889,14 @@ namespace Redemption.Globals
                 move *= speed / magnitude;
             }
 
-            move = (npc.velocity * turnResistance + move) / (turnResistance + 1f);
+            move = ((reverse ? -npc.velocity : npc.velocity) * turnResistance + move) / (turnResistance + 1f);
             magnitude = Magnitude(move);
             if (magnitude > speed)
             {
                 move *= speed / magnitude;
             }
 
-            npc.velocity = move;
+            npc.velocity = reverse ? -move : move;
         }
 
         public static void Move(this Projectile projectile, Vector2 vector, float speed, float turnResistance = 10f,
@@ -1031,7 +997,7 @@ namespace Redemption.Globals
 
         public static void Dodge(this Terraria.NPC npc, Projectile proj, float vel = 6, float jumpVel = 2, float maxJump = 8)
         {
-            npc.velocity = PolarVector(vel, npc.DirectionTo(proj.Center).ToRotation() + (proj.Center.X < npc.Center.X ? MathHelper.PiOver2 : -MathHelper.PiOver2));
+            npc.velocity = RedeHelper.PolarVector(vel, npc.DirectionTo(proj.Center).ToRotation() + (proj.Center.X < npc.Center.X ? MathHelper.PiOver2 : -MathHelper.PiOver2));
             npc.velocity.Y -= jumpVel;
             npc.velocity.Y = MathHelper.Max(-maxJump, npc.velocity.Y);
             if (npc.position.Y > proj.Bottom.Y && (proj.velocity.X > 2 || proj.velocity.X < -2) && proj.velocity.Y <= 1)
@@ -1041,10 +1007,12 @@ namespace Redemption.Globals
             }
         }
 
-        public static void PlatformFallCheck(this Terraria.NPC npc, ref bool canJump, int yOffset = 12)
+        public static void PlatformFallCheck(this Terraria.NPC npc, ref bool canJump, int yOffset = 12, float playerY = 0)
         {
             Terraria.Player player = Main.player[npc.target];
-            if (npc.Center.Y + yOffset < player.Center.Y)
+            if (playerY == 0)
+                playerY = player.Center.Y;
+            if (npc.Center.Y + yOffset < playerY)
             {
                 canJump = true;
                 return;
@@ -1071,7 +1039,7 @@ namespace Redemption.Globals
         {
             for (int i = 0; i < BuffLoader.BuffCount; i++)
             {
-                if (npc.HasBuff(i) && (Main.debuff[i] || npc.HasBuff(BuffID.BetsysCurse)|| npc.HasBuff(BuffID.Daybreak)|| npc.HasBuff(BuffID.Frostburn2)|| npc.HasBuff(BuffID.OnFire3)|| npc.HasBuff(BuffID.ShadowFlame)))
+                if (npc.HasBuff(i) && (Main.debuff[i] || npc.HasBuff(BuffID.BetsysCurse) || npc.HasBuff(BuffID.Daybreak) || npc.HasBuff(BuffID.Frostburn2) || npc.HasBuff(BuffID.OnFire3) || npc.HasBuff(BuffID.ShadowFlame)))
                     return true;
             }
             return false;
@@ -1134,6 +1102,7 @@ namespace Redemption.Globals
                     }
                 }
             }
+            BaseAI.WalkupHalfBricks(npc);
 
             //if there's a solid floor under us...
             if (BaseAI.HitTileOnSide(npc, 3))
@@ -1225,6 +1194,38 @@ namespace Redemption.Globals
             return new Vector2(npc.Center.X, npc.Center.Y);
         }
 
+        public static Vector2 FindGroundVector(this Terraria.NPC npc, Vector2 vector, int distFromVector, Func<int, int, bool> canTeleportTo = null)
+        {
+            int vectorX = (int)vector.X / 16;
+            int vectorY = (int)vector.Y / 16;
+            int tileX = (int)npc.position.X / 16;
+            int tileY = (int)npc.position.Y / 16;
+            int teleportCheckCount = 0;
+
+            while (teleportCheckCount < 1000)
+            {
+                teleportCheckCount++;
+                int tpTileX = Main.rand.Next(vectorX - distFromVector, vectorX + distFromVector);
+                int tpTileY = Main.rand.Next(vectorY - distFromVector, vectorY + distFromVector);
+                for (int tpY = tpTileY; tpY < vectorY + distFromVector; tpY++)
+                {
+                    if ((tpY < vectorY - 4 || tpY > vectorY + 4 || tpTileX < vectorX - 4 || tpTileX > vectorX + 4) &&
+                        (tpY < tileY - 1 || tpY > tileY + 1 || tpTileX < tileX - 1 || tpTileX > tileX + 1) &&
+                        Main.tile[tpTileX, tpY].HasUnactuatedTile)
+                    {
+                        if (canTeleportTo != null && canTeleportTo(tpTileX, tpY) ||
+                            Main.tile[tpTileX, tpY - 1].LiquidType != 2 &&
+                            Main.tileSolid[Main.tile[tpTileX, tpY].TileType] &&
+                            !Collision.SolidTiles(tpTileX - 1, tpTileX + 1, tpY - 4, tpY - 1))
+                        {
+                            return new Vector2(tpTileX, tpY) * 16;
+                        }
+                    }
+                }
+            }
+            return new Vector2(npc.Center.X, npc.Center.Y);
+        }
+
         public static void DamageHostileAttackers(this Terraria.NPC npc, float dmgModify = 0, int knockback = 0, List<int> AlwaysDmgNPC = default)
         {
             if (AlwaysDmgNPC == default)
@@ -1269,7 +1270,7 @@ namespace Redemption.Globals
         }
         public static void LockMoveRadius(this Terraria.NPC npc, Terraria.Player player, int radius = 1000)
         {
-            if (npc.Distance(player.Center) > radius)
+            if (!RedeConfigClient.Instance.CameraLockDisable && npc.Distance(player.Center) > radius)
             {
                 Vector2 movement = npc.Center - player.Center;
                 float difference = movement.Length() - radius;
@@ -1277,6 +1278,58 @@ namespace Redemption.Globals
                 movement *= difference < 17f ? difference : 17f;
                 player.position += movement;
             }
+        }
+        public static bool DespawnHandler(this Terraria.NPC npc)
+        {
+            Terraria.Player player = Main.player[npc.target];
+            if (!player.active || player.dead)
+            {
+                npc.TargetClosest(false);
+                player = Main.player[npc.target];
+                if (!player.active || player.dead)
+                {
+                    npc.velocity.Y -= 1;
+                    if (npc.timeLeft > 10)
+                        npc.timeLeft = 10;
+                    return true;
+                }
+            }
+            return false;
+        }
+        public static bool TargetCheck(this Terraria.NPC npc, int ID = 0, bool bool1 = false, bool bool2 = false)
+        {
+            Terraria.Player player = Main.player[npc.target];
+            RedeNPC globalNPC = npc.Redemption();
+            if (globalNPC.attacker is Terraria.Player)
+                return false;
+
+            Terraria.NPC target = Main.npc[globalNPC.attacker.whoAmI];
+            if (!target.active || target.whoAmI == npc.whoAmI || target.dontTakeDamage || target.type == NPCID.OldMan)
+                return true;
+
+            switch (ID)
+            {
+                case 1:
+                    if (NPCLists.Plantlike.Contains(target.type))
+                        return true;
+                    break;
+                case 2:
+                    if (player.RedemptionPlayerBuff().skeletonFriendly && NPCLists.SkeletonHumanoid.Contains(target.type))
+                        return true;
+                    break;
+                case 3:
+                    if (target.type == npc.type || target.type == ModContent.NPCType<PrototypeSilver>())
+                        return true;
+                    break;
+            }
+            return false;
+        }
+        public static bool ThreatenedCheck(this Terraria.NPC npc, ref int runCD, int runCDNum = 180, int ID = 0)
+        {
+            RedeNPC globalNPC = npc.Redemption();
+            if (globalNPC.attacker == null || !globalNPC.attacker.active || npc.TargetCheck(ID) || npc.PlayerDead() || npc.DistanceSQ(globalNPC.attacker.Center) > 1400 * 1400 || runCD > runCDNum)
+                return true;
+            return false;
         }
         #endregion
     }

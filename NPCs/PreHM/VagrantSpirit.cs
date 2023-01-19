@@ -15,6 +15,7 @@ using Terraria.GameContent.ItemDropRules;
 using Terraria.GameContent.Bestiary;
 using Redemption.Items.Usable.Potions;
 using Redemption.BaseExtension;
+using Redemption.Globals.NPC;
 
 namespace Redemption.NPCs.PreHM
 {
@@ -96,6 +97,7 @@ namespace Redemption.NPCs.PreHM
         public override void OnSpawn(IEntitySource source)
         {
             TimerRand = Main.rand.Next(180, 420);
+            NPC.netUpdate = true;
         }
         public override void AI()
         {
@@ -113,19 +115,13 @@ namespace Redemption.NPCs.PreHM
             {
                 NPC.velocity.Y += 0.03f;
                 if (NPC.velocity.Y > .7f)
-                {
                     NPC.ai[3] = 1;
-                    NPC.netUpdate = true;
-                }
             }
             else if (NPC.ai[3] == 1)
             {
                 NPC.velocity.Y -= 0.03f;
                 if (NPC.velocity.Y < -.7f)
-                {
                     NPC.ai[3] = 0;
-                    NPC.netUpdate = true;
-                }
             }
 
             switch (AIState)
@@ -148,6 +144,7 @@ namespace Redemption.NPCs.PreHM
                         AITimer = 0;
                         TimerRand = Main.rand.Next(180, 420);
                         AIState = ActionState.Vanish;
+                        NPC.netUpdate = true;
                     }
                     break;
 
@@ -156,9 +153,8 @@ namespace Redemption.NPCs.PreHM
                     if (NPC.alpha >= 255)
                     {
                         if (((player.ZoneOverworldHeight || player.ZoneSkyHeight) && !Main.LocalPlayer.RedemptionAbility().SpiritwalkerActive) || vanishCounter > 4)
-                        {
                             NPC.active = false;
-                        }
+
                         vanishCounter++;
                         NPC.position = new Vector2(player.Center.X + (600 * NPC.spriteDirection), player.Center.Y + Main.rand.Next(-400, 401));
                         NPC.LookAtEntity(player);
@@ -202,6 +198,7 @@ namespace Redemption.NPCs.PreHM
         }
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
         {
+            bestiaryEntry.UIInfoProvider = new CustomCollectionInfoProvider(ContentSamples.NpcBestiaryCreditIdsByNpcNetIds[Type], false, 25);
             bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[]
             {
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Caverns,

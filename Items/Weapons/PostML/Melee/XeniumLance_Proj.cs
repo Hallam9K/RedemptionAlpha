@@ -61,10 +61,11 @@ namespace Redemption.Items.Weapons.PostML.Melee
             else
                 Projectile.rotation = (Projectile.Center - player.Center).ToRotation() - MathHelper.Pi - MathHelper.PiOver4;
 
+            player.SetCompositeArmFront(true, Length >= 80 ? Player.CompositeArmStretchAmount.Full : Player.CompositeArmStretchAmount.Quarter, (player.Center - Projectile.Center).ToRotation() + MathHelper.PiOver2);
+
             switch (Projectile.ai[0])
             {
                 case 0:
-                    player.SetCompositeArmFront(true, Player.CompositeArmStretchAmount.Full, (player.Center - Projectile.Center).ToRotation() + MathHelper.PiOver2);
                     if (Timer++ == 0)
                     {
                         startVector = RedeHelper.PolarVector(1, Projectile.velocity.ToRotation() - (MathHelper.PiOver2 * Projectile.spriteDirection));
@@ -91,7 +92,6 @@ namespace Redemption.Items.Weapons.PostML.Melee
                     break;
 
                 case 1:
-                    player.SetCompositeArmFront(true, Player.CompositeArmStretchAmount.Full, (player.Center - Projectile.Center).ToRotation() + MathHelper.PiOver2);
                     if (Timer++ == 0)
                     {
                         startVector = RedeHelper.PolarVector(1, Projectile.velocity.ToRotation() + (MathHelper.PiOver2 * Projectile.spriteDirection));
@@ -117,7 +117,6 @@ namespace Redemption.Items.Weapons.PostML.Melee
                     Length = MathHelper.Clamp(Length, 60, 120);
                     break;
                 case 2:
-                    player.SetCompositeArmFront(true, Player.CompositeArmStretchAmount.Full, (player.Center - Projectile.Center).ToRotation() + MathHelper.PiOver2);
                     if (Timer++ == 0)
                     {
                         startVector = RedeHelper.PolarVector(1, Projectile.velocity.ToRotation() - (MathHelper.PiOver2 * Projectile.spriteDirection));

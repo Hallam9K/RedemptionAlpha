@@ -26,6 +26,8 @@ using Redemption.Items.Placeable.Furniture.PetrifiedWood;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria.GameContent;
 using ReLogic.Content;
+using Redemption.WorldGeneration;
+using SubworldLibrary;
 
 namespace Redemption.Globals.Player
 {
@@ -54,6 +56,8 @@ namespace Redemption.Globals.Player
         public bool parryStance;
         public bool parried;
         public float visionAmt;
+        public bool yesChoice;
+        public bool noChoice;
 
         public override void ResetEffects()
         {
@@ -95,7 +99,7 @@ namespace Redemption.Globals.Player
         {
             if ((damageSource.SourceNPCIndex >= 0 || (damageSource.SourceProjectileIndex >= 0 && Main.projectile[damageSource.SourceProjectileIndex].Redemption().TechnicallyMelee)) && contactImmuneTrue)
                 return false;
-            if (((damageSource.SourceNPCIndex >= 0 && Main.npc[damageSource.SourceNPCIndex].velocity.Length() > Player.velocity.Length() / 2) || 
+            if (((damageSource.SourceNPCIndex >= 0 && Main.npc[damageSource.SourceNPCIndex].velocity.Length() > Player.velocity.Length() / 2) ||
                 (damageSource.SourceProjectileIndex >= 0 && Main.projectile[damageSource.SourceProjectileIndex].Redemption().TechnicallyMelee)) && parryStance)
             {
                 parried = true;
@@ -120,6 +124,15 @@ namespace Redemption.Globals.Player
                 hitTarget = target.whoAmI;
                 hitTarget2 = target.whoAmI;
             }
+        }
+        public override void OnEnterWorld(Terraria.Player player)
+        {
+            if (SubworldSystem.Current != null)
+                return;
+            if (RedeGen.GoldenGatewayVector.X == -1 || RedeGen.BastionVector.X == -1 || RedeGen.gathicPortalVector.X == -1 || RedeGen.HallOfHeroesVector.X == -1 || RedeGen.slayerShipVector.X == -1)
+                Main.NewText("WARNING: Unable to locate a certain structure, new world is recommended!", Colors.RarityRed);
+            if (RedeGen.LabVector.X == -1 || RedeGen.newbCaveVector.X == -1)
+                Main.NewText("WARNING: Unable to locate important structure, new world is required!", Colors.RarityRed);
         }
         public override void PostUpdateMiscEffects()
         {

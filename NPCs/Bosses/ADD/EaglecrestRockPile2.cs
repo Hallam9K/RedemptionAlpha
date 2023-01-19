@@ -76,7 +76,7 @@ namespace Redemption.NPCs.Bosses.ADD
                 AITimer = 1;
             }
             NPC.PlatformFallCheck(ref NPC.Redemption().fallDownPlatform, 20);
-            RedeHelper.HorizontallyMove(NPC, player.Center, 0.14f, 7f + TimerRand, 26, 30, NPC.Center.Y > player.Center.Y);
+            NPCHelper.HorizontallyMove(NPC, player.Center, 0.14f, 7f + TimerRand, 26, 30, NPC.Center.Y > player.Center.Y);
         }
         public override bool? CanFallThroughPlatforms() => NPC.Redemption().fallDownPlatform;
         public override void FindFrame(int frameHeight)
@@ -100,7 +100,22 @@ namespace Redemption.NPCs.Bosses.ADD
                 NPC.frame.Y = 0;
             }
         }
-
+        public override void ModifyHitByItem(Player player, Item item, ref int damage, ref float knockback, ref bool crit)
+        {
+            if (!RedeConfigClient.Instance.ElementDisable)
+            {
+                if (ItemLists.Earth.Contains(item.type))
+                    NPC.Redemption().elementDmg *= 0.75f;
+            }
+        }
+        public override void ModifyHitByProjectile(Projectile projectile, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
+        {
+            if (!RedeConfigClient.Instance.ElementDisable)
+            {
+                if (ProjectileLists.Earth.Contains(projectile.type))
+                    NPC.Redemption().elementDmg *= 0.75f;
+            }
+        }
         public override void HitEffect(int hitDirection, double damage)
         {
             if (NPC.life <= 0)

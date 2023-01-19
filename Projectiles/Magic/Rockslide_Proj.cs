@@ -36,7 +36,7 @@ namespace Redemption.Projectiles.Magic
             Projectile.frame = Main.rand.Next(4);
             Rand = Main.rand.Next(50, 100);
             Projectile.spriteDirection = Main.rand.NextBool() ? 1 : -1;
-
+            Projectile.extraUpdates = 1;
             double angle = Main.rand.NextDouble() * 2d * Math.PI;
             MoveVector2.X = (float)(Math.Sin(angle) * Rand);
             MoveVector2.Y = (float)(Math.Cos(angle) * Rand);

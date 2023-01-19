@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Redemption.Items.Placeable.Tiles;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -43,6 +44,28 @@ namespace Redemption.Items.Weapons.HM.Ranged
         public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback)
         {
             type = ModContent.ProjectileType<SteampunkMinigun_Proj>();
+        }
+        public override void ModifyTooltips(List<TooltipLine> tooltips)
+        {
+            if (Main.keyState.PressingShift())
+            {
+                TooltipLine line = new(Mod, "Lore",
+                    "'A relic of Nirin's ancient brass technology, first uncovered and brought to light by a hermit with a rusty metal arm.\n" +
+                    "The mountains of the frozen domain hold many secrets and crafts long neglected, first created by dwindling\n" +
+                    "natives of the Arctic Realm and preserved by refugees of a ruined kingdom, yet only for a fleeting time did it last.'")
+                {
+                    OverrideColor = Color.LightGray
+                };
+                tooltips.Add(line);
+            }
+            else
+            {
+                TooltipLine line = new(Mod, "HoldShift", "Hold [Shift] to view lore")
+                {
+                    OverrideColor = Color.Gray,
+                };
+                tooltips.Add(line);
+            }
         }
         public override void AddRecipes()
         {

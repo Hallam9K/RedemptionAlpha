@@ -646,7 +646,7 @@ namespace Redemption.NPCs.Bosses.ADD
                                     {
                                         Vector2 ai = RedeHelper.PolarVector(12, -NPC.velocity.ToRotation() + Main.rand.NextFloat(-0.2f, 0.2f));
                                         float ai2 = Main.rand.Next(100);
-                                        Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, RedeHelper.PolarVector(12, -NPC.velocity.ToRotation() + Main.rand.NextFloat(-0.2f, 0.2f)), ModContent.ProjectileType<UkkoLightning>(), RedeHelper.HostileProjDamage((int)(NPC.damage * 0.9f)), 0, Main.myPlayer, ai.ToRotation(), ai2);
+                                        Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, RedeHelper.PolarVector(12, -NPC.velocity.ToRotation() + Main.rand.NextFloat(-0.2f, 0.2f)), ModContent.ProjectileType<UkkoLightning>(), NPCHelper.HostileProjDamage((int)(NPC.damage * 0.9f)), 0, Main.myPlayer, ai.ToRotation(), ai2);
                                     }
                                     if (AITimer >= 50 && dashCounter < 2)
                                     {
@@ -722,7 +722,7 @@ namespace Redemption.NPCs.Bosses.ADD
                                 NPC.ai[3] = 1;
                                 Vector2 ai = RedeHelper.PolarVector(15, Main.rand.NextFloat(0, MathHelper.TwoPi));
                                 float ai2 = Main.rand.Next(100);
-                                Projectile.NewProjectile(NPC.GetSource_FromAI(), HammerPos, RedeHelper.PolarVector(15, Main.rand.NextFloat(0, MathHelper.TwoPi)), ModContent.ProjectileType<UkkoLightning>(), RedeHelper.HostileProjDamage((int)(NPC.damage * 0.9f)), 0, Main.myPlayer, ai.ToRotation(), ai2);
+                                Projectile.NewProjectile(NPC.GetSource_FromAI(), HammerPos, RedeHelper.PolarVector(15, Main.rand.NextFloat(0, MathHelper.TwoPi)), ModContent.ProjectileType<UkkoLightning>(), NPCHelper.HostileProjDamage((int)(NPC.damage * 0.9f)), 0, Main.myPlayer, ai.ToRotation(), ai2);
                             }
                             if (AITimer >= 50)
                             {

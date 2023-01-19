@@ -28,7 +28,7 @@ namespace Redemption.Items.Weapons.HM.Magic
             Item.useAnimation = 32;
             Item.useTime = 32;
             Item.knockBack = 1f;
-            Item.rare = ItemRarityID.LightRed;
+            Item.rare = ItemRarityID.Pink;
             Item.damage = 48;
             Item.shoot = ModContent.ProjectileType<Synthesizer_Proj>();
             Item.shootSpeed = 0;

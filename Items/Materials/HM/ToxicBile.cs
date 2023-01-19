@@ -17,7 +17,7 @@ namespace Redemption.Items.Materials.HM
 			Item.height = 24;
 			Item.maxStack = 9999;
 			Item.value = Item.sellPrice(0, 0, 9, 0);
-			Item.rare = ItemRarityID.Lime;
+			Item.rare = ItemRarityID.LightRed;
 		}
     }
 }

@@ -12,6 +12,8 @@ using Redemption.Dusts;
 using Terraria.GameContent.UI;
 using Redemption.UI;
 using Terraria.GameContent;
+using System.Collections;
+using Redemption.Items.Usable;
 
 namespace Redemption.NPCs.Friendly
 {
@@ -39,7 +41,12 @@ namespace Redemption.NPCs.Friendly
             NPC.noGravity = false;
             NPC.dontTakeDamage = true;
             NPC.alpha = 255;
+            bubble = ModContent.Request<Texture2D>("Redemption/UI/TextBubble_Epidotra").Value;
+            voice = CustomSounds.Voice4 with { Pitch = 0.6f };
         }
+        private int Look;
+        private Texture2D bubble;
+        private SoundStyle voice;
         public override void AI()
         {
             if (NPC.target < 0 || NPC.target == 255 || Main.player[NPC.target].dead || !Main.player[NPC.target].active)
@@ -47,8 +54,6 @@ namespace Redemption.NPCs.Friendly
 
             Player player = Main.player[NPC.target];
             NPC portal = Main.npc[(int)NPC.ai[3]];
-            Texture2D bubble = ModContent.Request<Texture2D>("Redemption/UI/TextBubble_Epidotra").Value;
-            SoundStyle voice = CustomSounds.Voice4 with { Pitch = 0.6f };
 
             if (NPC.alpha > 0 && TimerRand < 3)
                 NPC.alpha -= 10;
@@ -104,12 +109,13 @@ namespace Redemption.NPCs.Friendly
                     if (AITimer++ == 40 && !Main.dedServ)
                     {
                         EmoteBubble.NewBubble(1, new WorldUIAnchor(NPC), 187);
-                        Dialogue d1 = new(NPC, "Ow, my head hurts..", Color.White, Color.Gray, voice, 3, 100, 30, true, bubble: bubble); // 187
-
+                        DialogueChain chain = new();
+                        chain.Add(new(NPC, "Ow, my head hurts..", Color.White, Color.Gray, voice, 3, 100, 30, true, bubble: bubble, endID: 1)); // 187
+                        chain.OnEndTrigger += Chain_OnEndTrigger;
                         TextBubbleUI.Visible = true;
-                        TextBubbleUI.Add(d1);
+                        TextBubbleUI.Add(chain);
                     }
-                    if (AITimer >= 227)
+                    if (AITimer >= 1000)
                     {
                         ExtraFrames = 0;
                         ExtraTexs = 0;
@@ -123,38 +129,32 @@ namespace Redemption.NPCs.Friendly
                     {
                         DialogueChain chain = new();
                         chain.Add(new(NPC, "Hey Zephos,[10] do you know where we are?", Color.White, Color.Gray, voice, 3, 100, 0, false, bubble: bubble)) // 221
-                             .Add(new(NPC, "Uh..[30] Zephos?", Color.White, Color.Gray, voice, 3, 100, 0, false, bubble: bubble)) // 166
-                             .Add(new(NPC, "Oh, hi there![10] Didn't notice you.", Color.White, Color.Gray, voice, 3, 100, 0, false, bubble: bubble)) // 206
+                             .Add(new(NPC, "[@a]Uh..[30] Zephos?", Color.White, Color.Gray, voice, 3, 100, 0, false, bubble: bubble)) // 166
+                             .Add(new(NPC, "[@b]Oh, hi there![10] Didn't notice you.", Color.White, Color.Gray, voice, 3, 100, 0, false, bubble: bubble)) // 206
                              .Add(new(NPC, "You haven't seen my friend around here,[10] have you?", Color.White, Color.Gray, voice, 3, 100, 0, false, bubble: bubble)) // 257
                              .Add(new(NPC, "Guess he didn't jump in.[30] Oh well,[10] I'll head back to get him.", Color.White, Color.Gray, voice, 3, 100, 0, false, bubble: bubble)) // 320
-                             .Add(new(NPC, "I'm going to need a place for me to stay if I come back,[10] so, see you soon I suppose.", Color.White, Color.Gray, voice, 3, 100, 30, true, bubble: bubble)); // 382
-
+                             .Add(new(NPC, "I'm going to need a place for me to stay if I come back,[10] so, see you soon I suppose.", Color.White, Color.Gray, voice, 3, 100, 30, true, bubble: bubble, endID: 1)); // 382
+                        chain.OnSymbolTrigger += Chain_OnSymbolTrigger;
+                        chain.OnEndTrigger += Chain_OnEndTrigger;
                         TextBubbleUI.Visible = true;
                         TextBubbleUI.Add(chain);
                     }
-                    if (AITimer >= 226 && AITimer % 30 == 0 && AITimer < 392)
+                    if (Look == 1 && AITimer % 30 == 0)
                         NPC.spriteDirection *= -1;
-                    if (AITimer == 226)
-                        EmoteBubble.NewBubble(87, new WorldUIAnchor(NPC), 166);
-                    if (AITimer >= 392)
+                    if (Look == 2)
                         NPC.LookAtEntity(player);
-                    if (AITimer == 392)
-                    {
-                        EmoteBubble.NewBubble(3, new WorldUIAnchor(NPC), 120);
-                        NPC.velocity.Y = -3;
-                    }
-                    if (AITimer == 1492 + 65)
+                    if (AITimer == 3000)
                     {
                         NPC.velocity.Y = -8;
                         NPC.velocity.X = -3;
                     }
-                    if (AITimer >= 1552 + 65)
+                    if (AITimer >= 3060)
                     {
                         NPC.noTileCollide = true;
                         NPC.Move(portal.Center, 20, 30);
                         NPC.alpha += 5;
                     }
-                    if (AITimer >= 1492 + 65)
+                    if (AITimer >= 3000)
                     {
                         NPC.rotation -= 0.1f;
                         NPC.velocity.X *= 0.99f;
@@ -173,6 +173,7 @@ namespace Redemption.NPCs.Friendly
                                 Main.dust[dust].velocity *= 3f;
                             }
                             RedeQuest.wayfarerVars[0] = 2;
+                            Item.NewItem(NPC.GetSource_Loot(), NPC.getRect(), ModContent.ItemType<ChaliceFragments>());
                             NPC.active = false;
                             if (Main.netMode == NetmodeID.Server)
                                 NetMessage.SendData(MessageID.WorldData);
@@ -187,6 +188,25 @@ namespace Redemption.NPCs.Friendly
             NPC.LockMoveRadius(player);
             Terraria.Graphics.Effects.Filters.Scene["MoR:FogOverlay"]?.GetShader().UseOpacity(1f).UseIntensity(1f).UseColor(Color.Black).UseImage(ModContent.Request<Texture2D>("Redemption/Effects/Vignette", AssetRequestMode.ImmediateLoad).Value);
             player.ManageSpecialBiomeVisuals("MoR:FogOverlay", true);
+        }
+        private void Chain_OnSymbolTrigger(Dialogue dialogue, string signature)
+        {
+            switch (signature)
+            {
+                case "a":
+                    Look = 1;
+                    EmoteBubble.NewBubble(87, new WorldUIAnchor(NPC), 166);
+                    break;
+                case "b":
+                    Look = 2;
+                    EmoteBubble.NewBubble(3, new WorldUIAnchor(NPC), 120);
+                    NPC.velocity.Y = -3;
+                    break;
+            }
+        }
+        private void Chain_OnEndTrigger(Dialogue dialogue, int ID)
+        {
+            AITimer = 2999;
         }
         private int ExtraFrames;
         private int ExtraTexs;

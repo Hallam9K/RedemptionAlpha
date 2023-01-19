@@ -23,6 +23,7 @@ using Redemption.Biomes;
 using Redemption.Items.Placeable.Furniture.Shade;
 using SubworldLibrary;
 using Redemption.WorldGeneration.Soulless;
+using Redemption.NPCs.Friendly;
 
 namespace Redemption.Globals
 {
@@ -351,8 +352,8 @@ namespace Redemption.Globals
         }
         public override void OnCreate(Item item, ItemCreationContext context)
         {
-            if (item.type == ModContent.ItemType<AlignmentTeller>())
-                RedeSystem.Instance.ChaliceUIElement.DisplayDialogue("Greetings, I am the Chalice of Alignment, and I judge the actions of those who wield me.", 260, 30, 0, Color.DarkGoldenrod);
+            if (item.type == ModContent.ItemType<AlignmentTeller>() && !Terraria.NPC.AnyNPCs(ModContent.NPCType<Chalice_Intro>()))
+                RedeHelper.SpawnNPC(item.GetSource_FromAI(), (int)Main.LocalPlayer.Center.X, (int)Main.LocalPlayer.Center.Y, ModContent.NPCType<Chalice_Intro>());
         }
 
         public override void ModifyTooltips(Item item, List<TooltipLine> tooltips)

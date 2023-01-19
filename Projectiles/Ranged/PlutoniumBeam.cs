@@ -28,6 +28,7 @@ namespace Redemption.Projectiles.Ranged
             Projectile.timeLeft = 1400;
             Projectile.penetrate = 20;
             Projectile.tileCollide = true;
+            Projectile.DamageType = DamageClass.Ranged;
             Projectile.Redemption().EnergyBased = true;
         }
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)

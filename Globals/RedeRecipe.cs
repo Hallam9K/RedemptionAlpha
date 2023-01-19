@@ -70,7 +70,7 @@ namespace Redemption.Globals
                 Recipe recipe = Main.recipe[i];
 
                 if (recipe.HasResult(ItemID.Zenith))
-                    recipe.AddIngredient<GildedStar>(10);
+                    recipe.AddIngredient<LifeFragment>(10);
             }
         }
         public override void AddRecipes()

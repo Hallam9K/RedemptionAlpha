@@ -24,7 +24,7 @@ namespace Redemption.Items.Weapons.HM.Melee
             Item.noMelee = true;
             Item.knockBack = 4;
             Item.value = Item.sellPrice(0, 6, 0, 0);
-            Item.rare = ItemRarityID.Cyan;
+            Item.rare = ItemRarityID.LightPurple;
             Item.UseSound = SoundID.Item15;
             Item.autoReuse = true;
             Item.noUseGraphic = true;

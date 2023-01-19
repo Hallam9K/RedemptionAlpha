@@ -74,6 +74,7 @@ namespace Redemption.Base
          */
         public static bool ReduceMana(Player player, int amount, bool autoRefill = true)
         {
+            player.manaRegenDelay = 60;
             if(autoRefill && player.manaFlower && player.statMana < (int)(amount * player.manaCost))
             {
                player.QuickMana();

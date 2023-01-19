@@ -210,7 +210,7 @@ namespace Redemption.NPCs.Bosses.ADD
                     }
 
                     NPC.PlatformFallCheck(ref NPC.Redemption().fallDownPlatform, 28);
-                    RedeHelper.HorizontallyMove(NPC, player.Center, moveInterval, moveSpeed, 20, 26, NPC.Center.Y > player.Center.Y);
+                    NPCHelper.HorizontallyMove(NPC, player.Center, moveInterval, moveSpeed, 20, 26, NPC.Center.Y > player.Center.Y);
                     break;
                 case ActionState.Roll:
                     if (TimerRand2 == 0)
@@ -306,7 +306,7 @@ namespace Redemption.NPCs.Bosses.ADD
                         NPC.netUpdate = true;
                     }
                     NPC.PlatformFallCheck(ref NPC.Redemption().fallDownPlatform, 28);
-                    RedeHelper.HorizontallyMove(NPC, player.Center, moveInterval, moveSpeed, 20, 26, NPC.Center.Y > player.Center.Y);
+                    NPCHelper.HorizontallyMove(NPC, player.Center, moveInterval, moveSpeed, 20, 26, NPC.Center.Y > player.Center.Y);
                     break;
                 case ActionState.Transform:
                     NPC.velocity *= 0.9f;
@@ -617,6 +617,22 @@ namespace Redemption.NPCs.Bosses.ADD
             spriteBatch.End();
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
             return false;
+        }
+        public override void ModifyHitByItem(Player player, Item item, ref int damage, ref float knockback, ref bool crit)
+        {
+            if (!RedeConfigClient.Instance.ElementDisable)
+            {
+                if (ItemLists.Earth.Contains(item.type))
+                    NPC.Redemption().elementDmg *= 0.75f;
+            }
+        }
+        public override void ModifyHitByProjectile(Projectile projectile, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
+        {
+            if (!RedeConfigClient.Instance.ElementDisable)
+            {
+                if (ProjectileLists.Earth.Contains(projectile.type))
+                    NPC.Redemption().elementDmg *= 0.75f;
+            }
         }
         public override void PostDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {

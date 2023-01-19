@@ -18,7 +18,6 @@ namespace Redemption.Items.Weapons.HM.Melee
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Infectious Glaive");
-            Tooltip.SetDefault("");
             ItemID.Sets.SkipsInitialUseSound[Item.type] = true;
             ItemID.Sets.Spears[Item.type] = true;
             SacrificeTotal = 1;

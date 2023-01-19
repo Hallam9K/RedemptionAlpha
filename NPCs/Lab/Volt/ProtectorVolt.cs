@@ -257,7 +257,7 @@ namespace Redemption.NPCs.Lab.Volt
 
                     if (AITimer >= 40 && AITimer % (TimerRand == 0 ? 10 : 20) == 0 && Main.netMode != NetmodeID.MultiplayerClient)
                     {
-                        int proj = Projectile.NewProjectile(NPC.GetSource_FromAI(), GunOrigin, RedeHelper.PolarVector(TimerRand == 0 ? 14 : 15, gunRot), ProjectileID.MartianTurretBolt, RedeHelper.HostileProjDamage(NPC.damage), 0, Main.myPlayer);
+                        int proj = Projectile.NewProjectile(NPC.GetSource_FromAI(), GunOrigin, RedeHelper.PolarVector(TimerRand == 0 ? 14 : 15, gunRot), ProjectileID.MartianTurretBolt, NPCHelper.HostileProjDamage(NPC.damage), 0, Main.myPlayer);
                         Main.projectile[proj].tileCollide = false;
                         Main.projectile[proj].timeLeft = 200;
                         Main.projectile[proj].netUpdate2 = true;
@@ -459,11 +459,12 @@ namespace Redemption.NPCs.Lab.Volt
                                     chain.Add(new(NPC, "... Are you allowed through?[30] Let me check.", Colors.RarityYellow, new Color(100, 86, 0), voice, 2, 100, 0, false, modifier: modifier)) // 214
                                          .Add(new(NPC, "... Oh?", Colors.RarityYellow, new Color(100, 86, 0), voice, 2, 100, 0, false, modifier: modifier)) // 114
                                          .Add(new(NPC, "... You're allowed through?", Colors.RarityYellow, new Color(100, 86, 0), voice, 2, 100, 0, false, modifier: modifier)) // 154
-                                         .Add(new(NPC, "This was mildly embarrassing.[30] Apologies.", Colors.RarityYellow, new Color(100, 86, 0), voice, 2, 100, 30, true, modifier: modifier)); // 240
+                                         .Add(new(NPC, "This was mildly embarrassing.[30] Apologies.", Colors.RarityYellow, new Color(100, 86, 0), voice, 2, 100, 30, true, modifier: modifier, endID: 1)); // 240
+                                    chain.OnEndTrigger += Chain_OnEndTrigger;
                                     TextBubbleUI.Visible = true;
                                     TextBubbleUI.Add(chain);
                                 }
-                                if (AITimer >= 732)
+                                if (AITimer >= 2000)
                                 {
                                     AITimer = 0;
                                     TimerRand = 2;
@@ -504,6 +505,10 @@ namespace Redemption.NPCs.Lab.Volt
                     }
                     break;
             }
+        }
+        private void Chain_OnEndTrigger(Dialogue dialogue, int ID)
+        {
+            AITimer = 3000;
         }
         public Vector2 PickRandPos()
         {

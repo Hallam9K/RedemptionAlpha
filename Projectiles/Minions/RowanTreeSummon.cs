@@ -4,7 +4,6 @@ using Redemption.Buffs;
 using Redemption.Globals;
 using Terraria;
 using Terraria.GameContent;
-using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -15,11 +14,9 @@ namespace Redemption.Projectiles.Minions
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Rowan Tree");
-            Main.projPet[Projectile.type] = true;
 
             ProjectileID.Sets.MinionSacrificable[Projectile.type] = true;
             ProjectileID.Sets.CultistIsResistantTo[Projectile.type] = true;
-            ProjectileID.Sets.MinionTargettingFeature[Projectile.type] = true;
         }
 
         public override void SetDefaults()

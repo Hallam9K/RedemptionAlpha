@@ -1193,14 +1193,14 @@ namespace Redemption.NPCs.Bosses.KSIII
                                             {
                                                 for (int i = 0; i < 8; i++)
                                                 {
-                                                    int proj = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, RedeHelper.PolarVector(8, MathHelper.ToRadians(45) * i), ProjectileID.MartianTurretBolt, RedeHelper.HostileProjDamage(NPC.damage), 0, Main.myPlayer);
+                                                    int proj = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, RedeHelper.PolarVector(8, MathHelper.ToRadians(45) * i), ProjectileID.MartianTurretBolt, NPCHelper.HostileProjDamage(NPC.damage), 0, Main.myPlayer);
                                                     Main.projectile[proj].tileCollide = false;
                                                     Main.projectile[proj].timeLeft = 200;
                                                     Main.projectile[proj].netUpdate2 = true;
                                                 }
                                                 for (int i = 0; i < 18; i++)
                                                 {
-                                                    int proj = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, RedeHelper.PolarVector(7, MathHelper.ToRadians(20) * i), ProjectileID.MartianTurretBolt, RedeHelper.HostileProjDamage(NPC.damage), 0, Main.myPlayer);
+                                                    int proj = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, RedeHelper.PolarVector(7, MathHelper.ToRadians(20) * i), ProjectileID.MartianTurretBolt, NPCHelper.HostileProjDamage(NPC.damage), 0, Main.myPlayer);
                                                     Main.projectile[proj].tileCollide = false;
                                                     Main.projectile[proj].timeLeft = 200;
                                                     Main.projectile[proj].netUpdate2 = true;
@@ -1624,6 +1624,8 @@ namespace Redemption.NPCs.Bosses.KSIII
                                             continue;
 
                                         int hitDirection = NPC.Center.X > target.Center.X ? -1 : 1;
+                                        if (!target.noKnockback)
+                                            target.velocity.X = 20 * NPC.spriteDirection;
                                         BaseAI.DamagePlayer(target, NPC.damage, 3, hitDirection, NPC);
                                     }
                                 }

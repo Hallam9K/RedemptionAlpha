@@ -21,6 +21,7 @@ namespace Redemption.Projectiles.Ranged
             Projectile.tileCollide = false;
             Projectile.timeLeft = 520;
             Projectile.penetrate = -1;
+            Projectile.DamageType = DamageClass.Ranged;
         }
 
         public override void AI()

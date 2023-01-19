@@ -14,6 +14,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Redemption.Items.Placeable.Banners;
 using Redemption.Buffs.NPCBuffs;
+using System.IO;
 
 namespace Redemption.NPCs.Lab
 {
@@ -81,11 +82,24 @@ namespace Redemption.NPCs.Lab
                 new FlavorTextBestiaryInfoElement("An amorphous blob of foul-smelling ooze. Below its icky slime is something organic, excreting its fluid almost endlessly... God, what a mess.")
             });
         }
+        public override void SendExtraAI(BinaryWriter writer)
+        {
+            base.SendExtraAI(writer);
+            if (Main.netMode == NetmodeID.Server || Main.dedServ)
+                writer.Write(Xvel);
+        }
+        public override void ReceiveExtraAI(BinaryReader reader)
+        {
+            base.ReceiveExtraAI(reader);
+            if (Main.netMode == NetmodeID.MultiplayerClient)
+                Xvel = reader.ReadInt32();
+        }
         public int Xvel;
         public int consumed;
         public override void OnSpawn(IEntitySource source)
         {
             TimerRand = Main.rand.Next(10, 30);
+            NPC.netUpdate = true;
         }
         public override void AI()
         {
@@ -109,6 +123,7 @@ namespace Redemption.NPCs.Lab
                         AITimer = 0;
                         TimerRand = Main.rand.Next(10, 30);
                         AIState = ActionState.Bounce;
+                        NPC.netUpdate = true;
                     }
                     break;
 
@@ -163,6 +178,7 @@ namespace Redemption.NPCs.Lab
             NPC.knockBackResist -= 0.05f;
             NPC.knockBackResist = MathHelper.Clamp(NPC.knockBackResist, 0, 1);
             consumed++;
+            NPC.netUpdate = true;
         }
         public override void FindFrame(int frameHeight)
         {

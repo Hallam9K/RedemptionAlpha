@@ -10,7 +10,7 @@ namespace Redemption.Items.Placeable.Furniture.Misc
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Tragic Protector");
-            Tooltip.SetDefault("'BöRKman'");
+            Tooltip.SetDefault("'BoRKman'");
             SacrificeTotal = 1;
 		}
 

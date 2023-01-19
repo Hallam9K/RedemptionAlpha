@@ -45,7 +45,7 @@ namespace Redemption.Items.Usable.Summons
         }
         public override bool CanUseItem(Player player)
         {
-            return !SubworldSystem.IsActive<SoullessSub>() && !Main.dayTime && !NPC.AnyNPCs(ModContent.NPCType<Nebuleus>()) && !NPC.AnyNPCs(ModContent.NPCType<Nebuleus2>()) && !NPC.AnyNPCs(ModContent.NPCType<Nebuleus_Clone>()) && !NPC.AnyNPCs(ModContent.NPCType<Nebuleus2_Clone>());
+            return !SubworldSystem.IsActive<SoullessSub>() && !Main.dayTime && !NPC.AnyNPCs(ModContent.NPCType<Nebuleus>()) && !NPC.AnyNPCs(ModContent.NPCType<Nebuleus2>()) && !NPC.AnyNPCs(ModContent.NPCType<Nebuleus_Clone>()) && !NPC.AnyNPCs(ModContent.NPCType<Nebuleus2_Clone>()) && !NPC.AnyNPCs(ModContent.NPCType<Neb_Start>());
         }
         public override bool AltFunctionUse(Player player)
         {

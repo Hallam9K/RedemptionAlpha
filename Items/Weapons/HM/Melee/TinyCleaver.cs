@@ -22,7 +22,7 @@ namespace Redemption.Items.Weapons.HM.Melee
             // Common Properties
             Item.width = 52;
             Item.height = 52;
-            Item.rare = ItemRarityID.Red;
+            Item.rare = ItemRarityID.Yellow;
             Item.value = Item.sellPrice(gold: 1);
 
             // Use Properties

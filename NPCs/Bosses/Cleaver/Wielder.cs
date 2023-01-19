@@ -14,6 +14,9 @@ using Redemption.BaseExtension;
 using Terraria.GameContent.ItemDropRules;
 using Redemption.Items.Weapons.HM.Melee;
 using Terraria.Audio;
+using System;
+using Redemption.UI;
+using Redemption.NPCs.PreHM;
 
 namespace Redemption.NPCs.Bosses.Cleaver
 {
@@ -90,7 +93,11 @@ namespace Redemption.NPCs.Bosses.Cleaver
             NPC.noGravity = true;
             NPC.noTileCollide = true;
             NPC.chaseable = false;
+            voice = CustomSounds.Voice6 with { Pitch = 0.4f };
+            bubble = ModContent.Request<Texture2D>("Redemption/UI/TextBubble_Omega").Value;
         }
+        SoundStyle voice;
+        Texture2D bubble;
         public override void ModifyHitByItem(Player player, Item item, ref int damage, ref float knockback, ref bool crit)
         {
             if (item.DamageType == DamageClass.Melee)
@@ -122,7 +129,7 @@ namespace Redemption.NPCs.Bosses.Cleaver
         public override bool CheckActive()
         {
             Player player = Main.player[NPC.target];
-            return !NPC.AnyNPCs(ModContent.NPCType<OmegaCleaver>()) && (!player.active || player.dead || Main.dayTime || (AIState == ActionState.Death2 && NPC.ai[2] >= 260));
+            return !NPC.AnyNPCs(ModContent.NPCType<OmegaCleaver>()) && (!player.active || player.dead || Main.dayTime || (AIState == ActionState.Death2 && NPC.ai[2] >= 340));
         }
 
         public override void SendExtraAI(BinaryWriter writer)
@@ -232,12 +239,15 @@ namespace Redemption.NPCs.Bosses.Cleaver
                     if (Funny && !Main.dedServ)
                     {
                         if (AITimer == 60)
-                            RedeSystem.Instance.DialogueUIElement.DisplayDialogue("I came here to kick gum", 100, 1, 0.6f, "Wielder Bot:", 1f, Color.Red, null, null, NPC.Center, sound: true);
-
-                        if (AITimer == 161)
-                            RedeSystem.Instance.DialogueUIElement.DisplayDialogue("and chew ass...", 100, 1, 0.6f, "Wielder Bot:", 1f, Color.Red, null, null, NPC.Center, sound: true);
-
-                        if (AITimer > 261)
+                        {
+                            DialogueChain chain = new();
+                            chain.Add(new(NPC, "I came here to kick gum", Colors.RarityRed, Color.DarkRed, voice, 2, 100, 0, false, null, bubble))
+                                 .Add(new(NPC, "and chew ass...", Colors.RarityRed, Color.DarkRed, voice, 2, 100, 30, true, null, bubble, endID: 1));
+                            chain.OnEndTrigger += Chain_OnEndTrigger;
+                            TextBubbleUI.Visible = true;
+                            TextBubbleUI.Add(chain);
+                        }
+                        if (AITimer > 600)
                         {
                             if (!NPC.AnyNPCs(ModContent.NPCType<OmegaCleaver>()))
                                 RedeHelper.SpawnNPC(NPC.GetSource_FromAI(), NPC.spriteDirection == 1 ? (int)NPC.Center.X - 1400 : (int)NPC.Center.X + 1400, (int)NPC.Center.Y + 150, ModContent.NPCType<OmegaCleaver>(), ai3: NPC.whoAmI);
@@ -266,11 +276,14 @@ namespace Redemption.NPCs.Bosses.Cleaver
                     if (AIHost == 1)
                     {
                         AITimer++;
-                        if (Funny && AITimer == 60 && !Main.dedServ)
+                        if (Funny && AITimer == 1 && !Main.dedServ)
                         {
-                            RedeSystem.Instance.DialogueUIElement.DisplayDialogue("...And I'm all out of ass.", 100, 1, 0.6f, "Wielder Bot:", 1f, Color.Red, null, null, NPC.Center, sound: true);
+                            DialogueChain chain = new();
+                            chain.Add(new(NPC, "...And I'm all out of ass.", Colors.RarityRed, Color.DarkRed, voice, 2, 100, 30, true, null, bubble));
+                            TextBubbleUI.Visible = true;
+                            TextBubbleUI.Add(chain);
                         }
-                        if (AITimer > 60)
+                        if (AITimer > (Funny ? 120 : 60))
                         {
                             if (Main.netMode != NetmodeID.MultiplayerClient)
                             {
@@ -649,7 +662,12 @@ namespace Redemption.NPCs.Bosses.Cleaver
                     NPC.velocity *= .96f;
                     AITimer++;
                     if (AITimer == 180)
-                        CombatText.NewText(NPC.getRect(), Colors.RarityRed, "...Nah.", true, false);
+                    {
+                        DialogueChain chain = new();
+                        chain.Add(new(NPC, "...Nah.", Colors.RarityRed, Color.DarkRed, voice, 1, 100, 0, false, null, bubble));
+                        TextBubbleUI.Visible = true;
+                        TextBubbleUI.Add(chain);
+                    }
                     if (AITimer > 260)
                     {
                         aniType = 3;
@@ -660,7 +678,10 @@ namespace Redemption.NPCs.Bosses.Cleaver
                     break;
             }
         }
-
+        private void Chain_OnEndTrigger(Dialogue dialogue, int ID)
+        {
+            AITimer = 550;
+        }
         public override void FindFrame(int frameHeight)
         {
             switch (aniType)

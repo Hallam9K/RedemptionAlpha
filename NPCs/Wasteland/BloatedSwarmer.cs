@@ -8,6 +8,7 @@ using Redemption.Items.Materials.PreHM;
 using Redemption.Items.Usable.Potions;
 using Redemption.Items.Weapons.HM.Ranged;
 using System;
+using System.IO;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
@@ -72,6 +73,18 @@ namespace Redemption.NPCs.Wasteland
                 for (int i = 0; i < 4; i++)
                     Gore.NewGore(NPC.GetSource_FromThis(), NPC.position, NPC.velocity, ModContent.Find<ModGore>("Redemption/BloatedSwarmerGore" + (i + 1)).Type, 1);
             }
+        }
+        public override void SendExtraAI(BinaryWriter writer)
+        {
+            base.SendExtraAI(writer);
+            if (Main.netMode == NetmodeID.Server || Main.dedServ)
+                writer.Write(Burst);
+        }
+        public override void ReceiveExtraAI(BinaryReader reader)
+        {
+            base.ReceiveExtraAI(reader);
+            if (Main.netMode == NetmodeID.MultiplayerClient)
+                Burst = reader.ReadBoolean();
         }
         private bool Burst;
         public override bool PreAI()

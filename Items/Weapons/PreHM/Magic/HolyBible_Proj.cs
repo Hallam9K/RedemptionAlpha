@@ -20,10 +20,21 @@ namespace Redemption.Items.Weapons.PreHM.Magic
             Projectile.penetrate = -1;
             Projectile.hostile = false;
             Projectile.friendly = false;
-            Projectile.tileCollide = false;
+            Projectile.tileCollide = true;
             Projectile.timeLeft = 600;
         }
-
+        public override bool OnTileCollide(Vector2 oldVelocity)
+        {
+            Projectile.velocity *= -1;
+            if (Projectile.ai[0] < 30)
+                Projectile.ai[0] = 30;
+            return false;
+        }
+        public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough, ref Vector2 hitboxCenterFrac)
+        {
+            width = height = 16;
+            return true;
+        }
         private float glowRot;
         public override void AI()
         {
@@ -58,6 +69,7 @@ namespace Redemption.Items.Weapons.PreHM.Magic
             }
             if (Projectile.ai[0] >= 240)
             {
+                Projectile.tileCollide = false;
                 Projectile.Move(player.Center, Projectile.ai[1], 1);
                 Projectile.ai[1] *= 1.01f;
                 if (Projectile.DistanceSQ(player.Center) < 20 * 20)

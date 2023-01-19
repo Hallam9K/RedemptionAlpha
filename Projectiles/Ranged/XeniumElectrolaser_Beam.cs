@@ -26,6 +26,7 @@ namespace Redemption.Projectiles.Ranged
             Projectile.timeLeft = 700;
             Projectile.penetrate = 8;
             Projectile.tileCollide = true;
+            Projectile.DamageType = DamageClass.Ranged;
             Projectile.usesLocalNPCImmunity = true;
             Projectile.Redemption().EnergyBased = true;
         }
@@ -72,6 +73,7 @@ namespace Redemption.Projectiles.Ranged
             Projectile.extraUpdates = 100;
             Projectile.timeLeft = 700;
             Projectile.penetrate = 30;
+            Projectile.DamageType = DamageClass.Ranged;
             Projectile.tileCollide = false;
             Projectile.Redemption().EnergyBased = true;
         }

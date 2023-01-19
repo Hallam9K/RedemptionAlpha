@@ -546,7 +546,7 @@ namespace Redemption.NPCs.Bosses.Neb.Phase2
                                 {
                                     if (Main.netMode != NetmodeID.MultiplayerClient)
                                     {
-                                        int projID = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<CurvingStar_Tele4>(), RedeHelper.HostileProjDamage((int)(NPC.damage * .67f)), 0, Main.myPlayer, 1.01f, 0);
+                                        int projID = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<CurvingStar_Tele4>(), NPCHelper.HostileProjDamage((int)(NPC.damage * .67f)), 0, Main.myPlayer, 1.01f, 0);
                                         Main.projectile[projID].velocity = BaseUtility.RotateVector(default, new Vector2(5f, 0f), m / (float)pieCut * 6.28f);
                                         Main.projectile[projID].netUpdate = true;
                                     }
@@ -559,7 +559,7 @@ namespace Redemption.NPCs.Bosses.Neb.Phase2
                                 {
                                     if (Main.netMode != NetmodeID.MultiplayerClient)
                                     {
-                                        int projID = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<CurvingStar_Tele4>(), RedeHelper.HostileProjDamage((int)(NPC.damage * .67f)), 0, Main.myPlayer, 1.01f, 1);
+                                        int projID = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<CurvingStar_Tele4>(), NPCHelper.HostileProjDamage((int)(NPC.damage * .67f)), 0, Main.myPlayer, 1.01f, 1);
                                         Main.projectile[projID].velocity = BaseUtility.RotateVector(default, new Vector2(5f, 0f), m / (float)pieCut * 6.28f);
                                         Main.projectile[projID].netUpdate = true;
                                     }
@@ -594,7 +594,7 @@ namespace Redemption.NPCs.Bosses.Neb.Phase2
                                     for (int i = 0; i < 4; i++)
                                     {
                                         Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, new Vector2(6f, 0).RotatedBy(attackTimer[0] + Math.PI / 2 * i),
-                                            ModContent.ProjectileType<CurvingStar_Tele2>(), RedeHelper.HostileProjDamage((int)(NPC.damage * .67f)), 0f, Main.myPlayer, 1.005f);
+                                            ModContent.ProjectileType<CurvingStar_Tele2>(), NPCHelper.HostileProjDamage((int)(NPC.damage * .67f)), 0f, Main.myPlayer, 1.005f);
                                     }
                                 }
                             }
@@ -646,13 +646,13 @@ namespace Redemption.NPCs.Bosses.Neb.Phase2
                                     int pieCut = 4;
                                     for (int m = 0; m < pieCut; m++)
                                     {
-                                        int projID = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<CurvingStar_Tele4>(), RedeHelper.HostileProjDamage((int)(NPC.damage * .67f)), 0, Main.myPlayer, 1.001f, 2);
+                                        int projID = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<CurvingStar_Tele4>(), NPCHelper.HostileProjDamage((int)(NPC.damage * .67f)), 0, Main.myPlayer, 1.001f, 2);
                                         Main.projectile[projID].velocity = BaseUtility.RotateVector(default, new Vector2(5f, 0f), m / (float)pieCut * 6.28f);
                                         Main.projectile[projID].netUpdate = true;
                                     }
                                     for (int m = 0; m < pieCut; m++)
                                     {
-                                        int projID = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<CurvingStar_Tele4>(), RedeHelper.HostileProjDamage((int)(NPC.damage * .67f)), 0, Main.myPlayer, 1.001f, 3);
+                                        int projID = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<CurvingStar_Tele4>(), NPCHelper.HostileProjDamage((int)(NPC.damage * .67f)), 0, Main.myPlayer, 1.001f, 3);
                                         Main.projectile[projID].velocity = BaseUtility.RotateVector(default, new Vector2(5f, 0f), m / (float)pieCut * 6.28f);
                                         Main.projectile[projID].netUpdate = true;
                                     }
@@ -665,13 +665,13 @@ namespace Redemption.NPCs.Bosses.Neb.Phase2
                                     int pieCut = 4;
                                     for (int m = 0; m < pieCut; m++)
                                     {
-                                        int projID = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<CurvingStar_Tele4>(), RedeHelper.HostileProjDamage((int)(NPC.damage * .67f)), 0, Main.myPlayer, 1.001f, 2);
+                                        int projID = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<CurvingStar_Tele4>(), NPCHelper.HostileProjDamage((int)(NPC.damage * .67f)), 0, Main.myPlayer, 1.001f, 2);
                                         Main.projectile[projID].velocity = BaseUtility.RotateVector(default, new Vector2(9f, 0f), m / (float)pieCut * 6.28f);
                                         Main.projectile[projID].netUpdate = true;
                                     }
                                     for (int m = 0; m < pieCut; m++)
                                     {
-                                        int projID = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<CurvingStar_Tele4>(), RedeHelper.HostileProjDamage((int)(NPC.damage * .67f)), 0, Main.myPlayer, 1.001f, 3);
+                                        int projID = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<CurvingStar_Tele4>(), NPCHelper.HostileProjDamage((int)(NPC.damage * .67f)), 0, Main.myPlayer, 1.001f, 3);
                                         Main.projectile[projID].velocity = BaseUtility.RotateVector(default, new Vector2(9f, 0f), m / (float)pieCut * 6.28f);
                                         Main.projectile[projID].netUpdate = true;
                                     }
@@ -684,13 +684,13 @@ namespace Redemption.NPCs.Bosses.Neb.Phase2
                                     int pieCut = 8;
                                     for (int m = 0; m < pieCut; m++)
                                     {
-                                        int projID = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<CurvingStar_Tele4>(), RedeHelper.HostileProjDamage((int)(NPC.damage * .67f)), 0, Main.myPlayer, 1.001f, 2);
+                                        int projID = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<CurvingStar_Tele4>(), NPCHelper.HostileProjDamage((int)(NPC.damage * .67f)), 0, Main.myPlayer, 1.001f, 2);
                                         Main.projectile[projID].velocity = BaseUtility.RotateVector(default, new Vector2(3f, 0f), m / (float)pieCut * 6.28f);
                                         Main.projectile[projID].netUpdate = true;
                                     }
                                     for (int m = 0; m < pieCut; m++)
                                     {
-                                        int projID = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<CurvingStar_Tele4>(), RedeHelper.HostileProjDamage((int)(NPC.damage * .67f)), 0, Main.myPlayer, 1.001f, 3);
+                                        int projID = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<CurvingStar_Tele4>(), NPCHelper.HostileProjDamage((int)(NPC.damage * .67f)), 0, Main.myPlayer, 1.001f, 3);
                                         Main.projectile[projID].velocity = BaseUtility.RotateVector(default, new Vector2(3f, 0f), m / (float)pieCut * 6.28f);
                                         Main.projectile[projID].netUpdate = true;
                                     }
@@ -785,7 +785,7 @@ namespace Redemption.NPCs.Bosses.Neb.Phase2
                                 if (Main.netMode != NetmodeID.MultiplayerClient)
                                 {
                                     Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, new Vector2(6f, 0).RotatedBy(attackTimer[0] + Math.PI / 2),
-                                        ModContent.ProjectileType<CosmicEye3>(), RedeHelper.HostileProjDamage((int)(NPC.damage * .7f)), 0f, Main.myPlayer);
+                                        ModContent.ProjectileType<CosmicEye3>(), NPCHelper.HostileProjDamage((int)(NPC.damage * .7f)), 0f, Main.myPlayer);
                                 }
                             }
                             if (NPC.ai[2] == 40 || NPC.ai[2] == 120)
@@ -795,7 +795,7 @@ namespace Redemption.NPCs.Bosses.Neb.Phase2
                                     int pieCut = 8;
                                     for (int m = 0; m < pieCut; m++)
                                     {
-                                        int projID = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<CurvingStar_Tele4>(), RedeHelper.HostileProjDamage((int)(NPC.damage * .67f)), 0, Main.myPlayer, 1.001f, 0);
+                                        int projID = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<CurvingStar_Tele4>(), NPCHelper.HostileProjDamage((int)(NPC.damage * .67f)), 0, Main.myPlayer, 1.001f, 0);
                                         Main.projectile[projID].velocity = BaseUtility.RotateVector(default, new Vector2(2f, 0f), m / (float)pieCut * 6.28f);
                                         Main.projectile[projID].netUpdate = true;
                                     }
@@ -864,7 +864,7 @@ namespace Redemption.NPCs.Bosses.Neb.Phase2
                                     int pieCut = 8;
                                     for (int m = 0; m < pieCut; m++)
                                     {
-                                        int projID = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<CurvingStar_Tele4>(), RedeHelper.HostileProjDamage((int)(NPC.damage * .67f)), 0, Main.myPlayer, 1.02f, 0);
+                                        int projID = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<CurvingStar_Tele4>(), NPCHelper.HostileProjDamage((int)(NPC.damage * .67f)), 0, Main.myPlayer, 1.02f, 0);
                                         Main.projectile[projID].velocity = BaseUtility.RotateVector(default, new Vector2(5f, 0f), m / (float)pieCut * 6.28f);
                                         Main.projectile[projID].netUpdate = true;
                                     }
@@ -877,7 +877,7 @@ namespace Redemption.NPCs.Bosses.Neb.Phase2
                                     int pieCut = 8;
                                     for (int m = 0; m < pieCut; m++)
                                     {
-                                        int projID = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<CurvingStar_Tele4>(), RedeHelper.HostileProjDamage((int)(NPC.damage * .67f)), 0, Main.myPlayer, 1.02f, 1);
+                                        int projID = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<CurvingStar_Tele4>(), NPCHelper.HostileProjDamage((int)(NPC.damage * .67f)), 0, Main.myPlayer, 1.02f, 1);
                                         Main.projectile[projID].velocity = BaseUtility.RotateVector(default, new Vector2(5f, 0f), m / (float)pieCut * 6.28f);
                                         Main.projectile[projID].netUpdate = true;
                                     }
@@ -1386,7 +1386,7 @@ namespace Redemption.NPCs.Bosses.Neb.Phase2
                                 if (Main.netMode != NetmodeID.MultiplayerClient)
                                 {
                                     Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, new Vector2(1f, 0).RotatedBy(attackTimer[0] + Math.PI / 2),
-                                        ModContent.ProjectileType<StarBolt>(), RedeHelper.HostileProjDamage((int)(NPC.damage * .7f)), 0f, Main.myPlayer);
+                                        ModContent.ProjectileType<StarBolt>(), NPCHelper.HostileProjDamage((int)(NPC.damage * .7f)), 0f, Main.myPlayer);
                                 }
                             }
                             if (NPC.ai[2] == 300) { NPC.ai[3] = 2; }
@@ -1446,7 +1446,7 @@ namespace Redemption.NPCs.Bosses.Neb.Phase2
                                 {
                                     if (Main.netMode != NetmodeID.MultiplayerClient)
                                     {
-                                        int p = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, RedeHelper.PolarVector(2, (vector - NPC.Center).ToRotation()), ModContent.ProjectileType<StarBolt>(), RedeHelper.HostileProjDamage((int)(NPC.damage * .7f)), 0, Main.myPlayer, NPC.whoAmI);
+                                        int p = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, RedeHelper.PolarVector(2, (vector - NPC.Center).ToRotation()), ModContent.ProjectileType<StarBolt>(), NPCHelper.HostileProjDamage((int)(NPC.damage * .7f)), 0, Main.myPlayer, NPC.whoAmI);
                                         Main.projectile[p].timeLeft = 155;
                                     }
                                 }
@@ -1545,10 +1545,10 @@ namespace Redemption.NPCs.Bosses.Neb.Phase2
         public void Teleport(bool specialPos, Vector2 teleportPos)
         {
             Player player = Main.player[NPC.target];
-            DustHelper.DrawParticleStar(NPC.Center, new GlowParticle2(), Color.Blue * 0.4f, 5, 0.8f, 2, 0.7f, 2, 0, ai1: Main.rand.Next(50, 60));
-            DustHelper.DrawParticleStar(NPC.Center, new GlowParticle2(), Color.Purple * 0.4f, 5, 1.6f, 2, 0.7f, 2, 0, ai1: Main.rand.Next(50, 60));
-            DustHelper.DrawParticleStar(NPC.Center, new GlowParticle2(), Color.Pink * 0.4f, 5, 2.4f, 2, 0.7f, 2, 0, ai1: Main.rand.Next(50, 60));
-            DustHelper.DrawParticleStar(NPC.Center, new GlowParticle2(), Color.IndianRed * 0.4f, 5, 3.2f, 2, 0.7f, 2, 0, ai1: Main.rand.Next(50, 60));
+            DustHelper.DrawParticleStar(NPC.Center, new GlowParticle2(), Color.Blue * 0.4f, 5, 0.8f, 1, 0.7f, 2, 0, ai1: Main.rand.Next(50, 60));
+            DustHelper.DrawParticleStar(NPC.Center, new GlowParticle2(), Color.Purple * 0.4f, 5, 1.6f, 1, 0.7f, 2, 0, ai1: Main.rand.Next(50, 60));
+            DustHelper.DrawParticleStar(NPC.Center, new GlowParticle2(), Color.Pink * 0.4f, 5, 2.4f, 1, 0.7f, 2, 0, ai1: Main.rand.Next(50, 60));
+            DustHelper.DrawParticleStar(NPC.Center, new GlowParticle2(), Color.IndianRed * 0.4f, 5, 3.2f, 1, 0.7f, 2, 0, ai1: Main.rand.Next(50, 60));
             teleGlow = true;
             teleGlowTimer = 0;
             teleVector = NPC.Center;

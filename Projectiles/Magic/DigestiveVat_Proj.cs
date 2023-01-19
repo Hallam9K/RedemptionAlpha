@@ -24,6 +24,7 @@ namespace Redemption.Projectiles.Magic
             Projectile.penetrate = 3;
             Projectile.hostile = false;
             Projectile.friendly = true;
+            Projectile.DamageType = DamageClass.Magic;
             Projectile.tileCollide = true;
             Projectile.ignoreWater = false;
             Projectile.timeLeft = 200;

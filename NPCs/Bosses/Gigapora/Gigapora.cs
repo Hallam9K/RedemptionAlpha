@@ -229,7 +229,7 @@ namespace Redemption.NPCs.Bosses.Gigapora
                 oldrot[k] = oldrot[k - 1];
             oldrot[0] = NPC.rotation;
 
-            if (NPC.immortal && AIState is not ActionState.Death)
+            if (NPC.immortal && AIState is not ActionState.Death && NPC.ai[3] == 0)
                 shieldAlpha += 0.04f;
             else
                 shieldAlpha -= 0.04f;
@@ -243,7 +243,7 @@ namespace Redemption.NPCs.Bosses.Gigapora
                 if (target.velocity.Length() == 0 || target.ProjBlockBlacklist() || !NPC.Hitbox.Intersects(target.Hitbox))
                     continue;
 
-                if (NPC.immortal && AIState is not ActionState.Death)
+                if (NPC.immortal && AIState is not ActionState.Death && NPC.ai[3] == 0)
                     RedeDraw.SpawnRing(target.Center, Color.Red, 0.13f, 0.7f);
                 target.Kill();
             }
@@ -364,7 +364,7 @@ namespace Redemption.NPCs.Bosses.Gigapora
                             choice.Add(ActionState.Gigabeam, BodyState >= 7 ? 1.5f : 1);
                         if (!flameDone)
                             choice.Add(ActionState.Flamethrowers, BodyState >= 3 ? .4f : 1);
-                        choice.Add(ActionState.BurrowAtk);
+                        choice.Add(ActionState.BurrowAtk, BodyState >= 2 ? .8f : 0);
                         if (!xbombDone)
                             choice.Add(ActionState.CrossBomb);
 
@@ -400,7 +400,7 @@ namespace Redemption.NPCs.Bosses.Gigapora
                                     NPC.velocity.Y += 0.2f;
                                 break;
                             case 1:
-                                if (NPC.DistanceSQ(new Vector2(targetPos.X, player.Center.Y + 400)) < 100 * 100 || AITimer++ >= 180)
+                                if (NPC.DistanceSQ(new Vector2(targetPos.X, player.Center.Y + 500)) < 100 * 100 || AITimer++ >= 180)
                                 {
                                     AITimer = 0;
                                     TimerRand = 2;
@@ -435,7 +435,7 @@ namespace Redemption.NPCs.Bosses.Gigapora
                     for (int i = 0; i < Main.maxNPCs; i++)
                     {
                         NPC core = Main.npc[i];
-                        if (!core.active || core.type != ModContent.NPCType<Gigapora_ShieldCore>())
+                        if (!core.active || core.type != ModContent.NPCType<Gigapora_ShieldCore>() || core.ai[1] == 5)
                             continue;
 
                         core.ai[1] = 1;
@@ -548,7 +548,7 @@ namespace Redemption.NPCs.Bosses.Gigapora
                     for (int i = 0; i < Main.maxNPCs; i++)
                     {
                         NPC core = Main.npc[i];
-                        if (!core.active || core.type != ModContent.NPCType<Gigapora_ShieldCore>())
+                        if (!core.active || core.type != ModContent.NPCType<Gigapora_ShieldCore>() || core.ai[1] == 5)
                             continue;
 
                         core.ai[1] = 1;
@@ -697,7 +697,7 @@ namespace Redemption.NPCs.Bosses.Gigapora
                     for (int i = 0; i < Main.maxNPCs; i++)
                     {
                         NPC core = Main.npc[i];
-                        if (!core.active || core.type != ModContent.NPCType<Gigapora_ShieldCore>())
+                        if (!core.active || core.type != ModContent.NPCType<Gigapora_ShieldCore>() || core.ai[1] == 5)
                             continue;
 
                         core.ai[1] = 1;
@@ -1022,14 +1022,14 @@ namespace Redemption.NPCs.Bosses.Gigapora
         }
         public override bool StrikeNPC(ref double damage, int defense, ref float knockback, int hitDirection, ref bool crit)
         {
-            if (NPC.immortal && AIState is not ActionState.Death)
+            if (NPC.immortal && AIState is not ActionState.Death && NPC.ai[3] == 0)
             {
                 if (!Main.dedServ)
                     SoundEngine.PlaySound(CustomSounds.BallFire with { Volume = .5f }, NPC.position);
                 damage = 0;
                 return false;
             }
-            damage *= 2;
+            damage *= 1.8f;
             return true;
         }
         private void DespawnHandler()
