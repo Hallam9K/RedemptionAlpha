@@ -191,7 +191,7 @@ namespace Redemption.NPCs.Wasteland
         }
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
-            Texture2D sneezeTex = ModContent.Request<Texture2D>(NPC.ModNPC.Texture + "_Sneeze").Value;
+            Texture2D sneezeTex = ModContent.Request<Texture2D>(Texture + "_Sneeze").Value;
             Vector2 SneezeOrigin = new(sneezeTex.Width / 2, sneezeTex.Height / 2);
             var effects = NPC.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
             if (NPC.localAI[0] != 0 && AIState == ActionState.Sneeze)

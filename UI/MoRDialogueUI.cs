@@ -130,7 +130,7 @@ namespace Redemption.UI
             }
             else
             {
-                CenterPosition = screenPos;
+                CenterPosition = screenPos * Main.UIScale;
             }
             // * Main.UIScale
             int centerX = (int)CenterPosition.X;

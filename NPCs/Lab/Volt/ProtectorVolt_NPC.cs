@@ -257,7 +257,7 @@ namespace Redemption.NPCs.Lab.Volt
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
             Texture2D texture = TextureAssets.Npc[NPC.type].Value;
-            Texture2D GunTex = ModContent.Request<Texture2D>(NPC.ModNPC.Texture + "_Extra").Value;
+            Texture2D GunTex = ModContent.Request<Texture2D>(Texture + "_Extra").Value;
             var effects = NPC.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
 
             spriteBatch.Draw(GunTex, NPC.Center - screenPos, new Rectangle?(new Rectangle(0, 0, GunTex.Width, GunTex.Height)), drawColor, gunRot, new Vector2(GunTex.Width / 2f, GunTex.Height / 2f), NPC.scale, effects, 0f);

@@ -127,7 +127,7 @@ namespace Redemption.NPCs.HM
         {
             Player player = Main.player[NPC.target];
             RedeNPC globalNPC = NPC.Redemption();
-            bubble = ModContent.Request<Texture2D>("Redemption/UI/TextBubble_Epidotra").Value;
+            bubble = ModContent.Request<Texture2D>("Redemption/UI/TextBubble_Slayer").Value;
             voice = CustomSounds.Voice6 with { Pitch = 0.8f };
             if (globalNPC.attacker is Player && AIState > ActionState.Scan)
                 NPC.chaseable = true;
@@ -478,7 +478,7 @@ namespace Redemption.NPCs.HM
         }
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
-            Texture2D glow = ModContent.Request<Texture2D>(NPC.ModNPC.Texture + "_Glow").Value;
+            Texture2D glow = ModContent.Request<Texture2D>(Texture + "_Glow").Value;
             var effects = NPC.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
             spriteBatch.Draw(TextureAssets.Npc[NPC.type].Value, NPC.Center + new Vector2(0, 3) - screenPos, NPC.frame, NPC.GetAlpha(drawColor), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
             spriteBatch.Draw(glow, NPC.Center + new Vector2(0, 3) - screenPos, NPC.frame, NPC.GetAlpha(Color.White), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);

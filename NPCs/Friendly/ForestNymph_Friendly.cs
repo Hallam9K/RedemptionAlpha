@@ -292,7 +292,7 @@ namespace Redemption.NPCs.Friendly
                         else if (RedeQuest.forestNymphVar == 2)
                         {
                             SoundEngine.PlaySound(SoundID.Chat);
-                            Main.npcChatText = "We usually live in giant hollowed-out trees with a body of water nearby. The tree is only good for hiding, but the water is vital for our survive, as we cannot blossom without it. The living trees this island has are the closest things to the great oaks back through the portal, but they could use some sprucing up. They aren't exactly homely.";
+                            Main.npcChatText = "We usually live in giant hollowed-out trees with a body of water nearby. The tree is only good for hiding, but the water is vital for our survival, as we cannot blossom without it. The living trees this island has are the closest things to the great oaks back through the portal, but they could use some sprucing up. They aren't exactly homely.";
                             RedeQuest.forestNymphVar++;
                             if (Main.netMode == NetmodeID.Server)
                                 NetMessage.SendData(MessageID.WorldData);
@@ -448,7 +448,9 @@ namespace Redemption.NPCs.Friendly
         private string ChitChat()
         {
             WeightedRandom<string> chat = new();
-            chat.Add(BothChat());
+            string bothChat = BothChat();
+            if (bothChat != null)
+                chat.Add(bothChat);
             chat.Add("Do you wonder why there aren't more of us around? It is simply the matter of strict requirements for our seeds to grow, and the centuries it takes for them to fully blossom. We usually produce seeds in the Spring season once every decade - a long time for humans. If you see a peculiar bulb near my pond, I'd recommend saying farewell to me and this place indefinitely. A blooming nymph is a fragile thing, and I won't take any chances.");
             chat.Add("I have learnt many things from my observations of humans, along with the languages they speak. I understand they have a false perception of us, some say we were created by the World to replicate the \"perfect image of humans\". Of course, that is merely a rumour fuelled with egotism. Humans are far from perfect, form or otherwise.");
             chat.Add("Artistic depictions created by humans show us having a much more similar appearance to them than what is accurate. They seldom get the chance to get a close look at us so it is understandable. I came across such artwork in a book I stole, it was... the complete opposite of flattering.");
@@ -506,7 +508,9 @@ namespace Redemption.NPCs.Friendly
                 chat.Add("You better hope that wood you don is not from my home.");
                 chat.Add("You don the wood of a living tree. If I find out you've taken it from my home, I won't be happy.");
             }
-            chat.Add(BothChat());
+            string bothChat = BothChat();
+            if (bothChat != null)
+                chat.Add(bothChat);
 
             if (Personality is PersonalityState.Aggressive && RedeQuest.forestNymphVar < 2)
                 chat.Add("Better watch yourself.");

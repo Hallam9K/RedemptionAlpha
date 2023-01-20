@@ -699,9 +699,9 @@ namespace Redemption.NPCs.Lab.MACE
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
             Texture2D texture = TextureAssets.Npc[NPC.type].Value;
-            Texture2D glowTex = ModContent.Request<Texture2D>(NPC.ModNPC.Texture + "_Glow").Value;
+            Texture2D glowTex = ModContent.Request<Texture2D>(Texture + "_Glow").Value;
             Texture2D trolleyTex = ModContent.Request<Texture2D>("Redemption/NPCs/Lab/MACE/CraneTrolley").Value;
-            Texture2D jawTex = ModContent.Request<Texture2D>(NPC.ModNPC.Texture + "_Jaw").Value;
+            Texture2D jawTex = ModContent.Request<Texture2D>(Texture + "_Jaw").Value;
             Vector2 drawCenter = new(NPC.Center.X, NPC.Center.Y - 18);
             if (Phase == 2)
                 drawCenter = NPC.Center;

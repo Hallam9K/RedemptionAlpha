@@ -157,7 +157,7 @@ namespace Redemption.NPCs.Friendly
                     break;
 
                 case ActionState.Alert:
-                    if (NPC.ThreatenedCheck(ref runCooldown, 180))
+                    if (NPC.ThreatenedCheck(ref runCooldown, 180, 4))
                     {
                         runCooldown = 0;
                         AIState = ActionState.Idle;
@@ -233,7 +233,7 @@ namespace Redemption.NPCs.Friendly
                         for (int i = 0; i < Main.maxNPCs; i++)
                         {
                             NPC target = Main.npc[i];
-                            if (!target.active || !target.CanBeChasedBy() || target.whoAmI == NPC.whoAmI)
+                            if (!target.active || target.friendly || target.lifeMax <= 5 || target.type == Type || target.whoAmI == NPC.whoAmI)
                                 continue;
 
                             if (!target.Hitbox.Intersects(SlashHitbox))
@@ -271,8 +271,8 @@ namespace Redemption.NPCs.Friendly
         public void SightCheck()
         {
             RedeNPC globalNPC = NPC.Redemption();
-            int gotNPC = RedeHelper.GetNearestNPC(NPC.Center);
-            if (gotNPC != -1 && NPC.Sight(Main.npc[gotNPC], 600, false, false) && !Main.npc[gotNPC].dontTakeDamage && !Main.npc[gotNPC].immortal)
+            int gotNPC = RedeHelper.GetNearestNPC(NPC.Center, canBeChasedBy: true);
+            if (gotNPC != -1 && NPC.Sight(Main.npc[gotNPC], 600, false, false))
             {
                 SoundEngine.PlaySound(SoundID.Zombie81, NPC.position);
                 globalNPC.attacker = Main.npc[gotNPC];

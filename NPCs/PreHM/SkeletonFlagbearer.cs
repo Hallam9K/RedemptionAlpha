@@ -247,7 +247,7 @@ namespace Redemption.NPCs.PreHM
                     AITimer++;
                     if (AITimer % 60 == 0)
                     {
-                        DustHelper.DrawCircle(NPC.Center, DustID.ViciousPowder, 16, 2, 2, nogravity: true);
+                        RedeDraw.SpawnCirclePulse(NPC.Center, Color.DarkRed, .75f, NPC);
                         for (int i = 0; i < Main.maxNPCs; i++)
                         {
                             NPC target = Main.npc[i];
@@ -405,7 +405,7 @@ namespace Redemption.NPCs.PreHM
         }
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
-            Texture2D Glow = ModContent.Request<Texture2D>(NPC.ModNPC.Texture + "_Glow").Value;
+            Texture2D Glow = ModContent.Request<Texture2D>(Texture + "_Glow").Value;
             var effects = NPC.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
 
             spriteBatch.Draw(TextureAssets.Npc[NPC.type].Value, NPC.Center - screenPos - new Vector2(0, 33), NPC.frame, drawColor, NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);

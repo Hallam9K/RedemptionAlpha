@@ -421,7 +421,7 @@ namespace Redemption.NPCs.Friendly
             if (!Redemption.AprilFools || (NPC.frame.Y != 0 && NPC.frame.Y < 19 * 58))
                 return true;
 
-            Texture2D texture = ModContent.Request<Texture2D>(NPC.ModNPC.Texture + "_Drip").Value;
+            Texture2D texture = ModContent.Request<Texture2D>(Texture + "_Drip").Value;
             Vector2 offset = new(0, 4);
             var effects = NPC.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
             spriteBatch.Draw(texture, NPC.Center - offset - screenPos, null, NPC.GetAlpha(drawColor), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);

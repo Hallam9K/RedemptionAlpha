@@ -26,12 +26,49 @@ using Redemption.Items.Weapons.PostML.Summon;
 using Redemption.Items.Weapons.PostML.Melee;
 using Redemption.Items.Accessories.PostML;
 using System.IO;
+using ReLogic.Content;
 
 namespace Redemption.NPCs.Bosses.ADD
 {
     [AutoloadBossHead]
     public class Ukko : ModNPC
     {
+        private static Asset<Texture2D> glowMask;
+        private static Asset<Texture2D> wandAni;
+        private static Asset<Texture2D> wandGlow;
+        private static Asset<Texture2D> swipeAni;
+        private static Asset<Texture2D> swipeGlow;
+        private static Asset<Texture2D> swipeSlash;
+        private static Asset<Texture2D> chariotAni;
+        private static Asset<Texture2D> chariotGlow;
+        private static Asset<Texture2D> jyrina;
+        private static Asset<Texture2D> jyrinaGlow;
+        public override void Load()
+        {
+            glowMask = ModContent.Request<Texture2D>(Texture + "_Glow");
+            wandAni = ModContent.Request<Texture2D>(Texture + "_WandRaise");
+            wandGlow = ModContent.Request<Texture2D>(Texture + "_WandRaise_Glow");
+            swipeAni = ModContent.Request<Texture2D>(Texture + "_Swipe");
+            swipeGlow = ModContent.Request<Texture2D>(Texture + "_Swipe_Glow");
+            swipeSlash = ModContent.Request<Texture2D>(Texture + "_Swipe_Slash");
+            chariotAni = ModContent.Request<Texture2D>(Texture + "_Chariot");
+            chariotGlow = ModContent.Request<Texture2D>(Texture + "_Chariot_Glow");
+            jyrina = ModContent.Request<Texture2D>("Redemption/NPCs/Bosses/ADD/Jyrina");
+            jyrinaGlow = ModContent.Request<Texture2D>("Redemption/NPCs/Bosses/ADD/Jyrina_Glow");
+        }
+        public override void Unload()
+        {
+            glowMask = null;
+            wandAni = null;
+            wandGlow = null;
+            swipeAni = null;
+            swipeGlow = null;
+            swipeSlash = null;
+            chariotAni = null;
+            chariotGlow = null;
+            jyrina = null;
+            jyrinaGlow = null;
+        }
         private Player player;
 
         private int RunOnce = 0;
@@ -594,7 +631,7 @@ namespace Redemption.NPCs.Bosses.ADD
                                     }
                                     if (Main.rand.NextBool(3))
                                     {
-                                        NPC.Shoot(player.Center + RedeHelper.PolarVector(Main.rand.Next(300, 601), Main.rand.NextFloat(0, MathHelper.TwoPi)), ModContent.ProjectileType<UkkoDancingLights>(), 0, RedeHelper.Spread(1), false, SoundID.Item1);
+                                        NPC.Shoot(player.Center + RedeHelper.PolarVector(Main.rand.Next(300, 601), RedeHelper.RandomRotation()), ModContent.ProjectileType<UkkoDancingLights>(), 0, RedeHelper.Spread(1), false, SoundID.Item1);
                                     }
                                 }
                                 if (AITimer >= 200)
@@ -717,12 +754,12 @@ namespace Redemption.NPCs.Bosses.ADD
                             if (AITimer % 10 == 0 && AITimer < 50)
                             {
                                 for (int i = 0; i < 3; i++)
-                                    DustHelper.DrawParticleElectricity(HammerPos, HammerPos + RedeHelper.PolarVector(90, Main.rand.NextFloat(0, MathHelper.TwoPi)), new LightningParticle(), 1, 20, 0.1f);
+                                    DustHelper.DrawParticleElectricity(HammerPos, HammerPos + RedeHelper.PolarVector(90, RedeHelper.RandomRotation()), new LightningParticle(), 1, 20, 0.1f);
 
                                 NPC.ai[3] = 1;
-                                Vector2 ai = RedeHelper.PolarVector(15, Main.rand.NextFloat(0, MathHelper.TwoPi));
+                                Vector2 ai = RedeHelper.PolarVector(15, RedeHelper.RandomRotation());
                                 float ai2 = Main.rand.Next(100);
-                                Projectile.NewProjectile(NPC.GetSource_FromAI(), HammerPos, RedeHelper.PolarVector(15, Main.rand.NextFloat(0, MathHelper.TwoPi)), ModContent.ProjectileType<UkkoLightning>(), NPCHelper.HostileProjDamage((int)(NPC.damage * 0.9f)), 0, Main.myPlayer, ai.ToRotation(), ai2);
+                                Projectile.NewProjectile(NPC.GetSource_FromAI(), HammerPos, RedeHelper.PolarVector(15, RedeHelper.RandomRotation()), ModContent.ProjectileType<UkkoLightning>(), NPCHelper.HostileProjDamage((int)(NPC.damage * 0.9f)), 0, Main.myPlayer, ai.ToRotation(), ai2);
                             }
                             if (AITimer >= 50)
                             {
@@ -961,7 +998,7 @@ namespace Redemption.NPCs.Bosses.ADD
                                 if (AITimer == 152)
                                 {
                                     for (int i = 0; i < Main.rand.Next(9, 14); i++)
-                                        DustHelper.DrawParticleElectricity(NPC.Center, NPC.Center + RedeHelper.PolarVector(Main.rand.Next(160, 210), Main.rand.NextFloat(0, MathHelper.TwoPi)), new LightningParticle(), 3, 40, 0.1f, 1);
+                                        DustHelper.DrawParticleElectricity(NPC.Center, NPC.Center + RedeHelper.PolarVector(Main.rand.Next(160, 210), RedeHelper.RandomRotation()), new LightningParticle(), 3, 40, 0.1f, 1);
 
                                     Main.LocalPlayer.RedemptionScreen().ScreenShakeOrigin = NPC.Center;
                                     Main.LocalPlayer.RedemptionScreen().ScreenShakeIntensity += 30;
@@ -1293,16 +1330,6 @@ namespace Redemption.NPCs.Bosses.ADD
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
             Texture2D texture = TextureAssets.Npc[NPC.type].Value;
-            Texture2D glowMask = ModContent.Request<Texture2D>(NPC.ModNPC.Texture + "_Glow").Value;
-            Texture2D wandAni = ModContent.Request<Texture2D>(NPC.ModNPC.Texture + "_WandRaise").Value;
-            Texture2D wandGlow = ModContent.Request<Texture2D>(NPC.ModNPC.Texture + "_WandRaise_Glow").Value;
-            Texture2D swipeAni = ModContent.Request<Texture2D>(NPC.ModNPC.Texture + "_Swipe").Value;
-            Texture2D swipeGlow = ModContent.Request<Texture2D>(NPC.ModNPC.Texture + "_Swipe_Glow").Value;
-            Texture2D swipeSlash = ModContent.Request<Texture2D>(NPC.ModNPC.Texture + "_Swipe_Slash").Value;
-            Texture2D chariotAni = ModContent.Request<Texture2D>(NPC.ModNPC.Texture + "_Chariot").Value;
-            Texture2D chariotGlow = ModContent.Request<Texture2D>(NPC.ModNPC.Texture + "_Chariot_Glow").Value;
-            Texture2D jyrina = ModContent.Request<Texture2D>("Redemption/NPCs/Bosses/ADD/Jyrina").Value;
-            Texture2D jyrinaGlow = ModContent.Request<Texture2D>("Redemption/NPCs/Bosses/ADD/Jyrina_Glow").Value;
             var effects = NPC.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
             int shader = ContentSamples.CommonlyUsedContentSamples.ColorOnlyShaderIndex;
             Color shaderColor = BaseUtility.MultiLerpColor(Main.LocalPlayer.miscCounter % 100 / 100f, Color.LightGoldenrodYellow, Color.LightYellow * 0.7f, Color.LightGoldenrodYellow);
@@ -1328,7 +1355,7 @@ namespace Redemption.NPCs.Bosses.ADD
                         RedeDraw.DrawTreasureBagEffect(Main.spriteBatch, texture, ref drawTimer, NPC.Center - n - screenPos, NPC.frame, Color.LightYellow * NPC.Opacity, NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects);
 
                     spriteBatch.Draw(texture, NPC.Center - n - screenPos, NPC.frame, drawColor * NPC.Opacity, NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0f);
-                    spriteBatch.Draw(glowMask, NPC.Center - n - screenPos, NPC.frame, NPC.GetAlpha(Color.White), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0f);
+                    spriteBatch.Draw(glowMask.Value, NPC.Center - n - screenPos, NPC.frame, NPC.GetAlpha(Color.White), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0f);
                     break;
                 case 1:
                     Vector2 wandDrawCenter = new(13 * NPC.spriteDirection, -28);
@@ -1338,22 +1365,22 @@ namespace Redemption.NPCs.Bosses.ADD
                     for (int i = 0; i < NPCID.Sets.TrailCacheLength[NPC.type]; i++)
                     {
                         Vector2 oldPos = NPC.oldPos[i];
-                        spriteBatch.Draw(wandAni, oldPos + new Vector2(13 * NPC.spriteDirection, -28) - n + NPC.Size / 2f - screenPos + new Vector2(0, NPC.gfxOffY), null, NPC.GetAlpha(shaderColor) * ((NPC.oldPos.Length - i) / (float)NPC.oldPos.Length), NPC.rotation, new Vector2(wandAni.Width / 2f, wandAni.Height / 2f), NPC.scale, effects, 0);
+                        spriteBatch.Draw(wandAni.Value, oldPos + new Vector2(13 * NPC.spriteDirection, -28) - n + NPC.Size / 2f - screenPos + new Vector2(0, NPC.gfxOffY), null, NPC.GetAlpha(shaderColor) * ((NPC.oldPos.Length - i) / (float)NPC.oldPos.Length), NPC.rotation, new Vector2(wandAni.Value.Width / 2f, wandAni.Value.Height / 2f), NPC.scale, effects, 0);
                     }
                     spriteBatch.End();
                     spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
 
                     if (NPC.RedemptionGuard().GuardPoints > 0)
-                        RedeDraw.DrawTreasureBagEffect(Main.spriteBatch, wandAni, ref drawTimer, NPC.Center - n + wandDrawCenter - screenPos, null, Color.LightYellow * NPC.Opacity, NPC.rotation, new Vector2(wandAni.Width / 2f, wandAni.Height / 2f), NPC.scale, effects);
+                        RedeDraw.DrawTreasureBagEffect(Main.spriteBatch, wandAni.Value, ref drawTimer, NPC.Center - n + wandDrawCenter - screenPos, null, Color.LightYellow * NPC.Opacity, NPC.rotation, new Vector2(wandAni.Value.Width / 2f, wandAni.Value.Height / 2f), NPC.scale, effects);
 
-                    spriteBatch.Draw(wandAni, NPC.Center - n + wandDrawCenter - screenPos, null, drawColor * NPC.Opacity, NPC.rotation, new Vector2(wandAni.Width / 2f, wandAni.Height / 2f), NPC.scale, effects, 0f);
-                    spriteBatch.Draw(wandGlow, NPC.Center - n + wandDrawCenter - screenPos, null, NPC.GetAlpha(Color.White), NPC.rotation, new Vector2(wandAni.Width / 2f, wandAni.Height / 2f), NPC.scale, effects, 0f);
+                    spriteBatch.Draw(wandAni.Value, NPC.Center - n + wandDrawCenter - screenPos, null, drawColor * NPC.Opacity, NPC.rotation, new Vector2(wandAni.Value.Width / 2f, wandAni.Value.Height / 2f), NPC.scale, effects, 0f);
+                    spriteBatch.Draw(wandGlow.Value, NPC.Center - n + wandDrawCenter - screenPos, null, NPC.GetAlpha(Color.White), NPC.rotation, new Vector2(wandAni.Value.Width / 2f, wandAni.Value.Height / 2f), NPC.scale, effects, 0f);
                     break;
                 case 2:
-                    int chariotHeight = chariotAni.Height / 3;
+                    int chariotHeight = chariotAni.Value.Height / 3;
                     int chariotY = chariotHeight * chariotFrame;
 
-                    int jyrinaHeight = jyrina.Height / 9;
+                    int jyrinaHeight = jyrina.Value.Height / 9;
                     int jyrinaY = jyrinaHeight * jyrinaFrame;
                     spriteBatch.End();
                     spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
@@ -1361,27 +1388,27 @@ namespace Redemption.NPCs.Bosses.ADD
                     for (int i = 0; i < NPCID.Sets.TrailCacheLength[NPC.type]; i++)
                     {
                         Vector2 oldPos = NPC.oldPos[i];
-                        spriteBatch.Draw(chariotAni, oldPos - n + NPC.Size / 2f - screenPos + new Vector2(0, NPC.gfxOffY), new Rectangle?(new Rectangle(0, chariotY, chariotAni.Width, chariotHeight)), NPC.GetAlpha(shaderColor) * ((NPC.oldPos.Length - i) / (float)NPC.oldPos.Length), NPC.rotation, new Vector2(chariotAni.Width / 2f, chariotHeight / 2f), NPC.scale, effects, 0);
-                        spriteBatch.Draw(jyrina, oldPos - n + NPC.Size / 2f - screenPos + new Vector2(0, NPC.gfxOffY), new Rectangle?(new Rectangle(0, jyrinaY, jyrina.Width, jyrinaHeight)), NPC.GetAlpha(shaderColor) * ((NPC.oldPos.Length - i) / (float)NPC.oldPos.Length), NPC.rotation, new Vector2(jyrina.Width / 2f, jyrinaHeight / 2f), NPC.scale, NPC.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0);
+                        spriteBatch.Draw(chariotAni.Value, oldPos - n + NPC.Size / 2f - screenPos + new Vector2(0, NPC.gfxOffY), new Rectangle?(new Rectangle(0, chariotY, chariotAni.Value.Width, chariotHeight)), NPC.GetAlpha(shaderColor) * ((NPC.oldPos.Length - i) / (float)NPC.oldPos.Length), NPC.rotation, new Vector2(chariotAni.Value.Width / 2f, chariotHeight / 2f), NPC.scale, effects, 0);
+                        spriteBatch.Draw(jyrina.Value, oldPos - n + NPC.Size / 2f - screenPos + new Vector2(0, NPC.gfxOffY), new Rectangle?(new Rectangle(0, jyrinaY, jyrina.Value.Width, jyrinaHeight)), NPC.GetAlpha(shaderColor) * ((NPC.oldPos.Length - i) / (float)NPC.oldPos.Length), NPC.rotation, new Vector2(jyrina.Value.Width / 2f, jyrinaHeight / 2f), NPC.scale, NPC.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0);
                     }
                     spriteBatch.End();
                     spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
 
                     if (NPC.RedemptionGuard().GuardPoints > 0)
-                        RedeDraw.DrawTreasureBagEffect(Main.spriteBatch, chariotAni, ref drawTimer, NPC.Center - n - screenPos, new Rectangle?(new Rectangle(0, chariotY, chariotAni.Width, chariotHeight)), Color.LightYellow * NPC.Opacity, NPC.rotation, new Vector2(chariotAni.Width / 2f, chariotHeight / 2f), NPC.scale, effects);
+                        RedeDraw.DrawTreasureBagEffect(Main.spriteBatch, chariotAni.Value, ref drawTimer, NPC.Center - n - screenPos, new Rectangle?(new Rectangle(0, chariotY, chariotAni.Value.Width, chariotHeight)), Color.LightYellow * NPC.Opacity, NPC.rotation, new Vector2(chariotAni.Value.Width / 2f, chariotHeight / 2f), NPC.scale, effects);
 
-                    spriteBatch.Draw(chariotAni, NPC.Center - n - screenPos, new Rectangle?(new Rectangle(0, chariotY, chariotAni.Width, chariotHeight)), drawColor * ((255 - NPC.alpha) / 255f), NPC.rotation, new Vector2(chariotAni.Width / 2f, chariotHeight / 2f), NPC.scale, effects, 0f);
-                    spriteBatch.Draw(chariotGlow, NPC.Center - n - screenPos, new Rectangle?(new Rectangle(0, chariotY, chariotAni.Width, chariotHeight)), NPC.GetAlpha(Color.White), NPC.rotation, new Vector2(chariotAni.Width / 2f, chariotHeight / 2f), NPC.scale, effects, 0f);
+                    spriteBatch.Draw(chariotAni.Value, NPC.Center - n - screenPos, new Rectangle?(new Rectangle(0, chariotY, chariotAni.Value.Width, chariotHeight)), drawColor * ((255 - NPC.alpha) / 255f), NPC.rotation, new Vector2(chariotAni.Value.Width / 2f, chariotHeight / 2f), NPC.scale, effects, 0f);
+                    spriteBatch.Draw(chariotGlow.Value, NPC.Center - n - screenPos, new Rectangle?(new Rectangle(0, chariotY, chariotAni.Value.Width, chariotHeight)), NPC.GetAlpha(Color.White), NPC.rotation, new Vector2(chariotAni.Value.Width / 2f, chariotHeight / 2f), NPC.scale, effects, 0f);
 
-                    spriteBatch.Draw(jyrina, NPC.Center - n - screenPos, new Rectangle?(new Rectangle(0, jyrinaY, jyrina.Width, jyrinaHeight)), drawColor * ((255 - NPC.alpha) / 255f), NPC.rotation, new Vector2(jyrina.Width / 2f, jyrinaHeight / 2f), NPC.scale, NPC.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
-                    spriteBatch.Draw(jyrinaGlow, NPC.Center - n - screenPos, new Rectangle?(new Rectangle(0, jyrinaY, jyrina.Width, jyrinaHeight)), NPC.GetAlpha(Color.White), NPC.rotation, new Vector2(jyrina.Width / 2f, jyrinaHeight / 2f), NPC.scale, NPC.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
+                    spriteBatch.Draw(jyrina.Value, NPC.Center - n - screenPos, new Rectangle?(new Rectangle(0, jyrinaY, jyrina.Value.Width, jyrinaHeight)), drawColor * ((255 - NPC.alpha) / 255f), NPC.rotation, new Vector2(jyrina.Value.Width / 2f, jyrinaHeight / 2f), NPC.scale, NPC.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
+                    spriteBatch.Draw(jyrinaGlow.Value, NPC.Center - n - screenPos, new Rectangle?(new Rectangle(0, jyrinaY, jyrina.Value.Width, jyrinaHeight)), NPC.GetAlpha(Color.White), NPC.rotation, new Vector2(jyrina.Value.Width / 2f, jyrinaHeight / 2f), NPC.scale, NPC.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
                     break;
                 case 3:
-                    int swipeHeight = swipeAni.Height / 6;
+                    int swipeHeight = swipeAni.Value.Height / 6;
                     int swipeY = swipeHeight * swipeFrame;
                     Vector2 swipeDrawCenter = new(14 * NPC.spriteDirection, -9);
 
-                    int swipeSHeight = swipeSlash.Height / 6;
+                    int swipeSHeight = swipeSlash.Value.Height / 6;
                     int swipeSY = swipeSHeight * swipeFrame;
                     Vector2 swipeSDrawCenter = new(41 * NPC.spriteDirection, -41);
                     spriteBatch.End();
@@ -1390,18 +1417,18 @@ namespace Redemption.NPCs.Bosses.ADD
                     for (int i = 0; i < NPCID.Sets.TrailCacheLength[NPC.type]; i++)
                     {
                         Vector2 oldPos = NPC.oldPos[i];
-                        spriteBatch.Draw(swipeAni, oldPos + new Vector2(14 * NPC.spriteDirection, -9) - n + NPC.Size / 2f - screenPos + new Vector2(0, NPC.gfxOffY), new Rectangle?(new Rectangle(0, swipeY, swipeAni.Width, swipeHeight)), NPC.GetAlpha(shaderColor) * ((NPC.oldPos.Length - i) / (float)NPC.oldPos.Length), NPC.rotation, new Vector2(swipeAni.Width / 2f, swipeHeight / 2f), NPC.scale, effects, 0);
+                        spriteBatch.Draw(swipeAni.Value, oldPos + new Vector2(14 * NPC.spriteDirection, -9) - n + NPC.Size / 2f - screenPos + new Vector2(0, NPC.gfxOffY), new Rectangle?(new Rectangle(0, swipeY, swipeAni.Value.Width, swipeHeight)), NPC.GetAlpha(shaderColor) * ((NPC.oldPos.Length - i) / (float)NPC.oldPos.Length), NPC.rotation, new Vector2(swipeAni.Value.Width / 2f, swipeHeight / 2f), NPC.scale, effects, 0);
                     }
                     spriteBatch.End();
                     spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
 
                     if (NPC.RedemptionGuard().GuardPoints > 0)
-                        RedeDraw.DrawTreasureBagEffect(Main.spriteBatch, swipeAni, ref drawTimer, NPC.Center - n + swipeDrawCenter - screenPos, new Rectangle?(new Rectangle(0, swipeY, swipeAni.Width, swipeHeight)), Color.LightYellow * NPC.Opacity, NPC.rotation, new Vector2(swipeAni.Width / 2f, swipeHeight / 2f), NPC.scale, effects);
+                        RedeDraw.DrawTreasureBagEffect(Main.spriteBatch, swipeAni.Value, ref drawTimer, NPC.Center - n + swipeDrawCenter - screenPos, new Rectangle?(new Rectangle(0, swipeY, swipeAni.Value.Width, swipeHeight)), Color.LightYellow * NPC.Opacity, NPC.rotation, new Vector2(swipeAni.Value.Width / 2f, swipeHeight / 2f), NPC.scale, effects);
 
-                    spriteBatch.Draw(swipeAni, NPC.Center - n + swipeDrawCenter - screenPos, new Rectangle?(new Rectangle(0, swipeY, swipeAni.Width, swipeHeight)), drawColor * ((255 - NPC.alpha) / 255f), NPC.rotation, new Vector2(swipeAni.Width / 2f, swipeHeight / 2f), NPC.scale, effects, 0f);
-                    spriteBatch.Draw(swipeGlow, swipeDrawCenter - screenPos, new Rectangle?(new Rectangle(0, swipeY, swipeAni.Width, swipeHeight)), NPC.GetAlpha(Color.White), NPC.rotation, new Vector2(swipeAni.Width / 2f, swipeHeight / 2f), NPC.scale, effects, 0f);
+                    spriteBatch.Draw(swipeAni.Value, NPC.Center - n + swipeDrawCenter - screenPos, new Rectangle?(new Rectangle(0, swipeY, swipeAni.Value.Width, swipeHeight)), drawColor * ((255 - NPC.alpha) / 255f), NPC.rotation, new Vector2(swipeAni.Value.Width / 2f, swipeHeight / 2f), NPC.scale, effects, 0f);
+                    spriteBatch.Draw(swipeGlow.Value, swipeDrawCenter - screenPos, new Rectangle?(new Rectangle(0, swipeY, swipeAni.Value.Width, swipeHeight)), NPC.GetAlpha(Color.White), NPC.rotation, new Vector2(swipeAni.Value.Width / 2f, swipeHeight / 2f), NPC.scale, effects, 0f);
 
-                    spriteBatch.Draw(swipeSlash, NPC.Center - n + swipeSDrawCenter - screenPos, new Rectangle?(new Rectangle(0, swipeSY, swipeSlash.Width, swipeSHeight)), NPC.GetAlpha(Color.White), NPC.rotation, new Vector2(swipeSlash.Width / 2f, swipeSHeight / 2f), NPC.scale, effects, 0f);
+                    spriteBatch.Draw(swipeSlash.Value, NPC.Center - n + swipeSDrawCenter - screenPos, new Rectangle?(new Rectangle(0, swipeSY, swipeSlash.Value.Width, swipeSHeight)), NPC.GetAlpha(Color.White), NPC.rotation, new Vector2(swipeSlash.Value.Width / 2f, swipeSHeight / 2f), NPC.scale, effects, 0f);
                     break;
             }
             return false;

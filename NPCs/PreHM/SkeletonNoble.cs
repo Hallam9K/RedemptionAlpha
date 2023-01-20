@@ -593,36 +593,33 @@ namespace Redemption.NPCs.PreHM
         }
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
-            Texture2D Glow = ModContent.Request<Texture2D>(NPC.ModNPC.Texture + "_Glow").Value;
-            Texture2D SlashAni = ModContent.Request<Texture2D>("Redemption/NPCs/PreHM/SkeletonNoble_HalberdSlash").Value;
-            Texture2D SlashGlow = ModContent.Request<Texture2D>("Redemption/NPCs/PreHM/SkeletonNoble_HalberdSlash_Glow").Value;
-            Texture2D head = ModContent.Request<Texture2D>("Redemption/NPCs/PreHM/Skeleton_Heads").Value;
+            Texture2D Glow = ModContent.Request<Texture2D>(Texture + "_Glow").Value;
             var effects = NPC.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
 
-            int HeightH = head.Height / 14;
-            int WidthH = head.Width / 2;
+            int HeightH = head.Value.Height / 14;
+            int WidthH = head.Value.Width / 2;
             int yH = HeightH * HeadType;
             int xH = WidthH * HeadX;
             Rectangle rectH = new(xH, yH, WidthH, HeightH);
 
             if (AIState is ActionState.Slash)
             {
-                spriteBatch.Draw(head, NPC.Center - screenPos, new Rectangle?(rectH), drawColor, NPC.rotation, NPC.frame.Size() / 2 + new Vector2((NPC.spriteDirection == 1 ? -35 : -35) + (HeadOffsetX * NPC.spriteDirection), -6 + -HeadOffset), NPC.scale, effects, 0);
+                spriteBatch.Draw(head.Value, NPC.Center - screenPos, new Rectangle?(rectH), drawColor, NPC.rotation, NPC.frame.Size() / 2 + new Vector2((NPC.spriteDirection == 1 ? -35 : -35) + (HeadOffsetX * NPC.spriteDirection), -6 + -HeadOffset), NPC.scale, effects, 0);
 
-                int Height = SlashAni.Height / 6;
-                int Width = SlashAni.Width / 3;
+                int Height = NobleSlashAni.Value.Height / 6;
+                int Width = NobleSlashAni.Value.Width / 3;
                 int y = Height * AniFrameY;
                 int x = Width * AniFrameX;
                 Rectangle rect = new(x, y, Width, Height);
                 Vector2 origin = new(Width / 2f, Height / 2f);
-                spriteBatch.Draw(SlashAni, NPC.Center - screenPos - new Vector2(0, 17), new Rectangle?(rect), drawColor, NPC.rotation, origin, NPC.scale, effects, 0);
+                spriteBatch.Draw(NobleSlashAni.Value, NPC.Center - screenPos - new Vector2(0, 17), new Rectangle?(rect), drawColor, NPC.rotation, origin, NPC.scale, effects, 0);
 
                 if (HasEyes && HeadType < 12)
-                    spriteBatch.Draw(SlashGlow, NPC.Center - screenPos - new Vector2(0, 17), new Rectangle?(rect), Color.White, NPC.rotation, origin, NPC.scale, effects, 0);
+                    spriteBatch.Draw(NobleSlashGlow.Value, NPC.Center - screenPos - new Vector2(0, 17), new Rectangle?(rect), Color.White, NPC.rotation, origin, NPC.scale, effects, 0);
             }
             else
             {
-                spriteBatch.Draw(head, NPC.Center - screenPos, new Rectangle?(rectH), drawColor, NPC.rotation, NPC.frame.Size() / 2 + new Vector2((NPC.spriteDirection == 1 ? -36 : -34) + (HeadOffsetX * NPC.spriteDirection), -4 + HeadOffset), NPC.scale, effects, 0);
+                spriteBatch.Draw(head.Value, NPC.Center - screenPos, new Rectangle?(rectH), drawColor, NPC.rotation, NPC.frame.Size() / 2 + new Vector2((NPC.spriteDirection == 1 ? -36 : -34) + (HeadOffsetX * NPC.spriteDirection), -4 + HeadOffset), NPC.scale, effects, 0);
 
                 spriteBatch.Draw(TextureAssets.Npc[NPC.type].Value, NPC.Center - screenPos - new Vector2(0, 4), NPC.frame, drawColor, NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
 

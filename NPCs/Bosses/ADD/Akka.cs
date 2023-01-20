@@ -21,13 +21,25 @@ using Redemption.Items.Armor.Vanity;
 using Redemption.BaseExtension;
 using Redemption.Items.Weapons.PostML.Magic;
 using Redemption.Items.Weapons.PostML.Summon;
-using System.IO;
+using ReLogic.Content;
 
 namespace Redemption.NPCs.Bosses.ADD
 {
     [AutoloadBossHead]
     public class Akka : ModNPC
     {
+        private static Asset<Texture2D> magicAni;
+        private static Asset<Texture2D> magicGlow;
+        public override void Load()
+        {
+            magicAni = ModContent.Request<Texture2D>(Texture + "_Spell");
+            magicGlow = ModContent.Request<Texture2D>(Texture + "_Spell_Glow");
+        }
+        public override void Unload()
+        {
+            magicAni = null;
+            magicGlow = null;
+        }
         private Player player;
         public enum ActionState
         {
@@ -643,8 +655,6 @@ namespace Redemption.NPCs.Bosses.ADD
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
             Texture2D texture = TextureAssets.Npc[NPC.type].Value;
-            Texture2D magicAni = ModContent.Request<Texture2D>(NPC.ModNPC.Texture + "_Spell").Value;
-            Texture2D magicGlow = ModContent.Request<Texture2D>(NPC.ModNPC.Texture + "_Spell_Glow").Value;
             var effects = NPC.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
             int shader = ContentSamples.CommonlyUsedContentSamples.ColorOnlyShaderIndex;
             Color shaderColor = BaseUtility.MultiLerpColor(Main.LocalPlayer.miscCounter % 100 / 100f, Color.LightGreen, Color.SpringGreen * 0.7f, Color.LightGreen);
@@ -671,9 +681,9 @@ namespace Redemption.NPCs.Bosses.ADD
                     spriteBatch.Draw(texture, NPC.Center - screenPos, NPC.frame, drawColor * NPC.Opacity, NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0f);
                     break;
                 case 1:
-                    int magicHeight = magicAni.Height / 6;
+                    int magicHeight = magicAni.Value.Height / 6;
                     int magicY = magicHeight * magicFrame;
-                    int magicGlowHeight = magicGlow.Height / 6;
+                    int magicGlowHeight = magicGlow.Value.Height / 6;
                     int magicGlowY = magicGlowHeight * magicFrame;
                     Vector2 glowCenter = NPC.Center + new Vector2(15 * NPC.spriteDirection, -24);
 
@@ -683,16 +693,16 @@ namespace Redemption.NPCs.Bosses.ADD
                     for (int i = 0; i < NPCID.Sets.TrailCacheLength[NPC.type]; i++)
                     {
                         Vector2 oldPos = NPC.oldPos[i];
-                        spriteBatch.Draw(magicAni, oldPos + NPC.Size / 2f - screenPos + new Vector2(0, NPC.gfxOffY), new Rectangle?(new Rectangle(0, magicY, magicAni.Width, magicHeight)), NPC.GetAlpha(shaderColor) * ((NPC.oldPos.Length - i) / (float)NPC.oldPos.Length), NPC.rotation, new Vector2(magicAni.Width / 2f, magicHeight / 2f), NPC.scale, effects, 0);
+                        spriteBatch.Draw(magicAni.Value, oldPos + NPC.Size / 2f - screenPos + new Vector2(0, NPC.gfxOffY), new Rectangle?(new Rectangle(0, magicY, magicAni.Value.Width, magicHeight)), NPC.GetAlpha(shaderColor) * ((NPC.oldPos.Length - i) / (float)NPC.oldPos.Length), NPC.rotation, new Vector2(magicAni.Value.Width / 2f, magicHeight / 2f), NPC.scale, effects, 0);
                     }
                     spriteBatch.End();
                     spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
 
                     if (NPC.RedemptionGuard().GuardPoints > 0)
-                        RedeDraw.DrawTreasureBagEffect(Main.spriteBatch, magicAni, ref drawTimer, NPC.Center - screenPos, new Rectangle?(new Rectangle(0, magicY, magicAni.Width, magicHeight)), Color.LightGreen * NPC.Opacity, NPC.rotation, new Vector2(magicAni.Width / 2f, magicHeight / 2f), NPC.scale, effects);
+                        RedeDraw.DrawTreasureBagEffect(Main.spriteBatch, magicAni.Value, ref drawTimer, NPC.Center - screenPos, new Rectangle?(new Rectangle(0, magicY, magicAni.Value.Width, magicHeight)), Color.LightGreen * NPC.Opacity, NPC.rotation, new Vector2(magicAni.Value.Width / 2f, magicHeight / 2f), NPC.scale, effects);
 
-                    spriteBatch.Draw(magicAni, NPC.Center - screenPos, new Rectangle?(new Rectangle(0, magicY, magicAni.Width, magicHeight)), drawColor * NPC.Opacity, NPC.rotation, new Vector2(magicAni.Width / 2f, magicHeight / 2f), NPC.scale, effects, 0f);
-                    spriteBatch.Draw(magicGlow, glowCenter - screenPos, new Rectangle?(new Rectangle(0, magicGlowY, magicGlow.Width, magicGlowHeight)), Color.White * NPC.Opacity, NPC.rotation, new Vector2(magicGlow.Width / 2f, magicGlowHeight / 2f), NPC.scale, effects, 0f);
+                    spriteBatch.Draw(magicAni.Value, NPC.Center - screenPos, new Rectangle?(new Rectangle(0, magicY, magicAni.Value.Width, magicHeight)), drawColor * NPC.Opacity, NPC.rotation, new Vector2(magicAni.Value.Width / 2f, magicHeight / 2f), NPC.scale, effects, 0f);
+                    spriteBatch.Draw(magicGlow.Value, glowCenter - screenPos, new Rectangle?(new Rectangle(0, magicGlowY, magicGlow.Value.Width, magicGlowHeight)), Color.White * NPC.Opacity, NPC.rotation, new Vector2(magicGlow.Value.Width / 2f, magicGlowHeight / 2f), NPC.scale, effects, 0f);
                     break;
             }
             return false;

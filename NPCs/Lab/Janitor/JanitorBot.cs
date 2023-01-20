@@ -15,12 +15,25 @@ using Terraria.GameContent.Bestiary;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Redemption.BaseExtension;
+using ReLogic.Content;
 
 namespace Redemption.NPCs.Lab.Janitor
 {
     [AutoloadBossHead]
     public class JanitorBot : ModNPC
     {
+        private static Asset<Texture2D> SlipAni;
+        private static Asset<Texture2D> YeetAni;
+        public override void Load()
+        {
+            SlipAni = ModContent.Request<Texture2D>(Texture + "_Slip");
+            YeetAni = ModContent.Request<Texture2D>(Texture + "_Yeet");
+        }
+        public override void Unload()
+        {
+            SlipAni = null;
+            YeetAni = null;
+        }
         public enum ActionState
         {
             Begin,
@@ -395,25 +408,23 @@ namespace Redemption.NPCs.Lab.Janitor
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
             Texture2D texture = TextureAssets.Npc[NPC.type].Value;
-            Texture2D SlipAni = ModContent.Request<Texture2D>(NPC.ModNPC.Texture + "_Slip").Value;
-            Texture2D YeetAni = ModContent.Request<Texture2D>(NPC.ModNPC.Texture + "_Yeet").Value;
             var effects = NPC.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
 
             if (AIState is ActionState.Slip)
             {
-                int Height = SlipAni.Height / 7;
+                int Height = SlipAni.Value.Height / 7;
                 int y = Height * AniFrameY;
-                Rectangle rect = new(0, y, SlipAni.Width, Height);
-                Vector2 origin = new(SlipAni.Width / 2f, Height / 2f);
-                spriteBatch.Draw(SlipAni, NPC.Center - screenPos - new Vector2(0, 3), new Rectangle?(rect), NPC.GetAlpha(drawColor), NPC.rotation, origin, NPC.scale, effects, 0);
+                Rectangle rect = new(0, y, SlipAni.Value.Width, Height);
+                Vector2 origin = new(SlipAni.Value.Width / 2f, Height / 2f);
+                spriteBatch.Draw(SlipAni.Value, NPC.Center - screenPos - new Vector2(0, 3), new Rectangle?(rect), NPC.GetAlpha(drawColor), NPC.rotation, origin, NPC.scale, effects, 0);
             }
             else if (AIState is ActionState.Yeet && AITimer >= 30 && AITimer <= 60)
             {
-                int Height = YeetAni.Height / 6;
+                int Height = YeetAni.Value.Height / 6;
                 int y = Height * AniFrameY;
-                Rectangle rect = new(0, y, YeetAni.Width, Height);
-                Vector2 origin = new(YeetAni.Width / 2f, Height / 2f);
-                spriteBatch.Draw(YeetAni, NPC.Center - screenPos - new Vector2(0, 6), new Rectangle?(rect), NPC.GetAlpha(drawColor), NPC.rotation, origin, NPC.scale, effects, 0);
+                Rectangle rect = new(0, y, YeetAni.Value.Width, Height);
+                Vector2 origin = new(YeetAni.Value.Width / 2f, Height / 2f);
+                spriteBatch.Draw(YeetAni.Value, NPC.Center - screenPos - new Vector2(0, 6), new Rectangle?(rect), NPC.GetAlpha(drawColor), NPC.rotation, origin, NPC.scale, effects, 0);
             }
             else
                 spriteBatch.Draw(texture, NPC.Center - screenPos, NPC.frame, NPC.GetAlpha(drawColor), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0f);

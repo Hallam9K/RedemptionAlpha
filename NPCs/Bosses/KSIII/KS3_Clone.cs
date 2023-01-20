@@ -24,12 +24,28 @@ using Redemption.BaseExtension;
 using Redemption.Items.Weapons.HM.Magic;
 using Redemption.Items.Weapons.HM.Melee;
 using Redemption.Items.Armor.Vanity;
+using ReLogic.Content;
 
 namespace Redemption.NPCs.Bosses.KSIII
 {
     [AutoloadBossHead]
     public class KS3_Clone : ModNPC
     {
+        private static Asset<Texture2D> Glow;
+        private static Asset<Texture2D> Arms;
+        private static Asset<Texture2D> ArmsGlow;
+        public override void Load()
+        {
+            Glow = ModContent.Request<Texture2D>(Texture + "_Glow");
+            Arms = ModContent.Request<Texture2D>(Texture + "_Arms");
+            ArmsGlow = ModContent.Request<Texture2D>(Texture + "_Arms_Glow");
+        }
+        public override void Unload()
+        {
+            Glow = null;
+            Arms = null;
+            ArmsGlow = null;
+        }
         public override string Texture => "Redemption/NPCs/Bosses/KSIII/KS3";
         public enum ActionState
         {
@@ -1981,10 +1997,6 @@ namespace Redemption.NPCs.Bosses.KSIII
 
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
-            Texture2D Glow = ModContent.Request<Texture2D>(NPC.ModNPC.Texture + "_Glow").Value;
-            Texture2D Arms = ModContent.Request<Texture2D>(NPC.ModNPC.Texture + "_Arms").Value;
-            Texture2D ArmsGlow = ModContent.Request<Texture2D>(NPC.ModNPC.Texture + "_Arms_Glow").Value;
-
             var effects = NPC.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
 
             for (int i = 0; i < NPCID.Sets.TrailCacheLength[NPC.type]; i++)
@@ -1994,7 +2006,7 @@ namespace Redemption.NPCs.Bosses.KSIII
             }
 
             spriteBatch.Draw(TextureAssets.Npc[NPC.type].Value, NPC.Center - screenPos, NPC.frame, NPC.GetAlpha(RedeColor.SlayerColour), NPC.rotation, NPC.frame.Size() / 2, NPC.scale * 2, effects, 0);
-            spriteBatch.Draw(Glow, NPC.Center - screenPos, NPC.frame, NPC.GetAlpha(Color.White), NPC.rotation, NPC.frame.Size() / 2, NPC.scale * 2, effects, 0);
+            spriteBatch.Draw(Glow.Value, NPC.Center - screenPos, NPC.frame, NPC.GetAlpha(Color.White), NPC.rotation, NPC.frame.Size() / 2, NPC.scale * 2, effects, 0);
 
             spriteBatch.End();
             spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.LinearClamp, DepthStencilState.Default, RasterizerState.CullNone, null, Main.GameViewMatrix.TransformationMatrix);
@@ -2013,19 +2025,19 @@ namespace Redemption.NPCs.Bosses.KSIII
 
             if (BodyState < (int)BodyAnim.IdlePhysical)
             {
-                int height = Arms.Height / 6;
-                int width = Arms.Width / 10;
+                int height = Arms.Value.Height / 6;
+                int width = Arms.Value.Width / 10;
                 int y = height * ArmsFrameY;
                 int x = width * ArmsFrameX;
                 Rectangle ArmsRect = new(x, y, width, height);
                 Vector2 ArmsOrigin = new(width / 2f, height / 2f);
                 Vector2 ArmsPos = new(NPC.Center.X, NPC.Center.Y - 13);
 
-                spriteBatch.Draw(Arms, ArmsPos - screenPos, new Rectangle?(ArmsRect), NPC.GetAlpha(RedeColor.SlayerColour),
+                spriteBatch.Draw(Arms.Value, ArmsPos - screenPos, new Rectangle?(ArmsRect), NPC.GetAlpha(RedeColor.SlayerColour),
                     BodyState < (int)BodyAnim.Gun || BodyState > (int)BodyAnim.GunEnd ? NPC.rotation :
                     gunRot + (NPC.spriteDirection == -1 ? (float)Math.PI : 0), ArmsOrigin, NPC.scale, effects, 0);
 
-                spriteBatch.Draw(ArmsGlow, ArmsPos - screenPos, new Rectangle?(ArmsRect), NPC.GetAlpha(Color.White),
+                spriteBatch.Draw(ArmsGlow.Value, ArmsPos - screenPos, new Rectangle?(ArmsRect), NPC.GetAlpha(Color.White),
                     BodyState < (int)BodyAnim.Gun || BodyState > (int)BodyAnim.GunEnd ? NPC.rotation :
                     gunRot + (NPC.spriteDirection == -1 ? (float)Math.PI : 0), ArmsOrigin, NPC.scale, effects, 0);
 
@@ -2039,7 +2051,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                 effect.Parameters["red2"].SetValue(new Color(0.1f, 1f, 0.7f, 0.9f).ToVector4());
 
                 effect.CurrentTechnique.Passes[0].Apply();
-                spriteBatch.Draw(Arms, ArmsPos - screenPos, new Rectangle?(ArmsRect), NPC.GetAlpha(RedeColor.SlayerColour),
+                spriteBatch.Draw(Arms.Value, ArmsPos - screenPos, new Rectangle?(ArmsRect), NPC.GetAlpha(RedeColor.SlayerColour),
                     BodyState < (int)BodyAnim.Gun || BodyState > (int)BodyAnim.GunEnd ? NPC.rotation :
                     gunRot + (NPC.spriteDirection == -1 ? (float)Math.PI : 0), ArmsOrigin, NPC.scale, effects, 0);
 

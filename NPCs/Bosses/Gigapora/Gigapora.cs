@@ -12,6 +12,7 @@ using Redemption.Items.Armor.Vanity;
 using Redemption.Items.Materials.HM;
 using Redemption.Items.Placeable.Trophies;
 using Redemption.Items.Usable;
+using ReLogic.Content;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -30,6 +31,27 @@ namespace Redemption.NPCs.Bosses.Gigapora
     [AutoloadBossHead]
     public class Gigapora : ModNPC
     {
+        private static Asset<Texture2D> glowMask;
+        private static Asset<Texture2D> drill;
+        private static Asset<Texture2D> drillShoot;
+        private static Asset<Texture2D> thrusterBlue;
+        private static Asset<Texture2D> thrusterOrange;
+        public override void Load()
+        {
+            glowMask = ModContent.Request<Texture2D>(Texture + "_Glow");
+            drill = ModContent.Request<Texture2D>(Texture + "_Drill");
+            drillShoot = ModContent.Request<Texture2D>(Texture + "_Drill_Shoot");
+            thrusterBlue = ModContent.Request<Texture2D>(Texture + "_ThrusterBlue");
+            thrusterOrange = ModContent.Request<Texture2D>(Texture + "_ThrusterOrange");
+        }
+        public override void Unload()
+        {
+            glowMask = null;
+            drill = null;
+            drillShoot = null;
+            thrusterBlue = null;
+            thrusterOrange = null;
+        }
         public float[] oldrot = new float[6];
         public enum ActionState
         {
@@ -1185,11 +1207,6 @@ namespace Redemption.NPCs.Bosses.Gigapora
                 ShieldEffect.Parameters["inner"].SetValue(Color.Multiply(innerColor, shieldAlpha).ToVector4());
 
                 Texture2D texture = TextureAssets.Npc[NPC.type].Value;
-                Texture2D glowMask = ModContent.Request<Texture2D>(NPC.ModNPC.Texture + "_Glow").Value;
-                Texture2D drill = ModContent.Request<Texture2D>(NPC.ModNPC.Texture + "_Drill").Value;
-                Texture2D drillShoot = ModContent.Request<Texture2D>(NPC.ModNPC.Texture + "_Drill_Shoot").Value;
-                Texture2D thrusterBlue = ModContent.Request<Texture2D>(NPC.ModNPC.Texture + "_ThrusterBlue").Value;
-                Texture2D thrusterOrange = ModContent.Request<Texture2D>(NPC.ModNPC.Texture + "_ThrusterOrange").Value;
                 var effects = NPC.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
                 float thrusterScaleX = MathHelper.Lerp(1.5f, 0.5f, NPC.velocity.Length() / 20);
                 thrusterScaleX = MathHelper.Clamp(thrusterScaleX, 0.5f, 1.5f);
@@ -1202,15 +1219,15 @@ namespace Redemption.NPCs.Bosses.Gigapora
                 spriteBatch.End();
                 spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
 
-                Vector2 thrusterOrigin = new(thrusterBlue.Width / 2f, thrusterBlue.Height / 2f - 20);
+                Vector2 thrusterOrigin = new(thrusterBlue.Value.Width / 2f, thrusterBlue.Value.Height / 2f - 20);
                 for (int i = 0; i < NPCID.Sets.TrailCacheLength[NPC.type]; i++)
                 {
                     Vector2 oldPos = NPC.oldPos[i];
-                    spriteBatch.Draw(BodyState >= 8 ? thrusterOrange : thrusterBlue, oldPos + NPC.Size / 2f + RedeHelper.PolarVector(40, NPC.rotation) + RedeHelper.PolarVector(35, NPC.rotation + MathHelper.PiOver2) - screenPos, null, Color.White * 0.5f * MathHelper.Clamp(NPC.velocity.Length() / 20, 0, 1), oldrot[i], thrusterOrigin, new Vector2(thrusterScaleX, thrusterScaleY), effects, 0);
-                    spriteBatch.Draw(BodyState >= 8 ? thrusterOrange : thrusterBlue, oldPos + NPC.Size / 2f + RedeHelper.PolarVector(-40, NPC.rotation) + RedeHelper.PolarVector(35, NPC.rotation + MathHelper.PiOver2) - screenPos, null, Color.White * 0.5f * MathHelper.Clamp(NPC.velocity.Length() / 20, 0, 1), oldrot[i], thrusterOrigin, new Vector2(thrusterScaleX, thrusterScaleY), effects, 0);
+                    spriteBatch.Draw(BodyState >= 8 ? thrusterOrange.Value : thrusterBlue.Value, oldPos + NPC.Size / 2f + RedeHelper.PolarVector(40, NPC.rotation) + RedeHelper.PolarVector(35, NPC.rotation + MathHelper.PiOver2) - screenPos, null, Color.White * 0.5f * MathHelper.Clamp(NPC.velocity.Length() / 20, 0, 1), oldrot[i], thrusterOrigin, new Vector2(thrusterScaleX, thrusterScaleY), effects, 0);
+                    spriteBatch.Draw(BodyState >= 8 ? thrusterOrange.Value : thrusterBlue.Value, oldPos + NPC.Size / 2f + RedeHelper.PolarVector(-40, NPC.rotation) + RedeHelper.PolarVector(35, NPC.rotation + MathHelper.PiOver2) - screenPos, null, Color.White * 0.5f * MathHelper.Clamp(NPC.velocity.Length() / 20, 0, 1), oldrot[i], thrusterOrigin, new Vector2(thrusterScaleX, thrusterScaleY), effects, 0);
                 }
-                spriteBatch.Draw(BodyState >= 8 ? thrusterOrange : thrusterBlue, pos + RedeHelper.PolarVector(40, NPC.rotation) + RedeHelper.PolarVector(35, NPC.rotation + MathHelper.PiOver2) - screenPos, null, Color.White * MathHelper.Clamp(NPC.velocity.Length() / 20, 0, 1), NPC.rotation, thrusterOrigin, new Vector2(thrusterScaleX, thrusterScaleY), effects, 0);
-                spriteBatch.Draw(BodyState >= 8 ? thrusterOrange : thrusterBlue, pos + RedeHelper.PolarVector(-40, NPC.rotation) + RedeHelper.PolarVector(35, NPC.rotation + MathHelper.PiOver2) - screenPos, null, Color.White * MathHelper.Clamp(NPC.velocity.Length() / 20, 0, 1), NPC.rotation, thrusterOrigin, new Vector2(thrusterScaleX, thrusterScaleY), effects, 0);
+                spriteBatch.Draw(BodyState >= 8 ? thrusterOrange.Value : thrusterBlue.Value, pos + RedeHelper.PolarVector(40, NPC.rotation) + RedeHelper.PolarVector(35, NPC.rotation + MathHelper.PiOver2) - screenPos, null, Color.White * MathHelper.Clamp(NPC.velocity.Length() / 20, 0, 1), NPC.rotation, thrusterOrigin, new Vector2(thrusterScaleX, thrusterScaleY), effects, 0);
+                spriteBatch.Draw(BodyState >= 8 ? thrusterOrange.Value : thrusterBlue.Value, pos + RedeHelper.PolarVector(-40, NPC.rotation) + RedeHelper.PolarVector(35, NPC.rotation + MathHelper.PiOver2) - screenPos, null, Color.White * MathHelper.Clamp(NPC.velocity.Length() / 20, 0, 1), NPC.rotation, thrusterOrigin, new Vector2(thrusterScaleX, thrusterScaleY), effects, 0);
 
                 spriteBatch.End();
                 ShieldEffect.Parameters["sinMult"].SetValue(10f);
@@ -1224,7 +1241,7 @@ namespace Redemption.NPCs.Bosses.Gigapora
                 spriteBatch.End();
                 spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
 
-                spriteBatch.Draw(glowMask, pos - screenPos, NPC.frame, RedeColor.RedPulse, NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
+                spriteBatch.Draw(glowMask.Value, pos - screenPos, NPC.frame, RedeColor.RedPulse, NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
                 spriteBatch.End();
 
                 ShieldEffect.Parameters["sinMult"].SetValue(30f / 6f);
@@ -1233,21 +1250,21 @@ namespace Redemption.NPCs.Bosses.Gigapora
 
                 if (DrillFrame >= 8)
                 {
-                    ShieldEffect.Parameters["spriteRatio"].SetValue(new Vector2(drillShoot.Width / 2f / HexagonTexture.Width, drillShoot.Height / 8 / HexagonTexture.Height));
-                    ShieldEffect.Parameters["conversion"].SetValue(new Vector2(1f / (drillShoot.Width / 2), 1f / (drillShoot.Height / 2)));
+                    ShieldEffect.Parameters["spriteRatio"].SetValue(new Vector2(drillShoot.Value.Width / 2f / HexagonTexture.Width, drillShoot.Value.Height / 8 / HexagonTexture.Height));
+                    ShieldEffect.Parameters["conversion"].SetValue(new Vector2(1f / (drillShoot.Value.Width / 2), 1f / (drillShoot.Value.Height / 2)));
                     ShieldEffect.CurrentTechnique.Passes[0].Apply();
-                    int height = drillShoot.Height / 8;
+                    int height = drillShoot.Value.Height / 8;
                     int y = height * (DrillFrame - 8);
-                    spriteBatch.Draw(drillShoot, pos - screenPos, new Rectangle?(new Rectangle(0, y, drillShoot.Width, height)), drawColor, NPC.rotation, NPC.frame.Size() / 2 + new Vector2(16, 98), NPC.scale, effects, 0);
+                    spriteBatch.Draw(drillShoot.Value, pos - screenPos, new Rectangle?(new Rectangle(0, y, drillShoot.Value.Width, height)), drawColor, NPC.rotation, NPC.frame.Size() / 2 + new Vector2(16, 98), NPC.scale, effects, 0);
                 }
                 else
                 {
-                    ShieldEffect.Parameters["spriteRatio"].SetValue(new Vector2(drill.Width / 2f / HexagonTexture.Width, drill.Height / 8 / HexagonTexture.Height));
-                    ShieldEffect.Parameters["conversion"].SetValue(new Vector2(1f / (drill.Width / 2), 1f / (drill.Height / 2)));
+                    ShieldEffect.Parameters["spriteRatio"].SetValue(new Vector2(drill.Value.Width / 2f / HexagonTexture.Width, drill.Value.Height / 8 / HexagonTexture.Height));
+                    ShieldEffect.Parameters["conversion"].SetValue(new Vector2(1f / (drill.Value.Width / 2), 1f / (drill.Value.Height / 2)));
                     ShieldEffect.CurrentTechnique.Passes[0].Apply();
-                    int height = drill.Height / 8;
+                    int height = drill.Value.Height / 8;
                     int y = height * DrillFrame;
-                    spriteBatch.Draw(drill, pos - screenPos, new Rectangle?(new Rectangle(0, y, drill.Width, height)), drawColor, NPC.rotation, NPC.frame.Size() / 2 + new Vector2(-8, 96), NPC.scale, effects, 0);
+                    spriteBatch.Draw(drill.Value, pos - screenPos, new Rectangle?(new Rectangle(0, y, drill.Value.Width, height)), drawColor, NPC.rotation, NPC.frame.Size() / 2 + new Vector2(-8, 96), NPC.scale, effects, 0);
                 }
             }
             return false;

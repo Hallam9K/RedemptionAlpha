@@ -114,7 +114,7 @@ namespace Redemption.NPCs.Wasteland
         }
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
-            Texture2D NukeTex = ModContent.Request<Texture2D>(NPC.ModNPC.Texture + "_Overlay").Value;
+            Texture2D NukeTex = ModContent.Request<Texture2D>(Texture + "_Overlay").Value;
             int Height = NukeTex.Height / 5;
             int y = Height * (NPC.frame.Y / 42);
             Rectangle rect = new(0, y, NukeTex.Width, Height);

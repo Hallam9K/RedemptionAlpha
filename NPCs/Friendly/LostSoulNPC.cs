@@ -81,7 +81,7 @@ namespace Redemption.NPCs.Friendly
             if (--ThrowTimer <= 0)
             {
                 if (NPC.velocity.Length() < 2)
-                    NPC.velocity = RedeHelper.PolarVector(3, Main.rand.NextFloat(0, MathHelper.TwoPi));
+                    NPC.velocity = RedeHelper.PolarVector(3, RedeHelper.RandomRotation());
 
                 NPC.velocity = NPC.velocity.RotatedBy(Main.rand.NextFloat(-0.3f, 0.3f));
             }

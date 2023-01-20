@@ -41,7 +41,7 @@ namespace Redemption
         public static readonly SoundStyle Bass1 = new("Redemption/Sounds/Custom/Bass1") { PitchVariance = .1f };
         public static readonly SoundStyle BulletBounce = new("Redemption/Sounds/Custom/BulletBounce", 3) { Volume = .3f, PitchVariance = .1f };
         public static readonly SoundStyle ChainSwing = new("Redemption/Sounds/Custom/ChainSwing");
-        public static readonly SoundStyle ChickenCluck = new("Redemption/Sounds/Custom/ChickenCluck", 3);
+        public static readonly SoundStyle ChickenCluck = new("Redemption/Sounds/Custom/ChickenCluck", 3) { PitchVariance = .1f };
         public static readonly SoundStyle Choir = new("Redemption/Sounds/Custom/Choir");
         public static readonly SoundStyle DistortedRoar = new("Redemption/Sounds/Custom/DistortedRoar") { Volume = .5f };
         public static readonly SoundStyle Doot = new("Redemption/Sounds/Custom/Doot") { PitchVariance = .3f };
@@ -134,5 +134,6 @@ namespace Redemption
         public static readonly SoundStyle Pixie1 = new("Redemption/Sounds/Custom/Pixie1") { PitchVariance = .1f };
         public static readonly SoundStyle Pixie2 = new("Redemption/Sounds/Custom/Pixie2") { PitchVariance = .1f };
         public static readonly SoundStyle Pixie3 = new("Redemption/Sounds/Custom/Pixie3") { PitchVariance = .1f };
+        public static readonly SoundStyle RoosterRoar = new("Redemption/Sounds/Custom/RoosterRoar") { PitchVariance = .1f };
     }
 }

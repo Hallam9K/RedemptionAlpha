@@ -10,7 +10,8 @@ namespace Redemption.Items.Placeable.Furniture.Misc
 		public override void SetStaticDefaults()
 		{
             Tooltip.SetDefault("Right-click the placed warhead to view the side panel" +
-                "\nDetonation will create a wasteland");
+                "\nDetonation will create a wasteland\n" +
+                "Can only detonate within the outer thirds of the world on the surface, and while no unexplodable tiles are nearby");
 			SacrificeTotal = 1;
 		}
 

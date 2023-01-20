@@ -25,12 +25,39 @@ using Terraria.GameContent.UI;
 using System;
 using System.Collections.Generic;
 using Redemption.Items.Usable;
-using Microsoft.CodeAnalysis;
+using ReLogic.Content;
 
 namespace Redemption.NPCs.HM
 {
     public class SpacePaladin : ModNPC
     {
+        private static Asset<Texture2D> glow;
+        private static Asset<Texture2D> upper;
+        private static Asset<Texture2D> upperGlow;
+        private static Asset<Texture2D> upperA;
+        private static Asset<Texture2D> upperAGlow;
+        private static Asset<Texture2D> shieldBack;
+        private static Asset<Texture2D> shieldFront;
+        public override void Load()
+        {
+            glow = ModContent.Request<Texture2D>(Texture + "_Glow");
+            upper = ModContent.Request<Texture2D>(Texture + "_Upper_Calm");
+            upperGlow = ModContent.Request<Texture2D>(Texture + "_Upper_Calm_Glow");
+            upperA = ModContent.Request<Texture2D>(Texture + "_Upper_Angry");
+            upperAGlow = ModContent.Request<Texture2D>(Texture + "_Upper_Angry_Glow");
+            shieldBack = ModContent.Request<Texture2D>(Texture + "_Shield_B");
+            shieldFront = ModContent.Request<Texture2D>(Texture + "_Shield_F");
+        }
+        public override void Unload()
+        {
+            glow = null;
+            upper = null;
+            upperGlow = null;
+            upperA = null;
+            upperAGlow = null;
+            shieldBack = null;
+            shieldFront = null;
+        }
         public enum ActionState
         {
             Idle,
@@ -548,37 +575,30 @@ namespace Redemption.NPCs.HM
         public Color borderColor = new(0 * c, 242 * c, 170 * c, 1f);
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
-            Texture2D glow = ModContent.Request<Texture2D>(NPC.ModNPC.Texture + "_Glow").Value;
-            Texture2D upper = ModContent.Request<Texture2D>(NPC.ModNPC.Texture + "_Upper_Calm").Value;
-            Texture2D upperGlow = ModContent.Request<Texture2D>(NPC.ModNPC.Texture + "_Upper_Calm_Glow").Value;
-            Texture2D upperA = ModContent.Request<Texture2D>(NPC.ModNPC.Texture + "_Upper_Angry").Value;
-            Texture2D upperAGlow = ModContent.Request<Texture2D>(NPC.ModNPC.Texture + "_Upper_Angry_Glow").Value;
-            Texture2D shieldBack = ModContent.Request<Texture2D>(NPC.ModNPC.Texture + "_Shield_B").Value;
-            Texture2D shieldFront = ModContent.Request<Texture2D>(NPC.ModNPC.Texture + "_Shield_F").Value;
             var effects = NPC.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
             Vector2 pos = NPC.Center + new Vector2(0, 3);
 
             if (AIState is not ActionState.Alert && AIState is not ActionState.Laser)
-                spriteBatch.Draw(shieldBack, pos - screenPos, null, NPC.GetAlpha(drawColor) * 0.5f, NPC.rotation, NPC.frame.Size() / 2 + new Vector2(NPC.spriteDirection == -1 ? 26 : -18, 6), NPC.scale, effects, 0);
+                spriteBatch.Draw(shieldBack.Value, pos - screenPos, null, NPC.GetAlpha(drawColor) * 0.5f, NPC.rotation, NPC.frame.Size() / 2 + new Vector2(NPC.spriteDirection == -1 ? 26 : -18, 6), NPC.scale, effects, 0);
 
             spriteBatch.Draw(TextureAssets.Npc[NPC.type].Value, pos - screenPos, NPC.frame, NPC.GetAlpha(drawColor), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
-            spriteBatch.Draw(glow, pos - screenPos, NPC.frame, NPC.GetAlpha(Color.White), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
+            spriteBatch.Draw(glow.Value, pos - screenPos, NPC.frame, NPC.GetAlpha(Color.White), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
 
             if (AIState is not ActionState.Alert && AIState is not ActionState.Laser)
             {
-                int UpperHeight = upper.Height / 12;
+                int UpperHeight = upper.Value.Height / 12;
                 int UpperY = UpperHeight * NPC.frame.Y / 94;
-                Rectangle UpperRect = new(0, UpperY, upper.Width, UpperHeight);
-                spriteBatch.Draw(upper, pos - screenPos, UpperRect, NPC.GetAlpha(drawColor), NPC.rotation, NPC.frame.Size() / 2 + new Vector2(NPC.spriteDirection == -1 ? 4 : 10, 24), NPC.scale, effects, 0);
-                spriteBatch.Draw(upperGlow, pos - screenPos, UpperRect, NPC.GetAlpha(Color.White), NPC.rotation, NPC.frame.Size() / 2 + new Vector2(NPC.spriteDirection == -1 ? 4 : 10, 24), NPC.scale, effects, 0);
+                Rectangle UpperRect = new(0, UpperY, upper.Value.Width, UpperHeight);
+                spriteBatch.Draw(upper.Value, pos - screenPos, UpperRect, NPC.GetAlpha(drawColor), NPC.rotation, NPC.frame.Size() / 2 + new Vector2(NPC.spriteDirection == -1 ? 4 : 10, 24), NPC.scale, effects, 0);
+                spriteBatch.Draw(upperGlow.Value, pos - screenPos, UpperRect, NPC.GetAlpha(Color.White), NPC.rotation, NPC.frame.Size() / 2 + new Vector2(NPC.spriteDirection == -1 ? 4 : 10, 24), NPC.scale, effects, 0);
             }
             if (AIState is ActionState.Alert || AIState is ActionState.Laser)
             {
-                int UpperAHeight = upperA.Height / 12;
+                int UpperAHeight = upperA.Value.Height / 12;
                 int UpperAY = UpperAHeight * NPC.frame.Y / 94;
-                Rectangle UpperARect = new(0, UpperAY, upperA.Width, UpperAHeight);
-                spriteBatch.Draw(upperA, pos - screenPos, UpperARect, NPC.GetAlpha(drawColor), NPC.rotation, NPC.frame.Size() / 2 + new Vector2(NPC.spriteDirection == -1 ? 8 : 16, 22), NPC.scale, effects, 0);
-                spriteBatch.Draw(upperAGlow, pos - screenPos, UpperARect, NPC.GetAlpha(Color.White), NPC.rotation, NPC.frame.Size() / 2 + new Vector2(NPC.spriteDirection == -1 ? 8 : 16, 22), NPC.scale, effects, 0);
+                Rectangle UpperARect = new(0, UpperAY, upperA.Value.Width, UpperAHeight);
+                spriteBatch.Draw(upperA.Value, pos - screenPos, UpperARect, NPC.GetAlpha(drawColor), NPC.rotation, NPC.frame.Size() / 2 + new Vector2(NPC.spriteDirection == -1 ? 8 : 16, 22), NPC.scale, effects, 0);
+                spriteBatch.Draw(upperAGlow.Value, pos - screenPos, UpperARect, NPC.GetAlpha(Color.White), NPC.rotation, NPC.frame.Size() / 2 + new Vector2(NPC.spriteDirection == -1 ? 8 : 16, 22), NPC.scale, effects, 0);
 
                 Texture2D HexagonTexture = ModContent.Request<Texture2D>("Redemption/Empty", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
                 Effect ShieldEffect = ModContent.Request<Effect>("Redemption/Effects/Shield", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
@@ -590,13 +610,13 @@ namespace Redemption.NPCs.HM
 
                 spriteBatch.End();
                 ShieldEffect.Parameters["sinMult"].SetValue(10f);
-                ShieldEffect.Parameters["spriteRatio"].SetValue(new Vector2(shieldFront.Width / 2f / HexagonTexture.Width, shieldFront.Height / 2f / HexagonTexture.Height));
-                ShieldEffect.Parameters["conversion"].SetValue(new Vector2(1f / (shieldFront.Width / 2), 1f / (shieldFront.Height / 2)));
+                ShieldEffect.Parameters["spriteRatio"].SetValue(new Vector2(shieldFront.Value.Width / 2f / HexagonTexture.Width, shieldFront.Value.Height / 2f / HexagonTexture.Height));
+                ShieldEffect.Parameters["conversion"].SetValue(new Vector2(1f / (shieldFront.Value.Width / 2), 1f / (shieldFront.Value.Height / 2)));
                 ShieldEffect.Parameters["frameAmount"].SetValue(1f);
                 spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
                 ShieldEffect.CurrentTechnique.Passes[0].Apply();
 
-                spriteBatch.Draw(shieldFront, pos - screenPos, null, NPC.GetAlpha(drawColor) * 0.5f, NPC.rotation, NPC.frame.Size() / 2 + new Vector2(NPC.spriteDirection == -1 ? 30 : -24, 10), NPC.scale, effects, 0);
+                spriteBatch.Draw(shieldFront.Value, pos - screenPos, null, NPC.GetAlpha(drawColor) * 0.5f, NPC.rotation, NPC.frame.Size() / 2 + new Vector2(NPC.spriteDirection == -1 ? 30 : -24, 10), NPC.scale, effects, 0);
 
                 spriteBatch.End();
                 spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);

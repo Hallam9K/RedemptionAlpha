@@ -11,11 +11,37 @@ using Terraria.GameContent.UI;
 using Terraria.Utilities;
 using System.IO;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using ReLogic.Content;
 
 namespace Redemption.NPCs.PreHM
 {
     public abstract class SkeletonBase : ModNPC
     {
+        public static Asset<Texture2D> head;
+        public static Asset<Texture2D> SlashAni;
+        public static Asset<Texture2D> SlashGlow;
+        public static Asset<Texture2D> head2;
+        public static Asset<Texture2D> NobleSlashAni;
+        public static Asset<Texture2D> NobleSlashGlow;
+        public override void Load()
+        {
+            head = ModContent.Request<Texture2D>("Redemption/NPCs/PreHM/Skeleton_Heads");
+            SlashAni = ModContent.Request<Texture2D>("Redemption/NPCs/PreHM/SkeletonDuelist_Slashes");
+            SlashGlow = ModContent.Request<Texture2D>("Redemption/NPCs/PreHM/SkeletonDuelist_Slashes_Glow");
+            head2 = ModContent.Request<Texture2D>("Redemption/NPCs/PreHM/Skeleton_Heads2");
+            NobleSlashAni = ModContent.Request<Texture2D>("Redemption/NPCs/PreHM/SkeletonNoble_HalberdSlash");
+            NobleSlashGlow = ModContent.Request<Texture2D>("Redemption/NPCs/PreHM/SkeletonNoble_HalberdSlash_Glow");
+        }
+        public override void Unload()
+        {
+            head = null;
+            SlashAni = null;
+            SlashGlow = null;
+            head2 = null;
+            NobleSlashAni = null;
+            NobleSlashGlow = null;
+        }
         public enum PersonalityState
         {
             Normal, Aggressive, Calm, Greedy, Soulful

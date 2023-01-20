@@ -27,15 +27,29 @@ using Redemption.Dusts;
 using Redemption.NPCs.Friendly;
 using Redemption.BaseExtension;
 using Redemption.Items.Weapons.PreHM.Ritualist;
+using ReLogic.Content;
 
 namespace Redemption.NPCs.Bosses.Keeper
 {
     [AutoloadBossHead]
     public class Keeper : ModNPC
     {
+        private static Asset<Texture2D> glow;
+        private static Asset<Texture2D> veilTex;
+        private static Asset<Texture2D> closureTex;
+        public override void Unload()
+        {
+            glow = null;
+            veilTex = null;
+            closureTex = null;
+        }
         public static int secondStageHeadSlot = -1;
         public override void Load()
         {
+            glow = ModContent.Request<Texture2D>(Texture + "_Glow");
+            veilTex = ModContent.Request<Texture2D>("Redemption/NPCs/Bosses/Keeper/VeilFX");
+            closureTex = ModContent.Request<Texture2D>("Redemption/NPCs/Bosses/Keeper/Keeper_Closure");
+
             string texture = BossHeadTexture + "_Unveiled";
             secondStageHeadSlot = Mod.AddBossHeadTexture(texture, -1);
         }
@@ -994,9 +1008,6 @@ namespace Redemption.NPCs.Bosses.Keeper
 
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
-            Texture2D glow = ModContent.Request<Texture2D>(NPC.ModNPC.Texture + "_Glow").Value;
-            Texture2D veilTex = ModContent.Request<Texture2D>("Redemption/NPCs/Bosses/Keeper/VeilFX").Value;
-            Texture2D closureTex = ModContent.Request<Texture2D>("Redemption/NPCs/Bosses/Keeper/Keeper_Closure").Value;
             var effects = NPC.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
             int shader = ContentSamples.CommonlyUsedContentSamples.ColorOnlyShaderIndex;
             Color angryColor = BaseUtility.MultiLerpColor(Main.LocalPlayer.miscCounter % 100 / 100f, Color.DarkSlateBlue, Color.DarkRed * 0.7f, Color.DarkSlateBlue);
@@ -1025,21 +1036,21 @@ namespace Redemption.NPCs.Bosses.Keeper
                 GameShaders.Armor.ApplySecondary(reapShader, Main.player[Main.myPlayer], null);
             }
             if (AIState is ActionState.Teddy && TimerRand == 3)
-                spriteBatch.Draw(closureTex, NPC.Center - screenPos, NPC.frame, NPC.GetAlpha(Color.White), NPC.rotation, NPC.frame.Size() / 2, NPC.scale * 2, effects, 0);
+                spriteBatch.Draw(closureTex.Value, NPC.Center - screenPos, NPC.frame, NPC.GetAlpha(Color.White), NPC.rotation, NPC.frame.Size() / 2, NPC.scale * 2, effects, 0);
             else
             {
                 spriteBatch.Draw(TextureAssets.Npc[NPC.type].Value, NPC.Center - screenPos, NPC.frame, NPC.GetAlpha(drawColor), NPC.rotation, NPC.frame.Size() / 2, NPC.scale * 2, effects, 0);
 
-                spriteBatch.Draw(glow, NPC.Center - screenPos, NPC.frame, NPC.GetAlpha(Color.White), NPC.rotation, NPC.frame.Size() / 2, NPC.scale * 2, effects, 0);
+                spriteBatch.Draw(glow.Value, NPC.Center - screenPos, NPC.frame, NPC.GetAlpha(Color.White), NPC.rotation, NPC.frame.Size() / 2, NPC.scale * 2, effects, 0);
             }
 
-            int height = veilTex.Height / 6;
+            int height = veilTex.Value.Height / 6;
             int y = height * VeilFrameY;
-            Rectangle rect = new(0, y, veilTex.Width, height);
-            Vector2 origin = new(veilTex.Width / 2f, height / 2f);
+            Rectangle rect = new(0, y, veilTex.Value.Width, height);
+            Vector2 origin = new(veilTex.Value.Width / 2f, height / 2f);
             Vector2 VeilPos = new(NPC.Center.X + 3 * NPC.spriteDirection, NPC.Center.Y - 37);
             if (!Unveiled && NPC.life > NPC.lifeMax / 2)
-                Main.spriteBatch.Draw(veilTex, VeilPos - screenPos, new Rectangle?(rect), NPC.GetAlpha(drawColor), NPC.rotation, origin, NPC.scale, effects, 0);
+                Main.spriteBatch.Draw(veilTex.Value, VeilPos - screenPos, new Rectangle?(rect), NPC.GetAlpha(drawColor), NPC.rotation, origin, NPC.scale, effects, 0);
 
             spriteBatch.End();
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);

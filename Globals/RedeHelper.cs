@@ -48,6 +48,7 @@ namespace Redemption.Globals
             Terraria.Player player = Main.player[proj.owner];
             return player.RedemptionAbility().SpiritwalkerActive || proj.Redemption().RitDagger || ProjectileLists.Arcane.Contains(proj.type) || ProjectileLists.Celestial.Contains(proj.type) || ProjectileLists.Holy.Contains(proj.type) || ProjectileLists.Psychic.Contains(proj.type) || RedeConfigClient.Instance.ElementDisable ? null : false;
         }
+        public static float RandomRotation() => Main.rand.NextFloat() * MathHelper.TwoPi;
         public static Vector2 TurnRight(this Vector2 vec) => new(-vec.Y, vec.X);
         public static Vector2 TurnLeft(this Vector2 vec) => new(vec.Y, -vec.X);
 
@@ -443,7 +444,7 @@ namespace Redemption.Globals
 
         public static float RadToGrad(float rad) => rad * 180.0f / (float)Math.PI;
 
-        public static int GetNearestNPC(Vector2 point, bool friendly = false, bool noBoss = false)
+        public static int GetNearestNPC(Vector2 point, bool friendly = false, bool noBoss = false, bool canBeChasedBy = false)
         {
             float nearestNPCDist = -1;
             int nearestNPC = -1;
@@ -455,6 +456,9 @@ namespace Redemption.Globals
                     continue;
 
                 if (noBoss && npc.boss)
+                    continue;
+
+                if (canBeChasedBy && !npc.CanBeChasedBy())
                     continue;
 
                 if (!friendly && (npc.friendly || npc.lifeMax <= 5))
@@ -1317,7 +1321,11 @@ namespace Redemption.Globals
                         return true;
                     break;
                 case 3:
-                    if (target.type == npc.type || target.type == ModContent.NPCType<PrototypeSilver>())
+                    if (target.type == npc.type || target.type == ModContent.NPCType<PrototypeSilver>() || target.type == ModContent.NPCType<SpacePaladin>())
+                        return true;
+                    break;
+                case 4:
+                    if (target.type == npc.type)
                         return true;
                     break;
             }

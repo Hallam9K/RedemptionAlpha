@@ -38,7 +38,7 @@ namespace Redemption.Items.Weapons.PostML.Magic
         }
         public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback)
         {
-            position = Main.MouseWorld + RedeHelper.PolarVector(Main.rand.Next(100, 301), Main.rand.NextFloat(0, MathHelper.TwoPi));
+            position = Main.MouseWorld + RedeHelper.PolarVector(Main.rand.Next(100, 301), RedeHelper.RandomRotation());
         }
         public override void AddRecipes()
         {

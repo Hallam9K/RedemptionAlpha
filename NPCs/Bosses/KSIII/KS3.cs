@@ -28,12 +28,43 @@ using Redemption.BaseExtension;
 using Redemption.Items.Weapons.HM.Magic;
 using Redemption.Items.Weapons.HM.Melee;
 using Redemption.Items.Armor.Vanity;
+using ReLogic.Content;
 
 namespace Redemption.NPCs.Bosses.KSIII
 {
     [AutoloadBossHead]
     public class KS3 : ModNPC
     {
+        private static Asset<Texture2D> Glow;
+        private static Asset<Texture2D> Arms;
+        private static Asset<Texture2D> ArmsGlow;
+        private static Asset<Texture2D> Head;
+        private static Asset<Texture2D> HeadGlow;
+        private static Asset<Texture2D> Overclock;
+        private static Asset<Texture2D> OverclockGlow;
+        private static Asset<Texture2D> OverclockArmsGlow;
+        public override void Load()
+        {
+            Glow = ModContent.Request<Texture2D>(Texture + "_Glow");
+            Arms = ModContent.Request<Texture2D>(Texture + "_Arms");
+            ArmsGlow = ModContent.Request<Texture2D>(Texture + "_Arms_Glow");
+            Head = ModContent.Request<Texture2D>(Texture + "_Heads");
+            HeadGlow = ModContent.Request<Texture2D>(Texture + "_Heads_Glow");
+            Overclock = ModContent.Request<Texture2D>(Texture + "_Overclock");
+            OverclockGlow = ModContent.Request<Texture2D>(Texture + "_Overclock_Glow");
+            OverclockArmsGlow = ModContent.Request<Texture2D>(Texture + "_Arms_Overclock_Glow");
+        }
+        public override void Unload()
+        {
+            Glow = null;
+            Arms = null;
+            ArmsGlow = null;
+            Head = null;
+            HeadGlow = null;
+            Overclock = null;
+            OverclockGlow = null;
+            OverclockArmsGlow = null;
+        }
         public enum ActionState
         {
             Begin,
@@ -2983,16 +3014,6 @@ namespace Redemption.NPCs.Bosses.KSIII
 
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
-            Texture2D Glow = ModContent.Request<Texture2D>(NPC.ModNPC.Texture + "_Glow").Value;
-            Texture2D Arms = ModContent.Request<Texture2D>(NPC.ModNPC.Texture + "_Arms").Value;
-            Texture2D ArmsGlow = ModContent.Request<Texture2D>(NPC.ModNPC.Texture + "_Arms_Glow").Value;
-            Texture2D Head = ModContent.Request<Texture2D>(NPC.ModNPC.Texture + "_Heads").Value;
-            Texture2D HeadGlow = ModContent.Request<Texture2D>(NPC.ModNPC.Texture + "_Heads_Glow").Value;
-
-            Texture2D Overclock = ModContent.Request<Texture2D>(NPC.ModNPC.Texture + "_Overclock").Value;
-            Texture2D OverclockGlow = ModContent.Request<Texture2D>(NPC.ModNPC.Texture + "_Overclock_Glow").Value;
-            Texture2D OverclockArmsGlow = ModContent.Request<Texture2D>(NPC.ModNPC.Texture + "_Arms_Overclock_Glow").Value;
-
             var effects = NPC.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
 
             if (!NPC.IsABestiaryIconDummy)
@@ -3000,20 +3021,20 @@ namespace Redemption.NPCs.Bosses.KSIII
                 for (int i = 0; i < NPCID.Sets.TrailCacheLength[NPC.type]; i++)
                 {
                     Vector2 oldPos = NPC.oldPos[i];
-                    Main.spriteBatch.Draw(phase < 5 ? TextureAssets.Npc[NPC.type].Value : Overclock, oldPos + NPC.Size / 2f - screenPos + new Vector2(0, NPC.gfxOffY), NPC.frame, NPC.GetAlpha(RedeColor.SlayerColour) * 0.5f, oldrot[i], NPC.frame.Size() / 2, NPC.scale * 2, effects, 0);
+                    Main.spriteBatch.Draw(phase < 5 ? TextureAssets.Npc[NPC.type].Value : Overclock.Value, oldPos + NPC.Size / 2f - screenPos + new Vector2(0, NPC.gfxOffY), NPC.frame, NPC.GetAlpha(RedeColor.SlayerColour) * 0.5f, oldrot[i], NPC.frame.Size() / 2, NPC.scale * 2, effects, 0);
                 }
             }
-            spriteBatch.Draw(phase < 5 ? TextureAssets.Npc[NPC.type].Value : Overclock, NPC.Center - screenPos, NPC.frame, NPC.GetAlpha(drawColor), NPC.rotation, NPC.frame.Size() / 2, NPC.scale * 2, effects, 0);
-            spriteBatch.Draw(phase < 5 ? Glow : OverclockGlow, NPC.Center - screenPos, NPC.frame, NPC.GetAlpha(Color.White), NPC.rotation, NPC.frame.Size() / 2, NPC.scale * 2, effects, 0);
+            spriteBatch.Draw(phase < 5 ? TextureAssets.Npc[NPC.type].Value : Overclock.Value, NPC.Center - screenPos, NPC.frame, NPC.GetAlpha(drawColor), NPC.rotation, NPC.frame.Size() / 2, NPC.scale * 2, effects, 0);
+            spriteBatch.Draw(phase < 5 ? Glow.Value : OverclockGlow.Value, NPC.Center - screenPos, NPC.frame, NPC.GetAlpha(Color.White), NPC.rotation, NPC.frame.Size() / 2, NPC.scale * 2, effects, 0);
 
             if (AIState != ActionState.GunAttacks && AIState != ActionState.PhysicalAttacks && AIState != ActionState.SpecialAttacks && NPC.velocity.Length() < 13f && phase < 5)
             {
                 Vector2 HeadPos = new(NPC.Center.X - 2 * NPC.spriteDirection, NPC.Center.Y - 35);
-                int HeadHeight = Head.Height / 20;
+                int HeadHeight = Head.Value.Height / 20;
                 int yHead = HeadHeight * HeadFrame;
-                Rectangle HeadRect = new(0, yHead, Head.Width, HeadHeight);
-                spriteBatch.Draw(Head, HeadPos - screenPos, new Rectangle?(HeadRect), NPC.GetAlpha(drawColor), NPC.rotation, new Vector2(Head.Width / 2f, HeadHeight / 2f), NPC.scale * 2, effects, 0f);
-                spriteBatch.Draw(HeadGlow, HeadPos - screenPos, new Rectangle?(HeadRect), NPC.GetAlpha(Color.White), NPC.rotation, new Vector2(Head.Width / 2f, HeadHeight / 2f), NPC.scale * 2, effects, 0f);
+                Rectangle HeadRect = new(0, yHead, Head.Value.Width, HeadHeight);
+                spriteBatch.Draw(Head.Value, HeadPos - screenPos, new Rectangle?(HeadRect), NPC.GetAlpha(drawColor), NPC.rotation, new Vector2(Head.Value.Width / 2f, HeadHeight / 2f), NPC.scale * 2, effects, 0f);
+                spriteBatch.Draw(HeadGlow.Value, HeadPos - screenPos, new Rectangle?(HeadRect), NPC.GetAlpha(Color.White), NPC.rotation, new Vector2(Head.Value.Width / 2f, HeadHeight / 2f), NPC.scale * 2, effects, 0f);
             }
 
             if (!NPC.IsABestiaryIconDummy && NPC.dontTakeDamage && !Main.dedServ && spriteBatch != null)
@@ -3035,19 +3056,19 @@ namespace Redemption.NPCs.Bosses.KSIII
             }
             if (BodyState < (int)BodyAnim.IdlePhysical)
             {
-                int height = Arms.Height / 6;
-                int width = Arms.Width / 10;
+                int height = Arms.Value.Height / 6;
+                int width = Arms.Value.Width / 10;
                 int y = height * ArmsFrameY;
                 int x = width * ArmsFrameX;
                 Rectangle ArmsRect = new(x, y, width, height);
                 Vector2 ArmsOrigin = new(width / 2f, height / 2f);
                 Vector2 ArmsPos = new(NPC.Center.X, NPC.Center.Y - 13);
 
-                spriteBatch.Draw(Arms, ArmsPos - screenPos, new Rectangle?(ArmsRect), NPC.GetAlpha(drawColor),
+                spriteBatch.Draw(Arms.Value, ArmsPos - screenPos, new Rectangle?(ArmsRect), NPC.GetAlpha(drawColor),
                     BodyState < (int)BodyAnim.Gun || BodyState > (int)BodyAnim.GunEnd ? NPC.rotation :
                     gunRot + (NPC.spriteDirection == -1 ? (float)Math.PI : 0), ArmsOrigin, NPC.scale, effects, 0);
 
-                spriteBatch.Draw(phase < 5 ? ArmsGlow : OverclockArmsGlow, ArmsPos - screenPos, new Rectangle?(ArmsRect), NPC.GetAlpha(Color.White),
+                spriteBatch.Draw(phase < 5 ? ArmsGlow.Value : OverclockArmsGlow.Value, ArmsPos - screenPos, new Rectangle?(ArmsRect), NPC.GetAlpha(Color.White),
                     BodyState < (int)BodyAnim.Gun || BodyState > (int)BodyAnim.GunEnd ? NPC.rotation :
                     gunRot + (NPC.spriteDirection == -1 ? (float)Math.PI : 0), ArmsOrigin, NPC.scale, effects, 0);
 
@@ -3063,7 +3084,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                     effect.Parameters["red2"].SetValue(new Color(0.1f, 1f, 1f, 0.9f).ToVector4());
 
                     effect.CurrentTechnique.Passes[0].Apply();
-                    spriteBatch.Draw(Arms, ArmsPos - screenPos, new Rectangle?(ArmsRect), Color.White,
+                    spriteBatch.Draw(Arms.Value, ArmsPos - screenPos, new Rectangle?(ArmsRect), Color.White,
                     BodyState < (int)BodyAnim.Gun || BodyState > (int)BodyAnim.GunEnd ? NPC.rotation :
                     gunRot + (NPC.spriteDirection == -1 ? (float)Math.PI : 0), ArmsOrigin, NPC.scale, effects, 0);
 

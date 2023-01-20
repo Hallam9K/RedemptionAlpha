@@ -163,13 +163,13 @@ namespace Redemption.Items.Weapons.HM.Magic
             }
             if (Main.rand.NextBool(10))
             {
-                DustHelper.DrawParticleElectricity(Projectile.Center, Projectile.Center + RedeHelper.PolarVector(90 * Projectile.scale, Main.rand.NextFloat(0, MathHelper.TwoPi)), new LightningParticle(), 1.5f, 20, 0.1f);
-                DustHelper.DrawParticleElectricity(Projectile.Center, Projectile.Center + RedeHelper.PolarVector(90 * Projectile.scale, Main.rand.NextFloat(0, MathHelper.TwoPi)), new LightningParticle(), 1.5f, 20, 0.1f);
+                DustHelper.DrawParticleElectricity(Projectile.Center, Projectile.Center + RedeHelper.PolarVector(90 * Projectile.scale, RedeHelper.RandomRotation()), new LightningParticle(), 1.5f, 20, 0.1f);
+                DustHelper.DrawParticleElectricity(Projectile.Center, Projectile.Center + RedeHelper.PolarVector(90 * Projectile.scale, RedeHelper.RandomRotation()), new LightningParticle(), 1.5f, 20, 0.1f);
             }
             if (Projectile.ai[1] < 0 && Main.rand.NextBool(2))
             {
-                DustHelper.DrawParticleElectricity(Projectile.Center, Projectile.Center + RedeHelper.PolarVector(180 * Projectile.scale, Main.rand.NextFloat(0, MathHelper.TwoPi)), new LightningParticle(), 1.5f, 20, 0.1f);
-                DustHelper.DrawParticleElectricity(Projectile.Center, Projectile.Center + RedeHelper.PolarVector(180 * Projectile.scale, Main.rand.NextFloat(0, MathHelper.TwoPi)), new LightningParticle(), 1.5f, 20, 0.1f);
+                DustHelper.DrawParticleElectricity(Projectile.Center, Projectile.Center + RedeHelper.PolarVector(180 * Projectile.scale, RedeHelper.RandomRotation()), new LightningParticle(), 1.5f, 20, 0.1f);
+                DustHelper.DrawParticleElectricity(Projectile.Center, Projectile.Center + RedeHelper.PolarVector(180 * Projectile.scale, RedeHelper.RandomRotation()), new LightningParticle(), 1.5f, 20, 0.1f);
             }
 
             if (Projectile.owner == Main.myPlayer)

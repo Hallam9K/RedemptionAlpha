@@ -80,7 +80,7 @@ namespace Redemption.UI
         public override void OnInitialize()
         {
             lastScreenSize = new Vector2(Main.screenWidth, Main.screenHeight);
-            screenPos = new(Main.screenWidth / 2, Main.screenHeight / 3);
+            screenPos = new Vector2(Main.screenWidth / 2, Main.screenHeight / 2.3f);
         }
         public override void Draw(SpriteBatch spriteBatch)
         {
@@ -90,7 +90,7 @@ namespace Redemption.UI
             if (lastScreenSize != new Vector2(Main.screenWidth, Main.screenHeight))
             {
                 lastScreenSize = new Vector2(Main.screenWidth, Main.screenHeight);
-                screenPos = new(Main.screenWidth / 2, Main.screenHeight / 3);
+                screenPos = new(Main.screenWidth / 2, Main.screenHeight / 2.3f);
             }
             DynamicSpriteFont font = TextFont switch
             {
@@ -105,7 +105,7 @@ namespace Redemption.UI
             }
             else
             {
-                CenterPosition = new Vector2(Main.screenWidth / 2, Main.screenHeight / 2.3f);
+                CenterPosition = screenPos * Main.UIScale;
             }
             // * Main.UIScale
             int centerX = (int)CenterPosition.X;

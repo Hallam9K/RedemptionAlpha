@@ -538,32 +538,29 @@ namespace Redemption.NPCs.PreHM
         }
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
-            Texture2D Glow = ModContent.Request<Texture2D>(NPC.ModNPC.Texture + "_Glow").Value;
-            Texture2D SlashAni = ModContent.Request<Texture2D>("Redemption/NPCs/PreHM/SkeletonDuelist_Slashes").Value;
-            Texture2D SlashGlow = ModContent.Request<Texture2D>("Redemption/NPCs/PreHM/SkeletonDuelist_Slashes_Glow").Value;
-            Texture2D head = ModContent.Request<Texture2D>("Redemption/NPCs/PreHM/Skeleton_Heads2").Value;
+            Texture2D Glow = ModContent.Request<Texture2D>(Texture + "_Glow").Value;
             var effects = NPC.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
 
-            int HeightH = head.Height / 12;
-            int WidthH = head.Width / 2;
+            int HeightH = head2.Value.Height / 12;
+            int WidthH = head2.Value.Width / 2;
             int yH = HeightH * HeadType;
             int xH = WidthH * HeadX;
             Rectangle rectH = new(xH, yH, WidthH, HeightH);
 
             if (AIState is ActionState.Attack)
             {
-                int Height = SlashAni.Height / 11;
-                int Width = SlashAni.Width / 3;
+                int Height = SlashAni.Value.Height / 11;
+                int Width = SlashAni.Value.Width / 3;
                 int y = Height * AniFrameY;
                 int x = Width * AniFrameX;
                 Rectangle rect = new(x, y, Width, Height);
                 Vector2 origin = new(Width / 2f, Height / 2f);
-                spriteBatch.Draw(SlashAni, NPC.Center - screenPos - new Vector2(0, 11), new Rectangle?(rect), drawColor, NPC.rotation, origin, NPC.scale, effects, 0);
+                spriteBatch.Draw(SlashAni.Value, NPC.Center - screenPos - new Vector2(0, 11), new Rectangle?(rect), drawColor, NPC.rotation, origin, NPC.scale, effects, 0);
 
-                spriteBatch.Draw(head, NPC.Center - screenPos, new Rectangle?(rectH), drawColor, NPC.rotation, NPC.frame.Size() / 2 + new Vector2((NPC.spriteDirection == 1 ? -48 : -38) + (HeadOffsetX * NPC.spriteDirection), -1 + HeadOffset), NPC.scale, effects, 0);
+                spriteBatch.Draw(head2.Value, NPC.Center - screenPos, new Rectangle?(rectH), drawColor, NPC.rotation, NPC.frame.Size() / 2 + new Vector2((NPC.spriteDirection == 1 ? -48 : -38) + (HeadOffsetX * NPC.spriteDirection), -1 + HeadOffset), NPC.scale, effects, 0);
 
                 if (HasEyes)
-                    spriteBatch.Draw(SlashGlow, NPC.Center - screenPos - new Vector2(0, 11), new Rectangle?(rect), Color.White, NPC.rotation, origin, NPC.scale, effects, 0);
+                    spriteBatch.Draw(SlashGlow.Value, NPC.Center - screenPos - new Vector2(0, 11), new Rectangle?(rect), Color.White, NPC.rotation, origin, NPC.scale, effects, 0);
             }
             else
             {
@@ -578,7 +575,7 @@ namespace Redemption.NPCs.PreHM
                 }
                 spriteBatch.Draw(TextureAssets.Npc[NPC.type].Value, NPC.Center - screenPos, NPC.frame, drawColor, NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
 
-                spriteBatch.Draw(head, NPC.Center - screenPos, new Rectangle?(rectH), drawColor, NPC.rotation, NPC.frame.Size() / 2 + new Vector2((NPC.spriteDirection == 1 ? -48 : -38) + (HeadOffsetX * NPC.spriteDirection), -2 + HeadOffset), NPC.scale, effects, 0);
+                spriteBatch.Draw(head2.Value, NPC.Center - screenPos, new Rectangle?(rectH), drawColor, NPC.rotation, NPC.frame.Size() / 2 + new Vector2((NPC.spriteDirection == 1 ? -48 : -38) + (HeadOffsetX * NPC.spriteDirection), -2 + HeadOffset), NPC.scale, effects, 0);
 
                 if (HasEyes)
                     spriteBatch.Draw(Glow, NPC.Center - screenPos, NPC.frame, Color.White, NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);

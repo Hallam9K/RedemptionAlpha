@@ -51,7 +51,7 @@ namespace Redemption.Items.Weapons.HM.Magic
                             SoundEngine.PlaySound(CustomSounds.Spark1, Projectile.position);
 
                         if (Projectile.ai[1] >= 30 && (Projectile.ai[1] >= 60 ? Main.rand.NextBool(6) : Main.rand.NextBool(10)))
-                            DustHelper.DrawParticleElectricity(Projectile.Center + new Vector2(32 * player.direction, -32), Projectile.Center + new Vector2(32 * player.direction, -32) + RedeHelper.PolarVector(30 * (glow + 1), Main.rand.NextFloat(0, MathHelper.TwoPi)), new LightningParticle(), 0.2f, 5, 0.1f);
+                            DustHelper.DrawParticleElectricity(Projectile.Center + new Vector2(32 * player.direction, -32), Projectile.Center + new Vector2(32 * player.direction, -32) + RedeHelper.PolarVector(30 * (glow + 1), RedeHelper.RandomRotation()), new LightningParticle(), 0.2f, 5, 0.1f);
 
                         if (!player.channel || glow >= 0.8f)
                         {

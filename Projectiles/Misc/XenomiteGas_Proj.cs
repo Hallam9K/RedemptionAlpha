@@ -4,6 +4,7 @@ using Terraria;
 using Terraria.GameContent;
 using Terraria.ModLoader;
 using Redemption.Buffs.Debuffs;
+using Redemption.Globals;
 
 namespace Redemption.Projectiles.Misc
 {
@@ -26,7 +27,7 @@ namespace Redemption.Projectiles.Misc
             Projectile.alpha = 255;
             Projectile.timeLeft = 600;
             Projectile.scale = Main.rand.NextFloat(1, 1.5f);
-            Projectile.rotation = Main.rand.NextFloat(0, MathHelper.TwoPi);
+            Projectile.rotation = RedeHelper.RandomRotation();
             Projectile.usesLocalNPCImmunity = true;
         }
         public override void AI()

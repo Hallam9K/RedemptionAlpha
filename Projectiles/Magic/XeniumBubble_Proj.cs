@@ -115,7 +115,7 @@ namespace Redemption.Projectiles.Magic
             Projectile.ignoreWater = true;
             Projectile.tileCollide = false;
             Projectile.DamageType = DamageClass.Magic;
-            Projectile.rotation = Main.rand.NextFloat(0, MathHelper.TwoPi);
+            Projectile.rotation = RedeHelper.RandomRotation();
             Projectile.spriteDirection = Main.rand.NextBool() ? 1 : -1;
         }
         public override void AI()

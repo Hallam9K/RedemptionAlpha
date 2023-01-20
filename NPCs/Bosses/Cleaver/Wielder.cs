@@ -14,15 +14,29 @@ using Redemption.BaseExtension;
 using Terraria.GameContent.ItemDropRules;
 using Redemption.Items.Weapons.HM.Melee;
 using Terraria.Audio;
-using System;
 using Redemption.UI;
-using Redemption.NPCs.PreHM;
+using ReLogic.Content;
 
 namespace Redemption.NPCs.Bosses.Cleaver
 {
     [AutoloadBossHead]
     public class Wielder : ModNPC
     {
+        private static Asset<Texture2D> glowMask;
+        private static Asset<Texture2D> boosterAni;
+        private static Asset<Texture2D> boosterGlow;
+        public override void Load()
+        {
+            glowMask = ModContent.Request<Texture2D>(Texture + "_Glow");
+            boosterAni = ModContent.Request<Texture2D>(Texture + "_Booster");
+            boosterGlow = ModContent.Request<Texture2D>(Texture + "_Booster_Glow");
+        }
+        public override void Unload()
+        {
+            glowMask = null;
+            boosterAni = null;
+            boosterGlow = null;
+        }
         public enum ActionState
         {
             Begin,
@@ -784,17 +798,14 @@ namespace Redemption.NPCs.Bosses.Cleaver
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
             Texture2D texture = TextureAssets.Npc[NPC.type].Value;
-            Texture2D glowMask = ModContent.Request<Texture2D>(NPC.ModNPC.Texture + "_Glow").Value;
-            Texture2D boosterAni = ModContent.Request<Texture2D>(NPC.ModNPC.Texture + "_Booster").Value;
-            Texture2D boosterGlow = ModContent.Request<Texture2D>(NPC.ModNPC.Texture + "_Booster_Glow").Value;
             var effects = NPC.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
-            int num214 = boosterAni.Height / 4;
+            int num214 = boosterAni.Value.Height / 4;
             int y6 = num214 * boosterFrame;
-            spriteBatch.Draw(boosterAni, NPC.Center - screenPos, new Rectangle?(new Rectangle(0, y6, boosterAni.Width, num214)), drawColor, NPC.rotation, new Vector2(boosterAni.Width / 2f, num214 / 2f), NPC.scale, effects, 0);
-            spriteBatch.Draw(boosterGlow, NPC.Center - screenPos, new Rectangle?(new Rectangle(0, y6, boosterAni.Width, num214)), RedeColor.RedPulse, NPC.rotation, new Vector2(boosterAni.Width / 2f, num214 / 2f), NPC.scale, effects, 0);
+            spriteBatch.Draw(boosterAni.Value, NPC.Center - screenPos, new Rectangle?(new Rectangle(0, y6, boosterAni.Value.Width, num214)), drawColor, NPC.rotation, new Vector2(boosterAni.Value.Width / 2f, num214 / 2f), NPC.scale, effects, 0);
+            spriteBatch.Draw(boosterGlow.Value, NPC.Center - screenPos, new Rectangle?(new Rectangle(0, y6, boosterAni.Value.Width, num214)), RedeColor.RedPulse, NPC.rotation, new Vector2(boosterAni.Value.Width / 2f, num214 / 2f), NPC.scale, effects, 0);
 
             spriteBatch.Draw(texture, NPC.Center - screenPos, NPC.frame, drawColor, NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
-            spriteBatch.Draw(glowMask, NPC.Center - screenPos, NPC.frame, RedeColor.RedPulse, NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
+            spriteBatch.Draw(glowMask.Value, NPC.Center - screenPos, NPC.frame, RedeColor.RedPulse, NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
             return false;
         }
         public override void PostDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)

@@ -59,207 +59,207 @@ namespace Redemption.Globals.NPC
                 float elementDmg = 1;
                 if (npc.type == ModContent.NPCType<Akka>())
                 {
-                    if (i == 11 || i == 4 || i == 9)
+                    if (i is 11 or 4 or 9)
                         elementDmg *= 0.75f;
 
-                    if (i == 10 || i == 2)
+                    if (i is 10 or 2)
                         elementDmg *= 0.9f;
 
-                    if (i == 1)
+                    if (i is 1)
                         elementDmg *= 1.25f;
 
-                    if (i == 5)
+                    if (i is 5)
                         elementDmg *= 1.1f;
                 }
                 if (npc.type == ModContent.NPCType<Ukko>())
                 {
-                    if (i == 11 || i == 4 || i == 6)
+                    if (i is 11 or 4 or 6)
                         elementDmg *= 0.75f;
 
-                    if (i == 10 || i == 2 || i == 5)
+                    if (i is 10 or 2 or 5)
                         elementDmg *= 0.9f;
 
-                    if (i == 3)
+                    if (i is 3)
                         elementDmg *= 1.25f;
 
-                    if (i == 8)
+                    if (i is 8)
                         elementDmg *= 1.1f;
                 }
                 if (npc.type == ModContent.NPCType<Erhan>() || npc.type == ModContent.NPCType<ErhanSpirit>())
                 {
-                    if (i == 12)
+                    if (i is 12)
                         elementDmg *= 0.9f;
                 }
                 if (npc.type == ModContent.NPCType<Nebuleus>() || npc.type == ModContent.NPCType<Nebuleus2>() || npc.type == ModContent.NPCType<Nebuleus_Clone>() || npc.type == ModContent.NPCType<Nebuleus2_Clone>())
                 {
-                    if (i == 13)
+                    if (i is 13)
                         elementDmg *= 0.75f;
 
-                    if (i == 9)
+                    if (i is 9)
                         elementDmg *= 0.9f;
 
-                    if (i == 12)
+                    if (i is 12)
                         elementDmg *= 1.25f;
 
-                    if (i == 8)
+                    if (i is 8)
                         elementDmg *= 1.1f;
                 }
                 if (npc.type == ModContent.NPCType<EaglecrestGolem>() || npc.type == ModContent.NPCType<EaglecrestGolem2>() || npc.type == ModContent.NPCType<EaglecrestRockPile>() || npc.type == ModContent.NPCType<EaglecrestRockPile2>())
                 {
-                    if (i == 4)
+                    if (i is 4)
                         elementDmg *= 0.75f;
                 }
                 if (npc.type == ModContent.NPCType<JollyMadman>())
                 {
-                    if (i == 7)
+                    if (i is 7)
                         elementDmg *= 2f;
                 }
                 if (NPCLists.Plantlike.Contains(npc.type))
                 {
-                    if (i == 1 || i == 5)
+                    if (i is 1 or 5)
                         elementDmg *= 1.25f;
 
-                    if (i == 9)
+                    if (i is 9)
                         elementDmg *= 0.75f;
 
-                    if (i == 10)
+                    if (i is 10)
                         elementDmg *= 0.5f;
                 }
                 if (NPCLists.Undead.Contains(npc.type) || NPCLists.Skeleton.Contains(npc.type))
                 {
-                    if (i == 7)
+                    if (i is 7)
                         elementDmg *= 1.25f;
 
-                    if (i == 8)
+                    if (i is 8)
                         elementDmg *= 0.8f;
                 }
                 if (NPCLists.Demon.Contains(npc.type))
                 {
-                    if (i == 7 || i == 13)
+                    if (i is 7 or 13)
                         elementDmg *= 1.3f;
 
-                    if (i == 1)
+                    if (i is 1)
                         elementDmg *= 0.5f;
 
-                    if (i == 2 || i == 3)
+                    if (i is 2 or 3)
                         elementDmg *= 1.15f;
                 }
                 if (NPCLists.Spirit.Contains(npc.type))
                 {
-                    if (i == 7 || i == 13 || i == 0)
+                    if (i is 7 or 13 or 0)
                         elementDmg *= 1.15f;
                 }
                 if (NPCLists.IsSlime.Contains(npc.type))
                 {
-                    if (i == 1)
+                    if (i is 1)
                         elementDmg *= 1.25f;
 
-                    if (i == 3)
+                    if (i is 3)
                         elementDmg *= 0.75f;
 
-                    if (i == 2)
+                    if (i is 2)
                         elementDmg *= 0.5f;
                 }
                 if (NPCLists.Cold.Contains(npc.type))
                 {
-                    if (i == 1)
+                    if (i is 1)
                         elementDmg *= 1.25f;
 
-                    if (i == 3)
+                    if (i is 3)
                         elementDmg *= 0.75f;
 
-                    if (i == 6 || i == 5)
+                    if (i is 6 or 5)
                         elementDmg *= 1.1f;
 
-                    if (i == 10)
+                    if (i is 10)
                         elementDmg *= 0.9f;
                 }
                 if (NPCLists.Hot.Contains(npc.type))
                 {
-                    if (i == 1)
+                    if (i is 1)
                         elementDmg *= 0.5f;
 
-                    if (i == 3)
+                    if (i is 3)
                         elementDmg *= 1.25f;
 
-                    if (i == 2 || i == 5 || i == 10)
+                    if (i is 2 or 5 or 10)
                         elementDmg *= 1.1f;
                 }
                 if (NPCLists.Wet.Contains(npc.type))
                 {
-                    if (i == 1)
+                    if (i is 1)
                         elementDmg *= 0.75f;
 
-                    if (i == 3 || i == 10)
+                    if (i is 3 or 10)
                         elementDmg *= 1.25f;
 
-                    if (i == 2)
+                    if (i is 2)
                         elementDmg *= 0.5f;
                 }
                 if (NPCLists.Infected.Contains(npc.type))
                 {
-                    if (i == 1)
+                    if (i is 1)
                         elementDmg *= 1.15f;
 
-                    if (i == 3)
+                    if (i is 3)
                         elementDmg *= 0.7f;
 
-                    if (i == 11)
+                    if (i is 11)
                         elementDmg *= 1.25f;
 
-                    if (i == 10)
+                    if (i is 10)
                         elementDmg *= 0.25f;
                 }
                 if (NPCLists.Robotic.Contains(npc.type))
                 {
-                    if (i == 11 || i == 10)
+                    if (i is 11 or 10)
                         elementDmg *= 0.75f;
 
-                    if (i == 6)
+                    if (i is 6)
                         elementDmg *= 1.1f;
 
-                    if (i == 2)
+                    if (i is 2)
                         elementDmg *= 1.35f;
                 }
                 if (!NPCLists.Inorganic.Contains(npc.type))
                 {
-                    if (i == 11)
+                    if (i is 11)
                         elementDmg *= 1.1f;
 
-                    if (i == 10)
+                    if (i is 10)
                         elementDmg *= 1.05f;
                 }
                 if (NPCLists.Hallowed.Contains(npc.type))
                 {
-                    if (i == 13)
+                    if (i is 13)
                         elementDmg *= 0.9f;
 
-                    if (i == 7)
+                    if (i is 7)
                         elementDmg *= 0.5f;
 
-                    if (i == 8)
+                    if (i is 8)
                         elementDmg *= 1.25f;
                 }
                 if (NPCLists.Dark.Contains(npc.type))
                 {
-                    if (i == 7)
+                    if (i is 7)
                         elementDmg *= 1.15f;
 
-                    if (i == 9)
+                    if (i is 9)
                         elementDmg *= 0.9f;
 
-                    if (i == 8)
+                    if (i is 8)
                         elementDmg *= 0.75f;
                 }
                 if (NPCLists.Blood.Contains(npc.type))
                 {
-                    if (i == 7 || i == 3 || i == 10)
+                    if (i is 7 or 3 or 10)
                         elementDmg *= 1.1f;
 
-                    if (i == 8)
+                    if (i is 8)
                         elementDmg *= 0.9f;
 
-                    if (i == 11)
+                    if (i is 11)
                         elementDmg *= 0.75f;
                 }
 

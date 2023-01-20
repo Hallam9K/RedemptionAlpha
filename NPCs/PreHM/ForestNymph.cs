@@ -13,6 +13,7 @@ using Redemption.NPCs.Friendly;
 using Redemption.Projectiles.Hostile;
 using Redemption.Projectiles.Minions;
 using Redemption.UI;
+using ReLogic.Content;
 using System;
 using System.IO;
 using System.Linq;
@@ -32,6 +33,33 @@ namespace Redemption.NPCs.PreHM
 {
     public class ForestNymph : ModNPC
     {
+        private static Asset<Texture2D> hair1;
+        private static Asset<Texture2D> hair1b;
+        private static Asset<Texture2D> hair1c;
+        private static Asset<Texture2D> hair2;
+        private static Asset<Texture2D> hair3;
+        private static Asset<Texture2D> tophat;
+        private static Asset<Texture2D> eye;
+        public override void Load()
+        {
+            hair1 = ModContent.Request<Texture2D>(Texture + "_Extra1");
+            hair1b = ModContent.Request<Texture2D>(Texture + "_Extra1b");
+            hair1c = ModContent.Request<Texture2D>(Texture + "_Extra1c");
+            hair2 = ModContent.Request<Texture2D>(Texture + "_Extra2");
+            hair3 = ModContent.Request<Texture2D>(Texture + "_Extra3");
+            tophat = ModContent.Request<Texture2D>(Texture + "_Extra4");
+            eye = ModContent.Request<Texture2D>(Texture + "_Eye");
+        }
+        public override void Unload()
+        {
+            hair1 = null;
+            hair1b = null;
+            hair1c = null;
+            hair2 = null;
+            hair3 = null;
+            tophat = null;
+            eye = null;
+        }
         public enum ActionState
         {
             Idle,
@@ -848,29 +876,22 @@ namespace Redemption.NPCs.PreHM
         }
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
-            Texture2D hair1 = ModContent.Request<Texture2D>(NPC.ModNPC.Texture + "_Extra1").Value;
-            Texture2D hair1b = ModContent.Request<Texture2D>(NPC.ModNPC.Texture + "_Extra1b").Value;
-            Texture2D hair1c = ModContent.Request<Texture2D>(NPC.ModNPC.Texture + "_Extra1c").Value;
-            Texture2D hair2 = ModContent.Request<Texture2D>(NPC.ModNPC.Texture + "_Extra2").Value;
-            Texture2D hair3 = ModContent.Request<Texture2D>(NPC.ModNPC.Texture + "_Extra3").Value;
-            Texture2D tophat = ModContent.Request<Texture2D>(NPC.ModNPC.Texture + "_Extra4").Value;
-            Texture2D eye = ModContent.Request<Texture2D>(NPC.ModNPC.Texture + "_Eye").Value;
             var effects = NPC.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
             Vector2 pos = NPC.Center + new Vector2(NPC.spriteDirection == -1 ? -19 : 17, -17);
             spriteBatch.Draw(TextureAssets.Npc[NPC.type].Value, pos - screenPos, NPC.frame, NPC.GetAlpha(drawColor), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
 
-            int EyeHeight = eye.Height / 3;
-            int EyeWidth = eye.Width / 5;
+            int EyeHeight = eye.Value.Height / 3;
+            int EyeWidth = eye.Value.Width / 5;
             int EyeY = EyeHeight * EyeFrame;
             int EyeX = EyeWidth * EyeType;
             Rectangle EyeRect = new(EyeX, EyeY, EyeWidth, EyeHeight);
-            spriteBatch.Draw(eye, pos - screenPos, new Rectangle?(EyeRect), drawColor, NPC.rotation, NPC.frame.Size() / 2 + new Vector2(NPC.spriteDirection == -1 ? -56 : -28, -32) - new Vector2(EyeOffset.X * -NPC.spriteDirection, EyeOffset.Y), NPC.scale, effects, 0);
+            spriteBatch.Draw(eye.Value, pos - screenPos, new Rectangle?(EyeRect), drawColor, NPC.rotation, NPC.frame.Size() / 2 + new Vector2(NPC.spriteDirection == -1 ? -56 : -28, -32) - new Vector2(EyeOffset.X * -NPC.spriteDirection, EyeOffset.Y), NPC.scale, effects, 0);
 
-            int Height = hair1.Height / 10;
-            int Width = hair1.Width / 4;
-            int Height2 = hair2.Height / 10;
-            int Width2 = hair2.Width / 4;
-            int Width3 = hair3.Width / 5;
+            int Height = hair1.Value.Height / 10;
+            int Width = hair1.Value.Width / 4;
+            int Height2 = hair2.Value.Height / 10;
+            int Width2 = hair2.Value.Width / 4;
+            int Width3 = hair3.Value.Width / 5;
             int y = Height * (NPC.frame.Y / 94);
             int x = Width * HairType;
             int y2 = Height2 * (NPC.frame.Y / 94);
@@ -878,7 +899,7 @@ namespace Redemption.NPCs.PreHM
             int x3 = Width3 * FlowerType;
             Rectangle rect = new(x, y, Width, Height);
             Rectangle rect2 = new(x2, y2, Width2, Height2);
-            Rectangle rect3 = new(x3, 0, Width3, hair3.Height);
+            Rectangle rect3 = new(x3, 0, Width3, hair3.Value.Height);
             switch (HairExtType)
             {
                 case 1:
@@ -886,21 +907,21 @@ namespace Redemption.NPCs.PreHM
                     break;
                 case 2:
                     hair1 = hair1c;
-                    Height = hair1c.Height / 10;
-                    Width = hair1c.Width / 4;
+                    Height = hair1c.Value.Height / 10;
+                    Width = hair1c.Value.Width / 4;
                     y = Height * (NPC.frame.Y / 94);
                     x = Width * HairType;
                     rect = new(x, y, Width, Height);
                     break;
             }
-            spriteBatch.Draw(hair1, pos - screenPos, new Rectangle?(rect), drawColor, NPC.rotation, NPC.frame.Size() / 2 + new Vector2(NPC.spriteDirection == -1 ? -58 : 6, -12) - (HairExtType == 2 ? new Vector2(NPC.spriteDirection == -1 ? -2 : 8, -2) : Vector2.Zero), NPC.scale, effects, 0);
+            spriteBatch.Draw(hair1.Value, pos - screenPos, new Rectangle?(rect), drawColor, NPC.rotation, NPC.frame.Size() / 2 + new Vector2(NPC.spriteDirection == -1 ? -58 : 6, -12) - (HairExtType == 2 ? new Vector2(NPC.spriteDirection == -1 ? -2 : 8, -2) : Vector2.Zero), NPC.scale, effects, 0);
 
-            spriteBatch.Draw(hair2, pos - screenPos, new Rectangle?(rect2), drawColor, NPC.rotation, NPC.frame.Size() / 2 + new Vector2(NPC.spriteDirection == -1 ? -34 : -18, -16), NPC.scale, effects, 0);
+            spriteBatch.Draw(hair2.Value, pos - screenPos, new Rectangle?(rect2), drawColor, NPC.rotation, NPC.frame.Size() / 2 + new Vector2(NPC.spriteDirection == -1 ? -34 : -18, -16), NPC.scale, effects, 0);
             if (FlowerType <= 4)
-                spriteBatch.Draw(hair3, pos - screenPos, new Rectangle?(rect3), drawColor, NPC.rotation, NPC.frame.Size() / 2 + new Vector2(NPC.spriteDirection == -1 ? -34 : -18, -16) - new Vector2(EyeOffset.X * -NPC.spriteDirection, EyeOffset.Y), NPC.scale, effects, 0);
+                spriteBatch.Draw(hair3.Value, pos - screenPos, new Rectangle?(rect3), drawColor, NPC.rotation, NPC.frame.Size() / 2 + new Vector2(NPC.spriteDirection == -1 ? -34 : -18, -16) - new Vector2(EyeOffset.X * -NPC.spriteDirection, EyeOffset.Y), NPC.scale, effects, 0);
 
             if (HasHat)
-                spriteBatch.Draw(tophat, pos - screenPos, null, drawColor, NPC.rotation, NPC.frame.Size() / 2 + new Vector2(NPC.spriteDirection == -1 ? -44 : -24, -10) - new Vector2(EyeOffset.X * -NPC.spriteDirection, EyeOffset.Y), NPC.scale, effects, 0);
+                spriteBatch.Draw(tophat.Value, pos - screenPos, null, drawColor, NPC.rotation, NPC.frame.Size() / 2 + new Vector2(NPC.spriteDirection == -1 ? -44 : -24, -10) - new Vector2(EyeOffset.X * -NPC.spriteDirection, EyeOffset.Y), NPC.scale, effects, 0);
             return false;
         }
         public override bool? CanHitNPC(NPC target) => false;

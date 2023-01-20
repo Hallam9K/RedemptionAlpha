@@ -23,14 +23,26 @@ using Redemption.BaseExtension;
 using Redemption.NPCs.Bosses.Obliterator;
 using Redemption.Items.Armor.Vanity;
 using Redemption.Items.Materials.HM;
-using Redemption.Items.Accessories.PreHM;
 using Redemption.Items.Accessories.HM;
+using ReLogic.Content;
 
 namespace Redemption.NPCs.Bosses.Cleaver
 {
     [AutoloadBossHead]
     public class OmegaCleaver : ModNPC
     {
+        private static Asset<Texture2D> glowMask;
+        private static Asset<Texture2D> trail;
+        public override void Load()
+        {
+            glowMask = ModContent.Request<Texture2D>(Texture + "_Glow");
+            trail = ModContent.Request<Texture2D>(Texture + "_Trail");
+        }
+        public override void Unload()
+        {
+            glowMask = null;
+            trail = null;
+        }
         public float[] oldrot = new float[6];
 
         public enum ActionState
@@ -845,8 +857,6 @@ namespace Redemption.NPCs.Bosses.Cleaver
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
             Texture2D texture = TextureAssets.Npc[NPC.type].Value;
-            Texture2D glowMask = ModContent.Request<Texture2D>(NPC.ModNPC.Texture + "_Glow").Value;
-            Texture2D trail = ModContent.Request<Texture2D>(NPC.ModNPC.Texture + "_Trail").Value;
             var effects = NPC.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
             Rectangle rectangle = NPC.frame;
             Vector2 origin2 = rectangle.Size() / 2f;
@@ -858,7 +868,7 @@ namespace Redemption.NPCs.Bosses.Cleaver
                 for (int i = 0; i < NPCID.Sets.TrailCacheLength[NPC.type]; i++)
                 {
                     Vector2 value4 = NPC.oldPos[i];
-                    spriteBatch.Draw(trail, value4 + NPC.Size / 2f - screenPos + new Vector2(0, NPC.gfxOffY), new Rectangle?(rectangle), RedeColor.VlitchGlowColour * 0.5f, oldrot[i], origin2, NPC.scale, effects, 0);
+                    spriteBatch.Draw(trail.Value, value4 + NPC.Size / 2f - screenPos + new Vector2(0, NPC.gfxOffY), new Rectangle?(rectangle), RedeColor.VlitchGlowColour * 0.5f, oldrot[i], origin2, NPC.scale, effects, 0);
                 }
 
                 spriteBatch.End();
@@ -866,7 +876,7 @@ namespace Redemption.NPCs.Bosses.Cleaver
             }
 
             spriteBatch.Draw(texture, NPC.Center - screenPos, NPC.frame, drawColor, NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0f);
-            spriteBatch.Draw(glowMask, NPC.Center - screenPos, NPC.frame, RedeColor.RedPulse, NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
+            spriteBatch.Draw(glowMask.Value, NPC.Center - screenPos, NPC.frame, RedeColor.RedPulse, NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
 
             spriteBatch.End();
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);

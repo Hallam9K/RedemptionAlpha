@@ -34,7 +34,7 @@ namespace Redemption.Projectiles.Ranged
             {
                 for (int i = 0; i < 4; i++)
                 {
-                    Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, RedeHelper.PolarVector(8, Main.rand.NextFloat(0, MathHelper.TwoPi)), ModContent.ProjectileType<SpiritArrow_Shard>(), (int)(Projectile.damage * 0.75f), Projectile.knockBack, Main.myPlayer);
+                    Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, RedeHelper.PolarVector(8, RedeHelper.RandomRotation()), ModContent.ProjectileType<SpiritArrow_Shard>(), (int)(Projectile.damage * 0.75f), Projectile.knockBack, Main.myPlayer);
                 }
             }
         }

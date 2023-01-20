@@ -11,11 +11,27 @@ using Redemption.Globals;
 using Redemption.WorldGeneration;
 using Redemption.Biomes;
 using Redemption.BaseExtension;
+using ReLogic.Content;
 
 namespace Redemption.NPCs.Lab
 {
     public class CraneOperator : ModNPC
     {
+        private static Asset<Texture2D> Anims;
+        private static Asset<Texture2D> StepAni;
+        private static Asset<Texture2D> WalkAni;
+        public override void Load()
+        {
+            Anims = ModContent.Request<Texture2D>(Texture + "_Anims");
+            StepAni = ModContent.Request<Texture2D>(Texture + "_Step");
+            WalkAni = ModContent.Request<Texture2D>(Texture + "_Walk");
+        }
+        public override void Unload()
+        {
+            Anims = null;
+            StepAni = null;
+            WalkAni = null;
+        }
         public static int BodyType() => ModContent.NPCType<MACEProject>();
         public enum ActionState
         {
@@ -283,36 +299,33 @@ namespace Redemption.NPCs.Lab
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
             Texture2D texture = TextureAssets.Npc[NPC.type].Value;
-            Texture2D Anims = ModContent.Request<Texture2D>(NPC.ModNPC.Texture + "_Anims").Value;
-            Texture2D StepAni = ModContent.Request<Texture2D>(NPC.ModNPC.Texture + "_Step").Value;
-            Texture2D WalkAni = ModContent.Request<Texture2D>(NPC.ModNPC.Texture + "_Walk").Value;
             var effects = NPC.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
 
             if (AIState is ActionState.WalkAway)
             {
-                int Height = WalkAni.Height / 8;
+                int Height = WalkAni.Value.Height / 8;
                 int y = Height * AniFrameY;
-                Rectangle rect = new(0, y, WalkAni.Width, Height);
-                Vector2 origin = new(WalkAni.Width / 2f, Height / 2f);
-                spriteBatch.Draw(WalkAni, NPC.Center - screenPos + new Vector2(12, -4), new Rectangle?(rect), NPC.GetAlpha(drawColor), NPC.rotation, origin, NPC.scale, effects, 0);
+                Rectangle rect = new(0, y, WalkAni.Value.Width, Height);
+                Vector2 origin = new(WalkAni.Value.Width / 2f, Height / 2f);
+                spriteBatch.Draw(WalkAni.Value, NPC.Center - screenPos + new Vector2(12, -4), new Rectangle?(rect), NPC.GetAlpha(drawColor), NPC.rotation, origin, NPC.scale, effects, 0);
             }
             else if (AIState is ActionState.Kick)
             {
-                int Height = StepAni.Height / 3;
+                int Height = StepAni.Value.Height / 3;
                 int y = Height * AniFrameY;
-                Rectangle rect = new(0, y, StepAni.Width, Height);
-                Vector2 origin = new(StepAni.Width / 2f, Height / 2f);
-                spriteBatch.Draw(StepAni, NPC.Center - screenPos + new Vector2(1, -10), new Rectangle?(rect), NPC.GetAlpha(drawColor), NPC.rotation, origin, NPC.scale, effects, 0);
+                Rectangle rect = new(0, y, StepAni.Value.Width, Height);
+                Vector2 origin = new(StepAni.Value.Width / 2f, Height / 2f);
+                spriteBatch.Draw(StepAni.Value, NPC.Center - screenPos + new Vector2(1, -10), new Rectangle?(rect), NPC.GetAlpha(drawColor), NPC.rotation, origin, NPC.scale, effects, 0);
             }
             else if (AIState != ActionState.Idle)
             {
-                int Height = Anims.Height / 18;
+                int Height = Anims.Value.Height / 18;
                 int y = Height * AniFrameY;
-                int Width = Anims.Width / 2;
+                int Width = Anims.Value.Width / 2;
                 int x = Width * AniFrameX;
                 Rectangle rect = new(x, y, Width, Height);
                 Vector2 origin = new(Width / 2f, Height / 2f);
-                spriteBatch.Draw(Anims, NPC.Center - screenPos + new Vector2(2, -4), new Rectangle?(rect), NPC.GetAlpha(drawColor), NPC.rotation, origin, NPC.scale, effects, 0);
+                spriteBatch.Draw(Anims.Value, NPC.Center - screenPos + new Vector2(2, -4), new Rectangle?(rect), NPC.GetAlpha(drawColor), NPC.rotation, origin, NPC.scale, effects, 0);
             }
             else
                 spriteBatch.Draw(texture, NPC.Center - screenPos + new Vector2(1, 1), NPC.frame, NPC.GetAlpha(drawColor), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0f);

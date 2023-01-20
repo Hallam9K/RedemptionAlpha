@@ -441,7 +441,7 @@ namespace Redemption.NPCs.HM
         public Color borderColor = new(0 * c, 242 * c, 170 * c, 1f);
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
-            Texture2D glow = ModContent.Request<Texture2D>(NPC.ModNPC.Texture + "_Glow").Value;
+            Texture2D glow = ModContent.Request<Texture2D>(Texture + "_Glow").Value;
             var effects = NPC.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
             if (shieldAlpha <= 0)
             {

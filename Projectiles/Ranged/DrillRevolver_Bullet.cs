@@ -49,9 +49,7 @@ namespace Redemption.Projectiles.Ranged
             }
             Projectile.rotation = Projectile.velocity.ToRotation() + 1.57f;
 
-            Point tile = new Vector2(Projectile.Center.X, Projectile.Center.Y).ToTileCoordinates();
-            Tile tile2 = Main.tile[tile.X, tile.Y];
-            if (tile2 is { HasUnactuatedTile: true } && Main.tileSolid[tile2.TileType])
+            if (Collision.SolidCollision(Projectile.position, Projectile.width, Projectile.height))
             {
                 if (Projectile.localAI[1] % 10 == 0)
                 {

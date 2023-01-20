@@ -23,10 +23,12 @@ namespace Redemption.UI
 
         public override void OnInitialize()
         {
+            lastScreenSize = new Vector2(Main.screenWidth, Main.screenHeight);
+
             BgSprite.Width.Set(200, 0f);
             BgSprite.Height.Set(300, 0f);
-            BgSprite.Top.Set((Main.screenHeight / 2f) - (100f / 2f), 0f);
-            BgSprite.Left.Set((Main.screenWidth / 2f) + 103f, 0f);
+            BgSprite.Top.Set((Main.screenHeight / 2f) - 164f, 0f);
+            BgSprite.Left.Set((Main.screenWidth / 2f) - 103f, 0f);
         }
         public override void Update(GameTime gameTime)
         {
@@ -55,6 +57,14 @@ namespace Redemption.UI
         {
             if (!Visible)
                 return;
+
+            if (lastScreenSize != new Vector2(Main.screenWidth, Main.screenHeight))
+            {
+                lastScreenSize = new Vector2(Main.screenWidth, Main.screenHeight);
+                BgSprite.Top.Pixels = (Main.screenHeight / 2f) - 164f;
+                BgSprite.Left.Pixels = (Main.screenWidth / 2f) - 103f;
+                BgSprite.Recalculate();
+            }
 
             base.Draw(spriteBatch);
         }
