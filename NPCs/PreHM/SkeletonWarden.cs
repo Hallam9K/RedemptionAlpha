@@ -153,7 +153,7 @@ namespace Redemption.NPCs.PreHM
                 ShieldHitbox = new((int)(NPC.spriteDirection == -1 ? NPC.Center.X - 30 : NPC.Center.X - 22), (int)(NPC.Center.Y - 32), 52, 22);
             else
             {
-                if (NPC.Center.X > player.Center.X && NPC.spriteDirection == 1 || (NPC.Center.X < player.Center.X && NPC.spriteDirection == -1))
+                if (NPC.RightOf(player) && NPC.spriteDirection == 1 || (player.RightOf(NPC) && NPC.spriteDirection == -1))
                     return;
             }
 
@@ -176,7 +176,7 @@ namespace Redemption.NPCs.PreHM
                 ShieldHitbox = new((int)(NPC.spriteDirection == -1 ? NPC.Center.X - 30 : NPC.Center.X - 22), (int)(NPC.Center.Y - 32), 52, 22);
             else
             {
-                if (NPC.Center.X > projectile.Center.X && NPC.spriteDirection == 1 || (NPC.Center.X < projectile.Center.X && NPC.spriteDirection == -1))
+                if (NPC.RightOf(projectile) && NPC.spriteDirection == 1 || (projectile.RightOf(NPC) && NPC.spriteDirection == -1))
                     return;
             }
 
@@ -244,7 +244,7 @@ namespace Redemption.NPCs.PreHM
                     }
                     else
                     {
-                        if ((NPC.Center.X > projectile.Center.X && NPC.spriteDirection == -1 || (NPC.Center.X < projectile.Center.X && NPC.spriteDirection == 1)) && projectile.Colliding(projectile.Hitbox, ShieldHitbox))
+                        if ((NPC.RightOf(projectile) && NPC.spriteDirection == -1 || (projectile.RightOf(NPC) && NPC.spriteDirection == 1)) && projectile.Colliding(projectile.Hitbox, ShieldHitbox))
                         {
                             if (!projectile.ProjBlockBlacklist() && projectile.penetrate != -1)
                             {
@@ -330,13 +330,13 @@ namespace Redemption.NPCs.PreHM
                             if (globalNPC.attacker is NPC attackerNPC && attackerNPC.immune[NPC.whoAmI] <= 0)
                             {
                                 attackerNPC.immune[NPC.whoAmI] = 25;
-                                int hitDirection = NPC.Center.X > attackerNPC.Center.X ? -1 : 1;
+                                int hitDirection = attackerNPC.RightOfDir(NPC);
                                 attackerNPC.velocity.X += NPC.velocity.X * attackerNPC.knockBackResist;
                                 BaseAI.DamageNPC(attackerNPC, NPC.damage, 11, hitDirection, NPC);
                             }
                             else if (globalNPC.attacker is Player attackerPlayer2)
                             {
-                                int hitDirection = NPC.Center.X > attackerPlayer2.Center.X ? -1 : 1;
+                                int hitDirection = attackerPlayer2.RightOfDir(NPC);
                                 if (!attackerPlayer2.noKnockback)
                                     attackerPlayer2.velocity.X += NPC.velocity.X / 2;
                                 BaseAI.DamagePlayer(attackerPlayer2, NPC.damage, 11, hitDirection, NPC);
@@ -401,13 +401,13 @@ namespace Redemption.NPCs.PreHM
                             if (globalNPC.attacker is NPC attackerNPC && attackerNPC.immune[NPC.whoAmI] <= 0)
                             {
                                 attackerNPC.immune[NPC.whoAmI] = 25;
-                                int hitDirection = NPC.Center.X > attackerNPC.Center.X ? -1 : 1;
+                                int hitDirection = attackerNPC.RightOfDir(NPC);
                                 attackerNPC.velocity.X += NPC.velocity.X * attackerNPC.knockBackResist;
                                 BaseAI.DamageNPC(attackerNPC, NPC.damage, 11, hitDirection, NPC);
                             }
                             else if (globalNPC.attacker is Player attackerPlayer3)
                             {
-                                int hitDirection = NPC.Center.X > attackerPlayer3.Center.X ? -1 : 1;
+                                int hitDirection = attackerPlayer3.RightOfDir(NPC);
                                 if (!attackerPlayer3.noKnockback)
                                     attackerPlayer3.velocity.X += NPC.velocity.X / 2;
                                 BaseAI.DamagePlayer(attackerPlayer3, NPC.damage, 11, hitDirection, NPC);
@@ -452,7 +452,7 @@ namespace Redemption.NPCs.PreHM
                         runCooldown--;
 
                     NPC.PlatformFallCheck(ref NPC.Redemption().fallDownPlatform, 20);
-                    NPCHelper.HorizontallyMove(NPC, new Vector2(globalNPC.attacker.Center.X < NPC.Center.X ? NPC.Center.X + 100 : NPC.Center.X - 100, NPC.Center.Y), 0.4f, 2.2f * SpeedMultiplier * (NPC.RedemptionNPCBuff().rallied ? 1.1f : 1), 12, 8, NPC.Center.Y > player.Center.Y);
+                    NPCHelper.HorizontallyMove(NPC, new Vector2(NPC.Center.X + (100 * NPC.RightOfDir(globalNPC.attacker)), NPC.Center.Y), 0.4f, 2.2f * SpeedMultiplier * (NPC.RedemptionNPCBuff().rallied ? 1.1f : 1), 12, 8, NPC.Center.Y > player.Center.Y);
                     break;
             }
             if (Personality != PersonalityState.Greedy)

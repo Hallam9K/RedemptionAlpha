@@ -68,7 +68,7 @@ namespace Redemption.NPCs.Lab.Volt
                 switch (State)
                 {
                     case 0:
-                        if (NPC.DistanceSQ(player.Center) < 300 * 300 && player.Center.X > NPC.Center.X)
+                        if (NPC.DistanceSQ(player.Center) < 300 * 300 && player.RightOf(NPC))
                         {
                             if (player.IsFullTBot())
                                 State = 2;

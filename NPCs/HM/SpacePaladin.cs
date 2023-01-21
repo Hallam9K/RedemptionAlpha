@@ -141,7 +141,7 @@ namespace Redemption.NPCs.HM
                 for (int p = 0; p < Main.maxProjectiles; p++)
                 {
                     Projectile proj = Main.projectile[p];
-                    if (!proj.active || proj.friendly || (NPC.Center.X > proj.Center.X && NPC.spriteDirection == 1) || (NPC.Center.X < proj.Center.X && NPC.spriteDirection == -1))
+                    if (!proj.active || proj.friendly || (NPC.RightOf(proj) && NPC.spriteDirection == 1) || (proj.RightOf(NPC) && NPC.spriteDirection == -1))
                         continue;
 
                     if (proj.Hitbox.Intersects(ShieldHitbox))
@@ -542,7 +542,7 @@ namespace Redemption.NPCs.HM
             if (AIState is not ActionState.Alert && AIState is not ActionState.Laser)
                 return;
             Rectangle ShieldHitbox = new((int)(NPC.spriteDirection == -1 ? NPC.Center.X - 62 : NPC.Center.X), (int)(NPC.Center.Y - 54), 62, 92);
-            if (item.noMelee || item.damage <= 0 || (NPC.Center.X > player.Center.X && NPC.spriteDirection == 1) || (NPC.Center.X < player.Center.X && NPC.spriteDirection == -1))
+            if (item.noMelee || item.damage <= 0 || (NPC.RightOf(player) && NPC.spriteDirection == 1) || (player.RightOf(NPC) && NPC.spriteDirection == -1))
                 return;
 
             if (player.Redemption().meleeHitbox.Intersects(ShieldHitbox))
@@ -557,7 +557,7 @@ namespace Redemption.NPCs.HM
             if (AIState is not ActionState.Alert && AIState is not ActionState.Laser)
                 return;
             Rectangle ShieldHitbox = new((int)(NPC.spriteDirection == -1 ? NPC.Center.X - 62 : NPC.Center.X), (int)(NPC.Center.Y - 54), 62, 92);
-            if (!projBlocked.Contains(projectile.whoAmI) && (!projectile.active || (NPC.Center.X > projectile.Center.X && NPC.spriteDirection == 1) || (NPC.Center.X < projectile.Center.X && NPC.spriteDirection == -1)))
+            if (!projBlocked.Contains(projectile.whoAmI) && (!projectile.active || (NPC.RightOf(projectile) && NPC.spriteDirection == 1) || (projectile.RightOf(NPC) && NPC.spriteDirection == -1)))
                 return;
 
             if (projectile.Colliding(projectile.Hitbox, ShieldHitbox))

@@ -73,7 +73,7 @@ namespace Redemption.Projectiles.Minions
                 {
                     attackPosition = Main.rand.Next(target.width + 40, target.width + 120);
                     attackPositionY = Main.rand.Next(target.width - 25, target.width);
-                    AttackPos = new(Projectile.Center.X > target.Center.X ? attackPosition : -attackPosition, -attackPositionY);
+                    AttackPos = new(attackPosition * Projectile.RightOfDir(target), -attackPositionY);
                 }
 
                 Projectile.Move(target.Center + AttackPos, 15, 10);

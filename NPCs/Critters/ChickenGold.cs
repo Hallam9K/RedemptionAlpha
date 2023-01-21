@@ -148,7 +148,7 @@ namespace Redemption.NPCs.Critters
                     Point tileBelow = NPC.Bottom.ToTileCoordinates();
                     Tile tile = Framing.GetTileSafely(tileBelow.X, tileBelow.Y);
 
-                    if ((NPC.collideY || NPC.velocity.Y == 0) && Main.rand.NextBool(100) && tile.TileType == TileID.HayBlock && 
+                    if ((NPC.collideY || NPC.velocity.Y == 0) && Main.rand.NextBool(100) && tile.TileType == TileID.HayBlock &&
                         tile is { HasUnactuatedTile: true } && Main.tileSolid[tile.TileType])
                     {
                         AITimer = 0;
@@ -231,8 +231,7 @@ namespace Redemption.NPCs.Critters
                     if (Main.rand.NextBool(20) && NPC.velocity.Length() >= 2)
                         Dust.NewDust(NPC.position, NPC.width, NPC.height, ModContent.DustType<ChickenFeatherDust5>());
 
-                    NPCHelper.HorizontallyMove(NPC, new Vector2(globalNPC.attacker.Center.X < NPC.Center.X ? NPC.Center.X + 100
-                        : NPC.Center.X - 100, NPC.Center.Y), 0.2f, 2.5f, 8, 8, NPC.Center.Y > globalNPC.attacker.Center.Y);
+                    NPCHelper.HorizontallyMove(NPC, new Vector2(NPC.Center.X + (100 * NPC.RightOfDir(globalNPC.attacker)), NPC.Center.Y), 0.2f, 2.5f, 8, 8, NPC.Center.Y > globalNPC.attacker.Center.Y);
                     break;
             }
 
@@ -339,7 +338,7 @@ namespace Redemption.NPCs.Critters
 
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
         {
-            bestiaryEntry.UIInfoProvider = new GoldCritterUICollectionInfoProvider(new int[] { ModContent.NPCType<Chicken>() }, 
+            bestiaryEntry.UIInfoProvider = new GoldCritterUICollectionInfoProvider(new int[] { ModContent.NPCType<Chicken>() },
                 ContentSamples.NpcBestiaryCreditIdsByNpcNetIds[NPC.type]);
 
             bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[]

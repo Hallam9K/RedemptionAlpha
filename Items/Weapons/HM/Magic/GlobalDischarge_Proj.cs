@@ -205,7 +205,7 @@ namespace Redemption.Items.Weapons.HM.Magic
 
                                 DustHelper.DrawParticleElectricity(Projectile.Center, npc.Center, new LightningParticle(), 2f, 20, 0.05f);
                                 DustHelper.DrawParticleElectricity(Projectile.Center, npc.Center, new LightningParticle(), 2f, 20, 0.05f);
-                                int hitDirection = Projectile.Center.X > npc.Center.X ? -1 : 1;
+                                int hitDirection = npc.RightOfDir(Projectile);
                                 BaseAI.DamageNPC(npc, Projectile.damage * 2, Projectile.knockBack, hitDirection, Projectile, crit: Projectile.HeldItemCrit());
                             }
                             RedeDraw.SpawnExplosion(Projectile.Center, Color.White, DustID.Electric, 60, 40, 2, 5);
@@ -245,7 +245,7 @@ namespace Redemption.Items.Weapons.HM.Magic
 
                                 DustHelper.DrawParticleElectricity(Projectile.Center, target.Center, new LightningParticle(), 1.5f, 20, 0.05f);
                                 DustHelper.DrawParticleElectricity(Projectile.Center, target.Center, new LightningParticle(), 1.5f, 20, 0.05f);
-                                int hitDirection = Projectile.Center.X > target.Center.X ? -1 : 1;
+                                int hitDirection = target.RightOfDir(Projectile);
                                 BaseAI.DamageNPC(target, Projectile.damage, Projectile.knockBack, hitDirection, Projectile, crit: Projectile.HeldItemCrit());
 
                                 Projectile.localAI[0] = 0;

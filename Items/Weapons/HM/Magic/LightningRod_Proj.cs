@@ -81,7 +81,7 @@ namespace Redemption.Items.Weapons.HM.Magic
                             if (npc.DistanceSQ(Main.MouseWorld) > 60 * 60)
                                 continue;
 
-                            int hitDirection = Projectile.Center.X > npc.Center.X ? -1 : 1;
+                            int hitDirection = npc.RightOfDir(Projectile);
                             BaseAI.DamageNPC(npc, Projectile.damage + dmg * 2, Projectile.knockBack, hitDirection, Projectile, crit: Projectile.HeldItemCrit());
                         }
                         for (int i = 0; i < Main.maxNPCs; i++)
@@ -102,7 +102,7 @@ namespace Redemption.Items.Weapons.HM.Magic
                             }
                             DustHelper.DrawParticleElectricity(Projectile.Center + new Vector2(36 * player.direction, -36), npc.Center, new LightningParticle(), 1.3f, 30, 0.05f);
                             DustHelper.DrawParticleElectricity(Projectile.Center + new Vector2(36 * player.direction, -36), npc.Center, new LightningParticle(), 1.3f, 30, 0.05f);
-                            int hitDirection = Projectile.Center.X > npc.Center.X ? -1 : 1;
+                            int hitDirection = npc.RightOfDir(Projectile);
                             if (glow >= 0.8f)
                                 BaseAI.DamageNPC(npc, Projectile.damage * 2, Projectile.knockBack, hitDirection, Projectile, crit: Projectile.HeldItemCrit());
                             else

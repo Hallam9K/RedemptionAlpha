@@ -193,7 +193,7 @@ namespace Redemption.NPCs.PreHM
                         runCooldown--;
 
                     NPC.PlatformFallCheck(ref NPC.Redemption().fallDownPlatform, 20);
-                    NPCHelper.HorizontallyMove(NPC, new Vector2(globalNPC.attacker.Center.X < NPC.Center.X ? NPC.Center.X + 100 : NPC.Center.X - 100, NPC.Center.Y), 0.4f, 2.4f * SpeedMultiplier * (NPC.RedemptionNPCBuff().rallied ? 1.1f : 1), 12, 8, NPC.Center.Y > player.Center.Y);
+                    NPCHelper.HorizontallyMove(NPC, new Vector2(NPC.Center.X + (100 * NPC.RightOfDir(globalNPC.attacker)), NPC.Center.Y), 0.4f, 2.4f * SpeedMultiplier * (NPC.RedemptionNPCBuff().rallied ? 1.1f : 1), 12, 8, NPC.Center.Y > player.Center.Y);
                     break;
 
                 case ActionState.Follow:

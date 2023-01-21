@@ -177,9 +177,9 @@ namespace Redemption.Items.Weapons.HM.Melee
                             Projectile.localAI[1]++;
                             if (RedeHelper.ClosestNPC(ref target, 2000, Projectile.Center, true, player.MinionAttackTargetNPC))
                             {
-                                rot.SlowRotation(target.Center.X > Projectile.Center.X ? 0.78f : 5.49f, (float)Math.PI / 20f);
+                                rot.SlowRotation(target.RightOf(Projectile) ? 0.78f : 5.49f, (float)Math.PI / 20f);
                                 Projectile.rotation = rot;
-                                Projectile.Move(target.Center + new Vector2(Projectile.Center.X > target.Center.X ? 200 : -200, -160), 16, 3);
+                                Projectile.Move(target.Center + new Vector2(200 * Projectile.RightOfDir(target), -160), 16, 3);
                             }
                             else
                             {
@@ -193,8 +193,8 @@ namespace Redemption.Items.Weapons.HM.Melee
                                 Projectile.alpha = 0;
                                 if (RedeHelper.ClosestNPC(ref target, 2000, Projectile.Center, true, player.MinionAttackTargetNPC))
                                 {
-                                    Projectile.rotation = target.Center.X > Projectile.Center.X ? 0.78f : 5.49f;
-                                    repeat = target.Center.X > Projectile.Center.X ? 0 : 1;
+                                    Projectile.rotation = target.RightOf(Projectile) ? 0.78f : 5.49f;
+                                    repeat = target.RightOf(Projectile) ? 0 : 1;
                                 }
                                 else
                                 {

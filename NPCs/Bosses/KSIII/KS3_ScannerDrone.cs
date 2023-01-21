@@ -102,7 +102,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                 NPC.soundDelay = 10;
             }
             if (NPC.ai[1]++ % 50 == 0)
-                DefaultPos = new Vector2(player.Center.X > NPC.Center.X ? Main.rand.Next(-280, -180) : Main.rand.Next(180, 280), Main.rand.Next(-60, -40));
+                DefaultPos = new Vector2(Main.rand.Next(180, 280) * NPC.RightOfDir(player), Main.rand.Next(-60, -40));
 
             switch (NPC.ai[0])
             {

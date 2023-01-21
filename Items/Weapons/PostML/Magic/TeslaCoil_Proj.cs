@@ -121,7 +121,7 @@ namespace Redemption.Items.Weapons.PostML.Magic
                                         if (npc.DistanceSQ(lightningArc2) > 60 * 60)
                                             continue;
 
-                                        int hitDirection = Projectile.Center.X > npc.Center.X ? -1 : 1;
+                                        int hitDirection = npc.RightOfDir(Projectile);
                                         BaseAI.DamageNPC(npc, Projectile.damage + (npc.defense / 2), Projectile.knockBack, hitDirection, Projectile, crit: Projectile.HeldItemCrit());
                                     }
                                 }

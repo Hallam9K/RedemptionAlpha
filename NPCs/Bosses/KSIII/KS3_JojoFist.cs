@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Redemption.Globals;
 using System;
 using System.Xml;
 using Terraria;
@@ -57,17 +58,12 @@ namespace Redemption.NPCs.Bosses.KSIII
                 case 1:
                     Projectile.Center = new Vector2(npc.Center.X + vector.X + offset, npc.Center.Y + vector.Y);
                     if (Projectile.frame > 1)
-                    {
-                        if (npc.Center.X > Projectile.Center.X)
-                            offset -= 15;
-                        else
-                            offset += 15;
-                    }
+                        offset += 15 * Projectile.RightOfDir(npc);
                     break;
             }
             Projectile.velocity = Vector2.Zero;
             Projectile.rotation = (float)Math.PI / 2;
-            if (npc.Center.X > Projectile.Center.X)
+            if (npc.RightOf(Projectile))
                 Projectile.rotation = (float)-Math.PI / 2;
             else
                 Projectile.rotation = (float)Math.PI / 2;

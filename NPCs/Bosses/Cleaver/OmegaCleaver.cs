@@ -231,9 +231,9 @@ namespace Redemption.NPCs.Bosses.Cleaver
                 NPC.TargetClosest();
 
             Vector2 DefaultPos = new(host.spriteDirection == 1 ? -180 : 180, -60);
-            Vector2 PosPlayer = new(NPC.Center.X > player.Center.X ? 300 : -300, -80);
-            Vector2 PosPlayer3 = new(NPC.Center.X > player.Center.X ? 200 : -200, -160);
-            Vector2 PosPlayer3Check = new(NPC.Center.X > player.Center.X ? player.Center.X + 200 : player.Center.X - 200, player.Center.Y - 160);
+            Vector2 PosPlayer = new(300 * NPC.RightOfDir(player), -80);
+            Vector2 PosPlayer3 = new(200 * NPC.RightOfDir(player), -160);
+            Vector2 PosPlayer3Check = new(player.Center.X + (200 * NPC.RightOfDir(player)), player.Center.Y - 160);
 
             if (!RedeHelper.AnyProjectiles(ModContent.ProjectileType<CleaverHitbox>()))
                 NPC.Shoot(NPC.Center, ModContent.ProjectileType<CleaverHitbox>(), NPC.damage, Vector2.Zero, false, SoundID.Item1, NPC.whoAmI);
@@ -453,7 +453,7 @@ namespace Redemption.NPCs.Bosses.Cleaver
                                     NPC.rotation = rot;
                                     if (AITimer < 100)
                                     {
-                                        Vector2 PosPlayer2 = new(NPC.Center.X > player.Center.X ? 600 : -600, -80);
+                                        Vector2 PosPlayer2 = new(600 * NPC.RightOfDir(player), -80);
                                         if (NPC.Distance(PosPlayer2) < 300 || AITimer > 80)
                                         {
                                             AITimer = 100;
@@ -476,7 +476,7 @@ namespace Redemption.NPCs.Bosses.Cleaver
                                 if (NPC.ai[1] == 0)
                                 {
                                     AITimer = 0;
-                                    if (player.Center.X > NPC.Center.X)
+                                    if (player.RightOf(NPC))
                                         NPC.ai[1] = 1;
                                     else
                                         NPC.ai[1] = 2;
@@ -575,13 +575,13 @@ namespace Redemption.NPCs.Bosses.Cleaver
                                         break;
                                     case 1:
                                         AITimer++;
-                                        rot.SlowRotation(player.Center.X > NPC.Center.X ? 0.78f : 5.49f, (float)Math.PI / 20f);
+                                        rot.SlowRotation(player.RightOf(NPC) ? 0.78f : 5.49f, (float)Math.PI / 20f);
                                         NPC.rotation = rot;
                                         if (NPC.Distance(PosPlayer3Check) < 30 || AITimer > 60)
                                         {
                                             SoundEngine.PlaySound(CustomSounds.OODashReady, NPC.position);
-                                            NPC.rotation = player.Center.X > NPC.Center.X ? 0.78f : 5.49f;
-                                            repeat = player.Center.X > NPC.Center.X ? 0 : 1;
+                                            NPC.rotation = player.RightOf(NPC) ? 0.78f : 5.49f;
+                                            repeat = player.RightOf(NPC) ? 0 : 1;
                                             NPC.ai[1] = 2;
                                             AITimer = 0;
                                             NPC.netUpdate = true;
@@ -660,7 +660,7 @@ namespace Redemption.NPCs.Bosses.Cleaver
                                         {
                                             SoundEngine.PlaySound(CustomSounds.OODashReady, NPC.position);
                                             NPC.rotation = repeat == 0 ? 5.49f : 0.78f;
-                                            repeat = player.Center.X > NPC.Center.X ? 0 : 1;
+                                            repeat = player.RightOf(NPC) ? 0 : 1;
                                             NPC.ai[1] = 6;
                                             AITimer = 0;
                                             NPC.netUpdate = true;
@@ -738,7 +738,7 @@ namespace Redemption.NPCs.Bosses.Cleaver
                                         {
                                             host.ai[2] = 200;
                                             SoundEngine.PlaySound(SoundID.Item71, NPC.position);
-                                            NPC.rotation = player.Center.X > NPC.Center.X ? 0.78f : 5.49f;
+                                            NPC.rotation = player.RightOf(NPC) ? 0.78f : 5.49f;
                                             NPC.ai[1] = 10;
                                             AITimer = 0;
                                             NPC.netUpdate = true;

@@ -109,7 +109,7 @@ namespace Redemption.Items.Accessories.PostML
                         if (npc.DistanceSQ(targetPos) > 40 * 40)
                             continue;
 
-                        int hitDirection = Projectile.Center.X > npc.Center.X ? -1 : 1;
+                        int hitDirection = npc.RightOfDir(Projectile);
                         BaseAI.DamageNPC(npc, Projectile.damage, Projectile.knockBack, hitDirection, Projectile);
                     }
                 }

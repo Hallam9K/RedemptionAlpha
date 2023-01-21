@@ -58,7 +58,7 @@ namespace Redemption.Projectiles.Magic
                     if (Projectile.DistanceSQ(target.Center) > 160 * 160)
                         continue;
 
-                    int hitDirection = Projectile.Center.X > target.Center.X ? -1 : 1;
+                    int hitDirection = target.RightOfDir(Projectile);
                     BaseAI.DamageNPC(target, Projectile.damage * 2, Projectile.knockBack, hitDirection, Projectile);
                 }
             }

@@ -167,7 +167,7 @@ namespace Redemption.NPCs.Friendly
                         runCooldown++;
                     else if (runCooldown > 0)
                         runCooldown--;
-                    moveTo = globalNPC.attacker.Center + new Vector2(NPC.Center.X > globalNPC.attacker.Center.X ? 80 : -80, -20);
+                    moveTo = globalNPC.attacker.Center + new Vector2(NPC.RightOfDir(globalNPC.attacker) * 80, -20);
                     NPC.Move(moveTo, 16, 10);
                     if (NPC.DistanceSQ(moveTo) < 20 * 20)
                     {

@@ -298,8 +298,7 @@ namespace Redemption.NPCs.PreHM
                             Gore.NewGore(NPC.GetSource_FromThis(), NPC.position, RedeHelper.Spread(1), ModContent.Find<ModGore>("Redemption/AncientCoinGore").Type, 1);
                     }
                     NPC.PlatformFallCheck(ref NPC.Redemption().fallDownPlatform, 20);
-                    NPCHelper.HorizontallyMove(NPC, Personality == PersonalityState.Greedy ? new Vector2(globalNPC.attacker.Center.X < NPC.Center.X ? NPC.Center.X + 100
-                        : NPC.Center.X - 100, NPC.Center.Y) : globalNPC.attacker.Center, 0.2f, 2f * SpeedMultiplier * (NPC.RedemptionNPCBuff().rallied ? 1.2f : 1), 12, 8, NPC.Center.Y > globalNPC.attacker.Center.Y);
+                    NPCHelper.HorizontallyMove(NPC, Personality == PersonalityState.Greedy ? new Vector2(NPC.Center.X + (100 * NPC.RightOfDir(globalNPC.attacker)), NPC.Center.Y) : globalNPC.attacker.Center, 0.2f, 2f * SpeedMultiplier * (NPC.RedemptionNPCBuff().rallied ? 1.2f : 1), 12, 8, NPC.Center.Y > globalNPC.attacker.Center.Y);
 
                     break;
 
@@ -326,14 +325,14 @@ namespace Redemption.NPCs.PreHM
                         if (globalNPC.attacker is NPC attackerNPC && attackerNPC.immune[NPC.whoAmI] <= 0)
                         {
                             attackerNPC.immune[NPC.whoAmI] = 20;
-                            int hitDirection = NPC.Center.X > attackerNPC.Center.X ? -1 : 1;
+                            int hitDirection = attackerNPC.RightOfDir(NPC);
                             BaseAI.DamageNPC(attackerNPC, damage * (NPC.alpha > 50 ? 2 : 1), 4, hitDirection, NPC);
                             if (Main.rand.NextBool(3))
                                 attackerNPC.AddBuff(ModContent.BuffType<DirtyWoundDebuff>(), Main.rand.Next(400, 1200));
                         }
                         else if (globalNPC.attacker is Player attackerPlayer3)
                         {
-                            int hitDirection = NPC.Center.X > attackerPlayer3.Center.X ? -1 : 1;
+                            int hitDirection = attackerPlayer3.RightOfDir(NPC);
                             BaseAI.DamagePlayer(attackerPlayer3, damage * (NPC.alpha > 50 ? 2 : 1), 4, hitDirection, NPC);
                             if (Main.rand.NextBool(3) && globalNPC.attacker is Player)
                                 attackerPlayer3.AddBuff(ModContent.BuffType<DirtyWoundDebuff>(), Main.rand.Next(400, 1200));

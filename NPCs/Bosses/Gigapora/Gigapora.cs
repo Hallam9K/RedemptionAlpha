@@ -355,7 +355,7 @@ namespace Redemption.NPCs.Bosses.Gigapora
                     {
                         if (player.Center.Y < NPC.Center.Y && Framing.GetTileSafely(ground.X, ground.Y).HasTile)
                             TimerRand = 0;
-                        if (player.Center.X > NPC.Center.X && NPC.velocity.X < 6)
+                        if (player.RightOf(NPC) && NPC.velocity.X < 6)
                             NPC.velocity.X += 0.1f;
                         else if (NPC.velocity.X > -6)
                             NPC.velocity.X -= 0.1f;
@@ -413,7 +413,7 @@ namespace Redemption.NPCs.Bosses.Gigapora
                                     else
                                         TimerRand = 1;
                                 }
-                                if (player.Center.X > NPC.Center.X && NPC.velocity.X < 6)
+                                if (player.RightOf(NPC) && NPC.velocity.X < 6)
                                     NPC.velocity.X += 0.1f;
                                 else if (NPC.velocity.X > -6)
                                     NPC.velocity.X -= 0.1f;
@@ -452,7 +452,7 @@ namespace Redemption.NPCs.Bosses.Gigapora
                     NPC.rotation = NPC.velocity.ToRotation() + 1.57f;
                     break;
                 case ActionState.Gigabeam:
-                    targetPos = new Vector2(player.Center.X + (player.Center.X > NPC.Center.X ? -400 : 400), player.Center.Y + 800);
+                    targetPos = new Vector2(player.Center.X + (400 * NPC.RightOfDir(player)), player.Center.Y + 800);
                     for (int i = 0; i < Main.maxNPCs; i++)
                     {
                         NPC core = Main.npc[i];
@@ -477,7 +477,7 @@ namespace Redemption.NPCs.Bosses.Gigapora
                                 else
                                     TimerRand = 1;
                             }
-                            if (player.Center.X > NPC.Center.X && NPC.velocity.X < 6)
+                            if (player.RightOf(NPC) && NPC.velocity.X < 6)
                                 NPC.velocity.X += 0.1f;
                             else if (NPC.velocity.X > -6)
                                 NPC.velocity.X -= 0.1f;
@@ -565,7 +565,7 @@ namespace Redemption.NPCs.Bosses.Gigapora
                     }
                     break;
                 case ActionState.Flamethrowers:
-                    targetPos = new Vector2(player.Center.X + (player.Center.X > NPC.Center.X ? -600 : 600), player.Center.Y + 800);
+                    targetPos = new Vector2(player.Center.X + (600 * NPC.RightOfDir(player)), player.Center.Y + 800);
                     for (int i = 0; i < Main.maxNPCs; i++)
                     {
                         NPC core = Main.npc[i];
@@ -590,7 +590,7 @@ namespace Redemption.NPCs.Bosses.Gigapora
                                 else
                                     TimerRand = 1;
                             }
-                            if (player.Center.X > NPC.Center.X && NPC.velocity.X < 6)
+                            if (player.RightOf(NPC) && NPC.velocity.X < 6)
                                 NPC.velocity.X += 0.1f;
                             else if (NPC.velocity.X > -6)
                                 NPC.velocity.X -= 0.1f;
@@ -673,7 +673,7 @@ namespace Redemption.NPCs.Bosses.Gigapora
                                 else
                                     TimerRand = 1;
                             }
-                            if (player.Center.X > NPC.Center.X && NPC.velocity.X < 6)
+                            if (player.RightOf(NPC) && NPC.velocity.X < 6)
                                 NPC.velocity.X += 0.1f;
                             else if (NPC.velocity.X > -6)
                                 NPC.velocity.X -= 0.1f;
@@ -714,7 +714,7 @@ namespace Redemption.NPCs.Bosses.Gigapora
                     }
                     break;
                 case ActionState.CrossBomb:
-                    targetPos = new Vector2(player.Center.X + (player.Center.X > NPC.Center.X ? -400 : 400), player.Center.Y + 800);
+                    targetPos = new Vector2(player.Center.X + (400 * NPC.RightOfDir(player)), player.Center.Y + 800);
                     for (int i = 0; i < Main.maxNPCs; i++)
                     {
                         NPC core = Main.npc[i];
@@ -739,7 +739,7 @@ namespace Redemption.NPCs.Bosses.Gigapora
                                 else
                                     TimerRand = 1;
                             }
-                            if (player.Center.X > NPC.Center.X && NPC.velocity.X < 6)
+                            if (player.RightOf(NPC) && NPC.velocity.X < 6)
                                 NPC.velocity.X += 0.1f;
                             else if (NPC.velocity.X > -6)
                                 NPC.velocity.X -= 0.1f;

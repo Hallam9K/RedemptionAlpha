@@ -70,7 +70,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
         public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
         {
             Player player = Main.player[Projectile.owner];
-            hitDirection = player.Center.X > target.Center.X ? -1 : 1;
+            hitDirection = player.RightOfDir(target);
             knockback = rotSpeed * 10;
             knockback = MathHelper.Clamp(knockback, 0, 10);
         }

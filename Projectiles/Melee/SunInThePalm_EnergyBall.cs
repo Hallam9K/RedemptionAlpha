@@ -208,7 +208,7 @@ namespace Redemption.Projectiles.Melee
                     continue;
 
                 target.immune[Projectile.whoAmI] = 20;
-                int hitDirection = Projectile.Center.X > target.Center.X ? -1 : 1;
+                int hitDirection = target.RightOfDir(Projectile);
                 BaseAI.DamageNPC(target, (int)(Projectile.damage * (Projectile.scale * 1.5f)), 7, hitDirection, Projectile, crit: Projectile.HeldItemCrit());
                 BaseAI.DamageNPC(target, (int)(Projectile.damage * (Projectile.scale * 1.25f)), 4, hitDirection, Projectile, crit: Projectile.HeldItemCrit());
             }

@@ -312,7 +312,7 @@ namespace Redemption.NPCs.Bosses.ADD
                     NPC.LookAtEntity(player);
                 }
             }
-            Vector2 ThunderwavePos = new(player.Center.X > NPC.Center.X ? player.Center.X - 700 : player.Center.X + 700, player.Center.Y);
+            Vector2 ThunderwavePos = new(player.Center.X + (700 * NPC.RightOfDir(player)), player.Center.Y);
             Vector2 EarthProtectPos = new(player.Center.X, player.Center.Y - 400);
             Vector2 HammerPos = new(NPC.Center.X - (24 * NPC.spriteDirection), NPC.Center.Y - 101);
             int akkaID = NPC.FindFirstNPC(ModContent.NPCType<Akka>());
@@ -1264,12 +1264,12 @@ namespace Redemption.NPCs.Bosses.ADD
         }
         public Vector2 Pos()
         {
-            Vector2 Pos1 = new(player.Center.X > NPC.Center.X ? player.Center.X + Main.rand.Next(-500, -300) : player.Center.X + Main.rand.Next(300, 500), player.Center.Y + Main.rand.Next(-400, 200));
+            Vector2 Pos1 = new(player.Center.X + (Main.rand.Next(300, 500) * NPC.RightOfDir(player)), player.Center.Y + Main.rand.Next(-400, 200));
             return Pos1;
         }
         public Vector2 ChargePos()
         {
-            Vector2 ChargePos1 = new(player.Center.X > NPC.Center.X ? player.Center.X - 1400 : player.Center.X + 1400, player.Center.Y + Main.rand.Next(-80, 80));
+            Vector2 ChargePos1 = new(player.Center.X + (1400 * NPC.RightOfDir(player)), player.Center.Y + Main.rand.Next(-80, 80));
             return ChargePos1;
         }
         private void Target()

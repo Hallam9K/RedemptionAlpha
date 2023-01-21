@@ -488,12 +488,7 @@ namespace Redemption.NPCs.Lab.MACE
                             break;
                         case 3:
                             if (AITimer++ < 120)
-                            {
-                                if (player.Center.X > NPC.Center.X)
-                                    NPC.velocity.X += 0.2f;
-                                else
-                                    NPC.velocity.X -= 0.2f;
-                            }
+                                NPC.velocity.X += 0.2f * player.RightOfDir(NPC);
                             if (AITimer == 120)
                                 NPC.velocity.X = 0;
 

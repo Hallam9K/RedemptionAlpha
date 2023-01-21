@@ -51,6 +51,13 @@ namespace Redemption.Globals
         public static float RandomRotation() => Main.rand.NextFloat() * MathHelper.TwoPi;
         public static Vector2 TurnRight(this Vector2 vec) => new(-vec.Y, vec.X);
         public static Vector2 TurnLeft(this Vector2 vec) => new(vec.Y, -vec.X);
+        public static int RightOfDir(this Entity toRight, Entity toLeft)
+        {
+            if (toLeft.Center.X < toRight.Center.X)
+                return -1;
+            return 1;
+        }
+        public static bool RightOf(this Entity toRight, Entity toLeft) => toLeft.Center.X < toRight.Center.X;
 
         public static Vector2 PolarVector(float radius, float theta) =>
             new Vector2((float)Math.Cos(theta), (float)Math.Sin(theta)) * radius;
@@ -762,7 +769,7 @@ namespace Redemption.Globals
             int dir = 1;
             if (opposite)
                 dir = -1;
-            if (target.Center.X > npc.Center.X)
+            if (target.RightOf(npc))
             {
                 npc.spriteDirection = dir;
                 npc.direction = dir;
@@ -779,7 +786,7 @@ namespace Redemption.Globals
             int dir = 1;
             if (opposite)
                 dir = -1;
-            if (target.Center.X > projectile.Center.X)
+            if (target.RightOf(projectile))
             {
                 projectile.spriteDirection = dir;
                 projectile.direction = dir;
@@ -965,12 +972,15 @@ namespace Redemption.Globals
             if (codable == null || !codable.active || (codable is Terraria.Player codablePlayer && codablePlayer.dead))
                 return false;
 
-            if (!canSeeHiding && codable is Terraria.NPC codableNPC && codableNPC.Redemption().invisible)
-                return false;
-            if (!canSeeHiding && codable is Terraria.Player codablePlayer2 && codablePlayer2.invis)
-                return false;
-            if (!canSeeHiding && codable is Projectile codableProj && codableProj.alpha >= 200)
-                return false;
+            if (!canSeeHiding)
+            {
+                if (codable is Terraria.NPC codableNPC && codableNPC.Redemption().invisible)
+                    return false;
+                if (codable is Terraria.Player codablePlayer2 && codablePlayer2.invis)
+                    return false;
+                if (codable is Projectile codableProj && codableProj.alpha >= 200)
+                    return false;
+            }
             if (blind && codable.velocity.Length() <= moveThreshold)
                 return false;
 
@@ -991,8 +1001,8 @@ namespace Redemption.Globals
                 if (npc.DistanceSQ(codable.Center) <= (codable.width + 32) * (codable.width + 32))
                     return true;
 
-                return npc.Center.X > codable.Center.X && npc.spriteDirection == -1 ||
-                       npc.Center.X < codable.Center.X && npc.spriteDirection == 1;
+                return npc.RightOf(codable) && npc.spriteDirection == -1 ||
+                       codable.RightOf(npc) && npc.spriteDirection == 1;
             }
 
             return true;
@@ -1246,7 +1256,7 @@ namespace Redemption.Globals
                     continue;
 
                 target.immune[npc.whoAmI] = 30;
-                int hitDirection = npc.Center.X > target.Center.X ? -1 : 1;
+                int hitDirection = npc.RightOfDir(target);
                 BaseAI.DamageNPC(target, npc.damage + (int)dmgModify, knockback, hitDirection, npc);
             }
         }
@@ -1267,7 +1277,7 @@ namespace Redemption.Globals
                     continue;
 
                 target.immune[npc.whoAmI] = 30;
-                int hitDirection = npc.Center.X > target.Center.X ? -1 : 1;
+                int hitDirection = npc.RightOfDir(target);
                 BaseAI.DamageNPC(target, npc.damage + (int)dmgModify, knockback, hitDirection, npc);
             }
         }

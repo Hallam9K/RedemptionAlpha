@@ -308,7 +308,7 @@ namespace Redemption.NPCs.Bosses.Keeper
                                             continue;
 
                                         target.immune[NPC.whoAmI] = 30;
-                                        int hitDirection = NPC.Center.X > target.Center.X ? -1 : 1;
+                                        int hitDirection = target.RightOfDir(NPC);
                                         BaseAI.DamageNPC(target, NPC.damage, 3, hitDirection, NPC);
                                         target.AddBuff(BuffID.Bleeding, 600);
                                     }
@@ -321,7 +321,7 @@ namespace Redemption.NPCs.Bosses.Keeper
                                         if (!target.Hitbox.Intersects(SlashHitbox))
                                             continue;
 
-                                        int hitDirection = NPC.Center.X > target.Center.X ? -1 : 1;
+                                        int hitDirection = target.RightOfDir(NPC);
                                         BaseAI.DamagePlayer(target, NPC.damage, 3, hitDirection, NPC);
                                         target.AddBuff(BuffID.Bleeding, 600);
                                     }

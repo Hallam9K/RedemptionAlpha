@@ -46,7 +46,7 @@ namespace Redemption.NPCs.Bosses.ADD
                 if (Projectile.DistanceSQ(target.Center) > 120 * 120)
                     continue;
 
-                int hitDirection = Projectile.Center.X > target.Center.X ? -1 : 1;
+                int hitDirection = target.RightOfDir(Projectile);
                 BaseAI.DamagePlayer(target, Projectile.damage * 4, Projectile.knockBack, hitDirection, Projectile);
             }
             for (int i = 0; i < 20; i++)

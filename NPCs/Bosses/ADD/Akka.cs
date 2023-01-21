@@ -243,7 +243,7 @@ namespace Redemption.NPCs.Bosses.ADD
             bool ukkoActive = false;
             if (NPC.ai[3] > -1 && Main.npc[(int)NPC.ai[3]].active && Main.npc[(int)NPC.ai[3]].type == ModContent.NPCType<Ukko>())
                 ukkoActive = true;
-            Vector2 EarthProtectPos = new(player.Center.X + (player.Center.X > NPC.Center.X ? -500 : 500), player.Center.Y - 100);
+            Vector2 EarthProtectPos = new(player.Center.X + (500 * NPC.RightOfDir(player)), player.Center.Y - 100);
             switch (AIState)
             {
                 case ActionState.Start:
@@ -387,7 +387,7 @@ namespace Redemption.NPCs.Bosses.ADD
                                 TremorTimer++;
                                 if (TremorTimer > 50 && TremorTimer % 40 == 0)
                                 {
-                                    int hitDirection = NPC.Center.X > player.Center.X ? 1 : -1;
+                                    int hitDirection = NPC.RightOfDir(player);
                                     player.Hurt(PlayerDeathReason.ByNPC(NPC.whoAmI),
                                         40, hitDirection, false, false, false, 0);
                                     player.AddBuff(ModContent.BuffType<StunnedDebuff>(), 60);
@@ -628,7 +628,7 @@ namespace Redemption.NPCs.Bosses.ADD
         public override bool CanHitPlayer(Player target, ref int cooldownSlot) => false;
         public Vector2 Pos()
         {
-            Vector2 Pos1 = new(player.Center.X > NPC.Center.X ? player.Center.X + Main.rand.Next(-300, -200) : player.Center.X + Main.rand.Next(200, 300), player.Center.Y + Main.rand.Next(-400, 200));
+            Vector2 Pos1 = new(player.Center.X + (Main.rand.Next(200, 300) * NPC.RightOfDir(player)), player.Center.Y + Main.rand.Next(-400, 200));
             return Pos1;
         }
         private void Target()

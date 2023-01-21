@@ -210,8 +210,8 @@ namespace Redemption.NPCs.Bosses.Cleaver
 
             if (cooldown < 0)
                 cooldown = 0;
-            Vector2 SwingPos = new(NPC.Center.X > player.Center.X ? 150 : -150, -20);
-            Vector2 AwayPos = new(NPC.Center.X > player.Center.X ? 500 : -500, -40);
+            Vector2 SwingPos = new(150 * NPC.RightOfDir(player), -20);
+            Vector2 AwayPos = new(500 * NPC.RightOfDir(player), -40);
 
             if (!player.active || player.dead)
                 return;

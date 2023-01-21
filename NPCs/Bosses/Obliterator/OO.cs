@@ -594,7 +594,7 @@ namespace Redemption.NPCs.Bosses.Obliterator
                                 if (AITimer == 205)
                                 {
                                     SoundEngine.PlaySound(CustomSounds.OODashReady, NPC.position);
-                                    NPC.velocity.X = player.Center.X > NPC.Center.X ? -8 : 8;
+                                    NPC.velocity.X = 8 * NPC.RightOfDir(player);
                                 }
 
                                 if (AITimer == 235)
@@ -1082,7 +1082,7 @@ namespace Redemption.NPCs.Bosses.Obliterator
                                 if (AITimer == 205)
                                 {
                                     SoundEngine.PlaySound(CustomSounds.OODashReady, NPC.position);
-                                    NPC.velocity.X = player.Center.X > NPC.Center.X ? -8 : 8;
+                                    NPC.velocity.X = 8 * NPC.RightOfDir(player);
                                 }
 
                                 if (AITimer == 225)
@@ -1529,7 +1529,7 @@ namespace Redemption.NPCs.Bosses.Obliterator
             if (directional)
                 NPC.velocity = NPC.DirectionTo(player.Center) * speed;
             else
-                NPC.velocity.X = player.Center.X > NPC.Center.X ? speed : -speed;
+                NPC.velocity.X = speed * player.RightOfDir(NPC);
         }
         private void DespawnHandler()
         {
