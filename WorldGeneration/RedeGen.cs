@@ -629,6 +629,7 @@ namespace Redemption.WorldGeneration
                         [new Color(255, 0, 0)] = TileID.Dirt,
                         [new Color(0, 255, 0)] = TileID.Grass,
                         [new Color(0, 0, 255)] = TileID.Emerald,
+                        [new Color(0, 255, 255)] = ModContent.TileType<ElderWoodTile>(),
                         [new Color(150, 150, 150)] = -2,
                         [Color.Black] = -1
                     };
