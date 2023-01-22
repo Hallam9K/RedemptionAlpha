@@ -89,7 +89,7 @@ namespace Redemption.CrossMod
                         ModContent.ItemType<ErhanTrophy>(),
                         ModContent.ItemType<ErhanHelmet>(),
                     },
-                    ModContent.ItemType<DemonScroll>(), "Use a [i:" + ModContent.ItemType<DemonScroll>() + "] at day. Can be found at the surface portal.",
+                    ModContent.ItemType<DemonScroll>(), "Use a [i:" + ModContent.ItemType<DemonScroll>() + "]. Can be found at the surface portal.",
                     "Erhan bravely flew away...",
                     (SpriteBatch sb, Rectangle rect, Color color) =>
                     {
