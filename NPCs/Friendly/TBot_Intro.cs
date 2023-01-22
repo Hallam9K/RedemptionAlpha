@@ -220,7 +220,8 @@ namespace Redemption.NPCs.Friendly
         private void Chain_OnEndTrigger(Dialogue dialogue, int ID)
         {
             AITimer = 2999;
-            Look = 1;
+            if (TimerRand == 4)
+                Look = 1;
         }
         public override void FindFrame(int frameHeight)
         {

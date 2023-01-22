@@ -53,7 +53,7 @@ namespace Redemption.Globals
         public static Vector2 TurnLeft(this Vector2 vec) => new(vec.Y, -vec.X);
         public static int RightOfDir(this Entity toRight, Entity toLeft)
         {
-            if (toLeft.Center.X < toRight.Center.X)
+            if (toRight.Center.X < toLeft.Center.X)
                 return -1;
             return 1;
         }
@@ -1172,7 +1172,7 @@ namespace Redemption.Globals
                     }
                 }
             }
-            return new Vector2(npc.Center.X, npc.Center.Y);
+            return new Vector2(npc.Center.X, npc.Center.Y) / 16;
         }
 
         public static Vector2 FindGroundPlayer(this Terraria.NPC npc, int distFromPlayer, Func<int, int, bool> canTeleportTo = null)
@@ -1204,7 +1204,7 @@ namespace Redemption.Globals
                     }
                 }
             }
-            return new Vector2(npc.Center.X, npc.Center.Y);
+            return new Vector2(npc.Center.X, npc.Center.Y) / 16;
         }
 
         public static Vector2 FindGroundVector(this Terraria.NPC npc, Vector2 vector, int distFromVector, Func<int, int, bool> canTeleportTo = null)
@@ -1236,7 +1236,7 @@ namespace Redemption.Globals
                     }
                 }
             }
-            return new Vector2(npc.Center.X, npc.Center.Y);
+            return new Vector2(npc.Center.X, npc.Center.Y) / 16;
         }
 
         public static void DamageHostileAttackers(this Terraria.NPC npc, float dmgModify = 0, int knockback = 0, List<int> AlwaysDmgNPC = default)

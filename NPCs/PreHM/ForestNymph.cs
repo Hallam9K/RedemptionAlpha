@@ -867,8 +867,9 @@ namespace Redemption.NPCs.PreHM
                 regenTimer++;
                 if (regenTimer % regenCooldown == 0 && NPC.life < NPC.lifeMax)
                 {
-                    NPC.life += 2;
-                    NPC.HealEffect(2);
+                    int heal = NPC.type == ModContent.NPCType<ForestNymph_Friendly>() ? 10 : 2;
+                    NPC.life += heal;
+                    NPC.HealEffect(heal);
                     if (NPC.life > NPC.lifeMax)
                         NPC.life = NPC.lifeMax;
                 }
@@ -900,13 +901,14 @@ namespace Redemption.NPCs.PreHM
             Rectangle rect = new(x, y, Width, Height);
             Rectangle rect2 = new(x2, y2, Width2, Height2);
             Rectangle rect3 = new(x3, 0, Width3, hair3.Value.Height);
+            Texture2D h1 = hair1.Value;
             switch (HairExtType)
             {
                 case 1:
-                    hair1 = hair1b;
+                    h1 = hair1b.Value;
                     break;
                 case 2:
-                    hair1 = hair1c;
+                    h1 = hair1c.Value;
                     Height = hair1c.Value.Height / 10;
                     Width = hair1c.Value.Width / 4;
                     y = Height * (NPC.frame.Y / 94);
@@ -914,7 +916,7 @@ namespace Redemption.NPCs.PreHM
                     rect = new(x, y, Width, Height);
                     break;
             }
-            spriteBatch.Draw(hair1.Value, pos - screenPos, new Rectangle?(rect), drawColor, NPC.rotation, NPC.frame.Size() / 2 + new Vector2(NPC.spriteDirection == -1 ? -58 : 6, -12) - (HairExtType == 2 ? new Vector2(NPC.spriteDirection == -1 ? -2 : 8, -2) : Vector2.Zero), NPC.scale, effects, 0);
+            spriteBatch.Draw(h1, pos - screenPos, new Rectangle?(rect), drawColor, NPC.rotation, NPC.frame.Size() / 2 + new Vector2(NPC.spriteDirection == -1 ? -58 : 6, -12) - (HairExtType == 2 ? new Vector2(NPC.spriteDirection == -1 ? -2 : 8, -2) : Vector2.Zero), NPC.scale, effects, 0);
 
             spriteBatch.Draw(hair2.Value, pos - screenPos, new Rectangle?(rect2), drawColor, NPC.rotation, NPC.frame.Size() / 2 + new Vector2(NPC.spriteDirection == -1 ? -34 : -18, -16), NPC.scale, effects, 0);
             if (FlowerType <= 4)
