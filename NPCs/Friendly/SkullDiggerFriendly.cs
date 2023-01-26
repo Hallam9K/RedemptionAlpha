@@ -72,9 +72,11 @@ namespace Redemption.NPCs.Friendly
         public override bool? CanHitNPC(NPC target) => false;
 
         private bool floatTimer;
-
+        private bool spoken;
         public override void AI()
         {
+            if (spoken)
+                NPC.DiscourageDespawn(60);
             Player player = Main.player[RedeHelper.GetNearestAlivePlayer(NPC)];
             if (NPC.target < 0 || NPC.target == 255 || player.dead || !player.active)
                 NPC.TargetClosest();
@@ -187,6 +189,7 @@ namespace Redemption.NPCs.Friendly
         }
         public override string GetChat()
         {
+            spoken = true;
             return "Oh... I thank you for freeing my mistress from her sorrow. But now without her, what is my purpose. I do not yet feel fulfilled. If only I could have a token of her, an object of remembrance...";
         }
 

@@ -82,11 +82,10 @@ namespace Redemption.NPCs.Friendly
         public override bool CanHitPlayer(Player target, ref int cooldownSlot) => false;
         public override bool? CanHitNPC(NPC target) => false;
 
-        private bool setName;
-        private string setName2;
+        private string setName;
         public override void ModifyTypeName(ref string typeName)
         {
-            if (setName2 == null)
+            if (setName == null)
             {
                 WeightedRandom<string> name = new(Main.rand);
                 name.Add("Gentlewood");
@@ -103,10 +102,10 @@ namespace Redemption.NPCs.Friendly
                     name.Add("Cherrysplinter", 3);
                     name.Add("Blossomwood", 3);
                 }
-                setName2 = name + " the Treebark Dryad";
+                setName = name + " the Treebark Dryad";
             }
             else
-                typeName = setName2;
+                typeName = setName;
         }
         public override void AI()
         {
