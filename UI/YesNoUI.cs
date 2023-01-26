@@ -7,6 +7,7 @@ using Terraria.UI;
 using Terraria.GameContent.UI.Elements;
 using Terraria.Audio;
 using Redemption.BaseExtension;
+using Terraria.GameInput;
 
 namespace Redemption.UI
 {
@@ -67,7 +68,9 @@ namespace Redemption.UI
         }
         public override void Update(GameTime gameTime)
         {
-            Main.LocalPlayer.mouseInterface = true;
+            base.Update(gameTime);
+            if (ContainsPoint(Main.MouseScreen) && !PlayerInput.IgnoreMouseInterface)
+                Main.LocalPlayer.mouseInterface = true;
         }
         public override void Draw(SpriteBatch spriteBatch)
         {

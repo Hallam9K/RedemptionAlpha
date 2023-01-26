@@ -208,7 +208,11 @@ namespace Redemption.NPCs.Bosses.Thorn
                 attempts++;
             }
         }
-
+        public override void ModifyTypeName(ref string typeName)
+        {
+            if (Main.xMas)
+                typeName = "Everthorn, Bane of the Holidays";
+        }
         private bool barrierSpawn;
         private Vector2 origin;
         public override void AI()
@@ -217,9 +221,6 @@ namespace Redemption.NPCs.Bosses.Thorn
                 NPC.TargetClosest();
 
             Player player = Main.player[NPC.target];
-
-            if (Main.xMas)
-                NPC.GivenName = "Everthorn, Bane of the Holidays";
 
             DespawnHandler();
 

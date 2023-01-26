@@ -24,8 +24,8 @@ namespace Redemption.Items.Weapons.HM.Ranged
         {
             Item.damage = 94;
             Item.DamageType = DamageClass.Ranged;
-            Item.width = 64;
-            Item.height = 30;
+            Item.width = 94;
+            Item.height = 40;
             Item.useTime = 48;
             Item.useAnimation = 48;
             Item.useStyle = ItemUseStyleID.Shoot;
@@ -49,7 +49,7 @@ namespace Redemption.Items.Weapons.HM.Ranged
 
         public override Vector2? HoldoutOffset()
         {
-            return new Vector2(-4, 0);
+            return new Vector2(-8, 0);
         }
 
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)

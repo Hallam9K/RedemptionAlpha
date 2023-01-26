@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.GameContent.UI.Elements;
+using Terraria.GameInput;
 using Terraria.ModLoader;
 using Terraria.UI;
 
@@ -41,7 +42,10 @@ namespace Redemption.UI
         }
         public override void Update(GameTime gameTime)
         {
-            Main.LocalPlayer.mouseInterface = true;
+            base.Update(gameTime);
+            if (ContainsPoint(Main.MouseScreen) && !PlayerInput.IgnoreMouseInterface)
+                Main.LocalPlayer.mouseInterface = true;
+
             if (!Main.LocalPlayer.releaseInventory)
                 Visible = false;
         }

@@ -317,6 +317,12 @@ namespace Redemption.NPCs.Friendly
                 shop.item[nextSlot].shopCustomPrice = new int?(12);
                 shop.item[nextSlot++].shopSpecialCurrency = Redemption.AntiqueDorulCurrencyId;
             }
+            if (NPC.downedPirates)
+            {
+                shop.item[nextSlot].SetDefaults(ModContent.ItemType<SunkenCaptainPainting>());
+                shop.item[nextSlot].shopCustomPrice = new int?(12);
+                shop.item[nextSlot++].shopSpecialCurrency = Redemption.AntiqueDorulCurrencyId;
+            }
             if (NPC.downedPlantBoss)
             {
                 shop.item[nextSlot].SetDefaults(ItemID.Ectoplasm);

@@ -1204,7 +1204,7 @@ namespace Redemption.Globals
                     }
                 }
             }
-            return new Vector2(npc.Center.X, npc.Center.Y) / 16;
+            return new Vector2(npc.Center.X, npc.Center.Y);
         }
 
         public static Vector2 FindGroundVector(this Terraria.NPC npc, Vector2 vector, int distFromVector, Func<int, int, bool> canTeleportTo = null)
@@ -1236,7 +1236,7 @@ namespace Redemption.Globals
                     }
                 }
             }
-            return new Vector2(npc.Center.X, npc.Center.Y) / 16;
+            return new Vector2(npc.Center.X, npc.Center.Y);
         }
 
         public static void DamageHostileAttackers(this Terraria.NPC npc, float dmgModify = 0, int knockback = 0, List<int> AlwaysDmgNPC = default)
@@ -1249,7 +1249,7 @@ namespace Redemption.Globals
                 if (!target.active || !target.CanBeChasedBy() || target.whoAmI == npc.whoAmI || target != npc.Redemption().attacker)
                     continue;
 
-                if (!AlwaysDmgNPC.Contains(target.type) && (target.friendly || NPCID.Sets.TakesDamageFromHostilesWithoutBeingFriendly[target.type]))
+                if (!AlwaysDmgNPC.Contains(target.type) && target.friendly)
                     continue;
 
                 if (target.immune[npc.whoAmI] > 0 || !npc.Hitbox.Intersects(target.Hitbox))

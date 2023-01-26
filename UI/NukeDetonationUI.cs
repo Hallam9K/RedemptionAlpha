@@ -9,6 +9,7 @@ using Terraria.Audio;
 using Redemption.Globals;
 using Terraria.Localization;
 using Terraria.Chat;
+using Terraria.GameInput;
 
 namespace Redemption.UI
 {
@@ -92,7 +93,6 @@ namespace Redemption.UI
         }
         private void NukeButtonClicked(UIMouseEvent evt, UIElement listeningElement)
         {
-            Main.isMouseLeftConsumedByUI = true;
             SoundEngine.PlaySound(SoundID.MenuTick);
             if (Switch1State && Switch2State)
             {
@@ -145,12 +145,11 @@ namespace Redemption.UI
             }
 
         }
-        public override void MouseOver(UIMouseEvent evt)
-        {
-        }
         public override void Update(GameTime gameTime)
         {
-            Main.LocalPlayer.mouseInterface = true;
+            base.Update(gameTime);
+            if (ContainsPoint(Main.MouseScreen) && !PlayerInput.IgnoreMouseInterface)
+                Main.LocalPlayer.mouseInterface = true;
 
             if (ButtonState != 2 && !Main.LocalPlayer.releaseInventory)
                 Visible = false;

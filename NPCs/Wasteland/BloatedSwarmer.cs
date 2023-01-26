@@ -109,7 +109,7 @@ namespace Redemption.NPCs.Wasteland
                     {
                         if (Main.netMode != NetmodeID.MultiplayerClient)
                         {
-                            int n = NPC.NewNPC(NPC.GetSource_FromAI(), (int)RedeHelper.RandAreaInEntity(NPC).X, (int)RedeHelper.RandAreaInEntity(NPC).Y, ModContent.NPCType<BloatedGrub>());
+                            int n = NPC.NewNPC(NPC.GetSource_FromAI(), (int)NPC.RandAreaInEntity().X, (int)NPC.RandAreaInEntity().Y, ModContent.NPCType<BloatedGrub>());
                             Main.npc[n].velocity = RedeHelper.Spread(10);
                             if (Main.netMode == NetmodeID.Server && n < Main.maxNPCs)
                             {

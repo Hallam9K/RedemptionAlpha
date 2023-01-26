@@ -25,6 +25,7 @@ namespace Redemption.Tiles.Furniture.Shade
             name.SetDefault("Shadestone Sofa");
             AddMapEntry(new Color(59, 61, 87), name);
 
+            AddToArray(ref TileID.Sets.RoomNeeds.CountsAsChair);
             AdjTiles = new int[] { TileID.Benches };
             DustType = ModContent.DustType<ShadestoneDust>();
         }

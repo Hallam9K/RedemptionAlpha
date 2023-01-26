@@ -279,10 +279,10 @@ namespace Redemption.NPCs.Bosses.Keeper
                 Player player2 = Main.player[k];
                 if (!player2.active || player2.dead)
                     continue;
-                if (player2.HasItem(ModContent.ItemType<SorrowfulEssence>()))
-                    sorrowfulEssence = true;
                 if (player2.HasItem(ModContent.ItemType<AbandonedTeddy>()))
                     teddy = true;
+                if (player2.HasItem(ModContent.ItemType<SorrowfulEssence>()))
+                    sorrowfulEssence = true;
             }
             DespawnHandler();
 

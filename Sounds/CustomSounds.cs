@@ -84,7 +84,7 @@ namespace Redemption
         public static readonly SoundStyle PatientZeroLaserL = new("Redemption/Sounds/Custom/PatientZeroLaserL");
         public static readonly SoundStyle PlasmaBlast = new("Redemption/Sounds/Custom/PlasmaBlast");
         public static readonly SoundStyle PlasmaShot = new("Redemption/Sounds/Custom/PlasmaShot");
-        public static readonly SoundStyle PortalWub = new("Redemption/Sounds/Custom/PortalWub");
+        public static readonly SoundStyle PortalWub = new("Redemption/Sounds/Custom/PortalWub") { Volume = .5f, MaxInstances = 1, SoundLimitBehavior = SoundLimitBehavior.IgnoreNew };
         public static readonly SoundStyle Quake = new("Redemption/Sounds/Custom/Quake");
         public static readonly SoundStyle Reflect = new("Redemption/Sounds/Custom/Reflect") { Volume = .5f, PitchVariance = .1f };
         public static readonly SoundStyle ShootChange = new("Redemption/Sounds/Custom/ShootChange");

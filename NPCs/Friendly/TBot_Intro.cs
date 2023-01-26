@@ -43,6 +43,7 @@ namespace Redemption.NPCs.Friendly
         private int Look;
         public override void AI()
         {
+            NPC.DiscourageDespawn(60);
             if (NPC.target < 0 || NPC.target == 255 || Main.player[NPC.target].dead || !Main.player[NPC.target].active)
                 NPC.TargetClosest();
 

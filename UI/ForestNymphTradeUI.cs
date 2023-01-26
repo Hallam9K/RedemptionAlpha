@@ -8,6 +8,7 @@ using Redemption.NPCs.Friendly;
 using System;
 using Terraria;
 using Terraria.GameContent.UI.Elements;
+using Terraria.GameInput;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.UI;
@@ -32,6 +33,10 @@ namespace Redemption.UI
         }
         public override void Update(GameTime gameTime)
         {
+            base.Update(gameTime);
+            if (ContainsPoint(Main.MouseScreen) && !PlayerInput.IgnoreMouseInterface)
+                Main.LocalPlayer.mouseInterface = true;
+
             if (!Main.LocalPlayer.releaseInventory || Main.LocalPlayer.talkNPC == -1 || Main.npc[Main.LocalPlayer.talkNPC].type != ModContent.NPCType<ForestNymph_Friendly>())
                 Visible = false;
 

@@ -79,6 +79,8 @@ namespace Redemption.NPCs.Friendly
         private int playerFollow;
         public override void PostAI()
         {
+            if (++NPC.breath <= 0)
+                NPC.breath = 9000;
             if (!setStats)
             {
                 if (Main.expertMode)

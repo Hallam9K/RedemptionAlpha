@@ -54,7 +54,7 @@ namespace Redemption.NPCs.Friendly
         }
         public override void AI()
         {
-            ParticleManager.NewParticle(RedeHelper.RandAreaInEntity(NPC) + (NPC.velocity * 2), Vector2.Zero, new SpiritParticle(), Color.White, 0.6f * NPC.scale, 0, 1);
+            ParticleManager.NewParticle(NPC.RandAreaInEntity() + (NPC.velocity * 2), Vector2.Zero, new SpiritParticle(), Color.White, 0.6f * NPC.scale, 0, 1);
             if (Main.rand.NextBool(3))
                 ParticleManager.NewParticle(NPC.Center, RedeHelper.Spread(2), new SpiritParticle(), Color.White, 1);
 

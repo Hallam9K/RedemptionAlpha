@@ -82,6 +82,32 @@ namespace Redemption.NPCs.Friendly
         public override bool CanHitPlayer(Player target, ref int cooldownSlot) => false;
         public override bool? CanHitNPC(NPC target) => false;
 
+        private bool setName;
+        private string setName2;
+        public override void ModifyTypeName(ref string typeName)
+        {
+            if (setName2 == null)
+            {
+                WeightedRandom<string> name = new(Main.rand);
+                name.Add("Gentlewood");
+                name.Add("Blandwood");
+                name.Add("Elmshade");
+                name.Add("Vinewood");
+                name.Add("Bitterthorn");
+                name.Add("Irontwig");
+                name.Add("Tapio");
+                if (WoodType == 1)
+                    name.Add("Willowbark", 3);
+                if (WoodType == 2)
+                {
+                    name.Add("Cherrysplinter", 3);
+                    name.Add("Blossomwood", 3);
+                }
+                setName2 = name + " the Treebark Dryad";
+            }
+            else
+                typeName = setName2;
+        }
         public override void AI()
         {
             Player player = Main.player[RedeHelper.GetNearestAlivePlayer(NPC)];
@@ -113,23 +139,6 @@ namespace Redemption.NPCs.Friendly
                 choice.Add(2, SakuraScore);
 
                 WoodType = choice;
-
-                WeightedRandom<string> name = new(Main.rand);
-                name.Add("Gentlewood");
-                name.Add("Blandwood");
-                name.Add("Elmshade");
-                name.Add("Vinewood");
-                name.Add("Bitterthorn");
-                name.Add("Irontwig");
-                name.Add("Tapio");
-                if (WoodType == 1)
-                    name.Add("Willowbark", 3);
-                if (WoodType == 2)
-                {
-                    name.Add("Cherrysplinter", 3);
-                    name.Add("Blossomwood", 3);
-                }
-                NPC.GivenName = name + " the Treebark Dryad";
                 TimerRand = 1;
             }
         }

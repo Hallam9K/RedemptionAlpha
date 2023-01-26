@@ -5,6 +5,7 @@ using Terraria.ID;
 using System;
 using Redemption.Items.Usable;
 using Terraria.DataStructures;
+using Redemption.Globals;
 
 namespace Redemption.Tiles.Tiles
 {
@@ -17,6 +18,7 @@ namespace Redemption.Tiles.Tiles
             Main.tileLighted[Type] = false;
             Main.tileBlockLight[Type] = false;
             Main.tileShine[Type] = 1100;
+            TileID.Sets.IsBeam[Type] = true;
             TileID.Sets.Falling[Type] = true;
             DustType = DustID.GoldCoin;
             HitSound = SoundID.Coins;
