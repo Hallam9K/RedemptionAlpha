@@ -72,6 +72,7 @@ namespace Redemption.NPCs.Friendly
         public override bool? CanHitNPC(NPC target) => false;
         public override bool CheckActive() => !spoken;
         private bool floatTimer;
+        private bool spoken;
         public override void AI()
         {
             if (spoken)
@@ -190,11 +191,6 @@ namespace Redemption.NPCs.Friendly
         {
             spoken = true;
             return "Oh... I thank you for freeing my mistress from her sorrow. But now without her, what is my purpose. I do not yet feel fulfilled. If only I could have a token of her, an object of remembrance...";
-        }
-
-        public override bool CheckActive()
-        {
-            return true;
         }
 
         public override void FindFrame(int frameHeight)
