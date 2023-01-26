@@ -58,8 +58,6 @@ namespace Redemption.Globals
             RecipeGroup.RegisterGroup("Redemption:Plants", PlantRecipeGroup);
 
             RecipeGroup.RegisterGroup("Fruit", new RecipeGroup(null, ModContent.ItemType<Olives>()));
-            RecipeGroup.RegisterGroup("Bugs", new RecipeGroup(null, ModContent.ItemType<BoneSpiderItem>(), ModContent.ItemType<CoastScarabItem>(), ModContent.ItemType<KabucraItem>(), ModContent.ItemType<SandskinSpiderItem>(), ModContent.ItemType<SpiderSwarmerItem>(), ModContent.ItemType<TreeBugItem>()));
-            RecipeGroup.RegisterGroup("GoldenCritter", new RecipeGroup(null, ModContent.ItemType<ChickenGoldItem>()));
             RecipeGroup.RegisterGroup("Sand", new RecipeGroup(null, ModContent.ItemType<IrradiatedSand>(), ModContent.ItemType<IrradiatedHardenedSand>()));
             RecipeGroup.RegisterGroup("Snails", new RecipeGroup(null, ModContent.ItemType<JohnSnailItem>()));
             RecipeGroup.RegisterGroup("Wood", new RecipeGroup(null, ModContent.ItemType<ElderWood>(), ModContent.ItemType<PetrifiedWood>()));

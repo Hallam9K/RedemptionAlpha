@@ -70,9 +70,8 @@ namespace Redemption.NPCs.Friendly
 
         public override bool CanHitPlayer(Player target, ref int cooldownSlot) => false;
         public override bool? CanHitNPC(NPC target) => false;
-
+        public override bool CheckActive() => !spoken;
         private bool floatTimer;
-        private bool spoken;
         public override void AI()
         {
             if (spoken)
