@@ -205,7 +205,7 @@ namespace Redemption.Tiles.Furniture.SlayerShip
                             "'I tested my new weaponry on the empire's planet. Xehito came back to the SoS so he wouldn't get hit.\n" +
                             "It's a dual-beam that shoots from both edges of my crescent moon-shaped spaceship. The planet was devastated,\n" +
                             "with the empire along with it. There were leftovers in the form of spaceships that were out of range of the\n" +
-                            "planet's explosion, but Xehito and I made quick work of them. The retribution of the empire fills me with satisfaction,\n" +
+                            "blast, but Xehito and I made quick work of them. The retribution of the empire fills me with satisfaction,\n" +
                             "and during my time helping the other planet, my feelings of pain had dulled. But, now it returns once more.'");
                         break;
                     case 14:
