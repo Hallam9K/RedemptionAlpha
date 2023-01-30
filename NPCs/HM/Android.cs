@@ -28,6 +28,9 @@ using Redemption.Particles;
 using Terraria.GameContent.UI;
 using Redemption.Items.Usable;
 using System.IO;
+using Mono.CompilerServices.SymbolWriter;
+using Redemption.Items.Accessories.PreHM;
+using static Humanizer.In;
 
 namespace Redemption.NPCs.HM
 {
@@ -129,12 +132,67 @@ namespace Redemption.NPCs.HM
             RedeNPC globalNPC = NPC.Redemption();
             bubble = ModContent.Request<Texture2D>("Redemption/UI/TextBubble_Slayer").Value;
             voice = CustomSounds.Voice6 with { Pitch = 0.8f };
-            if (globalNPC.attacker is Player && AIState > ActionState.Scan)
-                NPC.chaseable = true;
-            else
-                NPC.chaseable = false;
-
             NPC.TargetClosest();
+
+            if (Variant >= 10)
+            {
+                NPC.LookAtEntity(player);
+                NPC.knockBackResist = 0;
+                if (AITimer++ == 10)
+                {
+                    DialogueChain chain = new();
+                    if (Variant == 11)
+                    {
+                        chain.Add(new(NPC, "Well aren't you a little trigger-happy.", Color.LightBlue, Color.DarkCyan, voice, 2, 100, 0, false, bubble: bubble))
+                             .Add(new(NPC, "You know there's like[10] a million of us, right?[60] Anyway,[10] I've come to relay a message from King Slayer -", Color.LightBlue, Color.DarkCyan, voice, 2, 100, 0, false, bubble: bubble))
+                             .Add(new(NPC, "\"I'll be heading off to the other world soon,[10] so if you have any unfinished business with me,[20] I'd get on that sooner rather than later.\"", Color.LightBlue, Color.DarkCyan, CustomSounds.Voice6 with { Pitch = 0.2f }, 2, 200, 30, true, bubble: bubble, endID: 1));
+                    }
+                    else if (Variant == 12)
+                    {
+                        NPC.dontTakeDamage = true;
+                        chain.Add(new(NPC, "Screw you too I guess.", Color.LightBlue, Color.DarkCyan, voice, 2, 100, 0, false, bubble: bubble));
+                    }
+                    else
+                    {
+                        chain.Add(new(NPC, "Don't attack.", Color.LightBlue, Color.DarkCyan, voice, 2, 100, 0, false, bubble: bubble))
+                             .Add(new(NPC, "I've come to relay a message from King Slayer -", Color.LightBlue, Color.DarkCyan, voice, 2, 100, 0, false, bubble: bubble))
+                             .Add(new(NPC, "\"I'll be heading off to the other world soon,[10] so if you have any unfinished business with me,[20] I'd get on that sooner rather than later.\"", Color.LightBlue, Color.DarkCyan, CustomSounds.Voice6 with { Pitch = 0.2f }, 2, 200, 30, true, bubble: bubble, endID: 1));
+                    }
+                    chain.OnEndTrigger += Chain_OnEndTrigger;
+                    TextBubbleUI.Visible = true;
+                    TextBubbleUI.Add(chain);
+                }
+                if (Variant == 12 && AITimer >= 120)
+                {
+                    RedeHelper.SpawnNPC(NPC.GetSource_FromAI(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<SlayerSpawner>(), 3);
+                    AITimer = 2000;
+                }
+                if (AITimer >= 2000)
+                {
+                    SoundEngine.PlaySound(SoundID.Item74 with { Pitch = 0.1f }, NPC.position);
+                    DustHelper.DrawDustImage(NPC.Center, DustID.Frost, 0.1f, "Redemption/Effects/DustImages/WarpShape", 2, true, 0);
+                    for (int i = 0; i < 15; i++)
+                    {
+                        ParticleManager.NewParticle(NPC.RandAreaInEntity(), RedeHelper.SpreadUp(1), new LightningParticle(), Color.White, 3);
+                        int dust = Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.Frost, Scale: 3f);
+                        Main.dust[dust].velocity *= 6f;
+                        Main.dust[dust].noGravity = true;
+                    }
+                    NPC.active = false;
+
+                    if (Variant != 12)
+                    {
+                        RedeWorld.slayerMessageGiven = true;
+                        if (Main.netMode == NetmodeID.Server)
+                            NetMessage.SendData(MessageID.WorldData);
+                    }
+                }
+                return;
+            }
+
+            if ((globalNPC.attacker is Player || (globalNPC.attacker is NPC spirit && spirit.Redemption().spiritSummon)) && AIState > ActionState.Scan)
+                NPC.chaseable = true;
+
             if (AIState is not ActionState.RocketFist)
                 NPC.LookByVelocity();
 
@@ -191,7 +249,7 @@ namespace Redemption.NPCs.HM
                             AIState = ActionState.Scan;
                             NPC.netUpdate = true;
                         }
-                        else if (RedeHelper.ClosestNPCToNPC(NPC, ref closeNPC, 100, NPC.Center))
+                        else if (RedeHelper.ClosestNPCToNPC(NPC, ref closeNPC, 100, NPC.Center) && !closeNPC.dontTakeDamage)
                         {
                             AITimer = 0;
                             AIState = ActionState.Scan;
@@ -224,7 +282,12 @@ namespace Redemption.NPCs.HM
                     {
                         if (TimerRand == 1)
                         {
-                            Dialogue d1 = new(NPC, "Human scanned...", Color.LightBlue, Color.DarkCyan, voice, 1, 30, 30, true, bubble: bubble); // 65
+                            string s = "Human";
+                            if (player.IsFullTBot())
+                                s = "Robot";
+                            else if (player.RedemptionPlayerBuff().ChickenForm)
+                                s = "Chicken";
+                            Dialogue d1 = new(NPC, s + " scanned...", Color.LightBlue, Color.DarkCyan, voice, 1, 30, 30, true, bubble: bubble); // 65
                             TextBubbleUI.Visible = true;
                             TextBubbleUI.Add(d1);
                         }
@@ -290,8 +353,8 @@ namespace Redemption.NPCs.HM
                         NPC.netUpdate = true;
                     }
 
-                    NPC.PlatformFallCheck(ref NPC.Redemption().fallDownPlatform, 20);
-                    NPCHelper.HorizontallyMove(NPC, globalNPC.attacker.Center, 0.15f, 2.6f, 12, 16, NPC.Center.Y > globalNPC.attacker.Center.Y);
+                    NPC.PlatformFallCheck(ref NPC.Redemption().fallDownPlatform, 20, globalNPC.attacker.Center.Y);
+                    NPCHelper.HorizontallyMove(NPC, globalNPC.attacker.Center, 0.15f, 2.6f, 12, 16, NPC.Center.Y > globalNPC.attacker.Center.Y, globalNPC.attacker);
                     break;
 
                 case ActionState.RocketFist:
@@ -346,7 +409,7 @@ namespace Redemption.NPCs.HM
                         DustHelper.DrawDustImage(NPC.Center, DustID.Frost, 0.1f, "Redemption/Effects/DustImages/WarpShape", 2, true, 0);
                         for (int i = 0; i < 15; i++)
                         {
-                            ParticleManager.NewParticle(RedeHelper.RandAreaInEntity(NPC), RedeHelper.SpreadUp(1), new LightningParticle(), Color.White, 3);
+                            ParticleManager.NewParticle(NPC.RandAreaInEntity(), RedeHelper.SpreadUp(1), new LightningParticle(), Color.White, 3);
                             int dust = Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.Frost, Scale: 3f);
                             Main.dust[dust].velocity *= 6f;
                             Main.dust[dust].noGravity = true;
@@ -363,13 +426,20 @@ namespace Redemption.NPCs.HM
                     break;
             }
         }
+        private void Chain_OnEndTrigger(Dialogue dialogue, int ID)
+        {
+            AITimer = 2000;
+        }
         public override bool? CanFallThroughPlatforms() => NPC.Redemption().fallDownPlatform;
         public override void FindFrame(int frameHeight)
         {
             if (Main.netMode != NetmodeID.Server)
             {
                 NPC.frame.Width = TextureAssets.Npc[NPC.type].Width() / 3;
-                NPC.frame.X = (int)(NPC.frame.Width * Variant);
+                int var = (int)Variant;
+                if (var >= 3)
+                    var = 0;
+                NPC.frame.X = NPC.frame.Width * var;
 
                 if (AIState is ActionState.Scan)
                 {
@@ -391,7 +461,7 @@ namespace Redemption.NPCs.HM
                         if (NPC.frame.Y == 20 * frameHeight)
                         {
                             SoundEngine.PlaySound(CustomSounds.MissileFire1 with { Volume = 0.5f }, NPC.position);
-                            NPC.Shoot(NPC.Center + new Vector2(19 * NPC.spriteDirection, -1), ModContent.ProjectileType<Android_Proj>(), NPC.damage, new Vector2(14 * NPC.spriteDirection, 0), false, SoundID.Item1, NPC.whoAmI, Variant);
+                            NPC.Shoot(NPC.Center + new Vector2(19 * NPC.spriteDirection, -1), ModContent.ProjectileType<Android_Proj>(), NPC.damage, new Vector2(14 * NPC.spriteDirection, 0), false, SoundID.Item1, NPC.whoAmI, var);
                             NPC.velocity.X -= 3 * NPC.spriteDirection;
                             Main.LocalPlayer.RedemptionScreen().ScreenShakeOrigin = NPC.Center;
                             Main.LocalPlayer.RedemptionScreen().ScreenShakeIntensity += 3;
@@ -436,10 +506,12 @@ namespace Redemption.NPCs.HM
         }
         public void PickType()
         {
+            if (Variant >= 10)
+                return;
             WeightedRandom<int> choice = new(Main.rand);
             choice.Add(0, 10);
             choice.Add(1, 4);
-            choice.Add(2, 0.02f);
+            choice.Add(2, 0.04f);
 
             Variant = choice;
             NPC.netUpdate = true;
@@ -490,6 +562,10 @@ namespace Redemption.NPCs.HM
 
         public override void OnKill()
         {
+            if (Variant == 10)
+                RedeHelper.SpawnNPC(NPC.GetSource_FromAI(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<SlayerSpawner>(), 1);
+            else if (Variant == 11 && RedeWorld.slayerRep > 2)
+                RedeHelper.SpawnNPC(NPC.GetSource_FromAI(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<SlayerSpawner>(), 2);
             if (Variant == 2)
             {
                 RedeWorld.apidroidKilled = true;
@@ -518,14 +594,18 @@ namespace Redemption.NPCs.HM
                     int dustIndex = Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.Electric);
                     Main.dust[dustIndex].velocity *= 5;
                 }
-                Gore.NewGore(NPC.GetSource_FromThis(), NPC.position, NPC.velocity, ModContent.Find<ModGore>("Redemption/AndroidGore1" + (Variant + 1)).Type, 1);
-                Gore.NewGore(NPC.GetSource_FromThis(), NPC.position, NPC.velocity, ModContent.Find<ModGore>("Redemption/AndroidGore2" + (Variant + 1)).Type, 1);
+                int var = (int)Variant;
+                if (var >= 3)
+                    var = 0;
+
+                Gore.NewGore(NPC.GetSource_FromThis(), NPC.position, NPC.velocity, ModContent.Find<ModGore>("Redemption/AndroidGore1" + (var + 1)).Type, 1);
+                Gore.NewGore(NPC.GetSource_FromThis(), NPC.position, NPC.velocity, ModContent.Find<ModGore>("Redemption/AndroidGore2" + (var + 1)).Type, 1);
                 for (int i = 0; i < 3; i++)
-                    Gore.NewGore(NPC.GetSource_FromThis(), NPC.position, NPC.velocity, ModContent.Find<ModGore>("Redemption/AndroidGore3" + (Variant + 1)).Type, 1);
+                    Gore.NewGore(NPC.GetSource_FromThis(), NPC.position, NPC.velocity, ModContent.Find<ModGore>("Redemption/AndroidGore3" + (var + 1)).Type, 1);
             }
             Dust.NewDust(NPC.position + NPC.velocity, NPC.width, NPC.height, DustID.Electric, NPC.velocity.X * 0.5f, NPC.velocity.Y * 0.5f);
 
-            if (AIState is ActionState.Idle or ActionState.Wander or ActionState.Scan)
+            if (Variant < 10 && AIState is ActionState.Idle or ActionState.Wander or ActionState.Scan)
             {
                 AITimer = 0;
                 AIState = ActionState.Alert;

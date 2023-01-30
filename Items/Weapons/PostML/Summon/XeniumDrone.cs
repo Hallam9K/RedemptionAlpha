@@ -36,7 +36,7 @@ namespace Redemption.Items.Weapons.PostML.Summon
             Item.noMelee = true;
             Item.knockBack = 0;
             Item.value = Item.sellPrice(0, 0, 45, 0);
-            Item.rare = ItemRarityID.Orange;
+            Item.rare = ItemRarityID.Purple;
             Item.UseSound = SoundID.Item44;
             Item.autoReuse = false;
             Item.buffType = ModContent.BuffType<XeniumTurretBuff>();

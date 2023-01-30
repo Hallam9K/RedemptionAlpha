@@ -29,9 +29,6 @@ using Redemption.Items.Weapons.HM.Magic;
 using Redemption.Items.Weapons.HM.Melee;
 using Redemption.Items.Armor.Vanity;
 using ReLogic.Content;
-using Redemption.NPCs.PreHM;
-using static System.Net.Mime.MediaTypeNames;
-using static Humanizer.In;
 
 namespace Redemption.NPCs.Bosses.KSIII
 {
@@ -191,7 +188,6 @@ namespace Redemption.NPCs.Bosses.KSIII
 
             notExpertRule.OnSuccess(ItemDropRule.OneFromOptions(1, ModContent.ItemType<SlayerGun>(), ModContent.ItemType<Nanoswarmer>(), ModContent.ItemType<SlayerFist>()));
             notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<SlayerController>(), 10));
-            notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<SlayerMedal>()));
             notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<Holokey>()));
             notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<CyberPlating>(), 1, 14, 18));
 
@@ -206,6 +202,8 @@ namespace Redemption.NPCs.Bosses.KSIII
         public override void OnKill()
         {
             NPC.Shoot(new Vector2(NPC.Center.X - 60, NPC.Center.Y), ModContent.ProjectileType<KS3_Exit>(), 0, Vector2.Zero, false, SoundID.Item1);
+            if (NPC.ai[0] != 11)
+                Item.NewItem(NPC.GetSource_Loot(), (int)NPC.position.X, (int)NPC.position.Y, NPC.width, NPC.height, ModContent.ItemType<SlayerMedal>());
 
             if (!RedeBossDowned.downedSlayer)
             {
@@ -403,10 +401,15 @@ namespace Redemption.NPCs.Bosses.KSIII
                                 else
                                 {
                                     if (RedeWorld.alignment >= 0)
+                                    {
                                         line2 = "I warned you,[10] so don't go crying to your mummy when I crush you into the ground!";
+                                        if (player.Redemption().slayerStarRating >= 6)
+                                            line2 = "Do you understand how annoying it is to be spam-pinged by my units because of your trigger-happy arse?[60] Maybe I should teach you a lesson!";
+                                    }
                                     else
                                         line2 = "You were on my hitlist,[10] so lets skip the small talk and get on with it!";
                                 }
+                                player.Redemption().slayerStarRating = 0;
 
                                 DialogueChain chain = new();
                                 chain.Add(new(NPC, line1, new Color(170, 255, 255), Color.Black, voice, 2, 100, 0, false, null, bubble, null, modifier))

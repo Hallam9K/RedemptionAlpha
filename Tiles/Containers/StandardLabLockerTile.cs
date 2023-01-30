@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Redemption.Dusts.Tiles;
+using Redemption.Globals;
 using Redemption.Items.Placeable.Containers;
 using Terraria;
 using Terraria.Audio;
@@ -96,6 +97,9 @@ namespace Redemption.Tiles.Containers
 
         public override bool RightClick(int i, int j)
         {
+            if (!LabArea.labAccess[0])
+                return false;
+
             Player player = Main.LocalPlayer;
             Tile tile = Framing.GetTileSafely(i, j);
             Main.mouseRightRelease = false;

@@ -210,7 +210,7 @@ namespace Redemption.NPCs.Bosses.ADD
                     }
 
                     NPC.PlatformFallCheck(ref NPC.Redemption().fallDownPlatform, 28);
-                    NPCHelper.HorizontallyMove(NPC, player.Center, moveInterval, moveSpeed, 20, 26, NPC.Center.Y > player.Center.Y);
+                    NPCHelper.HorizontallyMove(NPC, player.Center, moveInterval, moveSpeed, 20, 26, NPC.Center.Y > player.Center.Y, player);
                     break;
                 case ActionState.Roll:
                     if (TimerRand2 == 0)
@@ -306,7 +306,7 @@ namespace Redemption.NPCs.Bosses.ADD
                         NPC.netUpdate = true;
                     }
                     NPC.PlatformFallCheck(ref NPC.Redemption().fallDownPlatform, 28);
-                    NPCHelper.HorizontallyMove(NPC, player.Center, moveInterval, moveSpeed, 20, 26, NPC.Center.Y > player.Center.Y);
+                    NPCHelper.HorizontallyMove(NPC, player.Center, moveInterval, moveSpeed, 20, 26, NPC.Center.Y > player.Center.Y, player);
                     break;
                 case ActionState.Transform:
                     NPC.velocity *= 0.9f;

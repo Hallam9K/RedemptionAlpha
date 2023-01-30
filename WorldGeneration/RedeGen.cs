@@ -630,6 +630,7 @@ namespace Redemption.WorldGeneration
                         [new Color(0, 255, 0)] = TileID.Grass,
                         [new Color(0, 0, 255)] = TileID.Emerald,
                         [new Color(0, 255, 255)] = ModContent.TileType<ElderWoodTile>(),
+                        [new Color(255, 0, 255)] = ModContent.TileType<AncientHallBrickTile>(),
                         [new Color(150, 150, 150)] = -2,
                         [Color.Black] = -1
                     };
@@ -639,6 +640,8 @@ namespace Redemption.WorldGeneration
                         [new Color(0, 255, 0)] = WallID.DirtUnsafe3,
                         [new Color(0, 0, 255)] = WallID.DirtUnsafe1,
                         [new Color(0, 255, 255)] = WallID.GrassUnsafe,
+                        [new Color(255, 0, 0)] = ModContent.WallType<AncientHallPillarWallTile>(),
+                        [new Color(150, 150, 150)] = -2,
                         [Color.Black] = -1
                     };
 
@@ -726,8 +729,8 @@ namespace Redemption.WorldGeneration
 
                     Point originPoint = newbCaveVector.ToPoint();
                     GenUtils.ObjectPlace(originPoint.X + 34, originPoint.Y + 10, (ushort)ModContent.TileType<AnglonPortalTile>());
-                    GenUtils.ObjectPlace(originPoint.X + 25, originPoint.Y + 9, (ushort)ModContent.TileType<ElderWoodWorkbenchTile>());
-                    GenUtils.ObjectPlace(originPoint.X + 26, originPoint.Y + 8, (ushort)ModContent.TileType<DemonScrollTile>());
+                    GenUtils.ObjectPlace(originPoint.X + 22, originPoint.Y + 9, (ushort)ModContent.TileType<ElderWoodWorkbenchTile>());
+                    GenUtils.ObjectPlace(originPoint.X + 23, originPoint.Y + 8, (ushort)ModContent.TileType<DemonScrollTile>());
                     GenUtils.ObjectPlace(originPoint.X + 34, originPoint.Y + 64, (ushort)ModContent.TileType<NewbMound>());
 
                     BaseWorldGen.SmoothTiles(originPoint.X, originPoint.Y, originPoint.X + 60, originPoint.Y + 82);
@@ -1373,7 +1376,7 @@ namespace Redemption.WorldGeneration
             int PlacementSuccess = WorldGen.PlaceChest(x, y, (ushort)ModContent.TileType<ElderWoodChestTile>(), false);
 
             int[] ChestLoot = new int[] {
-                ModContent.ItemType<RopeHook>(), ModContent.ItemType<BeardedHatchet>(), ModContent.ItemType<WeddingRing>(), ModContent.ItemType<TrappedSoulBauble>() };
+                ModContent.ItemType<RopeHook>(), ModContent.ItemType<BeardedHatchet>(), ModContent.ItemType<WeddingRing>(), ModContent.ItemType<TrappedSoulBauble>(), ModContent.ItemType<EmptyCruxCard>() };
             int[] ChestLoot2 = new int[] {
                 ModContent.ItemType<ZweihanderFragment1>(), ModContent.ItemType<ZweihanderFragment2>() };
             int[] ChestLoot3 = new int[] {

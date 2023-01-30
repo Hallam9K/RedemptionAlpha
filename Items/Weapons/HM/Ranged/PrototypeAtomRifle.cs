@@ -49,7 +49,7 @@ namespace Redemption.Items.Weapons.HM.Ranged
 
         public override Vector2? HoldoutOffset()
         {
-            return new Vector2(-8, 0);
+            return new Vector2(-16, 0);
         }
 
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)

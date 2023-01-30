@@ -192,8 +192,8 @@ namespace Redemption.NPCs.PreHM
                     else if (runCooldown > 0)
                         runCooldown--;
 
-                    NPC.PlatformFallCheck(ref NPC.Redemption().fallDownPlatform, 20);
-                    NPCHelper.HorizontallyMove(NPC, new Vector2(NPC.Center.X + (100 * NPC.RightOfDir(globalNPC.attacker)), NPC.Center.Y), 0.4f, 2.4f * SpeedMultiplier * (NPC.RedemptionNPCBuff().rallied ? 1.1f : 1), 12, 8, NPC.Center.Y > player.Center.Y);
+                    NPC.PlatformFallCheck(ref NPC.Redemption().fallDownPlatform, 20, globalNPC.attacker.Center.Y);
+                    NPCHelper.HorizontallyMove(NPC, new Vector2(NPC.Center.X + (100 * NPC.RightOfDir(globalNPC.attacker)), NPC.Center.Y), 0.4f, 2.4f * SpeedMultiplier * (NPC.RedemptionNPCBuff().rallied ? 1.1f : 1), 12, 8, NPC.Center.Y > player.Center.Y, globalNPC.attacker);
                     break;
 
                 case ActionState.Follow:
@@ -204,6 +204,8 @@ namespace Redemption.NPCs.PreHM
                         AIState = ActionState.Wander;
                         NPC.netUpdate = true;
                     }
+                    if (globalNPC.attacker is NPC nonUndead && !NPCLists.Undead.Contains(nonUndead.type) && !NPCLists.Skeleton.Contains(nonUndead.type))
+                        AIState = ActionState.Retreat;
 
                     if (!NPC.Sight(globalNPC.attacker, VisionRange, HasEyes, HasEyes, false))
                         runCooldown++;
@@ -225,8 +227,8 @@ namespace Redemption.NPCs.PreHM
                         if (Main.netMode != NetmodeID.Server)
                             Gore.NewGore(NPC.GetSource_FromThis(), NPC.position, RedeHelper.Spread(1), ModContent.Find<ModGore>("Redemption/AncientCoinGore").Type, 1);
                     }
-                    NPC.PlatformFallCheck(ref NPC.Redemption().fallDownPlatform, 20);
-                    NPCHelper.HorizontallyMove(NPC, globalNPC.attacker.Center, 0.2f, 2.4f * SpeedMultiplier * (NPC.RedemptionNPCBuff().rallied ? 1.2f : 1), 6, 6, NPC.Center.Y > globalNPC.attacker.Center.Y);
+                    NPC.PlatformFallCheck(ref NPC.Redemption().fallDownPlatform, 20, globalNPC.attacker.Center.Y);
+                    NPCHelper.HorizontallyMove(NPC, globalNPC.attacker.Center, 0.2f, 2.4f * SpeedMultiplier * (NPC.RedemptionNPCBuff().rallied ? 1.2f : 1), 6, 6, NPC.Center.Y > globalNPC.attacker.Center.Y, globalNPC.attacker);
 
                     break;
 
@@ -238,6 +240,11 @@ namespace Redemption.NPCs.PreHM
                         AITimer = 0;
                         AIState = ActionState.Wander;
                         NPC.netUpdate = true;
+                    }
+                    if (globalNPC.attacker is NPC nonUndead2 && !NPCLists.Undead.Contains(nonUndead2.type) && !NPCLists.Skeleton.Contains(nonUndead2.type))
+                    {
+                        NPC.frameCounter = 0;
+                        AIState = ActionState.Retreat;
                     }
 
                     NPC.LookAtEntity(globalNPC.attacker);

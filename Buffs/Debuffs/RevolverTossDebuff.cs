@@ -1,3 +1,4 @@
+using Terraria;
 using Terraria.ModLoader;
 
 namespace Redemption.Buffs.Debuffs
@@ -8,6 +9,7 @@ namespace Redemption.Buffs.Debuffs
         {
             DisplayName.SetDefault("Epic Fail!");
             Description.SetDefault("You fool! You idiot! You dropped your gun!");
+            Main.debuff[Type] = true;
         }
     }
 }

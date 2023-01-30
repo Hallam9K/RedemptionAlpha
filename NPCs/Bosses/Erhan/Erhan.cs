@@ -393,12 +393,23 @@ namespace Redemption.NPCs.Bosses.Erhan
                             {
                                 if (AITimer++ == 0 && !Main.dedServ)
                                 {
-                                    Dialogue d1 = new(NPC, "CEASE!", Color.LightGoldenrodYellow, new Color(100, 86, 0), voice, 2, 100, 30, true, null, bubble, null, modifier); // 154
+                                    DialogueChain chain = new();
+                                    if (player.ZoneUnderworldHeight)
+                                    {
+                                        chain.Add(new(NPC, "CEA-", Color.LightGoldenrodYellow, new Color(100, 86, 0), voice, 2, 20, 0, false, null, bubble, null, modifier));
+                                        chain.Add(new(NPC, "...[60] A-[10]are we in...", Color.LightGoldenrodYellow, new Color(100, 86, 0), voice, 2, 100, 0, false, null, bubble, null, modifier));
+                                        chain.Add(new(NPC, "[@j]Why didst thou summon me here!?[30] I dareth not fight in such demonic lands!!", Color.LightGoldenrodYellow, new Color(100, 86, 0), voice, 2, 100, 0, false, null, bubble, null, modifier));
+                                        chain.Add(new(NPC, "Farewell!", Color.LightGoldenrodYellow, new Color(100, 86, 0), voice, 2, 60, 0, false, null, bubble, null, modifier, 4));
+                                    }
+                                    else
+                                        chain.Add(new(NPC, "CEASE!", Color.LightGoldenrodYellow, new Color(100, 86, 0), voice, 2, 100, 30, true, null, bubble, null, modifier, 2));
+                                    chain.OnSymbolTrigger += Chain_OnSymbolTrigger;
+                                    chain.OnEndTrigger += Chain_OnEndTrigger;
                                     TextBubbleUI.Visible = true;
-                                    TextBubbleUI.Add(d1);
+                                    TextBubbleUI.Add(chain);
                                 }
 
-                                if (AITimer >= 120)
+                                if (AITimer >= 2000)
                                 {
                                     if (!Main.dedServ)
                                     {
@@ -1053,7 +1064,7 @@ namespace Redemption.NPCs.Bosses.Erhan
                             case 3:
                                 if (AITimer++ == 30)
                                 {
-                                    NPC.life = 1;
+                                    NPC.life = 10;
                                     NPC.dontTakeDamage = false;
                                     NPC.chaseable = false;
                                     NPC.Shoot(NPC.Center, ModContent.ProjectileType<ProjDeath>(), 0, Vector2.Zero, false, SoundID.Item1);
@@ -1086,8 +1097,8 @@ namespace Redemption.NPCs.Bosses.Erhan
                                     if (!Main.dedServ)
                                     {
                                         DialogueChain chain = new();
-                                        chain.Add(new(NPC, "Well...[30] 'Til we meet again![@i]", Color.LightGoldenrodYellow, new Color(100, 86, 0), voice, 2, 100, 0, false, null, bubble, null, modifier)); // 184
-                                        chain.OnSymbolTrigger += Chain_OnSymbolTrigger;
+                                        chain.Add(new(NPC, "Well...[30] 'Til we meet again!", Color.LightGoldenrodYellow, new Color(100, 86, 0), voice, 2, 100, 0, false, null, bubble, null, modifier, 5)); // 184
+                                        chain.OnEndTrigger += Chain_OnEndTrigger;
                                         TextBubbleUI.Visible = true;
                                         TextBubbleUI.Add(chain);
                                     }
@@ -1144,8 +1155,9 @@ namespace Redemption.NPCs.Bosses.Erhan
                 case "h":
                     AITimer = 3000;
                     break;
-                case "i":
-                    AITimer = 2383;
+                case "j":
+                    ArmType = 2;
+                    HeadFrameY = 1;
                     break;
             }
         }
@@ -1161,6 +1173,17 @@ namespace Redemption.NPCs.Bosses.Erhan
                     break;
                 case 3:
                     AITimer = 1466;
+                    break;
+                case 4:
+                    SoundEngine.PlaySound(SoundID.Item68, NPC.position);
+                    Main.LocalPlayer.RedemptionScreen().ScreenShakeOrigin = NPC.Center;
+                    Main.LocalPlayer.RedemptionScreen().ScreenShakeIntensity += 14;
+                    RedeDraw.SpawnExplosion(NPC.Center, Color.White, 6, 0, scale: 2, noDust: true, tex: ModContent.Request<Texture2D>("Redemption/Textures/HolyGlow3").Value);
+                    RedeDraw.SpawnExplosion(NPC.Center, Color.White, 6, 0, scale: 3, noDust: true, tex: ModContent.Request<Texture2D>("Redemption/Textures/HolyGlow2").Value);
+                    NPC.active = false;
+                    break;
+                case 5:
+                    AITimer = 2383;
                     break;
             }
         }
@@ -1212,7 +1235,7 @@ namespace Redemption.NPCs.Bosses.Erhan
         {
             if (AIState is ActionState.Death)
             {
-                if (TimerRand < 3 && AITimer < 60)
+                if (!RedeBossDowned.downedErhan && TimerRand < 3 && AITimer < 60)
                 {
                     NPC.life = 1;
                     return false;

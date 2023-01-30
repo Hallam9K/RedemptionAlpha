@@ -91,7 +91,7 @@ namespace Redemption.NPCs.Lab.Janitor
                                 State = 3;
                                 NPC.netUpdate = true;
                             }
-                            NPC.PlatformFallCheck(ref NPC.Redemption().fallDownPlatform, 20);
+                            NPC.PlatformFallCheck(ref NPC.Redemption().fallDownPlatform, 20, moveTo.Y);
                             NPCHelper.HorizontallyMove(NPC, moveTo, 0.4f, 1.4f, 12, 8, NPC.Center.Y > moveTo.Y);
                         }
                     }
@@ -117,7 +117,7 @@ namespace Redemption.NPCs.Lab.Janitor
                             State = 3;
                             NPC.netUpdate = true;
                         }
-                        NPC.PlatformFallCheck(ref NPC.Redemption().fallDownPlatform, 20);
+                        NPC.PlatformFallCheck(ref NPC.Redemption().fallDownPlatform, 20, moveTo.Y);
                         NPCHelper.HorizontallyMove(NPC, moveTo, 0.4f, 1.4f, 12, 8, NPC.Center.Y > moveTo.Y);
                     }
                     break;
