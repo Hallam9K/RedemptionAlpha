@@ -37,6 +37,11 @@ using Redemption.NPCs.Bosses.ADD;
 using Redemption.Items.Accessories.PostML;
 using Redemption.NPCs.Friendly;
 using Redemption.Items.Weapons.PreHM.Summon;
+using Redemption.NPCs.Bosses.FowlEmperor;
+using Redemption.Items.Placeable.Furniture.Misc;
+using Redemption.NPCs.Critters;
+using Redemption.NPCs.FowlMorning;
+using Redemption.Items;
 
 namespace Redemption.CrossMod
 {
@@ -52,6 +57,49 @@ namespace Redemption.CrossMod
             Redemption mod = Redemption.Instance;
             if (ModLoader.TryGetMod("BossChecklist", out Mod bossChecklist))
             {
+                #region Fowl Emperor
+                bossChecklist.Call("AddBoss", mod, "Fowl Emperor", ModContent.NPCType<FowlEmperor>(), 0.1f, () => RedeBossDowned.downedFowlEmperor, () => RedeBossDowned.downedFowlEmperor,
+                    new List<int>
+                    {
+                        ModContent.ItemType<FowlEmperorRelic>(),
+                        //ModContent.ItemType<BouquetOfThorns>(),
+                        ModContent.ItemType<FowlEmperorTrophy>(),
+                        ModContent.ItemType<FowlCrown>(),
+                        ModContent.ItemType<ForestBossBox>()
+                    },
+                    ModContent.ItemType<EggCrown>(), "Use an [i:" + ModContent.ItemType<EggCrown>() + "] at day.",
+                    "The emperor tires of your shenanigans...",
+                    (SpriteBatch sb, Rectangle rect, Color color) =>
+                    {
+                        Texture2D texture = ModContent.Request<Texture2D>("Redemption/CrossMod/BossChecklist/FowlEmperor").Value;
+                        Vector2 centered = new(rect.X + (rect.Width / 2) - (texture.Width / 2), rect.Y + (rect.Height / 2) - (texture.Height / 2));
+                        sb.Draw(texture, centered, color);
+                    }, null);
+                #endregion
+
+                #region Fowl Morning
+                bossChecklist.Call("AddEvent", mod, "Fowl Morning", new List<int>()
+                    {
+                        ModContent.NPCType<ChickenScratcher>(),
+                        ModContent.NPCType<ChickenBomber>(),
+                    }, 0.11f, () => RedeBossDowned.downedFowlMorning, () => RedeBossDowned.downedFowlEmperor,
+                    new List<int>
+                    {
+                        //ModContent.ItemType<ThornRelic>(),
+                        //ModContent.ItemType<BouquetOfThorns>(),
+                        //ModContent.ItemType<ThornTrophy>(),
+                        //ModContent.ItemType<ThornMask>(),
+                        //ModContent.ItemType<ForestBossBox>()
+                    },
+                    ModContent.ItemType<FowlWarHorn>(), "Use a [i:" + ModContent.ItemType<FowlWarHorn>() + "] before midday.",
+                    (SpriteBatch sb, Rectangle rect, Color color) =>
+                    {
+                        Texture2D texture = ModContent.Request<Texture2D>("Redemption/CrossMod/BossChecklist/FowlMorning").Value;
+                        Vector2 centered = new(rect.X + (rect.Width / 2) - (texture.Width / 2), rect.Y + (rect.Height / 2) - (texture.Height / 2));
+                        sb.Draw(texture, centered, color);
+                    }, "Redemption/Gores/Boss/FowlEmperor_Crown");
+                #endregion
+
                 #region Thorn
                 bossChecklist.Call("AddBoss", mod, "Thorn", ModContent.NPCType<Thorn>(), 1.5f, () => RedeBossDowned.downedThorn, () => true,
                     new List<int>
@@ -214,7 +262,8 @@ namespace Redemption.CrossMod
                         ModContent.ItemType<SlayerProjector>(),
                         ModContent.ItemType<KS3Trophy>(),
                         ModContent.ItemType<KingSlayerMask>(),
-                        ModContent.ItemType<KSBox>()
+                        ModContent.ItemType<KSBox>(),
+                        ModContent.ItemType<SlayerMedal>()
                     },
                     ModContent.ItemType<CyberTech>(), "Use a [i:" + ModContent.ItemType<CyberTech>() + "] at day, or attack Androids on the surface and allow them to teleport away.", null,
                     (SpriteBatch sb, Rectangle rect, Color color) =>
@@ -378,11 +427,11 @@ namespace Redemption.CrossMod
                         Vector2 centered = new(rect.X + (rect.Width / 2) - (texture.Width / 2), rect.Y + (rect.Height / 2) - (texture.Height / 2));
                         sb.Draw(texture, centered, color);
                         sb.End();
-                        sb.Begin(SpriteSortMode.Immediate, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null);
+                        sb.Begin(SpriteSortMode.Immediate, BlendState.Additive, SamplerState.LinearClamp, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.UIScaleMatrix);
                         GameShaders.Armor.ApplySecondary(shader, Main.player[Main.myPlayer], null);
                         sb.Draw(wingTex, centered, color);
                         sb.End();
-                        sb.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null);
+                        sb.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.LinearClamp, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.UIScaleMatrix);
                     }, null);
                 #endregion
 

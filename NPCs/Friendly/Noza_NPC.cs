@@ -28,10 +28,7 @@ namespace Redemption.NPCs.Friendly
         }
         public ref float AITimer => ref NPC.ai[1];
         public ref float Force => ref NPC.ai[2];
-        public static void UnloadChain()
-        {
-            tailChain = null;
-        }
+
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Noza, Tamer of Evil");

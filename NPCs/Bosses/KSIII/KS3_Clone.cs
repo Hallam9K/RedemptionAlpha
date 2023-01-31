@@ -284,8 +284,8 @@ namespace Redemption.NPCs.Bosses.KSIII
                     {
                         DialogueChain chain = new();
                         chain.Add(new(NPC, "SCANNING TARGET...", new Color(170, 255, 255), Color.Black, voice, 2, 100, 0, false, null, bubble, null, modifier))
-                             .Add(new(NPC, "TARGET DEEMED:[30] 'A WASTE OF TIME'", new Color(170, 255, 255), Color.Black, voice, 2, 100, 0, false, null, bubble, null, modifier))
-                             .Add(new(NPC, "RELAYING MESSAGE:[30] 'KING SLAYER NO LONGER HAS TIME FOR YOU'", new Color(170, 255, 255), Color.Black, voice, 2, 100, 10, true, null, bubble, null, modifier, 1));
+                             .Add(new(NPC, "TARGET DEEMED -[30] 'A WASTE OF TIME'", new Color(170, 255, 255), Color.Black, voice, 2, 100, 0, false, null, bubble, null, modifier))
+                             .Add(new(NPC, "RELAYING MESSAGE -[30] 'KING SLAYER NO LONGER HAS TIME FOR YOU'", new Color(170, 255, 255), Color.Black, voice, 2, 100, 10, true, null, bubble, null, modifier, 1));
                         chain.OnEndTrigger += Chain_OnEndTrigger;
                         TextBubbleUI.Visible = true;
                         TextBubbleUI.Add(chain);

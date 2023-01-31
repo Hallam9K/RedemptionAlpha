@@ -111,10 +111,8 @@ namespace Redemption.NPCs.Wasteland
             NPC.TargetClosest();
             NPC.LookByVelocity();
             RegenCheck();
-            if (globalNPC.attacker is Player && AIState > ActionState.Wander)
+            if ((globalNPC.attacker is Player || (globalNPC.attacker is NPC spirit && spirit.Redemption().spiritSummon)) && AIState > ActionState.Wander)
                 NPC.chaseable = true;
-            else
-                NPC.chaseable = false;
 
             switch (AIState)
             {

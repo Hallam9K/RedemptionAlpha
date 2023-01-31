@@ -13,6 +13,7 @@ using System.IO;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
+using Redemption.NPCs.Friendly.SpiritSummons;
 
 namespace Redemption.NPCs.PreHM
 {
@@ -130,6 +131,9 @@ namespace Redemption.NPCs.PreHM
         }
         public override bool PreAI()
         {
+            if (NPC.type == ModContent.NPCType<EpidotrianSkeleton_SS>())
+                return true;
+
             Player player = Main.player[NPC.target];
             if (player.RedemptionPlayerBuff().skeletonFriendly)
                 NPC.friendly = true;

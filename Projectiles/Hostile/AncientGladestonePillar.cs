@@ -3,12 +3,17 @@ using Redemption.NPCs.PreHM;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.Audio;
+using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Redemption.Projectiles.Hostile
 {
     public class AncientGladestonePillar : ModProjectile
     {
+        public override void SetStaticDefaults()
+        {
+            ProjectileID.Sets.DontAttachHideToAlpha[Type] = true;
+        }
         public override void SetDefaults()
         {
             Projectile.width = 34;

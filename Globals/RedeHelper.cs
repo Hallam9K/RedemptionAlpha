@@ -1062,7 +1062,7 @@ namespace Redemption.Globals
         ///     Makes this NPC horizontally move towards the Player (Take Fighter AI, as an example)
         /// </summary>
         public static void HorizontallyMove(Terraria.NPC npc, Vector2 vector, float moveInterval, float moveSpeed,
-            int maxJumpTilesX, int maxJumpTilesY, bool jumpUpPlatforms)
+            int maxJumpTilesX, int maxJumpTilesY, bool jumpUpPlatforms, Entity target = null)
         {
             //if velocity is less than -1 or greater than 1...
             if (npc.velocity.X < -moveSpeed || npc.velocity.X > moveSpeed)
@@ -1125,7 +1125,7 @@ namespace Redemption.Globals
                 {
                     //...attempt to jump if needed.
                     Vector2 newVec = BaseAI.AttemptJump(npc.position, npc.velocity, npc.width, npc.height,
-                        npc.direction, npc.directionY, maxJumpTilesX, maxJumpTilesY, moveSpeed, jumpUpPlatforms);
+                        npc.direction, npc.directionY, maxJumpTilesX, maxJumpTilesY, moveSpeed, jumpUpPlatforms, target);
                     if (!npc.noTileCollide)
                     {
                         Collision.StepUp(ref npc.position, ref npc.velocity, npc.width, npc.height, ref npc.stepSpeed,
@@ -1314,7 +1314,7 @@ namespace Redemption.Globals
             Terraria.Player player = Main.player[npc.target];
             RedeNPC globalNPC = npc.Redemption();
             if (globalNPC.attacker is Terraria.Player)
-                return false;
+                return npc.Redemption().spiritSummon;
 
             Terraria.NPC target = Main.npc[globalNPC.attacker.whoAmI];
             if (!target.active || target.whoAmI == npc.whoAmI || target.dontTakeDamage || target.type == NPCID.OldMan)

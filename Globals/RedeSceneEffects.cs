@@ -10,6 +10,7 @@ using Redemption.NPCs.Bosses.Neb.Phase2;
 using Redemption.NPCs.Bosses.Neb.Clone;
 using Redemption.NPCs.Bosses.ADD;
 using Redemption.NPCs.Friendly;
+using Redemption.Globals.World;
 
 namespace Redemption.Globals
 {
@@ -29,6 +30,19 @@ namespace Redemption.Globals
         public override bool IsSceneEffectActive(Terraria.Player player)
         {
             return RedeWorld.SkeletonInvasion && player.ZoneOverworldHeight;
+        }
+    }
+    public class FowlMorningMusic : ModSceneEffect
+    {
+        public override int Music => MusicLoader.GetMusicSlot("Redemption/Sounds/Music/FowlMorning");
+        public override SceneEffectPriority Priority => SceneEffectPriority.Event;
+        public override void SpecialVisuals(Terraria.Player player, bool isActive)
+        {
+            player.ManageSpecialBiomeVisuals("MoR:FowlMorningSky", isActive);
+        }
+        public override bool IsSceneEffectActive(Terraria.Player player)
+        {
+            return FowlMorningWorld.FowlMorningActive && player.ZoneOverworldHeight;
         }
     }
     public class ChaliceIntroMusic : ModSceneEffect

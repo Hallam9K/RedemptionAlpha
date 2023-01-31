@@ -1,6 +1,7 @@
 using Microsoft.CodeAnalysis.Operations;
 using Microsoft.Xna.Framework;
 using Redemption.Base;
+using Redemption.BaseExtension;
 using Redemption.Buffs.Debuffs;
 using Redemption.Buffs.NPCBuffs;
 using Redemption.Globals;
@@ -11,6 +12,7 @@ using Redemption.Items.Materials.PreHM;
 using Redemption.Items.Placeable.Plants;
 using Redemption.Items.Usable;
 using Redemption.Items.Weapons.PreHM.Melee;
+using Redemption.Items.Weapons.PreHM.Summon;
 using Redemption.NPCs.PreHM;
 using Redemption.UI;
 using System;
@@ -206,6 +208,9 @@ namespace Redemption.NPCs.Friendly
                     break;
                 case 5:
                     button = "Style Hair";
+                    break;
+                case 6:
+                    button = "Request Crux";
                     break;
             }
         }
@@ -424,6 +429,32 @@ namespace Redemption.NPCs.Friendly
                         if (HairExtType > 2)
                             HairExtType = 0;
                         break;
+                    case 6:
+                        if (!Main.LocalPlayer.RedemptionAbility().SpiritwalkerActive)
+                        {
+                            Main.npcChatText = "I cannot gift it to thee unless you're partly in the realm of spirits.";
+                            ChatNumber--;
+                            return;
+                        }
+                        int card = Main.LocalPlayer.FindItem(ModContent.ItemType<EmptyCruxCard>());
+                        if (card >= 0)
+                        {
+                            Main.LocalPlayer.inventory[card].stack--;
+                            if (Main.LocalPlayer.inventory[card].stack <= 0)
+                                Main.LocalPlayer.inventory[card] = new Item();
+
+                            Main.LocalPlayer.QuickSpawnItem(NPC.GetSource_Loot(), ModContent.ItemType<CruxCardForestNymph>());
+                            Main.npcChatText = "Fascinating. I never would've expected one such as yourself to have this ability. As you wish, I will give to thee the spirit of my kind.";
+                            Main.npcChatCornerItem = ModContent.ItemType<CruxCardForestNymph>();
+                            SoundEngine.PlaySound(SoundID.Chat);
+                        }
+                        else
+                        {
+                            Main.npcChatText = "You bare no object to imbue.";
+                            Main.npcChatCornerItem = ModContent.ItemType<EmptyCruxCard>();
+                        }
+                        ChatNumber--;
+                        break;
                 }
             }
             else
@@ -432,7 +463,7 @@ namespace Redemption.NPCs.Friendly
                 while (skip)
                 {
                     ChatNumber++;
-                    if (ChatNumber > 5)
+                    if (ChatNumber > 6)
                         ChatNumber = 0;
                     if (RedeQuest.forestNymphVar < 1 && (ChatNumber == 4 || ChatNumber == 5))
                         skip = true;
@@ -441,6 +472,8 @@ namespace Redemption.NPCs.Friendly
                     else if (RedeQuest.forestNymphVar < 2 && ChatNumber == 3)
                         skip = true;
                     else if (RedeQuest.forestNymphVar < 5 && ChatNumber == 1)
+                        skip = true;
+                    else if (ChatNumber == 6 && (RedeQuest.forestNymphVar < 5 || !Main.LocalPlayer.RedemptionAbility().SpiritwalkerActive || Main.LocalPlayer.HasItem(ModContent.ItemType<CruxCardForestNymph>())))
                         skip = true;
                     else
                         skip = false;
@@ -503,6 +536,8 @@ namespace Redemption.NPCs.Friendly
             if (RedeWorld.alignment < 0)
                 return "Leave. The fae's trust in you was an act of folly, the World deems you a danger.";
 
+            if (Main.LocalPlayer.RedemptionAbility().SpiritwalkerActive)
+                chat.Add("Oh, how vulgar. You are able to see within the other realm and as such are bearing witness to my ethereal form. Or mayhaps you aren't submerged deep enough to see it in full? No matter.", 2);
             if (BasePlayer.HasHelmet(player, ModContent.ItemType<ThornMask>(), true))
                 chat.Add("You aren't blighted, are you? No, it is just a mask.");
             if (BasePlayer.HasArmorSet(player, "Living Wood", true) || BasePlayer.HasArmorSet(player, "Living Wood", false))

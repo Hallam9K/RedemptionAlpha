@@ -320,7 +320,7 @@ namespace Redemption.NPCs.Friendly
         {
             WeightedRandom<string> chat = new(Main.rand);
             chat.Add("When encountering skeletons and undead, holy weapons are most effective against them. On the contrary, shadow weapons aren't as effective. I hate skeletons, used to think they looked kinda funny, until me and Daerel met a skeleton Vex.");
-            chat.Add("If you hate slimes, burn them! They'll burn brighter than my passion for attractive ladies" + (Main.LocalPlayer.Male ? "" : "(wink wink)") + ". Or, you could use ice weapons to freeze them, but that isn't as fun.");
+            chat.Add("If you hate slimes, burn them! They'll burn brighter than my passion for attractive ladies" + (Main.LocalPlayer.Male ? "" : " (wink wink)") + ". Or, you could use ice weapons to freeze them, but that isn't as fun.");
             chat.Add("Ever want to sneak up on an Epidotrian skeleton? Or perhaps a chicken? Well invisibility potions are real handy for the job!");
             chat.Add("Skeletons can wield some super rusty weapons, not something you'd wanna get cut by. If you do get a dirty wound, take a dip in some water and it'll disappear!");
             chat.Add("See foes wearing armor or holding shields? You'll need to smash their Guard to deal with them! A hammer or explosives will be your best bet, just make sure your weapon isn't super weak.");
@@ -357,8 +357,8 @@ namespace Redemption.NPCs.Friendly
                 shop.item[nextSlot++].SetDefaults(ModContent.ItemType<OphosNotes>());
 
             shop.item[nextSlot++].SetDefaults(ModContent.ItemType<KingChickenPainting>());
-            //if (RedeBossDowned.downedFowlEmperor)
-            //    shop.item[nextSlot++].SetDefaults(ModContent.ItemType<FowlEmperorPainting>());
+            if (RedeBossDowned.downedFowlEmperor)
+                shop.item[nextSlot++].SetDefaults(ModContent.ItemType<FowlEmperorPainting>());
             if (NPC.downedBoss1)
                 shop.item[nextSlot++].SetDefaults(ModContent.ItemType<PonderingTreesPainting>());
             if (NPC.downedBoss3)

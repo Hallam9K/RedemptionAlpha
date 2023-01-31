@@ -43,6 +43,7 @@ using Redemption.NPCs.Bosses.Neb.Clone;
 using Redemption.Items.Donator.Lordfunnyman;
 using Terraria.GameContent.Bestiary;
 using Terraria.UI;
+using Redemption.Globals.World;
 
 namespace Redemption.Globals.NPC
 {
@@ -53,6 +54,7 @@ namespace Redemption.Globals.NPC
         public bool invisible;
         public float elementDmg = 1;
         public bool fallDownPlatform;
+        public bool spiritSummon;
         public Entity attacker = Main.LocalPlayer;
         public Terraria.NPC npcTarget;
 
@@ -92,6 +94,13 @@ namespace Redemption.Globals.NPC
             invisible = false;
         }
 
+        public override bool StrikeNPC(Terraria.NPC npc, ref double damage, int defense, ref float knockback, int hitDirection, ref bool crit)
+        {
+            if (spiritSummon)
+                damage *= .75f;
+
+            return base.StrikeNPC(npc, ref damage, defense, ref knockback, hitDirection, ref crit);
+        }
         public override bool CanHitPlayer(Terraria.NPC npc, Terraria.Player target, ref int cooldownSlot)
         {
             if (target.RedemptionPlayerBuff().skeletonFriendly)
@@ -669,6 +678,11 @@ namespace Redemption.Globals.NPC
         {
             if (maxSpawns <= 0)
                 return;
+            if (FowlMorningWorld.FowlMorningActive)
+            {
+                maxSpawns = 8;
+                spawnRate = 40;
+            }
             if (RedeWorld.blobbleSwarm)
             {
                 spawnRate = 10;
@@ -714,6 +728,18 @@ namespace Redemption.Globals.NPC
                 pool.Add(ModContent.NPCType<SurfaceSkeletonSpawner>(), 2);
                 pool.Add(ModContent.NPCType<CorpseWalkerPriest>(), 0.5f);
                 pool.Add(ModContent.NPCType<JollyMadman>(), 0.02f);
+            }
+            if (FowlMorningWorld.FowlMorningActive && spawnInfo.Player.ZoneOverworldHeight && !spawnInfo.Player.ZoneTowerNebula && !spawnInfo.Player.ZoneTowerSolar && !spawnInfo.Player.ZoneTowerStardust && !spawnInfo.Player.ZoneTowerVortex)
+            {
+                pool.Clear();
+                if (Main.tile[spawnInfo.SpawnTileX, spawnInfo.SpawnTileY - 1].WallType is not WallID.DirtUnsafe)
+                {
+                    IDictionary<int, float> spawnpool = FowlMorningNPC.SpawnPool.ElementAt(FowlMorningWorld.ChickWave);
+                    foreach (KeyValuePair<int, float> key in spawnpool)
+                    {
+                        pool.Add(key.Key, key.Value);
+                    }
+                }
             }
             if (spawnInfo.Player.InModBiome<LabBiome>())
             {
