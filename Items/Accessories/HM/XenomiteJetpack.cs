@@ -1,3 +1,5 @@
+using Terraria.Audio;
+using Microsoft.Xna.Framework;
 using Redemption.Items.Materials.HM;
 using Terraria;
 using Terraria.DataStructures;
@@ -7,11 +9,10 @@ using Terraria.ModLoader;
 namespace Redemption.Items.Accessories.HM
 {
     [AutoloadEquip(EquipType.Wings)]
-    public class XenomiteWings : ModItem
+    public class XenomiteJetpack : ModItem
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Xenomite Wings");
             Tooltip.SetDefault("Allows flight and slow fall");
             SacrificeTotal = 1;
             ArmorIDs.Wing.Sets.Stats[Item.wingSlot] = new WingStats(100, 7f, 2.5f);
@@ -24,6 +25,32 @@ namespace Redemption.Items.Accessories.HM
             Item.rare = ItemRarityID.Pink;
             Item.canBePlacedInVanityRegardlessOfConditions = true;
             Item.accessory = true;
+        }
+        public override void UpdateAccessory(Player player, bool hideVisual)
+        {
+            player.flapSound = false;
+        }
+        public override bool WingUpdate(Player player, bool inUse)
+        {
+            if (inUse)
+            {
+                if (++player.wingFrameCounter >= 12)
+                {
+                    player.wingFrameCounter = 0;
+                    SoundEngine.PlaySound(SoundID.Item13 with { Volume = .6f }, player.position);
+                }
+                player.wingFrame = 1 + (player.wingFrameCounter / 4);
+                Color color = player.wingFrame switch
+                {
+                    2 => new Color(212, 246, 187),
+                    3 => new Color(253, 242, 170),
+                    _ => new Color(199, 253, 230),
+                };
+                Lighting.AddLight(player.Center, 255f / color.R * .3f, 255f / color.G * .3f, 255f / color.B * .3f);
+            }
+            else
+                player.wingFrame = 0;
+            return true;
         }
         public override void VerticalWingSpeeds(Player player, ref float ascentWhenFalling, ref float ascentWhenRising, ref float maxCanAscendMultiplier, ref float maxAscentMultiplier, ref float constantAscend)
         {

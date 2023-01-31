@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Base;
 using Redemption.Buffs.Debuffs;
+using Redemption.Globals;
 using Terraria;
 using Terraria.Audio;
 using Terraria.GameContent;
@@ -104,7 +105,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                     if (!player.active || player.dead || Projectile.DistanceSQ(player.Center) >= 60 * 60)
                         continue;
 
-                    int hitDirection = Projectile.Center.X > player.Center.X ? -1 : 1;
+                    int hitDirection = player.RightOfDir(Projectile);
                     BaseAI.DamagePlayer(player, Projectile.damage, 3, hitDirection, Projectile);
 
                     player.AddBuff(BuffID.Confused, 180);

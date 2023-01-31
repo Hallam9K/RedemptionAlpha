@@ -51,7 +51,7 @@ namespace Redemption.Items.Weapons.HM.Magic
                             SoundEngine.PlaySound(CustomSounds.Spark1, Projectile.position);
 
                         if (Projectile.ai[1] >= 30 && (Projectile.ai[1] >= 60 ? Main.rand.NextBool(6) : Main.rand.NextBool(10)))
-                            DustHelper.DrawParticleElectricity(Projectile.Center + new Vector2(32 * player.direction, -32), Projectile.Center + new Vector2(32 * player.direction, -32) + RedeHelper.PolarVector(30 * (glow + 1), Main.rand.NextFloat(0, MathHelper.TwoPi)), new LightningParticle(), 0.2f, 5, 0.1f);
+                            DustHelper.DrawParticleElectricity(Projectile.Center + new Vector2(32 * player.direction, -32), Projectile.Center + new Vector2(32 * player.direction, -32) + RedeHelper.PolarVector(30 * (glow + 1), RedeHelper.RandomRotation()), new LightningParticle(), 0.2f, 5, 0.1f);
 
                         if (!player.channel || glow >= 0.8f)
                         {
@@ -81,7 +81,7 @@ namespace Redemption.Items.Weapons.HM.Magic
                             if (npc.DistanceSQ(Main.MouseWorld) > 60 * 60)
                                 continue;
 
-                            int hitDirection = Projectile.Center.X > npc.Center.X ? -1 : 1;
+                            int hitDirection = npc.RightOfDir(Projectile);
                             BaseAI.DamageNPC(npc, Projectile.damage + dmg * 2, Projectile.knockBack, hitDirection, Projectile, crit: Projectile.HeldItemCrit());
                         }
                         for (int i = 0; i < Main.maxNPCs; i++)
@@ -102,7 +102,7 @@ namespace Redemption.Items.Weapons.HM.Magic
                             }
                             DustHelper.DrawParticleElectricity(Projectile.Center + new Vector2(36 * player.direction, -36), npc.Center, new LightningParticle(), 1.3f, 30, 0.05f);
                             DustHelper.DrawParticleElectricity(Projectile.Center + new Vector2(36 * player.direction, -36), npc.Center, new LightningParticle(), 1.3f, 30, 0.05f);
-                            int hitDirection = Projectile.Center.X > npc.Center.X ? -1 : 1;
+                            int hitDirection = npc.RightOfDir(Projectile);
                             if (glow >= 0.8f)
                                 BaseAI.DamageNPC(npc, Projectile.damage * 2, Projectile.knockBack, hitDirection, Projectile, crit: Projectile.HeldItemCrit());
                             else

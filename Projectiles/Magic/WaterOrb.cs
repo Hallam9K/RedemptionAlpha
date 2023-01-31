@@ -57,9 +57,7 @@ namespace Redemption.Projectiles.Magic
             Projectile.velocity = Projectile.velocity.RotatedBy(Projectile.ai[0] == 0 ? Projectile.ai[1] : -Projectile.ai[1]);
             Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.Pi;
 
-            Point tile = new Vector2(Projectile.Center.X, Projectile.Center.Y).ToTileCoordinates();
-            Tile tile2 = Main.tile[tile.X, tile.Y];
-            if (tile2 is { HasUnactuatedTile: true } && Main.tileSolid[tile2.TileType])
+            if (Collision.SolidCollision(Projectile.position, Projectile.width, Projectile.height))
                 Projectile.timeLeft -= 4;
 
             if (Main.netMode != NetmodeID.Server)

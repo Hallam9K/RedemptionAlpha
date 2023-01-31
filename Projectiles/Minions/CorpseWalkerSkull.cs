@@ -86,7 +86,7 @@ namespace Redemption.Projectiles.Minions
                 if (attackPosition == 0 || Projectile.ai[0] % 120 == 0)
                 {
                     attackPosition = Main.rand.Next(target.width + 40, target.width + 120);
-                    AttackPos = new(Projectile.Center.X > target.Center.X ? attackPosition : -attackPosition, -attackPosition);
+                    AttackPos = new(attackPosition * Projectile.RightOfDir(target), -attackPosition);
                 }
 
                 Projectile.Move(target.Center + AttackPos, 10, 30);

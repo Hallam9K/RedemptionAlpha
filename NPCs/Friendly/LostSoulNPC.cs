@@ -70,7 +70,7 @@ namespace Redemption.NPCs.Friendly
         public override bool? CanBeHitByProjectile(Projectile projectile) => RedeHelper.CanHitSpiritCheck(projectile);
         public override void AI()
         {
-            ParticleManager.NewParticle(RedeHelper.RandAreaInEntity(NPC) + (NPC.velocity * 10), Vector2.Zero, new SpiritParticle(), Color.White, 0.6f * NPC.scale, 0, 1);
+            ParticleManager.NewParticle(NPC.RandAreaInEntity() + (NPC.velocity * 10), Vector2.Zero, new SpiritParticle(), Color.White, 0.6f * NPC.scale, 0, 1);
 
             NPC.scale = 1 + Scale;
             NPC.rotation = NPC.velocity.ToRotation() + MathHelper.Pi;
@@ -81,7 +81,7 @@ namespace Redemption.NPCs.Friendly
             if (--ThrowTimer <= 0)
             {
                 if (NPC.velocity.Length() < 2)
-                    NPC.velocity = RedeHelper.PolarVector(3, Main.rand.NextFloat(0, MathHelper.TwoPi));
+                    NPC.velocity = RedeHelper.PolarVector(3, RedeHelper.RandomRotation());
 
                 NPC.velocity = NPC.velocity.RotatedBy(Main.rand.NextFloat(-0.3f, 0.3f));
             }

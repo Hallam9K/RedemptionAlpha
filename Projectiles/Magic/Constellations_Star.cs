@@ -40,7 +40,7 @@ namespace Redemption.Projectiles.Magic
                     pos = RedeHelper.RotateVector(Main.MouseWorld, Projectile.Center, MathHelper.Pi);
                     if (i > 0)
                     {
-                        Vector2 pos2 = Projectile.Center + RedeHelper.PolarVector(Main.rand.Next(100, 300), Main.rand.NextFloat(0, MathHelper.TwoPi));
+                        Vector2 pos2 = Projectile.Center + RedeHelper.PolarVector(Main.rand.Next(100, 300), RedeHelper.RandomRotation());
                         Projectile.NewProjectile(Projectile.GetSource_FromAI(), pos2, Projectile.velocity, Type, Projectile.damage, Projectile.knockBack, Main.myPlayer, 0, i + 1);
                     }
                     else

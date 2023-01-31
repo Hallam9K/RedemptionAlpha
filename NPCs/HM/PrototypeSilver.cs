@@ -221,8 +221,8 @@ namespace Redemption.NPCs.HM
                         NPC.netUpdate = true;
                     }
 
-                    NPC.PlatformFallCheck(ref NPC.Redemption().fallDownPlatform, 20);
-                    NPCHelper.HorizontallyMove(NPC, globalNPC.attacker.Center, 0.15f, 2f, 8, 16, NPC.Center.Y > globalNPC.attacker.Center.Y);
+                    NPC.PlatformFallCheck(ref NPC.Redemption().fallDownPlatform, 20, globalNPC.attacker.Center.Y);
+                    NPCHelper.HorizontallyMove(NPC, globalNPC.attacker.Center, 0.15f, 2f, 8, 16, NPC.Center.Y > globalNPC.attacker.Center.Y, globalNPC.attacker);
                     break;
 
                 case ActionState.Laser:
@@ -333,7 +333,7 @@ namespace Redemption.NPCs.HM
                         DustHelper.DrawDustImage(NPC.Center, DustID.Frost, 0.12f, "Redemption/Effects/DustImages/WarpShape", 2, true, 0);
                         for (int i = 0; i < 15; i++)
                         {
-                            ParticleManager.NewParticle(RedeHelper.RandAreaInEntity(NPC), RedeHelper.SpreadUp(1), new LightningParticle(), Color.White, 3);
+                            ParticleManager.NewParticle(NPC.RandAreaInEntity(), RedeHelper.SpreadUp(1), new LightningParticle(), Color.White, 3);
                             int dust = Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.Frost, Scale: 3f);
                             Main.dust[dust].velocity *= 6f;
                             Main.dust[dust].noGravity = true;
@@ -441,7 +441,7 @@ namespace Redemption.NPCs.HM
         public Color borderColor = new(0 * c, 242 * c, 170 * c, 1f);
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
-            Texture2D glow = ModContent.Request<Texture2D>(NPC.ModNPC.Texture + "_Glow").Value;
+            Texture2D glow = ModContent.Request<Texture2D>(Texture + "_Glow").Value;
             var effects = NPC.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
             if (shieldAlpha <= 0)
             {

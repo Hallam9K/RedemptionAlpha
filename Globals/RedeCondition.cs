@@ -4,6 +4,7 @@ using Terraria.ModLoader;
 using Redemption.BaseExtension;
 using Terraria;
 using Redemption.Biomes;
+using Redemption.NPCs.Bosses.FowlEmperor;
 
 namespace Redemption.Globals
 {
@@ -66,6 +67,17 @@ namespace Redemption.Globals
 			return false;
 		}
 		public bool CanShowItemDropInUI() => true;
-		public string GetConditionDescription() => "Dropped while outside the Soulless Caverns";
-	}
+    public string GetConditionDescription() => "Dropped while outside the Soulless Caverns";
+  }
+    public class EggCrackerCondition : IItemDropRuleCondition
+  	{
+  		public bool CanDrop(DropAttemptInfo info)
+  		{
+  			if (!info.IsInSimulation && Terraria.NPC.AnyNPCs(ModContent.NPCType<FowlEmperor>()))
+            return true;
+
+        return false;
+      }
+		  public string GetConditionDescription() => "Dropped while the Fowl Emperor is alive";
+    }
 }

@@ -24,6 +24,7 @@ using Redemption.Items.Usable;
 using Redemption.Items.Placeable.Furniture.Misc;
 using Redemption.Items.Materials.HM;
 using Redemption.Items.Weapons.HM.Melee;
+using Redemption.BaseExtension;
 
 namespace Redemption.NPCs.Friendly
 {
@@ -317,10 +318,22 @@ namespace Redemption.NPCs.Friendly
                 shop.item[nextSlot].shopCustomPrice = new int?(12);
                 shop.item[nextSlot++].shopSpecialCurrency = Redemption.AntiqueDorulCurrencyId;
             }
+            if (NPC.downedPirates)
+            {
+                shop.item[nextSlot].SetDefaults(ModContent.ItemType<SunkenCaptainPainting>());
+                shop.item[nextSlot].shopCustomPrice = new int?(12);
+                shop.item[nextSlot++].shopSpecialCurrency = Redemption.AntiqueDorulCurrencyId;
+            }
             if (NPC.downedPlantBoss)
             {
                 shop.item[nextSlot].SetDefaults(ItemID.Ectoplasm);
                 shop.item[nextSlot].shopCustomPrice = new int?(NPC.downedGolemBoss ? 6 : 10);
+                shop.item[nextSlot++].shopSpecialCurrency = Redemption.AntiqueDorulCurrencyId;
+            }
+            if (Main.LocalPlayer.RedemptionAbility().Spiritwalker)
+            {
+                shop.item[nextSlot].SetDefaults(ModContent.ItemType<EmptyCruxCard>());
+                shop.item[nextSlot].shopCustomPrice = new int?(30);
                 shop.item[nextSlot++].shopSpecialCurrency = Redemption.AntiqueDorulCurrencyId;
             }
             if (RedeWorld.deadRingerGiven)

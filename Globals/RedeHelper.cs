@@ -49,8 +49,16 @@ namespace Redemption.Globals
             Terraria.Player player = Main.player[proj.owner];
             return player.RedemptionAbility().SpiritwalkerActive || player.InModBiome<SoullessBiome>() || proj.Redemption().RitDagger || ProjectileLists.Arcane.Contains(proj.type) || ProjectileLists.Celestial.Contains(proj.type) || ProjectileLists.Holy.Contains(proj.type) || ProjectileLists.Psychic.Contains(proj.type) || RedeConfigClient.Instance.ElementDisable ? null : false;
         }
+        public static float RandomRotation() => Main.rand.NextFloat() * MathHelper.TwoPi;
         public static Vector2 TurnRight(this Vector2 vec) => new(-vec.Y, vec.X);
         public static Vector2 TurnLeft(this Vector2 vec) => new(vec.Y, -vec.X);
+        public static int RightOfDir(this Entity toRight, Entity toLeft)
+        {
+            if (toRight.Center.X < toLeft.Center.X)
+                return -1;
+            return 1;
+        }
+        public static bool RightOf(this Entity toRight, Entity toLeft) => toLeft.Center.X < toRight.Center.X;
 
         public static Vector2 PolarVector(float radius, float theta) =>
             new Vector2((float)Math.Cos(theta), (float)Math.Sin(theta)) * radius;
@@ -444,7 +452,7 @@ namespace Redemption.Globals
 
         public static float RadToGrad(float rad) => rad * 180.0f / (float)Math.PI;
 
-        public static int GetNearestNPC(Vector2 point, bool friendly = false, bool noBoss = false)
+        public static int GetNearestNPC(Vector2 point, bool friendly = false, bool noBoss = false, bool canBeChasedBy = false)
         {
             float nearestNPCDist = -1;
             int nearestNPC = -1;
@@ -456,6 +464,9 @@ namespace Redemption.Globals
                     continue;
 
                 if (noBoss && npc.boss)
+                    continue;
+
+                if (canBeChasedBy && !npc.CanBeChasedBy())
                     continue;
 
                 if (!friendly && (npc.friendly || npc.lifeMax <= 5))
@@ -759,7 +770,7 @@ namespace Redemption.Globals
             int dir = 1;
             if (opposite)
                 dir = -1;
-            if (target.Center.X > npc.Center.X)
+            if (target.RightOf(npc))
             {
                 npc.spriteDirection = dir;
                 npc.direction = dir;
@@ -776,7 +787,7 @@ namespace Redemption.Globals
             int dir = 1;
             if (opposite)
                 dir = -1;
-            if (target.Center.X > projectile.Center.X)
+            if (target.RightOf(projectile))
             {
                 projectile.spriteDirection = dir;
                 projectile.direction = dir;
@@ -962,12 +973,15 @@ namespace Redemption.Globals
             if (codable == null || !codable.active || (codable is Terraria.Player codablePlayer && codablePlayer.dead))
                 return false;
 
-            if (!canSeeHiding && codable is Terraria.NPC codableNPC && codableNPC.Redemption().invisible)
-                return false;
-            if (!canSeeHiding && codable is Terraria.Player codablePlayer2 && codablePlayer2.invis)
-                return false;
-            if (!canSeeHiding && codable is Projectile codableProj && codableProj.alpha >= 200)
-                return false;
+            if (!canSeeHiding)
+            {
+                if (codable is Terraria.NPC codableNPC && codableNPC.Redemption().invisible)
+                    return false;
+                if (codable is Terraria.Player codablePlayer2 && codablePlayer2.invis)
+                    return false;
+                if (codable is Projectile codableProj && codableProj.alpha >= 200)
+                    return false;
+            }
             if (blind && codable.velocity.Length() <= moveThreshold)
                 return false;
 
@@ -988,8 +1002,8 @@ namespace Redemption.Globals
                 if (npc.DistanceSQ(codable.Center) <= (codable.width + 32) * (codable.width + 32))
                     return true;
 
-                return npc.Center.X > codable.Center.X && npc.spriteDirection == -1 ||
-                       npc.Center.X < codable.Center.X && npc.spriteDirection == 1;
+                return npc.RightOf(codable) && npc.spriteDirection == -1 ||
+                       codable.RightOf(npc) && npc.spriteDirection == 1;
             }
 
             return true;
@@ -1049,7 +1063,7 @@ namespace Redemption.Globals
         ///     Makes this NPC horizontally move towards the Player (Take Fighter AI, as an example)
         /// </summary>
         public static void HorizontallyMove(Terraria.NPC npc, Vector2 vector, float moveInterval, float moveSpeed,
-            int maxJumpTilesX, int maxJumpTilesY, bool jumpUpPlatforms)
+            int maxJumpTilesX, int maxJumpTilesY, bool jumpUpPlatforms, Entity target = null)
         {
             //if velocity is less than -1 or greater than 1...
             if (npc.velocity.X < -moveSpeed || npc.velocity.X > moveSpeed)
@@ -1112,7 +1126,7 @@ namespace Redemption.Globals
                 {
                     //...attempt to jump if needed.
                     Vector2 newVec = BaseAI.AttemptJump(npc.position, npc.velocity, npc.width, npc.height,
-                        npc.direction, npc.directionY, maxJumpTilesX, maxJumpTilesY, moveSpeed, jumpUpPlatforms);
+                        npc.direction, npc.directionY, maxJumpTilesX, maxJumpTilesY, moveSpeed, jumpUpPlatforms, target);
                     if (!npc.noTileCollide)
                     {
                         Collision.StepUp(ref npc.position, ref npc.velocity, npc.width, npc.height, ref npc.stepSpeed,
@@ -1159,7 +1173,7 @@ namespace Redemption.Globals
                     }
                 }
             }
-            return new Vector2(npc.Center.X, npc.Center.Y);
+            return new Vector2(npc.Center.X, npc.Center.Y) / 16;
         }
 
         public static Vector2 FindGroundPlayer(this Terraria.NPC npc, int distFromPlayer, Func<int, int, bool> canTeleportTo = null)
@@ -1236,14 +1250,14 @@ namespace Redemption.Globals
                 if (!target.active || !target.CanBeChasedBy() || target.whoAmI == npc.whoAmI || target != npc.Redemption().attacker)
                     continue;
 
-                if (!AlwaysDmgNPC.Contains(target.type) && (target.friendly || NPCID.Sets.TakesDamageFromHostilesWithoutBeingFriendly[target.type]))
+                if (!AlwaysDmgNPC.Contains(target.type) && target.friendly)
                     continue;
 
                 if (target.immune[npc.whoAmI] > 0 || !npc.Hitbox.Intersects(target.Hitbox))
                     continue;
 
                 target.immune[npc.whoAmI] = 30;
-                int hitDirection = npc.Center.X > target.Center.X ? -1 : 1;
+                int hitDirection = npc.RightOfDir(target);
                 BaseAI.DamageNPC(target, npc.damage + (int)dmgModify, knockback, hitDirection, npc);
             }
         }
@@ -1264,7 +1278,7 @@ namespace Redemption.Globals
                     continue;
 
                 target.immune[npc.whoAmI] = 30;
-                int hitDirection = npc.Center.X > target.Center.X ? -1 : 1;
+                int hitDirection = npc.RightOfDir(target);
                 BaseAI.DamageNPC(target, npc.damage + (int)dmgModify, knockback, hitDirection, npc);
             }
         }
@@ -1301,7 +1315,7 @@ namespace Redemption.Globals
             Terraria.Player player = Main.player[npc.target];
             RedeNPC globalNPC = npc.Redemption();
             if (globalNPC.attacker is Terraria.Player)
-                return false;
+                return npc.Redemption().spiritSummon;
 
             Terraria.NPC target = Main.npc[globalNPC.attacker.whoAmI];
             if (!target.active || target.whoAmI == npc.whoAmI || target.dontTakeDamage || target.type == NPCID.OldMan)
@@ -1318,7 +1332,11 @@ namespace Redemption.Globals
                         return true;
                     break;
                 case 3:
-                    if (target.type == npc.type || target.type == ModContent.NPCType<PrototypeSilver>())
+                    if (target.type == npc.type || target.type == ModContent.NPCType<PrototypeSilver>() || target.type == ModContent.NPCType<SpacePaladin>())
+                        return true;
+                    break;
+                case 4:
+                    if (target.type == npc.type)
                         return true;
                     break;
             }

@@ -32,6 +32,7 @@ namespace Redemption.Items.Usable
             Item.useStyle = ItemUseStyleID.HoldUp;
             Item.useAnimation = 45;
             Item.useTime = 45;
+            Item.consumable = true;
         }
 
 		public override bool? UseItem(Player player)

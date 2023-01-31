@@ -248,7 +248,7 @@ namespace Redemption.NPCs.Minibosses.EaglecrestGolem
                     }
 
                     NPC.PlatformFallCheck(ref NPC.Redemption().fallDownPlatform, 28);
-                    NPCHelper.HorizontallyMove(NPC, player.Center, moveInterval, moveSpeed, 12, 12, NPC.Center.Y > player.Center.Y);
+                    NPCHelper.HorizontallyMove(NPC, player.Center, moveInterval, moveSpeed, 12, 12, NPC.Center.Y > player.Center.Y, player);
                     break;
                 case ActionState.Roll:
                     if (!Collision.CanHit(NPC.Center, 0, 0, player.Center, 0, 0) || Collision.SolidCollision(new Vector2(NPC.Center.X, NPC.position.Y - NPC.height / 2 + 10), NPC.width, NPC.height))
@@ -282,7 +282,7 @@ namespace Redemption.NPCs.Minibosses.EaglecrestGolem
                         }
 
                         NPC.PlatformFallCheck(ref NPC.Redemption().fallDownPlatform, 28);
-                        NPCHelper.HorizontallyMove(NPC, player.Center, 0.12f, 10, 20, 30, NPC.Center.Y > player.Center.Y);
+                        NPCHelper.HorizontallyMove(NPC, player.Center, 0.12f, 10, 20, 30, NPC.Center.Y > player.Center.Y, player);
                     }
                     break;
                 case ActionState.Laser:
@@ -403,7 +403,7 @@ namespace Redemption.NPCs.Minibosses.EaglecrestGolem
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
             Texture2D texture = TextureAssets.Npc[NPC.type].Value;
-            Texture2D SlashAni = ModContent.Request<Texture2D>(NPC.ModNPC.Texture + "_Slash").Value;
+            Texture2D SlashAni = ModContent.Request<Texture2D>(Texture + "_Slash").Value;
             var effects = NPC.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
 
             if (!NPC.IsABestiaryIconDummy && AIState is ActionState.Roll)

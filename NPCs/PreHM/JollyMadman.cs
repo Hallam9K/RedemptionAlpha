@@ -287,8 +287,8 @@ namespace Redemption.NPCs.PreHM
                         AIState = ActionState.Slash;
                     }
 
-                    NPC.PlatformFallCheck(ref NPC.Redemption().fallDownPlatform, 20);
-                    NPCHelper.HorizontallyMove(NPC, globalNPC.attacker.Center, 0.2f, 2.4f * (NPC.RedemptionNPCBuff().rallied ? 1.2f : 1), 12, 8, NPC.Center.Y > globalNPC.attacker.Center.Y);
+                    NPC.PlatformFallCheck(ref NPC.Redemption().fallDownPlatform, 20, globalNPC.attacker.Center.Y);
+                    NPCHelper.HorizontallyMove(NPC, globalNPC.attacker.Center, 0.2f, 2.4f * (NPC.RedemptionNPCBuff().rallied ? 1.2f : 1), 12, 8, NPC.Center.Y > globalNPC.attacker.Center.Y, globalNPC.attacker);
 
                     break;
 
@@ -313,14 +313,14 @@ namespace Redemption.NPCs.PreHM
                         if (globalNPC.attacker is NPC attackerNPC && attackerNPC.immune[NPC.whoAmI] <= 0)
                         {
                             attackerNPC.immune[NPC.whoAmI] = 10;
-                            int hitDirection = NPC.Center.X > attackerNPC.Center.X ? -1 : 1;
+                            int hitDirection = attackerNPC.RightOfDir(NPC);
                             BaseAI.DamageNPC(attackerNPC, damage, 5, hitDirection, NPC);
                             attackerNPC.AddBuff(BuffID.Bleeding, 1000);
                             attackerNPC.AddBuff(ModContent.BuffType<DirtyWoundDebuff>(), 1400);
                         }
                         else if (globalNPC.attacker is Player attackerPlayer)
                         {
-                            int hitDirection = NPC.Center.X > attackerPlayer.Center.X ? -1 : 1;
+                            int hitDirection = attackerPlayer.RightOfDir(NPC);
                             BaseAI.DamagePlayer(attackerPlayer, damage, 5, hitDirection, NPC);
                             if (globalNPC.attacker is Player && (Main.rand.NextBool(2) || Main.expertMode))
                             {

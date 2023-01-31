@@ -24,7 +24,8 @@ namespace Redemption.Tiles.Furniture.ElderWood
 			name.SetDefault("Elder Wood Sofa");
 			AddMapEntry(new Color(109, 87, 78), name);
 
-			AdjTiles = new int[] { TileID.Benches };
+            AddToArray(ref TileID.Sets.RoomNeeds.CountsAsChair);
+            AdjTiles = new int[] { TileID.Benches };
 			DustType = DustID.t_BorealWood;
 		}
 		public override void NumDust(int i, int j, bool fail, ref int num) => num = fail ? 1 : 3;

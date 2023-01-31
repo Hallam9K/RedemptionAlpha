@@ -41,7 +41,8 @@ namespace Redemption.Tiles.Furniture.Misc
         {
             Player player = Main.LocalPlayer;
             player.AddBuff(ModContent.BuffType<HKStatueBuff>(), 20);
-            player.Redemption().foundHall = true;
+            if (closer)
+                player.Redemption().foundHall = true;
         }
 
         public override void KillMultiTile(int i, int j, int frameX, int frameY)

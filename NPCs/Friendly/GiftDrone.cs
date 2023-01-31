@@ -138,8 +138,8 @@ namespace Redemption.NPCs.Friendly
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
             Texture2D texture = TextureAssets.Npc[NPC.type].Value;
-            Texture2D glowMask = ModContent.Request<Texture2D>(NPC.ModNPC.Texture + "_Glow").Value;
-            Texture2D gift = ModContent.Request<Texture2D>(NPC.ModNPC.Texture + "_Gift").Value;
+            Texture2D glowMask = ModContent.Request<Texture2D>(Texture + "_Glow").Value;
+            Texture2D gift = ModContent.Request<Texture2D>(Texture + "_Gift").Value;
             var effects = NPC.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
             if (NPC.ai[0] < 2)
                 spriteBatch.Draw(gift, NPC.Center - screenPos, null, NPC.GetAlpha(drawColor), NPC.rotation * 2, NPC.frame.Size() / 2 + new Vector2(-6, -10), NPC.scale, effects, 0);
@@ -257,9 +257,9 @@ namespace Redemption.NPCs.Friendly
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
             Texture2D texture = TextureAssets.Npc[NPC.type].Value;
-            Texture2D glowMask = ModContent.Request<Texture2D>(NPC.ModNPC.Texture + "_Glow").Value;
-            Texture2D gift = ModContent.Request<Texture2D>(NPC.ModNPC.Texture + "2_Gift").Value;
-            Texture2D giftGlow = ModContent.Request<Texture2D>(NPC.ModNPC.Texture + "2_Gift_Glow").Value;
+            Texture2D glowMask = ModContent.Request<Texture2D>(Texture + "_Glow").Value;
+            Texture2D gift = ModContent.Request<Texture2D>(Texture + "2_Gift").Value;
+            Texture2D giftGlow = ModContent.Request<Texture2D>(Texture + "2_Gift_Glow").Value;
             var effects = NPC.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
             if (NPC.ai[0] < 2)
             {

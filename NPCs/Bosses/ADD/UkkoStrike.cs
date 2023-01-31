@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Globals;
+using ReLogic.Content;
 using Terraria;
 using Terraria.Audio;
 using Terraria.GameContent;
@@ -11,6 +12,15 @@ namespace Redemption.NPCs.Bosses.ADD
 {
     public class UkkoStrike : ModProjectile
     {
+        private static Asset<Texture2D> warning;
+        public override void Load()
+        {
+            warning = ModContent.Request<Texture2D>("Redemption/NPCs/Bosses/ADD/LightningWarning");
+        }
+        public override void Unload()
+        {
+            warning = null;
+        }
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Ukko's Lightning");
@@ -71,7 +81,6 @@ namespace Redemption.NPCs.Bosses.ADD
         public override bool PreDraw(ref Color lightColor)
         {
             Texture2D texture = TextureAssets.Projectile[Projectile.type].Value;
-            Texture2D warning = ModContent.Request<Texture2D>("Redemption/NPCs/Bosses/ADD/LightningWarning").Value;
             int height = texture.Height / 24;
             int y = height * Projectile.frame;
             Vector2 position = Projectile.Center - Main.screenPosition;
@@ -85,13 +94,13 @@ namespace Redemption.NPCs.Bosses.ADD
 
             Main.EntitySpriteDraw(texture, position, new Rectangle?(rect), Projectile.GetAlpha(Color.White), Projectile.rotation + MathHelper.PiOver2, origin, Projectile.scale, 0, 0);
 
-            int height2 = warning.Height / 2;
+            int height2 = warning.Value.Height / 2;
             int y2 = height2 * warningFrames;
-            Rectangle rect2 = new(0, y2, warning.Width, height2);
-            Vector2 origin2 = new(warning.Width / 2f, height2 / 2f);
+            Rectangle rect2 = new(0, y2, warning.Value.Width, height2);
+            Vector2 origin2 = new(warning.Value.Width / 2f, height2 / 2f);
 
             if (Projectile.frame < 12)
-                Main.EntitySpriteDraw(warning, position, new Rectangle?(rect2), Projectile.GetAlpha(Color.White) * 0.8f, Projectile.rotation + MathHelper.PiOver2, origin2, Projectile.scale, 0, 0);
+                Main.EntitySpriteDraw(warning.Value, position, new Rectangle?(rect2), Projectile.GetAlpha(Color.White) * 0.8f, Projectile.rotation + MathHelper.PiOver2, origin2, Projectile.scale, 0, 0);
 
             Main.spriteBatch.End();
             Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);

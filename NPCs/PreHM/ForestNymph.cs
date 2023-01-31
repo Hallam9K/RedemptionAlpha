@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using ParticleLibrary;
 using Redemption.Base;
 using Redemption.BaseExtension;
 using Redemption.Buffs.Debuffs;
@@ -10,9 +11,11 @@ using Redemption.Items.Accessories.PreHM;
 using Redemption.Items.Placeable.Banners;
 using Redemption.Items.Placeable.Plants;
 using Redemption.NPCs.Friendly;
+using Redemption.Particles;
 using Redemption.Projectiles.Hostile;
 using Redemption.Projectiles.Minions;
 using Redemption.UI;
+using ReLogic.Content;
 using System;
 using System.IO;
 using System.Linq;
@@ -23,6 +26,7 @@ using Terraria.GameContent;
 using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.GameContent.UI;
+using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ModLoader.Utilities;
@@ -32,6 +36,33 @@ namespace Redemption.NPCs.PreHM
 {
     public class ForestNymph : ModNPC
     {
+        public static Asset<Texture2D> hair1;
+        public static Asset<Texture2D> hair1b;
+        public static Asset<Texture2D> hair1c;
+        public static Asset<Texture2D> hair2;
+        public static Asset<Texture2D> hair3;
+        public static Asset<Texture2D> tophat;
+        public static Asset<Texture2D> eye;
+        public override void Load()
+        {
+            hair1 = ModContent.Request<Texture2D>(Texture + "_Extra1");
+            hair1b = ModContent.Request<Texture2D>(Texture + "_Extra1b");
+            hair1c = ModContent.Request<Texture2D>(Texture + "_Extra1c");
+            hair2 = ModContent.Request<Texture2D>(Texture + "_Extra2");
+            hair3 = ModContent.Request<Texture2D>(Texture + "_Extra3");
+            tophat = ModContent.Request<Texture2D>(Texture + "_Extra4");
+            eye = ModContent.Request<Texture2D>(Texture + "_Eye");
+        }
+        public override void Unload()
+        {
+            hair1 = null;
+            hair1b = null;
+            hair1c = null;
+            hair2 = null;
+            hair3 = null;
+            tophat = null;
+            eye = null;
+        }
         public enum ActionState
         {
             Idle,
@@ -236,11 +267,8 @@ namespace Redemption.NPCs.PreHM
             if (AIState is not ActionState.Idle)
                 YippieeTimer = 0;
             RegenCheck();
-            NPC.noTileCollide = false;
-            if (globalNPC.attacker is Player && AIState > ActionState.Alert && AIState is not ActionState.Sleeping)
+            if ((globalNPC.attacker is Player || (globalNPC.attacker is NPC spirit && spirit.Redemption().spiritSummon)) && AIState > ActionState.Alert && AIState is not ActionState.Sleeping)
                 NPC.chaseable = true;
-            else
-                NPC.chaseable = false;
 
             switch (AIState)
             {
@@ -419,13 +447,13 @@ namespace Redemption.NPCs.PreHM
                         NPC.netUpdate = true;
                     }
 
-                    NPC.PlatformFallCheck(ref NPC.Redemption().fallDownPlatform, 20);
+                    NPC.PlatformFallCheck(ref NPC.Redemption().fallDownPlatform, 20, globalNPC.attacker.Center.Y);
                     if ((globalNPC.attacker is NPC attackerNPC && attackerNPC.life >= NPC.life) || Personality is PersonalityState.Shy)
                     {
-                        NPCHelper.HorizontallyMove(NPC, new Vector2(globalNPC.attacker.Center.X < NPC.Center.X ? NPC.Center.X + 100 : NPC.Center.X - 100, NPC.Center.Y), 0.2f, 2f * SpeedMultiplier, 12, 8, NPC.Center.Y > globalNPC.attacker.Center.Y);
+                        NPCHelper.HorizontallyMove(NPC, new Vector2(NPC.Center.X + (100 * NPC.RightOfDir(globalNPC.attacker)), NPC.Center.Y), 0.2f, 2f * SpeedMultiplier, 12, 8, NPC.Center.Y > globalNPC.attacker.Center.Y, globalNPC.attacker);
                         break;
                     }
-                    NPCHelper.HorizontallyMove(NPC, globalNPC.attacker.Center, 0.2f, 2f * SpeedMultiplier, 12, 8, NPC.Center.Y > globalNPC.attacker.Center.Y);
+                    NPCHelper.HorizontallyMove(NPC, globalNPC.attacker.Center, 0.2f, 2f * SpeedMultiplier, 12, 8, NPC.Center.Y > globalNPC.attacker.Center.Y, globalNPC.attacker);
                     break;
 
                 case ActionState.Slash:
@@ -457,17 +485,13 @@ namespace Redemption.NPCs.PreHM
                         if (globalNPC.attacker is NPC attackerNPC2 && attackerNPC2.immune[NPC.whoAmI] <= 0)
                         {
                             attackerNPC2.immune[NPC.whoAmI] = 10;
-                            int hitDirection = NPC.Center.X > attackerNPC2.Center.X ? -1 : 1;
+                            int hitDirection = attackerNPC2.RightOfDir(NPC);
                             BaseAI.DamageNPC(attackerNPC2, damage, 5, hitDirection, NPC);
-                            if (Main.rand.NextBool(3))
-                                attackerNPC2.AddBuff(BuffID.Poisoned, Main.rand.Next(400, 1200));
                         }
                         else if (globalNPC.attacker is Player attackerPlayer)
                         {
-                            int hitDirection = NPC.Center.X > attackerPlayer.Center.X ? -1 : 1;
+                            int hitDirection = attackerPlayer.RightOfDir(NPC);
                             BaseAI.DamagePlayer(attackerPlayer, damage, 5, hitDirection, NPC);
-                            if (Main.rand.NextBool(3) && globalNPC.attacker is Player)
-                                attackerPlayer.AddBuff(BuffID.Poisoned, Main.rand.Next(400, 1200));
                         }
                     }
                     break;
@@ -593,6 +617,10 @@ namespace Redemption.NPCs.PreHM
                     }
                     break;
             }
+            if (!Main.rand.NextBool(20) || !Main.LocalPlayer.RedemptionAbility().SpiritwalkerActive)
+                return;
+            ParticleManager.NewParticle(NPC.RandAreaInEntity(), RedeHelper.Spread(2), new SpiritParticle(), Color.White, .5f);
+
         }
         private void Chain_OnSymbolTrigger(Dialogue dialogue, string signature)
         {
@@ -839,8 +867,9 @@ namespace Redemption.NPCs.PreHM
                 regenTimer++;
                 if (regenTimer % regenCooldown == 0 && NPC.life < NPC.lifeMax)
                 {
-                    NPC.life += 2;
-                    NPC.HealEffect(2);
+                    int heal = NPC.type == ModContent.NPCType<ForestNymph_Friendly>() ? 10 : 2;
+                    NPC.life += heal;
+                    NPC.HealEffect(heal);
                     if (NPC.life > NPC.lifeMax)
                         NPC.life = NPC.lifeMax;
                 }
@@ -848,29 +877,31 @@ namespace Redemption.NPCs.PreHM
         }
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
-            Texture2D hair1 = ModContent.Request<Texture2D>(NPC.ModNPC.Texture + "_Extra1").Value;
-            Texture2D hair1b = ModContent.Request<Texture2D>(NPC.ModNPC.Texture + "_Extra1b").Value;
-            Texture2D hair1c = ModContent.Request<Texture2D>(NPC.ModNPC.Texture + "_Extra1c").Value;
-            Texture2D hair2 = ModContent.Request<Texture2D>(NPC.ModNPC.Texture + "_Extra2").Value;
-            Texture2D hair3 = ModContent.Request<Texture2D>(NPC.ModNPC.Texture + "_Extra3").Value;
-            Texture2D tophat = ModContent.Request<Texture2D>(NPC.ModNPC.Texture + "_Extra4").Value;
-            Texture2D eye = ModContent.Request<Texture2D>(NPC.ModNPC.Texture + "_Eye").Value;
             var effects = NPC.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
             Vector2 pos = NPC.Center + new Vector2(NPC.spriteDirection == -1 ? -19 : 17, -17);
+
+            if (Main.LocalPlayer.RedemptionAbility().SpiritwalkerActive)
+            {
+                int shader = ContentSamples.CommonlyUsedContentSamples.ColorOnlyShaderIndex;
+                spriteBatch.End();
+                spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.NonPremultiplied, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+                GameShaders.Armor.ApplySecondary(shader, Main.player[Main.myPlayer], null);
+                drawColor = Color.Black * .8f;
+            }
             spriteBatch.Draw(TextureAssets.Npc[NPC.type].Value, pos - screenPos, NPC.frame, NPC.GetAlpha(drawColor), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
 
-            int EyeHeight = eye.Height / 3;
-            int EyeWidth = eye.Width / 5;
+            int EyeHeight = eye.Value.Height / 3;
+            int EyeWidth = eye.Value.Width / 6;
             int EyeY = EyeHeight * EyeFrame;
             int EyeX = EyeWidth * EyeType;
             Rectangle EyeRect = new(EyeX, EyeY, EyeWidth, EyeHeight);
-            spriteBatch.Draw(eye, pos - screenPos, new Rectangle?(EyeRect), drawColor, NPC.rotation, NPC.frame.Size() / 2 + new Vector2(NPC.spriteDirection == -1 ? -56 : -28, -32) - new Vector2(EyeOffset.X * -NPC.spriteDirection, EyeOffset.Y), NPC.scale, effects, 0);
+            spriteBatch.Draw(eye.Value, pos - screenPos, new Rectangle?(EyeRect), drawColor, NPC.rotation, NPC.frame.Size() / 2 + new Vector2(NPC.spriteDirection == -1 ? -56 : -28, -32) - new Vector2(EyeOffset.X * -NPC.spriteDirection, EyeOffset.Y), NPC.scale, effects, 0);
 
-            int Height = hair1.Height / 10;
-            int Width = hair1.Width / 4;
-            int Height2 = hair2.Height / 10;
-            int Width2 = hair2.Width / 4;
-            int Width3 = hair3.Width / 5;
+            int Height = hair1.Value.Height / 10;
+            int Width = hair1.Value.Width / 4;
+            int Height2 = hair2.Value.Height / 10;
+            int Width2 = hair2.Value.Width / 4;
+            int Width3 = hair3.Value.Width / 5;
             int y = Height * (NPC.frame.Y / 94);
             int x = Width * HairType;
             int y2 = Height2 * (NPC.frame.Y / 94);
@@ -878,29 +909,38 @@ namespace Redemption.NPCs.PreHM
             int x3 = Width3 * FlowerType;
             Rectangle rect = new(x, y, Width, Height);
             Rectangle rect2 = new(x2, y2, Width2, Height2);
-            Rectangle rect3 = new(x3, 0, Width3, hair3.Height);
+            Rectangle rect3 = new(x3, 0, Width3, hair3.Value.Height);
+            Texture2D h1 = hair1.Value;
             switch (HairExtType)
             {
                 case 1:
-                    hair1 = hair1b;
+                    h1 = hair1b.Value;
                     break;
                 case 2:
-                    hair1 = hair1c;
-                    Height = hair1c.Height / 10;
-                    Width = hair1c.Width / 4;
+                    h1 = hair1c.Value;
+                    Height = hair1c.Value.Height / 10;
+                    Width = hair1c.Value.Width / 4;
                     y = Height * (NPC.frame.Y / 94);
                     x = Width * HairType;
                     rect = new(x, y, Width, Height);
                     break;
             }
-            spriteBatch.Draw(hair1, pos - screenPos, new Rectangle?(rect), drawColor, NPC.rotation, NPC.frame.Size() / 2 + new Vector2(NPC.spriteDirection == -1 ? -58 : 6, -12) - (HairExtType == 2 ? new Vector2(NPC.spriteDirection == -1 ? -2 : 8, -2) : Vector2.Zero), NPC.scale, effects, 0);
+            spriteBatch.Draw(h1, pos - screenPos, new Rectangle?(rect), drawColor, NPC.rotation, NPC.frame.Size() / 2 + new Vector2(NPC.spriteDirection == -1 ? -58 : 6, -12) - (HairExtType == 2 ? new Vector2(NPC.spriteDirection == -1 ? -2 : 8, -2) : Vector2.Zero), NPC.scale, effects, 0);
 
-            spriteBatch.Draw(hair2, pos - screenPos, new Rectangle?(rect2), drawColor, NPC.rotation, NPC.frame.Size() / 2 + new Vector2(NPC.spriteDirection == -1 ? -34 : -18, -16), NPC.scale, effects, 0);
+            spriteBatch.Draw(hair2.Value, pos - screenPos, new Rectangle?(rect2), drawColor, NPC.rotation, NPC.frame.Size() / 2 + new Vector2(NPC.spriteDirection == -1 ? -34 : -18, -16), NPC.scale, effects, 0);
             if (FlowerType <= 4)
-                spriteBatch.Draw(hair3, pos - screenPos, new Rectangle?(rect3), drawColor, NPC.rotation, NPC.frame.Size() / 2 + new Vector2(NPC.spriteDirection == -1 ? -34 : -18, -16) - new Vector2(EyeOffset.X * -NPC.spriteDirection, EyeOffset.Y), NPC.scale, effects, 0);
+                spriteBatch.Draw(hair3.Value, pos - screenPos, new Rectangle?(rect3), drawColor, NPC.rotation, NPC.frame.Size() / 2 + new Vector2(NPC.spriteDirection == -1 ? -34 : -18, -16) - new Vector2(EyeOffset.X * -NPC.spriteDirection, EyeOffset.Y), NPC.scale, effects, 0);
 
             if (HasHat)
-                spriteBatch.Draw(tophat, pos - screenPos, null, drawColor, NPC.rotation, NPC.frame.Size() / 2 + new Vector2(NPC.spriteDirection == -1 ? -44 : -24, -10) - new Vector2(EyeOffset.X * -NPC.spriteDirection, EyeOffset.Y), NPC.scale, effects, 0);
+                spriteBatch.Draw(tophat.Value, pos - screenPos, null, drawColor, NPC.rotation, NPC.frame.Size() / 2 + new Vector2(NPC.spriteDirection == -1 ? -44 : -24, -10) - new Vector2(EyeOffset.X * -NPC.spriteDirection, EyeOffset.Y), NPC.scale, effects, 0);
+            if (Main.LocalPlayer.RedemptionAbility().SpiritwalkerActive)
+            {
+                EyeRect = new(20, EyeY, EyeWidth, EyeHeight);
+                spriteBatch.Draw(eye.Value, pos - screenPos, new Rectangle?(EyeRect), Color.White, NPC.rotation, NPC.frame.Size() / 2 + new Vector2(NPC.spriteDirection == -1 ? -56 : -28, -32) - new Vector2(EyeOffset.X * -NPC.spriteDirection, EyeOffset.Y), NPC.scale, effects, 0);
+
+                spriteBatch.End();
+                spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+            }
             return false;
         }
         public override bool? CanHitNPC(NPC target) => false;

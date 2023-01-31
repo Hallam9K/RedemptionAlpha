@@ -1,6 +1,7 @@
 using Microsoft.CodeAnalysis.Operations;
 using Microsoft.Xna.Framework;
 using Redemption.Base;
+using Redemption.BaseExtension;
 using Redemption.Buffs.Debuffs;
 using Redemption.Buffs.NPCBuffs;
 using Redemption.Globals;
@@ -11,6 +12,7 @@ using Redemption.Items.Materials.PreHM;
 using Redemption.Items.Placeable.Plants;
 using Redemption.Items.Usable;
 using Redemption.Items.Weapons.PreHM.Melee;
+using Redemption.Items.Weapons.PreHM.Summon;
 using Redemption.NPCs.PreHM;
 using Redemption.UI;
 using System;
@@ -79,6 +81,8 @@ namespace Redemption.NPCs.Friendly
         private int playerFollow;
         public override void PostAI()
         {
+            if (++NPC.breath <= 0)
+                NPC.breath = 9000;
             if (!setStats)
             {
                 if (Main.expertMode)
@@ -205,6 +209,9 @@ namespace Redemption.NPCs.Friendly
                 case 5:
                     button = "Style Hair";
                     break;
+                case 6:
+                    button = "Request Crux";
+                    break;
             }
         }
 
@@ -292,7 +299,7 @@ namespace Redemption.NPCs.Friendly
                         else if (RedeQuest.forestNymphVar == 2)
                         {
                             SoundEngine.PlaySound(SoundID.Chat);
-                            Main.npcChatText = "We usually live in giant hollowed-out trees with a body of water nearby. The tree is only good for hiding, but the water is vital for our survive, as we cannot blossom without it. The living trees this island has are the closest things to the great oaks back through the portal, but they could use some sprucing up. They aren't exactly homely.";
+                            Main.npcChatText = "We usually live in giant hollowed-out trees with a body of water nearby. The tree is only good for hiding, but the water is vital for our survival, as we cannot blossom without it. The living trees this island has are the closest things to the great oaks back through the portal, but they could use some sprucing up. They aren't exactly homely.";
                             RedeQuest.forestNymphVar++;
                             if (Main.netMode == NetmodeID.Server)
                                 NetMessage.SendData(MessageID.WorldData);
@@ -422,6 +429,32 @@ namespace Redemption.NPCs.Friendly
                         if (HairExtType > 2)
                             HairExtType = 0;
                         break;
+                    case 6:
+                        if (!Main.LocalPlayer.RedemptionAbility().SpiritwalkerActive)
+                        {
+                            Main.npcChatText = "I cannot gift it to thee unless you're partly in the realm of spirits.";
+                            ChatNumber--;
+                            return;
+                        }
+                        int card = Main.LocalPlayer.FindItem(ModContent.ItemType<EmptyCruxCard>());
+                        if (card >= 0)
+                        {
+                            Main.LocalPlayer.inventory[card].stack--;
+                            if (Main.LocalPlayer.inventory[card].stack <= 0)
+                                Main.LocalPlayer.inventory[card] = new Item();
+
+                            Main.LocalPlayer.QuickSpawnItem(NPC.GetSource_Loot(), ModContent.ItemType<CruxCardForestNymph>());
+                            Main.npcChatText = "Fascinating. I never would've expected one such as yourself to have this ability. As you wish, I will give to thee the spirit of my kind.";
+                            Main.npcChatCornerItem = ModContent.ItemType<CruxCardForestNymph>();
+                            SoundEngine.PlaySound(SoundID.Chat);
+                        }
+                        else
+                        {
+                            Main.npcChatText = "You bare no object to imbue.";
+                            Main.npcChatCornerItem = ModContent.ItemType<EmptyCruxCard>();
+                        }
+                        ChatNumber--;
+                        break;
                 }
             }
             else
@@ -430,7 +463,7 @@ namespace Redemption.NPCs.Friendly
                 while (skip)
                 {
                     ChatNumber++;
-                    if (ChatNumber > 5)
+                    if (ChatNumber > 6)
                         ChatNumber = 0;
                     if (RedeQuest.forestNymphVar < 1 && (ChatNumber == 4 || ChatNumber == 5))
                         skip = true;
@@ -440,6 +473,8 @@ namespace Redemption.NPCs.Friendly
                         skip = true;
                     else if (RedeQuest.forestNymphVar < 5 && ChatNumber == 1)
                         skip = true;
+                    else if (ChatNumber == 6 && (RedeQuest.forestNymphVar < 5 || !Main.LocalPlayer.RedemptionAbility().SpiritwalkerActive || Main.LocalPlayer.HasItem(ModContent.ItemType<CruxCardForestNymph>())))
+                        skip = true;
                     else
                         skip = false;
                 }
@@ -448,7 +483,9 @@ namespace Redemption.NPCs.Friendly
         private string ChitChat()
         {
             WeightedRandom<string> chat = new();
-            chat.Add(BothChat());
+            string bothChat = BothChat();
+            if (bothChat != null)
+                chat.Add(bothChat);
             chat.Add("Do you wonder why there aren't more of us around? It is simply the matter of strict requirements for our seeds to grow, and the centuries it takes for them to fully blossom. We usually produce seeds in the Spring season once every decade - a long time for humans. If you see a peculiar bulb near my pond, I'd recommend saying farewell to me and this place indefinitely. A blooming nymph is a fragile thing, and I won't take any chances.");
             chat.Add("I have learnt many things from my observations of humans, along with the languages they speak. I understand they have a false perception of us, some say we were created by the World to replicate the \"perfect image of humans\". Of course, that is merely a rumour fuelled with egotism. Humans are far from perfect, form or otherwise.");
             chat.Add("Artistic depictions created by humans show us having a much more similar appearance to them than what is accurate. They seldom get the chance to get a close look at us so it is understandable. I came across such artwork in a book I stole, it was... the complete opposite of flattering.");
@@ -499,6 +536,8 @@ namespace Redemption.NPCs.Friendly
             if (RedeWorld.alignment < 0)
                 return "Leave. The fae's trust in you was an act of folly, the World deems you a danger.";
 
+            if (Main.LocalPlayer.RedemptionAbility().SpiritwalkerActive)
+                chat.Add("Oh, how vulgar. You are able to see within the other realm and as such are bearing witness to my ethereal form. Or mayhaps you aren't submerged deep enough to see it in full? No matter.", 2);
             if (BasePlayer.HasHelmet(player, ModContent.ItemType<ThornMask>(), true))
                 chat.Add("You aren't blighted, are you? No, it is just a mask.");
             if (BasePlayer.HasArmorSet(player, "Living Wood", true) || BasePlayer.HasArmorSet(player, "Living Wood", false))
@@ -506,7 +545,9 @@ namespace Redemption.NPCs.Friendly
                 chat.Add("You better hope that wood you don is not from my home.");
                 chat.Add("You don the wood of a living tree. If I find out you've taken it from my home, I won't be happy.");
             }
-            chat.Add(BothChat());
+            string bothChat = BothChat();
+            if (bothChat != null)
+                chat.Add(bothChat);
 
             if (Personality is PersonalityState.Aggressive && RedeQuest.forestNymphVar < 2)
                 chat.Add("Better watch yourself.");

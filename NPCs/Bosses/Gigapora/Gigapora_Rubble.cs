@@ -30,7 +30,7 @@ namespace Redemption.NPCs.Bosses.Gigapora
             Projectile.tileCollide = false;
             Projectile.ignoreWater = false;
             Projectile.timeLeft = 600;
-            Projectile.rotation = Main.rand.NextFloat(0, MathHelper.TwoPi);
+            Projectile.rotation = RedeHelper.RandomRotation();
             Projectile.frame = Main.rand.Next(4);
             Projectile.spriteDirection = Main.rand.NextBool() ? 1 : -1;
         }

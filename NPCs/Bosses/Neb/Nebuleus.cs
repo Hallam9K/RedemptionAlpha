@@ -25,12 +25,58 @@ using Redemption.BaseExtension;
 using Redemption.Items.Materials.PostML;
 using Terraria.DataStructures;
 using Redemption.Textures;
+using ReLogic.Content;
 
 namespace Redemption.NPCs.Bosses.Neb
 {
     [AutoloadBossHead]
     public class Nebuleus : ModNPC
     {
+        private static Asset<Texture2D> chain;
+        private static Asset<Texture2D> wings;
+        private static Asset<Texture2D> armsAni;
+        private static Asset<Texture2D> armsPrayAni;
+        private static Asset<Texture2D> armsPrayGlow;
+        private static Asset<Texture2D> armsStarfallAni;
+        private static Asset<Texture2D> armsStarfallGlow;
+        private static Asset<Texture2D> armsPiercingAni;
+        private static Asset<Texture2D> armsPiercingGlow;
+        private static Asset<Texture2D> armsChainAni;
+        private static Asset<Texture2D> armsChainGlow;
+        private static Asset<Texture2D> armsEyesAni;
+        private static Asset<Texture2D> armsEyesGlow;
+        public override void Load()
+        {
+            chain = ModContent.Request<Texture2D>("Redemption/NPCs/Bosses/Neb/CosmosChain1");
+            wings = ModContent.Request<Texture2D>(Texture + "_Wings");
+            armsAni = ModContent.Request<Texture2D>(Texture + "_Arms_Idle");
+            armsPrayAni = ModContent.Request<Texture2D>(Texture + "_Arms_Pray");
+            armsPrayGlow = ModContent.Request<Texture2D>(Texture + "_Arms_Pray_Glow");
+            armsStarfallAni = ModContent.Request<Texture2D>(Texture + "_Arms_Starfall");
+            armsStarfallGlow = ModContent.Request<Texture2D>(Texture + "_Arms_Starfall_Glow");
+            armsPiercingAni = ModContent.Request<Texture2D>(Texture + "_Arms_PiercingNebula");
+            armsPiercingGlow = ModContent.Request<Texture2D>(Texture + "_Arms_PiercingNebula_Glow");
+            armsChainAni = ModContent.Request<Texture2D>(Texture + "_Arms_CosmicChain");
+            armsChainGlow = ModContent.Request<Texture2D>(Texture + "_Arms_CosmicChain_Glow");
+            armsEyesAni = ModContent.Request<Texture2D>(Texture + "_Arms_LongCharge");
+            armsEyesGlow = ModContent.Request<Texture2D>(Texture + "_Arms_LongCharge_Glow");
+        }
+        public override void Unload()
+        {
+            chain = null;
+            wings = null;
+            armsAni = null;
+            armsPrayAni = null;
+            armsPrayGlow = null;
+            armsStarfallAni = null;
+            armsStarfallGlow = null;
+            armsPiercingAni = null;
+            armsPiercingGlow = null;
+            armsChainAni = null;
+            armsChainGlow = null;
+            armsEyesAni = null;
+            armsEyesGlow = null;
+        }
         public Vector2[] oldPos = new Vector2[5];
         public float[] oldrot = new float[5];
 
@@ -1675,19 +1721,6 @@ namespace Redemption.NPCs.Bosses.Neb
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
             Texture2D texture = TextureAssets.Npc[NPC.type].Value;
-            Texture2D chain = ModContent.Request<Texture2D>("Redemption/NPCs/Bosses/Neb/CosmosChain1").Value;
-            Texture2D wings = ModContent.Request<Texture2D>(NPC.ModNPC.Texture + "_Wings").Value;
-            Texture2D armsAni = ModContent.Request<Texture2D>(NPC.ModNPC.Texture + "_Arms_Idle").Value;
-            Texture2D armsPrayAni = ModContent.Request<Texture2D>(NPC.ModNPC.Texture + "_Arms_Pray").Value;
-            Texture2D armsPrayGlow = ModContent.Request<Texture2D>(NPC.ModNPC.Texture + "_Arms_Pray_Glow").Value;
-            Texture2D armsStarfallAni = ModContent.Request<Texture2D>(NPC.ModNPC.Texture + "_Arms_Starfall").Value;
-            Texture2D armsStarfallGlow = ModContent.Request<Texture2D>(NPC.ModNPC.Texture + "_Arms_Starfall_Glow").Value;
-            Texture2D armsPiercingAni = ModContent.Request<Texture2D>(NPC.ModNPC.Texture + "_Arms_PiercingNebula").Value;
-            Texture2D armsPiercingGlow = ModContent.Request<Texture2D>(NPC.ModNPC.Texture + "_Arms_PiercingNebula_Glow").Value;
-            Texture2D armsChainAni = ModContent.Request<Texture2D>(NPC.ModNPC.Texture + "_Arms_CosmicChain").Value;
-            Texture2D armsChainGlow = ModContent.Request<Texture2D>(NPC.ModNPC.Texture + "_Arms_CosmicChain_Glow").Value;
-            Texture2D armsEyesAni = ModContent.Request<Texture2D>(NPC.ModNPC.Texture + "_Arms_LongCharge").Value;
-            Texture2D armsEyesGlow = ModContent.Request<Texture2D>(NPC.ModNPC.Texture + "_Arms_LongCharge_Glow").Value;
             var effects = NPC.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
             int shader = GameShaders.Armor.GetShaderIdFromItemId(ItemID.LivingRainbowDye);
             Vector2 drawCenter = new(NPC.Center.X, NPC.Center.Y);
@@ -1703,7 +1736,7 @@ namespace Redemption.NPCs.Bosses.Neb
             {
                 for (int i = 0; i < ChainPos.Length; i++)
                 {
-                    RedeHelper.DrawBezier(spriteBatch, chain, "", Main.DiscoColor, NPC.Center, ChainPos[i], (NPC.Center + ChainPos[i]) / 2 + new Vector2(0, 130 + (int)(Math.Sin(NPC.ai[2] / 12) * (150 - NPC.ai[2] / 3))), (NPC.Center + ChainPos[i]) / 2 + new Vector2(0, 130 + (int)(Math.Sin(NPC.ai[2] / 12) * (150 - NPC.ai[2] / 3))), 0.04f, 0);
+                    RedeHelper.DrawBezier(spriteBatch, chain.Value, "", Main.DiscoColor, NPC.Center, ChainPos[i], (NPC.Center + ChainPos[i]) / 2 + new Vector2(0, 130 + (int)(Math.Sin(NPC.ai[2] / 12) * (150 - NPC.ai[2] / 3))), (NPC.Center + ChainPos[i]) / 2 + new Vector2(0, 130 + (int)(Math.Sin(NPC.ai[2] / 12) * (150 - NPC.ai[2] / 3))), 0.04f, 0);
                 }
             }
             spriteBatch.Draw(texture, NPC.Center - screenPos, NPC.frame, drawColor * NPC.Opacity, NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0f);
@@ -1714,7 +1747,7 @@ namespace Redemption.NPCs.Bosses.Neb
                 spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
                 GameShaders.Armor.ApplySecondary(shader, Main.player[Main.myPlayer], null);
 
-                spriteBatch.Draw(wings, NPC.Center - screenPos, NPC.frame, NPC.GetAlpha(Color.White), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0f);
+                spriteBatch.Draw(wings.Value, NPC.Center - screenPos, NPC.frame, NPC.GetAlpha(Color.White), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0f);
 
                 spriteBatch.End();
                 spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
@@ -1723,44 +1756,44 @@ namespace Redemption.NPCs.Bosses.Neb
             {
                 if (NPC.ai[3] == 0)
                 {
-                    int num214 = armsAni.Height / 4;
+                    int num214 = armsAni.Value.Height / 4;
                     int y6 = num214 * armFrames[0];
-                    Main.spriteBatch.Draw(armsAni, drawCenter - screenPos, new Rectangle?(new Rectangle(0, y6, armsAni.Width, num214)), drawColor * NPC.Opacity, NPC.rotation, new Vector2(armsAni.Width / 2f, num214 / 2f), NPC.scale, effects, 0f);
+                    Main.spriteBatch.Draw(armsAni.Value, drawCenter - screenPos, new Rectangle?(new Rectangle(0, y6, armsAni.Value.Width, num214)), drawColor * NPC.Opacity, NPC.rotation, new Vector2(armsAni.Value.Width / 2f, num214 / 2f), NPC.scale, effects, 0f);
                 }
                 if (NPC.ai[3] == 1 || NPC.ai[3] == 2)
                 {
-                    int num214 = armsPrayAni.Height / 8;
+                    int num214 = armsPrayAni.Value.Height / 8;
                     int y6 = num214 * armFrames[1];
-                    Main.spriteBatch.Draw(armsPrayAni, drawCenter - screenPos, new Rectangle?(new Rectangle(0, y6, armsPrayAni.Width, num214)), drawColor * NPC.Opacity, NPC.rotation, new Vector2(armsPrayAni.Width / 2f, num214 / 2f), NPC.scale, effects, 0f);
-                    Main.spriteBatch.Draw(armsPrayGlow, drawCenter - screenPos, new Rectangle?(new Rectangle(0, y6, armsPrayAni.Width, num214)), NPC.GetAlpha(Color.White), NPC.rotation, new Vector2(armsPrayAni.Width / 2f, num214 / 2f), NPC.scale, effects, 0f);
+                    Main.spriteBatch.Draw(armsPrayAni.Value, drawCenter - screenPos, new Rectangle?(new Rectangle(0, y6, armsPrayAni.Value.Width, num214)), drawColor * NPC.Opacity, NPC.rotation, new Vector2(armsPrayAni.Value.Width / 2f, num214 / 2f), NPC.scale, effects, 0f);
+                    Main.spriteBatch.Draw(armsPrayGlow.Value, drawCenter - screenPos, new Rectangle?(new Rectangle(0, y6, armsPrayAni.Value.Width, num214)), NPC.GetAlpha(Color.White), NPC.rotation, new Vector2(armsPrayAni.Value.Width / 2f, num214 / 2f), NPC.scale, effects, 0f);
                 }
                 if (NPC.ai[3] == 3 || NPC.ai[3] == 4)
                 {
-                    int num214 = armsStarfallAni.Height / 8;
+                    int num214 = armsStarfallAni.Value.Height / 8;
                     int y6 = num214 * armFrames[2];
-                    Main.spriteBatch.Draw(armsStarfallAni, drawCenter - screenPos, new Rectangle?(new Rectangle(0, y6, armsStarfallAni.Width, num214)), drawColor * NPC.Opacity, NPC.rotation, new Vector2(armsStarfallAni.Width / 2f, num214 / 2f), NPC.scale, effects, 0f);
-                    Main.spriteBatch.Draw(armsStarfallGlow, drawCenter - screenPos, new Rectangle?(new Rectangle(0, y6, armsStarfallAni.Width, num214)), NPC.GetAlpha(Color.White), NPC.rotation, new Vector2(armsStarfallAni.Width / 2f, num214 / 2f), NPC.scale, effects, 0f);
+                    Main.spriteBatch.Draw(armsStarfallAni.Value, drawCenter - screenPos, new Rectangle?(new Rectangle(0, y6, armsStarfallAni.Value.Width, num214)), drawColor * NPC.Opacity, NPC.rotation, new Vector2(armsStarfallAni.Value.Width / 2f, num214 / 2f), NPC.scale, effects, 0f);
+                    Main.spriteBatch.Draw(armsStarfallGlow.Value, drawCenter - screenPos, new Rectangle?(new Rectangle(0, y6, armsStarfallAni.Value.Width, num214)), NPC.GetAlpha(Color.White), NPC.rotation, new Vector2(armsStarfallAni.Value.Width / 2f, num214 / 2f), NPC.scale, effects, 0f);
                 }
                 if (NPC.ai[3] == 5)
                 {
-                    int num214 = armsPiercingAni.Height / 9;
+                    int num214 = armsPiercingAni.Value.Height / 9;
                     int y6 = num214 * armFrames[3];
-                    Main.spriteBatch.Draw(armsPiercingAni, drawCenter - screenPos, new Rectangle?(new Rectangle(0, y6, armsPiercingAni.Width, num214)), drawColor * NPC.Opacity, NPC.rotation, new Vector2(armsPiercingAni.Width / 2f, num214 / 2f), NPC.scale, effects, 0f);
-                    Main.spriteBatch.Draw(armsPiercingGlow, drawCenter - screenPos, new Rectangle?(new Rectangle(0, y6, armsPiercingAni.Width, num214)), NPC.GetAlpha(Color.White), NPC.rotation, new Vector2(armsPiercingAni.Width / 2f, num214 / 2f), NPC.scale, effects, 0f);
+                    Main.spriteBatch.Draw(armsPiercingAni.Value, drawCenter - screenPos, new Rectangle?(new Rectangle(0, y6, armsPiercingAni.Value.Width, num214)), drawColor * NPC.Opacity, NPC.rotation, new Vector2(armsPiercingAni.Value.Width / 2f, num214 / 2f), NPC.scale, effects, 0f);
+                    Main.spriteBatch.Draw(armsPiercingGlow.Value, drawCenter - screenPos, new Rectangle?(new Rectangle(0, y6, armsPiercingAni.Value.Width, num214)), NPC.GetAlpha(Color.White), NPC.rotation, new Vector2(armsPiercingAni.Value.Width / 2f, num214 / 2f), NPC.scale, effects, 0f);
                 }
                 if (NPC.ai[3] == 7)
                 {
-                    int num214 = armsChainAni.Height / 7;
+                    int num214 = armsChainAni.Value.Height / 7;
                     int y6 = num214 * armFrames[4];
-                    Main.spriteBatch.Draw(armsChainAni, drawCenter - screenPos, new Rectangle?(new Rectangle(0, y6, armsChainAni.Width, num214)), drawColor * NPC.Opacity, NPC.rotation, new Vector2(armsChainAni.Width / 2f, num214 / 2f), NPC.scale, effects, 0f);
-                    Main.spriteBatch.Draw(armsChainGlow, drawCenter - screenPos, new Rectangle?(new Rectangle(0, y6, armsChainAni.Width, num214)), NPC.GetAlpha(Color.White), NPC.rotation, new Vector2(armsChainAni.Width / 2f, num214 / 2f), NPC.scale, effects, 0f);
+                    Main.spriteBatch.Draw(armsChainAni.Value, drawCenter - screenPos, new Rectangle?(new Rectangle(0, y6, armsChainAni.Value.Width, num214)), drawColor * NPC.Opacity, NPC.rotation, new Vector2(armsChainAni.Value.Width / 2f, num214 / 2f), NPC.scale, effects, 0f);
+                    Main.spriteBatch.Draw(armsChainGlow.Value, drawCenter - screenPos, new Rectangle?(new Rectangle(0, y6, armsChainAni.Value.Width, num214)), NPC.GetAlpha(Color.White), NPC.rotation, new Vector2(armsChainAni.Value.Width / 2f, num214 / 2f), NPC.scale, effects, 0f);
                 }
                 if (NPC.ai[3] == 8)
                 {
-                    int num214 = armsEyesAni.Height / 19;
+                    int num214 = armsEyesAni.Value.Height / 19;
                     int y6 = num214 * armFrames[5];
-                    Main.spriteBatch.Draw(armsEyesAni, drawCenter - screenPos, new Rectangle?(new Rectangle(0, y6, armsEyesAni.Width, num214)), drawColor * NPC.Opacity, NPC.rotation, new Vector2(armsEyesAni.Width / 2f, num214 / 2f), NPC.scale, effects, 0f);
-                    Main.spriteBatch.Draw(armsEyesGlow, drawCenter - screenPos, new Rectangle?(new Rectangle(0, y6, armsEyesAni.Width, num214)), NPC.GetAlpha(Color.White), NPC.rotation, new Vector2(armsEyesAni.Width / 2f, num214 / 2f), NPC.scale, effects, 0f);
+                    Main.spriteBatch.Draw(armsEyesAni.Value, drawCenter - screenPos, new Rectangle?(new Rectangle(0, y6, armsEyesAni.Value.Width, num214)), drawColor * NPC.Opacity, NPC.rotation, new Vector2(armsEyesAni.Value.Width / 2f, num214 / 2f), NPC.scale, effects, 0f);
+                    Main.spriteBatch.Draw(armsEyesGlow.Value, drawCenter - screenPos, new Rectangle?(new Rectangle(0, y6, armsEyesAni.Value.Width, num214)), NPC.GetAlpha(Color.White), NPC.rotation, new Vector2(armsEyesAni.Value.Width / 2f, num214 / 2f), NPC.scale, effects, 0f);
                 }
             }
             return false;

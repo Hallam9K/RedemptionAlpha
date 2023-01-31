@@ -7,7 +7,7 @@ using Redemption.Rarities;
 
 namespace Redemption.Items.Weapons.PostML.Ranged
 {
-    public class Ukonnuoli : ModItem
+    public class Salamanisku : ModItem
 	{
         public override void SetStaticDefaults()
         {

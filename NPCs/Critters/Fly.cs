@@ -80,7 +80,7 @@ namespace Redemption.NPCs.Critters
                 NPC.scale = 1.2f;
 
             TimerRand = Main.rand.Next(240, 600);
-            NPC.velocity = RedeHelper.PolarVector(10, Main.rand.NextFloat(0, MathHelper.TwoPi));
+            NPC.velocity = RedeHelper.PolarVector(10, RedeHelper.RandomRotation());
         }
         public override void AI()
         {
@@ -109,7 +109,7 @@ namespace Redemption.NPCs.Critters
                     loopVolume = 1 * NPC.scale;
 
                     if (NPC.velocity.Length() < 4)
-                        NPC.velocity = RedeHelper.PolarVector(10, Main.rand.NextFloat(0, MathHelper.TwoPi));
+                        NPC.velocity = RedeHelper.PolarVector(10, RedeHelper.RandomRotation());
 
                     NPC.velocity = NPC.velocity.RotatedBy(Main.rand.NextFloat(-1f, 1f));
                     AITimer++;
@@ -171,7 +171,7 @@ namespace Redemption.NPCs.Critters
                     if (AITimer >= TimerRand)
                     {
                         NPC.velocity.Y -= 10;
-                        NPC.velocity = RedeHelper.PolarVector(10, Main.rand.NextFloat(0, MathHelper.TwoPi));
+                        NPC.velocity = RedeHelper.PolarVector(10, RedeHelper.RandomRotation());
                         AITimer = 0;
                         TimerRand = Main.rand.Next(240, 600);
                         AIState = ActionState.Flying;
@@ -180,7 +180,7 @@ namespace Redemption.NPCs.Critters
                     if (NPC.ClosestNPCToNPC(ref npcTarget, 100, NPC.Center) && npcTarget.lifeMax > 5 && !npcTarget.Redemption().invisible)
                     {
                         NPC.velocity.Y -= 10;
-                        NPC.velocity = RedeHelper.PolarVector(10, Main.rand.NextFloat(0, MathHelper.TwoPi));
+                        NPC.velocity = RedeHelper.PolarVector(10, RedeHelper.RandomRotation());
                         AITimer = 0;
                         TimerRand = Main.rand.Next(240, 600);
                         AIState = ActionState.Flying;
@@ -189,7 +189,7 @@ namespace Redemption.NPCs.Critters
                     if (NPC.DistanceSQ(player.Center) <= 100 * 100)
                     {
                         NPC.velocity.Y -= 10;
-                        NPC.velocity = RedeHelper.PolarVector(10, Main.rand.NextFloat(0, MathHelper.TwoPi));
+                        NPC.velocity = RedeHelper.PolarVector(10, RedeHelper.RandomRotation());
                         AITimer = 0;
                         TimerRand = Main.rand.Next(240, 600);
                         AIState = ActionState.Flying;

@@ -8,6 +8,8 @@ using ReLogic.Graphics;
 using System;
 using Terraria.Audio;
 using static Redemption.UI.Dialogue;
+using IL.Terraria.DataStructures;
+using Terraria.UI.Chat;
 
 namespace Redemption.UI
 {
@@ -65,7 +67,7 @@ namespace Redemption.UI
                 Dialogue dialogue = Dialogue[i].Get();
 
                 string[] drawnText = FormatText(dialogue.displayingText, dialogue.font, out int width, out int height);
-                Vector2 pos = (dialogue.chain == null ? Vector2.Zero : dialogue.chain.modifier) + dialogue.modifier + (dialogue.npc != null ? dialogue.npc.Center - Main.screenPosition - new Vector2((width + 68f) / 2f, -dialogue.npc.height) : dialogue.chain.anchor != null ? dialogue.chain.anchor.VisualPosition : new Vector2(Main.screenWidth / 2f - width / 2f, Main.screenHeight * 0.8f - height / 2f));
+                Vector2 pos = (dialogue.chain == null ? Vector2.Zero : dialogue.chain.modifier) + dialogue.modifier + (dialogue.entity != null ? dialogue.entity.Center - Main.screenPosition - new Vector2((width + 68f) / 2f, -dialogue.entity.height) : dialogue.chain.anchor != null ? dialogue.chain.anchor.VisualPosition : new Vector2(Main.screenWidth / 2f - width / 2f, Main.screenHeight * 0.8f - height / 2f));
 
                 spriteBatch.End();
                 spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.NonPremultiplied, SamplerState.PointClamp, DepthStencilState.Default, RasterizerState.CullNone);
@@ -217,16 +219,8 @@ namespace Redemption.UI
         }
         public static void DrawStringEightWay(SpriteBatch spriteBatch, string text, int thickness, Vector2 position, Color textColor, Color shadowColor)
         {
-            for (int i = -thickness; i <= thickness; i++)
-            {
-                for (int k = -thickness; k <= thickness; k++)
-                {
-                    if (i == 0 && k == 0) continue;
-                    float alpha = MathHelper.Lerp(1f, 0f, Math.Abs((i + k) / 2f));
-                    spriteBatch.DrawString(Terraria.GameContent.FontAssets.MouseText.Value, text, position + new Vector2(i, k), Color.Multiply(shadowColor, alpha));
-                }
-            }
-            spriteBatch.DrawString(Terraria.GameContent.FontAssets.MouseText.Value, text, position, textColor);
+            ChatManager.DrawColorCodedStringShadow(spriteBatch, Terraria.GameContent.FontAssets.MouseText.Value, text, position, shadowColor * .5f, 0, Vector2.Zero, Vector2.One);
+            ChatManager.DrawColorCodedString(spriteBatch, Terraria.GameContent.FontAssets.MouseText.Value, text, position, textColor, 0, Vector2.Zero, Vector2.One);
         }
     }
 
@@ -277,7 +271,7 @@ namespace Redemption.UI
         public delegate void EndTrigger(Dialogue dialogue, int id);
         public event EndTrigger OnEndTrigger;
 
-        public NPC npc;
+        public Entity entity;
         public Color textColor;
         public Color shadowColor;
         public SoundStyle? sound;
@@ -301,9 +295,9 @@ namespace Redemption.UI
         public int fadeTimeMax;
         public int endID;
 
-        public Dialogue(NPC npc, string text, Color? textColor = null, Color? shadowColor = null, SoundStyle? sound = null, int charTime = 3, int preFadeTime = 100, int fadeTime = 30, bool boxFade = false, Texture2D icon = null, Texture2D bubble = null, DynamicSpriteFont font = null, Vector2 modifier = default, int endID = 0)
+        public Dialogue(Entity entity, string text, Color? textColor = null, Color? shadowColor = null, SoundStyle? sound = null, int charTime = 3, int preFadeTime = 100, int fadeTime = 30, bool boxFade = false, Texture2D icon = null, Texture2D bubble = null, DynamicSpriteFont font = null, Vector2 modifier = default, int endID = 0)
         {
-            this.npc = npc;
+            this.entity = entity;
             this.text = text ?? "";
             displayingText ??= "";
 
@@ -331,7 +325,7 @@ namespace Redemption.UI
             // our timer, allowing us to decide how many chars to display
             if (pauseTime <= 0 && displayingText.Length != text.Length && timer % charTime == 0)
             {
-                SoundEngine.PlaySound((SoundStyle)sound, npc.position);
+                SoundEngine.PlaySound((SoundStyle)sound, entity.position);
                 displayingText += text[displayingText.Length];
             }
 
@@ -340,7 +334,7 @@ namespace Redemption.UI
             if (displayingText.Length == text.Length)
                 textFinished = true;
 
-            if ((textFinished && preFadeTime <= 0 && fadeTime <= 0) || !npc.active)
+            if ((textFinished && preFadeTime <= 0 && fadeTime <= 0) || !entity.active)
             {
                 if (endID > 0)
                 {

@@ -199,7 +199,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
         }
         public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
         {
-            hitDirection = Projectile.Center.X > target.Center.X ? -1 : 1;
+            hitDirection = Projectile.RightOfDir(target);
         }
     }
 }

@@ -57,6 +57,7 @@ namespace Redemption.Globals.NPC
         public bool holyFire;
         public bool ukonArrow;
         public bool bInfection;
+        public bool roosterBoost;
 
         public override void ResetEffects(Terraria.NPC npc)
         {
@@ -86,6 +87,7 @@ namespace Redemption.Globals.NPC
             holyFire = false;
             ukonArrow = false;
             bInfection = false;
+            roosterBoost = false;
 
             if (!npc.HasBuff(ModContent.BuffType<InfestedDebuff>()))
             {
@@ -361,6 +363,8 @@ namespace Redemption.Globals.NPC
         }
         public override void ModifyHitByItem(Terraria.NPC npc, Terraria.Player player, Item item, ref int damage, ref float knockback, ref bool crit)
         {
+            if (roosterBoost && Main.expertMode)
+                knockback *= .8f;
             if (stomachAcid)
                 player.GetArmorPenetration(DamageClass.Generic) += 8;
             if (bileDebuff)
@@ -375,6 +379,8 @@ namespace Redemption.Globals.NPC
         public override void ModifyHitByProjectile(Terraria.NPC npc, Projectile projectile, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
         {
             Terraria.Player player = Main.player[projectile.owner];
+            if (roosterBoost && Main.expertMode)
+                knockback *= .8f;
             if (stomachAcid)
                 player.GetArmorPenetration(DamageClass.Generic) += 8;
             if (bileDebuff)
@@ -397,6 +403,8 @@ namespace Redemption.Globals.NPC
             }
             if (rallied)
                 damage *= 0.85;
+            if (roosterBoost && Main.expertMode)
+                damage *= 0.9;
             if (stoneskin)
                 damage *= 0.75;
             if (smashed)
@@ -409,7 +417,7 @@ namespace Redemption.Globals.NPC
         }
         public override void ModifyHitPlayer(Terraria.NPC npc, Terraria.Player target, ref int damage, ref bool crit)
         {
-            if (rallied)
+            if (rallied || roosterBoost)
                 damage = (int)(damage * 1.15f);
             if (dragonblaze)
                 damage = (int)(damage * 0.85f);
@@ -418,7 +426,7 @@ namespace Redemption.Globals.NPC
         }
         public override void ModifyHitNPC(Terraria.NPC npc, Terraria.NPC target, ref int damage, ref float knockback, ref bool crit)
         {
-            if (rallied)
+            if (rallied || roosterBoost)
                 damage = (int)(damage * 1.15f);
             if (dragonblaze)
                 damage = (int)(damage * 0.85f);
@@ -431,7 +439,7 @@ namespace Redemption.Globals.NPC
                 drawColor = Color.Lerp(drawColor, new Color(32, 158, 88), 0.2f);
             if (infested)
                 drawColor = Color.Lerp(drawColor, new Color(197, 219, 171), 0.2f);
-            if (rallied)
+            if (rallied || roosterBoost)
                 drawColor = Color.Lerp(drawColor, new Color(200, 150, 150), 0.2f);
             if (pureChill)
             {
@@ -475,7 +483,7 @@ namespace Redemption.Globals.NPC
                 drawColor = Color.Lerp(drawColor, new Color(220, 150, 150), 0.5f);
                 if (Main.rand.NextBool(5) && !Main.gamePaused)
                 {
-                    ParticleManager.NewParticle(RedeHelper.RandAreaInEntity(npc), RedeHelper.SpreadUp(1), new EmberParticle(), Color.OrangeRed, 1);
+                    ParticleManager.NewParticle(npc.RandAreaInEntity(), RedeHelper.SpreadUp(1), new EmberParticle(), Color.OrangeRed, 1);
                 }
             }
             if (iceFrozen)
@@ -540,7 +548,7 @@ namespace Redemption.Globals.NPC
             if (holyFire)
             {
                 if (Main.rand.NextBool(4) && !Main.gamePaused)
-                    ParticleManager.NewParticle(RedeHelper.RandAreaInEntity(npc), new Vector2(0, -1), new GlowParticle2(), Color.LightGoldenrodYellow, 1, .45f, Main.rand.Next(50, 60));
+                    ParticleManager.NewParticle(npc.RandAreaInEntity(), new Vector2(0, -1), new GlowParticle2(), Color.LightGoldenrodYellow, 1, .45f, Main.rand.Next(50, 60));
             }
         }
 

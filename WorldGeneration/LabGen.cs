@@ -58,6 +58,10 @@ namespace Redemption.WorldGeneration
     {
         public static List<int> labMainLoot;
         public static List<int> labMainLoot2;
+        public static List<int> labDatalogLoot;
+        public static List<int> labDatalogLoot2;
+        public static int labDatalogRand;
+        public static int labDatalogRand2;
         public override bool Place(Point origin, StructureMap structures)
         {
             Mod mod = Redemption.Instance;
@@ -356,49 +360,61 @@ namespace Redemption.WorldGeneration
             labMainLoot2 = new List<int> {
                 ModContent.ItemType<HazmatSuit>(), ModContent.ItemType<MysteriousXenomiteFragment>(),  ModContent.ItemType<EmptyMutagen>(), ModContent.ItemType<Hacksaw>(), ModContent.ItemType<DepletedCrossbow>(), ModContent.ItemType<TeslaCoil>()
             };
-
+            labDatalogLoot = new List<int> {
+                ModContent.ItemType<FloppyDisk1>(),
+                ModContent.ItemType<FloppyDisk3>(),
+                ModContent.ItemType<FloppyDisk3_1>()
+            };
+            labDatalogLoot2 = new List<int> {
+                ModContent.ItemType<FloppyDisk5>(),
+                ModContent.ItemType<FloppyDisk5_1>(),
+                ModContent.ItemType<FloppyDisk5_2>(),
+                ModContent.ItemType<FloppyDisk5_3>()
+            };
+            labDatalogRand = Main.rand.Next(6);
+            labDatalogRand2 = Main.rand.Next(26);
             LabChest(origin.X + 183, origin.Y + 31);
-            LabChest(origin.X + 204, origin.Y + 31);
-            LabChest(origin.X + 199, origin.Y + 27);
-            LabChest(origin.X + 204, origin.Y + 27);
-            LabChest(origin.X + 24, origin.Y + 49);
-            LabChest(origin.X + 145, origin.Y + 86);
-            LabChest(origin.X + 167, origin.Y + 131);
-            LabChest(origin.X + 172, origin.Y + 131);
-            LabChest(origin.X + 180, origin.Y + 126);
-            LabChest(origin.X + 145, origin.Y + 74);
-            LabChest(origin.X + 77, origin.Y + 75);
-            LabChest(origin.X + 82, origin.Y + 75);
-            LabChest(origin.X + 11, origin.Y + 74);
-            LabChest(origin.X + 14, origin.Y + 74);
-            LabChest(origin.X + 9, origin.Y + 105);
-            LabChest(origin.X + 34, origin.Y + 105);
-            LabChest(origin.X + 9, origin.Y + 140);
-            LabChest(origin.X + 23, origin.Y + 151);
-            LabChest(origin.X + 67, origin.Y + 140);
-            LabChest(origin.X + 24, origin.Y + 163);
-            LabChest(origin.X + 27, origin.Y + 74);
-            LabChest(origin.X + 30, origin.Y + 74);
-            LabChest(origin.X + 243, origin.Y + 73);
-            LabChest(origin.X + 231, origin.Y + 101);
-            LabChest(origin.X + 159, origin.Y + 157);
-            LabChest(origin.X + 156, origin.Y + 157);
-            LabChest(origin.X + 184, origin.Y + 181);
-            LabChest(origin.X + 187, origin.Y + 181);
-            LabChest(origin.X + 276, origin.Y + 164);
-            LabChest(origin.X + 279, origin.Y + 164);
+            LabChest(origin.X + 204, origin.Y + 31, 1);
+            LabChest(origin.X + 199, origin.Y + 27, 2);
+            LabChest(origin.X + 204, origin.Y + 27, 3);
+            LabChest(origin.X + 24, origin.Y + 49, 4);
+            LabChest(origin.X + 145, origin.Y + 86, 5);
+            LabChest(origin.X + 167, origin.Y + 131, 6);
+            LabChest(origin.X + 172, origin.Y + 131, 7);
+            LabChest(origin.X + 180, origin.Y + 126, 8);
+            LabChest(origin.X + 145, origin.Y + 74, 9);
+            LabChest(origin.X + 77, origin.Y + 75, 10);
+            LabChest(origin.X + 82, origin.Y + 75, 11);
+            LabChest(origin.X + 11, origin.Y + 74, 12);
+            LabChest(origin.X + 14, origin.Y + 74, 13);
+            LabChest(origin.X + 9, origin.Y + 105, 14);
+            LabChest(origin.X + 34, origin.Y + 105, 15);
+            LabChest(origin.X + 9, origin.Y + 140, 16);
+            LabChest(origin.X + 23, origin.Y + 151, 17);
+            LabChest(origin.X + 67, origin.Y + 140, 18);
+            LabChest(origin.X + 24, origin.Y + 163, 19);
+            LabChest(origin.X + 27, origin.Y + 74, 20);
+            LabChest(origin.X + 30, origin.Y + 74, 21);
+            LabChest(origin.X + 243, origin.Y + 73, 22);
+            LabChest(origin.X + 231, origin.Y + 101, 23);
+            LabChest(origin.X + 159, origin.Y + 157, 24);
+            LabChest(origin.X + 156, origin.Y + 157, 25);
+            LabChest(origin.X + 184, origin.Y + 181, 26);
+            LabChest(origin.X + 187, origin.Y + 181, 27);
+            LabChest(origin.X + 276, origin.Y + 164, 28);
+            LabChest(origin.X + 279, origin.Y + 164, 29);
 
             SpecialLabChest(origin.X + 151, origin.Y + 154);
 
             LabLocker(origin.X + 130, origin.Y + 37);
-            LabLocker(origin.X + 27, origin.Y + 49);
-            LabLocker(origin.X + 91, origin.Y + 86);
-            LabLocker(origin.X + 100, origin.Y + 86);
-            LabLocker(origin.X + 122, origin.Y + 86);
-            LabLocker(origin.X + 122, origin.Y + 74);
-            LabLocker(origin.X + 167, origin.Y + 87);
-            LabLocker(origin.X + 198, origin.Y + 86);
-            LabLocker(origin.X + 202, origin.Y + 87);
+            LabLocker(origin.X + 27, origin.Y + 49, 1);
+            LabLocker(origin.X + 91, origin.Y + 86, 2);
+            LabLocker(origin.X + 100, origin.Y + 86, 3);
+            LabLocker(origin.X + 122, origin.Y + 86, 4);
+            LabLocker(origin.X + 122, origin.Y + 74, 5);
+            LabLocker(origin.X + 167, origin.Y + 87, 6);
+            LabLocker(origin.X + 198, origin.Y + 86, 7);
+            LabLocker(origin.X + 202, origin.Y + 87, 8);
 
             int[] TileArray = { ModContent.TileType<HardenedSludgeTile>(),
                 ModContent.TileType<BlackHardenedSludgeTile>(),
@@ -422,20 +438,13 @@ namespace Redemption.WorldGeneration
             return true;
         }
 
-        public static void LabChest(int x, int y)
+        public static void LabChest(int x, int y, int id = 0)
         {
             int PlacementSuccess = WorldGen.PlaceChest(x, y, (ushort)ModContent.TileType<LabChestTileLocked>(), false, 1);
 
             int[] LabChestLoot = new int[]
             {
                 ModContent.ItemType<HazmatSuit>(), ModContent.ItemType<MysteriousXenomiteFragment>(),  ModContent.ItemType<EmptyMutagen>(), ModContent.ItemType<Hacksaw>(), ModContent.ItemType<DepletedCrossbow>(), ModContent.ItemType<TeslaCoil>()
-            };
-            int[] FloppyDiskLoot = new int[]
-            {
-                ModContent.ItemType<FloppyDisk5>(),
-                ModContent.ItemType<FloppyDisk5_1>(),
-                ModContent.ItemType<FloppyDisk5_2>(),
-                ModContent.ItemType<FloppyDisk5_3>()
             };
             int[] LabChestLoot2 = new int[]
             {
@@ -492,29 +501,25 @@ namespace Redemption.WorldGeneration
                     chest.item[slot].SetDefaults(ModContent.ItemType<CrystalSerum>());
                     chest.item[slot++].stack = WorldGen.genRand.Next(2, 6);
                 }
-
-                if (WorldGen.genRand.NextBool(2))
-                    chest.item[slot++].SetDefaults(Utils.Next(WorldGen.genRand, FloppyDiskLoot));
-
+                if (id >= labDatalogRand2 && labDatalogLoot2 != null && labDatalogLoot2.Count != 0)
+                {
+                    int ID = labDatalogLoot2[Main.rand.Next(0, labDatalogLoot2.Count)];
+                    chest.item[slot++].SetDefaults(ID, false);
+                    labDatalogLoot2.Remove(ID);
+                }
                 /*if (WorldGen.genRand.Next(4) == 0)
                 {
                     chest.item[4].SetDefaults(Utils.Next(WorldGen.genRand, LabChestLoot4));
                 }*/
             }
         }
-        public static void LabLocker(int x, int y)
+        public static void LabLocker(int x, int y, int id = 0)
         {
             int PlacementSuccess = WorldGen.PlaceChest(x, y, (ushort)ModContent.TileType<StandardLabLockerTile>(), false);
 
             int[] LabChestLoot = new int[]
             {
                 ModContent.ItemType<GasMask>(), ModContent.ItemType<Holoshield>(), ModContent.ItemType<PrototypeAtomRifle>(), ModContent.ItemType<MiniWarhead>(), ModContent.ItemType<GravityHammer>(), ModContent.ItemType<TeslaGenerator>(), ModContent.ItemType<LightningRod>()
-            };
-            int[] FloppyDiskLoot = new int[]
-            {
-                ModContent.ItemType<FloppyDisk1>(),
-                ModContent.ItemType<FloppyDisk3>(),
-                ModContent.ItemType<FloppyDisk3_1>()
             };
             int[] LabChestLoot2 = new int[]
             {
@@ -549,8 +554,12 @@ namespace Redemption.WorldGeneration
                 chest.item[slot].SetDefaults(Utils.Next(WorldGen.genRand, LabChestLoot3));
                 chest.item[slot++].stack = WorldGen.genRand.Next(8, 12);
 
-                if (WorldGen.genRand.NextBool(4))
-                    chest.item[slot++].SetDefaults(Utils.Next(WorldGen.genRand, FloppyDiskLoot));
+                if (id >= labDatalogRand && labDatalogLoot != null && labDatalogLoot.Count != 0)
+                {
+                    int ID = labDatalogLoot[Main.rand.Next(0, labDatalogLoot.Count)];
+                    chest.item[slot++].SetDefaults(ID, false);
+                    labDatalogLoot.Remove(ID);
+                }
 
                 if (WorldGen.genRand.NextBool(4))
                 {

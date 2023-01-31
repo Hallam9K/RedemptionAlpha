@@ -28,10 +28,7 @@ namespace Redemption.NPCs.Friendly
         }
         public ref float AITimer => ref NPC.ai[1];
         public ref float Force => ref NPC.ai[2];
-        public static void UnloadChain()
-        {
-            tailChain = null;
-        }
+
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Noza, Tamer of Evil");
@@ -192,7 +189,7 @@ namespace Redemption.NPCs.Friendly
         }
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
-            Texture2D EyesTex = ModContent.Request<Texture2D>(NPC.ModNPC.Texture + "_Blink").Value;
+            Texture2D EyesTex = ModContent.Request<Texture2D>(Texture + "_Blink").Value;
             var effects = NPC.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
 
             spriteBatch.Draw(TextureAssets.Npc[NPC.type].Value, NPC.Center - new Vector2(0, 3) - screenPos, NPC.frame, NPC.GetAlpha(drawColor), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);

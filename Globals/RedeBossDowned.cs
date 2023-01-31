@@ -39,6 +39,7 @@ namespace Redemption.Globals
         public static bool downedADD;
         public static int downedGGBossFirst;
         public static bool downedFowlEmperor;
+        public static bool downedFowlMorning;
 
         public override void OnWorldLoad()
         {
@@ -73,6 +74,7 @@ namespace Redemption.Globals
             downedADD = false;
             downedGGBossFirst = 0;
             downedFowlEmperor = false;
+            downedFowlMorning = false;
         }
 
         public override void OnWorldUnload()
@@ -108,6 +110,7 @@ namespace Redemption.Globals
             downedADD = false;
             downedGGBossFirst = 0;
             downedFowlEmperor = false;
+            downedFowlMorning = false;
         }
 
         public override void SaveWorldData(TagCompound tag)
@@ -164,6 +167,8 @@ namespace Redemption.Globals
                 downed.Add("downedADD");
             if (downedFowlEmperor)
                 downed.Add("downedFowlEmperor");
+            if (downedFowlMorning)
+                downed.Add("downedFowlMorning");
 
             tag["downed"] = downed;
             tag["erhanDeath"] = erhanDeath;
@@ -209,6 +214,7 @@ namespace Redemption.Globals
             downedADD = downed.Contains("downedADD");
             downedGGBossFirst = tag.GetInt("downedGGBossFirst");
             downedFowlEmperor = downed.Contains("downedFowlEmperor");
+            downedFowlMorning = downed.Contains("downedFowlMorning");
         }
 
         public override void NetSend(BinaryWriter writer)
@@ -245,6 +251,7 @@ namespace Redemption.Globals
             writer.Write(flags3);
             var flags4 = new BitsByte();
             flags4[0] = downedFowlEmperor;
+            flags4[1] = downedFowlMorning;
             writer.Write(flags4);
 
             writer.Write(erhanDeath);
@@ -286,6 +293,7 @@ namespace Redemption.Globals
             downedADD = flags3[7];
             BitsByte flags4 = reader.ReadByte();
             downedFowlEmperor = flags4[0];
+            downedFowlMorning = flags4[1];
 
             erhanDeath = reader.ReadInt32();
             slayerDeath = reader.ReadInt32();

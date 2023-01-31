@@ -22,12 +22,31 @@ using Redemption.Items.Armor.Vanity;
 using Redemption.Items.Accessories.PreHM;
 using Redemption.BaseExtension;
 using Redemption.UI;
+using ReLogic.Content;
 
 namespace Redemption.NPCs.Bosses.Erhan
 {
     [AutoloadBossHead]
     public class ErhanSpirit : ModNPC
     {
+        private static Asset<Texture2D> ArmsTex;
+        private static Asset<Texture2D> HeadTex;
+        private static Asset<Texture2D> FallTex;
+        private static Asset<Texture2D> GroundedTex;
+        public override void Load()
+        {
+            ArmsTex = ModContent.Request<Texture2D>(Texture + "_Arms");
+            HeadTex = ModContent.Request<Texture2D>(Texture + "_Head");
+            FallTex = ModContent.Request<Texture2D>(Texture + "_Fall");
+            GroundedTex = ModContent.Request<Texture2D>(Texture + "_Grounded");
+        }
+        public override void Unload()
+        {
+            ArmsTex = null;
+            HeadTex = null;
+            FallTex = null;
+            GroundedTex = null;
+        }
         public override string Texture => "Redemption/NPCs/Bosses/Erhan/Erhan";
         public enum ActionState
         {
@@ -919,10 +938,6 @@ namespace Redemption.NPCs.Bosses.Erhan
 
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
-            Texture2D ArmsTex = ModContent.Request<Texture2D>(NPC.ModNPC.Texture + "_Arms").Value;
-            Texture2D HeadTex = ModContent.Request<Texture2D>(NPC.ModNPC.Texture + "_Head").Value;
-            Texture2D FallTex = ModContent.Request<Texture2D>(NPC.ModNPC.Texture + "_Fall").Value;
-            Texture2D GroundedTex = ModContent.Request<Texture2D>(NPC.ModNPC.Texture + "_Grounded").Value;
             var effects = NPC.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
             int shader = ContentSamples.CommonlyUsedContentSamples.ColorOnlyShaderIndex;
             Color shaderColor = BaseUtility.MultiLerpColor(Main.LocalPlayer.miscCounter % 100 / 100f, Color.Yellow, Color.Goldenrod * 0.7f, Color.Yellow);
@@ -931,25 +946,25 @@ namespace Redemption.NPCs.Bosses.Erhan
             {
                 if (TimerRand <= 1)
                 {
-                    Rectangle rectFall = new(0, 0, FallTex.Width, FallTex.Height);
-                    Vector2 originFall = new(FallTex.Width / 2f, FallTex.Height / 2f);
-                    spriteBatch.Draw(FallTex, NPC.Center - screenPos, new Rectangle?(rectFall), NPC.GetAlpha(drawColor), NPC.rotation, originFall, NPC.scale, effects, 0);
+                    Rectangle rectFall = new(0, 0, FallTex.Value.Width, FallTex.Value.Height);
+                    Vector2 originFall = new(FallTex.Value.Width / 2f, FallTex.Value.Height / 2f);
+                    spriteBatch.Draw(FallTex.Value, NPC.Center - screenPos, new Rectangle?(rectFall), NPC.GetAlpha(drawColor), NPC.rotation, originFall, NPC.scale, effects, 0);
                 }
                 else
                 {
-                    int heightGrounded = GroundedTex.Height / 4;
+                    int heightGrounded = GroundedTex.Value.Height / 4;
                     int yGrounded = heightGrounded * ArmFrameY;
-                    Rectangle rectGrounded = new(0, yGrounded, GroundedTex.Width, heightGrounded);
-                    Vector2 originGrounded = new(GroundedTex.Width / 2f, heightGrounded / 2f);
-                    spriteBatch.Draw(GroundedTex, NPC.Center - screenPos + new Vector2(0, 10), new Rectangle?(rectGrounded), NPC.GetAlpha(drawColor), NPC.rotation, originGrounded, NPC.scale, effects, 0);
+                    Rectangle rectGrounded = new(0, yGrounded, GroundedTex.Value.Width, heightGrounded);
+                    Vector2 originGrounded = new(GroundedTex.Value.Width / 2f, heightGrounded / 2f);
+                    spriteBatch.Draw(GroundedTex.Value, NPC.Center - screenPos + new Vector2(0, 10), new Rectangle?(rectGrounded), NPC.GetAlpha(drawColor), NPC.rotation, originGrounded, NPC.scale, effects, 0);
                 }
                 return false;
             }
 
-            int heightHead = HeadTex.Height / 3;
+            int heightHead = HeadTex.Value.Height / 3;
             int yHead = heightHead * HeadFrameY;
-            Rectangle rectHead = new(0, yHead, HeadTex.Width, heightHead);
-            Vector2 originHead = new(HeadTex.Width / 2f, heightHead / 2f);
+            Rectangle rectHead = new(0, yHead, HeadTex.Value.Width, heightHead);
+            Vector2 originHead = new(HeadTex.Value.Width / 2f, heightHead / 2f);
             if (!NPC.IsABestiaryIconDummy)
             {
                 spriteBatch.End();
@@ -959,7 +974,7 @@ namespace Redemption.NPCs.Bosses.Erhan
                 for (int i = 0; i < NPCID.Sets.TrailCacheLength[NPC.type]; i++)
                 {
                     Vector2 oldPos = NPC.oldPos[i];
-                    spriteBatch.Draw(HeadTex, oldPos + NPC.Size / 2f - screenPos - new Vector2(-2 * NPC.spriteDirection, 33), new Rectangle?(rectHead), NPC.GetAlpha(shaderColor) * 0.5f, oldrot[i], originHead, NPC.scale + 0.1f, effects, 0);
+                    spriteBatch.Draw(HeadTex.Value, oldPos + NPC.Size / 2f - screenPos - new Vector2(-2 * NPC.spriteDirection, 33), new Rectangle?(rectHead), NPC.GetAlpha(shaderColor) * 0.5f, oldrot[i], originHead, NPC.scale + 0.1f, effects, 0);
                 }
                 for (int i = 0; i < NPCID.Sets.TrailCacheLength[NPC.type]; i++)
                 {
@@ -973,13 +988,13 @@ namespace Redemption.NPCs.Bosses.Erhan
 
             spriteBatch.Draw(TextureAssets.Npc[NPC.type].Value, NPC.Center - screenPos, NPC.frame, NPC.GetAlpha(drawColor), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
 
-            spriteBatch.Draw(HeadTex, NPC.Center - screenPos - new Vector2(-2 * NPC.spriteDirection, 33), new Rectangle?(rectHead), NPC.GetAlpha(drawColor), NPC.rotation, originHead, NPC.scale, effects, 0);
+            spriteBatch.Draw(HeadTex.Value, NPC.Center - screenPos - new Vector2(-2 * NPC.spriteDirection, 33), new Rectangle?(rectHead), NPC.GetAlpha(drawColor), NPC.rotation, originHead, NPC.scale, effects, 0);
 
-            int heightArms = ArmsTex.Height / 24;
+            int heightArms = ArmsTex.Value.Height / 24;
             int yArms = heightArms * ArmFrameY;
-            Rectangle rectArms = new(0, yArms, ArmsTex.Width, heightArms);
-            Vector2 originArms = new(ArmsTex.Width / 2f, heightArms / 2f);
-            spriteBatch.Draw(ArmsTex, NPC.Center - screenPos + new Vector2(-2 * NPC.spriteDirection, -10), new Rectangle?(rectArms), NPC.GetAlpha(drawColor), NPC.rotation, originArms, NPC.scale, effects, 0);
+            Rectangle rectArms = new(0, yArms, ArmsTex.Value.Width, heightArms);
+            Vector2 originArms = new(ArmsTex.Value.Width / 2f, heightArms / 2f);
+            spriteBatch.Draw(ArmsTex.Value, NPC.Center - screenPos + new Vector2(-2 * NPC.spriteDirection, -10), new Rectangle?(rectArms), NPC.GetAlpha(drawColor), NPC.rotation, originArms, NPC.scale, effects, 0);
 
             return false;
         }

@@ -98,7 +98,7 @@ namespace Redemption.Items.Weapons.HM.Melee
                         NPC target = null;
                         if (Projectile.localAI[0] == 2 && RedeHelper.ClosestNPC(ref target, 200, player.Center, true))
                         {
-                            int hitDirection = Projectile.Center.X > target.Center.X ? -1 : 1;
+                            int hitDirection = target.RightOfDir(Projectile);
                             BaseAI.DamageNPC(target, Projectile.damage * 2, Projectile.knockBack, hitDirection, Projectile, crit: Projectile.HeldItemCrit());
 
                             SoundEngine.PlaySound(CustomSounds.NebSound3 with { Pitch = .2f, Volume = .6f }, player.Center);

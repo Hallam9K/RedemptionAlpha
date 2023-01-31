@@ -6,6 +6,7 @@ using Redemption.Items.Armor.Vanity;
 using Redemption.Items.Materials.PreHM;
 using Redemption.Items.Placeable.Banners;
 using Redemption.NPCs.Friendly;
+using ReLogic.Content;
 using System.IO;
 using Terraria;
 using Terraria.GameContent;
@@ -18,6 +19,15 @@ namespace Redemption.NPCs.PreHM
 {
     public class DancingSkeleton : SkeletonBase
     {
+        private static Asset<Texture2D> soulless;
+        public override void Load()
+        {
+            soulless = ModContent.Request<Texture2D>("Redemption/Textures/Misc/TheSoulless");
+        }
+        public override void Unload()
+        {
+            soulless = null;
+        }
         public override string Texture => "Redemption/NPCs/PreHM/RaveyardSkeleton";
         public enum ActionState
         {
@@ -196,8 +206,7 @@ namespace Redemption.NPCs.PreHM
         }
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
-            Texture2D glow = ModContent.Request<Texture2D>(NPC.ModNPC.Texture + "_Glow").Value;
-            Texture2D soulless = ModContent.Request<Texture2D>("Redemption/Textures/Misc/TheSoulless").Value;
+            Texture2D glow = ModContent.Request<Texture2D>(Texture + "_Glow").Value;
             var effects = NPC.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
             int shader = GameShaders.Armor.GetShaderIdFromItemId(ItemID.VoidDye);
 
@@ -221,13 +230,13 @@ namespace Redemption.NPCs.PreHM
             {
                 float opacity = (float)NPC.life / NPC.lifeMax;
 
-                int Height = soulless.Height / 28;
+                int Height = soulless.Value.Height / 28;
                 int y = Height * AniFrameY;
-                Rectangle rect = new(0, y, soulless.Width, Height);
-                Vector2 origin = new(soulless.Width / 2f, Height / 2f);
-                spriteBatch.Draw(soulless, NPC.Center - screenPos - new Vector2(0, 12), new Rectangle?(rect), drawColor * MathHelper.Lerp(0.6f, 0f, opacity), NPC.rotation, origin, NPC.scale, effects, 0);
-                spriteBatch.Draw(soulless, NPC.Center - screenPos - new Vector2(0, 12), new Rectangle?(rect), drawColor * MathHelper.Lerp(0.1f, 0f, opacity), NPC.rotation, origin, NPC.scale * 10, effects, 0);
-                spriteBatch.Draw(soulless, NPC.Center - screenPos - new Vector2(0, 12), new Rectangle?(rect), drawColor * MathHelper.Lerp(0.05f, 0f, opacity), NPC.rotation, origin, NPC.scale * 20, effects, 0);
+                Rectangle rect = new(0, y, soulless.Value.Width, Height);
+                Vector2 origin = new(soulless.Value.Width / 2f, Height / 2f);
+                spriteBatch.Draw(soulless.Value, NPC.Center - screenPos - new Vector2(0, 12), new Rectangle?(rect), drawColor * MathHelper.Lerp(0.6f, 0f, opacity), NPC.rotation, origin, NPC.scale, effects, 0);
+                spriteBatch.Draw(soulless.Value, NPC.Center - screenPos - new Vector2(0, 12), new Rectangle?(rect), drawColor * MathHelper.Lerp(0.1f, 0f, opacity), NPC.rotation, origin, NPC.scale * 10, effects, 0);
+                spriteBatch.Draw(soulless.Value, NPC.Center - screenPos - new Vector2(0, 12), new Rectangle?(rect), drawColor * MathHelper.Lerp(0.05f, 0f, opacity), NPC.rotation, origin, NPC.scale * 20, effects, 0);
             }
             return false;
         }

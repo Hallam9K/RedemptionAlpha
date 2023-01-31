@@ -36,6 +36,27 @@ namespace Redemption.NPCs.Bosses.PatientZero
     [AutoloadBossHead]
     public class PZ : ModNPC
     {
+        private static Asset<Texture2D> BodyAni;
+        private static Asset<Texture2D> BodyGlowAni;
+        private static Asset<Texture2D> EyeAni;
+        private static Asset<Texture2D> KariAni;
+        private static Asset<Texture2D> SlimeAni;
+        public override void Load()
+        {
+            BodyAni = ModContent.Request<Texture2D>("Redemption/NPCs/Bosses/PatientZero/PZ_Body");
+            BodyGlowAni = ModContent.Request<Texture2D>("Redemption/NPCs/Bosses/PatientZero/PZ_Body_Glow");
+            EyeAni = ModContent.Request<Texture2D>("Redemption/NPCs/Bosses/PatientZero/PZ_Pupil");
+            KariAni = ModContent.Request<Texture2D>("Redemption/NPCs/Bosses/PatientZero/PZ_Kari");
+            SlimeAni = ModContent.Request<Texture2D>("Redemption/NPCs/Bosses/PatientZero/PZ_Slime");
+        }
+        public override void Unload()
+        {
+            BodyAni = null;
+            BodyGlowAni = null;
+            EyeAni = null;
+            KariAni = null;
+            SlimeAni = null;
+        }
         public override string Texture => "Redemption/NPCs/Bosses/PatientZero/PZ_Eyelid";
         public enum ActionState
         {
@@ -887,30 +908,25 @@ namespace Redemption.NPCs.Bosses.PatientZero
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
             Texture2D texture = TextureAssets.Npc[NPC.type].Value;
-            Texture2D BodyAni = ModContent.Request<Texture2D>("Redemption/NPCs/Bosses/PatientZero/PZ_Body").Value;
-            Texture2D BodyGlowAni = ModContent.Request<Texture2D>("Redemption/NPCs/Bosses/PatientZero/PZ_Body_Glow").Value;
-            Texture2D EyeAni = ModContent.Request<Texture2D>("Redemption/NPCs/Bosses/PatientZero/PZ_Pupil").Value;
-            Texture2D KariAni = ModContent.Request<Texture2D>("Redemption/NPCs/Bosses/PatientZero/PZ_Kari").Value;
-            Texture2D SlimeAni = ModContent.Request<Texture2D>("Redemption/NPCs/Bosses/PatientZero/PZ_Slime").Value;
 
             Vector2 drawCenterC = new(NPC.Center.X + 5, NPC.Center.Y + 7);
-            spriteBatch.Draw(SlimeAni, drawCenterC - screenPos, new Rectangle?(new Rectangle(0, 0, SlimeAni.Width, SlimeAni.Height)), drawColor, 0, new Vector2(SlimeAni.Width / 2f, SlimeAni.Height / 2f), 1, SpriteEffects.None, 0f);
+            spriteBatch.Draw(SlimeAni.Value, drawCenterC - screenPos, new Rectangle?(new Rectangle(0, 0, SlimeAni.Value.Width, SlimeAni.Value.Height)), drawColor, 0, new Vector2(SlimeAni.Value.Width / 2f, SlimeAni.Value.Height / 2f), 1, SpriteEffects.None, 0f);
 
             Vector2 drawCenterB = new(NPC.Center.X - 2, NPC.Center.Y + 14);
-            int widthB = BodyAni.Height / 8;
+            int widthB = BodyAni.Value.Height / 8;
             int yB = widthB * BodyFrame;
-            spriteBatch.Draw(BodyAni, drawCenterB - screenPos, new Rectangle?(new Rectangle(0, yB, BodyAni.Width, widthB)), drawColor, 0, new Vector2(BodyAni.Width / 2f, widthB / 2f), NPC.scale * 2, SpriteEffects.None, 0f);
-            spriteBatch.Draw(BodyGlowAni, drawCenterB - screenPos, new Rectangle?(new Rectangle(0, yB, BodyAni.Width, widthB)), new Color(255, 255, 255, NPC.Opacity), 0, new Vector2(BodyAni.Width / 2f, widthB / 2f), NPC.scale * 2, SpriteEffects.None, 0f);
+            spriteBatch.Draw(BodyAni.Value, drawCenterB - screenPos, new Rectangle?(new Rectangle(0, yB, BodyAni.Value.Width, widthB)), drawColor, 0, new Vector2(BodyAni.Value.Width / 2f, widthB / 2f), NPC.scale * 2, SpriteEffects.None, 0f);
+            spriteBatch.Draw(BodyGlowAni.Value, drawCenterB - screenPos, new Rectangle?(new Rectangle(0, yB, BodyAni.Value.Width, widthB)), new Color(255, 255, 255, NPC.Opacity), 0, new Vector2(BodyAni.Value.Width / 2f, widthB / 2f), NPC.scale * 2, SpriteEffects.None, 0f);
 
             if (AIState != ActionState.PhaseChange)
             {
                 Vector2 drawCenterD = new(NPC.Center.X + 1, NPC.Center.Y + 123);
-                int widthD = KariAni.Height / 4;
+                int widthD = KariAni.Value.Height / 4;
                 int yD = widthD * KariFrame;
-                spriteBatch.Draw(KariAni, drawCenterD - screenPos, new Rectangle?(new Rectangle(0, yD, KariAni.Width, widthD)), drawColor, 0, new Vector2(KariAni.Width / 2f, widthD / 2f), NPC.scale, SpriteEffects.None, 0f);
+                spriteBatch.Draw(KariAni.Value, drawCenterD - screenPos, new Rectangle?(new Rectangle(0, yD, KariAni.Value.Width, widthD)), drawColor, 0, new Vector2(KariAni.Value.Width / 2f, widthD / 2f), NPC.scale, SpriteEffects.None, 0f);
             }
 
-            Main.spriteBatch.Draw(EyeAni, NPC.Center - screenPos, new Rectangle?(new Rectangle(0, 0, EyeAni.Width, EyeAni.Height)), NPC.GetAlpha(Color.White), NPC.rotation, new Vector2(EyeAni.Width / 2f, EyeAni.Height / 2f), NPC.scale, 0, 0f);
+            Main.spriteBatch.Draw(EyeAni.Value, NPC.Center - screenPos, new Rectangle?(new Rectangle(0, 0, EyeAni.Value.Width, EyeAni.Value.Height)), NPC.GetAlpha(Color.White), NPC.rotation, new Vector2(EyeAni.Value.Width / 2f, EyeAni.Value.Height / 2f), NPC.scale, 0, 0f);
 
             spriteBatch.Draw(texture, NPC.Center - screenPos, NPC.frame, drawColor, 0, NPC.frame.Size() / 2, NPC.scale, SpriteEffects.None, 0f);
             return false;

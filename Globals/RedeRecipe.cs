@@ -6,6 +6,7 @@ using Redemption.Items.Placeable.Furniture.Kingdom;
 using Redemption.Items.Placeable.Furniture.Misc;
 using Redemption.Items.Placeable.Plants;
 using Redemption.Items.Placeable.Tiles;
+using Redemption.Items.Usable.Potions;
 using Redemption.Items.Weapons.PreHM.Ranged;
 using Terraria;
 using Terraria.ID;
@@ -62,6 +63,11 @@ namespace Redemption.Globals
 
             TorchRecipeGroup = new RecipeGroup(() => $"{Language.GetTextValue("LegacyMisc.37")} {Lang.GetItemNameValue(ItemID.Torch)}", ItemID.Torch, ItemID.BlueTorch, ItemID.BoneTorch, ItemID.CoralTorch, ItemID.CorruptTorch, ItemID.CrimsonTorch, ItemID.CursedTorch, ItemID.DemonTorch, ItemID.DesertTorch, ItemID.GreenTorch, ItemID.HallowedTorch, ItemID.IceTorch, ItemID.IchorTorch, ItemID.JungleTorch, ItemID.OrangeTorch, ItemID.PinkTorch, ItemID.PurpleTorch, ItemID.RainbowTorch, ItemID.RedTorch, ItemID.UltrabrightTorch, ItemID.WhiteTorch, ItemID.YellowTorch, ModContent.ItemType<WastelandTorch>(), ModContent.ItemType<KingdomTorch>());
             RecipeGroup.RegisterGroup("Redemption:Torches", TorchRecipeGroup);
+
+            RecipeGroup.RegisterGroup("Fruit", new RecipeGroup(null, ModContent.ItemType<Olives>()));
+            RecipeGroup.RegisterGroup("Sand", new RecipeGroup(null, ModContent.ItemType<IrradiatedSand>(), ModContent.ItemType<IrradiatedHardenedSand>()));
+            RecipeGroup.RegisterGroup("Snails", new RecipeGroup(null, ModContent.ItemType<JohnSnailItem>()));
+            RecipeGroup.RegisterGroup("Wood", new RecipeGroup(null, ModContent.ItemType<ElderWood>(), ModContent.ItemType<PetrifiedWood>()));
         }
         public override void PostAddRecipes()
         {
@@ -83,6 +89,11 @@ namespace Redemption.Globals
             Recipe.Create(ItemID.CyanDye)
                 .AddIngredient<CoastScarabShell>()
                 .AddTile(TileID.DyeVat)
+                .Register();
+
+            Recipe.Create(ItemID.Escargot)
+                .AddIngredient<JohnSnailItem>()
+                .AddTile(TileID.CookingPots)
                 .Register();
 
             Recipe.Create(ItemID.RottenEgg, 15)

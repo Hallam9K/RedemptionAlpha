@@ -38,7 +38,7 @@ namespace Redemption.NPCs.Bosses.ADD
             if (ZAPPED)
             {
                 if (Main.rand.NextBool(2))
-                    DustHelper.DrawParticleElectricity(Projectile.Center, Projectile.Center + RedeHelper.PolarVector(38, Main.rand.NextFloat(0, MathHelper.TwoPi)), new LightningParticle(), 1f, 30, 0.1f);
+                    DustHelper.DrawParticleElectricity(Projectile.Center, Projectile.Center + RedeHelper.PolarVector(38, RedeHelper.RandomRotation()), new LightningParticle(), 1f, 30, 0.1f);
 
                 Projectile.velocity *= 0.5f;
                 Projectile.velocity += new Vector2(Main.rand.Next(-1, 2), Main.rand.Next(-1, 2));
@@ -91,7 +91,7 @@ namespace Redemption.NPCs.Bosses.ADD
                 if (Projectile.DistanceSQ(target.Center) > 200 * 200)
                     continue;
 
-                int hitDirection = Projectile.Center.X > target.Center.X ? -1 : 1;
+                int hitDirection = target.RightOfDir(Projectile);
                 BaseAI.DamagePlayer(target, Projectile.damage * 4, Projectile.knockBack, hitDirection, Projectile);
             }
             for (int i = 0; i < 10; i++)

@@ -52,7 +52,7 @@ namespace Redemption.NPCs.Lab
             Vector2 offset = Vector2.Zero;
             if (RedeBossDowned.downedOmega3)
             {
-                texture = ModContent.Request<Texture2D>(NPC.ModNPC.Texture + "_OO").Value;
+                texture = ModContent.Request<Texture2D>(Texture + "_OO").Value;
                 int Height = texture.Height / 7;
                 int y = Height * AniFrameY;
                 rect = new(0, y, texture.Width, Height);

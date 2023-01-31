@@ -91,7 +91,7 @@ namespace Redemption.NPCs.Lab.Janitor
                                 State = 3;
                                 NPC.netUpdate = true;
                             }
-                            NPC.PlatformFallCheck(ref NPC.Redemption().fallDownPlatform, 20);
+                            NPC.PlatformFallCheck(ref NPC.Redemption().fallDownPlatform, 20, moveTo.Y);
                             NPCHelper.HorizontallyMove(NPC, moveTo, 0.4f, 1.4f, 12, 8, NPC.Center.Y > moveTo.Y);
                         }
                     }
@@ -117,7 +117,7 @@ namespace Redemption.NPCs.Lab.Janitor
                             State = 3;
                             NPC.netUpdate = true;
                         }
-                        NPC.PlatformFallCheck(ref NPC.Redemption().fallDownPlatform, 20);
+                        NPC.PlatformFallCheck(ref NPC.Redemption().fallDownPlatform, 20, moveTo.Y);
                         NPCHelper.HorizontallyMove(NPC, moveTo, 0.4f, 1.4f, 12, 8, NPC.Center.Y > moveTo.Y);
                     }
                     break;
@@ -207,7 +207,7 @@ namespace Redemption.NPCs.Lab.Janitor
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
             Texture2D texture = TextureAssets.Npc[NPC.type].Value;
-            Texture2D WalkAni = ModContent.Request<Texture2D>(NPC.ModNPC.Texture + "_WalkAway").Value;
+            Texture2D WalkAni = ModContent.Request<Texture2D>(Texture + "_WalkAway").Value;
             var effects = NPC.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
 
             if (NPC.velocity.X != 0)

@@ -115,9 +115,7 @@ namespace Redemption.NPCs.Minibosses.SkullDigger
                 Projectile.rotation += Projectile.velocity.Length() / 30 * Projectile.spriteDirection;
             }
 
-            Point tile = new Vector2(Projectile.Center.X, Projectile.Center.Y).ToTileCoordinates();
-            Tile tile2 = Main.tile[tile.X, tile.Y];
-            if (tile2 is { HasUnactuatedTile: true } && Main.tileSolid[tile2.TileType])
+            if (Collision.SolidCollision(Projectile.position, Projectile.width, Projectile.height))
                 Projectile.timeLeft -= 4;
             return false;
         }

@@ -75,7 +75,7 @@ namespace Redemption.Projectiles.Magic
             Projectile.alpha = 255;
             Projectile.timeLeft = 240;
             Projectile.scale = Main.rand.NextFloat(0.5f, 1f);
-            Projectile.rotation = Main.rand.NextFloat(0, MathHelper.TwoPi);
+            Projectile.rotation = RedeHelper.RandomRotation();
         }
         public override void AI()
         {

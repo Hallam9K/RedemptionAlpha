@@ -8,6 +8,7 @@ using Redemption.NPCs.Friendly;
 using System;
 using Terraria;
 using Terraria.GameContent.UI.Elements;
+using Terraria.GameInput;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.UI;
@@ -23,13 +24,19 @@ namespace Redemption.UI
 
         public override void OnInitialize()
         {
+            lastScreenSize = new Vector2(Main.screenWidth, Main.screenHeight);
+
             BgSprite.Width.Set(200, 0f);
             BgSprite.Height.Set(300, 0f);
-            BgSprite.Top.Set((Main.screenHeight / 2f) - (100f / 2f), 0f);
-            BgSprite.Left.Set((Main.screenWidth / 2f) + 103f, 0f);
+            BgSprite.Top.Set((Main.screenHeight / 2f) - 164f, 0f);
+            BgSprite.Left.Set((Main.screenWidth / 2f) - 103f, 0f);
         }
         public override void Update(GameTime gameTime)
         {
+            base.Update(gameTime);
+            if (ContainsPoint(Main.MouseScreen) && !PlayerInput.IgnoreMouseInterface)
+                Main.LocalPlayer.mouseInterface = true;
+
             if (!Main.LocalPlayer.releaseInventory || Main.LocalPlayer.talkNPC == -1 || Main.npc[Main.LocalPlayer.talkNPC].type != ModContent.NPCType<ForestNymph_Friendly>())
                 Visible = false;
 
@@ -55,6 +62,14 @@ namespace Redemption.UI
         {
             if (!Visible)
                 return;
+
+            if (lastScreenSize != new Vector2(Main.screenWidth, Main.screenHeight))
+            {
+                lastScreenSize = new Vector2(Main.screenWidth, Main.screenHeight);
+                BgSprite.Top.Pixels = (Main.screenHeight / 2f) - 164f;
+                BgSprite.Left.Pixels = (Main.screenWidth / 2f) - 103f;
+                BgSprite.Recalculate();
+            }
 
             base.Draw(spriteBatch);
         }

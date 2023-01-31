@@ -31,7 +31,7 @@ namespace Redemption.Projectiles.Magic
             Projectile.tileCollide = false;
             Projectile.ignoreWater = true;
             Projectile.timeLeft = 60;
-            Projectile.rotation = Main.rand.NextFloat(0, MathHelper.TwoPi);
+            Projectile.rotation = RedeHelper.RandomRotation();
             Projectile.alpha = 255;
             Projectile.frame = Main.rand.Next(4);
             Rand = Main.rand.Next(50, 100);

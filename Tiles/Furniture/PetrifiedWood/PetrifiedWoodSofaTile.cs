@@ -24,7 +24,8 @@ namespace Redemption.Tiles.Furniture.PetrifiedWood
 			name.SetDefault("Petrified Wood Sofa");
 			AddMapEntry(new Color(100, 100, 100), name);
 
-			AdjTiles = new int[] { TileID.Benches };
+            AddToArray(ref TileID.Sets.RoomNeeds.CountsAsChair);
+            AdjTiles = new int[] { TileID.Benches };
 			DustType = DustID.Ash;
 		}
 		public override void NumDust(int i, int j, bool fail, ref int num) => num = fail ? 1 : 3;

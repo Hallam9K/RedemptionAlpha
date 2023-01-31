@@ -19,7 +19,7 @@ namespace Redemption.Items.Lore
         {
             Item.width = 34;
             Item.height = 30;
-            Item.maxStack = 1;
+            Item.maxStack = 9999;
             Item.value = 0;
             Item.rare = ItemRarityID.Cyan;
         }
@@ -72,7 +72,7 @@ namespace Redemption.Items.Lore
                 + "\nA reset apparently takes a million years, so I must travel through space during that time period,"
                 + "\nand with luck, I should come back here a million years from now, and see the new world in all it's beauty."
                 + "\nAs far as I know, I am the sole survivor, and the first living thing to ever escape."
-                + "\nI transferred my human mind into a robotic body so I can save an infinite number of memories with ease,"
+                + "\nI transferred my human mind into a robotic body as no living thing can break through the planet's barrier,"
                 + "\nand I won't need to worry about thirst, hunger, or sleep.'")
                 {
                     OverrideColor = Color.LightCyan
@@ -150,7 +150,7 @@ namespace Redemption.Items.Lore
                 + "\nI have a strong feeling of tiredness and thirst, and my hunger has begun to take hold."
                 + "\nIt's only been 6 days damn it! Roughly 359,000,000 days to go..."
                 + "\nI've tried all I can, but these painful feelings can't go away."
-                + "\nThe human mind is more complicated than I imagined, and combined with all this technical stuff"
+                + "\nThe human mind is more complicated than I imagined, and combined with all this technical junk"
                 + "\nonly makes it harder for me to look into it!"
                 + "\nIf only I had more time back then! I could've looked through this body's code and easily discovered the error!"
                 + "\nGuess I'll just have to deal with it.'")
@@ -191,7 +191,7 @@ namespace Redemption.Items.Lore
                 + "\nand have only been getting worse from here. Humans can last 11 days without sleep,"
                 + "\nthe only thing that stopped them from feeling worse was death."
                 + "\nI can't even bloody die from fatigue, I can't starve to death either,"
-                + "\nI'm just stuck like this... For a million damn years!'")
+                + "\nI'm just stuck like this - for a million damn years!'")
                 {
                     OverrideColor = Color.LightCyan
                 };
@@ -227,7 +227,7 @@ namespace Redemption.Items.Lore
                     "'Finally!"
                 + "\nI am close enough to Nabu III to get a scan of the planet."
                 + "\nSeems to be a standard ocean planet with a radius of 5605.77km."
-                + "\n35.3% iron, 32.0% oxygen, 15.1% silicon, 6.1% sodium, 4.2% aluminum, 2.7% other metals, 4.7% other elements."
+                + "\n35.3% iron, 32.0% oxygen, 15.1% silicon, 6.1% sodium, 4.2% aluminum, 2.7% other metals."
                 + "\nGravitational pull is 7.84 m/s², less than my planet, but whatever..."
                 + "\nA cycle lasts 23.89 hours with an axis tilt of 28.37°."
                 + "\n80% ice sheets, 19.8% ocean, 0.2% land. Atmospheric pressure of 91.83 kPa."
@@ -268,10 +268,10 @@ namespace Redemption.Items.Lore
                     "'Alright. I have constructed a temporary base on Nabu III."
                 + "\nThe amount of iron and sulfur here has come in handy."
                 + "\nI mean, if I was a human I'd be dead with the lack of proper air."
-                + "\nMy blueprint for a country sized spaceship is also finished, now begins the long construction."
+                + "\nMy blueprint for a country-sized spaceship is also finished. Now begins the long construction."
                 + "\nThe design will be a crescent moon shape, not sure why..."
                 + "\nProbably because I used to look up at the moon of my world a lot"
-                + "\nwhen I was human... I wish I still was.'")
+                + "\nwhen I was human. I wish I still was.'")
                 {
                     OverrideColor = Color.LightCyan
                 };
@@ -306,7 +306,7 @@ namespace Redemption.Items.Lore
                 TooltipLine line = new(Mod, "Lore",
                     "'My god how have I not died from this pain yet,"
                 + "\nit just keeps growing. Whenever I think it can't get any worse the next day it does!"
-                + "\nOn brighter news my bigass spaceship is finished. Now I can leave this planet."
+                + "\nOn brighter news my big-arse spaceship is finished. Now I can leave this planet."
                 + "\nI'm getting real sick of snow, the old world was nothing but snow as well, I just want some greenery for once."
                 + "\nUnfortunately my next planet is even further from the sun so I'm not really hopeful...'")
                 {
@@ -380,10 +380,10 @@ namespace Redemption.Items.Lore
                 TooltipLine line = new(Mod, "Lore",
                     "'Alright. Alkonost. And of course, it's ANOTHER DAMN ICE PLANET!"
                 + "\nRadius: 6059.58km, Composition: 36.1% titanium, 35.6% iron, 17.5% oxygen,"
-                + "\n7.4% silicon, 3.4% other metals, trace other elements. High amounts of titanium, huh?"
+                + "\n7.4% silicon, 3.4% other metals. High amounts of titanium, huh?"
                 + "\nThat's gonna be useful, Nabu III had barely any titanium."
                 + "\nGravity is 11.13 m/s². A cycle is 32.65 hours, with an axis tilt of 11.58°."
-                + "\nOh god. 100% of the surface is just ice. The atmosphere is toxic, with a pressure of 91.63 kPa."
+                + "\nOh. 100% of the surface is just ice. The atmosphere is toxic, with a pressure of 91.63 kPa."
                 + "\nThe temperature is -223°C... I don't think even my robotic body can handle that! Oh whatever.'")
                 {
                     OverrideColor = Color.LightCyan
@@ -420,7 +420,7 @@ namespace Redemption.Items.Lore
                     "'Holy..."
                 + "\nAfter exploring Alkonost's surface, I've finally found something other than ice!"
                 + "\nTook so long since I can't last down there for more than half a minute."
-                + "\nFrom the looks of things, it looks man-made. Or I guess alien-made... Hehe."
+                + "\nFrom the looks of things, it looks man-made. Or I guess alien-made... Heh."
                 + "\nFirst time I've felt this amused in forever, but anyways, the structure."
                 + "\nIt was under the thick ice sheet so I had to drill quite far down."
                 + "\nThe water under there must be freezing, but curiosity is getting the better of me here."
@@ -537,7 +537,7 @@ namespace Redemption.Items.Lore
                 TooltipLine line = new(Mod, "Lore",
                     "'Welp, I've reached the next solar system."
                 + "\n3 planets have been scanned, which is quite a disappointment..."
-                + "\nI was hoping for there to be more so I can have more to do."
+                + "\nI was hoping for there to be more to do."
                 + "\nBut it's fine I guess, the androids I've created have been keeping me company."
                 + "\nI'll go to the planet nearest the habitable zone, 'cos robots have become pretty boring now,"
                 + "\nand I'm dying to see actual greenery, not some dull frozen wasteland.'")
@@ -576,7 +576,7 @@ namespace Redemption.Items.Lore
                     "'I have named this planet Asherah, it appears to be iron/silicate-based."
                 + "\nA big radius of 8845.27 km, 40.8% iron, 32.9% oxygen, 15.6% silicon, 4.2% carbon, 2.9% magnesium..."
                 + "\nQuite strong gravity, 34.70 hour cycle, an axis tilt of 53.09°..."
-                + "\nOnly 1% is water, the rest looks like... boring stone and sand... Damn."
+                + "\nOnly 1% of the surface is water, the rest looks like... boring stone and sand. Hm."
                 + "\nOh! The scanner has found life! Microbes, fungi, sentient animals... What is that?"
                 + "\nWell I've found life here, only problem is they look ugly as hell."
                 + "\n2.01 million of these intelligent creatures have been scanned, so they've been around for a while.'")
@@ -651,7 +651,7 @@ namespace Redemption.Items.Lore
             {
                 TooltipLine line = new(Mod, "Lore",
                     "'Wow, this planet blew my expectations away..."
-                + "\nI have named it Alatar V. It's very small, and on the surface it just looks barren."
+                + "\nI have named it Alatar V. It's very small, and on the surface it looks barren."
                 + "\nHowever, it's cave systems are beautiful. Like, there's so many colours and valuable ores."
                 + "\nI've been exploring them overtime for probably years now. But that's fine,"
                 + "\nNot like I got anything better to do."
@@ -727,11 +727,11 @@ namespace Redemption.Items.Lore
             {
                 TooltipLine line = new(Mod, "Lore",
                     "'Today is the millionth day in space. When I was writing that down,"
-                + "\nI had a dumb moment where I thought it was a million years... But no."
-                + "\nIt has only been 2739.7 years, so... 364,000,000? days left... It feels like forever,"
+                + "\nI had a dumb moment where I thought it was a million years. But no."
+                + "\nIt has only been 2739.7 years, so... 364,000,000 days left? It feels like forever,"
                 + "\nand yet it's only been 0.27% of a million. Why am I still doing this. What's the point anymore?"
-                + "\nEvery day is a pain, I just want to eat, I want to sleep..."
-                + "\nI would say I want to be human again, but to be honest... I don't even want to be alive anymore.'")
+                + "\nEvery day is a pain, I just want to eat, I want to sleep."
+                + "\nI would say I want to be human again, but to be honest, I don't even want to be alive anymore.'")
                 {
                     OverrideColor = Color.LightCyan
                 };
@@ -806,7 +806,7 @@ namespace Redemption.Items.Lore
                 + "\nA hundred years for a human is forever, and I've been around for 100x that!"
                 + "\nI've redesigned my robotic body again, but I still haven't figured out how to get into my"
                 + "\nhuman mind and get rid of this STUPID HUNGER. I DON'T HAVE A STOMACH, WHY AM I HUNGRY!?"
-                + "\nI DON'T HAVE EYES, WHY AM I SO TIRED!? WHY DO I HAVE TO LIVE THROUGH THIS DAMN IT!?'")
+                + "\nI DON'T HAVE EYES, WHY AM I SO TIRED!? WHY DO I HAVE TO ENDURE THIS DAMN IT!?'")
                 {
                     OverrideColor = Color.LightCyan
                 };
@@ -986,7 +986,7 @@ namespace Redemption.Items.Lore
                 + "\nI've already set my course, but the problem is, because of that wormhole,"
                 + "\nI don't know which way is home... All I can do now is go to a random direction"
                 + "\nand hope for the best. But the galaxy is vast, I fear by the time I reach home again,"
-                + "\nThe next reset would've already started, and I'd have to wait another million years..."
+                + "\nThe next reset would've already started, and I'd have to wait another million years."
                 + "\nIf that happens, I won't try anymore, I'll just give up.'")
                 {
                     OverrideColor = Color.LightCyan

@@ -7,6 +7,12 @@ using Terraria.DataStructures;
 using Redemption.Globals;
 using Terraria.GameContent;
 using Terraria.Graphics.Shaders;
+using Redemption.BaseExtension;
+using Redemption.Items.Weapons.PreHM.Summon;
+using Redemption.Items.Usable.Summons;
+using Redemption.Items.Materials.PreHM;
+using Redemption.Items.Quest.KingSlayer;
+using Terraria.Audio;
 
 namespace Redemption.NPCs.Friendly
 {
@@ -121,6 +127,9 @@ namespace Redemption.NPCs.Friendly
                 case 4:
                     button = "About you?";
                     break;
+                case 5:
+                    button = "Request Crux";
+                    break;
             }
             button2 = "Cycle Dialogue";
         }
@@ -130,11 +139,41 @@ namespace Redemption.NPCs.Friendly
             if (firstButton)
             {
                 Main.npcChatText = ChitChat();
+                if (ChatNumber == 5)
+                {
+                    if (!Main.LocalPlayer.RedemptionAbility().SpiritwalkerActive)
+                    {
+                        Main.npcChatText = "Sorry! Can't give ya anything while you're completely in the physical realm. Peak in and I'll give it to ya!";
+                        ChatNumber = 4;
+                        return;
+                    }
+                    int card = Main.LocalPlayer.FindItem(ModContent.ItemType<EmptyCruxCard>());
+                    if (card >= 0)
+                    {
+                        Main.LocalPlayer.inventory[card].stack--;
+                        if (Main.LocalPlayer.inventory[card].stack <= 0)
+                            Main.LocalPlayer.inventory[card] = new Item();
+
+                        Main.LocalPlayer.QuickSpawnItem(NPC.GetSource_Loot(), ModContent.ItemType<CruxCardSkeleton>());
+                        Main.npcChatText = "Bravo! I 'ave infused ya card with the spirits of two skeletons, use some souls to summon 'em! They'll assist ya in battle, or make nice company if ya feelin' lonely. They do 'ave a mind of their own, so if they scurry off somewhere, use the card to tug their souls back!";
+                        Main.npcChatCornerItem = ModContent.ItemType<CruxCardSkeleton>();
+                        SoundEngine.PlaySound(SoundID.Chat);
+                    }
+                    else
+                    {
+                        Main.npcChatText = "Ya don't have anythin' I can imbue. If you want help findin' somethin', I'll say to look for those gathic tombs scattered aroun' the caverns. Ya might find somethin' in there.";
+                        Main.npcChatCornerItem = ModContent.ItemType<EmptyCruxCard>();
+                    }
+                    ChatNumber = 4;
+                }
             }
             else
             {
                 ChatNumber++;
-                if (ChatNumber > 4)
+                int max = 4;
+                if (Main.LocalPlayer.RedemptionAbility().SpiritwalkerActive && !Main.LocalPlayer.HasItem(ModContent.ItemType<CruxCardSkeleton>()))
+                    max = 5;
+                if (ChatNumber > max)
                     ChatNumber = 0;
             }
         }
@@ -142,7 +181,7 @@ namespace Redemption.NPCs.Friendly
         {
             return ChatNumber switch
             {
-                0 => "The ability given to ya gives you a peak into the Spirit Realm - A realm parallel to our own. Normally, neither realm can see each other, nor interact. You'll be able to kill foes connected to the realm while peakin', or find corpses to use that bell thing-a-ma-jig on. Such as mine!",
+                0 => "The ability given to ya gives you a peak into the Spirit Realm - A realm parallel to our own. Normally, neither realm can see each other, nor interact. You'll be able to kill foes connected to the realm while peakin', or find corpses to use that bell thing-a-ma-jig on. Such as mine! Another thing, we spirits can gift to you our \"crux\" if ya have somethin' to imbue it in - as long as you're submerged enough in our realm.",
                 1 => "A nifty artifact of Gathuram, that is. Usin' it on corpses will force their spirit back to their location while tuggin' them outta the Spirit Realm a tad, which is why you can see me now even if you stopped Spirit Walkin', despite me being a full-fledged spirit - not one of those Vagrants or Lost Souls.",
                 2 => "When folk die, their soul leaves their body to find anotha'. During this pilgrimage, they're still connected to the physical world, meanin' some with the arcane eye may see 'em, or even do... worse things with 'em. If a lost soul wanders too long, they can seep outta the spirit realm and become Vagrant Spirits - poor things forever lost.",
                 3 => "I 'aven't encountered many spirits in my time 'round here. This place is strange. Although, I met anotha' spirit in a mind-bogglin' location! It felt outta this world, which says a lot considerin' I'm not in your realm. The walls were white, pipes with green fluids hung from ceilings, strange blue lights emitted from metal boxes an' tubes... And the spirit I saw was most intriguing! He just kept repeatin' about alarms, and wore a strange white an' blue suit. Very odd.",

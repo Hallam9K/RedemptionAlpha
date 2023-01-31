@@ -112,10 +112,8 @@ namespace Redemption.NPCs.Wasteland
             NPC.TargetClosest();
             NPC.LookByVelocity();
             RegenCheck();
-            if (globalNPC.attacker is Player && AIState > ActionState.Wander)
+            if ((globalNPC.attacker is Player || (globalNPC.attacker is NPC spirit && spirit.Redemption().spiritSummon)) && AIState > ActionState.Wander)
                 NPC.chaseable = true;
-            else
-                NPC.chaseable = false;
 
             switch (AIState)
             {
@@ -178,7 +176,7 @@ namespace Redemption.NPCs.Wasteland
                     else if (runCooldown > 0)
                         runCooldown--;
 
-                    NPCHelper.HorizontallyMove(NPC, new Vector2(globalNPC.attacker.Center.X < NPC.Center.X ? NPC.Center.X + 50 : NPC.Center.X - 50, NPC.Center.Y),
+                    NPCHelper.HorizontallyMove(NPC, new Vector2(NPC.Center.X + (50 * NPC.RightOfDir(globalNPC.attacker)), NPC.Center.Y),
                         0.5f, 2, 6, 4, false);
 
                     if (Main.rand.NextBool(200) && NPC.velocity.Y == 0)

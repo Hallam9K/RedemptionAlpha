@@ -10,6 +10,9 @@ using ParticleLibrary;
 using Redemption.Particles;
 using Redemption.NPCs.Bosses.KSIII;
 using System.IO;
+using Terraria.ModLoader.Utilities;
+using Redemption.Biomes;
+using Redemption.Base;
 
 namespace Redemption.NPCs.HM
 {
@@ -48,6 +51,62 @@ namespace Redemption.NPCs.HM
         public override bool PreAI()
         {
             Player player = Main.player[RedeHelper.GetNearestAlivePlayer(NPC)];
+            if (!player.active || player.dead)
+                NPC.active = false;
+
+            if (RedeWorld.slayerRep > 0 && NPC.downedMoonlord && !RedeWorld.slayerMessageGiven && !RedeBossDowned.downedOmega3 && !RedeBossDowned.downedNebuleus)
+            {
+                int floor = BaseWorldGen.GetFirstTileFloor((int)player.position.X / 16, (int)player.position.Y / 16);
+                NPC.position = new Vector2(player.position.X, floor * 16);
+                if (NPC.ai[0] == 1)
+                {
+                    if (NPC.ai[1]++ >= 120)
+                    {
+                        SpawnAndroid(ref Pos, 11);
+                        NPC.active = false;
+                    }
+                    return true;
+                }
+                else if (NPC.ai[0] == 2)
+                {
+                    if (NPC.ai[1]++ >= 120)
+                    {
+                        SpawnAndroid(ref Pos, 12);
+                        NPC.active = false;
+                    }
+                    return true;
+                }
+                else if (NPC.ai[0] == 3)
+                {
+                    player.Redemption().slayerStarRating = 1;
+                    RedeWorld.slayerMessageGiven = true;
+                    if (Main.netMode == NetmodeID.Server)
+                        NetMessage.SendData(MessageID.WorldData);
+
+                    for (int i = 0; i < 6; i++)
+                        SpawnSpacePaladin(ref Pos);
+                    NPC.active = false;
+                    return true;
+                }
+                bool enemyNear = false;
+                for (int n = 0; n < Main.maxNPCs; n++)
+                {
+                    NPC npc = Main.npc[n];
+                    if (!npc.active || npc.friendly || npc.lifeMax <= 5)
+                        continue;
+
+                    if (player.DistanceSQ(npc.Center) > 800 * 800)
+                        continue;
+
+                    enemyNear = true;
+                }
+                if (NPC.ai[1]++ >= 600 && player.velocity.Y == 0 && player.velocity.Length() < 4 && !RedeHelper.BossActive() && !enemyNear)
+                {
+                    SpawnAndroid(ref Pos, 10);
+                    NPC.active = false;
+                }
+                return true;
+            }
             switch (player.Redemption().slayerStarRating)
             {
                 case 1:
@@ -93,8 +152,7 @@ namespace Redemption.NPCs.HM
                             if (Main.netMode == NetmodeID.Server)
                                 NetMessage.SendData(MessageID.WorldData);
                         }
-
-                        player.Redemption().slayerStarRating = 0;
+                        player.Redemption().slayerStarRating = 6;
                         RedeHelper.SpawnNPC(new EntitySource_SpawnNPC(), (int)player.Center.X, (int)player.Center.Y, ModContent.NPCType<KS3_Start>(), 5);
                         NPC.active = false;
                     }
@@ -102,7 +160,7 @@ namespace Redemption.NPCs.HM
             }
             return true;
         }
-        private void SpawnAndroid(ref Vector2 pos)
+        private void SpawnAndroid(ref Vector2 pos, int ID = 0)
         {
             pos = NPCHelper.FindGround(NPC, 18);
             pos *= 16;
@@ -121,7 +179,8 @@ namespace Redemption.NPCs.HM
                 Main.dust[dust].velocity *= 6f;
                 Main.dust[dust].noGravity = true;
             }
-            RedeHelper.SpawnNPC(new EntitySource_SpawnNPC(), (int)pos.X, (int)pos.Y, ModContent.NPCType<Android>());
+            int npc = ModContent.NPCType<Android>();
+            RedeHelper.SpawnNPC(new EntitySource_SpawnNPC(), (int)pos.X, (int)pos.Y, npc, 0, 0, 0, ID);
         }
         private void SpawnPrototypeSilver(ref Vector2 pos)
         {
@@ -164,6 +223,18 @@ namespace Redemption.NPCs.HM
                 Main.dust[dust].noGravity = true;
             }
             RedeHelper.SpawnNPC(new EntitySource_SpawnNPC(), (int)pos.X, (int)pos.Y, ModContent.NPCType<SpacePaladin>());
+        }
+        public override float SpawnChance(NPCSpawnInfo spawnInfo)
+        {
+            if (RedeWorld.slayerRep < 1 || !NPC.downedMoonlord || RedeWorld.slayerMessageGiven || RedeBossDowned.downedOmega3 || RedeBossDowned.downedNebuleus)
+                return 0;
+            if (spawnInfo.Player.InModBiome<SlayerShipBiome>())
+                return 0;
+
+            float baseChance = SpawnCondition.OverworldDay.Chance;
+            float m = NPC.AnyNPCs(ModContent.NPCType<Android>()) || NPC.AnyNPCs(ModContent.NPCType<SlayerSpawner>()) ? 0 : 10;
+
+            return baseChance * m;
         }
     }
 }

@@ -8,8 +8,8 @@ namespace Redemption.Globals
             NPCSpawnFromClient,
             NPCSpawnFromClient2,
             SpawnTrail,
-            //StartChickArmy,
-            //ChickArmyData
+            StartFowlMorning,
+            FowlMorningData
         }
     }
 }

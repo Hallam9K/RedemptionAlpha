@@ -92,7 +92,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
             {
                 if (++timer % 30 == 0 && Main.myPlayer == player.whoAmI)
                     Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, Vector2.Zero,
-                        ModContent.ProjectileType<SkullDigger_FlailBlade_ProjF>(), Projectile.damage, Projectile.knockBack, Projectile.owner, Projectile.whoAmI);
+                        ModContent.ProjectileType<SkullDigger_FlailBlade_ProjF>(), Projectile.damage, 0, Projectile.owner, Projectile.whoAmI);
             }
         }
 

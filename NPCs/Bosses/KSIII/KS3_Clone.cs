@@ -24,12 +24,28 @@ using Redemption.BaseExtension;
 using Redemption.Items.Weapons.HM.Magic;
 using Redemption.Items.Weapons.HM.Melee;
 using Redemption.Items.Armor.Vanity;
+using ReLogic.Content;
 
 namespace Redemption.NPCs.Bosses.KSIII
 {
     [AutoloadBossHead]
     public class KS3_Clone : ModNPC
     {
+        private static Asset<Texture2D> Glow;
+        private static Asset<Texture2D> Arms;
+        private static Asset<Texture2D> ArmsGlow;
+        public override void Load()
+        {
+            Glow = ModContent.Request<Texture2D>(Texture + "_Glow");
+            Arms = ModContent.Request<Texture2D>(Texture + "_Arms");
+            ArmsGlow = ModContent.Request<Texture2D>(Texture + "_Arms_Glow");
+        }
+        public override void Unload()
+        {
+            Glow = null;
+            Arms = null;
+            ArmsGlow = null;
+        }
         public override string Texture => "Redemption/NPCs/Bosses/KSIII/KS3";
         public enum ActionState
         {
@@ -105,6 +121,8 @@ namespace Redemption.NPCs.Bosses.KSIII
             NPC.netAlways = true;
             NPC.noTileCollide = true;
             NPC.dontTakeDamage = true;
+            voice = CustomSounds.Voice6 with { Pitch = 0.1f };
+            bubble = ModContent.Request<Texture2D>("Redemption/UI/TextBubble_Slayer").Value;
             if (!Main.dedServ)
                 Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/BossSlayer");
         }
@@ -151,7 +169,6 @@ namespace Redemption.NPCs.Bosses.KSIII
 
             notExpertRule.OnSuccess(ItemDropRule.OneFromOptions(1, ModContent.ItemType<SlayerGun>(), ModContent.ItemType<Nanoswarmer>(), ModContent.ItemType<SlayerFist>()));
             notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<SlayerController>(), 10));
-            notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<SlayerMedal>()));
             notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<Holokey>()));
             notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<CyberPlating>(), 1, 14, 18));
 
@@ -213,9 +230,11 @@ namespace Redemption.NPCs.Bosses.KSIII
         private bool TeleGlow;
         private Vector2 TeleVector;
 
+        private SoundStyle voice;
+        private Texture2D bubble;
+        public readonly Vector2 modifier = new(0, -260);
         public override void AI()
         {
-            Vector2 text = new Vector2(NPC.Center.X, NPC.position.Y - 140) - Main.screenPosition;
             Player player = Main.player[NPC.target];
 
             if (NPC.target < 0 || NPC.target == 255 || player.dead || !player.active)
@@ -264,25 +283,23 @@ namespace Redemption.NPCs.Bosses.KSIII
                     AITimer++;
                     if (AITimer == 60)
                     {
-                        RedeSystem.Instance.DialogueUIElement.DisplayDialogue("SCANNING TARGET...", 160, 1, 0.6f, "King Slayer III Clone:", 0.4f, RedeColor.SlayerColour, null, text, NPC.Center, 0, NPC.whoAmI, true);
+                        DialogueChain chain = new();
+                        chain.Add(new(NPC, "SCANNING TARGET...", new Color(170, 255, 255), Color.Black, voice, 2, 100, 0, false, null, bubble, null, modifier))
+                             .Add(new(NPC, "TARGET DEEMED -[30] 'A WASTE OF TIME'", new Color(170, 255, 255), Color.Black, voice, 2, 100, 0, false, null, bubble, null, modifier))
+                             .Add(new(NPC, "RELAYING MESSAGE -[30] 'KING SLAYER NO LONGER HAS TIME FOR YOU'", new Color(170, 255, 255), Color.Black, voice, 2, 100, 10, true, null, bubble, null, modifier, 1));
+                        chain.OnEndTrigger += Chain_OnEndTrigger;
+                        TextBubbleUI.Visible = true;
+                        TextBubbleUI.Add(chain);
                     }
-                    if (AITimer == 220)
-                    {
-                        RedeSystem.Instance.DialogueUIElement.DisplayDialogue("TARGET DEEMED: 'A WASTE OF TIME'", 180, 1, 0.6f, "King Slayer III Clone:", 0.4f, RedeColor.SlayerColour, null, text, NPC.Center, 0, NPC.whoAmI, true);
-                    }
-                    if (AITimer == 400)
-                    {
-                        RedeSystem.Instance.DialogueUIElement.DisplayDialogue("RELAYING MESSAGE: 'KING SLAYER NO LONGER HAS TIME FOR YOU'", 220, 1, 0.6f, "King Slayer III Clone:", 0.4f, RedeColor.SlayerColour, null, text, NPC.Center, 0, NPC.whoAmI, true);
-                    }
-                    if (AITimer == 420)
+                    if (AITimer == 5001)
                     {
                         ArmsFrameY = 1;
                         ArmsFrameX = 0;
                         BodyState = (int)BodyAnim.Gun;
                     }
-                    if (AITimer >= 500)
+                    if (AITimer >= 5060)
                     {
-                        ShootPos = new Vector2(player.Center.X > NPC.Center.X ? Main.rand.Next(-400, -300) : Main.rand.Next(300, 400), Main.rand.Next(-60, 60));
+                        ShootPos = new Vector2(Main.rand.Next(300, 400) * NPC.RightOfDir(player), Main.rand.Next(-60, 60));
                         NPC.Shoot(NPC.Center, ModContent.ProjectileType<KS3_Shield>(), 0, Vector2.Zero, false, SoundID.Item1, ai0: NPC.whoAmI);
                         AITimer = 0;
                         NPC.dontTakeDamage = false;
@@ -361,7 +378,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                             gunRot.SlowRotation(NPC.DirectionTo(Main.player[NPC.target].Center).ToRotation(), (float)Math.PI / 60f);
                             SnapGunToFiringArea();
                             if (AITimer++ % 20 == 0)
-                                ShootPos = new Vector2(player.Center.X > NPC.Center.X ? Main.rand.Next(-400, -300) : Main.rand.Next(300, 400), Main.rand.Next(-60, 60));
+                                ShootPos = new Vector2(Main.rand.Next(300, 400) * NPC.RightOfDir(player), Main.rand.Next(-60, 60));
 
                             NPC.Move(ShootPos, NPC.DistanceSQ(player.Center) < 100 * 100 ? 4f : NPC.DistanceSQ(player.Center) > 800 * 800 ? 20f : 12f, 14f, true);
 
@@ -406,7 +423,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                             if (AITimer++ == 0)
                                 NPC.Shoot(NPC.Center, ModContent.ProjectileType<KS3_TeleLine1>(), 0, RedeHelper.PolarVector(10, gunRot), false, SoundID.Item1, ai1: NPC.whoAmI);
 
-                            ShootPos = new Vector2(player.Center.X > NPC.Center.X ? -300 : 300, 10);
+                            ShootPos = new Vector2(300 * NPC.RightOfDir(player), 10);
 
                             if (BodyState < (int)BodyAnim.Gun || BodyState > (int)BodyAnim.GunEnd)
                             {
@@ -477,7 +494,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                             gunRot.SlowRotation(NPC.DirectionTo(Main.player[NPC.target].Center).ToRotation(), (float)Math.PI / 60f);
                             SnapGunToFiringArea();
                             AITimer++;
-                            ShootPos = new Vector2(player.Center.X > NPC.Center.X ? -450 : 450, -10);
+                            ShootPos = new Vector2(450 * NPC.RightOfDir(player), -10);
                             NPC.Move(ShootPos, NPC.Distance(player.Center) < 100 ? 4f : NPC.DistanceSQ(player.Center) > 800 * 800 ? 20f : 12f, 14f, true);
 
                             if (BodyState < (int)BodyAnim.Gun || BodyState > (int)BodyAnim.GunEnd)
@@ -509,7 +526,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                             gunRot.SlowRotation(NPC.DirectionTo(Main.player[NPC.target].Center).ToRotation(), (float)Math.PI / 60f);
                             SnapGunToFiringArea();
                             if (AITimer++ % 20 == 0)
-                                ShootPos = new Vector2(player.Center.X > NPC.Center.X ? Main.rand.Next(-400, -300) : Main.rand.Next(300, 400), Main.rand.Next(-60, 60));
+                                ShootPos = new Vector2(Main.rand.Next(300, 400) * NPC.RightOfDir(player), Main.rand.Next(-60, 60));
 
                             NPC.Move(ShootPos, NPC.Distance(player.Center) < 100 ? 4f : NPC.DistanceSQ(player.Center) > 800 * 800 ? 20f : 12f, 14f, true);
 
@@ -604,7 +621,7 @@ namespace Redemption.NPCs.Bosses.KSIII
 
                         #region Rocket Fist
                         case 1:
-                            ShootPos = new Vector2(player.Center.X > NPC.Center.X ? -300 : 300, -60);
+                            ShootPos = new Vector2(300 * NPC.RightOfDir(player), -60);
                             AITimer++;
                             if (AITimer < 100)
                             {
@@ -652,7 +669,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                             else
                             {
                                 AITimer++;
-                                ShootPos = new Vector2(player.Center.X > NPC.Center.X ? -200 : 200, 0);
+                                ShootPos = new Vector2(200 * NPC.RightOfDir(player), 0);
                                 if (AITimer < 100)
                                 {
                                     if (NPC.Distance(ShootPos) < 160 || AITimer > 50)
@@ -704,7 +721,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                             {
                                 AITimer++;
                                 BodyState = (int)BodyAnim.Charging;
-                                ShootPos = new Vector2(player.Center.X > NPC.Center.X ? -320 : 320, 0);
+                                ShootPos = new Vector2(320 * NPC.RightOfDir(player), 0);
                                 if (AITimer < 100)
                                 {
                                     if (NPC.Distance(ShootPos) < 160 || AITimer > 60)
@@ -764,7 +781,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                             {
                                 AITimer++;
                                 BodyState = (int)BodyAnim.Charging;
-                                ShootPos = new Vector2(player.Center.X > NPC.Center.X ? -80 : 80, 0);
+                                ShootPos = new Vector2(80 * NPC.RightOfDir(player), 0);
                                 if (AITimer < 200)
                                 {
                                     if (NPC.DistanceSQ(ShootPos) < 160 * 160 || AITimer > 120)
@@ -895,7 +912,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                             else
                             {
                                 if (AITimer++ % 20 == 0)
-                                    ShootPos = new Vector2(player.Center.X > NPC.Center.X ? Main.rand.Next(-400, -300) : Main.rand.Next(300, 400), Main.rand.Next(-60, 60));
+                                    ShootPos = new Vector2(Main.rand.Next(300, 400) * NPC.RightOfDir(player), Main.rand.Next(-60, 60));
 
                                 NPC.Move(ShootPos, NPC.Distance(player.Center) < 100 ? 4f : NPC.DistanceSQ(player.Center) > 800 * 800 ? 20f : 12f, 14f, true);
                                 if (AITimer == 16)
@@ -1101,7 +1118,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                             if (AITimer++ <= 40)
                             {
                                 NPC.rotation = NPC.velocity.X * 0.01f;
-                                ShootPos = new Vector2(player.Center.X > NPC.Center.X ? -200 : 200, -60);
+                                ShootPos = new Vector2(200 * NPC.RightOfDir(player), -60);
                                 NPC.Move(ShootPos, NPC.DistanceSQ(player.Center) > 800 * 800 ? 20f : 17f, 5f, true);
                             }
                             if (AITimer == 40)
@@ -1152,7 +1169,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                                         if (!target.Hitbox.Intersects(Hitbox))
                                             continue;
 
-                                        int hitDirection = NPC.Center.X > target.Center.X ? -1 : 1;
+                                        int hitDirection = target.RightOfDir(NPC);
                                         BaseAI.DamagePlayer(target, NPC.damage, 3, hitDirection, NPC);
                                     }
                                 }
@@ -1168,7 +1185,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                                 NPC.rotation = NPC.velocity.X * 0.01f;
                                 if (AITimer > 220)
                                 {
-                                    ShootPos = new Vector2(player.Center.X > NPC.Center.X ? -200 : 200, -60);
+                                    ShootPos = new Vector2(200 * NPC.RightOfDir(player), -60);
                                     NPC.Move(ShootPos, NPC.DistanceSQ(player.Center) > 800 * 800 ? 30f : 22f, 8f, true);
                                 }
                                 else
@@ -1205,7 +1222,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                                 }
                                 else
                                 {
-                                    ShootPos = new Vector2(player.Center.X > NPC.Center.X ? -100 : 100, 0);
+                                    ShootPos = new Vector2(100 * NPC.RightOfDir(player), 0);
                                     NPC.Move(ShootPos, NPC.DistanceSQ(player.Center) > 800 * 800 ? 20f : 17f, 5f, true);
                                 }
                             }
@@ -1214,7 +1231,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                                 NPC.rotation = 0;
                                 NPC.velocity *= 0.8f;
                                 if (AITimer == 101)
-                                    NPC.velocity.X = player.Center.X > NPC.Center.X ? -6 : 6;
+                                    NPC.velocity.X = NPC.RightOfDir(player) * 6;
 
                                 if (AITimer == 110)
                                     NPC.Dash(60, false, SoundID.Item74, player.Center);
@@ -1231,7 +1248,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                                         if (!target.Hitbox.Intersects(Hitbox))
                                             continue;
 
-                                        int hitDirection = NPC.Center.X > target.Center.X ? -1 : 1;
+                                        int hitDirection = target.RightOfDir(NPC);
                                         BaseAI.DamagePlayer(target, NPC.damage, 3, hitDirection, NPC);
                                     }
                                 }
@@ -1264,7 +1281,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                                     NPC.rotation = 0;
                                     if (NPC.DistanceSQ(ShootPos) < 100 * 100 || AITimer > 50)
                                     {
-                                        ShootPos = new Vector2(player.Center.X > NPC.Center.X ? -150 : 150, 200);
+                                        ShootPos = new Vector2(150 * NPC.RightOfDir(player), 200);
                                         AITimer = 100;
                                         NPC.velocity.X = 0;
                                         NPC.velocity.Y = -25;
@@ -1309,7 +1326,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                                             if (!target.Hitbox.Intersects(Hitbox))
                                                 continue;
 
-                                            int hitDirection = NPC.Center.X > target.Center.X ? -1 : 1;
+                                            int hitDirection = target.RightOfDir(NPC);
                                             BaseAI.DamagePlayer(target, (int)(NPC.damage * 1.1f), 3, hitDirection, NPC);
                                         }
                                     }
@@ -1350,7 +1367,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                         case 4:
                             AITimer++;
                             NPC.rotation = NPC.velocity.X * 0.01f;
-                            ShootPos = new Vector2(player.Center.X > NPC.Center.X ? -60 : 60, 20);
+                            ShootPos = new Vector2(60 * NPC.RightOfDir(player), 20);
                             if (AITimer < 100)
                             {
                                 NPC.LookAtEntity(player);
@@ -1396,7 +1413,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                                         if (!target.Hitbox.Intersects(Hitbox))
                                             continue;
 
-                                        int hitDirection = NPC.Center.X > target.Center.X ? -1 : 1;
+                                        int hitDirection = target.RightOfDir(NPC);
                                         BaseAI.DamagePlayer(target, (int)(NPC.damage * .9f), 3, hitDirection, NPC);
                                     }
                                 }
@@ -1449,7 +1466,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                                 NPC.LookAtEntity(player);
                                 NPC.rotation = NPC.velocity.X * 0.01f;
                                 AITimer++;
-                                ShootPos = new Vector2(player.Center.X > NPC.Center.X ? -80 : 80, 20);
+                                ShootPos = new Vector2(80 * NPC.RightOfDir(player), 20);
 
                                 if (AITimer == 5)
                                 {
@@ -1481,21 +1498,6 @@ namespace Redemption.NPCs.Bosses.KSIII
                     }
                     break;
             }
-            if (MoRDialogueUI.Visible)
-            {
-                if (RedeSystem.Instance.DialogueUIElement.ID == NPC.whoAmI)
-                {
-                    RedeSystem.Instance.DialogueUIElement.TextPos = text;
-                    RedeSystem.Instance.DialogueUIElement.PointPos = NPC.Center;
-                    RedeSystem.Instance.DialogueUIElement.TextColor = RedeColor.SlayerColour;
-                }
-                else
-                {
-                    RedeSystem.Instance.DialogueUIElement.TextPos = null;
-                    RedeSystem.Instance.DialogueUIElement.PointPos = null;
-                    RedeSystem.Instance.DialogueUIElement.TextColor = null;
-                }
-            }
             #region Teleporting
             if (NPC.DistanceSQ(player.Center) >= 1100 * 1100 && NPC.ai[0] > 0 && !player.RedemptionScreen().lockScreen)
             {
@@ -1506,7 +1508,10 @@ namespace Redemption.NPCs.Bosses.KSIII
             }
             #endregion
         }
-
+        private void Chain_OnEndTrigger(Dialogue dialogue, int ID)
+        {
+            AITimer = 5000;
+        }
         public override void OnHitPlayer(Player target, int damage, bool crit)
         {
             if (AIState is ActionState.PhysicalAttacks)
@@ -1982,20 +1987,32 @@ namespace Redemption.NPCs.Bosses.KSIII
 
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
-            Texture2D Glow = ModContent.Request<Texture2D>(NPC.ModNPC.Texture + "_Glow").Value;
-            Texture2D Arms = ModContent.Request<Texture2D>(NPC.ModNPC.Texture + "_Arms").Value;
-            Texture2D ArmsGlow = ModContent.Request<Texture2D>(NPC.ModNPC.Texture + "_Arms_Glow").Value;
-
             var effects = NPC.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
+            int height = Arms.Value.Height / 6;
+            int width = Arms.Value.Width / 10;
+            int y = height * ArmsFrameY;
+            int x = width * ArmsFrameX;
+            Rectangle ArmsRect = new(x, y, width, height);
+            Vector2 ArmsOrigin = new(width / 2f, height / 2f);
+            Vector2 ArmsPos = new(NPC.Center.X, NPC.Center.Y - 13);
 
             for (int i = 0; i < NPCID.Sets.TrailCacheLength[NPC.type]; i++)
             {
                 Vector2 oldPos = NPC.oldPos[i];
-                Main.spriteBatch.Draw(TextureAssets.Npc[NPC.type].Value, oldPos + NPC.Size / 2f - screenPos + new Vector2(0, NPC.gfxOffY), NPC.frame, NPC.GetAlpha(RedeColor.SlayerColour) * 0.5f, oldrot[i], NPC.frame.Size() / 2, NPC.scale * 2, effects, 0);
+                Main.spriteBatch.Draw(TextureAssets.Npc[NPC.type].Value, oldPos + NPC.Size / 2f - screenPos + new Vector2(0, NPC.gfxOffY), NPC.frame, NPC.GetAlpha(Color.LightCyan) * 0.5f, oldrot[i], NPC.frame.Size() / 2, NPC.scale * 2, effects, 0);
+            }
+            if (BodyState < (int)BodyAnim.IdlePhysical)
+            {
+                for (int i = 0; i < NPCID.Sets.TrailCacheLength[NPC.type]; i++)
+                {
+                    Vector2 oldPos = NPC.oldPos[i];
+                    Main.spriteBatch.Draw(Arms.Value, oldPos - new Vector2(0, 13) + NPC.Size / 2f - screenPos + new Vector2(0, NPC.gfxOffY), new Rectangle?(ArmsRect), NPC.GetAlpha(Color.LightCyan) * 0.5f, BodyState < (int)BodyAnim.Gun || BodyState > (int)BodyAnim.GunEnd ? NPC.rotation :
+                    gunRot + (NPC.spriteDirection == -1 ? (float)Math.PI : 0), ArmsOrigin, NPC.scale, effects, 0);
+                }
             }
 
-            spriteBatch.Draw(TextureAssets.Npc[NPC.type].Value, NPC.Center - screenPos, NPC.frame, NPC.GetAlpha(RedeColor.SlayerColour), NPC.rotation, NPC.frame.Size() / 2, NPC.scale * 2, effects, 0);
-            spriteBatch.Draw(Glow, NPC.Center - screenPos, NPC.frame, NPC.GetAlpha(Color.White), NPC.rotation, NPC.frame.Size() / 2, NPC.scale * 2, effects, 0);
+            spriteBatch.Draw(TextureAssets.Npc[NPC.type].Value, NPC.Center - screenPos, NPC.frame, NPC.GetAlpha(Color.LightCyan), NPC.rotation, NPC.frame.Size() / 2, NPC.scale * 2, effects, 0);
+            spriteBatch.Draw(Glow.Value, NPC.Center - screenPos, NPC.frame, NPC.GetAlpha(Color.White), NPC.rotation, NPC.frame.Size() / 2, NPC.scale * 2, effects, 0);
 
             spriteBatch.End();
             spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.LinearClamp, DepthStencilState.Default, RasterizerState.CullNone, null, Main.GameViewMatrix.TransformationMatrix);
@@ -2014,19 +2031,11 @@ namespace Redemption.NPCs.Bosses.KSIII
 
             if (BodyState < (int)BodyAnim.IdlePhysical)
             {
-                int height = Arms.Height / 6;
-                int width = Arms.Width / 10;
-                int y = height * ArmsFrameY;
-                int x = width * ArmsFrameX;
-                Rectangle ArmsRect = new(x, y, width, height);
-                Vector2 ArmsOrigin = new(width / 2f, height / 2f);
-                Vector2 ArmsPos = new(NPC.Center.X, NPC.Center.Y - 13);
-
-                spriteBatch.Draw(Arms, ArmsPos - screenPos, new Rectangle?(ArmsRect), NPC.GetAlpha(RedeColor.SlayerColour),
+                spriteBatch.Draw(Arms.Value, ArmsPos - screenPos, new Rectangle?(ArmsRect), NPC.GetAlpha(Color.LightCyan),
                     BodyState < (int)BodyAnim.Gun || BodyState > (int)BodyAnim.GunEnd ? NPC.rotation :
                     gunRot + (NPC.spriteDirection == -1 ? (float)Math.PI : 0), ArmsOrigin, NPC.scale, effects, 0);
 
-                spriteBatch.Draw(ArmsGlow, ArmsPos - screenPos, new Rectangle?(ArmsRect), NPC.GetAlpha(Color.White),
+                spriteBatch.Draw(ArmsGlow.Value, ArmsPos - screenPos, new Rectangle?(ArmsRect), NPC.GetAlpha(Color.White),
                     BodyState < (int)BodyAnim.Gun || BodyState > (int)BodyAnim.GunEnd ? NPC.rotation :
                     gunRot + (NPC.spriteDirection == -1 ? (float)Math.PI : 0), ArmsOrigin, NPC.scale, effects, 0);
 
@@ -2040,7 +2049,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                 effect.Parameters["red2"].SetValue(new Color(0.1f, 1f, 0.7f, 0.9f).ToVector4());
 
                 effect.CurrentTechnique.Passes[0].Apply();
-                spriteBatch.Draw(Arms, ArmsPos - screenPos, new Rectangle?(ArmsRect), NPC.GetAlpha(RedeColor.SlayerColour),
+                spriteBatch.Draw(Arms.Value, ArmsPos - screenPos, new Rectangle?(ArmsRect), NPC.GetAlpha(Color.LightCyan),
                     BodyState < (int)BodyAnim.Gun || BodyState > (int)BodyAnim.GunEnd ? NPC.rotation :
                     gunRot + (NPC.spriteDirection == -1 ? (float)Math.PI : 0), ArmsOrigin, NPC.scale, effects, 0);
 

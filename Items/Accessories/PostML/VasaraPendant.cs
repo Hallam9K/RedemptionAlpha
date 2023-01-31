@@ -68,8 +68,8 @@ namespace Redemption.Items.Accessories.PostML
 
             if (Projectile.timeLeft > 30 && Main.rand.NextBool(10))
             {
-                DustHelper.DrawParticleElectricity(Projectile.Center, Projectile.Center + RedeHelper.PolarVector(400, Main.rand.NextFloat(0, MathHelper.TwoPi)), new LightningParticle(), 1, 20, 0.1f);
-                DustHelper.DrawParticleElectricity(Projectile.Center, Projectile.Center + RedeHelper.PolarVector(400, Main.rand.NextFloat(0, MathHelper.TwoPi)), new LightningParticle(), 1, 20, 0.1f);
+                DustHelper.DrawParticleElectricity(Projectile.Center, Projectile.Center + RedeHelper.PolarVector(400, RedeHelper.RandomRotation()), new LightningParticle(), 1, 20, 0.1f);
+                DustHelper.DrawParticleElectricity(Projectile.Center, Projectile.Center + RedeHelper.PolarVector(400, RedeHelper.RandomRotation()), new LightningParticle(), 1, 20, 0.1f);
             }
             else if (Projectile.timeLeft <= 30)
                 Projectile.alpha += 2;
@@ -109,7 +109,7 @@ namespace Redemption.Items.Accessories.PostML
                         if (npc.DistanceSQ(targetPos) > 40 * 40)
                             continue;
 
-                        int hitDirection = Projectile.Center.X > npc.Center.X ? -1 : 1;
+                        int hitDirection = npc.RightOfDir(Projectile);
                         BaseAI.DamageNPC(npc, Projectile.damage, Projectile.knockBack, hitDirection, Projectile);
                     }
                 }

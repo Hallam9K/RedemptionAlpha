@@ -51,6 +51,9 @@ namespace Redemption.Projectiles.Melee
 
         public override void AI()
         {
+            if (Collision.SolidCollision(Projectile.position, Projectile.width, Projectile.height))
+                Projectile.timeLeft -= 2;
+
             thickness = Projectile.scale;
             if (Projectile.timeLeft > 150)
                 Projectile.velocity *= 0.98f;
@@ -62,7 +65,7 @@ namespace Redemption.Projectiles.Melee
                 for (int i = 0; i < Main.maxNPCs; i++)
                 {
                     NPC target = Main.npc[i];
-                    if (!target.CanBeChasedBy() || target.Redemption().invisible)
+                    if (!target.CanBeChasedBy() || target.Redemption().invisible || !Collision.CanHit(Projectile.Center, 0, 0, target.Center, 0, 0))
                         continue;
 
                     Vector2 newMove = target.Center - Projectile.Center;

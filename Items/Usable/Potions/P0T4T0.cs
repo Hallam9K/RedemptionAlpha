@@ -28,7 +28,7 @@ namespace Redemption.Items.Usable.Potions
         {
             Item.DefaultToFood(36, 30, BuffID.WellFed2, 72000);
             Item.value = Item.sellPrice(silver: 60);
-            Item.stack = 9999;
+            Item.maxStack = 9999;
             Item.rare = ItemRarityID.Orange;
         }
         public override void OnConsumeItem(Player player)

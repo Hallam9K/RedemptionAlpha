@@ -101,7 +101,7 @@ namespace Redemption.Items.Usable
                         continue;
 
                     target.immune[Projectile.whoAmI] = 20;
-                    int hitDirection = Projectile.Center.X > target.Center.X ? -1 : 1;
+                    int hitDirection = target.RightOfDir(Projectile);
                     BaseAI.DamageNPC(target, Projectile.damage, Projectile.knockBack, hitDirection, Projectile);
                 }
                 Projectile.knockBack = 10f;

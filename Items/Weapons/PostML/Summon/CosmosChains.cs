@@ -66,7 +66,7 @@ namespace Redemption.Items.Weapons.PostML.Summon
             Player player = Main.player[Projectile.owner];
             if (player.whoAmI == Main.myPlayer && player.ownedProjectileCounts[ModContent.ProjectileType<ChainsCosmicEye>()] < 4)
             {
-                Projectile.NewProjectile(Projectile.GetSource_FromAI(), target.Center + RedeHelper.PolarVector(Main.rand.Next(150, 351), Main.rand.NextFloat(0, MathHelper.TwoPi)), Vector2.Zero, ModContent.ProjectileType<ChainsCosmicEye>(), (int)(Projectile.damage * 0.5f), Projectile.knockBack, player.whoAmI, target.whoAmI);
+                Projectile.NewProjectile(Projectile.GetSource_FromAI(), target.Center + RedeHelper.PolarVector(Main.rand.Next(150, 351), RedeHelper.RandomRotation()), Vector2.Zero, ModContent.ProjectileType<ChainsCosmicEye>(), (int)(Projectile.damage * 0.5f), Projectile.knockBack, player.whoAmI, target.whoAmI);
             }
             target.AddBuff(BuffID.RainbowWhipNPCDebuff, 180);
             player.MinionAttackTargetNPC = target.whoAmI;

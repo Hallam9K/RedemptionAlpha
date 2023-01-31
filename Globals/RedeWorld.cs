@@ -91,6 +91,7 @@ namespace Redemption.Globals
         public static bool apidroidKilled;
         public static bool deadRingerGiven;
         public static bool newbGone;
+        public static bool slayerMessageGiven;
 
         #region Nuke Shenanigans
         public static int nukeTimerInternal = 1800;
@@ -442,6 +443,7 @@ namespace Redemption.Globals
             apidroidKilled = false;
             deadRingerGiven = false;
             newbGone = false;
+            slayerMessageGiven = false;
             if (Terraria.NPC.downedPlantBoss)
                 omegaTransmitReady[0] = true;
             else
@@ -471,6 +473,7 @@ namespace Redemption.Globals
             apidroidKilled = false;
             deadRingerGiven = false;
             newbGone = false;
+            slayerMessageGiven = false;
             omegaTransmitReady[0] = false;
             omegaTransmitReady[1] = false;
             omegaTransmitReady[2] = false;
@@ -490,6 +493,8 @@ namespace Redemption.Globals
                 lists.Add("deadRingerGiven");
             if (newbGone)
                 lists.Add("newbGone");
+            if (slayerMessageGiven)
+                lists.Add("slayerMessageGiven");
 
             tag["lists"] = lists;
             tag["alignment"] = alignment;
@@ -515,6 +520,7 @@ namespace Redemption.Globals
             apidroidKilled = lists.Contains("apidroidKilled");
             deadRingerGiven = lists.Contains("deadRingerGiven");
             newbGone = lists.Contains("newbGone");
+            slayerMessageGiven = lists.Contains("slayerMessageGiven");
         }
 
         public override void NetSend(BinaryWriter writer)
@@ -525,6 +531,7 @@ namespace Redemption.Globals
             flags[2] = apidroidKilled;
             flags[3] = deadRingerGiven;
             flags[4] = newbGone;
+            flags[5] = slayerMessageGiven;
             writer.Write(flags);
 
             writer.Write(alignment);
@@ -543,6 +550,7 @@ namespace Redemption.Globals
             apidroidKilled = flags[2];
             deadRingerGiven = flags[3];
             newbGone = flags[4];
+            slayerMessageGiven = flags[5];
 
             alignment = reader.ReadInt32();
             DayNightCount = reader.ReadInt32();
