@@ -127,6 +127,11 @@ namespace Redemption.Globals.Player
         }
         public override void OnEnterWorld(Terraria.Player player)
         {
+            Main.NewText("===IMPORTANT===\n" +
+                "You are using the Spoiler branch, which as you can guess, contains spoilers we don't yet want to reveal to public.\n" +
+                "Keep your findings in this branch to yourself please.\n" +
+                "===============", 244, 71, 255);
+
             if (SubworldSystem.Current != null)
                 return;
             if (RedeGen.GoldenGatewayVector.X == -1 || RedeGen.BastionVector.X == -1 || RedeGen.gathicPortalVector.X == -1 || RedeGen.HallOfHeroesVector.X == -1 || RedeGen.slayerShipVector.X == -1)
@@ -180,13 +185,6 @@ namespace Redemption.Globals.Player
                     TextureAssets.Heart2 = heartOriginal;
                 }
             }
-        }
-        public override void OnEnterWorld(Terraria.Player player)
-        {
-            Main.NewText("===IMPORTANT===\n" +
-                "You are using the Spoiler branch, which as you can guess, contains spoilers we don't yet want to reveal to public.\n" +
-                "Keep your findings in this branch to yourself please.\n" +
-                "===============", 244, 71, 255);
         }
 
         public string GetSpaceDeathQuote()
