@@ -30,6 +30,7 @@ namespace Redemption.Items.Usable.Potions
         {
             Item.DefaultToFood(30, 28, ModContent.BuffType<WellFed4>(), 216000, true);
             Item.value = Item.sellPrice(0, 25, 0, 0);
+            Item.maxStack = 9999;
             Item.rare = ModContent.RarityType<KingdomRarity>();
         }
         // TODO: Evergold Soup recipe

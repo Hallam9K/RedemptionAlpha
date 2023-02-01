@@ -29,6 +29,7 @@ namespace Redemption.Items.Usable.Potions
         {
             Item.DefaultToFood(30, 22, ModContent.BuffType<WellFed4>(), 54000, true);
             Item.value = Item.sellPrice(0, 1, 85, 0);
+            Item.maxStack = 9999;
             Item.rare = ModContent.RarityType<KingdomRarity>();
         }
         // TODO: Ancient Mushroom Soup recipe
