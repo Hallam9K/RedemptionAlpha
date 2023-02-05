@@ -27,7 +27,6 @@ using Microsoft.Xna.Framework.Graphics;
 using Terraria.GameContent;
 using ReLogic.Content;
 using Redemption.WorldGeneration;
-using SubworldLibrary;
 
 namespace Redemption.Globals.Player
 {
