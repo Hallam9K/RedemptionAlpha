@@ -11,6 +11,7 @@ namespace Redemption.Tiles.Tiles
         {
             Main.tileSolid[Type] = true;
             Main.tileMergeDirt[Type] = true;
+            Main.tileBlendAll[Type] = true;
             Main.tileBlockLight[Type] = true;
             ItemDrop = ModContent.ItemType<ElderWood>();
             MinPick = 0;

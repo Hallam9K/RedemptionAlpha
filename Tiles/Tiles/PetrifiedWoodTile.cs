@@ -13,6 +13,7 @@ namespace Redemption.Tiles.Tiles
             Main.tileSolid[Type] = true;
             Main.tileMergeDirt[Type] = true;
             Main.tileBlockLight[Type] = true;
+            Main.tileBlendAll[Type] = true;
             Main.tileMerge[Type][ModContent.TileType<IrradiatedDirtTile>()] = true;
             Main.tileMerge[ModContent.TileType<IrradiatedDirtTile>()][Type] = true;
             Main.tileMerge[Type][TileID.SpookyWood] = true;

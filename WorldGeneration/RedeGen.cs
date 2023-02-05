@@ -367,7 +367,7 @@ namespace Redemption.WorldGeneration
                                         whitelist = true;
                                         break;
                                     }
-                                    if (type == TileID.Stone || type == TileID.Dirt)
+                                    if (Framing.GetTileSafely(tilesX + x, tilesY + y).HasTile && (type == TileID.Stone || type == TileID.Dirt))
                                         stoneScore++;
                                     else
                                         emptyScore++;
@@ -423,7 +423,7 @@ namespace Redemption.WorldGeneration
                                         blacklist = true;
                                         break;
                                     }
-                                    if (type == TileID.Stone || type == TileID.Dirt)
+                                    if (Framing.GetTileSafely(tilesX + x, tilesY + y).HasTile && (type == TileID.Stone || type == TileID.Dirt))
                                         stoneScore++;
                                     else
                                         emptyScore++;
@@ -662,12 +662,12 @@ namespace Redemption.WorldGeneration
                             for (int y = 0; y < 39; y++)
                             {
                                 int type = Framing.GetTileSafely(tilesX + x, tilesY + y).TileType;
-                                if (!WorldGen.InWorld(tilesX + x, tilesY + y) || TileLists.BlacklistTiles.Contains(type) || !WorldGen.structures.CanPlace(new Rectangle(tilesX, tilesY, x, y)))
+                                if (!WorldGen.InWorld(tilesX + x, tilesY + y) || TileLists.BlacklistTiles.Contains(type) || TileID.Sets.Conversion.Sandstone[type] || !WorldGen.structures.CanPlace(new Rectangle(tilesX, tilesY, x, y)))
                                 {
                                     blacklist = true;
                                     break;
                                 }
-                                if (type == TileID.Stone || type == TileID.Dirt)
+                                if (Framing.GetTileSafely(tilesX + x, tilesY + y).HasTile && (type == TileID.Stone || type == TileID.Dirt))
                                     stoneScore++;
                                 else
                                     emptyScore++;
@@ -675,7 +675,7 @@ namespace Redemption.WorldGeneration
                         }
                         if (blacklist)
                             continue;
-                        if (stoneScore < emptyScore)
+                        if (stoneScore < (emptyScore * 1.5f))
                             continue;
 
                         Vector2 origin = new(tilesX, tilesY);
@@ -753,12 +753,12 @@ namespace Redemption.WorldGeneration
                             for (int y = 0; y < 44; y++)
                             {
                                 int type = Framing.GetTileSafely(tilesX + x, tilesY + y).TileType;
-                                if (!WorldGen.InWorld(tilesX + x, tilesY + y) || TileLists.BlacklistTiles.Contains(type) || !WorldGen.structures.CanPlace(new Rectangle(tilesX, tilesY, x, y)))
+                                if (!WorldGen.InWorld(tilesX + x, tilesY + y) || TileLists.BlacklistTiles.Contains(type) || TileID.Sets.Conversion.Sandstone[type] || !WorldGen.structures.CanPlace(new Rectangle(tilesX, tilesY, x, y)))
                                 {
                                     blacklist = true;
                                     break;
                                 }
-                                if (type == TileID.Stone || type == TileID.Dirt)
+                                if (Framing.GetTileSafely(tilesX + x, tilesY + y).HasTile && (type == TileID.Stone || type == TileID.Dirt))
                                     stoneScore++;
                                 else
                                     emptyScore++;
@@ -766,7 +766,7 @@ namespace Redemption.WorldGeneration
                         }
                         if (blacklist)
                             continue;
-                        if (stoneScore < emptyScore)
+                        if (stoneScore < (emptyScore * 1.5f))
                             continue;
 
                         Vector2 origin = new(tilesX, tilesY);
@@ -847,7 +847,7 @@ namespace Redemption.WorldGeneration
                                     blacklist = true;
                                     break;
                                 }
-                                if (type == TileID.Stone || type == TileID.Dirt)
+                                if (Framing.GetTileSafely(tilesX + x, tilesY + y).HasTile && (type == TileID.Stone || type == TileID.Dirt))
                                     stoneScore++;
                                 else
                                     emptyScore++;
