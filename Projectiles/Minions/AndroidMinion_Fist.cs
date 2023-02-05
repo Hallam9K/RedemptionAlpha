@@ -13,7 +13,7 @@ namespace Redemption.Projectiles.Minions
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Fist Rocket");
-            Main.projFrames[Projectile.type] = 2;
+            Main.projFrames[Projectile.type] = 3;
             ProjectileID.Sets.MinionShot[Projectile.type] = true;
             ProjectileID.Sets.CultistIsResistantTo[Projectile.type] = true;
         }
@@ -37,7 +37,7 @@ namespace Redemption.Projectiles.Minions
             if (++Projectile.frameCounter >= 3)
             {
                 Projectile.frameCounter = 0;
-                if (++Projectile.frame >= 2)
+                if (++Projectile.frame >= 3)
                     Projectile.frame = 0;
             }
             if (Main.rand.NextBool(10))

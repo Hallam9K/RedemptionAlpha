@@ -13,6 +13,7 @@ namespace Redemption.Tiles.Tiles
 		{
 			Main.tileSolid[Type] = true;
 			Main.tileMergeDirt[Type] = false;
+            Main.tileBlendAll[Type] = true;
             Main.tileLighted[Type] = false;
             Main.tileBlockLight[Type] = true;
             Main.tileMerge[Type][ModContent.TileType<GathicGladestoneTile>()] = true;

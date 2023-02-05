@@ -12,6 +12,8 @@ namespace Redemption.Tiles.Tiles
     {
         public override void SetStaticDefaults()
         {
+            Main.tileBlendAll[Type] = true;
+            Main.tileMergeDirt[Type] = true;
             Main.tileSolid[Type] = true;
             Main.tileMerge[Type][ModContent.TileType<IrradiatedDirtTile>()] = true;
             Main.tileMerge[ModContent.TileType<IrradiatedDirtTile>()][Type] = true;
@@ -40,7 +42,6 @@ namespace Redemption.Tiles.Tiles
             TileID.Sets.DoesntPlaceWithTileReplacement[Type] = true;
             TileID.Sets.SpreadOverground[Type] = true;
             TileID.Sets.SpreadUnderground[Type] = true;
-            Main.tileMergeDirt[Type] = false;
             Main.tileBlockLight[Type] = true;
             AddMapEntry(new Color(125, 115, 97));
             MinPick = 10;

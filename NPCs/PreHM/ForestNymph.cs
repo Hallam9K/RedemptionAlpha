@@ -811,10 +811,10 @@ namespace Redemption.NPCs.PreHM
             EyeType = eyes;
 
             WeightedRandom<PersonalityState> choice = new(Main.rand);
-            choice.Add(PersonalityState.Normal, 10);
-            choice.Add(PersonalityState.Calm, 5);
-            choice.Add(PersonalityState.Aggressive, 6);
-            choice.Add(PersonalityState.Shy, 3);
+            choice.Add(PersonalityState.Normal, 10); // 37%
+            choice.Add(PersonalityState.Calm, 5); // 18.5%
+            choice.Add(PersonalityState.Aggressive, 6); // 22%
+            choice.Add(PersonalityState.Shy, 3); // 11%
             choice.Add(PersonalityState.Jolly, 3);
 
             Personality = choice;

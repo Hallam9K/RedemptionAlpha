@@ -509,9 +509,9 @@ namespace Redemption.NPCs.HM
             if (Variant >= 10)
                 return;
             WeightedRandom<int> choice = new(Main.rand);
-            choice.Add(0, 10);
-            choice.Add(1, 4);
-            choice.Add(2, 0.04f);
+            choice.Add(0, 10); // 71%
+            choice.Add(1, 4); // 28%
+            choice.Add(2, 0.04f); // .28%
 
             Variant = choice;
             NPC.netUpdate = true;

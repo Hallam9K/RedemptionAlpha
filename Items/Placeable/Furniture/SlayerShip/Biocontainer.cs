@@ -13,6 +13,7 @@ namespace Redemption.Items.Placeable.Furniture.SlayerShip
             Tooltip.SetDefault("Naturally grows Life Fruits\n" +
                 "'A small container created by King Slayer in order to grow plants in space.\n" +
                 "It simulates specific environments depending on the settings, this one seems ideal for growing rare jungle plant-life'");
+            SacrificeTotal = 1;
         }
         public override void SetDefaults()
 		{

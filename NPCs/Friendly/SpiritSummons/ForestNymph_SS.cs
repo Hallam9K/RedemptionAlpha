@@ -23,7 +23,7 @@ using static Redemption.NPCs.PreHM.ForestNymph;
 
 namespace Redemption.NPCs.Friendly.SpiritSummons
 {
-    public class ForestNymph_SS : ModNPC
+    public class ForestNymph_SS : SSBase
     {
         public override string Texture => "Redemption/NPCs/PreHM/ForestNymph";
         public enum ActionState
@@ -53,12 +53,11 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
 
         public ref float AITimer => ref NPC.ai[1];
         public ref float TimerRand => ref NPC.ai[2];
-        public override void SetStaticDefaults()
+        public override void SetSafeStaticDefaults()
         {
             DisplayName.SetDefault("Forest Nymph");
             Main.npcFrameCount[NPC.type] = 10;
             NPCID.Sets.AllowDoorInteraction[Type] = true;
-            NPCID.Sets.MPAllowedEnemies[Type] = true;
 
             NPCID.Sets.DebuffImmunitySets.Add(Type, new NPCDebuffImmunityData
             {
@@ -70,23 +69,18 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
                     ModContent.BuffType<NecroticGougeDebuff>()
                 }
             });
-            NPCID.Sets.NPCBestiaryDrawModifiers value = new(0) { Hide = true };
-            NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, value);
         }
-        public override void SetDefaults()
+        public override void SetSafeDefaults()
         {
             NPC.width = 44;
             NPC.height = 48;
             NPC.damage = 56;
-            NPC.friendly = true;
             NPC.defense = 5;
             NPC.lifeMax = 500;
             NPC.lifeRegen = 1;
             NPC.HitSound = SoundID.NPCHit1;
             NPC.DeathSound = SoundID.NPCDeath1;
             NPC.knockBackResist = 0.3f;
-            NPC.aiStyle = -1;
-            NPC.Redemption().spiritSummon = true;
         }
         public override void HitEffect(int hitDirection, double damage)
         {
@@ -125,7 +119,6 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
                 _ => new Vector2(0, 0),
             };
         }
-        public override bool CheckActive() => false;
         public Vector2 moveTo;
         private int runCooldown;
         public float[] doorVars = new float[3];
@@ -172,8 +165,6 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
         {
             Player player = Main.player[(int)NPC.ai[3]];
             RedeNPC globalNPC = NPC.Redemption();
-            if (!player.active || player.dead)
-                NPC.StrikeNPC(999, 0, 1);
             if (AIState is not ActionState.Alert)
                 NPC.LookByVelocity();
 
@@ -294,7 +285,7 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
                     }
 
                     NPC.PlatformFallCheck(ref NPC.Redemption().fallDownPlatform, 20, globalNPC.attacker.Center.Y);
-                    if (globalNPC.attacker is NPC attackerNPC && attackerNPC.life >= NPC.life)
+                    if (NPC.life < NPC.lifeMax / 10)
                     {
                         if (Main.rand.NextBool(200) && NPC.velocity.Y == 0 && NPC.DistanceSQ(globalNPC.attacker.Center) > 100 * 100)
                         {
@@ -445,21 +436,11 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
                         NPC.Move(player.Center - new Vector2(0, 4), 20, 20);
                     break;
             }
-            if (Main.myPlayer == player.whoAmI && NPC.DistanceSQ(player.Center) > 2000 * 2000)
-            {
-                NPC.Center = player.Center;
-                NPC.velocity *= 0.1f;
-                NPC.netUpdate = true;
-            }
             if (AIState is not ActionState.SoulMove)
             {
                 NPC.alpha += Main.rand.Next(-10, 11);
                 NPC.alpha = (int)MathHelper.Clamp(NPC.alpha, 0, 30);
             }
-
-            if (!Main.rand.NextBool(40))
-                return;
-            ParticleManager.NewParticle(NPC.RandAreaInEntity(), RedeHelper.Spread(2), new SpiritParticle(), Color.White, 1);
         }
         public override bool? CanFallThroughPlatforms() => NPC.Redemption().fallDownPlatform;
         private int EyeFrame;
@@ -704,7 +685,7 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
         public override bool CanHitPlayer(Player target, ref int cooldownSlot) => false;
         public override void OnKill()
         {
-            RedeHelper.SpawnNPC(NPC.GetSource_FromAI(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<LostSoulNPC>(), Main.rand.NextFloat(0.6f, 0.8f));
+            RedeHelper.SpawnNPC(NPC.GetSource_FromAI(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<LostSoulNPC>(), Main.rand.NextFloat(0.6f, 1.2f));
         }
     }
     public class LivingBloomRoot_SS : LivingBloomRoot

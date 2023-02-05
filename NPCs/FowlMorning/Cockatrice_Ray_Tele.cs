@@ -131,7 +131,7 @@ namespace Redemption.NPCs.FowlMorning
             float point = 0f;
             // Run an AABB versus Line check to look for collisions
             if (Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(), Projectile.Center,
-                Projectile.Center + unit * LaserLength, Projectile.width * LaserScale, ref point))
+                Projectile.Center + unit * LaserLength, 1, ref point))
             {
                 return true;
             }
@@ -155,7 +155,7 @@ namespace Redemption.NPCs.FowlMorning
             Projectile.height = 12;
             Projectile.hostile = true;
             Projectile.extraUpdates = 100;
-            Projectile.timeLeft = 1400;
+            Projectile.timeLeft = 700;
             Projectile.penetrate = -1;
             Projectile.tileCollide = true;
         }

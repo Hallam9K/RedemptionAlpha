@@ -20,8 +20,8 @@ namespace Redemption.Items.Usable
         {
             Item.maxStack = 9999;
             Item.consumable = true;
-            Item.width = 42;
-            Item.height = 28;
+            Item.width = 52;
+            Item.height = 40;
             Item.rare = -1;
         }
 

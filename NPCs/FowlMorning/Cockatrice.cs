@@ -98,6 +98,10 @@ namespace Redemption.NPCs.FowlMorning
         private static IPhysChain tailChain;
         public override void AI()
         {
+            NPC.GetGlobalNPC<NPCPhysChain>().npcPhysChain[0] = tailChain;
+            NPC.GetGlobalNPC<NPCPhysChain>().npcPhysChainOffset[0] = new Vector2(-3f * NPC.spriteDirection, 4f);
+            NPC.GetGlobalNPC<NPCPhysChain>().npcPhysChainDir[0] = -NPC.spriteDirection;
+
             Player player = Main.player[NPC.target];
             if (NPC.target < 0 || NPC.target == 255 || player.dead || !player.active)
                 NPC.TargetClosest();
@@ -148,10 +152,6 @@ namespace Redemption.NPCs.FowlMorning
         public override bool? CanFallThroughPlatforms() => NPC.Redemption().fallDownPlatform;
         public override void FindFrame(int frameHeight)
         {
-            NPC.GetGlobalNPC<NPCPhysChain>().npcPhysChain[0] = tailChain;
-            NPC.GetGlobalNPC<NPCPhysChain>().npcPhysChainOffset[0] = new Vector2(-3f * NPC.spriteDirection, 4f);
-            NPC.GetGlobalNPC<NPCPhysChain>().npcPhysChainDir[0] = -NPC.spriteDirection;
-
             if (Flare)
             {
                 FlareTimer++;
@@ -294,13 +294,13 @@ namespace Redemption.NPCs.FowlMorning
 
                 for (int i = 0; i < 50; i++)
                 {
-                    int dust = Dust.NewDust(NPC.position + NPC.velocity, NPC.width, NPC.height, ModContent.DustType<ChickenFeatherDust1>(),
+                    int dust = Dust.NewDust(NPC.position + NPC.velocity, NPC.width, NPC.height, ModContent.DustType<ChickenFeatherDust3>(),
                         NPC.velocity.X * 0.5f, NPC.velocity.Y * 0.5f, Scale: 2);
                     Main.dust[dust].velocity *= 10f;
                 }
             }
             if (Main.rand.NextBool(2))
-                Dust.NewDust(NPC.position + NPC.velocity, NPC.width, NPC.height, ModContent.DustType<ChickenFeatherDust1>(), NPC.velocity.X * 0.5f, NPC.velocity.Y * 0.5f);
+                Dust.NewDust(NPC.position + NPC.velocity, NPC.width, NPC.height, ModContent.DustType<ChickenFeatherDust3>(), NPC.velocity.X * 0.5f, NPC.velocity.Y * 0.5f);
         }
     }
     internal class CockatriceScarfPhys : IPhysChain

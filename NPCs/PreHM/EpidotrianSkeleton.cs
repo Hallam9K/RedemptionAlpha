@@ -349,28 +349,28 @@ namespace Redemption.NPCs.PreHM
         public void ChoosePersonality()
         {
             WeightedRandom<int> head = new(Main.rand);
-            head.Add(0);
-            head.Add(1, 0.6);
+            head.Add(0); // 28%
+            head.Add(1, 0.6); // 17%
             head.Add(2, 0.6);
-            head.Add(3, 0.4);
+            head.Add(3, 0.4); // 11%
             head.Add(4, 0.4);
-            head.Add(5, 0.1);
+            head.Add(5, 0.1); // 2.8%
             head.Add(6, 0.1);
             head.Add(7, 0.1);
-            head.Add(8, 0.06);
+            head.Add(8, 0.06); // 1.7%
             head.Add(9, 0.06);
             head.Add(10, 0.06);
             head.Add(11, 0.06);
             HeadType = head;
 
             WeightedRandom<PersonalityState> choice = new(Main.rand);
-            choice.Add(PersonalityState.Normal, 10);
-            choice.Add(PersonalityState.Calm, 8);
+            choice.Add(PersonalityState.Normal, 10); // 36%
+            choice.Add(PersonalityState.Calm, 8); // 29%
             choice.Add(PersonalityState.Aggressive, 8);
             if (TimerRand == 0)
             {
-                choice.Add(PersonalityState.Soulful, 1);
-                choice.Add(PersonalityState.Greedy, 0.5);
+                choice.Add(PersonalityState.Soulful, 1); // 3.6%
+                choice.Add(PersonalityState.Greedy, 0.5); // 1.8%
             }
 
             Personality = choice;
@@ -421,7 +421,6 @@ namespace Redemption.NPCs.PreHM
             npcLoot.Add(ItemDropRule.Common(ItemID.Hook, 25));
             npcLoot.Add(ItemDropRule.Food(ItemID.MilkCarton, 150));
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<EpidotrianSkull>(), 50));
-            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<OldTophat>(), 500));
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Trumpet>(), 750));
             npcLoot.Add(ItemDropRule.ByCondition(new LostSoulCondition(), ModContent.ItemType<LostSoul>(), 3));
         }

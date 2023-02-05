@@ -55,7 +55,10 @@ namespace Redemption.Items.Weapons.HM.Melee
         public override bool CanUseItem(Player player)
         {
             if (player.altFunctionUse == 2)
+            {
                 Item.UseSound = CustomSounds.ShootChange;
+                return true;
+            }
             else
                 Item.UseSound = SoundID.Item44;
             return !player.HasBuff(ModContent.BuffType<SwordRemoteCooldown>());

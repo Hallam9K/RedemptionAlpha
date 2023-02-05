@@ -117,6 +117,9 @@ namespace Redemption.NPCs.PreHM
         private int runCooldown;
         public override void OnSpawn(IEntitySource source)
         {
+            if (Main.netMode != NetmodeID.Server)
+                NPC.frame.Width = TextureAssets.Npc[NPC.type].Width() / 3;
+
             ChoosePersonality();
             SetStats();
 
@@ -423,15 +426,17 @@ namespace Redemption.NPCs.PreHM
             head.Add(10, 0.06);
             head.Add(11, 0.06);
             HeadType = head;
+            if (NPC.ai[3] == 0)
+            {
+                WeightedRandom<PersonalityState> choice = new(Main.rand);
+                choice.Add(PersonalityState.Normal, 10);
+                choice.Add(PersonalityState.Calm, 8);
+                choice.Add(PersonalityState.Aggressive, 8);
+                choice.Add(PersonalityState.Soulful, 1);
+                choice.Add(PersonalityState.Greedy, 0.5);
 
-            WeightedRandom<PersonalityState> choice = new(Main.rand);
-            choice.Add(PersonalityState.Normal, 10);
-            choice.Add(PersonalityState.Calm, 8);
-            choice.Add(PersonalityState.Aggressive, 8);
-            choice.Add(PersonalityState.Soulful, 1);
-            choice.Add(PersonalityState.Greedy, 0.5);
-
-            Personality = choice;
+                Personality = choice;
+            }
             if (Main.rand.NextBool(3) || Personality == PersonalityState.Soulful)
                 HasEyes = true;
         }
@@ -479,7 +484,6 @@ namespace Redemption.NPCs.PreHM
             npcLoot.Add(ItemDropRule.Common(ItemID.Hook, 25));
             npcLoot.Add(ItemDropRule.Food(ItemID.MilkCarton, 150));
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<EpidotrianSkull>(), 50));
-            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<OldTophat>(), 500));
             npcLoot.Add(ItemDropRule.ByCondition(new LostSoulCondition(), ModContent.ItemType<LostSoul>(), 3));
         }
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)

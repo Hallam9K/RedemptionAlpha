@@ -108,7 +108,7 @@ namespace Redemption.Tiles.Furniture.Shade
 			if (Main.drawToScreen)
 				zero = Vector2.Zero;
 
-			ulong randSeed = Main.TileFrameSeed ^ (ulong)((long)j << 32 | (long)(uint)i);
+			ulong randSeed = Main.TileFrameSeed ^ (ulong)((long)j << 32 | (uint)i);
 			Color color = new(100, 100, 100, 0);
 			int width = 20;
 			int height = 20;

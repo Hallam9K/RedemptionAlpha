@@ -25,6 +25,8 @@ using Redemption.Items.Placeable.Furniture.Misc;
 using Redemption.Items.Materials.HM;
 using Redemption.Items.Weapons.HM.Melee;
 using Redemption.BaseExtension;
+using Redemption.Items.Weapons.PreHM.Summon;
+using Redemption.Items.Armor.Vanity;
 
 namespace Redemption.NPCs.Friendly
 {
@@ -312,6 +314,12 @@ namespace Redemption.NPCs.Friendly
             shop.item[nextSlot].SetDefaults(ModContent.ItemType<Violin>());
             shop.item[nextSlot].shopCustomPrice = new int?(20);
             shop.item[nextSlot++].shopSpecialCurrency = Redemption.AntiqueDorulCurrencyId;
+            if (Main.LocalPlayer.HasItem(ModContent.ItemType<CruxCardTied>()))
+            {
+                shop.item[nextSlot].SetDefaults(ModContent.ItemType<OldTophat>());
+                shop.item[nextSlot].shopCustomPrice = new int?(20);
+                shop.item[nextSlot++].shopSpecialCurrency = Redemption.AntiqueDorulCurrencyId;
+            }
             if (RedeBossDowned.downedSkullDigger)
             {
                 shop.item[nextSlot].SetDefaults(ModContent.ItemType<SkullDiggerPainting>());

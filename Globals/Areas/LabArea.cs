@@ -37,50 +37,50 @@ namespace Redemption.Globals
                         active = true;
                 }
             }
-            if (!active || RedeGen.LabVector.X == -1 || RedeGen.LabVector.Y == -1)
+            if (!active || RedeGen.LabPoint.X == -1 || RedeGen.LabPoint.Y == -1)
                 return;
 
-            Vector2 ToasterPos = new(((RedeGen.LabVector.X + 84) * 16) + 14, (RedeGen.LabVector.Y + 42) * 16);
+            Vector2 ToasterPos = new(((RedeGen.LabPoint.X + 84) * 16) + 14, (RedeGen.LabPoint.Y + 42) * 16);
             if (!Terraria.NPC.AnyNPCs(ModContent.NPCType<JustANormalToaster>()))
                 SpawnNPCInWorld(ToasterPos, ModContent.NPCType<JustANormalToaster>());
 
-            Vector2 JanitorPos = new((RedeGen.LabVector.X + 173) * 16, (RedeGen.LabVector.Y + 22) * 16);
+            Vector2 JanitorPos = new((RedeGen.LabPoint.X + 173) * 16, (RedeGen.LabPoint.Y + 22) * 16);
             if (!Terraria.NPC.AnyNPCs(ModContent.NPCType<JanitorBot_Cleaning>()) && !Terraria.NPC.AnyNPCs(ModContent.NPCType<JanitorBot>())
                 && !RedeBossDowned.downedJanitor)
                 SpawnNPCInWorld(JanitorPos, ModContent.NPCType<JanitorBot_Cleaning>());
 
-            Vector2 JanitorNPCPos = new((RedeGen.LabVector.X + 181) * 16, (RedeGen.LabVector.Y + 102) * 16);
+            Vector2 JanitorNPCPos = new((RedeGen.LabPoint.X + 181) * 16, (RedeGen.LabPoint.Y + 102) * 16);
             if (!Terraria.NPC.AnyNPCs(ModContent.NPCType<JanitorBot_NPC>()) && RedeBossDowned.downedJanitor)
                 SpawnNPCInWorld(JanitorNPCPos, ModContent.NPCType<JanitorBot_NPC>());
 
-            Vector2 BehemothPos = new(((RedeGen.LabVector.X + 214) * 16) - 4, (RedeGen.LabVector.Y + 45) * 16);
+            Vector2 BehemothPos = new(((RedeGen.LabPoint.X + 214) * 16) - 4, (RedeGen.LabPoint.Y + 45) * 16);
             if (!Terraria.NPC.AnyNPCs(ModContent.NPCType<IrradiatedBehemoth_Inactive>()) && !Terraria.NPC.AnyNPCs(ModContent.NPCType<IrradiatedBehemoth>()) && !RedeBossDowned.downedBehemoth)
                 SpawnNPCInWorld(BehemothPos, ModContent.NPCType<IrradiatedBehemoth_Inactive>());
 
-            Vector2 BlisterfacePos = new(((RedeGen.LabVector.X + 209) * 16) - 4, (RedeGen.LabVector.Y + 191) * 16);
+            Vector2 BlisterfacePos = new(((RedeGen.LabPoint.X + 209) * 16) - 4, (RedeGen.LabPoint.Y + 191) * 16);
             if (!Terraria.NPC.AnyNPCs(ModContent.NPCType<Blisterface_Inactive>()) && !Terraria.NPC.AnyNPCs(ModContent.NPCType<Blisterface>()) && !RedeBossDowned.downedBlisterface)
                 SpawnNPCInWorld(BlisterfacePos, ModContent.NPCType<Blisterface_Inactive>());
 
-            Vector2 VoltPos = new((RedeGen.LabVector.X + 49) * 16, (RedeGen.LabVector.Y + 122) * 16);
+            Vector2 VoltPos = new((RedeGen.LabPoint.X + 49) * 16, (RedeGen.LabPoint.Y + 122) * 16);
             if (!Terraria.NPC.AnyNPCs(ModContent.NPCType<ProtectorVolt>()) && !Terraria.NPC.AnyNPCs(ModContent.NPCType<ProtectorVolt_Start>()) && !Terraria.NPC.AnyNPCs(ModContent.NPCType<ProtectorVolt_NPC>()))
                 SpawnNPCInWorld(VoltPos, ModContent.NPCType<ProtectorVolt_Start>());
 
-            Vector2 CraneOperatorPos = new(((RedeGen.LabVector.X + 107) * 16) + 8, (RedeGen.LabVector.Y + 157) * 16);
+            Vector2 CraneOperatorPos = new(((RedeGen.LabPoint.X + 107) * 16) + 8, (RedeGen.LabPoint.Y + 157) * 16);
             if (!Terraria.NPC.AnyNPCs(ModContent.NPCType<CraneOperator>()) && !RedeBossDowned.downedMACE)
                 SpawnNPCInWorld(CraneOperatorPos, ModContent.NPCType<CraneOperator>());
 
-            Vector2 MacePos = new(((RedeGen.LabVector.X + 74) * 16) - 8, (RedeGen.LabVector.Y + 169) * 16);
+            Vector2 MacePos = new(((RedeGen.LabPoint.X + 74) * 16) - 8, (RedeGen.LabPoint.Y + 169) * 16);
             if (!Terraria.NPC.AnyNPCs(ModContent.NPCType<MACEProject_Off>()) && !Terraria.NPC.AnyNPCs(ModContent.NPCType<MACEProject>()) && !RedeBossDowned.downedMACE)
                 SpawnNPCInWorld(MacePos, ModContent.NPCType<MACEProject_Off>());
 
-            Vector2 KariPos = new((RedeGen.LabVector.X + 144) * 16, ((RedeGen.LabVector.Y + 193) * 16) + 1);
+            Vector2 KariPos = new((RedeGen.LabPoint.X + 144) * 16, ((RedeGen.LabPoint.Y + 193) * 16) + 1);
             if (!Terraria.NPC.AnyNPCs(ModContent.NPCType<PZ>()) && !Terraria.NPC.AnyNPCs(ModContent.NPCType<PZ_Inactive>()) && !RedeBossDowned.downedPZ)
                 SpawnNPCInWorld(KariPos, ModContent.NPCType<PZ_Inactive>());
         }
-        public static void SpawnNPCInWorld(Vector2 pos, int npcType)
+        public static void SpawnNPCInWorld(Vector2 pos, int npcType, int ai0 = 0)
         {
             if (Main.netMode != NetmodeID.MultiplayerClient)
-                RedeHelper.SpawnNPC(new EntitySource_SpawnNPC(), (int)pos.X, (int)pos.Y, npcType);
+                RedeHelper.SpawnNPC(new EntitySource_SpawnNPC(), (int)pos.X, (int)pos.Y, npcType, ai0);
             //else if (Main.netMode != NetmodeID.SinglePlayer)
             //    Redemption.WriteToPacket(Redemption.Instance.GetPacket(), (byte)ModMessageType.NPCSpawnFromClient, npcType, pos).Send(-1);
         }

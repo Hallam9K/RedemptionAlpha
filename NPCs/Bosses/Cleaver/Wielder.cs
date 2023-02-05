@@ -151,7 +151,6 @@ namespace Redemption.NPCs.Bosses.Cleaver
             base.SendExtraAI(writer);
             if (Main.netMode == NetmodeID.Server || Main.dedServ)
             {
-                writer.Write(ID);
                 writer.Write(AttackNumber);
                 writer.Write(cooldown);
             }
@@ -162,7 +161,6 @@ namespace Redemption.NPCs.Bosses.Cleaver
             base.ReceiveExtraAI(reader);
             if (Main.netMode == NetmodeID.MultiplayerClient)
             {
-                ID = reader.ReadInt32();
                 AttackNumber = reader.ReadInt32();
                 cooldown = reader.ReadInt32();
             }

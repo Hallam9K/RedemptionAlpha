@@ -93,7 +93,7 @@ namespace Redemption.Items.Weapons.HM.Melee
                 if (player.channel)
                 {
                     if (Projectile.ai[0] == 1 && damageIncrease <= 3f)
-                        damageIncrease += .02f;
+                        damageIncrease += .04f;
                     SoundEngine.PlaySound(SoundID.Item23, Projectile.position);
                     Timer = 0;
                     Projectile.ai[0] = 1;

@@ -1,6 +1,8 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.BaseExtension;
+using Redemption.Buffs;
+using Redemption.Buffs.Cooldowns;
 using Redemption.Dusts;
 using Redemption.Globals;
 using Redemption.Items.Materials.PreHM;
@@ -21,7 +23,7 @@ namespace Redemption.Items.Weapons.PreHM.Summon
             DisplayName.SetDefault("Crux Card: Bone Duo");
             Tooltip.SetDefault("Summons the spirits of 2 Epidotrian Skeletons\n" +
                 "Right-click to tug the spirits back to your position, consuming 1 [i:" + ModContent.ItemType<LostSoul>() + "]\n" +
-                "Consumes 8 [i:" + ModContent.ItemType<LostSoul>() + "] on use\n" +
+                "Consumes 6 [i:" + ModContent.ItemType<LostSoul>() + "] on use\n" +
                 "Can only use one Spirit Card at a time");
             SacrificeTotal = 1;
         }
@@ -40,10 +42,13 @@ namespace Redemption.Items.Weapons.PreHM.Summon
             Item.noMelee = true;
             Item.useStyle = ItemUseStyleID.HoldUp;
             Item.UseSound = SoundID.NPCDeath6;
+            Item.buffType = ModContent.BuffType<CruxCardBuff>();
         }
         public override bool AltFunctionUse(Player player) => true;
         public override bool CanUseItem(Player player)
         {
+            if (player.HasBuff<CruxCardCooldown>())
+                return false;
             int soul = player.FindItem(ModContent.ItemType<LostSoul>());
             if (player.altFunctionUse == 2)
             {
@@ -67,9 +72,9 @@ namespace Redemption.Items.Weapons.PreHM.Summon
                 return false;
 
             }
-            if (soul >= 0 && player.inventory[soul].stack >= 8)
+            if (soul >= 0 && player.inventory[soul].stack >= 6)
             {
-                player.inventory[soul].stack -= 8;
+                player.inventory[soul].stack -= 6;
                 if (player.inventory[soul].stack <= 0)
                     player.inventory[soul] = new Item();
             }
@@ -91,6 +96,7 @@ namespace Redemption.Items.Weapons.PreHM.Summon
         {
             if (player.whoAmI == Main.myPlayer)
             {
+                player.AddBuff(Item.buffType, 2);
                 if (player.altFunctionUse == 2)
                 {
                     for (int n = 0; n < Main.maxNPCs; n++)
