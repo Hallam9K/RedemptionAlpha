@@ -67,7 +67,7 @@ namespace Redemption.Tiles.Furniture.Shade
 
             Texture2D texture = ModContent.Request<Texture2D>("Redemption/Tiles/Furniture/Shade/WaxCandlesTile_Glow").Value;
             Rectangle frame = new(tile.TileFrameX, tile.TileFrameY + animate, 16, height);
-            ulong randSeed = Main.TileFrameSeed ^ (ulong)((long)j << 32 | (long)(uint)i);
+            ulong randSeed = Main.TileFrameSeed ^ (ulong)((long)j << 32 | (uint)i);
             Color color = new(100, 100, 100, 0);
             for (int k = 0; k < 4; k++)
             {

@@ -36,10 +36,10 @@ namespace Redemption.Globals
                         active = true;
                 }
             }
-            if (!active || RedeGen.BastionVector.X == -1 || RedeGen.BastionVector.Y == -1)
+            if (!active || RedeGen.BastionPoint.X == -1 || RedeGen.BastionPoint.Y == -1)
                 return;
 
-            Vector2 NozaPos = new((RedeGen.BastionVector.X + 210) * 16, (RedeGen.BastionVector.Y + 64) * 16);
+            Vector2 NozaPos = new((RedeGen.BastionPoint.X + 210) * 16, (RedeGen.BastionPoint.Y + 64) * 16);
             if (!Terraria.NPC.AnyNPCs(ModContent.NPCType<Noza_NPC>()) && RedeBossDowned.downedPZ)
                 LabArea.SpawnNPCInWorld(NozaPos, ModContent.NPCType<Noza_NPC>());
         }

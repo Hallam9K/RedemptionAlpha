@@ -313,7 +313,7 @@ namespace Redemption.NPCs.Lab.Janitor
                     AniFrameY++;
                     if (AniFrameY == 4)
                     {
-                        if (!Main.rand.NextBool(3))
+                        if (!Main.rand.NextBool(2))
                             NPC.Shoot(NPC.Center, ModContent.ProjectileType<JanitorMop_Proj>(), NPC.damage, RedeHelper.PolarVector(12, (player.Center - NPC.Center).ToRotation()), true, SoundID.Item19);
                         else
                             NPC.Shoot(NPC.Center, ModContent.ProjectileType<JanitorMop_Proj>(), NPC.damage, RedeHelper.PolarVector(8, (player.Center - NPC.Center).ToRotation()), true, SoundID.Item19, 1);

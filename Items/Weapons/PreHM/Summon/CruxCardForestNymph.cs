@@ -1,6 +1,8 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.BaseExtension;
+using Redemption.Buffs;
+using Redemption.Buffs.Cooldowns;
 using Redemption.Dusts;
 using Redemption.Globals;
 using Redemption.Items.Materials.PreHM;
@@ -40,10 +42,13 @@ namespace Redemption.Items.Weapons.PreHM.Summon
             Item.noMelee = true;
             Item.useStyle = ItemUseStyleID.HoldUp;
             Item.UseSound = SoundID.NPCDeath6;
+            Item.buffType = ModContent.BuffType<CruxCardBuff>();
         }
         public override bool AltFunctionUse(Player player) => true;
         public override bool CanUseItem(Player player)
         {
+            if (player.HasBuff<CruxCardCooldown>())
+                return false;
             int soul = player.FindItem(ModContent.ItemType<LostSoul>());
             if (player.altFunctionUse == 2)
             {
@@ -91,6 +96,7 @@ namespace Redemption.Items.Weapons.PreHM.Summon
         {
             if (player.whoAmI == Main.myPlayer)
             {
+                player.AddBuff(Item.buffType, 2);
                 if (player.altFunctionUse == 2)
                 {
                     for (int n = 0; n < Main.maxNPCs; n++)

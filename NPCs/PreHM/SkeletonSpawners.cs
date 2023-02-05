@@ -7,6 +7,8 @@ using Terraria.Utilities;
 using Microsoft.Xna.Framework;
 using Terraria.DataStructures;
 using System.IO;
+using Terraria.Audio;
+using Redemption.Dusts;
 
 namespace Redemption.NPCs.PreHM
 {
@@ -52,12 +54,12 @@ namespace Redemption.NPCs.PreHM
         public override bool PreAI()
         {
             WeightedRandom<SpawnType> SpawnChoice = new(Main.rand);
-            SpawnChoice.Add(SpawnType.Noble, 8);
-            SpawnChoice.Add(SpawnType.Warden, 10);
+            SpawnChoice.Add(SpawnType.Noble, 8); // 21%
+            SpawnChoice.Add(SpawnType.Warden, 10); // 26%
             SpawnChoice.Add(SpawnType.Flagbearer, 10);
-            SpawnChoice.Add(SpawnType.SmallGroup, 6);
-            SpawnChoice.Add(SpawnType.Group, 3);
-            SpawnChoice.Add(SpawnType.LargeGroup, 1);
+            SpawnChoice.Add(SpawnType.SmallGroup, 6); // 15.7%
+            SpawnChoice.Add(SpawnType.Group, 3); // 7.9%
+            SpawnChoice.Add(SpawnType.LargeGroup, 1); // 2.6%
 
             WeightedRandom<int> NPCType = new(Main.rand);
             NPCType.Add(ModContent.NPCType<SkeletonNoble>());
@@ -185,15 +187,15 @@ namespace Redemption.NPCs.PreHM
         public override bool PreAI()
         {
             WeightedRandom<SpawnType> choice = new(Main.rand);
-            choice.Add(SpawnType.Normal, 10);
+            choice.Add(SpawnType.Normal, 10); // 21%
             choice.Add(SpawnType.Wanderer, 10);
-            choice.Add(SpawnType.Assassin, 9);
-            choice.Add(SpawnType.Duelist, 8);
-            choice.Add(SpawnType.SmallGroup, 6);
-            choice.Add(SpawnType.Group, 3);
-            choice.Add(SpawnType.LargeGroup, 1);
+            choice.Add(SpawnType.Assassin, 9); // 19%
+            choice.Add(SpawnType.Duelist, 8); // 17%
+            choice.Add(SpawnType.SmallGroup, 6); // 12.7%
+            choice.Add(SpawnType.Group, 3); // 6.38%
+            choice.Add(SpawnType.LargeGroup, 1); // 2%
             if (Main.player[RedeHelper.GetNearestAlivePlayer(NPC)].ZoneRockLayerHeight)
-                choice.Add(SpawnType.Dance, 0.002);
+                choice.Add(SpawnType.Dance, 0.002); // 0.0043%
 
             WeightedRandom<int> NPCType = new(Main.rand);
             NPCType.Add(ModContent.NPCType<SkeletonWanderer>());
@@ -369,6 +371,88 @@ namespace Redemption.NPCs.PreHM
                     }
                     NPC.active = false;
                     break;
+            }
+            return true;
+        }
+    }
+    public class GathicTomb_Spawner : ModNPC
+    {
+        public override string Texture => Redemption.EMPTY_TEXTURE;
+        public override void SetStaticDefaults()
+        {
+            NPCID.Sets.NPCBestiaryDrawModifiers value = new(0) { Hide = true };
+            NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, value);
+        }
+        public override void SetDefaults()
+        {
+            NPC.width = 32;
+            NPC.height = 54;
+            NPC.lifeMax = 1;
+            NPC.aiStyle = -1;
+            NPC.noGravity = true;
+            NPC.dontTakeDamage = true;
+            NPC.chaseable = false;
+        }
+        public override bool CheckActive() => false;
+        public ref float TypeNPC => ref NPC.ai[1];
+        private Vector2 Pos;
+        public override void SendExtraAI(BinaryWriter writer)
+        {
+            base.SendExtraAI(writer);
+            if (Main.netMode == NetmodeID.Server || Main.dedServ)
+                writer.WriteVector2(Pos);
+        }
+        public override void ReceiveExtraAI(BinaryReader reader)
+        {
+            base.ReceiveExtraAI(reader);
+            if (Main.netMode == NetmodeID.MultiplayerClient)
+                Pos = reader.ReadVector2();
+        }
+        private bool spawned;
+        public override bool PreAI()
+        {
+            Player player = Main.player[RedeHelper.GetNearestAlivePlayer(NPC)];
+            TypeNPC = ModContent.NPCType<SkeletonAssassin>();
+            int clearNum = 3;
+            switch (NPC.ai[0])
+            {
+                case 1:
+                    TypeNPC = ModContent.NPCType<SkeletonNoble>();
+                    clearNum = 2;
+                    break;
+                case 2:
+                    TypeNPC = ModContent.NPCType<SkeletonWanderer>();
+                    clearNum = 4;
+                    break;
+            }
+            if (player.dead || player.DistanceSQ(NPC.Center) > 1000 * 1000)
+            {
+                spawned = false;
+                return false;
+            }
+            if (spawned && !NPC.AnyNPCs((int)TypeNPC) && player.DistanceSQ(NPC.Center) < 500 * 500)
+            {
+                RedeWorld.spawnCleared[(int)NPC.ai[0]] = true;
+                NPC.active = false;
+                return false;
+            }
+            if (!spawned && player.DistanceSQ(NPC.Center) < 500 * 500)
+            {
+                for (int i = 0; i < clearNum; i++)
+                {
+                    Pos = NPCHelper.FindGround(NPC, 10);
+                    NPC.netUpdate = true;
+                    RedeHelper.SpawnNPC(new EntitySource_SpawnNPC(), (int)Pos.X * 16, (int)Pos.Y * 16, (int)TypeNPC, 0, 0, 0, 4);
+                    for (int v = 0; v < 20; v++)
+                    {
+                        int dust = Dust.NewDust(Pos * 16 - new Vector2(32, 54), 32, 54, ModContent.DustType<GlowDust>(), 0, 0, 0, default, 1.5f);
+                        Main.dust[dust].noGravity = true;
+                        Color dustColor = new(188, 244, 227) { A = 0 };
+                        Main.dust[dust].color = dustColor;
+                    }
+                    SoundEngine.PlaySound(SoundID.NPCDeath6, Pos * 16);
+                }
+                spawned = true;
             }
             return true;
         }

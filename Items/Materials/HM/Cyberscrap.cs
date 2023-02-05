@@ -17,8 +17,8 @@ namespace Redemption.Items.Materials.HM
         public override void SetDefaults()
         {
             Item.DefaultToPlaceableTile(ModContent.TileType<JunkMetalTile>(), 0);
-            Item.width = 38;
-            Item.height = 28;
+            Item.width = 48;
+            Item.height = 34;
             Item.maxStack = 9999;
             Item.value = Item.buyPrice(0, 10, 0, 0);
             Item.rare = ItemRarityID.LightPurple;

@@ -7,6 +7,10 @@ using Terraria.DataStructures;
 using Redemption.Globals;
 using Terraria.GameContent;
 using Terraria.Graphics.Shaders;
+using Redemption.BaseExtension;
+using Redemption.Items.Materials.PreHM;
+using Redemption.Items.Weapons.HM.Summon;
+using Terraria.Audio;
 
 namespace Redemption.NPCs.Friendly
 {
@@ -24,11 +28,7 @@ namespace Redemption.NPCs.Friendly
             {
                 ImmuneToAllBuffsThatAreNotWhips = true
             });
-
-            NPCID.Sets.NPCBestiaryDrawModifiers value = new(0)
-            {
-                Hide = true
-            };
+            NPCID.Sets.NPCBestiaryDrawModifiers value = new(0) { Hide = true };
             NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, value);
         }
         public override void SetDefaults()
@@ -104,6 +104,33 @@ namespace Redemption.NPCs.Friendly
         }
 
         public override bool CanChat() => true;
+        public override void SetChatButtons(ref string button, ref string button2)
+        {
+            if (Main.LocalPlayer.RedemptionAbility().SpiritwalkerActive && !Main.LocalPlayer.HasItem(ModContent.ItemType<CruxCardHazmatZombie>()))
+                button = "Take Crux";
+        }
+        public override void OnChatButtonClicked(bool firstButton, ref bool shop)
+        {
+            if (firstButton)
+            {
+                if (!Main.LocalPlayer.RedemptionAbility().SpiritwalkerActive)
+                    return;
+
+                int card = Main.LocalPlayer.FindItem(ModContent.ItemType<EmptyCruxCard>());
+                if (card >= 0)
+                {
+                    Main.LocalPlayer.inventory[card].stack--;
+                    if (Main.LocalPlayer.inventory[card].stack <= 0)
+                        Main.LocalPlayer.inventory[card] = new Item();
+
+                    Main.LocalPlayer.QuickSpawnItem(NPC.GetSource_Loot(), ModContent.ItemType<CruxCardHazmatZombie>());
+                    Main.npcChatCornerItem = ModContent.ItemType<CruxCardHazmatZombie>();
+                    SoundEngine.PlaySound(SoundID.Chat);
+                }
+                else
+                    Main.npcChatCornerItem = ModContent.ItemType<EmptyCruxCard>();
+            }
+        }
         public override string GetChat()
         {
             return "... What the hell is going on? Alarms are blaring, lockdown was initiated, yet no alerts over the intercom! I'm not going to wait, I want out of here ASAP!";

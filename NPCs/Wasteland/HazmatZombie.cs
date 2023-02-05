@@ -72,7 +72,7 @@ namespace Redemption.NPCs.Wasteland
             NPC.height = 42;
             NPC.friendly = false;
             NPC.damage = 90;
-            NPC.defense = 30;
+            NPC.defense = 20;
             NPC.lifeMax = 560;
             NPC.HitSound = SoundID.NPCHit1;
             NPC.DeathSound = SoundID.NPCDeath1;

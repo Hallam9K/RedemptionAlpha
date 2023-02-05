@@ -42,7 +42,7 @@ namespace Redemption.NPCs.Lab.Blisterface
             switch (NPC.ai[0])
             {
                 case 0:
-                    Vector2 BlisterfacePos = new(((RedeGen.LabVector.X + 209) * 16) - 4, (RedeGen.LabVector.Y + 191) * 16);
+                    Vector2 BlisterfacePos = new(((RedeGen.LabPoint.X + 209) * 16) - 4, (RedeGen.LabPoint.Y + 191) * 16);
                     NPC.Center = BlisterfacePos;
                     NPC.alpha -= 10;
                     if (NPC.alpha <= 0)

@@ -131,7 +131,7 @@ namespace Redemption.NPCs.PreHM
         }
         public override bool PreAI()
         {
-            if (NPC.type == ModContent.NPCType<EpidotrianSkeleton_SS>())
+            if (NPC.Redemption().spiritSummon)
                 return true;
 
             Player player = Main.player[NPC.target];
@@ -219,39 +219,42 @@ namespace Redemption.NPCs.PreHM
                     NPC.defense += 4;
                     break;
             }
-            switch (Personality)
+            if (!NPC.Redemption().spiritSummon)
             {
-                case PersonalityState.Calm:
-                    NPC.lifeMax = (int)(NPC.lifeMax * 0.9f);
-                    NPC.life = (int)(NPC.life * 0.9f);
-                    NPC.damage = (int)(NPC.damage * 0.8f);
-                    SpeedMultiplier = 0.8f;
-                    break;
-                case PersonalityState.Aggressive:
-                    NPC.lifeMax = (int)(NPC.lifeMax * 1.05f);
-                    NPC.life = (int)(NPC.life * 1.05f);
-                    NPC.damage = (int)(NPC.damage * 1.05f);
-                    NPC.value = (int)(NPC.value * 1.25f);
-                    VisionIncrease = 100;
-                    SpeedMultiplier = 1.1f;
-                    break;
-                case PersonalityState.Soulful:
-                    NPC.lifeMax = (int)(NPC.lifeMax * 1.4f);
-                    NPC.life = (int)(NPC.life * 1.4f);
-                    NPC.defense = (int)(NPC.defense * 1.15f);
-                    NPC.damage = (int)(NPC.damage * 1.25f);
-                    NPC.value *= 2;
-                    VisionIncrease = 300;
-                    SpeedMultiplier = 1.3f;
-                    break;
-                case PersonalityState.Greedy:
-                    NPC.lifeMax = (int)(NPC.lifeMax * 1.2f);
-                    NPC.life = (int)(NPC.life * 1.2f);
-                    NPC.defense = (int)(NPC.defense * 1.25f);
-                    NPC.damage = (int)(NPC.damage * 0.6f);
-                    NPC.value *= 4;
-                    SpeedMultiplier = 1.8f;
-                    break;
+                switch (Personality)
+                {
+                    case PersonalityState.Calm:
+                        NPC.lifeMax = (int)(NPC.lifeMax * 0.9f);
+                        NPC.life = (int)(NPC.life * 0.9f);
+                        NPC.damage = (int)(NPC.damage * 0.8f);
+                        SpeedMultiplier = 0.8f;
+                        break;
+                    case PersonalityState.Aggressive:
+                        NPC.lifeMax = (int)(NPC.lifeMax * 1.05f);
+                        NPC.life = (int)(NPC.life * 1.05f);
+                        NPC.damage = (int)(NPC.damage * 1.05f);
+                        NPC.value = (int)(NPC.value * 1.25f);
+                        VisionIncrease = 100;
+                        SpeedMultiplier = 1.1f;
+                        break;
+                    case PersonalityState.Soulful:
+                        NPC.lifeMax = (int)(NPC.lifeMax * 1.4f);
+                        NPC.life = (int)(NPC.life * 1.4f);
+                        NPC.defense = (int)(NPC.defense * 1.15f);
+                        NPC.damage = (int)(NPC.damage * 1.25f);
+                        NPC.value *= 2;
+                        VisionIncrease = 300;
+                        SpeedMultiplier = 1.3f;
+                        break;
+                    case PersonalityState.Greedy:
+                        NPC.lifeMax = (int)(NPC.lifeMax * 1.2f);
+                        NPC.life = (int)(NPC.life * 1.2f);
+                        NPC.defense = (int)(NPC.defense * 1.25f);
+                        NPC.damage = (int)(NPC.damage * 0.6f);
+                        NPC.value *= 4;
+                        SpeedMultiplier = 1.8f;
+                        break;
+                }
             }
             if (HasEyes)
             {

@@ -16,6 +16,7 @@ Mods: {
 			NoitaBombCooldown: "Bomb Cooldown"
 			XeniumElectrolaserCooldown: "Xenium Electrolaser Cooldown"
 			VasaraPendantCooldown: "Vasara Pendant Cooldown"
+			CruxCardCooldown: "Crux Card Cooldown"
             
             # Debuffs
             AntibodiesDebuff: "Xenomite Antibodies"
@@ -97,6 +98,7 @@ Mods: {
 			NoitaBombCooldown: "You cannot use the Pommisauva"
 			XeniumElectrolaserCooldown: "The electrolaser's battery is recharging"
 			VasaraPendantCooldown: "The Vasara Pendant feels dull"
+			CruxCardCooldown: "You cannot summon spirits"
             
             # Debuffs
             AntibodiesDebuff: "Strong antibodies flood your blood and fight off any new infection that may come."

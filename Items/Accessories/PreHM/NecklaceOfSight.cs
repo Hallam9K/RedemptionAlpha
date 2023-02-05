@@ -19,8 +19,8 @@ namespace Redemption.Items.Accessories.PreHM
 
         public override void SetDefaults()
         {
-            Item.width = 30;
-            Item.height = 32;
+            Item.width = 26;
+            Item.height = 30;
             Item.value = Item.sellPrice(0, 1, 50, 0);
             Item.rare = ItemRarityID.Expert;
             Item.canBePlacedInVanityRegardlessOfConditions = true;

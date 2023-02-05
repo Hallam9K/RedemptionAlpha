@@ -15,7 +15,7 @@ namespace Redemption.Projectiles.Minions
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Corpse-Walker Skull");
-            Main.projFrames[Projectile.type] = 4;
+            Main.projFrames[Projectile.type] = 5;
             Main.projPet[Projectile.type] = true;
             ProjectileID.Sets.TrailCacheLength[Projectile.type] = 3;
             ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
@@ -27,8 +27,8 @@ namespace Redemption.Projectiles.Minions
 
         public override void SetDefaults()
         {
-            Projectile.width = 32;
-            Projectile.height = 30;
+            Projectile.width = 30;
+            Projectile.height = 38;
             Projectile.tileCollide = false;
 
             Projectile.friendly = true;
@@ -96,12 +96,12 @@ namespace Redemption.Projectiles.Minions
                 {
                     if (Projectile.ai[1] == 0)
                     {
-                        projPos = new(Projectile.Center.X - (8 * Projectile.spriteDirection), Projectile.Center.Y - 4);
+                        projPos = new(Projectile.Center.X + (8 * Projectile.spriteDirection), Projectile.Center.Y + 4);
                         Projectile.ai[1] = 1;
                     }
                     else
                     {
-                        projPos = new(Projectile.Center.X, Projectile.Center.Y);
+                        projPos = new(Projectile.Center.X, Projectile.Center.Y + 4);
                         Projectile.ai[1] = 0;
                     }
                     Flare = true;
@@ -128,11 +128,11 @@ namespace Redemption.Projectiles.Minions
         {
             Texture2D texture = TextureAssets.Projectile[Projectile.type].Value;
             Texture2D glow = ModContent.Request<Texture2D>(Projectile.ModProjectile.Texture + "_Glow").Value;
-            int height = texture.Height / 4;
+            int height = texture.Height / 5;
             int y = height * Projectile.frame;
             Rectangle rect = new(0, y, texture.Width, height);
             Vector2 drawOrigin = new(texture.Width / 2, Projectile.height / 2);
-            var effects = Projectile.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
+            var effects = Projectile.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
 
             for (int k = 0; k < Projectile.oldPos.Length; k++)
             {

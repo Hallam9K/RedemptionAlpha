@@ -79,7 +79,7 @@ namespace Redemption.Items.Usable
 
         public override void AI()
         {
-            Vector2 HallPos = new((RedeGen.HallOfHeroesVector.X + 36) * 16, (RedeGen.HallOfHeroesVector.Y + 17) * 16);
+            Vector2 HallPos = new((RedeGen.HallOfHeroesPoint.X + 36) * 16, (RedeGen.HallOfHeroesPoint.Y + 17) * 16);
             Player player = Main.player[Projectile.owner];
 
             if (player.HeldItem.type == ModContent.ItemType<ChaliceFragments>())

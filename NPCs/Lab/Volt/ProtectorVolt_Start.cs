@@ -119,7 +119,7 @@ namespace Redemption.NPCs.Lab.Volt
                                 };
 
                                 Texture2D tex = ModContent.Request<Texture2D>("Redemption/WorldGeneration/VoltDestroy", AssetRequestMode.ImmediateLoad).Value;
-                                Point origin = RedeGen.LabVector.ToPoint();
+                                Point origin = RedeGen.LabPoint.ToPoint();
                                 GenUtils.InvokeOnMainThread(() =>
                                 {
                                     TexGen gen = BaseWorldGenTex.GetTexGenerator(tex, colorToTile);

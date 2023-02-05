@@ -41,7 +41,7 @@ namespace Redemption.NPCs.Lab.Behemoth
             switch (NPC.ai[0])
             {
                 case 0:
-                    Vector2 BehemothPos = new(((RedeGen.LabVector.X + 214) * 16) - 4, (RedeGen.LabVector.Y + 45) * 16);
+                    Vector2 BehemothPos = new(((RedeGen.LabPoint.X + 214) * 16) - 4, (RedeGen.LabPoint.Y + 45) * 16);
                     NPC.Center = BehemothPos;
                     NPC.alpha -= 10;
                     if (NPC.alpha <= 0)

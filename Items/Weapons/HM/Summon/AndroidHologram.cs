@@ -13,7 +13,7 @@ namespace Redemption.Items.Weapons.HM.Summon
 		public override void SetStaticDefaults()
 		{
             Tooltip.SetDefault("Summons a little Android to fight for you");
-            Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(5, 2));
+            Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(5, 20));
             SacrificeTotal = 1;
 
             ItemID.Sets.GamepadWholeScreenUseRange[Item.type] = true;
@@ -25,8 +25,8 @@ namespace Redemption.Items.Weapons.HM.Summon
             Item.damage = 75;
             Item.DamageType = DamageClass.Summon;
             Item.mana = 15;
-            Item.width = 40;
-            Item.height = 30;
+            Item.width = 46;
+            Item.height = 32;
             Item.useTime = 20;
             Item.useAnimation = 20;
             Item.useStyle = ItemUseStyleID.Swing;

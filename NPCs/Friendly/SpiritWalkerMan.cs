@@ -13,6 +13,8 @@ using Redemption.Items.Usable.Summons;
 using Redemption.Items.Materials.PreHM;
 using Redemption.Items.Quest.KingSlayer;
 using Terraria.Audio;
+using Redemption.Items.Armor.Vanity;
+using Redemption.Base;
 
 namespace Redemption.NPCs.Friendly
 {
@@ -128,7 +130,10 @@ namespace Redemption.NPCs.Friendly
                     button = "About you?";
                     break;
                 case 5:
-                    button = "Request Crux";
+                    if (Main.LocalPlayer.HasItem(ModContent.ItemType<OldTophat>()))
+                        button = "Request Old Tophat's Crux";
+                    else
+                        button = "Request Crux";
                     break;
             }
             button2 = "Cycle Dialogue";
@@ -148,6 +153,28 @@ namespace Redemption.NPCs.Friendly
                         return;
                     }
                     int card = Main.LocalPlayer.FindItem(ModContent.ItemType<EmptyCruxCard>());
+                    if (Main.LocalPlayer.HasItem(ModContent.ItemType<OldTophat>()))
+                    {
+                        int oldTophat = Main.LocalPlayer.FindItem(ModContent.ItemType<OldTophat>());
+                        if (card >= 0 && oldTophat >= 0)
+                        {
+                            Main.LocalPlayer.inventory[oldTophat].stack--;
+                            if (Main.LocalPlayer.inventory[oldTophat].stack <= 0)
+                                Main.LocalPlayer.inventory[oldTophat] = new Item();
+
+                            Main.LocalPlayer.QuickSpawnItem(NPC.GetSource_Loot(), ModContent.ItemType<CruxCardTied>());
+                            Main.npcChatText = "I see, I see. Within this tophat lies an odd spirit. I don't believe I've ever met it before, but they appear ta be quite powerful.";
+                            Main.npcChatCornerItem = ModContent.ItemType<CruxCardTied>();
+                            SoundEngine.PlaySound(SoundID.Chat);
+                        }
+                        else
+                        {
+                            Main.npcChatText = "There's somethin' in that hat I can use to imbue into something, however, ya don't have anythin' for me to imbue.";
+                            Main.npcChatCornerItem = ModContent.ItemType<EmptyCruxCard>();
+                        }
+                        ChatNumber = 4;
+                        return;
+                    }
                     if (card >= 0)
                     {
                         Main.LocalPlayer.inventory[card].stack--;
@@ -171,8 +198,16 @@ namespace Redemption.NPCs.Friendly
             {
                 ChatNumber++;
                 int max = 4;
-                if (Main.LocalPlayer.RedemptionAbility().SpiritwalkerActive && !Main.LocalPlayer.HasItem(ModContent.ItemType<CruxCardSkeleton>()))
-                    max = 5;
+                if (Main.LocalPlayer.HasItem(ModContent.ItemType<OldTophat>()))
+                {
+                    if (Main.LocalPlayer.RedemptionAbility().SpiritwalkerActive && !Main.LocalPlayer.HasItem(ModContent.ItemType<CruxCardTied>()))
+                        max = 5;
+                }
+                else
+                {
+                    if (Main.LocalPlayer.RedemptionAbility().SpiritwalkerActive && !Main.LocalPlayer.HasItem(ModContent.ItemType<CruxCardSkeleton>()))
+                        max = 5;
+                }
                 if (ChatNumber > max)
                     ChatNumber = 0;
             }
@@ -192,6 +227,12 @@ namespace Redemption.NPCs.Friendly
         public override bool CanChat() => true;
         public override string GetChat()
         {
+            bool wearingHat = BasePlayer.HasHelmet(Main.LocalPlayer, ModContent.ItemType<OldTophat>());
+            string s = "P";
+            if (wearingHat)
+                s = "Take it off an' p";
+            if (Main.LocalPlayer.HasItem(ModContent.ItemType<OldTophat>()) || wearingHat)
+                return "Ey, that old tophat ya got has something spiritual 'bout it. " + s + "eak into the Spirit Realm for a bit so I can get a closer look.";
             return "Great! You figured out how ta' call me! I hope ya take fancy to ma' gift. I'm err, let's just say a spiritual enthusiast. I don't remember my actual name. Ask me anythin'!";
         }
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)

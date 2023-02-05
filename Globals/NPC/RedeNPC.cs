@@ -44,6 +44,8 @@ using Redemption.Items.Donator.Lordfunnyman;
 using Terraria.GameContent.Bestiary;
 using Terraria.UI;
 using Redemption.Globals.World;
+using ReLogic.Content;
+using Redemption.Buffs.Cooldowns;
 
 namespace Redemption.Globals.NPC
 {
@@ -100,6 +102,24 @@ namespace Redemption.Globals.NPC
                 damage *= .75f;
 
             return base.StrikeNPC(npc, ref damage, defense, ref knockback, hitDirection, ref crit);
+        }
+        public override bool PreKill(Terraria.NPC npc)
+        {
+            if (spiritSummon)
+            {
+                bool apply = true;
+                for (int n = 0; n < Main.maxNPCs; n++)
+                {
+                    Terraria.NPC other = Main.npc[n];
+                    if (!other.active || other.life <= 0 || !other.Redemption().spiritSummon)
+                        continue;
+
+                    apply = false;
+                }
+                if (apply)
+                    Main.player[(int)npc.ai[3]].AddBuff(ModContent.BuffType<CruxCardCooldown>(), 3600);
+            }
+            return base.PreKill(npc);
         }
         public override bool CanHitPlayer(Terraria.NPC npc, Terraria.Player target, ref int cooldownSlot)
         {

@@ -99,7 +99,7 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
         {
             Player player = Main.player[(int)NPC.ai[3]];
             RedeNPC globalNPC = NPC.Redemption();
-            if (!player.active || player.dead)
+            if (!player.active || player.dead || !SSBase.CheckActive(player))
                 NPC.StrikeNPC(999, 0, 1);
             NPC.LookByVelocity();
 

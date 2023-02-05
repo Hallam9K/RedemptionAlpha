@@ -70,6 +70,7 @@ namespace Redemption.Globals
         public static bool deadRingerGiven;
         public static bool newbGone;
         public static bool slayerMessageGiven;
+        public static bool[] spawnCleared = new bool[3];
 
         #region Nuke Shenanigans
         public static int nukeTimerInternal = 1800;
@@ -359,7 +360,7 @@ namespace Redemption.Globals
             }
         }
 
-        public void HandleNukeExplosion()
+        public static void HandleNukeExplosion()
         {
             for (int i = 0; i < Main.maxPlayers; ++i)
             {
@@ -430,6 +431,9 @@ namespace Redemption.Globals
                 omegaTransmitReady[2] = true;
             else
                 omegaTransmitReady[2] = false;
+            spawnCleared[0] = false;
+            spawnCleared[1] = false;
+            spawnCleared[2] = false;
         }
 
         public override void OnWorldUnload()
@@ -451,6 +455,9 @@ namespace Redemption.Globals
             omegaTransmitReady[0] = false;
             omegaTransmitReady[1] = false;
             omegaTransmitReady[2] = false;
+            spawnCleared[0] = false;
+            spawnCleared[1] = false;
+            spawnCleared[2] = false;
         }
 
         public override void SaveWorldData(TagCompound tag)

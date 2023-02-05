@@ -60,7 +60,7 @@ namespace Redemption.NPCs.FowlMorning
                 NPC.ai[0]--;
             }
             else
-                NPCHelper.HorizontallyMove(NPC, player.Center, 0.13f, 2.7f, 18, 18, NPC.Center.Y > player.Center.Y, player);
+                NPCHelper.HorizontallyMove(NPC, player.Center, 0.13f, 3f, 18, 18, NPC.Center.Y > player.Center.Y, player);
         }
         public override void OnHitPlayer(Player target, int damage, bool crit)
         {

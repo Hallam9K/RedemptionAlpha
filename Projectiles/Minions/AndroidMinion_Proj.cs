@@ -14,7 +14,7 @@ namespace Redemption.Projectiles.Minions
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Android Minion");
-            Main.projFrames[Projectile.type] = 6;
+            Main.projFrames[Projectile.type] = 10;
             Main.projPet[Projectile.type] = true;
 
             ProjectileID.Sets.MinionSacrificable[Projectile.type] = true;
@@ -24,8 +24,8 @@ namespace Redemption.Projectiles.Minions
 
         public override void SetDefaults()
         {
-            Projectile.width = 22;
-            Projectile.height = 28;
+            Projectile.width = 24;
+            Projectile.height = 32;
             Projectile.tileCollide = true;
 
             Projectile.friendly = true;
@@ -56,7 +56,7 @@ namespace Redemption.Projectiles.Minions
                     if (++Projectile.frameCounter >= 5)
                     {
                         Projectile.frameCounter = 0;
-                        if (++Projectile.frame >= 6)
+                        if (++Projectile.frame >= 10)
                             Projectile.frame = 2;
                     }
                 }

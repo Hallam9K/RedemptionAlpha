@@ -18,6 +18,7 @@ using Redemption.BaseExtension;
 using Redemption.NPCs.HM;
 using Redemption.Buffs.Debuffs;
 using Redemption.Buffs.NPCBuffs;
+using Redemption.NPCs.Friendly.SpiritSummons;
 
 namespace Redemption.Globals
 {
@@ -244,7 +245,7 @@ namespace Redemption.Globals
                             speed = 20f;
                     }
 
-                    damage = (int)((float)damage * 1.2);
+                    damage = (int)(damage * 1.2);
                 }
 
                 knockBack += item.knockBack;

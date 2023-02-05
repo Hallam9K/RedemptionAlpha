@@ -42,7 +42,7 @@ namespace Redemption.NPCs.Lab.Behemoth
 
                 if (Projectile.ai[0] == 1500)
                 {
-                    Vector2 DronePos = new(((RedeGen.LabVector.X + 113) * 16) + 8, (RedeGen.LabVector.Y + 154) * 16);
+                    Vector2 DronePos = new(((RedeGen.LabPoint.X + 113) * 16) + 8, (RedeGen.LabPoint.Y + 154) * 16);
                     for (int i = 0; i < Main.maxPlayers; i++)
                     {
                         Player player = Main.player[i];

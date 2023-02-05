@@ -182,10 +182,7 @@ namespace Redemption.NPCs.Friendly
         }
         public static string ChitChat()
         {
-            WeightedRandom<string> chat = new(Main.rand);
-
-            chat.Add("What would a meaningless protector offer in the ways of discussion..? Perhaps I may tell you about my past life... No, it's nothing but a blur now. Octavia resurrected me and kept my withering body moving for so long I have lost my old self. I'm barely an undead anymore, more so a spirit. But don't pity me, I enjoyed my time with her, it made me feel I had a purpose...");
-            return chat;
+            return "What would a meaningless protector offer in the ways of discussion..? Perhaps I may tell you about my past life... No, it's nothing but a blur now. Octavia resurrected me and kept my withering body moving for so long I have lost my old self. I'm barely an undead anymore, more so a spirit. But don't pity me, I enjoyed my time with her, it made me feel I had a purpose...";
         }
         public override string GetChat()
         {

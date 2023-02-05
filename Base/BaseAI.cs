@@ -5395,7 +5395,7 @@ namespace Redemption.Base
                         int num35 = Utils.SelectRandom(Main.rand, 3453, 3454, 3455);
                         int num36 = Item.NewItem(p.GetSource_OnHit(npc), (int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, num35);
                         Main.item[num36].velocity.Y = Main.rand.Next(-20, 1) * 0.2f;
-                        Main.item[num36].velocity.X = Main.rand.Next(10, 31) * 0.2f * (float)hitDirection;
+                        Main.item[num36].velocity.X = Main.rand.Next(10, 31) * 0.2f * hitDirection;
                         if (Main.netMode == NetmodeID.MultiplayerClient)
                         {
                             NetMessage.SendData(MessageID.SyncItem, -1, -1, null, num36);

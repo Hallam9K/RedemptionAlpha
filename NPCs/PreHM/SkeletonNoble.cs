@@ -142,6 +142,9 @@ namespace Redemption.NPCs.PreHM
         private int AniFrameX;
         public override void OnSpawn(IEntitySource source)
         {
+            if (Main.netMode != NetmodeID.Server)
+                NPC.frame.Width = TextureAssets.Npc[NPC.type].Width() / 3;
+
             ChoosePersonality();
             SetStats();
 
@@ -563,30 +566,33 @@ namespace Redemption.NPCs.PreHM
         public void ChoosePersonality()
         {
             WeightedRandom<int> head = new(Main.rand);
-            head.Add(0);
-            head.Add(1, 0.6);
+            head.Add(0); // 24%
+            head.Add(1, 0.6); // 14.5%
             head.Add(2, 0.6);
-            head.Add(3, 0.4);
+            head.Add(3, 0.4); // 9.6%
             head.Add(4, 0.4);
-            head.Add(5, 0.1);
+            head.Add(5, 0.1); // 2.4%
             head.Add(6, 0.1);
             head.Add(7, 0.1);
-            head.Add(8, 0.06);
+            head.Add(8, 0.06); // 1.4%
             head.Add(9, 0.06);
             head.Add(10, 0.06);
             head.Add(11, 0.06);
-            head.Add(12, 0.3);
+            head.Add(12, 0.3); // 7.2%
             head.Add(13, 0.3);
             HeadType = head;
 
-            WeightedRandom<PersonalityState> choice = new(Main.rand);
-            choice.Add(PersonalityState.Normal, 10);
-            choice.Add(PersonalityState.Calm, 1);
-            choice.Add(PersonalityState.Aggressive, 7);
-            choice.Add(PersonalityState.Soulful, 1);
-            choice.Add(PersonalityState.Greedy, 0.5);
+            if (NPC.ai[3] == 0)
+            {
+                WeightedRandom<PersonalityState> choice = new(Main.rand);
+                choice.Add(PersonalityState.Normal, 10);
+                choice.Add(PersonalityState.Calm, 1);
+                choice.Add(PersonalityState.Aggressive, 7);
+                choice.Add(PersonalityState.Soulful, 1);
+                choice.Add(PersonalityState.Greedy, 0.5);
 
-            Personality = choice;
+                Personality = choice;
+            }
             if (Main.rand.NextBool(2) || Personality == PersonalityState.Soulful)
                 HasEyes = true;
         }
@@ -655,7 +661,6 @@ namespace Redemption.NPCs.PreHM
             npcLoot.Add(ItemDropRule.Common(ItemID.Hook, 25));
             npcLoot.Add(ItemDropRule.Food(ItemID.MilkCarton, 150));
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<EpidotrianSkull>(), 50));
-            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<OldTophat>(), 500));
             npcLoot.Add(ItemDropRule.ByCondition(new LostSoulCondition(), ModContent.ItemType<LostSoul>(), 2));
         }
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)

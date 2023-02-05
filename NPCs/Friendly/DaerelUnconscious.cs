@@ -133,9 +133,7 @@ namespace Redemption.NPCs.Friendly
         }
         public static string NoPotionChat()
         {
-            WeightedRandom<string> chat = new(Main.rand);
-            chat.Add("You aren't holding a Revival Potion.");
-            return chat;
+            return "You aren't holding a Revival Potion.";
         }
         public static string PotionChat()
         {

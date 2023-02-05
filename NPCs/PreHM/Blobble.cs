@@ -186,13 +186,13 @@ namespace Redemption.NPCs.PreHM
         public void PickHat()
         {
             WeightedRandom<HatState> choice = new(Main.rand);
-            choice.Add(HatState.None, 10);
-            choice.Add(HatState.Crown, 2);
+            choice.Add(HatState.None, 10); // 54%
+            choice.Add(HatState.Crown, 2); // 11%
             choice.Add(HatState.Fez, 2);
             choice.Add(HatState.Flatcap, 2);
-            choice.Add(HatState.GodsTophat, 1);
+            choice.Add(HatState.GodsTophat, 1); // 5%
             choice.Add(HatState.OldTophat, 1);
-            choice.Add(HatState.Serb, 0.3);
+            choice.Add(HatState.Serb, 0.3); // 1.6%
 
             HatType = choice;
         }

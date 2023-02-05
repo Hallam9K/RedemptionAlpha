@@ -249,7 +249,7 @@ namespace Redemption.NPCs.Lab.Behemoth
             if (Main.LocalPlayer.Center.Y < NPC.Center.Y && Main.rand.NextBool(5))
                 NPC.Shoot(new Vector2(NPC.position.X + Main.rand.Next(0, NPC.width), NPC.Center.Y), ModContent.ProjectileType<GreenGas_Proj>(), 200, new Vector2(0, Main.rand.Next(-20, -10)), false, SoundID.Item1);
 
-            if (NPC.Center.Y > (RedeGen.LabVector.Y + 119) * 16)
+            if (NPC.Center.Y > (RedeGen.LabPoint.Y + 119) * 16)
             {
                 NPC.alpha += 2;
                 if (NPC.alpha >= 255)

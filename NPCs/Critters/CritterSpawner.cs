@@ -32,9 +32,9 @@ namespace Redemption.NPCs.Critters
         public override bool PreAI()
         {
             WeightedRandom<SpawnType> SpawnChoice = new(Main.rand);
-            SpawnChoice.Add(SpawnType.Single, 10);
-            SpawnChoice.Add(SpawnType.Small, 5);
-            SpawnChoice.Add(SpawnType.Big, 1);
+            SpawnChoice.Add(SpawnType.Single, 10); // 62.5%
+            SpawnChoice.Add(SpawnType.Small, 5); // 31%
+            SpawnChoice.Add(SpawnType.Big, 1); // 6.2%
 
             Vector2 pos = Vector2.Zero;
             switch ((SpawnType)SpawnChoice)
