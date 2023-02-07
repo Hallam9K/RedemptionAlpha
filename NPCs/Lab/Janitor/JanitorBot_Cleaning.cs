@@ -1,5 +1,4 @@
 ﻿using Microsoft.Xna.Framework;
-using MonoMod.RuntimeDetour;
 using Redemption.Globals;
 using Redemption.Items.Usable;
 using Redemption.UI;

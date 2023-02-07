@@ -1,7 +1,5 @@
 using Redemption.Globals;
-using Redemption.NPCs.Friendly;
 using Terraria;
-using Terraria.ModLoader;
 
 namespace Redemption.Items.Usable
 {

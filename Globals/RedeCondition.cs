@@ -2,7 +2,6 @@ using Redemption.NPCs.Minibosses.SkullDigger;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ModLoader;
 using Redemption.BaseExtension;
-using Terraria;
 using Redemption.NPCs.Bosses.FowlEmperor;
 
 namespace Redemption.Globals

@@ -6,7 +6,6 @@ using Terraria.ID;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Globals;
 using Terraria.GameContent;
-using Redemption.BaseExtension;
 
 namespace Redemption.NPCs.Bosses.ADD
 {

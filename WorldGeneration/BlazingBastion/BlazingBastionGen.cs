@@ -3,18 +3,12 @@ using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ModLoader;
 using Redemption.Walls;
-using Redemption.Items.Materials.HM;
-using Redemption.Items.Lore;
-using Redemption.Items.Usable;
-using Redemption.Tiles.Containers;
-using Redemption.Tiles.Furniture.SlayerShip;
 using Redemption.Tiles.Tiles;
 using Terraria.WorldBuilding;
 using Redemption.Base;
 using ReLogic.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria.ID;
-using Redemption.Items.Placeable.Furniture.Misc;
 using Redemption.Tiles.Furniture.Misc;
 
 namespace Redemption.WorldGeneration

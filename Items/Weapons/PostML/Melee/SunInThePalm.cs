@@ -6,8 +6,6 @@ using Microsoft.Xna.Framework;
 using Redemption.Items.Materials.HM;
 using Redemption.Items.Materials.PostML;
 using Redemption.Projectiles.Melee;
-using Redemption.Items.Weapons.PostML.Ranged;
-using Redemption.Items.Accessories.HM;
 
 namespace Redemption.Items.Weapons.PostML.Melee
 {

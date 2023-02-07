@@ -24,27 +24,17 @@ using Redemption.Items.Weapons.PreHM.Magic;
 using Redemption.Items.Weapons.HM.Magic;
 using Redemption.Items.Donator.Megaswave;
 using Redemption.Items.Usable.Potions;
-using Redemption.Items.Weapons.PreHM.Ritualist;
 using Redemption.Items.Weapons.HM.Melee;
-using Redemption.NPCs.Bosses.ADD;
 using Redemption.Items.Placeable.Furniture.Misc;
 using Redemption.Items.Weapons.PreHM.Melee;
-using Redemption.Items.Armor.Single;
 using Redemption.Buffs;
 using Redemption.Items.Armor.Vanity.Dev;
 using Redemption.Projectiles.Misc;
 using Redemption.Items.Weapons.PreHM.Summon;
 using System;
-using Redemption.Items.Accessories.PreHM;
 using Redemption.Items.Weapons.HM.Summon;
-using Redemption.NPCs.Bosses.Neb;
-using Redemption.NPCs.Bosses.Neb.Phase2;
-using Redemption.NPCs.Bosses.Neb.Clone;
 using Redemption.Items.Donator.Lordfunnyman;
-using Terraria.GameContent.Bestiary;
-using Terraria.UI;
 using Redemption.Globals.World;
-using ReLogic.Content;
 using Redemption.Buffs.Cooldowns;
 
 namespace Redemption.Globals.NPC

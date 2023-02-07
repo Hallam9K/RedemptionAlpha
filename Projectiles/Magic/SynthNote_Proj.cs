@@ -5,7 +5,6 @@ using Terraria;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Redemption.Buffs.Debuffs;
 
 namespace Redemption.Projectiles.Magic
 {

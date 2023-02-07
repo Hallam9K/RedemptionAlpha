@@ -7,7 +7,6 @@ using Microsoft.Xna.Framework;
 using Terraria.GameContent;
 using Terraria.GameContent.ItemDropRules;
 using Redemption.Items.Weapons.PostML.Ranged;
-using Redemption.Items.Weapons.PostML.Summon;
 using Redemption.Items.Weapons.PostML.Melee;
 using Redemption.Items.Accessories.PostML;
 

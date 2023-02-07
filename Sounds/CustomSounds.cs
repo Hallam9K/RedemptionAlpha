@@ -1,6 +1,5 @@
 using Microsoft.Xna.Framework;
 using ReLogic.Utilities;
-using System.Threading;
 using Terraria.Audio;
 
 namespace Redemption

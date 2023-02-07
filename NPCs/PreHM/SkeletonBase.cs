@@ -13,7 +13,6 @@ using System.IO;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
-using Redemption.NPCs.Friendly.SpiritSummons;
 
 namespace Redemption.NPCs.PreHM
 {

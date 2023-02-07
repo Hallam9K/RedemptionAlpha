@@ -6,7 +6,6 @@ using Terraria.ModLoader;
 using Terraria.ObjectData;
 using Terraria.Enums;
 using Redemption.Dusts.Tiles;
-using Redemption.Items.Usable;
 using Terraria.Audio;
 using Terraria.GameContent.ObjectInteractions;
 

@@ -2,7 +2,6 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.BaseExtension;
 using Redemption.Items.Materials.HM;
-using Redemption.Items.Weapons.PreHM.Magic;
 using Redemption.Projectiles.Magic;
 using Terraria;
 using Terraria.DataStructures;

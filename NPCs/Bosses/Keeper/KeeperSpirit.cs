@@ -22,7 +22,6 @@ using Redemption.Items.Weapons.PreHM.Magic;
 using Redemption.BaseExtension;
 using Redemption.Items.Weapons.PreHM.Melee;
 using Redemption.Items.Weapons.PreHM.Ranged;
-using Redemption.Items.Weapons.PreHM.Ritualist;
 
 namespace Redemption.NPCs.Bosses.Keeper
 {

@@ -6,9 +6,6 @@ using Terraria.Enums;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
-using Redemption.UI;
-using Redemption.Items;
-using Redemption.Globals;
 
 namespace Redemption.Tiles.Furniture.Misc
 {

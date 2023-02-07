@@ -9,7 +9,6 @@ using Redemption.BaseExtension;
 using Redemption.Dusts;
 using Redemption.Base;
 using Redemption.Items.Usable.Potions;
-using Redemption.Items.Weapons.PreHM.Ranged;
 using Terraria.GameContent.ItemDropRules;
 
 namespace Redemption.NPCs.Bosses.FowlEmperor

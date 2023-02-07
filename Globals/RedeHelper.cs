@@ -18,7 +18,6 @@ using Redemption.BaseExtension;
 using Redemption.NPCs.HM;
 using Redemption.Buffs.Debuffs;
 using Redemption.Buffs.NPCBuffs;
-using Redemption.NPCs.Friendly.SpiritSummons;
 
 namespace Redemption.Globals
 {

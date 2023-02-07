@@ -10,7 +10,6 @@ using Redemption.NPCs.Bosses.KSIII;
 using Redemption.NPCs.Bosses.Neb;
 using Redemption.NPCs.Bosses.Neb.Phase2;
 using Redemption.NPCs.Friendly;
-using Redemption.Projectiles.Magic;
 using Redemption.Projectiles.Melee;
 using Redemption.Projectiles.Minions;
 using Redemption.Projectiles.Ranged;

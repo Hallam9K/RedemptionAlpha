@@ -24,7 +24,6 @@ using Redemption.Items.Weapons.PreHM.Summon;
 using Redemption.Items.Accessories.PreHM;
 using Redemption.Buffs.NPCBuffs;
 using Redemption.BaseExtension;
-using Redemption.Items.Weapons.PreHM.Ritualist;
 
 namespace Redemption.NPCs.Bosses.Thorn
 {

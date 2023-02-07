@@ -8,7 +8,6 @@ using Redemption.Globals;
 using Terraria.Audio;
 using Terraria.GameContent;
 using Redemption.NPCs.Bosses.Neb.Phase2;
-using Redemption.BaseExtension;
 
 namespace Redemption.NPCs.Bosses.Neb
 {

@@ -1,6 +1,5 @@
 ﻿using Redemption.Buffs;
 using Redemption.Items.Materials.PreHM;
-using Redemption.Items.Placeable.Plants;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;

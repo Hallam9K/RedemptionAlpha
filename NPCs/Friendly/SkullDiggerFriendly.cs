@@ -8,7 +8,6 @@ using Terraria.DataStructures;
 using Redemption.Globals;
 using Terraria.Graphics.Shaders;
 using Terraria.GameContent;
-using Terraria.Utilities;
 using Redemption.Items.Usable.Summons;
 using Redemption.Base;
 

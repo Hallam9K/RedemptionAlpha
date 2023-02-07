@@ -1,5 +1,4 @@
 using Microsoft.Xna.Framework;
-using Redemption.Globals.NPC;
 using Redemption.NPCs.FowlMorning;
 using System.Collections.Generic;
 using System.IO;

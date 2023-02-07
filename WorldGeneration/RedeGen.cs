@@ -28,7 +28,6 @@ using Redemption.Walls;
 using Redemption.Tiles.Bars;
 using Redemption.Items.Accessories.PreHM;
 using Redemption.Items.Tools.PreHM;
-using Redemption.Items.Weapons.PreHM.Melee;
 using Redemption.Items.Usable.Summons;
 using Redemption.Items.Materials.PreHM;
 using Redemption.Items.Usable;
@@ -39,10 +38,7 @@ using Redemption.Tiles.Furniture.Archcloth;
 using Redemption.NPCs.Bosses.KSIII;
 using System;
 using System.Threading;
-using Redemption.Items.Weapons.PreHM.Ritualist;
 using Redemption.Items.Weapons.PreHM.Magic;
-using Terraria.GameContent.ItemDropRules;
-using Redemption.Items.Armor.Vanity.Dev;
 using Redemption.NPCs.PreHM;
 
 namespace Redemption.WorldGeneration

@@ -1,12 +1,11 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Terraria;
 using Terraria.DataStructures;
 using Terraria.ModLoader;
 
 namespace Redemption.Globals
 {
-	public interface IPhysChain
+    public interface IPhysChain
 	{
 		/// <summary>
 		/// Load the Texture2D of the spritesheet.

@@ -3,7 +3,6 @@ using Terraria.ID;
 using Terraria;
 using Microsoft.Xna.Framework;
 using Terraria.DataStructures;
-using Redemption.Globals;
 using Terraria.Audio;
 using Redemption.BaseExtension;
 

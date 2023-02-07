@@ -1,8 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Redemption.Base;
 using Redemption.Buffs.Pets;
-using Redemption.Globals;
 using Terraria;
 using Terraria.GameContent;
 using Terraria.Graphics.Shaders;

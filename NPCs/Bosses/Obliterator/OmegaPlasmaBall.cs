@@ -4,7 +4,6 @@ using Terraria.ModLoader;
 using System;
 using Terraria.ID;
 using Redemption.Globals;
-using Redemption.BaseExtension;
 using Terraria.Audio;
 using Redemption.NPCs.Bosses.Cleaver;
 using Terraria.GameContent;

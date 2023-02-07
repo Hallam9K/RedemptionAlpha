@@ -1,5 +1,4 @@
 using Microsoft.Xna.Framework;
-using Redemption.Projectiles.Magic;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;

@@ -7,7 +7,6 @@ using Terraria.ID;
 using Redemption.Globals;
 using Terraria.Audio;
 using Redemption.Dusts;
-using Redemption.Projectiles.Hostile;
 
 namespace Redemption.NPCs.FowlMorning
 {

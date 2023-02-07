@@ -1,9 +1,6 @@
-using Microsoft.Xna.Framework;
 using Redemption.Globals;
 using Redemption.Items.Weapons.PreHM.Ranged;
-using Redemption.NPCs.Bosses;
 using Redemption.NPCs.Bosses.FowlEmperor;
-using Redemption.NPCs.Bosses.Thorn;
 using Redemption.WorldGeneration.Soulless;
 using SubworldLibrary;
 using Terraria;

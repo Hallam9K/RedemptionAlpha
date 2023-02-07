@@ -1,6 +1,4 @@
-using Microsoft.Xna.Framework;
 using Redemption.Buffs.Pets;
-using Redemption.Globals;
 using Terraria;
 using Terraria.ModLoader;
 

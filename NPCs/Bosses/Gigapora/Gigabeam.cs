@@ -1,6 +1,5 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System.IO;
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.GameContent;
@@ -9,7 +8,6 @@ using Redemption.Globals;
 using System.Collections.Generic;
 using Redemption.BaseExtension;
 using Redemption.Dusts;
-using Terraria.ID;
 using ReLogic.Content;
 
 namespace Redemption.NPCs.Bosses.Gigapora

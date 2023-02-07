@@ -13,7 +13,6 @@ using System.Collections.Generic;
 using Terraria.DataStructures;
 using Redemption.Buffs.NPCBuffs;
 using Redemption.Buffs.Debuffs;
-using Redemption.BaseExtension;
 
 namespace Redemption.NPCs.Bosses.KSIII
 {

@@ -2,7 +2,6 @@
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.BaseExtension;
 using Redemption.Globals;
-using Redemption.Items;
 using Redemption.Items.Materials.PreHM;
 using Redemption.Items.Usable;
 using Redemption.NPCs.Friendly;

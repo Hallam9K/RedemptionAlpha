@@ -1,4 +1,3 @@
-using Microsoft.CodeAnalysis;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.BaseExtension;
@@ -8,7 +7,6 @@ using Redemption.Globals.NPC;
 using Redemption.Globals.World;
 using Redemption.Items.Accessories.PreHM;
 using Redemption.Items.Usable.Potions;
-using Redemption.Items.Weapons.PreHM.Melee;
 using System;
 using System.Collections.Generic;
 using Terraria;

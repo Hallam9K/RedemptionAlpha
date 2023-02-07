@@ -2,13 +2,10 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using Terraria;
-using Terraria.ModLoader;
 using Terraria.GameContent;
 using Redemption.Base;
 using Terraria.Audio;
-using Terraria.ID;
 using Redemption.Globals;
-using Redemption.BaseExtension;
 
 namespace Redemption.NPCs.Bosses.Obliterator
 {

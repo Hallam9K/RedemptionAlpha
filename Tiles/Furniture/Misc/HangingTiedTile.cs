@@ -6,7 +6,6 @@ using Terraria.ModLoader;
 using Terraria.ObjectData;
 using Terraria.DataStructures;
 using Redemption.Items.Usable;
-using System;
 using Terraria.Audio;
 using Redemption.BaseExtension;
 using Microsoft.Xna.Framework.Graphics;

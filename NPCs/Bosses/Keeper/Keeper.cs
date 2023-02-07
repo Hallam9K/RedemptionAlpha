@@ -26,7 +26,6 @@ using Redemption.NPCs.Minibosses.SkullDigger;
 using Redemption.Dusts;
 using Redemption.NPCs.Friendly;
 using Redemption.BaseExtension;
-using Redemption.Items.Weapons.PreHM.Ritualist;
 using ReLogic.Content;
 
 namespace Redemption.NPCs.Bosses.Keeper

@@ -22,7 +22,6 @@ using Redemption.Items.Placeable.Trophies;
 using Terraria.GameContent.ItemDropRules;
 using Redemption.Particles;
 using Redemption.Items.Weapons.PostML.Ranged;
-using Redemption.Items.Weapons.PostML.Summon;
 using Redemption.Items.Weapons.PostML.Melee;
 using Redemption.Items.Accessories.PostML;
 using System.IO;

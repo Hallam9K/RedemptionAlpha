@@ -1,9 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Redemption.Buffs.Minions;
 using Redemption.Globals;
 using Redemption.NPCs.PreHM;
-using System;
 using Terraria;
 using Terraria.GameContent;
 using Terraria.ID;

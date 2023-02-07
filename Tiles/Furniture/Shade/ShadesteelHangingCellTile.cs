@@ -5,7 +5,6 @@ using Terraria.ModLoader;
 using Terraria.ObjectData;
 using Terraria.DataStructures;
 using Redemption.Dusts.Tiles;
-using Terraria.ID;
 
 namespace Redemption.Tiles.Furniture.Shade
 {

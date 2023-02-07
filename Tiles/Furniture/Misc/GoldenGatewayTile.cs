@@ -8,13 +8,11 @@ using Microsoft.Xna.Framework.Graphics;
 using Terraria.Enums;
 using System;
 using ReLogic.Content;
-using Terraria.Localization;
-using Redemption.Items.Placeable.Trophies;
 using Redemption.Globals;
 
 namespace Redemption.Tiles.Furniture.Misc
 {
-	public class GoldenGatewayTile : ModTile
+    public class GoldenGatewayTile : ModTile
 	{
 		public const int FrameWidth = 16 * 12;
 		public const int FrameHeight = 16 * 3;

@@ -1,7 +1,6 @@
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.ID;
-using Redemption.Items.Materials.HM;
 using Redemption.BaseExtension;
 using Redemption.Globals.Player;
 

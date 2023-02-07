@@ -1,5 +1,3 @@
-using Redemption.Globals;
-using Redemption.Items.Placeable.Tiles;
 using Redemption.Items.Weapons.PreHM.Ranged;
 using Redemption.Tiles.MusicBoxes;
 using Terraria.ID;

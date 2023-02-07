@@ -9,7 +9,6 @@ using Redemption.Items.Weapons.PreHM.Melee;
 using Redemption.Items.Weapons.PreHM.Ranged;
 using Redemption.Items.Accessories.PreHM;
 using Redemption.Items.Weapons.PreHM.Summon;
-using Redemption.Items.Weapons.PreHM.Ritualist;
 using Terraria.GameContent.ItemDropRules;
 
 namespace Redemption.Items.Usable

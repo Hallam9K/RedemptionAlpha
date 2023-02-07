@@ -1,4 +1,3 @@
-using Redemption.Items.Placeable.Furniture.Lab;
 using Redemption.Tiles.Tiles;
 using Terraria;
 using Terraria.ID;

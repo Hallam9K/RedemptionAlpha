@@ -12,7 +12,6 @@ using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Redemption.NPCs.PreHM;
 using Redemption.NPCs.Friendly.SpiritSummons;
 
 namespace Redemption.Items.Weapons.PreHM.Summon

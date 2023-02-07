@@ -1,6 +1,5 @@
 using Microsoft.Xna.Framework;
 using Redemption.DamageClasses;
-using Redemption.Items.Materials.PreHM;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.ID;
