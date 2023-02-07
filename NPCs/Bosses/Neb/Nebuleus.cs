@@ -24,7 +24,6 @@ using Redemption.Items.Armor.Vanity;
 using Redemption.BaseExtension;
 using Redemption.Items.Materials.PostML;
 using Terraria.DataStructures;
-using Redemption.Textures;
 using ReLogic.Content;
 
 namespace Redemption.NPCs.Bosses.Neb

@@ -13,7 +13,7 @@ namespace Redemption.Items.Usable
 {
     public class RoomsCreator : ModItem
     {
-        public override string Texture => "Redemption/Placeholder";
+        public override string Texture => Redemption.PLACEHOLDER_TEXTURE;
         public override void SetStaticDefaults()
 		{
             DisplayName.SetDefault("Room Layout Generator");

@@ -21,7 +21,6 @@ using Terraria.Utilities;
 using Redemption.BaseExtension;
 using Terraria.DataStructures;
 using System.Collections.Generic;
-using Microsoft.CodeAnalysis;
 
 namespace Redemption.NPCs.PreHM
 {

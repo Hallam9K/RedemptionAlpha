@@ -1,4 +1,3 @@
-using Microsoft.CodeAnalysis.Operations;
 using Microsoft.Xna.Framework;
 using Redemption.Base;
 using Redemption.BaseExtension;
@@ -15,7 +14,6 @@ using Redemption.Items.Weapons.PreHM.Melee;
 using Redemption.Items.Weapons.PreHM.Summon;
 using Redemption.NPCs.PreHM;
 using Redemption.UI;
-using System;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.Audio;

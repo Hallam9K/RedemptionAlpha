@@ -1,6 +1,5 @@
 
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
 using ParticleLibrary;
 using Redemption.Base;
@@ -9,7 +8,6 @@ using Redemption.Globals;
 using Redemption.Items.Weapons.PostML.Melee;
 using Redemption.Particles;
 using ReLogic.Utilities;
-using System.Data;
 using Terraria;
 using Terraria.Audio;
 using Terraria.GameContent;

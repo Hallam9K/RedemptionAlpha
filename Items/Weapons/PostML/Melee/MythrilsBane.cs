@@ -1,7 +1,4 @@
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using Redemption.BaseExtension;
-using Redemption.Items.Weapons.HM.Ranged;
 using Redemption.Projectiles.Melee;
 using System.Collections.Generic;
 using Terraria;

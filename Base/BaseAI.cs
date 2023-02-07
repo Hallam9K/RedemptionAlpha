@@ -10,7 +10,6 @@ using Terraria.Utilities;
 using Terraria.ModLoader;
 using Redemption.BaseExtension;
 using Redemption.Globals;
-using Steamworks;
 
 namespace Redemption.Base
 {

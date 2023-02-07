@@ -6,7 +6,6 @@ using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using Redemption.BaseExtension;
 using Terraria.Graphics.Effects;
-using Redemption.Base;
 
 namespace Redemption.Globals.Player
 {

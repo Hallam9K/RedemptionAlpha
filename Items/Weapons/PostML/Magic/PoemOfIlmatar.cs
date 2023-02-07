@@ -1,6 +1,4 @@
 using Microsoft.Xna.Framework;
-using Redemption.Globals;
-using Redemption.Items.Materials.PostML;
 using Redemption.Projectiles.Magic;
 using Redemption.Rarities;
 using Terraria;

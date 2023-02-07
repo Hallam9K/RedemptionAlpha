@@ -6,7 +6,6 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Redemption.Buffs.Minions;
-using Redemption.BaseExtension;
 
 namespace Redemption.Projectiles.Minions
 {

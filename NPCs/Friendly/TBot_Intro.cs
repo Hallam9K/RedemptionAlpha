@@ -11,7 +11,6 @@ using ReLogic.Content;
 using Redemption.Dusts;
 using Terraria.GameContent.UI;
 using Redemption.UI;
-using MonoMod.RuntimeDetour;
 
 namespace Redemption.NPCs.Friendly
 {

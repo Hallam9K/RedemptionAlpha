@@ -36,7 +36,7 @@ namespace Redemption.Tiles.Furniture.Lab
     }
     public class KariBed : PlaceholderTile
     {
-        public override string Texture => "Redemption/Placeholder";
+        public override string Texture => Redemption.PLACEHOLDER_TEXTURE;
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Kari's Hospital Bed");

@@ -13,7 +13,6 @@ using Terraria.Utilities;
 using Redemption.Items.Placeable.Banners;
 using Redemption.Buffs.Debuffs;
 using Redemption.Buffs.NPCBuffs;
-using Redemption.Items.Usable;
 using Redemption.Globals.NPC;
 using System.IO;
 

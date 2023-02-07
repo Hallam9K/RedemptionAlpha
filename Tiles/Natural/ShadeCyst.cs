@@ -1,6 +1,4 @@
 ﻿using Microsoft.Xna.Framework;
-using Redemption.Globals;
-using Redemption.Projectiles.Misc;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.Enums;
@@ -61,7 +59,7 @@ namespace Redemption.Tiles.Natural
     }
     public class ShadeCystItem : PlaceholderTile
     {
-        public override string Texture => "Redemption/Placeholder";
+        public override string Texture => Redemption.PLACEHOLDER_TEXTURE;
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Shade Cyst");

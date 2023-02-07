@@ -1,7 +1,4 @@
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using Redemption.Base;
-using Redemption.BaseExtension;
 using Redemption.Projectiles.Minions;
 using Redemption.Rarities;
 using Terraria;

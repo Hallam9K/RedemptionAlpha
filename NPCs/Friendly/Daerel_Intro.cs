@@ -12,7 +12,6 @@ using Redemption.Dusts;
 using Terraria.GameContent.UI;
 using Redemption.UI;
 using Terraria.GameContent;
-using System.Collections;
 using Redemption.Items.Usable;
 
 namespace Redemption.NPCs.Friendly

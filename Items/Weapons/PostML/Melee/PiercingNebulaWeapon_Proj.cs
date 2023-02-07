@@ -1,14 +1,9 @@
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using Terraria.GameContent;
 using Terraria;
 using Terraria.ID;
 using Redemption.Globals;
 using Terraria.ModLoader;
 using Terraria.Audio;
-using ParticleLibrary;
-using Redemption.Particles;
-using static Terraria.ModLoader.PlayerDrawLayer;
 
 namespace Redemption.Items.Weapons.PostML.Melee
 {

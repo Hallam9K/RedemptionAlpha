@@ -55,7 +55,7 @@ namespace Redemption.Tiles.Furniture.Lab
     }
     public class WideLabConsole : PlaceholderTile
     {
-        public override string Texture => "Redemption/Placeholder";
+        public override string Texture => Redemption.PLACEHOLDER_TEXTURE;
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Wide Laboratory Console");

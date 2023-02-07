@@ -1,11 +1,5 @@
-﻿using Microsoft.Xna.Framework;
-using ParticleLibrary;
-using Redemption.BaseExtension;
-using Redemption.Dusts;
-using Redemption.Globals;
-using Redemption.Particles;
+﻿using Redemption.Dusts;
 using Terraria;
-using Terraria.Audio;
 using Terraria.ModLoader;
 
 namespace Redemption.Projectiles.Ranged

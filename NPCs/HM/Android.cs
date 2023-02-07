@@ -28,9 +28,6 @@ using Redemption.Particles;
 using Terraria.GameContent.UI;
 using Redemption.Items.Usable;
 using System.IO;
-using Mono.CompilerServices.SymbolWriter;
-using Redemption.Items.Accessories.PreHM;
-using static Humanizer.In;
 
 namespace Redemption.NPCs.HM
 {

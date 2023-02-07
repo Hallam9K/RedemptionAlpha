@@ -5,14 +5,11 @@ using Terraria.ModLoader;
 using Redemption.Globals;
 using Terraria.Audio;
 using Redemption.BaseExtension;
-using Redemption.Base;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
-using Redemption.Dusts;
 using Terraria.GameContent.UI;
 using Redemption.UI;
 using Terraria.GameContent;
-using System;
 
 namespace Redemption.NPCs.Friendly
 {

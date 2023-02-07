@@ -117,7 +117,7 @@ namespace Redemption.Tiles.Furniture.Shade
     }
     public class ShadesteelGate : PlaceholderTile
     {
-        public override string Texture => "Redemption/Placeholder";
+        public override string Texture => Redemption.PLACEHOLDER_TEXTURE;
         public override void SetStaticDefaults()
         {
             Tooltip.SetDefault("[c/ff0000:Unbreakable (500% Pickaxe Power)]");

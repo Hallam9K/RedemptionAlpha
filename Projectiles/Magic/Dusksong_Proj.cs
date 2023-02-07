@@ -3,7 +3,6 @@ using Microsoft.Xna.Framework.Graphics;
 using ParticleLibrary;
 using Redemption.Dusts;
 using Redemption.Effects;
-using Redemption.Effects.PrimitiveTrails;
 using Redemption.Globals;
 using Redemption.Globals.NPC;
 using Redemption.Particles;

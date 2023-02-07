@@ -12,7 +12,6 @@ using Terraria.GameContent.ItemDropRules;
 using Redemption.Globals.World;
 using Redemption.Items.Usable.Potions;
 using Terraria.DataStructures;
-using System.Reflection;
 using Redemption.Buffs.NPCBuffs;
 
 namespace Redemption.NPCs.FowlMorning

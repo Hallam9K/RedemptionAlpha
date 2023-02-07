@@ -24,7 +24,6 @@ using Redemption.BaseExtension;
 using Terraria.GameContent.UI;
 using Redemption.UI;
 using Redemption.Projectiles.Misc;
-using Redemption.NPCs.PreHM;
 using Redemption.Projectiles.Magic;
 using Redemption.Items.Weapons.HM.Melee;
 using ReLogic.Content;

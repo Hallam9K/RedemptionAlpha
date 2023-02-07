@@ -41,7 +41,7 @@ namespace Redemption.Tiles.Furniture.Misc
     }
     public class GathuramPortalItem : PlaceholderTile
     {
-        public override string Texture => "Redemption/Placeholder";
+        public override string Texture => Redemption.PLACEHOLDER_TEXTURE;
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Gathuram Portal");

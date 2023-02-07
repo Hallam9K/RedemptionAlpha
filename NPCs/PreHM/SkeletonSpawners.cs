@@ -424,6 +424,10 @@ namespace Redemption.NPCs.PreHM
                     TypeNPC = ModContent.NPCType<SkeletonWanderer>();
                     clearNum = 4;
                     break;
+                case 3:
+                    TypeNPC = ModContent.NPCType<AncientGladestoneGolem>();
+                    clearNum = 3;
+                    break;
             }
             if (player.dead || player.DistanceSQ(NPC.Center) > 1000 * 1000)
             {

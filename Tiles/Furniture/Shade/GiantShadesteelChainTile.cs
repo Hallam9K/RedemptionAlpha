@@ -33,7 +33,7 @@ namespace Redemption.Tiles.Furniture.Shade
     }
     public class GiantShadesteelChain : PlaceholderTile
     {
-        public override string Texture => "Redemption/Placeholder";
+        public override string Texture => Redemption.PLACEHOLDER_TEXTURE;
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Giant Shadesteel Chain");

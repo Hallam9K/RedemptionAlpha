@@ -1,7 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.BaseExtension;
-using Redemption.Buffs;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;

@@ -10,7 +10,6 @@ using Terraria.Audio;
 using ReLogic.Content;
 using Redemption.BaseExtension;
 using Redemption.Effects.PrimitiveTrails;
-using log4net.Core;
 
 namespace Redemption.Items.Weapons.HM.Melee
 {

@@ -1,10 +1,8 @@
 using Microsoft.Xna.Framework;
 using Redemption.Biomes;
-using Redemption.NPCs.Bosses.PatientZero;
 using Redemption.NPCs.Friendly;
 using Redemption.WorldGeneration;
 using Terraria;
-using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -27,7 +25,7 @@ namespace Redemption.Globals
                         active = true;
                 }
             }
-            if (!active || RedeGen.BastionPoint.X == -1 || RedeGen.BastionPoint.Y == -1)
+            if (!active || RedeGen.BastionPoint.X == 0)
                 return;
 
             Vector2 NozaPos = new((RedeGen.BastionPoint.X + 210) * 16, (RedeGen.BastionPoint.Y + 64) * 16);

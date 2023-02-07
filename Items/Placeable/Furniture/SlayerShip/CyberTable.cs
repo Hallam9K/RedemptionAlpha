@@ -1,8 +1,6 @@
 using Terraria.ModLoader;
 using Terraria.ID;
 using Redemption.Tiles.Furniture.SlayerShip;
-using Terraria.GameContent.Creative;
-using Redemption.Items.Placeable.Tiles;
 using Redemption.Items.Materials.HM;
 
 namespace Redemption.Items.Placeable.Furniture.SlayerShip

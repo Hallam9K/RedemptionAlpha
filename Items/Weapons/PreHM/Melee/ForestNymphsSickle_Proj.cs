@@ -190,7 +190,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
                                 if (BasePlayer.ReduceMana(player, 8))
                                 {
                                     SoundEngine.PlaySound(SoundID.Item101, Projectile.position);
-                                    Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, new Vector2(Main.rand.NextFloat(-3, 3), -Main.rand.NextFloat(4, 8)), ModContent.ProjectileType<NaturePixie_Magic>(), Projectile.damage / 2, Projectile.knockBack, player.whoAmI);
+                                    Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, new Vector2(Main.rand.NextFloat(-3, 3), -Main.rand.NextFloat(4, 8)), ModContent.ProjectileType<NaturePixie_Magic>(), Projectile.damage, Projectile.knockBack, player.whoAmI);
                                 }
                             }
                         }

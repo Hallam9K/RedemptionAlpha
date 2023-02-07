@@ -29,7 +29,6 @@ using Redemption.Items.Weapons.HM.Magic;
 using Redemption.Items.Weapons.PostML.Melee;
 using System.Linq;
 using Redemption.Items.Weapons.PostML.Magic;
-using Redemption.Items.Placeable.Furniture.SlayerShip;
 
 namespace Redemption.WorldGeneration
 {

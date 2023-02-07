@@ -4,7 +4,6 @@ using Redemption.Base;
 using Redemption.BaseExtension;
 using Redemption.Buffs.Debuffs;
 using Redemption.Globals;
-using Redemption.NPCs.Bosses.Obliterator;
 using Terraria;
 using Terraria.Audio;
 using Terraria.GameContent;

@@ -8,7 +8,6 @@ using Terraria.ModLoader;
 using Redemption.Globals;
 using Redemption.Projectiles.Melee;
 using Redemption.Buffs.NPCBuffs;
-using Redemption.BaseExtension;
 
 namespace Redemption.Items.Weapons.PostML.Melee
 {

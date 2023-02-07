@@ -1,5 +1,4 @@
 using Microsoft.Xna.Framework;
-using Redemption.Dusts;
 using System.Collections.Generic;
 using System.Linq;
 using Terraria;
@@ -80,6 +79,8 @@ namespace Redemption.Items.Weapons.PreHM.Melee
         public override void ModifyWeaponDamage(Player player, ref StatModifier damage)
         {
             damage = damage.CombineWith(player.GetTotalDamage(MagicMode ? DamageClass.Magic : DamageClass.Melee));
+            if (MagicMode)
+                damage *= .7f;
         }
         public override void ModifyWeaponCrit(Player player, ref float crit)
         {

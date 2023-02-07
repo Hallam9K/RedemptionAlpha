@@ -6,7 +6,6 @@ using Terraria.ModLoader;
 using Terraria.ObjectData;
 using Terraria.Enums;
 using Redemption.Dusts.Tiles;
-using Redemption.Items.Usable;
 using Terraria.Audio;
 using Terraria.GameContent.ObjectInteractions;
 
@@ -154,7 +153,7 @@ namespace Redemption.Tiles.Furniture.Shade
     }
     public class ShadePortcullis : PlaceholderTile
     {
-        public override string Texture => "Redemption/Placeholder";
+        public override string Texture => Redemption.PLACEHOLDER_TEXTURE;
         public override void SetStaticDefaults()
         {
             Tooltip.SetDefault("[c/ff0000:Unbreakable (500% Pickaxe Power)]");

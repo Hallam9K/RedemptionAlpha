@@ -8,8 +8,6 @@ using Redemption.Base;
 using Redemption.Globals;
 using Redemption.Buffs.Debuffs;
 using Terraria.Audio;
-using Terraria.ID;
-using Redemption.BaseExtension;
 
 namespace Redemption.NPCs.Bosses.Obliterator
 {

@@ -21,7 +21,6 @@ using Terraria.ModLoader;
 using Terraria.Utilities;
 using Redemption.BaseExtension;
 using Terraria.DataStructures;
-using Redemption.Items.Weapons.PreHM.Ritualist;
 
 namespace Redemption.NPCs.PreHM
 {

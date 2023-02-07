@@ -1,4 +1,3 @@
-using Redemption.Items.Materials.HM;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;

@@ -165,10 +165,8 @@ namespace Redemption.NPCs.PreHM
             }
         }
 
-        public override bool CanHitPlayer(Player target, ref int cooldownSlot)
-        {
-            return NPC.alpha < 150;
-        }
+        public override bool CanHitPlayer(Player target, ref int cooldownSlot) => NPC.alpha < 150;
+        public override void ModifyHitPlayer(Player target, ref int damage, ref bool crit) => target.noKnockback = true;
 
         public override void FindFrame(int frameHeight)
         {
@@ -258,7 +256,7 @@ namespace Redemption.NPCs.PreHM
         public override float SpawnChance(NPCSpawnInfo spawnInfo)
         {
             if (spawnInfo.Player.RedemptionAbility().SpiritwalkerActive && !spawnInfo.Player.ZoneTowerNebula && !spawnInfo.Player.ZoneTowerSolar && !spawnInfo.Player.ZoneTowerStardust && !spawnInfo.Player.ZoneTowerVortex)
-                return 1f;
+                return 0.6f;
 
             return SpawnCondition.Cavern.Chance * 0.01f;
         }

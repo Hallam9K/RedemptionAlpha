@@ -1,4 +1,3 @@
-using Redemption.Globals;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.ID;

@@ -14,7 +14,6 @@ using Redemption.Items.Armor.Vanity;
 using Terraria.GameContent.Personalities;
 using System.Collections.Generic;
 using Redemption.BaseExtension;
-using Redemption.Items.Placeable.Furniture.Misc;
 using Redemption.Items.Usable;
 
 namespace Redemption.NPCs.Friendly

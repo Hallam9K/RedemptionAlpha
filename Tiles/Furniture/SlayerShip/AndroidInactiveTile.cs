@@ -1,6 +1,4 @@
 using Microsoft.Xna.Framework;
-using Redemption.Dusts.Tiles;
-using Redemption.Items.Placeable.Furniture.Lab;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.Enums;
@@ -55,7 +53,7 @@ namespace Redemption.Tiles.Furniture.SlayerShip
     }
     public class AndroidInactive : PlaceholderTile
     {
-        public override string Texture => "Redemption/Placeholder";
+        public override string Texture => Redemption.PLACEHOLDER_TEXTURE;
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Inactive Android");

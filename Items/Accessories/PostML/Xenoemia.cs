@@ -1,17 +1,10 @@
 using Microsoft.Xna.Framework;
-using Redemption.Base;
 using Redemption.Buffs.Pets;
-using Redemption.Dusts;
-using Redemption.Globals;
-using Redemption.Items.Accessories.HM;
-using Redemption.Projectiles.Minions;
 using Redemption.Projectiles.Pets;
-using System;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
-using static Terraria.ModLoader.PlayerDrawLayer;
 
 namespace Redemption.Items.Accessories.PostML
 {

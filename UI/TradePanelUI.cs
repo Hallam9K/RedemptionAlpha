@@ -6,7 +6,6 @@ using Terraria.UI;
 using Terraria.ID;
 using Terraria.Audio;
 using Terraria.GameContent;
-using Redemption.Items.Materials.HM;
 using Terraria.DataStructures;
 
 namespace Redemption.UI

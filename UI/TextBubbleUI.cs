@@ -5,10 +5,7 @@ using System.Collections.Generic;
 using Terraria.UI;
 using Terraria.ModLoader;
 using ReLogic.Graphics;
-using System;
 using Terraria.Audio;
-using static Redemption.UI.Dialogue;
-using IL.Terraria.DataStructures;
 using Terraria.UI.Chat;
 
 namespace Redemption.UI

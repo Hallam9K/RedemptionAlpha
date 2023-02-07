@@ -4,7 +4,6 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Localization;
 using Terraria.Utilities;
-using Redemption.Items.Materials.PreHM;
 using Terraria.GameContent.Bestiary;
 using Redemption.Globals;
 using Redemption.Items.Materials.HM;
@@ -25,8 +24,6 @@ using Terraria.GameContent.Personalities;
 using System.Collections.Generic;
 using Redemption.Items;
 using Microsoft.Xna.Framework.Graphics;
-using Terraria.GameContent;
-using Terraria.ModLoader.Default;
 using Redemption.Items.Donator.Lordfunnyman;
 
 namespace Redemption.NPCs.Friendly

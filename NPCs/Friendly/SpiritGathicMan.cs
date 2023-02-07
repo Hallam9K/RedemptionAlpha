@@ -19,7 +19,7 @@ namespace Redemption.NPCs.Friendly
         public ref float AITimer => ref NPC.ai[1];
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Spirit Old Man");
+            DisplayName.SetDefault("Old Spirit Man");
             Main.npcFrameCount[NPC.type] = 4;
             NPCID.Sets.ActsLikeTownNPC[Type] = true;
 

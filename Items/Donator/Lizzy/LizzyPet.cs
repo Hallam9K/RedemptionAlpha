@@ -1,11 +1,9 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Redemption.Base;
 using Redemption.Biomes;
 using Redemption.Globals;
 using Redemption.NPCs.Friendly;
 using System;
-using System.Security.AccessControl;
 using Terraria;
 using Terraria.GameContent;
 using Terraria.GameContent.UI;

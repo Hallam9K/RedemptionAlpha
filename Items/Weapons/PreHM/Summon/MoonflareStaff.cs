@@ -10,7 +10,6 @@ using Terraria.Localization;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.BaseExtension;
-using Redemption.Base;
 
 namespace Redemption.Items.Weapons.PreHM.Summon
 {

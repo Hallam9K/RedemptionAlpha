@@ -75,23 +75,25 @@ namespace Redemption.Tiles.Furniture.Lab
                         SoundEngine.PlaySound(SoundID.Item74, player.position);
                     }
                 }
+                return true;
             }
             else
             {
                 if (Main.tile[left, top].TileFrameX == 0)
                 {
                     player.QuickSpawnItem(new EntitySource_TileInteraction(player, i, j), ModContent.ItemType<HazmatSuit2>());
-                }
-                for (int x = left; x < left + 3; x++)
-                {
-                    for (int y = top; y < top + 2; y++)
+                    for (int x = left; x < left + 3; x++)
                     {
-                        if (Main.tile[x, y].TileFrameX < 54)
-                            Main.tile[x, y].TileFrameX += 54;
+                        for (int y = top; y < top + 2; y++)
+                        {
+                            if (Main.tile[x, y].TileFrameX < 54)
+                                Main.tile[x, y].TileFrameX += 54;
+                        }
                     }
+                    return true;
                 }
             }
-            return true;
+            return false;
         }
         public override void KillMultiTile(int i, int j, int frameX, int frameY)
         {
@@ -131,7 +133,7 @@ namespace Redemption.Tiles.Furniture.Lab
     }
     public class HazmatCorpse : PlaceholderTile
     {
-        public override string Texture => "Redemption/Placeholder";
+        public override string Texture => Redemption.PLACEHOLDER_TEXTURE;
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Hazmat Corpse");

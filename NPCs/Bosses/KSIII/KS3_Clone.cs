@@ -16,7 +16,6 @@ using Redemption.UI;
 using Terraria.GameContent.ItemDropRules;
 using Redemption.Items.Accessories.HM;
 using Redemption.Items.Placeable.Trophies;
-using Redemption.Items;
 using Redemption.Items.Weapons.HM.Ranged;
 using Redemption.Items.Materials.HM;
 using Redemption.Buffs.NPCBuffs;

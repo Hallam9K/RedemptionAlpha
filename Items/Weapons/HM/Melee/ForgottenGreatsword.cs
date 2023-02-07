@@ -1,6 +1,5 @@
 using Microsoft.Xna.Framework;
 using Redemption.Items.Materials.HM;
-using Redemption.Items.Materials.PreHM;
 using Redemption.Items.Weapons.PreHM.Melee;
 using System;
 using System.Collections.Generic;

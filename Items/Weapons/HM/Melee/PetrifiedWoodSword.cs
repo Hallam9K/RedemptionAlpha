@@ -1,4 +1,3 @@
-using Redemption.Items.Materials.HM;
 using Redemption.Items.Placeable.Tiles;
 using Terraria;
 using Terraria.ID;

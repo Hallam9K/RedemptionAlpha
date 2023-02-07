@@ -5,7 +5,6 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Redemption.Globals.Player;
 using Microsoft.Xna.Framework;
-using System.IO;
 
 namespace Redemption.Items.Accessories.HM
 {

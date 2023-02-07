@@ -9,7 +9,6 @@ using Terraria.GameContent;
 using Terraria.Audio;
 using Redemption.BaseExtension;
 using Redemption.Items.Weapons.HM.Ammo;
-using System.Security.AccessControl;
 using Redemption.Projectiles.Ranged;
 
 namespace Redemption.Items.Weapons.PostML.Ranged

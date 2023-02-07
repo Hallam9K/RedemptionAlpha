@@ -1,9 +1,7 @@
 ﻿using Redemption.Rarities;
 using Terraria;
-using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Redemption.BaseExtension;
 using Redemption.Globals.Player;
 
 namespace Redemption.Items.Usable

@@ -1,7 +1,5 @@
 using Microsoft.Xna.Framework;
 using Redemption.Items.Materials.HM;
-using Redemption.Items.Placeable.Tiles;
-using Redemption.Items.Weapons.PreHM.Ranged;
 using Redemption.Projectiles.Ranged;
 using Terraria;
 using Terraria.ID;

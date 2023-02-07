@@ -6,7 +6,6 @@ using Terraria.ModLoader;
 using Terraria.ObjectData;
 using Terraria.DataStructures;
 using Redemption.Items.Usable;
-using System;
 using Terraria.Audio;
 using Redemption.BaseExtension;
 using Microsoft.Xna.Framework.Graphics;
@@ -91,7 +90,7 @@ namespace Redemption.Tiles.Furniture.Misc
     }
     public class HangingTied : PlaceholderTile
     {
-        public override string Texture => "Redemption/Placeholder";
+        public override string Texture => Redemption.PLACEHOLDER_TEXTURE;
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Hanging Tied");

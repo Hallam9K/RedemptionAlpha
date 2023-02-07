@@ -1,18 +1,9 @@
-using IL.Terraria.IO;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Redemption.Base;
 using Redemption.BaseExtension;
-using Redemption.Globals;
-using Redemption.Items.Materials.HM;
 using Redemption.Items.Materials.PostML;
-using Redemption.NPCs.Bosses.Neb;
-using Redemption.Projectiles.Melee;
 using Redemption.Rarities;
-using Redemption.Tiles.Furniture.Lab;
 using Terraria;
-using Terraria.DataStructures;
-using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
 

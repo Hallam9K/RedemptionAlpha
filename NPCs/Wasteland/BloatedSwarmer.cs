@@ -7,7 +7,6 @@ using Redemption.Items.Materials.HM;
 using Redemption.Items.Materials.PreHM;
 using Redemption.Items.Usable.Potions;
 using Redemption.Items.Weapons.HM.Ranged;
-using System;
 using System.IO;
 using Terraria;
 using Terraria.Audio;

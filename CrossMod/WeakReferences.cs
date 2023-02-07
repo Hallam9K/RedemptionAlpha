@@ -38,8 +38,6 @@ using Redemption.Items.Accessories.PostML;
 using Redemption.NPCs.Friendly;
 using Redemption.Items.Weapons.PreHM.Summon;
 using Redemption.NPCs.Bosses.FowlEmperor;
-using Redemption.Items.Placeable.Furniture.Misc;
-using Redemption.NPCs.Critters;
 using Redemption.NPCs.FowlMorning;
 using Redemption.Items;
 

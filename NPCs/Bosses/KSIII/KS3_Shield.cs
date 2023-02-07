@@ -6,7 +6,6 @@ using Terraria.ModLoader;
 using Terraria.Audio;
 using Terraria.GameContent;
 using Microsoft.Xna.Framework.Graphics;
-using Redemption.BaseExtension;
 using Redemption.Globals;
 
 namespace Redemption.NPCs.Bosses.KSIII

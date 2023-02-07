@@ -1,5 +1,4 @@
 using Redemption.Items.Usable;
-using Redemption.Items.Weapons.PreHM.Ranged;
 using Redemption.Tiles.MusicBoxes;
 using Terraria.ID;
 using Terraria.ModLoader;
