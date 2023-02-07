@@ -488,7 +488,7 @@ namespace Redemption.Tiles.Natural
     }
     public class SkeletonRemains1_Special : PlaceholderTile
     {
-        public override string Texture => "Redemption/Placeholder";
+        public override string Texture => Redemption.PLACEHOLDER_TEXTURE;
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Skeletal Remains (Soulful)");
@@ -501,7 +501,7 @@ namespace Redemption.Tiles.Natural
     }
     public class SkeletonRemains3_Special : PlaceholderTile
     {
-        public override string Texture => "Redemption/Placeholder";
+        public override string Texture => Redemption.PLACEHOLDER_TEXTURE;
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Skeletal Remains (Assassin)");
@@ -514,7 +514,7 @@ namespace Redemption.Tiles.Natural
     }
     public class SkeletonRemains4_Special : PlaceholderTile
     {
-        public override string Texture => "Redemption/Placeholder";
+        public override string Texture => Redemption.PLACEHOLDER_TEXTURE;
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Skeletal Remains (Common Guard)");
@@ -527,7 +527,7 @@ namespace Redemption.Tiles.Natural
     }
     public class SkeletonRemains5_Special : PlaceholderTile
     {
-        public override string Texture => "Redemption/Placeholder";
+        public override string Texture => Redemption.PLACEHOLDER_TEXTURE;
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Skeletal Remains (Gathic Man)");

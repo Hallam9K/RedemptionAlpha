@@ -45,6 +45,7 @@ namespace Redemption
 
         public const string Abbreviation = "MoR";
         public const string EMPTY_TEXTURE = "Redemption/Empty";
+        public const string PLACEHOLDER_TEXTURE = "Redemption/Placeholder";
         public Vector2 cameraOffset;
         public Rectangle currentScreen;
         public static ModKeybind RedeSpecialAbility;
@@ -125,6 +126,8 @@ namespace Redemption
                     PremultiplyTexture(ref DarkSoulTex);
                     Texture2D TornadoTex = ModContent.Request<Texture2D>("Redemption/Textures/TornadoTex", immLoad).Value;
                     PremultiplyTexture(ref TornadoTex);
+                    Texture2D SpiritPortalTex = ModContent.Request<Texture2D>("Redemption/Textures/SpiritPortalTex", immLoad).Value;
+                    PremultiplyTexture(ref SpiritPortalTex);
 
                     Texture2D purityWastelandBG3Tex = ModContent.Request<Texture2D>("Redemption/Backgrounds/PurityWastelandBG3", immLoad).Value;
                     PremultiplyTexture(ref purityWastelandBG3Tex);

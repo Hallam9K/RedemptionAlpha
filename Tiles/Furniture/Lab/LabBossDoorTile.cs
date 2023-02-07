@@ -63,7 +63,7 @@ namespace Redemption.Tiles.Furniture.Lab
     }
     public class LabBossDoor : PlaceholderTile
     {
-        public override string Texture => "Redemption/Placeholder";
+        public override string Texture => Redemption.PLACEHOLDER_TEXTURE;
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Vertical Reinforced Lab Door");
@@ -130,7 +130,7 @@ namespace Redemption.Tiles.Furniture.Lab
     }
     public class LabBossDoorH : PlaceholderTile
     {
-        public override string Texture => "Redemption/Placeholder";
+        public override string Texture => Redemption.PLACEHOLDER_TEXTURE;
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Horizontal Reinforced Lab Door");

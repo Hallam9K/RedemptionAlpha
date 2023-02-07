@@ -16,7 +16,7 @@ namespace Redemption.Walls
         }
         public class IrradiatedCrimstoneWall : PlaceholderTile
         {
-            public override string Texture => "Redemption/Placeholder";
+            public override string Texture => Redemption.PLACEHOLDER_TEXTURE;
             public override void SetStaticDefaults()
             {
                 Tooltip.SetDefault("[c/ff0000:Unbreakable]");

@@ -152,7 +152,7 @@ namespace Redemption.Tiles.Furniture.Lab
     }
     public class LabKeycardDoor : PlaceholderTile
     {
-        public override string Texture => "Redemption/Placeholder";
+        public override string Texture => Redemption.PLACEHOLDER_TEXTURE;
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Keycard Door");

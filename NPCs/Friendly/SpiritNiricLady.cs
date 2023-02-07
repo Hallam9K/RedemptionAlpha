@@ -14,12 +14,12 @@ using Terraria.Audio;
 
 namespace Redemption.NPCs.Friendly
 {
-    public class SpiritGathicMan : ModNPC
+    public class SpiritNiricLady : ModNPC
     {
         public ref float AITimer => ref NPC.ai[1];
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Old Spirit Man");
+            DisplayName.SetDefault("Old Spirit Lady");
             Main.npcFrameCount[NPC.type] = 4;
             NPCID.Sets.ActsLikeTownNPC[Type] = true;
 
@@ -73,7 +73,7 @@ namespace Redemption.NPCs.Friendly
                 DustHelper.DrawDustImage(NPC.Center, DustID.DungeonSpirit, 0.5f, "Redemption/Effects/DustImages/DeadRingerDust", 2, true, 0);
             }
             NPC.alpha += Main.rand.Next(-10, 11);
-            NPC.alpha = (int)MathHelper.Clamp(NPC.alpha, 40, 60);
+            NPC.alpha = (int)MathHelper.Clamp(NPC.alpha, 80, 120);
         }
 
         public override void FindFrame(int frameHeight)
@@ -110,10 +110,10 @@ namespace Redemption.NPCs.Friendly
         {
             button = ChatNumber switch
             {
-                1 => "Olden Ruins?",
-                2 => "God of Decay?",
-                3 => "False Gods?",
-                4 => "Dead Ringer?",
+                1 => "New kingdom?",
+                2 => "Your corpse?",
+                3 => "Nirin?",
+                4 => "Disaster?",
                 5 => "Request Crux",
                 _ => "About you?",
             };
@@ -129,7 +129,7 @@ namespace Redemption.NPCs.Friendly
                 {
                     if (!Main.LocalPlayer.RedemptionAbility().SpiritwalkerActive)
                     {
-                        Main.npcChatText = "Get in tha Spirit Realm, garbar! Can't do anythin' otherwise!";
+                        Main.npcChatText = "I'm unable to give you what you seek beyond my realm.";
                         ChatNumber = 4;
                         return;
                     }
@@ -140,14 +140,14 @@ namespace Redemption.NPCs.Friendly
                         if (Main.LocalPlayer.inventory[card].stack <= 0)
                             Main.LocalPlayer.inventory[card] = new Item();
 
-                        Main.LocalPlayer.QuickSpawnItem(NPC.GetSource_Loot(), ModContent.ItemType<CruxCardGathicSkeletons>());
-                        Main.npcChatText = "Sure thing, lad! Have the spirits of my people, and may they stab ya foes hard!";
-                        Main.npcChatCornerItem = ModContent.ItemType<CruxCardGathicSkeletons>();
+                        Main.LocalPlayer.QuickSpawnItem(NPC.GetSource_Loot(), ModContent.ItemType<CruxCardGladestone>());
+                        Main.npcChatText = "Take it. My blessings to you. Whoever you are.";
+                        Main.npcChatCornerItem = ModContent.ItemType<CruxCardGladestone>();
                         SoundEngine.PlaySound(SoundID.Chat);
                     }
                     else
                     {
-                        Main.npcChatText = "Gimme somethin' to imbue first!";
+                        Main.npcChatText = "I would require an object to imbue for that.";
                         Main.npcChatCornerItem = ModContent.ItemType<EmptyCruxCard>();
                     }
                     ChatNumber = 4;
@@ -157,7 +157,7 @@ namespace Redemption.NPCs.Friendly
             {
                 ChatNumber++;
                 int max = 4;
-                if (Main.LocalPlayer.RedemptionAbility().SpiritwalkerActive && !Main.LocalPlayer.HasItem(ModContent.ItemType<CruxCardGathicSkeletons>()))
+                if (Main.LocalPlayer.RedemptionAbility().SpiritwalkerActive && !Main.LocalPlayer.HasItem(ModContent.ItemType<CruxCardGladestone>()))
                     max = 5;
                 if (ChatNumber > max)
                     ChatNumber = 0;
@@ -167,25 +167,25 @@ namespace Redemption.NPCs.Friendly
         {
             return ChatNumber switch
             {
-                0 => "They called me the \"Brain Cleaver\" back in ma prime, for reasons I'm sure ya can figure out. My real name was somethin' less intense - Bromal. I was a warrior of Iful's Capital in the ol' kingdom of Kol Duluramodul before the undead took over. Now it's known as the Olden Ruins.",
-                1 => "A rotting mass of land home to Gathuram, a domain of Epidotra. During ma time there were no such things as \"domains\", the kingdom was just about all I knew. The folk of it ere the fall came from up north-east, migrating from the sinking Eranmount. They named their new land Odulmount - meaning Great Swamp in your tongue - but after lifetimes of glory, it was renamed to Kol Duluramodul - meaning Immovable Swamp Kingdom. It was indeed an impenetrable land, until the God of Decay appeared.",
-                2 => "A disease swept through Kol Duluramodul like an air-borne tsunami. The cause was the False God of Decay who roamed Tethuram - Gathuram's name in ancient times. It rotted and corroded flesh and turned humans into undead. The swamps, we discovered, were where the infection thrived most, so the folk who yet lived abandoned the kingdom and travelled further west. Such hard times they were, I only look back in anguish for my people.",
-                3 => "Be thankful for the present ya live in now. The Ancient World was an unforgiving age, made worse by the False Gods. We only knew of one at the time - after becoming a spirit I learnt a lot more about them from others of the realm. Apparently there was also one in Anglon, Blight I believe. For all the knowledge a thousand spirits can give, not one knows of the False Gods' origins. They're all dead though, the last of 'em was felled by ye olde Light. And I'm not talking about the Light you may know.",
-                4 => "Aye, I know of the artifact you carry, in fact it was created in Iful's Capital! 'Tis designed to call upon the spirits of corpses. Originally, the purpose was for gainin' knowledge of the past, but overtime we used it for more personal reasons - such as lettin' the dead talk to their family an' friends. I am unsure why it was found beneath this island though.",
+                0 => "Me? Unsure. I was from a place. My recollection fails me... It was cold, too cold for my liking. I split myself, and dug. Dug for our new kingdom.",
+                1 => "A new kingdom in snowy mountains, the old perished. We left, found ourselves here. The natives called it Nirin. They helped us, we helped them. Together we recreated our technology, we taught them our wisdom. All was well.",
+                2 => "Mine? Yes, and no. I am part of a piece, infused within the inanimate to become animate. Automatons we are. Powered by the permanent soul. My true spirit lies elsewhere, I alone am too frail. I wish to become whole again.",
+                3 => "Arctic Realm, it is known by. Frigid and open, a harsh change from our old home. It was warm and enclosed, as snug as sitting by a fireplace on a cold night. How I wish we stayed. How I wish the disaster never happened...\n\nHow did I get here?",
+                4 => "Oooooh...",
                 _ => "...",
             };
         }
         public override bool CanChat() => true;
         public override string GetChat()
         {
-            return "RAAAARRGGGHH! Haha! I saw ya comin' with ya fancy artifact, knew ya might call me with it, so I was ready to give ya a jump! No reaction? Come on, I yelled pretty loud. Not even a slight shiver in ya boots? Whatever, what is it?";
+            return "Oooh...";
         }
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
             var effects = NPC.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
             int shader = GameShaders.Armor.GetShaderIdFromItemId(ItemID.MirageDye);
             spriteBatch.End();
-            spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.NonPremultiplied, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+            spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
             GameShaders.Armor.ApplySecondary(shader, Main.player[Main.myPlayer], null);
 
             spriteBatch.Draw(TextureAssets.Npc[NPC.type].Value, NPC.Center - screenPos, NPC.frame, NPC.GetAlpha(Color.White), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0f);

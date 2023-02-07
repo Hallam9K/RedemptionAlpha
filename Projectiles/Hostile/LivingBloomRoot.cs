@@ -54,7 +54,6 @@ namespace Redemption.Projectiles.Hostile
                 Projectile.alpha -= 10;
             else if (Projectile.localAI[0] == 30)
             {
-                Projectile.hostile = true;
                 SoundEngine.PlaySound(SoundID.Item17, Projectile.position);
                 Projectile.velocity.Y -= 3;
             }

@@ -36,7 +36,7 @@ namespace Redemption.Globals
                         active = true;
                 }
             }
-            if (!active || RedeGen.BastionPoint.X == -1 || RedeGen.BastionPoint.Y == -1)
+            if (!active || RedeGen.BastionPoint.X == 0)
                 return;
 
             Vector2 NozaPos = new((RedeGen.BastionPoint.X + 210) * 16, (RedeGen.BastionPoint.Y + 64) * 16);

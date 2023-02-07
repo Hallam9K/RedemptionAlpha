@@ -1,8 +1,7 @@
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.BaseExtension;
-using Redemption.Items;
-using Redemption.Items.Accessories.HM;
+using Redemption.Globals;
 using Redemption.Items.Usable;
 using Redemption.NPCs.Friendly;
 using Terraria;
@@ -14,32 +13,47 @@ using Terraria.ModLoader;
 using Terraria.ObjectData;
 using static Redemption.Globals.RedeNet;
 
-namespace Redemption.Tiles.Furniture.Lab
+namespace Redemption.Tiles.Natural
 {
-    public class HazmatCorpseTile : ModTile
+    public class NiricAutomatonRemainsTile : ModTile
     {
         public override void SetStaticDefaults()
         {
             Main.tileFrameImportant[Type] = true;
-            Main.tileLavaDeath[Type] = false;
+            Main.tileSolid[Type] = false;
             Main.tileNoAttach[Type] = true;
-            TileObjectData.newTile.Width = 3;
+            TileObjectData.newTile.Width = 6;
             TileObjectData.newTile.Height = 2;
-            TileObjectData.newTile.CoordinateHeights = new int[] { 20, 16 };
+            TileObjectData.newTile.CoordinateHeights = new int[] { 16, 16 };
             TileObjectData.newTile.UsesCustomCanPlace = true;
+            TileObjectData.newTile.StyleHorizontal = true;
             TileObjectData.newTile.CoordinateWidth = 16;
             TileObjectData.newTile.CoordinatePadding = 2;
-            TileObjectData.newTile.Origin = new Point16(1, 1);
+            TileObjectData.newTile.DrawYOffset = 2;
+            TileObjectData.newTile.Origin = new Point16(2, 1);
             TileObjectData.newTile.AnchorBottom = new AnchorData(AnchorType.SolidTile | AnchorType.SolidWithTop | AnchorType.SolidSide, TileObjectData.newTile.Width, 0);
             TileObjectData.addTile(Type);
-            DustType = DustID.GreenBlood;
+            DustType = DustID.DungeonSpirit;
             MinPick = 500;
-            MineResist = 8f;
-            HitSound = SoundID.NPCHit13;
+            MineResist = 50;
+            HitSound = SoundID.Tink;
             ModTranslation name = CreateMapEntryName();
-            name.SetDefault("Hazmat Corpse");
-            AddMapEntry(new Color(242, 183, 111), name);
+            name.SetDefault("Automaton Remains");
+            AddMapEntry(new Color(117, 117, 126));
         }
+        public override void NearbyEffects(int i, int j, bool closer)
+        {
+            if (Main.tile[i, j].TileFrameX == 0 && Main.tile[i, j].TileFrameY == 0)
+            {
+                if (Main.rand.NextBool(20))
+                {
+                    int d = Dust.NewDust(new Vector2(i * 16 + 22, j * 16 + 8), 50, 24, DustID.DungeonSpirit);
+                    Main.dust[d].velocity.Y -= 3f;
+                    Main.dust[d].noGravity = true;
+                }
+            }
+        }
+        public override bool CanExplode(int i, int j) => false;
         public override void MouseOver(int i, int j)
         {
             Player player = Main.LocalPlayer;
@@ -48,20 +62,23 @@ namespace Redemption.Tiles.Furniture.Lab
             if (player.HeldItem.type == ModContent.ItemType<DeadRinger>())
                 player.cursorItemIconID = ModContent.ItemType<DeadRinger>();
             else
-                player.cursorItemIconID = ModContent.ItemType<HintIcon>();
+            {
+                player.cursorItemIconEnabled = false;
+                player.cursorItemIconID = 0;
+            }
         }
         public override bool RightClick(int i, int j)
         {
             Player player = Main.LocalPlayer;
-            int left = i - Main.tile[i, j].TileFrameX / 18 % 3;
-            int top = j - Main.tile[i, j].TileFrameY / 18 % 2;
             if (player.HeldItem.type == ModContent.ItemType<DeadRinger>())
             {
-                if (!NPC.AnyNPCs(ModContent.NPCType<HazmatCorpse_Ghost>()))
+                if (!NPC.AnyNPCs(ModContent.NPCType<SpiritNiricLady>()))
                 {
+                    int offset = Main.tile[i, j].TileFrameX / 18;
+
                     if (Main.netMode != NetmodeID.MultiplayerClient)
                     {
-                        int index1 = NPC.NewNPC(new EntitySource_TileInteraction(player, i, j), i * 16, (j + 1) * 16, ModContent.NPCType<HazmatCorpse_Ghost>());
+                        int index1 = NPC.NewNPC(new EntitySource_TileInteraction(player, i, j), (i - offset + 3) * 16, (j + 1) * 16, ModContent.NPCType<SpiritNiricLady>());
                         SoundEngine.PlaySound(SoundID.Item74, Main.npc[index1].position);
                         Main.npc[index1].velocity.Y -= 4;
                         Main.npc[index1].netUpdate2 = true;
@@ -71,39 +88,13 @@ namespace Redemption.Tiles.Furniture.Lab
                         if (Main.netMode == NetmodeID.SinglePlayer)
                             return false;
 
-                        Redemption.WriteToPacket(Redemption.Instance.GetPacket(), (byte)ModMessageType.NPCSpawnFromClient, ModContent.NPCType<HazmatCorpse_Ghost>(), new Vector2(i * 16, (j + 1) * 16)).Send(-1);
+                        Redemption.WriteToPacket(Redemption.Instance.GetPacket(), (byte)ModMessageType.NPCSpawnFromClient, ModContent.NPCType<SpiritNiricLady>(), new Vector2((i + offset) * 16, (j + 1) * 16)).Send(-1);
                         SoundEngine.PlaySound(SoundID.Item74, player.position);
                     }
                 }
-                return true;
             }
-            else
-            {
-                if (Main.tile[left, top].TileFrameX == 0)
-                {
-                    player.QuickSpawnItem(new EntitySource_TileInteraction(player, i, j), ModContent.ItemType<HazmatSuit2>());
-                    for (int x = left; x < left + 3; x++)
-                    {
-                        for (int y = top; y < top + 2; y++)
-                        {
-                            if (Main.tile[x, y].TileFrameX < 54)
-                                Main.tile[x, y].TileFrameX += 54;
-                        }
-                    }
-                    return true;
-                }
-            }
-            return false;
-        }
-        public override void KillMultiTile(int i, int j, int frameX, int frameY)
-        {
-            int left = i - Main.tile[i, j].TileFrameX / 18 % 3;
-            int top = j - Main.tile[i, j].TileFrameY / 18 % 2;
-            if (Main.tile[left, top].TileFrameX == 0)
-            {
-                Player player = Main.LocalPlayer;
-                player.QuickSpawnItem(new EntitySource_TileBreak(i, j), ModContent.ItemType<HazmatSuit2>());
-            }
+            return true;
+
         }
         public override bool PreDraw(int i, int j, SpriteBatch spriteBatch)
         {
@@ -116,35 +107,32 @@ namespace Redemption.Tiles.Furniture.Lab
             if (Main.drawToScreen)
                 zero = Vector2.Zero;
             Vector2 origin = new(flare.Width / 2f, flare.Height / 2f);
-            if ((Main.tile[i, j].TileFrameX == 0 || Main.tile[i, j].TileFrameX == 54) && Main.tile[i, j].TileFrameY == 0)
+            if (Main.tile[i, j].TileFrameX == 0 && Main.tile[i, j].TileFrameY == 0)
             {
                 spriteBatch.End();
                 spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null);
 
-                spriteBatch.Draw(flare, new Vector2(((i + 1.45f) * 16) - (int)Main.screenPosition.X, ((j + 0.7f) * 16) - (int)Main.screenPosition.Y) + zero, new Rectangle?(rect), RedeColor.COLOR_GLOWPULSE, Main.GlobalTimeWrappedHourly, origin, 1.5f, 0, 1f);
-                spriteBatch.Draw(flare, new Vector2(((i + 1.45f) * 16) - (int)Main.screenPosition.X, ((j + 0.7f) * 16) - (int)Main.screenPosition.Y) + zero, new Rectangle?(rect), RedeColor.COLOR_GLOWPULSE, -Main.GlobalTimeWrappedHourly, origin, 1.5f, 0, 1f);
+                spriteBatch.Draw(flare, new Vector2(((i + 2.8f) * 16) - (int)Main.screenPosition.X, ((j + 1.1f) * 16) - (int)Main.screenPosition.Y) + zero, new Rectangle?(rect), RedeColor.COLOR_GLOWPULSE, Main.GlobalTimeWrappedHourly, origin, 1.5f, 0, 1f);
+                spriteBatch.Draw(flare, new Vector2(((i + 2.8f) * 16) - (int)Main.screenPosition.X, ((j + 1.1f) * 16) - (int)Main.screenPosition.Y) + zero, new Rectangle?(rect), RedeColor.COLOR_GLOWPULSE, -Main.GlobalTimeWrappedHourly, origin, 1.5f, 0, 1f);
 
                 spriteBatch.End();
                 spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null);
             }
             return true;
         }
-        public override bool CanExplode(int i, int j) => false;
+        public override void NumDust(int i, int j, bool fail, ref int num) => num = fail ? 1 : 3;
     }
-    public class HazmatCorpse : PlaceholderTile
+    public class NiricAutomatonRemains : PlaceholderTile
     {
         public override string Texture => Redemption.PLACEHOLDER_TEXTURE;
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Hazmat Corpse");
-            Tooltip.SetDefault("Gives Hazmat Suit" +
-                "\n[c/ff0000:Unbreakable (500% Pickaxe Power)]");
+            DisplayName.SetDefault("Niric Automaton Remains");
         }
-
         public override void SetDefaults()
         {
             base.SetDefaults();
-            Item.createTile = ModContent.TileType<HazmatCorpseTile>();
+            Item.createTile = ModContent.TileType<NiricAutomatonRemainsTile>();
         }
     }
 }

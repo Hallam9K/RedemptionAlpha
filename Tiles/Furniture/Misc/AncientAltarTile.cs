@@ -67,18 +67,19 @@ namespace Redemption.Tiles.Furniture.Misc
             {
                 Player player = Main.LocalPlayer;
                 player.QuickSpawnItem(new EntitySource_TileInteraction(player, i, j), ModContent.ItemType<CursedGem>());
-            }
-            for (int x = left; x < left + 2; x++)
-            {
-                for (int y = top; y < top + 3; y++)
+                for (int x = left; x < left + 2; x++)
                 {
-                    if (Main.tile[x, y].TileFrameX < 36)
+                    for (int y = top; y < top + 3; y++)
                     {
-                        Main.tile[x, y].TileFrameX += 36;
+                        if (Main.tile[x, y].TileFrameX < 36)
+                        {
+                            Main.tile[x, y].TileFrameX += 36;
+                        }
                     }
                 }
+                return true;
             }
-            return true;
+            return false;
         }
         public override bool PreDraw(int i, int j, SpriteBatch spriteBatch)
         {
@@ -105,7 +106,7 @@ namespace Redemption.Tiles.Furniture.Misc
     }
     public class AncientAltar : PlaceholderTile
     {
-        public override string Texture => "Redemption/Placeholder";
+        public override string Texture => Redemption.PLACEHOLDER_TEXTURE;
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Ancient Altar");

@@ -18,8 +18,8 @@ namespace Redemption.Projectiles.Hostile
         {
             Projectile.width = 34;
             Projectile.height = 110;
-            Projectile.hostile = false;
-            Projectile.friendly = false;
+            Projectile.hostile = true;
+            Projectile.friendly = true;
             Projectile.penetrate = -1;
             Projectile.timeLeft = 180;
             Projectile.alpha = 255;
@@ -29,6 +29,10 @@ namespace Redemption.Projectiles.Hostile
         public override bool? CanHitNPC(NPC target)
         {
             return Projectile.velocity.Length() != 0 && target.type != ModContent.NPCType<AncientGladestoneGolem>() ? null : false;
+        }
+        public override bool CanHitPlayer(Player target)
+        {
+            return Projectile.velocity.Length() != 0;
         }
         public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection) => damage *= 4;
         public override void DrawBehind(int index, List<int> behindNPCsAndTiles, List<int> behindNPCs, List<int> behindProjectiles, List<int> overPlayers, List<int> overWiresUI)
@@ -40,16 +44,6 @@ namespace Redemption.Projectiles.Hostile
             if (Main.rand.NextBool(2)&& Projectile.localAI[0] < 30)
             {
                 Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, ModContent.DustType<SlateDust>(), Projectile.velocity.X * 0.5f, Projectile.velocity.Y * 0.5f, Scale: 2);
-            }
-            if (Projectile.velocity.Length() != 0)
-            {
-                Projectile.hostile = true;
-                Projectile.friendly = true;
-            }
-            else
-            {
-                Projectile.hostile = false;
-                Projectile.friendly = false;
             }
             Projectile.localAI[0]++;
             if (Projectile.localAI[0] < 30)

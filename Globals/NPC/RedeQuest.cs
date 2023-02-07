@@ -58,7 +58,7 @@ namespace Redemption.Globals
                         Main.dust[dust].color = dustColor;
                         Main.dust[dust].velocity *= 3f;
                     }
-                    if (RedeGen.newbCavePoint.X != -1 && !RedeHelper.WayfarerActive())
+                    if (RedeGen.newbCavePoint.X != 0 && !RedeHelper.WayfarerActive())
                         LabArea.SpawnNPCInWorld(anglonPortalPos, wayfarer);
 
                     if (Main.netMode == NetmodeID.Server)

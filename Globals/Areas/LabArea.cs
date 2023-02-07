@@ -37,7 +37,7 @@ namespace Redemption.Globals
                         active = true;
                 }
             }
-            if (!active || RedeGen.LabPoint.X == -1 || RedeGen.LabPoint.Y == -1)
+            if (!active || RedeGen.LabPoint.X == 0)
                 return;
 
             Vector2 ToasterPos = new(((RedeGen.LabPoint.X + 84) * 16) + 14, (RedeGen.LabPoint.Y + 42) * 16);

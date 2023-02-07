@@ -106,9 +106,9 @@ namespace Redemption.Globals.Player
         {
             if (SubworldSystem.Current != null)
                 return;
-            if (RedeGen.GoldenGatewayPoint.X == -1 || RedeGen.BastionPoint.X == -1 || RedeGen.gathicPortalPoint.X == -1 || RedeGen.HallOfHeroesPoint.X == -1 || RedeGen.slayerShipPoint.X == -1)
+            if (RedeGen.GoldenGatewayPoint.X == 0 || RedeGen.BastionPoint.X == 0 || RedeGen.gathicPortalPoint.X == 0 || RedeGen.HallOfHeroesPoint.X == 0 || RedeGen.slayerShipPoint.X == 0)
                 Main.NewText("WARNING: Unable to locate a certain structure, new world is recommended!", Colors.RarityRed);
-            if (RedeGen.LabPoint.X == -1 || RedeGen.newbCavePoint.X == -1)
+            if (RedeGen.LabPoint.X == 0 || RedeGen.newbCavePoint.X == 0)
                 Main.NewText("WARNING: Unable to locate important structure, new world is required!", Colors.RarityRed);
         }
         public override void PostUpdateMiscEffects()

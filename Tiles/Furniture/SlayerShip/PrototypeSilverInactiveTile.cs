@@ -55,7 +55,7 @@ namespace Redemption.Tiles.Furniture.SlayerShip
     }
     public class PrototypeSilverInactive : PlaceholderTile
     {
-        public override string Texture => "Redemption/Placeholder";
+        public override string Texture => Redemption.PLACEHOLDER_TEXTURE;
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Inactive Prototype Silver");

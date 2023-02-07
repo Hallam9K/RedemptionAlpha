@@ -217,7 +217,7 @@ namespace Redemption.Tiles.Natural
     }
     public class SkeletonRemains1 : PlaceholderTile
     {
-        public override string Texture => "Redemption/Placeholder";
+        public override string Texture => Redemption.PLACEHOLDER_TEXTURE;
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Skeletal Remains (Sword)");
@@ -231,7 +231,7 @@ namespace Redemption.Tiles.Natural
     }
     public class SkeletonRemains2 : PlaceholderTile
     {
-        public override string Texture => "Redemption/Placeholder";
+        public override string Texture => Redemption.PLACEHOLDER_TEXTURE;
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Skeletal Remains (Front-facing)");
@@ -245,7 +245,7 @@ namespace Redemption.Tiles.Natural
     }
     public class SkeletonRemains3 : PlaceholderTile
     {
-        public override string Texture => "Redemption/Placeholder";
+        public override string Texture => Redemption.PLACEHOLDER_TEXTURE;
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Skeletal Remains (Sitting)");
@@ -259,7 +259,7 @@ namespace Redemption.Tiles.Natural
     }
     public class SkeletonRemains4 : PlaceholderTile
     {
-        public override string Texture => "Redemption/Placeholder";
+        public override string Texture => Redemption.PLACEHOLDER_TEXTURE;
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Skeletal Remains (Bones)");
@@ -273,7 +273,7 @@ namespace Redemption.Tiles.Natural
     }
     public class SkeletonRemains5 : PlaceholderTile
     {
-        public override string Texture => "Redemption/Placeholder";
+        public override string Texture => Redemption.PLACEHOLDER_TEXTURE;
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Skeletal Remains (Wall Sitting)");
@@ -287,7 +287,7 @@ namespace Redemption.Tiles.Natural
     }
     public class SkeletonRemains6 : PlaceholderTile
     {
-        public override string Texture => "Redemption/Placeholder";
+        public override string Texture => Redemption.PLACEHOLDER_TEXTURE;
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Skeletal Remains (Family Guy Death Pose)");
@@ -301,7 +301,7 @@ namespace Redemption.Tiles.Natural
     }
     public class SkeletonRemains7 : PlaceholderTile
     {
-        public override string Texture => "Redemption/Placeholder";
+        public override string Texture => Redemption.PLACEHOLDER_TEXTURE;
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Skeletal Remains (Headless)");

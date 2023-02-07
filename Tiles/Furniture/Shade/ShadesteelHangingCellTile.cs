@@ -113,7 +113,7 @@ namespace Redemption.Tiles.Furniture.Shade
     }
     public class ShadesteelHangingCell2 : PlaceholderTile
     {
-        public override string Texture => "Redemption/Placeholder";
+        public override string Texture => Redemption.PLACEHOLDER_TEXTURE;
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Hanging Shadesteel Cell (With Echo)");

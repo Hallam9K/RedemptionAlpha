@@ -12,7 +12,7 @@ namespace Redemption.Globals
     {
         public override void Draw(ref MapOverlayDrawContext context, ref string text)
         {
-            if (RedeQuest.wayfarerVars[0] == 1 && RedeGen.newbCavePoint.X != -1 && RedeGen.newbCavePoint.Y != -1)
+            if (RedeQuest.wayfarerVars[0] == 1 && RedeGen.newbCavePoint.X != 0)
             {
                 const float scaleIfNotSelected = 1f;
                 const float scaleIfSelected = scaleIfNotSelected * 1.2f;

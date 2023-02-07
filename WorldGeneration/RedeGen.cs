@@ -51,16 +51,18 @@ namespace Redemption.WorldGeneration
     {
         public static bool dragonLeadSpawn;
         public static bool corpseCheck;
-        public static Point16 newbCavePoint = new(-1, -1);
-        public static Point16 gathicPortalPoint = new(-1, -1);
-        public static Point16 slayerShipPoint = new(-1, -1);
-        public static Point16 HallOfHeroesPoint = new(-1, -1);
-        public static Point16 LabPoint = new(-1, -1);
-        public static Point16 BastionPoint = new(-1, -1);
-        public static Point16 GoldenGatewayPoint = new(-1, -1);
-        public static Point16 SpiritAssassinPoint = new(-1, -1);
-        public static Point16 SpiritCommonGuardPoint = new(-1, -1);
-        public static Point16 SpiritOldManPoint = new(-1, -1);
+        public static Point16 newbCavePoint;
+        public static Point16 gathicPortalPoint;
+        public static Point16 slayerShipPoint;
+        public static Point16 HallOfHeroesPoint;
+        public static Point16 LabPoint;
+        public static Point16 BastionPoint;
+        public static Point16 GoldenGatewayPoint;
+        public static Point16 SpiritAssassinPoint;
+        public static Point16 SpiritCommonGuardPoint;
+        public static Point16 SpiritOldManPoint;
+        public static Point16 HangingTiedPoint;
+        public static Point16 SpiritOldLadyPoint;
 
         public override void OnWorldLoad()
         {
@@ -69,31 +71,35 @@ namespace Redemption.WorldGeneration
             else
                 dragonLeadSpawn = false;
 
-            newbCavePoint = new Point16(-1, -1);
-            gathicPortalPoint = new Point16(-1, -1);
-            slayerShipPoint = new Point16(-1, -1);
-            HallOfHeroesPoint = new Point16(-1, -1);
-            LabPoint = new Point16(-1, -1);
-            BastionPoint = new Point16(-1, -1);
-            GoldenGatewayPoint = new Point16(-1, -1);
-            SpiritAssassinPoint = new Point16(-1, -1);
-            SpiritCommonGuardPoint = new Point16(-1, -1);
-            SpiritOldManPoint = new Point16(-1, -1);
+            newbCavePoint = Point16.Zero;
+            gathicPortalPoint = Point16.Zero;
+            slayerShipPoint = Point16.Zero;
+            HallOfHeroesPoint = Point16.Zero;
+            LabPoint = Point16.Zero;
+            BastionPoint = Point16.Zero;
+            GoldenGatewayPoint = Point16.Zero;
+            SpiritAssassinPoint = Point16.Zero;
+            SpiritCommonGuardPoint = Point16.Zero;
+            SpiritOldManPoint = Point16.Zero;
+            HangingTiedPoint = Point16.Zero;
+            SpiritOldLadyPoint = Point16.Zero;
             corpseCheck = false;
         }
         public override void OnWorldUnload()
         {
             dragonLeadSpawn = false;
-            newbCavePoint = new Point16(-1, -1);
-            gathicPortalPoint = new Point16(-1, -1);
-            slayerShipPoint = new Point16(-1, -1);
-            HallOfHeroesPoint = new Point16(-1, -1);
-            LabPoint = new Point16(-1, -1);
-            BastionPoint = new Point16(-1, -1);
-            GoldenGatewayPoint = new Point16(-1, -1);
-            SpiritAssassinPoint = new Point16(-1, -1);
-            SpiritCommonGuardPoint = new Point16(-1, -1);
-            SpiritOldManPoint = new Point16(-1, -1);
+            newbCavePoint = Point16.Zero;
+            gathicPortalPoint = Point16.Zero;
+            slayerShipPoint = Point16.Zero;
+            HallOfHeroesPoint = Point16.Zero;
+            LabPoint = Point16.Zero;
+            BastionPoint = Point16.Zero;
+            GoldenGatewayPoint = Point16.Zero;
+            SpiritAssassinPoint = Point16.Zero;
+            SpiritCommonGuardPoint = Point16.Zero;
+            SpiritOldManPoint = Point16.Zero;
+            HangingTiedPoint = Point16.Zero;
+            SpiritOldLadyPoint = Point16.Zero;
             corpseCheck = false;
         }
         /*public override void PostWorldGen()
@@ -503,7 +509,7 @@ namespace Redemption.WorldGeneration
                         while (!placed && attempts++ < 10000)
                         {
                             int tilesX = WorldGen.genRand.Next(60, Main.maxTilesX - 250);
-                            int tilesY = WorldGen.genRand.Next((int)(Main.maxTilesY * .3f), (int)(Main.maxTilesY * .8));
+                            int tilesY = WorldGen.genRand.Next((int)(Main.maxTilesY * .3f), (int)(Main.maxTilesY * .8f));
                             if (!WorldGen.InWorld(tilesX, tilesY))
                                 continue;
 
@@ -824,6 +830,136 @@ namespace Redemption.WorldGeneration
                             }
                         }
                         placed3 = true;
+                    }
+                    bool placed4 = false;
+                    int attempts4 = 0;
+                    while (!placed4 && attempts4++ < 10000)
+                    {
+                        int tilesX = WorldGen.genRand.Next(60, Main.maxTilesX - 250);
+                        int tilesY = WorldGen.genRand.Next((int)(Main.maxTilesY * .3f), (int)(Main.maxTilesY * .8f));
+                        if (!WorldGen.InWorld(tilesX, tilesY))
+                            continue;
+
+                        int roomNum = Main.rand.Next(2, 4);
+                        int bigRoom = roomNum / 2;
+                        bool blacklist = false;
+                        int stoneScore = 0;
+                        int emptyScore = 0;
+                        for (int x = 0; x < 30 + (30 * roomNum); x++)
+                        {
+                            for (int y = 0; y < 50; y++)
+                            {
+                                int type = Framing.GetTileSafely(tilesX + x, tilesY + y).TileType;
+                                if (!WorldGen.InWorld(tilesX + x, tilesY + y) || TileLists.BlacklistTiles.Contains(type) || !WorldGen.structures.CanPlace(new Rectangle(tilesX, tilesY, x, y)))
+                                {
+                                    blacklist = true;
+                                    break;
+                                }
+                                if (type == TileID.IceBlock || type == TileID.SnowBlock)
+                                    stoneScore++;
+                                else
+                                    emptyScore++;
+                            }
+                        }
+                        if (blacklist)
+                            continue;
+                        if (stoneScore < (emptyScore * 1.5f))
+                            continue;
+
+                        Vector2 origin = new(tilesX, tilesY);
+                        StructureHelper.Generator.GenerateStructure("WorldGeneration/IceDecalR", origin.ToPoint16(), Mod);
+                        for (int i = 0; i < roomNum; i++)
+                        {
+                            origin.X += 30;
+                            if (i == bigRoom)
+                            {
+                                origin.Y -= 6;
+                                StructureHelper.Generator.GenerateStructure("WorldGeneration/IceDecalMSpecial1", origin.ToPoint16(), Mod);
+                                origin.X += 30;
+                                origin.Y += 6;
+                            }
+                            else
+                                StructureHelper.Generator.GenerateMultistructureRandom("WorldGeneration/IceDecalM", origin.ToPoint16(), Mod);
+                        }
+                        origin.X += 30;
+                        StructureHelper.Generator.GenerateStructure("WorldGeneration/IceDecalL", origin.ToPoint16(), Mod);
+
+                        for (int x = 0; x < 30 + (30 * roomNum); x++)
+                        {
+                            for (int y = 0; y < 50; y++)
+                            {
+                                if (WorldGen.InWorld(tilesX + x, tilesY + y))
+                                {
+                                    List<int> GathicTileArray = new() { ModContent.TileType<GathicStoneTile>(), ModContent.TileType<GathicStoneBrickTile>() };
+                                    for (int n = 1; n < 3; n++)
+                                    {
+                                        bool gathic = false;
+                                        bool tileUp = GathicTileArray.Contains(Framing.GetTileSafely(tilesX + x, tilesY + y - n).TileType);
+                                        bool tileDown = GathicTileArray.Contains(Framing.GetTileSafely(tilesX + x, tilesY + y + n).TileType);
+                                        bool tileLeft = GathicTileArray.Contains(Framing.GetTileSafely(tilesX + x - n, tilesY + y).TileType);
+                                        bool tileRight = GathicTileArray.Contains(Framing.GetTileSafely(tilesX + x + n, tilesY + y).TileType);
+                                        if (tileUp)
+                                            gathic = true;
+                                        else if (tileDown)
+                                            gathic = true;
+                                        else if (tileLeft)
+                                            gathic = true;
+                                        else if (tileRight)
+                                            gathic = true;
+
+                                        if (gathic && Main.rand.NextBool(n))
+                                        {
+                                            if (Framing.GetTileSafely(tilesX + x, tilesY + y).TileType == ModContent.TileType<GathicFroststoneTile>())
+                                                Framing.GetTileSafely(tilesX + x, tilesY + y).TileType = (ushort)ModContent.TileType<GathicColdstoneTile>();
+                                            if (Framing.GetTileSafely(tilesX + x, tilesY + y).TileType == ModContent.TileType<GathicFroststoneBrickTile>())
+                                                Framing.GetTileSafely(tilesX + x, tilesY + y).TileType = (ushort)ModContent.TileType<GathicColdstoneBrickTile>();
+                                        }
+                                    }
+                                    if (WorldGen.genRand.NextBool(3))
+                                    {
+                                        if (Framing.GetTileSafely(tilesX + x, tilesY + y).TileType == ModContent.TileType<GathicFroststoneTile>())
+                                            Framing.GetTileSafely(tilesX + x, tilesY + y).TileType = TileID.IceBlock;
+                                        if (Framing.GetTileSafely(tilesX + x, tilesY + y).TileType == ModContent.TileType<GathicFroststoneBrickTile>())
+                                            Framing.GetTileSafely(tilesX + x, tilesY + y).TileType = TileID.IceBrick;
+                                        if (Framing.GetTileSafely(tilesX + x, tilesY + y).WallType == ModContent.WallType<GathicFroststoneWallTile>())
+                                            Framing.GetTileSafely(tilesX + x, tilesY + y).WallType = WallID.IceUnsafe;
+                                        if (Framing.GetTileSafely(tilesX + x, tilesY + y).WallType == ModContent.WallType<GathicFroststoneBrickWallTile>())
+                                            Framing.GetTileSafely(tilesX + x, tilesY + y).WallType = WallID.IceBrick;
+                                    }
+                                    if (!Framing.GetTileSafely(tilesX + x, tilesY + y - 1).HasTile && Framing.GetTileSafely(tilesX + x, tilesY + y).HasTile)
+                                    {
+                                        if (WorldGen.genRand.NextBool(8))
+                                        {
+                                            switch (WorldGen.genRand.Next(7))
+                                            {
+                                                default:
+                                                    GenUtils.ObjectPlace(tilesX + x, tilesY + y - 1, ModContent.TileType<SkeletonRemainsTile1>(), 0, WorldGen.genRand.NextBool() ? -1 : 1);
+                                                    break;
+                                                case 1:
+                                                    GenUtils.ObjectPlace(tilesX + x, tilesY + y - 1, ModContent.TileType<SkeletonRemainsTile2>(), 0, WorldGen.genRand.NextBool() ? -1 : 1);
+                                                    break;
+                                                case 2:
+                                                    GenUtils.ObjectPlace(tilesX + x, tilesY + y - 1, ModContent.TileType<SkeletonRemainsTile3>(), 0, WorldGen.genRand.NextBool() ? -1 : 1);
+                                                    break;
+                                                case 3:
+                                                    GenUtils.ObjectPlace(tilesX + x, tilesY + y - 1, ModContent.TileType<SkeletonRemainsTile4>(), 0, WorldGen.genRand.NextBool() ? -1 : 1);
+                                                    break;
+                                                case 4:
+                                                    GenUtils.ObjectPlace(tilesX + x, tilesY + y - 1, ModContent.TileType<SkeletonRemainsTile5>(), 0, WorldGen.genRand.NextBool() ? -1 : 1);
+                                                    break;
+                                                case 5:
+                                                    GenUtils.ObjectPlace(tilesX + x, tilesY + y - 1, ModContent.TileType<SkeletonRemainsTile6>(), 0, WorldGen.genRand.NextBool() ? -1 : 1);
+                                                    break;
+                                                case 6:
+                                                    GenUtils.ObjectPlace(tilesX + x, tilesY + y - 1, ModContent.TileType<SkeletonRemainsTile7>(), 0, WorldGen.genRand.NextBool() ? -1 : 1);
+                                                    break;
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        placed4 = true;
                     }
                     bool placed2 = false;
                     int attempts2 = 0;
@@ -1536,9 +1672,9 @@ namespace Redemption.WorldGeneration
                 tasks.Insert(ShiniesIndex2 + 10, new PassLegacy("Slayer Ship", delegate (GenerationProgress progress, GameConfiguration configuration)
                 {
                     progress.Message = "Crashing Spaceships";
-                    Vector2 origin = new((int)(Main.maxTilesX * 0.65f), (int)Main.worldSurface - 180);
+                    Vector2 origin = new((int)(Main.maxTilesX * 0.65f), (int)Main.worldSurface - 170);
                     if (Main.dungeonX < Main.maxTilesX / 2)
-                        origin = new Vector2((int)(Main.maxTilesX * 0.35f), (int)Main.worldSurface - 180);
+                        origin = new Vector2((int)(Main.maxTilesX * 0.35f), (int)Main.worldSurface - 170);
 
                     origin.Y = GetTileFloorIgnoreTree((int)origin.X, (int)origin.Y, true);
                     origin.X -= 60;
@@ -1700,7 +1836,7 @@ namespace Redemption.WorldGeneration
                 Chest chest = Main.chest[PlacementSuccess];
 
                 if (ID == 1)
-                    chest.item[slot].SetDefaults(ModContent.ItemType<CantripStaff>());
+                    chest.item[slot].SetDefaults(ModContent.ItemType<BronzeWand>());
                 else if (ID == 2)
                     chest.item[slot].SetDefaults(ModContent.ItemType<DeadRinger>());
                 else
@@ -1759,17 +1895,17 @@ namespace Redemption.WorldGeneration
 
         public override void PreUpdateWorld()
         {
-            if (newbCavePoint.X != -1 && !NPC.AnyNPCs(ModContent.NPCType<AnglonPortal>()))
+            if (newbCavePoint.X != 0 && !NPC.AnyNPCs(ModContent.NPCType<AnglonPortal>()))
             {
                 Vector2 anglonPortalPos = new(((newbCavePoint.X + 35) * 16) - 8, ((newbCavePoint.Y + 12) * 16) - 4);
                 LabArea.SpawnNPCInWorld(anglonPortalPos, ModContent.NPCType<AnglonPortal>());
             }
-            if (gathicPortalPoint.X != -1 && !NPC.AnyNPCs(ModContent.NPCType<GathuramPortal>()))
+            if (gathicPortalPoint.X != 0 && !NPC.AnyNPCs(ModContent.NPCType<GathuramPortal>()))
             {
                 Vector2 gathicPortalPos = new(((gathicPortalPoint.X + 46) * 16) - 8, ((gathicPortalPoint.Y + 23) * 16) - 4);
                 LabArea.SpawnNPCInWorld(gathicPortalPos, ModContent.NPCType<GathuramPortal>());
             }
-            if (slayerShipPoint.X != -1 && RedeBossDowned.downedSlayer && !RedeBossDowned.downedOmega3 && !RedeBossDowned.downedNebuleus && !NPC.AnyNPCs(ModContent.NPCType<KS3Sitting>()) && !NPC.AnyNPCs(ModContent.NPCType<KS3>()))
+            if (slayerShipPoint.X != 0 && RedeBossDowned.downedSlayer && !RedeBossDowned.downedOmega3 && !RedeBossDowned.downedNebuleus && !NPC.AnyNPCs(ModContent.NPCType<KS3Sitting>()) && !NPC.AnyNPCs(ModContent.NPCType<KS3>()))
             {
                 Vector2 slayerSittingPos = new((slayerShipPoint.X + 92) * 16, (slayerShipPoint.Y + 28) * 16);
                 LabArea.SpawnNPCInWorld(slayerSittingPos, ModContent.NPCType<KS3Sitting>());
@@ -1779,10 +1915,11 @@ namespace Redemption.WorldGeneration
             SpawnSpiritAssassin();
             SpawnSpiritCommonGuard();
             SpawnSpiritOldMan();
+            SpawnSpiritOldLady();
         }
         public static void CorpseChecks()
         {
-            if (SpiritAssassinPoint.X == -1)
+            if (SpiritAssassinPoint.X == 0)
             {
                 for (int x = (int)(Main.maxTilesX * .3f); x < (int)(Main.maxTilesX * .8f); x++)
                 {
@@ -1797,7 +1934,7 @@ namespace Redemption.WorldGeneration
                     }
                 }
             }
-            if (SpiritOldManPoint.X == -1)
+            if (SpiritOldManPoint.X == 0)
             {
                 for (int x = (int)(Main.maxTilesX * .3f); x < (int)(Main.maxTilesX * .9f); x++)
                 {
@@ -1812,7 +1949,22 @@ namespace Redemption.WorldGeneration
                     }
                 }
             }
-            if (SpiritCommonGuardPoint.X == -1)
+            if (SpiritOldLadyPoint.X == 0)
+            {
+                for (int x = 250; x < Main.maxTilesX - 250; x++)
+                {
+                    for (int y = (int)(Main.maxTilesY * .3f); y < (int)(Main.maxTilesY * .9f); y++)
+                    {
+                        Tile tile = Framing.GetTileSafely(x, y);
+                        if (!tile.HasTile || tile.TileType != ModContent.TileType<NiricAutomatonRemainsTile>())
+                            continue;
+
+                        SpiritOldLadyPoint = new Point16(x, y - 18);
+                        break;
+                    }
+                }
+            }
+            if (SpiritCommonGuardPoint.X == 0)
             {
                 for (int x = (int)(Main.maxTilesX * .1f); x < Main.maxTilesX; x++)
                 {
@@ -1827,11 +1979,26 @@ namespace Redemption.WorldGeneration
                     }
                 }
             }
+            if (HangingTiedPoint.X == 0)
+            {
+                for (int x = 50; x < Main.maxTilesX - 50; x++)
+                {
+                    for (int y = (int)(Main.maxTilesY * .5f); y < (int)(Main.maxTilesY * .7f); y++)
+                    {
+                        Tile tile = Framing.GetTileSafely(x, y);
+                        if (!tile.HasTile || tile.TileType != ModContent.TileType<HangingTiedTile>())
+                            continue;
+
+                        HangingTiedPoint = new Point16(x, y);
+                        break;
+                    }
+                }
+            }
             corpseCheck = true;
         }
         public static void SpawnSpiritAssassin()
         {
-            if (RedeWorld.spawnCleared[0] || SpiritAssassinPoint.X == -1 || !Main.LocalPlayer.ZoneRockLayerHeight || Main.LocalPlayer.DistanceSQ(SpiritAssassinPoint.ToVector2() * 16) >= 600 * 600 || NPC.AnyNPCs(ModContent.NPCType<GathicTomb_Spawner>()))
+            if (RedeWorld.spawnCleared[0] || SpiritAssassinPoint.X == 0 || !Main.LocalPlayer.ZoneRockLayerHeight || Main.LocalPlayer.DistanceSQ(SpiritAssassinPoint.ToVector2() * 16) >= 600 * 600 || NPC.AnyNPCs(ModContent.NPCType<GathicTomb_Spawner>()))
                 return;
 
             Vector2 pos = new((SpiritAssassinPoint.X + 14) * 16, SpiritAssassinPoint.Y * 16);
@@ -1839,15 +2006,23 @@ namespace Redemption.WorldGeneration
         }
         public static void SpawnSpiritOldMan()
         {
-            if (RedeWorld.spawnCleared[2] || SpiritOldManPoint.X == -1 || !Main.LocalPlayer.ZoneRockLayerHeight || Main.LocalPlayer.DistanceSQ(SpiritOldManPoint.ToVector2() * 16) >= 600 * 600 || NPC.AnyNPCs(ModContent.NPCType<GathicTomb_Spawner>()))
+            if (RedeWorld.spawnCleared[2] || SpiritOldManPoint.X == 0 || !Main.LocalPlayer.ZoneRockLayerHeight || Main.LocalPlayer.DistanceSQ(SpiritOldManPoint.ToVector2() * 16) >= 600 * 600 || NPC.AnyNPCs(ModContent.NPCType<GathicTomb_Spawner>()))
                 return;
 
             Vector2 pos = new((SpiritOldManPoint.X + 1) * 16, (SpiritOldManPoint.Y + 10) * 16);
             LabArea.SpawnNPCInWorld(pos, ModContent.NPCType<GathicTomb_Spawner>(), 2);
         }
+        public static void SpawnSpiritOldLady()
+        {
+            if (RedeWorld.spawnCleared[3] || SpiritOldLadyPoint.X == 0 || Main.LocalPlayer.DistanceSQ(SpiritOldLadyPoint.ToVector2() * 16) >= 600 * 600 || NPC.AnyNPCs(ModContent.NPCType<GathicTomb_Spawner>()))
+                return;
+
+            Vector2 pos = new(SpiritOldLadyPoint.X * 16, SpiritOldLadyPoint.Y * 16);
+            LabArea.SpawnNPCInWorld(pos, ModContent.NPCType<GathicTomb_Spawner>(), 3);
+        }
         public static void SpawnSpiritCommonGuard()
         {
-            if (RedeWorld.spawnCleared[1] || SpiritCommonGuardPoint.X == -1 || Main.LocalPlayer.DistanceSQ(SpiritCommonGuardPoint.ToVector2() * 16) >= 600 * 600 || NPC.AnyNPCs(ModContent.NPCType<GathicTomb_Spawner>()))
+            if (RedeWorld.spawnCleared[1] || SpiritCommonGuardPoint.X == 0 || Main.LocalPlayer.DistanceSQ(SpiritCommonGuardPoint.ToVector2() * 16) >= 600 * 600 || NPC.AnyNPCs(ModContent.NPCType<GathicTomb_Spawner>()))
                 return;
 
             Vector2 pos = new(SpiritCommonGuardPoint.X * 16, SpiritCommonGuardPoint.Y * 16);
