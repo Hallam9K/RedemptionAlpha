@@ -12,6 +12,7 @@ namespace Redemption.Tiles.Tiles
 		{
 			Main.tileSolid[Type] = true;
 			Main.tileMergeDirt[Type] = true;
+            Main.tileBrick[Type] = true;
             Main.tileMerge[Type][TileID.Mud] = true;
             Main.tileMerge[TileID.Mud][Type] = true;
             Main.tileMerge[Type][TileID.Grass] = true;

@@ -15,6 +15,7 @@ namespace Redemption.Tiles.Tiles
 		public override void SetStaticDefaults()
 		{
 			Main.tileSolid[Type] = true;
+            Main.tileBrick[Type] = true;
             Main.tileMerge[Type][ModContent.TileType<IrradiatedGrassTile>()] = true;
             Main.tileMerge[ModContent.TileType<IrradiatedGrassTile>()][Type] = true;
             Main.tileMerge[Type][ModContent.TileType<IrradiatedCorruptGrassTile>()] = true;

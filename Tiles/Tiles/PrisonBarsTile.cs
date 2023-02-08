@@ -14,6 +14,7 @@ namespace Redemption.Tiles.Tiles
             Main.tileSolid[Type] = true;
             Main.tileMergeDirt[Type] = false;
             Main.tileBlockLight[Type] = true;
+            Main.tileBrick[Type] = true;
             Main.tileMerge[Type][ModContent.TileType<ShadestoneTile>()] = true;
             Main.tileMerge[Type][ModContent.TileType<ShadestoneBrickTile>()] = true;
             Main.tileMerge[Type][ModContent.TileType<ShadestoneMossyTile>()] = true;

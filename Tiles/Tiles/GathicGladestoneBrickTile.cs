@@ -17,6 +17,7 @@ namespace Redemption.Tiles.Tiles
             Main.tileMergeDirt[Type] = true;
             Main.tileBlockLight[Type] = true;
             Main.tileBlendAll[Type] = true;
+            Main.tileBrick[Type] = true;
             Main.tileMerge[Type][ModContent.TileType<GathicGladestoneTile>()] = true;
             Main.tileMerge[Type][ModContent.TileType<AncientHallBrickTile>()] = true;
             Main.tileMerge[Type][ModContent.TileType<AncientDirtTile>()] = true;
