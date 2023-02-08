@@ -1,3 +1,4 @@
+using Terraria.ID;
 using Microsoft.Xna.Framework;
 using Redemption.Dusts.Tiles;
 using Redemption.Items.Placeable.Tiles;
@@ -21,6 +22,10 @@ namespace Redemption.Tiles.Tiles
             Main.tileMerge[Type][ModContent.TileType<AncientDirtTile>()] = true;
             Main.tileMerge[Type][ModContent.TileType<GathicStoneBrickTile>()] = true;
             Main.tileMerge[Type][ModContent.TileType<GathicStoneTile>()] = true;
+            Main.tileMerge[Type][TileID.Mud] = true;
+            Main.tileMerge[TileID.Mud][Type] = true;
+            Main.tileMerge[Type][TileID.Mudstone] = true;
+            Main.tileMerge[TileID.Mudstone][Type] = true;
             ItemDrop = ModContent.ItemType<GathicGladestoneBrick>();
             DustType = ModContent.DustType<SlateDust>();
             MinPick = 0;

@@ -42,7 +42,6 @@ namespace Redemption.Items.Weapons.PreHM.Summon
             Item.noMelee = true;
             Item.useStyle = ItemUseStyleID.HoldUp;
             Item.UseSound = SoundID.NPCDeath6;
-            Item.buffType = ModContent.BuffType<CruxCardBuff>();
         }
         public override bool AltFunctionUse(Player player) => true;
         public override bool CanUseItem(Player player)
@@ -96,7 +95,7 @@ namespace Redemption.Items.Weapons.PreHM.Summon
         {
             if (player.whoAmI == Main.myPlayer)
             {
-                player.AddBuff(Item.buffType, 2);
+                player.AddBuff(ModContent.BuffType<CruxCardBuff>(), 2);
                 if (player.altFunctionUse == 2)
                 {
                     for (int n = 0; n < Main.maxNPCs; n++)
