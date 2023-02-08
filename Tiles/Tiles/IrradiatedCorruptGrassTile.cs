@@ -12,39 +12,20 @@ namespace Redemption.Tiles.Tiles
 	{
 		public override void SetStaticDefaults()
 		{
-			Main.tileSolid[Type] = true;
-            Main.tileMerge[Type][ModContent.TileType<IrradiatedDirtTile>()] = true;
-            Main.tileMerge[ModContent.TileType<IrradiatedDirtTile>()][Type] = true;
-            Main.tileMerge[Type][ModContent.TileType<IrradiatedGrassTile>()] = true;
-            Main.tileMerge[ModContent.TileType<IrradiatedGrassTile>()][Type] = true;
-            Main.tileMerge[Type][ModContent.TileType<IrradiatedCrimsonGrassTile>()] = true;
-            Main.tileMerge[ModContent.TileType<IrradiatedCrimsonGrassTile>()][Type] = true;
-            Main.tileMerge[Type][TileID.Dirt] = true;
-            Main.tileMerge[TileID.Dirt][Type] = true;
-            Main.tileMerge[Type][TileID.Grass] = true;
-            Main.tileMerge[TileID.Grass][Type] = true;
-            Main.tileMerge[Type][TileID.CorruptGrass] = true;
-            Main.tileMerge[TileID.CorruptGrass][Type] = true;
-            Main.tileMerge[Type][TileID.CrimsonGrass] = true;
-            Main.tileMerge[TileID.CrimsonGrass][Type] = true;
-            Main.tileMerge[Type][TileID.HallowedGrass] = true;
-            Main.tileMerge[TileID.HallowedGrass][Type] = true;
-            TileID.Sets.Conversion.Grass[Type] = true;
-            TileID.Sets.Conversion.MergesWithDirtInASpecialWay[Type] = true;
+            Main.tileBlockLight[Type] = true;
+            Main.tileBrick[Type] = true;
+            Main.tileLighted[Type] = true;
+            Main.tileSolid[Type] = true;
+
+            TileID.Sets.CanBeDugByShovel[Type] = true;
             TileID.Sets.Grass[Type] = true;
-            TileID.Sets.Corrupt[Type] = true;
             TileID.Sets.ChecksForMerge[Type] = true;
             TileID.Sets.NeedsGrassFraming[Type] = true;
-            TileID.Sets.NeedsGrassFramingDirt[Type] = ModContent.TileType<IrradiatedDirtTile>();
-            TileID.Sets.CanBeDugByShovel[Type] = true;
-            TileID.Sets.ResetsHalfBrickPlacementAttempt[Type] = true;
+            TileID.Sets.NeedsGrassFramingDirt[Type] = ModContent.TileType<AncientDirtTile>();
+            TileID.Sets.ForcedDirtMerging[Type] = true;
+            TileID.Sets.Conversion.MergesWithDirtInASpecialWay[Type] = true;
+            TileID.Sets.ResetsHalfBrickPlacementAttempt[Type] = false;
             TileID.Sets.DoesntPlaceWithTileReplacement[Type] = true;
-            TileID.Sets.SpreadOverground[Type] = true;
-            TileID.Sets.SpreadUnderground[Type] = true;
-            TileID.Sets.CanBeClearedDuringOreRunner[Type] = true;
-            Main.tileMergeDirt[Type] = false;
-			Main.tileBlockLight[Type] = true;
-            Main.tileLighted[Type] = true;
             AddMapEntry(new Color(127, 93, 95));
             MinPick = 10;
             MineResist = 0.1f;
