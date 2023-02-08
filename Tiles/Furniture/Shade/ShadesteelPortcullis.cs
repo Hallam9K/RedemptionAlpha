@@ -8,6 +8,7 @@ using Terraria.Enums;
 using Redemption.Dusts.Tiles;
 using Terraria.Audio;
 using Terraria.GameContent.ObjectInteractions;
+using Redemption.Items.Usable;
 
 namespace Redemption.Tiles.Furniture.Shade
 {

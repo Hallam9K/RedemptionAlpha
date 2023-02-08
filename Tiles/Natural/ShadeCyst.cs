@@ -1,4 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
+using Redemption.Globals;
+using Redemption.Projectiles.Misc;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.Enums;
