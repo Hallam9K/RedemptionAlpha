@@ -46,48 +46,6 @@ namespace Redemption.Items.Usable.Summons
             if (!Main.dedServ)
                 Item.RedemptionGlow().glowTexture = ModContent.Request<Texture2D>(Item.ModItem.Texture + "_Glow").Value;
         }
-        public override bool CanRightClick() => true;
-        public override void RightClick(Player player)
-        {
-            SoundEngine.PlaySound(CustomSounds.ShootChange, player.position);
-            int limit = -1;
-            if (NPC.downedPlantBoss)
-                limit = 0;
-            if (NPC.downedGolemBoss)
-                limit = 1;
-            if (NPC.downedMoonlord)
-                limit = 2;
-            if (RedeBossDowned.downedNebuleus)
-                limit = 3;
-
-            if (player.altFunctionUse == 2)
-            {
-                Choice++;
-                if (Choice >= limit + 1)
-                    Choice = 0;
-
-                switch (Choice)
-                {
-                    case 0:
-                        if (limit == -1)
-                            CombatText.NewText(player.getRect(), Color.Red, "Nothing happens...", true, false);
-                        else if (limit == 0)
-                            CombatText.NewText(player.getRect(), Color.Red, "No other Prototypes available...", true, false);
-                        else
-                            CombatText.NewText(player.getRect(), Color.Red, "1st Omega Prototype", true, false);
-                        break;
-                    case 1:
-                        CombatText.NewText(player.getRect(), Color.Red, "2nd Omega Prototype", true, false);
-                        break;
-                    case 2:
-                        CombatText.NewText(player.getRect(), Color.Red, "3rd Omega Prototype", true, false);
-                        break;
-                    case 3:
-                        CombatText.NewText(player.getRect(), Color.Red, "4th Omega Prototype", true, false);
-                        break;
-                }
-            }
-        }
         public override bool AltFunctionUse(Player player) => true;
         public override bool CanUseItem(Player player)
         {
