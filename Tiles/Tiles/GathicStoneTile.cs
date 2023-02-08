@@ -22,8 +22,9 @@ namespace Redemption.Tiles.Tiles
             Main.tileMerge[Type][ModContent.TileType<GathicStoneBrickTile>()] = true;
             Main.tileMerge[Type][ModContent.TileType<GathicGladestoneTile>()] = true;
             Main.tileMerge[Type][TileID.Mud] = true;
+            Main.tileMerge[TileID.Mud][Type] = true;
             Main.tileMerge[Type][TileID.Mudstone] = true;
-            Main.tileMerge[Type][TileID.JungleGrass] = true;
+            Main.tileMerge[TileID.Mudstone][Type] = true;
             ItemDrop = ModContent.ItemType<GathicStone>();
             DustType = ModContent.DustType<SlateDust>();
             MinPick = 0;

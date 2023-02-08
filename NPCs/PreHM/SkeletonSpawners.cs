@@ -392,8 +392,8 @@ namespace Redemption.NPCs.PreHM
             NPC.noGravity = true;
             NPC.dontTakeDamage = true;
             NPC.chaseable = false;
+            NPC.npcSlots = 0;
         }
-        public override bool CheckActive() => false;
         public ref float TypeNPC => ref NPC.ai[1];
         private Vector2 Pos;
         public override void SendExtraAI(BinaryWriter writer)
@@ -429,7 +429,7 @@ namespace Redemption.NPCs.PreHM
                     clearNum = 3;
                     break;
             }
-            if (player.dead || player.DistanceSQ(NPC.Center) > 1000 * 1000)
+            if (player.dead)
             {
                 spawned = false;
                 return false;

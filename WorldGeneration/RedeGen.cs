@@ -1994,7 +1994,7 @@ namespace Redemption.WorldGeneration
         }
         public static void SpawnSpiritAssassin()
         {
-            if (RedeWorld.spawnCleared[0] || SpiritAssassinPoint.X == 0 || !Main.LocalPlayer.ZoneRockLayerHeight || Main.LocalPlayer.DistanceSQ(SpiritAssassinPoint.ToVector2() * 16) >= 600 * 600 || NPC.AnyNPCs(ModContent.NPCType<GathicTomb_Spawner>()))
+            if (RedeWorld.spawnCleared[0] || SpiritAssassinPoint.X == 0 || !Main.LocalPlayer.ZoneRockLayerHeight || Main.LocalPlayer.DistanceSQ(SpiritAssassinPoint.ToVector2() * 16) >= 500 * 500 || NPC.AnyNPCs(ModContent.NPCType<GathicTomb_Spawner>()))
                 return;
 
             Vector2 pos = new((SpiritAssassinPoint.X + 14) * 16, SpiritAssassinPoint.Y * 16);
@@ -2002,7 +2002,7 @@ namespace Redemption.WorldGeneration
         }
         public static void SpawnSpiritOldMan()
         {
-            if (RedeWorld.spawnCleared[2] || SpiritOldManPoint.X == 0 || !Main.LocalPlayer.ZoneRockLayerHeight || Main.LocalPlayer.DistanceSQ(SpiritOldManPoint.ToVector2() * 16) >= 600 * 600 || NPC.AnyNPCs(ModContent.NPCType<GathicTomb_Spawner>()))
+            if (RedeWorld.spawnCleared[2] || SpiritOldManPoint.X == 0 || !Main.LocalPlayer.ZoneRockLayerHeight || Main.LocalPlayer.DistanceSQ(SpiritOldManPoint.ToVector2() * 16) >= 500 * 500 || NPC.AnyNPCs(ModContent.NPCType<GathicTomb_Spawner>()))
                 return;
 
             Vector2 pos = new((SpiritOldManPoint.X + 1) * 16, (SpiritOldManPoint.Y + 10) * 16);
@@ -2010,7 +2010,7 @@ namespace Redemption.WorldGeneration
         }
         public static void SpawnSpiritOldLady()
         {
-            if (RedeWorld.spawnCleared[3] || SpiritOldLadyPoint.X == 0 || Main.LocalPlayer.DistanceSQ(SpiritOldLadyPoint.ToVector2() * 16) >= 600 * 600 || NPC.AnyNPCs(ModContent.NPCType<GathicTomb_Spawner>()))
+            if (RedeWorld.spawnCleared[3] || SpiritOldLadyPoint.X == 0 || Main.LocalPlayer.DistanceSQ(SpiritOldLadyPoint.ToVector2() * 16) >= 500 * 500 || NPC.AnyNPCs(ModContent.NPCType<GathicTomb_Spawner>()))
                 return;
 
             Vector2 pos = new(SpiritOldLadyPoint.X * 16, SpiritOldLadyPoint.Y * 16);
@@ -2018,7 +2018,7 @@ namespace Redemption.WorldGeneration
         }
         public static void SpawnSpiritCommonGuard()
         {
-            if (RedeWorld.spawnCleared[1] || SpiritCommonGuardPoint.X == 0 || Main.LocalPlayer.DistanceSQ(SpiritCommonGuardPoint.ToVector2() * 16) >= 600 * 600 || NPC.AnyNPCs(ModContent.NPCType<GathicTomb_Spawner>()))
+            if (RedeWorld.spawnCleared[1] || SpiritCommonGuardPoint.X == 0 || Main.LocalPlayer.DistanceSQ(SpiritCommonGuardPoint.ToVector2() * 16) >= 500 * 500 || NPC.AnyNPCs(ModContent.NPCType<GathicTomb_Spawner>()))
                 return;
 
             Vector2 pos = new(SpiritCommonGuardPoint.X * 16, SpiritCommonGuardPoint.Y * 16);
