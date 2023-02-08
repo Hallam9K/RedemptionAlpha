@@ -3,6 +3,7 @@ using Redemption.Dusts.Tiles;
 using Redemption.Items.Placeable.Tiles;
 using Redemption.Tiles.Plants;
 using Terraria;
+using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Redemption.Tiles.Tiles
@@ -21,6 +22,9 @@ namespace Redemption.Tiles.Tiles
             Main.tileMerge[Type][ModContent.TileType<AncientDirtTile>()] = true;
             Main.tileMerge[Type][ModContent.TileType<GathicStoneBrickTile>()] = true;
             Main.tileMerge[Type][ModContent.TileType<GathicStoneTile>()] = true;
+            Main.tileMerge[Type][TileID.Mud] = true;
+            Main.tileMerge[Type][TileID.Mudstone] = true;
+            Main.tileMerge[Type][TileID.JungleGrass] = true;
             ItemDrop = ModContent.ItemType<GathicGladestone>();
             DustType = ModContent.DustType<SlateDust>();
             MinPick = 0;

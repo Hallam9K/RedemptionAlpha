@@ -21,6 +21,9 @@ namespace Redemption.Tiles.Tiles
             Main.tileMerge[Type][ModContent.TileType<AncientDirtTile>()] = true;
             Main.tileMerge[Type][ModContent.TileType<GathicStoneTile>()] = true;
             Main.tileMerge[Type][ModContent.TileType<GathicStoneBrickTile>()] = true;
+            Main.tileMerge[Type][TileID.Mud] = true;
+            Main.tileMerge[Type][TileID.Mudstone] = true;
+            Main.tileMerge[Type][TileID.JungleGrass] = true;
             DustType = ModContent.DustType<SlateDust>();
             MinPick = 500;
             MineResist = 10f;
