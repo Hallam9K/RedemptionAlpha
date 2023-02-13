@@ -27,7 +27,7 @@ namespace Redemption.Items.Placeable.Furniture.Lab
             CreateRecipe()
                 .AddIngredient(ModContent.ItemType<LabPlating>(), 6)
                 .AddIngredient(ModContent.ItemType<CarbonMyofibre>(), 6)
-                .AddIngredient(ModContent.ItemType<Capacitator>(), 1)
+                .AddIngredient(ModContent.ItemType<Capacitor>(), 1)
                 .AddTile(TileID.WorkBenches)
                 .Register();
         }

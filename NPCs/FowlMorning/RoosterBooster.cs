@@ -71,7 +71,7 @@ namespace Redemption.NPCs.FowlMorning
                         if (!target.active || target.whoAmI == NPC.whoAmI)
                             continue;
 
-                        if (target.type != ModContent.NPCType<ChickenScratcher>() && target.type != ModContent.NPCType<ChickenBomber>() && target.type != ModContent.NPCType<Haymaker>() && target.type != ModContent.NPCType<Cockatrice>())
+                        if (target.type != ModContent.NPCType<ChickenScratcher>() && target.type != ModContent.NPCType<ChickenBomber>() && target.type != ModContent.NPCType<Haymaker>() && target.type != ModContent.NPCType<Cockatrice>() && target.type != ModContent.NPCType<HeadlessChicken>())
                             continue;
 
                         if (NPC.DistanceSQ(target.Center) > 300 * 300)

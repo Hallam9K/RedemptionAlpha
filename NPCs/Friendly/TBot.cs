@@ -369,7 +369,7 @@ namespace Redemption.NPCs.Friendly
             {
                 shop.item[nextSlot++].SetDefaults(ModContent.ItemType<AIChip>());
                 shop.item[nextSlot++].SetDefaults(ModContent.ItemType<CarbonMyofibre>());
-                shop.item[nextSlot++].SetDefaults(ModContent.ItemType<Capacitator>());
+                shop.item[nextSlot++].SetDefaults(ModContent.ItemType<Capacitor>());
                 shop.item[nextSlot++].SetDefaults(ModContent.ItemType<Plating>());
             }
             if (NPC.downedMechBoss1 && NPC.downedMechBoss2 && NPC.downedMechBoss3)

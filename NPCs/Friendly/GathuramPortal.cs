@@ -74,41 +74,6 @@ namespace Redemption.NPCs.Friendly
                 if (RotTime > 0.5 && RotTime < 0.6 && !Main.dedServ)
                     SoundEngine.PlaySound(CustomSounds.PortalWub, NPC.position);
             }
-
-            for (int i = 0; i < 30; i++)
-            {
-                float distance = Main.rand.Next(14) * 4;
-                Vector2 dustRotation = new Vector2(distance, 0f).RotatedBy(MathHelper.ToRadians(i * 12));
-                Vector2 dustPosition = NPC.Center + dustRotation;
-                Vector2 nextDustPosition = NPC.Center + dustRotation.RotatedBy(MathHelper.ToRadians(-4));
-                Vector2 dustVelocity = dustPosition - nextDustPosition + NPC.velocity;
-                if (Main.rand.NextBool(5))
-                {
-                    Dust dust = Dust.NewDustPerfect(dustPosition, DustID.BlueTorch, dustVelocity, Scale: 0.2f);
-                    dust.scale = distance / 30;
-                    dust.scale = MathHelper.Clamp(dust.scale, 0.2f, 4);
-                    dust.noGravity = true;
-                    dust.noLight = true;
-                    dust.alpha += 10;
-                    dust.rotation = dustRotation.ToRotation();
-                }
-            }
-            for (int i = 0; i < 30; i++)
-            {
-                float distance = Main.rand.Next(25) * 4;
-                Vector2 dustRotation = new Vector2(distance, 0f).RotatedBy(MathHelper.ToRadians(i * 12));
-                Vector2 dustPosition = NPC.Center + dustRotation;
-                Vector2 nextDustPosition = NPC.Center + dustRotation.RotatedBy(MathHelper.ToRadians(-4));
-                Vector2 dustVelocity = (dustPosition - nextDustPosition + NPC.velocity) * -1;
-                if (Main.rand.NextBool(40))
-                {
-                    Dust dust = Dust.NewDustPerfect(dustPosition, DustID.BlueTorch, dustVelocity);
-                    dust.noGravity = true;
-                    dust.noLight = true;
-                    dust.alpha += 10;
-                    dust.rotation = dustRotation.ToRotation();
-                }
-            }
         }
 
         public override bool CanChat() => false;
@@ -125,6 +90,12 @@ namespace Redemption.NPCs.Friendly
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
 
             spriteBatch.Draw(texture, NPC.Center - Main.screenPosition, NPC.frame, NPC.GetAlpha(Color.CornflowerBlue), NPC.rotation, NPC.frame.Size() / 2, NPC.scale * 1.1f, SpriteEffects.None, 0f);
+
+
+            Texture2D extra = ModContent.Request<Texture2D>("Redemption/Textures/SpiritPortalTex").Value;
+            spriteBatch.Draw(extra, NPC.Center - screenPos, null, Color.LightBlue * NPC.Opacity * .4f, -NPC.rotation * 1.5f, new Vector2(extra.Width / 2, extra.Height / 2), NPC.scale, 0, 0f);
+            spriteBatch.Draw(extra, NPC.Center - screenPos, null, Color.LightBlue * NPC.Opacity * .2f, -NPC.rotation * 2f, new Vector2(extra.Width / 2, extra.Height / 2), NPC.scale * .7f, 0, 0f);
+            spriteBatch.Draw(extra, NPC.Center - screenPos, null, Color.LightBlue * NPC.Opacity * .1f, -NPC.rotation * 2.5f, new Vector2(extra.Width / 2, extra.Height / 2), NPC.scale * .5f, 0, 0f);
 
             spriteBatch.End();
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);

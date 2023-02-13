@@ -57,7 +57,7 @@ namespace Redemption.Globals
             PlantRecipeGroup = new RecipeGroup(() => $"{Language.GetTextValue("LegacyMisc.37")} {Lang.GetItemNameValue(ItemID.Daybloom)}", ItemID.Daybloom, ItemID.Waterleaf, ItemID.Blinkroot, ItemID.Deathweed, ItemID.Fireblossom, ItemID.Moonglow, ItemID.Shiverthorn, ModContent.ItemType<Nightshade>());
             RecipeGroup.RegisterGroup("Redemption:Plants", PlantRecipeGroup);
 
-            RecipeGroup.RegisterGroup("Fruit", new RecipeGroup(null, ModContent.ItemType<Olives>()));
+            RecipeGroup.RegisterGroup("Fruit", new RecipeGroup(null, ModContent.ItemType<Olives>(), ModContent.ItemType<Avocado>()));
             RecipeGroup.RegisterGroup("Sand", new RecipeGroup(null, ModContent.ItemType<IrradiatedSand>(), ModContent.ItemType<IrradiatedHardenedSand>()));
             RecipeGroup.RegisterGroup("Snails", new RecipeGroup(null, ModContent.ItemType<JohnSnailItem>()));
             RecipeGroup.RegisterGroup("Wood", new RecipeGroup(null, ModContent.ItemType<ElderWood>(), ModContent.ItemType<PetrifiedWood>()));

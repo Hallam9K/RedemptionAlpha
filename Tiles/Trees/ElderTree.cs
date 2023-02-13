@@ -47,7 +47,10 @@ namespace Redemption.Tiles.Trees
             switch (drop)
             {
                 case 1:
-                    Item.NewItem(new EntitySource_ShakeTree(x, y), x * 16, y * 16, 16, 16, ModContent.ItemType<Olives>());
+                    if (Main.rand.NextBool(2))
+                        Item.NewItem(new EntitySource_ShakeTree(x, y), x * 16, y * 16, 16, 16, ModContent.ItemType<Avocado>());
+                    else
+                        Item.NewItem(new EntitySource_ShakeTree(x, y), x * 16, y * 16, 16, 16, ModContent.ItemType<Olives>());
                     break;
                 case 2:
                     Item.NewItem(new EntitySource_ShakeTree(x, y), x * 16, y * 16, 16, 16, ItemID.Acorn, Main.rand.Next(1, 3));

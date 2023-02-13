@@ -449,7 +449,7 @@ namespace Redemption.WorldGeneration
             {
                 ModContent.ItemType<ScrapMetal>(),
                 ModContent.ItemType<AIChip>(),
-                ModContent.ItemType<Capacitator>(),
+                ModContent.ItemType<Capacitor>(),
                 ModContent.ItemType<Plating>(),
                 ModContent.ItemType<RawXenium>()
             };
@@ -524,7 +524,7 @@ namespace Redemption.WorldGeneration
             {
                 ModContent.ItemType<ScrapMetal>(),
                 ModContent.ItemType<AIChip>(),
-                ModContent.ItemType<Capacitator>(),
+                ModContent.ItemType<Capacitor>(),
                 ModContent.ItemType<Plating>()
             };
             int[] LabChestLoot3 = new int[]

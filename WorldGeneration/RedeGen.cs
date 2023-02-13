@@ -1050,12 +1050,14 @@ namespace Redemption.WorldGeneration
 
                             if (Framing.GetTileSafely(i, j).TileType == ModContent.TileType<PetrifiedWoodTile>())
                             {
-                                if (Main.rand.NextBool(2))
+                                bool frozen = BaseTile.GetTileCount(new Vector2(i, j), new int[] { ModContent.TileType<GathicFroststoneBrickTile>(), ModContent.TileType<GathicFroststoneTile>() }, 15) > 0;
+
+                                if (!frozen && Main.rand.NextBool(2))
                                     WorldGen.KillTile(i, j, noItem: true);
                                 else
                                 {
                                     Framing.GetTileSafely(i, j).ClearTile();
-                                    ElderWoodChest(i, j);
+                                    ElderWoodChest(i, j, frozen ? 3 : 0);
                                 }
                             }
                         }
@@ -1817,8 +1819,12 @@ namespace Redemption.WorldGeneration
         {
             int PlacementSuccess = WorldGen.PlaceChest(x, y, (ushort)ModContent.TileType<ElderWoodChestTile>(), false);
 
+            int tome = ModContent.ItemType<Earthbind>();
+            if (ID == 3)
+                tome = ModContent.ItemType<Mistfall>();
+
             int[] ChestLoot = new int[] {
-                ModContent.ItemType<RopeHook>(), ModContent.ItemType<BeardedHatchet>(), ModContent.ItemType<WeddingRing>(), ModContent.ItemType<TrappedSoulBauble>(), ModContent.ItemType<EmptyCruxCard>() };
+                ModContent.ItemType<RopeHook>(), ModContent.ItemType<BeardedHatchet>(), ModContent.ItemType<WeddingRing>(), ModContent.ItemType<TrappedSoulBauble>(), ModContent.ItemType<EmptyCruxCard>(), tome };
             int[] ChestLoot2 = new int[] {
                 ModContent.ItemType<ZweihanderFragment1>(), ModContent.ItemType<ZweihanderFragment2>() };
             int[] ChestLoot3 = new int[] {

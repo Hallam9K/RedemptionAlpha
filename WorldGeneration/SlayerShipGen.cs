@@ -135,7 +135,7 @@ namespace Redemption.WorldGeneration
             int[] HoloChestLoot2 = new int[]
             {   ModContent.ItemType<ScrapMetal>(),
                 ModContent.ItemType<AIChip>(),
-                ModContent.ItemType<Capacitator>(),
+                ModContent.ItemType<Capacitor>(),
                 ModContent.ItemType<Plating>()
             };
             if (PlacementSuccess >= 0)

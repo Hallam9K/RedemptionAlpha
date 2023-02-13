@@ -28,6 +28,7 @@ using Redemption.Items.Weapons.PostML.Magic;
 using Redemption.Items.Weapons.PostML.Summon;
 using Redemption.Items.Accessories.PostML;
 using Redemption.Projectiles.Magic;
+using Redemption.Items.Usable.Summons;
 
 namespace Redemption.NPCs.Bosses.PatientZero
 {
@@ -164,6 +165,9 @@ namespace Redemption.NPCs.Bosses.PatientZero
         }
         public override void OnKill()
         {
+            if (!RedeBossDowned.downedPZ)
+                Item.NewItem(NPC.GetSource_Loot(), (int)NPC.position.X, (int)NPC.position.Y, NPC.width, NPC.height, ModContent.ItemType<LabHologramDevice>());
+
             if (!LabArea.labAccess[5])
                 Item.NewItem(NPC.GetSource_Loot(), (int)NPC.position.X, (int)NPC.position.Y, NPC.width, NPC.height, ModContent.ItemType<ZoneAccessPanel6>());
 

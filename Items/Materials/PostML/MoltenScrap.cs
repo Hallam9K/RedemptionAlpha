@@ -46,7 +46,7 @@ namespace Redemption.Items.Materials.PostML
                 .AddTile(ModContent.TileType<XeniumSmelterTile>())
                 .Register();
             CreateRecipe()
-                .AddIngredient(ModContent.ItemType<Capacitator>())
+                .AddIngredient(ModContent.ItemType<Capacitor>())
                 .AddTile(ModContent.TileType<XeniumSmelterTile>())
                 .Register();
             CreateRecipe()

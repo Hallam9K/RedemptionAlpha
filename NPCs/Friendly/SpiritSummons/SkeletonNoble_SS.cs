@@ -52,7 +52,7 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
         {
             NPC.width = 32;
             NPC.height = 54;
-            NPC.damage = 56;
+            NPC.damage = 28;
             NPC.friendly = true;
             NPC.defense = 15;
             NPC.lifeMax = 144;
@@ -110,6 +110,9 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
         private int AniFrameY;
         public override void OnSpawn(IEntitySource source)
         {
+            Player player = Main.player[(int)NPC.ai[3]];
+            NPC.damage = (int)(NPC.damage * player.GetTotalDamage(DamageClass.Summon).Additive);
+
             ChoosePersonality();
             SetStats();
 

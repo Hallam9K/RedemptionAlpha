@@ -40,7 +40,7 @@ namespace Redemption.Items.Quest.KingSlayer
             CreateRecipe()
                 .AddIngredient(ModContent.ItemType<Cyberscrap>(), 20)
                 .AddIngredient(ModContent.ItemType<Plating>(), 4)
-                .AddIngredient(ModContent.ItemType<Capacitator>())
+                .AddIngredient(ModContent.ItemType<Capacitor>())
                 .AddIngredient(ModContent.ItemType<CarbonMyofibre>(), 2)
                 .AddRecipeGroup(RedeRecipe.CopperRecipeGroup, 8)
                 .AddIngredient(ItemID.Wire, 15)

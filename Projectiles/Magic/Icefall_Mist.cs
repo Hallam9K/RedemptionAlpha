@@ -1,9 +1,11 @@
+using IL.Terraria.IO;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Buffs.NPCBuffs;
 using Redemption.Globals;
 using Terraria;
 using Terraria.Audio;
+using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -31,9 +33,14 @@ namespace Redemption.Projectiles.Magic
             Projectile.scale = Main.rand.NextFloat(0.4f, 0.7f);
             Projectile.rotation = RedeHelper.RandomRotation();
         }
-
+        public override void OnSpawn(IEntitySource source)
+        {
+            if (Projectile.ai[0] == 1)
+                Projectile.scale *= .75f;
+        }
         public override void AI()
         {
+            bool weak = Projectile.ai[0] == 1;
             Projectile.velocity *= 0.98f;
             if (Projectile.localAI[0] == 0)
                 Projectile.localAI[0] = Main.rand.Next(1, 3);
@@ -53,7 +60,7 @@ namespace Redemption.Projectiles.Magic
             {
                 Projectile.alpha -= 5;
 
-                if (Main.rand.NextBool(30) && Projectile.alpha <= 100 && Main.myPlayer == Projectile.owner)
+                if (!weak && Main.rand.NextBool(30) && Projectile.alpha <= 100 && Main.myPlayer == Projectile.owner)
                     Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.RandAreaInEntity(), Vector2.Zero, ModContent.ProjectileType<Icefall_Proj>(), Projectile.damage, Projectile.knockBack, Projectile.owner);
 
                 if (Main.rand.NextBool(20) && Projectile.alpha <= 150)
@@ -63,16 +70,19 @@ namespace Redemption.Projectiles.Magic
                     Main.dust[dust].noGravity = true;
                 }
 
-                for (int i = 0; i < Main.maxNPCs; i++)
+                if (Projectile.alpha <= 100)
                 {
-                    NPC target = Main.npc[i];
-                    if (!target.active || !target.CanBeChasedBy())
-                        continue;
+                    for (int i = 0; i < Main.maxNPCs; i++)
+                    {
+                        NPC target = Main.npc[i];
+                        if (!target.active || !target.CanBeChasedBy())
+                            continue;
 
-                    if (!Projectile.Hitbox.Intersects(target.Hitbox))
-                        continue;
+                        if (!Projectile.Hitbox.Intersects(target.Hitbox))
+                            continue;
 
-                    target.AddBuff(ModContent.BuffType<PureChillDebuff>(), 180);
+                        target.AddBuff(ModContent.BuffType<PureChillDebuff>(), weak ? 5 : 180);
+                    }
                 }
             }
             Projectile.alpha = (int)MathHelper.Clamp(Projectile.alpha, 0, 255);

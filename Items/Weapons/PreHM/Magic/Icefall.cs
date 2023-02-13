@@ -55,7 +55,7 @@ namespace Redemption.Items.Weapons.PreHM.Magic
         public override void AddRecipes()
         {
             CreateRecipe()
-            .AddIngredient(ItemID.WaterBolt)
+            .AddIngredient(ModContent.ItemType<Mistfall>())
             .AddIngredient(ModContent.ItemType<GathicCryoCrystal>(), 5)
             .AddTile(TileID.Bookcases)
             .Register();

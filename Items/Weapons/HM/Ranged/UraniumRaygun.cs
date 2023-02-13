@@ -54,7 +54,7 @@ namespace Redemption.Items.Weapons.HM.Ranged
             CreateRecipe()
                 .AddIngredient(ModContent.ItemType<Uranium>(), 18)
                 .AddIngredient(ModContent.ItemType<Plating>(), 3)
-                .AddIngredient(ModContent.ItemType<Capacitator>())
+                .AddIngredient(ModContent.ItemType<Capacitor>())
                 .AddTile(TileID.MythrilAnvil)
                 .Register();
         }

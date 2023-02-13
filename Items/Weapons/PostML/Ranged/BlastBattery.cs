@@ -87,7 +87,7 @@ namespace Redemption.Items.Weapons.PostML.Ranged
                 .AddIngredient(ModContent.ItemType<CorruptedXenomite>(), 12)
                 .AddIngredient(ModContent.ItemType<CarbonMyofibre>(), 4)
                 .AddIngredient(ModContent.ItemType<Plating>(), 2)
-                .AddIngredient(ModContent.ItemType<Capacitator>())
+                .AddIngredient(ModContent.ItemType<Capacitor>())
                 .AddTile(TileID.MythrilAnvil)
                 .Register();
         }

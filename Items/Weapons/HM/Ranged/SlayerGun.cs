@@ -163,7 +163,7 @@ namespace Redemption.Items.Weapons.HM.Ranged
         {
             CreateRecipe()
                 .AddIngredient(ModContent.ItemType<CyberPlating>(), 6)
-                .AddIngredient(ModContent.ItemType<Capacitator>(), 2)
+                .AddIngredient(ModContent.ItemType<Capacitor>(), 2)
                 .AddTile(TileID.MythrilAnvil)
                 .Register();
         }

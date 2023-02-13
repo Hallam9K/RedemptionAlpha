@@ -57,6 +57,12 @@ namespace Redemption.Globals
                 return -1;
             return 1;
         }
+        public static int RightOfDir(this Vector2 toRight, Vector2 toLeft)
+        {
+            if (toRight.X < toLeft.X)
+                return -1;
+            return 1;
+        }
         public static bool RightOf(this Entity toRight, Entity toLeft) => toLeft.Center.X < toRight.Center.X;
 
         public static Vector2 PolarVector(float radius, float theta) =>

@@ -9,6 +9,7 @@ using ReLogic.Content;
 using Redemption.BaseExtension;
 using Redemption.Effects.PrimitiveTrails;
 using Redemption.Buffs.Cooldowns;
+using Redemption.Projectiles.Melee;
 
 namespace Redemption.Items.Weapons.PostML.Melee
 {
@@ -71,6 +72,10 @@ namespace Redemption.Items.Weapons.PostML.Melee
                         startVector = RedeHelper.PolarVector(1, Projectile.velocity.ToRotation() - (MathHelper.PiOver2 * Projectile.spriteDirection));
                         speed = MathHelper.ToRadians(6);
                     }
+                    if (Timer % 3 == 0)
+                    {
+                        Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, Vector2.Zero, ModContent.ProjectileType<XeniumLanceSpark_Proj>(), Projectile.damage / 6, 0, Main.myPlayer);
+                    }
                     if (Timer < 10)
                     {
                         Length *= 1.1f;
@@ -97,6 +102,10 @@ namespace Redemption.Items.Weapons.PostML.Melee
                         startVector = RedeHelper.PolarVector(1, Projectile.velocity.ToRotation() + (MathHelper.PiOver2 * Projectile.spriteDirection));
                         speed = MathHelper.ToRadians(6);
                     }
+                    if (Timer % 3 == 0)
+                    {
+                        Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, Vector2.Zero, ModContent.ProjectileType<XeniumLanceSpark_Proj>(), Projectile.damage / 6, 0, Main.myPlayer);
+                    }
                     if (Timer < 10)
                     {
                         Length *= 1.1f;
@@ -121,6 +130,10 @@ namespace Redemption.Items.Weapons.PostML.Melee
                     {
                         startVector = RedeHelper.PolarVector(1, Projectile.velocity.ToRotation() - (MathHelper.PiOver2 * Projectile.spriteDirection));
                         speed = MathHelper.ToRadians(6);
+                    }
+                    if (Timer % 2 == 0)
+                    {
+                        Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, Vector2.Zero, ModContent.ProjectileType<XeniumLanceSpark_Proj>(), Projectile.damage / 6, 0, Main.myPlayer);
                     }
                     if (Timer < 10)
                     {
@@ -147,7 +160,6 @@ namespace Redemption.Items.Weapons.PostML.Melee
                         startVector = RedeHelper.PolarVector(1, Projectile.velocity.ToRotation());
                         speed = 1.2f;
                     }
-
                     if (Timer == 5)
                     {
                         player.velocity = RedeHelper.PolarVector(35, Projectile.velocity.ToRotation());
@@ -170,8 +182,7 @@ namespace Redemption.Items.Weapons.PostML.Melee
                     }
                     if (Timer >= 10)
                     {
-                        player.immune = true;
-                        player.immuneTime = 40;
+                        player.Redemption().contactImmune = true;
                     }
                     Length *= speed;
                     vector = startVector * Length;

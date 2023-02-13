@@ -18,6 +18,8 @@ namespace Redemption.Items.Weapons.PostML.Ranged
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Electonade");
+            Main.projFrames[Projectile.type] = 11;
+
         }
         public override void SetDefaults()
         {
@@ -32,6 +34,12 @@ namespace Redemption.Items.Weapons.PostML.Ranged
         }
         public override void AI()
         {
+            if (++Projectile.frameCounter >= 3)
+            {
+                Projectile.frameCounter = 0;
+                if (++Projectile.frame >= 11)
+                    Projectile.frame = 0;
+            }
             Projectile.LookByVelocity();
             Projectile.rotation += Projectile.velocity.X / 20;
             Projectile.velocity.Y += 0.2f;
@@ -69,6 +77,19 @@ namespace Redemption.Items.Weapons.PostML.Ranged
             }
             Projectile.velocity.Y *= 0.3f;
             Projectile.velocity.X *= 0.7f;
+            return false;
+        }
+        public override bool PreDraw(ref Color lightColor)
+        {
+            Texture2D texture = TextureAssets.Projectile[Projectile.type].Value;
+            Texture2D glow = ModContent.Request<Texture2D>(Projectile.ModProjectile.Texture + "_Glow").Value;
+            int height = texture.Height / 11;
+            int y = height * Projectile.frame;
+            Rectangle rect = new(0, y, texture.Width, height);
+            Vector2 drawOrigin = new(texture.Width / 2, Projectile.height / 2);
+
+            Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition, new Rectangle?(rect), lightColor * Projectile.Opacity, Projectile.rotation, drawOrigin, Projectile.scale, 0, 0);
+            Main.EntitySpriteDraw(glow, Projectile.Center - Main.screenPosition, new Rectangle?(rect), Color.White * Projectile.Opacity, Projectile.rotation, drawOrigin, Projectile.scale, 0, 0);
             return false;
         }
     }

@@ -59,7 +59,7 @@ namespace Redemption.Items.Weapons.HM.Magic
         {
             CreateRecipe()
                 .AddIngredient(ModContent.ItemType<CyberPlating>(), 8)
-                .AddIngredient(ModContent.ItemType<Capacitator>())
+                .AddIngredient(ModContent.ItemType<Capacitor>())
                 .AddIngredient(ModContent.ItemType<AIChip>())
                 .AddTile(TileID.MythrilAnvil)
                 .Register();

@@ -53,7 +53,7 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
         {
             NPC.width = 20;
             NPC.height = 54;
-            NPC.damage = 36;
+            NPC.damage = 18;
             NPC.friendly = true;
             NPC.defense = 11;
             NPC.lifeMax = 120;
@@ -158,6 +158,9 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
         private NPC defending;
         public override void OnSpawn(IEntitySource source)
         {
+            Player player = Main.player[(int)NPC.ai[3]];
+            NPC.damage = (int)(NPC.damage * player.GetTotalDamage(DamageClass.Summon).Additive);
+
             SetStats();
 
             TimerRand = Main.rand.Next(80, 280);

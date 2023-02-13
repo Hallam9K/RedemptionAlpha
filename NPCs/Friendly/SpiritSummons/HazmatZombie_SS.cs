@@ -55,7 +55,7 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
         {
             NPC.width = 36;
             NPC.height = 42;
-            NPC.damage = 180;
+            NPC.damage = 90;
             NPC.defense = 20;
             NPC.lifeMax = 1120;
             NPC.HitSound = SoundID.NPCHit1;
@@ -83,6 +83,9 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
         private int runCooldown;
         public override void OnSpawn(IEntitySource source)
         {
+            Player player = Main.player[(int)NPC.ai[3]];
+            NPC.damage = (int)(NPC.damage * player.GetTotalDamage(DamageClass.Summon).Additive);
+
             Variant = Main.rand.Next(2);
             TimerRand = Main.rand.Next(80, 120);
             NPC.netUpdate = true;

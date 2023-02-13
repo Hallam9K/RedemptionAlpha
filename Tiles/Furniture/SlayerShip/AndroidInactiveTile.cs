@@ -45,7 +45,7 @@ namespace Redemption.Tiles.Furniture.SlayerShip
             if (Main.rand.NextBool(4))
                 Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 32, 48, ModContent.ItemType<Plating>(), Main.rand.Next(1, 3));
             if (Main.rand.NextBool(4))
-                Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 32, 48, ModContent.ItemType<Capacitator>());
+                Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 32, 48, ModContent.ItemType<Capacitor>());
             if (Main.rand.NextBool(8))
                 Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 32, 48, ModContent.ItemType<AIChip>());
         }

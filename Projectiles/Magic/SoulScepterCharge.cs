@@ -93,7 +93,7 @@ namespace Redemption.Projectiles.Magic
             {
                 for (int i = 0; i < 25; i++)
                 {
-                    int dustIndex = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.DungeonSpirit, Scale: 2f);
+                    int dustIndex = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.SpectreStaff, Scale: 4f);
                     Main.dust[dustIndex].velocity *= 0.6f;
                     Main.dust[dustIndex].noGravity = true;
                 }
@@ -106,10 +106,6 @@ namespace Redemption.Projectiles.Magic
             Projectile.tileCollide = false;
             if (fakeTimer >= 120)
                 Projectile.Kill();
-        }
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
-        {
-
         }
         public override bool PreDraw(ref Color lightColor)
         {
@@ -138,7 +134,7 @@ namespace Redemption.Projectiles.Magic
                 return;
             for (int i = 0; i < 25; i++)
             {
-                int dustIndex = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.DungeonSpirit, Scale: 2f);
+                int dustIndex = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.SpectreStaff, Scale: 4f);
                 Main.dust[dustIndex].velocity *= 0.6f;
                 Main.dust[dustIndex].noGravity = true;
             }
@@ -157,6 +153,9 @@ namespace Redemption.Projectiles.Magic
                 if (player.channel)
                 {
                     int mana = player.inventory[player.selectedItem].mana;
+                    if (Projectile.localAI[1] % 10 == 0 && !BasePlayer.ReduceMana(player, 3))
+                        player.channel = false;
+
                     if (Projectile.localAI[1] == 0)
                         SoundEngine.PlaySound(SoundID.NPCDeath52, player.position);
                     if (Projectile.localAI[1] == 120)

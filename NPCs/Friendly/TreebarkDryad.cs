@@ -367,7 +367,7 @@ namespace Redemption.NPCs.Friendly
             }
 
             float baseChance = SpawnCondition.OverworldDay.Chance * (!NPC.AnyNPCs(NPC.type) ? 1 : 0);
-            float multiplier = Framing.GetTileSafely(spawnInfo.SpawnTileX, spawnInfo.SpawnTileY).TileType == TileID.Grass ? (Main.raining ? 0.01f : 0.005f) : 0f;
+            float multiplier = Framing.GetTileSafely(spawnInfo.SpawnTileX, spawnInfo.SpawnTileY).TileType == TileID.Grass ? (Main.raining ? 0.02f : 0.005f) : 0f;
             float trees = score >= 60 ? 1 : 0;
 
             return baseChance * multiplier * trees;

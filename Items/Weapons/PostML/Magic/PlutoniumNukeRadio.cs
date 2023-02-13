@@ -55,7 +55,7 @@ namespace Redemption.Items.Weapons.PostML.Magic
             CreateRecipe()
                 .AddIngredient(ModContent.ItemType<Plutonium>(), 8)
                 .AddIngredient(ModContent.ItemType<Plating>(), 6)
-                .AddIngredient(ModContent.ItemType<Capacitator>())
+                .AddIngredient(ModContent.ItemType<Capacitor>())
                 .AddIngredient(ModContent.ItemType<CarbonMyofibre>(), 4)
                 .AddTile(TileID.LunarCraftingStation)
                 .Register();

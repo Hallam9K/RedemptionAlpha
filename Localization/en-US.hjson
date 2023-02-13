@@ -1,6 +1,12 @@
 Mods: {
 	Redemption: {	
 		
+        Achievements: {
+            PZKill: {
+                Name: "We’re Gonna Need a Bigger Mop"
+                Description: "Defeat Kari Johannson, the patient zero of the Xenomite Infection."
+            } 
+        }
 		Currencies: {
 			AntiqueDorulCurrency: antique doruls
 		}

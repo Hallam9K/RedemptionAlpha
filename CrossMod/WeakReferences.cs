@@ -40,6 +40,7 @@ using Redemption.Items.Weapons.PreHM.Summon;
 using Redemption.NPCs.Bosses.FowlEmperor;
 using Redemption.NPCs.FowlMorning;
 using Redemption.Items;
+using Terraria.Achievements;
 
 namespace Redemption.CrossMod
 {
@@ -49,6 +50,15 @@ namespace Redemption.CrossMod
         {
             PerformBossChecklistSupport();
             PerformCencusSupport();
+            PerformAchievementSupport();
+        }
+        private static void PerformAchievementSupport()
+        {
+            Redemption mod = Redemption.Instance;
+            if (ModLoader.TryGetMod("TMLAchievements", out Mod ach))
+            {
+                ach.Call("AddAchievement", mod, "PZKill", AchievementCategory.Slayer, "Redemption/Textures/Achievements/Ach_PZ", null, false, true, 37f, new string[] { "Kill_" + ModContent.NPCType<PZ>() });
+            }
         }
         private static void PerformBossChecklistSupport()
         {

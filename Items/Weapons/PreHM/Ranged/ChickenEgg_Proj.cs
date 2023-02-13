@@ -25,7 +25,6 @@ namespace Redemption.Items.Weapons.PreHM.Ranged
             Projectile.tileCollide = true;
             Projectile.timeLeft = 300;
         }
-
         public override void AI()
         {
             Projectile.rotation += Projectile.velocity.X / 40 * Projectile.direction;
@@ -44,7 +43,7 @@ namespace Redemption.Items.Weapons.PreHM.Ranged
         {
             Collision.HitTiles(Projectile.position, oldVelocity, Projectile.width, Projectile.height);
             SoundEngine.PlaySound(SoundID.Dig, Projectile.position);
-            if (Main.netMode != NetmodeID.MultiplayerClient && Main.rand.NextBool(4))
+            if (Main.netMode != NetmodeID.MultiplayerClient && Main.rand.NextBool(4) && Projectile.ai[0] == 0)
             {
                 int index = NPC.NewNPC(Projectile.GetSource_FromThis(), (int)Projectile.Center.X, (int)Projectile.position.Y, ModContent.NPCType<Chicken>());
 
