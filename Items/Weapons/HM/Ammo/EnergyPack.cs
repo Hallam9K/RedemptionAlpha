@@ -68,7 +68,7 @@ namespace Redemption.Items.Weapons.HM.Ammo
             CreateRecipe()
                 .AddIngredient(ModContent.ItemType<Xenomite>(), 10)
                 .AddIngredient(ModContent.ItemType<Plating>(), 2)
-                .AddIngredient(ModContent.ItemType<Capacitator>())
+                .AddIngredient(ModContent.ItemType<Capacitor>())
                 .AddTile(TileID.MythrilAnvil)
                 .Register();
         }

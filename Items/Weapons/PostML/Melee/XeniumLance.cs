@@ -113,7 +113,7 @@ namespace Redemption.Items.Weapons.PostML.Melee
         {
             CreateRecipe()
                 .AddIngredient(ModContent.ItemType<XeniumAlloy>(), 15)
-                .AddIngredient(ModContent.ItemType<Capacitator>())
+                .AddIngredient(ModContent.ItemType<Capacitor>())
                 .AddIngredient(ModContent.ItemType<CarbonMyofibre>(), 8)
                 .AddTile(ModContent.TileType<XeniumRefineryTile>())
                 .Register();

@@ -38,7 +38,7 @@ namespace Redemption.Items.Usable
         {
             CreateRecipe()
                 .AddIngredient(ItemID.LunarBar, 5)
-                .AddIngredient(ModContent.ItemType<Capacitator>())
+                .AddIngredient(ModContent.ItemType<Capacitor>())
                 .AddIngredient(ModContent.ItemType<Plating>(), 3)
                 .AddTile(TileID.LunarCraftingStation)
                 .Register();

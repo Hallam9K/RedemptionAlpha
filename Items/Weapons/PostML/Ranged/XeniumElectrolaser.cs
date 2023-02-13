@@ -74,7 +74,7 @@ namespace Redemption.Items.Weapons.PostML.Ranged
         {
             CreateRecipe()
                 .AddIngredient(ModContent.ItemType<XeniumAlloy>(), 14)
-                .AddIngredient(ModContent.ItemType<Capacitator>(), 2)
+                .AddIngredient(ModContent.ItemType<Capacitor>(), 2)
                 .AddIngredient(ModContent.ItemType<CarbonMyofibre>(), 6)
                 .AddTile(ModContent.TileType<XeniumRefineryTile>())
                 .Register();

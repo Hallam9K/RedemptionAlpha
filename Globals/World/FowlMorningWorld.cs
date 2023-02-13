@@ -174,20 +174,24 @@ namespace Redemption.Globals.World
                 new Dictionary<int, float> { // 6
                     {ModContent.NPCType<ChickenScratcher>(), 1f},
                     {ModContent.NPCType<ChickenBomber>(), Terraria.NPC.CountNPCS(ModContent.NPCType<ChickenBomber>()) < 3 ? .7f : 0f },
-                    {ModContent.NPCType<Haymaker>(), Terraria.NPC.CountNPCS(ModContent.NPCType<Haymaker>()) < 2 ? .5f : 0f }
+                    {ModContent.NPCType<Haymaker>(), Terraria.NPC.CountNPCS(ModContent.NPCType<Haymaker>()) < 2 ? .5f : 0f },
+                    {ModContent.NPCType<HeadlessChicken>(), .8f}
                 },
                 new Dictionary<int, float> { // 7
                     {ModContent.NPCType<ChickenBomber>(), Terraria.NPC.CountNPCS(ModContent.NPCType<ChickenBomber>()) < 3 ? .7f : 0f },
                     {ModContent.NPCType<RoosterBooster>(), Terraria.NPC.CountNPCS(ModContent.NPCType<RoosterBooster>()) < 3 ? .6f : 0f },
                     {ModContent.NPCType<Haymaker>(), Terraria.NPC.CountNPCS(ModContent.NPCType<Haymaker>()) < 3 ? .5f : 0f },
-                    {ModContent.NPCType<Cockatrice>(), Terraria.NPC.CountNPCS(ModContent.NPCType<Cockatrice>()) < 1 ? .3f : 0f }
+                    {ModContent.NPCType<Cockatrice>(), Terraria.NPC.CountNPCS(ModContent.NPCType<Cockatrice>()) < 1 ? .3f : 0f },
+                    {ModContent.NPCType<HeadlessChicken>(), .8f}
                 },
                 new Dictionary<int, float> { // 8
                     {ModContent.NPCType<RoosterBooster>(), Terraria.NPC.CountNPCS(ModContent.NPCType<RoosterBooster>()) < 4 ? .6f : 0f },
-                    {ModContent.NPCType<Haymaker>(), Terraria.NPC.CountNPCS(ModContent.NPCType<Haymaker>()) < 3 ? .4f : 0f }
+                    {ModContent.NPCType<Haymaker>(), Terraria.NPC.CountNPCS(ModContent.NPCType<Haymaker>()) < 3 ? .4f : 0f },
+                    {ModContent.NPCType<HeadlessChicken>(), .8f}
                 },
                 new Dictionary<int, float> { // 9
                     {ModContent.NPCType<Cockatrice>(), Terraria.NPC.CountNPCS(ModContent.NPCType<Cockatrice>()) < 2 ? .6f : 0f },
+                    {ModContent.NPCType<HeadlessChicken>(), .8f}
                 },
                 new Dictionary<int, float> { // 10
                     {ModContent.NPCType<RoosterBooster>(), Terraria.NPC.CountNPCS(ModContent.NPCType<RoosterBooster>()) < 4 ? .6f : 0f },

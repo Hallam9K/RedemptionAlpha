@@ -13,7 +13,6 @@ namespace Redemption.Tiles.Tiles
         {
             Main.tileBlockLight[Type] = true;
             Main.tileBrick[Type] = true;
-            Main.tileLighted[Type] = true;
             Main.tileSolid[Type] = true;
 
             TileID.Sets.CanBeDugByShovel[Type] = true;

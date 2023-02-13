@@ -1,10 +1,15 @@
 Mods: {
-	Redemption: {	
-		
+	Redemption: {
+
 		SubworldName: {
 			SoullessSub: Soulless Dimension
 		}
-		
+		Achievements: {
+				PZKill: {
+						Name: "We’re Gonna Need a Bigger Mop"
+						Description: "Defeat Kari Johannson, the patient zero of the Xenomite Infection."
+				}
+		}
 		Currencies: {
 			AntiqueDorulCurrency: antique doruls
 		}
@@ -21,7 +26,7 @@ Mods: {
 			XeniumElectrolaserCooldown: "Xenium Electrolaser Cooldown"
 			VasaraPendantCooldown: "Vasara Pendant Cooldown"
 			CruxCardCooldown: "Crux Card Cooldown"
-            
+
             # Debuffs
             AntibodiesDebuff: "Xenomite Antibodies"
             BileDebuff: "Burning Acid"
@@ -53,7 +58,7 @@ Mods: {
             Stunned2Debuff: "Snared!"
             StunnedDebuff: "Stunned!"
             BInfectionDebuff: "Bacterial Infection"
-            
+
             # Minions
             AndroidMinionBuff: "Android Minion"
             CorpseSkullBuff: "Corpse-Walker Skull"
@@ -68,10 +73,10 @@ Mods: {
             HoloMinionBuff: "Hologram"
             MoonflareGuardianBuff: "Moonflare Guardian"
             NaturePixieBuff: "Nature Pixie"
-            
+
             # Mounts
             JyrinaMountBuff: "Ukko's Steed"
-            
+
             # Pets
             BabyRockpileBuff: "Baby Rockpile"
             BouquetOfThornsBuff: "Bouquet of Thorns"
@@ -89,7 +94,7 @@ Mods: {
             XenoemiaBuff: "Xenoemia"
             CleaverPetBuff: "Omini Cleaver"
 		}
-		
+
 		BuffDescription: {
             # Cooldowns
 			ErhanCrossCooldown: "The holy shield has been broken"
@@ -103,7 +108,7 @@ Mods: {
 			XeniumElectrolaserCooldown: "The electrolaser's battery is recharging"
 			VasaraPendantCooldown: "The Vasara Pendant feels dull"
 			CruxCardCooldown: "You cannot summon spirits"
-            
+
             # Debuffs
             AntibodiesDebuff: "Strong antibodies flood your blood and fight off any new infection that may come."
             BileDebuff: "Reduced defence"
@@ -135,7 +140,7 @@ Mods: {
             Stunned2Debuff: "You are stunned!"
             StunnedDebuff: "You are stunned!"
             BInfectionDebuff: "Yucky!"
-            
+
             # Minions
             AndroidMinionBuff: "A small android will fight for you"
             CorpseSkullBuff: "The dried up skull will fight for you"
@@ -150,10 +155,10 @@ Mods: {
             HoloMinionBuff: "Wait, how do holograms hit things?"
 			MoonflareGuardianBuff: "A Moonflare Guardian will fight for you"
             NaturePixieBuff: "A Nature Pixie will annoy enemies for you"
-            
+
             # Mounts
             JyrinaMountBuff: "Is that the sound of an approaching thunderstorm I hear?"
-            
+
             # Pets
             BabyRockpileBuff: "Never seen a pile of rocks dance before"
             BouquetOfThornsBuff: "A gift for the newly divorced"

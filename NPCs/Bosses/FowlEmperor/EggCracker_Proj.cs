@@ -36,7 +36,7 @@ namespace Redemption.NPCs.Bosses.FowlEmperor
         }
         public override void Kill(int timeLeft)
         {
-            SoundEngine.PlaySound(SoundID.Item14, Projectile.position);
+            SoundEngine.PlaySound(SoundID.DD2_KoboldExplosion, Projectile.position);
             SoundEngine.PlaySound(SoundID.NPCDeath11 with { Volume = .5f }, Projectile.position);
             for (int i = 0; i < 8; i++)
                 Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.MothronEgg, Projectile.velocity.X * 0.5f,

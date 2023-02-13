@@ -64,7 +64,7 @@ namespace Redemption.Items.Weapons.PostML.Ranged
             CreateRecipe()
                 .AddIngredient(ModContent.ItemType<Plutonium>(), 30)
                 .AddIngredient(ModContent.ItemType<Plating>(), 5)
-                .AddIngredient(ModContent.ItemType<Capacitator>())
+                .AddIngredient(ModContent.ItemType<Capacitor>())
                 .AddTile(TileID.LunarCraftingStation)
                 .Register();
         }

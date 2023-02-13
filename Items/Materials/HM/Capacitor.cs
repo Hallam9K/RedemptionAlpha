@@ -3,11 +3,11 @@ using Terraria.ModLoader;
 
 namespace Redemption.Items.Materials.HM
 {
-    public class Capacitator : ModItem
+    public class Capacitor : ModItem
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Capacitator");
+            DisplayName.SetDefault("Capacitor");
             Tooltip.SetDefault("'Holds a high amount of energy'");
             SacrificeTotal = 25;
         }

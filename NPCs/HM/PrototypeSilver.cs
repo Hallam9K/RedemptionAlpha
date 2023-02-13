@@ -482,7 +482,7 @@ namespace Redemption.NPCs.HM
         {
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<CarbonMyofibre>(), 2, 4, 6));
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Plating>(), 3, 2, 4));
-            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Capacitator>(), 3, 1, 2));
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Capacitor>(), 3, 1, 2));
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<AIChip>(), 6, 1, 1));
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<EnergyCell>(), 10));
             npcLoot.Add(ItemDropRule.Food(ModContent.ItemType<P0T4T0>(), 150));

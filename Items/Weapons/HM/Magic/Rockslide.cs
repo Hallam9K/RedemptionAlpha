@@ -1,4 +1,5 @@
 using Microsoft.Xna.Framework;
+using Redemption.Items.Weapons.PreHM.Magic;
 using Redemption.Projectiles.Magic;
 using System.Collections.Generic;
 using Terraria;
@@ -67,7 +68,7 @@ namespace Redemption.Items.Weapons.HM.Magic
         public override void AddRecipes()
         {
             CreateRecipe()
-                .AddIngredient(ItemID.SpellTome)
+                .AddIngredient(ModContent.ItemType<Earthbind>())
                 .AddIngredient(ItemID.BeetleHusk, 4)
                 .AddIngredient(ItemID.LunarTabletFragment, 10)
                 .AddIngredient(ItemID.SoulofNight, 15)

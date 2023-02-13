@@ -60,7 +60,7 @@ namespace Redemption.Items.Usable.Summons
             CreateRecipe()
             .AddIngredient(ModContent.ItemType<AIChip>(), 1)
             .AddIngredient(ModContent.ItemType<Plating>(), 4)
-            .AddIngredient(ModContent.ItemType<Capacitator>(), 2)
+            .AddIngredient(ModContent.ItemType<Capacitor>(), 2)
             .AddIngredient(ItemID.SoulofSight, 5)
             .AddIngredient(ItemID.SoulofMight, 5)
             .AddIngredient(ItemID.SoulofFright, 5)

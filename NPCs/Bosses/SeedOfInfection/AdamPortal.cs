@@ -122,6 +122,11 @@ namespace Redemption.NPCs.Bosses.SeedOfInfection
 
             Main.spriteBatch.End();
             Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+
+            Texture2D extra = ModContent.Request<Texture2D>("Redemption/Textures/SpiritPortalTex").Value;
+            Main.EntitySpriteDraw(extra, Projectile.Center - Main.screenPosition, null, Color.LightGreen * Projectile.Opacity * .4f, -Projectile.rotation * 1.5f, new Vector2(extra.Width / 2, extra.Height / 2), Projectile.scale, 0, 0);
+            Main.EntitySpriteDraw(extra, Projectile.Center - Main.screenPosition, null, Color.LightGreen * Projectile.Opacity * .2f, -Projectile.rotation * 2f, new Vector2(extra.Width / 2, extra.Height / 2), Projectile.scale * .7f, 0, 0);
+            Main.EntitySpriteDraw(extra, Projectile.Center - Main.screenPosition, null, Color.LightGreen * Projectile.Opacity * .1f, -Projectile.rotation * 2.5f, new Vector2(extra.Width / 2, extra.Height / 2), Projectile.scale * .5f, 0, 0);
             return false;
         }
     }

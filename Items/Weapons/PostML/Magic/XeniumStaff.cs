@@ -68,7 +68,7 @@ namespace Redemption.Items.Weapons.PostML.Magic
         {
             CreateRecipe()
                 .AddIngredient(ModContent.ItemType<XeniumAlloy>(), 12)
-                .AddIngredient(ModContent.ItemType<Capacitator>())
+                .AddIngredient(ModContent.ItemType<Capacitor>())
                 .AddIngredient(ModContent.ItemType<CarbonMyofibre>(), 5)
                 .AddTile(ModContent.TileType<XeniumRefineryTile>())
                 .Register();

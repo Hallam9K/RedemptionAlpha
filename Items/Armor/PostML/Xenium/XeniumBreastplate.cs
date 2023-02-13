@@ -35,7 +35,7 @@ namespace Redemption.Items.Armor.PostML.Xenium
         {
             CreateRecipe()
             .AddIngredient(ModContent.ItemType<XeniumAlloy>(), 16)
-            .AddIngredient(ModContent.ItemType<Capacitator>(), 1)
+            .AddIngredient(ModContent.ItemType<Capacitor>(), 1)
             .AddIngredient(ModContent.ItemType<CarbonMyofibre>(), 8)
             .AddTile(ModContent.TileType<XeniumRefineryTile>())
             .Register();

@@ -36,7 +36,7 @@ namespace Redemption.Items.Usable
                 player.QuickSpawnItem(player.GetSource_OpenItem(Type), ModContent.ItemType<Plating>(), Main.rand.Next(1, 2));
 
             if (Main.rand.NextBool(2))
-                player.QuickSpawnItem(player.GetSource_OpenItem(Type), ModContent.ItemType<Capacitator>(), Main.rand.Next(1, 2));
+                player.QuickSpawnItem(player.GetSource_OpenItem(Type), ModContent.ItemType<Capacitor>(), Main.rand.Next(1, 2));
 
             if (Main.rand.NextBool(75))
                 player.QuickSpawnItem(player.GetSource_OpenItem(Type), ItemID.EmptyBucket);

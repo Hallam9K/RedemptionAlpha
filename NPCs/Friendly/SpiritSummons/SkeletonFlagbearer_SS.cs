@@ -50,7 +50,7 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
         {
             NPC.width = 30;
             NPC.height = 46;
-            NPC.damage = 20;
+            NPC.damage = 10;
             NPC.friendly = true;
             NPC.defense = 9;
             NPC.lifeMax = 92;
@@ -90,6 +90,9 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
         }
         public override void OnSpawn(IEntitySource source)
         {
+            Player player = Main.player[(int)NPC.ai[3]];
+            NPC.damage = (int)(NPC.damage * player.GetTotalDamage(DamageClass.Summon).Additive);
+
             if (Main.rand.NextBool(3))
                 HasEyes = true;
             SetStats();

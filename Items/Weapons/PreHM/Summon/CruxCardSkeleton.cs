@@ -30,7 +30,8 @@ namespace Redemption.Items.Weapons.PreHM.Summon
 
         public override void SetDefaults()
         {
-            Item.damage = 36;
+            Item.damage = 18;
+            Item.DamageType = DamageClass.Summon;
             Item.knockBack = 4;
             Item.width = 40;
             Item.height = 40;

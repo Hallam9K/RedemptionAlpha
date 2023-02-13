@@ -26,6 +26,7 @@ using Redemption.Items.Weapons.HM.Melee;
 using Redemption.BaseExtension;
 using Redemption.Items.Weapons.PreHM.Summon;
 using Redemption.Items.Armor.Vanity;
+using System.Diagnostics;
 
 namespace Redemption.NPCs.Friendly
 {
@@ -295,6 +296,18 @@ namespace Redemption.NPCs.Friendly
             shop.item[nextSlot].SetDefaults(ModContent.ItemType<BronzeWand>());
             shop.item[nextSlot].shopCustomPrice = new int?(30);
             shop.item[nextSlot++].shopSpecialCurrency = Redemption.AntiqueDorulCurrencyId;
+            if (Main.LocalPlayer.ZoneRockLayerHeight || Main.LocalPlayer.ZoneDirtLayerHeight)
+            {
+                shop.item[nextSlot].SetDefaults(ModContent.ItemType<Earthbind>());
+                shop.item[nextSlot].shopCustomPrice = new int?(15);
+                shop.item[nextSlot++].shopSpecialCurrency = Redemption.AntiqueDorulCurrencyId;
+            }
+            if (Main.LocalPlayer.ZoneSnow)
+            {
+                shop.item[nextSlot].SetDefaults(ModContent.ItemType<Mistfall>());
+                shop.item[nextSlot].shopCustomPrice = new int?(15);
+                shop.item[nextSlot++].shopSpecialCurrency = Redemption.AntiqueDorulCurrencyId;
+            }
             shop.item[nextSlot].SetDefaults(ModContent.ItemType<AncientDirt>());
             shop.item[nextSlot].shopCustomPrice = new int?(1);
             shop.item[nextSlot++].shopSpecialCurrency = Redemption.AntiqueDorulCurrencyId;

@@ -56,7 +56,7 @@ namespace Redemption.Items.Placeable.Furniture.Lab
             {
                 ModContent.ItemType<ScrapMetal>(),
                 ModContent.ItemType<AIChip>(),
-                ModContent.ItemType<Capacitator>(),
+                ModContent.ItemType<Capacitor>(),
                 ModContent.ItemType<Plating>()
             };
             int[] LabChestLoot3 = new int[]

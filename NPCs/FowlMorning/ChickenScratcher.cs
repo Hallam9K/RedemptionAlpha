@@ -158,7 +158,7 @@ namespace Redemption.NPCs.FowlMorning
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Times.DayTime,
 
                 new FlavorTextBestiaryInfoElement(
-                    "Cluck.")
+                    "Chicken scratch, chicken scratch a lot. They can never ever ever stop. Chicken scratch, chicken can scratch all day.")
             });
         }
     }

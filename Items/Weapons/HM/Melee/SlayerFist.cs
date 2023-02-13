@@ -39,7 +39,7 @@ namespace Redemption.Items.Weapons.HM.Melee
         {
             CreateRecipe()
                 .AddIngredient(ModContent.ItemType<CyberPlating>(), 4)
-                .AddIngredient(ModContent.ItemType<Capacitator>(), 2)
+                .AddIngredient(ModContent.ItemType<Capacitor>(), 2)
                 .AddIngredient(ModContent.ItemType<AIChip>())
                 .AddTile(TileID.MythrilAnvil)
                 .Register();

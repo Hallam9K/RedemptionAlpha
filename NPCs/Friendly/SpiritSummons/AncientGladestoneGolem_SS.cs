@@ -59,7 +59,7 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
         {
             NPC.width = 54;
             NPC.height = 80;
-            NPC.damage = 70;
+            NPC.damage = 35;
             NPC.defense = 20;
             NPC.lifeMax = 250;
             NPC.HitSound = SoundID.DD2_WitherBeastCrystalImpact;
@@ -127,6 +127,8 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
         public int runCooldown;
         public override void OnSpawn(IEntitySource source)
         {
+            Player player = Main.player[(int)NPC.ai[3]];
+            NPC.damage = (int)(NPC.damage * player.GetTotalDamage(DamageClass.Summon).Additive);
             TimerRand = Main.rand.Next(120, 280);
             NPC.netUpdate = true;
         }
