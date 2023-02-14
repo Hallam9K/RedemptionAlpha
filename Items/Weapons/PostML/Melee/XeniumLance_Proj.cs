@@ -209,6 +209,9 @@ namespace Redemption.Items.Weapons.PostML.Melee
             {
                 player.ClearBuff(ModContent.BuffType<XeniumLanceCooldown>());
 
+                player.immune = true;
+                player.immuneTime = (int)MathHelper.Max(player.immuneTime, 20);
+
                 Projectile.localNPCImmunity[target.whoAmI] = 60;
                 target.immune[Projectile.owner] = 0;
             }

@@ -36,12 +36,6 @@ namespace Redemption.Globals
             if (player.RedemptionPlayerBuff().bowString && item.useAmmo == AmmoID.Arrow)
                 velocity *= 1.2f;
         }
-        public override void ModifyHitNPC(Item item, Terraria.Player player, Terraria.NPC target, ref int damage,
-            ref float knockBack, ref bool crit)
-        {
-            if ((item.axe > 0 || TechnicallyAxe) && crit)
-                damage += damage / 2;
-        }
         public override void ModifyWeaponCrit(Item item, Terraria.Player player, ref float crit)
         {
             BuffPlayer modPlayer = player.RedemptionPlayerBuff();

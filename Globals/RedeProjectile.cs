@@ -59,11 +59,6 @@ namespace Redemption.Globals
             if (ArenaWorld.arenaActive && projectile.aiStyle == 7 && !projectile.Hitbox.Intersects(new Rectangle((int)ArenaWorld.arenaTopLeft.X, (int)ArenaWorld.arenaTopLeft.Y, (int)ArenaWorld.arenaSize.X, (int)ArenaWorld.arenaSize.Y)))
                 projectile.Kill();
         }
-        public override void ModifyHitNPC(Projectile projectile, Terraria.NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
-        {
-            if (IsAxe && crit)
-                damage += damage / 2;
-        }
         public static void Decapitation(Terraria.NPC target, ref int damage, ref bool crit, int chance = 200)
         {
             if (target.life < target.lifeMax && NPCLists.SkeletonHumanoid.Contains(target.type))

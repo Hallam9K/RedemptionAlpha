@@ -7,6 +7,8 @@ using Microsoft.Xna.Framework.Graphics;
 using Terraria.GameContent;
 using Redemption.Globals;
 using Redemption.Buffs.NPCBuffs;
+using Redemption.NPCs.Bosses.Keeper;
+using Redemption.Projectiles.Melee;
 
 namespace Redemption.Items.Weapons.PreHM.Melee
 {
@@ -31,6 +33,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
         public override bool? CanHitNPC(NPC target) => Projectile.frame is 2 ? null : false;
         public float SwingSpeed;
         int directionLock = 0;
+        private float glow;
         public override void AI()
         {
             Player player = Main.player[Projectile.owner];
@@ -46,8 +49,17 @@ namespace Redemption.Items.Weapons.PreHM.Melee
                 {
                     player.itemRotation = MathHelper.ToRadians(-90f * player.direction);
                     player.bodyFrame.Y = 5 * player.bodyFrame.Height;
-                    Projectile.ai[0] = 1;
                     directionLock = player.direction;
+                    glow += 0.02f;
+                    glow = MathHelper.Clamp(glow, 0, 0.8f);
+                    if (glow >= 0.8 && Projectile.localAI[0] == 0)
+                    {
+                        RedeDraw.SpawnRing(Projectile.Center, Color.DarkRed, 0.2f);
+                        SoundEngine.PlaySound(SoundID.NPCDeath7, Projectile.position);
+                        Projectile.localAI[0] = 1;
+                    }
+                    if (!player.channel)
+                        Projectile.ai[0] = 1;
                 }
                 if (Projectile.ai[0] >= 1)
                 {
@@ -62,7 +74,26 @@ namespace Redemption.Items.Weapons.PreHM.Melee
                         Projectile.frameCounter = 0;
                         Projectile.frame++;
                         if (Projectile.frame is 2)
+                        {
+                            if (Projectile.localAI[0] == 1)
+                            {
+                                player.statLife -= 20;
+                                if (player.statLife < 1)
+                                    player.statLife = 1;
+                                CombatText.NewText(player.getRect(), Colors.RarityDarkRed, 20, true, true);
+                                SoundEngine.PlaySound(SoundID.NPCDeath19, Projectile.position);
+                                for (int i = 0; i < 4; i++)
+                                {
+                                    Projectile.NewProjectile(Projectile.GetSource_FromAI(), player.Center, RedeHelper.PolarVector(Main.rand.NextFloat(5, 8), (Main.MouseWorld - player.Center).ToRotation() + Main.rand.NextFloat(-0.2f, 0.2f)), ModContent.ProjectileType<KeepersClaw_BloodWave>(), Projectile.damage, 2, player.whoAmI);
+                                }
+                                for (int i = 0; i < 20; i++)
+                                {
+                                    int dustIndex = Dust.NewDust(player.position + player.velocity, player.width, player.height, DustID.Blood);
+                                    Main.dust[dustIndex].velocity *= 5f;
+                                }
+                            }
                             SoundEngine.PlaySound(SoundID.Item71, Projectile.position);
+                        }
 
                         if (Projectile.frame > 5)
                         {
@@ -93,6 +124,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
         {
             target.AddBuff(ModContent.BuffType<NecroticGougeDebuff>(), 600);
         }
+        private float drawTimer;
         public override bool PreDraw(ref Color lightColor)
         {
             Player player = Main.player[Projectile.owner];
@@ -104,6 +136,8 @@ namespace Redemption.Items.Weapons.PreHM.Melee
             Vector2 drawOrigin = new(texture.Width / 2, Projectile.height / 2);
             var effects = Projectile.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
             int offset = Projectile.frame > 1 ? 14 : 0;
+
+            RedeDraw.DrawTreasureBagEffect(Main.spriteBatch, texture, ref drawTimer, Projectile.Center - Main.screenPosition, null, Color.Red * Projectile.Opacity * glow, Projectile.rotation, drawOrigin, Projectile.scale, effects);
 
             Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition - new Vector2(-1 * player.direction, 6 - offset) + Vector2.UnitY * Projectile.gfxOffY,
                 new Rectangle?(rect), Projectile.GetAlpha(lightColor), Projectile.rotation, drawOrigin, Projectile.scale, effects, 0);
