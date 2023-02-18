@@ -316,8 +316,6 @@ namespace Redemption.Globals.NPC
                     crit = true;
                 }
             }
-            if ((item.axe > 0 || item.Redemption().TechnicallyAxe) && crit)
-                damage += damage / 2;
         }
         public override void ModifyHitByProjectile(Terraria.NPC npc, Projectile projectile, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
         {
@@ -495,8 +493,6 @@ namespace Redemption.Globals.NPC
                 elementDmg = 1;
                 #endregion
             }
-            if (projectile.Redemption().IsAxe && crit)
-                damage += damage / 2;
         }
         public override void OnHitNPC(Terraria.NPC npc, Terraria.NPC target, int damage, float knockback, bool crit)
         {

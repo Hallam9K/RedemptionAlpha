@@ -90,6 +90,10 @@ namespace Redemption.CrossMod
                     {
                         ModContent.NPCType<ChickenScratcher>(),
                         ModContent.NPCType<ChickenBomber>(),
+                        ModContent.NPCType<RoosterBooster>(),
+                        ModContent.NPCType<Haymaker>(),
+                        ModContent.NPCType<HeadlessChicken>(),
+                        ModContent.NPCType<Cockatrice>()
                     }, 0.11f, () => RedeBossDowned.downedFowlMorning, () => RedeBossDowned.downedFowlEmperor,
                     new List<int>
                     {

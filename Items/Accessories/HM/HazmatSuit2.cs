@@ -29,6 +29,8 @@ namespace Redemption.Items.Accessories.HM
                 ArmorIDs.Head.Sets.DrawHead[equipSlotHead] = false;
                 ArmorIDs.Body.Sets.HidesTopSkin[equipSlotBody] = true;
                 ArmorIDs.Body.Sets.HidesArms[equipSlotBody] = true;
+                ArmorIDs.Legs.Sets.HidesBottomSkin[equipSlotBody] = true;
+                ArmorIDs.Legs.Sets.HidesTopSkin[equipSlotBody] = true;
             }
         }
         public override void SetStaticDefaults()

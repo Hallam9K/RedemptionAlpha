@@ -41,6 +41,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
             Item.noUseGraphic = true;
             Item.DamageType = DamageClass.Melee;
             Item.noMelee = true;
+            Item.channel = true;
 
             // Projectile Properties
             Item.shootSpeed = 5f;

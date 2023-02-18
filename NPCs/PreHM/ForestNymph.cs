@@ -4,6 +4,7 @@ using ParticleLibrary;
 using Redemption.Base;
 using Redemption.BaseExtension;
 using Redemption.Buffs.Debuffs;
+using Redemption.Buffs.Minions;
 using Redemption.Buffs.NPCBuffs;
 using Redemption.Globals;
 using Redemption.Globals.NPC;
@@ -972,9 +973,10 @@ namespace Redemption.NPCs.PreHM
 
             float baseChance = SpawnCondition.OverworldDay.Chance * (!NPC.AnyNPCs(NPC.type) && !NPC.AnyNPCs(ModContent.NPCType<ForestNymph_Friendly>()) ? 1 : 0);
             float multiplier = TileArray.Contains(Framing.GetTileSafely(spawnInfo.SpawnTileX, spawnInfo.SpawnTileY).TileType) ? (Main.raining ? 0.08f : 0.04f) : 0f;
+            float pixie = spawnInfo.Player.HasBuff<NaturePixieBuff>() ? 10 : 1;
             float trees = score >= 5 ? 1 : 0;
 
-            return baseChance * multiplier * trees;
+            return baseChance * multiplier * trees * pixie;
         }
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
         {

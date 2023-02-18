@@ -449,6 +449,8 @@ namespace Redemption.Globals.Player
                 crit = true;
 
             damage = (int)(damage * TrueMeleeDamage);
+            if ((item.axe > 0 || item.Redemption().TechnicallyAxe) && crit)
+                damage += damage / 2;
         }
         public override void ModifyHitNPCWithProj(Projectile proj, Terraria.NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
         {
@@ -461,6 +463,8 @@ namespace Redemption.Globals.Player
 
                 damage = (int)(damage * TrueMeleeDamage);
             }
+            if (proj.Redemption().IsAxe && crit)
+                damage += damage / 2;
         }
         public override void OnHitNPCWithProj(Projectile proj, Terraria.NPC target, int damage, float knockback, bool crit)
         {
@@ -735,7 +739,7 @@ namespace Redemption.Globals.Player
                 damageSource = PlayerDeathReason.ByCustomReason(Player.name + " was too glorious");
 
             if (Player.FindBuffIndex(ModContent.BuffType<EnsnaredDebuff>()) != -1 && damage == 10.0 && hitDirection == 0 && damageSource.SourceOtherIndex == 8)
-                damageSource = PlayerDeathReason.ByCustomReason(Player.name + " get consumed by the thorns");
+                damageSource = PlayerDeathReason.ByCustomReason(Player.name + " got consumed by the thorns");
 
             return true;
         }

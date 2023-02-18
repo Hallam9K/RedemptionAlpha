@@ -205,6 +205,8 @@ namespace Redemption.Items.Weapons.PostML.Melee
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
             Player player = Main.player[Projectile.owner];
+            Projectile.localNPCImmunity[target.whoAmI] = 15;
+            target.immune[Projectile.owner] = 0;
             if (Projectile.ai[0] == 3)
             {
                 player.ClearBuff(ModContent.BuffType<XeniumLanceCooldown>());

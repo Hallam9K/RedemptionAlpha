@@ -27,6 +27,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
             Projectile.friendly = true;
             Projectile.hostile = false;
             Projectile.penetrate = -1;
+            Projectile.usesLocalNPCImmunity = true;
         }
 
         public override bool? CanCutTiles() => Projectile.frame is 2;
@@ -34,12 +35,13 @@ namespace Redemption.Items.Weapons.PreHM.Melee
         public float SwingSpeed;
         int directionLock = 0;
         private float glow;
+        Vector2 mousePoint;
         public override void AI()
         {
             Player player = Main.player[Projectile.owner];
             player.heldProj = Projectile.whoAmI;
 
-            SwingSpeed = SetSwingSpeed(30);
+            SwingSpeed = SetSwingSpeed(20);
 
             if (player.noItems || player.CCed || player.dead || !player.active)
                 Projectile.Kill();
@@ -47,6 +49,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
             {
                 if (Projectile.ai[0] == 0)
                 {
+                    mousePoint = Main.MouseWorld;
                     player.itemRotation = MathHelper.ToRadians(-90f * player.direction);
                     player.bodyFrame.Y = 5 * player.bodyFrame.Height;
                     directionLock = player.direction;
@@ -55,11 +58,17 @@ namespace Redemption.Items.Weapons.PreHM.Melee
                     if (glow >= 0.8 && Projectile.localAI[0] == 0)
                     {
                         RedeDraw.SpawnRing(Projectile.Center, Color.DarkRed, 0.2f);
-                        SoundEngine.PlaySound(SoundID.NPCDeath7, Projectile.position);
+                        SoundEngine.PlaySound(SoundID.NPCDeath7 with { Pitch = -.2f, Volume = .5f }, Projectile.position);
                         Projectile.localAI[0] = 1;
                     }
                     if (!player.channel)
+                    {
                         Projectile.ai[0] = 1;
+                        if (Main.MouseWorld.X < player.Center.X)
+                            directionLock = -1;
+                        else
+                            directionLock = 1;
+                    }
                 }
                 if (Projectile.ai[0] >= 1)
                 {
@@ -77,14 +86,14 @@ namespace Redemption.Items.Weapons.PreHM.Melee
                         {
                             if (Projectile.localAI[0] == 1)
                             {
-                                player.statLife -= 20;
+                                player.statLife -= 18;
                                 if (player.statLife < 1)
                                     player.statLife = 1;
-                                CombatText.NewText(player.getRect(), Colors.RarityDarkRed, 20, true, true);
+                                CombatText.NewText(player.getRect(), Colors.RarityRed, 18, true, true);
                                 SoundEngine.PlaySound(SoundID.NPCDeath19, Projectile.position);
                                 for (int i = 0; i < 4; i++)
                                 {
-                                    Projectile.NewProjectile(Projectile.GetSource_FromAI(), player.Center, RedeHelper.PolarVector(Main.rand.NextFloat(5, 8), (Main.MouseWorld - player.Center).ToRotation() + Main.rand.NextFloat(-0.2f, 0.2f)), ModContent.ProjectileType<KeepersClaw_BloodWave>(), Projectile.damage, 2, player.whoAmI);
+                                    Projectile.NewProjectile(Projectile.GetSource_FromAI(), player.Center, RedeHelper.PolarVector(Main.rand.NextFloat(5, 8), (mousePoint - player.Center).ToRotation() + Main.rand.NextFloat(-0.2f, 0.2f)), ModContent.ProjectileType<KeepersClaw_BloodWave>(), Projectile.damage / 4, 2, player.whoAmI);
                                 }
                                 for (int i = 0; i < 20; i++)
                                 {
@@ -122,6 +131,9 @@ namespace Redemption.Items.Weapons.PreHM.Melee
         }
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
+            Projectile.localNPCImmunity[target.whoAmI] = 30;
+            target.immune[Projectile.owner] = 0;
+
             target.AddBuff(ModContent.BuffType<NecroticGougeDebuff>(), 600);
         }
         private float drawTimer;
@@ -137,10 +149,14 @@ namespace Redemption.Items.Weapons.PreHM.Melee
             var effects = Projectile.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
             int offset = Projectile.frame > 1 ? 14 : 0;
 
-            RedeDraw.DrawTreasureBagEffect(Main.spriteBatch, texture, ref drawTimer, Projectile.Center - Main.screenPosition, null, Color.Red * Projectile.Opacity * glow, Projectile.rotation, drawOrigin, Projectile.scale, effects);
+            Vector2 pos = Projectile.Center - Main.screenPosition - new Vector2(-1 * player.direction, 6 - offset) + Vector2.UnitY * Projectile.gfxOffY;
+            Main.spriteBatch.End();
+            Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+            RedeDraw.DrawTreasureBagEffect(Main.spriteBatch, texture, ref drawTimer, pos, new Rectangle?(rect), Color.Red * Projectile.Opacity * glow, Projectile.rotation, drawOrigin, Projectile.scale, effects);
+            Main.spriteBatch.End();
+            Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
 
-            Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition - new Vector2(-1 * player.direction, 6 - offset) + Vector2.UnitY * Projectile.gfxOffY,
-                new Rectangle?(rect), Projectile.GetAlpha(lightColor), Projectile.rotation, drawOrigin, Projectile.scale, effects, 0);
+            Main.EntitySpriteDraw(texture, pos, new Rectangle?(rect), Projectile.GetAlpha(lightColor), Projectile.rotation, drawOrigin, Projectile.scale, effects, 0);
 
             Texture2D slash = ModContent.Request<Texture2D>("Redemption/Items/Weapons/PreHM/Melee/KeepersClaw_SlashProj").Value;
             int height2 = slash.Height / 3;

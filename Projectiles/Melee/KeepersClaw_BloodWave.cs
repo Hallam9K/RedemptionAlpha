@@ -30,11 +30,14 @@ namespace Redemption.Projectiles.Melee
             Projectile.rotation = Projectile.velocity.ToRotation() + 1.57f;
             Projectile.alpha += 5;
             if (Collision.SolidCollision(Projectile.Center - Vector2.One, 1, 1))
+            {
+                Projectile.velocity *= .9f;
                 Projectile.alpha += 5;
+            }
             if (Projectile.alpha >= 255)
                 Projectile.Kill();
         }
-        public override bool? CanHitNPC(NPC target) => target.friendly && Projectile.alpha < 200 && Projectile.ai[0] < 2 ? null : false;
+        public override bool? CanHitNPC(NPC target) => !target.friendly && Projectile.alpha < 200 && Projectile.ai[0] < 2 ? null : false;
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
             Projectile.localNPCImmunity[target.whoAmI] = 40;

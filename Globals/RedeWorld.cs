@@ -221,7 +221,7 @@ namespace Redemption.Globals
                 {
                     labSafe = true;
 
-                    string status = "The laboratory's defence systems have malfunctioned...";
+                    string status = "The laboratory's defense systems have malfunctioned...";
                     if (Main.netMode == NetmodeID.Server)
                         ChatHelper.BroadcastChatMessage(NetworkText.FromLiteral(status), Color.Cyan);
                     else if (Main.netMode == NetmodeID.SinglePlayer)
@@ -373,12 +373,12 @@ namespace Redemption.Globals
                     string nukeDeathReason;
 
                     WeightedRandom<string> nukeDeaths = new(Main.rand);
-                    nukeDeaths.Add(player.name + " saw a second sunrise.", 5);
-                    nukeDeaths.Add(player.name + " was wiped off the face of " + Main.worldName + ".", 5);
-                    nukeDeaths.Add(player.name + " experienced doomsday.", 5);
-                    nukeDeaths.Add(player.name + " became a shadow on the ground.", 5);
-                    nukeDeaths.Add(player.name + " went out with a bang.", 5);
-                    nukeDeaths.Add(player.name + " couldn't find the fridge in time.", 1);
+                    nukeDeaths.Add(player.name + " saw a second sunrise", 5);
+                    nukeDeaths.Add(player.name + " was wiped off the face of " + Main.worldName + "", 5);
+                    nukeDeaths.Add(player.name + " experienced doomsday", 5);
+                    nukeDeaths.Add(player.name + " became a shadow on the ground", 5);
+                    nukeDeaths.Add(player.name + " went out with a bang", 5);
+                    nukeDeaths.Add(player.name + " couldn't find the fridge in time", 1);
 
                     nukeDeathReason = nukeDeaths;
                     if (!Main.dedServ)
