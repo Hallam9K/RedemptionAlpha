@@ -333,7 +333,7 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
             for (int i = 0; i < Main.maxNPCs; i++)
             {
                 NPC target = Main.npc[i];
-                if (!target.active || target.whoAmI == NPC.whoAmI || target.dontTakeDamage || target.type == NPCID.OldMan)
+                if (!target.active || target.whoAmI == NPC.whoAmI || target.dontTakeDamage || target.type == NPCID.OldMan || target.type == NPCID.TargetDummy)
                     continue;
 
                 if (target.friendly || target.lifeMax <= 5 || NPCID.Sets.TakesDamageFromHostilesWithoutBeingFriendly[target.type])
@@ -433,6 +433,7 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
         public override void SetDefaults()
         {
             base.SetDefaults();
+            Projectile.DamageType = DamageClass.Summon;
             Projectile.friendly = true;
             Projectile.hostile = false;
         }

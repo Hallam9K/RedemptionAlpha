@@ -11,6 +11,7 @@ using Redemption.BaseExtension;
 using Redemption.Items.Weapons.PreHM.Summon;
 using Redemption.Items.Materials.PreHM;
 using Terraria.Audio;
+using Redemption.Items.Tools.PreHM;
 
 namespace Redemption.NPCs.Friendly
 {
@@ -106,15 +107,17 @@ namespace Redemption.NPCs.Friendly
             }
         }
         public static int ChatNumber = 0;
+        public static bool request;
         public override void SetChatButtons(ref string button, ref string button2)
         {
+            bool offering = Main.LocalPlayer.HasItem(ModContent.ItemType<GraveSteelBattleaxe>());
             button = ChatNumber switch
             {
                 1 => "Olden Ruins?",
                 2 => "God of Decay?",
                 3 => "False Gods?",
                 4 => "Dead Ringer?",
-                5 => "Request Crux",
+                5 => request && offering ? "Offer Grave Steel Battleaxe" : "Request Crux",
                 _ => "About you?",
             };
             button2 = "Cycle Dialogue";
@@ -127,30 +130,44 @@ namespace Redemption.NPCs.Friendly
                 Main.npcChatText = ChitChat();
                 if (ChatNumber == 5)
                 {
-                    if (!Main.LocalPlayer.RedemptionAbility().SpiritwalkerActive)
+                    int offering = Main.LocalPlayer.FindItem(ModContent.ItemType<GraveSteelBattleaxe>());
+                    if (request && offering >= 0)
                     {
-                        Main.npcChatText = "Get in tha Spirit Realm, garbar! Can't do anythin' otherwise!";
-                        ChatNumber = 4;
-                        return;
-                    }
-                    int card = Main.LocalPlayer.FindItem(ModContent.ItemType<EmptyCruxCard>());
-                    if (card >= 0)
-                    {
-                        Main.LocalPlayer.inventory[card].stack--;
-                        if (Main.LocalPlayer.inventory[card].stack <= 0)
-                            Main.LocalPlayer.inventory[card] = new Item();
+                        if (!Main.LocalPlayer.RedemptionAbility().SpiritwalkerActive)
+                        {
+                            Main.npcChatText = "Get in tha Spirit Realm, garbar! Can't do anythin' otherwise!";
+                            ChatNumber = 4;
+                            return;
+                        }
+                        int card = Main.LocalPlayer.FindItem(ModContent.ItemType<EmptyCruxCard>());
+                        if (card >= 0)
+                        {
+                            Main.LocalPlayer.inventory[offering].stack--;
+                            if (Main.LocalPlayer.inventory[offering].stack <= 0)
+                                Main.LocalPlayer.inventory[offering] = new Item();
 
-                        Main.LocalPlayer.QuickSpawnItem(NPC.GetSource_Loot(), ModContent.ItemType<CruxCardGathicSkeletons>());
-                        Main.npcChatText = "Sure thing, lad! Have the spirits of my people, and may they stab ya foes hard!";
-                        Main.npcChatCornerItem = ModContent.ItemType<CruxCardGathicSkeletons>();
-                        SoundEngine.PlaySound(SoundID.Chat);
+                            Main.LocalPlayer.inventory[card].stack--;
+                            if (Main.LocalPlayer.inventory[card].stack <= 0)
+                                Main.LocalPlayer.inventory[card] = new Item();
+
+                            Main.LocalPlayer.QuickSpawnItem(NPC.GetSource_Loot(), ModContent.ItemType<CruxCardGathicSkeletons>());
+                            Main.npcChatText = "Weapon's a bit dusty but it'll do nicely. You wanted ma crux? Sure thing, lad! Have the spirits of my people, and may they stab ya foes hard!";
+                            Main.npcChatCornerItem = ModContent.ItemType<CruxCardGathicSkeletons>();
+                            SoundEngine.PlaySound(SoundID.Chat);
+                            ChatNumber = 4;
+                        }
+                        else
+                        {
+                            Main.npcChatText = "Gimme somethin' to imbue first!";
+                            Main.npcChatCornerItem = ModContent.ItemType<EmptyCruxCard>();
+                        }
                     }
                     else
                     {
-                        Main.npcChatText = "Gimme somethin' to imbue first!";
-                        Main.npcChatCornerItem = ModContent.ItemType<EmptyCruxCard>();
+                        Main.npcChatText = "Of course! But first, I'd like ya to give ma corpse a weapon. Let the bone-heads and tomb raiders know I died fightin'! A big ol' battleaxe will do.";
+                        Main.npcChatCornerItem = ModContent.ItemType<GraveSteelBattleaxe>();
                     }
-                    ChatNumber = 4;
+                    request = true;
                 }
             }
             else

@@ -70,7 +70,7 @@ namespace Redemption.Globals
         public static bool deadRingerGiven;
         public static bool newbGone;
         public static bool slayerMessageGiven;
-        public static bool[] spawnCleared = new bool[4];
+        public static bool[] spawnCleared = new bool[5];
 
         #region Nuke Shenanigans
         public static int nukeTimerInternal = 1800;

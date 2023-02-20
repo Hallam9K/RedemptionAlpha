@@ -428,6 +428,10 @@ namespace Redemption.NPCs.PreHM
                     TypeNPC = ModContent.NPCType<AncientGladestoneGolem>();
                     clearNum = 3;
                     break;
+                case 4:
+                    TypeNPC = ModContent.NPCType<JollyMadman>();
+                    clearNum = 2;
+                    break;
             }
             if (player.dead)
             {

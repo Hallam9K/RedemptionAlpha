@@ -134,5 +134,6 @@ namespace Redemption
         public static readonly SoundStyle Pixie2 = new("Redemption/Sounds/Custom/Pixie2") { PitchVariance = .1f };
         public static readonly SoundStyle Pixie3 = new("Redemption/Sounds/Custom/Pixie3") { PitchVariance = .1f };
         public static readonly SoundStyle RoosterRoar = new("Redemption/Sounds/Custom/RoosterRoar") { PitchVariance = .1f };
+        public static readonly SoundStyle Roar1 = new("Redemption/Sounds/Custom/Roar1") { PitchVariance = .1f };
     }
 }

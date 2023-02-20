@@ -183,7 +183,37 @@ namespace Redemption
                 });
             }
         }
+        public override object Call(params object[] args)
+        {
+            try
+            {
+                string code = args[0].ToString();
 
+                switch (code)
+                {
+                    case "AbominationnClearEvents":
+                        bool eventOccurring = FowlMorningWorld.FowlMorningActive;
+                        bool canClearEvents = Convert.ToBoolean(args[1]);
+                        if (eventOccurring && canClearEvents)
+                        {
+                            FowlMorningWorld.FowlMorningActive = false;
+                            FowlMorningWorld.ChickPoints = 0;
+                            FowlMorningWorld.ChickWave = 0;
+
+                            if (Main.netMode == NetmodeID.Server)
+                                NetMessage.SendData(MessageID.WorldData);
+
+                            FowlMorningWorld.SendInfoPacket();
+                        }
+                        return eventOccurring;
+                }
+            }
+            catch (Exception e)
+            {
+                Logger.Error("Call Error: " + e.StackTrace + e.Message);
+            }
+            return base.Call(args);
+        }
         public static void PremultiplyTexture(ref Texture2D texture)
         {
             Color[] buffer = new Color[texture.Width * texture.Height];

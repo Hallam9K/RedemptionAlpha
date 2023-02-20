@@ -128,6 +128,10 @@ namespace Redemption.NPCs.Bosses.Neb.Clone
         }
         public override void BossLoot(ref string name, ref int potionType)
         {
+            NPC nPC = new();
+            nPC.SetDefaults(ModContent.NPCType<Nebuleus>());
+            Main.BestiaryTracker.Kills.RegisterKill(nPC);
+
             potionType = ItemID.SuperHealingPotion;
             if (!Main.expertMode && Main.rand.NextBool(7))
             {

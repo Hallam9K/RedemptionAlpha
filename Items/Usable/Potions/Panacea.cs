@@ -11,8 +11,7 @@ namespace Redemption.Items.Usable.Potions
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Panacea Pill");
-            Tooltip.SetDefault("Cures radiation poisoning instantly and grants complete immunity to it for 10 minutes"
-                + "\n[Cheat Item]");
+            Tooltip.SetDefault("Cures radiation poisoning instantly and grants complete immunity to it for 10 minutes");
         }
 
         public override void SetDefaults()

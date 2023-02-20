@@ -26,6 +26,7 @@ namespace Redemption.Projectiles.Ranged
             Projectile.penetrate = 1;
             Projectile.timeLeft = 600;
             Projectile.alpha = 255;
+            Projectile.arrow = true;
         }
         public override void Kill(int timeLeft)
         {

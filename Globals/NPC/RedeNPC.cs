@@ -750,6 +750,7 @@ namespace Redemption.Globals.NPC
                         pool.Add(key.Key, key.Value);
                     }
                 }
+                return;
             }
             if (spawnInfo.Player.InModBiome<LabBiome>())
             {
@@ -760,7 +761,7 @@ namespace Redemption.Globals.NPC
                 }
                 else
                 {
-                    int[] LabTileArray = { ModContent.TileType<LabPlatingTileUnsafe>(), ModContent.TileType<OvergrownLabPlatingTile>(), ModContent.TileType<DangerTapeTile>(), ModContent.TileType<HardenedSludgeTile>(), ModContent.TileType<BlackHardenedSludgeTile>() };
+                    int[] LabTileArray = { ModContent.TileType<LabPlatingTileUnsafe>(), ModContent.TileType<DangerTapeTile>(), ModContent.TileType<HardenedSludgeTile>(), ModContent.TileType<BlackHardenedSludgeTile>() };
                     bool tileCheck = LabTileArray.Contains(Main.tile[spawnInfo.SpawnTileX, spawnInfo.SpawnTileY].TileType);
 
                     pool.Clear();

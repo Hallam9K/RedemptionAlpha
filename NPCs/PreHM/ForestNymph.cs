@@ -739,7 +739,7 @@ namespace Redemption.NPCs.PreHM
             for (int i = 0; i < Main.maxNPCs; i++)
             {
                 NPC target = Main.npc[i];
-                if (!target.active || target.whoAmI == NPC.whoAmI || target.dontTakeDamage || target.type == NPCID.OldMan)
+                if (!target.active || target.whoAmI == NPC.whoAmI || target.dontTakeDamage || target.type == NPCID.OldMan || target.type == NPCID.TargetDummy)
                     continue;
 
                 if (target.lifeMax <= 5 || target.friendly || target.damage <= 0 || NPCLists.Plantlike.Contains(target.type))

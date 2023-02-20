@@ -180,7 +180,7 @@ namespace Redemption.NPCs.Friendly
                             Main.LocalPlayer.inventory[card] = new Item();
 
                         Main.LocalPlayer.QuickSpawnItem(NPC.GetSource_Loot(), ModContent.ItemType<CruxCardSkeleton>());
-                        Main.npcChatText = "Bravo! I 'ave infused ya card with the spirits of two skeletons, use some souls to summon 'em! They'll assist ya in battle, or make nice company if ya feelin' lonely. They do 'ave a mind of their own, so if they scurry off somewhere, use the card to tug their souls back!";
+                        Main.npcChatText = "Bravo! I 'ave infused ya card with the spirits of two skeletons, use some souls to summon 'em! They'll assist ya in battle, or make nice company if ya feelin' lonely. They do 'ave a mind of their own, so if they scurry off somewhere, use the card to tug their souls back! Keep in mind, other spirits may wish for somethin' in return for these.";
                         Main.npcChatCornerItem = ModContent.ItemType<CruxCardSkeleton>();
                         SoundEngine.PlaySound(SoundID.Chat);
                     }

@@ -41,6 +41,7 @@ using Redemption.NPCs.Bosses.FowlEmperor;
 using Redemption.NPCs.FowlMorning;
 using Redemption.Items;
 using Terraria.Achievements;
+using System;
 
 namespace Redemption.CrossMod
 {
@@ -51,6 +52,7 @@ namespace Redemption.CrossMod
             PerformBossChecklistSupport();
             PerformCencusSupport();
             PerformAchievementSupport();
+            PerformFargosSupport();
         }
         private static void PerformAchievementSupport()
         {
@@ -477,6 +479,25 @@ namespace Redemption.CrossMod
                 censusMod.Call("TownNPCCondition", ModContent.NPCType<Newb>(), "Dig up the dirt mound beneath the surface portal");
                 censusMod.Call("TownNPCCondition", ModContent.NPCType<TBot>(), "Defeat the Seed of Infection and have a suitable house");
                 censusMod.Call("TownNPCCondition", ModContent.NPCType<ForestNymph_Friendly>(), "Use the [i:" + ModContent.ItemType<KingsOakStaff>() + "] to gain a Forest Nymph's trust, requires positive alignment");
+            }
+        }
+        private static void PerformFargosSupport()
+        {
+            if (ModLoader.TryGetMod("Fargowiltas", out Mod fargos))
+            {
+                fargos.Call("AddSummon", 0.1f, "Redemption", "EggCrown", () => RedeBossDowned.downedFowlEmperor, Item.buyPrice(0, 4));
+                fargos.Call("AddSummon", 1.5f, "Redemption", "HeartOfThorns", () => RedeBossDowned.downedThorn, Item.buyPrice(0, 6));
+                fargos.Call("AddSummon", 1.9f, "Redemption", "DemonScroll", () => RedeBossDowned.downedErhan, Item.buyPrice(0, 6));
+                fargos.Call("AddSummon", 2.4f, "Redemption", "WeddingRing", () => RedeBossDowned.downedKeeper, Item.buyPrice(0, 8));
+                fargos.Call("AddSummon", 2.41f, "Redemption", "SorrowfulEssence", () => RedeBossDowned.downedSkullDigger, Item.buyPrice(0, 4));
+                fargos.Call("AddSummon", 3.48f, "Redemption", "AnomalyDetector", () => RedeBossDowned.downedSeed, Item.buyPrice(0, 10));
+                fargos.Call("AddSummon", 11.1f, "Redemption", "LabHologramDevice", () => RedeBossDowned.downedBehemoth, Item.buyPrice(0, 20));
+                fargos.Call("AddSummon", 11.999f, "Redemption", "CyberTech", () => RedeBossDowned.downedSlayer, Item.buyPrice(0, 40));
+                fargos.Call("AddSummon", 12.5f, "Redemption", "OmegaTransmitter", () => RedeBossDowned.downedOmega1 || RedeBossDowned.downedOmega2 || RedeBossDowned.downedOmega3, Item.buyPrice(0, 60));
+                fargos.Call("AddSummon", 20f, "Redemption", "AncientSigil", () => RedeBossDowned.downedADD, Item.buyPrice(4));
+                fargos.Call("AddSummon", 21f, "Redemption", "NebSummon", () => RedeBossDowned.downedNebuleus, Item.buyPrice(10));
+
+                fargos.Call("AddEventSummon", 1f, "Redemption", "FowlWarHorn", () => RedeBossDowned.downedFowlMorning, Item.buyPrice(0, 4, 50));
             }
         }
     }

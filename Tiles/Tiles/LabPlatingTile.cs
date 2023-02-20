@@ -20,8 +20,8 @@ namespace Redemption.Tiles.Tiles
             Main.tileMerge[ModContent.TileType<OvergrownLabPlatingTile>()][Type] = true;
             DustType = ModContent.DustType<LabPlatingDust>();
             ItemDrop = ModContent.ItemType<LabPlating>();
-            MinPick = 10;
-            MineResist = 1.5f;
+            MinPick = 200;
+            MineResist = 5f;
             HitSound = SoundID.Tink;
             AddMapEntry(new Color(202, 210, 210));
         }

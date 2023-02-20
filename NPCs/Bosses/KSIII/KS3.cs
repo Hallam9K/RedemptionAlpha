@@ -226,7 +226,6 @@ namespace Redemption.NPCs.Bosses.KSIII
                         else
                             RedeSystem.Instance.ChaliceUIElement.DisplayDialogue("Oh dear, he seems to have a very short temper, and you winning probably made it worse.\nI hope he doesn't do anything stupid.", 240, 30, 0, Color.DarkGoldenrod);
                     }
-
                 }
             }
             NPC.SetEventFlagCleared(ref RedeBossDowned.downedSlayer, -1);
@@ -2235,6 +2234,9 @@ namespace Redemption.NPCs.Bosses.KSIII
                         }
                         if (AITimer > 5000)
                         {
+                            if (Main.LocalPlayer.HasItem(ModContent.ItemType<AlignmentTeller>()) && !Main.dedServ && !RedeBossDowned.downedSlayer)
+                                RedeSystem.Instance.ChaliceUIElement.DisplayDialogue("I would leave him be, if I were you.", 180, 30, 0, Color.DarkGoldenrod);
+
                             NPC.life = 1;
                             NPC.Shoot(NPC.Center, ModContent.ProjectileType<ProjDeath>(), 0, Vector2.Zero, false, SoundID.Item1);
                             HeadType = 0;
@@ -2507,6 +2509,8 @@ namespace Redemption.NPCs.Bosses.KSIII
             {
                 if (NPC.ai[0] == 10)
                 {
+                    if (Main.LocalPlayer.HasItem(ModContent.ItemType<AlignmentTeller>()) && !Main.dedServ)
+                        ChaliceAlignmentUI.Visible = false;
                     AITimer = 0;
                     AIState = ActionState.Attacked;
                     NPC.netUpdate = true;

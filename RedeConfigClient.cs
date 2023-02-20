@@ -43,5 +43,22 @@ namespace Redemption
         [Label("No Patient Zero Build-Up")]
         [Tooltip("Makes the boss begin the fight instantly, mainly for no-hitters. (This will cause the boss's pulse effect to not sync well with the music)")]
         public bool NoPZBuildUp;
+
+        [Header("The Funnies (Remember to disable these before intending to generate a normal world!)")]
+        [Label("Oops! All spider!")]
+        [Tooltip("Generating a new world will cause all stone blocks to become infested stone")]
+        public bool FunniSpiders;
+
+        [Label("Alright, who set off the nuke?")]
+        [Tooltip("Generating a new world will have a Wasteland biome naturally generate (This can break progression, obviously)")]
+        public bool FunniWasteland;
+
+        [Label("Liden at home:")]
+        [Tooltip("Generating a new world will convert every tile into it's irradiated version (This can break progression, obviously)")]
+        public bool FunniAllWasteland;
+
+        [Label("The Janitor's Last Stand")]
+        [Tooltip("Generating a new world will create a clean lab with safe laboratory tiles and no sludge (This can break progression, obviously)")]
+        public bool FunniJanitor;
     }
 }

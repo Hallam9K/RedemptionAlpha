@@ -181,18 +181,20 @@ namespace Redemption.NPCs.PreHM
         private readonly float[] doorVars = new float[3];
         public override void OnSpawn(IEntitySource source)
         {
-            WeightedRandom<int> NPCType = new(Main.rand);
-            NPCType.Add(ModContent.NPCType<SkeletonWanderer>());
-            NPCType.Add(ModContent.NPCType<SkeletonAssassin>());
-            NPCType.Add(ModContent.NPCType<SkeletonDuelist>());
-            NPCType.Add(ModContent.NPCType<EpidotrianSkeleton>());
-
-            for (int i = 0; i < Main.rand.Next(3, 6); i++)
+            if (NPC.ai[3] != 4)
             {
-                Vector2 pos = NPCHelper.FindGround(NPC, 8);
-                RedeHelper.SpawnNPC(NPC.GetSource_FromAI(), (int)pos.X * 16, (int)pos.Y * 16, NPCType);
-            }
+                WeightedRandom<int> NPCType = new(Main.rand);
+                NPCType.Add(ModContent.NPCType<SkeletonWanderer>());
+                NPCType.Add(ModContent.NPCType<SkeletonAssassin>());
+                NPCType.Add(ModContent.NPCType<SkeletonDuelist>());
+                NPCType.Add(ModContent.NPCType<EpidotrianSkeleton>());
 
+                for (int i = 0; i < Main.rand.Next(3, 6); i++)
+                {
+                    Vector2 pos = NPCHelper.FindGround(NPC, 8);
+                    RedeHelper.SpawnNPC(NPC.GetSource_FromAI(), (int)pos.X * 16, (int)pos.Y * 16, NPCType);
+                }
+            }
             TimerRand = Main.rand.Next(80, 280);
             NPC.netUpdate = true;
         }
@@ -317,6 +319,21 @@ namespace Redemption.NPCs.PreHM
                             BaseAI.DamageNPC(attackerNPC, damage, 5, hitDirection, NPC);
                             attackerNPC.AddBuff(BuffID.Bleeding, 1000);
                             attackerNPC.AddBuff(ModContent.BuffType<DirtyWoundDebuff>(), 1400);
+                            if (attackerNPC.life <= 0)
+                            {
+                                for (int i = 0; i < 30; i++)
+                                {
+                                    int dustIndex = Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.LifeDrain);
+                                    Main.dust[dustIndex].velocity.Y = -3;
+                                    Main.dust[dustIndex].velocity.X = 0;
+                                    Main.dust[dustIndex].noGravity = true;
+                                }
+                                SoundEngine.PlaySound(SoundID.NPCHit48, NPC.position);
+                                NPC.life += 50;
+                                if (NPC.life >= NPC.lifeMax)
+                                    NPC.life = NPC.lifeMax;
+                                NPC.HealEffect(50);
+                            }
                         }
                         else if (globalNPC.attacker is Player attackerPlayer)
                         {
@@ -417,7 +434,7 @@ namespace Redemption.NPCs.PreHM
             for (int i = 0; i < Main.maxNPCs; i++)
             {
                 NPC target = Main.npc[i];
-                if (!target.active || target.whoAmI == NPC.whoAmI || target.dontTakeDamage || target.type == NPCID.OldMan)
+                if (!target.active || target.whoAmI == NPC.whoAmI || target.dontTakeDamage || target.type == NPCID.OldMan || target.type == NPCID.TargetDummy)
                     continue;
 
                 if (!WhitelistNPC.Contains(target.type) && (target.lifeMax <= 5 || (!target.friendly && !NPCID.Sets.TakesDamageFromHostilesWithoutBeingFriendly[target.type])))

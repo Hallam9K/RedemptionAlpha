@@ -76,10 +76,10 @@ namespace Redemption.Globals
             if (!Terraria.NPC.AnyNPCs(ModContent.NPCType<PZ>()) && !Terraria.NPC.AnyNPCs(ModContent.NPCType<PZ_Inactive>()) && !RedeBossDowned.downedPZ)
                 SpawnNPCInWorld(KariPos, ModContent.NPCType<PZ_Inactive>());
         }
-        public static void SpawnNPCInWorld(Vector2 pos, int npcType, int ai0 = 0)
+        public static void SpawnNPCInWorld(Vector2 pos, int npcType, int ai0 = 0, int ai1 = 0, int ai2 = 0, int ai3 = 0)
         {
             if (Main.netMode != NetmodeID.MultiplayerClient)
-                RedeHelper.SpawnNPC(new EntitySource_SpawnNPC(), (int)pos.X, (int)pos.Y, npcType, ai0);
+                RedeHelper.SpawnNPC(new EntitySource_SpawnNPC(), (int)pos.X, (int)pos.Y, npcType, ai0, ai1, ai2, ai3);
             //else if (Main.netMode != NetmodeID.SinglePlayer)
             //    Redemption.WriteToPacket(Redemption.Instance.GetPacket(), (byte)ModMessageType.NPCSpawnFromClient, npcType, pos).Send(-1);
         }

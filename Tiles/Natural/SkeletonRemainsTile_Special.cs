@@ -20,6 +20,7 @@ namespace Redemption.Tiles.Natural
         public override void SetStaticDefaults()
         {
             base.SetStaticDefaults();
+            Main.tileLighted[Type] = true;
             DustType = DustID.DungeonSpirit;
             MinPick = 500;
             MineResist = 50;
@@ -150,6 +151,7 @@ namespace Redemption.Tiles.Natural
         public override void SetStaticDefaults()
         {
             base.SetStaticDefaults();
+            Main.tileLighted[Type] = true;
             DustType = DustID.DungeonSpirit;
             MinPick = 500;
             MineResist = 50;
@@ -264,6 +266,7 @@ namespace Redemption.Tiles.Natural
         public override void SetStaticDefaults()
         {
             base.SetStaticDefaults();
+            Main.tileLighted[Type] = true;
             DustType = DustID.DungeonSpirit;
             MinPick = 500;
             MineResist = 50;
@@ -378,6 +381,7 @@ namespace Redemption.Tiles.Natural
         public override void SetStaticDefaults()
         {
             base.SetStaticDefaults();
+            Main.tileLighted[Type] = true;
             DustType = DustID.DungeonSpirit;
             MinPick = 500;
             MineResist = 50;
@@ -485,6 +489,120 @@ namespace Redemption.Tiles.Natural
         }
         public override void NumDust(int i, int j, bool fail, ref int num) => num = fail ? 1 : 3;
     }
+    public class SkeletonRemainsTile7_Special : SkeletonRemainsTile7
+    {
+        public override string Texture => "Redemption/Tiles/Natural/SkeletonRemainsTile7";
+        public override void SetStaticDefaults()
+        {
+            base.SetStaticDefaults();
+            Main.tileLighted[Type] = true;
+            DustType = DustID.DungeonSpirit;
+            MinPick = 500;
+            MineResist = 50;
+            ModTranslation name = CreateMapEntryName();
+            name.SetDefault("Skeletal Remains");
+            AddMapEntry(new Color(229, 229, 195));
+        }
+        public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)
+        {
+            r = 0.3f;
+            g = 0.3f;
+            b = 0.6f;
+        }
+        public override void NearbyEffects(int i, int j, bool closer)
+        {
+            if (Main.tile[i, j].TileFrameX == 54 && Main.tile[i, j].TileFrameY == 0)
+            {
+                if (Main.rand.NextBool(20))
+                {
+                    int d = Dust.NewDust(new Vector2(i * 16, j * 16), 48, 32, DustID.DungeonSpirit);
+                    Main.dust[d].velocity.Y -= 3f;
+                    Main.dust[d].noGravity = true;
+                }
+            }
+        }
+        public override void PostDraw(int i, int j, SpriteBatch spriteBatch)
+        {
+            Tile tile = Framing.GetTileSafely(i, j);
+            Vector2 zero = new(Main.offScreenRange, Main.offScreenRange);
+            if (Main.drawToScreen)
+                zero = Vector2.Zero;
+
+            int height = tile.TileFrameY == 36 ? 18 : 16;
+            Main.spriteBatch.Draw(ModContent.Request<Texture2D>("Redemption/Tiles/Natural/SkeletonRemainsTile7_Glow").Value, new Vector2((i * 16) - (int)Main.screenPosition.X, (j * 16) - (int)Main.screenPosition.Y) + zero, new Rectangle(tile.TileFrameX, tile.TileFrameY - 2, 16, height), Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
+        }
+        public override bool CanExplode(int i, int j) => false;
+        public override void MouseOver(int i, int j)
+        {
+            Player player = Main.LocalPlayer;
+            player.noThrow = 2;
+            player.cursorItemIconEnabled = true;
+            if (player.HeldItem.type == ModContent.ItemType<DeadRinger>())
+                player.cursorItemIconID = ModContent.ItemType<DeadRinger>();
+            else
+            {
+                player.cursorItemIconEnabled = false;
+                player.cursorItemIconID = 0;
+            }
+        }
+        public override bool RightClick(int i, int j)
+        {
+            Player player = Main.LocalPlayer;
+            if (player.HeldItem.type == ModContent.ItemType<DeadRinger>())
+            {
+                if (!NPC.AnyNPCs(ModContent.NPCType<SpiritDruid>()))
+                {
+                    int offset = -1;
+                    if (Main.tile[i, j].TileFrameX == 54)
+                        offset = 1;
+                    if (Main.tile[i, j].TileFrameX == 54 + 18)
+                        offset = 0;
+
+                    if (Main.netMode != NetmodeID.MultiplayerClient)
+                    {
+                        int index1 = NPC.NewNPC(new EntitySource_TileInteraction(player, i, j), (i + offset) * 16, (j + 1) * 16, ModContent.NPCType<SpiritDruid>());
+                        SoundEngine.PlaySound(SoundID.Item74, Main.npc[index1].position);
+                        Main.npc[index1].velocity.Y -= 4;
+                        Main.npc[index1].netUpdate2 = true;
+                    }
+                    else
+                    {
+                        if (Main.netMode == NetmodeID.SinglePlayer)
+                            return false;
+
+                        Redemption.WriteToPacket(Redemption.Instance.GetPacket(), (byte)ModMessageType.NPCSpawnFromClient, ModContent.NPCType<SpiritDruid>(), new Vector2((i + offset) * 16, (j + 1) * 16)).Send(-1);
+                        SoundEngine.PlaySound(SoundID.Item74, player.position);
+                    }
+                }
+            }
+            return true;
+        }
+        public override bool PreDraw(int i, int j, SpriteBatch spriteBatch)
+        {
+            if (!Main.LocalPlayer.RedemptionAbility().SpiritwalkerActive)
+                return true;
+
+            Texture2D flare = ModContent.Request<Texture2D>("Redemption/Textures/WhiteFlare").Value;
+            Rectangle rect = new(0, 0, flare.Width, flare.Height);
+            Vector2 zero = new(Main.offScreenRange, Main.offScreenRange);
+            if (Main.drawToScreen)
+                zero = Vector2.Zero;
+            Vector2 origin = new(flare.Width / 2f, flare.Height / 2f);
+            if (Main.tile[i, j].TileFrameX == 54 && Main.tile[i, j].TileFrameY == 0)
+            {
+                spriteBatch.End();
+                spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null);
+
+                spriteBatch.Draw(flare, new Vector2(((i + 1.5f) * 16) - (int)Main.screenPosition.X, ((j + 1.4f) * 16) - (int)Main.screenPosition.Y) + zero, new Rectangle?(rect), RedeColor.COLOR_GLOWPULSE, Main.GlobalTimeWrappedHourly, origin, 1.5f, 0, 1f);
+                spriteBatch.Draw(flare, new Vector2(((i + 1.5f) * 16) - (int)Main.screenPosition.X, ((j + 1.4f) * 16) - (int)Main.screenPosition.Y) + zero, new Rectangle?(rect), RedeColor.COLOR_GLOWPULSE, -Main.GlobalTimeWrappedHourly, origin, 1.5f, 0, 1f);
+
+                spriteBatch.End();
+                spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null);
+            }
+            return true;
+        }
+        public override void NumDust(int i, int j, bool fail, ref int num) => num = fail ? 1 : 3;
+    }
     public class SkeletonRemains1_Special : PlaceholderTile
     {
         public override string Texture => Redemption.PLACEHOLDER_TEXTURE;
@@ -535,6 +653,19 @@ namespace Redemption.Tiles.Natural
         {
             base.SetDefaults();
             Item.createTile = ModContent.TileType<SkeletonRemainsTile5_Special>();
+        }
+    }
+    public class SkeletonRemains7_Special : PlaceholderTile
+    {
+        public override string Texture => Redemption.PLACEHOLDER_TEXTURE;
+        public override void SetStaticDefaults()
+        {
+            DisplayName.SetDefault("Skeletal Remains (Druid)");
+        }
+        public override void SetDefaults()
+        {
+            base.SetDefaults();
+            Item.createTile = ModContent.TileType<SkeletonRemainsTile7_Special>();
         }
     }
 }
