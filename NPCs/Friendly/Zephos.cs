@@ -21,6 +21,7 @@ using Redemption.Items.Weapons.PostML.Melee;
 using Redemption.Items.Placeable.Furniture.Misc;
 using Redemption.Items.Accessories.PreHM;
 using Redemption.Items.Materials.HM;
+using ReLogic.Content;
 
 namespace Redemption.NPCs.Friendly
 {
@@ -129,6 +130,42 @@ namespace Redemption.NPCs.Friendly
             var effects = NPC.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
 
             spriteBatch.Draw(TextureAssets.Npc[NPC.type].Value, NPC.Center + new Vector2(0, 1) - screenPos, NPC.frame, NPC.GetAlpha(drawColor), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
+
+            if (NPC.altTexture == 1)
+            {
+                Asset<Texture2D> hat = ModContent.Request<Texture2D>("Terraria/Images/Item_" + ItemID.PartyHat);
+                int offset;
+                switch (NPC.frame.Y / 52)
+                {
+                    default:
+                        offset = 0;
+                        break;
+                    case 3:
+                        offset = 2;
+                        break;
+                    case 4:
+                        offset = 2;
+                        break;
+                    case 5:
+                        offset = 2;
+                        break;
+                    case 10:
+                        offset = 2;
+                        break;
+                    case 11:
+                        offset = 2;
+                        break;
+                    case 12:
+                        offset = 2;
+                        break;
+                    case 18:
+                        offset = 2;
+                        break;
+                }
+                var hatEffects = NPC.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
+                Vector2 origin = new(hat.Value.Width / 2f, hat.Value.Height / 2f);
+                spriteBatch.Draw(hat.Value, NPC.Center - new Vector2(4 * NPC.spriteDirection, 24 + offset) - screenPos, null, NPC.GetAlpha(drawColor), NPC.rotation, origin, NPC.scale, hatEffects, 0);
+            }
             return false;
         }
 
@@ -151,7 +188,7 @@ namespace Redemption.NPCs.Friendly
         {
             return new List<string> { "Zephos" };
         }
-
+        public override ITownNPCProfile TownNPCProfile() => new ZephosProfile();
         public override string GetChat()
         {
             WeightedRandom<string> chat = new(Main.rand);
@@ -420,5 +457,12 @@ namespace Redemption.NPCs.Friendly
             itemWidth = 36;
             itemHeight = 34;
         }
+    }
+    public class ZephosProfile : ITownNPCProfile
+    {
+        public int RollVariation() => 0;
+        public string GetNameForVariant(NPC npc) => npc.getNewNPCName();
+        public Asset<Texture2D> GetTextureNPCShouldUse(NPC npc) => ModContent.Request<Texture2D>("Redemption/NPCs/Friendly/Zephos");
+        public int GetHeadTextureIndex(NPC npc) => ModContent.GetModHeadSlot("Redemption/NPCs/Friendly/Zephos_Head");
     }
 }

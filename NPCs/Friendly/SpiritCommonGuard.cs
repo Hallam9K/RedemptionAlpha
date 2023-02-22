@@ -11,6 +11,8 @@ using Redemption.BaseExtension;
 using Redemption.Items.Weapons.PreHM.Summon;
 using Redemption.Items.Materials.PreHM;
 using Terraria.Audio;
+using Redemption.Items.Weapons.PreHM.Melee;
+using Redemption.Base;
 
 namespace Redemption.NPCs.Friendly
 {
@@ -106,14 +108,16 @@ namespace Redemption.NPCs.Friendly
             }
         }
         public static int ChatNumber = 0;
+        public static bool request;
         public override void SetChatButtons(ref string button, ref string button2)
         {
+            bool offering = Main.LocalPlayer.HasItem(ModContent.ItemType<NoblesHalberd>());
             button = ChatNumber switch
             {
                 1 => "Anglon?",
                 2 => "Ricusa?",
                 3 => "Demons?",
-                4 => "Request Crux",
+                4 => request && offering ? "Offer Noble's Halberd" : "Request Crux",
                 _ => "About you?",
             };
             button2 = "Cycle Dialogue";
@@ -126,30 +130,44 @@ namespace Redemption.NPCs.Friendly
                 Main.npcChatText = ChitChat();
                 if (ChatNumber == 4)
                 {
-                    if (!Main.LocalPlayer.RedemptionAbility().SpiritwalkerActive)
+                    int offering = Main.LocalPlayer.FindItem(ModContent.ItemType<NoblesHalberd>());
+                    if (request && offering >= 0)
                     {
-                        Main.npcChatText = "Thou must be at least partly within the Spirit Realm for me to give thee what you ask.";
-                        ChatNumber = 3;
-                        return;
-                    }
-                    int card = Main.LocalPlayer.FindItem(ModContent.ItemType<EmptyCruxCard>());
-                    if (card >= 0)
-                    {
-                        Main.LocalPlayer.inventory[card].stack--;
-                        if (Main.LocalPlayer.inventory[card].stack <= 0)
-                            Main.LocalPlayer.inventory[card] = new Item();
+                        if (!Main.LocalPlayer.RedemptionAbility().SpiritwalkerActive)
+                        {
+                            Main.npcChatText = "Thou must be at least partly within the Spirit Realm for me to give thee what you ask.";
+                            ChatNumber = 3;
+                            return;
+                        }
+                        int card = Main.LocalPlayer.FindItem(ModContent.ItemType<EmptyCruxCard>());
+                        if (card >= 0)
+                        {
+                            Main.LocalPlayer.inventory[offering].stack--;
+                            if (Main.LocalPlayer.inventory[offering].stack <= 0)
+                                Main.LocalPlayer.inventory[offering] = new Item();
 
-                        Main.LocalPlayer.QuickSpawnItem(NPC.GetSource_Loot(), ModContent.ItemType<CruxCardAnglonSkeletons>());
-                        Main.npcChatText = "Aye, take it, within me lies the Common Guard's spirit! May it protect and defend thee against the greatest of foes.";
-                        Main.npcChatCornerItem = ModContent.ItemType<CruxCardAnglonSkeletons>();
-                        SoundEngine.PlaySound(SoundID.Chat);
+                            Main.LocalPlayer.inventory[card].stack--;
+                            if (Main.LocalPlayer.inventory[card].stack <= 0)
+                                Main.LocalPlayer.inventory[card] = new Item();
+
+                            Main.LocalPlayer.QuickSpawnItem(NPC.GetSource_Loot(), ModContent.ItemType<CruxCardAnglonSkeletons>());
+                            Main.npcChatText = "Aye, take it, within me lies the Common Guard's spirit! May it protect and defend thee against the greatest of foes.";
+                            Main.npcChatCornerItem = ModContent.ItemType<CruxCardAnglonSkeletons>();
+                            SoundEngine.PlaySound(SoundID.Chat);
+                            ChatNumber = 3;
+                        }
+                        else
+                        {
+                            Main.npcChatText = "I'll need something to imbue first.";
+                            Main.npcChatCornerItem = ModContent.ItemType<EmptyCruxCard>();
+                        }
                     }
                     else
                     {
-                        Main.npcChatText = "I'll need something to imbue first.";
-                        Main.npcChatCornerItem = ModContent.ItemType<EmptyCruxCard>();
+                        Main.npcChatText = "Gladly, however I request something in return. My remains lay empty-handed, if thou'st may offer upon them a weapon of my unit, then I shall be complacent. A lone corpse tells a bare tale.";
+                        Main.npcChatCornerItem = ModContent.ItemType<NoblesHalberd>();
                     }
-                    ChatNumber = 3;
+                    request = true;
                 }
             }
             else

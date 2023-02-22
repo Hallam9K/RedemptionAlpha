@@ -23,8 +23,7 @@ namespace Redemption.Items.Usable.Summons
             DisplayName.SetDefault("Galaxy Stone");
             Tooltip.SetDefault("Summons the Angel of the Cosmos"
                 + "\nOnly usable at night"
-                + "\nNot consumable" +
-                "\n[i:" + ModContent.ItemType<BadNeutralRoute>() + "][c/ff5533: This item may have a negative impact onto the world depending on past decisions]");
+                + "\nNot consumable");
             Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(4, 8));
             SacrificeTotal = 1;
             ItemID.Sets.SortingPriorityBossSpawns[Type] = 13;

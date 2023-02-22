@@ -22,6 +22,8 @@ using Redemption.BaseExtension;
 using Redemption.Items.Donator.Lizzy;
 using Terraria.GameContent.UI;
 using Redemption.Items.Materials.PostML;
+using Terraria.GameContent;
+using Terraria.ModLoader.Default;
 
 namespace Redemption.NPCs.Friendly
 {
@@ -55,12 +57,35 @@ namespace Redemption.NPCs.Friendly
             NPC.npcSlots = 0;
         }
 
-        public override bool UsesPartyHat() => false;
+        public override bool UsesPartyHat() => true;
         public override bool CanTownNPCSpawn(int numTownNPCs, int money) => false;
         public override bool CanChat() => true;
         public override bool CheckActive()
         {
             return false;
+        }
+        public override void PostDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
+        {
+            if (Terraria.GameContent.Events.BirthdayParty.PartyIsUp)
+            {
+                Asset<Texture2D> hat = ModContent.Request<Texture2D>("Terraria/Images/Item_" + ItemID.PartyHat);
+                int offset;
+                switch (NPC.frame.Y / 88)
+                {
+                    default:
+                        offset = 0;
+                        break;
+                    case 3:
+                        offset = 2;
+                        break;
+                    case 4:
+                        offset = 2;
+                        break;
+                }
+                var hatEffects = NPC.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
+                Vector2 origin = new(hat.Value.Width / 2f, hat.Value.Height / 2f);
+                spriteBatch.Draw(hat.Value, NPC.Center - new Vector2(1 - offset * NPC.spriteDirection, 48) - screenPos, null, NPC.GetAlpha(drawColor), NPC.rotation, origin, NPC.scale, hatEffects, 0);
+            }
         }
         public override void AI()
         {

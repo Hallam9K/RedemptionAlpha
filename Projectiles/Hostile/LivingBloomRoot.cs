@@ -1,3 +1,4 @@
+using Redemption.BaseExtension;
 using Redemption.Globals;
 using Redemption.NPCs.PreHM;
 using System.Collections.Generic;
@@ -26,6 +27,7 @@ namespace Redemption.Projectiles.Hostile
             Projectile.alpha = 255;
             Projectile.tileCollide = false;
             Projectile.hide = true;
+            Projectile.Redemption().friendlyHostile = true;
         }
         public override void DrawBehind(int index, List<int> behindNPCsAndTiles, List<int> behindNPCs, List<int> behindProjectiles, List<int> overPlayers, List<int> overWiresUI)
         {

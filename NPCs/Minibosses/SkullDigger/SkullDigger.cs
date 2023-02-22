@@ -87,6 +87,7 @@ namespace Redemption.NPCs.Minibosses.SkullDigger
             NPC.alpha = 255;
             NPC.boss = true;
             NPC.netAlways = true;
+            NPC.lavaImmune = true;
             if (!Main.dedServ)
                 Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/SilentCaverns");
         }
@@ -141,7 +142,7 @@ namespace Redemption.NPCs.Minibosses.SkullDigger
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<SkullDiggerFlail>()));
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<SkullDiggerMask>()));
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<GraveSteelShards>(), 1, 20, 40));
-            npcLoot.Add(ItemDropRule.ByCondition(new LostSoulCondition(), ModContent.ItemType<LostSoul>()));
+            npcLoot.Add(ItemDropRule.ByCondition(new LostSoulCondition(), ModContent.ItemType<LostSoul>(), 1, 6, 6));
         }
 
         public override void SendExtraAI(BinaryWriter writer)

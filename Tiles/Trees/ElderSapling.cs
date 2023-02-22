@@ -28,7 +28,7 @@ namespace Redemption.Tiles.Trees
             TileObjectData.newTile.CoordinateHeights = new int[] { 16, 18 };
             TileObjectData.newTile.CoordinateWidth = 16;
             TileObjectData.newTile.CoordinatePadding = 2;
-            TileObjectData.newTile.AnchorValidTiles = new int[] { ModContent.TileType<AncientDirtTile>() };
+            TileObjectData.newTile.AnchorValidTiles = new int[] { ModContent.TileType<AncientDirtTile>(), ModContent.TileType<AncientGrassTile>() };
             TileObjectData.newTile.StyleHorizontal = true;
             TileObjectData.newTile.DrawFlipHorizontal = true;
             TileObjectData.newTile.WaterPlacement = LiquidPlacement.NotAllowed;

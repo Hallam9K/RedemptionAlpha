@@ -26,6 +26,7 @@ namespace Redemption.NPCs.HM
             Projectile.ignoreWater = true;
             Projectile.Redemption().TechnicallyMelee = true;
             Projectile.Redemption().ParryBlacklist = true;
+            Projectile.Redemption().friendlyHostile = true;
         }
         public override bool? CanHitNPC(NPC target)
         {

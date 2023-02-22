@@ -41,6 +41,11 @@ using System.Threading;
 using Redemption.Items.Weapons.PreHM.Magic;
 using Redemption.NPCs.PreHM;
 using SubworldLibrary;
+using System.Reflection;
+using Terraria.ModLoader.Config;
+using Terraria.Audio;
+using Redemption.Tiles.Furniture.Lab;
+using Terraria.Enums;
 
 namespace Redemption.WorldGeneration
 {
@@ -55,11 +60,13 @@ namespace Redemption.WorldGeneration
         public static Point16 LabPoint;
         public static Point16 BastionPoint;
         public static Point16 GoldenGatewayPoint;
+        public static Point16 JoShrinePoint;
         public static Point16 SpiritAssassinPoint;
         public static Point16 SpiritCommonGuardPoint;
         public static Point16 SpiritOldManPoint;
         public static Point16 HangingTiedPoint;
         public static Point16 SpiritOldLadyPoint;
+        public static Point16 SpiritDruidPoint;
 
         public override void OnWorldLoad()
         {
@@ -75,11 +82,13 @@ namespace Redemption.WorldGeneration
             LabPoint = Point16.Zero;
             BastionPoint = Point16.Zero;
             GoldenGatewayPoint = Point16.Zero;
+            JoShrinePoint = Point16.Zero;
             SpiritAssassinPoint = Point16.Zero;
             SpiritCommonGuardPoint = Point16.Zero;
             SpiritOldManPoint = Point16.Zero;
             HangingTiedPoint = Point16.Zero;
             SpiritOldLadyPoint = Point16.Zero;
+            SpiritDruidPoint = Point16.Zero;
             corpseCheck = false;
         }
         public override void OnWorldUnload()
@@ -97,11 +106,12 @@ namespace Redemption.WorldGeneration
             SpiritOldManPoint = Point16.Zero;
             HangingTiedPoint = Point16.Zero;
             SpiritOldLadyPoint = Point16.Zero;
+            SpiritDruidPoint = Point16.Zero;
             corpseCheck = false;
         }
-        /*public override void PostWorldGen()
+        public override void PostWorldGen()
         {
-            for (int chestIndex = 0; chestIndex < 1000; chestIndex++)
+            /*for (int chestIndex = 0; chestIndex < 1000; chestIndex++)
             {
                 Chest chest = Main.chest[chestIndex];
                 if (chest != null && Main.tile[chest.x, chest.y].TileType == TileID.Containers && Main.tile[chest.x, chest.y].TileFrameX == 10 * 36)
@@ -118,8 +128,251 @@ namespace Redemption.WorldGeneration
                         }
                     }
                 }
+            }*/
+            #region The Funnies
+            if (RedeConfigClient.Instance.FunniSpiders)
+            {
+                for (int i = 0; i < Main.maxTilesX; i++)
+                {
+                    for (int j = 0; j < Main.maxTilesY; j++)
+                    {
+                        Tile tile = Framing.GetTileSafely(i, j);
+                        if (tile.TileType is TileID.Stone)
+                            tile.TileType = (ushort)ModContent.TileType<InfestedStoneTile>();
+                    }
+                }
             }
-        }*/
+            if (RedeConfigClient.Instance.FunniWasteland)
+            {
+                bool placed = false;
+                int attempts = 0;
+                while (!placed && attempts++ < 100000)
+                {
+                    int placeX = WorldGen.genRand.Next((int)(Main.maxTilesX * .2f), (int)(Main.maxTilesX * .8f));
+
+                    int placeY = (int)Main.worldSurface - 180;
+
+                    if (placeX > Main.spawnTileX - 200 && placeX < Main.spawnTileX + 200)
+                        continue;
+                    // We go down until we hit a solid tile or go under the world's surface
+                    while (!WorldGen.SolidTile(placeX, placeY) && placeY <= Main.worldSurface)
+                    {
+                        placeY++;
+                    }
+                    // If we went under the world's surface, try again
+                    if (placeY > Main.worldSurface)
+                        continue;
+                    Tile tile = Framing.GetTileSafely(placeX, placeY);
+                    if (!TileID.Sets.Conversion.Grass[tile.TileType] && !TileID.Sets.Conversion.Sand[tile.TileType] && !TileID.Sets.Conversion.Ice[tile.TileType] && tile.TileType != TileID.SnowBlock)
+                        continue;
+                    if (!CheckFlat(placeX, placeY, 2, 0))
+                        continue;
+
+                    Vector2 origin = new(placeX, placeY);
+
+                    bool fail = false;
+                    for (int x = -44; x <= 44; x++)
+                    {
+                        for (int y = -44; y <= 44; y++)
+                        {
+                            Point tileToWarhead = origin.ToPoint();
+                            int type = Main.tile[tileToWarhead.X + x, tileToWarhead.Y + y].TileType;
+                            if (Main.tile[tileToWarhead.X + x, tileToWarhead.Y + y] != null && Main.tile[tileToWarhead.X + x, tileToWarhead.Y + y].HasTile)
+                            {
+                                if (Main.tileDungeon[type] || type == 88 || type == 21 || type == 26 || type == 107 || type == 108 || type == 111 || type == 226 || type == 237 || type == 221 || type == 222 || type == 223 || type == 211)
+                                    fail = true;
+                                if (!TileLoader.CanExplode(tileToWarhead.X + x, tileToWarhead.Y + y))
+                                    fail = true;
+                            }
+                        }
+                    }
+                    if (fail)
+                        continue;
+
+                    ConversionHandler.ConvertWasteland(origin * 16, 287);
+                    SoundEngine.PlaySound(CustomSounds.NukeExplosion);
+                    placed = true;
+                }
+                RedeBossDowned.nukeDropped = true;
+                if (Main.netMode == NetmodeID.Server)
+                    NetMessage.SendData(MessageID.WorldData);
+            }
+            if (RedeConfigClient.Instance.FunniAllWasteland)
+            {
+                for (int i = 0; i < Main.maxTilesX; i++)
+                {
+                    for (int j = 0; j < Main.maxTilesY; j++)
+                    {
+                        Tile tile = Framing.GetTileSafely(i, j);
+                        if (tile.HasTile || tile.WallType != 0)
+                            ConversionHandler.WastelandTileConversion(tile, i, j);
+
+                        if (tile.HasTile)
+                        {
+                            if (tile.TileType != ModContent.TileType<IrradiatedCorruptGrassTile>() && tile.TileType != ModContent.TileType<IrradiatedCrimsonGrassTile>())
+                                WorldGen.KillTile(i, j, true);
+                            else if (Framing.GetTileSafely(i, j - 1).TileType != ModContent.TileType<IrradiatedCorruptGrassTile>() && Framing.GetTileSafely(i, j - 1).TileType != ModContent.TileType<IrradiatedCrimsonGrassTile>())
+                                WorldGen.KillTile(i, j - 1, true);
+                            if (j < (int)(Main.maxTilesY * .4f))
+                                WorldGen.SpreadGrass(i, j, ModContent.TileType<IrradiatedDirtTile>(), ModContent.TileType<IrradiatedGrassTile>(), true);
+                            ModTile tile2 = TileLoader.GetTile(Main.tile[i, j].TileType);
+                            if (tile2 != null)
+                            {
+                                for (int v = 0; v < 5; v++)
+                                    tile2.RandomUpdate(i, j);
+                            }
+                        }
+                    }
+                }
+                Point16 dims = Point16.Zero;
+                StructureHelper.Generator.GetDimensions("WorldGeneration/AllWastelandHouse", Mod, ref dims);
+                Point16 house = new(Main.spawnTileX - (dims.X / 2), Main.spawnTileY - 15);
+                StructureHelper.Generator.GenerateStructure("WorldGeneration/AllWastelandHouse", house, Mod);
+                for (int i = house.X - 1; i < house.X + dims.X + 1; i++)
+                {
+                    for (int j = house.Y - 1; j < house.Y + dims.Y; j++)
+                    {
+                        Tile tile = Framing.GetTileSafely(i, j);
+                        if (tile.HasTile && tile.TileType is TileID.Trees or TileID.VanityTreeSakura or TileID.VanityTreeYellowWillow)
+                            WorldGen.KillTile(i, j, noItem: true);
+                    }
+                }
+                int guide = NPC.FindFirstNPC(NPCID.Guide);
+                if (guide != -1)
+                    Main.npc[guide].active = false;
+                int num = NPC.NewNPC(new EntitySource_WorldGen(), (Main.spawnTileX + 5) * 16, Main.spawnTileY * 16, ModContent.NPCType<TBotUnconscious>());
+                Main.npc[num].homeTileX = Main.spawnTileX + 5;
+                Main.npc[num].homeTileY = Main.spawnTileY;
+                Main.npc[num].direction = 1;
+                Main.npc[num].homeless = true;
+
+                RedeBossDowned.nukeDropped = true;
+                if (Main.netMode == NetmodeID.Server)
+                    NetMessage.SendData(MessageID.WorldData);
+            }
+            else if (RedeConfigClient.Instance.FunniAncient)
+            {
+                for (int i = 0; i < Main.maxTilesX; i++)
+                {
+                    for (int j = 0; j < Main.maxTilesY; j++)
+                    {
+                        Tile tile = Framing.GetTileSafely(i, j);
+                        if (tile.HasTile)
+                        {
+                            if (tile.TileType is TileID.Grass)
+                                tile.TileType = (ushort)ModContent.TileType<AncientGrassTile>();
+                            if (tile.TileType is TileID.Dirt)
+                                tile.TileType = (ushort)ModContent.TileType<AncientDirtTile>();
+                            if (tile.TileType is TileID.GoldCoinPile)
+                                tile.TileType = (ushort)ModContent.TileType<AncientGoldCoinPileTile>();
+                            if (tile.TileType is TileID.WoodBlock)
+                                tile.TileType = (ushort)ModContent.TileType<ElderWoodTile>();
+                            if (TileID.Sets.Conversion.Moss[tile.TileType])
+                                tile.TileType = (ushort)ModContent.TileType<GathicGladestoneTile>();
+                            if (tile.TileType == TileID.Stone || tile.TileType == ModContent.TileType<InfestedStoneTile>())
+                                tile.TileType = (ushort)ModContent.TileType<GathicStoneTile>();
+                            if (tile.TileType is TileID.GrayBrick)
+                                tile.TileType = (ushort)ModContent.TileType<GathicStoneBrickTile>();
+
+                            if (tile.TileType != TileID.CorruptGrass && tile.TileType != TileID.CrimsonGrass && tile.TileType != TileID.JungleGrass && tile.TileType != TileID.MushroomGrass)
+                                WorldGen.KillTile(i, j, true);
+                            WorldGen.SpreadGrass(i, j, ModContent.TileType<AncientDirtTile>(), ModContent.TileType<AncientGrassTile>(), true);
+                            ModTile tile2 = TileLoader.GetTile(Main.tile[i, j].TileType);
+                            if (tile2 != null)
+                            {
+                                for (int v = 0; v < 20; v++)
+                                    tile2.RandomUpdate(i, j);
+                            }
+                            if (!Framing.GetTileSafely(i, j - 1).HasTile)
+                            {
+                                if (WorldGen.genRand.NextBool(30))
+                                {
+                                    switch (WorldGen.genRand.Next(7))
+                                    {
+                                        default:
+                                            GenUtils.ObjectPlace(i, j - 1, ModContent.TileType<SkeletonRemainsTile1>(), 0, WorldGen.genRand.NextBool() ? -1 : 1);
+                                            break;
+                                        case 1:
+                                            GenUtils.ObjectPlace(i, j - 1, ModContent.TileType<SkeletonRemainsTile2>(), 0, WorldGen.genRand.NextBool() ? -1 : 1);
+                                            break;
+                                        case 2:
+                                            GenUtils.ObjectPlace(i, j - 1, ModContent.TileType<SkeletonRemainsTile3>(), 0, WorldGen.genRand.NextBool() ? -1 : 1);
+                                            break;
+                                        case 3:
+                                            GenUtils.ObjectPlace(i, j - 1, ModContent.TileType<SkeletonRemainsTile4>(), 0, WorldGen.genRand.NextBool() ? -1 : 1);
+                                            break;
+                                        case 4:
+                                            GenUtils.ObjectPlace(i, j - 1, ModContent.TileType<SkeletonRemainsTile5>(), 0, WorldGen.genRand.NextBool() ? -1 : 1);
+                                            break;
+                                        case 5:
+                                            GenUtils.ObjectPlace(i, j - 1, ModContent.TileType<SkeletonRemainsTile6>(), 0, WorldGen.genRand.NextBool() ? -1 : 1);
+                                            break;
+                                        case 6:
+                                            GenUtils.ObjectPlace(i, j - 1, ModContent.TileType<SkeletonRemainsTile7>(), 0, WorldGen.genRand.NextBool() ? -1 : 1);
+                                            break;
+                                    }
+                                }
+                            }
+                        }
+                        if (tile.WallType is WallID.DirtUnsafe or WallID.DirtUnsafe1 or WallID.DirtUnsafe2 or WallID.DirtUnsafe3 or WallID.DirtUnsafe4 or WallID.Cave6Unsafe)
+                            tile.WallType = (ushort)ModContent.WallType<AncientDirtWallTile>();
+                        if (tile.WallType is WallID.Wood)
+                            tile.WallType = (ushort)ModContent.WallType<ElderWoodWallTile>();
+                        if (tile.WallType == WallID.Stone)
+                            tile.WallType = (ushort)ModContent.WallType<GathicStoneWallTile>();
+                        if (tile.WallType == WallID.GrayBrick)
+                            tile.WallType = (ushort)ModContent.WallType<GathicStoneBrickWallTile>();
+                    }
+                }
+                int guide = NPC.FindFirstNPC(NPCID.Guide);
+                if (guide != -1)
+                    Main.npc[guide].active = false;
+                int num = NPC.NewNPC(new EntitySource_WorldGen(), (Main.spawnTileX + 5) * 16, Main.spawnTileY * 16, ModContent.NPCType<Fallen>());
+                Main.npc[num].homeTileX = Main.spawnTileX + 5;
+                Main.npc[num].homeTileY = Main.spawnTileY;
+                Main.npc[num].direction = 1;
+                Main.npc[num].homeless = true;
+            }
+            if (RedeConfigClient.Instance.FunniJanitor)
+            {
+                for (int i = 0; i < Main.maxTilesX; i++)
+                {
+                    for (int j = 0; j < Main.maxTilesY; j++)
+                    {
+                        Tile tile = Framing.GetTileSafely(i, j);
+                        if (tile.HasTile)
+                        {
+                            if (tile.TileType == ModContent.TileType<LabPlatingTileUnsafe>())
+                                tile.TileType = (ushort)ModContent.TileType<LabPlatingTile>();
+                            if (tile.TileType == ModContent.TileType<XenomiteShardTile>() || tile.TileType == ModContent.TileType<HardenedSludgeTile>() || tile.TileType == ModContent.TileType<BlackHardenedSludgeTile>() || tile.TileType == ModContent.TileType<InfectedCorpse1Tile>() || tile.TileType == ModContent.TileType<InfectedCorpse2Tile>() || tile.TileType == ModContent.TileType<InfectedCorpse3Tile>())
+                                WorldGen.KillTile(i, j, noItem: true);
+
+                            if (tile.TileType == ModContent.TileType<OpenVentTile>())
+                            {
+                                WorldGen.KillTile(i, j, noItem: true);
+                                WorldGen.PlaceTile(i + 1, j, ModContent.TileType<LargeVentTile>());
+                            }
+                            if (tile.TileType == ModContent.TileType<BrokenLabBackDoorTile>())
+                            {
+                                WorldGen.KillTile(i, j, noItem: true);
+                                WorldGen.PlaceTile(i + 1, j + 3, ModContent.TileType<LabBackDoorTile>());
+                            }
+                        }
+                        if (tile.WallType == ModContent.WallType<HardenedSludgeWallTile>() || tile.WallType == ModContent.WallType<BlackHardenedSludgeWallTile>())
+                            tile.WallType = (ushort)ModContent.WallType<LabPlatingWallTileUnsafe>();
+
+                        if (tile.WallType == ModContent.WallType<LabPlatingWallTileUnsafe>())
+                            tile.WallType = (ushort)ModContent.WallType<LabPlatingWallTile>();
+                        if (tile.WallType == ModContent.WallType<DangerTapeWallTile>())
+                            tile.WallType = (ushort)ModContent.WallType<DangerTapeWall2Tile>();
+
+                        if (tile.TileType == ModContent.TileType<LabTubeTile>() || tile.TileType == ModContent.TileType<LabTankTile>())
+                            Framing.GetTileSafely(i, j).TileColor = PaintID.CyanPaint;
+                    }
+                }
+            }
+            #endregion
+        }
         public override void PostUpdateWorld()
         {
             if (SubworldSystem.AnyActive<Redemption>())
@@ -403,14 +656,16 @@ namespace Redemption.WorldGeneration
                 {
                     #region Ancient Decal
                     progress.Message = "Carving gathic caverns";
-                    for (int k = 0; k < (int)(Main.maxTilesX * Main.maxTilesY * 4E-06); k++)
+                    int multi = RedeConfigClient.Instance.FunniAncient ? 4 : 1;
+                    for (int k = 0; k < (int)(Main.maxTilesX * Main.maxTilesY * (4E-06 * multi)); k++)
                     {
                         bool placed = false;
                         int attempts = 0;
                         while (!placed && attempts++ < 10000)
                         {
+                            bool funni = RedeConfigClient.Instance.FunniAncient;
                             int tilesX = WorldGen.genRand.Next(50, Main.maxTilesX - 250);
-                            int tilesY = WorldGen.genRand.Next((int)(Main.maxTilesY * .4f), (int)(Main.maxTilesY * .8));
+                            int tilesY = WorldGen.genRand.Next((int)(Main.maxTilesY * (funni ? .1f : .4f)), (int)(Main.maxTilesY * .8f));
                             if (!WorldGen.InWorld(tilesX, tilesY))
                                 continue;
 
@@ -501,14 +756,16 @@ namespace Redemption.WorldGeneration
                 {
                     #region Frozen Ancient Decal
                     progress.Message = "Carving gathic caverns 2: Frozen Edition";
-                    for (int k = 0; k < (int)(Main.maxTilesX * Main.maxTilesY * 16E-07); k++)
+                    int multi = RedeConfigClient.Instance.FunniAncient ? 2 : 1;
+                    for (int k = 0; k < (int)(Main.maxTilesX * Main.maxTilesY * (16E-07 * multi)); k++)
                     {
                         bool placed = false;
                         int attempts = 0;
                         while (!placed && attempts++ < 10000)
                         {
+                            bool funni = RedeConfigClient.Instance.FunniAncient;
                             int tilesX = WorldGen.genRand.Next(60, Main.maxTilesX - 250);
-                            int tilesY = WorldGen.genRand.Next((int)(Main.maxTilesY * .3f), (int)(Main.maxTilesY * .8f));
+                            int tilesY = WorldGen.genRand.Next((int)(Main.maxTilesY * (funni ? .1f : .3f)), (int)(Main.maxTilesY * .8f));
                             if (!WorldGen.InWorld(tilesX, tilesY))
                                 continue;
 
@@ -526,7 +783,7 @@ namespace Redemption.WorldGeneration
                                         blacklist = true;
                                         break;
                                     }
-                                    if (type == TileID.IceBlock || type == TileID.SnowBlock)
+                                    if (Framing.GetTileSafely(tilesX + x, tilesY + y).HasTile && (type == TileID.IceBlock || type == TileID.SnowBlock))
                                         iceScore++;
                                     else
                                         emptyScore++;
@@ -1040,6 +1297,89 @@ namespace Redemption.WorldGeneration
                         }
                         placed2 = true;
                     }
+                    bool placed5 = false;
+                    int attempts5 = 0;
+                    while (!placed5 && attempts5++ < 10000)
+                    {
+                        int tilesX = WorldGen.genRand.Next((int)(Main.maxTilesX * .1f), (int)(Main.maxTilesX * .9f));
+                        int tilesY = WorldGen.genRand.Next((int)(Main.maxTilesY * .5f), (int)(Main.maxTilesY * .8f));
+                        if (!WorldGen.InWorld(tilesX, tilesY))
+                            continue;
+
+                        Point16 dims = Point16.Zero;
+                        StructureHelper.Generator.GetDimensions("WorldGeneration/JungleDecalSpecial1", Mod, ref dims);
+
+                        bool blacklist = false;
+                        int stoneScore = 0;
+                        int emptyScore = 0;
+                        for (int x = 0; x < dims.X; x++)
+                        {
+                            for (int y = 0; y < dims.Y; y++)
+                            {
+                                int type = Framing.GetTileSafely(tilesX + x, tilesY + y).TileType;
+                                if (!WorldGen.InWorld(tilesX + x, tilesY + y) || TileLists.BlacklistTiles.Contains(type) || !WorldGen.structures.CanPlace(new Rectangle(tilesX, tilesY, x, y)))
+                                {
+                                    blacklist = true;
+                                    break;
+                                }
+                                if (Framing.GetTileSafely(tilesX + x, tilesY + y).HasTile && (type == TileID.Mud || type == TileID.JungleGrass))
+                                    stoneScore++;
+                                else
+                                    emptyScore++;
+                            }
+                        }
+                        if (blacklist)
+                            continue;
+                        if (stoneScore < (int)(emptyScore * 1.5))
+                            continue;
+
+                        Vector2 origin = new(tilesX, tilesY);
+                        StructureHelper.Generator.GenerateStructure("WorldGeneration/JungleDecalSpecial1", origin.ToPoint16(), Mod);
+                        for (int x = 0; x < dims.X; x++)
+                        {
+                            for (int y = 0; y < dims.Y; y++)
+                            {
+                                if (WorldGen.InWorld(tilesX + x, tilesY + y))
+                                {
+                                    if (!Framing.GetTileSafely(tilesX + x, tilesY + y - 1).HasTile && Framing.GetTileSafely(tilesX + x, tilesY + y).HasTile)
+                                    {
+                                        if (WorldGen.genRand.NextBool(8))
+                                        {
+                                            switch (WorldGen.genRand.Next(7))
+                                            {
+                                                default:
+                                                    GenUtils.ObjectPlace(tilesX + x, tilesY + y - 1, ModContent.TileType<SkeletonRemainsTile1>(), 0, WorldGen.genRand.NextBool() ? -1 : 1);
+                                                    break;
+                                                case 1:
+                                                    GenUtils.ObjectPlace(tilesX + x, tilesY + y - 1, ModContent.TileType<SkeletonRemainsTile2>(), 0, WorldGen.genRand.NextBool() ? -1 : 1);
+                                                    break;
+                                                case 2:
+                                                    GenUtils.ObjectPlace(tilesX + x, tilesY + y - 1, ModContent.TileType<SkeletonRemainsTile3>(), 0, WorldGen.genRand.NextBool() ? -1 : 1);
+                                                    break;
+                                                case 3:
+                                                    GenUtils.ObjectPlace(tilesX + x, tilesY + y - 1, ModContent.TileType<SkeletonRemainsTile4>(), 0, WorldGen.genRand.NextBool() ? -1 : 1);
+                                                    break;
+                                                case 4:
+                                                    GenUtils.ObjectPlace(tilesX + x, tilesY + y - 1, ModContent.TileType<SkeletonRemainsTile5>(), 0, WorldGen.genRand.NextBool() ? -1 : 1);
+                                                    break;
+                                                case 5:
+                                                    GenUtils.ObjectPlace(tilesX + x, tilesY + y - 1, ModContent.TileType<SkeletonRemainsTile6>(), 0, WorldGen.genRand.NextBool() ? -1 : 1);
+                                                    break;
+                                                case 6:
+                                                    GenUtils.ObjectPlace(tilesX + x, tilesY + y - 1, ModContent.TileType<SkeletonRemainsTile7>(), 0, WorldGen.genRand.NextBool() ? -1 : 1);
+                                                    break;
+                                            }
+                                        }
+                                    }
+                                    if (WorldGen.genRand.NextBool(3))
+                                        WorldGen.PlacePot(tilesX + x, tilesY + y - 1, 28, Main.rand.Next(7, 10));
+                                    if (Framing.GetTileSafely(tilesX + x, tilesY + y).TileType is TileID.Mud or TileID.JungleGrass)
+                                        BaseWorldGen.SmoothTiles(tilesX + x, tilesY + y, tilesY + x + 1, tilesY + y + 1);
+                                }
+                            }
+                        }
+                        placed5 = true;
+                    }
                     #endregion
                 }));
                 tasks.Insert(ShiniesIndex2 + 4, new PassLegacy("Ancient Decal Chests", delegate (GenerationProgress progress, GameConfiguration configuration)
@@ -1093,7 +1433,7 @@ namespace Redemption.WorldGeneration
                     };
 
                     bool placed = false;
-
+                    int liquidAttempts = 0;
                     while (!placed)
                     {
                         int placeX = WorldGen.genRand.Next(0, Main.maxTilesX);
@@ -1150,13 +1490,27 @@ namespace Redemption.WorldGeneration
                             for (int j = 0; j <= 82; j++)
                             {
                                 int type = Framing.GetTileSafely((int)origin.X + i, (int)origin.Y + j).TileType;
-                                if (!WorldGen.InWorld((int)origin.X + i, (int)origin.Y + j) || TileLists.BlacklistTiles.Contains(type) || type == TileID.SnowBlock || type == TileID.Sand ||
-                                    type == ModContent.TileType<HeartOfThornsTile>())
+                                if (!WorldGen.InWorld((int)origin.X + i, (int)origin.Y + j) || TileLists.BlacklistTiles.Contains(type) || type == TileID.SnowBlock || type == TileID.Sand || type == ModContent.TileType<HeartOfThornsTile>())
                                 {
                                     whitelist = true;
                                     break;
                                 }
                             }
+                        }
+                        while (liquidAttempts++ < 1000)
+                        {
+                            for (int i = 0; i <= 60; i++)
+                            {
+                                for (int j = 0; j <= 20; j++)
+                                {
+                                    if (Framing.GetTileSafely((int)origin.X + i, (int)origin.Y + j).LiquidAmount >= 255)
+                                    {
+                                        whitelist = true;
+                                        break;
+                                    }
+                                }
+                            }
+                            break;
                         }
                         if (whitelist)
                             continue;
@@ -1225,6 +1579,108 @@ namespace Redemption.WorldGeneration
                         }
                     }
                     WorldGen.structures.AddProtectedStructure(new Rectangle(originPoint.X, originPoint.Y, 60, 82));
+                    #endregion
+                }));
+                tasks.Insert(ShiniesIndex2 + 6, new PassLegacy("Jo Shrine", delegate (GenerationProgress progress, GameConfiguration configuration)
+                {
+                    #region Jo Shrine
+                    Point16 dims = new();
+                    StructureHelper.Generator.GetDimensions("WorldGeneration/JShrine", Mod, ref dims);
+                    bool placed = false;
+                    while (!placed)
+                    {
+                        int placeX = WorldGen.genRand.Next(0, Main.maxTilesX);
+
+                        int placeY = (int)Main.worldSurface - 160;
+
+                        if (!WorldGen.InWorld(placeX, placeY) || (placeX > Main.spawnTileX - 100 && placeX < Main.spawnTileX + 100))
+                            continue;
+                        // We go down until we hit a solid tile or go under the world's surface
+                        while (!WorldGen.SolidTile(placeX, placeY) && placeY <= Main.worldSurface)
+                        {
+                            placeY++;
+                        }
+                        // If we went under the world's surface, try again
+                        if (placeY > Main.worldSurface)
+                            continue;
+                        Tile tile = Framing.GetTileSafely(placeX, placeY);
+                        if (tile.TileType != TileID.Grass)
+                            continue;
+                        if (!CheckFlat(placeX + 4, placeY, 10, 2))
+                            continue;
+
+                        Vector2 origin = new(placeX - (dims.X / 2), placeY - 13);
+                        int oldX = (int)origin.X;
+                        int attempts = 0;
+                        while (attempts < 50000 && !WorldGen.structures.CanPlace(new Rectangle((int)origin.X, (int)origin.Y, dims.X, dims.Y)))
+                        {
+                            origin.X = WorldGen.genRand.Next(100, Main.maxTilesX - 100);
+                        }
+                        if (oldX != origin.X)
+                        {
+                            placeY = (int)Main.worldSurface - 160;
+                            while (!WorldGen.SolidTile(placeX, placeY) && placeY <= Main.worldSurface)
+                            {
+                                placeY++;
+                            }
+                            if (placeY > Main.worldSurface)
+                                continue;
+                            tile = Framing.GetTileSafely(placeX, placeY);
+                            if (tile.TileType != TileID.Grass)
+                                continue;
+                            if (!CheckFlat(placeX + 4, placeY, 10, 2))
+                                continue;
+
+                            origin = new(placeX - (dims.X / 2), placeY - 13);
+                        }
+                        bool whitelist = false;
+                        for (int i = 0; i <= dims.X; i++)
+                        {
+                            for (int j = 0; j <= dims.Y; j++)
+                            {
+                                int type = Framing.GetTileSafely((int)origin.X + i, (int)origin.Y + j).TileType;
+                                if (!WorldGen.InWorld((int)origin.X + i, (int)origin.Y + j) || TileLists.BlacklistTiles.Contains(type) || type == TileID.SnowBlock || type == TileID.Sand || type == ModContent.TileType<HeartOfThornsTile>() || !WorldGen.structures.CanPlace(new Rectangle((int)origin.X - 10, (int)origin.Y - 10, dims.X + 10, dims.Y + 10)))
+                                {
+                                    whitelist = true;
+                                    break;
+                                }
+                                if (Framing.GetTileSafely((int)origin.X + i, (int)origin.Y + j).LiquidAmount >= 255)
+                                {
+                                    whitelist = true;
+                                    break;
+                                }
+                            }
+                        }
+                        if (whitelist)
+                            continue;
+
+                        StructureHelper.Generator.GenerateStructure("WorldGeneration/JShrine", origin.ToPoint16(), Mod);
+
+                        JoShrinePoint = origin.ToPoint16();
+                        placed = true;
+                    }
+
+                    Point originPoint = JoShrinePoint.ToPoint();
+
+                    BaseWorldGen.SmoothTiles(originPoint.X, originPoint.Y, originPoint.X + dims.X, originPoint.Y + dims.Y);
+                    for (int i = originPoint.X; i < originPoint.X + dims.X; i++)
+                    {
+                        for (int j = originPoint.Y; j < originPoint.Y + dims.Y; j++)
+                            WorldGen.KillTile(i, j, true);
+                    }
+                    for (int i = originPoint.X; i < originPoint.X + dims.X; i++)
+                    {
+                        for (int j = originPoint.Y; j < originPoint.Y + dims.Y; j++)
+                            WorldGen.SpreadGrass(i, j);
+                    }
+                    for (int i = originPoint.X; i < originPoint.X + dims.X; i++)
+                        WorldGen.KillTile(i, originPoint.Y - 1, noItem: true);
+
+                    WorldUtils.Gen(originPoint, new Shapes.Rectangle(dims.X, dims.Y), Actions.Chain(new GenAction[]
+                    {
+                        new Actions.SetLiquid(0, 0)
+                    }));
+                    WorldGen.structures.AddProtectedStructure(new Rectangle(originPoint.X, originPoint.Y, dims.X, dims.Y));
                     #endregion
                 }));
                 tasks.Insert(ShiniesIndex2 + 6, new PassLegacy("Portals 2", delegate (GenerationProgress progress, GameConfiguration configuration)
@@ -1673,9 +2129,9 @@ namespace Redemption.WorldGeneration
                 tasks.Insert(ShiniesIndex2 + 10, new PassLegacy("Slayer Ship", delegate (GenerationProgress progress, GameConfiguration configuration)
                 {
                     progress.Message = "Crashing Spaceships";
-                    Vector2 origin = new((int)(Main.maxTilesX * 0.65f), (int)Main.worldSurface - 170);
+                    Vector2 origin = new((int)(Main.maxTilesX * 0.65f), (int)Main.worldSurface - 180);
                     if (Main.dungeonX < Main.maxTilesX / 2)
-                        origin = new Vector2((int)(Main.maxTilesX * 0.35f), (int)Main.worldSurface - 170);
+                        origin = new Vector2((int)(Main.maxTilesX * 0.35f), (int)Main.worldSurface - 180);
 
                     origin.Y = GetTileFloorIgnoreTree((int)origin.X, (int)origin.Y, true);
                     origin.X -= 60;
@@ -1775,7 +2231,7 @@ namespace Redemption.WorldGeneration
                     bool placed = false;
                     while (!placed)
                     {
-                        int placeX = WorldGen.genRand.Next(145, Main.maxTilesX - 145);
+                        int placeX = WorldGen.genRand.Next(300, Main.maxTilesX - 300);
                         int placeY = WorldGen.genRand.Next(50, 80);
                         if (!WorldGen.InWorld(placeX, placeY))
                             continue;
@@ -1912,6 +2368,11 @@ namespace Redemption.WorldGeneration
                 Vector2 gathicPortalPos = new(((gathicPortalPoint.X + 46) * 16) - 8, ((gathicPortalPoint.Y + 23) * 16) - 4);
                 LabArea.SpawnNPCInWorld(gathicPortalPos, ModContent.NPCType<GathuramPortal>());
             }
+            if (JoShrinePoint.X != 0 && RedeWorld.DayNightCount < 4 && !NPC.AnyNPCs(ModContent.NPCType<TreebarkDryad>()))
+            {
+                Vector2 shrinePos = new((JoShrinePoint.X + 9) * 16, (JoShrinePoint.Y + 13) * 16);
+                LabArea.SpawnNPCInWorld(shrinePos, ModContent.NPCType<TreebarkDryad>(), 0, 1, 0, 2);
+            }
             if (slayerShipPoint.X != 0 && RedeBossDowned.downedSlayer && !RedeBossDowned.downedOmega3 && !RedeBossDowned.downedNebuleus && !NPC.AnyNPCs(ModContent.NPCType<KS3Sitting>()) && !NPC.AnyNPCs(ModContent.NPCType<KS3>()))
             {
                 Vector2 slayerSittingPos = new((slayerShipPoint.X + 92) * 16, (slayerShipPoint.Y + 28) * 16);
@@ -1923,6 +2384,7 @@ namespace Redemption.WorldGeneration
             SpawnSpiritCommonGuard();
             SpawnSpiritOldMan();
             SpawnSpiritOldLady();
+            SpawnSpiritDruid();
         }
         public static void CorpseChecks()
         {
@@ -1986,6 +2448,21 @@ namespace Redemption.WorldGeneration
                     }
                 }
             }
+            if (SpiritDruidPoint.X == 0)
+            {
+                for (int x = (int)(Main.maxTilesX * .1f); x < Main.maxTilesX; x++)
+                {
+                    for (int y = (int)(Main.maxTilesY * .5f); y < (int)(Main.maxTilesY * .9f); y++)
+                    {
+                        Tile tile = Framing.GetTileSafely(x, y);
+                        if (!tile.HasTile || tile.TileType != ModContent.TileType<SkeletonRemainsTile7_Special>())
+                            continue;
+
+                        SpiritDruidPoint = new Point16(x, y);
+                        break;
+                    }
+                }
+            }
             if (HangingTiedPoint.X == 0)
             {
                 for (int x = 50; x < Main.maxTilesX - 50; x++)
@@ -2035,6 +2512,14 @@ namespace Redemption.WorldGeneration
             Vector2 pos = new(SpiritCommonGuardPoint.X * 16, SpiritCommonGuardPoint.Y * 16);
             LabArea.SpawnNPCInWorld(pos, ModContent.NPCType<GathicTomb_Spawner>(), 1);
         }
+        public static void SpawnSpiritDruid()
+        {
+            if (RedeWorld.spawnCleared[4] || SpiritDruidPoint.X == 0 || Main.LocalPlayer.DistanceSQ(SpiritDruidPoint.ToVector2() * 16) >= 500 * 500 || NPC.AnyNPCs(ModContent.NPCType<GathicTomb_Spawner>()))
+                return;
+
+            Vector2 pos = new(SpiritDruidPoint.X * 16, SpiritDruidPoint.Y * 16);
+            LabArea.SpawnNPCInWorld(pos, ModContent.NPCType<GathicTomb_Spawner>(), 4);
+        }
         public override void SaveWorldData(TagCompound tag)
         {
             tag["nCaveX"] = newbCavePoint.X;
@@ -2051,6 +2536,8 @@ namespace Redemption.WorldGeneration
             tag["BastionY"] = BastionPoint.Y;
             tag["GGateX"] = GoldenGatewayPoint.X;
             tag["GGateY"] = GoldenGatewayPoint.Y;
+            tag["JShrineX"] = JoShrinePoint.X;
+            tag["JShrineY"] = JoShrinePoint.Y;
         }
 
         public override void LoadWorldData(TagCompound tag)
@@ -2062,6 +2549,7 @@ namespace Redemption.WorldGeneration
             LabPoint = new Point16(tag.Get<ushort>("LabX"), tag.Get<ushort>("LabY"));
             BastionPoint = new Point16(tag.Get<ushort>("BastionX"), tag.Get<ushort>("BastionY"));
             GoldenGatewayPoint = new Point16(tag.Get<ushort>("GGateX"), tag.Get<ushort>("GGateY"));
+            JoShrinePoint = new Point16(tag.Get<ushort>("JShrineX"), tag.Get<ushort>("JShrineY"));
         }
 
         public override void NetSend(BinaryWriter writer)
@@ -2080,6 +2568,8 @@ namespace Redemption.WorldGeneration
             writer.Write(BastionPoint.Y);
             writer.Write(GoldenGatewayPoint.X);
             writer.Write(GoldenGatewayPoint.Y);
+            writer.Write(JoShrinePoint.X);
+            writer.Write(JoShrinePoint.Y);
         }
         public override void NetReceive(BinaryReader reader)
         {
@@ -2090,6 +2580,7 @@ namespace Redemption.WorldGeneration
             LabPoint = new Point16(reader.ReadUInt16(), reader.ReadUInt16());
             BastionPoint = new Point16(reader.ReadUInt16(), reader.ReadUInt16());
             GoldenGatewayPoint = new Point16(reader.ReadUInt16(), reader.ReadUInt16());
+            JoShrinePoint = new Point16(reader.ReadUInt16(), reader.ReadUInt16());
         }
     }
     public class GenUtils

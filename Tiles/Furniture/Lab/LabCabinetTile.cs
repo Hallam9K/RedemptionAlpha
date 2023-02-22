@@ -65,7 +65,7 @@ namespace Redemption.Tiles.Furniture.Lab
                     player.QuickSpawnItem(new EntitySource_TileInteraction(player, i, j), ItemID.AdhesiveBandage);
                 if (Main.rand.NextBool(20))
                     player.QuickSpawnItem(new EntitySource_TileInteraction(player, i, j), ItemID.Vitamins);
-                if (Main.rand.NextBool(66666))
+                if (Main.rand.NextBool(666))
                     player.QuickSpawnItem(new EntitySource_TileInteraction(player, i, j), ModContent.ItemType<Panacea>());
             }
             for (int x = left; x < left + 2; x++)

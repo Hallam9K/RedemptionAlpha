@@ -1,3 +1,4 @@
+using Redemption.BaseExtension;
 using Redemption.Dusts.Tiles;
 using Redemption.NPCs.PreHM;
 using System.Collections.Generic;
@@ -25,6 +26,7 @@ namespace Redemption.Projectiles.Hostile
             Projectile.alpha = 255;
             Projectile.tileCollide = false;
             Projectile.hide = true;
+            Projectile.Redemption().friendlyHostile = true;
         }
         public override bool? CanHitNPC(NPC target)
         {
@@ -41,7 +43,7 @@ namespace Redemption.Projectiles.Hostile
         }
         public override void AI()
         {
-            if (Main.rand.NextBool(2)&& Projectile.localAI[0] < 30)
+            if (Main.rand.NextBool(2) && Projectile.localAI[0] < 30)
             {
                 Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, ModContent.DustType<SlateDust>(), Projectile.velocity.X * 0.5f, Projectile.velocity.Y * 0.5f, Scale: 2);
             }

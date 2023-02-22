@@ -1325,7 +1325,7 @@ namespace Redemption.Globals
                 return npc.Redemption().spiritSummon;
 
             Terraria.NPC target = Main.npc[globalNPC.attacker.whoAmI];
-            if (!target.active || target.whoAmI == npc.whoAmI || target.dontTakeDamage || target.type == NPCID.OldMan)
+            if (!target.active || target.whoAmI == npc.whoAmI || target.dontTakeDamage || target.type == NPCID.OldMan || target.type == NPCID.TargetDummy)
                 return true;
 
             switch (ID)

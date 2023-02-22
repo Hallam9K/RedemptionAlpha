@@ -85,7 +85,7 @@ namespace Redemption.Items.Weapons.PreHM.Summon
         {
             CreateRecipe()
                 .AddIngredient(ModContent.ItemType<ElderWood>(), 24)
-                .AddIngredient(ModContent.ItemType<GrimShard>(), 4)
+                .AddIngredient(ModContent.ItemType<GrimShard>(), 2)
                 .AddIngredient(ModContent.ItemType<LostSoul>(), 8)
                 .AddTile(TileID.Anvils)
                 .Register();

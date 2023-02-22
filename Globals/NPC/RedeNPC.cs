@@ -46,6 +46,7 @@ using Terraria.UI;
 using Terraria.ModLoader.Utilities;
 using Redemption.Globals.World;
 using Redemption.Buffs.Cooldowns;
+using Steamworks;
 
 namespace Redemption.Globals.NPC
 {
@@ -530,6 +531,8 @@ namespace Redemption.Globals.NPC
                 elementDmg = 1;
                 #endregion
             }
+            if (spiritSummon && projectile.hostile && !projectile.Redemption().friendlyHostile)
+                damage *= 4;
         }
         public override void OnHitNPC(Terraria.NPC npc, Terraria.NPC target, int damage, float knockback, bool crit)
         {
@@ -796,6 +799,7 @@ namespace Redemption.Globals.NPC
                         pool.Add(key.Key, key.Value);
                     }
                 }
+                return;
             }
             if (spawnInfo.Player.InModBiome<LabBiome>())
             {
@@ -806,7 +810,7 @@ namespace Redemption.Globals.NPC
                 }
                 else
                 {
-                    int[] LabTileArray = { ModContent.TileType<LabPlatingTileUnsafe>(), ModContent.TileType<OvergrownLabPlatingTile>(), ModContent.TileType<DangerTapeTile>(), ModContent.TileType<HardenedSludgeTile>(), ModContent.TileType<BlackHardenedSludgeTile>() };
+                    int[] LabTileArray = { ModContent.TileType<LabPlatingTileUnsafe>(), ModContent.TileType<DangerTapeTile>(), ModContent.TileType<HardenedSludgeTile>(), ModContent.TileType<BlackHardenedSludgeTile>() };
                     bool tileCheck = LabTileArray.Contains(Main.tile[spawnInfo.SpawnTileX, spawnInfo.SpawnTileY].TileType);
 
                     pool.Clear();

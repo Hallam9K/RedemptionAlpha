@@ -22,6 +22,7 @@ namespace Redemption.Tiles.Tiles
             TileID.Sets.NeedsGrassFraming[Type] = true;
             TileID.Sets.NeedsGrassFramingDirt[Type] = ModContent.TileType<AncientDirtTile>();
             TileID.Sets.ForcedDirtMerging[Type] = true;
+            TileID.Sets.Conversion.Grass[Type] = true;
             TileID.Sets.Conversion.MergesWithDirtInASpecialWay[Type] = true;
             TileID.Sets.ResetsHalfBrickPlacementAttempt[Type] = false;
             TileID.Sets.DoesntPlaceWithTileReplacement[Type] = true;

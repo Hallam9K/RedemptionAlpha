@@ -24,6 +24,7 @@ using Redemption.BaseExtension;
 using Redemption.Items.Materials.PostML;
 using Terraria.DataStructures;
 using ReLogic.Content;
+using Redemption.NPCs.Lab.Volt;
 
 namespace Redemption.NPCs.Bosses.Neb.Phase2
 {
@@ -120,6 +121,10 @@ namespace Redemption.NPCs.Bosses.Neb.Phase2
         }
         public override void BossLoot(ref string name, ref int potionType)
         {
+            NPC nPC = new();
+            nPC.SetDefaults(ModContent.NPCType<Nebuleus>());
+            Main.BestiaryTracker.Kills.RegisterKill(nPC);
+
             potionType = ItemID.SuperHealingPotion;
             if (!Main.expertMode && Main.rand.NextBool(7))
             {
@@ -141,7 +146,7 @@ namespace Redemption.NPCs.Bosses.Neb.Phase2
                         continue;
 
                     if (!Main.dedServ)
-                        RedeSystem.Instance.ChaliceUIElement.DisplayDialogue("Trust me when I say this, you've dug yourself a 1000-feet hole here.", 120, 30, 0, Color.DarkGoldenrod);
+                        RedeSystem.Instance.ChaliceUIElement.DisplayDialogue("Trust me when I say this, you've dug yourself a 1000-feet hole here.", 300, 30, 0, Color.DarkGoldenrod);
 
                 }
             }

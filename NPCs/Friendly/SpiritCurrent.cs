@@ -15,7 +15,6 @@ using Terraria.ModLoader.Utilities;
 
 namespace Redemption.NPCs.Friendly
 {
-    [AutoloadBossHead]
     public class SpiritCurrent : ModNPC
     {
         public override string Texture => "Redemption/NPCs/Friendly/SoullessPortal";
@@ -88,12 +87,13 @@ namespace Redemption.NPCs.Friendly
                     int attempts = 0;
                     while (attempts++ < 10 && point == Point16.Zero)
                     {
-                        point = Main.rand.Next(5) switch
+                        point = Main.rand.Next(6) switch
                         {
                             1 => RedeGen.SpiritAssassinPoint,
                             2 => RedeGen.SpiritCommonGuardPoint,
                             3 => RedeGen.HangingTiedPoint,
                             4 => RedeGen.SpiritOldLadyPoint,
+                            5 => RedeGen.SpiritDruidPoint,
                             _ => RedeGen.SpiritOldManPoint,
                         };
                     }
@@ -105,7 +105,7 @@ namespace Redemption.NPCs.Friendly
                     while (attempts2++ < 1000 && !set)
                     {
                         Point16 offset = RedeHelper.PolarVector(Main.rand.Next(80, 131), RedeHelper.RandomRotation()).ToPoint16();
-                        if (Main.tile[(point + offset).X, (point + offset).Y].WallType is 0 && !Collision.SolidCollision(new Vector2(((point + offset).X * 16) - 50, ((point + offset).Y * 16) - 50), 100, 100))
+                        if (WorldGen.InWorld((point + offset).X, (point + offset).Y) && Framing.GetTileSafely((point + offset).X, (point + offset).Y).WallType is 0 && !Collision.SolidCollision(new Vector2(((point + offset).X * 16) - 50, ((point + offset).Y * 16) - 50), 100, 100))
                         {
                             point += offset;
                             set = true;

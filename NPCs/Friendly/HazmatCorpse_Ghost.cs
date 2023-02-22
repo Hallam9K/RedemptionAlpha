@@ -20,7 +20,7 @@ namespace Redemption.NPCs.Friendly
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Hazmat Corpse");
+            DisplayName.SetDefault("Hazmat Ghost");
             Main.npcFrameCount[NPC.type] = 8;
             NPCID.Sets.ActsLikeTownNPC[Type] = true;
 
@@ -104,33 +104,6 @@ namespace Redemption.NPCs.Friendly
         }
 
         public override bool CanChat() => true;
-        public override void SetChatButtons(ref string button, ref string button2)
-        {
-            if (Main.LocalPlayer.RedemptionAbility().SpiritwalkerActive && !Main.LocalPlayer.HasItem(ModContent.ItemType<CruxCardHazmatZombie>()))
-                button = "Take Crux";
-        }
-        public override void OnChatButtonClicked(bool firstButton, ref bool shop)
-        {
-            if (firstButton)
-            {
-                if (!Main.LocalPlayer.RedemptionAbility().SpiritwalkerActive)
-                    return;
-
-                int card = Main.LocalPlayer.FindItem(ModContent.ItemType<EmptyCruxCard>());
-                if (card >= 0)
-                {
-                    Main.LocalPlayer.inventory[card].stack--;
-                    if (Main.LocalPlayer.inventory[card].stack <= 0)
-                        Main.LocalPlayer.inventory[card] = new Item();
-
-                    Main.LocalPlayer.QuickSpawnItem(NPC.GetSource_Loot(), ModContent.ItemType<CruxCardHazmatZombie>());
-                    Main.npcChatCornerItem = ModContent.ItemType<CruxCardHazmatZombie>();
-                    SoundEngine.PlaySound(SoundID.Chat);
-                }
-                else
-                    Main.npcChatCornerItem = ModContent.ItemType<EmptyCruxCard>();
-            }
-        }
         public override string GetChat()
         {
             return "... What the hell is going on? Alarms are blaring, lockdown was initiated, yet no alerts over the intercom! I'm not going to wait, I want out of here ASAP!";

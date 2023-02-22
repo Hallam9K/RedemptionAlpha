@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.BaseExtension;
+using Redemption.Biomes;
 using Redemption.Dusts;
 using Redemption.Globals;
 using Redemption.Globals.NPC;
@@ -67,6 +68,7 @@ namespace Redemption.NPCs.FowlMorning
             tailChain = new CockatriceScarfPhys();
             if (!Main.dedServ)
                 Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/FowlMorning");
+            SpawnModBiomes = new int[1] { ModContent.GetInstance<FowlMorningBiome>().Type };
         }
 
         public override bool CanHitPlayer(Player target, ref int cooldownSlot) => false;

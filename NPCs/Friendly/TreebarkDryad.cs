@@ -36,8 +36,8 @@ namespace Redemption.NPCs.Friendly
         public ref float AITimer => ref NPC.ai[1];
 
         public ref float TimerRand => ref NPC.ai[2];
+        public ref float WoodType => ref NPC.ai[3];
 
-        private int WoodType;
         private int EyeFrameY;
         private int EyeFrameX;
 
@@ -124,7 +124,7 @@ namespace Redemption.NPCs.Friendly
                     for (int y = -40; y <= 40; y++)
                     {
                         Point tileToNPC = NPC.Center.ToTileCoordinates();
-                        int type = Framing.GetTileSafely(tileToNPC.X, tileToNPC.Y).TileType;
+                        int type = Framing.GetTileSafely(tileToNPC.X + x, tileToNPC.Y + y).TileType;
                         if (type == TileID.VanityTreeSakura)
                             SakuraScore++;
                         if (type == TileID.VanityTreeYellowWillow)
@@ -132,12 +132,15 @@ namespace Redemption.NPCs.Friendly
                     }
                 }
 
-                WeightedRandom<int> choice = new(Main.rand);
-                choice.Add(0, 100);
-                choice.Add(1, WillowScore);
-                choice.Add(2, SakuraScore);
+                if (WoodType == 0)
+                {
+                    WeightedRandom<int> choice = new(Main.rand);
+                    choice.Add(0, 20);
+                    choice.Add(1, WillowScore);
+                    choice.Add(2, SakuraScore);
 
-                WoodType = choice;
+                    WoodType = choice;
+                }
                 TimerRand = 1;
             }
         }
@@ -253,6 +256,14 @@ namespace Redemption.NPCs.Friendly
                 }
             }
 
+            if (AITimer == 1)
+            {
+                if (RedeWorld.DayNightCount >= 3)
+                    chat.Add("I think I have lingered here for long enough. I was told by the humans to guard this place, but it has been far too long an age... Dangers have come and gone, but none have ever sought to demolish this shrine. To Fairwood I return - I have missed its lush forests and bark'en friends. Mayhaps you be this shrine's new protector..? If it needs one, anyway.", 4);
+                chat.Add("What's that shrine behind me..? It was built by a group of humans, long dead by now, as a place of worship to some sort of figure... I don't recall their name, but I know they were a good friend of nature. Some may consider her the Mother of Nature..? Hmmm... My memory grows distant in my old age.", 2);
+                chat.Add("I have been here a long time, even for us. I was a bold sapling, far more than the others, and so I had come to this land far far earlier than the rest. Maybe I was unwise, but I have seen more of us coming from our lands in recent times, so perhaps the others grew adventurous too.");
+            }
+
             if (score == 0)
                 chat.Add("Where did all my tree friends go..? Perhaps they grew weary of me...", 2);
 
@@ -262,20 +273,23 @@ namespace Redemption.NPCs.Friendly
             if (RedeWorld.alignment < 0)
                 chat.Add("You don't look like a very pleasant fellow. I hope you don't try to chop me down... Haha.. Ha.");
 
-            if (RedeBossDowned.downedThorn)
-                chat.Add("The forest we came from, Fairwood, has been freed of its curse. I was there to witness the forest's warden be tangled up by those cursed roots... But we toil with no humans, and our magic did nothing, so we roamed and roamed until we found this strange portal. It's what lead us here.");
-            else
-                chat.Add("You wouldn't happen to see a brambly young man..? Poor thing was gulped up by the cursed forest we once lived in. I toil with no humans, but I do wonder if he's alright...");
-
-            if (BasePlayer.HasHelmet(Main.LocalPlayer, ModContent.ItemType<ThornMask>()))
-                chat.Add("You remind me of that young warden, did the forest's curse get you too..?");
-
+            if (AITimer != 1)
+            {
+                if (RedeBossDowned.downedThorn)
+                    chat.Add("The forest we came from, Fairwood, has been freed of its curse. I was there to witness the forest's warden be tangled up by those cursed roots... But we toil with no humans, and our magic did nothing, so we roamed and roamed until we found this strange portal. It's what lead us here.");
+                else
+                    chat.Add("You wouldn't happen to see a brambly young man..? Poor thing was gulped up by the cursed forest we once lived in. I toil with no humans, but I do wonder if he's alright...");
+                if (BasePlayer.HasHelmet(Main.LocalPlayer, ModContent.ItemType<ThornMask>()))
+                    chat.Add("You remind me of that young warden, did the forest's curse get you too..?");
+            }
             chat.Add("Are you friend, or foe? As long as you don't use your axe on me, I don't care...");
             return "Hmmmm... " + chat;
         }
 
         public override bool CheckActive()
         {
+            if (AITimer == 1 && RedeWorld.DayNightCount < 4)
+                return false;
             return true;
         }
 
@@ -284,8 +298,8 @@ namespace Redemption.NPCs.Friendly
             if (Main.netMode != NetmodeID.Server)
             {
                 NPC.frame.Width = TextureAssets.Npc[NPC.type].Width() / 3;
-                NPC.frame.X = NPC.frame.Width * WoodType;
-                EyeFrameX = WoodType;
+                NPC.frame.X = NPC.frame.Width * (int)WoodType;
+                EyeFrameX = (int)WoodType;
 
                 if (Main.LocalPlayer.talkNPC > -1 && Main.npc[Main.LocalPlayer.talkNPC].whoAmI == NPC.whoAmI)
                 {

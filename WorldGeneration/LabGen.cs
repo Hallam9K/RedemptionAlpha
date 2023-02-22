@@ -99,6 +99,7 @@ namespace Redemption.WorldGeneration
                 [new Color(100, 0, 0)] = ModContent.WallType<BlackHardenedSludgeWallTile>(),
                 [new Color(0, 255, 255)] = ModContent.WallType<MossyLabPlatingWallTile>(),
                 [new Color(255, 0, 255)] = ModContent.WallType<MossyLabWallTile>(),
+                [new Color(100, 100, 0)] = ModContent.WallType<DangerTapeWallTile>(),
                 [new Color(150, 150, 150)] = -2,
                 [Color.Black] = -1
             };

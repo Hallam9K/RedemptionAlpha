@@ -14,8 +14,7 @@ namespace Redemption.Items.Usable.Summons
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Cyber Radio");
-            Tooltip.SetDefault("Transmits a signal towards a colossal spaceship\nOnly usable at day\nNot consumable" +
-            "\n[i:" + ModContent.ItemType<BadRedemptionRoute>() + "][c/ff5533: This item may have a redeemable negative impact onto the world]");
+            Tooltip.SetDefault("Transmits a signal towards a colossal spaceship\nOnly usable at day\nNot consumable");
             Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(4, 4));
             SacrificeTotal = 1;
             ItemID.Sets.SortingPriorityBossSpawns[Type] = 13;

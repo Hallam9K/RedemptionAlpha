@@ -186,7 +186,7 @@ namespace Redemption.NPCs.Critters
             {
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Caverns,
 
-                new FlavorTextBestiaryInfoElement("An skeletal spider ready to spook you at any moment!")
+                new FlavorTextBestiaryInfoElement("A skeletal spider ready to spook you at any moment! Don't worry, it's not technically a spider; spiders don't have bones.")
             });
         }
 

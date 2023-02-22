@@ -188,6 +188,7 @@ Mods: {
 			LidenBiomeAlpha: The Alpha
 			LidenBiomeOmega: The Omega
 			SoullessBiome: Soulless Caverns
+			FowlMorningBiome: Fowl Morning
 		}
 		TownNPCMood: {
 			Daerel: {

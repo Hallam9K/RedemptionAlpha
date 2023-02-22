@@ -11,6 +11,8 @@ using Redemption.BaseExtension;
 using Redemption.Items.Weapons.PreHM.Summon;
 using Redemption.Items.Materials.PreHM;
 using Terraria.Audio;
+using Redemption.Items.Weapons.PreHM.Melee;
+using Redemption.Items.Placeable.Plants;
 
 namespace Redemption.NPCs.Friendly
 {
@@ -107,8 +109,10 @@ namespace Redemption.NPCs.Friendly
         }
         public static int ChatNumber = 0;
         public static bool what;
+        public static bool request;
         public override void SetChatButtons(ref string button, ref string button2)
         {
+            bool offering = Main.LocalPlayer.HasItem(ModContent.ItemType<Nightshade>());
             switch (ChatNumber)
             {
                 case 0:
@@ -127,7 +131,7 @@ namespace Redemption.NPCs.Friendly
                     button = "Demon?";
                     break;
                 case 4:
-                    button = "Request Crux";
+                    button = request && offering ? "Offer 3 Nightshade" : "Request Crux";
                     break;
             }
             if (what)
@@ -141,30 +145,44 @@ namespace Redemption.NPCs.Friendly
                 Main.npcChatText = ChitChat();
                 if (ChatNumber == 4)
                 {
-                    if (!Main.LocalPlayer.RedemptionAbility().SpiritwalkerActive)
+                    int offering = Main.LocalPlayer.FindItem(ModContent.ItemType<Nightshade>());
+                    if (request && offering >= 0 && Main.LocalPlayer.inventory[offering].stack >= 3)
                     {
-                        Main.npcChatText = "You must be at least partly within the Spirit Realm for me to give you what you ask.";
-                        ChatNumber = 3;
-                        return;
-                    }
-                    int card = Main.LocalPlayer.FindItem(ModContent.ItemType<EmptyCruxCard>());
-                    if (card >= 0)
-                    {
-                        Main.LocalPlayer.inventory[card].stack--;
-                        if (Main.LocalPlayer.inventory[card].stack <= 0)
-                            Main.LocalPlayer.inventory[card] = new Item();
+                        if (!Main.LocalPlayer.RedemptionAbility().SpiritwalkerActive)
+                        {
+                            Main.npcChatText = "You must be at least partly within the Spirit Realm for me to give you what you ask.";
+                            ChatNumber = 3;
+                            return;
+                        }
+                        int card = Main.LocalPlayer.FindItem(ModContent.ItemType<EmptyCruxCard>());
+                        if (card >= 0)
+                        {
+                            Main.LocalPlayer.inventory[offering].stack -= 3;
+                            if (Main.LocalPlayer.inventory[offering].stack <= 0)
+                                Main.LocalPlayer.inventory[offering] = new Item();
 
-                        Main.LocalPlayer.QuickSpawnItem(NPC.GetSource_Loot(), ModContent.ItemType<CruxCardSkeletonAssassin>());
-                        Main.npcChatText = "Hm, yes I can give you it. Within me lies the spirits of assassins, take it and may it give you a chance in this harsh world.";
-                        Main.npcChatCornerItem = ModContent.ItemType<CruxCardSkeletonAssassin>();
-                        SoundEngine.PlaySound(SoundID.Chat);
+                            Main.LocalPlayer.inventory[card].stack--;
+                            if (Main.LocalPlayer.inventory[card].stack <= 0)
+                                Main.LocalPlayer.inventory[card] = new Item();
+
+                            Main.LocalPlayer.QuickSpawnItem(NPC.GetSource_Loot(), ModContent.ItemType<CruxCardSkeletonAssassin>());
+                            Main.npcChatText = "Hm, yes I can give you it. Within me lies the spirits of assassins, take it and may it give you a chance in this harsh world.";
+                            Main.npcChatCornerItem = ModContent.ItemType<CruxCardSkeletonAssassin>();
+                            SoundEngine.PlaySound(SoundID.Chat);
+                            ChatNumber = 3;
+                        }
+                        else
+                        {
+                            Main.npcChatText = "I'll need something to imbue, if you please.";
+                            Main.npcChatCornerItem = ModContent.ItemType<EmptyCruxCard>();
+                        }
                     }
                     else
                     {
-                        Main.npcChatText = "I'll need something to imbue, if you please.";
-                        Main.npcChatCornerItem = ModContent.ItemType<EmptyCruxCard>();
+                        Main.npcChatText = "I shall, if only you give unto my remains three flowers of the night. One for each of my band to fall to that vile demon.";
+                        Main.npcChatCornerItem = ModContent.ItemType<Nightshade>();
                     }
-                    ChatNumber = 3;
+                    request = true;
                 }
                 what = true;
             }

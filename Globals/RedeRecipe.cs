@@ -127,6 +127,18 @@ namespace Redemption.Globals
                 .AddTile(TileID.Bottles)
                 .Register();
 
+            Recipe.Create(ItemID.SlimeStaff)
+                .AddIngredient<ElderWood>(12)
+                .AddIngredient(ItemID.Gel, 25)
+                .AddTile(TileID.Anvils)
+                .Register();
+
+            Recipe.Create(ItemID.WoodenArrow, 25)
+                .AddIngredient<ElderWood>()
+                .AddRecipeGroup(GathicStoneRecipeGroup)
+                .AddTile(TileID.WorkBenches)
+                .Register();
+
             // Living Furniture
             Recipe.Create(ItemID.LivingLoom)
                 .AddIngredient(ModContent.ItemType<LivingTwig>(), 10)

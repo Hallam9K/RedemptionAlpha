@@ -14,6 +14,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
         {
             DisplayName.SetDefault("Blade of the Mountain");
             Tooltip.SetDefault("Parries physical or ice projectiles" +
+                "\nDeals more damage at the tip of the blade" +
                 "\nHitting on the very tip of the blade can freeze enemies" +
                 "\nEnemies with knockback immunity cannot be frozen\n" +
                 "'Send them to their snowy grave'");

@@ -59,7 +59,7 @@ namespace Redemption.Items.Usable
             if (Main.rand.NextBool(100))
                 player.QuickSpawnItem(player.GetSource_OpenItem(Type), ItemID.FlareGun);
 
-            if (NPC.downedMechBoss1 && NPC.downedMechBoss2 && NPC.downedMechBoss3 && Main.rand.NextBool(75))
+            if (NPC.downedPlantBoss && Main.rand.NextBool(75))
                 player.QuickSpawnItem(player.GetSource_OpenItem(Type), ItemID.ProximityMineLauncher);
 
             if (NPC.downedMechBossAny)

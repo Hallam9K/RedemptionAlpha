@@ -18,8 +18,8 @@ namespace Redemption.Items.Weapons.HM.Melee
 		{
             Item.damage = 32;
             Item.DamageType = DamageClass.Melee;
-            Item.width = 36;
-            Item.height = 40;
+            Item.width = 34;
+            Item.height = 36;
             Item.useTime = 15;
             Item.useAnimation = 15;
             Item.useStyle = ItemUseStyleID.Swing;

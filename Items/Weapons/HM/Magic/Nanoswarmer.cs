@@ -26,8 +26,8 @@ namespace Redemption.Items.Weapons.HM.Magic
             Item.mana = 10;
             Item.width = 60;
             Item.height = 36;
-            Item.useTime = 36;
-            Item.useAnimation = 36;
+            Item.useTime = 42;
+            Item.useAnimation = 42;
             Item.useStyle = ItemUseStyleID.Shoot;
             Item.noMelee = true;
             Item.knockBack = 0;

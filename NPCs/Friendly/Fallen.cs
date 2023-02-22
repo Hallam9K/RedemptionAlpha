@@ -27,6 +27,7 @@ using Redemption.BaseExtension;
 using Redemption.Items.Weapons.PreHM.Summon;
 using Redemption.Items.Armor.Vanity;
 using System.Diagnostics;
+using ReLogic.Content;
 
 namespace Redemption.NPCs.Friendly
 {
@@ -135,6 +136,39 @@ namespace Redemption.NPCs.Friendly
             var effects = NPC.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
 
             spriteBatch.Draw(TextureAssets.Npc[NPC.type].Value, NPC.Center - screenPos, NPC.frame, NPC.GetAlpha(drawColor), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
+
+            if (NPC.altTexture == 1)
+            {
+                Asset<Texture2D> hat = ModContent.Request<Texture2D>("Terraria/Images/Item_" + ItemID.PartyHat);
+                int offset;
+                switch (NPC.frame.Y / 54)
+                {
+                    default:
+                        offset = 0;
+                        break;
+                    case 3:
+                        offset = 2;
+                        break;
+                    case 4:
+                        offset = 2;
+                        break;
+                    case 5:
+                        offset = 2;
+                        break;
+                    case 10:
+                        offset = 2;
+                        break;
+                    case 11:
+                        offset = 2;
+                        break;
+                    case 12:
+                        offset = 2;
+                        break;
+                }
+                var hatEffects = NPC.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
+                Vector2 origin = new(hat.Value.Width / 2f, hat.Value.Height / 2f);
+                spriteBatch.Draw(hat.Value, NPC.Center - new Vector2(3 * NPC.spriteDirection, 24 + offset) - screenPos, null, NPC.GetAlpha(drawColor), NPC.rotation, origin, NPC.scale, hatEffects, 0);
+            }
             return false;
         }
 
@@ -157,7 +191,7 @@ namespace Redemption.NPCs.Friendly
         {
             return new List<string> { "Happins", "Tenvon", "Okvot" };
         }
-
+        public override ITownNPCProfile TownNPCProfile() => new FallenProfile();
         public override string GetChat()
         {
             WeightedRandom<string> chat = new(Main.rand);
@@ -222,6 +256,8 @@ namespace Redemption.NPCs.Friendly
             button = Language.GetTextValue("LegacyInterface.28");
 
             button2 = "Repair Fragments";
+            if (Main.LocalPlayer.HasItem(ModContent.ItemType<GolemEye>()) && NPC.downedMoonlord && !RedeBossDowned.downedADD)
+                button2 = "Eye's Origins?";
         }
 
         public override void OnChatButtonClicked(bool firstButton, ref bool shop)
@@ -232,6 +268,11 @@ namespace Redemption.NPCs.Friendly
                 shop = true;
             else
             {
+                if (Main.LocalPlayer.HasItem(ModContent.ItemType<GolemEye>()) && NPC.downedMoonlord && !RedeBossDowned.downedADD)
+                {
+                    Main.npcChatText = "That eye comes from Ukon Veistos? Been many an age since I've heard tales of such things. It was carved from the stone of Gathuram, with the eye being placed in the center. Tales tell of an old God's spirit, said to reawaken once the time was right. The eye was said to be the catalyst, seeping its energy into stone moulded to take a diamond form. Tales as ancient as these twist and morph as time marches on, thus I believe not of what I speak of, yet I'd still be cautious of what you are about to do.";
+                    return;
+                }
                 int[] Frag = new int[] {
                     player.FindItem(ModContent.ItemType<ZweihanderFragment1>()),
                     player.FindItem(ModContent.ItemType<ZweihanderFragment2>()),
@@ -386,5 +427,12 @@ namespace Redemption.NPCs.Friendly
         {
             itemWidth = itemHeight = 38;
         }
+    }
+    public class FallenProfile : ITownNPCProfile
+    {
+        public int RollVariation() => 0;
+        public string GetNameForVariant(NPC npc) => npc.getNewNPCName();
+        public Asset<Texture2D> GetTextureNPCShouldUse(NPC npc) => ModContent.Request<Texture2D>("Redemption/NPCs/Friendly/Fallen");
+        public int GetHeadTextureIndex(NPC npc) => ModContent.GetModHeadSlot("Redemption/NPCs/Friendly/Fallen_Head");
     }
 }

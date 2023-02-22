@@ -1,3 +1,5 @@
+using Microsoft.Xna.Framework;
+using Redemption.Globals;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -13,5 +15,15 @@ namespace Redemption.Buffs.Cooldowns
             Main.buffNoSave[Type] = false;
 			BuffID.Sets.NurseCannotRemoveDebuff[Type] = true;
         }
-	}
+        public override void Update(Player player, ref int buffIndex)
+        {
+            if (RedeHelper.BossActive())
+            {
+                Main.buffNoTimeDisplay[Type] = true;
+                player.buffTime[buffIndex] = (int)MathHelper.Max(player.buffTime[buffIndex], 2);
+            }
+            else
+                Main.buffNoTimeDisplay[Type] = false;
+        }
+    }
 }

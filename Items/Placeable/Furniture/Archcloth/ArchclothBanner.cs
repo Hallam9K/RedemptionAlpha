@@ -19,7 +19,7 @@ namespace Redemption.Items.Placeable.Furniture.Archcloth
             Item.height = 28;
             Item.maxStack = 9999;
             Item.rare = ItemRarityID.LightRed;
-            Item.value = Item.sellPrice(0, 5, 0, 0);
+            Item.value = 100;
         }
         public override void AddRecipes()
         {

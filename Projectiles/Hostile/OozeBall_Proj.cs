@@ -1,3 +1,4 @@
+using Redemption.BaseExtension;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -22,6 +23,7 @@ namespace Redemption.Projectiles.Hostile
             Projectile.ignoreWater = true;
             Projectile.alpha = 160;
             Projectile.timeLeft = 200;
+            Projectile.Redemption().friendlyHostile = true;
         }
         public override bool? CanHitNPC(NPC target) => target.whoAmI != Projectile.ai[0] ? null : false;
         public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection) => damage *= 4;

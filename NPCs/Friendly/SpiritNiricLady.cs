@@ -11,6 +11,8 @@ using Redemption.BaseExtension;
 using Redemption.Items.Weapons.PreHM.Summon;
 using Redemption.Items.Materials.PreHM;
 using Terraria.Audio;
+using Redemption.Items.Tools.PreHM;
+using Redemption.Items.Usable;
 
 namespace Redemption.NPCs.Friendly
 {
@@ -106,15 +108,17 @@ namespace Redemption.NPCs.Friendly
             }
         }
         public static int ChatNumber = 0;
+        public static bool request;
         public override void SetChatButtons(ref string button, ref string button2)
         {
+            bool offering = Main.LocalPlayer.HasItem(ItemID.Diamond);
             button = ChatNumber switch
             {
                 1 => "New kingdom?",
                 2 => "Your corpse?",
                 3 => "Nirin?",
                 4 => "Disaster?",
-                5 => "Request Crux",
+                5 => request && offering ? "Offer 6 Diamonds" : "Request Crux",
                 _ => "About you?",
             };
             button2 = "Cycle Dialogue";
@@ -127,30 +131,44 @@ namespace Redemption.NPCs.Friendly
                 Main.npcChatText = ChitChat();
                 if (ChatNumber == 5)
                 {
-                    if (!Main.LocalPlayer.RedemptionAbility().SpiritwalkerActive)
+                    int offering = Main.LocalPlayer.FindItem(ItemID.Diamond);
+                    if (request && offering >= 0 && Main.LocalPlayer.inventory[offering].stack >= 6)
                     {
-                        Main.npcChatText = "I'm unable to give you what you seek beyond my realm.";
-                        ChatNumber = 4;
-                        return;
-                    }
-                    int card = Main.LocalPlayer.FindItem(ModContent.ItemType<EmptyCruxCard>());
-                    if (card >= 0)
-                    {
-                        Main.LocalPlayer.inventory[card].stack--;
-                        if (Main.LocalPlayer.inventory[card].stack <= 0)
-                            Main.LocalPlayer.inventory[card] = new Item();
+                        if (!Main.LocalPlayer.RedemptionAbility().SpiritwalkerActive)
+                        {
+                            Main.npcChatText = "I'm unable to give you what you seek beyond my realm.";
+                            ChatNumber = 4;
+                            return;
+                        }
+                        int card = Main.LocalPlayer.FindItem(ModContent.ItemType<EmptyCruxCard>());
+                        if (card >= 0)
+                        {
+                            Main.LocalPlayer.inventory[offering].stack -= 6;
+                            if (Main.LocalPlayer.inventory[offering].stack <= 0)
+                                Main.LocalPlayer.inventory[offering] = new Item();
 
-                        Main.LocalPlayer.QuickSpawnItem(NPC.GetSource_Loot(), ModContent.ItemType<CruxCardGladestone>());
-                        Main.npcChatText = "Take it. My blessings to you. Whoever you are.";
-                        Main.npcChatCornerItem = ModContent.ItemType<CruxCardGladestone>();
-                        SoundEngine.PlaySound(SoundID.Chat);
+                            Main.LocalPlayer.inventory[card].stack--;
+                            if (Main.LocalPlayer.inventory[card].stack <= 0)
+                                Main.LocalPlayer.inventory[card] = new Item();
+
+                            Main.LocalPlayer.QuickSpawnItem(NPC.GetSource_Loot(), ModContent.ItemType<CruxCardGladestone>());
+                            Main.npcChatText = "Take it. My blessings to you. Whoever you are.";
+                            Main.npcChatCornerItem = ModContent.ItemType<CruxCardGladestone>();
+                            SoundEngine.PlaySound(SoundID.Chat);
+                            ChatNumber = 4;
+                        }
+                        else
+                        {
+                            Main.npcChatText = "I would require an object to imbue for that.";
+                            Main.npcChatCornerItem = ModContent.ItemType<EmptyCruxCard>();
+                        }
                     }
                     else
                     {
-                        Main.npcChatText = "I would require an object to imbue for that.";
-                        Main.npcChatCornerItem = ModContent.ItemType<EmptyCruxCard>();
+                        Main.npcChatText = "Only if you may, bring me six gemstones of the purest shine, and lay them around my remains. Six are the hands of an angel. Their arms hold us so...";
+                        Main.npcChatCornerItem = ItemID.Diamond;
                     }
-                    ChatNumber = 4;
+                    request = true;
                 }
             }
             else

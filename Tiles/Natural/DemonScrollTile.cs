@@ -12,6 +12,7 @@ namespace Redemption.Tiles.Natural
 		public override void SetStaticDefaults()
 		{
 			Main.tileFrameImportant[Type] = true;
+            Main.tileNoAttach[Type] = true;
             TileObjectData.newTile.CopyFrom(TileObjectData.StyleOnTable1x1);
             TileObjectData.newTile.CoordinateHeights = new int[] { 16 };
             TileObjectData.addTile(Type);
@@ -32,7 +33,7 @@ namespace Redemption.Tiles.Natural
 		{
 			num = fail ? 1 : 3;
 		}
-
+        public override bool CanKillTile(int i, int j, ref bool blockDamaged) => !WorldGen.gen;
         public override void MouseOver(int i, int j)
         {
             Player player = Main.LocalPlayer;
