@@ -25,7 +25,6 @@ namespace Redemption.NPCs.Bosses.Keeper
             Projectile.tileCollide = false;
             Projectile.ignoreWater = false;
             Projectile.DamageType = DamageClass.Magic;
-            Projectile.alpha = 0;
             Projectile.timeLeft = 200;
         }
 
@@ -44,9 +43,7 @@ namespace Redemption.NPCs.Bosses.Keeper
             {
                 Projectile.frameCounter = 0;
                 if (++Projectile.frame >= 4)
-                {
                     Projectile.frame = 0;
-                }
             }
             Lighting.AddLight(Projectile.Center, Projectile.Opacity, Projectile.Opacity, Projectile.Opacity);
 
@@ -57,7 +54,9 @@ namespace Redemption.NPCs.Bosses.Keeper
                 TrailHelper.ManageBasicCaches(ref cache, ref cache2, NUMPOINTS, Projectile.Center + Projectile.velocity);
                 TrailHelper.ManageBasicTrail(ref cache, ref cache2, ref trail, ref trail2, NUMPOINTS, Projectile.Center + Projectile.velocity, baseColor, baseColor, baseColor, thickness);
             }
-            if (fakeTimer > 0)
+            if (Projectile.ai[0] == 1)
+                Projectile.alpha += 5;
+            if (fakeTimer > 0 || Projectile.alpha >= 255)
                 FakeKill();
         }
         private int fakeTimer;
@@ -113,6 +112,6 @@ namespace Redemption.NPCs.Bosses.Keeper
                 Main.dust[dustIndex].noGravity = true;
             }
         }
-        public override Color? GetAlpha(Color lightColor) => new Color(255, 255, 255, 0);
+        public override Color? GetAlpha(Color lightColor) => new Color(255, 255, 255, 0) * Projectile.Opacity;
     }
 }

@@ -98,7 +98,7 @@ namespace Redemption.Items.Weapons.PostML.Melee
         }
         public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
         {
-            damage = damage * Projectile.timeLeft / 120;
+            damage = (int)(damage * 1.4f * Projectile.timeLeft / 120);
             if (damage < 40)
                 damage = 40;
         }

@@ -100,7 +100,6 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
             NPC.damage = (int)(NPC.damage * player.GetTotalDamage(DamageClass.Summon).Additive);
             TimerRand = Main.rand.Next(80, 120);
             NPC.netUpdate = true;
-            NPC.netUpdate = true;
         }
         public override void AI()
         {
@@ -442,7 +441,7 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
                                 SoundEngine.PlaySound(CustomSounds.Roar1 with { Pitch = -.5f }, NPC.position);
 
                             if (AITimer > 25 && AITimer % 4 == 0)
-                                NPC.Shoot(new Vector2(NPC.Center.X + (64 * NPC.spriteDirection), NPC.Center.Y - 8), ModContent.ProjectileType<MossyGoliath_SS_ToxicBreath>(), NPC.damage / 4, new Vector2(7 * NPC.spriteDirection, Main.rand.NextFloat(-1f, 1f)), false, SoundID.Item1);
+                                NPC.Shoot(new Vector2(NPC.Center.X + (64 * NPC.spriteDirection), NPC.Center.Y - 8), ModContent.ProjectileType<MossyGoliath_SS_ToxicBreath>(), NPC.damage / 3, new Vector2(7 * NPC.spriteDirection, Main.rand.NextFloat(-1f, 1f)), false, SoundID.Item1);
 
                             if (AITimer >= 80)
                             {

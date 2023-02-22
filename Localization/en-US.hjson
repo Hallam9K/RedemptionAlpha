@@ -184,6 +184,7 @@ Mods: {
 			LidenBiome: Liden
 			LidenBiomeAlpha: The Alpha
 			LidenBiomeOmega: The Omega
+			FowlMorningBiome: Fowl Morning
 		}
 		TownNPCMood: {
 			Daerel: {

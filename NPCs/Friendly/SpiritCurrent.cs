@@ -105,7 +105,7 @@ namespace Redemption.NPCs.Friendly
                     while (attempts2++ < 1000 && !set)
                     {
                         Point16 offset = RedeHelper.PolarVector(Main.rand.Next(80, 131), RedeHelper.RandomRotation()).ToPoint16();
-                        if (Main.tile[(point + offset).X, (point + offset).Y].WallType is 0 && !Collision.SolidCollision(new Vector2(((point + offset).X * 16) - 50, ((point + offset).Y * 16) - 50), 100, 100))
+                        if (WorldGen.InWorld((point + offset).X, (point + offset).Y) && Framing.GetTileSafely((point + offset).X, (point + offset).Y).WallType is 0 && !Collision.SolidCollision(new Vector2(((point + offset).X * 16) - 50, ((point + offset).Y * 16) - 50), 100, 100))
                         {
                             point += offset;
                             set = true;

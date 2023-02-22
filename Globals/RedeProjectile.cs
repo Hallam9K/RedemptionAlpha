@@ -21,6 +21,7 @@ namespace Redemption.Globals
         public bool RitDagger;
         public bool EnergyBased;
         public bool ParryBlacklist;
+        public bool friendlyHostile;
         public int DissolveTimer;
         public override void SetDefaults(Projectile projectile)
         {

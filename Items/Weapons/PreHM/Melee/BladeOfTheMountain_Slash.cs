@@ -114,6 +114,13 @@ namespace Redemption.Items.Weapons.PreHM.Melee
         }
         public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
         {
+            Player player = Main.player[Projectile.owner];
+            float tipBonus;
+            tipBonus = player.Distance(target.Center) / 3;
+            tipBonus = MathHelper.Clamp(tipBonus, 0, 20);
+
+            damage += (int)tipBonus;
+
             RedeProjectile.Decapitation(target, ref damage, ref crit);
         }
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
@@ -122,6 +129,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
             if (target.DistanceSQ(player.Center) > 100 * 100 && target.knockBackResist > 0 && !target.RedemptionNPCBuff().iceFrozen)
             {
                 SoundEngine.PlaySound(SoundID.Item30, target.position);
+                DustHelper.DrawDustImage(target.Center, DustID.Frost, 0.5f, "Redemption/Effects/DustImages/Flake", 2, true, RedeHelper.RandomRotation());
                 target.AddBuff(ModContent.BuffType<IceFrozen>(), 1800 - ((int)MathHelper.Clamp(target.lifeMax, 60, 1780)));
             }
         }

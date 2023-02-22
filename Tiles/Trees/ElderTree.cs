@@ -93,7 +93,7 @@ namespace Redemption.Tiles.Trees
         }
         public override void SetStaticDefaults()
         {
-            GrowsOnTileId = new int[1] { ModContent.TileType<AncientDirtTile>() };
+            GrowsOnTileId = new int[2] { ModContent.TileType<AncientDirtTile>(), ModContent.TileType<AncientGrassTile>() };
         }
         public override Asset<Texture2D> GetTexture()
         {

@@ -7,6 +7,7 @@ using Terraria.Utilities;
 using Microsoft.Xna.Framework;
 using Terraria.DataStructures;
 using static Redemption.NPCs.Critters.Chicken;
+using System;
 
 namespace Redemption.NPCs.Critters
 {
@@ -71,9 +72,10 @@ namespace Redemption.NPCs.Critters
         public override float SpawnChance(NPCSpawnInfo spawnInfo)
         {
             float baseChance = SpawnCondition.OverworldDay.Chance;
-            float multiplier = Main.tile[spawnInfo.SpawnTileX, spawnInfo.SpawnTileY].TileType == TileID.Grass ? 0.12f : 0f;
+            float townChance = SpawnCondition.OverworldDayGrassCritter.Chance;
+            float multiplier = Framing.GetTileSafely(spawnInfo.SpawnTileX, spawnInfo.SpawnTileY).TileType is TileID.Grass or TileID.JungleGrass ? 0.12f : 0f;
 
-            return baseChance * multiplier;
+            return Math.Max(baseChance, townChance) * multiplier;
         }
     }
     public class KabucraSpawner : ModNPC

@@ -87,6 +87,7 @@ namespace Redemption.NPCs.Minibosses.SkullDigger
             NPC.alpha = 255;
             NPC.boss = true;
             NPC.netAlways = true;
+            NPC.lavaImmune = true;
             if (!Main.dedServ)
                 Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/SilentCaverns");
         }

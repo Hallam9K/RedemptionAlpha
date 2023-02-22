@@ -149,7 +149,7 @@ namespace Redemption.Items.Weapons.PreHM.Summon
         {
             Texture2D texture = TextureAssets.Item[Item.type].Value;
             Texture2D bossTex = ModContent.Request<Texture2D>("Redemption/Textures/CruxCardBoss").Value;
-            RedeDraw.DrawTreasureBagEffect(spriteBatch, bossTex, ref drawTimer, position - new Vector2(2, 2), new Rectangle(0, 0, bossTex.Width, bossTex.Height), RedeColor.EnergyPulse, 0, origin, scale);
+            RedeDraw.DrawTreasureBagEffect(spriteBatch, bossTex, ref drawTimer, position - new Vector2(2, 2), new Rectangle(0, 0, bossTex.Width, bossTex.Height), RedeColor.EnergyPulse * .5f, 0, origin, scale);
             spriteBatch.Draw(texture, position, new Rectangle(0, 0, texture.Width, texture.Height), drawColor, 0, origin, scale, 0, 0f);
             return false;
         }
@@ -164,7 +164,7 @@ namespace Redemption.Items.Weapons.PreHM.Summon
                 frame = texture.Frame();
             Vector2 origin = frame.Size() / 2f;
 
-            RedeDraw.DrawTreasureBagEffect(spriteBatch, bossTex, ref drawTimer, Item.Center - new Vector2(2, 2) - Main.screenPosition, frame, RedeColor.EnergyPulse, rotation, origin, scale);
+            RedeDraw.DrawTreasureBagEffect(spriteBatch, bossTex, ref drawTimer, Item.Center - new Vector2(2, 2) - Main.screenPosition, frame, RedeColor.EnergyPulse * .5f, rotation, origin, scale);
             spriteBatch.Draw(texture, Item.Center - Main.screenPosition, frame, lightColor, rotation, origin, scale, SpriteEffects.None, 0f);
             return false;
         }

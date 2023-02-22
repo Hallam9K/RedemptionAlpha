@@ -14,7 +14,7 @@ namespace Redemption.Items.Weapons.PostML.Melee
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Piercing Nebula");
-            Tooltip.SetDefault("Deals less damage the further away the target\n" +
+            Tooltip.SetDefault("Deals more damage the closer you are to the target\n" +
                 "'Penetrates through even the fabric of space'");
             SacrificeTotal = 1;
             ItemID.Sets.SkipsInitialUseSound[Item.type] = true;

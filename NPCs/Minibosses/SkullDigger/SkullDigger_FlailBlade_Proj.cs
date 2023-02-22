@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Redemption.BaseExtension;
 using Redemption.Globals;
 using Terraria;
 using Terraria.GameContent;
@@ -98,6 +99,7 @@ namespace Redemption.NPCs.Minibosses.SkullDigger
             Projectile.friendly = true;
             Projectile.hostile = false;
         }
+        NPC boss;
         public override bool PreAI()
         {
             Projectile host = Main.projectile[(int)Projectile.ai[0]];
@@ -105,9 +107,11 @@ namespace Redemption.NPCs.Minibosses.SkullDigger
 
             if (Projectile.localAI[0]++ == 0)
                 Projectile.rotation = host.rotation;
-
-            if (Projectile.localAI[0] == 5 && player.whoAmI == Main.myPlayer)
+            bool spirit = Projectile.localAI[1] == 1;
+            if (!spirit && Projectile.localAI[0] == 5 && player.whoAmI == Main.myPlayer)
+            {
                 Projectile.velocity = RedeHelper.PolarVector(0.08f, (Main.MouseWorld - Projectile.Center).ToRotation());
+            }
             if (Projectile.localAI[0] >= 5)
             {
                 Projectile.LookByVelocity();

@@ -60,5 +60,9 @@ namespace Redemption
         [Label("The Janitor's Last Stand")]
         [Tooltip("Generating a new world will create a clean lab with safe laboratory tiles and no sludge (This can break progression, obviously)")]
         public bool FunniJanitor;
+
+        [Label("Ancient World")]
+        [Tooltip("Generating a new world will convert tiles to their ancient or gathic version, and gathic tombs will gen more frequently")]
+        public bool FunniAncient;
     }
 }

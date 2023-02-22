@@ -171,7 +171,7 @@ namespace Redemption
                 ConvertWall(x1, y1, (ushort)ModContent.WallType<IrradiatedSnowWallTile>());
             else if (tile.WallType is WallID.LivingWood or WallID.LivingWoodUnsafe)
                 ConvertWall(x1, y1, (ushort)ModContent.WallType<IrradiatedLivingWoodWallTile>());
-            else if (tile.WallType is WallID.DirtUnsafe or WallID.DirtUnsafe1 or WallID.DirtUnsafe2 or WallID.DirtUnsafe3 or WallID.DirtUnsafe4 or WallID.GrassUnsafe or WallID.FlowerUnsafe or WallID.CorruptGrassUnsafe or WallID.CrimsonGrassUnsafe)
+            else if (tile.WallType is WallID.DirtUnsafe or WallID.DirtUnsafe1 or WallID.DirtUnsafe2 or WallID.DirtUnsafe3 or WallID.DirtUnsafe4 or WallID.GrassUnsafe or WallID.FlowerUnsafe or WallID.CorruptGrassUnsafe or WallID.CrimsonGrassUnsafe or WallID.Cave6Unsafe)
                 ConvertWall(x1, y1, (ushort)ModContent.WallType<IrradiatedDirtWallTile>());
             else if (tile.WallType is WallID.MudUnsafe)
                 ConvertWall(x1, y1, (ushort)ModContent.WallType<IrradiatedMudWallTile>());

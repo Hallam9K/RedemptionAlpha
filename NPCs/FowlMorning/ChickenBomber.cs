@@ -13,6 +13,7 @@ using Terraria.DataStructures;
 using Redemption.NPCs.Bosses.FowlEmperor;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria.GameContent;
+using Redemption.Biomes;
 
 namespace Redemption.NPCs.FowlMorning
 {
@@ -39,6 +40,7 @@ namespace Redemption.NPCs.FowlMorning
             NPC.knockBackResist = 0.4f;
             NPC.noGravity = true;
             NPC.noTileCollide = true;
+            SpawnModBiomes = new int[1] { ModContent.GetInstance<FowlMorningBiome>().Type };
         }
         public override void HitEffect(int hitDirection, double damage)
         {

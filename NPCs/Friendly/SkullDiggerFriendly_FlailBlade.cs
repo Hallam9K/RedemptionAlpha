@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Globals;
 using Terraria;
+using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -31,7 +32,7 @@ namespace Redemption.NPCs.Friendly
         public override void AI()
         {
             NPC host = Main.npc[(int)Projectile.ai[0]];
-            if (!host.active || host.type != ModContent.NPCType<SkullDiggerFriendly>())
+            if (!host.active || (host.type != ModContent.NPCType<SkullDiggerFriendly>() && host.type != ModContent.NPCType<SkullDiggerFriendly_Spirit>()))
                 Projectile.Kill();
 
             Vector2 originPos = host.Center + new Vector2(host.spriteDirection == 1 ? 35 : -35, -6);
@@ -52,6 +53,13 @@ namespace Redemption.NPCs.Friendly
 
         public override bool PreDraw(ref Color lightColor)
         {
+            if (Projectile.ai[1] == 1)
+            {
+                int shader = GameShaders.Armor.GetShaderIdFromItemId(ItemID.WispDye);
+                Main.spriteBatch.End();
+                Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+                GameShaders.Armor.ApplySecondary(shader, Main.player[Main.myPlayer], null);
+            }
             NPC host = Main.npc[(int)Projectile.ai[0]];
             Texture2D ballTexture = ModContent.Request<Texture2D>("Redemption/NPCs/Minibosses/SkullDigger/SkullDigger_FlailBlade").Value;
             Vector2 anchorPos = Projectile.Center;
@@ -78,7 +86,7 @@ namespace Redemption.NPCs.Friendly
                     vector2_1.Normalize();
                     HeadPos += vector2_1 * num1;
                     vector2_4 = anchorPos - HeadPos;
-                    Main.EntitySpriteDraw(chainTexture, HeadPos - Main.screenPosition, new Rectangle?(sourceRectangle), Projectile.GetAlpha(lightColor), rotation, origin, 1, SpriteEffects.None, 0);
+                    Main.EntitySpriteDraw(chainTexture, HeadPos - Main.screenPosition, new Rectangle?(sourceRectangle), Projectile.GetAlpha(Projectile.ai[1] == 1 ? Color.White : lightColor), rotation, origin, 1, SpriteEffects.None, 0);
                 }
             }
             Vector2 position = Projectile.Center - Main.screenPosition;
@@ -92,7 +100,12 @@ namespace Redemption.NPCs.Friendly
                 Main.EntitySpriteDraw(ballTexture, drawPos, new Rectangle?(rect), color, Projectile.rotation, origin2, Projectile.scale, effects, 0);
             }
 
-            Main.EntitySpriteDraw(ballTexture, position, new Rectangle?(rect), Projectile.GetAlpha(lightColor), Projectile.rotation, origin2, Projectile.scale, effects, 0);
+            Main.EntitySpriteDraw(ballTexture, position, new Rectangle?(rect), Projectile.GetAlpha(Projectile.ai[1] == 1 ? Color.White : lightColor), Projectile.rotation, origin2, Projectile.scale, effects, 0);
+            if (Projectile.ai[1] == 1)
+            {
+                Main.spriteBatch.End();
+                Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+            }
             return false;
         }
     }

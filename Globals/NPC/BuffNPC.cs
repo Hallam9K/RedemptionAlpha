@@ -622,7 +622,7 @@ namespace Redemption.Globals.NPC
                         Projectile.NewProjectile(npc.GetSource_FromAI(), npc.Center, RedeHelper.SpreadUp(14), ModContent.ProjectileType<Blood_Proj>(), npc.damage, 0, Main.myPlayer);
                 }
             }
-            if (iceFrozen)
+            if (iceFrozen && damage > 1)
             {
                 SoundEngine.PlaySound(SoundID.DD2_WitherBeastCrystalImpact, npc.position);
                 Dust.NewDust(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, DustID.Ice, Scale: 1);

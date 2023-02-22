@@ -13,6 +13,7 @@ using Redemption.Globals.World;
 using Redemption.Items.Usable.Potions;
 using Terraria.DataStructures;
 using Redemption.Buffs.NPCBuffs;
+using Redemption.Biomes;
 
 namespace Redemption.NPCs.FowlMorning
 {
@@ -37,6 +38,7 @@ namespace Redemption.NPCs.FowlMorning
             NPC.DeathSound = SoundID.NPCDeath1;
             NPC.aiStyle = -1;
             NPC.knockBackResist = 0.3f;
+            SpawnModBiomes = new int[1] { ModContent.GetInstance<FowlMorningBiome>().Type };
         }
         public override void OnSpawn(IEntitySource source)
         {

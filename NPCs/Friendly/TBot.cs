@@ -25,6 +25,8 @@ using System.Collections.Generic;
 using Redemption.Items;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Items.Donator.Lordfunnyman;
+using Terraria.GameContent;
+using ReLogic.Content;
 
 namespace Redemption.NPCs.Friendly
 {
@@ -115,7 +117,7 @@ namespace Redemption.NPCs.Friendly
         {
             return new List<string> { "Adam" };
         }
-
+        public override ITownNPCProfile TownNPCProfile() => new TBotProfile();
         public override string GetChat()
         {
             NextPage = false;
@@ -424,5 +426,12 @@ namespace Redemption.NPCs.Friendly
             spriteBatch.Draw(texture, NPC.Center - offset - screenPos, null, NPC.GetAlpha(drawColor), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
             return false;
         }
+    }
+    public class TBotProfile : ITownNPCProfile
+    {
+        public int RollVariation() => 0;
+        public string GetNameForVariant(NPC npc) => npc.getNewNPCName();
+        public Asset<Texture2D> GetTextureNPCShouldUse(NPC npc) => ModContent.Request<Texture2D>("Redemption/NPCs/Friendly/TBot");
+        public int GetHeadTextureIndex(NPC npc) => ModContent.GetModHeadSlot("Redemption/NPCs/Friendly/TBot_Head");
     }
 }

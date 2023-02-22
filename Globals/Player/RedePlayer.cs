@@ -108,7 +108,7 @@ namespace Redemption.Globals.Player
                 return;
             if (RedeGen.GoldenGatewayPoint.X == 0 || RedeGen.BastionPoint.X == 0 || RedeGen.gathicPortalPoint.X == 0 || RedeGen.HallOfHeroesPoint.X == 0 || RedeGen.slayerShipPoint.X == 0)
                 Main.NewText("WARNING: Unable to locate a certain structure, new world is recommended!", Colors.RarityRed);
-            if (RedeGen.LabPoint.X == 0 || RedeGen.newbCavePoint.X == 0 || RedeGen.JoShrinePoint.X == 0)
+            if (RedeGen.LabPoint.X == 0 || RedeGen.newbCavePoint.X == 0)
                 Main.NewText("WARNING: Unable to locate important structure, new world is required!", Colors.RarityRed);
 
             if (RedeConfigClient.Instance.FunniAllWasteland || RedeConfigClient.Instance.FunniJanitor || RedeConfigClient.Instance.FunniSpiders || RedeConfigClient.Instance.FunniWasteland)

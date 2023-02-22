@@ -329,10 +329,10 @@ namespace Redemption.NPCs.PreHM
                                     Main.dust[dustIndex].noGravity = true;
                                 }
                                 SoundEngine.PlaySound(SoundID.NPCHit48, NPC.position);
-                                NPC.life += 50;
+                                NPC.life += 250;
                                 if (NPC.life >= NPC.lifeMax)
                                     NPC.life = NPC.lifeMax;
-                                NPC.HealEffect(50);
+                                NPC.HealEffect(250);
                             }
                         }
                         else if (globalNPC.attacker is Player attackerPlayer)

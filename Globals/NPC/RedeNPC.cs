@@ -36,6 +36,7 @@ using Redemption.Items.Weapons.HM.Summon;
 using Redemption.Items.Donator.Lordfunnyman;
 using Redemption.Globals.World;
 using Redemption.Buffs.Cooldowns;
+using Steamworks;
 
 namespace Redemption.Globals.NPC
 {
@@ -493,6 +494,8 @@ namespace Redemption.Globals.NPC
                 elementDmg = 1;
                 #endregion
             }
+            if (spiritSummon && projectile.hostile && !projectile.Redemption().friendlyHostile)
+                damage *= 4;
         }
         public override void OnHitNPC(Terraria.NPC npc, Terraria.NPC target, int damage, float knockback, bool crit)
         {

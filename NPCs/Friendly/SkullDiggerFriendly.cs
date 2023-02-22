@@ -10,6 +10,11 @@ using Terraria.Graphics.Shaders;
 using Terraria.GameContent;
 using Redemption.Items.Usable.Summons;
 using Redemption.Base;
+using Redemption.Items.Weapons.PreHM.Melee;
+using Redemption.BaseExtension;
+using Redemption.Items.Weapons.PreHM.Summon;
+using Redemption.Items.Materials.PreHM;
+using Terraria.Audio;
 
 namespace Redemption.NPCs.Friendly
 {
@@ -87,19 +92,13 @@ namespace Redemption.NPCs.Friendly
             {
                 NPC.velocity.Y += 0.03f;
                 if (NPC.velocity.Y > .5f)
-                {
                     floatTimer = true;
-                    NPC.netUpdate = true;
-                }
             }
             else if (floatTimer)
             {
                 NPC.velocity.Y -= 0.03f;
                 if (NPC.velocity.Y < -.5f)
-                {
                     floatTimer = false;
-                    NPC.netUpdate = true;
-                }
             }
 
             switch (AIState)
@@ -239,6 +238,132 @@ namespace Redemption.NPCs.Friendly
         {
             NPC.lifeMax = (int)(NPC.lifeMax * 0.6f * bossLifeScale);
             NPC.damage = (int)(NPC.damage * 0.6f);
+        }
+    }
+    public class SkullDiggerFriendly_Spirit : SkullDiggerFriendly
+    {
+        public override string Texture => "Redemption/NPCs/Minibosses/SkullDigger/SkullDigger";
+        public override void SetStaticDefaults()
+        {
+            base.SetStaticDefaults();
+            DisplayName.SetDefault("Skull Digger's Spirit");
+        }
+        public override bool CheckActive() => false;
+        private bool floatTimer;
+        public override bool PreAI()
+        {
+            Player player = Main.player[RedeHelper.GetNearestAlivePlayer(NPC)];
+            if (NPC.target < 0 || NPC.target == 255 || player.dead || !player.active)
+                NPC.TargetClosest();
+            if (!Main.player[Main.myPlayer].RedemptionAbility().SpiritwalkerActive)
+            {
+                NPC.alpha += 10;
+                if (NPC.alpha >= 255)
+                {
+                    bool oneActive = false;
+                    for (int i = 0; i < Main.maxPlayers; i++)
+                    {
+                        Player player2 = Main.player[i];
+                        if (!player2.active || player2.dead || !player.RedemptionAbility().SpiritwalkerActive)
+                            continue;
+
+                        oneActive = true;
+                    }
+                    if (!oneActive)
+                        NPC.active = false;
+                }
+                return false;
+            }
+            else
+            {
+                if (NPC.ai[0] >= 2 && NPC.alpha > 0)
+                    NPC.alpha -= 10;
+            }
+
+            if (!RedeHelper.AnyProjectiles(ModContent.ProjectileType<SkullDiggerFriendly_FlailBlade>()))
+                NPC.Shoot(NPC.Center, ModContent.ProjectileType<SkullDiggerFriendly_FlailBlade>(), NPC.damage, Vector2.Zero, false, SoundID.Item1, NPC.whoAmI, 1);
+
+            if (!floatTimer)
+            {
+                NPC.velocity.Y += 0.03f;
+                if (NPC.velocity.Y > .5f)
+                    floatTimer = true;
+            }
+            else if (floatTimer)
+            {
+                NPC.velocity.Y -= 0.03f;
+                if (NPC.velocity.Y < -.5f)
+                    floatTimer = false;
+            }
+            NPC.alpha += Main.rand.Next(-10, 11);
+            NPC.alpha = (int)MathHelper.Clamp(NPC.alpha, 0, 30);
+            return false;
+        }
+        public override void SetChatButtons(ref string button, ref string button2)
+        {
+            button = "Talk";
+            if (Main.LocalPlayer.RedemptionAbility().SpiritwalkerActive && !Main.LocalPlayer.HasItem(ModContent.ItemType<CruxCardSkullDigger>()))
+                button2 = "Request Crux";
+        }
+        public override void OnChatButtonClicked(bool firstButton, ref bool shop)
+        {
+            if (firstButton)
+                Main.npcChatText = "You see, I was expecting to join my mistress in this realm, seeing as we were both freed of our sorrows. Contrariwise, I have no sight of her, none at all... I have looked and looked, but alas, I feel I am searching for a ghost - in the metaphorical and literal sense. If you know not of where she lies, I suppose I must continue my search. I must not let my vexation sway me, lest I turn vengeful.";
+            else
+            {
+                int card = Main.LocalPlayer.FindItem(ModContent.ItemType<EmptyCruxCard>());
+                if (card >= 0)
+                {
+                    Main.LocalPlayer.inventory[card].stack--;
+                    if (Main.LocalPlayer.inventory[card].stack <= 0)
+                        Main.LocalPlayer.inventory[card] = new Item();
+
+                    Main.LocalPlayer.QuickSpawnItem(NPC.GetSource_Loot(), ModContent.ItemType<CruxCardSkullDigger>());
+                    Main.npcChatText = "For all the kindness you have brought, I will accept. May I serve you well.";
+                    Main.npcChatCornerItem = ModContent.ItemType<CruxCardSkullDigger>();
+                    SoundEngine.PlaySound(SoundID.Chat);
+                }
+                else
+                {
+                    Main.npcChatText = "Of course, but I cannot without an object to imbue.";
+                    Main.npcChatCornerItem = ModContent.ItemType<EmptyCruxCard>();
+                }
+            }
+        }
+        public override string GetChat()
+        {
+            return "Hmmmm... Oh! I never expected for you to see me again, seeing as I am a full-fledged spirit now. Hm, I care not that our paths cross again so soon, as perhaps you may assist my worried thoughts.";
+        }
+
+        public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
+        {
+            Texture2D HandsTex = ModContent.Request<Texture2D>("Redemption/NPCs/Minibosses/SkullDigger/SkullDigger_Hands").Value;
+            var effects = NPC.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
+            int shader = GameShaders.Armor.GetShaderIdFromItemId(ItemID.WispDye);
+            spriteBatch.End();
+            spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+            GameShaders.Armor.ApplySecondary(shader, Main.player[Main.myPlayer], null);
+
+            for (int i = 0; i < NPCID.Sets.TrailCacheLength[NPC.type]; i++)
+            {
+                Vector2 oldPos = NPC.oldPos[i];
+                Main.spriteBatch.Draw(TextureAssets.Npc[NPC.type].Value, oldPos + NPC.Size / 2f - screenPos + new Vector2(0, NPC.gfxOffY), NPC.frame, NPC.GetAlpha(Color.LightCyan) * 0.3f, oldrot[i], NPC.frame.Size() / 2, NPC.scale + 0.1f, effects, 0);
+            }
+
+            spriteBatch.Draw(TextureAssets.Npc[NPC.type].Value, NPC.Center - screenPos, NPC.frame, NPC.GetAlpha(Color.White), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
+
+            Rectangle rect = new(0, 0, HandsTex.Width, HandsTex.Height);
+            spriteBatch.Draw(HandsTex, NPC.Center - screenPos - new Vector2(14, -32), new Rectangle?(rect), NPC.GetAlpha(Color.White), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
+            spriteBatch.End();
+            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+            return false;
+        }
+
+        public override float SpawnChance(NPCSpawnInfo spawnInfo)
+        {
+            if (spawnInfo.Player.RedemptionAbility().SpiritwalkerActive && !spawnInfo.Player.ZoneTowerNebula && !spawnInfo.Player.ZoneTowerSolar && !spawnInfo.Player.ZoneTowerStardust && !spawnInfo.Player.ZoneTowerVortex)
+                return !NPC.AnyNPCs(NPC.type) && RedeBossDowned.skullDiggerSaved ? 0.4f : 0;
+            return 0;
         }
     }
 }
