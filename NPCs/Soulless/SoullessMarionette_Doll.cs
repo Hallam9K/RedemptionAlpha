@@ -35,6 +35,7 @@ namespace Redemption.NPCs.Soulless
             });
             NPCID.Sets.NPCBestiaryDrawModifiers value = new(0) { Velocity = 1f };
             NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, value);
+            ElementID.NPCShadow[Type] = true;
         }
         public override void SetDefaults()
         {

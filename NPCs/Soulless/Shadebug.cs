@@ -58,6 +58,7 @@ namespace Redemption.NPCs.Soulless
                 Velocity = 1
             };
             NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, value);
+            ElementID.NPCShadow[Type] = true;
         }
 
         public override void SetDefaults()

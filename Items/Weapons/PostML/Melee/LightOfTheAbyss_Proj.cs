@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Redemption.BaseExtension;
+using Redemption.Globals;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -14,6 +15,8 @@ namespace Redemption.Items.Weapons.PostML.Melee
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Light of the Abyss");
+            ElementID.ProjShadow[Type] = true;
+            ElementID.ProjFire[Type] = true;
         }
         public override void SetDefaults()
         {

@@ -21,6 +21,7 @@ namespace Redemption.Projectiles.Magic
             Main.projFrames[Projectile.type] = 8;
             ProjectileID.Sets.TrailCacheLength[Projectile.type] = 6;
             ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
+            ElementID.ProjShadow[Type] = true;
         }
         public override void SetDefaults()
         {
@@ -101,6 +102,7 @@ namespace Redemption.Projectiles.Magic
         {
             DisplayName.SetDefault("Shade Ring");
             ProjectileID.Sets.CultistIsResistantTo[Projectile.type] = true;
+            ElementID.ProjShadow[Type] = true;
         }
         public override void SetDefaults()
         {

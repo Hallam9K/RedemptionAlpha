@@ -55,6 +55,7 @@ namespace Redemption.Items.Weapons.PostML.Melee
             DisplayName.SetDefault("Dark Star");
             ProjectileID.Sets.TrailCacheLength[Projectile.type] = 5;
             ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
+            ElementID.ProjShadow[Type] = true;
         }
         public override void SetDefaults()
         {

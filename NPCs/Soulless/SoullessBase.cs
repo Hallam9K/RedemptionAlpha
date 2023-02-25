@@ -51,6 +51,7 @@ namespace Redemption.NPCs.Soulless
                     ModContent.BuffType<BlackenedHeartDebuff>()
                 }
             });
+            ElementID.NPCShadow[Type] = true;
         }
         public override bool PreAI()
         {

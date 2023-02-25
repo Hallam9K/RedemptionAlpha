@@ -17,6 +17,8 @@ namespace Redemption.Projectiles.Magic
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Song of the Abyss");
+            ElementID.ProjShadow[Type] = true;
+            ElementID.ProjArcane[Type] = true;
         }
         public override void SetDefaults()
         {
@@ -150,6 +152,8 @@ namespace Redemption.Projectiles.Magic
         {
             DisplayName.SetDefault("Song of the Abyss");
             ProjectileID.Sets.CultistIsResistantTo[Projectile.type] = true;
+            ElementID.ProjShadow[Type] = true;
+            ElementID.ProjArcane[Type] = true;
         }
         public override void SetDefaults()
         {

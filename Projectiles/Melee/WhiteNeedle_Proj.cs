@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.BaseExtension;
 using Redemption.Effects.PrimitiveTrails;
+using Redemption.Globals;
 using ReLogic.Content;
 using Terraria;
 using Terraria.Audio;
@@ -18,6 +19,8 @@ namespace Redemption.Projectiles.Melee
             DisplayName.SetDefault("White Needle");
             ProjectileID.Sets.TrailCacheLength[Projectile.type] = 5;
             ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
+            ElementID.ProjShadow[Type] = true;
+            ElementID.ProjPoison[Type] = true;
         }
         public override void SetDefaults()
         {

@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using Redemption.BaseExtension;
 using Redemption.Buffs;
 using Redemption.Buffs.Debuffs;
+using Redemption.Globals;
 using Redemption.Globals.Player;
 using Redemption.Items.Materials.PostML;
 using Redemption.Rarities;
@@ -21,6 +22,7 @@ namespace Redemption.Items.Tools.PostML
             Tooltip.SetDefault("Hitting an enemy will make them bleed heavily for a long period of time\n" +
                 "Can mine Vessel Fragments");
             SacrificeTotal = 1;
+            ElementID.ItemShadow[Type] = true;
         }
 
         public override void SetDefaults()

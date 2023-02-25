@@ -14,6 +14,7 @@ namespace Redemption.Projectiles.Misc
         {
             DisplayName.SetDefault("Echo");
             Main.projFrames[Projectile.type] = 10;
+            ElementID.ProjShadow[Type] = true;
         }
         public override void SetDefaults()
         {

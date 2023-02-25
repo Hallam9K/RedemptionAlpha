@@ -69,16 +69,8 @@ namespace Redemption.NPCs.Soulless
                     NPC.frame.Y = 0;
             }
         }
-        public override bool? CanBeHitByItem(Player player, Item item)
-        {
-            return ItemLists.Arcane.Contains(item.type) || ItemLists.Celestial.Contains(item.type) || ItemLists.Holy.Contains(item.type) ||
-                ItemLists.Psychic.Contains(item.type) || RedeConfigClient.Instance.ElementDisable ? null : false;
-        }
-        public override bool? CanBeHitByProjectile(Projectile projectile)
-        {
-            return ProjectileLists.Arcane.Contains(projectile.type) || ProjectileLists.Celestial.Contains(projectile.type) || ProjectileLists.Holy.Contains(projectile.type) ||
-                ProjectileLists.Psychic.Contains(projectile.type) || RedeConfigClient.Instance.ElementDisable;
-        }
+        public override bool? CanBeHitByItem(Player player, Item item) => RedeHelper.CanHitSpiritCheck(player, item);
+        public override bool? CanBeHitByProjectile(Projectile projectile) => RedeHelper.CanHitSpiritCheck(projectile);
         public override bool? CanHitNPC(NPC target) => false;
         public override bool CanHitPlayer(Player target, ref int cooldownSlot) => false;
 

@@ -36,6 +36,8 @@ namespace Redemption.NPCs.Soulless
             });
             NPCID.Sets.NPCBestiaryDrawModifiers value = new(0);
             NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, value);
+            ElementID.NPCShadow[Type] = true;
+            ElementID.NPCPsychic[Type] = true;
         }
 
         public override void SetDefaults()

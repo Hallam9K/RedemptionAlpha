@@ -445,7 +445,7 @@ namespace Redemption.Globals
             {
                 #region Elemental Attributes
                 float multiplier = 1;
-                ElementalEffects(npc, item, ref multiplier, ref knockback);
+                ElementalEffects(npc, player, item, ref multiplier, ref knockback);
                 for (int j = 0; j < npc.GetGlobalNPC<ElementalNPC>().elementDmg.Length; j++)
                 {
                     if (npc.GetGlobalNPC<ElementalNPC>().elementDmg[j] is 1 || !item.HasElement(j))
@@ -600,9 +600,20 @@ namespace Redemption.Globals
                 multiplier[ElementID.Shadow] *= 0.9f;
                 multiplier[ElementID.Blood] *= 0.75f;
             }
+            if (NPCLists.Soulless.Contains(npc.type))
+            {
+                multiplier[ElementID.Blood] *= 0.75f;
+                multiplier[ElementID.Celestial] *= 1.25f;
+                multiplier[ElementID.Holy] *= 1.25f;
+                multiplier[ElementID.Psychic] *= 1.75f;
+                multiplier[ElementID.Shadow] *= 0.5f;
+            }
         }
-        public void ElementalEffects(Terraria.NPC npc, Item item, ref float multiplier, ref float knockback)
+        public void ElementalEffects(Terraria.NPC npc, Terraria.Player player, Item item, ref float multiplier, ref float knockback)
         {
+            if (item.HasElement(ElementID.Shadow) && NPCLists.Soulless.Contains(npc.type) && player.RedemptionPlayerBuff().maskOfGrief)
+                multiplier *= 2f;
+
             if (item.HasElement(ElementID.Thunder) && ((npc.wet && !npc.lavaWet) || npc.HasBuff(BuffID.Wet) || NPCLists.Wet.Contains(npc.type)))
                 multiplier *= 1.1f;
             if (item.HasElement(ElementID.Earth) && !npc.noTileCollide && npc.collideY)
@@ -615,6 +626,9 @@ namespace Redemption.Globals
         }
         public void ElementalEffects(Terraria.NPC npc, Projectile proj, ref float multiplier, ref float knockback)
         {
+            if (proj.HasElement(ElementID.Shadow) && NPCLists.Soulless.Contains(npc.type) && Main.player[proj.owner].RedemptionPlayerBuff().maskOfGrief)
+                multiplier *= 2f;
+
             if (proj.HasElement(ElementID.Thunder) && ((npc.wet && !npc.lavaWet) || npc.HasBuff(BuffID.Wet) || NPCLists.Wet.Contains(npc.type)))
                 multiplier *= 1.1f;
             if (proj.HasElement(ElementID.Earth) && !npc.noTileCollide && npc.collideY)

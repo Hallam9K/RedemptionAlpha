@@ -9,6 +9,7 @@ using Redemption.Rarities;
 using Redemption.BaseExtension;
 using Redemption.Globals.Player;
 using Redemption.Items.Materials.PostML;
+using Redemption.Globals;
 
 namespace Redemption.Items.Tools.PostML
 {
@@ -18,6 +19,7 @@ namespace Redemption.Items.Tools.PostML
         {
             Tooltip.SetDefault("Smashing an enemy will make it take 15% more damage for 5 seconds");
             SacrificeTotal = 1;
+            ElementID.ItemShadow[Type] = true;
         }
         public override void SetDefaults()
         {

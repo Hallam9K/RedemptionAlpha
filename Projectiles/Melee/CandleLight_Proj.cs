@@ -14,6 +14,8 @@ namespace Redemption.Projectiles.Melee
         {
             DisplayName.SetDefault("Candle Light");
             Main.projFrames[Projectile.type] = 4;
+            ElementID.ProjShadow[Type] = true;
+            ElementID.ProjFire[Type] = true;
         }
 
         public override void SetDefaults()

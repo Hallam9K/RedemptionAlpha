@@ -17,6 +17,7 @@ namespace Redemption.NPCs.Soulless
             DisplayName.SetDefault("Wrath Slash");
             ProjectileID.Sets.TrailCacheLength[Projectile.type] = 6;
             ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
+            ElementID.ProjPsychic[Type] = true;
         }
         public override void SetDefaults()
         {

@@ -9,6 +9,7 @@ using Redemption.Rarities;
 using Redemption.BaseExtension;
 using Terraria.DataStructures;
 using Terraria.Audio;
+using Redemption.Globals;
 
 namespace Redemption.Items.Weapons.PostML.Melee
 {
@@ -21,6 +22,7 @@ namespace Redemption.Items.Weapons.PostML.Melee
                 "Slashes up and down, hold down left-click to follow up with a rapid flurry of stabs");
             ItemID.Sets.SkipsInitialUseSound[Item.type] = true;
             SacrificeTotal = 1;
+            ElementID.ItemShadow[Type] = true;
         }
 
         public override void SetDefaults()

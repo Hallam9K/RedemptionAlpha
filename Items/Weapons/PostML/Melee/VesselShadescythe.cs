@@ -10,6 +10,7 @@ using Redemption.Globals.Player;
 using Redemption.Items.Materials.PostML;
 using Redemption.Rarities;
 using Redemption.Projectiles.Melee;
+using Redemption.Globals;
 
 namespace Redemption.Items.Weapons.PostML.Melee
 {
@@ -21,6 +22,7 @@ namespace Redemption.Items.Weapons.PostML.Melee
                 "\nMelee swings deal double damage" +
                 "\nRight-clicking is a normal swing"); // TODO: Make similar to Blind Justice
             SacrificeTotal = 1;
+            ElementID.ItemShadow[Type] = true;
         }
 
         public override void SetDefaults()

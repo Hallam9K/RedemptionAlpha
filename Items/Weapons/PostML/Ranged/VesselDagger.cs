@@ -57,6 +57,7 @@ namespace Redemption.Items.Weapons.PostML.Ranged
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Vessel Dagger");
+            ElementID.ProjShadow[Type] = true;
         }
 
         public override void SetDefaults()
