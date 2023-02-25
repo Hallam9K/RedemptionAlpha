@@ -11,6 +11,7 @@ namespace Redemption.Items.Weapons.PreHM.Ritualist
         {
             DisplayName.SetDefault("Soul Skewer");
             Main.projFrames[Projectile.type] = 5;
+            ElementID.ProjShadow[Type] = true;
         }
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {

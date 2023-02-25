@@ -17,6 +17,7 @@ namespace Redemption.Items.Weapons.PostML.Melee
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Infectious Gauntlet");
+            ElementID.ProjPoison[Type] = true;
         }
         public override bool ShouldUpdatePosition() => false;
         public override void SetSafeDefaults()

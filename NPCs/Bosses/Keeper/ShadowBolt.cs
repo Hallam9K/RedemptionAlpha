@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using ParticleLibrary;
 using Redemption.Base;
 using Redemption.Effects.PrimitiveTrails;
+using Redemption.Globals;
 using Redemption.Particles;
 using Terraria;
 using Terraria.ID;
@@ -16,6 +17,7 @@ namespace Redemption.NPCs.Bosses.Keeper
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Shadow Bolt");
+            ElementID.ProjShadow[Type] = true;
         }
         public override void SetDefaults()
         {

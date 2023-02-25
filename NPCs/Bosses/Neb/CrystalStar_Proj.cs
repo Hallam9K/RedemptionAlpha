@@ -16,6 +16,7 @@ namespace Redemption.NPCs.Bosses.Neb
             DisplayName.SetDefault("Crystal Star");
             ProjectileID.Sets.TrailCacheLength[Projectile.type] = 5;
             ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
+            ElementID.ProjCelestial[Type] = true;
         }
 
         public override void SetDefaults()
@@ -37,7 +38,7 @@ namespace Redemption.NPCs.Bosses.Neb
             if (Main.myPlayer == Projectile.owner)
             {
                 for (int i = 0; i < 5; i++)
-                    Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, RedeHelper.PolarVector(10, (MathHelper.ToRadians(72) * i) + Projectile.rotation), ModContent.ProjectileType<CrystalStarShard_Proj>(), Projectile.damage / 3, 0, Main.myPlayer);
+                    Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, RedeHelper.PolarVector(10, (MathHelper.ToRadians(72) * i) + Projectile.rotation), ModContent.ProjectileType<CrystalStarShard_Proj>(), Projectile.damage / 2, 0, Main.myPlayer);
             }
         }
         public override void AI()

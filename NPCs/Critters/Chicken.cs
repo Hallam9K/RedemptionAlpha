@@ -95,7 +95,7 @@ namespace Redemption.NPCs.Critters
         {
             if (NPC.life <= 0)
             {
-                if (ItemLists.Fire.Contains(item.type))
+                if (item.HasElement(ElementID.Fire))
                     Item.NewItem(NPC.GetSource_Loot(), NPC.getRect(), ModContent.ItemType<FriedChicken>());
                 else if (NPC.FindBuffIndex(BuffID.OnFire) != -1 || NPC.FindBuffIndex(BuffID.OnFire3) != -1)
                     Item.NewItem(NPC.GetSource_Loot(), NPC.getRect(), ModContent.ItemType<FriedChicken>());
@@ -105,7 +105,7 @@ namespace Redemption.NPCs.Critters
         {
             if (NPC.life <= 0)
             {
-                if (ProjectileLists.Fire.Contains(projectile.type))
+                if (projectile.HasElement(ElementID.Fire))
                     Item.NewItem(NPC.GetSource_Loot(), NPC.getRect(), ModContent.ItemType<FriedChicken>());
                 else if (NPC.FindBuffIndex(BuffID.OnFire) != -1 || NPC.FindBuffIndex(BuffID.OnFire3) != -1)
                     Item.NewItem(NPC.GetSource_Loot(), NPC.getRect(), ModContent.ItemType<FriedChicken>());

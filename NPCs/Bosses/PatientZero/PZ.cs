@@ -98,6 +98,7 @@ namespace Redemption.NPCs.Bosses.PatientZero
 
             NPCID.Sets.NPCBestiaryDrawModifiers value = new(0);
             NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, value);
+            ElementID.NPCPoison[Type] = true;
         }
         public override void SetDefaults()
         {

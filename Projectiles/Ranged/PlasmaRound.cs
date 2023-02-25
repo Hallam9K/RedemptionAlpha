@@ -18,6 +18,7 @@ namespace Redemption.Projectiles.Ranged
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Plasma Round");
+            ElementID.ProjFire[Type] = true;
         }
 
         public override void SetDefaults()
@@ -140,6 +141,8 @@ namespace Redemption.Projectiles.Ranged
         {
             DisplayName.SetDefault("Explosion");
             Main.projFrames[Projectile.type] = 6;
+            ElementID.ProjFire[Type] = true;
+            ElementID.ProjExplosive[Type] = true;
         }
 
         public override void SetDefaults()

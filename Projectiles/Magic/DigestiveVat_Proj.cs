@@ -16,6 +16,8 @@ namespace Redemption.Projectiles.Magic
         {
             DisplayName.SetDefault("Digestive Acid");
             Main.projFrames[Projectile.type] = 3;
+            ElementID.ProjWater[Type] = true;
+            ElementID.ProjPoison[Type] = true;
         }
         public override void SetDefaults()
         {

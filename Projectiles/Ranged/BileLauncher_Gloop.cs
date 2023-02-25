@@ -1,4 +1,5 @@
 using Microsoft.Xna.Framework;
+using Redemption.Globals;
 using Redemption.Projectiles.Misc;
 using Terraria;
 using Terraria.ID;
@@ -13,6 +14,7 @@ namespace Redemption.Projectiles.Ranged
         {
             DisplayName.SetDefault("Radioactive Bile");
             Main.projFrames[Projectile.type] = 4;
+            ElementID.ProjPoison[Type] = true;
         }
         public override void SetDefaults()
         {

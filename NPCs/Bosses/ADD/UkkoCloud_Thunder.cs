@@ -14,6 +14,7 @@ namespace Redemption.NPCs.Bosses.ADD
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Lightning");
+            ElementID.ProjThunder[Type] = true;
         }
         public override void SetDefaults()
         {

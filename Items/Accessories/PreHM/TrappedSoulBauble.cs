@@ -4,6 +4,7 @@ using Terraria.ModLoader;
 using Redemption.BaseExtension;
 using Terraria.DataStructures;
 using Redemption.Items.Materials.PreHM;
+using Redemption.Globals;
 
 namespace Redemption.Items.Accessories.PreHM
 {
@@ -12,8 +13,7 @@ namespace Redemption.Items.Accessories.PreHM
         public override void SetStaticDefaults()
         {
             Tooltip.SetDefault("The player occasionally emits a strong force, causing every enemy caught in the blast to give a small magic damage boost" +
-                "\n10% increased Arcane elemental resistance" +
-                 "\n10% increased Arcane elemental damage" +
+                "\n10% increased " + ElementID.ArcaneS + " elemental damage and resistance" +
                  "\n+20 max mana");
             Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(4, 10));
             SacrificeTotal = 1;
@@ -23,15 +23,15 @@ namespace Redemption.Items.Accessories.PreHM
         {
             Item.width = 38;
             Item.height = 44;
-            Item.value = Item.sellPrice(0, 2, 0, 0);
+            Item.value = Item.sellPrice(0, 0, 75, 0);
             Item.rare = ItemRarityID.Blue;
             Item.accessory = true;
         }
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
             player.RedemptionPlayerBuff().trappedSoul = true;
-            player.RedemptionPlayerBuff().ElementalDamage[1] += 0.10f;
-            player.RedemptionPlayerBuff().ElementalResistance[1] += 0.10f;
+            player.RedemptionPlayerBuff().ElementalDamage[ElementID.Arcane] += 0.10f;
+            player.RedemptionPlayerBuff().ElementalResistance[ElementID.Arcane] += 0.10f;
 
             player.statManaMax2 += 20;
         }

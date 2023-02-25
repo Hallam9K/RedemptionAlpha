@@ -24,6 +24,7 @@ namespace Redemption.Items.Weapons.PostML.Melee
             DisplayName.SetDefault("Piercing Nebula");
             ProjectileID.Sets.TrailCacheLength[Projectile.type] = 8;
             ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
+            ElementID.ProjCelestial[Type] = true;
         }
         public override void SetDefaults()
         {
@@ -124,6 +125,7 @@ namespace Redemption.Items.Weapons.PostML.Melee
         public override string Texture => Redemption.EMPTY_TEXTURE;
         public override void SetStaticDefaults()
         {
+            base.SetStaticDefaults();
             DisplayName.SetDefault("Piercing Nebula");
         }
         public override void SetDefaults()
@@ -138,6 +140,7 @@ namespace Redemption.Items.Weapons.PostML.Melee
         public override string Texture => Redemption.EMPTY_TEXTURE;
         public override void SetStaticDefaults()
         {
+            base.SetStaticDefaults();
             DisplayName.SetDefault("Piercing Nebula");
         }
         public override void SetDefaults()

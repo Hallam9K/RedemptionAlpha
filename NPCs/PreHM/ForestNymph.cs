@@ -121,6 +121,7 @@ namespace Redemption.NPCs.PreHM
             });
             NPCID.Sets.NPCBestiaryDrawModifiers value = new(0) { Velocity = 1f };
             NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, value);
+            ElementID.NPCNature[Type] = true;
         }
         public override void SetDefaults()
         {
@@ -140,6 +141,7 @@ namespace Redemption.NPCs.PreHM
             NPC.chaseable = false;
             Banner = NPC.type;
             BannerItem = ModContent.ItemType<ForestNymphBanner>();
+            NPC.GetGlobalNPC<ElementalNPC>().OverrideMultiplier[ElementID.Nature] *= .75f;
         }
         public Vector2 SetEyeOffset(ref int frameHeight)
         {

@@ -4,6 +4,7 @@ using Redemption.BaseExtension;
 using Redemption.Globals;
 using Redemption.Items.Armor.Single;
 using Redemption.Items.Critters;
+using Redemption.Items.Placeable.Banners;
 using Redemption.NPCs.PreHM;
 using Terraria;
 using Terraria.DataStructures;
@@ -53,6 +54,8 @@ namespace Redemption.NPCs.Critters
             NPC.knockBackResist = 0.5f;
             NPC.aiStyle = -1;
             NPC.catchItem = (short)ModContent.ItemType<KabucraItem>();
+            Banner = NPC.type;
+            BannerItem = ModContent.ItemType<KabucraBanner>();
         }
         public NPC npcTarget;
         public Vector2 moveTo;

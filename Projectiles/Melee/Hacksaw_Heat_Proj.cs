@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Redemption.Globals;
 using Terraria;
 using Terraria.GameContent;
 using Terraria.ID;
@@ -15,6 +16,7 @@ namespace Redemption.Projectiles.Melee
             Main.projFrames[Projectile.type] = 3;
             ProjectileID.Sets.TrailCacheLength[Projectile.type] = 6;
             ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
+            ElementID.ProjFire[Type] = true;
         }
         public override void SetDefaults()
         {

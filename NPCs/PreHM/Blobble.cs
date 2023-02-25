@@ -64,8 +64,8 @@ namespace Redemption.NPCs.PreHM
             });
 
             NPCID.Sets.NPCBestiaryDrawModifiers value = new(0);
-
             NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, value);
+            ElementID.NPCWater[Type] = true;
         }
 
         public override void SetDefaults()

@@ -103,6 +103,7 @@ namespace Redemption.Items.Weapons.HM.Magic
         {
             DisplayName.SetDefault("Global Discharge");
             Main.projFrames[Projectile.type] = 3;
+            ElementID.ProjThunder[Type] = true;
         }
         public override void SetDefaults()
         {

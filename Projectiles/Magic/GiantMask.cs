@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Base;
+using Redemption.Globals;
 using Terraria;
 using Terraria.GameContent;
 using Terraria.ID;
@@ -16,6 +17,8 @@ namespace Redemption.Projectiles.Magic
             Main.projFrames[Projectile.type] = 2;
             ProjectileID.Sets.TrailCacheLength[Projectile.type] = 5;
             ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
+            ElementID.ProjArcane[Type] = true;
+            ElementID.ProjShadow[Type] = true;
         }
 
         public override void SetDefaults()

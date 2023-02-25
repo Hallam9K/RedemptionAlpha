@@ -18,6 +18,7 @@ namespace Redemption.Projectiles.Magic
             DisplayName.SetDefault("Plutonium Nuke");
             ProjectileID.Sets.TrailCacheLength[Projectile.type] = 6;
             ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
+            ElementID.ProjExplosive[Type] = true;
         }
 
         public override void SetDefaults()

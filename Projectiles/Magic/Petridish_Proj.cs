@@ -12,6 +12,7 @@ namespace Redemption.Projectiles.Magic
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Petridish");
+            ElementID.ProjPoison[Type] = true;
         }
         public override void SetDefaults()
         {

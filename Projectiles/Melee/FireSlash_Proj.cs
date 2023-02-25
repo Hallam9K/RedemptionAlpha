@@ -15,6 +15,8 @@ namespace Redemption.Projectiles.Melee
             DisplayName.SetDefault("Heat Wave");
             ProjectileID.Sets.TrailCacheLength[Projectile.type] = 4;
             ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
+            ElementID.ProjFire[Type] = true;
+            ElementID.ProjWind[Type] = true;
         }
         public override void SetDefaults()
         {

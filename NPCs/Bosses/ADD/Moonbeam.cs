@@ -9,6 +9,7 @@ using Terraria.ModLoader;
 using Terraria.Audio;
 using Terraria.GameContent;
 using Redemption.BaseExtension;
+using Redemption.Globals;
 
 namespace Redemption.NPCs.Bosses.ADD
 {
@@ -18,6 +19,8 @@ namespace Redemption.NPCs.Bosses.ADD
         {
             DisplayName.SetDefault("Moonbeam");
             ProjectileID.Sets.DrawScreenCheckFluff[Type] = 2400;
+            ElementID.ProjArcane[Type] = true;
+            ElementID.ProjCelestial[Type] = true;
         }
         public override void SetDefaults()
         {

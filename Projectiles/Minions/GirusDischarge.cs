@@ -2,6 +2,7 @@
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.ID;
+using Redemption.Globals;
 
 namespace Redemption.Projectiles.Minions
 {
@@ -12,6 +13,7 @@ namespace Redemption.Projectiles.Minions
         {
             DisplayName.SetDefault("Discharge");
             ProjectileID.Sets.MinionShot[Projectile.type] = true;
+            ElementID.ProjThunder[Type] = true;
         }
         public override void SetDefaults()
         {

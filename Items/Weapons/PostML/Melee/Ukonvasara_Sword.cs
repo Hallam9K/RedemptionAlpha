@@ -20,6 +20,8 @@ namespace Redemption.Items.Weapons.PostML.Melee
             DisplayName.SetDefault("Ukonvasara");
             ProjectileID.Sets.TrailCacheLength[Projectile.type] = 6;
             ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
+            ElementID.ProjEarth[Type] = true;
+            ElementID.ProjThunder[Type] = true;
         }
         public override bool ShouldUpdatePosition() => false;
         public override void SetSafeDefaults()
@@ -241,6 +243,8 @@ namespace Redemption.Items.Weapons.PostML.Melee
             DisplayName.SetDefault("Ukonvasara");
             ProjectileID.Sets.TrailCacheLength[Projectile.type] = 8;
             ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
+            ElementID.ProjEarth[Type] = true;
+            ElementID.ProjThunder[Type] = true;
         }
         public float[] oldrot = new float[8];
         public override void SetDefaults()

@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Redemption.Base;
 using Redemption.Buffs.Debuffs;
 using Redemption.Effects.PrimitiveTrails;
+using Redemption.Globals;
 using ReLogic.Content;
 using Terraria;
 using Terraria.ID;
@@ -16,6 +17,7 @@ namespace Redemption.NPCs.Bosses.ADD
         {
             DisplayName.SetDefault("Static Dualcast");
             Main.projFrames[Projectile.type] = 4;
+            ElementID.ProjThunder[Type] = true;
         }
         public override void SetDefaults()
         {

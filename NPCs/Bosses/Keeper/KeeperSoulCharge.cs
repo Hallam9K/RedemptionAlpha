@@ -5,6 +5,7 @@ using Terraria.ID;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Effects;
 using System.Collections.Generic;
+using Redemption.Globals;
 
 namespace Redemption.NPCs.Bosses.Keeper
 {
@@ -14,6 +15,7 @@ namespace Redemption.NPCs.Bosses.Keeper
         {
             DisplayName.SetDefault("Soul Charge");
             Main.projFrames[Projectile.type] = 4;
+            ElementID.ProjArcane[Type] = true;
         }
         public override void SetDefaults()
         {

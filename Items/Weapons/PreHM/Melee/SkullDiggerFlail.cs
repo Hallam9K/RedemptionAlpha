@@ -9,6 +9,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Redemption.BaseExtension;
 using Terraria.Audio;
+using Redemption.Globals;
 
 namespace Redemption.Items.Weapons.PreHM.Melee
 {
@@ -17,7 +18,8 @@ namespace Redemption.Items.Weapons.PreHM.Melee
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Skull Digger's Skull Digger");
-            Tooltip.SetDefault("'Yes, he did name his weapon after himself...'");
+            Tooltip.SetDefault("Spinning the weapon around you will conjure " + ElementID.ArcaneS + " mirages\n" +
+                "'Yes, he did name his weapon after himself...'");
 
             ItemID.Sets.ToolTipDamageMultiplier[Type] = 2f;
             SacrificeTotal = 1;
@@ -42,6 +44,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
             Item.autoReuse = false;
             Item.channel = true;
             Item.shoot = ModContent.ProjectileType<SkullDiggerFlail_Proj>();
+            Item.ExtraItemShoot(ModContent.ProjectileType<SkullDigger_FlailBlade_ProjF>());
             Item.shootSpeed = 32f;
         }
     }

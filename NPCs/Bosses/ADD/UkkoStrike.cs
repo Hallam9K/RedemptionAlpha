@@ -25,6 +25,7 @@ namespace Redemption.NPCs.Bosses.ADD
         {
             DisplayName.SetDefault("Ukko's Lightning");
             Main.projFrames[Projectile.type] = 24;
+            ElementID.ProjThunder[Type] = true;
         }
         public override void SetDefaults()
         {
@@ -118,6 +119,7 @@ namespace Redemption.NPCs.Bosses.ADD
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Ukko's Lightning");
+            ElementID.ProjThunder[Type] = true;
         }
         public override void SetDefaults()
         {

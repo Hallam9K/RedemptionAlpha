@@ -1,5 +1,7 @@
 using Microsoft.Xna.Framework;
+using Redemption.Globals;
 using Redemption.Items.Materials.PreHM;
+using Redemption.Projectiles.Melee;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.ID;
@@ -12,7 +14,8 @@ namespace Redemption.Items.Weapons.PreHM.Melee
         public override void SetStaticDefaults()
         {
             Tooltip.SetDefault("Swings can block fire projectiles\n" +
-                "Hold left-click to charge a Heat Wave, continue holding to go into a fiery flurry\n" +
+                "Hold left-click to charge a Heat Wave, dealing " + ElementID.WindS + " damage\n" +
+                "Continue holding left-click to go into a fiery flurry\n" +
                 "Deals more damage to dragon-like enemies");
 
             ItemID.Sets.SkipsInitialUseSound[Item.type] = true;
@@ -32,7 +35,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
             Item.useAnimation = 40;
             Item.useTime = 40;
             Item.UseSound = SoundID.Item1;
-            Item.autoReuse = false;
+            Item.autoReuse = true;
 
             // Weapon Properties
             Item.damage = 50;
@@ -45,6 +48,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
             // Projectile Properties
             Item.shootSpeed = 5f;
             Item.shoot = ModContent.ProjectileType<DragonCleaver_Proj>();
+            Item.ExtraItemShoot(ModContent.ProjectileType<FireSlash_Proj>());
         }
 
         public override void AddRecipes()
@@ -76,9 +80,8 @@ namespace Redemption.Items.Weapons.PreHM.Melee
                 };
                 tooltips.Add(line);
             }
-
-            TooltipLine axeLine = new(Mod, "SharpBonus", "Slash Bonus: Small chance to decapitate skeletons, killing them instantly") { OverrideColor = Colors.RarityOrange };
-            tooltips.Add(axeLine);
+            TooltipLine slashLine = new(Mod, "SharpBonus", RedeItem.slashBonus) { OverrideColor = Colors.RarityOrange };
+            tooltips.Add(slashLine);
         }
     }
 }

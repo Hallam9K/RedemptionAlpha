@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Redemption.Base;
+using Redemption.Globals;
 using Redemption.Items.Materials.HM;
 using Redemption.Projectiles.Magic;
 using Terraria;
@@ -31,6 +32,7 @@ namespace Redemption.Items.Weapons.HM.Magic
             Item.rare = ItemRarityID.Pink;
             Item.damage = 48;
             Item.shoot = ModContent.ProjectileType<Synthesizer_Proj>();
+            Item.ExtraItemShoot(ModContent.ProjectileType<SynthNote_Proj>());
             Item.shootSpeed = 0;
             Item.DamageType = DamageClass.Magic;
             Item.mana = 15;

@@ -1,4 +1,5 @@
 using Microsoft.Xna.Framework;
+using Redemption.Globals;
 using Redemption.Items.Materials.PreHM;
 using System.Collections.Generic;
 using Terraria;
@@ -79,8 +80,8 @@ namespace Redemption.Items.Weapons.HM.Melee
                 tooltips.Add(line);
             }
 
-            TooltipLine axeLine = new(Mod, "SharpBonus", "Slash Bonus: Small chance to decapitate skeletons, killing them instantly") { OverrideColor = Colors.RarityOrange };
-            tooltips.Add(axeLine);
+            TooltipLine slashLine = new(Mod, "SharpBonus", RedeItem.slashBonus) { OverrideColor = Colors.RarityOrange };
+            tooltips.Add(slashLine);
         }
     }
 }

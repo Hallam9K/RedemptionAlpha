@@ -16,6 +16,7 @@ namespace Redemption.Items.Weapons.PreHM.Ranged
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Egg Bomb");
+            ElementID.ProjExplosive[Type] = true;
         }
         public override void SetDefaults()
         {

@@ -1,4 +1,5 @@
 ﻿using Redemption.BaseExtension;
+using Redemption.Globals;
 using Redemption.Globals.Player;
 using Redemption.Items.Materials.PreHM;
 using Terraria;
@@ -12,9 +13,9 @@ namespace Redemption.Items.Accessories.HM
     {
         public override void SetStaticDefaults()
         {
-            Tooltip.SetDefault("12% increased Holy elemental damage and resistance\n" +
-                "6% increased Holy elemental critical strike chance\n" +
-                "Critical strikes with a Holy elemental weapon has a chance to release homing lightmass\n" +
+            Tooltip.SetDefault("12% increased " + ElementID.HolyS + " elemental damage and resistance\n" +
+                "6% increased " + ElementID.HolyS + " elemental critical strike chance\n" +
+                "Critical strikes with a " + ElementID.HolyS + " elemental weapon has a chance to release homing lightmass\n" +
                 "Increases length of invincibility after taking damage");
             SacrificeTotal = 1;
         }
@@ -40,8 +41,8 @@ namespace Redemption.Items.Accessories.HM
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
             BuffPlayer modPlayer = player.RedemptionPlayerBuff();
-            modPlayer.ElementalDamage[7] += 0.12f;
-            modPlayer.ElementalResistance[7] += 0.12f;
+            modPlayer.ElementalDamage[ElementID.Holy] += 0.12f;
+            modPlayer.ElementalResistance[ElementID.Holy] += 0.12f;
             player.longInvince = true;
             modPlayer.sacredCross = true;
         }

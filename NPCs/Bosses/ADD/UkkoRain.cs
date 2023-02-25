@@ -1,3 +1,4 @@
+using Redemption.Globals;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -9,6 +10,7 @@ namespace Redemption.NPCs.Bosses.ADD
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Rain");
+            ElementID.ProjWater[Type] = true;
         }
         public override void SetDefaults()
         {

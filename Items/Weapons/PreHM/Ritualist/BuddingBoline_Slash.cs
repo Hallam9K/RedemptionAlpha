@@ -12,6 +12,7 @@ namespace Redemption.Items.Weapons.PreHM.Ritualist
         {
             DisplayName.SetDefault("Budding Boline");
             Main.projFrames[Projectile.type] = 5;
+            ElementID.ProjNature[Type] = true;
         }
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {

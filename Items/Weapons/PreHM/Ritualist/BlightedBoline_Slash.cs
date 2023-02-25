@@ -17,6 +17,7 @@ namespace Redemption.Items.Weapons.PreHM.Ritualist
         {
             DisplayName.SetDefault("Blighted Boline");
             Main.projFrames[Projectile.type] = 5;
+            ElementID.ProjNature[Type] = true;
         }
         public override bool ShouldUpdatePosition() => false;
         public override void SetSafeDefaults()

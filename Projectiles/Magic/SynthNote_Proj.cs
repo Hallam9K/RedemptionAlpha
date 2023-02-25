@@ -16,6 +16,7 @@ namespace Redemption.Projectiles.Magic
             Main.projFrames[Projectile.type] = 2;
             ProjectileID.Sets.TrailCacheLength[Projectile.type] = 8;
             ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
+            ElementID.ProjArcane[Type] = true;
         }
         public override void SetDefaults()
         {

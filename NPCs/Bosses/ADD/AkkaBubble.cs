@@ -16,6 +16,8 @@ namespace Redemption.NPCs.Bosses.ADD
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Bubble");
+            ElementID.ProjWater[Type] = true;
+            ElementID.ProjThunder[Type] = true;
         }
         public override void SetDefaults()
         {

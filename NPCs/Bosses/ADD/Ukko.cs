@@ -119,6 +119,8 @@ namespace Redemption.NPCs.Bosses.ADD
                 PortraitPositionYOverride = 0
             };
             NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, value);
+            ElementID.NPCThunder[Type] = true;
+            ElementID.NPCEarth[Type] = true;
         }
         public int GuardPointMax;
         public override void SetDefaults()
@@ -144,43 +146,19 @@ namespace Redemption.NPCs.Bosses.ADD
             NPC.BossBar = ModContent.GetInstance<UkkoHealthBar>();
             if (!Main.dedServ)
                 Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/BossForest2");
-        }
-        public override void ModifyHitByItem(Player player, Item item, ref int damage, ref float knockback, ref bool crit)
-        {
-            if (!RedeConfigClient.Instance.ElementDisable)
-            {
-                if (ItemLists.Blood.Contains(item.type) || ItemLists.Earth.Contains(item.type) || ItemLists.Thunder.Contains(item.type))
-                    NPC.Redemption().elementDmg *= 0.75f;
 
-                if (ItemLists.Poison.Contains(item.type) || ItemLists.Water.Contains(item.type) || ItemLists.Wind.Contains(item.type))
-                    NPC.Redemption().elementDmg *= 0.9f;
-
-                if (ItemLists.Ice.Contains(item.type))
-                    NPC.Redemption().elementDmg *= 1.25f;
-
-                if (ItemLists.Shadow.Contains(item.type))
-                    NPC.Redemption().elementDmg *= 1.1f;
-            }
+            NPC.GetGlobalNPC<ElementalNPC>().OverrideMultiplier[ElementID.Blood] *= .75f;
+            NPC.GetGlobalNPC<ElementalNPC>().OverrideMultiplier[ElementID.Earth] *= .75f;
+            NPC.GetGlobalNPC<ElementalNPC>().OverrideMultiplier[ElementID.Thunder] *= .75f;
+            NPC.GetGlobalNPC<ElementalNPC>().OverrideMultiplier[ElementID.Water] *= .9f;
+            NPC.GetGlobalNPC<ElementalNPC>().OverrideMultiplier[ElementID.Wind] *= .9f;
+            NPC.GetGlobalNPC<ElementalNPC>().OverrideMultiplier[ElementID.Ice] *= 1.25f;
+            NPC.GetGlobalNPC<ElementalNPC>().OverrideMultiplier[ElementID.Shadow] *= 1.1f;
         }
         public override void ModifyHitByProjectile(Projectile projectile, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
         {
             if (projectile.type == ProjectileID.LastPrismLaser)
                 damage /= 3;
-
-            if (!RedeConfigClient.Instance.ElementDisable)
-            {
-                if (ProjectileLists.Blood.Contains(projectile.type) || ProjectileLists.Earth.Contains(projectile.type) || ProjectileLists.Thunder.Contains(projectile.type))
-                    NPC.Redemption().elementDmg *= 0.75f;
-
-                if (ProjectileLists.Poison.Contains(projectile.type) || ProjectileLists.Water.Contains(projectile.type) || ProjectileLists.Wind.Contains(projectile.type))
-                    NPC.Redemption().elementDmg *= 0.9f;
-
-                if (ProjectileLists.Ice.Contains(projectile.type))
-                    NPC.Redemption().elementDmg *= 1.25f;
-
-                if (ProjectileLists.Shadow.Contains(projectile.type))
-                    NPC.Redemption().elementDmg *= 1.1f;
-            }
 
             if (ProjectileID.Sets.CultistIsResistantTo[projectile.type])
                 damage = (int)(damage * .75f);

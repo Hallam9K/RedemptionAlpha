@@ -19,6 +19,8 @@ namespace Redemption.Items.Weapons.PostML.Melee
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Ukonvasara");
+            ElementID.ProjEarth[Type] = true;
+            ElementID.ProjThunder[Type] = true;
         }
 
         public override void SetSafeDefaults()

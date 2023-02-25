@@ -1,6 +1,7 @@
 using Terraria.ID;
 using Terraria;
 using Terraria.ModLoader;
+using Redemption.Globals;
 
 namespace Redemption.NPCs.Bosses.ADD
 {
@@ -10,6 +11,7 @@ namespace Redemption.NPCs.Bosses.ADD
         {
             DisplayName.SetDefault("Ice Spike");
             Main.projFrames[Projectile.type] = 5;
+            ElementID.ProjIce[Type] = true;
         }
         public override void SetDefaults()
         {

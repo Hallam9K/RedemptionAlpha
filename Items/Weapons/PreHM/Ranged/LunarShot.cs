@@ -8,6 +8,7 @@ using Redemption.Projectiles.Ranged;
 using System.Collections.Generic;
 using Terraria.Localization;
 using Redemption.BaseExtension;
+using Redemption.Globals;
 
 namespace Redemption.Items.Weapons.PreHM.Ranged
 {
@@ -16,7 +17,7 @@ namespace Redemption.Items.Weapons.PreHM.Ranged
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Lunar Shot");
-            Tooltip.SetDefault("Replaces Wooden Arrows with Lunar Bolts" +
+            Tooltip.SetDefault("Replaces Wooden Arrows with Lunar Bolts, dealing " + ElementID.FireS + " and " + ElementID.NatureS + " damage" +
                 "\nLunar Bolts summon bats while the moon is out" +
                 "\nSummons an extra bat while it's a full moon");
 
@@ -41,15 +42,14 @@ namespace Redemption.Items.Weapons.PreHM.Ranged
             Item.shoot = ProjectileID.PurificationPowder;
             Item.shootSpeed = 10f;
             Item.useAmmo = AmmoID.Arrow;
+            Item.ExtraItemShoot(ModContent.ProjectileType<LunarShot_Proj>());
             if (!Main.dedServ)
                 Item.RedemptionGlow().glowTexture = ModContent.Request<Texture2D>(Item.ModItem.Texture + "_Glow").Value;
         }
         public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback)
         {
             if (type == ProjectileID.WoodenArrowFriendly)
-            {
                 type = ModContent.ProjectileType<LunarShot_Proj>();
-            }
         }
         public override Vector2? HoldoutOffset()
         {

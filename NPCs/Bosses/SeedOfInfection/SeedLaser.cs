@@ -5,6 +5,7 @@ using System;
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.GameContent;
+using Redemption.Globals;
 
 namespace Redemption.NPCs.Bosses.SeedOfInfection
 {
@@ -13,6 +14,7 @@ namespace Redemption.NPCs.Bosses.SeedOfInfection
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Xenomite Beam");
+            ElementID.ProjPoison[Type] = true;
         }
         public override void SetDefaults()
         {

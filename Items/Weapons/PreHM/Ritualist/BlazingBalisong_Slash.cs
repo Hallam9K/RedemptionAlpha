@@ -13,6 +13,7 @@ namespace Redemption.Items.Weapons.PreHM.Ritualist
         {
             DisplayName.SetDefault("Blazing Balisong");
             Main.projFrames[Projectile.type] = 5;
+            ElementID.ProjFire[Type] = true;
         }
         public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
         {

@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Redemption.Base;
 using Redemption.Buffs.Minions;
+using Redemption.Globals;
 using Redemption.Projectiles.Minions;
 using Terraria;
 using Terraria.DataStructures;
@@ -38,7 +39,8 @@ namespace Redemption.Items.Weapons.HM.Summon
             Item.UseSound = SoundID.DD2_DefenseTowerSpawn;
             Item.autoReuse = false;
             Item.buffType = ModContent.BuffType<TeslaGeneratorBuff>();
-            Item.shoot = ModContent.ProjectileType<TeslaGenerator_Lightning>();
+            Item.shoot = ModContent.ProjectileType<TeslaGenerator_Proj>();
+            Item.ExtraItemShoot(ModContent.ProjectileType<TeslaGenerator_Lightning>());
             Item.mana = 10;
         }
         public override bool CanUseItem(Player player)
@@ -51,7 +53,6 @@ namespace Redemption.Items.Weapons.HM.Summon
         }
         public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback)
         {
-            type = ModContent.ProjectileType<TeslaGenerator_Proj>();
             int floor = BaseWorldGen.GetFirstTileFloor((int)Main.MouseWorld.X / 16, (int)Main.MouseWorld.Y / 16);
             position = new Vector2(Main.MouseWorld.X, floor * 16 - 22);
         }

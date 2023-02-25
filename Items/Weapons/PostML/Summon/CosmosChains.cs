@@ -52,6 +52,7 @@ namespace Redemption.Items.Weapons.PostML.Summon
         {
             DisplayName.SetDefault("Chains of the Cosmos");
             ProjectileID.Sets.IsAWhip[Type] = true;
+            ElementID.ProjCelestial[Type] = true;
         }
         public override void SetDefaults()
         {

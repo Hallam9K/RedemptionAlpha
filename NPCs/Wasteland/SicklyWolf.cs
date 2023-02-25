@@ -40,6 +40,7 @@ namespace Redemption.NPCs.Wasteland
                 Velocity = 3f
             };
             NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, value);
+            ElementID.NPCPoison[Type] = true;
         }
         public override void SetDefaults()
         {

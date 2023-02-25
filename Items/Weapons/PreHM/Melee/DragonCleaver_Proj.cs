@@ -11,6 +11,9 @@ using Terraria.Graphics.Shaders;
 using Redemption.Projectiles.Melee;
 using Redemption.Base;
 using Redemption.BaseExtension;
+using Redemption.Dusts;
+using ParticleLibrary;
+using Redemption.Particles;
 
 namespace Redemption.Items.Weapons.PreHM.Melee
 {
@@ -24,6 +27,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
             DisplayName.SetDefault("Dragon Cleaver");
             ProjectileID.Sets.TrailCacheLength[Projectile.type] = 4;
             ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
+            ElementID.ProjFire[Type] = true;
         }
 
         public override bool ShouldUpdatePosition() => false;
@@ -145,7 +149,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
                             speed *= 0.8f;
                             vector = startVector.RotatedBy(Rot) * Length;
                         }
-                        if (Timer >= 20 * SwingSpeed)
+                        if (Timer >= Main.rand.Next(13, 17) * SwingSpeed)
                         {
                             if (!player.channel)
                             {
@@ -181,7 +185,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
                             speed *= 0.5f;
                             vector = startVector.RotatedBy(Rot) * Length;
                         }
-                        if (Timer >= 20 * SwingSpeed)
+                        if (Timer >= Main.rand.Next(13, 17) * SwingSpeed)
                         {
                             if (!player.channel)
                             {
@@ -196,6 +200,17 @@ namespace Redemption.Items.Weapons.PreHM.Melee
                         break;
                 }
             }
+            if (Projectile.ai[0] > 0)
+            {
+                player.RedemptionScreen().Rumble(4, 1);
+                if (Main.rand.NextBool(4))
+                    ParticleManager.NewParticle(player.RandAreaInEntity(), RedeHelper.SpreadUp(1), new EmberParticle(), Color.OrangeRed, 1f);
+
+                int dustIndex = Dust.NewDust(player.position, player.width, player.height, DustID.FlameBurst, Scale: 1f);
+                Main.dust[dustIndex].velocity.Y = -5;
+                Main.dust[dustIndex].velocity.X = 0;
+                Main.dust[dustIndex].noGravity = true;
+            }
             if (Timer > 1)
                 Projectile.alpha = 0;
 
@@ -209,7 +224,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
                 if (!target.active || target.whoAmI == Projectile.whoAmI || !target.hostile || target.damage > 200 / 4)
                     continue;
 
-                if (target.velocity.Length() == 0 || !Projectile.Hitbox.Intersects(target.Hitbox) || !ProjectileLists.Fire.Contains(target.type) || target.ProjBlockBlacklist(true))
+                if (target.velocity.Length() == 0 || !Projectile.Hitbox.Intersects(target.Hitbox) || !target.HasElement(ElementID.Fire) || target.ProjBlockBlacklist(true))
                     continue;
 
                 DustHelper.DrawCircle(target.Center, DustID.Torch, 1, 4, 4, nogravity: true);

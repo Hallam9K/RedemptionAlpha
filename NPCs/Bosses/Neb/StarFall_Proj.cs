@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Terraria.GameContent;
 using Redemption.Effects.PrimitiveTrails;
 using ReLogic.Content;
+using Redemption.Globals;
 
 namespace Redemption.NPCs.Bosses.Neb
 {
@@ -16,6 +17,7 @@ namespace Redemption.NPCs.Bosses.Neb
             DisplayName.SetDefault("Starfall");
             ProjectileID.Sets.TrailCacheLength[Projectile.type] = 5;
             ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
+            ElementID.ProjCelestial[Type] = true;
         }
 
         public override void SetDefaults()

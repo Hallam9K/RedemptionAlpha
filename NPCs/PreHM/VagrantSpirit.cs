@@ -55,6 +55,7 @@ namespace Redemption.NPCs.PreHM
             };
 
             NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, value);
+            ElementID.NPCArcane[Type] = true;
         }
         public override void SetDefaults()
         {

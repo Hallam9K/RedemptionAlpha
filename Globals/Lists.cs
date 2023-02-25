@@ -3,28 +3,17 @@ using Redemption.NPCs.Critters;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Redemption.NPCs.PreHM;
-using Redemption.Projectiles.Hostile;
 using Redemption.NPCs.Friendly;
-using Redemption.Items.Weapons.PreHM.Melee;
-using Redemption.Projectiles.Ranged;
-using Redemption.Items.Weapons.PreHM.Ammo;
-using Redemption.Projectiles.Magic;
 using Redemption.NPCs.Bosses.Thorn;
 using Redemption.Projectiles.Misc;
-using Redemption.Projectiles.Melee;
 using Redemption.NPCs.Bosses.Keeper;
 using Redemption.NPCs.Minibosses.SkullDigger;
 using Redemption.NPCs.Minibosses.EaglecrestGolem;
 using Redemption.NPCs.Bosses.Erhan;
-using Redemption.Items.Weapons.PreHM.Magic;
-using Redemption.Items.Weapons.PreHM.Ranged;
 using Redemption.NPCs.Bosses.KSIII;
-using Redemption.Projectiles.Minions;
 using Redemption.NPCs.Bosses.SeedOfInfection;
 using Redemption.Tiles.Tiles;
 using Redemption.NPCs.Lab;
-using Redemption.Items.Weapons.PostML.Ranged;
-using Redemption.Items.Weapons.HM.Ranged;
 using Redemption.NPCs.Bosses.Cleaver;
 using Redemption.NPCs.Wasteland;
 using Redemption.NPCs.Lab.Janitor;
@@ -32,11 +21,8 @@ using Redemption.NPCs.Lab.Behemoth;
 using Redemption.NPCs.Lab.Blisterface;
 using Redemption.NPCs.Lab.Volt;
 using Redemption.NPCs.Lab.MACE;
-using Redemption.Items.Weapons.HM.Melee;
-using Redemption.Items.Weapons.HM.Magic;
 using Redemption.NPCs.Bosses.PatientZero;
 using Redemption.Items.Usable;
-using Redemption.Items.Weapons.PostML.Melee;
 using Redemption.NPCs.Bosses.Gigapora;
 using Redemption.Tiles.Furniture.ElderWood;
 using Redemption.Tiles.Furniture.PetrifiedWood;
@@ -49,15 +35,9 @@ using Redemption.Items.Weapons.PreHM.Summon;
 using Redemption.Items.Weapons.PreHM.Ritualist;
 using Redemption.NPCs.Bosses.Obliterator;
 using Redemption.NPCs.HM;
-using Redemption.Projectiles.Ritualist;
-using Redemption.NPCs.Bosses.Neb;
-using Redemption.NPCs.Bosses.Neb.Phase2;
 using Redemption.NPCs.Bosses.ADD;
-using Redemption.Items.Weapons.PostML.Magic;
-using Redemption.Items.Weapons.HM.Summon;
-using Redemption.Items.Weapons.HM.Ammo;
-using Redemption.Items.Weapons.PostML.Summon;
 using Redemption.NPCs.Friendly.SpiritSummons;
+using Redemption.NPCs.FowlMorning;
 
 namespace Redemption.Globals
 {
@@ -238,7 +218,7 @@ namespace Redemption.Globals
 
         #region Spirit
 
-        public static List<int> Spirit = new() { NPCID.EnchantedSword, NPCID.CrimsonAxe, NPCID.CursedHammer, NPCID.DesertDjinn, NPCID.DungeonSpirit, NPCID.FloatyGross, NPCID.Ghost, NPCID.PossessedArmor, NPCID.Wraith, NPCID.Reaper, NPCID.Poltergeist, NPCID.PirateGhost, ModContent.NPCType<SkullDigger>(), ModContent.NPCType<VagrantSpirit>(), ModContent.NPCType<KeeperSpirit>(), ModContent.NPCType<ErhanSpirit>(), ModContent.NPCType<LostSoulNPC>(), ModContent.NPCType<NuclearShadow>(), ModContent.NPCType<WraithSlayer_Samurai>(), ModContent.NPCType<EpidotrianSkeleton_SS>(), ModContent.NPCType<ForestNymph_SS>(), ModContent.NPCType<SkeletonAssassin_SS>(), ModContent.NPCType<SkeletonFlagbearer_SS>(), ModContent.NPCType<SkeletonNoble_SS>(), ModContent.NPCType<SkeletonWarden_SS>(), ModContent.NPCType<HazmatZombie_SS>(), ModContent.NPCType<SkeletonDuelist_SS>(), ModContent.NPCType<SkeletonWanderer_SS>(), ModContent.NPCType<Asher_SS>(), ModContent.NPCType<AncientGladestoneGolem_SS>(), ModContent.NPCType<MossyGoliath_SS>() };
+        public static List<int> Spirit = new() { NPCID.EnchantedSword, NPCID.CrimsonAxe, NPCID.CursedHammer, NPCID.DesertDjinn, NPCID.DungeonSpirit, NPCID.FloatyGross, NPCID.Ghost, NPCID.PossessedArmor, NPCID.Wraith, NPCID.Reaper, NPCID.Poltergeist, NPCID.PirateGhost, ModContent.NPCType<SkullDigger>(), ModContent.NPCType<VagrantSpirit>(), ModContent.NPCType<KeeperSpirit>(), ModContent.NPCType<ErhanSpirit>(), ModContent.NPCType<LostSoulNPC>(), ModContent.NPCType<NuclearShadow>(), ModContent.NPCType<WraithSlayer_Samurai>(), ModContent.NPCType<EpidotrianSkeleton_SS>(), ModContent.NPCType<ForestNymph_SS>(), ModContent.NPCType<SkeletonAssassin_SS>(), ModContent.NPCType<SkeletonFlagbearer_SS>(), ModContent.NPCType<SkeletonNoble_SS>(), ModContent.NPCType<SkeletonWarden_SS>(), ModContent.NPCType<HazmatZombie_SS>(), ModContent.NPCType<SkeletonDuelist_SS>(), ModContent.NPCType<SkeletonWanderer_SS>(), ModContent.NPCType<Asher_SS>(), ModContent.NPCType<AncientGladestoneGolem_SS>(), ModContent.NPCType<MossyGoliath_SS>(), ModContent.NPCType<HeadlessChicken>() };
 
         #endregion
 
@@ -293,14 +273,14 @@ namespace Redemption.Globals
         #endregion
 
         #region Dark
-        public static List<int> Dark = new() { NPCID.DarkCaster, NPCID.DungeonSlime, NPCID.EaterofSouls, NPCID.BigEater, NPCID.LittleEater, NPCID.DevourerBody, NPCID.DevourerHead, NPCID.DevourerTail, NPCID.Clinger, NPCID.BigMimicCorruption, NPCID.CorruptSlime, NPCID.Slimeling, NPCID.Corruptor, NPCID.CursedHammer, NPCID.DarkMummy, NPCID.DesertDjinn, NPCID.Necromancer, NPCID.NecromancerArmored, NPCID.RaggedCaster, NPCID.RaggedCasterOpenCoat, NPCID.PossessedArmor, NPCID.DesertGhoulCorruption, NPCID.Slimer, NPCID.Slimer2, NPCID.Wraith, NPCID.SeekerHead, NPCID.SeekerBody, NPCID.SeekerTail, NPCID.CorruptBunny, NPCID.CorruptGoldfish, NPCID.CorruptPenguin, NPCID.SandsharkCorrupt, NPCID.GoblinSummoner, NPCID.ShadowFlameApparition, NPCID.Reaper, NPCID.ThePossessed, NPCID.Vampire, NPCID.Hellhound, NPCID.HeadlessHorseman, NPCID.Splinterling, NPCID.Krampus, NPCID.EaterofWorldsBody, NPCID.EaterofWorldsHead, NPCID.EaterofWorldsTail, NPCID.DD2DarkMageT1, NPCID.DD2DarkMageT3, NPCID.MourningWood, NPCID.Pumpking };
+        public static List<int> Dark = new() { NPCID.DarkCaster, NPCID.DungeonSlime, NPCID.EaterofSouls, NPCID.DevourerBody, NPCID.DevourerHead, NPCID.DevourerTail, NPCID.Clinger, NPCID.BigMimicCorruption, NPCID.CorruptSlime, NPCID.Corruptor, NPCID.CursedHammer, NPCID.DarkMummy, NPCID.DesertDjinn, NPCID.Necromancer, NPCID.NecromancerArmored, NPCID.RaggedCaster, NPCID.RaggedCasterOpenCoat, NPCID.PossessedArmor, NPCID.DesertGhoulCorruption, NPCID.Slimer, NPCID.Wraith, NPCID.SeekerHead, NPCID.SeekerBody, NPCID.SeekerTail, NPCID.CorruptBunny, NPCID.CorruptGoldfish, NPCID.CorruptPenguin, NPCID.SandsharkCorrupt, NPCID.GoblinSummoner, NPCID.ShadowFlameApparition, NPCID.Reaper, NPCID.ThePossessed, NPCID.Vampire, NPCID.Hellhound, NPCID.HeadlessHorseman, NPCID.Splinterling, NPCID.Krampus, NPCID.EaterofWorldsBody, NPCID.EaterofWorldsHead, NPCID.EaterofWorldsTail, NPCID.DD2DarkMageT1, NPCID.DD2DarkMageT3, NPCID.MourningWood, NPCID.Pumpking };
         #endregion
 
         #region Blood
-        public static List<int> Blood = new() { NPCID.BloodCrawler, NPCID.BloodCrawlerWall, NPCID.Crimera, NPCID.BigCrimera, NPCID.LittleCrimera, NPCID.EyeballFlyingFish, NPCID.CataractEye, NPCID.CataractEye2, NPCID.DemonEye, NPCID.DemonEye2, NPCID.DemonEyeOwl, NPCID.DemonEyeSpaceship, NPCID.DialatedEye, NPCID.DialatedEye2, NPCID.GreenEye, NPCID.GreenEye2, NPCID.PurpleEye, NPCID.PurpleEye2, NPCID.WanderingEye, NPCID.FaceMonster, NPCID.BloodMummy, NPCID.BloodJelly, NPCID.BloodFeeder, NPCID.Crimslime, NPCID.BigCrimslime, NPCID.LittleCrimslime, NPCID.CrimsonAxe, NPCID.BigMimicCrimson, NPCID.FloatyGross, NPCID.Herpling, NPCID.IchorSticker, NPCID.DesertGhoulCrimson, NPCID.BloodEelBody, NPCID.BloodEelHead, NPCID.BloodEelTail, NPCID.BloodSquid, NPCID.BloodZombie, NPCID.BloodNautilus, NPCID.Drippler, NPCID.GoblinShark, NPCID.CrimsonBunny, NPCID.CrimsonGoldfish, NPCID.CrimsonPenguin, NPCID.SandsharkCrimson, NPCID.Vampire, NPCID.BrainofCthulhu, NPCID.EyeofCthulhu, NPCID.WallofFlesh, NPCID.WallofFleshEye, NPCID.Creeper, NPCID.LeechBody, NPCID.LeechHead, NPCID.LeechTail, NPCID.TheHungry, NPCID.TheHungryII, NPCID.ServantofCthulhu };
+        public static List<int> Blood = new() { NPCID.BloodCrawler, NPCID.BloodCrawlerWall, NPCID.Crimera, NPCID.EyeballFlyingFish, NPCID.CataractEye, NPCID.DemonEye, NPCID.DemonEyeOwl, NPCID.DemonEyeSpaceship, NPCID.DialatedEye, NPCID.GreenEye, NPCID.PurpleEye, NPCID.WanderingEye, NPCID.FaceMonster, NPCID.BloodMummy, NPCID.BloodJelly, NPCID.BloodFeeder, NPCID.Crimslime, NPCID.CrimsonAxe, NPCID.BigMimicCrimson, NPCID.FloatyGross, NPCID.Herpling, NPCID.IchorSticker, NPCID.DesertGhoulCrimson, NPCID.BloodEelBody, NPCID.BloodEelHead, NPCID.BloodEelTail, NPCID.BloodSquid, NPCID.BloodZombie, NPCID.BloodNautilus, NPCID.Drippler, NPCID.GoblinShark, NPCID.CrimsonBunny, NPCID.CrimsonGoldfish, NPCID.CrimsonPenguin, NPCID.SandsharkCrimson, NPCID.Vampire, NPCID.BrainofCthulhu, NPCID.EyeofCthulhu, NPCID.WallofFlesh, NPCID.WallofFleshEye, NPCID.Creeper, NPCID.LeechBody, NPCID.LeechHead, NPCID.LeechTail, NPCID.TheHungry, NPCID.TheHungryII, NPCID.ServantofCthulhu };
         #endregion
 
-        public static List<int> IsSlime = new() { NPCID.GreenSlime, NPCID.BlueSlime, NPCID.RedSlime, NPCID.PurpleSlime, NPCID.YellowSlime, NPCID.BlackSlime, NPCID.IceSlime, NPCID.SandSlime, NPCID.JungleSlime, NPCID.SpikedIceSlime, NPCID.SpikedJungleSlime, NPCID.MotherSlime, NPCID.BabySlime, NPCID.LavaSlime, NPCID.DungeonSlime, NPCID.Pinky, NPCID.GoldenSlime, NPCID.KingSlime, NPCID.SlimeSpiked, NPCID.UmbrellaSlime, NPCID.SlimeMasked, NPCID.SlimeRibbonGreen, NPCID.SlimeRibbonRed, NPCID.SlimeRibbonWhite, NPCID.SlimeRibbonYellow, NPCID.ToxicSludge, NPCID.CorruptSlime, NPCID.Slimeling, NPCID.Slimer, NPCID.Slimer2, NPCID.Crimslime, NPCID.Gastropod, NPCID.IlluminantSlime, NPCID.RainbowSlime, NPCID.QueenSlimeBoss, NPCID.QueenSlimeMinionBlue, NPCID.QueenSlimeMinionPink, NPCID.QueenSlimeMinionPurple, NPCID.HoppinJack, ModContent.NPCType<Blobble>(), ModContent.NPCType<SeedGrowth>(), ModContent.NPCType<OozeBlob>(), ModContent.NPCType<BobTheBlob>(), ModContent.NPCType<RadioactiveSlime>(), ModContent.NPCType<NuclearSlime>(), ModContent.NPCType<IrradiatedBehemoth>() };
+        public static List<int> IsSlime = new() { NPCID.BlueSlime, NPCID.IceSlime, NPCID.SandSlime, NPCID.SpikedIceSlime, NPCID.SpikedJungleSlime, NPCID.MotherSlime, NPCID.LavaSlime, NPCID.DungeonSlime, NPCID.GoldenSlime, NPCID.KingSlime, NPCID.SlimeSpiked, NPCID.UmbrellaSlime, NPCID.SlimeMasked, NPCID.SlimeRibbonGreen, NPCID.SlimeRibbonRed, NPCID.SlimeRibbonWhite, NPCID.SlimeRibbonYellow, NPCID.ToxicSludge, NPCID.CorruptSlime, NPCID.Slimer, NPCID.Crimslime, NPCID.Gastropod, NPCID.IlluminantSlime, NPCID.RainbowSlime, NPCID.QueenSlimeBoss, NPCID.QueenSlimeMinionBlue, NPCID.QueenSlimeMinionPink, NPCID.QueenSlimeMinionPurple, NPCID.HoppinJack, ModContent.NPCType<Blobble>(), ModContent.NPCType<SeedGrowth>(), ModContent.NPCType<OozeBlob>(), ModContent.NPCType<BobTheBlob>(), ModContent.NPCType<RadioactiveSlime>(), ModContent.NPCType<NuclearSlime>(), ModContent.NPCType<IrradiatedBehemoth>() };
 
         public static List<int> IsBunny = new()
         {
@@ -349,9 +329,6 @@ namespace Redemption.Globals
         public static List<int> Celestial = new() { ProjectileID.Starfury, ProjectileID.FallingStar, ProjectileID.RainbowRodBullet, ProjectileID.HallowStar, ProjectileID.RainbowBack, ProjectileID.RainbowFront, ProjectileID.PhantasmalEye, ProjectileID.PhantasmalSphere, ProjectileID.PhantasmalDeathray, ProjectileID.Meowmere, ProjectileID.StarWrath, ProjectileID.StardustSoldierLaser, ProjectileID.Twinkle, ProjectileID.NebulaBolt, ProjectileID.NebulaEye, ProjectileID.NebulaSphere, ProjectileID.NebulaLaser, ProjectileID.NebulaArcanum, ProjectileID.NebulaArcanumExplosionShot, ProjectileID.NebulaArcanumExplosionShotShard, ProjectileID.LastPrismLaser, ProjectileID.NebulaBlaze1, ProjectileID.NebulaBlaze2, ProjectileID.MoonlordTurretLaser, ProjectileID.RainbowCrystalExplosion, ProjectileID.ManaCloakStar, ProjectileID.BeeCloakStar, ProjectileID.StarVeilStar, ProjectileID.StarCloakStar, ProjectileID.SuperStar, ProjectileID.SuperStarSlash, ProjectileID.SparkleGuitar, ProjectileID.HallowBossLastingRainbow, ProjectileID.HallowBossRainbowStreak, ProjectileID.FairyQueenLance, ProjectileID.FairyQueenSunDance, ProjectileID.FairyQueenHymn, ProjectileID.PiercingStarlight, ProjectileID.FairyQueenMagicItemShot, ProjectileID.FairyQueenRangedItemShot, ProjectileID.FinalFractal, ProjectileID.EmpressBlade, ProjectileID.PrincessWeapon, ProjectileID.StarCannonStar, ProjectileID.SolarFlareDrill, ProjectileID.NebulaDrill, ProjectileID.VortexDrill, ProjectileID.StardustDrill, ProjectileID.MoonlordArrow, ProjectileID.MoonlordBullet, ProjectileID.StardustCellMinion, ProjectileID.StardustCellMinionShot, ProjectileID.StardustDragon1, ProjectileID.StardustDragon2, ProjectileID.StardustDragon3, ProjectileID.StardustDragon4, ProjectileID.SolarFlareRay, ProjectileID.SolarCounter, ProjectileID.SolarWhipSword, ProjectileID.SolarWhipSwordExplosion, ProjectileID.Daybreak, ProjectileID.DaybreakExplosion, ProjectileID.LastPrism, ProjectileID.RainbowCrystal, ProjectileID.MoonlordTurret, ProjectileID.MoonlordTurretLaser, ModContent.ProjectileType<Midnight_SlashProj>(), ModContent.ProjectileType<NebulaSpark>(), ModContent.ProjectileType<NebulaStar>(), ModContent.ProjectileType<CosmicEye_Beam>(), ModContent.ProjectileType<CrystalStar_Proj>(), ModContent.ProjectileType<CrystalStarShard_Proj>(), ModContent.ProjectileType<CurvingStar>(), ModContent.ProjectileType<CurvingStar2>(), ModContent.ProjectileType<GiantStar_Proj>(), ModContent.ProjectileType<PNebula1>(), ModContent.ProjectileType<PNebula2>(), ModContent.ProjectileType<PNebula3>(), ModContent.ProjectileType<StarFall_Proj>(), ModContent.ProjectileType<StationaryStar>(), ModContent.ProjectileType<CosmicEye_Beam2>(), ModContent.ProjectileType<StarBolt>(), ModContent.ProjectileType<StarFall_Proj2>(), ModContent.ProjectileType<SpellsongMirage_Proj>(), ModContent.ProjectileType<SpellsongSlash_Proj>(), ModContent.ProjectileType<Spellsong_Proj>(), ModContent.ProjectileType<Moonbeam>(), ModContent.ProjectileType<PNebula1_Friendly>(), ModContent.ProjectileType<PNebula2_Friendly>(), ModContent.ProjectileType<PNebula3_Friendly>(), ModContent.ProjectileType<Constellations_Star>(), ModContent.ProjectileType<CosmosChains_Proj>(), ModContent.ProjectileType<ChainsCosmicEye_Beam>() };
 
         public static List<int> NoElement = new() { ProjectileID.CorruptSpray, ProjectileID.CrimsonSpray, ProjectileID.HallowSpray, ProjectileID.MushroomSpray, ProjectileID.PureSpray, ProjectileID.RocketI, ProjectileID.RocketII, ProjectileID.RocketIII, ProjectileID.RocketIV, ModContent.ProjectileType<BleachedSolution_Proj>() };
-
-        public static List<int> Explosive = new() { ProjectileID.Bomb, ProjectileID.BombFish, ProjectileID.Grenade, ProjectileID.Dynamite, ProjectileID.StickyBomb, ProjectileID.StickyDynamite, ProjectileID.StickyGrenade, ProjectileID.HellfireArrow, ProjectileID.HappyBomb, ProjectileID.BombSkeletronPrime, ProjectileID.Explosives, ProjectileID.GrenadeI, ProjectileID.GrenadeII, ProjectileID.GrenadeIII, ProjectileID.GrenadeIV, ProjectileID.RocketI, ProjectileID.RocketII, ProjectileID.RocketIII, ProjectileID.RocketIV, ProjectileID.ProximityMineI, ProjectileID.ProximityMineII, ProjectileID.ProximityMineIII, ProjectileID.ProximityMineIV, ProjectileID.Landmine, ProjectileID.Beenade, ProjectileID.ExplosiveBunny, ProjectileID.ExplosiveBullet, ProjectileID.RocketSkeleton, ProjectileID.JackOLantern, ProjectileID.OrnamentFriendly, ProjectileID.RocketSnowmanI, ProjectileID.RocketSnowmanII, ProjectileID.RocketSnowmanIII, ProjectileID.RocketSnowmanIV, ProjectileID.Missile, ProjectileID.Meteor1, ProjectileID.Meteor2, ProjectileID.Meteor3, ProjectileID.ElectrosphereMissile, ProjectileID.SaucerMissile, ProjectileID.SeedlerNut, ProjectileID.BouncyBomb, ProjectileID.BouncyDynamite, ProjectileID.BouncyGrenade, ProjectileID.PartyGirlGrenade, ProjectileID.SolarWhipSwordExplosion, ProjectileID.VortexBeaterRocket, ProjectileID.LunarFlare, ProjectileID.DD2GoblinBomb, ProjectileID.DD2ExplosiveTrapT1Explosion, ProjectileID.DD2ExplosiveTrapT2Explosion, ProjectileID.DD2ExplosiveTrapT3Explosion, ProjectileID.ScarabBomb, ProjectileID.ClusterRocketI, ProjectileID.ClusterRocketII, ProjectileID.ClusterGrenadeI, ProjectileID.ClusterGrenadeII, ProjectileID.ClusterMineI, ProjectileID.ClusterMineII, ProjectileID.MiniNukeRocketI, ProjectileID.MiniNukeRocketII, ProjectileID.MiniNukeGrenadeI, ProjectileID.MiniNukeGrenadeII, ProjectileID.MiniNukeMineI, ProjectileID.MiniNukeMineII, ProjectileID.ClusterSnowmanRocketI, ProjectileID.ClusterSnowmanRocketII, ProjectileID.MiniNukeSnowmanRocketI, ProjectileID.MiniNukeSnowmanRocketII, ProjectileID.SantankMountRocket, ProjectileID.DaybreakExplosion, ProjectileID.NailFriendly, ProjectileID.Nail, ProjectileID.Celeb2Rocket, ProjectileID.Celeb2RocketExplosive, ProjectileID.Celeb2RocketExplosiveLarge, ProjectileID.Celeb2RocketLarge, ProjectileID.Celeb2Weapon, ProjectileID.Stynger, ProjectileID.MolotovCocktail, ProjectileID.InfernoHostileBlast, ProjectileID.InfernoFriendlyBolt, ProjectileID.InfernoHostileBlast, ProjectileID.InfernoHostileBolt, ProjectileID.MonkStaffT1Explosion, ProjectileID.FireWhipProj, ProjectileID.FireWhip, ProjectileID.DD2ExplosiveTrapT1, ProjectileID.DD2ExplosiveTrapT2, ProjectileID.DD2ExplosiveTrapT3, ModContent.ProjectileType<AcornBomb_Proj>(), ModContent.ProjectileType<AcornBomb_Proj>(), ModContent.ProjectileType<Hardlight_SlayerMissile>(), ModContent.ProjectileType<PlasmaRound_Blast>(), ModContent.ProjectileType<EggBomb_Proj>(), ModContent.ProjectileType<HallowedHandGrenade_Proj>(), ModContent.ProjectileType<BlastBattery_MissileBlast>(), ModContent.ProjectileType<Electronade_Proj>(), ModContent.ProjectileType<Hardlight_SoSMissile>(), ModContent.ProjectileType<Hardlight_MissileBlast>(), ModContent.ProjectileType<KS3_Fist>(), ModContent.ProjectileType<KS3_SoSMissile>(), ModContent.ProjectileType<SlayerMissile>(), ModContent.ProjectileType<OO_MissileBlast>(), ModContent.ProjectileType<OO_BarrageMissile>(), ModContent.ProjectileType<Android_Proj>(), ModContent.ProjectileType<FlakGrenade>(), ModContent.ProjectileType<FlakGrenade_Bouncy>(), ModContent.ProjectileType<FlakGrenade_Sticky>(), ModContent.ProjectileType<DAN_Rocket>(), ModContent.ProjectileType<XeniumBubble_Proj>(), ModContent.ProjectileType<Uranium_Proj>(), ModContent.ProjectileType<BlastBattery_Missile>(), ModContent.ProjectileType<PlutoniumNuke_Proj>(), ModContent.ProjectileType<AndroidMinion_Fist>(), ModContent.ProjectileType<AndroidMinion_Proj>() };
-
         #endregion
     }
     public static class ItemLists

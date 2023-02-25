@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Redemption.DamageClasses;
+using Redemption.Globals;
 using Redemption.Globals.Player;
 using Redemption.Projectiles.Ritualist;
 using System.Collections.Generic;
@@ -61,7 +62,7 @@ namespace Redemption.Items.Weapons.PreHM.Ritualist
         }
         public override void ModifyTooltips(List<TooltipLine> tooltips)
         {
-            TooltipLine slashLine = new(Mod, "SharpBonus", "Slash Bonus: Small chance to decapitate skeletons, killing them instantly") { OverrideColor = Colors.RarityOrange };
+            TooltipLine slashLine = new(Mod, "SharpBonus", RedeItem.slashBonus) { OverrideColor = Colors.RarityOrange };
             tooltips.Add(slashLine);
         }
     }

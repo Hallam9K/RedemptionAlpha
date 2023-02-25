@@ -19,6 +19,7 @@ namespace Redemption.Projectiles.Magic
             DisplayName.SetDefault("Soul Charge");
             Main.projFrames[Projectile.type] = 4;
             ProjectileID.Sets.CultistIsResistantTo[Projectile.type] = true;
+            ElementID.ProjArcane[Type] = true;
         }
         public override void SetDefaults()
         {

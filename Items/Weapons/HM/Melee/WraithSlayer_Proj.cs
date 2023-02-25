@@ -18,6 +18,8 @@ namespace Redemption.Items.Weapons.HM.Melee
             DisplayName.SetDefault("Wraith Slayer");
             ProjectileID.Sets.TrailCacheLength[Projectile.type] = 4;
             ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
+            ElementID.ProjArcane[Type] = true;
+            ElementID.ProjShadow[Type] = true;
         }
 
         public override bool ShouldUpdatePosition() => false;

@@ -14,6 +14,8 @@ namespace Redemption.Projectiles.Misc
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Bile Gas");
+            ElementID.ProjWind[Type] = true;
+            ElementID.ProjPoison[Type] = true;
         }
         public override void SetDefaults()
         {

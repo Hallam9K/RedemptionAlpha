@@ -1,4 +1,5 @@
 using Microsoft.Xna.Framework;
+using Redemption.Globals;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
@@ -11,6 +12,7 @@ namespace Redemption.Items.Weapons.PreHM.Ammo
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Aqua Arrow");
+            ElementID.ProjWater[Type] = true;
         }
         public override void SetDefaults()
         {

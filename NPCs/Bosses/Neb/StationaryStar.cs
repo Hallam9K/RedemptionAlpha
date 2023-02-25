@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Redemption.Base;
+using Redemption.Globals;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -12,6 +13,7 @@ namespace Redemption.NPCs.Bosses.Neb
         {
             DisplayName.SetDefault("Starplane");
             Main.projFrames[Projectile.type] = 6;
+            ElementID.ProjCelestial[Type] = true;
         }
 
         public override void SetDefaults()

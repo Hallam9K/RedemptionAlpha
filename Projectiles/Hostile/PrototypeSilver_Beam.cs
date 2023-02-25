@@ -17,6 +17,7 @@ namespace Redemption.Projectiles.Hostile
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Eye Beam");
+            ElementID.ProjThunder[Type] = true;
         }
 
         public override void SetDefaults()

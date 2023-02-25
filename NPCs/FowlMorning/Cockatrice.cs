@@ -69,6 +69,7 @@ namespace Redemption.NPCs.FowlMorning
             if (!Main.dedServ)
                 Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/FowlMorning");
             SpawnModBiomes = new int[1] { ModContent.GetInstance<FowlMorningBiome>().Type };
+            NPC.GetGlobalNPC<ElementalNPC>().OverrideMultiplier[ElementID.Psychic] *= .75f;
         }
 
         public override bool CanHitPlayer(Player target, ref int cooldownSlot) => false;
@@ -268,7 +269,7 @@ namespace Redemption.NPCs.FowlMorning
         {
             if (NPC.life <= 0)
             {
-                if (ItemLists.Fire.Contains(item.type))
+                if (item.HasElement(ElementID.Fire))
                     Item.NewItem(NPC.GetSource_Loot(), NPC.getRect(), ModContent.ItemType<FriedChicken>(), Main.rand.Next(2, 4));
                 else if (NPC.FindBuffIndex(BuffID.OnFire) != -1 || NPC.FindBuffIndex(BuffID.OnFire3) != -1)
                     Item.NewItem(NPC.GetSource_Loot(), NPC.getRect(), ModContent.ItemType<FriedChicken>(), Main.rand.Next(2, 4));
@@ -278,7 +279,7 @@ namespace Redemption.NPCs.FowlMorning
         {
             if (NPC.life <= 0)
             {
-                if (ProjectileLists.Fire.Contains(projectile.type))
+                if (projectile.HasElement(ElementID.Fire))
                     Item.NewItem(NPC.GetSource_Loot(), NPC.getRect(), ModContent.ItemType<FriedChicken>(), Main.rand.Next(2, 4));
                 else if (NPC.FindBuffIndex(BuffID.OnFire) != -1 || NPC.FindBuffIndex(BuffID.OnFire3) != -1)
                     Item.NewItem(NPC.GetSource_Loot(), NPC.getRect(), ModContent.ItemType<FriedChicken>(), Main.rand.Next(2, 4));

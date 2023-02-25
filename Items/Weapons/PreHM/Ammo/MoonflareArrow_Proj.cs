@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Buffs.NPCBuffs;
 using Redemption.Dusts;
+using Redemption.Globals;
 using Terraria;
 using Terraria.Audio;
 using Terraria.GameContent;
@@ -18,7 +19,9 @@ namespace Redemption.Items.Weapons.PreHM.Ammo
             DisplayName.SetDefault("Moonflare Arrow");
 			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 4;
             ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
-		}
+            ElementID.ProjFire[Type] = true;
+            ElementID.ProjNature[Type] = true;
+        }
 		public override void SetDefaults()
 		{
 			Projectile.width = 14;

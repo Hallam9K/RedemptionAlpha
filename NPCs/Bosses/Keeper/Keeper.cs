@@ -108,6 +108,8 @@ namespace Redemption.NPCs.Bosses.Keeper
                 PortraitPositionYOverride = 8
             };
             NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, value);
+            ElementID.NPCShadow[Type] = true;
+            ElementID.NPCBlood[Type] = true;
         }
 
         public override void SetDefaults()

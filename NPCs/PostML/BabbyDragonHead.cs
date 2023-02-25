@@ -24,6 +24,7 @@ namespace Redemption.NPCs.PostML
 
             NPCID.Sets.NPCBestiaryDrawModifiers value = new(0) { Hide = true };
             NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, value);
+            ElementID.NPCCelestial[Type] = true;
         }
 
         public override void SetDefaults()
@@ -43,6 +44,7 @@ namespace Redemption.NPCs.PostML
             NPC.behindTiles = true;
             NPC.HitSound = SoundID.NPCHit56;
             NPC.DeathSound = SoundID.NPCDeath60;
+            NPC.GetGlobalNPC<ElementalNPC>().OverrideMultiplier[ElementID.Celestial] *= .8f;
         }
 
         public override bool PreAI()

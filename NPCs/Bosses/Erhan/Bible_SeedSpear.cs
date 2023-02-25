@@ -4,6 +4,7 @@ using Terraria;
 using Terraria.ModLoader;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria.GameContent;
+using Redemption.Globals;
 
 namespace Redemption.NPCs.Bosses.Erhan
 {
@@ -13,6 +14,7 @@ namespace Redemption.NPCs.Bosses.Erhan
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Holy Spear");
+            ElementID.ProjHoly[Type] = true;
         }
 
         public override void SetDefaults()

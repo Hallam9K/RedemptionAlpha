@@ -39,6 +39,7 @@ namespace Redemption.Items.Usable
             Projectile.height += 8;
             Projectile.timeLeft = 60;
         }
+        public override bool? CanCutTiles() => false;
         public override void AI()
         {
             if (Projectile.owner == Main.myPlayer)

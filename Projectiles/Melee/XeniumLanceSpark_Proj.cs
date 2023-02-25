@@ -13,6 +13,7 @@ namespace Redemption.Projectiles.Melee
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Xenium Spark");
+            ElementID.ProjThunder[Type] = true;
         }
         public override void SetDefaults()
         {

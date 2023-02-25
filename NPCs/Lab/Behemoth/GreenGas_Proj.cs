@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Redemption.Globals;
 using Terraria;
 using Terraria.GameContent;
 using Terraria.ID;
@@ -14,6 +15,8 @@ namespace Redemption.NPCs.Lab.Behemoth
             DisplayName.SetDefault("Radioactive Gas");
             ProjectileID.Sets.TrailCacheLength[Projectile.type] = 5;
             ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
+            ElementID.ProjWind[Type] = true;
+            ElementID.ProjPoison[Type] = true;
         }
         public override void SetDefaults()
         {

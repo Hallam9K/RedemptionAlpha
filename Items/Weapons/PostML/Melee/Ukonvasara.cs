@@ -1,5 +1,7 @@
 using Microsoft.Xna.Framework;
+using Redemption.Globals;
 using Redemption.Rarities;
+using System.Collections;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
@@ -139,10 +141,20 @@ namespace Redemption.Items.Weapons.PostML.Melee
                 };
                 tooltips.Add(line2);
             }
-            if (AttackMode > 0)
+            switch (AttackMode)
             {
-                TooltipLine axeLine = new(Mod, "HammerBonus", "Hammer Bonus: Deals quadruple damage to Guard Points") { OverrideColor = Colors.RarityOrange };
-                tooltips.Add(axeLine);
+                default:
+                    TooltipLine swordLine = new(Mod, "SlashBonus", RedeItem.slashBonus) { OverrideColor = Colors.RarityOrange };
+                    tooltips.Add(swordLine);
+                    break;
+                case 1:
+                    TooltipLine hammerLine = new(Mod, "HammerBonus", RedeItem.hammerBonus) { OverrideColor = Colors.RarityOrange };
+                    tooltips.Add(hammerLine);
+                    break;
+                case 2:
+                    TooltipLine axeLine = new(Mod, "AxeBonus", RedeItem.axeBonus) { OverrideColor = Colors.RarityOrange };
+                    tooltips.Add(axeLine);
+                    break;
             }
         }
     }

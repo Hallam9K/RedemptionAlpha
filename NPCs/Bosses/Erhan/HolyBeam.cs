@@ -9,6 +9,7 @@ using Redemption.Base;
 using Terraria.ID;
 using Terraria.Audio;
 using Redemption.BaseExtension;
+using Redemption.Globals;
 
 namespace Redemption.NPCs.Bosses.Erhan
 {
@@ -44,6 +45,8 @@ namespace Redemption.NPCs.Bosses.Erhan
         {
             DisplayName.SetDefault("Holy Beam");
             ProjectileID.Sets.DrawScreenCheckFluff[Type] = 2400;
+            ElementID.ProjFire[Type] = true;
+            ElementID.ProjHoly[Type] = true;
         }
 
         public override void SetDefaults()

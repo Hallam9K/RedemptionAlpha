@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.BaseExtension;
 using Redemption.Buffs.NPCBuffs;
+using Redemption.Globals;
 using System;
 using Terraria;
 using Terraria.Audio;
@@ -16,6 +17,7 @@ namespace Redemption.Items.Weapons.HM.Melee
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Tidal Wake");
+            ElementID.ProjWater[Type] = true;
         }
         public override void SetDefaults()
         {

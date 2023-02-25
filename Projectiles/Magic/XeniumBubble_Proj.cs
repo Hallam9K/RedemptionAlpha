@@ -17,6 +17,9 @@ namespace Redemption.Projectiles.Magic
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Xenium Bubble");
+            ElementID.ProjWater[Type] = true;
+            ElementID.ProjPoison[Type] = true;
+            ElementID.ProjExplosive[Type] = true;
         }
         public override void SetDefaults()
         {

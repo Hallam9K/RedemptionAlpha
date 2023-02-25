@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.BaseExtension;
+using Redemption.Globals;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.GameContent;
@@ -37,6 +38,7 @@ namespace Redemption.Items.Weapons.PreHM.Summon
         {
             DisplayName.SetDefault("Root Tendril");
             ProjectileID.Sets.IsAWhip[Type] = true;
+            ElementID.ProjNature[Type] = true;
         }
         public override void SetDefaults()
         {

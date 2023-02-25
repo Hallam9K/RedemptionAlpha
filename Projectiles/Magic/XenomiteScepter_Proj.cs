@@ -8,6 +8,7 @@ using Redemption.Base;
 using ParticleLibrary;
 using Redemption.Particles;
 using Redemption.Buffs.Debuffs;
+using Redemption.Globals;
 
 namespace Redemption.Projectiles.Magic
 {
@@ -17,6 +18,8 @@ namespace Redemption.Projectiles.Magic
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Helix Bolt");
+            ElementID.ProjArcane[Type] = true;
+            ElementID.ProjPoison[Type] = true;
         }
         public override void SetDefaults()
         {

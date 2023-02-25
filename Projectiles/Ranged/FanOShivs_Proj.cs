@@ -1,4 +1,5 @@
 using Microsoft.Xna.Framework;
+using Redemption.Globals;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -46,6 +47,7 @@ namespace Redemption.Projectiles.Ranged
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Poisoned Shiv");
+            ElementID.ProjPoison[Type] = true;
         }
         public override void SetDefaults()
         {

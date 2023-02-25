@@ -1,4 +1,5 @@
 using Microsoft.Xna.Framework;
+using Redemption.Globals;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
@@ -14,6 +15,7 @@ namespace Redemption.Projectiles.Ranged
             DisplayName.SetDefault("Thorn Trap");
             Main.projFrames[Projectile.type] = 6;
             ProjectileID.Sets.DontAttachHideToAlpha[Type] = true;
+            ElementID.ProjNature[Type] = true;
         }
         public override void SetDefaults()
         {

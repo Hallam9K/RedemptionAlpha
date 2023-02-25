@@ -643,7 +643,7 @@ namespace Redemption.NPCs.PreHM
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<GraveSteelShards>(), 2, 3, 12));
             npcLoot.Add(ItemDropRule.Common(ItemID.Hook, 25));
             npcLoot.Add(ItemDropRule.Food(ItemID.MilkCarton, 150));
-            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<EpidotrianSkull>(), 50));
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<EpidotrianSkull>(), 100));
             npcLoot.Add(ItemDropRule.ByCondition(new LostSoulCondition(), ModContent.ItemType<LostSoul>(), 2));
         }
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)

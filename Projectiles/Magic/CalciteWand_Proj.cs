@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Redemption.Globals;
 using Terraria;
 using Terraria.Audio;
 using Terraria.GameContent;
@@ -16,6 +17,7 @@ namespace Redemption.Projectiles.Magic
             Main.projFrames[Projectile.type] = 3;
             ProjectileID.Sets.TrailCacheLength[Projectile.type] = 5;
             ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
+            ElementID.ProjEarth[Type] = true;
         }
         public override void SetDefaults()
         {

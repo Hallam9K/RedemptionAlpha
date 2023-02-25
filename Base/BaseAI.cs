@@ -5385,7 +5385,7 @@ namespace Redemption.Base
                     PlayerLoader.OnHitNPCWithProj(p, npc, parsedDamage, knockback, crit);
                     ProjectileLoader.ModifyHitNPC(p, npc, ref parsedDamage, ref knockback, ref crit, ref hitDirection);
                     ProjectileLoader.OnHitNPC(p, npc, parsedDamage, knockback, crit);
-                    if (ProjectileLists.Psychic.Contains(p.type))
+                    if (p.HasElement(ElementID.Psychic))
                         npc.RedemptionGuard().IgnoreArmour = true;
 
                     if (!npc.immortal && npc.canGhostHeal && p.DamageType == DamageClass.Magic && Main.player[p.owner].setNebula && Main.player[p.owner].nebulaCD == 0 && Main.rand.NextBool(3))

@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Redemption.BaseExtension;
 using Redemption.Buffs.Debuffs;
+using Redemption.Globals;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -11,6 +12,7 @@ namespace Redemption.NPCs.Bosses.Thorn
         public override void SetStaticDefaults()
         {
             Main.projFrames[Projectile.type] = 9;
+            ElementID.ProjNature[Type] = true;
         }
         public override void SetDefaults()
         {

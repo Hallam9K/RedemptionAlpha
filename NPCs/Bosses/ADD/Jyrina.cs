@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Base;
+using Redemption.Globals;
 using Terraria;
 using Terraria.GameContent;
 using Terraria.Graphics.Shaders;
@@ -17,6 +18,7 @@ namespace Redemption.NPCs.Bosses.ADD
             Main.projFrames[Projectile.type] = 9;
             ProjectileID.Sets.TrailCacheLength[Projectile.type] = 8;
             ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
+            ElementID.ProjEarth[Type] = true;
         }
         public override void SetDefaults()
         {

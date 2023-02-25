@@ -1,5 +1,6 @@
 using Redemption.Biomes;
 using Redemption.Buffs.Debuffs;
+using Redemption.Globals;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent.Bestiary;
@@ -28,6 +29,7 @@ namespace Redemption.NPCs.Wasteland
                 Velocity = 1f
             };
             NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, value);
+            ElementID.NPCPoison[Type] = true;
         }
 
         public override void SetDefaults()

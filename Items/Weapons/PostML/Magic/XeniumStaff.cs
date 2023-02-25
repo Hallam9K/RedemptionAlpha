@@ -1,4 +1,5 @@
 using Microsoft.Xna.Framework;
+using Redemption.Globals;
 using Redemption.Items.Materials.HM;
 using Redemption.Items.Materials.PostML;
 using Redemption.Projectiles.Magic;
@@ -15,7 +16,7 @@ namespace Redemption.Items.Weapons.PostML.Magic
         public override void SetStaticDefaults()
         {
             Tooltip.SetDefault("Casts two harmless bubble mines\n" +
-                "Right-click to fire a small beam that detonates any mine it hits");
+                "Right-click to fire a small " + ElementID.PoisonS + " beam that detonates any mine it hits");
             Item.staff[Item.type] = true;
             SacrificeTotal = 1;
         }

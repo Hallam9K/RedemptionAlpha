@@ -16,6 +16,7 @@ namespace Redemption.Projectiles.Melee
             DisplayName.SetDefault("Spellsong Mirage");
             ProjectileID.Sets.TrailCacheLength[Projectile.type] = 5;
             ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
+            ElementID.ProjCelestial[Type] = true;
         }
         public override void SetDefaults()
         {

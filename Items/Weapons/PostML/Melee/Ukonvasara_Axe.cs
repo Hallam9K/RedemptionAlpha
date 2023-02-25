@@ -21,6 +21,8 @@ namespace Redemption.Items.Weapons.PostML.Melee
             DisplayName.SetDefault("Ukonvasara");
             ProjectileID.Sets.TrailCacheLength[Projectile.type] = 4;
             ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
+            ElementID.ProjEarth[Type] = true;
+            ElementID.ProjThunder[Type] = true;
         }
 
         public override bool ShouldUpdatePosition() => false;
@@ -32,7 +34,7 @@ namespace Redemption.Items.Weapons.PostML.Melee
             Projectile.penetrate = -1;
             Projectile.alpha = 255;
             Projectile.usesLocalNPCImmunity = true;
-            Projectile.Redemption().IsHammer = true;
+            Projectile.Redemption().IsAxe = true;
         }
 
         public override bool? CanHitNPC(NPC target) => !target.friendly && Projectile.ai[0] >= 1 ? null : false;

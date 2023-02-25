@@ -1,4 +1,6 @@
 using Microsoft.Xna.Framework;
+using Redemption.Globals;
+using Redemption.Projectiles.Melee;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
@@ -104,13 +106,17 @@ namespace Redemption.Items.Weapons.PostML.Melee
         public override void ModifyTooltips(List<TooltipLine> tooltips)
         {
             string shotType = "";
+            if (AttackMode is 1)
+                Item.ExtraItemShoot(ModContent.ProjectileType<Hacksaw_Heat_Proj>());
+            else
+                Item.ExtraItemShoot();
             switch (AttackMode)
             {
                 case 0:
                     shotType = "Attack Mode 1: Swings the hacksaw in a circle around the user";
                     break;
                 case 1:
-                    shotType = "Attack Mode 2: Revves up the blade, causing it to overheat and firing a powerful heat blast";
+                    shotType = "Attack Mode 2: Revves up the blade, causing it to overheat and firing a powerful heat blast which deals " + ElementID.FireS + " damage";
                     break;
                 case 2:
                     shotType = "Attack Mode 3: Acts like a normal chainsaw, doing increasing damage over the time spent damaging a target";

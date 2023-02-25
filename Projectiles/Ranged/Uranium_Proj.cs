@@ -18,6 +18,7 @@ namespace Redemption.Projectiles.Ranged
             DisplayName.SetDefault("Uranium Rod");
             ProjectileID.Sets.TrailCacheLength[Projectile.type] = 6;
             ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
+            ElementID.ProjExplosive[Type] = true;
         }
         public override void SetDefaults()
         {

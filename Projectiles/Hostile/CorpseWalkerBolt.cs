@@ -21,6 +21,7 @@ namespace Redemption.Projectiles.Hostile
 
             ProjectileID.Sets.TrailCacheLength[Projectile.type] = 5;
             ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
+            ElementID.ProjHoly[Type] = true;
         }
 
         public override void SetDefaults()

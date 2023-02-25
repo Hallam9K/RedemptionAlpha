@@ -17,6 +17,7 @@ namespace Redemption.NPCs.Bosses.KSIII
         public override void SetSafeStaticDefaults()
         {
             DisplayName.SetDefault("Magnet Beam");
+            ElementID.ProjThunder[Type] = true;
         }
 
         public override void SetSafeDefaults()

@@ -18,6 +18,7 @@ namespace Redemption.Projectiles.Melee
         public override void SetStaticDefaults()
         {
             ProjectileID.Sets.CultistIsResistantTo[Projectile.type] = true;
+            ElementID.ProjHoly[Type] = true;
         }
         public override void SetDefaults()
         {

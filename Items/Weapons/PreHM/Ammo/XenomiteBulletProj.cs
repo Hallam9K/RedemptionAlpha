@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Buffs.Debuffs;
+using Redemption.Globals;
 using Terraria;
 using Terraria.Audio;
 using Terraria.GameContent;
@@ -16,7 +17,8 @@ namespace Redemption.Items.Weapons.PreHM.Ammo
 			DisplayName.SetDefault("Xenomite Bullet");
 			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 5;
 			ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
-		}
+            ElementID.ProjPoison[Type] = true;
+        }
 		public override void SetDefaults()
 		{
 			Projectile.width = 4;

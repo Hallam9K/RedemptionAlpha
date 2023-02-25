@@ -17,6 +17,7 @@ namespace Redemption.NPCs.Lab.MACE
             DisplayName.SetDefault("Flaming Blast");
             ProjectileID.Sets.TrailCacheLength[Projectile.type] = 5;
             ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
+            ElementID.ProjFire[Type] = true;
         }
         public override void SetDefaults()
         {

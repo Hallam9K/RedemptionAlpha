@@ -15,6 +15,7 @@ namespace Redemption.Projectiles.Hostile
         {
             DisplayName.SetDefault("Living Root");
             ProjectileID.Sets.DontAttachHideToAlpha[Type] = true;
+            ElementID.ProjNature[Type] = true;
         }
         public override void SetDefaults()
         {

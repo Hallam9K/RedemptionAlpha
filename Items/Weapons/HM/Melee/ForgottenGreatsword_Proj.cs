@@ -20,6 +20,7 @@ namespace Redemption.Items.Weapons.HM.Melee
             Main.projFrames[Projectile.type] = 3;
             ProjectileID.Sets.TrailCacheLength[Projectile.type] = 6;
             ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
+            ElementID.ProjFire[Type] = true;
         }
 
         public override bool ShouldUpdatePosition() => false;

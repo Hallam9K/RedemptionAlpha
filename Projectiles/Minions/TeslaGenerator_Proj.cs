@@ -113,6 +113,7 @@ namespace Redemption.Projectiles.Minions
             ProjectileID.Sets.MinionShot[Projectile.type] = true;
             ProjectileID.Sets.TrailCacheLength[Projectile.type] = 10;
             ProjectileID.Sets.TrailingMode[Projectile.type] = 1;
+            ElementID.ProjThunder[Type] = true;
         }
 
         float colorlerp;

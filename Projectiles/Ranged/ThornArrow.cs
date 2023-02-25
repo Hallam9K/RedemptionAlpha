@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Redemption.Base;
+using Redemption.Globals;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -12,6 +13,7 @@ namespace Redemption.Projectiles.Ranged
         {
             DisplayName.SetDefault("Seed-Laden Arrow");
             Main.projFrames[Projectile.type] = 5;
+            ElementID.ProjNature[Type] = true;
         }
         public override void SetDefaults()
         {

@@ -1,3 +1,4 @@
+using Redemption.Globals;
 using Terraria;
 
 namespace Redemption.Items.Weapons.PreHM.Ritualist
@@ -8,6 +9,7 @@ namespace Redemption.Items.Weapons.PreHM.Ritualist
         {
             DisplayName.SetDefault("Blood Letter");
             Main.projFrames[Projectile.type] = 5;
+            ElementID.ProjBlood[Type] = true;
         }
     }
 }

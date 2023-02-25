@@ -5,6 +5,8 @@ using Microsoft.Xna.Framework;
 using Terraria.DataStructures;
 using Redemption.Buffs.Minions;
 using Redemption.Projectiles.Minions;
+using Redemption.Globals;
+using Redemption.Projectiles.Ranged;
 
 namespace Redemption.Items.Weapons.PreHM.Summon
 {
@@ -37,7 +39,8 @@ namespace Redemption.Items.Weapons.PreHM.Summon
 			Item.autoReuse = false;
 			Item.buffType = ModContent.BuffType<CorpseSkullBuff>();
 			Item.shoot = ModContent.ProjectileType<CorpseWalkerSkull>();
-			Item.mana = 5;
+            Item.ExtraItemShoot(ModContent.ProjectileType<CorpseWalkerSkull_Proj>());
+            Item.mana = 5;
 		}
 		public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback)
 		{

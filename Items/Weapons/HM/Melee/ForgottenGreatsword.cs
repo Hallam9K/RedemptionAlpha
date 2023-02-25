@@ -1,6 +1,8 @@
 using Microsoft.Xna.Framework;
+using Redemption.Globals;
 using Redemption.Items.Materials.HM;
 using Redemption.Items.Weapons.PreHM.Melee;
+using Redemption.Projectiles.Melee;
 using System;
 using System.Collections.Generic;
 using Terraria;
@@ -16,7 +18,8 @@ namespace Redemption.Items.Weapons.HM.Melee
         {
             DisplayName.SetDefault("Ophos' Forgotten Greatsword");
             Tooltip.SetDefault("Spins the blade around the player and sets ablaze\n" +
-                "Forms a firestorm that engulfs the player, release left-click to disperse it, launching nearby enemies away");
+                "Forms a firestorm that engulfs the player, dealing " + ElementID.WindS + " damage" +
+                "\nRelease left-click to disperse it, launching nearby enemies away");
 
             SacrificeTotal = 1;
         }
@@ -47,6 +50,7 @@ namespace Redemption.Items.Weapons.HM.Melee
             // Projectile Properties
             Item.shootSpeed = 5f;
             Item.shoot = ModContent.ProjectileType<ForgottenGreatsword_Proj>();
+            Item.ExtraItemShoot(ModContent.ProjectileType<Firestorm_Proj>());
         }
         public override void AddRecipes()
         {
@@ -84,8 +88,8 @@ namespace Redemption.Items.Weapons.HM.Melee
                 };
                 tooltips.Add(line);
             }
-            TooltipLine axeLine = new(Mod, "SharpBonus", "Slash Bonus: Small chance to decapitate skeletons, killing them instantly") { OverrideColor = Colors.RarityOrange };
-            tooltips.Add(axeLine);
+            TooltipLine slashLine = new(Mod, "SharpBonus", RedeItem.slashBonus) { OverrideColor = Colors.RarityOrange };
+            tooltips.Add(slashLine);
         }
     }
 }

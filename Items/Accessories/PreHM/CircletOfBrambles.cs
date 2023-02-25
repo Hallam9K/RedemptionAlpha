@@ -2,6 +2,7 @@
 using Terraria.ID;
 using Terraria.ModLoader;
 using Redemption.BaseExtension;
+using Redemption.Globals;
 
 namespace Redemption.Items.Accessories.PreHM
 {
@@ -13,7 +14,7 @@ namespace Redemption.Items.Accessories.PreHM
             DisplayName.SetDefault("Circlet of Brambles");
             Tooltip.SetDefault("Every 5th use of a magic weapon shoots a spread of stingers" +
                 "\nIncreased life regeneration while in the Jungle\n" +
-                "6% increased Nature elemental critical strike chance");
+                "6% increased " + ElementID.NatureS + " elemental critical strike chance");
 
             SacrificeTotal = 1;
         }

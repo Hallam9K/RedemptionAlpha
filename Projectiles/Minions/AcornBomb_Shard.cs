@@ -1,4 +1,5 @@
 using Microsoft.Xna.Framework;
+using Redemption.Globals;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
@@ -12,6 +13,7 @@ namespace Redemption.Projectiles.Minions
         {
             DisplayName.SetDefault("Acorn Shard");
             ProjectileID.Sets.MinionShot[Projectile.type] = true;
+            ElementID.ProjNature[Type] = true;
         }
         public override void SetDefaults()
         {

@@ -57,6 +57,7 @@ namespace Redemption.Globals.Player
         public float visionAmt;
         public bool yesChoice;
         public bool noChoice;
+        public bool onHit;
 
         public override void ResetEffects()
         {
@@ -78,6 +79,7 @@ namespace Redemption.Globals.Player
             slayerCursor = false;
             contactImmune = false;
             parried = false;
+            onHit = false;
         }
         public override void Initialize()
         {
@@ -106,6 +108,7 @@ namespace Redemption.Globals.Player
                 Player.immuneTime = (int)MathHelper.Max(Player.immuneTime, 4);
                 return false;
             }
+            onHit = true;
             return true;
         }
         public override void OnHitNPC(Item item, Terraria.NPC target, int damage, float knockback, bool crit)

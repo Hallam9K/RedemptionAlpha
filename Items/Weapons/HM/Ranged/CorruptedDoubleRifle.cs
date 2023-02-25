@@ -19,7 +19,7 @@ namespace Redemption.Items.Weapons.HM.Ranged
         public override void SetStaticDefaults()
         {
             Tooltip.SetDefault("Converts normal bullets into high velocity bullets\n" +
-                "(3[i:" + ModContent.ItemType<EnergyPack>() + "]) Every 3rd shot fires a small laser beam if an Energy Pack is in your inventory\n" +
+                "(3[i:" + ModContent.ItemType<EnergyPack>() + "]) Every 3rd shot fires a small laser beam if an Energy Pack is in your inventory, dealing " + ElementID.ThunderS + " damage\n" +
                 "33% chance not to consume ammo");
             SacrificeTotal = 1;
         }
@@ -42,6 +42,7 @@ namespace Redemption.Items.Weapons.HM.Ranged
             Item.shoot = ProjectileID.PurificationPowder;
             Item.shootSpeed = 90;
             Item.useAmmo = AmmoID.Bullet;
+            Item.ExtraItemShoot(ModContent.ProjectileType<CorruptedDoubleRifle_Beam>());
             if (!Main.dedServ)
                 Item.RedemptionGlow().glowTexture = ModContent.Request<Texture2D>(Item.ModItem.Texture + "_Glow").Value;
         }

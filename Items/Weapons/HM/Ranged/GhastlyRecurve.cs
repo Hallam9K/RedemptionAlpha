@@ -6,6 +6,7 @@ using Redemption.Items.Materials.PreHM;
 using Redemption.Projectiles.Ranged;
 using Terraria.DataStructures;
 using Terraria.Audio;
+using Redemption.Globals;
 
 namespace Redemption.Items.Weapons.HM.Ranged
 {
@@ -14,7 +15,7 @@ namespace Redemption.Items.Weapons.HM.Ranged
         public override void SetStaticDefaults()
         {
             Tooltip.SetDefault("Right-click to fire a spirit to the aimed area, where they will linger there for a duration\n" +
-                "Arrows passing through the spirits are transformed into Spirit Arrows that split into homing shards upon impact");
+                "Arrows passing through the spirits are transformed into Spirit Arrows that split into homing shards upon impact, dealing " + ElementID.ArcaneS + " damage");
             SacrificeTotal = 1;
         }
         public override void SetDefaults()
@@ -41,6 +42,7 @@ namespace Redemption.Items.Weapons.HM.Ranged
             // Projectile Properties
             Item.shootSpeed = 20f;
             Item.shoot = ProjectileID.WoodenArrowFriendly;
+            Item.ExtraItemShoot(ModContent.ProjectileType<SpiritArrow_Proj>());
             Item.useAmmo = AmmoID.Arrow;
         }
         public override void AddRecipes()

@@ -18,6 +18,7 @@ namespace Redemption.Items.Weapons.HM.Melee
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Crystal Glaive");
+            ElementID.ProjHoly[Type] = true;
         }
         private Vector2 startVector;
         public override void SetDefaults()

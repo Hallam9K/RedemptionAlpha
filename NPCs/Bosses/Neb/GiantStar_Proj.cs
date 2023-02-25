@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Redemption.Globals;
 using Redemption.NPCs.Bosses.Neb.Clone;
 using Redemption.NPCs.Bosses.Neb.Phase2;
 using Terraria;
@@ -14,6 +15,7 @@ namespace Redemption.NPCs.Bosses.Neb
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Giant Star");
+            ElementID.ProjCelestial[Type] = true;
         }
         public override void SetDefaults()
         {

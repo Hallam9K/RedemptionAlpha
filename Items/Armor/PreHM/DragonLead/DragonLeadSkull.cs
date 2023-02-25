@@ -5,6 +5,7 @@ using Redemption.Items.Materials.PreHM;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Redemption.BaseExtension;
+using Redemption.Globals;
 
 namespace Redemption.Items.Armor.PreHM.DragonLead
 {
@@ -41,10 +42,10 @@ namespace Redemption.Items.Armor.PreHM.DragonLead
 
         public override void UpdateArmorSet(Player player)
         {
-            player.setBonus = "20% increased Ice elemental resistance\n" +
+            player.setBonus = "20% increased " + ElementID.IceS + " elemental resistance\n" +
                 "33% chance for weapons to inflict Dragonblaze\n" +
                 "100% chance for all Dragon-Lead weapons to inflict Dragonblaze";
-            player.RedemptionPlayerBuff().ElementalResistance[3] += 0.2f;
+            player.RedemptionPlayerBuff().ElementalResistance[ElementID.Ice] += 0.2f;
             player.RedemptionPlayerBuff().dragonLeadBonus = true;
             player.RedemptionPlayerBuff().MetalSet = true;
         }

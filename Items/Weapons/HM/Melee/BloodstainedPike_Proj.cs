@@ -22,6 +22,7 @@ namespace Redemption.Items.Weapons.HM.Melee
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Bloodstained Pike");
+            ElementID.ProjBlood[Type] = true;
         }
 
         public override void SetDefaults()
@@ -159,6 +160,7 @@ namespace Redemption.Items.Weapons.HM.Melee
             ProjectileID.Sets.CultistIsResistantTo[Projectile.type] = true;
             ProjectileID.Sets.TrailCacheLength[Projectile.type] = 4;
             ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
+            ElementID.ProjBlood[Type] = true;
         }
 
         public override void SetDefaults()

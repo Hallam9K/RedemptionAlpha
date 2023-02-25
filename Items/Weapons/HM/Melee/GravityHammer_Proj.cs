@@ -18,6 +18,8 @@ namespace Redemption.Items.Weapons.HM.Melee
         {
             DisplayName.SetDefault("Gravity Hammer");
             Main.projFrames[Projectile.type] = 11;
+            ElementID.ProjThunder[Type] = true;
+            ElementID.ProjEarth[Type] = true;
         }
         public override bool ShouldUpdatePosition() => false;
         public override void SetSafeDefaults()

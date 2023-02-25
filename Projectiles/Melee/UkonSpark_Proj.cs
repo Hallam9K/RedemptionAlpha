@@ -12,6 +12,7 @@ namespace Redemption.Projectiles.Melee
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Ukon Spark");
+            ElementID.ProjThunder[Type] = true;
         }
 
         public override void SetDefaults()

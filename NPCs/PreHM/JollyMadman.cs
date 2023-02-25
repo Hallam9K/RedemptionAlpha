@@ -66,6 +66,8 @@ namespace Redemption.NPCs.PreHM
             };
 
             NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, value);
+            ElementID.NPCBlood[Type] = true;
+            ElementID.NPCShadow[Type] = true;
         }
         public override void SetDefaults()
         {
@@ -84,6 +86,8 @@ namespace Redemption.NPCs.PreHM
             Banner = NPC.type;
             BannerItem = ModContent.ItemType<JollyMadmanBanner>();
             NPC.RedemptionGuard().GuardPoints = 25;
+
+            NPC.GetGlobalNPC<ElementalNPC>().OverrideMultiplier[ElementID.Holy] *= 2f;
         }
         public override void HitEffect(int hitDirection, double damage)
         {
@@ -145,10 +149,7 @@ namespace Redemption.NPCs.PreHM
         {
             if (!RedeConfigClient.Instance.ElementDisable)
             {
-                if (ItemLists.Holy.Contains(item.type))
-                    NPC.Redemption().elementDmg *= 2f;
-
-                if (ItemLists.Psychic.Contains(item.type))
+                if (item.HasElement(ElementID.Psychic))
                     PsychicHit = true;
             }
         }
@@ -156,10 +157,7 @@ namespace Redemption.NPCs.PreHM
         {
             if (!RedeConfigClient.Instance.ElementDisable)
             {
-                if (ProjectileLists.Holy.Contains(projectile.type))
-                    NPC.Redemption().elementDmg *= 2f;
-
-                if (ProjectileLists.Psychic.Contains(projectile.type))
+                if (projectile.HasElement(ElementID.Psychic))
                     PsychicHit = true;
             }
         }

@@ -1,6 +1,8 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.BaseExtension;
+using Redemption.Globals;
+using Redemption.Projectiles.Ranged;
 using Redemption.Rarities;
 using Terraria;
 using Terraria.ID;
@@ -13,7 +15,7 @@ namespace Redemption.Items.Weapons.PostML.Ranged
 		public override void SetStaticDefaults()
 		{
             Tooltip.SetDefault("Holding left-click will grow a hive cyst inside the cannon\n" +
-                "Release when the cyst is fully grown to launch it at enemies, dealing Poison damage\n" +
+                "Release when the cyst is fully grown to launch it at enemies, dealing " + ElementID.PoisonS + " damage\n" +
                 "Replaces normal bullets with bile bullets");
             ItemID.Sets.SkipsInitialUseSound[Item.type] = true;
             SacrificeTotal = 1;
@@ -37,7 +39,7 @@ namespace Redemption.Items.Weapons.PostML.Ranged
             Item.rare = ModContent.RarityType<TurquoiseRarity>();
             Item.UseSound = SoundID.Item38;
             Item.autoReuse = true;
-            Item.shoot = ProjectileID.PurificationPowder;
+            Item.shoot = ModContent.ProjectileType<SwarmGrowth_Proj>();
             Item.shootSpeed = 90;
             Item.useAmmo = AmmoID.Bullet;
             if (!Main.dedServ)

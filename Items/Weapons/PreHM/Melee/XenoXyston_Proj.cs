@@ -14,6 +14,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Xeno Xyston");
+            ElementID.ProjPoison[Type] = true;
         }
         public override void SetSafeDefaults()
         {

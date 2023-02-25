@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Redemption.Buffs.Minions;
+using Redemption.Globals;
 using Redemption.Projectiles.Minions;
 using Terraria;
 using Terraria.DataStructures;
@@ -37,6 +38,7 @@ namespace Redemption.Items.Weapons.HM.Summon
             Item.value = Item.sellPrice(0, 10, 0, 0);
             Item.UseSound = SoundID.Item44;
             Item.shoot = ModContent.ProjectileType<AndroidMinion_Proj>();
+            Item.ExtraItemShoot(ModContent.ProjectileType<AndroidMinion_Fist>());
             Item.buffType = ModContent.BuffType<AndroidMinionBuff>();
 		}
         public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback)
