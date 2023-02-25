@@ -38,6 +38,8 @@ namespace Redemption.NPCs.Bosses.SeedOfInfection
             NPCID.Sets.DontDoHardmodeScaling[Type] = true;
             NPCID.Sets.CantTakeLunchMoney[Type] = true;
             NPCID.Sets.BossBestiaryPriority.Add(Type);
+            ElementID.NPCPoison[Type] = true;
+            ElementID.NPCWater[Type] = true;
         }
 
         public override void SetDefaults()

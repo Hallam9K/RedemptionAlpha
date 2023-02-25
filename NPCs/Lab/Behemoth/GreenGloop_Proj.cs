@@ -1,3 +1,4 @@
+using Redemption.Globals;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -10,6 +11,7 @@ namespace Redemption.NPCs.Lab.Behemoth
         {
             DisplayName.SetDefault("Gloop");
             Main.projFrames[Projectile.type] = 3;
+            ElementID.ProjPoison[Type] = true;
         }
         public override void SetDefaults()
         {

@@ -17,6 +17,8 @@ namespace Redemption.NPCs.FowlMorning
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Ghost-Fire");
+            ElementID.ProjArcane[Type] = true;
+            ElementID.ProjFire[Type] = true;
         }
         public override void SetDefaults()
         {

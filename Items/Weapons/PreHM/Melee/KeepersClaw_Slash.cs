@@ -18,6 +18,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
         {
             DisplayName.SetDefault("Keeper's Claw");
             Main.projFrames[Projectile.type] = 6;
+            ElementID.ProjBlood[Type] = true;
         }
         public override bool ShouldUpdatePosition() => false;
         public override void SetSafeDefaults()

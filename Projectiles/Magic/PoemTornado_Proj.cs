@@ -18,6 +18,7 @@ namespace Redemption.Projectiles.Magic
         {
             DisplayName.SetDefault("Tornado");
             ProjectileID.Sets.DontAttachHideToAlpha[Projectile.type] = true;
+            ElementID.ProjWind[Type] = true;
         }
         public override void SetDefaults()
         {

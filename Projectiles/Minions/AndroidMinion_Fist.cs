@@ -7,6 +7,7 @@ using Terraria.Audio;
 using Redemption.BaseExtension;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria.GameContent;
+using Redemption.Globals;
 
 namespace Redemption.Projectiles.Minions
 {
@@ -18,6 +19,7 @@ namespace Redemption.Projectiles.Minions
             Main.projFrames[Projectile.type] = 3;
             ProjectileID.Sets.MinionShot[Projectile.type] = true;
             ProjectileID.Sets.CultistIsResistantTo[Projectile.type] = true;
+            ElementID.ProjExplosive[Type] = true;
         }
 
         public override void SetDefaults()

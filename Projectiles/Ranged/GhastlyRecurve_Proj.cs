@@ -51,7 +51,7 @@ namespace Redemption.Projectiles.Ranged
             for (int i = 0; i < Main.maxProjectiles; i++)
             {
                 Projectile proj = Main.projectile[i];
-                if (!proj.active || !proj.arrow || !proj.friendly || !Projectile.Hitbox.Intersects(proj.Hitbox))
+                if (!proj.active || !proj.arrow || !proj.friendly || proj.type == ModContent.ProjectileType<SpiritArrow_Proj>() || proj.type == ModContent.ProjectileType<SpiritArrow_Shard>() || !Projectile.Hitbox.Intersects(proj.Hitbox))
                     continue;
 
                 SoundEngine.PlaySound(SoundID.Zombie53 with { Volume = 0.6f }, Projectile.Center);

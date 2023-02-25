@@ -1,8 +1,10 @@
 using Microsoft.Xna.Framework;
 using Redemption.Base;
 using Redemption.Buffs.Minions;
+using Redemption.Globals;
 using Redemption.Items.Materials.PreHM;
 using Redemption.Projectiles.Minions;
+using Redemption.Projectiles.Ranged;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
@@ -39,7 +41,8 @@ namespace Redemption.Items.Weapons.PreHM.Summon
             Item.UseSound = SoundID.DD2_DefenseTowerSpawn;
             Item.autoReuse = false;
             Item.buffType = ModContent.BuffType<LogStaffBuff>();
-            Item.shoot = ModContent.ProjectileType<AcornBomb_Proj>();
+            Item.shoot = ModContent.ProjectileType<LogStaff_Proj>();
+            Item.ExtraItemShoot(ModContent.ProjectileType<AcornBomb_Proj>());
             Item.mana = 4;
         }
         public override void AddRecipes()
@@ -60,7 +63,6 @@ namespace Redemption.Items.Weapons.PreHM.Summon
         }
         public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback)
         {
-            type = ModContent.ProjectileType<LogStaff_Proj>();
             int floor = BaseWorldGen.GetFirstTileFloor((int)Main.MouseWorld.X / 16, (int)Main.MouseWorld.Y / 16);
             position = new Vector2(Main.MouseWorld.X, floor * 16 - 10);
         }

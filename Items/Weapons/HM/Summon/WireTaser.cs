@@ -44,6 +44,7 @@ namespace Redemption.Items.Weapons.HM.Summon
         {
             DisplayName.SetDefault("Wire Taser");
             ProjectileID.Sets.IsAWhip[Type] = true;
+            ElementID.ProjThunder[Type] = true;
         }
         public override void SetDefaults()
         {
@@ -232,6 +233,7 @@ namespace Redemption.Items.Weapons.HM.Summon
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Wire Taser");
+            ElementID.ProjThunder[Type] = true;
         }
         public override void SetDefaults()
         {

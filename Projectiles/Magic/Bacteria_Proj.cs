@@ -16,6 +16,7 @@ namespace Redemption.Projectiles.Magic
         {
             DisplayName.SetDefault("Bacteria");
             Main.projFrames[Projectile.type] = 2;
+            ElementID.ProjPoison[Type] = true;
         }
         public override void SetDefaults()
         {

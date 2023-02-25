@@ -1,4 +1,5 @@
 using Redemption.BaseExtension;
+using Redemption.Globals;
 using Redemption.Globals.Player;
 using Terraria;
 using Terraria.ID;
@@ -11,8 +12,8 @@ namespace Redemption.Items.Accessories.PreHM
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Forest Core");
-            Tooltip.SetDefault("Increased chance of Nature Boons to drop from the Nature elemental bonus\n" +
-                "Nature Boons additionally increase critical strike chance for Nature weapons by 10%\n" +
+            Tooltip.SetDefault("Increased chance of Nature Boons to drop from the " + ElementID.NatureS + " elemental bonus\n" +
+                "Nature Boons additionally increase critical strike chance for " + ElementID.NatureS + " weapons by 10%\n" +
                 "Increased duration of Nature Boons' effect");
             SacrificeTotal = 1;
         }

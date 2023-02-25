@@ -88,6 +88,7 @@ namespace Redemption.Globals.Player
         public bool infectionHeart;
         public int infectionHeartTimer;
         public bool vasaraPendant;
+        public bool crystalKnowledge;
 
         public bool pureIronBonus;
         public bool dragonLeadBonus;
@@ -105,8 +106,8 @@ namespace Redemption.Globals.Player
 
         public float TrueMeleeDamage = 1f;
 
-        public float[] ElementalResistance = new float[14];
-        public float[] ElementalDamage = new float[14];
+        public float[] ElementalResistance = new float[15];
+        public float[] ElementalDamage = new float[15];
 
         public override void ResetEffects()
         {
@@ -163,15 +164,12 @@ namespace Redemption.Globals.Player
             forestCore = false;
             infectionHeart = false;
             vasaraPendant = false;
+            crystalKnowledge = false;
 
             for (int k = 0; k < ElementalResistance.Length; k++)
-            {
                 ElementalResistance[k] = 0;
-            }
             for (int k = 0; k < ElementalDamage.Length; k++)
-            {
                 ElementalDamage[k] = 0;
-            }
             if (!Player.HasBuff(ModContent.BuffType<InfestedDebuff>()))
             {
                 infested = false;
@@ -395,34 +393,45 @@ namespace Redemption.Globals.Player
             if (!RedeConfigClient.Instance.ElementDisable)
             {
                 #region Elemental Resistances
-                if (ProjectileLists.Arcane.Contains(proj.type))
-                    damage = (int)(damage * (1 - ElementalResistance[0]));
-                if (ProjectileLists.Fire.Contains(proj.type))
-                    damage = (int)(damage * (1 - ElementalResistance[1]));
-                if (ProjectileLists.Water.Contains(proj.type))
-                    damage = (int)(damage * (1 - ElementalResistance[2]));
-                if (ProjectileLists.Ice.Contains(proj.type))
-                    damage = (int)(damage * (1 - ElementalResistance[3]));
-                if (ProjectileLists.Earth.Contains(proj.type))
-                    damage = (int)(damage * (1 - ElementalResistance[4]));
-                if (ProjectileLists.Wind.Contains(proj.type))
-                    damage = (int)(damage * (1 - ElementalResistance[5]));
-                if (ProjectileLists.Thunder.Contains(proj.type))
-                    damage = (int)(damage * (1 - ElementalResistance[6]));
-                if (ProjectileLists.Holy.Contains(proj.type))
-                    damage = (int)(damage * (1 - ElementalResistance[7]));
-                if (ProjectileLists.Shadow.Contains(proj.type))
-                    damage = (int)(damage * (1 - ElementalResistance[8]));
-                if (ProjectileLists.Nature.Contains(proj.type))
-                    damage = (int)(damage * (1 - ElementalResistance[9]));
-                if (ProjectileLists.Poison.Contains(proj.type))
-                    damage = (int)(damage * (1 - ElementalResistance[10]));
-                if (ProjectileLists.Blood.Contains(proj.type))
-                    damage = (int)(damage * (1 - ElementalResistance[11]));
-                if (ProjectileLists.Psychic.Contains(proj.type))
-                    damage = (int)(damage * (1 - ElementalResistance[12]));
-                if (ProjectileLists.Celestial.Contains(proj.type))
-                    damage = (int)(damage * (1 - ElementalResistance[13]));
+                float multiplier = 1;
+                if (proj.HasElement(ElementID.Arcane))
+                    multiplier *= 1 - ElementalResistance[ElementID.Arcane];
+                if (proj.HasElement(ElementID.Fire))
+                    multiplier *= 1 - ElementalResistance[ElementID.Fire];
+                if (proj.HasElement(ElementID.Water))
+                    multiplier *= 1 - ElementalResistance[ElementID.Water];
+                if (proj.HasElement(ElementID.Ice))
+                    multiplier *= 1 - ElementalResistance[ElementID.Ice];
+                if (proj.HasElement(ElementID.Earth))
+                    multiplier *= 1 - (ElementalResistance[ElementID.Earth]);
+                if (proj.HasElement(ElementID.Wind))
+                    multiplier *= 1 - ElementalResistance[ElementID.Wind];
+                if (proj.HasElement(ElementID.Thunder))
+                    multiplier *= 1 - ElementalResistance[ElementID.Thunder];
+                if (proj.HasElement(ElementID.Holy))
+                    multiplier *= 1 - ElementalResistance[ElementID.Holy];
+                if (proj.HasElement(ElementID.Shadow))
+                    multiplier *= 1 - ElementalResistance[ElementID.Shadow];
+                if (proj.HasElement(ElementID.Nature))
+                    multiplier *= 1 - ElementalResistance[ElementID.Nature];
+                if (proj.HasElement(ElementID.Poison))
+                    multiplier *= 1 - ElementalResistance[ElementID.Poison];
+                if (proj.HasElement(ElementID.Blood))
+                    multiplier *= 1 - ElementalResistance[ElementID.Blood];
+                if (proj.HasElement(ElementID.Psychic))
+                    multiplier *= 1 - ElementalResistance[ElementID.Psychic];
+                if (proj.HasElement(ElementID.Celestial))
+                    multiplier *= 1 - ElementalResistance[ElementID.Celestial];
+
+                multiplier = (int)Math.Round(multiplier * 100);
+                multiplier /= 100;
+
+                if (multiplier >= 1.1f)
+                    CombatText.NewText(Player.getRect(), Color.IndianRed, multiplier + "x", true, true);
+                else if (multiplier <= 0.9f)
+                    CombatText.NewText(Player.getRect(), Color.CornflowerBlue, multiplier + "x", true, true);
+
+                damage = (int)(damage * multiplier);
                 #endregion
             }
             if (shellCap && proj.velocity.Y > 1 && proj.Bottom.Y < Player.Center.Y)
@@ -434,6 +443,50 @@ namespace Redemption.Globals.Player
         }
         public override void ModifyHitByNPC(Terraria.NPC npc, ref int damage, ref bool crit)
         {
+            if (!RedeConfigClient.Instance.ElementDisable)
+            {
+                #region Elemental Resistances
+                float multiplier = 1;
+                if (npc.HasElement(ElementID.Arcane))
+                    multiplier *= 1 - ElementalResistance[ElementID.Arcane];
+                if (npc.HasElement(ElementID.Fire))
+                    multiplier *= 1 - ElementalResistance[ElementID.Fire];
+                if (npc.HasElement(ElementID.Water))
+                    multiplier *= 1 - ElementalResistance[ElementID.Water];
+                if (npc.HasElement(ElementID.Ice))
+                    multiplier *= 1 - ElementalResistance[ElementID.Ice];
+                if (npc.HasElement(ElementID.Earth))
+                    multiplier *= 1 - ElementalResistance[ElementID.Earth];
+                if (npc.HasElement(ElementID.Wind))
+                    multiplier *= 1 - ElementalResistance[ElementID.Wind];
+                if (npc.HasElement(ElementID.Thunder))
+                    multiplier *= 1 - ElementalResistance[ElementID.Thunder];
+                if (npc.HasElement(ElementID.Holy))
+                    multiplier *= 1 - ElementalResistance[ElementID.Holy];
+                if (npc.HasElement(ElementID.Shadow) || (npc.netID is NPCID.BlackSlime or NPCID.BabySlime or NPCID.Slimeling))
+                    multiplier *= 1 - ElementalResistance[ElementID.Shadow];
+                if (npc.HasElement(ElementID.Nature) || (npc.netID is NPCID.JungleSlime))
+                    multiplier *= 1 - ElementalResistance[ElementID.Nature];
+                if (npc.HasElement(ElementID.Poison))
+                    multiplier *= 1 - ElementalResistance[ElementID.Poison];
+                if (npc.HasElement(ElementID.Blood))
+                    multiplier *= 1 - ElementalResistance[ElementID.Blood];
+                if (npc.HasElement(ElementID.Psychic))
+                    multiplier *= 1 - ElementalResistance[ElementID.Psychic];
+                if (npc.HasElement(ElementID.Celestial))
+                    multiplier *= 1 - ElementalResistance[ElementID.Celestial];
+
+                multiplier = (int)Math.Round(multiplier * 100);
+                multiplier /= 100;
+
+                if (multiplier >= 1.1f)
+                    CombatText.NewText(Player.getRect(), Color.IndianRed, multiplier + "x", true, true);
+                else if (multiplier <= 0.9f)
+                    CombatText.NewText(Player.getRect(), Color.CornflowerBlue, multiplier + "x", true, true);
+
+                damage = (int)(damage * multiplier);
+                #endregion
+            }
             if (shellCap && npc.velocity.Y > 1 && npc.Bottom.Y < Player.Center.Y)
             {
                 SoundEngine.PlaySound(SoundID.NPCHit38, Player.position);
@@ -481,11 +534,16 @@ namespace Redemption.Globals.Player
             {
                 Projectile.NewProjectile(proj.GetSource_FromAI(), new Vector2(target.Center.X, target.position.Y - 200), Vector2.Zero, ModContent.ProjectileType<PhantomCleaver_F2>(), proj.damage * 3, proj.knockBack, Main.myPlayer, target.whoAmI);
             }
-            if ((sacredCross || gracesGuidance) && ProjectileLists.Holy.Contains(proj.type) && crit && Main.rand.NextBool(2) && proj.type != ModContent.ProjectileType<Lightmass>())
+            if ((sacredCross || gracesGuidance) && proj.HasElement(ElementID.Holy) && crit && Main.rand.NextBool(2) && proj.type != ModContent.ProjectileType<Lightmass>())
             {
                 SoundEngine.PlaySound(SoundID.Item101, Player.Center);
                 for (int i = 0; i < Main.rand.Next(3, 6); i++)
                     Projectile.NewProjectile(proj.GetSource_FromThis(), target.Center, new Vector2(Main.rand.NextFloat(-3, 3), Main.rand.NextFloat(-9, -5)), ModContent.ProjectileType<Lightmass>(), 15, proj.knockBack / 4, Main.myPlayer);
+            }
+            if (crystalKnowledge && proj.GetFirstElement(true) != 0 && Player.ownedProjectileCounts[ModContent.ProjectileType<ElementalCrystal>()] < 6 && Main.rand.NextBool(4) && proj.type != ModContent.ProjectileType<ElementalCrystal>())
+            {
+                Player.AddBuff(ModContent.BuffType<CrystalKnowledgeBuff>(), 10);
+                Projectile.NewProjectile(proj.GetSource_FromAI(), Player.Center, Vector2.Zero, ModContent.ProjectileType<ElementalCrystal>(), 10, 1, Main.myPlayer, 0, proj.GetFirstElement(true));
             }
         }
         public override void OnHitNPC(Item item, Terraria.NPC target, int damage, float knockback, bool crit)
@@ -500,11 +558,16 @@ namespace Redemption.Globals.Player
             {
                 Projectile.NewProjectile(Player.GetSource_ItemUse(item), new Vector2(target.Center.X, target.position.Y - 200), Vector2.Zero, ModContent.ProjectileType<PhantomCleaver_F2>(), item.damage * 3, item.knockBack, Main.myPlayer, target.whoAmI);
             }
-            if ((sacredCross || gracesGuidance) && ItemLists.Holy.Contains(item.type) && crit && Main.rand.NextBool(2))
+            if ((sacredCross || gracesGuidance) && item.HasElement(ElementID.Holy) && crit && Main.rand.NextBool(2))
             {
                 SoundEngine.PlaySound(SoundID.Item101, Player.Center);
                 for (int i = 0; i < Main.rand.Next(3, 6); i++)
                     Projectile.NewProjectile(Player.GetSource_ItemUse(item), target.Center, new Vector2(Main.rand.NextFloat(-3, 3), Main.rand.NextFloat(-9, -5)), ModContent.ProjectileType<Lightmass>(), 15, item.knockBack / 4, Main.myPlayer);
+            }
+            if (crystalKnowledge && item.GetFirstElement(true) != 0 && Player.ownedProjectileCounts[ModContent.ProjectileType<ElementalCrystal>()] < 6 && Main.rand.NextBool(4))
+            {
+                Player.AddBuff(ModContent.BuffType<CrystalKnowledgeBuff>(), 10);
+                Projectile.NewProjectile(Player.GetSource_ItemUse(item), Player.Center, Vector2.Zero, ModContent.ProjectileType<ElementalCrystal>(), 10, 1, Main.myPlayer, 0, item.GetFirstElement(true));
             }
         }
         public override void UpdateBadLifeRegen()

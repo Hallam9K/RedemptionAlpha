@@ -37,16 +37,16 @@ namespace Redemption.Globals
         }
         public static bool ProjBlockBlacklist(this Projectile proj, bool countHoming = false)
         {
-            return proj.minion || proj.Redemption().TechnicallyMelee || proj.Redemption().ParryBlacklist || Main.projPet[proj.type] || proj.sentry || (countHoming && ProjectileID.Sets.CultistIsResistantTo[proj.type]);
+            return proj.minion || proj.ownerHitCheck || proj.Redemption().TechnicallyMelee || proj.Redemption().ParryBlacklist || Main.projPet[proj.type] || proj.sentry || (countHoming && ProjectileID.Sets.CultistIsResistantTo[proj.type]);
         }
         public static bool? CanHitSpiritCheck(Terraria.Player player, Item item)
         {
-            return player.RedemptionAbility().SpiritwalkerActive || ItemLists.Arcane.Contains(item.type) || ItemLists.Celestial.Contains(item.type) || ItemLists.Holy.Contains(item.type) || ItemLists.Psychic.Contains(item.type) || RedeConfigClient.Instance.ElementDisable ? null : false;
+            return player.RedemptionAbility().SpiritwalkerActive || item.HasElement(ElementID.Arcane) || item.HasElement(ElementID.Celestial) || item.HasElement(ElementID.Holy) || item.HasElement(ElementID.Psychic) || RedeConfigClient.Instance.ElementDisable ? null : false;
         }
         public static bool? CanHitSpiritCheck(Projectile proj)
         {
             Terraria.Player player = Main.player[proj.owner];
-            return player.RedemptionAbility().SpiritwalkerActive || proj.Redemption().RitDagger || ProjectileLists.Arcane.Contains(proj.type) || ProjectileLists.Celestial.Contains(proj.type) || ProjectileLists.Holy.Contains(proj.type) || ProjectileLists.Psychic.Contains(proj.type) || RedeConfigClient.Instance.ElementDisable ? null : false;
+            return player.RedemptionAbility().SpiritwalkerActive || proj.Redemption().RitDagger || proj.HasElement(ElementID.Arcane) || proj.HasElement(ElementID.Celestial) || proj.HasElement(ElementID.Holy) || proj.HasElement(ElementID.Psychic) || RedeConfigClient.Instance.ElementDisable ? null : false;
         }
         public static float RandomRotation() => Main.rand.NextFloat() * MathHelper.TwoPi;
         public static Vector2 TurnRight(this Vector2 vec) => new(-vec.Y, vec.X);

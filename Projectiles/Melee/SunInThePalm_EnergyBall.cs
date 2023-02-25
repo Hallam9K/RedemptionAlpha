@@ -25,6 +25,7 @@ namespace Redemption.Projectiles.Melee
             DisplayName.SetDefault("Sun Blast");
             ProjectileID.Sets.TrailCacheLength[Projectile.type] = 8;
             ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
+            ElementID.ProjFire[Type] = true;
         }
 
         public override void SetDefaults()

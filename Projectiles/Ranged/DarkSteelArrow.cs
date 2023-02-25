@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Dusts;
+using Redemption.Globals;
 using Terraria;
 using Terraria.Audio;
 using Terraria.GameContent;
@@ -18,6 +19,7 @@ namespace Redemption.Projectiles.Ranged
             DisplayName.SetDefault("Dark-Steel Arrow");
             ProjectileID.Sets.TrailCacheLength[Projectile.type] = 8;
             ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
+            ElementID.ProjShadow[Type] = true;
         }
         public override void SetDefaults()
         {

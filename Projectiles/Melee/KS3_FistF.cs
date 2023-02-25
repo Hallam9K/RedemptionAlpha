@@ -7,6 +7,7 @@ using Terraria.Audio;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria.GameContent;
 using Redemption.Globals.NPC;
+using Redemption.Globals;
 
 namespace Redemption.Projectiles.Melee
 {
@@ -17,6 +18,7 @@ namespace Redemption.Projectiles.Melee
         {
             DisplayName.SetDefault("Fist Rocket");
             Main.projFrames[Projectile.type] = 4;
+            ElementID.ProjExplosive[Type] = true;
         }
 
 		public override void SetDefaults()

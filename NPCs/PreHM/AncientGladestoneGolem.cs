@@ -62,8 +62,8 @@ namespace Redemption.NPCs.PreHM
             {
                 Velocity = 1f
             };
-
             NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, value);
+            ElementID.NPCEarth[Type] = true;
         }
         public override void SetDefaults()
         {
@@ -82,6 +82,7 @@ namespace Redemption.NPCs.PreHM
             Banner = NPC.type;
             BannerItem = ModContent.ItemType<AncientGladestoneGolemBanner>();
             NPC.RedemptionGuard().GuardPoints = NPC.lifeMax / 4;
+            NPC.GetGlobalNPC<ElementalNPC>().OverrideMultiplier[ElementID.Earth] *= .75f;
         }
         public override void HitEffect(int hitDirection, double damage)
         {

@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Redemption.Buffs.Debuffs;
+using Redemption.Globals;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
@@ -13,6 +14,7 @@ namespace Redemption.Items.Weapons.HM.Ammo
         public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Bile Arrow");
+            ElementID.ProjPoison[Type] = true;
         }
         public override void SetDefaults()
 		{

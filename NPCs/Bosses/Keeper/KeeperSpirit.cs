@@ -66,6 +66,7 @@ namespace Redemption.NPCs.Bosses.Keeper
                 Hide = true
             };
             NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, value);
+            ElementID.NPCArcane[Type] = true;
         }
 
         public override void SetDefaults()

@@ -3,6 +3,7 @@ using Redemption.Base;
 using Redemption.BaseExtension;
 using Redemption.Globals;
 using Redemption.Items.Critters;
+using Redemption.Items.Placeable.Banners;
 using Redemption.NPCs.PreHM;
 using Terraria;
 using Terraria.Audio;
@@ -64,6 +65,8 @@ namespace Redemption.NPCs.Critters
             NPC.aiStyle = -1;
             NPC.behindTiles = true;
             NPC.catchItem = (short)ModContent.ItemType<SandskinSpiderItem>();
+            Banner = NPC.type;
+            BannerItem = ModContent.ItemType<SandskinSpiderBanner>();
         }
 
         public NPC npcTarget;

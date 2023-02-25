@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.ID;
+using Redemption.Globals;
 
 namespace Redemption.NPCs.Bosses.Thorn
 {
@@ -11,6 +12,8 @@ namespace Redemption.NPCs.Bosses.Thorn
         {
             DisplayName.SetDefault("Life-Draining Thorn");
             Main.projFrames[Projectile.type] = 2;
+            ElementID.ProjNature[Type] = true;
+            ElementID.ProjBlood[Type] = true;
         }
         public override void SetDefaults()
         {

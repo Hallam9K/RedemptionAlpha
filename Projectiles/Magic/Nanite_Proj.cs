@@ -1,5 +1,6 @@
 using System;
 using Microsoft.Xna.Framework;
+using Redemption.Globals;
 using Redemption.Globals.NPC;
 using Terraria;
 using Terraria.ID;
@@ -12,6 +13,7 @@ namespace Redemption.Projectiles.Magic
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Nanite");
+            ElementID.ProjPsychic[Type] = true;
         }
         public override void SetDefaults()
         {

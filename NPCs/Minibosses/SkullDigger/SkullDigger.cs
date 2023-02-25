@@ -66,6 +66,7 @@ namespace Redemption.NPCs.Minibosses.SkullDigger
                 PortraitPositionYOverride = 8
             };
             NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, value);
+            ElementID.NPCArcane[Type] = true;
         }
         public override void SetDefaults()
         {

@@ -16,6 +16,7 @@ namespace Redemption.NPCs.Bosses.PatientZero
             DisplayName.SetDefault("Xenium Blast");
             ProjectileID.Sets.TrailCacheLength[Projectile.type] = 5;
             ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
+            ElementID.ProjPoison[Type] = true;
         }
         public override void SetDefaults()
 		{

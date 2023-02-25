@@ -6,11 +6,16 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Redemption.Effects;
 using System.Collections.Generic;
+using Redemption.Globals;
 
 namespace Redemption.Projectiles.Magic
 {
     public class WaterOrb : ModProjectile
     {
+        public override void SetStaticDefaults()
+        {
+            ElementID.ProjWater[Type] = true;
+        }
         public override void SetDefaults()
         {
             Projectile.width = 16;

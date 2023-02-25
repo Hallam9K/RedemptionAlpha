@@ -77,6 +77,7 @@ namespace Redemption.NPCs.Bosses.Thorn
                 PortraitPositionYOverride = 0
             };
             NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, value);
+            ElementID.NPCNature[Type] = true;
         }
 
         public override void SetDefaults()

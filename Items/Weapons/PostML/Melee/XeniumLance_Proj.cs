@@ -18,6 +18,7 @@ namespace Redemption.Items.Weapons.PostML.Melee
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Xenium Lance");
+            ElementID.ProjThunder[Type] = true;
         }
 
         public override bool ShouldUpdatePosition() => false;

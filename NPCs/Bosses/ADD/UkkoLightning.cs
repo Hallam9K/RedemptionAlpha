@@ -7,6 +7,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Utilities;
 using Terraria.GameContent;
+using Redemption.Globals;
 
 namespace Redemption.NPCs.Bosses.ADD
 {
@@ -18,6 +19,7 @@ namespace Redemption.NPCs.Bosses.ADD
             DisplayName.SetDefault("Lightning Arc");
             ProjectileID.Sets.TrailCacheLength[Projectile.type] = 10;
             ProjectileID.Sets.TrailingMode[Projectile.type] = 1;
+            ElementID.ProjThunder[Type] = true;
         }
 
         float colorlerp;

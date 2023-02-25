@@ -3,6 +3,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
 using Redemption.Projectiles.Ranged;
+using Redemption.Globals;
 
 namespace Redemption.Items.Weapons.PreHM.Melee
 {
@@ -12,6 +13,8 @@ namespace Redemption.Items.Weapons.PreHM.Melee
         {
             Tooltip.SetDefault("Slain enemies burst into seeds that sprout brambles of thorns");
             SacrificeTotal = 1;
+            ElementID.ItemNature[Type] = true;
+            ElementID.ItemPoison[Type] = true;
         }
 
         public override void SetDefaults()

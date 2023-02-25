@@ -1,4 +1,5 @@
 using Redemption.BaseExtension;
+using Redemption.Globals;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -11,6 +12,7 @@ namespace Redemption.Projectiles.Hostile
         {
             DisplayName.SetDefault("Ooze");
             Main.projFrames[Projectile.type] = 4;
+            ElementID.ProjPoison[Type] = true;
         }
         public override void SetDefaults()
         {

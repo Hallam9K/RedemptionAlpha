@@ -15,6 +15,7 @@ namespace Redemption.Projectiles.Ranged
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Xenium Laser");
+            ElementID.ProjThunder[Type] = true;
         }
         public override void SetDefaults()
         {
@@ -63,6 +64,7 @@ namespace Redemption.Projectiles.Ranged
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Xenium Laser");
+            ElementID.ProjThunder[Type] = true;
         }
         public override void SetDefaults()
         {

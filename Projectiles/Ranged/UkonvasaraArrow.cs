@@ -18,6 +18,7 @@ namespace Redemption.Projectiles.Ranged
             ProjectileID.Sets.DontAttachHideToAlpha[Type] = true;
             ProjectileID.Sets.TrailCacheLength[Projectile.type] = 5;
             ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
+            ElementID.ProjThunder[Type] = true;
         }
         private int origDamage;
         public override void SetDefaults()

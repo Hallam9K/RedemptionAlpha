@@ -21,6 +21,8 @@ namespace Redemption.Projectiles.Melee
             DisplayName.SetDefault("Ophos' Firestorm");
             ProjectileID.Sets.TrailCacheLength[Projectile.type] = 6;
             ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
+            ElementID.ProjFire[Type] = true;
+            ElementID.ProjWind[Type] = true;
         }
 
         public override bool ShouldUpdatePosition() => false;

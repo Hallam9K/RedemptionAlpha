@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework.Graphics;
 using ParticleLibrary;
 using Redemption.Base;
 using Redemption.Effects.PrimitiveTrails;
+using Redemption.Globals;
 using Redemption.Particles;
 using ReLogic.Content;
 using Terraria;
@@ -21,6 +22,7 @@ namespace Redemption.NPCs.Bosses.Neb
             DisplayName.SetDefault("Shooting Star");
             ProjectileID.Sets.TrailCacheLength[Projectile.type] = 5;
             ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
+            ElementID.ProjCelestial[Type] = true;
         }
 
         public override void SetDefaults()

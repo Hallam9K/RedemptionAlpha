@@ -16,6 +16,7 @@ namespace Redemption.NPCs.Bosses.ADD
         {
             DisplayName.SetDefault("Ukko's Thunderwave");
             Main.projFrames[Projectile.type] = 8;
+            ElementID.ProjThunder[Type] = true;
         }
         public override void SetDefaults()
         {

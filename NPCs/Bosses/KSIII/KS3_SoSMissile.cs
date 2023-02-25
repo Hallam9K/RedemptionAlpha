@@ -17,6 +17,7 @@ namespace Redemption.NPCs.Bosses.KSIII
         {
             DisplayName.SetDefault("SoS Missile");
             Main.projFrames[Projectile.type] = 4;
+            ElementID.ProjExplosive[Type] = true;
         }
 
         public override void SetDefaults()

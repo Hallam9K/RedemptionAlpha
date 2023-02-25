@@ -1,3 +1,5 @@
+using Redemption.Globals;
+using Redemption.Projectiles.Magic;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -35,6 +37,7 @@ namespace Redemption.Items.Weapons.PreHM.Magic
             Item.rare = ItemRarityID.Blue;
             Item.shoot = ModContent.ProjectileType<HolyBible_Proj>();
             Item.shootSpeed = 10;
+            Item.ExtraItemShoot(ModContent.ProjectileType<HolyBible_Ray>());
         }
         public override bool CanUseItem(Player player)
         {

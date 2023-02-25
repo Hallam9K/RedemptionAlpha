@@ -1,4 +1,5 @@
 using Microsoft.Xna.Framework;
+using Redemption.Globals;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
@@ -12,6 +13,7 @@ namespace Redemption.Projectiles.Magic
         {
             DisplayName.SetDefault("Calcite Stalagmites");
             Main.projFrames[Projectile.type] = 3;
+            ElementID.ProjEarth[Type] = true;
         }
         public override void SetDefaults()
         {

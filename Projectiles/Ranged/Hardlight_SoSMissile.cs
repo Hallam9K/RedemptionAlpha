@@ -17,6 +17,7 @@ namespace Redemption.Projectiles.Ranged
         {
             DisplayName.SetDefault("SoS Missile");
             Main.projFrames[Projectile.type] = 4;
+            ElementID.ProjExplosive[Type] = true;
         }
 
         public override void SetDefaults()
@@ -118,6 +119,7 @@ namespace Redemption.Projectiles.Ranged
         {
             DisplayName.SetDefault("Explosion");
             Main.projFrames[Projectile.type] = 5;
+            ElementID.ProjExplosive[Type] = true;
         }
 
         public override void SetDefaults()

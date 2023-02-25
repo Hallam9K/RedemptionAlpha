@@ -15,6 +15,7 @@ namespace Redemption.Projectiles.Ranged
             DisplayName.SetDefault("Spirit Arrow");
             ProjectileID.Sets.TrailCacheLength[Projectile.type] = 6;
             ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
+            ElementID.ProjArcane[Type] = true;
         }
         public override void SetDefaults()
         {

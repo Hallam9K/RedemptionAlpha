@@ -48,8 +48,8 @@ namespace Redemption.NPCs.PreHM
             Main.npcFrameCount[NPC.type] = 15;
 
             NPCID.Sets.NPCBestiaryDrawModifiers value = new(0);
-
             NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, value);
+            ElementID.NPCHoly[Type] = true;
         }
         public override void SetDefaults()
         {
@@ -66,6 +66,7 @@ namespace Redemption.NPCs.PreHM
             NPC.aiStyle = -1;
             Banner = NPC.type;
             BannerItem = ModContent.ItemType<CorpseWalkerPriestBanner>();
+            NPC.GetGlobalNPC<ElementalNPC>().OverrideMultiplier[ElementID.Holy] *= .5f;
         }
         public override void HitEffect(int hitDirection, double damage)
         {
@@ -442,7 +443,7 @@ namespace Redemption.NPCs.PreHM
         {
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<CorpseWalkerStaff>(), 12));
             npcLoot.Add(ItemDropRule.Food(ItemID.MilkCarton, 150));
-            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<CorpseWalkerSkullVanity>(), 50));
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<CorpseWalkerSkullVanity>(), 100));
             npcLoot.Add(ItemDropRule.ByCondition(new LostSoulCondition(), ModContent.ItemType<LostSoul>(), 2));
         }
         public override float SpawnChance(NPCSpawnInfo spawnInfo)

@@ -22,6 +22,8 @@ namespace Redemption.Projectiles.Minions
             ProjectileID.Sets.CultistIsResistantTo[Projectile.type] = true;
             ProjectileID.Sets.MinionTargettingFeature[Projectile.type] = true;
             Main.projPet[Projectile.type] = true;
+            ElementID.ProjFire[Type] = true;
+            ElementID.ProjNature[Type] = true;
         }
 
         public override void SetDefaults()

@@ -6,6 +6,7 @@ using Terraria.ID;
 using Redemption.Base;
 using Terraria.Audio;
 using Terraria.GameContent;
+using Redemption.Globals;
 
 namespace Redemption.Items.Weapons.HM.Melee
 {
@@ -17,6 +18,7 @@ namespace Redemption.Items.Weapons.HM.Melee
             DisplayName.SetDefault("Cyber Chakram");
             ProjectileID.Sets.TrailCacheLength[Projectile.type] = 16;
             ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
+            ElementID.ProjThunder[Type] = true;
         }
 
         public override void SetDefaults()

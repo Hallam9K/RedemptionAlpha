@@ -13,6 +13,7 @@ namespace Redemption.NPCs.Bosses.KSIII
         public override void SetSafeStaticDefaults()
         {
             DisplayName.SetDefault("Beam Cell");
+            ElementID.ProjThunder[Type] = true;
         }
 
         public override void SetSafeDefaults()

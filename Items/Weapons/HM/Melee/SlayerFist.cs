@@ -2,6 +2,8 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Redemption.Items.Materials.HM;
+using Redemption.Projectiles.Melee;
+using Redemption.Globals;
 
 namespace Redemption.Items.Weapons.HM.Melee
 {
@@ -11,7 +13,7 @@ namespace Redemption.Items.Weapons.HM.Melee
         {
             DisplayName.SetDefault("Slayer's Rocket Fist");
             Tooltip.SetDefault("Punches enemies up-close\n" +
-                "Holding down left-click and hitting an enemy will fire a rocket fist if you are airborne");
+                "Holding down left-click and hitting an enemy will fire an " + ElementID.ExplosiveS + " rocket fist if you are airborne");
             SacrificeTotal = 1;
         }
 
@@ -33,6 +35,7 @@ namespace Redemption.Items.Weapons.HM.Melee
             Item.UseSound = SoundID.Item74;
             Item.autoReuse = true;
             Item.shoot = ModContent.ProjectileType<SlayerFist_Proj>();
+            Item.ExtraItemShoot(ModContent.ProjectileType<KS3_FistF>());
             Item.shootSpeed = 5f;
         }
         public override void AddRecipes()

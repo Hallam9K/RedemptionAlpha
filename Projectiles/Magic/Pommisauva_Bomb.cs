@@ -6,11 +6,16 @@ using Terraria.ModLoader;
 using Terraria.GameContent.Achievements;
 using Redemption.Dusts;
 using Terraria.Audio;
+using Redemption.Globals;
 
 namespace Redemption.Projectiles.Magic
 {
     public class Pommisauva_Bomb : ModProjectile
     {
+        public override void SetStaticDefaults()
+        {
+            ElementID.ProjExplosive[Type] = true;
+        }
         public override void SetDefaults()
         {
             Projectile.width = 16;
@@ -226,6 +231,7 @@ namespace Redemption.Projectiles.Magic
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Explosion");
+            ElementID.ProjExplosive[Type] = true;
         }
 
         public override void SetDefaults()

@@ -17,6 +17,7 @@ namespace Redemption.Projectiles.Magic
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Dragon Skull");
+            ElementID.ProjFire[Type] = true;
         }
         public override void SetDefaults()
         {

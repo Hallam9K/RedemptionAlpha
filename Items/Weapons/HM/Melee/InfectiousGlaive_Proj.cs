@@ -17,6 +17,7 @@ namespace Redemption.Items.Weapons.HM.Melee
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Xenomite Glaive");
+            ElementID.ProjPoison[Type] = true;
         }
         private Vector2 startVector;
         public override void SetDefaults()

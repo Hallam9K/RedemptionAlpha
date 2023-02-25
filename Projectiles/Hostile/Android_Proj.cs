@@ -7,6 +7,7 @@ using Terraria.Audio;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria.GameContent;
 using Redemption.BaseExtension;
+using Redemption.Globals;
 
 namespace Redemption.Projectiles.Hostile
 {
@@ -16,6 +17,7 @@ namespace Redemption.Projectiles.Hostile
         {
             DisplayName.SetDefault("Fist Rocket");
             Main.projFrames[Projectile.type] = 2;
+            ElementID.ProjExplosive[Type] = true;
         }
 
         public override void SetDefaults()

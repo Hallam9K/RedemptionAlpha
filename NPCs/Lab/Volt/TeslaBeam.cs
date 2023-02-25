@@ -38,7 +38,10 @@ namespace Redemption.NPCs.Lab.Volt
         public int LaserFrameDelay = 5;
         public bool StopsOnTiles = true;
         // >
-
+        public override void SetStaticDefaults()
+        {
+            ElementID.ProjThunder[Type] = true;
+        }
         public override void SetDefaults()
         {
             Projectile.width = 30;

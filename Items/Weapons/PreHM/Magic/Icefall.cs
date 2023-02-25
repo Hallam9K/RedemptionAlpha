@@ -1,4 +1,5 @@
 using Microsoft.Xna.Framework;
+using Redemption.Globals;
 using Redemption.Items.Materials.PreHM;
 using Redemption.Projectiles.Magic;
 using Terraria;
@@ -34,6 +35,7 @@ namespace Redemption.Items.Weapons.PreHM.Magic
             Item.rare = ItemRarityID.Orange;
             Item.shootSpeed = 0;
             Item.shoot = ModContent.ProjectileType<Icefall_Mist>();
+            Item.ExtraItemShoot(ModContent.ProjectileType<Icefall_Proj>());
             if (Main.netMode != NetmodeID.Server)
                 Item.UseSound = CustomSounds.IceMist;
         }

@@ -177,6 +177,7 @@ namespace Redemption.NPCs.Bosses.KSIII
         {
             DisplayName.SetDefault("Drone Missile");
             Main.projFrames[Projectile.type] = 2;
+            ElementID.ProjExplosive[Type] = true;
         }
 
         public override void SetDefaults()

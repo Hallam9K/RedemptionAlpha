@@ -14,6 +14,8 @@ namespace Redemption.NPCs.Lab.Blisterface
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Toxic Bubble");
+            ElementID.ProjWater[Type] = true;
+            ElementID.ProjPoison[Type] = true;
         }
         public override void SetDefaults()
         {

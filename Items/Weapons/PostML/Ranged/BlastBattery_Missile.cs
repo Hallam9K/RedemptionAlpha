@@ -19,6 +19,7 @@ namespace Redemption.Items.Weapons.PostML.Ranged
         {
             DisplayName.SetDefault("Omega Missile");
             Main.projFrames[Projectile.type] = 3;
+            ElementID.ProjExplosive[Type] = true;
         }
 
         public override void SetDefaults()
@@ -165,6 +166,7 @@ namespace Redemption.Items.Weapons.PostML.Ranged
         {
             DisplayName.SetDefault("Explosion");
             Main.projFrames[Projectile.type] = 5;
+            ElementID.ProjExplosive[Type] = true;
         }
 
         public override void SetDefaults()

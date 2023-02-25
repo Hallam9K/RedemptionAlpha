@@ -3,6 +3,7 @@ using System;
 using Terraria;
 using Terraria.ID;
 using Redemption.BaseExtension;
+using Redemption.Globals;
 
 namespace Redemption.Projectiles.Magic
 {
@@ -13,6 +14,7 @@ namespace Redemption.Projectiles.Magic
         {
             DisplayName.SetDefault("Water Orb");
             ProjectileID.Sets.CultistIsResistantTo[Projectile.type] = true;
+            ElementID.ProjWater[Type] = true;
         }
 
         public override void SetDefaults()

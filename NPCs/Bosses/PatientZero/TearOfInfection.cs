@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Redemption.Dusts;
+using Redemption.Globals;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
@@ -13,6 +14,7 @@ namespace Redemption.NPCs.Bosses.PatientZero
         {
             DisplayName.SetDefault("Tear of Infection");
             Main.projFrames[Projectile.type] = 4;
+            ElementID.ProjPoison[Type] = true;
         }
         public override void SetDefaults()
         {

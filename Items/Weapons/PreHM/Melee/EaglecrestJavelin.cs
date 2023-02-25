@@ -1,4 +1,5 @@
 using Microsoft.Xna.Framework;
+using Redemption.Globals;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.ID;
@@ -11,7 +12,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
         public override void SetStaticDefaults()
         {
             Tooltip.SetDefault("Hold left-click to charge the javelin, release to throw\n" +
-                "Strikes the ground and foe alike with lightning, dealing Thunder damage");
+                "Strikes the ground and foe alike with lightning, dealing " + ElementID.ThunderS + " damage");
 
             ItemID.Sets.SkipsInitialUseSound[Item.type] = true;
             SacrificeTotal = 1;
@@ -44,6 +45,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
             // Projectile Properties
             Item.shootSpeed = 0f;
             Item.shoot = ModContent.ProjectileType<EaglecrestJavelin_Proj>();
+            Item.ExtraItemShoot(ModContent.ProjectileType<EaglecrestJavelin_Thunder>());
         }
         public override void ModifyTooltips(List<TooltipLine> tooltips)
         {

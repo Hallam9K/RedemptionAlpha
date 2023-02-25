@@ -17,6 +17,7 @@ namespace Redemption.Projectiles.Melee
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Flaming Rain");
+            ElementID.ProjFire[Type] = true;
         }
         public override void SetDefaults()
         {

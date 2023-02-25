@@ -86,6 +86,7 @@ namespace Redemption.NPCs.Lab.MACE
         {
             DisplayName.SetDefault("Tesla Field");
             Main.projFrames[Projectile.type] = 3;
+            ElementID.ProjThunder[Type] = true;
         }
         public override void SetDefaults()
         {

@@ -13,9 +13,9 @@ namespace Redemption.Items.Accessories.HM
 		public override void SetStaticDefaults()
 		{
             DisplayName.SetDefault("Power Cell Wristband");
-            Tooltip.SetDefault("4% increased critical strike chance for Fire and Holy elemental weapons\n" +
+            Tooltip.SetDefault("4% increased critical strike chance for " + ElementID.FireS + " and " + ElementID.HolyS + " elemental weapons\n" +
                 "Stacks if both elements are present\n" +
-                "An aura of fire surrounds you while holding a Fire or Holy elemental weapon\n" +
+                "An aura of fire surrounds you while holding a " + ElementID.FireS + " or " + ElementID.HolyS + " elemental weapon\n" +
                 "'Fueled with the sun itself'");
             SacrificeTotal = 1;
         }
@@ -42,7 +42,7 @@ namespace Redemption.Items.Accessories.HM
         private int timer;
         public override void UpdateAccessory(Player player, bool hideVisual)
 		{
-            if (player.whoAmI == Main.myPlayer && player.active && !player.dead && (ItemLists.Fire.Contains(player.HeldItem.type) || ProjectileLists.Fire.Contains(player.HeldItem.shoot) || ItemLists.Holy.Contains(player.HeldItem.type) || ProjectileLists.Holy.Contains(player.HeldItem.shoot)))
+            if (player.whoAmI == Main.myPlayer && player.active && !player.dead && (player.HeldItem.HasElementItem(ElementID.Fire) || player.HeldItem.HasElementItem(ElementID.Holy)))
             {
                 if (timer++ % 30 == 0)
                     RedeDraw.SpawnCirclePulse(player.Center, Color.DarkOrange * 0.8f, 0.8f, player);

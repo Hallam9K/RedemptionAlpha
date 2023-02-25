@@ -14,6 +14,7 @@ namespace Redemption.Projectiles.Melee
             DisplayName.SetDefault("Blood Wave");
             ProjectileID.Sets.TrailCacheLength[Projectile.type] = 4;
             ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
+            ElementID.ProjBlood[Type] = true;
         }
         public override void SetDefaults()
         {

@@ -44,6 +44,7 @@ namespace Redemption.NPCs.Minibosses.EaglecrestGolem
                 Velocity = 1
             };
             NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, value);
+            ElementID.NPCEarth[Type] = true;
         }
 
         public override void SetDefaults()
@@ -58,6 +59,8 @@ namespace Redemption.NPCs.Minibosses.EaglecrestGolem
             NPC.HitSound = SoundID.NPCHit41;
             NPC.DeathSound = SoundID.NPCDeath43;
             NPC.lavaImmune = true;
+
+            NPC.GetGlobalNPC<ElementalNPC>().OverrideMultiplier[ElementID.Earth] *= .75f;
         }
 
         public override void AI()
@@ -111,22 +114,6 @@ namespace Redemption.NPCs.Minibosses.EaglecrestGolem
 
                 new FlavorTextBestiaryInfoElement("Absolute BEBE")
             });
-        }
-        public override void ModifyHitByItem(Player player, Item item, ref int damage, ref float knockback, ref bool crit)
-        {
-            if (!RedeConfigClient.Instance.ElementDisable)
-            {
-                if (ItemLists.Earth.Contains(item.type))
-                    NPC.Redemption().elementDmg *= 0.75f;
-            }
-        }
-        public override void ModifyHitByProjectile(Projectile projectile, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
-        {
-            if (!RedeConfigClient.Instance.ElementDisable)
-            {
-                if (ProjectileLists.Earth.Contains(projectile.type))
-                    NPC.Redemption().elementDmg *= 0.75f;
-            }
         }
         public override void HitEffect(int hitDirection, double damage)
         {

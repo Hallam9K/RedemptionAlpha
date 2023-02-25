@@ -25,6 +25,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
             DisplayName.SetDefault("Forest Nymph's Sickle");
             ProjectileID.Sets.TrailCacheLength[Projectile.type] = 7;
             ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
+            ElementID.ProjNature[Type] = true;
         }
         public override bool ShouldUpdatePosition() => false;
         public override void SetSafeDefaults()

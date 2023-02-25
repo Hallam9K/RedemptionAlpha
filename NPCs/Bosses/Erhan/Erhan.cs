@@ -92,6 +92,7 @@ namespace Redemption.NPCs.Bosses.Erhan
                 PortraitPositionYOverride = 8
             };
             NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, value);
+            ElementID.NPCHoly[Type] = true;
         }
 
         public override void SetDefaults()
@@ -118,6 +119,8 @@ namespace Redemption.NPCs.Bosses.Erhan
             bubble = ModContent.Request<Texture2D>("Redemption/UI/TextBubble_Epidotra").Value;
             if (!Main.dedServ)
                 Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/BossErhan");
+
+            NPC.GetGlobalNPC<ElementalNPC>().OverrideMultiplier[ElementID.Psychic] *= .9f;
         }
 
         public override bool CanHitPlayer(Player target, ref int cooldownSlot) => false;
@@ -1476,23 +1479,11 @@ namespace Redemption.NPCs.Bosses.Erhan
         {
             if (AIState is ActionState.Fallen && TimerRand == 2 && item.DamageType == DamageClass.Melee)
                 damage *= 2;
-
-            if (!RedeConfigClient.Instance.ElementDisable)
-            {
-                if (ItemLists.Psychic.Contains(item.type))
-                    NPC.Redemption().elementDmg *= 0.9f;
-            }
         }
         public override void ModifyHitByProjectile(Projectile projectile, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
         {
             if (AIState is ActionState.Fallen && TimerRand == 2 && projectile.Redemption().TechnicallyMelee)
                 damage *= 2;
-
-            if (!RedeConfigClient.Instance.ElementDisable)
-            {
-                if (ProjectileLists.Psychic.Contains(projectile.type))
-                    NPC.Redemption().elementDmg *= 0.9f;
-            }
         }
 
         private void DespawnHandler()

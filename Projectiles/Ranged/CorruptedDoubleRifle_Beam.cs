@@ -15,6 +15,7 @@ namespace Redemption.Projectiles.Ranged
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Omega Beam");
+            ElementID.ProjThunder[Type] = true;
         }
         public override void SetDefaults()
         {

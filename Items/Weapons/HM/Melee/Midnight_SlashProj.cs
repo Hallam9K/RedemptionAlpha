@@ -10,7 +10,6 @@ using Terraria.ModLoader;
 using Redemption.Projectiles.Melee;
 using ParticleLibrary;
 using Redemption.Particles;
-using System.Reflection.Metadata;
 
 namespace Redemption.Items.Weapons.HM.Melee
 {
@@ -20,6 +19,8 @@ namespace Redemption.Items.Weapons.HM.Melee
         {
             DisplayName.SetDefault("Midnight, Defiler of the Prince");
             Main.projFrames[Projectile.type] = 9;
+            ElementID.ProjShadow[Type] = true;
+            ElementID.ProjCelestial[Type] = true;
         }
         public override bool ShouldUpdatePosition() => false;
         public override void SetSafeDefaults()

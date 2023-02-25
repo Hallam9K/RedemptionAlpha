@@ -15,6 +15,10 @@ namespace Redemption.Projectiles.Magic
 {
     public class IceBolt : ModProjectile
     {
+        public override void SetStaticDefaults()
+        {
+            ElementID.ProjIce[Type] = true;
+        }
         public override void SetDefaults()
         {
             Projectile.width = 22;

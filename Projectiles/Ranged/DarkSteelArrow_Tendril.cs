@@ -1,4 +1,5 @@
 ﻿using Redemption.Dusts;
+using Redemption.Globals;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -10,6 +11,7 @@ namespace Redemption.Projectiles.Ranged
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Dark Tendril");
+            ElementID.ProjShadow[Type] = true;
         }
         public override void SetDefaults()
         {

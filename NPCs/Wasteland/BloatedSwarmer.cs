@@ -5,6 +5,7 @@ using Redemption.Items.Accessories.HM;
 using Redemption.Items.Armor.Vanity.Intruder;
 using Redemption.Items.Materials.HM;
 using Redemption.Items.Materials.PreHM;
+using Redemption.Items.Placeable.Banners;
 using Redemption.Items.Usable.Potions;
 using Redemption.Items.Weapons.HM.Ranged;
 using System.IO;
@@ -40,6 +41,7 @@ namespace Redemption.NPCs.Wasteland
                 Velocity = 1f
             };
             NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, value);
+            ElementID.NPCPoison[Type] = true;
         }
 
         public override void SetDefaults()
@@ -52,10 +54,12 @@ namespace Redemption.NPCs.Wasteland
             NPC.HitSound = SoundID.NPCHit32;
             NPC.DeathSound = SoundID.NPCDeath35;
             NPC.value = 2000f;
-            NPC.knockBackResist = 0f;
+            NPC.knockBackResist = 0.1f;
             NPC.aiStyle = 44;
             AIType = NPCID.FlyingAntlion;
             SpawnModBiomes = new int[1] { ModContent.GetInstance<WastelandDesertBiome>().Type };
+            Banner = NPC.type;
+            BannerItem = ModContent.ItemType<BloatedSwarmerBanner>();
         }
         public override void HitEffect(int hitDirection, double damage)
         {

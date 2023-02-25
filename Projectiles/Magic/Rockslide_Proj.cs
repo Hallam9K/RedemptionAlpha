@@ -19,6 +19,8 @@ namespace Redemption.Projectiles.Magic
             Main.projFrames[Projectile.type] = 4;
             ProjectileID.Sets.TrailCacheLength[Projectile.type] = 6;
             ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
+            ElementID.ProjEarth[Type] = true;
+            ElementID.ProjPsychic[Type] = true;
         }
         public override void SetDefaults()
         {
@@ -142,6 +144,7 @@ namespace Redemption.Projectiles.Magic
             DisplayName.SetDefault("Pebble");
             ProjectileID.Sets.TrailCacheLength[Projectile.type] = 3;
             ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
+            ElementID.ProjEarth[Type] = true;
         }
         public override void SetDefaults()
         {

@@ -14,6 +14,8 @@ namespace Redemption.Projectiles.Minions
         {
             DisplayName.SetDefault("Acorn Bomb");
             ProjectileID.Sets.MinionShot[Projectile.type] = true;
+            ElementID.ProjNature[Type] = true;
+            ElementID.ProjExplosive[Type] = true;
         }
         public override void SetDefaults()
         {

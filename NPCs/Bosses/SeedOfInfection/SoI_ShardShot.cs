@@ -2,6 +2,7 @@
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.ID;
+using Redemption.Globals;
 
 namespace Redemption.NPCs.Bosses.SeedOfInfection
 {
@@ -11,6 +12,7 @@ namespace Redemption.NPCs.Bosses.SeedOfInfection
         {
             DisplayName.SetDefault("Shard Shot");
             Main.projFrames[Projectile.type] = 3;
+            ElementID.ProjPoison[Type] = true;
         }
 
         public override void SetDefaults()

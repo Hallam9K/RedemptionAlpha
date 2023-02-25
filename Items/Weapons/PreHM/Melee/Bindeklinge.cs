@@ -7,6 +7,7 @@ using Terraria.Audio;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.BaseExtension;
+using Redemption.Globals;
 
 namespace Redemption.Items.Weapons.PreHM.Melee
 {
@@ -15,8 +16,8 @@ namespace Redemption.Items.Weapons.PreHM.Melee
         public override void SetStaticDefaults()
         {
             Tooltip.SetDefault("Critical strikes release homing lightmass");
-
             SacrificeTotal = 1;
+            ElementID.ItemHoly[Type] = true;
         }
 
         public override void SetDefaults()

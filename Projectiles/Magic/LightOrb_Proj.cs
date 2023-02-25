@@ -20,6 +20,7 @@ namespace Redemption.Projectiles.Magic
             DisplayName.SetDefault("Light Orb");
             ProjectileID.Sets.TrailCacheLength[Projectile.type] = 8;
             ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
+            ElementID.ProjHoly[Type] = true;
         }
         public override void SetDefaults()
         {

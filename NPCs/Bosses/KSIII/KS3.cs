@@ -152,6 +152,7 @@ namespace Redemption.NPCs.Bosses.KSIII
             bubble = ModContent.Request<Texture2D>("Redemption/UI/TextBubble_Slayer").Value;
             if (!Main.dedServ)
                 Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/BossSlayer");
+            NPC.GetGlobalNPC<ElementalNPC>().OverrideMultiplier[ElementID.Psychic] *= 1.25f;
         }
         public override bool CanHitPlayer(Player target, ref int cooldownSlot)
         {

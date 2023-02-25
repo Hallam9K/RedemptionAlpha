@@ -4,6 +4,7 @@ using Terraria;
 using Terraria.ModLoader;
 using Redemption.BaseExtension;
 using Redemption.Effects.PrimitiveTrails;
+using Redemption.Globals;
 
 namespace Redemption.NPCs.Bosses.KSIII
 {
@@ -14,6 +15,7 @@ namespace Redemption.NPCs.Bosses.KSIII
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Energy Bolt");
+            ElementID.ProjThunder[Type] = true;
         }
 
         public override void SetDefaults()

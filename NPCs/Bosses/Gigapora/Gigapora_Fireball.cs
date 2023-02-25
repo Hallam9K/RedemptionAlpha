@@ -18,6 +18,7 @@ namespace Redemption.NPCs.Bosses.Gigapora
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Fireball");
+            ElementID.ProjFire[Type] = true;
         }
 
         public override void SetDefaults()

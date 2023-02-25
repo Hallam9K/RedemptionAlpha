@@ -18,6 +18,8 @@ namespace Redemption.Items.Weapons.HM.Melee
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Blind Justice, Demon's Terror");
+            ElementID.ProjHoly[Type] = true;
+            ElementID.ProjArcane[Type] = true;
         }
 
         public override bool ShouldUpdatePosition() => false;
@@ -121,7 +123,7 @@ namespace Redemption.Items.Weapons.HM.Melee
                             if (!target.active || target.whoAmI == Projectile.whoAmI || !target.hostile || target.damage > 200)
                                 continue;
 
-                            if (target.velocity.Length() == 0 || !Projectile.Hitbox.Intersects(target.Hitbox) || !ProjectileLists.Shadow.Contains(target.type) || target.ProjBlockBlacklist(true))
+                            if (target.velocity.Length() == 0 || !Projectile.Hitbox.Intersects(target.Hitbox) || !target.HasElement(ElementID.Shadow) || target.ProjBlockBlacklist(true))
                                 continue;
 
                             DustHelper.DrawCircle(target.Center, DustID.GoldFlame, 1, 4, 4, nogravity: true);

@@ -22,6 +22,7 @@ namespace Redemption.NPCs.Bosses.Neb
             DisplayName.SetDefault("Shooting Star");
             ProjectileID.Sets.TrailCacheLength[Projectile.type] = 5;
             ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
+            ElementID.ProjCelestial[Type] = true;
         }
         public override void SetDefaults()
         {

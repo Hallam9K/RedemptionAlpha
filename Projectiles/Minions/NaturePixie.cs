@@ -24,6 +24,7 @@ namespace Redemption.Projectiles.Minions
             ProjectileID.Sets.CultistIsResistantTo[Projectile.type] = true;
             ProjectileID.Sets.MinionTargettingFeature[Projectile.type] = true;
             Main.projPet[Projectile.type] = true;
+            ElementID.ProjNature[Type] = true;
         }
 
         public override void SetDefaults()
@@ -263,6 +264,7 @@ namespace Redemption.Projectiles.Minions
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Yell");
+            ElementID.ProjPsychic[Type] = true;
         }
         public override void SetDefaults()
         {

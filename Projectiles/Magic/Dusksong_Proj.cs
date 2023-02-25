@@ -25,6 +25,8 @@ namespace Redemption.Projectiles.Magic
             DisplayName.SetDefault("Dark Soul");
             ProjectileID.Sets.TrailCacheLength[Projectile.type] = 8;
             ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
+            ElementID.ProjArcane[Type] = true;
+            ElementID.ProjShadow[Type] = true;
         }
 
         public override void SetDefaults()
@@ -205,6 +207,8 @@ namespace Redemption.Projectiles.Magic
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Dark Soul");
+            ElementID.ProjArcane[Type] = true;
+            ElementID.ProjShadow[Type] = true;
         }
         public override void SetDefaults()
         {

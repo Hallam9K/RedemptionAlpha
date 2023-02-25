@@ -17,6 +17,7 @@ namespace Redemption.NPCs.Bosses.PatientZero
             Main.projFrames[Projectile.type] = 4;
             ProjectileID.Sets.TrailCacheLength[Projectile.type] = 5;
             ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
+            ElementID.ProjPoison[Type] = true;
         }
         public override void SetDefaults()
         {

@@ -17,6 +17,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
         {
             DisplayName.SetDefault("Blade of the Mountain");
             Main.projFrames[Projectile.type] = 10;
+            ElementID.ProjIce[Type] = true;
         }
         public override bool ShouldUpdatePosition() => false;
         public override void SetSafeDefaults()
@@ -80,7 +81,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
                                 if (!target.active || target.whoAmI == Projectile.whoAmI || !target.hostile || target.damage > 100)
                                     continue;
 
-                                if (target.velocity.Length() == 0 || !projHitbox.Intersects(target.Hitbox) || !ProjectileLists.Ice.Contains(target.type) || target.alpha > 0 || target.minion || ProjectileID.Sets.CultistIsResistantTo[target.type] || Main.projPet[target.type])
+                                if (target.velocity.Length() == 0 || !projHitbox.Intersects(target.Hitbox) || !target.HasElement(ElementID.Ice) || target.alpha > 0 || target.minion || ProjectileID.Sets.CultistIsResistantTo[target.type] || Main.projPet[target.type])
                                     continue;
 
                                 SoundEngine.PlaySound(SoundID.Tink, Projectile.position);

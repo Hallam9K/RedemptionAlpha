@@ -43,6 +43,8 @@ namespace Redemption.NPCs.Lab.Blisterface
                 Velocity = 1
             };
             NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, value);
+            ElementID.NPCWater[Type] = true;
+            ElementID.NPCPoison[Type] = true;
         }
         public override void SetDefaults()
         {

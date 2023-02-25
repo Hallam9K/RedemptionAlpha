@@ -5,6 +5,7 @@ using System;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria.GameContent;
 using Redemption.Globals.NPC;
+using Redemption.Globals;
 
 namespace Redemption.Projectiles.Melee
 {
@@ -14,6 +15,7 @@ namespace Redemption.Projectiles.Melee
         {
             DisplayName.SetDefault("Infectious Fist");
             Main.projFrames[Projectile.type] = 7;
+            ElementID.ProjPoison[Type] = true;
         }
 
         public override void SetDefaults()

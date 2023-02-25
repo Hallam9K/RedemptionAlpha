@@ -3,6 +3,7 @@ using Terraria;
 using Terraria.ModLoader;
 using Terraria.ID;
 using Redemption.Base;
+using Redemption.Globals;
 
 namespace Redemption.Projectiles.Magic
 {
@@ -11,6 +12,8 @@ namespace Redemption.Projectiles.Magic
         public override void SetStaticDefaults()
         {
             Main.projFrames[Projectile.type] = 4;
+            ElementID.ProjWind[Type] = true;
+            ElementID.ProjNature[Type] = true;
         }
         public override void SetDefaults()
         {

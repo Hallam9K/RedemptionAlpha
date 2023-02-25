@@ -17,6 +17,7 @@ namespace Redemption.NPCs.Bosses.Obliterator
         public override void SetSafeStaticDefaults()
         {
             DisplayName.SetDefault("Stun Beam");
+            ElementID.ProjThunder[Type] = true;
         }
         public override void SetSafeDefaults()
         {

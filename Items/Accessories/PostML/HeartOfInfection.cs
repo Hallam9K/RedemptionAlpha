@@ -3,6 +3,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Redemption.BaseExtension;
 using Terraria.DataStructures;
+using Redemption.Globals;
 
 namespace Redemption.Items.Accessories.PostML
 {
@@ -12,8 +13,8 @@ namespace Redemption.Items.Accessories.PostML
         {
             DisplayName.SetDefault("Heart of Infection");
             Tooltip.SetDefault("The player occasionally emits a life-draining force that steals life from debuffed enemies" +
-                "\n20% increased Poison elemental resistance" +
-                 "\n10% increased Poison elemental damage");
+                "\n20% increased " + ElementID.PoisonS + " elemental resistance" +
+                 "\n10% increased " + ElementID.PoisonS + " elemental damage");
             Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(4, 6));
             ItemID.Sets.AnimatesAsSoul[Type] = true;
             SacrificeTotal = 1;
@@ -31,8 +32,8 @@ namespace Redemption.Items.Accessories.PostML
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
             player.RedemptionPlayerBuff().infectionHeart = true;
-            player.RedemptionPlayerBuff().ElementalDamage[10] += 0.10f;
-            player.RedemptionPlayerBuff().ElementalResistance[10] += 0.20f;
+            player.RedemptionPlayerBuff().ElementalDamage[ElementID.Poison] += 0.10f;
+            player.RedemptionPlayerBuff().ElementalResistance[ElementID.Poison] += 0.20f;
         }
     }
 }

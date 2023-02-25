@@ -16,6 +16,7 @@ namespace Redemption.Projectiles.Minions
         public override void SetSafeStaticDefaults()
         {
             DisplayName.SetDefault("Cosmic Ray");
+            ElementID.ProjCelestial[Type] = true;
         }
         public override void SetSafeDefaults()
         {

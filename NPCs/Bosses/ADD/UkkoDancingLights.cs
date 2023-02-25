@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Buffs.Debuffs;
+using Redemption.Globals;
 using Terraria;
 using Terraria.GameContent;
 using Terraria.ModLoader;
@@ -13,6 +14,7 @@ namespace Redemption.NPCs.Bosses.ADD
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Dancing Light");
+            ElementID.ProjHoly[Type] = true;
         }
         public override void SetDefaults()
         {

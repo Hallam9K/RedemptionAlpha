@@ -8,6 +8,8 @@ using Redemption.Projectiles.Minions;
 using Redemption.Items.Materials.PreHM;
 using Redemption.Items.Placeable.Tiles;
 using System.Collections.Generic;
+using Redemption.Globals;
+using Redemption.Projectiles.Ranged;
 
 namespace Redemption.Items.Weapons.PreHM.Summon
 {
@@ -17,7 +19,7 @@ namespace Redemption.Items.Weapons.PreHM.Summon
 		{
 			DisplayName.SetDefault("King's Oak Staff");
 			Tooltip.SetDefault("Summons a Nature Pixie to fight for you\n" +
-                "Occassionally shouts at their target, dealing Psychic damage");
+                "Occassionally shouts at their target, dealing " + ElementID.PsychicS + " damage");
 			SacrificeTotal = 1;
 
 			ItemID.Sets.GamepadWholeScreenUseRange[Item.type] = true;
@@ -41,6 +43,7 @@ namespace Redemption.Items.Weapons.PreHM.Summon
 			Item.autoReuse = false;
 			Item.buffType = ModContent.BuffType<NaturePixieBuff>();
 			Item.shoot = ModContent.ProjectileType<NaturePixie>();
+            Item.ExtraItemShoot(ModContent.ProjectileType<NaturePixie_Yell>());
             Item.shootSpeed = 2;
 			Item.mana = 6;
         }

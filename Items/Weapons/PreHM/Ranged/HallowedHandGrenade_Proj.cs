@@ -17,6 +17,8 @@ namespace Redemption.Items.Weapons.PreHM.Ranged
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Hallowed Hand Grenade of Anglon");
+            ElementID.ProjHoly[Type] = true;
+            ElementID.ProjExplosive[Type] = true;
         }
         public override void SetDefaults()
         {

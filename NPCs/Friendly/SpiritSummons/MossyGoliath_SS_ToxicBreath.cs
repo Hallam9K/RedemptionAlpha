@@ -14,6 +14,8 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Toxic Breath");
+            ElementID.ProjWind[Type] = true;
+            ElementID.ProjPoison[Type] = true;
         }
 
         public override void SetDefaults()

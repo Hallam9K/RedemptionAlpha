@@ -15,6 +15,8 @@ namespace Redemption.Projectiles.Ranged
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Lunar Bolt");
+            ElementID.ProjFire[Type] = true;
+            ElementID.ProjNature[Type] = true;
         }
 
         public override void SetDefaults()

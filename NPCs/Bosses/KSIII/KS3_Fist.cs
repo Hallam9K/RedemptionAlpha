@@ -6,6 +6,7 @@ using System;
 using Terraria.Audio;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria.GameContent;
+using Redemption.Globals;
 
 namespace Redemption.NPCs.Bosses.KSIII
 {
@@ -15,6 +16,7 @@ namespace Redemption.NPCs.Bosses.KSIII
         {
             DisplayName.SetDefault("Fist Rocket");
             Main.projFrames[Projectile.type] = 4;
+            ElementID.ProjExplosive[Type] = true;
         }
 
 		public override void SetDefaults()

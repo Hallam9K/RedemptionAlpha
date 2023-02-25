@@ -19,6 +19,8 @@ namespace Redemption.Items.Weapons.PostML.Ranged
         {
             DisplayName.SetDefault("Electonade");
             Main.projFrames[Projectile.type] = 11;
+            ElementID.ProjThunder[Type] = true;
+            ElementID.ProjExplosive[Type] = true;
 
         }
         public override void SetDefaults()
@@ -100,6 +102,7 @@ namespace Redemption.Items.Weapons.PostML.Ranged
         {
             DisplayName.SetDefault("Tesla Field");
             Main.projFrames[Projectile.type] = 3;
+            ElementID.ProjThunder[Type] = true;
         }
         public override void SetDefaults()
         {

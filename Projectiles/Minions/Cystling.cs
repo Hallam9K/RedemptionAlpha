@@ -19,6 +19,8 @@ namespace Redemption.Projectiles.Minions
             ProjectileID.Sets.MinionSacrificable[Projectile.type] = true;
             ProjectileID.Sets.CultistIsResistantTo[Projectile.type] = true;
             ProjectileID.Sets.MinionTargettingFeature[Projectile.type] = true;
+            ElementID.ProjPoison[Type] = true;
+            ElementID.ProjPsychic[Type] = true;
         }
 
         public override void SetDefaults()

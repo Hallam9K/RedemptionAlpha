@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Base;
+using Redemption.Globals;
 using ReLogic.Content;
 using Terraria;
 using Terraria.GameContent;
@@ -27,6 +28,7 @@ namespace Redemption.NPCs.Bosses.Thorn
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Cursed Thorns");
+            ElementID.ProjNature[Type] = true;
         }
 
         public override void SetDefaults()

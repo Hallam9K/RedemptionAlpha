@@ -15,6 +15,8 @@ namespace Redemption.Items.Weapons.HM.Ranged
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Toxic Grenade");
+            ElementID.ProjPoison[Type] = true;
+            ElementID.ProjExplosive[Type] = true;
         }
         public override void SetDefaults()
         {

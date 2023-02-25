@@ -9,6 +9,7 @@ using Terraria.ModLoader;
 using Redemption.BaseExtension;
 using Redemption.Items.Weapons.HM.Ammo;
 using Redemption.Globals.Player;
+using Redemption.Globals;
 
 namespace Redemption.Items.Weapons.HM.Ranged
 {
@@ -36,7 +37,8 @@ namespace Redemption.Items.Weapons.HM.Ranged
             Item.UseSound = CustomSounds.PlasmaShot;
 
             Item.autoReuse = true;
-            Item.shoot = ProjectileID.PurificationPowder;
+            Item.shoot = ModContent.ProjectileType<PlasmaRound>();
+            Item.ExtraItemShoot(ModContent.ProjectileType<PlasmaRound_Blast>());
             Item.shootSpeed = 12;
             Item.useAmmo = AmmoID.Bullet;
             if (!Main.dedServ)

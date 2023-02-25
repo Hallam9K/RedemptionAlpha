@@ -1,4 +1,5 @@
 using Redemption.Buffs.Debuffs;
+using Redemption.Globals;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -10,6 +11,7 @@ namespace Redemption.Projectiles.Hostile
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Pollen Cloud");
+            ElementID.ProjPoison[Type] = true;
         }
         public override void SetDefaults()
         {

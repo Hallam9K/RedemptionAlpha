@@ -19,6 +19,7 @@ namespace Redemption.Items.Weapons.HM.Melee
             DisplayName.SetDefault("Spellsong, Core of the West");
             ProjectileID.Sets.TrailCacheLength[Projectile.type] = 4;
             ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
+            ElementID.ProjCelestial[Type] = true;
         }
 
         public override bool ShouldUpdatePosition() => false;

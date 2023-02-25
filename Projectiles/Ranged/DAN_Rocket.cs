@@ -12,6 +12,7 @@ namespace Redemption.Projectiles.Ranged
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("D.A.N Rocket");
+            ElementID.ProjExplosive[Type] = true;
         }
         public override void SetDefaults()
         {

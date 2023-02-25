@@ -18,6 +18,7 @@ namespace Redemption.NPCs.Bosses.Erhan
         {
             DisplayName.SetDefault("Lightmass");
             ProjectileID.Sets.CultistIsResistantTo[Projectile.type] = true;
+            ElementID.ProjHoly[Type] = true;
         }
         public override void SetDefaults()
         {

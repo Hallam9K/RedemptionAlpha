@@ -4,6 +4,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Redemption.BaseExtension;
+using Redemption.Globals;
 
 namespace Redemption.Items.Accessories.PreHM
 {
@@ -13,7 +14,7 @@ namespace Redemption.Items.Accessories.PreHM
         {
             DisplayName.SetDefault("Heart Insignia");
             Tooltip.SetDefault("Picking up hearts give a short boost to life regen" +
-                "\n15% increased Shadow and Blood elemental damage and resistance");
+                "\n15% increased " + ElementID.ShadowS + " and " + ElementID.BloodS + " elemental damage and resistance");
             SacrificeTotal = 1;
         }
 
@@ -32,11 +33,11 @@ namespace Redemption.Items.Accessories.PreHM
         {
             BuffPlayer modPlayer = player.RedemptionPlayerBuff();
 
-            modPlayer.ElementalDamage[8] += 0.15f;
-            modPlayer.ElementalDamage[11] += 0.15f;
+            modPlayer.ElementalDamage[ElementID.Shadow] += 0.15f;
+            modPlayer.ElementalDamage[ElementID.Blood] += 0.15f;
 
-            modPlayer.ElementalResistance[8] += 0.15f;
-            modPlayer.ElementalResistance[11] += 0.15f;
+            modPlayer.ElementalResistance[ElementID.Shadow] += 0.15f;
+            modPlayer.ElementalResistance[ElementID.Blood] += 0.15f;
 
             modPlayer.heartInsignia = true;
         }

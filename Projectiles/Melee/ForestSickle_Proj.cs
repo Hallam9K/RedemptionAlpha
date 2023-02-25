@@ -15,6 +15,7 @@ namespace Redemption.Projectiles.Melee
             DisplayName.SetDefault("Nature Slash");
             ProjectileID.Sets.TrailCacheLength[Projectile.type] = 7;
             ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
+            ElementID.ProjNature[Type] = true;
         }
         public override void SetDefaults()
         {

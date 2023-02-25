@@ -23,6 +23,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
             DisplayName.SetDefault("Pure-Iron Sword");
             ProjectileID.Sets.TrailCacheLength[Projectile.type] = 4;
             ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
+            ElementID.ProjIce[Type] = true;
         }
 
         public override bool ShouldUpdatePosition() => false;
@@ -241,7 +242,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
                 if (!target.active || target.whoAmI == Projectile.whoAmI || !target.hostile || target.damage > 200 / 4)
                     continue;
 
-                if (target.velocity.Length() == 0 || !Projectile.Hitbox.Intersects(target.Hitbox) || !ProjectileLists.Ice.Contains(target.type) || target.ProjBlockBlacklist(true))
+                if (target.velocity.Length() == 0 || !Projectile.Hitbox.Intersects(target.Hitbox) || !target.HasElement(ElementID.Ice) || target.ProjBlockBlacklist(true))
                     continue;
 
                 DustHelper.DrawCircle(target.Center, DustID.IceTorch, 1, 4, 4, nogravity: true);

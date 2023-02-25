@@ -20,6 +20,7 @@ namespace Redemption.Items.Weapons.PostML.Magic
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Tesla Coil");
+            ElementID.ProjThunder[Type] = true;
         }
         public override void SetDefaults()
         {

@@ -68,6 +68,7 @@ namespace Redemption.NPCs.Lab.Janitor
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Water");
+            ElementID.ProjWater[Type] = true;
         }
         public override void SetDefaults()
         {

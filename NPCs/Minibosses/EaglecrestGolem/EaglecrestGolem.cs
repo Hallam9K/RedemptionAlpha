@@ -78,6 +78,7 @@ namespace Redemption.NPCs.Minibosses.EaglecrestGolem
                 PortraitPositionYOverride = 0
             };
             NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, value);
+            ElementID.NPCEarth[Type] = true;
         }
 
         public override void SetDefaults()
@@ -99,6 +100,10 @@ namespace Redemption.NPCs.Minibosses.EaglecrestGolem
             NPC.netAlways = true;
             if (!Main.dedServ)
                 Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/BossForest1");
+
+            NPC.GetGlobalNPC<ElementalNPC>().OverrideMultiplier[ElementID.Earth] *= .75f;
+            NPC.GetGlobalNPC<ElementalNPC>().OverrideMultiplier[ElementID.Thunder] *= .9f;
+
         }
 
         public override bool CanHitPlayer(Player target, ref int cooldownSlot) => AIState is ActionState.Roll;
@@ -453,22 +458,6 @@ namespace Redemption.NPCs.Minibosses.EaglecrestGolem
                         NPC.timeLeft = 10;
                     return;
                 }
-            }
-        }
-        public override void ModifyHitByItem(Player player, Item item, ref int damage, ref float knockback, ref bool crit)
-        {
-            if (!RedeConfigClient.Instance.ElementDisable)
-            {
-                if (ItemLists.Earth.Contains(item.type))
-                    NPC.Redemption().elementDmg *= 0.75f;
-            }
-        }
-        public override void ModifyHitByProjectile(Projectile projectile, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
-        {
-            if (!RedeConfigClient.Instance.ElementDisable)
-            {
-                if (ProjectileLists.Earth.Contains(projectile.type))
-                    NPC.Redemption().elementDmg *= 0.75f;
             }
         }
         public override void HitEffect(int hitDirection, double damage)

@@ -16,6 +16,7 @@ namespace Redemption.NPCs.Minibosses.SkullDigger
             DisplayName.SetDefault("Skull Digger's Skull Digger");
             ProjectileID.Sets.TrailCacheLength[Projectile.type] = 5;
             ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
+            ElementID.ProjArcane[Type] = true;
         }
         public override void SetDefaults()
         {
@@ -99,7 +100,6 @@ namespace Redemption.NPCs.Minibosses.SkullDigger
             Projectile.friendly = true;
             Projectile.hostile = false;
         }
-        NPC boss;
         public override bool PreAI()
         {
             Projectile host = Main.projectile[(int)Projectile.ai[0]];

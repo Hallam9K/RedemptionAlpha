@@ -1,3 +1,4 @@
+using Redemption.Globals;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -40,6 +41,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Spark");
+            ElementID.ProjFire[Type] = true;
         }
         public override void SetDefaults()
         {

@@ -16,6 +16,7 @@ namespace Redemption.Projectiles.Ranged
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Flak Grenade");
+            ElementID.ProjExplosive[Type] = true;
         }
         public override void SetDefaults()
         {

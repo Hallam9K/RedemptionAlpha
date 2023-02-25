@@ -15,6 +15,7 @@ namespace Redemption.Projectiles.Melee
             DisplayName.SetDefault("Wind Slice");
             ProjectileID.Sets.TrailCacheLength[Projectile.type] = 12;
             ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
+            ElementID.ProjWind[Type] = true;
         }
         public override void SetDefaults()
         {

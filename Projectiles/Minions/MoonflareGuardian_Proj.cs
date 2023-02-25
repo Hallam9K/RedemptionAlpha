@@ -18,6 +18,8 @@ namespace Redemption.Projectiles.Minions
         {
             DisplayName.SetDefault("Lunar Bolt");
             ProjectileID.Sets.MinionShot[Projectile.type] = true;
+            ElementID.ProjFire[Type] = true;
+            ElementID.ProjNature[Type] = true;
         }
 
         public override void SetDefaults()

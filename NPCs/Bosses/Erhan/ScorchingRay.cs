@@ -16,6 +16,8 @@ namespace Redemption.NPCs.Bosses.Erhan
         public override void SetSafeStaticDefaults()
         {
             DisplayName.SetDefault("Scorching Ray");
+            ElementID.ProjFire[Type] = true;
+            ElementID.ProjHoly[Type] = true;
         }
 
         public override void SetSafeDefaults()

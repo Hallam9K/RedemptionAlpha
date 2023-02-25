@@ -2,6 +2,7 @@ using System;
 using Microsoft.Xna.Framework;
 using Redemption.Base;
 using Redemption.Buffs.Debuffs;
+using Redemption.Globals;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -14,6 +15,7 @@ namespace Redemption.NPCs.Lab.Volt
         {
             DisplayName.SetDefault("Electric Orb");
             Main.projFrames[Projectile.type] = 4;
+            ElementID.ProjThunder[Type] = true;
         }
         public override void SetDefaults()
         {

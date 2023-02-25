@@ -14,7 +14,6 @@ using Microsoft.Xna.Framework.Graphics;
 using Redemption.Items.Accessories.PreHM;
 using ReLogic.Content;
 using Terraria.GameContent.ItemDropRules;
-using Redemption.Globals.Player;
 using Redemption.Items.Weapons.HM.Summon;
 using Redemption.Biomes;
 using Redemption.NPCs.Friendly;
@@ -35,70 +34,6 @@ namespace Redemption.Globals
         {
             if (player.RedemptionPlayerBuff().bowString && item.useAmmo == AmmoID.Arrow)
                 velocity *= 1.2f;
-        }
-        public override void ModifyWeaponCrit(Item item, Terraria.Player player, ref float crit)
-        {
-            BuffPlayer modPlayer = player.RedemptionPlayerBuff();
-            if (!RedeConfigClient.Instance.ElementDisable)
-            {
-                if (modPlayer.powerCell)
-                {
-                    if (ItemLists.Fire.Contains(item.type) || ProjectileLists.Fire.Contains(item.shoot))
-                        crit += 4;
-                    if (ItemLists.Holy.Contains(item.type) || ProjectileLists.Holy.Contains(item.shoot))
-                        crit += 4;
-                }
-                if (modPlayer.gracesGuidance)
-                {
-                    if (ItemLists.Fire.Contains(item.type) || ProjectileLists.Fire.Contains(item.shoot))
-                        crit += 6;
-                    if (ItemLists.Holy.Contains(item.type) || ProjectileLists.Holy.Contains(item.shoot))
-                        crit += 6;
-                }
-                if (modPlayer.sacredCross && (ItemLists.Holy.Contains(item.type) || ProjectileLists.Holy.Contains(item.shoot)))
-                    crit += 6;
-                if (modPlayer.forestCore && player.dryadWard && (ItemLists.Nature.Contains(item.type) || ProjectileLists.Nature.Contains(item.shoot)))
-                    crit += 10;
-                if (modPlayer.thornCirclet && (ItemLists.Nature.Contains(item.type) || ProjectileLists.Nature.Contains(item.shoot)))
-                    crit += 6;
-            }
-        }
-        public override void ModifyWeaponDamage(Item item, Terraria.Player player, ref StatModifier damage)
-        {
-            BuffPlayer modPlayer = player.RedemptionPlayerBuff();
-            if (!RedeConfigClient.Instance.ElementDisable)
-            {
-                #region Elemental Damage
-                if (ItemLists.Arcane.Contains(item.type) || ProjectileLists.Arcane.Contains(item.shoot))
-                    damage += modPlayer.ElementalDamage[0];
-                if (ItemLists.Fire.Contains(item.type) || ProjectileLists.Fire.Contains(item.shoot))
-                    damage += modPlayer.ElementalDamage[1];
-                if (ItemLists.Water.Contains(item.type) || ProjectileLists.Water.Contains(item.shoot))
-                    damage += modPlayer.ElementalDamage[2];
-                if (ItemLists.Ice.Contains(item.type) || ProjectileLists.Ice.Contains(item.shoot))
-                    damage += modPlayer.ElementalDamage[3];
-                if (ItemLists.Earth.Contains(item.type) || ProjectileLists.Earth.Contains(item.shoot))
-                    damage += modPlayer.ElementalDamage[4];
-                if (ItemLists.Wind.Contains(item.type) || ProjectileLists.Wind.Contains(item.shoot))
-                    damage += modPlayer.ElementalDamage[5];
-                if (ItemLists.Thunder.Contains(item.type) || ProjectileLists.Thunder.Contains(item.shoot))
-                    damage += modPlayer.ElementalDamage[6];
-                if (ItemLists.Holy.Contains(item.type) || ProjectileLists.Holy.Contains(item.shoot))
-                    damage += modPlayer.ElementalDamage[7];
-                if (ItemLists.Shadow.Contains(item.type) || ProjectileLists.Shadow.Contains(item.shoot))
-                    damage += modPlayer.ElementalDamage[8];
-                if (ItemLists.Nature.Contains(item.type) || ProjectileLists.Nature.Contains(item.shoot))
-                    damage += modPlayer.ElementalDamage[9];
-                if (ItemLists.Poison.Contains(item.type) || ProjectileLists.Poison.Contains(item.shoot))
-                    damage += modPlayer.ElementalDamage[10];
-                if (ItemLists.Blood.Contains(item.type) || ProjectileLists.Blood.Contains(item.shoot))
-                    damage += modPlayer.ElementalDamage[11];
-                if (ItemLists.Psychic.Contains(item.type) || ProjectileLists.Psychic.Contains(item.shoot))
-                    damage += modPlayer.ElementalDamage[12];
-                if (ItemLists.Celestial.Contains(item.type) || ProjectileLists.Celestial.Contains(item.shoot))
-                    damage += modPlayer.ElementalDamage[13];
-                #endregion
-            }
         }
         public override bool OnPickup(Item item, Terraria.Player player)
         {
@@ -210,63 +145,63 @@ namespace Redemption.Globals
         {
             if (set == copperSet || set == tinSet)
             {
-                player.setBonus += "\n20% increased Thunder elemental resistance";
-                player.RedemptionPlayerBuff().ElementalResistance[6] += 0.2f;
+                player.setBonus += "\n20% increased " + ElementID.ThunderS + " elemental resistance";
+                player.RedemptionPlayerBuff().ElementalResistance[ElementID.Thunder] += 0.2f;
             }
             if (set == silverSet || set == tungstenSet || set == titaniumSet)
             {
-                player.setBonus += "\n20% increased Thunder elemental damage";
-                player.RedemptionPlayerBuff().ElementalDamage[6] += 0.2f;
+                player.setBonus += "\n20% increased " + ElementID.ThunderS + " elemental damage";
+                player.RedemptionPlayerBuff().ElementalDamage[ElementID.Thunder] += 0.2f;
             }
             if (set == cactusSet || set == jungleSet || set == orichalcumSet || set == beetleSet || set == turtleSet)
             {
-                player.setBonus += "\n20% increased Nature elemental resistance";
-                player.RedemptionPlayerBuff().ElementalResistance[9] += 0.2f;
+                player.setBonus += "\n20% increased " + ElementID.NatureS + " elemental resistance";
+                player.RedemptionPlayerBuff().ElementalResistance[ElementID.Nature] += 0.2f;
             }
             if (set == goldSet || set == mythrilSet || set == spectreSet)
             {
-                player.setBonus += "\n20% increased Arcane elemental resistance";
-                player.RedemptionPlayerBuff().ElementalResistance[0] += 0.2f;
+                player.setBonus += "\n20% increased " + ElementID.ArcaneS + " elemental resistance";
+                player.RedemptionPlayerBuff().ElementalResistance[ElementID.Arcane] += 0.2f;
             }
             if (set == platinumSet)
             {
-                player.setBonus += "\n20% increased Arcane elemental damage";
-                player.RedemptionPlayerBuff().ElementalDamage[0] += 0.2f;
+                player.setBonus += "\n20% increased " + ElementID.ArcaneS + " elemental damage";
+                player.RedemptionPlayerBuff().ElementalDamage[ElementID.Arcane] += 0.2f;
             }
             if (set == fossilSet || set == adamantiteSet || set == forbiddenSet || set == turtleSet || set == beetleSet || set == ironSet || set == leadSet)
             {
-                player.setBonus += "\n20% increased Earth elemental resistance";
-                player.RedemptionPlayerBuff().ElementalDamage[4] += 0.2f;
+                player.setBonus += "\n20% increased " + ElementID.EarthS + " elemental resistance";
+                player.RedemptionPlayerBuff().ElementalDamage[ElementID.Earth] += 0.2f;
             }
             if (set == shadowSet)
             {
-                player.setBonus += "\n20% increased Shadow elemental resistance";
-                player.RedemptionPlayerBuff().ElementalDamage[8] += 0.2f;
+                player.setBonus += "\n20% increased " + ElementID.ShadowS + " elemental resistance";
+                player.RedemptionPlayerBuff().ElementalDamage[ElementID.Shadow] += 0.2f;
             }
             if (set == crimsonSet)
             {
-                player.setBonus += "\n20% increased Blood elemental resistance";
-                player.RedemptionPlayerBuff().ElementalDamage[11] += 0.2f;
+                player.setBonus += "\n20% increased " + ElementID.BloodS + " elemental resistance";
+                player.RedemptionPlayerBuff().ElementalDamage[ElementID.Blood] += 0.2f;
             }
             if (set == moltenSet)
             {
-                player.setBonus += "\n20% increased Fire elemental resistance";
-                player.RedemptionPlayerBuff().ElementalDamage[1] += 0.2f;
+                player.setBonus += "\n20% increased " + ElementID.FireS + " elemental resistance";
+                player.RedemptionPlayerBuff().ElementalDamage[ElementID.Fire] += 0.2f;
             }
             if (set == cobaltSet)
             {
-                player.setBonus += "\n20% increased Water elemental resistance";
-                player.RedemptionPlayerBuff().ElementalDamage[2] += 0.2f;
+                player.setBonus += "\n20% increased " + ElementID.WaterS + " elemental resistance";
+                player.RedemptionPlayerBuff().ElementalDamage[ElementID.Water] += 0.2f;
             }
             if (set == palladiumSet || set == hallowedSet)
             {
-                player.setBonus += "\n20% increased Holy elemental resistance";
-                player.RedemptionPlayerBuff().ElementalDamage[7] += 0.2f;
+                player.setBonus += "\n20% increased " + ElementID.HolyS + " elemental resistance";
+                player.RedemptionPlayerBuff().ElementalDamage[ElementID.Holy] += 0.2f;
             }
             if (set == frostSet)
             {
-                player.setBonus += "\n20% increased Ice elemental resistance";
-                player.RedemptionPlayerBuff().ElementalDamage[3] += 0.2f;
+                player.setBonus += "\n20% increased " + ElementID.IceS + " elemental resistance";
+                player.RedemptionPlayerBuff().ElementalDamage[ElementID.Ice] += 0.2f;
             }
         }
         #endregion
@@ -340,9 +275,12 @@ namespace Redemption.Globals
                 RedeHelper.SpawnNPC(item.GetSource_FromAI(), (int)Main.LocalPlayer.Center.X, (int)Main.LocalPlayer.Center.Y, ModContent.NPCType<Chalice_Intro>());
         }
 
+        public const string axeBonus = "Axe Bonus: 3x critical strike damage, increased chance to decapitate skeletons";
+        public const string slashBonus = "Slash Bonus: Small chance to decapitate skeletons, killing them instantly";
+        public const string hammerBonus = "Hammer Bonus: Deals quadruple damage to Guard Points";
         public override void ModifyTooltips(Item item, List<TooltipLine> tooltips)
         {
-            TooltipLine axeLine = new(Mod, "AxeBonus", "Axe Bonus: 3x critical strike damage, increased chance to decapitate skeletons") { OverrideColor = Colors.RarityOrange };
+            TooltipLine axeLine = new(Mod, "AxeBonus", axeBonus) { OverrideColor = Colors.RarityOrange };
             if ((item.CountsAsClass(DamageClass.Melee) && item.damage > 0 && item.useStyle == ItemUseStyleID.Swing && !item.noUseGraphic))
             {
                 if (item.axe > 0)
@@ -350,7 +288,7 @@ namespace Redemption.Globals
 
                 else if (!ItemLists.BluntSwing.Contains(item.type) && item.hammer == 0 && item.pick == 0)
                 {
-                    TooltipLine slashLine = new(Mod, "SlashBonus", "Slash Bonus: Small chance to decapitate skeletons, killing them instantly") { OverrideColor = Colors.RarityOrange };
+                    TooltipLine slashLine = new(Mod, "SlashBonus", slashBonus) { OverrideColor = Colors.RarityOrange };
                     tooltips.Add(slashLine);
                 }
             }
@@ -359,10 +297,10 @@ namespace Redemption.Globals
 
             if (item.hammer > 0 || item.type == ItemID.PaladinsHammer || TechnicallyHammer)
             {
-                TooltipLine hammerLine = new(Mod, "HammerBonus", "Hammer Bonus: Deals quadruple damage to Guard Points") { OverrideColor = Colors.RarityOrange };
+                TooltipLine hammerLine = new(Mod, "HammerBonus", hammerBonus) { OverrideColor = Colors.RarityOrange };
                 tooltips.Add(hammerLine);
             }
-            if (!RedeConfigClient.Instance.ElementDisable && ProjectileLists.Explosive.Contains(item.shoot))
+            if (!RedeConfigClient.Instance.ElementDisable && item.HasElementItem(ElementID.Explosive))
             {
                 TooltipLine explodeLine = new(Mod, "ExplodeBonus", "Explosive Bonus: Deals quadruple damage to Guard Points") { OverrideColor = Colors.RarityOrange };
                 tooltips.Add(explodeLine);
@@ -370,72 +308,72 @@ namespace Redemption.Globals
 
             if (!RedeConfigClient.Instance.ElementDisable && !ItemLists.NoElement.Contains(item.type) && !ProjectileLists.NoElement.Contains(item.shoot))
             {
-                if (ItemLists.Arcane.Contains(item.type) || ProjectileLists.Arcane.Contains(item.shoot))
+                if (item.HasElementItem(ElementID.Arcane))
                 {
                     TooltipLine line = new(Mod, "Element", "Arcane Bonus: Can hit enemies from the spirit realm") { OverrideColor = Color.LightBlue };
                     tooltips.Add(line);
                 }
-                if (ItemLists.Blood.Contains(item.type) || ProjectileLists.Blood.Contains(item.shoot))
+                if (item.HasElementItem(ElementID.Blood))
                 {
                     TooltipLine line = new(Mod, "Element", "Blood Bonus: Increased damage to organic enemies, but decreased to robotic") { OverrideColor = Color.IndianRed };
                     tooltips.Add(line);
                 }
-                if (ItemLists.Celestial.Contains(item.type) || ProjectileLists.Celestial.Contains(item.shoot))
+                if (item.HasElementItem(ElementID.Celestial))
                 {
                     TooltipLine line = new(Mod, "Element", "Celestial Bonus: Hitting foes can create stars around them, restoring life and mana once the foe is slain") { OverrideColor = Color.Pink };
                     tooltips.Add(line);
                 }
-                if (ItemLists.Earth.Contains(item.type) || ProjectileLists.Earth.Contains(item.shoot))
+                if (item.HasElementItem(ElementID.Earth))
                 {
                     TooltipLine line = new(Mod, "Element", "Earth Bonus: Deals extra damage and has a chance to stun grounded enemies") { OverrideColor = Color.SandyBrown };
                     tooltips.Add(line);
                 }
-                if (ItemLists.Fire.Contains(item.type) || ProjectileLists.Fire.Contains(item.shoot))
+                if (item.HasElementItem(ElementID.Fire))
                 {
                     TooltipLine line = new(Mod, "Element", "Fire Bonus: Chance to inflict a strong 'On Fire!' debuff on flammable enemies") { OverrideColor = Color.Orange };
                     tooltips.Add(line);
                 }
-                if (ItemLists.Holy.Contains(item.type) || ProjectileLists.Holy.Contains(item.shoot))
+                if (item.HasElementItem(ElementID.Holy))
                 {
                     TooltipLine line = new(Mod, "Element", "Holy Bonus: Increased damage to undead and demons") { OverrideColor = Color.LightGoldenrodYellow };
                     tooltips.Add(line);
                 }
-                if (ItemLists.Ice.Contains(item.type) || ProjectileLists.Ice.Contains(item.shoot))
+                if (item.HasElementItem(ElementID.Ice))
                 {
                     TooltipLine line = new(Mod, "Element", "Ice Bonus: Chance to freeze slimes and slow down infected enemies") { OverrideColor = Color.LightCyan };
                     tooltips.Add(line);
                 }
-                if (ItemLists.Nature.Contains(item.type) || ProjectileLists.Nature.Contains(item.shoot))
+                if (item.HasElementItem(ElementID.Nature))
                 {
                     TooltipLine line = new(Mod, "Element", "Nature Bonus: Has a chance to drop a defence-increasing Nature Boon upon hitting enemies inflicted with a non-fire debuff") { OverrideColor = Color.LawnGreen };
                     tooltips.Add(line);
                 }
-                if (ItemLists.Poison.Contains(item.type) || ProjectileLists.Poison.Contains(item.shoot))
+                if (item.HasElementItem(ElementID.Poison))
                 {
                     TooltipLine line = new(Mod, "Element", "Poison Bonus: Increased damage to poisoned enemies") { OverrideColor = Color.MediumPurple };
                     tooltips.Add(line);
                 }
-                if (ItemLists.Psychic.Contains(item.type) || ProjectileLists.Psychic.Contains(item.shoot))
+                if (item.HasElementItem(ElementID.Psychic))
                 {
                     TooltipLine line = new(Mod, "Element", "Psychic Bonus: Ignores enemy Guard Points") { OverrideColor = Color.LightPink };
                     tooltips.Add(line);
                 }
-                if (ItemLists.Shadow.Contains(item.type) || ProjectileLists.Shadow.Contains(item.shoot))
+                if (item.HasElementItem(ElementID.Shadow))
                 {
                     TooltipLine line = new(Mod, "Element", "Shadow Bonus: Slain enemies have a chance to drop a pickup which increases Shadow damage") { OverrideColor = Color.MediumSlateBlue };
                     tooltips.Add(line);
                 }
-                if (ItemLists.Thunder.Contains(item.type) || ProjectileLists.Thunder.Contains(item.shoot))
+                if (item.HasElementItem(ElementID.Thunder))
                 {
                     TooltipLine line = new(Mod, "Element", "Thunder Bonus: Electrifies and deals extra damage if the target is in water") { OverrideColor = Color.LightYellow };
                     tooltips.Add(line);
                 }
-                if (ItemLists.Water.Contains(item.type) || ProjectileLists.Water.Contains(item.shoot))
+                if (item.HasElementItem(ElementID.Water))
                 {
                     TooltipLine line = new(Mod, "Element", "Water Bonus: Increased damage to demons and can electrify robotic targets") { OverrideColor = Color.SkyBlue };
                     tooltips.Add(line);
                 }
-                if (ItemLists.Wind.Contains(item.type) || ProjectileLists.Wind.Contains(item.shoot))
+                if (item.HasElementItem(ElementID.Wind))
                 {
                     TooltipLine line = new(Mod, "Element", "Wind Bonus: Deals extra knockback to airborne targets") { OverrideColor = Color.LightGray };
                     tooltips.Add(line);

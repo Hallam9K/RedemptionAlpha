@@ -3,6 +3,7 @@ using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
 using Redemption.Dusts;
 using Redemption.Base;
+using Redemption.Globals;
 
 namespace Redemption.Projectiles.Magic
 {
@@ -11,6 +12,7 @@ namespace Redemption.Projectiles.Magic
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Noidan Nuoli");
+            ElementID.ProjArcane[Type] = true;
         }
 
         public override void SetDefaults()

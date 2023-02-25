@@ -10,6 +10,7 @@ using Redemption.BaseExtension;
 using Redemption.Items.Materials.HM;
 using Redemption.Items.Weapons.HM.Ammo;
 using Redemption.Globals.Player;
+using Redemption.Globals;
 
 namespace Redemption.Items.Weapons.HM.Ranged
 {
@@ -44,6 +45,7 @@ namespace Redemption.Items.Weapons.HM.Ranged
             Item.useAmmo = AmmoID.Bullet;
             if (!Main.dedServ)
                 Item.RedemptionGlow().glowTexture = ModContent.Request<Texture2D>(Item.ModItem.Texture + "_Glow").Value;
+            Item.ExtraItemShoot(ModContent.ProjectileType<KS3_EnergyBolt>());
         }
 
         public int AttackMode;

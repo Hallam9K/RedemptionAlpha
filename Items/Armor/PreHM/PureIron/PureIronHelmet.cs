@@ -5,6 +5,7 @@ using Redemption.Items.Materials.PreHM;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Redemption.BaseExtension;
+using Redemption.Globals;
 
 namespace Redemption.Items.Armor.PreHM.PureIron
 {
@@ -41,10 +42,10 @@ namespace Redemption.Items.Armor.PreHM.PureIron
 
         public override void UpdateArmorSet(Player player)
         {
-            player.setBonus = "20% increased Fire elemental resistance\n" +
+            player.setBonus = "20% increased " + ElementID.FireS + " elemental resistance\n" +
                 "33% chance for weapons to inflict Pure Chill\n" +
                 "100% chance for all Pure-Iron weapons to inflict Pure Chill";
-            player.RedemptionPlayerBuff().ElementalResistance[1] += 0.2f;
+            player.RedemptionPlayerBuff().ElementalResistance[ElementID.Fire] += 0.2f;
             player.RedemptionPlayerBuff().pureIronBonus = true;
             player.RedemptionPlayerBuff().MetalSet = true;
         }

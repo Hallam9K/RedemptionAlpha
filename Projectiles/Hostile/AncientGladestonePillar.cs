@@ -1,5 +1,6 @@
 using Redemption.BaseExtension;
 using Redemption.Dusts.Tiles;
+using Redemption.Globals;
 using Redemption.NPCs.PreHM;
 using System.Collections.Generic;
 using Terraria;
@@ -14,6 +15,7 @@ namespace Redemption.Projectiles.Hostile
         public override void SetStaticDefaults()
         {
             ProjectileID.Sets.DontAttachHideToAlpha[Type] = true;
+            ElementID.ProjEarth[Type] = true;
         }
         public override void SetDefaults()
         {

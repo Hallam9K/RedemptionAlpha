@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Redemption.Base;
+using Redemption.Globals;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -11,6 +12,7 @@ namespace Redemption.Projectiles.Misc
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Stinger");
+            ElementID.ProjPoison[Type] = true;
         }
         public override void SetDefaults()
         {

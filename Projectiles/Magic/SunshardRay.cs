@@ -12,6 +12,7 @@ namespace Redemption.Projectiles.Magic
         public override void SetSafeStaticDefaults()
         {
             DisplayName.SetDefault("Sunshard Ray");
+            ElementID.ProjHoly[Type] = true;
         }
 
         public override void SetSafeDefaults()

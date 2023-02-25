@@ -16,6 +16,7 @@ namespace Redemption.Items.Weapons.PreHM.Ranged
         {
             DisplayName.SetDefault("Eaglecrest Sling");
             Main.projFrames[Projectile.type] = 6;
+            ElementID.ProjEarth[Type] = true;
         }
 
         public override bool ShouldUpdatePosition() => false;

@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.BaseExtension;
 using Redemption.Buffs.Debuffs;
+using Redemption.Globals;
 using Redemption.Items.Materials.HM;
 using Redemption.Projectiles.Minions;
 using System.Collections.Generic;
@@ -47,6 +48,7 @@ namespace Redemption.Items.Weapons.HM.Summon
         {
             DisplayName.SetDefault("Infected Tentacle");
             ProjectileID.Sets.IsAWhip[Type] = true;
+            ElementID.ProjPoison[Type] = true;
         }
         public override void SetDefaults()
         {

@@ -19,6 +19,7 @@ namespace Redemption.NPCs.Bosses.Gigapora
         {
             DisplayName.SetDefault("Flames");
             Main.projFrames[Projectile.type] = 3;
+            ElementID.ProjFire[Type] = true;
         }
         public override void SetDefaults()
         {

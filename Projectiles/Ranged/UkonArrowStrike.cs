@@ -18,6 +18,7 @@ namespace Redemption.Projectiles.Ranged
         {
             DisplayName.SetDefault("Ukko's Lightning");
             Main.projFrames[Projectile.type] = 24;
+            ElementID.ProjThunder[Type] = true;
         }
         public override void SetDefaults()
         {

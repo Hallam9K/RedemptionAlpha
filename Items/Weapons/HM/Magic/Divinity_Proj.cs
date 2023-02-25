@@ -105,6 +105,8 @@ namespace Redemption.Items.Weapons.HM.Magic
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Sun");
+            ElementID.ProjFire[Type] = true;
+            ElementID.ProjHoly[Type] = true;
         }
         public override void SetDefaults()
         {
@@ -305,6 +307,12 @@ namespace Redemption.Items.Weapons.HM.Magic
     public class Divinity_Ball : ModProjectile
     {
         public override string Texture => "Redemption/Textures/WhiteOrb";
+        public override void SetStaticDefaults()
+        {
+            DisplayName.SetDefault("Divinity Charge");
+            ElementID.ProjFire[Type] = true;
+            ElementID.ProjHoly[Type] = true;
+        }
         public override void SetDefaults()
         {
             Projectile.width = 22;

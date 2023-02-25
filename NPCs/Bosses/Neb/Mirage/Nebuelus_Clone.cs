@@ -91,6 +91,7 @@ namespace Redemption.NPCs.Bosses.Neb.Clone
                 Hide = true
             };
             NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, value);
+            ElementID.NPCCelestial[Type] = true;
         }
 
         public override void SetDefaults()
@@ -113,6 +114,11 @@ namespace Redemption.NPCs.Bosses.Neb.Clone
             NPC.dontTakeDamage = true;
             if (!Main.dedServ)
                 Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/BossStarGod1");
+
+            NPC.GetGlobalNPC<ElementalNPC>().OverrideMultiplier[ElementID.Celestial] *= .75f;
+            NPC.GetGlobalNPC<ElementalNPC>().OverrideMultiplier[ElementID.Nature] *= .9f;
+            NPC.GetGlobalNPC<ElementalNPC>().OverrideMultiplier[ElementID.Psychic] *= 1.25f;
+            NPC.GetGlobalNPC<ElementalNPC>().OverrideMultiplier[ElementID.Shadow] *= 1.1f;
         }
         public override bool CanHitPlayer(Player target, ref int cooldownSlot) => NPC.ai[3] == 6;
         public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
@@ -1367,43 +1373,13 @@ namespace Redemption.NPCs.Bosses.Neb.Clone
         }
         public override void ModifyHitByItem(Player player, Item item, ref int damage, ref float knockback, ref bool crit)
         {
-            if (!RedeConfigClient.Instance.ElementDisable)
-            {
-                if (ItemLists.Celestial.Contains(item.type))
-                    NPC.Redemption().elementDmg *= 0.75f;
-
-                if (ItemLists.Nature.Contains(item.type))
-                    NPC.Redemption().elementDmg *= 0.9f;
-
-                if (ItemLists.Psychic.Contains(item.type))
-                    NPC.Redemption().elementDmg *= 1.25f;
-
-                if (ItemLists.Shadow.Contains(item.type))
-                    NPC.Redemption().elementDmg *= 1.1f;
-            }
             if (item.DamageType == DamageClass.Melee)
                 damage *= 2;
         }
         public override void ModifyHitByProjectile(Projectile projectile, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
         {
-            if (!RedeConfigClient.Instance.ElementDisable)
-            {
-                if (ProjectileLists.Celestial.Contains(projectile.type))
-                    NPC.Redemption().elementDmg *= 0.75f;
-
-                if (ProjectileLists.Nature.Contains(projectile.type))
-                    NPC.Redemption().elementDmg *= 0.9f;
-
-                if (ProjectileLists.Psychic.Contains(projectile.type))
-                    NPC.Redemption().elementDmg *= 1.25f;
-
-                if (ProjectileLists.Shadow.Contains(projectile.type))
-                    NPC.Redemption().elementDmg *= 1.1f;
-            }
             if (projectile.Redemption().TechnicallyMelee)
-            {
                 damage *= 2;
-            }
         }
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
