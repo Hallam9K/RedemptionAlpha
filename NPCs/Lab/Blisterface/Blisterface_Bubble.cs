@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Redemption.Buffs.Debuffs;
 using Redemption.Globals;
 using Terraria;
 using Terraria.Audio;
@@ -77,6 +78,7 @@ namespace Redemption.NPCs.Lab.Blisterface
         }
         public override void OnHitPlayer(Player target, int damage, bool crit)
         {
+            target.AddBuff(ModContent.BuffType<BileDebuff>(), 180);
             Projectile.Kill();
         }
         public override bool PreDraw(ref Color lightColor)

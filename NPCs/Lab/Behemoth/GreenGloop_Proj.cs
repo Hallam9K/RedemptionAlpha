@@ -1,3 +1,4 @@
+using Redemption.Buffs.Debuffs;
 using Redemption.Globals;
 using Terraria;
 using Terraria.ID;
@@ -25,6 +26,7 @@ namespace Redemption.NPCs.Lab.Behemoth
             Projectile.alpha = 160;
             Projectile.timeLeft = 200;
         }
+        public override void OnHitPlayer(Player target, int damage, bool crit) => target.AddBuff(ModContent.BuffType<BileDebuff>(), 180);
         public override void AI()
         {
             if (++Projectile.frameCounter >= 5)

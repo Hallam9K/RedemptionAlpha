@@ -1,6 +1,9 @@
 ﻿using Microsoft.Xna.Framework;
 using Redemption.Globals;
 using Redemption.NPCs.Bosses.ADD;
+using Redemption.NPCs.Bosses.Neb;
+using Redemption.NPCs.Bosses.Neb.Clone;
+using Redemption.NPCs.Bosses.Neb.Phase2;
 using System;
 using Terraria;
 using Terraria.DataStructures;
@@ -194,8 +197,14 @@ namespace Redemption
             }
             ScreenShakeIntensity = MathHelper.Clamp(ScreenShakeIntensity, 0, 200);
 
-            if (Player.dead || !Player.active)
+            if (Player.dead || !Player.active || (!NPC.AnyNPCs(ModContent.NPCType<Nebuleus>()) && !NPC.AnyNPCs(ModContent.NPCType<Nebuleus2>()) && !NPC.AnyNPCs(ModContent.NPCType<Nebuleus_Clone>()) && !NPC.AnyNPCs(ModContent.NPCType<Nebuleus2_Clone>())))
+            {
+                NebCutscene = false;
+                NebCutsceneflag = false;
+                yeet2 = 0;
+                yeet = 0;
                 return;
+            }
             if (NebCutscene)
             {
                 if (!NebCutsceneflag)

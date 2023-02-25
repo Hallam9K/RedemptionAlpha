@@ -86,8 +86,11 @@ namespace Redemption.Globals.Player
                 Player.immuneTime = (int)MathHelper.Max(Player.immuneTime, 4);
                 return false;
             }
-            onHit = true;
             return true;
+        }
+        public override void PostHurt(bool pvp, bool quiet, double damage, int hitDirection, bool crit, int cooldownCounter)
+        {
+            onHit = true;
         }
         public override void OnHitNPC(Item item, Terraria.NPC target, int damage, float knockback, bool crit)
         {

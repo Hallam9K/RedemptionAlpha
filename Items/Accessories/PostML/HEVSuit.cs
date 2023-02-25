@@ -63,6 +63,7 @@ namespace Redemption.Items.Accessories.PostML
             p.HideVanity = hideVisual;
             p.VanityOn = true;
 
+            player.buffImmune[ModContent.BuffType<BileDebuff>()] = true;
             player.buffImmune[ModContent.BuffType<HeavyRadiationDebuff>()] = true;
             player.buffImmune[ModContent.BuffType<RadioactiveFalloutDebuff>()] = true;
             player.buffImmune[ModContent.BuffType<GreenRashesDebuff>()] = true;

@@ -1,4 +1,5 @@
 using Microsoft.Xna.Framework;
+using Redemption.Buffs.Debuffs;
 using Redemption.Dusts;
 using Redemption.Globals;
 using Terraria;
@@ -26,6 +27,7 @@ namespace Redemption.NPCs.Bosses.PatientZero
             Projectile.ignoreWater = true;
             Projectile.timeLeft = 200;
         }
+        public override void OnHitPlayer(Player target, int damage, bool crit) => target.AddBuff(ModContent.BuffType<BileDebuff>(), 180);
         public override Color? GetAlpha(Color lightColor) => Color.White * Projectile.Opacity;
         public override void AI()
         {

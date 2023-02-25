@@ -54,6 +54,7 @@ namespace Redemption
 
         public static RenderTargetManager Targets;
         public static Effect GlowTrailShader;
+        public static TrailManager TrailManager;
 
         private List<ILoadable> _loadCache;
 
@@ -80,6 +81,8 @@ namespace Redemption
 
             if (!Main.dedServ)
             {
+                TrailManager = new TrailManager(this);
+
                 dragonLeadCapeID = EquipLoader.AddEquipTexture(this, "Redemption/Items/Armor/PreHM/DragonLead/DragonLeadRibplate_Back", EquipType.Back, ModContent.GetInstance<DragonLeadRibplate>());
                 shinkiteCapeID = EquipLoader.AddEquipTexture(this, "Redemption/Items/Armor/PostML/Shinkite/ShinkiteChestplate_Back", EquipType.Back, ModContent.GetInstance<ShinkiteChestplate>());
                 archeMaleLegID = EquipLoader.AddEquipTexture(this, "Redemption/Items/Donator/Arche/ArchePatreonVanityLegs_Legs", EquipType.Legs, ModContent.GetModItem(ModContent.ItemType<ArchePatreonVanityLegs>()));
@@ -169,7 +172,10 @@ namespace Redemption
             RedeSpiritwalkerAbility = KeybindLoader.RegisterKeybind(this, "Spirit Walker Key", Keys.K);
             AntiqueDorulCurrencyId = CustomCurrencyManager.RegisterCurrency(new AntiqueDorulCurrency(ModContent.ItemType<AncientGoldCoin>(), 999L, "Antique Doruls"));
         }
-
+        public override void Unload()
+        {
+            TrailManager = null;
+        }
         public override void PostSetupContent()
         {
             WeakReferences.PerformModSupport();
@@ -329,13 +335,13 @@ namespace Redemption
 
                     if (Main.netMode == NetmodeID.Server)
                     {
-                        WriteToPacket(GetPacket(), (byte)ModMessageType.SpawnTrail, projindex).Send();
+                        //If received by the server, send to all clients instead
+                        WriteToPacket(Instance.GetPacket(), (byte)ModMessageType.SpawnTrail, projindex).Send();
                         break;
                     }
 
-                    if (Main.projectile[projindex].ModProjectile is ITrailProjectile trailproj)
-                        trailproj.DoTrailCreation(RedeSystem.TrailManager);
-
+                    if (Main.projectile[projindex].ModProjectile is IManualTrailProjectile trailProj)
+                        trailProj.DoTrailCreation(Redemption.TrailManager);
                     break;
                 case ModMessageType.StartFowlMorning:
                     FowlMorningWorld.FowlMorningActive = true;
@@ -386,16 +392,11 @@ namespace Redemption
         public UserInterface ForestNymphTradeUILayer;
         public ForestNymphTradeUI ForestNymphTradeUIElement;
 
-        public static TrailManager TrailManager;
-        public bool Initialized;
-
         public override void Load()
         {
             RedeDetours.Initialize();
             if (!Main.dedServ)
             {
-                On.Terraria.Main.Update += LoadTrailManager;
-
                 TitleUILayer = new UserInterface();
                 TitleCardUIElement = new TitleCard();
                 TitleUILayer.SetState(TitleCardUIElement);
@@ -429,27 +430,15 @@ namespace Redemption
                 ForestNymphTradeUILayer.SetState(ForestNymphTradeUIElement);
             }
         }
-        private void LoadTrailManager(On.Terraria.Main.orig_Update orig, Main self, GameTime gameTime)
-        {
-            if (!Initialized)
-            {
-                TrailManager = new TrailManager(Redemption.Instance);
-                Initialized = true;
-            }
-
-            orig(self, gameTime);
-        }
-
-        public override void Unload()
-        {
-            TrailManager = null;
-            On.Terraria.Main.Update -= LoadTrailManager;
-        }
-
         public override void ModifyLightingBrightness(ref float scale)
         {
             if (ModContent.GetInstance<RedeTileCount>().WastelandCrimsonTileCount >= 50 || ModContent.GetInstance<RedeTileCount>().WastelandCorruptTileCount >= 50)
                 scale = 0.9f;
+        }
+        public override void PreUpdateItems()
+        {
+            if (Main.netMode != NetmodeID.Server)
+                Redemption.TrailManager.UpdateTrails();
         }
         public override void ModifySunLightColor(ref Color tileColor, ref Color backgroundColor)
         {
@@ -492,13 +481,6 @@ namespace Redemption
                 Transform.Zoom = new Vector2(screenPlayer.customZoom);
         }
 
-        public override void PreUpdateProjectiles()
-        {
-            if (Main.netMode != NetmodeID.Server)
-            {
-                TrailManager.UpdateTrails();
-            }
-        }
         public override void ModifyInterfaceLayers(List<GameInterfaceLayer> layers)
         {
             BuffPlayer bP = Main.LocalPlayer.GetModPlayer<BuffPlayer>();

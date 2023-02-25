@@ -405,6 +405,9 @@ namespace Redemption.Globals
 
         public override void OnWorldLoad()
         {
+            if (Redemption.TrailManager != null)
+                Redemption.TrailManager.ClearAllTrails(); //trails break on world unload and reload(their projectile is still counted as being active???), so this just clears them all on reload
+
             alignment = 0;
             DayNightCount = 0;
             SkeletonInvasion = false;

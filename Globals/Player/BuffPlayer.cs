@@ -28,6 +28,7 @@ using ParticleLibrary;
 using Redemption.Particles;
 using Redemption.NPCs.Bosses.Neb.Phase2;
 using Redemption.NPCs.Bosses.Neb.Clone;
+using Redemption.Base;
 
 namespace Redemption.Globals.Player
 {
@@ -269,7 +270,20 @@ namespace Redemption.Globals.Player
                 }
             }
         }
+        /// <summary>Allows you to modify the knockback given ANY damage source. NOTE: This is an IL hook, which is why it needs a Player instance and is static.</summary>
+        /// <param name="player">The specific player to change.</param>
+        /// <param name="horizontal">Whether this is a horizontal (velocity.X) change or a vertical (velocity.Y) change.</param>
+        public static float KnockbackMultiplier(Terraria.Player player, bool horizontal)
+        {
+            float totalKb = 1f;
 
+            if (BasePlayer.HasAccessory(player, ModContent.ItemType<EggShield>(), true, false))
+                totalKb *= 0.75f;
+
+            if (totalKb < 0.001f) //Throws NullReferenceException if it's 0 for some reason
+                totalKb = 0.001f;
+            return totalKb;
+        }
         public override void UpdateEquips()
         {
             if (snipped)
@@ -543,7 +557,7 @@ namespace Redemption.Globals.Player
             if (crystalKnowledge && proj.GetFirstElement(true) != 0 && Player.ownedProjectileCounts[ModContent.ProjectileType<ElementalCrystal>()] < 6 && Main.rand.NextBool(4) && proj.type != ModContent.ProjectileType<ElementalCrystal>())
             {
                 Player.AddBuff(ModContent.BuffType<CrystalKnowledgeBuff>(), 10);
-                Projectile.NewProjectile(proj.GetSource_FromAI(), Player.Center, Vector2.Zero, ModContent.ProjectileType<ElementalCrystal>(), 10, 1, Main.myPlayer, 0, proj.GetFirstElement(true));
+                Projectile.NewProjectile(proj.GetSource_FromAI(), Player.Center, Vector2.Zero, ModContent.ProjectileType<ElementalCrystal>(), 40, 1, Main.myPlayer, 0, proj.GetFirstElement(true));
             }
         }
         public override void OnHitNPC(Item item, Terraria.NPC target, int damage, float knockback, bool crit)
@@ -567,7 +581,7 @@ namespace Redemption.Globals.Player
             if (crystalKnowledge && item.GetFirstElement(true) != 0 && Player.ownedProjectileCounts[ModContent.ProjectileType<ElementalCrystal>()] < 6 && Main.rand.NextBool(4))
             {
                 Player.AddBuff(ModContent.BuffType<CrystalKnowledgeBuff>(), 10);
-                Projectile.NewProjectile(Player.GetSource_ItemUse(item), Player.Center, Vector2.Zero, ModContent.ProjectileType<ElementalCrystal>(), 10, 1, Main.myPlayer, 0, item.GetFirstElement(true));
+                Projectile.NewProjectile(Player.GetSource_ItemUse(item), Player.Center, Vector2.Zero, ModContent.ProjectileType<ElementalCrystal>(), 40, 1, Main.myPlayer, 0, item.GetFirstElement(true));
             }
         }
         public override void UpdateBadLifeRegen()
@@ -610,8 +624,8 @@ namespace Redemption.Globals.Player
                     Player.lifeRegen = 0;
 
                 Player.lifeRegenTime = 0;
-                Player.lifeRegen -= 5;
-                Player.statDefense -= 30;
+                Player.lifeRegen -= 10;
+                Player.statDefense -= 15;
             }
             if ((Player.InModBiome<WastelandPurityBiome>() || Player.InModBiome<LabBiome>()) && Player.wet && !Player.lavaWet && !Player.honeyWet && !Player.RedemptionPlayerBuff().WastelandWaterImmune)
             {

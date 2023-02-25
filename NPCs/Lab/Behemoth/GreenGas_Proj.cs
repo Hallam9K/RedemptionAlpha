@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Redemption.Buffs.Debuffs;
 using Redemption.Globals;
 using Terraria;
 using Terraria.GameContent;
@@ -30,6 +31,7 @@ namespace Redemption.NPCs.Lab.Behemoth
             Projectile.alpha = 200;
             Projectile.timeLeft = 120;
         }
+        public override void OnHitPlayer(Player target, int damage, bool crit) => target.AddBuff(ModContent.BuffType<BileDebuff>(), 180);
         public override void AI()
         {
             Projectile.rotation += Projectile.velocity.Length() / 40 * Projectile.spriteDirection;

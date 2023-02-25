@@ -275,7 +275,7 @@ namespace Redemption.Globals.NPC
                 if (npc.lifeRegen > 0)
                     npc.lifeRegen = 0;
 
-                npc.lifeRegen -= 5;
+                npc.lifeRegen -= 10;
             }
             if (electrified)
             {

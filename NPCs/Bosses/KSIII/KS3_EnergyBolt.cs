@@ -32,7 +32,7 @@ namespace Redemption.NPCs.Bosses.KSIII
 
         public void DoTrailCreation(TrailManager tManager)
         {
-            tManager.CreateTrail(Projectile, new GradientTrail(new Color(140, 255, 242), new Color(194, 255, 242)), new RoundCap(), new ArrowGlowPosition(), 10f, 200f);
+            tManager.CreateTrail(Projectile, new GradientTrail(new Color(140, 255, 242), new Color(194, 255, 242)), new RoundCap(), new DefaultTrailPosition(), 10f, 200f);
         }
 
 

@@ -261,8 +261,8 @@ namespace Redemption.NPCs.Bosses.Neb
                 Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
 
                 Color color = new(Main.DiscoR * 6, Main.DiscoG * 6, Main.DiscoB * 6);
-                Main.EntitySpriteDraw(texture, position - new Vector2(0, 80), new Rectangle?(rect), color * Projectile.Opacity, Projectile.rotation, origin, Projectile.scale * 0.5f, 0, 0);
-                Main.EntitySpriteDraw(texture, position - new Vector2(0, 80), new Rectangle?(rect), color * 0.7f * Projectile.Opacity, -Projectile.rotation, origin, Projectile.scale * 0.5f, 0, 0);
+                Main.EntitySpriteDraw(texture, position, new Rectangle?(rect), color * Projectile.Opacity, Projectile.rotation, origin, Projectile.scale * 0.5f, 0, 0);
+                Main.EntitySpriteDraw(texture, position, new Rectangle?(rect), color * 0.7f * Projectile.Opacity, -Projectile.rotation, origin, Projectile.scale * 0.5f, 0, 0);
 
                 Main.spriteBatch.End();
                 Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
