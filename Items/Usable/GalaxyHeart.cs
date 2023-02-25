@@ -1,6 +1,8 @@
-﻿using Redemption.Globals.Player;
+﻿using Redemption.BaseExtension;
+using Redemption.Globals.Player;
 using Redemption.Rarities;
 using Terraria;
+using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -28,22 +30,19 @@ namespace Redemption.Items.Usable
         }
         public override bool CanUseItem(Player player)
         {
-            RedePlayer modPlayer = player.GetModPlayer<RedePlayer>();
-            if (modPlayer.galaxyHeart || player.statLifeMax < 500)
-                return false;
-            return true;
+            return player.ConsumedLifeCrystals == Player.LifeCrystalMax && player.ConsumedLifeFruit == Player.LifeFruitMax;
         }
 
         public override bool? UseItem(Player player)
         {
-            if (player.itemAnimation > 0 && player.itemTime == 0)
-            {
-                player.itemTime = Item.useTime;
-                if (Main.myPlayer == player.whoAmI)
-                    player.HealEffect(50);
-                RedePlayer modPlayer = player.GetModPlayer<RedePlayer>();
-                modPlayer.galaxyHeart = true;
-            }
+            player.Redemption().heartStyle = 2;
+            if (player.Redemption().galaxyHeart)
+                return null;
+
+            player.UseHealthMaxIncreasingItem(50);
+
+            player.Redemption().galaxyHeart = true;
+            SoundEngine.PlaySound(SoundID.Item43, player.position);
             return true;
         }
     }
