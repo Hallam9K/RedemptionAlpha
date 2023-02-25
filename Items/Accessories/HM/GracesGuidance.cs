@@ -75,19 +75,10 @@ namespace Redemption.Items.Accessories.HM
                 }
             }
         }
-        public override bool CanEquipAccessory(Player player, int slot, bool modded)
+        public override bool CanAccessoryBeEquippedWith(Item equippedItem, Item incomingItem, Player player)
         {
-            if (slot < 10)
-            {
-                int maxAccessoryIndex = 5 + player.extraAccessorySlots;
-                for (int i = 3; i < 3 + maxAccessoryIndex; i++)
-                {
-                    if (slot != i && player.armor[i].type == ModContent.ItemType<PowerCellWristband>())
-                        return false;
-                    if (slot != i && player.armor[i].type == ModContent.ItemType<SacredCross>())
-                        return false;
-                }
-            }
+            if (equippedItem.type == ModContent.ItemType<PowerCellWristband>() || equippedItem.type == ModContent.ItemType<SacredCross>())
+                return false;
             return true;
         }
     }

@@ -38,6 +38,7 @@ namespace Redemption.Projectiles.Misc
             Projectile.timeLeft = 1200;
             Projectile.alpha = 255;
         }
+        public override bool? CanCutTiles() => false;
         public ref float Element => ref Projectile.ai[1];
         private Color elemColor;
         public int speed;

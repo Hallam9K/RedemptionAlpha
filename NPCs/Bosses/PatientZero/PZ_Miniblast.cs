@@ -6,6 +6,7 @@ using Terraria.Audio;
 using Redemption.Globals;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria.GameContent;
+using Redemption.Buffs.Debuffs;
 
 namespace Redemption.NPCs.Bosses.PatientZero
 {
@@ -30,6 +31,7 @@ namespace Redemption.NPCs.Bosses.PatientZero
             Projectile.timeLeft = 160;
             Projectile.alpha = 255;
         }
+        public override void OnHitPlayer(Player target, int damage, bool crit) => target.AddBuff(ModContent.BuffType<BileDebuff>(), 120);
         public override void AI()
         {
             if (Main.rand.NextBool(5))

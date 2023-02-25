@@ -3,6 +3,7 @@ using Terraria;
 using Terraria.ModLoader;
 using Terraria.ID;
 using Redemption.Globals;
+using Redemption.Buffs.Debuffs;
 
 namespace Redemption.NPCs.Bosses.SeedOfInfection
 {
@@ -26,7 +27,7 @@ namespace Redemption.NPCs.Bosses.SeedOfInfection
             Projectile.tileCollide = false;
             Projectile.timeLeft = 160;
         }
-
+        public override void OnHitPlayer(Player target, int damage, bool crit) => target.AddBuff(ModContent.BuffType<BileDebuff>(), 120);
         public override void AI()
         {
             if (++Projectile.frameCounter >= 3)

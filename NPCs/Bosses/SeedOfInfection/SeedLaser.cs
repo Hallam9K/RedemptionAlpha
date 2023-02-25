@@ -6,6 +6,7 @@ using Terraria;
 using Terraria.ModLoader;
 using Terraria.GameContent;
 using Redemption.Globals;
+using Redemption.Buffs.Debuffs;
 
 namespace Redemption.NPCs.Bosses.SeedOfInfection
 {
@@ -27,6 +28,7 @@ namespace Redemption.NPCs.Bosses.SeedOfInfection
             Projectile.timeLeft = 3600;
             Projectile.tileCollide = false;
         }
+        public override void OnHitPlayer(Player target, int damage, bool crit) => target.AddBuff(ModContent.BuffType<BileDebuff>(), 120);
         internal const float charge = 40f;
         public float LaserLength { get { return Projectile.localAI[1]; } set { Projectile.localAI[1] = value; } }
         public const float LaserLengthMax = 2000f;

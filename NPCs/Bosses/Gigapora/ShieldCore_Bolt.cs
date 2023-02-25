@@ -27,25 +27,31 @@ namespace Redemption.NPCs.Bosses.Gigapora
         }
         public void DoTrailCreation(TrailManager tManager)
         {
-            tManager.CreateTrail(Projectile, new GradientTrail(new Color(207, 29, 29), new Color(106, 16, 16)), new RoundCap(), new ArrowGlowPosition(), 20f, 200f);
+            tManager.CreateTrail(Projectile, new GradientTrail(new Color(255, 236, 100, 100), new Color(0, 0, 0, 0)), new RoundCap(), new DefaultTrailPosition(), 10f, 300f);
+            tManager.CreateTrail(Projectile, new GradientTrail(new Color(255, 29, 29, 0), new Color(106, 16, 16, 0)), new RoundCap(), new DefaultTrailPosition(), 20f, 200f);
         }
         public override void AI()
         {
             Projectile.velocity *= 1.02f;
+            flareScale += Main.rand.NextFloat(-.02f, .02f);
+            flareScale = MathHelper.Clamp(flareScale, .9f, 1.1f);
+            flareOpacity += Main.rand.NextFloat(-.2f, .2f);
+            flareOpacity = MathHelper.Clamp(flareOpacity, 0.6f, 1.1f);
         }
+        private float flareScale;
+        private float flareOpacity;
         public override void PostDraw(Color lightColor)
         {
             Main.spriteBatch.End();
             Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
 
-            Texture2D flare = ModContent.Request<Texture2D>("Redemption/Textures/WhiteFlare").Value;
+            Texture2D flare = ModContent.Request<Texture2D>("Redemption/Textures/RedEyeFlare").Value;
             Rectangle rect = new(0, 0, flare.Width, flare.Height);
             Vector2 origin = new(flare.Width / 2, flare.Height / 2);
             Vector2 position = Projectile.Center - Main.screenPosition;
-            Color colour = Color.Lerp(Color.White, new Color(207, 29, 29), 1f);
 
-            Main.EntitySpriteDraw(flare, position, new Rectangle?(rect), colour, Projectile.rotation, origin, 1f, SpriteEffects.None, 0);
-            Main.EntitySpriteDraw(flare, position, new Rectangle?(rect), colour * 0.4f, Projectile.rotation, origin, 1.4f, SpriteEffects.None, 0);
+            Main.EntitySpriteDraw(flare, position, new Rectangle?(rect), Color.White * flareOpacity, Projectile.rotation, origin, 1f * flareScale, SpriteEffects.None, 0);
+            Main.EntitySpriteDraw(flare, position, new Rectangle?(rect), Color.White * flareOpacity * 0.4f, Projectile.rotation, origin, 1.4f * flareScale, SpriteEffects.None, 0);
 
             Main.spriteBatch.End();
             Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);

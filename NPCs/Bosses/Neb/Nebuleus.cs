@@ -495,8 +495,10 @@ namespace Redemption.NPCs.Bosses.Neb
                 case 0:
                     #region Dramatic Entrance
                     NPC.LookAtEntity(player);
-                    player.GetModPlayer<ScreenPlayer>().lockScreen = true;
+                    player.RedemptionScreen().ScreenFocusPosition = NPC.Center;
+                    player.RedemptionScreen().lockScreen = true;
                     player.RedemptionScreen().cutscene = true;
+                    NPC.LockMoveRadius(player);
                     NPC.ai[2]++;
                     if (NPC.ai[2] >= 60)
                     {

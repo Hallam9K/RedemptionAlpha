@@ -8,7 +8,7 @@ namespace Redemption.Buffs.Debuffs
 	{
 		public override void SetStaticDefaults()
 		{
-			Main.buffNoTimeDisplay[Type] = true;
+			Main.buffNoTimeDisplay[Type] = false;
             Main.debuff[Type] = true;
         }
 

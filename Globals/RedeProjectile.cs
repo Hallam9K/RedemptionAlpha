@@ -4,9 +4,7 @@ using Terraria.ModLoader;
 using Redemption.BaseExtension;
 using Terraria.DataStructures;
 using System.Collections.Generic;
-using Redemption.Effects.PrimitiveTrails;
 using Terraria.ID;
-using static Redemption.Globals.RedeNet;
 using System.Linq;
 using Terraria.Enums;
 
@@ -78,21 +76,13 @@ namespace Redemption.Globals
         {
             Entity attacker = null;
             if (source is EntitySource_ItemUse item && projectile.friendly && !projectile.hostile)
-            {
                 attacker = item.Entity;
-            }
             else if (source is EntitySource_Buff buff && projectile.friendly && !projectile.hostile)
-            {
                 attacker = buff.Entity;
-            }
             else if (source is EntitySource_ItemUse_WithAmmo itemAmmo && projectile.friendly && !projectile.hostile)
-            {
                 attacker = itemAmmo.Entity;
-            }
             else if (source is EntitySource_Mount mount && projectile.friendly && !projectile.hostile)
-            {
                 attacker = mount.Entity;
-            }
             else if (source is EntitySource_Parent parent)
             {
                 if (parent.Entity is Projectile proj)
@@ -105,15 +95,6 @@ namespace Redemption.Globals
                 if (projOwners.ContainsKey(projectile.whoAmI))
                     projOwners.Remove(projectile.whoAmI);
                 projOwners.Add(projectile.whoAmI, (attacker, source));
-            }
-
-            if (projectile.ModProjectile is ITrailProjectile)
-            {
-                if (Main.netMode == NetmodeID.SinglePlayer)
-                    (projectile.ModProjectile as ITrailProjectile).DoTrailCreation(RedeSystem.TrailManager);
-
-                else
-                    Redemption.WriteToPacket(Redemption.Instance.GetPacket(), (byte)ModMessageType.SpawnTrail, projectile.whoAmI).Send();
             }
         }
         #region Wasteland Conversion

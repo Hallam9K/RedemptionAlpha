@@ -6,6 +6,7 @@ using Redemption.Globals;
 using Terraria.Audio;
 using Terraria.GameContent;
 using Microsoft.Xna.Framework.Graphics;
+using Redemption.Buffs.Debuffs;
 
 namespace Redemption.NPCs.Bosses.PatientZero
 {
@@ -53,6 +54,7 @@ namespace Redemption.NPCs.Bosses.PatientZero
                 Projectile.localAI[0] = 1;
             }
         }
+        public override void OnHitPlayer(Player target, int damage, bool crit) => target.AddBuff(ModContent.BuffType<BileDebuff>(), 300);
         public override bool PreDraw(ref Color lightColor)
         {
             Texture2D texture = TextureAssets.Projectile[Projectile.type].Value;
