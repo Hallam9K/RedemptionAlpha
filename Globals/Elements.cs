@@ -436,7 +436,6 @@ namespace Redemption.Globals
 
         public override void SetDefaults(Terraria.NPC npc)
         {
-            base.SetDefaults(npc);
             SetElementalMultipliers(npc, ref npc.GetGlobalNPC<ElementalNPC>().elementDmg);
         }
         public override void ModifyHitByItem(Terraria.NPC npc, Terraria.Player player, Item item, ref int damage, ref float knockback, ref bool crit)
@@ -497,14 +496,14 @@ namespace Redemption.Globals
                 #endregion
             }
         }
-        public void SetElementalMultipliers(Terraria.NPC npc, ref float[] multiplier)
+        public static void SetElementalMultipliers(Terraria.NPC npc, ref float[] multiplier)
         {
             for (int j = 0; j < npc.GetGlobalNPC<ElementalNPC>().OverrideMultiplier.Length; j++)
             {
-                if (npc.GetGlobalNPC<ElementalNPC>().OverrideMultiplier[j] is 1)
-                    npc.GetGlobalNPC<ElementalNPC>().elementDmg[j] = 1;
+                if (npc.GetGlobalNPC<ElementalNPC>().OverrideMultiplier[j] == 1)
+                    multiplier[j] = 1;
                 else
-                    npc.GetGlobalNPC<ElementalNPC>().elementDmg = npc.GetGlobalNPC<ElementalNPC>().OverrideMultiplier;
+                    multiplier[j] = npc.GetGlobalNPC<ElementalNPC>().OverrideMultiplier[j];
             }
             if (NPCLists.Plantlike.Contains(npc.type))
             {

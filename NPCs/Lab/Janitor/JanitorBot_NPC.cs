@@ -170,6 +170,8 @@ namespace Redemption.NPCs.Lab.Janitor
                 shop.item[nextSlot++].SetDefaults(ModContent.ItemType<BotHanger>());
                 shop.item[nextSlot++].SetDefaults(ModContent.ItemType<EmptyBotHanger>());
             }
+            if (RedeWorld.keycardGiven)
+                shop.item[nextSlot++].SetDefaults(ModContent.ItemType<Keycard>());
             if (RedeBossDowned.downedBlisterface)
                 shop.item[nextSlot++].SetDefaults(ModContent.ItemType<NanoPickaxe>());
         }

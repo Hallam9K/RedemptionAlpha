@@ -13,6 +13,7 @@ using System.IO;
 using Terraria.ModLoader.Utilities;
 using Redemption.Biomes;
 using Redemption.Base;
+using Redemption.NPCs.Friendly;
 
 namespace Redemption.NPCs.HM
 {
@@ -232,7 +233,7 @@ namespace Redemption.NPCs.HM
                 return 0;
 
             float baseChance = SpawnCondition.OverworldDay.Chance;
-            float m = NPC.AnyNPCs(ModContent.NPCType<Android>()) || NPC.AnyNPCs(ModContent.NPCType<SlayerSpawner>()) ? 0 : 10;
+            float m = NPC.AnyNPCs(ModContent.NPCType<GiftDrone3>()) || NPC.AnyNPCs(ModContent.NPCType<Android>()) || NPC.AnyNPCs(Type) ? 0 : 10;
 
             return baseChance * m;
         }
