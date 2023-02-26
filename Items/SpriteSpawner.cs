@@ -1,6 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Redemption.UI;
+using Redemption.UI.ChatUI;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -40,15 +40,15 @@ namespace Redemption.Items
 
             DialogueChain chain = new();
             chain.modifier = new(0f, 128f);
-            chain.Add(new(npc, "Hey there, don't mind me, I'm just testing this UI. I'll be out of your^20^...[90]uh^20^...[90]^6^hair[30] in no time.", Color.LightGreen, Color.DarkCyan, boxFade: true))
+            chain.Add(new(npc, "Hey there, don't mind me, I'm just testing this UI. I'll be out of your^0.3^...[1.5]uh^0.3^...[1.5]^0.1^hair[0.5] in no time.", Color.LightGreen, Color.DarkCyan, boxFade: true))
                  .Add(new(npc, "It's such a lovely day out! I hope nothing bad happens to me...", Color.LightGreen, Color.DarkCyan, boxFade: true))
                  .Add(new(npc, "What could go wrong anyway? Seems pretty safe out here.", Color.LightGreen, Color.DarkCyan, boxFade: true))
                  .Add(new(npc, "Plus! I could just run away at any time! I'm SUPER[@BOO!] good at jumping.", Color.LightGreen, Color.DarkCyan, boxFade: true))
                  .Add(new(npc, "[@Gotcha!]Apparently there's a slime out there that can jump a bajillion feet into the air! Something like the King of all slimes...", Color.LightGreen, Color.DarkCyan, boxFade: true));
             chain.OnSymbolTrigger += Chain_OnSymbolTrigger;
 
-            TextBubbleUI.Visible = true;
-            TextBubbleUI.Add(chain);
+            ChatUI.Visible = true;
+            ChatUI.Add(chain);
             //Projectile.NewProjectile(Item.GetSource_FromThis(), player.Center, Vector2.Zero, ModContent.ProjectileType<AdamPortal>(), 0, 0f);
 
             if (player.altFunctionUse == 2)

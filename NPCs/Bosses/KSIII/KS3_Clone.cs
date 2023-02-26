@@ -12,7 +12,6 @@ using Terraria.GameContent;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria.Audio;
 using Redemption.Base;
-using Redemption.UI;
 using Terraria.GameContent.ItemDropRules;
 using Redemption.Items.Accessories.HM;
 using Redemption.Items.Placeable.Trophies;
@@ -25,6 +24,7 @@ using Redemption.Items.Weapons.HM.Magic;
 using Redemption.Items.Weapons.HM.Melee;
 using Redemption.Items.Armor.Vanity;
 using ReLogic.Content;
+using Redemption.UI.ChatUI;
 
 namespace Redemption.NPCs.Bosses.KSIII
 {
@@ -288,8 +288,8 @@ namespace Redemption.NPCs.Bosses.KSIII
                              .Add(new(NPC, "TARGET DEEMED:[30] 'A WASTE OF TIME'", new Color(170, 255, 255), Color.Black, voice, 2, 100, 0, false, null, bubble, null, modifier))
                              .Add(new(NPC, "RELAYING MESSAGE:[30] 'KING SLAYER NO LONGER HAS TIME FOR YOU'", new Color(170, 255, 255), Color.Black, voice, 2, 100, 10, true, null, bubble, null, modifier, 1));
                         chain.OnEndTrigger += Chain_OnEndTrigger;
-                        TextBubbleUI.Visible = true;
-                        TextBubbleUI.Add(chain);
+                        ChatUI.Visible = true;
+                        ChatUI.Add(chain);
                     }
                     if (AITimer == 5001)
                     {

@@ -2,7 +2,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.BaseExtension;
 using Redemption.Globals;
-using Redemption.UI;
+using Redemption.UI.ChatUI;
 using Redemption.WorldGeneration;
 using Terraria;
 using Terraria.Audio;
@@ -67,8 +67,8 @@ namespace Redemption.NPCs.Lab.Janitor
                              .Add(new(NPC, "Here,[10] have this Lab Access thing and get lost!", Colors.RarityYellow, new Color(100, 86, 0), voice, 2, 100, 0, false)) // 202
                              .Add(new(NPC, "[@a]I got moppin' to do.", Colors.RarityYellow, new Color(100, 86, 0), voice, 2, 100, 30, true)); // 170
                         chain.OnSymbolTrigger += Chain_OnSymbolTrigger;
-                        TextBubbleUI.Visible = true;
-                        TextBubbleUI.Add(chain);
+                        ChatUI.Visible = true;
+                        ChatUI.Add(chain);
                     }
                     if (AITimer >= 2000)
                     {
@@ -145,8 +145,8 @@ namespace Redemption.NPCs.Lab.Janitor
                              .Add(new(NPC, "Did you just...[30] block my way?", Colors.RarityYellow, new Color(100, 86, 0), voice, 2, 100, 0, false)) // 188
                              .Add(new(NPC, "Well screw you too!", Colors.RarityYellow, new Color(100, 86, 0), voice, 2, 100, 30, true, endID: 1)); // 168
                         chain.OnEndTrigger += Chain_OnEndTrigger;
-                        TextBubbleUI.Visible = true;
-                        TextBubbleUI.Add(chain);
+                        ChatUI.Visible = true;
+                        ChatUI.Add(chain);
                     }
                     if (AITimer > 2000)
                     {

@@ -15,7 +15,6 @@ using Microsoft.Xna.Framework.Graphics;
 using Terraria.Audio;
 using Redemption.Base;
 using Redemption.Projectiles.Misc;
-using Redemption.UI;
 using Redemption.Dusts;
 using Terraria.GameContent.ItemDropRules;
 using Redemption.Items.Placeable.Trophies;
@@ -32,6 +31,7 @@ using ReLogic.Content;
 using Redemption.NPCs.PreHM;
 using static System.Net.Mime.MediaTypeNames;
 using static Humanizer.In;
+using Redemption.UI.ChatUI;
 
 namespace Redemption.NPCs.Bosses.KSIII
 {
@@ -419,8 +419,8 @@ namespace Redemption.NPCs.Bosses.KSIII
                                 }
                                 chain.OnSymbolTrigger += Chain_OnSymbolTrigger;
                                 chain.OnEndTrigger += Chain_OnEndTrigger;
-                                TextBubbleUI.Visible = true;
-                                TextBubbleUI.Add(chain);
+                                ChatUI.Visible = true;
+                                ChatUI.Add(chain);
                             }
                         }
                         if (AITimer == 5001)
@@ -485,8 +485,8 @@ namespace Redemption.NPCs.Bosses.KSIII
                             chain.Add(new(NPC, line1, new Color(170, 255, 255), Color.Black, voice, 2, 100, 30, true, null, bubble, null, modifier, 1));
                             chain.OnSymbolTrigger += Chain_OnSymbolTrigger;
                             chain.OnEndTrigger += Chain_OnEndTrigger;
-                            TextBubbleUI.Visible = true;
-                            TextBubbleUI.Add(chain);
+                            ChatUI.Visible = true;
+                            ChatUI.Add(chain);
                         }
                         if (AITimer == 5001)
                         {
@@ -1945,8 +1945,8 @@ namespace Redemption.NPCs.Bosses.KSIII
                                  .Add(new(NPC, "[@h2]" + line2, new Color(170, 255, 255), Color.Black, voice, 2, 100, 30, true, null, bubble, null, modifier, 1));
                             chain.OnSymbolTrigger += Chain_OnSymbolTrigger;
                             chain.OnEndTrigger += Chain_OnEndTrigger;
-                            TextBubbleUI.Visible = true;
-                            TextBubbleUI.Add(chain);
+                            ChatUI.Visible = true;
+                            ChatUI.Add(chain);
                         }
                         if (AITimer == 5001)
                         {
@@ -2052,8 +2052,8 @@ namespace Redemption.NPCs.Bosses.KSIII
                                  .Add(new(NPC, "[@h2]" + line2, new Color(170, 255, 255), Color.Black, voice, 2, 100, 30, true, null, bubble, null, modifier, 1));
                             chain.OnSymbolTrigger += Chain_OnSymbolTrigger;
                             chain.OnEndTrigger += Chain_OnEndTrigger;
-                            TextBubbleUI.Visible = true;
-                            TextBubbleUI.Add(chain);
+                            ChatUI.Visible = true;
+                            ChatUI.Add(chain);
                         }
                         if (AITimer == 5001)
                         {
@@ -2139,8 +2139,8 @@ namespace Redemption.NPCs.Bosses.KSIII
                                  .Add(new(NPC, "[@h2]But you better realise I'm hardly trying.[60][@h1] I ain't bluffing either.", new Color(170, 255, 255), Color.Black, voice, 2, 100, 30, true, null, bubble, null, modifier, 1));
                             chain.OnSymbolTrigger += Chain_OnSymbolTrigger;
                             chain.OnEndTrigger += Chain_OnEndTrigger;
-                            TextBubbleUI.Visible = true;
-                            TextBubbleUI.Add(chain);
+                            ChatUI.Visible = true;
+                            ChatUI.Add(chain);
                         }
                         if (AITimer == 5001)
                         {
@@ -2193,8 +2193,8 @@ namespace Redemption.NPCs.Bosses.KSIII
                             chain.Add(new(NPC, "If you stop attacking,[10] I'll go back to more [10][@h2]IMPORTANT[10][@h3] business.", new Color(170, 255, 255), Color.Black, voice, 2, 100, 30, true, null, bubble, null, modifier, 1));
                             chain.OnSymbolTrigger += Chain_OnSymbolTrigger;
                             chain.OnEndTrigger += Chain_OnEndTrigger;
-                            TextBubbleUI.Visible = true;
-                            TextBubbleUI.Add(chain);
+                            ChatUI.Visible = true;
+                            ChatUI.Add(chain);
                         }
                         if (AITimer > 5000)
                         {
@@ -2227,8 +2227,8 @@ namespace Redemption.NPCs.Bosses.KSIII
                                  .Add(new(NPC, "[@h3]But,[10] if you so choose,[10] we can continue...[60] But I won't be happy if I lose.", new Color(170, 255, 255), Color.Black, voice, 2, 100, 30, true, null, bubble, null, modifier, 1));
                             chain.OnSymbolTrigger += Chain_OnSymbolTrigger;
                             chain.OnEndTrigger += Chain_OnEndTrigger;
-                            TextBubbleUI.Visible = true;
-                            TextBubbleUI.Add(chain);
+                            ChatUI.Visible = true;
+                            ChatUI.Add(chain);
                         }
                         if (AITimer > 5000)
                         {
@@ -2306,8 +2306,8 @@ namespace Redemption.NPCs.Bosses.KSIII
                         HeadType = 1;
                         DialogueChain chain = new();
                         chain.Add(new(NPC, "I see how it is...", new Color(170, 255, 255), Color.Black, voice, 2, 100, 30, true, null, bubble, null, modifier));
-                        TextBubbleUI.Visible = true;
-                        TextBubbleUI.Add(chain);
+                        ChatUI.Visible = true;
+                        ChatUI.Add(chain);
                     }
                     if (AITimer == 180)
                         RedeHelper.SpawnNPC(NPC.GetSource_FromAI(), (int)NPC.Center.X + Main.rand.Next(-80, 80), (int)NPC.Center.Y - Main.rand.Next(800, 900), ModContent.NPCType<SpaceKeeper>(), NPC.whoAmI, 0);
@@ -2369,8 +2369,8 @@ namespace Redemption.NPCs.Bosses.KSIII
                              .Add(new(NPC, "[@h1]Adios,[10] dingus.", new Color(170, 255, 255), Color.Black, voice, 2, 100, 30, true, null, bubble, null, modifier, 1));
                         chain.OnSymbolTrigger += Chain_OnSymbolTrigger;
                         chain.OnEndTrigger += Chain_OnEndTrigger;
-                        TextBubbleUI.Visible = true;
-                        TextBubbleUI.Add(chain);
+                        ChatUI.Visible = true;
+                        ChatUI.Add(chain);
                     }
                     if (AITimer > 5001)
                     {
@@ -2432,8 +2432,8 @@ namespace Redemption.NPCs.Bosses.KSIII
                              .Add(new(NPC, "[@h0]Let's begin.", new Color(170, 255, 255), Color.Black, voice, 2, 100, 30, true, null, bubble, null, modifier, 1));
                         chain.OnSymbolTrigger += Chain_OnSymbolTrigger;
                         chain.OnEndTrigger += Chain_OnEndTrigger;
-                        TextBubbleUI.Visible = true;
-                        TextBubbleUI.Add(chain);
+                        ChatUI.Visible = true;
+                        ChatUI.Add(chain);
                     }
                     if (AITimer >= 5000)
                     {

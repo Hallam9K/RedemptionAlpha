@@ -14,7 +14,6 @@ using Redemption.Globals;
 using Terraria.Audio;
 using Terraria.GameContent;
 using Redemption.BaseExtension;
-using Redemption.UI;
 using System;
 using Redemption.Dusts;
 using Redemption.NPCs.Bosses.Cleaver;
@@ -30,6 +29,7 @@ using Redemption.Items.Materials.PostML;
 using Redemption.Items.Weapons.PostML.Melee;
 using Redemption.Items.Accessories.PostML;
 using Redemption.NPCs.PreHM;
+using Redemption.UI.ChatUI;
 
 namespace Redemption.NPCs.Bosses.Obliterator
 {
@@ -354,8 +354,8 @@ namespace Redemption.NPCs.Bosses.Obliterator
                                 {
                                     Dialogue d1 = new(NPC, "Yo.", Colors.RarityRed, Color.DarkRed, CustomSounds.Voice1 with { Volume = 0 }, 3, 60, 0, false, null, bubble, modifier: modifier); // 69
 
-                                    TextBubbleUI.Visible = true;
-                                    TextBubbleUI.Add(d1);
+                                    ChatUI.Visible = true;
+                                    ChatUI.Add(d1);
                                 }
                             }
                             if (AITimer >= 120 && AITimer < 188)
@@ -412,8 +412,8 @@ namespace Redemption.NPCs.Bosses.Obliterator
                                      .Add(new(NPC, "Anyway...", Colors.RarityRed, Color.DarkRed, voice, 2, 100, 30, true, null, bubble, modifier: modifier, endID: 1));
                                 chain.OnSymbolTrigger += Chain_OnSymbolTrigger;
                                 chain.OnEndTrigger += Chain_OnEndTrigger;
-                                TextBubbleUI.Visible = true;
-                                TextBubbleUI.Add(chain);
+                                ChatUI.Visible = true;
+                                ChatUI.Add(chain);
                             }
                             if (AITimer > 3000)
                             {
@@ -470,8 +470,8 @@ namespace Redemption.NPCs.Bosses.Obliterator
 
                             Dialogue d1 = new(NPC, s, Colors.RarityRed, Color.DarkRed, voice, 2, 100, 30, true, null, bubble, modifier: modifier); // 176
 
-                            TextBubbleUI.Visible = true;
-                            TextBubbleUI.Add(d1);
+                            ChatUI.Visible = true;
+                            ChatUI.Add(d1);
                         }
                     }
                     if (AITimer >= 236)
@@ -829,8 +829,8 @@ namespace Redemption.NPCs.Bosses.Obliterator
                                     if (!RedeBossDowned.downedOmega3 && !Main.dedServ)
                                     {
                                         Dialogue d1 = new(NPC, "Eye beam!", Colors.RarityRed, Color.DarkRed, voice, 2, 70, 30, true, null, bubble, modifier: modifier);
-                                        TextBubbleUI.Visible = true;
-                                        TextBubbleUI.Add(d1);
+                                        ChatUI.Visible = true;
+                                        ChatUI.Add(d1);
                                     }
 
                                     for (int i = 0; i < 3; i++)
@@ -1021,8 +1021,8 @@ namespace Redemption.NPCs.Bosses.Obliterator
                                              .Add(new(NPC, "THE POWER OF THE SUN IN MY VERY CORE!", Colors.RarityRed, Color.DarkRed, voice with { Pitch = 0.3f, PitchVariance = 0.3f }, 2, 100, 30, true, null, bubble, modifier: modifier, endID: 1)); // 204
                                         chain.OnSymbolTrigger += Chain_OnSymbolTrigger;
                                         chain.OnEndTrigger += Chain_OnEndTrigger;
-                                        TextBubbleUI.Visible = true;
-                                        TextBubbleUI.Add(chain);
+                                        ChatUI.Visible = true;
+                                        ChatUI.Add(chain);
                                     }
                                     else
                                     {
@@ -1031,8 +1031,8 @@ namespace Redemption.NPCs.Bosses.Obliterator
                                              .Add(new(NPC, "[@d][@e]OVERHEATING...[10] OVERHEATING...[10] OVERHEATING...[10]", Colors.RarityRed, Color.DarkRed, voice, 2, 100, 0, false, null, bubble, modifier: modifier, endID: 1)); // 218
                                         chain.OnSymbolTrigger += Chain_OnSymbolTrigger;
                                         chain.OnEndTrigger += Chain_OnEndTrigger;
-                                        TextBubbleUI.Visible = true;
-                                        TextBubbleUI.Add(chain);
+                                        ChatUI.Visible = true;
+                                        ChatUI.Add(chain);
                                     }
                                 }
                                 if (AITimer > 3000)
@@ -1171,8 +1171,8 @@ namespace Redemption.NPCs.Bosses.Obliterator
                                 if (AITimer == 305 && !RedeBossDowned.downedOmega3 && !Main.dedServ)
                                 {
                                     Dialogue d1 = new(NPC, "EYE BEAM! EYE BEAM! EYE BEAM! EYE BEAM!", Colors.RarityRed, Color.DarkRed, voice with { Pitch = 0.3f, PitchVariance = 0.3f }, 1, 70, 30, true, null, bubble, modifier: modifier);
-                                    TextBubbleUI.Visible = true;
-                                    TextBubbleUI.Add(d1);
+                                    ChatUI.Visible = true;
+                                    ChatUI.Add(d1);
                                 }
                                 if (AITimer >= 305 && AITimer % 4 == 0 && AITimer <= 355)
                                     NPC.Shoot(EyePos, ModContent.ProjectileType<OO_NormalBeam>(), 180, new Vector2(1 * NPC.spriteDirection, Main.rand.NextFloat(-0.25f, 0.25f)), true, CustomSounds.Laser1, NPC.whoAmI, -1);
@@ -1402,8 +1402,8 @@ namespace Redemption.NPCs.Bosses.Obliterator
                                             chain.Add(new(NPC, "CRITICAL CONDITION REACHED...[30] SELF DESTRUCTING...", Colors.RarityRed, Color.DarkRed, voice with { Pitch = -0.5f }, 2, 100, 0, false, null, bubble, modifier: modifier)) // 228
                                                  .Add(new(NPC, "Is it getting hot in here[10] or is it just m-[@c]", Colors.RarityRed, Color.DarkRed, voice with { Pitch = 0.3f, PitchVariance = 0.3f }, 3, 3, 0, false, null, bubble, modifier: modifier)); // 124
                                             chain.OnSymbolTrigger += Chain_OnSymbolTrigger;
-                                            TextBubbleUI.Visible = true;
-                                            TextBubbleUI.Add(chain);
+                                            ChatUI.Visible = true;
+                                            ChatUI.Add(chain);
                                         }
                                         else
                                         {
@@ -1411,8 +1411,8 @@ namespace Redemption.NPCs.Bosses.Obliterator
                                             chain.Add(new(NPC, "CRITICAL CONDITION REACHED...[30] SELF DESTRUCTING...", Colors.RarityRed, Color.DarkRed, voice, 2, 100, 0, false, null, bubble, modifier: modifier, endID: 1)); // 228
                                             chain.OnSymbolTrigger += Chain_OnSymbolTrigger;
                                             chain.OnEndTrigger += Chain_OnEndTrigger;
-                                            TextBubbleUI.Visible = true;
-                                            TextBubbleUI.Add(chain);
+                                            ChatUI.Visible = true;
+                                            ChatUI.Add(chain);
                                         }
                                     }
                                 }
@@ -1562,8 +1562,8 @@ namespace Redemption.NPCs.Bosses.Obliterator
                         chain.Add(new(NPC, "Alright,[10] target eliminated.", Colors.RarityRed, Color.DarkRed, voice, 2, 100, 0, false, null, bubble, modifier: modifier)) // 154
                              .Add(new(NPC, "Returning to base...", Colors.RarityRed, Color.DarkRed, voice, 2, 100, 30, true, null, bubble, modifier: modifier)); // 170
 
-                        TextBubbleUI.Visible = true;
-                        TextBubbleUI.Add(chain);
+                        ChatUI.Visible = true;
+                        ChatUI.Add(chain);
                     }
                     if (!RedeHelper.AnyProjectiles(ModContent.ProjectileType<OmegaMegaBeam>()))
                         BeamAnimation = false;
@@ -1582,8 +1582,8 @@ namespace Redemption.NPCs.Bosses.Obliterator
                         {
                             Dialogue d1 = new(NPC, "Target eliminated...", Colors.RarityRed, Color.DarkRed, voice, 2, 100, 30, true, null, bubble, modifier: modifier); // 150
 
-                            TextBubbleUI.Visible = true;
-                            TextBubbleUI.Add(d1);
+                            ChatUI.Visible = true;
+                            ChatUI.Add(d1);
                         }
                         AITimer = 0;
                         NPC.ai[0] = -2;

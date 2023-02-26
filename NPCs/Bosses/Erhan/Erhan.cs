@@ -22,12 +22,12 @@ using Redemption.Items.Armor.Vanity;
 using Redemption.Items.Accessories.PreHM;
 using Redemption.BaseExtension;
 using Terraria.GameContent.UI;
-using Redemption.UI;
 using Redemption.Projectiles.Misc;
 using Redemption.NPCs.PreHM;
 using Redemption.Projectiles.Magic;
 using Redemption.Items.Weapons.HM.Melee;
 using ReLogic.Content;
+using Redemption.UI.ChatUI;
 
 namespace Redemption.NPCs.Bosses.Erhan
 {
@@ -336,8 +336,8 @@ namespace Redemption.NPCs.Bosses.Erhan
                                         chain.Add(new(NPC, "Great heavens!!", Color.LightGoldenrodYellow, new Color(100, 86, 0), voice, 2, 100, 0, false, null, bubble, null, modifier, 1));
                                         chain.OnSymbolTrigger += Chain_OnSymbolTrigger;
                                         chain.OnEndTrigger += Chain_OnEndTrigger;
-                                        TextBubbleUI.Visible = true;
-                                        TextBubbleUI.Add(chain);
+                                        ChatUI.Visible = true;
+                                        ChatUI.Add(chain);
                                     }
                                     AITimer = 1;
                                 }
@@ -361,8 +361,8 @@ namespace Redemption.NPCs.Bosses.Erhan
                                              .Add(new(NPC, "[@c]Lest I smack'eth thine buttocks with the Hand of Judgement!", Color.LightGoldenrodYellow, new Color(100, 86, 0), voice, 2, 100, 30, true, null, bubble, null, modifier, 2)); // 248
                                         chain.OnSymbolTrigger += Chain_OnSymbolTrigger;
                                         chain.OnEndTrigger += Chain_OnEndTrigger;
-                                        TextBubbleUI.Visible = true;
-                                        TextBubbleUI.Add(chain);
+                                        ChatUI.Visible = true;
+                                        ChatUI.Add(chain);
                                     }
                                 }
                                 if (AITimer >= 2000)
@@ -394,8 +394,8 @@ namespace Redemption.NPCs.Bosses.Erhan
                                 if (AITimer++ == 0 && !Main.dedServ)
                                 {
                                     Dialogue d1 = new(NPC, "CEASE!", Color.LightGoldenrodYellow, new Color(100, 86, 0), voice, 2, 100, 30, true, null, bubble, null, modifier); // 154
-                                    TextBubbleUI.Visible = true;
-                                    TextBubbleUI.Add(d1);
+                                    ChatUI.Visible = true;
+                                    ChatUI.Add(d1);
                                 }
 
                                 if (AITimer >= 120)
@@ -882,14 +882,14 @@ namespace Redemption.NPCs.Bosses.Erhan
                                     DialogueChain chain = new();
                                     chain.Add(new(NPC, "Huzzah! [30]*pant*[30] A shield!", Color.LightGoldenrodYellow, new Color(100, 86, 0), voice, 2, 100, 0, false, null, bubble, null, modifier)) // 184
                                          .Add(new(NPC, "But alas,[10] this shield is useless against a blade!", Color.LightGoldenrodYellow, new Color(100, 86, 0), voice, 2, 100, 30, true, null, bubble, null, modifier)); // 238
-                                    TextBubbleUI.Visible = true;
-                                    TextBubbleUI.Add(chain);
+                                    ChatUI.Visible = true;
+                                    ChatUI.Add(chain);
                                 }
                                 if (AITimer == 500)
                                 {
                                     Dialogue d1 = new(NPC, "*pant* *pant*[30] Alright'eth![30] I hath regained my breath.[30] Have at thee!", Color.LightGoldenrodYellow, new Color(100, 86, 0), voice, 2, 100, 30, true, null, bubble, null, modifier); // 354
-                                    TextBubbleUI.Visible = true;
-                                    TextBubbleUI.Add(d1);
+                                    ChatUI.Visible = true;
+                                    ChatUI.Add(d1);
                                 }
                             }
                             if (AITimer >= (RedeBossDowned.erhanDeath < 2 ? 500 : 360))
@@ -982,8 +982,8 @@ namespace Redemption.NPCs.Bosses.Erhan
                                              .Add(new(NPC, "If all else fail'eth...", Color.LightGoldenrodYellow, new Color(100, 86, 0), voice, 2, 100, 20, true, null, bubble, null, modifier, 3)); // 166
                                         chain.OnSymbolTrigger += Chain_OnSymbolTrigger;
                                         chain.OnEndTrigger += Chain_OnEndTrigger;
-                                        TextBubbleUI.Visible = true;
-                                        TextBubbleUI.Add(chain);
+                                        ChatUI.Visible = true;
+                                        ChatUI.Add(chain);
                                     }
                                     if (AITimer == 1516)
                                     {
@@ -998,8 +998,8 @@ namespace Redemption.NPCs.Bosses.Erhan
                                              .Add(new(NPC, "[@f]...", Color.LightGoldenrodYellow, new Color(100, 86, 0), voice, 2, 130, 0, false, null, bubble, null, modifier)) // 136
                                              .Add(new(NPC, "[@g]How doth one use this thing?[@h]", Color.LightGoldenrodYellow, new Color(100, 86, 0), voice, 2, 10, 0, false, null, bubble, null, modifier)); // 66
                                         chain.OnSymbolTrigger += Chain_OnSymbolTrigger;
-                                        TextBubbleUI.Visible = true;
-                                        TextBubbleUI.Add(chain);
+                                        ChatUI.Visible = true;
+                                        ChatUI.Add(chain);
                                     }
                                 }
                                 if (AITimer >= 3000)
@@ -1065,20 +1065,20 @@ namespace Redemption.NPCs.Bosses.Erhan
                                     if (AITimer == 60)
                                     {
                                         Dialogue d1 = new(NPC, "It would[10] appear'eth,[20] I hath lost.", Color.LightGoldenrodYellow, new Color(100, 86, 0), voice, 2, 100, 30, true, null, bubble, null, modifier); // 216
-                                        TextBubbleUI.Visible = true;
-                                        TextBubbleUI.Add(d1);
+                                        ChatUI.Visible = true;
+                                        ChatUI.Add(d1);
                                     }
                                     if (AITimer == 300)
                                     {
                                         Dialogue d2 = new(NPC, "If,[20] mayhaps you shan't[10] spare my life...", Color.LightGoldenrodYellow, new Color(100, 86, 0), voice, 2, 100, 30, true, null, bubble, null, modifier); // 238
-                                        TextBubbleUI.Visible = true;
-                                        TextBubbleUI.Add(d2);
+                                        ChatUI.Visible = true;
+                                        ChatUI.Add(d2);
                                     }
                                     if (AITimer == 600)
                                     {
                                         Dialogue d3 = new(NPC, "Send master Hallowed Knight[20] my regards.", Color.LightGoldenrodYellow, new Color(100, 86, 0), voice, 2, 100, 30, true, null, bubble, null, modifier); // 228
-                                        TextBubbleUI.Visible = true;
-                                        TextBubbleUI.Add(d3);
+                                        ChatUI.Visible = true;
+                                        ChatUI.Add(d3);
                                     }
                                 }
                                 if (AITimer == 1200)
@@ -1088,8 +1088,8 @@ namespace Redemption.NPCs.Bosses.Erhan
                                         DialogueChain chain = new();
                                         chain.Add(new(NPC, "Well...[30] 'Til we meet again![@i]", Color.LightGoldenrodYellow, new Color(100, 86, 0), voice, 2, 100, 0, false, null, bubble, null, modifier)); // 184
                                         chain.OnSymbolTrigger += Chain_OnSymbolTrigger;
-                                        TextBubbleUI.Visible = true;
-                                        TextBubbleUI.Add(chain);
+                                        ChatUI.Visible = true;
+                                        ChatUI.Add(chain);
                                     }
 
                                     NPC.dontTakeDamage = true;
@@ -1173,8 +1173,8 @@ namespace Redemption.NPCs.Bosses.Erhan
             if (!egged && AIState is ActionState.Attacks && (projectile.type == ModContent.ProjectileType<ChickenEgg_Proj>() || projectile.type == ModContent.ProjectileType<GoldChickenEgg_Proj>()))
             {
                 Dialogue d = new(NPC, "Thou shall not egg a priest!", Color.LightGoldenrodYellow, new Color(100, 86, 0), voice, 2, 100, 30, true, null, bubble, null, modifier);
-                TextBubbleUI.Visible = true;
-                TextBubbleUI.Add(d);
+                ChatUI.Visible = true;
+                ChatUI.Add(d);
                 egged = true;
             }
             if (!grenaded && AIState is ActionState.Attacks && (projectile.type == ModContent.ProjectileType<HallowedHandGrenade_Proj>()))
@@ -1183,8 +1183,8 @@ namespace Redemption.NPCs.Bosses.Erhan
                 if (Main.rand.NextBool())
                     s = "What in God's name!?";
                 Dialogue d = new(NPC, s, Color.LightGoldenrodYellow, new Color(100, 86, 0), voice, 2, 100, 30, true, null, bubble, null, modifier);
-                TextBubbleUI.Visible = true;
-                TextBubbleUI.Add(d);
+                ChatUI.Visible = true;
+                ChatUI.Add(d);
                 grenaded = true;
             }
             if (!bibled && AIState is ActionState.Attacks && (projectile.type == ModContent.ProjectileType<HolyBible_Ray>()))
@@ -1193,8 +1193,8 @@ namespace Redemption.NPCs.Bosses.Erhan
                 if (Main.rand.NextBool())
                     s = "Cease this boondoggling bible betrayal!";
                 Dialogue d = new(NPC, s, Color.LightGoldenrodYellow, new Color(100, 86, 0), voice, 2, 100, 30, true, null, bubble, null, modifier);
-                TextBubbleUI.Visible = true;
-                TextBubbleUI.Add(d);
+                ChatUI.Visible = true;
+                ChatUI.Add(d);
                 bibled = true;
             }
             if (!blindJusted && AIState is ActionState.Attacks && (projectile.type == ModContent.ProjectileType<BlindJustice_Proj>()))
@@ -1203,8 +1203,8 @@ namespace Redemption.NPCs.Bosses.Erhan
                 if (Main.rand.NextBool())
                     s = "Expel my father's weapon from thy grasp'eth this instant!";
                 Dialogue d = new(NPC, s, Color.LightGoldenrodYellow, new Color(100, 86, 0), voice, 2, 100, 30, true, null, bubble, null, modifier);
-                TextBubbleUI.Visible = true;
-                TextBubbleUI.Add(d);
+                ChatUI.Visible = true;
+                ChatUI.Add(d);
                 blindJusted = true;
             }
         }
@@ -1221,8 +1221,8 @@ namespace Redemption.NPCs.Bosses.Erhan
                 {
                     if (!Main.dedServ)
                     {
-                        TextBubbleUI.Visible = false;
-                        TextBubbleUI.Clear();
+                        ChatUI.Visible = false;
+                        ChatUI.Clear();
                     }
                 }
                 return true;

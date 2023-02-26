@@ -2,7 +2,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Base;
 using Redemption.Globals;
-using Redemption.UI;
+using Redemption.UI.ChatUI;
 using Terraria;
 using Terraria.Audio;
 using Terraria.GameContent;
@@ -62,8 +62,8 @@ namespace Redemption.NPCs.Bosses.KSIII
                          .Add(new(Projectile, "[@f0]I'll beat you up if you annoy me again.", new Color(170, 255, 255), Color.Black, voice, 2, 100, 30, true, null, bubble, null, endID: 1));
                     chain.OnSymbolTrigger += Chain_OnSymbolTrigger;
                     chain.OnEndTrigger += Chain_OnEndTrigger;
-                    TextBubbleUI.Visible = true;
-                    TextBubbleUI.Add(chain);
+                    ChatUI.Visible = true;
+                    ChatUI.Add(chain);
                 }
             }
             if (Projectile.localAI[0] > 5000)

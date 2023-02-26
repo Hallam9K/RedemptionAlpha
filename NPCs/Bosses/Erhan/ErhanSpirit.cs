@@ -21,8 +21,8 @@ using Redemption.Items.Weapons.PreHM.Ranged;
 using Redemption.Items.Armor.Vanity;
 using Redemption.Items.Accessories.PreHM;
 using Redemption.BaseExtension;
-using Redemption.UI;
 using ReLogic.Content;
+using Redemption.UI.ChatUI;
 
 namespace Redemption.NPCs.Bosses.Erhan
 {
@@ -282,8 +282,8 @@ namespace Redemption.NPCs.Bosses.Erhan
                                     if (AITimer == 1 && !Main.dedServ)
                                     {
                                         Dialogue d1 = new(NPC, "GOD IS REAL AND HE SENT ME BACK TO KICK YOUR ASS.", Color.LightGoldenrodYellow, new Color(100, 86, 0), voice, 2, 100, 30, true, null, bubble, null, modifier); // 228
-                                        TextBubbleUI.Visible = true;
-                                        TextBubbleUI.Add(d1);
+                                        ChatUI.Visible = true;
+                                        ChatUI.Add(d1);
                                     }
                                     if (AITimer >= 218)
                                     {
@@ -314,8 +314,8 @@ namespace Redemption.NPCs.Bosses.Erhan
                                         chain.Add(new(NPC, "Thou may inquire,[10] how hath I returned...", Color.LightGoldenrodYellow, new Color(100, 86, 0), voice, 2, 100, 0, false, null, bubble, null, modifier)) // 190
                                              .Add(new(NPC, "I am but the holiest of men,[10] thus the Lord has returned me to beat thine buttocks once more!", Color.LightGoldenrodYellow, new Color(100, 86, 0), voice, 2, 100, 30, true, null, bubble, null, modifier, 1)); // 324
                                         chain.OnEndTrigger += Chain_OnEndTrigger;
-                                        TextBubbleUI.Visible = true;
-                                        TextBubbleUI.Add(chain);
+                                        ChatUI.Visible = true;
+                                        ChatUI.Add(chain);
                                     }
                                     if (AITimer >= 1000)
                                     {
@@ -344,8 +344,8 @@ namespace Redemption.NPCs.Bosses.Erhan
                                 if (AITimer++ == 0 && !Main.dedServ)
                                 {
                                     Dialogue d1 = new(NPC, "Guess whom'st've's back!", Color.LightGoldenrodYellow, new Color(100, 86, 0), voice, 2, 100, 30, true, null, bubble, null, modifier); // 178
-                                    TextBubbleUI.Visible = true;
-                                    TextBubbleUI.Add(d1);
+                                    ChatUI.Visible = true;
+                                    ChatUI.Add(d1);
                                 }
                                 if (AITimer >= 150)
                                 {

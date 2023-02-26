@@ -2,7 +2,7 @@
 using MonoMod.RuntimeDetour;
 using Redemption.Globals;
 using Redemption.Items.Usable;
-using Redemption.UI;
+using Redemption.UI.ChatUI;
 using Terraria;
 using Terraria.Audio;
 using Terraria.GameContent.UI;
@@ -67,8 +67,8 @@ namespace Redemption.NPCs.Lab.Janitor
                              .Add(new(NPC, "Lost your access card huh?[30] Have mine and get out of my sight.", Colors.RarityYellow, new Color(100, 86, 0), voice, 2, 100, 0, false)) // 252
                              .Add(new(NPC, "[@a]*Grumbles* Those darn careless bots losing their cards...", Colors.RarityYellow, new Color(100, 86, 0), voice, 2, 100, 30, true)); // 244
                         chain.OnSymbolTrigger += Chain_OnSymbolTrigger;
-                        TextBubbleUI.Visible = true;
-                        TextBubbleUI.Add(chain);
+                        ChatUI.Visible = true;
+                        ChatUI.Add(chain);
                     }
                     if (AITimer >= 2000)
                     {
@@ -96,8 +96,8 @@ namespace Redemption.NPCs.Lab.Janitor
                              .Add(new(NPC, "[@b]Wait...[30] You're a trespasser!", Colors.RarityYellow, new Color(100, 86, 0), voice, 2, 100, 30, true, endID: 1)); // 216
                         chain.OnSymbolTrigger += Chain_OnSymbolTrigger;
                         chain.OnEndTrigger += Chain_OnEndTrigger;
-                        TextBubbleUI.Visible = true;
-                        TextBubbleUI.Add(chain);
+                        ChatUI.Visible = true;
+                        ChatUI.Add(chain);
                     }
                     if (AITimer >= 2000)
                     {

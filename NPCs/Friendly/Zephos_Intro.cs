@@ -10,10 +10,10 @@ using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using Redemption.Dusts;
 using Terraria.GameContent.UI;
-using Redemption.UI;
 using Terraria.GameContent;
 using MonoMod.RuntimeDetour;
 using Redemption.Items.Usable;
+using Redemption.UI.ChatUI;
 
 namespace Redemption.NPCs.Friendly
 {
@@ -78,8 +78,8 @@ namespace Redemption.NPCs.Friendly
                         {
                             Dialogue d1 = new(NPC, "WAH!", Color.White, Color.Gray, voice, 1, 30, 30, true, bubble: bubble); // 64
 
-                            TextBubbleUI.Visible = true;
-                            TextBubbleUI.Add(d1);
+                            ChatUI.Visible = true;
+                            ChatUI.Add(d1);
                         }
                     }
                     NPC.rotation += 0.1f;
@@ -113,8 +113,8 @@ namespace Redemption.NPCs.Friendly
                         DialogueChain chain = new();
                         chain.Add(new(NPC, "Jeez,[10] bad landing.", Color.White, Color.Gray, voice, 3, 100, 30, true, bubble: bubble, endID: 1)); // 187
                         chain.OnEndTrigger += Chain_OnEndTrigger;
-                        TextBubbleUI.Visible = true;
-                        TextBubbleUI.Add(chain);
+                        ChatUI.Visible = true;
+                        ChatUI.Add(chain);
                     }
                     if (AITimer >= 1000)
                     {
@@ -137,8 +137,8 @@ namespace Redemption.NPCs.Friendly
                              .Add(new(NPC, "I'll come back once I find him,[10] so ya better have a place for us to stay!", Color.White, Color.Gray, voice, 3, 100, 30, true, bubble: bubble, endID: 1)); // 349
                         chain.OnSymbolTrigger += Chain_OnSymbolTrigger;
                         chain.OnEndTrigger += Chain_OnEndTrigger;
-                        TextBubbleUI.Visible = true;
-                        TextBubbleUI.Add(chain);
+                        ChatUI.Visible = true;
+                        ChatUI.Add(chain);
                     }
                     if (Look == 1 && AITimer % 30 == 0)
                         NPC.spriteDirection *= -1;

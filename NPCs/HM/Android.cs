@@ -22,12 +22,12 @@ using Redemption.Base;
 using Redemption.NPCs.Bosses.KSIII;
 using Redemption.Projectiles.Hostile;
 using Terraria.ModLoader.Utilities;
-using Redemption.UI;
 using ParticleLibrary;
 using Redemption.Particles;
 using Terraria.GameContent.UI;
 using Redemption.Items.Usable;
 using System.IO;
+using Redemption.UI.ChatUI;
 
 namespace Redemption.NPCs.HM
 {
@@ -225,8 +225,8 @@ namespace Redemption.NPCs.HM
                         if (TimerRand == 1)
                         {
                             Dialogue d1 = new(NPC, "Human scanned...", Color.LightBlue, Color.DarkCyan, voice, 1, 30, 30, true, bubble: bubble); // 65
-                            TextBubbleUI.Visible = true;
-                            TextBubbleUI.Add(d1);
+                            ChatUI.Visible = true;
+                            ChatUI.Add(d1);
                         }
                         else
                         {
@@ -234,8 +234,8 @@ namespace Redemption.NPCs.HM
                             if (closeNPC.TypeName == "")
                                 s = "Unknown entity";
                             Dialogue d1 = new(NPC, s + " scanned...", Color.LightBlue, Color.DarkCyan, voice, 1, 30, 30, true, bubble: bubble); // 65
-                            TextBubbleUI.Visible = true;
-                            TextBubbleUI.Add(d1);
+                            ChatUI.Visible = true;
+                            ChatUI.Add(d1);
                         }
                     }
                     SightCheck();
