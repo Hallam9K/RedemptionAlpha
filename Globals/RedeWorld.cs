@@ -70,6 +70,7 @@ namespace Redemption.Globals
         public static bool deadRingerGiven;
         public static bool newbGone;
         public static bool slayerMessageGiven;
+        public static bool keycardGiven;
         public static bool[] spawnCleared = new bool[5];
 
         #region Nuke Shenanigans
@@ -245,7 +246,7 @@ namespace Redemption.Globals
                 omegaTransmitReady[1] = true;
                 OmegaTransmitterMessage();
             }
-            if (Terraria.NPC.downedMoonlord && !omegaTransmitReady[2])
+            if (Terraria.NPC.downedMoonlord && keycardGiven && !omegaTransmitReady[2])
             {
                 omegaTransmitReady[2] = true;
                 OmegaTransmitterMessage();
@@ -422,6 +423,7 @@ namespace Redemption.Globals
             deadRingerGiven = false;
             newbGone = false;
             slayerMessageGiven = false;
+            keycardGiven = false;
             if (Terraria.NPC.downedPlantBoss)
                 omegaTransmitReady[0] = true;
             else
@@ -454,6 +456,7 @@ namespace Redemption.Globals
             deadRingerGiven = false;
             newbGone = false;
             slayerMessageGiven = false;
+            keycardGiven = false;
             omegaTransmitReady[0] = false;
             omegaTransmitReady[1] = false;
             omegaTransmitReady[2] = false;
@@ -477,6 +480,8 @@ namespace Redemption.Globals
                 lists.Add("newbGone");
             if (slayerMessageGiven)
                 lists.Add("slayerMessageGiven");
+            if (keycardGiven)
+                lists.Add("keycardGiven");
 
             tag["lists"] = lists;
             tag["alignment"] = alignment;
@@ -503,6 +508,7 @@ namespace Redemption.Globals
             deadRingerGiven = lists.Contains("deadRingerGiven");
             newbGone = lists.Contains("newbGone");
             slayerMessageGiven = lists.Contains("slayerMessageGiven");
+            keycardGiven = lists.Contains("keycardGiven");
         }
 
         public override void NetSend(BinaryWriter writer)
@@ -514,6 +520,7 @@ namespace Redemption.Globals
             flags[3] = deadRingerGiven;
             flags[4] = newbGone;
             flags[5] = slayerMessageGiven;
+            flags[6] = keycardGiven;
             writer.Write(flags);
 
             writer.Write(alignment);
@@ -533,6 +540,7 @@ namespace Redemption.Globals
             deadRingerGiven = flags[3];
             newbGone = flags[4];
             slayerMessageGiven = flags[5];
+            keycardGiven = flags[6];
 
             alignment = reader.ReadInt32();
             DayNightCount = reader.ReadInt32();

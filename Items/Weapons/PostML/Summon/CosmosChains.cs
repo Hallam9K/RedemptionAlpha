@@ -76,7 +76,7 @@ namespace Redemption.Items.Weapons.PostML.Summon
         public override void PostAI()
         {
             if (soundTimer++ == 18)
-                SoundEngine.PlaySound(SoundID.Item125, Projectile.position);
+                SoundEngine.PlaySound(SoundID.Item125 with { Volume = .5f }, Projectile.position);
         }
         private static void DrawLine(List<Vector2> list)
         {

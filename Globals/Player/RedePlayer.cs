@@ -88,7 +88,7 @@ namespace Redemption.Globals.Player
             }
             return true;
         }
-        public override void PostHurt(bool pvp, bool quiet, double damage, int hitDirection, bool crit, int cooldownCounter)
+        public override void Hurt(bool pvp, bool quiet, double damage, int hitDirection, bool crit, int cooldownCounter)
         {
             onHit = true;
         }

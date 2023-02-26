@@ -67,7 +67,7 @@ namespace Redemption.Items.Weapons.HM.Summon
 
             if (player.whoAmI == Main.myPlayer && player.ownedProjectileCounts[ModContent.ProjectileType<HiveCyst_Proj>()] < 2)
             {
-                SoundEngine.PlaySound(SoundID.NPCHit13, Projectile.position);
+                SoundEngine.PlaySound(SoundID.NPCHit13 with { Volume = .5f }, Projectile.position);
                 Projectile.NewProjectile(Projectile.GetSource_FromAI(), target.Center, Vector2.Zero, ModContent.ProjectileType<HiveCyst_Proj>(), Projectile.damage / 3, Projectile.knockBack, player.whoAmI);
             }
             Main.player[Projectile.owner].MinionAttackTargetNPC = target.whoAmI;

@@ -326,8 +326,6 @@ namespace Redemption.Globals.NPC
             }
             if (npc.type is NPCID.Dandelion)
                 npcLoot.Add(ItemDropRule.Food(ModContent.ItemType<GiantDandelion>(), 5));
-            if (npc.type is NPCID.MoonLordCore)
-                npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Keycard>()));
             if (npc.type is NPCID.Golem)
                 npcLoot.Add(ItemDropRule.ByCondition(new Conditions.NotExpert(), ModContent.ItemType<GolemStaff>(), 7));
             if (npc.type is NPCID.IceGolem or NPCID.RockGolem)
