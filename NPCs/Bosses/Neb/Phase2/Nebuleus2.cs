@@ -139,7 +139,7 @@ namespace Redemption.NPCs.Bosses.Neb.Phase2
             }
             if (!RedeBossDowned.downedNebuleus)
             {
-                RedeWorld.alignment -= 4;
+                RedeWorld.alignment -= 6;
                 for (int p = 0; p < Main.maxPlayers; p++)
                 {
                     Player player = Main.player[p];

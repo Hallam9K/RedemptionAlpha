@@ -599,7 +599,7 @@ namespace Redemption.NPCs.PreHM
                         EmoteBubble.NewBubble(87, new WorldUIAnchor(NPC), 120);
                     if (AITimer == 220)
                         EmoteBubble.NewBubble(10, new WorldUIAnchor(NPC), 60);
-                    if (AITimer == 300)
+                    if (AITimer == 300 && !Main.dedServ)
                     {
                         Texture2D bubble = ModContent.Request<Texture2D>("Redemption/UI/TextBubble_Epidotra").Value;
                         SoundStyle voice = CustomSounds.Voice3 with { Pitch = 1.3f };

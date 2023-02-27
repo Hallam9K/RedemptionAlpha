@@ -24,6 +24,7 @@ namespace Redemption.Items.Accessories.HM
                 + "\nInflicts Infection upon dashing into an enemy"
                 + "\nReleases acid-like sparks as you move");
             SacrificeTotal = 1;
+            ElementID.ItemPoison[Type] = true;
         }
 
         public override void SetDefaults()
@@ -146,7 +147,7 @@ namespace Redemption.Items.Accessories.HM
                     for (int i = 0; i < Main.maxNPCs; i++)
                     {
                         NPC npc = Main.npc[i];
-                        if (!npc.active || npc.dontTakeDamage || npc.friendly)
+                        if (!npc.active || npc.dontTakeDamage || npc.friendly || NPCLoader.CanBeHitByItem(npc, Player, new Item(ModContent.ItemType<InfectionShield>())) == false)
                             continue;
 
                         if (!hitbox.Intersects(npc.Hitbox) || !npc.noTileCollide && !Collision.CanHit(Player.position, Player.width, Player.height, npc.position, npc.width, npc.height))
@@ -175,7 +176,7 @@ namespace Redemption.Items.Accessories.HM
                             if (Main.rand.NextBool(5))
                                 npc.AddBuff(ModContent.BuffType<GlowingPustulesDebuff>(), 300);
 
-                            BaseAI.DamageNPC(npc, (int)damage, knockback, hitDirection, Player, crit: crit, item: new Item(ItemID.BeeKeeper));
+                            BaseAI.DamageNPC(npc, (int)damage, knockback, hitDirection, Player, crit: crit, item: new Item(ModContent.ItemType<InfectionShield>()));
                             if (Main.netMode != NetmodeID.SinglePlayer)
                                 NetMessage.SendData(MessageID.DamageNPC, -1, -1, null, i, damage, knockback, hitDirection, 0,
                                     0, 0);
