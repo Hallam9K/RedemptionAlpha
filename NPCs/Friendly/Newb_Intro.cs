@@ -63,7 +63,7 @@ namespace Redemption.NPCs.Friendly
                         NPC.spriteDirection = 1;
                         if (!Main.dedServ)
                         {
-                            Dialogue d1 = new(NPC, "...", Color.White, Color.Gray, voice1, 1, 30, 60, true, bubble: bubble);
+                            Dialogue d1 = new(NPC, "...", Color.White, Color.Gray, voice1, .01f, .5f, 1, true, bubble: bubble);
 
                             ChatUI.Visible = true;
                             ChatUI.Add(d1);
@@ -79,7 +79,7 @@ namespace Redemption.NPCs.Friendly
                     if (AITimer++ == 30 && !Main.dedServ)
                     {
                         DialogueChain chain = new();
-                        chain.Add(new(NPC, "What do you think, Jo-", Color.White, Color.Gray, voice1, 3, 30, 100, true, bubble: bubble, endID: 1)); // 187
+                        chain.Add(new(NPC, "What do you think, Jo-", Color.White, Color.Gray, voice1, .05f, .5f, 2f, true, bubble: bubble, endID: 1)); // 187
                         chain.OnEndTrigger += Chain_OnEndTrigger;
                         ChatUI.Visible = true;
                         ChatUI.Add(chain);
@@ -96,9 +96,9 @@ namespace Redemption.NPCs.Friendly
                     {
                         EmoteBubble.NewBubble(87, new WorldUIAnchor(NPC), 120);
                         DialogueChain chain = new();
-                        chain.Add(new(NPC, "Who you?!", Color.White, Color.Gray, voice2, 3, 100, 0, false, bubble: bubble)) // 166
-                             .Add(new(NPC, "Where am I?", Color.White, Color.Gray, voice2, 3, 100, 0, false, bubble: bubble)) // 166
-                             .Add(new(NPC, "Heyo, I'm Newb![60] Want to be friends?", Color.White, Color.Gray, voice2, 3, 100, 30, true, bubble: bubble, endID: 1)); // 196
+                        chain.Add(new(NPC, "Who you?!", Color.White, Color.Gray, voice2, .05f, 2f, 0, false, bubble: bubble)) // 166
+                             .Add(new(NPC, "Where am I?", Color.White, Color.Gray, voice2, .05f, 2f, 0, false, bubble: bubble)) // 166
+                             .Add(new(NPC, "Heyo, I'm Newb![1] Want to be friends?", Color.White, Color.Gray, voice2, .05f, 2f, .5f, true, bubble: bubble, endID: 1)); // 196
                         chain.OnEndTrigger += Chain_OnEndTrigger;
                         ChatUI.Visible = true;
                         ChatUI.Add(chain);

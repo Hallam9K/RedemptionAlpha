@@ -282,9 +282,9 @@ namespace Redemption.NPCs.Bosses.KSIII
                     if (AITimer == 60)
                     {
                         DialogueChain chain = new();
-                        chain.Add(new(NPC, "SCANNING TARGET...", new Color(170, 255, 255), Color.Black, voice, 2, 100, 0, false, null, bubble, null, modifier))
-                             .Add(new(NPC, "TARGET DEEMED -[30] 'A WASTE OF TIME'", new Color(170, 255, 255), Color.Black, voice, 2, 100, 0, false, null, bubble, null, modifier))
-                             .Add(new(NPC, "RELAYING MESSAGE -[30] 'KING SLAYER NO LONGER HAS TIME FOR YOU'", new Color(170, 255, 255), Color.Black, voice, 2, 100, 10, true, null, bubble, null, modifier, 1));
+                        chain.Add(new(NPC, "SCANNING TARGET...", new Color(170, 255, 255), Color.Black, voice, .03f, 2f, 0, false, null, bubble, null, modifier))
+                             .Add(new(NPC, "TARGET DEEMED -[0.5] 'A WASTE OF TIME'", new Color(170, 255, 255), Color.Black, voice, .03f, 2f, 0, false, null, bubble, null, modifier))
+                             .Add(new(NPC, "RELAYING MESSAGE -[0.5] 'KING SLAYER NO LONGER HAS TIME FOR YOU'", new Color(170, 255, 255), Color.Black, voice, .03f, 1.6f, .16f, true, null, bubble, null, modifier, 1));
                         chain.OnEndTrigger += Chain_OnEndTrigger;
                         ChatUI.Visible = true;
                         ChatUI.Add(chain);

@@ -62,10 +62,10 @@ namespace Redemption.NPCs.Lab.Janitor
                     if (AITimer++ == 10 && !Main.dedServ)
                     {
                         DialogueChain chain = new();
-                        chain.Add(new(NPC, "Okay,[10] okay!", Colors.RarityYellow, new Color(100, 86, 0), voice, 2, 100, 0, false)) // 132
-                             .Add(new(NPC, "Alright fine,[10] you probably can handle yourself here.", Colors.RarityYellow, new Color(100, 86, 0), voice, 2, 100, 0, false)) // 214
-                             .Add(new(NPC, "Here,[10] have this Lab Access thing and get lost!", Colors.RarityYellow, new Color(100, 86, 0), voice, 2, 100, 0, false)) // 202
-                             .Add(new(NPC, "[@a]I got moppin' to do.", Colors.RarityYellow, new Color(100, 86, 0), voice, 2, 100, 30, true)); // 170
+                        chain.Add(new(NPC, "Okay,[0.1] okay!", Colors.RarityYellow, new Color(100, 86, 0), voice, .03f, 2f, 0, false)) // 132
+                             .Add(new(NPC, "Alright fine,[0.1] you probably can handle yourself here.", Colors.RarityYellow, new Color(100, 86, 0), voice, .03f, 2f, 0, false)) // 214
+                             .Add(new(NPC, "Here,[0.1] have this Lab Access thing and get lost!", Colors.RarityYellow, new Color(100, 86, 0), voice, .03f, 2f, 0, false)) // 202
+                             .Add(new(NPC, "[@a]I got moppin' to do.", Colors.RarityYellow, new Color(100, 86, 0), voice, .03f, 2f, .5f, true)); // 170
                         chain.OnSymbolTrigger += Chain_OnSymbolTrigger;
                         ChatUI.Visible = true;
                         ChatUI.Add(chain);
@@ -141,9 +141,9 @@ namespace Redemption.NPCs.Lab.Janitor
                     if (AITimer++ == 40 && !Main.dedServ)
                     {
                         DialogueChain chain = new();
-                        chain.Add(new(NPC, "Ey...", Colors.RarityYellow, new Color(100, 86, 0), voice, 2, 100, 0, false)) // 110
-                             .Add(new(NPC, "Did you just...[30] block my way?", Colors.RarityYellow, new Color(100, 86, 0), voice, 2, 100, 0, false)) // 188
-                             .Add(new(NPC, "Well screw you too!", Colors.RarityYellow, new Color(100, 86, 0), voice, 2, 100, 30, true, endID: 1)); // 168
+                        chain.Add(new(NPC, "Ey...", Colors.RarityYellow, new Color(100, 86, 0), voice, .03f, 2f, 0, false)) // 110
+                             .Add(new(NPC, "Did you just...[0.5] block my way?", Colors.RarityYellow, new Color(100, 86, 0), voice, .03f, 2f, 0, false)) // 188
+                             .Add(new(NPC, "Well screw you too!", Colors.RarityYellow, new Color(100, 86, 0), voice, .03f, 2f, .5f, true, endID: 1)); // 168
                         chain.OnEndTrigger += Chain_OnEndTrigger;
                         ChatUI.Visible = true;
                         ChatUI.Add(chain);

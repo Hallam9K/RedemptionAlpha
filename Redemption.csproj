@@ -18,16 +18,16 @@
   </ItemGroup>
   <ItemGroup>
     <Reference Include="CollisionLib">
-      <HintPath>..\..\..\..\..\DLLs\Terraria 1.4\CollisionLib.dll</HintPath>
+      <HintPath>..\ModAssemblies\CollisionLib.dll</HintPath>
     </Reference>
     <Reference Include="ParticleLibrary">
-      <HintPath>..\..\..\..\..\DLLs\Terraria 1.4\ParticleLibrary.dll</HintPath>
+      <HintPath>..\ModAssemblies\ParticleLibrary.dll</HintPath>
     </Reference>
     <Reference Include="StructureHelper">
-      <HintPath>..\..\..\..\..\DLLs\Terraria 1.4\StructureHelper.dll</HintPath>
+      <HintPath>..\ModAssemblies\StructureHelper_v2.0.9.dll</HintPath>
     </Reference>
     <Reference Include="SubworldLibrary">
-      <HintPath>..\..\..\..\..\DLLs\Terraria 1.4\SubworldLibrary.dll</HintPath>
+      <HintPath>..\ModAssemblies\SubworldLibrary.dll</HintPath>
     </Reference>
   </ItemGroup>
 </Project>

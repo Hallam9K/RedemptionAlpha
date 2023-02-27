@@ -32,6 +32,7 @@ using Redemption.NPCs.PreHM;
 using static System.Net.Mime.MediaTypeNames;
 using static Humanizer.In;
 using Redemption.UI.ChatUI;
+using Redemption.UI;
 
 namespace Redemption.NPCs.Bosses.KSIII
 {
@@ -391,37 +392,37 @@ namespace Redemption.NPCs.Bosses.KSIII
                                     else
                                     {
                                         if (player.IsFullTBot())
-                                            line1 = "Ah,[10] this little scrap of metal decided to save me the trouble of finding it.";
+                                            line1 = "Ah,[0.1] this little scrap of metal decided to save me the trouble of finding it.";
                                         else if (player.RedemptionPlayerBuff().ChickenForm)
-                                            line1 = "Ah,[10] this little chicken nugget decided to save me the trouble of finding it.";
+                                            line1 = "Ah,[0.1] this little chicken nugget decided to save me the trouble of finding it.";
                                         else
-                                            line1 = "Ah,[10] this little fleshbag decided to save me the trouble of finding it.";
+                                            line1 = "Ah,[0.1] this little fleshbag decided to save me the trouble of finding it.";
                                     }
                                 }
                                 string line2;
                                 if (RedeHelper.AnyProjectiles(ModContent.ProjectileType<KS3_DroneKillCheck>()))
-                                    line2 = "Eh,[10] not like I got a shortage of them,[10] but I'm still gonna blast ya for it!";
+                                    line2 = "Eh,[0.1] not like I got a shortage of them,[0.1] but I'm still gonna blast ya for it!";
                                 else
                                 {
                                     if (RedeWorld.alignment >= 0)
                                     {
-                                        line2 = "I warned you,[10] so don't go crying to your mummy when I crush you into the ground!";
+                                        line2 = "I warned you,[0.1] so don't go crying to your mummy when I crush you into the ground!";
                                         if (player.Redemption().slayerStarRating >= 6)
-                                            line2 = "Do you understand how annoying it is to be spam-pinged by my units because of your trigger-happy arse?[60] Maybe I should teach you a lesson!";
+                                            line2 = "Do you understand how annoying it is to be spam-pinged by my units because of your trigger-happy arse?[1] Maybe I should teach you a lesson!";
                                     }
                                     else
-                                        line2 = "You were on my hitlist,[10] so lets skip the small talk and get on with it!";
+                                        line2 = "You were on my hitlist,[0.1] so lets skip the small talk and get on with it!";
                                 }
                                 player.Redemption().slayerStarRating = 0;
 
                                 DialogueChain chain = new();
-                                chain.Add(new(NPC, line1, new Color(170, 255, 255), Color.Black, voice, 2, 100, 0, false, null, bubble, null, modifier))
-                                     .Add(new(NPC, "[@h1]" + line2, new Color(170, 255, 255), Color.Black, voice, 2, 100, 30, !RedeBossDowned.downedKeeper, null, bubble, null, modifier, RedeBossDowned.downedKeeper ? 0 : 1));
+                                chain.Add(new(NPC, line1, new Color(170, 255, 255), Color.Black, voice, .03f, 2f, 0, false, null, bubble, null, modifier))
+                                     .Add(new(NPC, "[@h1]" + line2, new Color(170, 255, 255), Color.Black, voice, .03f, 2f, .5f, !RedeBossDowned.downedKeeper, null, bubble, null, modifier, RedeBossDowned.downedKeeper ? 0 : 1));
                                 if (RedeBossDowned.downedKeeper)
                                 {
-                                    chain.Add(new(NPC, "[@b0][@h0]Actually...[30] You were the one that fought the Keeper, weren't you!", new Color(170, 255, 255), Color.Black, voice, 2, 100, 0, false, null, bubble, null, modifier));
-                                    chain.Add(new(NPC, "[@h2]That was my job!", new Color(170, 255, 255), Color.Black, voice, 2, 100, 0, false, null, bubble, null, modifier));
-                                    chain.Add(new(NPC, "[@h0]Great,[10] now I have even more reason to pummel you to ash!", new Color(170, 255, 255), Color.Black, voice, 2, 100, 30, true, null, bubble, null, modifier, 1));
+                                    chain.Add(new(NPC, "[@b0][@h0]Actually...[0.5] You were the one that fought the Keeper, weren't you!", new Color(170, 255, 255), Color.Black, voice, .03f, 2f, 0, false, null, bubble, null, modifier));
+                                    chain.Add(new(NPC, "[@h2]That was my job!", new Color(170, 255, 255), Color.Black, voice, .03f, 2f, 0, false, null, bubble, null, modifier));
+                                    chain.Add(new(NPC, "[@h0]Great,[0.1] now I have even more reason to pummel you to ash!", new Color(170, 255, 255), Color.Black, voice, .03f, 2f, .5f, true, null, bubble, null, modifier, 1));
                                 }
                                 chain.OnSymbolTrigger += Chain_OnSymbolTrigger;
                                 chain.OnEndTrigger += Chain_OnEndTrigger;
@@ -471,9 +472,9 @@ namespace Redemption.NPCs.Bosses.KSIII
                                 {
                                     1 => "[@h1]Why must you summon me again?",
                                     2 => "[@h2]Could you maybe possibly probably potentially LEAVE ME ALONE?",
-                                    3 => "[@h1]Really,[10] a rematch?[30] Fine.",
+                                    3 => "[@h1]Really,[0.1] a rematch?[0.5] Fine.",
                                     4 => "[@h1]Why don't you go preemptively die and save me the effort.",
-                                    _ => "[@h4]What?[30] Do you want to fight me again?",
+                                    _ => "[@h4]What?[0.5] Do you want to fight me again?",
                                 };
                             }
                             else
@@ -482,13 +483,13 @@ namespace Redemption.NPCs.Bosses.KSIII
                                 {
                                     1 => "[@h3]Could've sworn you died...",
                                     2 => "Ready for a rematch?",
-                                    3 => "Welp,[10] time to win again!",
+                                    3 => "Welp,[0.1] time to win again!",
                                     4 => "Still wanna fight?",
                                     _ => "[@h3]You're quite a resilient fellow...",
                                 };
                             }
                             DialogueChain chain = new();
-                            chain.Add(new(NPC, line1, new Color(170, 255, 255), Color.Black, voice, 2, 100, 30, true, null, bubble, null, modifier, 1));
+                            chain.Add(new(NPC, line1, new Color(170, 255, 255), Color.Black, voice, .03f, 2f, .5f, true, null, bubble, null, modifier, 1));
                             chain.OnSymbolTrigger += Chain_OnSymbolTrigger;
                             chain.OnEndTrigger += Chain_OnEndTrigger;
                             ChatUI.Visible = true;
@@ -1933,12 +1934,12 @@ namespace Redemption.NPCs.Bosses.KSIII
                             if (RedeHelper.AnyProjectiles(ModContent.ProjectileType<KS3_Shield>()))
                             {
                                 if (player.HeldItem.DamageType == DamageClass.Melee)
-                                    line1 = "What a nuisance.[60] It would seem my Auto-Shield is ineffective to your attacks.";
+                                    line1 = "What a nuisance.[1] It would seem my Auto-Shield is ineffective to your attacks.";
                                 else
-                                    line1 = "What a nuisance.[60] Your petty projectiles are going through my Auto-Shield.";
+                                    line1 = "What a nuisance.[1] Your petty projectiles are going through my Auto-Shield.";
                             }
                             else
-                                line1 = "What a nuisance.[60] You are only wasting both of our efforts here.";
+                                line1 = "What a nuisance.[1] You are only wasting both of our efforts here.";
 
                             string line2;
                             if (TeleportCount > 6)
@@ -1947,8 +1948,8 @@ namespace Redemption.NPCs.Bosses.KSIII
                                 line2 = "Might as well blow you to pieces with a few missiles.";
 
                             DialogueChain chain = new();
-                            chain.Add(new(NPC, line1, new Color(170, 255, 255), Color.Black, voice, 2, 100, 0, false, null, bubble, null, modifier))
-                                 .Add(new(NPC, "[@h2]" + line2, new Color(170, 255, 255), Color.Black, voice, 2, 100, 30, true, null, bubble, null, modifier, 1));
+                            chain.Add(new(NPC, line1, new Color(170, 255, 255), Color.Black, voice, .03f, 2f, 0, false, null, bubble, null, modifier))
+                                 .Add(new(NPC, "[@h2]" + line2, new Color(170, 255, 255), Color.Black, voice, .03f, 2f, .5f, true, null, bubble, null, modifier, 1));
                             chain.OnSymbolTrigger += Chain_OnSymbolTrigger;
                             chain.OnEndTrigger += Chain_OnEndTrigger;
                             ChatUI.Visible = true;
@@ -2047,15 +2048,15 @@ namespace Redemption.NPCs.Bosses.KSIII
 
                             string line2;
                             if (player.HeldItem.DamageType == DamageClass.Ranged || player.HeldItem.DamageType == DamageClass.Magic)
-                                line2 = "You like shooting things,[10] correct?[30] Well try shooting me now.";
+                                line2 = "You like shooting things,[0.1] correct?[0.5] Well try shooting me now.";
                             else
-                                line2 = "Go ahead,[10] shoot me if you can.";
+                                line2 = "Go ahead,[0.1] shoot me if you can.";
 
                             DialogueChain chain = new();
-                            chain.Add(new(NPC, line1, new Color(170, 255, 255), Color.Black, voice, 2, 100, 0, false, null, bubble, null, modifier))
-                                 .Add(new(NPC, "[@h3]I might even have to take you seriously...", new Color(170, 255, 255), Color.Black, voice, 2, 100, 0, false, null, bubble, null, modifier))
-                                 .Add(new(NPC, "[@h0]PAH![30] What a joke!", new Color(170, 255, 255), Color.Black, voice, 2, 100, 0, false, null, bubble, null, modifier))
-                                 .Add(new(NPC, "[@h2]" + line2, new Color(170, 255, 255), Color.Black, voice, 2, 100, 30, true, null, bubble, null, modifier, 1));
+                            chain.Add(new(NPC, line1, new Color(170, 255, 255), Color.Black, voice, .03f, 2f, 0, false, null, bubble, null, modifier))
+                                 .Add(new(NPC, "[@h3]I might even have to take you seriously...", new Color(170, 255, 255), Color.Black, voice, .03f, 2f, 0, false, null, bubble, null, modifier))
+                                 .Add(new(NPC, "[@h0]PAH![0.5] What a joke!", new Color(170, 255, 255), Color.Black, voice, .03f, 2f, 0, false, null, bubble, null, modifier))
+                                 .Add(new(NPC, "[@h2]" + line2, new Color(170, 255, 255), Color.Black, voice, .03f, 2f, .5f, true, null, bubble, null, modifier, 1));
                             chain.OnSymbolTrigger += Chain_OnSymbolTrigger;
                             chain.OnEndTrigger += Chain_OnEndTrigger;
                             ChatUI.Visible = true;
@@ -2140,9 +2141,9 @@ namespace Redemption.NPCs.Bosses.KSIII
                         {
                             HeadType = 2;
                             DialogueChain chain = new();
-                            chain.Add(new(NPC, "This is getting ridiculous![30] Why can't I kill you?", new Color(170, 255, 255), Color.Black, voice, 2, 100, 0, false, null, bubble, null, modifier))
-                                 .Add(new(NPC, "[@h3]*Ahem*[60] Your persistence is admirable,[10] I'll give you that.", new Color(170, 255, 255), Color.Black, voice, 2, 100, 0, false, null, bubble, null, modifier))
-                                 .Add(new(NPC, "[@h2]But you better realise I'm hardly trying.[60][@h1] I ain't bluffing either.", new Color(170, 255, 255), Color.Black, voice, 2, 100, 30, true, null, bubble, null, modifier, 1));
+                            chain.Add(new(NPC, "This is getting ridiculous![0.5] Why can't I kill you?", new Color(170, 255, 255), Color.Black, voice, .03f, 2f, 0, false, null, bubble, null, modifier))
+                                 .Add(new(NPC, "[@h3]*Ahem*[1] Your persistence is admirable,[0.1] I'll give you that.", new Color(170, 255, 255), Color.Black, voice, .03f, 2f, 0, false, null, bubble, null, modifier))
+                                 .Add(new(NPC, "[@h2]But you better realise I'm hardly trying.[1][@h1] I ain't bluffing either.", new Color(170, 255, 255), Color.Black, voice, .03f, 2f, .5f, true, null, bubble, null, modifier, 1));
                             chain.OnSymbolTrigger += Chain_OnSymbolTrigger;
                             chain.OnEndTrigger += Chain_OnEndTrigger;
                             ChatUI.Visible = true;
@@ -2196,7 +2197,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                         {
                             HeadType = 3;
                             DialogueChain chain = new();
-                            chain.Add(new(NPC, "If you stop attacking,[10] I'll go back to more [10][@h2]IMPORTANT[10][@h3] business.", new Color(170, 255, 255), Color.Black, voice, 2, 100, 30, true, null, bubble, null, modifier, 1));
+                            chain.Add(new(NPC, "If you stop attacking,[0.1] I'll go back to more [0.1][@h2]IMPORTANT[0.1][@h3] business.", new Color(170, 255, 255), Color.Black, voice, .03f, 2f, .5f, true, null, bubble, null, modifier, 1));
                             chain.OnSymbolTrigger += Chain_OnSymbolTrigger;
                             chain.OnEndTrigger += Chain_OnEndTrigger;
                             ChatUI.Visible = true;
@@ -2221,16 +2222,16 @@ namespace Redemption.NPCs.Bosses.KSIII
 
                             string line1;
                             if (TeleportCount > 16)
-                                line1 = "You've just been flying away the entire fight.[60] Seriously.";
+                                line1 = "You've just been flying away the entire fight.[1] Seriously.";
                             else
                                 line1 = "I'm too tired to get mad about this nonsense.";
 
                             DialogueChain chain = new();
-                            chain.Add(new(NPC, "Alright alright alright!", new Color(170, 255, 255), Color.Black, voice, 2, 100, 0, false, null, bubble, null, modifier))
-                                 .Add(new(NPC, "[@h1]We'll...[30] call it a draw then.", new Color(170, 255, 255), Color.Black, voice, 2, 100, 0, false, null, bubble, null, modifier))
-                                 .Add(new(NPC, line1, new Color(170, 255, 255), Color.Black, voice, 2, 100, 0, false, null, bubble, null, modifier))
-                                 .Add(new(NPC, "[@h2]If you stop attacking,[10] I'll go back to more [10][@h2]IMPORTANT[10][@h3] business.", new Color(170, 255, 255), Color.Black, voice, 2, 100, 0, false, null, bubble, null, modifier))
-                                 .Add(new(NPC, "[@h3]But,[10] if you so choose,[10] we can continue...[60] But I won't be happy if I lose.", new Color(170, 255, 255), Color.Black, voice, 2, 100, 30, true, null, bubble, null, modifier, 1));
+                            chain.Add(new(NPC, "Alright alright alright!", new Color(170, 255, 255), Color.Black, voice, .03f, 2f, 0, false, null, bubble, null, modifier))
+                                 .Add(new(NPC, "[@h1]We'll...[0.5] call it a draw then.", new Color(170, 255, 255), Color.Black, voice, .03f, 2f, 0, false, null, bubble, null, modifier))
+                                 .Add(new(NPC, line1, new Color(170, 255, 255), Color.Black, voice, .03f, 2f, 0, false, null, bubble, null, modifier))
+                                 .Add(new(NPC, "[@h2]If you stop attacking,[0.1] I'll go back to more [0.1][@h2]IMPORTANT[0.1][@h3] business.", new Color(170, 255, 255), Color.Black, voice, .03f, 2f, 0, false, null, bubble, null, modifier))
+                                 .Add(new(NPC, "[@h3]But,[0.1] if you so choose,[0.1] we can continue...[1] But I won't be happy if I lose.", new Color(170, 255, 255), Color.Black, voice, .03f, 2f, .5f, true, null, bubble, null, modifier, 1));
                             chain.OnSymbolTrigger += Chain_OnSymbolTrigger;
                             chain.OnEndTrigger += Chain_OnEndTrigger;
                             ChatUI.Visible = true;
@@ -2314,7 +2315,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                     {
                         HeadType = 1;
                         DialogueChain chain = new();
-                        chain.Add(new(NPC, "I see how it is...", new Color(170, 255, 255), Color.Black, voice, 2, 100, 30, true, null, bubble, null, modifier));
+                        chain.Add(new(NPC, "I see how it is...", new Color(170, 255, 255), Color.Black, voice, .03f, 2f, .5f, true, null, bubble, null, modifier));
                         ChatUI.Visible = true;
                         ChatUI.Add(chain);
                     }
@@ -2374,8 +2375,8 @@ namespace Redemption.NPCs.Bosses.KSIII
                     {
                         HeadType = 0;
                         DialogueChain chain = new();
-                        chain.Add(new(NPC, "Tie it is then.[60] Now don't distract me again.", new Color(170, 255, 255), Color.Black, voice, 2, 100, 0, false, null, bubble, null, modifier))
-                             .Add(new(NPC, "[@h1]Adios,[10] dingus.", new Color(170, 255, 255), Color.Black, voice, 2, 100, 30, true, null, bubble, null, modifier, 1));
+                        chain.Add(new(NPC, "Tie it is then.[1] Now don't distract me again.", new Color(170, 255, 255), Color.Black, voice, .03f, 2f, 0, false, null, bubble, null, modifier))
+                             .Add(new(NPC, "[@h1]Adios,[0.1] dingus.", new Color(170, 255, 255), Color.Black, voice, .03f, 2f, .5f, true, null, bubble, null, modifier, 1));
                         chain.OnSymbolTrigger += Chain_OnSymbolTrigger;
                         chain.OnEndTrigger += Chain_OnEndTrigger;
                         ChatUI.Visible = true;
@@ -2408,7 +2409,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                     }
                     player.RedemptionScreen().lockScreen = true;
                     NPC.LockMoveRadius(player);
-                    if (AITimer < 70 && !Main.dedServ)
+                    if (AITimer < 120 && !Main.dedServ)
                         Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/silence");
                     else
                         Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/BossSlayer2");
@@ -2418,7 +2419,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                         HeadType = 2;
                         string line1;
                         if (RedeBossDowned.slayerDeath >= 8)
-                            line1 = "Once again,[10] you really are eager to win...";
+                            line1 = "Once again,[0.1] you really are eager to win...";
                         else
                             line1 = "I'm disappointed I actually have to overclock this vessel...";
 
@@ -2430,15 +2431,15 @@ namespace Redemption.NPCs.Bosses.KSIII
                             if (player.IsFullTBot())
                                 line2 = "... And for a heap of scrap no less.";
                             else if (player.RedemptionPlayerBuff().ChickenForm)
-                                line2 = "... And for what?[30] A bloody chicken!?";
+                                line2 = "... And for what?[0.5] A bloody chicken!?";
                             else
                                 line2 = "... And for an annoying brat no less.";
                         }
 
                         DialogueChain chain = new();
-                        chain.Add(new(NPC, line1, new Color(170, 255, 255), Color.Black, voice, 2, 100, 0, false, null, bubble, null, modifier))
-                             .Add(new(NPC, "[@h4]" + line2, new Color(170, 255, 255), Color.Black, voice, 2, 100, 0, false, null, bubble, null, modifier))
-                             .Add(new(NPC, "[@h0]Let's begin.", new Color(170, 255, 255), Color.Black, voice, 2, 100, 30, true, null, bubble, null, modifier, 1));
+                        chain.Add(new(NPC, line1, new Color(170, 255, 255), Color.Black, voice, .03f, 2f, 0, false, null, bubble, null, modifier))
+                             .Add(new(NPC, "[@h4]" + line2, new Color(170, 255, 255), Color.Black, voice, .03f, 2f, 0, false, null, bubble, null, modifier))
+                             .Add(new(NPC, "[@h0]Let's begin.", new Color(170, 255, 255), Color.Black, voice, .03f, 2f, .5f, true, null, bubble, null, modifier, 1));
                         chain.OnSymbolTrigger += Chain_OnSymbolTrigger;
                         chain.OnEndTrigger += Chain_OnEndTrigger;
                         ChatUI.Visible = true;
