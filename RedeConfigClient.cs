@@ -9,23 +9,23 @@ namespace Redemption
 
         public static RedeConfigClient Instance;
 
-        [Range(0, 180)]
+        [Range(0, 1.5f)]
         [DefaultValue(0)]
         [Slider]
         [Label("Extra Dialogue Wait Time")]
         [Tooltip("Increases duration of dialogue text persisting before moving on, increase if you're a slow reader\n" +
-            "Value is in frames (60 = 1 extra second, caps at 180 extra frames/3 extra seconds)")]
-        public int DialogueWaitTime;
+            "Value is in seconds.")]
+        public float DialogueWaitTime;
 
-        [Range(-2, 2)]
+        [Range(-0.05f, 0.05f)]
         [DefaultValue(0)]
         [Slider]
         [DrawTicks]
         [Label("Dialogue Text Speed")]
         [Tooltip("Only recommend changing if the dialogue speed is too slow or fast normally.\n" +
-            "This is how many frames less for each letter to appear, higher = faster.\n" +
+            "This is how much less time measured in seconds for each letter to appear, higher = faster.\n" +
             "The faster you make it, the harder it is to read before finishing, so also adjust Extra Dialogue Wait Time")]
-        public int DialogueSpeed;
+        public float DialogueSpeed;
 
         [Label("Disable Zelda-Styled Boss Titles")]
         [Tooltip("Disables the Legend of Zelda-style boss introduction text for bosses.")]

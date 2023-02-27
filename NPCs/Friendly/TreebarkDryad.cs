@@ -22,6 +22,7 @@ using Redemption.UI;
 using Terraria.Audio;
 using Redemption.Items.Usable;
 using Terraria.GameContent.ItemDropRules;
+using Redemption.UI.ChatUI;
 
 namespace Redemption.NPCs.Friendly
 {
@@ -178,10 +179,10 @@ namespace Redemption.NPCs.Friendly
                         SoundStyle voice = CustomSounds.Voice2 with { Pitch = -1f };
 
                         DialogueChain chain = new();
-                        chain.Add(new(NPC, "Now,[10] now.[30] Watch where you swing that axe of yours...[60] I don't want you chopping down any of my friends.", Color.LightGreen, Color.ForestGreen, voice, 4, 100, 30, true, bubble: bubble, endID: 1));
+                        chain.Add(new(NPC, "Now,[0.1] now.[0.5] Watch where you swing that axe of yours...[1] I don't want you chopping down any of my friends.", Color.LightGreen, Color.ForestGreen, voice, .06f, 2f, .5f, true, bubble: bubble, endID: 1));
                         chain.OnEndTrigger += Chain_OnEndTrigger;
-                        TextBubbleUI.Visible = true;
-                        TextBubbleUI.Add(chain);
+                        ChatUI.Visible = true;
+                        ChatUI.Add(chain);
                         TimerRand = 2;
                     }
                 }
@@ -194,9 +195,9 @@ namespace Redemption.NPCs.Friendly
 
                         string gender = player.Male ? "man" : "lady";
                         DialogueChain chain = new();
-                        chain.Add(new(NPC, "It will do no good,[10] young " + gender + ".[30] We bring no harm to you.[60] Chopping us down will only bring bad omens.", Color.LightGreen, Color.ForestGreen, voice, 4, 100, 30, true, bubble: bubble));
-                        TextBubbleUI.Visible = true;
-                        TextBubbleUI.Add(chain);
+                        chain.Add(new(NPC, "It will do no good,[0.1] young " + gender + ".[0.5] We bring no harm to you.[1] Chopping us down will only bring bad omens.", Color.LightGreen, Color.ForestGreen, voice, .06f, 2, .5f, true, bubble: bubble));
+                        ChatUI.Visible = true;
+                        ChatUI.Add(chain);
                         TimerRand = 4;
                     }
                 }
