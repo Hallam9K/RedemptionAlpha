@@ -11,8 +11,8 @@ using Terraria.Audio;
 using Redemption.Base;
 using ReLogic.Content;
 using Redemption.WorldGeneration;
-using Redemption.UI;
 using Redemption.Biomes;
+using Redemption.UI.ChatUI;
 
 namespace Redemption.NPCs.Lab.Volt
 {
@@ -95,8 +95,8 @@ namespace Redemption.NPCs.Lab.Volt
                                 DialogueChain chain = new();
                                 chain.Add(new(NPC, "Halt!", Colors.RarityYellow, new Color(100, 86, 0), voice, 2, 100, 0, false, modifier: modifier)) // 110
                                      .Add(new(NPC, "You aren't supposed to be here!", Colors.RarityYellow, new Color(100, 86, 0), voice, 2, 100, 30, true, modifier: modifier)); // 192
-                                TextBubbleUI.Visible = true;
-                                TextBubbleUI.Add(chain);
+                                ChatUI.Visible = true;
+                                ChatUI.Add(chain);
                             }
                             if (AITimer == 342)
                             {
@@ -142,8 +142,8 @@ namespace Redemption.NPCs.Lab.Volt
                                  .Add(new(NPC, ".[20].[20].[20]", Colors.RarityYellow, new Color(100, 86, 0), voice, 2, 100, 0, false, modifier: modifier)) // 166
                                  .Add(new(NPC, "Everything seems to be in order.[30] Move along.", Colors.RarityYellow, new Color(100, 86, 0), voice, 2, 100, 30, true, modifier: modifier, endID: 1)); // 248
                             chain.OnEndTrigger += Chain_OnEndTrigger;
-                            TextBubbleUI.Visible = true;
-                            TextBubbleUI.Add(chain);
+                            ChatUI.Visible = true;
+                            ChatUI.Add(chain);
                         }
                         if (AITimer > 2000)
                         {

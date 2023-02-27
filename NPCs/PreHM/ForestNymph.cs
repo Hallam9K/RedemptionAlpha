@@ -15,7 +15,7 @@ using Redemption.NPCs.Friendly;
 using Redemption.Particles;
 using Redemption.Projectiles.Hostile;
 using Redemption.Projectiles.Minions;
-using Redemption.UI;
+using Redemption.UI.ChatUI;
 using ReLogic.Content;
 using System;
 using System.IO;
@@ -615,8 +615,8 @@ namespace Redemption.NPCs.PreHM
                         DialogueChain chain = new();
                         chain.Add(new(NPC, line1 + "[@End]", Color.LightGreen, Color.ForestGreen, voice, 3, 100, 30, true, bubble: bubble));
                         chain.OnSymbolTrigger += Chain_OnSymbolTrigger;
-                        TextBubbleUI.Visible = true;
-                        TextBubbleUI.Add(chain);
+                        ChatUI.Visible = true;
+                        ChatUI.Add(chain);
                     }
                     break;
             }

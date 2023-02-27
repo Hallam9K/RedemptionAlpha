@@ -16,6 +16,7 @@ using Redemption.Items.Weapons.HM.Melee;
 using Terraria.Audio;
 using Redemption.UI;
 using ReLogic.Content;
+using Redemption.UI.ChatUI;
 
 namespace Redemption.NPCs.Bosses.Cleaver
 {
@@ -255,8 +256,8 @@ namespace Redemption.NPCs.Bosses.Cleaver
                             chain.Add(new(NPC, "I came here to kick gum", Colors.RarityRed, Color.DarkRed, voice, 2, 100, 0, false, null, bubble))
                                  .Add(new(NPC, "and chew ass...", Colors.RarityRed, Color.DarkRed, voice, 2, 100, 30, true, null, bubble, endID: 1));
                             chain.OnEndTrigger += Chain_OnEndTrigger;
-                            TextBubbleUI.Visible = true;
-                            TextBubbleUI.Add(chain);
+                            ChatUI.Visible = true;
+                            ChatUI.Add(chain);
                         }
                         if (AITimer > 600)
                         {
@@ -291,8 +292,8 @@ namespace Redemption.NPCs.Bosses.Cleaver
                         {
                             DialogueChain chain = new();
                             chain.Add(new(NPC, "...And I'm all out of ass.", Colors.RarityRed, Color.DarkRed, voice, 2, 100, 30, true, null, bubble));
-                            TextBubbleUI.Visible = true;
-                            TextBubbleUI.Add(chain);
+                            ChatUI.Visible = true;
+                            ChatUI.Add(chain);
                         }
                         if (AITimer > (Funny ? 120 : 60))
                         {
@@ -676,8 +677,8 @@ namespace Redemption.NPCs.Bosses.Cleaver
                     {
                         DialogueChain chain = new();
                         chain.Add(new(NPC, "...Nah.", Colors.RarityRed, Color.DarkRed, voice, 1, 100, 0, false, null, bubble));
-                        TextBubbleUI.Visible = true;
-                        TextBubbleUI.Add(chain);
+                        ChatUI.Visible = true;
+                        ChatUI.Add(chain);
                     }
                     if (AITimer > 260)
                     {

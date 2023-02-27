@@ -18,6 +18,7 @@ using Redemption.Items.Donator.Arche;
 using Redemption.Items.Donator.Uncon;
 using Redemption.Items.Usable;
 using Redemption.UI;
+using Redemption.UI.ChatUI;
 using ReLogic.Content;
 using System;
 using System.Collections.Generic;
@@ -384,7 +385,7 @@ namespace Redemption
         public AMemoryUIState AMemoryUIElement;
 
         public UserInterface TextBubbleUILayer;
-        public TextBubbleUI TextBubbleUIElement;
+        public ChatUI TextBubbleUIElement;
 
         public UserInterface YesNoUILayer;
         public YesNoUI YesNoUIElement;
@@ -418,7 +419,7 @@ namespace Redemption
                 AMemoryUILayer.SetState(AMemoryUIElement);
 
                 TextBubbleUILayer = new UserInterface();
-                TextBubbleUIElement = new TextBubbleUI();
+                TextBubbleUIElement = new ChatUI();
                 TextBubbleUILayer.SetState(TextBubbleUIElement);
 
                 YesNoUILayer = new UserInterface();
@@ -588,7 +589,7 @@ namespace Redemption
                 AddInterfaceLayer(layers, DialogueUILayer, DialogueUIElement, MouseTextIndex + 2, MoRDialogueUI.Visible, "Dialogue");
                 AddInterfaceLayer(layers, TitleUILayer, TitleCardUIElement, MouseTextIndex + 3, TitleCard.Showing, "Title Card");
                 AddInterfaceLayer(layers, NukeUILayer, NukeUIElement, MouseTextIndex + 4, NukeDetonationUI.Visible, "Nuke UI");
-                AddInterfaceLayer(layers, TextBubbleUILayer, TextBubbleUIElement, MouseTextIndex + 5, TextBubbleUI.Visible, "Text Bubble");
+                AddInterfaceLayer(layers, TextBubbleUILayer, TextBubbleUIElement, MouseTextIndex + 5, ChatUI.Visible, "Text Bubble");
                 AddInterfaceLayer(layers, YesNoUILayer, YesNoUIElement, MouseTextIndex + 6, YesNoUI.Visible, "Yes No Choice");
                 AddInterfaceLayer(layers, ForestNymphTradeUILayer, ForestNymphTradeUIElement, MouseTextIndex + 7, ForestNymphTradeUI.Visible, "Nymph Trade");
             }

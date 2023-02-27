@@ -8,9 +8,9 @@ using ReLogic.Graphics;
 using Terraria.Audio;
 using Terraria.UI.Chat;
 
-namespace Redemption.UI
+namespace Redemption.UI.ChatUI
 {
-    public class TextBubbleUI : UIState
+    public class ChatUI : UIState
     {
         public static List<IDialogue> Dialogue;
 
@@ -29,18 +29,7 @@ namespace Redemption.UI
             EpidotraTex = ModContent.Request<Texture2D>("Redemption/UI/TextBubble_Epidotra", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
             KingdomTex = ModContent.Request<Texture2D>("Redemption/UI/TextBubble_Kingdom", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
         }
-        public static void Add(IDialogue dialogue)
-        {
-            Dialogue.Add(dialogue);
-        }
-        public static void Remove(IDialogue dialogue)
-        {
-            Dialogue.Remove(dialogue);
-        }
-        public static void Clear()
-        {
-            Dialogue.Clear();
-        }
+
         public override void Update(GameTime gameTime)
         {
             if (!Visible || Dialogue.Count == 0)
@@ -51,9 +40,10 @@ namespace Redemption.UI
             for (int i = 0; i < Dialogue.Count; i++)
             {
                 IDialogue dialogue = Dialogue[i];
-                dialogue.Update();
+                dialogue.Update(gameTime);
             }
         }
+
         public override void Draw(SpriteBatch spriteBatch)
         {
             if (!Visible || Dialogue.Count == 0)
@@ -91,6 +81,7 @@ namespace Redemption.UI
                 }
             }
         }
+
         public static void DrawPanel(SpriteBatch spriteBatch, Texture2D texture, Vector2 position, Color color, int width, int height)
         {
             // Top Left
@@ -140,6 +131,7 @@ namespace Redemption.UI
             Rectangle bottomRightRect = new(36, 36, 34, 34);
             spriteBatch.Draw(texture, bottomRightPos, bottomRightRect, color, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
         }
+
         public static string[] FormatText(string text, DynamicSpriteFont font, out int width, out int height)
         {
             // Measure the width of the text so that we can stretch the bubble
@@ -168,6 +160,7 @@ namespace Redemption.UI
 
             return displayingText;
         }
+        
         public static void InterpretSymbols(Dialogue dialogue)
         {
             if (dialogue.displayingText.Length == 0)
@@ -191,7 +184,7 @@ namespace Redemption.UI
                     return;
                 }
 
-                bool parsed = int.TryParse(numbers, out int result);
+                bool parsed = float.TryParse(numbers, out float result);
                 if (!parsed) return;
 
                 dialogue.pauseTime = result;
@@ -206,7 +199,7 @@ namespace Redemption.UI
                 int length = dialogue.displayingText.Length - 1;
                 string text = dialogue.text[length..(index + 1)];
                 string numbers = text[1..^1];
-                int.TryParse(numbers, out int result);
+                float.TryParse(numbers, out float result);
 
                 dialogue.charTime = result;
                 dialogue.text = dialogue.text.Replace(text, "");
@@ -214,146 +207,26 @@ namespace Redemption.UI
                 return;
             }
         }
+
         public static void DrawStringEightWay(SpriteBatch spriteBatch, string text, int thickness, Vector2 position, Color textColor, Color shadowColor)
         {
             ChatManager.DrawColorCodedStringShadow(spriteBatch, Terraria.GameContent.FontAssets.MouseText.Value, text, position, shadowColor * .5f, 0, Vector2.Zero, Vector2.One);
             ChatManager.DrawColorCodedString(spriteBatch, Terraria.GameContent.FontAssets.MouseText.Value, text, position, textColor, 0, Vector2.Zero, Vector2.One);
         }
-    }
 
-    public interface IDialogue
-    {
-        public void Update();
-        public Dialogue Get();
-    }
+		public static void Add(IDialogue dialogue)
+		{
+			Dialogue.Add(dialogue);
+		}
 
-    public class DialogueChain : IDialogue
-    {
-        public delegate void SymbolTrigger(Dialogue dialogue, string signature);
-        public event SymbolTrigger OnSymbolTrigger;
-        public delegate void EndTrigger(Dialogue dialogue, int id);
-        public event EndTrigger OnEndTrigger;
-        public List<Dialogue> Dialogue;
-        public Entity anchor;
-        public Vector2 modifier;
+		public static void Remove(IDialogue dialogue)
+		{
+			Dialogue.Remove(dialogue);
+		}
 
-        public DialogueChain(Entity anchor = null, Vector2 modifier = default)
-        {
-            Dialogue = new List<Dialogue>();
-            this.anchor = anchor;
-            this.modifier = modifier;
-        }
-        public void Update()
-        {
-            Dialogue[0].Update();
-            if (Dialogue.Count == 0)
-                TextBubbleUI.Dialogue.Remove(this);
-        }
-        public DialogueChain Add(Dialogue dialogue)
-        {
-            dialogue.chain = this;
-            Dialogue.Add(dialogue);
-            return this;
-        }
-        public Dialogue Get() => Dialogue[0];
-        public void TriggerSymbol(string signature) => OnSymbolTrigger?.Invoke(Dialogue[0], signature);
-        public void TriggerEnd(int ID) => OnEndTrigger?.Invoke(Dialogue[0], ID);
-    }
-
-    public class Dialogue : IDialogue
-    {
-        public DialogueChain chain;
-        public delegate void SymbolTrigger(Dialogue dialogue, string signature);
-        public event SymbolTrigger OnSymbolTrigger;
-        public delegate void EndTrigger(Dialogue dialogue, int id);
-        public event EndTrigger OnEndTrigger;
-
-        public Entity entity;
-        public Color textColor;
-        public Color shadowColor;
-        public SoundStyle? sound;
-
-        public Texture2D icon;
-        public Texture2D bubble;
-        public DynamicSpriteFont font;
-        public Vector2 modifier;
-
-        public bool boxFade;
-        public bool textFinished;
-
-        public string text;
-        public string displayingText;
-
-        public int timer;
-        public int charTime;
-        public int pauseTime;
-        public int preFadeTime;
-        public int fadeTime;
-        public int fadeTimeMax;
-        public int endID;
-
-        public Dialogue(Entity entity, string text, Color? textColor = null, Color? shadowColor = null, SoundStyle? sound = null, int charTime = 3, int preFadeTime = 100, int fadeTime = 30, bool boxFade = false, Texture2D icon = null, Texture2D bubble = null, DynamicSpriteFont font = null, Vector2 modifier = default, int endID = 0)
-        {
-            this.entity = entity;
-            this.text = text ?? "";
-            displayingText ??= "";
-
-            this.textColor = textColor ?? Color.White;
-            this.shadowColor = shadowColor ?? Color.Black;
-            this.sound = sound ?? CustomSounds.Voice1;
-            this.charTime = charTime - RedeConfigClient.Instance.DialogueSpeed;
-            this.preFadeTime = preFadeTime + RedeConfigClient.Instance.DialogueWaitTime;
-            this.fadeTime = fadeTime;
-            fadeTimeMax = fadeTime;
-            this.boxFade = boxFade;
-            this.icon = icon;
-            this.bubble = bubble ?? ModContent.Request<Texture2D>("Redemption/UI/TextBubble_Liden").Value;
-            this.font = font ?? Terraria.GameContent.FontAssets.MouseText.Value;
-            this.modifier = modifier;
-            this.endID = endID;
-            if (this.charTime < 1)
-                this.charTime = 1;
-        }
-        public void Update()
-        {
-            if (Main.gamePaused)
-                return;
-            // Measure our progress via a modulo between our char time and
-            // our timer, allowing us to decide how many chars to display
-            if (pauseTime <= 0 && displayingText.Length != text.Length && timer % charTime == 0)
-            {
-                SoundEngine.PlaySound((SoundStyle)sound, entity.position);
-                displayingText += text[displayingText.Length];
-            }
-
-            TextBubbleUI.InterpretSymbols(this);
-
-            if (displayingText.Length == text.Length)
-                textFinished = true;
-
-            if ((textFinished && preFadeTime <= 0 && fadeTime <= 0) || !entity.active)
-            {
-                if (endID > 0)
-                {
-                    TriggerEnd(endID);
-                    chain.TriggerEnd(endID);
-                }
-                if (chain != null)
-                    chain.Dialogue.Remove(this);
-                else
-                    TextBubbleUI.Dialogue.Remove(this);
-            }
-
-            pauseTime--;
-            if (pauseTime <= 0)
-                timer++;
-            if (textFinished)
-                preFadeTime--;
-            if (preFadeTime <= 0)
-                fadeTime--;
-        }
-        public Dialogue Get() => this;
-        public void TriggerSymbol(string signature) => OnSymbolTrigger?.Invoke(this, signature);
-        public void TriggerEnd(int ID) => OnEndTrigger?.Invoke(this, ID);
-    }
+		public static void Clear()
+		{
+			Dialogue.Clear();
+		}
+	}
 }

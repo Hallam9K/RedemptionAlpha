@@ -10,7 +10,8 @@ using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using Redemption.Dusts;
 using Terraria.GameContent.UI;
-using Redemption.UI;
+using MonoMod.RuntimeDetour;
+using Redemption.UI.ChatUI;
 
 namespace Redemption.NPCs.Friendly
 {
@@ -105,8 +106,8 @@ namespace Redemption.NPCs.Friendly
                             chain.Add(new(NPC, "HUH?", Color.LightGreen, Color.DarkGreen, null, 3, 100, 0, false)) // 112
                                  .Add(new(NPC, "How-[10] Wh-[10] I-", Color.LightGreen, Color.DarkGreen, boxFade: true, endID: 1)); // 183
                             chain.OnEndTrigger += Chain_OnEndTrigger;
-                            TextBubbleUI.Visible = true;
-                            TextBubbleUI.Add(chain);
+                            ChatUI.Visible = true;
+                            ChatUI.Add(chain);
                         }
                         if (AITimer >= 1000)
                         {
@@ -123,8 +124,8 @@ namespace Redemption.NPCs.Friendly
                             chain.Add(new(NPC, "AH!", Color.LightGreen, Color.DarkGreen, null, 3, 100, 0, false)) // 109
                                  .Add(new(NPC, "...I-[10]I thought you were someone else.[30] Sorry about that.", Color.LightGreen, Color.DarkGreen, null, boxFade: true, endID: 1)); // 335
                             chain.OnEndTrigger += Chain_OnEndTrigger;
-                            TextBubbleUI.Visible = true;
-                            TextBubbleUI.Add(chain);
+                            ChatUI.Visible = true;
+                            ChatUI.Add(chain);
                         }
                         if (AITimer >= 1000)
                         {
@@ -147,8 +148,8 @@ namespace Redemption.NPCs.Friendly
                                  .Add(new(NPC, "[@a]...Alright.[30] We can safely ignore each other then.", Color.LightGreen, Color.DarkGreen, boxFade: true, endID: 1)); // 307
                             chain.OnSymbolTrigger += Chain_OnSymbolTrigger;
                             chain.OnEndTrigger += Chain_OnEndTrigger;
-                            TextBubbleUI.Visible = true;
-                            TextBubbleUI.Add(chain);
+                            ChatUI.Visible = true;
+                            ChatUI.Add(chain);
 
                             EmoteBubble.NewBubble(1, new WorldUIAnchor(NPC), 272);
                         }
@@ -170,8 +171,8 @@ namespace Redemption.NPCs.Friendly
                                  .Add(new(NPC, "[@b]Seeing as I won't be returning to that frozen hell for a good while,[10] mind if I stay here?[30] I assume you've some shelter to stay at.", Color.LightGreen, Color.DarkGreen, boxFade: true, endID: 1)); // 560
                             chain.OnSymbolTrigger += Chain_OnSymbolTrigger;
                             chain.OnEndTrigger += Chain_OnEndTrigger;
-                            TextBubbleUI.Visible = true;
-                            TextBubbleUI.Add(chain);
+                            ChatUI.Visible = true;
+                            ChatUI.Add(chain);
                         }
                         if (AITimer == 3000 && !Main.dedServ)
                         {
@@ -179,8 +180,8 @@ namespace Redemption.NPCs.Friendly
 
                             EmoteBubble.NewBubble(10, new WorldUIAnchor(NPC), 265);
                             NPC.spriteDirection = -NPC.spriteDirection;
-                            TextBubbleUI.Visible = true;
-                            TextBubbleUI.Add(d4);
+                            ChatUI.Visible = true;
+                            ChatUI.Add(d4);
                         }
                         if (AITimer >= 3265)
                         {
