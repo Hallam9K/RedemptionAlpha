@@ -484,7 +484,6 @@ namespace Redemption.NPCs.Minibosses.EaglecrestGolem
             }
             int dustIndex = Dust.NewDust(NPC.position + NPC.velocity, NPC.width, NPC.height, DustID.Stone);
             Main.dust[dustIndex].velocity *= 2f;
-
         }
     }
 }

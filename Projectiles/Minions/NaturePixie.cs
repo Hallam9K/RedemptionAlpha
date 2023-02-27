@@ -188,7 +188,7 @@ namespace Redemption.Projectiles.Minions
             else
             {
                 Projectile.ai[1] = 0;
-                if (RedeWorld.alignment >= 1 && Projectile.localAI[1]++ % 60 == 0)
+                if (((RedeWorld.alignment >= 1 && !RedeBossDowned.downedTreebark) || (RedeWorld.alignment >= 3 && RedeBossDowned.downedTreebark)) && Projectile.localAI[1]++ % 60 == 0)
                 {
                     int nymphID = NPC.FindFirstNPC(ModContent.NPCType<ForestNymph>());
                     if (nymphID != -1)

@@ -14,6 +14,7 @@ using Terraria.ModLoader.Utilities;
 using Redemption.Biomes;
 using Redemption.Base;
 using Redemption.NPCs.Friendly;
+using SubworldLibrary;
 
 namespace Redemption.NPCs.HM
 {
@@ -229,7 +230,7 @@ namespace Redemption.NPCs.HM
         {
             if (RedeWorld.slayerRep < 1 || !NPC.downedMoonlord || RedeWorld.slayerMessageGiven || RedeBossDowned.downedOmega3 || RedeBossDowned.downedNebuleus)
                 return 0;
-            if (spawnInfo.Player.InModBiome<SlayerShipBiome>())
+            if (spawnInfo.Player.InModBiome<SlayerShipBiome>() || SubworldSystem.Current != null)
                 return 0;
 
             float baseChance = SpawnCondition.OverworldDay.Chance;

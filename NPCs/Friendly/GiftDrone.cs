@@ -19,6 +19,7 @@ using System.Reflection;
 using Redemption.Items.Placeable.Tiles;
 using Redemption.NPCs.Lab.Volt;
 using Redemption.UI;
+using SubworldLibrary;
 
 namespace Redemption.NPCs.Friendly
 {
@@ -528,7 +529,7 @@ namespace Redemption.NPCs.Friendly
         }
         public override float SpawnChance(NPCSpawnInfo spawnInfo)
         {
-            if (!NPC.downedMoonlord || RedeWorld.keycardGiven)
+            if (!NPC.downedMoonlord || RedeWorld.keycardGiven || SubworldSystem.Current != null)
                 return 0;
 
             float m = NPC.AnyNPCs(Type) || NPC.AnyNPCs(ModContent.NPCType<Android>()) || NPC.AnyNPCs(ModContent.NPCType<SlayerSpawner>()) ? 0 : 10;

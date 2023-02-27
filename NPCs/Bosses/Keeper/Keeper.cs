@@ -27,6 +27,7 @@ using Redemption.Dusts;
 using Redemption.NPCs.Friendly;
 using Redemption.BaseExtension;
 using ReLogic.Content;
+using Redemption.Items.Usable.Summons;
 
 namespace Redemption.NPCs.Bosses.Keeper
 {
@@ -305,7 +306,16 @@ namespace Redemption.NPCs.Bosses.Keeper
                     if (NPC.alpha <= 0)
                     {
                         if (teddy)
+                        {
                             AIState = ActionState.Teddy;
+                            int teddyItem = Main.LocalPlayer.FindItem(ModContent.ItemType<AbandonedTeddy>());
+                            if (teddyItem >= 0)
+                            {
+                                Main.LocalPlayer.inventory[teddyItem].stack--;
+                                if (Main.LocalPlayer.inventory[teddyItem].stack <= 0)
+                                    Main.LocalPlayer.inventory[teddyItem] = new Item();
+                            }
+                        }
                         else
                             AIState = ActionState.Idle;
 
@@ -781,14 +791,14 @@ namespace Redemption.NPCs.Bosses.Keeper
                         NPC.Shoot(NPC.Center, ModContent.ProjectileType<KeeperSoul>(), 0, Vector2.Zero, false, SoundID.Item1);
                         if (!RedeBossDowned.keeperSaved)
                         {
-                            RedeWorld.alignment += 2;
+                            RedeWorld.alignment += 3;
                             for (int p = 0; p < Main.maxPlayers; p++)
                             {
                                 Player player2 = Main.player[p];
                                 if (!player2.active)
                                     continue;
 
-                                CombatText.NewText(player2.getRect(), Color.Gold, "+2", true, false);
+                                CombatText.NewText(player2.getRect(), Color.Gold, "+3", true, false);
 
                                 if (!player2.HasItem(ModContent.ItemType<AlignmentTeller>()))
                                     continue;

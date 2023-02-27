@@ -198,14 +198,14 @@ namespace Redemption.NPCs.Bosses.Erhan
             if (!RedeBossDowned.downedErhan)
             {
                 string fight = Spared ? "fighting" : "slaying";
-                RedeWorld.alignment -= Spared ? 1 : 2;
+                RedeWorld.alignment -= Spared ? 1 : 3;
                 for (int p = 0; p < Main.maxPlayers; p++)
                 {
                     Player player = Main.player[p];
                     if (!player.active)
                         continue;
 
-                    CombatText.NewText(player.getRect(), Color.Gold, Spared ? "-1" : "-2", true, false);
+                    CombatText.NewText(player.getRect(), Color.Gold, Spared ? "-1" : "-3", true, false);
 
                     if (!player.HasItem(ModContent.ItemType<AlignmentTeller>()))
                         continue;
