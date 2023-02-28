@@ -8,6 +8,9 @@ using Redemption.Globals.NPC;
 using Redemption.Globals.World;
 using Redemption.Items.Accessories.PreHM;
 using Redemption.Items.Usable.Potions;
+using Redemption.Items.Weapons.PreHM.Melee;
+using Redemption.Items.Weapons.PreHM.Ranged;
+using Redemption.Items.Weapons.PreHM.Summon;
 using System;
 using System.Collections.Generic;
 using Terraria;
@@ -83,6 +86,10 @@ namespace Redemption.NPCs.FowlMorning
 
                 new FlavorTextBestiaryInfoElement("Squawk!")
             });
+        }
+        public override void BossLoot(ref string name, ref int potionType)
+        {
+            potionType = ItemID.Heart;
         }
         public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
         {
@@ -263,6 +270,9 @@ namespace Redemption.NPCs.FowlMorning
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<EggShield>(), 10));
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<GreneggLauncher>(), 10));
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Halbirdhouse>(), 10));
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<NestWand>(), 10));
             npcLoot.Add(ItemDropRule.ByCondition(new OnFireCondition(), ModContent.ItemType<FriedChicken>(), 1, 2, 3));
         }
         public override void OnHitByItem(Player player, Item item, int damage, float knockback, bool crit)
