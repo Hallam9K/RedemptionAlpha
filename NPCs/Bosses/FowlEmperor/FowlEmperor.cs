@@ -11,12 +11,14 @@ using Redemption.Items.Usable.Potions;
 using Redemption.Items.Usable.Summons;
 using System;
 using System.Collections.Generic;
+using System.Security.AccessControl;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
+using Terraria.GameContent.UI;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -154,7 +156,8 @@ namespace Redemption.NPCs.Bosses.FowlEmperor
                     Item.NewItem(NPC.GetSource_Loot(), NPC.getRect(), ModContent.ItemType<FriedChicken>(), 5);
             }
         }
-
+        public override bool? CanBeHitByItem(Player player, Item item) => AIState > ActionState.Start ? null : false;
+        public override bool? CanBeHitByProjectile(Projectile projectile) => AIState > ActionState.Start ? null : false;
         public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
         {
             NPC.lifeMax = (int)(NPC.lifeMax * 0.7f * bossLifeScale);
@@ -169,6 +172,7 @@ namespace Redemption.NPCs.Bosses.FowlEmperor
         public int crownLife = 40;
         public Vector2 moveTo;
         private bool eggCracked;
+        private Projectile crownProj;
         public override void AI()
         {
             Player player = Main.player[NPC.target];
@@ -216,14 +220,74 @@ namespace Redemption.NPCs.Bosses.FowlEmperor
                             {
                                 NPC.noTileCollide = false;
                                 NPC.noGravity = false;
+                                TimerRand++;
 
                                 AniType = (int)AnimType.None;
+                            }
+                            else
+                                NPC.Move(landingPos - new Vector2(0, 100), 10, 20);
+                            break;
+                        case 2:
+                            if (NPC.velocity.Y == 0)
+                            {
+                                NPC.LookAtEntity(player);
+                                EmoteBubble.NewBubble(15, new WorldUIAnchor(NPC), 90);
+                                NPC.Shoot(NPC.Center + new Vector2(10 * NPC.spriteDirection, -16), ModContent.ProjectileType<FowlEmperor_Crown_Proj>(), 0, NPC.velocity / 4, false, SoundID.Item1, NPC.whoAmI);
+                                NPC.velocity.X = 0;
+                                hideCrown = true;
+                                TimerRand++;
+                                for (int p = 0; p < Main.maxProjectiles; p++)
+                                {
+                                    Projectile crown = Main.projectile[p];
+                                    if (!crown.active || crown.type != ModContent.ProjectileType<FowlEmperor_Crown_Proj>() || crown.ai[0] != NPC.whoAmI)
+                                        continue;
+
+                                    crownProj = crown;
+                                }
+                            }
+                            break;
+                        case 3:
+                            AniType = (int)AnimType.Laugh;
+                            if (AITimer++ >= 90)
+                            {
+                                if (crownProj is null)
+                                    NPC.LookAtEntity(crownProj);
+                                NPC.frame.Y = 8 * 76;
+                                AniType = (int)AnimType.Stun;
+                            }
+                            if (AITimer >= 180)
+                            {
+                                AITimer = 0;
+                                TimerRand++;
+                            }
+                            break;
+                        case 4:
+                            AniType = (int)AnimType.None;
+                            if (crownProj is null)
+                                AITimer = 120;
+                            else
+                            {
+                                NPC.PlatformFallCheck(ref NPC.Redemption().fallDownPlatform, 20, crownProj.Center.Y);
+                                NPCHelper.HorizontallyMove(NPC, crownProj.Center, 0.08f, 2f, 18, 18, NPC.Center.Y > crownProj.Center.Y, crownProj);
+                            }
+                            if (AITimer++ >= 120)
+                            {
+                                NPC.velocity.X = 0;
+                                EmoteBubble.NewBubble(1, new WorldUIAnchor(NPC), 80);
+                                AniType = (int)AnimType.Recrown;
+                                AITimer = 0;
+                                TimerRand++;
+                            }
+                            break;
+                        case 5:
+                            if (AniType is (int)AnimType.None)
+                            {
+                                AniType = (int)AnimType.Recrown;
+                                AITimer = 0;
                                 AIState = ActionState.Idle;
                                 TimerRand = Main.rand.Next(140, 201);
                                 NPC.netUpdate = true;
                             }
-                            else
-                                NPC.Move(landingPos - new Vector2(0, 100), 10, 20);
                             break;
                     }
                     break;
@@ -587,6 +651,7 @@ namespace Redemption.NPCs.Bosses.FowlEmperor
                         NPC.frame.Y -= frameHeight;
                         if (NPC.frame.Y < 0)
                         {
+                            hideCrown = false;
                             NPC.frame.Y = 0;
                             AniType = (int)AnimType.None;
                         }
@@ -650,9 +715,11 @@ namespace Redemption.NPCs.Bosses.FowlEmperor
                 damage *= 10;
             }
         }
+        private bool hideCrown;
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
             Texture2D texture = TextureAssets.Npc[NPC.type].Value;
+            Texture2D crownTex = ModContent.Request<Texture2D>(Texture + "_CrownSheet").Value;
             var effects = NPC.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
 
             if (!NPC.IsABestiaryIconDummy && (AniType is (int)AnimType.Mad or (int)AnimType.Flap))
@@ -665,6 +732,8 @@ namespace Redemption.NPCs.Bosses.FowlEmperor
             }
 
             spriteBatch.Draw(texture, NPC.Center - new Vector2(0, 8) - screenPos, NPC.frame, NPC.GetAlpha(drawColor), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0f);
+            if (!hideCrown)
+                spriteBatch.Draw(crownTex, NPC.Center - new Vector2(0, 8) - screenPos, NPC.frame, NPC.GetAlpha(drawColor), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0f);
 
             if (!eggCracked || AniType is not (int)AnimType.Stun)
                 return false;

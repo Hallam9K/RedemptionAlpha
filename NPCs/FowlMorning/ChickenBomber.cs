@@ -126,7 +126,7 @@ namespace Redemption.NPCs.FowlMorning
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<EggBomb>(), 2, 4, 6));
-            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<GreneggLauncher>(), 25));
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<GreneggLauncher>(), 60));
             npcLoot.Add(ItemDropRule.ByCondition(new OnFireCondition(), ModContent.ItemType<FriedChicken>(), 4));
         }
         public override void OnHitByItem(Player player, Item item, int damage, float knockback, bool crit)

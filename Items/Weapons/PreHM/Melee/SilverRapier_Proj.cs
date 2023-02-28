@@ -91,7 +91,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
         public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
         {
             Player player = Main.player[Projectile.owner];
-            hitDirection = player.RightOfDir(target);
+            hitDirection = target.RightOfDir(player);
         }
         public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox)
         {

@@ -47,6 +47,7 @@ using Terraria.ModLoader.Utilities;
 using Redemption.Globals.World;
 using Redemption.Buffs.Cooldowns;
 using Steamworks;
+using Redemption.Items.Weapons.PreHM.Ranged;
 
 namespace Redemption.Globals.NPC
 {
@@ -62,6 +63,8 @@ namespace Redemption.Globals.NPC
 
         public override void SetupShop(int type, Chest shop, ref int nextSlot)
         {
+            if (type == NPCID.Demolitionist && Main.LocalPlayer.HasItem(ModContent.ItemType<GreneggLauncher>()))
+                shop.item[nextSlot++].SetDefaults(ModContent.ItemType<EggBomb>());
             if (type == NPCID.SkeletonMerchant)
                 shop.item[nextSlot++].SetDefaults(ModContent.ItemType<CalciteWand>());
             if (type == NPCID.Dryad)

@@ -1,3 +1,4 @@
+using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -18,7 +19,7 @@ namespace Redemption.Items.Weapons.PreHM.Ranged
             Item.damage = 32;
             Item.knockBack = 8;
             Item.maxStack = 9999;
-            Item.value = 15;
+            Item.value = Item.buyPrice(0, 0, 0, 70);
             Item.rare = ItemRarityID.Blue;
             Item.useStyle = ItemUseStyleID.Swing;
             Item.useAnimation = 35;
