@@ -35,7 +35,7 @@ namespace Redemption.NPCs.FowlMorning
             NPC.friendly = false;
             NPC.damage = 17;
             NPC.defense = 4;
-            NPC.lifeMax = 80;
+            NPC.lifeMax = 60;
             NPC.value = 50;
             NPC.HitSound = SoundID.NPCHit1;
             NPC.DeathSound = SoundID.NPCDeath1;
@@ -46,7 +46,7 @@ namespace Redemption.NPCs.FowlMorning
         public override void OnSpawn(IEntitySource source)
         {
             nestPos = NPC.Center;
-            NPC.localAI[0] = Main.rand.Next(240, 401);
+            NPC.localAI[0] = Main.rand.Next(240, 801);
             NPC.netUpdate = true;
         }
         private bool laid;
@@ -72,7 +72,7 @@ namespace Redemption.NPCs.FowlMorning
                     NPC.velocity.Y = -Main.rand.NextFloat(5f, 8f);
                     NPC.ai[1] = 0;
                     NPC.ai[2] = 0;
-                    NPC.localAI[0] = Main.rand.Next(60, 81);
+                    NPC.localAI[0] = Main.rand.Next(60, 301);
                     NPC.netUpdate = true;
                 }
                 return;
@@ -95,7 +95,7 @@ namespace Redemption.NPCs.FowlMorning
                 float speed = MathHelper.Distance(player.Center.X, nestPos.X) / 100;
                 speed = MathHelper.Clamp(speed, 1, 7);
                 NPC.Shoot(nestPos, ModContent.ProjectileType<Rooster_EggBomb>(), (int)(NPC.damage * 1.1f), new Vector2(speed * player.Center.RightOfDir(nestPos), -Main.rand.Next(9, 10)).RotatedBy(Main.rand.NextFloat(-.2f, .2f)), true, SoundID.Item1);
-                NPC.localAI[0] = Main.rand.Next(60, 161);
+                NPC.localAI[0] = Main.rand.Next(60, 301);
                 NPC.ai[3] = 0;
             }
         }

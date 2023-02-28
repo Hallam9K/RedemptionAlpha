@@ -18,7 +18,7 @@ namespace Redemption.Items.Usable
         {
             DisplayName.SetDefault("Chalice of Alignment");
             Tooltip.SetDefault("Tells you your current alignment"
-                + "\n[c/ffea9b:A sentient treasure, cursed with visions of what is yet to come]");
+                + "\n[c/ffea9b:A sentient treasure, cursed to judge those who wield it]");
             Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(4, 4));
             ItemID.Sets.AnimatesAsSoul[Item.type] = true;
 

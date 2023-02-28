@@ -13,6 +13,7 @@ using ReLogic.Content;
 using Redemption.WorldGeneration;
 using Redemption.Biomes;
 using Redemption.UI.ChatUI;
+using Terraria.Graphics.CameraModifiers;
 
 namespace Redemption.NPCs.Lab.Volt
 {
@@ -108,6 +109,9 @@ namespace Redemption.NPCs.Lab.Volt
 
                                 if (!Main.dedServ)
                                     SoundEngine.PlaySound(CustomSounds.EarthBoom, NPC.position);
+
+                                PunchCameraModifier camPunch = new(NPC.Center, new Vector2(0f, -1f), 20f, 6f, 30, 1000f, "Volt");
+                                Main.instance.CameraModifiers.Add(camPunch);
 
                                 for (int i = 0; i < 40; i++)
                                     Dust.NewDust(NPC.BottomLeft, Main.rand.Next(NPC.width), 1, DustID.Smoke, 0, 0, 0, default, 2f);
