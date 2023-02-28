@@ -1418,7 +1418,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                                 {
                                     NPC.Shoot(NPC.Center, ModContent.ProjectileType<KS3_Call>(), 0, Vector2.Zero, true, CustomSounds.Alarm2, NPC.whoAmI);
                                     if (!RedeHelper.AnyProjectiles(ModContent.ProjectileType<KS3_SoSCrosshair>()))
-                                        NPC.Shoot(player.Center, ModContent.ProjectileType<KS3_SoSCrosshair>(), (int)(NPC.damage * 1.1f), Vector2.Zero, false, SoundID.Item1, NPC.whoAmI);
+                                        NPC.Shoot(player.Center, ModContent.ProjectileType<KS3_SoSCrosshair>(), (int)(NPC.damage * 1.8f), Vector2.Zero, false, SoundID.Item1, NPC.whoAmI);
                                 }
                                 if (AITimer > 91)
                                 {

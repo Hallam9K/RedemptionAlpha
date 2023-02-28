@@ -24,6 +24,8 @@ namespace Redemption.Items.Accessories.HM
                 "An aura of holy flames surrounds you while holding a " + ElementID.FireS + " or " + ElementID.HolyS + " elemental weapon\n" +
                 "Increases length of invincibility after taking damage");
             SacrificeTotal = 1;
+            ElementID.ItemHoly[Type] = true;
+            ElementID.ItemFire[Type] = true;
         }
 
         public override void SetDefaults()
@@ -68,7 +70,7 @@ namespace Redemption.Items.Accessories.HM
                 for (int i = 0; i < Main.maxNPCs; i++)
                 {
                     NPC npc = Main.npc[i];
-                    if (!npc.active || !npc.CanBeChasedBy() || player.DistanceSQ(npc.Center) > 280 * 280)
+                    if (!npc.active || !npc.CanBeChasedBy() || NPCLoader.CanBeHitByItem(npc, player, Item) is false || player.DistanceSQ(npc.Center) > 280 * 280)
                         continue;
 
                     npc.AddBuff(ModContent.BuffType<HolyFireDebuff>(), 4);
