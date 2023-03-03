@@ -59,7 +59,7 @@ namespace Redemption.Items.Weapons.HM.Magic
         {
             CreateRecipe()
             .AddIngredient(ItemID.BottledWater)
-                .AddIngredient(ModContent.ItemType<ToxicBile>(), 6)
+            .AddIngredient(ModContent.ItemType<ToxicBile>(), 6)
             .AddTile(TileID.Bottles)
             .Register();
         }

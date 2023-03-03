@@ -236,7 +236,7 @@ namespace Redemption.Globals
                 .Register();
             Recipe.Create(ItemID.LivingWoodClock)
                 .AddIngredient(ModContent.ItemType<LivingTwig>(), 10)
-                .AddRecipeGroup("IronBar", 3)
+                .AddRecipeGroup(RecipeGroupID.IronBar, 3)
                 .AddIngredient(ItemID.Glass, 6)
                 .AddTile(TileID.WorkBenches)
                 .Register();
