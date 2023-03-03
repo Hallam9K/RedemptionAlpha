@@ -45,6 +45,7 @@ namespace Redemption.Items.Placeable.Tiles
                 .Register(); 
             CreateRecipe()
                 .AddIngredient(ModContent.ItemType<AncientDirtWall>(), 4)
+                .AddTile(TileID.WorkBenches)
                 .Register();
         }
     }

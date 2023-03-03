@@ -269,10 +269,10 @@ namespace Redemption.NPCs.FowlMorning
         }
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
-            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<EggShield>(), 10));
-            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<GreneggLauncher>(), 10));
-            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Halbirdhouse>(), 10));
-            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<NestWand>(), 10));
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<EggShield>(), 5));
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<GreneggLauncher>(), 5));
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Halbirdhouse>(), 5));
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<NestWand>(), 5));
             npcLoot.Add(ItemDropRule.ByCondition(new OnFireCondition(), ModContent.ItemType<FriedChicken>(), 1, 2, 3));
         }
         public override void OnHitByItem(Player player, Item item, int damage, float knockback, bool crit)

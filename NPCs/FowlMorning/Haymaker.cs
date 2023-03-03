@@ -151,10 +151,11 @@ namespace Redemption.NPCs.FowlMorning
             Texture2D nestTex = ModContent.Request<Texture2D>(Texture + "_Nest").Value;
             Texture2D nestBack = ModContent.Request<Texture2D>(Texture + "_Nest_Back").Value;
             var effects = NPC.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
+            Color color = Lighting.GetColor(nestPos.ToTileCoordinates());
 
-            spriteBatch.Draw(nestBack, nestPos - screenPos, null, NPC.GetAlpha(drawColor) * nestOpacity, 0, new Vector2(nestBack.Width / 2, nestBack.Height / 2), NPC.scale, 0, 0f);
+            spriteBatch.Draw(nestBack, nestPos - screenPos, null, NPC.GetAlpha(color) * nestOpacity, 0, new Vector2(nestBack.Width / 2, nestBack.Height / 2), NPC.scale, 0, 0f);
             spriteBatch.Draw(texture, NPC.Center - screenPos, NPC.frame, NPC.GetAlpha(drawColor), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0f);
-            spriteBatch.Draw(nestTex, nestPos - screenPos, null, NPC.GetAlpha(drawColor) * nestOpacity, 0, new Vector2(nestTex.Width / 2, nestTex.Height / 2), NPC.scale, 0, 0f);
+            spriteBatch.Draw(nestTex, nestPos - screenPos, null, NPC.GetAlpha(color) * nestOpacity, 0, new Vector2(nestTex.Width / 2, nestTex.Height / 2), NPC.scale, 0, 0f);
             return false;
         }
         public override bool PreKill()

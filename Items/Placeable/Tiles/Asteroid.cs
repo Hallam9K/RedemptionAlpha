@@ -27,6 +27,7 @@ namespace Redemption.Items.Placeable.Tiles
                 .Register();
             CreateRecipe()
                 .AddIngredient(ModContent.ItemType<AsteroidWall>(), 4)
+                .AddTile(TileID.WorkBenches)
                 .Register();
         }
     }
