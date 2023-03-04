@@ -9,7 +9,6 @@ using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using Terraria.GameContent.UI;
 using Terraria.GameContent;
-using System;
 using Redemption.UI.ChatUI;
 
 namespace Redemption.NPCs.Friendly

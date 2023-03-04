@@ -2,7 +2,6 @@ using Microsoft.Xna.Framework;
 using Redemption.BaseExtension;
 using Redemption.Globals.Player;
 using System;
-using System.Security.Permissions;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;

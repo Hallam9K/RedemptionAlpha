@@ -28,9 +28,6 @@ using Redemption.Items.Weapons.HM.Magic;
 using Redemption.Items.Weapons.HM.Melee;
 using Redemption.Items.Armor.Vanity;
 using ReLogic.Content;
-using Redemption.NPCs.PreHM;
-using static System.Net.Mime.MediaTypeNames;
-using static Humanizer.In;
 using Redemption.UI.ChatUI;
 using Redemption.UI;
 

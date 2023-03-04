@@ -36,8 +36,10 @@ using Redemption.Items.Weapons.HM.Summon;
 using Redemption.Items.Donator.Lordfunnyman;
 using Redemption.Globals.World;
 using Redemption.Buffs.Cooldowns;
-using Steamworks;
 using Redemption.Items.Weapons.PreHM.Ranged;
+using Redemption.WorldGeneration.Misc;
+using Redemption.NPCs.Critters;
+using SubworldLibrary;
 
 namespace Redemption.Globals.NPC
 {
@@ -475,6 +477,11 @@ namespace Redemption.Globals.NPC
                     pool.Add(NPCID.HellArmoredBonesSpikeShield, 0.2f);
                     pool.Add(NPCID.HellArmoredBonesSword, 0.2f);
                 }
+            }
+            if (SubworldSystem.IsActive<CSub>())
+            {
+                pool.Clear();
+                pool.Add(ModContent.NPCType<Chicken>(), 1);
             }
         }
     }

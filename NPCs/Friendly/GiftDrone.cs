@@ -13,11 +13,7 @@ using Redemption.Items.Usable;
 using Terraria.ModLoader.Utilities;
 using Redemption.BaseExtension;
 using Redemption.Items.Usable.Summons;
-using Redemption.Biomes;
 using Redemption.NPCs.HM;
-using System.Reflection;
-using Redemption.Items.Placeable.Tiles;
-using Redemption.NPCs.Lab.Volt;
 using Redemption.UI;
 using SubworldLibrary;
 

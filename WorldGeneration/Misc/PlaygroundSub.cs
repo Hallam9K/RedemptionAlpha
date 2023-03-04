@@ -5,7 +5,6 @@ using SubworldLibrary;
 using Redemption.Tiles.Tiles;
 using Terraria.WorldBuilding;
 using Terraria.IO;
-using Mono.CompilerServices.SymbolWriter;
 
 namespace Redemption.WorldGeneration.Misc
 {

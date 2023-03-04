@@ -96,6 +96,9 @@ namespace Redemption.Globals
             if (Main.time == 1)
                 DayNightCount++;
 
+            if (SubworldSystem.Current != null)
+                return;
+
             #region Skeleton Invasion
             if (DayNightCount >= 10 && !Main.hardMode && !Main.fastForwardTime)
             {

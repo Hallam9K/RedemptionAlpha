@@ -24,7 +24,6 @@ using Redemption.BaseExtension;
 using Redemption.Items.Materials.PostML;
 using Terraria.DataStructures;
 using ReLogic.Content;
-using Redemption.NPCs.Lab.Volt;
 
 namespace Redemption.NPCs.Bosses.Neb.Phase2
 {

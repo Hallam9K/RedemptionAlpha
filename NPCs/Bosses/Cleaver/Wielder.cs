@@ -14,7 +14,6 @@ using Redemption.BaseExtension;
 using Terraria.GameContent.ItemDropRules;
 using Redemption.Items.Weapons.HM.Melee;
 using Terraria.Audio;
-using Redemption.UI;
 using ReLogic.Content;
 using Redemption.UI.ChatUI;
 

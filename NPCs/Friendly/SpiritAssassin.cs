@@ -11,7 +11,6 @@ using Redemption.BaseExtension;
 using Redemption.Items.Weapons.PreHM.Summon;
 using Redemption.Items.Materials.PreHM;
 using Terraria.Audio;
-using Redemption.Items.Weapons.PreHM.Melee;
 using Redemption.Items.Placeable.Plants;
 
 namespace Redemption.NPCs.Friendly

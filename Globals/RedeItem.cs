@@ -17,6 +17,9 @@ using Terraria.GameContent.ItemDropRules;
 using Redemption.Items.Weapons.HM.Summon;
 using Redemption.Biomes;
 using Redemption.NPCs.Friendly;
+using Redemption.Tiles.Furniture.Misc;
+using Redemption.WorldGeneration.Misc;
+using SubworldLibrary;
 
 namespace Redemption.Globals
 {
@@ -267,6 +270,14 @@ namespace Redemption.Globals
             if (player.InModBiome<LabBiome>() && !RedeBossDowned.downedPZ && item.type == ItemID.RodofDiscord)
                 return false;
 
+            #region C
+            Point coop = player.Center.ToTileCoordinates();
+            if (item.type is ItemID.TeleportationPotion && player.RedemptionPlayerBuff().ChickenForm && Framing.GetTileSafely(coop.X, coop.Y).TileType == ModContent.TileType<ChickenCoopTile>())
+            {
+                if (!SubworldSystem.AnyActive<Redemption>())
+                    SubworldSystem.Enter<CSub>();
+            }
+            #endregion
             return base.CanUseItem(item, player);
         }
         public override void OnCreate(Item item, ItemCreationContext context)

@@ -28,7 +28,6 @@ using Redemption.Items.Armor.Vanity;
 using Redemption.Items.Materials.PostML;
 using Redemption.Items.Weapons.PostML.Melee;
 using Redemption.Items.Accessories.PostML;
-using Redemption.NPCs.PreHM;
 using Redemption.UI.ChatUI;
 
 namespace Redemption.NPCs.Bosses.Obliterator

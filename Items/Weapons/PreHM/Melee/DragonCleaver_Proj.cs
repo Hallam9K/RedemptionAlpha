@@ -11,7 +11,6 @@ using Terraria.Graphics.Shaders;
 using Redemption.Projectiles.Melee;
 using Redemption.Base;
 using Redemption.BaseExtension;
-using Redemption.Dusts;
 using ParticleLibrary;
 using Redemption.Particles;
 

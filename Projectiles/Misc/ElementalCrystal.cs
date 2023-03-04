@@ -10,8 +10,6 @@ using Terraria.DataStructures;
 using Redemption.Dusts;
 using Terraria.GameContent;
 using System;
-using Redemption.Buffs.Minions;
-using static Humanizer.In;
 using Redemption.Buffs;
 
 namespace Redemption.Projectiles.Misc

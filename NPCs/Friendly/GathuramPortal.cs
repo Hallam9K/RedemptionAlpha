@@ -4,7 +4,6 @@ using Terraria.ID;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using Terraria.GameContent;
-using Redemption.Globals;
 using System;
 using Terraria.Audio;
 using ParticleLibrary;

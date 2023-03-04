@@ -4,14 +4,11 @@ using ReLogic.Graphics;
 using Terraria.ModLoader;
 using Terraria;
 using Terraria.Audio;
-using Steamworks;
-using System.Reflection;
-using System;
 using Terraria.Enums;
 
 namespace Redemption.UI.ChatUI
 {
-	public class Dialogue : IDialogue
+    public class Dialogue : IDialogue
 	{
 		public DialogueChain chain;
 		public delegate void SymbolTrigger(Dialogue dialogue, string signature);

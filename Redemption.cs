@@ -37,6 +37,8 @@ using Terraria.ModLoader;
 using Terraria.UI;
 using Terraria.UI.Chat;
 using static Redemption.Globals.RedeNet;
+using Redemption.WorldGeneration.Misc;
+using SubworldLibrary;
 
 namespace Redemption
 {
@@ -153,6 +155,8 @@ namespace Redemption
                     PremultiplyTexture(ref UkkoSkyBoltTex);
                     Texture2D UkkoSkyFlashTex = ModContent.Request<Texture2D>("Redemption/Backgrounds/Skies/UkkoSkyFlash", immLoad).Value;
                     PremultiplyTexture(ref UkkoSkyFlashTex);
+                    Texture2D SkyTex = ModContent.Request<Texture2D>("Redemption/Backgrounds/Skies/SkyTex", immLoad).Value;
+                    PremultiplyTexture(ref SkyTex);
                 });
 
                 Filters.Scene["MoR:NebP1"] = new Filter(new ScreenShaderData("FilterMiniTower").UseColor(0.2f, 0f, 0.3f).UseOpacity(0.5f), EffectPriority.VeryHigh);
@@ -455,6 +459,22 @@ namespace Redemption
                 sunR -= (int)(200 * Strength * (backgroundColor.R / 255f));
                 sunB -= (int)(200f * Strength * (backgroundColor.B / 255f));
                 sunG -= (int)(170f * Strength * (backgroundColor.G / 255f));
+                sunR = Utils.Clamp(sunR, 15, 255);
+                sunG = Utils.Clamp(sunG, 15, 255);
+                sunB = Utils.Clamp(sunB, 15, 255);
+                backgroundColor.R = (byte)sunR;
+                backgroundColor.G = (byte)sunG;
+                backgroundColor.B = (byte)sunB;
+            }
+            if (SubworldSystem.IsActive<CSub>())
+            {
+                int sunR = backgroundColor.R;
+                int sunG = backgroundColor.G;
+                int sunB = backgroundColor.B;
+                // Remove all colors
+                sunR -= (int)(255f * 3f * (backgroundColor.R / 255f));
+                sunG -= (int)(255f * 3f * (backgroundColor.G / 255f));
+                sunB -= (int)(200f * 2f * (backgroundColor.B / 255f));
                 sunR = Utils.Clamp(sunR, 15, 255);
                 sunG = Utils.Clamp(sunG, 15, 255);
                 sunB = Utils.Clamp(sunB, 15, 255);

@@ -9,7 +9,6 @@ using Redemption.Items.Tools.PostML;
 using Redemption.Items.Usable;
 using Redemption.Items.Usable.Summons;
 using Redemption.Tiles.Tiles;
-using Redemption.WorldGeneration;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;

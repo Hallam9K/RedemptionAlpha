@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using Redemption.BaseExtension;
 using Redemption.Globals;
 using Redemption.WorldGeneration;
+using SubworldLibrary;
 using Terraria;
 using Terraria.ModLoader;
 namespace Redemption.Biomes
@@ -31,6 +32,8 @@ namespace Redemption.Biomes
 
         public override bool IsBiomeActive(Player player)
         {
+            if (SubworldSystem.Current != null)
+                return false;
             Rectangle lab = new(RedeGen.LabPoint.X * 16, RedeGen.LabPoint.Y * 16, 289 * 16, 217 * 16);
             return ModContent.GetInstance<RedeTileCount>().LabTileCount >= 100 || player.Hitbox.Intersects(lab);
         }

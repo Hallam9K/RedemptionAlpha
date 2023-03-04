@@ -10,7 +10,6 @@ using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using Redemption.Dusts;
 using Terraria.GameContent.UI;
-using MonoMod.RuntimeDetour;
 using Redemption.UI.ChatUI;
 
 namespace Redemption.NPCs.Friendly

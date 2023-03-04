@@ -2,10 +2,6 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Redemption.BaseExtension;
-using Redemption.Globals;
-using Redemption.Items.Accessories.HM;
-using Redemption.Items.Materials.PostML;
-using Redemption.Items.Usable.Potions;
 using Redemption.Items.Materials.PreHM;
 
 namespace Redemption.Items.Accessories.PreHM

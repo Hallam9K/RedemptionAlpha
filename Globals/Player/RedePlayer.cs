@@ -17,6 +17,7 @@ using Terraria.GameContent;
 using ReLogic.Content;
 using Redemption.WorldGeneration;
 using SubworldLibrary;
+using Redemption.WorldGeneration.Misc;
 
 namespace Redemption.Globals.Player
 {
@@ -164,6 +165,16 @@ namespace Redemption.Globals.Player
                 else
                 {
                     TextureAssets.Heart2 = heartOriginal;
+                }
+                if (SubworldSystem.IsActive<CSub>())
+                {
+                    Player.noBuilding = true;
+                    Player.controlUseItem = false;
+                    Player.controlUseTile = false;
+                    Player.RedemptionScreen().customZoom = .4f;
+                    Player.RedemptionScreen().lockScreen = true;
+                    Player.RedemptionScreen().ScreenFocusPosition = new Vector2(100, 100) * 16;
+
                 }
             }
         }

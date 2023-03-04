@@ -10,7 +10,6 @@ using Redemption.NPCs.Bosses.Neb.Phase2;
 using Redemption.NPCs.Bosses.Neb.Clone;
 using Redemption.NPCs.Bosses.ADD;
 using Redemption.NPCs.Friendly;
-using Redemption.Globals.World;
 
 namespace Redemption.Globals
 {

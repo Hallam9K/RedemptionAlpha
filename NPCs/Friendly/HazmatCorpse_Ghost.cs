@@ -7,10 +7,6 @@ using Terraria.DataStructures;
 using Redemption.Globals;
 using Terraria.GameContent;
 using Terraria.Graphics.Shaders;
-using Redemption.BaseExtension;
-using Redemption.Items.Materials.PreHM;
-using Redemption.Items.Weapons.HM.Summon;
-using Terraria.Audio;
 
 namespace Redemption.NPCs.Friendly
 {

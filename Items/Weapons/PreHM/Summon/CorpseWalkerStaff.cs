@@ -6,7 +6,6 @@ using Terraria.DataStructures;
 using Redemption.Buffs.Minions;
 using Redemption.Projectiles.Minions;
 using Redemption.Globals;
-using Redemption.Projectiles.Ranged;
 
 namespace Redemption.Items.Weapons.PreHM.Summon
 {
