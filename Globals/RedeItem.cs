@@ -22,7 +22,6 @@ using Redemption.WorldGeneration.Soulless;
 using Redemption.NPCs.Friendly;
 using Redemption.Tiles.Furniture.Misc;
 using Redemption.WorldGeneration.Misc;
-using SubworldLibrary;
 
 namespace Redemption.Globals
 {

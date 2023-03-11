@@ -10,6 +10,7 @@ using ParticleLibrary;
 using Redemption.Particles;
 using Redemption.NPCs.Soulless;
 using Redemption.Dusts;
+using Redemption.Globals;
 
 namespace Redemption.NPCs.Friendly
 {

@@ -48,7 +48,6 @@ using Redemption.Globals.World;
 using Redemption.Buffs.Cooldowns;
 using Redemption.Items.Weapons.PreHM.Ranged;
 using Redemption.WorldGeneration.Misc;
-using SubworldLibrary;
 
 namespace Redemption.Globals.NPC
 {
