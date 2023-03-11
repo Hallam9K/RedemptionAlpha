@@ -128,8 +128,8 @@ namespace Redemption.Globals
                         if (!Main.dedServ)
                             SoundEngine.PlaySound(CustomSounds.EarthBoom with { Volume = .5f }, b4.Center.ToVector2());
 
-                        RedeHelper.SpawnNPC(new EntitySource_WorldGen(), 396 * 16, 1136 * 16, ModContent.NPCType<LostLight>());
-                        RedeHelper.SpawnNPC(new EntitySource_WorldGen(), 309 * 16, 1084 * 16, ModContent.NPCType<LostLight>());
+                        RedeHelper.SpawnNPC(new EntitySource_WorldGen(), 396 * 16, 1136 * 16, ModContent.NPCType<LostLight>(), 1);
+                        RedeHelper.SpawnNPC(new EntitySource_WorldGen(), 309 * 16, 1084 * 16, ModContent.NPCType<LostLight>(), 2);
 
                         Main.player[Main.myPlayer].RedemptionScreen().ScreenShakeIntensity = 8 - (Main.player[Main.myPlayer].Distance(b4.Center.ToVector2()) / 64);
                         for (int x = 400; x < 404; x++)

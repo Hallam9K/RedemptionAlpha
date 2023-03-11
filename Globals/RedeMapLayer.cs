@@ -32,7 +32,7 @@ namespace Redemption.Globals
     {
         public override void Draw(ref MapOverlayDrawContext context, ref string text)
         {
-            if (RedeQuest.shadesoulVar == 1 && RedeGen.gathicPortalPoint.X != -1)
+            if (RedeQuest.shadesoulVar == 1 && RedeGen.gathicPortalPoint.X != 0)
             {
                 const float scaleIfNotSelected = 1f;
                 const float scaleIfSelected = scaleIfNotSelected * 1.2f;

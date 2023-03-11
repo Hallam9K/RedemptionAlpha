@@ -155,7 +155,7 @@ namespace Redemption.NPCs.Soulless
                             if (NPC.DistanceSQ(v) <= 20 * 20)
                                 NPC.ai[1]++;
 
-                            NPC.Move(v, 4, 50);
+                            NPC.Move(v, 6, 50);
                             break;
                         case 1:
                             canFade = true;
@@ -194,7 +194,7 @@ namespace Redemption.NPCs.Soulless
                             NPC.Move(v, 5, 50);
                             break;
                         case 3:
-                            v = new Vector2(371, 1064) * 16;
+                            v = new Vector2(378, 1053) * 16;
                             if (NPC.DistanceSQ(v) <= 20 * 20)
                                 NPC.ai[1]++;
 
@@ -204,7 +204,7 @@ namespace Redemption.NPCs.Soulless
                             NPC.ai[2] += 3;
                             v = (new Vector2(378, 1053) * 16) + (Vector2.One.RotatedBy(MathHelper.ToRadians(NPC.ai[2])) * 80);
                             NPC.Move(v, 4, 20);
-                            if (Main.LocalPlayer.DistanceSQ(NPC.Center) < 200 * 200)
+                            if (Main.LocalPlayer.DistanceSQ(NPC.Center) < 120 * 120)
                             {
                                 NPC.ai[2] = 0;
                                 NPC.ai[1]++;

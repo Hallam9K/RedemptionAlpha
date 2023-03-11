@@ -59,8 +59,11 @@ namespace Redemption.Items
             SoullessArea.soullessBools[0] = false;
             SoullessArea.soullessBools[1] = false;
             SoullessArea.soullessBools[2] = false;
+            SoullessArea.soullessBools[3] = false;
+            SoullessArea.soullessBools[4] = false;
             SoullessArea.soullessInts[0] = 0;
             SoullessArea.soullessInts[1] = 0;
+            SoullessArea.soullessInts[2] = 0;
             RedeQuest.forestNymphVar = 0;
             RedeBossDowned.downedGGBossFirst = 0;
 

@@ -57,10 +57,10 @@ namespace Redemption.NPCs.Soulless
                 for (int i = 0; i < Main.maxPlayers; i++)
                 {
                     Player player2 = Main.player[i];
-                    if (!player2.active && player2.dead && !player2.Hitbox.Intersects(NPC.Hitbox))
+                    if (!player2.active || player2.dead || !player2.Hitbox.Intersects(NPC.Hitbox))
                         continue;
 
-                    player2.position.X += 2 * player.RightOfDir(NPC);
+                    player2.position.X = NPC.position.X + (player.RightOf(NPC) ? NPC.width + 20 : -20);
                 }
             }
             if (Flare)
