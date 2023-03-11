@@ -103,11 +103,10 @@ namespace Redemption.Items.Weapons.HM.Ranged
         public override void AddRecipes()
         {
             CreateRecipe()
-                .AddIngredient(ItemID.Shotgun)
-                .AddIngredient(ItemID.PhoenixBlaster)
                 .AddIngredient(ItemID.HellstoneBar, 10)
                 .AddIngredient(ItemID.HallowedBar, 10)
                 .AddIngredient(ItemID.ExplosivePowder, 15)
+                .AddIngredient(ItemID.SoulofMight, 10)
                 .AddIngredient(ItemID.IllegalGunParts)
                 .AddTile(TileID.Hellforge)
                 .Register();

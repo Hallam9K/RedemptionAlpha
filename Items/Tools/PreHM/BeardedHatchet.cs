@@ -12,7 +12,7 @@ namespace Redemption.Items.Tools.PreHM
         public override void SetStaticDefaults()
         {
             Tooltip.SetDefault("Increased chance to decapitate skeletons, guaranteeing skull drops" +
-                "\nDeals 45% more damage to skeletons");
+                "\nDeals 75% more damage to skeletons");
 
             SacrificeTotal = 1;
         }
@@ -36,20 +36,20 @@ namespace Redemption.Items.Tools.PreHM
 
         public override void ModifyHitNPC(Player player, NPC target, ref int damage, ref float knockBack, ref bool crit)
         {
-            if (target.life < target.lifeMax && NPCLists.SkeletonHumanoid.Contains(target.type))
+            bool skele = NPCLists.SkeletonHumanoid.Contains(target.type);
+            bool humanoid = skele || NPCLists.Humanoid.Contains(target.type);
+            if (target.life < target.lifeMax && target.life < damage * 100 && humanoid)
             {
-                if (Main.rand.NextBool(20))
+                if (Main.rand.NextBool(skele ? 20 : 80))
                 {
                     CombatText.NewText(target.getRect(), Color.Orange, "Decapitated!");
                     target.Redemption().decapitated = true;
-                    damage = damage < target.life ? target.life : damage;
+                    damage = target.life;
                     crit = true;
                 }
             }
             if (NPCLists.Skeleton.Contains(target.type))
-            {
-                damage = (int)(damage * 1.45f);
-            }
+                damage = (int)(damage * 1.75f);
         }
     }
 }

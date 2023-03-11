@@ -99,6 +99,8 @@ namespace Redemption.Items.Weapons.PreHM.Melee
         }
         public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
         {
+            Player player = Main.player[Projectile.owner];
+            hitDirection = target.RightOfDir(player);
             RedeProjectile.Decapitation(target, ref damage, ref crit);
         }
         private float drawTimer;

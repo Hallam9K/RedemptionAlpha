@@ -14,7 +14,7 @@ Mods: {
             # Cooldowns
 			ErhanCrossCooldown: "Holy Shield Cooldown"
 			HardlightCooldown: "SoS Cooldown"
-			SwordRemoteCooldown: "Sword Remote Cooldown"
+			SwordRemoteCooldown: "Cleaver Remote Cooldown"
 			XeniumCooldown: "Xenium Cooldown"
 			XeniumLanceCooldown: "Xenium Lance Cooldown"
 			XenomiteCooldown: "Xenomite Gas Cooldown"
@@ -96,7 +96,7 @@ Mods: {
             # Cooldowns
 			ErhanCrossCooldown: "The holy shield has been broken"
 			HardlightCooldown: "Hey, the ship can't help you all the time."
-			SwordRemoteCooldown: "You cannot use the Sword Remote"
+			SwordRemoteCooldown: "You cannot use the Cleaver Remote"
 			XeniumCooldown: "Your shoulder launcher is reloading"
 			XeniumLanceCooldown: "The lance's battery is recharging"
 			XenomiteCooldown: "Your gas container is refilling"

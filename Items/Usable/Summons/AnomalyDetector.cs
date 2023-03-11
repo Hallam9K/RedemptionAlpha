@@ -15,7 +15,6 @@ namespace Redemption.Items.Usable.Summons
         public override void SetStaticDefaults()
         {
             Tooltip.SetDefault("Summons a strange portal..."
-                + "\n[c/67ff3e:Begins the Infection]"
                 + "\nNot consumable");
             Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(4, 4));
 

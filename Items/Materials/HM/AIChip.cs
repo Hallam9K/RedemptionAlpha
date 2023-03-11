@@ -12,7 +12,7 @@ namespace Redemption.Items.Materials.HM
             DisplayName.SetDefault("AI Chip");
             Tooltip.SetDefault("'Filled with code'");
             Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(10, 10));
-
+            SacrificeTotal = 1;
         }
 
         public override void SetDefaults()

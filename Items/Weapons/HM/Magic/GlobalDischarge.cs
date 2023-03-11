@@ -13,8 +13,8 @@ namespace Redemption.Items.Weapons.HM.Magic
         {
             Tooltip.SetDefault("Casts an unstable lightning sphere, contained as long as the staff's stream is active\n" +
                 "Tap left-click to cast and immediately break the stream, causing an unstable discharge" +
-                "\nHold down left-click to cast and keep the sphere stable, constantly emitting lightning at an enemy at cursor point\n" +
-                "Keeping the sphere active for too long will cause the user to take damage as well");
+                "\nHold down left-click to cast and keep the sphere stable, using momentum to swing it" +
+                "\nDeals more damage the faster it moves");
             Item.staff[Item.type] = true;
 
             SacrificeTotal = 1;

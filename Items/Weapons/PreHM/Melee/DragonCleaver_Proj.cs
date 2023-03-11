@@ -129,10 +129,15 @@ namespace Redemption.Items.Weapons.PreHM.Melee
                         player.SetCompositeArmFront(true, Player.CompositeArmStretchAmount.Full, (player.Center - Projectile.Center).ToRotation() + MathHelper.PiOver2);
                         if (Timer++ == (int)(7 * SwingSpeed))
                         {
-                            SoundEngine.PlaySound(SoundID.DD2_PhantomPhoenixShot, Projectile.position);
-                            Projectile.NewProjectile(Projectile.GetSource_FromAI(), player.Center,
-                                RedeHelper.PolarVector(15, (Projectile.Center - player.Center).ToRotation()),
-                                ModContent.ProjectileType<FireSlash_Proj>(), Projectile.damage, Projectile.knockBack, Projectile.owner);
+                            if (hitFury is 2)
+                                hitFury = 0;
+                            else
+                            {
+                                SoundEngine.PlaySound(SoundID.DD2_PhantomPhoenixShot, Projectile.position);
+                                Projectile.NewProjectile(Projectile.GetSource_FromAI(), player.Center,
+                                    RedeHelper.PolarVector(15, (Projectile.Center - player.Center).ToRotation()),
+                                    ModContent.ProjectileType<FireSlash_Proj>(), Projectile.damage, Projectile.knockBack, Projectile.owner);
+                            }
                         }
                         if (Timer < 15 * SwingSpeed)
                             BlockProj();
@@ -156,6 +161,13 @@ namespace Redemption.Items.Weapons.PreHM.Melee
                                 return;
                             }
                             SoundEngine.PlaySound(SoundID.Item71, Projectile.position);
+                            if (hitFury is 1)
+                            {
+                                speed = MathHelper.ToRadians(1);
+                                startVector = RedeHelper.PolarVector(1, (Main.MouseWorld - player.Center).ToRotation() - ((MathHelper.PiOver2 + 0.6f) * Projectile.spriteDirection));
+                                vector = startVector * Length;
+                                hitFury = 2;
+                            }
                             Projectile.ai[0]++;
                             Timer = 0;
                             Projectile.netUpdate = true;
@@ -165,10 +177,15 @@ namespace Redemption.Items.Weapons.PreHM.Melee
                         player.SetCompositeArmFront(true, Player.CompositeArmStretchAmount.Full, (player.Center - Projectile.Center).ToRotation() + MathHelper.PiOver2);
                         if (Timer++ == (int)(5 * SwingSpeed))
                         {
-                            SoundEngine.PlaySound(SoundID.DD2_PhantomPhoenixShot, Projectile.position);
-                            Projectile.NewProjectile(Projectile.GetSource_FromAI(), player.Center,
-                                RedeHelper.PolarVector(15, (Projectile.Center - player.Center).ToRotation()),
-                                ModContent.ProjectileType<FireSlash_Proj>(), Projectile.damage, Projectile.knockBack, Projectile.owner);
+                            if (hitFury is 2)
+                                hitFury = 0;
+                            else
+                            {
+                                SoundEngine.PlaySound(SoundID.DD2_PhantomPhoenixShot, Projectile.position);
+                                Projectile.NewProjectile(Projectile.GetSource_FromAI(), player.Center,
+                                    RedeHelper.PolarVector(15, (Projectile.Center - player.Center).ToRotation()),
+                                    ModContent.ProjectileType<FireSlash_Proj>(), Projectile.damage, Projectile.knockBack, Projectile.owner);
+                            }
                         }
                         if (Timer < 15 * SwingSpeed)
                             BlockProj();
@@ -192,6 +209,13 @@ namespace Redemption.Items.Weapons.PreHM.Melee
                                 return;
                             }
                             SoundEngine.PlaySound(SoundID.Item71, Projectile.position);
+                            if (hitFury is 1)
+                            {
+                                speed = MathHelper.ToRadians(1);
+                                startVector = RedeHelper.PolarVector(1, (Main.MouseWorld - player.Center).ToRotation() - ((MathHelper.PiOver2 - 0.6f) * Projectile.spriteDirection));
+                                vector = startVector * Length;
+                                hitFury = 2;
+                            }
                             Projectile.ai[0] = 1;
                             Timer = 0;
                             Projectile.netUpdate = true;
@@ -237,9 +261,11 @@ namespace Redemption.Items.Weapons.PreHM.Melee
 
             RedeProjectile.Decapitation(target, ref damage, ref crit);
         }
-
+        private int hitFury;
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
+            if (Projectile.ai[0] > 0)
+                hitFury = 1;
             Projectile.localNPCImmunity[target.whoAmI] = 20;
             target.immune[Projectile.owner] = 0;
 

@@ -1,4 +1,5 @@
 ﻿using Redemption.Buffs;
+using Redemption.Globals;
 using Redemption.Items.Placeable.Plants;
 using Terraria;
 using Terraria.ID;
@@ -10,7 +11,8 @@ namespace Redemption.Items.Usable.Potions
 	{
 		public override void SetStaticDefaults()
 		{
-            Tooltip.SetDefault("Attackers also take damage, and get inflicted by poison");
+            Tooltip.SetDefault("Attackers also take damage, and get inflicted by poison\n" +
+                "10% increased " + ElementID.PoisonS + " elemental damage");
 
             SacrificeTotal = 20;
         }

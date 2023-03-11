@@ -80,10 +80,10 @@ namespace Redemption.NPCs.Friendly
 
             if (--ThrowTimer <= 0)
             {
-                if (NPC.velocity.Length() < 2)
-                    NPC.velocity = RedeHelper.PolarVector(3, RedeHelper.RandomRotation());
+                if (NPC.velocity.Length() < 1)
+                    NPC.velocity = RedeHelper.PolarVector(2, RedeHelper.RandomRotation());
 
-                NPC.velocity = NPC.velocity.RotatedBy(Main.rand.NextFloat(-0.3f, 0.3f));
+                NPC.velocity = NPC.velocity.RotatedBy(Main.rand.NextFloat(-0.2f, 0.2f));
             }
 
             if (++AITimer > 600 && !Main.LocalPlayer.RedemptionAbility().SpiritwalkerActive)

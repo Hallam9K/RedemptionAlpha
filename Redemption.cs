@@ -51,6 +51,7 @@ namespace Redemption
         public const string PLACEHOLDER_TEXTURE = "Redemption/Placeholder";
         public Vector2 cameraOffset;
         public Rectangle currentScreen;
+        public static int grooveTimer;
         public static ModKeybind RedeSpecialAbility;
         public static ModKeybind RedeSpiritwalkerAbility;
         public static bool AprilFools => DateTime.Now is DateTime { Month: 4, Day: 1 };
@@ -159,6 +160,8 @@ namespace Redemption
                     PremultiplyTexture(ref SkyTex);
                 });
 
+                Filters.Scene["MoR:OOSky"] = new Filter(new ScreenShaderData("FilterMiniTower").UseColor(0.2f, 0f, 0f).UseOpacity(0.2f), EffectPriority.VeryHigh);
+                SkyManager.Instance["MoR:OOSky"] = new OOSky();
                 Filters.Scene["MoR:NebP1"] = new Filter(new ScreenShaderData("FilterMiniTower").UseColor(0.2f, 0f, 0.3f).UseOpacity(0.5f), EffectPriority.VeryHigh);
                 SkyManager.Instance["MoR:NebP1"] = new NebSky();
                 Filters.Scene["MoR:NebP2"] = new Filter(new ScreenShaderData("FilterMiniTower").UseColor(0.2f, 0f, 0.3f).UseOpacity(0.5f), EffectPriority.VeryHigh);
@@ -468,19 +471,12 @@ namespace Redemption
             }
             if (SubworldSystem.IsActive<CSub>())
             {
-                int sunR = backgroundColor.R;
-                int sunG = backgroundColor.G;
-                int sunB = backgroundColor.B;
-                // Remove all colors
-                sunR -= (int)(255f * 3f * (backgroundColor.R / 255f));
-                sunG -= (int)(255f * 3f * (backgroundColor.G / 255f));
-                sunB -= (int)(200f * 2f * (backgroundColor.B / 255f));
-                sunR = Utils.Clamp(sunR, 15, 255);
-                sunG = Utils.Clamp(sunG, 15, 255);
-                sunB = Utils.Clamp(sunB, 15, 255);
-                backgroundColor.R = (byte)sunR;
-                backgroundColor.G = (byte)sunG;
-                backgroundColor.B = (byte)sunB;
+                backgroundColor.R = 15;
+                backgroundColor.G = 15;
+                backgroundColor.B = 15;
+                tileColor.R = 15;
+                tileColor.G = 15;
+                tileColor.B = 15;
             }
         }
         public override void ModifyTransformMatrix(ref SpriteViewMatrix Transform)

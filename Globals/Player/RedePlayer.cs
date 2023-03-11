@@ -119,7 +119,7 @@ namespace Redemption.Globals.Player
                 Main.NewText("WARNING: Unable to locate important structure, new world is required!", Colors.RarityRed);
 
             if (RedeConfigClient.Instance.FunniAllWasteland || RedeConfigClient.Instance.FunniJanitor || RedeConfigClient.Instance.FunniSpiders || RedeConfigClient.Instance.FunniWasteland)
-                Main.NewText("CAUTION: You have a Funni config enabled that affects world gen. If you created a world just now, check which one you have enabled.", Colors.RarityOrange);
+                Main.NewText("CAUTION: You have a Funni config enabled that affects world gen. If you created a world just now, check which one you have enabled and disable it for next time.", Colors.RarityOrange);
         }
         public override void PostUpdateMiscEffects()
         {
@@ -171,10 +171,9 @@ namespace Redemption.Globals.Player
                     Player.noBuilding = true;
                     Player.controlUseItem = false;
                     Player.controlUseTile = false;
-                    Player.RedemptionScreen().customZoom = .4f;
                     Player.RedemptionScreen().lockScreen = true;
-                    Player.RedemptionScreen().ScreenFocusPosition = new Vector2(100, 100) * 16;
-
+                    Player.RedemptionScreen().ScreenFocusPosition = new Vector2(100, 99) * 16;
+                    Player.RedemptionScreen().interpolantTimer = 100;
                 }
             }
         }

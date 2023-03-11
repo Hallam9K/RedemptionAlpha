@@ -2,13 +2,14 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Globals;
 using Redemption.Projectiles.Magic;
+using Redemption.Projectiles.Minions;
 using System;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace Redemption.Items.Weapons.PreHM.Magic
+namespace Redemption.Items.Weapons.PreHM.Summon
 {
     public class HolyBible_Proj : ModProjectile
     {
@@ -16,7 +17,7 @@ namespace Redemption.Items.Weapons.PreHM.Magic
         {
             Projectile.width = 42;
             Projectile.height = 32;
-            Projectile.DamageType = DamageClass.Magic;
+            Projectile.DamageType = DamageClass.Summon;
             Projectile.penetrate = -1;
             Projectile.hostile = false;
             Projectile.friendly = false;

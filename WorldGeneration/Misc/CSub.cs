@@ -8,6 +8,7 @@ using Terraria.ModLoader;
 using Terraria.DataStructures;
 using Redemption.Globals;
 using Redemption.NPCs.Critters;
+using Redemption.BaseExtension;
 
 namespace Redemption.WorldGeneration.Misc
 {
@@ -24,11 +25,14 @@ namespace Redemption.WorldGeneration.Misc
         };
         public override void OnLoad()
         {
-            for (int i = 0; i < 50; i++)
+            Vector2 Pos;
+            for (int i = 0; i < 100; i++)
             {
-                Vector2 Pos = NPCHelper.FindGroundVector(new Vector2(100, 100) * 16, 50);
+                Pos = NPCHelper.FindGroundVector(new Vector2(100, 100) * 16, 20);
                 LabArea.SpawnNPCInWorld(Pos, ModContent.NPCType<Chicken>());
             }
+            Pos = NPCHelper.FindGroundVector(new Vector2(100, 100) * 16, 20);
+            LabArea.SpawnNPCInWorld(Pos, ModContent.NPCType<JohnSnail>());
 
             SubworldSystem.hideUnderworld = true;
             Main.cloudAlpha = 0;
@@ -38,6 +42,10 @@ namespace Redemption.WorldGeneration.Misc
             Main.raining = false;
             Main.maxRaining = 0f;
             Main.slimeRain = false;
+        }
+        public override void OnUnload()
+        {
+            Main.LocalPlayer.RedemptionScreen().interpolantTimer = 0;
         }
     }
     public class CPass : GenPass

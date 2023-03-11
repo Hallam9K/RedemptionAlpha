@@ -9,8 +9,9 @@ namespace Redemption.Items.Placeable.Furniture.Lab
 	{
         public override void SetStaticDefaults()
         {
-            Tooltip.SetDefault("Used to melt scraps of metal"
-                + "\nFound in the Abandoned Lab");
+            Tooltip.SetDefault("Used to melt scraps of metal\n" +
+                "Counts as a forge"
+                + "\nFound in the Abandoned Laboratory");
 			SacrificeTotal = 1;
 		}
 		public override void SetDefaults()

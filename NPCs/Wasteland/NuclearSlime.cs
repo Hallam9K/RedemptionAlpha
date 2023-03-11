@@ -60,7 +60,7 @@ namespace Redemption.NPCs.Wasteland
             NPC.value = 400f;
             NPC.knockBackResist = 0.5f;
             NPC.aiStyle = 1;
-            NPC.alpha = 80;
+            NPC.alpha = 40;
             AIType = NPCID.IlluminantSlime;
             SpawnModBiomes = new int[1] { ModContent.GetInstance<WastelandPurityBiome>().Type };
             Banner = NPC.type;
@@ -118,7 +118,7 @@ namespace Redemption.NPCs.Wasteland
             int y = Height * (NPC.frame.Y / 42);
             Rectangle rect = new(0, y, NukeTex.Width, Height);
             Vector2 origin = new(NukeTex.Width / 2f, Height / 2f);
-            spriteBatch.Draw(NukeTex, NPC.Center - screenPos + new Vector2(14, -12), new Rectangle?(rect), NPC.GetAlpha(drawColor), NPC.rotation, origin, NPC.scale, 0, 0);
+            spriteBatch.Draw(NukeTex, NPC.Center - screenPos + new Vector2(14, -12), new Rectangle?(rect), drawColor, NPC.rotation, origin, NPC.scale, 0, 0);
 
             spriteBatch.Draw(TextureAssets.Npc[NPC.type].Value, NPC.Center - screenPos - new Vector2(0, 2), NPC.frame, NPC.GetAlpha(drawColor), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, 0, 0);
             return false;

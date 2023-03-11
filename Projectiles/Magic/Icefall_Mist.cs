@@ -42,7 +42,11 @@ namespace Redemption.Projectiles.Magic
             bool weak = Projectile.ai[0] == 1;
             Projectile.velocity *= 0.98f;
             if (Projectile.localAI[0] == 0)
+            {
+                if (weak)
+                    Projectile.timeLeft += 60;
                 Projectile.localAI[0] = Main.rand.Next(1, 3);
+            }
 
             if (Projectile.localAI[0] == 1)
                 Projectile.rotation -= 0.003f;

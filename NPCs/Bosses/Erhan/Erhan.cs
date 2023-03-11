@@ -27,6 +27,8 @@ using Redemption.Projectiles.Magic;
 using Redemption.Items.Weapons.HM.Melee;
 using ReLogic.Content;
 using Redemption.UI.ChatUI;
+using Redemption.Projectiles.Minions;
+using Redemption.Items.Weapons.PreHM.Summon;
 
 namespace Redemption.NPCs.Bosses.Erhan
 {

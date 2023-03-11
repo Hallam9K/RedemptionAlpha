@@ -43,12 +43,20 @@ namespace Redemption.Items.Weapons.HM.Melee
         {
             Player p = Main.player[Projectile.owner];
             BaseAI.AIBoomerang(Projectile, ref Projectile.ai, p.position, p.width, p.height, true, 27f, 35, 1f, 0.6f, false);
-            Projectile.localAI[0]++;
-            if (Projectile.localAI[0] >= 10 && Projectile.owner == Main.myPlayer)
+            if (Projectile.localAI[0]++ % 10 == 0 && Projectile.owner == Main.myPlayer)
             {
-                Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center.X, Projectile.Center.Y, 0, 0, ModContent.ProjectileType<CyberChakram_Proj2>(), Projectile.damage, Projectile.knockBack, Main.myPlayer, Projectile.rotation);
-                Projectile.localAI[0] = 0;
+                Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center.X, Projectile.Center.Y, 0, 0, ModContent.ProjectileType<CyberChakram_Proj2>(), Projectile.damage, 0, Main.myPlayer, Projectile.rotation);
             }
+        }
+        public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough, ref Vector2 hitboxCenterFrac)
+        {
+            width = height = 20;
+            return true;
+        }
+        public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
+        {
+            if (Projectile.localAI[0] >= 35)
+                knockback = 0;
         }
         public override bool PreDraw(ref Color lightColor)
         {
