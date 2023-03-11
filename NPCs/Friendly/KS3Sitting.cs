@@ -22,8 +22,6 @@ using Redemption.BaseExtension;
 using Redemption.Items.Donator.Lizzy;
 using Terraria.GameContent.UI;
 using Redemption.Items.Materials.PostML;
-using Terraria.GameContent;
-using Terraria.ModLoader.Default;
 
 namespace Redemption.NPCs.Friendly
 {

@@ -33,6 +33,7 @@ namespace Redemption.Items.Weapons.PreHM.Ranged
         }
         public override void AI()
         {
+            Player player = Main.player[Projectile.owner];
             Projectile.LookByVelocity();
             Projectile.rotation += Projectile.velocity.X / 20;
             if (Projectile.localAI[0] < 180)
@@ -47,6 +48,12 @@ namespace Redemption.Items.Weapons.PreHM.Ranged
                 SoundEngine.PlaySound(SoundID.Item14, Projectile.position);
                 RedeDraw.SpawnExplosion(Projectile.Center, new Color(255, 216, 0), DustID.GoldFlame, 0, 30, 3);
                 Rectangle boom = new((int)Projectile.Center.X - 150, (int)Projectile.Center.Y - 150, 300, 300);
+                Rectangle boom2 = new((int)Projectile.Center.X - 80, (int)Projectile.Center.Y - 80, 160, 160);
+                if (player.Hitbox.Intersects(boom2))
+                {
+                    int hitDirection = player.RightOfDir(Projectile);
+                    BaseAI.DamagePlayer(player, Projectile.damage / 4, 3, hitDirection, Projectile);
+                }
                 for (int i = 0; i < Main.maxNPCs; i++)
                 {
                     NPC target = Main.npc[i];
@@ -73,7 +80,7 @@ namespace Redemption.Items.Weapons.PreHM.Ranged
         }
         public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
         {
-            if (target.type == NPCID.EaterofWorldsBody || target.type == NPCID.EaterofWorldsHead || target.type == NPCID.EaterofWorldsTail)
+            if (target.type is NPCID.EaterofWorldsBody or NPCID.EaterofWorldsHead or NPCID.EaterofWorldsTail or NPCID.Creeper)
                 damage /= 2;
         }
         public override bool PreDraw(ref Color lightColor)

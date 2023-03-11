@@ -1,7 +1,6 @@
 using Terraria;
 using Terraria.ModLoader;
 using Redemption.BaseExtension;
-using Redemption.Projectiles.Pets;
 using Redemption.Projectiles.Misc;
 
 namespace Redemption.Buffs

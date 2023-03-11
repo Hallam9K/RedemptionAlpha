@@ -1,3 +1,4 @@
+using Microsoft.Xna.Framework;
 using Redemption.Biomes;
 using Redemption.Buffs.Debuffs;
 using Redemption.Globals;
@@ -51,6 +52,7 @@ namespace Redemption.NPCs.Wasteland
             NPC.aiStyle = 2;
             AIType = NPCID.DemonEye;
             AnimationType = NPCID.DemonEye;
+            NPC.noGravity = true;
             SpawnModBiomes = new int[1] { ModContent.GetInstance<WastelandPurityBiome>().Type };
             Banner = NPC.type;
             BannerItem = ModContent.ItemType<SickenedDemonEyeBanner>();

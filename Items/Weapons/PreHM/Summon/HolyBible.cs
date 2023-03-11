@@ -1,10 +1,10 @@
 using Redemption.Globals;
-using Redemption.Projectiles.Magic;
+using Redemption.Projectiles.Minions;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace Redemption.Items.Weapons.PreHM.Magic
+namespace Redemption.Items.Weapons.PreHM.Summon
 {
     public class HolyBible : ModItem
     {
@@ -19,8 +19,8 @@ namespace Redemption.Items.Weapons.PreHM.Magic
 
         public override void SetDefaults()
 		{
-            Item.damage = 14;
-            Item.DamageType = DamageClass.Magic;
+            Item.damage = 12;
+            Item.DamageType = DamageClass.Summon;
             Item.width = 30;
             Item.height = 36;
             Item.useTime = 15;

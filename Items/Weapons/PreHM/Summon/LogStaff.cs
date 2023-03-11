@@ -4,7 +4,6 @@ using Redemption.Buffs.Minions;
 using Redemption.Globals;
 using Redemption.Items.Materials.PreHM;
 using Redemption.Projectiles.Minions;
-using Redemption.Projectiles.Ranged;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;

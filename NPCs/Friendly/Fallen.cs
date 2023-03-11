@@ -26,7 +26,6 @@ using Redemption.Items.Weapons.HM.Melee;
 using Redemption.BaseExtension;
 using Redemption.Items.Weapons.PreHM.Summon;
 using Redemption.Items.Armor.Vanity;
-using System.Diagnostics;
 using ReLogic.Content;
 
 namespace Redemption.NPCs.Friendly

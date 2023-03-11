@@ -40,8 +40,6 @@ using Redemption.Items.Weapons.PreHM.Summon;
 using Redemption.NPCs.Bosses.FowlEmperor;
 using Redemption.NPCs.FowlMorning;
 using Redemption.Items;
-using Terraria.Achievements;
-using System;
 
 namespace Redemption.CrossMod
 {

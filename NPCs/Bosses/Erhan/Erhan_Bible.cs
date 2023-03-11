@@ -9,12 +9,13 @@ using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Redemption.Projectiles.Magic;
+using Redemption.Projectiles.Minions;
 
 namespace Redemption.NPCs.Bosses.Erhan
 {
     public class Erhan_Bible : ModProjectile
     {
-        public override string Texture => "Redemption/Items/Weapons/PreHM/Magic/HolyBible";
+        public override string Texture => "Redemption/Items/Weapons/PreHM/Summon/HolyBible";
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Holy Bible");
@@ -267,7 +268,7 @@ namespace Redemption.NPCs.Bosses.Erhan
         {
             Texture2D texture = TextureAssets.Projectile[Projectile.type].Value;
             if (openBook)
-                texture = ModContent.Request<Texture2D>("Redemption/Items/Weapons/PreHM/Magic/HolyBible_Proj").Value;
+                texture = ModContent.Request<Texture2D>("Redemption/Items/Weapons/PreHM/Summon/HolyBible_Proj").Value;
             Vector2 drawOrigin = new(texture.Width / 2, Projectile.height / 2);
 
             if (godrayFade > 0)

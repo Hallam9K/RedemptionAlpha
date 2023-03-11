@@ -23,6 +23,7 @@ using Redemption.Items.Accessories.PreHM;
 using Redemption.BaseExtension;
 using ReLogic.Content;
 using Redemption.UI.ChatUI;
+using Redemption.Items.Weapons.PreHM.Summon;
 
 namespace Redemption.NPCs.Bosses.Erhan
 {

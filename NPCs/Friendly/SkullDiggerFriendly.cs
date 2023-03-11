@@ -10,7 +10,6 @@ using Terraria.Graphics.Shaders;
 using Terraria.GameContent;
 using Redemption.Items.Usable.Summons;
 using Redemption.Base;
-using Redemption.Items.Weapons.PreHM.Melee;
 using Redemption.BaseExtension;
 using Redemption.Items.Weapons.PreHM.Summon;
 using Redemption.Items.Materials.PreHM;

@@ -28,7 +28,6 @@ using Redemption.Items.Armor.Vanity;
 using Redemption.Items.Materials.PostML;
 using Redemption.Items.Weapons.PostML.Melee;
 using Redemption.Items.Accessories.PostML;
-using Redemption.NPCs.PreHM;
 using Redemption.UI.ChatUI;
 
 namespace Redemption.NPCs.Bosses.Obliterator
@@ -317,7 +316,7 @@ namespace Redemption.NPCs.Bosses.Obliterator
                         case 0:
                             if (!Main.dedServ)
                                 Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/silence");
-
+                            Redemption.grooveTimer = 0;
                             ArmRot[0] = MathHelper.PiOver2 + (NPC.spriteDirection == -1 ? 0 : MathHelper.Pi);
                             NPC.LookAtEntity(player);
                             AITimer++;
@@ -437,9 +436,10 @@ namespace Redemption.NPCs.Bosses.Obliterator
                     break;
                 case ActionState.Begin:
                     #region Fight Startup
-                    NPC.LookAtEntity(player);
                     if (!Main.dedServ)
                         Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/BossOmega2");
+
+                    NPC.LookAtEntity(player);
                     ArmRot[0] = MathHelper.PiOver2 + (NPC.spriteDirection == -1 ? 0 : MathHelper.Pi);
                     if (AITimer++ == 0 && Main.dedServ)
                         RedeSystem.Instance.TitleCardUIElement.DisplayTitle("Omega Obliterator", 60, 90, 0.8f, 0, Color.Red, "3rd Omega Prototype");
@@ -1011,6 +1011,8 @@ namespace Redemption.NPCs.Bosses.Obliterator
                                 }
                                 if (AITimer == 60 && !Main.dedServ)
                                 {
+                                    Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/OmegaOverheat");
+
                                     if (!RedeBossDowned.downedOmega3)
                                     {
                                         DialogueChain chain = new();
@@ -1596,6 +1598,10 @@ namespace Redemption.NPCs.Bosses.Obliterator
                 }
                 return;
             }
+            if (Music == MusicLoader.GetMusicSlot(Mod, "Sounds/Music/BossOmega2"))
+                Redemption.grooveTimer++;
+            else
+                Redemption.grooveTimer = 0;
         }
         public override bool? DrawHealthBar(byte hbPosition, ref float scale, ref Vector2 position)
         {

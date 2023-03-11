@@ -228,7 +228,7 @@ namespace Redemption.NPCs.HM
         }
         public override float SpawnChance(NPCSpawnInfo spawnInfo)
         {
-            if (RedeWorld.slayerRep < 1 || !NPC.downedMoonlord || RedeWorld.slayerMessageGiven || RedeBossDowned.downedOmega3 || RedeBossDowned.downedNebuleus)
+            if (RedeWorld.slayerRep < 1 || RedeWorld.slayerRep >= 4 || !NPC.downedMoonlord || RedeWorld.slayerMessageGiven || RedeBossDowned.downedOmega3 || RedeBossDowned.downedNebuleus)
                 return 0;
             if (spawnInfo.Player.InModBiome<SlayerShipBiome>() || SubworldSystem.Current != null)
                 return 0;

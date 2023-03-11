@@ -36,7 +36,7 @@ namespace Redemption.Tiles.Furniture.Misc
             name.SetDefault("Ancient Altar");
             AddMapEntry(new Color(120, 190, 40), name);
         }
-        public override bool HasSmartInteract(int i, int j, SmartInteractScanSettings settings) => true;
+        public override bool HasSmartInteract(int i, int j, SmartInteractScanSettings settings) => Main.tile[i, j].TileFrameX < 36;
         public override void NearbyEffects(int i, int j, bool closer)
         {
             if (!Main.rand.NextBool(10))
@@ -53,7 +53,10 @@ namespace Redemption.Tiles.Furniture.Misc
             Player player = Main.LocalPlayer;
             player.noThrow = 2;
             player.cursorItemIconEnabled = true;
-            player.cursorItemIconID = ModContent.ItemType<CursedGem>();
+            if (Main.tile[i, j].TileFrameX < 36)
+                player.cursorItemIconID = ModContent.ItemType<CursedGem>();
+            else
+                player.cursorItemIconID = -1;
         }
 
         public override bool CanKillTile(int i, int j, ref bool blockDamaged) => false;
@@ -72,9 +75,7 @@ namespace Redemption.Tiles.Furniture.Misc
                     for (int y = top; y < top + 3; y++)
                     {
                         if (Main.tile[x, y].TileFrameX < 36)
-                        {
                             Main.tile[x, y].TileFrameX += 36;
-                        }
                     }
                 }
                 return true;

@@ -27,6 +27,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Terraria.GameContent;
 using ReLogic.Content;
 using Redemption.WorldGeneration;
+using Redemption.WorldGeneration.Misc;
 
 namespace Redemption.Globals.Player
 {
@@ -145,7 +146,7 @@ namespace Redemption.Globals.Player
                 Main.NewText("WARNING: Unable to locate important structure, new world is required!", Colors.RarityRed);
 
             if (RedeConfigClient.Instance.FunniAllWasteland || RedeConfigClient.Instance.FunniJanitor || RedeConfigClient.Instance.FunniSpiders || RedeConfigClient.Instance.FunniWasteland)
-                Main.NewText("CAUTION: You have a Funni config enabled that affects world gen. If you created a world just now, check which one you have enabled.", Colors.RarityOrange);
+                Main.NewText("CAUTION: You have a Funni config enabled that affects world gen. If you created a world just now, check which one you have enabled and disable it for next time.", Colors.RarityOrange);
         }
         public override void PostUpdateMiscEffects()
         {
@@ -191,6 +192,15 @@ namespace Redemption.Globals.Player
                 else
                 {
                     TextureAssets.Heart2 = heartOriginal;
+                }
+                if (SubworldSystem.IsActive<CSub>())
+                {
+                    Player.noBuilding = true;
+                    Player.controlUseItem = false;
+                    Player.controlUseTile = false;
+                    Player.RedemptionScreen().lockScreen = true;
+                    Player.RedemptionScreen().ScreenFocusPosition = new Vector2(100, 99) * 16;
+                    Player.RedemptionScreen().interpolantTimer = 100;
                 }
             }
         }

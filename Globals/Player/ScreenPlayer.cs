@@ -4,6 +4,8 @@ using Redemption.NPCs.Bosses.ADD;
 using Redemption.NPCs.Bosses.Neb;
 using Redemption.NPCs.Bosses.Neb.Clone;
 using Redemption.NPCs.Bosses.Neb.Phase2;
+using Redemption.WorldGeneration.Misc;
+using SubworldLibrary;
 using System;
 using Terraria;
 using Terraria.DataStructures;
@@ -63,6 +65,8 @@ namespace Redemption
             }
             cutscene = false;
             customZoom = 0;
+            if (SubworldSystem.IsActive<CSub>())
+                customZoom = 2f;
         }
         public override void UpdateEquips()
         {

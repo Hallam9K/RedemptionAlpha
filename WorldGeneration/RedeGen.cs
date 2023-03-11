@@ -45,7 +45,6 @@ using System.Reflection;
 using Terraria.ModLoader.Config;
 using Terraria.Audio;
 using Redemption.Tiles.Furniture.Lab;
-using Terraria.Enums;
 
 namespace Redemption.WorldGeneration
 {
@@ -1717,7 +1716,7 @@ namespace Redemption.WorldGeneration
 
                     while (!placed)
                     {
-                        int placeX = WorldGen.genRand.Next((int)(Main.maxTilesX * .35f), (int)(Main.maxTilesX * .65f));
+                        int placeX = WorldGen.genRand.Next((int)(Main.maxTilesX * .4f), (int)(Main.maxTilesX * .6f));
 
                         int placeY = WorldGen.genRand.Next((int)(Main.maxTilesY * .4f), (int)(Main.maxTilesY * .7));
 

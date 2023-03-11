@@ -27,7 +27,6 @@ using Redemption.Dusts;
 using Redemption.NPCs.Friendly;
 using Redemption.BaseExtension;
 using ReLogic.Content;
-using Redemption.Items.Usable.Summons;
 
 namespace Redemption.NPCs.Bosses.Keeper
 {

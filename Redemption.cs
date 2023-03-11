@@ -42,6 +42,7 @@ using Terraria.UI;
 using Terraria.UI.Chat;
 using static Redemption.Globals.RedeNet;
 using Redemption.Items.Placeable.Furniture.SlayerShip;
+using Redemption.WorldGeneration.Misc;
 
 namespace Redemption
 {
@@ -54,6 +55,7 @@ namespace Redemption
         public const string PLACEHOLDER_TEXTURE = "Redemption/Placeholder";
         public Vector2 cameraOffset;
         public Rectangle currentScreen;
+        public static int grooveTimer;
         public static ModKeybind RedeSpecialAbility;
         public static ModKeybind RedeSpiritwalkerAbility;
         public static bool AprilFools => DateTime.Now is DateTime { Month: 4, Day: 1 };
@@ -166,8 +168,12 @@ namespace Redemption
                     PremultiplyTexture(ref UkkoSkyBoltTex);
                     Texture2D UkkoSkyFlashTex = ModContent.Request<Texture2D>("Redemption/Backgrounds/Skies/UkkoSkyFlash", immLoad).Value;
                     PremultiplyTexture(ref UkkoSkyFlashTex);
+                    Texture2D SkyTex = ModContent.Request<Texture2D>("Redemption/Backgrounds/Skies/SkyTex", immLoad).Value;
+                    PremultiplyTexture(ref SkyTex);
                 });
 
+                Filters.Scene["MoR:OOSky"] = new Filter(new ScreenShaderData("FilterMiniTower").UseColor(0.2f, 0f, 0f).UseOpacity(0.2f), EffectPriority.VeryHigh);
+                SkyManager.Instance["MoR:OOSky"] = new OOSky();
                 Filters.Scene["MoR:NebP1"] = new Filter(new ScreenShaderData("FilterMiniTower").UseColor(0.2f, 0f, 0.3f).UseOpacity(0.5f), EffectPriority.VeryHigh);
                 SkyManager.Instance["MoR:NebP1"] = new NebSky();
                 Filters.Scene["MoR:NebP2"] = new Filter(new ScreenShaderData("FilterMiniTower").UseColor(0.2f, 0f, 0.3f).UseOpacity(0.5f), EffectPriority.VeryHigh);
@@ -546,6 +552,15 @@ namespace Redemption
                 tileColor.R = (byte)sunR2;
                 tileColor.G = (byte)sunG2;
                 tileColor.B = (byte)sunB2;
+            }
+            if (SubworldSystem.IsActive<CSub>())
+            {
+                backgroundColor.R = 15;
+                backgroundColor.G = 15;
+                backgroundColor.B = 15;
+                tileColor.R = 15;
+                tileColor.G = 15;
+                tileColor.B = 15;
             }
         }
         public override void ModifyTransformMatrix(ref SpriteViewMatrix Transform)

@@ -9,7 +9,6 @@ using Redemption.Items.Materials.PreHM;
 using Redemption.Items.Placeable.Tiles;
 using System.Collections.Generic;
 using Redemption.Globals;
-using Redemption.Projectiles.Ranged;
 
 namespace Redemption.Items.Weapons.PreHM.Summon
 {

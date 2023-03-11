@@ -160,6 +160,8 @@ namespace Redemption.Items.Weapons.HM.Magic
                             Projectile.Kill();
                             Projectile.netUpdate = true;
                         }
+                        if (Projectile.DistanceSQ(player.Center) > 300 * 300)
+                            Projectile.Move(player.Center - new Vector2(0, 100), 2, 20);
                         if (Projectile.localAI[0]++ % 14 == 0 && Projectile.scale < 3)
                         {
                             int mana = player.inventory[player.selectedItem].mana;
@@ -262,7 +264,7 @@ namespace Redemption.Items.Weapons.HM.Magic
         {
             damage = (int)(damage * Projectile.scale);
             if (Projectile.ai[1] != 2)
-                damage /= 2;
+                damage /= 4;
         }
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {

@@ -15,7 +15,7 @@ namespace Redemption.Items.Accessories.HM
         {
             Tooltip.SetDefault("Allows flight and slow fall");
             SacrificeTotal = 1;
-            ArmorIDs.Wing.Sets.Stats[Item.wingSlot] = new WingStats(100, 7f, 2.5f);
+            ArmorIDs.Wing.Sets.Stats[Item.wingSlot] = new WingStats(90, 7f, 2.5f);
         }
         public override void SetDefaults()
         {

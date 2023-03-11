@@ -41,9 +41,15 @@ namespace Redemption.Backgrounds.Skies
         public override void Update(GameTime gameTime)
         {
             if (Active)
+            {
+                Intensity += 0.002f;
                 Intensity = Math.Min(1f, 0.01f + Intensity);
+            }
             else
+            {
+                Intensity -= 0.002f;
                 Intensity = Math.Max(0f, Intensity - 0.01f);
+            }
 
             if (ticksUntilNextBolt <= 0)
             {
@@ -91,7 +97,7 @@ namespace Redemption.Backgrounds.Skies
             if (maxDepth >= 3.40282347E+38f && minDepth < 3.40282347E+38f)
             {
                 Vector2 SkyPos = new(Main.screenWidth / 2, Main.screenHeight / 2);
-                spriteBatch.Draw(CloudTex, SkyPos, null, new Color(200, 200, 200), 0f, new Vector2(CloudTex.Width >> 1, CloudTex.Height >> 1), 1f, SpriteEffects.None, 1f);
+                spriteBatch.Draw(CloudTex, SkyPos, null, new Color(200, 200, 200) * Intensity, 0f, new Vector2(CloudTex.Width >> 1, CloudTex.Height >> 1), 1f, SpriteEffects.None, 1f);
                 Color white2 = Color.White;
                 float num65 = 1f - Main.cloudAlpha * 1.5f;
                 if (num65 < 0f)
@@ -166,23 +172,24 @@ namespace Redemption.Backgrounds.Skies
 
         public override void Activate(Vector2 position, params object[] args)
         {
-            Intensity = 0.002f;
-            Active = true;
-
-            bolts = new Bolt[500];
-            for (int i = 0; i < bolts.Length; i++)
+            if (!Active)
             {
-                bolts[i].IsAlive = false;
-            }
+                Active = true;
+                bolts = new Bolt[500];
+                for (int i = 0; i < bolts.Length; i++)
+                {
+                    bolts[i].IsAlive = false;
+                }
 
-            _pillars = new LightPillar[40];
-            for (int i = 0; i < _pillars.Length; i++)
-            {
-                _pillars[i].Position.X = i / (float)_pillars.Length * (Main.maxTilesX * 16f + 20000f) + _random.NextFloat() * 40f - 20f - 20000f;
-                _pillars[i].Position.Y = _random.NextFloat() * 200f - 2000f;
-                _pillars[i].Depth = _random.NextFloat() * 8f + 7f;
+                _pillars = new LightPillar[40];
+                for (int i = 0; i < _pillars.Length; i++)
+                {
+                    _pillars[i].Position.X = i / (float)_pillars.Length * (Main.maxTilesX * 16f + 20000f) + _random.NextFloat() * 40f - 20f - 20000f;
+                    _pillars[i].Position.Y = _random.NextFloat() * 200f - 2000f;
+                    _pillars[i].Depth = _random.NextFloat() * 8f + 7f;
+                }
+                Array.Sort(_pillars, new Comparison<LightPillar>(SortMethod));
             }
-            Array.Sort(_pillars, new Comparison<LightPillar>(SortMethod));
         }
 
         private int SortMethod(LightPillar pillar1, LightPillar pillar2)

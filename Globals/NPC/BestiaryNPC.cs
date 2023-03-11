@@ -3,15 +3,7 @@ using Terraria.ModLoader;
 using System;
 using Terraria.GameContent.Bestiary;
 using Terraria.UI;
-using Redemption.NPCs.Bosses.Erhan;
-using Redemption.NPCs.Bosses.ADD;
-using Redemption.NPCs.Bosses.Neb;
-using Redemption.NPCs.PreHM;
-using Redemption.NPCs.Bosses.Neb.Phase2;
-using Redemption.NPCs.Bosses.Neb.Clone;
-using Redemption.NPCs.Minibosses.EaglecrestGolem;
 using Terraria;
-using static Terraria.ModLoader.PlayerDrawLayer;
 
 namespace Redemption.Globals.NPC
 {

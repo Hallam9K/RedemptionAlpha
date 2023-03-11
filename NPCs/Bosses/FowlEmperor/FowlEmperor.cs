@@ -11,7 +11,6 @@ using Redemption.Items.Usable.Potions;
 using Redemption.Items.Usable.Summons;
 using System;
 using System.Collections.Generic;
-using System.Security.AccessControl;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;

@@ -1,3 +1,4 @@
+using Microsoft.Xna.Framework;
 using Redemption.Globals;
 using Terraria;
 using Terraria.ID;
@@ -21,15 +22,18 @@ namespace Redemption.NPCs.Bosses.SeedOfInfection
             Projectile.friendly = false;
             Projectile.tileCollide = true;
             Projectile.ignoreWater = true;
-            Projectile.timeLeft = 200;
+            Projectile.timeLeft = 400;
         }
 
         public override void AI()
         {
             Projectile.rotation = Projectile.velocity.ToRotation() + 1.57f;
-            Projectile.velocity.Y += 0.04f;
+            Projectile.velocity.Y += 0.06f;
         }
-
+        public override Color? GetAlpha(Color lightColor)
+        {
+            return Color.White * Projectile.Opacity;
+        }
         public override void Kill(int timeLeft)
         {
             for (int i = 0; i < 4; i++)

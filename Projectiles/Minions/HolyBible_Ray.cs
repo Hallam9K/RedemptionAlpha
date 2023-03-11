@@ -5,8 +5,9 @@ using Terraria.ModLoader;
 using Terraria.GameContent;
 using Redemption.NPCs.Bosses.Erhan;
 using Redemption.Globals;
+using Terraria.ID;
 
-namespace Redemption.Projectiles.Magic
+namespace Redemption.Projectiles.Minions
 {
     public class HolyBible_Ray : LaserProjectile
     {
@@ -22,7 +23,7 @@ namespace Redemption.Projectiles.Magic
         {
             Projectile.penetrate = -1;
             Projectile.tileCollide = false;
-            Projectile.DamageType = DamageClass.Magic;
+            Projectile.DamageType = DamageClass.Summon;
             Projectile.timeLeft = 180;
             LaserSegmentLength = 16;
             LaserWidth = 20;
@@ -30,7 +31,11 @@ namespace Redemption.Projectiles.Magic
             MaxLaserLength = 112;
             StopsOnTiles = false;
         }
-
+        public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
+        {
+            if (target.type is NPCID.EaterofWorldsBody or NPCID.EaterofWorldsHead or NPCID.EaterofWorldsTail or NPCID.Creeper)
+                damage /= 2;
+        }
         public override void AI()
         {
             Projectile proj = Main.projectile[(int)Projectile.ai[0]];

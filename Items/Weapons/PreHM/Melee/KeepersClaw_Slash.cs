@@ -7,7 +7,6 @@ using Microsoft.Xna.Framework.Graphics;
 using Terraria.GameContent;
 using Redemption.Globals;
 using Redemption.Buffs.NPCBuffs;
-using Redemption.NPCs.Bosses.Keeper;
 using Redemption.Projectiles.Melee;
 
 namespace Redemption.Items.Weapons.PreHM.Melee

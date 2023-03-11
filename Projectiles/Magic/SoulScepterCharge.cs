@@ -54,7 +54,7 @@ namespace Redemption.Projectiles.Magic
                 if (++Projectile.frame >= 4)
                     Projectile.frame = 0;
             }
-            Lighting.AddLight(Projectile.Center, Projectile.Opacity, Projectile.Opacity, Projectile.Opacity);
+            Lighting.AddLight(Projectile.Center, Projectile.Opacity * .4f, Projectile.Opacity * .4f, Projectile.Opacity * .4f);
 
             Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.Pi;
 

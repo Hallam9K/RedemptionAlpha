@@ -10,8 +10,6 @@ using Terraria.DataStructures;
 using Redemption.Dusts;
 using Terraria.GameContent;
 using System;
-using Redemption.Buffs.Minions;
-using static Humanizer.In;
 using Redemption.Buffs;
 
 namespace Redemption.Projectiles.Misc
@@ -68,6 +66,7 @@ namespace Redemption.Projectiles.Misc
         private bool onSpawn;
         public override void AI()
         {
+            Player player = Main.player[Projectile.owner];
             if (!onSpawn)
             {
                 bool noIntersect = false;
@@ -90,9 +89,10 @@ namespace Redemption.Projectiles.Misc
                             continue;
 
                         noIntersect = false;
+                        Projectile.localAI[0] = RedeHelper.RandomRotation();
+                        Projectile.localAI[1] = Main.rand.Next(50, 100);
+                        Projectile.Center = player.Center + Vector2.One.RotatedBy(MathHelper.ToRadians(Projectile.localAI[0])) * Projectile.localAI[1];
                     }
-                    Projectile.localAI[0] = RedeHelper.RandomRotation();
-                    Projectile.localAI[1] = Main.rand.Next(50, 100);
                 }
                 onSpawn = true;
             }
@@ -100,7 +100,6 @@ namespace Redemption.Projectiles.Misc
                 oldrot[k] = oldrot[k - 1];
             oldrot[0] = Projectile.rotation;
 
-            Player player = Main.player[Projectile.owner];
             if (!CheckActive(player))
                 return;
 
