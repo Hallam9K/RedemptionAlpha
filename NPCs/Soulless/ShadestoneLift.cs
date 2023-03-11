@@ -213,10 +213,6 @@ namespace Redemption.NPCs.Soulless
     public class ShadestoneLift2 : ShadestoneLift
     {
         public override string Texture => "Redemption/NPCs/Soulless/ShadestoneLift";
-    }
-    public class ShadestoneLift3 : ShadestoneLift
-    {
-        public override string Texture => "Redemption/NPCs/Soulless/ShadestoneLift";
         public override bool PreAI()
         {
             if (colliders == null || colliders.Length != 4)

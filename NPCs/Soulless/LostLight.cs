@@ -147,6 +147,89 @@ namespace Redemption.NPCs.Soulless
                             break;
                     }
                     break;
+                case 1:
+                    switch (NPC.ai[1])
+                    {
+                        case 0:
+                            v = new Vector2(340, 1115) * 16;
+                            if (NPC.DistanceSQ(v) <= 20 * 20)
+                                NPC.ai[1]++;
+
+                            NPC.Move(v, 4, 50);
+                            break;
+                        case 1:
+                            canFade = true;
+                            NPC.velocity *= 0.96f;
+                            NPC.alpha += 2;
+                            if (NPC.alpha >= 255)
+                            {
+                                CombatText.NewText(NPC.getRect(), Color.GhostWhite, "Jugh...", true, false);
+                                NPC.active = false;
+                            }
+                            break;
+                    }
+                    break;
+                case 2:
+                    switch (NPC.ai[1])
+                    {
+                        case 0:
+                            v = new Vector2(327, 1084) * 16;
+                            if (Main.LocalPlayer.DistanceSQ(NPC.Center) < 200 * 200)
+                                NPC.ai[1]++;
+
+                            NPC.Move(v, 4, 50);
+                            break;
+                        case 1:
+                            v = new Vector2(339, 1083) * 16;
+                            if (NPC.DistanceSQ(v) <= 20 * 20)
+                                NPC.ai[1]++;
+
+                            NPC.Move(v, 5, 50);
+                            break;
+                        case 2:
+                            v = new Vector2(349, 1074) * 16;
+                            if (NPC.DistanceSQ(v) <= 20 * 20)
+                                NPC.ai[1]++;
+
+                            NPC.Move(v, 5, 50);
+                            break;
+                        case 3:
+                            v = new Vector2(371, 1064) * 16;
+                            if (NPC.DistanceSQ(v) <= 20 * 20)
+                                NPC.ai[1]++;
+
+                            NPC.Move(v, 5, 50);
+                            break;
+                        case 4:
+                            NPC.ai[2] += 3;
+                            v = (new Vector2(378, 1053) * 16) + (Vector2.One.RotatedBy(MathHelper.ToRadians(NPC.ai[2])) * 80);
+                            NPC.Move(v, 4, 20);
+                            if (Main.LocalPlayer.DistanceSQ(NPC.Center) < 200 * 200)
+                            {
+                                NPC.ai[2] = 0;
+                                NPC.ai[1]++;
+                            }
+                            break;
+                        case 5:
+                            NPC.velocity *= .9f;
+                            if (NPC.ai[2]++ < 120)
+                            {
+                                SoullessArea.soullessInts[2] = 0;
+                                if (Main.netMode == NetmodeID.Server)
+                                    NetMessage.SendData(MessageID.WorldData);
+
+                                canFade = true;
+                                NPC.velocity *= 0.96f;
+                                NPC.alpha += 2;
+                                if (NPC.alpha >= 255)
+                                {
+                                    CombatText.NewText(NPC.getRect(), Color.GhostWhite, "Qua lyht'ned...", true, false);
+                                    NPC.active = false;
+                                }
+                            }
+                            break;
+                    }
+                    break;
             }
             NPC.LookByVelocity();
             NPC.rotation = NPC.velocity.X * 0.05f;

@@ -52,6 +52,17 @@ namespace Redemption.NPCs.Soulless
         public override void AI()
         {
             Player player = Main.player[RedeHelper.GetNearestAlivePlayer(NPC)];
+            if (player.DistanceSQ(NPC.Center) < 400 * 400)
+            {
+                for (int i = 0; i < Main.maxPlayers; i++)
+                {
+                    Player player2 = Main.player[i];
+                    if (!player2.active && player2.dead && !player2.Hitbox.Intersects(NPC.Hitbox))
+                        continue;
+
+                    player2.position.X += 2 * player.RightOfDir(NPC);
+                }
+            }
             if (Flare)
             {
                 FlareTimer++;

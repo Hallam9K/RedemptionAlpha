@@ -101,7 +101,7 @@ namespace Redemption.WorldGeneration.Soulless
 
             Main.spriteBatch.End();
 
-            animationTimer += 0.125;
+            animationTimer += 0.025;
             if (animationTimer > 5)
                 animationTimer = 5;
         }
@@ -394,7 +394,6 @@ namespace Redemption.WorldGeneration.Soulless
             GenUtils.ObjectPlace(276, 853, ModContent.TileType<ShadestoneCandelabraTile>());
             GenUtils.ObjectPlace(300, 749, ModContent.TileType<GiantShadesteelChainTile>());
             GenUtils.ObjectPlace(291, 763, ModContent.TileType<ShadestoneMirrorTile>());
-            GenUtils.ObjectPlace(327, 786, ModContent.TileType<ShadestoneMirrorTile>());
             GenUtils.ObjectPlace(285, 870, ModContent.TileType<ShadestoneMirrorTile>());
             GenUtils.ObjectPlace(235, 979, ModContent.TileType<ShadestoneMirrorTile>());
             GenUtils.ObjectPlace(366, 1079, ModContent.TileType<ShadestoneMirrorTile>());
@@ -410,6 +409,13 @@ namespace Redemption.WorldGeneration.Soulless
             GenUtils.ObjectPlace(505, 851, ModContent.TileType<SoullessRemainsTile>());
             GenUtils.ObjectPlace(331, 1085, ModContent.TileType<SoullessRemainsTile>());
             GenUtils.ObjectPlace(418, 1117, ModContent.TileType<SoullessRemainsTile2>());
+
+            GenUtils.ObjectPlace(378, 1054, ModContent.TileType<ShadestoneMonolith1Tile>());
+
+            GenUtils.ObjectPlace(602, 820, ModContent.TileType<ShadesteelLeverTile>());
+            GenUtils.ObjectPlace(612, 862, ModContent.TileType<ShadesteelLeverTile>());
+            GenUtils.ObjectPlace(338, 761, ModContent.TileType<ShadesteelLeverTile>());
+            GenUtils.ObjectPlace(328, 786, ModContent.TileType<ShadesteelLeverTile>());
 
             GenUtils.ObjectPlace(313, 1004, ModContent.TileType<StalkerGateTile>());
             //Chests
@@ -499,12 +505,12 @@ namespace Redemption.WorldGeneration.Soulless
                     {
                         if (Framing.GetTileSafely(DecoX, DecoY).TileType == ModContent.TileType<ShadestoneBrickTile>() && !Framing.GetTileSafely(DecoX, DecoY - 1).HasTile)
                         {
-                            if (WorldGen.genRand.NextBool(20))
+                            if (WorldGen.genRand.NextBool(15))
                                 WorldGen.PlaceObject(DecoX, DecoY - 1, ModContent.TileType<ShadePots>(), true, Main.rand.Next(3));
                         }
                         if (Framing.GetTileSafely(DecoX, DecoY).TileType == ModContent.TileType<ShadestoneTile>() && !Framing.GetTileSafely(DecoX, DecoY - 1).HasTile)
                         {
-                            if (WorldGen.genRand.NextBool(40))
+                            if (WorldGen.genRand.NextBool(30))
                                 WorldGen.PlaceObject(DecoX, DecoY - 1, ModContent.TileType<ShadePots>(), true, Main.rand.Next(3));
                         }
                     }

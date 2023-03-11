@@ -61,7 +61,7 @@ namespace Redemption.Globals.Player
 
         public override void ResetEffects()
         {
-            if (stalkerSilence)
+            if (stalkerSilence && SoullessArea.soullessInts[2] is 0)
                 visionAmt += 0.02f;
             else
                 visionAmt -= 0.05f;

@@ -8,7 +8,6 @@ using Redemption.NPCs.Soulless;
 using Redemption.Tiles.Tiles;
 using Redemption.WorldGeneration;
 using ReLogic.Content;
-using SubworldLibrary;
 using System.Collections.Generic;
 using System.IO;
 using Terraria;
@@ -22,7 +21,7 @@ namespace Redemption.Globals
 {
     public class SoullessArea : ModSystem
     {
-        public static bool[] soullessBools = new bool[4];
+        public static bool[] soullessBools = new bool[5];
         public static int[] soullessInts = new int[3];
         public static Rectangle stalkerZone = new(200 * 16, 925 * 16, 377 * 16, 212 * 16);
         public static int keyEventTimer;
@@ -122,6 +121,38 @@ namespace Redemption.Globals
                     }
                     if (player.Hitbox.Intersects(stalkerZone))
                         player.AddBuff(ModContent.BuffType<StalkerDebuff>(), 30);
+
+                    Rectangle b4 = new(400 * 16, 1093 * 16, 4 * 16, 4 * 16);
+                    if (!soullessBools[4] && player.Hitbox.Intersects(b4))
+                    {
+                        if (!Main.dedServ)
+                            SoundEngine.PlaySound(CustomSounds.EarthBoom with { Volume = .5f }, b4.Center.ToVector2());
+
+                        RedeHelper.SpawnNPC(new EntitySource_WorldGen(), 396 * 16, 1136 * 16, ModContent.NPCType<LostLight>());
+                        RedeHelper.SpawnNPC(new EntitySource_WorldGen(), 309 * 16, 1084 * 16, ModContent.NPCType<LostLight>());
+
+                        Main.player[Main.myPlayer].RedemptionScreen().ScreenShakeIntensity = 8 - (Main.player[Main.myPlayer].Distance(b4.Center.ToVector2()) / 64);
+                        for (int x = 400; x < 404; x++)
+                        {
+                            for (int y = 1097; y < 1104; y++)
+                            {
+                                if (Framing.GetTileSafely(x, y).TileType == ModContent.TileType<ShadestoneTile>())
+                                    WorldGen.KillTile(x, y, false, false, true);
+                            }
+                        }
+                        for (int x = 385; x < 395; x++)
+                        {
+                            for (int y = 1052; y < 1055; y++)
+                            {
+                                if (Framing.GetTileSafely(x, y).TileType == ModContent.TileType<ShadestoneTile>())
+                                    WorldGen.KillTile(x, y, false, false, true);
+                            }
+                        }
+                        soullessBools[4] = true;
+                        if (Main.netMode == NetmodeID.Server)
+                            NetMessage.SendData(MessageID.WorldData);
+                        break;
+                    }
                 }
             }
             if (soullessInts[1] == 2)
@@ -156,21 +187,33 @@ namespace Redemption.Globals
                 }
             }
 
-            Vector2 LiftPos = new(608 * 16, (822 * 16) + 8);
-            if (!Terraria.NPC.AnyNPCs(ModContent.NPCType<ShadestoneLift2>()))
-                Terraria.NPC.NewNPC(new EntitySource_SpawnNPC(), (int)LiftPos.X, (int)LiftPos.Y, ModContent.NPCType<ShadestoneLift2>(), 0, 0, 0, 863, 821);
-            Vector2 LiftPos2 = new(334 * 16, (763 * 16) + 8);
             if (!Terraria.NPC.AnyNPCs(ModContent.NPCType<ShadestoneLift>()))
+            {
+                Vector2 LiftPos = new(608 * 16, (822 * 16) + 8);
+                Terraria.NPC.NewNPC(new EntitySource_SpawnNPC(), (int)LiftPos.X, (int)LiftPos.Y, ModContent.NPCType<ShadestoneLift>(), 0, 0, 0, 863, 821);
+                Vector2 LiftPos2 = new(334 * 16, (763 * 16) + 8);
                 Terraria.NPC.NewNPC(new EntitySource_SpawnNPC(), (int)LiftPos2.X, (int)LiftPos2.Y, ModContent.NPCType<ShadestoneLift>(), 0, 0, 0, 787, 762);
-            Vector2 LiftPos3 = new(510 * 16, (863 * 16) + 8);
-            if (!soullessBools[2] && !Terraria.NPC.AnyNPCs(ModContent.NPCType<ShadestoneLift3>()))
-                Terraria.NPC.NewNPC(new EntitySource_SpawnNPC(), (int)LiftPos3.X, (int)LiftPos3.Y, ModContent.NPCType<ShadestoneLift3>(), 0, 0, 0, 1026, 862);
-            Vector2 GMaskPos = new(573 * 16, 1036 * 16);
+            }
+            if (!soullessBools[2] && !Terraria.NPC.AnyNPCs(ModContent.NPCType<ShadestoneLift2>()))
+            {
+                Vector2 LiftPos3 = new(510 * 16, (863 * 16) + 8);
+                Terraria.NPC.NewNPC(new EntitySource_SpawnNPC(), (int)LiftPos3.X, (int)LiftPos3.Y, ModContent.NPCType<ShadestoneLift2>(), 0, 0, 0, 1026, 862);
+            }
             if (!Terraria.NPC.AnyNPCs(ModContent.NPCType<RuhRoh>()))
+            {
+                Vector2 GMaskPos = new(573 * 16, 1036 * 16);
                 Terraria.NPC.NewNPC(new EntitySource_SpawnNPC(), (int)GMaskPos.X, (int)GMaskPos.Y, ModContent.NPCType<RuhRoh>(), 0, 10);
-            Vector2 StalkerPos = new(316 * 16, 1013 * 16);
+            }
             if (soullessInts[1] <= 1 && !Terraria.NPC.AnyNPCs(ModContent.NPCType<TheStalker>()))
+            {
+                Vector2 StalkerPos = new(316 * 16, 1013 * 16);
                 Terraria.NPC.NewNPC(new EntitySource_SpawnNPC(), (int)StalkerPos.X, (int)StalkerPos.Y, ModContent.NPCType<TheStalker>());
+            }
+            if (soullessInts[1] == 4 && !Terraria.NPC.AnyNPCs(ModContent.NPCType<TheStalker>()))
+            {
+                Vector2 StalkerPos = new(466 * 16, 1102 * 16);
+                Terraria.NPC.NewNPC(new EntitySource_SpawnNPC(), (int)StalkerPos.X, (int)StalkerPos.Y, ModContent.NPCType<TheStalker>(), 0, 1);
+            }
             if (soullessInts[1] <= 1 && !Terraria.NPC.AnyNPCs(ModContent.NPCType<SpookyEyes2>()))
             {
                 for (int i = 0; i < 30; i++)

@@ -10,7 +10,6 @@ using Redemption.NPCs.Bosses.Neb.Phase2;
 using Redemption.NPCs.Bosses.Neb.Clone;
 using Redemption.NPCs.Bosses.ADD;
 using Redemption.NPCs.Friendly;
-using Redemption.Globals.World;
 
 namespace Redemption.Globals
 {
@@ -25,7 +24,7 @@ namespace Redemption.Globals
     }
     public class StalkerEffect : ModSceneEffect
     {
-        public override int Music => MusicLoader.GetMusicSlot("Redemption/Sounds/Music/Stalker1");
+        public override int Music => SoullessArea.soullessInts[2] is 1 ? MusicLoader.GetMusicSlot("Redemption/Sounds/Music/Stalker2") : MusicLoader.GetMusicSlot("Redemption/Sounds/Music/Stalker1");
         public override SceneEffectPriority Priority => SceneEffectPriority.BossHigh;
         public override bool IsSceneEffectActive(Terraria.Player player)
         {

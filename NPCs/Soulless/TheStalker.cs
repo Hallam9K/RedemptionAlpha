@@ -1,12 +1,8 @@
-using CollisionLib;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using Redemption.BaseExtension;
 using Redemption.Globals;
+using Redemption.WorldGeneration;
 using Terraria;
-using Terraria.Audio;
 using Terraria.DataStructures;
-using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -35,8 +31,31 @@ namespace Redemption.NPCs.Soulless
         }
         public override void AI()
         {
-            if (SoullessArea.soullessInts[1] > 1)
-                NPC.active = false;
+            switch (NPC.ai[0])
+            {
+                case 0:
+                    if (SoullessArea.soullessInts[1] > 1)
+                        NPC.active = false;
+                    break;
+                case 1:
+                    switch (NPC.ai[1])
+                    {
+                        case 0:
+                            NPC.spriteDirection = 1;
+                            Player player = Main.player[Main.myPlayer];
+                            Rectangle activeZone = new(473 * 16, 1097 * 16, 17 * 16, 9 * 16);
+                            if (player.Hitbox.Intersects(activeZone))
+                            {
+                                SoullessArea.soullessInts[2] = 1;
+                                NPC.ai[1] = 1;
+                            }
+                            break;
+                        case 1:
+
+                            break;
+                    }
+                    break;
+            }
         }
         public override bool CheckActive() => false;
     }

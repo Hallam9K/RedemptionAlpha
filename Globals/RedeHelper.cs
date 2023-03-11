@@ -20,6 +20,7 @@ using Redemption.Buffs.Debuffs;
 using Redemption.Buffs.NPCBuffs;
 using Redemption.Biomes;
 using Redemption.NPCs.Friendly.SpiritSummons;
+using System.Linq;
 
 namespace Redemption.Globals
 {
@@ -508,7 +509,32 @@ namespace Redemption.Globals
 
             return nearestPlayer;
         }
+        public static int GetNearestProj(Vector2 point, bool friendly = false, int type = -1)
+        {
+            float nearestProjDist = -1;
+            int nearestProj = -1;
 
+            for (int i = 0; i < Main.maxProjectiles; i++)
+            {
+                Projectile proj = Main.projectile[i];
+                if (!proj.active)
+                    continue;
+
+                if (type != -1 && proj.type != type)
+                    continue;
+
+                if (!friendly && proj.friendly)
+                    continue;
+
+                if (nearestProjDist != -1 && !(proj.Distance(point) < nearestProjDist))
+                    continue;
+
+                nearestProjDist = proj.Distance(point);
+                nearestProj = proj.whoAmI;
+            }
+
+            return nearestProj;
+        }
         public static Vector2 VelocityToPoint(Vector2 a, Vector2 b, float speed)
         {
             Vector2 move = b - a;
