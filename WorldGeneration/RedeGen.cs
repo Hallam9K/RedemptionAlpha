@@ -98,6 +98,7 @@ namespace Redemption.WorldGeneration
             LabVector = new Vector2(-1, -1);
             BastionVector = new Vector2(-1, -1);
             GoldenGatewayVector = new Vector2(-1, -1);
+            JoShrinePoint = Point16.Zero;
             SpiritAssassinPoint = Point16.Zero;
             SpiritCommonGuardPoint = Point16.Zero;
             SpiritOldManPoint = Point16.Zero;
@@ -2297,6 +2298,12 @@ namespace Redemption.WorldGeneration
                     chest.item[slot].SetDefaults(Utils.Next(WorldGen.genRand, ChestLoot));
                 chest.item[slot++].stack = 1;
 
+                if (ID == 2)
+                {
+                    chest.item[slot].SetDefaults(ModContent.ItemType<EmptyCruxCard>());
+                    chest.item[slot++].stack = 1;
+                }
+
                 if (RedeHelper.GenChance(.05f))
                 {
                     chest.item[slot].SetDefaults(ModContent.ItemType<Violin>());
@@ -2359,7 +2366,7 @@ namespace Redemption.WorldGeneration
                 Vector2 gathicPortalPos = new(((gathicPortalVector.X + 46) * 16) - 8, ((gathicPortalVector.Y + 23) * 16) - 4);
                 LabArea.SpawnNPCInWorld(gathicPortalPos, ModContent.NPCType<GathuramPortal>());
             }
-            if (JoShrinePoint.X != 0 && RedeWorld.DayNightCount < 4 && !NPC.AnyNPCs(ModContent.NPCType<TreebarkDryad>()))
+            if (JoShrinePoint.X != 0 && !RedeBossDowned.downedTreebark && RedeWorld.DayNightCount < 4 && !NPC.AnyNPCs(ModContent.NPCType<TreebarkDryad>()))
             {
                 Vector2 shrinePos = new((JoShrinePoint.X + 9) * 16, (JoShrinePoint.Y + 13) * 16);
                 LabArea.SpawnNPCInWorld(shrinePos, ModContent.NPCType<TreebarkDryad>(), 0, 1, 0, 2);
@@ -2547,6 +2554,7 @@ namespace Redemption.WorldGeneration
             BastionVector.Y = tag.GetFloat("BastionVectorY");
             GoldenGatewayVector.X = tag.GetFloat("GoldenGatewayVectorX");
             GoldenGatewayVector.Y = tag.GetFloat("GoldenGatewayVectorY");
+            JoShrinePoint = new Point16(tag.Get<ushort>("JShrineX"), tag.Get<ushort>("JShrineY"));
         }
 
         public override void NetSend(BinaryWriter writer)
