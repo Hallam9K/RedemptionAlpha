@@ -13,7 +13,7 @@ namespace Redemption.Items.Placeable.Furniture.Shade
         }
         public override void SetDefaults()
         {
-            Item.DefaultToPlaceableTile(ModContent.TileType<ShadestoneMirrorTile>(), 0);
+            Item.DefaultToPlaceableTile(ModContent.TileType<ShadestoneMirrorTile2>(), 0);
             Item.width = 18;
             Item.height = 28;
             Item.maxStack = 9999;

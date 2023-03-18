@@ -18,6 +18,7 @@ namespace Redemption.Tiles.Furniture.SlayerShip
             Main.tileLavaDeath[Type] = false;
             Main.tileNoAttach[Type] = true;
             Main.tileLighted[Type] = true;
+            TileID.Sets.FramesOnKillWall[Type] = true;
             TileID.Sets.HasOutlines[Type] = true;
             TileObjectData.newTile.Width = 2;
             TileObjectData.newTile.Height = 2;

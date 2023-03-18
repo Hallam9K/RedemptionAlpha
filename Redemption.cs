@@ -56,6 +56,7 @@ namespace Redemption
         public Vector2 cameraOffset;
         public Rectangle currentScreen;
         public static int grooveTimer;
+        public static float[] OldMusicFade = new float[Main.musicFade.Length];
         public static ModKeybind RedeSpecialAbility;
         public static ModKeybind RedeSpiritwalkerAbility;
         public static bool AprilFools => DateTime.Now is DateTime { Month: 4, Day: 1 };

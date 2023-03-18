@@ -157,14 +157,14 @@ namespace Redemption.NPCs.Soulless
                     switch (TimerRand)
                     {
                         case 0:
-                            if (NPC.DistanceSQ(new Vector2(447, 799) * 16) < 20 * 20)
+                            if (NPC.DistanceSQ((new Vector2(447, 799) + SoullessArea.Offset.ToVector2()) * 16) < 20 * 20)
                             {
                                 NPC.velocity.X = 0;
                                 TimerRand = 1;
                                 NPC.netUpdate = true;
                             }
                             else
-                                NPCHelper.HorizontallyMove(NPC, new Vector2(447, 799) * 16, 0.4f, 1, 12, 12, NPC.Center.Y > player.Center.Y);
+                                NPCHelper.HorizontallyMove(NPC, (new Vector2(447, 799) + SoullessArea.Offset.ToVector2()) * 16, 0.4f, 1, 12, 12, NPC.Center.Y > player.Center.Y);
                             break;
                         case 1:
                             if (AITimer++ >= 30 && AITimer % 10 == 0 && AITimer < 90)
@@ -173,7 +173,7 @@ namespace Redemption.NPCs.Soulless
                             }
                             if (AITimer >= 120)
                             {
-                                RedeHelper.SpawnNPC(new EntitySource_WorldGen(), 474 * 16, 759 * 16, ModContent.NPCType<LostLight>());
+                                RedeHelper.SpawnNPC(new EntitySource_WorldGen(), (474 + SoullessArea.Offset.X) * 16, (759 + SoullessArea.Offset.Y) * 16, ModContent.NPCType<LostLight>());
 
                                 if (SoullessArea.soullessInts[0] < 1)
                                     SoullessArea.soullessInts[0] = 1;
@@ -184,7 +184,7 @@ namespace Redemption.NPCs.Soulless
                             }
                             break;
                         case 2:
-                            if (NPC.DistanceSQ(new Vector2(534, 802) * 16) < 20 * 20)
+                            if (NPC.DistanceSQ((new Vector2(534, 802) + SoullessArea.Offset.ToVector2()) * 16) < 20 * 20)
                             {
                                 NPC.dontTakeDamage = false;
                                 NPC.velocity.X = 0;
@@ -196,7 +196,7 @@ namespace Redemption.NPCs.Soulless
                                     NetMessage.SendData(MessageID.SyncNPC, number: NPC.whoAmI);
                             }
                             else
-                                NPCHelper.HorizontallyMove(NPC, new Vector2(534, 802) * 16, 0.4f, 1, 12, 12, NPC.Center.Y > player.Center.Y);
+                                NPCHelper.HorizontallyMove(NPC, (new Vector2(534, 802) + SoullessArea.Offset.ToVector2()) * 16, 0.4f, 1, 12, 12, NPC.Center.Y > player.Center.Y);
                             break;
                     }
                     break;

@@ -40,10 +40,11 @@ namespace Redemption.NPCs.Soulless
         public override bool CanHitPlayer(Player target, ref int cooldownSlot) => NPC.velocity.X < -2;
         public override bool PreAI()
         {
-            if (colliders == null || colliders.Length != 1)
+            if (colliders == null || colliders.Length != 2)
             {
                 colliders = new CollisionSurface[] {
-                    new CollisionSurface(NPC.TopLeft, NPC.BottomLeft, new int[] { 1, 1, 1, 1 }) };
+                    new CollisionSurface(NPC.TopLeft, NPC.BottomLeft, new int[] { 1, 1, 1, 1 }, true),
+                    new CollisionSurface(NPC.BottomLeft, NPC.BottomRight, new int[] { 1, 1, 1, 1 }, true) };
             }
             return true;
         }
@@ -52,7 +53,7 @@ namespace Redemption.NPCs.Soulless
         public override void AI()
         {
             Player player = Main.player[RedeHelper.GetNearestAlivePlayer(NPC)];
-            if (player.DistanceSQ(NPC.Center) < 400 * 400)
+            if (Main.LocalPlayer.DistanceSQ(NPC.Center) < 400 * 400)
             {
                 for (int i = 0; i < Main.maxPlayers; i++)
                 {
@@ -60,7 +61,12 @@ namespace Redemption.NPCs.Soulless
                     if (!player2.active || player2.dead || !player2.Hitbox.Intersects(NPC.Hitbox))
                         continue;
 
-                    player2.position.X = NPC.position.X + (player.RightOf(NPC) ? NPC.width + 20 : -20);
+                    if (player2.position.Y > NPC.Bottom.Y - 20)
+                        player2.position.Y = NPC.position.Y + NPC.height;
+                    else if (player2.Bottom.Y < NPC.position.Y + 20)
+                        player2.position.Y = NPC.position.Y + -player2.height;
+                    else
+                        player2.position.X = NPC.position.X + (player2.RightOf(NPC) ? NPC.width + 20 : -20);
                 }
             }
             if (Flare)
@@ -91,11 +97,14 @@ namespace Redemption.NPCs.Soulless
                     break;
             }
 
-            if (colliders != null && colliders.Length == 1)
+            if (colliders != null && colliders.Length == 2)
             {
                 colliders[0].Update();
                 colliders[0].endPoints[0] = NPC.Center + (NPC.TopLeft - NPC.Center).RotatedBy(NPC.rotation);
                 colliders[0].endPoints[1] = NPC.Center + (NPC.BottomLeft - NPC.Center).RotatedBy(NPC.rotation);
+                colliders[1].Update();
+                colliders[1].endPoints[0] = NPC.Center + (NPC.BottomLeft - NPC.Center).RotatedBy(NPC.rotation);
+                colliders[1].endPoints[1] = NPC.Center + (NPC.BottomRight - NPC.Center).RotatedBy(NPC.rotation);
             }
         }
         public override void PostDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)

@@ -13,6 +13,8 @@ using Redemption.Biomes;
 using ParticleLibrary;
 using Redemption.Particles;
 using Redemption.Globals.NPC;
+using Redemption.Tiles.Tiles;
+using Terraria.Audio;
 
 namespace Redemption.NPCs.Soulless
 {
@@ -50,6 +52,7 @@ namespace Redemption.NPCs.Soulless
         }
         private float alpha;
         private bool canFade;
+        private readonly Point offset = SoullessArea.Offset;
         public override void AI()
         {
             Player player = Main.player[NPC.target];
@@ -106,7 +109,7 @@ namespace Redemption.NPCs.Soulless
                     switch (NPC.ai[1])
                     {
                         case 0:
-                            v = new Vector2(430, 787) * 16;
+                            v = (new Vector2(430, 787) + offset.ToVector2()) * 16;
                             if (NPC.DistanceSQ(v) <= 20 * 20)
                                 NPC.ai[1]++;
 
@@ -118,7 +121,7 @@ namespace Redemption.NPCs.Soulless
                             else
                             {
                                 NPC.ai[2] += 2;
-                                v = (new Vector2(424, 798) * 16) + (Vector2.One.RotatedBy(MathHelper.ToRadians(NPC.ai[2])) * 40);
+                                v = ((new Vector2(424, 798) + offset.ToVector2()) * 16) + (Vector2.One.RotatedBy(MathHelper.ToRadians(NPC.ai[2])) * 40);
                                 NPC.Move(v, 4, 20);
                             }
                             if (NPC.ai[2] >= 360 * 2)
@@ -128,7 +131,7 @@ namespace Redemption.NPCs.Soulless
                             }
                             break;
                         case 2:
-                            v = new Vector2(414, 802) * 16;
+                            v = (new Vector2(414, 802) + offset.ToVector2()) * 16;
                             if (NPC.DistanceSQ(v) <= 20 * 20)
                                 NPC.ai[1]++;
 
@@ -151,7 +154,7 @@ namespace Redemption.NPCs.Soulless
                     switch (NPC.ai[1])
                     {
                         case 0:
-                            v = new Vector2(340, 1115) * 16;
+                            v = (new Vector2(340, 1115) + offset.ToVector2()) * 16;
                             if (NPC.DistanceSQ(v) <= 20 * 20)
                                 NPC.ai[1]++;
 
@@ -170,62 +173,137 @@ namespace Redemption.NPCs.Soulless
                     }
                     break;
                 case 2:
+                    if (SoullessArea.soullessInts[2] is 0 && NPC.ai[1] < 5)
+                        NPC.active = false;
+
                     switch (NPC.ai[1])
                     {
                         case 0:
-                            v = new Vector2(327, 1084) * 16;
+                            v = (new Vector2(327, 1084) + offset.ToVector2()) * 16;
                             if (Main.LocalPlayer.DistanceSQ(NPC.Center) < 200 * 200)
                                 NPC.ai[1]++;
 
-                            NPC.Move(v, 4, 50);
+                            NPC.Move(v, 4, 30);
                             break;
                         case 1:
-                            v = new Vector2(339, 1083) * 16;
+                            v = (new Vector2(339, 1083) + offset.ToVector2()) * 16;
                             if (NPC.DistanceSQ(v) <= 20 * 20)
                                 NPC.ai[1]++;
 
-                            NPC.Move(v, 5, 50);
+                            NPC.Move(v, 5, 30);
                             break;
                         case 2:
-                            v = new Vector2(349, 1074) * 16;
+                            v = (new Vector2(349, 1074) + offset.ToVector2()) * 16;
                             if (NPC.DistanceSQ(v) <= 20 * 20)
                                 NPC.ai[1]++;
 
-                            NPC.Move(v, 5, 50);
+                            NPC.Move(v, 5, 30);
                             break;
                         case 3:
-                            v = new Vector2(378, 1053) * 16;
-                            if (NPC.DistanceSQ(v) <= 20 * 20)
+                            v = (new Vector2(378, 1053) + offset.ToVector2()) * 16;
+                            if (NPC.DistanceSQ(v) <= 60 * 60)
                                 NPC.ai[1]++;
 
-                            NPC.Move(v, 5, 50);
+                            NPC.Move(v, 5, 30);
                             break;
                         case 4:
                             NPC.ai[2] += 3;
-                            v = (new Vector2(378, 1053) * 16) + (Vector2.One.RotatedBy(MathHelper.ToRadians(NPC.ai[2])) * 80);
+                            v = ((new Vector2(378, 1053) + offset.ToVector2()) * 16) + (Vector2.One.RotatedBy(MathHelper.ToRadians(NPC.ai[2])) * 80);
                             NPC.Move(v, 4, 20);
                             if (Main.LocalPlayer.DistanceSQ(NPC.Center) < 120 * 120)
                             {
+                                SoundEngine.PlaySound(SoundID.AbigailCry, NPC.position);
+                                if (SoullessArea.soullessInts[1] < 5)
+                                    SoullessArea.soullessInts[1] = 5;
+                                SoullessArea.soullessInts[2] = 0;
+                                if (Main.netMode == NetmodeID.Server)
+                                    NetMessage.SendData(MessageID.WorldData);
+
                                 NPC.ai[2] = 0;
                                 NPC.ai[1]++;
                             }
                             break;
                         case 5:
+                            v = (new Vector2(378, 1053) + offset.ToVector2()) * 16;
+                            NPC.Move(v, 3, 1);
                             NPC.velocity *= .9f;
+                            NPC.scale += 0.2f;
                             if (NPC.ai[2]++ < 120)
                             {
-                                SoullessArea.soullessInts[2] = 0;
-                                if (Main.netMode == NetmodeID.Server)
-                                    NetMessage.SendData(MessageID.WorldData);
-
                                 canFade = true;
                                 NPC.velocity *= 0.96f;
                                 NPC.alpha += 2;
                                 if (NPC.alpha >= 255)
                                 {
+                                    for (int x = 573 + offset.X; x < 585 + offset.X; x++)
+                                    {
+                                        for (int y = 1117 + offset.Y; y < 1127 + offset.Y; y++)
+                                        {
+                                            if (Framing.GetTileSafely(x, y).TileType == ModContent.TileType<ShadestoneTile>())
+                                                WorldGen.KillTile(x, y, false, false, true);
+                                        }
+                                    }
+                                    RedeHelper.SpawnNPC(new EntitySource_WorldGen(), (414 + offset.X) * 16, (1059 + offset.Y) * 16, ModContent.NPCType<LostLight>(), 3);
                                     CombatText.NewText(NPC.getRect(), Color.GhostWhite, "Qua lyht'ned...", true, false);
                                     NPC.active = false;
                                 }
+                            }
+                            break;
+                    }
+                    break;
+                case 3:
+                    switch (NPC.ai[1])
+                    {
+                        case 0:
+                            v = (new Vector2(394, 1053) + offset.ToVector2()) * 16;
+                            if (Main.LocalPlayer.DistanceSQ(NPC.Center) < 200 * 200)
+                                NPC.ai[1]++;
+
+                            NPC.Move(v, 2, 50);
+                            break;
+                        case 1:
+                            v = (new Vector2(424, 1070) + offset.ToVector2()) * 16;
+                            if (NPC.DistanceSQ(v) <= 20 * 20)
+                                NPC.ai[1]++;
+
+                            NPC.Move(v, 6, 50);
+                            break;
+                        case 2:
+                            v = (new Vector2(477, 1071) + offset.ToVector2()) * 16;
+                            if (NPC.DistanceSQ(v) <= 20 * 20)
+                                NPC.ai[1]++;
+
+                            NPC.Move(v, 6, 50);
+                            break;
+                        case 3:
+                            v = (new Vector2(480, 1102) + offset.ToVector2()) * 16;
+                            if (NPC.DistanceSQ(v) <= 20 * 20)
+                                NPC.ai[1]++;
+
+                            NPC.Move(v, 6, 50);
+                            break;
+                        case 4:
+                            v = (new Vector2(563, 1105) + offset.ToVector2()) * 16;
+                            if (NPC.DistanceSQ(v) <= 20 * 20)
+                                NPC.ai[1]++;
+
+                            NPC.Move(v, 6, 50);
+                            break;
+                        case 5:
+                            v = (new Vector2(575, 1124) + offset.ToVector2()) * 16;
+                            if (NPC.DistanceSQ(v) <= 20 * 20)
+                                NPC.ai[1]++;
+
+                            NPC.Move(v, 6, 50);
+                            break;
+                        case 6:
+                            canFade = true;
+                            NPC.velocity *= 0.96f;
+                            NPC.alpha += 2;
+                            if (NPC.alpha >= 255)
+                            {
+                                CombatText.NewText(NPC.getRect(), Color.GhostWhite, "Jugh...", true, false);
+                                NPC.active = false;
                             }
                             break;
                     }
@@ -261,10 +339,10 @@ namespace Redemption.NPCs.Soulless
             spriteBatch.End();
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
 
-            spriteBatch.Draw(TextureAssets.Npc[NPC.type].Value, NPC.Center - screenPos, NPC.frame, Color.White * alpha, NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
-            spriteBatch.Draw(LightGlow, NPC.Center - screenPos, null, NPC.GetAlpha(Color.White), NPC.rotation, drawOrigin, 0.2f, effects, 0);
-            spriteBatch.Draw(LightGlow, NPC.Center - screenPos, null, NPC.GetAlpha(Color.White) * 0.6f, NPC.rotation, drawOrigin, scale, effects, 0);
-            spriteBatch.Draw(LightGlow, NPC.Center - screenPos, null, NPC.GetAlpha(Color.White) * 0.8f, NPC.rotation, drawOrigin, scale2, effects, 0);
+            spriteBatch.Draw(TextureAssets.Npc[NPC.type].Value, NPC.Center - screenPos, NPC.frame, Color.White * alpha, NPC.rotation, NPC.frame.Size() / 2, 1, effects, 0);
+            spriteBatch.Draw(LightGlow, NPC.Center - screenPos, null, NPC.GetAlpha(Color.White), NPC.rotation, drawOrigin, NPC.scale * 0.2f, effects, 0);
+            spriteBatch.Draw(LightGlow, NPC.Center - screenPos, null, NPC.GetAlpha(Color.White) * 0.6f, NPC.rotation, drawOrigin, NPC.scale * scale, effects, 0);
+            spriteBatch.Draw(LightGlow, NPC.Center - screenPos, null, NPC.GetAlpha(Color.White) * 0.8f, NPC.rotation, drawOrigin, NPC.scale * scale2, effects, 0);
 
             spriteBatch.End();
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);

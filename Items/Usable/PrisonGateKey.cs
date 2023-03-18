@@ -50,6 +50,13 @@ namespace Redemption.Items.Usable
         }
         public override bool OnPickup(Player player)
         {
+            if (SoullessArea.soullessInts[1] is 5)
+            {
+                SoullessArea.soullessInts[1] = 6;
+                if (Main.netMode == NetmodeID.Server)
+                    NetMessage.SendData(MessageID.WorldData);
+                return true;
+            }
             if (SoullessArea.soullessInts[1] > 1)
                 return true;
 

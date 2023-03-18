@@ -33,6 +33,7 @@ using Terraria.GameInput;
 using Terraria.UI.Chat;
 using Terraria.GameContent;
 using Redemption.Items.Weapons.PostML.Ranged;
+using Redemption.Tiles.Furniture.Kingdom;
 
 namespace Redemption.WorldGeneration.Soulless
 {
@@ -57,15 +58,15 @@ namespace Redemption.WorldGeneration.Soulless
         {
             if (SoullessArea.soullessBools[2])
             {
-                Main.spawnTileY = 1024;
-                Main.spawnTileX = 509;
+                Main.spawnTileY = 1024 + SoullessArea.Offset.Y;
+                Main.spawnTileX = 509 + SoullessArea.Offset.X;
             }
             if (Main.netMode != NetmodeID.MultiplayerClient && SoullessArea.soullessInts[0] < 2)
             {
                 if (SoullessArea.soullessInts[0] < 1)
-                    NPC.NewNPC(new EntitySource_WorldGen(), 496 * 16, 802 * 16, ModContent.NPCType<TwinfaceSoulless>());
+                    NPC.NewNPC(new EntitySource_WorldGen(), (496 + SoullessArea.Offset.X) * 16, (802 + SoullessArea.Offset.Y) * 16, ModContent.NPCType<TwinfaceSoulless>());
                 else
-                    NPC.NewNPC(new EntitySource_WorldGen(), 534 * 16, 802 * 16, ModContent.NPCType<TwinfaceSoulless>(), 0, 1, 0, Main.rand.Next(80, 280));
+                    NPC.NewNPC(new EntitySource_WorldGen(), (534 + SoullessArea.Offset.X) * 16, (802 + SoullessArea.Offset.Y) * 16, ModContent.NPCType<TwinfaceSoulless>(), 0, 1, 0, Main.rand.Next(80, 280));
             }
 
             Main.cloudAlpha = 0;
@@ -79,6 +80,7 @@ namespace Redemption.WorldGeneration.Soulless
             Main.time = 40000;
         }
         private double animationTimer = 0;
+        private double animationTimer2 = 0;
         public override void DrawSetup(GameTime gameTime)
         {
             PlayerInput.SetZoom_Unscaled();
@@ -88,6 +90,12 @@ namespace Redemption.WorldGeneration.Soulless
         public override void DrawMenu(GameTime gameTime)
         {
             Texture2D soullessBackground = ModContent.Request<Texture2D>("Redemption/WorldGeneration/Soulless/SoullessSubworldTex").Value;
+            Texture2D portalTex = ModContent.Request<Texture2D>("Redemption/Textures/SpiritPortalTex").Value;
+            Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, null, null, null, null, Main.UIScaleMatrix);
+            Main.spriteBatch.Draw(portalTex, new Vector2(Main.screenWidth / 2, Main.screenHeight / 2), null, Color.White * (float)(animationTimer / 5) * 0.4f, (float)animationTimer2 / 2, new Vector2(portalTex.Width / 2, portalTex.Height / 2), 20, 0, 0);
+            Main.spriteBatch.Draw(portalTex, new Vector2(Main.screenWidth / 2, Main.screenHeight / 2), null, Color.White * (float)(animationTimer / 5) * 0.3f, (float)animationTimer2 * 0.75f, new Vector2(portalTex.Width / 2, portalTex.Height / 2), 16, 0, 0);
+            Main.spriteBatch.Draw(portalTex, new Vector2(Main.screenWidth / 2, Main.screenHeight / 2), null, Color.White * (float)(animationTimer / 5) * 0.2f, (float)animationTimer2, new Vector2(portalTex.Width / 2, portalTex.Height / 2), 12, 0, 0);
+            Main.spriteBatch.End();
             Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied, null, null, null, null, Main.UIScaleMatrix);
             Main.spriteBatch.Draw
             (
@@ -96,22 +104,24 @@ namespace Redemption.WorldGeneration.Soulless
                 null,
                 Color.White * (float)(animationTimer / 5) * 0.8f
             );
-
             ChatManager.DrawColorCodedStringWithShadow(Main.spriteBatch, FontAssets.DeathText.Value, Main.statusText, new Vector2(Main.screenWidth, (float)Main.screenHeight) / 2f - FontAssets.DeathText.Value.MeasureString(Main.statusText) / 2f, Color.White, 0f, Vector2.Zero, Vector2.One);
 
             Main.spriteBatch.End();
 
             animationTimer += 0.025;
+            animationTimer2 += 0.025;
             if (animationTimer > 5)
                 animationTimer = 5;
         }
         public override void OnExit()
         {
             animationTimer = 0;
+            animationTimer2 = 0;
         }
         public override void OnEnter()
         {
             animationTimer = 0;
+            animationTimer2 = 0;
         }
         public override void OnUnload()
         {
@@ -123,10 +133,10 @@ namespace Redemption.WorldGeneration.Soulless
         {
             progress.Message = "Loading";
             WorldGen.noTileActions = true;
-            Main.spawnTileY = 799;
-            Main.spawnTileX = 432;
-            Main.worldSurface = 635;
-            Main.rockLayer = 635;
+            Main.spawnTileY = 799 + SoullessArea.Offset.Y;
+            Main.spawnTileX = 432 + SoullessArea.Offset.X;
+            Main.worldSurface = 635 + SoullessArea.Offset.Y;
+            Main.rockLayer = 635 + SoullessArea.Offset.Y;
 
             Mod mod = Redemption.Instance;
             Dictionary<Color, int> colorToTile = new()
@@ -166,7 +176,7 @@ namespace Redemption.WorldGeneration.Soulless
             GenUtils.InvokeOnMainThread(() =>
             {
                 TexGen gen = BaseWorldGenTex.GetTexGenerator(tex, colorToTile, texWalls, colorToWall, texLiquids, texSlopes);
-                gen.Generate(0, 0, true, true);
+                gen.Generate(SoullessArea.Offset.X, SoullessArea.Offset.Y, true, true);
             });
         }
         public SoullessPass1(string name, float loadWeight) : base(name, loadWeight)
@@ -179,6 +189,8 @@ namespace Redemption.WorldGeneration.Soulless
         {
             progress.Message = "Furnishing Caverns";
             Mod mod = Redemption.Instance;
+            int offsetX = SoullessArea.Offset.X;
+            int offsetY = SoullessArea.Offset.Y;
 
             #region Platforms
             Dictionary<Color, int> colorToTile2 = new()
@@ -192,11 +204,11 @@ namespace Redemption.WorldGeneration.Soulless
             GenUtils.InvokeOnMainThread(() =>
             {
                 TexGen gen = BaseWorldGenTex.GetTexGenerator(platTex, colorToTile2);
-                gen.Generate(0, 0, true, true);
+                gen.Generate(offsetX, offsetY, true, true);
             });
-            for (int x = 0; x < 0 + platTex.Width; x++)
+            for (int x = offsetX; x < offsetX + platTex.Width; x++)
             {
-                for (int y = 0; y < 0 + platTex.Height; y++)
+                for (int y = offsetY; y < offsetY + platTex.Height; y++)
                 {
                     switch (Main.tile[x, y].TileType)
                     {
@@ -256,13 +268,13 @@ namespace Redemption.WorldGeneration.Soulless
             GenUtils.InvokeOnMainThread(() =>
             {
                 TexGen gen = BaseWorldGenTex.GetTexGenerator(ObjectTex, colorToObj);
-                gen.Generate(0, 0, true, true);
+                gen.Generate(offsetX, offsetY, true, true);
             });
 
             #region Objects
-            for (int x2 = 0; x2 < 0 + ObjectTex.Width; x2++)
+            for (int x2 = offsetX; x2 < offsetX + ObjectTex.Width; x2++)
             {
-                for (int y2 = 0; y2 < 0 + ObjectTex.Height; y2++)
+                for (int y2 = offsetY; y2 < offsetY + ObjectTex.Height; y2++)
                 {
                     switch (Main.tile[x2, y2].TileType)
                     {
@@ -387,37 +399,44 @@ namespace Redemption.WorldGeneration.Soulless
             }
             #endregion
 
-            GenUtils.ObjectPlace(440, 797, ModContent.TileType<ShadestoneCandleTile>());
-            GenUtils.ObjectPlace(240, 765, ModContent.TileType<ShadestoneCandleTile>());
-            GenUtils.ObjectPlace(524, 874, ModContent.TileType<ShadestoneCandleTile>());
-            GenUtils.ObjectPlace(554, 833, ModContent.TileType<ShadestoneCandelabraTile>());
-            GenUtils.ObjectPlace(276, 853, ModContent.TileType<ShadestoneCandelabraTile>());
-            GenUtils.ObjectPlace(300, 749, ModContent.TileType<GiantShadesteelChainTile>());
-            GenUtils.ObjectPlace(291, 763, ModContent.TileType<ShadestoneMirrorTile>());
-            GenUtils.ObjectPlace(285, 870, ModContent.TileType<ShadestoneMirrorTile>());
-            GenUtils.ObjectPlace(235, 979, ModContent.TileType<ShadestoneMirrorTile>());
-            GenUtils.ObjectPlace(366, 1079, ModContent.TileType<ShadestoneMirrorTile>());
-            GenUtils.ObjectPlace(339, 1060, ModContent.TileType<ShadestoneMirrorTile>());
-            GenUtils.ObjectPlace(540, 843, ModContent.TileType<ShadestoneToiletTile>());
-            GenUtils.ObjectPlace(208, 998, ModContent.TileType<ShadestoneCrateTile>());
+            GenUtils.ObjectPlace(440 + offsetX, 797 + offsetY, ModContent.TileType<ShadestoneCandleTile>());
+            GenUtils.ObjectPlace(240 + offsetX, 765 + offsetY, ModContent.TileType<ShadestoneCandleTile>());
+            GenUtils.ObjectPlace(524 + offsetX, 874 + offsetY, ModContent.TileType<ShadestoneCandleTile>());
+            GenUtils.ObjectPlace(554 + offsetX, 833 + offsetY, ModContent.TileType<ShadestoneCandelabraTile>());
+            GenUtils.ObjectPlace(276 + offsetX, 853 + offsetY, ModContent.TileType<ShadestoneCandelabraTile>());
+            GenUtils.ObjectPlace(300 + offsetX, 749 + offsetY, ModContent.TileType<GiantShadesteelChainTile>());
+            GenUtils.ObjectPlace(291 + offsetX, 763 + offsetY, ModContent.TileType<ShadestoneMirrorTile>());
+            GenUtils.ObjectPlace(285 + offsetX, 870 + offsetY, ModContent.TileType<ShadestoneMirrorTile>());
+            GenUtils.ObjectPlace(235 + offsetX, 979 + offsetY, ModContent.TileType<ShadestoneMirrorTile>());
+            GenUtils.ObjectPlace(366 + offsetX, 1079 + offsetY, ModContent.TileType<ShadestoneMirrorTile>());
+            GenUtils.ObjectPlace(339 + offsetX, 1060 + offsetY, ModContent.TileType<ShadestoneMirrorTile>());
+            GenUtils.ObjectPlace(693 + offsetX, 1071 + offsetY, ModContent.TileType<ShadestoneMirrorTile>());
+            GenUtils.ObjectPlace(540 + offsetX, 843 + offsetY, ModContent.TileType<ShadestoneToiletTile>());
+            GenUtils.ObjectPlace(208 + offsetX, 998 + offsetY, ModContent.TileType<ShadestoneCrateTile>());
 
-            GenUtils.ObjectPlace(352, 813, ModContent.TileType<SoullessRemainsTile>());
-            GenUtils.ObjectPlace(289, 870, ModContent.TileType<SoullessRemainsTile>());
-            GenUtils.ObjectPlace(335, 883, ModContent.TileType<SoullessRemainsTile>());
-            GenUtils.ObjectPlace(550, 835, ModContent.TileType<SoullessRemainsTile>());
-            GenUtils.ObjectPlace(398, 794, ModContent.TileType<SoullessRemainsTile>());
-            GenUtils.ObjectPlace(505, 851, ModContent.TileType<SoullessRemainsTile>());
-            GenUtils.ObjectPlace(331, 1085, ModContent.TileType<SoullessRemainsTile>());
-            GenUtils.ObjectPlace(418, 1117, ModContent.TileType<SoullessRemainsTile2>());
+            GenUtils.ObjectPlace(352 + offsetX, 813 + offsetY, ModContent.TileType<SoullessRemainsTile>());
+            GenUtils.ObjectPlace(289 + offsetX, 870 + offsetY, ModContent.TileType<SoullessRemainsTile>());
+            GenUtils.ObjectPlace(335 + offsetX, 883 + offsetY, ModContent.TileType<SoullessRemainsTile>());
+            GenUtils.ObjectPlace(550 + offsetX, 835 + offsetY, ModContent.TileType<SoullessRemainsTile>());
+            GenUtils.ObjectPlace(398 + offsetX, 794 + offsetY, ModContent.TileType<SoullessRemainsTile>());
+            GenUtils.ObjectPlace(505 + offsetX, 851 + offsetY, ModContent.TileType<SoullessRemainsTile>());
+            GenUtils.ObjectPlace(331 + offsetX, 1085 + offsetY, ModContent.TileType<SoullessRemainsTile>());
+            GenUtils.ObjectPlace(418 + offsetX, 1117 + offsetY, ModContent.TileType<SoullessRemainsTile2>());
+            GenUtils.ObjectPlace(591 + offsetX, 1209 + offsetY, ModContent.TileType<SoullessRemainsTile>());
+            GenUtils.ObjectPlace(487 + offsetX, 1163 + offsetY, ModContent.TileType<SoullessRemainsTile>());
+            GenUtils.ObjectPlace(691 + offsetX, 1106 + offsetY, ModContent.TileType<SoullessRemainsTile>());
+            GenUtils.ObjectPlace(500 + offsetX, 1210 + offsetY, ModContent.TileType<SoullessRemainsTile2>());
 
-            GenUtils.ObjectPlace(378, 1054, ModContent.TileType<ShadestoneMonolith1Tile>());
+            GenUtils.ObjectPlace(378 + offsetX, 1054 + offsetY, ModContent.TileType<ShadestoneMonolith1Tile>());
 
-            GenUtils.ObjectPlace(602, 820, ModContent.TileType<ShadesteelLeverTile>());
-            GenUtils.ObjectPlace(612, 862, ModContent.TileType<ShadesteelLeverTile>());
-            GenUtils.ObjectPlace(338, 761, ModContent.TileType<ShadesteelLeverTile>());
-            GenUtils.ObjectPlace(328, 786, ModContent.TileType<ShadesteelLeverTile>());
+            GenUtils.ObjectPlace(602 + offsetX, 820 + offsetY, ModContent.TileType<ShadesteelLeverTile>());
+            GenUtils.ObjectPlace(612 + offsetX, 862 + offsetY, ModContent.TileType<ShadesteelLeverTile>());
+            GenUtils.ObjectPlace(338 + offsetX, 761 + offsetY, ModContent.TileType<ShadesteelLeverTile>());
+            GenUtils.ObjectPlace(328 + offsetX, 786 + offsetY, ModContent.TileType<ShadesteelLeverTile>());
 
-            GenUtils.ObjectPlace(313, 1004, ModContent.TileType<StalkerGateTile>());
+            GenUtils.ObjectPlace(313 + offsetX, 1004 + offsetY, ModContent.TileType<StalkerGateTile>());
+
+            GenUtils.ObjectPlace(734 + offsetX, 1055 + offsetY, ModContent.TileType<AngelStatue_SC>());
             //Chests
             SpookChest(265, 854);
             SpookChest(254, 880);
@@ -432,13 +451,33 @@ namespace Redemption.WorldGeneration.Soulless
             SpookChest(206, 998);
             SpookChest(274, 1054);
             SpookChest(321, 1060);
+            SpookChest(657, 1052);
+            SpookChest(242, 924);
+            SpookChest(666, 1080);
+            SpookChest(485, 1168);
 
-            for (int i = 0; i < 1800; i++)
+            for (int i = offsetX; i < 1800 + offsetX; i++)
             {
-                for (int j = 0; j < 1800; j++)
+                for (int j = offsetY; j < 1800 + offsetY; j++)
                 {
                     if (Framing.GetTileSafely(i, j).TileType == TileID.Books && WorldGen.InWorld(i, j))
                         Framing.GetTileSafely(i, j).TileColor = PaintID.WhitePaint;
+                }
+            }
+            for (int i = 68 + offsetX; i < 82 + offsetX; i++)
+            {
+                for (int j = 837 + offsetY; j < 844 + offsetY; j++)
+                {
+                    if (Framing.GetTileSafely(i, j).WallType == ModContent.WallType<LeadFenceBlackWall>() && WorldGen.InWorld(i, j))
+                        Framing.GetTileSafely(i, j).WallColor = PaintID.ShadowPaint;
+                }
+            }
+            for (int i = 106 + offsetX; i < 120 + offsetX; i++)
+            {
+                for (int j = 837 + offsetY; j < 844 + offsetY; j++)
+                {
+                    if (Framing.GetTileSafely(i, j).WallType == ModContent.WallType<LeadFenceBlackWall>() && WorldGen.InWorld(i, j))
+                        Framing.GetTileSafely(i, j).WallColor = PaintID.ShadowPaint;
                 }
             }
         }
@@ -448,7 +487,7 @@ namespace Redemption.WorldGeneration.Soulless
         #region Chest Contents
         public static void SpookChest(int x, int y, int chestID = 0)
         {
-            int PlacementSuccess = WorldGen.PlaceChest(x, y, (ushort)ModContent.TileType<ShadestoneChestTile>(), false);
+            int PlacementSuccess = WorldGen.PlaceChest(x + SoullessArea.Offset.X, y + SoullessArea.Offset.Y, (ushort)ModContent.TileType<ShadestoneChestTile>(), false);
 
             int[] ChestLoot2 = new int[] {
                 ItemID.MiningPotion, ItemID.BattlePotion, ModContent.ItemType<LurkingKetredPotion>(), ItemID.InvisibilityPotion };
@@ -497,8 +536,8 @@ namespace Redemption.WorldGeneration.Soulless
             #region Pots for Soulless Caverns
             for (int num = 0; num < 1800; num++)
             {
-                int xAxis = WorldGen.genRand.Next(1800 - 45);
-                int yAxis = WorldGen.genRand.Next(1800 - 45);
+                int xAxis = WorldGen.genRand.Next(1800 + SoullessArea.Offset.X - 45);
+                int yAxis = WorldGen.genRand.Next(1800 + SoullessArea.Offset.Y - 45);
                 for (int DecoX = xAxis; DecoX < xAxis + 45; DecoX++)
                 {
                     for (int DecoY = yAxis; DecoY < yAxis + 45; DecoY++)
@@ -528,9 +567,9 @@ namespace Redemption.WorldGeneration.Soulless
         {
             progress.Message = "Growing Cysts";
             #region Ambient Tiles
-            for (int i = 0; i < 1800; i++)
+            for (int i = SoullessArea.Offset.X; i < 1800 + SoullessArea.Offset.X; i++)
             {
-                for (int j = 0; j < 1800; j++)
+                for (int j = SoullessArea.Offset.Y; j < 1800 + SoullessArea.Offset.Y; j++)
                 {
                     ushort type = Framing.GetTileSafely(i, j).TileType;
                     if ((type == ModContent.TileType<ShadestoneTile>() || type == ModContent.TileType<ShadestoneMossyTile>()) && !Framing.GetTileSafely(i, j - 1).HasTile && WorldGen.InWorld(i, j))
@@ -554,8 +593,8 @@ namespace Redemption.WorldGeneration.Soulless
             #region Random Deco for Soulless Caverns
             for (int num = 0; num < 1800; num++)
             {
-                int xAxis = WorldGen.genRand.Next(1800 - 45);
-                int yAxis = WorldGen.genRand.Next(1800 - 45);
+                int xAxis = WorldGen.genRand.Next(1800 + SoullessArea.Offset.X - 45);
+                int yAxis = WorldGen.genRand.Next(1800 + SoullessArea.Offset.Y - 45);
                 for (int DecoX = xAxis; DecoX < xAxis + 45; DecoX++)
                 {
                     for (int DecoY = yAxis; DecoY < yAxis + 45; DecoY++)
@@ -603,8 +642,8 @@ namespace Redemption.WorldGeneration.Soulless
             }
             for (int num = 0; num < 1200; num++)
             {
-                int xAxis = WorldGen.genRand.Next(1800 - 45);
-                int yAxis = WorldGen.genRand.Next(1800 - 45);
+                int xAxis = WorldGen.genRand.Next(1800 + SoullessArea.Offset.X - 45);
+                int yAxis = WorldGen.genRand.Next(1800 + SoullessArea.Offset.Y - 45);
                 for (int DecoX = xAxis; DecoX < xAxis + 45; DecoX++)
                 {
                     for (int DecoY = yAxis; DecoY < yAxis + 45; DecoY++)
@@ -632,8 +671,8 @@ namespace Redemption.WorldGeneration.Soulless
             //WorldGen.AddTrees();
             for (int num = 0; num < 1800; num++)
             {
-                int xAxis = WorldGen.genRand.Next(1800 - 45);
-                int yAxis = WorldGen.genRand.Next(1800 - 45);
+                int xAxis = WorldGen.genRand.Next(1800 + SoullessArea.Offset.X - 45);
+                int yAxis = WorldGen.genRand.Next(1800 + SoullessArea.Offset.Y - 45);
                 for (int DecoX = xAxis; DecoX < xAxis + 45; DecoX++)
                 {
                     for (int DecoY = yAxis; DecoY < yAxis + 45; DecoY++)
@@ -665,9 +704,9 @@ namespace Redemption.WorldGeneration.Soulless
             int[] TileArray = { ModContent.TileType<ShadestoneTile>(),
                 ModContent.TileType<MasksTile>(),
                 ModContent.TileType<ShadestoneMossyTile>() };
-            for (int i = 0; i < 1800; i++)
+            for (int i = SoullessArea.Offset.X; i < 1800 + SoullessArea.Offset.X; i++)
             {
-                for (int j = 0; j < 1800; j++)
+                for (int j = SoullessArea.Offset.Y; j < 1800 + SoullessArea.Offset.Y; j++)
                 {
                     if (TileArray.Contains(Framing.GetTileSafely(i, j).TileType) && WorldGen.InWorld(i, j))
                         BaseWorldGen.SmoothTiles(i, j, i + 1, j + 1);

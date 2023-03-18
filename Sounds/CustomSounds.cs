@@ -28,10 +28,7 @@ namespace Redemption
                 slot = SlotId.Invalid;
             }
         }
-        public static readonly SoundStyle MaskBreak = new("Redemption/Sounds/Custom/MaskBreak")
-        {
-            PitchVariance = 0.2f
-        };
+        public static readonly SoundStyle MaskBreak = new("Redemption/Sounds/Custom/MaskBreak") { PitchVariance = 0.3f };
         public static readonly SoundStyle LiftLoop = new("Redemption/Sounds/Custom/ElevatorLoop");
         public static readonly SoundStyle AlarmItem = new("Redemption/Sounds/Custom/AlarmItem") { PitchVariance = .1f };
         public static readonly SoundStyle Alarm2 = new("Redemption/Sounds/Custom/Alarm2");
@@ -144,5 +141,6 @@ namespace Redemption
         public static readonly SoundStyle Pixie3 = new("Redemption/Sounds/Custom/Pixie3") { PitchVariance = .1f };
         public static readonly SoundStyle RoosterRoar = new("Redemption/Sounds/Custom/RoosterRoar") { PitchVariance = .1f };
         public static readonly SoundStyle Roar1 = new("Redemption/Sounds/Custom/Roar1") { PitchVariance = .1f };
+        public static readonly SoundStyle StalkerScare = new("Redemption/Sounds/Custom/StalkerScare");
     }
 }

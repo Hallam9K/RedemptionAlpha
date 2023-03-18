@@ -48,6 +48,7 @@ using Redemption.Globals.World;
 using Redemption.Buffs.Cooldowns;
 using Redemption.Items.Weapons.PreHM.Ranged;
 using Redemption.WorldGeneration.Misc;
+using Redemption.NPCs.Critters;
 
 namespace Redemption.Globals.NPC
 {
@@ -512,9 +513,9 @@ namespace Redemption.Globals.NPC
                 pool.Clear();
                 //if (NPC.AnyNPCs(ModContent.NPCType<WardenIdle>()) || NPC.AnyNPCs(ModContent.NPCType<WardenSaved>()))
                 //    return;
-                if (!spawnInfo.Player.Hitbox.Intersects(SoullessArea.stalkerZone))
+                if (!spawnInfo.Player.Hitbox.Intersects(SoullessArea.stalkerZone) && !spawnInfo.Player.Hitbox.Intersects(SoullessArea.stalkerZone2))
                 {
-                    if (SoullessArea.soullessBools[0])
+                    if (SoullessArea.soullessBools[0] && !spawnInfo.Water)
                     {
                         pool.Add(ModContent.NPCType<SoullessWanderer>(), .03f);
                         pool.Add(ModContent.NPCType<SoullessDuelist>(), .03f);
@@ -526,6 +527,7 @@ namespace Redemption.Globals.NPC
                         pool.Add(ModContent.NPCType<LaughingMaskSmall>(), .01f);
                         pool.Add(ModContent.NPCType<LaughingMaskMedium>(), .01f);
                         pool.Add(ModContent.NPCType<LaughingMaskBig>(), .01f);
+                        pool.Add(ModContent.NPCType<AntiJohnSnail>(), .0005f);
                     }
 
                     pool.Add(ModContent.NPCType<SpookyEyes>(), .02f);

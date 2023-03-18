@@ -111,7 +111,7 @@ namespace Redemption.NPCs.Soulless
             if (NPC.target < 0 || NPC.target == 255 || player.dead || !player.active)
                 NPC.TargetClosest();
 
-            if (SoullessArea.soullessInts[1] > 1)
+            if (SoullessArea.soullessInts[1] > 1 && SoullessArea.soullessInts[1] != 5)
                 NPC.ai[1] = 2;
         }
         public override void FindFrame(int frameHeight)

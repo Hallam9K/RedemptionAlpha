@@ -17,5 +17,14 @@ namespace Redemption
         public static Color RedPulse => BaseUtility.MultiLerpColor(Main.LocalPlayer.miscCounter % 100 / 100f, Color.White, Color.Red * 0.6f, Color.White);
         public static Color EnergyPulse => BaseUtility.MultiLerpColor(Main.LocalPlayer.miscCounter % 100 / 100f, Color.LightBlue, Color.IndianRed, Color.LightGreen, Color.LightGoldenrodYellow, Color.LightBlue);
         public static Color GreenPulse => BaseUtility.MultiLerpColor(Main.LocalPlayer.miscCounter % 100 / 100f, Color.LightGreen, Color.Green, Color.LightGreen, Color.White, Color.LightGreen);
+        public static Color COLOR_WHITEFADE3
+        {
+            get
+            {
+                Color c = BaseUtility.MultiLerpColor(Main.LocalPlayer.miscCounter % 100 / 100f, Color.White, Color.White * 0.8f, Color.White);
+                c.A = 255;
+                return c;
+            }
+        }
     }
 }

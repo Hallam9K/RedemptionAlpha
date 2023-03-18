@@ -43,10 +43,10 @@ namespace Redemption.NPCs.Soulless
             if (colliders == null || colliders.Length != 4)
             {
                 colliders = new CollisionSurface[] {
-                    new CollisionSurface(NPC.TopLeft, NPC.TopRight, new int[] { 1, 1, 1, 1 }),
-                    new CollisionSurface(NPC.TopLeft, NPC.BottomLeft, new int[] { 1, 1, 1, 1 }),
-                    new CollisionSurface(NPC.TopRight, NPC.BottomRight, new int[] { 1, 1, 1, 1 }),
-                    new CollisionSurface(NPC.BottomLeft, NPC.BottomRight, new int[] { 1, 1, 1, 1 }) };
+                    new CollisionSurface(NPC.TopLeft, NPC.TopRight, new int[] { 1, 1, 1, 1 }, true),
+                    new CollisionSurface(NPC.TopLeft, NPC.BottomLeft, new int[] { 1, 1, 1, 1 }, true),
+                    new CollisionSurface(NPC.TopRight, NPC.BottomRight, new int[] { 1, 1, 1, 1 }, true),
+                    new CollisionSurface(NPC.BottomLeft, NPC.BottomRight, new int[] { 1, 1, 1, 1 }, true) };
             }
             return true;
         }
@@ -57,6 +57,17 @@ namespace Redemption.NPCs.Soulless
         private float loopVolume;
         public override void AI()
         {
+            if (Main.LocalPlayer.DistanceSQ(NPC.Center) < 100 * 100)
+            {
+                for (int i = 0; i < Main.maxPlayers; i++)
+                {
+                    Player player2 = Main.player[i];
+                    if (!player2.active || player2.dead || !player2.Hitbox.Intersects(NPC.Hitbox))
+                        continue;
+
+                    player2.position.Y = NPC.position.Y + (player2.Below(NPC) ? NPC.height : -player2.height);
+                }
+            }
             Rectangle buttonRect = new((int)NPC.position.X + 32, (int)NPC.position.Y - 14, 32, 18);
             for (int i = 0; i < Main.maxPlayers; i++)
             {
@@ -218,15 +229,26 @@ namespace Redemption.NPCs.Soulless
             if (colliders == null || colliders.Length != 4)
             {
                 colliders = new CollisionSurface[] {
-                    new CollisionSurface(NPC.TopLeft, NPC.TopRight, new int[] { 1, 1, 1, 1 }),
-                    new CollisionSurface(NPC.TopLeft, NPC.BottomLeft, new int[] { 1, 1, 1, 1 }),
-                    new CollisionSurface(NPC.TopRight, NPC.BottomRight, new int[] { 1, 1, 1, 1 }),
-                    new CollisionSurface(NPC.BottomLeft, NPC.BottomRight, new int[] { 1, 1, 1, 1 }) };
+                    new CollisionSurface(NPC.TopLeft, NPC.TopRight, new int[] { 1, 1, 1, 1 }, true),
+                    new CollisionSurface(NPC.TopLeft, NPC.BottomLeft, new int[] { 1, 1, 1, 1 }, true),
+                    new CollisionSurface(NPC.TopRight, NPC.BottomRight, new int[] { 1, 1, 1, 1 }, true),
+                    new CollisionSurface(NPC.BottomLeft, NPC.BottomRight, new int[] { 1, 1, 1, 1 }, true) };
             }
             return true;
         }
         public override void AI()
         {
+            if (Main.LocalPlayer.DistanceSQ(NPC.Center) < 100 * 100)
+            {
+                for (int i = 0; i < Main.maxPlayers; i++)
+                {
+                    Player player2 = Main.player[i];
+                    if (!player2.active || player2.dead || !player2.Hitbox.Intersects(NPC.Hitbox))
+                        continue;
+
+                    player2.position.Y = NPC.position.Y + (player2.Below(NPC) ? NPC.height : -player2.height);
+                }
+            }
             Rectangle buttonRect = new((int)NPC.position.X + 32, (int)NPC.position.Y - 14, 32, 18);
             for (int i = 0; i < Main.maxPlayers; i++)
             {
@@ -300,8 +322,8 @@ namespace Redemption.NPCs.Soulless
                         }
                         if (NPC.position.Y >= NPC.ai[2] * 16)
                         {
-                            Main.spawnTileY = 1024;
-                            Main.spawnTileX = 509;
+                            Main.spawnTileY = 1024 + SoullessArea.Offset.Y;
+                            Main.spawnTileX = 509 + SoullessArea.Offset.X;
 
                             SoullessArea.soullessBools[2] = true;
                             for (int i = 0; i < Main.maxNPCs; i++)

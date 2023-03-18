@@ -23,8 +23,10 @@ namespace Redemption.Globals
     {
         public static bool[] soullessBools = new bool[5];
         public static int[] soullessInts = new int[3];
-        public static Rectangle stalkerZone = new(200 * 16, 925 * 16, 377 * 16, 212 * 16);
+        public static Rectangle stalkerZone = new((200 + Offset.X) * 16, (950 + Offset.Y) * 16, 423 * 16, 187 * 16);
+        public static Rectangle stalkerZone2 = new((315 + Offset.X) * 16, (1141 + Offset.Y) * 16, 281 * 16, 146 * 16);
         public static int keyEventTimer;
+        public static readonly Point Offset = new(40, 0);
         public override void PreUpdateWorld()
         {
             bool active = Main.LocalPlayer.InModBiome<SoullessBiome>();
@@ -49,16 +51,16 @@ namespace Redemption.Globals
                 if (!player.active || player.dead)
                     continue;
 
-                Rectangle b1 = new(275 * 16, 832 * 16, 5 * 16, 10 * 16);
+                Rectangle b1 = new((275 + Offset.X) * 16, (832 + Offset.Y) * 16, 5 * 16, 10 * 16);
                 if (!soullessBools[1] && player.Hitbox.Intersects(b1))
                 {
                     if (!Main.dedServ)
                         SoundEngine.PlaySound(CustomSounds.EarthBoom with { Volume = .5f }, b1.Center.ToVector2());
 
                     Main.player[Main.myPlayer].RedemptionScreen().ScreenShakeIntensity = 8 - (Main.player[Main.myPlayer].Distance(b1.Center.ToVector2()) / 64);
-                    for (int x = 275; x < 280; x++)
+                    for (int x = 275 + Offset.X; x < 280 + Offset.X; x++)
                     {
-                        for (int y = 836; y < 841; y++)
+                        for (int y = 836 + Offset.Y; y < 841 + Offset.Y; y++)
                         {
                             if (Framing.GetTileSafely(x, y).TileType == ModContent.TileType<ShadestoneTile>())
                                 WorldGen.KillTile(x, y, false, false, true);
@@ -69,16 +71,16 @@ namespace Redemption.Globals
                         NetMessage.SendData(MessageID.WorldData);
                     break;
                 }
-                Rectangle b2 = new(347 * 16, 988 * 16, 7 * 16, 7 * 16);
+                Rectangle b2 = new((347 + Offset.X) * 16, (988 + Offset.Y) * 16, 7 * 16, 7 * 16);
                 if (!soullessBools[3] && player.Hitbox.Intersects(b2))
                 {
                     if (!Main.dedServ)
                         SoundEngine.PlaySound(CustomSounds.EarthBoom with { Volume = .5f }, b2.Center.ToVector2());
 
                     Main.player[Main.myPlayer].RedemptionScreen().ScreenShakeIntensity = 8 - (Main.player[Main.myPlayer].Distance(b2.Center.ToVector2()) / 64);
-                    for (int x = 347; x < 354; x++)
+                    for (int x = 347 + Offset.X; x < 354 + Offset.X; x++)
                     {
-                        for (int y = 991; y < 999; y++)
+                        for (int y = 991 + Offset.Y; y < 999 + Offset.Y; y++)
                         {
                             if (Framing.GetTileSafely(x, y).TileType == ModContent.TileType<ShadestoneTile>())
                                 WorldGen.KillTile(x, y, false, false, true);
@@ -89,7 +91,7 @@ namespace Redemption.Globals
                         NetMessage.SendData(MessageID.WorldData);
                     break;
                 }
-                Rectangle b3 = new(300 * 16, 993 * 16, 40 * 16, 26 * 16);
+                Rectangle b3 = new((300 + Offset.X) * 16, (993 + Offset.Y) * 16, 40 * 16, 26 * 16);
                 if (soullessInts[1] < 4 && player.Hitbox.Intersects(b3))
                 {
                     if (soullessInts[1] == 0)
@@ -114,7 +116,7 @@ namespace Redemption.Globals
                 }
                 if (soullessInts[1] == 4)
                 {
-                    if (player.position.Y < 970 * 16)
+                    if (player.position.Y < (970 + Offset.Y) * 16)
                     {
                         player.velocity.Y = MathHelper.Max(player.velocity.Y, 0);
                         player.velocity.Y += 2;
@@ -122,27 +124,27 @@ namespace Redemption.Globals
                     if (player.Hitbox.Intersects(stalkerZone))
                         player.AddBuff(ModContent.BuffType<StalkerDebuff>(), 30);
 
-                    Rectangle b4 = new(400 * 16, 1093 * 16, 4 * 16, 4 * 16);
+                    Rectangle b4 = new((400 + Offset.X) * 16, (1093 + Offset.Y) * 16, 4 * 16, 4 * 16);
                     if (!soullessBools[4] && player.Hitbox.Intersects(b4))
                     {
                         if (!Main.dedServ)
                             SoundEngine.PlaySound(CustomSounds.EarthBoom with { Volume = .5f }, b4.Center.ToVector2());
 
-                        RedeHelper.SpawnNPC(new EntitySource_WorldGen(), 396 * 16, 1136 * 16, ModContent.NPCType<LostLight>(), 1);
-                        RedeHelper.SpawnNPC(new EntitySource_WorldGen(), 309 * 16, 1084 * 16, ModContent.NPCType<LostLight>(), 2);
+                        RedeHelper.SpawnNPC(new EntitySource_WorldGen(), (396 + Offset.X) * 16, (1136 + Offset.Y) * 16, ModContent.NPCType<LostLight>(), 1);
+                        RedeHelper.SpawnNPC(new EntitySource_WorldGen(), (309 + Offset.X) * 16, (1084 + Offset.Y) * 16, ModContent.NPCType<LostLight>(), 2);
 
                         Main.player[Main.myPlayer].RedemptionScreen().ScreenShakeIntensity = 8 - (Main.player[Main.myPlayer].Distance(b4.Center.ToVector2()) / 64);
-                        for (int x = 400; x < 404; x++)
+                        for (int x = 400 + Offset.X; x < 404 + Offset.X; x++)
                         {
-                            for (int y = 1097; y < 1104; y++)
+                            for (int y = 1097 + Offset.Y; y < 1104 + Offset.Y; y++)
                             {
                                 if (Framing.GetTileSafely(x, y).TileType == ModContent.TileType<ShadestoneTile>())
                                     WorldGen.KillTile(x, y, false, false, true);
                             }
                         }
-                        for (int x = 385; x < 395; x++)
+                        for (int x = 385 + Offset.X; x < 395 + Offset.X; x++)
                         {
-                            for (int y = 1052; y < 1055; y++)
+                            for (int y = 1052 + Offset.Y; y < 1055 + Offset.Y; y++)
                             {
                                 if (Framing.GetTileSafely(x, y).TileType == ModContent.TileType<ShadestoneTile>())
                                     WorldGen.KillTile(x, y, false, false, true);
@@ -153,6 +155,11 @@ namespace Redemption.Globals
                             NetMessage.SendData(MessageID.WorldData);
                         break;
                     }
+                }
+                if (soullessInts[1] == 7)
+                {
+                    if (player.Hitbox.Intersects(stalkerZone2))
+                        player.AddBuff(ModContent.BuffType<StalkerDebuff>(), 30);
                 }
             }
             if (soullessInts[1] == 2)
@@ -169,7 +176,7 @@ namespace Redemption.Globals
                     };
 
                     Texture2D tex = ModContent.Request<Texture2D>("Redemption/WorldGeneration/Soulless/StalkerDestroy", AssetRequestMode.ImmediateLoad).Value;
-                    Point origin = new(286, 995);
+                    Point origin = new(286 + Offset.X, 995 + Offset.Y);
                     GenUtils.InvokeOnMainThread(() =>
                     {
                         TexGen gen = BaseWorldGenTex.GetTexGenerator(tex, colorToTile);
@@ -189,36 +196,51 @@ namespace Redemption.Globals
 
             if (!Terraria.NPC.AnyNPCs(ModContent.NPCType<ShadestoneLift>()))
             {
-                Vector2 LiftPos = new(608 * 16, (822 * 16) + 8);
-                Terraria.NPC.NewNPC(new EntitySource_SpawnNPC(), (int)LiftPos.X, (int)LiftPos.Y, ModContent.NPCType<ShadestoneLift>(), 0, 0, 0, 863, 821);
-                Vector2 LiftPos2 = new(334 * 16, (763 * 16) + 8);
-                Terraria.NPC.NewNPC(new EntitySource_SpawnNPC(), (int)LiftPos2.X, (int)LiftPos2.Y, ModContent.NPCType<ShadestoneLift>(), 0, 0, 0, 787, 762);
+                Point LiftPos = new((Offset.X + 608) * 16, ((Offset.Y + 822) * 16) + 8);
+                Terraria.NPC.NewNPC(new EntitySource_SpawnNPC(), LiftPos.X, LiftPos.Y, ModContent.NPCType<ShadestoneLift>(), 0, 0, 0, 863, 821);
+                Point LiftPos2 = new((Offset.X + 334) * 16, ((Offset.Y + 763) * 16) + 8);
+                Terraria.NPC.NewNPC(new EntitySource_SpawnNPC(), LiftPos2.X, LiftPos2.Y, ModContent.NPCType<ShadestoneLift>(), 0, 0, 0, 787, 762);
             }
             if (!soullessBools[2] && !Terraria.NPC.AnyNPCs(ModContent.NPCType<ShadestoneLift2>()))
             {
-                Vector2 LiftPos3 = new(510 * 16, (863 * 16) + 8);
-                Terraria.NPC.NewNPC(new EntitySource_SpawnNPC(), (int)LiftPos3.X, (int)LiftPos3.Y, ModContent.NPCType<ShadestoneLift2>(), 0, 0, 0, 1026, 862);
+                Point LiftPos3 = new((Offset.X + 510) * 16, ((Offset.Y + 863) * 16) + 8);
+                Terraria.NPC.NewNPC(new EntitySource_SpawnNPC(), LiftPos3.X, LiftPos3.Y, ModContent.NPCType<ShadestoneLift2>(), 0, 0, 0, 1026, 862);
             }
             if (!Terraria.NPC.AnyNPCs(ModContent.NPCType<RuhRoh>()))
             {
-                Vector2 GMaskPos = new(573 * 16, 1036 * 16);
-                Terraria.NPC.NewNPC(new EntitySource_SpawnNPC(), (int)GMaskPos.X, (int)GMaskPos.Y, ModContent.NPCType<RuhRoh>(), 0, 10);
+                Point GMaskPos = new((Offset.X + 573) * 16, (Offset.Y + 1036) * 16);
+                Terraria.NPC.NewNPC(new EntitySource_SpawnNPC(), GMaskPos.X, GMaskPos.Y, ModContent.NPCType<RuhRoh>(), 0, 10);
             }
             if (soullessInts[1] <= 1 && !Terraria.NPC.AnyNPCs(ModContent.NPCType<TheStalker>()))
             {
-                Vector2 StalkerPos = new(316 * 16, 1013 * 16);
-                Terraria.NPC.NewNPC(new EntitySource_SpawnNPC(), (int)StalkerPos.X, (int)StalkerPos.Y, ModContent.NPCType<TheStalker>());
+                Point StalkerPos = new((Offset.X + 316) * 16, (Offset.Y + 1013) * 16);
+                Terraria.NPC.NewNPC(new EntitySource_SpawnNPC(), StalkerPos.X, StalkerPos.Y, ModContent.NPCType<TheStalker>());
             }
             if (soullessInts[1] == 4 && !Terraria.NPC.AnyNPCs(ModContent.NPCType<TheStalker>()))
             {
-                Vector2 StalkerPos = new(466 * 16, 1102 * 16);
-                Terraria.NPC.NewNPC(new EntitySource_SpawnNPC(), (int)StalkerPos.X, (int)StalkerPos.Y, ModContent.NPCType<TheStalker>(), 0, 1);
+                Point StalkerPos = new((Offset.X + 463) * 16, (Offset.Y + 1103) * 16);
+                Terraria.NPC.NewNPC(new EntitySource_SpawnNPC(), StalkerPos.X, StalkerPos.Y, ModContent.NPCType<TheStalker>(), 0, 1);
+            }
+            if (soullessInts[1] >= 6 && !Terraria.NPC.AnyNPCs(ModContent.NPCType<TheStalker>()))
+            {
+                Point StalkerPos = new((Offset.X + 425) * 16, (Offset.Y + 1181) * 16);
+                Terraria.NPC.NewNPC(new EntitySource_SpawnNPC(), StalkerPos.X, StalkerPos.Y, ModContent.NPCType<TheStalker>(), 0, 2);
             }
             if (soullessInts[1] <= 1 && !Terraria.NPC.AnyNPCs(ModContent.NPCType<SpookyEyes2>()))
             {
                 for (int i = 0; i < 30; i++)
                 {
-                    Vector2 eyesPos = RedeHelper.RandomPosition(new Vector2(312, 1074), new Vector2(332, 1083)) * 16;
+                    Vector2 eyesPos = RedeHelper.RandomPosition(new Vector2(312 + Offset.X, 1074 + Offset.Y), new Vector2(332 + Offset.X, 1083 + Offset.Y)) * 16;
+                    Terraria.NPC.NewNPC(new EntitySource_SpawnNPC(), (int)eyesPos.X, (int)eyesPos.Y, ModContent.NPCType<SpookyEyes2>());
+                }
+            }
+            if (soullessInts[1] is 4 && soullessBools[4] && soullessInts[2] is 1 && !Terraria.NPC.AnyNPCs(ModContent.NPCType<LostLight>()))
+                RedeHelper.SpawnNPC(new EntitySource_WorldGen(), (309 + Offset.X) * 16, (1084 + Offset.Y) * 16, ModContent.NPCType<LostLight>(), 2);
+            if (soullessInts[1] is 5 && !Terraria.NPC.AnyNPCs(ModContent.NPCType<SpookyEyes2>()))
+            {
+                for (int i = 0; i < 40; i++)
+                {
+                    Vector2 eyesPos = RedeHelper.RandomPosition(new Vector2(507 + Offset.X, 1178 + Offset.Y), new Vector2(527 + Offset.X, 1186 + Offset.Y)) * 16;
                     Terraria.NPC.NewNPC(new EntitySource_SpawnNPC(), (int)eyesPos.X, (int)eyesPos.Y, ModContent.NPCType<SpookyEyes2>());
                 }
             }
