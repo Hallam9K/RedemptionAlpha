@@ -42,6 +42,7 @@ using Redemption.Items.Weapons.PreHM.Magic;
 using Redemption.NPCs.PreHM;
 using Terraria.Audio;
 using Redemption.Tiles.Furniture.Lab;
+using Redemption.Items.Placeable.Furniture.Lab;
 
 namespace Redemption.WorldGeneration
 {
@@ -49,13 +50,13 @@ namespace Redemption.WorldGeneration
     {
         public static bool dragonLeadSpawn;
         public static bool corpseCheck;
-        public static Point16 newbCavePoint;
-        public static Point16 gathicPortalPoint;
-        public static Point16 slayerShipPoint;
-        public static Point16 HallOfHeroesPoint;
-        public static Point16 LabPoint;
-        public static Point16 BastionPoint;
-        public static Point16 GoldenGatewayPoint;
+        public static Vector2 newbCaveVector = new(-1, -1);
+        public static Vector2 gathicPortalVector = new(-1, -1);
+        public static Vector2 slayerShipVector = new(-1, -1);
+        public static Vector2 HallOfHeroesVector = new(-1, -1);
+        public static Vector2 LabVector = new(-1, -1);
+        public static Vector2 BastionVector = new(-1, -1);
+        public static Vector2 GoldenGatewayVector = new(-1, -1);
         public static Point16 JoShrinePoint;
         public static Point16 SpiritAssassinPoint;
         public static Point16 SpiritCommonGuardPoint;
@@ -71,13 +72,13 @@ namespace Redemption.WorldGeneration
             else
                 dragonLeadSpawn = false;
 
-            newbCavePoint = Point16.Zero;
-            gathicPortalPoint = Point16.Zero;
-            slayerShipPoint = Point16.Zero;
-            HallOfHeroesPoint = Point16.Zero;
-            LabPoint = Point16.Zero;
-            BastionPoint = Point16.Zero;
-            GoldenGatewayPoint = Point16.Zero;
+            newbCaveVector = new Vector2(-1, -1);
+            gathicPortalVector = new Vector2(-1, -1);
+            slayerShipVector = new Vector2(-1, -1);
+            HallOfHeroesVector = new Vector2(-1, -1);
+            LabVector = new Vector2(-1, -1);
+            BastionVector = new Vector2(-1, -1);
+            GoldenGatewayVector = new Vector2(-1, -1);
             JoShrinePoint = Point16.Zero;
             SpiritAssassinPoint = Point16.Zero;
             SpiritCommonGuardPoint = Point16.Zero;
@@ -90,13 +91,13 @@ namespace Redemption.WorldGeneration
         public override void OnWorldUnload()
         {
             dragonLeadSpawn = false;
-            newbCavePoint = Point16.Zero;
-            gathicPortalPoint = Point16.Zero;
-            slayerShipPoint = Point16.Zero;
-            HallOfHeroesPoint = Point16.Zero;
-            LabPoint = Point16.Zero;
-            BastionPoint = Point16.Zero;
-            GoldenGatewayPoint = Point16.Zero;
+            newbCaveVector = new Vector2(-1, -1);
+            gathicPortalVector = new Vector2(-1, -1);
+            slayerShipVector = new Vector2(-1, -1);
+            HallOfHeroesVector = new Vector2(-1, -1);
+            LabVector = new Vector2(-1, -1);
+            BastionVector = new Vector2(-1, -1);
+            GoldenGatewayVector = new Vector2(-1, -1);
             SpiritAssassinPoint = Point16.Zero;
             SpiritCommonGuardPoint = Point16.Zero;
             SpiritOldManPoint = Point16.Zero;
@@ -887,7 +888,7 @@ namespace Redemption.WorldGeneration
                     {
                         new Actions.SetLiquid(0, 0)
                     }));
-                    LabPoint = origin;
+                    LabVector = origin.ToVector2();
 
                     AbandonedLab biome = new();
                     LabClear delete = new();
@@ -1516,11 +1517,11 @@ namespace Redemption.WorldGeneration
                             gen.Generate((int)origin.X, (int)origin.Y, true, true);
                         });
 
-                        newbCavePoint = origin.ToPoint16();
+                        newbCaveVector = origin;
                         placed = true;
                     }
 
-                    Point originPoint = newbCavePoint.ToPoint();
+                    Point originPoint = newbCaveVector.ToPoint();
                     GenUtils.ObjectPlace(originPoint.X + 34, originPoint.Y + 10, (ushort)ModContent.TileType<AnglonPortalTile>());
                     GenUtils.ObjectPlace(originPoint.X + 22, originPoint.Y + 9, (ushort)ModContent.TileType<ElderWoodWorkbenchTile>());
                     GenUtils.ObjectPlace(originPoint.X + 23, originPoint.Y + 8, (ushort)ModContent.TileType<DemonScrollTile>());
@@ -1757,11 +1758,11 @@ namespace Redemption.WorldGeneration
                             gen.Generate((int)origin.X, (int)origin.Y, true, true);
                         });
 
-                        gathicPortalPoint = origin.ToPoint16();
+                        gathicPortalVector = origin;
                         placed = true;
                     }
 
-                    Point originPoint = gathicPortalPoint.ToPoint();
+                    Point originPoint = gathicPortalVector.ToPoint();
                     GenUtils.ObjectPlace(originPoint.X + 45, originPoint.Y + 21, (ushort)ModContent.TileType<GathuramPortalTile>());
                     GenUtils.ObjectPlace(originPoint.X + 16, originPoint.Y + 22, (ushort)ModContent.TileType<ElderWoodTableTile>());
                     GenUtils.ObjectPlace(originPoint.X + 18, originPoint.Y + 22, (ushort)ModContent.TileType<ElderWoodChairTile>());
@@ -1988,10 +1989,10 @@ namespace Redemption.WorldGeneration
                             TexGen gen = BaseWorldGenTex.GetTexGenerator(tex, colorToTile, texWall, colorToWall, null, texSlope);
                             gen.Generate((int)origin2.X, (int)origin2.Y, true, true);
                         });
-                        HallOfHeroesPoint = origin2.ToPoint16();
+                        HallOfHeroesVector = origin2;
                         placed = true;
                     }
-                    Point HallPoint = HallOfHeroesPoint.ToPoint();
+                    Point HallPoint = HallOfHeroesVector.ToPoint();
                     GenUtils.ObjectPlace(HallPoint.X + 24, HallPoint.Y + 24, (ushort)ModContent.TileType<KSStatueTile>());
                     GenUtils.ObjectPlace(HallPoint.X + 54, HallPoint.Y + 24, (ushort)ModContent.TileType<NStatueTile>());
                     GenUtils.ObjectPlace(HallPoint.X + 43, HallPoint.Y + 20, (ushort)ModContent.TileType<JStatueTile>());
@@ -2191,7 +2192,7 @@ namespace Redemption.WorldGeneration
                     {
                         new Actions.SetLiquid(0, 0)
                     }));
-                    slayerShipPoint = origin.ToPoint16();
+                    slayerShipVector = origin;
 
                     SlayerShipClear delete = new();
                     SlayerShip biome = new();
@@ -2206,7 +2207,7 @@ namespace Redemption.WorldGeneration
                     {
                         new Actions.SetLiquid(0, 0)
                     }));
-                    BastionPoint = origin;
+                    BastionVector = origin.ToVector2();
 
                     BlazingBastion biome = new();
                     BastionClear delete = new();
@@ -2250,7 +2251,7 @@ namespace Redemption.WorldGeneration
                         delete.Place(origin.ToPoint(), WorldGen.structures);
                         biome.Place(origin.ToPoint(), WorldGen.structures);
 
-                        GoldenGatewayPoint = origin;
+                        GoldenGatewayVector = origin.ToVector2();
                         placed = true;
                     }
                 }));
@@ -2348,14 +2349,14 @@ namespace Redemption.WorldGeneration
 
         public override void PreUpdateWorld()
         {
-            if (newbCavePoint.X != 0 && !NPC.AnyNPCs(ModContent.NPCType<AnglonPortal>()))
+            if (newbCaveVector.X != -1 && !NPC.AnyNPCs(ModContent.NPCType<AnglonPortal>()))
             {
-                Vector2 anglonPortalPos = new(((newbCavePoint.X + 35) * 16) - 8, ((newbCavePoint.Y + 12) * 16) - 4);
+                Vector2 anglonPortalPos = new(((newbCaveVector.X + 35) * 16) - 8, ((newbCaveVector.Y + 12) * 16) - 4);
                 LabArea.SpawnNPCInWorld(anglonPortalPos, ModContent.NPCType<AnglonPortal>());
             }
-            if (gathicPortalPoint.X != 0 && !NPC.AnyNPCs(ModContent.NPCType<GathuramPortal>()))
+            if (gathicPortalVector.X != -1 && !NPC.AnyNPCs(ModContent.NPCType<GathuramPortal>()))
             {
-                Vector2 gathicPortalPos = new(((gathicPortalPoint.X + 46) * 16) - 8, ((gathicPortalPoint.Y + 23) * 16) - 4);
+                Vector2 gathicPortalPos = new(((gathicPortalVector.X + 46) * 16) - 8, ((gathicPortalVector.Y + 23) * 16) - 4);
                 LabArea.SpawnNPCInWorld(gathicPortalPos, ModContent.NPCType<GathuramPortal>());
             }
             if (JoShrinePoint.X != 0 && RedeWorld.DayNightCount < 4 && !NPC.AnyNPCs(ModContent.NPCType<TreebarkDryad>()))
@@ -2363,9 +2364,9 @@ namespace Redemption.WorldGeneration
                 Vector2 shrinePos = new((JoShrinePoint.X + 9) * 16, (JoShrinePoint.Y + 13) * 16);
                 LabArea.SpawnNPCInWorld(shrinePos, ModContent.NPCType<TreebarkDryad>(), 0, 1, 0, 2);
             }
-            if (slayerShipPoint.X != 0 && RedeBossDowned.downedSlayer && !RedeBossDowned.downedOmega3 && !RedeBossDowned.downedNebuleus && !NPC.AnyNPCs(ModContent.NPCType<KS3Sitting>()) && !NPC.AnyNPCs(ModContent.NPCType<KS3>()))
+            if (slayerShipVector.X != -1 && RedeBossDowned.downedSlayer && !RedeBossDowned.downedOmega3 && !RedeBossDowned.downedNebuleus && !NPC.AnyNPCs(ModContent.NPCType<KS3Sitting>()) && !NPC.AnyNPCs(ModContent.NPCType<KS3>()))
             {
-                Vector2 slayerSittingPos = new((slayerShipPoint.X + 92) * 16, (slayerShipPoint.Y + 28) * 16);
+                Vector2 slayerSittingPos = new((slayerShipVector.X + 92) * 16, (slayerShipVector.Y + 28) * 16);
                 LabArea.SpawnNPCInWorld(slayerSittingPos, ModContent.NPCType<KS3Sitting>());
             }
             if (!corpseCheck)
@@ -2512,64 +2513,63 @@ namespace Redemption.WorldGeneration
         }
         public override void SaveWorldData(TagCompound tag)
         {
-            tag["nCaveX"] = newbCavePoint.X;
-            tag["nCaveY"] = newbCavePoint.Y;
-            tag["gPortalX"] = gathicPortalPoint.X;
-            tag["gPortalY"] = gathicPortalPoint.Y;
-            tag["sShipX"] = slayerShipPoint.X;
-            tag["sShipY"] = slayerShipPoint.Y;
-            tag["HallHeroX"] = HallOfHeroesPoint.X;
-            tag["HallHeroY"] = HallOfHeroesPoint.Y;
-            tag["LabX"] = LabPoint.X;
-            tag["LabY"] = LabPoint.Y;
-            tag["BastionX"] = BastionPoint.X;
-            tag["BastionY"] = BastionPoint.Y;
-            tag["GGateX"] = GoldenGatewayPoint.X;
-            tag["GGateY"] = GoldenGatewayPoint.Y;
+            tag["newbCaveVectorX"] = newbCaveVector.X;
+            tag["newbCaveVectorY"] = newbCaveVector.Y;
+            tag["gathicPortalVectorX"] = gathicPortalVector.X;
+            tag["gathicPortalVectorY"] = gathicPortalVector.Y;
+            tag["slayerShipVectorX"] = slayerShipVector.X;
+            tag["slayerShipVectorY"] = slayerShipVector.Y;
+            tag["HallOfHeroesVectorX"] = HallOfHeroesVector.X;
+            tag["HallOfHeroesVectorY"] = HallOfHeroesVector.Y;
+            tag["LabVectorX"] = LabVector.X;
+            tag["LabVectorY"] = LabVector.Y;
+            tag["BastionVectorX"] = BastionVector.X;
+            tag["BastionVectorY"] = BastionVector.Y;
+            tag["GoldenGatewayVectorX"] = GoldenGatewayVector.X;
+            tag["GoldenGatewayVectorY"] = GoldenGatewayVector.Y;
             tag["JShrineX"] = JoShrinePoint.X;
             tag["JShrineY"] = JoShrinePoint.Y;
         }
 
         public override void LoadWorldData(TagCompound tag)
         {
-            newbCavePoint = new Point16(tag.Get<ushort>("nCaveX"), tag.Get<ushort>("nCaveY"));
-            gathicPortalPoint = new Point16(tag.Get<ushort>("gPortalX"), tag.Get<ushort>("gPortalY"));
-            slayerShipPoint = new Point16(tag.Get<ushort>("sShipX"), tag.Get<ushort>("sShipY"));
-            HallOfHeroesPoint = new Point16(tag.Get<ushort>("HallHeroX"), tag.Get<ushort>("HallHeroY"));
-            LabPoint = new Point16(tag.Get<ushort>("LabX"), tag.Get<ushort>("LabY"));
-            BastionPoint = new Point16(tag.Get<ushort>("BastionX"), tag.Get<ushort>("BastionY"));
-            GoldenGatewayPoint = new Point16(tag.Get<ushort>("GGateX"), tag.Get<ushort>("GGateY"));
-            JoShrinePoint = new Point16(tag.Get<ushort>("JShrineX"), tag.Get<ushort>("JShrineY"));
+            newbCaveVector.X = tag.GetFloat("newbCaveVectorX");
+            newbCaveVector.Y = tag.GetFloat("newbCaveVectorY");
+            gathicPortalVector.X = tag.GetFloat("gathicPortalVectorX");
+            gathicPortalVector.Y = tag.GetFloat("gathicPortalVectorY");
+            slayerShipVector.X = tag.GetFloat("slayerShipVectorX");
+            slayerShipVector.Y = tag.GetFloat("slayerShipVectorY");
+            HallOfHeroesVector.X = tag.GetFloat("HallOfHeroesVectorX");
+            HallOfHeroesVector.Y = tag.GetFloat("HallOfHeroesVectorY");
+            LabVector.X = tag.GetFloat("LabVectorX");
+            LabVector.Y = tag.GetFloat("LabVectorY");
+            BastionVector.X = tag.GetFloat("BastionVectorX");
+            BastionVector.Y = tag.GetFloat("BastionVectorY");
+            GoldenGatewayVector.X = tag.GetFloat("GoldenGatewayVectorX");
+            GoldenGatewayVector.Y = tag.GetFloat("GoldenGatewayVectorY");
         }
 
         public override void NetSend(BinaryWriter writer)
         {
-            writer.Write(newbCavePoint.X);
-            writer.Write(newbCavePoint.Y);
-            writer.Write(gathicPortalPoint.X);
-            writer.Write(gathicPortalPoint.Y);
-            writer.Write(slayerShipPoint.X);
-            writer.Write(slayerShipPoint.Y);
-            writer.Write(HallOfHeroesPoint.X);
-            writer.Write(HallOfHeroesPoint.Y);
-            writer.Write(LabPoint.X);
-            writer.Write(LabPoint.Y);
-            writer.Write(BastionPoint.X);
-            writer.Write(BastionPoint.Y);
-            writer.Write(GoldenGatewayPoint.X);
-            writer.Write(GoldenGatewayPoint.Y);
+            writer.WritePackedVector2(newbCaveVector);
+            writer.WritePackedVector2(gathicPortalVector);
+            writer.WritePackedVector2(slayerShipVector);
+            writer.WritePackedVector2(HallOfHeroesVector);
+            writer.WritePackedVector2(LabVector);
+            writer.WritePackedVector2(BastionVector);
+            writer.WritePackedVector2(GoldenGatewayVector);
             writer.Write(JoShrinePoint.X);
             writer.Write(JoShrinePoint.Y);
         }
         public override void NetReceive(BinaryReader reader)
         {
-            newbCavePoint = new Point16(reader.ReadUInt16(), reader.ReadUInt16());
-            gathicPortalPoint = new Point16(reader.ReadUInt16(), reader.ReadUInt16());
-            slayerShipPoint = new Point16(reader.ReadUInt16(), reader.ReadUInt16());
-            HallOfHeroesPoint = new Point16(reader.ReadUInt16(), reader.ReadUInt16());
-            LabPoint = new Point16(reader.ReadUInt16(), reader.ReadUInt16());
-            BastionPoint = new Point16(reader.ReadUInt16(), reader.ReadUInt16());
-            GoldenGatewayPoint = new Point16(reader.ReadUInt16(), reader.ReadUInt16());
+            newbCaveVector = reader.ReadPackedVector2();
+            gathicPortalVector = reader.ReadPackedVector2();
+            slayerShipVector = reader.ReadPackedVector2();
+            HallOfHeroesVector = reader.ReadPackedVector2();
+            LabVector = reader.ReadPackedVector2();
+            BastionVector = reader.ReadPackedVector2();
+            GoldenGatewayVector = reader.ReadPackedVector2();
             JoShrinePoint = new Point16(reader.ReadUInt16(), reader.ReadUInt16());
         }
     }

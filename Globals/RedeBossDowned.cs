@@ -38,8 +38,6 @@ namespace Redemption.Globals
         public static bool downedNebuleus;
         public static bool downedADD;
         public static int downedGGBossFirst;
-        public static bool downedFowlEmperor;
-        public static bool downedFowlMorning;
         public static bool downedTreebark;
 
         public override void OnWorldLoad()
@@ -74,8 +72,6 @@ namespace Redemption.Globals
             downedNebuleus = false;
             downedADD = false;
             downedGGBossFirst = 0;
-            downedFowlEmperor = false;
-            downedFowlMorning = false;
             downedTreebark = false;
         }
 
@@ -111,8 +107,6 @@ namespace Redemption.Globals
             downedNebuleus = false;
             downedADD = false;
             downedGGBossFirst = 0;
-            downedFowlEmperor = false;
-            downedFowlMorning = false;
             downedTreebark = false;
         }
 
@@ -168,10 +162,6 @@ namespace Redemption.Globals
                 downed.Add("downedNebuleus");
             if (downedADD)
                 downed.Add("downedADD");
-            if (downedFowlEmperor)
-                downed.Add("downedFowlEmperor");
-            if (downedFowlMorning)
-                downed.Add("downedFowlMorning");
             if (downedTreebark)
                 downed.Add("downedTreebark");
 
@@ -218,8 +208,6 @@ namespace Redemption.Globals
             downedNebuleus = downed.Contains("downedNebuleus");
             downedADD = downed.Contains("downedADD");
             downedGGBossFirst = tag.GetInt("downedGGBossFirst");
-            downedFowlEmperor = downed.Contains("downedFowlEmperor");
-            downedFowlMorning = downed.Contains("downedFowlMorning");
             downedTreebark = downed.Contains("downedTreebark");
         }
 
@@ -256,9 +244,7 @@ namespace Redemption.Globals
             flags3[7] = downedADD;
             writer.Write(flags3);
             var flags4 = new BitsByte();
-            flags4[0] = downedFowlEmperor;
-            flags4[1] = downedFowlMorning;
-            flags4[2] = downedTreebark;
+            flags4[0] = downedTreebark;
             writer.Write(flags4);
 
             writer.Write(erhanDeath);
@@ -299,9 +285,7 @@ namespace Redemption.Globals
             downedNebuleus = flags3[6];
             downedADD = flags3[7];
             BitsByte flags4 = reader.ReadByte();
-            downedFowlEmperor = flags4[0];
-            downedFowlMorning = flags4[1];
-            downedTreebark = flags4[2];
+            downedTreebark = flags4[0];
 
             erhanDeath = reader.ReadInt32();
             slayerDeath = reader.ReadInt32();

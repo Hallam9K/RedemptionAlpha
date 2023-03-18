@@ -2,7 +2,6 @@ using Redemption.NPCs.Minibosses.SkullDigger;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ModLoader;
 using Redemption.BaseExtension;
-using Redemption.NPCs.Bosses.FowlEmperor;
 
 namespace Redemption.Globals
 {
@@ -54,17 +53,5 @@ namespace Redemption.Globals
 		}
 		public bool CanShowItemDropInUI() => true;
 		public string GetConditionDescription() => "Dropped from enemies at the beach after any mech boss is defeated";
-	}
-	public class EggCrackerCondition : IItemDropRuleCondition
-	{
-		public bool CanDrop(DropAttemptInfo info)
-		{
-			if (!info.IsInSimulation && Terraria.NPC.AnyNPCs(ModContent.NPCType<FowlEmperor>()))
-				return true;
-
-			return false;
-		}
-		public bool CanShowItemDropInUI() => true;
-		public string GetConditionDescription() => "Dropped while the Fowl Emperor is alive";
 	}
 }

@@ -408,8 +408,6 @@ namespace Redemption.NPCs.Friendly
                 shop.item[nextSlot++].SetDefaults(ModContent.ItemType<OphosNotes>());
 
             shop.item[nextSlot++].SetDefaults(ModContent.ItemType<KingChickenPainting>());
-            if (RedeBossDowned.downedFowlEmperor)
-                shop.item[nextSlot++].SetDefaults(ModContent.ItemType<FowlEmperorPainting>());
             if (NPC.downedBoss1)
                 shop.item[nextSlot++].SetDefaults(ModContent.ItemType<PonderingTreesPainting>());
             if (NPC.downedBoss3)

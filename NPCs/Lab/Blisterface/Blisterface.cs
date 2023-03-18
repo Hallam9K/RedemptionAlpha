@@ -136,17 +136,17 @@ namespace Redemption.NPCs.Lab.Blisterface
             NPC.LookByVelocity();
             if (AITimer[0] < 1)
             {
-                if (NPC.Center.Y < (RedeGen.LabPoint.Y + 186) * 16)
+                if (NPC.Center.Y < (RedeGen.LabVector.Y + 186) * 16)
                     NPC.velocity.Y += 0.1f;
-                if (NPC.Center.Y > (RedeGen.LabPoint.Y + 191) * 16)
+                if (NPC.Center.Y > (RedeGen.LabVector.Y + 191) * 16)
                     NPC.velocity.Y -= 0.1f;
             }
-            if (NPC.Center.X < (RedeGen.LabPoint.X + 194) * 16)
+            if (NPC.Center.X < (RedeGen.LabVector.X + 194) * 16)
                 NPC.velocity.X += 1f;
-            if (NPC.Center.X > (RedeGen.LabPoint.X + 222) * 16)
+            if (NPC.Center.X > (RedeGen.LabVector.X + 222) * 16)
                 NPC.velocity.X -= 1f;
 
-            if (NPC.Center.Y > (RedeGen.LabPoint.Y + 196) * 16)
+            if (NPC.Center.Y > (RedeGen.LabVector.Y + 196) * 16)
             {
 
                 if (AITimer[0] > 0)

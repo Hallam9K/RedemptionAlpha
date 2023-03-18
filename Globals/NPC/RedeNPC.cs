@@ -34,7 +34,6 @@ using Redemption.Items.Weapons.PreHM.Summon;
 using System;
 using Redemption.Items.Weapons.HM.Summon;
 using Redemption.Items.Donator.Lordfunnyman;
-using Redemption.Globals.World;
 using Redemption.Buffs.Cooldowns;
 using Redemption.Items.Weapons.PreHM.Ranged;
 using Redemption.WorldGeneration.Misc;
@@ -54,8 +53,6 @@ namespace Redemption.Globals.NPC
 
         public override void SetupShop(int type, Chest shop, ref int nextSlot)
         {
-            if (type == NPCID.Demolitionist && Main.LocalPlayer.HasItem(ModContent.ItemType<GreneggLauncher>()))
-                shop.item[nextSlot++].SetDefaults(ModContent.ItemType<EggBomb>());
             if (type == NPCID.SkeletonMerchant)
                 shop.item[nextSlot++].SetDefaults(ModContent.ItemType<CalciteWand>());
             if (type == NPCID.Dryad)
@@ -355,11 +352,6 @@ namespace Redemption.Globals.NPC
         {
             if (maxSpawns <= 0)
                 return;
-            if (FowlMorningWorld.FowlMorningActive)
-            {
-                maxSpawns = 8;
-                spawnRate = 40;
-            }
             if (RedeWorld.blobbleSwarm)
             {
                 spawnRate = 10;
@@ -405,19 +397,6 @@ namespace Redemption.Globals.NPC
                 pool.Add(ModContent.NPCType<SurfaceSkeletonSpawner>(), 2);
                 pool.Add(ModContent.NPCType<CorpseWalkerPriest>(), 0.5f);
                 pool.Add(ModContent.NPCType<JollyMadman>(), 0.02f);
-            }
-            if (FowlMorningWorld.FowlMorningActive && spawnInfo.Player.ZoneOverworldHeight && !spawnInfo.Player.ZoneTowerNebula && !spawnInfo.Player.ZoneTowerSolar && !spawnInfo.Player.ZoneTowerStardust && !spawnInfo.Player.ZoneTowerVortex)
-            {
-                pool.Clear();
-                if (Main.tile[spawnInfo.SpawnTileX, spawnInfo.SpawnTileY - 1].WallType is not WallID.DirtUnsafe)
-                {
-                    IDictionary<int, float> spawnpool = FowlMorningNPC.SpawnPool.ElementAt(FowlMorningWorld.ChickWave);
-                    foreach (KeyValuePair<int, float> key in spawnpool)
-                    {
-                        pool.Add(key.Key, key.Value);
-                    }
-                }
-                return;
             }
             if (spawnInfo.Player.InModBiome<LabBiome>())
             {

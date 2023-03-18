@@ -37,8 +37,6 @@ using Redemption.NPCs.Bosses.ADD;
 using Redemption.Items.Accessories.PostML;
 using Redemption.NPCs.Friendly;
 using Redemption.Items.Weapons.PreHM.Summon;
-using Redemption.NPCs.Bosses.FowlEmperor;
-using Redemption.NPCs.FowlMorning;
 using Redemption.Items;
 
 namespace Redemption.CrossMod
@@ -65,53 +63,6 @@ namespace Redemption.CrossMod
             Redemption mod = Redemption.Instance;
             if (ModLoader.TryGetMod("BossChecklist", out Mod bossChecklist))
             {
-                #region Fowl Emperor
-                bossChecklist.Call("AddBoss", mod, "Fowl Emperor", ModContent.NPCType<FowlEmperor>(), 0.1f, () => RedeBossDowned.downedFowlEmperor, () => RedeBossDowned.downedFowlEmperor,
-                    new List<int>
-                    {
-                        ModContent.ItemType<FowlEmperorRelic>(),
-                        //ModContent.ItemType<BouquetOfThorns>(),
-                        ModContent.ItemType<FowlEmperorTrophy>(),
-                        ModContent.ItemType<FowlCrown>(),
-                        ModContent.ItemType<ForestBossBox>()
-                    },
-                    ModContent.ItemType<EggCrown>(), "Use an [i:" + ModContent.ItemType<EggCrown>() + "] at day.",
-                    "The emperor tires of your shenanigans...",
-                    (SpriteBatch sb, Rectangle rect, Color color) =>
-                    {
-                        Texture2D texture = ModContent.Request<Texture2D>("Redemption/CrossMod/BossChecklist/FowlEmperor").Value;
-                        Vector2 centered = new(rect.X + (rect.Width / 2) - (texture.Width / 2), rect.Y + (rect.Height / 2) - (texture.Height / 2));
-                        sb.Draw(texture, centered, color);
-                    }, null);
-                #endregion
-
-                #region Fowl Morning
-                bossChecklist.Call("AddEvent", mod, "Fowl Morning", new List<int>()
-                    {
-                        ModContent.NPCType<ChickenScratcher>(),
-                        ModContent.NPCType<ChickenBomber>(),
-                        ModContent.NPCType<RoosterBooster>(),
-                        ModContent.NPCType<Haymaker>(),
-                        ModContent.NPCType<HeadlessChicken>(),
-                        ModContent.NPCType<Cockatrice>()
-                    }, 0.11f, () => RedeBossDowned.downedFowlMorning, () => RedeBossDowned.downedFowlEmperor,
-                    new List<int>
-                    {
-                        //ModContent.ItemType<ThornRelic>(),
-                        //ModContent.ItemType<BouquetOfThorns>(),
-                        //ModContent.ItemType<ThornTrophy>(),
-                        //ModContent.ItemType<ThornMask>(),
-                        //ModContent.ItemType<ForestBossBox>()
-                    },
-                    ModContent.ItemType<FowlWarHorn>(), "Use a [i:" + ModContent.ItemType<FowlWarHorn>() + "] before midday.",
-                    (SpriteBatch sb, Rectangle rect, Color color) =>
-                    {
-                        Texture2D texture = ModContent.Request<Texture2D>("Redemption/CrossMod/BossChecklist/FowlMorning").Value;
-                        Vector2 centered = new(rect.X + (rect.Width / 2) - (texture.Width / 2), rect.Y + (rect.Height / 2) - (texture.Height / 2));
-                        sb.Draw(texture, centered, color);
-                    }, "Redemption/Gores/Boss/FowlEmperor_Crown");
-                #endregion
-
                 #region Thorn
                 bossChecklist.Call("AddBoss", mod, "Thorn", ModContent.NPCType<Thorn>(), 1.5f, () => RedeBossDowned.downedThorn, () => true,
                     new List<int>
@@ -483,7 +434,6 @@ namespace Redemption.CrossMod
         {
             if (ModLoader.TryGetMod("Fargowiltas", out Mod fargos))
             {
-                fargos.Call("AddSummon", 0.1f, "Redemption", "EggCrown", () => RedeBossDowned.downedFowlEmperor, Item.buyPrice(0, 4));
                 fargos.Call("AddSummon", 1.5f, "Redemption", "HeartOfThorns", () => RedeBossDowned.downedThorn, Item.buyPrice(0, 6));
                 fargos.Call("AddSummon", 1.9f, "Redemption", "DemonScroll", () => RedeBossDowned.downedErhan, Item.buyPrice(0, 6));
                 fargos.Call("AddSummon", 2.4f, "Redemption", "WeddingRing", () => RedeBossDowned.downedKeeper, Item.buyPrice(0, 8));
@@ -494,8 +444,6 @@ namespace Redemption.CrossMod
                 fargos.Call("AddSummon", 12.5f, "Redemption", "OmegaTransmitter", () => RedeBossDowned.downedOmega1 || RedeBossDowned.downedOmega2 || RedeBossDowned.downedOmega3, Item.buyPrice(0, 60));
                 fargos.Call("AddSummon", 20f, "Redemption", "AncientSigil", () => RedeBossDowned.downedADD, Item.buyPrice(4));
                 fargos.Call("AddSummon", 21f, "Redemption", "NebSummon", () => RedeBossDowned.downedNebuleus, Item.buyPrice(10));
-
-                fargos.Call("AddEventSummon", 1f, "Redemption", "FowlWarHorn", () => RedeBossDowned.downedFowlMorning, Item.buyPrice(0, 4, 50));
             }
         }
     }

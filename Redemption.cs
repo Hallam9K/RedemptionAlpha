@@ -10,7 +10,6 @@ using Redemption.Effects.PrimitiveTrails;
 using Redemption.Effects.RenderTargets;
 using Redemption.Globals;
 using Redemption.Globals.Player;
-using Redemption.Globals.World;
 using Redemption.Items.Accessories.HM;
 using Redemption.Items.Armor.PostML.Shinkite;
 using Redemption.Items.Armor.PreHM.DragonLead;
@@ -174,7 +173,6 @@ namespace Redemption
             Filters.Scene["MoR:IslandEffect"] = new Filter(new ScreenShaderData("FilterMiniTower").UseColor(0.4f, 0.4f, 0.4f).UseOpacity(0.5f), EffectPriority.VeryHigh);
             SkyManager.Instance["MoR:RuinedKingdomSky"] = new RuinedKingdomSky();
             Filters.Scene["MoR:SoullessSky"] = new Filter(new ScreenShaderData("FilterMiniTower").UseColor(0f, 0f, 0f).UseOpacity(0.55f), EffectPriority.High);
-            Filters.Scene["MoR:FowlMorningSky"] = new Filter(new ScreenShaderData("FilterMiniTower").UseColor(0.7f, 0.3f, 0.02f).UseOpacity(0.3f), EffectPriority.High);
 
             RedeSpecialAbility = KeybindLoader.RegisterKeybind(this, "Special Ability Key", Keys.F);
             RedeSpiritwalkerAbility = KeybindLoader.RegisterKeybind(this, "Spirit Walker Key", Keys.K);
@@ -196,37 +194,6 @@ namespace Redemption
                     OnBodyDraw.RegisterBodies();
                 });
             }
-        }
-        public override object Call(params object[] args)
-        {
-            try
-            {
-                string code = args[0].ToString();
-
-                switch (code)
-                {
-                    case "AbominationnClearEvents":
-                        bool eventOccurring = FowlMorningWorld.FowlMorningActive;
-                        bool canClearEvents = Convert.ToBoolean(args[1]);
-                        if (eventOccurring && canClearEvents)
-                        {
-                            FowlMorningWorld.FowlMorningActive = false;
-                            FowlMorningWorld.ChickPoints = 0;
-                            FowlMorningWorld.ChickWave = 0;
-
-                            if (Main.netMode == NetmodeID.Server)
-                                NetMessage.SendData(MessageID.WorldData);
-
-                            FowlMorningWorld.SendInfoPacket();
-                        }
-                        return eventOccurring;
-                }
-            }
-            catch (Exception e)
-            {
-                Logger.Error("Call Error: " + e.StackTrace + e.Message);
-            }
-            return base.Call(args);
         }
         public static void PremultiplyTexture(ref Texture2D texture)
         {
@@ -350,13 +317,6 @@ namespace Redemption
 
                     if (Main.projectile[projindex].ModProjectile is IManualTrailProjectile trailProj)
                         trailProj.DoTrailCreation(Redemption.TrailManager);
-                    break;
-                case ModMessageType.StartFowlMorning:
-                    FowlMorningWorld.FowlMorningActive = true;
-                    FowlMorningWorld.ChickArmyStart();
-                    break;
-                case ModMessageType.FowlMorningData:
-                    FowlMorningWorld.HandlePacket(bb);
                     break;
             }
         }
@@ -577,21 +537,6 @@ namespace Redemption
                     layers.Insert(index, SkeleUI);
                 }
             }
-            if (FowlMorningWorld.FowlMorningActive)
-            {
-                int index = layers.FindIndex(layer => layer.Name.Equals("Vanilla: Inventory"));
-                if (index >= 0)
-                {
-                    LegacyGameInterfaceLayer FowlUI = new("Redemption: FowlMorning",
-                        delegate
-                        {
-                            DrawFowlMorningUI(Main.spriteBatch);
-                            return true;
-                        },
-                        InterfaceScaleType.UI);
-                    layers.Insert(index, FowlUI);
-                }
-            }
             layers.Insert(layers.FindIndex(layer => layer.Name.Equals("Vanilla: Mouse Text")), new LegacyGameInterfaceLayer("GUI Menus",
                 delegate
                 {
@@ -770,41 +715,6 @@ namespace Redemption
             Rectangle icon = new(descBackground.X + descOffset + 5, descBackground.Y + descOffset, 18, 20);
             spriteBatch.Draw(InvIcon, icon, Color.White);
             Utils.DrawBorderString(spriteBatch, "Raveyard", new Vector2(barrierBackground.X + barrierBackground.Width * 0.5f, barrierBackground.Y - internalOffset - descSize.Y * 0.5f), Color.White, scmp, 0.4f, 0.4f);
-        }
-        #endregion
-        #region Fowl Morning UI
-        public static void DrawFowlMorningUI(SpriteBatch spriteBatch)
-        {
-            float alpha = .5f;
-            Texture2D backGround1 = TextureAssets.ColorBar.Value;
-            Texture2D progressColor = TextureAssets.ColorBar.Value;
-            Texture2D InvIcon = ModContent.Request<Texture2D>("Redemption/Gores/Boss/FowlEmperor_Crown").Value;
-            float scmp = .875f;
-            Color descColor = new(104, 70, 6);
-            Color waveColor = new(255, 241, 51);
-            const int offsetX = 20;
-            const int offsetY = 40;
-            int width = (int)(200f * scmp);
-            int height = (int)(52f * scmp);
-            Rectangle waveBackground = Utils.CenteredRectangle(new Vector2(Main.screenWidth - offsetX - 100f, Main.screenHeight - offsetY - 23f), new Vector2(width, height));
-            Utils.DrawInvBG(spriteBatch, waveBackground, new Color(63, 65, 151, 255) * 0.785f);
-            float cleared = FowlMorningWorld.ChickPoints / (float)FowlMorningNPC.maxPoints;
-            string waveText = "Wave " + (FowlMorningWorld.ChickWave + 1) + ": " + Math.Round(100 * cleared) + "%";
-            Utils.DrawBorderString(spriteBatch, waveText, new Vector2(waveBackground.X + waveBackground.Width / 2, waveBackground.Y + 3), Color.White, 1, 0.5f, -0.1f);
-            Rectangle waveProgressBar = Utils.CenteredRectangle(new Vector2(waveBackground.X + waveBackground.Width * 0.5f, waveBackground.Y + waveBackground.Height * 0.75f), new Vector2(progressColor.Width, progressColor.Height));
-            Rectangle waveProgressAmount = new(0, 0, (int)(progressColor.Width * MathHelper.Clamp(cleared, 0f, 1f)), progressColor.Height);
-            Vector2 offset = new((waveProgressBar.Width - (int)(waveProgressBar.Width * scmp)) * 0.5f, (waveProgressBar.Height - (int)(waveProgressBar.Height * scmp)) * 0.5f);
-            spriteBatch.Draw(backGround1, waveProgressBar.Location.ToVector2() + offset, null, Color.Black, 0f, new Vector2(0f), scmp, SpriteEffects.None, 0f);
-            spriteBatch.Draw(backGround1, waveProgressBar.Location.ToVector2() + offset, waveProgressAmount, waveColor, 0f, new Vector2(0f), scmp, SpriteEffects.None, 0f);
-            const int internalOffset = -1;
-            Vector2 descSize = new Vector2(188, 50) * scmp;
-            Rectangle barrierBackground = Utils.CenteredRectangle(new Vector2(Main.screenWidth - offsetX - 100f, Main.screenHeight - offsetY - 19f), new Vector2(width, height));
-            Rectangle descBackground = Utils.CenteredRectangle(new Vector2(barrierBackground.X + barrierBackground.Width * 0.5f, barrierBackground.Y - internalOffset - descSize.Y * 0.5f), descSize * .8f);
-            Utils.DrawInvBG(spriteBatch, descBackground, descColor * alpha);
-            int descOffset = (descBackground.Height - (int)(32f * scmp)) / 2;
-            Rectangle icon = new(descBackground.X + descOffset, descBackground.Y + descOffset, 22, 24);
-            spriteBatch.Draw(InvIcon, icon, Color.White);
-            Utils.DrawBorderString(spriteBatch, "Fowl Morning", new Vector2(barrierBackground.X + barrierBackground.Width * 0.5f, barrierBackground.Y - internalOffset - descSize.Y * 0.5f), Color.White, scmp, 0.4f, 0.4f);
         }
         #endregion
     }

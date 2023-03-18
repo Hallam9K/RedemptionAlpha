@@ -24,7 +24,6 @@ using Redemption.Buffs.Debuffs;
 using Redemption.Items.Weapons.HM.Ranged;
 using Redemption.NPCs.Bosses.Thorn;
 using Mono.Cecil;
-using Redemption.NPCs.Bosses.FowlEmperor;
 
 namespace Redemption.NPCs.Bosses.SeedOfInfection
 {
