@@ -537,9 +537,7 @@ namespace Redemption.WorldGeneration
         {
             int ShiniesIndex = tasks.FindIndex(genpass => genpass.Name.Equals("Shinies"));
             int ShiniesIndex2 = tasks.FindIndex(genpass => genpass.Name.Equals("Final Cleanup"));
-            int GuideIndex = tasks.FindIndex(genpass => genpass.Name.Equals("Sunflowers"));
-            if (GuideIndex == -1)
-                return;
+
             if (ShiniesIndex2 != -1)
             {
                 tasks.Insert(ShiniesIndex2, new PassLegacy("Heart of Thorns", delegate (GenerationProgress progress, GameConfiguration configuration)
@@ -881,7 +879,7 @@ namespace Redemption.WorldGeneration
             }
             if (ShiniesIndex2 != -1)
             {
-                tasks.Insert(ShiniesIndex2 + 2, new PassLegacy("Abandoned Lab", delegate (GenerationProgress progress, GameConfiguration configuration)
+                tasks.Insert(ShiniesIndex2 + 3, new PassLegacy("Abandoned Lab", delegate (GenerationProgress progress, GameConfiguration configuration)
                 {
                     progress.Message = "Placing the Abandoned Lab in the island which is not\nactually canonically meant to be there but that'll change in 0.9";
                     Point16 origin = new((int)(Main.maxTilesX * 0.55f), (int)(Main.maxTilesY * 0.65f));
@@ -896,7 +894,7 @@ namespace Redemption.WorldGeneration
                     delete.Place(origin.ToPoint(), WorldGen.structures);
                     biome.Place(origin.ToPoint(), WorldGen.structures);
                 }));
-                tasks.Insert(ShiniesIndex2 + 3, new PassLegacy("Generating Ancient Decal", delegate (GenerationProgress progress, GameConfiguration configuration)
+                tasks.Insert(ShiniesIndex2 + 4, new PassLegacy("Generating Ancient Decal", delegate (GenerationProgress progress, GameConfiguration configuration)
                 {
                     #region Ancient Decal Special
                     progress.Message = "Putting spirits to rest";
@@ -1376,7 +1374,7 @@ namespace Redemption.WorldGeneration
                     }
                     #endregion
                 }));
-                tasks.Insert(ShiniesIndex2 + 4, new PassLegacy("Ancient Decal Chests", delegate (GenerationProgress progress, GameConfiguration configuration)
+                tasks.Insert(ShiniesIndex2 + 5, new PassLegacy("Ancient Decal Chests", delegate (GenerationProgress progress, GameConfiguration configuration)
                 {
                     for (int i = 15; i < Main.maxTilesX - 15; i++)
                     {
@@ -1400,7 +1398,7 @@ namespace Redemption.WorldGeneration
                         }
                     }
                 }));
-                tasks.Insert(ShiniesIndex2 + 5, new PassLegacy("Portals", delegate (GenerationProgress progress, GameConfiguration configuration)
+                tasks.Insert(ShiniesIndex2 + 6, new PassLegacy("Portals", delegate (GenerationProgress progress, GameConfiguration configuration)
                 {
                     #region Surface Portal
                     progress.Message = "Thinking with portals";
@@ -1575,7 +1573,7 @@ namespace Redemption.WorldGeneration
                     WorldGen.structures.AddProtectedStructure(new Rectangle(originPoint.X, originPoint.Y, 60, 82));
                     #endregion
                 }));
-                tasks.Insert(ShiniesIndex2 + 6, new PassLegacy("Jo Shrine", delegate (GenerationProgress progress, GameConfiguration configuration)
+                tasks.Insert(ShiniesIndex2 + 7, new PassLegacy("Jo Shrine", delegate (GenerationProgress progress, GameConfiguration configuration)
                 {
                     #region Jo Shrine
                     Point16 dims = new();
@@ -1677,7 +1675,7 @@ namespace Redemption.WorldGeneration
                     WorldGen.structures.AddProtectedStructure(new Rectangle(originPoint.X, originPoint.Y, dims.X, dims.Y));
                     #endregion
                 }));
-                tasks.Insert(ShiniesIndex2 + 6, new PassLegacy("Portals 2", delegate (GenerationProgress progress, GameConfiguration configuration)
+                tasks.Insert(ShiniesIndex2 + 7, new PassLegacy("Portals 2", delegate (GenerationProgress progress, GameConfiguration configuration)
                 {
                     #region Underground Portal
                     progress.Message = "Thinking with portals";
@@ -1795,7 +1793,7 @@ namespace Redemption.WorldGeneration
                     }
                     #endregion
                 }));
-                tasks.Insert(ShiniesIndex2 + 7, new PassLegacy("Ancient Hut", delegate (GenerationProgress progress, GameConfiguration configuration)
+                tasks.Insert(ShiniesIndex2 + 8, new PassLegacy("Ancient Hut", delegate (GenerationProgress progress, GameConfiguration configuration)
                 {
                     #region Ancient Hut
                     Mod mod = Redemption.Instance;
@@ -1918,7 +1916,7 @@ namespace Redemption.WorldGeneration
                     }
                     #endregion
                 }));
-                tasks.Insert(ShiniesIndex2 + 8, new PassLegacy("Hall of Heroes", delegate (GenerationProgress progress, GameConfiguration configuration)
+                tasks.Insert(ShiniesIndex2 + 9, new PassLegacy("Hall of Heroes", delegate (GenerationProgress progress, GameConfiguration configuration)
                 {
                     #region Hall of Heroes
                     progress.Message = "Unearthing Halls";
@@ -2036,7 +2034,7 @@ namespace Redemption.WorldGeneration
                     WorldGen.structures.AddProtectedStructure(new Rectangle(HallPoint.X, HallPoint.Y, 84, 43));
                     #endregion
                 }));
-                tasks.Insert(ShiniesIndex2 + 9, new PassLegacy("Tied Lair", delegate (GenerationProgress progress, GameConfiguration configuration)
+                tasks.Insert(ShiniesIndex2 + 10, new PassLegacy("Tied Lair", delegate (GenerationProgress progress, GameConfiguration configuration)
                 {
                     #region Tied Lair
                     Mod mod = Redemption.Instance;
@@ -2120,7 +2118,7 @@ namespace Redemption.WorldGeneration
                     GenUtils.ObjectPlace(origin.X + 9, origin.Y + 5, (ushort)ModContent.TileType<HangingTiedTile>());
                     #endregion
                 }));
-                tasks.Insert(ShiniesIndex2 + 10, new PassLegacy("Slayer Ship", delegate (GenerationProgress progress, GameConfiguration configuration)
+                tasks.Insert(ShiniesIndex2 + 11, new PassLegacy("Slayer Ship", delegate (GenerationProgress progress, GameConfiguration configuration)
                 {
                     progress.Message = "Crashing Spaceships";
                     Vector2 origin = new((int)(Main.maxTilesX * 0.65f), (int)Main.worldSurface - 180);
@@ -2200,7 +2198,7 @@ namespace Redemption.WorldGeneration
                     delete.Place(origin.ToPoint(), WorldGen.structures);
                     biome.Place(origin.ToPoint(), WorldGen.structures);
                 }));
-                tasks.Insert(ShiniesIndex2 + 6, new PassLegacy("Blazing Bastion", delegate (GenerationProgress progress, GameConfiguration configuration)
+                tasks.Insert(ShiniesIndex2 + 7, new PassLegacy("Blazing Bastion", delegate (GenerationProgress progress, GameConfiguration configuration)
                 {
                     progress.Message = "Building Blazing Bastions";
                     Point16 origin = new(Main.maxTilesX - 332, Main.maxTilesY - 192);
@@ -2219,7 +2217,7 @@ namespace Redemption.WorldGeneration
                         new Actions.SetLiquid(0, 0)
                     }));
                 }));
-                tasks.Insert(ShiniesIndex2 + 7, new PassLegacy("Golden Gateway", delegate (GenerationProgress progress, GameConfiguration configuration)
+                tasks.Insert(ShiniesIndex2 + 8, new PassLegacy("Golden Gateway", delegate (GenerationProgress progress, GameConfiguration configuration)
                 {
                     progress.Message = "Thinking harder with portals";
                     bool placed = false;

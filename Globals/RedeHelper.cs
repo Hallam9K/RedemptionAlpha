@@ -64,6 +64,7 @@ namespace Redemption.Globals
             return 1;
         }
         public static bool RightOf(this Entity toRight, Entity toLeft) => toLeft.Center.X < toRight.Center.X;
+        public static bool Below(this Entity toBelow, Entity toAbove) => toAbove.Center.Y < toBelow.Center.Y;
 
         public static Vector2 PolarVector(float radius, float theta) =>
             new Vector2((float)Math.Cos(theta), (float)Math.Sin(theta)) * radius;
@@ -406,7 +407,7 @@ namespace Redemption.Globals
 
             foreach (Terraria.Player player in Main.player)
             {
-                if (!(player.Distance(npc.Center) < nearestPlayerDist) || !player.active)
+                if (!player.active || !(player.Distance(npc.Center) < nearestPlayerDist))
                     continue;
 
                 nearestPlayerDist = player.Distance(npc.Center);
