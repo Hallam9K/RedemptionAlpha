@@ -25,6 +25,7 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
         {
             NPC.friendly = true;
             NPC.aiStyle = -1;
+            NPC.lifeRegen = 5;
             NPC.Redemption().spiritSummon = true;
             SetSafeDefaults();
         }

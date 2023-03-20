@@ -1603,7 +1603,7 @@ namespace Redemption.WorldGeneration
                         if (!CheckFlat(placeX + 4, placeY, 10, 2))
                             continue;
 
-                        Vector2 origin = new(placeX - (dims.X / 2), placeY - 13);
+                        Vector2 origin = new(placeX - (dims.X / 2), placeY - 14);
                         int oldX = (int)origin.X;
                         int attempts = 0;
                         while (attempts < 50000 && !WorldGen.structures.CanPlace(new Rectangle((int)origin.X, (int)origin.Y, dims.X, dims.Y)))
@@ -1625,7 +1625,7 @@ namespace Redemption.WorldGeneration
                             if (!CheckFlat(placeX + 4, placeY, 10, 2))
                                 continue;
 
-                            origin = new(placeX - (dims.X / 2), placeY - 13);
+                            origin = new(placeX - (dims.X / 2), placeY - 14);
                         }
                         bool whitelist = false;
                         for (int i = 0; i <= dims.X; i++)
@@ -1656,7 +1656,6 @@ namespace Redemption.WorldGeneration
 
                     Point originPoint = JoShrinePoint.ToPoint();
 
-                    BaseWorldGen.SmoothTiles(originPoint.X, originPoint.Y, originPoint.X + dims.X, originPoint.Y + dims.Y);
                     for (int i = originPoint.X; i < originPoint.X + dims.X; i++)
                     {
                         for (int j = originPoint.Y; j < originPoint.Y + dims.Y; j++)
@@ -1670,6 +1669,7 @@ namespace Redemption.WorldGeneration
                     for (int i = originPoint.X; i < originPoint.X + dims.X; i++)
                         WorldGen.KillTile(i, originPoint.Y - 1, noItem: true);
 
+                    BaseWorldGen.SmoothTiles(originPoint.X - 1, originPoint.Y - 1, originPoint.X + dims.X + 1, originPoint.Y + dims.Y + 1);
                     WorldUtils.Gen(originPoint, new Shapes.Rectangle(dims.X, dims.Y), Actions.Chain(new GenAction[]
                     {
                         new Actions.SetLiquid(0, 0)
@@ -2146,7 +2146,7 @@ namespace Redemption.WorldGeneration
                                 origin.X++;
                                 origin.Y = GetTileFloorIgnoreTree((int)origin.X, (int)Main.worldSurface - 170, true);
                                 inSpawn = false;
-                                if (origin.X > Main.spawnTileX - 200 && origin.X < Main.spawnTileX + 200)
+                                if (origin.X > Main.spawnTileX - 300 && origin.X < Main.spawnTileX + 300)
                                     inSpawn = true;
                                 else
                                     attempts++;
@@ -2160,7 +2160,7 @@ namespace Redemption.WorldGeneration
                                 origin.X--;
                                 origin.Y = GetTileFloorIgnoreTree((int)origin.X, (int)Main.worldSurface - 170, true);
                                 inSpawn = false;
-                                if (origin.X > Main.spawnTileX - 200 && origin.X < Main.spawnTileX + 200)
+                                if (origin.X > Main.spawnTileX - 300 && origin.X < Main.spawnTileX + 300)
                                     inSpawn = true;
                                 else
                                     attempts++;
@@ -2170,7 +2170,7 @@ namespace Redemption.WorldGeneration
                                 origin.Y = GetTileFloorIgnoreTree((int)origin.X, (int)Main.worldSurface - 170, true);
                                 origin.X -= 60;
                                 inSpawn = false;
-                                if (origin.X > Main.spawnTileX - 200 && origin.X < Main.spawnTileX + 200)
+                                if (origin.X > Main.spawnTileX - 300 && origin.X < Main.spawnTileX + 300)
                                     inSpawn = true;
                                 else
                                     attempts++;

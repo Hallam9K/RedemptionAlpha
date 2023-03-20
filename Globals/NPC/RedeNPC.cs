@@ -88,7 +88,11 @@ namespace Redemption.Globals.NPC
         public override bool StrikeNPC(Terraria.NPC npc, ref double damage, int defense, ref float knockback, int hitDirection, ref bool crit)
         {
             if (spiritSummon)
+            {
                 damage *= .75f;
+                if (Main.expertMode)
+                    damage *= Main.masterMode ? .5f : .75f;
+            }
 
             return base.StrikeNPC(npc, ref damage, defense, ref knockback, hitDirection, ref crit);
         }
