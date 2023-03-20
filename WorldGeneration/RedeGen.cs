@@ -1601,7 +1601,7 @@ namespace Redemption.WorldGeneration
                         if (!CheckFlat(placeX + 4, placeY, 10, 2))
                             continue;
 
-                        Vector2 origin = new(placeX - (dims.X / 2), placeY - 14);
+                        Vector2 origin = new(placeX - (dims.X / 2), placeY - 13);
                         int oldX = (int)origin.X;
                         int attempts = 0;
                         while (attempts < 50000 && !WorldGen.structures.CanPlace(new Rectangle((int)origin.X, (int)origin.Y, dims.X, dims.Y)))
@@ -1623,7 +1623,7 @@ namespace Redemption.WorldGeneration
                             if (!CheckFlat(placeX + 4, placeY, 10, 2))
                                 continue;
 
-                            origin = new(placeX - (dims.X / 2), placeY - 14);
+                            origin = new(placeX - (dims.X / 2), placeY - 13);
                         }
                         bool whitelist = false;
                         for (int i = 0; i <= dims.X; i++)
@@ -2142,7 +2142,7 @@ namespace Redemption.WorldGeneration
                                     checkType++;
                                 }
                                 origin.X++;
-                                origin.Y = GetTileFloorIgnoreTree((int)origin.X, (int)Main.worldSurface - 180, true);
+                                origin.Y = GetTileFloorIgnoreTree((int)origin.X + 60, (int)Main.worldSurface - 170, true);
                                 inSpawn = false;
                                 if (origin.X > Main.spawnTileX - 300 && origin.X < Main.spawnTileX + 300)
                                     inSpawn = true;
@@ -2156,7 +2156,7 @@ namespace Redemption.WorldGeneration
                                     checkType++;
                                 }
                                 origin.X--;
-                                origin.Y = GetTileFloorIgnoreTree((int)origin.X, (int)Main.worldSurface - 180, true);
+                                origin.Y = GetTileFloorIgnoreTree((int)origin.X + 60, (int)Main.worldSurface - 170, true);
                                 inSpawn = false;
                                 if (origin.X > Main.spawnTileX - 300 && origin.X < Main.spawnTileX + 300)
                                     inSpawn = true;
@@ -2165,7 +2165,7 @@ namespace Redemption.WorldGeneration
                                 break;
                             case 2:
                                 origin.X = WorldGen.genRand.Next(150, Main.maxTilesX - 150);
-                                origin.Y = GetTileFloorIgnoreTree((int)origin.X, (int)Main.worldSurface - 180, true);
+                                origin.Y = GetTileFloorIgnoreTree((int)origin.X + 60, (int)Main.worldSurface - 170, true);
                                 origin.X -= 60;
                                 inSpawn = false;
                                 if (origin.X > Main.spawnTileX - 300 && origin.X < Main.spawnTileX + 300)
