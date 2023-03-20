@@ -10,6 +10,9 @@ using ParticleLibrary;
 using Redemption.Particles;
 using Terraria.GameInput;
 using Terraria.Audio;
+using Terraria.DataStructures;
+using Redemption.Dusts;
+using System;
 
 namespace Redemption.Globals.Player
 {
@@ -57,6 +60,28 @@ namespace Redemption.Globals.Player
         public override void PreUpdate()
         {
             Player.ManageSpecialBiomeVisuals("MoR:SpiritSky", false, Player.Center);
+        }
+        public override void DrawEffects(PlayerDrawSet drawInfo, ref float r, ref float g, ref float b, ref float a, ref bool fullBright)
+        {
+            if (SpiritwalkerTimer > 0)
+            {
+                if (Main.rand.NextBool(2) && drawInfo.shadow == 0f)
+                {
+                    for (int k = 0; k < 3; k++)
+                    {
+                        Vector2 vector;
+                        double angle = Main.rand.NextDouble() * 2d * Math.PI;
+                        vector.X = (float)(Math.Sin(angle) * (130 - (SpiritwalkerTimer * 2)));
+                        vector.Y = (float)(Math.Cos(angle) * (130 - (SpiritwalkerTimer * 2)));
+                        Dust dust2 = Main.dust[Dust.NewDust(drawInfo.Center + vector, 2, 2, DustID.DungeonSpirit, Scale: 2)];
+                        dust2.noGravity = true;
+                        dust2.noLight = true;
+                        Color dustColor = new(180, 255, 255) { A = 0 };
+                        dust2.color = dustColor;
+                        dust2.velocity = dust2.position.DirectionTo(drawInfo.Center) * 8f;
+                    }
+                }
+            }
         }
         public override void PostUpdateBuffs()
         {
