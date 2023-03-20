@@ -94,7 +94,7 @@ namespace Redemption.Globals.NPC
             {
                 damage *= .75f;
                 if (Main.expertMode)
-                    damage *= Main.masterMode ? .5f : .75f;
+                    damage /= Main.masterMode ? 3 : 2;
             }
 
             return base.StrikeNPC(npc, ref damage, defense, ref knockback, hitDirection, ref crit);
