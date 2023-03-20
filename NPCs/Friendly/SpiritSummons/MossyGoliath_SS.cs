@@ -66,6 +66,7 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
             NPC.aiStyle = -1;
             NPC.width = 126;
             NPC.height = 58;
+            NPC.lifeRegen = 10;
             NPC.HitSound = SoundID.NPCHit24;
             NPC.DeathSound = SoundID.NPCDeath27;
             NPC.lavaImmune = true;

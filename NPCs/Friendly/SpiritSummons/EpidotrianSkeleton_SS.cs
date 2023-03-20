@@ -51,6 +51,7 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
             NPC.friendly = true;
             NPC.defense = 7;
             NPC.lifeMax = 108;
+            NPC.lifeRegen = 5;
             NPC.HitSound = SoundID.DD2_SkeletonHurt;
             NPC.DeathSound = SoundID.DD2_SkeletonDeath;
             NPC.knockBackResist = 0.5f;
