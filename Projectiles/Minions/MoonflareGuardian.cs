@@ -115,7 +115,7 @@ namespace Redemption.Projectiles.Minions
                     if (++Projectile.ai[0] % 80 == 0 && Main.myPlayer == owner.whoAmI)
                     {
                         SoundEngine.PlaySound(SoundID.DD2_BetsyFireballShot, Projectile.Center);
-                        for (int i = 0; i < 3; i++)
+                        for (int i = 0; i < 2; i++)
                             Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, Projectile.DirectionTo(target.Center).RotatedByRandom(0.8f) * 4, ModContent.ProjectileType<MoonflareGuardian_Proj>(), Projectile.damage, Projectile.knockBack, owner.whoAmI);
                     }
                 }
