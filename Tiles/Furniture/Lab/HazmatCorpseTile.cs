@@ -64,7 +64,7 @@ namespace Redemption.Tiles.Furniture.Lab
                         int index1 = NPC.NewNPC(new EntitySource_TileInteraction(player, i, j), i * 16, (j + 1) * 16, ModContent.NPCType<HazmatCorpse_Ghost>());
                         SoundEngine.PlaySound(SoundID.Item74, Main.npc[index1].position);
                         Main.npc[index1].velocity.Y -= 4;
-                        Main.npc[index1].netUpdate2 = true;
+                        Main.npc[index1].netUpdate = true;
                     }
                     else
                     {

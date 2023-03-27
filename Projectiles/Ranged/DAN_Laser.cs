@@ -75,7 +75,7 @@ namespace Redemption.Projectiles.Ranged
                     int p = Projectile.NewProjectile(Projectile.GetSource_FromAI(), origin, new Vector2(0, -6), ProjectileID.GeyserTrap, Projectile.damage / 5, Projectile.knockBack, player.whoAmI);
                     Main.projectile[p].hostile = false;
                     Main.projectile[p].friendly = true;
-                    Main.projectile[p].netUpdate2 = true;
+                    Main.projectile[p].netUpdate = true;
                 }
             }
             return true;

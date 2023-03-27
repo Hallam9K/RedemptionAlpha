@@ -113,7 +113,7 @@ namespace Redemption.Items.Weapons.PostML.Melee
                                     Main.projectile[p].alpha = 0;
                                     Main.projectile[p].position.Y -= 540;
                                     Main.projectile[p].frame = 12;
-                                    Main.projectile[p].netUpdate2 = true;
+                                    Main.projectile[p].netUpdate = true;
                                 }
                                 player.RedemptionScreen().ScreenShakeIntensity += 8;
                                 Projectile.ai[1] = 1;

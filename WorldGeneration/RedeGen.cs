@@ -100,6 +100,7 @@ namespace Redemption.WorldGeneration
             LabPoint = Point16.Zero;
             BastionPoint = Point16.Zero;
             GoldenGatewayPoint = Point16.Zero;
+            JoShrinePoint = Point16.Zero;
             SpiritAssassinPoint = Point16.Zero;
             SpiritCommonGuardPoint = Point16.Zero;
             SpiritOldManPoint = Point16.Zero;
@@ -1659,7 +1660,6 @@ namespace Redemption.WorldGeneration
 
                     Point originPoint = JoShrinePoint.ToPoint();
 
-                    BaseWorldGen.SmoothTiles(originPoint.X, originPoint.Y, originPoint.X + dims.X, originPoint.Y + dims.Y);
                     for (int i = originPoint.X; i < originPoint.X + dims.X; i++)
                     {
                         for (int j = originPoint.Y; j < originPoint.Y + dims.Y; j++)
@@ -1673,6 +1673,7 @@ namespace Redemption.WorldGeneration
                     for (int i = originPoint.X; i < originPoint.X + dims.X; i++)
                         WorldGen.KillTile(i, originPoint.Y - 1, noItem: true);
 
+                    BaseWorldGen.SmoothTiles(originPoint.X - 1, originPoint.Y - 1, originPoint.X + dims.X + 1, originPoint.Y + dims.Y + 1);
                     WorldUtils.Gen(originPoint, new Shapes.Rectangle(dims.X, dims.Y), Actions.Chain(new GenAction[]
                     {
                         new Actions.SetLiquid(0, 0)
@@ -1714,7 +1715,7 @@ namespace Redemption.WorldGeneration
 
                     while (!placed)
                     {
-                        int placeX = WorldGen.genRand.Next((int)(Main.maxTilesX * .4f), (int)(Main.maxTilesX * .6f));
+                        int placeX = WorldGen.genRand.Next((int)(Main.maxTilesX * .45f), (int)(Main.maxTilesX * .55f));
 
                         int placeY = WorldGen.genRand.Next((int)(Main.maxTilesY * .4f), (int)(Main.maxTilesY * .7));
 
@@ -2147,9 +2148,9 @@ namespace Redemption.WorldGeneration
                                     checkType++;
                                 }
                                 origin.X++;
-                                origin.Y = GetTileFloorIgnoreTree((int)origin.X, (int)Main.worldSurface - 180, true);
+                                origin.Y = GetTileFloorIgnoreTree((int)origin.X + 60, (int)Main.worldSurface - 170, true);
                                 inSpawn = false;
-                                if (origin.X > Main.spawnTileX - 200 && origin.X < Main.spawnTileX + 200)
+                                if (origin.X > Main.spawnTileX - 300 && origin.X < Main.spawnTileX + 300)
                                     inSpawn = true;
                                 else
                                     attempts++;
@@ -2161,19 +2162,19 @@ namespace Redemption.WorldGeneration
                                     checkType++;
                                 }
                                 origin.X--;
-                                origin.Y = GetTileFloorIgnoreTree((int)origin.X, (int)Main.worldSurface - 180, true);
+                                origin.Y = GetTileFloorIgnoreTree((int)origin.X + 60, (int)Main.worldSurface - 170, true);
                                 inSpawn = false;
-                                if (origin.X > Main.spawnTileX - 200 && origin.X < Main.spawnTileX + 200)
+                                if (origin.X > Main.spawnTileX - 300 && origin.X < Main.spawnTileX + 300)
                                     inSpawn = true;
                                 else
                                     attempts++;
                                 break;
                             case 2:
                                 origin.X = WorldGen.genRand.Next(150, Main.maxTilesX - 150);
-                                origin.Y = GetTileFloorIgnoreTree((int)origin.X, (int)Main.worldSurface - 180, true);
+                                origin.Y = GetTileFloorIgnoreTree((int)origin.X + 60, (int)Main.worldSurface - 170, true);
                                 origin.X -= 60;
                                 inSpawn = false;
-                                if (origin.X > Main.spawnTileX - 200 && origin.X < Main.spawnTileX + 200)
+                                if (origin.X > Main.spawnTileX - 300 && origin.X < Main.spawnTileX + 300)
                                     inSpawn = true;
                                 else
                                     attempts++;

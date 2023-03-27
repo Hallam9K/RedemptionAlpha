@@ -44,7 +44,7 @@ namespace Redemption.Items.Placeable.MusicBoxes
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Music Box (Omega Obliterator)");
-			Tooltip.SetDefault("Nick Nuwe - Chaos Attack");
+			Tooltip.SetDefault("Universe - Hailfire");
 
 			SacrificeTotal = 1;
 

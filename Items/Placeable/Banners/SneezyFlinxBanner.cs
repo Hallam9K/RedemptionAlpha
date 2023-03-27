@@ -9,6 +9,7 @@ namespace Redemption.Items.Placeable.Banners
     {
         public override void SetStaticDefaults()
         {
+            DisplayName.SetDefault("Sneezy Snow Flinx Banner");
             SacrificeTotal = 1;
         }
         public override void SetDefaults()

@@ -97,7 +97,7 @@ namespace Redemption.NPCs.FowlMorning
             {
                 int p = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center + new Vector2(0, 11), Vector2.Zero, ModContent.ProjectileType<Rooster_EggBomb>(), NPCHelper.HostileProjDamage(NPC.damage), 3);
                 Main.projectile[p].rotation = MathHelper.PiOver2 * NPC.spriteDirection;
-                Main.projectile[p].netUpdate2 = true;
+                Main.projectile[p].netUpdate = true;
                 bombOpacity = 0;
                 NPC.ai[3] = 1;
             }

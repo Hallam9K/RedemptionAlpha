@@ -101,7 +101,11 @@ namespace Redemption.Globals.NPC
         public override bool StrikeNPC(Terraria.NPC npc, ref double damage, int defense, ref float knockback, int hitDirection, ref bool crit)
         {
             if (spiritSummon)
+            {
                 damage *= .75f;
+                if (Main.expertMode)
+                    damage /= Main.masterMode ? 3 : 2;
+            }
 
             return base.StrikeNPC(npc, ref damage, defense, ref knockback, hitDirection, ref crit);
         }
@@ -343,7 +347,7 @@ namespace Redemption.Globals.NPC
                 npcLoot.Add(ItemDropRule.Food(ModContent.ItemType<Soulshake>(), 150));
             //if (npc.type is NPCID.AngryBones or NPCID.AngryBonesBig or NPCID.AngryBonesBigHelmet or NPCID.AngryBonesBigMuscle or NPCID.CursedSkull or NPCID.DarkCaster)
             //    npcLoot.Add(ItemDropRule.Food(ModContent.ItemType<Incisor>(), 100));
-            if (npc.type is NPCID.Demon or NPCID.VoodooDemon or NPCID.FireImp)
+            if (npc.type is NPCID.Demon or NPCID.VoodooDemon or NPCID.FireImp or NPCID.RedDevil)
                 npcLoot.Add(ItemDropRule.Food(ModContent.ItemType<ForgottenSword>(), 100));
             if (npc.type is NPCID.GraniteFlyer or NPCID.GraniteGolem)
             {

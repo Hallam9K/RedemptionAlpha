@@ -85,7 +85,7 @@ namespace Redemption.Items.Weapons.PostML.Melee
                     "\"Utilizing the same, revolutionary heat-sink technology Obliterator's super heatray uses,\n" +
                     "but instead of being buried in your chest, it's in your palm! It's just that simple!!\n\n" +
                     "Caution: Girus is not responsible for irresponsible and/or dangerous use of the Sun-In-Palm product.\n" +
-                    "Please hold the Sun-In-Palm product as far away from yourself while in use.\"")
+                    "Please hold the Sun-In-Palm product far away from yourself while in use.\"")
                 {
                     OverrideColor = Color.LightGray
                 };

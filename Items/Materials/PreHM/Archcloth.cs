@@ -18,7 +18,7 @@ namespace Redemption.Items.Materials.PreHM
             Item.width = 34;
             Item.height = 26;
             Item.maxStack = 9999;
-            Item.value = Item.sellPrice(0, 0, 50, 0);
+            Item.value = Item.buyPrice(0, 1, 0, 0);
             Item.rare = ItemRarityID.Orange;
         }
     }

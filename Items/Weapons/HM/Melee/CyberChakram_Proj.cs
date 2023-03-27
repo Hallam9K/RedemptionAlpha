@@ -45,7 +45,7 @@ namespace Redemption.Items.Weapons.HM.Melee
             BaseAI.AIBoomerang(Projectile, ref Projectile.ai, p.position, p.width, p.height, true, 27f, 35, 1f, 0.6f, false);
             if (Projectile.localAI[0]++ % 10 == 0 && Projectile.owner == Main.myPlayer)
             {
-                Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center.X, Projectile.Center.Y, 0, 0, ModContent.ProjectileType<CyberChakram_Proj2>(), Projectile.damage, 0, Main.myPlayer, Projectile.rotation);
+                Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center.X, Projectile.Center.Y, 0, 0, ModContent.ProjectileType<CyberChakram_Proj2>(), Projectile.damage, 0, Main.myPlayer, Projectile.rotation, Projectile.direction);
             }
         }
         public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough, ref Vector2 hitboxCenterFrac)

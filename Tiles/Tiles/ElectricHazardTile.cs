@@ -57,8 +57,10 @@ namespace Redemption.Tiles.Tiles
             if (Main.drawToScreen)
                 zero = Vector2.Zero;
 
-            int height = tile.TileFrameY == 36 ? 18 : 16;
-            Main.spriteBatch.Draw(texture, new Vector2((i * 16) - (int)Main.screenPosition.X, (j * 16) - (int)Main.screenPosition.Y) + zero, new Rectangle(tile.TileFrameX, tile.TileFrameY, 16, height), Color.White, 0f, Vector2.Zero, 1f, 0, 0f);
+            int height = tile.TileFrameY % AnimationFrameHeight >= 16 ? 18 : 16;
+            int animate = Main.tileFrame[Type] * AnimationFrameHeight;
+            Rectangle frame = new(tile.TileFrameX, tile.TileFrameY + animate, 16, height);
+            Main.spriteBatch.Draw(texture, new Vector2((i * 16) - (int)Main.screenPosition.X, (j * 16) - (int)Main.screenPosition.Y) + zero, frame, Color.White, 0f, Vector2.Zero, 1f, 0, 0f);
         }
         public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)
         {

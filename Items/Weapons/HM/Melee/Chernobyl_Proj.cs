@@ -94,7 +94,7 @@ namespace Redemption.Items.Weapons.HM.Melee
                         Main.projectile[proj].timeLeft = 300;
                         Main.projectile[proj].hostile = false;
                         Main.projectile[proj].friendly = true;
-                        Main.projectile[proj].netUpdate2 = true;
+                        Main.projectile[proj].netUpdate = true;
                     }
                 }
                 for (int i = 0; i < 10; i++)

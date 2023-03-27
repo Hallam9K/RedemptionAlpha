@@ -99,7 +99,7 @@ namespace Redemption.NPCs.Lab
                             SoundEngine.PlaySound(SoundID.Item91, NPC.position);
                             Main.projectile[proj].tileCollide = false;
                             Main.projectile[proj].timeLeft = 200;
-                            Main.projectile[proj].netUpdate2 = true;
+                            Main.projectile[proj].netUpdate = true;
                         }
                     }
                 }

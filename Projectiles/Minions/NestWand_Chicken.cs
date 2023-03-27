@@ -70,7 +70,7 @@ namespace Redemption.Projectiles.Minions
                             height = 1;
                         int p = Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center - new Vector2(0, 16), Projectile.DirectionTo(target.Center) * Main.rand.Next(8, 13) - new Vector2(0, height), ModContent.ProjectileType<ChickenEgg_Proj>(), Projectile.damage, Projectile.knockBack, owner.whoAmI, 1);
                         Main.projectile[p].DamageType = DamageClass.Summon;
-                        Main.projectile[p].netUpdate2 = true;
+                        Main.projectile[p].netUpdate = true;
                     }
                     if (++Projectile.frame > 4)
                     {

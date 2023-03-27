@@ -436,7 +436,7 @@ namespace Redemption.NPCs.Bosses.ADD
                                 int p = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center.X, NPC.position.Y - 4, 0f, -10f, ModContent.ProjectileType<Moonbeam>(), 0, 0, Main.myPlayer);
                                 Main.projectile[p].alpha = 150;
                                 Main.projectile[p].hostile = false;
-                                Main.projectile[p].netUpdate2 = true;
+                                Main.projectile[p].netUpdate = true;
                             }
                             if (AITimer == 25)
                             {
