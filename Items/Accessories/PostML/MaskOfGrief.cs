@@ -1,5 +1,6 @@
 ﻿using Redemption.BaseExtension;
 using Redemption.Biomes;
+using Redemption.Globals;
 using Redemption.Rarities;
 using Terraria;
 using Terraria.GameContent.Creative;
@@ -15,7 +16,7 @@ namespace Redemption.Items.Accessories.PostML
             DisplayName.SetDefault("Mask of Grief");
             Tooltip.SetDefault("Decreases enemy aggro while in Soulless Caverns"
                 + "\n10% increased damage while in the Soulless Cavern\n" +
-                "Makes Shadow elemental weapons more effective against Soulless targets");
+                "Makes " + ElementID.ShadowS + " elemental weapons more effective against Soulless targets");
             SacrificeTotal = 1;
         }
         public override void SetDefaults()

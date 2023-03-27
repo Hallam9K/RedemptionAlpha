@@ -57,7 +57,7 @@ namespace Redemption.Buffs
                     float ai2 = Main.rand.Next(100);
                     int p = Projectile.NewProjectile(Projectile.InheritSource(Projectile), Projectile.Center, RedeHelper.PolarVector(18, (target.Center - Projectile.Center).ToRotation()), ModContent.ProjectileType<TeslaGenerator_Lightning>(), Projectile.damage, 0, Main.myPlayer, ai.ToRotation(), ai2);
                     Main.projectile[p].DamageType = DamageClass.Generic;
-                    Main.projectile[p].netUpdate2 = true;
+                    Main.projectile[p].netUpdate = true;
                 }
             }
         }
