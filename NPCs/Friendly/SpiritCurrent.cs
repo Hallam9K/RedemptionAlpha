@@ -162,10 +162,12 @@ namespace Redemption.NPCs.Friendly
                     zoomer.controlUseItem = false;
                     zoomer.controlUseTile = false;
                     zoomer.controlThrow = false;
-                    zoomer.velocity *= 0;
+                    zoomer.velocity *= 0.01f;
+                    zoomer.noFallDmg = true;
                     zoomer.position = zoomer.oldPosition;
                     if (NPC.ai[1]++ >= 40)
                     {
+                        zoomer.AddBuff(BuffID.Featherfall, 60);
                         if (Main.myPlayer == zoomer.whoAmI)
                             Main.BlackFadeIn = 500;
 

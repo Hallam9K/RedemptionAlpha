@@ -138,6 +138,12 @@ namespace Redemption.Globals
                 .AddTile(TileID.Anvils)
                 .Register();
 
+            Recipe.Create(ItemID.AncientChisel)
+                .AddIngredient<GraveSteelAlloy>(4)
+                .AddIngredient<ElderWood>(20)
+                .AddTile(TileID.Anvils)
+                .Register();
+
             // Living Furniture
             Recipe.Create(ItemID.LivingLoom)
                 .AddIngredient(ModContent.ItemType<LivingTwig>(), 10)

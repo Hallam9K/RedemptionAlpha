@@ -697,10 +697,7 @@ namespace Redemption.Globals
             if (Main.netMode != NetmodeID.MultiplayerClient)
             {
                 int index = Terraria.NPC.NewNPC(source, posX, posY, npcType, 0, ai0, ai1, ai2, ai3);
-                if (Main.netMode == NetmodeID.Server && index < Main.maxNPCs)
-                {
-                    NetMessage.SendData(MessageID.SyncNPC, number: index);
-                }
+                Main.npc[index].netUpdate = true;
             }
         }
     }

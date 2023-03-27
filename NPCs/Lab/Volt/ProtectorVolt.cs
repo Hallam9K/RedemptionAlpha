@@ -259,7 +259,7 @@ namespace Redemption.NPCs.Lab.Volt
                         int proj = Projectile.NewProjectile(NPC.GetSource_FromAI(), GunOrigin, RedeHelper.PolarVector(TimerRand == 0 ? 14 : 15, gunRot), ProjectileID.MartianTurretBolt, NPCHelper.HostileProjDamage(NPC.damage), 0, Main.myPlayer);
                         Main.projectile[proj].tileCollide = false;
                         Main.projectile[proj].timeLeft = 200;
-                        Main.projectile[proj].netUpdate2 = true;
+                        Main.projectile[proj].netUpdate = true;
                     }
                     if (AITimer >= (TimerRand == 0 ? 100 : 120))
                     {

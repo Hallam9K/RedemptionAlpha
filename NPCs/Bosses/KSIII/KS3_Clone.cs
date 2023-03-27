@@ -821,14 +821,14 @@ namespace Redemption.NPCs.Bosses.KSIII
                                                     int proj = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, RedeHelper.PolarVector(8, MathHelper.ToRadians(45) * i), ProjectileID.MartianTurretBolt, NPCHelper.HostileProjDamage((int)(NPC.damage * .85f)), 0, Main.myPlayer);
                                                     Main.projectile[proj].tileCollide = false;
                                                     Main.projectile[proj].timeLeft = 200;
-                                                    Main.projectile[proj].netUpdate2 = true;
+                                                    Main.projectile[proj].netUpdate = true;
                                                 }
                                                 for (int i = 0; i < 18; i++)
                                                 {
                                                     int proj = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, RedeHelper.PolarVector(7, MathHelper.ToRadians(20) * i), ProjectileID.MartianTurretBolt, NPCHelper.HostileProjDamage((int)(NPC.damage * .85f)), 0, Main.myPlayer);
                                                     Main.projectile[proj].tileCollide = false;
                                                     Main.projectile[proj].timeLeft = 200;
-                                                    Main.projectile[proj].netUpdate2 = true;
+                                                    Main.projectile[proj].netUpdate = true;
                                                 }
                                             }
                                         }

@@ -97,6 +97,7 @@ namespace Redemption.WorldGeneration
             LabPoint = Point16.Zero;
             BastionPoint = Point16.Zero;
             GoldenGatewayPoint = Point16.Zero;
+            JoShrinePoint = Point16.Zero;
             SpiritAssassinPoint = Point16.Zero;
             SpiritCommonGuardPoint = Point16.Zero;
             SpiritOldManPoint = Point16.Zero;

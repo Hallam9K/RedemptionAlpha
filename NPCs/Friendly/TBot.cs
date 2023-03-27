@@ -360,12 +360,14 @@ namespace Redemption.NPCs.Friendly
                             shop.item[nextSlot++].SetDefaults(ModContent.ItemType<IrradiatedCorruptGrassSeeds>());
                         }
                     }
-                    shop.item[nextSlot++].SetDefaults(ModContent.ItemType<IrradiatedStoneWall>());
                 }
                 shop.item[nextSlot++].SetDefaults(ModContent.ItemType<CrystalSerum>());
                 shop.item[nextSlot++].SetDefaults(ModContent.ItemType<BleachedSolution>());
                 shop.item[nextSlot++].SetDefaults(ModContent.ItemType<GasMask>());
-                shop.item[nextSlot++].SetDefaults(ModContent.ItemType<HazmatSuit>());
+                if (Redemption.FinlandDay)
+                    shop.item[nextSlot++].SetDefaults(ModContent.ItemType<HazmatSuit4>());
+                else
+                    shop.item[nextSlot++].SetDefaults(ModContent.ItemType<HazmatSuit>());
             }
             if (Main.hardMode)
             {

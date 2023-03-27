@@ -350,7 +350,7 @@ namespace Redemption.NPCs.HM
                                             RedeHelper.PolarVector(8, MathHelper.ToRadians(45) * i), ProjectileID.MartianTurretBolt, NPCHelper.HostileProjDamage(NPC.damage), 0, Main.myPlayer);
                                         Main.projectile[proj].tileCollide = false;
                                         Main.projectile[proj].timeLeft = 200;
-                                        Main.projectile[proj].netUpdate2 = true;
+                                        Main.projectile[proj].netUpdate = true;
                                     }
                                     for (int i = 0; i < 18; i++)
                                     {
@@ -358,7 +358,7 @@ namespace Redemption.NPCs.HM
                                             RedeHelper.PolarVector(7, MathHelper.ToRadians(20) * i), ProjectileID.MartianTurretBolt, NPCHelper.HostileProjDamage(NPC.damage), 0, Main.myPlayer);
                                         Main.projectile[proj].tileCollide = false;
                                         Main.projectile[proj].timeLeft = 200;
-                                        Main.projectile[proj].netUpdate2 = true;
+                                        Main.projectile[proj].netUpdate = true;
                                     }
                                 }
                                 slamOrigin = NPC.Center;

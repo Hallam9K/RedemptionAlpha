@@ -337,7 +337,7 @@ namespace Redemption.Globals.NPC
                 npcLoot.Add(ItemDropRule.Food(ModContent.ItemType<Soulshake>(), 150));
             //if (npc.type is NPCID.AngryBones or NPCID.AngryBonesBig or NPCID.AngryBonesBigHelmet or NPCID.AngryBonesBigMuscle or NPCID.CursedSkull or NPCID.DarkCaster)
             //    npcLoot.Add(ItemDropRule.Food(ModContent.ItemType<Incisor>(), 100));
-            if (npc.type is NPCID.Demon or NPCID.VoodooDemon or NPCID.FireImp)
+            if (npc.type is NPCID.Demon or NPCID.VoodooDemon or NPCID.FireImp or NPCID.RedDevil)
                 npcLoot.Add(ItemDropRule.Food(ModContent.ItemType<ForgottenSword>(), 100));
             if (npc.type is NPCID.GraniteFlyer or NPCID.GraniteGolem)
             {

@@ -325,7 +325,7 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
                                     Main.projectile[p].hostile = false;
                                     Main.projectile[p].friendly = true;
                                     Main.projectile[p].DamageType = DamageClass.Summon;
-                                    Main.projectile[p].netUpdate2 = true;
+                                    Main.projectile[p].netUpdate = true;
                                 }
                             }
                             if (AITimer >= 120)
@@ -596,7 +596,7 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
                                     int p = Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, RedeHelper.PolarVector(0.08f, (globalNPC.attacker.Center - Projectile.Center).ToRotation()), ModContent.ProjectileType<SkullDigger_FlailBlade_ProjF>(), Projectile.damage * 4, Projectile.knockBack, Projectile.owner, Projectile.whoAmI, host.whoAmI);
                                     Main.projectile[p].localAI[1] = 1;
                                     Main.projectile[p].DamageType = DamageClass.Summon;
-                                    Main.projectile[p].netUpdate2 = true;
+                                    Main.projectile[p].netUpdate = true;
                                 }
                                 if (Projectile.localAI[0] >= 260)
                                 {

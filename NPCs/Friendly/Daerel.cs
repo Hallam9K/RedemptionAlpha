@@ -22,6 +22,7 @@ using Redemption.Items.Accessories.PreHM;
 using Redemption.Items.Weapons.PostML.Ranged;
 using Redemption.Items.Materials.HM;
 using ReLogic.Content;
+using Redemption.BaseExtension;
 
 namespace Redemption.NPCs.Friendly
 {
@@ -187,6 +188,7 @@ namespace Redemption.NPCs.Friendly
         public override ITownNPCProfile TownNPCProfile() => new DaerelProfile();
         public override string GetChat()
         {
+            adviceNum = 0;
             WeightedRandom<string> chat = new(Main.rand);
             if (RedeQuest.wayfarerVars[0] < 4)
             {
@@ -194,10 +196,6 @@ namespace Redemption.NPCs.Friendly
             }
             else
             {
-                int DryadID = NPC.FindFirstNPC(NPCID.Dryad);
-                if (DryadID >= 0)
-                    chat.Add("Is " + Main.npc[DryadID].GivenName + " a half-Nymph? Or just a weirdo who doesn't wear actual clothes?");
-
                 int PartyGirlID = NPC.FindFirstNPC(NPCID.PartyGirl);
                 if (PartyGirlID >= 0)
                     chat.Add("I swear " + Main.npc[PartyGirlID].GivenName + " reminds me of a technicoloured pony from another universe...", 0.2);
@@ -318,6 +316,7 @@ namespace Redemption.NPCs.Friendly
                             break;
                         case 1:
                             Main.npcChatText = ChitChat();
+                            adviceNum++;
                             break;
                         case 2:
                             if (Main.LocalPlayer.BuyItem(1000))
@@ -368,10 +367,27 @@ namespace Redemption.NPCs.Friendly
             return chat;
         }
 
+        private static int adviceNum;
         public static string ChitChat()
         {
-            WeightedRandom<string> chat = new(Main.rand);
-            chat.Add("If you wanna find Leaf Beetles, or Tree Bugs as they're called here, then chop down some trees. They live on tree tops, their leaf-green shell camouflaging them in the foliage. They eat the bark off of trees, and if their tree is destroyed or rotted, it will climb down and find another suitable tree to live on.");
+            List<string> chat = new();
+            if (RedeBossDowned.downedPZ && !RedeBossDowned.downedNebuleus)
+                chat.Add("Honestly, I'm surprised you still come to me for advice. You seem like a smart person, far more than I. But anyway, I've recently been seeing interesting wyverns in the sky - purple and gold. Give it a check if you wish.");
+            int FallenID = NPC.FindFirstNPC(ModContent.NPCType<Fallen>());
+            if (FallenID >= 0 && Main.LocalPlayer.HasItem(ModContent.ItemType<GolemEye>()) && NPC.downedMoonlord && !RedeBossDowned.downedADD)
+                chat.Add("Hmm, that glowing eye you got looks rather... mythical. And it's giving you a riddle too? \"Surround it with the stones of its origin\"... Well you need to place some stone around it, the question is what kind? Maybe ask " + Main.npc[FallenID].GivenName + ".");
+            if (Main.hardMode && !RedeBossDowned.downedSlayer)
+                chat.Add("I've seen some robots meandering about the island, scanning random objects and creatures. No idea where they came from, but I did see one get attacked. Once it was weakened, it stopped moving and teleported into the sky. Their purpose is a mystery to me. Maybe you could figure it out?");
+            int DryadID = NPC.FindFirstNPC(NPCID.Dryad);
+            if (DryadID >= 0 && RedeQuest.forestNymphVar == 0)
+                chat.Add("The dryad, " + Main.npc[DryadID].GivenName + ", says she's seen a Forest Nymph on this island at one point, if you can believe that. They're seldom seen, you'd only be able to find them near giant trees. If you do come across one, I wouldn't linger around for too long, they don't like humans getting in their personal space. I wonder if there were a way to befriend one though?");
+            if (FallenID >= 0 && !Main.LocalPlayer.RedemptionAbility().Spiritwalker)
+                chat.Add(Main.npc[FallenID].GivenName + " has told me he came from another portal underground. Apparently it leads to some catacombs in Gathuram, but you wouldn't be able to go through it. Still, he's told of some rather intriguing things lying by the portal, I'd give it a check if I were you.");
+            if (!RedeBossDowned.downedEaglecrestGolem)
+                chat.Add("While I was having a walk I came across some oddly-shaped stones - looked like a boulder with legs. I was curious of course, so I shot it from a safe distance. Nothing happened... and yet I sensed a presence inside it. You, as a slayer of many things, should search around and find it, might be another foe to face.");
+            if (!Main.LocalPlayer.RedemptionAbility().Spiritwalker)
+                chat.Add("Ever see tiny lights dancing from a slain skeleton? Or perhaps a lantern-carrying ghost underground? Those are lost souls, and as far as I know, only arcane or holy weapons may bring them harm. Not that I'd suggest harming those helpless things.");
+            chat.Add("Wanna know about some insects? If you wanna find leaf beetles, or tree bugs as they're called here, then chop down some trees. They live on tree tops, with their green shell camouflaging them in the foliage. Coast Scarabs can also be found on palm trees at the beach, their shells sparkle when wet. Grand larvae are, well, rather gross - though they can make excellent bait. That is, if you're brave enough to get close to one.");
             chat.Add("When encountering skeletons and undead, I think its logical to assume shadow weapons aren't effective against them, while holy weapons are. I used to like the exploring caves, until me and Zephos encountered a skeleton Vex...");
             chat.Add("Best way to deal with slimes? Burn them. Alternatively, ice weapons can freeze them in their place, THEN you can burn them!");
             chat.Add("If you ever wanna sneak up on the Epidotrian skeletons or chickens, invisibility potions are real handy for the job.");
@@ -381,7 +397,14 @@ namespace Redemption.NPCs.Friendly
                 chat.Add("I felt a strange presence beneath that portal I hopped out of, which is quite peculiar. Maybe you should check it out.");
             if (RedeBossDowned.erhanDeath == 0)
                 chat.Add("I noticed a scroll sitting atop a small table next to the portal I came out of, did you pick it up yet? It looked rather... demonic.");
-            return chat;
+
+            string[] chatStr = chat.ToArray();
+            int maxAdvice = chatStr.Length;
+            if (adviceNum >= maxAdvice)
+                adviceNum = 0;
+
+            string num = "(" + (adviceNum + 1) + "/" + maxAdvice + ") ";
+            return num + chatStr[adviceNum];
         }
 
         public override void SetupShop(Chest shop, ref int nextSlot)

@@ -193,6 +193,7 @@ Mods: {
 				LoveSpace: I like the space I have here, plenty of room to practice my archery.
 				FarFromHome: Could you please get me back to my house? This land is quite scary.
 				DislikeCrowded: I'm somewhat of an introvert, so all these people near me is quite unnerving.
+                HateCrowded: I'm somewhat of an introvert, so all these people near me is quite unnerving.
 				LikeBiome: "I think {BiomeName} is a very nice place, I hardly see any snow where I was from."
 				LoveBiome: "I think {BiomeName} is perfect, calm and tranquil."
 				DislikeBiome: "I don't really like {BiomeName}, I'd hate to have a run-in with skeletons!"

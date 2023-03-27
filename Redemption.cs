@@ -55,6 +55,7 @@ namespace Redemption
         public static ModKeybind RedeSpecialAbility;
         public static ModKeybind RedeSpiritwalkerAbility;
         public static bool AprilFools => DateTime.Now is DateTime { Month: 4, Day: 1 };
+        public static bool FinlandDay => DateTime.Now is DateTime { Month: 12, Day: 6 };
 
         public static RenderTargetManager Targets;
         public static Effect GlowTrailShader;
@@ -158,6 +159,12 @@ namespace Redemption
                     PremultiplyTexture(ref UkkoSkyFlashTex);
                     Texture2D SkyTex = ModContent.Request<Texture2D>("Redemption/Backgrounds/Skies/SkyTex", immLoad).Value;
                     PremultiplyTexture(ref SkyTex);
+                    Texture2D SkyTex2 = ModContent.Request<Texture2D>("Redemption/Backgrounds/Skies/SkyTex2", immLoad).Value;
+                    PremultiplyTexture(ref SkyTex2);
+                    Texture2D WastelandCorruptSkyTex = ModContent.Request<Texture2D>("Redemption/Backgrounds/Skies/WastelandCorruptSkyTex", immLoad).Value;
+                    PremultiplyTexture(ref WastelandCorruptSkyTex);
+                    Texture2D WastelandCrimsonSkyTex = ModContent.Request<Texture2D>("Redemption/Backgrounds/Skies/WastelandCrimsonSkyTex", immLoad).Value;
+                    PremultiplyTexture(ref WastelandCrimsonSkyTex);
                 });
 
                 Filters.Scene["MoR:OOSky"] = new Filter(new ScreenShaderData("FilterMiniTower").UseColor(0.2f, 0f, 0f).UseOpacity(0.2f), EffectPriority.VeryHigh);
@@ -170,6 +177,11 @@ namespace Redemption
                 SkyManager.Instance["MoR:Ukko"] = new UkkoClouds();
             }
             Filters.Scene["MoR:WastelandSky"] = new Filter(new ScreenShaderData("FilterMiniTower").UseColor(0f, 0.2f, 0f).UseOpacity(0.5f), EffectPriority.High);
+            SkyManager.Instance["MoR:WastelandSky"] = new WastelandSky();
+            SkyManager.Instance["MoR:WastelandSnowSky"] = new WastelandSnowSky();
+            SkyManager.Instance["MoR:WastelandCorruptSky"] = new WastelandCorruptSky();
+            SkyManager.Instance["MoR:WastelandCrimsonSky"] = new WastelandCrimsonSky();
+
             Filters.Scene["MoR:SpiritSky"] = new Filter(new ScreenShaderData("FilterMiniTower").UseColor(0.4f, 0.8f, 0.8f), EffectPriority.VeryHigh);
             Filters.Scene["MoR:IslandEffect"] = new Filter(new ScreenShaderData("FilterMiniTower").UseColor(0.4f, 0.4f, 0.4f).UseOpacity(0.5f), EffectPriority.VeryHigh);
             SkyManager.Instance["MoR:RuinedKingdomSky"] = new RuinedKingdomSky();
@@ -309,7 +321,7 @@ namespace Redemption
 
                         int npcID = NPC.NewNPC(null, npcCenterX, npcCenterY, bossType);
                         Main.npc[npcID].Center = new Vector2(npcCenterX, npcCenterY);
-                        Main.npc[npcID].netUpdate2 = true;
+                        Main.npc[npcID].netUpdate = true;
                         ChatHelper.BroadcastChatMessage(NetworkText.FromKey("Announcement.HasAwoken", Main.npc[npcID].GetTypeNetName()), new Color(175, 75, 255));
                     }
                     break;
@@ -324,7 +336,7 @@ namespace Redemption
 
                         int npcID = NPC.NewNPC(null, (int)npcCenter.X, (int)npcCenter.Y, NPCType);
                         Main.npc[npcID].Center = npcCenter;
-                        Main.npc[npcID].netUpdate2 = true;
+                        Main.npc[npcID].netUpdate = true;
                     }
                     break;
                 case ModMessageType.NPCSpawnFromClient2:
@@ -335,7 +347,7 @@ namespace Redemption
 
                         int npcID = NPC.NewNPC(null, (int)npcCenter.X, (int)npcCenter.Y, NPCType);
                         Main.npc[npcID].Center = npcCenter;
-                        Main.npc[npcID].netUpdate2 = true;
+                        Main.npc[npcID].netUpdate = true;
                     }
                     break;
                 case ModMessageType.SpawnTrail:
@@ -451,7 +463,7 @@ namespace Redemption
         public override void ModifySunLightColor(ref Color tileColor, ref Color backgroundColor)
         {
             RedeTileCount tileCount = ModContent.GetInstance<RedeTileCount>();
-            if (tileCount.WastelandTileCount > 0)
+            if (NPC.downedMechBossAny && tileCount.WastelandTileCount > 0)
             {
                 float Strength = tileCount.WastelandTileCount / 200f;
                 Strength = Math.Min(Strength, 1f);
@@ -459,9 +471,9 @@ namespace Redemption
                 int sunR = backgroundColor.R;
                 int sunG = backgroundColor.G;
                 int sunB = backgroundColor.B;
-                sunR -= (int)(200 * Strength * (backgroundColor.R / 255f));
-                sunB -= (int)(200f * Strength * (backgroundColor.B / 255f));
-                sunG -= (int)(170f * Strength * (backgroundColor.G / 255f));
+                sunR -= (int)(40f * Strength * (backgroundColor.R / 255f));
+                sunB -= (int)(40f * Strength * (backgroundColor.B / 255f));
+                sunG -= (int)(30f * Strength * (backgroundColor.G / 255f));
                 sunR = Utils.Clamp(sunR, 15, 255);
                 sunG = Utils.Clamp(sunG, 15, 255);
                 sunB = Utils.Clamp(sunB, 15, 255);

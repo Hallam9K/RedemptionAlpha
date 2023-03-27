@@ -224,7 +224,7 @@ namespace Redemption.CrossMod
                         ModContent.ItemType<StonePuppet>(),
                         ModContent.ItemType<ForestBossBox>(),
                     },
-                    ModContent.ItemType<EaglecrestSpelltome>(), "Naturally spawns at day after Eater of Worlds/Brain of Cthulhu is defeated.",
+                    ModContent.ItemType<EaglecrestSpelltome>(), "Naturally spawns on the surface at day after Eater of Worlds/Brain of Cthulhu is defeated.",
                     null,
                     (SpriteBatch sb, Rectangle rect, Color color) =>
                     {
