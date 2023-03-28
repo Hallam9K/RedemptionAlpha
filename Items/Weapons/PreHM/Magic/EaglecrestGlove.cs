@@ -46,7 +46,11 @@ namespace Redemption.Items.Weapons.PreHM.Magic
         public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback)
         {
             position.Y -= 20;
-            velocity += player.velocity;
+            if ((player.velocity.Y >= 0 || velocity.Y < 0) && (player.velocity.Y < 0 || velocity.Y >= 0))
+                velocity.Y += player.velocity.Y;
+
+            if ((player.velocity.X >= 0 || velocity.X < 0) && (player.velocity.X < 0 || velocity.X >= 0))
+                velocity.X += player.velocity.X;
         }
     }
 }

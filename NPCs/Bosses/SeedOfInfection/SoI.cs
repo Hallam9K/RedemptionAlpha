@@ -25,6 +25,7 @@ using Redemption.Items.Weapons.HM.Ranged;
 using Redemption.NPCs.Bosses.Thorn;
 using Mono.Cecil;
 using Redemption.NPCs.Bosses.FowlEmperor;
+using Redemption.Items.Weapons.PreHM.Magic;
 
 namespace Redemption.NPCs.Bosses.SeedOfInfection
 {
@@ -136,7 +137,7 @@ namespace Redemption.NPCs.Bosses.SeedOfInfection
 
             notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<InfectedMask>(), 7));
 
-            notExpertRule.OnSuccess(ItemDropRule.OneFromOptions(1, ModContent.ItemType<XenoXyston>(), ModContent.ItemType<CystlingSummon>()));
+            notExpertRule.OnSuccess(ItemDropRule.OneFromOptions(1, ModContent.ItemType<XenoXyston>(), ModContent.ItemType<CystlingSummon>(), ModContent.ItemType<ContagionSpreader>()));
             notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<XenomiteShard>(), 1, 12, 22));
             notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<ToxicGrenade>(), 1, 20, 30));
 
