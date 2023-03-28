@@ -2254,6 +2254,7 @@ namespace Redemption.WorldGeneration
                 }));
                 tasks.Add(new PassLegacy("Final Cleanup 2", delegate (GenerationProgress progress, GameConfiguration configuration)
                 {
+                    #region Final Cleanup 2
                     Main.tileSolid[484] = false;
                     WorldGen.FillWallHolesInArea(new Rectangle(0, 0, Main.maxTilesX, (int)Main.worldSurface));
                     progress.Message = Lang.gen[86].Value;
@@ -2462,6 +2463,7 @@ namespace Redemption.WorldGeneration
                     WorldGen.noTileActions = false;
                     WorldGen.gen = false;
                     WorldGen.skipFramingDuringGen = false;
+                    #endregion
                 }));
             }
         }
@@ -2572,7 +2574,7 @@ namespace Redemption.WorldGeneration
                 Vector2 gathicPortalPos = new(((gathicPortalPoint.X + 46) * 16) - 8, ((gathicPortalPoint.Y + 23) * 16) - 4);
                 LabArea.SpawnNPCInWorld(gathicPortalPos, ModContent.NPCType<GathuramPortal>());
             }
-            if (JoShrinePoint.X != 0 && RedeWorld.DayNightCount < 4 && !NPC.AnyNPCs(ModContent.NPCType<TreebarkDryad>()))
+            if (JoShrinePoint.X != 0 && !RedeBossDowned.downedTreebark && RedeWorld.DayNightCount < 4 && !NPC.AnyNPCs(ModContent.NPCType<TreebarkDryad>()))
             {
                 Vector2 shrinePos = new((JoShrinePoint.X + 9) * 16, (JoShrinePoint.Y + 13) * 16);
                 LabArea.SpawnNPCInWorld(shrinePos, ModContent.NPCType<TreebarkDryad>(), 0, 1, 0, 2);

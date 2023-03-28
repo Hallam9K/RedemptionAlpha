@@ -13,6 +13,7 @@ using Redemption.Items.Weapons.PreHM.Melee;
 using Redemption.Globals.World;
 using Redemption.Items.Usable.Potions;
 using Redemption.Biomes;
+using Redemption.Items.Placeable.Banners;
 
 namespace Redemption.NPCs.FowlMorning
 {
@@ -38,6 +39,8 @@ namespace Redemption.NPCs.FowlMorning
             NPC.aiStyle = -1;
             NPC.knockBackResist = 0.5f;
             SpawnModBiomes = new int[1] { ModContent.GetInstance<FowlMorningBiome>().Type };
+            Banner = NPC.type;
+            BannerItem = ModContent.ItemType<ChickenScratcherBanner>();
         }
         public override void AI()
         {

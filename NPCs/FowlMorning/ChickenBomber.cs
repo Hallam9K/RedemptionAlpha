@@ -14,6 +14,7 @@ using Redemption.NPCs.Bosses.FowlEmperor;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria.GameContent;
 using Redemption.Biomes;
+using Redemption.Items.Placeable.Banners;
 
 namespace Redemption.NPCs.FowlMorning
 {
@@ -41,6 +42,8 @@ namespace Redemption.NPCs.FowlMorning
             NPC.noGravity = true;
             NPC.noTileCollide = true;
             SpawnModBiomes = new int[1] { ModContent.GetInstance<FowlMorningBiome>().Type };
+            Banner = NPC.type;
+            BannerItem = ModContent.ItemType<ChickenBomberBanner>();
         }
         public override void HitEffect(int hitDirection, double damage)
         {

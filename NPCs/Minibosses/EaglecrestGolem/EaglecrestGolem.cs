@@ -9,6 +9,7 @@ using Redemption.Items.Armor.Vanity;
 using Redemption.Items.Materials.PreHM;
 using Redemption.Items.Placeable.Tiles;
 using Redemption.Items.Usable;
+using Redemption.Items.Weapons.PreHM.Magic;
 using Redemption.Items.Weapons.PreHM.Melee;
 using Redemption.Items.Weapons.PreHM.Ranged;
 using System;
@@ -154,6 +155,7 @@ namespace Redemption.NPCs.Minibosses.EaglecrestGolem
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<EaglecrestHead>()));
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<EaglecrestJavelin>()));
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<EaglecrestSling>()));
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<EaglecrestGlove>()));
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<GathicStone>(), 1, 14, 34));
         }
 
