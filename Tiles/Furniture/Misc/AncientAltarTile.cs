@@ -32,6 +32,7 @@ namespace Redemption.Tiles.Furniture.Misc
             DustType = 7;
             MinPick = 500;
             MineResist = 3f;
+            HitSound = CustomSounds.StoneHit;
             ModTranslation name = CreateMapEntryName();
             name.SetDefault("Ancient Altar");
             AddMapEntry(new Color(120, 190, 40), name);

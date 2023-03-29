@@ -51,8 +51,8 @@ namespace Redemption.Tiles.Furniture.Misc
 			TileObjectData.newTile.LavaDeath = false;
 			TileObjectData.newTile.DrawYOffset = 2;
 			TileObjectData.addTile(Type);
-
-			DustType = DustID.GoldCoin;
+            HitSound = CustomSounds.MetalHit;
+            DustType = DustID.GoldCoin;
 			ModTranslation name = CreateMapEntryName();
 			name.SetDefault("Golden Gateway");
 			AddMapEntry(new Color(203, 179, 73));

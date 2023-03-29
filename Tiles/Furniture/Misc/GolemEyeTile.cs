@@ -33,7 +33,7 @@ namespace Redemption.Tiles.Furniture.Misc
             TileObjectData.newTile.CoordinatePadding = 2;
             TileObjectData.newTile.AnchorBottom = new AnchorData(AnchorType.SolidTile | AnchorType.SolidWithTop | AnchorType.SolidSide, TileObjectData.newTile.Width, 0);
             TileObjectData.addTile(Type);
-            HitSound = SoundID.Tink;
+            HitSound = CustomSounds.CrystalHit;
             DustType = DustID.Sandnado;
             ItemDrop = ModContent.ItemType<GolemEye>();
             MinPick = 0;
