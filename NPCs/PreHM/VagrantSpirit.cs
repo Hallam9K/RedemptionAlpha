@@ -259,7 +259,7 @@ namespace Redemption.NPCs.PreHM
             if (spawnInfo.Player.RedemptionAbility().SpiritwalkerActive && !spawnInfo.Player.ZoneTowerNebula && !spawnInfo.Player.ZoneTowerSolar && !spawnInfo.Player.ZoneTowerStardust && !spawnInfo.Player.ZoneTowerVortex)
                 return 0.6f;
 
-            return SpawnCondition.Cavern.Chance * 0.01f;
+            return SpawnCondition.Cavern.Chance * 0.007f;
         }
     }
 }

@@ -5,6 +5,7 @@ using Terraria.ID;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.BaseExtension;
 using Redemption.Items.Weapons.PreHM.Magic;
+using Redemption.Items.Weapons.PreHM.Summon;
 
 namespace Redemption.Items.Weapons.HM.Magic
 {

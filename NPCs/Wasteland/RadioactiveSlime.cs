@@ -54,7 +54,7 @@ namespace Redemption.NPCs.Wasteland
             NPC.value = 200f;
             NPC.knockBackResist = 0.5f;
             NPC.aiStyle = 1;
-            NPC.alpha = 80;
+            NPC.alpha = 40;
             AIType = NPCID.IlluminantSlime;
             SpawnModBiomes = new int[1] { ModContent.GetInstance<WastelandPurityBiome>().Type };
             Banner = NPC.type;

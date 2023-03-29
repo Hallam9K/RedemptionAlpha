@@ -22,6 +22,7 @@ using Redemption.Items.Placeable.Furniture.Misc;
 using Redemption.Items.Accessories.PreHM;
 using Redemption.Items.Materials.HM;
 using ReLogic.Content;
+using Redemption.BaseExtension;
 
 namespace Redemption.NPCs.Friendly
 {
@@ -134,34 +135,17 @@ namespace Redemption.NPCs.Friendly
             if (NPC.altTexture == 1)
             {
                 Asset<Texture2D> hat = ModContent.Request<Texture2D>("Terraria/Images/Item_" + ItemID.PartyHat);
-                int offset;
-                switch (NPC.frame.Y / 52)
+                var offset = (NPC.frame.Y / 52) switch
                 {
-                    default:
-                        offset = 0;
-                        break;
-                    case 3:
-                        offset = 2;
-                        break;
-                    case 4:
-                        offset = 2;
-                        break;
-                    case 5:
-                        offset = 2;
-                        break;
-                    case 10:
-                        offset = 2;
-                        break;
-                    case 11:
-                        offset = 2;
-                        break;
-                    case 12:
-                        offset = 2;
-                        break;
-                    case 18:
-                        offset = 2;
-                        break;
-                }
+                    3 => 2,
+                    4 => 2,
+                    5 => 2,
+                    10 => 2,
+                    11 => 2,
+                    12 => 2,
+                    18 => 2,
+                    _ => 0,
+                };
                 var hatEffects = NPC.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
                 Vector2 origin = new(hat.Value.Width / 2f, hat.Value.Height / 2f);
                 spriteBatch.Draw(hat.Value, NPC.Center - new Vector2(4 * NPC.spriteDirection, 24 + offset) - screenPos, null, NPC.GetAlpha(drawColor), NPC.rotation, origin, NPC.scale, hatEffects, 0);
@@ -191,6 +175,7 @@ namespace Redemption.NPCs.Friendly
         public override ITownNPCProfile TownNPCProfile() => new ZephosProfile();
         public override string GetChat()
         {
+            adviceNum = 0;
             WeightedRandom<string> chat = new(Main.rand);
             if (RedeQuest.wayfarerVars[0] < 4)
             {
@@ -252,9 +237,6 @@ namespace Redemption.NPCs.Friendly
                     case 3:
                         button = "Shine Armor (15 silver)";
                         break;
-                    case 4:
-                        button = "Quest";
-                        break;
                 }
             }
         }
@@ -303,6 +285,7 @@ namespace Redemption.NPCs.Friendly
                             break;
                         case 1:
                             Main.npcChatText = ChitChat();
+                            adviceNum++;
                             break;
                         case 2:
                             if (Main.LocalPlayer.BuyItem(500))
@@ -328,16 +311,12 @@ namespace Redemption.NPCs.Friendly
                                 SoundEngine.PlaySound(SoundID.MenuTick);
                             }
                             break;
-                        case 4:
-                            Main.npcChatText = "(Quests will become available in v0.8.1 - Wayfarer Update)";
-                            SoundEngine.PlaySound(SoundID.MenuTick);
-                            break;
                     }
                 }
                 else
                 {
                     ChatNumber++;
-                    if (ChatNumber > 4)
+                    if (ChatNumber > 3)
                         ChatNumber = 0;
                 }
             }
@@ -352,10 +331,26 @@ namespace Redemption.NPCs.Friendly
             chat.Add("You really don't have enough money? Ah whatever, not like I can complain.");
             return chat;
         }
-
+        private static int adviceNum;
         public static string ChitChat()
         {
-            WeightedRandom<string> chat = new(Main.rand);
+            List<string> chat = new();
+            if (RedeBossDowned.downedPZ && !RedeBossDowned.downedNebuleus)
+                chat.Add("Honestly, I'm surprised you still come to me for advice! I know I certainly ain't the smartest fella out there. But anyway, I've recently been seeing peculiar lookin' wyverns in the sky - purple and gold. Give it a check!");
+            int FallenID = NPC.FindFirstNPC(ModContent.NPCType<Fallen>());
+            if (FallenID >= 0 && Main.LocalPlayer.HasItem(ModContent.ItemType<GolemEye>()) && NPC.downedMoonlord && !RedeBossDowned.downedADD)
+                chat.Add("Hmm, that shinin' eye you got looks rather... mythical. And it's giving you a riddle too? \"Surround it with the stones of its origin\"... Eh, I got nothin', maybe ask " + Main.npc[FallenID].GivenName + ".");
+            if (Main.hardMode && !RedeBossDowned.downedSlayer)
+                chat.Add("I've seen some strange metal folk meandering about the island, firing beams of light on random objects and creatures. No idea where they came from, but I did see one get attacked. Once it was weakened, it stopped moving and vanished into the air! Their purpose is a mystery to me. Maybe you could figure it out?");
+            int DryadID = NPC.FindFirstNPC(NPCID.Dryad);
+            if (DryadID >= 0 && RedeQuest.forestNymphVar == 0)
+                chat.Add("Ya know " + Main.npc[DryadID].GivenName + "? She's seen a Forest Nymph on this island at one point, if you can believe that. Super rare creatures those are, you'd only be able to find them near giant trees. If you do come across one, I wouldn't linger around for too long, they don't like humans getting in their personal space. I wonder if there were a way to befriend one though?");
+            if (FallenID >= 0 && !Main.LocalPlayer.RedemptionAbility().Spiritwalker)
+                chat.Add(Main.npc[FallenID].GivenName + " has told me he came from another portal underground. Apparently it leads to some catacombs, but you wouldn't be able to go through it. Still, he's told of some rather intriguing things lying by the portal, I'd give it a check if I were you!");
+            if (!RedeBossDowned.downedEaglecrestGolem)
+                chat.Add("While I was having a stroll I came across some oddly-shaped stones - looked like a boulder with legs. I was curious of course, so I gave it a WHAM with my sword! Nothing happened... and yet I sensed a presence inside it. You, as a slayer of many things, should search around and find it, might be another challenge to face!");
+            if (!Main.LocalPlayer.RedemptionAbility().Spiritwalker)
+                chat.Add("Ever see tiny lights skitterin' from a slain skeleton? Or perhaps a lantern-carrying ghost underground? Those are lost souls, and as far as I know, only arcane or holy weapons may bring them harm. Not that I'd suggest harming those helpless things.");
             chat.Add("When encountering skeletons and undead, holy weapons are most effective against them. On the contrary, shadow weapons aren't as effective. I hate skeletons, used to think they looked kinda funny, until me and Daerel met a skeleton Vex.");
             chat.Add("If you hate slimes, burn them! They'll burn brighter than my passion for attractive ladies" + (Main.LocalPlayer.Male ? "" : " (wink wink)") + ". Or, you could use ice weapons to freeze them, but that isn't as fun.");
             chat.Add("Ever want to sneak up on an Epidotrian skeleton? Or perhaps a chicken? Well invisibility potions are real handy for the job!");
@@ -365,7 +360,14 @@ namespace Redemption.NPCs.Friendly
                 chat.Add("I felt a weird presence beneath that portal I hopped out of, it was super uncanny! Maybe you should check it out.");
             if (RedeBossDowned.erhanDeath == 0)
                 chat.Add("I saw a scroll sitting atop a small table next to the portal I came out of, did you pick it up yet? It looked rather... demonic.");
-            return chat;
+
+            string[] chatStr = chat.ToArray();
+            int maxAdvice = chatStr.Length;
+            if (adviceNum >= maxAdvice)
+                adviceNum = 0;
+
+            string num = "(" + (adviceNum + 1) + "/" + maxAdvice + ") ";
+            return num + chatStr[adviceNum];
         }
 
         public override void SetupShop(Chest shop, ref int nextSlot)

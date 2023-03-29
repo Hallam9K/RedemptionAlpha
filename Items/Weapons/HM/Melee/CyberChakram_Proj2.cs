@@ -31,8 +31,11 @@ namespace Redemption.Items.Weapons.HM.Melee
             if (Projectile.localAI[0] == 0)
             {
                 Projectile.rotation = Projectile.ai[0];
+                Projectile.localAI[1] = .6f;
                 Projectile.localAI[0] = 1;
             }
+            Projectile.rotation += Projectile.localAI[1] * Projectile.ai[1];
+            Projectile.localAI[1] *= .9f;
         }
         public override Color? GetAlpha(Color lightColor)
         {

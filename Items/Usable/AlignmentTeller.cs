@@ -18,7 +18,7 @@ namespace Redemption.Items.Usable
         {
             DisplayName.SetDefault("Chalice of Alignment");
             Tooltip.SetDefault("Tells you your current alignment"
-                + "\n[c/ffea9b:A sentient treasure, cursed with visions of what is yet to come]");
+                + "\n[c/ffea9b:A sentient treasure, cursed to judge those who wield it]");
             Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(4, 4));
             ItemID.Sets.AnimatesAsSoul[Item.type] = true;
 
@@ -68,7 +68,7 @@ namespace Redemption.Items.Usable
                 else if (RedeWorld.alignment >= -3 && RedeWorld.alignment <= -2)
                     RedeSystem.Instance.ChaliceUIElement.DisplayDialogue("Be wary, you are straying from the path of good...", 120, 30, 0, Color.DarkGoldenrod);
                 else if (RedeWorld.alignment >= -5 && RedeWorld.alignment <= -4)
-                    RedeSystem.Instance.ChaliceUIElement.DisplayDialogue("You are really pushing it aren't you... If you continue this road, he will come...", 120, 30, 0, Color.DarkGoldenrod);
+                    RedeSystem.Instance.ChaliceUIElement.DisplayDialogue("You are really pushing it aren't you... If you continue down this road, justice will await you.", 120, 30, 0, Color.DarkGoldenrod);
                 else if (RedeWorld.alignment >= 4 && RedeWorld.alignment <= 5)
                     RedeSystem.Instance.ChaliceUIElement.DisplayDialogue("I am proud of you for keeping the light within you bright...", 120, 30, 0, Color.DarkGoldenrod);
                 else if (RedeWorld.alignment >= -7 && RedeWorld.alignment <= -6)

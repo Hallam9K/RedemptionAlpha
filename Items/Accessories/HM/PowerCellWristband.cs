@@ -9,19 +9,20 @@ using Terraria.ModLoader;
 namespace Redemption.Items.Accessories.HM
 {
     public class PowerCellWristband : ModItem
-	{
-		public override void SetStaticDefaults()
-		{
+    {
+        public override void SetStaticDefaults()
+        {
             DisplayName.SetDefault("Power Cell Wristband");
             Tooltip.SetDefault("4% increased critical strike chance for " + ElementID.FireS + " and " + ElementID.HolyS + " elemental weapons\n" +
                 "Stacks if both elements are present\n" +
                 "An aura of fire surrounds you while holding a " + ElementID.FireS + " or " + ElementID.HolyS + " elemental weapon\n" +
                 "'Fueled with the sun itself'");
             SacrificeTotal = 1;
+            ElementID.ItemFire[Type] = true;
         }
 
         public override void SetDefaults()
-		{
+        {
             Item.width = 22;
             Item.height = 22;
             Item.value = Item.sellPrice(0, 6, 0, 0);
@@ -41,7 +42,7 @@ namespace Redemption.Items.Accessories.HM
         }
         private int timer;
         public override void UpdateAccessory(Player player, bool hideVisual)
-		{
+        {
             if (player.whoAmI == Main.myPlayer && player.active && !player.dead && (player.HeldItem.HasElementItem(ElementID.Fire) || player.HeldItem.HasElementItem(ElementID.Holy)))
             {
                 if (timer++ % 30 == 0)
@@ -50,13 +51,13 @@ namespace Redemption.Items.Accessories.HM
                 for (int i = 0; i < Main.maxNPCs; i++)
                 {
                     NPC npc = Main.npc[i];
-                    if (!npc.active || !npc.CanBeChasedBy() || player.DistanceSQ(npc.Center) > 280 * 280)
+                    if (!npc.active || !npc.CanBeChasedBy() || NPCLoader.CanBeHitByItem(npc, player, Item) is false || player.DistanceSQ(npc.Center) > 280 * 280)
                         continue;
 
                     npc.AddBuff(BuffID.OnFire3, 4);
                 }
             }
             player.RedemptionPlayerBuff().powerCell = true;
-		}
+        }
     }
 }

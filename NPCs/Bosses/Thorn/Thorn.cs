@@ -146,20 +146,20 @@ namespace Redemption.NPCs.Bosses.Thorn
                 else if (Main.netMode == NetmodeID.SinglePlayer)
                     Main.NewText(Language.GetTextValue(status), Color.LawnGreen);
 
-                RedeWorld.alignment++;
+                RedeWorld.alignment += 2;
                 for (int p = 0; p < Main.maxPlayers; p++)
                 {
                     Player player = Main.player[p];
                     if (!player.active)
                         continue;
 
-                    CombatText.NewText(player.getRect(), Color.Gold, "+1", true, false);
+                    CombatText.NewText(player.getRect(), Color.Gold, "+2", true, false);
 
                     if (!player.HasItem(ModContent.ItemType<AlignmentTeller>()))
                         continue;
 
                     if (!Main.dedServ)
-                        RedeSystem.Instance.ChaliceUIElement.DisplayDialogue("Nice work, the forest is safe now.", 120, 30, 0, Color.DarkGoldenrod);
+                        RedeSystem.Instance.ChaliceUIElement.DisplayDialogue("The blight should quell with this unfortunate warden slain.", 300, 30, 0, Color.DarkGoldenrod);
 
                 }
             }

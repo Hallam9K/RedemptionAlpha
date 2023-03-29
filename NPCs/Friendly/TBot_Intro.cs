@@ -10,7 +10,7 @@ using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using Redemption.Dusts;
 using Terraria.GameContent.UI;
-using Redemption.UI;
+using Redemption.UI.ChatUI;
 
 namespace Redemption.NPCs.Friendly
 {
@@ -102,11 +102,11 @@ namespace Redemption.NPCs.Friendly
                         if (AITimer++ == 18 && !Main.dedServ)
                         {
                             DialogueChain chain = new();
-                            chain.Add(new(NPC, "HUH?", Color.LightGreen, Color.DarkGreen, null, 3, 100, 0, false)) // 112
-                                 .Add(new(NPC, "How-[10] Wh-[10] I-", Color.LightGreen, Color.DarkGreen, boxFade: true, endID: 1)); // 183
+                            chain.Add(new(NPC, "HUH?", Color.LightGreen, Color.DarkGreen, null, .05f, 2, 0, false)) // 112
+                                 .Add(new(NPC, "How-[0.1] Wh-[0.1] I-", Color.LightGreen, Color.DarkGreen, null, .05f, 2, .5f, boxFade: true, endID: 1)); // 183
                             chain.OnEndTrigger += Chain_OnEndTrigger;
-                            TextBubbleUI.Visible = true;
-                            TextBubbleUI.Add(chain);
+                            ChatUI.Visible = true;
+                            ChatUI.Add(chain);
                         }
                         if (AITimer >= 1000)
                         {
@@ -120,11 +120,11 @@ namespace Redemption.NPCs.Friendly
                         if (AITimer++ == 18 && !Main.dedServ)
                         {
                             DialogueChain chain = new();
-                            chain.Add(new(NPC, "AH!", Color.LightGreen, Color.DarkGreen, null, 3, 100, 0, false)) // 109
-                                 .Add(new(NPC, "...I-[10]I thought you were someone else.[30] Sorry about that.", Color.LightGreen, Color.DarkGreen, null, boxFade: true, endID: 1)); // 335
+                            chain.Add(new(NPC, "AH!", Color.LightGreen, Color.DarkGreen, null, .05f, 2, 0, false)) // 109
+                                 .Add(new(NPC, "...I-[0.1]I thought you were someone else.[0.5] Sorry about that.", Color.LightGreen, Color.DarkGreen, null, .05f, 2, .5f, boxFade: true, endID: 1)); // 335
                             chain.OnEndTrigger += Chain_OnEndTrigger;
-                            TextBubbleUI.Visible = true;
-                            TextBubbleUI.Add(chain);
+                            ChatUI.Visible = true;
+                            ChatUI.Add(chain);
                         }
                         if (AITimer >= 1000)
                         {
@@ -142,13 +142,13 @@ namespace Redemption.NPCs.Friendly
                         if (AITimer++ == 5 && !Main.dedServ)
                         {
                             DialogueChain chain = new();
-                            chain.Add(new(NPC, "*Sigh*[10] I wasn't expecting to see the likes of us here.", Color.LightGreen, Color.DarkGreen, null, 3, 100, 0, false)) // 272
-                                 .Add(new(NPC, "Not going back there now.[30] Since you're here and not there,[10] I can safely assume you're not with Her..?", Color.LightGreen, Color.DarkGreen, boxFade: true)) // 473
-                                 .Add(new(NPC, "[@a]...Alright.[30] We can safely ignore each other then.", Color.LightGreen, Color.DarkGreen, boxFade: true, endID: 1)); // 307
+                            chain.Add(new(NPC, "*Sigh*[0.1] I wasn't expecting to see the likes of us here.", Color.LightGreen, Color.DarkGreen, null, .05f, 2, 0, false)) // 272
+                                 .Add(new(NPC, "Not going back there now.[0.5] Since you're here and not there,[0.1] I can safely assume you're not with Her..?", Color.LightGreen, Color.DarkGreen, null, .05f, 2, .5f, boxFade: true)) // 473
+                                 .Add(new(NPC, "[@a]...Alright.[0.5] We can safely ignore each other then.", Color.LightGreen, Color.DarkGreen, null, .05f, 2, .5f, boxFade: true, endID: 1)); // 307
                             chain.OnSymbolTrigger += Chain_OnSymbolTrigger;
                             chain.OnEndTrigger += Chain_OnEndTrigger;
-                            TextBubbleUI.Visible = true;
-                            TextBubbleUI.Add(chain);
+                            ChatUI.Visible = true;
+                            ChatUI.Add(chain);
 
                             EmoteBubble.NewBubble(1, new WorldUIAnchor(NPC), 272);
                         }
@@ -166,21 +166,21 @@ namespace Redemption.NPCs.Friendly
                         if (AITimer++ == 5 && !Main.dedServ)
                         {
                             DialogueChain chain = new();
-                            chain.Add(new(NPC, "Anyways,[10] hello.[30] I'm Adam,[10] and I'm an Android originating from a faraway snowy wasteland.", Color.LightGreen, Color.DarkGreen, null, 3, 100, 0, false)) // 414
-                                 .Add(new(NPC, "[@b]Seeing as I won't be returning to that frozen hell for a good while,[10] mind if I stay here?[30] I assume you've some shelter to stay at.", Color.LightGreen, Color.DarkGreen, boxFade: true, endID: 1)); // 560
+                            chain.Add(new(NPC, "Anyways,[0.1] hello.[0.5] I'm Adam,[0.1] and I'm an Android originating from a faraway snowy wasteland.", Color.LightGreen, Color.DarkGreen, null, .05f, 2, 0, false)) // 414
+                                 .Add(new(NPC, "[@b]Seeing as I won't be returning to that frozen hell for a good while,[0.1] mind if I stay here?[0.5] I assume you've some shelter to stay at.", Color.LightGreen, Color.DarkGreen, null, .05f, 2, .5f, boxFade: true, endID: 1)); // 560
                             chain.OnSymbolTrigger += Chain_OnSymbolTrigger;
                             chain.OnEndTrigger += Chain_OnEndTrigger;
-                            TextBubbleUI.Visible = true;
-                            TextBubbleUI.Add(chain);
+                            ChatUI.Visible = true;
+                            ChatUI.Add(chain);
                         }
                         if (AITimer == 3000 && !Main.dedServ)
                         {
-                            Dialogue d4 = new(NPC, "...The resemblance between them is uncanny...", Color.LightGreen, Color.DarkGreen, boxFade: true); // 265
+                            Dialogue d4 = new(NPC, "...The resemblance between them is uncanny...", Color.LightGreen, Color.DarkGreen, null, .05f, 2, .5f, boxFade: true); // 265
 
                             EmoteBubble.NewBubble(10, new WorldUIAnchor(NPC), 265);
                             NPC.spriteDirection = -NPC.spriteDirection;
-                            TextBubbleUI.Visible = true;
-                            TextBubbleUI.Add(d4);
+                            ChatUI.Visible = true;
+                            ChatUI.Add(d4);
                         }
                         if (AITimer >= 3265)
                         {

@@ -14,6 +14,7 @@ namespace Redemption.Tiles.Furniture.Lab
             Main.tileLavaDeath[Type] = false;
             Main.tileNoAttach[Type] = true;
             Main.tileTable[Type] = false;
+            TileID.Sets.FramesOnKillWall[Type] = true;
             TileObjectData.newTile.Width = 2;
             TileObjectData.newTile.Height = 2;
             TileObjectData.newTile.CoordinateHeights = new int[] { 16, 16 };

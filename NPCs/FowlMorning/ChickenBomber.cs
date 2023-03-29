@@ -14,6 +14,7 @@ using Redemption.NPCs.Bosses.FowlEmperor;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria.GameContent;
 using Redemption.Biomes;
+using Redemption.Items.Placeable.Banners;
 
 namespace Redemption.NPCs.FowlMorning
 {
@@ -41,6 +42,8 @@ namespace Redemption.NPCs.FowlMorning
             NPC.noGravity = true;
             NPC.noTileCollide = true;
             SpawnModBiomes = new int[1] { ModContent.GetInstance<FowlMorningBiome>().Type };
+            Banner = NPC.type;
+            BannerItem = ModContent.ItemType<ChickenBomberBanner>();
         }
         public override void HitEffect(int hitDirection, double damage)
         {
@@ -97,7 +100,7 @@ namespace Redemption.NPCs.FowlMorning
             {
                 int p = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center + new Vector2(0, 11), Vector2.Zero, ModContent.ProjectileType<Rooster_EggBomb>(), NPCHelper.HostileProjDamage(NPC.damage), 3);
                 Main.projectile[p].rotation = MathHelper.PiOver2 * NPC.spriteDirection;
-                Main.projectile[p].netUpdate2 = true;
+                Main.projectile[p].netUpdate = true;
                 bombOpacity = 0;
                 NPC.ai[3] = 1;
             }
@@ -126,7 +129,7 @@ namespace Redemption.NPCs.FowlMorning
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<EggBomb>(), 2, 4, 6));
-            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<GreneggLauncher>(), 25));
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<GreneggLauncher>(), 60));
             npcLoot.Add(ItemDropRule.ByCondition(new OnFireCondition(), ModContent.ItemType<FriedChicken>(), 4));
         }
         public override void OnHitByItem(Player player, Item item, int damage, float knockback, bool crit)

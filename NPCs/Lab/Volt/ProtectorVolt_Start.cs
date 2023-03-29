@@ -11,8 +11,9 @@ using Terraria.Audio;
 using Redemption.Base;
 using ReLogic.Content;
 using Redemption.WorldGeneration;
-using Redemption.UI;
 using Redemption.Biomes;
+using Redemption.UI.ChatUI;
+using Terraria.Graphics.CameraModifiers;
 
 namespace Redemption.NPCs.Lab.Volt
 {
@@ -93,10 +94,10 @@ namespace Redemption.NPCs.Lab.Volt
                             if (AITimer == 40 && !Main.dedServ)
                             {
                                 DialogueChain chain = new();
-                                chain.Add(new(NPC, "Halt!", Colors.RarityYellow, new Color(100, 86, 0), voice, 2, 100, 0, false, modifier: modifier)) // 110
-                                     .Add(new(NPC, "You aren't supposed to be here!", Colors.RarityYellow, new Color(100, 86, 0), voice, 2, 100, 30, true, modifier: modifier)); // 192
-                                TextBubbleUI.Visible = true;
-                                TextBubbleUI.Add(chain);
+                                chain.Add(new(NPC, "Halt!", Colors.RarityYellow, new Color(100, 86, 0), voice, .03f, 2f, 0, false, modifier: modifier)) // 110
+                                     .Add(new(NPC, "You aren't supposed to be here!", Colors.RarityYellow, new Color(100, 86, 0), voice, .03f, 2f, .5f, true, modifier: modifier)); // 192
+                                ChatUI.Visible = true;
+                                ChatUI.Add(chain);
                             }
                             if (AITimer == 342)
                             {
@@ -108,6 +109,9 @@ namespace Redemption.NPCs.Lab.Volt
 
                                 if (!Main.dedServ)
                                     SoundEngine.PlaySound(CustomSounds.EarthBoom, NPC.position);
+
+                                PunchCameraModifier camPunch = new(NPC.Center, new Vector2(0f, -1f), 20f, 6f, 30, 1000f, "Volt");
+                                Main.instance.CameraModifiers.Add(camPunch);
 
                                 for (int i = 0; i < 40; i++)
                                     Dust.NewDust(NPC.BottomLeft, Main.rand.Next(NPC.width), 1, DustID.Smoke, 0, 0, 0, default, 2f);
@@ -137,13 +141,13 @@ namespace Redemption.NPCs.Lab.Volt
                         if (AITimer == 40 && !Main.dedServ)
                         {
                             DialogueChain chain = new();
-                            chain.Add(new(NPC, "Hm? Are you supposed to be let through?", Colors.RarityYellow, new Color(100, 86, 0), voice, 2, 100, 0, false, modifier: modifier)) // 178
-                                 .Add(new(NPC, "One second...", Colors.RarityYellow, new Color(100, 86, 0), voice, 2, 100, 0, false, modifier: modifier)) // 126
-                                 .Add(new(NPC, ".[20].[20].[20]", Colors.RarityYellow, new Color(100, 86, 0), voice, 2, 100, 0, false, modifier: modifier)) // 166
-                                 .Add(new(NPC, "Everything seems to be in order.[30] Move along.", Colors.RarityYellow, new Color(100, 86, 0), voice, 2, 100, 30, true, modifier: modifier, endID: 1)); // 248
+                            chain.Add(new(NPC, "Hm? Are you supposed to be let through?", Colors.RarityYellow, new Color(100, 86, 0), voice, .03f, 2f, 0, false, modifier: modifier)) // 178
+                                 .Add(new(NPC, "One second...", Colors.RarityYellow, new Color(100, 86, 0), voice, .03f, 2f, 0, false, modifier: modifier)) // 126
+                                 .Add(new(NPC, ".[0.3].[0.3].[0.3]", Colors.RarityYellow, new Color(100, 86, 0), voice, .03f, 2f, 0, false, modifier: modifier)) // 166
+                                 .Add(new(NPC, "Everything seems to be in order.[0.5] Move along.", Colors.RarityYellow, new Color(100, 86, 0), voice, .03f, 2f, .5f, true, modifier: modifier, endID: 1)); // 248
                             chain.OnEndTrigger += Chain_OnEndTrigger;
-                            TextBubbleUI.Visible = true;
-                            TextBubbleUI.Add(chain);
+                            ChatUI.Visible = true;
+                            ChatUI.Add(chain);
                         }
                         if (AITimer > 2000)
                         {

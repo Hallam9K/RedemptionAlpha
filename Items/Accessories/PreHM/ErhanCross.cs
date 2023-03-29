@@ -68,7 +68,7 @@ namespace Redemption.Items.Accessories.PreHM
         public override void AI()
         {
             Player player = Main.player[Projectile.owner];
-            if (!player.active || player.HasBuff<ErhanCrossCooldown>() || !player.RedemptionPlayerBuff().erhanCross)
+            if (!player.active || player.dead || player.HasBuff<ErhanCrossCooldown>() || !player.RedemptionPlayerBuff().erhanCross)
                 Projectile.Kill();
 
             Projectile.timeLeft = 10;

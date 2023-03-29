@@ -40,8 +40,6 @@ using Redemption.Items.Weapons.PreHM.Summon;
 using Redemption.NPCs.Bosses.FowlEmperor;
 using Redemption.NPCs.FowlMorning;
 using Redemption.Items;
-using Terraria.Achievements;
-using System;
 
 namespace Redemption.CrossMod
 {
@@ -57,10 +55,10 @@ namespace Redemption.CrossMod
         private static void PerformAchievementSupport()
         {
             Redemption mod = Redemption.Instance;
-            if (ModLoader.TryGetMod("TMLAchievements", out Mod ach))
+            /*if (ModLoader.TryGetMod("TMLAchievements", out Mod ach))
             {
                 ach.Call("AddAchievement", mod, "PZKill", AchievementCategory.Slayer, "Redemption/Textures/Achievements/Ach_PZ", null, false, true, 37f, new string[] { "Kill_" + ModContent.NPCType<PZ>() });
-            }
+            }*/
         }
         private static void PerformBossChecklistSupport()
         {
@@ -226,7 +224,7 @@ namespace Redemption.CrossMod
                         ModContent.ItemType<StonePuppet>(),
                         ModContent.ItemType<ForestBossBox>(),
                     },
-                    ModContent.ItemType<EaglecrestSpelltome>(), "Naturally spawns at day after Eater of Worlds/Brain of Cthulhu is defeated.",
+                    ModContent.ItemType<EaglecrestSpelltome>(), "Naturally spawns on the surface at day after Eater of Worlds/Brain of Cthulhu is defeated.",
                     null,
                     (SpriteBatch sb, Rectangle rect, Color color) =>
                     {
@@ -478,7 +476,7 @@ namespace Redemption.CrossMod
                 censusMod.Call("TownNPCCondition", ModContent.NPCType<Fallen>(), "Defeat the Keeper and have a suitable house");
                 censusMod.Call("TownNPCCondition", ModContent.NPCType<Newb>(), "Dig up the dirt mound beneath the surface portal");
                 censusMod.Call("TownNPCCondition", ModContent.NPCType<TBot>(), "Defeat the Seed of Infection and have a suitable house");
-                censusMod.Call("TownNPCCondition", ModContent.NPCType<ForestNymph_Friendly>(), "Use the [i:" + ModContent.ItemType<KingsOakStaff>() + "] to gain a Forest Nymph's trust, requires positive alignment");
+                censusMod.Call("TownNPCCondition", ModContent.NPCType<ForestNymph_Friendly>(), "Use the [i:" + ModContent.ItemType<KingsOakStaff>() + "] to gain a Forest Nymph's trust, requires positive alignment.\nRequires +3 alignment if a Treebark Dryad was slain.");
             }
         }
         private static void PerformFargosSupport()

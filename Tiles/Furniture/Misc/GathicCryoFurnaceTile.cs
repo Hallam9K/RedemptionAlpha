@@ -1,6 +1,5 @@
 using Microsoft.Xna.Framework;
 using Redemption.Dusts.Tiles;
-using Redemption.Items.Placeable.Furniture.ElderWood;
 using Redemption.Items.Placeable.Furniture.Misc;
 using Terraria;
 using Terraria.DataStructures;
@@ -25,6 +24,7 @@ namespace Redemption.Tiles.Furniture.Misc
 			name.SetDefault("Gathic Cryo-Furnace");
 			AddMapEntry(new Color(81, 72, 65), name);
             DustType = ModContent.DustType<SlateDust>();
+            HitSound = CustomSounds.StoneHit;
             AdjTiles = new int[] { TileID.Furnaces };
             AnimationFrameHeight = 36;
         }

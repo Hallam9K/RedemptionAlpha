@@ -510,7 +510,7 @@ namespace Redemption.NPCs.Lab.MACE
                                                 RedeHelper.PolarVector(6, MathHelper.ToRadians(45) * i), ProjectileID.MartianTurretBolt, NPCHelper.HostileProjDamage(NPC.damage), 0, Main.myPlayer);
                                             Main.projectile[proj].tileCollide = false;
                                             Main.projectile[proj].timeLeft = 200;
-                                            Main.projectile[proj].netUpdate2 = true;
+                                            Main.projectile[proj].netUpdate = true;
                                         }
                                         for (int i = 0; i < 18; i++)
                                         {
@@ -518,7 +518,7 @@ namespace Redemption.NPCs.Lab.MACE
                                                 RedeHelper.PolarVector(5, MathHelper.ToRadians(20) * i), ProjectileID.MartianTurretBolt, NPCHelper.HostileProjDamage(NPC.damage), 0, Main.myPlayer);
                                             Main.projectile[proj].tileCollide = false;
                                             Main.projectile[proj].timeLeft = 200;
-                                            Main.projectile[proj].netUpdate2 = true;
+                                            Main.projectile[proj].netUpdate = true;
                                         }
                                     }
                                     for (int i = 0; i < 2; i++)
@@ -581,14 +581,14 @@ namespace Redemption.NPCs.Lab.MACE
                                         int proj = Projectile.NewProjectile(NPC.GetSource_FromAI(), new Vector2(TimerRand == 0 ? NPC.position.X : NPC.Right.X, NPC.Center.Y), RedeHelper.PolarVector(8, MathHelper.ToRadians(24) * i), ProjectileID.MartianTurretBolt, NPCHelper.HostileProjDamage(NPC.damage), 0, Main.myPlayer);
                                         Main.projectile[proj].tileCollide = false;
                                         Main.projectile[proj].timeLeft = 200;
-                                        Main.projectile[proj].netUpdate2 = true;
+                                        Main.projectile[proj].netUpdate = true;
                                     }
                                     for (int i = 0; i < 20; i++)
                                     {
                                         int proj = Projectile.NewProjectile(NPC.GetSource_FromAI(), new Vector2(TimerRand == 0 ? NPC.position.X : NPC.Right.X, NPC.Center.Y), RedeHelper.PolarVector(7, MathHelper.ToRadians(18) * i), ProjectileID.MartianTurretBolt, NPCHelper.HostileProjDamage(NPC.damage), 0, Main.myPlayer);
                                         Main.projectile[proj].tileCollide = false;
                                         Main.projectile[proj].timeLeft = 200;
-                                        Main.projectile[proj].netUpdate2 = true;
+                                        Main.projectile[proj].netUpdate = true;
                                     }
                                 }
                                 for (int i = 0; i < 6; i++)

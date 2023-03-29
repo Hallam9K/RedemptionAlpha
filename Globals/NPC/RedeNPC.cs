@@ -36,7 +36,9 @@ using Redemption.Items.Weapons.HM.Summon;
 using Redemption.Items.Donator.Lordfunnyman;
 using Redemption.Globals.World;
 using Redemption.Buffs.Cooldowns;
-using Steamworks;
+using Redemption.Items.Weapons.PreHM.Ranged;
+using Redemption.WorldGeneration.Misc;
+using SubworldLibrary;
 
 namespace Redemption.Globals.NPC
 {
@@ -52,12 +54,12 @@ namespace Redemption.Globals.NPC
 
         public override void SetupShop(int type, Chest shop, ref int nextSlot)
         {
+            if (type == NPCID.Demolitionist && Main.LocalPlayer.HasItem(ModContent.ItemType<GreneggLauncher>()))
+                shop.item[nextSlot++].SetDefaults(ModContent.ItemType<EggBomb>());
             if (type == NPCID.SkeletonMerchant)
                 shop.item[nextSlot++].SetDefaults(ModContent.ItemType<CalciteWand>());
             if (type == NPCID.Dryad)
                 shop.item[nextSlot++].SetDefaults(ModContent.ItemType<DruidHat>());
-            if (type == NPCID.Cyborg)
-                shop.item[nextSlot++].SetDefaults(ModContent.ItemType<GlobalDischarge>());
             if (type == NPCID.Clothier)
             {
                 if (RedeBossDowned.downedThorn)
@@ -89,7 +91,11 @@ namespace Redemption.Globals.NPC
         public override bool StrikeNPC(Terraria.NPC npc, ref double damage, int defense, ref float knockback, int hitDirection, ref bool crit)
         {
             if (spiritSummon)
+            {
                 damage *= .75f;
+                if (Main.expertMode)
+                    damage /= Main.masterMode ? 3 : 2;
+            }
 
             return base.StrikeNPC(npc, ref damage, defense, ref knockback, hitDirection, ref crit);
         }
@@ -124,20 +130,21 @@ namespace Redemption.Globals.NPC
         public override void ModifyHitByItem(Terraria.NPC npc, Terraria.Player player, Item item, ref int damage, ref float knockback, ref bool crit)
         {
             // Decapitation
-            if (npc.life < npc.lifeMax && item.CountsAsClass(DamageClass.Melee) && item.pick == 0 && item.hammer == 0 && !item.noUseGraphic && item.damage > 0 && item.useStyle == ItemUseStyleID.Swing && NPCLists.SkeletonHumanoid.Contains(npc.type))
+            bool humanoid = NPCLists.SkeletonHumanoid.Contains(npc.type) || NPCLists.Humanoid.Contains(npc.type);
+            if (npc.life < npc.lifeMax && npc.life < item.damage * 100 && item.CountsAsClass(DamageClass.Melee) && item.pick == 0 && item.hammer == 0 && !item.noUseGraphic && item.damage > 0 && item.useStyle == ItemUseStyleID.Swing && humanoid)
             {
                 if (Main.rand.NextBool(200) && !ItemLists.BluntSwing.Contains(item.type))
                 {
                     CombatText.NewText(npc.getRect(), Color.Orange, "Decapitated!");
                     decapitated = true;
-                    damage = damage < npc.life ? npc.life : damage;
+                    damage = npc.life;
                     crit = true;
                 }
                 else if (Main.rand.NextBool(80) && (item.axe > 0 || item.Redemption().TechnicallyAxe) && item.type != ModContent.ItemType<BeardedHatchet>())
                 {
                     CombatText.NewText(npc.getRect(), Color.Orange, "Decapitated!");
                     decapitated = true;
-                    damage = damage < npc.life ? npc.life : damage;
+                    damage = npc.life;
                     crit = true;
                 }
             }
@@ -294,11 +301,13 @@ namespace Redemption.Globals.NPC
         }
         public override void ModifyNPCLoot(Terraria.NPC npc, NPCLoot npcLoot)
         {
-            if (NPCLists.SkeletonHumanoid.Contains(npc.type))
+            if (NPCLists.SkeletonHumanoid.Contains(npc.type) || NPCLists.Humanoid.Contains(npc.type))
             {
                 DecapitationCondition decapitationDropCondition = new();
                 IItemDropRule conditionalRule = new LeadingConditionRule(decapitationDropCondition);
-                int itemType = ItemID.Skull;
+                int itemType = ItemID.None;
+                if (NPCLists.SkeletonHumanoid.Contains(npc.type))
+                    itemType = ItemID.Skull;
                 if (npc.type == ModContent.NPCType<CorpseWalkerPriest>())
                     itemType = ModContent.ItemType<CorpseWalkerSkullVanity>();
                 else if (npc.type == ModContent.NPCType<EpidotrianSkeleton>() || npc.type == ModContent.NPCType<SkeletonAssassin>() ||
@@ -306,10 +315,21 @@ namespace Redemption.Globals.NPC
                     npc.type == ModContent.NPCType<SkeletonNoble>() || npc.type == ModContent.NPCType<SkeletonWanderer>() ||
                     npc.type == ModContent.NPCType<SkeletonWarden>())
                     itemType = ModContent.ItemType<EpidotrianSkull>();
+                else if (npc.type is NPCID.RockGolem)
+                    itemType = ItemID.RockGolemHead;
+                else if (npc.type is NPCID.Medusa)
+                    itemType = ItemID.MedusaHead;
+                else if (npc.type is NPCID.DesertLamiaLight or NPCID.DesertLamiaDark)
+                    itemType = ItemID.LamiaHat;
+                else if (npc.type is NPCID.Mummy or NPCID.BloodMummy or NPCID.DarkMummy or NPCID.LightMummy)
+                    itemType = ItemID.MummyMask;
 
-                IItemDropRule rule = ItemDropRule.Common(itemType);
-                conditionalRule.OnSuccess(rule);
-                npcLoot.Add(conditionalRule);
+                if (itemType is not ItemID.None)
+                {
+                    IItemDropRule rule = ItemDropRule.Common(itemType);
+                    conditionalRule.OnSuccess(rule);
+                    npcLoot.Add(conditionalRule);
+                }
             }
             if (npc.type is NPCID.BoneSerpentHead)
                 npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<SmolderedScale>(), 20));
@@ -317,7 +337,7 @@ namespace Redemption.Globals.NPC
                 npcLoot.Add(ItemDropRule.Food(ModContent.ItemType<Soulshake>(), 150));
             //if (npc.type is NPCID.AngryBones or NPCID.AngryBonesBig or NPCID.AngryBonesBigHelmet or NPCID.AngryBonesBigMuscle or NPCID.CursedSkull or NPCID.DarkCaster)
             //    npcLoot.Add(ItemDropRule.Food(ModContent.ItemType<Incisor>(), 100));
-            if (npc.type is NPCID.Demon or NPCID.VoodooDemon or NPCID.FireImp)
+            if (npc.type is NPCID.Demon or NPCID.VoodooDemon or NPCID.FireImp or NPCID.RedDevil)
                 npcLoot.Add(ItemDropRule.Food(ModContent.ItemType<ForgottenSword>(), 100));
             if (npc.type is NPCID.GraniteFlyer or NPCID.GraniteGolem)
             {
@@ -326,8 +346,6 @@ namespace Redemption.Globals.NPC
             }
             if (npc.type is NPCID.Dandelion)
                 npcLoot.Add(ItemDropRule.Food(ModContent.ItemType<GiantDandelion>(), 5));
-            if (npc.type is NPCID.MoonLordCore)
-                npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Keycard>()));
             if (npc.type is NPCID.Golem)
                 npcLoot.Add(ItemDropRule.ByCondition(new Conditions.NotExpert(), ModContent.ItemType<GolemStaff>(), 7));
             if (npc.type is NPCID.IceGolem or NPCID.RockGolem)
@@ -370,7 +388,7 @@ namespace Redemption.Globals.NPC
         }
         public override void EditSpawnPool(IDictionary<int, float> pool, NPCSpawnInfo spawnInfo)
         {
-            if (spawnInfo.Player.RedemptionScreen().cutscene && !RedeConfigClient.Instance.CameraLockDisable)
+            if ((spawnInfo.Player.RedemptionScreen().cutscene && !RedeConfigClient.Instance.CameraLockDisable) || SubworldSystem.IsActive<CSub>())
             {
                 pool.Clear();
                 return;

@@ -305,7 +305,16 @@ namespace Redemption.NPCs.Bosses.Keeper
                     if (NPC.alpha <= 0)
                     {
                         if (teddy)
+                        {
                             AIState = ActionState.Teddy;
+                            int teddyItem = Main.LocalPlayer.FindItem(ModContent.ItemType<AbandonedTeddy>());
+                            if (teddyItem >= 0)
+                            {
+                                Main.LocalPlayer.inventory[teddyItem].stack--;
+                                if (Main.LocalPlayer.inventory[teddyItem].stack <= 0)
+                                    Main.LocalPlayer.inventory[teddyItem] = new Item();
+                            }
+                        }
                         else
                             AIState = ActionState.Idle;
 
@@ -338,14 +347,29 @@ namespace Redemption.NPCs.Bosses.Keeper
                     }
                     if (NPC.dontTakeDamage ? AITimer == -1 : AITimer > 60)
                     {
-                        NPC.dontTakeDamage = false;
-                        AttackChoice();
-                        AITimer = 0;
-                        AIState = ActionState.Attacks;
-                        NPC.netUpdate = true;
+                        if (teddy)
+                        {
+                            AIState = ActionState.Teddy;
+                            int teddyItem = Main.LocalPlayer.FindItem(ModContent.ItemType<AbandonedTeddy>());
+                            if (teddyItem >= 0)
+                            {
+                                Main.LocalPlayer.inventory[teddyItem].stack--;
+                                if (Main.LocalPlayer.inventory[teddyItem].stack <= 0)
+                                    Main.LocalPlayer.inventory[teddyItem] = new Item();
+                            }
+                            AITimer = 0;
+                        }
+                        else
+                        {
+                            NPC.dontTakeDamage = false;
+                            AttackChoice();
+                            AITimer = 0;
+                            AIState = ActionState.Attacks;
+                            NPC.netUpdate = true;
 
-                        if (Main.netMode == NetmodeID.Server && NPC.whoAmI < Main.maxNPCs)
-                            NetMessage.SendData(MessageID.SyncNPC, number: NPC.whoAmI);
+                            if (Main.netMode == NetmodeID.Server && NPC.whoAmI < Main.maxNPCs)
+                                NetMessage.SendData(MessageID.SyncNPC, number: NPC.whoAmI);
+                        }
                     }
                     break;
                 case ActionState.Attacks:
@@ -712,7 +736,7 @@ namespace Redemption.NPCs.Bosses.Keeper
                     player.RedemptionScreen().cutscene = true;
                     NPC.LockMoveRadius(player);
                     Unveiled = true;
-
+                    NPC.velocity *= .94f;
                     if (!Main.dedServ)
                         Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/silence");
 
@@ -781,14 +805,14 @@ namespace Redemption.NPCs.Bosses.Keeper
                         NPC.Shoot(NPC.Center, ModContent.ProjectileType<KeeperSoul>(), 0, Vector2.Zero, false, SoundID.Item1);
                         if (!RedeBossDowned.keeperSaved)
                         {
-                            RedeWorld.alignment += 2;
+                            RedeWorld.alignment += 3;
                             for (int p = 0; p < Main.maxPlayers; p++)
                             {
                                 Player player2 = Main.player[p];
                                 if (!player2.active)
                                     continue;
 
-                                CombatText.NewText(player2.getRect(), Color.Gold, "+2", true, false);
+                                CombatText.NewText(player2.getRect(), Color.Gold, "+3", true, false);
 
                                 if (!player2.HasItem(ModContent.ItemType<AlignmentTeller>()))
                                     continue;

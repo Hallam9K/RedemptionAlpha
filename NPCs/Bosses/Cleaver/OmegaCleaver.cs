@@ -99,7 +99,7 @@ namespace Redemption.NPCs.Bosses.Cleaver
             NPC.friendly = false;
             NPC.damage = 110;
             NPC.defense = 60;
-            NPC.lifeMax = 55000;
+            NPC.lifeMax = 42000;
             NPC.HitSound = SoundID.NPCHit4;
             NPC.DeathSound = SoundID.NPCDeath14;
             NPC.npcSlots = 10f;

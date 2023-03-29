@@ -132,6 +132,18 @@ namespace Redemption.Globals
                 .AddTile(TileID.WorkBenches)
                 .Register();
 
+            Recipe.Create(ItemID.ChainKnife)
+                .AddIngredient<GraveSteelAlloy>(9)
+                .AddIngredient(ItemID.Chain, 3)
+                .AddTile(TileID.Anvils)
+                .Register();
+
+            Recipe.Create(ItemID.AncientChisel)
+                .AddIngredient<GraveSteelAlloy>(4)
+                .AddIngredient<ElderWood>(20)
+                .AddTile(TileID.Anvils)
+                .Register();
+
             // Living Furniture
             Recipe.Create(ItemID.LivingLoom)
                 .AddIngredient(ModContent.ItemType<LivingTwig>(), 10)
@@ -236,7 +248,7 @@ namespace Redemption.Globals
                 .Register();
             Recipe.Create(ItemID.LivingWoodClock)
                 .AddIngredient(ModContent.ItemType<LivingTwig>(), 10)
-                .AddRecipeGroup("IronBar", 3)
+                .AddRecipeGroup(RecipeGroupID.IronBar, 3)
                 .AddIngredient(ItemID.Glass, 6)
                 .AddTile(TileID.WorkBenches)
                 .Register();

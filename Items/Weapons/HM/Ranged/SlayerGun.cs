@@ -115,7 +115,7 @@ namespace Redemption.Items.Weapons.HM.Ranged
                         Main.projectile[proj].friendly = true;
                         Main.projectile[proj].DamageType = DamageClass.Ranged;
                         Main.projectile[proj].tileCollide = true;
-                        Main.projectile[proj].netUpdate2 = true;
+                        Main.projectile[proj].netUpdate = true;
                         break;
                     case 1:
                         player.itemAnimationMax = Item.useTime * 3;
@@ -134,7 +134,7 @@ namespace Redemption.Items.Weapons.HM.Ranged
                             Main.projectile[proj3].friendly = true;
                             Main.projectile[proj3].DamageType = DamageClass.Ranged;
                             Main.projectile[proj3].tileCollide = true;
-                            Main.projectile[proj3].netUpdate2 = true;
+                            Main.projectile[proj3].netUpdate = true;
                         }
                         player.GetModPlayer<EnergyPlayer>().statEnergy -= 6;
                         int proj2 = Projectile.NewProjectile(source, position, velocity, ModContent.ProjectileType<KS3_EnergyBolt>(), damage, knockback, player.whoAmI);
@@ -142,7 +142,7 @@ namespace Redemption.Items.Weapons.HM.Ranged
                         Main.projectile[proj2].friendly = true;
                         Main.projectile[proj2].DamageType = DamageClass.Ranged;
                         Main.projectile[proj2].tileCollide = true;
-                        Main.projectile[proj2].netUpdate2 = true;
+                        Main.projectile[proj2].netUpdate = true;
                         break;
                     case 2:
                         damage = (int)(damage * 1.4f);
@@ -154,7 +154,7 @@ namespace Redemption.Items.Weapons.HM.Ranged
                         Main.projectile[proj4].hostile = false;
                         Main.projectile[proj4].friendly = true;
                         Main.projectile[proj4].DamageType = DamageClass.Ranged;
-                        Main.projectile[proj4].netUpdate2 = true;
+                        Main.projectile[proj4].netUpdate = true;
                         break;
 
                 }

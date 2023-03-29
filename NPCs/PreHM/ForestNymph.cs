@@ -15,7 +15,7 @@ using Redemption.NPCs.Friendly;
 using Redemption.Particles;
 using Redemption.Projectiles.Hostile;
 using Redemption.Projectiles.Minions;
-using Redemption.UI;
+using Redemption.UI.ChatUI;
 using ReLogic.Content;
 using System;
 using System.IO;
@@ -599,24 +599,24 @@ namespace Redemption.NPCs.PreHM
                         EmoteBubble.NewBubble(87, new WorldUIAnchor(NPC), 120);
                     if (AITimer == 220)
                         EmoteBubble.NewBubble(10, new WorldUIAnchor(NPC), 60);
-                    if (AITimer == 300)
+                    if (AITimer == 300 && !Main.dedServ)
                     {
                         Texture2D bubble = ModContent.Request<Texture2D>("Redemption/UI/TextBubble_Epidotra").Value;
                         SoundStyle voice = CustomSounds.Voice3 with { Pitch = 1.3f };
 
                         string line1 = Personality switch
                         {
-                            PersonalityState.Calm => "Your fae says you're kind-hearted.[30] I will put it in good faith.",
-                            PersonalityState.Shy => "Your fae tells me you're safe.[30] I'm still rather sceptical,[10] but I'll trust it's words.",
-                            PersonalityState.Jolly => "Your fae just told me how pleasant you are.[30] A friend of nature is a friend of me.",
-                            PersonalityState.Aggressive => "Are you sure, fae?[30] This human doesn't look very kindly,[10] but I will trust your word.",
-                            _ => "Your fae says you have a good heart.[30] I will be less wary of you from now on.",
+                            PersonalityState.Calm => "Your fae says you're kind-hearted.[0.5] I will put it in good faith.",
+                            PersonalityState.Shy => "Your fae tells me you're safe.[0.5] I'm still rather sceptical,[0.1] but I'll trust it's words.",
+                            PersonalityState.Jolly => "Your fae just told me how pleasant you are.[0.5] A friend of nature is a friend of me.",
+                            PersonalityState.Aggressive => "Are you sure, fae?[0.5] This human doesn't look very kindly,[0.1] but I will trust your word.",
+                            _ => "Your fae says you have a good heart.[0.5] I will be less wary of you from now on.",
                         };
                         DialogueChain chain = new();
-                        chain.Add(new(NPC, line1 + "[@End]", Color.LightGreen, Color.ForestGreen, voice, 3, 100, 30, true, bubble: bubble));
+                        chain.Add(new(NPC, line1 + "[@End]", Color.LightGreen, Color.ForestGreen, voice, .05f, 2, .5f, true, bubble: bubble));
                         chain.OnSymbolTrigger += Chain_OnSymbolTrigger;
-                        TextBubbleUI.Visible = true;
-                        TextBubbleUI.Add(chain);
+                        ChatUI.Visible = true;
+                        ChatUI.Add(chain);
                     }
                     break;
             }

@@ -158,7 +158,7 @@ namespace Redemption.NPCs.Friendly
         public bool following;
         public override void SetChatButtons(ref string button, ref string button2)
         {
-            if (RedeWorld.alignment < 0)
+            if ((RedeWorld.alignment < 0 && !RedeBossDowned.downedTreebark) || (RedeWorld.alignment < 2 && RedeBossDowned.downedTreebark))
                 return;
             button2 = "Cycle Options";
             switch (ChatNumber)
@@ -480,7 +480,7 @@ namespace Redemption.NPCs.Friendly
         }
         private string ChitChat()
         {
-            WeightedRandom<string> chat = new();
+            WeightedRandom<string> chat = new(Main.rand);
             string bothChat = BothChat();
             if (bothChat != null)
                 chat.Add(bothChat);
@@ -499,8 +499,14 @@ namespace Redemption.NPCs.Friendly
         }
         private string BothChat()
         {
-            WeightedRandom<string> chat = new();
+            WeightedRandom<string> chat = new(Main.rand);
             Player player = Main.player[Main.myPlayer];
+            if (RedeBossDowned.downedTreebark)
+                chat.Add("A forewarning to you, I will never forget your act of felling towards the tree-folk. I only speak to you now for the good you have done despite that.");
+            if (RedeBossDowned.downedADD)
+                chat.Add("I had sensed the return of a great presence, however it was short-lived. You defeated her I presume? A wise decision - Akka was a friend of Nature only in soul. Her mind, however, was only filled with demand and grim desires. Ukko, her husband, was the same.");
+            if (RedeBossDowned.nukeDropped)
+                chat.Add("I do not approve of the horrific destruction you have caused to a portion of the land, what manner of power caused this? A blast that withers earth, mutates plant, and decays air. Such power is otherworldly.");
             if (BasePlayer.HasArmorSet(player, "Common Guard", true) || BasePlayer.HasArmorSet(player, "Common Guard", false))
             {
                 chat.Add("Common Guard, are you? Members of their troop used to lurk around the forests I came from. They got too close for comfort so I left and found the portal here.");
@@ -530,8 +536,8 @@ namespace Redemption.NPCs.Friendly
             Main.LocalPlayer.currentShoppingSettings.HappinessReport = "";
 
             Player player = Main.player[Main.myPlayer];
-            WeightedRandom<string> chat = new();
-            if (RedeWorld.alignment < 0)
+            WeightedRandom<string> chat = new(Main.rand);
+            if ((RedeWorld.alignment < 0 && !RedeBossDowned.downedTreebark) || (RedeWorld.alignment < 2 && RedeBossDowned.downedTreebark))
                 return "Leave. The fae's trust in you was an act of folly, the World deems you a danger.";
 
             if (Main.LocalPlayer.RedemptionAbility().SpiritwalkerActive)

@@ -85,7 +85,6 @@ namespace Redemption.Items.Weapons.HM.Magic
         public override void AddRecipes()
         {
             CreateRecipe()
-                .AddIngredient(ItemID.CrystalVileShard)
                 .AddIngredient(ItemID.SkyFracture)
                 .AddIngredient(ItemID.SoulofMight, 10)
                 .AddIngredient(ItemID.SoulofSight, 10)

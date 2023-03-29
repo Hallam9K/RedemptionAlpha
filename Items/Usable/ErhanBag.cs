@@ -10,6 +10,7 @@ using Redemption.Items.Weapons.PreHM.Ranged;
 using Redemption.Items.Accessories.PreHM;
 using Redemption.Items.Weapons.PreHM.Magic;
 using Terraria.GameContent.ItemDropRules;
+using Redemption.Items.Weapons.PreHM.Summon;
 
 namespace Redemption.Items.Usable
 {

@@ -17,6 +17,9 @@ using Terraria.GameContent.ItemDropRules;
 using Redemption.Items.Weapons.HM.Summon;
 using Redemption.Biomes;
 using Redemption.NPCs.Friendly;
+using Redemption.Tiles.Furniture.Misc;
+using Redemption.WorldGeneration.Misc;
+using SubworldLibrary;
 
 namespace Redemption.Globals
 {
@@ -45,6 +48,14 @@ namespace Redemption.Globals
         public override void MeleeEffects(Item item, Terraria.Player player, Rectangle hitbox)
         {
             player.Redemption().meleeHitbox = hitbox;
+            if (item.DamageType == DamageClass.Melee && player.HasBuff<ExplosiveFlaskBuff>())
+            {
+                if (Main.rand.NextBool(3))
+                    Dust.NewDust(item.position, item.width, item.height, DustID.Smoke);
+                if (Main.rand.NextBool(10))
+                    Dust.NewDust(item.position, item.width, item.height, DustID.InfernoFork);
+                item.GetGlobalItem<ElementalItem>().OverrideElement[ElementID.Explosive] = 1;
+            }
         }
         public override void ModifyItemLoot(Item item, ItemLoot itemLoot)
         {
@@ -208,7 +219,7 @@ namespace Redemption.Globals
 
         public override void PostUpdate(Item item)
         {
-            if ((item.type == ItemID.Heart || item.type == ItemID.CandyApple || item.type == ItemID.CandyCane) && Main.LocalPlayer.RedemptionPlayerBuff().heartInsignia)
+            if ((item.type is ItemID.Heart or ItemID.CandyApple or ItemID.CandyCane) && Main.LocalPlayer.RedemptionPlayerBuff().heartInsignia)
             {
                 if (!Main.rand.NextBool(6))
                     return;
@@ -219,7 +230,7 @@ namespace Redemption.Globals
                 Main.dust[sparkle].velocity.Y = -2;
                 Main.dust[sparkle].noGravity = true;
             }
-            if (item.type == ItemID.GoldCrown || item.type == ItemID.PlatinumCrown)
+            if (item.type is ItemID.GoldCrown or ItemID.PlatinumCrown)
             {
                 for (int i = 0; i < Main.maxNPCs; i++)
                 {
@@ -267,6 +278,17 @@ namespace Redemption.Globals
             if (player.InModBiome<LabBiome>() && !RedeBossDowned.downedPZ && item.type == ItemID.RodofDiscord)
                 return false;
 
+            #region C
+            Point coop = player.Center.ToTileCoordinates();
+            if (item.type is ItemID.TeleportationPotion && player.RedemptionPlayerBuff().ChickenForm && Framing.GetTileSafely(coop.X, coop.Y).TileType == ModContent.TileType<ChickenCoopTile>())
+            {
+                if (!SubworldSystem.AnyActive<Redemption>())
+                {
+                    SubworldSystem.Enter<CSub>();
+                    return false;
+                }
+            }
+            #endregion
             return base.CanUseItem(item, player);
         }
         public override void OnCreate(Item item, ItemCreationContext context)
@@ -275,8 +297,8 @@ namespace Redemption.Globals
                 RedeHelper.SpawnNPC(item.GetSource_FromAI(), (int)Main.LocalPlayer.Center.X, (int)Main.LocalPlayer.Center.Y, ModContent.NPCType<Chalice_Intro>());
         }
 
-        public const string axeBonus = "Axe Bonus: 3x critical strike damage, increased chance to decapitate skeletons";
-        public const string slashBonus = "Slash Bonus: Small chance to decapitate skeletons, killing them instantly";
+        public const string axeBonus = "Axe Bonus: 3x critical strike damage, increased chance to decapitate humanoid enemies";
+        public const string slashBonus = "Slash Bonus: Small chance to decapitate most humanoid enemies, killing them instantly";
         public const string hammerBonus = "Hammer Bonus: Deals quadruple damage to Guard Points";
         public override void ModifyTooltips(Item item, List<TooltipLine> tooltips)
         {

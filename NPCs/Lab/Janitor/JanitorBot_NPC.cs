@@ -9,7 +9,6 @@ using Redemption.Items.Tools.PostML;
 using Redemption.Items.Usable;
 using Redemption.Items.Usable.Summons;
 using Redemption.Tiles.Tiles;
-using Redemption.WorldGeneration;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -170,6 +169,8 @@ namespace Redemption.NPCs.Lab.Janitor
                 shop.item[nextSlot++].SetDefaults(ModContent.ItemType<BotHanger>());
                 shop.item[nextSlot++].SetDefaults(ModContent.ItemType<EmptyBotHanger>());
             }
+            if (RedeWorld.keycardGiven)
+                shop.item[nextSlot++].SetDefaults(ModContent.ItemType<Keycard>());
             if (RedeBossDowned.downedBlisterface)
                 shop.item[nextSlot++].SetDefaults(ModContent.ItemType<NanoPickaxe>());
         }

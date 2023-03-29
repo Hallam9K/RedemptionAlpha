@@ -1,4 +1,5 @@
 ﻿using Redemption.Buffs;
+using Redemption.Globals;
 using Redemption.Items.Materials.PreHM;
 using Terraria;
 using Terraria.ID;
@@ -10,7 +11,7 @@ namespace Redemption.Items.Usable.Potions
 	{
 		public override void SetStaticDefaults()
 		{
-            Tooltip.SetDefault("Greatly increased chance of Shadow Fuel to drop upon slaying enemies with Shadow weapons");
+            Tooltip.SetDefault("Greatly increased chance of Shadow Fuel to drop upon slaying enemies with " + ElementID.ShadowS + " weapons");
             SacrificeTotal = 20;
         }
 

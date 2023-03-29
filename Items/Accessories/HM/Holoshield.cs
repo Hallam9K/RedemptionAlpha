@@ -101,7 +101,7 @@ namespace Redemption.Items.Accessories.HM
 
             if (DashTimer > 0)
             {
-                Player.eocDash = DashTimer;
+                Player.eocDash = DashTimer - 1;
                 Player.armorEffectDrawShadowEOCShield = true;
 
                 if (ShieldHit < 0 && DashTimer > 15)
@@ -110,7 +110,7 @@ namespace Redemption.Items.Accessories.HM
                     for (int i = 0; i < Main.maxNPCs; i++)
                     {
                         NPC npc = Main.npc[i];
-                        if (!npc.active || npc.dontTakeDamage || npc.friendly)
+                        if (!npc.active || npc.dontTakeDamage || npc.friendly || NPCLoader.CanBeHitByItem(npc, Player, new Item(ModContent.ItemType<Holoshield>())) == false)
                             continue;
 
                         if (!hitbox.Intersects(npc.Hitbox) || !npc.noTileCollide && !Collision.CanHit(Player.position, Player.width, Player.height, npc.position, npc.width, npc.height))
@@ -147,6 +147,7 @@ namespace Redemption.Items.Accessories.HM
                         Player.velocity.X = -Player.velocity.X;
                         Player.velocity.Y = -4f;
                         ShieldHit = 1;
+                        DashTimer = 0;
                     }
                     for (int i = 0; i < Main.maxProjectiles; i++)
                     {
@@ -170,9 +171,9 @@ namespace Redemption.Items.Accessories.HM
                         Player.velocity.X = -Player.velocity.X;
                         Player.velocity.Y = -4f;
                         ShieldHit = 1;
+                        DashTimer = 0;
                     }
                 }
-
                 DashTimer--;
             }
         }

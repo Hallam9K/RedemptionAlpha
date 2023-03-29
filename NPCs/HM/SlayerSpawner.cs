@@ -13,6 +13,8 @@ using System.IO;
 using Terraria.ModLoader.Utilities;
 using Redemption.Biomes;
 using Redemption.Base;
+using Redemption.NPCs.Friendly;
+using SubworldLibrary;
 
 namespace Redemption.NPCs.HM
 {
@@ -226,13 +228,13 @@ namespace Redemption.NPCs.HM
         }
         public override float SpawnChance(NPCSpawnInfo spawnInfo)
         {
-            if (RedeWorld.slayerRep < 1 || !NPC.downedMoonlord || RedeWorld.slayerMessageGiven || RedeBossDowned.downedOmega3 || RedeBossDowned.downedNebuleus)
+            if (RedeWorld.slayerRep < 1 || RedeWorld.slayerRep >= 4 || !NPC.downedMoonlord || RedeWorld.slayerMessageGiven || RedeBossDowned.downedOmega3 || RedeBossDowned.downedNebuleus)
                 return 0;
-            if (spawnInfo.Player.InModBiome<SlayerShipBiome>())
+            if (spawnInfo.Player.InModBiome<SlayerShipBiome>() || SubworldSystem.Current != null)
                 return 0;
 
             float baseChance = SpawnCondition.OverworldDay.Chance;
-            float m = NPC.AnyNPCs(ModContent.NPCType<Android>()) || NPC.AnyNPCs(ModContent.NPCType<SlayerSpawner>()) ? 0 : 10;
+            float m = NPC.AnyNPCs(ModContent.NPCType<GiftDrone3>()) || NPC.AnyNPCs(ModContent.NPCType<Android>()) || NPC.AnyNPCs(Type) ? 0 : 10;
 
             return baseChance * m;
         }

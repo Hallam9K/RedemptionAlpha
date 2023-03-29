@@ -33,7 +33,8 @@ namespace Redemption.Tiles.Furniture.Misc
             MinPick = 0;
             MineResist = 1.2f;
 			ModTranslation name = CreateMapEntryName();
-			AddMapEntry(new Color(151, 107, 75), name);
+            name.SetDefault("Chicken Coop");
+            AddMapEntry(new Color(151, 107, 75), name);
 		}
         public override void RandomUpdate(int i, int j)
         {

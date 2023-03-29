@@ -48,7 +48,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
                 {
                     int p = Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, Projectile.velocity * 4, ModContent.ProjectileType<ChickenEgg_Proj>(), Projectile.damage, Projectile.knockBack, player.whoAmI);
                     Main.projectile[p].DamageType = DamageClass.Melee;
-                    Main.projectile[p].netUpdate2 = true;
+                    Main.projectile[p].netUpdate = true;
                     HitCount = 0;
                 }
                 SoundEngine.PlaySound(SoundID.Item1, Projectile.position);

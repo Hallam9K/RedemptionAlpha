@@ -5,6 +5,7 @@ using Terraria;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 using Terraria.DataStructures;
+using Terraria.ID;
 
 namespace Redemption.Tiles.Furniture.Lab
 {
@@ -15,6 +16,7 @@ namespace Redemption.Tiles.Furniture.Lab
 			Main.tileFrameImportant[Type] = true;
 			Main.tileLavaDeath[Type] = false;
             Main.tileNoAttach[Type] = true;
+            TileID.Sets.FramesOnKillWall[Type] = true;
             TileObjectData.newTile.Width = 2;
             TileObjectData.newTile.Height = 2;
             TileObjectData.newTile.CoordinateHeights = new int[] { 16, 16 };

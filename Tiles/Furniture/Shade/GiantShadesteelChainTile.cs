@@ -26,7 +26,7 @@ namespace Redemption.Tiles.Furniture.Shade
             AddMapEntry(new Color(83, 87, 123));
             MinPick = 500;
             MineResist = 10f;
-            HitSound = SoundID.Tink;
+            HitSound = CustomSounds.ChainHit;
         }
         public override bool CanExplode(int i, int j) => false;
         public override void NumDust(int i, int j, bool fail, ref int num) => num = fail ? 1 : 3;

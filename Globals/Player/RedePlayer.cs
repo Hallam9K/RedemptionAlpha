@@ -17,6 +17,7 @@ using Terraria.GameContent;
 using ReLogic.Content;
 using Redemption.WorldGeneration;
 using SubworldLibrary;
+using Redemption.WorldGeneration.Misc;
 
 namespace Redemption.Globals.Player
 {
@@ -88,7 +89,7 @@ namespace Redemption.Globals.Player
             }
             return true;
         }
-        public override void PostHurt(bool pvp, bool quiet, double damage, int hitDirection, bool crit, int cooldownCounter)
+        public override void Hurt(bool pvp, bool quiet, double damage, int hitDirection, bool crit, int cooldownCounter)
         {
             onHit = true;
         }
@@ -118,7 +119,7 @@ namespace Redemption.Globals.Player
                 Main.NewText("WARNING: Unable to locate important structure, new world is required!", Colors.RarityRed);
 
             if (RedeConfigClient.Instance.FunniAllWasteland || RedeConfigClient.Instance.FunniJanitor || RedeConfigClient.Instance.FunniSpiders || RedeConfigClient.Instance.FunniWasteland)
-                Main.NewText("CAUTION: You have a Funni config enabled that affects world gen. If you created a world just now, check which one you have enabled.", Colors.RarityOrange);
+                Main.NewText("CAUTION: You have a Funni config enabled that affects world gen. If you created a world just now, check which one you have enabled and disable it for next time.", Colors.RarityOrange);
         }
         public override void ModifyMaxStats(out StatModifier health, out StatModifier mana)
         {
@@ -150,6 +151,15 @@ namespace Redemption.Globals.Player
                     TextureAssets.Cursors[11] = cursor11;
                     TextureAssets.Cursors[12] = cursor12;
                 }
+            }
+            if (SubworldSystem.IsActive<CSub>())
+            {
+                Player.noBuilding = true;
+                Player.controlUseItem = false;
+                Player.controlUseTile = false;
+                Player.RedemptionScreen().lockScreen = true;
+                Player.RedemptionScreen().ScreenFocusPosition = new Vector2(100, 99) * 16;
+                Player.RedemptionScreen().interpolantTimer = 100;
             }
         }
         public override void CatchFish(FishingAttempt attempt, ref int itemDrop, ref int npcSpawn, ref AdvancedPopupRequest sonar, ref Vector2 sonarPosition)

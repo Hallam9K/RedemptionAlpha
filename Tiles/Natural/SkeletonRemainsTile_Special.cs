@@ -97,7 +97,7 @@ namespace Redemption.Tiles.Natural
                             int index1 = NPC.NewNPC(new EntitySource_TileInteraction(player, i, j), i * 16, (j + 1) * 16, ModContent.NPCType<SpiritWalkerMan>());
                             SoundEngine.PlaySound(SoundID.Item74, Main.npc[index1].position);
                             Main.npc[index1].velocity.Y -= 4;
-                            Main.npc[index1].netUpdate2 = true;
+                            Main.npc[index1].netUpdate = true;
                         }
                         else
                         {
@@ -219,7 +219,7 @@ namespace Redemption.Tiles.Natural
                         int index1 = NPC.NewNPC(new EntitySource_TileInteraction(player, i, j), (i + offset) * 16, (j + 1) * 16, ModContent.NPCType<SpiritAssassin>());
                         SoundEngine.PlaySound(SoundID.Item74, Main.npc[index1].position);
                         Main.npc[index1].velocity.Y -= 4;
-                        Main.npc[index1].netUpdate2 = true;
+                        Main.npc[index1].netUpdate = true;
                     }
                     else
                     {
@@ -334,7 +334,7 @@ namespace Redemption.Tiles.Natural
                         int index1 = NPC.NewNPC(new EntitySource_TileInteraction(player, i, j), (i + offset) * 16, (j + 1) * 16, ModContent.NPCType<SpiritCommonGuard>());
                         SoundEngine.PlaySound(SoundID.Item74, Main.npc[index1].position);
                         Main.npc[index1].velocity.Y -= 4;
-                        Main.npc[index1].netUpdate2 = true;
+                        Main.npc[index1].netUpdate = true;
                     }
                     else
                     {
@@ -449,7 +449,7 @@ namespace Redemption.Tiles.Natural
                         int index1 = NPC.NewNPC(new EntitySource_TileInteraction(player, i, j), (i + offset) * 16, (j + 1) * 16, ModContent.NPCType<SpiritGathicMan>());
                         SoundEngine.PlaySound(SoundID.Item74, Main.npc[index1].position);
                         Main.npc[index1].velocity.Y -= 4;
-                        Main.npc[index1].netUpdate2 = true;
+                        Main.npc[index1].netUpdate = true;
                     }
                     else
                     {
@@ -563,7 +563,7 @@ namespace Redemption.Tiles.Natural
                         int index1 = NPC.NewNPC(new EntitySource_TileInteraction(player, i, j), (i + offset) * 16, (j + 1) * 16, ModContent.NPCType<SpiritDruid>());
                         SoundEngine.PlaySound(SoundID.Item74, Main.npc[index1].position);
                         Main.npc[index1].velocity.Y -= 4;
-                        Main.npc[index1].netUpdate2 = true;
+                        Main.npc[index1].netUpdate = true;
                     }
                     else
                     {

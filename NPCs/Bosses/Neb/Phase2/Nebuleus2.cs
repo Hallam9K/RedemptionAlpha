@@ -24,7 +24,6 @@ using Redemption.BaseExtension;
 using Redemption.Items.Materials.PostML;
 using Terraria.DataStructures;
 using ReLogic.Content;
-using Redemption.NPCs.Lab.Volt;
 
 namespace Redemption.NPCs.Bosses.Neb.Phase2
 {
@@ -88,7 +87,7 @@ namespace Redemption.NPCs.Bosses.Neb.Phase2
 
         public override void SetDefaults()
         {
-            NPC.lifeMax = 400000;
+            NPC.lifeMax = 440000;
             NPC.defense = 85;
             NPC.damage = 180;
             NPC.width = 90;
@@ -139,7 +138,7 @@ namespace Redemption.NPCs.Bosses.Neb.Phase2
             }
             if (!RedeBossDowned.downedNebuleus)
             {
-                RedeWorld.alignment -= 4;
+                RedeWorld.alignment -= 6;
                 for (int p = 0; p < Main.maxPlayers; p++)
                 {
                     Player player = Main.player[p];

@@ -69,7 +69,7 @@ namespace Redemption.Projectiles.Magic
                     Main.projectile[proj].timeLeft = 300;
                     Main.projectile[proj].hostile = false;
                     Main.projectile[proj].friendly = true;
-                    Main.projectile[proj].netUpdate2 = true;
+                    Main.projectile[proj].netUpdate = true;
                 }
             }
             RedeDraw.SpawnExplosion(Projectile.Center, Color.LightCyan, scale: 2);

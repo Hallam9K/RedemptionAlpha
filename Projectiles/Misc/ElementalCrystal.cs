@@ -10,8 +10,6 @@ using Terraria.DataStructures;
 using Redemption.Dusts;
 using Terraria.GameContent;
 using System;
-using Redemption.Buffs.Minions;
-using static Humanizer.In;
 using Redemption.Buffs;
 
 namespace Redemption.Projectiles.Misc
@@ -44,30 +42,6 @@ namespace Redemption.Projectiles.Misc
         public int speed;
         public override void OnSpawn(IEntitySource source)
         {
-            bool noIntersect = false;
-            while (!noIntersect)
-            {
-                noIntersect = true;
-                for (int n = 0; n < Main.maxProjectiles; n++)
-                {
-                    Projectile proj = Main.projectile[n];
-                    if (!proj.active || proj.owner != Projectile.owner || proj.whoAmI == Projectile.whoAmI || proj.type != Type)
-                        continue;
-
-                    if (proj.alpha > 0)
-                    {
-                        Projectile.active = false;
-                        return;
-                    }
-
-                    if (!Projectile.Hitbox.Intersects(proj.Hitbox))
-                        continue;
-
-                    noIntersect = false;
-                }
-                Projectile.localAI[0] = RedeHelper.RandomRotation();
-                Projectile.localAI[1] = Main.rand.Next(50, 100);
-            }
             speed = Main.rand.Next(2, 5);
             elemColor = Element switch
             {
@@ -89,13 +63,43 @@ namespace Redemption.Projectiles.Misc
             Projectile.GetGlobalProjectile<ElementalProjectile>().OverrideElement[(int)Element] = 1;
             Projectile.netUpdate = true;
         }
+        private bool onSpawn;
         public override void AI()
         {
+            Player player = Main.player[Projectile.owner];
+            if (!onSpawn)
+            {
+                bool noIntersect = false;
+                while (!noIntersect)
+                {
+                    noIntersect = true;
+                    for (int n = 0; n < Main.maxProjectiles; n++)
+                    {
+                        Projectile proj = Main.projectile[n];
+                        if (!proj.active || proj.owner != Projectile.owner || proj.whoAmI == Projectile.whoAmI || proj.type != Type)
+                            continue;
+
+                        if (proj.alpha > 0)
+                        {
+                            Projectile.active = false;
+                            return;
+                        }
+
+                        if (!Projectile.Hitbox.Intersects(proj.Hitbox))
+                            continue;
+
+                        noIntersect = false;
+                        Projectile.localAI[0] = RedeHelper.RandomRotation();
+                        Projectile.localAI[1] = Main.rand.Next(50, 100);
+                        Projectile.Center = player.Center + Vector2.One.RotatedBy(MathHelper.ToRadians(Projectile.localAI[0])) * Projectile.localAI[1];
+                    }
+                }
+                onSpawn = true;
+            }
             for (int k = Projectile.oldPos.Length - 1; k > 0; k--)
                 oldrot[k] = oldrot[k - 1];
             oldrot[0] = Projectile.rotation;
 
-            Player player = Main.player[Projectile.owner];
             if (!CheckActive(player))
                 return;
 

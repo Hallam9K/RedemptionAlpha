@@ -16,7 +16,7 @@ using Redemption.WorldGeneration;
 using Redemption.Buffs.Debuffs;
 using Redemption.Buffs.NPCBuffs;
 using Terraria.Audio;
-using Redemption.UI;
+using Redemption.UI.ChatUI;
 
 namespace Redemption.NPCs.Lab.Volt
 {
@@ -259,7 +259,7 @@ namespace Redemption.NPCs.Lab.Volt
                         int proj = Projectile.NewProjectile(NPC.GetSource_FromAI(), GunOrigin, RedeHelper.PolarVector(TimerRand == 0 ? 14 : 15, gunRot), ProjectileID.MartianTurretBolt, NPCHelper.HostileProjDamage(NPC.damage), 0, Main.myPlayer);
                         Main.projectile[proj].tileCollide = false;
                         Main.projectile[proj].timeLeft = 200;
-                        Main.projectile[proj].netUpdate2 = true;
+                        Main.projectile[proj].netUpdate = true;
                     }
                     if (AITimer >= (TimerRand == 0 ? 100 : 120))
                     {
@@ -438,10 +438,10 @@ namespace Redemption.NPCs.Lab.Volt
                             {
                                 if (AITimer == 10 && !Main.dedServ)
                                 {
-                                    Dialogue d1 = new(NPC, "Enough.", Colors.RarityYellow, new Color(100, 86, 0), voice, 2, 100, 30, true, modifier: modifier); // 144
+                                    Dialogue d1 = new(NPC, "Enough.", Colors.RarityYellow, new Color(100, 86, 0), voice, .03f, 2f, .5f, true, modifier: modifier); // 144
 
-                                    TextBubbleUI.Visible = true;
-                                    TextBubbleUI.Add(d1);
+                                    ChatUI.Visible = true;
+                                    ChatUI.Add(d1);
                                 }
                                 if (AITimer >= 30)
                                 {
@@ -455,13 +455,13 @@ namespace Redemption.NPCs.Lab.Volt
                                 if (AITimer == 10 && !Main.dedServ)
                                 {
                                     DialogueChain chain = new();
-                                    chain.Add(new(NPC, "... Are you allowed through?[30] Let me check.", Colors.RarityYellow, new Color(100, 86, 0), voice, 2, 100, 0, false, modifier: modifier)) // 214
-                                         .Add(new(NPC, "... Oh?", Colors.RarityYellow, new Color(100, 86, 0), voice, 2, 100, 0, false, modifier: modifier)) // 114
-                                         .Add(new(NPC, "... You're allowed through?", Colors.RarityYellow, new Color(100, 86, 0), voice, 2, 100, 0, false, modifier: modifier)) // 154
-                                         .Add(new(NPC, "This was mildly embarrassing.[30] Apologies.", Colors.RarityYellow, new Color(100, 86, 0), voice, 2, 100, 30, true, modifier: modifier, endID: 1)); // 240
+                                    chain.Add(new(NPC, "... Are you allowed through?[0.5] Let me check.", Colors.RarityYellow, new Color(100, 86, 0), voice, .03f, 2f, 0, false, modifier: modifier)) // 214
+                                         .Add(new(NPC, "... Oh?", Colors.RarityYellow, new Color(100, 86, 0), voice, .03f, 2f, 0, false, modifier: modifier)) // 114
+                                         .Add(new(NPC, "... You're allowed through?", Colors.RarityYellow, new Color(100, 86, 0), voice, .03f, 2f, 0, false, modifier: modifier)) // 154
+                                         .Add(new(NPC, "This was mildly embarrassing.[0.5] Apologies.", Colors.RarityYellow, new Color(100, 86, 0), voice, .03f, 2f, .5f, true, modifier: modifier, endID: 1)); // 240
                                     chain.OnEndTrigger += Chain_OnEndTrigger;
-                                    TextBubbleUI.Visible = true;
-                                    TextBubbleUI.Add(chain);
+                                    ChatUI.Visible = true;
+                                    ChatUI.Add(chain);
                                 }
                                 if (AITimer >= 2000)
                                 {

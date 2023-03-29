@@ -14,7 +14,7 @@ Mods: {
             # Cooldowns
 			ErhanCrossCooldown: "Holy Shield Cooldown"
 			HardlightCooldown: "SoS Cooldown"
-			SwordRemoteCooldown: "Sword Remote Cooldown"
+			SwordRemoteCooldown: "Cleaver Remote Cooldown"
 			XeniumCooldown: "Xenium Cooldown"
 			XeniumLanceCooldown: "Xenium Lance Cooldown"
 			XenomiteCooldown: "Xenomite Gas Cooldown"
@@ -96,7 +96,7 @@ Mods: {
             # Cooldowns
 			ErhanCrossCooldown: "The holy shield has been broken"
 			HardlightCooldown: "Hey, the ship can't help you all the time."
-			SwordRemoteCooldown: "You cannot use the Sword Remote"
+			SwordRemoteCooldown: "You cannot use the Cleaver Remote"
 			XeniumCooldown: "Your shoulder launcher is reloading"
 			XeniumLanceCooldown: "The lance's battery is recharging"
 			XenomiteCooldown: "Your gas container is refilling"
@@ -193,6 +193,7 @@ Mods: {
 				LoveSpace: I like the space I have here, plenty of room to practice my archery.
 				FarFromHome: Could you please get me back to my house? This land is quite scary.
 				DislikeCrowded: I'm somewhat of an introvert, so all these people near me is quite unnerving.
+                HateCrowded: I'm somewhat of an introvert, so all these people near me is quite unnerving.
 				LikeBiome: "I think {BiomeName} is a very nice place, I hardly see any snow where I was from."
 				LoveBiome: "I think {BiomeName} is perfect, calm and tranquil."
 				DislikeBiome: "I don't really like {BiomeName}, I'd hate to have a run-in with skeletons!"

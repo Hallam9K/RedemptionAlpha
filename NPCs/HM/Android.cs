@@ -22,12 +22,12 @@ using Redemption.Base;
 using Redemption.NPCs.Bosses.KSIII;
 using Redemption.Projectiles.Hostile;
 using Terraria.ModLoader.Utilities;
-using Redemption.UI;
 using ParticleLibrary;
 using Redemption.Particles;
 using Terraria.GameContent.UI;
 using Redemption.Items.Usable;
 using System.IO;
+using Redemption.UI.ChatUI;
 
 namespace Redemption.NPCs.HM
 {
@@ -140,24 +140,24 @@ namespace Redemption.NPCs.HM
                     DialogueChain chain = new();
                     if (Variant == 11)
                     {
-                        chain.Add(new(NPC, "Well aren't you a little trigger-happy.", Color.LightBlue, Color.DarkCyan, voice, 2, 100, 0, false, bubble: bubble))
-                             .Add(new(NPC, "You know there's like[10] a million of us, right?[60] Anyway,[10] I've come to relay a message from King Slayer -", Color.LightBlue, Color.DarkCyan, voice, 2, 100, 0, false, bubble: bubble))
-                             .Add(new(NPC, "\"I'll be heading off to the other world soon,[10] so if you have any unfinished business with me,[20] I'd get on that sooner rather than later.\"", Color.LightBlue, Color.DarkCyan, CustomSounds.Voice6 with { Pitch = 0.2f }, 2, 200, 30, true, bubble: bubble, endID: 1));
+                        chain.Add(new(NPC, "Well aren't you a little trigger-happy.", Color.LightBlue, Color.DarkCyan, voice, .03f, 2f, 0, false, bubble: bubble))
+                             .Add(new(NPC, "You know there's like[0.1] a million of us, right?[1] Anyway,[0.1] I've come to relay a message from King Slayer -", Color.LightBlue, Color.DarkCyan, voice, .03f, 2f, 0, false, bubble: bubble))
+                             .Add(new(NPC, "\"I'll be heading off to the other world soon,[0.1] so if you have any unfinished business with me,[0.3] I'd get on that sooner rather than later.\"", Color.LightBlue, Color.DarkCyan, CustomSounds.Voice6 with { Pitch = 0.2f }, .03f, 3f, .5f, true, bubble: bubble, endID: 1));
                     }
                     else if (Variant == 12)
                     {
                         NPC.dontTakeDamage = true;
-                        chain.Add(new(NPC, "Screw you too I guess.", Color.LightBlue, Color.DarkCyan, voice, 2, 100, 0, false, bubble: bubble));
+                        chain.Add(new(NPC, "Screw you too I guess.", Color.LightBlue, Color.DarkCyan, voice, .03f, 2f, 0, false, bubble: bubble));
                     }
                     else
                     {
-                        chain.Add(new(NPC, "Don't attack.", Color.LightBlue, Color.DarkCyan, voice, 2, 100, 0, false, bubble: bubble))
-                             .Add(new(NPC, "I've come to relay a message from King Slayer -", Color.LightBlue, Color.DarkCyan, voice, 2, 100, 0, false, bubble: bubble))
-                             .Add(new(NPC, "\"I'll be heading off to the other world soon,[10] so if you have any unfinished business with me,[20] I'd get on that sooner rather than later.\"", Color.LightBlue, Color.DarkCyan, CustomSounds.Voice6 with { Pitch = 0.2f }, 2, 200, 30, true, bubble: bubble, endID: 1));
+                        chain.Add(new(NPC, "Don't attack.", Color.LightBlue, Color.DarkCyan, voice, .03f, 2f, 0, false, bubble: bubble))
+                             .Add(new(NPC, "I've come to relay a message from King Slayer -", Color.LightBlue, Color.DarkCyan, voice, .03f, 2f, 0, false, bubble: bubble))
+                             .Add(new(NPC, "\"I'll be heading off to the other world soon,[0.1] so if you have any unfinished business with me,[0.3] I'd get on that sooner rather than later.\"", Color.LightBlue, Color.DarkCyan, CustomSounds.Voice6 with { Pitch = 0.2f }, .03f, 3f, .5f, true, bubble: bubble, endID: 1));
                     }
                     chain.OnEndTrigger += Chain_OnEndTrigger;
-                    TextBubbleUI.Visible = true;
-                    TextBubbleUI.Add(chain);
+                    ChatUI.Visible = true;
+                    ChatUI.Add(chain);
                 }
                 if (Variant == 12 && AITimer >= 120)
                 {
@@ -284,18 +284,18 @@ namespace Redemption.NPCs.HM
                                 s = "Robot";
                             else if (player.RedemptionPlayerBuff().ChickenForm)
                                 s = "Chicken";
-                            Dialogue d1 = new(NPC, s + " scanned...", Color.LightBlue, Color.DarkCyan, voice, 1, 30, 30, true, bubble: bubble); // 65
-                            TextBubbleUI.Visible = true;
-                            TextBubbleUI.Add(d1);
+                            Dialogue d1 = new(NPC, s + " scanned...", Color.LightBlue, Color.DarkCyan, voice, .01f, .5f, .5f, true, bubble: bubble); // 65
+                            ChatUI.Visible = true;
+                            ChatUI.Add(d1);
                         }
                         else
                         {
                             string s = closeNPC.TypeName;
                             if (closeNPC.TypeName == "")
                                 s = "Unknown entity";
-                            Dialogue d1 = new(NPC, s + " scanned...", Color.LightBlue, Color.DarkCyan, voice, 1, 30, 30, true, bubble: bubble); // 65
-                            TextBubbleUI.Visible = true;
-                            TextBubbleUI.Add(d1);
+                            Dialogue d1 = new(NPC, s + " scanned...", Color.LightBlue, Color.DarkCyan, voice, .01f, .5f, .5f, true, bubble: bubble); // 65
+                            ChatUI.Visible = true;
+                            ChatUI.Add(d1);
                         }
                     }
                     SightCheck();

@@ -14,6 +14,7 @@ namespace Redemption.Tiles.Trophies
         {
             Main.tileFrameImportant[Type] = true;
             Main.tileLavaDeath[Type] = true;
+            TileID.Sets.FramesOnKillWall[Type] = true;
             TileObjectData.newTile.CopyFrom(TileObjectData.Style3x3Wall);
             TileObjectData.newTile.StyleHorizontal = true;
             TileObjectData.newTile.StyleWrapLimit = 36;

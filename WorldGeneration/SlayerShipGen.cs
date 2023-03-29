@@ -18,6 +18,8 @@ using Redemption.Items.Weapons.HM.Ranged;
 using Redemption.Items.Weapons.HM.Summon;
 using Redemption.Items.Placeable.Furniture.SlayerShip;
 using Redemption.Items.Weapons.HM.Melee;
+using Redemption.Projectiles.Minions;
+using Redemption.Items.Weapons.HM.Magic;
 
 namespace Redemption.WorldGeneration
 {
@@ -82,7 +84,7 @@ namespace Redemption.WorldGeneration
             WorldGen.PlaceObject(origin.X + 84, origin.Y + 36, (ushort)ModContent.TileType<SlayerFabricatorTile>());
             NetMessage.SendObjectPlacment(-1, origin.X + 84, origin.Y + 36, (ushort)ModContent.TileType<SlayerFabricatorTile>(), 0, 0, -1, -1);
             holochestMainLoot = new List<int> {
-                ModContent.ItemType<HyperTechRevolvers>(), ModContent.ItemType<CyberChakram>(), ModContent.ItemType<AndroidHologram>(), ModContent.ItemType<WireTaser>(), ModContent.ItemType<Biocontainer>()
+                ModContent.ItemType<HyperTechRevolvers>(), ModContent.ItemType<CyberChakram>(), ModContent.ItemType<AndroidHologram>(), ModContent.ItemType<WireTaser>(), ModContent.ItemType<Biocontainer>(), ModContent.ItemType<GlobalDischarge>()
             };
             holochestDatalogLoot = new List<int> {
                 ModContent.ItemType<Datalog>(), ModContent.ItemType<Datalog2>(), ModContent.ItemType<Datalog3>(), ModContent.ItemType<Datalog4>()
@@ -145,7 +147,7 @@ namespace Redemption.WorldGeneration
                 Item item0 = chest.item[0];
                 UnifiedRandom genRand0 = WorldGen.genRand;
                 int[] array0 = new int[]
-                { ModContent.ItemType<HyperTechRevolvers>(), ModContent.ItemType<CyberChakram>(), ModContent.ItemType<AndroidHologram>(), ModContent.ItemType<WireTaser>(), ModContent.ItemType<Biocontainer>() };
+                { ModContent.ItemType<HyperTechRevolvers>(), ModContent.ItemType<CyberChakram>(), ModContent.ItemType<AndroidHologram>(), ModContent.ItemType<WireTaser>(), ModContent.ItemType<Biocontainer>(), ModContent.ItemType<GlobalDischarge>() };
 
                 if (holochestMainLoot == null || holochestMainLoot.Count == 0)
                     item0.SetDefaults(Utils.Next(genRand0, array0), false);

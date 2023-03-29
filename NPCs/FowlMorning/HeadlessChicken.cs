@@ -8,12 +8,12 @@ using Redemption.BaseExtension;
 using Redemption.Dusts;
 using Microsoft.Xna.Framework;
 using Terraria.GameContent.ItemDropRules;
-using Redemption.Items.Weapons.PreHM.Melee;
 using Redemption.Globals.World;
 using Redemption.Items.Usable.Potions;
 using Terraria.DataStructures;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Biomes;
+using Redemption.Items.Placeable.Banners;
 
 namespace Redemption.NPCs.FowlMorning
 {
@@ -32,13 +32,15 @@ namespace Redemption.NPCs.FowlMorning
             NPC.friendly = false;
             NPC.damage = 18;
             NPC.defense = 0;
-            NPC.lifeMax = 40;
+            NPC.lifeMax = 18;
             NPC.value = 20;
             NPC.HitSound = SoundID.NPCHit1;
             NPC.DeathSound = SoundID.NPCDeath1;
             NPC.aiStyle = -1;
             NPC.knockBackResist = 0.3f;
             SpawnModBiomes = new int[1] { ModContent.GetInstance<FowlMorningBiome>().Type };
+            Banner = NPC.type;
+            BannerItem = ModContent.ItemType<HeadlessChickenBanner>();
         }
         public override void OnSpawn(IEntitySource source)
         {

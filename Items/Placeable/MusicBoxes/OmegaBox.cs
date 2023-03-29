@@ -1,4 +1,5 @@
 using Redemption.Items.Materials.HM;
+using Redemption.Items.Materials.PostML;
 using Redemption.Tiles.MusicBoxes;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -43,7 +44,7 @@ namespace Redemption.Items.Placeable.MusicBoxes
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Music Box (Omega Obliterator)");
-			Tooltip.SetDefault("Nick Nuwe - Chaos Attack");
+			Tooltip.SetDefault("Universe - Hailfire");
 
 			SacrificeTotal = 1;
 
@@ -64,7 +65,8 @@ namespace Redemption.Items.Placeable.MusicBoxes
 		{
 			CreateRecipe()
 				.AddIngredient(ItemID.MusicBox)
-				.AddTile(TileID.MythrilAnvil)
+				.AddIngredient(ModContent.ItemType<RoboBrain>())
+                .AddTile(TileID.MythrilAnvil)
 				.Register();
 		}
 	}

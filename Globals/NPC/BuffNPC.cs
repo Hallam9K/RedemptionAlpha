@@ -17,6 +17,7 @@ using Redemption.BaseExtension;
 using Redemption.Particles;
 using ParticleLibrary;
 using Redemption.Globals.Player;
+using Redemption.Projectiles.Magic;
 
 namespace Redemption.Globals.NPC
 {
@@ -55,6 +56,7 @@ namespace Redemption.Globals.NPC
         public bool ukonArrow;
         public bool bInfection;
         public bool roosterBoost;
+        public bool contagionShard;
 
         public override void ResetEffects(Terraria.NPC npc)
         {
@@ -82,6 +84,7 @@ namespace Redemption.Globals.NPC
             ukonArrow = false;
             bInfection = false;
             roosterBoost = false;
+            contagionShard = false;
 
             if (!npc.HasBuff(ModContent.BuffType<InfestedDebuff>()))
             {
@@ -332,6 +335,22 @@ namespace Redemption.Globals.NPC
                 npc.lifeRegen -= 200;
                 if (damage < 20)
                     damage = 20;
+            }
+            if (contagionShard)
+            {
+                if (npc.lifeRegen > 0)
+                    npc.lifeRegen = 0;
+
+                int shardCount = 0;
+                for (int i = 0; i < 1000; i++)
+                {
+                    Projectile p = Main.projectile[i];
+                    if (p.active && p.type == ModContent.ProjectileType<ContagionShard_Proj>() && p.ai[0] == 1f && p.ai[1] == npc.whoAmI)
+                        shardCount++;
+                }
+                npc.lifeRegen -= shardCount * 8;
+                if (damage < shardCount * 8)
+                    damage = shardCount * 8;
             }
         }
         public override void ModifyHitByItem(Terraria.NPC npc, Terraria.Player player, Item item, ref int damage, ref float knockback, ref bool crit)

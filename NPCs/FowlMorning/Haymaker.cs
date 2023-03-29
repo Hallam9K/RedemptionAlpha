@@ -35,7 +35,7 @@ namespace Redemption.NPCs.FowlMorning
             NPC.friendly = false;
             NPC.damage = 17;
             NPC.defense = 4;
-            NPC.lifeMax = 80;
+            NPC.lifeMax = 60;
             NPC.value = 50;
             NPC.HitSound = SoundID.NPCHit1;
             NPC.DeathSound = SoundID.NPCDeath1;
@@ -46,7 +46,7 @@ namespace Redemption.NPCs.FowlMorning
         public override void OnSpawn(IEntitySource source)
         {
             nestPos = NPC.Center;
-            NPC.localAI[0] = Main.rand.Next(240, 401);
+            NPC.localAI[0] = Main.rand.Next(240, 801);
             NPC.netUpdate = true;
         }
         private bool laid;
@@ -72,7 +72,7 @@ namespace Redemption.NPCs.FowlMorning
                     NPC.velocity.Y = -Main.rand.NextFloat(5f, 8f);
                     NPC.ai[1] = 0;
                     NPC.ai[2] = 0;
-                    NPC.localAI[0] = Main.rand.Next(60, 81);
+                    NPC.localAI[0] = Main.rand.Next(60, 301);
                     NPC.netUpdate = true;
                 }
                 return;
@@ -95,7 +95,7 @@ namespace Redemption.NPCs.FowlMorning
                 float speed = MathHelper.Distance(player.Center.X, nestPos.X) / 100;
                 speed = MathHelper.Clamp(speed, 1, 7);
                 NPC.Shoot(nestPos, ModContent.ProjectileType<Rooster_EggBomb>(), (int)(NPC.damage * 1.1f), new Vector2(speed * player.Center.RightOfDir(nestPos), -Main.rand.Next(9, 10)).RotatedBy(Main.rand.NextFloat(-.2f, .2f)), true, SoundID.Item1);
-                NPC.localAI[0] = Main.rand.Next(60, 161);
+                NPC.localAI[0] = Main.rand.Next(60, 301);
                 NPC.ai[3] = 0;
             }
         }
@@ -151,10 +151,11 @@ namespace Redemption.NPCs.FowlMorning
             Texture2D nestTex = ModContent.Request<Texture2D>(Texture + "_Nest").Value;
             Texture2D nestBack = ModContent.Request<Texture2D>(Texture + "_Nest_Back").Value;
             var effects = NPC.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
+            Color color = Lighting.GetColor(nestPos.ToTileCoordinates());
 
-            spriteBatch.Draw(nestBack, nestPos - screenPos, null, NPC.GetAlpha(drawColor) * nestOpacity, 0, new Vector2(nestBack.Width / 2, nestBack.Height / 2), NPC.scale, 0, 0f);
+            spriteBatch.Draw(nestBack, nestPos - screenPos, null, NPC.GetAlpha(color) * nestOpacity, 0, new Vector2(nestBack.Width / 2, nestBack.Height / 2), NPC.scale, 0, 0f);
             spriteBatch.Draw(texture, NPC.Center - screenPos, NPC.frame, NPC.GetAlpha(drawColor), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0f);
-            spriteBatch.Draw(nestTex, nestPos - screenPos, null, NPC.GetAlpha(drawColor) * nestOpacity, 0, new Vector2(nestTex.Width / 2, nestTex.Height / 2), NPC.scale, 0, 0f);
+            spriteBatch.Draw(nestTex, nestPos - screenPos, null, NPC.GetAlpha(color) * nestOpacity, 0, new Vector2(nestTex.Width / 2, nestTex.Height / 2), NPC.scale, 0, 0f);
             return false;
         }
         public override bool PreKill()
@@ -169,7 +170,7 @@ namespace Redemption.NPCs.FowlMorning
         }
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
-            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<NestWand>(), 50));
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<NestWand>(), 60));
             npcLoot.Add(ItemDropRule.ByCondition(new OnFireCondition(), ModContent.ItemType<FriedChicken>(), 4));
         }
         public override void OnHitByItem(Player player, Item item, int damage, float knockback, bool crit)

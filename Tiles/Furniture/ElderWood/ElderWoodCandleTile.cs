@@ -37,7 +37,10 @@ namespace Redemption.Tiles.Furniture.ElderWood
         }
         public override bool RightClick(int i, int j)
         {
-            Main.player[Main.myPlayer].PickTile(i, j, 100);
+            if (Main.tile[i, j].TileFrameX >= 18)
+                Main.tile[i, j].TileFrameX -= 18;
+            else
+                Main.tile[i, j].TileFrameX += 18;
             return true;
         }
         public override void NumDust(int i, int j, bool fail, ref int num) => num = fail ? 1 : 3;

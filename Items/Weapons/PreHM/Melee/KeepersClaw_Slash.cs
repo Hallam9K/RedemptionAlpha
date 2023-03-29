@@ -7,7 +7,6 @@ using Microsoft.Xna.Framework.Graphics;
 using Terraria.GameContent;
 using Redemption.Globals;
 using Redemption.Buffs.NPCBuffs;
-using Redemption.NPCs.Bosses.Keeper;
 using Redemption.Projectiles.Melee;
 
 namespace Redemption.Items.Weapons.PreHM.Melee
@@ -87,7 +86,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
                         {
                             if (Projectile.localAI[0] == 1)
                             {
-                                player.statLife -= 18;
+                                player.statLife -= 15;
                                 if (player.statLife < 1)
                                     player.statLife = 1;
                                 CombatText.NewText(player.getRect(), Colors.RarityRed, 18, true, true);

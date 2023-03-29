@@ -26,7 +26,6 @@ using Redemption.Items.Weapons.HM.Melee;
 using Redemption.BaseExtension;
 using Redemption.Items.Weapons.PreHM.Summon;
 using Redemption.Items.Armor.Vanity;
-using System.Diagnostics;
 using ReLogic.Content;
 
 namespace Redemption.NPCs.Friendly
@@ -373,6 +372,9 @@ namespace Redemption.NPCs.Friendly
                 shop.item[nextSlot].shopCustomPrice = new int?(20);
                 shop.item[nextSlot++].shopSpecialCurrency = Redemption.AntiqueDorulCurrencyId;
             }
+            shop.item[nextSlot].SetDefaults(ModContent.ItemType<ScrunklePainting>());
+            shop.item[nextSlot].shopCustomPrice = new int?(12);
+            shop.item[nextSlot++].shopSpecialCurrency = Redemption.AntiqueDorulCurrencyId;
             if (RedeBossDowned.downedSkullDigger)
             {
                 shop.item[nextSlot].SetDefaults(ModContent.ItemType<SkullDiggerPainting>());

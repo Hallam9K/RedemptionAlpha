@@ -51,7 +51,7 @@ namespace Redemption.Tiles.Natural
             TileObjectData.addAlternate(3);
             TileObjectData.addTile(Type);
 
-            HitSound = SoundID.Item27;
+            HitSound = CustomSounds.CrystalHit;
             DustType = DustID.IceTorch;
             ItemDrop = ModContent.ItemType<GathicCryoCrystal>();
             ModTranslation name = CreateMapEntryName();

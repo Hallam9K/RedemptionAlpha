@@ -71,7 +71,7 @@ namespace Redemption.NPCs.Lab.Volt
                     int p = Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, vel * 3, ProjectileID.MartianTurretBolt, Projectile.damage / 2, 0f, Main.myPlayer);
                     Main.projectile[p].timeLeft = 60;
                     Main.projectile[p].tileCollide = false;
-                    Main.projectile[p].netUpdate2 = true;
+                    Main.projectile[p].netUpdate = true;
                 }
             }
         }

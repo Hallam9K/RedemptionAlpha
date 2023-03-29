@@ -64,6 +64,7 @@ namespace Redemption.Globals
             return 1;
         }
         public static bool RightOf(this Entity toRight, Entity toLeft) => toLeft.Center.X < toRight.Center.X;
+        public static bool Below(this Entity toBelow, Entity toAbove) => toAbove.Center.Y < toBelow.Center.Y;
 
         public static Vector2 PolarVector(float radius, float theta) =>
             new Vector2((float)Math.Cos(theta), (float)Math.Sin(theta)) * radius;
@@ -406,7 +407,7 @@ namespace Redemption.Globals
 
             foreach (Terraria.Player player in Main.player)
             {
-                if (!(player.Distance(npc.Center) < nearestPlayerDist) || !player.active)
+                if (!player.active || !(player.Distance(npc.Center) < nearestPlayerDist))
                     continue;
 
                 nearestPlayerDist = player.Distance(npc.Center);
@@ -696,10 +697,7 @@ namespace Redemption.Globals
             if (Main.netMode != NetmodeID.MultiplayerClient)
             {
                 int index = Terraria.NPC.NewNPC(source, posX, posY, npcType, 0, ai0, ai1, ai2, ai3);
-                if (Main.netMode == NetmodeID.Server && index < Main.maxNPCs)
-                {
-                    NetMessage.SendData(MessageID.SyncNPC, number: index);
-                }
+                Main.npc[index].netUpdate = true;
             }
         }
     }
@@ -1243,6 +1241,34 @@ namespace Redemption.Globals
                 }
             }
             return new Vector2(npc.Center.X, npc.Center.Y);
+        }
+        public static Vector2 FindGroundVector(Vector2 vector, int distFromVector, Func<int, int, bool> canTeleportTo = null)
+        {
+            int vectorX = (int)vector.X / 16;
+            int vectorY = (int)vector.Y / 16;
+            int teleportCheckCount = 0;
+
+            while (teleportCheckCount < 1000)
+            {
+                teleportCheckCount++;
+                int tpTileX = Main.rand.Next(vectorX - distFromVector, vectorX + distFromVector);
+                int tpTileY = Main.rand.Next(vectorY - distFromVector, vectorY + distFromVector);
+                for (int tpY = tpTileY; tpY < vectorY + distFromVector; tpY++)
+                {
+                    if ((tpY < vectorY - 4 || tpY > vectorY + 4 || tpTileX < vectorX - 4 || tpTileX > vectorX + 4) &&
+                        Main.tile[tpTileX, tpY].HasUnactuatedTile)
+                    {
+                        if (canTeleportTo != null && canTeleportTo(tpTileX, tpY) ||
+                            Main.tile[tpTileX, tpY - 1].LiquidType != 2 &&
+                            Main.tileSolid[Main.tile[tpTileX, tpY].TileType] &&
+                            !Collision.SolidTiles(tpTileX - 1, tpTileX + 1, tpY - 4, tpY - 1))
+                        {
+                            return new Vector2(tpTileX, tpY) * 16;
+                        }
+                    }
+                }
+            }
+            return vector;
         }
 
         public static void DamageHostileAttackers(this Terraria.NPC npc, float dmgModify = 0, int knockback = 0, List<int> AlwaysDmgNPC = default)

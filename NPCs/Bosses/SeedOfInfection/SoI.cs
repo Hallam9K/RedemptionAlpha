@@ -22,6 +22,10 @@ using Redemption.Items.Weapons.PreHM.Summon;
 using Redemption.Biomes;
 using Redemption.Buffs.Debuffs;
 using Redemption.Items.Weapons.HM.Ranged;
+using Redemption.NPCs.Bosses.Thorn;
+using Mono.Cecil;
+using Redemption.NPCs.Bosses.FowlEmperor;
+using Redemption.Items.Weapons.PreHM.Magic;
 
 namespace Redemption.NPCs.Bosses.SeedOfInfection
 {
@@ -133,7 +137,7 @@ namespace Redemption.NPCs.Bosses.SeedOfInfection
 
             notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<InfectedMask>(), 7));
 
-            notExpertRule.OnSuccess(ItemDropRule.OneFromOptions(1, ModContent.ItemType<XenoXyston>(), ModContent.ItemType<CystlingSummon>()));
+            notExpertRule.OnSuccess(ItemDropRule.OneFromOptions(1, ModContent.ItemType<XenoXyston>(), ModContent.ItemType<CystlingSummon>(), ModContent.ItemType<ContagionSpreader>()));
             notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<XenomiteShard>(), 1, 12, 22));
             notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<ToxicGrenade>(), 1, 20, 30));
 
@@ -191,11 +195,12 @@ namespace Redemption.NPCs.Bosses.SeedOfInfection
         }
 
         public List<int> CopyList = null;
-        public List<int> AttackList = new() { 0, 1, 2, 3, 4, 5, 6, 7 };
+        public List<int> AttackList = new() { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
         private float move;
         private float speed;
         private Vector2 target;
         private bool FreakOut;
+        private int repeat;
 
         public int ID { get => (int)NPC.ai[3]; set => NPC.ai[3] = value; }
 
@@ -213,6 +218,11 @@ namespace Redemption.NPCs.Bosses.SeedOfInfection
             if (AIState != ActionState.Death && ID != 6)
                 NPC.rotation += 0.09f;
 
+            if (NPC.velocity.Length() >= 10)
+                trailOpacity += 0.3f;
+            else
+                trailOpacity -= 0.04f;
+            trailOpacity = MathHelper.Clamp(trailOpacity, 0, 1);
             Vector2 HighPos = new(player.Center.X + 240 * NPC.spriteDirection, player.Center.Y - 50);
             Vector2 FarPos = new(player.Center.X + 320 * NPC.spriteDirection, player.Center.Y - 25);
             Vector2 TopPos = new(player.Center.X, player.Center.Y - 120);
@@ -404,6 +414,7 @@ namespace Redemption.NPCs.Bosses.SeedOfInfection
                                     {
                                         NPC.Shoot(NPC.Center, ModContent.ProjectileType<SoI_ToxicSludge>(), NPC.damage, RedeHelper.PolarVector(12, (player.Center - NPC.Center).ToRotation() + Main.rand.NextFloat(-0.06f, 0.06f)), true, SoundID.Item60);
                                     }
+                                    NPC.velocity += player.Center.DirectionTo(NPC.Center) * 4;
                                 }
                                 if (AITimer >= 300)
                                 {
@@ -557,8 +568,99 @@ namespace Redemption.NPCs.Bosses.SeedOfInfection
                                 NPC.netUpdate = true;
                             }
                             break;
-                            #endregion
+                        #endregion
 
+                        #region Splitting Shards
+                        case 8:
+                            if (AITimer++ <= 80)
+                                NPC.Move(HighPos, 10, 40);
+                            else
+                                NPC.velocity *= .96f;
+
+                            if (AITimer == 120)
+                                target = player.Center;
+                            if (AITimer >= 120 && AITimer < 123)
+                            {
+                                NPC.Shoot(NPC.Center, ModContent.ProjectileType<SoI_SplitShard>(), NPC.damage,
+                                    RedeHelper.PolarVector(12, (target - NPC.Center).ToRotation()
+                                    + TimerRand - MathHelper.ToRadians(15)), true, SoundID.Item42);
+
+                                NPC.velocity += target.DirectionTo(NPC.Center) * 1;
+                                TimerRand += MathHelper.ToRadians(15);
+                            }
+                            if (NPC.life < NPC.lifeMax / 2)
+                            {
+                                if (AITimer == 123)
+                                {
+                                    TimerRand = 0;
+                                    target = player.Center;
+                                }
+                                if (AITimer >= 124 && AITimer < 129)
+                                {
+                                    NPC.Shoot(NPC.Center, ModContent.ProjectileType<SoI_SplitShard>(), NPC.damage,
+                                        RedeHelper.PolarVector(8, (target - NPC.Center).ToRotation()
+                                        + TimerRand + MathHelper.ToRadians(40)), true, SoundID.Item42);
+
+                                    NPC.velocity += target.DirectionTo(NPC.Center) * 1;
+                                    TimerRand -= MathHelper.ToRadians(20);
+                                }
+                            }
+                            if (AITimer >= 180)
+                            {
+                                FreakOut = false;
+                                AITimer = 20;
+                                TimerRand = 0;
+                                AIState = ActionState.Idle;
+                                NPC.netUpdate = true;
+                            }
+                            break;
+                        #endregion
+
+                        #region Irradiated Rain II
+                        case 9:
+                            if (NPC.life <= NPC.lifeMax / 2)
+                            {
+                                if (AITimer++ == 0)
+                                    TimerRand = player.RightOfDir(NPC);
+                                if (AITimer < 80)
+                                    NPC.Move(player.Center + new Vector2(600 * -TimerRand, -Main.rand.Next(400, 451)), 12, 30);
+                                else
+                                {
+                                    NPC.Move(player.Center + new Vector2(600 * TimerRand, -Main.rand.Next(400, 451)), 12, 40);
+                                    if (AITimer % (NPC.life <= NPC.lifeMax / 4 ? 3 : 4) == 0 && Main.rand.NextBool())
+                                    {
+                                        NPC.Shoot(NPC.Center, ModContent.ProjectileType<SoI_ShardShot>(), NPC.damage, new Vector2(0, Main.rand.Next(6, 10)), true, SoundID.Item42);
+
+                                    }
+                                }
+                                if (AITimer >= 300 || (TimerRand == -1 ? NPC.Center.X <= player.Center.X - 600 : NPC.Center.X >= player.Center.X + 600))
+                                {
+                                    if (repeat <= 2 && !Main.rand.NextBool(4))
+                                    {
+                                        TimerRand *= -1;
+                                        AITimer = 60;
+                                        repeat++;
+                                        NPC.netUpdate = true;
+                                    }
+                                    else
+                                    {
+                                        AITimer = 20;
+                                        TimerRand = 0;
+                                        AIState = ActionState.Idle;
+                                        repeat = 0;
+                                        NPC.netUpdate = true;
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                AITimer = 60;
+                                TimerRand = 0;
+                                AIState = ActionState.Idle;
+                                NPC.netUpdate = true;
+                            }
+                            break;
+                            #endregion
                     }
                     break;
                 case ActionState.Death:
@@ -644,6 +746,7 @@ namespace Redemption.NPCs.Bosses.SeedOfInfection
         {
             if (Main.netMode != NetmodeID.Server)
             {
+                NPC.rotation += NPC.velocity.X * 0.01f;
                 for (int k = NPC.oldPos.Length - 1; k > 0; k--)
                 {
                     oldrot[k] = oldrot[k - 1];
@@ -715,19 +818,16 @@ namespace Redemption.NPCs.Bosses.SeedOfInfection
                 }
             }
         }
-
+        private float trailOpacity;
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
             Texture2D EyeTex = ModContent.Request<Texture2D>("Redemption/NPCs/Bosses/SeedOfInfection/SoI_Eye").Value;
             var effects = NPC.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
 
-            if (NPC.velocity.Length() > 10)
+            for (int i = 0; i < NPCID.Sets.TrailCacheLength[NPC.type]; i++)
             {
-                for (int i = 0; i < NPCID.Sets.TrailCacheLength[NPC.type]; i++)
-                {
-                    Vector2 oldPos = NPC.oldPos[i];
-                    Main.spriteBatch.Draw(TextureAssets.Npc[NPC.type].Value, oldPos + NPC.Size / 2f - screenPos + new Vector2(0, NPC.gfxOffY), NPC.frame, NPC.GetAlpha(Color.Green) * 0.5f, oldrot[i], NPC.frame.Size() / 2, NPC.scale, effects, 0);
-                }
+                Vector2 oldPos = NPC.oldPos[i];
+                Main.spriteBatch.Draw(TextureAssets.Npc[NPC.type].Value, oldPos + NPC.Size / 2f - screenPos + new Vector2(0, NPC.gfxOffY), NPC.frame, NPC.GetAlpha(Color.LightGreen) * 0.5f * trailOpacity, oldrot[i], NPC.frame.Size() / 2, NPC.scale, effects, 0);
             }
 
             spriteBatch.Draw(TextureAssets.Npc[NPC.type].Value, NPC.Center - screenPos, NPC.frame, NPC.GetAlpha(drawColor), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);

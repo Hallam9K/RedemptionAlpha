@@ -135,5 +135,13 @@ namespace Redemption
         public static readonly SoundStyle Pixie3 = new("Redemption/Sounds/Custom/Pixie3") { PitchVariance = .1f };
         public static readonly SoundStyle RoosterRoar = new("Redemption/Sounds/Custom/RoosterRoar") { PitchVariance = .1f };
         public static readonly SoundStyle Roar1 = new("Redemption/Sounds/Custom/Roar1") { PitchVariance = .1f };
+
+        public static readonly SoundStyle BoneHit = new("Redemption/Sounds/Tiles/BoneHit", 3);
+        public static readonly SoundStyle BrickHit = new("Redemption/Sounds/Tiles/BrickHit", 3);
+        public static readonly SoundStyle ChainHit = new("Redemption/Sounds/Tiles/ChainHit", 3);
+        public static readonly SoundStyle CrystalHit = new("Redemption/Sounds/Tiles/CrystalHit", 3);
+        public static readonly SoundStyle MetalHit = new("Redemption/Sounds/Tiles/MetalHit", 3);
+        public static readonly SoundStyle DragonLeadHit = new("Redemption/Sounds/Tiles/DragonLeadHit", 3);
+        public static readonly SoundStyle StoneHit = new("Redemption/Sounds/Tiles/StoneHit1") { PitchVariance = .1f };
     }
 }

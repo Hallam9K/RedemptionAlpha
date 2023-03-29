@@ -3,6 +3,8 @@ using Terraria;
 using Terraria.ModLoader;
 using Terraria.ID;
 using Redemption.Items.Placeable.Tiles;
+using Microsoft.Xna.Framework.Graphics;
+using Redemption.Globals;
 
 namespace Redemption.Tiles.Tiles
 {
@@ -47,7 +49,19 @@ namespace Redemption.Tiles.Tiles
                 player.AddBuff(BuffID.Electrified, 120);
             }
         }
+        public override void PostDraw(int i, int j, SpriteBatch spriteBatch)
+        {
+            Tile tile = Framing.GetTileSafely(i, j);
+            Texture2D texture = ModContent.Request<Texture2D>(Texture).Value;
+            Vector2 zero = new(Main.offScreenRange, Main.offScreenRange);
+            if (Main.drawToScreen)
+                zero = Vector2.Zero;
 
+            int height = tile.TileFrameY % AnimationFrameHeight >= 16 ? 18 : 16;
+            int animate = Main.tileFrame[Type] * AnimationFrameHeight;
+            Rectangle frame = new(tile.TileFrameX, tile.TileFrameY + animate, 16, height);
+            Main.spriteBatch.Draw(texture, new Vector2((i * 16) - (int)Main.screenPosition.X, (j * 16) - (int)Main.screenPosition.Y) + zero, frame, Color.White, 0f, Vector2.Zero, 1f, 0, 0f);
+        }
         public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)
         {
             r = 0.3f;

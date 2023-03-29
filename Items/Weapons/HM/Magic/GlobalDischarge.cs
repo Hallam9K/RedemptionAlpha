@@ -13,10 +13,9 @@ namespace Redemption.Items.Weapons.HM.Magic
         {
             Tooltip.SetDefault("Casts an unstable lightning sphere, contained as long as the staff's stream is active\n" +
                 "Tap left-click to cast and immediately break the stream, causing an unstable discharge" +
-                "\nHold down left-click to cast and keep the sphere stable, constantly emitting lightning at an enemy at cursor point\n" +
-                "Keeping the sphere active for too long will cause the user to take damage as well");
+                "\nHold down left-click to cast and keep the sphere stable, using momentum to swing it" +
+                "\nDeals more damage the faster it moves");
             Item.staff[Item.type] = true;
-
             SacrificeTotal = 1;
         }
 
@@ -33,11 +32,11 @@ namespace Redemption.Items.Weapons.HM.Magic
             Item.useStyle = ItemUseStyleID.Shoot;
             Item.knockBack = 3;
             Item.channel = true;
-            Item.rare = ItemRarityID.Yellow;
+            Item.rare = ItemRarityID.LightPurple;
             Item.noMelee = true;
             Item.autoReuse = false;
             Item.noUseGraphic = true;
-            Item.value = Item.buyPrice(0, 65, 50, 0);
+            Item.value = Item.sellPrice(0, 6, 0, 0);
             Item.UseSound = CustomSounds.ElectricSlash2;
             Item.shootSpeed = 16f;
             Item.shoot = ModContent.ProjectileType<GlobalDischarge_Sphere>();

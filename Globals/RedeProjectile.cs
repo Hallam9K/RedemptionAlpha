@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using Terraria.ID;
 using System.Linq;
 using Terraria.Enums;
+using Redemption.Buffs;
 
 namespace Redemption.Globals
 {
@@ -26,7 +27,18 @@ namespace Redemption.Globals
             if (ProjectileLists.IsTechnicallyMelee.Contains(projectile.type))
                 TechnicallyMelee = true;
         }
-
+        public override bool PreAI(Projectile projectile)
+        {
+            if ((projectile.DamageType == DamageClass.Melee || projectile.DamageType == DamageClass.SummonMeleeSpeed) && Main.player[projectile.owner].HasBuff<ExplosiveFlaskBuff>())
+            {
+                if (Main.rand.NextBool(3))
+                    Dust.NewDust(projectile.position, projectile.width, projectile.height, DustID.Smoke);
+                if (Main.rand.NextBool(10))
+                    Dust.NewDust(projectile.position, projectile.width, projectile.height, DustID.InfernoFork);
+                projectile.GetGlobalProjectile<ElementalProjectile>().OverrideElement[ElementID.Explosive] = 1;
+            }
+            return base.PreAI(projectile);
+        }
         private readonly int[] bannedArenaProjs = new int[]
         {
             ProjectileID.SandBallGun,
@@ -60,13 +72,14 @@ namespace Redemption.Globals
         }
         public static void Decapitation(Terraria.NPC target, ref int damage, ref bool crit, int chance = 200)
         {
-            if (target.life < target.lifeMax && NPCLists.SkeletonHumanoid.Contains(target.type))
+            bool humanoid = NPCLists.SkeletonHumanoid.Contains(target.type) || NPCLists.Humanoid.Contains(target.type);
+            if (target.life < target.lifeMax && target.life < damage * 100 && humanoid)
             {
                 if (Main.rand.NextBool(chance))
                 {
                     CombatText.NewText(target.getRect(), Color.Orange, "Decapitated!");
                     target.Redemption().decapitated = true;
-                    damage = damage < target.life ? target.life : damage;
+                    damage = target.life;
                     crit = true;
                 }
             }

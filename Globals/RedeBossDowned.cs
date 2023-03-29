@@ -40,6 +40,7 @@ namespace Redemption.Globals
         public static int downedGGBossFirst;
         public static bool downedFowlEmperor;
         public static bool downedFowlMorning;
+        public static bool downedTreebark;
 
         public override void OnWorldLoad()
         {
@@ -75,6 +76,7 @@ namespace Redemption.Globals
             downedGGBossFirst = 0;
             downedFowlEmperor = false;
             downedFowlMorning = false;
+            downedTreebark = false;
         }
 
         public override void OnWorldUnload()
@@ -111,6 +113,7 @@ namespace Redemption.Globals
             downedGGBossFirst = 0;
             downedFowlEmperor = false;
             downedFowlMorning = false;
+            downedTreebark = false;
         }
 
         public override void SaveWorldData(TagCompound tag)
@@ -169,6 +172,8 @@ namespace Redemption.Globals
                 downed.Add("downedFowlEmperor");
             if (downedFowlMorning)
                 downed.Add("downedFowlMorning");
+            if (downedTreebark)
+                downed.Add("downedTreebark");
 
             tag["downed"] = downed;
             tag["erhanDeath"] = erhanDeath;
@@ -215,6 +220,7 @@ namespace Redemption.Globals
             downedGGBossFirst = tag.GetInt("downedGGBossFirst");
             downedFowlEmperor = downed.Contains("downedFowlEmperor");
             downedFowlMorning = downed.Contains("downedFowlMorning");
+            downedTreebark = downed.Contains("downedTreebark");
         }
 
         public override void NetSend(BinaryWriter writer)
@@ -252,6 +258,7 @@ namespace Redemption.Globals
             var flags4 = new BitsByte();
             flags4[0] = downedFowlEmperor;
             flags4[1] = downedFowlMorning;
+            flags4[2] = downedTreebark;
             writer.Write(flags4);
 
             writer.Write(erhanDeath);
@@ -294,6 +301,7 @@ namespace Redemption.Globals
             BitsByte flags4 = reader.ReadByte();
             downedFowlEmperor = flags4[0];
             downedFowlMorning = flags4[1];
+            downedTreebark = flags4[2];
 
             erhanDeath = reader.ReadInt32();
             slayerDeath = reader.ReadInt32();

@@ -8,15 +8,18 @@ using Terraria.DataStructures;
 using Redemption.Globals;
 using Terraria.GameContent;
 using Terraria.Utilities;
-using Redemption.Buffs.Debuffs;
 using Redemption.Base;
 using Terraria.Localization;
 using Terraria.GameContent.Bestiary;
 using System.Collections.Generic;
 using Redemption.Items.Armor.Vanity;
 using Redemption.Items.Materials.PreHM;
-using Redemption.Buffs.NPCBuffs;
 using Redemption.Items.Accessories.PreHM;
+using Redemption.BaseExtension;
+using Terraria.Audio;
+using Redemption.Items.Usable;
+using Terraria.GameContent.ItemDropRules;
+using Redemption.UI.ChatUI;
 
 namespace Redemption.NPCs.Friendly
 {
@@ -47,18 +50,12 @@ namespace Redemption.NPCs.Friendly
         {
             Main.npcFrameCount[NPC.type] = 9;
             NPCID.Sets.ActsLikeTownNPC[Type] = true;
+            NPCID.Sets.TownNPCBestiaryPriority.Add(Type);
 
             NPCID.Sets.DebuffImmunitySets.Add(Type, new NPCDebuffImmunityData
             {
-                SpecificallyImmuneTo = new int[] {
-                    BuffID.Bleeding,
-                    BuffID.Poisoned,
-                    ModContent.BuffType<NecroticGougeDebuff>(),
-                    ModContent.BuffType<DirtyWoundDebuff>(),
-                    ModContent.BuffType<InfestedDebuff>()
-                }
+                ImmuneToAllBuffsThatAreNotWhips = true
             });
-
             NPCID.Sets.NPCBestiaryDrawModifiers value = new(0)
             {
                 Position = new Vector2(0, 20),
@@ -71,17 +68,43 @@ namespace Redemption.NPCs.Friendly
         {
             NPC.width = 88;
             NPC.height = 92;
-            NPC.friendly = true;
-            NPC.lifeMax = 500;
+            NPC.lifeMax = Main.hardMode ? 2000 : 500;
+            NPC.defense = 6;
             NPC.knockBackResist = 0f;
             NPC.aiStyle = -1;
-            NPC.dontTakeDamage = true;
             NPC.rarity = 1;
+            NPC.lifeRegen = 1;
+            NPC.HitSound = SoundID.Dig;
+            NPC.DeathSound = SoundID.NPCDeath27;
         }
+        public override void OnKill()
+        {
+            if (!RedeBossDowned.downedTreebark)
+            {
+                RedeWorld.alignment--;
+                for (int p = 0; p < Main.maxPlayers; p++)
+                {
+                    Player player = Main.player[p];
+                    if (!player.active)
+                        continue;
 
+                    CombatText.NewText(player.getRect(), Color.Gold, "-1", true, false);
+
+                    if (!player.HasItem(ModContent.ItemType<AlignmentTeller>()))
+                        continue;
+
+                    if (!Main.dedServ)
+                        RedeSystem.Instance.ChaliceUIElement.DisplayDialogue("Assisting the extinction of these dwindling dryads is not something I approve of.", 300, 30, 0, Color.DarkGoldenrod);
+                }
+            }
+            RedeBossDowned.downedTreebark = true;
+            if (Main.netMode != NetmodeID.SinglePlayer)
+                NetMessage.SendData(MessageID.WorldData);
+        }
         public override bool CanHitPlayer(Player target, ref int cooldownSlot) => false;
         public override bool? CanHitNPC(NPC target) => false;
-
+        public override bool? CanBeHitByItem(Player player, Item item) => item.axe > 0 ? null : false;
+        public override bool? CanBeHitByProjectile(Projectile projectile) => projectile.Redemption().IsAxe ? null : false;
         private string setName;
         public override void ModifyTypeName(ref string typeName)
         {
@@ -143,11 +166,49 @@ namespace Redemption.NPCs.Friendly
                 }
                 TimerRand = 1;
             }
+            else
+            {
+                if (TimerRand == 1)
+                {
+                    if (NPC.life < NPC.lifeMax - 10 && !Main.dedServ)
+                    {
+                        Texture2D bubble = ModContent.Request<Texture2D>("Redemption/UI/TextBubble_Epidotra").Value;
+                        SoundStyle voice = CustomSounds.Voice2 with { Pitch = -1f };
+
+                        DialogueChain chain = new();
+                        chain.Add(new(NPC, "Now,[0.1] now.[0.5] Watch where you swing that axe of yours...[1] I don't want you chopping down any of my friends.", Color.LightGreen, Color.ForestGreen, voice, .06f, 2f, .5f, true, bubble: bubble, endID: 1));
+                        chain.OnEndTrigger += Chain_OnEndTrigger;
+                        ChatUI.Visible = true;
+                        ChatUI.Add(chain);
+                        TimerRand = 2;
+                    }
+                }
+                else if (TimerRand == 3)
+                {
+                    if (NPC.life < NPC.lifeMax / 2 && !Main.dedServ)
+                    {
+                        Texture2D bubble = ModContent.Request<Texture2D>("Redemption/UI/TextBubble_Epidotra").Value;
+                        SoundStyle voice = CustomSounds.Voice2 with { Pitch = -1f };
+
+                        string gender = player.Male ? "man" : "lady";
+                        DialogueChain chain = new();
+                        chain.Add(new(NPC, "It will do no good,[0.1] young " + gender + ".[0.5] We bring no harm to you.[1] Chopping us down will only bring bad omens.", Color.LightGreen, Color.ForestGreen, voice, .06f, 2, .5f, true, bubble: bubble));
+                        ChatUI.Visible = true;
+                        ChatUI.Add(chain);
+                        TimerRand = 4;
+                    }
+                }
+            }
+        }
+        private void Chain_OnEndTrigger(Dialogue dialogue, int ID)
+        {
+            TimerRand = 3;
         }
         public override bool CanChat() => true;
         public override void SetChatButtons(ref string button, ref string button2)
         {
-            button = Language.GetTextValue("LegacyInterface.28");
+            if (!RedeBossDowned.downedTreebark)
+                button = Language.GetTextValue("LegacyInterface.28");
         }
         public override void OnChatButtonClicked(bool firstButton, ref bool shop)
         {
@@ -243,6 +304,16 @@ namespace Redemption.NPCs.Friendly
         public override string GetChat()
         {
             WeightedRandom<string> chat = new(Main.rand);
+
+            if (NPC.life < (int)(NPC.lifeMax * .8f) || RedeBossDowned.downedTreebark)
+                chat.Add("Do you fear the unknown? Does my size frighten you? Please, do not be afraid, I am just a lone ent.", 10);
+            if (NPC.life < (int)(NPC.lifeMax * .5f) || RedeBossDowned.downedTreebark)
+                chat.Add("You are a peculiar thing. Do you chop for a reason, or for fun? You should be more considerate about your surroundings.", 10);
+            if (RedeBossDowned.downedTreebark)
+            {
+                chat.Add("I help no tree-feller.", 10);
+                return "Hmmmm... " + chat;
+            }
 
             int score = 0;
             for (int x = -40; x <= 40; x++)
@@ -369,6 +440,9 @@ namespace Redemption.NPCs.Friendly
 
         public override float SpawnChance(NPCSpawnInfo spawnInfo)
         {
+            if (NPC.AnyNPCs(Type))
+                return 0;
+
             int score = 0;
             for (int x = -40; x <= 40; x++)
             {
@@ -380,13 +454,36 @@ namespace Redemption.NPCs.Friendly
                 }
             }
 
-            float baseChance = SpawnCondition.OverworldDay.Chance * (!NPC.AnyNPCs(NPC.type) ? 1 : 0);
+            float baseChance = SpawnCondition.OverworldDay.Chance;
             float multiplier = Framing.GetTileSafely(spawnInfo.SpawnTileX, spawnInfo.SpawnTileY).TileType == TileID.Grass ? (Main.raining ? 0.02f : 0.005f) : 0f;
             float trees = score >= 60 ? 1 : 0;
 
             return baseChance * multiplier * trees;
         }
+        public override void HitEffect(int hitDirection, double damage)
+        {
+            if (NPC.life <= 0)
+            {
+                if (Main.netMode == NetmodeID.Server)
+                    return;
 
+                for (int i = 0; i < 35; i++)
+                    Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.WoodFurniture, Scale: 2f);
+
+                for (int i = 0; i < 2; i++)
+                    Gore.NewGore(NPC.GetSource_FromThis(), NPC.position + new Vector2(0, 60), NPC.velocity, ModContent.Find<ModGore>("Redemption/TreebarkDryadGoreLeg" + (WoodType + 1)).Type, 1);
+                Gore.NewGore(NPC.GetSource_FromThis(), NPC.position, NPC.velocity, ModContent.Find<ModGore>("Redemption/TreebarkDryadGoreAntler" + (WoodType + 1)).Type, 1);
+                Gore.NewGore(NPC.GetSource_FromThis(), NPC.position + new Vector2(40, 0), NPC.velocity, ModContent.Find<ModGore>("Redemption/TreebarkDryadGoreAntlerB" + (WoodType + 1)).Type, 1);
+                Gore.NewGore(NPC.GetSource_FromThis(), NPC.position + new Vector2(20, 10), NPC.velocity, ModContent.Find<ModGore>("Redemption/TreebarkDryadGoreHead" + (WoodType + 1)).Type, 1);
+            }
+            for (int i = 0; i < 3; i++)
+                Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.WoodFurniture);
+        }
+        public override void ModifyNPCLoot(NPCLoot npcLoot)
+        {
+            npcLoot.Add(ItemDropRule.Common(ItemID.Wood, 1, 40, 60));
+            npcLoot.Add(ItemDropRule.Common(ItemID.Acorn, 1, 10, 20));
+        }
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
         {
             bestiaryEntry.UIInfoProvider = new TownNPCUICollectionInfoProvider(ContentSamples.NpcBestiaryCreditIdsByNpcNetIds[NPC.type]);
@@ -394,7 +491,7 @@ namespace Redemption.NPCs.Friendly
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Surface,
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Times.DayTime,
 
-                new FlavorTextBestiaryInfoElement("These slow-thinking ents only appear in heavily forested areas. They have only recently arrived on this island, coming from the portal on the surface. Once every century, they find a shallow pond and hibernate in the centre. The water from the pond feeds the ent while hibernating.")
+                new FlavorTextBestiaryInfoElement("These slow-thinking ents only appear in heavily forested areas. They have only recently arrived on this island, coming from the portal on the surface. Once every century, they find a shallow pond and hibernate in the centre. The water from the pond feeds the ent during the process.")
             });
         }
     }

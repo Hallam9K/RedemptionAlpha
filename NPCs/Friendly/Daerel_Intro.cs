@@ -10,9 +10,9 @@ using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using Redemption.Dusts;
 using Terraria.GameContent.UI;
-using Redemption.UI;
 using Terraria.GameContent;
 using Redemption.Items.Usable;
+using Redemption.UI.ChatUI;
 
 namespace Redemption.NPCs.Friendly
 {
@@ -75,10 +75,10 @@ namespace Redemption.NPCs.Friendly
                         }
                         if (!Main.dedServ)
                         {
-                            Dialogue d1 = new(NPC, "Woah!", Color.White, Color.Gray, voice, 1, 30, 30, true, bubble: bubble); // 65
+                            Dialogue d1 = new(NPC, "Woah!", Color.White, Color.Gray, voice, 0.01f, .5f, .5f, true, bubble: bubble); // 65
 
-                            TextBubbleUI.Visible = true;
-                            TextBubbleUI.Add(d1);
+                            ChatUI.Visible = true;
+                            ChatUI.Add(d1);
                         }
                     }
                     NPC.rotation += 0.1f;
@@ -110,10 +110,10 @@ namespace Redemption.NPCs.Friendly
                     {
                         EmoteBubble.NewBubble(1, new WorldUIAnchor(NPC), 187);
                         DialogueChain chain = new();
-                        chain.Add(new(NPC, "Ow, my head hurts..", Color.White, Color.Gray, voice, 3, 100, 30, true, bubble: bubble, endID: 1)); // 187
+                        chain.Add(new(NPC, "Ow, my head hurts..", Color.White, Color.Gray, voice, .05f, 2, .5f, true, bubble: bubble, endID: 1)); // 187
                         chain.OnEndTrigger += Chain_OnEndTrigger;
-                        TextBubbleUI.Visible = true;
-                        TextBubbleUI.Add(chain);
+                        ChatUI.Visible = true;
+                        ChatUI.Add(chain);
                     }
                     if (AITimer >= 1000)
                     {
@@ -128,16 +128,16 @@ namespace Redemption.NPCs.Friendly
                     if (AITimer++ == 5 && !Main.dedServ)
                     {
                         DialogueChain chain = new();
-                        chain.Add(new(NPC, "Hey Zephos,[10] do you know where we are?", Color.White, Color.Gray, voice, 3, 100, 0, false, bubble: bubble)) // 221
-                             .Add(new(NPC, "[@a]Uh..[30] Zephos?", Color.White, Color.Gray, voice, 3, 100, 0, false, bubble: bubble)) // 166
-                             .Add(new(NPC, "[@b]Oh, hi there![10] Didn't notice you.", Color.White, Color.Gray, voice, 3, 100, 0, false, bubble: bubble)) // 206
-                             .Add(new(NPC, "You haven't seen my friend around here,[10] have you?", Color.White, Color.Gray, voice, 3, 100, 0, false, bubble: bubble)) // 257
-                             .Add(new(NPC, "Guess he didn't jump in.[30] Oh well,[10] I'll head back to get him.", Color.White, Color.Gray, voice, 3, 100, 0, false, bubble: bubble)) // 320
-                             .Add(new(NPC, "I'm going to need a place for me to stay if I come back,[10] so, see you soon I suppose.", Color.White, Color.Gray, voice, 3, 100, 30, true, bubble: bubble, endID: 1)); // 382
+                        chain.Add(new(NPC, "Hey Zephos,[0.1] do you know where we are?", Color.White, Color.Gray, voice, .05f, 2f, 0, false, bubble: bubble)) // 221
+                             .Add(new(NPC, "[@a]Uh..[0.5] Zephos?", Color.White, Color.Gray, voice, .05f, 2f, 0, false, bubble: bubble)) // 166
+                             .Add(new(NPC, "[@b]Oh, hi there![0.1] Didn't notice you.", Color.White, Color.Gray, voice, .05f, 2f, 0, false, bubble: bubble)) // 206
+                             .Add(new(NPC, "You haven't seen my friend around here,[0.1] have you?", Color.White, Color.Gray, voice, .05f, 2f, 0, false, bubble: bubble)) // 257
+                             .Add(new(NPC, "Guess he didn't jump in.[0.5] Oh well,[0.1] I'll head back to get him.", Color.White, Color.Gray, voice, .05f, 2f, 0, false, bubble: bubble)) // 320
+                             .Add(new(NPC, "I'm going to need a place for me to stay if I come back,[0.1] so, see you soon I suppose.", Color.White, Color.Gray, voice, .05f, 2, .5f, true, bubble: bubble, endID: 1)); // 382
                         chain.OnSymbolTrigger += Chain_OnSymbolTrigger;
                         chain.OnEndTrigger += Chain_OnEndTrigger;
-                        TextBubbleUI.Visible = true;
-                        TextBubbleUI.Add(chain);
+                        ChatUI.Visible = true;
+                        ChatUI.Add(chain);
                     }
                     if (Look == 1 && AITimer % 30 == 0)
                         NPC.spriteDirection *= -1;

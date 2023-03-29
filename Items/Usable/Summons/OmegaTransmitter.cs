@@ -64,7 +64,7 @@ namespace Redemption.Items.Usable.Summons
                 limit = 0;
             if (NPC.downedGolemBoss)
                 limit = 1;
-            if (NPC.downedMoonlord)
+            if (NPC.downedMoonlord && RedeWorld.keycardGiven)
                 limit = 2;
             if (RedeBossDowned.downedNebuleus)
                 limit = 3;
@@ -185,7 +185,7 @@ namespace Redemption.Items.Usable.Summons
                 glowing = true;
             if (NPC.downedGolemBoss && !RedeBossDowned.downedOmega2)
                 glowing = true;
-            if (NPC.downedMoonlord && !RedeBossDowned.downedOmega3)
+            if (NPC.downedMoonlord && RedeWorld.keycardGiven && !RedeBossDowned.downedOmega3)
                 glowing = true;
             if (glowing)
             {
@@ -211,7 +211,7 @@ namespace Redemption.Items.Usable.Summons
                 glowing = true;
             if (NPC.downedGolemBoss && !RedeBossDowned.downedOmega2)
                 glowing = true;
-            if (NPC.downedMoonlord && !RedeBossDowned.downedOmega3)
+            if (NPC.downedMoonlord && RedeWorld.keycardGiven && !RedeBossDowned.downedOmega3)
                 glowing = true;
             if (glowing)
             {

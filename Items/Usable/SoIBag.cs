@@ -12,6 +12,7 @@ using Terraria.GameContent.ItemDropRules;
 using Redemption.Items.Weapons.HM.Ranged;
 using Redemption.Items.Accessories.PreHM;
 using Redemption.Items.Armor.Vanity.Dev;
+using Redemption.Items.Weapons.PreHM.Magic;
 
 namespace Redemption.Items.Usable
 {
@@ -51,7 +52,7 @@ namespace Redemption.Items.Usable
         public override void ModifyItemLoot(ItemLoot itemLoot)
         {
             itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<InfectedMask>(), 7));
-            itemLoot.Add(ItemDropRule.OneFromOptions(1, ModContent.ItemType<XenoXyston>(), ModContent.ItemType<CystlingSummon>()));
+            itemLoot.Add(ItemDropRule.OneFromOptions(1, ModContent.ItemType<XenoXyston>(), ModContent.ItemType<CystlingSummon>(), ModContent.ItemType<ContagionSpreader>()));
             itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<ToxicGrenade>(), 1, 30, 40));
             itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<XenomiteShard>(), 1, 12, 22));
             itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<NecklaceOfSight>()));
