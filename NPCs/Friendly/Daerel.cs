@@ -134,31 +134,16 @@ namespace Redemption.NPCs.Friendly
             if (NPC.altTexture == 1)
             {
                 Asset<Texture2D> hat = ModContent.Request<Texture2D>("Terraria/Images/Item_" + ItemID.PartyHat);
-                int offset;
-                switch (NPC.frame.Y / 56)
+                var offset = (NPC.frame.Y / 56) switch
                 {
-                    default:
-                        offset = 0;
-                        break;
-                    case 3:
-                        offset = 2;
-                        break;
-                    case 4:
-                        offset = 2;
-                        break;
-                    case 5:
-                        offset = 2;
-                        break;
-                    case 10:
-                        offset = 2;
-                        break;
-                    case 11:
-                        offset = 2;
-                        break;
-                    case 12:
-                        offset = 2;
-                        break;
-                }
+                    3 => 2,
+                    4 => 2,
+                    5 => 2,
+                    10 => 2,
+                    11 => 2,
+                    12 => 2,
+                    _ => 0,
+                };
                 var hatEffects = NPC.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
                 Vector2 origin = new(hat.Value.Width / 2f, hat.Value.Height / 2f);
                 spriteBatch.Draw(hat.Value, NPC.Center - new Vector2(1 * NPC.spriteDirection, 25 + offset) - screenPos, null, NPC.GetAlpha(drawColor), NPC.rotation, origin, NPC.scale, hatEffects, 0);
@@ -265,9 +250,6 @@ namespace Redemption.NPCs.Friendly
                     case 3:
                         button = "Poison Weapon (25 silver)";
                         break;
-                    case 4:
-                        button = "Quest";
-                        break;
                 }
             }
         }
@@ -322,7 +304,7 @@ namespace Redemption.NPCs.Friendly
                             if (Main.LocalPlayer.BuyItem(1000))
                             {
                                 SoundEngine.PlaySound(SoundID.Item37, NPC.position);
-                                Main.LocalPlayer.AddBuff(BuffID.Archery, 36000);
+                                Main.LocalPlayer.AddBuff(BuffID.Archery, 21600);
                             }
                             else
                             {
@@ -342,16 +324,12 @@ namespace Redemption.NPCs.Friendly
                                 SoundEngine.PlaySound(SoundID.MenuTick);
                             }
                             break;
-                        case 4:
-                            Main.npcChatText = "(Quests will become available in v0.8.1 - Wayfarer Update)";
-                            SoundEngine.PlaySound(SoundID.MenuTick);
-                            break;
                     }
                 }
                 else
                 {
                     ChatNumber++;
-                    if (ChatNumber > 4)
+                    if (ChatNumber > 3)
                         ChatNumber = 0;
                 }
             }

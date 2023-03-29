@@ -135,34 +135,17 @@ namespace Redemption.NPCs.Friendly
             if (NPC.altTexture == 1)
             {
                 Asset<Texture2D> hat = ModContent.Request<Texture2D>("Terraria/Images/Item_" + ItemID.PartyHat);
-                int offset;
-                switch (NPC.frame.Y / 52)
+                var offset = (NPC.frame.Y / 52) switch
                 {
-                    default:
-                        offset = 0;
-                        break;
-                    case 3:
-                        offset = 2;
-                        break;
-                    case 4:
-                        offset = 2;
-                        break;
-                    case 5:
-                        offset = 2;
-                        break;
-                    case 10:
-                        offset = 2;
-                        break;
-                    case 11:
-                        offset = 2;
-                        break;
-                    case 12:
-                        offset = 2;
-                        break;
-                    case 18:
-                        offset = 2;
-                        break;
-                }
+                    3 => 2,
+                    4 => 2,
+                    5 => 2,
+                    10 => 2,
+                    11 => 2,
+                    12 => 2,
+                    18 => 2,
+                    _ => 0,
+                };
                 var hatEffects = NPC.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
                 Vector2 origin = new(hat.Value.Width / 2f, hat.Value.Height / 2f);
                 spriteBatch.Draw(hat.Value, NPC.Center - new Vector2(4 * NPC.spriteDirection, 24 + offset) - screenPos, null, NPC.GetAlpha(drawColor), NPC.rotation, origin, NPC.scale, hatEffects, 0);
@@ -254,9 +237,6 @@ namespace Redemption.NPCs.Friendly
                     case 3:
                         button = "Shine Armor (15 silver)";
                         break;
-                    case 4:
-                        button = "Quest";
-                        break;
                 }
             }
         }
@@ -331,16 +311,12 @@ namespace Redemption.NPCs.Friendly
                                 SoundEngine.PlaySound(SoundID.MenuTick);
                             }
                             break;
-                        case 4:
-                            Main.npcChatText = "(Quests will become available in v0.8.1 - Wayfarer Update)";
-                            SoundEngine.PlaySound(SoundID.MenuTick);
-                            break;
                     }
                 }
                 else
                 {
                     ChatNumber++;
-                    if (ChatNumber > 4)
+                    if (ChatNumber > 3)
                         ChatNumber = 0;
                 }
             }

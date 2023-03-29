@@ -16,6 +16,7 @@ namespace Redemption.Items.Weapons.PreHM.Magic
             Tooltip.SetDefault("Throws a boulder which inherits your forward momentum\n" +
                 "If thrown fast enough, lightning strikes the ground when it bounces, dealing " + ElementID.ThunderS + " damage\n" +
                 "'Don't like a guy? Throw a boulder at him!'");
+            SacrificeTotal = 1;
         }
 
         public override void SetDefaults()
