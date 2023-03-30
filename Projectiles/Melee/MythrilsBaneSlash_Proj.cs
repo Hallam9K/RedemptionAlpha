@@ -12,7 +12,7 @@ namespace Redemption.Projectiles.Melee
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Wind Slice");
+            // DisplayName.SetDefault("Wind Slice");
             ProjectileID.Sets.TrailCacheLength[Projectile.type] = 12;
             ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
             ElementID.ProjWind[Type] = true;
@@ -51,7 +51,7 @@ namespace Redemption.Projectiles.Melee
 
         public override bool? CanHitNPC(NPC target) => !target.friendly && Projectile.alpha <= 200 ? null : false;
         public override bool? CanCutTiles() => false;
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             Projectile.localNPCImmunity[target.whoAmI] = 30;
             target.immune[Projectile.owner] = 0;

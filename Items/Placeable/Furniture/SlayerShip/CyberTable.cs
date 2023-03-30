@@ -2,6 +2,7 @@ using Terraria.ModLoader;
 using Terraria.ID;
 using Redemption.Tiles.Furniture.SlayerShip;
 using Redemption.Items.Materials.HM;
+using Terraria;
 
 namespace Redemption.Items.Placeable.Furniture.SlayerShip
 {
@@ -9,14 +10,14 @@ namespace Redemption.Items.Placeable.Furniture.SlayerShip
 	{
         public override void SetStaticDefaults()
         {
-            SacrificeTotal = 1;
+            Item.ResearchUnlockCount = 1;
         }
         public override void SetDefaults()
 		{
             Item.DefaultToPlaceableTile(ModContent.TileType<CyberTableTile>(), 0);
             Item.width = 32;
             Item.height = 22;
-            Item.maxStack = 9999;
+            Item.maxStack = Item.CommonMaxStack;
             Item.value = 500;
             Item.rare = ItemRarityID.LightPurple;
 		}

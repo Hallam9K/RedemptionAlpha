@@ -8,10 +8,10 @@ namespace Redemption.Items.Weapons.HM.Melee
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Tidal Wake");
-            Tooltip.SetDefault("Turns into a whirlpool, pulling in weak enemies\n" +
-                "Slain enemies affected by the whirlpool will heal the user");
-            SacrificeTotal = 1;
+            // DisplayName.SetDefault("Tidal Wake");
+            /* Tooltip.SetDefault("Turns into a whirlpool, pulling in weak enemies\n" +
+                "Slain enemies affected by the whirlpool will heal the user"); */
+            Item.ResearchUnlockCount = 1;
             ItemID.Sets.Yoyo[Item.type] = true;
             ItemID.Sets.GamepadExtraRange[Item.type] = 15;
             ItemID.Sets.GamepadSmartQuickReach[Item.type] = true;

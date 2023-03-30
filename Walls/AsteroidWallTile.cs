@@ -12,7 +12,6 @@ namespace Redemption.Walls
 		{
 			Main.wallHouse[Type] = false;
 			DustType = ModContent.DustType<SlateDust>();
-			ItemDrop = ModContent.ItemType<AsteroidWall>();
 			AddMapEntry(new Color(54, 46, 49));
 		}
 	}

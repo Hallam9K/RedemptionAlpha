@@ -21,14 +21,14 @@ namespace Redemption.Items.Usable.Summons
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Omega Transmitter");
-            Tooltip.SetDefault("Summons an Omega Prototype"
+            // DisplayName.SetDefault("Omega Transmitter");
+            /* Tooltip.SetDefault("Summons an Omega Prototype"
                 + "\nRight-click to switch which prototype to summon"
                 + "\nOnly usable at night" +
                 "\nOnly usable after Plantera has been defeated"
-                + "\nNot consumable");
+                + "\nNot consumable"); */
             ItemID.Sets.SortingPriorityBossSpawns[Item.type] = 13;
-            SacrificeTotal = 1;
+            Item.ResearchUnlockCount = 1;
         }
 
         public override void SetDefaults()
@@ -114,7 +114,7 @@ namespace Redemption.Items.Usable.Summons
                                 if (Main.netMode != NetmodeID.MultiplayerClient)
                                     NPC.NewNPC(new EntitySource_BossSpawn(player), (int)player.position.X + 200, (int)player.position.Y + 500, type2);
                                 else
-                                    NetMessage.SendData(MessageID.SpawnBoss, number: player.whoAmI, number2: type2);
+                                    NetMessage.SendData(MessageID.SpawnBossUseLicenseStartEvent, number: player.whoAmI, number2: type2);
                             }
                         }
                         break;
@@ -128,7 +128,7 @@ namespace Redemption.Items.Usable.Summons
                             if (Main.netMode != NetmodeID.MultiplayerClient)
                                 NPC.NewNPC(new EntitySource_BossSpawn(player), (int)player.position.X + 200, (int)player.position.Y - 500, type2);
                             else
-                                NetMessage.SendData(MessageID.SpawnBoss, number: player.whoAmI, number2: type2);
+                                NetMessage.SendData(MessageID.SpawnBossUseLicenseStartEvent, number: player.whoAmI, number2: type2);
                         }
                         break;
                     case 2:
@@ -139,7 +139,7 @@ namespace Redemption.Items.Usable.Summons
                         if (Main.netMode != NetmodeID.MultiplayerClient)
                             NPC.NewNPC(new EntitySource_BossSpawn(player), (int)player.position.X + 350, (int)player.position.Y - 800, type);
                         else
-                            NetMessage.SendData(MessageID.SpawnBoss, number: player.whoAmI, number2: type);
+                            NetMessage.SendData(MessageID.SpawnBossUseLicenseStartEvent, number: player.whoAmI, number2: type);
                         break;
                 }
             }

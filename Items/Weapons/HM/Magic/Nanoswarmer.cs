@@ -14,9 +14,9 @@ namespace Redemption.Items.Weapons.HM.Magic
     {
         public override void SetStaticDefaults()
         {
-            Tooltip.SetDefault("Fires a barrage of nanites that enter enemies and destroy them from within\n" +
-                "'Nanomachines, son'");
-            SacrificeTotal = 1;
+            /* Tooltip.SetDefault("Fires a barrage of nanites that enter enemies and destroy them from within\n" +
+                "'Nanomachines, son'"); */
+            Item.ResearchUnlockCount = 1;
         }
 
         public override void SetDefaults()

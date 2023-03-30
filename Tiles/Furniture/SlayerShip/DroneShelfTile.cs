@@ -4,6 +4,7 @@ using Redemption.Items.Placeable.Furniture.SlayerShip;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.Enums;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 
@@ -29,13 +30,12 @@ namespace Redemption.Tiles.Furniture.SlayerShip
             TileObjectData.newTile.AnchorBottom = new AnchorData(AnchorType.SolidTile | AnchorType.SolidWithTop | AnchorType.SolidSide, TileObjectData.newTile.Width, 0);
             TileObjectData.newTile.StyleHorizontal = true;
             TileObjectData.addTile(Type);
-            ModTranslation name = CreateMapEntryName();
-            name.SetDefault("Drone Shelves");
+            LocalizedText name = CreateMapEntryName();
+            // name.SetDefault("Drone Shelves");
             AddMapEntry(new Color(151, 153, 160), name);
             DustType = ModContent.DustType<LabPlatingDust>();
         }
         public override void NumDust(int i, int j, bool fail, ref int num) => num = fail ? 1 : 3;
-        public override void KillMultiTile(int i, int j, int frameX, int frameY) => Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 48, 48, ModContent.ItemType<DroneShelf>());
         public override bool CanExplode(int i, int j) => false;
     }
 }

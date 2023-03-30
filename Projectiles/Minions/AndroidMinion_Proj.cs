@@ -13,7 +13,7 @@ namespace Redemption.Projectiles.Minions
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Android Minion");
+            // DisplayName.SetDefault("Android Minion");
             Main.projFrames[Projectile.type] = 10;
             Main.projPet[Projectile.type] = true;
 

@@ -38,7 +38,7 @@ namespace Redemption.NPCs.Friendly
             NPC.alpha = 255;
             NPC.npcSlots = 0;
         }
-        public override bool? CanHitNPC(NPC target) => false;
+        public override bool CanHitNPC(NPC target) => false;
         public Point16 point;
         public Point16 origPoint;
         private Player zoomer;

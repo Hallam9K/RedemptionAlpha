@@ -13,9 +13,9 @@ namespace Redemption.Items.Accessories.PostML
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Ukon Ratsu");
-            Tooltip.SetDefault("Summons Jyrina and a ridable Lightning Chariot");
-            SacrificeTotal = 1;
+            // DisplayName.SetDefault("Ukon Ratsu");
+            // Tooltip.SetDefault("Summons Jyrina and a ridable Lightning Chariot");
+            Item.ResearchUnlockCount = 1;
         }
         public override void SetDefaults()
         {

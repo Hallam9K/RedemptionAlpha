@@ -25,11 +25,11 @@ namespace Redemption.Items.Weapons.PreHM.Magic
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Blighted Root");
-            Tooltip.SetDefault("i am BEGGING to be updated");
+            // DisplayName.SetDefault("Blighted Root");
+            // Tooltip.SetDefault("i am BEGGING to be updated");
             Item.staff[Item.type] = true;
 
-            SacrificeTotal = 1;
+            Item.ResearchUnlockCount = 1;
         }
 
         public override void SetDefaults()
@@ -366,7 +366,7 @@ namespace Redemption.Items.Weapons.PreHM.Magic
             return base.CanHitNPC(target);
         }
 
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             Projectile.penetrate++;
             alreadyHit.Add(target);

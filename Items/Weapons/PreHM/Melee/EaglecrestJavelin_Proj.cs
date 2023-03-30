@@ -19,7 +19,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
         public float[] oldrot = new float[4];
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Eaglecrest Javelin");
+            // DisplayName.SetDefault("Eaglecrest Javelin");
             ProjectileID.Sets.TrailCacheLength[Projectile.type] = 4;
             ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
             ElementID.ProjEarth[Type] = true;
@@ -116,7 +116,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
             SoundEngine.PlaySound(SoundID.Dig, Projectile.position);
             return true;
         }
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             Projectile.localNPCImmunity[target.whoAmI] = 30;
             target.immune[Projectile.owner] = 0;
@@ -177,7 +177,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
         public override string Texture => Redemption.EMPTY_TEXTURE;
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Lightning");
+            // DisplayName.SetDefault("Lightning");
             ElementID.ProjThunder[Type] = true;
         }
         public override void SetDefaults()
@@ -193,15 +193,15 @@ namespace Redemption.Items.Weapons.PreHM.Melee
             Projectile.tileCollide = false;
             Projectile.usesLocalNPCImmunity = true;
         }
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             Projectile.localNPCImmunity[target.whoAmI] = 30;
             target.immune[Projectile.owner] = 0;
             target.AddBuff(ModContent.BuffType<ElectrifiedDebuff>(), 30);
         }
-        public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
+        public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
         {
-            hitDirection = Projectile.RightOfDir(target);
+            modifiers.HitDirectionOverride = Projectile.RightOfDir(target);
         }
     }
 }

@@ -11,7 +11,7 @@ namespace Redemption.Items.Placeable.Furniture.Misc
         public override string Texture => "Redemption/Items/Placeable/Furniture/Misc/NozaCage";
         public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Small Bastion Cage");
+			// DisplayName.SetDefault("Small Bastion Cage");
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
 		}
 		public override void SetDefaults()
@@ -37,7 +37,7 @@ namespace Redemption.Items.Placeable.Furniture.Misc
 		public override string Texture => "Redemption/Items/Placeable/Furniture/Misc/NozaCage";
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Bastion Cage");
+			// DisplayName.SetDefault("Bastion Cage");
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
 		}
 		public override void SetDefaults()
@@ -63,7 +63,7 @@ namespace Redemption.Items.Placeable.Furniture.Misc
 		public override string Texture => "Redemption/Items/Placeable/Furniture/Misc/NozaCage";
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Large Bastion Cage");
+			// DisplayName.SetDefault("Large Bastion Cage");
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
 		}
 		public override void SetDefaults()

@@ -26,12 +26,12 @@ namespace Redemption.Projectiles.Magic
             Projectile.timeLeft = 180;
         }
 
-        public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
+        public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
         {
             if (Main.expertMode)
             {
                 if (target.type >= NPCID.EaterofWorldsHead && target.type <= NPCID.EaterofWorldsTail)
-                    damage /= 5;
+                    modifiers.FinalDamage /= 5;
             }
         }
 
@@ -230,7 +230,7 @@ namespace Redemption.Projectiles.Magic
         public override string Texture => Redemption.EMPTY_TEXTURE;
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Explosion");
+            // DisplayName.SetDefault("Explosion");
             ElementID.ProjExplosive[Type] = true;
         }
 

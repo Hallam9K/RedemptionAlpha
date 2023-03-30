@@ -17,7 +17,7 @@ namespace Redemption.Items.Weapons.HM.Melee
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Crystal Glaive");
+            // DisplayName.SetDefault("Crystal Glaive");
             ElementID.ProjHoly[Type] = true;
         }
         private Vector2 startVector;
@@ -165,7 +165,7 @@ namespace Redemption.Items.Weapons.HM.Melee
             dust.shader = GameShaders.Armor.GetSecondaryShader(77, Main.player[Projectile.owner]);
             return false;
         }
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             Player player = Main.player[Projectile.owner];
             if (Projectile.ai[0] == 2 && player.Redemption().crystalGlaiveShotCount <= 0)

@@ -11,7 +11,7 @@ namespace Redemption.Projectiles.Minions
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Microshield Core");
+            // DisplayName.SetDefault("Microshield Core");
             ProjectileID.Sets.MinionSacrificable[Projectile.type] = true;
             ProjectileID.Sets.CultistIsResistantTo[Projectile.type] = true;
             ProjectileID.Sets.MinionTargettingFeature[Projectile.type] = true;

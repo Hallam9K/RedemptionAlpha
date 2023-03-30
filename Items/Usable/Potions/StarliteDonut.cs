@@ -10,9 +10,9 @@ namespace Redemption.Items.Usable.Potions
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Starlite Donut");
-            Tooltip.SetDefault("Medium improvements to all stats" +
-                "\n'Do you know who ate all the donuts?'");
+            // DisplayName.SetDefault("Starlite Donut");
+            /* Tooltip.SetDefault("Medium improvements to all stats" +
+                "\n'Do you know who ate all the donuts?'"); */
             Main.RegisterItemAnimation(Type, new DrawAnimationVertical(int.MaxValue, 3));
             ItemID.Sets.FoodParticleColors[Item.type] = new Color[3] {
                 new Color(111, 226, 158),
@@ -20,14 +20,14 @@ namespace Redemption.Items.Usable.Potions
                 new Color(114, 167, 111)
             };
             ItemID.Sets.IsFood[Type] = true;
-            SacrificeTotal = 5;
+            Item.ResearchUnlockCount = 5;
         }
 
         public override void SetDefaults()
         {
             Item.DefaultToFood(26, 30, BuffID.WellFed2, 26000);
             Item.value = Item.sellPrice(silver: 80);
-            Item.maxStack = 9999;
+            Item.maxStack = Item.CommonMaxStack;
             Item.rare = ItemRarityID.Orange;
         }
     }

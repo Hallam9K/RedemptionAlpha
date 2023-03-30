@@ -10,7 +10,7 @@ namespace Redemption.NPCs.Bosses.Neb
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Shout!");
+            // DisplayName.SetDefault("Shout!");
         }
         public override void SetDefaults()
         {
@@ -53,7 +53,7 @@ namespace Redemption.NPCs.Bosses.Neb
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Shout!");
+            // DisplayName.SetDefault("Shout!");
         }
 
         public override void SetDefaults()
@@ -69,7 +69,7 @@ namespace Redemption.NPCs.Bosses.Neb
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Shout!");
+            // DisplayName.SetDefault("Shout!");
         }
 
         public override void SetDefaults()
@@ -85,7 +85,7 @@ namespace Redemption.NPCs.Bosses.Neb
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Shout!");
+            // DisplayName.SetDefault("Shout!");
         }
 
         public override void SetDefaults()
@@ -101,7 +101,7 @@ namespace Redemption.NPCs.Bosses.Neb
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Shout!");
+            // DisplayName.SetDefault("Shout!");
         }
 
         public override void SetDefaults()
@@ -117,7 +117,7 @@ namespace Redemption.NPCs.Bosses.Neb
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Shout!");
+            // DisplayName.SetDefault("Shout!");
         }
 
         public override void SetDefaults()
@@ -133,7 +133,7 @@ namespace Redemption.NPCs.Bosses.Neb
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Shout!");
+            // DisplayName.SetDefault("Shout!");
         }
 
         public override void SetDefaults()
@@ -149,7 +149,7 @@ namespace Redemption.NPCs.Bosses.Neb
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Shout!");
+            // DisplayName.SetDefault("Shout!");
         }
 
         public override void SetDefaults()
@@ -165,7 +165,7 @@ namespace Redemption.NPCs.Bosses.Neb
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Shout!");
+            // DisplayName.SetDefault("Shout!");
         }
 
         public override void SetDefaults()
@@ -181,7 +181,7 @@ namespace Redemption.NPCs.Bosses.Neb
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Shout!");
+            // DisplayName.SetDefault("Shout!");
         }
 
         public override void SetDefaults()
@@ -197,7 +197,7 @@ namespace Redemption.NPCs.Bosses.Neb
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Shout!");
+            // DisplayName.SetDefault("Shout!");
         }
 
         public override void SetDefaults()

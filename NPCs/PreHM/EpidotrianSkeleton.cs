@@ -62,7 +62,7 @@ namespace Redemption.NPCs.PreHM
             Banner = NPC.type;
             BannerItem = ModContent.ItemType<EpidotrianSkeletonBanner>();
         }
-        public override void HitEffect(int hitDirection, double damage)
+        public override void HitEffect(NPC.HitInfo hit)
         {
             if (NPC.life <= 0)
             {
@@ -397,7 +397,7 @@ namespace Redemption.NPCs.PreHM
 
             return false;
         }
-        public override bool? CanHitNPC(NPC target) => AIState == ActionState.Alert && Personality != PersonalityState.Greedy ? null : false;
+        public override bool CanHitNPC(NPC target) => AIState == ActionState.Alert && Personality != PersonalityState.Greedy;
         public override bool CanHitPlayer(Player target, ref int cooldownSlot) => AIState == ActionState.Alert && Personality != PersonalityState.Greedy;
         public override void OnKill()
         {

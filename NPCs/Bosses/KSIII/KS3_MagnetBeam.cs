@@ -16,7 +16,7 @@ namespace Redemption.NPCs.Bosses.KSIII
         private new const float FirstSegmentDrawDist = 20;
         public override void SetSafeStaticDefaults()
         {
-            DisplayName.SetDefault("Magnet Beam");
+            // DisplayName.SetDefault("Magnet Beam");
             ElementID.ProjThunder[Type] = true;
         }
 

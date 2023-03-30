@@ -17,7 +17,7 @@ namespace Redemption.NPCs.Bosses.Keeper
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("The Keeper");
+            // DisplayName.SetDefault("The Keeper");
         }
         public override void SetDefaults()
         {

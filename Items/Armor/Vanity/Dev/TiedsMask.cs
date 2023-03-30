@@ -8,10 +8,10 @@ namespace Redemption.Items.Armor.Vanity.Dev
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Tied's Mask");
-            Tooltip.SetDefault("'Great for impersonating devs!'");
+            // DisplayName.SetDefault("Tied's Mask");
+            // Tooltip.SetDefault("'Great for impersonating devs!'");
             ArmorIDs.Head.Sets.DrawHead[EquipLoader.GetEquipSlot(Mod, Name, EquipType.Head)] = false;
-            SacrificeTotal = 1;
+            Item.ResearchUnlockCount = 1;
         }
         public override void SetDefaults()
         {

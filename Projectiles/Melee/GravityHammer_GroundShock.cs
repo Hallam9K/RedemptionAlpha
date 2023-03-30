@@ -14,7 +14,7 @@ namespace Redemption.Projectiles.Melee
         public override string Texture => "Redemption/NPCs/Lab/MACE/MACE_GroundShock";
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Electric Eruption");
+            // DisplayName.SetDefault("Electric Eruption");
             Main.projFrames[Projectile.type] = 6;
         }
 
@@ -36,7 +36,7 @@ namespace Redemption.Projectiles.Melee
         {
             behindNPCsAndTiles.Add(index);
         }
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             if (target.knockBackResist != 0)
                 target.velocity.Y -= 8 * target.knockBackResist;
@@ -45,9 +45,9 @@ namespace Redemption.Projectiles.Melee
             if (Main.rand.NextBool(5) && target.knockBackResist > 0)
                 target.AddBuff(ModContent.BuffType<StunnedDebuff>(), 60);
         }
-        public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
+        public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
         {
-            hitDirection = Projectile.ai[0] > target.Center.X ? -1 : 1;
+            modifiers.HitDirectionOverride = Projectile.ai[0] > target.Center.X ? -1 : 1;
         }
         public override void AI()
         {

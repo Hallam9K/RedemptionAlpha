@@ -11,7 +11,7 @@ namespace Redemption.Projectiles.Magic
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Noidan Nuoli");
+            // DisplayName.SetDefault("Noidan Nuoli");
             ElementID.ProjArcane[Type] = true;
         }
 

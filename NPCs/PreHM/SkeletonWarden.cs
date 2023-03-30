@@ -21,6 +21,7 @@ using Terraria.Utilities;
 using Redemption.BaseExtension;
 using Terraria.DataStructures;
 using System.Collections.Generic;
+using Terraria.Localization;
 
 namespace Redemption.NPCs.PreHM
 {
@@ -67,7 +68,7 @@ namespace Redemption.NPCs.PreHM
             BannerItem = ModContent.ItemType<SkeletonWardenBanner>();
             NPC.RedemptionGuard().GuardPoints = 20;
         }
-        public override void HitEffect(int hitDirection, double damage)
+        public override void HitEffect(NPC.HitInfo hit)
         {
             if (NPC.life <= 0)
             {
@@ -123,15 +124,15 @@ namespace Redemption.NPCs.PreHM
             }
         }
         private bool blocked;
-        public override bool StrikeNPC(ref double damage, int defense, ref float knockback, int hitDirection, ref bool crit)
+        public override void ModifyIncomingHit(ref NPC.HitModifiers modifiers)
         {
-            bool vDmg = false;
             if (blocked && NPC.RedemptionGuard().GuardPoints >= 0)
             {
-                NPC.RedemptionGuard().GuardHit(NPC, ref vDmg, ref damage, ref knockback, SoundID.Dig, 0.1f, true);
+                modifiers.DisableCrit();
+                modifiers.ModifyHitInfo += (ref NPC.HitInfo n) => NPC.RedemptionGuard().GuardHit(ref n, NPC, SoundID.Dig, 0.1f, true);
                 blocked = false;
                 if (NPC.RedemptionGuard().GuardPoints >= 0)
-                    return vDmg;
+                    return;
             }
             if (NPC.RedemptionGuard().GuardPoints <= 0 && !NPC.RedemptionGuard().GuardBroken)
             {
@@ -140,9 +141,8 @@ namespace Redemption.NPCs.PreHM
             }
             NPC.RedemptionGuard().GuardBreakCheck(NPC, DustID.WoodFurniture, CustomSounds.GuardBreak, 10, 1, 40);
             blocked = false;
-            return true;
         }
-        public override void ModifyHitByItem(Player player, Item item, ref int damage, ref float knockback, ref bool crit)
+        public override void ModifyHitByItem(Player player, Item item, ref NPC.HitModifiers modifiers)
         {
             if (NPC.RedemptionGuard().GuardBroken)
                 return;
@@ -165,7 +165,7 @@ namespace Redemption.NPCs.PreHM
             }
         }
         private readonly List<int> projBlocked = new();
-        public override void ModifyHitByProjectile(Projectile projectile, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
+        public override void ModifyHitByProjectile(Projectile projectile, ref NPC.HitModifiers modifiers)
         {
             if (NPC.RedemptionGuard().GuardBroken)
                 return;
@@ -234,7 +234,7 @@ namespace Redemption.NPCs.PreHM
                             if (!projectile.ProjBlockBlacklist() && projectile.penetrate != -1)
                             {
                                 blocked = true;
-                                NPC.StrikeNPC(projectile.damage, projectile.damage, 1, false);
+                                NPC.SimpleStrikeNPC(projectile.damage, 1);
                                 projectile.Kill();
                             }
                             if (!projBlocked.Contains(projectile.whoAmI))
@@ -248,7 +248,7 @@ namespace Redemption.NPCs.PreHM
                             if (!projectile.ProjBlockBlacklist() && projectile.penetrate != -1)
                             {
                                 blocked = true;
-                                NPC.StrikeNPC(projectile.damage, projectile.damage, 1, false);
+                                NPC.SimpleStrikeNPC(projectile.damage, 1);
                                 projectile.Kill();
                             }
                             if (!projBlocked.Contains(projectile.whoAmI))
@@ -619,7 +619,7 @@ namespace Redemption.NPCs.PreHM
                 spriteBatch.Draw(ShieldTex, NPC.Center - screenPos, null, drawColor, NPC.rotation, NPC.frame.Size() / 2 - new Vector2(0, ShieldOffset.Y), NPC.scale, effects, 0);
             return false;
         }
-        public override bool? CanHitNPC(NPC target) => false;
+        public override bool CanHitNPC(NPC target) => false;
         public override bool CanHitPlayer(Player target, ref int cooldownSlot) => false;
         public override void OnKill()
         {

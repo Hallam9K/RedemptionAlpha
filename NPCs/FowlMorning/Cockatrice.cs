@@ -76,7 +76,7 @@ namespace Redemption.NPCs.FowlMorning
         }
 
         public override bool CanHitPlayer(Player target, ref int cooldownSlot) => false;
-        public override bool? CanHitNPC(NPC target) => false;
+        public override bool CanHitNPC(NPC target) => false;
 
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
         {
@@ -91,9 +91,9 @@ namespace Redemption.NPCs.FowlMorning
         {
             potionType = ItemID.Heart;
         }
-        public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
+        public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)
         {
-            NPC.lifeMax = (int)(NPC.lifeMax * 0.6f * bossLifeScale);
+            NPC.lifeMax = (int)(NPC.lifeMax * 0.6f * balance * bossAdjustment);
             NPC.damage = (int)(NPC.damage * 0.6f);
         }
         public override void OnSpawn(IEntitySource source)
@@ -275,7 +275,7 @@ namespace Redemption.NPCs.FowlMorning
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<NestWand>(), 5));
             npcLoot.Add(ItemDropRule.ByCondition(new OnFireCondition(), ModContent.ItemType<FriedChicken>(), 1, 2, 3));
         }
-        public override void OnHitByItem(Player player, Item item, int damage, float knockback, bool crit)
+        public override void OnHitByItem(Player player, Item item, NPC.HitInfo hit, int damageDone)
         {
             if (NPC.life <= 0)
             {
@@ -285,7 +285,7 @@ namespace Redemption.NPCs.FowlMorning
                     Item.NewItem(NPC.GetSource_Loot(), NPC.getRect(), ModContent.ItemType<FriedChicken>(), Main.rand.Next(2, 4));
             }
         }
-        public override void OnHitByProjectile(Projectile projectile, int damage, float knockback, bool crit)
+        public override void OnHitByProjectile(Projectile projectile, NPC.HitInfo hit, int damageDone)
         {
             if (NPC.life <= 0)
             {
@@ -295,7 +295,7 @@ namespace Redemption.NPCs.FowlMorning
                     Item.NewItem(NPC.GetSource_Loot(), NPC.getRect(), ModContent.ItemType<FriedChicken>(), Main.rand.Next(2, 4));
             }
         }
-        public override void HitEffect(int hitDirection, double damage)
+        public override void HitEffect(NPC.HitInfo hit)
         {
             if (NPC.life <= 0)
             {

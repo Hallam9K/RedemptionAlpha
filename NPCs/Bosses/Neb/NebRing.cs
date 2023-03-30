@@ -9,7 +9,7 @@ namespace Redemption.NPCs.Bosses.Neb
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Cosmic Ring");
+            // DisplayName.SetDefault("Cosmic Ring");
         }
         public override void SetDefaults()
         {

@@ -19,7 +19,7 @@ namespace Redemption.NPCs.Friendly
         public override string Texture => "Redemption/Items/Usable/AlignmentTeller";
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Chalice of Alignment");
+            // DisplayName.SetDefault("Chalice of Alignment");
             Main.npcFrameCount[Type] = 4;
             NPCID.Sets.NPCBestiaryDrawModifiers value = new(0) { Hide = true };
             NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, value);

@@ -13,7 +13,7 @@ namespace Redemption.NPCs.Lab.Blisterface
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Blisterface");
+            // DisplayName.SetDefault("Blisterface");
             Main.npcFrameCount[NPC.type] = 2;
 
             NPCID.Sets.MPAllowedEnemies[Type] = true;

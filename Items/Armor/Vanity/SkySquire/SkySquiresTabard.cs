@@ -11,8 +11,8 @@ namespace Redemption.Items.Armor.Vanity.SkySquire
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Sky Squire's Tabard");
-            SacrificeTotal = 1;
+            // DisplayName.SetDefault("Sky Squire's Tabard");
+            Item.ResearchUnlockCount = 1;
         }
 
         public override void SetDefaults()

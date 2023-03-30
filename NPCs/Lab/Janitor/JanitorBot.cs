@@ -55,7 +55,7 @@ namespace Redemption.NPCs.Lab.Janitor
         public ref float TimerRand => ref NPC.ai[2];
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("The Janitor");
+            // DisplayName.SetDefault("The Janitor");
             Main.npcFrameCount[NPC.type] = 19;
 
             NPCID.Sets.MPAllowedEnemies[Type] = true;
@@ -101,30 +101,29 @@ namespace Redemption.NPCs.Lab.Janitor
             SpawnModBiomes = new int[2] { ModContent.GetInstance<LidenBiomeOmega>().Type, ModContent.GetInstance<LabBiome>().Type };
         }
         public override bool CanHitPlayer(Player target, ref int cooldownSlot) => false;
-        public override bool? CanHitNPC(NPC target) => false;
+        public override bool CanHitNPC(NPC target) => false;
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
         {
             bestiaryEntry.Info.AddRange(new List<IBestiaryInfoElement> {
                 new FlavorTextBestiaryInfoElement("Amidst all the ailments that germs can conjure, all the grime mankind can produce. We'll send unto them, only you. Scrape and Clean until it is done.")
             });
         }
-        public override bool StrikeNPC(ref double damage, int defense, ref float knockback, int hitDirection, ref bool crit)
+        public override void ModifyIncomingHit(ref NPC.HitModifiers modifiers)
         {
-            bool vDmg = false;
             if (AIState is not ActionState.Slip && NPC.RedemptionGuard().GuardPoints >= 0)
             {
-                NPC.RedemptionGuard().GuardHit(NPC, ref vDmg, ref damage, ref knockback, SoundID.NPCHit4);
+                modifiers.DisableCrit();
+                modifiers.ModifyHitInfo += (ref NPC.HitInfo n) => NPC.RedemptionGuard().GuardHit(ref n, NPC, SoundID.NPCHit4);
                 if (NPC.RedemptionGuard().GuardPoints >= 0)
-                    return vDmg;
+                    return;
             }
             NPC.RedemptionGuard().GuardBreakCheck(NPC, DustID.Electric, CustomSounds.GuardBreak, 10, 1, 1000);
 
             if (AIState is ActionState.Slip)
-                damage /= 4;
-            damage *= 2;
-            return true;
+                modifiers.FinalDamage /= 2;
+            modifiers.FinalDamage *= 2;
         }
-        public override void HitEffect(int hitDirection, double damage)
+        public override void HitEffect(NPC.HitInfo hit)
         {
             if (NPC.life <= 0)
             {
@@ -445,9 +444,9 @@ namespace Redemption.NPCs.Lab.Janitor
                 }
             }
         }
-        public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
+        public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)
         {
-            NPC.lifeMax = (int)(NPC.lifeMax * 0.6f * bossLifeScale);
+            NPC.lifeMax = (int)(NPC.lifeMax * 0.6f * balance * bossAdjustment);
             NPC.damage = (int)(NPC.damage * 0.6f);
         }
     }

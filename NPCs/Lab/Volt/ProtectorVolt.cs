@@ -48,7 +48,7 @@ namespace Redemption.NPCs.Lab.Volt
         private readonly float[] oldrot = new float[3];
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Protector Volt");
+            // DisplayName.SetDefault("Protector Volt");
             Main.npcFrameCount[NPC.type] = 5;
             NPCID.Sets.TrailCacheLength[NPC.type] = 3;
             NPCID.Sets.TrailingMode[NPC.type] = 1;
@@ -100,7 +100,7 @@ namespace Redemption.NPCs.Lab.Volt
             SpawnModBiomes = new int[2] { ModContent.GetInstance<LidenBiomeOmega>().Type, ModContent.GetInstance<LabBiome>().Type };
         }
         public override bool CanHitPlayer(Player target, ref int cooldownSlot) => AIState == ActionState.SweepingBeam;
-        public override bool? CanHitNPC(NPC target) => false;
+        public override bool CanHitNPC(NPC target) => false;
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
         {
             bestiaryEntry.Info.AddRange(new List<IBestiaryInfoElement> {
@@ -615,9 +615,9 @@ namespace Redemption.NPCs.Lab.Volt
             }
         }
 
-        public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
+        public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)
         {
-            NPC.lifeMax = (int)(NPC.lifeMax * 0.6f * bossLifeScale);
+            NPC.lifeMax = (int)(NPC.lifeMax * 0.6f * balance * bossAdjustment);
             NPC.damage = (int)(NPC.damage * 0.6f);
         }
     }

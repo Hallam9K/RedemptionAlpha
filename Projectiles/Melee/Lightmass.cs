@@ -33,7 +33,7 @@ namespace Redemption.Projectiles.Melee
             Projectile.scale = Main.rand.NextFloat(0.5f, 1);
             Projectile.usesLocalNPCImmunity = true;
         }
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             FakeKill();
             Projectile.localNPCImmunity[target.whoAmI] = 20;

@@ -12,13 +12,13 @@ namespace Redemption.Items.Weapons.HM.Ranged
 	{
 		public override void SetStaticDefaults()
 		{
-            DisplayName.SetDefault("D.A.N");
-            Tooltip.SetDefault("Fires two blasts of bullets per use\n" +
+            // DisplayName.SetDefault("D.A.N");
+            /* Tooltip.SetDefault("Fires two blasts of bullets per use\n" +
                 "Continuing to hold left-click will spin the weapon while firing, creating a spiral of bullets\n" +
                 "\n(15[i:" + ModContent.ItemType<EnergyPack>() + "]) Continuing to hold left-click while aiming downwards will charge a purple beam that'll cause eruptions on impact\n" +
-                "66% chance to not consume ammo, 90% chance during the bullet spiral");
+                "66% chance to not consume ammo, 90% chance during the bullet spiral"); */
             ItemID.Sets.SkipsInitialUseSound[Item.type] = true;
-            SacrificeTotal = 1;
+            Item.ResearchUnlockCount = 1;
         }
 
         public override void SetDefaults()

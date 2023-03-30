@@ -38,7 +38,7 @@ namespace Redemption.NPCs.Minibosses.EaglecrestGolem
         // >
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Eye Ray");
+            // DisplayName.SetDefault("Eye Ray");
             ProjectileID.Sets.DrawScreenCheckFluff[Type] = 2400;
         }
 

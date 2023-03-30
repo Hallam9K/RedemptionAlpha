@@ -14,7 +14,7 @@ namespace Redemption.NPCs.Friendly
         public override string Texture => "Redemption/NPCs/Minibosses/SkullDigger/SkullDigger_FlailBlade";
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Skull Digger");
+            // DisplayName.SetDefault("Skull Digger");
             ProjectileID.Sets.TrailCacheLength[Projectile.type] = 5;
             ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
         }

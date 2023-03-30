@@ -15,7 +15,7 @@ namespace Redemption.NPCs.Bosses.FowlEmperor
         public override string Texture => "Redemption/NPCs/Bosses/FowlEmperor/EggCracker";
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Egg Cracker");
+            // DisplayName.SetDefault("Egg Cracker");
         }
         public override void SetDefaults()
         {
@@ -81,7 +81,7 @@ namespace Redemption.NPCs.Bosses.FowlEmperor
                 BaseAI.DamageNPC(target, Projectile.damage, Projectile.knockBack, hitDirection, Projectile, crit: Projectile.HeldItemCrit());
             }
         }
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             target.immune[Projectile.whoAmI] = 20;
         }

@@ -11,11 +11,11 @@ namespace Redemption.Items.Weapons.HM.Melee
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Tiny Cleaver");
-            Tooltip.SetDefault("Swings causes the blade segments to detach, increasing range");
+            // DisplayName.SetDefault("Tiny Cleaver");
+            // Tooltip.SetDefault("Swings causes the blade segments to detach, increasing range");
 
             ItemID.Sets.SkipsInitialUseSound[Item.type] = true;
-            SacrificeTotal = 1;
+            Item.ResearchUnlockCount = 1;
         }
 
         public override void SetDefaults()

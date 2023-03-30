@@ -11,10 +11,10 @@ namespace Redemption.Items.Usable
 	{
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Omega's Gift");
-			Tooltip.SetDefault("{$CommonItemTooltip.RightClickToOpen}\n" +
-                "'Gift from my friends to you'");
-            SacrificeTotal = 1;
+            // DisplayName.SetDefault("Omega's Gift");
+			/* Tooltip.SetDefault("{$CommonItemTooltip.RightClickToOpen}\n" +
+                "'Gift from my friends to you'"); */
+            Item.ResearchUnlockCount = 1;
         }
 
         public override void SetDefaults()

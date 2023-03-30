@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Terraria;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ID;
 using Redemption.Items.Materials.PreHM;
@@ -17,14 +18,16 @@ namespace Redemption.Tiles.Ores
             Main.tileLighted[Type] = true;
             Main.tileSpelunker[Type] = true;
             TileID.Sets.Ore[Type] = true;
+            Main.tileShine2[Type] = true;
+            Main.tileShine[Type] = 975;
             Main.tileOreFinderPriority[Type] = 300;
             DustType = DustID.GreenTorch;
             ItemDrop = ModContent.ItemType<XenomiteShard>();
             MinPick = 100;
             MineResist = 4f;
             HitSound = SoundID.Item27;
-            ModTranslation name = CreateMapEntryName();
-            name.SetDefault("Xenomite Shard");
+            LocalizedText name = CreateMapEntryName();
+            // name.SetDefault("Xenomite Shard");
             AddMapEntry(new Color(54, 193, 59), name);
         }
         public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)
@@ -46,12 +49,12 @@ namespace Redemption.Tiles.Ores
             if (!tileAbove.HasTile && Main.tile[i, j].HasTile && Main.rand.NextBool(70))
             {
                 WorldGen.PlaceObject(i, j - 1, ModContent.TileType<XenomiteCrystalTile>(), true);
-                NetMessage.SendObjectPlacment(-1, i, j - 1, ModContent.TileType<XenomiteCrystalTile>(), 0, 0, -1, -1);
+                NetMessage.SendObjectPlacement(-1, i, j - 1, ModContent.TileType<XenomiteCrystalTile>(), 0, 0, -1, -1);
             }
             if (!tileAbove.HasTile && Main.tile[i, j].HasTile && Main.rand.NextBool(400))
             {
                 WorldGen.PlaceObject(i, j - 1, ModContent.TileType<XenomiteCrystalBigTile>());
-                NetMessage.SendObjectPlacment(-1, i, j - 1, ModContent.TileType<XenomiteCrystalBigTile>(), 0, 0, -1, -1);
+                NetMessage.SendObjectPlacement(-1, i, j - 1, ModContent.TileType<XenomiteCrystalBigTile>(), 0, 0, -1, -1);
             }
         }
 

@@ -17,7 +17,7 @@ namespace Redemption.Projectiles.Minions
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Tesla Field Generator");
+            // DisplayName.SetDefault("Tesla Field Generator");
 
             ProjectileID.Sets.MinionSacrificable[Projectile.type] = true;
             ProjectileID.Sets.CultistIsResistantTo[Projectile.type] = true;
@@ -109,7 +109,7 @@ namespace Redemption.Projectiles.Minions
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Lightning Arc");
+            // DisplayName.SetDefault("Lightning Arc");
             ProjectileID.Sets.MinionShot[Projectile.type] = true;
             ProjectileID.Sets.TrailCacheLength[Projectile.type] = 10;
             ProjectileID.Sets.TrailingMode[Projectile.type] = 1;

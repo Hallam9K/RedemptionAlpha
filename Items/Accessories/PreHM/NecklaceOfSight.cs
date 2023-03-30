@@ -10,11 +10,11 @@ namespace Redemption.Items.Accessories.PreHM
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Necklace of Sight");
-            Tooltip.SetDefault("Increases movement speed while an enemy is close\n" +
+            // DisplayName.SetDefault("Necklace of Sight");
+            /* Tooltip.SetDefault("Increases movement speed while an enemy is close\n" +
                 "6% increased critical strike chance\n"
-                + "Improves vision");
-            SacrificeTotal = 1;
+                + "Improves vision"); */
+            Item.ResearchUnlockCount = 1;
         }
 
         public override void SetDefaults()
@@ -23,7 +23,7 @@ namespace Redemption.Items.Accessories.PreHM
             Item.height = 30;
             Item.value = Item.sellPrice(0, 1, 50, 0);
             Item.rare = ItemRarityID.Expert;
-            Item.canBePlacedInVanityRegardlessOfConditions = true;
+            Item.hasVanityEffects = true;
             Item.accessory = true;
             Item.expert = true;
         }

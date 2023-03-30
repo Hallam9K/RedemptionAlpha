@@ -24,7 +24,7 @@ namespace Redemption.NPCs.Lab.Volt
         public ref float AITimer => ref NPC.ai[1];
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Protector Volt");
+            // DisplayName.SetDefault("Protector Volt");
             Main.npcFrameCount[NPC.type] = 5;
             NPCID.Sets.DontDoHardmodeScaling[Type] = true;
             NPCID.Sets.NPCBestiaryDrawModifiers value = new(0) { Hide = true };
@@ -50,7 +50,7 @@ namespace Redemption.NPCs.Lab.Volt
             return !Main.LocalPlayer.InModBiome<LabBiome>();
         }
         public override bool CanHitPlayer(Player target, ref int cooldownSlot) => false;
-        public override bool? CanHitNPC(NPC target) => false;
+        public override bool CanHitNPC(NPC target) => false;
         public readonly Vector2 modifier = new(0, -200);
         public override void AI()
         {

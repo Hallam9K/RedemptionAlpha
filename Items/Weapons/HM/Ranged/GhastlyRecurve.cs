@@ -14,9 +14,9 @@ namespace Redemption.Items.Weapons.HM.Ranged
     {
         public override void SetStaticDefaults()
         {
-            Tooltip.SetDefault("Right-click to fire a spirit to the aimed area, where they will linger there for a duration\n" +
-                "Arrows passing through the spirits are transformed into Spirit Arrows that split into homing shards upon impact, dealing " + ElementID.ArcaneS + " damage");
-            SacrificeTotal = 1;
+            /* Tooltip.SetDefault("Right-click to fire a spirit to the aimed area, where they will linger there for a duration\n" +
+                "Arrows passing through the spirits are transformed into Spirit Arrows that split into homing shards upon impact, dealing " + ElementID.ArcaneS + " damage"); */
+            Item.ResearchUnlockCount = 1;
         }
         public override void SetDefaults()
         {

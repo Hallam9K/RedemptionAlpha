@@ -11,8 +11,8 @@ namespace Redemption.Items.Usable.Potions
     {
         public override void SetStaticDefaults()
         {
-            Tooltip.SetDefault("Massive improvements to all stats" +
-                "\n'Tastes like black liquorice'");
+            /* Tooltip.SetDefault("Massive improvements to all stats" +
+                "\n'Tastes like black liquorice'"); */
             Main.RegisterItemAnimation(Type, new DrawAnimationVertical(int.MaxValue, 3));
             ItemID.Sets.DrinkParticleColors[Item.type] = new Color[3] {
                 new Color(10, 14, 23),
@@ -20,14 +20,14 @@ namespace Redemption.Items.Usable.Potions
                 new Color(210, 200, 191)
             };
             ItemID.Sets.IsFood[Type] = true;
-            SacrificeTotal = 5;
+            Item.ResearchUnlockCount = 5;
         }
 
         public override void SetDefaults()
         {
             Item.DefaultToFood(22, 38, ModContent.BuffType<WellFed4>(), 15000, true);
             Item.value = 80;
-            Item.maxStack = 9999;
+            Item.maxStack = Item.CommonMaxStack;
             Item.rare = ItemRarityID.Blue;
         }
     }

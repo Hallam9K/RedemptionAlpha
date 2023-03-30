@@ -12,7 +12,7 @@ namespace Redemption.Projectiles.Melee
         public override string Texture => Redemption.EMPTY_TEXTURE;
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Xenium Spark");
+            // DisplayName.SetDefault("Xenium Spark");
             ElementID.ProjThunder[Type] = true;
         }
         public override void SetDefaults()
@@ -27,7 +27,7 @@ namespace Redemption.Projectiles.Melee
             Projectile.timeLeft = 30;
             Projectile.usesLocalNPCImmunity = true;
         }
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             DustHelper.DrawParticleElectricity(new Vector2(target.position.X, target.position.Y + Main.rand.Next(0, target.height)), new Vector2(target.TopRight.X, target.TopRight.Y + Main.rand.Next(0, target.height)), new LightningParticle(), .5f, 10, 0.2f, 5);
             DustHelper.DrawParticleElectricity(new Vector2(target.TopRight.X, target.TopRight.Y + Main.rand.Next(0, target.height)), new Vector2(target.position.X, target.position.Y + Main.rand.Next(0, target.height)), new LightningParticle(), .5f, 10, 0.2f, 5);

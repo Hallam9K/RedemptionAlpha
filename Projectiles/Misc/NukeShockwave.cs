@@ -13,7 +13,7 @@ namespace Redemption.Projectiles.Misc
         public override string Texture => Redemption.EMPTY_TEXTURE;
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Shockwave");
+            // DisplayName.SetDefault("Shockwave");
         }
         public override void SetDefaults()
         {
@@ -40,7 +40,7 @@ namespace Redemption.Projectiles.Misc
             Projectile.height += Math.Abs((int)(Projectile.velocity.X / 4));
             Projectile.width += Math.Abs((int)(Projectile.velocity.Y / 4));
         }
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             target.AddBuff(BuffID.OnFire, 900);
             Vector2 groundZeroPos = new(Projectile.ai[0], Projectile.ai[1]);
@@ -49,7 +49,7 @@ namespace Redemption.Projectiles.Misc
             throwVelocity *= Projectile.velocity.Length() / 4;
             target.velocity += throwVelocity;
         }
-        public override void OnHitPlayer(Player target, int damage, bool crit)
+        public override void OnHitPlayer(Player target, Player.HurtInfo info)
         {
             if (!target.behindBackWall)
             {

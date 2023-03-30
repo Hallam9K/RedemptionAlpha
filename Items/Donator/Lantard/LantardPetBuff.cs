@@ -8,8 +8,8 @@ namespace Redemption.Items.Donator.Lantard
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Fluffy Boi");
-			Description.SetDefault("Fluff.");
+			// DisplayName.SetDefault("Fluffy Boi");
+			// Description.SetDefault("Fluff.");
 
 			Main.buffNoTimeDisplay[Type] = true;
 			Main.vanityPet[Type] = true;

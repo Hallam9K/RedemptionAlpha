@@ -9,7 +9,7 @@ namespace Redemption.NPCs.Bosses.Obliterator
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Omega Laser");
+            // DisplayName.SetDefault("Omega Laser");
             Main.projFrames[Projectile.type] = 8;
         }
         public override void SetDefaults()

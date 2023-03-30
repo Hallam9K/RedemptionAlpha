@@ -81,7 +81,7 @@ namespace Redemption.NPCs.Bosses.Gigapora
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Omega Gigapora");
+            // DisplayName.SetDefault("Omega Gigapora");
             Main.npcFrameCount[NPC.type] = 3;
             NPCID.Sets.TrailCacheLength[NPC.type] = 6;
             NPCID.Sets.TrailingMode[NPC.type] = 1;
@@ -140,7 +140,7 @@ namespace Redemption.NPCs.Bosses.Gigapora
                 new FlavorTextBestiaryInfoElement("A modified tunnelling machine, originally of Teochrome design, retrofitted with rocket boosters, various weaponry and very experimental projected shield technology. Gigapora's shield projectors are prone to overheating and melting if they're inside the projected shield, hence why they're outside.")
             });
         }
-        public override void HitEffect(int hitDirection, double damage)
+        public override void HitEffect(NPC.HitInfo hit)
         {
             if (NPC.life <= 0)
             {
@@ -187,7 +187,7 @@ namespace Redemption.NPCs.Bosses.Gigapora
 
             LeadingConditionRule notExpertRule = new(new Conditions.NotExpert());
 
-            notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<DrillHeadHead>(), 7));
+            notExpertRule.OnSuccess(ItemDropRule.NotScalingWithLuck(ModContent.ItemType<DrillHeadHead>(), 7));
             notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<OmegaPowerCell>(), 1, 2, 4));
             notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<CorruptedXenomite>(), 1, 8, 16));
             npcLoot.Add(notExpertRule);
@@ -200,9 +200,9 @@ namespace Redemption.NPCs.Bosses.Gigapora
         {
             return AIState != ActionState.CrossBomb;
         }
-        public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
+        public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)
         {
-            NPC.lifeMax = (int)(NPC.lifeMax * 0.75f * bossLifeScale);
+            NPC.lifeMax = (int)(NPC.lifeMax * 0.75f * balance * bossAdjustment);
             NPC.damage = (int)(NPC.damage * 0.6f);
         }
         public override void SendExtraAI(BinaryWriter writer)
@@ -1041,17 +1041,19 @@ namespace Redemption.NPCs.Bosses.Gigapora
                 }
             }
         }
-        public override bool StrikeNPC(ref double damage, int defense, ref float knockback, int hitDirection, ref bool crit)
+        public override void ModifyIncomingHit(ref NPC.HitModifiers modifiers)
         {
             if (NPC.immortal && AIState is not ActionState.Death && NPC.ai[3] == 0)
             {
                 if (!Main.dedServ)
                     SoundEngine.PlaySound(CustomSounds.BallFire with { Volume = .5f }, NPC.position);
-                damage = 0;
-                return false;
+                modifiers.SetMaxDamage(1);
+                modifiers.DisableCrit();
+                modifiers.HideCombatText();
+                CombatText.NewText(NPC.getRect(), Color.Orange, 0, true, true);
+                return;
             }
-            damage *= 1.8f;
-            return true;
+            modifiers.FinalDamage *= 1.8f;
         }
         private void DespawnHandler()
         {

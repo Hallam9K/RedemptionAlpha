@@ -12,10 +12,10 @@ namespace Redemption.Items.Quest.KingSlayer
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Ship Wiring Kit");
+            // DisplayName.SetDefault("Ship Wiring Kit");
             Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(5, 2));
 
-            SacrificeTotal = 1;
+            Item.ResearchUnlockCount = 1;
         }
 
 

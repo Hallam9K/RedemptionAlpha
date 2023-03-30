@@ -10,7 +10,7 @@ namespace Redemption.Projectiles.Hostile
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Pollen Cloud");
+            // DisplayName.SetDefault("Pollen Cloud");
             ElementID.ProjPoison[Type] = true;
         }
         public override void SetDefaults()

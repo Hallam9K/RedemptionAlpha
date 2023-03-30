@@ -15,7 +15,10 @@ namespace Redemption.NPCs.Bosses.PatientZero
     public class PZ_Laser : LaserProjectile
     {
         private new readonly float FirstSegmentDrawDist = 23;
-        public override void SetSafeStaticDefaults() => DisplayName.SetDefault("Xenium Laser");
+        public override void SetSafeStaticDefaults() 
+        {
+            // DisplayName.SetDefault("Xenium Laser");
+        }
         public override void SetSafeDefaults()
         {
             Projectile.width = 36;
@@ -33,7 +36,7 @@ namespace Redemption.NPCs.Bosses.PatientZero
             MaxLaserLength = 1840;
             maxLaserFrames = 3;
         }
-        public override void OnHitPlayer(Player target, int damage, bool crit) => target.AddBuff(ModContent.BuffType<BileDebuff>(), 300);
+        public override void OnHitPlayer(Player target, Player.HurtInfo info) => target.AddBuff(ModContent.BuffType<BileDebuff>(), 300);
         public override bool CanHitPlayer(Player target) => AITimer >= 85;
         public override bool? CanHitNPC(NPC target) => target.friendly && AITimer >= 85 ? null : false;
         public override void AI()

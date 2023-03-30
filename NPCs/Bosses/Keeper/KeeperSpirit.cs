@@ -48,7 +48,7 @@ namespace Redemption.NPCs.Bosses.Keeper
         public float[] oldrot = new float[5];
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("The Keeper's Spirit");
+            // DisplayName.SetDefault("The Keeper's Spirit");
             Main.npcFrameCount[NPC.type] = 8;
             NPCID.Sets.TrailCacheLength[NPC.type] = 5;
             NPCID.Sets.TrailingMode[NPC.type] = 1;
@@ -93,7 +93,7 @@ namespace Redemption.NPCs.Bosses.Keeper
                 Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/BossKeeper");
         }
 
-        public override void HitEffect(int hitDirection, double damage)
+        public override void HitEffect(NPC.HitInfo hit)
         {
             if (NPC.life <= 0)
             {
@@ -106,11 +106,11 @@ namespace Redemption.NPCs.Bosses.Keeper
         }
 
         public override bool CanHitPlayer(Player target, ref int cooldownSlot) => false;
-        public override bool? CanHitNPC(NPC target) => false;
+        public override bool CanHitNPC(NPC target) => false;
 
-        public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
+        public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)
         {
-            NPC.lifeMax = (int)(NPC.lifeMax * 0.6f * bossLifeScale);
+            NPC.lifeMax = (int)(NPC.lifeMax * 0.6f * balance * bossAdjustment);
             NPC.damage = (int)(NPC.damage * 0.6f);
         }
 
@@ -125,7 +125,7 @@ namespace Redemption.NPCs.Bosses.Keeper
 
             LeadingConditionRule notExpertRule = new(new Conditions.NotExpert());
 
-            notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<KeepersVeil>(), 7));
+            notExpertRule.OnSuccess(ItemDropRule.NotScalingWithLuck(ModContent.ItemType<KeepersVeil>(), 7));
 
             //notExpertRule.OnSuccess(ItemDropRule.OneFromOptions(1, ModContent.ItemType<SoulScepter>(), ModContent.ItemType<KeepersClaw>(), ModContent.ItemType<FanOShivs>(), ModContent.ItemType<KeepersKnife>()));
             notExpertRule.OnSuccess(ItemDropRule.OneFromOptions(1, ModContent.ItemType<SoulScepter>(), ModContent.ItemType<KeepersClaw>(), ModContent.ItemType<FanOShivs>()));

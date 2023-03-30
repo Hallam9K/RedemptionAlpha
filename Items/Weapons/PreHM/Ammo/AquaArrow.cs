@@ -8,8 +8,9 @@ namespace Redemption.Items.Weapons.PreHM.Ammo
     {
         public override void SetStaticDefaults()
         {
-            Tooltip.SetDefault("Makes targets wet");
-            SacrificeTotal = 99;
+            // Tooltip.SetDefault("Makes targets wet");
+            ItemID.Sets.ShimmerTransformToItem[Type] = ItemID.ShimmerArrow;
+            Item.ResearchUnlockCount = 99;
         }
 
         public override void SetDefaults()
@@ -18,7 +19,7 @@ namespace Redemption.Items.Weapons.PreHM.Ammo
             Item.DamageType = DamageClass.Ranged;
             Item.width = 14;
             Item.height = 38;
-            Item.maxStack = 9999;
+            Item.maxStack = Item.CommonMaxStack;
             Item.consumable = true;
             Item.knockBack = 2.5f;
             Item.value = 2;

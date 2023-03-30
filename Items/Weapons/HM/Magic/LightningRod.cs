@@ -8,13 +8,13 @@ namespace Redemption.Items.Weapons.HM.Magic
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Self-Sufficient Lighting Rod");
-            Tooltip.SetDefault("Hold left-click to charge up electricity, release to fire a shock of lightning at the cursor\n" +
+            // DisplayName.SetDefault("Self-Sufficient Lighting Rod");
+            /* Tooltip.SetDefault("Hold left-click to charge up electricity, release to fire a shock of lightning at the cursor\n" +
                 "Lightning arcs to more enemies and does more damage as it is charged\n" +
-                "Overcharging causes it to do less damage but have a wider radius");
+                "Overcharging causes it to do less damage but have a wider radius"); */
             Item.staff[Item.type] = true;
             ItemID.Sets.SkipsInitialUseSound[Item.type] = true;
-            SacrificeTotal = 1;
+            Item.ResearchUnlockCount = 1;
         }
         public override void SetDefaults()
         {

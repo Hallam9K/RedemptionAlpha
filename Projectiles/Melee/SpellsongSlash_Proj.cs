@@ -12,7 +12,7 @@ namespace Redemption.Projectiles.Melee
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Arcane Wave");
+            // DisplayName.SetDefault("Arcane Wave");
             ProjectileID.Sets.TrailCacheLength[Projectile.type] = 5;
             ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
             ElementID.ProjCelestial[Type] = true;
@@ -50,7 +50,7 @@ namespace Redemption.Projectiles.Melee
 
         public override bool? CanHitNPC(NPC target) => !target.friendly && Projectile.alpha <= 200 ? null : false;
         public override bool? CanCutTiles() => false;
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             Projectile.localNPCImmunity[target.whoAmI] = 20;
             target.immune[Projectile.owner] = 0;

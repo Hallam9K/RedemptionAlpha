@@ -11,7 +11,7 @@ namespace Redemption.Items.Weapons.PreHM.Ammo
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Aqua Arrow");
+            // DisplayName.SetDefault("Aqua Arrow");
             ElementID.ProjWater[Type] = true;
         }
         public override void SetDefaults()
@@ -36,7 +36,7 @@ namespace Redemption.Items.Weapons.PreHM.Ammo
             if (Main.rand.NextBool(4))
                 Dust.NewDust(Projectile.position + Projectile.velocity, Projectile.width, Projectile.height, DustID.Water, Projectile.velocity.X * 0.5f, Projectile.velocity.Y * 0.5f);
         }
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             if (Main.rand.NextBool(2))
                 return;

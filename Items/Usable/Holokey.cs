@@ -9,11 +9,11 @@ namespace Redemption.Items.Usable
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Holokey");
-            Tooltip.SetDefault("'Unlocks Holochests found in a crashed spaceship'"
-                + "\nOnly one is needed");
+            // DisplayName.SetDefault("Holokey");
+            /* Tooltip.SetDefault("'Unlocks Holochests found in a crashed spaceship'"
+                + "\nOnly one is needed"); */
             Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(5, 2));
-            SacrificeTotal = 1;
+            Item.ResearchUnlockCount = 1;
         }
 
 

@@ -13,8 +13,8 @@ namespace Redemption.Items.Weapons.PreHM.Summon
 	{
 		public override void SetStaticDefaults()
 		{
-            Tooltip.SetDefault("Summons a Forret to fight for you");
-			SacrificeTotal = 1;
+            // Tooltip.SetDefault("Summons a Forret to fight for you");
+			Item.ResearchUnlockCount = 1;
 
 			ItemID.Sets.GamepadWholeScreenUseRange[Item.type] = true;
 			ItemID.Sets.LockOnIgnoresCollision[Item.type] = true;
@@ -51,6 +51,7 @@ namespace Redemption.Items.Weapons.PreHM.Summon
 
 		public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback)
 		{
+			knockback = 0;
 			position = Main.MouseWorld;
 		}
 

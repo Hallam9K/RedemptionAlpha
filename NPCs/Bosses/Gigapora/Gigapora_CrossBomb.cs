@@ -14,7 +14,7 @@ namespace Redemption.NPCs.Bosses.Gigapora
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Cross Bomb");
+            // DisplayName.SetDefault("Cross Bomb");
             Main.projFrames[Projectile.type] = 2;
             ProjectileID.Sets.TrailCacheLength[Projectile.type] = 4;
             ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
@@ -97,7 +97,7 @@ namespace Redemption.NPCs.Bosses.Gigapora
         public override string Texture => Redemption.EMPTY_TEXTURE;
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("");
+            // DisplayName.SetDefault("");
         }
         public override void SetDefaults()
         {

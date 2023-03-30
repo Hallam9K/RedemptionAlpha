@@ -12,7 +12,7 @@ namespace Redemption.Projectiles.Melee
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Heat Wave");
+            // DisplayName.SetDefault("Heat Wave");
             ProjectileID.Sets.TrailCacheLength[Projectile.type] = 4;
             ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
             ElementID.ProjFire[Type] = true;
@@ -46,8 +46,8 @@ namespace Redemption.Projectiles.Melee
 
         public override bool? CanHitNPC(NPC target) => !target.friendly && Projectile.alpha <= 200 ? null : false;
 
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) => target.AddBuff(BuffID.OnFire, 120);
-        public override void OnHitPlayer(Player target, int damage, bool crit) => target.AddBuff(BuffID.OnFire, 120);
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) => target.AddBuff(BuffID.OnFire, 120);
+        public override void OnHitPlayer(Player target, Player.HurtInfo info) => target.AddBuff(BuffID.OnFire, 120);
 
         public override bool? CanCutTiles() => false;
 

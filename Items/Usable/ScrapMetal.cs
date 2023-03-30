@@ -9,16 +9,16 @@ namespace Redemption.Items.Usable
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Scrap Metal");
-            Tooltip.SetDefault("'Surely I can get something useful from this scrap...'"
-                + "\n{$CommonItemTooltip.RightClickToOpen}");
+            // DisplayName.SetDefault("Scrap Metal");
+            /* Tooltip.SetDefault("'Surely I can get something useful from this scrap...'"
+                + "\n{$CommonItemTooltip.RightClickToOpen}"); */
 
-            SacrificeTotal = 10;
+            Item.ResearchUnlockCount = 10;
         }
 
         public override void SetDefaults()
         {
-            Item.maxStack = 9999;
+            Item.maxStack = Item.CommonMaxStack;
             Item.consumable = true;
             Item.width = 52;
             Item.height = 40;

@@ -9,15 +9,15 @@ namespace Redemption.Items.Placeable.Banners
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Sneezy Snow Flinx Banner");
-            SacrificeTotal = 1;
+            // DisplayName.SetDefault("Sneezy Snow Flinx Banner");
+            Item.ResearchUnlockCount = 1;
         }
         public override void SetDefaults()
         {
             Item.DefaultToPlaceableTile(ModContent.TileType<SneezyFlinxBannerTile>(), 0);
             Item.width = 12;
             Item.height = 28;
-            Item.maxStack = 9999;
+            Item.maxStack = Item.CommonMaxStack;
             Item.rare = ItemRarityID.Blue;
             Item.value = Item.buyPrice(0, 0, 10, 0);
         }

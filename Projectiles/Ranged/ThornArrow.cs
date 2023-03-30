@@ -11,7 +11,7 @@ namespace Redemption.Projectiles.Ranged
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Seed-Laden Arrow");
+            // DisplayName.SetDefault("Seed-Laden Arrow");
             Main.projFrames[Projectile.type] = 5;
             ElementID.ProjNature[Type] = true;
         }
@@ -54,7 +54,7 @@ namespace Redemption.Projectiles.Ranged
         public override string Texture => "Redemption/NPCs/Bosses/Thorn/ThornSeed";
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Thorn Seed");
+            // DisplayName.SetDefault("Thorn Seed");
         }
         public override void SetDefaults()
         {

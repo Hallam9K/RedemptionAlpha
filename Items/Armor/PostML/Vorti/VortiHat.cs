@@ -11,14 +11,14 @@ namespace Redemption.Items.Armor.PostML.Vorti
     {
         public override void SetStaticDefaults()
         {
-            Tooltip.SetDefault("18% increased magic damage"
+            /* Tooltip.SetDefault("18% increased magic damage"
                 + "\n12% increased magic critical strike chance"
-                + "\n+150 max mana");
+                + "\n+150 max mana"); */
 
             ArmorIDs.Head.Sets.DrawHead[EquipLoader.GetEquipSlot(Mod, Name, EquipType.Head)] = true;
             ArmorIDs.Head.Sets.DrawFullHair[EquipLoader.GetEquipSlot(Mod, Name, EquipType.Head)] = false;
             ArmorIDs.Head.Sets.DrawHatHair[EquipLoader.GetEquipSlot(Mod, Name, EquipType.Head)] = true;
-            SacrificeTotal = 1;
+            Item.ResearchUnlockCount = 1;
         }
 
         public override void SetDefaults()

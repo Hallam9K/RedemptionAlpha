@@ -14,7 +14,7 @@ namespace Redemption.Projectiles.Ranged
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Lunar Bolt");
+            // DisplayName.SetDefault("Lunar Bolt");
             ElementID.ProjFire[Type] = true;
             ElementID.ProjNature[Type] = true;
         }
@@ -38,7 +38,7 @@ namespace Redemption.Projectiles.Ranged
         private DanTrail trail2;
         private float thickness = 3f;
 
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             FakeKill();
             Player player = Main.player[Projectile.owner];

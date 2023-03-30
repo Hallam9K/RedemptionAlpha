@@ -13,7 +13,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Noble's Halberd");
+            // DisplayName.SetDefault("Noble's Halberd");
             Main.projFrames[Projectile.type] = 6;
         }
         public override bool ShouldUpdatePosition() => false;
@@ -106,9 +106,9 @@ namespace Redemption.Items.Weapons.PreHM.Melee
         {
             hitbox = new((int)(Projectile.spriteDirection == -1 ? Projectile.Center.X - 78 : Projectile.Center.X), (int)(Projectile.Center.Y - 66), 78, 94);
         }
-        public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
-            RedeProjectile.Decapitation(target, ref damage, ref crit, 80);
+            RedeProjectile.Decapitation(target, ref damageDone, ref hit.Crit, 80);
         }
         public override bool PreDraw(ref Color lightColor)
         {

@@ -14,7 +14,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Sword Slicer");
+            // DisplayName.SetDefault("Sword Slicer");
             Main.projFrames[Projectile.type] = 9;
         }
         public override bool ShouldUpdatePosition() => false;
@@ -100,12 +100,9 @@ namespace Redemption.Items.Weapons.PreHM.Melee
         {
             hitbox = new((int)(Projectile.spriteDirection == -1 ? Projectile.Center.X - 90 : Projectile.Center.X), (int)(Projectile.Center.Y - 67), 90, 126);
         }
-        public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
-            RedeProjectile.Decapitation(target, ref damage, ref crit);
-        }
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
-        {
+            RedeProjectile.Decapitation(target, ref damageDone, ref hit.Crit);
             if (NPCLists.Armed.Contains(target.type))
                 target.AddBuff(ModContent.BuffType<DisarmedDebuff>(), 1800);
         }

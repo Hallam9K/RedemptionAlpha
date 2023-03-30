@@ -14,11 +14,11 @@ namespace Redemption.Items.Armor.Single
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Antique Pure-Iron Helmet");
-            Tooltip.SetDefault("7% increased damage");
+			// DisplayName.SetDefault("Antique Pure-Iron Helmet");
+            // Tooltip.SetDefault("7% increased damage");
             ArmorIDs.Head.Sets.DrawHead[EquipLoader.GetEquipSlot(Mod, Name, EquipType.Head)] = false;
-
-            SacrificeTotal = 1;
+            ItemID.Sets.ShimmerTransformToItem[Type] = ModContent.ItemType<PureIronHelmet>();
+            Item.ResearchUnlockCount = 1;
 		}
 
 		public override void SetDefaults()

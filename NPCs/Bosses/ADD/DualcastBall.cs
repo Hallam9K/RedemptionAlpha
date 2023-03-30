@@ -15,7 +15,7 @@ namespace Redemption.NPCs.Bosses.ADD
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Static Dualcast");
+            // DisplayName.SetDefault("Static Dualcast");
             Main.projFrames[Projectile.type] = 4;
             ElementID.ProjThunder[Type] = true;
         }
@@ -102,7 +102,7 @@ namespace Redemption.NPCs.Bosses.ADD
             Projectile.rotation = BaseUtility.RotationTo(Projectile.Center, Projectile.Center + Projectile.velocity) + 1.57f - MathHelper.PiOver4;
             Projectile.spriteDirection = 1;
         }
-        public override void ModifyHitPlayer(Player target, ref int damage, ref bool crit)
+        public override void ModifyHitPlayer(Player target, ref Player.HurtModifiers modifiers)
         {
             if (Main.rand.NextBool(2))
             {

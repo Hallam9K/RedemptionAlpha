@@ -4,6 +4,7 @@ using Redemption.Items.Placeable.Furniture.Lab;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.Enums;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 
@@ -30,8 +31,8 @@ namespace Redemption.Tiles.Furniture.Lab
             DustType = ModContent.DustType<LabPlatingDust>();
             MinPick = 200;
             MineResist = 10f;
-			ModTranslation name = CreateMapEntryName();
-			name.SetDefault("Laboratory Reception Monitors");
+			LocalizedText name = CreateMapEntryName();
+			// name.SetDefault("Laboratory Reception Monitors");
             AddMapEntry(new Color(0, 187, 240), name);
             AnimationFrameHeight = 72;
         }
@@ -51,10 +52,6 @@ namespace Redemption.Tiles.Furniture.Lab
             r = 0.0f;
             g = 0.2f;
             b = 0.3f;
-        }
-        public override void KillMultiTile(int i, int j, int frameX, int frameY)
-        {
-            Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 64, 64, ModContent.ItemType<LabReceptionMonitors>());
         }
         public override bool CanExplode(int i, int j) => false;
     }

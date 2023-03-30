@@ -22,7 +22,7 @@ namespace Redemption.NPCs.Bosses.ADD
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Eaglecrest Rock Pile");
+            // DisplayName.SetDefault("Eaglecrest Rock Pile");
             Main.npcFrameCount[NPC.type] = 8;
 
             NPCID.Sets.DontDoHardmodeScaling[Type] = true;
@@ -101,7 +101,7 @@ namespace Redemption.NPCs.Bosses.ADD
                 NPC.frame.Y = 0;
             }
         }
-        public override void HitEffect(int hitDirection, double damage)
+        public override void HitEffect(NPC.HitInfo hit)
         {
             if (NPC.life <= 0)
             {

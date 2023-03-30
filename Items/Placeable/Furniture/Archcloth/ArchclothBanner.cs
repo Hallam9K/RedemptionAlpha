@@ -9,7 +9,7 @@ namespace Redemption.Items.Placeable.Furniture.Archcloth
     {
         public override void SetStaticDefaults()
         {
-            SacrificeTotal = 1;
+            Item.ResearchUnlockCount = 1;
         }
 
         public override void SetDefaults()
@@ -17,7 +17,7 @@ namespace Redemption.Items.Placeable.Furniture.Archcloth
             Item.DefaultToPlaceableTile(ModContent.TileType<ArchclothBannerTile>(), 0);
             Item.width = 12;
             Item.height = 28;
-            Item.maxStack = 9999;
+            Item.maxStack = Item.CommonMaxStack;
             Item.rare = ItemRarityID.LightRed;
             Item.value = 100;
         }

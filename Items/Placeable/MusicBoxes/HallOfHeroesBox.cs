@@ -9,9 +9,10 @@ namespace Redemption.Items.Placeable.MusicBoxes
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Music Box (Hall of Heroes)");
-
-			SacrificeTotal = 1;
+            // DisplayName.SetDefault("Music Box (Hall of Heroes)");
+            ItemID.Sets.CanGetPrefixes[Type] = false;
+            ItemID.Sets.ShimmerTransformToItem[Type] = ItemID.MusicBox;
+            Item.ResearchUnlockCount = 1;
 
 			MusicLoader.AddMusicBox(Mod, MusicLoader.GetMusicSlot(Mod, "Sounds/Music/HallofHeroes"), ModContent.ItemType<HallOfHeroesBox>(), ModContent.TileType<HallOfHeroesBoxTile>());
 		}

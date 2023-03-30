@@ -4,6 +4,8 @@ using Terraria;
 using Microsoft.Xna.Framework;
 using Redemption.Projectiles.Ranged;
 using System.Collections.Generic;
+using Redemption.Items.Weapons.PreHM.Magic;
+using Redemption.Items.Weapons.PreHM.Melee;
 
 namespace Redemption.Items.Weapons.PreHM.Ranged
 {
@@ -11,10 +13,11 @@ namespace Redemption.Items.Weapons.PreHM.Ranged
 	{
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Daerel's Silverwood Bow");
-            Tooltip.SetDefault("20% chance not to consume ammo"
-                + "\nShoots silverwood arrows that stick onto enemies, draining their life");
-            SacrificeTotal = 1;
+            // DisplayName.SetDefault("Daerel's Silverwood Bow");
+            /* Tooltip.SetDefault("20% chance not to consume ammo"
+                + "\nShoots silverwood arrows that stick onto enemies, draining their life"); */
+            ItemID.Sets.ShimmerTransformToItem[Type] = ModContent.ItemType<SwordSlicer>();
+            Item.ResearchUnlockCount = 1;
         }
 
         public override void SetDefaults()

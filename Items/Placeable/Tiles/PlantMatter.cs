@@ -10,10 +10,10 @@ namespace Redemption.Items.Placeable.Tiles
     {
         public override void SetStaticDefaults()
         {
-            Tooltip.SetDefault("Use at an Extractinator");
+            // Tooltip.SetDefault("Use at an Extractinator");
             ItemID.Sets.ExtractinatorMode[Item.type] = Item.type;
 
-            SacrificeTotal = 50;
+            Item.ResearchUnlockCount = 50;
         }
 
         public override void SetDefaults()
@@ -21,10 +21,10 @@ namespace Redemption.Items.Placeable.Tiles
             Item.DefaultToPlaceableTile(ModContent.TileType<PlantMatterTile>(), 0);
             Item.width = 16;
             Item.height = 16;
-            Item.maxStack = 9999;
+            Item.maxStack = Item.CommonMaxStack;
         }
 
-        public override void ExtractinatorUse(ref int resultType, ref int resultStack)
+        public override void ExtractinatorUse(int extractinatorBlockType, ref int resultType, ref int resultStack)
         {
             switch (Main.rand.Next(14))
             {

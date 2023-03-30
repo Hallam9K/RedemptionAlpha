@@ -10,11 +10,11 @@ namespace Redemption.Items.Armor.Single
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Kabucra Shell");
-            Tooltip.SetDefault("25% damage reduction and knockback immunity towards falling entities\n" +
-                "'Time for crab'");
+            // DisplayName.SetDefault("Kabucra Shell");
+            /* Tooltip.SetDefault("25% damage reduction and knockback immunity towards falling entities\n" +
+                "'Time for crab'"); */
             ArmorIDs.Head.Sets.DrawFullHair[EquipLoader.GetEquipSlot(Mod, Name, EquipType.Head)] = false;
-            SacrificeTotal = 1;
+            Item.ResearchUnlockCount = 1;
         }
         public override void SetDefaults()
         {

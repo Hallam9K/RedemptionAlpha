@@ -10,12 +10,12 @@ namespace Redemption.Items.Accessories.PreHM
     {
         public override void SetStaticDefaults()
         {
-            Tooltip.SetDefault("Hitting enemies using a weapon with any element will cause elemental crystals to gradually appear, circling around the user\n" +
+            /* Tooltip.SetDefault("Hitting enemies using a weapon with any element will cause elemental crystals to gradually appear, circling around the user\n" +
                 "\nThe element of the crystals are based on the element of the weapon used to create them\n" +
                 "Getting hit will cause the crystals to break away from the user\n" +
                 //"Once 6 crystals have been created, they will amass into an enchanted tome which fires bolts based on each crystal's element" +
-                "\n4% increased elemental damage and resistance for each crystal of an element to be active");
-            SacrificeTotal = 1;
+                "\n4% increased elemental damage and resistance for each crystal of an element to be active"); */
+            Item.ResearchUnlockCount = 1;
         }
 
         public override void SetDefaults()

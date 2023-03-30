@@ -8,8 +8,8 @@ namespace Redemption.Buffs
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("...");
-            Description.SetDefault("You feel like you're being watched...");
+            // DisplayName.SetDefault("...");
+            // Description.SetDefault("You feel like you're being watched...");
             Main.buffNoTimeDisplay[Type] = true;
             Main.debuff[Type] = true;
             BuffID.Sets.NurseCannotRemoveDebuff[Type] = true;

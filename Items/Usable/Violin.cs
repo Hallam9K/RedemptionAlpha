@@ -11,9 +11,9 @@ namespace Redemption.Items.Usable
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Violin");
-            Tooltip.SetDefault("Playable Instrument");
-            SacrificeTotal = 1;
+            // DisplayName.SetDefault("Violin");
+            // Tooltip.SetDefault("Playable Instrument");
+            Item.ResearchUnlockCount = 1;
         }
 
         public override void SetDefaults()

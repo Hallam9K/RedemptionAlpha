@@ -12,9 +12,9 @@ namespace Redemption.Items.Weapons.PreHM.Ritualist
     {
         public override void SetStaticDefaults()
         {
-            Tooltip.SetDefault("Plants hellfire charges onto the enemy\n" +
-                "Upon the player's Spirit Level increasing, all hellfire charges explode");
-            SacrificeTotal = 1;
+            /* Tooltip.SetDefault("Plants hellfire charges onto the enemy\n" +
+                "Upon the player's Spirit Level increasing, all hellfire charges explode"); */
+            Item.ResearchUnlockCount = 1;
         }
 
         public override void SetDefaults()

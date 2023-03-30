@@ -14,9 +14,9 @@ namespace Redemption.Items.Usable.Summons
 	{
 		public override void SetStaticDefaults()
 		{
-            Tooltip.SetDefault("Summons a regal rooster"
-                + "\nOnly usable at day");
-            SacrificeTotal = 1;
+            /* Tooltip.SetDefault("Summons a regal rooster"
+                + "\nOnly usable at day"); */
+            Item.ResearchUnlockCount = 1;
             ItemID.Sets.SortingPriorityBossSpawns[Type] = 12;
         }
 
@@ -24,7 +24,7 @@ namespace Redemption.Items.Usable.Summons
 		{
 			Item.width = 20;
             Item.height = 22;
-            Item.maxStack = 9999;
+            Item.maxStack = Item.CommonMaxStack;
             Item.rare = ItemRarityID.Blue;
             Item.value = Item.sellPrice(0, 0, 50, 0);
             Item.useAnimation = 45;
@@ -49,7 +49,7 @@ namespace Redemption.Items.Usable.Summons
                 if (Main.netMode != NetmodeID.MultiplayerClient)
                     NPC.SpawnOnPlayer(player.whoAmI, type);
                 else
-                    NetMessage.SendData(MessageID.SpawnBoss, number: player.whoAmI, number2: type);
+                    NetMessage.SendData(MessageID.SpawnBossUseLicenseStartEvent, number: player.whoAmI, number2: type);
             }
             return true;
         }

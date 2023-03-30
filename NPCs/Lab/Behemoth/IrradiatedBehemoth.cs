@@ -43,7 +43,7 @@ namespace Redemption.NPCs.Lab.Behemoth
         public ref float TimerRand2 => ref NPC.ai[3];
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Irradiated Behemoth");
+            // DisplayName.SetDefault("Irradiated Behemoth");
             NPCID.Sets.MPAllowedEnemies[Type] = true;
             NPCID.Sets.BossBestiaryPriority.Add(Type);
 
@@ -100,7 +100,7 @@ namespace Redemption.NPCs.Lab.Behemoth
                 new FlavorTextBestiaryInfoElement("An unfortunate scientist, disfigured and mutilated beyond recognition by the Xenomite infection. This specimen is entering the final stage of the infection, and has had its body transform into a sludgy slurry on the ceiling... God, that must be agonizing.")
             });
         }
-        public override void HitEffect(int hitDirection, double damage)
+        public override void HitEffect(NPC.HitInfo hit)
         {
             if (NPC.life <= 0)
             {
@@ -320,12 +320,12 @@ namespace Redemption.NPCs.Lab.Behemoth
                 }
             }
         }
-        public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
+        public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)
         {
-            NPC.lifeMax = (int)(NPC.lifeMax * 0.6f * bossLifeScale);
+            NPC.lifeMax = (int)(NPC.lifeMax * 0.6f * balance * bossAdjustment);
             NPC.damage = (int)(NPC.damage * 0.6f);
         }
-        public override void ModifyHitPlayer(Player target, ref int damage, ref bool crit)
+        public override void ModifyHitPlayer(Player target, ref Player.HurtModifiers modifiers)
         {
             if (Main.rand.NextBool(2) || Main.expertMode)
                 target.AddBuff(ModContent.BuffType<GreenRashesDebuff>(), Main.rand.Next(1000, 3200));

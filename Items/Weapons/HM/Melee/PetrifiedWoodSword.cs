@@ -9,9 +9,9 @@ namespace Redemption.Items.Weapons.HM.Melee
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Petrified Wood Sword");
-            Tooltip.SetDefault("'About as useful as a burnt twig'");
-            SacrificeTotal = 1;
+            // DisplayName.SetDefault("Petrified Wood Sword");
+            // Tooltip.SetDefault("'About as useful as a burnt twig'");
+            Item.ResearchUnlockCount = 1;
         }
 
         public override void SetDefaults()

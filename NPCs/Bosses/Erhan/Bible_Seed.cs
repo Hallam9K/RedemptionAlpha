@@ -12,7 +12,7 @@ namespace Redemption.NPCs.Bosses.Erhan
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Seed of Virtue");
+            // DisplayName.SetDefault("Seed of Virtue");
             ProjectileID.Sets.TrailCacheLength[Projectile.type] = 3;
             ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
         }
@@ -85,7 +85,7 @@ namespace Redemption.NPCs.Bosses.Erhan
         public override string Texture => Redemption.EMPTY_TEXTURE;
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Seed of Virtue");
+            // DisplayName.SetDefault("Seed of Virtue");
         }
         public override void SetDefaults()
         {

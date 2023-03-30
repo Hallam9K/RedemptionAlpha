@@ -78,14 +78,13 @@ namespace Redemption.NPCs.Lab.Blisterface
         {
             return !Main.LocalPlayer.InModBiome<LabBiome>();
         }
-        public override bool StrikeNPC(ref double damage, int defense, ref float knockback, int hitDirection, ref bool crit)
+        public override void ModifyIncomingHit(ref NPC.HitModifiers modifiers)
         {
             Point water = NPC.Center.ToTileCoordinates();
             if (Main.tile[water.X, water.Y].LiquidType == LiquidID.Water && Main.tile[water.X, water.Y].LiquidAmount > 0)
-                damage /= 10;
-            return true;
+                modifiers.FinalDamage /= 10;
         }
-        public override void HitEffect(int hitDirection, double damage)
+        public override void HitEffect(NPC.HitInfo hit)
         {
             if (NPC.life <= 0)
             {
@@ -253,12 +252,12 @@ namespace Redemption.NPCs.Lab.Blisterface
                 }
             }
         }
-        public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
+        public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)
         {
-            NPC.lifeMax = (int)(NPC.lifeMax * 0.6f * bossLifeScale);
+            NPC.lifeMax = (int)(NPC.lifeMax * 0.6f * balance * bossAdjustment);
             NPC.damage = (int)(NPC.damage * 0.6f);
         }
-        public override void ModifyHitPlayer(Player target, ref int damage, ref bool crit)
+        public override void ModifyHitPlayer(Player target, ref Player.HurtModifiers modifiers)
         {
             if (Main.rand.NextBool(2) || Main.expertMode)
                 target.AddBuff(ModContent.BuffType<GreenRashesDebuff>(), Main.rand.Next(800, 1600));

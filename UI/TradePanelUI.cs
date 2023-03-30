@@ -86,7 +86,7 @@ namespace Redemption.UI
             SoundEngine.PlaySound(SoundID.MenuTick);
             BorderColor = Colors.FancyUIFatButtonMouseOver;
         }
-        public override void Click(UIMouseEvent evt)
+        public override void LeftClick(UIMouseEvent evt)
         {
             int trade = Main.LocalPlayer.FindItem(inputItem.type);
             if (trade >= 0 && Main.LocalPlayer.inventory[trade].stack >= inputStack)

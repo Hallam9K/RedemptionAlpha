@@ -10,8 +10,8 @@ namespace Redemption.Items.Donator.Uncon
 	{
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Dominator Suit (Skinless)");
-            SacrificeTotal = 1;
+            // DisplayName.SetDefault("Dominator Suit (Skinless)");
+            Item.ResearchUnlockCount = 1;
         }
         public override void SetDefaults()
 		{
@@ -33,8 +33,8 @@ namespace Redemption.Items.Donator.Uncon
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Dominator Visage (Skinless)");
-            SacrificeTotal = 1;
+            // DisplayName.SetDefault("Dominator Visage (Skinless)");
+            Item.ResearchUnlockCount = 1;
             ArmorIDs.Head.Sets.DrawFullHair[EquipLoader.GetEquipSlot(Mod, Name, EquipType.Head)] = false;
         }
 
@@ -58,8 +58,8 @@ namespace Redemption.Items.Donator.Uncon
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Dominator Boots (Skinless)");
-            SacrificeTotal = 1;
+            // DisplayName.SetDefault("Dominator Boots (Skinless)");
+            Item.ResearchUnlockCount = 1;
         }
         public override void SetDefaults()
         {

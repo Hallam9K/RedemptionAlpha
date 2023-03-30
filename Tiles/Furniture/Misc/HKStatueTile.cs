@@ -47,10 +47,6 @@ namespace Redemption.Tiles.Furniture.Misc
                 player.Redemption().foundHall = true;
         }
 
-        public override void KillMultiTile(int i, int j, int frameX, int frameY)
-        {
-            Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 16, 32, ModContent.ItemType<HKStatue>());
-        }
         public override void PostDraw(int i, int j, SpriteBatch spriteBatch)
         {
             if (!Main.LocalPlayer.RedemptionAbility().SpiritwalkerActive)

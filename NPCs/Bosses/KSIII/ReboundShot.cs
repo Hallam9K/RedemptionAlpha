@@ -13,7 +13,7 @@ namespace Redemption.NPCs.Bosses.KSIII
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Rebound Shot");
+            // DisplayName.SetDefault("Rebound Shot");
             ProjectileID.Sets.TrailCacheLength[Projectile.type] = 16;
             ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
         }

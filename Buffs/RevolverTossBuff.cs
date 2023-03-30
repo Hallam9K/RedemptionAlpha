@@ -7,8 +7,8 @@ namespace Redemption.Buffs
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Cool Bonus");
-            Description.SetDefault("Boosted firerate for being cool!");
+            // DisplayName.SetDefault("Cool Bonus");
+            // Description.SetDefault("Boosted firerate for being cool!");
         }
         public override bool ReApply(Player player, int time, int buffIndex)
         {
@@ -21,8 +21,8 @@ namespace Redemption.Buffs
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Extra Cool Bonus");
-            Description.SetDefault("Boosted firerate for being cool!");
+            // DisplayName.SetDefault("Extra Cool Bonus");
+            // Description.SetDefault("Boosted firerate for being cool!");
         }
         public override bool ReApply(Player player, int time, int buffIndex)
         {
@@ -35,8 +35,8 @@ namespace Redemption.Buffs
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Extremely Cool Bonus");
-            Description.SetDefault("Boosted firerate for being cool!");
+            // DisplayName.SetDefault("Extremely Cool Bonus");
+            // Description.SetDefault("Boosted firerate for being cool!");
         }
     }
 }

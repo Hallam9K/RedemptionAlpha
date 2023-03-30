@@ -7,8 +7,8 @@ namespace Redemption.Buffs
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Weapon Imbue: Bile");
-			Description.SetDefault("Melee attacks inflict Burning Acid");
+			// DisplayName.SetDefault("Weapon Imbue: Bile");
+			// Description.SetDefault("Melee attacks inflict Burning Acid");
 			Main.persistentBuff[Type] = true;
 			Main.meleeBuff[Type] = true;
         }

@@ -19,9 +19,9 @@ namespace Redemption.Items.Weapons.PostML.Ranged
     {
         public override void SetStaticDefaults()
         {
-            Tooltip.SetDefault("(9[i:" + ModContent.ItemType<EnergyPack>() + "]) Shoots three piercing beams of plutonium, each consuming 3 Energy\n" +
-                "Requires an Energy Pack to be in your inventory");
-            SacrificeTotal = 1;
+            /* Tooltip.SetDefault("(9[i:" + ModContent.ItemType<EnergyPack>() + "]) Shoots three piercing beams of plutonium, each consuming 3 Energy\n" +
+                "Requires an Energy Pack to be in your inventory"); */
+            Item.ResearchUnlockCount = 1;
         }
         public override void SetDefaults()
         {

@@ -9,7 +9,7 @@ namespace Redemption.NPCs.Bosses.Cleaver
         public override string Texture => Redemption.EMPTY_TEXTURE;
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Ominous Voice");
+            // DisplayName.SetDefault("Ominous Voice");
         }
         public override void SetDefaults()
         {

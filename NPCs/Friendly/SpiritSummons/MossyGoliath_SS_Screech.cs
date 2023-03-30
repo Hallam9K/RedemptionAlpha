@@ -9,7 +9,7 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Roar");
+            // DisplayName.SetDefault("Roar");
         }
         public override void SetDefaults()
         {

@@ -9,8 +9,8 @@ namespace Redemption.Buffs
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Panacea");
-            Description.SetDefault("You feel great");
+            // DisplayName.SetDefault("Panacea");
+            // Description.SetDefault("You feel great");
             Main.buffNoTimeDisplay[Type] = false;
         }
         public override void Update(Player player, ref int buffIndex)

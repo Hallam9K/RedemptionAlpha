@@ -353,75 +353,63 @@ namespace Redemption.Globals.NPC
                     damage = shardCount * 8;
             }
         }
-        public override void ModifyHitByItem(Terraria.NPC npc, Terraria.Player player, Item item, ref int damage, ref float knockback, ref bool crit)
+        public override void ModifyHitByItem(Terraria.NPC npc, Terraria.Player player, Item item, ref Terraria.NPC.HitModifiers modifiers)
+        {
+            if (incisored)
+                modifiers.ArmorPenetration += (player.GetModPlayer<RitualistPlayer>().SpiritLevel + 1) * 5;
+        }
+        public override void ModifyHitByProjectile(Terraria.NPC npc, Projectile projectile, ref Terraria.NPC.HitModifiers modifiers)
+        {
+            if (incisored)
+                modifiers.ArmorPenetration += (Main.player[projectile.owner].GetModPlayer<RitualistPlayer>().SpiritLevel + 1) * 5;
+        }
+        public override void ModifyIncomingHit(Terraria.NPC npc, ref Terraria.NPC.HitModifiers modifiers)
         {
             if (roosterBoost && Main.expertMode)
-                knockback *= .8f;
+                modifiers.Knockback *= .8f;
             if (stomachAcid)
-                player.GetArmorPenetration(DamageClass.Generic) += 8;
+                modifiers.Defense.Flat += 8;
             if (bileDebuff)
-                player.GetArmorPenetration(DamageClass.Generic) += 15;
+                modifiers.Defense.Flat += 15;
             if (infected)
-                player.GetArmorPenetration(DamageClass.Generic) += 20;
-            if (incisored)
-                player.GetArmorPenetration(DamageClass.Generic) += (player.GetModPlayer<RitualistPlayer>().SpiritLevel + 1) * 5;
+                modifiers.Defense.Flat += 20;
             if (badtime)
-                player.GetArmorPenetration(DamageClass.Generic) += 99;
-        }
-        public override void ModifyHitByProjectile(Terraria.NPC npc, Projectile projectile, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
-        {
-            Terraria.Player player = Main.player[projectile.owner];
-            if (roosterBoost && Main.expertMode)
-                knockback *= .8f;
-            if (stomachAcid)
-                player.GetArmorPenetration(DamageClass.Generic) += 8;
-            if (bileDebuff)
-                player.GetArmorPenetration(DamageClass.Generic) += 15;
+                modifiers.Defense.Flat += 99;
             if (infected)
-                player.GetArmorPenetration(DamageClass.Generic) += 20;
-            if (incisored)
-                player.GetArmorPenetration(DamageClass.Generic) += (player.GetModPlayer<RitualistPlayer>().SpiritLevel + 1) * 5;
-            if (badtime)
-                player.GetArmorPenetration(DamageClass.Generic) += 99;
-        }
-        public override bool StrikeNPC(Terraria.NPC npc, ref double damage, int defense, ref float knockback, int hitDirection, ref bool crit)
-        {
-            if (infected)
-                damage *= 1.2;
+                modifiers.FinalDamage *= 1.2f;
             if (infested)
             {
                 if (npc.defense > 0)
                     npc.defense -= infestedTime / 120;
             }
             if (rallied)
-                damage *= 0.85;
+                modifiers.FinalDamage *= 0.85f;
             if (roosterBoost && Main.expertMode)
-                damage *= 0.9;
+                modifiers.FinalDamage *= 0.9f;
             if (stoneskin)
-                damage *= 0.75;
+                modifiers.FinalDamage *= 0.75f;
             if (brokenArmor)
-                damage += npc.defense / 2;
+                modifiers.Defense *= .5f;
             if (sandDust)
-                damage += npc.defense / 6;
-            return true;
+                modifiers.Defense *= .75f;
         }
-        public override void ModifyHitPlayer(Terraria.NPC npc, Terraria.Player target, ref int damage, ref bool crit)
+        public override void ModifyHitPlayer(Terraria.NPC npc, Terraria.Player target, ref Terraria.Player.HurtModifiers modifiers)
         {
             if (rallied || roosterBoost)
-                damage = (int)(damage * 1.15f);
+                modifiers.IncomingDamageMultiplier *= 1.15f;
             if (dragonblaze)
-                damage = (int)(damage * 0.85f);
+                modifiers.IncomingDamageMultiplier *= .85f;
             if (disarmed)
-                damage = (int)(damage * 0.2f);
+                modifiers.IncomingDamageMultiplier *= .2f;
         }
-        public override void ModifyHitNPC(Terraria.NPC npc, Terraria.NPC target, ref int damage, ref float knockback, ref bool crit)
+        public override void ModifyHitNPC(Terraria.NPC npc, Terraria.NPC target, ref Terraria.NPC.HitModifiers modifiers)
         {
             if (rallied || roosterBoost)
-                damage = (int)(damage * 1.15f);
+                modifiers.FinalDamage *= 1.15f;
             if (dragonblaze)
-                damage = (int)(damage * 0.85f);
+                modifiers.FinalDamage *= .85f;
             if (disarmed)
-                damage = (int)(damage * 0.2f);
+                modifiers.FinalDamage *= .2f;
         }
         public override void DrawEffects(Terraria.NPC npc, ref Color drawColor)
         {
@@ -625,11 +613,11 @@ namespace Redemption.Globals.NPC
                 npc.velocity.X *= 0.94f;
             }
         }
-        public override void HitEffect(Terraria.NPC npc, int hitDirection, double damage)
+        public override void HitEffect(Terraria.NPC npc, Terraria.NPC.HitInfo hit)
         {
             if (npc.life <= 0 && necroticGouge && npc.lifeMax > 5)
             {
-                SoundEngine.PlaySound(SoundID.NPCDeath19, npc.position);
+                SoundEngine.PlaySound(SoundID.NPCDeath19);
                 for (int i = 0; i < 20; i++)
                 {
                     int dustIndex4 = Dust.NewDust(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, DustID.Blood, Scale: 3f);
@@ -641,9 +629,9 @@ namespace Redemption.Globals.NPC
                         Projectile.NewProjectile(npc.GetSource_FromAI(), npc.Center, RedeHelper.SpreadUp(14), ModContent.ProjectileType<Blood_Proj>(), npc.damage, 0, Main.myPlayer);
                 }
             }
-            if (iceFrozen && damage > 1)
+            if (iceFrozen && hit.Damage > 1)
             {
-                SoundEngine.PlaySound(SoundID.DD2_WitherBeastCrystalImpact, npc.position);
+                SoundEngine.PlaySound(SoundID.DD2_WitherBeastCrystalImpact);
                 Dust.NewDust(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, DustID.Ice, Scale: 1);
             }
         }

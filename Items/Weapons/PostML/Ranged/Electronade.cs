@@ -9,9 +9,9 @@ namespace Redemption.Items.Weapons.PostML.Ranged
 	{
 		public override void SetStaticDefaults()
 		{
-            Tooltip.SetDefault("Throw an energy-filled grenade");
+            // Tooltip.SetDefault("Throw an energy-filled grenade");
             Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(4, 11));
-            SacrificeTotal = 1;
+            Item.ResearchUnlockCount = 1;
         }
 
         public override void SetDefaults()

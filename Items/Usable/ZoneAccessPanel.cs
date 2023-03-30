@@ -18,9 +18,9 @@ namespace Redemption.Items.Usable
     {
         public override void SetStaticDefaults()
 		{
-            DisplayName.SetDefault("Lab Access Panel - Alpha");
-            Tooltip.SetDefault("Opens up the alpha sector of the lab");
-            SacrificeTotal = 1;
+            // DisplayName.SetDefault("Lab Access Panel - Alpha");
+            // Tooltip.SetDefault("Opens up the alpha sector of the lab");
+            Item.ResearchUnlockCount = 1;
         }
 
         public override void SetDefaults()
@@ -73,9 +73,9 @@ namespace Redemption.Items.Usable
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Lab Access Panel - Gamma");
-            Tooltip.SetDefault("Opens up the gamma sector of the lab");
-            SacrificeTotal = 1;
+            // DisplayName.SetDefault("Lab Access Panel - Gamma");
+            // Tooltip.SetDefault("Opens up the gamma sector of the lab");
+            Item.ResearchUnlockCount = 1;
         }
         public override void SetDefaults() => base.SetDefaults();
         public override bool? UseItem(Player player)
@@ -116,9 +116,9 @@ namespace Redemption.Items.Usable
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Lab Access Panel - Sigma");
-            Tooltip.SetDefault("Opens up the sigma sector of the lab");
-            SacrificeTotal = 1;
+            // DisplayName.SetDefault("Lab Access Panel - Sigma");
+            // Tooltip.SetDefault("Opens up the sigma sector of the lab");
+            Item.ResearchUnlockCount = 1;
         }
         public override void SetDefaults() => base.SetDefaults();
         public override bool? UseItem(Player player)
@@ -159,9 +159,9 @@ namespace Redemption.Items.Usable
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Lab Access Panel - Omicron");
-            Tooltip.SetDefault("Opens up the omicron sector of the lab");
-            SacrificeTotal = 1;
+            // DisplayName.SetDefault("Lab Access Panel - Omicron");
+            // Tooltip.SetDefault("Opens up the omicron sector of the lab");
+            Item.ResearchUnlockCount = 1;
         }
         public override void SetDefaults() => base.SetDefaults();
         public override bool? UseItem(Player player)
@@ -203,9 +203,9 @@ namespace Redemption.Items.Usable
         public override string Texture { get { return "Redemption/Items/Usable/ZoneAccessPanel6"; } }
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Lab Access Panel - 0");
-            Tooltip.SetDefault("Opens up the vault sector of the lab");
-            SacrificeTotal = 1;
+            // DisplayName.SetDefault("Lab Access Panel - 0");
+            // Tooltip.SetDefault("Opens up the vault sector of the lab");
+            Item.ResearchUnlockCount = 1;
         }
         public override void SetDefaults() => base.SetDefaults();
         public override bool? UseItem(Player player)
@@ -245,9 +245,9 @@ namespace Redemption.Items.Usable
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Lab Access Panel - Master");
-            Tooltip.SetDefault("Disables all lasers in the lab");
-            SacrificeTotal = 1;
+            // DisplayName.SetDefault("Lab Access Panel - Master");
+            // Tooltip.SetDefault("Disables all lasers in the lab");
+            Item.ResearchUnlockCount = 1;
         }
         public override void SetDefaults() => base.SetDefaults();
         public override bool? UseItem(Player player)

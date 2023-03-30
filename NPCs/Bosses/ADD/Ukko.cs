@@ -92,7 +92,7 @@ namespace Redemption.NPCs.Bosses.ADD
         public ref float AITimer => ref NPC.ai[2];
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Ukko");
+            // DisplayName.SetDefault("Ukko");
             Main.npcFrameCount[NPC.type] = 5;
             NPCID.Sets.TrailCacheLength[NPC.type] = 8;
             NPCID.Sets.TrailingMode[NPC.type] = 0;
@@ -155,32 +155,31 @@ namespace Redemption.NPCs.Bosses.ADD
             NPC.GetGlobalNPC<ElementalNPC>().OverrideMultiplier[ElementID.Ice] *= 1.25f;
             NPC.GetGlobalNPC<ElementalNPC>().OverrideMultiplier[ElementID.Shadow] *= 1.1f;
         }
-        public override void ModifyHitByProjectile(Projectile projectile, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
+        public override void ModifyHitByProjectile(Projectile projectile, ref NPC.HitModifiers modifiers)
         {
             if (projectile.type == ProjectileID.LastPrismLaser)
-                damage /= 3;
+                modifiers.FinalDamage /= 3;
 
             if (ProjectileID.Sets.CultistIsResistantTo[projectile.type])
-                damage = (int)(damage * .75f);
+                modifiers.FinalDamage *= .75f;
         }
-        public override bool StrikeNPC(ref double damage, int defense, ref float knockback, int hitDirection, ref bool crit)
+        public override void ModifyIncomingHit(ref NPC.HitModifiers modifiers)
         {
             if (RedeBossDowned.downedGGBossFirst == 1 && RedeBossDowned.downedGGBossFirst == 2)
-                damage *= .85f;
+                modifiers.FinalDamage *= .85f;
 
-            bool vDmg = false;
             if (NPC.RedemptionGuard().GuardPoints >= 0)
             {
-                NPC.RedemptionGuard().GuardHit(NPC, ref vDmg, ref damage, ref knockback, SoundID.DD2_WitherBeastCrystalImpact);
+                modifiers.DisableCrit();
+                modifiers.ModifyHitInfo += (ref NPC.HitInfo n) => NPC.RedemptionGuard().GuardHit(ref n, NPC, SoundID.DD2_WitherBeastCrystalImpact);
                 if (NPC.RedemptionGuard().GuardPoints >= 0)
-                    return vDmg;
+                    return;
             }
             NPC.RedemptionGuard().GuardBreakCheck(NPC, DustID.Stone, CustomSounds.EarthBoom, 10, 1, 2000);
-            return true;
         }
-        public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
+        public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)
         {
-            NPC.lifeMax = (int)(NPC.lifeMax * 0.75f * bossLifeScale);
+            NPC.lifeMax = (int)(NPC.lifeMax * 0.75f * balance * bossAdjustment);
             NPC.damage = (int)(NPC.damage * 0.6f);
         }
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
@@ -202,7 +201,7 @@ namespace Redemption.NPCs.Bosses.ADD
 
             LeadingConditionRule notExpertRule = new(new Conditions.NotExpert());
 
-            notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<UkkoMask>(), 7));
+            notExpertRule.OnSuccess(ItemDropRule.NotScalingWithLuck(ModContent.ItemType<UkkoMask>(), 7));
 
             notExpertRule.OnSuccess(ItemDropRule.OneFromOptions(1, ModContent.ItemType<Salamanisku>(), ModContent.ItemType<Ukonvasara>()));
 
@@ -1416,7 +1415,7 @@ namespace Redemption.NPCs.Bosses.ADD
             Vector2 position = NPC.Center - screenPos + new Vector2(4 * NPC.spriteDirection, -53);
             RedeDraw.DrawEyeFlare(spriteBatch, ref FlareTimer, position, Color.LightYellow, NPC.rotation);
         }
-        public override void HitEffect(int hitDirection, double damage)
+        public override void HitEffect(NPC.HitInfo hit)
         {
             if (NPC.life <= 0)
             {

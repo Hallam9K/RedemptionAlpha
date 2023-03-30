@@ -13,7 +13,7 @@ namespace Redemption.Projectiles.Minions
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Rowan Tree");
+            // DisplayName.SetDefault("Rowan Tree");
 
             ProjectileID.Sets.MinionSacrificable[Projectile.type] = true;
             ProjectileID.Sets.CultistIsResistantTo[Projectile.type] = true;

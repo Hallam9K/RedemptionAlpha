@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Terraria;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 using Terraria.ID;
@@ -54,8 +55,8 @@ namespace Redemption.Tiles.Natural
             HitSound = CustomSounds.CrystalHit;
             DustType = DustID.IceTorch;
             ItemDrop = ModContent.ItemType<GathicCryoCrystal>();
-            ModTranslation name = CreateMapEntryName();
-            name.SetDefault("Gathic Cryo-Crystal");
+            LocalizedText name = CreateMapEntryName();
+            // name.SetDefault("Gathic Cryo-Crystal");
             AddMapEntry(new Color(159, 188, 215), name);
         }
 

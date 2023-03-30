@@ -13,7 +13,7 @@ namespace Redemption.NPCs.Lab.Janitor
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("The Janitor");
+            // DisplayName.SetDefault("The Janitor");
             Main.npcFrameCount[NPC.type] = 4;
 
             NPCID.Sets.MPAllowedEnemies[Type] = true;

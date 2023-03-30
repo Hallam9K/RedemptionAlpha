@@ -12,7 +12,7 @@ namespace Redemption.NPCs.Lab.Behemoth
         public override string Texture => "Redemption/Textures/RadialTelegraph1";
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Telegraph");
+            // DisplayName.SetDefault("Telegraph");
         }
         public override void SetDefaults()
         {

@@ -3,30 +3,31 @@ using Redemption.Items.Placeable.Furniture.PetrifiedWood;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 
 namespace Redemption.Tiles.Furniture.PetrifiedWood
 {
     public class PetrifiedCrateTile : ModTile
-	{
-		public override void SetStaticDefaults()
-		{
-            Main.tileTable[Type] = true;
-            Main.tileSolidTop[Type] = true;
+    {
+        public override void SetStaticDefaults()
+        {
             Main.tileFrameImportant[Type] = true;
-            Main.tileNoAttach[Type] = true;
-            Main.tileLavaDeath[Type] = true;
+            Main.tileSolidTop[Type] = true;
+            Main.tileTable[Type] = true;
+
+            // Placement
             TileObjectData.newTile.CopyFrom(TileObjectData.Style2x2);
+            TileObjectData.newTile.CoordinateHeights = new int[2] { 16, 18 };
+            TileObjectData.newTile.StyleHorizontal = true;
             TileObjectData.addTile(Type);
-            ModTranslation name = CreateMapEntryName();
-			name.SetDefault("Petrified Crate");
-			AddMapEntry(new Color(111, 100, 93), name);
+
+            LocalizedText name = CreateMapEntryName();
+            // name.SetDefault("Petrified Crate");
+            AddMapEntry(new Color(111, 100, 93), name);
             DustType = DustID.Ash;
         }
-        public override void KillMultiTile(int i, int j, int frameX, int frameY)
-		{
-			Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 32, 32, ModContent.ItemType<PetrifiedCrate>());
-		}
-	}
+        public override bool CreateDust(int i, int j, ref int type) => false;
+    }
 }

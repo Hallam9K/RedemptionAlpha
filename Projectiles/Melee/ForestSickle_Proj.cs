@@ -12,7 +12,7 @@ namespace Redemption.Projectiles.Melee
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Nature Slash");
+            // DisplayName.SetDefault("Nature Slash");
             ProjectileID.Sets.TrailCacheLength[Projectile.type] = 7;
             ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
             ElementID.ProjNature[Type] = true;
@@ -45,13 +45,13 @@ namespace Redemption.Projectiles.Melee
             if (Projectile.alpha >= 255)
                 Projectile.Kill();
         }
-        public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
+        public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
         {
             if (NPCLists.Dark.Contains(target.type))
-                damage = (int)(damage * 1.5f);
+                modifiers.FinalDamage *= 1.5f;
         }
 
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             Projectile.localNPCImmunity[target.whoAmI] = 20;
             target.immune[Projectile.owner] = 0;

@@ -9,16 +9,16 @@ namespace Redemption.Items.Placeable.Tiles
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Laboratory Panel Wall"); 
-            SacrificeTotal = 400;
+            // DisplayName.SetDefault("Laboratory Panel Wall"); 
+            Item.ResearchUnlockCount = 400;
         }
 
         public override void SetDefaults()
 		{
-            Item.DefaultToPlacableWall((ushort)ModContent.WallType<LabPlatingWallTile>());
+            Item.DefaultToPlaceableWall((ushort)ModContent.WallType<LabPlatingWallTile>());
             Item.width = 24;
             Item.height = 24;
-            Item.maxStack = 9999;
+            Item.maxStack = Item.CommonMaxStack;
             Item.value = Item.buyPrice(0, 0, 1, 0);
             Item.rare = ItemRarityID.LightPurple;
 		}

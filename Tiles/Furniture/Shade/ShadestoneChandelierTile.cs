@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.Enums;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 using Terraria.DataStructures;
@@ -23,13 +24,14 @@ namespace Redemption.Tiles.Furniture.Shade
             TileObjectData.newTile.AnchorTop = new AnchorData(AnchorType.SolidTile | AnchorType.SolidSide, 1, 1);
             TileObjectData.newTile.AnchorBottom = AnchorData.Empty;
             TileObjectData.newTile.LavaDeath = true;
+            TileObjectData.newTile.WaterDeath = true;
+            TileObjectData.newTile.WaterPlacement = LiquidPlacement.NotAllowed;
+            TileObjectData.newTile.LavaPlacement = LiquidPlacement.NotAllowed;
             TileObjectData.newTile.StyleWrapLimit = 37;
             TileObjectData.newTile.StyleHorizontal = false;
             TileObjectData.newTile.StyleLineSkip = 2;
             TileObjectData.addTile(Type);
-            ModTranslation name = CreateMapEntryName();
-            name.SetDefault("Shadestone Chandelier");
-            AddMapEntry(new Color(59, 61, 87), name);
+            AddMapEntry(new Color(59, 61, 87), Language.GetText("MapObject.Chandelier"));
             AdjTiles = new int[] { TileID.Chandeliers };
             AddToArray(ref TileID.Sets.RoomNeeds.CountsAsTorch);
             DustType = ModContent.DustType<ShadestoneDust>();
@@ -81,12 +83,6 @@ namespace Redemption.Tiles.Furniture.Shade
                 b = 0.8f;
             }
         }
-        public override void KillMultiTile(int i, int j, int frameX, int frameY)
-        {
-            Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 48, 48, ModContent.ItemType<ShadestoneChandelier>());
-            Chest.DestroyChest(i, j);
-        }
-
         public override void PostDraw(int i, int j, SpriteBatch spriteBatch)
         {
             Tile tile = Framing.GetTileSafely(i, j);

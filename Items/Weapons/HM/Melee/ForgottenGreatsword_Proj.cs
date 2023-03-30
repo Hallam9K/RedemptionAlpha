@@ -16,7 +16,7 @@ namespace Redemption.Items.Weapons.HM.Melee
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Ophos' Forgotten Greatsword");
+            // DisplayName.SetDefault("Ophos' Forgotten Greatsword");
             Main.projFrames[Projectile.type] = 3;
             ProjectileID.Sets.TrailCacheLength[Projectile.type] = 6;
             ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
@@ -98,15 +98,15 @@ namespace Redemption.Items.Weapons.HM.Melee
             if (Main.rand.NextBool(6))
                 ParticleManager.NewParticle(RedeHelper.RandAreaInEntity(Projectile), RedeHelper.Spread(2), new EmberParticle(), Color.White, 1);
         }
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             target.AddBuff(BuffID.OnFire3, 300);
+            RedeProjectile.Decapitation(target, ref damageDone, ref hit.Crit);
         }
-        public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
+        public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
         {
             Player player = Main.player[Projectile.owner];
-            hitDirection = target.RightOfDir(player);
-            RedeProjectile.Decapitation(target, ref damage, ref crit);
+            modifiers.HitDirectionOverride = target.RightOfDir(player);
         }
         private float drawTimer;
         public override bool PreDraw(ref Color lightColor)

@@ -16,16 +16,16 @@ namespace Redemption.Items.Usable
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Treasure Bag (Nebuleus)");
-			Tooltip.SetDefault("{$CommonItemTooltip.RightClickToOpen}");
+			// DisplayName.SetDefault("Treasure Bag (Nebuleus)");
+			// Tooltip.SetDefault("{$CommonItemTooltip.RightClickToOpen}");
 
             ItemID.Sets.BossBag[Type] = true;
-            SacrificeTotal = 3;
+            Item.ResearchUnlockCount = 3;
         }
 
         public override void SetDefaults()
 		{
-            Item.maxStack = 9999;
+            Item.maxStack = Item.CommonMaxStack;
             Item.consumable = true;
             Item.width = 44;
             Item.height = 32;

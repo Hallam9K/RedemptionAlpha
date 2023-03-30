@@ -9,10 +9,11 @@ namespace Redemption.Items.Placeable.MusicBoxes
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Music Box (Wasteland)");
-			Tooltip.SetDefault("Musearys - The Wastelands");
-
-			SacrificeTotal = 1;
+            // DisplayName.SetDefault("Music Box (Wasteland)");
+            // Tooltip.SetDefault("Musearys - The Wastelands");
+            ItemID.Sets.CanGetPrefixes[Type] = false;
+            ItemID.Sets.ShimmerTransformToItem[Type] = ItemID.MusicBox;
+            Item.ResearchUnlockCount = 1;
 
 			MusicLoader.AddMusicBox(Mod, MusicLoader.GetMusicSlot(Mod, "Sounds/Music/Wasteland"), ModContent.ItemType<WastelandBox>(), ModContent.TileType<WastelandBoxTile>());
 		}

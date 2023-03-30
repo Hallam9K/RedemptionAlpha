@@ -4,6 +4,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Redemption.BaseExtension;
+using Microsoft.Xna.Framework;
 
 namespace Redemption.Items.Weapons.PreHM.Melee
 {
@@ -11,8 +12,8 @@ namespace Redemption.Items.Weapons.PreHM.Melee
     {
         public override void SetStaticDefaults()
         {
-            Tooltip.SetDefault("Hold left-click to increase acceleration of the spin");
-            SacrificeTotal = 1;
+            // Tooltip.SetDefault("Hold left-click to increase acceleration of the spin");
+            Item.ResearchUnlockCount = 1;
         }
 
         public override void SetDefaults()
@@ -34,7 +35,10 @@ namespace Redemption.Items.Weapons.PreHM.Melee
             if (!Main.dedServ)
                 Item.RedemptionGlow().glowTexture = ModContent.Request<Texture2D>(Item.ModItem.Texture + "_Glow").Value;
         }
-
+        public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback)
+        {
+            knockback = 0;
+        }
         public override void AddRecipes()
         {
             CreateRecipe()

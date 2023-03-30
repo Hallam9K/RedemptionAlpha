@@ -84,7 +84,7 @@ namespace Redemption.NPCs.Lab.MACE
         public override string Texture => "Redemption/Textures/StaticBall";
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Tesla Field");
+            // DisplayName.SetDefault("Tesla Field");
             Main.projFrames[Projectile.type] = 3;
             ElementID.ProjThunder[Type] = true;
         }
@@ -119,7 +119,7 @@ namespace Redemption.NPCs.Lab.MACE
                 Projectile.alpha += 5;
         }
         public override bool CanHitPlayer(Player target) => Projectile.alpha < 100;
-        public override void OnHitPlayer(Player target, int damage, bool crit)
+        public override void OnHitPlayer(Player target, Player.HurtInfo info)
         {
             target.AddBuff(BuffID.Electrified, 360);
         }

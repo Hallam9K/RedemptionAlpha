@@ -44,7 +44,7 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
         public ref float AniType => ref NPC.localAI[0];
         public override void SetSafeStaticDefaults()
         {
-            DisplayName.SetDefault("Mossy Goliath");
+            // DisplayName.SetDefault("Mossy Goliath");
             Main.npcFrameCount[NPC.type] = 6;
             NPCID.Sets.TrailCacheLength[NPC.type] = 3;
             NPCID.Sets.TrailingMode[NPC.type] = 1;
@@ -619,7 +619,7 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
                 NPC.netUpdate = true;
             }
         }
-        public override bool? CanHitNPC(NPC target) => !NPC.friendly && AIState == ActionState.AlertRun ? null : false;
+        public override bool CanHitNPC(NPC target) => !NPC.friendly && AIState == ActionState.AlertRun;
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
             Texture2D texture = TextureAssets.Npc[NPC.type].Value;
@@ -664,7 +664,7 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
             return false;
         }
 
-        public override void HitEffect(int hitDirection, double damage)
+        public override void HitEffect(NPC.HitInfo hit)
         {
             if (NPC.life <= 0)
             {

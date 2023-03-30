@@ -42,44 +42,7 @@ namespace Redemption.Globals
         public static bool downedFowlMorning;
         public static bool downedTreebark;
 
-        public override void OnWorldLoad()
-        {
-            downedThorn = false;
-            downedKeeper = false;
-            downedSkullDigger = false;
-            downedSeed = false;
-            keeperSaved = false;
-            skullDiggerSaved = false;
-            downedSkeletonInvasion = false;
-            downedEaglecrestGolem = false;
-            foundNewb = false;
-            downedSlayer = false;
-            downedOmega1 = false;
-            downedOmega2 = false;
-            downedOmega3 = false;
-            downedErhan = false;
-            erhanDeath = 0;
-            slayerDeath = 0;
-            oblitDeath = 0;
-            nebDeath = 0;
-            ADDDeath = 0;
-            nukeDropped = false;
-            downedJanitor = false;
-            downedBehemoth = false;
-            downedBlisterface = false;
-            downedVolt = false;
-            downedMACE = false;
-            voltBegin = false;
-            downedPZ = false;
-            downedNebuleus = false;
-            downedADD = false;
-            downedGGBossFirst = 0;
-            downedFowlEmperor = false;
-            downedFowlMorning = false;
-            downedTreebark = false;
-        }
-
-        public override void OnWorldUnload()
+        public override void ClearWorld()
         {
             downedThorn = false;
             downedKeeper = false;

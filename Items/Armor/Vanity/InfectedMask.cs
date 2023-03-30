@@ -8,8 +8,8 @@ namespace Redemption.Items.Armor.Vanity
     {
         public override void SetStaticDefaults()
         {
-            Tooltip.SetDefault("'Become infected... Cosmetically'");
-            SacrificeTotal = 1;
+            // Tooltip.SetDefault("'Become infected... Cosmetically'");
+            Item.ResearchUnlockCount = 1;
             ArmorIDs.Head.Sets.DrawHead[EquipLoader.GetEquipSlot(Mod, Name, EquipType.Head)] = false;
         }
 

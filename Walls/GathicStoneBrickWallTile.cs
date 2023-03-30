@@ -12,7 +12,6 @@ namespace Redemption.Walls
 		{
             Main.wallHouse[Type] = false;
             DustType = ModContent.DustType<SlateDust>();
-			ItemDrop = ModContent.ItemType<GathicStoneBrickWall>();
 			AddMapEntry(new Color(49, 43, 39));
 		}
     }
@@ -23,7 +22,6 @@ namespace Redemption.Walls
         {
             Main.wallHouse[Type] = true;
             DustType = ModContent.DustType<SlateDust>();
-            ItemDrop = ModContent.ItemType<GathicStoneBrickWall>();
             AddMapEntry(new Color(49, 43, 39));
         }
     }

@@ -8,6 +8,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Redemption.BaseExtension;
+using Terraria.WorldBuilding;
 
 namespace Redemption.Projectiles.Minions
 {
@@ -98,11 +99,6 @@ namespace Redemption.Projectiles.Minions
             BaseAI.AIMinionFighter(Projectile, ref Projectile.ai, projOwner, false, 9, 6, 40, 1400, 2000, 0.1f, 6, 10, (proj, owner) => { return target == projOwner ? null : target; });
         }
 
-        public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
-        {
-            knockback = Math.Abs(Projectile.velocity.X);
-        }
-
         private Entity target;
         private NPC target2;
         public void Target()
@@ -110,7 +106,7 @@ namespace Redemption.Projectiles.Minions
             Player projOwner = Main.player[Projectile.owner];
             if (RedeHelper.ClosestNPC(ref target2, 600, Projectile.Center, false, projOwner.MinionAttackTargetNPC))
                 target = target2;
-            else 
+            else
                 target = projOwner;
         }
 
@@ -128,11 +124,13 @@ namespace Redemption.Projectiles.Minions
 
             return true;
         }
-
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
+        {
+            modifiers.Knockback.Flat += Math.Abs(Projectile.velocity.X);
+        }
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             Player player = Main.player[Projectile.owner];
-
             if (player.RedemptionPlayerBuff().pureIronBonus)
                 target.AddBuff(ModContent.BuffType<PureChillDebuff>(), 300);
         }

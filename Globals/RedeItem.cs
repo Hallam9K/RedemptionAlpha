@@ -4,6 +4,7 @@ using Redemption.Items.Usable;
 using Redemption.Rarities;
 using System.Collections.Generic;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Redemption.BaseExtension;
@@ -271,11 +272,17 @@ namespace Redemption.Globals
             ItemID.ActuationRod,
             ItemID.GravitationPotion
         };
+        public override bool? UseItem(Item item, Terraria.Player player)
+        {
+            if (item.type is ItemID.RodOfHarmony && RedeHelper.BossActive())
+                player.AddBuff(BuffID.ChaosState, 360);
+            return base.UseItem(item, player);
+        }
         public override bool CanUseItem(Item item, Terraria.Player player)
         {
             if (ArenaWorld.arenaActive && bannedArenaItems.Any(x => x == item.type))
                 return false;
-            if (player.InModBiome<LabBiome>() && !RedeBossDowned.downedPZ && item.type == ItemID.RodofDiscord)
+            if (player.InModBiome<LabBiome>() && !RedeBossDowned.downedPZ && (item.type is ItemID.RodofDiscord or ItemID.RodOfHarmony))
                 return false;
 
             #region C
@@ -291,7 +298,7 @@ namespace Redemption.Globals
             #endregion
             return base.CanUseItem(item, player);
         }
-        public override void OnCreate(Item item, ItemCreationContext context)
+        public override void OnCreated(Item item, ItemCreationContext context)
         {
             if (item.type == ModContent.ItemType<AlignmentTeller>() && !Terraria.NPC.AnyNPCs(ModContent.NPCType<Chalice_Intro>()))
                 RedeHelper.SpawnNPC(item.GetSource_FromAI(), (int)Main.LocalPlayer.Center.X, (int)Main.LocalPlayer.Center.Y, ModContent.NPCType<Chalice_Intro>());

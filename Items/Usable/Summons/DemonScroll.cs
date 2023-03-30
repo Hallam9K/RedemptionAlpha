@@ -15,12 +15,12 @@ namespace Redemption.Items.Usable.Summons
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Forbidden Ritual");
-            Tooltip.SetDefault("May draw unwanted attention\n" +
+            // DisplayName.SetDefault("Forbidden Ritual");
+            /* Tooltip.SetDefault("May draw unwanted attention\n" +
                 "Requires the user to have at least 140 max life"
                 + "\nNot consumable" +
-                "\n[i:" + ModContent.ItemType<BadRoute>() + "][c/ff5533: This item may have a negative impact onto the world]");
-            SacrificeTotal = 1;
+                "\n[i:" + ModContent.ItemType<BadRoute>() + "][c/ff5533: This item may have a negative impact onto the world]"); */
+            Item.ResearchUnlockCount = 1;
             ItemID.Sets.SortingPriorityBossSpawns[Type] = 12;
         }
 
@@ -51,7 +51,7 @@ namespace Redemption.Items.Usable.Summons
                 if (Main.netMode != NetmodeID.MultiplayerClient)
                     NPC.SpawnOnPlayer(player.whoAmI, type);
                 else
-                    NetMessage.SendData(MessageID.SpawnBoss, number: player.whoAmI, number2: type);
+                    NetMessage.SendData(MessageID.SpawnBossUseLicenseStartEvent, number: player.whoAmI, number2: type);
 
                 if (RedeBossDowned.erhanDeath > 0 || player.statLifeMax2 == 1)
                     return true;

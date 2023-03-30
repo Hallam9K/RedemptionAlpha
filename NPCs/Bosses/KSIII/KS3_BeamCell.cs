@@ -12,7 +12,7 @@ namespace Redemption.NPCs.Bosses.KSIII
         private new const float FirstSegmentDrawDist = 5;
         public override void SetSafeStaticDefaults()
         {
-            DisplayName.SetDefault("Beam Cell");
+            // DisplayName.SetDefault("Beam Cell");
             ElementID.ProjThunder[Type] = true;
         }
 

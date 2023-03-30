@@ -20,7 +20,7 @@ namespace Redemption.Walls
         public override string Texture => Redemption.PLACEHOLDER_TEXTURE;
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Cyberscrap Wall");
+            // DisplayName.SetDefault("Cyberscrap Wall");
         }
 
         public override void SetDefaults()

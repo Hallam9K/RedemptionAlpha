@@ -12,9 +12,9 @@ namespace Redemption.Items.Accessories.HM
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Geiger-Muller");
-            Tooltip.SetDefault("Lab issued Geiger counter. The louder it gets, the higher the chance of you getting irradiated.");
-            SacrificeTotal = 1;
+            // DisplayName.SetDefault("Geiger-Muller");
+            // Tooltip.SetDefault("Lab issued Geiger counter. The louder it gets, the higher the chance of you getting irradiated.");
+            Item.ResearchUnlockCount = 1;
         }
         public override void SetDefaults()
         {

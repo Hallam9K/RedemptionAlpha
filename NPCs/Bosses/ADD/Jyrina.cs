@@ -14,7 +14,7 @@ namespace Redemption.NPCs.Bosses.ADD
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Jyrina");
+            // DisplayName.SetDefault("Jyrina");
             Main.projFrames[Projectile.type] = 9;
             ProjectileID.Sets.TrailCacheLength[Projectile.type] = 8;
             ProjectileID.Sets.TrailingMode[Projectile.type] = 0;

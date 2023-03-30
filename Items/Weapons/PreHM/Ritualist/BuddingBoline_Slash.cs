@@ -10,11 +10,11 @@ namespace Redemption.Items.Weapons.PreHM.Ritualist
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Budding Boline");
+            // DisplayName.SetDefault("Budding Boline");
             Main.projFrames[Projectile.type] = 5;
             ElementID.ProjNature[Type] = true;
         }
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             Player player = Main.player[Projectile.owner];
             if (player.whoAmI == Main.myPlayer && player.GetModPlayer<RitualistPlayer>().bolineFlower)

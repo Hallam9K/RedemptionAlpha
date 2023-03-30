@@ -13,7 +13,7 @@ namespace Redemption.Projectiles.Magic
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Mana Drone Mk.I");
+            // DisplayName.SetDefault("Mana Drone Mk.I");
             Main.projFrames[Projectile.type] = 4;
             ProjectileID.Sets.CultistIsResistantTo[Projectile.type] = true;
         }

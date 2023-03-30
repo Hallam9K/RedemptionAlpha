@@ -9,8 +9,8 @@ namespace Redemption.Items.Armor.Vanity.TBot
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("T-Bot Chestplate");
-            SacrificeTotal = 1;
+            // DisplayName.SetDefault("T-Bot Chestplate");
+            Item.ResearchUnlockCount = 1;
             ArmorIDs.Body.Sets.HidesArms[EquipLoader.GetEquipSlot(Mod, Name, EquipType.Body)] = true;
             ArmorIDs.Body.Sets.HidesTopSkin[EquipLoader.GetEquipSlot(Mod, Name, EquipType.Body)] = true;
         }

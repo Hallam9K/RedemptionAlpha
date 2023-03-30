@@ -29,6 +29,7 @@ namespace Redemption.Tiles.Natural
                 ModContent.TileType<IrradiatedEbonstoneTile>()
             };
             TileObjectData.addTile(Type);
+            ItemDrop = -1;
             DustType = DustID.Ash;
         }
 

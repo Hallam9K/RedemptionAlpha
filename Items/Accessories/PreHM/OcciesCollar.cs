@@ -12,10 +12,10 @@ namespace Redemption.Items.Accessories.PreHM
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Occie's Collar");
-			Tooltip.SetDefault("Summons Occie, Octavia's cat, to follow you");
+			// DisplayName.SetDefault("Occie's Collar");
+			// Tooltip.SetDefault("Summons Occie, Octavia's cat, to follow you");
 
-			SacrificeTotal = 1;
+			Item.ResearchUnlockCount = 1;
 		}
 
 		public override void SetDefaults()

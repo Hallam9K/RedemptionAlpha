@@ -14,11 +14,11 @@ namespace Redemption.Items.Armor.PreHM.DragonLead
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Dragon-Lead Skull");
-            Tooltip.SetDefault("7% increased damage");
+            // DisplayName.SetDefault("Dragon-Lead Skull");
+            // Tooltip.SetDefault("7% increased damage");
             ArmorIDs.Head.Sets.DrawHead[EquipLoader.GetEquipSlot(Mod, Name, EquipType.Head)] = false;
 
-            SacrificeTotal = 1;
+            Item.ResearchUnlockCount = 1;
         }
 
         public override void SetDefaults()

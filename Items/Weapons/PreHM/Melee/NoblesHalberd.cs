@@ -11,11 +11,11 @@ namespace Redemption.Items.Weapons.PreHM.Melee
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Noble's Halberd");
-            Tooltip.SetDefault("Right-click to thrust the halberd\n" +
-                "'One of the primary weapons used by Anglon's Common Guard'");
+            // DisplayName.SetDefault("Noble's Halberd");
+            /* Tooltip.SetDefault("Right-click to thrust the halberd\n" +
+                "'One of the primary weapons used by Anglon's Common Guard'"); */
 
-            SacrificeTotal = 1;
+            Item.ResearchUnlockCount = 1;
         }
 
         public override void SetDefaults()

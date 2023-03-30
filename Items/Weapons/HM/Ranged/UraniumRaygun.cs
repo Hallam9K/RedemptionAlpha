@@ -13,11 +13,11 @@ namespace Redemption.Items.Weapons.HM.Ranged
 	{
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Uranium Raygun");
-            Tooltip.SetDefault("(2[i:" + ModContent.ItemType<EnergyPack>() + "]) Fires rings of uranium"
+            // DisplayName.SetDefault("Uranium Raygun");
+            /* Tooltip.SetDefault("(2[i:" + ModContent.ItemType<EnergyPack>() + "]) Fires rings of uranium"
                 + "\nCan pierce through tiles and enemies\n" +
-                "Requires an Energy Pack to be in your inventory");
-            SacrificeTotal = 1;
+                "Requires an Energy Pack to be in your inventory"); */
+            Item.ResearchUnlockCount = 1;
         }
 
         public override void SetDefaults()

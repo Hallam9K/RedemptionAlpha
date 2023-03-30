@@ -98,7 +98,7 @@ namespace Redemption.Tiles.Tiles
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Antique Dorul");
+            // DisplayName.SetDefault("Antique Dorul");
             ProjectileID.Sets.ForcePlateDetection[Projectile.type] = true;
         }
 

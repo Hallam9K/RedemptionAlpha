@@ -15,11 +15,11 @@ namespace Redemption.Items.Weapons.PostML.Melee
     {
         public override void SetStaticDefaults()
         {
-            Tooltip.SetDefault("Left click to do a close ranged combo attack\n" +
+            /* Tooltip.SetDefault("Left click to do a close ranged combo attack\n" +
                 "Right-click to thrust forward, doing more damage at the tail-end of the thrust\n" +
-                "Hitting with the thrust allows chaining the right-click, while missing gives a 20 second cooldown");
+                "Hitting with the thrust allows chaining the right-click, while missing gives a 20 second cooldown"); */
             ItemID.Sets.Spears[Item.type] = true;
-            SacrificeTotal = 1;
+            Item.ResearchUnlockCount = 1;
         }
 
         public override void SetDefaults()

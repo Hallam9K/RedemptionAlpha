@@ -13,7 +13,7 @@ namespace Redemption.NPCs.Bosses.PatientZero
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Tear of Infection");
+            // DisplayName.SetDefault("Tear of Infection");
             Main.projFrames[Projectile.type] = 4;
             ElementID.ProjPoison[Type] = true;
         }
@@ -28,7 +28,7 @@ namespace Redemption.NPCs.Bosses.PatientZero
             Projectile.ignoreWater = true;
             Projectile.timeLeft = 200;
         }
-        public override void OnHitPlayer(Player target, int damage, bool crit) => target.AddBuff(ModContent.BuffType<BileDebuff>(), 120);
+        public override void OnHitPlayer(Player target, Player.HurtInfo info) => target.AddBuff(ModContent.BuffType<BileDebuff>(), 120);
         public override Color? GetAlpha(Color lightColor) => Color.White * Projectile.Opacity;
         public override void AI()
         {
@@ -60,7 +60,7 @@ namespace Redemption.NPCs.Bosses.PatientZero
         public override string Texture => "Redemption/NPCs/Bosses/PatientZero/TearOfInfection";
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Poison Beat");
+            // DisplayName.SetDefault("Poison Beat");
             Main.projFrames[Projectile.type] = 4;
         }
         public override void SetDefaults()
@@ -80,7 +80,7 @@ namespace Redemption.NPCs.Bosses.PatientZero
         public override string Texture => Redemption.EMPTY_TEXTURE;
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Poison Beat");
+            // DisplayName.SetDefault("Poison Beat");
         }
         public override void SetDefaults()
         {

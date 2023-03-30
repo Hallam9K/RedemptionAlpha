@@ -10,10 +10,10 @@ namespace Redemption.Items.Donator.Gonk
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Samus Head");
-            Tooltip.SetDefault("Summons a chibi Samus\n");
+            // DisplayName.SetDefault("Samus Head");
+            // Tooltip.SetDefault("Summons a chibi Samus\n");
 
-            SacrificeTotal = 1;
+            Item.ResearchUnlockCount = 1;
         }
 
         public override void SetDefaults()

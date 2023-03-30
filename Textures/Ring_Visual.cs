@@ -11,7 +11,7 @@ namespace Redemption.Textures
         public override string Texture => "Redemption/Textures/Ring1";
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Ring");
+            // DisplayName.SetDefault("Ring");
         }
         public override void SetDefaults()
         {

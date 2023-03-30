@@ -28,8 +28,19 @@ namespace Redemption.Globals
                     Dust.NewDust(new Vector2(i * 16, j * 16), 0, 0, ModContent.DustType<XenoWaterDust>(), Main.rand.NextFloat(-2f, 2f), Main.rand.NextFloat(-4f, -2f));
             }
         }
-
-        public override bool Drop(int i, int j, int type)
+        public override bool CanDrop(int i, int j, int type)
+        {
+            if (type == ModContent.TileType<IrradiatedDirtTile>() && TileID.Sets.BreakableWhenPlacing[ModContent.TileType<IrradiatedDirtTile>()])
+                return false;
+            if (type == ModContent.TileType<AncientDirtTile>() && TileID.Sets.BreakableWhenPlacing[ModContent.TileType<AncientDirtTile>()])
+                return false;
+            if (type == ModContent.TileType<ShadestoneBrickTile>() && TileID.Sets.BreakableWhenPlacing[ModContent.TileType<ShadestoneBrickTile>()])
+                return false;
+            if (type == ModContent.TileType<ShadestoneTile>() && TileID.Sets.BreakableWhenPlacing[ModContent.TileType<ShadestoneTile>()])
+                return false;
+            return base.CanDrop(i, j, type);
+        }
+        public override void Drop(int i, int j, int type)
         {
             if (Main.netMode != NetmodeID.MultiplayerClient && !WorldGen.noTileActions && !WorldGen.gen)
             {
@@ -46,17 +57,6 @@ namespace Redemption.Globals
             }
             if ((type == TileID.LeafBlock || type == TileID.LivingMahoganyLeaves) && Main.rand.NextBool(4))
                 Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 16, 16, ModContent.ItemType<LivingTwig>());
-
-            if (type == ModContent.TileType<IrradiatedDirtTile>() && TileID.Sets.BreakableWhenPlacing[ModContent.TileType<IrradiatedDirtTile>()])
-                return false;
-            if (type == ModContent.TileType<AncientDirtTile>() && TileID.Sets.BreakableWhenPlacing[ModContent.TileType<AncientDirtTile>()])
-                return false;
-            if (type == ModContent.TileType<ShadestoneBrickTile>() && TileID.Sets.BreakableWhenPlacing[ModContent.TileType<ShadestoneBrickTile>()])
-                return false;
-            if (type == ModContent.TileType<ShadestoneTile>() && TileID.Sets.BreakableWhenPlacing[ModContent.TileType<ShadestoneTile>()])
-                return false;
-
-            return base.Drop(i, j, type);
         }
         public override void RandomUpdate(int i, int j, int type)
         {
@@ -95,22 +95,22 @@ namespace Redemption.Globals
                     if (tileUp)
                     {
                         WorldGen.PlaceObject(i, j - 1, ModContent.TileType<CryoCrystalTile>(), true);
-                        NetMessage.SendObjectPlacment(-1, i, j - 1, ModContent.TileType<CryoCrystalTile>(), 0, 0, -1, -1);
+                        NetMessage.SendObjectPlacement(-1, i, j - 1, ModContent.TileType<CryoCrystalTile>(), 0, 0, -1, -1);
                     }
                     else if (tileDown)
                     {
                         WorldGen.PlaceObject(i, j + 1, ModContent.TileType<CryoCrystalTile>(), true);
-                        NetMessage.SendObjectPlacment(-1, i, j + 1, ModContent.TileType<CryoCrystalTile>(), 0, 0, -1, -1);
+                        NetMessage.SendObjectPlacement(-1, i, j + 1, ModContent.TileType<CryoCrystalTile>(), 0, 0, -1, -1);
                     }
                     else if (tileLeft)
                     {
                         WorldGen.PlaceObject(i - 1, j, ModContent.TileType<CryoCrystalTile>(), true);
-                        NetMessage.SendObjectPlacment(-1, i - 1, j, ModContent.TileType<CryoCrystalTile>(), 0, 0, -1, -1);
+                        NetMessage.SendObjectPlacement(-1, i - 1, j, ModContent.TileType<CryoCrystalTile>(), 0, 0, -1, -1);
                     }
                     else if (tileRight)
                     {
                         WorldGen.PlaceObject(i + 1, j, ModContent.TileType<CryoCrystalTile>(), true);
-                        NetMessage.SendObjectPlacment(-1, i + 1, j, ModContent.TileType<CryoCrystalTile>(), 0, 0, -1, -1);
+                        NetMessage.SendObjectPlacement(-1, i + 1, j, ModContent.TileType<CryoCrystalTile>(), 0, 0, -1, -1);
                     }
                 }
             }

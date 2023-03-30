@@ -8,8 +8,8 @@ namespace Redemption.Buffs
 	{
 		public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Crux Card");
-            Description.SetDefault("Right-click to despawn spirit summons");
+            // DisplayName.SetDefault("Crux Card");
+            // Description.SetDefault("Right-click to despawn spirit summons");
             Main.buffNoSave[Type] = true;
 			Main.buffNoTimeDisplay[Type] = true;
 		}

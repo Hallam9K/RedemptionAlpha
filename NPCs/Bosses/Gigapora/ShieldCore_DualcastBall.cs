@@ -16,7 +16,7 @@ namespace Redemption.NPCs.Bosses.Gigapora
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Dualcast");
+            // DisplayName.SetDefault("Dualcast");
             Main.projFrames[Projectile.type] = 4;
             ProjectileID.Sets.CultistIsResistantTo[Projectile.type] = true;
         }
@@ -87,7 +87,7 @@ namespace Redemption.NPCs.Bosses.Gigapora
                 }
             }
         }
-        public override void OnHitPlayer(Player target, int damage, bool crit) => Projectile.Kill();
+        public override void OnHitPlayer(Player target, Player.HurtInfo info) => Projectile.Kill();
         public override Color? GetAlpha(Color lightColor)
         {
             return new Color(1f, 1f, 1f, 0f) * Projectile.Opacity;

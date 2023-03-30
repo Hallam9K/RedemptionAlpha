@@ -15,7 +15,7 @@ namespace Redemption.Items.Accessories.PostML
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Jyrina");
+            // DisplayName.SetDefault("Jyrina");
             Main.projFrames[Projectile.type] = 17;
             ProjectileID.Sets.TrailCacheLength[Projectile.type] = 8;
             ProjectileID.Sets.TrailingMode[Projectile.type] = 0;

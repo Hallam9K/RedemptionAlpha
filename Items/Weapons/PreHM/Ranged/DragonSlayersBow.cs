@@ -11,9 +11,9 @@ namespace Redemption.Items.Weapons.PreHM.Ranged
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Dragon Slayer's Greatbow");
-            Tooltip.SetDefault("Replaces Wooden Arrows with Hellfire Arrows");
-            SacrificeTotal = 1;
+            // DisplayName.SetDefault("Dragon Slayer's Greatbow");
+            // Tooltip.SetDefault("Replaces Wooden Arrows with Hellfire Arrows");
+            Item.ResearchUnlockCount = 1;
         }
 
         public override void SetDefaults()
@@ -59,10 +59,10 @@ namespace Redemption.Items.Weapons.PreHM.Ranged
             if (type == ProjectileID.WoodenArrowFriendly)
                 type = ProjectileID.HellfireArrow;
         }
-        public override void ModifyHitNPC(Player player, NPC target, ref int damage, ref float knockBack, ref bool crit)
+        public override void ModifyHitNPC(Player player, NPC target, ref NPC.HitModifiers modifiers)
         {
             if (NPCLists.Dragonlike.Contains(target.type))
-                damage *= 10;
+                modifiers.FinalDamage *= 10;
         }
     }
 }

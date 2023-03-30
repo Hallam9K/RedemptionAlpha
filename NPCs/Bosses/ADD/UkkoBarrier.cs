@@ -14,7 +14,7 @@ namespace Redemption.NPCs.Bosses.ADD
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Barrier");
+            // DisplayName.SetDefault("Barrier");
             ProjectileID.Sets.DrawScreenCheckFluff[Type] = 2400;
         }
         public override void SetDefaults()
@@ -93,7 +93,7 @@ namespace Redemption.NPCs.Bosses.ADD
         public override string Texture => "Redemption/NPCs/Bosses/ADD/UkkoBarrier";
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Barrier");
+            // DisplayName.SetDefault("Barrier");
         }
         public override void SetDefaults()
         {

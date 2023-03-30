@@ -13,7 +13,7 @@ namespace Redemption.NPCs.Bosses.ADD
         public override string Texture => Redemption.EMPTY_TEXTURE;
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Lightning");
+            // DisplayName.SetDefault("Lightning");
             ElementID.ProjThunder[Type] = true;
         }
         public override void SetDefaults()
@@ -39,7 +39,7 @@ namespace Redemption.NPCs.Bosses.ADD
                 Projectile.localAI[0] = 1;
             }
         }
-        public override void OnHitPlayer(Player target, int damage, bool crit)
+        public override void OnHitPlayer(Player target, Player.HurtInfo info)
         {
             target.AddBuff(ModContent.BuffType<ElectrifiedDebuff>(), 120);
         }

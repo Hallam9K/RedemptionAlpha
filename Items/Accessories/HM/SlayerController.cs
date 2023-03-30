@@ -9,9 +9,9 @@ namespace Redemption.Items.Accessories.HM
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Slayer's Gamer Controller");
-            Tooltip.SetDefault("Changes your cursor to a cyan crosshair");
-            SacrificeTotal = 1;
+            // DisplayName.SetDefault("Slayer's Gamer Controller");
+            // Tooltip.SetDefault("Changes your cursor to a cyan crosshair");
+            Item.ResearchUnlockCount = 1;
         }
         public override void SetDefaults()
         {
@@ -19,7 +19,7 @@ namespace Redemption.Items.Accessories.HM
             Item.rare = ItemRarityID.Cyan;
             Item.width = 30;
             Item.height = 26;
-            Item.canBePlacedInVanityRegardlessOfConditions = true;
+            Item.hasVanityEffects = true;
             Item.accessory = true;
         }
         public override void UpdateAccessory(Player player, bool hideVisual)

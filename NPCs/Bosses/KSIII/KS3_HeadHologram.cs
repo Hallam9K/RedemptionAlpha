@@ -15,7 +15,7 @@ namespace Redemption.NPCs.Bosses.KSIII
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Hologram");
+            // DisplayName.SetDefault("Hologram");
             Main.projFrames[Projectile.type] = 10;
         }
         public override void SetDefaults()

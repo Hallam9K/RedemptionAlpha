@@ -9,8 +9,8 @@ namespace Redemption.Buffs.NPCBuffs
         public override string Texture => "Redemption/Buffs/Debuffs/_DebuffTemplate";
         public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Contagion Shard");
-			Description.SetDefault("yowie!");
+			// DisplayName.SetDefault("Contagion Shard");
+			// Description.SetDefault("yowie!");
             Main.debuff[Type] = true;
         }
 

@@ -16,7 +16,7 @@ namespace Redemption.Projectiles.Magic
         public override string Texture => "Redemption/NPCs/Bosses/Keeper/KeeperSoulCharge";
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Soul Charge");
+            // DisplayName.SetDefault("Soul Charge");
             Main.projFrames[Projectile.type] = 4;
             ProjectileID.Sets.CultistIsResistantTo[Projectile.type] = true;
             ElementID.ProjArcane[Type] = true;

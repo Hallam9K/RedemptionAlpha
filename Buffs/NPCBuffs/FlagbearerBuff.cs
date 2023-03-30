@@ -8,8 +8,8 @@ namespace Redemption.Buffs.NPCBuffs
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Rallied");
-            Description.SetDefault(":D");
+            // DisplayName.SetDefault("Rallied");
+            // Description.SetDefault(":D");
             Main.buffNoSave[Type] = true;
         }
         public override void Update(NPC npc, ref int buffIndex)

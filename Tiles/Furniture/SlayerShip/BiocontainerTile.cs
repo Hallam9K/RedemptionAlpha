@@ -1,10 +1,12 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Items.Placeable.Furniture.SlayerShip;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent.ObjectInteractions;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 
@@ -26,8 +28,8 @@ namespace Redemption.Tiles.Furniture.SlayerShip
             DustType = DustID.Glass;
             MinPick = 100;
             MineResist = 5f;
-            ModTranslation name = CreateMapEntryName();
-            name.SetDefault("Life Fruit Bio-Container");
+            LocalizedText name = CreateMapEntryName();
+            // name.SetDefault("Life Fruit Bio-Container");
             AddMapEntry(new Color(143, 215, 29), name);
         }
         public override bool HasSmartInteract(int i, int j, SmartInteractScanSettings settings) => true;
@@ -72,11 +74,14 @@ namespace Redemption.Tiles.Furniture.SlayerShip
             return true;
         }
         public override bool CanExplode(int i, int j) => false;
-        public override void KillMultiTile(int i, int j, int frameX, int frameY)
+        public override IEnumerable<Item> GetItemDrops(int i, int j)
         {
-            Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 48, 48, ModContent.ItemType<Biocontainer>());
-            if (frameX >= 54)
-                Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 48, 48, ItemID.LifeFruit);
+            Tile t = Main.tile[i, j];
+            int style = t.TileFrameX / 54;
+            if (style >= 1)
+                yield return new Item(ItemID.LifeFruit);
+            yield return new Item(ModContent.ItemType<Biocontainer>());
+
         }
         public override bool IsTileSpelunkable(int i, int j)
         {

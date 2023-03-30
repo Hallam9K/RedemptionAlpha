@@ -12,10 +12,10 @@ namespace Redemption.Items.Accessories.PreHM
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Heart Insignia");
-            Tooltip.SetDefault("Picking up hearts give a short boost to life regen" +
-                "\n15% increased " + ElementID.ShadowS + " and " + ElementID.BloodS + " elemental damage and resistance");
-            SacrificeTotal = 1;
+            // DisplayName.SetDefault("Heart Insignia");
+            /* Tooltip.SetDefault("Picking up hearts give a short boost to life regen" +
+                "\n15% increased " + ElementID.ShadowS + " and " + ElementID.BloodS + " elemental damage and resistance"); */
+            Item.ResearchUnlockCount = 1;
         }
 
         public override void SetDefaults()

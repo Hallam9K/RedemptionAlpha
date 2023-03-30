@@ -91,7 +91,7 @@ namespace Redemption.NPCs.Bosses.Obliterator
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Omega Obliterator");
+            // DisplayName.SetDefault("Omega Obliterator");
             Main.npcFrameCount[NPC.type] = 6;
             NPCID.Sets.TrailCacheLength[NPC.type] = 5;
             NPCID.Sets.TrailingMode[NPC.type] = 1;
@@ -156,7 +156,7 @@ namespace Redemption.NPCs.Bosses.Obliterator
                 new FlavorTextBestiaryInfoElement("An autonomous war machine mostly of Girus' own design with many integrated weapon systems, such as literal finger guns and an advanced heat dispersion system in the form of a giant beam, capable of obliterating anyone it engulfs - Also where Obliterator got its name from.")
             });
         }
-        public override void HitEffect(int hitDirection, double damage)
+        public override void HitEffect(NPC.HitInfo hit)
         {
             if (NPC.life <= 0)
             {
@@ -205,7 +205,7 @@ namespace Redemption.NPCs.Bosses.Obliterator
 
             LeadingConditionRule notExpertRule = new(new Conditions.NotExpert());
 
-            notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<OOMask>(), 7));
+            notExpertRule.OnSuccess(ItemDropRule.NotScalingWithLuck(ModContent.ItemType<OOMask>(), 7));
 
             notExpertRule.OnSuccess(ItemDropRule.OneFromOptions(1, ModContent.ItemType<BlastBattery>(), ModContent.ItemType<OOFingergun>(), ModContent.ItemType<SunInThePalm>()));
             notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<CorruptedXenomite>(), 1, 16, 28));
@@ -213,19 +213,18 @@ namespace Redemption.NPCs.Bosses.Obliterator
             notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<RoboBrain>(), 1, 1, 2));
             npcLoot.Add(notExpertRule);
         }
-        public override bool StrikeNPC(ref double damage, int defense, ref float knockback, int hitDirection, ref bool crit)
+        public override void ModifyIncomingHit(ref NPC.HitModifiers modifiers)
         {
-            damage *= 0.8;
-            return true;
+            modifiers.FinalDamage *= 0.8f;
         }
         public override void BossLoot(ref string name, ref int potionType)
         {
             potionType = ItemID.GreaterHealingPotion;
         }
         public override bool CanHitPlayer(Player target, ref int cooldownSlot) => NPC.velocity.Length() > 12;
-        public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
+        public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)
         {
-            NPC.lifeMax = (int)(NPC.lifeMax * 0.6f * bossLifeScale);
+            NPC.lifeMax = (int)(NPC.lifeMax * 0.6f * balance * bossAdjustment);
             NPC.damage = (int)(NPC.damage * 0.6f);
         }
 

@@ -15,7 +15,7 @@ namespace Redemption.Items.Weapons.HM.Ranged
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Steam-Cog Minigun");
+            // DisplayName.SetDefault("Steam-Cog Minigun");
             Main.projFrames[Projectile.type] = 4;
         }
         public override void SetDefaults()

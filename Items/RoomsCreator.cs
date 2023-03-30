@@ -16,9 +16,9 @@ namespace Redemption.Items.Usable
         public override string Texture => Redemption.PLACEHOLDER_TEXTURE;
         public override void SetStaticDefaults()
 		{
-            DisplayName.SetDefault("Room Layout Generator");
-            Tooltip.SetDefault("Creates a bunch of 25x25 room layouts\n" +
-                "WILL DESTROY TILES IN A LARGE AREA");
+            // DisplayName.SetDefault("Room Layout Generator");
+            /* Tooltip.SetDefault("Creates a bunch of 25x25 room layouts\n" +
+                "WILL DESTROY TILES IN A LARGE AREA"); */
 		}
 		
         public override void SetDefaults()

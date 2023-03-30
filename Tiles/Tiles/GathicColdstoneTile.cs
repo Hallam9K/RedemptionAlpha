@@ -65,22 +65,22 @@ namespace Redemption.Tiles.Tiles
                 if (tileUp)
                 {
                     WorldGen.PlaceObject(i, j - 1, ModContent.TileType<CryoCrystalTile>(), true);
-                    NetMessage.SendObjectPlacment(-1, i, j - 1, ModContent.TileType<CryoCrystalTile>(), 0, 0, -1, -1);
+                    NetMessage.SendObjectPlacement(-1, i, j - 1, ModContent.TileType<CryoCrystalTile>(), 0, 0, -1, -1);
                 }
                 else if (tileDown)
                 {
                     WorldGen.PlaceObject(i, j + 1, ModContent.TileType<CryoCrystalTile>(), true);
-                    NetMessage.SendObjectPlacment(-1, i, j + 1, ModContent.TileType<CryoCrystalTile>(), 0, 0, -1, -1);
+                    NetMessage.SendObjectPlacement(-1, i, j + 1, ModContent.TileType<CryoCrystalTile>(), 0, 0, -1, -1);
                 }
                 else if (tileLeft)
                 {
                     WorldGen.PlaceObject(i - 1, j, ModContent.TileType<CryoCrystalTile>(), true);
-                    NetMessage.SendObjectPlacment(-1, i - 1, j, ModContent.TileType<CryoCrystalTile>(), 0, 0, -1, -1);
+                    NetMessage.SendObjectPlacement(-1, i - 1, j, ModContent.TileType<CryoCrystalTile>(), 0, 0, -1, -1);
                 }
                 else if (tileRight)
                 {
                     WorldGen.PlaceObject(i + 1, j, ModContent.TileType<CryoCrystalTile>(), true);
-                    NetMessage.SendObjectPlacment(-1, i + 1, j, ModContent.TileType<CryoCrystalTile>(), 0, 0, -1, -1);
+                    NetMessage.SendObjectPlacement(-1, i + 1, j, ModContent.TileType<CryoCrystalTile>(), 0, 0, -1, -1);
                 }
             }
         }

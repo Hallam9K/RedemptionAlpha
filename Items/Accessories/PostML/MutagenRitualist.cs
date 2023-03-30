@@ -11,10 +11,10 @@ namespace Redemption.Items.Accessories.PostML
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Ritualist's Mutagen");
-            Tooltip.SetDefault("15% increased ritual damage"
-                + "\n10% increased ritual critical strike chance");
-            SacrificeTotal = 1;
+            // DisplayName.SetDefault("Ritualist's Mutagen");
+            /* Tooltip.SetDefault("15% increased ritual damage"
+                + "\n10% increased ritual critical strike chance"); */
+            Item.ResearchUnlockCount = 1;
         }
         public override void SetDefaults()
         {

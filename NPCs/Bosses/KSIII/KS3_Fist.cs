@@ -14,7 +14,7 @@ namespace Redemption.NPCs.Bosses.KSIII
 	{
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Fist Rocket");
+            // DisplayName.SetDefault("Fist Rocket");
             Main.projFrames[Projectile.type] = 4;
             ElementID.ProjExplosive[Type] = true;
         }
@@ -76,7 +76,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                 vector *= 12f / magnitude;
             }
         }
-        public override void OnHitPlayer(Player target, int damage, bool crit)
+        public override void OnHitPlayer(Player target, Player.HurtInfo info)
         {
             Projectile.Kill();
         }

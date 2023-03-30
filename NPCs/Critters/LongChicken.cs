@@ -38,8 +38,9 @@ namespace Redemption.NPCs.Critters
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("L o n g  Chicken");
+            // DisplayName.SetDefault("L o n g  Chicken");
             Main.npcFrameCount[Type] = 21;
+            NPCID.Sets.ShimmerTransformToNPC[NPC.type] = ModContent.NPCType<Chicken>();
             NPCID.Sets.CountsAsCritter[Type] = true;
             NPCID.Sets.DontDoHardmodeScaling[Type] = true;
             NPCID.Sets.TakesDamageFromHostilesWithoutBeingFriendly[Type] = true;
@@ -75,7 +76,7 @@ namespace Redemption.NPCs.Critters
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<LongEgg>(), 1, 1, 2));
             npcLoot.Add(ItemDropRule.ByCondition(new OnFireCondition(), ModContent.ItemType<FriedChicken>()));
         }
-        public override void OnHitByItem(Player player, Item item, int damage, float knockback, bool crit)
+        public override void OnHitByItem(Player player, Item item, NPC.HitInfo hit, int damageDone)
         {
             if (NPC.life <= 0)
             {
@@ -85,7 +86,7 @@ namespace Redemption.NPCs.Critters
                     Item.NewItem(NPC.GetSource_Loot(), NPC.getRect(), ModContent.ItemType<FriedChicken>());
             }
         }
-        public override void OnHitByProjectile(Projectile projectile, int damage, float knockback, bool crit)
+        public override void OnHitByProjectile(Projectile projectile, NPC.HitInfo hit, int damageDone)
         {
             if (NPC.life <= 0)
             {
@@ -317,7 +318,7 @@ namespace Redemption.NPCs.Critters
             }
         }
 
-        public override void HitEffect(int hitDirection, double damage)
+        public override void HitEffect(NPC.HitInfo hit)
         {
             if (AIState is not ActionState.Alert)
             {

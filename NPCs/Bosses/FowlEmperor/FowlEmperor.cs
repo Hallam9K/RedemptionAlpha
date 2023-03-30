@@ -91,7 +91,7 @@ namespace Redemption.NPCs.Bosses.FowlEmperor
         }
 
         public override bool CanHitPlayer(Player target, ref int cooldownSlot) => AniType is (int)AnimType.Throw && NPC.frame.Y >= 17 * 80;
-        public override bool? CanHitNPC(NPC target) => target.friendly && AniType is (int)AnimType.Throw && NPC.frame.Y >= 17 * 80 ? null : false;
+        public override bool CanHitNPC(NPC target) => target.friendly && AniType is (int)AnimType.Throw && NPC.frame.Y >= 17 * 80;
 
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
         {
@@ -131,11 +131,11 @@ namespace Redemption.NPCs.Bosses.FowlEmperor
         {
             npcLoot.Add(ItemDropRule.MasterModeCommonDrop(ModContent.ItemType<FowlEmperorRelic>()));
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<FowlEmperorTrophy>(), 10));
-            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<FowlCrown>(), 7));
+            npcLoot.Add(ItemDropRule.NotScalingWithLuck(ModContent.ItemType<FowlCrown>(), 7));
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<FowlWarHorn>()));
             npcLoot.Add(ItemDropRule.ByCondition(new OnFireCondition(), ModContent.ItemType<FriedChicken>(), 1, 5, 5));
         }
-        public override void OnHitByItem(Player player, Item item, int damage, float knockback, bool crit)
+        public override void OnHitByItem(Player player, Item item, NPC.HitInfo hit, int damageDone)
         {
             if (NPC.life <= 0)
             {
@@ -145,7 +145,7 @@ namespace Redemption.NPCs.Bosses.FowlEmperor
                     Item.NewItem(NPC.GetSource_Loot(), NPC.getRect(), ModContent.ItemType<FriedChicken>(), 5);
             }
         }
-        public override void OnHitByProjectile(Projectile projectile, int damage, float knockback, bool crit)
+        public override void OnHitByProjectile(Projectile projectile, NPC.HitInfo hit, int damageDone)
         {
             if (NPC.life <= 0)
             {
@@ -157,9 +157,9 @@ namespace Redemption.NPCs.Bosses.FowlEmperor
         }
         public override bool? CanBeHitByItem(Player player, Item item) => AIState > ActionState.Start ? null : false;
         public override bool? CanBeHitByProjectile(Projectile projectile) => AIState > ActionState.Start ? null : false;
-        public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
+        public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)
         {
-            NPC.lifeMax = (int)(NPC.lifeMax * 0.7f * bossLifeScale);
+            NPC.lifeMax = (int)(NPC.lifeMax * 0.7f * balance * bossAdjustment);
             NPC.damage = (int)(NPC.damage * 0.7f);
         }
 
@@ -698,20 +698,19 @@ namespace Redemption.NPCs.Bosses.FowlEmperor
                     break;
             }
         }
-        public override bool StrikeNPC(ref double damage, int defense, ref float knockback, int hitDirection, ref bool crit)
+        public override void ModifyIncomingHit(ref NPC.HitModifiers modifiers)
         {
             if (eggCracked && AniType is (int)AnimType.Stun)
-                damage *= 2;
+                modifiers.FinalDamage *= 2;
             if (AniType is (int)AnimType.Mad)
-                damage *= 0.1f;
-            return true;
+                modifiers.FinalDamage *= 0.1f;
         }
-        public override void ModifyHitByProjectile(Projectile projectile, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
+        public override void ModifyHitByProjectile(Projectile projectile, ref NPC.HitModifiers modifiers)
         {
             if (AniType is (int)AnimType.Mad && projectile.type == ModContent.ProjectileType<EggCracker_Proj>())
             {
                 eggCracked = true;
-                damage *= 10;
+                modifiers.FinalDamage *= 10;
             }
         }
         private bool hideCrown;
@@ -766,7 +765,7 @@ namespace Redemption.NPCs.Bosses.FowlEmperor
                 }
             }
         }
-        public override void HitEffect(int hitDirection, double damage)
+        public override void HitEffect(NPC.HitInfo hit)
         {
             if (NPC.life <= 0)
             {
@@ -795,7 +794,7 @@ namespace Redemption.NPCs.Bosses.FowlEmperor
         public static int BodyType() => ModContent.NPCType<FowlEmperor>();
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Very Hittable Looking Crown");
+            // DisplayName.SetDefault("Very Hittable Looking Crown");
             NPCID.Sets.CantTakeLunchMoney[Type] = true;
             NPCID.Sets.DebuffImmunitySets.Add(Type, new NPCDebuffImmunityData
             {
@@ -821,11 +820,11 @@ namespace Redemption.NPCs.Bosses.FowlEmperor
             NPC.HitSound = SoundID.NPCHit4;
             NPC.DeathSound = SoundID.NPCHit4;
         }
-        public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
+        public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)
         {
             NPC.lifeMax = 40;
         }
-        public override void HitEffect(int hitDirection, double damage)
+        public override void HitEffect(NPC.HitInfo hit)
         {
             if (NPC.life <= 0)
             {
@@ -843,10 +842,10 @@ namespace Redemption.NPCs.Bosses.FowlEmperor
             if (Main.npc[(int)NPC.ai[0]].ModNPC is FowlEmperor fowl)
                 NPC.life = fowl.crownLife;
         }
-        public override void ModifyHitByItem(Player player, Item item, ref int damage, ref float knockback, ref bool crit)
+        public override void ModifyHitByItem(Player player, Item item, ref NPC.HitModifiers modifiers)
         {
             if (item.type == ItemID.SlapHand)
-                damage = 999;
+                modifiers.FlatBonusDamage += 999;
         }
         public override void AI()
         {

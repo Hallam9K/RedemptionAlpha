@@ -11,9 +11,9 @@ namespace Redemption.Items.Weapons.PostML.Magic
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Poem of Ilmatar");
-            Tooltip.SetDefault("Hold left-click to create a tornado that picks up enemies and juggles them");
-            SacrificeTotal = 1;
+            // DisplayName.SetDefault("Poem of Ilmatar");
+            // Tooltip.SetDefault("Hold left-click to create a tornado that picks up enemies and juggles them");
+            Item.ResearchUnlockCount = 1;
         }
 
         public override void SetDefaults()

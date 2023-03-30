@@ -10,8 +10,8 @@ namespace Redemption.Items.Usable.Potions
     {
         public override void SetStaticDefaults()
         {
-            Tooltip.SetDefault("Minor improvements to all stats" +
-                "\n'I'm lovin' it'");
+            /* Tooltip.SetDefault("Minor improvements to all stats" +
+                "\n'I'm lovin' it'"); */
             Main.RegisterItemAnimation(Type, new DrawAnimationVertical(int.MaxValue, 3));
             ItemID.Sets.FoodParticleColors[Item.type] = new Color[3] {
                 new Color(239, 185, 113),
@@ -19,14 +19,14 @@ namespace Redemption.Items.Usable.Potions
                 new Color(160, 72, 27)
             };
             ItemID.Sets.IsFood[Type] = true;
-            SacrificeTotal = 5;
+            Item.ResearchUnlockCount = 5;
         }
 
         public override void SetDefaults()
         {
             Item.DefaultToFood(20, 20, BuffID.WellFed, 20000);
             Item.value = 80;
-            Item.maxStack = 9999;
+            Item.maxStack = Item.CommonMaxStack;
             Item.rare = ItemRarityID.Blue;
         }
     }

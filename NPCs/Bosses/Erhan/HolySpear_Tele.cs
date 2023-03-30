@@ -28,7 +28,7 @@ namespace Redemption.NPCs.Bosses.Erhan
         // >
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Telegraph");
+            // DisplayName.SetDefault("Telegraph");
         }
 
         public override void SetDefaults()

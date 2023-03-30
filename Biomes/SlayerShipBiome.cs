@@ -15,7 +15,7 @@ namespace Redemption.Biomes
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Slayer's Crashed Cruiser");
+            // DisplayName.SetDefault("Slayer's Crashed Cruiser");
         }
 
         public override bool IsBiomeActive(Player player)

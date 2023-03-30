@@ -14,7 +14,7 @@ namespace Redemption.Items.Weapons.PostML.Magic
         public override string Texture => "Redemption/Items/Weapons/PostML/Magic/OOFingergun";
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Omega Finger Gun");
+            // DisplayName.SetDefault("Omega Finger Gun");
         }
         public override void SetDefaults()
         {

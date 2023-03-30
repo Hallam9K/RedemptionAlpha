@@ -14,7 +14,7 @@ namespace Redemption.NPCs.Bosses.KSIII
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("King Slayer III");
+            // DisplayName.SetDefault("King Slayer III");
             ProjectileID.Sets.TrailCacheLength[Projectile.type] = 4;
             ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
             ElementID.ProjWind[Type] = true;

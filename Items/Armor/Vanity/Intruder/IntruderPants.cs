@@ -8,9 +8,9 @@ namespace Redemption.Items.Armor.Vanity.Intruder
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Intruder's Armored Pants");
+            // DisplayName.SetDefault("Intruder's Armored Pants");
             ArmorIDs.Legs.Sets.HidesBottomSkin[EquipLoader.GetEquipSlot(Mod, Name, EquipType.Legs)] = true;
-            SacrificeTotal = 1;
+            Item.ResearchUnlockCount = 1;
         }
         public override void SetDefaults()
         {

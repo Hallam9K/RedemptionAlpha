@@ -36,10 +36,10 @@ namespace Redemption.Items.Accessories.PreHM
         }
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Crown of the King");
-            Tooltip.SetDefault("Become the Mighty King Chicken!\n" +
-                "'The king's spirit lives on'");
-            SacrificeTotal = 1;
+            // DisplayName.SetDefault("Crown of the King");
+            /* Tooltip.SetDefault("Become the Mighty King Chicken!\n" +
+                "'The king's spirit lives on'"); */
+            Item.ResearchUnlockCount = 1;
             SetupDrawing();
         }
         public override void SetDefaults()
@@ -50,7 +50,7 @@ namespace Redemption.Items.Accessories.PreHM
             Item.rare = ItemRarityID.Green;
             Item.accessory = true;
             Item.vanity = true;
-            Item.canBePlacedInVanityRegardlessOfConditions = true;
+            Item.hasVanityEffects = true;
         }
         public override void UpdateAccessory(Player player, bool hideVisual)
         {

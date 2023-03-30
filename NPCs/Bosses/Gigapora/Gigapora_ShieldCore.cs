@@ -43,7 +43,7 @@ namespace Redemption.NPCs.Bosses.Gigapora
         public ref float TimerRand => ref NPC.localAI[0];
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Shield Core");
+            // DisplayName.SetDefault("Shield Core");
             Main.npcFrameCount[NPC.type] = 19;
             NPCDebuffImmunityData debuffData = new()
             {
@@ -81,9 +81,9 @@ namespace Redemption.NPCs.Bosses.Gigapora
             NPC.DeathSound = SoundID.NPCDeath14;
             SpawnModBiomes = new int[2] { ModContent.GetInstance<LidenBiomeOmega>().Type, ModContent.GetInstance<LidenBiome>().Type };
         }
-        public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
+        public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)
         {
-            NPC.lifeMax = (int)(NPC.lifeMax * 0.75f * bossLifeScale);
+            NPC.lifeMax = (int)(NPC.lifeMax * 0.75f * balance * bossAdjustment);
             NPC.damage = (int)(NPC.damage * 0.6f);
         }
         public override bool CheckDead()
@@ -134,7 +134,7 @@ namespace Redemption.NPCs.Bosses.Gigapora
             }
         }
 
-        public override void HitEffect(int hitDirection, double damage)
+        public override void HitEffect(NPC.HitInfo hit)
         {
             if (NPC.life <= 0 && AIState is ActionState.Death && godrayFade >= 1f)
             {
@@ -156,7 +156,7 @@ namespace Redemption.NPCs.Bosses.Gigapora
             }
         }
         public override bool CanHitPlayer(Player target, ref int cooldownSlot) => false;
-        public override bool? CanHitNPC(NPC target) => false;
+        public override bool CanHitNPC(NPC target) => false;
         public override bool CheckActive() => false;
         private float godrayFade;
         private float godraySize;

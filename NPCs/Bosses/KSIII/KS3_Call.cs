@@ -8,7 +8,7 @@ namespace Redemption.NPCs.Bosses.KSIII
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Transmission");
+            // DisplayName.SetDefault("Transmission");
             Main.projFrames[Projectile.type] = 10;
         }
         public override void SetDefaults()

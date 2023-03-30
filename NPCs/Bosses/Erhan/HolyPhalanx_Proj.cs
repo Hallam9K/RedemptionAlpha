@@ -14,7 +14,7 @@ namespace Redemption.NPCs.Bosses.Erhan
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Holy Phalanx");
+            // DisplayName.SetDefault("Holy Phalanx");
             ProjectileID.Sets.TrailCacheLength[Projectile.type] = 5;
             ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
             ElementID.ProjHoly[Type] = true;

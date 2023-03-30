@@ -9,11 +9,11 @@ namespace Redemption.Items.Armor.PostML.Hikarite
     {
         public override void SetStaticDefaults()
         {
-            Tooltip.SetDefault("13% increased damage"
+            /* Tooltip.SetDefault("13% increased damage"
                 + "\n8% increased critical strike chance" +
-                "\n20% increased movement speed");
+                "\n20% increased movement speed"); */
 
-            SacrificeTotal = 1;
+            Item.ResearchUnlockCount = 1;
         }
         public override void SetDefaults()
         {

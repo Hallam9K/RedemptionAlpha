@@ -8,10 +8,10 @@ namespace Redemption.Items.Armor.Vanity
     {
         public override void SetStaticDefaults()
         {
-            Tooltip.SetDefault("'Looks painful...'");
+            // Tooltip.SetDefault("'Looks painful...'");
             ArmorIDs.Head.Sets.DrawHead[EquipLoader.GetEquipSlot(Mod, Name, EquipType.Head)] = false;
 
-            SacrificeTotal = 1;
+            Item.ResearchUnlockCount = 1;
         }
 
         public override void SetDefaults()

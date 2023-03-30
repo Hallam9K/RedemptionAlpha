@@ -10,7 +10,7 @@ namespace Redemption.Projectiles.Hostile
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Ooze");
+            // DisplayName.SetDefault("Ooze");
             Main.projFrames[Projectile.type] = 4;
             ElementID.ProjPoison[Type] = true;
         }
@@ -28,7 +28,7 @@ namespace Redemption.Projectiles.Hostile
             Projectile.Redemption().friendlyHostile = true;
         }
         public override bool? CanHitNPC(NPC target) => target.whoAmI != Projectile.ai[0] ? null : false;
-        public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection) => damage *= 4;
+        public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers) => modifiers.FinalDamage *= 4;
         public override void AI()
         {
             if (++Projectile.frameCounter >= 5)

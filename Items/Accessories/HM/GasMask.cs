@@ -10,17 +10,17 @@ namespace Redemption.Items.Accessories.HM
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Gas Mask");
-            Tooltip.SetDefault("Grants immunity to Radioactive Fallout\n" +
-                "'Hudda hudda!'");
-            SacrificeTotal = 1;
+            // DisplayName.SetDefault("Gas Mask");
+            /* Tooltip.SetDefault("Grants immunity to Radioactive Fallout\n" +
+                "'Hudda hudda!'"); */
+            Item.ResearchUnlockCount = 1;
         }
         public override void SetDefaults()
         {
             Item.width = 38;
             Item.height = 32;
             Item.value = Item.buyPrice(0, 5, 0, 0);
-            Item.canBePlacedInVanityRegardlessOfConditions = true;
+            Item.hasVanityEffects = true;
             Item.rare = ItemRarityID.Pink;
             Item.accessory = true;
         }

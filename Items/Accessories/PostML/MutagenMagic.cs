@@ -9,10 +9,10 @@ namespace Redemption.Items.Accessories.PostML
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Sorcerer's Mutagen");
-            Tooltip.SetDefault("15% increased magic damage"
-                + "\n10% increased magic critical strike chance");
-            SacrificeTotal = 1;
+            // DisplayName.SetDefault("Sorcerer's Mutagen");
+            /* Tooltip.SetDefault("15% increased magic damage"
+                + "\n10% increased magic critical strike chance"); */
+            Item.ResearchUnlockCount = 1;
         }
         public override void SetDefaults()
         {

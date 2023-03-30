@@ -5,6 +5,7 @@ using Terraria;
 using Terraria.DataStructures;
 using Terraria.Enums;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 
@@ -36,8 +37,8 @@ namespace Redemption.Tiles.Furniture.Lab
             TileObjectData.addAlternate(1);
             TileObjectData.addTile(Type);
             AddToArray(ref TileID.Sets.RoomNeeds.CountsAsTable);
-            ModTranslation name = CreateMapEntryName();
-            name.SetDefault("Server Cabinet");
+            LocalizedText name = CreateMapEntryName();
+            // name.SetDefault("Server Cabinet");
             AddMapEntry(new Color(189, 191, 200), name);
             DustType = ModContent.DustType<LabPlatingDust>();
             AnimationFrameHeight = 72;
@@ -49,7 +50,6 @@ namespace Redemption.Tiles.Furniture.Lab
             b = 0.1f;
         }
         public override void NumDust(int i, int j, bool fail, ref int num) => num = fail ? 1 : 3;
-        public override void KillMultiTile(int i, int j, int frameX, int frameY) => Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 32, 64, ModContent.ItemType<ServerCabinet>());
         public override bool CanExplode(int i, int j) => false;
         public override void AnimateTile(ref int frame, ref int frameCounter)
         {

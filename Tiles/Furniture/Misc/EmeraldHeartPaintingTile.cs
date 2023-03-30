@@ -5,6 +5,7 @@ using Terraria.ObjectData;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Redemption.Items.Placeable.Furniture.Misc;
+using Terraria.Localization;
 
 namespace Redemption.Tiles.Furniture.Misc
 {
@@ -26,11 +27,7 @@ namespace Redemption.Tiles.Furniture.Misc
             TileObjectData.newTile.AnchorWall = true;
             TileObjectData.addTile(Type);
             DustType = DustID.WoodFurniture;
-			AddMapEntry(new Color(203, 185, 151));
-        }
-        public override void KillMultiTile(int i, int j, int frameX, int frameY)
-        {
-            Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 64, 48, ModContent.ItemType<EmeraldHeartPainting>());
+			AddMapEntry(new Color(203, 185, 151), Language.GetText("MapObject.Painting"));
         }
     }
 }

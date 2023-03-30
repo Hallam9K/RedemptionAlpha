@@ -11,7 +11,7 @@ namespace Redemption.Items.Weapons.PostML.Ranged
         public override string Texture => "Redemption/Items/Weapons/PostML/Ranged/SussyEgg";
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Suspicious Egg");
+            // DisplayName.SetDefault("Suspicious Egg");
             Main.projFrames[Projectile.type] = 7;
 
         }

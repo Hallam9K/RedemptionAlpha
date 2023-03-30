@@ -27,13 +27,13 @@ namespace Redemption.Items.Weapons.PostML.Melee
         }
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Sun-In-Palm");
-            Tooltip.SetDefault("Hold out this mechanical hand to grow a ball of energy\n" +
+            // DisplayName.SetDefault("Sun-In-Palm");
+            /* Tooltip.SetDefault("Hold out this mechanical hand to grow a ball of energy\n" +
                 "Disintegrates most projectiles after reaching a certain size\n" +
                 "Release left-click to shrink it back down, overcharging will cause it to explode and set the player on fire\n" +
-                "'The power of the sun, in the palm of my hand'");
+                "'The power of the sun, in the palm of my hand'"); */
             ItemID.Sets.SkipsInitialUseSound[Item.type] = true;
-            SacrificeTotal = 1;
+            Item.ResearchUnlockCount = 1;
             SetupDrawing();
         }
 

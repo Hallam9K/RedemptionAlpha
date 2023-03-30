@@ -23,6 +23,8 @@ using Redemption.Items.Accessories.PreHM;
 using Redemption.Items.Materials.HM;
 using ReLogic.Content;
 using Redemption.BaseExtension;
+using Redemption.Items.Weapons.PostML.Ranged;
+using Redemption.Items.Weapons.PreHM.Ranged;
 
 namespace Redemption.NPCs.Friendly
 {
@@ -31,7 +33,7 @@ namespace Redemption.NPCs.Friendly
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Wayfarer");
+            // DisplayName.SetDefault("Wayfarer");
             Main.npcFrameCount[Type] = 25;
 
             NPCID.Sets.ExtraFramesCount[Type] = 5;
@@ -153,7 +155,7 @@ namespace Redemption.NPCs.Friendly
             return false;
         }
 
-        public override void HitEffect(int hitDirection, double damage)
+        public override void HitEffect(NPC.HitInfo hit)
         {
             if (NPC.life <= 0)
             {
@@ -163,7 +165,7 @@ namespace Redemption.NPCs.Friendly
             Dust.NewDust(NPC.position + NPC.velocity, NPC.width, NPC.height, DustID.Blood, NPC.velocity.X * 0.5f, NPC.velocity.Y * 0.5f);
 
         }
-        public override bool CanTownNPCSpawn(int numTownNPCs, int money)
+        public override bool CanTownNPCSpawn(int numTownNPCs)
         {
             return !WorldGen.crimson && RedeQuest.wayfarerVars[0] >= 2 && !RedeHelper.ZephosActive();
         }
@@ -241,7 +243,7 @@ namespace Redemption.NPCs.Friendly
             }
         }
 
-        public override void OnChatButtonClicked(bool firstButton, ref bool shop)
+        public override void OnChatButtonClicked(bool firstButton, ref string shopName)
         {
             if (RedeQuest.wayfarerVars[0] < 4)
             {
@@ -281,7 +283,7 @@ namespace Redemption.NPCs.Friendly
                     switch (ChatNumber)
                     {
                         case 0:
-                            shop = true;
+                            shopName = "Shop";
                             break;
                         case 1:
                             Main.npcChatText = ChitChat();
@@ -369,70 +371,36 @@ namespace Redemption.NPCs.Friendly
             string num = "(" + (adviceNum + 1) + "/" + maxAdvice + ") ";
             return num + chatStr[adviceNum];
         }
-
-        public override void SetupShop(Chest shop, ref int nextSlot)
+        public override void AddShops()
         {
-            shop.item[nextSlot++].SetDefaults(ItemID.Leather);
-            shop.item[nextSlot++].SetDefaults(ModContent.ItemType<FlintAndSteel>());
-            shop.item[nextSlot++].SetDefaults(ModContent.ItemType<BeardedHatchet>());
-            shop.item[nextSlot++].SetDefaults(ModContent.ItemType<CantripStaff>());
-            shop.item[nextSlot++].SetDefaults(ModContent.ItemType<LeatherSheath>());
-            shop.item[nextSlot++].SetDefaults(ModContent.ItemType<Archcloth>());
-            if (NPC.downedBoss1)
-                shop.item[nextSlot++].SetDefaults(ModContent.ItemType<SilverRapier>());
+            var npcShop = new NPCShop(Type)
+                .Add(ItemID.Leather)
+                .Add<FlintAndSteel>()
+                .Add<BeardedHatchet>()
+                .Add<CantripStaff>()
+                .Add<LeatherSheath>()
+                .Add<Archcloth>()
+                .Add<SilverRapier>(Condition.DownedEarlygameBoss)
+                .Add<EaglecrestSpelltome>(Condition.DownedEowOrBoc)
+                .Add<SwordSlicer>(Condition.DownedEowOrBoc)
+                .Add<GolemEye>(RedeConditions.DownedEaglecrestGolem)
+                .Add<ChaliceFragments>()
+                .Add<OphosNotes>(Condition.DownedGolem)
+                .Add<KingChickenPainting>()
+                .Add<FowlEmperorPainting>(RedeConditions.DownedFowlEmperor)
+                .Add<PonderingTreesPainting>(Condition.DownedEarlygameBoss)
+                .Add<MudGuardianPainting>(Condition.DownedSkeletron)
+                .Add<SkeletonGuardianPainting>(Condition.DownedSkeletron)
+                .Add<AkkaPainting>(Condition.Hardmode)
+                .Add<AncientAutoPainting>(Condition.Hardmode)
+                .Add<DubiousWatcherPainting>(Condition.Hardmode)
+                .Add<KSPainting>(RedeConditions.DownedSlayer)
+                .Add<UkkoPainting>(Condition.DownedPlantera)
+                .Add<EmeraldHeartPainting>(Condition.DownedPlantera)
+                .Add<WardenPainting>(Condition.DownedMoonLord)
+                .Add<MythrilsBane>(Condition.DownedMoonLord);
 
-            if (NPC.downedBoss2)
-            {
-                shop.item[nextSlot++].SetDefaults(ModContent.ItemType<EaglecrestSpelltome>());
-                shop.item[nextSlot++].SetDefaults(ModContent.ItemType<SwordSlicer>());
-            }
-
-            if (RedeBossDowned.downedEaglecrestGolem)
-                shop.item[nextSlot++].SetDefaults(ModContent.ItemType<GolemEye>());
-
-            shop.item[nextSlot++].SetDefaults(ModContent.ItemType<ChaliceFragments>());
-
-            if (NPC.downedGolemBoss)
-                shop.item[nextSlot++].SetDefaults(ModContent.ItemType<OphosNotes>());
-
-            shop.item[nextSlot++].SetDefaults(ModContent.ItemType<KingChickenPainting>());
-            if (RedeBossDowned.downedFowlEmperor)
-                shop.item[nextSlot++].SetDefaults(ModContent.ItemType<FowlEmperorPainting>());
-            if (NPC.downedBoss1)
-                shop.item[nextSlot++].SetDefaults(ModContent.ItemType<PonderingTreesPainting>());
-            if (NPC.downedBoss3)
-            {
-                shop.item[nextSlot++].SetDefaults(ModContent.ItemType<MudGuardianPainting>());
-                shop.item[nextSlot++].SetDefaults(ModContent.ItemType<SkeletonGuardianPainting>());
-            }
-            if (Main.hardMode)
-            {
-                shop.item[nextSlot++].SetDefaults(ModContent.ItemType<AkkaPainting>());
-                shop.item[nextSlot++].SetDefaults(ModContent.ItemType<AncientAutoPainting>());
-                shop.item[nextSlot++].SetDefaults(ModContent.ItemType<DubiousWatcherPainting>());
-            }
-            if (RedeBossDowned.downedSlayer)
-                shop.item[nextSlot++].SetDefaults(ModContent.ItemType<KSPainting>());
-            if (NPC.downedPlantBoss)
-            {
-                shop.item[nextSlot++].SetDefaults(ModContent.ItemType<UkkoPainting>());
-                shop.item[nextSlot++].SetDefaults(ModContent.ItemType<EmeraldHeartPainting>());
-            }
-            if (NPC.downedMoonlord)
-            {
-                shop.item[nextSlot++].SetDefaults(ModContent.ItemType<WardenPainting>());
-                shop.item[nextSlot++].SetDefaults(ModContent.ItemType<MythrilsBane>());
-            }
-
-            /*if (RedeBossDowned.downedMossyGoliath)
-            {
-                shop.item[nextSlot].SetDefaults(ModContent.ItemType<MossyWimpGun>());
-                nextSlot++;
-                shop.item[nextSlot].SetDefaults(ModContent.ItemType<MudMace>());
-                nextSlot++;
-                shop.item[nextSlot].SetDefaults(ModContent.ItemType<TastySteak>());
-                nextSlot++;
-            }*/
+            npcShop.Register(); // Name of this shop tab
         }
 
         public override void TownNPCAttackStrength(ref int damage, ref float knockback)
@@ -447,7 +415,7 @@ namespace Redemption.NPCs.Friendly
             randExtraCooldown = 30;
         }
 
-        public override void DrawTownAttackSwing(ref Texture2D item, ref int itemSize, ref float scale, ref Vector2 offset)
+        public override void DrawTownAttackSwing(ref Texture2D item, ref Rectangle itemFrame, ref int itemSize, ref float scale, ref Vector2 offset)
         {
             scale = 1f;
             item = TextureAssets.Item[ModContent.ItemType<SwordSlicer>()].Value;

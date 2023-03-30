@@ -9,9 +9,9 @@ namespace Redemption.Items.Placeable.Tiles
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Laboratory Tank");
-            Tooltip.SetDefault("'Filled with green sludge'" +
-                "\n[c/ff0000:Unbreakable (500% Pickaxe Power)]");
+            // DisplayName.SetDefault("Laboratory Tank");
+            /* Tooltip.SetDefault("'Filled with green sludge'" +
+                "\n[c/ff0000:Unbreakable (500% Pickaxe Power)]"); */
         }
 
         public override void SetDefaults()
@@ -19,7 +19,7 @@ namespace Redemption.Items.Placeable.Tiles
             Item.DefaultToPlaceableTile(ModContent.TileType<LabTankTile>(), 0);
             Item.width = 16;
             Item.height = 18;
-            Item.maxStack = 9999;
+            Item.maxStack = Item.CommonMaxStack;
             Item.value = Item.buyPrice(0, 0, 2, 0);
             Item.rare = ItemRarityID.LightPurple;
         }

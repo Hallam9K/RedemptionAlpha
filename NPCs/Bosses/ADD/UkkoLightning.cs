@@ -16,7 +16,7 @@ namespace Redemption.NPCs.Bosses.ADD
         public override string Texture => "Terraria/Images/Projectile_466";
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Lightning Arc");
+            // DisplayName.SetDefault("Lightning Arc");
             ProjectileID.Sets.TrailCacheLength[Projectile.type] = 10;
             ProjectileID.Sets.TrailingMode[Projectile.type] = 1;
             ElementID.ProjThunder[Type] = true;
@@ -168,7 +168,7 @@ namespace Redemption.NPCs.Bosses.ADD
             }
         }
 
-        public override void OnHitPlayer(Player target, int damage, bool crit)
+        public override void OnHitPlayer(Player target, Player.HurtInfo info)
         {
             if (Main.rand.NextBool(2))
                 target.AddBuff(BuffID.Electrified, target.HasBuff(BuffID.Wet) ? 320 : 160);

@@ -11,7 +11,7 @@ namespace Redemption.Items.Weapons.PostML.Melee
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Sword of the Forgotten");
+            // DisplayName.SetDefault("Sword of the Forgotten");
             Main.projFrames[Projectile.type] = 6;
         }
 

@@ -10,9 +10,9 @@ namespace Redemption.Items.Weapons.PreHM.Ranged
     {
         public override void SetStaticDefaults()
         {
-            Tooltip.SetDefault("Replaces wooden arrows with seed-laden arrows that sprout small thorn traps");
+            // Tooltip.SetDefault("Replaces wooden arrows with seed-laden arrows that sprout small thorn traps");
 
-            SacrificeTotal = 1;
+            Item.ResearchUnlockCount = 1;
         }
 
         public override void SetDefaults()

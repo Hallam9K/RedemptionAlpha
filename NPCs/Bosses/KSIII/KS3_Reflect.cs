@@ -13,7 +13,7 @@ namespace Redemption.NPCs.Bosses.KSIII
         public override string Texture => Redemption.EMPTY_TEXTURE;
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Reflector Shield");
+            // DisplayName.SetDefault("Reflector Shield");
         }
         public override void SetDefaults()
         {

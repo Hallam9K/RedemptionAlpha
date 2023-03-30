@@ -2,6 +2,7 @@ using Redemption.Rarities;
 using Redemption.Tiles.Tiles;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria;
 
 namespace Redemption.Items.Placeable.Tiles
 {
@@ -9,7 +10,7 @@ namespace Redemption.Items.Placeable.Tiles
     {
         public override void SetStaticDefaults()
         {
-            SacrificeTotal = 100;
+            Item.ResearchUnlockCount = 100;
         }
 
         public override void SetDefaults()
@@ -17,7 +18,7 @@ namespace Redemption.Items.Placeable.Tiles
             Item.DefaultToPlaceableTile(ModContent.TileType<ShinkiteBrickTile>(), 0);
             Item.width = 16;
             Item.height = 16;
-            Item.maxStack = 9999;
+            Item.maxStack = Item.CommonMaxStack;
             Item.rare = ModContent.RarityType<TurquoiseRarity>();
         }
         public override void AddRecipes()

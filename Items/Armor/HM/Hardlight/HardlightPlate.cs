@@ -10,9 +10,9 @@ namespace Redemption.Items.Armor.HM.Hardlight
     {
         public override void SetStaticDefaults()
         {
-            Tooltip.SetDefault("10% increased damage");
+            // Tooltip.SetDefault("10% increased damage");
 
-            SacrificeTotal = 1;
+            Item.ResearchUnlockCount = 1;
         }
 
         public override void UpdateEquip(Player player)

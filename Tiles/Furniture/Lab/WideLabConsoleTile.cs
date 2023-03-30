@@ -3,6 +3,7 @@ using Terraria;
 using Terraria.DataStructures;
 using Terraria.Enums;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 
@@ -28,8 +29,9 @@ namespace Redemption.Tiles.Furniture.Lab
             DustType = DustID.Electric;
             MinPick = 500;
             MineResist = 3f;
-            ModTranslation name = CreateMapEntryName();
-            name.SetDefault("Wide Laboratory Console");
+            ItemDrop = -1;
+            LocalizedText name = CreateMapEntryName();
+            // name.SetDefault("Wide Laboratory Console");
             AddMapEntry(new Color(0, 187, 240));
             AnimationFrameHeight = 36;
         }
@@ -58,8 +60,8 @@ namespace Redemption.Tiles.Furniture.Lab
         public override string Texture => Redemption.PLACEHOLDER_TEXTURE;
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Wide Laboratory Console");
-            Tooltip.SetDefault("[c/ff0000:Unbreakable]");
+            // DisplayName.SetDefault("Wide Laboratory Console");
+            // Tooltip.SetDefault("[c/ff0000:Unbreakable]");
         }
 
         public override void SetDefaults()

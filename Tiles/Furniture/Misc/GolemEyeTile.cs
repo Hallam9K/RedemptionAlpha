@@ -137,8 +137,8 @@ namespace Redemption.Tiles.Furniture.Misc
         {
             if (NPC.downedMoonlord)
             {
-                WorldGen.SpreadGrass(i + Main.rand.Next(-2, 3), j + Main.rand.Next(-2, 3), ModContent.TileType<GathicStoneTile>(), ModContent.TileType<EnergizedGathicStoneTile>(), false, 0);
-                WorldGen.SpreadGrass(i + Main.rand.Next(-2, 3), j + Main.rand.Next(-2, 3), ModContent.TileType<GathicGladestoneTile>(), ModContent.TileType<EnergizedGathicStoneTile>(), false, 0);
+                WorldGen.SpreadGrass(i + Main.rand.Next(-2, 3), j + Main.rand.Next(-2, 3), ModContent.TileType<GathicStoneTile>(), ModContent.TileType<EnergizedGathicStoneTile>(), false);
+                WorldGen.SpreadGrass(i + Main.rand.Next(-2, 3), j + Main.rand.Next(-2, 3), ModContent.TileType<GathicGladestoneTile>(), ModContent.TileType<EnergizedGathicStoneTile>(), false);
             }
         }
         public override bool CanExplode(int i, int j) => false;

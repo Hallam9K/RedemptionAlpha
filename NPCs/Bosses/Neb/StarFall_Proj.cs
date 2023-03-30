@@ -14,7 +14,7 @@ namespace Redemption.NPCs.Bosses.Neb
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Starfall");
+            // DisplayName.SetDefault("Starfall");
             ProjectileID.Sets.TrailCacheLength[Projectile.type] = 5;
             ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
             ElementID.ProjCelestial[Type] = true;
@@ -96,7 +96,7 @@ namespace Redemption.NPCs.Bosses.Neb
         // >
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Telegraph");
+            // DisplayName.SetDefault("Telegraph");
         }
 
         public override void SetDefaults()

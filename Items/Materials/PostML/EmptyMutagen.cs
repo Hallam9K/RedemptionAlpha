@@ -8,8 +8,8 @@ namespace Redemption.Items.Materials.PostML
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Empty Mutagen");
-            SacrificeTotal = 1;
+            // DisplayName.SetDefault("Empty Mutagen");
+            Item.ResearchUnlockCount = 1;
         }
 
         public override void SetDefaults()

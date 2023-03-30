@@ -53,7 +53,7 @@ namespace Redemption.NPCs.Bosses.Gigapora
         public float[] oldrot = new float[5];
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Wielder Bot");
+            // DisplayName.SetDefault("Wielder Bot");
             Main.npcFrameCount[NPC.type] = 19;
 
             NPCID.Sets.MPAllowedEnemies[Type] = true;

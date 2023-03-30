@@ -17,7 +17,7 @@ namespace Redemption.Items.Weapons.HM.Ranged
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Hyper-Tech Revolver");
+            // DisplayName.SetDefault("Hyper-Tech Revolver");
         }
         public override void SetDefaults()
         {

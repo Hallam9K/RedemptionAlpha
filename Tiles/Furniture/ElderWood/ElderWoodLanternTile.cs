@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Terraria;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ID;
 using Terraria.Enums;
@@ -19,13 +20,11 @@ namespace Redemption.Tiles.Furniture.ElderWood
             Main.tileLavaDeath[Type] = true;
             TileObjectData.newTile.CopyFrom(TileObjectData.Style1x2Top);
             TileObjectData.newSubTile.CopyFrom(TileObjectData.newTile);
-            TileObjectData.newSubTile.LavaDeath = false;
-            TileObjectData.newTile.StyleHorizontal = true;
-            TileObjectData.newSubTile.LavaPlacement = LiquidPlacement.Allowed;
+            TileObjectData.newTile.WaterDeath = true;
+            TileObjectData.newTile.WaterPlacement = LiquidPlacement.NotAllowed;
+            TileObjectData.newTile.LavaPlacement = LiquidPlacement.NotAllowed; TileObjectData.newTile.StyleHorizontal = true;
             TileObjectData.addTile(Type);
-			ModTranslation name = CreateMapEntryName();
-			name.SetDefault("Elder Wood Lantern");
-            AddMapEntry(new Color(109, 87, 78), name);
+            AddMapEntry(new Color(109, 87, 78), Language.GetText("MapObject.Lantern"));
             AdjTiles = new int[] { TileID.HangingLanterns };
             AddToArray(ref TileID.Sets.RoomNeeds.CountsAsTorch);
             DustType = DustID.t_BorealWood;
@@ -80,11 +79,6 @@ namespace Redemption.Tiles.Furniture.ElderWood
 
                 Main.spriteBatch.Draw(ModContent.Request<Texture2D>("Redemption/Tiles/Furniture/ElderWood/ElderWoodLanternTile_Glow").Value, new Vector2((i * 16) - (int)Main.screenPosition.X + xx, (j * 16) - (int)Main.screenPosition.Y + yy) + zero, new Rectangle(tile.TileFrameX, tile.TileFrameY, 16, height), color, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
             }
-        }
-        public override void KillMultiTile(int i, int j, int frameX, int frameY)
-		{
-			Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 16, 32, ModContent.ItemType<ElderWoodLantern>());
-			Chest.DestroyChest(i, j);
         }
     }
 }

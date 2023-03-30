@@ -7,6 +7,7 @@ using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.Enums;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 
@@ -32,8 +33,8 @@ namespace Redemption.Tiles.Furniture.Misc
             DustType = DustID.WoodFurniture;
             MinPick = 0;
             MineResist = 1.2f;
-			ModTranslation name = CreateMapEntryName();
-            name.SetDefault("Chicken Coop");
+			LocalizedText name = CreateMapEntryName();
+            // name.SetDefault("Chicken Coop");
             AddMapEntry(new Color(151, 107, 75), name);
 		}
         public override void RandomUpdate(int i, int j)
@@ -52,10 +53,6 @@ namespace Redemption.Tiles.Furniture.Misc
         public override void NumDust(int i, int j, bool fail, ref int num)
         {
             num = fail ? 1 : 3;
-        }
-        public override void KillMultiTile(int i, int j, int frameX, int frameY)
-        {
-            Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 16, 32, ModContent.ItemType<ChickenCoop>());
         }
     }
 }

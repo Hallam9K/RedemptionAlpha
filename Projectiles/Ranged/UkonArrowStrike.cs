@@ -16,7 +16,7 @@ namespace Redemption.Projectiles.Ranged
         public override string Texture => "Redemption/NPCs/Bosses/ADD/UkkoStrike";
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Ukko's Lightning");
+            // DisplayName.SetDefault("Ukko's Lightning");
             Main.projFrames[Projectile.type] = 24;
             ElementID.ProjThunder[Type] = true;
         }
@@ -107,7 +107,7 @@ namespace Redemption.Projectiles.Ranged
             Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
             return false;
         }
-        public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
+        public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
         {
             Projectile.localNPCImmunity[target.whoAmI] = 10;
             target.immune[Projectile.owner] = 0;

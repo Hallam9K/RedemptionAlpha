@@ -16,7 +16,7 @@ namespace Redemption.NPCs.Lab.MACE
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Fire Blast");
+            // DisplayName.SetDefault("Fire Blast");
             ProjectileID.Sets.TrailCacheLength[Projectile.type] = 8;
             ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
             ElementID.ProjFire[Type] = true;
@@ -78,9 +78,9 @@ namespace Redemption.NPCs.Lab.MACE
             Projectile.rotation += 0.1f;
             Lighting.AddLight(Projectile.Center, Projectile.Opacity * 0.9f, Projectile.Opacity * 0.5f, Projectile.Opacity * 0.5f);
         }
-        public override void OnHitPlayer(Player player, int damage, bool crit)
+        public override void OnHitPlayer(Player target, Player.HurtInfo info)
         {
-            player.AddBuff(BuffID.OnFire, 900);
+            target.AddBuff(BuffID.OnFire, 900);
         }
         public override bool PreDraw(ref Color lightColor)
         {

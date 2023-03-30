@@ -15,7 +15,7 @@ namespace Redemption.Projectiles.Ranged
         public override string Texture => Redemption.EMPTY_TEXTURE;
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("D.A.N Laser");
+            // DisplayName.SetDefault("D.A.N Laser");
         }
         public override void SetDefaults()
         {

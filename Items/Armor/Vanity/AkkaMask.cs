@@ -8,7 +8,7 @@ namespace Redemption.Items.Armor.Vanity
     {
         public override void SetStaticDefaults()
         {
-            SacrificeTotal = 1;
+            Item.ResearchUnlockCount = 1;
             ArmorIDs.Head.Sets.DrawFullHair[EquipLoader.GetEquipSlot(Mod, Name, EquipType.Head)] = false;
         }
 

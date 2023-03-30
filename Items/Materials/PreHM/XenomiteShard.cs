@@ -10,18 +10,18 @@ namespace Redemption.Items.Materials.PreHM
 	{
 		public override void SetStaticDefaults()
 		{
-            DisplayName.SetDefault("Xenomite Shard");
-            Tooltip.SetDefault("Holding this may infect you");
+            // DisplayName.SetDefault("Xenomite Shard");
+            // Tooltip.SetDefault("Holding this may infect you");
             Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(4, 5));
 
-            SacrificeTotal = 100;
+            Item.ResearchUnlockCount = 100;
         }
 
         public override void SetDefaults()
 		{
 			Item.width = 14;
             Item.height = 14;
-			Item.maxStack = 9999;
+			Item.maxStack = Item.CommonMaxStack;
             Item.value = Item.sellPrice(0, 0, 0, 25);
             Item.rare = ItemRarityID.Green;
             Item.useTurn = true;

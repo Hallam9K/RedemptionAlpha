@@ -11,12 +11,12 @@ namespace Redemption.Items.Armor.PostML.Hikarite
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Hikarite Greathelm");
-            Tooltip.SetDefault("16% increased damage"
-                + "\n9% increased critical strike chance");
+            // DisplayName.SetDefault("Hikarite Greathelm");
+            /* Tooltip.SetDefault("16% increased damage"
+                + "\n9% increased critical strike chance"); */
 
             ArmorIDs.Head.Sets.DrawHead[EquipLoader.GetEquipSlot(Mod, Name, EquipType.Head)] = false;
-            SacrificeTotal = 1;
+            Item.ResearchUnlockCount = 1;
         }
 
         public override void SetDefaults()

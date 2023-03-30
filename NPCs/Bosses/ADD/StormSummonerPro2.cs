@@ -10,7 +10,7 @@ namespace Redemption.NPCs.Bosses.ADD
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Ukko's Lightning");
+            // DisplayName.SetDefault("Ukko's Lightning");
         }
         public override void SetDefaults()
         {

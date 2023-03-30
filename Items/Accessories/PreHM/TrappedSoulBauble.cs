@@ -12,11 +12,11 @@ namespace Redemption.Items.Accessories.PreHM
     {
         public override void SetStaticDefaults()
         {
-            Tooltip.SetDefault("The player occasionally emits a strong force, causing every enemy caught in the blast to give a small magic damage boost" +
+            /* Tooltip.SetDefault("The player occasionally emits a strong force, causing every enemy caught in the blast to give a small magic damage boost" +
                 "\n10% increased " + ElementID.ArcaneS + " elemental damage and resistance" +
-                 "\n+20 max mana");
+                 "\n+20 max mana"); */
             Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(4, 10));
-            SacrificeTotal = 1;
+            Item.ResearchUnlockCount = 1;
         }
 
         public override void SetDefaults()

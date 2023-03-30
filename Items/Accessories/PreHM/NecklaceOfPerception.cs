@@ -10,12 +10,12 @@ namespace Redemption.Items.Accessories.PreHM
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Necklace of Perception");
-            Tooltip.SetDefault("Increases movement speed after taking damage\n" +
+            // DisplayName.SetDefault("Necklace of Perception");
+            /* Tooltip.SetDefault("Increases movement speed after taking damage\n" +
                 "Increases movement speed while an enemy is near\n" +
                 "8% increased critical strike chance\n"
-                + "Improves vision");
-            SacrificeTotal = 1;
+                + "Improves vision"); */
+            Item.ResearchUnlockCount = 1;
         }
 
         public override void SetDefaults()
@@ -24,7 +24,7 @@ namespace Redemption.Items.Accessories.PreHM
             Item.height = 32;
             Item.value = Item.sellPrice(0, 3, 50, 0);
             Item.rare = ItemRarityID.Expert;
-            Item.canBePlacedInVanityRegardlessOfConditions = true;
+            Item.hasVanityEffects = true;
             Item.accessory = true;
             Item.expert = true;
         }

@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Terraria;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ID;
 using Terraria.Enums;
@@ -21,12 +22,13 @@ namespace Redemption.Tiles.Furniture.ElderWood
             TileObjectData.newTile.Origin = new Point16(1, 0);
             TileObjectData.newTile.AnchorTop = new AnchorData(AnchorType.SolidTile | AnchorType.SolidSide, 1, 1);
             TileObjectData.newTile.AnchorBottom = AnchorData.Empty;
+            TileObjectData.newTile.WaterDeath = true;
+            TileObjectData.newTile.WaterPlacement = LiquidPlacement.NotAllowed;
+            TileObjectData.newTile.LavaPlacement = LiquidPlacement.NotAllowed;
             TileObjectData.newTile.LavaDeath = true;
             TileObjectData.newTile.StyleHorizontal = true;
             TileObjectData.addTile(Type);
-            ModTranslation name = CreateMapEntryName();
-            name.SetDefault("Elder Wood Chandelier");
-            AddMapEntry(new Color(109, 87, 78), name);
+            AddMapEntry(new Color(109, 87, 78), Language.GetText("MapObject.Chandelier"));
             AdjTiles = new int[] { TileID.Chandeliers };
             AddToArray(ref TileID.Sets.RoomNeeds.CountsAsTorch);
             DustType = DustID.t_BorealWood;
@@ -70,12 +72,6 @@ namespace Redemption.Tiles.Furniture.ElderWood
                 b = 0.4f;
             }
         }
-        public override void KillMultiTile(int i, int j, int frameX, int frameY)
-        {
-            Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 48, 48, ModContent.ItemType<ElderWoodChandelier>());
-            Chest.DestroyChest(i, j);
-        }
-
         public override void PostDraw(int i, int j, SpriteBatch spriteBatch)
         {
             Tile tile = Framing.GetTileSafely(i, j);

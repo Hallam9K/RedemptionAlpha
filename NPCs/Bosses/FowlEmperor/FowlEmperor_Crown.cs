@@ -12,7 +12,7 @@ namespace Redemption.NPCs.Bosses.FowlEmperor
         public override string Texture => "Redemption/NPCs/Bosses/FowlEmperor/FowlEmperor_Crown";
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Fowl Crown");
+            // DisplayName.SetDefault("Fowl Crown");
         }
         public override void SetDefaults()
         {

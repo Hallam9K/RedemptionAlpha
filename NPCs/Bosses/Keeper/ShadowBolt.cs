@@ -16,7 +16,7 @@ namespace Redemption.NPCs.Bosses.Keeper
         public override string Texture => Redemption.EMPTY_TEXTURE;
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Shadow Bolt");
+            // DisplayName.SetDefault("Shadow Bolt");
             ElementID.ProjShadow[Type] = true;
         }
         public override void SetDefaults()
@@ -81,7 +81,7 @@ namespace Redemption.NPCs.Bosses.Keeper
             Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
             return false;
         }
-        public override void OnHitPlayer(Player target, int damage, bool crit)
+        public override void OnHitPlayer(Player target, Player.HurtInfo info)
         {
             if (Projectile.penetrate <= 0)
                 Projectile.Kill();

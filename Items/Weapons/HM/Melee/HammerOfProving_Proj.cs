@@ -18,7 +18,7 @@ namespace Redemption.Items.Weapons.HM.Melee
         public float[] oldrot = new float[4];
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Hammer of Proving");
+            // DisplayName.SetDefault("Hammer of Proving");
             ProjectileID.Sets.TrailCacheLength[Projectile.type] = 4;
             ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
         }
@@ -139,13 +139,13 @@ namespace Redemption.Items.Weapons.HM.Melee
                 player.SetCompositeArmFront(true, Player.CompositeArmStretchAmount.Full, (player.Center - Projectile.Center).ToRotation() + MathHelper.PiOver2);
         }
 
-        public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
+        public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
         {
             Player player = Main.player[Projectile.owner];
             if (player.velocity.Y > 0)
-                damage = (int)(damage * ((player.velocity.Y / 8) + 1));
+                modifiers.FinalDamage *= ((player.velocity.Y / 8) + 1);
         }
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             Player player = Main.player[Projectile.owner];
             if (player.velocity.Y >= 20 && target.knockBackResist > 0)

@@ -11,9 +11,9 @@ namespace Redemption.Items.Donator.Rain
 	{
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Form of a Living Weapon");
-            Tooltip.SetDefault("'A body etched by agony and filled with strength'");
-            SacrificeTotal = 1;
+            // DisplayName.SetDefault("Form of a Living Weapon");
+            // Tooltip.SetDefault("'A body etched by agony and filled with strength'");
+            Item.ResearchUnlockCount = 1;
         }
         public override void SetDefaults()
 		{
@@ -37,9 +37,9 @@ namespace Redemption.Items.Donator.Rain
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Horns of a Living Weapon");
-            Tooltip.SetDefault("'Strange, you can't seem to smile'");
-            SacrificeTotal = 1;
+            // DisplayName.SetDefault("Horns of a Living Weapon");
+            // Tooltip.SetDefault("'Strange, you can't seem to smile'");
+            Item.ResearchUnlockCount = 1;
             ArmorIDs.Head.Sets.DrawFullHair[EquipLoader.GetEquipSlot(Mod, Name, EquipType.Head)] = false;
         }
 
@@ -65,9 +65,9 @@ namespace Redemption.Items.Donator.Rain
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Talons of a Living Weapon");
-            Tooltip.SetDefault("'With claws like these, who needs a sword?'");
-            SacrificeTotal = 1;
+            // DisplayName.SetDefault("Talons of a Living Weapon");
+            // Tooltip.SetDefault("'With claws like these, who needs a sword?'");
+            Item.ResearchUnlockCount = 1;
         }
 
         public override void SetDefaults()
@@ -92,10 +92,10 @@ namespace Redemption.Items.Donator.Rain
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Tail of a Living Weapon");
-            Tooltip.SetDefault("'You can feel every twitch, even the slightest breeze'");
+            // DisplayName.SetDefault("Tail of a Living Weapon");
+            // Tooltip.SetDefault("'You can feel every twitch, even the slightest breeze'");
             ArmorIDs.Back.Sets.DrawInTailLayer[EquipLoader.GetEquipSlot(Mod, Name, EquipType.Back)] = true;
-            SacrificeTotal = 1;
+            Item.ResearchUnlockCount = 1;
         }
 
         public override void SetDefaults()

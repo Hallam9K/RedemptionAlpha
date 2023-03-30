@@ -14,7 +14,7 @@ namespace Redemption.Projectiles.Minions
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Xenium Autoturret");
+            // DisplayName.SetDefault("Xenium Autoturret");
             Main.projPet[Projectile.type] = true;
             Main.projFrames[Projectile.type] = 3;
 

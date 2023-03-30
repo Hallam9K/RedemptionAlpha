@@ -9,15 +9,15 @@ namespace Redemption.Items.Placeable.Furniture.Shade
 	{
         public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Hanging Shadesteel Cell");
-			SacrificeTotal = 1;
+			// DisplayName.SetDefault("Hanging Shadesteel Cell");
+			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults()
 		{
 			Item.DefaultToPlaceableTile(ModContent.TileType<ShadesteelHangingCellTile>(), 0);
 			Item.width = 24;
 			Item.height = 32;
-			Item.maxStack = 9999;
+			Item.maxStack = Item.CommonMaxStack;
 			Item.rare = ItemRarityID.Blue;
 			Item.value = Item.sellPrice(0, 0, 10, 0);
 		}

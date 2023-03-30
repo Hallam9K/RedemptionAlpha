@@ -5,6 +5,7 @@ using Terraria.ModLoader;
 using Redemption.Tiles.Furniture.Misc;
 using Redemption.Dusts.Tiles;
 using Redemption.Items.Placeable.Tiles;
+using Redemption.Tiles.Furniture.Shade;
 
 namespace Redemption.Items.Placeable.Furniture.Misc
 {
@@ -12,25 +13,13 @@ namespace Redemption.Items.Placeable.Furniture.Misc
 	{
 		public override void SetStaticDefaults()
 		{
-			SacrificeTotal = 100;
+            ItemID.Sets.ShimmerTransformToItem[Type] = ItemID.ShimmerTorch;
+            Item.ResearchUnlockCount = 100;
 		}
 
 		public override void SetDefaults()
-		{
-			Item.flame = true;
-			Item.noWet = true;
-			Item.useStyle = ItemUseStyleID.Swing;
-			Item.useTurn = true;
-			Item.useAnimation = 15;
-			Item.useTime = 10;
-			Item.holdStyle = ItemHoldStyleID.HoldFront;
-			Item.autoReuse = true;
-			Item.maxStack = 9999;
-			Item.consumable = true;
-			Item.createTile = ModContent.TileType<WastelandTorchTile>();
-			Item.width = 10;
-			Item.height = 12;
-			Item.value = 50;
+        {
+            Item.DefaultToTorch(ModContent.TileType<WastelandTorchTile>(), 0, false);
 		}
 
 		public override void ModifyResearchSorting(ref ContentSamples.CreativeHelper.ItemGroup itemGroup)

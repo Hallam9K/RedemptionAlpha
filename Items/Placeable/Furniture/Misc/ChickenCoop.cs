@@ -10,9 +10,9 @@ namespace Redemption.Items.Placeable.Furniture.Misc
 	{
 		public override void SetStaticDefaults()
 		{
-            Tooltip.SetDefault("Occasionally spawns chicken eggs");
+            // Tooltip.SetDefault("Occasionally spawns chicken eggs");
 
-			SacrificeTotal = 1;
+			Item.ResearchUnlockCount = 1;
 		}
 
 		public override void SetDefaults()
@@ -20,7 +20,7 @@ namespace Redemption.Items.Placeable.Furniture.Misc
 			Item.DefaultToPlaceableTile(ModContent.TileType<ChickenCoopTile>(), 0);
 			Item.width = 44;
 			Item.height = 42;
-			Item.maxStack = 9999;
+			Item.maxStack = Item.CommonMaxStack;
 			Item.rare = ItemRarityID.Blue;
 			Item.value = Item.sellPrice(0, 0, 15, 0);
 		}

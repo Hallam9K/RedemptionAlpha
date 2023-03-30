@@ -11,11 +11,11 @@ namespace Redemption.Items.Weapons.PreHM.Ranged
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Pure-Iron Crossbow");
-            Tooltip.SetDefault("Replaces arrows with frigid bolts that stick to enemies and eventually cause a frosty eruption\n" +
+            // DisplayName.SetDefault("Pure-Iron Crossbow");
+            /* Tooltip.SetDefault("Replaces arrows with frigid bolts that stick to enemies and eventually cause a frosty eruption\n" +
                 "The eruption's damage increases for each bolt stuck to the target and can freeze most enemies" +
-                "\nEnemies with knockback immunity cannot be frozen");
-            SacrificeTotal = 1;
+                "\nEnemies with knockback immunity cannot be frozen"); */
+            Item.ResearchUnlockCount = 1;
         }
 
         public override void SetDefaults()

@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Terraria;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ID;
 using Terraria.ObjectData;
@@ -29,8 +30,8 @@ namespace Redemption.Tiles.Furniture.Lab
             MinPick = 0;
             MineResist = 0.1f;
             HitSound = SoundID.Tink;
-            ModTranslation name = CreateMapEntryName();
-            name.SetDefault("Radiation Pill");
+            LocalizedText name = CreateMapEntryName();
+            // name.SetDefault("Radiation Pill");
             AddMapEntry(new Color(236, 144, 71), name);
         }
         public override void NumDust(int i, int j, bool fail, ref int num) => num = fail ? 1 : 3;
@@ -53,7 +54,7 @@ namespace Redemption.Tiles.Furniture.Lab
         public override string Texture => Redemption.PLACEHOLDER_TEXTURE;
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Radiation Pill (Deco)");
+            // DisplayName.SetDefault("Radiation Pill (Deco)");
         }
 
         public override void SetDefaults()

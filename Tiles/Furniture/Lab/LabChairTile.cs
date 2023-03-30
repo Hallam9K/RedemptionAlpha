@@ -4,6 +4,7 @@ using Redemption.Items.Placeable.Furniture.Lab;
 using Terraria;
 using Terraria.Enums;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 using Terraria.DataStructures;
@@ -31,10 +32,7 @@ namespace Redemption.Tiles.Furniture.Lab
 			DustType = ModContent.DustType<LabPlatingDust>();
 			AdjTiles = new int[] { TileID.Chairs };
 
-			// Names
-			ModTranslation name = CreateMapEntryName();
-			name.SetDefault("Laboratory Chair");
-			AddMapEntry(new Color(72, 70, 79), name);
+            AddMapEntry(new Color(72, 70, 79), Language.GetText("MapObject.Chair"));
 
 			// Placement
 			TileObjectData.newTile.CopyFrom(TileObjectData.Style1x2);
@@ -51,7 +49,6 @@ namespace Redemption.Tiles.Furniture.Lab
 
 		public override void NumDust(int i, int j, bool fail, ref int num) => num = fail ? 1 : 3;
 
-		public override void KillMultiTile(int i, int j, int frameX, int frameY) => Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 16, 32, ModContent.ItemType<LabChair>());
 		public override bool HasSmartInteract(int i, int j, SmartInteractScanSettings settings)
 		{
 			return settings.player.IsWithinSnappngRangeToTile(i, j, PlayerSittingHelper.ChairSittingMaxDistance);

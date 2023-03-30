@@ -15,7 +15,7 @@ namespace Redemption.Projectiles.Minions
         private new const float FirstSegmentDrawDist = 7;
         public override void SetSafeStaticDefaults()
         {
-            DisplayName.SetDefault("Holy Ray");
+            // DisplayName.SetDefault("Holy Ray");
             ElementID.ProjHoly[Type] = true;
         }
 
@@ -31,10 +31,10 @@ namespace Redemption.Projectiles.Minions
             MaxLaserLength = 112;
             StopsOnTiles = false;
         }
-        public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
+        public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
         {
             if (target.type is NPCID.EaterofWorldsBody or NPCID.EaterofWorldsHead or NPCID.EaterofWorldsTail or NPCID.Creeper)
-                damage /= 2;
+                modifiers.FinalDamage /= 2;
         }
         public override void AI()
         {

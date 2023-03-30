@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Terraria;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ID;
 using Redemption.Items.Materials.HM;
@@ -19,14 +20,16 @@ namespace Redemption.Tiles.Ores
             Main.tileBlockLight[Type] = true;
             Main.tileLighted[Type] = true;
             TileID.Sets.Ore[Type] = true;
+            Main.tileShine2[Type] = true;
+            Main.tileShine[Type] = 975;
             Main.tileOreFinderPriority[Type] = 440;
             DustType = DustID.Electric;
             ItemDrop = ModContent.ItemType<Uranium>();
             MinPick = 210;
             MineResist = 7f;
             HitSound = SoundID.Tink;
-            ModTranslation name = CreateMapEntryName();
-            name.SetDefault("Uranium");
+            LocalizedText name = CreateMapEntryName();
+            // name.SetDefault("Uranium");
             AddMapEntry(new Color(77, 240, 107), name);
         }
         public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)

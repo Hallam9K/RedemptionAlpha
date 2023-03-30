@@ -13,7 +13,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Zweihander");
+            // DisplayName.SetDefault("Zweihander");
             Main.projFrames[Projectile.type] = 10;
         }
         public override bool ShouldUpdatePosition() => false;
@@ -111,18 +111,19 @@ namespace Redemption.Items.Weapons.PreHM.Melee
         {
             hitbox = new((int)(Projectile.spriteDirection == -1 ? Projectile.Center.X - 70 : Projectile.Center.X), (int)(Projectile.Center.Y - 70), 70, 136);
         }
-        public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
+        public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
         {
             Player player = Main.player[Projectile.owner];
             float tipBonus;
             tipBonus = player.Distance(target.Center) / 3;
             tipBonus = MathHelper.Clamp(tipBonus, 0, 20);
 
-            damage += (int)tipBonus;
-
-            RedeProjectile.Decapitation(target, ref damage, ref crit);
+            modifiers.FlatBonusDamage += (int)tipBonus;
         }
-
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
+        {
+            RedeProjectile.Decapitation(target, ref damageDone, ref hit.Crit);
+        }
         public override bool PreDraw(ref Color lightColor)
         {
             Player player = Main.player[Projectile.owner];

@@ -15,7 +15,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
         public override string Texture => "Redemption/Items/Weapons/PreHM/Melee/SilverRapier";
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Silver Rapier");
+            // DisplayName.SetDefault("Silver Rapier");
         }
         private Vector2 startVector;
         public override void SetDefaults()
@@ -88,10 +88,10 @@ namespace Redemption.Items.Weapons.PreHM.Melee
             Main.dust[sparkle].noGravity = true;
             return false;
         }
-        public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
+        public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
         {
             Player player = Main.player[Projectile.owner];
-            hitDirection = target.RightOfDir(player);
+            modifiers.HitDirectionOverride = target.RightOfDir(player);
         }
         public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox)
         {

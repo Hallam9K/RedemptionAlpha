@@ -32,13 +32,13 @@ namespace Redemption.Projectiles.Magic
             Projectile.penetrate = 1;
             Projectile.timeLeft = 300;
         }
-        public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
+        public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
         {
             if (NPCLists.Dark.Contains(target.type))
-                damage = (int)(damage * 1.5f);
+                modifiers.FinalDamage *= 1.5f;
         }
 
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             if (Main.rand.NextBool(3))
                 target.AddBuff(BuffID.DryadsWardDebuff, 300);

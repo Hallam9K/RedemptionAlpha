@@ -11,6 +11,7 @@ namespace Redemption.NPCs.Critters
         public override void SetStaticDefaults()
         {
             Main.npcFrameCount[Type] = 6;
+            NPCID.Sets.ShimmerTransformToNPC[NPC.type] = ModContent.NPCType<AntiJohnSnail>();
             NPCID.Sets.CountsAsCritter[Type] = true;
             NPCID.Sets.DontDoHardmodeScaling[Type] = true;
             NPCID.Sets.TakesDamageFromHostilesWithoutBeingFriendly[Type] = true;
@@ -43,7 +44,7 @@ namespace Redemption.NPCs.Critters
 
         public override float SpawnChance(NPCSpawnInfo spawnInfo) => SpawnCondition.SnailCritter.Chance * 0.1f;
 
-        public override void HitEffect(int hitDirection, double damage)
+        public override void HitEffect(NPC.HitInfo hit)
         {
             if (NPC.life <= 0)
             {

@@ -8,8 +8,8 @@ namespace Redemption.Buffs.Debuffs
 	{
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Incandesence");
-            Description.SetDefault("NO! TOO GLORIOUS! STOP!");
+            // DisplayName.SetDefault("Incandesence");
+            // Description.SetDefault("NO! TOO GLORIOUS! STOP!");
             Main.debuff[Type] = true;
             Main.buffNoSave[Type] = true;
             Main.pvpBuff[Type] = true;

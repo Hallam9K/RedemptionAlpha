@@ -9,7 +9,7 @@ namespace Redemption.Biomes
         public override string MapBackground => BackgroundPath;
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Liden");
+            // DisplayName.SetDefault("Liden");
         }
         public override bool IsBiomeActive(Player player) => false;
     }
@@ -18,7 +18,7 @@ namespace Redemption.Biomes
         public override string BestiaryIcon => "Redemption/Textures/Bestiary/AlphaIcon";
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("The Alpha");
+            // DisplayName.SetDefault("The Alpha");
         }
         public override bool IsBiomeActive(Player player) => false;
     }
@@ -27,7 +27,7 @@ namespace Redemption.Biomes
         public override string BestiaryIcon => "Redemption/Textures/Bestiary/OmegaIcon";
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("The Omega");
+            // DisplayName.SetDefault("The Omega");
         }
         public override bool IsBiomeActive(Player player) => false;
     }

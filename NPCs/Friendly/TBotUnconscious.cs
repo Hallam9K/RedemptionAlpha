@@ -13,7 +13,7 @@ namespace Redemption.NPCs.Friendly
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Adam");
+            // DisplayName.SetDefault("Adam");
             Main.npcFrameCount[NPC.type] = 4;
             NPCID.Sets.ActsLikeTownNPC[Type] = true;
             NPCID.Sets.NPCBestiaryDrawModifiers drawModifiers = new(0)
@@ -79,7 +79,7 @@ namespace Redemption.NPCs.Friendly
         {
             button = "Use Revival Potion";
         }
-        public override void OnChatButtonClicked(bool firstButton, ref bool shop)
+        public override void OnChatButtonClicked(bool firstButton, ref string shopName)
         {
             Player player = Main.player[Main.myPlayer];
             if (firstButton)

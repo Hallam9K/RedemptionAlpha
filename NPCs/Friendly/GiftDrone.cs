@@ -23,7 +23,7 @@ namespace Redemption.NPCs.Friendly
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Gift Drone");
+            // DisplayName.SetDefault("Gift Drone");
             Main.npcFrameCount[NPC.type] = 3;
             NPCDebuffImmunityData debuffData = new()
             {
@@ -157,7 +157,7 @@ namespace Redemption.NPCs.Friendly
         public override string Texture => "Redemption/NPCs/Friendly/GiftDrone";
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Gift Drone");
+            // DisplayName.SetDefault("Gift Drone");
             Main.npcFrameCount[NPC.type] = 3;
             NPCDebuffImmunityData debuffData = new()
             {
@@ -280,7 +280,7 @@ namespace Redemption.NPCs.Friendly
         public override string Texture => "Redemption/NPCs/Friendly/GiftDrone";
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Gift Drone");
+            // DisplayName.SetDefault("Gift Drone");
             Main.npcFrameCount[NPC.type] = 3;
             NPCDebuffImmunityData debuffData = new()
             {

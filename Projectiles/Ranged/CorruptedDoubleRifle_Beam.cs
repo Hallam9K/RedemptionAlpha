@@ -14,7 +14,7 @@ namespace Redemption.Projectiles.Ranged
         public override string Texture => Redemption.EMPTY_TEXTURE;
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Omega Beam");
+            // DisplayName.SetDefault("Omega Beam");
             ElementID.ProjThunder[Type] = true;
         }
         public override void SetDefaults()

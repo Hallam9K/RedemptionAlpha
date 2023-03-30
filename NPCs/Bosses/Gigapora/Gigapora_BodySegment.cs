@@ -14,6 +14,7 @@ using Terraria.Audio;
 using Redemption.Dusts;
 using System.IO;
 using ReLogic.Content;
+using static Terraria.ModLoader.PlayerDrawLayer;
 
 namespace Redemption.NPCs.Bosses.Gigapora
 {
@@ -44,7 +45,7 @@ namespace Redemption.NPCs.Bosses.Gigapora
         public ref float SegmentType => ref NPC.ai[2];
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Omega Gigapora");
+            // DisplayName.SetDefault("Omega Gigapora");
             Main.npcFrameCount[NPC.type] = 16;
             NPCID.Sets.TrailCacheLength[NPC.type] = 6;
             NPCID.Sets.TrailingMode[NPC.type] = 1;
@@ -76,7 +77,7 @@ namespace Redemption.NPCs.Bosses.Gigapora
             NPC.height = 82;
             NPC.dontCountMe = true;
         }
-        public override void HitEffect(int hitDirection, double damage)
+        public override void HitEffect(NPC.HitInfo hit)
         {
             NPC host = Main.npc[(int)Host];
             if (NPC.life <= 0 && host.ai[0] == 4)
@@ -102,9 +103,9 @@ namespace Redemption.NPCs.Bosses.Gigapora
             NPC host = Main.npc[(int)Host];
             return host.ai[0] != 7;
         }
-        public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
+        public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)
         {
-            NPC.lifeMax = (int)(NPC.lifeMax * 0.6f * bossLifeScale);
+            NPC.lifeMax = (int)(NPC.lifeMax * 0.6f * balance * bossAdjustment);
             NPC.damage = (int)(NPC.damage * 0.6f);
         }
         public override void SendExtraAI(BinaryWriter writer)
@@ -488,27 +489,30 @@ namespace Redemption.NPCs.Bosses.Gigapora
             }
         }
         public override bool CheckActive() => false;
-        public override bool StrikeNPC(ref double damage, int defense, ref float knockback, int hitDirection, ref bool crit)
+        public override void ModifyIncomingHit(ref NPC.HitModifiers modifiers)
         {
             if (NPC.immortal)
             {
                 if (!Main.dedServ)
                     SoundEngine.PlaySound(CustomSounds.BallFire with { Volume = .5f }, NPC.position);
-                damage = 0;
-                return false;
+                modifiers.SetMaxDamage(1);
+                modifiers.DisableCrit();
+                modifiers.HideCombatText();
+                CombatText.NewText(NPC.getRect(), Color.Orange, 0, true, true);
+                NPC.life++;
+                return;
             }
             int ai3 = (int)Host;
             if (ai3 > -1 && ai3 < Main.maxNPCs && Main.npc[ai3].active && Main.npc[ai3].type == ModContent.NPCType<Gigapora>())
             {
                 if (Main.npc[ai3].immune[Main.myPlayer] > 0)
                 {
-                    damage = 1;
-                    crit = false;
-                    return false;
+                    modifiers.SetMaxDamage(1);
+                    modifiers.DisableCrit();
+                    return;
                 }
             }
-            damage *= 1.8f;
-            return true;
+            modifiers.FinalDamage *= 1.8f;
         }
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
@@ -589,7 +593,7 @@ namespace Redemption.NPCs.Bosses.Gigapora
             }
             return false;
         }
-        public override void OnHitByItem(Player player, Item item, int damage, float knockback, bool crit)
+        public override void OnHitByItem(Player player, Item item, NPC.HitInfo hit, int damageDone)
         {
             int ai3 = (int)Host;
             if (ai3 > -1 && ai3 < Main.maxNPCs && Main.npc[ai3].active && Main.npc[ai3].type == ModContent.NPCType<Gigapora>())
@@ -598,7 +602,7 @@ namespace Redemption.NPCs.Bosses.Gigapora
                     Main.npc[ai3].immune[Main.myPlayer] = NPC.immune[Main.myPlayer];
             }
         }
-        public override void OnHitByProjectile(Projectile projectile, int damage, float knockback, bool crit)
+        public override void OnHitByProjectile(Projectile projectile, NPC.HitInfo hit, int damageDone)
         {
             int ai3 = (int)Host;
             if (ai3 > -1 && ai3 < Main.maxNPCs && Main.npc[ai3].active && Main.npc[ai3].type == ModContent.NPCType<Gigapora>())

@@ -39,6 +39,7 @@ namespace Redemption.NPCs.Critters
         public override void SetStaticDefaults()
         {
             Main.npcFrameCount[NPC.type] = 4;
+            NPCID.Sets.ShimmerTransformToNPC[NPC.type] = NPCID.Shimmerfly;
             NPCID.Sets.CountsAsCritter[Type] = true;
             NPCID.Sets.DontDoHardmodeScaling[Type] = true;
             NPCID.Sets.DebuffImmunitySets.Add(Type, new NPCDebuffImmunityData
@@ -276,16 +277,16 @@ namespace Redemption.NPCs.Critters
             });
         }
 
-        public override void HitEffect(int hitDirection, double damage)
+        public override void HitEffect(NPC.HitInfo hit)
         {
             if (NPC.life < 0)
                 Dust.NewDust(NPC.position + NPC.velocity, NPC.width, NPC.height, DustID.GreenBlood,
                     NPC.velocity.X * 0.5f, NPC.velocity.Y * 0.5f);
         }
-        public override bool? CanHitNPC(NPC target) => false;
+        public override bool CanHitNPC(NPC target) => false;
         public override bool CanHitPlayer(Player target, ref int cooldownSlot) => Aggressive == 1 && !target.dontHurtCritters;
-        public override void ModifyHitPlayer(Player target, ref int damage, ref bool crit) => target.noKnockback = true;
-        public override void OnHitPlayer(Player target, int damage, bool crit)
+        public override void ModifyHitPlayer(Player target, ref Player.HurtModifiers modifiers) => target.noKnockback = true;
+        public override void OnHitPlayer(Player target, Player.HurtInfo hurtInfo)
         {
             if (Main.rand.NextBool(3))
                 target.AddBuff(ModContent.BuffType<InfestedDebuff>(), Main.rand.Next(60, 180));

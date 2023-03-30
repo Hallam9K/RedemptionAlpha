@@ -14,7 +14,7 @@ namespace Redemption.Projectiles.Minions
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Corpse-Walker Skull");
+            // DisplayName.SetDefault("Corpse-Walker Skull");
             Main.projFrames[Projectile.type] = 5;
             Main.projPet[Projectile.type] = true;
             ProjectileID.Sets.TrailCacheLength[Projectile.type] = 3;

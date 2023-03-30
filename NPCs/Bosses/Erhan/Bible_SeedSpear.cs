@@ -13,7 +13,7 @@ namespace Redemption.NPCs.Bosses.Erhan
         public override string Texture => "Redemption/NPCs/Bosses/Erhan/HolySpear_Proj";
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Holy Spear");
+            // DisplayName.SetDefault("Holy Spear");
             ElementID.ProjHoly[Type] = true;
         }
 

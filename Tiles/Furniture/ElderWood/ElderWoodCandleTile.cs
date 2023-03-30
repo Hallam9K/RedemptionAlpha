@@ -1,10 +1,12 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ID;
 using Terraria.ObjectData;
 using Redemption.Items.Placeable.Furniture.ElderWood;
+using Terraria.Enums;
 
 namespace Redemption.Tiles.Furniture.ElderWood
 {
@@ -19,9 +21,12 @@ namespace Redemption.Tiles.Furniture.ElderWood
             TileObjectData.newTile.CopyFrom(TileObjectData.StyleOnTable1x1);
             TileObjectData.newTile.CoordinateHeights = new int[] { 18 };
             TileObjectData.newTile.StyleHorizontal = true;
+            TileObjectData.newTile.WaterDeath = true;
+            TileObjectData.newTile.WaterPlacement = LiquidPlacement.NotAllowed;
+            TileObjectData.newTile.LavaPlacement = LiquidPlacement.NotAllowed;
             TileObjectData.addTile(Type);
-            ModTranslation name = CreateMapEntryName();
-            name.SetDefault("Elder Wood Candle");
+            LocalizedText name = CreateMapEntryName();
+            // name.SetDefault("Elder Wood Candle");
             AddMapEntry(new Color(109, 87, 78), name);
             AdjTiles = new int[] { TileID.Candles };
             ItemDrop = ModContent.ItemType<ElderWoodCandle>();

@@ -12,9 +12,9 @@ namespace Redemption.Items.Weapons.HM.Magic
     {
         public override void SetStaticDefaults()
         {
-            Tooltip.SetDefault("Casts a bomb, only 3 can be cast in a row" +
+            /* Tooltip.SetDefault("Casts a bomb, only 3 can be cast in a row" +
                 "\nBombs can destroy tiles\n" +
-                "'A magic wand that summons bombs that destroy ground efficiently'");
+                "'A magic wand that summons bombs that destroy ground efficiently'"); */
             Item.staff[Item.type] = true;
         }
 

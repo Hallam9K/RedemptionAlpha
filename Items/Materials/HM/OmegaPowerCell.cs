@@ -14,13 +14,13 @@ namespace Redemption.Items.Materials.HM
 		{
 			Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(4, 4));
             ItemID.Sets.AnimatesAsSoul[Item.type] = true;
-            SacrificeTotal = 25;
+            Item.ResearchUnlockCount = 25;
         }
 		public override void SetDefaults()
 		{
 			Item.width = 18;
 			Item.height = 40;
-			Item.maxStack = 9999;
+			Item.maxStack = Item.CommonMaxStack;
 			Item.value = Item.sellPrice(0, 0, 20, 0);
 			Item.rare = ItemRarityID.Red;
         }

@@ -11,7 +11,7 @@ namespace Redemption.NPCs.Critters
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Grand Larva");
+            // DisplayName.SetDefault("Grand Larva");
         }
 
         public override void SetDefaults()

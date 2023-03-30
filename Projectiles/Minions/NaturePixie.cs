@@ -41,7 +41,7 @@ namespace Redemption.Projectiles.Minions
             Projectile.penetrate = -1;
             Projectile.usesLocalNPCImmunity = true;
         }
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             Projectile.localNPCImmunity[target.whoAmI] = 10;
             target.immune[Projectile.owner] = 0;
@@ -263,7 +263,7 @@ namespace Redemption.Projectiles.Minions
         public override string Texture => Redemption.EMPTY_TEXTURE;
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Yell");
+            // DisplayName.SetDefault("Yell");
             ElementID.ProjPsychic[Type] = true;
         }
         public override void SetDefaults()
@@ -279,7 +279,7 @@ namespace Redemption.Projectiles.Minions
             Projectile.usesLocalNPCImmunity = true;
         }
         public override bool? CanCutTiles() => false;
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             if (Main.rand.NextBool())
                 target.AddBuff(BuffID.Confused, 60);

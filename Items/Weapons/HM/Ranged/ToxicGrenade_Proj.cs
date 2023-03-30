@@ -14,7 +14,7 @@ namespace Redemption.Items.Weapons.HM.Ranged
         public override string Texture => "Redemption/Items/Weapons/HM/Ranged/ToxicGrenade";
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Toxic Grenade");
+            // DisplayName.SetDefault("Toxic Grenade");
             ElementID.ProjPoison[Type] = true;
             ElementID.ProjExplosive[Type] = true;
         }
@@ -78,7 +78,7 @@ namespace Redemption.Items.Weapons.HM.Ranged
             if (Projectile.owner == Main.myPlayer)
                 Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, Vector2.Zero, ModContent.ProjectileType<ToxicGas_Proj>(), Projectile.damage / 2, 0, Projectile.owner);
         }
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             target.immune[Projectile.whoAmI] = 20;
         }

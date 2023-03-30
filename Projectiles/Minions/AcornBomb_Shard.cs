@@ -11,7 +11,7 @@ namespace Redemption.Projectiles.Minions
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Acorn Shard");
+            // DisplayName.SetDefault("Acorn Shard");
             ProjectileID.Sets.MinionShot[Projectile.type] = true;
             ElementID.ProjNature[Type] = true;
         }

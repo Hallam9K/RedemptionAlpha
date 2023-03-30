@@ -1,5 +1,6 @@
 using Redemption.Tiles.Furniture.ElderWood;
 using Terraria.ID;
+using Terraria;
 using Terraria.ModLoader;
 
 namespace Redemption.Items.Placeable.Furniture.ElderWood
@@ -8,9 +9,9 @@ namespace Redemption.Items.Placeable.Furniture.ElderWood
 	{
 		public override void SetStaticDefaults()
 		{
-            Tooltip.SetDefault("'Uncomfortable and feels rough...'");
+            // Tooltip.SetDefault("'Uncomfortable and feels rough...'");
 
-			SacrificeTotal = 1;
+			Item.ResearchUnlockCount = 1;
 		}
 
 		public override void SetDefaults()
@@ -18,7 +19,7 @@ namespace Redemption.Items.Placeable.Furniture.ElderWood
 			Item.DefaultToPlaceableTile(ModContent.TileType<ElderWoodBedTile>(), 0);
 			Item.width = 34;
 			Item.height = 18;
-			Item.maxStack = 9999;
+			Item.maxStack = Item.CommonMaxStack;
 			Item.value = 2000;
 		}
 

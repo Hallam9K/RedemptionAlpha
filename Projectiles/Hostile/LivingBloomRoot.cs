@@ -13,7 +13,7 @@ namespace Redemption.Projectiles.Hostile
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Living Root");
+            // DisplayName.SetDefault("Living Root");
             ProjectileID.Sets.DontAttachHideToAlpha[Type] = true;
             ElementID.ProjNature[Type] = true;
         }
@@ -42,7 +42,7 @@ namespace Redemption.Projectiles.Hostile
         {
             return Projectile.velocity.Length() != 0;
         }
-        public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection) => damage *= 4;
+        public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers) => modifiers.FinalDamage *= 4;
         public override void AI()
         {
             if (Main.rand.NextBool(2) && Projectile.localAI[0] < 30)

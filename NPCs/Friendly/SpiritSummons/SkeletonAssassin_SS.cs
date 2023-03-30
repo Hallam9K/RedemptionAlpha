@@ -41,7 +41,7 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
 
         public override void SetSafeStaticDefaults()
         {
-            DisplayName.SetDefault("Skeleton Assassin");
+            // DisplayName.SetDefault("Skeleton Assassin");
             Main.npcFrameCount[NPC.type] = 16;
             NPCID.Sets.MPAllowedEnemies[Type] = true;
 
@@ -62,7 +62,7 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
             NPC.aiStyle = -1;
             NPC.Redemption().spiritSummon = true;
         }
-        public override void HitEffect(int hitDirection, double damage)
+        public override void HitEffect(NPC.HitInfo hit)
         {
             if (NPC.life <= 0)
             {
@@ -111,7 +111,7 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
             Player player = Main.player[(int)NPC.ai[3]];
             RedeNPC globalNPC = NPC.Redemption();
             if (!player.active || player.dead || !SSBase.CheckActive(player))
-                NPC.StrikeNPC(999, 0, 1);
+                NPC.SimpleStrikeNPC(999, 1);
             NPC.TargetClosest();
             if (AIState != ActionState.Stab)
                 NPC.LookByVelocity();
@@ -462,8 +462,8 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
             return false;
         }
-        public override bool? CanHitNPC(NPC target) => false;
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override bool CanHitNPC(NPC target) => false;
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit)
         {
             if (Main.rand.NextBool(3))
                 target.AddBuff(ModContent.BuffType<DirtyWoundDebuff>(), Main.rand.Next(400, 1200));

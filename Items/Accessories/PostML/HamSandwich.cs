@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Redemption.Buffs.Pets;
+using Redemption.Items.Accessories.HM;
 using Redemption.Projectiles.Pets;
 using Terraria;
 using Terraria.DataStructures;
@@ -12,10 +13,11 @@ namespace Redemption.Items.Accessories.PostML
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Ham Sandwich");
-            Tooltip.SetDefault("'Unleash doomsday upon this fragile universe'" +
-                "\nSummons !!??");
-            SacrificeTotal = 1;
+            // DisplayName.SetDefault("Ham Sandwich");
+            /* Tooltip.SetDefault("'Unleash doomsday upon this fragile universe'" +
+                "\nSummons !!??"); */
+            ItemID.Sets.ShimmerTransformToItem[Type] = ModContent.ItemType<StrangeSkull>();
+            Item.ResearchUnlockCount = 1;
         }
 
         public override void SetDefaults()

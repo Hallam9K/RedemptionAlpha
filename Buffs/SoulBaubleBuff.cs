@@ -8,8 +8,8 @@ namespace Redemption.Buffs
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Magic Absorption");
-            Description.SetDefault("Increased magic damage from draining enemies");
+            // DisplayName.SetDefault("Magic Absorption");
+            // Description.SetDefault("Increased magic damage from draining enemies");
             Main.buffNoTimeDisplay[Type] = false;
         }
         public override void Update(Player player, ref int buffIndex)

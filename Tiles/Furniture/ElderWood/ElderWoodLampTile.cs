@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Terraria;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ID;
 using Terraria.Enums;
@@ -33,9 +34,7 @@ namespace Redemption.Tiles.Furniture.ElderWood
             TileObjectData.newTile.WaterPlacement = LiquidPlacement.NotAllowed;
             TileObjectData.newTile.LavaPlacement = LiquidPlacement.NotAllowed;
             TileObjectData.addTile(Type);
-            ModTranslation name = CreateMapEntryName();
-            name.SetDefault("Elder Wood Lamp");
-            AddMapEntry(new Color(109, 87, 78), name);
+            AddMapEntry(new Color(109, 87, 78), Language.GetText("MapObject.FloorLamp"));
             AddToArray(ref TileID.Sets.RoomNeeds.CountsAsTorch);
             DustType = DustID.t_BorealWood;
         }
@@ -90,11 +89,6 @@ namespace Redemption.Tiles.Furniture.ElderWood
 
                 Main.spriteBatch.Draw(ModContent.Request<Texture2D>("Redemption/Tiles/Furniture/ElderWood/ElderWoodLampTile_Glow").Value, new Vector2((i * 16) - (int)Main.screenPosition.X + xx, (j * 16) - (int)Main.screenPosition.Y + yy) + zero, new Rectangle(tile.TileFrameX, tile.TileFrameY, 16, height), color, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
             }
-        }
-        public override void KillMultiTile(int i, int j, int frameX, int frameY)
-        {
-            Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 16, 48, ModContent.ItemType<ElderWoodLamp>());
-            Chest.DestroyChest(i, j);
         }
     }
 }

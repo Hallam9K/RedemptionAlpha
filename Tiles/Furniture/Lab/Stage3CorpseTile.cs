@@ -4,6 +4,7 @@ using Terraria;
 using Terraria.DataStructures;
 using Terraria.Enums;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 
@@ -31,13 +32,9 @@ namespace Redemption.Tiles.Furniture.Lab
             HitSound = SoundID.Item27;
             MinPick = 200;
             MineResist = 7f;
-            ModTranslation name = CreateMapEntryName();
-            name.SetDefault("Crystallized Corpse");
+            LocalizedText name = CreateMapEntryName();
+            // name.SetDefault("Crystallized Corpse");
             AddMapEntry(new Color(54, 193, 59));
-        }
-        public override void KillMultiTile(int i, int j, int frameX, int frameY)
-        {
-            Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 48, 48, ModContent.ItemType<Stage3Corpse>());
         }
         public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)
         {

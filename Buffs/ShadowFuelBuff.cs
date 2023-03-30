@@ -9,8 +9,8 @@ namespace Redemption.Buffs
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Shadow Fuel");
-            Description.SetDefault("Increased Shadow damage");
+            // DisplayName.SetDefault("Shadow Fuel");
+            // Description.SetDefault("Increased Shadow damage");
             Main.buffNoTimeDisplay[Type] = false;
         }
         public override void Update(Player player, ref int buffIndex)

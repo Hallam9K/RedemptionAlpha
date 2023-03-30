@@ -14,7 +14,7 @@ namespace Redemption.Biomes
         public override SceneEffectPriority Priority => SceneEffectPriority.Environment;
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Blazing Bastion");
+            // DisplayName.SetDefault("Blazing Bastion");
         }
         public override bool IsBiomeActive(Player player)
         {

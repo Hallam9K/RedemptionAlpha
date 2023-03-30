@@ -53,7 +53,7 @@ namespace Redemption.NPCs.Bosses.ADD
         public float[] oldrot = new float[5];
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Eaglecrest Golem");
+            // DisplayName.SetDefault("Eaglecrest Golem");
             Main.npcFrameCount[NPC.type] = 13;
 
             NPCID.Sets.TrailCacheLength[NPC.type] = 5;
@@ -105,7 +105,7 @@ namespace Redemption.NPCs.Bosses.ADD
         }
 
         public override bool CanHitPlayer(Player target, ref int cooldownSlot) => AIState is ActionState.Roll;
-        public override bool? CanHitNPC(NPC target) => target.friendly && AIState is ActionState.Roll ? null : false;
+        public override bool CanHitNPC(NPC target) => target.friendly && AIState is ActionState.Roll;
         public override void BossLoot(ref string name, ref int potionType)
         {
             potionType = ItemID.HealingPotion;
@@ -125,9 +125,9 @@ namespace Redemption.NPCs.Bosses.ADD
             NPC.life = 1;
             return false;
         }
-        public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
+        public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)
         {
-            NPC.lifeMax = (int)(NPC.lifeMax * 0.6f * bossLifeScale);
+            NPC.lifeMax = (int)(NPC.lifeMax * 0.6f * balance * bossAdjustment);
             NPC.damage = (int)(NPC.damage * 0.6f);
         }
 
@@ -651,7 +651,7 @@ namespace Redemption.NPCs.Bosses.ADD
             }
         }
 
-        public override void HitEffect(int hitDirection, double damage)
+        public override void HitEffect(NPC.HitInfo hit)
         {
             if (NPC.life <= 0)
             {

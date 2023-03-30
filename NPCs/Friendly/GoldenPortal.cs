@@ -17,7 +17,7 @@ namespace Redemption.NPCs.Friendly
         public override string Texture => "Redemption/Textures/PortalTex";
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Golden Gateway");
+            // DisplayName.SetDefault("Golden Gateway");
             NPCID.Sets.NPCBestiaryDrawModifiers value = new(0)
             {
                 Hide = true

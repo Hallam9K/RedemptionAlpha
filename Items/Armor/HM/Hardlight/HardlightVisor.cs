@@ -12,13 +12,13 @@ namespace Redemption.Items.Armor.HM.Hardlight
     {
         public override void SetStaticDefaults()
         {
-            Tooltip.SetDefault("13% increased ranged damage\n" +
+            /* Tooltip.SetDefault("13% increased ranged damage\n" +
             "5% increased ranged critical strike chance\n" +
-            "Increased Energy regeneration if an Energy Pack is in your inventory");
+            "Increased Energy regeneration if an Energy Pack is in your inventory"); */
 
             ArmorIDs.Head.Sets.DrawHead[EquipLoader.GetEquipSlot(Mod, Name, EquipType.Head)] = false;
 
-            SacrificeTotal = 1;
+            Item.ResearchUnlockCount = 1;
         }
 
         public override void SetDefaults()

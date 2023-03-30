@@ -10,15 +10,15 @@ namespace Redemption.Items.Materials.PreHM
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Pure-Iron Alloy");
-
-            SacrificeTotal = 25;
+            // DisplayName.SetDefault("Pure-Iron Alloy");
+            ItemID.Sets.SortingPriorityMaterials[Item.type] = 70;
+            Item.ResearchUnlockCount = 25;
         }
         public override void SetDefaults()
         {
             Item.width = 30;
             Item.height = 24;
-            Item.maxStack = 9999;
+            Item.maxStack = Item.CommonMaxStack;
             Item.value = Item.sellPrice(0, 0, 33, 0);
             Item.rare = ItemRarityID.Orange;
             Item.useTurn = true;

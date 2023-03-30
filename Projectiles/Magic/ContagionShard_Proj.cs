@@ -18,7 +18,7 @@ namespace Redemption.Projectiles.Magic
         public override string Texture => "Redemption/NPCs/Bosses/SeedOfInfection/SoI_SplitShard";
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Xenomite Shard");
+            // DisplayName.SetDefault("Xenomite Shard");
             Main.projFrames[Projectile.type] = 7;
             ElementID.ProjPoison[Type] = true;
             ProjectileID.Sets.DontAttachHideToAlpha[Type] = true;
@@ -110,7 +110,7 @@ namespace Redemption.Projectiles.Magic
             set { Projectile.ai[1] = value; }
         }
         public override bool? CanHitNPC(NPC target) => !IsStickingToTarget ? null : false;
-        public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
+        public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
         {
             IsStickingToTarget = true;
             TargetWhoAmI = target.whoAmI;

@@ -35,8 +35,9 @@ namespace Redemption.NPCs.Wasteland
         }
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Sneezy Snow Flinx");
+            // DisplayName.SetDefault("Sneezy Snow Flinx");
             Main.npcFrameCount[NPC.type] = 16;
+            NPCID.Sets.ShimmerTransformToNPC[NPC.type] = NPCID.SnowFlinx;
             NPCID.Sets.DebuffImmunitySets.Add(Type, new NPCDebuffImmunityData
             {
                 SpecificallyImmuneTo = new int[] {
@@ -75,7 +76,7 @@ namespace Redemption.NPCs.Wasteland
             Banner = NPC.type;
             BannerItem = ModContent.ItemType<SneezyFlinxBanner>();
         }
-        public override void HitEffect(int hitDirection, double damage)
+        public override void HitEffect(NPC.HitInfo hit)
         {
             if (NPC.life <= 0)
             {
@@ -96,7 +97,7 @@ namespace Redemption.NPCs.Wasteland
                     "Looks like its big nose has caught a cold! Seems like it wasn't prepared for weather as cold as one made by a nuclear winter.")
             });
         }
-        public override void ModifyHitPlayer(Player target, ref int damage, ref bool crit)
+        public override void ModifyHitPlayer(Player target, ref Player.HurtModifiers modifiers)
         {
             if (Main.rand.NextBool(2) || Main.expertMode)
                 target.AddBuff(ModContent.BuffType<GreenRashesDebuff>(), Main.rand.Next(400, 1000));
@@ -206,7 +207,7 @@ namespace Redemption.NPCs.Wasteland
         }
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
-            npcLoot.Add(ItemDropRule.ByCondition(new Conditions.BeatAnyMechBoss(), ModContent.ItemType<XenomiteShard>(), 4, 4, 8));
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<XenomiteShard>(), 4, 4, 8));
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<ToxicBile>(), 2, 2, 5));
             npcLoot.Add(ItemDropRule.OneFromOptions(50, ModContent.ItemType<IntruderMask>(), ModContent.ItemType<IntruderArmour>(), ModContent.ItemType<IntruderPants>()));
             npcLoot.Add(ItemDropRule.Food(ModContent.ItemType<StarliteDonut>(), 150));
@@ -216,21 +217,19 @@ namespace Redemption.NPCs.Wasteland
                 npcLoot.Add(dropRule);
             }
         }
-        public override void ModifyHitByItem(Player player, Item item, ref int damage, ref float knockback, ref bool crit)
+        public override void ModifyHitByItem(Player player, Item item, ref NPC.HitModifiers modifiers)
         {
             if (AIState is ActionState.Sneeze)
             {
                 if (item.pick > 0)
-                    damage = item.damage + item.pick * 2;
+                    modifiers.FlatBonusDamage += item.pick * 2;
 
             }
         }
-        public override bool StrikeNPC(ref double damage, int defense, ref float knockback, int hitDirection, ref bool crit)
+        public override void ModifyIncomingHit(ref NPC.HitModifiers modifiers)
         {
             if (AIState is ActionState.Sneeze)
-                damage *= 0.1;
-
-            return true;
+                modifiers.FinalDamage *= 0.1f;
         }
     }
 }

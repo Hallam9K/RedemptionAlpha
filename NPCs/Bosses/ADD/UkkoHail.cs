@@ -9,7 +9,7 @@ namespace Redemption.NPCs.Bosses.ADD
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Hail");
+            // DisplayName.SetDefault("Hail");
             ElementID.ProjIce[Type] = true;
         }
         public override void SetDefaults()

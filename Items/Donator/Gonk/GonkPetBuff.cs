@@ -8,8 +8,8 @@ namespace Redemption.Items.Donator.Gonk
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Samus");
-			Description.SetDefault("From the hit game: Doom");
+			// DisplayName.SetDefault("Samus");
+			// Description.SetDefault("From the hit game: Doom");
 
 			Main.buffNoTimeDisplay[Type] = true;
 			Main.vanityPet[Type] = true;

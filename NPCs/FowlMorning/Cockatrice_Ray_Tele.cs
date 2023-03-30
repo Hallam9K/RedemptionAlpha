@@ -32,7 +32,7 @@ namespace Redemption.NPCs.FowlMorning
         // >
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Telegraph");
+            // DisplayName.SetDefault("Telegraph");
         }
 
         public override void SetDefaults()
@@ -146,7 +146,7 @@ namespace Redemption.NPCs.FowlMorning
         public override string Texture => Redemption.EMPTY_TEXTURE;
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Petrifying Gaze");
+            // DisplayName.SetDefault("Petrifying Gaze");
         }
         public override void SetDefaults()
         {
@@ -163,7 +163,7 @@ namespace Redemption.NPCs.FowlMorning
             NPC npc = Main.npc[(int)Projectile.ai[0]];
             return target.direction != npc.spriteDirection;
         }
-        public override void OnHitPlayer(Player target, int damage, bool crit)
+        public override void OnHitPlayer(Player target, Player.HurtInfo info)
         {
             if (!target.HasBuff(BuffID.Stoned))
                 target.AddBuff(BuffID.Stoned, Main.rand.Next(60, 121));

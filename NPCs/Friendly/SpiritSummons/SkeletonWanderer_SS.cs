@@ -37,7 +37,7 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
         }
         public override void SetSafeStaticDefaults()
         {
-            DisplayName.SetDefault("Skeleton Noble");
+            // DisplayName.SetDefault("Skeleton Noble");
             Main.npcFrameCount[NPC.type] = 16;
             NPCID.Sets.MPAllowedEnemies[Type] = true;
             NPCID.Sets.NPCBestiaryDrawModifiers value = new(0) { Hide = true };
@@ -57,7 +57,7 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
             NPC.aiStyle = -1;
             NPC.Redemption().spiritSummon = true;
         }
-        public override void HitEffect(int hitDirection, double damage)
+        public override void HitEffect(NPC.HitInfo hit)
         {
             if (NPC.life <= 0)
             {
@@ -103,7 +103,7 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
             Player player = Main.player[(int)NPC.ai[3]];
             RedeNPC globalNPC = NPC.Redemption();
             if (!player.active || player.dead || !SSBase.CheckActive(player))
-                NPC.StrikeNPC(999, 0, 1);
+                NPC.SimpleStrikeNPC(999, 1);
             NPC.TargetClosest();
             if (AIState != ActionState.Stab)
                 NPC.LookByVelocity();
@@ -415,7 +415,7 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
             return false;
         }
-        public override bool? CanHitNPC(NPC target) => false;
+        public override bool CanHitNPC(NPC target) => false;
         public override void OnKill()
         {
             RedeHelper.SpawnNPC(NPC.GetSource_FromAI(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<LostSoulNPC>(), Main.rand.NextFloat(0f, 0.4f));
@@ -426,7 +426,7 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
         public override string Texture => "Redemption/NPCs/PreHM/SkeletonWanderer_SpearProj";
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Spear");
+            // DisplayName.SetDefault("Spear");
             Main.projFrames[Projectile.type] = 2;
         }
 

@@ -4,6 +4,7 @@ using Terraria;
 using Terraria.DataStructures;
 using Terraria.Enums;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 
@@ -37,8 +38,8 @@ namespace Redemption.Tiles.Furniture.Lab
             DustType = DustID.Electric;
             MinPick = 200;
             MineResist = 6f;
-			ModTranslation name = CreateMapEntryName();
-			name.SetDefault("Laboratory Ceiling Monitor");
+			LocalizedText name = CreateMapEntryName();
+			// name.SetDefault("Laboratory Ceiling Monitor");
 			AddMapEntry(new Color(0, 187, 240), name);
             AnimationFrameHeight = 36;
         }
@@ -58,10 +59,6 @@ namespace Redemption.Tiles.Furniture.Lab
             r = 0.0f;
             g = 0.2f;
             b = 0.3f;
-        }
-        public override void KillMultiTile(int i, int j, int frameX, int frameY)
-        {
-            Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 48, 32, ModContent.ItemType<LabCeilingMonitor>());
         }
         public override bool CanExplode(int i, int j) => false;
     }

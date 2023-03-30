@@ -1,10 +1,12 @@
 using Redemption.Items.Accessories.HM;
+using Redemption.Items.Armor.Vanity;
 using Redemption.Items.Critters;
 using Redemption.Items.Materials.PostML;
 using Redemption.Items.Materials.PreHM;
 using Redemption.Items.Placeable.Plants;
 using Redemption.Items.Placeable.Tiles;
 using Redemption.Items.Usable.Potions;
+using Redemption.Items.Weapons.PostML.Melee;
 using Redemption.Items.Weapons.PreHM.Ranged;
 using Terraria;
 using Terraria.ID;
@@ -74,6 +76,10 @@ namespace Redemption.Globals
         }
         public override void AddRecipes()
         {
+            Recipe.Create(ItemID.WizardHat)
+                .AddCustomShimmerResult(ModContent.ItemType<DruidHat>())
+                .Register();
+
             Recipe.Create(ItemID.GreenDye)
                 .AddIngredient<TreeBugShell>()
                 .AddTile(TileID.DyeVat)

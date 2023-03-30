@@ -11,7 +11,7 @@ namespace Redemption.Items.Weapons.PreHM.Ranged
         public override string Texture => "Redemption/Items/Weapons/PreHM/Ranged/GoldChickenEgg";
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Gold Chicken Egg");
+            // DisplayName.SetDefault("Gold Chicken Egg");
         }
         public override void SetDefaults()
         {
@@ -46,14 +46,14 @@ namespace Redemption.Items.Weapons.PreHM.Ranged
                     Projectile.velocity.Y * 0.5f, Scale: 2);
         }
 
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             Projectile.velocity.X = -Projectile.velocity.X;
             Projectile.velocity.Y = -Projectile.velocity.Y;
             Projectile.velocity *= 0.9f;
         }
 
-        public override void OnHitPlayer(Player target, int damage, bool crit)
+        public override void OnHitPlayer(Player target, Player.HurtInfo info)
         {
             Projectile.velocity.X = -Projectile.velocity.X;
             Projectile.velocity.Y = -Projectile.velocity.Y;

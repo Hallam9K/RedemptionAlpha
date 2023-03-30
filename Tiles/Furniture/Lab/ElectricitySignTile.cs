@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using Redemption.Dusts.Tiles;
 using Redemption.Items.Placeable.Furniture.Lab;
 using Terraria;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 using Terraria.DataStructures;
@@ -28,14 +29,10 @@ namespace Redemption.Tiles.Furniture.Lab
             DustType = ModContent.DustType<LabPlatingDust>();
             MinPick = 200;
             MineResist = 5f;
-            ModTranslation name = CreateMapEntryName();
-            name.SetDefault("Electricity Sign");
+            LocalizedText name = CreateMapEntryName();
+            // name.SetDefault("Electricity Sign");
             AddMapEntry(new Color(211, 199, 67), name);
         }
         public override bool CanExplode(int i, int j) => false;
-        public override void KillMultiTile(int i, int j, int frameX, int frameY)
-        {
-            Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 32, 32, ModContent.ItemType<ElectricitySign>());
-        }
     }
 }

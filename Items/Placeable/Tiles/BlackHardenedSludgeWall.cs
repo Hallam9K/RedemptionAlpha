@@ -9,15 +9,15 @@ namespace Redemption.Items.Placeable.Tiles
     {
         public override void SetStaticDefaults()
         {
-            Tooltip.SetDefault("[c/ff0000:Unbreakable]");
+            // Tooltip.SetDefault("[c/ff0000:Unbreakable]");
         }
 
         public override void SetDefaults()
 		{
-            Item.DefaultToPlacableWall((ushort)ModContent.WallType<BlackHardenedSludgeWallTile>());
+            Item.DefaultToPlaceableWall((ushort)ModContent.WallType<BlackHardenedSludgeWallTile>());
             Item.width = 24;
             Item.height = 24;
-            Item.maxStack = 9999;
+            Item.maxStack = Item.CommonMaxStack;
             Item.value = Item.buyPrice(0, 0, 1, 0);
             Item.rare = ItemRarityID.Purple;
 		}

@@ -12,10 +12,10 @@ namespace Redemption.Items.Accessories.PreHM
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Cuddly Teratoma");
-			Tooltip.SetDefault("Summons a teratoma to latch onto you");
+			// DisplayName.SetDefault("Cuddly Teratoma");
+			// Tooltip.SetDefault("Summons a teratoma to latch onto you");
 
-			SacrificeTotal = 1;
+			Item.ResearchUnlockCount = 1;
 		}
 
 		public override void SetDefaults()

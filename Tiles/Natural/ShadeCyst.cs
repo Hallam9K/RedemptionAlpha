@@ -31,6 +31,7 @@ namespace Redemption.Tiles.Natural
             MineResist = 10;
             AddMapEntry(new Color(151, 147, 161));
             AnimationFrameHeight = 48;
+            ItemDrop = -1;
         }
         public override void AnimateTile(ref int frame, ref int frameCounter)
         {
@@ -50,7 +51,7 @@ namespace Redemption.Tiles.Natural
         public override string Texture => Redemption.PLACEHOLDER_TEXTURE;
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Shade Cyst");
+            // DisplayName.SetDefault("Shade Cyst");
         }
         public override void SetDefaults()
         {

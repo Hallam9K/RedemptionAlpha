@@ -15,11 +15,11 @@ namespace Redemption.Items.Weapons.PostML.Magic
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("P-2-Warhead Receiver");
-            Tooltip.SetDefault("Calls plutonium nukes from the sky"
+            // DisplayName.SetDefault("P-2-Warhead Receiver");
+            /* Tooltip.SetDefault("Calls plutonium nukes from the sky"
                 + "\nDoesn't destroy tiles\n" +
-                "'TACTICAL NUKE INCOMING!'");
-            SacrificeTotal = 1;
+                "'TACTICAL NUKE INCOMING!'"); */
+            Item.ResearchUnlockCount = 1;
         }
 
         public override void SetDefaults()

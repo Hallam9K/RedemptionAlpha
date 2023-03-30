@@ -11,16 +11,16 @@ namespace Redemption.Items.Materials.PreHM
     {
         public override void SetStaticDefaults()
         {
-            Tooltip.SetDefault("'Infused with shadow magic'");
+            // Tooltip.SetDefault("'Infused with shadow magic'");
 
-            SacrificeTotal = 25;
+            Item.ResearchUnlockCount = 25;
         }
 
         public override void SetDefaults()
         {
             Item.width = 12;
             Item.height = 24;
-            Item.maxStack = 9999;
+            Item.maxStack = Item.CommonMaxStack;
             Item.value = Item.sellPrice(0, 0, 0, 25);
             Item.rare = ItemRarityID.Blue;
         }

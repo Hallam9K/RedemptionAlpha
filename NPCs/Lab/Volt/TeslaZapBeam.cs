@@ -53,7 +53,7 @@ namespace Redemption.NPCs.Lab.Volt
             Projectile.timeLeft = 80;
             Projectile.Redemption().ParryBlacklist = true;
         }
-        public override void OnHitPlayer(Player target, int damage, bool crit)
+        public override void OnHitPlayer(Player target, Player.HurtInfo info)
         {
             target.AddBuff(ModContent.BuffType<StaticStunDebuff>(), 120);
         }

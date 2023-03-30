@@ -14,34 +14,33 @@ namespace Redemption.Globals.NPC
         public bool IgnoreArmour;
         public bool GuardBroken;
         public bool GuardPierce;
-
-        public void GuardHit(Terraria.NPC npc, ref bool vanillaDamage, ref double damage, ref float knockback, SoundStyle sound, float dmgReduction = 0.25f, bool noNPCHitSound = false)
+        public void GuardHit(ref Terraria.NPC.HitInfo info, Terraria.NPC npc, SoundStyle sound, float dmgReduction = .25f, bool noNPCHitSound = false)
         {
-            vanillaDamage = true;
             if (IgnoreArmour || GuardPoints < 0 || GuardBroken)
             {
                 IgnoreArmour = false;
                 return;
             }
 
-            int guardDamage = (int)(damage * dmgReduction);
+            int guardDamage = (int)(info.Damage * dmgReduction);
             SoundEngine.PlaySound(sound, npc.position);
             CombatText.NewText(npc.getRect(), Colors.RarityPurple, guardDamage, true, true);
             GuardPoints -= guardDamage;
 
-            if (npc.RedemptionNPCBuff().brokenArmor || npc.RedemptionNPCBuff().stunned || GuardPierce)
+            if (GuardPierce)
             {
-                vanillaDamage = true;
-                damage /= 4;
-                knockback /= 2;
+                info.Damage /= 4;
+                info.Knockback /= 2;
                 GuardPierce = false;
                 return;
             }
             npc.HitEffect();
+            info.HideCombatText = true;
             if (!noNPCHitSound && npc.HitSound.HasValue)
                 SoundEngine.PlaySound(npc.HitSound.Value, npc.position);
-            vanillaDamage = false;
-            damage = 0;
+            info.Damage = 0;
+            info.Knockback = 0;
+            npc.life++;
         }
         public void GuardBreakCheck(Terraria.NPC npc, int dustType, SoundStyle sound, int dustAmount = 10, float dustScale = 1, int damage = 0)
         {
@@ -60,17 +59,19 @@ namespace Redemption.Globals.NPC
             if (damage > 0)
                 BaseAI.DamageNPC(npc, damage, 0, Main.LocalPlayer, true, true);
         }
-        public override void ModifyHitByItem(Terraria.NPC npc, Terraria.Player player, Item item, ref int damage, ref float knockback, ref bool crit)
+        public override void ModifyHitByItem(Terraria.NPC npc, Terraria.Player player, Item item, ref Terraria.NPC.HitModifiers modifiers)
         {
             if (GuardPoints <= 0)
                 return;
 
+            if (npc.RedemptionNPCBuff().brokenArmor || npc.RedemptionNPCBuff().stunned)
+                GuardPierce = true;
             if (item.HasElement(ElementID.Psychic))
                 IgnoreArmour = true;
             if (item.hammer > 0 || item.Redemption().TechnicallyHammer)
-                damage *= 4;
+                modifiers.FinalDamage *= 4;
         }
-        public override void ModifyHitByProjectile(Terraria.NPC npc, Projectile projectile, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
+        public override void ModifyHitByProjectile(Terraria.NPC npc, Projectile projectile, ref Terraria.NPC.HitModifiers modifiers)
         {
             if (GuardPoints <= 0)
                 return;
@@ -78,98 +79,92 @@ namespace Redemption.Globals.NPC
             if (projectile.HasElement(ElementID.Psychic))
                 IgnoreArmour = true;
             if (projectile.Redemption().IsHammer || projectile.type == ProjectileID.PaladinsHammerFriendly)
-                damage *= 4;
-            if (projectile.Redemption().EnergyBased)
+                modifiers.FinalDamage *= 4;
+            if (npc.RedemptionNPCBuff().brokenArmor || npc.RedemptionNPCBuff().stunned || projectile.Redemption().EnergyBased)
                 GuardPierce = true;
             if (projectile.HasElement(ElementID.Explosive))
-                damage *= 4;
+                modifiers.FinalDamage *= 4;
         }
         public override void SetDefaults(Terraria.NPC npc)
         {
             base.SetDefaults(npc);
-            if (npc.type == NPCID.GreekSkeleton || npc.type == NPCID.AngryBonesBig || npc.type == NPCID.AngryBonesBigHelmet ||
-                npc.type == NPCID.AngryBonesBigMuscle || npc.type == NPCID.GoblinWarrior)
+            if (npc.type is NPCID.GreekSkeleton or NPCID.AngryBonesBig or NPCID.AngryBonesBigHelmet or NPCID.AngryBonesBigMuscle or NPCID.GoblinWarrior)
                 GuardPoints = 25;
-            if (npc.type == NPCID.ArmoredSkeleton || npc.type == NPCID.ArmoredViking || npc.type == NPCID.PossessedArmor)
+            if (npc.type is NPCID.ArmoredSkeleton or NPCID.ArmoredViking or NPCID.PossessedArmor)
                 GuardPoints = 80;
-            if (npc.type == NPCID.BlueArmoredBones || npc.type == NPCID.BlueArmoredBonesMace || npc.type == NPCID.BlueArmoredBonesNoPants ||
-                npc.type == NPCID.BlueArmoredBonesSword || npc.type == NPCID.RustyArmoredBonesAxe ||
-                npc.type == NPCID.RustyArmoredBonesFlail || npc.type == NPCID.RustyArmoredBonesSword ||
-                npc.type == NPCID.HellArmoredBones || npc.type == NPCID.HellArmoredBonesMace ||
-                npc.type == NPCID.HellArmoredBonesSpikeShield || npc.type == NPCID.HellArmoredBonesSword)
+            if (npc.type is NPCID.BlueArmoredBones or NPCID.BlueArmoredBonesMace or NPCID.BlueArmoredBonesNoPants or NPCID.BlueArmoredBonesSword or NPCID.RustyArmoredBonesAxe or NPCID.RustyArmoredBonesFlail or NPCID.RustyArmoredBonesSword or NPCID.HellArmoredBones or NPCID.HellArmoredBonesMace or NPCID.HellArmoredBonesSpikeShield or NPCID.HellArmoredBonesSword)
                 GuardPoints = 160;
-            if (npc.type == NPCID.Paladin)
+            if (npc.type is NPCID.Paladin)
                 GuardPoints = 500;
         }
-        public override bool StrikeNPC(Terraria.NPC npc, ref double damage, int defense, ref float knockback, int hitDirection, ref bool crit)
+        public override void ModifyIncomingHit(Terraria.NPC npc, ref Terraria.NPC.HitModifiers modifiers)
         {
-            bool vDmg = true;
-            if (npc.type == NPCID.GreekSkeleton)
+            if (npc.type is NPCID.GreekSkeleton)
             {
                 if (GuardPoints >= 0)
                 {
-                    GuardHit(npc, ref vDmg, ref damage, ref knockback, SoundID.NPCHit4);
+                    modifiers.DisableCrit();
+                    modifiers.ModifyHitInfo += (ref Terraria.NPC.HitInfo n) => GuardHit(ref n, npc, SoundID.NPCHit4);
                     if (GuardPoints >= 0)
-                        return vDmg;
+                        return;
                 }
                 GuardBreakCheck(npc, DustID.Gold, CustomSounds.GuardBreak, damage: npc.lifeMax / 4);
             }
-            if (npc.type == NPCID.AngryBonesBig || npc.type == NPCID.AngryBonesBigHelmet || npc.type == NPCID.AngryBonesBigMuscle ||
-                npc.type == NPCID.ArmoredSkeleton || npc.type == NPCID.ArmoredViking || npc.type == NPCID.BlueArmoredBones ||
-                npc.type == NPCID.BlueArmoredBonesMace || npc.type == NPCID.BlueArmoredBonesNoPants ||
-                npc.type == NPCID.BlueArmoredBonesSword || npc.type == NPCID.RustyArmoredBonesAxe ||
-                npc.type == NPCID.RustyArmoredBonesFlail || npc.type == NPCID.RustyArmoredBonesSword)
+            if (npc.type is NPCID.AngryBonesBig or NPCID.AngryBonesBigHelmet or NPCID.AngryBonesBigMuscle or NPCID.ArmoredSkeleton or NPCID.ArmoredViking or NPCID.BlueArmoredBones or NPCID.BlueArmoredBonesMace or NPCID.BlueArmoredBonesNoPants or NPCID.BlueArmoredBonesSword or NPCID.RustyArmoredBonesAxe or NPCID.RustyArmoredBonesFlail or NPCID.RustyArmoredBonesSword)
             {
                 if (GuardPoints >= 0)
                 {
-                    GuardHit(npc, ref vDmg, ref damage, ref knockback, SoundID.NPCHit4);
+                    modifiers.DisableCrit();
+                    modifiers.ModifyHitInfo += (ref Terraria.NPC.HitInfo n) => GuardHit(ref n, npc, SoundID.NPCHit4);
                     if (GuardPoints >= 0)
-                        return vDmg;
+                        return;
                 }
                 GuardBreakCheck(npc, DustID.Bone, CustomSounds.GuardBreak, damage: npc.lifeMax / 4);
             }
-            if (npc.type == NPCID.HellArmoredBones || npc.type == NPCID.HellArmoredBonesMace ||
-                npc.type == NPCID.HellArmoredBonesSpikeShield || npc.type == NPCID.HellArmoredBonesSword)
+            if (npc.type is NPCID.HellArmoredBones or NPCID.HellArmoredBonesMace or NPCID.HellArmoredBonesSpikeShield or NPCID.HellArmoredBonesSword)
             {
                 if (GuardPoints >= 0)
                 {
-                    GuardHit(npc, ref vDmg, ref damage, ref knockback, SoundID.NPCHit4);
+                    modifiers.DisableCrit();
+                    modifiers.ModifyHitInfo += (ref Terraria.NPC.HitInfo n) => GuardHit(ref n, npc, SoundID.NPCHit4);
                     if (GuardPoints >= 0)
-                        return vDmg;
+                        return;
                 }
                 GuardBreakCheck(npc, DustID.Torch, CustomSounds.GuardBreak, damage: npc.lifeMax / 4);
             }
-            if (npc.type == NPCID.PossessedArmor)
+            if (npc.type is NPCID.PossessedArmor)
             {
                 if (GuardPoints >= 0)
                 {
-                    GuardHit(npc, ref vDmg, ref damage, ref knockback, SoundID.NPCHit4);
+                    modifiers.DisableCrit();
+                    modifiers.ModifyHitInfo += (ref Terraria.NPC.HitInfo n) => GuardHit(ref n, npc, SoundID.NPCHit4);
                     if (GuardPoints >= 0)
-                        return vDmg;
+                        return;
                 }
                 GuardBreakCheck(npc, DustID.Demonite, CustomSounds.GuardBreak, damage: npc.lifeMax / 2);
             }
-            if (npc.type == NPCID.GoblinWarrior)
+            if (npc.type is NPCID.GoblinWarrior)
             {
                 if (GuardPoints >= 0)
                 {
-                    GuardHit(npc, ref vDmg, ref damage, ref knockback, SoundID.NPCHit4, 0.5f);
+                    modifiers.DisableCrit();
+                    modifiers.ModifyHitInfo += (ref Terraria.NPC.HitInfo n) => GuardHit(ref n, npc, SoundID.NPCHit4, .4f);
                     if (GuardPoints >= 0)
-                        return vDmg;
+                        return;
                 }
                 GuardBreakCheck(npc, DustID.Iron, CustomSounds.GuardBreak, damage: npc.lifeMax / 4);
             }
-            if (npc.type == NPCID.Paladin)
+            if (npc.type is NPCID.Paladin)
             {
                 if (GuardPoints >= 0)
                 {
-                    GuardHit(npc, ref vDmg, ref damage, ref knockback, SoundID.NPCHit4, 0.2f);
+                    modifiers.DisableCrit();
+                    modifiers.ModifyHitInfo += (ref Terraria.NPC.HitInfo n) => GuardHit(ref n, npc, SoundID.NPCHit4, .2f);
                     if (GuardPoints >= 0)
-                        return vDmg;
+                        return;
                 }
                 GuardBreakCheck(npc, DustID.GoldCoin, CustomSounds.GuardBreak, damage: npc.lifeMax / 3);
             }
-            return true;
         }
     }
 }

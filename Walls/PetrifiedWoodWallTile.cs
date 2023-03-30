@@ -12,7 +12,6 @@ namespace Redemption.Walls
 		{
 			Main.wallHouse[Type] = true;
             DustType = DustID.Ash;
-			ItemDrop = ModContent.ItemType<PetrifiedWoodWall>();
 			AddMapEntry(new Color(48, 44, 42));
 		}
 

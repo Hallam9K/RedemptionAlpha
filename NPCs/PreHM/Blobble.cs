@@ -49,9 +49,9 @@ namespace Redemption.NPCs.PreHM
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Blobble");
+            // DisplayName.SetDefault("Blobble");
             Main.npcFrameCount[Type] = 3;
-
+            NPCID.Sets.ShimmerTransformToNPC[NPC.type] = NPCID.ShimmerSlime;
             NPCID.Sets.DebuffImmunitySets.Add(Type, new NPCDebuffImmunityData
             {
                 SpecificallyImmuneTo = new int[] {
@@ -85,7 +85,7 @@ namespace Redemption.NPCs.PreHM
             BannerItem = ModContent.ItemType<BlobbleBanner>();
         }
 
-        public override void HitEffect(int hitDirection, double damage)
+        public override void HitEffect(NPC.HitInfo hit)
         {
             if (NPC.life <= 0)
             {
@@ -206,8 +206,8 @@ namespace Redemption.NPCs.PreHM
             return false;
         }
 
-        public override void OnHitPlayer(Player target, int damage, bool crit) => target.AddBuff(BuffID.Slimed, 120);
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) => target.AddBuff(BuffID.Slimed, 120);
+        public override void OnHitPlayer(Player target, Player.HurtInfo hurtInfo) => target.AddBuff(BuffID.Slimed, 120);
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit) => target.AddBuff(BuffID.Slimed, 120);
 
         public override void OnKill()
         {

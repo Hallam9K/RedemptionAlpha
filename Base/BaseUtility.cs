@@ -176,7 +176,7 @@ namespace Redemption.Base
             {
                 supertip += tooltips[m] + (m == tooltips.Length - 1 ? "" : "\n");
             }
-            item.Tooltip.SetDefault(supertip);
+            // item.Tooltip.SetDefault(supertip);
         }
 
         public static bool CanHit(Rectangle rect, Rectangle rect2)

@@ -22,7 +22,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
         public float[] oldrot = new float[7];
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Forest Nymph's Sickle");
+            // DisplayName.SetDefault("Forest Nymph's Sickle");
             ProjectileID.Sets.TrailCacheLength[Projectile.type] = 7;
             ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
             ElementID.ProjNature[Type] = true;
@@ -205,21 +205,20 @@ namespace Redemption.Items.Weapons.PreHM.Melee
 
             Projectile.Center = player.MountedCenter + vector;
         }
-        public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
+        public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
         {
             if (NPCLists.Dark.Contains(target.type))
-                damage = (int)(damage * 1.5f);
-
-            RedeProjectile.Decapitation(target, ref damage, ref crit);
+                modifiers.FinalDamage *= 1.5f;
         }
 
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
+            RedeProjectile.Decapitation(target, ref damageDone, ref hit.Crit);
             if (!lifeDrained)
             {
                 Player player = Main.player[Projectile.owner];
-                player.statLife += (int)Math.Floor((double)damage / 20);
-                player.HealEffect((int)Math.Floor((double)damage / 20));
+                player.statLife += (int)Math.Floor((double)damageDone / 20);
+                player.HealEffect((int)Math.Floor((double)damageDone / 20));
                 lifeDrained = true;
             }
             Projectile.localNPCImmunity[target.whoAmI] = 20;

@@ -10,16 +10,16 @@ namespace Redemption.Items.Critters
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Gold Chicken");
+            // DisplayName.SetDefault("Gold Chicken");
 
-            SacrificeTotal = 1;
+            Item.ResearchUnlockCount = 1;
         }
 
         public override void SetDefaults()
         {
             Item.width = 30;
             Item.height = 26;
-            Item.maxStack = 9999;
+            Item.maxStack = Item.CommonMaxStack;
             Item.value = Item.sellPrice(gold: 10);
             Item.rare = ItemRarityID.LightRed;
             Item.useAnimation = 30;

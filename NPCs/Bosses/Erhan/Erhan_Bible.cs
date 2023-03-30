@@ -18,7 +18,7 @@ namespace Redemption.NPCs.Bosses.Erhan
         public override string Texture => "Redemption/Items/Weapons/PreHM/Summon/HolyBible";
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Holy Bible");
+            // DisplayName.SetDefault("Holy Bible");
         }
         public override void SetDefaults()
         {

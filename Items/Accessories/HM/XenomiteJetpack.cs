@@ -5,6 +5,7 @@ using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
+using System.Linq;
 
 namespace Redemption.Items.Accessories.HM
 {
@@ -13,8 +14,8 @@ namespace Redemption.Items.Accessories.HM
     {
         public override void SetStaticDefaults()
         {
-            Tooltip.SetDefault("Allows flight and slow fall");
-            SacrificeTotal = 1;
+            // Tooltip.SetDefault("Allows flight and slow fall");
+            Item.ResearchUnlockCount = 1;
             ArmorIDs.Wing.Sets.Stats[Item.wingSlot] = new WingStats(90, 7f, 2.5f);
         }
         public override void SetDefaults()
@@ -23,7 +24,7 @@ namespace Redemption.Items.Accessories.HM
             Item.height = 20;
             Item.value = 300000;
             Item.rare = ItemRarityID.Pink;
-            Item.canBePlacedInVanityRegardlessOfConditions = true;
+            Item.hasVanityEffects = true;
             Item.accessory = true;
         }
         public override void UpdateAccessory(Player player, bool hideVisual)
@@ -67,12 +68,14 @@ namespace Redemption.Items.Accessories.HM
             .AddIngredient(ItemID.TitaniumBar, 5)
             .AddIngredient(ItemID.SoulofFlight, 20)
             .AddTile(TileID.MythrilAnvil)
+            .SortBefore(Main.recipe.First(recipe => recipe.createItem.wingSlot != -1))
             .Register();
             CreateRecipe()
             .AddIngredient(ModContent.ItemType<Xenomite>(), 20)
             .AddIngredient(ItemID.AdamantiteBar, 5)
             .AddIngredient(ItemID.SoulofFlight, 20)
             .AddTile(TileID.MythrilAnvil)
+            .SortBefore(Main.recipe.First(recipe => recipe.createItem.wingSlot != -1))
             .Register();
         }
     }

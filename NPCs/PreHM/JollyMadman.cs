@@ -89,7 +89,7 @@ namespace Redemption.NPCs.PreHM
 
             NPC.GetGlobalNPC<ElementalNPC>().OverrideMultiplier[ElementID.Holy] *= 2f;
         }
-        public override void HitEffect(int hitDirection, double damage)
+        public override void HitEffect(NPC.HitInfo hit)
         {
             if (NPC.life <= 0)
             {
@@ -115,14 +115,15 @@ namespace Redemption.NPCs.PreHM
         }
 
         private bool PsychicHit;
-        public override bool StrikeNPC(ref double damage, int defense, ref float knockback, int hitDirection, ref bool crit)
+        private int PsychicDamage;
+        public override void ModifyIncomingHit(ref NPC.HitModifiers modifiers)
         {
-            bool vDmg = false;
             if (NPC.RedemptionGuard().GuardPoints >= 0)
             {
-                NPC.RedemptionGuard().GuardHit(NPC, ref vDmg, ref damage, ref knockback, SoundID.NPCHit4);
+                modifiers.DisableCrit();
+                modifiers.ModifyHitInfo += (ref NPC.HitInfo n) => NPC.RedemptionGuard().GuardHit(ref n, NPC, SoundID.NPCHit4);
                 if (NPC.RedemptionGuard().GuardPoints >= 0)
-                    return vDmg;
+                    return;
             }
             NPC.RedemptionGuard().GuardBreakCheck(NPC, ModContent.DustType<VoidFlame>(), CustomSounds.GuardBreak, 10, 2);
 
@@ -131,34 +132,40 @@ namespace Redemption.NPCs.PreHM
                 SoundEngine.PlaySound(SoundID.NPCHit48, NPC.position);
                 if (NPC.life < NPC.lifeMax)
                 {
-                    NPC.life += (int)(damage / 10);
-                    NPC.HealEffect((int)(damage / 10));
+                    NPC.life += PsychicDamage / 10;
+                    NPC.HealEffect(PsychicDamage / 10);
                 }
                 if (NPC.life > NPC.lifeMax)
                     NPC.life = NPC.lifeMax;
 
-                damage = 0;
+                modifiers.FinalDamage *= 0;
+                modifiers.HideCombatText();
+                NPC.life++;
+                PsychicDamage = 0;
                 PsychicHit = false;
-                if (Main.netMode == NetmodeID.MultiplayerClient)
-                    NetMessage.SendData(MessageID.DamageNPC, -1, -1, null, NPC.whoAmI, (float)damage, knockback, hitDirection, 0, 0, 0);
-                return false;
+                return;
             }
-            return true;
         }
-        public override void ModifyHitByItem(Player player, Item item, ref int damage, ref float knockback, ref bool crit)
+        public override void OnHitByItem(Player player, Item item, NPC.HitInfo hit, int damageDone)
         {
             if (!RedeConfigClient.Instance.ElementDisable)
             {
                 if (item.HasElement(ElementID.Psychic))
+                {
                     PsychicHit = true;
+                    PsychicDamage = damageDone;
+                }
             }
         }
-        public override void ModifyHitByProjectile(Projectile projectile, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
+        public override void OnHitByProjectile(Projectile projectile, NPC.HitInfo hit, int damageDone)
         {
             if (!RedeConfigClient.Instance.ElementDisable)
             {
                 if (projectile.HasElement(ElementID.Psychic))
+                {
                     PsychicHit = true;
+                    PsychicDamage = damageDone;
+                }
             }
         }
         public override void SendExtraAI(BinaryWriter writer)
@@ -512,7 +519,7 @@ namespace Redemption.NPCs.PreHM
             }
         }
 
-        public override bool? CanHitNPC(NPC target) => false;
+        public override bool CanHitNPC(NPC target) => false;
         public override bool CanHitPlayer(Player target, ref int cooldownSlot) => false;
 
         public override void OnKill()

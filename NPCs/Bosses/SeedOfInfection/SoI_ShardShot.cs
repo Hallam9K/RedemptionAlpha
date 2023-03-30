@@ -11,7 +11,7 @@ namespace Redemption.NPCs.Bosses.SeedOfInfection
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Shard Shot");
+            // DisplayName.SetDefault("Shard Shot");
             Main.projFrames[Projectile.type] = 3;
             ElementID.ProjPoison[Type] = true;
         }
@@ -27,8 +27,8 @@ namespace Redemption.NPCs.Bosses.SeedOfInfection
             Projectile.tileCollide = false;
             Projectile.timeLeft = 160;
         }
-        public override void OnHitPlayer(Player target, int damage, bool crit) => target.AddBuff(ModContent.BuffType<BileDebuff>(), 120);
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) => target.AddBuff(ModContent.BuffType<GreenRashesDebuff>(), 120);
+        public override void OnHitPlayer(Player target, Player.HurtInfo info) => target.AddBuff(ModContent.BuffType<BileDebuff>(), 120);
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) => target.AddBuff(ModContent.BuffType<GreenRashesDebuff>(), 120);
         public override bool? CanHitNPC(NPC target) => Projectile.ai[0] is 2 && Projectile.ai[1] != target.whoAmI ? null : false;
         public override void AI()
         {

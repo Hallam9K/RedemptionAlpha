@@ -8,7 +8,7 @@ namespace Redemption.NPCs.Lab.MACE
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Scrap");
+			// DisplayName.SetDefault("Scrap");
             Main.projFrames[Projectile.type] = 5;
         }
 		public override void SetDefaults()

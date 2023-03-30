@@ -1,5 +1,6 @@
 using Terraria.ModLoader;
 using Terraria.ID;
+using Terraria;
 using Redemption.Walls;
 
 namespace Redemption.Items.Placeable.Furniture.PetrifiedWood
@@ -8,15 +9,15 @@ namespace Redemption.Items.Placeable.Furniture.PetrifiedWood
 	{
 		public override void SetStaticDefaults()
 		{
-			SacrificeTotal = 400;
+			Item.ResearchUnlockCount = 400;
 		}
 
 		public override void SetDefaults()
 		{
-			Item.DefaultToPlacableWall((ushort)ModContent.WallType<PetrifiedWoodFenceTile>());
+			Item.DefaultToPlaceableWall((ushort)ModContent.WallType<PetrifiedWoodFenceTile>());
 			Item.width = 32;
 			Item.height = 28;
-			Item.maxStack = 9999;
+			Item.maxStack = Item.CommonMaxStack;
 		}
 
 		public override void AddRecipes()

@@ -11,7 +11,7 @@ namespace Redemption.NPCs.Bosses.Gigapora
         public override string Texture => Redemption.EMPTY_TEXTURE;
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Flames");
+            // DisplayName.SetDefault("Flames");
         }
         public override void SetDefaults() => base.SetDefaults();
         public override bool PreAI()

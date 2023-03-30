@@ -17,7 +17,7 @@ namespace Redemption.Projectiles.Magic
         public override string Texture => "Redemption/Textures/WhiteOrb";
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Light Orb");
+            // DisplayName.SetDefault("Light Orb");
             ProjectileID.Sets.TrailCacheLength[Projectile.type] = 8;
             ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
             ElementID.ProjHoly[Type] = true;
@@ -78,7 +78,7 @@ namespace Redemption.Projectiles.Magic
                 Main.dust[dust].color = dustColor;
             }
         }
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             if (Main.rand.NextBool(3))
                 target.AddBuff(ModContent.BuffType<HolyFireDebuff>(), 60);
@@ -113,7 +113,7 @@ namespace Redemption.Projectiles.Magic
         public override string Texture => "Terraria/Images/Projectile_536";
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Light Ray");
+            // DisplayName.SetDefault("Light Ray");
         }
         public override void SetDefaults()
         {
@@ -142,7 +142,7 @@ namespace Redemption.Projectiles.Magic
             if (Projectile.alpha >= 255)
                 Projectile.Kill();
         }
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             if (Main.rand.NextBool(3))
                 target.AddBuff(ModContent.BuffType<HolyFireDebuff>(), 180);

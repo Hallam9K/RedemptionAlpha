@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Redemption.BaseExtension;
 using Redemption.Globals;
+using Redemption.Items.Armor.Single;
 
 namespace Redemption.Items.Armor.PreHM.PureIron
 {
@@ -14,11 +15,11 @@ namespace Redemption.Items.Armor.PreHM.PureIron
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Pure-Iron Helmet");
-            Tooltip.SetDefault("7% increased damage");
+            // DisplayName.SetDefault("Pure-Iron Helmet");
+            // Tooltip.SetDefault("7% increased damage");
             ArmorIDs.Head.Sets.DrawHead[EquipLoader.GetEquipSlot(Mod, Name, EquipType.Head)] = false;
-
-            SacrificeTotal = 1;
+            ItemID.Sets.ShimmerTransformToItem[Type] = ModContent.ItemType<AntiquePureIronHelmet>();
+            Item.ResearchUnlockCount = 1;
         }
 
         public override void SetDefaults()

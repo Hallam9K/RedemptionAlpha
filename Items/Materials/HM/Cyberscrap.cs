@@ -9,9 +9,9 @@ namespace Redemption.Items.Materials.HM
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Cyberscrap");
-            Tooltip.SetDefault("'Versatile, and can be used to make anything'");
-            SacrificeTotal = 50;
+            // DisplayName.SetDefault("Cyberscrap");
+            // Tooltip.SetDefault("'Versatile, and can be used to make anything'");
+            Item.ResearchUnlockCount = 50;
         }
 
         public override void SetDefaults()
@@ -19,7 +19,7 @@ namespace Redemption.Items.Materials.HM
             Item.DefaultToPlaceableTile(ModContent.TileType<JunkMetalTile>(), 0);
             Item.width = 48;
             Item.height = 34;
-            Item.maxStack = 9999;
+            Item.maxStack = Item.CommonMaxStack;
             Item.value = Item.buyPrice(0, 10, 0, 0);
             Item.rare = ItemRarityID.LightPurple;
         }
@@ -27,7 +27,7 @@ namespace Redemption.Items.Materials.HM
         {
             CreateRecipe(2)
                 .AddIngredient(ModContent.ItemType<CyberPlating>())
-                .AddCondition(Recipe.Condition.NearLava)
+                .AddCondition(Condition.NearLava)
                 .Register();
         }
     }

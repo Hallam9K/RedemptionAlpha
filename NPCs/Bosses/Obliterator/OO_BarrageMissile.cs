@@ -15,7 +15,7 @@ namespace Redemption.NPCs.Bosses.Obliterator
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Barrage Missile");
+            // DisplayName.SetDefault("Barrage Missile");
             Main.projFrames[Projectile.type] = 3;
             ElementID.ProjExplosive[Type] = true;
         }
@@ -98,7 +98,7 @@ namespace Redemption.NPCs.Bosses.Obliterator
                 vector *= 24f / magnitude;
             }
         }
-        public override void OnHitPlayer(Player target, int damage, bool crit)
+        public override void OnHitPlayer(Player target, Player.HurtInfo info)
         {
             Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, Vector2.Zero, ModContent.ProjectileType<OO_MissileBlast>(), Projectile.damage, 0, Main.myPlayer);
             Projectile.Kill();
@@ -138,7 +138,7 @@ namespace Redemption.NPCs.Bosses.Obliterator
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Explosion");
+            // DisplayName.SetDefault("Explosion");
             Main.projFrames[Projectile.type] = 5;
             ElementID.ProjExplosive[Type] = true;
         }

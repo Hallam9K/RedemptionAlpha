@@ -27,6 +27,7 @@ namespace Redemption.NPCs.Critters
         public override void SetStaticDefaults()
         {
             Main.npcFrameCount[Type] = 5;
+            NPCID.Sets.ShimmerTransformToNPC[NPC.type] = NPCID.Shimmerfly;
             NPCID.Sets.CountsAsCritter[Type] = true;
             NPCID.Sets.DontDoHardmodeScaling[Type] = true;
             NPCID.Sets.TakesDamageFromHostilesWithoutBeingFriendly[Type] = true;
@@ -55,15 +56,15 @@ namespace Redemption.NPCs.Critters
             BannerItem = ModContent.ItemType<MoonflareBatBanner>();
         }
 
-        public override void ModifyHitByItem(Player player, Item item, ref int damage, ref float knockback, ref bool crit)
+        public override void ModifyHitByItem(Player player, Item item, ref NPC.HitModifiers modifiers)
         {
             if (item.HasElement(ElementID.Shadow))
-                damage = (int)(damage * 1.25f);
+                modifiers.FinalDamage *= 1.25f;
         }
-        public override void ModifyHitByProjectile(Projectile projectile, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
+        public override void ModifyHitByProjectile(Projectile projectile, ref NPC.HitModifiers modifiers)
         {
             if (projectile.HasElement(ElementID.Shadow))
-                damage = (int)(damage * 1.25f);
+                modifiers.FinalDamage *= 1.25f;
         }
 
         public override bool CanHitPlayer(Player target, ref int cooldownSlot) => false;
@@ -186,7 +187,7 @@ namespace Redemption.NPCs.Critters
             return false;
         }
 
-        public override void HitEffect(int hitDirection, double damage)
+        public override void HitEffect(NPC.HitInfo hit)
         {
             if (NPC.life <= 0)
             {

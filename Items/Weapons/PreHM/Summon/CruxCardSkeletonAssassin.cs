@@ -20,12 +20,12 @@ namespace Redemption.Items.Weapons.PreHM.Summon
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Crux Card: Gank Squad");
-            Tooltip.SetDefault("Summons the spirits of 3 Skeleton Assassins\n" +
+            // DisplayName.SetDefault("Crux Card: Gank Squad");
+            /* Tooltip.SetDefault("Summons the spirits of 3 Skeleton Assassins\n" +
                 "Right-click to tug the spirits back to your position, consuming 1 [i:" + ModContent.ItemType<LostSoul>() + "]\n" +
                 "Consumes 10 [i:" + ModContent.ItemType<LostSoul>() + "] on use\n" +
-                "Can only use one Spirit Card at a time");
-            SacrificeTotal = 1;
+                "Can only use one Spirit Card at a time"); */
+            Item.ResearchUnlockCount = 1;
         }
 
         public override void SetDefaults()
@@ -131,7 +131,7 @@ namespace Redemption.Items.Weapons.PreHM.Summon
                         if (Main.netMode != NetmodeID.MultiplayerClient)
                             NPC.NewNPC(new EntitySource_BossSpawn(player), (int)player.Center.X + 10, (int)player.Center.Y + 10, type, ai3: player.whoAmI);
                         else
-                            NetMessage.SendData(MessageID.SpawnBoss, number: player.whoAmI, number2: type);
+                            NetMessage.SendData(MessageID.SpawnBossUseLicenseStartEvent, number: player.whoAmI, number2: type);
                     }
                 }
             }

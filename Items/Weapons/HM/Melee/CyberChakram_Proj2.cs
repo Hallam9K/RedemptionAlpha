@@ -8,7 +8,7 @@ namespace Redemption.Items.Weapons.HM.Melee
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Cyber Chakram");
+            // DisplayName.SetDefault("Cyber Chakram");
             ElementID.ProjThunder[Type] = true;
         }
         public override void SetDefaults()

@@ -12,9 +12,9 @@ namespace Redemption.Items.Weapons.PostML.Magic
     {
         public override void SetStaticDefaults()
         {
-            Tooltip.SetDefault("Casts orbs of light which shine blinding light onto nearby targets");
+            // Tooltip.SetDefault("Casts orbs of light which shine blinding light onto nearby targets");
             Item.staff[Item.type] = true;
-            SacrificeTotal = 1;
+            Item.ResearchUnlockCount = 1;
         }
 
         public override void SetDefaults()

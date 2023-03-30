@@ -13,7 +13,7 @@ namespace Redemption.NPCs.Bosses.PatientZero
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Patient Zero");
+            // DisplayName.SetDefault("Patient Zero");
             Main.npcFrameCount[NPC.type] = 2;
 
             NPCID.Sets.MPAllowedEnemies[Type] = true;

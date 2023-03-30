@@ -32,7 +32,7 @@ namespace Redemption.Tiles.Tiles
             if (!tileAbove.HasTile && Main.tile[i, j].HasTile && Main.rand.NextBool(600))
             {
                 WorldGen.PlaceObject(i, j - 1, ModContent.TileType<BabyHiveTile>(), true);
-                NetMessage.SendObjectPlacment(-1, i, j - 1, ModContent.TileType<BabyHiveTile>(), 0, 0, -1, -1);
+                NetMessage.SendObjectPlacement(-1, i, j - 1, ModContent.TileType<BabyHiveTile>(), 0, 0, -1, -1);
             }
         }
 

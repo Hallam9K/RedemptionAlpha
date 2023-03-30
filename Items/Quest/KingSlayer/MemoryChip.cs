@@ -8,10 +8,10 @@ namespace Redemption.Items.Quest.KingSlayer
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Memory Chip");
-            Tooltip.SetDefault("Has no use to you, but it would be a good idea to keep it for now...");
+            // DisplayName.SetDefault("Memory Chip");
+            // Tooltip.SetDefault("Has no use to you, but it would be a good idea to keep it for now...");
 
-            SacrificeTotal = 1;
+            Item.ResearchUnlockCount = 1;
         }
 
 

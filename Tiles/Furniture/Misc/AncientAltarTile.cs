@@ -6,6 +6,7 @@ using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent.ObjectInteractions;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 
@@ -32,9 +33,10 @@ namespace Redemption.Tiles.Furniture.Misc
             DustType = 7;
             MinPick = 500;
             MineResist = 3f;
+            ItemDrop = -1;
             HitSound = CustomSounds.StoneHit;
-            ModTranslation name = CreateMapEntryName();
-            name.SetDefault("Ancient Altar");
+            LocalizedText name = CreateMapEntryName();
+            // name.SetDefault("Ancient Altar");
             AddMapEntry(new Color(120, 190, 40), name);
         }
         public override bool HasSmartInteract(int i, int j, SmartInteractScanSettings settings) => Main.tile[i, j].TileFrameX < 36;
@@ -111,9 +113,9 @@ namespace Redemption.Tiles.Furniture.Misc
         public override string Texture => Redemption.PLACEHOLDER_TEXTURE;
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Ancient Altar");
-            Tooltip.SetDefault("Gives the Cursed Gem" +
-                "\n[c/ff0000:Unbreakable]");
+            // DisplayName.SetDefault("Ancient Altar");
+            /* Tooltip.SetDefault("Gives the Cursed Gem" +
+                "\n[c/ff0000:Unbreakable]"); */
         }
 
         public override void SetDefaults()

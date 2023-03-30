@@ -13,8 +13,8 @@ namespace Redemption.Items.Weapons.PreHM.Summon
     {
         public override void SetStaticDefaults()
         {
-            Tooltip.SetDefault("Summons a nest with a chicken that lobs eggs at enemies");
-            SacrificeTotal = 1;
+            // Tooltip.SetDefault("Summons a nest with a chicken that lobs eggs at enemies");
+            Item.ResearchUnlockCount = 1;
 
             ItemID.Sets.GamepadWholeScreenUseRange[Item.type] = true;
             ItemID.Sets.LockOnIgnoresCollision[Item.type] = true;

@@ -15,7 +15,7 @@ namespace Redemption.Items.Weapons.HM.Melee
         public float[] oldrot = new float[4];
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Wraith Slayer");
+            // DisplayName.SetDefault("Wraith Slayer");
             ProjectileID.Sets.TrailCacheLength[Projectile.type] = 4;
             ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
             ElementID.ProjArcane[Type] = true;
@@ -121,16 +121,16 @@ namespace Redemption.Items.Weapons.HM.Melee
                 Projectile.alpha = 0;
         }
 
-        public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
+        public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
         {
             if (NPCLists.Spirit.Contains(target.type))
-                damage *= 2;
-
-            RedeProjectile.Decapitation(target, ref damage, ref crit);
+                modifiers.FinalDamage *= 2;
         }
 
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
+            RedeProjectile.Decapitation(target, ref damageDone, ref hit.Crit);
+
             if (target.life <= 0 && target.lifeMax >= 50 && (Main.rand.NextBool(6) || NPCLists.Spirit.Contains(target.type)) && NPC.CountNPCS(ModContent.NPCType<WraithSlayer_Samurai>()) < 4)
             {
                 for (int i = 0; i < 20; i++)

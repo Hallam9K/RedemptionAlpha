@@ -15,7 +15,7 @@ namespace Redemption.NPCs.Bosses.KSIII
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Stun Grenade");
+            // DisplayName.SetDefault("Stun Grenade");
             Main.projFrames[Projectile.type] = 3;
         }
         public override void SetDefaults()
@@ -29,7 +29,7 @@ namespace Redemption.NPCs.Bosses.KSIII
             Projectile.ignoreWater = false;
             Projectile.timeLeft = 90;
         }
-        public override void OnHitPlayer(Player target, int damage, bool crit)
+        public override void OnHitPlayer(Player target, Player.HurtInfo info)
         {
             Projectile.Kill();
         }
@@ -67,7 +67,7 @@ namespace Redemption.NPCs.Bosses.KSIII
         public override string Texture => "Redemption/Textures/TransitionTex";
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Flash");
+            // DisplayName.SetDefault("Flash");
         }
 
         public override void SetDefaults()

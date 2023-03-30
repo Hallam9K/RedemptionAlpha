@@ -19,7 +19,7 @@ namespace Redemption.Items.Weapons.PostML.Magic
         public override string Texture => "Redemption/Items/Weapons/PostML/Magic/TeslaCoil";
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Tesla Coil");
+            // DisplayName.SetDefault("Tesla Coil");
             ElementID.ProjThunder[Type] = true;
         }
         public override void SetDefaults()
@@ -160,7 +160,7 @@ namespace Redemption.Items.Weapons.PostML.Magic
                 loop = SlotId.Invalid;
             }
         }
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             target.AddBuff(ModContent.BuffType<ElectrifiedDebuff>(), 180);
         }

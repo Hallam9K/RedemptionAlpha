@@ -3,9 +3,11 @@ using Redemption.Buffs.Debuffs;
 using Redemption.Items.Usable.Summons;
 using Terraria;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 using Terraria.DataStructures;
+using Terraria.GameContent.Metadata;
 
 namespace Redemption.Tiles.Plants
 {
@@ -24,17 +26,14 @@ namespace Redemption.Tiles.Plants
             };
             TileObjectData.newTile.DrawYOffset = 4;
             TileObjectData.addTile(Type);
-            ModTranslation name = CreateMapEntryName();
-            name.SetDefault("Heart of Thorns");
+            LocalizedText name = CreateMapEntryName();
+            // name.SetDefault("Heart of Thorns");
             AddMapEntry(new Color(144, 244, 144), name);
             DustType = DustID.GrassBlades;
             HitSound = SoundID.Grass;
+            TileMaterials.SetForTileId(Type, TileMaterials._materialsByName["Plant"]);
         }
         public override bool IsTileDangerous(int i, int j, Player player) => true;
-        public override void KillMultiTile(int i, int j, int frameX, int frameY)
-        {
-            Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 32, 32, ModContent.ItemType<HeartOfThorns>());
-        }
         public override void NearbyEffects(int i, int j, bool closer)
         {
             Player player = Main.LocalPlayer;

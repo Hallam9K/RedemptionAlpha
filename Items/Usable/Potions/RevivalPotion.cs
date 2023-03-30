@@ -1,4 +1,5 @@
-﻿using Redemption.Items.Placeable.Plants;
+﻿using Microsoft.Xna.Framework;
+using Redemption.Items.Placeable.Plants;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -9,17 +10,21 @@ namespace Redemption.Items.Usable.Potions
     {
         public override void SetStaticDefaults()
         {
-            Tooltip.SetDefault("Use on an unconsious town npc to wake them up" +
-                "\nConsume to cure most debuffs");
-
-            SacrificeTotal = 4;
+            /* Tooltip.SetDefault("Use on an unconsious town npc to wake them up" +
+                "\nConsume to cure most debuffs"); */
+            ItemID.Sets.DrinkParticleColors[Type] = new Color[3] {
+                new Color(255, 136, 96),
+                new Color(252, 85, 101),
+                new Color(255, 49, 87)
+            };
+            Item.ResearchUnlockCount = 4;
         }
 
         public override void SetDefaults()
         {
             Item.width = 20;
             Item.height = 38;
-            Item.maxStack = 9999;
+            Item.maxStack = Item.CommonMaxStack;
             Item.value = Item.buyPrice(0, 10, 0, 0);
             Item.rare = ItemRarityID.Blue;
             Item.healLife = 100;
@@ -61,6 +66,7 @@ namespace Redemption.Items.Usable.Potions
                 .AddIngredient(ItemID.Gel, 8)
                 .AddIngredient(ItemID.BottledWater, 4)
                 .AddTile(TileID.Bottles)
+                .DisableDecraft()
                 .Register();
         }
     }

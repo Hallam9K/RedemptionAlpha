@@ -15,8 +15,8 @@ namespace Redemption.Items.Weapons.PreHM.Melee
     {
         public override void SetStaticDefaults()
         {
-            Tooltip.SetDefault("Critical strikes release homing lightmass");
-            SacrificeTotal = 1;
+            // Tooltip.SetDefault("Critical strikes release homing lightmass");
+            Item.ResearchUnlockCount = 1;
             ElementID.ItemHoly[Type] = true;
         }
 
@@ -40,13 +40,13 @@ namespace Redemption.Items.Weapons.PreHM.Melee
                 Item.RedemptionGlow().glowTexture = ModContent.Request<Texture2D>(Item.ModItem.Texture + "_Glow").Value;
         }
 
-        public override void OnHitNPC(Player player, NPC target, int damage, float knockBack, bool crit)
+        public override void OnHitNPC(Player player, NPC target, NPC.HitInfo hit, int damageDone)
         {
-            if (crit)
+            if (hit.Crit)
             {
                 SoundEngine.PlaySound(SoundID.Item101, player.Center);
                 for (int i = 0; i < Main.rand.Next(4, 7); i++)
-                    Projectile.NewProjectile(player.GetSource_ItemUse(Item), target.Center, new Vector2(Main.rand.NextFloat(-3, 3), Main.rand.NextFloat(-9, -5)), ModContent.ProjectileType<Lightmass>(), 7, knockBack / 2, player.whoAmI);
+                    Projectile.NewProjectile(player.GetSource_ItemUse(Item), target.Center, new Vector2(Main.rand.NextFloat(-3, 3), Main.rand.NextFloat(-9, -5)), ModContent.ProjectileType<Lightmass>(), 7, hit.Knockback / 2, player.whoAmI);
             }
         }
 

@@ -22,7 +22,7 @@ namespace Redemption.Projectiles.Magic
         public override string Texture => "Redemption/Textures/DarkSoulTex";
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Dark Soul");
+            // DisplayName.SetDefault("Dark Soul");
             ProjectileID.Sets.TrailCacheLength[Projectile.type] = 8;
             ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
             ElementID.ProjArcane[Type] = true;
@@ -107,7 +107,7 @@ namespace Redemption.Projectiles.Magic
             if (fakeTimer >= 60)
                 Projectile.Kill();
         }
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             if (CD > 0)
                 return;
@@ -206,7 +206,7 @@ namespace Redemption.Projectiles.Magic
         public override string Texture => Redemption.EMPTY_TEXTURE;
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Dark Soul");
+            // DisplayName.SetDefault("Dark Soul");
             ElementID.ProjArcane[Type] = true;
             ElementID.ProjShadow[Type] = true;
         }
@@ -297,7 +297,7 @@ namespace Redemption.Projectiles.Magic
             if (fakeTimer++ >= 60)
                 Projectile.Kill();
         }
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             if (Projectile.penetrate <= 1)
                 FakeKill();

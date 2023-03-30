@@ -15,12 +15,12 @@ namespace Redemption.Items.Weapons.HM.Ranged
 	{
 		public override void SetStaticDefaults()
 		{
-            Tooltip.SetDefault("Uses grenades as ammo, sticky and bouncy grenades included\n" +
+            /* Tooltip.SetDefault("Uses grenades as ammo, sticky and bouncy grenades included\n" +
                 "Fires flak grenades that penetrate through defense\n" +
                 "\nHolding left-click will charge a stream of grenades with no additional ammo consumption\n" +
-                "'Quite the unreal bang bang and boom boom'");
+                "'Quite the unreal bang bang and boom boom'"); */
             ItemID.Sets.SkipsInitialUseSound[Item.type] = true;
-            SacrificeTotal = 1;
+            Item.ResearchUnlockCount = 1;
         }
 
         public override void SetDefaults()

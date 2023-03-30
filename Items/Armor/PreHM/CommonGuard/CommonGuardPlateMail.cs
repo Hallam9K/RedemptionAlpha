@@ -12,9 +12,9 @@ namespace Redemption.Items.Armor.PreHM.CommonGuard
     {
         public override void SetStaticDefaults()
         {
-            Tooltip.SetDefault("Reduces damage taken by 4%");
+            // Tooltip.SetDefault("Reduces damage taken by 4%");
 
-            SacrificeTotal = 1;
+            Item.ResearchUnlockCount = 1;
         }
 
         public override void SetDefaults()

@@ -20,7 +20,7 @@ namespace Redemption.Items.Weapons.HM.Magic
         public override string Texture => "Redemption/Items/Weapons/HM/Magic/GlobalDischarge";
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Global Discharge");
+            // DisplayName.SetDefault("Global Discharge");
         }
         public override void SetDefaults()
         {
@@ -102,7 +102,7 @@ namespace Redemption.Items.Weapons.HM.Magic
         public override string Texture => "Redemption/Textures/StaticBall";
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Global Discharge");
+            // DisplayName.SetDefault("Global Discharge");
             Main.projFrames[Projectile.type] = 3;
             ElementID.ProjThunder[Type] = true;
         }
@@ -277,9 +277,9 @@ namespace Redemption.Items.Weapons.HM.Magic
                 sound.Volume = MathHelper.Clamp(sound.Volume, 0, 1);
             }
         }
-        public override void ModifyDamageScaling(ref float damageScale)
+        public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
         {
-            damageScale *= (Projectile.velocity.Length() / 10) + .4f;
+            modifiers.FinalDamage *= (Projectile.velocity.Length() / 10) + .4f;
         }
         public override void Kill(int timeLeft)
         {
@@ -291,7 +291,7 @@ namespace Redemption.Items.Weapons.HM.Magic
             if (!Main.dedServ)
                 SoundEngine.PlaySound(CustomSounds.MissileExplosion, Projectile.position);
         }
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             target.AddBuff(ModContent.BuffType<ElectrifiedDebuff>(), 360);
             if (Projectile.ai[1] != 1)

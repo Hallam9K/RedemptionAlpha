@@ -29,7 +29,7 @@ namespace Redemption.NPCs.Bosses.PatientZero
         // >
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Telegraph");
+            // DisplayName.SetDefault("Telegraph");
         }
 
         public override void SetDefaults()

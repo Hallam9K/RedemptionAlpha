@@ -12,10 +12,10 @@ namespace Redemption.Items.Accessories.HM
 	{
 		public override void SetStaticDefaults()
 		{
-            DisplayName.SetDefault("Broken Blade");
-            Tooltip.SetDefault("Hitting enemies with physical melee has a chance to summon a Phantom Cleaver above their heads" +
-                "\n10% increased physical melee damage");
-            SacrificeTotal = 1;
+            // DisplayName.SetDefault("Broken Blade");
+            /* Tooltip.SetDefault("Hitting enemies with physical melee has a chance to summon a Phantom Cleaver above their heads" +
+                "\n10% increased physical melee damage"); */
+            Item.ResearchUnlockCount = 1;
         }
 
         public override void SetDefaults()
@@ -37,7 +37,7 @@ namespace Redemption.Items.Accessories.HM
         public override string Texture => "Redemption/NPCs/Bosses/Cleaver/PhantomCleaver";
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Phantom Cleaver");
+            // DisplayName.SetDefault("Phantom Cleaver");
             ProjectileID.Sets.TrailCacheLength[Projectile.type] = 5;
             ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
         }

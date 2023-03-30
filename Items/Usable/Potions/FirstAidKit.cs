@@ -1,5 +1,6 @@
 ﻿using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria;
 
 namespace Redemption.Items.Usable.Potions
 {
@@ -7,10 +8,10 @@ namespace Redemption.Items.Usable.Potions
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("First-Aid Kit");
-            Tooltip.SetDefault("Does not give Potion Sickness\n" +
-                "'These are in limited supply'");
-            SacrificeTotal = 5;
+            // DisplayName.SetDefault("First-Aid Kit");
+            /* Tooltip.SetDefault("Does not give Potion Sickness\n" +
+                "'These are in limited supply'"); */
+            Item.ResearchUnlockCount = 5;
         }
 
         public override void SetDefaults()
@@ -18,7 +19,7 @@ namespace Redemption.Items.Usable.Potions
             Item.width = 20;
             Item.height = 22;
             Item.useTurn = true;
-            Item.maxStack = 9999;
+            Item.maxStack = Item.CommonMaxStack;
             Item.healLife = 175;
             Item.useAnimation = 40;
             Item.useTime = 40;

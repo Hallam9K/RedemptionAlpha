@@ -13,14 +13,14 @@ namespace Redemption.Items.Materials.PostML
     {
         public override void SetStaticDefaults()
         {
-            SacrificeTotal = 25;
+            Item.ResearchUnlockCount = 25;
             Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(5, 4));
         }
         public override void SetDefaults()
         {
             Item.width = 44;
             Item.height = 28;
-            Item.maxStack = 9999;
+            Item.maxStack = Item.CommonMaxStack;
             Item.value = Item.sellPrice(0, 0, 50, 0);
             Item.rare = ItemRarityID.Purple; 
         }

@@ -14,7 +14,7 @@ namespace Redemption.Projectiles.Melee
         public override string Texture => Redemption.EMPTY_TEXTURE;
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Arcane Beam");
+            // DisplayName.SetDefault("Arcane Beam");
         }
 
         public override void SetDefaults()

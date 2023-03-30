@@ -9,7 +9,7 @@ namespace Redemption.NPCs.Bosses.Neb
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Cosmic Eye");
+            // DisplayName.SetDefault("Cosmic Eye");
         }
         public override void SetDefaults()
         {

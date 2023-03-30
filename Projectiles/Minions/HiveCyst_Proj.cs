@@ -13,7 +13,7 @@ namespace Redemption.Projectiles.Minions
         public override string Texture => "Redemption/NPCs/Bosses/SeedOfInfection/SeedGrowth";
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Hive Cyst");
+            // DisplayName.SetDefault("Hive Cyst");
             Main.projFrames[Projectile.type] = 4;
 
             ProjectileID.Sets.CultistIsResistantTo[Projectile.type] = true;
@@ -37,7 +37,7 @@ namespace Redemption.Projectiles.Minions
             Projectile.alpha = 255;
             Projectile.usesLocalNPCImmunity = true;
         }
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             SoundEngine.PlaySound(SoundID.NPCHit13, Projectile.position);
             Projectile.localNPCImmunity[target.whoAmI] = 20;

@@ -4,6 +4,7 @@ using Redemption.Items.Placeable.Furniture.Lab;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.Enums;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 
@@ -35,14 +36,10 @@ namespace Redemption.Tiles.Furniture.Lab
             DustType = ModContent.DustType<LabPlatingDust>();
             MinPick = 200;
             MineResist = 4f;
-			ModTranslation name = CreateMapEntryName();
-			name.SetDefault("Laboratory Intercom");
+			LocalizedText name = CreateMapEntryName();
+			// name.SetDefault("Laboratory Intercom");
 			AddMapEntry(new Color(145, 153, 159), name);
 		}
         public override bool CanExplode(int i, int j) => false;
-        public override void KillMultiTile(int i, int j, int frameX, int frameY)
-        {
-            Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 32, 32, ModContent.ItemType<LabIntercom>());
-        }
     }
 }

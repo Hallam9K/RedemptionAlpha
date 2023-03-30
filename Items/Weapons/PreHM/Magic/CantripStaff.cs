@@ -11,12 +11,12 @@ namespace Redemption.Items.Weapons.PreHM.Magic
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Cantrip Staff");
-            Tooltip.SetDefault("Casts a ball of ember" +
-                "\nCasts a larger fireball every 4 consecutive shots");
+            // DisplayName.SetDefault("Cantrip Staff");
+            /* Tooltip.SetDefault("Casts a ball of ember" +
+                "\nCasts a larger fireball every 4 consecutive shots"); */
             Item.staff[Item.type] = true;
 
-            SacrificeTotal = 1;
+            Item.ResearchUnlockCount = 1;
         }
 
         public override void SetDefaults()

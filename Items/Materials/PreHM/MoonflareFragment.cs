@@ -13,17 +13,17 @@ namespace Redemption.Items.Materials.PreHM
     {
         public override void SetStaticDefaults()
         {
-            Tooltip.SetDefault("'Shines in the moon's reflective light'");
+            // Tooltip.SetDefault("'Shines in the moon's reflective light'");
             Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(5, 6));
             ItemID.Sets.AnimatesAsSoul[Item.type] = true;
 
-            SacrificeTotal = 10;
+            Item.ResearchUnlockCount = 10;
         }
         public override void SetDefaults()
         {
             Item.width = 16;
             Item.height = 20;
-            Item.maxStack = 9999;
+            Item.maxStack = Item.CommonMaxStack;
             Item.value = 15;
             Item.rare = ItemRarityID.Blue;
         }

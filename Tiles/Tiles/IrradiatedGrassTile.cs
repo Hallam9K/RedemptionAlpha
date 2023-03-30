@@ -60,15 +60,20 @@ namespace Redemption.Tiles.Tiles
             if (!tileAbove.HasTile && Main.tile[i, j].HasTile && Main.rand.NextBool(15) && Main.tile[i, j - 1].LiquidAmount == 0)
             {
                 WorldGen.PlaceObject(i, j - 1, ModContent.TileType<PurityWastelandFoliage>(), true, Main.rand.Next(14));
-                NetMessage.SendObjectPlacment(-1, i, j - 1, ModContent.TileType<PurityWastelandFoliage>(), Main.rand.Next(14), 0, -1, -1);
+                NetMessage.SendObjectPlacement(-1, i, j - 1, ModContent.TileType<PurityWastelandFoliage>(), Main.rand.Next(14), 0, -1, -1);
             }
             if (Main.rand.NextBool(4))
-                WorldGen.SpreadGrass(i + Main.rand.Next(-1, 1), j + Main.rand.Next(-1, 1), ModContent.TileType<IrradiatedDirtTile>(), Type, false, 0);
+                WorldGen.SpreadGrass(i + Main.rand.Next(-1, 1), j + Main.rand.Next(-1, 1), ModContent.TileType<IrradiatedDirtTile>(), Type, false);
 
             if (NPC.downedMechBossAny && !tileAbove.HasTile && Main.tile[i, j].HasTile && Main.rand.NextBool(100))
             {
                 WorldGen.PlaceObject(i, j - 1, ModContent.TileType<XenomiteCrystalTile>(), true);
-                NetMessage.SendObjectPlacment(-1, i, j - 1, ModContent.TileType<XenomiteCrystalTile>(), 0, 0, -1, -1);
+                NetMessage.SendObjectPlacement(-1, i, j - 1, ModContent.TileType<XenomiteCrystalTile>(), 0, 0, -1, -1);
+            }
+            if (NPC.downedMechBossAny && !tileAbove.HasTile && Main.tile[i, j].HasTile && Main.rand.NextBool(600))
+            {
+                WorldGen.PlaceObject(i, j - 1, ModContent.TileType<XenomiteCrystalBigTile>());
+                NetMessage.SendObjectPlacement(-1, i, j - 1, ModContent.TileType<XenomiteCrystalBigTile>(), 0, 0, -1, -1);
             }
         }
     }

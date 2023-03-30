@@ -16,7 +16,7 @@ namespace Redemption.Projectiles.Hostile
         public override string Texture => Redemption.EMPTY_TEXTURE;
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Eye Beam");
+            // DisplayName.SetDefault("Eye Beam");
             ElementID.ProjThunder[Type] = true;
         }
 
@@ -37,13 +37,13 @@ namespace Redemption.Projectiles.Hostile
             NPC host = Main.npc[(int)Projectile.ai[0]];
             return target == host.Redemption().attacker ? null : false;
         }
-        public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection) => damage *= 4;
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers) => modifiers.FinalDamage *= 4;
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             if (Main.rand.NextBool(2))
                 target.AddBuff(ModContent.BuffType<ElectrifiedDebuff>(), 60);
         }
-        public override void OnHitPlayer(Player target, int damage, bool crit)
+        public override void OnHitPlayer(Player target, Player.HurtInfo info)
         {
             if (Main.rand.NextBool(2))
                 target.AddBuff(BuffID.Electrified, 60);

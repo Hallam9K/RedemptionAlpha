@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 using Microsoft.Xna.Framework.Graphics;
@@ -25,8 +26,8 @@ namespace Redemption.Tiles.Furniture.Misc
             TileObjectData.newTile.CoordinatePadding = 2;
             TileObjectData.newTile.AnchorWall = true;
             TileObjectData.addTile(Type);
-            ModTranslation name = CreateMapEntryName();
-            name.SetDefault("Niric Cog");
+            LocalizedText name = CreateMapEntryName();
+            // name.SetDefault("Niric Cog");
             AddMapEntry(new Color(117, 117, 126), name);
             DustType = ModContent.DustType<NiricBrassDust>();
             HitSound = SoundID.Tink;
@@ -68,14 +69,14 @@ namespace Redemption.Tiles.Furniture.Misc
         public override string Texture => "Redemption/Tiles/Furniture/Misc/NirinCog";
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Niric Cog");
+            // DisplayName.SetDefault("Niric Cog");
         }
         public override void SetDefaults()
         {
             Item.DefaultToPlaceableTile(ModContent.TileType<NirinCogMediumTile>(), 0);
             Item.width = 32;
             Item.height = 32;
-            Item.maxStack = 9999;
+            Item.maxStack = Item.CommonMaxStack;
             Item.value = Item.value = Item.sellPrice(0, 2, 0, 0);
             Item.rare = ItemRarityID.Blue;
         }
@@ -95,8 +96,8 @@ namespace Redemption.Tiles.Furniture.Misc
             TileObjectData.newTile.CoordinatePadding = 2;
             TileObjectData.newTile.AnchorWall = true;
             TileObjectData.addTile(Type);
-            ModTranslation name = CreateMapEntryName();
-            name.SetDefault("Niric Cog");
+            LocalizedText name = CreateMapEntryName();
+            // name.SetDefault("Niric Cog");
             AddMapEntry(new Color(117, 117, 126), name);
             DustType = DustID.Lead;
             HitSound = SoundID.Tink;
@@ -138,14 +139,14 @@ namespace Redemption.Tiles.Furniture.Misc
         public override string Texture => "Redemption/Tiles/Furniture/Misc/NirinCog";
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Big Niric Cog");
+            // DisplayName.SetDefault("Big Niric Cog");
         }
         public override void SetDefaults()
         {
             Item.DefaultToPlaceableTile(ModContent.TileType<NirinCogBigTile>(), 0);
             Item.width = 32;
             Item.height = 32;
-            Item.maxStack = 9999;
+            Item.maxStack = Item.CommonMaxStack;
             Item.value = Item.value = Item.sellPrice(0, 3, 0, 0);
             Item.rare = ItemRarityID.Blue;
         }

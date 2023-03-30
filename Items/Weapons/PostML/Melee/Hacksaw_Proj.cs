@@ -18,7 +18,7 @@ namespace Redemption.Items.Weapons.PostML.Melee
         public float[] oldrot = new float[4];
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Automated Hacksaw");
+            // DisplayName.SetDefault("Automated Hacksaw");
             Main.projFrames[Projectile.type] = 2;
             ProjectileID.Sets.TrailCacheLength[Projectile.type] = 4;
             ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
@@ -169,14 +169,14 @@ namespace Redemption.Items.Weapons.PostML.Melee
             player.itemAnimation = 2;
             player.itemRotation = (float)Math.Atan2(Projectile.velocity.Y * Projectile.direction, Projectile.velocity.X * Projectile.direction);
         }
-        public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
+        public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
         {
             if (Projectile.ai[0] == 2)
             {
                 Projectile.localAI[0] = 20;
                 damageIncrease += 0.04f;
                 damageIncrease = MathHelper.Clamp(damageIncrease, 0, 4);
-                damage = (int)(damage * (damageIncrease + 1));
+                modifiers.FinalDamage *= damageIncrease + 1;
             }
         }
         public override bool PreDraw(ref Color lightColor)

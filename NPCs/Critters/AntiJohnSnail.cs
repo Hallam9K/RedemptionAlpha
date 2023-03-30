@@ -9,8 +9,9 @@ namespace Redemption.NPCs.Critters
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Anti-John Snail");
+            // DisplayName.SetDefault("Anti-John Snail");
             Main.npcFrameCount[Type] = 6;
+            NPCID.Sets.ShimmerTransformToNPC[NPC.type] = ModContent.NPCType<JohnSnail>();
             NPCID.Sets.CountsAsCritter[Type] = true;
             NPCID.Sets.DontDoHardmodeScaling[Type] = true;
             NPCID.Sets.TakesDamageFromHostilesWithoutBeingFriendly[Type] = true;
@@ -40,7 +41,7 @@ namespace Redemption.NPCs.Critters
         }
 
         public override bool CanHitPlayer(Player target, ref int cooldownSlot) => false;
-        public override void HitEffect(int hitDirection, double damage)
+        public override void HitEffect(NPC.HitInfo hit)
         {
             if (NPC.life <= 0)
             {

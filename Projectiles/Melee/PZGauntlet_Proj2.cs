@@ -13,7 +13,7 @@ namespace Redemption.Projectiles.Melee
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Infectious Fist");
+            // DisplayName.SetDefault("Infectious Fist");
             Main.projFrames[Projectile.type] = 7;
             ElementID.ProjPoison[Type] = true;
         }

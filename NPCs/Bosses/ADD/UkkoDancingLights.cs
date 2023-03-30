@@ -13,7 +13,7 @@ namespace Redemption.NPCs.Bosses.ADD
         public override string Texture => "Redemption/Textures/WhiteOrb";
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Dancing Light");
+            // DisplayName.SetDefault("Dancing Light");
             ElementID.ProjHoly[Type] = true;
         }
         public override void SetDefaults()

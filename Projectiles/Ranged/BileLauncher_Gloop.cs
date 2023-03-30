@@ -12,7 +12,7 @@ namespace Redemption.Projectiles.Ranged
         public override string Texture => "Redemption/Projectiles/Hostile/OozeBall_Proj";
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Radioactive Bile");
+            // DisplayName.SetDefault("Radioactive Bile");
             Main.projFrames[Projectile.type] = 4;
             ElementID.ProjPoison[Type] = true;
         }

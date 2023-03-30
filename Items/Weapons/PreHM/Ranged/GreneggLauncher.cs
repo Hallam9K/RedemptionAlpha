@@ -9,9 +9,9 @@ namespace Redemption.Items.Weapons.PreHM.Ranged
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Grenegg Launcher");
-            Tooltip.SetDefault("Uses Egg Bombs as ammo");
-            SacrificeTotal = 1;
+            // DisplayName.SetDefault("Grenegg Launcher");
+            // Tooltip.SetDefault("Uses Egg Bombs as ammo");
+            Item.ResearchUnlockCount = 1;
         }
 
         public override void SetDefaults()

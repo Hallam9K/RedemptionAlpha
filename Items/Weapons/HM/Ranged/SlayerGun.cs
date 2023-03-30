@@ -18,11 +18,11 @@ namespace Redemption.Items.Weapons.HM.Ranged
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Hyper-Tech Blaster");
-            Tooltip.SetDefault("\n(2-6[i:" + ModContent.ItemType<EnergyPack>() + "]) Replaces normal bullets with Energy Bolts"
+            // DisplayName.SetDefault("Hyper-Tech Blaster");
+            /* Tooltip.SetDefault("\n(2-6[i:" + ModContent.ItemType<EnergyPack>() + "]) Replaces normal bullets with Energy Bolts"
                 + "\nRight-clicking changes type of fire\n" +
-                "Requires an Energy Pack to be in your inventory");
-            SacrificeTotal = 1;
+                "Requires an Energy Pack to be in your inventory"); */
+            Item.ResearchUnlockCount = 1;
         }
 
         public override void SetDefaults()

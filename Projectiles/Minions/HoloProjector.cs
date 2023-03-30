@@ -8,7 +8,7 @@ namespace Redemption.Projectiles.Minions
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Hologram Projector");
+            // DisplayName.SetDefault("Hologram Projector");
             Main.projFrames[Projectile.type] = 4;
         }
         public override void SetDefaults()

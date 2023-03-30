@@ -5,6 +5,7 @@ using Redemption.Items.Placeable.Furniture.Shade;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 
@@ -25,17 +26,13 @@ namespace Redemption.Tiles.Furniture.Shade
             TileObjectData.newTile.RandomStyleRange = 5;
             TileObjectData.newTile.DrawYOffset = 2;
             TileObjectData.addTile(Type);
-            ModTranslation name = CreateMapEntryName();
-            name.SetDefault("Wax Candles");
+            LocalizedText name = CreateMapEntryName();
+            // name.SetDefault("Wax Candles");
             AddMapEntry(new Color(141, 132, 172), name);
             AdjTiles = new int[] { TileID.Candles };
             AddToArray(ref TileID.Sets.RoomNeeds.CountsAsTorch);
             DustType = ModContent.DustType<MaskDust>();
             AnimationFrameHeight = 36;
-        }
-        public override void KillMultiTile(int i, int j, int frameX, int frameY)
-        {
-            Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 16, 32, ModContent.ItemType<WaxCandles>());
         }
         public override void AnimateTile(ref int frame, ref int frameCounter)
         {

@@ -13,10 +13,10 @@ namespace Redemption.Items.Weapons.HM.Magic
     {
         public override void SetStaticDefaults()
         {
-            Tooltip.SetDefault("Hold left-click to conjure a tiny sun and charge it up, draining mana\n" +
-                "Release once charged enough to launch at cursor position");
+            /* Tooltip.SetDefault("Hold left-click to conjure a tiny sun and charge it up, draining mana\n" +
+                "Release once charged enough to launch at cursor position"); */
 
-            SacrificeTotal = 1;
+            Item.ResearchUnlockCount = 1;
         }
 
         public override void SetDefaults()

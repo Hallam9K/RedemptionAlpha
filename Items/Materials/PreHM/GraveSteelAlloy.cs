@@ -9,13 +9,14 @@ namespace Redemption.Items.Materials.PreHM
     {
         public override void SetStaticDefaults()
         {
-            SacrificeTotal = 25;
+            Item.ResearchUnlockCount = 25;
+            ItemID.Sets.SortingPriorityMaterials[Item.type] = 55;
         }
         public override void SetDefaults()
         {
             Item.width = 30;
             Item.height = 24;
-            Item.maxStack = 9999;
+            Item.maxStack = Item.CommonMaxStack;
             Item.value = Item.sellPrice(0, 0, 0, 10);
             Item.rare = ItemRarityID.Blue;
             Item.useTurn = true;

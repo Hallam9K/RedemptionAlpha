@@ -13,12 +13,12 @@ namespace Redemption.Items.Weapons.HM.Melee
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Spellsong, Core of the West");
-            Tooltip.SetDefault("Slashes emit arcane waves" +
-                "\nHolding left-click will do a 3-swing combo, ending with Spellsong shooting a beam that conjures mirages of itself");
+            // DisplayName.SetDefault("Spellsong, Core of the West");
+            /* Tooltip.SetDefault("Slashes emit arcane waves" +
+                "\nHolding left-click will do a 3-swing combo, ending with Spellsong shooting a beam that conjures mirages of itself"); */
 
             ItemID.Sets.SkipsInitialUseSound[Item.type] = true;
-            SacrificeTotal = 1;
+            Item.ResearchUnlockCount = 1;
         }
 
         public override void SetDefaults()

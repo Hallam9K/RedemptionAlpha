@@ -11,12 +11,12 @@ namespace Redemption.Items.Armor.HM.Xenomite
     {
         public override void SetStaticDefaults()
         {
-            Tooltip.SetDefault("7% increased damage\n" +
-            "10% increased critical strike chance");
+            /* Tooltip.SetDefault("7% increased damage\n" +
+            "10% increased critical strike chance"); */
 
             ArmorIDs.Head.Sets.DrawHead[EquipLoader.GetEquipSlot(Mod, Name, EquipType.Head)] = false;
 
-            SacrificeTotal = 1;
+            Item.ResearchUnlockCount = 1;
         }
 
         public override void SetDefaults()

@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Terraria;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ID;
 using Redemption.Items.Materials.PreHM;
@@ -10,11 +11,13 @@ namespace Redemption.Tiles.Ores
 	{
 		public override void SetStaticDefaults()
 		{
-			Main.tileSolid[Type] = true;
+            Main.tileSolid[Type] = true;
 			Main.tileMergeDirt[Type] = true;
             Main.tileSpelunker[Type] = true;
             Main.tileBlockLight[Type] = true;
             Main.tileLighted[Type] = true;
+            Main.tileShine2[Type] = true; // Modifies the draw color slightly.
+            Main.tileShine[Type] = 975; // How often tiny dust appear off this tile. Larger is less frequently
             Main.tileOreFinderPriority[Type] = 320;
             TileID.Sets.Ore[Type] = true;
             DustType = DustID.Torch;
@@ -22,8 +25,8 @@ namespace Redemption.Tiles.Ores
             MinPick = 100;
             MineResist = 1.4f;
             HitSound = CustomSounds.DragonLeadHit;
-            ModTranslation name = CreateMapEntryName();
-            name.SetDefault("Dragon-Lead Ore");
+            LocalizedText name = CreateMapEntryName();
+            // name.SetDefault("Dragon-Lead Ore");
             AddMapEntry(new Color(177, 142, 142), name);
         }
         public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)

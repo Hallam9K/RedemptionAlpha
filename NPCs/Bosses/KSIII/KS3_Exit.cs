@@ -8,7 +8,7 @@ namespace Redemption.NPCs.Bosses.KSIII
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("King Slayer III");
+            // DisplayName.SetDefault("King Slayer III");
             Main.projFrames[Projectile.type] = 14;
         }
         public override void SetDefaults()

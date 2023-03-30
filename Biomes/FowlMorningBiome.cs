@@ -8,7 +8,7 @@ namespace Redemption.Biomes
         public override string BestiaryIcon => "Redemption/Textures/Bestiary/FowlMorningIcon";
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Fowl Morning");
+            // DisplayName.SetDefault("Fowl Morning");
         }
         public override int Music => MusicLoader.GetMusicSlot("Redemption/Sounds/Music/FowlMorning");
         public override SceneEffectPriority Priority => SceneEffectPriority.Event;

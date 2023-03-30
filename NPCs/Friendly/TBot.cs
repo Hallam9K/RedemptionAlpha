@@ -27,6 +27,9 @@ using Microsoft.Xna.Framework.Graphics;
 using Redemption.Items.Donator.Lordfunnyman;
 using Terraria.GameContent;
 using ReLogic.Content;
+using Redemption.Items.Placeable.Containers;
+using Redemption.Items.Placeable.Furniture.Lab;
+using Redemption.Items.Tools.PostML;
 
 namespace Redemption.NPCs.Friendly
 {
@@ -35,7 +38,7 @@ namespace Redemption.NPCs.Friendly
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Friendly T-Bot");
+            // DisplayName.SetDefault("Friendly T-Bot");
             Main.npcFrameCount[NPC.type] = 21;
             NPCID.Sets.HatOffsetY[NPC.type] = -4;
             NPCID.Sets.ExtraFramesCount[Type] = 5;
@@ -86,7 +89,7 @@ namespace Redemption.NPCs.Friendly
             });
         }
 
-        public override void HitEffect(int hitDirection, double damage)
+        public override void HitEffect(NPC.HitInfo hit)
         {
             if (NPC.life <= 0)
             {
@@ -108,7 +111,7 @@ namespace Redemption.NPCs.Friendly
             return false;
         }
 
-        public override bool CanTownNPCSpawn(int numTownNPCs, int money)
+        public override bool CanTownNPCSpawn(int numTownNPCs)
         {
             return RedeBossDowned.downedSeed && !NPC.AnyNPCs(ModContent.NPCType<TBotUnconscious>()) && !NPC.AnyNPCs(ModContent.NPCType<TBot_Intro>()) && !RedeHelper.AnyProjectiles(ModContent.ProjectileType<AdamPortal>());
         }
@@ -222,11 +225,11 @@ namespace Redemption.NPCs.Friendly
         }
 
         public static int FDisk;
-        public override void OnChatButtonClicked(bool firstButton, ref bool shop)
+        public override void OnChatButtonClicked(bool firstButton, ref string shopName)
         {
             Player player = Main.player[Main.myPlayer];
             if (firstButton)
-                shop = true;
+                shopName = "Shop";
             else
             {
                 FDisk = 0;
@@ -335,87 +338,42 @@ namespace Redemption.NPCs.Friendly
                 _ => "Seems like you aren't holding a floppy disk in your hand, or you just don't have one. If you show me them, I can tell you what they say.",
             };
         }
-        public override void SetupShop(Chest shop, ref int nextSlot)
+        public override void AddShops()
         {
-            Player player = Main.player[Main.myPlayer];
-            if (Main.hardMode)
-                shop.item[nextSlot++].SetDefaults(ModContent.ItemType<NuclearWarhead>());
+            var npcShop = new NPCShop(Type)
+                .Add<NuclearWarhead>(Condition.Hardmode)
+                .Add<IrradiatedStone>(RedeConditions.NukeDropped, Condition.InGraveyard)
+                .Add<IrradiatedGrassSeeds>(RedeConditions.NukeDropped, Condition.InGraveyard)
+                .Add<IrradiatedCrimstone>(RedeConditions.NukeDropped, Condition.InGraveyard, Condition.BloodMoon, Condition.CrimsonWorld)
+                .Add<IrradiatedCrimsonGrassSeeds>(RedeConditions.NukeDropped, Condition.InGraveyard, Condition.BloodMoon, Condition.CrimsonWorld)
+                .Add<IrradiatedEbonstone>(RedeConditions.NukeDropped, Condition.InGraveyard, Condition.BloodMoon, Condition.CorruptWorld)
+                .Add<IrradiatedCorruptGrassSeeds>(RedeConditions.NukeDropped, Condition.InGraveyard, Condition.BloodMoon, Condition.CorruptWorld)
+                .Add<CrystalSerum>(RedeConditions.NukeDropped)
+                .Add<BleachedSolution>(RedeConditions.NukeDropped)
+                .Add<GasMask>(RedeConditions.NukeDropped)
+                .Add<HazmatSuit4>(RedeConditions.NukeDropped, RedeConditions.IsFinlandDay)
+                .Add<HazmatSuit>(RedeConditions.NukeDropped, RedeConditions.IsNotFinlandDay)
+                .Add<AIChip>(Condition.Hardmode)
+                .Add<CarbonMyofibre>(Condition.Hardmode)
+                .Add<Capacitor>(Condition.Hardmode)
+                .Add<Plating>(Condition.Hardmode)
+                .Add<MiniWarhead>(Condition.DownedMechBossAll)
+                .Add<GeigerMuller>(Condition.DownedMechBossAll)
+                .Add<IOLocator>(Condition.DownedMechBossAll)
+                .Add<RadiationPill>(Condition.DownedMechBossAll)
+                .Add<AnomalyDetector>(RedeConditions.DownedSeed)
+                .Add<MedicOutfit>()
+                .Add<MedicLegs>()
+                .Add<MedicBackpack>()
+                .Add<AdamHead>(RedeConditions.IsTBotHead)
+                .Add<ZoneAccessPanel1>(new Condition("", () => RedeBossDowned.downedJanitor && !LabArea.labAccess[0]))
+                .Add<ZoneAccessPanel2>(new Condition("", () => RedeBossDowned.downedBehemoth && !LabArea.labAccess[1]))
+                .Add<ZoneAccessPanel3>(new Condition("", () => RedeBossDowned.downedBlisterface && !LabArea.labAccess[2]))
+                .Add<ZoneAccessPanel4>(new Condition("", () => RedeBossDowned.downedVolt && !LabArea.labAccess[3]))
+                .Add<ZoneAccessPanel5>(new Condition("", () => RedeBossDowned.downedMACE && !LabArea.labAccess[4]))
+                .Add<ZoneAccessPanel6>(new Condition("", () => RedeBossDowned.downedPZ && !LabArea.labAccess[5]));
 
-            if (RedeBossDowned.nukeDropped)
-            {
-                if (player.ZoneGraveyard)
-                {
-                    shop.item[nextSlot++].SetDefaults(ModContent.ItemType<IrradiatedStone>());
-                    shop.item[nextSlot++].SetDefaults(ModContent.ItemType<IrradiatedGrassSeeds>());
-                    if (Main.bloodMoon)
-                    {
-                        if (WorldGen.crimson)
-                        {
-                            shop.item[nextSlot++].SetDefaults(ModContent.ItemType<IrradiatedCrimstone>());
-                            shop.item[nextSlot++].SetDefaults(ModContent.ItemType<IrradiatedCrimsonGrassSeeds>());
-                        }
-                        else
-                        {
-                            shop.item[nextSlot++].SetDefaults(ModContent.ItemType<IrradiatedEbonstone>());
-                            shop.item[nextSlot++].SetDefaults(ModContent.ItemType<IrradiatedCorruptGrassSeeds>());
-                        }
-                    }
-                }
-                shop.item[nextSlot++].SetDefaults(ModContent.ItemType<CrystalSerum>());
-                shop.item[nextSlot++].SetDefaults(ModContent.ItemType<BleachedSolution>());
-                shop.item[nextSlot++].SetDefaults(ModContent.ItemType<GasMask>());
-                if (Redemption.FinlandDay)
-                    shop.item[nextSlot++].SetDefaults(ModContent.ItemType<HazmatSuit4>());
-                else
-                    shop.item[nextSlot++].SetDefaults(ModContent.ItemType<HazmatSuit>());
-            }
-            if (Main.hardMode)
-            {
-                shop.item[nextSlot++].SetDefaults(ModContent.ItemType<AIChip>());
-                shop.item[nextSlot++].SetDefaults(ModContent.ItemType<CarbonMyofibre>());
-                shop.item[nextSlot++].SetDefaults(ModContent.ItemType<Capacitor>());
-                shop.item[nextSlot++].SetDefaults(ModContent.ItemType<Plating>());
-            }
-            if (NPC.downedMechBoss1 && NPC.downedMechBoss2 && NPC.downedMechBoss3)
-            {
-                shop.item[nextSlot++].SetDefaults(ModContent.ItemType<MiniWarhead>());
-                shop.item[nextSlot++].SetDefaults(ModContent.ItemType<GeigerMuller>());
-                shop.item[nextSlot++].SetDefaults(ModContent.ItemType<IOLocator>());
-                shop.item[nextSlot++].SetDefaults(ModContent.ItemType<RadiationPill>());
-            }
-            if (RedeBossDowned.downedSeed)
-                shop.item[nextSlot++].SetDefaults(ModContent.ItemType<AnomalyDetector>());
-            /*if (NPC.downedMoonlord)
-            {
-                shop.item[nextSlot].SetDefaults(ModContent.ItemType<TerraBombaPart1>());
-                nextSlot++;
-                shop.item[nextSlot].SetDefaults(ModContent.ItemType<TerraBombaPart2>());
-                nextSlot++;
-                shop.item[nextSlot].SetDefaults(ModContent.ItemType<TerraBombaPart3>());
-                nextSlot++;
-            }
-            if (RedeWorld.downedVolt)
-            {
-                shop.item[nextSlot].SetDefaults(ModContent.ItemType<TeslaCannon>());
-                nextSlot++;
-            }*/
-            shop.item[nextSlot++].SetDefaults(ModContent.ItemType<MedicOutfit>());
-            shop.item[nextSlot++].SetDefaults(ModContent.ItemType<MedicLegs>());
-            shop.item[nextSlot++].SetDefaults(ModContent.ItemType<MedicBackpack>());
-            if (player.IsTBotHead())
-                shop.item[nextSlot++].SetDefaults(ModContent.ItemType<AdamHead>());
-            if (RedeBossDowned.downedJanitor && !LabArea.labAccess[0])
-                shop.item[nextSlot++].SetDefaults(ModContent.ItemType<ZoneAccessPanel1>());
-            if (RedeBossDowned.downedBehemoth && !LabArea.labAccess[1])
-                shop.item[nextSlot++].SetDefaults(ModContent.ItemType<ZoneAccessPanel2>());
-            if (RedeBossDowned.downedBlisterface && !LabArea.labAccess[2])
-                shop.item[nextSlot++].SetDefaults(ModContent.ItemType<ZoneAccessPanel3>());
-            if (RedeBossDowned.downedVolt && !LabArea.labAccess[3])
-                shop.item[nextSlot++].SetDefaults(ModContent.ItemType<ZoneAccessPanel4>());
-            if (RedeBossDowned.downedMACE && !LabArea.labAccess[4])
-                shop.item[nextSlot++].SetDefaults(ModContent.ItemType<ZoneAccessPanel5>());
-            if (RedeBossDowned.downedPZ && !LabArea.labAccess[5])
-                shop.item[nextSlot++].SetDefaults(ModContent.ItemType<ZoneAccessPanel6>());
+            npcShop.Register();
         }
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {

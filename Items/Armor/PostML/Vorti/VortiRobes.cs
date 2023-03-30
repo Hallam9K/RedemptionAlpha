@@ -10,13 +10,13 @@ namespace Redemption.Items.Armor.PostML.Vorti
     {
         public override void SetStaticDefaults()
         {
-            Tooltip.SetDefault("+100 max life"
+            /* Tooltip.SetDefault("+100 max life"
                 + "\n15% increased magic damage"
-                + "\n5% increased magic critical strike chance");
+                + "\n5% increased magic critical strike chance"); */
 
             ArmorIDs.Body.Sets.HidesArms[EquipLoader.GetEquipSlot(Mod, Name, EquipType.Body)] = true;
             ArmorIDs.Body.Sets.HidesTopSkin[EquipLoader.GetEquipSlot(Mod, Name, EquipType.Body)] = true;
-            SacrificeTotal = 1;
+            Item.ResearchUnlockCount = 1;
         }
         public override void SetDefaults()
         {

@@ -18,7 +18,7 @@ namespace Redemption.Projectiles.Magic
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Earthbind");
+            // DisplayName.SetDefault("Earthbind");
             Main.projFrames[Projectile.type] = 21;
         }
 
@@ -103,7 +103,7 @@ namespace Redemption.Projectiles.Magic
         public override string Texture => "Redemption/Textures/EarthbindEffect";
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Earthbind");
+            // DisplayName.SetDefault("Earthbind");
         }
 
         public override void SetDefaults()

@@ -33,7 +33,7 @@ namespace Redemption.UI
             Button.Top.Set(0, 0f);
             Button.Width.Set(130, 0f);
             Button.Height.Set(70, 0f);
-            Button.OnClick += new MouseEvent(YesClicked);
+            Button.OnLeftClick += new MouseEvent(YesClicked);
             BgSprite.Append(Button);
 
             Append(BgSprite);
@@ -47,7 +47,7 @@ namespace Redemption.UI
             Button2.Top.Set(0, 0f);
             Button2.Width.Set(130, 0f);
             Button2.Height.Set(70, 0f);
-            Button2.OnClick += new MouseEvent(NoClicked);
+            Button2.OnLeftClick += new MouseEvent(NoClicked);
             BgSprite2.Append(Button2);
 
             Append(BgSprite2);

@@ -7,8 +7,8 @@ namespace Redemption.Buffs
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Weapon Imbue: Nitroglycerine");
-			Description.SetDefault("Melee attacks gain the Explosive bonus");
+			// DisplayName.SetDefault("Weapon Imbue: Nitroglycerine");
+			// Description.SetDefault("Melee attacks gain the Explosive bonus");
 			Main.persistentBuff[Type] = true;
 			Main.meleeBuff[Type] = true;
         }

@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.Enums;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 using Terraria.DataStructures;
@@ -34,9 +35,7 @@ namespace Redemption.Tiles.Furniture.Shade
             TileObjectData.newTile.WaterPlacement = LiquidPlacement.NotAllowed;
             TileObjectData.newTile.LavaPlacement = LiquidPlacement.NotAllowed;
             TileObjectData.addTile(Type);
-            ModTranslation name = CreateMapEntryName();
-            name.SetDefault("Shadestone Lamp");
-            AddMapEntry(new Color(59, 61, 87), name);
+            AddMapEntry(new Color(59, 61, 87), Language.GetText("MapObject.FloorLamp"));
             AddToArray(ref TileID.Sets.RoomNeeds.CountsAsTorch);
             DustType = ModContent.DustType<ShadestoneDust>();
             AnimationFrameHeight = 54;
@@ -106,11 +105,6 @@ namespace Redemption.Tiles.Furniture.Shade
                 Vector2 drawPosition = new Vector2(i * 16 - (int)Main.screenPosition.X + xx, j * 16 - (int)Main.screenPosition.Y + yy) + zero;
                 spriteBatch.Draw(texture, drawPosition, frame, color, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
             }
-        }
-        public override void KillMultiTile(int i, int j, int frameX, int frameY)
-        {
-            Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 16, 48, ModContent.ItemType<ShadestoneLamp>());
-            Chest.DestroyChest(i, j);
         }
     }
 }

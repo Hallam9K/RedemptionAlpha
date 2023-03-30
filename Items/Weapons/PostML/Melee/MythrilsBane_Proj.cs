@@ -17,7 +17,7 @@ namespace Redemption.Items.Weapons.PostML.Melee
         public override string Texture => "Redemption/Items/Weapons/PostML/Melee/MythrilsBane";
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Mythril's Bane");
+            // DisplayName.SetDefault("Mythril's Bane");
             ProjectileID.Sets.TrailCacheLength[Projectile.type] = 6;
             ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
         }
@@ -34,8 +34,10 @@ namespace Redemption.Items.Weapons.PostML.Melee
             Projectile.usesLocalNPCImmunity = true;
             Projectile.extraUpdates = 1;
         }
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
+            RedeProjectile.Decapitation(target, ref damageDone, ref hit.Crit, 50);
+
             Projectile.localNPCImmunity[target.whoAmI] = 10;
             target.immune[Projectile.owner] = 0;
 
@@ -175,10 +177,6 @@ namespace Redemption.Items.Weapons.PostML.Melee
         public override bool? CanHitNPC(NPC target)
         {
             return Timer <= 8 && Projectile.ai[0] < 2 ? null : false;
-        }
-        public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
-        {
-            RedeProjectile.Decapitation(target, ref damage, ref crit, 50);
         }
         public override bool PreDraw(ref Color lightColor)
         {

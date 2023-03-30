@@ -18,7 +18,7 @@ namespace Redemption.Items.Weapons.PostML.Ranged
         public override string Texture => "Redemption/Items/Weapons/PostML/Ranged/SwarmerCannon";
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Swarmer Cannon");
+            // DisplayName.SetDefault("Swarmer Cannon");
         }
         public override void SetDefaults()
         {

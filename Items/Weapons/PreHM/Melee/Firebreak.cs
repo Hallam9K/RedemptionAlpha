@@ -14,9 +14,9 @@ namespace Redemption.Items.Weapons.PreHM.Melee
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Firebreak");
-            Tooltip.SetDefault("Rains down fire from the skies when hitting a target");
-            SacrificeTotal = 1;
+            // DisplayName.SetDefault("Firebreak");
+            // Tooltip.SetDefault("Rains down fire from the skies when hitting a target");
+            Item.ResearchUnlockCount = 1;
             ElementID.ItemFire[Type] = true;
         }
 
@@ -38,7 +38,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
             if (!Main.dedServ)
                 Item.RedemptionGlow().glowTexture = ModContent.Request<Texture2D>(Item.ModItem.Texture + "_Glow").Value;
         }
-        public override void OnHitNPC(Player player, NPC target, int damage, float knockBack, bool crit)
+        public override void OnHitNPC(Player player, NPC target, NPC.HitInfo hit, int damageDone)
         {
             for (int i = 0; i < 3; i++)
             {
@@ -46,7 +46,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
 
                 Projectile.NewProjectile(player.GetSource_ItemUse(Item), spawn,
                     RedeHelper.PolarVector(30, (target.Center + target.velocity * 20f - spawn).ToRotation() + Main.rand.NextFloat(-0.1f, 0.1f)),
-                    ModContent.ProjectileType<Firebreak_Proj>(), 13, knockBack, Main.myPlayer);
+                    ModContent.ProjectileType<Firebreak_Proj>(), 13, hit.Knockback, Main.myPlayer);
             }
         }
         public override void AddRecipes()

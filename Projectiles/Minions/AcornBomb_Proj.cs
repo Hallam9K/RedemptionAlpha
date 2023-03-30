@@ -12,7 +12,7 @@ namespace Redemption.Projectiles.Minions
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Acorn Bomb");
+            // DisplayName.SetDefault("Acorn Bomb");
             ProjectileID.Sets.MinionShot[Projectile.type] = true;
             ElementID.ProjNature[Type] = true;
             ElementID.ProjExplosive[Type] = true;
@@ -84,7 +84,7 @@ namespace Redemption.Projectiles.Minions
             if (Projectile.localAI[0] == 182)
                 Projectile.friendly = false;
         }
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             target.immune[Projectile.whoAmI] = 20;
             if (Projectile.localAI[0] < 180)

@@ -13,7 +13,7 @@ namespace Redemption.NPCs.Lab.Behemoth
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Irradiated Behemoth");
+            // DisplayName.SetDefault("Irradiated Behemoth");
             Main.npcFrameCount[NPC.type] = 2;
 
             NPCID.Sets.MPAllowedEnemies[Type] = true;

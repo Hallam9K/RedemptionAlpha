@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.Enums;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 using Terraria.DataStructures;
@@ -30,14 +31,10 @@ namespace Redemption.Tiles.Furniture.Lab
             TileObjectData.newTile.LavaDeath = false;
             TileObjectData.newTile.AnchorBottom = new AnchorData(AnchorType.SolidTile | AnchorType.SolidWithTop | AnchorType.SolidSide, TileObjectData.newTile.Width, 0);
             TileObjectData.addTile(Type);
-            ModTranslation name = CreateMapEntryName();
-            name.SetDefault("Laboratory Railing");
+            LocalizedText name = CreateMapEntryName();
+            // name.SetDefault("Laboratory Railing");
             AddMapEntry(new Color(200, 246, 254), name);
             DustType = DustID.Glass;
-        }
-        public override void KillMultiTile(int i, int j, int frameX, int frameY)
-        {
-            Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 16, 32, ModContent.ItemType<LabRail_L>());
         }
         public override void NumDust(int i, int j, bool fail, ref int num) => num = fail ? 1 : 3;
     }
@@ -62,14 +59,10 @@ namespace Redemption.Tiles.Furniture.Lab
             TileObjectData.newTile.LavaDeath = false;
             TileObjectData.newTile.AnchorBottom = new AnchorData(AnchorType.SolidTile | AnchorType.SolidWithTop | AnchorType.SolidSide, TileObjectData.newTile.Width, 0);
             TileObjectData.addTile(Type);
-            ModTranslation name = CreateMapEntryName();
-            name.SetDefault("Laboratory Railing");
+            LocalizedText name = CreateMapEntryName();
+            // name.SetDefault("Laboratory Railing");
             AddMapEntry(new Color(200, 246, 254), name);
             DustType = DustID.Glass;
-        }
-        public override void KillMultiTile(int i, int j, int frameX, int frameY)
-        {
-            Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 16, 32, ModContent.ItemType<LabRail_Mid>());
         }
         public override void NumDust(int i, int j, bool fail, ref int num) => num = fail ? 1 : 3;
     }
@@ -93,14 +86,10 @@ namespace Redemption.Tiles.Furniture.Lab
             TileObjectData.newTile.LavaDeath = false;
             TileObjectData.newTile.AnchorBottom = new AnchorData(AnchorType.SolidTile | AnchorType.SolidWithTop | AnchorType.SolidSide, TileObjectData.newTile.Width, 0);
             TileObjectData.addTile(Type);
-            ModTranslation name = CreateMapEntryName();
-            name.SetDefault("Laboratory Railing");
+            LocalizedText name = CreateMapEntryName();
+            // name.SetDefault("Laboratory Railing");
             AddMapEntry(new Color(200, 246, 254), name);
             DustType = DustID.Glass;
-        }
-        public override void KillMultiTile(int i, int j, int frameX, int frameY)
-        {
-            Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 16, 32, ModContent.ItemType<LabRail_R>());
         }
         public override void NumDust(int i, int j, bool fail, ref int num) => num = fail ? 1 : 3;
     }

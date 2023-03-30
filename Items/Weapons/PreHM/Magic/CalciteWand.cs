@@ -11,11 +11,11 @@ namespace Redemption.Items.Weapons.PreHM.Magic
     {
         public override void SetStaticDefaults()
         {
-            Tooltip.SetDefault("Drops stalagmites at cursor point" +
-                "\nIncreased damage the higher they fall");
+            /* Tooltip.SetDefault("Drops stalagmites at cursor point" +
+                "\nIncreased damage the higher they fall"); */
             Item.staff[Item.type] = true;
 
-            SacrificeTotal = 1;
+            Item.ResearchUnlockCount = 1;
         }
 
         public override void SetDefaults()

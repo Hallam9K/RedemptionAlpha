@@ -12,8 +12,8 @@ namespace Redemption.Items.Accessories.HM
 	{
 		public override void SetStaticDefaults()
 		{
-			Tooltip.SetDefault("Summons an Omini Cleaver");
-			SacrificeTotal = 1;
+			// Tooltip.SetDefault("Summons an Omini Cleaver");
+			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults()
 		{

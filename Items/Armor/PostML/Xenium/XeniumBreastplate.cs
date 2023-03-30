@@ -12,8 +12,8 @@ namespace Redemption.Items.Armor.PostML.Xenium
     {
         public override void SetStaticDefaults()
         {
-            Tooltip.SetDefault("10% increased damage");
-            SacrificeTotal = 1;
+            // Tooltip.SetDefault("10% increased damage");
+            Item.ResearchUnlockCount = 1;
         }
 
         public override void SetDefaults()

@@ -11,10 +11,10 @@ namespace Redemption.Items.Weapons.HM.Melee
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Slayer's Rocket Fist");
-            Tooltip.SetDefault("Punches enemies up-close\n" +
-                "Holding down left-click and hitting an enemy will fire an " + ElementID.ExplosiveS + " rocket fist if you are airborne");
-            SacrificeTotal = 1;
+            // DisplayName.SetDefault("Slayer's Rocket Fist");
+            /* Tooltip.SetDefault("Punches enemies up-close\n" +
+                "Holding down left-click and hitting an enemy will fire an " + ElementID.ExplosiveS + " rocket fist if you are airborne"); */
+            Item.ResearchUnlockCount = 1;
         }
 
         public override void SetDefaults()

@@ -14,7 +14,7 @@ namespace Redemption.NPCs.Bosses.KSIII
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Energy Bolt");
+            // DisplayName.SetDefault("Energy Bolt");
             ElementID.ProjThunder[Type] = true;
         }
 

@@ -4,6 +4,7 @@ using Terraria;
 using Terraria.DataStructures;
 using Terraria.Enums;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 
@@ -27,14 +28,10 @@ namespace Redemption.Tiles.Furniture.Lab
             DustType = DustID.Glass;
             MinPick = 10;
             MineResist = 1f;
-			ModTranslation name = CreateMapEntryName();
-			name.SetDefault("Test Tubes");
+			LocalizedText name = CreateMapEntryName();
+			// name.SetDefault("Test Tubes");
 			AddMapEntry(new Color(200, 246, 254), name);
             AdjTiles = new int[] { TileID.Bottles };
-        }
-        public override void KillMultiTile(int i, int j, int frameX, int frameY)
-        {
-            Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 16, 16, ModContent.ItemType<TestTubes>());
         }
         public override bool CanExplode(int i, int j) => false;
     }

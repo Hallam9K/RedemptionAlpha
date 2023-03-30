@@ -7,9 +7,9 @@ namespace Redemption.Items.Usable
     {
         public override void SetStaticDefaults()
         {
-            Tooltip.SetDefault("Unlocks Laboratory Chests and Doors"
-                + "\nOnly one is needed");
-            SacrificeTotal = 1;
+            /* Tooltip.SetDefault("Unlocks Laboratory Chests and Doors"
+                + "\nOnly one is needed"); */
+            Item.ResearchUnlockCount = 1;
         }
 
         public override void SetDefaults()

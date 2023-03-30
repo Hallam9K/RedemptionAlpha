@@ -19,7 +19,7 @@ namespace Redemption.NPCs.Bosses.Neb
         public override string Texture => Redemption.EMPTY_TEXTURE;
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("");
+            // DisplayName.SetDefault("");
 
             NPCID.Sets.NPCBestiaryDrawModifiers value = new(0)
             {
@@ -186,7 +186,7 @@ namespace Redemption.NPCs.Bosses.Neb
         public int proType = 0;
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Nebuleus");
+            // DisplayName.SetDefault("Nebuleus");
         }
         public override void SetDefaults()
         {
@@ -274,7 +274,7 @@ namespace Redemption.NPCs.Bosses.Neb
         public override string Texture => Redemption.EMPTY_TEXTURE;
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Nebuleus");
+            // DisplayName.SetDefault("Nebuleus");
         }
         public override void SetDefaults()
         {
@@ -288,7 +288,7 @@ namespace Redemption.NPCs.Bosses.Neb
         public override string Texture => Redemption.EMPTY_TEXTURE;
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Nebuleus");
+            // DisplayName.SetDefault("Nebuleus");
         }
         public override void SetDefaults()
         {

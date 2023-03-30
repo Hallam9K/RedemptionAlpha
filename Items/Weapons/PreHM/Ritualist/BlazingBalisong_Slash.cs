@@ -11,16 +11,13 @@ namespace Redemption.Items.Weapons.PreHM.Ritualist
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Blazing Balisong");
+            // DisplayName.SetDefault("Blazing Balisong");
             Main.projFrames[Projectile.type] = 5;
             ElementID.ProjFire[Type] = true;
         }
-        public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
-            RedeProjectile.Decapitation(target, ref damage, ref crit);
-        }
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
-        {
+            RedeProjectile.Decapitation(target, ref damageDone, ref hit.Crit);
             target.AddBuff(BuffID.OnFire, 260);
             if (Main.rand.NextBool(2) && Projectile.owner == Main.myPlayer)
             {

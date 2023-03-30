@@ -11,9 +11,9 @@ namespace Redemption.Items.Tools.PreHM
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Pure-Iron Pickaxe");
+            // DisplayName.SetDefault("Pure-Iron Pickaxe");
 
-            SacrificeTotal = 1;
+            Item.ResearchUnlockCount = 1;
         }
 
         public override void SetDefaults()
@@ -33,7 +33,7 @@ namespace Redemption.Items.Tools.PreHM
             Item.autoReuse = true;
         }
 
-        public override void OnHitNPC(Player player, NPC target, int damage, float knockBack, bool crit)
+        public override void OnHitNPC(Player player, NPC target, NPC.HitInfo hit, int damageDone)
         {
             if (player.RedemptionPlayerBuff().pureIronBonus)
                 target.AddBuff(ModContent.BuffType<PureChillDebuff>(), 300);

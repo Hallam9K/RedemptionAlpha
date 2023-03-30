@@ -13,11 +13,11 @@ namespace Redemption.Items.Accessories.PreHM
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Shell Necklace");
-            Tooltip.SetDefault("10% increased " + ElementID.NatureS + " elemental damage and resistance\n" +
+            // DisplayName.SetDefault("Shell Necklace");
+            /* Tooltip.SetDefault("10% increased " + ElementID.NatureS + " elemental damage and resistance\n" +
                 "Increased chance of Nature Boons to drop from the " + ElementID.NatureS + " elemental bonus\n" +
-                "'Makes you feel one with nature'");
-            SacrificeTotal = 1;
+                "'Makes you feel one with nature'"); */
+            Item.ResearchUnlockCount = 1;
         }
 
         public override void SetDefaults()
@@ -26,7 +26,7 @@ namespace Redemption.Items.Accessories.PreHM
             Item.height = 26;
             Item.defense = 1;
             Item.value = Item.buyPrice(0, 1, 0, 0);
-            Item.canBePlacedInVanityRegardlessOfConditions = true;
+            Item.hasVanityEffects = true;
             Item.rare = ItemRarityID.Green;
             Item.accessory = true;
         }

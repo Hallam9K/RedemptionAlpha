@@ -10,7 +10,7 @@ namespace Redemption.NPCs.Bosses.SeedOfInfection
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Xenomite Shot");
+            // DisplayName.SetDefault("Xenomite Shot");
             ElementID.ProjPoison[Type] = true;
         }
         public override void SetDefaults()

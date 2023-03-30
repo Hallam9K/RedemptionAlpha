@@ -3,6 +3,7 @@ using Terraria;
 using Terraria.DataStructures;
 using Terraria.Enums;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 
@@ -27,8 +28,9 @@ namespace Redemption.Tiles.Furniture.Lab
             DustType = DustID.GreenBlood;
             MinPick = 500;
             MineResist = 3f;
-            ModTranslation name = CreateMapEntryName();
-            name.SetDefault("Kari's Hospital Bed");
+            ItemDrop = -1;
+            LocalizedText name = CreateMapEntryName();
+            // name.SetDefault("Kari's Hospital Bed");
             AddMapEntry(new Color(56, 78, 210));
         }
         public override bool CanKillTile(int i, int j, ref bool blockDamaged) => false;
@@ -39,8 +41,8 @@ namespace Redemption.Tiles.Furniture.Lab
         public override string Texture => Redemption.PLACEHOLDER_TEXTURE;
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Kari's Hospital Bed");
-            Tooltip.SetDefault("[c/ff0000:Unbreakable]");
+            // DisplayName.SetDefault("Kari's Hospital Bed");
+            // Tooltip.SetDefault("[c/ff0000:Unbreakable]");
         }
 
         public override void SetDefaults()

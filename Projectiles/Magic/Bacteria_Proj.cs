@@ -14,7 +14,7 @@ namespace Redemption.Projectiles.Magic
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Bacteria");
+            // DisplayName.SetDefault("Bacteria");
             Main.projFrames[Projectile.type] = 2;
             ElementID.ProjPoison[Type] = true;
         }
@@ -73,7 +73,7 @@ namespace Redemption.Projectiles.Magic
             Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition, new Rectangle?(rect), Projectile.GetAlpha(lightColor), Projectile.rotation, drawOrigin, Projectile.scale, effects, 0);
             return false;
         }
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             target.AddBuff(ModContent.BuffType<BInfectionDebuff>(), 1000);
         }

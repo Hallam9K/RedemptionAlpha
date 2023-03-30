@@ -5,6 +5,7 @@ using Redemption.Globals;
 using Redemption.NPCs.Bosses.Keeper;
 using Redemption.NPCs.Bosses.KSIII;
 using Terraria;
+using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Redemption.Projectiles.Pets
@@ -13,12 +14,15 @@ namespace Redemption.Projectiles.Pets
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Slayer Projector");
+			// DisplayName.SetDefault("Slayer Projector");
 			Main.projFrames[Projectile.type] = 12;
 			Main.projPet[Projectile.type] = true;
-		}
+            ProjectileID.Sets.CharacterPreviewAnimations[Projectile.type] = ProjectileID.Sets.SimpleLoop(0, 1, 5)
+				.WithOffset(-10, -20f)
+				.WithCode(DelegateMethods.CharacterPreview.Float);
+        }
 
-		public override void SetDefaults()
+        public override void SetDefaults()
 		{
 			Projectile.width = 32;
 			Projectile.height = 46;

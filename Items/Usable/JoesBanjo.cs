@@ -11,10 +11,10 @@ namespace Redemption.Items.Usable
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Joe's Banjo");
-            Tooltip.SetDefault("Playable Instrument" +
-                "\n'Kazooie not included'");
-            SacrificeTotal = 1;
+            // DisplayName.SetDefault("Joe's Banjo");
+            /* Tooltip.SetDefault("Playable Instrument" +
+                "\n'Kazooie not included'"); */
+            Item.ResearchUnlockCount = 1;
         }
 
         public override void SetDefaults()

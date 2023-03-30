@@ -44,7 +44,7 @@ namespace Redemption.NPCs.PreHM
 
         public override void SetSafeStaticDefaults()
         {
-            DisplayName.SetDefault("Dancing Skeleton");
+            // DisplayName.SetDefault("Dancing Skeleton");
             Main.npcFrameCount[NPC.type] = 36;
 
             NPCID.Sets.NPCBestiaryDrawModifiers value = new(0) { Hide = true };
@@ -66,7 +66,7 @@ namespace Redemption.NPCs.PreHM
             Banner = NPC.type;
             BannerItem = ModContent.ItemType<EpidotrianSkeletonBanner>();
         }
-        public override void HitEffect(int hitDirection, double damage)
+        public override void HitEffect(NPC.HitInfo hit)
         {
             if (NPC.life <= 0)
             {
@@ -240,7 +240,7 @@ namespace Redemption.NPCs.PreHM
             }
             return false;
         }
-        public override bool? CanHitNPC(NPC target) => false;
+        public override bool CanHitNPC(NPC target) => false;
         public override bool CanHitPlayer(Player target, ref int cooldownSlot) => false;
         public override void OnKill()
         {

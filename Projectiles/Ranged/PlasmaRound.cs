@@ -17,7 +17,7 @@ namespace Redemption.Projectiles.Ranged
         public override string Texture => Redemption.EMPTY_TEXTURE;
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Plasma Round");
+            // DisplayName.SetDefault("Plasma Round");
             ElementID.ProjFire[Type] = true;
         }
 
@@ -54,7 +54,7 @@ namespace Redemption.Projectiles.Ranged
             BlastSpawn(oldVelocity / 2);
             return false;
         }
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             if (Projectile.penetrate <= 1)
                 FakeKill();
@@ -139,7 +139,7 @@ namespace Redemption.Projectiles.Ranged
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Explosion");
+            // DisplayName.SetDefault("Explosion");
             Main.projFrames[Projectile.type] = 6;
             ElementID.ProjFire[Type] = true;
             ElementID.ProjExplosive[Type] = true;
@@ -170,7 +170,7 @@ namespace Redemption.Projectiles.Ranged
             }
         }
 
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             Projectile.localNPCImmunity[target.whoAmI] = 5;
             target.immune[Projectile.owner] = 0;

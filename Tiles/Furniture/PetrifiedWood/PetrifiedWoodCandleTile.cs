@@ -1,9 +1,11 @@
 using Microsoft.Xna.Framework;
 using Terraria;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ID;
 using Terraria.ObjectData;
 using Redemption.Items.Placeable.Furniture.PetrifiedWood;
+using Terraria.Enums;
 
 namespace Redemption.Tiles.Furniture.PetrifiedWood
 {
@@ -16,10 +18,13 @@ namespace Redemption.Tiles.Furniture.PetrifiedWood
             Main.tileLighted[Type] = true;
             TileID.Sets.DisableSmartCursor[Type] = true;
             TileObjectData.newTile.CopyFrom(TileObjectData.StyleOnTable1x1);
+            TileObjectData.newTile.WaterDeath = true;
+            TileObjectData.newTile.WaterPlacement = LiquidPlacement.NotAllowed;
+            TileObjectData.newTile.LavaPlacement = LiquidPlacement.NotAllowed;
             TileObjectData.newTile.CoordinateHeights = new int[] { 20 };
             TileObjectData.addTile(Type);
-			ModTranslation name = CreateMapEntryName();
-			name.SetDefault("Petrified Wood Candle");
+			LocalizedText name = CreateMapEntryName();
+			// name.SetDefault("Petrified Wood Candle");
             AddMapEntry(new Color(100, 100, 100), name);
 			AdjTiles = new int[]{ TileID.Candles };
             ItemDrop = ModContent.ItemType<PetrifiedWoodCandle>();

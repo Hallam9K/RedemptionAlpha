@@ -11,8 +11,8 @@ namespace Redemption.Items.Usable.Potions
     {
         public override void SetStaticDefaults()
         {
-            Tooltip.SetDefault("Minor improvements to all stats" +
-                "\n'Because eggs are tasty.'");
+            /* Tooltip.SetDefault("Minor improvements to all stats" +
+                "\n'Because eggs are tasty.'"); */
             Main.RegisterItemAnimation(Type, new DrawAnimationVertical(int.MaxValue, 3));
             ItemID.Sets.FoodParticleColors[Item.type] = new Color[3] {
                 new Color(247, 226, 199),
@@ -20,14 +20,14 @@ namespace Redemption.Items.Usable.Potions
                 new Color(235, 161, 31)
             };
             ItemID.Sets.IsFood[Type] = true;
-            SacrificeTotal = 5;
+            Item.ResearchUnlockCount = 5;
         }
 
         public override void SetDefaults()
         {
             Item.DefaultToFood(28, 18, BuffID.WellFed, 3600);
             Item.value = 100;
-            Item.maxStack = 9999;
+            Item.maxStack = Item.CommonMaxStack;
             Item.rare = ItemRarityID.Blue;
         }
         public override void AddRecipes()

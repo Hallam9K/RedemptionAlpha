@@ -15,7 +15,7 @@ namespace Redemption.NPCs.Bosses.Obliterator
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Barrier");
+            // DisplayName.SetDefault("Barrier");
             ProjectileID.Sets.DrawScreenCheckFluff[Type] = 2400;
         }
         public override void SetDefaults()
@@ -94,7 +94,7 @@ namespace Redemption.NPCs.Bosses.Obliterator
         public override string Texture => "Redemption/NPCs/Bosses/Obliterator/OOBarrier";
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Barrier");
+            // DisplayName.SetDefault("Barrier");
         }
         public override void SetDefaults()
         {

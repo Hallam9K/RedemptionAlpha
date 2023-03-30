@@ -11,16 +11,16 @@ namespace Redemption.Items.Usable.Potions
     {
         public override void SetStaticDefaults()
         {
-            Tooltip.SetDefault("Cures radiation poisoning"
+            /* Tooltip.SetDefault("Cures radiation poisoning"
                 + "\nREAD INSTRUCTIONS:"
                 + "\n'Radiation normally cannot be cured, but with this new medicine, we are slowly progressing."
                 + "\n- Make sure you know for a fact you have radiation poisoning, this will do more harm than good!"
                 + "\n- This medicine only works when the user is in a specific stage of poisoning,"
                 + "\nthe stage which is recommended to use contains the following symptoms:"
                 + "\nFatigue and Nausea"
-                + "\n- After successful use, you will feel weak and fragile, this will go away in a few minutes.'");
+                + "\n- After successful use, you will feel weak and fragile, this will go away in a few minutes.'"); */
 
-            SacrificeTotal = 4;
+            Item.ResearchUnlockCount = 4;
         }
 
         public override void SetDefaults()
@@ -33,7 +33,7 @@ namespace Redemption.Items.Usable.Potions
             Item.consumable = true;
             Item.width = 20;
             Item.height = 26;
-            Item.maxStack = 9999;
+            Item.maxStack = Item.CommonMaxStack;
             Item.value = Item.buyPrice(0, 15, 0, 0);
             Item.rare = ItemRarityID.Yellow;
         }

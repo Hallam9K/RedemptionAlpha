@@ -21,7 +21,7 @@ namespace Redemption.NPCs.Lab.MACE
             }
             return null;
         }
-        public override bool? ModifyInfo(ref BigProgressBarInfo info, ref float lifePercent, ref float shieldPercent)
+        public override bool? ModifyInfo(ref BigProgressBarInfo info, ref float life, ref float lifeMax, ref float shield, ref float shieldMax)
         {
             NPC npc = Main.npc[info.npcIndexToAimAt];
             if (!npc.active || npc.type != ModContent.NPCType<MACEProject>())
@@ -29,10 +29,10 @@ namespace Redemption.NPCs.Lab.MACE
 
             bossHeadIndex = npc.GetBossHeadTextureIndex();
 
-            lifePercent = Utils.Clamp(npc.life / (float)npc.lifeMax, 0f, 1f);
+            life = Utils.Clamp(npc.life / (float)npc.lifeMax, 0f, 1f);
             if (npc.ModNPC is MACEProject mace)
             {
-                shieldPercent = Utils.Clamp((float)npc.RedemptionGuard().GuardPoints / mace.GuardPointMax, 0f, 1f);
+                shield = Utils.Clamp((float)npc.RedemptionGuard().GuardPoints / mace.GuardPointMax, 0f, 1f);
             }
             return true;
         }

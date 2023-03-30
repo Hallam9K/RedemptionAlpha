@@ -19,7 +19,7 @@ namespace Redemption.Effects.RenderTargets
             BasicLayer = new BasicLayer();
             EmberLayer = new EmberLayer();
             ShieldLayer = new ShieldLayer();
-            On.Terraria.Main.DrawNPCs += (orig, self, behindTiles) =>
+            Terraria.On_Main.DrawNPCs += (orig, self, behindTiles) =>
             {
                 DrawLayers(Main.spriteBatch);
                 orig(self, behindTiles);
@@ -35,7 +35,7 @@ namespace Redemption.Effects.RenderTargets
             BasicLayer = null;
             EmberLayer = null;
             ShieldLayer = null;
-            On.Terraria.Main.DrawNPCs -= (orig, self, behindTiles) =>
+            Terraria.On_Main.DrawNPCs -= (orig, self, behindTiles) =>
             {
                 DrawLayers(Main.spriteBatch);
                 orig(self, behindTiles);

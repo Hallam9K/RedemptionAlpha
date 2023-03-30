@@ -18,7 +18,7 @@ namespace Redemption.Items.Weapons.HM.Magic
         public override string Texture => "Redemption/Items/Weapons/HM/Magic/LightningRod";
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Self-Sufficient Lighting Rod");
+            // DisplayName.SetDefault("Self-Sufficient Lighting Rod");
             ElementID.ProjThunder[Type] = true;
         }
         public override void SetDefaults()
@@ -126,7 +126,7 @@ namespace Redemption.Items.Weapons.HM.Magic
             player.itemTime = 2;
             player.itemAnimation = 2;
         }
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             target.AddBuff(ModContent.BuffType<ElectrifiedDebuff>(), 180);
         }

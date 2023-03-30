@@ -12,8 +12,8 @@ namespace Redemption.Items.Materials.PostML
     {
         public override void SetStaticDefaults()
         {
-            Tooltip.SetDefault("Holding this will cause severe radiation poisoning without proper equipment");
-            SacrificeTotal = 25;
+            // Tooltip.SetDefault("Holding this will cause severe radiation poisoning without proper equipment");
+            Item.ResearchUnlockCount = 25;
         }
 
         public override void SetDefaults()
@@ -21,7 +21,7 @@ namespace Redemption.Items.Materials.PostML
             Item.DefaultToPlaceableTile(ModContent.TileType<SolidCoriumTile>(), 0);
             Item.width = 24;
             Item.height = 26;
-            Item.maxStack = 9999;
+            Item.maxStack = Item.CommonMaxStack;
             Item.value = 40000;
             Item.rare = ItemRarityID.Red;
         }

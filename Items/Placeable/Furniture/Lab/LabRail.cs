@@ -1,6 +1,7 @@
 using Redemption.Items.Placeable.Tiles;
 using Redemption.Tiles.Furniture.Lab;
 using Terraria.ID;
+using Terraria;
 using Terraria.ModLoader;
 
 namespace Redemption.Items.Placeable.Furniture.Lab
@@ -9,15 +10,15 @@ namespace Redemption.Items.Placeable.Furniture.Lab
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Laboratory Railing (Left)");
-            SacrificeTotal = 25;
+            // DisplayName.SetDefault("Laboratory Railing (Left)");
+            Item.ResearchUnlockCount = 25;
         }
         public override void SetDefaults()
         {
             Item.DefaultToPlaceableTile(ModContent.TileType<LabRailTile_L>(), 0);
             Item.width = 16;
             Item.height = 26;
-            Item.maxStack = 9999;
+            Item.maxStack = Item.CommonMaxStack;
             Item.value = 200;
             Item.rare = ItemRarityID.LightPurple;
         }
@@ -34,15 +35,15 @@ namespace Redemption.Items.Placeable.Furniture.Lab
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Laboratory Railing (Middle)");
-            SacrificeTotal = 25;
+            // DisplayName.SetDefault("Laboratory Railing (Middle)");
+            Item.ResearchUnlockCount = 25;
         }
         public override void SetDefaults()
         {
             Item.DefaultToPlaceableTile(ModContent.TileType<LabRailTile_Mid>(), 0);
             Item.width = 20;
             Item.height = 26;
-            Item.maxStack = 9999;
+            Item.maxStack = Item.CommonMaxStack;
             Item.value = 200;
             Item.rare = ItemRarityID.LightPurple;
         }
@@ -59,15 +60,15 @@ namespace Redemption.Items.Placeable.Furniture.Lab
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Laboratory Railing (Right)");
-            SacrificeTotal = 25;
+            // DisplayName.SetDefault("Laboratory Railing (Right)");
+            Item.ResearchUnlockCount = 25;
         }
         public override void SetDefaults()
         {
             Item.DefaultToPlaceableTile(ModContent.TileType<LabRailTile_R>(), 0);
             Item.width = 16;
             Item.height = 26;
-            Item.maxStack = 9999;
+            Item.maxStack = Item.CommonMaxStack;
             Item.value = 200;
             Item.rare = ItemRarityID.LightPurple;
         }

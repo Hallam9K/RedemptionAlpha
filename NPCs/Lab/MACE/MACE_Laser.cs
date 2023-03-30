@@ -9,7 +9,7 @@ namespace Redemption.NPCs.Lab.MACE
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Xenium Laser");
+            // DisplayName.SetDefault("Xenium Laser");
             Main.projFrames[Projectile.type] = 8;
         }
         public override void SetDefaults()

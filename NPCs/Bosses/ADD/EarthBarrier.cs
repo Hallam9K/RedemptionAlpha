@@ -13,7 +13,7 @@ namespace Redemption.NPCs.Bosses.ADD
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Floating Island");
+            // DisplayName.SetDefault("Floating Island");
             Main.projFrames[Projectile.type] = 5;
         }
         public override void SetDefaults()

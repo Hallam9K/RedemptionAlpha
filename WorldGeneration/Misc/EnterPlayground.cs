@@ -10,8 +10,8 @@ namespace Redemption.WorldGeneration.Misc
         public override string Texture => "Redemption/Placeholder";
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("THINGY TO ENTER THE THING");
-            Tooltip.SetDefault("Sends all players to the Playground");
+            // DisplayName.SetDefault("THINGY TO ENTER THE THING");
+            // Tooltip.SetDefault("Sends all players to the Playground");
         }
 
         public override void SetDefaults()

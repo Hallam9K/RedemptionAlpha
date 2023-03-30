@@ -15,7 +15,7 @@ namespace Redemption.Projectiles.Magic
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Plutonium Nuke");
+            // DisplayName.SetDefault("Plutonium Nuke");
             ProjectileID.Sets.TrailCacheLength[Projectile.type] = 6;
             ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
             ElementID.ProjExplosive[Type] = true;
@@ -105,7 +105,7 @@ namespace Redemption.Projectiles.Magic
             Main.EntitySpriteDraw(glow, Projectile.Center - Main.screenPosition, null, Projectile.GetAlpha(Color.White), Projectile.rotation, drawOrigin, Projectile.scale, effects, 0);
             return false;
         }
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             target.immune[Projectile.whoAmI] = 20;
         }

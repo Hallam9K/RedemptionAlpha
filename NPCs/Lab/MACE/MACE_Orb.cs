@@ -9,7 +9,7 @@ namespace Redemption.NPCs.Lab.MACE
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Xenium Orb");
+            // DisplayName.SetDefault("Xenium Orb");
             Main.projFrames[Projectile.type] = 4;
         }
 

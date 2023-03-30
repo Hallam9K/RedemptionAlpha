@@ -12,13 +12,13 @@ namespace Redemption.Items.Weapons.HM.Melee
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Midnight, Defiler of the Prince");
-            Tooltip.SetDefault("Slams down in a blaze of twilight" +
+            // DisplayName.SetDefault("Midnight, Defiler of the Prince");
+            /* Tooltip.SetDefault("Slams down in a blaze of twilight" +
                 "\nHold left-click to charge a stronger slam, releasing Nebula stars if hitting a surface or enemy" +
                 "\nNebula Stars slowly chase targets while spewing nebula sparks" +
-                "\nCan't create nebula stars while at least 4 are already active");
+                "\nCan't create nebula stars while at least 4 are already active"); */
 
-            SacrificeTotal = 1;
+            Item.ResearchUnlockCount = 1;
         }
 
         public override void SetDefaults()

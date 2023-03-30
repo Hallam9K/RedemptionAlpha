@@ -52,7 +52,7 @@ namespace Redemption.NPCs.Minibosses.EaglecrestGolem
         public float[] oldrot = new float[5];
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Eaglecrest Golem");
+            // DisplayName.SetDefault("Eaglecrest Golem");
             Main.npcFrameCount[NPC.type] = 13;
 
             NPCID.Sets.TrailCacheLength[NPC.type] = 5;
@@ -108,7 +108,7 @@ namespace Redemption.NPCs.Minibosses.EaglecrestGolem
         }
 
         public override bool CanHitPlayer(Player target, ref int cooldownSlot) => AIState is ActionState.Roll;
-        public override bool? CanHitNPC(NPC target) => target.friendly && AIState is ActionState.Roll ? null : false;
+        public override bool CanHitNPC(NPC target) => target.friendly && AIState is ActionState.Roll;
 
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
         {
@@ -159,9 +159,9 @@ namespace Redemption.NPCs.Minibosses.EaglecrestGolem
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<GathicStone>(), 1, 14, 34));
         }
 
-        public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
+        public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)
         {
-            NPC.lifeMax = (int)(NPC.lifeMax * 0.6f * bossLifeScale);
+            NPC.lifeMax = (int)(NPC.lifeMax * 0.6f * balance * bossAdjustment);
             NPC.damage = (int)(NPC.damage * 0.6f);
         }
         public override void SendExtraAI(BinaryWriter writer)
@@ -462,7 +462,7 @@ namespace Redemption.NPCs.Minibosses.EaglecrestGolem
                 }
             }
         }
-        public override void HitEffect(int hitDirection, double damage)
+        public override void HitEffect(NPC.HitInfo hit)
         {
             if (NPC.life <= 0)
             {

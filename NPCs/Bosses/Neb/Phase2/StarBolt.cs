@@ -13,7 +13,7 @@ namespace Redemption.NPCs.Bosses.Neb.Phase2
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Star Bolt");
+            // DisplayName.SetDefault("Star Bolt");
             ProjectileID.Sets.TrailCacheLength[Projectile.type] = 5;
             ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
             ElementID.ProjCelestial[Type] = true;

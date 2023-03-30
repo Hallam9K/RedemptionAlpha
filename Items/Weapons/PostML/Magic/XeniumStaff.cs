@@ -15,10 +15,10 @@ namespace Redemption.Items.Weapons.PostML.Magic
     {
         public override void SetStaticDefaults()
         {
-            Tooltip.SetDefault("Casts two harmless bubble mines\n" +
-                "Right-click to fire a small " + ElementID.PoisonS + " beam that detonates any mine it hits");
+            /* Tooltip.SetDefault("Casts two harmless bubble mines\n" +
+                "Right-click to fire a small " + ElementID.PoisonS + " beam that detonates any mine it hits"); */
             Item.staff[Item.type] = true;
-            SacrificeTotal = 1;
+            Item.ResearchUnlockCount = 1;
         }
 
         public override void SetDefaults()

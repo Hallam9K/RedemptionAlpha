@@ -9,7 +9,7 @@ namespace Redemption.NPCs.Bosses.Obliterator
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Fingerflash");
+            // DisplayName.SetDefault("Fingerflash");
             Main.projFrames[Projectile.type] = 9;
         }
         public override void SetDefaults()

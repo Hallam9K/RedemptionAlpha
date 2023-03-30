@@ -11,10 +11,10 @@ namespace Redemption.Items.Weapons.PreHM.Melee
     {
         public override void SetStaticDefaults()
         {
-            Tooltip.SetDefault("Throws three skulls from a flail\n" +
-                "The skulls will latch onto enemies, dealing damage for 5 seconds before letting go");
+            /* Tooltip.SetDefault("Throws three skulls from a flail\n" +
+                "The skulls will latch onto enemies, dealing damage for 5 seconds before letting go"); */
 
-            SacrificeTotal = 1;
+            Item.ResearchUnlockCount = 1;
         }
 
         public override void SetDefaults()

@@ -13,8 +13,8 @@ namespace Redemption.Items.Weapons.PostML.Melee
     {
         public override void SetStaticDefaults()
         {
-            Tooltip.SetDefault("Right-click to change attack modes");
-            SacrificeTotal = 1;
+            // Tooltip.SetDefault("Right-click to change attack modes");
+            Item.ResearchUnlockCount = 1;
         }
 
         public override void SetDefaults()

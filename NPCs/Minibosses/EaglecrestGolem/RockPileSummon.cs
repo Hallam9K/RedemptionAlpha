@@ -11,7 +11,7 @@ namespace Redemption.NPCs.Minibosses.EaglecrestGolem
         public override string Texture => Redemption.EMPTY_TEXTURE;
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Rock Pile");
+            // DisplayName.SetDefault("Rock Pile");
         }
         public override void SetDefaults()
         {

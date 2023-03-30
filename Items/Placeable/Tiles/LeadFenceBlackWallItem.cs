@@ -1,5 +1,6 @@
 using Terraria.ModLoader;
 using Redemption.Walls;
+using Terraria;
 
 namespace Redemption.Items.Placeable.Tiles
 {
@@ -7,14 +8,14 @@ namespace Redemption.Items.Placeable.Tiles
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Lead Fence (Black Background)");
+			// DisplayName.SetDefault("Lead Fence (Black Background)");
 		}
 		public override void SetDefaults()
 		{
-			Item.DefaultToPlacableWall((ushort)ModContent.WallType<LeadFenceBlackWall>());
+			Item.DefaultToPlaceableWall((ushort)ModContent.WallType<LeadFenceBlackWall>());
 			Item.width = 16;
 			Item.height = 16;
-			Item.maxStack = 9999;
+			Item.maxStack = Item.CommonMaxStack;
 		}
 	}
 }

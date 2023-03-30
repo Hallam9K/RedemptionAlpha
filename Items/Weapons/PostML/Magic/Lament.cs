@@ -11,9 +11,9 @@ namespace Redemption.Items.Weapons.PostML.Magic
     {
         public override void SetStaticDefaults()
         {
-            Tooltip.SetDefault("Conjures a massive mask");
+            // Tooltip.SetDefault("Conjures a massive mask");
 
-            SacrificeTotal = 1;
+            Item.ResearchUnlockCount = 1;
         }
 
         public override void SetDefaults()

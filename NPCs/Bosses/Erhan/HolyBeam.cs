@@ -43,7 +43,7 @@ namespace Redemption.NPCs.Bosses.Erhan
         // >
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Holy Beam");
+            // DisplayName.SetDefault("Holy Beam");
             ProjectileID.Sets.DrawScreenCheckFluff[Type] = 2400;
             ElementID.ProjFire[Type] = true;
             ElementID.ProjHoly[Type] = true;
@@ -66,7 +66,7 @@ namespace Redemption.NPCs.Bosses.Erhan
         public override bool? CanHitNPC(NPC target) => target.friendly && AITimer >= 80 ? null : false;
         public override bool ShouldUpdatePosition() => false;
 
-        public override void OnHitPlayer(Player target, int damage, bool crit)
+        public override void OnHitPlayer(Player target, Player.HurtInfo info)
         {
             target.AddBuff(BuffID.OnFire, 300);
         }

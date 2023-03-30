@@ -159,7 +159,7 @@ namespace Redemption.NPCs.PreHM
                 _ => new Vector2(0, 0),
             };
         }
-        public override void HitEffect(int hitDirection, double damage)
+        public override void HitEffect(NPC.HitInfo hit)
         {
             if (NPC.life <= 0)
             {
@@ -756,12 +756,12 @@ namespace Redemption.NPCs.PreHM
 
             return nearestNPC;
         }
-        public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit)
+        public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
         {
             if (NPCLists.Dark.Contains(target.type))
-                damage = (int)(damage * 1.5f);
+                modifiers.FinalDamage *= 1.5f;
         }
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit)
         {
             if (Main.rand.NextBool(3))
                 target.AddBuff(BuffID.DryadsWardDebuff, 300);
@@ -946,7 +946,7 @@ namespace Redemption.NPCs.PreHM
             }
             return false;
         }
-        public override bool? CanHitNPC(NPC target) => false;
+        public override bool CanHitNPC(NPC target) => false;
         public override bool CanHitPlayer(Player target, ref int cooldownSlot) => false;
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {

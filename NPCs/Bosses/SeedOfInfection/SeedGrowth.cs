@@ -19,7 +19,7 @@ namespace Redemption.NPCs.Bosses.SeedOfInfection
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Hive Growth");
+            // DisplayName.SetDefault("Hive Growth");
             Main.npcFrameCount[NPC.type] = 4;
             NPCID.Sets.DebuffImmunitySets.Add(Type, new NPCDebuffImmunityData
             {
@@ -76,7 +76,7 @@ namespace Redemption.NPCs.Bosses.SeedOfInfection
                 Item.NewItem(NPC.GetSource_Loot(), NPC.getRect(), ItemID.Heart);
         }
 
-        public override void HitEffect(int hitDirection, double damage)
+        public override void HitEffect(NPC.HitInfo hit)
         {
             if (NPC.life <= 0)
             {

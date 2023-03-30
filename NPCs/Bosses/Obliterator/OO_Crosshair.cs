@@ -13,7 +13,7 @@ namespace Redemption.NPCs.Bosses.Obliterator
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Crosshair");
+            // DisplayName.SetDefault("Crosshair");
         }
 
         public override void SetDefaults()

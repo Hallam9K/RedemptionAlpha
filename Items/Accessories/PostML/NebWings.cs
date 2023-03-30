@@ -10,10 +10,10 @@ namespace Redemption.Items.Accessories.PostML
 	{
 		public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Nebuleus Wings");
-            Tooltip.SetDefault("Allows flight and slow fall"
-                + "\nUse dyes to make it look fabulous!");
-            SacrificeTotal = 1;
+            // DisplayName.SetDefault("Nebuleus Wings");
+            /* Tooltip.SetDefault("Allows flight and slow fall"
+                + "\nUse dyes to make it look fabulous!"); */
+            Item.ResearchUnlockCount = 1;
             ArmorIDs.Wing.Sets.Stats[Item.wingSlot] = new WingStats(220, 7f, 2.5f, true, 6, 1.5f);
         }
 
@@ -24,7 +24,7 @@ namespace Redemption.Items.Accessories.PostML
             Item.value = Item.sellPrice(0, 10, 0, 0);
             Item.accessory = true;
             Item.expert = true;
-            Item.canBePlacedInVanityRegardlessOfConditions = true;
+            Item.hasVanityEffects = true;
             Item.rare = ItemRarityID.Expert;
         }
 		public override void VerticalWingSpeeds(Player player, ref float ascentWhenFalling, ref float ascentWhenRising,

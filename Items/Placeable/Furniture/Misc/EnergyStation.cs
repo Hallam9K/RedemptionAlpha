@@ -14,8 +14,8 @@ namespace Redemption.Items.Placeable.Furniture.Misc
 	{
 		public override void SetStaticDefaults()
 		{
-            Tooltip.SetDefault("Place down and right-click to recharge your Energy if an Energy Pack is in your inventory");
-			SacrificeTotal = 1;
+            // Tooltip.SetDefault("Place down and right-click to recharge your Energy if an Energy Pack is in your inventory");
+			Item.ResearchUnlockCount = 1;
 		}
 
 		public override void SetDefaults()
@@ -23,7 +23,7 @@ namespace Redemption.Items.Placeable.Furniture.Misc
 			Item.DefaultToPlaceableTile(ModContent.TileType<EnergyStationTile>(), 0);
 			Item.width = 42;
 			Item.height = 40;
-			Item.maxStack = 9999;
+			Item.maxStack = Item.CommonMaxStack;
 			Item.rare = ItemRarityID.LightRed;
 			Item.value = Item.sellPrice(0, 12, 0, 0);
         }

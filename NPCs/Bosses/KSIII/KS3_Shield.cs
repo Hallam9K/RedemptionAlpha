@@ -15,7 +15,7 @@ namespace Redemption.NPCs.Bosses.KSIII
         public override string Texture => "Redemption/Textures/BubbleShield";
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Bubble Shield");
+            // DisplayName.SetDefault("Bubble Shield");
         }
         public override void SetDefaults()
         {
@@ -92,7 +92,7 @@ namespace Redemption.NPCs.Bosses.KSIII
         public override string Texture => "Redemption/Textures/BubbleShield";
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Bubble Shield");
+            // DisplayName.SetDefault("Bubble Shield");
         }
         public override void SetDefaults()
         {

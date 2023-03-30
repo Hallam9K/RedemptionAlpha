@@ -11,9 +11,9 @@ namespace Redemption.Items.Materials.PreHM
     {
         public override void SetStaticDefaults()
         {
-            Tooltip.SetDefault("'A gem... or an eye?'");
+            // Tooltip.SetDefault("'A gem... or an eye?'");
 
-            SacrificeTotal = 1;
+            Item.ResearchUnlockCount = 1;
         }
 
         public override void SetDefaults()

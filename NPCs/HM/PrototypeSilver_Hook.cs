@@ -13,7 +13,7 @@ namespace Redemption.NPCs.HM
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Prototype Silver");
+            // DisplayName.SetDefault("Prototype Silver");
         }
         public override void SetDefaults()
         {
@@ -33,7 +33,7 @@ namespace Redemption.NPCs.HM
             NPC host = Main.npc[(int)Projectile.ai[0]];
             return target == host.Redemption().attacker ? null : false;
         }
-        public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection) => damage *= 4;
+        public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers) => modifiers.FinalDamage *= 4;
         public override void AI()
         {
             NPC host = Main.npc[(int)Projectile.ai[0]];

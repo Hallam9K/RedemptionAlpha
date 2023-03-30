@@ -3,6 +3,7 @@ using Terraria;
 using Terraria.DataStructures;
 using Terraria.Enums;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 
@@ -29,8 +30,9 @@ namespace Redemption.Tiles.Furniture.Lab
             DustType = DustID.Glass;
             MinPick = 300;
             MineResist = 12f;
-			ModTranslation name = CreateMapEntryName();
-            name.SetDefault("Mossy Laboratory Tube");
+            ItemDrop = -1;
+            LocalizedText name = CreateMapEntryName();
+            // name.SetDefault("Mossy Laboratory Tube");
             AddMapEntry(new Color(34, 168, 81), name);
         }
 
@@ -41,7 +43,7 @@ namespace Redemption.Tiles.Furniture.Lab
         public override string Texture => Redemption.PLACEHOLDER_TEXTURE;
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Mossy Laboratory Tube");
+            // DisplayName.SetDefault("Mossy Laboratory Tube");
         }
 
         public override void SetDefaults()

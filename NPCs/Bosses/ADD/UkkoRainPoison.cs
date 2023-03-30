@@ -9,7 +9,7 @@ namespace Redemption.NPCs.Bosses.ADD
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Poison Rain");
+            // DisplayName.SetDefault("Poison Rain");
             ElementID.ProjWater[Type] = true;
         }
         public override void SetDefaults()

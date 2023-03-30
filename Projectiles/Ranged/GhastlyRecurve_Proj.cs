@@ -11,7 +11,7 @@ namespace Redemption.Projectiles.Ranged
         public override string Texture => "Terraria/Images/NPC_" + NPCID.DungeonSpirit;
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Ghastly Spirit");
+            // DisplayName.SetDefault("Ghastly Spirit");
             Main.projFrames[Projectile.type] = 3;
         }
         public override void SetDefaults()

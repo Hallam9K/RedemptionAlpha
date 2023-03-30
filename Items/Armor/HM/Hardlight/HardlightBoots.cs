@@ -10,10 +10,10 @@ namespace Redemption.Items.Armor.HM.Hardlight
     {
 		public override void SetStaticDefaults()
 		{
-			Tooltip.SetDefault("5% increased damage\n" +
-				"10% increased movement speed");
+			/* Tooltip.SetDefault("5% increased damage\n" +
+				"10% increased movement speed"); */
 
-			SacrificeTotal = 1;
+			Item.ResearchUnlockCount = 1;
 		}
 
 		public override void SetDefaults()

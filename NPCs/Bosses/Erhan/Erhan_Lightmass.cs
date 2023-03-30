@@ -16,7 +16,7 @@ namespace Redemption.NPCs.Bosses.Erhan
         public override string Texture => "Redemption/Textures/WhiteFlare";
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Lightmass");
+            // DisplayName.SetDefault("Lightmass");
             ProjectileID.Sets.CultistIsResistantTo[Projectile.type] = true;
             ElementID.ProjHoly[Type] = true;
         }

@@ -22,7 +22,7 @@ namespace Redemption.NPCs.Bosses.KSIII
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Missile Drone Mk.I");
+            // DisplayName.SetDefault("Missile Drone Mk.I");
             Main.npcFrameCount[NPC.type] = 4;
             NPCDebuffImmunityData debuffData = new()
             {
@@ -70,7 +70,7 @@ namespace Redemption.NPCs.Bosses.KSIII
             });
         }
 
-        public override void HitEffect(int hitDirection, double damage)
+        public override void HitEffect(NPC.HitInfo hit)
         {
             if (NPC.life <= 0)
             {
@@ -175,7 +175,7 @@ namespace Redemption.NPCs.Bosses.KSIII
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Drone Missile");
+            // DisplayName.SetDefault("Drone Missile");
             Main.projFrames[Projectile.type] = 2;
             ElementID.ProjExplosive[Type] = true;
         }
@@ -190,7 +190,7 @@ namespace Redemption.NPCs.Bosses.KSIII
             Projectile.tileCollide = false;
             Projectile.timeLeft = 180;
         }
-        public override void OnHitPlayer(Player target, int damage, bool crit)
+        public override void OnHitPlayer(Player target, Player.HurtInfo info)
         {
             Projectile.Kill();
         }

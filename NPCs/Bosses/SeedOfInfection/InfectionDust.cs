@@ -11,7 +11,7 @@ namespace Redemption.NPCs.Bosses.SeedOfInfection
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Infection");
+            // DisplayName.SetDefault("Infection");
         }
 
         public override void SetDefaults()

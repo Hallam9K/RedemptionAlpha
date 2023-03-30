@@ -5,6 +5,7 @@ using Terraria.DataStructures;
 using Terraria.Enums;
 using Terraria.GameContent.ObjectInteractions;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 
@@ -27,15 +28,12 @@ namespace Redemption.Tiles.Furniture.PetrifiedWood
 
 			DustType = DustID.Ash;
 			AdjTiles = new int[] { TileID.OpenDoor };
-			CloseDoorID = ModContent.TileType<PetrifiedWoodDoorClosed>();
+			TileID.Sets.CloseDoorID[Type] = ModContent.TileType<PetrifiedWoodDoorClosed>();
 
-			// Names
-			ModTranslation name = CreateMapEntryName();
-			name.SetDefault("Petrified Wood Door");
-			AddMapEntry(new Color(100, 100, 100), name);
+			AddMapEntry(new Color(100, 100, 100), Language.GetText("MapObject.Door"));
 
-			// Placement
-			TileObjectData.newTile.Width = 2;
+            // Placement
+            TileObjectData.newTile.Width = 2;
 			TileObjectData.newTile.Height = 3;
 			TileObjectData.newTile.Origin = new Point16(0, 0);
 			TileObjectData.newTile.AnchorTop = new AnchorData(AnchorType.SolidTile, 1, 0);
@@ -79,9 +77,6 @@ namespace Redemption.Tiles.Furniture.PetrifiedWood
         public override bool HasSmartInteract(int i, int j, SmartInteractScanSettings settings) => true;
 
 		public override void NumDust(int i, int j, bool fail, ref int num) => num = 1;
-
-		public override void KillMultiTile(int i, int j, int frameX, int frameY) => Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 32, 48, ModContent.ItemType<PetrifiedWoodDoor>());
-
 		public override void MouseOver(int i, int j)
 		{
 			Player player = Main.LocalPlayer;

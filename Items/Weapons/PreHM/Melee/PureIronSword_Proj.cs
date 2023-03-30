@@ -20,7 +20,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
         public float[] oldrot = new float[4];
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Pure-Iron Sword");
+            // DisplayName.SetDefault("Pure-Iron Sword");
             ProjectileID.Sets.TrailCacheLength[Projectile.type] = 4;
             ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
             ElementID.ProjIce[Type] = true;
@@ -249,15 +249,15 @@ namespace Redemption.Items.Weapons.PreHM.Melee
                 target.Kill();
             }
         }
-        public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
+        public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
         {
             if (Projectile.ai[0] == 3)
-                damage *= 2;
-
-            RedeProjectile.Decapitation(target, ref damage, ref crit);
+                modifiers.FinalDamage *= 2;
         }
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
+            RedeProjectile.Decapitation(target, ref damageDone, ref hit.Crit);
+
             Projectile.localNPCImmunity[target.whoAmI] = 11;
             target.immune[Projectile.owner] = 0;
 

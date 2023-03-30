@@ -264,7 +264,7 @@ namespace Redemption.NPCs.Lab
             }
         }
 
-        public override bool? CanHitNPC(NPC target) => AIState == ActionState.Alert ? null : false;
+        public override bool CanHitNPC(NPC target) => AIState == ActionState.Alert;
         public override bool CanHitPlayer(Player target, ref int cooldownSlot) => AIState == ActionState.Alert;
 
         public override void ModifyNPCLoot(NPCLoot npcLoot)
@@ -275,12 +275,12 @@ namespace Redemption.NPCs.Lab
             npcLoot.Add(ItemDropRule.OneFromOptions(50, ModContent.ItemType<SneakloneHelmet1>(), ModContent.ItemType<SneakloneHelmet2>(), ModContent.ItemType<SneakloneSuit>(), ModContent.ItemType<SneakloneLegs>()));
         }
 
-        public override void ModifyHitPlayer(Player target, ref int damage, ref bool crit)
+        public override void ModifyHitPlayer(Player target, ref Player.HurtModifiers modifiers)
         {
             if (Main.rand.NextBool(2) || Main.expertMode)
                 target.AddBuff(ModContent.BuffType<GreenRashesDebuff>(), Main.rand.Next(200, 1800));
         }
-        public override void HitEffect(int hitDirection, double damage)
+        public override void HitEffect(NPC.HitInfo hit)
         {
             if (NPC.life <= 0)
             {

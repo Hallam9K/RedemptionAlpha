@@ -9,10 +9,10 @@ namespace Redemption.Items.Weapons.PostML.Melee
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Infectious Gauntlet");
-            Tooltip.SetDefault("Punches enemies up-close\n" +
-                "Holding down left-click and hitting an enemy will fire a flurry of fists if you are airborne");
-            SacrificeTotal = 1;
+            // DisplayName.SetDefault("Infectious Gauntlet");
+            /* Tooltip.SetDefault("Punches enemies up-close\n" +
+                "Holding down left-click and hitting an enemy will fire a flurry of fists if you are airborne"); */
+            Item.ResearchUnlockCount = 1;
         }
 
         public override void SetDefaults()

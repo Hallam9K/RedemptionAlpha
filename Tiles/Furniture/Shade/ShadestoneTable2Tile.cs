@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.Enums;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 using Terraria.DataStructures;
@@ -42,13 +43,9 @@ namespace Redemption.Tiles.Furniture.Shade
 
 			AddToArray(ref TileID.Sets.RoomNeeds.CountsAsTable);
 
-			// Etc
-			ModTranslation name = CreateMapEntryName();
-			name.SetDefault("Shadestone Table");
-			AddMapEntry(new Color(59, 61, 87), name);
-		}
+			AddMapEntry(new Color(59, 61, 87), Language.GetText("MapObject.Table"));
+        }
 
 		public override void NumDust(int i, int j, bool fail, ref int num) => num = fail ? 1 : 3;
-		public override void KillMultiTile(int i, int j, int frameX, int frameY) => Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 32, 96, ModContent.ItemType<ShadestoneTable2>());
     }
 }

@@ -10,20 +10,20 @@ namespace Redemption.Items.Materials.PreHM
 	{
 		public override void SetStaticDefaults()
 		{
-            DisplayName.SetDefault("Blackened Heart");
-            Tooltip.SetDefault("'May cause instant death'");
+            // DisplayName.SetDefault("Blackened Heart");
+            // Tooltip.SetDefault("'May cause instant death'");
             ItemID.Sets.ItemIconPulse[Item.type] = true;
             ItemID.Sets.AnimatesAsSoul[Item.type] = true;
             Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(5, 5));
 
-            SacrificeTotal = 1;
+            Item.ResearchUnlockCount = 1;
         }
 
         public override void SetDefaults()
 		{
             Item.width = 20;
             Item.height = 18;
-            Item.maxStack = 9999;
+            Item.maxStack = Item.CommonMaxStack;
             Item.value = 3000;
             Item.rare = ModContent.RarityType<SoullessRarity>();
             Item.UseSound = SoundID.Item3;

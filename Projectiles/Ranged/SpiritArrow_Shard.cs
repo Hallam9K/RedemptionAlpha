@@ -12,7 +12,7 @@ namespace Redemption.Projectiles.Ranged
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Spirit Shard");
+            // DisplayName.SetDefault("Spirit Shard");
             ProjectileID.Sets.CultistIsResistantTo[Projectile.type] = true;
             ProjectileID.Sets.TrailCacheLength[Projectile.type] = 4;
             ProjectileID.Sets.TrailingMode[Projectile.type] = 0;

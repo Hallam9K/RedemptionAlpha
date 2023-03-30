@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using Redemption.Buffs.Pets;
 using Redemption.Globals;
 using Terraria;
+using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Redemption.Projectiles.Pets
@@ -10,10 +11,13 @@ namespace Redemption.Projectiles.Pets
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Angel Erhan");
+			// DisplayName.SetDefault("Angel Erhan");
 			Main.projFrames[Projectile.type] = 4;
 			Main.projPet[Projectile.type] = true;
-		}
+            ProjectileID.Sets.CharacterPreviewAnimations[Projectile.type] = ProjectileID.Sets.SimpleLoop(0, Main.projFrames[Projectile.type], 5)
+                .WithOffset(-10, -20f)
+                .WithCode(DelegateMethods.CharacterPreview.Float);
+        }
 
 		public override void SetDefaults()
 		{

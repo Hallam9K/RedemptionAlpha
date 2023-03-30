@@ -15,7 +15,7 @@ namespace Redemption.NPCs.HM
         public override string Texture => "Redemption/NPCs/Lab/MACE/MACE_GroundShock";
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Shockwave");
+            // DisplayName.SetDefault("Shockwave");
             Main.projFrames[Projectile.type] = 6;
         }
 
@@ -35,7 +35,7 @@ namespace Redemption.NPCs.HM
         {
             behindNPCsAndTiles.Add(index);
         }
-        public override void OnHitPlayer(Player target, int damage, bool crit)
+        public override void OnHitPlayer(Player target, Player.HurtInfo info)
         {
             if (!target.noKnockback)
                 target.velocity.Y -= 16;

@@ -75,25 +75,25 @@ namespace Redemption.Globals.Player
             parryStance = false;
             parried = false;
         }
-        public override bool PreHurt(bool pvp, bool quiet, ref int damage, ref int hitDirection, ref bool crit, ref bool customDamage, ref bool playSound, ref bool genGore, ref PlayerDeathReason damageSource, ref int cooldownCounter)
+        public override bool ImmuneTo(PlayerDeathReason damageSource, int cooldownCounter, bool dodgeable)
         {
-            if ((damageSource.SourceNPCIndex >= 0 || (damageSource.SourceProjectileIndex >= 0 && Main.projectile[damageSource.SourceProjectileIndex].Redemption().TechnicallyMelee)) && contactImmuneTrue)
-                return false;
+            if ((damageSource.SourceNPCIndex >= 0 || (damageSource.SourceProjectileLocalIndex >= 0 && Main.projectile[damageSource.SourceProjectileLocalIndex].Redemption().TechnicallyMelee)) && contactImmuneTrue)
+                return true;
             if (((damageSource.SourceNPCIndex >= 0 && Main.npc[damageSource.SourceNPCIndex].velocity.Length() > Player.velocity.Length() / 2) ||
-                (damageSource.SourceProjectileIndex >= 0 && Main.projectile[damageSource.SourceProjectileIndex].Redemption().TechnicallyMelee)) && parryStance)
+                (damageSource.SourceProjectileLocalIndex >= 0 && Main.projectile[damageSource.SourceProjectileLocalIndex].Redemption().TechnicallyMelee)) && parryStance)
             {
                 parried = true;
                 Player.immune = true;
                 Player.immuneTime = (int)MathHelper.Max(Player.immuneTime, 4);
-                return false;
+                return true;
             }
-            return true;
+            return base.ImmuneTo(damageSource, cooldownCounter, dodgeable);
         }
-        public override void Hurt(bool pvp, bool quiet, double damage, int hitDirection, bool crit, int cooldownCounter)
+        public override void OnHurt(Terraria.Player.HurtInfo info)
         {
             onHit = true;
         }
-        public override void OnHitNPC(Item item, Terraria.NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPCWithItem(Item item, Terraria.NPC target, Terraria.NPC.HitInfo hit, int damageDone)
         {
             if (Player.RedemptionPlayerBuff().hardlightBonus == 3 && item.DamageType == DamageClass.Melee)
             {
@@ -101,7 +101,7 @@ namespace Redemption.Globals.Player
                 hitTarget2 = target.whoAmI;
             }
         }
-        public override void OnHitNPCWithProj(Projectile proj, Terraria.NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPCWithProj(Projectile proj, Terraria.NPC target, Terraria.NPC.HitInfo hit, int damageDone)
         {
             if (Player.RedemptionPlayerBuff().hardlightBonus == 3 && proj.DamageType == DamageClass.Melee && proj.type != ModContent.ProjectileType<MiniSpaceship_Laser>())
             {
@@ -109,7 +109,7 @@ namespace Redemption.Globals.Player
                 hitTarget2 = target.whoAmI;
             }
         }
-        public override void OnEnterWorld(Terraria.Player player)
+        public override void OnEnterWorld()
         {
             if (SubworldSystem.Current != null)
                 return;

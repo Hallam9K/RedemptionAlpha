@@ -11,13 +11,13 @@ namespace Redemption.Items.Accessories.PostML
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Heart of Infection");
-            Tooltip.SetDefault("The player occasionally emits a life-draining force that steals life from debuffed enemies" +
+            // DisplayName.SetDefault("Heart of Infection");
+            /* Tooltip.SetDefault("The player occasionally emits a life-draining force that steals life from debuffed enemies" +
                 "\n20% increased " + ElementID.PoisonS + " elemental resistance" +
-                 "\n10% increased " + ElementID.PoisonS + " elemental damage");
+                 "\n10% increased " + ElementID.PoisonS + " elemental damage"); */
             Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(4, 6));
             ItemID.Sets.AnimatesAsSoul[Type] = true;
-            SacrificeTotal = 1;
+            Item.ResearchUnlockCount = 1;
         }
 
         public override void SetDefaults()

@@ -464,7 +464,7 @@ namespace Redemption.NPCs.PreHM
         }
 
         public override bool CanHitPlayer(Player target, ref int cooldownSlot) => false;
-        public override bool? CanHitNPC(NPC target) => false;
+        public override bool CanHitNPC(NPC target) => false;
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
             npcLoot.Add(ItemDropRule.OneFromOptions(2,
@@ -499,7 +499,7 @@ namespace Redemption.NPCs.PreHM
             });
         }
 
-        public override void HitEffect(int hitDirection, double damage)
+        public override void HitEffect(NPC.HitInfo hit)
         {
             if (AIState is ActionState.Idle or ActionState.Wander)
             {

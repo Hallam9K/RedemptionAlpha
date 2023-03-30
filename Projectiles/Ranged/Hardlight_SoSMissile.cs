@@ -15,7 +15,7 @@ namespace Redemption.Projectiles.Ranged
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("SoS Missile");
+            // DisplayName.SetDefault("SoS Missile");
             Main.projFrames[Projectile.type] = 4;
             ElementID.ProjExplosive[Type] = true;
         }
@@ -71,7 +71,7 @@ namespace Redemption.Projectiles.Ranged
                 }
             }
         }
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             Main.LocalPlayer.RedemptionScreen().ScreenShakeOrigin = Projectile.Center;
             Main.LocalPlayer.RedemptionScreen().ScreenShakeIntensity += 12;
@@ -117,7 +117,7 @@ namespace Redemption.Projectiles.Ranged
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Explosion");
+            // DisplayName.SetDefault("Explosion");
             Main.projFrames[Projectile.type] = 5;
             ElementID.ProjExplosive[Type] = true;
         }
@@ -156,7 +156,7 @@ namespace Redemption.Projectiles.Ranged
             Projectile.scale += 0.02f;
         }
         public override bool? CanHitNPC(NPC target) => Projectile.frame > 2 ? null : false;
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             Projectile.localNPCImmunity[target.whoAmI] = 60;
             target.immune[Projectile.owner] = 0;

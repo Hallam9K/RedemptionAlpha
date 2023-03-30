@@ -12,11 +12,11 @@ namespace Redemption.Items.Armor.PreHM.LivingWood
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Living Wood Helmet");
-            Tooltip.SetDefault("+1 increased summon damage");
+            // DisplayName.SetDefault("Living Wood Helmet");
+            // Tooltip.SetDefault("+1 increased summon damage");
             ArmorIDs.Head.Sets.DrawHead[EquipLoader.GetEquipSlot(Mod, Name, EquipType.Head)] = false;
 
-            SacrificeTotal = 1;
+            Item.ResearchUnlockCount = 1;
         }
 
         public override void SetDefaults()

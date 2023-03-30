@@ -19,7 +19,7 @@ namespace Redemption.Projectiles.Misc
         public float[] oldrot = new float[8];
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Elemental Crystal");
+            // DisplayName.SetDefault("Elemental Crystal");
             ProjectileID.Sets.TrailCacheLength[Projectile.type] = 8;
             ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
         }

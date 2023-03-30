@@ -16,7 +16,7 @@ namespace Redemption.Items.Weapons.PreHM.Magic
         public override string Texture => "Redemption/Items/Weapons/PreHM/Magic/PureIronStaff";
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Pure-Iron Staff");
+            // DisplayName.SetDefault("Pure-Iron Staff");
         }
         public override void SetDefaults()
         {

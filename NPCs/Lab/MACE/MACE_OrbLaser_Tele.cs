@@ -10,7 +10,7 @@ namespace Redemption.NPCs.Lab.MACE
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Warning");
+            // DisplayName.SetDefault("Warning");
         }
         public override void SetDefaults()
         {

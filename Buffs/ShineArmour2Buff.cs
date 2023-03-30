@@ -7,8 +7,8 @@ namespace Redemption.Buffs
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Shined Armor II");
-            Description.SetDefault("Increased defense");
+            // DisplayName.SetDefault("Shined Armor II");
+            // Description.SetDefault("Increased defense");
             Main.buffNoTimeDisplay[Type] = false;
         }
         public override void Update(Player player, ref int buffIndex)

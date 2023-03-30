@@ -8,8 +8,8 @@ namespace Redemption.Buffs.Minions
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("LOG");
-			Description.SetDefault("A small log, perhaps a tiny squirrel is hiding inside it");
+			// DisplayName.SetDefault("LOG");
+			// Description.SetDefault("A small log, perhaps a tiny squirrel is hiding inside it");
 			Main.buffNoSave[Type] = true;
 			Main.buffNoTimeDisplay[Type] = true;
 		}

@@ -17,8 +17,8 @@ namespace Redemption.Items.Weapons.HM.Ranged
     {
         public override void SetStaticDefaults()
         {
-            Tooltip.SetDefault("(4[i:" + ModContent.ItemType<EnergyPack>() + "]) Replaces normal bullets with Plasma Rounds\n" +
-                "Requires an Energy Pack to be in your inventory");
+            /* Tooltip.SetDefault("(4[i:" + ModContent.ItemType<EnergyPack>() + "]) Replaces normal bullets with Plasma Rounds\n" +
+                "Requires an Energy Pack to be in your inventory"); */
         }
 
         public override void SetDefaults()

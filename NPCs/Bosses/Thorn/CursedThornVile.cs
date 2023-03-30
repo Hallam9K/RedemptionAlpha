@@ -27,7 +27,7 @@ namespace Redemption.NPCs.Bosses.Thorn
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Cursed Thorns");
+            // DisplayName.SetDefault("Cursed Thorns");
             ElementID.ProjNature[Type] = true;
         }
 

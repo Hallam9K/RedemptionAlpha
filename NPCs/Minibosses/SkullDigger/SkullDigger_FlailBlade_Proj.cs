@@ -12,7 +12,7 @@ namespace Redemption.NPCs.Minibosses.SkullDigger
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Skull Digger's Skull Digger");
+            // DisplayName.SetDefault("Skull Digger's Skull Digger");
             ProjectileID.Sets.TrailCacheLength[Projectile.type] = 5;
             ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
             ElementID.ProjArcane[Type] = true;
@@ -91,7 +91,7 @@ namespace Redemption.NPCs.Minibosses.SkullDigger
         public override void SetStaticDefaults()
         {
             base.SetStaticDefaults();
-            DisplayName.SetDefault("Skull Digger's Skull Digger");
+            // DisplayName.SetDefault("Skull Digger's Skull Digger");
         }
         public override void SetDefaults()
         {

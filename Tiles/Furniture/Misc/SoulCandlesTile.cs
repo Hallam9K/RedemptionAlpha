@@ -8,6 +8,7 @@ using Terraria;
 using Terraria.DataStructures;
 using Terraria.Enums;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 
@@ -31,8 +32,8 @@ namespace Redemption.Tiles.Furniture.Misc
             TileObjectData.newTile.AnchorBottom = new AnchorData(AnchorType.SolidTile | AnchorType.SolidWithTop | AnchorType.SolidSide, TileObjectData.newTile.Width, 0);
             TileObjectData.newTile.DrawYOffset = 2;
             TileObjectData.addTile(Type);
-            ModTranslation name = CreateMapEntryName();
-            name.SetDefault("Soul Candles");
+            LocalizedText name = CreateMapEntryName();
+            // name.SetDefault("Soul Candles");
             AddMapEntry(new Color(204, 223, 224), name);
             DustType = ModContent.DustType<ShadestoneDust>();
             AddToArray(ref TileID.Sets.RoomNeeds.CountsAsTorch);
@@ -69,10 +70,6 @@ namespace Redemption.Tiles.Furniture.Misc
             g = 0.7f;
             b = 0.8f;
         }
-        public override void KillMultiTile(int i, int j, int frameX, int frameY)
-        {
-            Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 32, 16, ModContent.ItemType<SoulCandles>());
-        }
         public override void PostDraw(int i, int j, SpriteBatch spriteBatch)
         {
             Tile tile = Main.tile[i, j];
@@ -98,7 +95,7 @@ namespace Redemption.Tiles.Furniture.Misc
         public Tile Parent;
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Soul Candles");
+            // DisplayName.SetDefault("Soul Candles");
         }
         public override void SetDefaults()
         {

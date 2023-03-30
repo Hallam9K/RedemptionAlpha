@@ -12,7 +12,7 @@ namespace Redemption.Projectiles.Melee
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Ukonvasara Fragments");
+            // DisplayName.SetDefault("Ukonvasara Fragments");
             ProjectileID.Sets.TrailCacheLength[Projectile.type] = 3;
             ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
             ElementID.ProjEarth[Type] = true;

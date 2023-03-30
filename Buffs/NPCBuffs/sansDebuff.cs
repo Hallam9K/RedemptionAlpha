@@ -8,8 +8,8 @@ namespace Redemption.Buffs.NPCBuffs
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("sans");
-			Description.SetDefault("Bad time time");
+			// DisplayName.SetDefault("sans");
+			// Description.SetDefault("Bad time time");
             Main.debuff[Type] = true;
             Main.buffNoSave[Type] = true;
             Main.pvpBuff[Type] = true;

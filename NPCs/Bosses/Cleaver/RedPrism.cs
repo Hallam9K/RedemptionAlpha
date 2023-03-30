@@ -15,7 +15,7 @@ namespace Redemption.NPCs.Bosses.Cleaver
         private new const float FirstSegmentDrawDist = 20;
         public override void SetSafeStaticDefaults()
         {
-            DisplayName.SetDefault("Phantom Cleaver");
+            // DisplayName.SetDefault("Phantom Cleaver");
         }
         public override void SetSafeDefaults()
         {
@@ -130,7 +130,7 @@ namespace Redemption.NPCs.Bosses.Cleaver
         private new const float FirstSegmentDrawDist = 20;
         public override void SetSafeStaticDefaults()
         {
-            DisplayName.SetDefault("Phantom Cleaver");
+            // DisplayName.SetDefault("Phantom Cleaver");
         }
         public override void SetSafeDefaults()
         {

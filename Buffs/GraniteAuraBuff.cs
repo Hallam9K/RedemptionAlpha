@@ -7,8 +7,8 @@ namespace Redemption.Buffs
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Granite Aura");
-            Description.SetDefault("You seep with energy");
+            // DisplayName.SetDefault("Granite Aura");
+            // Description.SetDefault("You seep with energy");
             Main.buffNoTimeDisplay[Type] = true;
         }
         public override void Update(Player player, ref int buffIndex)

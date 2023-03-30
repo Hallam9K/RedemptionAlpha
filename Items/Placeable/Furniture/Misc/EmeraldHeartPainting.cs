@@ -9,9 +9,9 @@ namespace Redemption.Items.Placeable.Furniture.Misc
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Emerald Heart");
-            Tooltip.SetDefault("'D. Juice'");
-            SacrificeTotal = 1;
+			// DisplayName.SetDefault("Emerald Heart");
+            // Tooltip.SetDefault("'D. Juice'");
+            Item.ResearchUnlockCount = 1;
 		}
 
 		public override void SetDefaults()
@@ -19,7 +19,7 @@ namespace Redemption.Items.Placeable.Furniture.Misc
 			Item.DefaultToPlaceableTile(ModContent.TileType<EmeraldHeartPaintingTile>(), 0);
 			Item.width = 42;
 			Item.height = 30;
-			Item.maxStack = 9999;
+			Item.maxStack = Item.CommonMaxStack;
 			Item.rare = ItemRarityID.White;
 			Item.value = Item.buyPrice(0, 3, 0, 0);
 		}

@@ -14,7 +14,7 @@ namespace Redemption.NPCs.Bosses.Neb
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Giant Star");
+            // DisplayName.SetDefault("Giant Star");
             ElementID.ProjCelestial[Type] = true;
         }
         public override void SetDefaults()

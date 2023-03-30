@@ -19,9 +19,9 @@ namespace Redemption.Items
         public float progress;
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Sprite Spawner");
-            Tooltip.SetDefault("Spawns sprites at the cursor and continuously draws them at that location.\n" +
-                               "Can be used to test shaders. You should use Edit and Continue to do this.");
+            // DisplayName.SetDefault("Sprite Spawner");
+            /* Tooltip.SetDefault("Spawns sprites at the cursor and continuously draws them at that location.\n" +
+                               "Can be used to test shaders. You should use Edit and Continue to do this."); */
         }
         public override void SetDefaults()
         {

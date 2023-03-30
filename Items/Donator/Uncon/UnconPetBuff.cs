@@ -8,8 +8,8 @@ namespace Redemption.Items.Donator.Uncon
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Tremor");
-			Description.SetDefault("No, not the mod");
+			// DisplayName.SetDefault("Tremor");
+			// Description.SetDefault("No, not the mod");
 
 			Main.buffNoTimeDisplay[Type] = true;
 			Main.vanityPet[Type] = true;

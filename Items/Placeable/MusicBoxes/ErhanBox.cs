@@ -9,10 +9,11 @@ namespace Redemption.Items.Placeable.MusicBoxes
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Music Box (Erhan)");
-			Tooltip.SetDefault("Sc0p3r - Holy Inquisition");
-
-			SacrificeTotal = 1;
+            // DisplayName.SetDefault("Music Box (Erhan)");
+            // Tooltip.SetDefault("Sc0p3r - Holy Inquisition");
+            ItemID.Sets.CanGetPrefixes[Type] = false;
+            ItemID.Sets.ShimmerTransformToItem[Type] = ItemID.MusicBox;
+            Item.ResearchUnlockCount = 1;
 
 			MusicLoader.AddMusicBox(Mod, MusicLoader.GetMusicSlot(Mod, "Sounds/Music/BossErhan"), ModContent.ItemType<ErhanBox>(), ModContent.TileType<ErhanBoxTile>());
 		}

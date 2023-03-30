@@ -23,7 +23,7 @@ namespace Redemption.NPCs.Bosses.ADD
         }
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Ukko's Lightning");
+            // DisplayName.SetDefault("Ukko's Lightning");
             Main.projFrames[Projectile.type] = 24;
             ElementID.ProjThunder[Type] = true;
         }
@@ -107,7 +107,7 @@ namespace Redemption.NPCs.Bosses.ADD
             Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
             return false;
         }
-        public override void ModifyHitPlayer(Player target, ref int damage, ref bool crit)
+        public override void ModifyHitPlayer(Player target, ref Player.HurtModifiers modifiers)
         {
             if (Main.rand.NextBool(2))
                 target.AddBuff(BuffID.Electrified, target.HasBuff(BuffID.Wet) ? 320 : 160);
@@ -118,7 +118,7 @@ namespace Redemption.NPCs.Bosses.ADD
         public override string Texture => Redemption.EMPTY_TEXTURE;
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Ukko's Lightning");
+            // DisplayName.SetDefault("Ukko's Lightning");
             ElementID.ProjThunder[Type] = true;
         }
         public override void SetDefaults()
@@ -146,7 +146,7 @@ namespace Redemption.NPCs.Bosses.ADD
                 Projectile.localAI[0] = 1;
             }
         }
-        public override void ModifyHitPlayer(Player target, ref int damage, ref bool crit)
+        public override void ModifyHitPlayer(Player target, ref Player.HurtModifiers modifiers)
         {
             if (Main.rand.NextBool(2))
                 target.AddBuff(BuffID.Electrified, target.HasBuff(BuffID.Wet) ? 320 : 160);

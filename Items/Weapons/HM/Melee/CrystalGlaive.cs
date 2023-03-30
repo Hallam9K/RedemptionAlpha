@@ -12,12 +12,12 @@ namespace Redemption.Items.Weapons.HM.Melee
     {
         public override void SetStaticDefaults()
         {
-            Tooltip.SetDefault("Left-click to do a close ranged combo attack when hitting enemies\n" +
+            /* Tooltip.SetDefault("Left-click to do a close ranged combo attack when hitting enemies\n" +
                 "Right-click to fire a mid range blast of crystal shards\n" +
-                "Completing the left-click combo on an enemy empowers the right-click ability for 5 shots");
+                "Completing the left-click combo on an enemy empowers the right-click ability for 5 shots"); */
             ItemID.Sets.SkipsInitialUseSound[Item.type] = true;
             ItemID.Sets.Spears[Item.type] = true;
-            SacrificeTotal = 1;
+            Item.ResearchUnlockCount = 1;
         }
 
         public override void SetDefaults()

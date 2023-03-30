@@ -80,7 +80,7 @@ namespace Redemption.NPCs.HM
         public ref float TimerRand => ref NPC.ai[2];
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Space Paladin Mk.I");
+            // DisplayName.SetDefault("Space Paladin Mk.I");
             Main.npcFrameCount[NPC.type] = 12;
             NPCID.Sets.CantTakeLunchMoney[Type] = true;
 
@@ -537,7 +537,7 @@ namespace Redemption.NPCs.HM
                 NPC.netUpdate = true;
             }
         }
-        public override void ModifyHitByItem(Player player, Item item, ref int damage, ref float knockback, ref bool crit)
+        public override void ModifyHitByItem(Player player, Item item, ref NPC.HitModifiers modifiers)
         {
             if (AIState is not ActionState.Alert && AIState is not ActionState.Laser)
                 return;
@@ -548,11 +548,11 @@ namespace Redemption.NPCs.HM
             if (player.Redemption().meleeHitbox.Intersects(ShieldHitbox))
             {
                 SoundEngine.PlaySound(SoundID.NPCHit34, NPC.position);
-                damage = 0;
-                knockback = 0;
+                modifiers.SetMaxDamage(1);
+                modifiers.Knockback *= 0;
             }
         }
-        public override void ModifyHitByProjectile(Projectile projectile, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
+        public override void ModifyHitByProjectile(Projectile projectile, ref NPC.HitModifiers modifiers)
         {
             if (AIState is not ActionState.Alert && AIState is not ActionState.Laser)
                 return;
@@ -566,8 +566,8 @@ namespace Redemption.NPCs.HM
                 if (projectile.penetrate > 1)
                     projectile.timeLeft = Math.Min(projectile.timeLeft, 2);
                 SoundEngine.PlaySound(SoundID.NPCHit34, NPC.position);
-                damage = 0;
-                knockback = 0;
+                modifiers.SetMaxDamage(1);
+                modifiers.Knockback *= 0;
             }
         }
         public static float c = 1f / 255f;
@@ -624,7 +624,7 @@ namespace Redemption.NPCs.HM
             return false;
         }
 
-        public override bool? CanHitNPC(NPC target) => false;
+        public override bool CanHitNPC(NPC target) => false;
         public override bool CanHitPlayer(Player target, ref int cooldownSlot) => AIState == ActionState.Stomp && NPC.velocity.Length() > 0;
 
         public override void ModifyNPCLoot(NPCLoot npcLoot)
@@ -636,7 +636,7 @@ namespace Redemption.NPCs.HM
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<EnergyCell>(), 2, 1, 3));
             npcLoot.Add(ItemDropRule.Food(ModContent.ItemType<P0T4T0>(), 150));
         }
-        public override void HitEffect(int hitDirection, double damage)
+        public override void HitEffect(NPC.HitInfo hit)
         {
             if (NPC.life <= 0)
             {

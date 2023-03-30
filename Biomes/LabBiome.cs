@@ -20,7 +20,7 @@ namespace Redemption.Biomes
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Abandoned Laboratory");
+            // DisplayName.SetDefault("Abandoned Laboratory");
         }
         public override void OnEnter(Player player)
         {

@@ -9,8 +9,8 @@ namespace Redemption.Buffs.NPCBuffs
         public override string Texture => "Redemption/Buffs/Debuffs/_DebuffTemplate";
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Moonflare");
-            Description.SetDefault(":(");
+            // DisplayName.SetDefault("Moonflare");
+            // Description.SetDefault(":(");
             Main.debuff[Type] = true;
             Main.buffNoSave[Type] = true;
         }

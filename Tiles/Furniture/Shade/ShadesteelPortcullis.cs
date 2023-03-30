@@ -2,6 +2,7 @@ using Terraria.DataStructures;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 using Terraria.Enums;
@@ -39,11 +40,12 @@ namespace Redemption.Tiles.Furniture.Shade
             TileObjectData.addAlternate(0);
             TileObjectData.addTile(Type);
             AddToArray(ref TileID.Sets.RoomNeeds.CountsAsDoor);
-            ModTranslation name = CreateMapEntryName();
-            name.SetDefault("Shadesteel Portcullis");
+            LocalizedText name = CreateMapEntryName();
+            // name.SetDefault("Shadesteel Portcullis");
             AddMapEntry(new Color(83, 87, 123), name);
             MinPick = 500;
             MineResist = 12f;
+            ItemDrop = -1;
             DustType = ModContent.DustType<ShadesteelDust>();
             AdjTiles = new int[] { TileID.ClosedDoor };
         }
@@ -67,7 +69,7 @@ namespace Redemption.Tiles.Furniture.Shade
             int top = j - Main.tile[i, j].TileFrameY / 18 % 3;
             WorldGen.KillTile(i, j, noItem: true);
             WorldGen.PlaceObject(i, j, ModContent.TileType<ShadesteelPortcullisOpen>());
-            NetMessage.SendObjectPlacment(-1, i, j, ModContent.TileType<ShadesteelPortcullisOpen>(), 0, 0, -1, -1);
+            NetMessage.SendObjectPlacement(-1, i, j, ModContent.TileType<ShadesteelPortcullisOpen>(), 0, 0, -1, -1);
             NetMessage.SendTileSquare(-1, left, top + 1, 2);
             return true;
         }
@@ -105,11 +107,12 @@ namespace Redemption.Tiles.Furniture.Shade
             TileObjectData.addTile(Type);
             AddToArray(ref TileID.Sets.RoomNeeds.CountsAsDoor);
             TileID.Sets.HousingWalls[Type] = true;
-            ModTranslation name = CreateMapEntryName();
-            name.SetDefault("Shadesteel Portcullis");
+            LocalizedText name = CreateMapEntryName();
+            // name.SetDefault("Shadesteel Portcullis");
             AddMapEntry(new Color(83, 87, 123), name);
             MinPick = 500;
             MineResist = 12f;
+            ItemDrop = -1;
             DustType = ModContent.DustType<ShadesteelDust>();
             AdjTiles = new int[] { TileID.OpenDoor };
         }
@@ -122,7 +125,7 @@ namespace Redemption.Tiles.Furniture.Shade
             int top = j - Main.tile[i, j].TileFrameY / 18 % 3;
             WorldGen.KillTile(i, j, noItem: true);
             WorldGen.PlaceObject(i, j, ModContent.TileType<ShadesteelPortcullisClose_Unlocked>());
-            NetMessage.SendObjectPlacment(-1, i, j, ModContent.TileType<ShadesteelPortcullisClose_Unlocked>(), 0, 0, -1, -1);
+            NetMessage.SendObjectPlacement(-1, i, j, ModContent.TileType<ShadesteelPortcullisClose_Unlocked>(), 0, 0, -1, -1);
             NetMessage.SendTileSquare(-1, left, top + 1, 2);
             return true;
         }
@@ -133,7 +136,7 @@ namespace Redemption.Tiles.Furniture.Shade
         public override string Texture => Redemption.PLACEHOLDER_TEXTURE;
         public override void SetStaticDefaults()
         {
-            Tooltip.SetDefault("[c/ff0000:Unbreakable (500% Pickaxe Power)]");
+            // Tooltip.SetDefault("[c/ff0000:Unbreakable (500% Pickaxe Power)]");
         }
         public override void SetDefaults()
         {

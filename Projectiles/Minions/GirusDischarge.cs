@@ -11,7 +11,7 @@ namespace Redemption.Projectiles.Minions
         public override string Texture => Redemption.EMPTY_TEXTURE;
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Discharge");
+            // DisplayName.SetDefault("Discharge");
             ProjectileID.Sets.MinionShot[Projectile.type] = true;
             ElementID.ProjThunder[Type] = true;
         }

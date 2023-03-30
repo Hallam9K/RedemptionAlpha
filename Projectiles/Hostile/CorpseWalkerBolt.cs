@@ -15,7 +15,7 @@ namespace Redemption.Projectiles.Hostile
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Redemptive Spark");
+            // DisplayName.SetDefault("Redemptive Spark");
             Main.projFrames[Projectile.type] = 5;
             ProjectileID.Sets.CultistIsResistantTo[Projectile.type] = true;
 
@@ -35,7 +35,7 @@ namespace Redemption.Projectiles.Hostile
             Projectile.timeLeft = 120;
             Projectile.Redemption().friendlyHostile = true;
         }
-        public override void OnHitPlayer(Player target, int damage, bool crit) => Projectile.Kill();
+        public override void OnHitPlayer(Player target, Player.HurtInfo info) => Projectile.Kill();
         public override bool? CanHitNPC(NPC target)
         {
             NPC host = Main.npc[(int)Projectile.ai[0]];
@@ -140,7 +140,7 @@ namespace Redemption.Projectiles.Hostile
                 Projectile.Kill();
             }
         }
-        public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection) => damage *= 4;
+        public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers) => modifiers.FinalDamage *= 4;
         public override bool PreDraw(ref Color lightColor)
         {
             Texture2D texture = TextureAssets.Projectile[Projectile.type].Value;

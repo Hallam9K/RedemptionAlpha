@@ -12,7 +12,7 @@ namespace Redemption.Items.Weapons.HM.Ammo
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Bile Bullet");
+			// DisplayName.SetDefault("Bile Bullet");
             ElementID.ProjPoison[Type] = true;
         }
 		public override void SetDefaults()
@@ -39,6 +39,6 @@ namespace Redemption.Items.Weapons.HM.Ammo
         {
             return Color.White * Projectile.Opacity;
         }
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) => target.AddBuff(ModContent.BuffType<BileDebuff>(), 600);
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) => target.AddBuff(ModContent.BuffType<BileDebuff>(), 600);
 	}
 }

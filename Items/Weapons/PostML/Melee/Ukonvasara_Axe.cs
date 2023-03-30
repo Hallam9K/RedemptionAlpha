@@ -18,7 +18,7 @@ namespace Redemption.Items.Weapons.PostML.Melee
         public float[] oldrot = new float[4];
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Ukonvasara");
+            // DisplayName.SetDefault("Ukonvasara");
             ProjectileID.Sets.TrailCacheLength[Projectile.type] = 4;
             ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
             ElementID.ProjEarth[Type] = true;
@@ -150,7 +150,7 @@ namespace Redemption.Items.Weapons.PostML.Melee
             else
                 player.SetCompositeArmFront(true, Player.CompositeArmStretchAmount.Full, (player.Center - Projectile.Center).ToRotation() + MathHelper.PiOver2);
         }
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             Player player = Main.player[Projectile.owner];
             if (player.velocity.Y >= 20 && target.knockBackResist > 0)

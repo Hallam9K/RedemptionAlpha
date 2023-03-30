@@ -1,4 +1,5 @@
 using Redemption.Tiles.Containers;
+using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -8,7 +9,7 @@ namespace Redemption.Items.Placeable.Containers
 	{
 		public override void SetStaticDefaults()
 		{
-			SacrificeTotal = 1;
+			Item.ResearchUnlockCount = 1;
 		}
 
 		public override void SetDefaults()
@@ -16,7 +17,7 @@ namespace Redemption.Items.Placeable.Containers
 			Item.DefaultToPlaceableTile(ModContent.TileType<ElderWoodChestTile>(), 0);
 			Item.width = 32;
 			Item.height = 24;
-			Item.maxStack = 9999;
+			Item.maxStack = Item.CommonMaxStack;
 			Item.value = 500;
 		}
 

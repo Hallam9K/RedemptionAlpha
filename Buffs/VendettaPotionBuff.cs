@@ -9,8 +9,8 @@ namespace Redemption.Buffs
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Poison Thorns");
-            Description.SetDefault("Attackers also take damage, and get inflicted by poison");
+            // DisplayName.SetDefault("Poison Thorns");
+            // Description.SetDefault("Attackers also take damage, and get inflicted by poison");
             Main.buffNoTimeDisplay[Type] = false;
         }
         public override void Update(Player player, ref int buffIndex)

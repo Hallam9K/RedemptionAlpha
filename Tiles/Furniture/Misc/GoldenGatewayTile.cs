@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 using Microsoft.Xna.Framework.Graphics;
@@ -53,8 +54,9 @@ namespace Redemption.Tiles.Furniture.Misc
 			TileObjectData.addTile(Type);
             HitSound = CustomSounds.MetalHit;
             DustType = DustID.GoldCoin;
-			ModTranslation name = CreateMapEntryName();
-			name.SetDefault("Golden Gateway");
+            ItemDrop = -1;
+            LocalizedText name = CreateMapEntryName();
+			// name.SetDefault("Golden Gateway");
 			AddMapEntry(new Color(203, 179, 73));
 		}
         public override bool CanExplode(int i, int j) => false;
@@ -112,8 +114,8 @@ namespace Redemption.Tiles.Furniture.Misc
 		public override string Texture => Redemption.PLACEHOLDER_TEXTURE;
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Golden Gateway");
-			Tooltip.SetDefault("[c/ff0000:Unbreakable]");
+			// DisplayName.SetDefault("Golden Gateway");
+			// Tooltip.SetDefault("[c/ff0000:Unbreakable]");
 		}
 
 		public override void SetDefaults()

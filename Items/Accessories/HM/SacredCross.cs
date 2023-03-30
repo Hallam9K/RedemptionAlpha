@@ -13,11 +13,11 @@ namespace Redemption.Items.Accessories.HM
     {
         public override void SetStaticDefaults()
         {
-            Tooltip.SetDefault("12% increased " + ElementID.HolyS + " elemental damage and resistance\n" +
+            /* Tooltip.SetDefault("12% increased " + ElementID.HolyS + " elemental damage and resistance\n" +
                 "6% increased " + ElementID.HolyS + " elemental critical strike chance\n" +
                 "Critical strikes with a " + ElementID.HolyS + " elemental weapon has a chance to release homing lightmass\n" +
-                "Increases length of invincibility after taking damage");
-            SacrificeTotal = 1;
+                "Increases length of invincibility after taking damage"); */
+            Item.ResearchUnlockCount = 1;
         }
 
         public override void SetDefaults()

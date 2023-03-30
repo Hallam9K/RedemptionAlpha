@@ -9,14 +9,14 @@ namespace Redemption.Items.Placeable.Furniture.Misc
     {
         public override void SetStaticDefaults()
         {
-            SacrificeTotal = 1;
+            Item.ResearchUnlockCount = 1;
         }
         public override void SetDefaults()
         {
             Item.DefaultToPlaceableTile(ModContent.TileType<BorealStatuetteTile>(), 0);
             Item.width = 22;
             Item.height = 32;
-            Item.maxStack = 9999;
+            Item.maxStack = Item.CommonMaxStack;
             Item.value = Item.sellPrice(0, 0, 0, 80);
         }
         public override void AddRecipes()

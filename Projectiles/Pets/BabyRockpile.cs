@@ -14,9 +14,11 @@ namespace Redemption.Projectiles.Pets
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Baby Rockpile");
+            // DisplayName.SetDefault("Baby Rockpile");
             Main.projFrames[Projectile.type] = 8;
             Main.projPet[Projectile.type] = true;
+            ProjectileID.Sets.CharacterPreviewAnimations[Projectile.type] = ProjectileID.Sets.SimpleLoop(0, Main.projFrames[Projectile.type], 5)
+                .WithOffset(-10, 0);
         }
 
         public override void SetDefaults()

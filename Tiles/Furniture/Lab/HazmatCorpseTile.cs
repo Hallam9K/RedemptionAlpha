@@ -10,6 +10,7 @@ using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.Enums;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 using static Redemption.Globals.RedeNet;
@@ -36,8 +37,9 @@ namespace Redemption.Tiles.Furniture.Lab
             MinPick = 500;
             MineResist = 8f;
             HitSound = SoundID.NPCHit13;
-            ModTranslation name = CreateMapEntryName();
-            name.SetDefault("Hazmat Corpse");
+            ItemDrop = -1;
+            LocalizedText name = CreateMapEntryName();
+            // name.SetDefault("Hazmat Corpse");
             AddMapEntry(new Color(242, 183, 111), name);
         }
         public override void MouseOver(int i, int j)
@@ -136,9 +138,9 @@ namespace Redemption.Tiles.Furniture.Lab
         public override string Texture => Redemption.PLACEHOLDER_TEXTURE;
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Hazmat Corpse");
-            Tooltip.SetDefault("Gives Hazmat Suit" +
-                "\n[c/ff0000:Unbreakable (500% Pickaxe Power)]");
+            // DisplayName.SetDefault("Hazmat Corpse");
+            /* Tooltip.SetDefault("Gives Hazmat Suit" +
+                "\n[c/ff0000:Unbreakable (500% Pickaxe Power)]"); */
         }
 
         public override void SetDefaults()

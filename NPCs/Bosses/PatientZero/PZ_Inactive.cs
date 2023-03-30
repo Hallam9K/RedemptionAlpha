@@ -30,7 +30,7 @@ namespace Redemption.NPCs.Bosses.PatientZero
         public override string Texture => "Redemption/NPCs/Bosses/PatientZero/PZ_Eyelid_Glooped";
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("");
+            // DisplayName.SetDefault("");
             NPCID.Sets.DontDoHardmodeScaling[Type] = true;
             NPCID.Sets.DebuffImmunitySets.Add(Type, new NPCDebuffImmunityData
             {
@@ -88,7 +88,7 @@ namespace Redemption.NPCs.Bosses.PatientZero
         }
         public override bool CheckActive() => !Main.LocalPlayer.InModBiome<LabBiome>();
         public override bool CanHitPlayer(Player target, ref int cooldownSlot) => false;
-        public override bool? CanHitNPC(NPC target) => false;
+        public override bool CanHitNPC(NPC target) => false;
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
             Texture2D texture = TextureAssets.Npc[NPC.type].Value;

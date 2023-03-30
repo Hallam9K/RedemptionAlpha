@@ -14,7 +14,7 @@ namespace Redemption.NPCs.Bosses.PatientZero
 	{
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Xenium Blast");
+            // DisplayName.SetDefault("Xenium Blast");
             ProjectileID.Sets.TrailCacheLength[Projectile.type] = 5;
             ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
             ElementID.ProjPoison[Type] = true;
@@ -31,7 +31,7 @@ namespace Redemption.NPCs.Bosses.PatientZero
             Projectile.timeLeft = 160;
             Projectile.alpha = 255;
         }
-        public override void OnHitPlayer(Player target, int damage, bool crit) => target.AddBuff(ModContent.BuffType<BileDebuff>(), 120);
+        public override void OnHitPlayer(Player target, Player.HurtInfo info) => target.AddBuff(ModContent.BuffType<BileDebuff>(), 120);
         public override void AI()
         {
             if (Main.rand.NextBool(5))
@@ -46,7 +46,7 @@ namespace Redemption.NPCs.Bosses.PatientZero
             if (Projectile.localAI[0]++ > 10)
                 Projectile.tileCollide = true;
         }
-        public override void ModifyHitPlayer(Player target, ref int damage, ref bool crit)
+        public override void ModifyHitPlayer(Player target, ref Player.HurtModifiers modifiers)
         {
             Projectile.Kill();
         }

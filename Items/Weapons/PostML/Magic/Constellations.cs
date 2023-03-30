@@ -13,8 +13,8 @@ namespace Redemption.Items.Weapons.PostML.Magic
     {
         public override void SetStaticDefaults()
         {
-            Tooltip.SetDefault("'We own the stars, we own the sky'");
-            SacrificeTotal = 1;
+            // Tooltip.SetDefault("'We own the stars, we own the sky'");
+            Item.ResearchUnlockCount = 1;
         }
 
         public override void SetDefaults()

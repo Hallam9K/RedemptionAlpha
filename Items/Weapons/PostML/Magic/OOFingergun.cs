@@ -11,10 +11,10 @@ namespace Redemption.Items.Weapons.PostML.Magic
 	{
 		public override void SetStaticDefaults()
 		{
-            DisplayName.SetDefault("Omega Finger Gun");
-            Tooltip.SetDefault("Gradually increases fire rate");
+            // DisplayName.SetDefault("Omega Finger Gun");
+            // Tooltip.SetDefault("Gradually increases fire rate");
             ItemID.Sets.SkipsInitialUseSound[Item.type] = true;
-            SacrificeTotal = 1;
+            Item.ResearchUnlockCount = 1;
         }
 
         public override void SetDefaults()

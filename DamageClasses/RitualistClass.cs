@@ -9,7 +9,7 @@ namespace Redemption.DamageClasses
     {
         public override void SetStaticDefaults()
         {
-            ClassName.SetDefault("ritual damage");
+            // DisplayName.SetDefault("ritual damage");
         }
         public override StatInheritanceData GetModifierInheritance(DamageClass damageClass)
         {

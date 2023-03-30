@@ -16,7 +16,7 @@ namespace Redemption.Projectiles.Ranged
         public float[] oldrot = new float[8];
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Dark-Steel Arrow");
+            // DisplayName.SetDefault("Dark-Steel Arrow");
             ProjectileID.Sets.TrailCacheLength[Projectile.type] = 8;
             ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
             ElementID.ProjShadow[Type] = true;
@@ -54,7 +54,7 @@ namespace Redemption.Projectiles.Ranged
             width = height = 14;
             return true;
         }
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             SoundEngine.PlaySound(SoundID.Item103, Projectile.position);
             if (Projectile.owner == Main.myPlayer)

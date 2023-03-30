@@ -13,7 +13,7 @@ namespace Redemption.Projectiles.Minions
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Granite Guardian");
+            // DisplayName.SetDefault("Granite Guardian");
             Main.projFrames[Projectile.type] = 6;
 
             ProjectileID.Sets.MinionSacrificable[Projectile.type] = true;

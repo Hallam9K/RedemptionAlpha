@@ -11,9 +11,9 @@ namespace Redemption.Items.Usable.Potions
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Bottle of Wine");
-            Tooltip.SetDefault("Massive improvements to all stats" +
-                "\n'A reward for a long days work'");
+            // DisplayName.SetDefault("Bottle of Wine");
+            /* Tooltip.SetDefault("Massive improvements to all stats" +
+                "\n'A reward for a long days work'"); */
             Main.RegisterItemAnimation(Type, new DrawAnimationVertical(int.MaxValue, 3));
             ItemID.Sets.DrinkParticleColors[Item.type] = new Color[3] {
                 new Color(212, 75, 104),
@@ -21,14 +21,14 @@ namespace Redemption.Items.Usable.Potions
                 new Color(104, 17, 36)
             };
             ItemID.Sets.IsFood[Type] = true;
-            SacrificeTotal = 5;
+            Item.ResearchUnlockCount = 5;
         }
 
         public override void SetDefaults()
         {
             Item.DefaultToFood(24, 58, ModContent.BuffType<WellFed4>(), 10000, true);
             Item.value = 80;
-            Item.maxStack = 9999;
+            Item.maxStack = Item.CommonMaxStack;
             Item.rare = ItemRarityID.Blue;
         }
     }

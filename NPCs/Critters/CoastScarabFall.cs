@@ -9,7 +9,7 @@ namespace Redemption.NPCs.Critters
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Coast Scarab");
+            // DisplayName.SetDefault("Coast Scarab");
         }
 
         public override void SetDefaults()

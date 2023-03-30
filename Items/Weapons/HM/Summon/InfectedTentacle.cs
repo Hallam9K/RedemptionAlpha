@@ -18,10 +18,10 @@ namespace Redemption.Items.Weapons.HM.Summon
     {
         public override void SetStaticDefaults()
         {
-            Tooltip.SetDefault("Your summons will focus struck enemies\n" +
+            /* Tooltip.SetDefault("Your summons will focus struck enemies\n" +
                 "Strike enemies to summon a friendly hive cyst\n" +
-                "Inflicts Infection");
-            SacrificeTotal = 1;
+                "Inflicts Infection"); */
+            Item.ResearchUnlockCount = 1;
         }
         public override void SetDefaults()
         {
@@ -46,7 +46,7 @@ namespace Redemption.Items.Weapons.HM.Summon
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Infected Tentacle");
+            // DisplayName.SetDefault("Infected Tentacle");
             ProjectileID.Sets.IsAWhip[Type] = true;
             ElementID.ProjPoison[Type] = true;
         }
@@ -58,7 +58,7 @@ namespace Redemption.Items.Weapons.HM.Summon
             Projectile.WhipSettings.RangeMultiplier = 0.8f;
             Projectile.Redemption().TechnicallyMelee = true;
         }
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             Player player = Main.player[Projectile.owner];
             target.AddBuff(ModContent.BuffType<GreenRashesDebuff>(), 300);

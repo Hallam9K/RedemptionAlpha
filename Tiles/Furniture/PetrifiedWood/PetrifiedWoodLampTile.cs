@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Terraria;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ID;
 using Terraria.Enums;
@@ -31,9 +32,7 @@ namespace Redemption.Tiles.Furniture.PetrifiedWood
             TileObjectData.newTile.WaterPlacement = LiquidPlacement.NotAllowed;
             TileObjectData.newTile.LavaPlacement = LiquidPlacement.NotAllowed;
             TileObjectData.addTile(Type);
-            ModTranslation name = CreateMapEntryName();
-            name.SetDefault("Petrified Wood Lamp");
-            AddMapEntry(new Color(100, 100, 100), name);
+            AddMapEntry(new Color(100, 100, 100), Language.GetText("MapObject.FloorLamp"));
             AddToArray(ref TileID.Sets.RoomNeeds.CountsAsTorch);
             DustType = DustID.Ash;
         }
@@ -70,11 +69,6 @@ namespace Redemption.Tiles.Furniture.PetrifiedWood
                 g = 0.7f;
                 b = 0.7f;
             }
-        }
-        public override void KillMultiTile(int i, int j, int frameX, int frameY)
-        {
-            Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 16, 48, ModContent.ItemType<PetrifiedWoodLamp>());
-            Chest.DestroyChest(i, j);
         }
     }
 }

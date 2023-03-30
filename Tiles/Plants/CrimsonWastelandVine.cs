@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Redemption.Tiles.Tiles;
 using System;
 using Terraria;
+using Terraria.GameContent.Metadata;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -21,6 +22,7 @@ namespace Redemption.Tiles.Plants
 			HitSound = SoundID.Grass;
             DustType = DustID.Ash;
 
+            TileMaterials.SetForTileId(Type, TileMaterials._materialsByName["Plant"]);
             AddMapEntry(new Color(93, 69, 72));
 		}
 

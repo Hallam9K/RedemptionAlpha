@@ -9,9 +9,9 @@ namespace Redemption.Items.Placeable.Furniture.Misc
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Ancient Technology");
-            Tooltip.SetDefault("'D. Juice'");
-            SacrificeTotal = 1;
+			// DisplayName.SetDefault("Ancient Technology");
+            // Tooltip.SetDefault("'D. Juice'");
+            Item.ResearchUnlockCount = 1;
 		}
 
 		public override void SetDefaults()
@@ -19,7 +19,7 @@ namespace Redemption.Items.Placeable.Furniture.Misc
 			Item.DefaultToPlaceableTile(ModContent.TileType<AncientAutoPaintingTile>(), 0);
 			Item.width = 28;
 			Item.height = 28;
-			Item.maxStack = 9999;
+			Item.maxStack = Item.CommonMaxStack;
 			Item.rare = ItemRarityID.White;
 			Item.value = Item.buyPrice(0, 0, 50, 0);
 		}

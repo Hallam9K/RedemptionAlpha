@@ -9,8 +9,8 @@ namespace Redemption.Items.Placeable.Trophies
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Akka Relic");
-			SacrificeTotal = 1;
+			// DisplayName.SetDefault("Akka Relic");
+			Item.ResearchUnlockCount = 1;
 		}
 
 		public override void SetDefaults()
@@ -18,7 +18,7 @@ namespace Redemption.Items.Placeable.Trophies
 			Item.DefaultToPlaceableTile(ModContent.TileType<RelicTile>(), 9);
 			Item.width = 32;
 			Item.height = 48;
-			Item.maxStack = 9999;
+			Item.maxStack = Item.CommonMaxStack;
 			Item.rare = ItemRarityID.Master;
 			Item.master = true;
 			Item.value = Item.buyPrice(0, 5);

@@ -7,8 +7,8 @@ namespace Redemption.Buffs.Debuffs
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Radioactive Fallout");
-			Description.SetDefault("Stats greatly decreased due to radioactivity");
+			// DisplayName.SetDefault("Radioactive Fallout");
+			// Description.SetDefault("Stats greatly decreased due to radioactivity");
 			Main.buffNoTimeDisplay[Type] = true;
             Main.debuff[Type] = true;
         }

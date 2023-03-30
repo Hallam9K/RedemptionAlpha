@@ -19,7 +19,7 @@ namespace Redemption.NPCs.Friendly
         public ref float AITimer => ref NPC.ai[1];
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Spirit Druid");
+            // DisplayName.SetDefault("Spirit Druid");
             Main.npcFrameCount[NPC.type] = 4;
             NPCID.Sets.ActsLikeTownNPC[Type] = true;
 
@@ -48,7 +48,7 @@ namespace Redemption.NPCs.Friendly
         }
 
         public override bool CanHitPlayer(Player target, ref int cooldownSlot) => false;
-        public override bool? CanHitNPC(NPC target) => false;
+        public override bool CanHitNPC(NPC target) => false;
 
         public bool floatTimer;
         public override void AI()
@@ -129,7 +129,7 @@ namespace Redemption.NPCs.Friendly
             button2 = "Cycle Dialogue";
         }
 
-        public override void OnChatButtonClicked(bool firstButton, ref bool shop)
+        public override void OnChatButtonClicked(bool firstButton, ref string shopName)
         {
             if (firstButton)
             {

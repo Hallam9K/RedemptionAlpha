@@ -10,8 +10,8 @@ namespace Redemption.Items.Weapons.PreHM.Ritualist
     {
         public override void SetStaticDefaults()
         {
-            Tooltip.SetDefault("Produces extra small spirits on hit");
-            SacrificeTotal = 1;
+            // Tooltip.SetDefault("Produces extra small spirits on hit");
+            Item.ResearchUnlockCount = 1;
         }
 
         public override void SetDefaults()

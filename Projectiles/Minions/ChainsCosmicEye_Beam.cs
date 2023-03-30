@@ -15,7 +15,7 @@ namespace Redemption.Projectiles.Minions
         public override bool ShouldUpdatePosition() => false;
         public override void SetSafeStaticDefaults()
         {
-            DisplayName.SetDefault("Cosmic Ray");
+            // DisplayName.SetDefault("Cosmic Ray");
             ElementID.ProjCelestial[Type] = true;
         }
         public override void SetSafeDefaults()
@@ -68,7 +68,7 @@ namespace Redemption.Projectiles.Minions
             LaserLength = Math.Min(dist, MaxLaserLength);
             ++AITimer;
         }
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             Projectile.localNPCImmunity[target.whoAmI] = 8;
             target.immune[Projectile.owner] = 0;

@@ -8,16 +8,16 @@ namespace Redemption.Items.Materials.PreHM
     {
         public override void SetStaticDefaults()
         {
-            Tooltip.SetDefault("'Expensive, purple cloth only used by the Nobles of Anglon'");
+            // Tooltip.SetDefault("'Expensive, purple cloth only used by the Nobles of Anglon'");
 
-            SacrificeTotal = 5;
+            Item.ResearchUnlockCount = 5;
         }
 
         public override void SetDefaults()
         {
             Item.width = 34;
             Item.height = 26;
-            Item.maxStack = 9999;
+            Item.maxStack = Item.CommonMaxStack;
             Item.value = Item.buyPrice(0, 1, 0, 0);
             Item.rare = ItemRarityID.Orange;
         }

@@ -21,7 +21,7 @@ namespace Redemption.NPCs.Bosses.PatientZero
             return null;
         }
         public override string Texture => "Redemption/Textures/BossBars/InfectionBossBar";
-        public override bool? ModifyInfo(ref BigProgressBarInfo info, ref float lifePercent, ref float shieldPercent)
+        public override bool? ModifyInfo(ref BigProgressBarInfo info, ref float life, ref float lifeMax, ref float shield, ref float shieldMax)
         {
             NPC npc = Main.npc[info.npcIndexToAimAt];
             if (!npc.active || npc.type != ModContent.NPCType<PZ>())
@@ -36,14 +36,14 @@ namespace Redemption.NPCs.Bosses.PatientZero
                 {
                     NPC kari = Main.npc[k];
                     if (k > -1 && kari.active && kari.type == ModContent.NPCType<PZ_Kari>())
-                        lifePercent = Utils.Clamp(kari.life / (float)kari.lifeMax, 0f, 1f);
+                        life = Utils.Clamp(kari.life / (float)kari.lifeMax, 0f, 1f);
                 }
                 else
-                    lifePercent = 1f;
+                    life = 1f;
             }
-            shieldPercent = Utils.Clamp(npc.life / (float)npc.lifeMax, 0f, 1f);
+            shield = Utils.Clamp(npc.life / (float)npc.lifeMax, 0f, 1f);
             if (npc.life <= npc.lifeMax * 0.1f)
-                shieldPercent = 0;
+                shield = 0;
             return true;
         }
     }

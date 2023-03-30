@@ -11,10 +11,10 @@ namespace Redemption.Items.Weapons.PreHM.Magic
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Mistfall");
-            Tooltip.SetDefault("Lowers the air temperature at cursor point, slowing enemies caught in the mist");
-
-            SacrificeTotal = 1;
+            // DisplayName.SetDefault("Mistfall");
+            // Tooltip.SetDefault("Lowers the air temperature at cursor point, slowing enemies caught in the mist");
+            ItemID.Sets.ShimmerTransformToItem[Type] = ModContent.ItemType<Earthbind>();
+            Item.ResearchUnlockCount = 1;
         }
 
         public override void SetDefaults()

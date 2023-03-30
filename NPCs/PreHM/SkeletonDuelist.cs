@@ -67,7 +67,7 @@ namespace Redemption.NPCs.PreHM
             Banner = NPC.type;
             BannerItem = ModContent.ItemType<SkeletonDuelistBanner>();
         }
-        public override void HitEffect(int hitDirection, double damage)
+        public override void HitEffect(NPC.HitInfo hit)
         {
             if (NPC.life <= 0)
             {
@@ -581,7 +581,7 @@ namespace Redemption.NPCs.PreHM
             }
             return false;
         }
-        public override bool? CanHitNPC(NPC target) => false;
+        public override bool CanHitNPC(NPC target) => false;
         public override bool CanHitPlayer(Player target, ref int cooldownSlot) => false;
         public override void OnKill()
         {

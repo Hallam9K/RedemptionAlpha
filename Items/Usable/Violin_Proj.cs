@@ -7,7 +7,7 @@ namespace Redemption.Items.Usable
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Violin");
+            // DisplayName.SetDefault("Violin");
             Main.projFrames[Projectile.type] = 5;
         }
 

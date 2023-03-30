@@ -100,7 +100,7 @@ namespace Redemption.Globals
                 return;
 
             #region Skeleton Invasion
-            if (DayNightCount >= 10 && !Main.hardMode && !Main.fastForwardTime)
+            if (DayNightCount >= 10 && !Main.hardMode && !Main.IsFastForwardingTime())
             {
                 if (Main.dayTime && Main.time == 1 && !WorldGen.spawnEye)
                 {
@@ -154,7 +154,7 @@ namespace Redemption.Globals
             #endregion
 
             #region Keeper Summoning
-            if (!Main.dayTime && Terraria.NPC.downedBoss1 && !Main.hardMode && !Main.fastForwardTime)
+            if (!Main.dayTime && Terraria.NPC.downedBoss1 && !Main.hardMode && !Main.IsFastForwardingTime())
             {
                 if (Main.time == 1 && !WorldGen.spawnEye && !spawnSkeletonInvasion)
                 {
@@ -195,7 +195,7 @@ namespace Redemption.Globals
                         if (Main.netMode != NetmodeID.MultiplayerClient)
                             Terraria.NPC.SpawnOnPlayer(player.whoAmI, type);
                         else
-                            NetMessage.SendData(MessageID.SpawnBoss, number: player.whoAmI, number2: type);
+                            NetMessage.SendData(MessageID.SpawnBossUseLicenseStartEvent, number: player.whoAmI, number2: type);
 
                         spawnKeeper = false;
                         break;
@@ -407,7 +407,7 @@ namespace Redemption.Globals
         }
         #endregion
 
-        public override void OnWorldLoad()
+        public override void ClearWorld()
         {
             if (Redemption.TrailManager != null)
                 Redemption.TrailManager.ClearAllTrails(); //trails break on world unload and reload(their projectile is still counted as being active???), so this just clears them all on reload
@@ -439,30 +439,6 @@ namespace Redemption.Globals
                 omegaTransmitReady[2] = true;
             else
                 omegaTransmitReady[2] = false;
-            for (int i = 0; i < spawnCleared.Length; i++)
-                spawnCleared[i] = false;
-        }
-
-        public override void OnWorldUnload()
-        {
-            alignment = 0;
-            DayNightCount = 0;
-            SkeletonInvasion = false;
-            spawnKeeper = false;
-            spawnSkeletonInvasion = false;
-            tbotDownedTimer = 0;
-            daerelDownedTimer = 0;
-            zephosDownedTimer = 0;
-            slayerRep = 0;
-            labSafe = false;
-            apidroidKilled = false;
-            deadRingerGiven = false;
-            newbGone = false;
-            slayerMessageGiven = false;
-            keycardGiven = false;
-            omegaTransmitReady[0] = false;
-            omegaTransmitReady[1] = false;
-            omegaTransmitReady[2] = false;
             for (int i = 0; i < spawnCleared.Length; i++)
                 spawnCleared[i] = false;
         }

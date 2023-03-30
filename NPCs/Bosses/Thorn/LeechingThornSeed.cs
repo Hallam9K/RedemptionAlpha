@@ -10,7 +10,7 @@ namespace Redemption.NPCs.Bosses.Thorn
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Life-Draining Thorn");
+            // DisplayName.SetDefault("Life-Draining Thorn");
             Main.projFrames[Projectile.type] = 2;
             ElementID.ProjNature[Type] = true;
             ElementID.ProjBlood[Type] = true;
@@ -40,7 +40,7 @@ namespace Redemption.NPCs.Bosses.Thorn
             Lighting.AddLight(Projectile.Center, Projectile.Opacity * 0.5f, 0f, 0f);
             Projectile.rotation = Projectile.velocity.ToRotation() + 1.57f;
         }
-        public override void OnHitPlayer(Player target, int damage, bool crit)
+        public override void OnHitPlayer(Player target, Player.HurtInfo info)
         {
             NPC host = Main.npc[(int)Projectile.ai[0]];
             if (host.life < host.lifeMax - 20)

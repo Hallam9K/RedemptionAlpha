@@ -11,12 +11,12 @@ namespace Redemption.Items.Weapons.HM.Magic
     {
         public override void SetStaticDefaults()
         {
-            Tooltip.SetDefault("Casts an unstable lightning sphere, contained as long as the staff's stream is active\n" +
+            /* Tooltip.SetDefault("Casts an unstable lightning sphere, contained as long as the staff's stream is active\n" +
                 "Tap left-click to cast and immediately break the stream, causing an unstable discharge" +
                 "\nHold down left-click to cast and keep the sphere stable, using momentum to swing it" +
-                "\nDeals more damage the faster it moves");
+                "\nDeals more damage the faster it moves"); */
             Item.staff[Item.type] = true;
-            SacrificeTotal = 1;
+            Item.ResearchUnlockCount = 1;
         }
 
         public override void SetDefaults()

@@ -62,7 +62,7 @@ namespace Redemption.NPCs.Bosses.Cleaver
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Wielder Bot");
+            // DisplayName.SetDefault("Wielder Bot");
             Main.npcFrameCount[NPC.type] = 19;
 
             NPCID.Sets.MPAllowedEnemies[Type] = true;
@@ -111,30 +111,29 @@ namespace Redemption.NPCs.Bosses.Cleaver
         }
         SoundStyle voice;
         Texture2D bubble;
-        public override void ModifyHitByItem(Player player, Item item, ref int damage, ref float knockback, ref bool crit)
+        public override void ModifyHitByItem(Player player, Item item, ref NPC.HitModifiers modifiers)
         {
             if (item.DamageType == DamageClass.Melee)
-                damage = (int)(damage * 2.5f);
+                modifiers.FinalDamage *= 2.5f;
         }
-        public override void ModifyHitByProjectile(Projectile projectile, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
+        public override void ModifyHitByProjectile(Projectile projectile, ref NPC.HitModifiers modifiers)
         {
             if (projectile.Redemption().TechnicallyMelee)
-                damage = (int)(damage * 2.5f);
+                modifiers.FinalDamage *= 2.5f;
         }
-        public override bool StrikeNPC(ref double damage, int defense, ref float knockback, int hitDirection, ref bool crit)
+        public override void ModifyIncomingHit(ref NPC.HitModifiers modifiers)
         {
-            damage *= 0.5;
-            return true;
+            modifiers.FinalDamage *= 0.5f;
         }
-        public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
+        public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)
         {
-            NPC.lifeMax = (int)(NPC.lifeMax * 0.6f * bossLifeScale);
+            NPC.lifeMax = (int)(NPC.lifeMax * 0.6f * balance * bossAdjustment);
         }
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<SwordRemote>()));
         }
-        public override void HitEffect(int hitDirection, double damage)
+        public override void HitEffect(NPC.HitInfo hit)
         {
             Dust.NewDust(NPC.position + NPC.velocity, NPC.width, NPC.height, DustID.LifeDrain, NPC.velocity.X * 0.5f, NPC.velocity.Y * 0.5f);
         }

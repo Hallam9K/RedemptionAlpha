@@ -12,8 +12,8 @@ namespace Redemption.Items.Accessories.HM
 	{
 		public override void SetStaticDefaults()
 		{
-			Tooltip.SetDefault("Summons a Mini Gigapora");
-			SacrificeTotal = 1;
+			// Tooltip.SetDefault("Summons a Mini Gigapora");
+			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults()
 		{

@@ -1,6 +1,7 @@
 using Redemption.Items.Placeable.Tiles;
 using Redemption.Tiles.Containers;
 using Terraria.ID;
+using Terraria;
 using Terraria.ModLoader;
 
 namespace Redemption.Items.Placeable.Containers
@@ -9,8 +10,8 @@ namespace Redemption.Items.Placeable.Containers
 	{
 		public override void SetStaticDefaults()
 		{
-            DisplayName.SetDefault("Standard Security Locker");
-			SacrificeTotal = 1;
+            // DisplayName.SetDefault("Standard Security Locker");
+			Item.ResearchUnlockCount = 1;
 		}
 
 		public override void SetDefaults()
@@ -18,7 +19,7 @@ namespace Redemption.Items.Placeable.Containers
 			Item.DefaultToPlaceableTile(ModContent.TileType<StandardLabLockerTile>(), 0);
 			Item.width = 30;
 			Item.height = 24;
-			Item.maxStack = 9999;
+			Item.maxStack = Item.CommonMaxStack;
 			Item.value = 5000;
 			Item.rare = ItemRarityID.LightPurple;
 		}

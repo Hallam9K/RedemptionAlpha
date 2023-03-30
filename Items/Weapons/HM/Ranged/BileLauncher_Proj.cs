@@ -17,7 +17,7 @@ namespace Redemption.Items.Weapons.HM.Ranged
         public override string Texture => "Redemption/Items/Weapons/HM/Ranged/BileLauncher";
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Bile Launcher");
+            // DisplayName.SetDefault("Bile Launcher");
         }
         public override void SetDefaults()
         {

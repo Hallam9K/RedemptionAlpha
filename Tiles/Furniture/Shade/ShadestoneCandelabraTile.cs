@@ -4,7 +4,9 @@ using Redemption.Dusts.Tiles;
 using Redemption.Items.Placeable.Furniture.Shade;
 using Terraria;
 using Terraria.DataStructures;
+using Terraria.Enums;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 
@@ -20,9 +22,12 @@ namespace Redemption.Tiles.Furniture.Shade
             Main.tileLavaDeath[Type] = true;
             TileObjectData.newTile.CopyFrom(TileObjectData.Style2x2);
             TileObjectData.newTile.DrawYOffset = 2;
+            TileObjectData.newTile.WaterDeath = true;
+            TileObjectData.newTile.WaterPlacement = LiquidPlacement.NotAllowed;
+            TileObjectData.newTile.LavaPlacement = LiquidPlacement.NotAllowed;
             TileObjectData.addTile(Type);
-            ModTranslation name = CreateMapEntryName();
-            name.SetDefault("Shadestone Candelabra");
+            LocalizedText name = CreateMapEntryName();
+            // name.SetDefault("Shadestone Candelabra");
             AddMapEntry(new Color(59, 61, 87), name);
             AddToArray(ref TileID.Sets.RoomNeeds.CountsAsTorch);
             AdjTiles = new int[] { TileID.Candelabras };
@@ -76,8 +81,6 @@ namespace Redemption.Tiles.Furniture.Shade
                 b = 0.8f;
             }
         }
-        public override void KillMultiTile(int i, int j, int frameX, int frameY) => Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 32, 32, ModContent.ItemType<ShadestoneCandelabra>());
-
         public override void PostDraw(int i, int j, SpriteBatch spriteBatch)
         {
             Tile tile = Framing.GetTileSafely(i, j);

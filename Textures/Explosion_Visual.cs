@@ -13,7 +13,7 @@ namespace Redemption.Textures
         public override string Texture => Redemption.EMPTY_TEXTURE;
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Explosion");
+            // DisplayName.SetDefault("Explosion");
         }
         public override void SetDefaults()
         {

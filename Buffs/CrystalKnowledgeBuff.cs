@@ -9,8 +9,8 @@ namespace Redemption.Buffs
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Crystal Knowledge");
-            Description.SetDefault("Increased damage and resistance to the crystal's elements");
+            // DisplayName.SetDefault("Crystal Knowledge");
+            // Description.SetDefault("Increased damage and resistance to the crystal's elements");
             Main.buffNoSave[Type] = true;
             Main.buffNoTimeDisplay[Type] = true;
         }

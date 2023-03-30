@@ -8,8 +8,8 @@ namespace Redemption.Items.Armor.Vanity
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Eaglecrest Cowl");
-            SacrificeTotal = 1;
+            // DisplayName.SetDefault("Eaglecrest Cowl");
+            Item.ResearchUnlockCount = 1;
             ArmorIDs.Head.Sets.DrawFullHair[EquipLoader.GetEquipSlot(Mod, Name, EquipType.Head)] = false;
         }
 

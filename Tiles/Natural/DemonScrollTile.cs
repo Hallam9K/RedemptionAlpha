@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Terraria;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ID;
 using Terraria.ObjectData;
@@ -16,8 +17,8 @@ namespace Redemption.Tiles.Natural
             TileObjectData.newTile.CopyFrom(TileObjectData.StyleOnTable1x1);
             TileObjectData.newTile.CoordinateHeights = new int[] { 16 };
             TileObjectData.addTile(Type);
-			ModTranslation name = CreateMapEntryName();
-			name.SetDefault("Forbidden Ritual");
+			LocalizedText name = CreateMapEntryName();
+			// name.SetDefault("Forbidden Ritual");
             AddMapEntry(new Color(180, 141, 119), name);
             ItemDrop = ModContent.ItemType<DemonScroll>();
             AddToArray(ref TileID.Sets.RoomNeeds.CountsAsTorch);

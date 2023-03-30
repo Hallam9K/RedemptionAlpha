@@ -22,11 +22,12 @@ namespace Redemption.Tiles.Furniture.PetrifiedWood
 			TileID.Sets.InteractibleByNPCs[Type] = true;
 			TileID.Sets.IsValidSpawnPoint[Type] = true;
 			TileID.Sets.DisableSmartCursor[Type] = true;
-			TileObjectData.newTile.CopyFrom(TileObjectData.Style4x2);
-			TileObjectData.newTile.CoordinateHeights = new int[] { 16, 18 };
-			TileObjectData.addTile(Type);
-			ModTranslation name = CreateMapEntryName();
-			name.SetDefault("Petrified Wood Bed");
+            TileObjectData.newTile.CopyFrom(TileObjectData.Style4x2);
+            TileObjectData.newTile.CoordinateHeights = new[] { 16, 18 };
+            TileObjectData.newTile.CoordinatePaddingFix = new Point16(0, -2);
+            TileObjectData.addTile(Type);
+            LocalizedText name = CreateMapEntryName();
+			// name.SetDefault("Petrified Wood Bed");
 			AddMapEntry(new Color(12, 128, 26), name);
 			DustType = DustID.Ash;
 			AddToArray(ref TileID.Sets.RoomNeeds.CountsAsChair);
@@ -45,9 +46,6 @@ namespace Redemption.Tiles.Furniture.PetrifiedWood
 		}
 
 		public override void NumDust(int i, int j, bool fail, ref int num) => num = 1;
-
-		public override void KillMultiTile(int i, int j, int frameX, int frameY) => Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 64, 32, ModContent.ItemType<PetrifiedWoodBed>());
-
 		public override bool RightClick(int i, int j)
 		{
 			Player player = Main.LocalPlayer;

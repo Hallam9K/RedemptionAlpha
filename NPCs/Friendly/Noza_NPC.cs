@@ -31,7 +31,7 @@ namespace Redemption.NPCs.Friendly
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Noza, Tamer of Evil");
+            // DisplayName.SetDefault("Noza, Tamer of Evil");
             Main.npcFrameCount[NPC.type] = 10;
             NPCID.Sets.ActsLikeTownNPC[Type] = true;
             NPCID.Sets.NPCBestiaryDrawModifiers value = new(0) { Hide = true };
@@ -121,7 +121,7 @@ namespace Redemption.NPCs.Friendly
             }
         }
         public override bool CanHitPlayer(Player target, ref int cooldownSlot) => false;
-        public override bool? CanHitNPC(NPC target) => false;
+        public override bool CanHitNPC(NPC target) => false;
 
         public static int ChatNumber = 0;
 
@@ -135,7 +135,7 @@ namespace Redemption.NPCs.Friendly
             }
         }
 
-        public override void OnChatButtonClicked(bool firstButton, ref bool shop)
+        public override void OnChatButtonClicked(bool firstButton, ref string shopName)
         {
             if (firstButton)
             {

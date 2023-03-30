@@ -19,6 +19,7 @@ using Redemption.Items.Materials.HM;
 using Redemption.Items.Usable.Potions;
 using Redemption.Items.Armor.Vanity.Intruder;
 using System.IO;
+using Redemption.NPCs.PreHM;
 
 namespace Redemption.NPCs.Wasteland
 {
@@ -44,7 +45,7 @@ namespace Redemption.NPCs.Wasteland
         {
             Main.npcFrameCount[Type] = 11;
             NPCID.Sets.TakesDamageFromHostilesWithoutBeingFriendly[Type] = true;
-
+            NPCID.Sets.ShimmerTransformToNPC[NPC.type] = ModContent.NPCType<LivingBloom>();
             NPCID.Sets.DebuffImmunitySets.Add(Type, new NPCDebuffImmunityData
             {
                 SpecificallyImmuneTo = new int[] {
@@ -306,7 +307,7 @@ namespace Redemption.NPCs.Wasteland
         }
 
         public override bool CanHitPlayer(Player target, ref int cooldownSlot) => false;
-        public override bool? CanHitNPC(NPC target) => false;
+        public override bool CanHitNPC(NPC target) => false;
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<ToxicBile>(), 4, 1, 3));
@@ -326,7 +327,7 @@ namespace Redemption.NPCs.Wasteland
             });
         }
 
-        public override void HitEffect(int hitDirection, double damage)
+        public override void HitEffect(NPC.HitInfo hit)
         {
             if (AIState is ActionState.Idle or ActionState.Wander)
             {

@@ -15,7 +15,7 @@ namespace Redemption.Projectiles.Ranged
         public override string Texture => "Redemption/NPCs/Critters/MoonflareBat_Trail";
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Moonflare Bat");
+            // DisplayName.SetDefault("Moonflare Bat");
             Main.projFrames[Projectile.type] = 5;
             ProjectileID.Sets.CultistIsResistantTo[Projectile.type] = true;
             ProjectileID.Sets.TrailCacheLength[Projectile.type] = 4;

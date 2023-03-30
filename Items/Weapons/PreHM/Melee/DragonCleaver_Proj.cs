@@ -23,7 +23,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
         public float[] oldrot = new float[4];
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Dragon Cleaver");
+            // DisplayName.SetDefault("Dragon Cleaver");
             ProjectileID.Sets.TrailCacheLength[Projectile.type] = 4;
             ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
             ElementID.ProjFire[Type] = true;
@@ -266,16 +266,16 @@ namespace Redemption.Items.Weapons.PreHM.Melee
                 target.Kill();
             }
         }
-        public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
+        public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
         {
             if (NPCLists.Dragonlike.Contains(target.type))
-                damage *= 4;
-
-            RedeProjectile.Decapitation(target, ref damage, ref crit);
+                modifiers.FinalDamage *= 4;
         }
         private int hitFury;
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
+            RedeProjectile.Decapitation(target, ref damageDone, ref hit.Crit);
+
             if (Projectile.ai[0] > 0 && hitFury is 0)
                 hitFury = 3;
             Projectile.localNPCImmunity[target.whoAmI] = Projectile.ai[0] > 0 ? 13 : 20;

@@ -11,10 +11,10 @@ namespace Redemption.Items.Tools.PreHM
     {
         public override void SetStaticDefaults()
         {
-            Tooltip.SetDefault("Increased chance to decapitate skeletons, guaranteeing skull drops" +
-                "\nDeals 75% more damage to skeletons");
+            /* Tooltip.SetDefault("Increased chance to decapitate skeletons, guaranteeing skull drops" +
+                "\nDeals 75% more damage to skeletons"); */
 
-            SacrificeTotal = 1;
+            Item.ResearchUnlockCount = 1;
         }
 
         public override void SetDefaults()
@@ -34,22 +34,25 @@ namespace Redemption.Items.Tools.PreHM
             Item.autoReuse = true;
 		}
 
-        public override void ModifyHitNPC(Player player, NPC target, ref int damage, ref float knockBack, ref bool crit)
+        public override void ModifyHitNPC(Player player, NPC target, ref NPC.HitModifiers modifiers)
+        {
+            if (NPCLists.Skeleton.Contains(target.type))
+                modifiers.FinalDamage *= 1.75f;
+        }
+        public override void OnHitNPC(Player player, NPC target, NPC.HitInfo hit, int damageDone)
         {
             bool skele = NPCLists.SkeletonHumanoid.Contains(target.type);
             bool humanoid = skele || NPCLists.Humanoid.Contains(target.type);
-            if (target.life < target.lifeMax && target.life < damage * 100 && humanoid)
+            if (target.life < target.lifeMax && target.life < damageDone * 100 && humanoid)
             {
                 if (Main.rand.NextBool(skele ? 20 : 80))
                 {
                     CombatText.NewText(target.getRect(), Color.Orange, "Decapitated!");
                     target.Redemption().decapitated = true;
-                    damage = target.life;
-                    crit = true;
+                    hit.Crit = true;
+                    target.StrikeInstantKill();
                 }
             }
-            if (NPCLists.Skeleton.Contains(target.type))
-                damage = (int)(damage * 1.75f);
         }
     }
 }

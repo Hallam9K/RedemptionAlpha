@@ -2,6 +2,7 @@ using Redemption.Items.Materials.HM;
 using Redemption.Items.Placeable.Tiles;
 using Redemption.Tiles.Furniture.Lab;
 using Terraria.ID;
+using Terraria;
 using Terraria.ModLoader;
 
 namespace Redemption.Items.Placeable.Furniture.Lab
@@ -10,15 +11,15 @@ namespace Redemption.Items.Placeable.Furniture.Lab
 	{
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Laboratory Ceiling Lamp");
-            SacrificeTotal = 1;
+            // DisplayName.SetDefault("Laboratory Ceiling Lamp");
+            Item.ResearchUnlockCount = 1;
         }
         public override void SetDefaults()
         {
             Item.DefaultToPlaceableTile(ModContent.TileType<LabCeilingLampTile>(), 0);
             Item.width = 24;
             Item.height = 32;
-            Item.maxStack = 9999;
+            Item.maxStack = Item.CommonMaxStack;
             Item.value = 9000;
             Item.rare = ItemRarityID.LightPurple;
 		}

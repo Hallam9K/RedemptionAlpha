@@ -8,7 +8,7 @@ namespace Redemption.Items
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Click 'Next Page' to continue dialogue");
+            // DisplayName.SetDefault("Click 'Next Page' to continue dialogue");
         }
 
         public override void SetDefaults()

@@ -16,7 +16,7 @@ namespace Redemption.Projectiles.Magic
         public override string Texture => "Redemption/Textures/IceMist";
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Ice Mist");
+            // DisplayName.SetDefault("Ice Mist");
         }
         public override void SetDefaults()
         {
@@ -104,7 +104,7 @@ namespace Redemption.Projectiles.Magic
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Icefall");
+            // DisplayName.SetDefault("Icefall");
             Main.projFrames[Projectile.type] = 3;
             ElementID.ProjIce[Type] = true;
         }
@@ -156,17 +156,17 @@ namespace Redemption.Projectiles.Magic
             Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition, new Rectangle?(rect), Projectile.GetAlpha(lightColor), Projectile.rotation, origin, Projectile.scale, effects, 0);
             return false;
         }
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             if (Main.rand.NextBool(3))
                 target.AddBuff(BuffID.Frostburn, 180);
         }
-        public override void OnHitPlayer(Player target, int damage, bool crit)
+        public override void OnHitPlayer(Player target, Player.HurtInfo info)
         {
             if (Main.rand.NextBool(3))
                 target.AddBuff(BuffID.Frostburn, 180);
         }
-        public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection) => damage = (int)(damage * Projectile.scale);
-        public override void ModifyHitPlayer(Player target, ref int damage, ref bool crit) => damage = (int)(damage * Projectile.scale);
+        public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers) => modifiers.FinalDamage *= Projectile.scale;
+        public override void ModifyHitPlayer(Player target, ref Player.HurtModifiers modifiers) => modifiers.FinalDamage *= Projectile.scale;
     }
 }

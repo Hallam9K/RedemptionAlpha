@@ -57,7 +57,7 @@ namespace Redemption.NPCs.Lab.Blisterface
             AIType = NPCID.Piranha;
             SpawnModBiomes = new int[1] { ModContent.GetInstance<LabBiome>().Type };
         }
-        public override void HitEffect(int hitDirection, double damage)
+        public override void HitEffect(NPC.HitInfo hit)
         {
             if (NPC.life <= 0)
             {
@@ -89,7 +89,7 @@ namespace Redemption.NPCs.Lab.Blisterface
                     NPC.frame.Y = 0;
             }
         }
-        public override void ModifyHitPlayer(Player target, ref int damage, ref bool crit)
+        public override void ModifyHitPlayer(Player target, ref Player.HurtModifiers modifiers)
         {
             if (Main.rand.NextBool(2) || Main.expertMode)
                 target.AddBuff(ModContent.BuffType<GreenRashesDebuff>(), Main.rand.Next(200, 600));
@@ -101,7 +101,7 @@ namespace Redemption.NPCs.Lab.Blisterface
         public override void SetStaticDefaults()
         {
             base.SetStaticDefaults();
-            DisplayName.SetDefault("Blistered Fish");
+            // DisplayName.SetDefault("Blistered Fish");
             NPCID.Sets.NPCBestiaryDrawModifiers value = new(0) { Hide = true };
             NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, value);
         }

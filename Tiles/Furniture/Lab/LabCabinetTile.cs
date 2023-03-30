@@ -7,6 +7,7 @@ using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent.ObjectInteractions;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 
@@ -33,8 +34,9 @@ namespace Redemption.Tiles.Furniture.Lab
             DustType = ModContent.DustType<LabPlatingDust>();
             MinPick = 300;
             MineResist = 8f;
-            ModTranslation name = CreateMapEntryName();
-            name.SetDefault("Laboratory Cabinet");
+            ItemDrop = -1;
+            LocalizedText name = CreateMapEntryName();
+            // name.SetDefault("Laboratory Cabinet");
             AddMapEntry(new Color(189, 191, 200), name);
         }
         public override bool HasSmartInteract(int i, int j, SmartInteractScanSettings settings)
@@ -86,8 +88,8 @@ namespace Redemption.Tiles.Furniture.Lab
         public override string Texture => Redemption.PLACEHOLDER_TEXTURE;
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Laboratory Cabinet");
-            Tooltip.SetDefault("Gives Radiation Pills");
+            // DisplayName.SetDefault("Laboratory Cabinet");
+            // Tooltip.SetDefault("Gives Radiation Pills");
         }
 
         public override void SetDefaults()

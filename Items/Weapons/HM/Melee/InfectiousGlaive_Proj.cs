@@ -16,7 +16,7 @@ namespace Redemption.Items.Weapons.HM.Melee
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Xenomite Glaive");
+            // DisplayName.SetDefault("Xenomite Glaive");
             ElementID.ProjPoison[Type] = true;
         }
         private Vector2 startVector;
@@ -113,7 +113,7 @@ namespace Redemption.Items.Weapons.HM.Melee
                 Projectile.alpha = 0;
             return false;
         }
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             if (Main.rand.NextBool(3))
                 target.AddBuff(ModContent.BuffType<GreenRashesDebuff>(), 300);

@@ -18,10 +18,10 @@ namespace Redemption.Items.Weapons.HM.Ranged
     {
         public override void SetStaticDefaults()
         {
-            Tooltip.SetDefault("Converts normal bullets into high velocity bullets\n" +
+            /* Tooltip.SetDefault("Converts normal bullets into high velocity bullets\n" +
                 "(3[i:" + ModContent.ItemType<EnergyPack>() + "]) Every 3rd shot fires a small laser beam if an Energy Pack is in your inventory, dealing " + ElementID.ThunderS + " damage\n" +
-                "33% chance not to consume ammo");
-            SacrificeTotal = 1;
+                "33% chance not to consume ammo"); */
+            Item.ResearchUnlockCount = 1;
         }
 
         public override void SetDefaults()

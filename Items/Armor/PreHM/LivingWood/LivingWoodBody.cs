@@ -10,9 +10,9 @@ namespace Redemption.Items.Armor.PreHM.LivingWood
     {
         public override void SetStaticDefaults()
         {
-            Tooltip.SetDefault("+1 increased summon damage");
+            // Tooltip.SetDefault("+1 increased summon damage");
 
-            SacrificeTotal = 1;
+            Item.ResearchUnlockCount = 1;
         }
 
         public override void SetDefaults()

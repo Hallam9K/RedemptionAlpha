@@ -11,12 +11,12 @@ namespace Redemption.Items.Accessories.PreHM
 	{
 		public override void SetStaticDefaults()
 		{
-            DisplayName.SetDefault("Circlet of Brambles");
-            Tooltip.SetDefault("Every 5th use of a magic weapon shoots a spread of stingers" +
+            // DisplayName.SetDefault("Circlet of Brambles");
+            /* Tooltip.SetDefault("Every 5th use of a magic weapon shoots a spread of stingers" +
                 "\nIncreased life regeneration while in the Jungle\n" +
-                "6% increased " + ElementID.NatureS + " elemental critical strike chance");
+                "6% increased " + ElementID.NatureS + " elemental critical strike chance"); */
 
-            SacrificeTotal = 1;
+            Item.ResearchUnlockCount = 1;
         }
 
         public override void SetDefaults()

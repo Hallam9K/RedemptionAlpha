@@ -14,7 +14,7 @@ namespace Redemption.NPCs.Bosses.PatientZero
         public override string Texture => "Redemption/Textures/RadialTelegraph2";
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Telegraph");
+            // DisplayName.SetDefault("Telegraph");
         }
         public override void SetDefaults()
         {
@@ -57,7 +57,7 @@ namespace Redemption.NPCs.Bosses.PatientZero
         public override string Texture => "Redemption/Textures/RadialTelegraph2";
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Telegraph");
+            // DisplayName.SetDefault("Telegraph");
         }
         public override void SetDefaults()
         {

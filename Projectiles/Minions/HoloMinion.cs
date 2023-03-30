@@ -15,7 +15,7 @@ namespace Redemption.Projectiles.Minions
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Hologram");
+            // DisplayName.SetDefault("Hologram");
             Main.projFrames[Projectile.type] = 2;
             Main.projPet[Projectile.type] = true;
 
@@ -162,7 +162,7 @@ namespace Redemption.Projectiles.Minions
         {
             return mode == swordMode;
         }
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             Projectile.localNPCImmunity[target.whoAmI] = 10;
             target.immune[Projectile.owner] = 0;

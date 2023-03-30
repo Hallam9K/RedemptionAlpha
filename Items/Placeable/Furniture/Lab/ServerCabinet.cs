@@ -3,6 +3,7 @@ using Redemption.Items.Placeable.Tiles;
 using Redemption.Tiles.Furniture.Lab;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria;
 
 namespace Redemption.Items.Placeable.Furniture.Lab
 {
@@ -10,14 +11,14 @@ namespace Redemption.Items.Placeable.Furniture.Lab
 	{
         public override void SetStaticDefaults()
         {
-            SacrificeTotal = 1;
+            Item.ResearchUnlockCount = 1;
         }
         public override void SetDefaults()
         {
             Item.DefaultToPlaceableTile(ModContent.TileType<ServerCabinetTile>(), 0);
             Item.width = 24;
             Item.height = 32;
-            Item.maxStack = 9999;
+            Item.maxStack = Item.CommonMaxStack;
             Item.value = 7000;
             Item.rare = ItemRarityID.LightPurple;
 		}

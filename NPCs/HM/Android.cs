@@ -55,7 +55,7 @@ namespace Redemption.NPCs.HM
         public ref float Variant => ref NPC.ai[3];
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Android Mk.I");
+            // DisplayName.SetDefault("Android Mk.I");
             Main.npcFrameCount[NPC.type] = 23;
             NPCID.Sets.CantTakeLunchMoney[Type] = true;
 
@@ -554,7 +554,7 @@ namespace Redemption.NPCs.HM
             return false;
         }
 
-        public override bool? CanHitNPC(NPC target) => AIState == ActionState.Alert ? null : false;
+        public override bool CanHitNPC(NPC target) => AIState == ActionState.Alert;
         public override bool CanHitPlayer(Player target, ref int cooldownSlot) => AIState == ActionState.Alert;
 
         public override void OnKill()
@@ -579,7 +579,7 @@ namespace Redemption.NPCs.HM
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<EnergyCell>(), 20));
             npcLoot.Add(ItemDropRule.Food(ModContent.ItemType<P0T4T0>(), 150));
         }
-        public override void HitEffect(int hitDirection, double damage)
+        public override void HitEffect(NPC.HitInfo hit)
         {
             if (NPC.life <= 0)
             {

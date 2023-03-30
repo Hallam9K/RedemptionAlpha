@@ -12,10 +12,10 @@ namespace Redemption.Items.Accessories.PreHM
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Devil's Advocate");
-			Tooltip.SetDefault("Summons a tiny angel and devil to follow you");
+			// DisplayName.SetDefault("Devil's Advocate");
+			// Tooltip.SetDefault("Summons a tiny angel and devil to follow you");
 
-			SacrificeTotal = 1;
+			Item.ResearchUnlockCount = 1;
 		}
 
 		public override void SetDefaults()

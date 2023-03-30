@@ -9,9 +9,9 @@ namespace Redemption.Items.Accessories.HM
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Ritualist Emblem");
-            Tooltip.SetDefault("15% increased ritual damage");
-            SacrificeTotal = 1;
+            // DisplayName.SetDefault("Ritualist Emblem");
+            // Tooltip.SetDefault("15% increased ritual damage");
+            Item.ResearchUnlockCount = 1;
         }
         public override void SetDefaults()
         {

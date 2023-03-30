@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Terraria;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ID;
 using Redemption.Dusts;
@@ -24,8 +25,8 @@ namespace Redemption.Tiles.Tiles
             MinPick = 350;
             MineResist = 11f;
             HitSound = CustomSounds.StoneHit;
-            ModTranslation name = CreateMapEntryName();
-            name.SetDefault("Shadestone");
+            LocalizedText name = CreateMapEntryName();
+            // name.SetDefault("Shadestone");
             AddMapEntry(new Color(30, 30, 30));
         }
         public override void DrawEffects(int i, int j, SpriteBatch spriteBatch, ref TileDrawInfo drawData)

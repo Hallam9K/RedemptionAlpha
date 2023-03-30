@@ -17,8 +17,8 @@ namespace Redemption.Items.Usable.Summons
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Hologram Remote");
-            Tooltip.SetDefault("Use in an Abandoned Laboratory boss's arena to resummon it");
+            // DisplayName.SetDefault("Hologram Remote");
+            // Tooltip.SetDefault("Use in an Abandoned Laboratory boss's arena to resummon it");
             Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(5, 2));
         }
         public override void SetDefaults()
@@ -69,7 +69,7 @@ namespace Redemption.Items.Usable.Summons
             if (Main.netMode != NetmodeID.MultiplayerClient)
                 NPC.SpawnOnPlayer(player.whoAmI, type);
             else
-                NetMessage.SendData(MessageID.SpawnBoss, number: player.whoAmI, number2: type);
+                NetMessage.SendData(MessageID.SpawnBossUseLicenseStartEvent, number: player.whoAmI, number2: type);
             return true;
         }
     }

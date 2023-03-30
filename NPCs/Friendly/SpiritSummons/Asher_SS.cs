@@ -38,7 +38,7 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
         }
         public override void SetSafeStaticDefaults()
         {
-            DisplayName.SetDefault("Asher");
+            // DisplayName.SetDefault("Asher");
             Main.npcFrameCount[NPC.type] = 13;
             NPCID.Sets.MPAllowedEnemies[Type] = true;
             NPCID.Sets.TrailCacheLength[NPC.type] = 4;
@@ -60,7 +60,7 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
             NPC.aiStyle = -1;
             NPC.Redemption().spiritSummon = true;
         }
-        public override void HitEffect(int hitDirection, double damage)
+        public override void HitEffect(NPC.HitInfo hit)
         {
             if (NPC.life <= 0)
             {
@@ -107,7 +107,7 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
             Player player = Main.player[(int)NPC.ai[3]];
             RedeNPC globalNPC = NPC.Redemption();
             if (!player.active || player.dead || !SSBase.CheckActive(player))
-                NPC.StrikeNPC(999, 0, 1);
+                NPC.SimpleStrikeNPC(999, 1);
             NPC.TargetClosest();
             NPC.LookByVelocity();
             Rectangle SlashHitbox1 = new((int)(NPC.spriteDirection == -1 ? NPC.Center.X - 66 : NPC.Center.X + 4), (int)(NPC.Center.Y - 60), 62, 86);
@@ -503,7 +503,7 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
             return false;
         }
-        public override bool? CanHitNPC(NPC target) => false;
+        public override bool CanHitNPC(NPC target) => false;
         public override void OnKill()
         {
             RedeHelper.SpawnNPC(NPC.GetSource_FromAI(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<LostSoulNPC>(), Main.rand.NextFloat(.8f, 1.6f));

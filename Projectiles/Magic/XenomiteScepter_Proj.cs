@@ -17,7 +17,7 @@ namespace Redemption.Projectiles.Magic
         public override string Texture => Redemption.EMPTY_TEXTURE;
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Helix Bolt");
+            // DisplayName.SetDefault("Helix Bolt");
             ElementID.ProjArcane[Type] = true;
             ElementID.ProjPoison[Type] = true;
         }
@@ -64,7 +64,7 @@ namespace Redemption.Projectiles.Magic
             Projectile.velocity = BaseUtility.RotateVector(default, new Vector2(Projectile.velocity.Length(), 0f), velRot + (vectorOffset * 0.5f));
             Projectile.rotation = (float)Math.Atan2(Projectile.velocity.Y, Projectile.velocity.X) + 1.57f;
         }
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             if (Main.rand.NextBool(3))
                 target.AddBuff(ModContent.BuffType<GreenRashesDebuff>(), 300);

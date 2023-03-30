@@ -11,8 +11,8 @@ namespace Redemption.Items.Donator.Uncon
 	{
 		public override void SetStaticDefaults()
 		{
-            DisplayName.SetDefault("Dominator Coat Cape");
-            SacrificeTotal = 1;
+            // DisplayName.SetDefault("Dominator Coat Cape");
+            Item.ResearchUnlockCount = 1;
         }
         public override void SetDefaults()
 		{

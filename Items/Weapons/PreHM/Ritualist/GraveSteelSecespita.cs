@@ -12,8 +12,8 @@ namespace Redemption.Items.Weapons.PreHM.Ritualist
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Grave Steel Secespita");
-            SacrificeTotal = 1;
+            // DisplayName.SetDefault("Grave Steel Secespita");
+            Item.ResearchUnlockCount = 1;
         }
 
         public override void SetDefaults()

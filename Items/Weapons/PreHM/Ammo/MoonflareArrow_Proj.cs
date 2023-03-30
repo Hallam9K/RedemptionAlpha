@@ -16,7 +16,7 @@ namespace Redemption.Items.Weapons.PreHM.Ammo
         public override string Texture => "Redemption/Items/Weapons/PreHM/Ammo/MoonflareArrow";
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Moonflare Arrow");
+            // DisplayName.SetDefault("Moonflare Arrow");
 			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 4;
             ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
             ElementID.ProjFire[Type] = true;
@@ -42,7 +42,7 @@ namespace Redemption.Items.Weapons.PreHM.Ammo
             Projectile.rotation = Projectile.velocity.ToRotation() - MathHelper.PiOver2;
             Projectile.velocity.Y += 0.03f;
         }
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             if (!Main.rand.NextBool(3) || Main.dayTime || Main.moonPhase == 4)
                 return;

@@ -13,7 +13,7 @@ namespace Redemption.Projectiles.Misc
         public override string Texture => "Redemption/Textures/IceMist";
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Toxic Gas");
+            // DisplayName.SetDefault("Toxic Gas");
         }
         public override void SetDefaults()
         {
@@ -69,7 +69,7 @@ namespace Redemption.Projectiles.Misc
                 }
             }
         }
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             if (Main.rand.NextBool(5))
                 target.AddBuff(ModContent.BuffType<GlowingPustulesDebuff>(), 300);

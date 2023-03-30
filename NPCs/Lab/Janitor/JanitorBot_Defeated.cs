@@ -21,7 +21,7 @@ namespace Redemption.NPCs.Lab.Janitor
         public ref float TimerRand => ref NPC.ai[2];
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("The Janitor");
+            // DisplayName.SetDefault("The Janitor");
             Main.npcFrameCount[NPC.type] = 19;
             NPCID.Sets.DontDoHardmodeScaling[Type] = true;
 
@@ -223,6 +223,6 @@ namespace Redemption.NPCs.Lab.Janitor
             return false;
         }
         public override bool CanHitPlayer(Player target, ref int cooldownSlot) => false;
-        public override bool? CanHitNPC(NPC target) => false;
+        public override bool CanHitNPC(NPC target) => false;
     }
 }

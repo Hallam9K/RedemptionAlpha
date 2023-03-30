@@ -5,6 +5,7 @@ using Terraria;
 using Terraria.DataStructures;
 using Terraria.Enums;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 
@@ -30,14 +31,10 @@ namespace Redemption.Tiles.Furniture.Lab
             DustType = ModContent.DustType<LabPlatingDust>();
             MinPick = 200;
             MineResist = 7f;
-			ModTranslation name = CreateMapEntryName();
-            name.SetDefault("Laboratory Reception Couch");
+			LocalizedText name = CreateMapEntryName();
+            // name.SetDefault("Laboratory Reception Couch");
             AddMapEntry(new Color(72, 70, 79), name);
             AdjTiles = new int[] { TileID.Chairs };
-        }
-        public override void KillMultiTile(int i, int j, int frameX, int frameY)
-        {
-            Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 48, 32, ModContent.ItemType<LabReceptionCouch>());
         }
         public override bool CanExplode(int i, int j) => false;
     }

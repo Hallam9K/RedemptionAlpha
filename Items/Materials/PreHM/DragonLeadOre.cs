@@ -10,15 +10,15 @@ namespace Redemption.Items.Materials.PreHM
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Dragon-Lead Ore");
-
-            SacrificeTotal = 100;
+            // DisplayName.SetDefault("Dragon-Lead Ore");
+            ItemID.Sets.SortingPriorityMaterials[Item.type] = 70;
+            Item.ResearchUnlockCount = 100;
         }
         public override void SetDefaults()
         {
             Item.width = 18;
             Item.height = 22;
-            Item.maxStack = 9999;
+            Item.maxStack = Item.CommonMaxStack;
             Item.value = Item.sellPrice(0, 0, 11, 0);
             Item.rare = ItemRarityID.Orange;
             Item.useTurn = true;

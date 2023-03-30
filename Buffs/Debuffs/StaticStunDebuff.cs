@@ -8,8 +8,8 @@ namespace Redemption.Buffs.Debuffs
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Static Shock!");
-			Description.SetDefault("You are stunned by electricity!");
+			// DisplayName.SetDefault("Static Shock!");
+			// Description.SetDefault("You are stunned by electricity!");
 			Main.buffNoTimeDisplay[Type] = true;
             Main.debuff[Type] = true;
         }

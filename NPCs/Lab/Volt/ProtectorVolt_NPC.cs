@@ -16,7 +16,7 @@ namespace Redemption.NPCs.Lab.Volt
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Protector Volt");
+            // DisplayName.SetDefault("Protector Volt");
             Main.npcFrameCount[NPC.type] = 2;
             NPCID.Sets.ActsLikeTownNPC[Type] = true;
             NPCID.Sets.NPCBestiaryDrawModifiers value = new(0) { Hide = true };
@@ -48,7 +48,7 @@ namespace Redemption.NPCs.Lab.Volt
             }
         }
         public override bool CanHitPlayer(Player target, ref int cooldownSlot) => false;
-        public override bool? CanHitNPC(NPC target) => false;
+        public override bool CanHitNPC(NPC target) => false;
 
         public override void AI()
         {
@@ -106,7 +106,7 @@ namespace Redemption.NPCs.Lab.Volt
                 button = "Next Page (1/2)";
         }
 
-        public override void OnChatButtonClicked(bool firstButton, ref bool shop)
+        public override void OnChatButtonClicked(bool firstButton, ref string shopName)
         {
             if (firstButton)
             {

@@ -8,7 +8,7 @@ namespace Redemption.NPCs.Bosses.Gigapora
         public override string Texture => Redemption.EMPTY_TEXTURE;
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Omega Beam");
+            // DisplayName.SetDefault("Omega Beam");
         }
         public override void SetDefaults()
         {

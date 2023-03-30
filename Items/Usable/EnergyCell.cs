@@ -15,15 +15,15 @@ namespace Redemption.Items.Usable
     {
         public override void SetStaticDefaults()
         {
-            Tooltip.SetDefault("Right-click to recharge +100 Energy if an Energy Pack is in your inventory\n" +
-                "Automatically recharges when your Energy is low");
-            SacrificeTotal = 25;
+            /* Tooltip.SetDefault("Right-click to recharge +100 Energy if an Energy Pack is in your inventory\n" +
+                "Automatically recharges when your Energy is low"); */
+            Item.ResearchUnlockCount = 25;
         }
         public override void SetDefaults()
         {
             Item.width = 18;
             Item.height = 10;
-            Item.maxStack = 9999;
+            Item.maxStack = Item.CommonMaxStack;
             Item.value = 100;
             Item.rare = ItemRarityID.LightRed;
         }

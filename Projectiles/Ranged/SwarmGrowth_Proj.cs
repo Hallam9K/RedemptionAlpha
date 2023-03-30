@@ -13,7 +13,7 @@ namespace Redemption.Projectiles.Ranged
         public override string Texture => "Redemption/NPCs/Bosses/SeedOfInfection/SeedGrowth";
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Swarm Growth");
+            // DisplayName.SetDefault("Swarm Growth");
             Main.projFrames[Projectile.type] = 4;
             ProjectileID.Sets.CultistIsResistantTo[Projectile.type] = true;
             ProjectileID.Sets.TrailCacheLength[Projectile.type] = 4;
@@ -74,7 +74,7 @@ namespace Redemption.Projectiles.Ranged
         {
             return true;
         }
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             Projectile.localNPCImmunity[target.whoAmI] = 10;
             target.immune[Projectile.owner] = 0;

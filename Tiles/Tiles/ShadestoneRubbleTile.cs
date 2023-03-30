@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Terraria;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ID;
 using Redemption.Dusts.Tiles;
@@ -18,15 +19,15 @@ namespace Redemption.Tiles.Tiles
             Main.tileMergeDirt[Type] = false;
             Main.tileBlockLight[Type] = true;
             Main.tileBrick[Type] = true;
-            TileID.Sets.TouchDamageSands[Type] = 50;
+            TileID.Sets.Suffocate[Type] = true;
             TileID.Sets.Falling[Type] = true;
-            ItemDrop = ModContent.ItemType<ShadestoneRubble>();
             DustType = ModContent.DustType<ShadestoneDust>();
             MinPick = 225;
             MineResist = 6f;
             HitSound = SoundID.Tink;
-            ModTranslation name = CreateMapEntryName();
-            name.SetDefault("Shadestone Rubble");
+            ItemDrop = -1;
+            LocalizedText name = CreateMapEntryName();
+            // name.SetDefault("Shadestone Rubble");
             AddMapEntry(new Color(65, 68, 83));
         }
         public override void NumDust(int i, int j, bool fail, ref int num) => num = fail ? 1 : 3;
@@ -100,7 +101,7 @@ namespace Redemption.Tiles.Tiles
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Shadestone Rubble");
+            // DisplayName.SetDefault("Shadestone Rubble");
             ProjectileID.Sets.ForcePlateDetection[Projectile.type] = true;
         }
 

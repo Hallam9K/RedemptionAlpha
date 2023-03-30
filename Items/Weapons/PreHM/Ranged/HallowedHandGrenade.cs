@@ -8,9 +8,9 @@ namespace Redemption.Items.Weapons.PreHM.Ranged
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Hallowed Hand Grenade of Anglon");
+            // DisplayName.SetDefault("Hallowed Hand Grenade of Anglon");
 
-            SacrificeTotal = 1;
+            Item.ResearchUnlockCount = 1;
         }
 
         public override void SetDefaults()

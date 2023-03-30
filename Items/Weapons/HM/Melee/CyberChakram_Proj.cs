@@ -15,7 +15,7 @@ namespace Redemption.Items.Weapons.HM.Melee
         public override string Texture => "Redemption/Items/Weapons/HM/Melee/CyberChakram";
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Cyber Chakram");
+            // DisplayName.SetDefault("Cyber Chakram");
             ProjectileID.Sets.TrailCacheLength[Projectile.type] = 16;
             ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
             ElementID.ProjThunder[Type] = true;
@@ -34,7 +34,7 @@ namespace Redemption.Items.Weapons.HM.Melee
             Projectile.extraUpdates = 1;
             Projectile.usesLocalNPCImmunity = true;
         }
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             Projectile.localNPCImmunity[target.whoAmI] = 20;
             target.immune[Projectile.owner] = 0;
@@ -53,10 +53,10 @@ namespace Redemption.Items.Weapons.HM.Melee
             width = height = 20;
             return true;
         }
-        public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
+        public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
         {
             if (Projectile.localAI[0] >= 35)
-                knockback = 0;
+                modifiers.Knockback *= 0;
         }
         public override bool PreDraw(ref Color lightColor)
         {

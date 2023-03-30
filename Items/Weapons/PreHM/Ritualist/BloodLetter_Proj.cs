@@ -12,7 +12,7 @@ namespace Redemption.Items.Weapons.PreHM.Ritualist
         public override string Texture => "Redemption/Items/Weapons/PreHM/Ritualist/BloodLetter";
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Blood Letter");
+            // DisplayName.SetDefault("Blood Letter");
         }
         public override void SetDefaults()
         {

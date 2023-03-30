@@ -10,9 +10,9 @@ namespace Redemption.Items.Donator.Megaswave
     {
         public override void SetStaticDefaults()
         {
-            Tooltip.SetDefault("Summons a chibi Miniswave");
+            // Tooltip.SetDefault("Summons a chibi Miniswave");
 
-            SacrificeTotal = 1;
+            Item.ResearchUnlockCount = 1;
         }
 
         public override void SetDefaults()

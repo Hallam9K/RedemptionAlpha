@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 
@@ -26,8 +27,9 @@ namespace Redemption.Tiles.Furniture.Lab
             DustType = DustID.Tungsten;
             MinPick = 500;
             MineResist = 3f;
-            ModTranslation name = CreateMapEntryName();
-            name.SetDefault("Sewer Hole");
+            ItemDrop = -1;
+            LocalizedText name = CreateMapEntryName();
+            // name.SetDefault("Sewer Hole");
             AddMapEntry(new Color(51, 61, 54));
         }
         public override bool CanExplode(int i, int j) => false;

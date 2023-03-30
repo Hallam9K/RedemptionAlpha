@@ -7,7 +7,7 @@ namespace Redemption.Items.Weapons.PreHM.Ritualist
         public override string Texture => "Redemption/Items/Weapons/PreHM/Ritualist/SoulSkewer_Slash";
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Obsidian Tecpatl");
+            // DisplayName.SetDefault("Obsidian Tecpatl");
             Main.projFrames[Projectile.type] = 5;
         }
     }

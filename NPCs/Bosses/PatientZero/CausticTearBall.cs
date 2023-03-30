@@ -13,7 +13,7 @@ namespace Redemption.NPCs.Bosses.PatientZero
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Caustic Tear");
+            // DisplayName.SetDefault("Caustic Tear");
             ElementID.ProjPoison[Type] = true;
         }
         public override void SetDefaults()
@@ -33,7 +33,7 @@ namespace Redemption.NPCs.Bosses.PatientZero
             Lighting.AddLight(Projectile.Center, 0, Projectile.Opacity * 0.8f, 0);
             Projectile.rotation = Projectile.velocity.ToRotation() + 1.57f;
         }
-        public override void OnHitPlayer(Player target, int damage, bool crit) => target.AddBuff(ModContent.BuffType<BileDebuff>(), 240);
+        public override void OnHitPlayer(Player target, Player.HurtInfo info) => target.AddBuff(ModContent.BuffType<BileDebuff>(), 240);
         public override void Kill(int timeLeft)
         {
             SoundEngine.PlaySound(SoundID.NPCDeath1 with { Volume = .3f }, Projectile.position);

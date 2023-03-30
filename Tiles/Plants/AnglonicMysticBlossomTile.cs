@@ -2,9 +2,11 @@ using Microsoft.Xna.Framework;
 using Redemption.Items.Placeable.Plants;
 using Terraria;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 using Terraria.DataStructures;
+using Terraria.GameContent.Metadata;
 
 namespace Redemption.Tiles.Plants
 {
@@ -23,15 +25,12 @@ namespace Redemption.Tiles.Plants
             TileObjectData.newTile.RandomStyleRange = 2;
             TileObjectData.newTile.DrawYOffset = 2;
             TileObjectData.addTile(Type);
-            ModTranslation name = CreateMapEntryName();
-            name.SetDefault("Anglonic Mystic Blossom");
+            LocalizedText name = CreateMapEntryName();
+            // name.SetDefault("Anglonic Mystic Blossom");
             AddMapEntry(new Color(235, 175, 255), name);
             DustType = DustID.GrassBlades;
             HitSound = SoundID.Grass;
-        }
-        public override void KillMultiTile(int i, int j, int frameX, int frameY)
-        {
-            Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 32, 32, ModContent.ItemType<AnglonicMysticBlossom>());
+            TileMaterials.SetForTileId(Type, TileMaterials._materialsByName["Plant"]);
         }
     }
 }

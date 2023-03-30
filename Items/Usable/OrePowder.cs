@@ -9,15 +9,15 @@ namespace Redemption.Items.Usable
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Magic Mineral Powder");
-            Tooltip.SetDefault("Converts basic ores into hardmode ores");
-            SacrificeTotal = 99;
+            // DisplayName.SetDefault("Magic Mineral Powder");
+            // Tooltip.SetDefault("Converts basic ores into hardmode ores");
+            Item.ResearchUnlockCount = 99;
         }
 
         public override void SetDefaults()
         {
             Item.CloneDefaults(ItemID.VilePowder);
-            Item.maxStack = 9999;
+            Item.maxStack = Item.CommonMaxStack;
             Item.consumable = true;
             Item.rare = ItemRarityID.LightRed;
             Item.value = Item.buyPrice(0, 0, 25, 0);
@@ -30,7 +30,7 @@ namespace Redemption.Items.Usable
         public override string Texture => Redemption.EMPTY_TEXTURE;
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Magic Mineral Powder");
+            // DisplayName.SetDefault("Magic Mineral Powder");
         }
         public override void SetDefaults()
         {

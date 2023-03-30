@@ -3,6 +3,7 @@ using Redemption.Dusts.Tiles;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.Enums;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 
@@ -27,8 +28,9 @@ namespace Redemption.Tiles.Furniture.Lab
             DustType = ModContent.DustType<LabPlatingDust>();
             MinPick = 500;
             MineResist = 7f;
-            ModTranslation name = CreateMapEntryName();
-            name.SetDefault("Janitor Equipment");
+            ItemDrop = -1;
+            LocalizedText name = CreateMapEntryName();
+            // name.SetDefault("Janitor Equipment");
             AddMapEntry(new Color(48, 63, 73), name);
         }
         public override void NumDust(int i, int j, bool fail, ref int num) => num = fail ? 1 : 3;
@@ -39,8 +41,8 @@ namespace Redemption.Tiles.Furniture.Lab
         public override string Texture => Redemption.PLACEHOLDER_TEXTURE;
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Janitor Equipment");
-            Tooltip.SetDefault("[c/ff0000:Unbreakable (500% Pickaxe Power)]");
+            // DisplayName.SetDefault("Janitor Equipment");
+            // Tooltip.SetDefault("[c/ff0000:Unbreakable (500% Pickaxe Power)]");
         }
 
         public override void SetDefaults()

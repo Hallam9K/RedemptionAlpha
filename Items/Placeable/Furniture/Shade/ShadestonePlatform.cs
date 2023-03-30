@@ -1,5 +1,6 @@
 using Redemption.Tiles.Furniture.Shade;
 using Terraria.ID;
+using Terraria;
 using Terraria.ModLoader;
 
 namespace Redemption.Items.Placeable.Furniture.Shade
@@ -8,7 +9,7 @@ namespace Redemption.Items.Placeable.Furniture.Shade
 	{
         public override void SetStaticDefaults()
         {
-            SacrificeTotal = 1;
+            Item.ResearchUnlockCount = 1;
         }
 
         public override void SetDefaults()
@@ -16,7 +17,7 @@ namespace Redemption.Items.Placeable.Furniture.Shade
             Item.DefaultToPlaceableTile(ModContent.TileType<ShadestonePlatformTile>(), 0);
             Item.width = 24;
             Item.height = 16;
-            Item.maxStack = 9999;
+            Item.maxStack = Item.CommonMaxStack;
             Item.rare = ItemRarityID.Blue;
         }
         public override void AddRecipes()

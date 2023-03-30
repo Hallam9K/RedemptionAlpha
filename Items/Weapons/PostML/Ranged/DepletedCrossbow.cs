@@ -12,11 +12,11 @@ namespace Redemption.Items.Weapons.PostML.Ranged
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Depleted Crossbow");
-            Tooltip.SetDefault("Fires depleted uranium rods that explode upon impact\n" +
+            // DisplayName.SetDefault("Depleted Crossbow");
+            /* Tooltip.SetDefault("Fires depleted uranium rods that explode upon impact\n" +
                 "Consumes uranium as ammo\n" +
-                "No ammo cost if the user has at least 10 uranium");
-            SacrificeTotal = 1;
+                "No ammo cost if the user has at least 10 uranium"); */
+            Item.ResearchUnlockCount = 1;
         }
 
         public override void SetDefaults()

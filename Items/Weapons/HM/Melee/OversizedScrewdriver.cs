@@ -9,12 +9,12 @@ namespace Redemption.Items.Weapons.HM.Melee
     {
         public override void SetStaticDefaults()
         {
-            Tooltip.SetDefault("Holds out a spinning screwdriver\n" +
+            /* Tooltip.SetDefault("Holds out a spinning screwdriver\n" +
                 "Holding down left-click and hitting an enemy will cause you to bounce on it\n" +
                 "Each successful bounce increases damage up to 300%\n" +
                 "Deals extra damage to robotic enemies\n" +
-                "'May cause dizziness'");
-            SacrificeTotal = 1;
+                "'May cause dizziness'"); */
+            Item.ResearchUnlockCount = 1;
         }
 
         public override void SetDefaults()

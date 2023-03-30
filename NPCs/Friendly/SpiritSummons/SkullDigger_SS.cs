@@ -44,7 +44,7 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
         public float[] oldrot = new float[5];
         public override void SetSafeStaticDefaults()
         {
-            DisplayName.SetDefault("Skull Digger");
+            // DisplayName.SetDefault("Skull Digger");
             Main.npcFrameCount[NPC.type] = 4;
             NPCID.Sets.TrailCacheLength[NPC.type] = 5;
             NPCID.Sets.TrailingMode[NPC.type] = 1;
@@ -74,8 +74,8 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
         }
 
         public override bool CanHitPlayer(Player target, ref int cooldownSlot) => false;
-        public override bool? CanHitNPC(NPC target) => false;
-        public override void HitEffect(int hitDirection, double damage)
+        public override bool CanHitNPC(NPC target) => false;
+        public override void HitEffect(NPC.HitInfo hit)
         {
             if (NPC.life <= 0)
             {
@@ -625,7 +625,7 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
             }
             return false;
         }
-        public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection) => damage *= 4;
+        public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers) => modifiers.FinalDamage *= 4;
         public override bool? CanHitNPC(NPC target)
         {
             NPC host = Main.npc[(int)Projectile.ai[0]];

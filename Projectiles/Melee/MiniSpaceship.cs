@@ -17,7 +17,7 @@ namespace Redemption.Projectiles.Melee
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Microship Mk.I");
+            // DisplayName.SetDefault("Microship Mk.I");
             Main.projFrames[Projectile.type] = 4;
             ProjectileID.Sets.CultistIsResistantTo[Projectile.type] = true;
         }

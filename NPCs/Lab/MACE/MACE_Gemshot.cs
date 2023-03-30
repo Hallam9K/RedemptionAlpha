@@ -13,7 +13,7 @@ namespace Redemption.NPCs.Lab.MACE
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Xeno Blast");
+            // DisplayName.SetDefault("Xeno Blast");
             ProjectileID.Sets.TrailCacheLength[Projectile.type] = 5;
             ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
         }

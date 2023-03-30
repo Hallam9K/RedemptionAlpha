@@ -9,8 +9,8 @@ namespace Redemption.Items.Usable
     {
         public override void SetStaticDefaults()
         {
-            Tooltip.SetDefault("Calls upon the spirits of corpses");
-            SacrificeTotal = 1;
+            // Tooltip.SetDefault("Calls upon the spirits of corpses");
+            Item.ResearchUnlockCount = 1;
         }
 
         public override void SetDefaults()

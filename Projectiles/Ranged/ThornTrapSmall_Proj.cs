@@ -12,7 +12,7 @@ namespace Redemption.Projectiles.Ranged
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Thorn Trap");
+            // DisplayName.SetDefault("Thorn Trap");
             Main.projFrames[Projectile.type] = 6;
             ProjectileID.Sets.DontAttachHideToAlpha[Type] = true;
             ElementID.ProjNature[Type] = true;

@@ -9,7 +9,7 @@ namespace Redemption.Items.Armor.Vanity
         public override void SetStaticDefaults()
         {
             ArmorIDs.Head.Sets.DrawHatHair[EquipLoader.GetEquipSlot(Mod, Name, EquipType.Head)] = true;
-            SacrificeTotal = 1;
+            Item.ResearchUnlockCount = 1;
         }
 
         public override void SetDefaults()

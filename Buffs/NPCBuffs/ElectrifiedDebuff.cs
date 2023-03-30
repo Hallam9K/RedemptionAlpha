@@ -10,7 +10,7 @@ namespace Redemption.Buffs.NPCBuffs
 
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Electrified");
+			// DisplayName.SetDefault("Electrified");
 			Main.debuff[Type] = true;
 		}
 

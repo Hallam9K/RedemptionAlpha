@@ -18,13 +18,7 @@ namespace Redemption.Globals.World
         public static int ChickWave = 0;
         public static bool FowlMorningActive;
 
-        public override void OnWorldLoad()
-        {
-            FowlMorningActive = false;
-            ChickPoints = 0;
-            ChickWave = 0;
-        }
-        public override void OnWorldUnload()
+        public override void ClearWorld()
         {
             FowlMorningActive = false;
             ChickPoints = 0;

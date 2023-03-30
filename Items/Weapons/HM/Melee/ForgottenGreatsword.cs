@@ -16,12 +16,12 @@ namespace Redemption.Items.Weapons.HM.Melee
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Ophos' Forgotten Greatsword");
-            Tooltip.SetDefault("Spins the blade around the player and sets ablaze\n" +
+            // DisplayName.SetDefault("Ophos' Forgotten Greatsword");
+            /* Tooltip.SetDefault("Spins the blade around the player and sets ablaze\n" +
                 "Forms a firestorm that engulfs the player, dealing " + ElementID.WindS + " damage" +
-                "\nRelease left-click to disperse it, launching nearby enemies away");
+                "\nRelease left-click to disperse it, launching nearby enemies away"); */
 
-            SacrificeTotal = 1;
+            Item.ResearchUnlockCount = 1;
         }
 
         public override void SetDefaults()
@@ -57,7 +57,7 @@ namespace Redemption.Items.Weapons.HM.Melee
             CreateRecipe()
                 .AddIngredient(ModContent.ItemType<ForgottenSword>())
                 .AddIngredient(ModContent.ItemType<OphosNotes>())
-                .AddCondition(new Recipe.Condition(NetworkText.FromLiteral("Repaired by the Fallen"), _ => false))
+                .AddCondition(RedeConditions.RepairedByFallen)
                 .Register();
         }
         private static readonly int[] unwantedPrefixes = new int[] { PrefixID.Terrible, PrefixID.Dull, PrefixID.Shameful, PrefixID.Annoying, PrefixID.Broken, PrefixID.Damaged, PrefixID.Shoddy, PrefixID.Weak };

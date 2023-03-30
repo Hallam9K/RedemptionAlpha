@@ -34,6 +34,7 @@ namespace Redemption.Tiles.Plants
             TileObjectData.addTile(Type);
             DustType = DustID.GrassBlades;
             HitSound = SoundID.Grass;
+            ItemDrop = -1;
             TileMaterials.SetForTileId(Type, TileMaterials._materialsByName["Plant"]);
         }
 

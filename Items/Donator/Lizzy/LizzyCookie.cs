@@ -11,11 +11,11 @@ namespace Redemption.Items.Donator.Lizzy
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Lizard Cookie");
-            Tooltip.SetDefault("Summons a chibi Lizzy\n" +
-                "'\"Baked\" with love'");
+            // DisplayName.SetDefault("Lizard Cookie");
+            /* Tooltip.SetDefault("Summons a chibi Lizzy\n" +
+                "'\"Baked\" with love'"); */
 
-            SacrificeTotal = 1;
+            Item.ResearchUnlockCount = 1;
         }
 
         public override void SetDefaults()

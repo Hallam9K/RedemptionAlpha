@@ -11,8 +11,8 @@ namespace Redemption.Items.Usable.Potions
 	{
 		public override void SetStaticDefaults()
 		{
-            Tooltip.SetDefault("Greatly increased chance of Shadow Fuel to drop upon slaying enemies with " + ElementID.ShadowS + " weapons");
-            SacrificeTotal = 20;
+            // Tooltip.SetDefault("Greatly increased chance of Shadow Fuel to drop upon slaying enemies with " + ElementID.ShadowS + " weapons");
+            Item.ResearchUnlockCount = 20;
         }
 
         public override void SetDefaults()
@@ -25,7 +25,7 @@ namespace Redemption.Items.Usable.Potions
             Item.consumable = true;
             Item.width = 28;
             Item.height = 34;
-            Item.maxStack = 9999;
+            Item.maxStack = Item.CommonMaxStack;
             Item.value = Item.sellPrice(0, 0, 2, 50);
             Item.rare = ItemRarityID.Green;
             Item.buffType = ModContent.BuffType<EvilJellyBuff>();

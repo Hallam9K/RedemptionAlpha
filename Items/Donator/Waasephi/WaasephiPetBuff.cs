@@ -8,8 +8,8 @@ namespace Redemption.Items.Donator.Waasephi
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Waasephini");
-			Description.SetDefault("Waa!");
+			// DisplayName.SetDefault("Waasephini");
+			// Description.SetDefault("Waa!");
 
 			Main.buffNoTimeDisplay[Type] = true;
 			Main.vanityPet[Type] = true;

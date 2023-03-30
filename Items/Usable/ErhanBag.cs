@@ -18,18 +18,18 @@ namespace Redemption.Items.Usable
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Treasure Bag (Erhan)");
-            Tooltip.SetDefault("{$CommonItemTooltip.RightClickToOpen}");
+            // DisplayName.SetDefault("Treasure Bag (Erhan)");
+            // Tooltip.SetDefault("{$CommonItemTooltip.RightClickToOpen}");
 
             ItemID.Sets.BossBag[Type] = true;
             ItemID.Sets.PreHardmodeLikeBossBag[Type] = true;
 
-            SacrificeTotal = 3;
+            Item.ResearchUnlockCount = 3;
         }
 
         public override void SetDefaults()
         {
-            Item.maxStack = 9999;
+            Item.maxStack = Item.CommonMaxStack;
             Item.consumable = true;
             Item.width = 32;
             Item.height = 34;
@@ -40,7 +40,7 @@ namespace Redemption.Items.Usable
         public override bool CanRightClick() => true;
         public override void ModifyItemLoot(ItemLoot itemLoot)
         {
-            itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<ErhanHelmet>(), 7));
+            itemLoot.Add(ItemDropRule.NotScalingWithLuck(ModContent.ItemType<ErhanHelmet>(), 7));
             itemLoot.Add(ItemDropRule.OneFromOptions(1,
                 ModContent.ItemType<Bindeklinge>(), ModContent.ItemType<HolyBible>(), ModContent.ItemType<HallowedHandGrenade>()));
             itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<ErhanMagnifyingGlass>(), 2));

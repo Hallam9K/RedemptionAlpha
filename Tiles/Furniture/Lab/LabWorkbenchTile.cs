@@ -4,6 +4,7 @@ using Redemption.Dusts.Tiles;
 using Redemption.Items.Placeable.Furniture.Lab;
 using Terraria;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 
@@ -33,16 +34,11 @@ namespace Redemption.Tiles.Furniture.Lab
 			AddToArray(ref TileID.Sets.RoomNeeds.CountsAsTable);
 
 			// Etc
-			ModTranslation name = CreateMapEntryName();
-			name.SetDefault("Laboratory Work Bench");
+			LocalizedText name = CreateMapEntryName();
+			// name.SetDefault("Laboratory Work Bench");
 			AddMapEntry(new Color(189, 191, 200), name);
 		}
 
 		public override void NumDust(int x, int y, bool fail, ref int num) => num = fail ? 1 : 3;
-
-		public override void KillMultiTile(int x, int y, int frameX, int frameY)
-		{
-			Item.NewItem(new EntitySource_TileBreak(x, y), x * 16, y * 16, 32, 16, ModContent.ItemType<LabWorkbench>());
-		}
 	}
 }

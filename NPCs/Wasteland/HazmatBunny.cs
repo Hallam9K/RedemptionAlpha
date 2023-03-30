@@ -16,7 +16,7 @@ namespace Redemption.NPCs.Wasteland
             NPCID.Sets.CountsAsCritter[Type] = true;
             NPCID.Sets.DontDoHardmodeScaling[Type] = true;
             NPCID.Sets.TakesDamageFromHostilesWithoutBeingFriendly[Type] = true;
-
+            NPCID.Sets.ShimmerTransformToNPC[NPC.type] = NPCID.Bunny;
             NPCID.Sets.DebuffImmunitySets.Add(Type, new NPCDebuffImmunityData
             {
                 SpecificallyImmuneTo = new int[] {
@@ -58,7 +58,7 @@ namespace Redemption.NPCs.Wasteland
                 npcLoot.Add(dropRule);
             }
         }
-        public override void HitEffect(int hitDirection, double damage)
+        public override void HitEffect(NPC.HitInfo hit)
         {
             if (NPC.life <= 0)
             {

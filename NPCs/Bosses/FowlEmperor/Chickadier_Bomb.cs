@@ -11,7 +11,7 @@ namespace Redemption.NPCs.Bosses.FowlEmperor
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Mini Egg Bomb");
+            // DisplayName.SetDefault("Mini Egg Bomb");
         }
         public override void SetDefaults()
         {

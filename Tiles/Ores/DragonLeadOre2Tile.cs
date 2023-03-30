@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Terraria;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ID;
 
@@ -19,8 +20,8 @@ namespace Redemption.Tiles.Ores
             MinPick = 10;
             MineResist = 1.4f;
             HitSound = SoundID.Tink;
-            ModTranslation name = CreateMapEntryName();
-            name.SetDefault("Stone?");
+            LocalizedText name = CreateMapEntryName();
+            // name.SetDefault("Stone?");
             AddMapEntry(new Color(138, 138, 138));
 		}
         public override void NumDust(int i, int j, bool fail, ref int num)

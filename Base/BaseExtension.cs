@@ -20,11 +20,11 @@ namespace Redemption.BaseExtension
         /// <summary>References the AbilityPlayer instance.</summary>
         public static AbilityPlayer RedemptionAbility(this Player player) => player.GetModPlayer<AbilityPlayer>();
         /// <summary>References the RedeNPC instance.</summary>
-        public static RedeNPC Redemption(this NPC npc) => npc.GetGlobalNPC<RedeNPC>(true);
+        public static RedeNPC Redemption(this NPC npc) => npc.GetGlobalNPC<RedeNPC>();
         /// <summary>References the BuffNPC instance.</summary>
-        public static BuffNPC RedemptionNPCBuff(this NPC npc) => npc.GetGlobalNPC<BuffNPC>(true);
+        public static BuffNPC RedemptionNPCBuff(this NPC npc) => npc.GetGlobalNPC<BuffNPC>();
         /// <summary>References the GuardNPC instance.</summary>
-        public static GuardNPC RedemptionGuard(this NPC npc) => npc.GetGlobalNPC<GuardNPC>(true);
+        public static GuardNPC RedemptionGuard(this NPC npc) => npc.GetGlobalNPC<GuardNPC>();
         /// <summary>References the RedeItem instance.</summary>
         public static RedeItem Redemption(this Item item) => item.GetGlobalItem<RedeItem>();
         /// <summary>References the </summary>

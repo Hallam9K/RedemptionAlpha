@@ -6,6 +6,7 @@ using Terraria.DataStructures;
 using Terraria.Enums;
 using Terraria.GameContent.ObjectInteractions;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 
@@ -28,15 +29,12 @@ namespace Redemption.Tiles.Furniture.Lab
 
 			DustType = ModContent.DustType<LabPlatingDust>();
 			AdjTiles = new int[] { TileID.OpenDoor };
-			CloseDoorID = ModContent.TileType<LabDoorClosed>();
+			TileID.Sets.CloseDoorID[Type] = ModContent.TileType<LabDoorClosed>();
 
-			// Names
-			ModTranslation name = CreateMapEntryName();
-			name.SetDefault("Laboratory Door");
-			AddMapEntry(new Color(189, 191, 200), name);
+			AddMapEntry(new Color(189, 191, 200), Language.GetText("MapObject.Door"));
 
-			// Placement
-			TileObjectData.newTile.Width = 2;
+            // Placement
+            TileObjectData.newTile.Width = 2;
 			TileObjectData.newTile.Height = 3;
 			TileObjectData.newTile.Origin = new Point16(0, 0);
 			TileObjectData.newTile.AnchorTop = new AnchorData(AnchorType.SolidTile, 1, 0);
@@ -80,9 +78,6 @@ namespace Redemption.Tiles.Furniture.Lab
         public override bool HasSmartInteract(int i, int j, SmartInteractScanSettings settings) => true;
 
 		public override void NumDust(int i, int j, bool fail, ref int num) => num = 1;
-
-		public override void KillMultiTile(int i, int j, int frameX, int frameY) => Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 32, 48, ModContent.ItemType<LabDoor>());
-
 		public override void MouseOver(int i, int j)
 		{
 			Player player = Main.LocalPlayer;

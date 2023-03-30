@@ -1,5 +1,6 @@
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria;
 
 namespace Redemption.Items.Weapons.PreHM.Ranged
 {
@@ -7,10 +8,10 @@ namespace Redemption.Items.Weapons.PreHM.Ranged
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("L o n g  Chicken Egg");
-            Tooltip.SetDefault("'It takes an awfully  l o n g  c h i c k e n  to make a long egg'");
+            // DisplayName.SetDefault("L o n g  Chicken Egg");
+            // Tooltip.SetDefault("'It takes an awfully  l o n g  c h i c k e n  to make a long egg'");
 
-            SacrificeTotal = 1;
+            Item.ResearchUnlockCount = 1;
         }
 
         public override void SetDefaults()
@@ -19,7 +20,7 @@ namespace Redemption.Items.Weapons.PreHM.Ranged
             Item.height = 20;
             Item.damage = 6;
             Item.knockBack = 3;
-            Item.maxStack = 9999;
+            Item.maxStack = Item.CommonMaxStack;
             Item.value = 500;
             Item.rare = ItemRarityID.White;
             Item.useStyle = ItemUseStyleID.Swing;

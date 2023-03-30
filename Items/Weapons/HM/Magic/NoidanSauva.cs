@@ -10,9 +10,9 @@ namespace Redemption.Items.Weapons.HM.Magic
 	{
         public override void SetStaticDefaults()
         {
-            Tooltip.SetDefault("A witch's staff that shoots enchanting spark projectiles");
+            // Tooltip.SetDefault("A witch's staff that shoots enchanting spark projectiles");
             Item.staff[Item.type] = true;
-            SacrificeTotal = 1;
+            Item.ResearchUnlockCount = 1;
         }
 
         public override void SetDefaults()

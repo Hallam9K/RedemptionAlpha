@@ -13,13 +13,13 @@ namespace Redemption.Items.Weapons.PreHM.Magic
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Dragon Slayer's Staff");
-            Tooltip.SetDefault("Casts a molten dragon skull to spews out flames at cursor point" +
-                "\nHold down left click long enough to change the flames into a heat ray at double the mana cost");
+            // DisplayName.SetDefault("Dragon Slayer's Staff");
+            /* Tooltip.SetDefault("Casts a molten dragon skull to spews out flames at cursor point" +
+                "\nHold down left click long enough to change the flames into a heat ray at double the mana cost"); */
             Item.staff[Item.type] = true;
             ItemID.Sets.SkipsInitialUseSound[Item.type] = true;
 
-            SacrificeTotal = 1;
+            Item.ResearchUnlockCount = 1;
         }
 
         public override void SetDefaults()

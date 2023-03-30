@@ -11,7 +11,7 @@ namespace Redemption.NPCs.Bosses.Neb
 	{
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Starplane");
+            // DisplayName.SetDefault("Starplane");
             Main.projFrames[Projectile.type] = 6;
             ElementID.ProjCelestial[Type] = true;
         }

@@ -9,7 +9,7 @@ namespace Redemption.NPCs.Critters
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Tree Bug");
+            // DisplayName.SetDefault("Tree Bug");
         }
 
         public override void SetDefaults()

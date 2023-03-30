@@ -4,6 +4,7 @@ using Terraria;
 using Terraria.DataStructures;
 using Terraria.Enums;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 
@@ -27,13 +28,9 @@ namespace Redemption.Tiles.Furniture.Archcloth
             MinPick = 0;
             MineResist = 1.2f;
             AddToArray(ref TileID.Sets.RoomNeeds.CountsAsChair);
-            ModTranslation name = CreateMapEntryName();
-            name.SetDefault("Archcloth Throne");
+            LocalizedText name = CreateMapEntryName();
+            // name.SetDefault("Archcloth Throne");
             AddMapEntry(new Color(123, 44, 122), name);
-        }
-        public override void KillMultiTile(int i, int j, int frameX, int frameY)
-        {
-            Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 16, 48, ModContent.ItemType<ArchclothThrone>());
         }
     }
 }

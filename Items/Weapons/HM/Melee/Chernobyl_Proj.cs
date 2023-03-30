@@ -15,7 +15,7 @@ namespace Redemption.Items.Weapons.HM.Melee
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Chernobyl");
+            // DisplayName.SetDefault("Chernobyl");
             ElementID.ProjFire[Type] = true;
             ElementID.ProjPoison[Type] = true;
         }
@@ -65,7 +65,7 @@ namespace Redemption.Items.Weapons.HM.Melee
                 npc.AddBuff(ModContent.BuffType<BileDebuff>(), 180);
             }
         }
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             if (target.life < 0 && target.lifeMax > 5)
             {

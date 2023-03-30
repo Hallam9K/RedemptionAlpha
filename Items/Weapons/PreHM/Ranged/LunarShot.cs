@@ -16,12 +16,12 @@ namespace Redemption.Items.Weapons.PreHM.Ranged
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Lunar Shot");
-            Tooltip.SetDefault("Replaces Wooden Arrows with Lunar Bolts, dealing " + ElementID.FireS + " and " + ElementID.NatureS + " damage" +
+            // DisplayName.SetDefault("Lunar Shot");
+            /* Tooltip.SetDefault("Replaces Wooden Arrows with Lunar Bolts, dealing " + ElementID.FireS + " and " + ElementID.NatureS + " damage" +
                 "\nLunar Bolts summon bats while the moon is out" +
-                "\nSummons an extra bat while it's a full moon");
+                "\nSummons an extra bat while it's a full moon"); */
 
-            SacrificeTotal = 1;
+            Item.ResearchUnlockCount = 1;
         }
 
         public override void SetDefaults()
@@ -72,7 +72,7 @@ namespace Redemption.Items.Weapons.PreHM.Ranged
             CreateRecipe()
                 .AddIngredient(ModContent.ItemType<MoonflareFragment>(), 8)
                 .AddTile(TileID.Anvils)
-                .AddCondition(new Recipe.Condition(NetworkText.FromLiteral("In Moonlight"), _ => !Main.dayTime && Main.moonPhase != 4))
+                .AddCondition(RedeConditions.InMoonlight)
                 .Register();
         }
     }

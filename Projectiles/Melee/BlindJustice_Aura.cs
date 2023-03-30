@@ -13,7 +13,7 @@ namespace Redemption.Projectiles.Melee
         public override string Texture => "Redemption/Textures/HolyGlow2";
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Holy Aura");
+            // DisplayName.SetDefault("Holy Aura");
         }
         public override void SetDefaults()
         {

@@ -4,6 +4,7 @@ using Terraria;
 using Terraria.DataStructures;
 using Terraria.Enums;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 
@@ -36,8 +37,9 @@ namespace Redemption.Tiles.Furniture.Lab
             DustType = DustID.Electric;
             MinPick = 500;
             MineResist = 20f;
-			ModTranslation name = CreateMapEntryName();
-			name.SetDefault("Laboratory MACE Turret");
+            ItemDrop = -1;
+            LocalizedText name = CreateMapEntryName();
+			// name.SetDefault("Laboratory MACE Turret");
 			AddMapEntry(new Color(110, 106, 120), name);
 		}
         public override bool CanExplode(int i, int j) => false;
@@ -73,8 +75,8 @@ namespace Redemption.Tiles.Furniture.Lab
         public override string Texture => Redemption.PLACEHOLDER_TEXTURE;
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Laboratory MACE Turret");
-            Tooltip.SetDefault("[c/ff0000:Unbreakable (500% Pickaxe Power)]");
+            // DisplayName.SetDefault("Laboratory MACE Turret");
+            // Tooltip.SetDefault("[c/ff0000:Unbreakable (500% Pickaxe Power)]");
         }
 
         public override void SetDefaults()

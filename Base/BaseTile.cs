@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Terraria;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 
@@ -25,8 +26,8 @@ namespace Redemption.Base
 		
 		public static void AddMapEntry(ModTile tile, Color color, string name)
 		{
-			ModTranslation name2 = tile.CreateMapEntryName();
-			name2.SetDefault(name);
+			LocalizedText name2 = tile.CreateMapEntryName();
+			// name2.SetDefault(name);
 			tile.AddMapEntry(color, name2);			
 		}
 

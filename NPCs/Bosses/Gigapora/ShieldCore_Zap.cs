@@ -16,7 +16,7 @@ namespace Redemption.NPCs.Bosses.Gigapora
         public override string Texture => Redemption.EMPTY_TEXTURE;
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Dualcast");
+            // DisplayName.SetDefault("Dualcast");
         }
         public override void SetDefaults()
         {

@@ -17,12 +17,12 @@ namespace Redemption.Items.Weapons.PreHM.Melee
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Skull Digger's Skull Digger");
-            Tooltip.SetDefault("Spinning the weapon around you will conjure " + ElementID.ArcaneS + " mirages\n" +
-                "'Yes, he did name his weapon after himself...'");
+            // DisplayName.SetDefault("Skull Digger's Skull Digger");
+            /* Tooltip.SetDefault("Spinning the weapon around you will conjure " + ElementID.ArcaneS + " mirages\n" +
+                "'Yes, he did name his weapon after himself...'"); */
 
             ItemID.Sets.ToolTipDamageMultiplier[Type] = 2f;
-            SacrificeTotal = 1;
+            Item.ResearchUnlockCount = 1;
         }
 
         public override void SetDefaults()
@@ -54,7 +54,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
         public override string Texture => "Redemption/NPCs/Minibosses/SkullDigger/SkullDigger_FlailBlade";
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Skull Digger's Skull Digger");
+            // DisplayName.SetDefault("Skull Digger's Skull Digger");
         }
 
         public override void SetDefaults()

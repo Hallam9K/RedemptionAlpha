@@ -11,9 +11,9 @@ namespace Redemption.Items.Weapons.HM.Ranged
     {
         public override void SetStaticDefaults()
         {
-            Tooltip.SetDefault("Converts bullets into drill bits that shred through enemies and tiles\n" +
-                "Inflicts Broken Armor, piercing through Guard Points");
-            SacrificeTotal = 1;
+            /* Tooltip.SetDefault("Converts bullets into drill bits that shred through enemies and tiles\n" +
+                "Inflicts Broken Armor, piercing through Guard Points"); */
+            Item.ResearchUnlockCount = 1;
         }
 
         public override void SetDefaults()

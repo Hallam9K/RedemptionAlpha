@@ -13,25 +13,13 @@ namespace Redemption.Items.Placeable.Furniture.Shade
     {
         public override void SetStaticDefaults()
         {
+            ItemID.Sets.ShimmerTransformToItem[Type] = ItemID.ShimmerTorch;
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 100;
         }
 
         public override void SetDefaults()
         {
-            Item.flame = true;
-            Item.noWet = true;
-            Item.useStyle = ItemUseStyleID.Swing;
-            Item.useTurn = true;
-            Item.useAnimation = 15;
-            Item.useTime = 10;
-            Item.holdStyle = ItemHoldStyleID.HoldFront;
-            Item.autoReuse = true;
-            Item.maxStack = 999;
-            Item.consumable = true;
-            Item.createTile = ModContent.TileType<ShadeTorchTile>();
-            Item.width = 10;
-            Item.height = 12;
-            Item.value = 50;
+            Item.DefaultToTorch(ModContent.TileType<ShadeTorchTile>(), 0, false);
         }
 
         public override void ModifyResearchSorting(ref ContentSamples.CreativeHelper.ItemGroup itemGroup)

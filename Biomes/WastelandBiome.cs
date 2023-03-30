@@ -65,7 +65,7 @@ namespace Redemption.Biomes
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Wasteland");
+            // DisplayName.SetDefault("Wasteland");
         }
 
         public override SceneEffectPriority Priority => SceneEffectPriority.BiomeMedium;
@@ -91,7 +91,7 @@ namespace Redemption.Biomes
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Snow Wasteland");
+            // DisplayName.SetDefault("Snow Wasteland");
         }
         public override void SpecialVisuals(Player player, bool isActive)
         {
@@ -122,7 +122,7 @@ namespace Redemption.Biomes
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Desert Wasteland");
+            // DisplayName.SetDefault("Desert Wasteland");
         }
 
         public override SceneEffectPriority Priority => SceneEffectPriority.BiomeHigh;
@@ -148,7 +148,7 @@ namespace Redemption.Biomes
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Corrupt Wasteland");
+            // DisplayName.SetDefault("Corrupt Wasteland");
         }
         public override void SpecialVisuals(Player player, bool isActive)
         {
@@ -180,7 +180,7 @@ namespace Redemption.Biomes
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Crimson Wasteland");
+            // DisplayName.SetDefault("Crimson Wasteland");
         }
         public override void SpecialVisuals(Player player, bool isActive)
         {

@@ -19,7 +19,7 @@ namespace Redemption.NPCs.Bosses.Neb
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Shooting Star");
+            // DisplayName.SetDefault("Shooting Star");
             ProjectileID.Sets.TrailCacheLength[Projectile.type] = 5;
             ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
             ElementID.ProjCelestial[Type] = true;
@@ -75,7 +75,7 @@ namespace Redemption.NPCs.Bosses.Neb
         public override string Texture => "Redemption/NPCs/Bosses/Neb/CurvingStar2_Tele";
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Shooting Star");
+            // DisplayName.SetDefault("Shooting Star");
             ProjectileID.Sets.TrailCacheLength[Projectile.type] = 5;
             ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
         }
@@ -128,7 +128,7 @@ namespace Redemption.NPCs.Bosses.Neb
         public override string Texture => "Redemption/NPCs/Bosses/Neb/CurvingStar2_Tele";
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Shooting Star");
+            // DisplayName.SetDefault("Shooting Star");
         }
         public override void SetDefaults()
         {

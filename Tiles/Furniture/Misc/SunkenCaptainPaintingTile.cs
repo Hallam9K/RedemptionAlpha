@@ -4,6 +4,7 @@ using Redemption.Items.Placeable.Furniture.Misc;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 
@@ -21,7 +22,7 @@ namespace Redemption.Tiles.Furniture.Misc
 			TileObjectData.newTile.StyleWrapLimit = 36;
 			TileObjectData.addTile(Type);
             DustType = DustID.WoodFurniture;
-			AddMapEntry(new Color(124, 99, 90));
+			AddMapEntry(new Color(124, 99, 90), Language.GetText("MapObject.Painting"));
             AnimationFrameHeight = 54;
         }
         public override void AnimateTile(ref int frame, ref int frameCounter)
@@ -54,10 +55,6 @@ namespace Redemption.Tiles.Furniture.Misc
             int animate = Main.tileFrame[Type] * AnimationFrameHeight;
             Rectangle frame = new(tile.TileFrameX, tile.TileFrameY + animate, 16, height);
             Main.spriteBatch.Draw(ModContent.Request<Texture2D>("Redemption/Tiles/Furniture/Misc/SunkenCaptainPaintingTile_Glow").Value, new Vector2((i * 16) - (int)Main.screenPosition.X, (j * 16) - (int)Main.screenPosition.Y) + zero, frame, Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
-        }
-        public override void KillMultiTile(int i, int j, int frameX, int frameY)
-        {
-            Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 48, 48, ModContent.ItemType<SunkenCaptainPainting>());
         }
     }
 }

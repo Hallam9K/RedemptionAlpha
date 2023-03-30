@@ -15,7 +15,7 @@ namespace Redemption.Projectiles.Minions
 	{
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Fist Rocket");
+            // DisplayName.SetDefault("Fist Rocket");
             Main.projFrames[Projectile.type] = 3;
             ProjectileID.Sets.MinionShot[Projectile.type] = true;
             ProjectileID.Sets.CultistIsResistantTo[Projectile.type] = true;

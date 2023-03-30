@@ -17,7 +17,7 @@ namespace Redemption.Projectiles.Magic
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Eaglecrest Boulder");
+            // DisplayName.SetDefault("Eaglecrest Boulder");
             ProjectileID.Sets.TrailCacheLength[Projectile.type] = 8;
             ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
             ElementID.ProjEarth[Type] = true;
@@ -53,7 +53,7 @@ namespace Redemption.Projectiles.Magic
             width = height = 42;
             return true;
         }
-        public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
+        public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
         {
             if (target.knockBackResist != 0)
                 target.velocity += Projectile.velocity * target.knockBackResist;

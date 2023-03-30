@@ -16,7 +16,7 @@ namespace Redemption.Projectiles.Melee
         public override string Texture => "Redemption/NPCs/Bosses/KSIII/KS3_Fist";
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Fist Rocket");
+            // DisplayName.SetDefault("Fist Rocket");
             Main.projFrames[Projectile.type] = 4;
             ElementID.ProjExplosive[Type] = true;
         }

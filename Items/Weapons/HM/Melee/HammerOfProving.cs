@@ -11,12 +11,12 @@ namespace Redemption.Items.Weapons.HM.Melee
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Hammer of Proving");
-            Tooltip.SetDefault("Hold left-click while in the air to keep the hammer out\n" +
+            // DisplayName.SetDefault("Hammer of Proving");
+            /* Tooltip.SetDefault("Hold left-click while in the air to keep the hammer out\n" +
                 "Increases the user's fall speed while held\n" +
                 "Increased damage based on how fast the player is falling\n" +
-                "Stuns enemies if falling above a certain speed");
-            SacrificeTotal = 1;
+                "Stuns enemies if falling above a certain speed"); */
+            Item.ResearchUnlockCount = 1;
         }
 
         public override void SetDefaults()

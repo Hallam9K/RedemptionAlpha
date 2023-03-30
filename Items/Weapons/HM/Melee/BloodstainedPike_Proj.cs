@@ -21,7 +21,7 @@ namespace Redemption.Items.Weapons.HM.Melee
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Bloodstained Pike");
+            // DisplayName.SetDefault("Bloodstained Pike");
             ElementID.ProjBlood[Type] = true;
         }
 
@@ -121,7 +121,7 @@ namespace Redemption.Items.Weapons.HM.Melee
                 Projectile.rotation = (Projectile.Center - player.Center).ToRotation() - MathHelper.Pi - MathHelper.PiOver4;
             return false;
         }
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             Player player = Main.player[Projectile.owner];
             if (skewered.Count < 5 && player.channel && (Projectile.timeLeft > player.itemAnimationMax / 2 || player.velocity.Length() > 1) && (target.life <= 500 || target.life <= target.lifeMax / 10) && target.knockBackResist > 0 && target.width < 100 && target.height < 100 && !target.dontTakeDamage && !target.immortal)
@@ -156,7 +156,7 @@ namespace Redemption.Items.Weapons.HM.Melee
         public float[] oldrot = new float[4];
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Bloodstained Pike");
+            // DisplayName.SetDefault("Bloodstained Pike");
             ProjectileID.Sets.CultistIsResistantTo[Projectile.type] = true;
             ProjectileID.Sets.TrailCacheLength[Projectile.type] = 4;
             ProjectileID.Sets.TrailingMode[Projectile.type] = 0;

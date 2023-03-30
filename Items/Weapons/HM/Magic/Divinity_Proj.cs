@@ -22,7 +22,7 @@ namespace Redemption.Items.Weapons.HM.Magic
         public override string Texture => "Redemption/Items/Weapons/HM/Magic/Divinity";
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Divinity");
+            // DisplayName.SetDefault("Divinity");
         }
         public override void SetDefaults()
         {
@@ -104,7 +104,7 @@ namespace Redemption.Items.Weapons.HM.Magic
         public override string Texture => "Redemption/Textures/Sun";
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Sun");
+            // DisplayName.SetDefault("Sun");
             ElementID.ProjFire[Type] = true;
             ElementID.ProjHoly[Type] = true;
         }
@@ -260,13 +260,13 @@ namespace Redemption.Items.Weapons.HM.Magic
                 }
             }
         }
-        public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
+        public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
         {
-            damage = (int)(damage * Projectile.scale);
+            modifiers.FinalDamage *= Projectile.scale;
             if (Projectile.ai[1] != 2)
-                damage /= 4;
+                modifiers.FinalDamage /= 4;
         }
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             target.AddBuff(BuffID.OnFire3, 600);
         }
@@ -311,7 +311,7 @@ namespace Redemption.Items.Weapons.HM.Magic
         public override string Texture => "Redemption/Textures/WhiteOrb";
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Divinity Charge");
+            // DisplayName.SetDefault("Divinity Charge");
             ElementID.ProjFire[Type] = true;
             ElementID.ProjHoly[Type] = true;
         }
@@ -337,7 +337,7 @@ namespace Redemption.Items.Weapons.HM.Magic
         private DanTrail trail2;
         private float thickness = 2f;
 
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             target.AddBuff(BuffID.OnFire3, 400);
         }

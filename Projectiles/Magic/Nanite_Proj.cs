@@ -12,7 +12,7 @@ namespace Redemption.Projectiles.Magic
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Nanite");
+            // DisplayName.SetDefault("Nanite");
             ElementID.ProjPsychic[Type] = true;
         }
         public override void SetDefaults()
@@ -112,7 +112,7 @@ namespace Redemption.Projectiles.Magic
         {
             return target == npcInside || npcInside == null ? null : false;
         }
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             if (npcInside == null)
             {

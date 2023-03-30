@@ -12,8 +12,8 @@ namespace Redemption.Items.Weapons.PreHM.Ritualist
     {
         public override void SetStaticDefaults()
         {
-            Tooltip.SetDefault("On hit, temporarily reduces the enemy's defense by 5 times the player's Spirit Level");
-            SacrificeTotal = 1;
+            // Tooltip.SetDefault("On hit, temporarily reduces the enemy's defense by 5 times the player's Spirit Level");
+            Item.ResearchUnlockCount = 1;
         }
 
         public override void SetDefaults()

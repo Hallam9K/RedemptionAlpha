@@ -16,7 +16,7 @@ namespace Redemption.NPCs.PostML
         public override string Texture => "Redemption/NPCs/PostML/BabbyDragonHead";
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Star Serpent");
+            // DisplayName.SetDefault("Star Serpent");
             NPCID.Sets.DebuffImmunitySets.Add(Type, new NPCDebuffImmunityData
             {
                 ImmuneToAllBuffsThatAreNotWhips = true
@@ -291,7 +291,7 @@ namespace Redemption.NPCs.PostML
         public override string Texture => "Redemption/NPCs/PostML/BabbyDragonBody";
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Star Serpent");
+            // DisplayName.SetDefault("Star Serpent");
             NPCID.Sets.DebuffImmunitySets.Add(Type, new NPCDebuffImmunityData
             {
                 ImmuneToAllBuffsThatAreNotWhips = true
@@ -376,7 +376,7 @@ namespace Redemption.NPCs.PostML
         public override string Texture => "Redemption/NPCs/PostML/BabbyDragonLeg";
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Star Serpent");
+            // DisplayName.SetDefault("Star Serpent");
             NPCID.Sets.DebuffImmunitySets.Add(Type, new NPCDebuffImmunityData
             {
                 ImmuneToAllBuffsThatAreNotWhips = true
@@ -464,7 +464,7 @@ namespace Redemption.NPCs.PostML
         public override string Texture => "Redemption/NPCs/PostML/BabbyDragonTail1";
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Star Serpent");
+            // DisplayName.SetDefault("Star Serpent");
             NPCID.Sets.DebuffImmunitySets.Add(Type, new NPCDebuffImmunityData
             {
                 ImmuneToAllBuffsThatAreNotWhips = true
@@ -552,7 +552,7 @@ namespace Redemption.NPCs.PostML
         public override string Texture => "Redemption/NPCs/PostML/BabbyDragonTail2";
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Star Serpent");
+            // DisplayName.SetDefault("Star Serpent");
             NPCID.Sets.DebuffImmunitySets.Add(Type, new NPCDebuffImmunityData
             {
                 ImmuneToAllBuffsThatAreNotWhips = true

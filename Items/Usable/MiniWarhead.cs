@@ -14,10 +14,11 @@ namespace Redemption.Items.Usable
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Mini Warhead");
-            Tooltip.SetDefault("A huge explosion that will destroy most tiles\n" +
-                "'I don't want to set the world on fire'");
-            SacrificeTotal = 5;
+            // DisplayName.SetDefault("Mini Warhead");
+            /* Tooltip.SetDefault("A huge explosion that will destroy most tiles\n" +
+                "'I don't want to set the world on fire'"); */
+            ItemID.Sets.ItemsThatCountAsBombsForDemolitionistToSpawn[Type] = true;
+            Item.ResearchUnlockCount = 5;
         }
 
         public override void SetDefaults()
@@ -25,7 +26,7 @@ namespace Redemption.Items.Usable
             Item.damage = 0;
             Item.width = 22;
             Item.height = 34;
-            Item.maxStack = 9999;
+            Item.maxStack = Item.CommonMaxStack;
             Item.consumable = true;
             Item.useStyle = ItemUseStyleID.Swing;
             Item.rare = ItemRarityID.Lime;
@@ -44,7 +45,7 @@ namespace Redemption.Items.Usable
         public override string Texture => "Redemption/Items/Usable/MiniWarhead";
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Mini Warhead");
+            // DisplayName.SetDefault("Mini Warhead");
         }
         public override void SetDefaults()
         {
@@ -58,10 +59,10 @@ namespace Redemption.Items.Usable
             DrawOriginOffsetY = 0;
         }
 
-        public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
+        public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
         {
             if (Main.expertMode && target.type >= NPCID.EaterofWorldsHead && target.type <= NPCID.EaterofWorldsTail)
-                damage /= 5;
+                modifiers.FinalDamage /= 5;
         }
 
         public override bool OnTileCollide(Vector2 oldVelocity)

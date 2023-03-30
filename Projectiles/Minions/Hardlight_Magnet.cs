@@ -16,7 +16,7 @@ namespace Redemption.Projectiles.Minions
         public override string Texture => "Redemption/NPCs/Bosses/KSIII/KS3_Magnet";
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Energy Magnet Drone Mk.I");
+            // DisplayName.SetDefault("Energy Magnet Drone Mk.I");
             Main.projFrames[Projectile.type] = 12;
             ProjectileID.Sets.CultistIsResistantTo[Projectile.type] = true;
         }
@@ -147,7 +147,7 @@ namespace Redemption.Projectiles.Minions
         public override string Texture => Redemption.EMPTY_TEXTURE;
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Surge");
+            // DisplayName.SetDefault("Surge");
         }
 
         public override void SetDefaults()

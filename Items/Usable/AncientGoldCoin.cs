@@ -10,19 +10,19 @@ namespace Redemption.Items.Usable
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Antique Dorul");
-            Tooltip.SetDefault("Can be given to a certain Undead as currency\n" +
-                "'Ancient gold coins used in the olden days of Gathuram'");
+            // DisplayName.SetDefault("Antique Dorul");
+            /* Tooltip.SetDefault("Can be given to a certain Undead as currency\n" +
+                "'Ancient gold coins used in the olden days of Gathuram'"); */
             Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(4, 6));
 
-            SacrificeTotal = 100;
+            Item.ResearchUnlockCount = 100;
         }
 
         public override void SetDefaults()
         {
             Item.width = 18;
             Item.height = 16;
-            Item.maxStack = 9999;
+            Item.maxStack = Item.CommonMaxStack;
             Item.value = Item.sellPrice(0, 0, 1, 0);
             Item.rare = ItemRarityID.Gray;
             Item.useTurn = true;

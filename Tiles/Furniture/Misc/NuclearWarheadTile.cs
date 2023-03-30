@@ -4,6 +4,7 @@ using Terraria;
 using Terraria.DataStructures;
 using Terraria.Enums;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 using Redemption.UI;
@@ -40,8 +41,8 @@ namespace Redemption.Tiles.Furniture.Misc
             MineResist = 7f;
             
             HitSound = SoundID.Tink;
-            ModTranslation name = CreateMapEntryName();
-            name.SetDefault("Nuclear Warhead");
+            LocalizedText name = CreateMapEntryName();
+            // name.SetDefault("Nuclear Warhead");
             AddMapEntry(new Color(62, 88, 90), name);
         }
         public override void MouseOver(int i, int j)
@@ -51,11 +52,13 @@ namespace Redemption.Tiles.Furniture.Misc
             player.cursorItemIconEnabled = true;
             player.cursorItemIconID = ModContent.ItemType<HintIcon>();
         }
+        public override bool CanDrop(int i, int j)
+        {
+            return !RedeWorld.nukeCountdownActive;
+        }
         public override void KillMultiTile(int i, int j, int frameX, int frameY)
         {
-            if (!RedeWorld.nukeCountdownActive)
-                Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 16, 32, ModContent.ItemType<NuclearWarhead>());
-            else
+            if (RedeWorld.nukeCountdownActive)
             {
                 RedeWorld.nukeTimerInternal = 2;
                 if (Main.netMode == NetmodeID.Server)

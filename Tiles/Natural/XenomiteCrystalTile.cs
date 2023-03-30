@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Redemption.Items.Materials.PreHM;
 using Redemption.Tiles.Tiles;
 using Terraria;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 using Terraria.ID;
@@ -18,8 +19,8 @@ namespace Redemption.Tiles.Natural
             Main.tileLighted[Type] = true;
             DustType = DustID.GreenTorch;
             ItemDrop = ModContent.ItemType<XenomiteShard>();
-            ModTranslation name = CreateMapEntryName();
-            name.SetDefault("Xenomite");
+            LocalizedText name = CreateMapEntryName();
+            // name.SetDefault("Xenomite");
             AddMapEntry(new Color(54, 193, 59), name);
             TileObjectData.newTile.CopyFrom(TileObjectData.StyleAlch);
             TileObjectData.newTile.DrawYOffset = 4;

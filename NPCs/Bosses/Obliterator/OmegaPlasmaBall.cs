@@ -16,7 +16,7 @@ namespace Redemption.NPCs.Bosses.Obliterator
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Omega Plasma Orb");
+            // DisplayName.SetDefault("Omega Plasma Orb");
             Main.projFrames[Projectile.type] = 4;
             ElementID.ProjThunder[Type] = true;
         }

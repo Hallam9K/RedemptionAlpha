@@ -8,11 +8,11 @@ namespace Redemption.Items.Armor.Single
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Sunset Helm");
-            Tooltip.SetDefault("'Comes from an ashen world'");
+            // DisplayName.SetDefault("Sunset Helm");
+            // Tooltip.SetDefault("'Comes from an ashen world'");
             ArmorIDs.Head.Sets.DrawFullHair[EquipLoader.GetEquipSlot(Mod, Name, EquipType.Head)] = false;
 
-            SacrificeTotal = 1;
+            Item.ResearchUnlockCount = 1;
         }
 
         public override void SetDefaults()

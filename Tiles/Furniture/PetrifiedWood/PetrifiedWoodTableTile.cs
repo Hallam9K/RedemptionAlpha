@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 using Terraria.DataStructures;
@@ -33,19 +34,12 @@ namespace Redemption.Tiles.Furniture.PetrifiedWood
 
 			AddToArray(ref TileID.Sets.RoomNeeds.CountsAsTable);
 
-			// Etc
-			ModTranslation name = CreateMapEntryName();
-			name.SetDefault("Petrified Wood Table");
-			AddMapEntry(new Color(100, 100, 100), name);
-		}
+			AddMapEntry(new Color(100, 100, 100), Language.GetText("MapObject.Table"));
+        }
 
 		public override void NumDust(int i, int j, bool fail, ref int num)
 		{
 			num = fail ? 1 : 3;
-		}
-		public override void KillMultiTile(int i, int j, int frameX, int frameY)
-		{
-			Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 48, 32, ModContent.ItemType<PetrifiedWoodTable>());
 		}
 	}
 }

@@ -9,7 +9,7 @@ namespace Redemption.Items.Usable
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Trumpet");
+            // DisplayName.SetDefault("Trumpet");
             Main.projFrames[Projectile.type] = 2;
         }
 

@@ -9,14 +9,14 @@ namespace Redemption.Items.Materials.PostML
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Obliterator Brain");
-            SacrificeTotal = 25;
+            // DisplayName.SetDefault("Obliterator Brain");
+            Item.ResearchUnlockCount = 25;
         }
         public override void SetDefaults()
         {
             Item.width = 36;
             Item.height = 34;
-            Item.maxStack = 9999;
+            Item.maxStack = Item.CommonMaxStack;
             Item.value = Item.sellPrice(0, 0, 40, 0);
             Item.rare = ItemRarityID.Red;
         }

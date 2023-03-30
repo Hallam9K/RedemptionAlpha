@@ -9,10 +9,10 @@ namespace Redemption.Items.Armor.Vanity.TBot
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("T-Bot Head");
-            Tooltip.SetDefault("Eyes" +
-                "\nMasculine");
-            SacrificeTotal = 1;
+            // DisplayName.SetDefault("T-Bot Head");
+            /* Tooltip.SetDefault("Eyes" +
+                "\nMasculine"); */
+            Item.ResearchUnlockCount = 1;
             ArmorIDs.Head.Sets.DrawHead[EquipLoader.GetEquipSlot(Mod, Name, EquipType.Head)] = false;
         }
 

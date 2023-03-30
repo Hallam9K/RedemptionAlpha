@@ -15,7 +15,7 @@ namespace Redemption.Projectiles.Hostile
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Fist Rocket");
+            // DisplayName.SetDefault("Fist Rocket");
             Main.projFrames[Projectile.type] = 2;
             ElementID.ProjExplosive[Type] = true;
         }
@@ -36,7 +36,7 @@ namespace Redemption.Projectiles.Hostile
             NPC host = Main.npc[(int)Projectile.ai[0]];
             return target == host.Redemption().attacker ? null : false;
         }
-        public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection) => damage *= 4;
+        public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers) => modifiers.FinalDamage *= 4;
         public override void AI()
         {
             NPC host = Main.npc[(int)Projectile.ai[0]];
@@ -107,7 +107,7 @@ namespace Redemption.Projectiles.Hostile
                 vector *= 12f / magnitude;
             }
         }
-        public override void OnHitPlayer(Player target, int damage, bool crit) => Projectile.Kill();
+        public override void OnHitPlayer(Player target, Player.HurtInfo info) => Projectile.Kill();
         public override void Kill(int timeLeft)
         {
             SoundEngine.PlaySound(SoundID.Item14, Projectile.position);

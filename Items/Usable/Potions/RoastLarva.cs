@@ -11,9 +11,9 @@ namespace Redemption.Items.Usable.Potions
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Roast Larva");
-            Tooltip.SetDefault("Medium improvements to all stats" +
-                               "\n'The forbidden croissant'");
+            // DisplayName.SetDefault("Roast Larva");
+            /* Tooltip.SetDefault("Medium improvements to all stats" +
+                               "\n'The forbidden croissant'"); */
             Main.RegisterItemAnimation(Type, new DrawAnimationVertical(int.MaxValue, 3));
             ItemID.Sets.FoodParticleColors[Item.type] = new Color[3] {
                 new Color(230, 164, 100),
@@ -21,14 +21,14 @@ namespace Redemption.Items.Usable.Potions
                 new Color(142, 86, 30)
             };
             ItemID.Sets.IsFood[Type] = true;
-            SacrificeTotal = 5;
+            Item.ResearchUnlockCount = 5;
         }
 
         public override void SetDefaults()
         {
             Item.DefaultToFood(30, 18, BuffID.WellFed2, 21600);
             Item.value = Item.sellPrice(silver: 5);
-            Item.maxStack = 9999;
+            Item.maxStack = Item.CommonMaxStack;
             Item.rare = ItemRarityID.Blue;
         }
 

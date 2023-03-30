@@ -11,8 +11,8 @@ namespace Redemption.Items.Donator.Arche
 	{
 		public override void SetStaticDefaults()
 		{
-            DisplayName.SetDefault("Iridescent Cape");
-            SacrificeTotal = 1;
+            // DisplayName.SetDefault("Iridescent Cape");
+            Item.ResearchUnlockCount = 1;
         }
         public override void SetDefaults()
 		{

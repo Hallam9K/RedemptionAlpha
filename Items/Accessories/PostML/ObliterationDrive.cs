@@ -16,11 +16,11 @@ namespace Redemption.Items.Accessories.PostML
     {
         public override void SetStaticDefaults()
         {
-            Tooltip.SetDefault("Double tap a direction while airborne to dash\n" +
+            /* Tooltip.SetDefault("Double tap a direction while airborne to dash\n" +
                 "Dashing through enemies gives the player a stack of Obliteration Motivation" +
                 "\nObliteration Motivation increases damage, defense and reduces the dash cooldown, at the cost of decreased life regen" +
-                "\nStacks up to 5 times");
-            SacrificeTotal = 1;
+                "\nStacks up to 5 times"); */
+            Item.ResearchUnlockCount = 1;
         }
 
         public override void SetDefaults()
@@ -149,8 +149,8 @@ namespace Redemption.Items.Accessories.PostML
                         if (npc.CountsAsACritter && Player.dontHurtCritters)
                             continue;
 
-                        float damage = 260 * Player.GetDamage(DamageClass.Melee).Multiplicative;
-                        float knockback = 13 * Player.GetKnockback(DamageClass.Melee).Multiplicative;
+                        float damage = 260 * Player.GetDamage(DamageClass.Melee).Additive;
+                        float knockback = 13 * Player.GetKnockback(DamageClass.Melee).Additive;
                         bool crit = false;
 
                         if (Main.rand.Next(100) < Player.GetCritChance(DamageClass.Melee))
@@ -191,11 +191,11 @@ namespace Redemption.Items.Accessories.PostML
                 DashTimer--;
             }
         }
-        public override bool PreHurt(bool pvp, bool quiet, ref int damage, ref int hitDirection, ref bool crit, ref bool customDamage, ref bool playSound, ref bool genGore, ref PlayerDeathReason damageSource, ref int cooldownCounter)
+        public override bool ImmuneTo(PlayerDeathReason damageSource, int cooldownCounter, bool dodgeable)
         {
-            if (damageSource.SourceNPCIndex >= 0 && damage < Player.statLifeMax2 && DashTimer >= 5)
-                return false;
-            return true;
+            if (damageSource.SourceNPCIndex >= 0 && DashTimer >= 5)
+                return true;
+            return base.ImmuneTo(damageSource, cooldownCounter, dodgeable);
         }
         private bool CanUseDash()
         {

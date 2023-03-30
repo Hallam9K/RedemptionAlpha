@@ -17,7 +17,7 @@ namespace Redemption.Items.Weapons.PostML.Melee
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Xenium Lance");
+            // DisplayName.SetDefault("Xenium Lance");
             ElementID.ProjThunder[Type] = true;
         }
 
@@ -198,12 +198,12 @@ namespace Redemption.Items.Weapons.PostML.Melee
                 Projectile.alpha = 0;
             return false;
         }
-        public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
+        public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
         {
             if (Projectile.ai[0] == 3 && Timer >= 10)
-                damage += Timer * 200;
+                modifiers.FlatBonusDamage += Timer * 200;
         }
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             Player player = Main.player[Projectile.owner];
             Projectile.localNPCImmunity[target.whoAmI] = 15;

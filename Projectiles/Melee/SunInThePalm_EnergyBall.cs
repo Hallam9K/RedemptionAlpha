@@ -22,7 +22,7 @@ namespace Redemption.Projectiles.Melee
         public override string Texture => "Redemption/NPCs/Lab/MACE/MACE_FireBlast";
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Sun Blast");
+            // DisplayName.SetDefault("Sun Blast");
             ProjectileID.Sets.TrailCacheLength[Projectile.type] = 8;
             ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
             ElementID.ProjFire[Type] = true;
@@ -137,13 +137,13 @@ namespace Redemption.Projectiles.Melee
             Lighting.AddLight(Projectile.Center, Projectile.Opacity * 0.9f, Projectile.Opacity * 0.2f, Projectile.Opacity * 0.2f);
         }
         public override bool? CanHitNPC(NPC target) => Projectile.localAI[0] == 1 ? null : false;
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             target.AddBuff(BuffID.OnFire3, 900);
         }
-        public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
+        public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
         {
-            damage = (int)(damage * ((Projectile.scale / 8) + 1));
+            modifiers.FinalDamage *= ((Projectile.scale / 8) + 1);
         }
         public override bool PreDraw(ref Color lightColor)
         {

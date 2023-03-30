@@ -2,6 +2,7 @@ using Terraria.DataStructures;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 using Terraria.Enums;
@@ -42,11 +43,12 @@ namespace Redemption.Tiles.Furniture.Lab
             TileObjectData.addAlternate(0);
             TileObjectData.addTile(Type);
             AddToArray(ref TileID.Sets.RoomNeeds.CountsAsDoor);
-            ModTranslation name = CreateMapEntryName();
-            name.SetDefault("Keycard Door");
+            LocalizedText name = CreateMapEntryName();
+            // name.SetDefault("Keycard Door");
             AddMapEntry(new Color(189, 191, 200), name);
             MinPick = 500;
             MineResist = 20f;
+            ItemDrop = -1;
             DustType = DustID.Electric;
             AdjTiles = new int[] { TileID.ClosedDoor };
             AnimationFrameHeight = 72;
@@ -90,7 +92,7 @@ namespace Redemption.Tiles.Furniture.Lab
                 int top = j - Main.tile[i, j].TileFrameY / 18 % 4;
                 WorldGen.KillTile(i, j, noItem: true);
                 WorldGen.PlaceObject(i, j, ModContent.TileType<LabKeycardDoorOpen>());
-                NetMessage.SendObjectPlacment(-1, i, j, ModContent.TileType<LabKeycardDoorOpen>(), 0, 0, -1, -1);
+                NetMessage.SendObjectPlacement(-1, i, j, ModContent.TileType<LabKeycardDoorOpen>(), 0, 0, -1, -1);
                 NetMessage.SendTileSquare(-1, left, top + 1, 2);
             }
             return true;
@@ -127,11 +129,12 @@ namespace Redemption.Tiles.Furniture.Lab
             TileObjectData.addTile(Type);
             AddToArray(ref TileID.Sets.RoomNeeds.CountsAsDoor);
             TileID.Sets.HousingWalls[Type] = true;
-            ModTranslation name = CreateMapEntryName();
-            name.SetDefault("Keycard Door");
+            LocalizedText name = CreateMapEntryName();
+            // name.SetDefault("Keycard Door");
             AddMapEntry(new Color(189, 191, 200), name);
             MinPick = 500;
             MineResist = 20f;
+            ItemDrop = -1;
             DustType = DustID.Electric;
             AdjTiles = new int[] { TileID.OpenDoor };
             AnimationFrameHeight = 72;
@@ -155,9 +158,9 @@ namespace Redemption.Tiles.Furniture.Lab
         public override string Texture => Redemption.PLACEHOLDER_TEXTURE;
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Keycard Door");
-            Tooltip.SetDefault("Opens using a Keycard" +
-                "\n[c/ff0000:Unbreakable (500% Pickaxe Power)]");
+            // DisplayName.SetDefault("Keycard Door");
+            /* Tooltip.SetDefault("Opens using a Keycard" +
+                "\n[c/ff0000:Unbreakable (500% Pickaxe Power)]"); */
         }
         public override void SetDefaults()
         {

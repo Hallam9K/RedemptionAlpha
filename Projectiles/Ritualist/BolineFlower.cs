@@ -13,7 +13,7 @@ namespace Redemption.Projectiles.Ritualist
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Boline Flower");
+            // DisplayName.SetDefault("Boline Flower");
             ProjectileID.Sets.TrailCacheLength[Projectile.type] = 4;
             ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
         }

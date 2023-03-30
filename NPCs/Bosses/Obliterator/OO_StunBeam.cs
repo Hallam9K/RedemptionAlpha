@@ -16,7 +16,7 @@ namespace Redemption.NPCs.Bosses.Obliterator
         private new readonly float FirstSegmentDrawDist = 96;
         public override void SetSafeStaticDefaults()
         {
-            DisplayName.SetDefault("Stun Beam");
+            // DisplayName.SetDefault("Stun Beam");
             ElementID.ProjThunder[Type] = true;
         }
         public override void SetSafeDefaults()
@@ -35,7 +35,7 @@ namespace Redemption.NPCs.Bosses.Obliterator
             MaxLaserLength = 1760;
             maxLaserFrames = 3;
         }
-        public override void OnHitPlayer(Player target, int damage, bool crit)
+        public override void OnHitPlayer(Player target, Player.HurtInfo info)
         {
             target.AddBuff(ModContent.BuffType<StaticStunDebuff>(), 120);
         }

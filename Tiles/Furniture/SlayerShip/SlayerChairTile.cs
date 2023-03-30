@@ -5,6 +5,7 @@ using Terraria;
 using Terraria.DataStructures;
 using Terraria.Enums;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 
@@ -35,15 +36,11 @@ namespace Redemption.Tiles.Furniture.SlayerShip
             DustType = DustID.Electric;
             MinPick = 500;
             MineResist = 10f;
-            ModTranslation name = CreateMapEntryName();
-            name.SetDefault("Slayer's Gaming Chair");
+            LocalizedText name = CreateMapEntryName();
+            // name.SetDefault("Slayer's Gaming Chair");
             AddMapEntry(new Color(107, 111, 127), name);
         }
         public override bool CanKillTile(int i, int j, ref bool blockDamaged) => RedeBossDowned.downedOmega3 || RedeBossDowned.downedNebuleus;
-        public override void KillMultiTile(int i, int j, int frameX, int frameY)
-        {
-            Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 32, 32, ModContent.ItemType<SlayerChair>());
-        }
         public override bool CanExplode(int i, int j) => false;
     }
 }

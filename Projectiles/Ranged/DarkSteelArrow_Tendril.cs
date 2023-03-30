@@ -10,7 +10,7 @@ namespace Redemption.Projectiles.Ranged
         public override string Texture => Redemption.EMPTY_TEXTURE;
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Dark Tendril");
+            // DisplayName.SetDefault("Dark Tendril");
             ElementID.ProjShadow[Type] = true;
         }
         public override void SetDefaults()

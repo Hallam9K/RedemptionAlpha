@@ -31,7 +31,7 @@ namespace Redemption.NPCs.Friendly
         public override string Texture => "Redemption/NPCs/PreHM/ForestNymph";
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Forest Nymph");
+            // DisplayName.SetDefault("Forest Nymph");
             Main.npcFrameCount[NPC.type] = 10;
             NPCID.Sets.AllowDoorInteraction[Type] = true;
             NPCID.Sets.DebuffImmunitySets.Add(Type, new NPCDebuffImmunityData
@@ -55,13 +55,13 @@ namespace Redemption.NPCs.Friendly
             if (RedeQuest.forestNymphVar < 4)
                 TownNPCStayingHomeless = true;
         }
-        public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
+        public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)
         {
             NPC.lifeMax *= 2;
         }
         public override bool UsesPartyHat() => false;
         public override bool CanChat() => AIState <= ActionState.Wander;
-        public override bool CanTownNPCSpawn(int numTownNPCs, int money) => false;
+        public override bool CanTownNPCSpawn(int numTownNPCs) => false;
         public override List<string> SetNPCNameList()
         {
             return new List<string>() {
@@ -213,7 +213,7 @@ namespace Redemption.NPCs.Friendly
             }
         }
 
-        public override void OnChatButtonClicked(bool firstButton, ref bool shop)
+        public override void OnChatButtonClicked(bool firstButton, ref string shopName)
         {
             Player player = Main.LocalPlayer;
             if (firstButton)

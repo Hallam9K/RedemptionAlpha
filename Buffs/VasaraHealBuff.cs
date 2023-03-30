@@ -7,8 +7,8 @@ namespace Redemption.Buffs
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Shaman's Aura");
-            Description.SetDefault("Greatly increased life regeneration");
+            // DisplayName.SetDefault("Shaman's Aura");
+            // Description.SetDefault("Greatly increased life regeneration");
         }
         public override void Update(Player player, ref int buffIndex)
         {

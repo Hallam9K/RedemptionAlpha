@@ -9,8 +9,8 @@ namespace Redemption.Items.Placeable.Tiles
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Danger Tape");
-            Tooltip.SetDefault("[c/ff0000:Unbreakable (500% Pickaxe Power)]");
+            // DisplayName.SetDefault("Danger Tape");
+            // Tooltip.SetDefault("[c/ff0000:Unbreakable (500% Pickaxe Power)]");
         }
 
         public override void SetDefaults()
@@ -18,7 +18,7 @@ namespace Redemption.Items.Placeable.Tiles
             Item.DefaultToPlaceableTile(ModContent.TileType<DangerTapeTile>(), 0);
             Item.width = 16;
             Item.height = 16;
-            Item.maxStack = 9999;
+            Item.maxStack = Item.CommonMaxStack;
             Item.value = Item.buyPrice(0, 0, 1, 25);
             Item.rare = ItemRarityID.LightPurple;
         }
@@ -28,8 +28,8 @@ namespace Redemption.Items.Placeable.Tiles
         public override string Texture => "Redemption/Items/Placeable/Tiles/DangerTape";
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Danger Tape");
-            SacrificeTotal = 100;
+            // DisplayName.SetDefault("Danger Tape");
+            Item.ResearchUnlockCount = 100;
         }
 
         public override void SetDefaults()
@@ -37,7 +37,7 @@ namespace Redemption.Items.Placeable.Tiles
             Item.DefaultToPlaceableTile(ModContent.TileType<DangerTape2Tile>(), 0);
             Item.width = 16;
             Item.height = 16;
-            Item.maxStack = 9999;
+            Item.maxStack = Item.CommonMaxStack;
             Item.value = Item.buyPrice(0, 0, 1, 25);
             Item.rare = ItemRarityID.LightPurple;
         }

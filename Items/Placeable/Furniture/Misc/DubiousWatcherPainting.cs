@@ -9,9 +9,9 @@ namespace Redemption.Items.Placeable.Furniture.Misc
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Dubious Watcher");
-            Tooltip.SetDefault("'[REDACTED]'");
-            SacrificeTotal = 1;
+			// DisplayName.SetDefault("Dubious Watcher");
+            // Tooltip.SetDefault("'[REDACTED]'");
+            Item.ResearchUnlockCount = 1;
 		}
 
 		public override void SetDefaults()
@@ -19,7 +19,7 @@ namespace Redemption.Items.Placeable.Furniture.Misc
 			Item.DefaultToPlaceableTile(ModContent.TileType<DubiousWatcherPaintingTile>(), 0);
 			Item.width = 18;
 			Item.height = 26;
-			Item.maxStack = 9999;
+			Item.maxStack = Item.CommonMaxStack;
 			Item.rare = ItemRarityID.White;
 			Item.value = Item.buyPrice(0, 0, 50, 0);
 		}

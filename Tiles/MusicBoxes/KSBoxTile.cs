@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Terraria;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 using Terraria.DataStructures;
@@ -19,16 +20,10 @@ namespace Redemption.Tiles.MusicBoxes
 			TileObjectData.newTile.DrawYOffset = 2;
 			TileObjectData.addTile(Type);
 
-			ModTranslation name = CreateMapEntryName();
-			name.SetDefault("Music Box");
+			LocalizedText name = CreateMapEntryName();
+			// name.SetDefault("Music Box");
 			AddMapEntry(new Color(189, 191, 200), name);
 		}
-
-		public override void KillMultiTile(int i, int j, int frameX, int frameY)
-		{
-			Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 32, 32, ModContent.ItemType<KSBox>());
-		}
-
 		public override void MouseOver(int i, int j)
 		{
 			Player player = Main.LocalPlayer;

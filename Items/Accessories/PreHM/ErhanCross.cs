@@ -17,13 +17,13 @@ namespace Redemption.Items.Accessories.PreHM
 	{
 		public override void SetStaticDefaults()
 		{
-            DisplayName.SetDefault("Erhan's Cross");
-            Tooltip.SetDefault("Summons a holy shield to orbit around the user, reflecting most projectiles" +
+            // DisplayName.SetDefault("Erhan's Cross");
+            /* Tooltip.SetDefault("Summons a holy shield to orbit around the user, reflecting most projectiles" +
                 "\nThe shield breaks once enough damage has been dealt to it" +
                 "\n10% increased " + ElementID.HolyS + " elemental resistance" +
-                "\n10% decreased " + ElementID.ShadowS + " elemental resistance");
+                "\n10% decreased " + ElementID.ShadowS + " elemental resistance"); */
 
-            SacrificeTotal = 1;
+            Item.ResearchUnlockCount = 1;
         }
 
         public override void SetDefaults()
@@ -52,7 +52,7 @@ namespace Redemption.Items.Accessories.PreHM
         public override string Texture => "Redemption/NPCs/Bosses/Erhan/Erhan_HolyShield";
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Holy Shield");
+            // DisplayName.SetDefault("Holy Shield");
         }
         public override void SetDefaults()
         {

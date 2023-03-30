@@ -16,14 +16,14 @@ namespace Redemption.Items.Accessories.HM
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Grace's Guidance");
-            Tooltip.SetDefault("12% increased " + ElementID.HolyS + " elemental damage and resistance\n" +
+            // DisplayName.SetDefault("Grace's Guidance");
+            /* Tooltip.SetDefault("12% increased " + ElementID.HolyS + " elemental damage and resistance\n" +
                 "6% increased " + ElementID.HolyS + " and " + ElementID.FireS + " elemental critical strike chance\n" +
                 "Stacks if both elements are present\n" +
                 "Critical strikes with a " + ElementID.HolyS + " elemental weapon has a chance to release homing lightmass\n" +
                 "An aura of holy flames surrounds you while holding a " + ElementID.FireS + " or " + ElementID.HolyS + " elemental weapon\n" +
-                "Increases length of invincibility after taking damage");
-            SacrificeTotal = 1;
+                "Increases length of invincibility after taking damage"); */
+            Item.ResearchUnlockCount = 1;
             ElementID.ItemHoly[Type] = true;
             ElementID.ItemFire[Type] = true;
         }

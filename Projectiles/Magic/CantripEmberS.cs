@@ -18,7 +18,7 @@ namespace Redemption.Projectiles.Magic
         public override string Texture => Redemption.EMPTY_TEXTURE;
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Ember");
+            // DisplayName.SetDefault("Ember");
             ElementID.ProjFire[Type] = true;
         }
 
@@ -127,7 +127,7 @@ namespace Redemption.Projectiles.Magic
             if (fakeTimer >= 60)
                 Projectile.Kill();
         }
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             if (Projectile.penetrate <= 1)
                 FakeKill();
@@ -191,11 +191,11 @@ namespace Redemption.Projectiles.Magic
                 Main.dust[dust2].noGravity = true;
             }
         }
-        public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
+        public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
         {
             target.AddBuff(BuffID.OnFire, 280);
         }
-        public override void ModifyHitPlayer(Player target, ref int damage, ref bool crit)
+        public override void ModifyHitPlayer(Player target, ref Player.HurtModifiers modifiers)
         {
             target.AddBuff(BuffID.OnFire, 280);
         }

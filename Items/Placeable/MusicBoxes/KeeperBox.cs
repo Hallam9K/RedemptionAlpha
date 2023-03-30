@@ -9,10 +9,11 @@ namespace Redemption.Items.Placeable.MusicBoxes
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Music Box (The Keeper)");
-			Tooltip.SetDefault("SpectralAves - Haunting Loneliness");
-
-			SacrificeTotal = 1;
+            // DisplayName.SetDefault("Music Box (The Keeper)");
+            // Tooltip.SetDefault("SpectralAves - Haunting Loneliness");
+            ItemID.Sets.CanGetPrefixes[Type] = false;
+            ItemID.Sets.ShimmerTransformToItem[Type] = ItemID.MusicBox;
+            Item.ResearchUnlockCount = 1;
 
 			MusicLoader.AddMusicBox(Mod, MusicLoader.GetMusicSlot(Mod, "Sounds/Music/BossKeeper"), ModContent.ItemType<KeeperBox>(), ModContent.TileType<KeeperBoxTile>());
 		}

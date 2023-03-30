@@ -10,8 +10,8 @@ namespace Redemption.Items.Tools.PostML
 	{
         public override void SetStaticDefaults()
         {
-            Tooltip.SetDefault("Can mine Black Hardened Sludge");
-			SacrificeTotal = 1;
+            // Tooltip.SetDefault("Can mine Black Hardened Sludge");
+			Item.ResearchUnlockCount = 1;
 		}
 
 		public override void SetDefaults()

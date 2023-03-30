@@ -12,15 +12,15 @@ namespace Redemption.Items.Weapons.HM.Melee
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Blind Justice, Demon's Terror");
-            Tooltip.SetDefault("Hold left-click to charge a Radiance Spin Slash\n" +
+            // DisplayName.SetDefault("Blind Justice, Demon's Terror");
+            /* Tooltip.SetDefault("Hold left-click to charge a Radiance Spin Slash\n" +
                 "Right-click the moment you're about to be hit by a physical attack (contact damage or weapon) to perform a parry, granting immunity frames\n" +
                 "Contact damage parries will not take effect if the enemy is stationary or moving twice as slow as you\n" +
                 "After a successful parry, left-click to counter with an instant Radiance Spin Slash\n" +
-                "Deals double damage against demonic enemies");
+                "Deals double damage against demonic enemies"); */
 
             ItemID.Sets.SkipsInitialUseSound[Item.type] = true;
-            SacrificeTotal = 1;
+            Item.ResearchUnlockCount = 1;
         }
 
         public override void SetDefaults()

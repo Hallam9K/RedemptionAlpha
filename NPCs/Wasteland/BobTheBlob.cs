@@ -44,7 +44,7 @@ namespace Redemption.NPCs.Wasteland
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Bob the Blob");
+            // DisplayName.SetDefault("Bob the Blob");
             Main.npcFrameCount[NPC.type] = 5;
 
             NPCID.Sets.DebuffImmunitySets.Add(Type, new NPCDebuffImmunityData
@@ -85,7 +85,7 @@ namespace Redemption.NPCs.Wasteland
             Banner = NPC.type;
             BannerItem = ModContent.ItemType<BobTheBlobBanner>();
         }
-        public override void HitEffect(int hitDirection, double damage)
+        public override void HitEffect(NPC.HitInfo hit)
         {
             if (NPC.life <= 0)
             {
@@ -109,7 +109,7 @@ namespace Redemption.NPCs.Wasteland
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<DAN>(), 2));
-            npcLoot.Add(ItemDropRule.ByCondition(new Conditions.BeatAnyMechBoss(), ModContent.ItemType<XenomiteShard>(), 1, 26, 48));
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<XenomiteShard>(), 1, 26, 48));
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<ToxicBile>(), 1, 6, 12));
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<HazmatSuit>(), 10));
             npcLoot.Add(ItemDropRule.OneFromOptions(3, ModContent.ItemType<IntruderMask>(), ModContent.ItemType<IntruderArmour>(), ModContent.ItemType<IntruderPants>()));
@@ -199,7 +199,7 @@ namespace Redemption.NPCs.Wasteland
 
             return false;
         }
-        public override void ModifyHitPlayer(Player target, ref int damage, ref bool crit)
+        public override void ModifyHitPlayer(Player target, ref Player.HurtModifiers modifiers)
         {
             if (Main.rand.NextBool(2) || Main.expertMode)
                 target.AddBuff(ModContent.BuffType<GreenRashesDebuff>(), Main.rand.Next(200, 2400));

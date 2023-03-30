@@ -8,9 +8,9 @@ namespace Redemption.Items.Usable
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Novelty Mop");
-            Tooltip.SetDefault("'Not as lethal as Janitor's'");
-            SacrificeTotal = 1;
+            // DisplayName.SetDefault("Novelty Mop");
+            // Tooltip.SetDefault("'Not as lethal as Janitor's'");
+            Item.ResearchUnlockCount = 1;
         }
 
         public override void SetDefaults()

@@ -24,7 +24,8 @@ namespace Redemption.NPCs.Wasteland
         public ref float AITimer => ref NPC.ai[0];
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Bloated Swarmer");
+            // DisplayName.SetDefault("Bloated Swarmer");
+            NPCID.Sets.ShimmerTransformToNPC[NPC.type] = NPCID.FlyingAntlion;
             Main.npcFrameCount[NPC.type] = 8;
             NPCID.Sets.DebuffImmunitySets.Add(Type, new NPCDebuffImmunityData
             {
@@ -61,7 +62,7 @@ namespace Redemption.NPCs.Wasteland
             Banner = NPC.type;
             BannerItem = ModContent.ItemType<BloatedSwarmerBanner>();
         }
-        public override void HitEffect(int hitDirection, double damage)
+        public override void HitEffect(NPC.HitInfo hit)
         {
             if (NPC.life <= 0)
             {
@@ -141,7 +142,7 @@ namespace Redemption.NPCs.Wasteland
         }
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
-            npcLoot.Add(ItemDropRule.ByCondition(new Conditions.BeatAnyMechBoss(), ModContent.ItemType<XenomiteShard>(), 4, 4, 8));
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<XenomiteShard>(), 4, 4, 8));
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<ToxicBile>(), 4, 1, 3));
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<GasMask>(), 20));
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<DoubleRifle>(), 100));
@@ -153,7 +154,7 @@ namespace Redemption.NPCs.Wasteland
                 npcLoot.Add(dropRule);
             }
         }
-        public override void ModifyHitPlayer(Player target, ref int damage, ref bool crit)
+        public override void ModifyHitPlayer(Player target, ref Player.HurtModifiers modifiers)
         {
             if (Main.rand.NextBool(2) || Main.expertMode)
                 target.AddBuff(ModContent.BuffType<GreenRashesDebuff>(), Main.rand.Next(200, 1200));

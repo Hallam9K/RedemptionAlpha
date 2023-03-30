@@ -11,15 +11,15 @@ namespace Redemption.Items.Materials.HM
 	{
 		public override void SetStaticDefaults()
 		{
-            Tooltip.SetDefault("'Infects living things'");
+            // Tooltip.SetDefault("'Infects living things'");
             Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(4, 7));
-            SacrificeTotal = 25;
+            Item.ResearchUnlockCount = 25;
         }
         public override void SetDefaults()
 		{
 			Item.width = 14;
             Item.height = 24;
-			Item.maxStack = 9999;
+			Item.maxStack = Item.CommonMaxStack;
             Item.value = Item.sellPrice(0, 0, 5, 0);
             Item.rare = ItemRarityID.Pink;
 		}
@@ -28,6 +28,11 @@ namespace Redemption.Items.Materials.HM
             CreateRecipe()
                 .AddIngredient(ModContent.ItemType<XenomiteShard>(), 4)
                 .AddTile(TileID.MythrilAnvil)
+                .DisableDecraft()
+                .Register();
+
+            CreateRecipe()
+                .AddCustomShimmerResult(ModContent.ItemType<ToxicBile>())
                 .Register();
         }
         public override void HoldItem(Player player)

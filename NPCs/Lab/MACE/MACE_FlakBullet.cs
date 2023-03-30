@@ -8,7 +8,7 @@ namespace Redemption.NPCs.Lab.MACE
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Flak Bullet");
+            // DisplayName.SetDefault("Flak Bullet");
             Main.projFrames[Projectile.type] = 2;
         }
         public override void SetDefaults()

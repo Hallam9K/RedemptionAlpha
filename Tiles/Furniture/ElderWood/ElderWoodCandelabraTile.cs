@@ -1,11 +1,13 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ID;
 using Terraria.ObjectData;
 using Redemption.Items.Placeable.Furniture.ElderWood;
 using Terraria.DataStructures;
+using Terraria.Enums;
 
 namespace Redemption.Tiles.Furniture.ElderWood
 {
@@ -20,9 +22,12 @@ namespace Redemption.Tiles.Furniture.ElderWood
             TileObjectData.newTile.CopyFrom(TileObjectData.Style2x2);
             TileObjectData.newTile.StyleHorizontal = true;
             TileObjectData.newTile.DrawYOffset = 2;
+            TileObjectData.newTile.WaterDeath = true;
+            TileObjectData.newTile.WaterPlacement = LiquidPlacement.NotAllowed;
+            TileObjectData.newTile.LavaPlacement = LiquidPlacement.NotAllowed;
             TileObjectData.addTile(Type);
-            ModTranslation name = CreateMapEntryName();
-            name.SetDefault("Elder Wood Candelabra");
+            LocalizedText name = CreateMapEntryName();
+            // name.SetDefault("Elder Wood Candelabra");
             AddMapEntry(new Color(109, 87, 78), name);
             AddToArray(ref TileID.Sets.RoomNeeds.CountsAsTorch);
             AdjTiles = new int[] { TileID.Candelabras };
@@ -64,8 +69,6 @@ namespace Redemption.Tiles.Furniture.ElderWood
                 b = 0.4f;
             }
         }
-        public override void KillMultiTile(int i, int j, int frameX, int frameY) => Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 32, 32, ModContent.ItemType<ElderWoodCandelabra>());
-
         public override void PostDraw(int i, int j, SpriteBatch spriteBatch)
         {
             Tile tile = Framing.GetTileSafely(i, j);

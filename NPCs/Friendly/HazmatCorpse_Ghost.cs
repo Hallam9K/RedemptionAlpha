@@ -16,7 +16,7 @@ namespace Redemption.NPCs.Friendly
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Hazmat Ghost");
+            // DisplayName.SetDefault("Hazmat Ghost");
             Main.npcFrameCount[NPC.type] = 8;
             NPCID.Sets.ActsLikeTownNPC[Type] = true;
 
@@ -42,7 +42,7 @@ namespace Redemption.NPCs.Friendly
         }
 
         public override bool CanHitPlayer(Player target, ref int cooldownSlot) => false;
-        public override bool? CanHitNPC(NPC target) => false;
+        public override bool CanHitNPC(NPC target) => false;
 
         public bool floatTimer;
         public override void AI()

@@ -14,9 +14,9 @@ namespace Redemption.Items.Weapons.PreHM.Summon
     {
         public override void SetStaticDefaults()
         {
-            Tooltip.SetDefault("Summons a granite guardian that emits an empowering aura\n" +
-                "Within the aura, whip speed and damage is increased by 15%");
-            SacrificeTotal = 1;
+            /* Tooltip.SetDefault("Summons a granite guardian that emits an empowering aura\n" +
+                "Within the aura, whip speed and damage is increased by 15%"); */
+            Item.ResearchUnlockCount = 1;
 
             ItemID.Sets.GamepadWholeScreenUseRange[Item.type] = true;
             ItemID.Sets.LockOnIgnoresCollision[Item.type] = true;

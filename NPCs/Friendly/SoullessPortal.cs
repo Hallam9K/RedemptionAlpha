@@ -16,7 +16,7 @@ namespace Redemption.NPCs.Friendly
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Shadesoul Gateway");
+            // DisplayName.SetDefault("Shadesoul Gateway");
             NPCID.Sets.NPCBestiaryDrawModifiers value = new(0)
             {
                 Hide = true
@@ -104,7 +104,7 @@ namespace Redemption.NPCs.Friendly
             button = "Enter Gateway";
         }
 
-        public override void OnChatButtonClicked(bool firstButton, ref bool shop)
+        public override void OnChatButtonClicked(bool firstButton, ref string shopName)
         {
             if (firstButton)
             {

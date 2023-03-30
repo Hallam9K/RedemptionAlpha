@@ -11,7 +11,7 @@ namespace Redemption.Projectiles.Pets
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Xenomite Crystal");
+            // DisplayName.SetDefault("Xenomite Crystal");
             Main.projFrames[Projectile.type] = 6;
         }
         public override void SetDefaults()

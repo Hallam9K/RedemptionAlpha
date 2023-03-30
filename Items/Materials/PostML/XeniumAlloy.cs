@@ -11,14 +11,15 @@ namespace Redemption.Items.Materials.PostML
     {
         public override void SetStaticDefaults()
         { 
-            SacrificeTotal = 25;
+            Item.ResearchUnlockCount = 25;
+            ItemID.Sets.SortingPriorityMaterials[Item.type] = 100;
         }
         public override void SetDefaults()
         {
             Item.DefaultToPlaceableTile(ModContent.TileType<XeniumAlloyTile>(), 0);
             Item.width = 28;
             Item.height = 24;
-            Item.maxStack = 9999;
+            Item.maxStack = Item.CommonMaxStack;
             Item.value = Item.sellPrice(0, 1, 50, 0);
             Item.rare = ItemRarityID.Purple;
         }

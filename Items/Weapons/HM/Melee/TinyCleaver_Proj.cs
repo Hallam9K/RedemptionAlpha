@@ -25,7 +25,7 @@ namespace Redemption.Items.Weapons.HM.Melee
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Tiny Cleaver");
+            // DisplayName.SetDefault("Tiny Cleaver");
         }
         public override bool ShouldUpdatePosition() => false;
         public override void SetSafeDefaults()
@@ -292,18 +292,19 @@ namespace Redemption.Items.Weapons.HM.Melee
             else
                 return false;
         }
-        public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
+        public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
         {
             if (Projectile.ai[0] == 5)
             {
-                damage = (int)(damage * 1.5f);
-                knockback += 4;
+                modifiers.FinalDamage *= 1.5f;
+                modifiers.Knockback.Flat += 4;
             }
 
-            RedeProjectile.Decapitation(target, ref damage, ref crit);
         }
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
+            RedeProjectile.Decapitation(target, ref damageDone, ref hit.Crit);
+
             Projectile.localNPCImmunity[target.whoAmI] = 11;
             target.immune[Projectile.owner] = 0;
         }

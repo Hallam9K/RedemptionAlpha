@@ -15,7 +15,7 @@ namespace Redemption.Projectiles.Ranged
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Flak Grenade");
+            // DisplayName.SetDefault("Flak Grenade");
             ElementID.ProjExplosive[Type] = true;
         }
         public override void SetDefaults()
@@ -90,7 +90,7 @@ namespace Redemption.Projectiles.Ranged
             if (Projectile.localAI[0] == 182)
                 Projectile.friendly = false;
         }
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             Projectile.localNPCImmunity[target.whoAmI] = 1;
             target.immune[Projectile.owner] = 0;
@@ -130,7 +130,7 @@ namespace Redemption.Projectiles.Ranged
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Flak Fragment");
+            // DisplayName.SetDefault("Flak Fragment");
             Main.projFrames[Projectile.type] = 3;
         }
         public override void SetDefaults()

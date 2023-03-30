@@ -18,7 +18,7 @@ namespace Redemption.NPCs.Bosses.SeedOfInfection
         public override string Texture => "Redemption/Textures/PortalTex";
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Portal to Another World (no way...)");
+            // DisplayName.SetDefault("Portal to Another World (no way...)");
         }
         public override void SetDefaults()
         {

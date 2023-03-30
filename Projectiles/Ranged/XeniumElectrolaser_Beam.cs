@@ -14,7 +14,7 @@ namespace Redemption.Projectiles.Ranged
         public override string Texture => Redemption.EMPTY_TEXTURE;
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Xenium Laser");
+            // DisplayName.SetDefault("Xenium Laser");
             ElementID.ProjThunder[Type] = true;
         }
         public override void SetDefaults()
@@ -44,7 +44,7 @@ namespace Redemption.Projectiles.Ranged
                 }
             }
         }
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             Projectile.localNPCImmunity[target.whoAmI] = 100;
             target.immune[Projectile.owner] = 0;
@@ -63,7 +63,7 @@ namespace Redemption.Projectiles.Ranged
         public override string Texture => Redemption.EMPTY_TEXTURE;
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Xenium Laser");
+            // DisplayName.SetDefault("Xenium Laser");
             ElementID.ProjThunder[Type] = true;
         }
         public override void SetDefaults()

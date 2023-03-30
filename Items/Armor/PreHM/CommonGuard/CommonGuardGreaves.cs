@@ -12,9 +12,9 @@ namespace Redemption.Items.Armor.PreHM.CommonGuard
 	{
 		public override void SetStaticDefaults()
 		{
-			Tooltip.SetDefault("7% increased melee speed");
+			// Tooltip.SetDefault("7% increased melee speed");
 
-			SacrificeTotal = 1;
+			Item.ResearchUnlockCount = 1;
 		}
 
 		public override void SetDefaults()

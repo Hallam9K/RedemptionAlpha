@@ -16,7 +16,7 @@ namespace Redemption.Items.Weapons.PostML.Melee
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Infectious Gauntlet");
+            // DisplayName.SetDefault("Infectious Gauntlet");
             ElementID.ProjPoison[Type] = true;
         }
         public override bool ShouldUpdatePosition() => false;
@@ -123,7 +123,7 @@ namespace Redemption.Items.Weapons.PostML.Melee
             player.fullRotation = 0f;
         }
         public override bool? CanHitNPC(NPC target) => Projectile.ai[0] == 0 ? null : false;
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             Player player = Main.player[Projectile.owner];
             player.immune = true;

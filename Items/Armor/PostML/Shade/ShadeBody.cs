@@ -14,11 +14,11 @@ namespace Redemption.Items.Armor.PostML.Shade
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Shadeplate");
-            Tooltip.SetDefault("10% increased ritual damage\n" +
-                "\n[c/bdffff:Maximum Spirit Level +2]");
+            // DisplayName.SetDefault("Shadeplate");
+            /* Tooltip.SetDefault("10% increased ritual damage\n" +
+                "\n[c/bdffff:Maximum Spirit Level +2]"); */
 
-            SacrificeTotal = 1;
+            Item.ResearchUnlockCount = 1;
         }
 
         public override void SetDefaults()

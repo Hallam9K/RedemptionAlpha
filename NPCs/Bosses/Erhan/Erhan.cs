@@ -80,7 +80,7 @@ namespace Redemption.NPCs.Bosses.Erhan
         public float[] oldrot = new float[5];
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Erhan, Anglonic High Priest");
+            // DisplayName.SetDefault("Erhan, Anglonic High Priest");
             Main.npcFrameCount[NPC.type] = 6;
             NPCID.Sets.TrailCacheLength[NPC.type] = 5;
             NPCID.Sets.TrailingMode[NPC.type] = 1;
@@ -126,12 +126,12 @@ namespace Redemption.NPCs.Bosses.Erhan
         }
 
         public override bool CanHitPlayer(Player target, ref int cooldownSlot) => false;
-        public override bool? CanHitNPC(NPC target) => false ? null : false;
+        public override bool CanHitNPC(NPC target) => false;
         public override bool CheckActive()
         {
             return AIState != ActionState.Death;
         }
-        public override void HitEffect(int hitDirection, double damage)
+        public override void HitEffect(NPC.HitInfo hit)
         {
             if (NPC.life <= 0 && !Spared && AIState == ActionState.Death)
             {
@@ -152,9 +152,9 @@ namespace Redemption.NPCs.Bosses.Erhan
             }
         }
 
-        public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
+        public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)
         {
-            NPC.lifeMax = (int)(NPC.lifeMax * 0.75f * bossLifeScale);
+            NPC.lifeMax = (int)(NPC.lifeMax * 0.75f * balance * bossAdjustment);
             NPC.damage = (int)(NPC.damage * 0.8f);
         }
 
@@ -179,7 +179,7 @@ namespace Redemption.NPCs.Bosses.Erhan
 
             LeadingConditionRule notExpertRule = new(new Conditions.NotExpert());
 
-            notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<ErhanHelmet>(), 7));
+            notExpertRule.OnSuccess(ItemDropRule.NotScalingWithLuck(ModContent.ItemType<ErhanHelmet>(), 7));
 
             notExpertRule.OnSuccess(ItemDropRule.OneFromOptions(1,
                 ModContent.ItemType<Bindeklinge>(), ModContent.ItemType<HolyBible>(), ModContent.ItemType<HallowedHandGrenade>()));
@@ -1050,7 +1050,7 @@ namespace Redemption.NPCs.Bosses.Erhan
                                             }
 
                                             if (Main.netMode == NetmodeID.Server)
-                                                NetMessage.SendData(MessageID.SendNPCBuffs, number: NPC.whoAmI);
+                                                NetMessage.SendData(MessageID.NPCBuffs, number: NPC.whoAmI);
                                         }
 
                                         for (int i = 0; i < 20; i++)
@@ -1195,7 +1195,7 @@ namespace Redemption.NPCs.Bosses.Erhan
         private bool grenaded;
         private bool bibled;
         private bool blindJusted;
-        public override void OnHitByProjectile(Projectile projectile, int damage, float knockback, bool crit)
+        public override void OnHitByProjectile(Projectile projectile, NPC.HitInfo hit, int damageDone)
         {
             if (!egged && AIState is ActionState.Attacks && (projectile.type == ModContent.ProjectileType<ChickenEgg_Proj>() || projectile.type == ModContent.ProjectileType<GoldChickenEgg_Proj>()))
             {
@@ -1268,7 +1268,7 @@ namespace Redemption.NPCs.Bosses.Erhan
                     }
 
                     if (Main.netMode == NetmodeID.Server)
-                        NetMessage.SendData(MessageID.SendNPCBuffs, number: NPC.whoAmI);
+                        NetMessage.SendData(MessageID.NPCBuffs, number: NPC.whoAmI);
                 }
                 NPC.dontTakeDamage = true;
                 NPC.velocity *= 0;
@@ -1477,15 +1477,15 @@ namespace Redemption.NPCs.Bosses.Erhan
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
         }
 
-        public override void ModifyHitByItem(Player player, Item item, ref int damage, ref float knockback, ref bool crit)
+        public override void ModifyHitByItem(Player player, Item item, ref NPC.HitModifiers modifiers)
         {
             if (AIState is ActionState.Fallen && TimerRand == 2 && item.DamageType == DamageClass.Melee)
-                damage *= 2;
+                modifiers.FinalDamage *= 2;
         }
-        public override void ModifyHitByProjectile(Projectile projectile, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
+        public override void ModifyHitByProjectile(Projectile projectile, ref NPC.HitModifiers modifiers)
         {
             if (AIState is ActionState.Fallen && TimerRand == 2 && projectile.Redemption().TechnicallyMelee)
-                damage *= 2;
+                modifiers.FinalDamage *= 2;
         }
 
         private void DespawnHandler()

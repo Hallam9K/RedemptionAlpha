@@ -12,8 +12,8 @@ namespace Redemption.Items.Accessories.PostML
     {
         public override void SetStaticDefaults()
         {
-            Tooltip.SetDefault("Summons a chibi Nebby to give you moral support!");
-            SacrificeTotal = 1;
+            // Tooltip.SetDefault("Summons a chibi Nebby to give you moral support!");
+            Item.ResearchUnlockCount = 1;
         }
 
         public override void SetDefaults()

@@ -36,6 +36,7 @@ namespace Redemption.NPCs.Critters
         public override void SetStaticDefaults()
         {
             Main.npcFrameCount[Type] = 3;
+            NPCID.Sets.ShimmerTransformToNPC[NPC.type] = NPCID.Shimmerfly;
             NPCID.Sets.CountsAsCritter[Type] = true;
             NPCID.Sets.DontDoHardmodeScaling[Type] = true;
             NPCID.Sets.TakesDamageFromHostilesWithoutBeingFriendly[Type] = true;
@@ -66,13 +67,13 @@ namespace Redemption.NPCs.Critters
         }
 
         public override bool CanHitPlayer(Player target, ref int cooldownSlot) => AIState is ActionState.Aggressive && !target.dontHurtCritters;
-        public override bool? CanHitNPC(NPC target) => false;
-        public override void ModifyHitPlayer(Player target, ref int damage, ref bool crit) => target.noKnockback = true;
-        public override void OnHitPlayer(Player target, int damage, bool crit)
+        public override bool CanHitNPC(NPC target) => false;
+        public override void ModifyHitPlayer(Player target, ref Player.HurtModifiers modifiers) => target.noKnockback = true;
+        public override void OnHitPlayer(Player target, Player.HurtInfo hurtInfo)
         {
             target.AddBuff(ModContent.BuffType<SpiderSwarmedDebuff>(), 120);
         }
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit)
         {
             target.AddBuff(ModContent.BuffType<SpiderSwarmedDebuff>(), 120);
         }
@@ -293,7 +294,7 @@ namespace Redemption.NPCs.Critters
             });
         }
 
-        public override void HitEffect(int hitDirection, double damage)
+        public override void HitEffect(NPC.HitInfo hit)
         {
             for (int i = 0; i < 4; i++)
                 Dust.NewDust(NPC.position + NPC.velocity, NPC.width, NPC.height, DustID.GreenBlood, NPC.velocity.X * 0.5f,

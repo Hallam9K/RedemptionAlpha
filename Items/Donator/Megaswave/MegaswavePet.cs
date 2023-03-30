@@ -13,9 +13,12 @@ namespace Redemption.Items.Donator.Megaswave
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Miniswave");
+            // DisplayName.SetDefault("Miniswave");
             Main.projFrames[Projectile.type] = 15;
             Main.projPet[Projectile.type] = true;
+            ProjectileID.Sets.CharacterPreviewAnimations[Projectile.type] = ProjectileID.Sets.SimpleLoop(1, 8, 5)
+                .WhenNotSelected(0, 0)
+                .WithOffset(-10, 0);
         }
 
         public override void SetDefaults()

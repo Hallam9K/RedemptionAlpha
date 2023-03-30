@@ -4,6 +4,7 @@ using Terraria;
 using Terraria.DataStructures;
 using Terraria.Enums;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 
@@ -29,8 +30,8 @@ namespace Redemption.Tiles.Furniture.Lab
             DustType = DustID.Electric;
             MinPick = 200;
             MineResist = 6f;
-			ModTranslation name = CreateMapEntryName();
-			name.SetDefault("Xenium Refinery");
+			LocalizedText name = CreateMapEntryName();
+			// name.SetDefault("Xenium Refinery");
 			AddMapEntry(new Color(54, 193, 59), name);
 		}
         public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)
@@ -38,10 +39,6 @@ namespace Redemption.Tiles.Furniture.Lab
             r = 0.0f;
             g = 0.2f;
             b = 0.0f;
-        }
-        public override void KillMultiTile(int i, int j, int frameX, int frameY)
-        {
-            Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 32, 16, ModContent.ItemType<XeniumRefinery>());
         }
         public override bool CanExplode(int i, int j) => false;
     }

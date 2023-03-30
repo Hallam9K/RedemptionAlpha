@@ -50,7 +50,7 @@ namespace Redemption.NPCs.HM
         public ref float TimerRand => ref NPC.ai[2];
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Prototype Silver Mk.I");
+            // DisplayName.SetDefault("Prototype Silver Mk.I");
             Main.npcFrameCount[NPC.type] = 13;
             NPCID.Sets.CantTakeLunchMoney[Type] = true;
 
@@ -475,7 +475,7 @@ namespace Redemption.NPCs.HM
             return false;
         }
 
-        public override bool? CanHitNPC(NPC target) => AIState == ActionState.Alert ? null : false;
+        public override bool CanHitNPC(NPC target) => AIState == ActionState.Alert;
         public override bool CanHitPlayer(Player target, ref int cooldownSlot) => AIState == ActionState.Alert;
 
         public override void ModifyNPCLoot(NPCLoot npcLoot)
@@ -487,7 +487,7 @@ namespace Redemption.NPCs.HM
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<EnergyCell>(), 10));
             npcLoot.Add(ItemDropRule.Food(ModContent.ItemType<P0T4T0>(), 150));
         }
-        public override void HitEffect(int hitDirection, double damage)
+        public override void HitEffect(NPC.HitInfo hit)
         {
             if (NPC.life <= 0)
             {

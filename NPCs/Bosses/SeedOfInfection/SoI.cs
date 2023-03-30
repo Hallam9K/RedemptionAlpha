@@ -53,7 +53,7 @@ namespace Redemption.NPCs.Bosses.SeedOfInfection
         public float[] oldrot = new float[4];
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Seed of Infection");
+            // DisplayName.SetDefault("Seed of Infection");
             Main.npcFrameCount[NPC.type] = 6;
             NPCID.Sets.TrailCacheLength[NPC.type] = 4;
             NPCID.Sets.TrailingMode[NPC.type] = 1;
@@ -102,16 +102,16 @@ namespace Redemption.NPCs.Bosses.SeedOfInfection
         }
 
         public override bool CanHitPlayer(Player target, ref int cooldownSlot) => NPC.velocity.Length() > 10;
-        public override bool? CanHitNPC(NPC target) => false;
+        public override bool CanHitNPC(NPC target) => false;
 
-        public override void HitEffect(int hitDirection, double damage)
+        public override void HitEffect(NPC.HitInfo hit)
         {
             Dust.NewDust(NPC.position + NPC.velocity, NPC.width, NPC.height, DustID.GreenBlood, NPC.velocity.X * 0.5f, NPC.velocity.Y * 0.5f);
         }
 
-        public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
+        public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)
         {
-            NPC.lifeMax = (int)(NPC.lifeMax * 0.6f * bossLifeScale);
+            NPC.lifeMax = (int)(NPC.lifeMax * 0.6f * balance * bossAdjustment);
             NPC.damage = (int)(NPC.damage * 0.75f);
         }
 
@@ -135,7 +135,7 @@ namespace Redemption.NPCs.Bosses.SeedOfInfection
 
             LeadingConditionRule notExpertRule = new(new Conditions.NotExpert());
 
-            notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<InfectedMask>(), 7));
+            notExpertRule.OnSuccess(ItemDropRule.NotScalingWithLuck(ModContent.ItemType<InfectedMask>(), 7));
 
             notExpertRule.OnSuccess(ItemDropRule.OneFromOptions(1, ModContent.ItemType<XenoXyston>(), ModContent.ItemType<CystlingSummon>(), ModContent.ItemType<ContagionSpreader>()));
             notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<XenomiteShard>(), 1, 12, 22));

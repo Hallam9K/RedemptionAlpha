@@ -8,8 +8,8 @@ namespace Redemption.Buffs.Debuffs
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Serum Withdrawal");
-            Description.SetDefault("Slowed and cannot take more serums");
+            // DisplayName.SetDefault("Serum Withdrawal");
+            // Description.SetDefault("Slowed and cannot take more serums");
             Main.buffNoTimeDisplay[Type] = false;
             Main.debuff[Type] = true;
             BuffID.Sets.NurseCannotRemoveDebuff[Type] = true;

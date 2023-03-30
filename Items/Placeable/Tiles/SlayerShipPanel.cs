@@ -3,6 +3,7 @@ using Redemption.Tiles.Furniture.SlayerShip;
 using Redemption.Tiles.Tiles;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria;
 
 namespace Redemption.Items.Placeable.Tiles
 {
@@ -10,8 +11,8 @@ namespace Redemption.Items.Placeable.Tiles
 	{
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Slayer's Ship Panel");
-            Tooltip.SetDefault("[c/ff0000:Unbreakable]");
+            // DisplayName.SetDefault("Slayer's Ship Panel");
+            // Tooltip.SetDefault("[c/ff0000:Unbreakable]");
         }
 
 		public override void SetDefaults()
@@ -20,7 +21,7 @@ namespace Redemption.Items.Placeable.Tiles
             Item.width = 16;
             Item.height = 16;
             Item.rare = ItemRarityID.LightPurple;
-            Item.maxStack = 9999;
+            Item.maxStack = Item.CommonMaxStack;
 		}
     }
     public class SlayerShipPanel2 : ModItem
@@ -28,8 +29,8 @@ namespace Redemption.Items.Placeable.Tiles
         public override string Texture => "Redemption/Items/Placeable/Tiles/SlayerShipPanel";
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Slayer's Ship Panel");
-            SacrificeTotal = 100;
+            // DisplayName.SetDefault("Slayer's Ship Panel");
+            Item.ResearchUnlockCount = 100;
         }
         public override void SetDefaults()
 		{
@@ -37,7 +38,7 @@ namespace Redemption.Items.Placeable.Tiles
             Item.width = 16;
             Item.height = 16;
             Item.rare = ItemRarityID.LightPurple;
-            Item.maxStack = 9999;
+            Item.maxStack = Item.CommonMaxStack;
         }
         public override void AddRecipes()
         {

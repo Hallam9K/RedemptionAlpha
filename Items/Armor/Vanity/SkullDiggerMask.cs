@@ -8,11 +8,11 @@ namespace Redemption.Items.Armor.Vanity
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Skull Digger's Mask");
-            Tooltip.SetDefault("'Made of bone'");
+            // DisplayName.SetDefault("Skull Digger's Mask");
+            // Tooltip.SetDefault("'Made of bone'");
             ArmorIDs.Head.Sets.DrawHead[EquipLoader.GetEquipSlot(Mod, Name, EquipType.Head)] = false;
 
-            SacrificeTotal = 1;
+            Item.ResearchUnlockCount = 1;
         }
 
         public override void SetDefaults()

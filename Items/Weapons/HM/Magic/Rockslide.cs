@@ -12,10 +12,10 @@ namespace Redemption.Items.Weapons.HM.Magic
     {
         public override void SetStaticDefaults()
         {
-            Tooltip.SetDefault("Casts a large amount of rocks to float above the player\n" +
-                "Release left-click to launch them at cursor point");
+            /* Tooltip.SetDefault("Casts a large amount of rocks to float above the player\n" +
+                "Release left-click to launch them at cursor point"); */
 
-            SacrificeTotal = 1;
+            Item.ResearchUnlockCount = 1;
         }
 
         public override void SetDefaults()

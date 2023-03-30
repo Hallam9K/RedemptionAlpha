@@ -17,15 +17,15 @@ namespace Redemption.Items.Usable
 	{
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Treasure Box (Omega Gigapora)");
-			Tooltip.SetDefault("{$CommonItemTooltip.RightClickToOpen}");
+            // DisplayName.SetDefault("Treasure Box (Omega Gigapora)");
+			// Tooltip.SetDefault("{$CommonItemTooltip.RightClickToOpen}");
             ItemID.Sets.BossBag[Type] = true;
-            SacrificeTotal = 3;
+            Item.ResearchUnlockCount = 3;
         }
 
         public override void SetDefaults()
 		{
-            Item.maxStack = 9999;
+            Item.maxStack = Item.CommonMaxStack;
             Item.consumable = true;
             Item.width = 24;
             Item.height = 24;
@@ -46,7 +46,7 @@ namespace Redemption.Items.Usable
         }
         public override void ModifyItemLoot(ItemLoot itemLoot)
         {
-            itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<DrillHeadHead>(), 7));
+            itemLoot.Add(ItemDropRule.NotScalingWithLuck(ModContent.ItemType<DrillHeadHead>(), 7));
             itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<CorruptedXenomite>(), 1, 8, 16));
             itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<OmegaPowerCell>(), 1, 2, 4));
             itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<MicroshieldCore>()));

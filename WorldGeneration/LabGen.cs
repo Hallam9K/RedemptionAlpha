@@ -434,7 +434,7 @@ namespace Redemption.WorldGeneration
                         BaseWorldGen.SmoothTiles(i, j, i + 1, j + 1);
                 }
             }
-            WorldGen.structures.AddProtectedStructure(new Rectangle(origin.X, origin.Y, 289, 217));
+            GenVars.structures.AddProtectedStructure(new Rectangle(origin.X, origin.Y, 289, 217));
             return true;
         }
 

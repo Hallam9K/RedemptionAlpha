@@ -12,10 +12,10 @@ namespace Redemption.Items.Donator.Lantard
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Fluffy Scarf");
-            Tooltip.SetDefault("Summons a chibi Ralsei");
+            // DisplayName.SetDefault("Fluffy Scarf");
+            // Tooltip.SetDefault("Summons a chibi Ralsei");
 
-            SacrificeTotal = 1;
+            Item.ResearchUnlockCount = 1;
         }
 
         public override void SetDefaults()

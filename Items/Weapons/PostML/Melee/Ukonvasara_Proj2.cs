@@ -18,7 +18,7 @@ namespace Redemption.Items.Weapons.PostML.Melee
         public override string Texture => "Redemption/Items/Weapons/PostML/Melee/Ukonvasara";
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Ukonvasara");
+            // DisplayName.SetDefault("Ukonvasara");
             ElementID.ProjEarth[Type] = true;
             ElementID.ProjThunder[Type] = true;
         }
@@ -96,7 +96,7 @@ namespace Redemption.Items.Weapons.PostML.Melee
                 Projectile.timeLeft = 25;
 
         }
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             Projectile.localNPCImmunity[target.whoAmI] = 60;
             target.immune[Projectile.owner] = 0;

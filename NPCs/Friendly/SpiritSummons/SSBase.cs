@@ -7,6 +7,7 @@ using Redemption.BaseExtension;
 using ParticleLibrary;
 using Redemption.Particles;
 using Redemption.Buffs;
+using Microsoft.CodeAnalysis;
 
 namespace Redemption.NPCs.Friendly.SpiritSummons
 {
@@ -33,7 +34,7 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
         {
             Player player = Main.player[(int)NPC.ai[3]];
             if (!player.active || player.dead || !CheckActive(player))
-                NPC.StrikeNPC(999, 0, 1);
+                NPC.SimpleStrikeNPC(999, 1);
 
             if (Main.myPlayer == player.whoAmI && NPC.DistanceSQ(player.Center) > 2000 * 2000)
             {

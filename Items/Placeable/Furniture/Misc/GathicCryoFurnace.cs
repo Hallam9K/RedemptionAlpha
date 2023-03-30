@@ -10,9 +10,9 @@ namespace Redemption.Items.Placeable.Furniture.Misc
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Gathic Cryo-Furnace");
-            Tooltip.SetDefault("Used for smelting ore");
-            SacrificeTotal = 1;
+            // DisplayName.SetDefault("Gathic Cryo-Furnace");
+            // Tooltip.SetDefault("Used for smelting ore");
+            Item.ResearchUnlockCount = 1;
         }
 
         public override void SetDefaults()
@@ -20,7 +20,7 @@ namespace Redemption.Items.Placeable.Furniture.Misc
             Item.DefaultToPlaceableTile(ModContent.TileType<GathicCryoFurnaceTile>(), 0);
             Item.width = 34;
             Item.height = 26;
-            Item.maxStack = 9999;
+            Item.maxStack = Item.CommonMaxStack;
             Item.value = Item.sellPrice(0, 0, 0, 60);
         }
         public override void AddRecipes()

@@ -21,7 +21,7 @@ namespace Redemption.NPCs.Friendly
         public ref float TimerRand => ref NPC.ai[2];
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Newb");
+            // DisplayName.SetDefault("Newb");
             Main.npcFrameCount[Type] = 25;
             NPCID.Sets.NPCBestiaryDrawModifiers value = new(0) { Hide = true };
             NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, value);

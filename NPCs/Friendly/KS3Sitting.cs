@@ -31,7 +31,7 @@ namespace Redemption.NPCs.Friendly
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("King Slayer III");
+            // DisplayName.SetDefault("King Slayer III");
             Main.npcFrameCount[NPC.type] = 7;
             NPCID.Sets.ActsLikeTownNPC[Type] = true;
             NPCID.Sets.NPCBestiaryDrawModifiers value = new(0)
@@ -56,7 +56,7 @@ namespace Redemption.NPCs.Friendly
         }
 
         public override bool UsesPartyHat() => true;
-        public override bool CanTownNPCSpawn(int numTownNPCs, int money) => false;
+        public override bool CanTownNPCSpawn(int numTownNPCs) => false;
         public override bool CanChat() => true;
         public override bool CheckActive()
         {
@@ -187,7 +187,7 @@ namespace Redemption.NPCs.Friendly
             }
         }
 
-        public override void OnChatButtonClicked(bool firstButton, ref bool shop)
+        public override void OnChatButtonClicked(bool firstButton, ref string shopName)
         {
             Player player = Main.LocalPlayer;
             Main.npcChatCornerItem = 0;
@@ -385,7 +385,7 @@ namespace Redemption.NPCs.Friendly
                     SoundEngine.PlaySound(SoundID.MenuTick);
                 }
                 else if (ChatNumber == 9 && RedeWorld.slayerRep >= 4)
-                    shop = true;
+                    shopName = "Shop";
                 else
                     Main.npcChatText = ChitChat();
             }
@@ -402,34 +402,37 @@ namespace Redemption.NPCs.Friendly
                     ChatNumber++;
             }
         }
-        public override void SetupShop(Chest shop, ref int nextSlot)
+        public override void AddShops()
         {
-            shop.item[nextSlot++].SetDefaults(ModContent.ItemType<Datalog>());
-            shop.item[nextSlot++].SetDefaults(ModContent.ItemType<Datalog2>());
-            shop.item[nextSlot++].SetDefaults(ModContent.ItemType<Datalog3>());
-            shop.item[nextSlot++].SetDefaults(ModContent.ItemType<Datalog4>());
-            shop.item[nextSlot++].SetDefaults(ModContent.ItemType<Datalog5>());
-            shop.item[nextSlot++].SetDefaults(ModContent.ItemType<Datalog6>());
-            shop.item[nextSlot++].SetDefaults(ModContent.ItemType<Datalog7>());
-            shop.item[nextSlot++].SetDefaults(ModContent.ItemType<Datalog8>());
-            shop.item[nextSlot++].SetDefaults(ModContent.ItemType<Datalog9>());
-            shop.item[nextSlot++].SetDefaults(ModContent.ItemType<Datalog10>());
-            shop.item[nextSlot++].SetDefaults(ModContent.ItemType<Datalog11>());
-            shop.item[nextSlot++].SetDefaults(ModContent.ItemType<Datalog12>());
-            shop.item[nextSlot++].SetDefaults(ModContent.ItemType<Datalog13>());
-            shop.item[nextSlot++].SetDefaults(ModContent.ItemType<Datalog14>());
-            shop.item[nextSlot++].SetDefaults(ModContent.ItemType<Datalog15>());
-            shop.item[nextSlot++].SetDefaults(ModContent.ItemType<Datalog16>());
-            shop.item[nextSlot++].SetDefaults(ModContent.ItemType<Datalog17>());
-            shop.item[nextSlot++].SetDefaults(ModContent.ItemType<Datalog18>());
-            shop.item[nextSlot++].SetDefaults(ModContent.ItemType<Datalog19>());
-            shop.item[nextSlot++].SetDefaults(ModContent.ItemType<Datalog20>());
-            shop.item[nextSlot++].SetDefaults(ModContent.ItemType<Datalog21>());
-            shop.item[nextSlot++].SetDefaults(ModContent.ItemType<Datalog22>());
-            shop.item[nextSlot++].SetDefaults(ModContent.ItemType<Datalog24>());
-            shop.item[nextSlot++].SetDefaults(ModContent.ItemType<Datalog25>());
-            shop.item[nextSlot++].SetDefaults(ModContent.ItemType<Datalog26>());
-            shop.item[nextSlot++].SetDefaults(ModContent.ItemType<Datalog27>());
+            var npcShop = new NPCShop(Type)
+                .Add<Datalog>()
+                .Add<Datalog2>()
+                .Add<Datalog3>()
+                .Add<Datalog4>()
+                .Add<Datalog5>()
+                .Add<Datalog6>()
+                .Add<Datalog7>()
+                .Add<Datalog8>()
+                .Add<Datalog9>()
+                .Add<Datalog10>()
+                .Add<Datalog11>()
+                .Add<Datalog12>()
+                .Add<Datalog13>()
+                .Add<Datalog14>()
+                .Add<Datalog15>()
+                .Add<Datalog16>()
+                .Add<Datalog17>()
+                .Add<Datalog18>()
+                .Add<Datalog19>()
+                .Add<Datalog20>()
+                .Add<Datalog21>()
+                .Add<Datalog22>()
+                .Add<Datalog24>()
+                .Add<Datalog25>()
+                .Add<Datalog26>()
+                .Add<Datalog27>();
+
+            npcShop.Register();
         }
 
         public static string QuestChat()

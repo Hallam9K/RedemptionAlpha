@@ -12,10 +12,10 @@ namespace Redemption.Items.Accessories.PostML
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Household Heatray");
-            Tooltip.SetDefault("Summons a toaster to follow you" +
-                "\n'Remember, all toasters toast toast!'");
-            SacrificeTotal = 1;
+            // DisplayName.SetDefault("Household Heatray");
+            /* Tooltip.SetDefault("Summons a toaster to follow you" +
+                "\n'Remember, all toasters toast toast!'"); */
+            Item.ResearchUnlockCount = 1;
         }
 
         public override void SetDefaults()

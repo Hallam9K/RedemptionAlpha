@@ -10,8 +10,8 @@ namespace Redemption.Items.Donator.Lordfunnyman
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Medic Outfit");
-            SacrificeTotal = 1;
+            // DisplayName.SetDefault("Medic Outfit");
+            Item.ResearchUnlockCount = 1;
             ArmorIDs.Body.Sets.HidesArms[EquipLoader.GetEquipSlot(Mod, Name, EquipType.Body)] = true;
         }
         public override void SetDefaults()
@@ -28,8 +28,8 @@ namespace Redemption.Items.Donator.Lordfunnyman
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Medic Boots");
-            SacrificeTotal = 1;
+            // DisplayName.SetDefault("Medic Boots");
+            Item.ResearchUnlockCount = 1;
         }
         public override void SetDefaults()
         {
@@ -45,8 +45,8 @@ namespace Redemption.Items.Donator.Lordfunnyman
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Medic Backpack Kit");
-            SacrificeTotal = 1;
+            // DisplayName.SetDefault("Medic Backpack Kit");
+            Item.ResearchUnlockCount = 1;
         }
         public override void SetDefaults()
         {

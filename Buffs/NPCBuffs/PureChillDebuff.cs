@@ -9,8 +9,8 @@ namespace Redemption.Buffs.NPCBuffs
         public override string Texture => "Redemption/Buffs/Debuffs/_DebuffTemplate";
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Pure Chill");
-            Description.SetDefault("brrr");
+            // DisplayName.SetDefault("Pure Chill");
+            // Description.SetDefault("brrr");
             Main.debuff[Type] = true;
             Main.buffNoSave[Type] = true;
         }

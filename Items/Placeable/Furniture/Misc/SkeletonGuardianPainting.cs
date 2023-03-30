@@ -9,9 +9,9 @@ namespace Redemption.Items.Placeable.Furniture.Misc
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Dungeon Soldier");
-            Tooltip.SetDefault("'A. Tied'");
-            SacrificeTotal = 1;
+			// DisplayName.SetDefault("Dungeon Soldier");
+            // Tooltip.SetDefault("'A. Tied'");
+            Item.ResearchUnlockCount = 1;
 		}
 
 		public override void SetDefaults()
@@ -19,7 +19,7 @@ namespace Redemption.Items.Placeable.Furniture.Misc
 			Item.DefaultToPlaceableTile(ModContent.TileType<SkeletonGuardianPaintingTile>(), 0);
 			Item.width = 58;
 			Item.height = 40;
-			Item.maxStack = 9999;
+			Item.maxStack = Item.CommonMaxStack;
 			Item.rare = ItemRarityID.White;
 			Item.value = Item.buyPrice(0, 1, 50, 0);
 		}

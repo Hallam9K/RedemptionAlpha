@@ -10,6 +10,7 @@ using System;
 using ReLogic.Content;
 using Terraria.Localization;
 using Redemption.Items.Placeable.Trophies;
+using System.Collections.Generic;
 
 namespace Redemption.Tiles.Trophies
 {
@@ -61,60 +62,58 @@ namespace Redemption.Tiles.Trophies
 
 			AddMapEntry(new Color(233, 207, 94), Language.GetText("MapObject.Relic"));
 		}
+		public override IEnumerable<Item> GetItemDrops(int i, int j)
+        {
+            Tile t = Main.tile[i, j];
+            int placeStyle = t.TileFrameX / FrameWidth;
 
-		public override void KillMultiTile(int i, int j, int frameX, int frameY)
-		{
-			int placeStyle = frameX / FrameWidth;
+            int itemType = 0;
+            switch (placeStyle)
+            {
+                case 0:
+                    itemType = ModContent.ItemType<ErhanRelic>();
+                    break;
+                case 1:
+                    itemType = ModContent.ItemType<KS3Relic>();
+                    break;
+                case 2:
+                    itemType = ModContent.ItemType<SoIRelic>();
+                    break;
+                case 3:
+                    itemType = ModContent.ItemType<ThornRelic>();
+                    break;
+                case 4:
+                    itemType = ModContent.ItemType<KeeperRelic>();
+                    break;
+                case 5:
+                    itemType = ModContent.ItemType<CleaverRelic>();
+                    break;
+                case 6:
+                    itemType = ModContent.ItemType<GigaporaRelic>();
+                    break;
+                case 7:
+                    itemType = ModContent.ItemType<OORelic>();
+                    break;
+                case 8:
+                    itemType = ModContent.ItemType<PZRelic>();
+                    break;
+                case 9:
+                    itemType = ModContent.ItemType<AkkaRelic>();
+                    break;
+                case 10:
+                    itemType = ModContent.ItemType<UkkoRelic>();
+                    break;
+                case 11:
+                    itemType = ModContent.ItemType<NebRelic>();
+                    break;
+                case 12:
+                    itemType = ModContent.ItemType<FowlEmperorRelic>();
+                    break;
+            }
 
-			int itemType = 0;
-			switch (placeStyle)
-			{
-				case 0:
-					itemType = ModContent.ItemType<ErhanRelic>();
-					break;
-				case 1:
-					itemType = ModContent.ItemType<KS3Relic>();
-					break;
-				case 2:
-					itemType = ModContent.ItemType<SoIRelic>();
-					break;
-				case 3:
-					itemType = ModContent.ItemType<ThornRelic>();
-					break;
-				case 4:
-					itemType = ModContent.ItemType<KeeperRelic>();
-					break;
-				case 5:
-					itemType = ModContent.ItemType<CleaverRelic>();
-					break;
-				case 6:
-					itemType = ModContent.ItemType<GigaporaRelic>();
-					break;
-				case 7:
-					itemType = ModContent.ItemType<OORelic>();
-					break;
-				case 8:
-					itemType = ModContent.ItemType<PZRelic>();
-					break;
-				case 9:
-					itemType = ModContent.ItemType<AkkaRelic>();
-					break;
-				case 10:
-					itemType = ModContent.ItemType<UkkoRelic>();
-					break;
-				case 11:
-					itemType = ModContent.ItemType<NebRelic>();
-					break;
-				case 12:
-					itemType = ModContent.ItemType<FowlEmperorRelic>();
-					break;
-
-			}
-
-			if (itemType > 0)
-				Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 32, 32, itemType);
+            if (itemType > 0)
+                yield return new Item(itemType);
 		}
-
 		public override bool CreateDust(int i, int j, ref int type)
 		{
 			return false;

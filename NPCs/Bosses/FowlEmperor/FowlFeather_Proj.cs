@@ -9,7 +9,7 @@ namespace Redemption.NPCs.Bosses.FowlEmperor
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Fowl Feather");
+            // DisplayName.SetDefault("Fowl Feather");
         }
         public override void SetDefaults()
         {

@@ -16,10 +16,10 @@ namespace Redemption.Items.Weapons.PreHM.Summon
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("King's Oak Staff");
-			Tooltip.SetDefault("Summons a Nature Pixie to fight for you\n" +
-                "Occassionally shouts at their target, dealing " + ElementID.PsychicS + " damage");
-			SacrificeTotal = 1;
+			// DisplayName.SetDefault("King's Oak Staff");
+			/* Tooltip.SetDefault("Summons a Nature Pixie to fight for you\n" +
+                "Occassionally shouts at their target, dealing " + ElementID.PsychicS + " damage"); */
+			Item.ResearchUnlockCount = 1;
 
 			ItemID.Sets.GamepadWholeScreenUseRange[Item.type] = true;
 			ItemID.Sets.LockOnIgnoresCollision[Item.type] = true;

@@ -1,5 +1,6 @@
 using Redemption.Tiles.Furniture.Shade;
 using Terraria.ID;
+using Terraria;
 using Terraria.ModLoader;
 
 namespace Redemption.Items.Placeable.Furniture.Shade
@@ -8,8 +9,8 @@ namespace Redemption.Items.Placeable.Furniture.Shade
 	{
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Long Shadestone Table");
-            SacrificeTotal = 1;
+            // DisplayName.SetDefault("Long Shadestone Table");
+            Item.ResearchUnlockCount = 1;
         }
 
         public override void SetDefaults()
@@ -17,7 +18,7 @@ namespace Redemption.Items.Placeable.Furniture.Shade
             Item.DefaultToPlaceableTile(ModContent.TileType<ShadestoneTable2Tile>(), 0);
             Item.width = 58;
             Item.height = 24;
-            Item.maxStack = 9999;
+            Item.maxStack = Item.CommonMaxStack;
             Item.value = 500;
             Item.rare = ItemRarityID.Blue;
         }

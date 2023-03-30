@@ -3,6 +3,7 @@ using Redemption.Items.Placeable.Furniture.PetrifiedWood;
 using Terraria;
 using Terraria.Enums;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 using Terraria.DataStructures;
@@ -30,10 +31,7 @@ namespace Redemption.Tiles.Furniture.PetrifiedWood
 			DustType = DustID.Ash;
 			AdjTiles = new int[] { TileID.Chairs };
 
-			// Names
-			ModTranslation name = CreateMapEntryName();
-			name.SetDefault("Petrified Wood Chair");
-			AddMapEntry(new Color(100, 100, 100), name);
+			AddMapEntry(new Color(100, 100, 100), Language.GetText("MapObject.Chair"));
 
 			// Placement
 			TileObjectData.newTile.CopyFrom(TileObjectData.Style1x2);
@@ -49,8 +47,6 @@ namespace Redemption.Tiles.Furniture.PetrifiedWood
 		}
 
 		public override void NumDust(int i, int j, bool fail, ref int num) => num = fail ? 1 : 3;
-
-		public override void KillMultiTile(int i, int j, int frameX, int frameY) => Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 32, 16, ModContent.ItemType<PetrifiedWoodChair>());
 		public override bool HasSmartInteract(int i, int j, SmartInteractScanSettings settings)
 		{
 			return settings.player.IsWithinSnappngRangeToTile(i, j, PlayerSittingHelper.ChairSittingMaxDistance);

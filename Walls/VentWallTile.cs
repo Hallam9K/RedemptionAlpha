@@ -19,7 +19,7 @@ namespace Redemption.Walls
         public override string Texture => Redemption.PLACEHOLDER_TEXTURE;
         public override void SetStaticDefaults()
         {
-            Tooltip.SetDefault("[c/ff0000:Unbreakable]");
+            // Tooltip.SetDefault("[c/ff0000:Unbreakable]");
         }
 
         public override void SetDefaults()

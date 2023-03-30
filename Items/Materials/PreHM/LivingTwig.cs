@@ -8,17 +8,17 @@ namespace Redemption.Items.Materials.PreHM
 	{
 		public override void SetStaticDefaults()
 		{
-            Tooltip.SetDefault("'It's moving..." +
-				"\nOh nevermind, it's just the wind.'");
+            /* Tooltip.SetDefault("'It's moving..." +
+				"\nOh nevermind, it's just the wind.'"); */
 
-			SacrificeTotal = 100;
+			Item.ResearchUnlockCount = 100;
 		}
 
 		public override void SetDefaults()
 		{
 			Item.width = 26;
 			Item.height = 24;
-			Item.maxStack = 9999;
+			Item.maxStack = Item.CommonMaxStack;
 			Item.value = Item.sellPrice(0, 0, 0, 8);
 		}
     }

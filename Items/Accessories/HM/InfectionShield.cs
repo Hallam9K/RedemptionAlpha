@@ -18,12 +18,12 @@ namespace Redemption.Items.Accessories.HM
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Infected Thornshield");
-            Tooltip.SetDefault("Double tap a direction to dash"
+            // DisplayName.SetDefault("Infected Thornshield");
+            /* Tooltip.SetDefault("Double tap a direction to dash"
                 + "\n4% increased melee critical strike chance"
                 + "\nInflicts Infection upon dashing into an enemy"
-                + "\nReleases acid-like sparks as you move");
-            SacrificeTotal = 1;
+                + "\nReleases acid-like sparks as you move"); */
+            Item.ResearchUnlockCount = 1;
             ElementID.ItemPoison[Type] = true;
         }
 
@@ -34,7 +34,7 @@ namespace Redemption.Items.Accessories.HM
             Item.rare = ItemRarityID.Expert;
             Item.value = 80000;
             Item.damage = 40;
-            Item.canBePlacedInVanityRegardlessOfConditions = true;
+            Item.hasVanityEffects = true;
             Item.DamageType = DamageClass.Melee;
             Item.accessory = true;
             Item.crit = 4;
@@ -157,7 +157,7 @@ namespace Redemption.Items.Accessories.HM
                         if ((npc.CountsAsACritter || npc.lifeMax <= 5) && Player.dontHurtCritters)
                             continue;
 
-                        float damage = 40 * Player.GetDamage(DamageClass.Melee).Multiplicative;
+                        float damage = 40 * Player.GetDamage(DamageClass.Melee).Additive;
                         float knockback = 10;
                         bool crit = false;
 
@@ -195,11 +195,11 @@ namespace Redemption.Items.Accessories.HM
                 DashTimer--;
             }
         }
-        public override bool PreHurt(bool pvp, bool quiet, ref int damage, ref int hitDirection, ref bool crit, ref bool customDamage, ref bool playSound, ref bool genGore, ref PlayerDeathReason damageSource, ref int cooldownCounter)
+        public override bool ImmuneTo(PlayerDeathReason damageSource, int cooldownCounter, bool dodgeable)
         {
             if (damageSource.SourceNPCIndex >= 0 && ShieldHit < 0 && DashTimer > 15)
-                return false;
-            return true;
+                return true;
+            return false;
         }
         private bool CanUseDash()
         {
@@ -218,7 +218,7 @@ namespace Redemption.Items.Accessories.HM
         public override string Texture => Redemption.EMPTY_TEXTURE;
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Acid Spark");
+            // DisplayName.SetDefault("Acid Spark");
         }
         public override void SetDefaults()
         {

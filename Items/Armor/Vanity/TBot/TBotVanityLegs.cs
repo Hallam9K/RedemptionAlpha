@@ -9,8 +9,8 @@ namespace Redemption.Items.Armor.Vanity.TBot
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("T-Bot Legs");
-            SacrificeTotal = 1;
+            // DisplayName.SetDefault("T-Bot Legs");
+            Item.ResearchUnlockCount = 1;
             ArmorIDs.Legs.Sets.OverridesLegs[EquipLoader.GetEquipSlot(Mod, Name, EquipType.Legs)] = true;
         }
 

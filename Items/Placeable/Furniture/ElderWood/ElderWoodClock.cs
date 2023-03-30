@@ -1,5 +1,6 @@
 using Redemption.Tiles.Furniture.ElderWood;
 using Terraria.ID;
+using Terraria;
 using Terraria.ModLoader;
 
 namespace Redemption.Items.Placeable.Furniture.ElderWood
@@ -8,9 +9,9 @@ namespace Redemption.Items.Placeable.Furniture.ElderWood
 	{
 		public override void SetStaticDefaults()
 		{
-            Tooltip.SetDefault("'Strange... It has only 8 numbers...'");
+            // Tooltip.SetDefault("'Strange... It has only 8 numbers...'");
 
-			SacrificeTotal = 1;
+			Item.ResearchUnlockCount = 1;
 		}
 
 		public override void SetDefaults()
@@ -18,7 +19,7 @@ namespace Redemption.Items.Placeable.Furniture.ElderWood
 			Item.DefaultToPlaceableTile(ModContent.TileType<ElderWoodClockTile>(), 0);
 			Item.width = 18;
 			Item.height = 40;
-			Item.maxStack = 9999;
+			Item.maxStack = Item.CommonMaxStack;
 			Item.value = 500;
 		}
 

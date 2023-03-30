@@ -17,7 +17,7 @@ namespace Redemption.Items.Weapons.PostML.Ranged
         public override string Texture => "Redemption/Items/Weapons/PostML/Ranged/Electronade";
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Electonade");
+            // DisplayName.SetDefault("Electonade");
             Main.projFrames[Projectile.type] = 11;
             ElementID.ProjThunder[Type] = true;
             ElementID.ProjExplosive[Type] = true;
@@ -100,7 +100,7 @@ namespace Redemption.Items.Weapons.PostML.Ranged
         public override string Texture => "Redemption/Textures/StaticBall";
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Tesla Field");
+            // DisplayName.SetDefault("Tesla Field");
             Main.projFrames[Projectile.type] = 3;
             ElementID.ProjThunder[Type] = true;
         }
@@ -135,7 +135,7 @@ namespace Redemption.Items.Weapons.PostML.Ranged
             if (Projectile.timeLeft <= 60)
                 Projectile.alpha += 5;
         }
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             target.AddBuff(ModContent.BuffType<ElectrifiedDebuff>(), 360);
         }

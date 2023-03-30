@@ -36,6 +36,7 @@ namespace Redemption.NPCs.Critters
         public override void SetStaticDefaults()
         {
             Main.npcFrameCount[Type] = 6;
+            NPCID.Sets.ShimmerTransformToNPC[NPC.type] = NPCID.Shimmerfly;
             NPCID.Sets.DontDoHardmodeScaling[Type] = true;
 
             NPCID.Sets.NPCBestiaryDrawModifiers value = new(0)
@@ -231,18 +232,18 @@ namespace Redemption.NPCs.Critters
                 RedeHelper.SpawnNPC(NPC.GetSource_FromAI(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<Fly>(), ai3: 1);
         }
 
-        public override bool? CanHitNPC(NPC target) => target.lifeMax > 5 ? null : false;
-        public override void OnHitPlayer(Player target, int damage, bool crit)
+        public override bool CanHitNPC(NPC target) => target.lifeMax > 5;
+        public override void OnHitPlayer(Player target, Player.HurtInfo hurtInfo)
         {
             target.AddBuff(ModContent.BuffType<InfestedDebuff>(), Main.rand.Next(300, 900));
         }
 
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit)
         {
             target.AddBuff(ModContent.BuffType<InfestedDebuff>(), Main.rand.Next(300, 900));
         }
 
-        public override void HitEffect(int hitDirection, double damage)
+        public override void HitEffect(NPC.HitInfo hit)
         {
             if (AIState == ActionState.Idle)
             {

@@ -10,7 +10,6 @@ namespace Redemption.Walls
         public override void SetStaticDefaults()
         {
             Main.wallHouse[Type] = true;
-            ItemDrop = ModContent.ItemType<SlayerShipPanelWall>();
             AddMapEntry(new Color(35, 34, 40));
         }
         public override bool CanExplode(int i, int j) => false;

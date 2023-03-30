@@ -16,11 +16,11 @@ namespace Redemption.Items.Weapons.HM.Magic
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Helix Scepter");
-            Tooltip.SetDefault("Casts infectious helix bolts\n" +
-                "Every consecutive shot increases the velocity of the bolts");
+            // DisplayName.SetDefault("Helix Scepter");
+            /* Tooltip.SetDefault("Casts infectious helix bolts\n" +
+                "Every consecutive shot increases the velocity of the bolts"); */
             Item.staff[Item.type] = true;
-            SacrificeTotal = 1;
+            Item.ResearchUnlockCount = 1;
         }
 
         public override void SetDefaults()

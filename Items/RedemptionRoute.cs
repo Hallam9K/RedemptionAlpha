@@ -8,8 +8,8 @@ namespace Redemption.Items
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Redemption");
-            Tooltip.SetDefault("This will redeem your past actions");
+            // DisplayName.SetDefault("Redemption");
+            // Tooltip.SetDefault("This will redeem your past actions");
         }
 
         public override void SetDefaults()

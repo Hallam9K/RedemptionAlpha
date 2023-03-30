@@ -11,7 +11,7 @@ namespace Redemption.NPCs.Bosses.Erhan
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Holy Hand Grenade of Anglon");
+            // DisplayName.SetDefault("Holy Hand Grenade of Anglon");
             Main.projFrames[Projectile.type] = 2;
         }
         public override void SetDefaults()

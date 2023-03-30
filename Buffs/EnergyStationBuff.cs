@@ -8,8 +8,8 @@ namespace Redemption.Buffs
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Energy Regeneration");
-            Description.SetDefault("Increased Energy regen");
+            // DisplayName.SetDefault("Energy Regeneration");
+            // Description.SetDefault("Increased Energy regen");
             Main.buffNoTimeDisplay[Type] = false;
         }
         public override void Update(Player player, ref int buffIndex)

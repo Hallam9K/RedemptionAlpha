@@ -77,7 +77,7 @@ namespace Redemption.NPCs.PreHM
             Banner = NPC.type;
             BannerItem = ModContent.ItemType<VagrantSpiritBanner>();
         }
-        public override void HitEffect(int hitDirection, double damage)
+        public override void HitEffect(NPC.HitInfo hit)
         {
             if (NPC.life <= 0)
             {
@@ -167,7 +167,7 @@ namespace Redemption.NPCs.PreHM
         }
 
         public override bool CanHitPlayer(Player target, ref int cooldownSlot) => NPC.alpha < 150;
-        public override void ModifyHitPlayer(Player target, ref int damage, ref bool crit) => target.noKnockback = true;
+        public override void ModifyHitPlayer(Player target, ref Player.HurtModifiers modifiers) => target.noKnockback = true;
 
         public override void FindFrame(int frameHeight)
         {

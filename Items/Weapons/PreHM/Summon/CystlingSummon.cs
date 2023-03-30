@@ -13,9 +13,9 @@ namespace Redemption.Items.Weapons.PreHM.Summon
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Diseased Meatball");
-            Tooltip.SetDefault("Summons a Cystling to fight for you");
-			SacrificeTotal = 1;
+			// DisplayName.SetDefault("Diseased Meatball");
+            // Tooltip.SetDefault("Summons a Cystling to fight for you");
+			Item.ResearchUnlockCount = 1;
 
 			ItemID.Sets.GamepadWholeScreenUseRange[Item.type] = true;
 			ItemID.Sets.LockOnIgnoresCollision[Item.type] = true;

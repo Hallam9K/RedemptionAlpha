@@ -1,6 +1,7 @@
 using Terraria.ModLoader;
 using Terraria.ID;
 using Redemption.Walls;
+using Terraria;
 
 namespace Redemption.Items.Placeable.Tiles
 {
@@ -8,14 +9,14 @@ namespace Redemption.Items.Placeable.Tiles
 	{
 		public override void SetStaticDefaults()
 		{
-			SacrificeTotal = 400;
+			Item.ResearchUnlockCount = 400;
 		}
 		public override void SetDefaults()
 		{
-			Item.DefaultToPlacableWall((ushort)ModContent.WallType<PetrifiedWoodWallTile>());
+			Item.DefaultToPlaceableWall((ushort)ModContent.WallType<PetrifiedWoodWallTile>());
 			Item.width = 24;
 			Item.height = 24;
-			Item.maxStack = 9999;
+			Item.maxStack = Item.CommonMaxStack;
 		}
 
 		public override void AddRecipes()

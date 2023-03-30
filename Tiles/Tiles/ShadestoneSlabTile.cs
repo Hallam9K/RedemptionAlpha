@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Terraria;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ID;
 using Redemption.Items.Placeable.Tiles;
@@ -21,8 +22,8 @@ namespace Redemption.Tiles.Tiles
             MinPick = 500;
             MineResist = 18f;
             HitSound = CustomSounds.BrickHit;
-            ModTranslation name = CreateMapEntryName();
-            name.SetDefault("Shadestone Slab");
+            LocalizedText name = CreateMapEntryName();
+            // name.SetDefault("Shadestone Slab");
             AddMapEntry(new Color(59, 61, 87));
         }
         public override void NumDust(int i, int j, bool fail, ref int num) => num = fail ? 1 : 3;

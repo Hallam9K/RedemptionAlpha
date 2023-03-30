@@ -1,5 +1,7 @@
 using Microsoft.Xna.Framework;
 using Redemption.Globals;
+using Redemption.Items.Weapons.PreHM.Magic;
+using Redemption.Items.Weapons.PreHM.Ranged;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.ID;
@@ -11,13 +13,13 @@ namespace Redemption.Items.Weapons.PreHM.Melee
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Zephos' Sword Slicer");
-            Tooltip.SetDefault("Hitting armed enemies inflicts Disarmed\n" +
+            // DisplayName.SetDefault("Zephos' Sword Slicer");
+            /* Tooltip.SetDefault("Hitting armed enemies inflicts Disarmed\n" +
                 "Disarmed heavily decreases contact damage and their weapon damage\n" +
-                "Blocks weak physical projectiles");
-
+                "Blocks weak physical projectiles"); */
+            ItemID.Sets.ShimmerTransformToItem[Type] = ModContent.ItemType<SilverwoodBow>();
             ItemID.Sets.SkipsInitialUseSound[Item.type] = true;
-            SacrificeTotal = 1;
+            Item.ResearchUnlockCount = 1;
         }
 
         public override void SetDefaults()

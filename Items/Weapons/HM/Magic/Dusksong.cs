@@ -10,10 +10,10 @@ namespace Redemption.Items.Weapons.HM.Magic
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Dusksong, Bond of Twilight");
-            Tooltip.SetDefault("Casts a large dusksong that splits upon hitting enemies");
+            // DisplayName.SetDefault("Dusksong, Bond of Twilight");
+            // Tooltip.SetDefault("Casts a large dusksong that splits upon hitting enemies");
 
-            SacrificeTotal = 1;
+            Item.ResearchUnlockCount = 1;
         }
 
         public override void SetDefaults()

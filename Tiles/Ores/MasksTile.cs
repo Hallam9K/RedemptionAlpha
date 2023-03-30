@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Terraria;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Redemption.Dusts;
 using Microsoft.Xna.Framework.Graphics;
@@ -21,16 +22,12 @@ namespace Redemption.Tiles.Ores
             MinPick = 300;
             MineResist = 6f;
             HitSound = CustomSounds.MaskBreak;
-            ModTranslation name = CreateMapEntryName();
-            name.SetDefault("Vessel Fragments");
+            LocalizedText name = CreateMapEntryName();
+            // name.SetDefault("Vessel Fragments");
             AddMapEntry(new Color(210, 200, 191));
+            ItemDrop = ModContent.ItemType<VesselFragment>();
         }
-        public override bool Drop(int i, int j)
-        {
-            if (Main.rand.NextBool(8))
-                Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 16, 16, ModContent.ItemType<VesselFragment>());
-            return true;
-        }
+        public override bool CanDrop(int i, int j) => Main.rand.NextBool(8);
         public override void DrawEffects(int i, int j, SpriteBatch spriteBatch, ref TileDrawInfo drawData)
         {
             if (Main.rand.NextBool(4000) && Main.LocalPlayer.InModBiome<SoullessBiome>())

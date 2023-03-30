@@ -11,7 +11,7 @@ namespace Redemption.Projectiles.Melee
         public override string Texture => "Redemption/Textures/SlashTexture2";
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Ukon Slash");
+            // DisplayName.SetDefault("Ukon Slash");
             ProjectileID.Sets.TrailCacheLength[Projectile.type] = 7;
             ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
         }

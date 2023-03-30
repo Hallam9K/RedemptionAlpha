@@ -10,16 +10,16 @@ namespace Redemption.Items.Critters
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Grand Larva");
+            // DisplayName.SetDefault("Grand Larva");
 
-            SacrificeTotal = 5;
+            Item.ResearchUnlockCount = 5;
         }
 
         public override void SetDefaults()
         {
             Item.width = 36;
             Item.height = 30;
-            Item.maxStack = 9999;
+            Item.maxStack = Item.CommonMaxStack;
             Item.value = Item.buyPrice(0, 0, 2);
             Item.rare = ItemRarityID.Blue;
             Item.bait = 55;

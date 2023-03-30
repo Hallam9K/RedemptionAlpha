@@ -12,10 +12,10 @@ namespace Redemption.Items.Armor.PreHM.PureIron
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Pure-Iron Greaves");
-            Tooltip.SetDefault("8% increased critical strike chance");
+            // DisplayName.SetDefault("Pure-Iron Greaves");
+            // Tooltip.SetDefault("8% increased critical strike chance");
 
-            SacrificeTotal = 1;
+            Item.ResearchUnlockCount = 1;
         }
 
         public override void SetDefaults()

@@ -13,7 +13,7 @@ namespace Redemption.Items.Armor.PostML.Shinkite
             ArmorIDs.Body.Sets.IncludedCapeBack[EquipLoader.GetEquipSlot(Mod, Name, EquipType.Body)] = Redemption.shinkiteCapeID;
             ArmorIDs.Body.Sets.IncludedCapeBackFemale[EquipLoader.GetEquipSlot(Mod, Name, EquipType.Body)] = Redemption.shinkiteCapeID;
 
-            SacrificeTotal = 1;
+            Item.ResearchUnlockCount = 1;
         }
         public override void SetDefaults()
         {

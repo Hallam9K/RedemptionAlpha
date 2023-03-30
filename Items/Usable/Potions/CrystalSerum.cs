@@ -9,11 +9,11 @@ namespace Redemption.Items.Usable.Potions
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Anti-Crystallizer Serum");
-            Tooltip.SetDefault("Reverts xenomite infection to a previous stage\n" +
+            // DisplayName.SetDefault("Anti-Crystallizer Serum");
+            /* Tooltip.SetDefault("Reverts xenomite infection to a previous stage\n" +
                 "Cures green rashes\n"
-                + "\n'Label says 'Do not swallow.' Why would you do that?'");
-            SacrificeTotal = 20;
+                + "\n'Label says 'Do not swallow.' Why would you do that?'"); */
+            Item.ResearchUnlockCount = 20;
         }
         public override void SetDefaults()
         {
@@ -22,7 +22,7 @@ namespace Redemption.Items.Usable.Potions
             Item.useTurn = true;
             Item.useAnimation = 17;
             Item.useTime = 17;
-            Item.maxStack = 9999;
+            Item.maxStack = Item.CommonMaxStack;
             Item.consumable = true;
             Item.width = 12;
             Item.height = 38;

@@ -1,5 +1,6 @@
 using Terraria.ModLoader;
 using Terraria.ID;
+using Terraria;
 using Redemption.Tiles.Furniture.Lab;
 using Redemption.Items.Placeable.Tiles;
 using Redemption.Items.Materials.HM;
@@ -10,15 +11,15 @@ namespace Redemption.Items.Placeable.Furniture.Lab
 	{
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Laboratory Table");
-            SacrificeTotal = 1;
+            // DisplayName.SetDefault("Laboratory Table");
+            Item.ResearchUnlockCount = 1;
         }
         public override void SetDefaults()
 		{
             Item.DefaultToPlaceableTile(ModContent.TileType<LabTableTile>(), 0);
             Item.width = 34;
             Item.height = 26;
-            Item.maxStack = 9999;
+            Item.maxStack = Item.CommonMaxStack;
             Item.value = 500;
             Item.rare = ItemRarityID.LightPurple;
 		}

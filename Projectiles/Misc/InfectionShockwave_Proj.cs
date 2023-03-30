@@ -14,7 +14,7 @@ namespace Redemption.Projectiles.Misc
         public override string Texture => "Redemption/Textures/Shockwave";
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Infection Pulse");
+            // DisplayName.SetDefault("Infection Pulse");
         }
         public override void SetDefaults()
         {

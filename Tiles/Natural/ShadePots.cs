@@ -5,6 +5,7 @@ using Terraria;
 using Terraria.DataStructures;
 using Terraria.Enums;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 
@@ -33,9 +34,8 @@ namespace Redemption.Tiles.Natural
             TileObjectData.addTile(Type);
             DustType = ModContent.DustType<ShadestoneDust>();
             HitSound = SoundID.Shatter;
-            ModTranslation name = CreateMapEntryName();
-            name.SetDefault("Pot");
-            AddMapEntry(new Color(140, 140, 170), name);
+            ItemDrop = -1;
+            AddMapEntry(new Color(140, 140, 170), Language.GetText("MapObject.Pot"));
         }
         public override void NumDust(int i, int j, bool fail, ref int num) => num = fail ? 1 : 3;
         public override void KillMultiTile(int i, int j, int frameX, int frameY)
@@ -154,7 +154,7 @@ namespace Redemption.Tiles.Natural
         public override string Texture => Redemption.PLACEHOLDER_TEXTURE;
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Shadestone Pot");
+            // DisplayName.SetDefault("Shadestone Pot");
         }
         public override void SetDefaults()
         {

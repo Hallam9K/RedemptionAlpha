@@ -13,7 +13,7 @@ namespace Redemption.NPCs.Lab.Behemoth
         public override string Texture => "Redemption/NPCs/Lab/Behemoth/IrradiatedBehemoth";
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("");
+            // DisplayName.SetDefault("");
             NPCID.Sets.DontDoHardmodeScaling[Type] = true;
 
             NPCID.Sets.NPCBestiaryDrawModifiers value = new(0)
@@ -77,6 +77,6 @@ namespace Redemption.NPCs.Lab.Behemoth
             return false;
         }
         public override bool CanHitPlayer(Player target, ref int cooldownSlot) => false;
-        public override bool? CanHitNPC(NPC target) => false;
+        public override bool CanHitNPC(NPC target) => false;
     }
 }

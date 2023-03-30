@@ -10,6 +10,7 @@ using Terraria.Localization;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.BaseExtension;
+using Redemption.Globals;
 
 namespace Redemption.Items.Weapons.PreHM.Summon
 {
@@ -17,10 +18,10 @@ namespace Redemption.Items.Weapons.PreHM.Summon
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Moonflare Staff");
-            Tooltip.SetDefault("Summons a Moonflare Guardian to fight for you\n" +
-                "The guardian will buff other minions while the moon is out, giving +3 damage and making them emit light");
-            SacrificeTotal = 1;
+            // DisplayName.SetDefault("Moonflare Staff");
+            /* Tooltip.SetDefault("Summons a Moonflare Guardian to fight for you\n" +
+                "The guardian will buff other minions while the moon is out, giving +3 damage and making them emit light"); */
+            Item.ResearchUnlockCount = 1;
 
             ItemID.Sets.GamepadWholeScreenUseRange[Item.type] = true;
             ItemID.Sets.LockOnIgnoresCollision[Item.type] = true;
@@ -77,7 +78,7 @@ namespace Redemption.Items.Weapons.PreHM.Summon
             CreateRecipe()
                 .AddIngredient(ModContent.ItemType<MoonflareFragment>(), 10)
                 .AddTile(TileID.Anvils)
-                .AddCondition(new Recipe.Condition(NetworkText.FromLiteral("In Moonlight"), _ => !Main.dayTime && Main.moonPhase != 4))
+                .AddCondition(RedeConditions.InMoonlight)
                 .Register();
         }
     }

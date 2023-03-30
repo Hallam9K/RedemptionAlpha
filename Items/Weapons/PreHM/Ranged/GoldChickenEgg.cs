@@ -8,9 +8,9 @@ namespace Redemption.Items.Weapons.PreHM.Ranged
     {
         public override void SetStaticDefaults()
         {
-            Tooltip.SetDefault("'Woah...'");
+            // Tooltip.SetDefault("'Woah...'");
 
-            SacrificeTotal = 2;
+            Item.ResearchUnlockCount = 2;
         }
 
         public override void SetDefaults()
@@ -19,7 +19,7 @@ namespace Redemption.Items.Weapons.PreHM.Ranged
             Item.height = 20;
             Item.damage = 10;
             Item.knockBack = 3;
-            Item.maxStack = 9999;
+            Item.maxStack = Item.CommonMaxStack;
             Item.value = Item.sellPrice(0, 1, 0, 0);
             Item.rare = ItemRarityID.LightRed;
             Item.useStyle = ItemUseStyleID.Swing;

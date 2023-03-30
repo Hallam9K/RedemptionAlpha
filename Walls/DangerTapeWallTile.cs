@@ -10,7 +10,6 @@ namespace Redemption.Walls
         public override void SetStaticDefaults()
         {
             Main.wallHouse[Type] = false;
-            ItemDrop = ModContent.ItemType<DangerTapeWall>();
             AddMapEntry(new Color(43, 43, 44));
         }
         public override bool CanExplode(int i, int j) => false;
@@ -22,7 +21,6 @@ namespace Redemption.Walls
         public override void SetStaticDefaults()
         {
             Main.wallHouse[Type] = true;
-            ItemDrop = ModContent.ItemType<DangerTapeWall2>();
             AddMapEntry(new Color(43, 43, 44));
         }
     }

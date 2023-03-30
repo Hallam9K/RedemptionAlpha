@@ -8,8 +8,8 @@ namespace Redemption.Items.Weapons.PreHM.Ranged
     {
         public override void SetStaticDefaults()
         {
-            Tooltip.SetDefault("'Takes egging to a whole new level'");
-            SacrificeTotal = 99;
+            // Tooltip.SetDefault("'Takes egging to a whole new level'");
+            Item.ResearchUnlockCount = 99;
         }
 
         public override void SetDefaults()
@@ -18,7 +18,7 @@ namespace Redemption.Items.Weapons.PreHM.Ranged
             Item.height = 24;
             Item.damage = 32;
             Item.knockBack = 8;
-            Item.maxStack = 9999;
+            Item.maxStack = Item.CommonMaxStack;
             Item.value = Item.buyPrice(0, 0, 0, 70);
             Item.rare = ItemRarityID.Blue;
             Item.useStyle = ItemUseStyleID.Swing;

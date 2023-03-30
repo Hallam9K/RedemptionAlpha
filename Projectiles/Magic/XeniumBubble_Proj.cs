@@ -16,7 +16,7 @@ namespace Redemption.Projectiles.Magic
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Xenium Bubble");
+            // DisplayName.SetDefault("Xenium Bubble");
             ElementID.ProjWater[Type] = true;
             ElementID.ProjPoison[Type] = true;
             ElementID.ProjExplosive[Type] = true;
@@ -80,7 +80,7 @@ namespace Redemption.Projectiles.Magic
             Projectile.velocity *= 0.95f;
             return false;
         }
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             if (Main.rand.NextBool(3))
                 target.AddBuff(ModContent.BuffType<GreenRashesDebuff>(), 300);
@@ -104,7 +104,7 @@ namespace Redemption.Projectiles.Magic
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Explosion");
+            // DisplayName.SetDefault("Explosion");
             Main.projFrames[Projectile.type] = 4;
         }
 

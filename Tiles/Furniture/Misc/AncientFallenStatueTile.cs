@@ -39,7 +39,6 @@ namespace Redemption.Tiles.Furniture.Misc
             AddMapEntry(new Color(104, 91, 83));
             DustType = ModContent.DustType<SlateDust>();
         }
-        public override void KillMultiTile(int i, int j, int frameX, int frameY) => Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 128, 112, ModContent.ItemType<AncientFallenStatue>());
         public override bool CanExplode(int i, int j) => false;
     }
 }

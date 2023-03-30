@@ -18,12 +18,12 @@ namespace Redemption.Items.Weapons.PostML.Summon
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Chains of the Cosmos");
-            Tooltip.SetDefault("20 summon tag damage\n" +
+            // DisplayName.SetDefault("Chains of the Cosmos");
+            /* Tooltip.SetDefault("20 summon tag damage\n" +
                 "10% summon tag critical strike chance\n" +
                 "Your summons will focus struck enemies\n" +
-                "Strike enemies to summon friendly cosmic eyes");
-            SacrificeTotal = 1;
+                "Strike enemies to summon friendly cosmic eyes"); */
+            Item.ResearchUnlockCount = 1;
         }
 
         public override void SetDefaults()
@@ -50,7 +50,7 @@ namespace Redemption.Items.Weapons.PostML.Summon
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Chains of the Cosmos");
+            // DisplayName.SetDefault("Chains of the Cosmos");
             ProjectileID.Sets.IsAWhip[Type] = true;
             ElementID.ProjCelestial[Type] = true;
         }
@@ -62,7 +62,7 @@ namespace Redemption.Items.Weapons.PostML.Summon
             Projectile.WhipSettings.RangeMultiplier = 2f;
             Projectile.Redemption().TechnicallyMelee = true;
         }
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             Player player = Main.player[Projectile.owner];
             if (player.whoAmI == Main.myPlayer && player.ownedProjectileCounts[ModContent.ProjectileType<ChainsCosmicEye>()] < 4)

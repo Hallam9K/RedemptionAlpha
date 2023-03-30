@@ -12,7 +12,6 @@ namespace Redemption.Walls
 		{
 			Main.wallHouse[Type] = false;
 			DustType = DustID.Ash;
-			ItemDrop = ModContent.ItemType<IrradiatedStoneWall>();
 			AddMapEntry(new Color(47, 47, 47));
 		}
 	}

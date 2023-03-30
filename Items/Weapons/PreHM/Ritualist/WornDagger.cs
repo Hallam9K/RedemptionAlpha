@@ -12,8 +12,8 @@ namespace Redemption.Items.Weapons.PreHM.Ritualist
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Worn Dagger");
-            SacrificeTotal = 1;
+            // DisplayName.SetDefault("Worn Dagger");
+            Item.ResearchUnlockCount = 1;
         }
 
         public override void SetDefaults()

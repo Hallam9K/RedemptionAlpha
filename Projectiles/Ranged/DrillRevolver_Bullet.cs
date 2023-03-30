@@ -14,7 +14,7 @@ namespace Redemption.Projectiles.Ranged
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Drill Bit");
+            // DisplayName.SetDefault("Drill Bit");
             Main.projFrames[Projectile.type] = 4;
             ProjectileID.Sets.TrailCacheLength[Projectile.type] = 8;
             ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
@@ -94,14 +94,15 @@ namespace Redemption.Projectiles.Ranged
             else
                 Projectile.velocity = origVelocity;
         }
-        public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
+        public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
         {
-            knockback = 0;
-            damage = (int)(damage * Projectile.penetrate / 30f);
+            modifiers.Knockback *= 0;
+            modifiers.FinalDamage *= Projectile.penetrate / 30f;
+
             if (Projectile.penetrate <= 2)
                 Projectile.Kill();
         }
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             target.AddBuff(ModContent.BuffType<BrokenArmorDebuff>(), 40);
             Projectile.localNPCImmunity[target.whoAmI] = 8;

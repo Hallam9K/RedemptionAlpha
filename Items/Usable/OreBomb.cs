@@ -11,14 +11,15 @@ namespace Redemption.Items.Usable
     {
         public override void SetStaticDefaults()
         {
-            Tooltip.SetDefault("A small explosion that will spread basic ores");
-            SacrificeTotal = 99;
+            // Tooltip.SetDefault("A small explosion that will spread basic ores");
+            ItemID.Sets.ItemsThatCountAsBombsForDemolitionistToSpawn[Type] = true;
+            Item.ResearchUnlockCount = 99;
         }
 
         public override void SetDefaults()
         {
             Item.CloneDefaults(ItemID.DirtBomb);
-            Item.maxStack = 9999;
+            Item.maxStack = Item.CommonMaxStack;
             Item.consumable = true;
             Item.rare = ItemRarityID.Blue;
             Item.value = Item.buyPrice(0, 1, 0, 0);
@@ -30,7 +31,7 @@ namespace Redemption.Items.Usable
         public override string Texture => "Redemption/Items/Usable/OreBomb";
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Ore Bomb");
+            // DisplayName.SetDefault("Ore Bomb");
         }
         public override void SetDefaults()
         {

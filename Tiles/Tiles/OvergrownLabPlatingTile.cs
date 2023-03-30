@@ -33,15 +33,15 @@ namespace Redemption.Tiles.Tiles
             if (!tileAbove.HasTile && Main.rand.NextBool(15) && tileAbove.LiquidAmount == 0)
             {
                 WorldGen.PlaceObject(i, j - 1, ModContent.TileType<LabShrub>(), true, Main.rand.Next(7));
-                NetMessage.SendObjectPlacment(-1, i, j - 1, ModContent.TileType<LabShrub>(), Main.rand.Next(7), 0, -1, -1);
+                NetMessage.SendObjectPlacement(-1, i, j - 1, ModContent.TileType<LabShrub>(), Main.rand.Next(7), 0, -1, -1);
             }
             if (!tileAbove.HasTile && Main.tile[i, j].HasTile && Main.rand.NextBool(600))
             {
                 WorldGen.PlaceObject(i, j - 1, ModContent.TileType<BabyHiveTile>(), true);
-                NetMessage.SendObjectPlacment(-1, i, j - 1, ModContent.TileType<BabyHiveTile>(), 0, 0, -1, -1);
+                NetMessage.SendObjectPlacement(-1, i, j - 1, ModContent.TileType<BabyHiveTile>(), 0, 0, -1, -1);
             }
             if (Main.rand.NextBool(200))
-                WorldGen.SpreadGrass(i + Main.rand.Next(-1, 1), j + Main.rand.Next(-1, 1), ModContent.TileType<LabPlatingTileUnsafe>(), Type, false, 0);
+                WorldGen.SpreadGrass(i + Main.rand.Next(-1, 1), j + Main.rand.Next(-1, 1), ModContent.TileType<LabPlatingTileUnsafe>(), Type, false);
         }
         public override void NumDust(int i, int j, bool fail, ref int num) => num = fail ? 1 : 3;
         public override bool CanExplode(int i, int j) => false;

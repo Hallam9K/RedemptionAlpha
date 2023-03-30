@@ -12,8 +12,8 @@ namespace Redemption.Items.Accessories.PostML
     {
         public override void SetStaticDefaults()
         {
-            Tooltip.SetDefault("Makes you become one with the infection");
-            SacrificeTotal = 1;
+            // Tooltip.SetDefault("Makes you become one with the infection");
+            Item.ResearchUnlockCount = 1;
         }
 
         public override void SetDefaults()

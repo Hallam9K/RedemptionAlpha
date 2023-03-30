@@ -12,10 +12,10 @@ namespace Redemption.Items.Accessories.PreHM
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Pile o' Grain");
-			Tooltip.SetDefault("Summons a pet chicken");
+			// DisplayName.SetDefault("Pile o' Grain");
+			// Tooltip.SetDefault("Summons a pet chicken");
 
-			SacrificeTotal = 1;
+			Item.ResearchUnlockCount = 1;
 		}
 
 		public override void SetDefaults()

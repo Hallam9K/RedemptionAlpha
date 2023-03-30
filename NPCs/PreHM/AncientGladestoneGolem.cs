@@ -84,7 +84,7 @@ namespace Redemption.NPCs.PreHM
             NPC.RedemptionGuard().GuardPoints = NPC.lifeMax / 4;
             NPC.GetGlobalNPC<ElementalNPC>().OverrideMultiplier[ElementID.Earth] *= .75f;
         }
-        public override void HitEffect(int hitDirection, double damage)
+        public override void HitEffect(NPC.HitInfo hit)
         {
             if (NPC.life <= 0)
             {
@@ -105,19 +105,18 @@ namespace Redemption.NPCs.PreHM
             }
         }
 
-        public override bool StrikeNPC(ref double damage, int defense, ref float knockback, int hitDirection, ref bool crit)
+        public override void ModifyIncomingHit(ref NPC.HitModifiers modifiers)
         {
-            bool vDmg = false;
             if (NPC.RedemptionGuard().GuardPoints >= 0)
             {
-                NPC.RedemptionGuard().GuardHit(NPC, ref vDmg, ref damage, ref knockback, SoundID.DD2_WitherBeastCrystalImpact, .1f);
+                modifiers.DisableCrit();
+                modifiers.ModifyHitInfo += (ref NPC.HitInfo n) => NPC.RedemptionGuard().GuardHit(ref n, NPC, SoundID.DD2_WitherBeastCrystalImpact, .1f);
                 if (NPC.RedemptionGuard().GuardPoints >= 0)
-                    return vDmg;
+                    return;
             }
             NPC.RedemptionGuard().GuardBreakCheck(NPC, DustID.Stone, CustomSounds.GuardBreak, 20, 2, 10);
 
-            damage *= 2;
-            return true;
+            modifiers.FinalDamage *= 2;
         }
         public override void SendExtraAI(BinaryWriter writer)
         {

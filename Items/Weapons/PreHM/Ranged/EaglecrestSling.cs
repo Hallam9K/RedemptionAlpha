@@ -8,10 +8,10 @@ namespace Redemption.Items.Weapons.PreHM.Ranged
     {
         public override void SetStaticDefaults()
         {
-            Tooltip.SetDefault("Hold to swing the sling around the player, release to toss the pebble");
+            // Tooltip.SetDefault("Hold to swing the sling around the player, release to toss the pebble");
 
             ItemID.Sets.SkipsInitialUseSound[Item.type] = true;
-            SacrificeTotal = 1;
+            Item.ResearchUnlockCount = 1;
         }
 
         public override void SetDefaults()

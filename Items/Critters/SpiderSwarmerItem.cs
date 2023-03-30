@@ -10,9 +10,9 @@ namespace Redemption.Items.Critters
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Spider Swarmer");
+            // DisplayName.SetDefault("Spider Swarmer");
 
-            SacrificeTotal = 5;
+            Item.ResearchUnlockCount = 5;
         }
 
         public override void SetDefaults()
@@ -20,7 +20,7 @@ namespace Redemption.Items.Critters
             Item.width = 16;
             Item.height = 12;
             Item.rare = ItemRarityID.Blue;
-            Item.maxStack = 9999;
+            Item.maxStack = Item.CommonMaxStack;
             Item.bait = 10;
             Item.value = Item.buyPrice(silver: 1);
             Item.useAnimation = 30;

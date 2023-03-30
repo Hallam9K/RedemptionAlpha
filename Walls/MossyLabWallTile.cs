@@ -1,4 +1,5 @@
 using Microsoft.Xna.Framework;
+using Redemption.Items.Placeable.Tiles;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -11,6 +12,7 @@ namespace Redemption.Walls
 		{
 			Main.wallHouse[Type] = false;
 			AddMapEntry(new Color(8, 64, 39));
+            ItemDrop = ModContent.ItemType<LabPlatingWall>();
             HitSound = SoundID.Grass;
         }
         public override bool CanExplode(int i, int j) => false;
@@ -21,8 +23,8 @@ namespace Redemption.Walls
         public override string Texture => Redemption.PLACEHOLDER_TEXTURE;
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Mossy Lab Wall (Full) (Unsafe)");
-            Tooltip.SetDefault("[c/ff0000:Unbreakable]");
+            // DisplayName.SetDefault("Mossy Lab Wall (Full) (Unsafe)");
+            // Tooltip.SetDefault("[c/ff0000:Unbreakable]");
         }
 
         public override void SetDefaults()

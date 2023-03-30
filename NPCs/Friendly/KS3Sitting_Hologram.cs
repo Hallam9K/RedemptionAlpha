@@ -12,7 +12,7 @@ namespace Redemption.NPCs.Friendly
         public override string Texture => "Redemption/NPCs/Friendly/Hologram";
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Hologram");
+            // DisplayName.SetDefault("Hologram");
             Main.projFrames[Projectile.type] = 7;
         }
         public override void SetDefaults()

@@ -16,7 +16,7 @@ namespace Redemption.Items.Weapons.PreHM.Ritualist
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Keeper's Knife");
+            // DisplayName.SetDefault("Keeper's Knife");
             Main.projFrames[Projectile.type] = 5;
         }
         public override bool ShouldUpdatePosition() => false;
@@ -68,17 +68,16 @@ namespace Redemption.Items.Weapons.PreHM.Ritualist
             Vector2 Offset = Vector2.Normalize(Projectile.velocity) * 50f;
             Projectile.Center = player.Center + Offset;
         }
-        public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
+        public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
         {
             if (NPCLists.Undead.Contains(target.type) || NPCLists.Skeleton.Contains(target.type))
-                damage = (int)(damage * 2f);
+                modifiers.FinalDamage *= 2f;
 
-            RedeProjectile.Decapitation(target, ref damage, ref crit);
         }
-
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             target.AddBuff(ModContent.BuffType<NecroticGougeDebuff>(), 600);
+            RedeProjectile.Decapitation(target, ref damageDone, ref hit.Crit);
         }
         public override bool PreDraw(ref Color lightColor)
         {

@@ -9,8 +9,8 @@ namespace Redemption.Items.Weapons.HM.Melee
     {
         public override void SetStaticDefaults()
         {
-            Tooltip.SetDefault("Slamming the ground creates a shockwave");
-            SacrificeTotal = 1;
+            // Tooltip.SetDefault("Slamming the ground creates a shockwave");
+            Item.ResearchUnlockCount = 1;
         }
 
         public override void SetDefaults()

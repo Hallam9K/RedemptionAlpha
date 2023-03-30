@@ -1,5 +1,6 @@
 using Redemption.Tiles.Furniture.Shade;
 using Terraria.ID;
+using Terraria;
 using Terraria.ModLoader;
 
 namespace Redemption.Items.Placeable.Furniture.Shade
@@ -8,7 +9,7 @@ namespace Redemption.Items.Placeable.Furniture.Shade
 	{
         public override void SetStaticDefaults()
         {
-            SacrificeTotal = 1;
+            Item.ResearchUnlockCount = 1;
         }
 
         public override void SetDefaults()
@@ -16,7 +17,7 @@ namespace Redemption.Items.Placeable.Furniture.Shade
             Item.DefaultToPlaceableTile(ModContent.TileType<ShadestoneToiletTile>(), 0);
             Item.width = 16;
             Item.height = 32;
-            Item.maxStack = 9999;
+            Item.maxStack = Item.CommonMaxStack;
             Item.value = 1000;
             Item.rare = ItemRarityID.Blue;
         }

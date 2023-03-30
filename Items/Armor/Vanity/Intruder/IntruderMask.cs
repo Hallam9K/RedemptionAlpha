@@ -8,9 +8,9 @@ namespace Redemption.Items.Armor.Vanity.Intruder
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Intruder's Mask");
+            // DisplayName.SetDefault("Intruder's Mask");
             ArmorIDs.Head.Sets.DrawFullHair[EquipLoader.GetEquipSlot(Mod, Name, EquipType.Head)] = true;
-            SacrificeTotal = 1;
+            Item.ResearchUnlockCount = 1;
         }
         public override void SetDefaults()
         {

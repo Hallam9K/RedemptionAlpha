@@ -12,11 +12,11 @@ namespace Redemption.Items.Weapons.PreHM.Magic
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Eaglecrest Glove");
-            Tooltip.SetDefault("Throws a boulder which inherits your forward momentum\n" +
+            // DisplayName.SetDefault("Eaglecrest Glove");
+            /* Tooltip.SetDefault("Throws a boulder which inherits your forward momentum\n" +
                 "If thrown fast enough, lightning strikes the ground when it bounces, dealing " + ElementID.ThunderS + " damage\n" +
-                "'Don't like a guy? Throw a boulder at him!'");
-            SacrificeTotal = 1;
+                "'Don't like a guy? Throw a boulder at him!'"); */
+            Item.ResearchUnlockCount = 1;
         }
 
         public override void SetDefaults()

@@ -10,9 +10,9 @@ namespace Redemption.Items.Usable
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Special Keycard");
-            Tooltip.SetDefault("Unlocks a special Laboratory Chest");
-            SacrificeTotal = 1;
+            // DisplayName.SetDefault("Special Keycard");
+            // Tooltip.SetDefault("Unlocks a special Laboratory Chest");
+            Item.ResearchUnlockCount = 1;
         }
         public override void SetDefaults()
         {

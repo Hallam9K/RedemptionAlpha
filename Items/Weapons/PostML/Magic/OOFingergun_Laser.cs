@@ -12,7 +12,7 @@ namespace Redemption.Items.Weapons.PostML.Magic
         public override string Texture => "Redemption/NPCs/Bosses/Obliterator/OO_Laser";
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Omega Laser");
+            // DisplayName.SetDefault("Omega Laser");
             Main.projFrames[Projectile.type] = 8;
         }
         public override void SetDefaults()
@@ -31,7 +31,7 @@ namespace Redemption.Items.Weapons.PostML.Magic
         public override string Texture => "Redemption/NPCs/Bosses/Obliterator/OO_Fingerflash";
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Fingerflash");
+            // DisplayName.SetDefault("Fingerflash");
             Main.projFrames[Projectile.type] = 9;
         }
         public override void SetDefaults() 

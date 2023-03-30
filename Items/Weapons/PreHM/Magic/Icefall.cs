@@ -12,10 +12,10 @@ namespace Redemption.Items.Weapons.PreHM.Magic
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Icefall");
-            Tooltip.SetDefault("Lowers the air temperature at cursor point, forming damaging ice crystals that eventually fall to gravity");
+            // DisplayName.SetDefault("Icefall");
+            // Tooltip.SetDefault("Lowers the air temperature at cursor point, forming damaging ice crystals that eventually fall to gravity");
 
-            SacrificeTotal = 1;
+            Item.ResearchUnlockCount = 1;
         }
 
         public override void SetDefaults()

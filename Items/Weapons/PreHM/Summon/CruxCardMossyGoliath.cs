@@ -20,12 +20,12 @@ namespace Redemption.Items.Weapons.PreHM.Summon
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Crux Card: Mossy Goliath");
-            Tooltip.SetDefault("Summons the great spirit of a Mossy Goliath\n" +
+            // DisplayName.SetDefault("Crux Card: Mossy Goliath");
+            /* Tooltip.SetDefault("Summons the great spirit of a Mossy Goliath\n" +
                 "Right-click to tug the spirits back to your position, consuming 5 [i:" + ModContent.ItemType<LostSoul>() + "]\n" +
                 "Consumes 30 [i:" + ModContent.ItemType<LostSoul>() + "] on use\n" +
-                "Can only use one Spirit Card at a time");
-            SacrificeTotal = 1;
+                "Can only use one Spirit Card at a time"); */
+            Item.ResearchUnlockCount = 1;
         }
 
         public override void SetDefaults()
@@ -130,7 +130,7 @@ namespace Redemption.Items.Weapons.PreHM.Summon
                     if (Main.netMode != NetmodeID.MultiplayerClient)
                         NPC.NewNPC(new EntitySource_BossSpawn(player), (int)player.Center.X + 10, (int)player.Center.Y + 20, type, ai3: player.whoAmI);
                     else
-                        NetMessage.SendData(MessageID.SpawnBoss, number: player.whoAmI, number2: type);
+                        NetMessage.SendData(MessageID.SpawnBossUseLicenseStartEvent, number: player.whoAmI, number2: type);
                 }
             }
             return true;

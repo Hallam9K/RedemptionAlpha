@@ -20,12 +20,12 @@ namespace Redemption.Items.Weapons.PreHM.Summon
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Crux Card: Gathic Soldiers");
-            Tooltip.SetDefault("Summons the spirits of 2 Skeleton Wanderers and a Duelist\n" +
+            // DisplayName.SetDefault("Crux Card: Gathic Soldiers");
+            /* Tooltip.SetDefault("Summons the spirits of 2 Skeleton Wanderers and a Duelist\n" +
                 "Right-click to tug the spirits back to your position, consuming 1 [i:" + ModContent.ItemType<LostSoul>() + "]\n" +
                 "Consumes 10 [i:" + ModContent.ItemType<LostSoul>() + "] on use\n" +
-                "Can only use one Spirit Card at a time");
-            SacrificeTotal = 1;
+                "Can only use one Spirit Card at a time"); */
+            Item.ResearchUnlockCount = 1;
         }
 
         public override void SetDefaults()
@@ -136,9 +136,9 @@ namespace Redemption.Items.Weapons.PreHM.Summon
                     }
                     else
                     {
-                        NetMessage.SendData(MessageID.SpawnBoss, number: player.whoAmI, number2: type);
-                        NetMessage.SendData(MessageID.SpawnBoss, number: player.whoAmI, number2: type);
-                        NetMessage.SendData(MessageID.SpawnBoss, number: player.whoAmI, number2: type2);
+                        NetMessage.SendData(MessageID.SpawnBossUseLicenseStartEvent, number: player.whoAmI, number2: type);
+                        NetMessage.SendData(MessageID.SpawnBossUseLicenseStartEvent, number: player.whoAmI, number2: type);
+                        NetMessage.SendData(MessageID.SpawnBossUseLicenseStartEvent, number: player.whoAmI, number2: type2);
                     }
                 }
             }

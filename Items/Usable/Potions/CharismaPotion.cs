@@ -1,4 +1,5 @@
-﻿using Redemption.Buffs;
+﻿using Microsoft.Xna.Framework;
+using Redemption.Buffs;
 using Redemption.Items.Placeable.Plants;
 using Terraria;
 using Terraria.ID;
@@ -10,9 +11,14 @@ namespace Redemption.Items.Usable.Potions
 	{
 		public override void SetStaticDefaults()
 		{
-            Tooltip.SetDefault("Shops have lower prices"
-                + "\nEnemies drop more gold");
-            SacrificeTotal = 20;
+            /* Tooltip.SetDefault("Shops have lower prices"
+                + "\nEnemies drop more gold"); */
+            ItemID.Sets.DrinkParticleColors[Type] = new Color[3] {
+                new Color(249, 249, 175),
+                new Color(208, 191, 80),
+                new Color(158, 105, 41)
+            };
+            Item.ResearchUnlockCount = 20;
         }
 
 		public override void SetDefaults()
@@ -25,7 +31,7 @@ namespace Redemption.Items.Usable.Potions
             Item.consumable = true;
             Item.width = 32;
             Item.height = 30;
-            Item.maxStack = 9999;
+            Item.maxStack = Item.CommonMaxStack;
             Item.value = Item.sellPrice(0, 8, 0, 0);
             Item.rare = ItemRarityID.Orange;
             Item.buffType = ModContent.BuffType<CharismaPotionBuff>();
@@ -39,6 +45,7 @@ namespace Redemption.Items.Usable.Potions
                 .AddIngredient(ItemID.Blinkroot)
                 .AddIngredient(ItemID.BottledWater)
                 .AddTile(TileID.Bottles)
+                .DisableDecraft()
                 .Register();
         }
     }

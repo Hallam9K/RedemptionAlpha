@@ -83,18 +83,11 @@ namespace Redemption.Globals
             //else if (Main.netMode != NetmodeID.SinglePlayer)
             //    Redemption.WriteToPacket(Redemption.Instance.GetPacket(), (byte)ModMessageType.NPCSpawnFromClient, npcType, pos).Send(-1);
         }
-        public override void OnWorldLoad()
+        public override void ClearWorld()
         {
             for (int k = 0; k < labAccess.Length; k++)
                 labAccess[k] = false;
         }
-
-        public override void OnWorldUnload()
-        {
-            for (int k = 0; k < labAccess.Length; k++)
-                labAccess[k] = false;
-        }
-
         public override void SaveWorldData(TagCompound tag)
         {
             var lists = new List<string>();

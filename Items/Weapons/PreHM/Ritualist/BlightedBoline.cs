@@ -15,9 +15,9 @@ namespace Redemption.Items.Weapons.PreHM.Ritualist
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Blighted Boline");
-            Tooltip.SetDefault("After the player's Spirit Level increases, the following swing fires a cursed thorn tenril");
-            SacrificeTotal = 1;
+            // DisplayName.SetDefault("Blighted Boline");
+            // Tooltip.SetDefault("After the player's Spirit Level increases, the following swing fires a cursed thorn tenril");
+            Item.ResearchUnlockCount = 1;
         }
 
         public override void SetDefaults()

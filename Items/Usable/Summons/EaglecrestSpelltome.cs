@@ -12,10 +12,10 @@ namespace Redemption.Items.Usable.Summons
     {
         public override void SetStaticDefaults()
         {
-            Tooltip.SetDefault("Calls upon Eaglecrest Golem"
-                + "\nSold by Zephos/Daerel after Eater of Worlds/Brain of Cthulhu is defeated");
+            /* Tooltip.SetDefault("Calls upon Eaglecrest Golem"
+                + "\nSold by Zephos/Daerel after Eater of Worlds/Brain of Cthulhu is defeated"); */
 
-            SacrificeTotal = 1;
+            Item.ResearchUnlockCount = 1;
             ItemID.Sets.SortingPriorityBossSpawns[Type] = 12;
         }
 
@@ -49,7 +49,7 @@ namespace Redemption.Items.Usable.Summons
                 if (Main.netMode != NetmodeID.MultiplayerClient)
                     NPC.SpawnOnPlayer(player.whoAmI, type);
                 else
-                    NetMessage.SendData(MessageID.SpawnBoss, number: player.whoAmI, number2: type);
+                    NetMessage.SendData(MessageID.SpawnBossUseLicenseStartEvent, number: player.whoAmI, number2: type);
 
                 int golem = NPC.FindFirstNPC(type);
                 if (golem > -1)

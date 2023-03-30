@@ -9,7 +9,7 @@ namespace Redemption.Projectiles.Misc
         public override string Texture => Redemption.EMPTY_TEXTURE;
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Shockwave Boom");
+            // DisplayName.SetDefault("Shockwave Boom");
         }
         public override void SetDefaults()
         {

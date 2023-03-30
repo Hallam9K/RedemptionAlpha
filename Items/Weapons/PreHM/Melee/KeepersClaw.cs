@@ -11,14 +11,14 @@ namespace Redemption.Items.Weapons.PreHM.Melee
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Keeper's Claw");
-            Tooltip.SetDefault("Hitting enemies with the slash inflicts Necrotic Gouge, causing them to burst into blood upon death\n" +
+            // DisplayName.SetDefault("Keeper's Claw");
+            /* Tooltip.SetDefault("Hitting enemies with the slash inflicts Necrotic Gouge, causing them to burst into blood upon death\n" +
                 "Physical slashes deal double damage to undead and skeletons\n" +
                 "Hold left-click to charge a Blood Wave, taking away some of your life to fire life-stealing projectiles" +
-                "\n'The hand of my beloved, cold and dead...'");
+                "\n'The hand of my beloved, cold and dead...'"); */
 
             ItemID.Sets.SkipsInitialUseSound[Item.type] = true;
-            SacrificeTotal = 1;
+            Item.ResearchUnlockCount = 1;
         }
 
         public override void SetDefaults()

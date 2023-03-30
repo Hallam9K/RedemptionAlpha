@@ -2,6 +2,7 @@ using Redemption.Items.Materials.HM;
 using Redemption.Items.Placeable.Tiles;
 using Redemption.Tiles.Containers;
 using Terraria.ID;
+using Terraria;
 using Terraria.ModLoader;
 
 namespace Redemption.Items.Placeable.Containers
@@ -10,8 +11,8 @@ namespace Redemption.Items.Placeable.Containers
 	{
 		public override void SetStaticDefaults()
 		{
-            DisplayName.SetDefault("High Security Laboratory Crate");
-			SacrificeTotal = 1;
+            // DisplayName.SetDefault("High Security Laboratory Crate");
+			Item.ResearchUnlockCount = 1;
 		}
 
 		public override void SetDefaults()
@@ -19,7 +20,7 @@ namespace Redemption.Items.Placeable.Containers
 			Item.DefaultToPlaceableTile(ModContent.TileType<LabChestTileLocked>(), 0);
 			Item.width = 30;
 			Item.height = 28;
-			Item.maxStack = 9999;
+			Item.maxStack = Item.CommonMaxStack;
 			Item.value = 5000;
 			Item.rare = ItemRarityID.LightPurple;
 		}

@@ -10,7 +10,7 @@ namespace Redemption.NPCs.Bosses.Neb
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Transition");
+            // DisplayName.SetDefault("Transition");
         }
         public override void SetDefaults()
         {

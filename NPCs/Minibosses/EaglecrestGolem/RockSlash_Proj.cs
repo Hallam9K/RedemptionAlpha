@@ -13,7 +13,7 @@ namespace Redemption.NPCs.Minibosses.EaglecrestGolem
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Rock Slash");
+            // DisplayName.SetDefault("Rock Slash");
             ProjectileID.Sets.TrailCacheLength[Projectile.type] = 5;
             ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
             ElementID.ProjWind[Type] = true;

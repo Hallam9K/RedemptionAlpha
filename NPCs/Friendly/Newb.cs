@@ -24,7 +24,7 @@ namespace Redemption.NPCs.Friendly
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Fool");
+            // DisplayName.SetDefault("Fool");
             Main.npcFrameCount[Type] = 25;
             NPCID.Sets.ExtraFramesCount[Type] = 5;
             NPCID.Sets.AttackFrameCount[Type] = 5;
@@ -136,7 +136,7 @@ namespace Redemption.NPCs.Friendly
             if (RedeWorld.newbGone)
                 NPC.active = false;
         }
-        public override void HitEffect(int hitDirection, double damage)
+        public override void HitEffect(NPC.HitInfo hit)
         {
             if (NPC.life <= 0)
             {
@@ -146,7 +146,7 @@ namespace Redemption.NPCs.Friendly
             Dust.NewDust(NPC.position + NPC.velocity, NPC.width, NPC.height, DustID.Blood, NPC.velocity.X * 0.5f, NPC.velocity.Y * 0.5f);
 
         }
-        public override bool CanTownNPCSpawn(int numTownNPCs, int money)
+        public override bool CanTownNPCSpawn(int numTownNPCs)
         {
             return RedeBossDowned.foundNewb && !RedeWorld.newbGone;
         }
@@ -209,43 +209,41 @@ namespace Redemption.NPCs.Friendly
                 button = Language.GetTextValue("LegacyInterface.28");
         }
 
-        public override void OnChatButtonClicked(bool firstButton, ref bool shop)
+        public override void OnChatButtonClicked(bool firstButton, ref string shopName)
         {
             if (firstButton)
-                shop = true;
+                shopName = "Shop";
         }
 
         public override bool CanGoToStatue(bool toKingStatue) => true;
-
-        public override void SetupShop(Chest shop, ref int nextSlot)
+        public override void AddShops()
         {
-            shop.item[nextSlot++].SetDefaults(ItemID.DirtBlock);
-            shop.item[nextSlot++].SetDefaults(ItemID.MudBlock);
-            if (NPC.downedBoss1 || NPC.downedSlimeKing || RedeBossDowned.downedThorn || RedeBossDowned.downedErhan)
+            var npcShop = new NPCShop(Type)
+                .Add(ItemID.DirtBlock)
+                .Add(ItemID.MudBlock)
+                .Add(ItemID.Amethyst, RedeConditions.DownedEarlyGameBossAndMoR)
+                .Add(ItemID.Topaz, RedeConditions.DownedEarlyGameBossAndMoR)
+                .Add(ItemID.Sapphire, RedeConditions.DownedEoCOrBoCOrKeeper)
+                .Add(ItemID.Emerald, RedeConditions.DownedEoCOrBoCOrKeeper)
+                .Add(new Item(ItemID.Geode) { shopCustomPrice = Item.buyPrice(0, 2) }, RedeConditions.DownedEoCOrBoCOrKeeper)
+                .Add(ItemID.Ruby, RedeConditions.DownedSkeletronOrSeed)
+                .Add(ItemID.Diamond, RedeConditions.DownedSkeletronOrSeed)
+                .Add<OreBomb>(Condition.InBelowSurface)
+                .Add<OrePowder>(Condition.InBelowSurface, Condition.Hardmode);
+
+            npcShop.Register();
+        }
+        public override void ModifyActiveShop(string shopName, Item[] items)
+        {
+            foreach (Item item in items)
             {
-                shop.item[nextSlot++].SetDefaults(ItemID.Amethyst);
-                shop.item[nextSlot++].SetDefaults(ItemID.Topaz);
-            }
-            if (NPC.downedBoss2 || RedeBossDowned.downedKeeper)
-            {
-                shop.item[nextSlot++].SetDefaults(ItemID.Sapphire);
-                shop.item[nextSlot++].SetDefaults(ItemID.Emerald);
-                shop.item[nextSlot].SetDefaults(ItemID.Geode);
-                shop.item[nextSlot++].shopCustomPrice = Item.buyPrice(0, NPC.downedBoss3 ? 1 : 2, 0, 0);
-            }
-            if (NPC.downedBoss3 || RedeBossDowned.downedSeed)
-            {
-                shop.item[nextSlot++].SetDefaults(ItemID.Ruby);
-                shop.item[nextSlot++].SetDefaults(ItemID.Diamond);
-            }
-            if (Main.LocalPlayer.ZoneRockLayerHeight || Main.LocalPlayer.ZoneDirtLayerHeight)
-            {
-                shop.item[nextSlot++].SetDefaults(ModContent.ItemType<OreBomb>());
-                if (Main.hardMode)
-                    shop.item[nextSlot++].SetDefaults(ModContent.ItemType<OrePowder>());
+                if (item == null || item.type == ItemID.None)
+                    continue;
+
+                if (item.type is ItemID.Geode && NPC.downedBoss3)
+                    item.shopCustomPrice = Item.buyPrice(0, 1);
             }
         }
-
         public override void TownNPCAttackStrength(ref int damage, ref float knockback)
         {
             damage = 18;
@@ -262,7 +260,7 @@ namespace Redemption.NPCs.Friendly
             itemWidth = itemHeight = 34;
         }
 
-        public override void DrawTownAttackSwing(ref Texture2D item, ref int itemSize, ref float scale, ref Vector2 offset)
+        public override void DrawTownAttackSwing(ref Texture2D item, ref Rectangle itemFrame, ref int itemSize, ref float scale, ref Vector2 offset)
         {
             item = TextureAssets.Item[ItemID.WoodenSword].Value;
         }

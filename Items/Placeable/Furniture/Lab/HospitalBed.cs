@@ -2,6 +2,7 @@ using Redemption.Items.Materials.HM;
 using Redemption.Items.Placeable.Tiles;
 using Redemption.Tiles.Furniture.Lab;
 using Terraria.ID;
+using Terraria;
 using Terraria.ModLoader;
 
 namespace Redemption.Items.Placeable.Furniture.Lab
@@ -10,8 +11,8 @@ namespace Redemption.Items.Placeable.Furniture.Lab
 	{
 		public override void SetStaticDefaults()
 		{
-            DisplayName.SetDefault("Hospital Bed");
-			SacrificeTotal = 1;
+            // DisplayName.SetDefault("Hospital Bed");
+			Item.ResearchUnlockCount = 1;
 		}
 
 		public override void SetDefaults()
@@ -19,7 +20,7 @@ namespace Redemption.Items.Placeable.Furniture.Lab
 			Item.DefaultToPlaceableTile(ModContent.TileType<HospitalBedTile>(), 0);
             Item.width = 38;
             Item.height = 24;
-            Item.maxStack = 9999;
+            Item.maxStack = Item.CommonMaxStack;
             Item.rare = ItemRarityID.LightPurple;
             Item.value = 6000;
 		}

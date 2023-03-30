@@ -14,7 +14,7 @@ namespace Redemption.NPCs.Bosses.SeedOfInfection
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Xenomite Beam");
+            // DisplayName.SetDefault("Xenomite Beam");
             ElementID.ProjPoison[Type] = true;
         }
         public override void SetDefaults()
@@ -28,7 +28,7 @@ namespace Redemption.NPCs.Bosses.SeedOfInfection
             Projectile.timeLeft = 3600;
             Projectile.tileCollide = false;
         }
-        public override void OnHitPlayer(Player target, int damage, bool crit) => target.AddBuff(ModContent.BuffType<BileDebuff>(), 120);
+        public override void OnHitPlayer(Player target, Player.HurtInfo info) => target.AddBuff(ModContent.BuffType<BileDebuff>(), 120);
         internal const float charge = 40f;
         public float LaserLength { get { return Projectile.localAI[1]; } set { Projectile.localAI[1] = value; } }
         public const float LaserLengthMax = 2000f;

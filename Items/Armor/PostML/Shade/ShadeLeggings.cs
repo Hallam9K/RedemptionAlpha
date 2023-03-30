@@ -12,12 +12,12 @@ namespace Redemption.Items.Armor.PostML.Shade
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Shade Greaves");
-            Tooltip.SetDefault("8% increased ritual damage\n" +
+            // DisplayName.SetDefault("Shade Greaves");
+            /* Tooltip.SetDefault("8% increased ritual damage\n" +
                 "15% increased ritual critical strike chance\n" +
-                "30% increased movement speed");
+                "30% increased movement speed"); */
 
-            SacrificeTotal = 1;
+            Item.ResearchUnlockCount = 1;
         }
 
         public override void SetDefaults()

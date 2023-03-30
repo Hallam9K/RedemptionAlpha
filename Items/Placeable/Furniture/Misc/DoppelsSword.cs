@@ -11,7 +11,7 @@ namespace Redemption.Items.Placeable.Furniture.Misc
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Steel Sword Fragment");
+			// DisplayName.SetDefault("Steel Sword Fragment");
         }
 
 		public override void SetDefaults()
@@ -19,7 +19,7 @@ namespace Redemption.Items.Placeable.Furniture.Misc
 			Item.DefaultToPlaceableTile(ModContent.TileType<DoppelsSwordTile>(), 0);
 			Item.width = 46;
 			Item.height = 50;
-			Item.maxStack = 9999;
+			Item.maxStack = Item.CommonMaxStack;
 			Item.rare = ItemRarityID.LightRed;
 			Item.value = Item.sellPrice(0, 0, 50, 0);
 		}

@@ -11,12 +11,12 @@ namespace Redemption.Items.Weapons.PreHM.Melee
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Pure-Iron Sword");
-            Tooltip.SetDefault("Swings can block ice projectiles\n" +
-                "Holding left-click and hitting enemies will charge an Arctic Spin Slash");
+            // DisplayName.SetDefault("Pure-Iron Sword");
+            /* Tooltip.SetDefault("Swings can block ice projectiles\n" +
+                "Holding left-click and hitting enemies will charge an Arctic Spin Slash"); */
 
             ItemID.Sets.SkipsInitialUseSound[Item.type] = true;
-            SacrificeTotal = 1;
+            Item.ResearchUnlockCount = 1;
         }
 
         public override void SetDefaults()

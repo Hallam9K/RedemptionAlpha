@@ -17,7 +17,7 @@ namespace Redemption.Items.Weapons.HM.Melee
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Midnight, Defiler of the Prince");
+            // DisplayName.SetDefault("Midnight, Defiler of the Prince");
             Main.projFrames[Projectile.type] = 9;
             ElementID.ProjShadow[Type] = true;
             ElementID.ProjCelestial[Type] = true;
@@ -155,8 +155,9 @@ namespace Redemption.Items.Weapons.HM.Melee
             }
         }
         private bool hitOnce;
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
+            RedeProjectile.Decapitation(target, ref damageDone, ref hit.Crit, 80);
             if (!hitOnce)
             {
                 Point tileBelow = new Vector2(projHitbox.Center.X, projHitbox.Bottom).ToTileCoordinates();
@@ -171,10 +172,9 @@ namespace Redemption.Items.Weapons.HM.Melee
         {
             hitbox = new((int)(Projectile.spriteDirection == -1 ? Projectile.Center.X - 140 : Projectile.Center.X), (int)(Projectile.Center.Y - 100), 140, 130);
         }
-        public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
+        public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
         {
-            damage = (int)(damage * ((glow * 2.5f) + 1));
-            RedeProjectile.Decapitation(target, ref damage, ref crit, 80);
+            modifiers.FinalDamage *= (glow * 2.5f) + 1;
         }
 
         private float drawTimer;

@@ -67,15 +67,7 @@ namespace Redemption.Globals
             }
             #endregion
         }
-        public override void OnWorldLoad()
-        {
-            for (int k = 0; k < wayfarerVars.Length; k++)
-                wayfarerVars[k] = 0;
-            for (int k = 0; k < voltVars.Length; k++)
-                voltVars[k] = false;
-            forestNymphVar = 0;
-        }
-        public override void OnWorldUnload()
+        public override void ClearWorld()
         {
             for (int k = 0; k < wayfarerVars.Length; k++)
                 wayfarerVars[k] = 0;

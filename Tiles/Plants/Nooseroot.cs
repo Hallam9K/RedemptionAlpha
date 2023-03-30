@@ -4,6 +4,7 @@ using Redemption.Tiles.Tiles;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.Enums;
+using Terraria.GameContent.Metadata;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
@@ -35,6 +36,7 @@ namespace Redemption.Tiles.Plants
             DustType = ModContent.DustType<VoidFlame>();
             HitSound = SoundID.Grass;
             ItemDrop = ModContent.ItemType<Nooseroot>();
+            TileMaterials.SetForTileId(Type, TileMaterials._materialsByName["Plant"]);
         }
         public override void NumDust(int i, int j, bool fail, ref int num)
         {
@@ -126,7 +128,7 @@ namespace Redemption.Tiles.Plants
         public override string Texture => Redemption.PLACEHOLDER_TEXTURE;
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Small Nooseroot");
+            // DisplayName.SetDefault("Small Nooseroot");
         }
         public override void SetDefaults()
         {
@@ -139,7 +141,7 @@ namespace Redemption.Tiles.Plants
         public override string Texture => Redemption.PLACEHOLDER_TEXTURE;
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Medium Nooseroot");
+            // DisplayName.SetDefault("Medium Nooseroot");
         }
         public override void SetDefaults()
         {
@@ -152,7 +154,7 @@ namespace Redemption.Tiles.Plants
         public override string Texture => Redemption.PLACEHOLDER_TEXTURE;
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Large Nooseroot");
+            // DisplayName.SetDefault("Large Nooseroot");
         }
         public override void SetDefaults()
         {

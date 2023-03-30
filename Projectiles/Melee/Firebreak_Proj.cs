@@ -16,7 +16,7 @@ namespace Redemption.Projectiles.Melee
         public override string Texture => Redemption.EMPTY_TEXTURE;
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Flaming Rain");
+            // DisplayName.SetDefault("Flaming Rain");
             ElementID.ProjFire[Type] = true;
         }
         public override void SetDefaults()

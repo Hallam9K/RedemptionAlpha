@@ -9,10 +9,11 @@ namespace Redemption.Items.Placeable.MusicBoxes
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Music Box (King Slayer III)");
-			Tooltip.SetDefault("William 'GoukisanNG' Prevett - Betrayal of Fear");
-
-			SacrificeTotal = 1;
+            // DisplayName.SetDefault("Music Box (King Slayer III)");
+            // Tooltip.SetDefault("William 'GoukisanNG' Prevett - Betrayal of Fear");
+            ItemID.Sets.CanGetPrefixes[Type] = false;
+            ItemID.Sets.ShimmerTransformToItem[Type] = ItemID.MusicBox;
+            Item.ResearchUnlockCount = 1;
 
 			MusicLoader.AddMusicBox(Mod, MusicLoader.GetMusicSlot(Mod, "Sounds/Music/BossSlayer"), ModContent.ItemType<KSBox>(), ModContent.TileType<KSBoxTile>());
 		}

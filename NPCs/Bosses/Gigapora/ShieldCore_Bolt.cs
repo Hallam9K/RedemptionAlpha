@@ -13,7 +13,7 @@ namespace Redemption.NPCs.Bosses.Gigapora
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Energy Bolt");
+            // DisplayName.SetDefault("Energy Bolt");
             ElementID.ProjThunder[Type] = true;
             ElementID.ProjFire[Type] = true;
         }

@@ -11,17 +11,17 @@ namespace Redemption.Items.Materials.HM
     {
         public override void SetStaticDefaults()
         {
-            Tooltip.SetDefault("'Infects mechanical things'");
+            // Tooltip.SetDefault("'Infects mechanical things'");
             Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(4, 4));
             ItemID.Sets.AnimatesAsSoul[Item.type] = true;
-            SacrificeTotal = 25;
+            Item.ResearchUnlockCount = 25;
         }
 
         public override void SetDefaults()
         {
             Item.width = 14;
             Item.height = 24;
-            Item.maxStack = 9999;
+            Item.maxStack = Item.CommonMaxStack;
             Item.value = Item.sellPrice(0, 1, 0, 0);
             Item.rare = ItemRarityID.Yellow;
         }

@@ -7,7 +7,7 @@ namespace Redemption.Items.Weapons.PreHM.Ritualist
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Blood Letter");
+            // DisplayName.SetDefault("Blood Letter");
             Main.projFrames[Projectile.type] = 5;
             ElementID.ProjBlood[Type] = true;
         }

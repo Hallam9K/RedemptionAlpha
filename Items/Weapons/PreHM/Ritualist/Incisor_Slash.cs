@@ -16,7 +16,7 @@ namespace Redemption.Items.Weapons.PreHM.Ritualist
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Incisor");
+            // DisplayName.SetDefault("Incisor");
             Main.projFrames[Projectile.type] = 5;
         }
         public override bool ShouldUpdatePosition() => false;
@@ -68,14 +68,11 @@ namespace Redemption.Items.Weapons.PreHM.Ritualist
             Vector2 Offset = Vector2.Normalize(Projectile.velocity) * 50f;
             Projectile.Center = player.Center + Offset;
         }
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
+            RedeProjectile.Decapitation(target, ref damageDone, ref hit.Crit);
             if (Projectile.type == ModContent.ProjectileType<Incisor_Slash>())
                 target.AddBuff(ModContent.BuffType<IncisorDebuff>(), 300);
-        }
-        public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
-        {
-            RedeProjectile.Decapitation(target, ref damage, ref crit);
         }
         public override bool PreDraw(ref Color lightColor)
         {

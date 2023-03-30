@@ -15,12 +15,12 @@ namespace Redemption.Items.Usable.Summons
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Wedding Ring");
-            Tooltip.SetDefault("Attracts the attention of a sorrowful mistress"
+            // DisplayName.SetDefault("Wedding Ring");
+            /* Tooltip.SetDefault("Attracts the attention of a sorrowful mistress"
                 + "\nOnly usable at night"
-                + "\nNot consumable");
+                + "\nNot consumable"); */
 
-            SacrificeTotal = 1;
+            Item.ResearchUnlockCount = 1;
             ItemID.Sets.SortingPriorityBossSpawns[Type] = 12;
         }
 
@@ -58,7 +58,7 @@ namespace Redemption.Items.Usable.Summons
                 }
                 else
                 {
-                    NetMessage.SendData(MessageID.SpawnBoss, number: player.whoAmI, number2: type);
+                    NetMessage.SendData(MessageID.SpawnBossUseLicenseStartEvent, number: player.whoAmI, number2: type);
                 }
             }
             return true;

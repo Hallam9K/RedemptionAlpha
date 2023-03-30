@@ -7,9 +7,9 @@ namespace Redemption.Items.Lore
 	{
 		public override void SetStaticDefaults()
 		{
-            DisplayName.SetDefault("Floppy Disk");
-            Tooltip.SetDefault("'A very old floppy disk. A T-Bot might be able to decode the data...'");
-            SacrificeTotal = 1;
+            // DisplayName.SetDefault("Floppy Disk");
+            // Tooltip.SetDefault("'A very old floppy disk. A T-Bot might be able to decode the data...'");
+            Item.ResearchUnlockCount = 1;
         }
         public override void SetDefaults()
 		{
@@ -25,8 +25,8 @@ namespace Redemption.Items.Lore
         public override void SetStaticDefaults()
         {
             base.SetStaticDefaults();
-            Tooltip.SetDefault("'A very old floppy disk. A T-Bot might be able to decode the data...'"
-            + "\n(1/2)");
+            /* Tooltip.SetDefault("'A very old floppy disk. A T-Bot might be able to decode the data...'"
+            + "\n(1/2)"); */
         }
         public override void SetDefaults()
         {
@@ -40,8 +40,8 @@ namespace Redemption.Items.Lore
         public override void SetStaticDefaults()
         {
             base.SetStaticDefaults();
-            Tooltip.SetDefault("'A very old floppy disk. A T-Bot might be able to decode the data...'"
-            + "\n(2/2)");
+            /* Tooltip.SetDefault("'A very old floppy disk. A T-Bot might be able to decode the data...'"
+            + "\n(2/2)"); */
         }
         public override void SetDefaults()
         {
@@ -54,8 +54,8 @@ namespace Redemption.Items.Lore
         public override void SetStaticDefaults()
         {
             base.SetStaticDefaults();
-            Tooltip.SetDefault("'A very old floppy disk. A T-Bot might be able to decode the data...'"
-            + "\n(1/2)");
+            /* Tooltip.SetDefault("'A very old floppy disk. A T-Bot might be able to decode the data...'"
+            + "\n(1/2)"); */
         }
         public override void SetDefaults()
         {
@@ -69,8 +69,8 @@ namespace Redemption.Items.Lore
         public override void SetStaticDefaults()
         {
             base.SetStaticDefaults();
-            Tooltip.SetDefault("'A very old floppy disk. A T-Bot might be able to decode the data...'"
-            + "\n(2/2)");
+            /* Tooltip.SetDefault("'A very old floppy disk. A T-Bot might be able to decode the data...'"
+            + "\n(2/2)"); */
         }
         public override void SetDefaults()
         {
@@ -83,8 +83,8 @@ namespace Redemption.Items.Lore
         public override void SetStaticDefaults()
         {
             base.SetStaticDefaults();
-            Tooltip.SetDefault("'A very old floppy disk. A T-Bot might be able to decode the data...'"
-            + "\n(1/4)");
+            /* Tooltip.SetDefault("'A very old floppy disk. A T-Bot might be able to decode the data...'"
+            + "\n(1/4)"); */
         }
         public override void SetDefaults()
         {
@@ -98,8 +98,8 @@ namespace Redemption.Items.Lore
         public override void SetStaticDefaults()
         {
             base.SetStaticDefaults();
-            Tooltip.SetDefault("'A very old floppy disk. A T-Bot might be able to decode the data...'"
-            + "\n(2/4)");
+            /* Tooltip.SetDefault("'A very old floppy disk. A T-Bot might be able to decode the data...'"
+            + "\n(2/4)"); */
         }
         public override void SetDefaults()
         {
@@ -113,8 +113,8 @@ namespace Redemption.Items.Lore
         public override void SetStaticDefaults()
         {
             base.SetStaticDefaults();
-            Tooltip.SetDefault("'A very old floppy disk. A T-Bot might be able to decode the data...'" +
-                "\n(3/4)");
+            /* Tooltip.SetDefault("'A very old floppy disk. A T-Bot might be able to decode the data...'" +
+                "\n(3/4)"); */
         }
         public override void SetDefaults()
         {
@@ -128,8 +128,8 @@ namespace Redemption.Items.Lore
         public override void SetStaticDefaults()
         {
             base.SetStaticDefaults();
-            Tooltip.SetDefault("'A very old floppy disk. A T-Bot might be able to decode the data...'" +
-                "\n(4/4)");
+            /* Tooltip.SetDefault("'A very old floppy disk. A T-Bot might be able to decode the data...'" +
+                "\n(4/4)"); */
         }
         public override void SetDefaults()
         {
@@ -142,8 +142,8 @@ namespace Redemption.Items.Lore
         public override void SetStaticDefaults()
         {
             base.SetStaticDefaults();
-            Tooltip.SetDefault("'A very old floppy disk. A T-Bot might be able to decode the data...'"
-            + "\n(1/2)");
+            /* Tooltip.SetDefault("'A very old floppy disk. A T-Bot might be able to decode the data...'"
+            + "\n(1/2)"); */
         }
         public override void SetDefaults()
         {
@@ -157,8 +157,8 @@ namespace Redemption.Items.Lore
         public override void SetStaticDefaults()
         {
             base.SetStaticDefaults();
-            Tooltip.SetDefault("'A very old floppy disk. A T-Bot might be able to decode the data...'"
-            + "\n(2/2)");
+            /* Tooltip.SetDefault("'A very old floppy disk. A T-Bot might be able to decode the data...'"
+            + "\n(2/2)"); */
         }
         public override void SetDefaults()
         {
@@ -171,8 +171,8 @@ namespace Redemption.Items.Lore
         public override void SetStaticDefaults()
         {
             base.SetStaticDefaults();
-            Tooltip.SetDefault("'A very old floppy disk. A T-Bot might be able to decode the data...'"
-            + "\n(1/2)");
+            /* Tooltip.SetDefault("'A very old floppy disk. A T-Bot might be able to decode the data...'"
+            + "\n(1/2)"); */
         }
         public override void SetDefaults()
         {
@@ -186,8 +186,8 @@ namespace Redemption.Items.Lore
         public override void SetStaticDefaults()
         {
             base.SetStaticDefaults();
-            Tooltip.SetDefault("'A very old floppy disk. A T-Bot might be able to decode the data...'"
-            + "\n(2/2)");
+            /* Tooltip.SetDefault("'A very old floppy disk. A T-Bot might be able to decode the data...'"
+            + "\n(2/2)"); */
         }
         public override void SetDefaults()
         {

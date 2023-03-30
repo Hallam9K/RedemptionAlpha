@@ -8,9 +8,9 @@ namespace Redemption.NPCs.Bosses.FowlEmperor
     {
         public override void SetStaticDefaults()
         {
-            Tooltip.SetDefault("Stuns the panicking Fowl Emperor\n" +
-                "Disappears if the Fowl Emperor isn't alive");
-            SacrificeTotal = 99;
+            /* Tooltip.SetDefault("Stuns the panicking Fowl Emperor\n" +
+                "Disappears if the Fowl Emperor isn't alive"); */
+            Item.ResearchUnlockCount = 99;
         }
         public override void SetDefaults()
         {
@@ -18,7 +18,7 @@ namespace Redemption.NPCs.Bosses.FowlEmperor
             Item.height = 24;
             Item.damage = 40;
             Item.knockBack = 8;
-            Item.maxStack = 9999;
+            Item.maxStack = Item.CommonMaxStack;
             Item.value = 0;
             Item.rare = ItemRarityID.Blue;
             Item.useStyle = ItemUseStyleID.Swing;

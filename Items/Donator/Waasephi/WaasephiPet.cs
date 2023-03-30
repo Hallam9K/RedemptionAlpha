@@ -11,10 +11,10 @@ namespace Redemption.Items.Donator.Waasephi
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Purple Yarn");
-            Tooltip.SetDefault("Summons a chibi Waasephi");
+            // DisplayName.SetDefault("Purple Yarn");
+            // Tooltip.SetDefault("Summons a chibi Waasephi");
 
-            SacrificeTotal = 1;
+            Item.ResearchUnlockCount = 1;
         }
 
         public override void SetDefaults()

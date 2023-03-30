@@ -14,7 +14,7 @@ namespace Redemption.Projectiles.Melee
         public override string Texture => "Redemption/Textures/IceFlake";
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Arctic Wind");
+            // DisplayName.SetDefault("Arctic Wind");
         }
         public override void SetDefaults()
         {

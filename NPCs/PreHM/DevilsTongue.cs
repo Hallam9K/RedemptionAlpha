@@ -28,7 +28,7 @@ namespace Redemption.NPCs.PreHM
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Devil's Tongue");
+            // DisplayName.SetDefault("Devil's Tongue");
             Main.npcFrameCount[Type] = 12;
             NPCID.Sets.DontDoHardmodeScaling[Type] = true;
             NPCID.Sets.DebuffImmunitySets.Add(Type, new NPCDebuffImmunityData
@@ -154,7 +154,7 @@ namespace Redemption.NPCs.PreHM
             for (int i = 0; i < Main.rand.Next(7, 10); i++)
                 RedeHelper.SpawnNPC(NPC.GetSource_FromAI(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<Fly>());
         }
-        public override void HitEffect(int hitDirection, double damage)
+        public override void HitEffect(NPC.HitInfo hit)
         {
             if (NPC.life <= 0)
             {

@@ -9,8 +9,8 @@ namespace Redemption.Items.Placeable.Trophies
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Patient Zero Relic");
-			SacrificeTotal = 1;
+			// DisplayName.SetDefault("Patient Zero Relic");
+			Item.ResearchUnlockCount = 1;
 		}
 
 		public override void SetDefaults()
@@ -18,7 +18,7 @@ namespace Redemption.Items.Placeable.Trophies
 			Item.DefaultToPlaceableTile(ModContent.TileType<RelicTile>(), 8);
 			Item.width = 38;
 			Item.height = 52;
-			Item.maxStack = 9999;
+			Item.maxStack = Item.CommonMaxStack;
 			Item.rare = ItemRarityID.Master;
 			Item.master = true;
 			Item.value = Item.buyPrice(0, 5);

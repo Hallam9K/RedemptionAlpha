@@ -10,7 +10,7 @@ namespace Redemption.Projectiles.Pets
         public override string Texture => "Redemption/Projectiles/Pets/HalPet";
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("SPEEN");
+            // DisplayName.SetDefault("SPEEN");
             Main.projFrames[Projectile.type] = 16;
         }
 

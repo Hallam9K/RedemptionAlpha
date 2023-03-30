@@ -9,6 +9,7 @@ using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using static Redemption.Globals.RedeNet;
 
@@ -24,8 +25,8 @@ namespace Redemption.Tiles.Natural
             DustType = DustID.DungeonSpirit;
             MinPick = 500;
             MineResist = 50;
-            ModTranslation name = CreateMapEntryName();
-            name.SetDefault("Skeletal Remains");
+            LocalizedText name = CreateMapEntryName();
+            // name.SetDefault("Skeletal Remains");
             AddMapEntry(new Color(229, 229, 195));
         }
         public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)
@@ -155,8 +156,8 @@ namespace Redemption.Tiles.Natural
             DustType = DustID.DungeonSpirit;
             MinPick = 500;
             MineResist = 50;
-            ModTranslation name = CreateMapEntryName();
-            name.SetDefault("Skeletal Remains");
+            LocalizedText name = CreateMapEntryName();
+            // name.SetDefault("Skeletal Remains");
             AddMapEntry(new Color(229, 229, 195));
         }
         public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)
@@ -270,8 +271,8 @@ namespace Redemption.Tiles.Natural
             DustType = DustID.DungeonSpirit;
             MinPick = 500;
             MineResist = 50;
-            ModTranslation name = CreateMapEntryName();
-            name.SetDefault("Skeletal Remains");
+            LocalizedText name = CreateMapEntryName();
+            // name.SetDefault("Skeletal Remains");
             AddMapEntry(new Color(229, 229, 195));
         }
         public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)
@@ -385,8 +386,8 @@ namespace Redemption.Tiles.Natural
             DustType = DustID.DungeonSpirit;
             MinPick = 500;
             MineResist = 50;
-            ModTranslation name = CreateMapEntryName();
-            name.SetDefault("Skeletal Remains");
+            LocalizedText name = CreateMapEntryName();
+            // name.SetDefault("Skeletal Remains");
             AddMapEntry(new Color(229, 229, 195));
         }
         public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)
@@ -499,8 +500,8 @@ namespace Redemption.Tiles.Natural
             DustType = DustID.DungeonSpirit;
             MinPick = 500;
             MineResist = 50;
-            ModTranslation name = CreateMapEntryName();
-            name.SetDefault("Skeletal Remains");
+            LocalizedText name = CreateMapEntryName();
+            // name.SetDefault("Skeletal Remains");
             AddMapEntry(new Color(229, 229, 195));
         }
         public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)
@@ -608,7 +609,7 @@ namespace Redemption.Tiles.Natural
         public override string Texture => Redemption.PLACEHOLDER_TEXTURE;
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Skeletal Remains (Soulful)");
+            // DisplayName.SetDefault("Skeletal Remains (Soulful)");
         }
         public override void SetDefaults()
         {
@@ -621,7 +622,7 @@ namespace Redemption.Tiles.Natural
         public override string Texture => Redemption.PLACEHOLDER_TEXTURE;
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Skeletal Remains (Assassin)");
+            // DisplayName.SetDefault("Skeletal Remains (Assassin)");
         }
         public override void SetDefaults()
         {
@@ -634,7 +635,7 @@ namespace Redemption.Tiles.Natural
         public override string Texture => Redemption.PLACEHOLDER_TEXTURE;
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Skeletal Remains (Common Guard)");
+            // DisplayName.SetDefault("Skeletal Remains (Common Guard)");
         }
         public override void SetDefaults()
         {
@@ -647,7 +648,7 @@ namespace Redemption.Tiles.Natural
         public override string Texture => Redemption.PLACEHOLDER_TEXTURE;
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Skeletal Remains (Gathic Man)");
+            // DisplayName.SetDefault("Skeletal Remains (Gathic Man)");
         }
         public override void SetDefaults()
         {
@@ -660,7 +661,7 @@ namespace Redemption.Tiles.Natural
         public override string Texture => Redemption.PLACEHOLDER_TEXTURE;
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Skeletal Remains (Druid)");
+            // DisplayName.SetDefault("Skeletal Remains (Druid)");
         }
         public override void SetDefaults()
         {

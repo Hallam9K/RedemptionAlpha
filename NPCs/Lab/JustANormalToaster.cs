@@ -12,7 +12,7 @@ namespace Redemption.NPCs.Lab
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("");
+            // DisplayName.SetDefault("");
             NPCID.Sets.DontDoHardmodeScaling[Type] = true;
             NPCID.Sets.ActsLikeTownNPC[Type] = true;
 
@@ -91,6 +91,6 @@ namespace Redemption.NPCs.Lab
             AniFrameY = 0;
         }
         public override bool CanHitPlayer(Player target, ref int cooldownSlot) => false;
-        public override bool? CanHitNPC(NPC target) => false;
+        public override bool CanHitNPC(NPC target) => false;
     }
 }

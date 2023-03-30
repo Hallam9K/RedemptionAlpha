@@ -15,7 +15,7 @@ namespace Redemption.Projectiles.Ranged
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Sticky Flak Grenade");
+            // DisplayName.SetDefault("Sticky Flak Grenade");
             ElementID.ProjExplosive[Type] = true;
         }
         public override void SetDefaults()
@@ -95,7 +95,7 @@ namespace Redemption.Projectiles.Ranged
             fallThrough = false;
             return true;
         }
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             Projectile.localNPCImmunity[target.whoAmI] = 1;
             target.immune[Projectile.owner] = 0;

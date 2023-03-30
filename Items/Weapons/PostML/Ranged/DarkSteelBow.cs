@@ -6,6 +6,8 @@ using Redemption.Projectiles.Ranged;
 using System.Collections.Generic;
 using Redemption.Globals;
 using Terraria.DataStructures;
+using Redemption.Items.Weapons.PreHM.Magic;
+using Redemption.Items.Weapons.PostML.Melee;
 
 namespace Redemption.Items.Weapons.PostML.Ranged
 {
@@ -13,10 +15,11 @@ namespace Redemption.Items.Weapons.PostML.Ranged
 	{
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Daerel's Dark-Steel Bow");
-            Tooltip.SetDefault("Shoots Dark-Steel arrows that create shadow tendrils upon hitting a target\n" +
-                "20% chance not to consume ammo");
-            SacrificeTotal = 1;
+            // DisplayName.SetDefault("Daerel's Dark-Steel Bow");
+            /* Tooltip.SetDefault("Shoots Dark-Steel arrows that create shadow tendrils upon hitting a target\n" +
+                "20% chance not to consume ammo"); */
+            ItemID.Sets.ShimmerTransformToItem[Type] = ModContent.ItemType<MythrilsBane>();
+            Item.ResearchUnlockCount = 1;
         }
 
         public override void SetDefaults()

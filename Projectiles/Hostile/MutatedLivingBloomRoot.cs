@@ -14,7 +14,7 @@ namespace Redemption.Projectiles.Hostile
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Mutated Living Root");
+            // DisplayName.SetDefault("Mutated Living Root");
             ProjectileID.Sets.DontAttachHideToAlpha[Type] = true;
             ElementID.ProjNature[Type] = true;
         }
@@ -39,7 +39,7 @@ namespace Redemption.Projectiles.Hostile
         {
             return target.type != ModContent.NPCType<MutatedLivingBloom>() ? null : false;
         }
-        public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection) => damage *= 4;
+        public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers) => modifiers.FinalDamage *= 4;
         public override void AI()
         {
             if (Main.rand.NextBool(2) && Projectile.localAI[0] < 30)
@@ -81,7 +81,7 @@ namespace Redemption.Projectiles.Hostile
                 }
             }
         }
-        public override void OnHitPlayer(Player target, int damage, bool crit)
+        public override void OnHitPlayer(Player target, Player.HurtInfo info)
         {
             NPC host = Main.npc[(int)Projectile.ai[0]];
             if (host.life < host.lifeMax - 10)
@@ -100,7 +100,7 @@ namespace Redemption.Projectiles.Hostile
                 host.HealEffect(10);
             }
         }
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             NPC host = Main.npc[(int)Projectile.ai[0]];
             if (host.life < host.lifeMax - 10)

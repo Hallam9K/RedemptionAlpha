@@ -13,7 +13,7 @@ namespace Redemption.NPCs.Bosses.PatientZero
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Tear of Pain");
+            // DisplayName.SetDefault("Tear of Pain");
             ElementID.ProjPoison[Type] = true;
         }
         public override void SetDefaults()
@@ -27,7 +27,7 @@ namespace Redemption.NPCs.Bosses.PatientZero
             Projectile.ignoreWater = true;
             Projectile.timeLeft = 200;
         }
-        public override void OnHitPlayer(Player target, int damage, bool crit) => target.AddBuff(ModContent.BuffType<BileDebuff>(), 300);
+        public override void OnHitPlayer(Player target, Player.HurtInfo info) => target.AddBuff(ModContent.BuffType<BileDebuff>(), 300);
         public override Color? GetAlpha(Color lightColor) => Color.White * Projectile.Opacity;
         public override void AI()
         {

@@ -10,9 +10,9 @@ namespace Redemption.Items.Armor.PreHM.LivingWood
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Living Wood Leggings");
+            // DisplayName.SetDefault("Living Wood Leggings");
 
-            SacrificeTotal = 1;
+            Item.ResearchUnlockCount = 1;
         }
 
         public override void SetDefaults()

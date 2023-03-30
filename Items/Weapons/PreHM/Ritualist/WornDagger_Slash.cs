@@ -15,7 +15,7 @@ namespace Redemption.Items.Weapons.PreHM.Ritualist
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Worn Dagger");
+            // DisplayName.SetDefault("Worn Dagger");
             Main.projFrames[Projectile.type] = 5;
         }
         public override bool ShouldUpdatePosition() => false;
@@ -67,11 +67,10 @@ namespace Redemption.Items.Weapons.PreHM.Ritualist
             Vector2 Offset = Vector2.Normalize(Projectile.velocity) * 50f;
             Projectile.Center = player.Center + Offset;
         }
-        public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
-            RedeProjectile.Decapitation(target, ref damage, ref crit);
+            RedeProjectile.Decapitation(target, ref damageDone, ref hit.Crit);
         }
-
         public override bool PreDraw(ref Color lightColor)
         {
             Texture2D texture = TextureAssets.Projectile[Projectile.type].Value;

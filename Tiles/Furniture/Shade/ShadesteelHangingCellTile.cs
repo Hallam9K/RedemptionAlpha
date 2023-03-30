@@ -1,10 +1,12 @@
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.Enums;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 using Terraria.DataStructures;
 using Redemption.Dusts.Tiles;
+using Redemption.Items.Placeable.Furniture.Shade;
 
 namespace Redemption.Tiles.Furniture.Shade
 {
@@ -27,8 +29,8 @@ namespace Redemption.Tiles.Furniture.Shade
             TileObjectData.newTile.CoordinateWidth = 16;
             TileObjectData.newTile.CoordinatePadding = 2;
             TileObjectData.addTile(Type);
-            ModTranslation name = CreateMapEntryName();
-            name.SetDefault("Hanging Cell");
+            LocalizedText name = CreateMapEntryName();
+            // name.SetDefault("Hanging Cell");
             AddMapEntry(new Color(83, 87, 123), name);
             DustType = ModContent.DustType<ShadesteelDust>();
             MinPick = 310;
@@ -53,13 +55,14 @@ namespace Redemption.Tiles.Furniture.Shade
             TileObjectData.newTile.CoordinateWidth = 16;
             TileObjectData.newTile.CoordinatePadding = 2;
             TileObjectData.addTile(Type);
-            ModTranslation name = CreateMapEntryName();
-            name.SetDefault("Hanging Cell");
+            LocalizedText name = CreateMapEntryName();
+            // name.SetDefault("Hanging Cell");
             AddMapEntry(new Color(83, 87, 123), name);
             DustType = ModContent.DustType<ShadesteelDust>();
             AnimationFrameHeight = 72;
             MinPick = 310;
             MineResist = 11f;
+            ItemDrop = ModContent.ItemType<ShadesteelHangingCell>();
         }
         public override void AnimateTile(ref int frame, ref int frameCounter)
         {
@@ -115,7 +118,7 @@ namespace Redemption.Tiles.Furniture.Shade
         public override string Texture => Redemption.PLACEHOLDER_TEXTURE;
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Hanging Shadesteel Cell (With Echo)");
+            // DisplayName.SetDefault("Hanging Shadesteel Cell (With Echo)");
         }
         public override void SetDefaults()
         {

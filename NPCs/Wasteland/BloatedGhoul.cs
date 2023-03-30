@@ -47,7 +47,7 @@ namespace Redemption.NPCs.Wasteland
         public override void SetStaticDefaults()
         {
             Main.npcFrameCount[NPC.type] = 10;
-
+            NPCID.Sets.ShimmerTransformToNPC[NPC.type] = NPCID.DesertGhoul;
             NPCID.Sets.DebuffImmunitySets.Add(Type, new NPCDebuffImmunityData
             {
                 SpecificallyImmuneTo = new int[] {
@@ -294,12 +294,12 @@ namespace Redemption.NPCs.Wasteland
             return false;
         }
 
-        public override bool? CanHitNPC(NPC target) => AIState == ActionState.Alert ? null : false;
+        public override bool CanHitNPC(NPC target) => AIState == ActionState.Alert;
         public override bool CanHitPlayer(Player target, ref int cooldownSlot) => AIState == ActionState.Alert;
 
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
-            npcLoot.Add(ItemDropRule.ByCondition(new Conditions.BeatAnyMechBoss(), ModContent.ItemType<XenomiteShard>(), 4, 4, 8));
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<XenomiteShard>(), 4, 4, 8));
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<ToxicBile>(), 4, 1, 3));
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<GasMask>(), 20));
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<DoubleRifle>(), 100));
@@ -311,12 +311,12 @@ namespace Redemption.NPCs.Wasteland
                 npcLoot.Add(dropRule);
             }
         }
-        public override void ModifyHitPlayer(Player target, ref int damage, ref bool crit)
+        public override void ModifyHitPlayer(Player target, ref Player.HurtModifiers modifiers)
         {
             if (Main.rand.NextBool(2) || Main.expertMode)
                 target.AddBuff(ModContent.BuffType<GreenRashesDebuff>(), Main.rand.Next(200, 1200));
         }
-        public override void HitEffect(int hitDirection, double damage)
+        public override void HitEffect(NPC.HitInfo hit)
         {
             if (NPC.life <= 0)
             {

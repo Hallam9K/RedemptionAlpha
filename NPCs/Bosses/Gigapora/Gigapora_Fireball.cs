@@ -17,7 +17,7 @@ namespace Redemption.NPCs.Bosses.Gigapora
         public override string Texture => Redemption.EMPTY_TEXTURE;
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Fireball");
+            // DisplayName.SetDefault("Fireball");
             ElementID.ProjFire[Type] = true;
         }
 
@@ -76,7 +76,7 @@ namespace Redemption.NPCs.Bosses.Gigapora
                 Main.dust[dust2].noGravity = true;
             }
         }
-        public override void ModifyHitPlayer(Player target, ref int damage, ref bool crit)
+        public override void ModifyHitPlayer(Player target, ref Player.HurtModifiers modifiers)
         {
             target.AddBuff(BuffID.OnFire, 300);
         }

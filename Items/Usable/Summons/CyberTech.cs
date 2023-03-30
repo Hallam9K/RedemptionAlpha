@@ -13,10 +13,10 @@ namespace Redemption.Items.Usable.Summons
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Cyber Radio");
-            Tooltip.SetDefault("Transmits a signal towards a colossal spaceship\nOnly usable at day\nNot consumable");
+            // DisplayName.SetDefault("Cyber Radio");
+            // Tooltip.SetDefault("Transmits a signal towards a colossal spaceship\nOnly usable at day\nNot consumable");
             Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(4, 4));
-            SacrificeTotal = 1;
+            Item.ResearchUnlockCount = 1;
             ItemID.Sets.SortingPriorityBossSpawns[Type] = 13;
         }
 
@@ -49,7 +49,7 @@ namespace Redemption.Items.Usable.Summons
                 if (Main.netMode != NetmodeID.MultiplayerClient)
                     NPC.NewNPC(new EntitySource_BossSpawn(player), (int)player.position.X + 200, (int)player.position.Y - 500, type);
                 else
-                    NetMessage.SendData(MessageID.SpawnBoss, number: player.whoAmI, number2: type);
+                    NetMessage.SendData(MessageID.SpawnBossUseLicenseStartEvent, number: player.whoAmI, number2: type);
             }
             return true;
         }

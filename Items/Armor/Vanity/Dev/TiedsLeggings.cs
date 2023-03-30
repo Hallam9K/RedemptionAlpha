@@ -8,9 +8,9 @@ namespace Redemption.Items.Armor.Vanity.Dev
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Tied's Marvelous Leggings");
-            Tooltip.SetDefault("'Great for impersonating devs!'");
-            SacrificeTotal = 1;
+            // DisplayName.SetDefault("Tied's Marvelous Leggings");
+            // Tooltip.SetDefault("'Great for impersonating devs!'");
+            Item.ResearchUnlockCount = 1;
         }
 
         public override void SetDefaults()

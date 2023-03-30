@@ -9,10 +9,10 @@ namespace Redemption.Items.Accessories.PreHM
 	{
 		public override void SetStaticDefaults()
 		{
-            Tooltip.SetDefault("Critters are attracted to you" +
+            /* Tooltip.SetDefault("Critters are attracted to you" +
                 "\nShy critters won't fear you"
-                + "\n'YOU STINK!'");
-            SacrificeTotal = 1;
+                + "\n'YOU STINK!'"); */
+            Item.ResearchUnlockCount = 1;
         }
 
         public override void SetDefaults()

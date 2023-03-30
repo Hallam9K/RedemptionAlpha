@@ -13,7 +13,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Xeno Xyston");
+            // DisplayName.SetDefault("Xeno Xyston");
             ElementID.ProjPoison[Type] = true;
         }
         public override void SetSafeDefaults()
@@ -64,16 +64,18 @@ namespace Redemption.Items.Weapons.PreHM.Melee
             player.itemRotation = Projectile.rotation;
             Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.GreenFairy);
         }
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             target.immune[Projectile.owner] = (int)(120 / ((rotSpeed * (SwingSpeed + 1) + 1) * MathHelper.TwoPi));
         }
-        public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
+        public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
         {
+            float increase = rotSpeed * 10;
+            increase = MathHelper.Clamp(increase, 0, 10);
+            modifiers.Knockback.Flat += increase;
+
             Player player = Main.player[Projectile.owner];
-            hitDirection = target.RightOfDir(player);
-            knockback = rotSpeed * 10;
-            knockback = MathHelper.Clamp(knockback, 0, 10);
+            modifiers.HitDirectionOverride = target.RightOfDir(player);
         }
         public override bool PreDraw(ref Color lightColor)
         {

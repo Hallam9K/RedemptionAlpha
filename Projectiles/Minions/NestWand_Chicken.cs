@@ -17,7 +17,7 @@ namespace Redemption.Projectiles.Minions
         public override string Texture => "Redemption/NPCs/FowlMorning/Haymaker_Nest";
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Chicken Nest");
+            // DisplayName.SetDefault("Chicken Nest");
             ProjectileID.Sets.DontAttachHideToAlpha[Type] = true;
             ProjectileID.Sets.MinionSacrificable[Projectile.type] = true;
             ProjectileID.Sets.CultistIsResistantTo[Projectile.type] = true;

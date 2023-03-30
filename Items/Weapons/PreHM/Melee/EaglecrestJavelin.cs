@@ -11,11 +11,11 @@ namespace Redemption.Items.Weapons.PreHM.Melee
     {
         public override void SetStaticDefaults()
         {
-            Tooltip.SetDefault("Hold left-click to charge the javelin, release to throw\n" +
-                "Strikes the ground and foe alike with lightning, dealing " + ElementID.ThunderS + " damage");
+            /* Tooltip.SetDefault("Hold left-click to charge the javelin, release to throw\n" +
+                "Strikes the ground and foe alike with lightning, dealing " + ElementID.ThunderS + " damage"); */
 
             ItemID.Sets.SkipsInitialUseSound[Item.type] = true;
-            SacrificeTotal = 1;
+            Item.ResearchUnlockCount = 1;
         }
 
         public override void SetDefaults()

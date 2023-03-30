@@ -13,7 +13,7 @@ namespace Redemption.NPCs.Bosses.Thorn
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Thorn Seed");
+            // DisplayName.SetDefault("Thorn Seed");
         }
         public override void SetDefaults()
         {

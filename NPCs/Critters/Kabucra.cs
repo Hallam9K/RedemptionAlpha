@@ -35,6 +35,7 @@ namespace Redemption.NPCs.Critters
         public override void SetStaticDefaults()
         {
             Main.npcFrameCount[Type] = 6;
+            NPCID.Sets.ShimmerTransformToNPC[NPC.type] = NPCID.Shimmerfly;
             NPCID.Sets.CountsAsCritter[Type] = true;
             NPCID.Sets.DontDoHardmodeScaling[Type] = true;
             NPCID.Sets.TakesDamageFromHostilesWithoutBeingFriendly[Type] = true;
@@ -268,7 +269,7 @@ namespace Redemption.NPCs.Critters
             });
         }
 
-        public override void HitEffect(int hitDirection, double damage)
+        public override void HitEffect(NPC.HitInfo hit)
         {
             if (AIState is ActionState.Idle)
             {

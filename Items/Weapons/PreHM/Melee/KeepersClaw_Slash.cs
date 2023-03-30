@@ -15,7 +15,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Keeper's Claw");
+            // DisplayName.SetDefault("Keeper's Claw");
             Main.projFrames[Projectile.type] = 6;
             ElementID.ProjBlood[Type] = true;
         }
@@ -122,15 +122,15 @@ namespace Redemption.Items.Weapons.PreHM.Melee
         {
             hitbox = new((int)(Projectile.spriteDirection == -1 ? Projectile.Center.X - 63 : Projectile.Center.X), (int)(Projectile.Center.Y - 55), 63, 104);
         }
-        public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
+        public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
         {
             if (NPCLists.Undead.Contains(target.type) || NPCLists.Skeleton.Contains(target.type))
-                damage = (int)(damage * 2f);
-
-            RedeProjectile.Decapitation(target, ref damage, ref crit);
+                modifiers.FinalDamage *= 2f;
         }
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
+            RedeProjectile.Decapitation(target, ref damageDone, ref hit.Crit);
+
             Projectile.localNPCImmunity[target.whoAmI] = 30;
             target.immune[Projectile.owner] = 0;
 

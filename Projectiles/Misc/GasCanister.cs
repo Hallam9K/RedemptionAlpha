@@ -14,7 +14,7 @@ namespace Redemption.Projectiles.Misc
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Virulent Grenade");
+            // DisplayName.SetDefault("Virulent Grenade");
             Main.projFrames[Projectile.type] = 2;
         }
         public override void SetDefaults()
@@ -88,7 +88,7 @@ namespace Redemption.Projectiles.Misc
         public override string Texture => "Redemption/Textures/IceMist";
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Virulent Gas");
+            // DisplayName.SetDefault("Virulent Gas");
         }
         public override void SetDefaults()
         {

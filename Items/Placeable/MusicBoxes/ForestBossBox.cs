@@ -10,10 +10,11 @@ namespace Redemption.Items.Placeable.MusicBoxes
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Music Box (Cursed Beings of the Forest)");
-			Tooltip.SetDefault("Peritune - Dramatic4");
-
-			SacrificeTotal = 1;
+            // DisplayName.SetDefault("Music Box (Cursed Beings of the Forest)");
+            // Tooltip.SetDefault("Peritune - Dramatic4");
+            ItemID.Sets.CanGetPrefixes[Type] = false;
+            ItemID.Sets.ShimmerTransformToItem[Type] = ItemID.MusicBox;
+            Item.ResearchUnlockCount = 1;
 
 			MusicLoader.AddMusicBox(Mod, MusicLoader.GetMusicSlot(Mod, "Sounds/Music/BossForest1"), ModContent.ItemType<ForestBossBox>(), ModContent.TileType<ForestBossBoxTile>());
 		}

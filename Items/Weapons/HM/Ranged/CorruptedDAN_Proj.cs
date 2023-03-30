@@ -20,7 +20,7 @@ namespace Redemption.Items.Weapons.HM.Ranged
         public override string Texture => "Redemption/Items/Weapons/HM/Ranged/CorruptedDAN";
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Corrupted D.A.N");
+            // DisplayName.SetDefault("Corrupted D.A.N");
         }
         public override void SetDefaults()
         {

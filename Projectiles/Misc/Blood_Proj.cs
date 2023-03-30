@@ -9,7 +9,7 @@ namespace Redemption.Projectiles.Hostile
         public override string Texture => Redemption.EMPTY_TEXTURE;
         public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Blood Clusters");
+			// DisplayName.SetDefault("Blood Clusters");
 		}
 
 		public override void SetDefaults()

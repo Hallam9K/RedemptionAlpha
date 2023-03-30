@@ -12,7 +12,7 @@ namespace Redemption.NPCs.Lab.MACE
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Electric Eruption");
+            // DisplayName.SetDefault("Electric Eruption");
             Main.projFrames[Projectile.type] = 6;
         }
 
@@ -32,7 +32,7 @@ namespace Redemption.NPCs.Lab.MACE
         {
             behindNPCsAndTiles.Add(index);
         }
-        public override void OnHitPlayer(Player target, int damage, bool crit)
+        public override void OnHitPlayer(Player target, Player.HurtInfo info)
         {
             if (!target.noKnockback)
                 target.velocity.Y -= 4;

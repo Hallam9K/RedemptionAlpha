@@ -12,7 +12,7 @@ namespace Redemption.Projectiles.Magic
         public override string Texture => "Redemption/Projectiles/Magic/WaterOrb";
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Water Orb");
+            // DisplayName.SetDefault("Water Orb");
             ProjectileID.Sets.CultistIsResistantTo[Projectile.type] = true;
             ElementID.ProjWater[Type] = true;
         }

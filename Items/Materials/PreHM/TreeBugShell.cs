@@ -8,16 +8,16 @@ namespace Redemption.Items.Materials.PreHM
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Tree Bug Shell");
-
-            SacrificeTotal = 3;
+            // DisplayName.SetDefault("Tree Bug Shell");
+            ItemID.Sets.ShimmerTransformToItem[Type] = ModContent.ItemType<CoastScarabShell>();
+            Item.ResearchUnlockCount = 3;
         }
 
         public override void SetDefaults()
         {
             Item.width = 14;
             Item.height = 22;
-            Item.maxStack = 9999;
+            Item.maxStack = Item.CommonMaxStack;
             Item.value = Item.sellPrice(copper: 50);
             Item.rare = ItemRarityID.White;
         }

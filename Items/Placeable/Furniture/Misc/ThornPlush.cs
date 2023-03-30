@@ -9,8 +9,8 @@ namespace Redemption.Items.Placeable.Furniture.Misc
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Thorn Plushie");
-			SacrificeTotal = 1;
+			// DisplayName.SetDefault("Thorn Plushie");
+			Item.ResearchUnlockCount = 1;
 		}
 
 		public override void SetDefaults()
@@ -18,7 +18,7 @@ namespace Redemption.Items.Placeable.Furniture.Misc
 			Item.DefaultToPlaceableTile(ModContent.TileType<ThornPlushTile>(), 0);
 			Item.width = 38;
 			Item.height = 40;
-			Item.maxStack = 9999;
+			Item.maxStack = Item.CommonMaxStack;
 			Item.rare = ItemRarityID.Blue;
 			Item.value = Item.buyPrice(0, 1, 0, 0);
 		}

@@ -8,8 +8,8 @@ namespace Redemption.Buffs
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Obliteration Motivation");
-            Description.SetDefault("Increased damage and defense, reduced dash cooldown, less life regen");
+            // DisplayName.SetDefault("Obliteration Motivation");
+            // Description.SetDefault("Increased damage and defense, reduced dash cooldown, less life regen");
         }
         public override void Update(Player player, ref int buffIndex)
         {
@@ -30,8 +30,8 @@ namespace Redemption.Buffs
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Obliteration Motivation");
-            Description.SetDefault("Increased damage and defense, reduced dash cooldown, less life regen");
+            // DisplayName.SetDefault("Obliteration Motivation");
+            // Description.SetDefault("Increased damage and defense, reduced dash cooldown, less life regen");
         }
         public override void Update(Player player, ref int buffIndex)
         {
@@ -52,8 +52,8 @@ namespace Redemption.Buffs
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Obliteration Motivation");
-            Description.SetDefault("Increased damage and defense, reduced dash cooldown, less life regen");
+            // DisplayName.SetDefault("Obliteration Motivation");
+            // Description.SetDefault("Increased damage and defense, reduced dash cooldown, less life regen");
         }
         public override void Update(Player player, ref int buffIndex)
         {
@@ -74,8 +74,8 @@ namespace Redemption.Buffs
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Obliteration Motivation");
-            Description.SetDefault("Increased damage and defense, reduced dash cooldown, less life regen");
+            // DisplayName.SetDefault("Obliteration Motivation");
+            // Description.SetDefault("Increased damage and defense, reduced dash cooldown, less life regen");
         }
         public override void Update(Player player, ref int buffIndex)
         {
@@ -96,8 +96,8 @@ namespace Redemption.Buffs
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Obliteration Motivation");
-            Description.SetDefault("Increased damage and defense, reduced dash cooldown, less life regen");
+            // DisplayName.SetDefault("Obliteration Motivation");
+            // Description.SetDefault("Increased damage and defense, reduced dash cooldown, less life regen");
         }
         public override void Update(Player player, ref int buffIndex)
         {

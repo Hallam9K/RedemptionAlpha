@@ -10,18 +10,18 @@ namespace Redemption.Items.Materials.PreHM
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Gathic Cryo-Crystal");
-            Tooltip.SetDefault("Makes the player chilled when held\n" +
-                "'A freezing cold crystal'");
-
-            SacrificeTotal = 25;
+            // DisplayName.SetDefault("Gathic Cryo-Crystal");
+            /* Tooltip.SetDefault("Makes the player chilled when held\n" +
+                "'A freezing cold crystal'"); */
+            ItemID.Sets.SortingPriorityMaterials[Item.type] = 70;
+            Item.ResearchUnlockCount = 25;
         }
 
         public override void SetDefaults()
         {
             Item.width = 22;
             Item.height = 24;
-            Item.maxStack = 9999;
+            Item.maxStack = Item.CommonMaxStack;
             Item.value = Item.sellPrice(0, 0, 5, 0);
             Item.rare = ItemRarityID.Orange;
             Item.consumable = true;

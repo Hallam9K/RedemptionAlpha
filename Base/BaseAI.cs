@@ -10,6 +10,8 @@ using Terraria.Utilities;
 using Terraria.ModLoader;
 using Redemption.BaseExtension;
 using Redemption.Globals;
+using Redemption.NPCs.Bosses.Cleaver;
+using Terraria.GameContent.Biomes;
 
 namespace Redemption.Base
 {
@@ -3060,7 +3062,7 @@ namespace Redemption.Base
                     SoundEngine.PlaySound(SoundID.Roar, npc.position);
             }
             //prevent a -1, -1 saving scenario
-            if (npc.type >= Main.maxNPCTypes && npc.homeTileX == -1 && npc.homeTileY == -1 || npc.homeTileX == ushort.MaxValue && npc.homeTileY == ushort.MaxValue)
+            if (npc.homeTileX == -1 && npc.homeTileY == -1 || npc.homeTileX == ushort.MaxValue && npc.homeTileY == ushort.MaxValue)
             {
                 npc.homeTileX = (int)npc.Center.X / 16;
                 npc.homeTileY = (int)npc.Center.Y / 16;
@@ -5263,70 +5265,53 @@ namespace Redemption.Base
                 defIgnore = 1;
 
             if (hitThroughDefense) { dmgAmt += (int)(player.statDefense * defIgnore); }
+            int parsedDamage = dmgAmt; if (dmgVariation) { parsedDamage = Main.DamageVar(dmgAmt); }
+            Player.HurtModifiers stat = default;
+            stat.GetDamage(dmgAmt, player.statDefense, player.DefenseEffectiveness.Value);
+            stat.GetKnockback(knockback, player.noKnockback);
+            stat.HitDirectionOverride = hitDirection;
+            Player.HurtInfo hurtInfo = stat.ToHurtInfo(parsedDamage, player.statDefense, player.DefenseEffectiveness.Value, knockback, player.noKnockback);
             if (damager == null)
-            {
-                int parsedDamage = dmgAmt; if (dmgVariation) { parsedDamage = Main.DamageVar(dmgAmt); }
-                player.Hurt(PlayerDeathReason.ByOther(-1), parsedDamage, hitDirection, false, false, false);
-            }
-            else if (damager is Player subPlayer)
-            {
-                int parsedDamage = dmgAmt; if (dmgVariation) { parsedDamage = Main.DamageVar(dmgAmt); }
-
-                PlayerLoader.OnHitPvp(subPlayer, subPlayer.HeldItem, player, parsedDamage, false);
-                bool crit = false;
-                PlayerLoader.ModifyHitPvp(subPlayer, subPlayer.HeldItem, player, ref parsedDamage, ref crit);
-                player.Hurt(PlayerDeathReason.ByPlayer(subPlayer.whoAmI), parsedDamage, hitDirection, true, false, false);
-
-                subPlayer.attackCD = (int)(subPlayer.itemAnimationMax * 0.33f);
-            }
+                player.Hurt(PlayerDeathReason.ByOther(-1), parsedDamage, hitDirection);
             else if (damager is Projectile p)
             {
                 if (p.friendly)
                 {
-                    bool crit = false;
-                    int parsedDamage = dmgAmt; if (dmgVariation) { parsedDamage = Main.DamageVar(dmgAmt); }
                     p.playerImmune[player.whoAmI] = 40;
-                    ProjectileLoader.ModifyHitPlayer(p, player, ref parsedDamage, ref crit);
-                    ProjectileLoader.OnHitPlayer(p, player, parsedDamage, false);
-                    PlayerLoader.OnHitByProjectile(player, p, parsedDamage, false);
-                    PlayerLoader.ModifyHitByProjectile(player, p, ref parsedDamage, ref crit);
-                    player.Hurt(PlayerDeathReason.ByProjectile(p.owner, p.whoAmI), parsedDamage, hitDirection, true, false, false);
+
+                    ProjectileLoader.ModifyHitPlayer(p, player, ref stat);
+                    ProjectileLoader.OnHitPlayer(p, player, hurtInfo);
+                    PlayerLoader.ModifyHitByProjectile(player, p, ref stat);
+                    PlayerLoader.OnHitByProjectile(player, p, hurtInfo);
+                    player.Hurt(PlayerDeathReason.ByProjectile(p.owner, p.whoAmI), parsedDamage, hitDirection);
                 }
                 else if (p.hostile)
                 {
-                    bool crit = false;
-                    int parsedDamage = dmgAmt; if (dmgVariation) { parsedDamage = Main.DamageVar(dmgAmt); }
-                    ProjectileLoader.ModifyHitPlayer(p, player, ref parsedDamage, ref crit);
-                    ProjectileLoader.OnHitPlayer(p, player, parsedDamage, false);
-                    PlayerLoader.OnHitByProjectile(player, p, parsedDamage, false);
-                    PlayerLoader.ModifyHitByProjectile(player, p, ref parsedDamage, ref crit);
-                    player.Hurt(PlayerDeathReason.ByProjectile(-1, p.whoAmI), parsedDamage, hitDirection, false, false, false);
+                    ProjectileLoader.ModifyHitPlayer(p, player, ref stat);
+                    ProjectileLoader.OnHitPlayer(p, player, hurtInfo);
+                    PlayerLoader.ModifyHitByProjectile(player, p, ref stat);
+                    PlayerLoader.OnHitByProjectile(player, p, hurtInfo);
+                    player.Hurt(PlayerDeathReason.ByProjectile(-1, p.whoAmI), parsedDamage, hitDirection);
                 }
                 else
                 {
-                    bool crit = false;
-                    int parsedDamage = dmgAmt; if (dmgVariation) { parsedDamage = Main.DamageVar(dmgAmt); }
-                    ProjectileLoader.ModifyHitPlayer(p, player, ref parsedDamage, ref crit);
-                    ProjectileLoader.OnHitPlayer(p, player, parsedDamage, false);
-                    PlayerLoader.OnHitByProjectile(player, p, parsedDamage, false);
-                    PlayerLoader.ModifyHitByProjectile(player, p, ref parsedDamage, ref crit);
-                    player.Hurt(PlayerDeathReason.ByProjectile(-1, p.whoAmI), parsedDamage, hitDirection, false, false, false);
+                    ProjectileLoader.ModifyHitPlayer(p, player, ref stat);
+                    ProjectileLoader.OnHitPlayer(p, player, hurtInfo);
+                    PlayerLoader.ModifyHitByProjectile(player, p, ref stat);
+                    PlayerLoader.OnHitByProjectile(player, p, hurtInfo);
+                    player.Hurt(PlayerDeathReason.ByProjectile(-1, p.whoAmI), parsedDamage, hitDirection);
                 }
             }
             else if (damager is NPC npc)
             {
-                bool crit = false;
-                bool truetrue = true;
-                int cool = -1;
                 PlayerDeathReason death = PlayerDeathReason.ByNPC(npc.whoAmI);
-                int parsedDamage = dmgAmt; if (dmgVariation) { parsedDamage = Main.DamageVar(dmgAmt); }
-                if (PlayerLoader.PreHurt(player, false, false, ref parsedDamage, ref hitDirection, ref crit, ref crit, ref truetrue, ref truetrue, ref death, ref cool))
+                if (PlayerLoader.ImmuneTo(player, death, -1, true))
                 {
-                    NPCLoader.ModifyHitPlayer(npc, player, ref parsedDamage, ref crit);
-                    NPCLoader.OnHitPlayer(npc, player, parsedDamage, false);
-                    PlayerLoader.ModifyHitByNPC(player, npc, ref parsedDamage, ref crit);
-                    PlayerLoader.OnHitByNPC(player, npc, parsedDamage, false);
-                    player.Hurt(PlayerDeathReason.ByNPC(npc.whoAmI), parsedDamage, hitDirection, false, false, false);
+                    NPCLoader.ModifyHitPlayer(npc, player, ref stat);
+                    NPCLoader.OnHitPlayer(npc, player, hurtInfo);
+                    PlayerLoader.ModifyHitByNPC(player, npc, ref stat);
+                    PlayerLoader.OnHitByNPC(player, npc, hurtInfo);
+                    player.Hurt(death, parsedDamage, hitDirection);
                 }
             }
         }
@@ -5352,39 +5337,38 @@ namespace Redemption.Base
          */
         public static void DamageNPC(NPC npc, int dmgAmt, float knockback, int hitDirection, Entity damager, bool dmgVariation = true, bool hitThroughDefense = false, bool crit = false, Item item = null)
         {
-            if (item == null)
-                item = new Item(ItemID.WoodenSword);
+            item ??= new Item(ItemID.WoodenSword);
             if (npc.dontTakeDamage || (npc.immortal && npc.type != NPCID.TargetDummy))
                 return;
             if (hitThroughDefense) { dmgAmt += (int)(npc.defense * 0.5f); }
+            NPC.HitModifiers stat = default;
+            stat.GetDamage(dmgAmt, crit, dmgVariation);
+            stat.GetKnockback(knockback);
+            stat.HitDirectionOverride = hitDirection;
+
             if (damager == null || damager is NPC)
             {
-                int parsedDamage = dmgAmt; if (dmgVariation) { parsedDamage = Main.DamageVar(dmgAmt); }
-
                 if (damager is NPC)
                 {
-                    NPCLoader.ModifyHitNPC(damager as NPC, npc, ref parsedDamage, ref knockback, ref crit);
-                    NPCLoader.OnHitNPC(damager as NPC, npc, parsedDamage, knockback, crit);
+                    NPCLoader.ModifyHitNPC(damager as NPC, npc, ref stat);
+                    NPCLoader.OnHitNPC(damager as NPC, npc, npc.CalculateHitInfo(dmgAmt, hitDirection, crit, knockback, null, dmgVariation));
                     npc.Redemption().attacker = damager;
                 }
 
-                npc.StrikeNPC(parsedDamage, knockback, hitDirection, crit);
+                npc.SimpleStrikeNPC(dmgAmt, hitDirection, crit, knockback, null, dmgVariation);
                 if (Main.netMode == NetmodeID.MultiplayerClient)
-                {
-                    NetMessage.SendData(MessageID.DamageNPC, -1, -1, NetworkText.FromLiteral(""), npc.whoAmI, 1, knockback, hitDirection, parsedDamage);
-                }
+                    NetMessage.SendData(MessageID.DamageNPC, -1, -1, NetworkText.FromLiteral(""), npc.whoAmI, 1, knockback, hitDirection, dmgAmt);
             }
             else if (damager is Projectile p)
             {
                 if (p.owner == Main.myPlayer && NPCLoader.CanBeHitByProjectile(npc, p) != false)
                 {
-                    int parsedDamage = dmgAmt; if (dmgVariation) { parsedDamage = Main.DamageVar(dmgAmt); }
-                    NPCLoader.ModifyHitByProjectile(npc, p, ref parsedDamage, ref knockback, ref crit, ref hitDirection);
-                    NPCLoader.OnHitByProjectile(npc, p, parsedDamage, knockback, crit);
-                    PlayerLoader.ModifyHitNPCWithProj(p, npc, ref parsedDamage, ref knockback, ref crit, ref hitDirection);
-                    PlayerLoader.OnHitNPCWithProj(p, npc, parsedDamage, knockback, crit);
-                    ProjectileLoader.ModifyHitNPC(p, npc, ref parsedDamage, ref knockback, ref crit, ref hitDirection);
-                    ProjectileLoader.OnHitNPC(p, npc, parsedDamage, knockback, crit);
+                    NPCLoader.ModifyHitByProjectile(npc, p, ref stat);
+                    NPCLoader.OnHitByProjectile(npc, p, npc.CalculateHitInfo(dmgAmt, hitDirection, crit, knockback, null, dmgVariation), dmgAmt);
+                    PlayerLoader.ModifyHitNPCWithProj(Main.player[p.owner], p, npc, ref stat);
+                    PlayerLoader.OnHitNPCWithProj(Main.player[p.owner], p, npc, npc.CalculateHitInfo(dmgAmt, hitDirection, crit, knockback, null, dmgVariation), dmgAmt);
+                    ProjectileLoader.ModifyHitNPC(p, npc, ref stat);
+                    ProjectileLoader.OnHitNPC(p, npc, npc.CalculateHitInfo(dmgAmt, hitDirection, crit, knockback, null, dmgVariation), dmgAmt);
                     if (p.HasElement(ElementID.Psychic))
                         npc.RedemptionGuard().IgnoreArmour = true;
 
@@ -5401,12 +5385,12 @@ namespace Redemption.Base
                         }
                     }
 
-                    npc.StrikeNPC(parsedDamage, knockback, hitDirection, crit);
+                    npc.SimpleStrikeNPC(dmgAmt, hitDirection, crit, knockback, null, dmgVariation);
                     if (Main.player[p.owner].accDreamCatcher)
-                        Main.player[p.owner].addDPS(parsedDamage);
+                        Main.player[p.owner].addDPS(dmgAmt);
 
                     if (Main.netMode == NetmodeID.MultiplayerClient)
-                        NetMessage.SendData(MessageID.DamageNPC, -1, -1, NetworkText.FromLiteral(""), npc.whoAmI, 1, knockback, hitDirection, parsedDamage);
+                        NetMessage.SendData(MessageID.DamageNPC, -1, -1, NetworkText.FromLiteral(""), npc.whoAmI, 1, knockback, hitDirection, dmgAmt);
 
                     if (p.penetrate != 1) { npc.immune[p.owner] = 10; }
                 }
@@ -5415,20 +5399,17 @@ namespace Redemption.Base
             {
                 if (player.whoAmI == Main.myPlayer && NPCLoader.CanBeHitByItem(npc, player, item) != false)
                 {
-                    int parsedDamage = dmgAmt; if (dmgVariation) { parsedDamage = Main.DamageVar(dmgAmt); }
-                    NPCLoader.ModifyHitByItem(npc, player, item, ref parsedDamage, ref knockback, ref crit);
-                    NPCLoader.OnHitByItem(npc, player, item, parsedDamage, knockback, crit);
-                    PlayerLoader.ModifyHitNPC(player, item, npc, ref parsedDamage, ref knockback, ref crit);
-                    PlayerLoader.OnHitNPC(player, item, npc, parsedDamage, knockback, crit);
+                    NPCLoader.ModifyHitByItem(npc, player, item, ref stat);
+                    NPCLoader.OnHitByItem(npc, player, item, npc.CalculateHitInfo(dmgAmt, hitDirection, crit, knockback, null, dmgVariation), dmgAmt);
+                    PlayerLoader.ModifyHitNPC(player, npc, ref stat);
+                    PlayerLoader.OnHitNPC(player, npc, npc.CalculateHitInfo(dmgAmt, hitDirection, crit, knockback, null, dmgVariation), dmgAmt);
 
-                    npc.StrikeNPC(parsedDamage, knockback, hitDirection, crit);
+                    npc.SimpleStrikeNPC(dmgAmt, hitDirection, crit, knockback, null, dmgVariation);
                     if (player.accDreamCatcher)
-                        player.addDPS(parsedDamage);
+                        player.addDPS(dmgAmt);
 
                     if (Main.netMode == NetmodeID.MultiplayerClient)
-                    {
-                        NetMessage.SendData(MessageID.DamageNPC, -1, -1, NetworkText.FromLiteral(""), npc.whoAmI, 1, knockback, hitDirection, parsedDamage);
-                    }
+                        NetMessage.SendData(MessageID.DamageNPC, -1, -1, NetworkText.FromLiteral(""), npc.whoAmI, 1, knockback, hitDirection, dmgAmt);
                     npc.immune[player.whoAmI] = player.itemAnimation;
                 }
             }

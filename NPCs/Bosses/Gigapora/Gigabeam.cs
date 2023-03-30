@@ -17,7 +17,7 @@ namespace Redemption.NPCs.Bosses.Gigapora
         private new readonly float FirstSegmentDrawDist = 460;
         public override void SetSafeStaticDefaults()
         {
-            DisplayName.SetDefault("Gigabeam");
+            // DisplayName.SetDefault("Gigabeam");
         }
         public override void SetSafeDefaults()
         {

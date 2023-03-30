@@ -17,7 +17,7 @@ namespace Redemption.Items.Weapons.PostML.Melee
         public float[] oldrot = new float[6];
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Ukonvasara");
+            // DisplayName.SetDefault("Ukonvasara");
             ProjectileID.Sets.TrailCacheLength[Projectile.type] = 6;
             ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
             ElementID.ProjEarth[Type] = true;
@@ -36,8 +36,10 @@ namespace Redemption.Items.Weapons.PostML.Melee
             Projectile.usesLocalNPCImmunity = true;
             Projectile.extraUpdates = 1;
         }
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
+            RedeProjectile.Decapitation(target, ref damageDone, ref hit.Crit);
+
             Projectile.localNPCImmunity[target.whoAmI] = 8;
             target.immune[Projectile.owner] = 0;
         }
@@ -209,10 +211,6 @@ namespace Redemption.Items.Weapons.PostML.Melee
         {
             return Timer <= 8 || (Timer <= 14 && Projectile.ai[0] == 2) ? null : false;
         }
-        public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
-        {
-            RedeProjectile.Decapitation(target, ref damage, ref crit);
-        }
         private float drawTimer;
         public override bool PreDraw(ref Color lightColor)
         {
@@ -240,7 +238,7 @@ namespace Redemption.Items.Weapons.PostML.Melee
         public override string Texture => "Redemption/Items/Weapons/PostML/Melee/Ukonvasara_Sword";
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Ukonvasara");
+            // DisplayName.SetDefault("Ukonvasara");
             ProjectileID.Sets.TrailCacheLength[Projectile.type] = 8;
             ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
             ElementID.ProjEarth[Type] = true;
@@ -262,7 +260,7 @@ namespace Redemption.Items.Weapons.PostML.Melee
             Projectile.Redemption().TechnicallyMelee = true;
         }
         private bool boomed;
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             Projectile.localNPCImmunity[target.whoAmI] = 7;
             target.immune[Projectile.owner] = 0;
@@ -326,9 +324,9 @@ namespace Redemption.Items.Weapons.PostML.Melee
 
             boomed = true;
         }
-        public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
+        public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
         {
-            damage = (int)(damage * 1.15f);
+            modifiers.FinalDamage *= 1.15f;
         }
         public override bool OnTileCollide(Vector2 velocityChange)
         {

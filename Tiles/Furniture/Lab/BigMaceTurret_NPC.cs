@@ -17,7 +17,7 @@ namespace Redemption.Tiles.Furniture.Lab
         public Tile Parent;
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Laboratory MACE Turret");
+            // DisplayName.SetDefault("Laboratory MACE Turret");
         }
         public override void SetDefaults()
         {

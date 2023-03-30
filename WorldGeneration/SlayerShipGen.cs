@@ -80,9 +80,9 @@ namespace Redemption.WorldGeneration
             });
 
             WorldGen.PlaceObject(origin.X + 91, origin.Y + 27, (ushort)ModContent.TileType<SlayerChairTile>());
-            NetMessage.SendObjectPlacment(-1, origin.X + 91, origin.Y + 27, (ushort)ModContent.TileType<SlayerChairTile>(), 0, 0, -1, -1);
+            NetMessage.SendObjectPlacement(-1, origin.X + 91, origin.Y + 27, (ushort)ModContent.TileType<SlayerChairTile>(), 0, 0, -1, -1);
             WorldGen.PlaceObject(origin.X + 84, origin.Y + 36, (ushort)ModContent.TileType<SlayerFabricatorTile>());
-            NetMessage.SendObjectPlacment(-1, origin.X + 84, origin.Y + 36, (ushort)ModContent.TileType<SlayerFabricatorTile>(), 0, 0, -1, -1);
+            NetMessage.SendObjectPlacement(-1, origin.X + 84, origin.Y + 36, (ushort)ModContent.TileType<SlayerFabricatorTile>(), 0, 0, -1, -1);
             holochestMainLoot = new List<int> {
                 ModContent.ItemType<HyperTechRevolvers>(), ModContent.ItemType<CyberChakram>(), ModContent.ItemType<AndroidHologram>(), ModContent.ItemType<WireTaser>(), ModContent.ItemType<Biocontainer>(), ModContent.ItemType<GlobalDischarge>()
             };
@@ -102,7 +102,7 @@ namespace Redemption.WorldGeneration
             ShipChest(origin.X + 104, origin.Y + 47, 9);
             ShipChest(origin.X + 102, origin.Y + 47, 10);
             ShipChest(origin.X + 100, origin.Y + 47, 11);
-            WorldGen.structures.AddProtectedStructure(new Rectangle(origin.X, origin.Y, 133, 58));
+            GenVars.structures.AddProtectedStructure(new Rectangle(origin.X, origin.Y, 133, 58));
             return true;
         }
         public static void ShipChest(int x, int y, int id = 0)

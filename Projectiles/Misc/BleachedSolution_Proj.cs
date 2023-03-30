@@ -12,7 +12,7 @@ namespace Redemption.Projectiles.Misc
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Bleached Spray");
+            // DisplayName.SetDefault("Bleached Spray");
         }
 
         public override void SetDefaults()

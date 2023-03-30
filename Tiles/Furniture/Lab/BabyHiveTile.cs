@@ -5,6 +5,7 @@ using Terraria;
 using Terraria.DataStructures;
 using Terraria.Enums;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 
@@ -30,8 +31,9 @@ namespace Redemption.Tiles.Furniture.Lab
             MinPick = 10;
             MineResist = 5f;
             HitSound = SoundID.NPCHit13;
-            ModTranslation name = CreateMapEntryName();
-            name.SetDefault("Baby Infection Hive");
+            ItemDrop = -1;
+            LocalizedText name = CreateMapEntryName();
+            // name.SetDefault("Baby Infection Hive");
             AddMapEntry(new Color(54, 193, 59));
             AnimationFrameHeight = 18;
         }
@@ -63,7 +65,7 @@ namespace Redemption.Tiles.Furniture.Lab
         public override string Texture => Redemption.PLACEHOLDER_TEXTURE;
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Baby Infection Hive");
+            // DisplayName.SetDefault("Baby Infection Hive");
         }
 
         public override void SetDefaults()

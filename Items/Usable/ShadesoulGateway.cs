@@ -12,10 +12,10 @@ namespace Redemption.Items.Usable
     {
         public override void SetStaticDefaults()
         {
-            Tooltip.SetDefault("Opens a portal to the Soulless Caverns" +
+            /* Tooltip.SetDefault("Opens a portal to the Soulless Caverns" +
                 "\nCan also be used to leave the Soulless Caverns" +
-                "\n'You feel keeping the gateway opened would be a bad idea...'");
-            SacrificeTotal = 1;
+                "\n'You feel keeping the gateway opened would be a bad idea...'"); */
+            Item.ResearchUnlockCount = 1;
         }
 
         public override void SetDefaults()
@@ -47,7 +47,7 @@ namespace Redemption.Items.Usable
                 if (Main.netMode != NetmodeID.MultiplayerClient)
                     NPC.NewNPC(new EntitySource_BossSpawn(player), (int)player.Center.X, (int)player.Center.Y, type);
                 else
-                    NetMessage.SendData(MessageID.SpawnBoss, number: player.whoAmI, number2: type);
+                    NetMessage.SendData(MessageID.SpawnBossUseLicenseStartEvent, number: player.whoAmI, number2: type);
 
                 Main.NewText("A Shadesoul Gateway has been opened...", Color.LightSlateGray);
             }

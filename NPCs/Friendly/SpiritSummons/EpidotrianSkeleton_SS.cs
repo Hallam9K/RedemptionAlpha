@@ -36,7 +36,7 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
         }
         public override void SetSafeStaticDefaults()
         {
-            DisplayName.SetDefault("Epidotrian Skeleton");
+            // DisplayName.SetDefault("Epidotrian Skeleton");
             Main.npcFrameCount[NPC.type] = 13;
             NPCID.Sets.MPAllowedEnemies[Type] = true;
 
@@ -58,7 +58,7 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
             NPC.aiStyle = -1;
             NPC.Redemption().spiritSummon = true;
         }
-        public override void HitEffect(int hitDirection, double damage)
+        public override void HitEffect(NPC.HitInfo hit)
         {
             if (NPC.life <= 0)
             {
@@ -103,7 +103,7 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
             Player player = Main.player[(int)NPC.ai[3]];
             RedeNPC globalNPC = NPC.Redemption();
             if (!player.active || player.dead || !SSBase.CheckActive(player))
-                NPC.StrikeNPC(999, 0, 1);
+                NPC.SimpleStrikeNPC(999, 1);
             NPC.LookByVelocity();
 
             if (Main.rand.NextBool(3500) && !Main.dedServ)
@@ -351,7 +351,7 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
             return false;
         }
-        public override bool? CanHitNPC(NPC target) => AIState == ActionState.Alert ? null : false;
+        public override bool CanHitNPC(NPC target) => AIState == ActionState.Alert;
         public override void OnKill()
         {
             RedeHelper.SpawnNPC(NPC.GetSource_FromAI(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<LostSoulNPC>(), Main.rand.NextFloat(0, 0.4f));

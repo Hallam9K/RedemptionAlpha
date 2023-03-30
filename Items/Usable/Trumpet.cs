@@ -11,9 +11,9 @@ namespace Redemption.Items.Usable
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Trumpet");
-            Tooltip.SetDefault("Playable Instrument" +
-                "\n'Doot'");
+            // DisplayName.SetDefault("Trumpet");
+            /* Tooltip.SetDefault("Playable Instrument" +
+                "\n'Doot'"); */
         }
 
         public override void SetDefaults()

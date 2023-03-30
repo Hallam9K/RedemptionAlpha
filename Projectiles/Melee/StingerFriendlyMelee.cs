@@ -9,7 +9,7 @@ namespace Redemption.Projectiles.Melee
         public override string Texture => "Redemption/Projectiles/Misc/StingerFriendly";
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Stinger");
+            // DisplayName.SetDefault("Stinger");
         }
         public override void SetDefaults()
         {

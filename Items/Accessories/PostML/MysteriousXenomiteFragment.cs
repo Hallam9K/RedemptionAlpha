@@ -12,8 +12,8 @@ namespace Redemption.Items.Accessories.PostML
     {
         public override void SetStaticDefaults()
         {
-            Tooltip.SetDefault("Summons a lil Xenomite Elemental to light your way!");
-            SacrificeTotal = 1;
+            // Tooltip.SetDefault("Summons a lil Xenomite Elemental to light your way!");
+            Item.ResearchUnlockCount = 1;
         }
 
         public override void SetDefaults()

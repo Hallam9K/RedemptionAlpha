@@ -16,7 +16,7 @@ namespace Redemption.NPCs.Bosses.FowlEmperor
         public override string Texture => "Redemption/Items/Weapons/PreHM/Ranged/EggBomb";
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Egg Bomb");
+            // DisplayName.SetDefault("Egg Bomb");
             ProjectileID.Sets.DontAttachHideToAlpha[Type] = true;
         }
         public override void SetDefaults()
@@ -52,7 +52,7 @@ namespace Redemption.NPCs.Bosses.FowlEmperor
             if (Projectile.timeLeft < 260)
                 Projectile.tileCollide = true;
         }
-        public override void OnHitPlayer(Player target, int damage, bool crit)
+        public override void OnHitPlayer(Player target, Player.HurtInfo info)
         {
             Projectile.timeLeft = 2;
         }

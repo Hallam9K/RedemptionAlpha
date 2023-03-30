@@ -10,15 +10,16 @@ namespace Redemption.Items.Materials.PostML
     {
         public override void SetStaticDefaults()
         {
-            Tooltip.SetDefault("Use a Xenium Refinery to craft Xenium Bars");
-            SacrificeTotal = 50;
+            // Tooltip.SetDefault("Use a Xenium Refinery to craft Xenium Bars");
+            Item.ResearchUnlockCount = 50;
+            ItemID.Sets.SortingPriorityMaterials[Item.type] = 100;
         }
 
         public override void SetDefaults()
         {
             Item.width = 26;
             Item.height = 26;
-            Item.maxStack = 9999;
+            Item.maxStack = Item.CommonMaxStack;
             Item.value = Item.sellPrice(0, 0, 15, 0);
             Item.rare = ItemRarityID.Purple;
         }

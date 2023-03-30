@@ -9,9 +9,9 @@ namespace Redemption.Items.Placeable.Furniture.Misc
 	{
 		public override void SetStaticDefaults()
 		{
-            Tooltip.SetDefault("Creates a small aura that instantly kills any soulless enemies that enter" +
-                "\nLife regen is disabled in the aura");
-			SacrificeTotal = 1;
+            /* Tooltip.SetDefault("Creates a small aura that instantly kills any soulless enemies that enter" +
+                "\nLife regen is disabled in the aura"); */
+			Item.ResearchUnlockCount = 1;
 		}
 
 		public override void SetDefaults()

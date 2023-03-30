@@ -1,6 +1,7 @@
 using Redemption.Tiles.Furniture.PetrifiedWood;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria;
 
 namespace Redemption.Items.Placeable.Furniture.PetrifiedWood
 {
@@ -8,7 +9,7 @@ namespace Redemption.Items.Placeable.Furniture.PetrifiedWood
 	{
 		public override void SetStaticDefaults()
 		{
-			SacrificeTotal = 1;
+			Item.ResearchUnlockCount = 1;
 		}
 
 		public override void SetDefaults()
@@ -16,7 +17,7 @@ namespace Redemption.Items.Placeable.Furniture.PetrifiedWood
 			Item.DefaultToPlaceableTile(ModContent.TileType<PetrifiedWoodBedTile>(), 0);
 			Item.width = 34;
 			Item.height = 18;
-			Item.maxStack = 9999;
+			Item.maxStack = Item.CommonMaxStack;
 			Item.value = 2000;
 		}
 

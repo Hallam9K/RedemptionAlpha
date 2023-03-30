@@ -11,13 +11,13 @@ namespace Redemption.Items.Armor.HM.Hardlight
     {
         public override void SetStaticDefaults()
         {
-            Tooltip.SetDefault("13% increased magic damage\n" +
+            /* Tooltip.SetDefault("13% increased magic damage\n" +
             "5% increased magic critical strike chance\n" +
-            "+50 max mana");
+            "+50 max mana"); */
 
             ArmorIDs.Head.Sets.DrawHead[EquipLoader.GetEquipSlot(Mod, Name, EquipType.Head)] = false;
 
-            SacrificeTotal = 1;
+            Item.ResearchUnlockCount = 1;
         }
 
         public override void SetDefaults()

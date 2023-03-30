@@ -8,8 +8,8 @@ namespace Redemption.Items.Donator.Lizzy
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Lizzy");
-			Description.SetDefault("'w'");
+			// DisplayName.SetDefault("Lizzy");
+			// Description.SetDefault("'w'");
 
 			Main.buffNoTimeDisplay[Type] = true;
 			Main.vanityPet[Type] = true;

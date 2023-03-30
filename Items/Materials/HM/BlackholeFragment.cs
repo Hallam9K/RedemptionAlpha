@@ -9,18 +9,18 @@ namespace Redemption.Items.Materials.HM
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Blackhole Fragment");
-            Tooltip.SetDefault("'The crushing gravity of a black hole resides within this fragment'");
+            // DisplayName.SetDefault("Blackhole Fragment");
+            // Tooltip.SetDefault("'The crushing gravity of a black hole resides within this fragment'");
             ItemID.Sets.ItemNoGravity[Item.type] = true;
             ItemID.Sets.ItemIconPulse[Item.type] = true;
-            SacrificeTotal = 25;
+            Item.ResearchUnlockCount = 25;
         }
 
         public override void SetDefaults()
         {
             Item.width = 22;
             Item.height = 24;
-            Item.maxStack = 9999;
+            Item.maxStack = Item.CommonMaxStack;
             Item.value = Item.sellPrice(0, 0, 20, 0);
             Item.rare = ItemRarityID.Cyan;
         }

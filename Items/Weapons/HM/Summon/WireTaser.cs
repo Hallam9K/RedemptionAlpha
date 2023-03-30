@@ -19,12 +19,12 @@ namespace Redemption.Items.Weapons.HM.Summon
     {
         public override void SetStaticDefaults()
         {
-            Tooltip.SetDefault("9 summon tag damage\n" +
+            /* Tooltip.SetDefault("9 summon tag damage\n" +
                 "Your summons will focus struck enemies\n" +
                 "Strike enemies with the tip of the taser to stun them for a second\n" +
                 "Cannot stun enemies with knockback immunity\n" +
-                "Inflicts electrified");
-            SacrificeTotal = 1;
+                "Inflicts electrified"); */
+            Item.ResearchUnlockCount = 1;
         }
         public override void SetDefaults()
         {
@@ -42,7 +42,7 @@ namespace Redemption.Items.Weapons.HM.Summon
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Wire Taser");
+            // DisplayName.SetDefault("Wire Taser");
             ProjectileID.Sets.IsAWhip[Type] = true;
             ElementID.ProjThunder[Type] = true;
         }
@@ -55,7 +55,7 @@ namespace Redemption.Items.Weapons.HM.Summon
             Projectile.Redemption().TechnicallyMelee = true;
         }
         private int FrameX;
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             Player player = Main.player[Projectile.owner];
             if (Main.rand.NextBool())
@@ -144,7 +144,7 @@ namespace Redemption.Items.Weapons.HM.Summon
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Wire Taser");
+            // DisplayName.SetDefault("Wire Taser");
         }
         public override void SetDefaults()
         {
@@ -232,7 +232,7 @@ namespace Redemption.Items.Weapons.HM.Summon
         }
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Wire Taser");
+            // DisplayName.SetDefault("Wire Taser");
             ElementID.ProjThunder[Type] = true;
         }
         public override void SetDefaults()
@@ -284,11 +284,11 @@ namespace Redemption.Items.Weapons.HM.Summon
                 }
             }
         }
-        public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
+        public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
         {
-            knockback = 0;
+            modifiers.Knockback *= 0;
         }
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             if (target.knockBackResist > 0)
                 target.AddBuff(ModContent.BuffType<StunnedDebuff>(), 20);

@@ -26,6 +26,7 @@ namespace Redemption.Tiles.Furniture.Shade
             AddMapEntry(new Color(83, 87, 123));
             MinPick = 500;
             MineResist = 10f;
+            ItemDrop = -1;
             HitSound = CustomSounds.ChainHit;
         }
         public override bool CanExplode(int i, int j) => false;
@@ -36,8 +37,8 @@ namespace Redemption.Tiles.Furniture.Shade
         public override string Texture => Redemption.PLACEHOLDER_TEXTURE;
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Giant Shadesteel Chain");
-            Tooltip.SetDefault("[c/ff0000:Unbreakable (500% Pickaxe Power)]");
+            // DisplayName.SetDefault("Giant Shadesteel Chain");
+            // Tooltip.SetDefault("[c/ff0000:Unbreakable (500% Pickaxe Power)]");
         }
         public override void SetDefaults()
         {

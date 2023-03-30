@@ -12,7 +12,7 @@ namespace Redemption.NPCs.Bosses.Neb.Phase2
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Dash Telegraph");
+            // DisplayName.SetDefault("Dash Telegraph");
             ProjectileID.Sets.TrailCacheLength[Projectile.type] = 5;
             ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
         }

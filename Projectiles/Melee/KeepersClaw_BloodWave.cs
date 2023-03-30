@@ -11,7 +11,7 @@ namespace Redemption.Projectiles.Melee
         public override string Texture => "Redemption/NPCs/Bosses/Keeper/KeeperBloodWave";
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Blood Wave");
+            // DisplayName.SetDefault("Blood Wave");
             ProjectileID.Sets.TrailCacheLength[Projectile.type] = 4;
             ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
             ElementID.ProjBlood[Type] = true;
@@ -39,7 +39,7 @@ namespace Redemption.Projectiles.Melee
                 Projectile.Kill();
         }
         public override bool? CanHitNPC(NPC target) => !target.friendly && Projectile.alpha < 200 && Projectile.ai[0] < 2 ? null : false;
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             Projectile.localNPCImmunity[target.whoAmI] = 40;
             target.immune[Projectile.owner] = 0;
@@ -63,6 +63,6 @@ namespace Redemption.Projectiles.Melee
                 player.HealEffect(5);
             }
         }
-        public override void OnHitPlayer(Player target, int damage, bool crit) { }
+        public override void OnHitPlayer(Player target, Player.HurtInfo info) { }
     }
 }

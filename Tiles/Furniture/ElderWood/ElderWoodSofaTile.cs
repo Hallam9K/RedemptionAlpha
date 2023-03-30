@@ -3,6 +3,7 @@ using Redemption.Items.Placeable.Furniture.ElderWood;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 
@@ -20,8 +21,8 @@ namespace Redemption.Tiles.Furniture.ElderWood
 			TileObjectData.newTile.DrawYOffset = 2;
 			TileObjectData.addTile(Type);
 
-			ModTranslation name = CreateMapEntryName();
-			name.SetDefault("Elder Wood Sofa");
+			LocalizedText name = CreateMapEntryName();
+			// name.SetDefault("Elder Wood Sofa");
 			AddMapEntry(new Color(109, 87, 78), name);
 
             AddToArray(ref TileID.Sets.RoomNeeds.CountsAsChair);
@@ -29,6 +30,5 @@ namespace Redemption.Tiles.Furniture.ElderWood
 			DustType = DustID.t_BorealWood;
 		}
 		public override void NumDust(int i, int j, bool fail, ref int num) => num = fail ? 1 : 3;
-		public override void KillMultiTile(int i, int j, int frameX, int frameY) => Item.NewItem(new EntitySource_TileBreak(i, j), new Vector2(i, j) * 16f, ModContent.ItemType<ElderWoodSofa>());
 	}
 }

@@ -22,7 +22,7 @@ namespace Redemption.NPCs.Bosses.KSIII
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Energy Magnet Drone Mk.I");
+            // DisplayName.SetDefault("Energy Magnet Drone Mk.I");
             Main.npcFrameCount[NPC.type] = 12;
             NPCDebuffImmunityData debuffData = new()
             {
@@ -72,7 +72,7 @@ namespace Redemption.NPCs.Bosses.KSIII
             });
         }
 
-        public override void HitEffect(int hitDirection, double damage)
+        public override void HitEffect(NPC.HitInfo hit)
         {
             if (NPC.life <= 0)
             {
@@ -218,7 +218,7 @@ namespace Redemption.NPCs.Bosses.KSIII
         public override string Texture => Redemption.EMPTY_TEXTURE;
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Surge");
+            // DisplayName.SetDefault("Surge");
         }
 
         public override void SetDefaults()

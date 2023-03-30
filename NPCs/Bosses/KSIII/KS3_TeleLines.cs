@@ -32,7 +32,7 @@ namespace Redemption.NPCs.Bosses.KSIII
         // >
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Telegraph");
+            // DisplayName.SetDefault("Telegraph");
             ProjectileID.Sets.DrawScreenCheckFluff[Type] = 2400;
         }
 
@@ -203,7 +203,7 @@ namespace Redemption.NPCs.Bosses.KSIII
         // >
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Telegraph");
+            // DisplayName.SetDefault("Telegraph");
             ProjectileID.Sets.DrawScreenCheckFluff[Type] = 2400;
         }
 

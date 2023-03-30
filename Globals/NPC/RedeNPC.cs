@@ -52,35 +52,28 @@ namespace Redemption.Globals.NPC
         public Entity attacker = Main.LocalPlayer;
         public Terraria.NPC npcTarget;
 
-        public override void SetupShop(int type, Chest shop, ref int nextSlot)
+        public override void ModifyShop(NPCShop shop)
         {
-            if (type == NPCID.Demolitionist && Main.LocalPlayer.HasItem(ModContent.ItemType<GreneggLauncher>()))
-                shop.item[nextSlot++].SetDefaults(ModContent.ItemType<EggBomb>());
-            if (type == NPCID.SkeletonMerchant)
-                shop.item[nextSlot++].SetDefaults(ModContent.ItemType<CalciteWand>());
-            if (type == NPCID.Dryad)
-                shop.item[nextSlot++].SetDefaults(ModContent.ItemType<DruidHat>());
-            if (type == NPCID.Clothier)
+            if (shop.NpcType == NPCID.Demolitionist)
+                shop.Add<EggBomb>(Condition.PlayerCarriesItem(ModContent.ItemType<GreneggLauncher>()));
+            if (shop.NpcType == NPCID.SkeletonMerchant)
+                shop.Add<CalciteWand>();
+            if (shop.NpcType == NPCID.Clothier)
             {
-                if (RedeBossDowned.downedThorn)
-                    shop.item[nextSlot++].SetDefaults(ModContent.ItemType<ThornPlush>());
-                if (RedeBossDowned.downedEaglecrestGolem)
-                    shop.item[nextSlot++].SetDefaults(ModContent.ItemType<EaglecrestGolemPlush>());
+                shop.Add<ThornPlush>(RedeConditions.DownedThorn);
+                shop.Add<EaglecrestGolemPlush>(RedeConditions.DownedEaglecrestGolem);
             }
-            if (type == NPCID.Wizard)
+            if (shop.NpcType == NPCID.Wizard)
             {
-                shop.item[nextSlot++].SetDefaults(ModContent.ItemType<NoidanSauva>());
-                shop.item[nextSlot++].SetDefaults(ModContent.ItemType<Pommisauva>());
+                shop.Add<NoidanSauva>();
+                shop.Add<Pommisauva>();
             }
-            if (type == NPCID.Princess)
+            if (shop.NpcType == NPCID.Princess)
             {
-                shop.item[nextSlot++].SetDefaults(ModContent.ItemType<HamPatPainting>());
-                shop.item[nextSlot++].SetDefaults(ModContent.ItemType<TiedBoiPainting>());
-                if (Main.expertMode && Terraria.NPC.boughtCat)
-                {
-                    shop.item[nextSlot++].SetDefaults(ModContent.ItemType<HallamHoodie>());
-                    shop.item[nextSlot++].SetDefaults(ModContent.ItemType<HallamLeggings>());
-                }
+                shop.Add<HamPatPainting>();
+                shop.Add<TiedBoiPainting>();
+                shop.Add<HallamHoodie>(Condition.InExpertMode, RedeConditions.BroughtCat);
+                shop.Add<HallamLeggings>(Condition.InExpertMode, RedeConditions.BroughtCat);
             }
         }
         public override void ResetEffects(Terraria.NPC npc)
@@ -88,16 +81,14 @@ namespace Redemption.Globals.NPC
             invisible = false;
         }
 
-        public override bool StrikeNPC(Terraria.NPC npc, ref double damage, int defense, ref float knockback, int hitDirection, ref bool crit)
+        public override void ModifyIncomingHit(Terraria.NPC npc, ref Terraria.NPC.HitModifiers modifiers)
         {
             if (spiritSummon)
             {
-                damage *= .75f;
+                modifiers.FinalDamage *= .75f;
                 if (Main.expertMode)
-                    damage /= Main.masterMode ? 3 : 2;
+                    modifiers.FinalDamage /= Main.masterMode ? 3 : 2;
             }
-
-            return base.StrikeNPC(npc, ref damage, defense, ref knockback, hitDirection, ref crit);
         }
         public override bool PreKill(Terraria.NPC npc)
         {
@@ -127,7 +118,7 @@ namespace Redemption.Globals.NPC
             return true;
         }
 
-        public override void ModifyHitByItem(Terraria.NPC npc, Terraria.Player player, Item item, ref int damage, ref float knockback, ref bool crit)
+        public override void ModifyHitByItem(Terraria.NPC npc, Terraria.Player player, Item item, ref Terraria.NPC.HitModifiers modifiers)
         {
             // Decapitation
             bool humanoid = NPCLists.SkeletonHumanoid.Contains(npc.type) || NPCLists.Humanoid.Contains(npc.type);
@@ -137,28 +128,28 @@ namespace Redemption.Globals.NPC
                 {
                     CombatText.NewText(npc.getRect(), Color.Orange, "Decapitated!");
                     decapitated = true;
-                    damage = npc.life;
-                    crit = true;
+                    modifiers.SetInstantKill();
+                    modifiers.SetCrit();
                 }
                 else if (Main.rand.NextBool(80) && (item.axe > 0 || item.Redemption().TechnicallyAxe) && item.type != ModContent.ItemType<BeardedHatchet>())
                 {
                     CombatText.NewText(npc.getRect(), Color.Orange, "Decapitated!");
                     decapitated = true;
-                    damage = npc.life;
-                    crit = true;
+                    modifiers.SetInstantKill();
+                    modifiers.SetCrit();
                 }
             }
         }
-        public override void ModifyHitByProjectile(Terraria.NPC npc, Projectile projectile, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
+        public override void ModifyHitByProjectile(Terraria.NPC npc, Projectile projectile, ref Terraria.NPC.HitModifiers modifiers)
         {
             if (spiritSummon && projectile.hostile && !projectile.Redemption().friendlyHostile)
-                damage *= 4;
+                modifiers.FinalDamage *= 4;
         }
-        public override void OnHitNPC(Terraria.NPC npc, Terraria.NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(Terraria.NPC npc, Terraria.NPC target, Terraria.NPC.HitInfo hit)
         {
             target.Redemption().attacker = npc;
         }
-        public override void OnHitByItem(Terraria.NPC npc, Terraria.Player player, Item item, int damage, float knockback, bool crit)
+        public override void OnHitByItem(Terraria.NPC npc, Terraria.Player player, Item item, Terraria.NPC.HitInfo hit, int damageDone)
         {
             if (!RedeConfigClient.Instance.ElementDisable && !ItemLists.NoElement.Contains(item.type))
             {
@@ -172,7 +163,7 @@ namespace Redemption.Globals.NPC
                 {
                     if (Main.rand.NextBool(8) && npc.life < npc.lifeMax && npc.knockBackResist > 0 && !npc.RedemptionNPCBuff().iceFrozen && item.HasElement(ElementID.Ice))
                     {
-                        SoundEngine.PlaySound(SoundID.Item30, npc.position);
+                        SoundEngine.PlaySound(SoundID.Item30);
                         npc.AddBuff(ModContent.BuffType<IceFrozen>(), 1800 - ((int)MathHelper.Clamp(npc.lifeMax, 60, 1780)));
                     }
                 }
@@ -222,7 +213,7 @@ namespace Redemption.Globals.NPC
 
             attacker = player;
         }
-        public override void OnHitByProjectile(Terraria.NPC npc, Projectile projectile, int damage, float knockback, bool crit)
+        public override void OnHitByProjectile(Terraria.NPC npc, Projectile projectile, Terraria.NPC.HitInfo hit, int damageDone)
         {
             if (!RedeConfigClient.Instance.ElementDisable && !ProjectileLists.NoElement.Contains(projectile.type))
             {
@@ -236,7 +227,7 @@ namespace Redemption.Globals.NPC
                 {
                     if (Main.rand.NextBool(8) && npc.life < npc.lifeMax && npc.knockBackResist > 0 && !npc.RedemptionNPCBuff().iceFrozen && projectile.HasElement(ElementID.Ice))
                     {
-                        SoundEngine.PlaySound(SoundID.Item30, npc.position);
+                        SoundEngine.PlaySound(SoundID.Item30);
                         npc.AddBuff(ModContent.BuffType<IceFrozen>(), 1800 - ((int)MathHelper.Clamp(npc.lifeMax, 60, 1780)));
                     }
                 }

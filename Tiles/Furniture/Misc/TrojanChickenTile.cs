@@ -4,6 +4,7 @@ using Terraria;
 using Terraria.DataStructures;
 using Terraria.Enums;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 
@@ -34,13 +35,9 @@ namespace Redemption.Tiles.Furniture.Misc
             DustType = DustID.WoodFurniture;
             MinPick = 10;
             MineResist = 2f;
-            ModTranslation name = CreateMapEntryName();
-            name.SetDefault("Trojan Chicken Replica");
+            LocalizedText name = CreateMapEntryName();
+            // name.SetDefault("Trojan Chicken Replica");
             AddMapEntry(new Color(151, 107, 75), name);
-        }
-        public override void KillMultiTile(int i, int j, int frameX, int frameY)
-        {
-            Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 176, 112, ModContent.ItemType<TrojanChicken>());
         }
         public override bool CanExplode(int i, int j) => false;
     }

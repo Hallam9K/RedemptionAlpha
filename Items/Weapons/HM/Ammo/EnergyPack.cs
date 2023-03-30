@@ -14,11 +14,11 @@ namespace Redemption.Items.Weapons.HM.Ammo
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Energy Pack");
-            Tooltip.SetDefault("While in inventory, allows the user to use energy-based weaponry\n" +
+            // DisplayName.SetDefault("Energy Pack");
+            /* Tooltip.SetDefault("While in inventory, allows the user to use energy-based weaponry\n" +
                 "Energy-based weaponry can pierce through Guard Points\n" +
-                "Can be stacked up to 3 times, each giving +100 energy");
-            SacrificeTotal = 1;
+                "Can be stacked up to 3 times, each giving +100 energy"); */
+            Item.ResearchUnlockCount = 1;
             Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(5, 4));
             ItemID.Sets.AnimatesAsSoul[Item.type] = true;
         }

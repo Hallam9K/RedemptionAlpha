@@ -1,5 +1,6 @@
 ﻿using Redemption.Tiles.Tiles;
 using Terraria.ModLoader;
+using Terraria;
 
 namespace Redemption.Items.Placeable.Tiles
 {
@@ -7,8 +8,8 @@ namespace Redemption.Items.Placeable.Tiles
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Reinforced Glass");
-            Tooltip.SetDefault("[c/ff0000:Unbreakable]");
+            // DisplayName.SetDefault("Reinforced Glass");
+            // Tooltip.SetDefault("[c/ff0000:Unbreakable]");
         }
 
 		public override void SetDefaults()
@@ -16,7 +17,7 @@ namespace Redemption.Items.Placeable.Tiles
             Item.DefaultToPlaceableTile(ModContent.TileType<ShipGlassTile>(), 0);
             Item.width = 16;
             Item.height = 16;
-            Item.maxStack = 9999;
+            Item.maxStack = Item.CommonMaxStack;
 		}
     }
 }

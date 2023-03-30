@@ -9,16 +9,17 @@ namespace Redemption.Items.Placeable.Plants
 	{
 		public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Irradiated Seeds");
-            Tooltip.SetDefault("Plants irradiated grass on dirt");
-            SacrificeTotal = 25;
+            // DisplayName.SetDefault("Irradiated Seeds");
+            // Tooltip.SetDefault("Plants irradiated grass on dirt");
+            ItemID.Sets.DisableAutomaticPlaceableDrop[Type] = true;
+            Item.ResearchUnlockCount = 25;
         }
 
         public override void SetDefaults()
         {
             Item.width = 22;
 			Item.height = 18;
-			Item.maxStack = 9999;
+			Item.maxStack = Item.CommonMaxStack;
 			Item.rare = ItemRarityID.Green;
 			Item.value = 10;
 

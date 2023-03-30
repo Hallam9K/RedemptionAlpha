@@ -15,7 +15,7 @@ namespace Redemption.Items.Weapons.PreHM.Ranged
         public override string Texture => "Redemption/Items/Weapons/PreHM/Ranged/EggBomb";
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Egg Bomb");
+            // DisplayName.SetDefault("Egg Bomb");
             ElementID.ProjExplosive[Type] = true;
         }
         public override void SetDefaults()
@@ -79,7 +79,7 @@ namespace Redemption.Items.Weapons.PreHM.Ranged
                 BaseAI.DamageNPC(target, Projectile.damage, Projectile.knockBack, hitDirection, Projectile, crit: Projectile.HeldItemCrit());
             }
         }
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             target.immune[Projectile.whoAmI] = 20;
         }

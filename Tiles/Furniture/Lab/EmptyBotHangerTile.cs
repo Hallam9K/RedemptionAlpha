@@ -4,6 +4,7 @@ using Redemption.Items.Placeable.Furniture.Lab;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.Enums;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 
@@ -28,13 +29,9 @@ namespace Redemption.Tiles.Furniture.Lab
             DustType = ModContent.DustType<LabPlatingDust>();
             MinPick = 200;
             MineResist = 5f;
-			ModTranslation name = CreateMapEntryName();
-			name.SetDefault("Empty Bot Hanger");
+			LocalizedText name = CreateMapEntryName();
+			// name.SetDefault("Empty Bot Hanger");
             AddMapEntry(new Color(189, 191, 200), name);
-        }
-        public override void KillMultiTile(int i, int j, int frameX, int frameY)
-        {
-            Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 32, 48, ModContent.ItemType<EmptyBotHanger>());
         }
         public override bool CanExplode(int i, int j) => false;
     }

@@ -9,6 +9,7 @@ using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.Enums;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 using static Redemption.Globals.RedeNet;
@@ -37,9 +38,10 @@ namespace Redemption.Tiles.Natural
             MinPick = 500;
             MineResist = 50;
             HitSound = SoundID.Tink;
-            ModTranslation name = CreateMapEntryName();
-            name.SetDefault("Automaton Remains");
+            LocalizedText name = CreateMapEntryName();
+            // name.SetDefault("Automaton Remains");
             AddMapEntry(new Color(117, 117, 126));
+            ItemDrop = -1;
         }
         public override void NearbyEffects(int i, int j, bool closer)
         {
@@ -127,7 +129,7 @@ namespace Redemption.Tiles.Natural
         public override string Texture => Redemption.PLACEHOLDER_TEXTURE;
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Niric Automaton Remains");
+            // DisplayName.SetDefault("Niric Automaton Remains");
         }
         public override void SetDefaults()
         {

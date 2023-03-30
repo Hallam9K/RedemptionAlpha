@@ -3,6 +3,7 @@ using Redemption.Dusts.Tiles;
 using Redemption.Items.Placeable.Furniture.Lab;
 using Terraria;
 using Terraria.DataStructures;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 
@@ -20,8 +21,8 @@ namespace Redemption.Tiles.Furniture.Lab
             TileObjectData.newTile.Origin = new Point16(0, 1);
             TileObjectData.newTile.CoordinateHeights = new int[] { 16, 16 };
             TileObjectData.addTile(Type);
-            ModTranslation name = CreateMapEntryName();
-            name.SetDefault("Girus Corruptor");
+            LocalizedText name = CreateMapEntryName();
+            // name.SetDefault("Girus Corruptor");
             AddMapEntry(new Color(185, 23, 23), name);
             DustType = ModContent.DustType<LabPlatingDust>();
             AnimationFrameHeight = 36;
@@ -45,10 +46,6 @@ namespace Redemption.Tiles.Furniture.Lab
             r = 0.4f;
             g = 0.0f;
             b = 0.0f;
-        }
-        public override void KillMultiTile(int i, int j, int frameX, int frameY)
-        {
-            Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 32, 32, ModContent.ItemType<GirusCorruptor>());
         }
     }
 }

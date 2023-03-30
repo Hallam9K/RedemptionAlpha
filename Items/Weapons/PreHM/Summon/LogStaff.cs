@@ -15,9 +15,9 @@ namespace Redemption.Items.Weapons.PreHM.Summon
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Log Staff");
-            Tooltip.SetDefault("Summons a small log that fires acorns in an arc");
-            SacrificeTotal = 1;
+            // DisplayName.SetDefault("Log Staff");
+            // Tooltip.SetDefault("Summons a small log that fires acorns in an arc");
+            Item.ResearchUnlockCount = 1;
 
             ItemID.Sets.GamepadWholeScreenUseRange[Item.type] = true;
             ItemID.Sets.LockOnIgnoresCollision[Item.type] = true;

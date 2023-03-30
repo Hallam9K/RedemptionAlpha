@@ -10,8 +10,8 @@ namespace Redemption.Items.Donator.Lordfunnyman
     {
         public override void SetStaticDefaults()
         {
-            Tooltip.SetDefault("Summons an ancient construct");
-            SacrificeTotal = 1;
+            // Tooltip.SetDefault("Summons an ancient construct");
+            Item.ResearchUnlockCount = 1;
         }
 
         public override void SetDefaults()

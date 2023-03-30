@@ -8,10 +8,10 @@ namespace Redemption.Items.Weapons.PreHM.Melee
     {
         public override void SetStaticDefaults()
         {
-            Tooltip.SetDefault("Causes armor penetration");
+            // Tooltip.SetDefault("Causes armor penetration");
             ItemID.Sets.SkipsInitialUseSound[Item.type] = true;
             ItemID.Sets.Spears[Item.type] = true;
-            SacrificeTotal = 1;
+            Item.ResearchUnlockCount = 1;
         }
 
         public override void SetDefaults()

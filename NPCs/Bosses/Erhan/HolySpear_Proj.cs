@@ -12,7 +12,7 @@ namespace Redemption.NPCs.Bosses.Erhan
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Holy Spear");
+            // DisplayName.SetDefault("Holy Spear");
             ProjectileID.Sets.TrailCacheLength[Projectile.type] = 3;
             ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
             ElementID.ProjHoly[Type] = true;

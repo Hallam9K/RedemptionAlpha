@@ -10,21 +10,21 @@ namespace Redemption.Items.Placeable.Tiles
     {
         public override void SetStaticDefaults()
         {
-            SacrificeTotal = 100;
+            Item.ResearchUnlockCount = 100;
         }
         public override void SetDefaults()
         {
             Item.DefaultToPlaceableTile(ModContent.TileType<GloomMushroomTile>(), 0);
             Item.width = 18;
             Item.height = 18;
-            Item.maxStack = 9999;
+            Item.maxStack = Item.CommonMaxStack;
         }
         public override void AddRecipes()
         {
             CreateRecipe(10)
                 .AddIngredient(ItemID.GlowingMushroom, 10)
                 .AddIngredient<LostSoul>()
-                .AddCondition(Recipe.Condition.InGraveyardBiome)
+                .AddCondition(Condition.InGraveyard)
                 .Register();
         }
     }

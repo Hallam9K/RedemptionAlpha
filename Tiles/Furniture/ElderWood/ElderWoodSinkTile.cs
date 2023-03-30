@@ -3,6 +3,7 @@ using Redemption.Items.Placeable.Furniture.ElderWood;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 
@@ -12,7 +13,8 @@ namespace Redemption.Tiles.Furniture.ElderWood
 	{
 		public override void SetStaticDefaults()
 		{
-			Main.tileFrameImportant[Type] = true;
+            TileID.Sets.CountsAsWaterSource[Type] = true;
+            Main.tileFrameImportant[Type] = true;
 			Main.tileNoAttach[Type] = true;
 			Main.tileLavaDeath[Type] = true;
 			TileObjectData.newTile.CopyFrom(TileObjectData.Style2x2);
@@ -21,14 +23,11 @@ namespace Redemption.Tiles.Furniture.ElderWood
 			TileObjectData.newTile.DrawYOffset = 2;
 			TileObjectData.addTile(Type);
 
-			ModTranslation name = CreateMapEntryName();
-			name.SetDefault("Elder Wood Sink");
-			AddMapEntry(new Color(109, 87, 78), name);
+			AddMapEntry(new Color(109, 87, 78), Language.GetText("MapObject.Sink"));
 
 			AdjTiles = new int[] { TileID.Sinks };
 			DustType = DustID.t_BorealWood;
 		}
 		public override void NumDust(int i, int j, bool fail, ref int num) => num = fail ? 1 : 3;
-		public override void KillMultiTile(int i, int j, int frameX, int frameY) => Item.NewItem(new EntitySource_TileBreak(i, j), new Vector2(i, j) * 16f, ModContent.ItemType<ElderWoodSink>());
 	}
 }

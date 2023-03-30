@@ -14,11 +14,11 @@ namespace Redemption.Items.Armor.PreHM.CommonGuard
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Common Guard Bucket Helm");
-            Tooltip.SetDefault("+2 increased melee damage");
+            // DisplayName.SetDefault("Common Guard Bucket Helm");
+            // Tooltip.SetDefault("+2 increased melee damage");
             ArmorIDs.Head.Sets.DrawHead[EquipLoader.GetEquipSlot(Mod, Name, EquipType.Head)] = false;
 
-            SacrificeTotal = 1;
+            Item.ResearchUnlockCount = 1;
         }
 
         public override void SetDefaults()

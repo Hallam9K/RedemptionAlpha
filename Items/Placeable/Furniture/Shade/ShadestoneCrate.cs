@@ -9,9 +9,9 @@ namespace Redemption.Items.Placeable.Furniture.Shade
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Shadestone Crate");
-            Tooltip.SetDefault("{$CommonItemTooltip.RightClickToOpen}");
-            SacrificeTotal = 5;
+            // DisplayName.SetDefault("Shadestone Crate");
+            // Tooltip.SetDefault("{$CommonItemTooltip.RightClickToOpen}");
+            Item.ResearchUnlockCount = 5;
         }
 
         public override void SetDefaults()
@@ -20,7 +20,7 @@ namespace Redemption.Items.Placeable.Furniture.Shade
             Item.width = 32;
             Item.height = 32;
             Item.rare = ItemRarityID.Blue;
-            Item.maxStack = 9999;
+            Item.maxStack = Item.CommonMaxStack;
         }
         public override bool CanRightClick() => true;
         public override void RightClick(Player player)

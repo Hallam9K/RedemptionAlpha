@@ -11,12 +11,12 @@ namespace Redemption.Items.Weapons.HM.Ranged
 	{
 		public override void SetStaticDefaults()
 		{
-            DisplayName.SetDefault("Steam-Cog Minigun");
-            Tooltip.SetDefault("Holding left-click will charge the weapon up, releasing will cause it to shoot rapidly for a short duration\n" +
+            // DisplayName.SetDefault("Steam-Cog Minigun");
+            /* Tooltip.SetDefault("Holding left-click will charge the weapon up, releasing will cause it to shoot rapidly for a short duration\n" +
                 "Shooting duration scales with the amount of time charged up, capping at 5 seconds\n" +
                 "Replaces normal bullets with high velocity bullets\n" +
-                "66% chance to not consume ammo");
-            SacrificeTotal = 1;
+                "66% chance to not consume ammo"); */
+            Item.ResearchUnlockCount = 1;
         }
 
         public override void SetDefaults()

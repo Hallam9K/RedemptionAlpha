@@ -27,7 +27,7 @@ namespace Redemption.Tiles.Tiles
             Main.tileMerge[ModContent.TileType<IrradiatedHardenedSandTile>()][Type] = true;
             Main.tileBlendAll[Type] = true;
             Main.tileSand[Type] = true;
-            TileID.Sets.TouchDamageSands[Type] = 15;
+            TileID.Sets.Suffocate[Type] = true;
             TileID.Sets.isDesertBiomeSand[Type] = true;
             TileID.Sets.Conversion.Sand[Type] = true;
             TileID.Sets.ForAdvancedCollision.ForSandshark[Type] = true;
@@ -126,7 +126,7 @@ namespace Redemption.Tiles.Tiles
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Irradiated Sand Ball");
+            // DisplayName.SetDefault("Irradiated Sand Ball");
             ProjectileID.Sets.ForcePlateDetection[Projectile.type] = true;
         }
 

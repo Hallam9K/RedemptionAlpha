@@ -16,7 +16,7 @@ namespace Redemption.NPCs.PreHM
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Spear");
+            // DisplayName.SetDefault("Spear");
             Main.projFrames[Projectile.type] = 2;
         }
 
@@ -36,17 +36,17 @@ namespace Redemption.NPCs.PreHM
             NPC host = Main.npc[(int)Projectile.ai[0]];
             return target == host.Redemption().attacker ? null : false;
         }
-        public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection) => damage *= 4;
+        public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers) => modifiers.FinalDamage *= 4;
         public override bool CanHitPlayer(Player target)
         {
             return !target.RedemptionPlayerBuff().skeletonFriendly;
         }
-        public override void OnHitPlayer(Player target, int damage, bool crit)
+        public override void OnHitPlayer(Player target, Player.HurtInfo info)
         {
             if (Main.rand.NextBool(3))
                 target.AddBuff(ModContent.BuffType<DirtyWoundDebuff>(), Main.rand.Next(400, 1200));
         }
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             if (Main.rand.NextBool(3))
                 target.AddBuff(ModContent.BuffType<DirtyWoundDebuff>(), Main.rand.Next(400, 1200));

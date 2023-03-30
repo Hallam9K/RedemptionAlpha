@@ -1,3 +1,5 @@
+using Redemption.Items.Accessories.PreHM;
+using Redemption.Items.Weapons.PostML.Melee;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -9,8 +11,9 @@ namespace Redemption.Items.Armor.Vanity
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Druid's Hat");
-            SacrificeTotal = 1;
+            // DisplayName.SetDefault("Druid's Hat");
+            Item.ResearchUnlockCount = 1;
+            ItemID.Sets.ShimmerTransformToItem[Type] = ItemID.WizardHat;
             ArmorIDs.Head.Sets.DrawHatHair[EquipLoader.GetEquipSlot(Mod, Name, EquipType.Head)] = true;
         }
         public override void SetDefaults()
@@ -21,6 +24,5 @@ namespace Redemption.Items.Armor.Vanity
             Item.value = Item.sellPrice(0, 0, 10, 0);
             Item.rare = ItemRarityID.Green;
         }
-        // TODO: shimmer version of Wizard's Hat
     }
 }

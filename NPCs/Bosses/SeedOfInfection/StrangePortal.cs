@@ -58,7 +58,7 @@ namespace Redemption.NPCs.Bosses.SeedOfInfection
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Strange Portal");
+            // DisplayName.SetDefault("Strange Portal");
             ProjectileID.Sets.DrawScreenCheckFluff[Type] = 2400;
         }
         public override void SetDefaults()

@@ -12,11 +12,11 @@ namespace Redemption.Items.Armor.PreHM.DragonLead
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Dragon-Lead Greaves");
-            Tooltip.SetDefault("8% increased critical strike chance\n" +
-                "10% increased movement speed");
+            // DisplayName.SetDefault("Dragon-Lead Greaves");
+            /* Tooltip.SetDefault("8% increased critical strike chance\n" +
+                "10% increased movement speed"); */
 
-            SacrificeTotal = 1;
+            Item.ResearchUnlockCount = 1;
         }
 
         public override void SetDefaults()

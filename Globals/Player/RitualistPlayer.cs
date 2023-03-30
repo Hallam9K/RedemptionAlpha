@@ -64,11 +64,11 @@ namespace Redemption.Globals.Player
                 proj.ai[1] = 1;
             }
         }
-        public override void PostHurt(bool pvp, bool quiet, double damage, int hitDirection, bool crit, int cooldownCounter)
+        public override void PostHurt(Terraria.Player.HurtInfo info)
         {
-            SpiritGauge -= 15;
+            SpiritGauge -= 2;
         }
-        public override void OnHitNPCWithProj(Projectile proj, Terraria.NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPCWithProj(Projectile proj, Terraria.NPC target, Terraria.NPC.HitInfo hit, int damageDone)
         {
             if (proj.Redemption().RitDagger)
             {

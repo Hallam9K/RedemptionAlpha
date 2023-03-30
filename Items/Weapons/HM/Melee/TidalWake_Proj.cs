@@ -16,7 +16,7 @@ namespace Redemption.Items.Weapons.HM.Melee
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Tidal Wake");
+            // DisplayName.SetDefault("Tidal Wake");
             ElementID.ProjWater[Type] = true;
         }
         public override void SetDefaults()
@@ -93,7 +93,7 @@ namespace Redemption.Items.Weapons.HM.Melee
             if (Projectile.scale < 1)
                 Projectile.scale += 0.04f;
         }
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             Player player = Main.player[Projectile.owner];
             if (target.life <= 0 && target.HasBuff<TidalWakeDebuff>())

@@ -11,7 +11,7 @@ namespace Redemption.Items.Weapons.HM.Ranged
         public override string Texture => "Redemption/Items/Weapons/HM/Ranged/HyperTechRevolvers_Proj";
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Hyper-Tech Revolver");
+            // DisplayName.SetDefault("Hyper-Tech Revolver");
         }
         public override void SetDefaults()
         {

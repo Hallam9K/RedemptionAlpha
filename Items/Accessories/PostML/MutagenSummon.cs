@@ -9,10 +9,10 @@ namespace Redemption.Items.Accessories.PostML
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Summoner's Mutagen");
-            Tooltip.SetDefault("15% increased summon damage"
-                + "\n10% increased summon critical strike chance");
-            SacrificeTotal = 1;
+            // DisplayName.SetDefault("Summoner's Mutagen");
+            /* Tooltip.SetDefault("15% increased summon damage"
+                + "\n10% increased summon critical strike chance"); */
+            Item.ResearchUnlockCount = 1;
         }
         public override void SetDefaults()
         {

@@ -9,8 +9,8 @@ namespace Redemption.Items.Weapons.PostML.Magic
 	{
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Mitosis");
-            Tooltip.SetDefault("Throw a Petridish filled with bacteria");
+            // DisplayName.SetDefault("Mitosis");
+            // Tooltip.SetDefault("Throw a Petridish filled with bacteria");
         }
 
         public override void SetDefaults()

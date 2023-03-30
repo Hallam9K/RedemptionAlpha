@@ -15,11 +15,11 @@ namespace Redemption.Items.Weapons.PostML.Ranged
     {
         public override void SetStaticDefaults()
         {
-            Tooltip.SetDefault("'Prepare for obliteration'"
+            /* Tooltip.SetDefault("'Prepare for obliteration'"
                 + "\nLeft-Click to mark a single enemy and fire a stream of missiles at their position" +
                 "\nRight-Click to mark your cursor position with a barrage of missiles" +
-                "\nUses rockets as ammo");
-            SacrificeTotal = 1;
+                "\nUses rockets as ammo"); */
+            Item.ResearchUnlockCount = 1;
         }
 
         public override void SetDefaults()

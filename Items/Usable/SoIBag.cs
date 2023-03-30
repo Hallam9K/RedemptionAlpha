@@ -20,18 +20,18 @@ namespace Redemption.Items.Usable
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Treasure Bag (Seed of Infection)");
-            Tooltip.SetDefault("{$CommonItemTooltip.RightClickToOpen}");
+            // DisplayName.SetDefault("Treasure Bag (Seed of Infection)");
+            // Tooltip.SetDefault("{$CommonItemTooltip.RightClickToOpen}");
 
             ItemID.Sets.BossBag[Type] = true;
             ItemID.Sets.PreHardmodeLikeBossBag[Type] = true;
 
-            SacrificeTotal = 3;
+            Item.ResearchUnlockCount = 3;
         }
 
         public override void SetDefaults()
         {
-            Item.maxStack = 9999;
+            Item.maxStack = Item.CommonMaxStack;
             Item.consumable = true;
             Item.width = 32;
             Item.height = 34;
@@ -51,7 +51,7 @@ namespace Redemption.Items.Usable
         }
         public override void ModifyItemLoot(ItemLoot itemLoot)
         {
-            itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<InfectedMask>(), 7));
+            itemLoot.Add(ItemDropRule.NotScalingWithLuck(ModContent.ItemType<InfectedMask>(), 7));
             itemLoot.Add(ItemDropRule.OneFromOptions(1, ModContent.ItemType<XenoXyston>(), ModContent.ItemType<CystlingSummon>(), ModContent.ItemType<ContagionSpreader>()));
             itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<ToxicGrenade>(), 1, 30, 40));
             itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<XenomiteShard>(), 1, 12, 22));

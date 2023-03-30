@@ -174,7 +174,7 @@ namespace Redemption.NPCs.FowlMorning
         {
             npcLoot.Add(ItemDropRule.ByCondition(new OnFireCondition(), ModContent.ItemType<FriedChicken>(), 4));
         }
-        public override void OnHitByItem(Player player, Item item, int damage, float knockback, bool crit)
+        public override void OnHitByItem(Player player, Item item, NPC.HitInfo hit, int damageDone)
         {
             if (NPC.life <= 0 && Main.rand.NextBool(4))
             {
@@ -184,7 +184,7 @@ namespace Redemption.NPCs.FowlMorning
                     Item.NewItem(NPC.GetSource_Loot(), NPC.getRect(), ModContent.ItemType<FriedChicken>());
             }
         }
-        public override void OnHitByProjectile(Projectile projectile, int damage, float knockback, bool crit)
+        public override void OnHitByProjectile(Projectile projectile, NPC.HitInfo hit, int damageDone)
         {
             if (NPC.life <= 0 && Main.rand.NextBool(4))
             {
@@ -195,7 +195,7 @@ namespace Redemption.NPCs.FowlMorning
             }
         }
         public override bool CanHitPlayer(Player target, ref int cooldownSlot) => false;
-        public override void HitEffect(int hitDirection, double damage)
+        public override void HitEffect(NPC.HitInfo hit)
         {
             if (NPC.life <= 0)
             {

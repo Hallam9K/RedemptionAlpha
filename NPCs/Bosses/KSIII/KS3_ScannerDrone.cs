@@ -18,7 +18,7 @@ namespace Redemption.NPCs.Bosses.KSIII
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Scanner Drone Mk.I");
+            // DisplayName.SetDefault("Scanner Drone Mk.I");
             Main.npcFrameCount[NPC.type] = 8;
             NPCDebuffImmunityData debuffData = new()
             {
@@ -67,7 +67,7 @@ namespace Redemption.NPCs.Bosses.KSIII
             });
         }
 
-        public override void HitEffect(int hitDirection, double damage)
+        public override void HitEffect(NPC.HitInfo hit)
         {
             if (NPC.life <= 0)
             {

@@ -9,14 +9,15 @@ namespace Redemption.Items.Placeable.Plants
 	{
 		public override void SetStaticDefaults()
         {
-            Tooltip.SetDefault("Plants grass on ancient dirt");
-            SacrificeTotal = 25;
+            // Tooltip.SetDefault("Plants grass on ancient dirt");
+            ItemID.Sets.DisableAutomaticPlaceableDrop[Type] = true;
+            Item.ResearchUnlockCount = 25;
         }
         public override void SetDefaults()
         {
             Item.width = 22;
             Item.height = 18;
-            Item.maxStack = 9999;
+            Item.maxStack = Item.CommonMaxStack;
             Item.rare = ItemRarityID.Green;
             Item.value = 10;
 

@@ -23,7 +23,7 @@ namespace Redemption.NPCs.Friendly
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Lost Soul");
+            // DisplayName.SetDefault("Lost Soul");
             NPCID.Sets.CountsAsCritter[NPC.type] = true;
             NPCID.Sets.DebuffImmunitySets.Add(Type, new NPCDebuffImmunityData
             {
@@ -53,7 +53,7 @@ namespace Redemption.NPCs.Friendly
             NPC.noTileCollide = true;
             NPC.catchItem = (short)ModContent.ItemType<LostSoul>();
         }
-        public override void HitEffect(int hitDirection, double damage)
+        public override void HitEffect(NPC.HitInfo hit)
         {
             if (NPC.life <= 0)
             {
@@ -98,7 +98,7 @@ namespace Redemption.NPCs.Friendly
             Item.NewItem(NPC.GetSource_Loot(), NPC.getRect(), ModContent.ItemType<LostSoul>(), 1 + dropAmount);
         }
         public override bool CanHitPlayer(Player target, ref int cooldownSlot) => false;
-        public override bool? CanHitNPC(NPC target) => false;
+        public override bool CanHitNPC(NPC target) => false;
         public override float SpawnChance(NPCSpawnInfo spawnInfo)
         {
             if (spawnInfo.Player.RedemptionAbility().SpiritwalkerActive && !spawnInfo.Player.ZoneTowerNebula && !spawnInfo.Player.ZoneTowerSolar && !spawnInfo.Player.ZoneTowerStardust && !spawnInfo.Player.ZoneTowerVortex)

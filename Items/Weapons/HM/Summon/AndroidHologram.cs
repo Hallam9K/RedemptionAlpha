@@ -13,9 +13,9 @@ namespace Redemption.Items.Weapons.HM.Summon
 	{
 		public override void SetStaticDefaults()
 		{
-            Tooltip.SetDefault("Summons a little Android to fight for you");
+            // Tooltip.SetDefault("Summons a little Android to fight for you");
             Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(5, 20));
-            SacrificeTotal = 1;
+            Item.ResearchUnlockCount = 1;
 
             ItemID.Sets.GamepadWholeScreenUseRange[Item.type] = true;
             ItemID.Sets.LockOnIgnoresCollision[Item.type] = true;

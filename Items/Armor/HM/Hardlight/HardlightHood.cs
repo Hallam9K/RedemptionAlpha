@@ -11,12 +11,12 @@ namespace Redemption.Items.Armor.HM.Hardlight
     {
         public override void SetStaticDefaults()
         {
-            Tooltip.SetDefault("13% increased summon damage\n" +
-            "Increases your max number of minions by 2");
+            /* Tooltip.SetDefault("13% increased summon damage\n" +
+            "Increases your max number of minions by 2"); */
 
             ArmorIDs.Head.Sets.DrawHead[EquipLoader.GetEquipSlot(Mod, Name, EquipType.Head)] = false;
 
-            SacrificeTotal = 1;
+            Item.ResearchUnlockCount = 1;
         }
 
         public override void SetDefaults()

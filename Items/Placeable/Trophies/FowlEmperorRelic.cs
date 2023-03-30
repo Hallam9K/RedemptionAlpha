@@ -9,7 +9,7 @@ namespace Redemption.Items.Placeable.Trophies
 	{
 		public override void SetStaticDefaults()
 		{
-			SacrificeTotal = 1;
+			Item.ResearchUnlockCount = 1;
 		}
 
 		public override void SetDefaults()
@@ -17,7 +17,7 @@ namespace Redemption.Items.Placeable.Trophies
 			Item.DefaultToPlaceableTile(ModContent.TileType<RelicTile>(), 12);
 			Item.width = 30;
 			Item.height = 40;
-			Item.maxStack = 9999;
+			Item.maxStack = Item.CommonMaxStack;
 			Item.rare = ItemRarityID.Master;
 			Item.master = true;
 			Item.value = Item.buyPrice(0, 1);

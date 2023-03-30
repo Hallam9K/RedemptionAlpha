@@ -18,7 +18,7 @@ namespace Redemption.Projectiles.Melee
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Ophos' Firestorm");
+            // DisplayName.SetDefault("Ophos' Firestorm");
             ProjectileID.Sets.TrailCacheLength[Projectile.type] = 6;
             ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
             ElementID.ProjFire[Type] = true;
@@ -111,7 +111,7 @@ namespace Redemption.Projectiles.Melee
                 ParticleManager.NewParticle(RedeHelper.RandAreaInEntity(Projectile), new Vector2(Main.rand.Next(-4, 5), 0), new EmberParticle(), Color.White, 2);
         }
         public override bool? CanHitNPC(NPC target) => Projectile.alpha <= 100 ? null : false;
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             target.AddBuff(BuffID.OnFire3, 300);
         }

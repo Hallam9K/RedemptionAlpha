@@ -10,7 +10,7 @@ namespace Redemption.NPCs.Bosses.ADD
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Electric Blast");
+            // DisplayName.SetDefault("Electric Blast");
             Main.projFrames[Projectile.type] = 4;
         }
         public override void SetDefaults()
@@ -66,7 +66,7 @@ namespace Redemption.NPCs.Bosses.ADD
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Electric Blast");
+            // DisplayName.SetDefault("Electric Blast");
         }
         public override void SetDefaults()
         {

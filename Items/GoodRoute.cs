@@ -8,8 +8,8 @@ namespace Redemption.Items
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Good Route");
-            Tooltip.SetDefault("This will increase alignment");
+            // DisplayName.SetDefault("Good Route");
+            // Tooltip.SetDefault("This will increase alignment");
         }
 
         public override void SetDefaults()

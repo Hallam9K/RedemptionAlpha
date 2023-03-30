@@ -13,7 +13,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
 
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Noble's Halberd");
+			// DisplayName.SetDefault("Noble's Halberd");
 		}
 
 		public override void SetDefaults()

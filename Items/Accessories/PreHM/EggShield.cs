@@ -9,10 +9,10 @@ namespace Redemption.Items.Accessories.PreHM
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Egg Shelld");
-            Tooltip.SetDefault("Decreases knockback the user receives\n" +
-                "When below 25% health, you will completely ignore knockback");
-            SacrificeTotal = 1;
+            // DisplayName.SetDefault("Egg Shelld");
+            /* Tooltip.SetDefault("Decreases knockback the user receives\n" +
+                "When below 25% health, you will completely ignore knockback"); */
+            Item.ResearchUnlockCount = 1;
         }
 
         public override void SetDefaults()
@@ -20,7 +20,7 @@ namespace Redemption.Items.Accessories.PreHM
             Item.width = 22;
             Item.height = 28;
             Item.value = Item.buyPrice(0, 0, 20, 0);
-            Item.canBePlacedInVanityRegardlessOfConditions = true;
+            Item.hasVanityEffects = true;
             Item.rare = ItemRarityID.Blue;
             Item.accessory = true;
             Item.defense = 2;

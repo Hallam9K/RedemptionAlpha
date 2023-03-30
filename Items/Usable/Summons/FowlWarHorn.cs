@@ -14,9 +14,9 @@ namespace Redemption.Items.Usable.Summons
 	{
 		public override void SetStaticDefaults()
 		{
-            Tooltip.SetDefault("Calls upon the Fowl Morning"
-                + "\nOnly usable before midday");
-            SacrificeTotal = 1;
+            /* Tooltip.SetDefault("Calls upon the Fowl Morning"
+                + "\nOnly usable before midday"); */
+            Item.ResearchUnlockCount = 1;
             ItemID.Sets.SortingPriorityBossSpawns[Type] = 12;
         }
 
@@ -24,7 +24,7 @@ namespace Redemption.Items.Usable.Summons
 		{
             Item.width = 28;
             Item.height = 26;
-            Item.maxStack = 9999;
+            Item.maxStack = Item.CommonMaxStack;
             Item.value = 2000;
             Item.rare = ItemRarityID.Blue;
             Item.useStyle = ItemUseStyleID.EatFood;

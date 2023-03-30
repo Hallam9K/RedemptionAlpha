@@ -16,7 +16,7 @@ namespace Redemption.Items.Weapons.PreHM.Ranged
         public override string Texture => "Redemption/Items/Weapons/PreHM/Ranged/HallowedHandGrenade";
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Hallowed Hand Grenade of Anglon");
+            // DisplayName.SetDefault("Hallowed Hand Grenade of Anglon");
             ElementID.ProjHoly[Type] = true;
             ElementID.ProjExplosive[Type] = true;
         }
@@ -71,17 +71,17 @@ namespace Redemption.Items.Weapons.PreHM.Ranged
             if (Projectile.localAI[0] == 182)
                 Projectile.friendly = false;
         }
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             target.immune[Projectile.whoAmI] = 20;
 
             if (Projectile.localAI[0] < 180)
                 Projectile.localAI[0] = 180;
         }
-        public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
+        public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
         {
             if (target.type is NPCID.EaterofWorldsBody or NPCID.EaterofWorldsHead or NPCID.EaterofWorldsTail or NPCID.Creeper)
-                damage /= 2;
+                modifiers.FinalDamage /= 2;
         }
         public override bool PreDraw(ref Color lightColor)
         {

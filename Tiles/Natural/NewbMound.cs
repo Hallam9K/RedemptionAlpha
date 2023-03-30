@@ -5,6 +5,7 @@ using Terraria;
 using Terraria.DataStructures;
 using Terraria.Enums;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 
@@ -27,9 +28,10 @@ namespace Redemption.Tiles.Natural
             TileObjectData.newTile.AnchorBottom = new AnchorData(AnchorType.SolidTile | AnchorType.SolidWithTop | AnchorType.SolidSide, TileObjectData.newTile.Width, 0);
             TileObjectData.addTile(Type);
             DustType = DustID.Dirt;
-            ModTranslation name = CreateMapEntryName();
-            name.SetDefault("Newb Mound");
+            LocalizedText name = CreateMapEntryName();
+            // name.SetDefault("Newb Mound");
             AddMapEntry(new Color(81, 72, 65));
+            ItemDrop = -1;
         }
         public override void KillMultiTile(int i, int j, int frameX, int frameY)
         {
@@ -51,7 +53,7 @@ namespace Redemption.Tiles.Natural
         public override string Texture => Redemption.PLACEHOLDER_TEXTURE;
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Newb Mound");
+            // DisplayName.SetDefault("Newb Mound");
         }
 
         public override void SetDefaults()

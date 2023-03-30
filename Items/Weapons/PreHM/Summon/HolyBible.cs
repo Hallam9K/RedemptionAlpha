@@ -10,11 +10,11 @@ namespace Redemption.Items.Weapons.PreHM.Summon
     {
         public override void SetStaticDefaults()
         {
-            Tooltip.SetDefault("Tosses the book, stopping at cursor point\n" +
+            /* Tooltip.SetDefault("Tosses the book, stopping at cursor point\n" +
                 "Shoots 4 short-ranged rays of light\n" +
-                "'You dare question the words of the mighty Jimmy!?'");
+                "'You dare question the words of the mighty Jimmy!?'"); */
 
-            SacrificeTotal = 1;
+            Item.ResearchUnlockCount = 1;
         }
 
         public override void SetDefaults()

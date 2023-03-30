@@ -16,7 +16,7 @@ namespace Redemption.Projectiles.Magic
         public override string Texture => "Redemption/Textures/TornadoTex";
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Tornado");
+            // DisplayName.SetDefault("Tornado");
             ProjectileID.Sets.DontAttachHideToAlpha[Projectile.type] = true;
             ElementID.ProjWind[Type] = true;
         }
@@ -105,9 +105,9 @@ namespace Redemption.Projectiles.Magic
             hitbox = new((int)Projectile.position.X + 60, (int)Projectile.position.Y, 88, Projectile.height);
         }
         public override bool? CanHitNPC(NPC target) => Projectile.alpha <= 200 ? null : false;
-        public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
+        public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
         {
-            knockback = 0;
+            modifiers.Knockback *= 0;
         }
         public override bool PreDraw(ref Color lightColor)
         {

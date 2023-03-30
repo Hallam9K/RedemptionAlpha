@@ -15,7 +15,7 @@ namespace Redemption.Projectiles.Minions
         public override string Texture => "Redemption/Projectiles/Hostile/CorpseWalkerBolt";
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Redemptive Spark");
+            // DisplayName.SetDefault("Redemptive Spark");
             Main.projFrames[Projectile.type] = 5;
             ProjectileID.Sets.MinionShot[Projectile.type] = true;
             ProjectileID.Sets.CultistIsResistantTo[Projectile.type] = true;

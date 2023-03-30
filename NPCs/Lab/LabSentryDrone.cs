@@ -15,7 +15,7 @@ namespace Redemption.NPCs.Lab
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Laboratory Drone");
+            // DisplayName.SetDefault("Laboratory Drone");
             Main.npcFrameCount[NPC.type] = 4;
             NPCID.Sets.NPCBestiaryDrawModifiers value = new(0) { Hide = true };
             NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, value);
@@ -34,7 +34,7 @@ namespace Redemption.NPCs.Lab
             NPC.aiStyle = -1;
             NPC.immortal = true;
         }
-        public override void HitEffect(int hitDirection, double damage)
+        public override void HitEffect(NPC.HitInfo hit)
         {
             Dust.NewDust(NPC.position + NPC.velocity, NPC.width, NPC.height, DustID.Electric);
         }

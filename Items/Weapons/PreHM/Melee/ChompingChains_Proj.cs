@@ -15,7 +15,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Chomping Chains");
+            // DisplayName.SetDefault("Chomping Chains");
         }
         public override void SetDefaults()
         {
@@ -102,7 +102,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
         }
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Chomping Chains");
+            // DisplayName.SetDefault("Chomping Chains");
             Main.projFrames[Projectile.type] = 3;
         }
         public override void SetDefaults()
@@ -163,12 +163,12 @@ namespace Redemption.Items.Weapons.PreHM.Melee
                 return target == nommed ? null : false;
             return null;
         }
-        public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
+        public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
         {
             if (Projectile.localAI[0] == 1)
-                knockback = 0;
+                modifiers.Knockback *= 0;
         }
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             Projectile.localNPCImmunity[target.whoAmI] = 20;
             target.immune[Projectile.owner] = 0;

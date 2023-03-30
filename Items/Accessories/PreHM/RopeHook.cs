@@ -11,9 +11,9 @@ namespace Redemption.Items.Accessories.PreHM
     {
         public override void SetStaticDefaults()
         {
-            Tooltip.SetDefault("Affected by gravity");
+            // Tooltip.SetDefault("Affected by gravity");
 
-            SacrificeTotal = 1;
+            Item.ResearchUnlockCount = 1;
         }
 
         public override void SetDefaults()
@@ -47,15 +47,13 @@ namespace Redemption.Items.Accessories.PreHM
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Rope Hook");
+            ProjectileID.Sets.SingleGrappleHook[Type] = true;
         }
 
         public override void SetDefaults()
         {
             Projectile.CloneDefaults(ProjectileID.GemHookAmethyst);
         }
-
-        public override bool? SingleGrappleHook(Player player) => true;
 
         public override void PostAI()
         {

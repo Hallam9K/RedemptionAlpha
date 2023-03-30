@@ -12,12 +12,12 @@ namespace Redemption.Items.Weapons.HM.Melee
     {
         public override void SetStaticDefaults()
         {
-            Tooltip.SetDefault("Slaying enemies has a chance to summon Cursed Samurai in their place\n" +
+            /* Tooltip.SetDefault("Slaying enemies has a chance to summon Cursed Samurai in their place\n" +
                 "Cursed Samurai will act as temporary minions to aid you\n" +
-                "Deals more damage to ghostly enemies");
+                "Deals more damage to ghostly enemies"); */
 
             ItemID.Sets.SkipsInitialUseSound[Item.type] = true;
-            SacrificeTotal = 1;
+            Item.ResearchUnlockCount = 1;
         }
 
         public override void SetDefaults()

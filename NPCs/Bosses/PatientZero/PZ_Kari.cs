@@ -18,7 +18,7 @@ namespace Redemption.NPCs.Bosses.PatientZero
         public ref float TimerRand2 => ref NPC.ai[3];
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Kari Johansson");
+            // DisplayName.SetDefault("Kari Johansson");
             Main.npcFrameCount[NPC.type] = 4;
             NPCID.Sets.BossBestiaryPriority.Add(Type);
 
@@ -62,7 +62,7 @@ namespace Redemption.NPCs.Bosses.PatientZero
             if (!Main.dedServ)
                 Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/LabBossMusic2");
         }
-        public override void HitEffect(int hitDirection, double damage)
+        public override void HitEffect(NPC.HitInfo hit)
         {
             if (NPC.life <= 0)
             {
@@ -260,17 +260,17 @@ namespace Redemption.NPCs.Bosses.PatientZero
                 }
             }
         }
-        public override void ModifyHitByProjectile(Projectile projectile, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
+        public override void ModifyHitByProjectile(Projectile projectile, ref NPC.HitModifiers modifiers)
         {
             if (projectile.type == ProjectileID.LastPrismLaser)
-                damage /= 3;
+                modifiers.FinalDamage /= 3;
             if (projectile.type == ModContent.ProjectileType<LightOrb_Proj>())
-                damage = (int)(damage * .6f);
+                modifiers.FinalDamage *= .6f;
         }
         public override bool CanHitPlayer(Player target, ref int cooldownSlot) => false;
-        public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
+        public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)
         {
-            NPC.lifeMax = (int)(NPC.lifeMax * 0.75f * bossLifeScale);
+            NPC.lifeMax = (int)(NPC.lifeMax * 0.75f * balance * bossAdjustment);
             NPC.damage = (int)(NPC.damage * 0.6f);
         }
     }

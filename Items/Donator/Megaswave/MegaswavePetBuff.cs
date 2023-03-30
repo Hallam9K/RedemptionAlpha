@@ -8,8 +8,8 @@ namespace Redemption.Items.Donator.Megaswave
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Miniswave");
-			Description.SetDefault("A truly mini wave");
+			// DisplayName.SetDefault("Miniswave");
+			// Description.SetDefault("A truly mini wave");
 
 			Main.buffNoTimeDisplay[Type] = true;
 			Main.vanityPet[Type] = true;

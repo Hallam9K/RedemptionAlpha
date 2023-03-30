@@ -14,11 +14,11 @@ namespace Redemption.Items.Usable.Summons
     {
         public override void SetStaticDefaults()
         {
-            Tooltip.SetDefault("Summons a strange portal..."
-                + "\nNot consumable");
+            /* Tooltip.SetDefault("Summons a strange portal..."
+                + "\nNot consumable"); */
             Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(4, 4));
 
-            SacrificeTotal = 1;
+            Item.ResearchUnlockCount = 1;
             ItemID.Sets.SortingPriorityBossSpawns[Type] = 12;
             ItemID.Sets.AnimatesAsSoul[Item.type] = true;
         }
@@ -53,7 +53,7 @@ namespace Redemption.Items.Usable.Summons
                 if (Main.netMode != NetmodeID.MultiplayerClient)
                     NPC.SpawnOnPlayer(player.whoAmI, type);
                 else
-                    NetMessage.SendData(MessageID.SpawnBoss, number: player.whoAmI, number2: type);
+                    NetMessage.SendData(MessageID.SpawnBossUseLicenseStartEvent, number: player.whoAmI, number2: type);
             }
             return true;
         }

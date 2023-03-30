@@ -16,7 +16,7 @@ namespace Redemption.Items.Weapons.HM.Melee
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Gravity Hammer");
+            // DisplayName.SetDefault("Gravity Hammer");
             Main.projFrames[Projectile.type] = 11;
             ElementID.ProjThunder[Type] = true;
             ElementID.ProjEarth[Type] = true;

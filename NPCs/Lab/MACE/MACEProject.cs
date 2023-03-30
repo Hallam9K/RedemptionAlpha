@@ -47,7 +47,7 @@ namespace Redemption.NPCs.Lab.MACE
         public ref float TimerRand2 => ref NPC.ai[3];
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("MACE Project");
+            // DisplayName.SetDefault("MACE Project");
             NPCID.Sets.TrailCacheLength[NPC.type] = 3;
             NPCID.Sets.TrailingMode[NPC.type] = 1;
 
@@ -99,7 +99,7 @@ namespace Redemption.NPCs.Lab.MACE
                 new FlavorTextBestiaryInfoElement("An old, unfinished war machine that went haywire. Looks like it never saw the light of day, as it's in progress of being scrapped for parts and components.")
             });
         }
-        public override void HitEffect(int hitDirection, double damage)
+        public override void HitEffect(NPC.HitInfo hit)
         {
             if (NPC.life <= 0)
             {
@@ -141,17 +141,16 @@ namespace Redemption.NPCs.Lab.MACE
         {
             potionType = ItemID.Heart;
         }
-        public override bool StrikeNPC(ref double damage, int defense, ref float knockback, int hitDirection, ref bool crit)
+        public override void ModifyIncomingHit(ref NPC.HitModifiers modifiers)
         {
-            bool vDmg = false;
             if (NPC.RedemptionGuard().GuardPoints >= 0)
             {
-                NPC.RedemptionGuard().GuardHit(NPC, ref vDmg, ref damage, ref knockback, SoundID.NPCHit4);
+                modifiers.DisableCrit();
+                modifiers.ModifyHitInfo += (ref NPC.HitInfo n) => NPC.RedemptionGuard().GuardHit(ref n, NPC, SoundID.NPCHit4);
                 if (NPC.RedemptionGuard().GuardPoints >= 0)
-                    return vDmg;
+                    return;
             }
             NPC.RedemptionGuard().GuardBreakCheck(NPC, DustID.Electric, CustomSounds.GuardBreak, 10, 1, 4000);
-            return true;
         }
 
         private Vector2 JawCenter;
@@ -761,9 +760,9 @@ namespace Redemption.NPCs.Lab.MACE
                 }
             }
         }
-        public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
+        public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)
         {
-            NPC.lifeMax = (int)(NPC.lifeMax * 0.6f * bossLifeScale);
+            NPC.lifeMax = (int)(NPC.lifeMax * 0.6f * balance * bossAdjustment);
             NPC.damage = (int)(NPC.damage * 0.6f);
         }
     }

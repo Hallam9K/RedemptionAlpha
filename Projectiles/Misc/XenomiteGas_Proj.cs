@@ -13,7 +13,7 @@ namespace Redemption.Projectiles.Misc
         public override string Texture => "Redemption/Textures/IceMist";
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Bile Gas");
+            // DisplayName.SetDefault("Bile Gas");
             ElementID.ProjWind[Type] = true;
             ElementID.ProjPoison[Type] = true;
         }
@@ -66,7 +66,7 @@ namespace Redemption.Projectiles.Misc
                 }
             }
         }
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             Projectile.localNPCImmunity[target.whoAmI] = 30;
             target.immune[Projectile.owner] = 0;

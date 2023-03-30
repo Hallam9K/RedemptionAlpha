@@ -17,7 +17,7 @@ namespace Redemption.Items.Weapons.HM.Melee
         public override string Texture => "Redemption/Items/Weapons/HM/Melee/BlindJustice";
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Blind Justice, Demon's Terror");
+            // DisplayName.SetDefault("Blind Justice, Demon's Terror");
             ElementID.ProjHoly[Type] = true;
             ElementID.ProjArcane[Type] = true;
         }
@@ -165,16 +165,18 @@ namespace Redemption.Items.Weapons.HM.Melee
                 player.SetCompositeArmFront(true, Player.CompositeArmStretchAmount.Full, (player.Center - Projectile.Center).ToRotation() + MathHelper.PiOver2);
         }
 
-        public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
+        public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
         {
             if (Projectile.localAI[0] == 2)
-                damage = (int)(damage * 2.5f);
+                modifiers.FinalDamage *= 2.5f;
             if (Projectile.localAI[0] == 1)
-                damage *= 2;
+                modifiers.FinalDamage *= 2;
             if (NPCLists.Demon.Contains(target.type))
-                damage *= 2;
-
-            RedeProjectile.Decapitation(target, ref damage, ref crit);
+                modifiers.FinalDamage *= 2;
+        }
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
+        {
+            RedeProjectile.Decapitation(target, ref damageDone, ref hit.Crit);
         }
         private float drawTimer;
         public override bool PreDraw(ref Color lightColor)
@@ -200,7 +202,7 @@ namespace Redemption.Items.Weapons.HM.Melee
         public override string Texture => "Redemption/Items/Weapons/HM/Melee/BlindJustice";
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Blind Justice, Demon's Terror");
+            // DisplayName.SetDefault("Blind Justice, Demon's Terror");
         }
 
         public override bool ShouldUpdatePosition() => false;

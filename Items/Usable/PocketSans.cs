@@ -9,8 +9,8 @@ namespace Redemption.Items.Usable
     {
         public override void SetStaticDefaults()
         {
-            Tooltip.SetDefault("Throws a strange skull with unfathomable power\n" +
-                "'Bad times all around'");
+            /* Tooltip.SetDefault("Throws a strange skull with unfathomable power\n" +
+                "'Bad times all around'"); */
         }
         public override void SetDefaults()
 		{
@@ -24,7 +24,7 @@ namespace Redemption.Items.Usable
             Item.useTime = 22;
             Item.width = 26;
             Item.height = 48;
-            Item.maxStack = 9999;
+            Item.maxStack = Item.CommonMaxStack;
             Item.rare = ItemRarityID.Cyan;
             Item.consumable = true;
             Item.noMelee = true;

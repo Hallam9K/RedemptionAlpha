@@ -15,7 +15,7 @@ namespace Redemption.Projectiles.Magic
         public override string Texture => "Redemption/Projectiles/Minions/MicroshieldDrone";
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Gigapeili Drone");
+            // DisplayName.SetDefault("Gigapeili Drone");
             Main.projFrames[Projectile.type] = 4;
         }
         public override void SetDefaults()

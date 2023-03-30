@@ -8,6 +8,7 @@ using Terraria;
 using Terraria.DataStructures;
 using Terraria.Enums;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 
@@ -53,9 +54,9 @@ namespace Redemption.Tiles.Furniture.Misc
 			TileObjectData.addTile(Type);
 
 			// Etc
-			ModTranslation name = CreateMapEntryName();
+			LocalizedText name = CreateMapEntryName();
 
-			name.SetDefault("Torch");
+			// name.SetDefault("Torch");
 
 			AddMapEntry(new Color(255, 199, 199), name);
 

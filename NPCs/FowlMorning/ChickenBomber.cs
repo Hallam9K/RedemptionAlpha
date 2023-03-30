@@ -45,7 +45,7 @@ namespace Redemption.NPCs.FowlMorning
             Banner = NPC.type;
             BannerItem = ModContent.ItemType<ChickenBomberBanner>();
         }
-        public override void HitEffect(int hitDirection, double damage)
+        public override void HitEffect(NPC.HitInfo hit)
         {
             if (NPC.life <= 0)
             {
@@ -132,7 +132,7 @@ namespace Redemption.NPCs.FowlMorning
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<GreneggLauncher>(), 60));
             npcLoot.Add(ItemDropRule.ByCondition(new OnFireCondition(), ModContent.ItemType<FriedChicken>(), 4));
         }
-        public override void OnHitByItem(Player player, Item item, int damage, float knockback, bool crit)
+        public override void OnHitByItem(Player player, Item item, NPC.HitInfo hit, int damageDone)
         {
             if (NPC.life <= 0 && Main.rand.NextBool(4))
             {
@@ -142,7 +142,7 @@ namespace Redemption.NPCs.FowlMorning
                     Item.NewItem(NPC.GetSource_Loot(), NPC.getRect(), ModContent.ItemType<FriedChicken>());
             }
         }
-        public override void OnHitByProjectile(Projectile projectile, int damage, float knockback, bool crit)
+        public override void OnHitByProjectile(Projectile projectile, NPC.HitInfo hit, int damageDone)
         {
             if (NPC.life <= 0 && Main.rand.NextBool(4))
             {
@@ -162,7 +162,7 @@ namespace Redemption.NPCs.FowlMorning
             spriteBatch.Draw(bombTex, NPC.Center - screenPos, NPC.frame, NPC.GetAlpha(drawColor) * bombOpacity, NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0f);
             return false;
         }
-        public override bool? CanHitNPC(NPC target) => false;
+        public override bool CanHitNPC(NPC target) => false;
         public override bool CanHitPlayer(Player target, ref int cooldownSlot) => false;
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
         {

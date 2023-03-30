@@ -29,6 +29,9 @@ using Redemption.Particles;
 using Redemption.NPCs.Bosses.Neb.Phase2;
 using Redemption.NPCs.Bosses.Neb.Clone;
 using Redemption.Base;
+using System.Threading;
+using Terraria.WorldBuilding;
+using System.Transactions;
 
 namespace Redemption.Globals.Player
 {
@@ -270,20 +273,6 @@ namespace Redemption.Globals.Player
                 }
             }
         }
-        /// <summary>Allows you to modify the knockback given ANY damage source. NOTE: This is an IL hook, which is why it needs a Player instance and is static.</summary>
-        /// <param name="player">The specific player to change.</param>
-        /// <param name="horizontal">Whether this is a horizontal (velocity.X) change or a vertical (velocity.Y) change.</param>
-        public static float KnockbackMultiplier(Terraria.Player player, bool horizontal)
-        {
-            float totalKb = 1f;
-
-            if (BasePlayer.HasAccessory(player, ModContent.ItemType<EggShield>(), true, false))
-                totalKb *= 0.75f;
-
-            if (totalKb < 0.001f) //Throws NullReferenceException if it's 0 for some reason
-                totalKb = 0.001f;
-            return totalKb;
-        }
         public override void UpdateEquips()
         {
             if (snipped)
@@ -397,12 +386,12 @@ namespace Redemption.Globals.Player
             }
             return base.Shoot(item, source, position, velocity, type, damage, knockback);
         }
-        public override void OnHitByNPC(Terraria.NPC npc, int damage, bool crit)
+        public override void OnHitByNPC(Terraria.NPC npc, Terraria.Player.HurtInfo hurtInfo)
         {
             if (vendetta)
                 npc.AddBuff(BuffID.Poisoned, 300);
         }
-        public override void ModifyHitByProjectile(Projectile proj, ref int damage, ref bool crit)
+        public override void ModifyHitByProjectile(Projectile proj, ref Terraria.Player.HurtModifiers modifiers)
         {
             if (!RedeConfigClient.Instance.ElementDisable)
             {
@@ -445,17 +434,17 @@ namespace Redemption.Globals.Player
                 else if (multiplier <= 0.9f)
                     CombatText.NewText(Player.getRect(), Color.CornflowerBlue, multiplier + "x", true, true);
 
-                damage = (int)(damage * multiplier);
+                modifiers.FinalDamage *= multiplier;
                 #endregion
             }
             if (shellCap && proj.velocity.Y > 1 && proj.Bottom.Y < Player.Center.Y)
             {
                 SoundEngine.PlaySound(SoundID.NPCHit38, Player.position);
                 Player.noKnockback = true;
-                damage = (int)(damage * 0.75f);
+                modifiers.FinalDamage *= 0.75f;
             }
         }
-        public override void ModifyHitByNPC(Terraria.NPC npc, ref int damage, ref bool crit)
+        public override void ModifyHitByNPC(Terraria.NPC npc, ref Terraria.Player.HurtModifiers modifiers)
         {
             if (!RedeConfigClient.Instance.ElementDisable)
             {
@@ -498,42 +487,42 @@ namespace Redemption.Globals.Player
                 else if (multiplier <= 0.9f)
                     CombatText.NewText(Player.getRect(), Color.CornflowerBlue, multiplier + "x", true, true);
 
-                damage = (int)(damage * multiplier);
+                modifiers.FinalDamage *= multiplier;
                 #endregion
             }
             if (shellCap && npc.velocity.Y > 1 && npc.Bottom.Y < Player.Center.Y)
             {
                 SoundEngine.PlaySound(SoundID.NPCHit38, Player.position);
                 Player.noKnockback = true;
-                damage = (int)(damage * 0.75f);
+                modifiers.FinalDamage *= 0.75f;
             }
         }
-        public override void ModifyHitNPC(Item item, Terraria.NPC target, ref int damage, ref float knockback, ref bool crit)
+        public override void ModifyHitNPCWithItem(Item item, Terraria.NPC target, ref Terraria.NPC.HitModifiers modifiers)
         {
             if (Player.HasBuff(ModContent.BuffType<BileFlaskBuff>()))
                 target.AddBuff(ModContent.BuffType<BileDebuff>(), 900);
             if (leatherSheath && target.life >= target.lifeMax && target.type != NPCID.TargetDummy)
-                crit = true;
+                modifiers.SetCrit();
 
-            damage = (int)(damage * TrueMeleeDamage);
-            if ((item.axe > 0 || item.Redemption().TechnicallyAxe) && crit)
-                damage += damage / 2;
+            modifiers.FinalDamage *= TrueMeleeDamage;
+            if (item.axe > 0 || item.Redemption().TechnicallyAxe)
+                modifiers.CritDamage += .5f;
         }
-        public override void ModifyHitNPCWithProj(Projectile proj, Terraria.NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
+        public override void ModifyHitNPCWithProj(Projectile proj, Terraria.NPC target, ref Terraria.NPC.HitModifiers modifiers)
         {
             if (proj.Redemption().TechnicallyMelee)
             {
                 if (Player.HasBuff(ModContent.BuffType<BileFlaskBuff>()))
                     target.AddBuff(ModContent.BuffType<BileDebuff>(), 900);
                 if (leatherSheath && target.life >= target.lifeMax && target.type != NPCID.TargetDummy)
-                    crit = true;
+                    modifiers.SetCrit();
 
-                damage = (int)(damage * TrueMeleeDamage);
+                modifiers.FinalDamage *= TrueMeleeDamage;
             }
-            if (proj.Redemption().IsAxe && crit)
-                damage += damage / 2;
+            if (proj.Redemption().IsAxe)
+                modifiers.CritDamage += .5f;
         }
-        public override void OnHitNPCWithProj(Projectile proj, Terraria.NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPCWithProj(Projectile proj, Terraria.NPC target, Terraria.NPC.HitInfo hit, int damageDone)
         {
             if (RedeProjectile.projOwners.TryGetValue(proj.whoAmI, out (Entity entity, IEntitySource source) value) && value.entity is Terraria.NPC)
                 return;
@@ -548,7 +537,7 @@ namespace Redemption.Globals.Player
             {
                 Projectile.NewProjectile(proj.GetSource_FromAI(), new Vector2(target.Center.X, target.position.Y - 200), Vector2.Zero, ModContent.ProjectileType<PhantomCleaver_F2>(), proj.damage * 3, proj.knockBack, Main.myPlayer, target.whoAmI);
             }
-            if ((sacredCross || gracesGuidance) && proj.HasElement(ElementID.Holy) && crit && Main.rand.NextBool(2) && proj.type != ModContent.ProjectileType<Lightmass>())
+            if ((sacredCross || gracesGuidance) && proj.HasElement(ElementID.Holy) && hit.Crit && Main.rand.NextBool(2) && proj.type != ModContent.ProjectileType<Lightmass>())
             {
                 SoundEngine.PlaySound(SoundID.Item101, Player.Center);
                 for (int i = 0; i < Main.rand.Next(3, 6); i++)
@@ -560,7 +549,7 @@ namespace Redemption.Globals.Player
                 Projectile.NewProjectile(proj.GetSource_FromAI(), Player.Center, Vector2.Zero, ModContent.ProjectileType<ElementalCrystal>(), 40, 1, Main.myPlayer, 0, proj.GetFirstElement(true));
             }
         }
-        public override void OnHitNPC(Item item, Terraria.NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPCWithItem(Item item, Terraria.NPC target, Terraria.NPC.HitInfo hit, int damageDone)
         {
             if (charisma)
                 target.AddBuff(BuffID.Midas, 300);
@@ -572,7 +561,7 @@ namespace Redemption.Globals.Player
             {
                 Projectile.NewProjectile(Player.GetSource_ItemUse(item), new Vector2(target.Center.X, target.position.Y - 200), Vector2.Zero, ModContent.ProjectileType<PhantomCleaver_F2>(), item.damage * 3, item.knockBack, Main.myPlayer, target.whoAmI);
             }
-            if ((sacredCross || gracesGuidance) && item.HasElement(ElementID.Holy) && crit && Main.rand.NextBool(2))
+            if ((sacredCross || gracesGuidance) && item.HasElement(ElementID.Holy) && hit.Crit && Main.rand.NextBool(2))
             {
                 SoundEngine.PlaySound(SoundID.Item101, Player.Center);
                 for (int i = 0; i < Main.rand.Next(3, 6); i++)
@@ -718,60 +707,65 @@ namespace Redemption.Globals.Player
                 drawInfo.hideHair = true;
             }
         }
-        public override void Hurt(bool pvp, bool quiet, double damage, int hitDirection, bool crit, int cooldownCounter)
+        public override void OnHurt(Terraria.Player.HurtInfo info)
         {
-            if (vasaraPendant && damage >= 150 && !Player.HasBuff<VasaraPendantCooldown>())
+            if (vasaraPendant && info.Damage >= 150 && !Player.HasBuff<VasaraPendantCooldown>())
             {
                 Player.AddBuff(ModContent.BuffType<VasaraPendantCooldown>(), 900);
                 Player.AddBuff(ModContent.BuffType<VasaraHealBuff>(), 300);
                 Projectile.NewProjectile(Player.GetSource_Accessory(new Item(ModContent.ItemType<VasaraPendant>())), Player.Center, Vector2.Zero, ModContent.ProjectileType<VasaraPendant_Proj>(), (int)(200 * Player.GetDamage<GenericDamageClass>().Multiplicative), 0, Main.myPlayer);
             }
         }
-        public override bool PreHurt(bool pvp, bool quiet, ref int damage, ref int hitDirection, ref bool crit, ref bool customDamage, ref bool playSound, ref bool genGore, ref PlayerDeathReason damageSource, ref int cooldownCounter)
+        public override void ModifyHurt(ref Terraria.Player.HurtModifiers modifiers)
         {
+            if (BasePlayer.HasAccessory(Player, ModContent.ItemType<EggShield>(), true, false))
+                modifiers.Knockback *= 0.75f;
+
             if (shieldGenerator && shieldGeneratorCD <= 0)
             {
+                modifiers.ModifyHurtInfo += ModifyDamage;
+            }
+        }
+        public void ModifyDamage(ref Terraria.Player.HurtInfo info)
+        {
+            for (int k = 0; k < 30; k++)
+            {
+                Vector2 vector;
+                double angle = Main.rand.NextDouble() * 2d * Math.PI;
+                vector.X = (float)(Math.Sin(angle) * 60);
+                vector.Y = (float)(Math.Cos(angle) * 60);
+                Dust dust2 = Main.dust[Dust.NewDust(Player.Center + vector, 2, 2, DustID.Frost)];
+                dust2.noGravity = true;
+                dust2.velocity = -Player.DirectionTo(dust2.position) * 6f;
+            }
+            if (info.Damage >= shieldGeneratorLife)
+            {
+                SoundEngine.PlaySound(SoundID.NPCDeath56, Player.position);
+                shieldGeneratorAlpha = 0;
+                shieldGenerator = false;
+                shieldGeneratorCD = 3600;
+                info.Damage *= 2;
+                info.Damage -= shieldGeneratorLife;
+                shieldGeneratorLife = 200;
                 for (int k = 0; k < 30; k++)
                 {
                     Vector2 vector;
                     double angle = Main.rand.NextDouble() * 2d * Math.PI;
                     vector.X = (float)(Math.Sin(angle) * 60);
                     vector.Y = (float)(Math.Cos(angle) * 60);
-                    Dust dust2 = Main.dust[Dust.NewDust(Player.Center + vector, 2, 2, DustID.Frost)];
+                    Dust dust2 = Main.dust[Dust.NewDust(Player.Center + vector, 2, 2, DustID.Frost, Scale: 2)];
                     dust2.noGravity = true;
-                    dust2.velocity = -Player.DirectionTo(dust2.position) * 6f;
+                    dust2.velocity = Player.DirectionTo(dust2.position) * 3f;
                 }
-                if (damage >= shieldGeneratorLife)
-                {
-                    SoundEngine.PlaySound(SoundID.NPCDeath56, Player.position);
-                    shieldGeneratorAlpha = 0;
-                    shieldGenerator = false;
-                    shieldGeneratorCD = 3600;
-                    damage *= 2;
-                    damage -= shieldGeneratorLife;
-                    shieldGeneratorLife = 200;
-                    for (int k = 0; k < 30; k++)
-                    {
-                        Vector2 vector;
-                        double angle = Main.rand.NextDouble() * 2d * Math.PI;
-                        vector.X = (float)(Math.Sin(angle) * 60);
-                        vector.Y = (float)(Math.Cos(angle) * 60);
-                        Dust dust2 = Main.dust[Dust.NewDust(Player.Center + vector, 2, 2, DustID.Frost, Scale: 2)];
-                        dust2.noGravity = true;
-                        dust2.velocity = Player.DirectionTo(dust2.position) * 3f;
-                    }
-                    return true;
-                }
-                playSound = false;
-                SoundEngine.PlaySound(SoundID.NPCHit34, Player.position);
-                shieldGeneratorLife -= damage;
-                Player.noKnockback = true;
-                damage = 0;
-                return true;
+                return;
             }
-            return true;
+            info.SoundDisabled = true;
+            SoundEngine.PlaySound(SoundID.NPCHit34, Player.position);
+            shieldGeneratorLife -= info.Damage;
+            Player.noKnockback = true;
+            info.Damage = 0;
         }
-        public override void PostHurt(bool pvp, bool quiet, double damage, int hitDirection, bool crit, int cooldownCounter)
+        public override void PostHurt(Terraria.Player.HurtInfo info)
         {
             if (!shieldGenerator || shieldGeneratorCD > 0)
             {

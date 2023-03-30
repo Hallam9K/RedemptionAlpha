@@ -7,7 +7,7 @@ namespace Redemption.Items.Usable
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Novelty Mop");
+            // DisplayName.SetDefault("Novelty Mop");
             Main.projFrames[Projectile.type] = 4;
         }
 

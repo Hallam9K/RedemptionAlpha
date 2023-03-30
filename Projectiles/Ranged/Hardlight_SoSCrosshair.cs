@@ -13,7 +13,7 @@ namespace Redemption.Projectiles.Ranged
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Crosshair");
+            // DisplayName.SetDefault("Crosshair");
             Main.projFrames[Projectile.type] = 4;
         }
         public override void SetDefaults()

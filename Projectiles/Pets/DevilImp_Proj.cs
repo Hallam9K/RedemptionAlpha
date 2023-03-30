@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using Redemption.Buffs.Pets;
 using Redemption.Globals;
 using Terraria;
+using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Redemption.Projectiles.Pets
@@ -10,12 +11,15 @@ namespace Redemption.Projectiles.Pets
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Devil Imp");
+			// DisplayName.SetDefault("Devil Imp");
 			Main.projFrames[Projectile.type] = 3;
 			Main.projPet[Projectile.type] = true;
-		}
+            ProjectileID.Sets.CharacterPreviewAnimations[Projectile.type] = ProjectileID.Sets.SimpleLoop(0, Main.projFrames[Projectile.type], 5)
+				.WithOffset(10, -20f)
+				.WithCode(DelegateMethods.CharacterPreview.Float);
+        }
 
-		public override void SetDefaults()
+        public override void SetDefaults()
 		{
 			Projectile.width = 30;
 			Projectile.height = 26;

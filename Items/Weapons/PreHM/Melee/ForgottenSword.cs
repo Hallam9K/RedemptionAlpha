@@ -11,10 +11,10 @@ namespace Redemption.Items.Weapons.PreHM.Melee
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Sword of the Forgotten");
-            Tooltip.SetDefault("Spins the blade around the player and sets ablaze, flinging embers in its wake");
+            // DisplayName.SetDefault("Sword of the Forgotten");
+            // Tooltip.SetDefault("Spins the blade around the player and sets ablaze, flinging embers in its wake");
 
-            SacrificeTotal = 1;
+            Item.ResearchUnlockCount = 1;
         }
 
         public override void SetDefaults()

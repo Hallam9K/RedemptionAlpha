@@ -14,7 +14,7 @@ namespace Redemption.Projectiles.Magic
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Digestive Acid");
+            // DisplayName.SetDefault("Digestive Acid");
             Main.projFrames[Projectile.type] = 3;
             ElementID.ProjWater[Type] = true;
             ElementID.ProjPoison[Type] = true;
@@ -39,7 +39,7 @@ namespace Redemption.Projectiles.Magic
             if (Main.rand.NextBool(4))
                 Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.ToxicBubble, Alpha: 100);
         }
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             target.AddBuff(ModContent.BuffType<StomachAcidDebuff>(), 800);
         }
@@ -62,7 +62,7 @@ namespace Redemption.Projectiles.Magic
         public override string Texture => "Redemption/Textures/IceMist";
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Acid Mist");
+            // DisplayName.SetDefault("Acid Mist");
         }
 
         public override void SetDefaults()

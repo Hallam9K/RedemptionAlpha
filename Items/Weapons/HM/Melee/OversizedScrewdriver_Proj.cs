@@ -13,7 +13,7 @@ namespace Redemption.Items.Weapons.HM.Melee
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Oversized Screwdriver");
+            // DisplayName.SetDefault("Oversized Screwdriver");
         }
         public override bool ShouldUpdatePosition() => false;
         public override void SetSafeDefaults()
@@ -81,7 +81,7 @@ namespace Redemption.Items.Weapons.HM.Melee
             }
         }
         private float damageIncrease = 1;
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             Projectile.localNPCImmunity[target.whoAmI] = 4;
             target.immune[Projectile.owner] = 0;
@@ -100,11 +100,11 @@ namespace Redemption.Items.Weapons.HM.Melee
                 }
             }
         }
-        public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
+        public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
         {
-            damage = (int)(damage * damageIncrease);
+            modifiers.FinalDamage *= damageIncrease;
             if (NPCLists.Robotic.Contains(target.type))
-                damage = (int)(damage * 1.2f);
+                modifiers.FinalDamage *= 1.2f;
         }
         public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox)
         {

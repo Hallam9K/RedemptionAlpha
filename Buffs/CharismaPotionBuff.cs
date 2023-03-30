@@ -8,13 +8,13 @@ namespace Redemption.Buffs
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Charisma");
-            Description.SetDefault("Shops have lower prices and enemies drop more gold");
+            // DisplayName.SetDefault("Charisma");
+            // Description.SetDefault("Shops have lower prices and enemies drop more gold");
             Main.buffNoTimeDisplay[Type] = false;
         }
         public override void Update(Player player, ref int buffIndex)
         {
-            player.discount = true;
+            player.discountAvailable = true;
             player.RedemptionPlayerBuff().charisma = true;
         }
     }

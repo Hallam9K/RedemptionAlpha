@@ -9,9 +9,9 @@ namespace Redemption.Items.Usable
     {
         public override void SetStaticDefaults()
         {
-            Tooltip.SetDefault("Throws a dust cloud that slightly reduces defense and confuses the target\n" +
-                "'Sand in the eyes!'");
-            SacrificeTotal = 99;
+            /* Tooltip.SetDefault("Throws a dust cloud that slightly reduces defense and confuses the target\n" +
+                "'Sand in the eyes!'"); */
+            Item.ResearchUnlockCount = 99;
         }
         public override void SetDefaults()
 		{
@@ -21,7 +21,7 @@ namespace Redemption.Items.Usable
             Item.useTime = 22;
             Item.width = 26;
             Item.height = 48;
-            Item.maxStack = 9999;
+            Item.maxStack = Item.CommonMaxStack;
             Item.rare = ItemRarityID.White;
             Item.consumable = true;
             Item.noMelee = true;

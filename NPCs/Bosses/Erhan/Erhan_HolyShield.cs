@@ -15,7 +15,7 @@ namespace Redemption.NPCs.Bosses.Erhan
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Holy Shield");
+            // DisplayName.SetDefault("Holy Shield");
         }
         public override void SetDefaults()
         {

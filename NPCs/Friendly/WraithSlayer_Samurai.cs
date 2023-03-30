@@ -37,7 +37,7 @@ namespace Redemption.NPCs.Friendly
         public ref float TimerRand => ref NPC.ai[2];
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Cursed Samurai");
+            // DisplayName.SetDefault("Cursed Samurai");
             Main.npcFrameCount[NPC.type] = 15;
             NPCID.Sets.TrailCacheLength[NPC.type] = 4;
             NPCID.Sets.TrailingMode[NPC.type] = 1;
@@ -70,7 +70,7 @@ namespace Redemption.NPCs.Friendly
             NPC.alpha = 255;
             NPC.RedemptionGuard().GuardPoints = 300;
         }
-        public override void HitEffect(int hitDirection, double damage)
+        public override void HitEffect(NPC.HitInfo hit)
         {
             if (NPC.life <= 0)
             {
@@ -94,17 +94,16 @@ namespace Redemption.NPCs.Friendly
             }
         }
 
-        public override bool StrikeNPC(ref double damage, int defense, ref float knockback, int hitDirection, ref bool crit)
+        public override void ModifyIncomingHit(ref NPC.HitModifiers modifiers)
         {
-            bool vDmg = false;
             if (NPC.RedemptionGuard().GuardPoints >= 0)
             {
-                NPC.RedemptionGuard().GuardHit(NPC, ref vDmg, ref damage, ref knockback, SoundID.NPCHit4);
+                modifiers.DisableCrit();
+                modifiers.ModifyHitInfo += (ref NPC.HitInfo n) => NPC.RedemptionGuard().GuardHit(ref n, NPC, SoundID.NPCHit4);
                 if (NPC.RedemptionGuard().GuardPoints >= 0)
-                    return vDmg;
+                    return;
             }
             NPC.RedemptionGuard().GuardBreakCheck(NPC, DustID.Wraith, CustomSounds.GuardBreak, 10, 1, 150);
-            return true;
         }
         private Vector2 moveTo;
         private int runCooldown;
@@ -315,7 +314,7 @@ namespace Redemption.NPCs.Friendly
             }
         }
 
-        public override bool? CanHitNPC(NPC target) => false;
+        public override bool CanHitNPC(NPC target) => false;
         public override bool CanHitPlayer(Player target, ref int cooldownSlot) => false;
     }
     public class WraithSlayer_Slash : ModProjectile, ITrailProjectile
@@ -323,7 +322,7 @@ namespace Redemption.NPCs.Friendly
         public override string Texture => Redemption.EMPTY_TEXTURE;
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Slash");
+            // DisplayName.SetDefault("Slash");
         }
         public override void SetDefaults()
         {

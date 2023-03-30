@@ -12,12 +12,12 @@ namespace Redemption.Items.Weapons.PreHM.Magic
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Bronze Wand");
-            Tooltip.SetDefault("Casts two unstable zig-zagging water orbs" +
-                "\nWater orbs home in on enemies after 6 consecutive shots");
+            // DisplayName.SetDefault("Bronze Wand");
+            /* Tooltip.SetDefault("Casts two unstable zig-zagging water orbs" +
+                "\nWater orbs home in on enemies after 6 consecutive shots"); */
             Item.staff[Item.type] = true;
 
-            SacrificeTotal = 1;
+            Item.ResearchUnlockCount = 1;
         }
 
         public override void SetDefaults()

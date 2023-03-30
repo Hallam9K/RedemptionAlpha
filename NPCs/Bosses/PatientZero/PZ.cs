@@ -78,7 +78,7 @@ namespace Redemption.NPCs.Bosses.PatientZero
         public ref float TimerRand2 => ref NPC.ai[3];
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Patient Zero");
+            // DisplayName.SetDefault("Patient Zero");
             Main.npcFrameCount[NPC.type] = 4;
             NPCID.Sets.MPAllowedEnemies[Type] = true;
             NPCID.Sets.BossBestiaryPriority.Add(Type);
@@ -131,7 +131,7 @@ namespace Redemption.NPCs.Bosses.PatientZero
                 new FlavorTextBestiaryInfoElement("An unfortunate scientist, mutilated and disfigured by the Xenomite infection. This specimen was Kari Johannson, the father of all T-Bots and patient zero of the xenomite infection. He's been stuck for 50 years, conscious and aware of the situation around him... God, that must be tormentous.")
             });
         }
-        public override void HitEffect(int hitDirection, double damage)
+        public override void HitEffect(NPC.HitInfo hit)
         {
             if (NPC.life <= 0 && AIState == ActionState.Death && AITimer >= 240)
             {
@@ -176,18 +176,17 @@ namespace Redemption.NPCs.Bosses.PatientZero
                 RedeBossDowned.downedGGBossFirst = 1;
             NPC.SetEventFlagCleared(ref RedeBossDowned.downedPZ, -1);
         }
-        public override void ModifyHitByProjectile(Projectile projectile, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
+        public override void ModifyHitByProjectile(Projectile projectile, ref NPC.HitModifiers modifiers)
         {
             if (projectile.type == ProjectileID.LastPrismLaser)
-                damage /= 3;
+                modifiers.FinalDamage /= 3;
             if (projectile.type == ModContent.ProjectileType<LightOrb_Proj>())
-                damage = (int)(damage * .6f);
+                modifiers.FinalDamage *= .6f;
         }
-        public override bool StrikeNPC(ref double damage, int defense, ref float knockback, int hitDirection, ref bool crit)
+        public override void ModifyIncomingHit(ref NPC.HitModifiers modifiers)
         {
             if (RedeBossDowned.downedGGBossFirst > 1)
-                damage *= .85f;
-            return true;
+                modifiers.FinalDamage *= .85f;
         }
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
@@ -201,7 +200,7 @@ namespace Redemption.NPCs.Bosses.PatientZero
             npcLoot.Add(ItemDropRule.MasterModeDropOnAllPlayers(ModContent.ItemType<Xenoemia>(), 4));
 
             LeadingConditionRule notExpertRule = new(new Conditions.NotExpert());
-            notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<PZMask>(), 7));
+            notExpertRule.OnSuccess(ItemDropRule.NotScalingWithLuck(ModContent.ItemType<PZMask>(), 7));
 
             notExpertRule.OnSuccess(ItemDropRule.OneFromOptions(1, ModContent.ItemType<PZGauntlet>(), ModContent.ItemType<SwarmerCannon>(), ModContent.ItemType<Petridish>(), ModContent.ItemType<PortableHoloProjector>()));
             notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<MedicKit>()));
@@ -881,9 +880,9 @@ namespace Redemption.NPCs.Bosses.PatientZero
                 }
             }
         }
-        public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
+        public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)
         {
-            NPC.lifeMax = (int)(NPC.lifeMax * 0.75f * bossLifeScale);
+            NPC.lifeMax = (int)(NPC.lifeMax * 0.75f * balance * bossAdjustment);
             NPC.damage = (int)(NPC.damage * 0.6f);
         }
         private void DespawnHandler()

@@ -14,9 +14,9 @@ namespace Redemption.Items.Weapons.HM.Summon
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Tesla Field Generator");
-            Tooltip.SetDefault("Summons a small generator with a tesla field around it");
-            SacrificeTotal = 1;
+            // DisplayName.SetDefault("Tesla Field Generator");
+            // Tooltip.SetDefault("Summons a small generator with a tesla field around it");
+            Item.ResearchUnlockCount = 1;
 
             ItemID.Sets.GamepadWholeScreenUseRange[Item.type] = true;
             ItemID.Sets.LockOnIgnoresCollision[Item.type] = true;

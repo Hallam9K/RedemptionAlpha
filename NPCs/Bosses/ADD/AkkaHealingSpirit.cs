@@ -11,7 +11,7 @@ namespace Redemption.NPCs.Bosses.ADD
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Healing Spirit");
+            // DisplayName.SetDefault("Healing Spirit");
         }
         public override void SetDefaults()
         {

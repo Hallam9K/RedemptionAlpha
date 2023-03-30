@@ -10,7 +10,7 @@ namespace Redemption.Items.Placeable.Tiles
     {
         public override void SetStaticDefaults()
         {
-            Tooltip.SetDefault("Can be climbed on");
+            // Tooltip.SetDefault("Can be climbed on");
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 100;
         }
         public override void SetDefaults()

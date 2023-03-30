@@ -55,7 +55,7 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
         public ref float TimerRand => ref NPC.ai[2];
         public override void SetSafeStaticDefaults()
         {
-            DisplayName.SetDefault("Forest Nymph");
+            // DisplayName.SetDefault("Forest Nymph");
             Main.npcFrameCount[NPC.type] = 10;
             NPCID.Sets.AllowDoorInteraction[Type] = true;
 
@@ -81,7 +81,7 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
             NPC.DeathSound = SoundID.NPCDeath1;
             NPC.knockBackResist = 0.3f;
         }
-        public override void HitEffect(int hitDirection, double damage)
+        public override void HitEffect(NPC.HitInfo hit)
         {
             if (NPC.life <= 0)
             {
@@ -558,12 +558,12 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
 
             return nearestNPC;
         }
-        public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit)
+        public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
         {
             if (NPCLists.Dark.Contains(target.type))
-                damage = (int)(damage * 1.5f);
+                modifiers.FinalDamage *= 1.5f;
         }
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit)
         {
             if (Main.rand.NextBool(3))
                 target.AddBuff(BuffID.DryadsWardDebuff, 300);
@@ -683,7 +683,7 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
             return false;
         }
-        public override bool? CanHitNPC(NPC target) => false;
+        public override bool CanHitNPC(NPC target) => false;
         public override bool CanHitPlayer(Player target, ref int cooldownSlot) => false;
         public override void OnKill()
         {
@@ -695,7 +695,7 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
         public override string Texture => "Redemption/Projectiles/Hostile/LivingBloomRoot";
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Living Root");
+            // DisplayName.SetDefault("Living Root");
         }
         public override void SetDefaults()
         {

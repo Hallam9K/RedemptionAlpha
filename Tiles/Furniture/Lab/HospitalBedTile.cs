@@ -29,13 +29,14 @@ namespace Redemption.Tiles.Furniture.Lab
 			TileObjectData.newTile.StyleWrapLimit = 2;
 			TileObjectData.newTile.StyleMultiplier = 2;
 			TileObjectData.newTile.StyleHorizontal = true;
-			TileObjectData.newAlternate.CopyFrom(TileObjectData.newTile);
+            TileObjectData.newTile.CoordinatePaddingFix = new Point16(0, -2);
+            TileObjectData.newAlternate.CopyFrom(TileObjectData.newTile);
 			TileObjectData.newAlternate.Direction = TileObjectDirection.PlaceRight;
 			TileObjectData.addAlternate(1);
 			TileObjectData.newTile.CoordinateHeights = new int[] { 16, 16, 16 };
 			TileObjectData.addTile(Type);
-			ModTranslation name = CreateMapEntryName();
-			name.SetDefault("Hospital Bed");
+			LocalizedText name = CreateMapEntryName();
+			// name.SetDefault("Hospital Bed");
 			AddMapEntry(new Color(57, 62, 162), name);
 			DustType = ModContent.DustType<LabPlatingDust>();
 			AddToArray(ref TileID.Sets.RoomNeeds.CountsAsChair);
@@ -53,7 +54,6 @@ namespace Redemption.Tiles.Furniture.Lab
 		}
 
 		public override void NumDust(int i, int j, bool fail, ref int num) => num = 1;
-		public override void KillMultiTile(int i, int j, int frameX, int frameY) => Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 48, 48, ModContent.ItemType<HospitalBed>());
 
 		public override bool RightClick(int i, int j)
 		{

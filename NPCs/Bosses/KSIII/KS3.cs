@@ -99,7 +99,7 @@ namespace Redemption.NPCs.Bosses.KSIII
         public float[] oldrot = new float[3];
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("King Slayer III");
+            // DisplayName.SetDefault("King Slayer III");
             Main.npcFrameCount[NPC.type] = 6;
             NPCID.Sets.TrailCacheLength[NPC.type] = 3;
             NPCID.Sets.TrailingMode[NPC.type] = 1;
@@ -159,9 +159,9 @@ namespace Redemption.NPCs.Bosses.KSIII
         {
             return NPC.velocity.Length() >= 13f && AIState is not ActionState.PhysicalAttacks;
         }
-        public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
+        public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)
         {
-            NPC.lifeMax = (int)(NPC.lifeMax * 0.6f * bossLifeScale);
+            NPC.lifeMax = (int)(NPC.lifeMax * 0.6f * balance * bossAdjustment);
             NPC.damage = (int)(NPC.damage * 0.6f);
         }
 
@@ -186,7 +186,7 @@ namespace Redemption.NPCs.Bosses.KSIII
 
             LeadingConditionRule notExpertRule = new(new Conditions.NotExpert());
 
-            notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<KingSlayerMask>(), 7));
+            notExpertRule.OnSuccess(ItemDropRule.NotScalingWithLuck(ModContent.ItemType<KingSlayerMask>(), 7));
 
             notExpertRule.OnSuccess(ItemDropRule.OneFromOptions(1, ModContent.ItemType<SlayerGun>(), ModContent.ItemType<Nanoswarmer>(), ModContent.ItemType<SlayerFist>()));
             notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<SlayerController>(), 10));
@@ -233,37 +233,36 @@ namespace Redemption.NPCs.Bosses.KSIII
             NPC.SetEventFlagCleared(ref RedeBossDowned.downedSlayer, -1);
         }
 
-        public override void HitEffect(int hitDirection, double damage)
+        public override void HitEffect(NPC.HitInfo hit)
         {
             Dust.NewDust(NPC.position + NPC.velocity, NPC.width, NPC.height, DustID.Electric, NPC.velocity.X * 0.5f, NPC.velocity.Y * 0.5f);
         }
-        public override void ModifyHitByItem(Player player, Item item, ref int damage, ref float knockback, ref bool crit)
+        public override void ModifyHitByItem(Player player, Item item, ref NPC.HitModifiers modifiers)
         {
             if (item.DamageType == DamageClass.Melee)
             {
                 if (AIState == ActionState.PhysicalAttacks)
-                    damage = (int)(damage * 1.65f);
+                    modifiers.FinalDamage *= 1.65f;
                 else if (AIState == ActionState.SpecialAttacks)
-                    damage = (int)(damage * 1.25f);
+                    modifiers.FinalDamage *= 1.25f;
             }
         }
-        public override void ModifyHitByProjectile(Projectile projectile, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
+        public override void ModifyHitByProjectile(Projectile projectile, ref NPC.HitModifiers modifiers)
         {
             if (projectile.Redemption().TechnicallyMelee)
             {
                 if (AIState == ActionState.PhysicalAttacks)
-                    damage = (int)(damage * 1.65f);
+                    modifiers.FinalDamage *= 1.65f;
                 else if (AIState == ActionState.SpecialAttacks)
-                    damage = (int)(damage * 1.25f);
+                    modifiers.FinalDamage *= 1.25f;
             }
         }
-        public override bool StrikeNPC(ref double damage, int defense, ref float knockback, int hitDirection, ref bool crit)
+        public override void ModifyIncomingHit(ref NPC.HitModifiers modifiers)
         {
             if (phase >= 5)
-                damage *= 0.75;
+                modifiers.FinalDamage *= 0.75f;
             else
-                damage *= 0.85;
-            return true;
+                modifiers.FinalDamage *= 0.85f;
         }
 
         public override void SendExtraAI(BinaryWriter writer)
@@ -1257,7 +1256,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                                         }
 
                                         if (Main.netMode == NetmodeID.Server)
-                                            NetMessage.SendData(MessageID.SendNPCBuffs, number: NPC.whoAmI);
+                                            NetMessage.SendData(MessageID.NPCBuffs, number: NPC.whoAmI);
                                     }
                                     NPC.netUpdate = true;
                                 }
@@ -2493,7 +2492,7 @@ namespace Redemption.NPCs.Bosses.KSIII
             AITimer = 5000;
         }
 
-        public override void OnHitPlayer(Player target, int damage, bool crit)
+        public override void OnHitPlayer(Player target, Player.HurtInfo hurtInfo)
         {
             if (AIState is ActionState.PhysicalAttacks)
             {

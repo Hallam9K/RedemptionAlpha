@@ -228,7 +228,7 @@ namespace Redemption.Globals
         #endregion
 
         #region Cold
-        public static List<int> Cold = new() { NPCID.ZombieEskimo, NPCID.ArmedZombieEskimo, NPCID.IceBat, NPCID.IceSlime, NPCID.SpikedIceSlime, NPCID.SnowFlinx, NPCID.IceElemental, NPCID.IceMimic, NPCID.IceTortoise, NPCID.IcyMerman, NPCID.MisterStabby, NPCID.Wolf, NPCID.IceGolem, NPCID.SnowBalla, NPCID.SnowmanGangsta, NPCID.Flocko, NPCID.Yeti, NPCID.IceQueen, NPCID.Deerclops, NPCID.DeerclopsLeg, ModContent.NPCType<SneezyFlinx>(), ModContent.NPCType<SicklyPenguin>(), ModContent.NPCType<SicklyWolf>() };
+        public static List<int> Cold = new() { NPCID.ZombieEskimo, NPCID.ArmedZombieEskimo, NPCID.IceBat, NPCID.IceSlime, NPCID.SpikedIceSlime, NPCID.SnowFlinx, NPCID.IceElemental, NPCID.IceMimic, NPCID.IceTortoise, NPCID.IcyMerman, NPCID.MisterStabby, NPCID.Wolf, NPCID.IceGolem, NPCID.SnowBalla, NPCID.SnowmanGangsta, NPCID.Flocko, NPCID.Yeti, NPCID.IceQueen, NPCID.Deerclops, ModContent.NPCType<SneezyFlinx>(), ModContent.NPCType<SicklyPenguin>(), ModContent.NPCType<SicklyWolf>() };
         #endregion
 
         #region Hot

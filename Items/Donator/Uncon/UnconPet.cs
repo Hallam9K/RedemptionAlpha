@@ -12,9 +12,12 @@ namespace Redemption.Items.Donator.Uncon
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Tremor");
+            // DisplayName.SetDefault("Tremor");
             Main.projFrames[Projectile.type] = 11;
             Main.projPet[Projectile.type] = true;
+            ProjectileID.Sets.CharacterPreviewAnimations[Projectile.type] = ProjectileID.Sets.SimpleLoop(1, 8, 5)
+                .WhenNotSelected(0, 0)
+                .WithOffset(-10, 0);
         }
 
         public override void SetDefaults()

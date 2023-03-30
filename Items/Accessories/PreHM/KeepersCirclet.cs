@@ -11,10 +11,10 @@ namespace Redemption.Items.Accessories.PreHM
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Keeper's Circlet");
-            Tooltip.SetDefault("Humanoid skeletons become friendly");
+            // DisplayName.SetDefault("Keeper's Circlet");
+            // Tooltip.SetDefault("Humanoid skeletons become friendly");
 
-            SacrificeTotal = 1;
+            Item.ResearchUnlockCount = 1;
         }
 
         public override void SetDefaults()
@@ -23,7 +23,7 @@ namespace Redemption.Items.Accessories.PreHM
             Item.height = 24;
             Item.value = Item.buyPrice(0, 5, 0, 0);
             Item.rare = ItemRarityID.LightRed;
-            Item.canBePlacedInVanityRegardlessOfConditions = true;
+            Item.hasVanityEffects = true;
             Item.accessory = true;
             if (!Main.dedServ)
                 Item.RedemptionGlow().glowTexture = ModContent.Request<Texture2D>(Item.ModItem.Texture + "_Glow").Value;

@@ -48,7 +48,7 @@ namespace Redemption.NPCs.Wasteland
             NPC.aiStyle = 3;
             SpawnModBiomes = new int[1] { ModContent.GetInstance<WastelandDesertBiome>().Type };
         }
-        public override void HitEffect(int hitDirection, double damage)
+        public override void HitEffect(NPC.HitInfo hit)
         {
             if (NPC.life <= 0)
             {
@@ -56,7 +56,7 @@ namespace Redemption.NPCs.Wasteland
                     Dust.NewDust(NPC.position + NPC.velocity, NPC.width, NPC.height, DustID.GreenBlood, Scale: 3);
             }
         }
-        public override void ModifyHitPlayer(Player target, ref int damage, ref bool crit)
+        public override void ModifyHitPlayer(Player target, ref Player.HurtModifiers modifiers)
         {
             if (Main.rand.NextBool(2) || Main.expertMode)
                 target.AddBuff(ModContent.BuffType<GreenRashesDebuff>(), Main.rand.Next(200, 1200));

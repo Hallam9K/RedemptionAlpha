@@ -16,11 +16,11 @@ namespace Redemption.Items.Weapons.HM.Magic
     {
         public override void SetStaticDefaults()
         {
-            Tooltip.SetDefault("Casts a burst of redemptive sparks" +
-                "\nCasts a holy ray of light every 3 consecutive shots");
+            /* Tooltip.SetDefault("Casts a burst of redemptive sparks" +
+                "\nCasts a holy ray of light every 3 consecutive shots"); */
             Item.staff[Item.type] = true;
 
-            SacrificeTotal = 1;
+            Item.ResearchUnlockCount = 1;
         }
 
         private float glowRot = 0;

@@ -9,9 +9,9 @@ namespace Redemption.Items.Placeable.Furniture.Misc
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Ham Pat");
-            Tooltip.SetDefault("'O. Tomato'");
-            SacrificeTotal = 1;
+			// DisplayName.SetDefault("Ham Pat");
+            // Tooltip.SetDefault("'O. Tomato'");
+            Item.ResearchUnlockCount = 1;
 		}
 
 		public override void SetDefaults()
@@ -19,7 +19,7 @@ namespace Redemption.Items.Placeable.Furniture.Misc
 			Item.DefaultToPlaceableTile(ModContent.TileType<HamPatPaintingTile>(), 0);
 			Item.width = 32;
 			Item.height = 32;
-			Item.maxStack = 9999;
+			Item.maxStack = Item.CommonMaxStack;
 			Item.rare = ItemRarityID.White;
 			Item.value = Item.buyPrice(0, 10, 0, 0);
 		}

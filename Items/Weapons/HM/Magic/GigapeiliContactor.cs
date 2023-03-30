@@ -14,12 +14,12 @@ namespace Redemption.Items.Weapons.HM.Magic
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Gigapeili Contactor");
-            Tooltip.SetDefault("Fires a short-ranged spread of electrical bolts\n" +
+            // DisplayName.SetDefault("Gigapeili Contactor");
+            /* Tooltip.SetDefault("Fires a short-ranged spread of electrical bolts\n" +
                 "Right-click to deploy a stationary drone, or to call it back\n" +
-                "Bolts hitting the drone will reflect them with a longer range and tighter spread at the nearest enemy");
+                "Bolts hitting the drone will reflect them with a longer range and tighter spread at the nearest enemy"); */
             Item.staff[Item.type] = true;
-            SacrificeTotal = 1;
+            Item.ResearchUnlockCount = 1;
         }
 
         public override void SetDefaults()

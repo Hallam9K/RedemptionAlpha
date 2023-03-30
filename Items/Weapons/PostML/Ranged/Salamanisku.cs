@@ -11,11 +11,11 @@ namespace Redemption.Items.Weapons.PostML.Ranged
 	{
         public override void SetStaticDefaults()
         {
-            Tooltip.SetDefault("20% chance not to consume ammo"
+            /* Tooltip.SetDefault("20% chance not to consume ammo"
                 + "\nReplaces arrows with Ukonvasara-tipped arrows\n" +
                 "Ukonvasara-tipped arrows impale into enemies and eventually cause thunder to strike them\n" +
-                "Two strikes will occur during a thunderstorm");
-            SacrificeTotal = 1;
+                "Two strikes will occur during a thunderstorm"); */
+            Item.ResearchUnlockCount = 1;
         }
 
         public override void SetDefaults()

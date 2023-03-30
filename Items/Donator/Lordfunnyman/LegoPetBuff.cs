@@ -8,8 +8,8 @@ namespace Redemption.Items.Donator.Lordfunnyman
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Lego Man");
-			Description.SetDefault("Don't step on it!");
+			// DisplayName.SetDefault("Lego Man");
+			// Description.SetDefault("Don't step on it!");
 
 			Main.buffNoTimeDisplay[Type] = true;
 			Main.vanityPet[Type] = true;

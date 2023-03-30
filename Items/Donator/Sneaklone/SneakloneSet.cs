@@ -10,8 +10,8 @@ namespace Redemption.Items.Donator.Sneaklone
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Facility Guard Vest");
-            SacrificeTotal = 1;
+            // DisplayName.SetDefault("Facility Guard Vest");
+            Item.ResearchUnlockCount = 1;
             ArmorIDs.Body.Sets.HidesTopSkin[EquipLoader.GetEquipSlot(Mod, Name, EquipType.Body)] = true;
             ArmorIDs.Body.Sets.HidesArms[EquipLoader.GetEquipSlot(Mod, Name, EquipType.Body)] = true;
         }
@@ -29,8 +29,8 @@ namespace Redemption.Items.Donator.Sneaklone
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Facility Guard Helmet");
-            SacrificeTotal = 1;
+            // DisplayName.SetDefault("Facility Guard Helmet");
+            Item.ResearchUnlockCount = 1;
             ArmorIDs.Head.Sets.DrawFullHair[EquipLoader.GetEquipSlot(Mod, Name, EquipType.Head)] = false;
         }
 
@@ -48,8 +48,8 @@ namespace Redemption.Items.Donator.Sneaklone
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Facility Guard Helmet");
-            SacrificeTotal = 1;
+            // DisplayName.SetDefault("Facility Guard Helmet");
+            Item.ResearchUnlockCount = 1;
             ArmorIDs.Head.Sets.DrawFullHair[EquipLoader.GetEquipSlot(Mod, Name, EquipType.Head)] = false;
         }
 
@@ -67,8 +67,8 @@ namespace Redemption.Items.Donator.Sneaklone
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Facility Guard Leggings");
-            SacrificeTotal = 1;
+            // DisplayName.SetDefault("Facility Guard Leggings");
+            Item.ResearchUnlockCount = 1;
             ArmorIDs.Legs.Sets.HidesBottomSkin[EquipLoader.GetEquipSlot(Mod, Name, EquipType.Legs)] = true;
         }
         public override void SetDefaults()

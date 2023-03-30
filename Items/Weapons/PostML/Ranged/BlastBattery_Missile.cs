@@ -17,7 +17,7 @@ namespace Redemption.Items.Weapons.PostML.Ranged
         public override string Texture => "Redemption/NPCs/Bosses/Obliterator/OO_BarrageMissile";
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Omega Missile");
+            // DisplayName.SetDefault("Omega Missile");
             Main.projFrames[Projectile.type] = 3;
             ElementID.ProjExplosive[Type] = true;
         }
@@ -119,7 +119,7 @@ namespace Redemption.Items.Weapons.PostML.Ranged
                 vector *= 20f / magnitude;
             }
         }
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, Vector2.Zero, ModContent.ProjectileType<BlastBattery_MissileBlast>(), Projectile.damage, 0, Main.myPlayer);
             Projectile.Kill();
@@ -164,7 +164,7 @@ namespace Redemption.Items.Weapons.PostML.Ranged
         public override string Texture => "Redemption/NPCs/Bosses/Obliterator/OO_MissileBlast";
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Explosion");
+            // DisplayName.SetDefault("Explosion");
             Main.projFrames[Projectile.type] = 5;
             ElementID.ProjExplosive[Type] = true;
         }
@@ -192,7 +192,7 @@ namespace Redemption.Items.Weapons.PostML.Ranged
             if (Projectile.frame > 2)
                 Projectile.hostile = false;
         }
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             Projectile.localNPCImmunity[target.whoAmI] = 60;
             target.immune[Projectile.owner] = 0;

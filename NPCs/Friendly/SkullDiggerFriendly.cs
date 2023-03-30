@@ -39,7 +39,7 @@ namespace Redemption.NPCs.Friendly
         public float[] oldrot = new float[5];
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Skull Digger");
+            // DisplayName.SetDefault("Skull Digger");
             Main.npcFrameCount[NPC.type] = 4;
             NPCID.Sets.TrailCacheLength[NPC.type] = 5;
             NPCID.Sets.TrailingMode[NPC.type] = 1;
@@ -72,7 +72,7 @@ namespace Redemption.NPCs.Friendly
         }
 
         public override bool CanHitPlayer(Player target, ref int cooldownSlot) => false;
-        public override bool? CanHitNPC(NPC target) => false;
+        public override bool CanHitNPC(NPC target) => false;
         public override bool CheckActive() => !spoken;
         private bool floatTimer;
         private bool spoken;
@@ -154,7 +154,7 @@ namespace Redemption.NPCs.Friendly
             if (Main.LocalPlayer.HasItem(ModContent.ItemType<WeddingRing>()))
                 button2 = "Give Wedding Ring";
         }
-        public override void OnChatButtonClicked(bool firstButton, ref bool shop)
+        public override void OnChatButtonClicked(bool firstButton, ref string shopName)
         {
             if (firstButton)
             {
@@ -233,9 +233,9 @@ namespace Redemption.NPCs.Friendly
             return SpawnCondition.Cavern.Chance * (!NPC.AnyNPCs(NPC.type) && !RedeBossDowned.skullDiggerSaved && RedeBossDowned.keeperSaved ? 0.03f : 0);
         }
 
-        public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
+        public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)
         {
-            NPC.lifeMax = (int)(NPC.lifeMax * 0.6f * bossLifeScale);
+            NPC.lifeMax = (int)(NPC.lifeMax * 0.6f * balance * bossAdjustment);
             NPC.damage = (int)(NPC.damage * 0.6f);
         }
     }
@@ -245,7 +245,7 @@ namespace Redemption.NPCs.Friendly
         public override void SetStaticDefaults()
         {
             base.SetStaticDefaults();
-            DisplayName.SetDefault("Skull Digger's Spirit");
+            // DisplayName.SetDefault("Skull Digger's Spirit");
         }
         public override bool CheckActive() => false;
         private bool floatTimer;
@@ -304,7 +304,7 @@ namespace Redemption.NPCs.Friendly
             if (Main.LocalPlayer.RedemptionAbility().SpiritwalkerActive && !Main.LocalPlayer.HasItem(ModContent.ItemType<CruxCardSkullDigger>()))
                 button2 = "Request Crux";
         }
-        public override void OnChatButtonClicked(bool firstButton, ref bool shop)
+        public override void OnChatButtonClicked(bool firstButton, ref string shopName)
         {
             if (firstButton)
                 Main.npcChatText = "You see, I was expecting to join my mistress in this realm, seeing as we were both freed of our sorrows. Contrariwise, I have no sight of her, none at all... I have looked and looked, but alas, I feel I am searching for a ghost - in the metaphorical and literal sense. If you know not of where she lies, I suppose I must continue my search. I must not let my vexation sway me, lest I turn vengeful.";

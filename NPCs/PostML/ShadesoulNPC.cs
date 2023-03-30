@@ -21,7 +21,7 @@ namespace Redemption.NPCs.PostML
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Shadesoul");
+            // DisplayName.SetDefault("Shadesoul");
             Main.npcFrameCount[Type] = 8;
             NPCID.Sets.CountsAsCritter[NPC.type] = true;
 
@@ -49,7 +49,7 @@ namespace Redemption.NPCs.PostML
             NPC.dontTakeDamage = true;
             NPC.catchItem = (short)ModContent.ItemType<Shadesoul>();
         }
-        public override void HitEffect(int hitDirection, double damage)
+        public override void HitEffect(NPC.HitInfo hit)
         {
             if (NPC.life <= 0)
             {
@@ -103,7 +103,7 @@ namespace Redemption.NPCs.PostML
                     NPC.frame.Y = 0;
             }
         }
-        public override void ModifyHitPlayer(Player target, ref int damage, ref bool crit)
+        public override void ModifyHitPlayer(Player target, ref Player.HurtModifiers modifiers)
         {
             target.AddBuff(ModContent.BuffType<BlackenedHeartDebuff>(), 15);
         }
@@ -113,7 +113,7 @@ namespace Redemption.NPCs.PostML
             Item.NewItem(NPC.GetSource_Loot(), NPC.getRect(), ModContent.ItemType<Shadesoul>(), 1 + dropAmount);
         }
         public override bool CanHitPlayer(Player target, ref int cooldownSlot) => false;
-        public override bool? CanHitNPC(NPC target) => false;
+        public override bool CanHitNPC(NPC target) => false;
 
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
         {

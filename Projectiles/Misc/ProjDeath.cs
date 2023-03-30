@@ -10,7 +10,7 @@ namespace Redemption.Projectiles.Misc
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("death");
+            // DisplayName.SetDefault("death");
         }
         public override void SetDefaults()
         {

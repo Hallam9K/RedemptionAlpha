@@ -8,10 +8,10 @@ namespace Redemption.Items.Armor.Vanity.Dev
 	{
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Tied's Marvelous Suit");
-            Tooltip.SetDefault("'Great for impersonating devs!'");
+            // DisplayName.SetDefault("Tied's Marvelous Suit");
+            // Tooltip.SetDefault("'Great for impersonating devs!'");
             ArmorIDs.Body.Sets.HidesHands[EquipLoader.GetEquipSlot(Mod, Name, EquipType.Body)] = true;
-            SacrificeTotal = 1;
+            Item.ResearchUnlockCount = 1;
         }
         public override void SetDefaults()
 		{

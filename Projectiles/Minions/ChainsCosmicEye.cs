@@ -12,7 +12,7 @@ namespace Redemption.Projectiles.Minions
         public override string Texture => "Redemption/NPCs/Bosses/Neb/CosmicEye";
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Cosmic Eye");
+            // DisplayName.SetDefault("Cosmic Eye");
         }
         public override void SetDefaults()
         {

@@ -71,7 +71,7 @@ namespace Redemption.NPCs.Bosses.Neb.Phase2
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Nebuleus, Angel of the Cosmos");
+            // DisplayName.SetDefault("Nebuleus, Angel of the Cosmos");
             Main.npcFrameCount[NPC.type] = 9;
             NPCID.Sets.DebuffImmunitySets.Add(Type, new NPCDebuffImmunityData
             {
@@ -112,12 +112,12 @@ namespace Redemption.NPCs.Bosses.Neb.Phase2
             NPC.GetGlobalNPC<ElementalNPC>().OverrideMultiplier[ElementID.Shadow] *= 1.1f;
         }
         public override bool CanHitPlayer(Player target, ref int cooldownSlot) => NPC.ai[3] == 6;
-        public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
+        public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)
         {
-            NPC.lifeMax = (int)(NPC.lifeMax * 0.6f * bossLifeScale);
+            NPC.lifeMax = (int)(NPC.lifeMax * 0.6f * balance * bossAdjustment);
             NPC.damage = (int)(NPC.damage * 0.6f);
         }
-        public override void HitEffect(int hitDirection, double damage)
+        public override void HitEffect(NPC.HitInfo hit)
         {
             if (NPC.life <= 0)
                 RazzleDazzle();
@@ -186,10 +186,9 @@ namespace Redemption.NPCs.Bosses.Neb.Phase2
 
             npcLoot.Add(notExpertRule);
         }
-        public override bool StrikeNPC(ref double damage, int defense, ref float knockback, int hitDirection, ref bool crit)
+        public override void ModifyIncomingHit(ref NPC.HitModifiers modifiers)
         {
-            damage *= 0.8;
-            return true;
+            modifiers.FinalDamage *= 0.8f;
         }
         public override void SendExtraAI(BinaryWriter writer)
         {
@@ -1665,15 +1664,15 @@ namespace Redemption.NPCs.Bosses.Neb.Phase2
             scale = 1.5f;
             return null;
         }
-        public override void ModifyHitByItem(Player player, Item item, ref int damage, ref float knockback, ref bool crit)
+        public override void ModifyHitByItem(Player player, Item item, ref NPC.HitModifiers modifiers)
         {
             if (item.DamageType == DamageClass.Melee)
-                damage *= 2;
+                modifiers.FinalDamage *= 2;
         }
-        public override void ModifyHitByProjectile(Projectile projectile, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
+        public override void ModifyHitByProjectile(Projectile projectile, ref NPC.HitModifiers modifiers)
         {
             if (projectile.Redemption().TechnicallyMelee)
-                damage *= 2;
+                modifiers.FinalDamage *= 2;
         }
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {

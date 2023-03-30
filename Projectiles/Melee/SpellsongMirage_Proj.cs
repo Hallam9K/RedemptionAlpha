@@ -13,7 +13,7 @@ namespace Redemption.Projectiles.Melee
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Spellsong Mirage");
+            // DisplayName.SetDefault("Spellsong Mirage");
             ProjectileID.Sets.TrailCacheLength[Projectile.type] = 5;
             ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
             ElementID.ProjCelestial[Type] = true;
@@ -79,7 +79,7 @@ namespace Redemption.Projectiles.Melee
             Projectile.alpha = (int)MathHelper.Clamp(Projectile.alpha, 0, 255);
             Projectile.scale = MathHelper.Clamp(Projectile.scale, 0.1f, 1);
         }
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             Projectile.localAI[0] = 2;
             Projectile.localNPCImmunity[target.whoAmI] = 10;

@@ -10,12 +10,12 @@ namespace Redemption.Items.Armor.PostML.Vorti
     {
         public override void SetStaticDefaults()
         {
-            Tooltip.SetDefault("50% increased movement speed"
-                + "\n15% increased magic damage and critical strike chance");
+            /* Tooltip.SetDefault("50% increased movement speed"
+                + "\n15% increased magic damage and critical strike chance"); */
 
             ArmorIDs.Legs.Sets.HidesBottomSkin[EquipLoader.GetEquipSlot(Mod, Name, EquipType.Legs)] = true;
             ArmorIDs.Legs.Sets.IncompatibleWithFrogLeg[EquipLoader.GetEquipSlot(Mod, Name, EquipType.Legs)] = true;
-            SacrificeTotal = 1;
+            Item.ResearchUnlockCount = 1;
         }
         public override void SetDefaults()
         {

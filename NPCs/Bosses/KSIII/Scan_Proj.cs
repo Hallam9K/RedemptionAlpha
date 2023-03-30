@@ -12,7 +12,7 @@ namespace Redemption.NPCs.Bosses.KSIII
         public override string Texture => "Redemption/Textures/Ray";
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Scan");
+            // DisplayName.SetDefault("Scan");
         }
 
         public override void SetDefaults()

@@ -1,5 +1,6 @@
 using Redemption.Buffs;
 using Terraria.ID;
+using Terraria;
 using Terraria.ModLoader;
 
 namespace Redemption.Items.Usable.Potions
@@ -8,10 +9,10 @@ namespace Redemption.Items.Usable.Potions
     {
         public override void SetStaticDefaults()
         {
-            Tooltip.SetDefault("Massive improvements to all stats" +
-                "\n'I eat pears'");
-
-            SacrificeTotal = 5;
+            /* Tooltip.SetDefault("Massive improvements to all stats" +
+                "\n'I eat pears'"); */
+            ItemID.Sets.ShimmerTransformToItem[Type] = ItemID.Ambrosia;
+            Item.ResearchUnlockCount = 5;
         }
 
         public override void SetDefaults()
@@ -21,7 +22,7 @@ namespace Redemption.Items.Usable.Potions
             Item.useTurn = true;
             Item.useAnimation = 14;
             Item.useTime = 14;
-            Item.maxStack = 9999;
+            Item.maxStack = Item.CommonMaxStack;
             Item.consumable = true;
             Item.width = 28;
             Item.height = 30;

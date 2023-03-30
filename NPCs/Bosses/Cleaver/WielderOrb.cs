@@ -11,7 +11,7 @@ namespace Redemption.NPCs.Bosses.Cleaver
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Shield Orb");
+            // DisplayName.SetDefault("Shield Orb");
             Main.projFrames[Projectile.type] = 4;
         }
         public override void SetDefaults()

@@ -28,7 +28,7 @@ namespace Redemption.Biomes
         }
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Soulless Caverns");
+            // DisplayName.SetDefault("Soulless Caverns");
         }
 
         public override SceneEffectPriority Priority => SceneEffectPriority.BiomeMedium;

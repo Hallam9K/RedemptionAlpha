@@ -8,6 +8,7 @@ using Terraria.DataStructures;
 using Terraria.Enums;
 using Terraria.GameContent.ObjectInteractions;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 
@@ -31,8 +32,8 @@ namespace Redemption.Tiles.Furniture.Misc
             TileObjectData.newTile.AnchorBottom = new AnchorData(AnchorType.SolidTile | AnchorType.SolidWithTop | AnchorType.SolidSide, TileObjectData.newTile.Width, 0);
             TileObjectData.newTile.DrawYOffset = 2;
             TileObjectData.addTile(Type);
-            ModTranslation name = CreateMapEntryName();
-            name.SetDefault("Energy Station");
+            LocalizedText name = CreateMapEntryName();
+            // name.SetDefault("Energy Station");
             AddMapEntry(new Color(189, 191, 200), name);
             DustType = DustID.Electric;
         }
@@ -62,10 +63,6 @@ namespace Redemption.Tiles.Furniture.Misc
                     Main.dust[d].noGravity = true;
                 }
             }
-        }
-        public override void KillMultiTile(int i, int j, int frameX, int frameY)
-        {
-            Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 48, 48, ModContent.ItemType<EnergyStation>());
         }
         public override void PostDraw(int i, int j, SpriteBatch spriteBatch)
         {

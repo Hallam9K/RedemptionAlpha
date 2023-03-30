@@ -12,7 +12,7 @@ namespace Redemption.Projectiles.Minions
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Log");
+            // DisplayName.SetDefault("Log");
             ProjectileID.Sets.DontAttachHideToAlpha[Type] = true;
             ProjectileID.Sets.MinionSacrificable[Projectile.type] = true;
             ProjectileID.Sets.CultistIsResistantTo[Projectile.type] = true;

@@ -42,7 +42,7 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
         public Vector2 ShieldOffset;
         public override void SetSafeStaticDefaults()
         {
-            DisplayName.SetDefault("Skeleton Warden");
+            // DisplayName.SetDefault("Skeleton Warden");
             Main.npcFrameCount[NPC.type] = 17;
             NPCID.Sets.MPAllowedEnemies[Type] = true;
 
@@ -64,7 +64,7 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
             NPC.RedemptionGuard().GuardPoints = 20;
             NPC.Redemption().spiritSummon = true;
         }
-        public override void HitEffect(int hitDirection, double damage)
+        public override void HitEffect(NPC.HitInfo hit)
         {
             if (NPC.life <= 0)
             {
@@ -88,15 +88,15 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
             }
         }
         private bool blocked;
-        public override bool StrikeNPC(ref double damage, int defense, ref float knockback, int hitDirection, ref bool crit)
+        public override void ModifyIncomingHit(ref NPC.HitModifiers modifiers)
         {
-            bool vDmg = false;
             if (blocked && NPC.RedemptionGuard().GuardPoints >= 0)
             {
-                NPC.RedemptionGuard().GuardHit(NPC, ref vDmg, ref damage, ref knockback, SoundID.Dig, 0.1f, true);
+                modifiers.DisableCrit();
+                modifiers.ModifyHitInfo += (ref NPC.HitInfo n) => NPC.RedemptionGuard().GuardHit(ref n, NPC, SoundID.Dig, 0.1f, true);
                 blocked = false;
                 if (NPC.RedemptionGuard().GuardPoints >= 0)
-                    return vDmg;
+                    return;
             }
             if (NPC.RedemptionGuard().GuardPoints <= 0 && !NPC.RedemptionGuard().GuardBroken)
             {
@@ -110,10 +110,9 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
             }
             NPC.RedemptionGuard().GuardBreakCheck(NPC, DustID.DungeonSpirit, CustomSounds.GuardBreak, 10, 1, 40);
             blocked = false;
-            return true;
         }
         private readonly List<int> projBlocked = new();
-        public override void ModifyHitByProjectile(Projectile projectile, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
+        public override void ModifyHitByProjectile(Projectile projectile, ref NPC.HitModifiers modifiers)
         {
             if (NPC.RedemptionGuard().GuardBroken)
                 return;
@@ -172,7 +171,7 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
             Player player = Main.player[(int)NPC.ai[3]];
             RedeNPC globalNPC = NPC.Redemption();
             if (!player.active || player.dead || !SSBase.CheckActive(player))
-                NPC.StrikeNPC(999, 0, 1);
+                NPC.SimpleStrikeNPC(999, 1);
             NPC.TargetClosest();
             NPC.LookByVelocity();
             Rectangle ShieldHitbox = new((int)(NPC.spriteDirection == -1 ? NPC.Center.X - 26 : NPC.Center.X + 8), (int)(NPC.Center.Y - 22), 16, 52);
@@ -192,7 +191,7 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
                             if (!projectile.ProjBlockBlacklist() && projectile.penetrate != -1)
                             {
                                 blocked = true;
-                                NPC.StrikeNPC(projectile.damage, projectile.damage, 1, false);
+                                NPC.SimpleStrikeNPC(projectile.damage, 1);
                                 projectile.Kill();
                             }
                             if (!projBlocked.Contains(projectile.whoAmI))
@@ -206,7 +205,7 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
                             if (!projectile.ProjBlockBlacklist() && projectile.penetrate != -1)
                             {
                                 blocked = true;
-                                NPC.StrikeNPC(projectile.damage, projectile.damage, 1, false);
+                                NPC.SimpleStrikeNPC(projectile.damage, 1);
                                 projectile.Kill();
                             }
                             if (!projBlocked.Contains(projectile.whoAmI))
@@ -581,7 +580,7 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
             return false;
         }
-        public override bool? CanHitNPC(NPC target) => false;
+        public override bool CanHitNPC(NPC target) => false;
         public override void OnKill()
         {
             RedeHelper.SpawnNPC(NPC.GetSource_FromAI(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<LostSoulNPC>(), Main.rand.NextFloat(0.2f, 0.4f));

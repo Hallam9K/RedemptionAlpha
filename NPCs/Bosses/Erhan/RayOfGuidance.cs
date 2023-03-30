@@ -17,7 +17,7 @@ namespace Redemption.NPCs.Bosses.Erhan
         // >
         public override void SetSafeStaticDefaults()
         {
-            DisplayName.SetDefault("Ray of Guidance");
+            // DisplayName.SetDefault("Ray of Guidance");
             ElementID.ProjFire[Type] = true;
             ElementID.ProjHoly[Type] = true;
         }
@@ -41,7 +41,7 @@ namespace Redemption.NPCs.Bosses.Erhan
         public override bool CanHitPlayer(Player target) => AITimer >= 80;
         public override bool? CanHitNPC(NPC target) => target.friendly && AITimer >= 80 ? null : false;
 
-        public override void OnHitPlayer(Player target, int damage, bool crit)
+        public override void OnHitPlayer(Player target, Player.HurtInfo info)
         {
             target.AddBuff(BuffID.OnFire, 600);
         }

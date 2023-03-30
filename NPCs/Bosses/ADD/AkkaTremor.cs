@@ -11,7 +11,7 @@ namespace Redemption.NPCs.Bosses.ADD
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Earth Tremor");
+            // DisplayName.SetDefault("Earth Tremor");
         }
         public override void SetDefaults()
         {

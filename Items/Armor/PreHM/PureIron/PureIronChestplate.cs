@@ -12,11 +12,11 @@ namespace Redemption.Items.Armor.PreHM.PureIron
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Pure-Iron Chestplate");
-            Tooltip.SetDefault("7% increased damage\n" +
-                "Immunity to most fire-related debuffs");
+            // DisplayName.SetDefault("Pure-Iron Chestplate");
+            /* Tooltip.SetDefault("7% increased damage\n" +
+                "Immunity to most fire-related debuffs"); */
 
-            SacrificeTotal = 1;
+            Item.ResearchUnlockCount = 1;
         }
 
         public override void SetDefaults()

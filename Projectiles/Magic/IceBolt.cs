@@ -190,7 +190,7 @@ namespace Redemption.Projectiles.Magic
             return false;
         }
 
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             if (Projectile.penetrate <= 1)
                 FakeKill();
@@ -203,17 +203,17 @@ namespace Redemption.Projectiles.Magic
             if (player.RedemptionPlayerBuff().pureIronBonus)
                 target.AddBuff(ModContent.BuffType<PureChillDebuff>(), 300);
         }
-        public override void OnHitPlayer(Player target, int damage, bool crit)
+        public override void OnHitPlayer(Player target, Player.HurtInfo info)
         {
             if (Main.rand.NextBool(3))
                 target.AddBuff(BuffID.Frostburn, 240);
         }
 
-        public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
+        public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
         {
             float newDamage = Projectile.scale - 1;
-            damage = (int)(damage * ((newDamage * 1.5f) + 1));
+            modifiers.FinalDamage *= (newDamage * 1.5f) + 1;
         }
-        public override void ModifyHitPlayer(Player target, ref int damage, ref bool crit) => damage = (int)(damage * Projectile.scale);
+        public override void ModifyHitPlayer(Player target, ref Player.HurtModifiers modifiers) => modifiers.FinalDamage *= Projectile.scale;
     }
 }

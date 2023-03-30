@@ -19,17 +19,17 @@ namespace Redemption.Items.Usable
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Cyber Loot Box (King Slayer III)");
-            Tooltip.SetDefault("{$CommonItemTooltip.RightClickToOpen}");
+            // DisplayName.SetDefault("Cyber Loot Box (King Slayer III)");
+            // Tooltip.SetDefault("{$CommonItemTooltip.RightClickToOpen}");
 
             ItemID.Sets.BossBag[Type] = true;
 
-            SacrificeTotal = 3;
+            Item.ResearchUnlockCount = 3;
         }
 
         public override void SetDefaults()
         {
-            Item.maxStack = 9999;
+            Item.maxStack = Item.CommonMaxStack;
             Item.consumable = true;
             Item.width = 40;
             Item.height = 24;
@@ -42,7 +42,7 @@ namespace Redemption.Items.Usable
         public override bool CanRightClick() => true;
         public override void ModifyItemLoot(ItemLoot itemLoot)
         {
-            itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<KingSlayerMask>(), 7));
+            itemLoot.Add(ItemDropRule.NotScalingWithLuck(ModContent.ItemType<KingSlayerMask>(), 7));
             itemLoot.Add(ItemDropRule.OneFromOptions(1, ModContent.ItemType<SlayerGun>(), ModContent.ItemType<Nanoswarmer>(), ModContent.ItemType<SlayerFist>()));
             itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<SlayerController>(), 10));
             itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<Holokey>()));

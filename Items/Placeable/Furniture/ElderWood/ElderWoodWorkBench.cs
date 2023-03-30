@@ -1,5 +1,6 @@
 using Redemption.Tiles.Furniture.ElderWood;
 using Terraria.ModLoader;
+using Terraria;
 
 namespace Redemption.Items.Placeable.Furniture.ElderWood
 {
@@ -7,7 +8,7 @@ namespace Redemption.Items.Placeable.Furniture.ElderWood
 	{
 		public override void SetStaticDefaults()
 		{
-			SacrificeTotal = 1;
+			Item.ResearchUnlockCount = 1;
 		}
 
 		public override void SetDefaults()
@@ -15,7 +16,7 @@ namespace Redemption.Items.Placeable.Furniture.ElderWood
 			Item.DefaultToPlaceableTile(ModContent.TileType<ElderWoodWorkbenchTile>(), 0);
 			Item.width = 32;
 			Item.height = 18;
-			Item.maxStack = 9999;
+			Item.maxStack = Item.CommonMaxStack;
 			Item.value = 150;
 		}
 

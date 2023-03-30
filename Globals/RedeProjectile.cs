@@ -79,8 +79,8 @@ namespace Redemption.Globals
                 {
                     CombatText.NewText(target.getRect(), Color.Orange, "Decapitated!");
                     target.Redemption().decapitated = true;
-                    damage = target.life;
                     crit = true;
+                    target.StrikeInstantKill();
                 }
             }
         }

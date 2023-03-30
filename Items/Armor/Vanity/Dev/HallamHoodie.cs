@@ -9,10 +9,10 @@ namespace Redemption.Items.Armor.Vanity.Dev
 	{
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Halm's Casual Hoodie");
-            Tooltip.SetDefault("'Great for impersonating devs!'");
+            // DisplayName.SetDefault("Halm's Casual Hoodie");
+            // Tooltip.SetDefault("'Great for impersonating devs!'");
             ArmorIDs.Body.Sets.HidesHands[EquipLoader.GetEquipSlot(Mod, Name, EquipType.Body)] = false;
-            SacrificeTotal = 1;
+            Item.ResearchUnlockCount = 1;
         }
         public override void SetDefaults()
 		{

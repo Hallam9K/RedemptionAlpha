@@ -11,9 +11,9 @@ namespace Redemption.Items.Weapons.HM.Ranged
 	{
 		public override void SetStaticDefaults()
 		{
-            Tooltip.SetDefault("Charges up and releases a stream of radioactive gloop\n" +
-                "Uses Toxic Grenades as ammo");
-            SacrificeTotal = 1;
+            /* Tooltip.SetDefault("Charges up and releases a stream of radioactive gloop\n" +
+                "Uses Toxic Grenades as ammo"); */
+            Item.ResearchUnlockCount = 1;
         }
 
         public override void SetDefaults()

@@ -10,15 +10,15 @@ namespace Redemption.Items.Critters
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Hazmat Bunny");
-            SacrificeTotal = 5;
+            // DisplayName.SetDefault("Hazmat Bunny");
+            Item.ResearchUnlockCount = 5;
         }
 
         public override void SetDefaults()
         {
             Item.width = 28;
             Item.height = 26;
-            Item.maxStack = 9999;
+            Item.maxStack = Item.CommonMaxStack;
             Item.value = Item.buyPrice(silver: 2);
             Item.rare = ItemRarityID.Blue;
             Item.useAnimation = 30;

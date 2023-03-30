@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Terraria;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ID;
 using Redemption.Items.Placeable.Tiles;
@@ -38,8 +39,8 @@ namespace Redemption.Tiles.Tiles
             MinPick = 0;
             MineResist = 1f;
             HitSound = SoundID.Grass;
-            ModTranslation name = CreateMapEntryName();
-            name.SetDefault("Plant Matter");
+            LocalizedText name = CreateMapEntryName();
+            // name.SetDefault("Plant Matter");
             AddMapEntry(new Color(109, 155, 67), name);
 		}
 

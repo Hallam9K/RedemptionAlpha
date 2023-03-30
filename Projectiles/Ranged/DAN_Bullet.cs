@@ -11,7 +11,7 @@ namespace Redemption.Projectiles.Ranged
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("D.A.N Bull-et");
+            // DisplayName.SetDefault("D.A.N Bull-et");
             Main.projFrames[Projectile.type] = 2;
             ProjectileID.Sets.TrailCacheLength[Projectile.type] = 4;
             ProjectileID.Sets.TrailingMode[Projectile.type] = 0;

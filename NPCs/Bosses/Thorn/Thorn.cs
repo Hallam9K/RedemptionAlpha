@@ -53,7 +53,7 @@ namespace Redemption.NPCs.Bosses.Thorn
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Thorn, Bane of the Forest");
+            // DisplayName.SetDefault("Thorn, Bane of the Forest");
             Main.npcFrameCount[NPC.type] = 10;
 
             NPCID.Sets.MPAllowedEnemies[Type] = true;
@@ -101,9 +101,9 @@ namespace Redemption.NPCs.Bosses.Thorn
                 Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/BossForest1");
         }
 
-        public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
+        public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)
         {
-            NPC.lifeMax = (int)(NPC.lifeMax * 0.6f * bossLifeScale);
+            NPC.lifeMax = (int)(NPC.lifeMax * 0.6f * balance * bossAdjustment);
             NPC.damage = (int)(NPC.damage * 0.75f);
         }
 
@@ -128,7 +128,7 @@ namespace Redemption.NPCs.Bosses.Thorn
 
             LeadingConditionRule notExpertRule = new(new Conditions.NotExpert());
 
-            notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<ThornMask>(), 7));
+            notExpertRule.OnSuccess(ItemDropRule.NotScalingWithLuck(ModContent.ItemType<ThornMask>(), 7));
 
             notExpertRule.OnSuccess(ItemDropRule.OneFromOptions(1, ModContent.ItemType<CursedGrassBlade>(), ModContent.ItemType<RootTendril>(), ModContent.ItemType<CursedThornBow>()));
             //notExpertRule.OnSuccess(ItemDropRule.OneFromOptions(1, ModContent.ItemType<CursedGrassBlade>(), ModContent.ItemType<RootTendril>(), ModContent.ItemType<CursedThornBow>(), ModContent.ItemType<BlightedBoline>()));
@@ -166,7 +166,7 @@ namespace Redemption.NPCs.Bosses.Thorn
             NPC.SetEventFlagCleared(ref RedeBossDowned.downedThorn, -1);
         }
 
-        public override void HitEffect(int hitDirection, double damage)
+        public override void HitEffect(NPC.HitInfo hit)
         {
             Dust.NewDust(NPC.position + NPC.velocity, NPC.width, NPC.height, DustID.Grass, NPC.velocity.X * 0.5f, NPC.velocity.Y * 0.5f);
         }

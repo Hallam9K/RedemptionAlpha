@@ -13,7 +13,6 @@ namespace Redemption.Walls
             Main.wallHouse[Type] = true;
             DustType = DustID.Ice;
             HitSound = SoundID.Item50;
-            ItemDrop = ModContent.ItemType<GathicFroststoneWall>();
 			AddMapEntry(new Color(24, 91, 144));
 		}
     }
@@ -25,7 +24,6 @@ namespace Redemption.Walls
             Main.wallHouse[Type] = false;
             DustType = DustID.Ice;
             HitSound = SoundID.Item50;
-            ItemDrop = ModContent.ItemType<GathicFroststoneWall>();
             AddMapEntry(new Color(24, 91, 144));
         }
     }

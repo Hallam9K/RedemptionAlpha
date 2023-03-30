@@ -17,9 +17,9 @@ namespace Redemption.Items.Accessories.PostML
     {
         public override void SetStaticDefaults()
         {
-            Tooltip.SetDefault("When hit for damage exceeding 150, an aura forms around the player that electrifies enemies and heals the player\n" +
-                "15 second cooldown");
-            SacrificeTotal = 1;
+            /* Tooltip.SetDefault("When hit for damage exceeding 150, an aura forms around the player that electrifies enemies and heals the player\n" +
+                "15 second cooldown"); */
+            Item.ResearchUnlockCount = 1;
         }
         public override void SetDefaults()
         {
@@ -40,7 +40,7 @@ namespace Redemption.Items.Accessories.PostML
         public override string Texture => "Redemption/Textures/StaticBall";
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Electricity Field");
+            // DisplayName.SetDefault("Electricity Field");
         }
         public override void SetDefaults()
         {

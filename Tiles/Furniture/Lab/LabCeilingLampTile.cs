@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.Enums;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 using Terraria.DataStructures;
@@ -25,8 +26,8 @@ namespace Redemption.Tiles.Furniture.Lab
             TileObjectData.newTile.StyleHorizontal = false;
             TileObjectData.newTile.StyleLineSkip = 2;
             TileObjectData.addTile(Type);
-			ModTranslation name = CreateMapEntryName();
-			name.SetDefault("Laboratory Ceiling Lamp");
+			LocalizedText name = CreateMapEntryName();
+			// name.SetDefault("Laboratory Ceiling Lamp");
             AddMapEntry(new Color(189, 191, 200), name);
             DustType = DustID.Electric;
             AdjTiles = new int[] { TileID.Chandeliers };
@@ -68,11 +69,5 @@ namespace Redemption.Tiles.Furniture.Lab
                 b = 0.8f;
             }
         }
-
-        public override void KillMultiTile(int i, int j, int frameX, int frameY)
-		{
-			Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 48, 32, ModContent.ItemType<LabCeilingLamp>());
-			Chest.DestroyChest(i, j);
-		}
     }
 }

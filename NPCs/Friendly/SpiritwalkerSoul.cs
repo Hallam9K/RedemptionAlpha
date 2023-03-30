@@ -22,7 +22,7 @@ namespace Redemption.NPCs.Friendly
         public ref float TimerRand => ref NPC.ai[1];
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Lost Soul");
+            // DisplayName.SetDefault("Lost Soul");
             NPCID.Sets.DebuffImmunitySets.Add(Type, new NPCDebuffImmunityData
             {
                 ImmuneToAllBuffsThatAreNotWhips = true
@@ -138,14 +138,14 @@ namespace Redemption.NPCs.Friendly
                     break;
             }
         }
-        public override bool? CanHitNPC(NPC target) => false;
+        public override bool CanHitNPC(NPC target) => false;
     }
     public class SpiritwalkerIconFade : ModProjectile
     {
         public override string Texture => "Redemption/Textures/Abilities/Spiritwalker";
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Spirit Walker");
+            // DisplayName.SetDefault("Spirit Walker");
         }
         public override void SetDefaults()
         {

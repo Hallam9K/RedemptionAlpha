@@ -13,7 +13,7 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
         public override string Texture => "Redemption/Textures/IceMist";
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Toxic Breath");
+            // DisplayName.SetDefault("Toxic Breath");
             ElementID.ProjWind[Type] = true;
             ElementID.ProjPoison[Type] = true;
         }
@@ -64,7 +64,7 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
             Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition, null, Projectile.GetAlpha(Color.Purple), Projectile.rotation / 2, drawOrigin, Projectile.scale * 1.1f, effects, 0);
             return false;
         }
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             target.AddBuff(BuffID.Venom, 30);
         }

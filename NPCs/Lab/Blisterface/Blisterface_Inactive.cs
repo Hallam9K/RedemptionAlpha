@@ -14,7 +14,7 @@ namespace Redemption.NPCs.Lab.Blisterface
         public override string Texture => "Redemption/NPCs/Lab/Blisterface/Blisterface";
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("");
+            // DisplayName.SetDefault("");
             Main.npcFrameCount[NPC.type] = 8;
             NPCID.Sets.DontDoHardmodeScaling[Type] = true;
 
@@ -79,6 +79,6 @@ namespace Redemption.NPCs.Lab.Blisterface
             }
         }
         public override bool CanHitPlayer(Player target, ref int cooldownSlot) => false;
-        public override bool? CanHitNPC(NPC target) => false ? null : false;
+        public override bool CanHitNPC(NPC target) => false;
     }
 }

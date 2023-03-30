@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.Enums;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 using Terraria.ID;
@@ -34,8 +35,9 @@ namespace Redemption.Tiles.Furniture.SlayerShip
             HitSound = SoundID.Tink;
             MinPick = 200;
             MineResist = 6f;
-            ModTranslation name = CreateMapEntryName();
-            name.SetDefault("Inactive Android Mk.I");
+            ItemDrop = -1;
+            LocalizedText name = CreateMapEntryName();
+            // name.SetDefault("Inactive Android Mk.I");
             AddMapEntry(new Color(189, 191, 200), name);
         }
         public override void KillMultiTile(int i, int j, int frameX, int frameY)
@@ -56,7 +58,7 @@ namespace Redemption.Tiles.Furniture.SlayerShip
         public override string Texture => Redemption.PLACEHOLDER_TEXTURE;
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Inactive Android");
+            // DisplayName.SetDefault("Inactive Android");
         }
         public override void SetDefaults()
         {

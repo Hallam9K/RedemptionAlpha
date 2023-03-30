@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using Redemption.Items;
 using Terraria;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 using Terraria.DataStructures;
@@ -25,13 +26,9 @@ namespace Redemption.Tiles.Furniture.Misc
             TileObjectData.newTile.AnchorWall = true;
             TileObjectData.addTile(Type);
             DustType = DustID.WoodFurniture;
-			ModTranslation name = CreateMapEntryName();
-			name.SetDefault("Medal");
+			LocalizedText name = CreateMapEntryName();
+			// name.SetDefault("Medal");
 			AddMapEntry(new Color(208, 191, 80), name);
 		}
-        public override void KillMultiTile(int i, int j, int frameX, int frameY)
-        {
-            Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 16, 32, ModContent.ItemType<SlayerMedal>());
-        }
     }
 }

@@ -12,7 +12,7 @@ namespace Redemption.Projectiles.Magic
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Constellations");
+            // DisplayName.SetDefault("Constellations");
             Main.projFrames[Projectile.type] = 7;
             ElementID.ProjCelestial[Type] = true;
         }

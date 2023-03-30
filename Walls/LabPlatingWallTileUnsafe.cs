@@ -10,7 +10,6 @@ namespace Redemption.Walls
         public override void SetStaticDefaults()
         {
             Main.wallHouse[Type] = false;
-            ItemDrop = ModContent.ItemType<LabPlatingWall>();
             AddMapEntry(new Color(53, 54, 60));
         }
         public override bool CanExplode(int i, int j) => false;
@@ -21,8 +20,8 @@ namespace Redemption.Walls
         public override string Texture => Redemption.PLACEHOLDER_TEXTURE;
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Lab Wall (Unsafe)");
-            Tooltip.SetDefault("[c/ff0000:Unbreakable]");
+            // DisplayName.SetDefault("Lab Wall (Unsafe)");
+            // Tooltip.SetDefault("[c/ff0000:Unbreakable]");
         }
 
         public override void SetDefaults()

@@ -13,7 +13,7 @@ namespace Redemption.NPCs.Bosses.Keeper
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Soul Charge");
+            // DisplayName.SetDefault("Soul Charge");
             Main.projFrames[Projectile.type] = 4;
             ElementID.ProjArcane[Type] = true;
         }

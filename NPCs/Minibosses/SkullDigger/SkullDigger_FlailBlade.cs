@@ -15,7 +15,7 @@ namespace Redemption.NPCs.Minibosses.SkullDigger
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Skull Digger");
+            // DisplayName.SetDefault("Skull Digger");
             ProjectileID.Sets.TrailCacheLength[Projectile.type] = 5;
             ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
         }
@@ -164,11 +164,11 @@ namespace Redemption.NPCs.Minibosses.SkullDigger
             }
         }
 
-        public override void ModifyHitPlayer(Player target, ref int damage, ref bool crit)
+        public override void ModifyHitPlayer(Player target, ref Player.HurtModifiers modifiers)
         {
             NPC host = Main.npc[(int)Projectile.ai[0]];
             if (host.RedemptionNPCBuff().disarmed)
-                damage = (int)(damage * 0.2f);
+                modifiers.FinalDamage *= 0.2f;
         }
 
         public override bool CanHitPlayer(Player target)

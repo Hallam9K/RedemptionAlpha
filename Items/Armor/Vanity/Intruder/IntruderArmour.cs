@@ -8,9 +8,9 @@ namespace Redemption.Items.Armor.Vanity.Intruder
 	{
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Intruder's Body Armor");
+            // DisplayName.SetDefault("Intruder's Body Armor");
             ArmorIDs.Body.Sets.HidesHands[EquipLoader.GetEquipSlot(Mod, Name, EquipType.Body)] = false;
-            SacrificeTotal = 1;
+            Item.ResearchUnlockCount = 1;
         }
         public override void SetDefaults()
         {

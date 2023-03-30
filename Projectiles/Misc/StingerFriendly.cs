@@ -11,7 +11,7 @@ namespace Redemption.Projectiles.Misc
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Stinger");
+            // DisplayName.SetDefault("Stinger");
             ElementID.ProjPoison[Type] = true;
         }
         public override void SetDefaults()
@@ -33,12 +33,12 @@ namespace Redemption.Projectiles.Misc
         {
             return BaseUtility.MultiLerpColor(Main.LocalPlayer.miscCounter % 100 / 100f, lightColor, Color.ForestGreen, lightColor);
         }
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             if (Main.rand.NextBool(3))
                 target.AddBuff(BuffID.Poisoned, 300);
         }
-        public override void OnHitPlayer(Player target, int damage, bool crit)
+        public override void OnHitPlayer(Player target, Player.HurtInfo info)
         {
             if (Main.rand.NextBool(3))
                 target.AddBuff(BuffID.Poisoned, 300);

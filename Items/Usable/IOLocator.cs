@@ -13,9 +13,9 @@ namespace Redemption.Items.Usable
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("IO-Locator");
-            Tooltip.SetDefault("Holding this in your hand will point to the Abandoned Laboratory");
-            SacrificeTotal = 1;
+            // DisplayName.SetDefault("IO-Locator");
+            // Tooltip.SetDefault("Holding this in your hand will point to the Abandoned Laboratory");
+            Item.ResearchUnlockCount = 1;
         }
 
         public override void SetDefaults()
@@ -36,7 +36,7 @@ namespace Redemption.Items.Usable
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Pointer");
+            // DisplayName.SetDefault("Pointer");
         }
 
         public override void SetDefaults()

@@ -10,7 +10,7 @@ namespace Redemption.Items.Usable
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("");
+            // DisplayName.SetDefault("");
             ItemID.Sets.ItemNoGravity[Item.type] = true;
             ItemID.Sets.ItemIconPulse[Item.type] = true;
         }

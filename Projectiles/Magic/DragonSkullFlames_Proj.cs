@@ -13,7 +13,7 @@ namespace Redemption.Projectiles.Magic
         public override string Texture => Redemption.EMPTY_TEXTURE;
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Flames");
+            // DisplayName.SetDefault("Flames");
             ElementID.ProjFire[Type] = true;
         }
         public override void SetDefaults()
@@ -56,7 +56,7 @@ namespace Redemption.Projectiles.Magic
             }
         }
 
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             target.AddBuff(BuffID.OnFire, 200);
         }

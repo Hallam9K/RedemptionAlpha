@@ -13,9 +13,9 @@ namespace Redemption.Items.Weapons.PreHM.Summon
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Corpse-Walker Staff");
-			Tooltip.SetDefault("Summons a Corpse-Walker Skull to fight for you");
-			SacrificeTotal = 1;
+			// DisplayName.SetDefault("Corpse-Walker Staff");
+			// Tooltip.SetDefault("Summons a Corpse-Walker Skull to fight for you");
+			Item.ResearchUnlockCount = 1;
 
 			ItemID.Sets.GamepadWholeScreenUseRange[Item.type] = true;
 			ItemID.Sets.LockOnIgnoresCollision[Item.type] = true;

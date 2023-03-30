@@ -11,10 +11,10 @@ namespace Redemption.Items.Usable.Potions
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("P0T4T0");
-            Tooltip.SetDefault("Medium improvements to all stats\n" +
+            // DisplayName.SetDefault("P0T4T0");
+            /* Tooltip.SetDefault("Medium improvements to all stats\n" +
                 "'Now with 100% less AI!'\n" +
-                "Increases Energy regeneration");
+                "Increases Energy regeneration"); */
             Main.RegisterItemAnimation(Type, new DrawAnimationVertical(int.MaxValue, 3));
             ItemID.Sets.FoodParticleColors[Item.type] = new Color[3] {
                 new Color(210, 145, 83),
@@ -22,13 +22,13 @@ namespace Redemption.Items.Usable.Potions
                 new Color(115, 120, 141)
             };
             ItemID.Sets.IsFood[Type] = true;
-            SacrificeTotal = 5;
+            Item.ResearchUnlockCount = 5;
         }
         public override void SetDefaults()
         {
             Item.DefaultToFood(36, 30, BuffID.WellFed2, 72000);
             Item.value = Item.sellPrice(silver: 60);
-            Item.maxStack = 9999;
+            Item.maxStack = Item.CommonMaxStack;
             Item.rare = ItemRarityID.Orange;
         }
         public override void OnConsumeItem(Player player)

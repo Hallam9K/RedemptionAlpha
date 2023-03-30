@@ -14,15 +14,15 @@ namespace Redemption.Items.Materials.PostML
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Fragment of Virtue");
+            // DisplayName.SetDefault("Fragment of Virtue");
             ItemID.Sets.ItemNoGravity[Item.type] = true;
-            SacrificeTotal = 25;
+            Item.ResearchUnlockCount = 25;
         }
         public override void SetDefaults()
         {
             Item.width = 18;
             Item.height = 48;
-            Item.maxStack = 9999;
+            Item.maxStack = Item.CommonMaxStack;
             Item.value = Item.sellPrice(0, 0, 75, 0);
             Item.rare = ModContent.RarityType<CosmicRarity>();
         }

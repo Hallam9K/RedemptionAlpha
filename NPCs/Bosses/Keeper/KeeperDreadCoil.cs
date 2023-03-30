@@ -15,7 +15,7 @@ namespace Redemption.NPCs.Bosses.Keeper
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Dread Coil");
+            // DisplayName.SetDefault("Dread Coil");
 
             ProjectileID.Sets.CultistIsResistantTo[Projectile.type] = true;
             Main.projFrames[Projectile.type] = 4;

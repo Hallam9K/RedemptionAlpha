@@ -10,9 +10,9 @@ namespace Redemption.Items.Quest.KingSlayer
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Ship Hull Plating");
+            // DisplayName.SetDefault("Ship Hull Plating");
 
-            SacrificeTotal = 1;
+            Item.ResearchUnlockCount = 1;
         }
 
 

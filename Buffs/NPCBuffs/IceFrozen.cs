@@ -9,8 +9,8 @@ namespace Redemption.Buffs.NPCBuffs
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Frozen");
-            Description.SetDefault("brrr");
+            // DisplayName.SetDefault("Frozen");
+            // Description.SetDefault("brrr");
             Main.buffNoSave[Type] = true;
             Main.debuff[Type] = true;
             Main.buffNoSave[Type] = true;

@@ -15,7 +15,7 @@ namespace Redemption.NPCs.Bosses.Neb.Phase2
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Nebuleus, Angel of the Cosmos");
+            // DisplayName.SetDefault("Nebuleus, Angel of the Cosmos");
             Main.projFrames[Projectile.type] = 4;
         }
 

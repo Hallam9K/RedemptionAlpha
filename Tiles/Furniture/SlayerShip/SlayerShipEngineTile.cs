@@ -30,10 +30,6 @@ namespace Redemption.Tiles.Furniture.SlayerShip
             AddMapEntry(new Color(189, 191, 200));
             AnimationFrameHeight = 108;
         }
-        public override void KillMultiTile(int i, int j, int frameX, int frameY)
-        {
-            Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 32, 32, ModContent.ItemType<SlayerShipEngine>());
-        }
         public override void AnimateTile(ref int frame, ref int frameCounter)
         {
             frameCounter++;

@@ -11,10 +11,10 @@ namespace Redemption.Items.Weapons.HM.Ranged
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Double Rifle");
-            Tooltip.SetDefault("Converts normal bullets into high velocity bullets\n" +
-                "33% chance not to consume ammo");
-            SacrificeTotal = 1;
+            // DisplayName.SetDefault("Double Rifle");
+            /* Tooltip.SetDefault("Converts normal bullets into high velocity bullets\n" +
+                "33% chance not to consume ammo"); */
+            Item.ResearchUnlockCount = 1;
         }
 
         public override void SetDefaults()

@@ -14,7 +14,7 @@ namespace Redemption.NPCs.Bosses.ADD
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Ukko's Thunderwave");
+            // DisplayName.SetDefault("Ukko's Thunderwave");
             Main.projFrames[Projectile.type] = 8;
             ElementID.ProjThunder[Type] = true;
         }
@@ -67,7 +67,7 @@ namespace Redemption.NPCs.Bosses.ADD
             Lighting.AddLight(Projectile.Center, Projectile.Opacity, Projectile.Opacity, Projectile.Opacity);
             Projectile.rotation = Projectile.velocity.ToRotation() + 1.57f;
         }
-        public override void ModifyHitPlayer(Player target, ref int damage, ref bool crit)
+        public override void ModifyHitPlayer(Player target, ref Player.HurtModifiers modifiers)
         {
             if (Main.rand.NextBool(2))
                 target.AddBuff(BuffID.Electrified, target.HasBuff(BuffID.Wet) ? 320 : 160);

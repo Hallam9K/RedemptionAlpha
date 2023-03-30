@@ -13,7 +13,7 @@ namespace Redemption.NPCs.Lab.Volt
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Electric Orb");
+            // DisplayName.SetDefault("Electric Orb");
             Main.projFrames[Projectile.type] = 4;
             ElementID.ProjThunder[Type] = true;
         }
@@ -51,7 +51,7 @@ namespace Redemption.NPCs.Lab.Volt
                 }
             }
         }
-        public override void OnHitPlayer(Player target, int damage, bool crit)
+        public override void OnHitPlayer(Player target, Player.HurtInfo info)
         {
             target.AddBuff(ModContent.BuffType<StaticStunDebuff>(), 30);
         }

@@ -11,7 +11,7 @@ namespace Redemption.NPCs.Bosses.Thorn
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Flash");
+            // DisplayName.SetDefault("Flash");
         }
         public override void SetDefaults()
         {

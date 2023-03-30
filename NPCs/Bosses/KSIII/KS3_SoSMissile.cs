@@ -15,7 +15,7 @@ namespace Redemption.NPCs.Bosses.KSIII
         public override string Texture => "Redemption/Projectiles/Ranged/Hardlight_SoSMissile";
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("SoS Missile");
+            // DisplayName.SetDefault("SoS Missile");
             Main.projFrames[Projectile.type] = 4;
             ElementID.ProjExplosive[Type] = true;
         }
@@ -32,7 +32,7 @@ namespace Redemption.NPCs.Bosses.KSIII
             Projectile.timeLeft = 300;
             Projectile.DamageType = DamageClass.Ranged;
         }
-        public override void OnHitPlayer(Player target, int damage, bool crit)
+        public override void OnHitPlayer(Player target, Player.HurtInfo info)
         {
             Projectile.Kill();
         }
@@ -104,7 +104,7 @@ namespace Redemption.NPCs.Bosses.KSIII
         public override string Texture => "Redemption/Projectiles/Ranged/Hardlight_MissileBlast";
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Explosion");
+            // DisplayName.SetDefault("Explosion");
             Main.projFrames[Projectile.type] = 5;
         }
 

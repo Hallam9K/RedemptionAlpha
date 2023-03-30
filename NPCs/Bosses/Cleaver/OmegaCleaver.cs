@@ -122,7 +122,7 @@ namespace Redemption.NPCs.Bosses.Cleaver
             });
         }
 
-        public override void HitEffect(int hitDirection, double damage)
+        public override void HitEffect(NPC.HitInfo hit)
         {
             if (NPC.life <= 0)
             {
@@ -171,7 +171,7 @@ namespace Redemption.NPCs.Bosses.Cleaver
 
             LeadingConditionRule notExpertRule = new(new Conditions.NotExpert());
 
-            notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<SwordHeadband>(), 7));
+            notExpertRule.OnSuccess(ItemDropRule.NotScalingWithLuck(ModContent.ItemType<SwordHeadband>(), 7));
             notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<GonkPet>(), 10));
             notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<CorruptedXenomite>(), 1, 4, 8));
 
@@ -208,9 +208,9 @@ namespace Redemption.NPCs.Bosses.Cleaver
 
         public override bool CanHitPlayer(Player target, ref int cooldownSlot) => false;
 
-        public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
+        public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)
         {
-            NPC.lifeMax = (int)(NPC.lifeMax * 0.6f * bossLifeScale);
+            NPC.lifeMax = (int)(NPC.lifeMax * 0.6f * balance * bossAdjustment);
             NPC.damage = (int)(NPC.damage * 0.6f);
         }
 
@@ -905,7 +905,7 @@ namespace Redemption.NPCs.Bosses.Cleaver
         public override string Texture => Redemption.EMPTY_TEXTURE;
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Omega Cleaver");
+            // DisplayName.SetDefault("Omega Cleaver");
         }
         public override void SetDefaults()
         {
@@ -931,7 +931,7 @@ namespace Redemption.NPCs.Bosses.Cleaver
             Projectile.rotation = host.rotation;
             Projectile.timeLeft = 10;
         }
-        public override void OnHitPlayer(Player target, int damage, bool crit)
+        public override void OnHitPlayer(Player target, Player.HurtInfo info)
         {
             target.AddBuff(ModContent.BuffType<SnippedDebuff>(), Main.expertMode ? 400 : 200);
         }

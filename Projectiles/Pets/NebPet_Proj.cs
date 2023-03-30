@@ -13,9 +13,12 @@ namespace Redemption.Projectiles.Pets
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Chibi Nebby");
+            // DisplayName.SetDefault("Chibi Nebby");
             Main.projFrames[Projectile.type] = 9;
             Main.projPet[Projectile.type] = true;
+            ProjectileID.Sets.CharacterPreviewAnimations[Projectile.type] = ProjectileID.Sets.SimpleLoop(1, 7, 5)
+                .WhenNotSelected(0, 0)
+                .WithOffset(-10, 0);
         }
 
         public override void SetDefaults()

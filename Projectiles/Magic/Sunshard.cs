@@ -15,7 +15,7 @@ namespace Redemption.Projectiles.Magic
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Redemptive Spark");
+            // DisplayName.SetDefault("Redemptive Spark");
             Main.projFrames[Projectile.type] = 5;
             ProjectileID.Sets.CultistIsResistantTo[Projectile.type] = true;
 

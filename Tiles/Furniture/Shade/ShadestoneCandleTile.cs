@@ -3,7 +3,9 @@ using Microsoft.Xna.Framework.Graphics;
 using Redemption.Dusts.Tiles;
 using Redemption.Items.Placeable.Furniture.Shade;
 using Terraria;
+using Terraria.Enums;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 
@@ -19,9 +21,12 @@ namespace Redemption.Tiles.Furniture.Shade
             TileID.Sets.DisableSmartCursor[Type] = true;
             TileObjectData.newTile.CopyFrom(TileObjectData.StyleOnTable1x1);
             TileObjectData.newTile.CoordinateHeights = new int[] { 18 };
+            TileObjectData.newTile.WaterDeath = true;
+            TileObjectData.newTile.WaterPlacement = LiquidPlacement.NotAllowed;
+            TileObjectData.newTile.LavaPlacement = LiquidPlacement.NotAllowed;
             TileObjectData.addTile(Type);
-            ModTranslation name = CreateMapEntryName();
-            name.SetDefault("Shadestone Candle");
+            LocalizedText name = CreateMapEntryName();
+            // name.SetDefault("Shadestone Candle");
             AddMapEntry(new Color(59, 61, 87), name);
             AdjTiles = new int[] { TileID.Candles };
             ItemDrop = ModContent.ItemType<ShadestoneCandle>();

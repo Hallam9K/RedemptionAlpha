@@ -11,9 +11,9 @@ namespace Redemption.Items.Donator.Rain
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Wings of a Living Weapon");
-            Tooltip.SetDefault("'Best hold back, you wouldn't want to hurt yourself'");
-            SacrificeTotal = 1;
+            // DisplayName.SetDefault("Wings of a Living Weapon");
+            // Tooltip.SetDefault("'Best hold back, you wouldn't want to hurt yourself'");
+            Item.ResearchUnlockCount = 1;
         }
 
         public override void SetDefaults()

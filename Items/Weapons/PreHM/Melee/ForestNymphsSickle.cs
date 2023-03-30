@@ -14,12 +14,12 @@ namespace Redemption.Items.Weapons.PreHM.Melee
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Forest Nymph's Sickle");
-            Tooltip.SetDefault("Deals 50% more damage to dark enemies\n" +
-                "Right-click to swap between Melee and Magic abilities");
+            // DisplayName.SetDefault("Forest Nymph's Sickle");
+            /* Tooltip.SetDefault("Deals 50% more damage to dark enemies\n" +
+                "Right-click to swap between Melee and Magic abilities"); */
 
             ItemID.Sets.SkipsInitialUseSound[Item.type] = true;
-            SacrificeTotal = 1;
+            Item.ResearchUnlockCount = 1;
         }
 
         public override void SetDefaults()

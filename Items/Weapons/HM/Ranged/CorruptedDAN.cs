@@ -14,13 +14,13 @@ namespace Redemption.Items.Weapons.HM.Ranged
 	{
 		public override void SetStaticDefaults()
 		{
-            DisplayName.SetDefault("Corrupted D.A.N");
-            Tooltip.SetDefault("Fires two blasts of rockets per use\n" +
+            // DisplayName.SetDefault("Corrupted D.A.N");
+            /* Tooltip.SetDefault("Fires two blasts of rockets per use\n" +
                 "Continuing to hold left-click will spin the weapon while firing, creating a spiral of homing rockets\n" +
                 "\n(15[i:" + ModContent.ItemType<EnergyPack>() + "]) Continuing to hold left-click while aiming downwards will charge a red beam that'll cause eruptions on impact\n" +
-                "66% chance to not consume ammo, 90% chance during the homing rocket spiral");
+                "66% chance to not consume ammo, 90% chance during the homing rocket spiral"); */
             ItemID.Sets.SkipsInitialUseSound[Item.type] = true;
-            SacrificeTotal = 1;
+            Item.ResearchUnlockCount = 1;
         }
 
         public override void SetDefaults()

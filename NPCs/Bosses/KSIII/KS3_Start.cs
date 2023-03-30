@@ -12,7 +12,7 @@ namespace Redemption.NPCs.Bosses.KSIII
         public override string Texture => Redemption.EMPTY_TEXTURE;
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("");
+            // DisplayName.SetDefault("");
 
             NPCID.Sets.NPCBestiaryDrawModifiers value = new(0)
             {
@@ -189,7 +189,7 @@ namespace Redemption.NPCs.Bosses.KSIII
         public override string Texture => Redemption.EMPTY_TEXTURE;
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("");
+            // DisplayName.SetDefault("");
         }
         public override void SetDefaults()
         {

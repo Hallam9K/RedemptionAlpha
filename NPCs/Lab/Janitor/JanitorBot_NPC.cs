@@ -1,13 +1,21 @@
 using Microsoft.Xna.Framework;
 using Redemption.Base;
 using Redemption.Globals;
+using Redemption.Items.Accessories.PreHM;
 using Redemption.Items.Armor.Vanity.TBot;
+using Redemption.Items.Materials.HM;
+using Redemption.Items.Materials.PreHM;
 using Redemption.Items.Placeable.Containers;
 using Redemption.Items.Placeable.Furniture.Lab;
+using Redemption.Items.Placeable.Furniture.Misc;
 using Redemption.Items.Placeable.Tiles;
 using Redemption.Items.Tools.PostML;
+using Redemption.Items.Tools.PreHM;
 using Redemption.Items.Usable;
 using Redemption.Items.Usable.Summons;
+using Redemption.Items.Weapons.PostML.Melee;
+using Redemption.Items.Weapons.PreHM.Magic;
+using Redemption.Items.Weapons.PreHM.Melee;
 using Redemption.Tiles.Tiles;
 using Terraria;
 using Terraria.ID;
@@ -22,7 +30,7 @@ namespace Redemption.NPCs.Lab.Janitor
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("The Janitor");
+            // DisplayName.SetDefault("The Janitor");
             Main.npcFrameCount[NPC.type] = 5;
             NPCID.Sets.ActsLikeTownNPC[Type] = true;
             NPCID.Sets.NPCBestiaryDrawModifiers value = new(0)
@@ -57,7 +65,7 @@ namespace Redemption.NPCs.Lab.Janitor
             }
         }
         public override bool CanHitPlayer(Player target, ref int cooldownSlot) => false;
-        public override bool? CanHitNPC(NPC target) => false;
+        public override bool CanHitNPC(NPC target) => false;
 
         public static int ChatNumber = 0;
         public override void SetChatButtons(ref string button, ref string button2)
@@ -89,12 +97,12 @@ namespace Redemption.NPCs.Lab.Janitor
             }
         }
 
-        public override void OnChatButtonClicked(bool firstButton, ref bool shop)
+        public override void OnChatButtonClicked(bool firstButton, ref string shopName)
         {
             if (firstButton)
             {
                 if (ChatNumber == 6)
-                    shop = true;
+                    shopName = "Shop";
                 else
                     Main.npcChatText = ChitChat();
             }
@@ -109,70 +117,57 @@ namespace Redemption.NPCs.Lab.Janitor
                     ChatNumber++;
             }
         }
-        public override void SetupShop(Chest shop, ref int nextSlot)
+        public override void AddShops()
         {
-            Player player = Main.player[Main.myPlayer];
-            shop.item[nextSlot++].SetDefaults(ModContent.ItemType<LabHologramDevice>());
-            if (RedeBossDowned.downedBehemoth)
-                shop.item[nextSlot++].SetDefaults(ModContent.ItemType<OmegaTransmitter>());
+            var npcShop = new NPCShop(Type)
+                .Add<LabHologramDevice>()
+                .Add<OmegaTransmitter>(RedeConditions.DownedBehemoth)
+                .Add<LabPlating>()
+                .Add<LabPlatingWall>()
+                .Add<HalogenLamp>()
+                .Add<LabPlatform>()
+                .Add<LabRail_L>()
+                .Add<LabRail_Mid>()
+                .Add<LabRail_R>()
+                .Add<XeniumRefinery>(RedeConditions.DownedVolt)
+                .Add<XeniumSmelter>(RedeConditions.DownedVolt)
+                .Add<LargeVent>()
+                .Add<Vent>()
+                .Add<SmallVent>()
+                .Add<ElectricitySign>()
+                .Add<SkullSign>()
+                .Add<BiohazardSign>()
+                .Add<RadioactiveSign>()
+                .Add<LabWorkbench>()
+                .Add<TestTubes>()
+                .Add<LabTable>()
+                .Add<LabWallFan>()
+                .Add<LabDoor>()
+                .Add<LabBackDoor2>()
+                .Add<LabChest>()
+                .Add<LabChair>()
+                .Add<ServerCabinet>()
+                .Add<HospitalBed>()
+                .Add<LabIntercom>()
+                .Add<LabComputer>()
+                .Add<LabReceptionCouch>()
+                .Add<LabCeilingMonitor>()
+                .Add<LabReceptionDesk>()
+                .Add<LabCeilingLamp>()
+                .Add<LabToilet>()
+                .Add<OperatorHead>(RedeConditions.IsTBotHead)
+                .Add<VoltHead>(RedeConditions.IsTBotHead)
+                .Add<JanitorOutfit>(RedeConditions.IsTBotHead)
+                .Add<JanitorPants>(RedeConditions.IsTBotHead)
+                .Add<AndroidArmour>(RedeConditions.IsTBotHead)
+                .Add<AndroidPants>(RedeConditions.IsTBotHead)
+                .Add<NoveltyMop>(RedeConditions.IsJanitor)
+                .Add<BotHanger>(RedeConditions.DownedVolt)
+                .Add<EmptyBotHanger>(RedeConditions.DownedVolt)
+                .Add<Keycard>(RedeConditions.KeycardGiven)
+                .Add<NanoPickaxe>(RedeConditions.DownedBlisterface);
 
-            shop.item[nextSlot++].SetDefaults(ModContent.ItemType<LabPlating>());
-            shop.item[nextSlot++].SetDefaults(ModContent.ItemType<LabPlatingWall>());
-            shop.item[nextSlot++].SetDefaults(ModContent.ItemType<HalogenLamp>());
-            shop.item[nextSlot++].SetDefaults(ModContent.ItemType<LabPlatform>());
-            shop.item[nextSlot++].SetDefaults(ModContent.ItemType<LabRail_L>());
-            shop.item[nextSlot++].SetDefaults(ModContent.ItemType<LabRail_Mid>());
-            shop.item[nextSlot++].SetDefaults(ModContent.ItemType<LabRail_R>());
-            if (RedeBossDowned.downedVolt)
-            {
-                shop.item[nextSlot++].SetDefaults(ModContent.ItemType<XeniumRefinery>());
-                shop.item[nextSlot++].SetDefaults(ModContent.ItemType<XeniumSmelter>());
-            }
-            shop.item[nextSlot++].SetDefaults(ModContent.ItemType<LargeVent>());
-            shop.item[nextSlot++].SetDefaults(ModContent.ItemType<Vent>());
-            shop.item[nextSlot++].SetDefaults(ModContent.ItemType<SmallVent>());
-            shop.item[nextSlot++].SetDefaults(ModContent.ItemType<ElectricitySign>());
-            shop.item[nextSlot++].SetDefaults(ModContent.ItemType<SkullSign>());
-            shop.item[nextSlot++].SetDefaults(ModContent.ItemType<BiohazardSign>());
-            shop.item[nextSlot++].SetDefaults(ModContent.ItemType<RadioactiveSign>());
-            shop.item[nextSlot++].SetDefaults(ModContent.ItemType<LabWorkbench>());
-            shop.item[nextSlot++].SetDefaults(ModContent.ItemType<TestTubes>());
-            shop.item[nextSlot++].SetDefaults(ModContent.ItemType<LabTable>());
-            shop.item[nextSlot++].SetDefaults(ModContent.ItemType<LabWallFan>());
-            shop.item[nextSlot++].SetDefaults(ModContent.ItemType<LabDoor>());
-            shop.item[nextSlot++].SetDefaults(ModContent.ItemType<LabBackDoor2>());
-            shop.item[nextSlot++].SetDefaults(ModContent.ItemType<LabChest>());
-            shop.item[nextSlot++].SetDefaults(ModContent.ItemType<LabChair>());
-            shop.item[nextSlot++].SetDefaults(ModContent.ItemType<ServerCabinet>());
-            shop.item[nextSlot++].SetDefaults(ModContent.ItemType<HospitalBed>());
-            shop.item[nextSlot++].SetDefaults(ModContent.ItemType<LabIntercom>());
-            shop.item[nextSlot++].SetDefaults(ModContent.ItemType<LabComputer>());
-            shop.item[nextSlot++].SetDefaults(ModContent.ItemType<LabReceptionCouch>());
-            shop.item[nextSlot++].SetDefaults(ModContent.ItemType<LabCeilingMonitor>());
-            shop.item[nextSlot++].SetDefaults(ModContent.ItemType<LabReceptionDesk>());
-            shop.item[nextSlot++].SetDefaults(ModContent.ItemType<LabCeilingLamp>());
-            shop.item[nextSlot++].SetDefaults(ModContent.ItemType<LabToilet>());
-            if (player.IsTBotHead())
-            {
-                shop.item[nextSlot++].SetDefaults(ModContent.ItemType<OperatorHead>());
-                shop.item[nextSlot++].SetDefaults(ModContent.ItemType<VoltHead>());
-                shop.item[nextSlot++].SetDefaults(ModContent.ItemType<JanitorOutfit>());
-                shop.item[nextSlot++].SetDefaults(ModContent.ItemType<JanitorPants>());
-                shop.item[nextSlot++].SetDefaults(ModContent.ItemType<AndroidArmour>());
-                shop.item[nextSlot++].SetDefaults(ModContent.ItemType<AndroidPants>());
-            }
-            if (BasePlayer.HasChestplate(player, ModContent.ItemType<JanitorOutfit>(), true) && BasePlayer.HasLeggings(player, ModContent.ItemType<JanitorPants>(), true))
-                shop.item[nextSlot++].SetDefaults(ModContent.ItemType<NoveltyMop>());
-
-            if (RedeBossDowned.downedVolt)
-            {
-                shop.item[nextSlot++].SetDefaults(ModContent.ItemType<BotHanger>());
-                shop.item[nextSlot++].SetDefaults(ModContent.ItemType<EmptyBotHanger>());
-            }
-            if (RedeWorld.keycardGiven)
-                shop.item[nextSlot++].SetDefaults(ModContent.ItemType<Keycard>());
-            if (RedeBossDowned.downedBlisterface)
-                shop.item[nextSlot++].SetDefaults(ModContent.ItemType<NanoPickaxe>());
+            npcShop.Register();
         }
 
         public static string ChitChat()

@@ -13,9 +13,9 @@ namespace Redemption.Items.Materials.PreHM
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Eye of the Eaglecrest Golem");
+            // DisplayName.SetDefault("Eye of the Eaglecrest Golem");
 
-            SacrificeTotal = 1;
+            Item.ResearchUnlockCount = 1;
         }
 
         public override void SetDefaults()

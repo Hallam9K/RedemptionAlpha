@@ -3,6 +3,7 @@ using Redemption.Items.Placeable.Furniture.Misc;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 
@@ -25,11 +26,7 @@ namespace Redemption.Tiles.Furniture.Misc
             TileObjectData.newTile.AnchorWall = true;
             TileObjectData.addTile(Type);
             DustType = DustID.WoodFurniture;
-			AddMapEntry(new Color(45, 38, 33));
+			AddMapEntry(new Color(45, 38, 33), Language.GetText("MapObject.Painting"));
 		}
-        public override void KillMultiTile(int i, int j, int frameX, int frameY)
-        {
-            Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 32, 48, ModContent.ItemType<DubiousWatcherPainting>());
-        }
     }
 }

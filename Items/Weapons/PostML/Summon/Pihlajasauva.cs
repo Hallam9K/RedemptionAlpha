@@ -12,10 +12,10 @@ namespace Redemption.Items.Weapons.PostML.Summon
     {
         public override void SetStaticDefaults()
         {
-            Tooltip.SetDefault("Summons a rowan tree that emits an empowering aura\n" +
+            /* Tooltip.SetDefault("Summons a rowan tree that emits an empowering aura\n" +
                 "Within the aura, your minions can cause rowan berries to drop from their targets and their damage is increased by 8%\n" +
-                "Rowan berries will heal for a small amount and give major improvements to all stats for a short time");
-            SacrificeTotal = 1;
+                "Rowan berries will heal for a small amount and give major improvements to all stats for a short time"); */
+            Item.ResearchUnlockCount = 1;
 
             ItemID.Sets.GamepadWholeScreenUseRange[Item.type] = true;
             ItemID.Sets.LockOnIgnoresCollision[Item.type] = true;

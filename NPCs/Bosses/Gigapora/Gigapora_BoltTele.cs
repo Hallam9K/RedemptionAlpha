@@ -11,7 +11,7 @@ namespace Redemption.NPCs.Bosses.Gigapora
         public override string Texture => Redemption.EMPTY_TEXTURE;
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Energy Bolt");
+            // DisplayName.SetDefault("Energy Bolt");
         }
         public override void SetDefaults()
         {

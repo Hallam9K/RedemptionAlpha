@@ -11,7 +11,7 @@ namespace Redemption.Items.Weapons.PostML.Melee
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Sun-In-Palm");
+            // DisplayName.SetDefault("Sun-In-Palm");
         }
         public override bool ShouldUpdatePosition() => false;
         public override void SetSafeDefaults()

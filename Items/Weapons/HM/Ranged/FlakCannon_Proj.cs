@@ -16,7 +16,7 @@ namespace Redemption.Items.Weapons.HM.Ranged
         public override string Texture => "Redemption/Items/Weapons/HM/Ranged/FlakCannon";
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Flak Cannon");
+            // DisplayName.SetDefault("Flak Cannon");
         }
         public override void SetDefaults()
         {

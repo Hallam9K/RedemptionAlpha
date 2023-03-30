@@ -14,7 +14,7 @@ namespace Redemption.Projectiles.Minions
         public float speed;
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Microshield Drone");
+            // DisplayName.SetDefault("Microshield Drone");
             Main.projFrames[Projectile.type] = 4;
             Main.projPet[Projectile.type] = true;
             ProjectileID.Sets.MinionSacrificable[Projectile.type] = false;

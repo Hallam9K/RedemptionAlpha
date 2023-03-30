@@ -8,8 +8,8 @@ namespace Redemption.Buffs.NPCBuffs
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Dusted");
-			Description.SetDefault("Defense slightly decreased");
+			// DisplayName.SetDefault("Dusted");
+			// Description.SetDefault("Defense slightly decreased");
             Main.debuff[Type] = true;
             Main.buffNoSave[Type] = true;
             Main.pvpBuff[Type] = true;

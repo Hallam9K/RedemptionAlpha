@@ -15,8 +15,8 @@ namespace Redemption.Items.Weapons.HM.Magic
     {
         public override void SetStaticDefaults()
         {
-            Tooltip.SetDefault("Shoots a wave of notes along the ground");
-            SacrificeTotal = 1;
+            // Tooltip.SetDefault("Shoots a wave of notes along the ground");
+            Item.ResearchUnlockCount = 1;
         }
 
         public override void SetDefaults()
@@ -78,7 +78,7 @@ namespace Redemption.Items.Weapons.HM.Magic
         public override string Texture => Redemption.EMPTY_TEXTURE;
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Synthesizer");
+            // DisplayName.SetDefault("Synthesizer");
         }
         public override void SetDefaults()
         {

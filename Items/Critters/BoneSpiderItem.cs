@@ -10,9 +10,9 @@ namespace Redemption.Items.Critters
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Bone Spider");
+            // DisplayName.SetDefault("Bone Spider");
 
-            SacrificeTotal = 5;
+            Item.ResearchUnlockCount = 5;
         }
 
         public override void SetDefaults()
@@ -20,7 +20,7 @@ namespace Redemption.Items.Critters
             Item.width = 22;
             Item.height = 14;
             Item.rare = ItemRarityID.Blue;
-            Item.maxStack = 9999;
+            Item.maxStack = Item.CommonMaxStack;
             Item.value = Item.buyPrice(silver: 4);
             Item.useAnimation = 30;
             Item.useTime = 30;

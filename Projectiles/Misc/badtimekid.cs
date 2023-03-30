@@ -11,7 +11,7 @@ namespace Redemption.Projectiles.Misc
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("SANS?!");
+            // DisplayName.SetDefault("SANS?!");
         }
         public override void SetDefaults()
         {
@@ -65,11 +65,11 @@ namespace Redemption.Projectiles.Misc
             if (magnitude > 41f)
                 vector *= 40f / magnitude;
         }
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             target.immune[Projectile.owner] = 1;
         }
-        public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
+        public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
         {
             target.AddBuff(ModContent.BuffType<sansDebuff>(), 10);
         }

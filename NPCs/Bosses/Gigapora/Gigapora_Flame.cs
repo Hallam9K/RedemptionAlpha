@@ -17,7 +17,7 @@ namespace Redemption.NPCs.Bosses.Gigapora
         public override string Texture => "Redemption/Textures/FlameTexture";
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Flames");
+            // DisplayName.SetDefault("Flames");
             Main.projFrames[Projectile.type] = 3;
             ElementID.ProjFire[Type] = true;
         }
@@ -103,7 +103,7 @@ namespace Redemption.NPCs.Bosses.Gigapora
             }
             return false;
         }
-        public override void OnHitPlayer(Player target, int damage, bool crit)
+        public override void OnHitPlayer(Player target, Player.HurtInfo info)
         {
             target.AddBuff(BuffID.OnFire, 200);
         }

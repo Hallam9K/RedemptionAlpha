@@ -1,5 +1,6 @@
 using Terraria.ModLoader;
 using Terraria.ID;
+using Terraria;
 using Redemption.Tiles.Furniture.SlayerShip;
 
 namespace Redemption.Items.Placeable.Furniture.SlayerShip
@@ -8,14 +9,14 @@ namespace Redemption.Items.Placeable.Furniture.SlayerShip
 	{
         public override void SetStaticDefaults()
         {
-            SacrificeTotal = 1;
+            Item.ResearchUnlockCount = 1;
         }
         public override void SetDefaults()
 		{
             Item.DefaultToPlaceableTile(ModContent.TileType<DroneShelfTile>(), 0);
             Item.width = 30;
             Item.height = 32;
-            Item.maxStack = 9999;
+            Item.maxStack = Item.CommonMaxStack;
             Item.rare = ItemRarityID.LightPurple;
 		}
     }

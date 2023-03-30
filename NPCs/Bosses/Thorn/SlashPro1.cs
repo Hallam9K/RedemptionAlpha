@@ -8,7 +8,7 @@ namespace Redemption.NPCs.Bosses.Thorn
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Slash");
+            // DisplayName.SetDefault("Slash");
             Main.projFrames[Projectile.type] = 6;
         }
 
@@ -35,7 +35,7 @@ namespace Redemption.NPCs.Bosses.Thorn
         }
         public override bool CanHitPlayer(Player target) => Projectile.frame < 3;
 
-        public override void ModifyHitPlayer(Player target, ref int damage, ref bool crit)
+        public override void ModifyHitPlayer(Player target, ref Player.HurtModifiers modifiers)
         {
             target.AddBuff(BuffID.Bleeding, 300);
         }

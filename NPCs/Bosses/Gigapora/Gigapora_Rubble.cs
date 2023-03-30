@@ -15,7 +15,7 @@ namespace Redemption.NPCs.Bosses.Gigapora
         public override string Texture => "Redemption/Projectiles/Magic/Rockslide_Proj";
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Rubble");
+            // DisplayName.SetDefault("Rubble");
             Main.projFrames[Projectile.type] = 4;
             ProjectileID.Sets.TrailCacheLength[Projectile.type] = 6;
             ProjectileID.Sets.TrailingMode[Projectile.type] = 0;

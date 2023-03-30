@@ -236,7 +236,7 @@ namespace Redemption.Globals
                 if (item.CountsAsClass(DamageClass.Ranged))
                 {
                     if (item.damage > 0)
-                        damage += (int)(item.damage * player.GetDamage(DamageClass.Ranged).Multiplicative);
+                        damage += (int)(item.damage * player.GetDamage(DamageClass.Ranged).Additive);
                 }
                 else
                     damage += item.damage;

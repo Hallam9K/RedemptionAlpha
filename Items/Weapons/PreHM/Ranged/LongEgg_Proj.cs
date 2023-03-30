@@ -12,7 +12,7 @@ namespace Redemption.Items.Weapons.PreHM.Ranged
         public override string Texture => "Redemption/Items/Weapons/PreHM/Ranged/LongEgg";
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("L o n g  Egg");
+            // DisplayName.SetDefault("L o n g  Egg");
         }
         public override void SetDefaults()
         {

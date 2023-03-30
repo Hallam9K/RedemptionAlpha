@@ -4,6 +4,7 @@ using Terraria;
 using Terraria.DataStructures;
 using Terraria.Enums;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 
@@ -31,11 +32,12 @@ namespace Redemption.Tiles.Furniture.Shade
             TileObjectData.newTile.AnchorTop = new AnchorData(AnchorType.SolidTile, TileObjectData.newTile.Width, 0);
             TileObjectData.newTile.AnchorBottom = new AnchorData(AnchorType.SolidTile, TileObjectData.newTile.Width, 0);
             TileObjectData.addTile(Type);
-            ModTranslation name = CreateMapEntryName();
-            name.SetDefault("Shadestone Gate");
+            LocalizedText name = CreateMapEntryName();
+            // name.SetDefault("Shadestone Gate");
             AddMapEntry(new Color(50, 50, 50), name);
             MinPick = 500;
             MineResist = 30f;
+            ItemDrop = -1;
             DustType = ModContent.DustType<VoidFlame>();
             AnimationFrameHeight = 180;
         }
@@ -70,7 +72,7 @@ namespace Redemption.Tiles.Furniture.Shade
     {
         public override void SetStaticDefaults()
         {
-            Tooltip.SetDefault("[c/ff0000:Unbreakable]");
+            // Tooltip.SetDefault("[c/ff0000:Unbreakable]");
         }
 
         public override void SetDefaults()

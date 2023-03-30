@@ -51,9 +51,6 @@ namespace Redemption.Tiles.Furniture.Shade
 		}
 
 		public override void NumDust(int i, int j, bool fail, ref int num) => num = fail ? 1 : 3;
-
-		public override void KillMultiTile(int i, int j, int frameX, int frameY) => Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 16, 32, ModContent.ItemType<ShadestoneToilet>());
-
 		public override bool HasSmartInteract(int i, int j, SmartInteractScanSettings settings)
 		{
 			return settings.player.IsWithinSnappngRangeToTile(i, j, PlayerSittingHelper.ChairSittingMaxDistance);

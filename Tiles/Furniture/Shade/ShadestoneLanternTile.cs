@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.Enums;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 using Microsoft.Xna.Framework.Graphics;
@@ -20,12 +21,10 @@ namespace Redemption.Tiles.Furniture.Shade
             Main.tileLavaDeath[Type] = true;
             TileObjectData.newTile.CopyFrom(TileObjectData.Style1x2Top);
             TileObjectData.newSubTile.CopyFrom(TileObjectData.newTile);
-            TileObjectData.newSubTile.LavaDeath = false;
-            TileObjectData.newSubTile.LavaPlacement = LiquidPlacement.Allowed;
-            TileObjectData.addTile(Type);
-            ModTranslation name = CreateMapEntryName();
-            name.SetDefault("Shadestone Lantern");
-            AddMapEntry(new Color(59, 61, 87), name);
+            TileObjectData.newTile.WaterDeath = true;
+            TileObjectData.newTile.WaterPlacement = LiquidPlacement.NotAllowed;
+            TileObjectData.newTile.LavaPlacement = LiquidPlacement.NotAllowed; TileObjectData.addTile(Type);
+            AddMapEntry(new Color(59, 61, 87), Language.GetText("MapObject.Lantern"));
             AdjTiles = new int[] { TileID.HangingLanterns };
             AddToArray(ref TileID.Sets.RoomNeeds.CountsAsTorch);
             DustType = ModContent.DustType<ShadestoneDust>();
@@ -95,11 +94,6 @@ namespace Redemption.Tiles.Furniture.Shade
                 Vector2 drawPosition = new Vector2(i * 16 - (int)Main.screenPosition.X + xx, j * 16 - (int)Main.screenPosition.Y + yy) + zero;
                 spriteBatch.Draw(texture, drawPosition, frame, color, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
             }
-        }
-        public override void KillMultiTile(int i, int j, int frameX, int frameY)
-        {
-            Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 16, 32, ModContent.ItemType<ShadestoneLantern>());
-            Chest.DestroyChest(i, j);
         }
     }
 }

@@ -3,6 +3,7 @@ using Redemption.Dusts.Tiles;
 using Redemption.Globals;
 using Terraria;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 
@@ -28,11 +29,12 @@ namespace Redemption.Tiles.Furniture.Lab
             TileObjectData.newTile.CoordinatePadding = 2;
             TileObjectData.newTile.AnchorWall = true;
             TileObjectData.addTile(Type);
-            ModTranslation name = CreateMapEntryName();
-            name.SetDefault("Reinforced Door");
+            LocalizedText name = CreateMapEntryName();
+            // name.SetDefault("Reinforced Door");
             AddMapEntry(new Color(110, 106, 120), name);
             MinPick = 500;
             MineResist = 10f;
+            ItemDrop = -1;
             DustType = ModContent.DustType<LabPlatingDust>();
             AnimationFrameHeight = 54;
         }
@@ -66,9 +68,9 @@ namespace Redemption.Tiles.Furniture.Lab
         public override string Texture => Redemption.PLACEHOLDER_TEXTURE;
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Vertical Reinforced Lab Door");
-            Tooltip.SetDefault("Closes when a boss is active" +
-                "\n[c/ff0000:Unbreakable]");
+            // DisplayName.SetDefault("Vertical Reinforced Lab Door");
+            /* Tooltip.SetDefault("Closes when a boss is active" +
+                "\n[c/ff0000:Unbreakable]"); */
         }
         public override void SetDefaults()
         {
@@ -95,11 +97,12 @@ namespace Redemption.Tiles.Furniture.Lab
             TileObjectData.newTile.CoordinatePadding = 2;
             TileObjectData.newTile.AnchorWall = true;
             TileObjectData.addTile(Type);
-            ModTranslation name = CreateMapEntryName();
-            name.SetDefault("Reinforced Door");
+            LocalizedText name = CreateMapEntryName();
+            // name.SetDefault("Reinforced Door");
             AddMapEntry(new Color(110, 106, 120), name);
             MinPick = 500;
             MineResist = 10f;
+            ItemDrop = -1;
             DustType = ModContent.DustType<LabPlatingDust>();
             AnimationFrameHeight = 18;
         }
@@ -133,9 +136,9 @@ namespace Redemption.Tiles.Furniture.Lab
         public override string Texture => Redemption.PLACEHOLDER_TEXTURE;
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Horizontal Reinforced Lab Door");
-            Tooltip.SetDefault("Closes when any of the Lab Minibosses/Bosses are active" +
-                "\n[c/ff0000:Unbreakable]");
+            // DisplayName.SetDefault("Horizontal Reinforced Lab Door");
+            /* Tooltip.SetDefault("Closes when any of the Lab Minibosses/Bosses are active" +
+                "\n[c/ff0000:Unbreakable]"); */
         }
         public override void SetDefaults()
         {

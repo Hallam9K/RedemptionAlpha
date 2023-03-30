@@ -13,7 +13,7 @@ namespace Redemption.Items.Weapons.PostML.Ranged
         public override string Texture => "Redemption/NPCs/Bosses/Obliterator/OO_Crosshair";
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Crosshair");
+            // DisplayName.SetDefault("Crosshair");
         }
         public override void SetDefaults()
         {

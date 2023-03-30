@@ -17,7 +17,7 @@ namespace Redemption.NPCs.Bosses.ADD
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Moonbeam");
+            // DisplayName.SetDefault("Moonbeam");
             ProjectileID.Sets.DrawScreenCheckFluff[Type] = 2400;
             ElementID.ProjArcane[Type] = true;
             ElementID.ProjCelestial[Type] = true;

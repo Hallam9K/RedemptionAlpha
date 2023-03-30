@@ -12,10 +12,10 @@ namespace Redemption.Items.Accessories.PreHM
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Bouquet of Thorns");
-			Tooltip.SetDefault("Summons a bouquet of thorns to follow you");
+			// DisplayName.SetDefault("Bouquet of Thorns");
+			// Tooltip.SetDefault("Summons a bouquet of thorns to follow you");
 
-			SacrificeTotal = 1;
+			Item.ResearchUnlockCount = 1;
 		}
 
 		public override void SetDefaults()

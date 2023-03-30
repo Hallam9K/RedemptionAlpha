@@ -13,7 +13,7 @@ namespace Redemption.NPCs.Lab.MACE
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("MACE Project");
+            // DisplayName.SetDefault("MACE Project");
             Main.npcFrameCount[NPC.type] = 2;
 
             NPCID.Sets.MPAllowedEnemies[Type] = true;

@@ -15,10 +15,10 @@ namespace Redemption.Items.Weapons.HM.Melee
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Infectious Glaive");
+            // DisplayName.SetDefault("Infectious Glaive");
             ItemID.Sets.SkipsInitialUseSound[Item.type] = true;
             ItemID.Sets.Spears[Item.type] = true;
-            SacrificeTotal = 1;
+            Item.ResearchUnlockCount = 1;
         }
 
         public override void SetDefaults()

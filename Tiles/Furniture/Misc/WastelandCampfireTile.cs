@@ -3,6 +3,7 @@ using Redemption.Items.Placeable.Furniture.Misc;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 
@@ -19,8 +20,8 @@ namespace Redemption.Tiles.Furniture.Misc
             TileObjectData.newTile.Origin = new Point16(1, 1);
             TileObjectData.newTile.WaterDeath = true;
             TileObjectData.addTile(Type);
-            ModTranslation name = CreateMapEntryName();
-            name.SetDefault("Wasteland Campfire");
+            LocalizedText name = CreateMapEntryName();
+            // name.SetDefault("Wasteland Campfire");
             AddMapEntry(new Color(254, 121, 2), name);
             DustType = DustID.Torch;
             AnimationFrameHeight = 36;
@@ -59,10 +60,6 @@ namespace Redemption.Tiles.Furniture.Misc
             r = 0.9f;
             g = 0.7f;
             b = 0.6f;
-        }
-        public override void KillMultiTile(int i, int j, int frameX, int frameY)
-        {
-            Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 48, 32, ModContent.ItemType<WastelandCampfire>());
         }
     }
 }

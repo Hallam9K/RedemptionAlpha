@@ -4,6 +4,7 @@ using Terraria;
 using Terraria.DataStructures;
 using Terraria.Enums;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 
@@ -28,14 +29,10 @@ namespace Redemption.Tiles.Furniture.SlayerShip
             DustType = DustID.Electric;
             MinPick = 500;
             MineResist = 15f;
-            ModTranslation name = CreateMapEntryName();
-            name.SetDefault("Cyber Fabricator");
+            LocalizedText name = CreateMapEntryName();
+            // name.SetDefault("Cyber Fabricator");
             AddMapEntry(new Color(190, 190, 230), name);
             AnimationFrameHeight = 72;
-        }
-        public override void KillMultiTile(int i, int j, int frameX, int frameY)
-        {
-            Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 32, 32, ModContent.ItemType<SlayerFabricator>());
         }
         public override void AnimateTile(ref int frame, ref int frameCounter)
         {

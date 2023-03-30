@@ -17,8 +17,8 @@ namespace Redemption.Items.Armor.Vanity
         }
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Nebuleus Robes");
-            SacrificeTotal = 1;
+            // DisplayName.SetDefault("Nebuleus Robes");
+            Item.ResearchUnlockCount = 1;
         }
         public override void SetDefaults()
 		{

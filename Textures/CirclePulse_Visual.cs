@@ -11,7 +11,7 @@ namespace Redemption.Textures
         public override string Texture => "Redemption/Textures/DreamsongLight_Visual";
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Pulse");
+            // DisplayName.SetDefault("Pulse");
         }
         public override void SetDefaults()
         {

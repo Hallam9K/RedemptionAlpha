@@ -10,7 +10,7 @@ namespace Redemption.Buffs.NPCBuffs
 
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Virality");
+			// DisplayName.SetDefault("Virality");
 			Main.debuff[Type] = true;
 		}
 

@@ -13,7 +13,7 @@ namespace Redemption.Items.Weapons.HM.Ammo
         public override string Texture => "Redemption/Items/Weapons/HM/Ammo/BileArrow";
         public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Bile Arrow");
+			// DisplayName.SetDefault("Bile Arrow");
             ElementID.ProjPoison[Type] = true;
         }
         public override void SetDefaults()
@@ -49,7 +49,7 @@ namespace Redemption.Items.Weapons.HM.Ammo
             Projectile.rotation = Projectile.velocity.ToRotation() - MathHelper.PiOver2;
             Projectile.velocity.Y += 0.034f;
         }
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             target.AddBuff(ModContent.BuffType<BileDebuff>(), 600);
         }

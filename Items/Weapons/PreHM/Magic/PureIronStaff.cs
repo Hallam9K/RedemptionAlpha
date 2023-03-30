@@ -12,13 +12,13 @@ namespace Redemption.Items.Weapons.PreHM.Magic
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Pure-Iron Staff");
-            Tooltip.SetDefault("Casts an icy snowflake" +
-                "\nHold down left click to increase the size of the snowflake");
+            // DisplayName.SetDefault("Pure-Iron Staff");
+            /* Tooltip.SetDefault("Casts an icy snowflake" +
+                "\nHold down left click to increase the size of the snowflake"); */
             Item.staff[Item.type] = true;
             ItemID.Sets.SkipsInitialUseSound[Item.type] = true;
 
-            SacrificeTotal = 1;
+            Item.ResearchUnlockCount = 1;
         }
 
         public override void SetDefaults()

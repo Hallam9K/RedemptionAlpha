@@ -8,12 +8,12 @@ namespace Redemption.Items.Weapons.HM.Melee
     {
         public override void SetStaticDefaults()
         {
-            Tooltip.SetDefault("Holding out the pike and charging into weak enemies skewers them\n" +
+            /* Tooltip.SetDefault("Holding out the pike and charging into weak enemies skewers them\n" +
                 "If a target is skewered for 10 seconds or once 5 are skewered at a time:\n" +
-                "The pike takes their life and becomes enchanted for 10 seconds");
+                "The pike takes their life and becomes enchanted for 10 seconds"); */
 
             ItemID.Sets.Spears[Item.type] = true;
-            SacrificeTotal = 1;
+            Item.ResearchUnlockCount = 1;
         }
 
         public override void SetDefaults()

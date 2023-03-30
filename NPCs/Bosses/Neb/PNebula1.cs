@@ -35,7 +35,7 @@ namespace Redemption.NPCs.Bosses.Neb
         // >
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Telegraph");
+            // DisplayName.SetDefault("Telegraph");
         }
 
         public override void SetDefaults()
@@ -159,7 +159,7 @@ namespace Redemption.NPCs.Bosses.Neb
         public int proType = 0;
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Piercing Nebula");
+            // DisplayName.SetDefault("Piercing Nebula");
             ProjectileID.Sets.TrailCacheLength[Projectile.type] = 8;
             ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
             ElementID.ProjCelestial[Type] = true;
@@ -261,7 +261,7 @@ namespace Redemption.NPCs.Bosses.Neb
         public override void SetStaticDefaults()
         {
             base.SetStaticDefaults();
-            DisplayName.SetDefault("Piercing Nebula");
+            // DisplayName.SetDefault("Piercing Nebula");
         }
         public override void SetDefaults()
         {
@@ -276,7 +276,7 @@ namespace Redemption.NPCs.Bosses.Neb
         public override void SetStaticDefaults()
         {
             base.SetStaticDefaults();
-            DisplayName.SetDefault("Piercing Nebula");
+            // DisplayName.SetDefault("Piercing Nebula");
         }
         public override void SetDefaults()
         {

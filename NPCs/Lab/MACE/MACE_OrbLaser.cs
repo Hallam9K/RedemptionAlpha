@@ -11,7 +11,7 @@ namespace Redemption.NPCs.Lab.MACE
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Xenium Zap");
+            // DisplayName.SetDefault("Xenium Zap");
         }
         public override void SetDefaults()
         {

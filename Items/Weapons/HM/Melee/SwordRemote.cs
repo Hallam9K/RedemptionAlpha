@@ -20,12 +20,12 @@ namespace Redemption.Items.Weapons.HM.Melee
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Cleaver Remote");
-            Tooltip.SetDefault("'Size does matter'"
+            // DisplayName.SetDefault("Cleaver Remote");
+            /* Tooltip.SetDefault("'Size does matter'"
                 + "\nCalls upon the Omega Cleaver to unleash a devastating attack" +
                 "\nRight-Click to switch mode of attack" +
-                "\n15 second cooldown");
-            SacrificeTotal = 1;
+                "\n15 second cooldown"); */
+            Item.ResearchUnlockCount = 1;
         }
 
         public override void SetDefaults()
@@ -143,7 +143,7 @@ namespace Redemption.Items.Weapons.HM.Melee
         public override string Texture => "Redemption/NPCs/Bosses/Cleaver/OmegaCleaver";
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Omega Cleaver");
+            // DisplayName.SetDefault("Omega Cleaver");
             Main.projFrames[Projectile.type] = 5;
             ProjectileID.Sets.TrailCacheLength[Projectile.type] = 6;
             ProjectileID.Sets.TrailingMode[Projectile.type] = 0;

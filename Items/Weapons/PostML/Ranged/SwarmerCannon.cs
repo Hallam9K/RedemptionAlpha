@@ -14,11 +14,11 @@ namespace Redemption.Items.Weapons.PostML.Ranged
 	{
 		public override void SetStaticDefaults()
 		{
-            Tooltip.SetDefault("Holding left-click will grow a hive cyst inside the cannon\n" +
+            /* Tooltip.SetDefault("Holding left-click will grow a hive cyst inside the cannon\n" +
                 "Release when the cyst is fully grown to launch it at enemies, dealing " + ElementID.PoisonS + " damage\n" +
-                "Replaces normal bullets with bile bullets");
+                "Replaces normal bullets with bile bullets"); */
             ItemID.Sets.SkipsInitialUseSound[Item.type] = true;
-            SacrificeTotal = 1;
+            Item.ResearchUnlockCount = 1;
         }
 
         public override void SetDefaults()

@@ -8,12 +8,12 @@ namespace Redemption.Items.Armor.Vanity
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("King Slayer III Mask");
-            Tooltip.SetDefault("'Was he a slayer of kings or the king of slayers?'"
-                + "\n'Or maybe he thought it was a cool name'");
+            // DisplayName.SetDefault("King Slayer III Mask");
+            /* Tooltip.SetDefault("'Was he a slayer of kings or the king of slayers?'"
+                + "\n'Or maybe he thought it was a cool name'"); */
             ArmorIDs.Head.Sets.DrawHead[EquipLoader.GetEquipSlot(Mod, Name, EquipType.Head)] = false;
 
-            SacrificeTotal = 1;
+            Item.ResearchUnlockCount = 1;
         }
 
         public override void SetDefaults()

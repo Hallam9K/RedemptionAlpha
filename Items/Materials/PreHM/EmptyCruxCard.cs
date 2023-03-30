@@ -8,10 +8,10 @@ namespace Redemption.Items.Materials.PreHM
     {
         public override void SetStaticDefaults()
         {
-            Tooltip.SetDefault("A container for friendly spirits to aid you\n" +
+            /* Tooltip.SetDefault("A container for friendly spirits to aid you\n" +
                 "Find willing spirits and request their crux to imbue into the card" +
-                "\n'Those who peek into the realm of fulfilment are bound to find friends'");
-            SacrificeTotal = 1;
+                "\n'Those who peek into the realm of fulfilment are bound to find friends'"); */
+            Item.ResearchUnlockCount = 1;
         }
 
         public override void SetDefaults()

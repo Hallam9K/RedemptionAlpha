@@ -10,9 +10,9 @@ namespace Redemption.Items
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Redemption Undowner");
-            Tooltip.SetDefault("Undowns all Redemption bosses" +
-                "\nNon-Consumable");
+            // DisplayName.SetDefault("Redemption Undowner");
+            /* Tooltip.SetDefault("Undowns all Redemption bosses" +
+                "\nNon-Consumable"); */
         }
 
         public override void SetDefaults()

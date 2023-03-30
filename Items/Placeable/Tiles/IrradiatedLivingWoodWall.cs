@@ -1,21 +1,24 @@
 using Terraria.ModLoader;
 using Terraria.ID;
 using Redemption.Walls;
+using Terraria;
+using Terraria.GameContent;
 
 namespace Redemption.Items.Placeable.Tiles
 {
     public class IrradiatedLivingWoodWall : ModItem
 	{
 		public override void SetStaticDefaults()
-		{
-			SacrificeTotal = 400;
+        {
+            ItemTrader.ChlorophyteExtractinator.AddOption_OneWay(Type, 1, ItemID.LivingWoodWall, 1);
+            Item.ResearchUnlockCount = 400;
 		}
 		public override void SetDefaults()
 		{
-			Item.DefaultToPlacableWall((ushort)ModContent.WallType<IrradiatedLivingWoodWallTile>());
+			Item.DefaultToPlaceableWall((ushort)ModContent.WallType<IrradiatedLivingWoodWallTile>());
 			Item.width = 24;
 			Item.height = 24;
-			Item.maxStack = 9999;
+			Item.maxStack = Item.CommonMaxStack;
 		}
 
 		public override void AddRecipes()

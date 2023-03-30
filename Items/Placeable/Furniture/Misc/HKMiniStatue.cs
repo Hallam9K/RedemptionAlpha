@@ -9,15 +9,15 @@ namespace Redemption.Items.Placeable.Furniture.Misc
 	{
 		public override void SetStaticDefaults()
 		{
-            DisplayName.SetDefault("Statue of the Knight");
-            SacrificeTotal = 1;
+            // DisplayName.SetDefault("Statue of the Knight");
+            Item.ResearchUnlockCount = 1;
         }
         public override void SetDefaults()
         {
             Item.DefaultToPlaceableTile(ModContent.TileType<HKMiniStatueTile>(), 0);
             Item.width = 24;
             Item.height = 30;
-            Item.maxStack = 9999;
+            Item.maxStack = Item.CommonMaxStack;
             Item.rare = ItemRarityID.Orange;
             Item.value = Item.sellPrice(0, 0, 25, 0);
         }

@@ -11,7 +11,7 @@ namespace Redemption.Projectiles.Magic
     {
         public override void SetSafeStaticDefaults()
         {
-            DisplayName.SetDefault("Xenium Ray");
+            // DisplayName.SetDefault("Xenium Ray");
             ElementID.ProjPoison[Type] = true;
         }
         public override void SetSafeDefaults()

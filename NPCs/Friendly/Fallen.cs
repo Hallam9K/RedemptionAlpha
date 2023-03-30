@@ -171,7 +171,7 @@ namespace Redemption.NPCs.Friendly
             return false;
         }
 
-        public override void HitEffect(int hitDirection, double damage)
+        public override void HitEffect(NPC.HitInfo hit)
         {
             if (NPC.life <= 0)
             {
@@ -181,7 +181,7 @@ namespace Redemption.NPCs.Friendly
             Dust.NewDust(NPC.position + NPC.velocity, NPC.width, NPC.height, DustID.Blood, NPC.velocity.X * 0.5f, NPC.velocity.Y * 0.5f);
 
         }
-        public override bool CanTownNPCSpawn(int numTownNPCs, int money)
+        public override bool CanTownNPCSpawn(int numTownNPCs)
         {
             return RedeBossDowned.downedKeeper;
         }
@@ -259,12 +259,12 @@ namespace Redemption.NPCs.Friendly
                 button2 = "Eye's Origins?";
         }
 
-        public override void OnChatButtonClicked(bool firstButton, ref bool shop)
+        public override void OnChatButtonClicked(bool firstButton, ref string shopName)
         {
             Player player = Main.LocalPlayer;
 
             if (firstButton)
-                shop = true;
+                shopName = "Shop";
             else
             {
                 if (Main.LocalPlayer.HasItem(ModContent.ItemType<GolemEye>()) && NPC.downedMoonlord && !RedeBossDowned.downedADD)
@@ -330,83 +330,39 @@ namespace Redemption.NPCs.Friendly
         }
 
         public override bool CanGoToStatue(bool toKingStatue) => true;
-
-        public override void SetupShop(Chest shop, ref int nextSlot)
+        public override void AddShops()
         {
-            shop.item[nextSlot].SetDefaults(ModContent.ItemType<BronzeWand>());
-            shop.item[nextSlot].shopCustomPrice = new int?(30);
-            shop.item[nextSlot++].shopSpecialCurrency = Redemption.AntiqueDorulCurrencyId;
-            if (Main.LocalPlayer.ZoneRockLayerHeight || Main.LocalPlayer.ZoneDirtLayerHeight)
+            var npcShop = new NPCShop(Type)
+                .Add(new Item(ModContent.ItemType<BronzeWand>()) { shopCustomPrice = 30, shopSpecialCurrency = Redemption.AntiqueDorulCurrencyId })
+                .Add(new Item(ModContent.ItemType<Earthbind>()) { shopCustomPrice = 15, shopSpecialCurrency = Redemption.AntiqueDorulCurrencyId }, Condition.InBelowSurface)
+                .Add(new Item(ModContent.ItemType<Mistfall>()) { shopCustomPrice = 15, shopSpecialCurrency = Redemption.AntiqueDorulCurrencyId }, Condition.InSnow)
+                .Add(new Item(ModContent.ItemType<AncientDirt>()) { shopCustomPrice = 1, shopSpecialCurrency = Redemption.AntiqueDorulCurrencyId })
+                .Add(new Item(ModContent.ItemType<ElderWood>()) { shopCustomPrice = 1, shopSpecialCurrency = Redemption.AntiqueDorulCurrencyId })
+                .Add(new Item(ModContent.ItemType<GathicStone>()) { shopCustomPrice = 1, shopSpecialCurrency = Redemption.AntiqueDorulCurrencyId })
+                .Add(new Item(ModContent.ItemType<WeddingRing>()) { shopCustomPrice = 15, shopSpecialCurrency = Redemption.AntiqueDorulCurrencyId })
+                .Add(new Item(ModContent.ItemType<LostSoul>()) { shopCustomPrice = 4, shopSpecialCurrency = Redemption.AntiqueDorulCurrencyId })
+                .Add(new Item(ModContent.ItemType<Violin>()) { shopCustomPrice = 20, shopSpecialCurrency = Redemption.AntiqueDorulCurrencyId })
+                .Add(new Item(ModContent.ItemType<OldTophat>()) { shopCustomPrice = 20, shopSpecialCurrency = Redemption.AntiqueDorulCurrencyId }, Condition.PlayerCarriesItem(ModContent.ItemType<CruxCardTied>()))
+                .Add(new Item(ModContent.ItemType<ScrunklePainting>()) { shopCustomPrice = 12, shopSpecialCurrency = Redemption.AntiqueDorulCurrencyId })
+                .Add(new Item(ModContent.ItemType<SkullDiggerPainting>()) { shopCustomPrice = 12, shopSpecialCurrency = Redemption.AntiqueDorulCurrencyId }, RedeConditions.DownedSkullDigger)
+                .Add(new Item(ModContent.ItemType<SunkenCaptainPainting>()) { shopCustomPrice = 12, shopSpecialCurrency = Redemption.AntiqueDorulCurrencyId }, Condition.DownedPirates)
+                .Add(new Item(ItemID.Ectoplasm) { shopCustomPrice = 10, shopSpecialCurrency = Redemption.AntiqueDorulCurrencyId }, Condition.DownedPlantera)
+                .Add(new Item(ModContent.ItemType<EmptyCruxCard>()) { shopCustomPrice = 30, shopSpecialCurrency = Redemption.AntiqueDorulCurrencyId }, RedeConditions.HasSpiritWalker)
+                .Add(new Item(ModContent.ItemType<DeadRinger>()) { shopCustomPrice = 30, shopSpecialCurrency = Redemption.AntiqueDorulCurrencyId }, RedeConditions.DeadRingerGiven);
+
+            npcShop.Register();
+        }
+        public override void ModifyActiveShop(string shopName, Item[] items)
+        {
+            foreach (Item item in items)
             {
-                shop.item[nextSlot].SetDefaults(ModContent.ItemType<Earthbind>());
-                shop.item[nextSlot].shopCustomPrice = new int?(15);
-                shop.item[nextSlot++].shopSpecialCurrency = Redemption.AntiqueDorulCurrencyId;
-            }
-            if (Main.LocalPlayer.ZoneSnow)
-            {
-                shop.item[nextSlot].SetDefaults(ModContent.ItemType<Mistfall>());
-                shop.item[nextSlot].shopCustomPrice = new int?(15);
-                shop.item[nextSlot++].shopSpecialCurrency = Redemption.AntiqueDorulCurrencyId;
-            }
-            shop.item[nextSlot].SetDefaults(ModContent.ItemType<AncientDirt>());
-            shop.item[nextSlot].shopCustomPrice = new int?(1);
-            shop.item[nextSlot++].shopSpecialCurrency = Redemption.AntiqueDorulCurrencyId;
-            shop.item[nextSlot].SetDefaults(ModContent.ItemType<ElderWood>());
-            shop.item[nextSlot].shopCustomPrice = new int?(1);
-            shop.item[nextSlot++].shopSpecialCurrency = Redemption.AntiqueDorulCurrencyId;
-            shop.item[nextSlot].SetDefaults(ModContent.ItemType<GathicStone>());
-            shop.item[nextSlot].shopCustomPrice = new int?(1);
-            shop.item[nextSlot++].shopSpecialCurrency = Redemption.AntiqueDorulCurrencyId;
-            shop.item[nextSlot].SetDefaults(ModContent.ItemType<WeddingRing>());
-            shop.item[nextSlot].shopCustomPrice = new int?(15);
-            shop.item[nextSlot++].shopSpecialCurrency = Redemption.AntiqueDorulCurrencyId;
-            shop.item[nextSlot].SetDefaults(ModContent.ItemType<LostSoul>());
-            shop.item[nextSlot].shopCustomPrice = new int?(4);
-            shop.item[nextSlot++].shopSpecialCurrency = Redemption.AntiqueDorulCurrencyId;
-            shop.item[nextSlot].SetDefaults(ModContent.ItemType<Violin>());
-            shop.item[nextSlot].shopCustomPrice = new int?(20);
-            shop.item[nextSlot++].shopSpecialCurrency = Redemption.AntiqueDorulCurrencyId;
-            if (Main.LocalPlayer.HasItem(ModContent.ItemType<CruxCardTied>()))
-            {
-                shop.item[nextSlot].SetDefaults(ModContent.ItemType<OldTophat>());
-                shop.item[nextSlot].shopCustomPrice = new int?(20);
-                shop.item[nextSlot++].shopSpecialCurrency = Redemption.AntiqueDorulCurrencyId;
-            }
-            shop.item[nextSlot].SetDefaults(ModContent.ItemType<ScrunklePainting>());
-            shop.item[nextSlot].shopCustomPrice = new int?(12);
-            shop.item[nextSlot++].shopSpecialCurrency = Redemption.AntiqueDorulCurrencyId;
-            if (RedeBossDowned.downedSkullDigger)
-            {
-                shop.item[nextSlot].SetDefaults(ModContent.ItemType<SkullDiggerPainting>());
-                shop.item[nextSlot].shopCustomPrice = new int?(12);
-                shop.item[nextSlot++].shopSpecialCurrency = Redemption.AntiqueDorulCurrencyId;
-            }
-            if (NPC.downedPirates)
-            {
-                shop.item[nextSlot].SetDefaults(ModContent.ItemType<SunkenCaptainPainting>());
-                shop.item[nextSlot].shopCustomPrice = new int?(12);
-                shop.item[nextSlot++].shopSpecialCurrency = Redemption.AntiqueDorulCurrencyId;
-            }
-            if (NPC.downedPlantBoss)
-            {
-                shop.item[nextSlot].SetDefaults(ItemID.Ectoplasm);
-                shop.item[nextSlot].shopCustomPrice = new int?(NPC.downedGolemBoss ? 6 : 10);
-                shop.item[nextSlot++].shopSpecialCurrency = Redemption.AntiqueDorulCurrencyId;
-            }
-            if (Main.LocalPlayer.RedemptionAbility().Spiritwalker)
-            {
-                shop.item[nextSlot].SetDefaults(ModContent.ItemType<EmptyCruxCard>());
-                shop.item[nextSlot].shopCustomPrice = new int?(30);
-                shop.item[nextSlot++].shopSpecialCurrency = Redemption.AntiqueDorulCurrencyId;
-            }
-            if (RedeWorld.deadRingerGiven)
-            {
-                shop.item[nextSlot].SetDefaults(ModContent.ItemType<DeadRinger>());
-                shop.item[nextSlot].shopCustomPrice = new int?(30);
-                shop.item[nextSlot++].shopSpecialCurrency = Redemption.AntiqueDorulCurrencyId;
+                if (item == null || item.type == ItemID.None)
+                    continue;
+
+                if (item.type is ItemID.Ectoplasm && NPC.downedGolemBoss)
+                    item.shopCustomPrice = 6;
             }
         }
-
         public override void TownNPCAttackStrength(ref int damage, ref float knockback)
         {
             damage = 46;
@@ -419,7 +375,7 @@ namespace Redemption.NPCs.Friendly
             randExtraCooldown = 30;
         }
 
-        public override void DrawTownAttackSwing(ref Texture2D item, ref int itemSize, ref float scale, ref Vector2 offset)
+        public override void DrawTownAttackSwing(ref Texture2D item, ref Rectangle itemFrame, ref int itemSize, ref float scale, ref Vector2 offset)
         {
             item = TextureAssets.Item[ModContent.ItemType<BeardedHatchet>()].Value;
             itemSize = 38;

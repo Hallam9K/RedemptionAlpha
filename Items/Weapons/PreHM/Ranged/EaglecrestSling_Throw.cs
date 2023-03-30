@@ -14,7 +14,7 @@ namespace Redemption.Items.Weapons.PreHM.Ranged
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Eaglecrest Sling");
+            // DisplayName.SetDefault("Eaglecrest Sling");
             Main.projFrames[Projectile.type] = 6;
             ElementID.ProjEarth[Type] = true;
         }

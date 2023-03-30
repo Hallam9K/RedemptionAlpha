@@ -11,12 +11,12 @@ namespace Redemption.Items.Weapons.PreHM.Ranged
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Fan o' Shivs");
-            Tooltip.SetDefault("Not consumable" +
+            // DisplayName.SetDefault("Fan o' Shivs");
+            /* Tooltip.SetDefault("Not consumable" +
                 "\nConsumes throwing knives if any are in your inventory, increasing damage" +
-                "\n'I'm sorry, Edwin...'");
+                "\n'I'm sorry, Edwin...'"); */
 
-            SacrificeTotal = 1;
+            Item.ResearchUnlockCount = 1;
         }
 
         public override void SetDefaults()

@@ -15,7 +15,7 @@ namespace Redemption.NPCs.Bosses.ADD
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Rain Cloud");
+            // DisplayName.SetDefault("Rain Cloud");
             Main.projFrames[Projectile.type] = 3;
         }
         public override void SetDefaults()

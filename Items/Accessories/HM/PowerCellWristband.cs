@@ -12,12 +12,12 @@ namespace Redemption.Items.Accessories.HM
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Power Cell Wristband");
-            Tooltip.SetDefault("4% increased critical strike chance for " + ElementID.FireS + " and " + ElementID.HolyS + " elemental weapons\n" +
+            // DisplayName.SetDefault("Power Cell Wristband");
+            /* Tooltip.SetDefault("4% increased critical strike chance for " + ElementID.FireS + " and " + ElementID.HolyS + " elemental weapons\n" +
                 "Stacks if both elements are present\n" +
                 "An aura of fire surrounds you while holding a " + ElementID.FireS + " or " + ElementID.HolyS + " elemental weapon\n" +
-                "'Fueled with the sun itself'");
-            SacrificeTotal = 1;
+                "'Fueled with the sun itself'"); */
+            Item.ResearchUnlockCount = 1;
             ElementID.ItemFire[Type] = true;
         }
 

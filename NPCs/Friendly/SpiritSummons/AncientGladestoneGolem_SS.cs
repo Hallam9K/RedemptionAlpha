@@ -42,7 +42,7 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
         public ref float TimerRand => ref NPC.ai[2];
         public override void SetSafeStaticDefaults()
         {
-            DisplayName.SetDefault("Ancient Gladestone Golem");
+            // DisplayName.SetDefault("Ancient Gladestone Golem");
             Main.npcFrameCount[NPC.type] = 12;
             NPCID.Sets.DebuffImmunitySets.Add(Type, new NPCDebuffImmunityData
             {
@@ -69,7 +69,7 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
             NPC.lavaImmune = true;
             NPC.RedemptionGuard().GuardPoints = NPC.lifeMax / 4;
         }
-        public override void HitEffect(int hitDirection, double damage)
+        public override void HitEffect(NPC.HitInfo hit)
         {
             if (NPC.life <= 0)
             {
@@ -90,19 +90,18 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
             }
         }
 
-        public override bool StrikeNPC(ref double damage, int defense, ref float knockback, int hitDirection, ref bool crit)
+        public override void ModifyIncomingHit(ref NPC.HitModifiers modifiers)
         {
-            bool vDmg = false;
             if (NPC.RedemptionGuard().GuardPoints >= 0)
             {
-                NPC.RedemptionGuard().GuardHit(NPC, ref vDmg, ref damage, ref knockback, SoundID.DD2_WitherBeastCrystalImpact, .1f);
+                modifiers.DisableCrit();
+                modifiers.ModifyHitInfo += (ref NPC.HitInfo n) => NPC.RedemptionGuard().GuardHit(ref n, NPC, SoundID.DD2_WitherBeastCrystalImpact, .1f);
                 if (NPC.RedemptionGuard().GuardPoints >= 0)
-                    return vDmg;
+                    return;
             }
             NPC.RedemptionGuard().GuardBreakCheck(NPC, DustID.DungeonSpirit, CustomSounds.GuardBreak, 20, 2, 10);
 
-            damage *= 2;
-            return true;
+            modifiers.FinalDamage *= 2;
         }
         public override void SendExtraAI(BinaryWriter writer)
         {
@@ -412,7 +411,7 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
             return false;
         }
-        public override bool? CanHitNPC(NPC target) => AIState == ActionState.Threatened ? null : false;
+        public override bool CanHitNPC(NPC target) => AIState == ActionState.Threatened;
         public override void OnKill()
         {
             RedeHelper.SpawnNPC(NPC.GetSource_FromAI(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<LostSoulNPC>(), Main.rand.NextFloat(0.6f, 0.8f));
@@ -423,7 +422,7 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
         public override string Texture => "Redemption/Projectiles/Hostile/AncientGladestonePillar";
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Ancient Gladestone Pillar");
+            // DisplayName.SetDefault("Ancient Gladestone Pillar");
             ProjectileID.Sets.DontAttachHideToAlpha[Type] = true;
         }
         public override void SetDefaults()

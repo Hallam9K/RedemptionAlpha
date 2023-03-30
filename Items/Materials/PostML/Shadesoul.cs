@@ -14,20 +14,20 @@ namespace Redemption.Items.Materials.PostML
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Shadesoul");
-            Tooltip.SetDefault("'A soul of pure chaos'");
+            // DisplayName.SetDefault("Shadesoul");
+            // Tooltip.SetDefault("'A soul of pure chaos'");
             Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(5, 8));
             ItemID.Sets.AnimatesAsSoul[Item.type] = true;
             ItemID.Sets.ItemIconPulse[Item.type] = true;
             ItemID.Sets.ItemNoGravity[Item.type] = true;
 
-            SacrificeTotal = 10;
+            Item.ResearchUnlockCount = 10;
         }
         public override void SetDefaults()
         {
             Item.width = 30;
             Item.height = 30;
-            Item.maxStack = 9999;
+            Item.maxStack = Item.CommonMaxStack;
             Item.value = 200;
             Item.rare = ModContent.RarityType<SoullessRarity>();
             Item.useAnimation = 30;

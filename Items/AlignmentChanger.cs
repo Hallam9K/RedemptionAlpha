@@ -10,10 +10,10 @@ namespace Redemption.Items
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Alignment Changer");
-            Tooltip.SetDefault("Left-click to increase alignment by 1\n" +
+            // DisplayName.SetDefault("Alignment Changer");
+            /* Tooltip.SetDefault("Left-click to increase alignment by 1\n" +
                 "Right-click to decrease alignment by 1" +
-                "\nNon-Consumable");
+                "\nNon-Consumable"); */
         }
 
         public override void SetDefaults()

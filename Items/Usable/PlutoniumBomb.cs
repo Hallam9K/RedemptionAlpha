@@ -13,15 +13,15 @@ namespace Redemption.Items.Usable
     {
         public override void SetStaticDefaults()
         {
-            Tooltip.SetDefault("Falls from the sky, turns the small blast radius into plutonium");
-            SacrificeTotal = 5;
+            // Tooltip.SetDefault("Falls from the sky, turns the small blast radius into plutonium");
+            Item.ResearchUnlockCount = 5;
         }
 
         public override void SetDefaults()
         {
             Item.width = 24;
             Item.height = 14;
-            Item.maxStack = 9999;
+            Item.maxStack = Item.CommonMaxStack;
             Item.consumable = true;
             Item.useStyle = ItemUseStyleID.Swing;
             Item.UseSound = SoundID.Item1;
@@ -133,7 +133,7 @@ namespace Redemption.Items.Usable
         public override string Texture => Redemption.EMPTY_TEXTURE;
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Plutonium Boom");
+            // DisplayName.SetDefault("Plutonium Boom");
         }
 
         public override void SetDefaults()

@@ -14,7 +14,7 @@ namespace Redemption.NPCs.Lab.MACE
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Flaming Blast");
+            // DisplayName.SetDefault("Flaming Blast");
             ProjectileID.Sets.TrailCacheLength[Projectile.type] = 5;
             ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
             ElementID.ProjFire[Type] = true;
@@ -44,15 +44,15 @@ namespace Redemption.NPCs.Lab.MACE
             if (Projectile.alpha > 0)
                 Projectile.alpha -= 20;
         }
-        public override void OnHitPlayer(Player player, int damage, bool crit)
-        {
-            player.AddBuff(BuffID.OnFire, 240);
-        }
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitPlayer(Player target, Player.HurtInfo info)
         {
             target.AddBuff(BuffID.OnFire, 240);
         }
-        public override void ModifyHitPlayer(Player target, ref int damage, ref bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
+        {
+            target.AddBuff(BuffID.OnFire, 240);
+        }
+        public override void ModifyHitPlayer(Player target, ref Player.HurtModifiers modifiers)
         {
             Projectile.Kill();
         }

@@ -12,7 +12,6 @@ namespace Redemption.Walls
 		{
 			Main.wallHouse[Type] = true;
 			DustType = ModContent.DustType<ShinkiteDust>();
-			ItemDrop = ModContent.ItemType<ShinkiteBrickWall>();
 			AddMapEntry(new Color(38, 20, 22));
 		}
         public override bool CanExplode(int i, int j)

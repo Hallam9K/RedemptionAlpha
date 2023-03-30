@@ -9,7 +9,7 @@ namespace Redemption.Items.Placeable.Tiles
     {
         public override void SetStaticDefaults()
         {
-            SacrificeTotal = 100;
+            Item.ResearchUnlockCount = 100;
         }
 
         public override void SetDefaults()
@@ -17,7 +17,7 @@ namespace Redemption.Items.Placeable.Tiles
             Item.DefaultToPlaceableTile(ModContent.TileType<MetalSupportBeamTile>(), 0);
             Item.width = 16;
             Item.height = 16;
-            Item.maxStack = 9999;
+            Item.maxStack = Item.CommonMaxStack;
             Item.rare = ItemRarityID.LightPurple;
             Item.value = Item.buyPrice(0, 0, 2, 0);
         }

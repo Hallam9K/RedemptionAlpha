@@ -12,12 +12,12 @@ namespace Redemption.Items.Weapons.PreHM.Ritualist
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Keeper's Knife");
-            Tooltip.SetDefault("Hitting enemies inflict Necrotic Gouge\n" +
+            // DisplayName.SetDefault("Keeper's Knife");
+            /* Tooltip.SetDefault("Hitting enemies inflict Necrotic Gouge\n" +
                 "Deals double damage to undead and skeletons" +
-                "\n'O murderer, let my knife pierce true'");
+                "\n'O murderer, let my knife pierce true'"); */
 
-            SacrificeTotal = 1;
+            Item.ResearchUnlockCount = 1;
         }
 
         public override void SetDefaults()

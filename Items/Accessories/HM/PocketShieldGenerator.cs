@@ -12,11 +12,11 @@ namespace Redemption.Items.Accessories.HM
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Pocket-Shield Generator");
-            Tooltip.SetDefault("Summons a bubble shield that can protect the user from a high amount of damage before breaking\n" +
+            // DisplayName.SetDefault("Pocket-Shield Generator");
+            /* Tooltip.SetDefault("Summons a bubble shield that can protect the user from a high amount of damage before breaking\n" +
                 "However, on the impact that breaks the shield, the user will receive 2x the damage it took in said impact\n" +
                 "Once broken, has a 1 minute cooldown\n" +
-                "While an Energy Pack is in your inventory, the shield will restore 4% of its life at the cost of 1% Energy per second");
+                "While an Energy Pack is in your inventory, the shield will restore 4% of its life at the cost of 1% Energy per second"); */
             Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(3, 9));
         }
 

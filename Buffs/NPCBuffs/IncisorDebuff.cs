@@ -8,7 +8,7 @@ namespace Redemption.Buffs.NPCBuffs
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Incisor");
+			// DisplayName.SetDefault("Incisor");
             Main.debuff[Type] = true;
             Main.buffNoSave[Type] = true;
             Main.pvpBuff[Type] = true;

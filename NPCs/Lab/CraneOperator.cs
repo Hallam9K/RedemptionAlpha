@@ -332,6 +332,6 @@ namespace Redemption.NPCs.Lab
             return false;
         }
         public override bool CanHitPlayer(Player target, ref int cooldownSlot) => false;
-        public override bool? CanHitNPC(NPC target) => false;
+        public override bool CanHitNPC(NPC target) => false;
     }
 }

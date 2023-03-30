@@ -19,7 +19,7 @@ namespace Redemption.Items.Weapons.PostML.Ranged
         public override string Texture => "Redemption/Items/Weapons/PostML/Ranged/XeniumElectrolaser";
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Xenium Electrolaser");
+            // DisplayName.SetDefault("Xenium Electrolaser");
         }
         public override void SetDefaults()
         {

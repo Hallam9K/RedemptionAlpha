@@ -17,7 +17,7 @@ namespace Redemption.Projectiles.Magic
     {
         public override void SetSafeStaticDefaults()
         {
-            DisplayName.SetDefault("Heat Ray");
+            // DisplayName.SetDefault("Heat Ray");
             ElementID.ProjFire[Type] = true;
         }
 
@@ -32,7 +32,7 @@ namespace Redemption.Projectiles.Magic
             Projectile.idStaticNPCHitCooldown = 10;
         }
 
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             Player player = Main.player[Projectile.owner];
 

@@ -35,10 +35,6 @@ namespace Redemption.Tiles.Furniture.Misc
             MineResist = 15f;
             AddMapEntry(new Color(104, 91, 83));
         }
-        public override void KillMultiTile(int i, int j, int frameX, int frameY)
-        {
-            Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 16, 32, ModContent.ItemType<NStatue>());
-        }
         public override bool CanExplode(int i, int j) => false;
     }
 }

@@ -14,7 +14,7 @@ namespace Redemption.Items.Weapons.PreHM.Ammo
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Xenomite Bullet");
+			// DisplayName.SetDefault("Xenomite Bullet");
 			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 5;
 			ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
             ElementID.ProjPoison[Type] = true;
@@ -34,7 +34,7 @@ namespace Redemption.Items.Weapons.PreHM.Ammo
 			Projectile.extraUpdates = 1;
 			AIType = ProjectileID.Bullet;
 		}
-		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) => target.AddBuff(ModContent.BuffType<GlowingPustulesDebuff>(), 10000, false);
+		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) => target.AddBuff(ModContent.BuffType<GlowingPustulesDebuff>(), 10000, false);
         public override bool PreDraw(ref Color lightColor)
         {
             Texture2D texture = TextureAssets.Projectile[Projectile.type].Value;

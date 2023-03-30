@@ -38,7 +38,7 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
         public ref float Variant => ref NPC.localAI[0];
         public override void SetSafeStaticDefaults()
         {
-            DisplayName.SetDefault("Hazmat Zombie");
+            // DisplayName.SetDefault("Hazmat Zombie");
             Main.npcFrameCount[NPC.type] = 9;
             NPCID.Sets.DebuffImmunitySets.Add(Type, new NPCDebuffImmunityData
             {
@@ -287,13 +287,13 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
             return false;
         }
 
-        public override bool? CanHitNPC(NPC target) => !NPC.friendly && AIState == ActionState.Alert ? null : false;
-        public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit)
+        public override bool CanHitNPC(NPC target) => !NPC.friendly && AIState == ActionState.Alert;
+        public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
         {
             if (Main.rand.NextBool(2) || Main.expertMode)
                 target.AddBuff(ModContent.BuffType<GreenRashesDebuff>(), Main.rand.Next(200, 1200));
         }
-        public override void HitEffect(int hitDirection, double damage)
+        public override void HitEffect(NPC.HitInfo hit)
         {
             if (NPC.life <= 0)
             {

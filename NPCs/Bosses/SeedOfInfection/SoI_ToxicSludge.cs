@@ -13,7 +13,7 @@ namespace Redemption.NPCs.Bosses.SeedOfInfection
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Toxic Sludge");
+            // DisplayName.SetDefault("Toxic Sludge");
             Main.projFrames[Projectile.type] = 3;
             ElementID.ProjPoison[Type] = true;
         }
@@ -28,7 +28,7 @@ namespace Redemption.NPCs.Bosses.SeedOfInfection
             Projectile.ignoreWater = true;
             Projectile.timeLeft = 200;
         }
-        public override void OnHitPlayer(Player target, int damage, bool crit) => target.AddBuff(ModContent.BuffType<BileDebuff>(), 180);
+        public override void OnHitPlayer(Player target, Player.HurtInfo info) => target.AddBuff(ModContent.BuffType<BileDebuff>(), 180);
         public override void AI()
         {
             if (++Projectile.frameCounter >= 3)

@@ -13,7 +13,7 @@ namespace Redemption.NPCs.Bosses.SeedOfInfection
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Splitting Shard");
+            // DisplayName.SetDefault("Splitting Shard");
             Main.projFrames[Projectile.type] = 7;
             ElementID.ProjPoison[Type] = true;
         }

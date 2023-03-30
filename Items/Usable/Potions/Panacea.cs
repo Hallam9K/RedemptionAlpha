@@ -10,8 +10,8 @@ namespace Redemption.Items.Usable.Potions
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Panacea Pill");
-            Tooltip.SetDefault("Cures radiation poisoning instantly and grants complete immunity to it for 10 minutes");
+            // DisplayName.SetDefault("Panacea Pill");
+            // Tooltip.SetDefault("Cures radiation poisoning instantly and grants complete immunity to it for 10 minutes");
         }
 
         public override void SetDefaults()
@@ -24,7 +24,7 @@ namespace Redemption.Items.Usable.Potions
             Item.consumable = true;
             Item.width = 20;
             Item.height = 26;
-            Item.maxStack = 9999;
+            Item.maxStack = Item.CommonMaxStack;
             Item.value = Item.buyPrice(0, 15, 0, 0);
             Item.rare = ItemRarityID.Purple;
         }

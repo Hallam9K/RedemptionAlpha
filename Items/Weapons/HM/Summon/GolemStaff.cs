@@ -14,10 +14,10 @@ namespace Redemption.Items.Weapons.HM.Summon
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Sun Deity Staff");
-            Tooltip.SetDefault("Summons a golem guardian that emits an empowering aura\n" +
-                "Within the aura, minions inflict a strong 'On Fire!' debuff and their damage is increased by 8%");
-            SacrificeTotal = 1;
+            // DisplayName.SetDefault("Sun Deity Staff");
+            /* Tooltip.SetDefault("Summons a golem guardian that emits an empowering aura\n" +
+                "Within the aura, minions inflict a strong 'On Fire!' debuff and their damage is increased by 8%"); */
+            Item.ResearchUnlockCount = 1;
 
             ItemID.Sets.GamepadWholeScreenUseRange[Item.type] = true;
             ItemID.Sets.LockOnIgnoresCollision[Item.type] = true;

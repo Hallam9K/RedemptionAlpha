@@ -11,12 +11,12 @@ namespace Redemption.Items.Armor.HM.Hardlight
     {
         public override void SetStaticDefaults()
         {
-            Tooltip.SetDefault("13% increased melee damage\n" +
-            "5% increased melee critical strike chance");
+            /* Tooltip.SetDefault("13% increased melee damage\n" +
+            "5% increased melee critical strike chance"); */
 
             ArmorIDs.Head.Sets.DrawHead[EquipLoader.GetEquipSlot(Mod, Name, EquipType.Head)] = false;
 
-            SacrificeTotal = 1;
+            Item.ResearchUnlockCount = 1;
         }
 
         public override void SetDefaults()

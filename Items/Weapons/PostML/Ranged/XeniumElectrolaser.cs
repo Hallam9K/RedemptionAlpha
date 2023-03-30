@@ -17,12 +17,12 @@ namespace Redemption.Items.Weapons.PostML.Ranged
     {
         public override void SetStaticDefaults()
         {
-            Tooltip.SetDefault("Hold left-click to fire blasts of electrified laser beams, which gradually increase in accuracy\n" +
+            /* Tooltip.SetDefault("Hold left-click to fire blasts of electrified laser beams, which gradually increase in accuracy\n" +
                 "Once it is 100% accurate, it will fire a large beam that deals heavy damage\n" +
                 "(5[i:" + ModContent.ItemType<EnergyPack>() + "]) Right-click to fire a precision shot that can penetrate surfaces and lingers, but has a 5 second cooldown\n" +
-                "Requires an Energy Pack to be in your inventory");
+                "Requires an Energy Pack to be in your inventory"); */
             ItemID.Sets.SkipsInitialUseSound[Item.type] = true;
-            SacrificeTotal = 1;
+            Item.ResearchUnlockCount = 1;
         }
 
         public override void SetDefaults()

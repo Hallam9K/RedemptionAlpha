@@ -11,13 +11,13 @@ namespace Redemption.Items.Armor.HM.Hardlight
     {
         public override void SetStaticDefaults()
         {
-            Tooltip.SetDefault("13% increased ritual damage\n" +
+            /* Tooltip.SetDefault("13% increased ritual damage\n" +
             "5% increased ritual critical strike chance\n" +
-            "+2 max spirit level");
+            "+2 max spirit level"); */
 
             ArmorIDs.Head.Sets.DrawHead[EquipLoader.GetEquipSlot(Mod, Name, EquipType.Head)] = false;
 
-            SacrificeTotal = 1;
+            Item.ResearchUnlockCount = 1;
         }
 
         public override void SetDefaults()

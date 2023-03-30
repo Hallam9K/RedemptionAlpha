@@ -14,10 +14,10 @@ namespace Redemption.Items.Weapons.PreHM.Summon
     {
         public override void SetStaticDefaults()
         {
-            Tooltip.SetDefault("4 summon tag damage\n" +
+            /* Tooltip.SetDefault("4 summon tag damage\n" +
                 "Your summons will focus struck enemies\n" +
-                "Striking enemies with the tip of the whip will heal the user");
-            SacrificeTotal = 1;
+                "Striking enemies with the tip of the whip will heal the user"); */
+            Item.ResearchUnlockCount = 1;
         }
 
         public override void SetDefaults()
@@ -36,7 +36,7 @@ namespace Redemption.Items.Weapons.PreHM.Summon
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Root Tendril");
+            // DisplayName.SetDefault("Root Tendril");
             ProjectileID.Sets.IsAWhip[Type] = true;
             ElementID.ProjNature[Type] = true;
         }
@@ -48,7 +48,7 @@ namespace Redemption.Items.Weapons.PreHM.Summon
             Projectile.WhipSettings.RangeMultiplier = 0.5f;
             Projectile.Redemption().TechnicallyMelee = true;
         }
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             Player player = Main.player[Projectile.owner];
             if (target.DistanceSQ(player.Center) > 130 * 130)

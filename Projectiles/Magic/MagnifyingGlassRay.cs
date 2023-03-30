@@ -16,7 +16,7 @@ namespace Redemption.Projectiles.Magic
         private new const float FirstSegmentDrawDist = 10;
         public override void SetSafeStaticDefaults()
         {
-            DisplayName.SetDefault("Scorching Ray");
+            // DisplayName.SetDefault("Scorching Ray");
             ElementID.ProjFire[Type] = true;
             ElementID.ProjHoly[Type] = true;
         }
@@ -44,7 +44,7 @@ namespace Redemption.Projectiles.Magic
         public override bool ShouldUpdatePosition() => false;
         public override bool? CanCutTiles() => false;
 
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             target.AddBuff(BuffID.OnFire, 300);
         }

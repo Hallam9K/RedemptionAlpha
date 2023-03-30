@@ -13,7 +13,7 @@ namespace Redemption.NPCs.Bosses.ADD
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Poison Bubble");
+            // DisplayName.SetDefault("Poison Bubble");
             ElementID.ProjWater[Type] = true;
             ElementID.ProjPoison[Type] = true;
         }
@@ -58,7 +58,7 @@ namespace Redemption.NPCs.Bosses.ADD
                 Main.dust[dustIndex].velocity *= 8f;
             }
         }
-        public override void ModifyHitPlayer(Player target, ref int damage, ref bool crit) => target.AddBuff(BuffID.Venom, 120);
+        public override void ModifyHitPlayer(Player target, ref Player.HurtModifiers modifiers) => target.AddBuff(BuffID.Venom, 120);
         public override bool PreDraw(ref Color lightColor)
         {
             Texture2D telegraph = ModContent.Request<Texture2D>("Redemption/Textures/RadialTelegraph3").Value;

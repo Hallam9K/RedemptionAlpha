@@ -102,7 +102,7 @@ namespace Redemption.NPCs.Friendly
                 NetMessage.SendData(MessageID.WorldData);
         }
         public override bool CanHitPlayer(Player target, ref int cooldownSlot) => false;
-        public override bool? CanHitNPC(NPC target) => false;
+        public override bool CanHitNPC(NPC target) => false;
         public override bool? CanBeHitByItem(Player player, Item item) => item.axe > 0 ? null : false;
         public override bool? CanBeHitByProjectile(Projectile projectile) => projectile.Redemption().IsAxe ? null : false;
         private string setName;
@@ -210,10 +210,10 @@ namespace Redemption.NPCs.Friendly
             if (!RedeBossDowned.downedTreebark)
                 button = Language.GetTextValue("LegacyInterface.28");
         }
-        public override void OnChatButtonClicked(bool firstButton, ref bool shop)
+        public override void OnChatButtonClicked(bool firstButton, ref string shopName)
         {
             if (firstButton)
-                shop = true;
+                shopName = "Shop";
         }
 
         public static List<Item> CreateNewShop()
@@ -289,15 +289,15 @@ namespace Redemption.NPCs.Friendly
             return items;
         }
 
-        public override void SetupShop(Chest shop, ref int nextSlot)
+        public override void ModifyActiveShop(string shopName, Item[] items)
         {
             foreach (Item item in shopItems)
             {
                 if (item == null || item.type == ItemID.None)
                     continue;
 
-                shop.item[nextSlot].SetDefaults(item.type);
-                nextSlot++;
+                int nextSlot = 0;
+                items[nextSlot++].SetDefaults(item.type);
             }
         }
 
@@ -460,7 +460,7 @@ namespace Redemption.NPCs.Friendly
 
             return baseChance * multiplier * trees;
         }
-        public override void HitEffect(int hitDirection, double damage)
+        public override void HitEffect(NPC.HitInfo hit)
         {
             if (NPC.life <= 0)
             {

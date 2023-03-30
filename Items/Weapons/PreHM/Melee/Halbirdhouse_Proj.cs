@@ -15,7 +15,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Halbirdhouse");
+            // DisplayName.SetDefault("Halbirdhouse");
         }
         private Vector2 startVector;
         public override void SetDefaults()
@@ -82,7 +82,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
                 Projectile.rotation = (Projectile.Center - player.Center).ToRotation() - MathHelper.Pi - MathHelper.PiOver4;
             return false;
         }
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             HitCount++;
         }

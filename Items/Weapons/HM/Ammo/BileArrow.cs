@@ -1,5 +1,6 @@
 using Redemption.Items.Materials.HM;
 using Terraria.ID;
+using Terraria;
 using Terraria.ModLoader;
 
 namespace Redemption.Items.Weapons.HM.Ammo
@@ -8,9 +9,10 @@ namespace Redemption.Items.Weapons.HM.Ammo
 	{
 		public override void SetStaticDefaults()
 		{
-            DisplayName.SetDefault("Bile Arrow");
-            Tooltip.SetDefault("Decreases target's defense and drains life");
-            SacrificeTotal = 99;
+            // DisplayName.SetDefault("Bile Arrow");
+            // Tooltip.SetDefault("Decreases target's defense and drains life");
+            ItemID.Sets.ShimmerTransformToItem[Type] = ItemID.ShimmerArrow;
+            Item.ResearchUnlockCount = 99;
         }
 
         public override void SetDefaults()
@@ -19,7 +21,7 @@ namespace Redemption.Items.Weapons.HM.Ammo
             Item.DamageType = DamageClass.Ranged;
             Item.width = 14;
             Item.height = 38;
-            Item.maxStack = 9999;
+            Item.maxStack = Item.CommonMaxStack;
             Item.consumable = true;
             Item.knockBack = 3f;
             Item.value = 17;

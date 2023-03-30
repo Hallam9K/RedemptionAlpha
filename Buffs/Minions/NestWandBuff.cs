@@ -8,8 +8,8 @@ namespace Redemption.Buffs.Minions
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Chikcen");
-			Description.SetDefault("Chikcen");
+			// DisplayName.SetDefault("Chikcen");
+			// Description.SetDefault("Chikcen");
 			Main.buffNoSave[Type] = true;
 			Main.buffNoTimeDisplay[Type] = true;
 		}

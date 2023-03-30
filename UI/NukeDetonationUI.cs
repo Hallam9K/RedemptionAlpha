@@ -42,14 +42,14 @@ namespace Redemption.UI
             SwitchSprite1.Top.Set(108, 0f);
             SwitchSprite1.Width.Set(52, 0f);
             SwitchSprite1.Height.Set(48, 0f);
-            SwitchSprite1.OnClick += new MouseEvent(Switch1Clicked);
+            SwitchSprite1.OnLeftClick += new MouseEvent(Switch1Clicked);
             BgSprite.Append(SwitchSprite1);
 
             SwitchSprite2.Left.Set(216, 0f);
             SwitchSprite2.Top.Set(192, 0f);
             SwitchSprite2.Width.Set(52, 0f);
             SwitchSprite2.Height.Set(48, 0f);
-            SwitchSprite2.OnClick += new MouseEvent(Switch2Clicked);
+            SwitchSprite2.OnLeftClick += new MouseEvent(Switch2Clicked);
             BgSprite.Append(SwitchSprite2);
 
             ButtonSprite.Left.Set(8, 0f);
@@ -60,7 +60,7 @@ namespace Redemption.UI
             Button.Top.Set(104, 0f);
             Button.Width.Set(164, 0f);
             Button.Height.Set(164, 0f);
-            Button.OnClick += new MouseEvent(NukeButtonClicked);
+            Button.OnLeftClick += new MouseEvent(NukeButtonClicked);
             BgSprite.Append(ButtonSprite);
             BgSprite.Append(Button);
 
@@ -71,7 +71,7 @@ namespace Redemption.UI
             closeButton.Left.Set(608 - 30, 0f);
             closeButton.Top.Set(8, 0f);
 
-            closeButton.OnClick += new MouseEvent(CloseMenu);
+            closeButton.OnLeftClick += new MouseEvent(CloseMenu);
             //closeButton.MouseOver 
             BgSprite.Append(closeButton);
 

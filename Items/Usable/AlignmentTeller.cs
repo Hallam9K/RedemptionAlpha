@@ -16,13 +16,13 @@ namespace Redemption.Items.Usable
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Chalice of Alignment");
-            Tooltip.SetDefault("Tells you your current alignment"
-                + "\n[c/ffea9b:A sentient treasure, cursed to judge those who wield it]");
+            // DisplayName.SetDefault("Chalice of Alignment");
+            /* Tooltip.SetDefault("Tells you your current alignment"
+                + "\n[c/ffea9b:A sentient treasure, cursed to judge those who wield it]"); */
             Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(4, 4));
             ItemID.Sets.AnimatesAsSoul[Item.type] = true;
 
-            SacrificeTotal = 1;
+            Item.ResearchUnlockCount = 1;
         }
 
         private float glowRot = 0;

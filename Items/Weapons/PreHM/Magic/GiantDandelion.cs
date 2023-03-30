@@ -11,8 +11,8 @@ namespace Redemption.Items.Weapons.PreHM.Magic
     {
         public override void SetStaticDefaults()
         {
-            Tooltip.SetDefault("Casts down giant dandelion seeds from the sky");
-            SacrificeTotal = 1;
+            // Tooltip.SetDefault("Casts down giant dandelion seeds from the sky");
+            Item.ResearchUnlockCount = 1;
         }
 
         public override void SetDefaults()

@@ -1,5 +1,6 @@
 using Redemption.Tiles.Containers;
 using Terraria.ID;
+using Terraria;
 using Terraria.ModLoader;
 
 namespace Redemption.Items.Placeable.Containers
@@ -8,14 +9,14 @@ namespace Redemption.Items.Placeable.Containers
 	{
         public override void SetStaticDefaults()
         {
-			SacrificeTotal = 1;
+			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults()
 		{
 			Item.DefaultToPlaceableTile(ModContent.TileType<ShadestoneChestTile>(), 0);
 			Item.width = 28;
 			Item.height = 28;
-			Item.maxStack = 9999;
+			Item.maxStack = Item.CommonMaxStack;
 			Item.value = 500;
 			Item.rare = ItemRarityID.Blue;
 		}

@@ -16,7 +16,7 @@ namespace Redemption.NPCs.Bosses.Obliterator
         private new float FirstSegmentDrawDist = 40;
         public override void SetSafeStaticDefaults()
         {
-            DisplayName.SetDefault("Obliterator Beam");
+            // DisplayName.SetDefault("Obliterator Beam");
         }
         public override void SetSafeDefaults()
         {

@@ -1,4 +1,6 @@
 using Microsoft.Xna.Framework;
+using Redemption.Items.Accessories.PostML;
+using Redemption.Items.Weapons.PostML.Melee;
 using Redemption.Projectiles.Magic;
 using Terraria;
 using Terraria.ID;
@@ -10,10 +12,10 @@ namespace Redemption.Items.Weapons.PreHM.Magic
     {
         public override void SetStaticDefaults()
         {
-            Tooltip.SetDefault("Holding left-click will channel a bind at cursor point, stunning any enemies caught in it\n" +
-                "The bind is less effective on targets with high knockback resistance");
-
-            SacrificeTotal = 1;
+            /* Tooltip.SetDefault("Holding left-click will channel a bind at cursor point, stunning any enemies caught in it\n" +
+                "The bind is less effective on targets with high knockback resistance"); */
+            ItemID.Sets.ShimmerTransformToItem[Type] = ModContent.ItemType<Mistfall>();
+            Item.ResearchUnlockCount = 1;
         }
 
         public override void SetDefaults()

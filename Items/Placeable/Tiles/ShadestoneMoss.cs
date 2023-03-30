@@ -10,16 +10,16 @@ namespace Redemption.Items.Placeable.Tiles
 	{
 		public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Black Moss");
-            Tooltip.SetDefault("Plants moss on Shadestone and Shadestone Bricks"); ;	
-            SacrificeTotal = 25;
+            // DisplayName.SetDefault("Black Moss");
+            // Tooltip.SetDefault("Plants moss on Shadestone and Shadestone Bricks"); ;	
+            Item.ResearchUnlockCount = 25;
         }
         public override void SetDefaults()
         {
             Item.DefaultToPlaceableTile(ModContent.TileType<ShadestoneMossyTile>(), 0);
             Item.width = 20;
             Item.height = 18;
-            Item.maxStack = 9999;
+            Item.maxStack = Item.CommonMaxStack;
             Item.rare = ModContent.RarityType<SoullessRarity>();
         }
         public override bool CanUseItem(Player p)

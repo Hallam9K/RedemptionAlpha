@@ -16,7 +16,7 @@ namespace Redemption.Projectiles.Minions
         public override string Texture => Redemption.EMPTY_TEXTURE;
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Lunar Bolt");
+            // DisplayName.SetDefault("Lunar Bolt");
             ProjectileID.Sets.MinionShot[Projectile.type] = true;
             ElementID.ProjFire[Type] = true;
             ElementID.ProjNature[Type] = true;
@@ -43,7 +43,7 @@ namespace Redemption.Projectiles.Minions
         private DanTrail trail2;
         private float thickness = 2f;
 
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             FakeKill();
             Projectile.localNPCImmunity[target.whoAmI] = 20;

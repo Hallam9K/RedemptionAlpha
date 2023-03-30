@@ -9,7 +9,7 @@ namespace Redemption.NPCs.Bosses.Keeper
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Veil");
+            // DisplayName.SetDefault("Veil");
             Main.projFrames[Projectile.type] = 6;
         }
         public override void SetDefaults()

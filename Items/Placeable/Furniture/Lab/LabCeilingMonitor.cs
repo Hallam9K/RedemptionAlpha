@@ -11,15 +11,15 @@ namespace Redemption.Items.Placeable.Furniture.Lab
 	{
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Laboratory Ceiling Monitor");
-            SacrificeTotal = 1;
+            // DisplayName.SetDefault("Laboratory Ceiling Monitor");
+            Item.ResearchUnlockCount = 1;
         }
         public override void SetDefaults()
         {
             Item.DefaultToPlaceableTile(ModContent.TileType<LabCeilingMonitorTile>(), 0);
             Item.width = 30;
             Item.height = 28;
-            Item.maxStack = 9999;
+            Item.maxStack = Item.CommonMaxStack;
             Item.value = Item.sellPrice(0, 1, 0, 0);
             Item.rare = ItemRarityID.LightPurple;
 		}

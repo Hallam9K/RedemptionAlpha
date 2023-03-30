@@ -15,7 +15,7 @@ namespace Redemption.Projectiles.Ritualist
         public override string Texture => Redemption.EMPTY_TEXTURE;
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Hellfire Charge");
+            // DisplayName.SetDefault("Hellfire Charge");
             ElementID.ProjFire[Type] = true;
         }
         public override void SetDefaults()

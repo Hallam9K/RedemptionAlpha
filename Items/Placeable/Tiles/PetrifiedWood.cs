@@ -1,6 +1,7 @@
 using Redemption.Items.Placeable.Furniture.PetrifiedWood;
 using Redemption.Tiles.Tiles;
 using Terraria.ID;
+using Terraria;
 using Terraria.ModLoader;
 
 namespace Redemption.Items.Placeable.Tiles
@@ -9,7 +10,8 @@ namespace Redemption.Items.Placeable.Tiles
     {
         public override void SetStaticDefaults()
         {
-            SacrificeTotal = 100;
+            ItemID.Sets.ShimmerTransformToItem[Type] = ItemID.Wood;
+            Item.ResearchUnlockCount = 100;
         }
 
         public override void SetDefaults()
@@ -17,7 +19,7 @@ namespace Redemption.Items.Placeable.Tiles
             Item.DefaultToPlaceableTile(ModContent.TileType<PetrifiedWoodTile>(), 0);
             Item.width = 24;
             Item.height = 22;
-            Item.maxStack = 9999;
+            Item.maxStack = Item.CommonMaxStack;
         }
 
         public override void AddRecipes()

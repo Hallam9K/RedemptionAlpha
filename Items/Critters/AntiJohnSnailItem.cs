@@ -10,15 +10,15 @@ namespace Redemption.Items.Critters
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Anti-John Snail");
-            SacrificeTotal = 5;
+            // DisplayName.SetDefault("Anti-John Snail");
+            Item.ResearchUnlockCount = 5;
         }
 
         public override void SetDefaults()
         {
             Item.width = 28;
             Item.height = 18;
-            Item.maxStack = 9999;
+            Item.maxStack = Item.CommonMaxStack;
             Item.value = Item.buyPrice(silver: 80);
             Item.rare = ItemRarityID.Blue;
             Item.useAnimation = 30;

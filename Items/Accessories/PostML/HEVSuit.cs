@@ -38,12 +38,12 @@ namespace Redemption.Items.Accessories.PostML
         }
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("HEV Suit");
-            Tooltip.SetDefault("Grants immunity to the Abandoned Lab and Wasteland water"
+            // DisplayName.SetDefault("HEV Suit");
+            /* Tooltip.SetDefault("Grants immunity to the Abandoned Lab and Wasteland water"
                 + "\nGreatly extends underwater breathing"
                 + "\nGrants immunity to Radioactive Fallout and all infection debuffs"
-                + "\nGrants protection against up to mid-level radiation");
-            SacrificeTotal = 1;
+                + "\nGrants protection against up to mid-level radiation"); */
+            Item.ResearchUnlockCount = 1;
             SetupDrawing();
         }
 
@@ -54,7 +54,7 @@ namespace Redemption.Items.Accessories.PostML
             Item.value = Item.buyPrice(1, 0, 0, 0);
             Item.rare = ItemRarityID.Purple;
             Item.accessory = true;
-            Item.canBePlacedInVanityRegardlessOfConditions = true;
+            Item.hasVanityEffects = true;
         }
 
         public override void UpdateAccessory(Player player, bool hideVisual)

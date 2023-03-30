@@ -14,7 +14,7 @@ namespace Redemption.NPCs.FowlMorning
         public override string Texture => Redemption.EMPTY_TEXTURE;
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Ghost-Fire");
+            // DisplayName.SetDefault("Ghost-Fire");
             ElementID.ProjArcane[Type] = true;
             ElementID.ProjFire[Type] = true;
         }
@@ -102,7 +102,7 @@ namespace Redemption.NPCs.FowlMorning
         {
             RedeDraw.DrawEyeFlare(Main.spriteBatch, ref FlareTimer, Projectile.Center - Main.screenPosition, Color.IndianRed, 0, FlareScale);
         }
-        public override void OnHitPlayer(Player target, int damage, bool crit)
+        public override void OnHitPlayer(Player target, Player.HurtInfo info)
         {
             if (Main.expertMode)
                 target.AddBuff(BuffID.OnFire, 180);

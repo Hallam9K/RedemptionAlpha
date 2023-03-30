@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Terraria;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ID;
 using Redemption.Items.Materials.PostML;
@@ -25,8 +26,8 @@ namespace Redemption.Tiles.Ores
             MinPick = 500;
             MineResist = 10f;
             HitSound = SoundID.Tink;
-            ModTranslation name = CreateMapEntryName();
-            name.SetDefault("Solid Corium");
+            LocalizedText name = CreateMapEntryName();
+            // name.SetDefault("Solid Corium");
             AddMapEntry(new Color(208, 101, 70), name);
         }
         public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)

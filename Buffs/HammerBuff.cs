@@ -7,8 +7,8 @@ namespace Redemption.Buffs
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Heavy");
-            Description.SetDefault("Increased fall speed");
+            // DisplayName.SetDefault("Heavy");
+            // Description.SetDefault("Increased fall speed");
             Main.buffNoTimeDisplay[Type] = true;
         }
         public override void Update(Player player, ref int buffIndex)

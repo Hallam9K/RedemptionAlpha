@@ -14,7 +14,7 @@ namespace Redemption.NPCs.Bosses.KSIII
         public override string Texture => "Redemption/Textures/StaticBall";
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Core Surge");
+            // DisplayName.SetDefault("Core Surge");
             Main.projFrames[Projectile.type] = 4;
         }
         public override void SetDefaults()
@@ -86,7 +86,7 @@ namespace Redemption.NPCs.Bosses.KSIII
         public override string Texture => Redemption.EMPTY_TEXTURE;
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Core Surge");
+            // DisplayName.SetDefault("Core Surge");
         }
         public override void SetDefaults()
         {

@@ -12,9 +12,10 @@ namespace Redemption.Items.Accessories.PostML
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Mysterious Skull");
-            Tooltip.SetDefault("Summons a certain spooky skeleton");
-            SacrificeTotal = 1;
+            // DisplayName.SetDefault("Mysterious Skull");
+            // Tooltip.SetDefault("Summons a certain spooky skeleton");
+            ItemID.Sets.ShimmerTransformToItem[Type] = ModContent.ItemType<HamSandwich>();
+            Item.ResearchUnlockCount = 1;
         }
         public override void SetDefaults()
         {

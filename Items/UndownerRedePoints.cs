@@ -9,9 +9,9 @@ namespace Redemption.Items
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Alignment Resetter");
-            Tooltip.SetDefault("Sets alignment to 0" +
-                "\nNon-Consumable");
+            // DisplayName.SetDefault("Alignment Resetter");
+            /* Tooltip.SetDefault("Sets alignment to 0" +
+                "\nNon-Consumable"); */
         }
 
         public override void SetDefaults()
