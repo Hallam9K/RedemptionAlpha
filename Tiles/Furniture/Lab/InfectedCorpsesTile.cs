@@ -33,7 +33,6 @@ namespace Redemption.Tiles.Furniture.Lab
 			AddMapEntry(new Color(61, 75, 66), name);
             DustType = DustID.GreenBlood;
 			HitSound = SoundID.NPCHit13;
-            ItemDrop = -1;
         }
         public override void NumDust(int i, int j, bool fail, ref int num) => num = fail ? 1 : 3;
 		public override void KillMultiTile(int i, int j, int frameX, int frameY)
@@ -64,7 +63,6 @@ namespace Redemption.Tiles.Furniture.Lab
 			AddMapEntry(new Color(61, 75, 66), name);
 			DustType = DustID.GreenBlood;
 			HitSound = SoundID.NPCHit13;
-            ItemDrop = -1;
         }
         public override void NumDust(int i, int j, bool fail, ref int num) => num = fail ? 1 : 3;
 		public override void KillMultiTile(int i, int j, int frameX, int frameY)
@@ -95,7 +93,6 @@ namespace Redemption.Tiles.Furniture.Lab
 			AddMapEntry(new Color(61, 75, 66), name);
 			DustType = DustID.GreenBlood;
 			HitSound = SoundID.NPCHit13;
-            ItemDrop = -1;
         }
         public override void NumDust(int i, int j, bool fail, ref int num) => num = fail ? 1 : 3;
 		public override void KillMultiTile(int i, int j, int frameX, int frameY)

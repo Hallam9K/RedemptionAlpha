@@ -91,7 +91,7 @@ namespace Redemption.Tiles.Furniture.Misc
     public class HangingTied : PlaceholderTile
     {
         public override string Texture => Redemption.PLACEHOLDER_TEXTURE;
-        public override void SetStaticDefaults()
+        public override void SetSafeStaticDefaults()
         {
             // DisplayName.SetDefault("Hanging Tied");
         }

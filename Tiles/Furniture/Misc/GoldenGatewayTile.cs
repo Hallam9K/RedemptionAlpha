@@ -54,10 +54,9 @@ namespace Redemption.Tiles.Furniture.Misc
 			TileObjectData.addTile(Type);
             HitSound = CustomSounds.MetalHit;
             DustType = DustID.GoldCoin;
-            ItemDrop = -1;
             LocalizedText name = CreateMapEntryName();
 			// name.SetDefault("Golden Gateway");
-			AddMapEntry(new Color(203, 179, 73));
+			AddMapEntry(new Color(203, 179, 73), name);
 		}
         public override bool CanExplode(int i, int j) => false;
 		public override bool CanKillTile(int i, int j, ref bool blockDamaged) => false;
@@ -112,7 +111,7 @@ namespace Redemption.Tiles.Furniture.Misc
 	public class GoldenGatewayItem : PlaceholderTile
 	{
 		public override string Texture => Redemption.PLACEHOLDER_TEXTURE;
-		public override void SetStaticDefaults()
+		public override void SetSafeStaticDefaults()
 		{
 			// DisplayName.SetDefault("Golden Gateway");
 			// Tooltip.SetDefault("[c/ff0000:Unbreakable]");

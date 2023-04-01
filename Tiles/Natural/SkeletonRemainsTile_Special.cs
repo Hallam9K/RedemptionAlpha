@@ -27,7 +27,7 @@ namespace Redemption.Tiles.Natural
             MineResist = 50;
             LocalizedText name = CreateMapEntryName();
             // name.SetDefault("Skeletal Remains");
-            AddMapEntry(new Color(229, 229, 195));
+            AddMapEntry(new Color(229, 229, 195), name);
         }
         public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)
         {
@@ -158,7 +158,7 @@ namespace Redemption.Tiles.Natural
             MineResist = 50;
             LocalizedText name = CreateMapEntryName();
             // name.SetDefault("Skeletal Remains");
-            AddMapEntry(new Color(229, 229, 195));
+            AddMapEntry(new Color(229, 229, 195), name);
         }
         public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)
         {
@@ -273,7 +273,7 @@ namespace Redemption.Tiles.Natural
             MineResist = 50;
             LocalizedText name = CreateMapEntryName();
             // name.SetDefault("Skeletal Remains");
-            AddMapEntry(new Color(229, 229, 195));
+            AddMapEntry(new Color(229, 229, 195), name);
         }
         public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)
         {
@@ -388,7 +388,7 @@ namespace Redemption.Tiles.Natural
             MineResist = 50;
             LocalizedText name = CreateMapEntryName();
             // name.SetDefault("Skeletal Remains");
-            AddMapEntry(new Color(229, 229, 195));
+            AddMapEntry(new Color(229, 229, 195), name);
         }
         public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)
         {
@@ -502,7 +502,7 @@ namespace Redemption.Tiles.Natural
             MineResist = 50;
             LocalizedText name = CreateMapEntryName();
             // name.SetDefault("Skeletal Remains");
-            AddMapEntry(new Color(229, 229, 195));
+            AddMapEntry(new Color(229, 229, 195), name);
         }
         public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)
         {
@@ -607,7 +607,7 @@ namespace Redemption.Tiles.Natural
     public class SkeletonRemains1_Special : PlaceholderTile
     {
         public override string Texture => Redemption.PLACEHOLDER_TEXTURE;
-        public override void SetStaticDefaults()
+        public override void SetSafeStaticDefaults()
         {
             // DisplayName.SetDefault("Skeletal Remains (Soulful)");
         }
@@ -620,7 +620,7 @@ namespace Redemption.Tiles.Natural
     public class SkeletonRemains3_Special : PlaceholderTile
     {
         public override string Texture => Redemption.PLACEHOLDER_TEXTURE;
-        public override void SetStaticDefaults()
+        public override void SetSafeStaticDefaults()
         {
             // DisplayName.SetDefault("Skeletal Remains (Assassin)");
         }
@@ -633,7 +633,7 @@ namespace Redemption.Tiles.Natural
     public class SkeletonRemains4_Special : PlaceholderTile
     {
         public override string Texture => Redemption.PLACEHOLDER_TEXTURE;
-        public override void SetStaticDefaults()
+        public override void SetSafeStaticDefaults()
         {
             // DisplayName.SetDefault("Skeletal Remains (Common Guard)");
         }
@@ -646,7 +646,7 @@ namespace Redemption.Tiles.Natural
     public class SkeletonRemains5_Special : PlaceholderTile
     {
         public override string Texture => Redemption.PLACEHOLDER_TEXTURE;
-        public override void SetStaticDefaults()
+        public override void SetSafeStaticDefaults()
         {
             // DisplayName.SetDefault("Skeletal Remains (Gathic Man)");
         }
@@ -659,7 +659,7 @@ namespace Redemption.Tiles.Natural
     public class SkeletonRemains7_Special : PlaceholderTile
     {
         public override string Texture => Redemption.PLACEHOLDER_TEXTURE;
-        public override void SetStaticDefaults()
+        public override void SetSafeStaticDefaults()
         {
             // DisplayName.SetDefault("Skeletal Remains (Druid)");
         }

@@ -28,11 +28,10 @@ namespace Redemption.Tiles.Furniture.Misc
             TileObjectData.newTile.AnchorBottom = new AnchorData(AnchorType.SolidTile | AnchorType.SolidWithTop | AnchorType.SolidSide, TileObjectData.newTile.Width, 0);
             TileObjectData.addTile(Type);
             HitSound = CustomSounds.StoneHit;
-            ItemDrop = -1;
             DustType = ModContent.DustType<SlateDust>();
             LocalizedText name = CreateMapEntryName();
-            // name.SetDefault("Gathuram Portal");
-            AddMapEntry(new Color(81, 72, 65));
+            // name.SetDefault("Gathuram Gateway");
+            AddMapEntry(new Color(81, 72, 65), name);
         }
 
         public override void NumDust(int i, int j, bool fail, ref int num)
@@ -45,7 +44,7 @@ namespace Redemption.Tiles.Furniture.Misc
     public class GathuramPortalItem : PlaceholderTile
     {
         public override string Texture => Redemption.PLACEHOLDER_TEXTURE;
-        public override void SetStaticDefaults()
+        public override void SetSafeStaticDefaults()
         {
             // DisplayName.SetDefault("Gathuram Portal");
             // Tooltip.SetDefault("[c/ff0000:Unbreakable]");

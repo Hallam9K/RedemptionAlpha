@@ -29,9 +29,8 @@ namespace Redemption.Tiles.Natural
             TileObjectData.addTile(Type);
             DustType = DustID.Dirt;
             LocalizedText name = CreateMapEntryName();
-            // name.SetDefault("Newb Mound");
-            AddMapEntry(new Color(81, 72, 65));
-            ItemDrop = -1;
+            // name.SetDefault("Suspicious Mound");
+            AddMapEntry(new Color(81, 72, 65), name);
         }
         public override void KillMultiTile(int i, int j, int frameX, int frameY)
         {
@@ -51,7 +50,7 @@ namespace Redemption.Tiles.Natural
     public class NewbMoundItem : PlaceholderTile
     {
         public override string Texture => Redemption.PLACEHOLDER_TEXTURE;
-        public override void SetStaticDefaults()
+        public override void SetSafeStaticDefaults()
         {
             // DisplayName.SetDefault("Newb Mound");
         }

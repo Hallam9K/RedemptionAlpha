@@ -37,7 +37,6 @@ namespace Redemption.Tiles.Furniture.Lab
             MinPick = 500;
             MineResist = 8f;
             HitSound = SoundID.NPCHit13;
-            ItemDrop = -1;
             LocalizedText name = CreateMapEntryName();
             // name.SetDefault("Hazmat Corpse");
             AddMapEntry(new Color(242, 183, 111), name);
@@ -136,7 +135,7 @@ namespace Redemption.Tiles.Furniture.Lab
     public class HazmatCorpse : PlaceholderTile
     {
         public override string Texture => Redemption.PLACEHOLDER_TEXTURE;
-        public override void SetStaticDefaults()
+        public override void SetSafeStaticDefaults()
         {
             // DisplayName.SetDefault("Hazmat Corpse");
             /* Tooltip.SetDefault("Gives Hazmat Suit" +

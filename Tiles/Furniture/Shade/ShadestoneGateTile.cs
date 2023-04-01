@@ -37,7 +37,6 @@ namespace Redemption.Tiles.Furniture.Shade
             AddMapEntry(new Color(50, 50, 50), name);
             MinPick = 500;
             MineResist = 30f;
-            ItemDrop = -1;
             DustType = ModContent.DustType<VoidFlame>();
             AnimationFrameHeight = 180;
         }
@@ -70,7 +69,7 @@ namespace Redemption.Tiles.Furniture.Shade
     }
     public class ShadestoneGate : PlaceholderTile
     {
-        public override void SetStaticDefaults()
+        public override void SetSafeStaticDefaults()
         {
             // Tooltip.SetDefault("[c/ff0000:Unbreakable]");
         }

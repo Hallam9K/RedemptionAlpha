@@ -39,7 +39,7 @@ namespace Redemption.Tiles.Furniture.Lab
     public class KariBed : PlaceholderTile
     {
         public override string Texture => Redemption.PLACEHOLDER_TEXTURE;
-        public override void SetStaticDefaults()
+        public override void SetSafeStaticDefaults()
         {
             // DisplayName.SetDefault("Kari's Hospital Bed");
             // Tooltip.SetDefault("[c/ff0000:Unbreakable]");

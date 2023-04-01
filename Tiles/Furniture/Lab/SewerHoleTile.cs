@@ -27,9 +27,6 @@ namespace Redemption.Tiles.Furniture.Lab
             DustType = DustID.Tungsten;
             MinPick = 500;
             MineResist = 3f;
-            ItemDrop = -1;
-            LocalizedText name = CreateMapEntryName();
-            // name.SetDefault("Sewer Hole");
             AddMapEntry(new Color(51, 61, 54));
         }
         public override bool CanExplode(int i, int j) => false;

@@ -83,7 +83,7 @@ namespace Redemption.Globals.NPC
             if (npc.RedemptionNPCBuff().brokenArmor || npc.RedemptionNPCBuff().stunned || projectile.Redemption().EnergyBased)
                 GuardPierce = true;
             if (projectile.HasElement(ElementID.Explosive))
-                modifiers.FinalDamage *= 4;
+                modifiers.FinalDamage *= 2;
         }
         public override void SetDefaults(Terraria.NPC npc)
         {

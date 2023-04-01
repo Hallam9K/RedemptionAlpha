@@ -18,7 +18,7 @@ namespace Redemption.Walls
     public class JunkMetalWallItem : PlaceholderTile
     {
         public override string Texture => Redemption.PLACEHOLDER_TEXTURE;
-        public override void SetStaticDefaults()
+        public override void SetSafeStaticDefaults()
         {
             // DisplayName.SetDefault("Cyberscrap Wall");
         }

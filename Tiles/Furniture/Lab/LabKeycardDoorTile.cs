@@ -134,7 +134,6 @@ namespace Redemption.Tiles.Furniture.Lab
             AddMapEntry(new Color(189, 191, 200), name);
             MinPick = 500;
             MineResist = 20f;
-            ItemDrop = -1;
             DustType = DustID.Electric;
             AdjTiles = new int[] { TileID.OpenDoor };
             AnimationFrameHeight = 72;
@@ -156,7 +155,7 @@ namespace Redemption.Tiles.Furniture.Lab
     public class LabKeycardDoor : PlaceholderTile
     {
         public override string Texture => Redemption.PLACEHOLDER_TEXTURE;
-        public override void SetStaticDefaults()
+        public override void SetSafeStaticDefaults()
         {
             // DisplayName.SetDefault("Keycard Door");
             /* Tooltip.SetDefault("Opens using a Keycard" +

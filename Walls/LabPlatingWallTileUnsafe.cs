@@ -18,7 +18,7 @@ namespace Redemption.Walls
     public class LabPlatingWallUnsafe : PlaceholderTile
     {
         public override string Texture => Redemption.PLACEHOLDER_TEXTURE;
-        public override void SetStaticDefaults()
+        public override void SetSafeStaticDefaults()
         {
             // DisplayName.SetDefault("Lab Wall (Unsafe)");
             // Tooltip.SetDefault("[c/ff0000:Unbreakable]");

@@ -33,7 +33,6 @@ namespace Redemption.Tiles.Furniture.Misc
             DustType = 7;
             MinPick = 500;
             MineResist = 3f;
-            ItemDrop = -1;
             HitSound = CustomSounds.StoneHit;
             LocalizedText name = CreateMapEntryName();
             // name.SetDefault("Ancient Altar");
@@ -111,7 +110,7 @@ namespace Redemption.Tiles.Furniture.Misc
     public class AncientAltar : PlaceholderTile
     {
         public override string Texture => Redemption.PLACEHOLDER_TEXTURE;
-        public override void SetStaticDefaults()
+        public override void SetSafeStaticDefaults()
         {
             // DisplayName.SetDefault("Ancient Altar");
             /* Tooltip.SetDefault("Gives the Cursed Gem" +

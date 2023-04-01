@@ -11,6 +11,7 @@ namespace Redemption.Items.Placeable.Furniture.Lab
         public override void SetStaticDefaults()
         {
             // DisplayName.SetDefault("Corpse (Sitting)");
+            ItemID.Sets.DisableAutomaticPlaceableDrop[Type] = true;
             Item.ResearchUnlockCount = 1;
         }
         public override void SetDefaults()
@@ -28,6 +29,7 @@ namespace Redemption.Items.Placeable.Furniture.Lab
         public override void SetStaticDefaults()
         {
             // DisplayName.SetDefault("Corpse (Laying on Back)");
+            ItemID.Sets.DisableAutomaticPlaceableDrop[Type] = true;
             Item.ResearchUnlockCount = 1;
         }
         public override void SetDefaults()
@@ -45,6 +47,7 @@ namespace Redemption.Items.Placeable.Furniture.Lab
         public override void SetStaticDefaults()
         {
             // DisplayName.SetDefault("Corpse (Laying on Stomach)");
+            ItemID.Sets.DisableAutomaticPlaceableDrop[Type] = true;
             Item.ResearchUnlockCount = 1;
         }
         public override void SetDefaults()

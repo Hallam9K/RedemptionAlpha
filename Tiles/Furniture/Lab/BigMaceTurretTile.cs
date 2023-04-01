@@ -37,7 +37,6 @@ namespace Redemption.Tiles.Furniture.Lab
             DustType = DustID.Electric;
             MinPick = 500;
             MineResist = 20f;
-            ItemDrop = -1;
             LocalizedText name = CreateMapEntryName();
 			// name.SetDefault("Laboratory MACE Turret");
 			AddMapEntry(new Color(110, 106, 120), name);
@@ -73,7 +72,7 @@ namespace Redemption.Tiles.Furniture.Lab
     public class BigMaceTurret : PlaceholderTile
     {
         public override string Texture => Redemption.PLACEHOLDER_TEXTURE;
-        public override void SetStaticDefaults()
+        public override void SetSafeStaticDefaults()
         {
             // DisplayName.SetDefault("Laboratory MACE Turret");
             // Tooltip.SetDefault("[c/ff0000:Unbreakable (500% Pickaxe Power)]");

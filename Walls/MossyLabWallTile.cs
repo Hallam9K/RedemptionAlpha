@@ -21,7 +21,7 @@ namespace Redemption.Walls
     public class MossyLabWall : PlaceholderTile
     {
         public override string Texture => Redemption.PLACEHOLDER_TEXTURE;
-        public override void SetStaticDefaults()
+        public override void SetSafeStaticDefaults()
         {
             // DisplayName.SetDefault("Mossy Lab Wall (Full) (Unsafe)");
             // Tooltip.SetDefault("[c/ff0000:Unbreakable]");

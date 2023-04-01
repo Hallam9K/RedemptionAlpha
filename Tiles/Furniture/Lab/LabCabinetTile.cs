@@ -34,7 +34,6 @@ namespace Redemption.Tiles.Furniture.Lab
             DustType = ModContent.DustType<LabPlatingDust>();
             MinPick = 300;
             MineResist = 8f;
-            ItemDrop = -1;
             LocalizedText name = CreateMapEntryName();
             // name.SetDefault("Laboratory Cabinet");
             AddMapEntry(new Color(189, 191, 200), name);
@@ -86,7 +85,7 @@ namespace Redemption.Tiles.Furniture.Lab
     public class LabCabinet : PlaceholderTile
     {
         public override string Texture => Redemption.PLACEHOLDER_TEXTURE;
-        public override void SetStaticDefaults()
+        public override void SetSafeStaticDefaults()
         {
             // DisplayName.SetDefault("Laboratory Cabinet");
             // Tooltip.SetDefault("Gives Radiation Pills");

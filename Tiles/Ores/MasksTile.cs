@@ -24,7 +24,7 @@ namespace Redemption.Tiles.Ores
             HitSound = CustomSounds.MaskBreak;
             LocalizedText name = CreateMapEntryName();
             // name.SetDefault("Vessel Fragments");
-            AddMapEntry(new Color(210, 200, 191));
+            AddMapEntry(new Color(210, 200, 191), name);
             ItemDrop = ModContent.ItemType<VesselFragment>();
         }
         public override bool CanDrop(int i, int j) => Main.rand.NextBool(8);

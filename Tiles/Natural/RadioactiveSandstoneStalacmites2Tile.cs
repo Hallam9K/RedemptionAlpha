@@ -25,7 +25,6 @@ namespace Redemption.Tiles.Natural
             TileObjectData.newTile.AnchorValidTiles = new int[] { ModContent.TileType<IrradiatedSandstoneTile>() };
             TileObjectData.addTile(Type);
             DustType = DustID.Ash;
-            ItemDrop = -1;
         }
 
         public override void SetSpriteEffects(int i, int j, ref SpriteEffects spriteEffects)

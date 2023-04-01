@@ -34,10 +34,9 @@ namespace Redemption.Tiles.Natural
             TileObjectData.addTile(Type);
             DustType = DustID.Bone;
             HitSound = CustomSounds.BoneHit;
-            ItemDrop = -1;
             LocalizedText name = CreateMapEntryName();
             // name.SetDefault("Skeletal Remains");
-            AddMapEntry(new Color(129, 129, 95));
+            AddMapEntry(new Color(129, 129, 95), name);
         }
         public override void KillMultiTile(int i, int j, int frameX, int frameY) => Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 64, 32, ModContent.ItemType<GraveSteelShards>(), Main.rand.Next(5, 9));
         public override void NumDust(int i, int j, bool fail, ref int num) => num = fail ? 1 : 3;
@@ -66,10 +65,9 @@ namespace Redemption.Tiles.Natural
             TileObjectData.addTile(Type);
             DustType = DustID.Bone;
             HitSound = CustomSounds.BoneHit;
-            ItemDrop = -1;
             LocalizedText name = CreateMapEntryName();
             // name.SetDefault("Skeletal Remains");
-            AddMapEntry(new Color(129, 129, 95));
+            AddMapEntry(new Color(129, 129, 95), name);
         }
         public override void KillMultiTile(int i, int j, int frameX, int frameY) => Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 48, 16, ModContent.ItemType<GraveSteelShards>(), Main.rand.Next(3, 6));
         public override void NumDust(int i, int j, bool fail, ref int num) => num = fail ? 1 : 3;
@@ -98,10 +96,9 @@ namespace Redemption.Tiles.Natural
             TileObjectData.addTile(Type);
             DustType = DustID.Bone;
             HitSound = CustomSounds.BoneHit;
-            ItemDrop = -1;
             LocalizedText name = CreateMapEntryName();
             // name.SetDefault("Skeletal Remains");
-            AddMapEntry(new Color(129, 129, 95));
+            AddMapEntry(new Color(129, 129, 95), name);
         }
         public override void KillMultiTile(int i, int j, int frameX, int frameY) => Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 48, 32, ModContent.ItemType<GraveSteelShards>(), Main.rand.Next(3, 6));
         public override void NumDust(int i, int j, bool fail, ref int num) => num = fail ? 1 : 3;
@@ -131,7 +128,7 @@ namespace Redemption.Tiles.Natural
             HitSound = CustomSounds.BoneHit;
             LocalizedText name = CreateMapEntryName();
             // name.SetDefault("Skeletal Remains");
-            AddMapEntry(new Color(129, 129, 95));
+            AddMapEntry(new Color(129, 129, 95), name);
         }
         public override void NumDust(int i, int j, bool fail, ref int num) => num = fail ? 1 : 3;
     }
@@ -161,7 +158,7 @@ namespace Redemption.Tiles.Natural
             HitSound = CustomSounds.BoneHit;
             LocalizedText name = CreateMapEntryName();
             // name.SetDefault("Skeletal Remains");
-            AddMapEntry(new Color(129, 129, 95));
+            AddMapEntry(new Color(129, 129, 95), name);
         }
         public override void NumDust(int i, int j, bool fail, ref int num) => num = fail ? 1 : 3;
     }
@@ -191,7 +188,7 @@ namespace Redemption.Tiles.Natural
             HitSound = CustomSounds.BoneHit;
             LocalizedText name = CreateMapEntryName();
             // name.SetDefault("Skeletal Remains");
-            AddMapEntry(new Color(129, 129, 95));
+            AddMapEntry(new Color(129, 129, 95), name);
         }
         public override void NumDust(int i, int j, bool fail, ref int num) => num = fail ? 1 : 3;
     }
@@ -222,7 +219,7 @@ namespace Redemption.Tiles.Natural
             ItemDrop = -1;
             LocalizedText name = CreateMapEntryName();
             // name.SetDefault("Skeletal Remains");
-            AddMapEntry(new Color(129, 129, 95));
+            AddMapEntry(new Color(129, 129, 95), name);
         }
         public override void NumDust(int i, int j, bool fail, ref int num) => num = fail ? 1 : 3;
         public override void KillMultiTile(int i, int j, int frameX, int frameY) => Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 48, 32, ModContent.ItemType<GraveSteelShards>(), Main.rand.Next(3, 6));
@@ -230,7 +227,7 @@ namespace Redemption.Tiles.Natural
     public class SkeletonRemains1 : PlaceholderTile
     {
         public override string Texture => Redemption.PLACEHOLDER_TEXTURE;
-        public override void SetStaticDefaults()
+        public override void SetSafeStaticDefaults()
         {
             // DisplayName.SetDefault("Skeletal Remains (Sword)");
         }
@@ -244,7 +241,7 @@ namespace Redemption.Tiles.Natural
     public class SkeletonRemains2 : PlaceholderTile
     {
         public override string Texture => Redemption.PLACEHOLDER_TEXTURE;
-        public override void SetStaticDefaults()
+        public override void SetSafeStaticDefaults()
         {
             // DisplayName.SetDefault("Skeletal Remains (Front-facing)");
         }
@@ -258,7 +255,7 @@ namespace Redemption.Tiles.Natural
     public class SkeletonRemains3 : PlaceholderTile
     {
         public override string Texture => Redemption.PLACEHOLDER_TEXTURE;
-        public override void SetStaticDefaults()
+        public override void SetSafeStaticDefaults()
         {
             // DisplayName.SetDefault("Skeletal Remains (Sitting)");
         }
@@ -272,7 +269,7 @@ namespace Redemption.Tiles.Natural
     public class SkeletonRemains4 : PlaceholderTile
     {
         public override string Texture => Redemption.PLACEHOLDER_TEXTURE;
-        public override void SetStaticDefaults()
+        public override void SetSafeStaticDefaults()
         {
             // DisplayName.SetDefault("Skeletal Remains (Bones)");
         }
@@ -286,7 +283,7 @@ namespace Redemption.Tiles.Natural
     public class SkeletonRemains5 : PlaceholderTile
     {
         public override string Texture => Redemption.PLACEHOLDER_TEXTURE;
-        public override void SetStaticDefaults()
+        public override void SetSafeStaticDefaults()
         {
             // DisplayName.SetDefault("Skeletal Remains (Wall Sitting)");
         }
@@ -300,7 +297,7 @@ namespace Redemption.Tiles.Natural
     public class SkeletonRemains6 : PlaceholderTile
     {
         public override string Texture => Redemption.PLACEHOLDER_TEXTURE;
-        public override void SetStaticDefaults()
+        public override void SetSafeStaticDefaults()
         {
             // DisplayName.SetDefault("Skeletal Remains (Family Guy Death Pose)");
         }
@@ -314,7 +311,7 @@ namespace Redemption.Tiles.Natural
     public class SkeletonRemains7 : PlaceholderTile
     {
         public override string Texture => Redemption.PLACEHOLDER_TEXTURE;
-        public override void SetStaticDefaults()
+        public override void SetSafeStaticDefaults()
         {
             // DisplayName.SetDefault("Skeletal Remains (Headless)");
         }

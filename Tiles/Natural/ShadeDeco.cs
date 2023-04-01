@@ -21,7 +21,6 @@ namespace Redemption.Tiles.Natural
             DustType = ModContent.DustType<ShadestoneDust>();
             AddMapEntry(new Color(59, 61, 87));
             AnimationFrameHeight = 36;
-            ItemDrop = -1;
         }
         public override void AnimateTile(ref int frame, ref int frameCounter)
         {
@@ -48,7 +47,6 @@ namespace Redemption.Tiles.Natural
             TileObjectData.addTile(Type);
             DustType = ModContent.DustType<ShadestoneDust>();
             AddMapEntry(new Color(59, 61, 87));
-            ItemDrop = -1;
         }
         public override void NumDust(int i, int j, bool fail, ref int num) => num = fail ? 1 : 3;
     }
@@ -65,7 +63,6 @@ namespace Redemption.Tiles.Natural
             TileObjectData.addTile(Type);
             DustType = ModContent.DustType<ShadestoneDust>();
             AddMapEntry(new Color(30, 30, 30));
-            ItemDrop = -1;
         }
         public override void NumDust(int i, int j, bool fail, ref int num) => num = fail ? 1 : 3;
     }
@@ -89,7 +86,6 @@ namespace Redemption.Tiles.Natural
             TileObjectData.addTile(Type);
             DustType = ModContent.DustType<ShadestoneDust>();
             AddMapEntry(new Color(30, 30, 30));
-            ItemDrop = -1;
         }
         public override void NumDust(int i, int j, bool fail, ref int num) => num = fail ? 1 : 3;
     }
@@ -113,7 +109,6 @@ namespace Redemption.Tiles.Natural
             TileObjectData.addTile(Type);
             DustType = ModContent.DustType<ShadestoneDust>();
             AddMapEntry(new Color(30, 30, 30));
-            ItemDrop = -1;
         }
         public override void NumDust(int i, int j, bool fail, ref int num) => num = fail ? 1 : 3;
     }
@@ -137,7 +132,6 @@ namespace Redemption.Tiles.Natural
             TileObjectData.addTile(Type);
             DustType = ModContent.DustType<ShadestoneDust>();
             AddMapEntry(new Color(30, 30, 30));
-            ItemDrop = -1;
         }
         public override void NumDust(int i, int j, bool fail, ref int num) => num = fail ? 1 : 3;
     }
@@ -161,7 +155,6 @@ namespace Redemption.Tiles.Natural
             TileObjectData.addTile(Type);
             DustType = ModContent.DustType<ShadestoneDust>();
             AddMapEntry(new Color(30, 30, 30));
-            ItemDrop = -1;
         }
         public override void NumDust(int i, int j, bool fail, ref int num) => num = fail ? 1 : 3;
     }
@@ -185,7 +178,6 @@ namespace Redemption.Tiles.Natural
             TileObjectData.addTile(Type);
             DustType = ModContent.DustType<ShadestoneDust>();
             AddMapEntry(new Color(30, 30, 30));
-            ItemDrop = -1;
         }
         public override void NumDust(int i, int j, bool fail, ref int num) => num = fail ? 1 : 3;
     }
@@ -208,7 +200,6 @@ namespace Redemption.Tiles.Natural
             TileObjectData.addTile(Type);
             DustType = ModContent.DustType<ShadestoneDust>();
             AddMapEntry(new Color(30, 30, 30));
-            ItemDrop = -1;
         }
         public override void NumDust(int i, int j, bool fail, ref int num) => num = fail ? 1 : 3;
     }

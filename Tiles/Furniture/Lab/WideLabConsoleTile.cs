@@ -29,10 +29,9 @@ namespace Redemption.Tiles.Furniture.Lab
             DustType = DustID.Electric;
             MinPick = 500;
             MineResist = 3f;
-            ItemDrop = -1;
             LocalizedText name = CreateMapEntryName();
             // name.SetDefault("Wide Laboratory Console");
-            AddMapEntry(new Color(0, 187, 240));
+            AddMapEntry(new Color(0, 187, 240), name);
             AnimationFrameHeight = 36;
         }
         public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)
@@ -58,7 +57,7 @@ namespace Redemption.Tiles.Furniture.Lab
     public class WideLabConsole : PlaceholderTile
     {
         public override string Texture => Redemption.PLACEHOLDER_TEXTURE;
-        public override void SetStaticDefaults()
+        public override void SetSafeStaticDefaults()
         {
             // DisplayName.SetDefault("Wide Laboratory Console");
             // Tooltip.SetDefault("[c/ff0000:Unbreakable]");

@@ -30,7 +30,6 @@ namespace Redemption.Tiles.Furniture.Lab
             DustType = ModContent.DustType<LabPlatingDust>();
             MinPick = 500;
             MineResist = 13f;
-            ItemDrop = -1;
             LocalizedText name = CreateMapEntryName();
             // name.SetDefault("Broken Laboratory Door");
             AddMapEntry(new Color(189, 191, 200), name);
@@ -66,7 +65,7 @@ namespace Redemption.Tiles.Furniture.Lab
     public class BrokenLabBackDoor : PlaceholderTile
     {
         public override string Texture => Redemption.PLACEHOLDER_TEXTURE;
-        public override void SetStaticDefaults()
+        public override void SetSafeStaticDefaults()
         {
             // DisplayName.SetDefault("Broken Laboratory Back Door");
             // Tooltip.SetDefault("[c/ff0000:Unbreakable (500% Pickaxe Power)]");

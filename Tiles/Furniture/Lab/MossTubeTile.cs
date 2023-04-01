@@ -30,7 +30,6 @@ namespace Redemption.Tiles.Furniture.Lab
             DustType = DustID.Glass;
             MinPick = 300;
             MineResist = 12f;
-            ItemDrop = -1;
             LocalizedText name = CreateMapEntryName();
             // name.SetDefault("Mossy Laboratory Tube");
             AddMapEntry(new Color(34, 168, 81), name);
@@ -41,7 +40,7 @@ namespace Redemption.Tiles.Furniture.Lab
     public class MossTube : PlaceholderTile
     {
         public override string Texture => Redemption.PLACEHOLDER_TEXTURE;
-        public override void SetStaticDefaults()
+        public override void SetSafeStaticDefaults()
         {
             // DisplayName.SetDefault("Mossy Laboratory Tube");
         }

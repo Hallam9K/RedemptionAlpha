@@ -12,6 +12,7 @@ namespace Redemption.Items.Placeable.Furniture.Lab
         {
             // DisplayName.SetDefault("Laboratory Back Door");
             // Tooltip.SetDefault("[c/ff0000:Unbreakable (500% Pickaxe Power)]");
+            ItemID.Sets.DisableAutomaticPlaceableDrop[Type] = true;
         }
         public override void SetDefaults()
         {

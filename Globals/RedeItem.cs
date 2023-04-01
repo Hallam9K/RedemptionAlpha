@@ -331,7 +331,7 @@ namespace Redemption.Globals
             }
             if (!RedeConfigClient.Instance.ElementDisable && item.HasElementItem(ElementID.Explosive))
             {
-                TooltipLine explodeLine = new(Mod, "ExplodeBonus", "Explosive Bonus: Deals quadruple damage to Guard Points") { OverrideColor = Colors.RarityOrange };
+                TooltipLine explodeLine = new(Mod, "ExplodeBonus", "Explosive Bonus: Deals double damage to Guard Points and penetrates through defense") { OverrideColor = Colors.RarityOrange };
                 tooltips.Add(explodeLine);
             }
 

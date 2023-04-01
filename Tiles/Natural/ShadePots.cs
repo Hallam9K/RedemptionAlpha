@@ -34,7 +34,6 @@ namespace Redemption.Tiles.Natural
             TileObjectData.addTile(Type);
             DustType = ModContent.DustType<ShadestoneDust>();
             HitSound = SoundID.Shatter;
-            ItemDrop = -1;
             AddMapEntry(new Color(140, 140, 170), Language.GetText("MapObject.Pot"));
         }
         public override void NumDust(int i, int j, bool fail, ref int num) => num = fail ? 1 : 3;
@@ -152,7 +151,7 @@ namespace Redemption.Tiles.Natural
     public class ShadePotsItem : PlaceholderTile
     {
         public override string Texture => Redemption.PLACEHOLDER_TEXTURE;
-        public override void SetStaticDefaults()
+        public override void SetSafeStaticDefaults()
         {
             // DisplayName.SetDefault("Shadestone Pot");
         }

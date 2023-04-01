@@ -37,9 +37,7 @@ namespace Redemption.Tiles.Furniture.Lab
             AddToArray(ref TileID.Sets.RoomNeeds.CountsAsTable);
 
             // Etc
-            LocalizedText name = CreateMapEntryName();
-            // name.SetDefault("Mossy Laboratory Table");
-            AddMapEntry(new Color(189, 191, 200), name);
+            AddMapEntry(new Color(189, 191, 200), Language.GetText("MapObject.Table"));
         }
 
         public override void NumDust(int i, int j, bool fail, ref int num) => num = fail ? 1 : 3;
@@ -47,7 +45,7 @@ namespace Redemption.Tiles.Furniture.Lab
     public class MossyLabTable : PlaceholderTile
     {
         public override string Texture => Redemption.PLACEHOLDER_TEXTURE;
-        public override void SetStaticDefaults()
+        public override void SetSafeStaticDefaults()
         {
             // DisplayName.SetDefault("Mossy Laboratory Table");
         }

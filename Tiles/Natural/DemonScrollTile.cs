@@ -21,7 +21,6 @@ namespace Redemption.Tiles.Natural
 			// name.SetDefault("Forbidden Ritual");
             AddMapEntry(new Color(180, 141, 119), name);
             ItemDrop = ModContent.ItemType<DemonScroll>();
-            AddToArray(ref TileID.Sets.RoomNeeds.CountsAsTorch);
         }
 
         public override bool RightClick(int i, int j)

@@ -7,10 +7,12 @@ namespace Redemption
     public class PlaceholderTile : ModItem
     {
         public override string Texture => Redemption.PLACEHOLDER_TEXTURE;
+        public virtual void SetSafeStaticDefaults() { }
         public override void SetStaticDefaults()
         {
             // DisplayName.SetDefault("null");
             ItemID.Sets.DisableAutomaticPlaceableDrop[Type] = true;
+            SetSafeStaticDefaults();
         }
 
         public override void SetDefaults()

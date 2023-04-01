@@ -28,7 +28,6 @@ namespace Redemption.Tiles.Furniture.Lab
             DustType = ModContent.DustType<LabPlatingDust>();
             MinPick = 500;
             MineResist = 3f;
-            ItemDrop = -1;
             AddMapEntry(new Color(23, 24, 25));
         }
         public override bool CanExplode(int i, int j) => false;
@@ -36,7 +35,7 @@ namespace Redemption.Tiles.Furniture.Lab
     public class OpenVent : PlaceholderTile
     {
         public override string Texture => Redemption.PLACEHOLDER_TEXTURE;
-        public override void SetStaticDefaults()
+        public override void SetSafeStaticDefaults()
         {
             // DisplayName.SetDefault("Open Vent");
             // Tooltip.SetDefault("[c/ff0000:Unbreakable (500% Pickaxe Power)]");

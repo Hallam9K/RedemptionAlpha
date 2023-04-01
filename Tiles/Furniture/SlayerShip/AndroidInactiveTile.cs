@@ -35,7 +35,6 @@ namespace Redemption.Tiles.Furniture.SlayerShip
             HitSound = SoundID.Tink;
             MinPick = 200;
             MineResist = 6f;
-            ItemDrop = -1;
             LocalizedText name = CreateMapEntryName();
             // name.SetDefault("Inactive Android Mk.I");
             AddMapEntry(new Color(189, 191, 200), name);
@@ -56,7 +55,7 @@ namespace Redemption.Tiles.Furniture.SlayerShip
     public class AndroidInactive : PlaceholderTile
     {
         public override string Texture => Redemption.PLACEHOLDER_TEXTURE;
-        public override void SetStaticDefaults()
+        public override void SetSafeStaticDefaults()
         {
             // DisplayName.SetDefault("Inactive Android");
         }

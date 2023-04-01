@@ -55,9 +55,7 @@ namespace Redemption.Tiles.Furniture.Misc
 
 			// Etc
 			LocalizedText name = CreateMapEntryName();
-
 			// name.SetDefault("Torch");
-
 			AddMapEntry(new Color(255, 199, 199), name);
 
 			// Assets

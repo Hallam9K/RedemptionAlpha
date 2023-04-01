@@ -27,7 +27,6 @@ namespace Redemption.Tiles.Natural
             AddMapEntry(new Color(50, 220, 50), name);
             HitSound = SoundID.Item27;
             DustType = DustID.GreenTorch;
-            ItemDrop = -1;
             Main.tileLighted[Type] = true;
         }
 

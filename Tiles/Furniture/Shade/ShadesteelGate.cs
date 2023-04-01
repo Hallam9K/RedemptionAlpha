@@ -99,7 +99,6 @@ namespace Redemption.Tiles.Furniture.Shade
             AddMapEntry(new Color(83, 87, 123), name);
             MinPick = 500;
             MineResist = 12f;
-            ItemDrop = -1;
             DustType = ModContent.DustType<ShadesteelDust>();
             AdjTiles = new int[] { TileID.OpenDoor };
         }
@@ -121,7 +120,7 @@ namespace Redemption.Tiles.Furniture.Shade
     public class ShadesteelGate : PlaceholderTile
     {
         public override string Texture => Redemption.PLACEHOLDER_TEXTURE;
-        public override void SetStaticDefaults()
+        public override void SetSafeStaticDefaults()
         {
             // Tooltip.SetDefault("[c/ff0000:Unbreakable (500% Pickaxe Power)]");
         }

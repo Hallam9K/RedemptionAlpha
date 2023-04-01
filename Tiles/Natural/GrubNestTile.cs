@@ -24,7 +24,6 @@ namespace Redemption.Tiles.Natural
             LocalizedText name = CreateMapEntryName();
             // name.SetDefault("Grub Nest");
             AddMapEntry(new Color(40, 60, 40), name);
-            ItemDrop = -1;
         }
         public override void NumDust(int i, int j, bool fail, ref int num)
         {

@@ -34,7 +34,7 @@ namespace Redemption.Tiles.Furniture.Lab
             MineResist = 7f;
             LocalizedText name = CreateMapEntryName();
             // name.SetDefault("Crystallized Corpse");
-            AddMapEntry(new Color(54, 193, 59));
+            AddMapEntry(new Color(54, 193, 59), name);
         }
         public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)
         {

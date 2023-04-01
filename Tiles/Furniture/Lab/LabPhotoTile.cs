@@ -31,10 +31,9 @@ namespace Redemption.Tiles.Furniture.Lab
             TileObjectData.addTile(Type);
             MinPick = 10;
             MineResist = 7f;
-            ItemDrop = -1;
             LocalizedText name = CreateMapEntryName();
             // name.SetDefault("Broken Photo");
-            AddMapEntry(new Color(200, 200, 200));
+            AddMapEntry(new Color(200, 200, 200), name);
         }
         public override bool HasSmartInteract(int i, int j, SmartInteractScanSettings settings) => true;
         public override void MouseOver(int i, int j)
@@ -73,7 +72,7 @@ namespace Redemption.Tiles.Furniture.Lab
     public class LabPhoto : PlaceholderTile
     {
         public override string Texture => Redemption.PLACEHOLDER_TEXTURE;
-        public override void SetStaticDefaults()
+        public override void SetSafeStaticDefaults()
         {
             // DisplayName.SetDefault("Laboratory Photo");
             // Tooltip.SetDefault("[c/ff0000:Unbreakable]");

@@ -37,10 +37,7 @@ namespace Redemption.Tiles.Trees
             TileObjectData.newTile.StyleMultiplier = 3;
 
             TileObjectData.addTile(Type);
-
-            LocalizedText name = CreateMapEntryName();
-            // name.SetDefault("Elder Sapling");
-            AddMapEntry(new Color(86, 70, 62), name);
+            AddMapEntry(new Color(86, 70, 62), Language.GetText("MapObject.Sapling"));
 
             TileID.Sets.TreeSapling[Type] = true;
             TileID.Sets.CommonSapling[Type] = true;

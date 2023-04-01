@@ -126,7 +126,7 @@ namespace Redemption.Tiles.Plants
     public class NooserootSmallItem : PlaceholderTile
     {
         public override string Texture => Redemption.PLACEHOLDER_TEXTURE;
-        public override void SetStaticDefaults()
+        public override void SetSafeStaticDefaults()
         {
             // DisplayName.SetDefault("Small Nooseroot");
         }
@@ -139,7 +139,7 @@ namespace Redemption.Tiles.Plants
     public class NooserootMediumItem : PlaceholderTile
     {
         public override string Texture => Redemption.PLACEHOLDER_TEXTURE;
-        public override void SetStaticDefaults()
+        public override void SetSafeStaticDefaults()
         {
             // DisplayName.SetDefault("Medium Nooseroot");
         }
@@ -152,7 +152,7 @@ namespace Redemption.Tiles.Plants
     public class NooserootLargeItem : PlaceholderTile
     {
         public override string Texture => Redemption.PLACEHOLDER_TEXTURE;
-        public override void SetStaticDefaults()
+        public override void SetSafeStaticDefaults()
         {
             // DisplayName.SetDefault("Large Nooseroot");
         }

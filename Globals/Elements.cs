@@ -354,6 +354,15 @@ namespace Redemption.Globals
     {
         public override bool InstancePerEntity => true;
         public int[] OverrideElement = new int[16];
+
+        public override void ModifyHitNPC(Projectile projectile, Terraria.NPC target, ref Terraria.NPC.HitModifiers modifiers)
+        {
+            if (!RedeConfigClient.Instance.ElementDisable)
+            {
+                if (projectile.HasElement(ElementID.Explosive))
+                    modifiers.ScalingArmorPenetration += .2f;
+            }
+        }
     }
     public class ElementalItem : GlobalItem
     {

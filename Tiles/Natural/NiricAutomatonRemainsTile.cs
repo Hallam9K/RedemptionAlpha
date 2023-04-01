@@ -38,10 +38,7 @@ namespace Redemption.Tiles.Natural
             MinPick = 500;
             MineResist = 50;
             HitSound = SoundID.Tink;
-            LocalizedText name = CreateMapEntryName();
-            // name.SetDefault("Automaton Remains");
             AddMapEntry(new Color(117, 117, 126));
-            ItemDrop = -1;
         }
         public override void NearbyEffects(int i, int j, bool closer)
         {
@@ -127,7 +124,7 @@ namespace Redemption.Tiles.Natural
     public class NiricAutomatonRemains : PlaceholderTile
     {
         public override string Texture => Redemption.PLACEHOLDER_TEXTURE;
-        public override void SetStaticDefaults()
+        public override void SetSafeStaticDefaults()
         {
             // DisplayName.SetDefault("Niric Automaton Remains");
         }

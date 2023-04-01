@@ -28,7 +28,6 @@ namespace Redemption.Tiles.Furniture.Lab
             DustType = ModContent.DustType<LabPlatingDust>();
             MinPick = 500;
             MineResist = 7f;
-            ItemDrop = -1;
             LocalizedText name = CreateMapEntryName();
             // name.SetDefault("Janitor Equipment");
             AddMapEntry(new Color(48, 63, 73), name);
@@ -39,7 +38,7 @@ namespace Redemption.Tiles.Furniture.Lab
     public class JanitorEquipment : PlaceholderTile
     {
         public override string Texture => Redemption.PLACEHOLDER_TEXTURE;
-        public override void SetStaticDefaults()
+        public override void SetSafeStaticDefaults()
         {
             // DisplayName.SetDefault("Janitor Equipment");
             // Tooltip.SetDefault("[c/ff0000:Unbreakable (500% Pickaxe Power)]");

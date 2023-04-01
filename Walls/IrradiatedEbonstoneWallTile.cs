@@ -18,7 +18,7 @@ namespace Redemption.Walls
     public class IrradiatedEbonstoneWall : PlaceholderTile
     {
         public override string Texture => Redemption.PLACEHOLDER_TEXTURE;
-        public override void SetStaticDefaults()
+        public override void SetSafeStaticDefaults()
         {
             // Tooltip.SetDefault("[c/ff0000:Unbreakable]");
         }

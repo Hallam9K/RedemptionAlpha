@@ -30,7 +30,6 @@ namespace Redemption.Tiles.Furniture.Lab
             DustType = ModContent.DustType<LabPlatingDust>();
             MinPick = 500;
             MineResist = 13f;
-            ItemDrop = -1;
             LocalizedText name = CreateMapEntryName();
             // name.SetDefault("Laboratory Door");
             AddMapEntry(new Color(189, 191, 200), name);

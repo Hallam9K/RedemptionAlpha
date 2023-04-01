@@ -31,9 +31,6 @@ namespace Redemption.Tiles.Furniture.Lab
             MinPick = 10;
             MineResist = 5f;
             HitSound = SoundID.NPCHit13;
-            ItemDrop = -1;
-            LocalizedText name = CreateMapEntryName();
-            // name.SetDefault("Baby Infection Hive");
             AddMapEntry(new Color(54, 193, 59));
             AnimationFrameHeight = 18;
         }
@@ -63,7 +60,7 @@ namespace Redemption.Tiles.Furniture.Lab
     public class BabyHive : PlaceholderTile
     {
         public override string Texture => Redemption.PLACEHOLDER_TEXTURE;
-        public override void SetStaticDefaults()
+        public override void SetSafeStaticDefaults()
         {
             // DisplayName.SetDefault("Baby Infection Hive");
         }
