@@ -31,7 +31,16 @@ namespace Redemption.Tiles.Tiles
             MineResist = 0.1f;
             DustType = DustID.Ash;
             ItemDrop = ModContent.ItemType<IrradiatedDirt>();
-		}
+        }
+        public override void FloorVisuals(Player player)
+        {
+            if (player.velocity.X != 0f && Main.rand.NextBool(20))
+            {
+                Dust dust = Dust.NewDustDirect(player.Bottom, 0, 0, DustType, 0f, -Main.rand.NextFloat(2f));
+                dust.noGravity = true;
+                dust.fadeIn = 1f;
+            }
+        }
         public override void KillTile(int i, int j, ref bool fail, ref bool effectOnly, ref bool noItem)
         {
             if (!fail)

@@ -42,8 +42,16 @@ namespace Redemption.Tiles.Tiles
             name.SetDefault("Plant Matter");
             AddMapEntry(new Color(109, 155, 67), name);
 		}
-
-		public override void NumDust(int i, int j, bool fail, ref int num)
+        public override void FloorVisuals(Player player)
+        {
+            if (player.velocity.X != 0f && Main.rand.NextBool(20))
+            {
+                Dust dust = Dust.NewDustDirect(player.Bottom, 0, 0, DustType, 0f, -Main.rand.NextFloat(2f));
+                dust.noGravity = true;
+                dust.fadeIn = 1f;
+            }
+        }
+        public override void NumDust(int i, int j, bool fail, ref int num)
 		{
 			num = fail ? 1 : 3;
 		}

@@ -26,7 +26,16 @@ namespace Redemption.Tiles.Tiles
             ModTranslation name = CreateMapEntryName();
             name.SetDefault("Hardened Sludge");
             AddMapEntry(new Color(54, 193, 59), name);
-		}
+        }
+        public override void FloorVisuals(Player player)
+        {
+            if (player.velocity.X != 0f && Main.rand.NextBool(20))
+            {
+                Dust dust = Dust.NewDustDirect(player.Bottom, 0, 0, DustType, 0f, -Main.rand.NextFloat(2f));
+                dust.noGravity = true;
+                dust.fadeIn = 1f;
+            }
+        }
         public override void KillTile(int i, int j, ref bool fail, ref bool effectOnly, ref bool noItem)
         {
             if (Main.rand.NextBool(6) && !fail && Main.netMode != NetmodeID.MultiplayerClient)

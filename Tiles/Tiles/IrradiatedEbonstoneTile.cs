@@ -45,6 +45,15 @@ namespace Redemption.Tiles.Tiles
             HitSound = SoundID.Tink;
             AddMapEntry(new Color(59, 58, 64));
         }
+        public override void FloorVisuals(Player player)
+        {
+            if (player.velocity.X != 0f && Main.rand.NextBool(20))
+            {
+                Dust dust = Dust.NewDustDirect(player.Bottom, 0, 0, DustType, 0f, -Main.rand.NextFloat(2f));
+                dust.noGravity = true;
+                dust.fadeIn = 1f;
+            }
+        }
         public override void KillTile(int i, int j, ref bool fail, ref bool effectOnly, ref bool noItem)
         {
             Player player = Main.LocalPlayer;

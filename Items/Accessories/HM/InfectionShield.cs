@@ -135,7 +135,6 @@ namespace Redemption.Items.Accessories.HM
             if (DashDelay > 0)
                 DashDelay--;
 
-            Player.eocDash = 0;
             if (DashTimer > 0)
             {
                 Player.eocDash = DashTimer - 1;

@@ -20,8 +20,8 @@ namespace Redemption.Items.Weapons.PreHM.Magic
         public override void SetDefaults()
         {
             Item.mana = 8;
-            Item.width = 28;
-            Item.height = 28;
+            Item.width = 30;
+            Item.height = 34;
             Item.useTime = 40;
             Item.useAnimation = 40;
             Item.useStyle = ItemUseStyleID.HoldUp;
