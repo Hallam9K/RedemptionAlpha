@@ -115,7 +115,7 @@ namespace Redemption.Items.Accessories.PostML
 
             if (DashTimer > 0)
             {
-                Player.eocDash = DashTimer;
+                Player.eocDash = DashTimer - 1;
                 Player.armorEffectDrawShadowEOCShield = true;
                 if (DashTimer > 5)
                 {

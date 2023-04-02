@@ -6,6 +6,7 @@ using Terraria.ID;
 using Redemption.Tiles.Plants;
 using Redemption.Dusts.Tiles;
 using Redemption.Items.Tools.PostML;
+using Redemption.Dusts;
 
 namespace Redemption.Tiles.Tiles
 {
@@ -29,6 +30,15 @@ namespace Redemption.Tiles.Tiles
             LocalizedText name = CreateMapEntryName();
             // name.SetDefault("Mossy Shadestone Brick");
             AddMapEntry(new Color(22, 26, 35));
+        }
+        public override void FloorVisuals(Player player)
+        {
+            if (player.velocity.X != 0f && Main.rand.NextBool(20))
+            {
+                Dust dust = Dust.NewDustDirect(player.Bottom, 0, 0, ModContent.DustType<VoidFlame>(), 0f, -Main.rand.NextFloat(2f));
+                dust.noGravity = true;
+                dust.fadeIn = 1f;
+            }
         }
         public override void NumDust(int i, int j, bool fail, ref int num) => num = fail ? 1 : 3;
         public override bool CanExplode(int i, int j) => false;
