@@ -154,7 +154,7 @@ namespace Redemption.Globals.Player
             }
             if (Player.InModBiome<LabBiome>())
             {
-                Player.shimmering = false;
+                Player.buffImmune[BuffID.Shimmer] = true;
             }
             // TODO: uncomment once sublib is ported
             /*if (SubworldSystem.IsActive<CSub>())

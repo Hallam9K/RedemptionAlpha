@@ -105,7 +105,7 @@ namespace Redemption.Items.Weapons.HM.Ranged
                         SoundEngine.PlaySound(SoundID.Item61, Projectile.position);
                         SoundEngine.PlaySound(CustomSounds.ShotgunBlast1 with { Pitch = -0.1f }, Projectile.position);
                         for (int i = 0; i < shotNum; i++)
-                            Projectile.NewProjectile(Projectile.GetSource_FromAI(), gunPos, RedeHelper.PolarVector(player.inventory[player.selectedItem].shootSpeed + Main.rand.Next(-4, 5), (Main.MouseWorld - gunPos).ToRotation() + Main.rand.NextFloat(-0.2f, 0.2f)), ModContent.ProjectileType<DAN_Rocket>(), Projectile.damage, Projectile.knockBack, player.whoAmI);
+                            Projectile.NewProjectile(Projectile.GetSource_FromAI(), gunPos, RedeHelper.PolarVector(player.inventory[player.selectedItem].shootSpeed + Main.rand.Next(-4, 5), (Main.MouseWorld - gunPos).ToRotation() + Main.rand.NextFloat(-0.2f, 0.2f)), ModContent.ProjectileType<DAN_Rocket>(), (int)(Projectile.damage * .75f), Projectile.knockBack, player.whoAmI);
 
                         for (int i = 0; i < 10; i++)
                         {
@@ -162,7 +162,7 @@ namespace Redemption.Items.Weapons.HM.Ranged
                                 SoundEngine.PlaySound(SoundID.Item61 with { Pitch = 0.2f }, Projectile.position);
                                 SoundEngine.PlaySound(CustomSounds.ShotgunBlast1 with { Volume = 0.5f, Pitch = 0.2f }, Projectile.position);
 
-                                Projectile.NewProjectile(Projectile.GetSource_FromAI(), gunPos, RedeHelper.PolarVector(player.inventory[player.selectedItem].shootSpeed, Projectile.velocity.ToRotation()), ModContent.ProjectileType<DAN_Rocket>(), (int)(Projectile.damage * .4f), Projectile.knockBack, player.whoAmI, 1);
+                                Projectile.NewProjectile(Projectile.GetSource_FromAI(), gunPos, RedeHelper.PolarVector(player.inventory[player.selectedItem].shootSpeed, Projectile.velocity.ToRotation()), ModContent.ProjectileType<DAN_Rocket>(), (int)(Projectile.damage * .5f), Projectile.knockBack, player.whoAmI, 1);
                                 for (int i = 0; i < 5; i++)
                                 {
                                     int num5 = Dust.NewDust(gunSmokePos, 8, 18, DustID.Smoke, Projectile.velocity.X / 2f, Projectile.velocity.Y / 2f);
