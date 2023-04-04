@@ -17,6 +17,7 @@ namespace Redemption.Projectiles.Magic
         {
             // DisplayName.SetDefault("Rockslide");
             Main.projFrames[Projectile.type] = 4;
+            ProjectileID.Sets.DontCancelChannelOnKill[Type] = true;
             ProjectileID.Sets.TrailCacheLength[Projectile.type] = 6;
             ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
             ElementID.ProjEarth[Type] = true;

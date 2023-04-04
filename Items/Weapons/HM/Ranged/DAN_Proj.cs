@@ -21,14 +21,14 @@ namespace Redemption.Items.Weapons.HM.Ranged
         public override void SetStaticDefaults()
         {
             // DisplayName.SetDefault("D.A.N");
+            ProjectileID.Sets.DontCancelChannelOnKill[Type] = true;
         }
-        public override void SetDefaults()
+        public override void SetSafeDefaults()
         {
             Projectile.width = 110;
             Projectile.height = 44;
             Projectile.friendly = false;
             Projectile.hostile = false;
-            Projectile.tileCollide = false;
             Projectile.penetrate = -1;
             Projectile.DamageType = DamageClass.Ranged;
             Projectile.ignoreWater = true;

@@ -20,6 +20,7 @@ namespace Redemption.Projectiles.Magic
         public override void SetStaticDefaults()
         {
             // DisplayName.SetDefault("Ember");
+            ProjectileID.Sets.DontCancelChannelOnKill[Type] = true;
             ElementID.ProjFire[Type] = true;
         }
         public override void SetDefaults()

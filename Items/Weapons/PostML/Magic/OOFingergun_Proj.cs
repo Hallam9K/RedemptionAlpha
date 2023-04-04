@@ -16,13 +16,12 @@ namespace Redemption.Items.Weapons.PostML.Magic
         {
             // DisplayName.SetDefault("Omega Finger Gun");
         }
-        public override void SetDefaults()
+        public override void SetSafeDefaults()
         {
             Projectile.width = 56;
             Projectile.height = 26;
             Projectile.friendly = false;
             Projectile.hostile = false;
-            Projectile.tileCollide = false;
             Projectile.penetrate = -1;
             Projectile.DamageType = DamageClass.Magic;
             Projectile.ignoreWater = true;

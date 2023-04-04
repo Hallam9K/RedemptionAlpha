@@ -62,7 +62,7 @@ namespace Redemption.Backgrounds
                 float bgParallax = 0.37f + 0.2f - (0.1f * (length - i));
                 int textureSlot = textureSlots[i];
                 Main.instance.LoadBackground(textureSlot);
-                float bgScale = 1.9f;
+                float bgScale = 2f;
                 int bgW = (int)(Main.backgroundWidth[textureSlot] * bgScale);
                 SkyManager.Instance.DrawToDepth(spriteBatch, 1f / bgParallax);
                 float screenOff = typeof(Main).GetFieldValue<float>("screenOff", Main.instance);

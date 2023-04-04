@@ -1,0 +1,6816 @@
+
+Mods: {
+	Redemption: {
+		Achievements: {
+			PZKill: {
+				Name: We’re Gonna Need a Bigger Mop
+				Description: Defeat Kari Johannson, the patient zero of the Xenomite Infection.
+			}
+		}
+
+		Currencies.AntiqueDorulCurrency: antique doruls
+
+		BuffName: {
+			# Cooldowns
+			ErhanCrossCooldown: Holy Shield Cooldown
+			HardlightCooldown: SoS Cooldown
+			SwordRemoteCooldown: Cleaver Remote Cooldown
+			XeniumCooldown: Xenium Cooldown
+			XeniumLanceCooldown: Xenium Lance Cooldown
+			XenomiteCooldown: Xenomite Gas Cooldown
+			RevolverTossCooldown: Revolver Cooldown
+			NoitaBombCooldown: Bomb Cooldown
+			XeniumElectrolaserCooldown: Xenium Electrolaser Cooldown
+			VasaraPendantCooldown: Vasara Pendant Cooldown
+			CruxCardCooldown: Crux Card Cooldown
+			# Debuffs
+			AntibodiesDebuff: Xenomite Antibodies
+			BileDebuff: Burning Acid
+			BlackenedHeartDebuff: Soulless
+			DevilScentedDebuff: Devil Scented
+			DirtyWoundDebuff: Dirty Wound
+			EnsnaredDebuff: Ensnared
+			FatigueDebuff: Fatigue
+			FeverDebuff: Fever
+			FleshCrystalsDebuff: Flesh Crystals
+			GlowingPustulesDebuff: Glowing Pustules
+			GreenRashesDebuff: Green Rashes
+			HairLossDebuff: Hair Loss
+			HazardLaserDebuff: Incinerated!
+			HeadacheDebuff: Headache
+			HeavyRadiationDebuff: Heavy Radiation
+			HemorrhageDebuff: Hemhorraging
+			InfestedDebuff: Infested
+			NauseaDebuff: Nausea
+			NecrosisDebuff: Necrosis
+			PillSickness: Pill Sickness
+			RadiationDebuff: Irradiated
+			RadioactiveFalloutDebuff: Radioactive Fallout
+			ShockDebuff: Shock
+			SkinBurnDebuff: Skin Burn
+			SnippedDebuff: Snipped
+			SpiderSwarmedDebuff: Swarmed!
+			StaticStunDebuff: Static Shock!
+			Stunned2Debuff: Snared!
+			StunnedDebuff: Stunned!
+			BInfectionDebuff: Bacterial Infection
+			# Minions
+			AndroidMinionBuff: Android Minion
+			CorpseSkullBuff: Corpse-Walker Skull
+			CystlingBuff: Cystling
+			ForretBuff: Forret
+			LogStaffBuff: LOG
+			MagmaCubeBuff: Magma Cube
+			TeslaGeneratorBuff: Tesla Field Generator
+			XeniumTurretBuff: Xenium Autoturret
+			MicroshieldCoreBuff: Microshield Core
+			MicroshieldDroneBuff: Microshield Drone
+			HoloMinionBuff: Hologram
+			MoonflareGuardianBuff: Moonflare Guardian
+			NaturePixieBuff: Nature Pixie
+			# Mounts
+			JyrinaMountBuff: Ukko's Steed
+			# Pets
+			BabyRockpileBuff: Baby Rockpile
+			BouquetOfThornsBuff: Bouquet of Thorns
+			CuddlyTeratomaBuff: Cuddly Teratoma
+			ErhanPetBuff: Angel & Devil
+			HalPetBuff: Ham Sandwich
+			KS3PetBuff: Slayer Projector
+			OcciePetBuff: Occie
+			PetChickenBuff: Chicken Pet
+			XenomiteElementalPetBuff: Xenomite Elemental
+			TiedPetBuff: Tied
+			NebPetBuff: Chibi Nebby
+			ToasterPetBuff: Household Heatray
+			MiniGigaporaPetBuff: Mini Gigapora
+			XenoemiaBuff: Xenoemia
+			CleaverPetBuff: Omini Cleaver
+		}
+
+		BuffDescription: {
+			# Cooldowns
+			ErhanCrossCooldown: The holy shield has been broken
+			HardlightCooldown: Hey, the ship can't help you all the time.
+			SwordRemoteCooldown: You cannot use the Cleaver Remote
+			XeniumCooldown: Your shoulder launcher is reloading
+			XeniumLanceCooldown: The lance's battery is recharging
+			XenomiteCooldown: Your gas container is refilling
+			RevolverTossCooldown: You can't toss your revolver
+			NoitaBombCooldown: You cannot use the Pommisauva
+			XeniumElectrolaserCooldown: The electrolaser's battery is recharging
+			VasaraPendantCooldown: The Vasara Pendant feels dull
+			CruxCardCooldown: You cannot summon spirits
+			# Debuffs
+			AntibodiesDebuff: Strong antibodies flood your blood and fight off any new infection that may come.
+			BileDebuff: Reduced defence
+			BlackenedHeartDebuff: ...
+			DevilScentedDebuff: You smell delicious
+			DirtyWoundDebuff: Better wash it
+			EnsnaredDebuff: Tangled in thorns
+			FatigueDebuff: You are overwhelmed with tiredness.
+			FeverDebuff: You feel extremely ill.
+			FleshCrystalsDebuff: ... The pain... it's... unbearable
+			GlowingPustulesDebuff: ... I have to carry on my work.
+			GreenRashesDebuff: ... Really itchy
+			HairLossDebuff: Your hair is gone!
+			HazardLaserDebuff: You are being lasered!
+			HeadacheDebuff: Sudden and pounding pain from the inside of your skull.
+			HeavyRadiationDebuff: Stats greatly decreased due to radioactivity
+			HemorrhageDebuff: The crystals... they're sharp... it hurts to move...
+			InfestedDebuff: Larvae are eating away at your flesh
+			NauseaDebuff: You feel sick
+			NecrosisDebuff: My extremities... numb... black and dead...
+			PillSickness: You feel sick
+			RadiationDebuff: You are dying of radiation!
+			RadioactiveFalloutDebuff: Stats greatly decreased due to radioactivity
+			ShockDebuff: What have I become..?
+			SkinBurnDebuff: Your skin is burning!
+			SnippedDebuff: Halved wing time
+			SpiderSwarmedDebuff: No! Not the spiders! Aaaaah!
+			StaticStunDebuff: You are stunned by electricity!
+			Stunned2Debuff: You are stunned!
+			StunnedDebuff: You are stunned!
+			BInfectionDebuff: Yucky!
+			# Minions
+			AndroidMinionBuff: A small android will fight for you
+			CorpseSkullBuff: The dried up skull will fight for you
+			CystlingBuff: A cystling will infect others for you
+			ForretBuff: The horned ferret will fight for you
+			LogStaffBuff: A small log, perhaps a tiny squirrel is hiding inside it
+			MagmaCubeBuff: The molten jelly cube will fight for you
+			TeslaGeneratorBuff: A small generator is creating a tesla field
+			XeniumTurretBuff: Pewpewpewpewpewpew
+			MicroshieldCoreBuff: A tiny shield core is defending you
+			MicroshieldDroneBuff: A microshield drone is defending you
+			HoloMinionBuff: Wait, how do holograms hit things?
+			MoonflareGuardianBuff: A Moonflare Guardian will fight for you
+			NaturePixieBuff: A Nature Pixie will annoy enemies for you
+			# Mounts
+			JyrinaMountBuff: Is that the sound of an approaching thunderstorm I hear?
+			# Pets
+			BabyRockpileBuff: Never seen a pile of rocks dance before
+			BouquetOfThornsBuff: A gift for the newly divorced
+			CuddlyTeratomaBuff: Don't stand still for too long
+			ErhanPetBuff: They're bickering about something non-stop
+			HalPetBuff: '''"Fear me"'''
+			KS3PetBuff: He's bored and needs some entertainment
+			OcciePetBuff: Octavia's kitty cat!
+			PetChickenBuff: Cluck cluck
+			XenomiteElementalPetBuff: Cute.
+			TiedPetBuff: '''"Spooked"'''
+			NebPetBuff: Nebbity Nobbity Nibbity Nuu, this small star gril be followin' you
+			ToasterPetBuff: Its heating filament is inadequate to its needs
+			MiniGigaporaPetBuff: You know the drill
+			XenoemiaBuff: A walking infection
+			CleaverPetBuff: *Loud metal clank noise*
+		}
+
+		BiomeName: {
+			WastelandPurityBiome: Wasteland
+			WastelandSnowBiome: Snow Wasteland
+			WastelandDesertBiome: Desert Wasteland
+			WastelandCorruptionBiome: Corrupt Wasteland
+			WastelandCrimsonBiome: Crimson Wasteland
+			LabBiome: Abandoned Laboratory
+			SlayerShipBiome: Slayer's Crashed Cruiser
+			LidenBiome: Liden
+			LidenBiomeAlpha: The Alpha
+			LidenBiomeOmega: The Omega
+			FowlMorningBiome: Fowl Morning
+		}
+
+		TownNPCMood: {
+			Daerel: {
+				Content: I'm rather content right now.
+				NoHome: Hey, I'd quite like a roof under my head if that's alright with you.
+				LoveSpace: I like the space I have here, plenty of room to practice my archery.
+				FarFromHome: Could you please get me back to my house? This land is quite scary.
+				DislikeCrowded: I'm somewhat of an introvert, so all these people near me is quite unnerving.
+				HateCrowded: I'm somewhat of an introvert, so all these people near me is quite unnerving.
+				LikeBiome: I think {BiomeName} is a very nice place, I hardly see any snow where I was from.
+				LoveBiome: I think {BiomeName} is perfect, calm and tranquil.
+				DislikeBiome: I don't really like {BiomeName}, I'd hate to have a run-in with skeletons!
+				HateBiome: Why'd you put me in {BiomeName}? You know how hostile jungles are!?
+				LikeNPC: "{NPCName} is good company, she's great at styling my hair too... That's not weird, right?"
+				LoveNPC: Me and {NPCName} are great friends, thank you for letting us live in the same town.
+				DislikeNPC: "{NPCName} keeps trying to get me to buy his dirt."
+				HateNPC: Psst, could you move {NPCName} far away from me, I'm already super broke as is.
+			}
+
+			Fallen: {
+				Content: Nice little place ya got here.
+				NoHome: I'd prefer to have a house.
+				LoveSpace: This place is a wee bit spacious, not complaining though, I quite like it.
+				FarFromHome: Could ya take me back to my home?
+				DislikeCrowded: All these humans are makin' my bones rattle.
+				HateCrowded: All these humans are makin' my bones rattle.
+				LikeBiome: Aah, {BiomeName} reminds me of when I was still alive in Gathuram. Good times they were.
+				LoveBiome: The caverns are perfect for us Fallen, not many humans come and go here.
+				DislikeBiome: I'm staying in {BiomeName}? Not my preferred place to live, I'd hate to have a run-in with aggressive humans!
+				HateBiome: I hate it here, {BiomeName} has some holy energy in it makin' my flesh crawl.
+				LikeNPC: "{NPCName} got somethin' about him I like."
+				LoveNPC: "{NPCName} sells some nifty gadgets, knows how to rip people off too. I like that."
+				DislikeNPC: "{NPCName} keeps lookin' at me with suspicion. Probably wants to 'purify' me."
+				HateNPC: "{NPCName} keeps thinking I'm some dying old man, insisting that she'll heal me. Please get me away from her."
+			}
+
+			Newb: {
+				Content: Me like here!
+				NoHome: Where home?
+				LoveSpace: So little people, yay!
+				FarFromHome: Me lost, can you find home?
+				DislikeCrowded: Too many faces!
+				HateCrowded: Too many faces!
+				LikeBiome: Me like {BiomeName}.
+				LoveBiome: Me love {BiomeName}! It give memory of... Uh..
+				DislikeBiome: Too boring here, me hate sand!
+				HateBiome: Me feel {BiomeName} make me sad!
+				LikeNPC: Me like {NPCName}!
+				LoveNPC: "{NPCName} knows magic like me!"
+				DislikeNPC: I feel evil within {NPCName}, very bad!
+				HateNPC: My hatred towards {NPCName} is beyond your mortal comprehension.
+			}
+
+			Zephos: {
+				Content: I'm alright.
+				NoHome: Yo, mind if you give me a house to stay in?
+				LoveSpace: This place is super spacious, good for practicing my swordsmanship!
+				FarFromHome: Yo bro, I can't find my house, you wanna help me out?
+				DislikeCrowded: Is it crowded in here or what!
+				HateCrowded: Is it crowded in here or what!
+				LikeBiome: I think {BiomeName} is a nice place, I can hear the birds singing and flowers blooming.
+				LoveBiome: Staying at {BiomeName} reminds me of when I was a young pirate, sailing the seas!
+				DislikeBiome: Not a fan of {BiomeName}, I'd rather live on the surface.
+				HateBiome: It's so cold here, I'm shaking in my boots!
+				LikeNPC: "{NPCName} is cool, I'd like to sail the seas with him sometime."
+				LoveNPC: "{NPCName} and I are great friends, so living near each other is great!"
+				DislikeNPC: "{NPCName} wants to get his greedy little fingers on my money!"
+				HateNPC: "{NPCName} will never take my money! NEVER!!"
+			}
+
+			TBot: {
+				Content: Feeling rather content, thank you for asking.
+				NoHome: I don't like being exposed to the elements. Do you have any housing or shelter I could inhabit for now?
+				LoveSpace: It's rather quiet around here.
+				FarFromHome: ...I believe we're very lost. I'm not familiar with our surroundings.
+				DislikeCrowded: Other tenants seem unhappy with the amount of crowding here, and frankly, so am I.
+				HateCrowded: Other tenants seem unhappy with the amount of crowding here, and frankly, so am I.
+				LikeBiome: This environment is mildly pleasant.
+				LoveBiome: I like this environment. It's very pleasant.
+				DislikeBiome: My current environment is rather... undesirable.
+				HateBiome: ...Just like home. I really do not like this environment.
+				LikeNPC: "{NPCName} and I have things in common. We get along well."
+				LoveNPC: "{NPCName}'s knowledge on medicine rivals that of mine! It's really impressive."
+				DislikeNPC: I find {NPCName} rather unsettling.
+				HateNPC: "{NPCName} reminds me of home. I'd rather not be reminded of that place."
+			}
+		}
+
+		Keybinds: {
+			"Special Ability Key.DisplayName": Mods.Redemption.Keybinds.Special Ability Key.DisplayName
+			"Spirit Walker Key.DisplayName": Mods.Redemption.Keybinds.Spirit Walker Key.DisplayName
+		}
+
+		Biomes: {
+			BlazingBastionBiome.DisplayName: Blazing Bastion Biome
+			FowlMorningBiome.DisplayName: Fowl Morning Biome
+			LabBiome.DisplayName: Lab Biome
+			LidenBiome.DisplayName: Liden Biome
+			LidenBiomeAlpha.DisplayName: Liden Biome Alpha
+			LidenBiomeOmega.DisplayName: Liden Biome Omega
+			SlayerShipBiome.DisplayName: Slayer Ship Biome
+			SoullessBiome.DisplayName: Soulless Biome
+			WastelandCorruptionBiome.DisplayName: Wasteland Corruption Biome
+			WastelandCrimsonBiome.DisplayName: Wasteland Crimson Biome
+			WastelandDesertBiome.DisplayName: Wasteland Desert Biome
+			WastelandPurityBiome.DisplayName: Wasteland Purity Biome
+			WastelandSnowBiome.DisplayName: Wasteland Snow Biome
+		}
+
+		Tiles: {
+			ElderWoodChestTile.MapEntry: Elder Wood Chest Tile
+
+			HolochestTile: {
+				MapEntry0: Mods.Redemption.Tiles.HolochestTile.MapEntry0
+				MapEntry1: Mods.Redemption.Tiles.HolochestTile.MapEntry1
+			}
+
+			LabChestTileLocked: {
+				MapEntry0: Mods.Redemption.Tiles.LabChestTileLocked.MapEntry0
+				MapEntry1: Mods.Redemption.Tiles.LabChestTileLocked.MapEntry1
+			}
+
+			LabChestTileLocked2: {
+				MapEntry0: Mods.Redemption.Tiles.LabChestTileLocked2.MapEntry0
+				MapEntry1: Mods.Redemption.Tiles.LabChestTileLocked2.MapEntry1
+			}
+
+			PetrifiedWoodChestTile.MapEntry: Petrified Wood Chest Tile
+			ShadestoneChestTile.MapEntry: Shadestone Chest Tile
+			StandardLabLockerTile.MapEntry: Standard Lab Locker Tile
+			ArchclothThroneTile.MapEntry: Archcloth Throne Tile
+			ElderWoodBathtubTile.MapEntry: Elder Wood Bathtub Tile
+			ElderWoodBedTile.MapEntry: Elder Wood Bed Tile
+			ElderWoodBookcaseTile.MapEntry: Elder Wood Bookcase Tile
+			ElderWoodCandelabraTile.MapEntry: Elder Wood Candelabra Tile
+			ElderWoodCandleTile.MapEntry: Elder Wood Candle Tile
+			ElderWoodClockTile.MapEntry: Elder Wood Clock Tile
+			ElderWoodDresserTile.MapEntry: Elder Wood Dresser Tile
+			ElderWoodPianoTile.MapEntry: Elder Wood Piano Tile
+			ElderWoodSofaTile.MapEntry: Elder Wood Sofa Tile
+			ElderWoodWorkbenchTile.MapEntry: Elder Wood Workbench Tile
+			BigMaceTurretTile.MapEntry: Big Mace Turret Tile
+			BiohazardSignTile.MapEntry: Biohazard Sign Tile
+			BotHangerTile.MapEntry: Bot Hanger Tile
+			BrokenLabBackDoor2Tile.MapEntry: Broken Lab Back Door2 Tile
+			BrokenLabBackDoorTile.MapEntry: Broken Lab Back Door Tile
+			ElectricitySignTile.MapEntry: Electricity Sign Tile
+			EmptyBotHangerTile.MapEntry: Empty Bot Hanger Tile
+			GirusCorruptorTile.MapEntry: Girus Corruptor Tile
+			HazmatCorpseTile.MapEntry: Hazmat Corpse Tile
+			HospitalBedTile.MapEntry: Hospital Bed Tile
+			InfectedCorpse1Tile.MapEntry: Infected Corpse1 Tile
+			InfectedCorpse2Tile.MapEntry: Infected Corpse2 Tile
+			InfectedCorpse3Tile.MapEntry: Infected Corpse3 Tile
+			JanitorEquipmentTile.MapEntry: Janitor Equipment Tile
+			KariBedTile.MapEntry: Kari Bed Tile
+			LabBackDoor2Tile.MapEntry: Lab Back Door2 Tile
+			LabBackDoorTile.MapEntry: Lab Back Door Tile
+			LabBossDoorTile.MapEntry: Lab Boss Door Tile
+			LabBossDoorTileH.MapEntry: Lab Boss Door Tile H
+			LabCabinetTile.MapEntry: Lab Cabinet Tile
+			LabCeilingLampTile.MapEntry: Lab Ceiling Lamp Tile
+			LabCeilingMonitorTile.MapEntry: Lab Ceiling Monitor Tile
+			LabComputerTile.MapEntry: Lab Computer Tile
+			LabCrate2Tile.MapEntry: Lab Crate2 Tile
+			LabCrateTile.MapEntry: Lab Crate Tile
+			LabIntercomTile.MapEntry: Lab Intercom Tile
+			LabKeycardDoorClosed.MapEntry: Lab Keycard Door Closed
+			LabKeycardDoorOpen.MapEntry: Lab Keycard Door Open
+			LabPhotoTile.MapEntry: Lab Photo Tile
+			LabRailTile_L.MapEntry: Lab Rail Tile_ L
+			LabRailTile_Mid.MapEntry: Lab Rail Tile_ Mid
+			LabRailTile_R.MapEntry: Lab Rail Tile_ R
+			LabReactorTile.MapEntry: Lab Reactor Tile
+			LabReceptionCouchTile.MapEntry: Lab Reception Couch Tile
+			LabReceptionDeskTile.MapEntry: Lab Reception Desk Tile
+			LabReceptionMonitorsTile.MapEntry: Lab Reception Monitors Tile
+			LabWallFanTile.MapEntry: Lab Wall Fan Tile
+			LabWorkbenchTile.MapEntry: Lab Workbench Tile
+			MossTubeTile.MapEntry: Moss Tube Tile
+			RadiationPillTile.MapEntry: Radiation Pill Tile
+			RadioactiveSignTile.MapEntry: Radioactive Sign Tile
+			ServerCabinetTile.MapEntry: Server Cabinet Tile
+			SkullSignTile.MapEntry: Skull Sign Tile
+			Stage3CorpseTile.MapEntry: Stage3 Corpse Tile
+			TestTubesTile.MapEntry: Test Tubes Tile
+			WideLabConsoleTile.MapEntry: Wide Lab Console Tile
+			XeniumRefineryTile.MapEntry: Xenium Refinery Tile
+			XeniumSmelterTile.MapEntry: Xenium Smelter Tile
+			AncientAltarTile.MapEntry: Ancient Altar Tile
+			AnglonPortalTile.MapEntry: Anglon Portal Tile
+			BorealStatuetteTile.MapEntry: Boreal Statuette Tile
+			ChickenCoopTile.MapEntry: Chicken Coop Tile
+			DoppelsSwordTile.MapEntry: Doppels Sword Tile
+			EaglecrestGolemPlushTile.MapEntry: Eaglecrest Golem Plush Tile
+			EnergyStationTile.MapEntry: Energy Station Tile
+			GathicCryoFurnaceTile.MapEntry: Gathic Cryo Furnace Tile
+			GathuramPortalTile.MapEntry: Gathuram Portal Tile
+			GoldenGatewayTile.MapEntry: Golden Gateway Tile
+			HangingTiedTile.MapEntry: Hanging Tied Tile
+			KingChessPieceTile.MapEntry: King Chess Piece Tile
+			NirinCogBigTile.MapEntry: Nirin Cog Big Tile
+			NirinCogMediumTile.MapEntry: Nirin Cog Medium Tile
+			NozaCageHangingTile.MapEntry: Noza Cage Hanging Tile
+			NozaCageLargeTile.MapEntry: Noza Cage Large Tile
+			NozaCageSmallTile.MapEntry: Noza Cage Small Tile
+			NozaCageTile.MapEntry: Noza Cage Tile
+			NuclearWarheadTile.MapEntry: Nuclear Warhead Tile
+			SlayerMedalTile.MapEntry: Slayer Medal Tile
+			SoulCandlesTile.MapEntry: Soul Candles Tile
+			ThornPlushTile.MapEntry: Thorn Plush Tile
+			TrojanChickenTile.MapEntry: Trojan Chicken Tile
+			WastelandCampfireTile.MapEntry: Wasteland Campfire Tile
+			WastelandTorchTile.MapEntry: Wasteland Torch Tile
+			PetrifiedCrateTile.MapEntry: Petrified Crate Tile
+			PetrifiedWoodBathtubTile.MapEntry: Petrified Wood Bathtub Tile
+			PetrifiedWoodBedTile.MapEntry: Petrified Wood Bed Tile
+			PetrifiedWoodBookcaseTile.MapEntry: Petrified Wood Bookcase Tile
+			PetrifiedWoodCandelabraTile.MapEntry: Petrified Wood Candelabra Tile
+			PetrifiedWoodCandleTile.MapEntry: Petrified Wood Candle Tile
+			PetrifiedWoodClockTile.MapEntry: Petrified Wood Clock Tile
+			PetrifiedWoodDresserTile.MapEntry: Petrified Wood Dresser Tile
+			PetrifiedWoodPianoTile.MapEntry: Petrified Wood Piano Tile
+			PetrifiedWoodSofaTile.MapEntry: Petrified Wood Sofa Tile
+			PetrifiedWoodWorkBenchTile.MapEntry: Petrified Wood Work Bench Tile
+			ShadesteelGateClose.MapEntry: Shadesteel Gate Close
+			ShadesteelGateOpen.MapEntry: Shadesteel Gate Open
+			ShadesteelHangingCell2Tile.MapEntry: Shadesteel Hanging Cell2 Tile
+			ShadesteelHangingCellTile.MapEntry: Shadesteel Hanging Cell Tile
+			ShadesteelPortcullisClose.MapEntry: Shadesteel Portcullis Close
+			ShadesteelPortcullisClose_Unlocked.MapEntry: Shadesteel Portcullis Close_ Unlocked
+			ShadesteelPortcullisOpen.MapEntry: Shadesteel Portcullis Open
+			ShadestoneBathtubTile.MapEntry: Shadestone Bathtub Tile
+			ShadestoneBedTile.MapEntry: Shadestone Bed Tile
+			ShadestoneBookcaseTile.MapEntry: Shadestone Bookcase Tile
+			ShadestoneCandelabraTile.MapEntry: Shadestone Candelabra Tile
+			ShadestoneCandleTile.MapEntry: Shadestone Candle Tile
+			ShadestoneClockTile.MapEntry: Shadestone Clock Tile
+			ShadestoneCrateTile.MapEntry: Shadestone Crate Tile
+			ShadestoneDresserTile.MapEntry: Shadestone Dresser Tile
+			ShadestoneGateTile.MapEntry: Shadestone Gate Tile
+			ShadestoneMirrorTile.MapEntry: Shadestone Mirror Tile
+			ShadestonePianoTile.MapEntry: Shadestone Piano Tile
+			ShadestoneSofaTile.MapEntry: Shadestone Sofa Tile
+			ShadestoneWorkbenchTile.MapEntry: Shadestone Workbench Tile
+			ShadeTorchTile.MapEntry: Shade Torch Tile
+			WaxCandlesTile.MapEntry: Wax Candles Tile
+			AndroidInactiveTile.MapEntry: Android Inactive Tile
+			BiocontainerTile.MapEntry: Biocontainer Tile
+			ChessTable4DTile.MapEntry: Chess Table4 D Tile
+			DroneShelfTile.MapEntry: Drone Shelf Tile
+			PrototypeSilverInactiveTile.MapEntry: Prototype Silver Inactive Tile
+			SlayerChairTile.MapEntry: Slayer Chair Tile
+			SlayerFabricatorTile.MapEntry: Slayer Fabricator Tile
+			SolarPanelTile.MapEntry: Solar Panel Tile
+			ErhanBoxTile.MapEntry: Erhan Box Tile
+			ForestBossBoxTile.MapEntry: Forest Boss Box Tile
+			ForestBossBoxTile2.MapEntry: Forest Boss Box Tile2
+			FowlMorningBoxTile.MapEntry: Fowl Morning Box Tile
+			HallOfHeroesBoxTile.MapEntry: Hall Of Heroes Box Tile
+			KeeperBoxTile.MapEntry: Keeper Box Tile
+			KSBoxTile.MapEntry: K S Box Tile
+			LabBossMusicBoxTile.MapEntry: Lab Boss Music Box Tile
+			LabMusicBoxTile.MapEntry: Lab Music Box Tile
+			NebBox2Tile.MapEntry: Neb Box2 Tile
+			NebBoxTile.MapEntry: Neb Box Tile
+			OmegaBoxTile.MapEntry: Omega Box Tile
+			OmegaBoxTile2.MapEntry: Omega Box Tile2
+			PZMusicBoxTile.MapEntry: P Z Music Box Tile
+			SlayerShipBoxTile.MapEntry: Slayer Ship Box Tile
+			SoIBoxTile.MapEntry: So I Box Tile
+			WastelandBoxTile.MapEntry: Wasteland Box Tile
+			CryoCrystalTile.MapEntry: Cryo Crystal Tile
+			DemonScrollTile.MapEntry: Demon Scroll Tile
+			GrubNestTile.MapEntry: Grub Nest Tile
+			NewbMound.MapEntry: Newb Mound
+			SkeletonRemainsTile1.MapEntry: Skeleton Remains Tile1
+			SkeletonRemainsTile1_Special.MapEntry: Skeleton Remains Tile1_ Special
+			SkeletonRemainsTile2.MapEntry: Skeleton Remains Tile2
+			SkeletonRemainsTile3.MapEntry: Skeleton Remains Tile3
+			SkeletonRemainsTile3_Special.MapEntry: Skeleton Remains Tile3_ Special
+			SkeletonRemainsTile4.MapEntry: Skeleton Remains Tile4
+			SkeletonRemainsTile4_Special.MapEntry: Skeleton Remains Tile4_ Special
+			SkeletonRemainsTile5.MapEntry: Skeleton Remains Tile5
+			SkeletonRemainsTile5_Special.MapEntry: Skeleton Remains Tile5_ Special
+			SkeletonRemainsTile6.MapEntry: Skeleton Remains Tile6
+			SkeletonRemainsTile7.MapEntry: Skeleton Remains Tile7
+			SkeletonRemainsTile7_Special.MapEntry: Skeleton Remains Tile7_ Special
+			XenomiteCrystalBigTile.MapEntry: Xenomite Crystal Big Tile
+			XenomiteCrystalTile.MapEntry: Xenomite Crystal Tile
+			DragonLeadOreTile.MapEntry: Dragon Lead Ore Tile
+			MasksTile.MapEntry: Masks Tile
+			PlutoniumTile.MapEntry: Plutonium Tile
+			SolidCoriumTile.MapEntry: Solid Corium Tile
+			UraniumTile.MapEntry: Uranium Tile
+			XenomiteShardTile.MapEntry: Xenomite Shard Tile
+			AnglonicMysticBlossomTile.MapEntry: Anglonic Mystic Blossom Tile
+			HeartOfThornsTile.MapEntry: Heart Of Thorns Tile
+			BedrockTile.MapEntry: Bedrock Tile
+			BlackHardenedSludgeTile.MapEntry: Black Hardened Sludge Tile
+			HardenedSludgeTile.MapEntry: Hardened Sludge Tile
+			JunkMetalTile.MapEntry: Junk Metal Tile
+			PlantMatterTile.MapEntry: Plant Matter Tile
+			PrisonBarsBeamTile.MapEntry: Prison Bars Beam Tile
+			PrisonBarsTile.MapEntry: Prison Bars Tile
+			ShadestoneBrickMossyTile.MapEntry: Shadestone Brick Mossy Tile
+			ShadestoneBrickTile.MapEntry: Shadestone Brick Tile
+			ShadestoneMossyTile.MapEntry: Shadestone Mossy Tile
+			ShadestoneRubbleTile.MapEntry: Shadestone Rubble Tile
+			ShadestoneSlabTile.MapEntry: Shadestone Slab Tile
+			ShadestoneTile.MapEntry: Shadestone Tile
+		}
+
+		Buffs: {
+			BileFlaskBuff: {
+				DisplayName: Bile Flask Buff
+				Description: Mods.Redemption.Buffs.BileFlaskBuff.Description
+			}
+
+			BolineFlowerBuff: {
+				DisplayName: Boline Flower Buff
+				Description: Mods.Redemption.Buffs.BolineFlowerBuff.Description
+			}
+
+			CharismaPotionBuff: {
+				DisplayName: Charisma Potion Buff
+				Description: Mods.Redemption.Buffs.CharismaPotionBuff.Description
+			}
+
+			CruxCardCooldown: {
+				DisplayName: Crux Card Cooldown
+				Description: Mods.Redemption.Buffs.CruxCardCooldown.Description
+			}
+
+			ErhanCrossCooldown: {
+				DisplayName: Erhan Cross Cooldown
+				Description: Mods.Redemption.Buffs.ErhanCrossCooldown.Description
+			}
+
+			HardlightCooldown: {
+				DisplayName: Hardlight Cooldown
+				Description: Mods.Redemption.Buffs.HardlightCooldown.Description
+			}
+
+			NoitaBombCooldown: {
+				DisplayName: Noita Bomb Cooldown
+				Description: Mods.Redemption.Buffs.NoitaBombCooldown.Description
+			}
+
+			SwordRemoteCooldown: {
+				DisplayName: Sword Remote Cooldown
+				Description: Mods.Redemption.Buffs.SwordRemoteCooldown.Description
+			}
+
+			VasaraPendantCooldown: {
+				DisplayName: Vasara Pendant Cooldown
+				Description: Mods.Redemption.Buffs.VasaraPendantCooldown.Description
+			}
+
+			XeniumCooldown: {
+				DisplayName: Xenium Cooldown
+				Description: Mods.Redemption.Buffs.XeniumCooldown.Description
+			}
+
+			XeniumElectrolaserCooldown: {
+				DisplayName: Xenium Electrolaser Cooldown
+				Description: Mods.Redemption.Buffs.XeniumElectrolaserCooldown.Description
+			}
+
+			XeniumLanceCooldown: {
+				DisplayName: Xenium Lance Cooldown
+				Description: Mods.Redemption.Buffs.XeniumLanceCooldown.Description
+			}
+
+			XenomiteCooldown: {
+				DisplayName: Xenomite Cooldown
+				Description: Mods.Redemption.Buffs.XenomiteCooldown.Description
+			}
+
+			CruxCardBuff: {
+				DisplayName: Crux Card Buff
+				Description: Mods.Redemption.Buffs.CruxCardBuff.Description
+			}
+
+			CrystalKnowledgeBuff: {
+				DisplayName: Crystal Knowledge Buff
+				Description: Mods.Redemption.Buffs.CrystalKnowledgeBuff.Description
+			}
+
+			AntibodiesDebuff: {
+				DisplayName: Antibodies Debuff
+				Description: Mods.Redemption.Buffs.AntibodiesDebuff.Description
+			}
+
+			BileDebuff: {
+				DisplayName: Bile Debuff
+				Description: Mods.Redemption.Buffs.BileDebuff.Description
+			}
+
+			BInfectionDebuff: {
+				DisplayName: B Infection Debuff
+				Description: Mods.Redemption.Buffs.BInfectionDebuff.Description
+			}
+
+			BlackenedHeartDebuff: {
+				DisplayName: Blackened Heart Debuff
+				Description: Mods.Redemption.Buffs.BlackenedHeartDebuff.Description
+			}
+
+			DevilScentedDebuff: {
+				DisplayName: Devil Scented Debuff
+				Description: Mods.Redemption.Buffs.DevilScentedDebuff.Description
+			}
+
+			DirtyWoundDebuff: {
+				DisplayName: Dirty Wound Debuff
+				Description: Mods.Redemption.Buffs.DirtyWoundDebuff.Description
+			}
+
+			EnsnaredDebuff: {
+				DisplayName: Ensnared Debuff
+				Description: Mods.Redemption.Buffs.EnsnaredDebuff.Description
+			}
+
+			FatigueDebuff: {
+				DisplayName: Fatigue Debuff
+				Description: Mods.Redemption.Buffs.FatigueDebuff.Description
+			}
+
+			FeverDebuff: {
+				DisplayName: Fever Debuff
+				Description: Mods.Redemption.Buffs.FeverDebuff.Description
+			}
+
+			FleshCrystalsDebuff: {
+				DisplayName: Flesh Crystals Debuff
+				Description: Mods.Redemption.Buffs.FleshCrystalsDebuff.Description
+			}
+
+			GlowingPustulesDebuff: {
+				DisplayName: Glowing Pustules Debuff
+				Description: Mods.Redemption.Buffs.GlowingPustulesDebuff.Description
+			}
+
+			GreenRashesDebuff: {
+				DisplayName: Green Rashes Debuff
+				Description: Mods.Redemption.Buffs.GreenRashesDebuff.Description
+			}
+
+			HairLossDebuff: {
+				DisplayName: Hair Loss Debuff
+				Description: Mods.Redemption.Buffs.HairLossDebuff.Description
+			}
+
+			HazardLaserDebuff: {
+				DisplayName: Hazard Laser Debuff
+				Description: Mods.Redemption.Buffs.HazardLaserDebuff.Description
+			}
+
+			HeadacheDebuff: {
+				DisplayName: Headache Debuff
+				Description: Mods.Redemption.Buffs.HeadacheDebuff.Description
+			}
+
+			HeavyRadiationDebuff: {
+				DisplayName: Heavy Radiation Debuff
+				Description: Mods.Redemption.Buffs.HeavyRadiationDebuff.Description
+			}
+
+			HemorrhageDebuff: {
+				DisplayName: Hemorrhage Debuff
+				Description: Mods.Redemption.Buffs.HemorrhageDebuff.Description
+			}
+
+			HolyFireDebuff: {
+				DisplayName: Holy Fire Debuff
+				Description: Mods.Redemption.Buffs.HolyFireDebuff.Description
+			}
+
+			InfestedDebuff: {
+				DisplayName: Infested Debuff
+				Description: Mods.Redemption.Buffs.InfestedDebuff.Description
+			}
+
+			IslandDebuff: {
+				DisplayName: Island Debuff
+				Description: Mods.Redemption.Buffs.IslandDebuff.Description
+			}
+
+			NauseaDebuff: {
+				DisplayName: Nausea Debuff
+				Description: Mods.Redemption.Buffs.NauseaDebuff.Description
+			}
+
+			NecrosisDebuff: {
+				DisplayName: Necrosis Debuff
+				Description: Mods.Redemption.Buffs.NecrosisDebuff.Description
+			}
+
+			PillSickness: {
+				DisplayName: Pill Sickness
+				Description: Mods.Redemption.Buffs.PillSickness.Description
+			}
+
+			RadiationDebuff: {
+				DisplayName: Radiation Debuff
+				Description: Mods.Redemption.Buffs.RadiationDebuff.Description
+			}
+
+			RadioactiveFalloutDebuff: {
+				DisplayName: Radioactive Fallout Debuff
+				Description: Mods.Redemption.Buffs.RadioactiveFalloutDebuff.Description
+			}
+
+			RevolverTossDebuff: {
+				DisplayName: Revolver Toss Debuff
+				Description: Mods.Redemption.Buffs.RevolverTossDebuff.Description
+			}
+
+			SerumWithdrawalDebuff: {
+				DisplayName: Serum Withdrawal Debuff
+				Description: Mods.Redemption.Buffs.SerumWithdrawalDebuff.Description
+			}
+
+			ShockDebuff: {
+				DisplayName: Shock Debuff
+				Description: Mods.Redemption.Buffs.ShockDebuff.Description
+			}
+
+			SkinBurnDebuff: {
+				DisplayName: Skin Burn Debuff
+				Description: Mods.Redemption.Buffs.SkinBurnDebuff.Description
+			}
+
+			SnippedDebuff: {
+				DisplayName: Snipped Debuff
+				Description: Mods.Redemption.Buffs.SnippedDebuff.Description
+			}
+
+			SpiderSwarmedDebuff: {
+				DisplayName: Spider Swarmed Debuff
+				Description: Mods.Redemption.Buffs.SpiderSwarmedDebuff.Description
+			}
+
+			StaticStunDebuff: {
+				DisplayName: Static Stun Debuff
+				Description: Mods.Redemption.Buffs.StaticStunDebuff.Description
+			}
+
+			StomachAcidDebuff: {
+				DisplayName: Stomach Acid Debuff
+				Description: Mods.Redemption.Buffs.StomachAcidDebuff.Description
+			}
+
+			Stunned2Debuff: {
+				DisplayName: Stunned2 Debuff
+				Description: Mods.Redemption.Buffs.Stunned2Debuff.Description
+			}
+
+			StunnedDebuff: {
+				DisplayName: Stunned Debuff
+				Description: Mods.Redemption.Buffs.StunnedDebuff.Description
+			}
+
+			EnergyRegenBuff: {
+				DisplayName: Energy Regen Buff
+				Description: Mods.Redemption.Buffs.EnergyRegenBuff.Description
+			}
+
+			EnergyStationBuff: {
+				DisplayName: Energy Station Buff
+				Description: Mods.Redemption.Buffs.EnergyStationBuff.Description
+			}
+
+			EvilJellyBuff: {
+				DisplayName: Evil Jelly Buff
+				Description: Mods.Redemption.Buffs.EvilJellyBuff.Description
+			}
+
+			ExplosiveFlaskBuff: {
+				DisplayName: Explosive Flask Buff
+				Description: Mods.Redemption.Buffs.ExplosiveFlaskBuff.Description
+			}
+
+			GraniteAuraBuff: {
+				DisplayName: Granite Aura Buff
+				Description: Mods.Redemption.Buffs.GraniteAuraBuff.Description
+			}
+
+			HammerBuff: {
+				DisplayName: Hammer Buff
+				Description: Mods.Redemption.Buffs.HammerBuff.Description
+			}
+
+			HeartInsigniaBuff: {
+				DisplayName: Heart Insignia Buff
+				Description: Mods.Redemption.Buffs.HeartInsigniaBuff.Description
+			}
+
+			HKStatueBuff: {
+				DisplayName: H K Statue Buff
+				Description: Mods.Redemption.Buffs.HKStatueBuff.Description
+			}
+
+			AndroidMinionBuff: {
+				DisplayName: Android Minion Buff
+				Description: Mods.Redemption.Buffs.AndroidMinionBuff.Description
+			}
+
+			CorpseSkullBuff: {
+				DisplayName: Corpse Skull Buff
+				Description: Mods.Redemption.Buffs.CorpseSkullBuff.Description
+			}
+
+			CystlingBuff: {
+				DisplayName: Cystling Buff
+				Description: Mods.Redemption.Buffs.CystlingBuff.Description
+			}
+
+			ForretBuff: {
+				DisplayName: Forret Buff
+				Description: Mods.Redemption.Buffs.ForretBuff.Description
+			}
+
+			HoloMinionBuff: {
+				DisplayName: Holo Minion Buff
+				Description: Mods.Redemption.Buffs.HoloMinionBuff.Description
+			}
+
+			LogStaffBuff: {
+				DisplayName: Log Staff Buff
+				Description: Mods.Redemption.Buffs.LogStaffBuff.Description
+			}
+
+			MagmaCubeBuff: {
+				DisplayName: Magma Cube Buff
+				Description: Mods.Redemption.Buffs.MagmaCubeBuff.Description
+			}
+
+			MicroshieldCoreBuff: {
+				DisplayName: Microshield Core Buff
+				Description: Mods.Redemption.Buffs.MicroshieldCoreBuff.Description
+			}
+
+			MicroshieldDroneBuff: {
+				DisplayName: Microshield Drone Buff
+				Description: Mods.Redemption.Buffs.MicroshieldDroneBuff.Description
+			}
+
+			MoonflareGuardianBuff: {
+				DisplayName: Moonflare Guardian Buff
+				Description: Mods.Redemption.Buffs.MoonflareGuardianBuff.Description
+			}
+
+			NaturePixieBuff: {
+				DisplayName: Nature Pixie Buff
+				Description: Mods.Redemption.Buffs.NaturePixieBuff.Description
+			}
+
+			NestWandBuff: {
+				DisplayName: Nest Wand Buff
+				Description: Mods.Redemption.Buffs.NestWandBuff.Description
+			}
+
+			TeslaGeneratorBuff: {
+				DisplayName: Tesla Generator Buff
+				Description: Mods.Redemption.Buffs.TeslaGeneratorBuff.Description
+			}
+
+			XeniumTurretBuff: {
+				DisplayName: Xenium Turret Buff
+				Description: Mods.Redemption.Buffs.XeniumTurretBuff.Description
+			}
+
+			JyrinaMountBuff: {
+				DisplayName: Jyrina Mount Buff
+				Description: Mods.Redemption.Buffs.JyrinaMountBuff.Description
+			}
+
+			NebHealBuff: {
+				DisplayName: Neb Heal Buff
+				Description: Mods.Redemption.Buffs.NebHealBuff.Description
+			}
+
+			BrokenArmorDebuff: {
+				DisplayName: Broken Armor Debuff
+				Description: Mods.Redemption.Buffs.BrokenArmorDebuff.Description
+			}
+
+			ContagionShardDebuff: {
+				DisplayName: Contagion Shard Debuff
+				Description: Mods.Redemption.Buffs.ContagionShardDebuff.Description
+			}
+
+			DisarmedDebuff: {
+				DisplayName: Disarmed Debuff
+				Description: Mods.Redemption.Buffs.DisarmedDebuff.Description
+			}
+
+			DragonblazeDebuff: {
+				DisplayName: Dragonblaze Debuff
+				Description: Mods.Redemption.Buffs.DragonblazeDebuff.Description
+			}
+
+			ElectrifiedDebuff: {
+				DisplayName: Electrified Debuff
+				Description: Mods.Redemption.Buffs.ElectrifiedDebuff.Description
+			}
+
+			FlagbearerBuff: {
+				DisplayName: Flagbearer Buff
+				Description: Mods.Redemption.Buffs.FlagbearerBuff.Description
+			}
+
+			IceFrozen: {
+				DisplayName: Ice Frozen
+				Description: Mods.Redemption.Buffs.IceFrozen.Description
+			}
+
+			IncisorDebuff: {
+				DisplayName: Incisor Debuff
+				Description: Mods.Redemption.Buffs.IncisorDebuff.Description
+			}
+
+			MoonflareDebuff: {
+				DisplayName: Moonflare Debuff
+				Description: Mods.Redemption.Buffs.MoonflareDebuff.Description
+			}
+
+			NecroticGougeDebuff: {
+				DisplayName: Necrotic Gouge Debuff
+				Description: Mods.Redemption.Buffs.NecroticGougeDebuff.Description
+			}
+
+			PureChillDebuff: {
+				DisplayName: Pure Chill Debuff
+				Description: Mods.Redemption.Buffs.PureChillDebuff.Description
+			}
+
+			RoosterBoostBuff: {
+				DisplayName: Rooster Boost Buff
+				Description: Mods.Redemption.Buffs.RoosterBoostBuff.Description
+			}
+
+			SandDustDebuff: {
+				DisplayName: Sand Dust Debuff
+				Description: Mods.Redemption.Buffs.SandDustDebuff.Description
+			}
+
+			sansDebuff: {
+				DisplayName: sans Debuff
+				Description: Mods.Redemption.Buffs.sansDebuff.Description
+			}
+
+			SilverwoodArrowDebuff: {
+				DisplayName: Silverwood Arrow Debuff
+				Description: Mods.Redemption.Buffs.SilverwoodArrowDebuff.Description
+			}
+
+			StoneskinBuff: {
+				DisplayName: Stoneskin Buff
+				Description: Mods.Redemption.Buffs.StoneskinBuff.Description
+			}
+
+			TidalWakeDebuff: {
+				DisplayName: Tidal Wake Debuff
+				Description: Mods.Redemption.Buffs.TidalWakeDebuff.Description
+			}
+
+			UkonArrowDebuff: {
+				DisplayName: Ukon Arrow Debuff
+				Description: Mods.Redemption.Buffs.UkonArrowDebuff.Description
+			}
+
+			ViralityDebuff: {
+				DisplayName: Virality Debuff
+				Description: Mods.Redemption.Buffs.ViralityDebuff.Description
+			}
+
+			OblitBuff1: {
+				DisplayName: Oblit Buff1
+				Description: Mods.Redemption.Buffs.OblitBuff1.Description
+			}
+
+			OblitBuff2: {
+				DisplayName: Oblit Buff2
+				Description: Mods.Redemption.Buffs.OblitBuff2.Description
+			}
+
+			OblitBuff3: {
+				DisplayName: Oblit Buff3
+				Description: Mods.Redemption.Buffs.OblitBuff3.Description
+			}
+
+			OblitBuff4: {
+				DisplayName: Oblit Buff4
+				Description: Mods.Redemption.Buffs.OblitBuff4.Description
+			}
+
+			OblitBuff5: {
+				DisplayName: Oblit Buff5
+				Description: Mods.Redemption.Buffs.OblitBuff5.Description
+			}
+
+			PanaceaBuff: {
+				DisplayName: Panacea Buff
+				Description: Mods.Redemption.Buffs.PanaceaBuff.Description
+			}
+
+			BabyRockpileBuff: {
+				DisplayName: Baby Rockpile Buff
+				Description: Mods.Redemption.Buffs.BabyRockpileBuff.Description
+			}
+
+			BouquetOfThornsBuff: {
+				DisplayName: Bouquet Of Thorns Buff
+				Description: Mods.Redemption.Buffs.BouquetOfThornsBuff.Description
+			}
+
+			CleaverPetBuff: {
+				DisplayName: Cleaver Pet Buff
+				Description: Mods.Redemption.Buffs.CleaverPetBuff.Description
+			}
+
+			CuddlyTeratomaBuff: {
+				DisplayName: Cuddly Teratoma Buff
+				Description: Mods.Redemption.Buffs.CuddlyTeratomaBuff.Description
+			}
+
+			ErhanPetBuff: {
+				DisplayName: Erhan Pet Buff
+				Description: Mods.Redemption.Buffs.ErhanPetBuff.Description
+			}
+
+			HalPetBuff: {
+				DisplayName: Hal Pet Buff
+				Description: Mods.Redemption.Buffs.HalPetBuff.Description
+			}
+
+			KS3PetBuff: {
+				DisplayName: K S3 Pet Buff
+				Description: Mods.Redemption.Buffs.KS3PetBuff.Description
+			}
+
+			MiniGigaporaPetBuff: {
+				DisplayName: Mini Gigapora Pet Buff
+				Description: Mods.Redemption.Buffs.MiniGigaporaPetBuff.Description
+			}
+
+			NebPetBuff: {
+				DisplayName: Neb Pet Buff
+				Description: Mods.Redemption.Buffs.NebPetBuff.Description
+			}
+
+			OcciePetBuff: {
+				DisplayName: Occie Pet Buff
+				Description: Mods.Redemption.Buffs.OcciePetBuff.Description
+			}
+
+			PetChickenBuff: {
+				DisplayName: Pet Chicken Buff
+				Description: Mods.Redemption.Buffs.PetChickenBuff.Description
+			}
+
+			TiedPetBuff: {
+				DisplayName: Tied Pet Buff
+				Description: Mods.Redemption.Buffs.TiedPetBuff.Description
+			}
+
+			ToasterPetBuff: {
+				DisplayName: Toaster Pet Buff
+				Description: Mods.Redemption.Buffs.ToasterPetBuff.Description
+			}
+
+			XenoemiaBuff: {
+				DisplayName: Xenoemia Buff
+				Description: Mods.Redemption.Buffs.XenoemiaBuff.Description
+			}
+
+			XenomiteElementalPetBuff: {
+				DisplayName: Xenomite Elemental Pet Buff
+				Description: Mods.Redemption.Buffs.XenomiteElementalPetBuff.Description
+			}
+
+			RevolverTossBuff: {
+				DisplayName: Revolver Toss Buff
+				Description: Mods.Redemption.Buffs.RevolverTossBuff.Description
+			}
+
+			RevolverTossBuff2: {
+				DisplayName: Revolver Toss Buff2
+				Description: Mods.Redemption.Buffs.RevolverTossBuff2.Description
+			}
+
+			RevolverTossBuff3: {
+				DisplayName: Revolver Toss Buff3
+				Description: Mods.Redemption.Buffs.RevolverTossBuff3.Description
+			}
+
+			RowanAuraBuff: {
+				DisplayName: Rowan Aura Buff
+				Description: Mods.Redemption.Buffs.RowanAuraBuff.Description
+			}
+
+			ShadowFuelBuff: {
+				DisplayName: Shadow Fuel Buff
+				Description: Mods.Redemption.Buffs.ShadowFuelBuff.Description
+			}
+
+			Sharpen2Buff: {
+				DisplayName: Sharpen2 Buff
+				Description: Mods.Redemption.Buffs.Sharpen2Buff.Description
+			}
+
+			Sharpen3Buff: {
+				DisplayName: Sharpen3 Buff
+				Description: Mods.Redemption.Buffs.Sharpen3Buff.Description
+			}
+
+			ShineArmour2Buff: {
+				DisplayName: Shine Armour2 Buff
+				Description: Mods.Redemption.Buffs.ShineArmour2Buff.Description
+			}
+
+			ShineArmour3Buff: {
+				DisplayName: Shine Armour3 Buff
+				Description: Mods.Redemption.Buffs.ShineArmour3Buff.Description
+			}
+
+			ShineArmourBuff: {
+				DisplayName: Shine Armour Buff
+				Description: Mods.Redemption.Buffs.ShineArmourBuff.Description
+			}
+
+			SoulBaubleBuff: {
+				DisplayName: Soul Bauble Buff
+				Description: Mods.Redemption.Buffs.SoulBaubleBuff.Description
+			}
+
+			SunAuraBuff: {
+				DisplayName: Sun Aura Buff
+				Description: Mods.Redemption.Buffs.SunAuraBuff.Description
+			}
+
+			VasaraHealBuff: {
+				DisplayName: Vasara Heal Buff
+				Description: Mods.Redemption.Buffs.VasaraHealBuff.Description
+			}
+
+			VendettaPotionBuff: {
+				DisplayName: Vendetta Potion Buff
+				Description: Mods.Redemption.Buffs.VendettaPotionBuff.Description
+			}
+
+			VigourousBuff: {
+				DisplayName: Vigourous Buff
+				Description: Mods.Redemption.Buffs.VigourousBuff.Description
+			}
+
+			WellFed4: {
+				DisplayName: Well Fed4
+				Description: Mods.Redemption.Buffs.WellFed4.Description
+			}
+
+			GonkPetBuff: {
+				DisplayName: Gonk Pet Buff
+				Description: Mods.Redemption.Buffs.GonkPetBuff.Description
+			}
+
+			LantardPetBuff: {
+				DisplayName: Lantard Pet Buff
+				Description: Mods.Redemption.Buffs.LantardPetBuff.Description
+			}
+
+			LizzyPetBuff: {
+				DisplayName: Lizzy Pet Buff
+				Description: Mods.Redemption.Buffs.LizzyPetBuff.Description
+			}
+
+			LegoPetBuff: {
+				DisplayName: Lego Pet Buff
+				Description: Mods.Redemption.Buffs.LegoPetBuff.Description
+			}
+
+			MegaswavePetBuff: {
+				DisplayName: Megaswave Pet Buff
+				Description: Mods.Redemption.Buffs.MegaswavePetBuff.Description
+			}
+
+			UnconPetBuff: {
+				DisplayName: Uncon Pet Buff
+				Description: Mods.Redemption.Buffs.UnconPetBuff.Description
+			}
+
+			WaasephiPetBuff: {
+				DisplayName: Waasephi Pet Buff
+				Description: Mods.Redemption.Buffs.WaasephiPetBuff.Description
+			}
+		}
+
+		Items: {
+			BrokenBlade: {
+				DisplayName: Broken Blade
+				Tooltip: ""
+			}
+
+			CleaverHandle: {
+				DisplayName: Cleaver Handle
+				Tooltip: ""
+			}
+
+			GasMask: {
+				DisplayName: Gas Mask
+				Tooltip: ""
+			}
+
+			GeigerMuller: {
+				DisplayName: Geiger Muller
+				Tooltip: ""
+			}
+
+			GracesGuidance: {
+				DisplayName: Graces Guidance
+				Tooltip: ""
+			}
+
+			HazmatSuit: {
+				DisplayName: Hazmat Suit
+				Tooltip: ""
+			}
+
+			HazmatSuit2: {
+				DisplayName: Hazmat Suit2
+				Tooltip: ""
+			}
+
+			HazmatSuit3: {
+				DisplayName: Hazmat Suit3
+				Tooltip: ""
+			}
+
+			HazmatSuit4: {
+				DisplayName: Hazmat Suit4
+				Tooltip: ""
+			}
+
+			Holoshield: {
+				DisplayName: Holoshield
+				Tooltip: ""
+			}
+
+			InfectionShield: {
+				DisplayName: Infection Shield
+				Tooltip: ""
+			}
+
+			MicroshieldCore: {
+				DisplayName: Microshield Core
+				Tooltip: ""
+			}
+
+			PocketShieldGenerator: {
+				DisplayName: Pocket Shield Generator
+				Tooltip: ""
+			}
+
+			PowerCellWristband: {
+				DisplayName: Power Cell Wristband
+				Tooltip: ""
+			}
+
+			PowerDrill: {
+				DisplayName: Power Drill
+				Tooltip: ""
+			}
+
+			RitualistEmblem: {
+				DisplayName: Ritualist Emblem
+				Tooltip: ""
+			}
+
+			SacredCross: {
+				DisplayName: Sacred Cross
+				Tooltip: ""
+			}
+
+			SlayerController: {
+				DisplayName: Slayer Controller
+				Tooltip: ""
+			}
+
+			SlayerProjector: {
+				DisplayName: Slayer Projector
+				Tooltip: ""
+			}
+
+			XenomiteJetpack: {
+				DisplayName: Xenomite Jetpack
+				Tooltip: ""
+			}
+
+			GildedBonnet: {
+				DisplayName: Gilded Bonnet
+				Tooltip: ""
+			}
+
+			HamSandwich: {
+				DisplayName: Ham Sandwich
+				Tooltip: ""
+			}
+
+			HeartOfInfection: {
+				DisplayName: Heart Of Infection
+				Tooltip: ""
+			}
+
+			HEVSuit: {
+				DisplayName: H E V Suit
+				Tooltip: ""
+			}
+
+			JyrinaMount: {
+				DisplayName: Jyrina Mount
+				Tooltip: ""
+			}
+
+			MutagenMagic: {
+				DisplayName: Mutagen Magic
+				Tooltip: ""
+			}
+
+			MutagenMelee: {
+				DisplayName: Mutagen Melee
+				Tooltip: ""
+			}
+
+			MutagenRanged: {
+				DisplayName: Mutagen Ranged
+				Tooltip: ""
+			}
+
+			MutagenRitualist: {
+				DisplayName: Mutagen Ritualist
+				Tooltip: ""
+			}
+
+			MutagenSummon: {
+				DisplayName: Mutagen Summon
+				Tooltip: ""
+			}
+
+			MysteriousXenomiteFragment: {
+				DisplayName: Mysterious Xenomite Fragment
+				Tooltip: ""
+			}
+
+			NebWings: {
+				DisplayName: Neb Wings
+				Tooltip: ""
+			}
+
+			ObliterationDrive: {
+				DisplayName: Obliteration Drive
+				Tooltip: ""
+			}
+
+			StrangeSkull: {
+				DisplayName: Strange Skull
+				Tooltip: ""
+			}
+
+			ToasterPet: {
+				DisplayName: Toaster Pet
+				Tooltip: ""
+			}
+
+			VasaraPendant: {
+				DisplayName: Vasara Pendant
+				Tooltip: ""
+			}
+
+			Xenoemia: {
+				DisplayName: Xenoemia
+				Tooltip: ""
+			}
+
+			BouquetOfThorns: {
+				DisplayName: Bouquet Of Thorns
+				Tooltip: ""
+			}
+
+			CircletOfBrambles: {
+				DisplayName: Circlet Of Brambles
+				Tooltip: ""
+			}
+
+			CrownOfTheKing: {
+				DisplayName: Crown Of The King
+				Tooltip: ""
+			}
+
+			CrystallizedKnowledge: {
+				DisplayName: Crystallized Knowledge
+				Tooltip: ""
+			}
+
+			CuddlyTeratoma: {
+				DisplayName: Cuddly Teratoma
+				Tooltip: ""
+			}
+
+			DevilishResin: {
+				DisplayName: Devilish Resin
+				Tooltip: ""
+			}
+
+			DevilsAdvocate: {
+				DisplayName: Devils Advocate
+				Tooltip: ""
+			}
+
+			DurableBowString: {
+				DisplayName: Durable Bow String
+				Tooltip: ""
+			}
+
+			EggShield: {
+				DisplayName: Egg Shield
+				Tooltip: ""
+			}
+
+			ErhanCross: {
+				DisplayName: Erhan Cross
+				Tooltip: ""
+			}
+
+			ForestCore: {
+				DisplayName: Forest Core
+				Tooltip: ""
+			}
+
+			Grain: {
+				DisplayName: Grain
+				Tooltip: ""
+			}
+
+			HeartInsignia: {
+				DisplayName: Heart Insignia
+				Tooltip: ""
+			}
+
+			KeepersCirclet: {
+				DisplayName: Keepers Circlet
+				Tooltip: ""
+			}
+
+			LeatherSheath: {
+				DisplayName: Leather Sheath
+				Tooltip: ""
+			}
+
+			NecklaceOfPerception: {
+				DisplayName: Necklace Of Perception
+				Tooltip: ""
+			}
+
+			NecklaceOfSight: {
+				DisplayName: Necklace Of Sight
+				Tooltip: ""
+			}
+
+			OcciesCollar: {
+				DisplayName: Occies Collar
+				Tooltip: ""
+			}
+
+			RopeHook: {
+				DisplayName: Rope Hook
+				Tooltip: ""
+			}
+
+			ShellNecklace: {
+				DisplayName: Shell Necklace
+				Tooltip: ""
+			}
+
+			StonePuppet: {
+				DisplayName: Stone Puppet
+				Tooltip: ""
+			}
+
+			TrappedSoulBauble: {
+				DisplayName: Trapped Soul Bauble
+				Tooltip: ""
+			}
+
+			AlignmentChanger: {
+				DisplayName: Alignment Changer
+				Tooltip: ""
+			}
+
+			HardlightBoots: {
+				DisplayName: Hardlight Boots
+				Tooltip: ""
+			}
+
+			HardlightCasque: {
+				DisplayName: Hardlight Casque
+				Tooltip: ""
+			}
+
+			HardlightCowl: {
+				DisplayName: Hardlight Cowl
+				Tooltip: ""
+			}
+
+			HardlightHelm: {
+				DisplayName: Hardlight Helm
+				Tooltip: ""
+			}
+
+			HardlightHood: {
+				DisplayName: Hardlight Hood
+				Tooltip: ""
+			}
+
+			HardlightPlate: {
+				DisplayName: Hardlight Plate
+				Tooltip: ""
+			}
+
+			HardlightVisor: {
+				DisplayName: Hardlight Visor
+				Tooltip: ""
+			}
+
+			XenomiteHelmet: {
+				DisplayName: Xenomite Helmet
+				Tooltip: ""
+			}
+
+			XenomiteLeggings: {
+				DisplayName: Xenomite Leggings
+				Tooltip: ""
+			}
+
+			XenomitePlate: {
+				DisplayName: Xenomite Plate
+				Tooltip: ""
+			}
+
+			Xenomite: {
+				DisplayName: Xenomite
+				Tooltip: ""
+			}
+
+			HikariteBreastplate: {
+				DisplayName: Hikarite Breastplate
+				Tooltip: ""
+			}
+
+			HikariteGreaves: {
+				DisplayName: Hikarite Greaves
+				Tooltip: ""
+			}
+
+			HikariteHelmet: {
+				DisplayName: Hikarite Helmet
+				Tooltip: ""
+			}
+
+			ShadeBody: {
+				DisplayName: Shade Body
+				Tooltip: ""
+			}
+
+			ShadeHead: {
+				DisplayName: Shade Head
+				Tooltip: ""
+			}
+
+			ShadeLeggings: {
+				DisplayName: Shade Leggings
+				Tooltip: ""
+			}
+
+			ShinkiteChestplate: {
+				DisplayName: Shinkite Chestplate
+				Tooltip: ""
+			}
+
+			ShinkiteHelmet: {
+				DisplayName: Shinkite Helmet
+				Tooltip: ""
+			}
+
+			ShinkiteLeggings: {
+				DisplayName: Shinkite Leggings
+				Tooltip: ""
+			}
+
+			VortiHat: {
+				DisplayName: Vorti Hat
+				Tooltip: ""
+			}
+
+			VortiPants: {
+				DisplayName: Vorti Pants
+				Tooltip: ""
+			}
+
+			VortiRobes: {
+				DisplayName: Vorti Robes
+				Tooltip: ""
+			}
+
+			XeniumBreastplate: {
+				DisplayName: Xenium Breastplate
+				Tooltip: ""
+			}
+
+			XeniumLeggings: {
+				DisplayName: Xenium Leggings
+				Tooltip: ""
+			}
+
+			XeniumVisor: {
+				DisplayName: Xenium Visor
+				Tooltip: ""
+			}
+
+			CommonGuardGreaves: {
+				DisplayName: Common Guard Greaves
+				Tooltip: ""
+			}
+
+			CommonGuardHelm1: {
+				DisplayName: Common Guard Helm1
+				Tooltip: ""
+			}
+
+			CommonGuardHelm2: {
+				DisplayName: Common Guard Helm2
+				Tooltip: ""
+			}
+
+			CommonGuardPlateMail: {
+				DisplayName: Common Guard Plate Mail
+				Tooltip: ""
+			}
+
+			DragonLeadGreaves: {
+				DisplayName: Dragon Lead Greaves
+				Tooltip: ""
+			}
+
+			DragonLeadRibplate: {
+				DisplayName: Dragon Lead Ribplate
+				Tooltip: ""
+			}
+
+			DragonLeadSkull: {
+				DisplayName: Dragon Lead Skull
+				Tooltip: ""
+			}
+
+			LivingWoodBody: {
+				DisplayName: Living Wood Body
+				Tooltip: ""
+			}
+
+			LivingWoodHelmet: {
+				DisplayName: Living Wood Helmet
+				Tooltip: ""
+			}
+
+			LivingWoodLeggings: {
+				DisplayName: Living Wood Leggings
+				Tooltip: ""
+			}
+
+			PureIronChestplate: {
+				DisplayName: Pure Iron Chestplate
+				Tooltip: ""
+			}
+
+			PureIronGreaves: {
+				DisplayName: Pure Iron Greaves
+				Tooltip: ""
+			}
+
+			PureIronHelmet: {
+				DisplayName: Pure Iron Helmet
+				Tooltip: ""
+			}
+
+			AntiquePureIronHelmet: {
+				DisplayName: Antique Pure Iron Helmet
+				Tooltip: ""
+			}
+
+			JollyHelm: {
+				DisplayName: Jolly Helm
+				Tooltip: ""
+			}
+
+			KabucraShell: {
+				DisplayName: Kabucra Shell
+				Tooltip: ""
+			}
+
+			AkkaMask: {
+				DisplayName: Akka Mask
+				Tooltip: ""
+			}
+
+			CorpseWalkerSkullVanity: {
+				DisplayName: Corpse Walker Skull Vanity
+				Tooltip: ""
+			}
+
+			HallamHoodie: {
+				DisplayName: Hallam Hoodie
+				Tooltip: ""
+			}
+
+			HallamLeggings: {
+				DisplayName: Hallam Leggings
+				Tooltip: ""
+			}
+
+			TiedsLeggings: {
+				DisplayName: Tieds Leggings
+				Tooltip: ""
+			}
+
+			TiedsMask: {
+				DisplayName: Tieds Mask
+				Tooltip: ""
+			}
+
+			TiedsSuit: {
+				DisplayName: Tieds Suit
+				Tooltip: ""
+			}
+
+			DrillHeadHead: {
+				DisplayName: Drill Head Head
+				Tooltip: ""
+			}
+
+			DruidHat: {
+				DisplayName: Druid Hat
+				Tooltip: ""
+			}
+
+			EaglecrestHead: {
+				DisplayName: Eaglecrest Head
+				Tooltip: ""
+			}
+
+			EpidotrianSkull: {
+				DisplayName: Epidotrian Skull
+				Tooltip: ""
+			}
+
+			ErhanHelmet: {
+				DisplayName: Erhan Helmet
+				Tooltip: ""
+			}
+
+			FowlCrown: {
+				DisplayName: Fowl Crown
+				Tooltip: ""
+			}
+
+			InfectedMask: {
+				DisplayName: Infected Mask
+				Tooltip: ""
+			}
+
+			IntruderArmour: {
+				DisplayName: Intruder Armour
+				Tooltip: ""
+			}
+
+			IntruderMask: {
+				DisplayName: Intruder Mask
+				Tooltip: ""
+			}
+
+			IntruderPants: {
+				DisplayName: Intruder Pants
+				Tooltip: ""
+			}
+
+			KeepersVeil: {
+				DisplayName: Keepers Veil
+				Tooltip: ""
+			}
+
+			KingSlayerMask: {
+				DisplayName: King Slayer Mask
+				Tooltip: ""
+			}
+
+			NebuleusMask: {
+				DisplayName: Nebuleus Mask
+				Tooltip: ""
+			}
+
+			NebuleusVanity: {
+				DisplayName: Nebuleus Vanity
+				Tooltip: ""
+			}
+
+			OldTophat: {
+				DisplayName: Old Tophat
+				Tooltip: ""
+			}
+
+			OOMask: {
+				DisplayName: O O Mask
+				Tooltip: ""
+			}
+
+			PZMask: {
+				DisplayName: P Z Mask
+				Tooltip: ""
+			}
+
+			SkullDiggerMask: {
+				DisplayName: Skull Digger Mask
+				Tooltip: ""
+			}
+
+			SkySquiresGreaves: {
+				DisplayName: Sky Squires Greaves
+				Tooltip: ""
+			}
+
+			SkySquiresHelm: {
+				DisplayName: Sky Squires Helm
+				Tooltip: ""
+			}
+
+			SkySquiresTabard: {
+				DisplayName: Sky Squires Tabard
+				Tooltip: ""
+			}
+
+			SwordHeadband: {
+				DisplayName: Sword Headband
+				Tooltip: ""
+			}
+
+			AdamHead: {
+				DisplayName: Adam Head
+				Tooltip: ""
+			}
+
+			AndroidArmour: {
+				DisplayName: Android Armour
+				Tooltip: ""
+			}
+
+			AndroidPants: {
+				DisplayName: Android Pants
+				Tooltip: ""
+			}
+
+			JanitorOutfit: {
+				DisplayName: Janitor Outfit
+				Tooltip: ""
+			}
+
+			JanitorPants: {
+				DisplayName: Janitor Pants
+				Tooltip: ""
+			}
+
+			OperatorHead: {
+				DisplayName: Operator Head
+				Tooltip: ""
+			}
+
+			TBotEyes_Femi: {
+				DisplayName: T Bot Eyes_ Femi
+				Tooltip: ""
+			}
+
+			TBotEyes_Masc: {
+				DisplayName: T Bot Eyes_ Masc
+				Tooltip: ""
+			}
+
+			TBotGoggles_Femi: {
+				DisplayName: T Bot Goggles_ Femi
+				Tooltip: ""
+			}
+
+			TBotGoggles_Masc: {
+				DisplayName: T Bot Goggles_ Masc
+				Tooltip: ""
+			}
+
+			TBotVanityChestplate: {
+				DisplayName: T Bot Vanity Chestplate
+				Tooltip: ""
+			}
+
+			TBotVanityEyes: {
+				DisplayName: T Bot Vanity Eyes
+				Tooltip: ""
+			}
+
+			TBotVanityGoggles: {
+				DisplayName: T Bot Vanity Goggles
+				Tooltip: ""
+			}
+
+			TBotVanityLegs: {
+				DisplayName: T Bot Vanity Legs
+				Tooltip: ""
+			}
+
+			VoltHead: {
+				DisplayName: Volt Head
+				Tooltip: ""
+			}
+
+			ThornMask: {
+				DisplayName: Thorn Mask
+				Tooltip: ""
+			}
+
+			UkkoMask: {
+				DisplayName: Ukko Mask
+				Tooltip: ""
+			}
+
+			BadNeutralRoute: {
+				DisplayName: Bad Neutral Route
+				Tooltip: ""
+			}
+
+			BadRedemptionRoute: {
+				DisplayName: Bad Redemption Route
+				Tooltip: ""
+			}
+
+			BadRoute: {
+				DisplayName: Bad Route
+				Tooltip: ""
+			}
+
+			AntiJohnSnailItem: {
+				DisplayName: Anti John Snail Item
+				Tooltip: ""
+			}
+
+			BlackChickenItem: {
+				DisplayName: Black Chicken Item
+				Tooltip: ""
+			}
+
+			BoneSpiderItem: {
+				DisplayName: Bone Spider Item
+				Tooltip: ""
+			}
+
+			ChickenGoldItem: {
+				DisplayName: Chicken Gold Item
+				Tooltip: ""
+			}
+
+			ChickenItem: {
+				DisplayName: Chicken Item
+				Tooltip: ""
+			}
+
+			CoastScarabItem: {
+				DisplayName: Coast Scarab Item
+				Tooltip: ""
+			}
+
+			FlyBait: {
+				DisplayName: Fly Bait
+				Tooltip: ""
+			}
+
+			GrandLarvaBait: {
+				DisplayName: Grand Larva Bait
+				Tooltip: ""
+			}
+
+			HazmatBunnyItem: {
+				DisplayName: Hazmat Bunny Item
+				Tooltip: ""
+			}
+
+			JohnSnailItem: {
+				DisplayName: John Snail Item
+				Tooltip: ""
+			}
+
+			KabucraItem: {
+				DisplayName: Kabucra Item
+				Tooltip: ""
+			}
+
+			LeghornChickenItem: {
+				DisplayName: Leghorn Chicken Item
+				Tooltip: ""
+			}
+
+			LongChickenItem: {
+				DisplayName: Long Chicken Item
+				Tooltip: ""
+			}
+
+			MoonflareBatItem: {
+				DisplayName: Moonflare Bat Item
+				Tooltip: ""
+			}
+
+			RedChickenItem: {
+				DisplayName: Red Chicken Item
+				Tooltip: ""
+			}
+
+			SandskinSpiderItem: {
+				DisplayName: Sandskin Spider Item
+				Tooltip: ""
+			}
+
+			SpiderSwarmerItem: {
+				DisplayName: Spider Swarmer Item
+				Tooltip: ""
+			}
+
+			TreeBugItem: {
+				DisplayName: Tree Bug Item
+				Tooltip: ""
+			}
+
+			ArchePatreonVanityBody: {
+				DisplayName: Arche Patreon Vanity Body
+				Tooltip: ""
+			}
+
+			ArchePatreonVanityCape: {
+				DisplayName: Arche Patreon Vanity Cape
+				Tooltip: ""
+			}
+
+			ArchePatreonVanityHead: {
+				DisplayName: Arche Patreon Vanity Head
+				Tooltip: ""
+			}
+
+			ArchePatreonVanityLegs: {
+				DisplayName: Arche Patreon Vanity Legs
+				Tooltip: ""
+			}
+
+			GonkPet: {
+				DisplayName: Gonk Pet
+				Tooltip: ""
+			}
+
+			LantardPatreon_Item: {
+				DisplayName: Lantard Patreon_ Item
+				Tooltip: ""
+			}
+
+			LizzyBody: {
+				DisplayName: Lizzy Body
+				Tooltip: ""
+			}
+
+			LizzyCookie: {
+				DisplayName: Lizzy Cookie
+				Tooltip: ""
+			}
+
+			LizzyHead: {
+				DisplayName: Lizzy Head
+				Tooltip: ""
+			}
+
+			LizzyLegs: {
+				DisplayName: Lizzy Legs
+				Tooltip: ""
+			}
+
+			LizzyTail: {
+				DisplayName: Lizzy Tail
+				Tooltip: ""
+			}
+
+			LegoBrick: {
+				DisplayName: Lego Brick
+				Tooltip: ""
+			}
+
+			MedicBackpack: {
+				DisplayName: Medic Backpack
+				Tooltip: ""
+			}
+
+			MedicLegs: {
+				DisplayName: Medic Legs
+				Tooltip: ""
+			}
+
+			MedicOutfit: {
+				DisplayName: Medic Outfit
+				Tooltip: ""
+			}
+
+			SmolderedScale: {
+				DisplayName: Smoldered Scale
+				Tooltip: ""
+			}
+
+			RainPatreonVanityAcc: {
+				DisplayName: Rain Patreon Vanity Acc
+				Tooltip: ""
+			}
+
+			RainPatreonVanityBody: {
+				DisplayName: Rain Patreon Vanity Body
+				Tooltip: ""
+			}
+
+			RainPatreonVanityHead: {
+				DisplayName: Rain Patreon Vanity Head
+				Tooltip: ""
+			}
+
+			RainPatreonVanityLegs: {
+				DisplayName: Rain Patreon Vanity Legs
+				Tooltip: ""
+			}
+
+			RainPatreonWings: {
+				DisplayName: Rain Patreon Wings
+				Tooltip: ""
+			}
+
+			SneakloneHelmet1: {
+				DisplayName: Sneaklone Helmet1
+				Tooltip: ""
+			}
+
+			SneakloneHelmet2: {
+				DisplayName: Sneaklone Helmet2
+				Tooltip: ""
+			}
+
+			SneakloneLegs: {
+				DisplayName: Sneaklone Legs
+				Tooltip: ""
+			}
+
+			SneakloneSuit: {
+				DisplayName: Sneaklone Suit
+				Tooltip: ""
+			}
+
+			UnconBody: {
+				DisplayName: Uncon Body
+				Tooltip: ""
+			}
+
+			UnconBody2: {
+				DisplayName: Uncon Body2
+				Tooltip: ""
+			}
+
+			UnconHead: {
+				DisplayName: Uncon Head
+				Tooltip: ""
+			}
+
+			UnconHead2: {
+				DisplayName: Uncon Head2
+				Tooltip: ""
+			}
+
+			UnconLegs: {
+				DisplayName: Uncon Legs
+				Tooltip: ""
+			}
+
+			UnconLegs2: {
+				DisplayName: Uncon Legs2
+				Tooltip: ""
+			}
+
+			UnconPatreon_CapeAcc: {
+				DisplayName: Uncon Patreon_ Cape Acc
+				Tooltip: ""
+			}
+
+			UnconPetItem: {
+				DisplayName: Uncon Pet Item
+				Tooltip: ""
+			}
+
+			WaasephiPet: {
+				DisplayName: Waasephi Pet
+				Tooltip: ""
+			}
+
+			GoodRoute: {
+				DisplayName: Good Route
+				Tooltip: ""
+			}
+
+			HintIcon: {
+				DisplayName: Hint Icon
+				Tooltip: ""
+			}
+
+			Datalog: {
+				DisplayName: Datalog
+				Tooltip: ""
+			}
+
+			Datalog10: {
+				DisplayName: Datalog10
+				Tooltip: ""
+			}
+
+			Datalog11: {
+				DisplayName: Datalog11
+				Tooltip: ""
+			}
+
+			Datalog12: {
+				DisplayName: Datalog12
+				Tooltip: ""
+			}
+
+			Datalog13: {
+				DisplayName: Datalog13
+				Tooltip: ""
+			}
+
+			Datalog14: {
+				DisplayName: Datalog14
+				Tooltip: ""
+			}
+
+			Datalog15: {
+				DisplayName: Datalog15
+				Tooltip: ""
+			}
+
+			Datalog16: {
+				DisplayName: Datalog16
+				Tooltip: ""
+			}
+
+			Datalog17: {
+				DisplayName: Datalog17
+				Tooltip: ""
+			}
+
+			Datalog18: {
+				DisplayName: Datalog18
+				Tooltip: ""
+			}
+
+			Datalog19: {
+				DisplayName: Datalog19
+				Tooltip: ""
+			}
+
+			Datalog2: {
+				DisplayName: Datalog2
+				Tooltip: ""
+			}
+
+			Datalog20: {
+				DisplayName: Datalog20
+				Tooltip: ""
+			}
+
+			Datalog21: {
+				DisplayName: Datalog21
+				Tooltip: ""
+			}
+
+			Datalog22: {
+				DisplayName: Datalog22
+				Tooltip: ""
+			}
+
+			Datalog23: {
+				DisplayName: Datalog23
+				Tooltip: ""
+			}
+
+			Datalog24: {
+				DisplayName: Datalog24
+				Tooltip: ""
+			}
+
+			Datalog25: {
+				DisplayName: Datalog25
+				Tooltip: ""
+			}
+
+			Datalog26: {
+				DisplayName: Datalog26
+				Tooltip: ""
+			}
+
+			Datalog27: {
+				DisplayName: Datalog27
+				Tooltip: ""
+			}
+
+			Datalog28: {
+				DisplayName: Datalog28
+				Tooltip: ""
+			}
+
+			Datalog3: {
+				DisplayName: Datalog3
+				Tooltip: ""
+			}
+
+			Datalog4: {
+				DisplayName: Datalog4
+				Tooltip: ""
+			}
+
+			Datalog5: {
+				DisplayName: Datalog5
+				Tooltip: ""
+			}
+
+			Datalog6: {
+				DisplayName: Datalog6
+				Tooltip: ""
+			}
+
+			Datalog7: {
+				DisplayName: Datalog7
+				Tooltip: ""
+			}
+
+			Datalog8: {
+				DisplayName: Datalog8
+				Tooltip: ""
+			}
+
+			Datalog9: {
+				DisplayName: Datalog9
+				Tooltip: ""
+			}
+
+			FloppyDisk1: {
+				DisplayName: Floppy Disk1
+				Tooltip: ""
+			}
+
+			FloppyDisk2: {
+				DisplayName: Floppy Disk2
+				Tooltip: ""
+			}
+
+			FloppyDisk2_1: {
+				DisplayName: Floppy Disk2_1
+				Tooltip: ""
+			}
+
+			FloppyDisk3: {
+				DisplayName: Floppy Disk3
+				Tooltip: ""
+			}
+
+			FloppyDisk3_1: {
+				DisplayName: Floppy Disk3_1
+				Tooltip: ""
+			}
+
+			FloppyDisk5: {
+				DisplayName: Floppy Disk5
+				Tooltip: ""
+			}
+
+			FloppyDisk5_1: {
+				DisplayName: Floppy Disk5_1
+				Tooltip: ""
+			}
+
+			FloppyDisk5_2: {
+				DisplayName: Floppy Disk5_2
+				Tooltip: ""
+			}
+
+			FloppyDisk5_3: {
+				DisplayName: Floppy Disk5_3
+				Tooltip: ""
+			}
+
+			FloppyDisk6: {
+				DisplayName: Floppy Disk6
+				Tooltip: ""
+			}
+
+			FloppyDisk6_1: {
+				DisplayName: Floppy Disk6_1
+				Tooltip: ""
+			}
+
+			FloppyDisk7: {
+				DisplayName: Floppy Disk7
+				Tooltip: ""
+			}
+
+			FloppyDisk7_1: {
+				DisplayName: Floppy Disk7_1
+				Tooltip: ""
+			}
+
+			AIChip: {
+				DisplayName: A I Chip
+				Tooltip: ""
+			}
+
+			BlackholeFragment: {
+				DisplayName: Blackhole Fragment
+				Tooltip: ""
+			}
+
+			Capacitor: {
+				DisplayName: Capacitor
+				Tooltip: ""
+			}
+
+			CarbonMyofibre: {
+				DisplayName: Carbon Myofibre
+				Tooltip: ""
+			}
+
+			CorruptedXenomite: {
+				DisplayName: Corrupted Xenomite
+				Tooltip: ""
+			}
+
+			CyberPlating: {
+				DisplayName: Cyber Plating
+				Tooltip: ""
+			}
+
+			Cyberscrap: {
+				DisplayName: Cyberscrap
+				Tooltip: ""
+			}
+
+			OmegaPowerCell: {
+				DisplayName: Omega Power Cell
+				Tooltip: ""
+			}
+
+			OphosNotes: {
+				DisplayName: Ophos Notes
+				Tooltip: ""
+			}
+
+			Plating: {
+				DisplayName: Plating
+				Tooltip: ""
+			}
+
+			ToxicBile: {
+				DisplayName: Toxic Bile
+				Tooltip: ""
+			}
+
+			Uranium: {
+				DisplayName: Uranium
+				Tooltip: ""
+			}
+
+			Corium: {
+				DisplayName: Corium
+				Tooltip: ""
+			}
+
+			EmptyMutagen: {
+				DisplayName: Empty Mutagen
+				Tooltip: ""
+			}
+
+			GildedStar: {
+				DisplayName: Gilded Star
+				Tooltip: ""
+			}
+
+			LifeFragment: {
+				DisplayName: Life Fragment
+				Tooltip: ""
+			}
+
+			MoltenScrap: {
+				DisplayName: Molten Scrap
+				Tooltip: ""
+			}
+
+			Plutonium: {
+				DisplayName: Plutonium
+				Tooltip: ""
+			}
+
+			RawXenium: {
+				DisplayName: Raw Xenium
+				Tooltip: ""
+			}
+
+			RoboBrain: {
+				DisplayName: Robo Brain
+				Tooltip: ""
+			}
+
+			Shadesoul: {
+				DisplayName: Shadesoul
+				Tooltip: ""
+			}
+
+			VesselFragment: {
+				DisplayName: Vessel Fragment
+				Tooltip: ""
+			}
+
+			XeniumAlloy: {
+				DisplayName: Xenium Alloy
+				Tooltip: ""
+			}
+
+			Archcloth: {
+				DisplayName: Archcloth
+				Tooltip: ""
+			}
+
+			BlackenedHeart: {
+				DisplayName: Blackened Heart
+				Tooltip: ""
+			}
+
+			CoastScarabShell: {
+				DisplayName: Coast Scarab Shell
+				Tooltip: ""
+			}
+
+			CursedGem: {
+				DisplayName: Cursed Gem
+				Tooltip: ""
+			}
+
+			DragonLeadAlloy: {
+				DisplayName: Dragon Lead Alloy
+				Tooltip: ""
+			}
+
+			DragonLeadOre: {
+				DisplayName: Dragon Lead Ore
+				Tooltip: ""
+			}
+
+			EmptyCruxCard: {
+				DisplayName: Empty Crux Card
+				Tooltip: ""
+			}
+
+			GathicCryoCrystal: {
+				DisplayName: Gathic Cryo Crystal
+				Tooltip: ""
+			}
+
+			GolemEye: {
+				DisplayName: Golem Eye
+				Tooltip: ""
+			}
+
+			GraveSteelAlloy: {
+				DisplayName: Grave Steel Alloy
+				Tooltip: ""
+			}
+
+			GraveSteelShards: {
+				DisplayName: Grave Steel Shards
+				Tooltip: ""
+			}
+
+			GrimShard: {
+				DisplayName: Grim Shard
+				Tooltip: ""
+			}
+
+			LivingTwig: {
+				DisplayName: Living Twig
+				Tooltip: ""
+			}
+
+			LostSoul: {
+				DisplayName: Lost Soul
+				Tooltip: ""
+			}
+
+			MoonflareFragment: {
+				DisplayName: Moonflare Fragment
+				Tooltip: ""
+			}
+
+			PureIronAlloy: {
+				DisplayName: Pure Iron Alloy
+				Tooltip: ""
+			}
+
+			TreeBugShell: {
+				DisplayName: Tree Bug Shell
+				Tooltip: ""
+			}
+
+			XenomiteShard: {
+				DisplayName: Xenomite Shard
+				Tooltip: ""
+			}
+
+			ZweihanderFragment1: {
+				DisplayName: Zweihander Fragment1
+				Tooltip: ""
+			}
+
+			ZweihanderFragment2: {
+				DisplayName: Zweihander Fragment2
+				Tooltip: ""
+			}
+
+			Zweihander: {
+				DisplayName: Zweihander
+				Tooltip: ""
+			}
+
+			NextPageArrow: {
+				DisplayName: Next Page Arrow
+				Tooltip: ""
+			}
+
+			AncientGladestoneGolemBanner: {
+				DisplayName: Ancient Gladestone Golem Banner
+				Tooltip: ""
+			}
+
+			AndroidBanner: {
+				DisplayName: Android Banner
+				Tooltip: ""
+			}
+
+			BlisteredScientistBanner: {
+				DisplayName: Blistered Scientist Banner
+				Tooltip: ""
+			}
+
+			BloatedGhoulBanner: {
+				DisplayName: Bloated Ghoul Banner
+				Tooltip: ""
+			}
+
+			BloatedGoldfishBanner: {
+				DisplayName: Bloated Goldfish Banner
+				Tooltip: ""
+			}
+
+			BloatedScientistBanner: {
+				DisplayName: Bloated Scientist Banner
+				Tooltip: ""
+			}
+
+			BloatedSwarmerBanner: {
+				DisplayName: Bloated Swarmer Banner
+				Tooltip: ""
+			}
+
+			BlobbleBanner: {
+				DisplayName: Blobble Banner
+				Tooltip: ""
+			}
+
+			BobTheBlobBanner: {
+				DisplayName: Bob The Blob Banner
+				Tooltip: ""
+			}
+
+			BoneSpiderBanner: {
+				DisplayName: Bone Spider Banner
+				Tooltip: ""
+			}
+
+			ChickenBanner: {
+				DisplayName: Chicken Banner
+				Tooltip: ""
+			}
+
+			ChickenBomberBanner: {
+				DisplayName: Chicken Bomber Banner
+				Tooltip: ""
+			}
+
+			ChickenScratcherBanner: {
+				DisplayName: Chicken Scratcher Banner
+				Tooltip: ""
+			}
+
+			CoastScarabBanner: {
+				DisplayName: Coast Scarab Banner
+				Tooltip: ""
+			}
+
+			CorpseWalkerPriestBanner: {
+				DisplayName: Corpse Walker Priest Banner
+				Tooltip: ""
+			}
+
+			DevilsTongueBanner: {
+				DisplayName: Devils Tongue Banner
+				Tooltip: ""
+			}
+
+			EpidotrianSkeletonBanner: {
+				DisplayName: Epidotrian Skeleton Banner
+				Tooltip: ""
+			}
+
+			ForestNymphBanner: {
+				DisplayName: Forest Nymph Banner
+				Tooltip: ""
+			}
+
+			GrandLarvaBanner: {
+				DisplayName: Grand Larva Banner
+				Tooltip: ""
+			}
+
+			HazmatZombieBanner: {
+				DisplayName: Hazmat Zombie Banner
+				Tooltip: ""
+			}
+
+			HeadlessChickenBanner: {
+				DisplayName: Headless Chicken Banner
+				Tooltip: ""
+			}
+
+			JollyMadmanBanner: {
+				DisplayName: Jolly Madman Banner
+				Tooltip: ""
+			}
+
+			KabucraBanner: {
+				DisplayName: Kabucra Banner
+				Tooltip: ""
+			}
+
+			LivingBloomBanner: {
+				DisplayName: Living Bloom Banner
+				Tooltip: ""
+			}
+
+			MoonflareBatBanner: {
+				DisplayName: Moonflare Bat Banner
+				Tooltip: ""
+			}
+
+			MutatedLivingBloomBanner: {
+				DisplayName: Mutated Living Bloom Banner
+				Tooltip: ""
+			}
+
+			NuclearShadowBanner: {
+				DisplayName: Nuclear Shadow Banner
+				Tooltip: ""
+			}
+
+			NuclearSlimeBanner: {
+				DisplayName: Nuclear Slime Banner
+				Tooltip: ""
+			}
+
+			OozeBlobBanner: {
+				DisplayName: Ooze Blob Banner
+				Tooltip: ""
+			}
+
+			OozingScientistBanner: {
+				DisplayName: Oozing Scientist Banner
+				Tooltip: ""
+			}
+
+			PrototypeSilverBanner: {
+				DisplayName: Prototype Silver Banner
+				Tooltip: ""
+			}
+
+			RadioactiveJellyBanner: {
+				DisplayName: Radioactive Jelly Banner
+				Tooltip: ""
+			}
+
+			RadioactiveSlimeBanner: {
+				DisplayName: Radioactive Slime Banner
+				Tooltip: ""
+			}
+
+			SandskinSpiderBanner: {
+				DisplayName: Sandskin Spider Banner
+				Tooltip: ""
+			}
+
+			SickenedBunnyBanner: {
+				DisplayName: Sickened Bunny Banner
+				Tooltip: ""
+			}
+
+			SickenedDemonEyeBanner: {
+				DisplayName: Sickened Demon Eye Banner
+				Tooltip: ""
+			}
+
+			SicklyPenguinBanner: {
+				DisplayName: Sickly Penguin Banner
+				Tooltip: ""
+			}
+
+			SicklyWolfBanner: {
+				DisplayName: Sickly Wolf Banner
+				Tooltip: ""
+			}
+
+			SkeletonAssassinBanner: {
+				DisplayName: Skeleton Assassin Banner
+				Tooltip: ""
+			}
+
+			SkeletonDuelistBanner: {
+				DisplayName: Skeleton Duelist Banner
+				Tooltip: ""
+			}
+
+			SkeletonFlagbearerBanner: {
+				DisplayName: Skeleton Flagbearer Banner
+				Tooltip: ""
+			}
+
+			SkeletonNobleBanner: {
+				DisplayName: Skeleton Noble Banner
+				Tooltip: ""
+			}
+
+			SkeletonWandererBanner: {
+				DisplayName: Skeleton Wanderer Banner
+				Tooltip: ""
+			}
+
+			SkeletonWardenBanner: {
+				DisplayName: Skeleton Warden Banner
+				Tooltip: ""
+			}
+
+			SneezyFlinxBanner: {
+				DisplayName: Sneezy Flinx Banner
+				Tooltip: ""
+			}
+
+			SpacePaladinBanner: {
+				DisplayName: Space Paladin Banner
+				Tooltip: ""
+			}
+
+			TreeBugBanner: {
+				DisplayName: Tree Bug Banner
+				Tooltip: ""
+			}
+
+			VagrantSpiritBanner: {
+				DisplayName: Vagrant Spirit Banner
+				Tooltip: ""
+			}
+
+			ElderWoodChest: {
+				DisplayName: Elder Wood Chest
+				Tooltip: ""
+			}
+
+			Holochest: {
+				DisplayName: Holochest
+				Tooltip: ""
+			}
+
+			LabChest: {
+				DisplayName: Lab Chest
+				Tooltip: ""
+			}
+
+			LabChest2: {
+				DisplayName: Lab Chest2
+				Tooltip: ""
+			}
+
+			PetrifiedWoodChest: {
+				DisplayName: Petrified Wood Chest
+				Tooltip: ""
+			}
+
+			ShadestoneChest: {
+				DisplayName: Shadestone Chest
+				Tooltip: ""
+			}
+
+			StandardLabLocker: {
+				DisplayName: Standard Lab Locker
+				Tooltip: ""
+			}
+
+			ArchclothBanner: {
+				DisplayName: Archcloth Banner
+				Tooltip: ""
+			}
+
+			ArchclothThrone: {
+				DisplayName: Archcloth Throne
+				Tooltip: ""
+			}
+
+			ElderWoodBathtub: {
+				DisplayName: Elder Wood Bathtub
+				Tooltip: ""
+			}
+
+			ElderWoodBed: {
+				DisplayName: Elder Wood Bed
+				Tooltip: ""
+			}
+
+			ElderWoodBookcase: {
+				DisplayName: Elder Wood Bookcase
+				Tooltip: ""
+			}
+
+			ElderWoodCandelabra: {
+				DisplayName: Elder Wood Candelabra
+				Tooltip: ""
+			}
+
+			ElderWoodCandle: {
+				DisplayName: Elder Wood Candle
+				Tooltip: ""
+			}
+
+			ElderWoodChair: {
+				DisplayName: Elder Wood Chair
+				Tooltip: ""
+			}
+
+			ElderWoodChandelier: {
+				DisplayName: Elder Wood Chandelier
+				Tooltip: ""
+			}
+
+			ElderWoodClock: {
+				DisplayName: Elder Wood Clock
+				Tooltip: ""
+			}
+
+			ElderWoodDoor: {
+				DisplayName: Elder Wood Door
+				Tooltip: ""
+			}
+
+			ElderWoodDresser: {
+				DisplayName: Elder Wood Dresser
+				Tooltip: ""
+			}
+
+			ElderWoodLamp: {
+				DisplayName: Elder Wood Lamp
+				Tooltip: ""
+			}
+
+			ElderWoodLantern: {
+				DisplayName: Elder Wood Lantern
+				Tooltip: ""
+			}
+
+			ElderWoodPiano: {
+				DisplayName: Elder Wood Piano
+				Tooltip: ""
+			}
+
+			ElderWoodPlatform: {
+				DisplayName: Elder Wood Platform
+				Tooltip: ""
+			}
+
+			ElderWoodSink: {
+				DisplayName: Elder Wood Sink
+				Tooltip: ""
+			}
+
+			ElderWoodSofa: {
+				DisplayName: Elder Wood Sofa
+				Tooltip: ""
+			}
+
+			ElderWoodTable: {
+				DisplayName: Elder Wood Table
+				Tooltip: ""
+			}
+
+			ElderWoodWorkBench: {
+				DisplayName: Elder Wood Work Bench
+				Tooltip: ""
+			}
+
+			ElderWood: {
+				DisplayName: Elder Wood
+				Tooltip: ""
+			}
+
+			BiohazardSign: {
+				DisplayName: Biohazard Sign
+				Tooltip: ""
+			}
+
+			BotHanger: {
+				DisplayName: Bot Hanger
+				Tooltip: ""
+			}
+
+			BrokenLabBackDoor2: {
+				DisplayName: Broken Lab Back Door2
+				Tooltip: ""
+			}
+
+			BrokenLabBackDoor: {
+				DisplayName: Broken Lab Back Door
+				Tooltip: ""
+			}
+
+			ElectricitySign: {
+				DisplayName: Electricity Sign
+				Tooltip: ""
+			}
+
+			EmptyBotHanger: {
+				DisplayName: Empty Bot Hanger
+				Tooltip: ""
+			}
+
+			GirusCorruptor: {
+				DisplayName: Girus Corruptor
+				Tooltip: ""
+			}
+
+			HospitalBed: {
+				DisplayName: Hospital Bed
+				Tooltip: ""
+			}
+
+			InfectedCorpse1: {
+				DisplayName: Infected Corpse1
+				Tooltip: ""
+			}
+
+			InfectedCorpse2: {
+				DisplayName: Infected Corpse2
+				Tooltip: ""
+			}
+
+			InfectedCorpse3: {
+				DisplayName: Infected Corpse3
+				Tooltip: ""
+			}
+
+			LabBackDoor: {
+				DisplayName: Lab Back Door
+				Tooltip: ""
+			}
+
+			LabBackDoor2: {
+				DisplayName: Lab Back Door2
+				Tooltip: ""
+			}
+
+			LabCeilingLamp: {
+				DisplayName: Lab Ceiling Lamp
+				Tooltip: ""
+			}
+
+			LabCeilingMonitor: {
+				DisplayName: Lab Ceiling Monitor
+				Tooltip: ""
+			}
+
+			LabChair: {
+				DisplayName: Lab Chair
+				Tooltip: ""
+			}
+
+			LabComputer: {
+				DisplayName: Lab Computer
+				Tooltip: ""
+			}
+
+			LabCrate: {
+				DisplayName: Lab Crate
+				Tooltip: ""
+			}
+
+			LabCrate2: {
+				DisplayName: Lab Crate2
+				Tooltip: ""
+			}
+
+			LabDoor: {
+				DisplayName: Lab Door
+				Tooltip: ""
+			}
+
+			LabIntercom: {
+				DisplayName: Lab Intercom
+				Tooltip: ""
+			}
+
+			LabPlatform: {
+				DisplayName: Lab Platform
+				Tooltip: ""
+			}
+
+			LabRail_L: {
+				DisplayName: Lab Rail_ L
+				Tooltip: ""
+			}
+
+			LabRail_Mid: {
+				DisplayName: Lab Rail_ Mid
+				Tooltip: ""
+			}
+
+			LabRail_R: {
+				DisplayName: Lab Rail_ R
+				Tooltip: ""
+			}
+
+			LabReactor: {
+				DisplayName: Lab Reactor
+				Tooltip: ""
+			}
+
+			LabReceptionCouch: {
+				DisplayName: Lab Reception Couch
+				Tooltip: ""
+			}
+
+			LabReceptionDesk: {
+				DisplayName: Lab Reception Desk
+				Tooltip: ""
+			}
+
+			LabReceptionMonitors: {
+				DisplayName: Lab Reception Monitors
+				Tooltip: ""
+			}
+
+			LabTable: {
+				DisplayName: Lab Table
+				Tooltip: ""
+			}
+
+			LabToilet: {
+				DisplayName: Lab Toilet
+				Tooltip: ""
+			}
+
+			LabWallFan: {
+				DisplayName: Lab Wall Fan
+				Tooltip: ""
+			}
+
+			LabWorkbench: {
+				DisplayName: Lab Workbench
+				Tooltip: ""
+			}
+
+			LargeVent: {
+				DisplayName: Large Vent
+				Tooltip: ""
+			}
+
+			RadioactiveSign: {
+				DisplayName: Radioactive Sign
+				Tooltip: ""
+			}
+
+			ServerCabinet: {
+				DisplayName: Server Cabinet
+				Tooltip: ""
+			}
+
+			SewerHole: {
+				DisplayName: Sewer Hole
+				Tooltip: ""
+			}
+
+			SkullSign: {
+				DisplayName: Skull Sign
+				Tooltip: ""
+			}
+
+			SmallVent: {
+				DisplayName: Small Vent
+				Tooltip: ""
+			}
+
+			Stage3Corpse: {
+				DisplayName: Stage3 Corpse
+				Tooltip: ""
+			}
+
+			TestTubes: {
+				DisplayName: Test Tubes
+				Tooltip: ""
+			}
+
+			Vent: {
+				DisplayName: Vent
+				Tooltip: ""
+			}
+
+			XeniumRefinery: {
+				DisplayName: Xenium Refinery
+				Tooltip: ""
+			}
+
+			XeniumSmelter: {
+				DisplayName: Xenium Smelter
+				Tooltip: ""
+			}
+
+			AkkaPainting: {
+				DisplayName: Akka Painting
+				Tooltip: ""
+			}
+
+			AncientAutoPainting: {
+				DisplayName: Ancient Auto Painting
+				Tooltip: ""
+			}
+
+			AncientFallenStatue: {
+				DisplayName: Ancient Fallen Statue
+				Tooltip: ""
+			}
+
+			BorealStatuette: {
+				DisplayName: Boreal Statuette
+				Tooltip: ""
+			}
+
+			ChickenCoop: {
+				DisplayName: Chicken Coop
+				Tooltip: ""
+			}
+
+			DoppelsSword: {
+				DisplayName: Doppels Sword
+				Tooltip: ""
+			}
+
+			DubiousWatcherPainting: {
+				DisplayName: Dubious Watcher Painting
+				Tooltip: ""
+			}
+
+			EaglecrestGolemPlush: {
+				DisplayName: Eaglecrest Golem Plush
+				Tooltip: ""
+			}
+
+			EmeraldHeartPainting: {
+				DisplayName: Emerald Heart Painting
+				Tooltip: ""
+			}
+
+			EnergyStation: {
+				DisplayName: Energy Station
+				Tooltip: ""
+			}
+
+			FowlEmperorPainting: {
+				DisplayName: Fowl Emperor Painting
+				Tooltip: ""
+			}
+
+			GathicCryoFurnace: {
+				DisplayName: Gathic Cryo Furnace
+				Tooltip: ""
+			}
+
+			HamPatPainting: {
+				DisplayName: Ham Pat Painting
+				Tooltip: ""
+			}
+
+			HKMiniStatue: {
+				DisplayName: H K Mini Statue
+				Tooltip: ""
+			}
+
+			HKStatue: {
+				DisplayName: H K Statue
+				Tooltip: ""
+			}
+
+			JStatue: {
+				DisplayName: J Statue
+				Tooltip: ""
+			}
+
+			KingChessPiece: {
+				DisplayName: King Chess Piece
+				Tooltip: ""
+			}
+
+			KingChickenPainting: {
+				DisplayName: King Chicken Painting
+				Tooltip: ""
+			}
+
+			KSPainting: {
+				DisplayName: K S Painting
+				Tooltip: ""
+			}
+
+			KSStatue: {
+				DisplayName: K S Statue
+				Tooltip: ""
+			}
+
+			MudGuardianPainting: {
+				DisplayName: Mud Guardian Painting
+				Tooltip: ""
+			}
+
+			NozaCage: {
+				DisplayName: Noza Cage
+				Tooltip: ""
+			}
+
+			NozaCageHanging: {
+				DisplayName: Noza Cage Hanging
+				Tooltip: ""
+			}
+
+			NozaCageLarge: {
+				DisplayName: Noza Cage Large
+				Tooltip: ""
+			}
+
+			NozaCageSmall: {
+				DisplayName: Noza Cage Small
+				Tooltip: ""
+			}
+
+			NStatue: {
+				DisplayName: N Statue
+				Tooltip: ""
+			}
+
+			NuclearWarhead: {
+				DisplayName: Nuclear Warhead
+				Tooltip: ""
+			}
+
+			PonderingTreesPainting: {
+				DisplayName: Pondering Trees Painting
+				Tooltip: ""
+			}
+
+			ScrunklePainting: {
+				DisplayName: Scrunkle Painting
+				Tooltip: ""
+			}
+
+			SkeletonGuardianPainting: {
+				DisplayName: Skeleton Guardian Painting
+				Tooltip: ""
+			}
+
+			SkullDiggerPainting: {
+				DisplayName: Skull Digger Painting
+				Tooltip: ""
+			}
+
+			SoulCandles: {
+				DisplayName: Soul Candles
+				Tooltip: ""
+			}
+
+			SunkenCaptainPainting: {
+				DisplayName: Sunken Captain Painting
+				Tooltip: ""
+			}
+
+			ThornPlush: {
+				DisplayName: Thorn Plush
+				Tooltip: ""
+			}
+
+			TiedBoiPainting: {
+				DisplayName: Tied Boi Painting
+				Tooltip: ""
+			}
+
+			TrojanChicken: {
+				DisplayName: Trojan Chicken
+				Tooltip: ""
+			}
+
+			UkkoPainting: {
+				DisplayName: Ukko Painting
+				Tooltip: ""
+			}
+
+			WardenPainting: {
+				DisplayName: Warden Painting
+				Tooltip: ""
+			}
+
+			WastelandCampfire: {
+				DisplayName: Wasteland Campfire
+				Tooltip: ""
+			}
+
+			WastelandTorch: {
+				DisplayName: Wasteland Torch
+				Tooltip: ""
+			}
+
+			PetrifiedCrate: {
+				DisplayName: Petrified Crate
+				Tooltip: ""
+			}
+
+			PetrifiedWoodBathtub: {
+				DisplayName: Petrified Wood Bathtub
+				Tooltip: ""
+			}
+
+			PetrifiedWoodBed: {
+				DisplayName: Petrified Wood Bed
+				Tooltip: ""
+			}
+
+			PetrifiedWoodBookcase: {
+				DisplayName: Petrified Wood Bookcase
+				Tooltip: ""
+			}
+
+			PetrifiedWoodCandelabra: {
+				DisplayName: Petrified Wood Candelabra
+				Tooltip: ""
+			}
+
+			PetrifiedWoodCandle: {
+				DisplayName: Petrified Wood Candle
+				Tooltip: ""
+			}
+
+			PetrifiedWoodChair: {
+				DisplayName: Petrified Wood Chair
+				Tooltip: ""
+			}
+
+			PetrifiedWoodChandelier: {
+				DisplayName: Petrified Wood Chandelier
+				Tooltip: ""
+			}
+
+			PetrifiedWoodClock: {
+				DisplayName: Petrified Wood Clock
+				Tooltip: ""
+			}
+
+			PetrifiedWoodDoor: {
+				DisplayName: Petrified Wood Door
+				Tooltip: ""
+			}
+
+			PetrifiedWoodDresser: {
+				DisplayName: Petrified Wood Dresser
+				Tooltip: ""
+			}
+
+			PetrifiedWoodFence: {
+				DisplayName: Petrified Wood Fence
+				Tooltip: ""
+			}
+
+			PetrifiedWoodLamp: {
+				DisplayName: Petrified Wood Lamp
+				Tooltip: ""
+			}
+
+			PetrifiedWoodLantern: {
+				DisplayName: Petrified Wood Lantern
+				Tooltip: ""
+			}
+
+			PetrifiedWoodPiano: {
+				DisplayName: Petrified Wood Piano
+				Tooltip: ""
+			}
+
+			PetrifiedWoodPlatform: {
+				DisplayName: Petrified Wood Platform
+				Tooltip: ""
+			}
+
+			PetrifiedWoodSink: {
+				DisplayName: Petrified Wood Sink
+				Tooltip: ""
+			}
+
+			PetrifiedWoodSofa: {
+				DisplayName: Petrified Wood Sofa
+				Tooltip: ""
+			}
+
+			PetrifiedWoodTable: {
+				DisplayName: Petrified Wood Table
+				Tooltip: ""
+			}
+
+			PetrifiedWoodWorkBench: {
+				DisplayName: Petrified Wood Work Bench
+				Tooltip: ""
+			}
+
+			PetrifiedWood: {
+				DisplayName: Petrified Wood
+				Tooltip: ""
+			}
+
+			ShadesteelHangingCell: {
+				DisplayName: Shadesteel Hanging Cell
+				Tooltip: ""
+			}
+
+			ShadestoneBathtub: {
+				DisplayName: Shadestone Bathtub
+				Tooltip: ""
+			}
+
+			ShadestoneBed: {
+				DisplayName: Shadestone Bed
+				Tooltip: ""
+			}
+
+			ShadestoneBookcase: {
+				DisplayName: Shadestone Bookcase
+				Tooltip: ""
+			}
+
+			ShadestoneCandelabra: {
+				DisplayName: Shadestone Candelabra
+				Tooltip: ""
+			}
+
+			ShadestoneCandle: {
+				DisplayName: Shadestone Candle
+				Tooltip: ""
+			}
+
+			ShadestoneChair: {
+				DisplayName: Shadestone Chair
+				Tooltip: ""
+			}
+
+			ShadestoneChandelier: {
+				DisplayName: Shadestone Chandelier
+				Tooltip: ""
+			}
+
+			ShadestoneClock: {
+				DisplayName: Shadestone Clock
+				Tooltip: ""
+			}
+
+			ShadestoneCrate: {
+				DisplayName: Shadestone Crate
+				Tooltip: ""
+			}
+
+			ShadestoneDoor: {
+				DisplayName: Shadestone Door
+				Tooltip: ""
+			}
+
+			ShadestoneDresser: {
+				DisplayName: Shadestone Dresser
+				Tooltip: ""
+			}
+
+			ShadestoneLamp: {
+				DisplayName: Shadestone Lamp
+				Tooltip: ""
+			}
+
+			ShadestoneLantern: {
+				DisplayName: Shadestone Lantern
+				Tooltip: ""
+			}
+
+			ShadestoneMirror: {
+				DisplayName: Shadestone Mirror
+				Tooltip: ""
+			}
+
+			ShadestonePiano: {
+				DisplayName: Shadestone Piano
+				Tooltip: ""
+			}
+
+			ShadestonePillar1: {
+				DisplayName: Shadestone Pillar1
+				Tooltip: ""
+			}
+
+			ShadestonePillar2: {
+				DisplayName: Shadestone Pillar2
+				Tooltip: ""
+			}
+
+			ShadestonePlatform: {
+				DisplayName: Shadestone Platform
+				Tooltip: ""
+			}
+
+			ShadestoneSink: {
+				DisplayName: Shadestone Sink
+				Tooltip: ""
+			}
+
+			ShadestoneSofa: {
+				DisplayName: Shadestone Sofa
+				Tooltip: ""
+			}
+
+			ShadestoneTable: {
+				DisplayName: Shadestone Table
+				Tooltip: ""
+			}
+
+			ShadestoneTable2: {
+				DisplayName: Shadestone Table2
+				Tooltip: ""
+			}
+
+			ShadestoneToilet: {
+				DisplayName: Shadestone Toilet
+				Tooltip: ""
+			}
+
+			ShadestoneWorkBench: {
+				DisplayName: Shadestone Work Bench
+				Tooltip: ""
+			}
+
+			Shadestone: {
+				DisplayName: Shadestone
+				Tooltip: ""
+			}
+
+			ShadeTorch: {
+				DisplayName: Shade Torch
+				Tooltip: ""
+			}
+
+			WaxCandles: {
+				DisplayName: Wax Candles
+				Tooltip: ""
+			}
+
+			Biocontainer: {
+				DisplayName: Biocontainer
+				Tooltip: ""
+			}
+
+			ChessTable4D: {
+				DisplayName: Chess Table4 D
+				Tooltip: ""
+			}
+
+			CyberChair: {
+				DisplayName: Cyber Chair
+				Tooltip: ""
+			}
+
+			CyberTable: {
+				DisplayName: Cyber Table
+				Tooltip: ""
+			}
+
+			DroneShelf: {
+				DisplayName: Drone Shelf
+				Tooltip: ""
+			}
+
+			SlayerChair: {
+				DisplayName: Slayer Chair
+				Tooltip: ""
+			}
+
+			SlayerFabricator: {
+				DisplayName: Slayer Fabricator
+				Tooltip: ""
+			}
+
+			SolarPanel: {
+				DisplayName: Solar Panel
+				Tooltip: ""
+			}
+
+			ErhanBox: {
+				DisplayName: Erhan Box
+				Tooltip: ""
+			}
+
+			ForestBossBox: {
+				DisplayName: Forest Boss Box
+				Tooltip: ""
+			}
+
+			ForestBossBox2: {
+				DisplayName: Forest Boss Box2
+				Tooltip: ""
+			}
+
+			FowlMorningBox: {
+				DisplayName: Fowl Morning Box
+				Tooltip: ""
+			}
+
+			HallOfHeroesBox: {
+				DisplayName: Hall Of Heroes Box
+				Tooltip: ""
+			}
+
+			KeeperBox: {
+				DisplayName: Keeper Box
+				Tooltip: ""
+			}
+
+			KSBox: {
+				DisplayName: K S Box
+				Tooltip: ""
+			}
+
+			LabBossMusicBox: {
+				DisplayName: Lab Boss Music Box
+				Tooltip: ""
+			}
+
+			LabMusicBox: {
+				DisplayName: Lab Music Box
+				Tooltip: ""
+			}
+
+			NebBox: {
+				DisplayName: Neb Box
+				Tooltip: ""
+			}
+
+			NebBox2: {
+				DisplayName: Neb Box2
+				Tooltip: ""
+			}
+
+			OmegaBox: {
+				DisplayName: Omega Box
+				Tooltip: ""
+			}
+
+			OmegaBox2: {
+				DisplayName: Omega Box2
+				Tooltip: ""
+			}
+
+			PZMusicBox: {
+				DisplayName: P Z Music Box
+				Tooltip: ""
+			}
+
+			SlayerShipBox: {
+				DisplayName: Slayer Ship Box
+				Tooltip: ""
+			}
+
+			SoIBox: {
+				DisplayName: So I Box
+				Tooltip: ""
+			}
+
+			WastelandBox: {
+				DisplayName: Wasteland Box
+				Tooltip: ""
+			}
+
+			AncientGrassSeeds: {
+				DisplayName: Ancient Grass Seeds
+				Tooltip: ""
+			}
+
+			AnglonicMysticBlossom: {
+				DisplayName: Anglonic Mystic Blossom
+				Tooltip: ""
+			}
+
+			IrradiatedCorruptGrassSeeds: {
+				DisplayName: Irradiated Corrupt Grass Seeds
+				Tooltip: ""
+			}
+
+			IrradiatedCrimsonGrassSeeds: {
+				DisplayName: Irradiated Crimson Grass Seeds
+				Tooltip: ""
+			}
+
+			IrradiatedGrassSeeds: {
+				DisplayName: Irradiated Grass Seeds
+				Tooltip: ""
+			}
+
+			Nightshade: {
+				DisplayName: Nightshade
+				Tooltip: ""
+			}
+
+			NightshadeSeeds: {
+				DisplayName: Nightshade Seeds
+				Tooltip: ""
+			}
+
+			Nooseroot: {
+				DisplayName: Nooseroot
+				Tooltip: ""
+			}
+
+			RadRoot: {
+				DisplayName: Rad Root
+				Tooltip: ""
+			}
+
+			AncientDirt: {
+				DisplayName: Ancient Dirt
+				Tooltip: ""
+			}
+
+			AncientDirtWall: {
+				DisplayName: Ancient Dirt Wall
+				Tooltip: ""
+			}
+
+			AncientHallBrick: {
+				DisplayName: Ancient Hall Brick
+				Tooltip: ""
+			}
+
+			AncientHallPillarWall: {
+				DisplayName: Ancient Hall Pillar Wall
+				Tooltip: ""
+			}
+
+			Asteroid: {
+				DisplayName: Asteroid
+				Tooltip: ""
+			}
+
+			AsteroidWall: {
+				DisplayName: Asteroid Wall
+				Tooltip: ""
+			}
+
+			Bedrock: {
+				DisplayName: Bedrock
+				Tooltip: ""
+			}
+
+			BlackHardenedSludge: {
+				DisplayName: Black Hardened Sludge
+				Tooltip: ""
+			}
+
+			BlackHardenedSludgeWall: {
+				DisplayName: Black Hardened Sludge Wall
+				Tooltip: ""
+			}
+
+			DangerTape: {
+				DisplayName: Danger Tape
+				Tooltip: ""
+			}
+
+			DangerTape2: {
+				DisplayName: Danger Tape2
+				Tooltip: ""
+			}
+
+			DangerTapeWall: {
+				DisplayName: Danger Tape Wall
+				Tooltip: ""
+			}
+
+			DangerTapeWall2: {
+				DisplayName: Danger Tape Wall2
+				Tooltip: ""
+			}
+
+			ElderWoodWall: {
+				DisplayName: Elder Wood Wall
+				Tooltip: ""
+			}
+
+			ElectricHazard: {
+				DisplayName: Electric Hazard
+				Tooltip: ""
+			}
+
+			GathicColdstone: {
+				DisplayName: Gathic Coldstone
+				Tooltip: ""
+			}
+
+			GathicColdstoneBrick: {
+				DisplayName: Gathic Coldstone Brick
+				Tooltip: ""
+			}
+
+			GathicFroststone: {
+				DisplayName: Gathic Froststone
+				Tooltip: ""
+			}
+
+			GathicFroststoneBrick: {
+				DisplayName: Gathic Froststone Brick
+				Tooltip: ""
+			}
+
+			GathicFroststoneBrickWall: {
+				DisplayName: Gathic Froststone Brick Wall
+				Tooltip: ""
+			}
+
+			GathicFroststoneWall: {
+				DisplayName: Gathic Froststone Wall
+				Tooltip: ""
+			}
+
+			GathicGladestone: {
+				DisplayName: Gathic Gladestone
+				Tooltip: ""
+			}
+
+			GathicGladestoneBrick: {
+				DisplayName: Gathic Gladestone Brick
+				Tooltip: ""
+			}
+
+			GathicGladestoneBrickWall: {
+				DisplayName: Gathic Gladestone Brick Wall
+				Tooltip: ""
+			}
+
+			GathicGladestoneWall: {
+				DisplayName: Gathic Gladestone Wall
+				Tooltip: ""
+			}
+
+			GathicStone: {
+				DisplayName: Gathic Stone
+				Tooltip: ""
+			}
+
+			GathicStoneBrick: {
+				DisplayName: Gathic Stone Brick
+				Tooltip: ""
+			}
+
+			GathicStoneBrickWall: {
+				DisplayName: Gathic Stone Brick Wall
+				Tooltip: ""
+			}
+
+			GathicStoneWall: {
+				DisplayName: Gathic Stone Wall
+				Tooltip: ""
+			}
+
+			GloomMushroom: {
+				DisplayName: Gloom Mushroom
+				Tooltip: ""
+			}
+
+			GreenLaser: {
+				DisplayName: Green Laser
+				Tooltip: ""
+			}
+
+			HalogenLamp: {
+				DisplayName: Halogen Lamp
+				Tooltip: ""
+			}
+
+			HardenedSludge: {
+				DisplayName: Hardened Sludge
+				Tooltip: ""
+			}
+
+			HardenedSludgeWall: {
+				DisplayName: Hardened Sludge Wall
+				Tooltip: ""
+			}
+
+			IrradiatedCrimstone: {
+				DisplayName: Irradiated Crimstone
+				Tooltip: ""
+			}
+
+			IrradiatedDirt: {
+				DisplayName: Irradiated Dirt
+				Tooltip: ""
+			}
+
+			IrradiatedEbonstone: {
+				DisplayName: Irradiated Ebonstone
+				Tooltip: ""
+			}
+
+			IrradiatedHardenedSand: {
+				DisplayName: Irradiated Hardened Sand
+				Tooltip: ""
+			}
+
+			IrradiatedIce: {
+				DisplayName: Irradiated Ice
+				Tooltip: ""
+			}
+
+			IrradiatedLivingWoodWall: {
+				DisplayName: Irradiated Living Wood Wall
+				Tooltip: ""
+			}
+
+			IrradiatedSand: {
+				DisplayName: Irradiated Sand
+				Tooltip: ""
+			}
+
+			IrradiatedSandstone: {
+				DisplayName: Irradiated Sandstone
+				Tooltip: ""
+			}
+
+			IrradiatedSnow: {
+				DisplayName: Irradiated Snow
+				Tooltip: ""
+			}
+
+			IrradiatedStone: {
+				DisplayName: Irradiated Stone
+				Tooltip: ""
+			}
+
+			IrradiatedStoneWall: {
+				DisplayName: Irradiated Stone Wall
+				Tooltip: ""
+			}
+
+			LabPlating: {
+				DisplayName: Lab Plating
+				Tooltip: ""
+			}
+
+			LabPlatingUnsafe: {
+				DisplayName: Lab Plating Unsafe
+				Tooltip: ""
+			}
+
+			LabPlatingWall: {
+				DisplayName: Lab Plating Wall
+				Tooltip: ""
+			}
+
+			LabTank: {
+				DisplayName: Lab Tank
+				Tooltip: ""
+			}
+
+			LabTubes: {
+				DisplayName: Lab Tubes
+				Tooltip: ""
+			}
+
+			LeadFenceBlackWallItem: {
+				DisplayName: Lead Fence Black Wall Item
+				Tooltip: ""
+			}
+
+			MetalSupportBeam: {
+				DisplayName: Metal Support Beam
+				Tooltip: ""
+			}
+
+			NiricPipe: {
+				DisplayName: Niric Pipe
+				Tooltip: ""
+			}
+
+			OvergrownLabPlating: {
+				DisplayName: Overgrown Lab Plating
+				Tooltip: ""
+			}
+
+			PetrifiedWoodWall: {
+				DisplayName: Petrified Wood Wall
+				Tooltip: ""
+			}
+
+			PlantMatter: {
+				DisplayName: Plant Matter
+				Tooltip: ""
+			}
+
+			PrisonBars: {
+				DisplayName: Prison Bars
+				Tooltip: ""
+			}
+
+			RedLaser: {
+				DisplayName: Red Laser
+				Tooltip: ""
+			}
+
+			ShadesteelChain: {
+				DisplayName: Shadesteel Chain
+				Tooltip: ""
+			}
+
+			ShadestoneBrick: {
+				DisplayName: Shadestone Brick
+				Tooltip: ""
+			}
+
+			ShadestoneBrickWall: {
+				DisplayName: Shadestone Brick Wall
+				Tooltip: ""
+			}
+
+			ShadestoneMoss: {
+				DisplayName: Shadestone Moss
+				Tooltip: ""
+			}
+
+			ShadestoneRubble: {
+				DisplayName: Shadestone Rubble
+				Tooltip: ""
+			}
+
+			ShadestoneSlab: {
+				DisplayName: Shadestone Slab
+				Tooltip: ""
+			}
+
+			ShadestoneWall: {
+				DisplayName: Shadestone Wall
+				Tooltip: ""
+			}
+
+			ShinkiteBeam: {
+				DisplayName: Shinkite Beam
+				Tooltip: ""
+			}
+
+			ShinkiteBrick: {
+				DisplayName: Shinkite Brick
+				Tooltip: ""
+			}
+
+			ShinkiteBrickOrnate: {
+				DisplayName: Shinkite Brick Ornate
+				Tooltip: ""
+			}
+
+			ShinkiteBrickWall: {
+				DisplayName: Shinkite Brick Wall
+				Tooltip: ""
+			}
+
+			ShipGlass: {
+				DisplayName: Ship Glass
+				Tooltip: ""
+			}
+
+			SlayerShipPanel: {
+				DisplayName: Slayer Ship Panel
+				Tooltip: ""
+			}
+
+			SlayerShipPanel2: {
+				DisplayName: Slayer Ship Panel2
+				Tooltip: ""
+			}
+
+			SlayerShipPanelWall: {
+				DisplayName: Slayer Ship Panel Wall
+				Tooltip: ""
+			}
+
+			AkanKirvesTrophy: {
+				DisplayName: Akan Kirves Trophy
+				Tooltip: ""
+			}
+
+			AkkaRelic: {
+				DisplayName: Akka Relic
+				Tooltip: ""
+			}
+
+			CleaverRelic: {
+				DisplayName: Cleaver Relic
+				Tooltip: ""
+			}
+
+			ErhanRelic: {
+				DisplayName: Erhan Relic
+				Tooltip: ""
+			}
+
+			ErhanTrophy: {
+				DisplayName: Erhan Trophy
+				Tooltip: ""
+			}
+
+			FowlEmperorRelic: {
+				DisplayName: Fowl Emperor Relic
+				Tooltip: ""
+			}
+
+			FowlEmperorTrophy: {
+				DisplayName: Fowl Emperor Trophy
+				Tooltip: ""
+			}
+
+			GigaporaRelic: {
+				DisplayName: Gigapora Relic
+				Tooltip: ""
+			}
+
+			KeeperRelic: {
+				DisplayName: Keeper Relic
+				Tooltip: ""
+			}
+
+			KeeperTrophy: {
+				DisplayName: Keeper Trophy
+				Tooltip: ""
+			}
+
+			KS3Relic: {
+				DisplayName: K S3 Relic
+				Tooltip: ""
+			}
+
+			KS3Trophy: {
+				DisplayName: K S3 Trophy
+				Tooltip: ""
+			}
+
+			NebRelic: {
+				DisplayName: Neb Relic
+				Tooltip: ""
+			}
+
+			NebuleusTrophy: {
+				DisplayName: Nebuleus Trophy
+				Tooltip: ""
+			}
+
+			OmegaTrophy: {
+				DisplayName: Omega Trophy
+				Tooltip: ""
+			}
+
+			OORelic: {
+				DisplayName: O O Relic
+				Tooltip: ""
+			}
+
+			PZRelic: {
+				DisplayName: P Z Relic
+				Tooltip: ""
+			}
+
+			PZTrophy: {
+				DisplayName: P Z Trophy
+				Tooltip: ""
+			}
+
+			SoIRelic: {
+				DisplayName: So I Relic
+				Tooltip: ""
+			}
+
+			SoITrophy: {
+				DisplayName: So I Trophy
+				Tooltip: ""
+			}
+
+			ThornRelic: {
+				DisplayName: Thorn Relic
+				Tooltip: ""
+			}
+
+			ThornTrophy: {
+				DisplayName: Thorn Trophy
+				Tooltip: ""
+			}
+
+			UkkoRelic: {
+				DisplayName: Ukko Relic
+				Tooltip: ""
+			}
+
+			UkonKirvesTrophy: {
+				DisplayName: Ukon Kirves Trophy
+				Tooltip: ""
+			}
+
+			MemoryChip: {
+				DisplayName: Memory Chip
+				Tooltip: ""
+			}
+
+			SlayerHullPlating: {
+				DisplayName: Slayer Hull Plating
+				Tooltip: ""
+			}
+
+			SlayerShipEngine: {
+				DisplayName: Slayer Ship Engine
+				Tooltip: ""
+			}
+
+			SlayerWiringKit: {
+				DisplayName: Slayer Wiring Kit
+				Tooltip: ""
+			}
+
+			RedemptionRoute: {
+				DisplayName: Redemption Route
+				Tooltip: ""
+			}
+
+			SlayerMedal: {
+				DisplayName: Slayer Medal
+				Tooltip: ""
+			}
+
+			SpriteSpawner: {
+				DisplayName: Sprite Spawner
+				Tooltip: ""
+			}
+
+			NanoAxe2: {
+				DisplayName: Nano Axe2
+				Tooltip: ""
+			}
+
+			NanoPickaxe: {
+				DisplayName: Nano Pickaxe
+				Tooltip: ""
+			}
+
+			BeardedHatchet: {
+				DisplayName: Bearded Hatchet
+				Tooltip: ""
+			}
+
+			GraveSteelBattleaxe: {
+				DisplayName: Grave Steel Battleaxe
+				Tooltip: ""
+			}
+
+			GraveSteelPickaxe: {
+				DisplayName: Grave Steel Pickaxe
+				Tooltip: ""
+			}
+
+			GraveSteelWarhammer: {
+				DisplayName: Grave Steel Warhammer
+				Tooltip: ""
+			}
+
+			PureIronBattleaxe: {
+				DisplayName: Pure Iron Battleaxe
+				Tooltip: ""
+			}
+
+			PureIronHammer: {
+				DisplayName: Pure Iron Hammer
+				Tooltip: ""
+			}
+
+			PureIronPickaxe: {
+				DisplayName: Pure Iron Pickaxe
+				Tooltip: ""
+			}
+
+			UndownerRede: {
+				DisplayName: Undowner Rede
+				Tooltip: ""
+			}
+
+			UndownerRedePoints: {
+				DisplayName: Undowner Rede Points
+				Tooltip: ""
+			}
+
+			AbandonedTeddy: {
+				DisplayName: Abandoned Teddy
+				Tooltip: ""
+			}
+
+			AkkaBag: {
+				DisplayName: Akka Bag
+				Tooltip: ""
+			}
+
+			AlignmentTeller: {
+				DisplayName: Alignment Teller
+				Tooltip: ""
+			}
+
+			AncientGoldCoin: {
+				DisplayName: Ancient Gold Coin
+				Tooltip: ""
+			}
+
+			BleachedSolution: {
+				DisplayName: Bleached Solution
+				Tooltip: ""
+			}
+
+			ChaliceFragments: {
+				DisplayName: Chalice Fragments
+				Tooltip: ""
+			}
+
+			DeadRinger: {
+				DisplayName: Dead Ringer
+				Tooltip: ""
+			}
+
+			EnergyCell: {
+				DisplayName: Energy Cell
+				Tooltip: ""
+			}
+
+			ErhanBag: {
+				DisplayName: Erhan Bag
+				Tooltip: ""
+			}
+
+			GalaxyHeart: {
+				DisplayName: Galaxy Heart
+				Tooltip: ""
+			}
+
+			Holokey: {
+				DisplayName: Holokey
+				Tooltip: ""
+			}
+
+			IOLocator: {
+				DisplayName: I O Locator
+				Tooltip: ""
+			}
+
+			JoesBanjo: {
+				DisplayName: Joes Banjo
+				Tooltip: ""
+			}
+
+			KeeperBag: {
+				DisplayName: Keeper Bag
+				Tooltip: ""
+			}
+
+			Keycard: {
+				DisplayName: Keycard
+				Tooltip: ""
+			}
+
+			Keycard2: {
+				DisplayName: Keycard2
+				Tooltip: ""
+			}
+
+			MedicKit: {
+				DisplayName: Medic Kit
+				Tooltip: ""
+			}
+
+			MiniWarhead: {
+				DisplayName: Mini Warhead
+				Tooltip: ""
+			}
+
+			NaturePickup: {
+				DisplayName: Nature Pickup
+				Tooltip: ""
+			}
+
+			NebBag: {
+				DisplayName: Neb Bag
+				Tooltip: ""
+			}
+
+			NoveltyMop: {
+				DisplayName: Novelty Mop
+				Tooltip: ""
+			}
+
+			OmegaCleaverBag: {
+				DisplayName: Omega Cleaver Bag
+				Tooltip: ""
+			}
+
+			OmegaGift: {
+				DisplayName: Omega Gift
+				Tooltip: ""
+			}
+
+			OmegaGigaporaBag: {
+				DisplayName: Omega Gigapora Bag
+				Tooltip: ""
+			}
+
+			OmegaOblitBag: {
+				DisplayName: Omega Oblit Bag
+				Tooltip: ""
+			}
+
+			OreBomb: {
+				DisplayName: Ore Bomb
+				Tooltip: ""
+			}
+
+			OrePowder: {
+				DisplayName: Ore Powder
+				Tooltip: ""
+			}
+
+			PlutoniumBomb: {
+				DisplayName: Plutonium Bomb
+				Tooltip: ""
+			}
+
+			PocketSand: {
+				DisplayName: Pocket Sand
+				Tooltip: ""
+			}
+
+			PocketSans: {
+				DisplayName: Pocket Sans
+				Tooltip: ""
+			}
+
+			AngelCake: {
+				DisplayName: Angel Cake
+				Tooltip: ""
+			}
+
+			Avocado: {
+				DisplayName: Avocado
+				Tooltip: ""
+			}
+
+			BileFlask: {
+				DisplayName: Bile Flask
+				Tooltip: ""
+			}
+
+			CharismaPotion: {
+				DisplayName: Charisma Potion
+				Tooltip: ""
+			}
+
+			CrystalSerum: {
+				DisplayName: Crystal Serum
+				Tooltip: ""
+			}
+
+			EnchantedPear: {
+				DisplayName: Enchanted Pear
+				Tooltip: ""
+			}
+
+			EvilJelly: {
+				DisplayName: Evil Jelly
+				Tooltip: ""
+			}
+
+			FirstAidKit: {
+				DisplayName: First Aid Kit
+				Tooltip: ""
+			}
+
+			FriedChicken: {
+				DisplayName: Fried Chicken
+				Tooltip: ""
+			}
+
+			FriedChickenEgg: {
+				DisplayName: Fried Chicken Egg
+				Tooltip: ""
+			}
+
+			IceCreamFloat: {
+				DisplayName: Ice Cream Float
+				Tooltip: ""
+			}
+
+			NitroglycerineFlask: {
+				DisplayName: Nitroglycerine Flask
+				Tooltip: ""
+			}
+
+			Olives: {
+				DisplayName: Olives
+				Tooltip: ""
+			}
+
+			P0T4T0: {
+				DisplayName: P0 T4 T0
+				Tooltip: ""
+			}
+
+			Panacea: {
+				DisplayName: Panacea
+				Tooltip: ""
+			}
+
+			RadiationPill: {
+				DisplayName: Radiation Pill
+				Tooltip: ""
+			}
+
+			RevivalPotion: {
+				DisplayName: Revival Potion
+				Tooltip: ""
+			}
+
+			RoastLarva: {
+				DisplayName: Roast Larva
+				Tooltip: ""
+			}
+
+			Shadeshake: {
+				DisplayName: Shadeshake
+				Tooltip: ""
+			}
+
+			Soulshake: {
+				DisplayName: Soulshake
+				Tooltip: ""
+			}
+
+			StarliteDonut: {
+				DisplayName: Starlite Donut
+				Tooltip: ""
+			}
+
+			VendettaPotion: {
+				DisplayName: Vendetta Potion
+				Tooltip: ""
+			}
+
+			VigourousPotion: {
+				DisplayName: Vigourous Potion
+				Tooltip: ""
+			}
+
+			WineBottle: {
+				DisplayName: Wine Bottle
+				Tooltip: ""
+			}
+
+			PZBag: {
+				DisplayName: P Z Bag
+				Tooltip: ""
+			}
+
+			RitSpirit: {
+				DisplayName: Rit Spirit
+				Tooltip: ""
+			}
+
+			RoomsCreator: {
+				DisplayName: Rooms Creator
+				Tooltip: ""
+			}
+
+			RowanTreeSummon_Berries: {
+				DisplayName: Rowan Tree Summon_ Berries
+				Tooltip: ""
+			}
+
+			ScrapMetal: {
+				DisplayName: Scrap Metal
+				Tooltip: ""
+			}
+
+			ShadesoulGateway: {
+				DisplayName: Shadesoul Gateway
+				Tooltip: ""
+			}
+
+			ShadowFuel: {
+				DisplayName: Shadow Fuel
+				Tooltip: ""
+			}
+
+			SlayerBag: {
+				DisplayName: Slayer Bag
+				Tooltip: ""
+			}
+
+			SoIBag: {
+				DisplayName: So I Bag
+				Tooltip: ""
+			}
+
+			SorrowfulEssence: {
+				DisplayName: Sorrowful Essence
+				Tooltip: ""
+			}
+
+			AncientSigil: {
+				DisplayName: Ancient Sigil
+				Tooltip: ""
+			}
+
+			AnomalyDetector: {
+				DisplayName: Anomaly Detector
+				Tooltip: ""
+			}
+
+			CyberTech: {
+				DisplayName: Cyber Tech
+				Tooltip: ""
+			}
+
+			DemonScroll: {
+				DisplayName: Demon Scroll
+				Tooltip: ""
+			}
+
+			EaglecrestSpelltome: {
+				DisplayName: Eaglecrest Spelltome
+				Tooltip: ""
+			}
+
+			EggCrown: {
+				DisplayName: Egg Crown
+				Tooltip: ""
+			}
+
+			FowlWarHorn: {
+				DisplayName: Fowl War Horn
+				Tooltip: ""
+			}
+
+			HeartOfThorns: {
+				DisplayName: Heart Of Thorns
+				Tooltip: ""
+			}
+
+			LabHologramDevice: {
+				DisplayName: Lab Hologram Device
+				Tooltip: ""
+			}
+
+			NebSummon: {
+				DisplayName: Neb Summon
+				Tooltip: ""
+			}
+
+			OmegaTransmitter: {
+				DisplayName: Omega Transmitter
+				Tooltip: ""
+			}
+
+			WeddingRing: {
+				DisplayName: Wedding Ring
+				Tooltip: ""
+			}
+
+			ThornBag: {
+				DisplayName: Thorn Bag
+				Tooltip: ""
+			}
+
+			Trumpet: {
+				DisplayName: Trumpet
+				Tooltip: ""
+			}
+
+			UkkoBag: {
+				DisplayName: Ukko Bag
+				Tooltip: ""
+			}
+
+			Violin: {
+				DisplayName: Violin
+				Tooltip: ""
+			}
+
+			ZoneAccessPanel1: {
+				DisplayName: Zone Access Panel1
+				Tooltip: ""
+			}
+
+			ZoneAccessPanel2: {
+				DisplayName: Zone Access Panel2
+				Tooltip: ""
+			}
+
+			ZoneAccessPanel3: {
+				DisplayName: Zone Access Panel3
+				Tooltip: ""
+			}
+
+			ZoneAccessPanel4: {
+				DisplayName: Zone Access Panel4
+				Tooltip: ""
+			}
+
+			ZoneAccessPanel5: {
+				DisplayName: Zone Access Panel5
+				Tooltip: ""
+			}
+
+			ZoneAccessPanel6: {
+				DisplayName: Zone Access Panel6
+				Tooltip: ""
+			}
+
+			BileArrow: {
+				DisplayName: Bile Arrow
+				Tooltip: ""
+			}
+
+			BileBullet: {
+				DisplayName: Bile Bullet
+				Tooltip: ""
+			}
+
+			EnergyPack: {
+				DisplayName: Energy Pack
+				Tooltip: ""
+			}
+
+			DigestiveVat: {
+				DisplayName: Digestive Vat
+				Tooltip: ""
+			}
+
+			Divinity: {
+				DisplayName: Divinity
+				Tooltip: ""
+			}
+
+			Dusksong: {
+				DisplayName: Dusksong
+				Tooltip: ""
+			}
+
+			GigapeiliContactor: {
+				DisplayName: Gigapeili Contactor
+				Tooltip: ""
+			}
+
+			GlobalDischarge: {
+				DisplayName: Global Discharge
+				Tooltip: ""
+			}
+
+			LightningRod: {
+				DisplayName: Lightning Rod
+				Tooltip: ""
+			}
+
+			Nanoswarmer: {
+				DisplayName: Nanoswarmer
+				Tooltip: ""
+			}
+
+			NoidanSauva: {
+				DisplayName: Noidan Sauva
+				Tooltip: ""
+			}
+
+			Pommisauva: {
+				DisplayName: Pommisauva
+				Tooltip: ""
+			}
+
+			Rockslide: {
+				DisplayName: Rockslide
+				Tooltip: ""
+			}
+
+			SunshardGreatstaff: {
+				DisplayName: Sunshard Greatstaff
+				Tooltip: ""
+			}
+
+			Synthesizer: {
+				DisplayName: Synthesizer
+				Tooltip: ""
+			}
+
+			XenomiteScepter: {
+				DisplayName: Xenomite Scepter
+				Tooltip: ""
+			}
+
+			BlindJustice: {
+				DisplayName: Blind Justice
+				Tooltip: ""
+			}
+
+			BloodstainedPike: {
+				DisplayName: Bloodstained Pike
+				Tooltip: ""
+			}
+
+			Chernobyl: {
+				DisplayName: Chernobyl
+				Tooltip: ""
+			}
+
+			CrystalGlaive: {
+				DisplayName: Crystal Glaive
+				Tooltip: ""
+			}
+
+			CyberChakram: {
+				DisplayName: Cyber Chakram
+				Tooltip: ""
+			}
+
+			ForgottenGreatsword: {
+				DisplayName: Forgotten Greatsword
+				Tooltip: ""
+			}
+
+			GravityHammer: {
+				DisplayName: Gravity Hammer
+				Tooltip: ""
+			}
+
+			HammerOfProving: {
+				DisplayName: Hammer Of Proving
+				Tooltip: ""
+			}
+
+			InfectiousGlaive: {
+				DisplayName: Infectious Glaive
+				Tooltip: ""
+			}
+
+			Midnight: {
+				DisplayName: Midnight
+				Tooltip: ""
+			}
+
+			OversizedScrewdriver: {
+				DisplayName: Oversized Screwdriver
+				Tooltip: ""
+			}
+
+			PetrifiedWoodSword: {
+				DisplayName: Petrified Wood Sword
+				Tooltip: ""
+			}
+
+			SlayerFist: {
+				DisplayName: Slayer Fist
+				Tooltip: ""
+			}
+
+			Spellsong: {
+				DisplayName: Spellsong
+				Tooltip: ""
+			}
+
+			SwordRemote: {
+				DisplayName: Sword Remote
+				Tooltip: ""
+			}
+
+			TidalWake: {
+				DisplayName: Tidal Wake
+				Tooltip: ""
+			}
+
+			TinyCleaver: {
+				DisplayName: Tiny Cleaver
+				Tooltip: ""
+			}
+
+			WraithSlayer: {
+				DisplayName: Wraith Slayer
+				Tooltip: ""
+			}
+
+			BileLauncher: {
+				DisplayName: Bile Launcher
+				Tooltip: ""
+			}
+
+			CorruptedDAN: {
+				DisplayName: Corrupted D A N
+				Tooltip: ""
+			}
+
+			CorruptedDoubleRifle: {
+				DisplayName: Corrupted Double Rifle
+				Tooltip: ""
+			}
+
+			DAN: {
+				DisplayName: D A N
+				Tooltip: ""
+			}
+
+			DoubleRifle: {
+				DisplayName: Double Rifle
+				Tooltip: ""
+			}
+
+			DrillRevolver: {
+				DisplayName: Drill Revolver
+				Tooltip: ""
+			}
+
+			FlakCannon: {
+				DisplayName: Flak Cannon
+				Tooltip: ""
+			}
+
+			GhastlyRecurve: {
+				DisplayName: Ghastly Recurve
+				Tooltip: ""
+			}
+
+			HyperTechRevolvers: {
+				DisplayName: Hyper Tech Revolvers
+				Tooltip: ""
+			}
+
+			PrototypeAtomRifle: {
+				DisplayName: Prototype Atom Rifle
+				Tooltip: ""
+			}
+
+			SlayerGun: {
+				DisplayName: Slayer Gun
+				Tooltip: ""
+			}
+
+			SteampunkMinigun: {
+				DisplayName: Steampunk Minigun
+				Tooltip: ""
+			}
+
+			ToxicGrenade: {
+				DisplayName: Toxic Grenade
+				Tooltip: ""
+			}
+
+			UraniumRaygun: {
+				DisplayName: Uranium Raygun
+				Tooltip: ""
+			}
+
+			AndroidHologram: {
+				DisplayName: Android Hologram
+				Tooltip: ""
+			}
+
+			CruxCardHazmatZombie: {
+				DisplayName: Crux Card Hazmat Zombie
+				Tooltip: ""
+			}
+
+			GolemStaff: {
+				DisplayName: Golem Staff
+				Tooltip: ""
+			}
+
+			InfectedTentacle: {
+				DisplayName: Infected Tentacle
+				Tooltip: ""
+			}
+
+			TeslaGenerator: {
+				DisplayName: Tesla Generator
+				Tooltip: ""
+			}
+
+			WireTaser: {
+				DisplayName: Wire Taser
+				Tooltip: ""
+			}
+
+			Constellations: {
+				DisplayName: Constellations
+				Tooltip: ""
+			}
+
+			EmpyreanBlind: {
+				DisplayName: Empyrean Blind
+				Tooltip: ""
+			}
+
+			Lament: {
+				DisplayName: Lament
+				Tooltip: ""
+			}
+
+			OOFingergun: {
+				DisplayName: O O Fingergun
+				Tooltip: ""
+			}
+
+			Petridish: {
+				DisplayName: Petridish
+				Tooltip: ""
+			}
+
+			PlutoniumNukeRadio: {
+				DisplayName: Plutonium Nuke Radio
+				Tooltip: ""
+			}
+
+			PoemOfIlmatar: {
+				DisplayName: Poem Of Ilmatar
+				Tooltip: ""
+			}
+
+			TeslaCoil: {
+				DisplayName: Tesla Coil
+				Tooltip: ""
+			}
+
+			XeniumStaff: {
+				DisplayName: Xenium Staff
+				Tooltip: ""
+			}
+
+			Hacksaw: {
+				DisplayName: Hacksaw
+				Tooltip: ""
+			}
+
+			MythrilsBane: {
+				DisplayName: Mythrils Bane
+				Tooltip: ""
+			}
+
+			PiercingNebulaWeapon: {
+				DisplayName: Piercing Nebula Weapon
+				Tooltip: ""
+			}
+
+			PZGauntlet: {
+				DisplayName: P Z Gauntlet
+				Tooltip: ""
+			}
+
+			SunInThePalm: {
+				DisplayName: Sun In The Palm
+				Tooltip: ""
+			}
+
+			Ukonvasara: {
+				DisplayName: Ukonvasara
+				Tooltip: ""
+			}
+
+			XeniumLance: {
+				DisplayName: Xenium Lance
+				Tooltip: ""
+			}
+
+			BlastBattery: {
+				DisplayName: Blast Battery
+				Tooltip: ""
+			}
+
+			DarkSteelBow: {
+				DisplayName: Dark Steel Bow
+				Tooltip: ""
+			}
+
+			DepletedCrossbow: {
+				DisplayName: Depleted Crossbow
+				Tooltip: ""
+			}
+
+			Electronade: {
+				DisplayName: Electronade
+				Tooltip: ""
+			}
+
+			PlutoniumRailgun: {
+				DisplayName: Plutonium Railgun
+				Tooltip: ""
+			}
+
+			Salamanisku: {
+				DisplayName: Salamanisku
+				Tooltip: ""
+			}
+
+			SussyEgg: {
+				DisplayName: Sussy Egg
+				Tooltip: ""
+			}
+
+			SwarmerCannon: {
+				DisplayName: Swarmer Cannon
+				Tooltip: ""
+			}
+
+			XeniumElectrolaser: {
+				DisplayName: Xenium Electrolaser
+				Tooltip: ""
+			}
+
+			CosmosChains: {
+				DisplayName: Cosmos Chains
+				Tooltip: ""
+			}
+
+			Pihlajasauva: {
+				DisplayName: Pihlajasauva
+				Tooltip: ""
+			}
+
+			PortableHoloProjector: {
+				DisplayName: Portable Holo Projector
+				Tooltip: ""
+			}
+
+			XeniumDrone: {
+				DisplayName: Xenium Drone
+				Tooltip: ""
+			}
+
+			AquaArrow: {
+				DisplayName: Aqua Arrow
+				Tooltip: ""
+			}
+
+			MoonflareArrow: {
+				DisplayName: Moonflare Arrow
+				Tooltip: ""
+			}
+
+			XenomiteBullet: {
+				DisplayName: Xenomite Bullet
+				Tooltip: ""
+			}
+
+			BlightedRoot: {
+				DisplayName: Blighted Root
+				Tooltip: ""
+			}
+
+			BronzeWand: {
+				DisplayName: Bronze Wand
+				Tooltip: ""
+			}
+
+			CalciteWand: {
+				DisplayName: Calcite Wand
+				Tooltip: ""
+			}
+
+			CantripStaff: {
+				DisplayName: Cantrip Staff
+				Tooltip: ""
+			}
+
+			ContagionSpreader: {
+				DisplayName: Contagion Spreader
+				Tooltip: ""
+			}
+
+			DragonSlayersStaff: {
+				DisplayName: Dragon Slayers Staff
+				Tooltip: ""
+			}
+
+			EaglecrestGlove: {
+				DisplayName: Eaglecrest Glove
+				Tooltip: ""
+			}
+
+			Earthbind: {
+				DisplayName: Earthbind
+				Tooltip: ""
+			}
+
+			ErhanMagnifyingGlass: {
+				DisplayName: Erhan Magnifying Glass
+				Tooltip: ""
+			}
+
+			GiantDandelion: {
+				DisplayName: Giant Dandelion
+				Tooltip: ""
+			}
+
+			Icefall: {
+				DisplayName: Icefall
+				Tooltip: ""
+			}
+
+			Mistfall: {
+				DisplayName: Mistfall
+				Tooltip: ""
+			}
+
+			PureIronStaff: {
+				DisplayName: Pure Iron Staff
+				Tooltip: ""
+			}
+
+			SoulScepter: {
+				DisplayName: Soul Scepter
+				Tooltip: ""
+			}
+
+			Bindeklinge: {
+				DisplayName: Bindeklinge
+				Tooltip: ""
+			}
+
+			BladeOfTheMountain: {
+				DisplayName: Blade Of The Mountain
+				Tooltip: ""
+			}
+
+			ChompingChains: {
+				DisplayName: Chomping Chains
+				Tooltip: ""
+			}
+
+			CursedGrassBlade: {
+				DisplayName: Cursed Grass Blade
+				Tooltip: ""
+			}
+
+			DragonCleaver: {
+				DisplayName: Dragon Cleaver
+				Tooltip: ""
+			}
+
+			EaglecrestJavelin: {
+				DisplayName: Eaglecrest Javelin
+				Tooltip: ""
+			}
+
+			ElderWoodSword: {
+				DisplayName: Elder Wood Sword
+				Tooltip: ""
+			}
+
+			Firebreak: {
+				DisplayName: Firebreak
+				Tooltip: ""
+			}
+
+			FlintAndSteel: {
+				DisplayName: Flint And Steel
+				Tooltip: ""
+			}
+
+			ForestNymphsSickle: {
+				DisplayName: Forest Nymphs Sickle
+				Tooltip: ""
+			}
+
+			ForgottenSword: {
+				DisplayName: Forgotten Sword
+				Tooltip: ""
+			}
+
+			Halbirdhouse: {
+				DisplayName: Halbirdhouse
+				Tooltip: ""
+			}
+
+			KeepersClaw: {
+				DisplayName: Keepers Claw
+				Tooltip: ""
+			}
+
+			NoblesHalberd: {
+				DisplayName: Nobles Halberd
+				Tooltip: ""
+			}
+
+			PureIronSword: {
+				DisplayName: Pure Iron Sword
+				Tooltip: ""
+			}
+
+			SilverRapier: {
+				DisplayName: Silver Rapier
+				Tooltip: ""
+			}
+
+			SkullDiggerFlail: {
+				DisplayName: Skull Digger Flail
+				Tooltip: ""
+			}
+
+			SwordSlicer: {
+				DisplayName: Sword Slicer
+				Tooltip: ""
+			}
+
+			XenoXyston: {
+				DisplayName: Xeno Xyston
+				Tooltip: ""
+			}
+
+			ChickenEgg: {
+				DisplayName: Chicken Egg
+				Tooltip: ""
+			}
+
+			CursedThornBow: {
+				DisplayName: Cursed Thorn Bow
+				Tooltip: ""
+			}
+
+			DragonSlayersBow: {
+				DisplayName: Dragon Slayers Bow
+				Tooltip: ""
+			}
+
+			EaglecrestSling: {
+				DisplayName: Eaglecrest Sling
+				Tooltip: ""
+			}
+
+			EggBomb: {
+				DisplayName: Egg Bomb
+				Tooltip: ""
+			}
+
+			FanOShivs: {
+				DisplayName: Fan O Shivs
+				Tooltip: ""
+			}
+
+			GoldChickenEgg: {
+				DisplayName: Gold Chicken Egg
+				Tooltip: ""
+			}
+
+			GreneggLauncher: {
+				DisplayName: Grenegg Launcher
+				Tooltip: ""
+			}
+
+			HallowedHandGrenade: {
+				DisplayName: Hallowed Hand Grenade
+				Tooltip: ""
+			}
+
+			LongEgg: {
+				DisplayName: Long Egg
+				Tooltip: ""
+			}
+
+			LunarShot: {
+				DisplayName: Lunar Shot
+				Tooltip: ""
+			}
+
+			PureIronCrossbow: {
+				DisplayName: Pure Iron Crossbow
+				Tooltip: ""
+			}
+
+			SilverwoodBow: {
+				DisplayName: Silverwood Bow
+				Tooltip: ""
+			}
+
+			BlazingBalisong: {
+				DisplayName: Blazing Balisong
+				Tooltip: ""
+			}
+
+			BlightedBoline: {
+				DisplayName: Blighted Boline
+				Tooltip: ""
+			}
+
+			BloodLetter: {
+				DisplayName: Blood Letter
+				Tooltip: ""
+			}
+
+			BuddingBoline: {
+				DisplayName: Budding Boline
+				Tooltip: ""
+			}
+
+			GraveSteelSecespita: {
+				DisplayName: Grave Steel Secespita
+				Tooltip: ""
+			}
+
+			Incisor: {
+				DisplayName: Incisor
+				Tooltip: ""
+			}
+
+			KeepersKnife: {
+				DisplayName: Keepers Knife
+				Tooltip: ""
+			}
+
+			ObsidianTecpatl: {
+				DisplayName: Obsidian Tecpatl
+				Tooltip: ""
+			}
+
+			SoulSkewer: {
+				DisplayName: Soul Skewer
+				Tooltip: ""
+			}
+
+			WornDagger: {
+				DisplayName: Worn Dagger
+				Tooltip: ""
+			}
+
+			AntlerStaff: {
+				DisplayName: Antler Staff
+				Tooltip: ""
+			}
+
+			CorpseWalkerStaff: {
+				DisplayName: Corpse Walker Staff
+				Tooltip: ""
+			}
+
+			CruxCardAnglonSkeletons: {
+				DisplayName: Crux Card Anglon Skeletons
+				Tooltip: ""
+			}
+
+			CruxCardForestNymph: {
+				DisplayName: Crux Card Forest Nymph
+				Tooltip: ""
+			}
+
+			CruxCardGathicSkeletons: {
+				DisplayName: Crux Card Gathic Skeletons
+				Tooltip: ""
+			}
+
+			CruxCardGladestone: {
+				DisplayName: Crux Card Gladestone
+				Tooltip: ""
+			}
+
+			CruxCardMossyGoliath: {
+				DisplayName: Crux Card Mossy Goliath
+				Tooltip: ""
+			}
+
+			CruxCardSkeleton: {
+				DisplayName: Crux Card Skeleton
+				Tooltip: ""
+			}
+
+			CruxCardSkeletonAssassin: {
+				DisplayName: Crux Card Skeleton Assassin
+				Tooltip: ""
+			}
+
+			CruxCardSkullDigger: {
+				DisplayName: Crux Card Skull Digger
+				Tooltip: ""
+			}
+
+			CruxCardTied: {
+				DisplayName: Crux Card Tied
+				Tooltip: ""
+			}
+
+			CystlingSummon: {
+				DisplayName: Cystling Summon
+				Tooltip: ""
+			}
+
+			GaucheStaff: {
+				DisplayName: Gauche Staff
+				Tooltip: ""
+			}
+
+			HolyBible: {
+				DisplayName: Holy Bible
+				Tooltip: ""
+			}
+
+			KingsOakStaff: {
+				DisplayName: Kings Oak Staff
+				Tooltip: ""
+			}
+
+			LogStaff: {
+				DisplayName: Log Staff
+				Tooltip: ""
+			}
+
+			MagmaStaff: {
+				DisplayName: Magma Staff
+				Tooltip: ""
+			}
+
+			MoonflareStaff: {
+				DisplayName: Moonflare Staff
+				Tooltip: ""
+			}
+
+			NestWand: {
+				DisplayName: Nest Wand
+				Tooltip: ""
+			}
+
+			RootTendril: {
+				DisplayName: Root Tendril
+				Tooltip: ""
+			}
+
+			EggCracker: {
+				DisplayName: Egg Cracker
+				Tooltip: ""
+			}
+
+			PlaceholderTile: {
+				DisplayName: Placeholder Tile
+				Tooltip: ""
+			}
+
+			BabyHive: {
+				DisplayName: Baby Hive
+				Tooltip: ""
+			}
+
+			BigMaceTurret: {
+				DisplayName: Big Mace Turret
+				Tooltip: ""
+			}
+
+			HazmatCorpse: {
+				DisplayName: Hazmat Corpse
+				Tooltip: ""
+			}
+
+			JanitorEquipment: {
+				DisplayName: Janitor Equipment
+				Tooltip: ""
+			}
+
+			KariBed: {
+				DisplayName: Kari Bed
+				Tooltip: ""
+			}
+
+			LabBossDoor: {
+				DisplayName: Lab Boss Door
+				Tooltip: ""
+			}
+
+			LabBossDoorH: {
+				DisplayName: Lab Boss Door H
+				Tooltip: ""
+			}
+
+			LabCabinet: {
+				DisplayName: Lab Cabinet
+				Tooltip: ""
+			}
+
+			LabKeycardDoor: {
+				DisplayName: Lab Keycard Door
+				Tooltip: ""
+			}
+
+			LabPhoto: {
+				DisplayName: Lab Photo
+				Tooltip: ""
+			}
+
+			MossTube: {
+				DisplayName: Moss Tube
+				Tooltip: ""
+			}
+
+			MossyLabTable: {
+				DisplayName: Mossy Lab Table
+				Tooltip: ""
+			}
+
+			OpenVent: {
+				DisplayName: Open Vent
+				Tooltip: ""
+			}
+
+			RadPillDeco: {
+				DisplayName: Rad Pill Deco
+				Tooltip: ""
+			}
+
+			WideLabConsole: {
+				DisplayName: Wide Lab Console
+				Tooltip: ""
+			}
+
+			AncientAltar: {
+				DisplayName: Ancient Altar
+				Tooltip: ""
+			}
+
+			AnglonPortalItem: {
+				DisplayName: Anglon Portal Item
+				Tooltip: ""
+			}
+
+			GathuramPortalItem: {
+				DisplayName: Gathuram Portal Item
+				Tooltip: ""
+			}
+
+			GoldenGatewayItem: {
+				DisplayName: Golden Gateway Item
+				Tooltip: ""
+			}
+
+			HangingTied: {
+				DisplayName: Hanging Tied
+				Tooltip: ""
+			}
+
+			NirinCogBig: {
+				DisplayName: Nirin Cog Big
+				Tooltip: ""
+			}
+
+			NirinCogMedium: {
+				DisplayName: Nirin Cog Medium
+				Tooltip: ""
+			}
+
+			GiantShadesteelChain: {
+				DisplayName: Giant Shadesteel Chain
+				Tooltip: ""
+			}
+
+			ShadePortcullis: {
+				DisplayName: Shade Portcullis
+				Tooltip: ""
+			}
+
+			ShadesteelGate: {
+				DisplayName: Shadesteel Gate
+				Tooltip: ""
+			}
+
+			ShadesteelHangingCell2: {
+				DisplayName: Shadesteel Hanging Cell2
+				Tooltip: ""
+			}
+
+			ShadestoneGate: {
+				DisplayName: Shadestone Gate
+				Tooltip: ""
+			}
+
+			AndroidInactive: {
+				DisplayName: Android Inactive
+				Tooltip: ""
+			}
+
+			PrototypeSilverInactive: {
+				DisplayName: Prototype Silver Inactive
+				Tooltip: ""
+			}
+
+			NewbMoundItem: {
+				DisplayName: Newb Mound Item
+				Tooltip: ""
+			}
+
+			NiricAutomatonRemains: {
+				DisplayName: Niric Automaton Remains
+				Tooltip: ""
+			}
+
+			ShadeCystItem: {
+				DisplayName: Shade Cyst Item
+				Tooltip: ""
+			}
+
+			ShadePotsItem: {
+				DisplayName: Shade Pots Item
+				Tooltip: ""
+			}
+
+			SkeletonRemains1: {
+				DisplayName: Skeleton Remains1
+				Tooltip: ""
+			}
+
+			SkeletonRemains1_Special: {
+				DisplayName: Skeleton Remains1_ Special
+				Tooltip: ""
+			}
+
+			SkeletonRemains2: {
+				DisplayName: Skeleton Remains2
+				Tooltip: ""
+			}
+
+			SkeletonRemains3: {
+				DisplayName: Skeleton Remains3
+				Tooltip: ""
+			}
+
+			SkeletonRemains3_Special: {
+				DisplayName: Skeleton Remains3_ Special
+				Tooltip: ""
+			}
+
+			SkeletonRemains4: {
+				DisplayName: Skeleton Remains4
+				Tooltip: ""
+			}
+
+			SkeletonRemains4_Special: {
+				DisplayName: Skeleton Remains4_ Special
+				Tooltip: ""
+			}
+
+			SkeletonRemains5: {
+				DisplayName: Skeleton Remains5
+				Tooltip: ""
+			}
+
+			SkeletonRemains5_Special: {
+				DisplayName: Skeleton Remains5_ Special
+				Tooltip: ""
+			}
+
+			SkeletonRemains6: {
+				DisplayName: Skeleton Remains6
+				Tooltip: ""
+			}
+
+			SkeletonRemains7: {
+				DisplayName: Skeleton Remains7
+				Tooltip: ""
+			}
+
+			SkeletonRemains7_Special: {
+				DisplayName: Skeleton Remains7_ Special
+				Tooltip: ""
+			}
+
+			NooserootLargeItem: {
+				DisplayName: Nooseroot Large Item
+				Tooltip: ""
+			}
+
+			NooserootMediumItem: {
+				DisplayName: Nooseroot Medium Item
+				Tooltip: ""
+			}
+
+			NooserootSmallItem: {
+				DisplayName: Nooseroot Small Item
+				Tooltip: ""
+			}
+
+			IrradiatedCrimstoneWall: {
+				DisplayName: Irradiated Crimstone Wall
+				Tooltip: ""
+			}
+
+			IrradiatedDirtWall: {
+				DisplayName: Irradiated Dirt Wall
+				Tooltip: ""
+			}
+
+			IrradiatedEbonstoneWall: {
+				DisplayName: Irradiated Ebonstone Wall
+				Tooltip: ""
+			}
+
+			IrradiatedHardenedSandWall: {
+				DisplayName: Irradiated Hardened Sand Wall
+				Tooltip: ""
+			}
+
+			IrradiatedIceWall: {
+				DisplayName: Irradiated Ice Wall
+				Tooltip: ""
+			}
+
+			IrradiatedMudWall: {
+				DisplayName: Irradiated Mud Wall
+				Tooltip: ""
+			}
+
+			IrradiatedSandstoneWall: {
+				DisplayName: Irradiated Sandstone Wall
+				Tooltip: ""
+			}
+
+			IrradiatedSnowWall: {
+				DisplayName: Irradiated Snow Wall
+				Tooltip: ""
+			}
+
+			JunkMetalWallItem: {
+				DisplayName: Junk Metal Wall Item
+				Tooltip: ""
+			}
+
+			LabPlatingWallUnsafe: {
+				DisplayName: Lab Plating Wall Unsafe
+				Tooltip: ""
+			}
+
+			MossyLabPlatingWall: {
+				DisplayName: Mossy Lab Plating Wall
+				Tooltip: ""
+			}
+
+			MossyLabWall: {
+				DisplayName: Mossy Lab Wall
+				Tooltip: ""
+			}
+
+			VentWall: {
+				DisplayName: Vent Wall
+				Tooltip: ""
+			}
+
+			EnterPlayground: {
+				DisplayName: Enter Playground
+				Tooltip: ""
+			}
+		}
+
+		NPCs: {
+			Akka.DisplayName: Akka
+			EaglecrestGolem2.DisplayName: Eaglecrest Golem2
+			EaglecrestGolem.DisplayName: Eaglecrest Golem
+			EaglecrestRockPile2.DisplayName: Eaglecrest Rock Pile2
+			EaglecrestRockPile.DisplayName: Eaglecrest Rock Pile
+			Ukko.DisplayName: Ukko
+			OmegaCleaver.DisplayName: Omega Cleaver
+			Wielder.DisplayName: Wielder
+			Bible_Platform.DisplayName: Bible_ Platform
+			Bible_Platform2.DisplayName: Bible_ Platform2
+			Erhan.DisplayName: Erhan
+			ErhanSpirit.DisplayName: Erhan Spirit
+			PalebatImp.DisplayName: Palebat Imp
+			Chickadier.DisplayName: Chickadier
+			Chickenvoy.DisplayName: Chickenvoy
+			Chicken.DisplayName: Chicken
+			CoopCrate.DisplayName: Coop Crate
+			FowlEmperor.DisplayName: Fowl Emperor
+			FowlEmperor_Crown.DisplayName: Fowl Emperor_ Crown
+			Gigapora.DisplayName: Gigapora
+			Gigapora_BodySegment.DisplayName: Gigapora_ Body Segment
+			Gigapora_ShieldCore.DisplayName: Gigapora_ Shield Core
+			Porakone.DisplayName: Porakone
+			Keeper.DisplayName: Keeper
+			KeeperSpirit.DisplayName: Keeper Spirit
+			KS3.DisplayName: K S3
+			KS3_Clone.DisplayName: K S3_ Clone
+			KS3_Magnet.DisplayName: K S3_ Magnet
+			KS3_MissileDrone.DisplayName: K S3_ Missile Drone
+			KS3_ScannerDrone.DisplayName: K S3_ Scanner Drone
+			KS3_Start.DisplayName: K S3_ Start
+			SpaceKeeper.DisplayName: Space Keeper
+			Nebuleus_Clone.DisplayName: Nebuleus_ Clone
+			Nebuleus2_Clone.DisplayName: Nebuleus2_ Clone
+			Nebuleus2.DisplayName: Nebuleus2
+			Nebuleus.DisplayName: Nebuleus
+			Neb_Start.DisplayName: Neb_ Start
+			OO.DisplayName: O O
+			PZ.DisplayName: P Z
+			PZ_Body_Holo.DisplayName: P Z_ Body_ Holo
+			PZ_Inactive.DisplayName: P Z_ Inactive
+			PZ_Kari.DisplayName: P Z_ Kari
+			SeedGrowth.DisplayName: Seed Growth
+			SoI.DisplayName: So I
+			Thorn.DisplayName: Thorn
+			AntiJohnSnail.DisplayName: Anti John Snail
+			BoneSpider.DisplayName: Bone Spider
+			ChickenGold.DisplayName: Chicken Gold
+			ChickenSpawner.DisplayName: Chicken Spawner
+			CoastScarab.DisplayName: Coast Scarab
+			Fly.DisplayName: Fly
+			GrandLarva.DisplayName: Grand Larva
+			JohnSnail.DisplayName: John Snail
+			Kabucra.DisplayName: Kabucra
+			KabucraSpawner.DisplayName: Kabucra Spawner
+			LongChicken.DisplayName: Long Chicken
+			MoonflareBat.DisplayName: Moonflare Bat
+			SandskinSpider.DisplayName: Sandskin Spider
+			SpiderSwarmer.DisplayName: Spider Swarmer
+			TreeBug.DisplayName: Tree Bug
+			ChickenBomber.DisplayName: Chicken Bomber
+			ChickenScratcher.DisplayName: Chicken Scratcher
+			Cockatrice.DisplayName: Cockatrice
+			Haymaker.DisplayName: Haymaker
+			HeadlessChicken.DisplayName: Headless Chicken
+			RoosterBooster.DisplayName: Rooster Booster
+			AnglonPortal.DisplayName: Anglon Portal
+			Chalice_Intro.DisplayName: Chalice_ Intro
+			Daerel.DisplayName: Daerel
+			Daerel_Intro.DisplayName: Daerel_ Intro
+			DaerelUnconscious.DisplayName: Daerel Unconscious
+			Fallen.DisplayName: Fallen
+			ForestNymph_Friendly.DisplayName: Forest Nymph_ Friendly
+			GathuramPortal.DisplayName: Gathuram Portal
+			GiftDrone.DisplayName: Gift Drone
+			GiftDrone2.DisplayName: Gift Drone2
+			GiftDrone3.DisplayName: Gift Drone3
+			GoldenPortal.DisplayName: Golden Portal
+			HazmatCorpse_Ghost.DisplayName: Hazmat Corpse_ Ghost
+			KS3Sitting.DisplayName: K S3 Sitting
+			LostSoulNPC.DisplayName: Lost Soul N P C
+			Newb.DisplayName: Newb
+			Newb_Intro.DisplayName: Newb_ Intro
+			Noza_NPC.DisplayName: Noza_ N P C
+			SkullDiggerFriendly.DisplayName: Skull Digger Friendly
+			SkullDiggerFriendly_Spirit.DisplayName: Skull Digger Friendly_ Spirit
+			SoullessPortal.DisplayName: Soulless Portal
+			SpiritAssassin.DisplayName: Spirit Assassin
+			SpiritCommonGuard.DisplayName: Spirit Common Guard
+			SpiritCurrent.DisplayName: Spirit Current
+			SpiritDruid.DisplayName: Spirit Druid
+			SpiritGathicMan.DisplayName: Spirit Gathic Man
+			SpiritNiricLady.DisplayName: Spirit Niric Lady
+			AncientGladestoneGolem_SS.DisplayName: Ancient Gladestone Golem_ S S
+			AncientGladestoneGolem.DisplayName: Ancient Gladestone Golem
+			Asher_SS.DisplayName: Asher_ S S
+			EpidotrianSkeleton_SS.DisplayName: Epidotrian Skeleton_ S S
+			EpidotrianSkeleton.DisplayName: Epidotrian Skeleton
+			ForestNymph_SS.DisplayName: Forest Nymph_ S S
+			ForestNymph.DisplayName: Forest Nymph
+			HazmatZombie_SS.DisplayName: Hazmat Zombie_ S S
+			HazmatZombie.DisplayName: Hazmat Zombie
+			MossyGoliath_SS.DisplayName: Mossy Goliath_ S S
+			SkeletonAssassin_SS.DisplayName: Skeleton Assassin_ S S
+			SkeletonAssassin.DisplayName: Skeleton Assassin
+			SkeletonDuelist_SS.DisplayName: Skeleton Duelist_ S S
+			SkeletonDuelist.DisplayName: Skeleton Duelist
+			SkeletonFlagbearer_SS.DisplayName: Skeleton Flagbearer_ S S
+			SkeletonFlagbearer.DisplayName: Skeleton Flagbearer
+			SkeletonNoble_SS.DisplayName: Skeleton Noble_ S S
+			SkeletonNoble.DisplayName: Skeleton Noble
+			SkeletonWanderer_SS.DisplayName: Skeleton Wanderer_ S S
+			SkeletonWanderer.DisplayName: Skeleton Wanderer
+			SkeletonWarden_SS.DisplayName: Skeleton Warden_ S S
+			SkeletonWarden.DisplayName: Skeleton Warden
+			SkullDigger_SS.DisplayName: Skull Digger_ S S
+			SkullDigger.DisplayName: Skull Digger
+			SpiritWalkerMan.DisplayName: Spirit Walker Man
+			SpiritwalkerSoul.DisplayName: Spiritwalker Soul
+			TBot.DisplayName: T Bot
+			TBot_Intro.DisplayName: T Bot_ Intro
+			TBotUnconscious.DisplayName: T Bot Unconscious
+			TreebarkDryad.DisplayName: Treebark Dryad
+			WraithSlayer_Samurai.DisplayName: Wraith Slayer_ Samurai
+			Zephos.DisplayName: Zephos
+			Zephos_Intro.DisplayName: Zephos_ Intro
+			ZephosUnconscious.DisplayName: Zephos Unconscious
+			Android.DisplayName: Android
+			PrototypeSilver.DisplayName: Prototype Silver
+			SlayerSpawner.DisplayName: Slayer Spawner
+			SpacePaladin.DisplayName: Space Paladin
+			IrradiatedBehemoth.DisplayName: Irradiated Behemoth
+			IrradiatedBehemoth_Holo.DisplayName: Irradiated Behemoth_ Holo
+			IrradiatedBehemoth_Inactive.DisplayName: Irradiated Behemoth_ Inactive
+			BlisteredScientist.DisplayName: Blistered Scientist
+			BlisteredFish.DisplayName: Blistered Fish
+			BlisteredFish2.DisplayName: Blistered Fish2
+			Blisterface.DisplayName: Blisterface
+			Blisterface_Holo.DisplayName: Blisterface_ Holo
+			Blisterface_Inactive.DisplayName: Blisterface_ Inactive
+			BloatedScientist.DisplayName: Bloated Scientist
+			CraneOperator.DisplayName: Crane Operator
+			JanitorBot.DisplayName: Janitor Bot
+			JanitorBot_Cleaning.DisplayName: Janitor Bot_ Cleaning
+			JanitorBot_Defeated.DisplayName: Janitor Bot_ Defeated
+			JanitorBot_Holo.DisplayName: Janitor Bot_ Holo
+			JanitorBot_NPC.DisplayName: Janitor Bot_ N P C
+			JustANormalToaster.DisplayName: Just A Normal Toaster
+			LabSentryDrone.DisplayName: Lab Sentry Drone
+			MACEProject.DisplayName: M A C E Project
+			MACEProject_Holo.DisplayName: M A C E Project_ Holo
+			MACEProject_Off.DisplayName: M A C E Project_ Off
+			OozeBlob.DisplayName: Ooze Blob
+			OozingScientist.DisplayName: Oozing Scientist
+			ProtectorVolt.DisplayName: Protector Volt
+			ProtectorVolt_NPC.DisplayName: Protector Volt_ N P C
+			ProtectorVolt_Start.DisplayName: Protector Volt_ Start
+			EaglecrestGolem_Sleep.DisplayName: Eaglecrest Golem_ Sleep
+			BabbyDragonBody.DisplayName: Babby Dragon Body
+			BabbyDragonHead.DisplayName: Babby Dragon Head
+			BabbyDragonLeg.DisplayName: Babby Dragon Leg
+			BabbyDragonTail1.DisplayName: Babby Dragon Tail1
+			BabbyDragonTail2.DisplayName: Babby Dragon Tail2
+			ShadesoulNPC.DisplayName: Shadesoul N P C
+			Blobble.DisplayName: Blobble
+			CavernSkeletonSpawner.DisplayName: Cavern Skeleton Spawner
+			CorpseWalkerPriest.DisplayName: Corpse Walker Priest
+			DancingSkeleton.DisplayName: Dancing Skeleton
+			DevilsTongue.DisplayName: Devils Tongue
+			GathicTomb_Spawner.DisplayName: Gathic Tomb_ Spawner
+			JollyMadman.DisplayName: Jolly Madman
+			LivingBloom.DisplayName: Living Bloom
+			RaveyardSkeleton.DisplayName: Raveyard Skeleton
+			RaveyardSkeletonSpawner.DisplayName: Raveyard Skeleton Spawner
+			SurfaceSkeletonSpawner.DisplayName: Surface Skeleton Spawner
+			VagrantSpirit.DisplayName: Vagrant Spirit
+			BloatedGhoul.DisplayName: Bloated Ghoul
+			BloatedGoldfish.DisplayName: Bloated Goldfish
+			BloatedGrub.DisplayName: Bloated Grub
+			BloatedSwarmer.DisplayName: Bloated Swarmer
+			BobTheBlob.DisplayName: Bob The Blob
+			HazmatBunny.DisplayName: Hazmat Bunny
+			MutatedLivingBloom.DisplayName: Mutated Living Bloom
+			NuclearShadow.DisplayName: Nuclear Shadow
+			NuclearSlime.DisplayName: Nuclear Slime
+			RadioactiveJelly.DisplayName: Radioactive Jelly
+			RadioactiveSlime.DisplayName: Radioactive Slime
+			SickenedBunny.DisplayName: Sickened Bunny
+			SickenedDemonEye.DisplayName: Sickened Demon Eye
+			SicklyPenguin.DisplayName: Sickly Penguin
+			SicklyWolf.DisplayName: Sickly Wolf
+			SneezyFlinx.DisplayName: Sneezy Flinx
+		}
+
+		Projectiles: {
+			InfectionShield_AcidSpark.DisplayName: Infection Shield_ Acid Spark
+			PhantomCleaver_F2.DisplayName: Phantom Cleaver_ F2
+			PhantomCleaver_F.DisplayName: Phantom Cleaver_ F
+			PhantomCleaver.DisplayName: Phantom Cleaver
+			JyrinaMount_Horse.DisplayName: Jyrina Mount_ Horse
+			Jyrina.DisplayName: Jyrina
+			VasaraPendant_Proj.DisplayName: Vasara Pendant_ Proj
+			ErhanCross_Shield.DisplayName: Erhan Cross_ Shield
+			RopeHook_Proj.DisplayName: Rope Hook_ Proj
+			GonkPatreon_Pet.DisplayName: Gonk Patreon_ Pet
+			LantardPatreon_Pet.DisplayName: Lantard Patreon_ Pet
+			LizzyPet.DisplayName: Lizzy Pet
+			Lordfunnyman_Pet.DisplayName: Lordfunnyman_ Pet
+			MegaswavePet.DisplayName: Megaswave Pet
+			UnconPet.DisplayName: Uncon Pet
+			WaasephiPet_Proj.DisplayName: Waasephi Pet_ Proj
+			HallPointer.DisplayName: Hall Pointer
+			LabPointer.DisplayName: Lab Pointer
+			MiniWarhead_Proj.DisplayName: Mini Warhead_ Proj
+			NoveltyMop_Proj.DisplayName: Novelty Mop_ Proj
+			OreBomb_Proj.DisplayName: Ore Bomb_ Proj
+			OrePowder_Proj.DisplayName: Ore Powder_ Proj
+			PlutoniumBomb_Proj.DisplayName: Plutonium Bomb_ Proj
+			PlutoniumBoom.DisplayName: Plutonium Boom
+			Trumpet_Proj.DisplayName: Trumpet_ Proj
+			Violin_Proj.DisplayName: Violin_ Proj
+			BileArrow_Proj.DisplayName: Bile Arrow_ Proj
+			BileBullet_Proj.DisplayName: Bile Bullet_ Proj
+			Divinity_Ball.DisplayName: Divinity_ Ball
+			Divinity_Proj.DisplayName: Divinity_ Proj
+			Divinity_Sun.DisplayName: Divinity_ Sun
+			GlobalDischarge_Proj.DisplayName: Global Discharge_ Proj
+			GlobalDischarge_Sphere.DisplayName: Global Discharge_ Sphere
+			LightningRod_Proj.DisplayName: Lightning Rod_ Proj
+			Synthesizer_Proj.DisplayName: Synthesizer_ Proj
+			BlindJustice_Proj.DisplayName: Blind Justice_ Proj
+			BlindJustice_Proj2.DisplayName: Blind Justice_ Proj2
+			BloodstainedPike_Proj.DisplayName: Bloodstained Pike_ Proj
+			BloodstainedPike_Proj2.DisplayName: Bloodstained Pike_ Proj2
+			Chernobyl_Proj.DisplayName: Chernobyl_ Proj
+			CrystalGlaive_Proj.DisplayName: Crystal Glaive_ Proj
+			CyberChakram_Proj.DisplayName: Cyber Chakram_ Proj
+			CyberChakram_Proj2.DisplayName: Cyber Chakram_ Proj2
+			ForgottenGreatsword_Proj.DisplayName: Forgotten Greatsword_ Proj
+			GravityHammer_Proj.DisplayName: Gravity Hammer_ Proj
+			HammerOfProving_Proj.DisplayName: Hammer Of Proving_ Proj
+			InfectiousGlaive_Proj.DisplayName: Infectious Glaive_ Proj
+			Midnight_SlashProj.DisplayName: Midnight_ Slash Proj
+			OversizedScrewdriver_Proj.DisplayName: Oversized Screwdriver_ Proj
+			RemoteCleaver.DisplayName: Remote Cleaver
+			SlayerFist_Proj.DisplayName: Slayer Fist_ Proj
+			Spellsong_Proj.DisplayName: Spellsong_ Proj
+			TidalWake_Proj.DisplayName: Tidal Wake_ Proj
+			TinyCleaver_Proj.DisplayName: Tiny Cleaver_ Proj
+			WraithSlayer_Proj.DisplayName: Wraith Slayer_ Proj
+			BileLauncher_Proj.DisplayName: Bile Launcher_ Proj
+			CorruptedDAN_Proj.DisplayName: Corrupted D A N_ Proj
+			DAN_Proj.DisplayName: D A N_ Proj
+			FlakCannon_Proj.DisplayName: Flak Cannon_ Proj
+			HyperTechRevolvers_Proj.DisplayName: Hyper Tech Revolvers_ Proj
+			HyperTechRevolvers_Proj2.DisplayName: Hyper Tech Revolvers_ Proj2
+			SteampunkMinigun_Proj.DisplayName: Steampunk Minigun_ Proj
+			ToxicGrenade_Proj.DisplayName: Toxic Grenade_ Proj
+			InfectedTentacle_Proj.DisplayName: Infected Tentacle_ Proj
+			WireTaser_Proj.DisplayName: Wire Taser_ Proj
+			WireTaser_Proj2.DisplayName: Wire Taser_ Proj2
+			WireTaser_Proj2_End.DisplayName: Wire Taser_ Proj2_ End
+			OOFingergun_Fingerflash.DisplayName: O O Fingergun_ Fingerflash
+			OOFingergun_Laser.DisplayName: O O Fingergun_ Laser
+			OOFingergun_Proj.DisplayName: O O Fingergun_ Proj
+			TeslaCoil_Proj.DisplayName: Tesla Coil_ Proj
+			Hacksaw_Proj.DisplayName: Hacksaw_ Proj
+			MythrilsBane_Proj.DisplayName: Mythrils Bane_ Proj
+			PiercingNebulaWeapon_Proj.DisplayName: Piercing Nebula Weapon_ Proj
+			PNebula1_Friendly.DisplayName: P Nebula1_ Friendly
+			PNebula1.DisplayName: P Nebula1
+			PNebula2_Friendly.DisplayName: P Nebula2_ Friendly
+			PNebula2.DisplayName: P Nebula2
+			PNebula3_Friendly.DisplayName: P Nebula3_ Friendly
+			PNebula3.DisplayName: P Nebula3
+			PZGauntlet_Proj.DisplayName: P Z Gauntlet_ Proj
+			SunInThePalm_Proj.DisplayName: Sun In The Palm_ Proj
+			Ukonvasara_Axe.DisplayName: Ukonvasara_ Axe
+			Ukonvasara_Proj2.DisplayName: Ukonvasara_ Proj2
+			Ukonvasara_Sword.DisplayName: Ukonvasara_ Sword
+			Ukonvasara_Sword_Proj.DisplayName: Ukonvasara_ Sword_ Proj
+			XeniumLance_Proj.DisplayName: Xenium Lance_ Proj
+			BlastBattery_Crosshair.DisplayName: Blast Battery_ Crosshair
+			BlastBattery_Missile.DisplayName: Blast Battery_ Missile
+			BlastBattery_MissileBlast.DisplayName: Blast Battery_ Missile Blast
+			Electronade_Proj.DisplayName: Electronade_ Proj
+			Electronade_TeslaField.DisplayName: Electronade_ Tesla Field
+			SussyEgg_Proj.DisplayName: Sussy Egg_ Proj
+			SwarmerCannon_Proj.DisplayName: Swarmer Cannon_ Proj
+			XeniumElectrolaser_Proj.DisplayName: Xenium Electrolaser_ Proj
+			CosmosChains_Proj.DisplayName: Cosmos Chains_ Proj
+			AquaArrow_Proj.DisplayName: Aqua Arrow_ Proj
+			MoonflareArrow_Proj.DisplayName: Moonflare Arrow_ Proj
+			XenomiteBulletProj.DisplayName: Xenomite Bullet Proj
+			BlightedRootProj.DisplayName: Blighted Root Proj
+			BlightedRootStabber.DisplayName: Blighted Root Stabber
+			BlightedRootThorn.DisplayName: Blighted Root Thorn
+			PureIronStaff_Proj.DisplayName: Pure Iron Staff_ Proj
+			BladeOfTheMountain_Slash.DisplayName: Blade Of The Mountain_ Slash
+			ChompingChains_Proj.DisplayName: Chomping Chains_ Proj
+			ChompingChains_Proj_Skull.DisplayName: Chomping Chains_ Proj_ Skull
+			DragonCleaver_Proj.DisplayName: Dragon Cleaver_ Proj
+			EaglecrestJavelin_Proj.DisplayName: Eaglecrest Javelin_ Proj
+			EaglecrestJavelin_Thunder.DisplayName: Eaglecrest Javelin_ Thunder
+			FlintAndSteelSpark.DisplayName: Flint And Steel Spark
+			ForestNymphsSickle_Proj.DisplayName: Forest Nymphs Sickle_ Proj
+			ForgottenSword_Proj.DisplayName: Forgotten Sword_ Proj
+			Halbirdhouse_Proj.DisplayName: Halbirdhouse_ Proj
+			KeepersClaw_Slash.DisplayName: Keepers Claw_ Slash
+			NoblesHalberd_Proj.DisplayName: Nobles Halberd_ Proj
+			NoblesHalberd_SlashProj.DisplayName: Nobles Halberd_ Slash Proj
+			PureIronSword_Proj.DisplayName: Pure Iron Sword_ Proj
+			SilverRapier_Proj.DisplayName: Silver Rapier_ Proj
+			SkullDiggerFlail_Proj.DisplayName: Skull Digger Flail_ Proj
+			SwordSlicer_Slash.DisplayName: Sword Slicer_ Slash
+			XenoXyston_Proj.DisplayName: Xeno Xyston_ Proj
+			Zweihander_SlashProj.DisplayName: Zweihander_ Slash Proj
+			ChickenEgg_Proj.DisplayName: Chicken Egg_ Proj
+			EaglecrestSling_Throw.DisplayName: Eaglecrest Sling_ Throw
+			EggBomb_Proj.DisplayName: Egg Bomb_ Proj
+			GoldChickenEgg_Proj.DisplayName: Gold Chicken Egg_ Proj
+			HallowedHandGrenade_Proj.DisplayName: Hallowed Hand Grenade_ Proj
+			LongEgg_Proj.DisplayName: Long Egg_ Proj
+			BlazingBalisong_Slash.DisplayName: Blazing Balisong_ Slash
+			BlightedBoline_Slash.DisplayName: Blighted Boline_ Slash
+			BloodLetter_Proj.DisplayName: Blood Letter_ Proj
+			BloodLetter_Slash.DisplayName: Blood Letter_ Slash
+			BuddingBoline_Slash.DisplayName: Budding Boline_ Slash
+			GraveSteelSecespita_Slash.DisplayName: Grave Steel Secespita_ Slash
+			Incisor_Slash.DisplayName: Incisor_ Slash
+			KeepersKnife_Slash.DisplayName: Keepers Knife_ Slash
+			ObsidianTecpatl_Slash.DisplayName: Obsidian Tecpatl_ Slash
+			SoulSkewer_Slash.DisplayName: Soul Skewer_ Slash
+			WornDagger_Slash.DisplayName: Worn Dagger_ Slash
+			HolyBible_Proj.DisplayName: Holy Bible_ Proj
+			RootTendril_Proj.DisplayName: Root Tendril_ Proj
+			AkkaBubble.DisplayName: Akka Bubble
+			AkkaHealingSpirit.DisplayName: Akka Healing Spirit
+			AkkaIsland.DisplayName: Akka Island
+			AkkaIslandHitbox.DisplayName: Akka Island Hitbox
+			AkkaIslandSummoner.DisplayName: Akka Island Summoner
+			AkkaIslandWarning.DisplayName: Akka Island Warning
+			AkkaPoisonBubble.DisplayName: Akka Poison Bubble
+			AkkaTremor.DisplayName: Akka Tremor
+			DualcastBall.DisplayName: Dualcast Ball
+			EarthBarrier.DisplayName: Earth Barrier
+			Moonbeam.DisplayName: Moonbeam
+			StormSummonerPro.DisplayName: Storm Summoner Pro
+			StormSummonerPro2.DisplayName: Storm Summoner Pro2
+			UkkoBarrier.DisplayName: Ukko Barrier
+			UkkoBarrierH.DisplayName: Ukko Barrier H
+			UkkoBlizzard.DisplayName: Ukko Blizzard
+			UkkoCloud_Thunder.DisplayName: Ukko Cloud_ Thunder
+			UkkoDancingLights.DisplayName: Ukko Dancing Lights
+			UkkoElectricBlast.DisplayName: Ukko Electric Blast
+			UkkoElectricBlast2.DisplayName: Ukko Electric Blast2
+			UkkoGust.DisplayName: Ukko Gust
+			UkkoHail.DisplayName: Ukko Hail
+			UkkoLightning.DisplayName: Ukko Lightning
+			UkkoRain.DisplayName: Ukko Rain
+			UkkoRainCloud.DisplayName: Ukko Rain Cloud
+			UkkoRainHealing.DisplayName: Ukko Rain Healing
+			UkkoRainPoison.DisplayName: Ukko Rain Poison
+			UkkoStrike.DisplayName: Ukko Strike
+			UkkoStrikeZap.DisplayName: Ukko Strike Zap
+			UkkoThunderwave.DisplayName: Ukko Thunderwave
+			CleaverHitbox.DisplayName: Cleaver Hitbox
+			OmegaBlast.DisplayName: Omega Blast
+			OmegaCleaver_GirusTalk.DisplayName: Omega Cleaver_ Girus Talk
+			PhantomCleaver2.DisplayName: Phantom Cleaver2
+			PhantomCleaver2_Spawner.DisplayName: Phantom Cleaver2_ Spawner
+			RedPrism.DisplayName: Red Prism
+			RedPrism_F.DisplayName: Red Prism_ F
+			WielderOrb.DisplayName: Wielder Orb
+			Bible_Ray.DisplayName: Bible_ Ray
+			Bible_Seed.DisplayName: Bible_ Seed
+			Bible_SeedSpear.DisplayName: Bible_ Seed Spear
+			Bible_SpearSpawner.DisplayName: Bible_ Spear Spawner
+			Erhan_Bible.DisplayName: Erhan_ Bible
+			Erhan_HolyShield.DisplayName: Erhan_ Holy Shield
+			Erhan_Lightmass.DisplayName: Erhan_ Lightmass
+			HolyBeam.DisplayName: Holy Beam
+			HolyHandGrenadeOfAnglon.DisplayName: Holy Hand Grenade Of Anglon
+			HolyPhalanx_Proj.DisplayName: Holy Phalanx_ Proj
+			HolyPhalanx_Proj2.DisplayName: Holy Phalanx_ Proj2
+			HolySpear_Proj.DisplayName: Holy Spear_ Proj
+			HolySpear_Tele.DisplayName: Holy Spear_ Tele
+			RayOfGuidance.DisplayName: Ray Of Guidance
+			ScorchingRay.DisplayName: Scorching Ray
+			Chickadier_Bomb.DisplayName: Chickadier_ Bomb
+			EggCracker_Proj.DisplayName: Egg Cracker_ Proj
+			FowlEmperor_Crown_Proj.DisplayName: Fowl Emperor_ Crown_ Proj
+			FowlFeather_Proj.DisplayName: Fowl Feather_ Proj
+			Rooster_EggBomb.DisplayName: Rooster_ Egg Bomb
+			CrossBomb_Beam.DisplayName: Cross Bomb_ Beam
+			Gigabeam.DisplayName: Gigabeam
+			Gigapora_BoltTele.DisplayName: Gigapora_ Bolt Tele
+			Gigapora_CrossBomb.DisplayName: Gigapora_ Cross Bomb
+			Gigapora_CrossBombTele.DisplayName: Gigapora_ Cross Bomb Tele
+			Gigapora_Fireball.DisplayName: Gigapora_ Fireball
+			Gigapora_Flame.DisplayName: Gigapora_ Flame
+			Gigapora_FlameTele.DisplayName: Gigapora_ Flame Tele
+			Gigapora_GirusTalk.DisplayName: Gigapora_ Girus Talk
+			Gigapora_Rubble.DisplayName: Gigapora_ Rubble
+			ShieldCore_Bolt.DisplayName: Shield Core_ Bolt
+			ShieldCore_DualcastBall.DisplayName: Shield Core_ Dualcast Ball
+			ShieldCore_Zap.DisplayName: Shield Core_ Zap
+			KeeperBloodWave.DisplayName: Keeper Blood Wave
+			KeeperDreadCoil.DisplayName: Keeper Dread Coil
+			KeeperSoul.DisplayName: Keeper Soul
+			KeeperSoulCharge.DisplayName: Keeper Soul Charge
+			ShadowBolt.DisplayName: Shadow Bolt
+			VeilFX.DisplayName: Veil F X
+			FlashGrenadeBlast.DisplayName: Flash Grenade Blast
+			KS3_BeamCell.DisplayName: K S3_ Beam Cell
+			KS3_Call.DisplayName: K S3_ Call
+			KS3_DroneKillCheck.DisplayName: K S3_ Drone Kill Check
+			KS3_EnergyBolt.DisplayName: K S3_ Energy Bolt
+			KS3_Exit.DisplayName: K S3_ Exit
+			KS3_Fist.DisplayName: K S3_ Fist
+			KS3_FlashGrenade.DisplayName: K S3_ Flash Grenade
+			KS3_HeadHologram.DisplayName: K S3_ Head Hologram
+			KS3_JojoFist.DisplayName: K S3_ Jojo Fist
+			KS3_MagnetBeam.DisplayName: K S3_ Magnet Beam
+			KS3_MagnetPulse.DisplayName: K S3_ Magnet Pulse
+			KS3_MissileBlast.DisplayName: K S3_ Missile Blast
+			KS3_Reflect.DisplayName: K S3_ Reflect
+			KS3_Shield.DisplayName: K S3_ Shield
+			KS3_Shield2.DisplayName: K S3_ Shield2
+			KS3_SoSCrosshair.DisplayName: K S3_ So S Crosshair
+			KS3_SoSMissile.DisplayName: K S3_ So S Missile
+			KS3_Surge.DisplayName: K S3_ Surge
+			KS3_Surge2.DisplayName: K S3_ Surge2
+			KS3_TeleLine1.DisplayName: K S3_ Tele Line1
+			KS3_TeleLine2.DisplayName: K S3_ Tele Line2
+			KS3_Wave.DisplayName: K S3_ Wave
+			ReboundShot.DisplayName: Rebound Shot
+			Scan_Proj.DisplayName: Scan_ Proj
+			SlayerMissile.DisplayName: Slayer Missile
+			CosmicEye.DisplayName: Cosmic Eye
+			CosmicEye_Beam.DisplayName: Cosmic Eye_ Beam
+			CrystalStar_Proj.DisplayName: Crystal Star_ Proj
+			CrystalStar_Tele.DisplayName: Crystal Star_ Tele
+			CrystalStarShard_Proj.DisplayName: Crystal Star Shard_ Proj
+			CurvingStar.DisplayName: Curving Star
+			CurvingStar_Tele.DisplayName: Curving Star_ Tele
+			CurvingStar_Tele2.DisplayName: Curving Star_ Tele2
+			CurvingStar_Tele3.DisplayName: Curving Star_ Tele3
+			CurvingStar_Tele4.DisplayName: Curving Star_ Tele4
+			CurvingStar2.DisplayName: Curving Star2
+			Dash_Tele.DisplayName: Dash_ Tele
+			GiantStar_Proj.DisplayName: Giant Star_ Proj
+			Neb_Start_Visual.DisplayName: Neb_ Start_ Visual
+			Neb_Start_Visual2.DisplayName: Neb_ Start_ Visual2
+			Neb_Start_Visual3.DisplayName: Neb_ Start_ Visual3
+			NebRing.DisplayName: Neb Ring
+			NebTeleLine1.DisplayName: Neb Tele Line1
+			NebTeleLine2.DisplayName: Neb Tele Line2
+			CosmicEye_Beam2.DisplayName: Cosmic Eye_ Beam2
+			CosmicEye2.DisplayName: Cosmic Eye2
+			CosmicEye3.DisplayName: Cosmic Eye3
+			Dash_Tele2.DisplayName: Dash_ Tele2
+			NebDefeat.DisplayName: Neb Defeat
+			NebFalling.DisplayName: Neb Falling
+			StarBolt.DisplayName: Star Bolt
+			StarFall_Proj2.DisplayName: Star Fall_ Proj2
+			StarFall_Proj.DisplayName: Star Fall_ Proj
+			Starfall_Tele2.DisplayName: Starfall_ Tele2
+			Starfall_Tele.DisplayName: Starfall_ Tele
+			PNebula1_Tele.DisplayName: P Nebula1_ Tele
+			Shout1.DisplayName: Shout1
+			Shout10.DisplayName: Shout10
+			Shout11.DisplayName: Shout11
+			Shout2.DisplayName: Shout2
+			Shout3.DisplayName: Shout3
+			Shout4.DisplayName: Shout4
+			Shout5.DisplayName: Shout5
+			Shout6.DisplayName: Shout6
+			Shout7.DisplayName: Shout7
+			Shout8.DisplayName: Shout8
+			Shout9.DisplayName: Shout9
+			StationaryStar.DisplayName: Stationary Star
+			Transition.DisplayName: Transition
+			OmegaMegaBeam.DisplayName: Omega Mega Beam
+			OmegaPlasmaBall.DisplayName: Omega Plasma Ball
+			OO_BarrageMissile.DisplayName: O O_ Barrage Missile
+			OO_Crosshair.DisplayName: O O_ Crosshair
+			OO_Fingerflash.DisplayName: O O_ Fingerflash
+			OO_GirusTalk.DisplayName: O O_ Girus Talk
+			OO_Laser.DisplayName: O O_ Laser
+			OO_MissileBlast.DisplayName: O O_ Missile Blast
+			OO_NormalBeam.DisplayName: O O_ Normal Beam
+			OO_StunBeam.DisplayName: O O_ Stun Beam
+			OOBarrier.DisplayName: O O Barrier
+			OOBarrierH.DisplayName: O O Barrier H
+			CausticTear.DisplayName: Caustic Tear
+			CausticTearBall.DisplayName: Caustic Tear Ball
+			EyeRadius_Tele.DisplayName: Eye Radius_ Tele
+			EyeRadius_Tele2.DisplayName: Eye Radius_ Tele2
+			InfectiousBeat.DisplayName: Infectious Beat
+			InfectiousBeat_Tele.DisplayName: Infectious Beat_ Tele
+			PoisonBeat.DisplayName: Poison Beat
+			PoisonBeat_Tele.DisplayName: Poison Beat_ Tele
+			PZ_Blast.DisplayName: P Z_ Blast
+			PZ_Kari_Laser.DisplayName: P Z_ Kari_ Laser
+			PZ_Laser.DisplayName: P Z_ Laser
+			PZ_Miniblast.DisplayName: P Z_ Miniblast
+			PZ_Tele.DisplayName: P Z_ Tele
+			TearOfInfection.DisplayName: Tear Of Infection
+			TearOfInfectionBall.DisplayName: Tear Of Infection Ball
+			TearOfPain.DisplayName: Tear Of Pain
+			TearOfPainBall.DisplayName: Tear Of Pain Ball
+			AdamPortal.DisplayName: Adam Portal
+			InfectionDust.DisplayName: Infection Dust
+			SeedLaser.DisplayName: Seed Laser
+			SoI_ShardShot.DisplayName: So I_ Shard Shot
+			SoI_SplitShard.DisplayName: So I_ Split Shard
+			SoI_ToxicSludge.DisplayName: So I_ Toxic Sludge
+			SoI_XenomiteShot.DisplayName: So I_ Xenomite Shot
+			StrangePortal.DisplayName: Strange Portal
+			StrangePortal2.DisplayName: Strange Portal2
+			CursedThornVile.DisplayName: Cursed Thorn Vile
+			LeechingThornSeed.DisplayName: Leeching Thorn Seed
+			ManaBarrier.DisplayName: Mana Barrier
+			SlashFlashPro.DisplayName: Slash Flash Pro
+			SlashPro1.DisplayName: Slash Pro1
+			ThornSeed.DisplayName: Thorn Seed
+			ThornTrap.DisplayName: Thorn Trap
+			CoastScarabFall.DisplayName: Coast Scarab Fall
+			GrandLarvaFall.DisplayName: Grand Larva Fall
+			TreeBugFall.DisplayName: Tree Bug Fall
+			Cockatrice_Ray.DisplayName: Cockatrice_ Ray
+			Cockatrice_Ray_Tele.DisplayName: Cockatrice_ Ray_ Tele
+			HeadlessChicken_Fire.DisplayName: Headless Chicken_ Fire
+			KS3Sitting_Hologram.DisplayName: K S3 Sitting_ Hologram
+			SkullDiggerFriendly_FlailBlade.DisplayName: Skull Digger Friendly_ Flail Blade
+			AncientGladestonePillar_SS.DisplayName: Ancient Gladestone Pillar_ S S
+			AncientGladestonePillar.DisplayName: Ancient Gladestone Pillar
+			LivingBloomRoot_SS.DisplayName: Living Bloom Root_ S S
+			LivingBloomRoot.DisplayName: Living Bloom Root
+			MossyGoliath_SS_Screech.DisplayName: Mossy Goliath_ S S_ Screech
+			MossyGoliath_SS_ToxicBreath.DisplayName: Mossy Goliath_ S S_ Toxic Breath
+			SkeletonNoble_SS_HalberdProj.DisplayName: Skeleton Noble_ S S_ Halberd Proj
+			SkeletonWanderer_SS_SpearProj.DisplayName: Skeleton Wanderer_ S S_ Spear Proj
+			SkullDigger_SS_FlailBlade.DisplayName: Skull Digger_ S S_ Flail Blade
+			SpiritwalkerIconFade.DisplayName: Spiritwalker Icon Fade
+			WraithSlayer_Slash.DisplayName: Wraith Slayer_ Slash
+			PrototypeSilver_Hook.DisplayName: Prototype Silver_ Hook
+			PrototypeSilver_Shield.DisplayName: Prototype Silver_ Shield
+			SpacePaladin_GroundShock.DisplayName: Space Paladin_ Ground Shock
+			GreenGas_Proj.DisplayName: Green Gas_ Proj
+			GreenGas_Tele.DisplayName: Green Gas_ Tele
+			GreenGloop_Proj.DisplayName: Green Gloop_ Proj
+			GreenGloop_Tele.DisplayName: Green Gloop_ Tele
+			IB_GirusTalk.DisplayName: I B_ Girus Talk
+			Blisterface_Bubble.DisplayName: Blisterface_ Bubble
+			BucketSplash.DisplayName: Bucket Splash
+			JanitorBucket_Proj.DisplayName: Janitor Bucket_ Proj
+			JanitorMop_Proj.DisplayName: Janitor Mop_ Proj
+			BigElectronade.DisplayName: Big Electronade
+			BigElectronade_TeslaField.DisplayName: Big Electronade_ Tesla Field
+			MACE_FireBlast.DisplayName: M A C E_ Fire Blast
+			MACE_FlakBullet.DisplayName: M A C E_ Flak Bullet
+			MACE_Gemshot.DisplayName: M A C E_ Gemshot
+			MACE_GroundShock.DisplayName: M A C E_ Ground Shock
+			MACE_Laser.DisplayName: M A C E_ Laser
+			MACE_Miniblast.DisplayName: M A C E_ Miniblast
+			MACE_Orb.DisplayName: M A C E_ Orb
+			MACE_OrbLaser.DisplayName: M A C E_ Orb Laser
+			MACE_OrbLaser_Tele.DisplayName: M A C E_ Orb Laser_ Tele
+			MACE_Scrap.DisplayName: M A C E_ Scrap
+			TeslaBeam.DisplayName: Tesla Beam
+			TeslaZapBeam.DisplayName: Tesla Zap Beam
+			Volt_OrbProj.DisplayName: Volt_ Orb Proj
+			GolemEyeRay.DisplayName: Golem Eye Ray
+			RockPileSummon.DisplayName: Rock Pile Summon
+			RockSlash_Proj.DisplayName: Rock Slash_ Proj
+			SkullDigger_FlailBlade.DisplayName: Skull Digger_ Flail Blade
+			SkullDigger_FlailBlade_Proj.DisplayName: Skull Digger_ Flail Blade_ Proj
+			SkullDigger_FlailBlade_ProjF.DisplayName: Skull Digger_ Flail Blade_ Proj F
+			SkeletonNoble_HalberdProj.DisplayName: Skeleton Noble_ Halberd Proj
+			SkeletonWanderer_SpearProj.DisplayName: Skeleton Wanderer_ Spear Proj
+			Android_Proj.DisplayName: Android_ Proj
+			Blood_Proj.DisplayName: Blood_ Proj
+			CorpseWalkerBolt.DisplayName: Corpse Walker Bolt
+			DevilsTongueCloud.DisplayName: Devils Tongue Cloud
+			MutatedLivingBloomRoot.DisplayName: Mutated Living Bloom Root
+			OozeBall_Proj.DisplayName: Ooze Ball_ Proj
+			PrototypeSilver_Beam.DisplayName: Prototype Silver_ Beam
+			Bacteria_Proj.DisplayName: Bacteria_ Proj
+			CalciteWand_Proj.DisplayName: Calcite Wand_ Proj
+			CantripEmber.DisplayName: Cantrip Ember
+			CantripEmberS.DisplayName: Cantrip Ember S
+			Constellations_Star.DisplayName: Constellations_ Star
+			ContagionShard_Proj.DisplayName: Contagion Shard_ Proj
+			DigestiveAcid_Mist.DisplayName: Digestive Acid_ Mist
+			DigestiveVat_Proj.DisplayName: Digestive Vat_ Proj
+			Divinity_Crosshair.DisplayName: Divinity_ Crosshair
+			DragonSkull_Proj.DisplayName: Dragon Skull_ Proj
+			DragonSkullFlames_Proj.DisplayName: Dragon Skull Flames_ Proj
+			Dusksong_Proj.DisplayName: Dusksong_ Proj
+			Dusksong_Proj2.DisplayName: Dusksong_ Proj2
+			EaglecrestBoulder_Proj.DisplayName: Eaglecrest Boulder_ Proj
+			Earthbind_Effect.DisplayName: Earthbind_ Effect
+			Earthbind_Proj.DisplayName: Earthbind_ Proj
+			GiantDandelionSeed.DisplayName: Giant Dandelion Seed
+			GiantMask.DisplayName: Giant Mask
+			GigapeiliBolt.DisplayName: Gigapeili Bolt
+			GigapeiliDrone.DisplayName: Gigapeili Drone
+			Hardlight_ManaDrone.DisplayName: Hardlight_ Mana Drone
+			HeatRay.DisplayName: Heat Ray
+			IceBolt.DisplayName: Ice Bolt
+			Icefall_Mist.DisplayName: Icefall_ Mist
+			Icefall_Proj.DisplayName: Icefall_ Proj
+			LightOrb_Proj.DisplayName: Light Orb_ Proj
+			LightOrbRay_Proj.DisplayName: Light Orb Ray_ Proj
+			MagnifyingGlassRay.DisplayName: Magnifying Glass Ray
+			Nanite_Proj.DisplayName: Nanite_ Proj
+			NaturePixie_Magic.DisplayName: Nature Pixie_ Magic
+			NaturePixie.DisplayName: Nature Pixie
+			NoidanNuoli.DisplayName: Noidan Nuoli
+			NoitaBombBlast.DisplayName: Noita Bomb Blast
+			Petridish_Proj.DisplayName: Petridish_ Proj
+			PlutoniumNuke_Proj.DisplayName: Plutonium Nuke_ Proj
+			PoemTornado_Proj.DisplayName: Poem Tornado_ Proj
+			Pommisauva_Bomb.DisplayName: Pommisauva_ Bomb
+			Rockslide_Proj.DisplayName: Rockslide_ Proj
+			RockslidePebble_Proj.DisplayName: Rockslide Pebble_ Proj
+			SoulScepterCharge.DisplayName: Soul Scepter Charge
+			SoulScepterChargeS.DisplayName: Soul Scepter Charge S
+			Sunshard.DisplayName: Sunshard
+			SunshardRay.DisplayName: Sunshard Ray
+			SynthNote_Proj.DisplayName: Synth Note_ Proj
+			WaterOrb.DisplayName: Water Orb
+			WaterOrbS.DisplayName: Water Orb S
+			XeniumBoom_Proj.DisplayName: Xenium Boom_ Proj
+			XeniumBubble_Proj.DisplayName: Xenium Bubble_ Proj
+			XeniumStaff_Proj.DisplayName: Xenium Staff_ Proj
+			XenomiteScepter_Proj.DisplayName: Xenomite Scepter_ Proj
+			ArcticWind_Proj.DisplayName: Arctic Wind_ Proj
+			BlindJustice_Aura.DisplayName: Blind Justice_ Aura
+			Firebreak_Proj.DisplayName: Firebreak_ Proj
+			FireSlash_Proj.DisplayName: Fire Slash_ Proj
+			Firestorm_Proj.DisplayName: Firestorm_ Proj
+			ForestSickle_Proj.DisplayName: Forest Sickle_ Proj
+			GravityHammer_GroundShock.DisplayName: Gravity Hammer_ Ground Shock
+			Hacksaw_Heat_Proj.DisplayName: Hacksaw_ Heat_ Proj
+			KeepersClaw_BloodWave.DisplayName: Keepers Claw_ Blood Wave
+			KS3_FistF.DisplayName: K S3_ Fist F
+			Lightmass.DisplayName: Lightmass
+			MiniSpaceship.DisplayName: Mini Spaceship
+			MythrilsBaneSlash_Proj.DisplayName: Mythrils Bane Slash_ Proj
+			NebulaSpark.DisplayName: Nebula Spark
+			NebulaStar.DisplayName: Nebula Star
+			PZGauntlet_Proj2.DisplayName: P Z Gauntlet_ Proj2
+			Spellsong_Beam.DisplayName: Spellsong_ Beam
+			SpellsongMirage_Proj.DisplayName: Spellsong Mirage_ Proj
+			SpellsongSlash_Proj.DisplayName: Spellsong Slash_ Proj
+			StingerFriendlyMelee.DisplayName: Stinger Friendly Melee
+			StingerFriendly.DisplayName: Stinger Friendly
+			SunInThePalm_EnergyBall.DisplayName: Sun In The Palm_ Energy Ball
+			UkonSpark_Proj.DisplayName: Ukon Spark_ Proj
+			Ukonvasara_Fragments.DisplayName: Ukonvasara_ Fragments
+			UkonvasaraSword_Wave.DisplayName: Ukonvasara Sword_ Wave
+			XeniumLanceSpark_Proj.DisplayName: Xenium Lance Spark_ Proj
+			AcornBomb_Proj.DisplayName: Acorn Bomb_ Proj
+			AcornBomb_Shard.DisplayName: Acorn Bomb_ Shard
+			AndroidMinion_Fist.DisplayName: Android Minion_ Fist
+			AndroidMinion_Proj.DisplayName: Android Minion_ Proj
+			ChainsCosmicEye.DisplayName: Chains Cosmic Eye
+			ChainsCosmicEye_Beam.DisplayName: Chains Cosmic Eye_ Beam
+			CorpseWalkerSkull.DisplayName: Corpse Walker Skull
+			CorpseWalkerSkull_Proj.DisplayName: Corpse Walker Skull_ Proj
+			Cystling.DisplayName: Cystling
+			Forret.DisplayName: Forret
+			GirusDischarge.DisplayName: Girus Discharge
+			GolemGuardian.DisplayName: Golem Guardian
+			GraniteGuardian.DisplayName: Granite Guardian
+			Hardlight_Magnet.DisplayName: Hardlight_ Magnet
+			Hardlight_MagnetBeam.DisplayName: Hardlight_ Magnet Beam
+			Hardlight_MagnetPulse.DisplayName: Hardlight_ Magnet Pulse
+			Hardlight_MissileDrone.DisplayName: Hardlight_ Missile Drone
+			Hardlight_SlayerMissile.DisplayName: Hardlight_ Slayer Missile
+			HiveCyst_Proj.DisplayName: Hive Cyst_ Proj
+			HoloMinion.DisplayName: Holo Minion
+			HoloProjector.DisplayName: Holo Projector
+			HolyBible_Ray.DisplayName: Holy Bible_ Ray
+			LogStaff_Proj.DisplayName: Log Staff_ Proj
+			MagmaCube.DisplayName: Magma Cube
+			MicroshieldCore_Bolt.DisplayName: Microshield Core_ Bolt
+			MicroshieldCore_Proj.DisplayName: Microshield Core_ Proj
+			MicroshieldDrone.DisplayName: Microshield Drone
+			MoonflareGuardian.DisplayName: Moonflare Guardian
+			MoonflareGuardian_Proj.DisplayName: Moonflare Guardian_ Proj
+			NaturePixie_Yell.DisplayName: Nature Pixie_ Yell
+			NestWand_Proj.DisplayName: Nest Wand_ Proj
+			RowanTreeSummon.DisplayName: Rowan Tree Summon
+			TeslaGenerator_Lightning.DisplayName: Tesla Generator_ Lightning
+			TeslaGenerator_Proj.DisplayName: Tesla Generator_ Proj
+			XeniumTurret.DisplayName: Xenium Turret
+			badtimekid.DisplayName: badtimekid
+			BleachedSolution_Proj.DisplayName: Bleached Solution_ Proj
+			CelestialStar.DisplayName: Celestial Star
+			ElementalCrystal.DisplayName: Elemental Crystal
+			GasCanister.DisplayName: Gas Canister
+			GasCanister_Gas.DisplayName: Gas Canister_ Gas
+			InfectionShockwave_Proj.DisplayName: Infection Shockwave_ Proj
+			NukeShockwave.DisplayName: Nuke Shockwave
+			ProjDeath.DisplayName: Proj Death
+			SandDust_Proj.DisplayName: Sand Dust_ Proj
+			ShockwaveBoom.DisplayName: Shockwave Boom
+			ShockwaveBoom2.DisplayName: Shockwave Boom2
+			ShockwaveBoom3.DisplayName: Shockwave Boom3
+			SoulShockwave_Proj.DisplayName: Soul Shockwave_ Proj
+			ToxicGas_Proj.DisplayName: Toxic Gas_ Proj
+			XenomiteGas_Proj.DisplayName: Xenomite Gas_ Proj
+			AngelErhan_Proj.DisplayName: Angel Erhan_ Proj
+			BabyRockpile.DisplayName: Baby Rockpile
+			BouquetOfThorns_Proj.DisplayName: Bouquet Of Thorns_ Proj
+			CleaverPet.DisplayName: Cleaver Pet
+			CuddlyTeratoma_Proj.DisplayName: Cuddly Teratoma_ Proj
+			DevilImp_Proj.DisplayName: Devil Imp_ Proj
+			DummyPet_Proj.DisplayName: Dummy Pet_ Proj
+			HalPet.DisplayName: Hal Pet
+			HalPetSPEEN.DisplayName: Hal Pet S P E E N
+			KS3Pet_Proj.DisplayName: K S3 Pet_ Proj
+			MiniGigapora.DisplayName: Mini Gigapora
+			MiniGigapora_Body.DisplayName: Mini Gigapora_ Body
+			MiniGigapora_Core.DisplayName: Mini Gigapora_ Core
+			MiniGigapora_Tail.DisplayName: Mini Gigapora_ Tail
+			NebPet_Proj.DisplayName: Neb Pet_ Proj
+			Occie.DisplayName: Occie
+			PetChicken.DisplayName: Pet Chicken
+			TiedPet.DisplayName: Tied Pet
+			ToasterPet_Proj.DisplayName: Toaster Pet_ Proj
+			Xenoemia_Proj.DisplayName: Xenoemia_ Proj
+			XenomiteElementalPet.DisplayName: Xenomite Elemental Pet
+			BileLauncher_Gloop.DisplayName: Bile Launcher_ Gloop
+			CorruptedDoubleRifle_Beam.DisplayName: Corrupted Double Rifle_ Beam
+			DAN_Bullet.DisplayName: D A N_ Bullet
+			DAN_Laser.DisplayName: D A N_ Laser
+			DAN_Rocket.DisplayName: D A N_ Rocket
+			DarkSteelArrow.DisplayName: Dark Steel Arrow
+			DarkSteelArrow_Tendril.DisplayName: Dark Steel Arrow_ Tendril
+			DrillRevolver_Bullet.DisplayName: Drill Revolver_ Bullet
+			EaglecrestSling_Proj.DisplayName: Eaglecrest Sling_ Proj
+			FanOShivs_Proj.DisplayName: Fan O Shivs_ Proj
+			FanOShivsPoison_Proj.DisplayName: Fan O Shivs Poison_ Proj
+			FlakGrenade.DisplayName: Flak Grenade
+			FlakGrenade_Bouncy.DisplayName: Flak Grenade_ Bouncy
+			FlakGrenade_Frag.DisplayName: Flak Grenade_ Frag
+			FlakGrenade_Sticky.DisplayName: Flak Grenade_ Sticky
+			FrigidBolt.DisplayName: Frigid Bolt
+			GhastlyRecurve_Proj.DisplayName: Ghastly Recurve_ Proj
+			Hardlight_MissileBlast.DisplayName: Hardlight_ Missile Blast
+			Hardlight_SoSCrosshair.DisplayName: Hardlight_ So S Crosshair
+			Hardlight_SoSMissile.DisplayName: Hardlight_ So S Missile
+			LunarShot_Proj.DisplayName: Lunar Shot_ Proj
+			MiniSpaceship_Laser.DisplayName: Mini Spaceship_ Laser
+			MoonflareBatIllusion.DisplayName: Moonflare Bat Illusion
+			PlasmaRound.DisplayName: Plasma Round
+			PlasmaRound_Blast.DisplayName: Plasma Round_ Blast
+			PlutoniumBeam.DisplayName: Plutonium Beam
+			SilverwoodArrow.DisplayName: Silverwood Arrow
+			SpiritArrow_Proj.DisplayName: Spirit Arrow_ Proj
+			SpiritArrow_Shard.DisplayName: Spirit Arrow_ Shard
+			SwarmGrowth_Proj.DisplayName: Swarm Growth_ Proj
+			ThornArrow.DisplayName: Thorn Arrow
+			ThornArrowSeed.DisplayName: Thorn Arrow Seed
+			ThornTrapSmall_Proj.DisplayName: Thorn Trap Small_ Proj
+			UkonArrowStrike.DisplayName: Ukon Arrow Strike
+			UkonvasaraArrow.DisplayName: Ukonvasara Arrow
+			Uranium_Proj.DisplayName: Uranium_ Proj
+			UraniumRaygun_Proj.DisplayName: Uranium Raygun_ Proj
+			XeniumElectrolaser_Beam.DisplayName: Xenium Electrolaser_ Beam
+			XeniumElectrolaser_Beam2.DisplayName: Xenium Electrolaser_ Beam2
+			BolineFlower.DisplayName: Boline Flower
+			CursedThornVileF.DisplayName: Cursed Thorn Vile F
+			HellfireCharge_Proj.DisplayName: Hellfire Charge_ Proj
+			CirclePulse_Visual.DisplayName: Circle Pulse_ Visual
+			Explosion_Visual.DisplayName: Explosion_ Visual
+			Ring_Visual.DisplayName: Ring_ Visual
+			BigMaceTurret_NPC.DisplayName: Big Mace Turret_ N P C
+			SoulCandles_Proj.DisplayName: Soul Candles_ Proj
+			AncientGoldCoinPileBall.DisplayName: Ancient Gold Coin Pile Ball
+			IrradiatedSandBall.DisplayName: Irradiated Sand Ball
+			ShadestoneRubbleBall.DisplayName: Shadestone Rubble Ball
+		}
+
+		Conditions: {
+			DownedThorn: Mods.Redemption.Conditions.DownedThorn
+			DownedErhan: Mods.Redemption.Conditions.DownedErhan
+			DownedADD: Mods.Redemption.Conditions.DownedADD
+			DownedBehemoth: Mods.Redemption.Conditions.DownedBehemoth
+			DownedBlisterface: Mods.Redemption.Conditions.DownedBlisterface
+			DownedEaglecrestGolem: Mods.Redemption.Conditions.DownedEaglecrestGolem
+			DownedFowlEmperor: Mods.Redemption.Conditions.DownedFowlEmperor
+			DownedFowlMorning: Mods.Redemption.Conditions.DownedFowlMorning
+			DownedJanitor: Mods.Redemption.Conditions.DownedJanitor
+			DownedKeeper: Mods.Redemption.Conditions.DownedKeeper
+			DownedMACE: Mods.Redemption.Conditions.DownedMACE
+			DownedNebuleus: Mods.Redemption.Conditions.DownedNebuleus
+			DownedOmega1: Mods.Redemption.Conditions.DownedOmega1
+			DownedOmega2: Mods.Redemption.Conditions.DownedOmega2
+			DownedOmega3: Mods.Redemption.Conditions.DownedOmega3
+			DownedPZ: Mods.Redemption.Conditions.DownedPZ
+			DownedSeed: Mods.Redemption.Conditions.DownedSeed
+			DownedSkullDigger: Mods.Redemption.Conditions.DownedSkullDigger
+			DownedVolt: Mods.Redemption.Conditions.DownedVolt
+			DownedSlayer: Mods.Redemption.Conditions.DownedSlayer
+			BroughtCat: Mods.Redemption.Conditions.BroughtCat
+			IsTBotHead: Mods.Redemption.Conditions.IsTBotHead
+			IsJanitor: Mods.Redemption.Conditions.IsJanitor
+			KeycardGiven: Mods.Redemption.Conditions.KeycardGiven
+			NukeDropped: Mods.Redemption.Conditions.NukeDropped
+			IsFinlandDay: Mods.Redemption.Conditions.IsFinlandDay
+			IsNotFinlandDay: Mods.Redemption.Conditions.IsNotFinlandDay
+			InMoonlight: Mods.Redemption.Conditions.InMoonlight
+			RepairedByFallen: Mods.Redemption.Conditions.RepairedByFallen
+			DownedEarlyGameBossAndMoR: Mods.Redemption.Conditions.DownedEarlyGameBossAndMoR
+			DownedEoCOrBoCOrKeeper: Mods.Redemption.Conditions.DownedEoCOrBoCOrKeeper
+			DownedSkeletronOrSeed: Mods.Redemption.Conditions.DownedSkeletronOrSeed
+			HasSpiritWalker: Mods.Redemption.Conditions.HasSpiritWalker
+			DeadRingerGiven: Mods.Redemption.Conditions.DeadRingerGiven
+		}
+	}
+}

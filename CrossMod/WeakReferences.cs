@@ -75,7 +75,7 @@ namespace Redemption.CrossMod
                         ModContent.ItemType<FowlCrown>(),
                         ModContent.ItemType<ForestBossBox>()
                     },
-                    ModContent.ItemType<EggCrown>(), "Use an [i:" + ModContent.ItemType<EggCrown>() + "] at day.",
+                    ModContent.ItemType<EggCrown>(), "Use an [i:Redemption/EggCrown] at day.",
                     "The emperor tires of your shenanigans...",
                     (SpriteBatch sb, Rectangle rect, Color color) =>
                     {
@@ -103,7 +103,7 @@ namespace Redemption.CrossMod
                         //ModContent.ItemType<ThornMask>(),
                         //ModContent.ItemType<ForestBossBox>()
                     },
-                    ModContent.ItemType<FowlWarHorn>(), "Use a [i:" + ModContent.ItemType<FowlWarHorn>() + "] before midday.",
+                    ModContent.ItemType<FowlWarHorn>(), "Use a [i:Redemption/FowlWarHorn] before midday.",
                     (SpriteBatch sb, Rectangle rect, Color color) =>
                     {
                         Texture2D texture = ModContent.Request<Texture2D>("Redemption/CrossMod/BossChecklist/FowlMorning").Value;
@@ -122,7 +122,7 @@ namespace Redemption.CrossMod
                         ModContent.ItemType<ThornMask>(),
                         ModContent.ItemType<ForestBossBox>()
                     },
-                    ModContent.ItemType<HeartOfThorns>(), "Use a [i:" + ModContent.ItemType<HeartOfThorns>() + "] at day. Can be found on the surface near spawn.",
+                    ModContent.ItemType<HeartOfThorns>(), "Use a [i:Redemption/HeartOfThorns] at day. Can be found on the surface near spawn.",
                     "Thorn returned to his blighted forest...",
                     (SpriteBatch sb, Rectangle rect, Color color) =>
                     {
@@ -133,7 +133,7 @@ namespace Redemption.CrossMod
                 #endregion
 
                 #region Erhan
-                bossChecklist.Call("AddBoss", mod, "Palebat Imp", ModContent.NPCType<Erhan>(), 1.9f, () => RedeBossDowned.downedErhan, () => RedeBossDowned.erhanDeath == 0, null, ModContent.ItemType<DemonScroll>(), "Use a [i:" + ModContent.ItemType<DemonScroll>() + "]. Can be found at the surface portal.", null,
+                bossChecklist.Call("AddBoss", mod, "Palebat Imp", ModContent.NPCType<Erhan>(), 1.9f, () => RedeBossDowned.downedErhan, () => RedeBossDowned.erhanDeath == 0, null, ModContent.ItemType<DemonScroll>(), "Use a [i:Redemption/DemonScroll]. Can be found at the surface portal.", null,
                     (SpriteBatch sb, Rectangle rect, Color color) =>
                     {
                         Texture2D texture = ModContent.Request<Texture2D>("Redemption/CrossMod/BossChecklist/PalebatImp").Value;
@@ -149,7 +149,7 @@ namespace Redemption.CrossMod
                         ModContent.ItemType<ErhanTrophy>(),
                         ModContent.ItemType<ErhanHelmet>(),
                     },
-                    ModContent.ItemType<DemonScroll>(), "Use a [i:" + ModContent.ItemType<DemonScroll>() + "]. Can be found at the surface portal.",
+                    ModContent.ItemType<DemonScroll>(), "Use a [i:Redemption/DemonScroll]. Can be found at the surface portal.",
                     "Erhan bravely flew away...",
                     (SpriteBatch sb, Rectangle rect, Color color) =>
                     {
@@ -170,7 +170,7 @@ namespace Redemption.CrossMod
                         ModContent.ItemType<KeeperBox>(),
                         ModContent.ItemType<KeepersCirclet>()
                     },
-                    ModContent.ItemType<WeddingRing>(), "Use a [i:" + ModContent.ItemType<WeddingRing>() + "] at night.",
+                    ModContent.ItemType<WeddingRing>(), "Use a [i:Redemption/WeddingRing] at night.",
                     null,
                     (SpriteBatch sb, Rectangle rect, Color color) =>
                     {
@@ -207,7 +207,7 @@ namespace Redemption.CrossMod
                         ModContent.ItemType<InfectedMask>(),
                         ModContent.ItemType<SoIBox>()
                     },
-                    ModContent.ItemType<AnomalyDetector>(), "Use an [i:" + ModContent.ItemType<AnomalyDetector>() + "]. Begins the Xenomite Infection.",
+                    ModContent.ItemType<AnomalyDetector>(), "Use an [i:Redemption/AnomalyDetector]. Begins the Xenomite Infection.",
                     null,
                     (SpriteBatch sb, Rectangle rect, Color color) =>
                     {
@@ -277,7 +277,7 @@ namespace Redemption.CrossMod
                         ModContent.ItemType<KSBox>(),
                         ModContent.ItemType<SlayerMedal>()
                     },
-                    ModContent.ItemType<CyberTech>(), "Use a [i:" + ModContent.ItemType<CyberTech>() + "] at day, or attack Androids on the surface and allow them to teleport away.", null,
+                    ModContent.ItemType<CyberTech>(), "Use a [i:Redemption/CyberTech] at day, or attack Androids on the surface and allow them to teleport away.", null,
                     (SpriteBatch sb, Rectangle rect, Color color) =>
                     {
                         Texture2D texture = ModContent.Request<Texture2D>("Redemption/CrossMod/BossChecklist/KingSlayer").Value;
@@ -295,7 +295,7 @@ namespace Redemption.CrossMod
                         ModContent.ItemType<OmegaBox>(),
                         ModContent.ItemType<SwordRemote>()
                     },
-                    ModContent.ItemType<OmegaTransmitter>(), "Use a [i:" + ModContent.ItemType<OmegaTransmitter>() + "] at night after Plantera has been defeated.", null,
+                    ModContent.ItemType<OmegaTransmitter>(), "Use a [i:Redemption/OmegaTransmitter] at night after Plantera has been defeated.", null,
                     (SpriteBatch sb, Rectangle rect, Color color) =>
                     {
                         Texture2D texture = ModContent.Request<Texture2D>("Redemption/CrossMod/BossChecklist/OmegaCleaver").Value;
@@ -313,7 +313,7 @@ namespace Redemption.CrossMod
                         ModContent.ItemType<OmegaTrophy>(),
                         ModContent.ItemType<OmegaBox>()
                     },
-                    ModContent.ItemType<OmegaTransmitter>(), "Use a [i:" + ModContent.ItemType<OmegaTransmitter>() + "] at night after Golem has been defeated.", null,
+                    ModContent.ItemType<OmegaTransmitter>(), "Use a [i:Redemption/OmegaTransmitter] at night after Golem has been defeated.", null,
                     (SpriteBatch sb, Rectangle rect, Color color) =>
                     {
                         Texture2D texture = ModContent.Request<Texture2D>("Redemption/CrossMod/BossChecklist/OmegaGigapora").Value;
@@ -331,7 +331,7 @@ namespace Redemption.CrossMod
                         ModContent.ItemType<OmegaTrophy>(),
                         ModContent.ItemType<OmegaBox2>()
                     },
-                    ModContent.ItemType<OmegaTransmitter>(), "Use a [i:" + ModContent.ItemType<OmegaTransmitter>() + "] at night after Moon Lord has been defeated.", null,
+                    ModContent.ItemType<OmegaTransmitter>(), "Use a [i:Redemption/OmegaTransmitter] at night after Moon Lord has been defeated.", null,
                     (SpriteBatch sb, Rectangle rect, Color color) =>
                     {
                         Texture2D texture = ModContent.Request<Texture2D>("Redemption/CrossMod/BossChecklist/OmegaObliterator").Value;
@@ -356,7 +356,7 @@ namespace Redemption.CrossMod
                         ModContent.ItemType<FloppyDisk7_1>(),
                         ModContent.ItemType<PZMusicBox>()
                     },
-                    ModContent.ItemType<Keycard>(), "Use a [i:" + ModContent.ItemType<Keycard>() + "] to access further sections of the laboratory. Beware what awaits beyond.", null,
+                    ModContent.ItemType<Keycard>(), "Use a [i:Redemption/Keycard] to access further sections of the laboratory. Beware what awaits beyond.", null,
                     (SpriteBatch sb, Rectangle rect, Color color) =>
                     {
                         Texture2D texture = ModContent.Request<Texture2D>("Redemption/CrossMod/BossChecklist/PatientZero").Value;
@@ -378,7 +378,7 @@ namespace Redemption.CrossMod
                         ModContent.ItemType<FloppyDisk7_1>(),
                         ModContent.ItemType<PZMusicBox>()
                     },
-                    ModContent.ItemType<Keycard>(), "Use a [i:" + ModContent.ItemType<Keycard>() + "] to access further sections of the laboratory. Beware what awaits beyond.", null,
+                    ModContent.ItemType<Keycard>(), "Use a [i:Redemption/Keycard] to access further sections of the laboratory. Beware what awaits beyond.", null,
                     (SpriteBatch sb, Rectangle rect, Color color) =>
                     {
                         Texture2D texture = ModContent.Request<Texture2D>("Redemption/CrossMod/BossChecklist/PatientZero").Value;
@@ -388,7 +388,7 @@ namespace Redemption.CrossMod
                 #endregion
 
                 #region Ancient Deity Duo
-                bossChecklist.Call("AddBoss", mod, "Eaglecrest Golem Rematch", ModContent.NPCType<EaglecrestGolem2>(), 20f, () => RedeBossDowned.downedADD, () => RedeBossDowned.downedEaglecrestGolem && RedeBossDowned.ADDDeath == 0, null, ModContent.ItemType<GolemEye>(), "Place down and encase the [i:" + ModContent.ItemType<GolemEye>() + "] within the stones of its origins, and it's true power will present itself.", null,
+                bossChecklist.Call("AddBoss", mod, "Eaglecrest Golem Rematch", ModContent.NPCType<EaglecrestGolem2>(), 20f, () => RedeBossDowned.downedADD, () => RedeBossDowned.downedEaglecrestGolem && RedeBossDowned.ADDDeath == 0, null, ModContent.ItemType<GolemEye>(), "Place down and encase the [i:Redemption/GolemEye] within the stones of its origins, and it's true power will present itself.", null,
                 (SpriteBatch sb, Rectangle rect, Color color) =>
                 {
                     Texture2D texture = ModContent.Request<Texture2D>("Redemption/CrossMod/BossChecklist/EaglecrestGolem").Value;
@@ -412,7 +412,7 @@ namespace Redemption.CrossMod
                         ModContent.ItemType<UkkoMask>(),
                         ModContent.ItemType<AkkaMask>(),
                     },
-                    ModContent.ItemType<AncientSigil>(), "Use an [i:" + ModContent.ItemType<AncientSigil>() + "] at day.", null,
+                    ModContent.ItemType<AncientSigil>(), "Use an [i:Redemption/AncientSigil] at day.", null,
                     (SpriteBatch sb, Rectangle rect, Color color) =>
                     {
                         Texture2D texture = ModContent.Request<Texture2D>("Redemption/CrossMod/BossChecklist/UkkoAkka").Value;
@@ -430,7 +430,7 @@ namespace Redemption.CrossMod
                         ModContent.ItemType<NebuleusMask>(),
                         ModContent.ItemType<NebBox>()
                     },
-                    ModContent.ItemType<NebSummon>(), "Use a [i:" + ModContent.ItemType<NebSummon>() + "] at night, dropped from Star Serpents in the sky.", null,
+                    ModContent.ItemType<NebSummon>(), "Use a [i:Redemption/NebSummon] at night, dropped from Star Serpents in the sky.", null,
                     (SpriteBatch sb, Rectangle rect, Color color) =>
                     {
                         int shader = GameShaders.Armor.GetShaderIdFromItemId(ItemID.LivingRainbowDye);
@@ -476,7 +476,7 @@ namespace Redemption.CrossMod
                 censusMod.Call("TownNPCCondition", ModContent.NPCType<Fallen>(), "Defeat the Keeper and have a suitable house");
                 censusMod.Call("TownNPCCondition", ModContent.NPCType<Newb>(), "Dig up the dirt mound beneath the surface portal");
                 censusMod.Call("TownNPCCondition", ModContent.NPCType<TBot>(), "Defeat the Seed of Infection and have a suitable house");
-                censusMod.Call("TownNPCCondition", ModContent.NPCType<ForestNymph_Friendly>(), "Use the [i:" + ModContent.ItemType<KingsOakStaff>() + "] to gain a Forest Nymph's trust, requires positive alignment.\nRequires +3 alignment if a Treebark Dryad was slain.");
+                censusMod.Call("TownNPCCondition", ModContent.NPCType<ForestNymph_Friendly>(), "Use the [i:Redemption/KingsOakStaff] to gain a Forest Nymph's trust, requires positive alignment.\nRequires +3 alignment if a Treebark Dryad was slain.");
             }
         }
         private static void PerformFargosSupport()

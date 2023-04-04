@@ -12,6 +12,8 @@ using Redemption.BaseExtension;
 using Redemption.Globals;
 using Redemption.NPCs.Bosses.Cleaver;
 using Terraria.GameContent.Biomes;
+using log4net.Filter;
+using System.Net.Http.Headers;
 
 namespace Redemption.Base
 {
@@ -5258,18 +5260,11 @@ namespace Redemption.Base
             }
             if (player.immune)
                 return;
-            float defIgnore = 0.5f;
-            if (Main.expertMode)
-                defIgnore = 0.75f;
-            else if (Main.masterMode)
-                defIgnore = 1;
 
-            if (hitThroughDefense) { dmgAmt += (int)(player.statDefense * defIgnore); }
             int parsedDamage = dmgAmt; if (dmgVariation) { parsedDamage = Main.DamageVar(dmgAmt); }
-            Player.HurtModifiers stat = default;
-            stat.GetDamage(dmgAmt, player.statDefense, player.DefenseEffectiveness.Value);
-            stat.GetKnockback(knockback, player.noKnockback);
-            stat.HitDirectionOverride = hitDirection;
+            Player.HurtModifiers stat = new();
+            if (hitThroughDefense)
+                stat.ScalingArmorPenetration += 1f;
             Player.HurtInfo hurtInfo = stat.ToHurtInfo(parsedDamage, player.statDefense, player.DefenseEffectiveness.Value, knockback, player.noKnockback);
             if (damager == null)
                 player.Hurt(PlayerDeathReason.ByOther(-1), parsedDamage, hitDirection);
@@ -5305,7 +5300,7 @@ namespace Redemption.Base
             else if (damager is NPC npc)
             {
                 PlayerDeathReason death = PlayerDeathReason.ByNPC(npc.whoAmI);
-                if (PlayerLoader.ImmuneTo(player, death, -1, true))
+                if (!PlayerLoader.ImmuneTo(player, death, -1, true))
                 {
                     NPCLoader.ModifyHitPlayer(npc, player, ref stat);
                     NPCLoader.OnHitPlayer(npc, player, hurtInfo);
@@ -5340,12 +5335,10 @@ namespace Redemption.Base
             item ??= new Item(ItemID.WoodenSword);
             if (npc.dontTakeDamage || (npc.immortal && npc.type != NPCID.TargetDummy))
                 return;
-            if (hitThroughDefense) { dmgAmt += (int)(npc.defense * 0.5f); }
-            NPC.HitModifiers stat = default;
-            stat.GetDamage(dmgAmt, crit, dmgVariation);
-            stat.GetKnockback(knockback);
-            stat.HitDirectionOverride = hitDirection;
 
+            NPC.HitModifiers stat = new();
+            if (hitThroughDefense)
+                stat.ScalingArmorPenetration += 1f;
             if (damager == null || damager is NPC)
             {
                 if (damager is NPC)

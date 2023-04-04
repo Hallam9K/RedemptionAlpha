@@ -171,11 +171,8 @@ namespace Redemption.NPCs.Bosses.ADD
             if (NPC.RedemptionGuard().GuardPoints >= 0)
             {
                 modifiers.DisableCrit();
-                modifiers.ModifyHitInfo += (ref NPC.HitInfo n) => NPC.RedemptionGuard().GuardHit(ref n, NPC, SoundID.DD2_WitherBeastCrystalImpact);
-                if (NPC.RedemptionGuard().GuardPoints >= 0)
-                    return;
+                modifiers.ModifyHitInfo += (ref NPC.HitInfo n) => NPC.RedemptionGuard().GuardHit(ref n, NPC, SoundID.DD2_WitherBeastCrystalImpact, .25f, false, DustID.Stone, CustomSounds.EarthBoom, 10, 1, 2000);
             }
-            NPC.RedemptionGuard().GuardBreakCheck(NPC, DustID.Stone, CustomSounds.EarthBoom, 10, 1, 2000);
         }
         public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)
         {

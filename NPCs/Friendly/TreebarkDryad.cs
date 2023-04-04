@@ -20,6 +20,16 @@ using Terraria.Audio;
 using Redemption.Items.Usable;
 using Terraria.GameContent.ItemDropRules;
 using Redemption.UI.ChatUI;
+using Redemption.Items.Materials.HM;
+using Redemption.Items.Placeable.Furniture.Misc;
+using Redemption.Items.Tools.PreHM;
+using Redemption.Items.Usable.Summons;
+using Redemption.Items.Weapons.PostML.Ranged;
+using Redemption.Items.Weapons.PreHM.Magic;
+using Redemption.Items.Weapons.PreHM.Melee;
+using Redemption.Items.Weapons.PreHM.Ranged;
+using Terraria.ModLoader.IO;
+using System.Linq;
 
 namespace Redemption.NPCs.Friendly
 {
@@ -44,7 +54,8 @@ namespace Redemption.NPCs.Friendly
         private int EyeFrameY;
         private int EyeFrameX;
 
-        public static List<Item> shopItems = new();
+        public static TreebarkShop Shop;
+        public List<Item> shopItems = new();
 
         public override void SetStaticDefaults()
         {
@@ -138,8 +149,6 @@ namespace Redemption.NPCs.Friendly
 
             if (TimerRand == 0)
             {
-                shopItems = CreateNewShop();
-
                 int SakuraScore = 0;
                 int WillowScore = 0;
                 for (int x = -40; x <= 40; x++)
@@ -213,92 +222,55 @@ namespace Redemption.NPCs.Friendly
         public override void OnChatButtonClicked(bool firstButton, ref string shopName)
         {
             if (firstButton)
-                shopName = "Shop";
+                shopName = Shop.Name;
         }
-
-        public static List<Item> CreateNewShop()
+        public override void OnSpawn(IEntitySource source)
         {
-            var itemIds = new List<int>
-            {
-                ModContent.ItemType<LivingTwig>(),
-                ItemID.GrassSeeds,
-                ItemID.Acorn,
-                ItemID.Mushroom
-            };
-            if (Main.rand.NextBool(2))
-            {
-                switch (Main.rand.Next(5))
-                {
-                    case 0:
-                        itemIds.Add(ItemID.BlueMoss);
-                        break;
-                    case 1:
-                        itemIds.Add(ItemID.BrownMoss);
-                        break;
-                    case 2:
-                        itemIds.Add(ItemID.GreenMoss);
-                        break;
-                    case 3:
-                        itemIds.Add(ItemID.PurpleMoss);
-                        break;
-                    case 4:
-                        itemIds.Add(ItemID.RedMoss);
-                        break;
-                }
-            }
-            switch (Main.rand.Next(5))
-            {
-                case 0:
-                    itemIds.Add(ItemID.Apple);
-                    break;
-                case 1:
-                    itemIds.Add(ItemID.Apricot);
-                    break;
-                case 2:
-                    itemIds.Add(ItemID.Grapefruit);
-                    break;
-                case 3:
-                    itemIds.Add(ItemID.Lemon);
-                    break;
-                case 4:
-                    itemIds.Add(ItemID.Peach);
-                    break;
-            }
-            itemIds.Add(ItemID.WandofSparking);
-            itemIds.Add(ItemID.BabyBirdStaff);
-            if (Main.rand.NextBool(2))
-                itemIds.Add(ItemID.Aglet);
-            if (Main.rand.NextBool(4))
-                itemIds.Add(ItemID.AnkletoftheWind);
-            if (Main.rand.NextBool(8))
-                itemIds.Add(ItemID.FlowerBoots);
-            if (Main.rand.NextBool(8))
-                itemIds.Add(ItemID.NaturesGift);
-            else if (Main.rand.NextBool(4))
-                itemIds.Add(ItemID.JungleRose);
-            else if (Main.rand.NextBool(10))
-                itemIds.Add(ModContent.ItemType<ForestCore>());
-
-            var items = new List<Item>();
-            foreach (int itemId in itemIds)
-            {
-                Item item = new();
-                item.SetDefaults(itemId);
-                items.Add(item);
-            }
-            return items;
+            shopItems = Shop.GenerateNewInventoryList();
         }
-
-        public override void ModifyActiveShop(string shopName, Item[] items)
+        public override void SaveData(TagCompound tag)
         {
-            foreach (Item item in shopItems)
-            {
-                if (item == null || item.type == ItemID.None)
-                    continue;
+            tag["itemIds"] = shopItems;
+        }
+        public override void LoadData(TagCompound tag)
+        {
+            shopItems = tag.Get<List<Item>>("shopItems");
+        }
+        public override void AddShops()
+        {
+            Shop = new TreebarkShop(NPC.type);
 
-                int nextSlot = 0;
-                items[nextSlot++].SetDefaults(item.type);
-            }
+            Shop.Add<LivingTwig>();
+            Shop.Add(ItemID.GrassSeeds);
+            Shop.Add(ItemID.Acorn);
+            Shop.Add(ItemID.Mushroom);
+
+            Shop.AddPool("Moss", 1)
+                .Add(new Item(ItemID.BlueMoss) { shopCustomPrice = 20 })
+                .Add(new Item(ItemID.BrownMoss) { shopCustomPrice = 20 })
+                .Add(new Item(ItemID.GreenMoss) { shopCustomPrice = 20 })
+                .Add(new Item(ItemID.PurpleMoss) { shopCustomPrice = 20 })
+                .Add(new Item(ItemID.RedMoss) { shopCustomPrice = 20 });
+
+            Shop.AddPool("Fruit", 1)
+                .Add(ItemID.Apple)
+                .Add(ItemID.Apricot)
+                .Add(ItemID.Grapefruit)
+                .Add(ItemID.Lemon)
+                .Add(ItemID.Peach);
+
+            Shop.Add(ItemID.WandofSparking);
+            Shop.Add(ItemID.BabyBirdStaff);
+
+            Shop.AddPool("Special", 1)
+                .Add(ItemID.Aglet)
+                .Add(ItemID.AnkletoftheWind)
+                .Add(ItemID.FlowerBoots)
+                .Add(ItemID.NaturesGift)
+                .Add(ItemID.JungleRose)
+                .Add<ForestCore>();
+
+            Shop.Register();
         }
 
         public override string GetChat()
@@ -493,6 +465,112 @@ namespace Redemption.NPCs.Friendly
 
                 new FlavorTextBestiaryInfoElement("These slow-thinking ents only appear in heavily forested areas. They have only recently arrived on this island, coming from the portal on the surface. Once every century, they find a shallow pond and hibernate in the centre. The water from the pond feeds the ent during the process.")
             });
+        }
+    }
+    public class TreebarkShop : AbstractNPCShop
+    {
+        public new record Entry(Item Item, List<Condition> Conditions) : AbstractNPCShop.Entry
+        {
+            IEnumerable<Condition> AbstractNPCShop.Entry.Conditions => Conditions;
+
+            public bool Disabled { get; private set; }
+
+            public Entry Disable()
+            {
+                Disabled = true;
+                return this;
+            }
+
+            public bool ConditionsMet() => Conditions.All(c => c.IsMet());
+        }
+
+        public record Pool(string Name, int Slots, List<Entry> Entries)
+        {
+            public Pool Add(Item item, params Condition[] conditions)
+            {
+                Entries.Add(new Entry(item, conditions.ToList()));
+                return this;
+            }
+
+            public Pool Add<T>(params Condition[] conditions) where T : ModItem => Add(ModContent.ItemType<T>(), conditions);
+            public Pool Add(int item, params Condition[] conditions) => Add(ContentSamples.ItemsByType[item], conditions);
+
+            // Picks a number of items (up to Slots) from the entries list, provided conditions are met.
+            public IEnumerable<Item> PickItems()
+            {
+                // This is not a fast way to pick items without replacement, but it's certainly easy. Be careful not to do this many many times per frame, or on huge lists of items.
+                var list = Entries.Where(e => !e.Disabled && e.ConditionsMet()).ToList();
+                for (int i = 0; i < Slots; i++)
+                {
+                    if (list.Count == 0)
+                        break;
+
+                    int k = Main.rand.Next(list.Count);
+                    yield return list[k].Item;
+
+                    // remove the entry from the list so it can't be selected again this pick
+                    list.RemoveAt(k);
+                }
+            }
+        }
+
+        public List<Pool> Pools { get; } = new();
+
+        public TreebarkShop(int npcType) : base(npcType) { }
+
+        public override IEnumerable<Entry> ActiveEntries => Pools.SelectMany(p => p.Entries).Where(e => !e.Disabled);
+
+        public Pool AddPool(string name, int slots)
+        {
+            var pool = new Pool(name, slots, new List<Entry>());
+            Pools.Add(pool);
+            return pool;
+        }
+
+        // Some methods to add a pool with a single item
+        public void Add(Item item, params Condition[] conditions) => AddPool(item.ModItem?.FullName ?? $"Terraria/{item.type}", slots: 1).Add(item, conditions);
+        public void Add<T>(params Condition[] conditions) where T : ModItem => Add(ModContent.ItemType<T>(), conditions);
+        public void Add(int item, params Condition[] conditions) => Add(ContentSamples.ItemsByType[item], conditions);
+
+        // Here is where we actually 'roll' the contents of the shop
+        public List<Item> GenerateNewInventoryList()
+        {
+            var items = new List<Item>();
+            foreach (var pool in Pools)
+            {
+                items.AddRange(pool.PickItems());
+            }
+            return items;
+        }
+
+        public override void FillShop(ICollection<Item> items, NPC npc)
+        {
+            // use the items which were selected when the NPC spawned.
+            foreach (var item in ((TreebarkDryad)npc.ModNPC).shopItems)
+            {
+                // make sure to add a clone of the item, in case any ModifyActiveShop hooks adjust the item when the shop is opened
+                items.Add(item.Clone());
+            }
+        }
+
+        public override void FillShop(Item[] items, NPC npc, out bool overflow)
+        {
+            overflow = false;
+            int i = 0;
+            // use the items which were selected when the NPC spawned.
+            foreach (var item in ((TreebarkDryad)npc.ModNPC).shopItems)
+            {
+
+                if (i == items.Length - 1)
+                {
+                    // leave the last slot empty for selling
+                    overflow = true;
+                    return;
+                }
+
+                // make sure to add a clone of the item, in case any ModifyActiveShop hooks adjust the item when the shop is opened
+                items[i++] = item.Clone();
+            }
         }
     }
 }

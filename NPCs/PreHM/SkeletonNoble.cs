@@ -128,11 +128,8 @@ namespace Redemption.NPCs.PreHM
             if (NPC.RedemptionGuard().GuardPoints >= 0)
             {
                 modifiers.DisableCrit();
-                modifiers.ModifyHitInfo += (ref NPC.HitInfo n) => NPC.RedemptionGuard().GuardHit(ref n, NPC, SoundID.NPCHit4);
-                if (NPC.RedemptionGuard().GuardPoints >= 0)
-                    return;
+                modifiers.ModifyHitInfo += (ref NPC.HitInfo n) => NPC.RedemptionGuard().GuardHit(ref n, NPC, SoundID.NPCHit4, .25f, false, DustID.Web, default, damage: NPC.lifeMax / 4);
             }
-            NPC.RedemptionGuard().GuardBreakCheck(NPC, DustID.Web, CustomSounds.GuardBreak, damage: NPC.lifeMax / 4);
         }
 
         private int runCooldown;

@@ -5,6 +5,7 @@ using Redemption.Globals;
 using Redemption.Particles;
 using Terraria;
 using Terraria.Audio;
+using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Redemption.Projectiles.Ranged
@@ -15,6 +16,7 @@ namespace Redemption.Projectiles.Ranged
         public override void SetStaticDefaults()
         {
             // DisplayName.SetDefault("Xenium Laser");
+            ProjectileID.Sets.DontCancelChannelOnKill[Type] = true;
             ElementID.ProjThunder[Type] = true;
         }
         public override void SetDefaults()

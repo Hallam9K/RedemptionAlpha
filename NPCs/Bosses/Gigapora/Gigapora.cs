@@ -1045,14 +1045,15 @@ namespace Redemption.NPCs.Bosses.Gigapora
         {
             if (NPC.immortal && AIState is not ActionState.Death && NPC.ai[3] == 0)
             {
-                if (!Main.dedServ)
-                    SoundEngine.PlaySound(CustomSounds.BallFire with { Volume = .5f }, NPC.position);
+                NPC.HitSound = CustomSounds.BallFire with { Volume = .5f };
                 modifiers.SetMaxDamage(1);
                 modifiers.DisableCrit();
                 modifiers.HideCombatText();
                 CombatText.NewText(NPC.getRect(), Color.Orange, 0, true, true);
                 return;
             }
+            else
+                NPC.HitSound = SoundID.NPCHit4;
             modifiers.FinalDamage *= 1.8f;
         }
         private void DespawnHandler()

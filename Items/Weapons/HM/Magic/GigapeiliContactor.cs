@@ -33,7 +33,6 @@ namespace Redemption.Items.Weapons.HM.Magic
             Item.mana = 10;
             Item.useStyle = ItemUseStyleID.Shoot;
             Item.knockBack = 3;
-            Item.channel = true;
             Item.rare = ItemRarityID.Yellow;
             Item.autoReuse = true;
             Item.noMelee = true;

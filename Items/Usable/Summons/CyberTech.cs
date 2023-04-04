@@ -1,7 +1,7 @@
 using Redemption.Items.Materials.HM;
 using Redemption.NPCs.Bosses.KSIII;
-using Redemption.WorldGeneration.Soulless;
-using SubworldLibrary;
+//using Redemption.WorldGeneration.Soulless;
+//using SubworldLibrary;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
@@ -37,7 +37,8 @@ namespace Redemption.Items.Usable.Summons
 
         public override bool CanUseItem(Player player)
         {
-            return !SubworldSystem.IsActive<SoullessSub>() && Main.dayTime && !NPC.AnyNPCs(ModContent.NPCType<KS3>()) && !NPC.AnyNPCs(ModContent.NPCType<KS3_Clone>()) && !NPC.AnyNPCs(ModContent.NPCType<KS3_ScannerDrone>()) && !NPC.AnyNPCs(ModContent.NPCType<KS3_Start>());
+            return //!SubworldSystem.IsActive<SoullessSub>() &&
+                Main.dayTime && !NPC.AnyNPCs(ModContent.NPCType<KS3>()) && !NPC.AnyNPCs(ModContent.NPCType<KS3_Clone>()) && !NPC.AnyNPCs(ModContent.NPCType<KS3_ScannerDrone>()) && !NPC.AnyNPCs(ModContent.NPCType<KS3_Start>());
         }
 
         public override bool? UseItem(Player player)

@@ -28,11 +28,12 @@ namespace Redemption.NPCs.Bosses.ADD
                 return false;
 
             bossHeadIndex = npc.GetBossHeadTextureIndex();
-
-            life = Utils.Clamp(npc.life / (float)npc.lifeMax, 0f, 1f);
+            lifeMax = npc.lifeMax;
+            life = Utils.Clamp(npc.life, 0, lifeMax);
             if (npc.ModNPC is Akka akka)
             {
-                shield = Utils.Clamp((float)npc.RedemptionGuard().GuardPoints / akka.GuardPointMax, 0f, 1f);
+                shieldMax = akka.GuardPointMax;
+                shield = Utils.Clamp(npc.RedemptionGuard().GuardPoints, 0, shieldMax);
             }
             return true;
         }
@@ -56,11 +57,12 @@ namespace Redemption.NPCs.Bosses.ADD
                 return false;
 
             bossHeadIndex = npc.GetBossHeadTextureIndex();
-
-            life = Utils.Clamp(npc.life / (float)npc.lifeMax, 0f, 1f);
+            lifeMax = npc.lifeMax;
+            life = Utils.Clamp(npc.life, 0, lifeMax);
             if (npc.ModNPC is Ukko ukko)
             {
-                shield = Utils.Clamp((float)npc.RedemptionGuard().GuardPoints / ukko.GuardPointMax, 0f, 1f);
+                shieldMax = ukko.GuardPointMax;
+                shield = Utils.Clamp(npc.RedemptionGuard().GuardPoints, 0, shieldMax);
             }
             return true;
         }

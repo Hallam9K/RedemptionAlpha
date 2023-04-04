@@ -20,13 +20,12 @@ namespace Redemption.Items.Weapons.PostML.Ranged
         {
             // DisplayName.SetDefault("Swarmer Cannon");
         }
-        public override void SetDefaults()
+        public override void SetSafeDefaults()
         {
             Projectile.width = 64;
             Projectile.height = 36;
             Projectile.friendly = false;
             Projectile.hostile = false;
-            Projectile.tileCollide = false;
             Projectile.penetrate = -1;
             Projectile.DamageType = DamageClass.Ranged;
             Projectile.ignoreWater = true;

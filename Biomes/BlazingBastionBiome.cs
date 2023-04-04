@@ -1,5 +1,5 @@
 using Microsoft.Xna.Framework;
-using SubworldLibrary;
+//using SubworldLibrary;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -18,8 +18,8 @@ namespace Redemption.Biomes
         }
         public override bool IsBiomeActive(Player player)
         {
-            if (SubworldSystem.Current != null)
-                return false;
+            // if (SubworldSystem.Current != null)
+            //    return false;
             return player.ZoneUnderworldHeight && player.Center.X > (Main.maxTilesX - 350) * 16;
         }
     }

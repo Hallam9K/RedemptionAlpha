@@ -109,7 +109,13 @@ namespace Redemption.Projectiles.Ranged
             get { return Projectile.ai[1]; }
             set { Projectile.ai[1] = value; }
         }
-
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
+        {
+            if (Projectile.localAI[0] < 400)
+            {
+                Projectile.damage = 0;
+            }
+        }
         public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
         {
             IsStickingToTarget = true;
@@ -117,12 +123,6 @@ namespace Redemption.Projectiles.Ranged
             Projectile.velocity = (target.Center - Projectile.Center) * 0.75f;
             Projectile.netUpdate = true;
             target.AddBuff(ModContent.BuffType<PureChillDebuff>(), 200);
-
-            if (Projectile.localAI[0] < 400)
-            {
-                origDamage = Projectile.damage;
-                Projectile.damage = 0;
-            }
 
             int maxStickingJavelins = 5;
             Point[] stickingJavelins = new Point[maxStickingJavelins];

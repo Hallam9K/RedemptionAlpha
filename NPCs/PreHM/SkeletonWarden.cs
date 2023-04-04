@@ -128,18 +128,13 @@ namespace Redemption.NPCs.PreHM
         {
             if (blocked && NPC.RedemptionGuard().GuardPoints >= 0)
             {
+                NPC.HitSound = SoundID.DD2_SkeletonHurt with { Volume = 0 };
                 modifiers.DisableCrit();
-                modifiers.ModifyHitInfo += (ref NPC.HitInfo n) => NPC.RedemptionGuard().GuardHit(ref n, NPC, SoundID.Dig, 0.1f, true);
+                modifiers.ModifyHitInfo += (ref NPC.HitInfo n) => NPC.RedemptionGuard().GuardHit(ref n, NPC, SoundID.Dig, 0.1f, true, DustID.WoodFurniture, default, 10, 1, 40);
                 blocked = false;
-                if (NPC.RedemptionGuard().GuardPoints >= 0)
-                    return;
             }
-            if (NPC.RedemptionGuard().GuardPoints <= 0 && !NPC.RedemptionGuard().GuardBroken)
-            {
-                if (Main.netMode != NetmodeID.Server)
-                    Gore.NewGore(NPC.GetSource_FromThis(), NPC.position, NPC.velocity, ModContent.Find<ModGore>("Redemption/SkeletonWardenGore2").Type, 1);
-            }
-            NPC.RedemptionGuard().GuardBreakCheck(NPC, DustID.WoodFurniture, CustomSounds.GuardBreak, 10, 1, 40);
+            else
+                NPC.HitSound = SoundID.DD2_SkeletonHurt;
             blocked = false;
         }
         public override void ModifyHitByItem(Player player, Item item, ref NPC.HitModifiers modifiers)
@@ -161,7 +156,15 @@ namespace Redemption.NPCs.PreHM
 
             if (player.Redemption().meleeHitbox.Intersects(ShieldHitbox))
             {
-                blocked = true;
+                if (NPC.RedemptionGuard().GuardPoints >= 0)
+                {
+                    NPC.HitSound = SoundID.DD2_SkeletonHurt with { Volume = 0 };
+                    modifiers.DisableCrit();
+                    modifiers.ModifyHitInfo += (ref NPC.HitInfo n) => NPC.RedemptionGuard().GuardHit(ref n, NPC, SoundID.Dig, 0.1f, true, DustID.WoodFurniture, default, 10, 1, 40);
+                    blocked = false;
+                }
+                else
+                    NPC.HitSound = SoundID.DD2_SkeletonHurt;
             }
         }
         private readonly List<int> projBlocked = new();
@@ -187,7 +190,15 @@ namespace Redemption.NPCs.PreHM
                 projBlocked.Remove(projectile.whoAmI);
                 if (!projectile.ProjBlockBlacklist() && projectile.penetrate > 1)
                     projectile.timeLeft = Math.Min(projectile.timeLeft, 2);
-                blocked = true;
+                if (NPC.RedemptionGuard().GuardPoints >= 0)
+                {
+                    NPC.HitSound = SoundID.DD2_SkeletonHurt with { Volume = 0 };
+                    modifiers.DisableCrit();
+                    modifiers.ModifyHitInfo += (ref NPC.HitInfo n) => NPC.RedemptionGuard().GuardHit(ref n, NPC, SoundID.Dig, 0.1f, true, DustID.WoodFurniture, default, 10, 1, 40);
+                    blocked = false;
+                }
+                else
+                    NPC.HitSound = SoundID.DD2_SkeletonHurt;
             }
         }
         public Vector2 SetEyeOffset(ref int frameHeight)

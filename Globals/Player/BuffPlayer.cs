@@ -723,6 +723,7 @@ namespace Redemption.Globals.Player
 
             if (shieldGenerator && shieldGeneratorCD <= 0)
             {
+                modifiers.ScalingArmorPenetration += .75f;
                 modifiers.ModifyHurtInfo += ModifyDamage;
             }
         }
@@ -744,8 +745,8 @@ namespace Redemption.Globals.Player
                 shieldGeneratorAlpha = 0;
                 shieldGenerator = false;
                 shieldGeneratorCD = 3600;
-                info.Damage *= 2;
                 info.Damage -= shieldGeneratorLife;
+                info.Damage *= 2;
                 shieldGeneratorLife = 200;
                 for (int k = 0; k < 30; k++)
                 {
@@ -762,8 +763,9 @@ namespace Redemption.Globals.Player
             info.SoundDisabled = true;
             SoundEngine.PlaySound(SoundID.NPCHit34, Player.position);
             shieldGeneratorLife -= info.Damage;
-            Player.noKnockback = true;
-            info.Damage = 0;
+            info.Knockback = 0;
+            info.Damage = 1;
+            Player.statLife++;
         }
         public override void PostHurt(Terraria.Player.HurtInfo info)
         {

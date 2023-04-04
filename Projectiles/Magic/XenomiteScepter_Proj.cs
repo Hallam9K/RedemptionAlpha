@@ -18,6 +18,7 @@ namespace Redemption.Projectiles.Magic
         public override void SetStaticDefaults()
         {
             // DisplayName.SetDefault("Helix Bolt");
+            ProjectileID.Sets.DontCancelChannelOnKill[Type] = true;
             ElementID.ProjArcane[Type] = true;
             ElementID.ProjPoison[Type] = true;
         }

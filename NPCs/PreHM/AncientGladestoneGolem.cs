@@ -71,7 +71,7 @@ namespace Redemption.NPCs.PreHM
             NPC.height = 80;
             NPC.damage = 35;
             NPC.friendly = false;
-            NPC.defense = 20;
+            NPC.defense = 10;
             NPC.lifeMax = 125;
             NPC.HitSound = SoundID.DD2_WitherBeastCrystalImpact;
             NPC.DeathSound = SoundID.NPCDeath3;
@@ -110,13 +110,10 @@ namespace Redemption.NPCs.PreHM
             if (NPC.RedemptionGuard().GuardPoints >= 0)
             {
                 modifiers.DisableCrit();
-                modifiers.ModifyHitInfo += (ref NPC.HitInfo n) => NPC.RedemptionGuard().GuardHit(ref n, NPC, SoundID.DD2_WitherBeastCrystalImpact, .1f);
-                if (NPC.RedemptionGuard().GuardPoints >= 0)
-                    return;
+                modifiers.ModifyHitInfo += (ref NPC.HitInfo n) => NPC.RedemptionGuard().GuardHit(ref n, NPC, SoundID.DD2_WitherBeastCrystalImpact, .1f, false, DustID.Stone, default, 20, 2, 10);
             }
-            NPC.RedemptionGuard().GuardBreakCheck(NPC, DustID.Stone, CustomSounds.GuardBreak, 20, 2, 10);
-
-            modifiers.FinalDamage *= 2;
+            else
+                modifiers.FinalDamage *= 2;
         }
         public override void SendExtraAI(BinaryWriter writer)
         {

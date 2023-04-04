@@ -113,15 +113,13 @@ namespace Redemption.NPCs.Lab.Janitor
             if (AIState is not ActionState.Slip && NPC.RedemptionGuard().GuardPoints >= 0)
             {
                 modifiers.DisableCrit();
-                modifiers.ModifyHitInfo += (ref NPC.HitInfo n) => NPC.RedemptionGuard().GuardHit(ref n, NPC, SoundID.NPCHit4);
-                if (NPC.RedemptionGuard().GuardPoints >= 0)
-                    return;
+                modifiers.ModifyHitInfo += (ref NPC.HitInfo n) => NPC.RedemptionGuard().GuardHit(ref n, NPC, SoundID.NPCHit4, .25f, false, DustID.Electric, default, 10, 1, 1000);
             }
-            NPC.RedemptionGuard().GuardBreakCheck(NPC, DustID.Electric, CustomSounds.GuardBreak, 10, 1, 1000);
+            else
+                modifiers.FinalDamage *= 2;
 
             if (AIState is ActionState.Slip)
                 modifiers.FinalDamage /= 2;
-            modifiers.FinalDamage *= 2;
         }
         public override void HitEffect(NPC.HitInfo hit)
         {

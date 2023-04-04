@@ -29,7 +29,6 @@ namespace Redemption.Items.Weapons.HM.Magic
             Item.noMelee = true;
             Item.autoReuse = true;
             Item.knockBack = 6;
-            Item.channel = true;
             Item.value = Item.sellPrice(0, 10, 0, 0);
             Item.rare = ItemRarityID.LightRed;
             Item.shootSpeed = 10;

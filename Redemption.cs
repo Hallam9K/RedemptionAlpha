@@ -38,7 +38,7 @@ using Terraria.UI;
 using Terraria.UI.Chat;
 using static Redemption.Globals.RedeNet;
 using Redemption.WorldGeneration.Misc;
-using SubworldLibrary;
+////using SubworldLibrary;
 
 namespace Redemption
 {
@@ -481,7 +481,8 @@ namespace Redemption
                 backgroundColor.G = (byte)sunG;
                 backgroundColor.B = (byte)sunB;
             }
-            if (SubworldSystem.IsActive<CSub>())
+            // TODO: readd once sublib is ported
+            /*if (SubworldSystem.IsActive<CSub>())
             {
                 backgroundColor.R = 15;
                 backgroundColor.G = 15;
@@ -489,7 +490,7 @@ namespace Redemption
                 tileColor.R = 15;
                 tileColor.G = 15;
                 tileColor.B = 15;
-            }
+            }*/
         }
         public override void ModifyTransformMatrix(ref SpriteViewMatrix Transform)
         {

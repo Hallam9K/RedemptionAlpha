@@ -1,9 +1,9 @@
-using System.Collections.Generic;
+/*using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ModLoader;
-using SubworldLibrary;
+//using SubworldLibrary;
 using Redemption.Tiles.Tiles;
 using Redemption.Tiles.Ores;
 using Redemption.Walls;
@@ -58,7 +58,7 @@ namespace Redemption.WorldGeneration.Soulless
             animationTimer += gameTime.ElapsedGameTime.TotalSeconds;
             if (animationTimer > 5)
                 animationTimer = 5;
-        }*/
+        }
         public override void Unload()
         {
         }
@@ -122,4 +122,4 @@ namespace Redemption.WorldGeneration.Soulless
         {
         }
     }
-}
+}*/

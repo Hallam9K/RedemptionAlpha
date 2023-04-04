@@ -64,13 +64,19 @@ namespace Redemption.WorldGeneration
         public static Point16 SpiritOldLadyPoint;
         public static Point16 SpiritDruidPoint;
 
-        public override void ClearWorld()
+        public override void OnWorldLoad()
         {
             if (NPC.downedBoss3)
                 dragonLeadSpawn = true;
             else
                 dragonLeadSpawn = false;
-
+        }
+        public override void OnWorldUnload()
+        {
+            dragonLeadSpawn = false;
+        }
+        public override void ClearWorld()
+        {
             newbCavePoint = Point16.Zero;
             gathicPortalPoint = Point16.Zero;
             slayerShipPoint = Point16.Zero;

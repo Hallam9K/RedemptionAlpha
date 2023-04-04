@@ -18,13 +18,12 @@ namespace Redemption.Items.Weapons.HM.Ranged
             // DisplayName.SetDefault("Steam-Cog Minigun");
             Main.projFrames[Projectile.type] = 4;
         }
-        public override void SetDefaults()
+        public override void SetSafeDefaults()
         {
             Projectile.width = 78;
             Projectile.height = 28;
             Projectile.friendly = false;
             Projectile.hostile = false;
-            Projectile.tileCollide = false;
             Projectile.penetrate = -1;
             Projectile.DamageType = DamageClass.Ranged;
             Projectile.ignoreWater = true;

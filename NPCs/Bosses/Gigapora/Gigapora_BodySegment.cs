@@ -493,8 +493,7 @@ namespace Redemption.NPCs.Bosses.Gigapora
         {
             if (NPC.immortal)
             {
-                if (!Main.dedServ)
-                    SoundEngine.PlaySound(CustomSounds.BallFire with { Volume = .5f }, NPC.position);
+                NPC.HitSound = CustomSounds.BallFire with { Volume = .5f };
                 modifiers.SetMaxDamage(1);
                 modifiers.DisableCrit();
                 modifiers.HideCombatText();
@@ -502,6 +501,9 @@ namespace Redemption.NPCs.Bosses.Gigapora
                 NPC.life++;
                 return;
             }
+            else
+                NPC.HitSound = SoundID.NPCHit4;
+
             int ai3 = (int)Host;
             if (ai3 > -1 && ai3 < Main.maxNPCs && Main.npc[ai3].active && Main.npc[ai3].type == ModContent.NPCType<Gigapora>())
             {

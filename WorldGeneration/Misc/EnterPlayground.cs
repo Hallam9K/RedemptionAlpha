@@ -1,4 +1,4 @@
-using SubworldLibrary;
+//using SubworldLibrary;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -28,10 +28,10 @@ namespace Redemption.WorldGeneration.Misc
         }
         public override bool? UseItem(Player player)
         {
-            if (!SubworldSystem.AnyActive<Redemption>())
+            /*if (!SubworldSystem.AnyActive<Redemption>())
                 SubworldSystem.Enter<PlaygroundSub>();
             if (SubworldSystem.IsActive<PlaygroundSub>())
-                SubworldSystem.Exit();
+                SubworldSystem.Exit();*/
             return true;
         }
     }

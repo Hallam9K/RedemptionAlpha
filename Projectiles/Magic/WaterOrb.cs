@@ -15,6 +15,7 @@ namespace Redemption.Projectiles.Magic
         public override void SetStaticDefaults()
         {
             ElementID.ProjWater[Type] = true;
+            ProjectileID.Sets.DontCancelChannelOnKill[Type] = true;
         }
         public override void SetDefaults()
         {

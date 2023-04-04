@@ -368,19 +368,19 @@ namespace Redemption.Globals.NPC
             if (roosterBoost && Main.expertMode)
                 modifiers.Knockback *= .8f;
             if (stomachAcid)
-                modifiers.Defense.Flat += 8;
+                modifiers.Defense.Flat -= 8;
             if (bileDebuff)
-                modifiers.Defense.Flat += 15;
+                modifiers.Defense.Flat -= 15;
             if (infected)
-                modifiers.Defense.Flat += 20;
+                modifiers.Defense.Flat -= 20;
             if (badtime)
-                modifiers.Defense.Flat += 99;
+                modifiers.Defense.Flat -= 99;
             if (infected)
                 modifiers.FinalDamage *= 1.2f;
             if (infested)
             {
-                if (npc.defense > 0)
-                    npc.defense -= infestedTime / 120;
+                if (modifiers.Defense.Flat > 0)
+                    modifiers.Defense.Flat -= infestedTime / 120;
             }
             if (rallied)
                 modifiers.FinalDamage *= 0.85f;

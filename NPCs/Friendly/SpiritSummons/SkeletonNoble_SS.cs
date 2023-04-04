@@ -91,11 +91,8 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
             if (NPC.RedemptionGuard().GuardPoints >= 0)
             {
                 modifiers.DisableCrit();
-                modifiers.ModifyHitInfo += (ref NPC.HitInfo n) => NPC.RedemptionGuard().GuardHit(ref n, NPC, SoundID.NPCHit4);
-                if (NPC.RedemptionGuard().GuardPoints >= 0)
-                    return;
+                modifiers.ModifyHitInfo += (ref NPC.HitInfo n) => NPC.RedemptionGuard().GuardHit(ref n, NPC, SoundID.NPCHit4, .25f, false, DustID.DungeonSpirit, damage: NPC.lifeMax / 4);
             }
-            NPC.RedemptionGuard().GuardBreakCheck(NPC, DustID.DungeonSpirit, CustomSounds.GuardBreak, damage: NPC.lifeMax / 4);
         }
 
         public override bool CheckActive() => false;

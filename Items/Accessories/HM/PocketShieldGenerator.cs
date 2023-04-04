@@ -53,7 +53,7 @@ namespace Redemption.Items.Accessories.HM
                     bP.shieldGeneratorAlpha += 0.04f;
                 bP.shieldGenerator = true;
 
-                if (eP.statEnergy >= (int)(eP.energyMax * 0.01f) && bP.shieldGeneratorLife < 200)
+                if (eP.energyMax > 0 && eP.statEnergy >= (int)(eP.energyMax * 0.01f) && bP.shieldGeneratorLife < 200)
                 {
                     eP.stopEnergyRegen = true;
                     if (timer % 60 == 0)

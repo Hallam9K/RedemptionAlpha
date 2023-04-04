@@ -92,23 +92,13 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
         {
             if (blocked && NPC.RedemptionGuard().GuardPoints >= 0)
             {
+                NPC.HitSound = SoundID.DD2_SkeletonHurt with { Volume = 0 };
                 modifiers.DisableCrit();
-                modifiers.ModifyHitInfo += (ref NPC.HitInfo n) => NPC.RedemptionGuard().GuardHit(ref n, NPC, SoundID.Dig, 0.1f, true);
+                modifiers.ModifyHitInfo += (ref NPC.HitInfo n) => NPC.RedemptionGuard().GuardHit(ref n, NPC, SoundID.Dig, 0.1f, true, DustID.DungeonSpirit, default, 10, 1, 40);
                 blocked = false;
-                if (NPC.RedemptionGuard().GuardPoints >= 0)
-                    return;
             }
-            if (NPC.RedemptionGuard().GuardPoints <= 0 && !NPC.RedemptionGuard().GuardBroken)
-            {
-                for (int i = 0; i < 4; i++)
-                {
-                    int dust = Dust.NewDust(NPC.position + NPC.velocity, NPC.width, NPC.height, DustID.DungeonSpirit,
-                        NPC.velocity.X * 0.5f, NPC.velocity.Y * 0.5f, Scale: 2);
-                    Main.dust[dust].velocity *= 5f;
-                    Main.dust[dust].noGravity = true;
-                }
-            }
-            NPC.RedemptionGuard().GuardBreakCheck(NPC, DustID.DungeonSpirit, CustomSounds.GuardBreak, 10, 1, 40);
+            else
+                NPC.HitSound = SoundID.DD2_SkeletonHurt;
             blocked = false;
         }
         private readonly List<int> projBlocked = new();
@@ -134,7 +124,15 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
                 projBlocked.Remove(projectile.whoAmI);
                 if (!projectile.ProjBlockBlacklist() && projectile.penetrate > 1)
                     projectile.timeLeft = Math.Min(projectile.timeLeft, 2);
-                blocked = true;
+                if (NPC.RedemptionGuard().GuardPoints >= 0)
+                {
+                    NPC.HitSound = SoundID.DD2_SkeletonHurt with { Volume = 0 };
+                    modifiers.DisableCrit();
+                    modifiers.ModifyHitInfo += (ref NPC.HitInfo n) => NPC.RedemptionGuard().GuardHit(ref n, NPC, SoundID.Dig, 0.1f, true, DustID.DungeonSpirit, default, 10, 1, 40);
+                    blocked = false;
+                }
+                else
+                    NPC.HitSound = SoundID.DD2_SkeletonHurt;
             }
         }
         public Vector2 SetEyeOffset(ref int frameHeight)

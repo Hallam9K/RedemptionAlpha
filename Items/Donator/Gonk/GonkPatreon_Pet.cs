@@ -17,8 +17,8 @@ namespace Redemption.Items.Donator.Gonk
             Main.projFrames[Projectile.type] = 12;
             Main.projPet[Projectile.type] = true;
             ProjectileID.Sets.CharacterPreviewAnimations[Projectile.type] = ProjectileID.Sets.SimpleLoop(1, 8, 5)
-                .WhenNotSelected(0, 0)
-                .WithOffset(-10, 0);
+                .WhenSelected(1, 8, 5)
+                .WithOffset(2, 0).WithSpriteDirection(-1);
         }
 
         public override void SetDefaults()
@@ -94,7 +94,7 @@ namespace Redemption.Items.Donator.Gonk
             Main.EntitySpriteDraw(texture, center - Main.screenPosition, new Rectangle?(rect), Projectile.GetAlpha(lightColor), Projectile.rotation, drawOrigin, Projectile.scale, effects, 0);
 
             Point water = Projectile.Center.ToTileCoordinates();
-            if (Main.tile[water.X, water.Y].LiquidType == LiquidID.Water && Main.tile[water.X, water.Y].LiquidAmount > 0)
+            if (Framing.GetTileSafely(water.X, water.Y).LiquidType == LiquidID.Water && Framing.GetTileSafely(water.X, water.Y).LiquidAmount > 0)
                 Main.EntitySpriteDraw(gravityOverlay, center - Main.screenPosition, new Rectangle?(rect), Projectile.GetAlpha(lightColor), Projectile.rotation, drawOrigin, Projectile.scale, effects, 0);
 
             if (Main.player[Projectile.owner].InModBiome<SoullessBiome>())

@@ -28,7 +28,6 @@ namespace Redemption.NPCs.Bosses.PatientZero
                 return false;
 
             bossHeadIndex = npc.GetBossHeadTextureIndex();
-
             if (npc.ModNPC is PZ)
             {
                 int k = NPC.FindFirstNPC(ModContent.NPCType<PZ_Kari>());
@@ -36,12 +35,16 @@ namespace Redemption.NPCs.Bosses.PatientZero
                 {
                     NPC kari = Main.npc[k];
                     if (k > -1 && kari.active && kari.type == ModContent.NPCType<PZ_Kari>())
-                        life = Utils.Clamp(kari.life / (float)kari.lifeMax, 0f, 1f);
+                    {
+                        lifeMax = kari.lifeMax;
+                        life = Utils.Clamp(kari.life, 0, lifeMax);
+                    }
                 }
                 else
                     life = 1f;
             }
-            shield = Utils.Clamp(npc.life / (float)npc.lifeMax, 0f, 1f);
+            shieldMax = npc.lifeMax;
+            shield = Utils.Clamp(npc.life, 0, shieldMax);
             if (npc.life <= npc.lifeMax * 0.1f)
                 shield = 0;
             return true;

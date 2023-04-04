@@ -21,13 +21,12 @@ namespace Redemption.Items.Weapons.PostML.Ranged
         {
             // DisplayName.SetDefault("Xenium Electrolaser");
         }
-        public override void SetDefaults()
+        public override void SetSafeDefaults()
         {
             Projectile.width = 90;
             Projectile.height = 34;
             Projectile.friendly = false;
             Projectile.hostile = false;
-            Projectile.tileCollide = false;
             Projectile.penetrate = -1;
             Projectile.DamageType = DamageClass.Ranged;
             Projectile.ignoreWater = true;

@@ -6,8 +6,8 @@ using Redemption.Globals;
 using Redemption.NPCs.Bosses.Cleaver;
 using Redemption.NPCs.Bosses.Gigapora;
 using Redemption.NPCs.Bosses.Obliterator;
-using Redemption.WorldGeneration.Soulless;
-using SubworldLibrary;
+//using Redemption.WorldGeneration.Soulless;
+//using SubworldLibrary;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.Audio;
@@ -54,7 +54,8 @@ namespace Redemption.Items.Usable.Summons
             else
                 Item.UseSound = SoundID.Item44;
 
-            return player.altFunctionUse == 2 || (!SubworldSystem.IsActive<SoullessSub>() && !Main.dayTime && !NPC.AnyNPCs(ModContent.NPCType<OmegaCleaver>()) && !NPC.AnyNPCs(ModContent.NPCType<Wielder>()) && !NPC.AnyNPCs(ModContent.NPCType<Gigapora>()) && !NPC.AnyNPCs(ModContent.NPCType<Porakone>()) && !NPC.AnyNPCs(ModContent.NPCType<OO>()));
+            return player.altFunctionUse == 2 || (//!SubworldSystem.IsActive<SoullessSub>() && 
+                !Main.dayTime && !NPC.AnyNPCs(ModContent.NPCType<OmegaCleaver>()) && !NPC.AnyNPCs(ModContent.NPCType<Wielder>()) && !NPC.AnyNPCs(ModContent.NPCType<Gigapora>()) && !NPC.AnyNPCs(ModContent.NPCType<Porakone>()) && !NPC.AnyNPCs(ModContent.NPCType<OO>()));
         }
         private int Choice;
         public override bool? UseItem(Player player)
@@ -197,7 +198,7 @@ namespace Redemption.Items.Usable.Summons
                 spriteBatch.End();
                 spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, SamplerState.LinearClamp, DepthStencilState.Default, RasterizerState.CullNone, null, Main.UIScaleMatrix);
 
-                spriteBatch.Draw(glow, position + new Vector2(6, 14), new Rectangle(0, 0, glow.Width, glow.Height), color * 0.7f, 0, origin2, scale * 0.8f, SpriteEffects.None, 0f);
+                spriteBatch.Draw(glow, position, new Rectangle(0, 0, glow.Width, glow.Height), color * 0.7f, 0, origin2, scale * 0.8f, SpriteEffects.None, 0f);
 
                 spriteBatch.End();
                 spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.LinearClamp, DepthStencilState.Default, RasterizerState.CullNone, null, Main.UIScaleMatrix);

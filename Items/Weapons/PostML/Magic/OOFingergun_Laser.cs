@@ -4,6 +4,7 @@ using Terraria.ModLoader;
 using Redemption.NPCs.Bosses.Obliterator;
 using Redemption.Globals;
 using Terraria.Audio;
+using Terraria.ID;
 
 namespace Redemption.Items.Weapons.PostML.Magic
 {
@@ -13,6 +14,7 @@ namespace Redemption.Items.Weapons.PostML.Magic
         public override void SetStaticDefaults()
         {
             // DisplayName.SetDefault("Omega Laser");
+            ProjectileID.Sets.DontCancelChannelOnKill[Type] = true;
             Main.projFrames[Projectile.type] = 8;
         }
         public override void SetDefaults()

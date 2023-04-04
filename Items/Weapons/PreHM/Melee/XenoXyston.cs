@@ -37,7 +37,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
         }
         public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback)
         {
-            knockback = 0;
+            knockback = 1;
         }
         public override void AddRecipes()
         {

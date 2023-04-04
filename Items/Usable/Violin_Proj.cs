@@ -11,7 +11,7 @@ namespace Redemption.Items.Usable
             Main.projFrames[Projectile.type] = 5;
         }
 
-        public override void SetDefaults()
+        public override void SetSafeDefaults()
         {
             Projectile.width = 40;
             Projectile.height = 18;

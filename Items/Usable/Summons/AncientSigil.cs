@@ -4,8 +4,8 @@ using Redemption.Base;
 using Redemption.NPCs.Bosses.ADD;
 using Redemption.NPCs.Minibosses.EaglecrestGolem;
 using Redemption.Rarities;
-using Redemption.WorldGeneration.Soulless;
-using SubworldLibrary;
+//using Redemption.WorldGeneration.Soulless;
+//using SubworldLibrary;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
@@ -44,7 +44,8 @@ namespace Redemption.Items.Usable.Summons
         }
         public override bool CanUseItem(Player player)
         {
-            return !SubworldSystem.IsActive<SoullessSub>() && Main.dayTime && !NPC.AnyNPCs(ModContent.NPCType<EaglecrestGolem2>()) && !NPC.AnyNPCs(ModContent.NPCType<EaglecrestGolem>());
+            return //!SubworldSystem.IsActive<SoullessSub>() &&
+                Main.dayTime && !NPC.AnyNPCs(ModContent.NPCType<EaglecrestGolem2>()) && !NPC.AnyNPCs(ModContent.NPCType<EaglecrestGolem>());
         }
         public override bool? UseItem(Player player)
         {

@@ -11,7 +11,6 @@ namespace Redemption.NPCs.Critters
         {
             // DisplayName.SetDefault("Anti-John Snail");
             Main.npcFrameCount[Type] = 6;
-            NPCID.Sets.ShimmerTransformToNPC[NPC.type] = ModContent.NPCType<JohnSnail>();
             NPCID.Sets.CountsAsCritter[Type] = true;
             NPCID.Sets.DontDoHardmodeScaling[Type] = true;
             NPCID.Sets.TakesDamageFromHostilesWithoutBeingFriendly[Type] = true;

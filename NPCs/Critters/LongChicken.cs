@@ -40,7 +40,6 @@ namespace Redemption.NPCs.Critters
         {
             // DisplayName.SetDefault("L o n g  Chicken");
             Main.npcFrameCount[Type] = 21;
-            NPCID.Sets.ShimmerTransformToNPC[NPC.type] = ModContent.NPCType<Chicken>();
             NPCID.Sets.CountsAsCritter[Type] = true;
             NPCID.Sets.DontDoHardmodeScaling[Type] = true;
             NPCID.Sets.TakesDamageFromHostilesWithoutBeingFriendly[Type] = true;

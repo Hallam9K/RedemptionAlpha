@@ -16,7 +16,7 @@ namespace Redemption.Projectiles.Pets
             Main.projFrames[Projectile.type] = 7;
             Main.projPet[Projectile.type] = true;
             ProjectileID.Sets.CharacterPreviewAnimations[Projectile.type] = ProjectileID.Sets.SimpleLoop(2, Main.projFrames[Projectile.type], 5)
-                .WithOffset(-10, -20f)
+                .WithOffset(2, -20f).WithSpriteDirection(-1)
                 .WithCode(DelegateMethods.CharacterPreview.Float);
         }
 

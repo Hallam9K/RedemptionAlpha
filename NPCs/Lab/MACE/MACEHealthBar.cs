@@ -29,10 +29,12 @@ namespace Redemption.NPCs.Lab.MACE
 
             bossHeadIndex = npc.GetBossHeadTextureIndex();
 
-            life = Utils.Clamp(npc.life / (float)npc.lifeMax, 0f, 1f);
+            lifeMax = npc.lifeMax;
+            life = Utils.Clamp(npc.life, 0, lifeMax);
             if (npc.ModNPC is MACEProject mace)
             {
-                shield = Utils.Clamp((float)npc.RedemptionGuard().GuardPoints / mace.GuardPointMax, 0f, 1f);
+                shieldMax = mace.GuardPointMax;
+                shield = Utils.Clamp(npc.RedemptionGuard().GuardPoints, 0, shieldMax);
             }
             return true;
         }

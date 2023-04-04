@@ -78,7 +78,8 @@ namespace Redemption.Globals
         {
             Recipe.Create(ItemID.WizardHat)
                 .AddCustomShimmerResult(ModContent.ItemType<DruidHat>())
-                .Register();
+                .Register()
+                .DisableRecipe();
 
             Recipe.Create(ItemID.GreenDye)
                 .AddIngredient<TreeBugShell>()

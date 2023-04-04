@@ -64,8 +64,8 @@ namespace Redemption.Items.Materials.PreHM
                 spriteBatch.End();
                 spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, SamplerState.LinearClamp, DepthStencilState.Default, RasterizerState.CullNone, null, Main.UIScaleMatrix);
 
-                spriteBatch.Draw(glow, position + new Vector2(5, 5), new Rectangle(0, 0, glow.Width, glow.Height), color, glowRot, origin2, scale, SpriteEffects.None, 0f);
-                spriteBatch.Draw(glow, position + new Vector2(5, 5), new Rectangle(0, 0, glow.Width, glow.Height), color, -glowRot, origin2, scale, SpriteEffects.None, 0f);
+                spriteBatch.Draw(glow, position, new Rectangle(0, 0, glow.Width, glow.Height), color, glowRot, origin2, scale, SpriteEffects.None, 0f);
+                spriteBatch.Draw(glow, position, new Rectangle(0, 0, glow.Width, glow.Height), color, -glowRot, origin2, scale, SpriteEffects.None, 0f);
 
                 spriteBatch.End();
                 spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.LinearClamp, DepthStencilState.Default, RasterizerState.CullNone, null, Main.UIScaleMatrix);

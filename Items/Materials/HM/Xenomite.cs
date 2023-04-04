@@ -33,7 +33,7 @@ namespace Redemption.Items.Materials.HM
 
             CreateRecipe()
                 .AddCustomShimmerResult(ModContent.ItemType<ToxicBile>())
-                .Register();
+                .Register().DisableRecipe();
         }
         public override void HoldItem(Player player)
         {

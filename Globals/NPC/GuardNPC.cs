@@ -4,6 +4,9 @@ using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Redemption.BaseExtension;
+using log4net.Filter;
+using Redemption.NPCs.PreHM;
+using Redemption.NPCs.Friendly.SpiritSummons;
 
 namespace Redemption.Globals.NPC
 {
@@ -14,8 +17,10 @@ namespace Redemption.Globals.NPC
         public bool IgnoreArmour;
         public bool GuardBroken;
         public bool GuardPierce;
-        public void GuardHit(ref Terraria.NPC.HitInfo info, Terraria.NPC npc, SoundStyle sound, float dmgReduction = .25f, bool noNPCHitSound = false)
+        public void GuardHit(ref Terraria.NPC.HitInfo info, Terraria.NPC npc, SoundStyle sound, float dmgReduction = .25f, bool noNPCHitSound = false, int dustType = 0, SoundStyle breakSound = default, int dustAmount = 10, float dustScale = 1, int damage = 0)
         {
+            if (breakSound == default)
+                breakSound = CustomSounds.GuardBreak;
             if (IgnoreArmour || GuardPoints < 0 || GuardBroken)
             {
                 IgnoreArmour = false;
@@ -32,6 +37,8 @@ namespace Redemption.Globals.NPC
                 info.Damage /= 4;
                 info.Knockback /= 2;
                 GuardPierce = false;
+
+                GuardBreakCheck(npc, dustType, breakSound, dustAmount, dustScale, damage);
                 return;
             }
             npc.HitEffect();
@@ -41,6 +48,8 @@ namespace Redemption.Globals.NPC
             info.Damage = 0;
             info.Knockback = 0;
             npc.life++;
+
+            GuardBreakCheck(npc, dustType, breakSound, dustAmount, dustScale, damage);
         }
         public void GuardBreakCheck(Terraria.NPC npc, int dustType, SoundStyle sound, int dustAmount = 10, float dustScale = 1, int damage = 0)
         {
@@ -58,6 +67,22 @@ namespace Redemption.Globals.NPC
             GuardBroken = true;
             if (damage > 0)
                 BaseAI.DamageNPC(npc, damage, 0, Main.LocalPlayer, true, true);
+
+            if (npc.type == ModContent.NPCType<SkeletonWarden>())
+            {
+                if (Main.netMode != NetmodeID.Server)
+                    Gore.NewGore(npc.GetSource_FromThis(), npc.position, npc.velocity, ModContent.Find<ModGore>("Redemption/SkeletonWardenGore2").Type, 1);
+            }
+            else if (npc.type == ModContent.NPCType<SkeletonWarden_SS>())
+            {
+                for (int i = 0; i < 4; i++)
+                {
+                    int dust = Dust.NewDust(npc.position + npc.velocity, npc.width, npc.height, DustID.DungeonSpirit,
+                        npc.velocity.X * 0.5f, npc.velocity.Y * 0.5f, Scale: 2);
+                    Main.dust[dust].velocity *= 5f;
+                    Main.dust[dust].noGravity = true;
+                }
+            }
         }
         public override void ModifyHitByItem(Terraria.NPC npc, Terraria.Player player, Item item, ref Terraria.NPC.HitModifiers modifiers)
         {
@@ -104,66 +129,48 @@ namespace Redemption.Globals.NPC
                 if (GuardPoints >= 0)
                 {
                     modifiers.DisableCrit();
-                    modifiers.ModifyHitInfo += (ref Terraria.NPC.HitInfo n) => GuardHit(ref n, npc, SoundID.NPCHit4);
-                    if (GuardPoints >= 0)
-                        return;
+                    modifiers.ModifyHitInfo += (ref Terraria.NPC.HitInfo n) => GuardHit(ref n, npc, SoundID.NPCHit4, .25f, false, DustID.Gold, damage: npc.lifeMax / 4);
                 }
-                GuardBreakCheck(npc, DustID.Gold, CustomSounds.GuardBreak, damage: npc.lifeMax / 4);
             }
             if (npc.type is NPCID.AngryBonesBig or NPCID.AngryBonesBigHelmet or NPCID.AngryBonesBigMuscle or NPCID.ArmoredSkeleton or NPCID.ArmoredViking or NPCID.BlueArmoredBones or NPCID.BlueArmoredBonesMace or NPCID.BlueArmoredBonesNoPants or NPCID.BlueArmoredBonesSword or NPCID.RustyArmoredBonesAxe or NPCID.RustyArmoredBonesFlail or NPCID.RustyArmoredBonesSword)
             {
                 if (GuardPoints >= 0)
                 {
                     modifiers.DisableCrit();
-                    modifiers.ModifyHitInfo += (ref Terraria.NPC.HitInfo n) => GuardHit(ref n, npc, SoundID.NPCHit4);
-                    if (GuardPoints >= 0)
-                        return;
+                    modifiers.ModifyHitInfo += (ref Terraria.NPC.HitInfo n) => GuardHit(ref n, npc, SoundID.NPCHit4, .25f, false, DustID.Bone, damage: npc.lifeMax / 4);
                 }
-                GuardBreakCheck(npc, DustID.Bone, CustomSounds.GuardBreak, damage: npc.lifeMax / 4);
             }
             if (npc.type is NPCID.HellArmoredBones or NPCID.HellArmoredBonesMace or NPCID.HellArmoredBonesSpikeShield or NPCID.HellArmoredBonesSword)
             {
                 if (GuardPoints >= 0)
                 {
                     modifiers.DisableCrit();
-                    modifiers.ModifyHitInfo += (ref Terraria.NPC.HitInfo n) => GuardHit(ref n, npc, SoundID.NPCHit4);
-                    if (GuardPoints >= 0)
-                        return;
+                    modifiers.ModifyHitInfo += (ref Terraria.NPC.HitInfo n) => GuardHit(ref n, npc, SoundID.NPCHit4, .25f, false, DustID.Torch, damage: npc.lifeMax / 4);
                 }
-                GuardBreakCheck(npc, DustID.Torch, CustomSounds.GuardBreak, damage: npc.lifeMax / 4);
             }
             if (npc.type is NPCID.PossessedArmor)
             {
                 if (GuardPoints >= 0)
                 {
                     modifiers.DisableCrit();
-                    modifiers.ModifyHitInfo += (ref Terraria.NPC.HitInfo n) => GuardHit(ref n, npc, SoundID.NPCHit4);
-                    if (GuardPoints >= 0)
-                        return;
+                    modifiers.ModifyHitInfo += (ref Terraria.NPC.HitInfo n) => GuardHit(ref n, npc, SoundID.NPCHit4, .25f, false, DustID.Demonite, damage: npc.lifeMax / 2);
                 }
-                GuardBreakCheck(npc, DustID.Demonite, CustomSounds.GuardBreak, damage: npc.lifeMax / 2);
             }
             if (npc.type is NPCID.GoblinWarrior)
             {
                 if (GuardPoints >= 0)
                 {
                     modifiers.DisableCrit();
-                    modifiers.ModifyHitInfo += (ref Terraria.NPC.HitInfo n) => GuardHit(ref n, npc, SoundID.NPCHit4, .4f);
-                    if (GuardPoints >= 0)
-                        return;
+                    modifiers.ModifyHitInfo += (ref Terraria.NPC.HitInfo n) => GuardHit(ref n, npc, SoundID.NPCHit4, .4f, false, DustID.Iron, damage: npc.lifeMax / 4);
                 }
-                GuardBreakCheck(npc, DustID.Iron, CustomSounds.GuardBreak, damage: npc.lifeMax / 4);
             }
             if (npc.type is NPCID.Paladin)
             {
                 if (GuardPoints >= 0)
                 {
                     modifiers.DisableCrit();
-                    modifiers.ModifyHitInfo += (ref Terraria.NPC.HitInfo n) => GuardHit(ref n, npc, SoundID.NPCHit4, .2f);
-                    if (GuardPoints >= 0)
-                        return;
+                    modifiers.ModifyHitInfo += (ref Terraria.NPC.HitInfo n) => GuardHit(ref n, npc, SoundID.NPCHit4, .2f, false, DustID.GoldCoin, damage: npc.lifeMax / 3);
                 }
-                GuardBreakCheck(npc, DustID.GoldCoin, CustomSounds.GuardBreak, damage: npc.lifeMax / 3);
             }
         }
     }

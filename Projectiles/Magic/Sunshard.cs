@@ -18,6 +18,7 @@ namespace Redemption.Projectiles.Magic
             // DisplayName.SetDefault("Redemptive Spark");
             Main.projFrames[Projectile.type] = 5;
             ProjectileID.Sets.CultistIsResistantTo[Projectile.type] = true;
+            ProjectileID.Sets.DontCancelChannelOnKill[Type] = true;
 
             ProjectileID.Sets.TrailCacheLength[Projectile.type] = 5;
             ProjectileID.Sets.TrailingMode[Projectile.type] = 0;

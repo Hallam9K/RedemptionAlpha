@@ -19,6 +19,7 @@ namespace Redemption.Items.Weapons.HM.Magic
         public override void SetStaticDefaults()
         {
             // DisplayName.SetDefault("Self-Sufficient Lighting Rod");
+            ProjectileID.Sets.DontCancelChannelOnKill[Type] = true;
             ElementID.ProjThunder[Type] = true;
         }
         public override void SetDefaults()

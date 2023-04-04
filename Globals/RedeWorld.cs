@@ -5,8 +5,8 @@ using Redemption.NPCs.Bosses.Erhan;
 using Redemption.NPCs.Bosses.Keeper;
 using Redemption.NPCs.Friendly;
 using Redemption.Projectiles.Misc;
-using Redemption.WorldGeneration.Soulless;
-using SubworldLibrary;
+//using Redemption.WorldGeneration.Soulless;
+//using SubworldLibrary;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -25,8 +25,9 @@ namespace Redemption.Globals
 {
     public class RedeWorld : ModSystem
     {
+        // TODO: uncomment sublib
         #region Soulless Subworld
-        public override void PreUpdateWorld()
+        /*public override void PreUpdateWorld()
         {
             if (SubworldSystem.IsActive<SoullessSub>())
             {
@@ -47,7 +48,7 @@ namespace Redemption.Globals
                         tile.RandomUpdate(i, j);
                 }
             }
-        }
+        }*/
         #endregion
 
         public static bool blobbleSwarm;
@@ -96,8 +97,8 @@ namespace Redemption.Globals
             if (Main.time == 1)
                 DayNightCount++;
 
-            if (SubworldSystem.Current != null)
-                return;
+            // if (SubworldSystem.Current != null)
+            //    return;
 
             #region Skeleton Invasion
             if (DayNightCount >= 10 && !Main.hardMode && !Main.IsFastForwardingTime())
@@ -407,6 +408,27 @@ namespace Redemption.Globals
         }
         #endregion
 
+        public override void OnWorldLoad()
+        {
+            if (Terraria.NPC.downedPlantBoss)
+                omegaTransmitReady[0] = true;
+            else
+                omegaTransmitReady[0] = false;
+            if (Terraria.NPC.downedGolemBoss)
+                omegaTransmitReady[1] = true;
+            else
+                omegaTransmitReady[1] = false;
+            if (Terraria.NPC.downedMoonlord)
+                omegaTransmitReady[2] = true;
+            else
+                omegaTransmitReady[2] = false;
+        }
+        public override void OnWorldUnload()
+        {
+            omegaTransmitReady[0] = false;
+            omegaTransmitReady[1] = false;
+            omegaTransmitReady[2] = false;
+        }
         public override void ClearWorld()
         {
             if (Redemption.TrailManager != null)
@@ -427,18 +449,6 @@ namespace Redemption.Globals
             newbGone = false;
             slayerMessageGiven = false;
             keycardGiven = false;
-            if (Terraria.NPC.downedPlantBoss)
-                omegaTransmitReady[0] = true;
-            else
-                omegaTransmitReady[0] = false;
-            if (Terraria.NPC.downedGolemBoss)
-                omegaTransmitReady[1] = true;
-            else
-                omegaTransmitReady[1] = false;
-            if (Terraria.NPC.downedMoonlord)
-                omegaTransmitReady[2] = true;
-            else
-                omegaTransmitReady[2] = false;
             for (int i = 0; i < spawnCleared.Length; i++)
                 spawnCleared[i] = false;
         }

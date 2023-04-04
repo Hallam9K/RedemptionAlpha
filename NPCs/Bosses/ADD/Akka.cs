@@ -138,11 +138,8 @@ namespace Redemption.NPCs.Bosses.ADD
             if (NPC.RedemptionGuard().GuardPoints >= 0)
             {
                 modifiers.DisableCrit();
-                modifiers.ModifyHitInfo += (ref NPC.HitInfo n) => NPC.RedemptionGuard().GuardHit(ref n, NPC, SoundID.Dig with { Pitch = -.1f });
-                if (NPC.RedemptionGuard().GuardPoints >= 0)
-                    return;
+                modifiers.ModifyHitInfo += (ref NPC.HitInfo n) => NPC.RedemptionGuard().GuardHit(ref n, NPC, SoundID.Dig with { Pitch = -.1f }, .25f, false, DustID.t_LivingWood, SoundID.Item43, 10, 1, 2000);
             }
-            NPC.RedemptionGuard().GuardBreakCheck(NPC, DustID.t_LivingWood, SoundID.Item43, 10, 1, 2000);
         }
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
         {

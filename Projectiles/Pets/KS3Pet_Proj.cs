@@ -18,8 +18,8 @@ namespace Redemption.Projectiles.Pets
 			Main.projFrames[Projectile.type] = 12;
 			Main.projPet[Projectile.type] = true;
             ProjectileID.Sets.CharacterPreviewAnimations[Projectile.type] = ProjectileID.Sets.SimpleLoop(0, 1, 5)
-				.WithOffset(-10, -20f)
-				.WithCode(DelegateMethods.CharacterPreview.Float);
+				.WithOffset(2, -20f).WithSpriteDirection(-1)
+                .WithCode(DelegateMethods.CharacterPreview.Float);
         }
 
         public override void SetDefaults()

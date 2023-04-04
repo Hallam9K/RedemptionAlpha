@@ -20,8 +20,7 @@ namespace Redemption.Items.Donator.Lizzy
             Main.projFrames[Projectile.type] = 11;
             Main.projPet[Projectile.type] = true;
             ProjectileID.Sets.CharacterPreviewAnimations[Projectile.type] = ProjectileID.Sets.SimpleLoop(1, 8, 5)
-                .WhenNotSelected(0, 0)
-                .WithOffset(-10, 0);
+                .WithOffset(2, 0).WithSpriteDirection(-1);
         }
 
         public override void SetDefaults()

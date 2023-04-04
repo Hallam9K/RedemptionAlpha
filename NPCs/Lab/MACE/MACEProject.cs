@@ -74,7 +74,8 @@ namespace Redemption.NPCs.Lab.MACE
             NPC.width = 92;
             NPC.height = 164;
             NPC.damage = 100;
-            NPC.lifeMax = 160000;
+            NPC.defense = 90;
+            NPC.lifeMax = 120000;
             NPC.knockBackResist = 0;
             NPC.HitSound = SoundID.NPCHit4;
             NPC.DeathSound = SoundID.NPCDeath14;
@@ -146,11 +147,8 @@ namespace Redemption.NPCs.Lab.MACE
             if (NPC.RedemptionGuard().GuardPoints >= 0)
             {
                 modifiers.DisableCrit();
-                modifiers.ModifyHitInfo += (ref NPC.HitInfo n) => NPC.RedemptionGuard().GuardHit(ref n, NPC, SoundID.NPCHit4);
-                if (NPC.RedemptionGuard().GuardPoints >= 0)
-                    return;
+                modifiers.ModifyHitInfo += (ref NPC.HitInfo n) => NPC.RedemptionGuard().GuardHit(ref n, NPC, SoundID.NPCHit4, .25f, false, DustID.Electric, default, 10, 1, 4000);
             }
-            NPC.RedemptionGuard().GuardBreakCheck(NPC, DustID.Electric, CustomSounds.GuardBreak, 10, 1, 4000);
         }
 
         private Vector2 JawCenter;

@@ -22,13 +22,12 @@ namespace Redemption.Items.Weapons.HM.Ranged
         {
             // DisplayName.SetDefault("Corrupted D.A.N");
         }
-        public override void SetDefaults()
+        public override void SetSafeDefaults()
         {
             Projectile.width = 104;
             Projectile.height = 40;
             Projectile.friendly = false;
             Projectile.hostile = false;
-            Projectile.tileCollide = false;
             Projectile.penetrate = -1;
             Projectile.DamageType = DamageClass.Ranged;
             Projectile.ignoreWater = true;
@@ -163,7 +162,7 @@ namespace Redemption.Items.Weapons.HM.Ranged
                                 SoundEngine.PlaySound(SoundID.Item61 with { Pitch = 0.2f }, Projectile.position);
                                 SoundEngine.PlaySound(CustomSounds.ShotgunBlast1 with { Volume = 0.5f, Pitch = 0.2f }, Projectile.position);
 
-                                Projectile.NewProjectile(Projectile.GetSource_FromAI(), gunPos, RedeHelper.PolarVector(player.inventory[player.selectedItem].shootSpeed, Projectile.velocity.ToRotation()), ModContent.ProjectileType<DAN_Rocket>(), (int)(Projectile.damage * 0.75f), Projectile.knockBack, player.whoAmI, 1);
+                                Projectile.NewProjectile(Projectile.GetSource_FromAI(), gunPos, RedeHelper.PolarVector(player.inventory[player.selectedItem].shootSpeed, Projectile.velocity.ToRotation()), ModContent.ProjectileType<DAN_Rocket>(), (int)(Projectile.damage * .4f), Projectile.knockBack, player.whoAmI, 1);
                                 for (int i = 0; i < 5; i++)
                                 {
                                     int num5 = Dust.NewDust(gunSmokePos, 8, 18, DustID.Smoke, Projectile.velocity.X / 2f, Projectile.velocity.Y / 2f);
@@ -208,7 +207,7 @@ namespace Redemption.Items.Weapons.HM.Ranged
                             SoundEngine.PlaySound(CustomSounds.MissileExplosion, Projectile.position);
                             player.velocity -= RedeHelper.PolarVector(6, (Main.MouseWorld - player.Center).ToRotation());
 
-                            Projectile.NewProjectile(Projectile.GetSource_FromAI(), gunPos, RedeHelper.PolarVector(3, Projectile.velocity.ToRotation()), ModContent.ProjectileType<DAN_Laser>(), Projectile.damage * 5, Projectile.knockBack, player.whoAmI, Projectile.whoAmI, 1);
+                            Projectile.NewProjectile(Projectile.GetSource_FromAI(), gunPos, RedeHelper.PolarVector(3, Projectile.velocity.ToRotation()), ModContent.ProjectileType<DAN_Laser>(), Projectile.damage * 6, Projectile.knockBack, player.whoAmI, Projectile.whoAmI, 1);
                             for (int i = 0; i < 15; i++)
                             {
                                 int num5 = Dust.NewDust(gunSmokePos, 8, 20, DustID.Smoke, Projectile.velocity.X / 2f, Projectile.velocity.Y / 2f);
