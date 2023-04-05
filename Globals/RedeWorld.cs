@@ -72,6 +72,7 @@ namespace Redemption.Globals
         public static bool newbGone;
         public static bool slayerMessageGiven;
         public static bool keycardGiven;
+        public static bool alignmentGiven;
         public static bool[] spawnCleared = new bool[5];
 
         #region Nuke Shenanigans
@@ -449,6 +450,7 @@ namespace Redemption.Globals
             newbGone = false;
             slayerMessageGiven = false;
             keycardGiven = false;
+            alignmentGiven = false;
             for (int i = 0; i < spawnCleared.Length; i++)
                 spawnCleared[i] = false;
         }
@@ -471,6 +473,8 @@ namespace Redemption.Globals
                 lists.Add("slayerMessageGiven");
             if (keycardGiven)
                 lists.Add("keycardGiven");
+            if (alignmentGiven)
+                lists.Add("alignmentGiven");
 
             tag["lists"] = lists;
             tag["alignment"] = alignment;
@@ -498,6 +502,7 @@ namespace Redemption.Globals
             newbGone = lists.Contains("newbGone");
             slayerMessageGiven = lists.Contains("slayerMessageGiven");
             keycardGiven = lists.Contains("keycardGiven");
+            alignmentGiven = lists.Contains("alignmentGiven");
         }
 
         public override void NetSend(BinaryWriter writer)
@@ -510,6 +515,7 @@ namespace Redemption.Globals
             flags[4] = newbGone;
             flags[5] = slayerMessageGiven;
             flags[6] = keycardGiven;
+            flags[7] = alignmentGiven;
             writer.Write(flags);
 
             writer.Write(alignment);
@@ -530,6 +536,7 @@ namespace Redemption.Globals
             newbGone = flags[4];
             slayerMessageGiven = flags[5];
             keycardGiven = flags[6];
+            alignmentGiven = flags[7];
 
             alignment = reader.ReadInt32();
             DayNightCount = reader.ReadInt32();

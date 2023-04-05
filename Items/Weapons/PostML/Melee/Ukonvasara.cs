@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 
 namespace Redemption.Items.Weapons.PostML.Melee
@@ -143,15 +144,15 @@ namespace Redemption.Items.Weapons.PostML.Melee
             switch (AttackMode)
             {
                 default:
-                    TooltipLine swordLine = new(Mod, "SlashBonus", RedeItem.slashBonus) { OverrideColor = Colors.RarityOrange };
+                    TooltipLine swordLine = new(Mod, "SlashBonus", Language.GetTextValue("Mods.Redemption.GenericTooltips.Bonuses.SlashBonus")) { OverrideColor = Colors.RarityOrange };
                     tooltips.Add(swordLine);
                     break;
                 case 1:
-                    TooltipLine hammerLine = new(Mod, "HammerBonus", RedeItem.hammerBonus) { OverrideColor = Colors.RarityOrange };
+                    TooltipLine hammerLine = new(Mod, "HammerBonus", Language.GetTextValue("Mods.Redemption.GenericTooltips.Bonuses.HammerBonus")) { OverrideColor = Colors.RarityOrange };
                     tooltips.Add(hammerLine);
                     break;
                 case 2:
-                    TooltipLine axeLine = new(Mod, "AxeBonus", RedeItem.axeBonus) { OverrideColor = Colors.RarityOrange };
+                    TooltipLine axeLine = new(Mod, "AxeBonus", Language.GetTextValue("Mods.Redemption.GenericTooltips.Bonuses.AxeBonus")) { OverrideColor = Colors.RarityOrange };
                     tooltips.Add(axeLine);
                     break;
             }

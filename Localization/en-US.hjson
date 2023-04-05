@@ -3,6 +3,30 @@ Mods: {
 	Redemption: {
 		Currencies.AntiqueDorulCurrency: antique doruls
 
+		GenericTooltips: {
+			Bonuses: {
+				AxeBonus: Axe Bonus: 3x critical strike damage, increased chance to decapitate humanoid enemies
+				SlashBonus: Slash Bonus: Small chance to decapitate most humanoid enemies, killing them instantly
+				HammerBonus: Hammer Bonus: Deals quadruple damage to Guard Points
+				ChaliceLine: "[i:Redemption/RedemptionRoute]The chalice has something to say about this item"
+				ExplodeBonus: Explosive Bonus: Deals double damage to Guard Points and penetrates through defense
+				ArcaneBonus: Arcane Bonus: Can hit enemies from the spirit realm
+				BloodBonus: Blood Bonus: Increased damage to organic enemies, but decreased to robotic
+				CelestialBonus: Celestial Bonus: Hitting foes can create stars around them, restoring life and mana once the foe is slain
+				EarthBonus: Earth Bonus: Deals extra damage and has a chance to stun grounded enemies
+				FireBonus: Fire Bonus: Chance to inflict a strong 'On Fire!' debuff on flammable enemies
+				HolyBonus: Holy Bonus: Increased damage to undead and demons
+				IceBonus: Ice Bonus: Chance to freeze slimes and slow down infected enemies
+				NatureBonus: Nature Bonus: Has a chance to drop a defence-increasing Nature Boon upon hitting enemies inflicted with a non-fire debuff
+				PoisonBonus: Poison Bonus: Increased damage to poisoned enemies
+				PsychicBonus: Psychic Bonus: Ignores enemy Guard Points
+				ShadowBonus: Shadow Bonus: Slain enemies have a chance to drop a pickup which increases Shadow damage
+				ThunderBonus: Thunder Bonus: Electrifies and deals extra damage if the target is in water
+				WaterBonus: Water Bonus: Increased damage to demons and can electrify robotic targets
+				WindBonus: Wind Bonus: Deals extra knockback to airborne targets
+			}
+		}
+
 		Buffs: {
 			ErhanCrossCooldown: {
 				# Cooldowns
@@ -1685,17 +1709,17 @@ Mods: {
 
 			IntruderArmour: {
 				DisplayName: Intruder's Body Armor
-				Tooltip: ""
+				Tooltip: "'From Intrusion, with love'"
 			}
 
 			IntruderMask: {
 				DisplayName: Intruder's Mask
-				Tooltip: ""
+				Tooltip: "'From Intrusion, with love'"
 			}
 
 			IntruderPants: {
 				DisplayName: Intruder's Armored Pants
-				Tooltip: ""
+				Tooltip: "'From Intrusion, with love'"
 			}
 
 			KeepersVeil: {
@@ -4450,7 +4474,6 @@ Mods: {
 				Tooltip:
 					'''
 					'Stands for Almost-Faster-Than-Light'
-					[i:Redemption/RedemptionRoute][c/f8f8bc: This item may redeem terrible actions]
 					'''
 			}
 
@@ -4555,7 +4578,6 @@ Mods: {
 				Tooltip:
 					'''
 					Let the Keeper's spirit rest
-					[i:Redemption/RedemptionRoute][c/f8f8bc: This item may redeem terrible actions]
 					'''
 			}
 
@@ -5018,7 +5040,6 @@ Mods: {
 				Tooltip:
 					'''
 					Having this in your inventory may attract the Keeper's first creation underground
-					[i:Redemption/BadRedemptionRoute][c/ff5533: This item may have a redeemable negative impact onto the world]
 					'''
 			}
 
@@ -5058,7 +5079,6 @@ Mods: {
 					May draw unwanted attention
 					Requires the user to have at least 140 max life
 					Not consumable
-					[i:Redemption/BadRoute][c/ff5533: This item may have a negative impact onto the world]
 					'''
 			}
 
@@ -5096,7 +5116,6 @@ Mods: {
 					Summons an unfortunate curse-bearer
 					Only usable at day
 					Not consumable
-					[i:Redemption/GoodRoute][c/bbf160: This item may have a positive impact onto the world]
 					'''
 			}
 
@@ -5490,7 +5509,6 @@ Mods: {
 					'''
 					Fires two blasts of rockets per use
 					Continuing to hold left-click will spin the weapon while firing, creating a spiral of homing rockets
-
 					(15 [i:Redemption/EnergyCell]) Continuing to hold left-click while aiming downwards will charge a red beam that'll cause eruptions on impact
 					66% chance to not consume ammo, 90% chance during the homing rocket spiral
 					'''
@@ -5512,9 +5530,9 @@ Mods: {
 					'''
 					Fires two blasts of bullets per use
 					Continuing to hold left-click will spin the weapon while firing, creating a spiral of bullets
-
 					(15[i:Redemption/EnergyCell]) Continuing to hold left-click while aiming downwards will charge a purple beam that'll cause eruptions on impact
 					66% chance to not consume ammo, 90% chance during the bullet spiral
+					               'From Intrusion, with love'
 					'''
 			}
 
@@ -5524,6 +5542,7 @@ Mods: {
 					'''
 					Converts normal bullets into high velocity bullets
 					33% chance not to consume ammo
+					               'From Intrusion, with love'
 					'''
 			}
 
@@ -7931,8 +7950,8 @@ Mods: {
 		}
 
 		Keybinds: {
-			"Special Ability Key.DisplayName": Mods.Redemption.Keybinds.Special Ability Key.DisplayName
-			"Spirit Walker Key.DisplayName": Mods.Redemption.Keybinds.Spirit Walker Key.DisplayName
+			"Special Ability Key.DisplayName": Special Ability Key
+			"Spirit Walker Key.DisplayName": Spirit Walker Key
 		}
 
 		Conditions: {

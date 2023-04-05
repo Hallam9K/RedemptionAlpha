@@ -155,7 +155,7 @@ namespace Redemption.NPCs.Bosses.Thorn
 
                     CombatText.NewText(player.getRect(), Color.Gold, "+2", true, false);
 
-                    if (!player.HasItem(ModContent.ItemType<AlignmentTeller>()))
+                    if (!RedeWorld.alignmentGiven)
                         continue;
 
                     if (!Main.dedServ)

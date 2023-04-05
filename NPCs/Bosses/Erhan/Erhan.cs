@@ -209,7 +209,7 @@ namespace Redemption.NPCs.Bosses.Erhan
 
                     CombatText.NewText(player.getRect(), Color.Gold, Spared ? "-1" : "-3", true, false);
 
-                    if (!player.HasItem(ModContent.ItemType<AlignmentTeller>()))
+                    if (!RedeWorld.alignmentGiven)
                         continue;
 
                     if (!Main.dedServ)

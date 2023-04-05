@@ -101,7 +101,7 @@ namespace Redemption.NPCs.Friendly
 
                     CombatText.NewText(player.getRect(), Color.Gold, "-1", true, false);
 
-                    if (!player.HasItem(ModContent.ItemType<AlignmentTeller>()))
+                    if (!RedeWorld.alignmentGiven)
                         continue;
 
                     if (!Main.dedServ)

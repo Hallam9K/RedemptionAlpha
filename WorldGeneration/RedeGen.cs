@@ -1981,8 +1981,8 @@ namespace Redemption.WorldGeneration
                     bool placed = false;
                     while (!placed)
                     {
-                        int placeX2 = WorldGen.genRand.Next((int)(Main.maxTilesX * .35f), (int)(Main.maxTilesX * .65f));
-                        int placeY2 = WorldGen.genRand.Next((int)(Main.maxTilesY * .4f), (int)(Main.maxTilesY * .6));
+                        int placeX2 = WorldGen.genRand.Next((int)(Main.maxTilesX * .4f), (int)(Main.maxTilesX * .6f));
+                        int placeY2 = WorldGen.genRand.Next((int)(Main.maxTilesY * .4f), (int)(Main.maxTilesY * .5f));
 
                         if (!WorldGen.InWorld(placeX2, placeY2))
                             continue;

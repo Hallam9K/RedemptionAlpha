@@ -32,6 +32,10 @@ using Redemption.NPCs.HM;
 using Redemption.NPCs.Bosses.ADD;
 using Redemption.NPCs.Friendly.SpiritSummons;
 using Redemption.NPCs.FowlMorning;
+using Redemption.Items.Usable.Summons;
+using Redemption.Items.Quest.KingSlayer;
+using Redemption.Items.Placeable.Plants;
+using Redemption.Items.Weapons.PreHM.Summon;
 
 namespace Redemption.Globals
 {
@@ -303,6 +307,9 @@ namespace Redemption.Globals
 
         public static List<int> NoElement = new()
         { ItemID.BlueSolution, ItemID.DarkBlueSolution, ItemID.GreenSolution, ItemID.PurpleSolution, ItemID.RedSolution, ItemID.RocketI, ItemID.RocketII, ItemID.RocketIII, ItemID.RocketIV, ModContent.ItemType<BleachedSolution>() };
+
+        public static List<int> AlignmentInterest = new()
+        { ModContent.ItemType<HeartOfThorns>(), ModContent.ItemType<DemonScroll>(), ModContent.ItemType<WeddingRing>(), ModContent.ItemType<SorrowfulEssence>(), ModContent.ItemType<AbandonedTeddy>(), ModContent.ItemType<CyberTech>(), ModContent.ItemType<SlayerShipEngine>(), ModContent.ItemType<MemoryChip>(), ModContent.ItemType<AnglonicMysticBlossom>(), ModContent.ItemType<KingsOakStaff>(), ModContent.ItemType<NebSummon>() };
 
         #endregion
     }

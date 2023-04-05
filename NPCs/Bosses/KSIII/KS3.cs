@@ -218,7 +218,7 @@ namespace Redemption.NPCs.Bosses.KSIII
 
                     CombatText.NewText(player.getRect(), Color.Gold, NPC.ai[0] == 11 ? "+0" : "-2", true, false);
 
-                    if (!player.HasItem(ModContent.ItemType<AlignmentTeller>()))
+                    if (!RedeWorld.alignmentGiven)
                         continue;
 
                     if (!Main.dedServ)
@@ -2235,7 +2235,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                         }
                         if (AITimer > 5000)
                         {
-                            if (Main.LocalPlayer.HasItem(ModContent.ItemType<AlignmentTeller>()) && !Main.dedServ && !RedeBossDowned.downedSlayer)
+                            if (RedeWorld.alignmentGiven && !Main.dedServ && !RedeBossDowned.downedSlayer)
                                 RedeSystem.Instance.ChaliceUIElement.DisplayDialogue("I would leave him be, if I were you.", 180, 30, 0, Color.DarkGoldenrod);
 
                             NPC.life = 1;
@@ -2510,7 +2510,7 @@ namespace Redemption.NPCs.Bosses.KSIII
             {
                 if (NPC.ai[0] == 10)
                 {
-                    if (Main.LocalPlayer.HasItem(ModContent.ItemType<AlignmentTeller>()) && !Main.dedServ)
+                    if (RedeWorld.alignmentGiven && !Main.dedServ)
                         ChaliceAlignmentUI.Visible = false;
                     AITimer = 0;
                     AIState = ActionState.Attacked;

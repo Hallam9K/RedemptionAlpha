@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Redemption.Base;
 using Redemption.Globals;
 using Redemption.Items.Materials.PreHM;
+using Redemption.NPCs.Bosses.FowlEmperor;
 using Redemption.NPCs.Friendly;
 using Terraria;
 using Terraria.DataStructures;
@@ -48,8 +49,25 @@ namespace Redemption.Items.Usable
             CreateRecipe()
                 .AddIngredient(ModContent.ItemType<CursedGem>())
                 .AddIngredient(ModContent.ItemType<ChaliceFragments>())
-                .AddTile(TileID.DemonAltar)
                 .Register();
+        }
+        public override void UpdateInventory(Player player)
+        {
+            int item = player.FindItem(Type);
+            if (item >= 0)
+            {
+                player.inventory[item].stack = 0;
+                if (player.inventory[item].stack <= 0)
+                    player.inventory[item] = new Item();
+            }
+        }
+        public override void Update(ref float gravity, ref float maxFallSpeed)
+        {
+            if (Main.netMode != NetmodeID.MultiplayerClient)
+            {
+                Item.active = false;
+                NetMessage.SendData(MessageID.SyncItem, -1, -1, null, Item.whoAmI);
+            }
         }
         public override bool? UseItem(Player player)
         {

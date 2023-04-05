@@ -147,7 +147,7 @@ namespace Redemption.NPCs.Bosses.Neb.Phase2
 
                     CombatText.NewText(player.getRect(), Color.Gold, "-4", true, false);
 
-                    if (!player.HasItem(ModContent.ItemType<AlignmentTeller>()))
+                    if (!RedeWorld.alignmentGiven)
                         continue;
 
                     if (!Main.dedServ)

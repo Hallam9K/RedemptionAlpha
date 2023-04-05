@@ -161,7 +161,7 @@ namespace Redemption.NPCs.Bosses.Neb
 
                     CombatText.NewText(player.getRect(), Color.Gold, "+0", true, false);
 
-                    if (!player.HasItem(ModContent.ItemType<AlignmentTeller>()))
+                    if (!RedeWorld.alignmentGiven)
                         continue;
 
                     if (!Main.dedServ)
@@ -1430,7 +1430,7 @@ namespace Redemption.NPCs.Bosses.Neb
                             RedeSystem.Instance.DialogueUIElement.DisplayDialogue("If you don't attack me now, I'll leave you be.", 180, 1, 0.6f, "Nebuleus:", 1, RedeColor.NebColour, null, null, NPC.Center, 0, 0, true);
                         if (NPC.ai[2] >= 2660)
                         {
-                            if (Main.LocalPlayer.HasItem(ModContent.ItemType<AlignmentTeller>()) && !Main.dedServ && !RedeBossDowned.downedSlayer)
+                            if (RedeWorld.alignmentGiven && !Main.dedServ && !RedeBossDowned.downedSlayer)
                                 RedeSystem.Instance.ChaliceUIElement.DisplayDialogue("Don't go down the road you seek, please.", 180, 30, 0, Color.DarkGoldenrod);
 
                             NPC.Shoot(NPC.Center, ModContent.ProjectileType<ProjDeath>(), 0, Vector2.Zero, false, SoundID.Item1);
@@ -1592,7 +1592,7 @@ namespace Redemption.NPCs.Bosses.Neb
 
             if (NPC.ai[0] == 9)
             {
-                if (Main.LocalPlayer.HasItem(ModContent.ItemType<AlignmentTeller>()) && !Main.dedServ)
+                if (RedeWorld.alignmentGiven && !Main.dedServ)
                     ChaliceAlignmentUI.Visible = false;
                 NPC.ai[2] = 0;
                 NPC.ai[0] = 10;
