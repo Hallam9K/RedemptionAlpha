@@ -19,6 +19,7 @@ using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 using Terraria.Utilities;
@@ -234,11 +235,11 @@ namespace Redemption.NPCs.Friendly
 
                                 string line = Personality switch
                                 {
-                                    PersonalityState.Calm => "Oh, how lovely. I'll accept this beautiful array of flowers, and return the gesture by giving you this.",
-                                    PersonalityState.Shy => "For me? How interesting. Would this be a gesture of kindness? I will accept. You may have this in return.",
-                                    PersonalityState.Jolly => "What a cute little collection of flowers, I shall accept this gift with glee. Have this in return.",
-                                    PersonalityState.Aggressive => "Trying to win my trust with flowers? Whatever, I will accept. Take this in return, if you want.",
-                                    _ => "Is this a gesture of friendship? Interesting. I will accept this lovely array of flowers, and in return I will give to you this.",
+                                    PersonalityState.Calm => Language.GetTextValue("Mods.Redemption.Dialogue.ForestNymph.HerbBagDialogueCalm"),
+                                    PersonalityState.Shy => Language.GetTextValue("Mods.Redemption.Dialogue.ForestNymph.HerbBagDialogueShy"),
+                                    PersonalityState.Jolly => Language.GetTextValue("Mods.Redemption.Dialogue.ForestNymph.HerbBagDialogueJolly"),
+                                    PersonalityState.Aggressive => Language.GetTextValue("Mods.Redemption.Dialogue.ForestNymph.HerbBagDialogueAggressive"),
+                                    _ => Language.GetTextValue("Mods.Redemption.Dialogue.ForestNymph.HerbBagDialogue"),
                                 };
                                 Main.npcChatText = line;
 
@@ -270,13 +271,13 @@ namespace Redemption.NPCs.Friendly
 
                                 string line = Personality switch
                                 {
-                                    PersonalityState.Calm => "Offering this to me is quite the shock. Whatever I may bestow in return would not rival such rarity. T",
-                                    PersonalityState.Shy => "For me? Are you sure? It is such a rarity I can not simply comprehend as a mere gift. It almost makes me nervous - to give away so freely, you must have a golden heart. But I do not know what to give in return! Forgive me, t",
-                                    PersonalityState.Jolly => "Goodness me! Such a rarity to bequeath to me, I am astounded by your generosity. Unfortunately I have not one thing in my possessions that may match your gift. T",
-                                    PersonalityState.Aggressive => "You... Goodness. Why would you possibly give me such a rarity! I cannot help but sense malicious intent. And yet, the World says you are good, and the World does not lie. In return for this, t",
-                                    _ => "This is... To offer such rarity to me is bewildering, to say the least. What may I bestow that may rival this? My possessions are limited, however my blessings are boundless. T",
+                                    PersonalityState.Calm => Language.GetTextValue("Mods.Redemption.Dialogue.ForestNymph.MysticBlossomDialogueCalm"),
+                                    PersonalityState.Shy => Language.GetTextValue("Mods.Redemption.Dialogue.ForestNymph.MysticBlossomDialogueShy"),
+                                    PersonalityState.Jolly => Language.GetTextValue("Mods.Redemption.Dialogue.ForestNymph.MysticBlossomDialogueJolly"),
+                                    PersonalityState.Aggressive => Language.GetTextValue("Mods.Redemption.Dialogue.ForestNymph.MysticBlossomDialogueAggressive"),
+                                    _ => Language.GetTextValue("Mods.Redemption.Dialogue.ForestNymph.MysticBlossomDialogue"),
                                 };
-                                Main.npcChatText = line + "ake my weapon, for it is the only tangible gift I have.";
+                                Main.npcChatText = line + Language.GetTextValue("Mods.Redemption.Dialogue.ForestNymph.MysticBlossomDialogueCont");
                                 NPC.lifeMax += 500;
                                 NPC.life += 500;
                                 RedeQuest.forestNymphVar++;
@@ -297,7 +298,7 @@ namespace Redemption.NPCs.Friendly
                         else if (RedeQuest.forestNymphVar == 2)
                         {
                             SoundEngine.PlaySound(SoundID.Chat);
-                            Main.npcChatText = "We usually live in giant hollowed-out trees with a body of water nearby. The tree is only good for hiding, but the water is vital for our survival, as we cannot blossom without it. The living trees this island has are the closest things to the great oaks back through the portal, but they could use some sprucing up. They aren't exactly homely.";
+                            Main.npcChatText = Language.GetTextValue("Mods.Redemption.Dialogue.ForestNymph.HomeDialogue1");
                             RedeQuest.forestNymphVar++;
                             if (Main.netMode == NetmodeID.Server)
                                 NetMessage.SendData(MessageID.WorldData);
@@ -313,7 +314,7 @@ namespace Redemption.NPCs.Friendly
                             }
                             if (RedeQuest.forestNymphVar == 3)
                             {
-                                Main.npcChatText = "Your fae spoke truthfully about you. If it wouldn't be too much work, I will accept a home you create for me. I have requirements, however. For one, I would prefer if it was made of living wood - I give you permission to renovate an existing living tree if so inclined, but as long as it's made of living wood I'll be satisfied. Secondly, I need a body of water nearby. A small one is fine, just as long as I can submerge my roots into it.";
+                                Main.npcChatText = Language.GetTextValue("Mods.Redemption.Dialogue.ForestNymph.HomeDialogue2");
                                 RedeQuest.forestNymphVar++;
                                 if (Main.netMode == NetmodeID.Server)
                                     NetMessage.SendData(MessageID.WorldData);
@@ -321,8 +322,7 @@ namespace Redemption.NPCs.Friendly
                             else if (RedeQuest.forestNymphVar == 4)
                             {
                                 if (NPC.homeless)
-                                    Main.npcChatText = "I would prefer if it was made of living wood - I give you permission to renovate an existing living tree if so inclined, but as long as it's made of living wood I'll be satisfied. Secondly, I need a body of water nearby. A small one is fine, just as long as I can submerge my roots into it." +
-                                        "\n\n[i:Redemption/GoodRoute][c/bbf160: This action may have a positive impact onto the world]";
+                                    Main.npcChatText = Language.GetTextValue("Mods.Redemption.Dialogue.ForestNymph.HomeDialogue3");
                                 else
                                 {
                                     int score = 0;
@@ -339,26 +339,25 @@ namespace Redemption.NPCs.Friendly
                                     {
                                         string line = Personality switch
                                         {
-                                            PersonalityState.Calm => "Make a nice body of water close at hand, and I'll accept this new home.",
-                                            PersonalityState.Shy => "If you can, please create a body of water close to my new home.",
-                                            PersonalityState.Jolly => "A small lake or pond is very important for us forest nymphs. I'll be most pleased if one was present.",
-                                            PersonalityState.Aggressive => "I did ask for a body of water, did I not? Make one and I'll accept this place as my home.",
-                                            _ => "If you can get a body of water to be close to my new home I will accept it.",
+                                            PersonalityState.Calm => Language.GetTextValue("Mods.Redemption.Dialogue.ForestNymph.HomeNeedWaterDialogueCalm"),
+                                            PersonalityState.Shy => Language.GetTextValue("Mods.Redemption.Dialogue.ForestNymph.HomeNeedWaterDialogueShy"),
+                                            PersonalityState.Jolly => Language.GetTextValue("Mods.Redemption.Dialogue.ForestNymph.HomeNeedWaterDialogueJolly"),
+                                            PersonalityState.Aggressive => Language.GetTextValue("Mods.Redemption.Dialogue.ForestNymph.HomeNeedWaterDialogueAggressive"),
+                                            _ => Language.GetTextValue("Mods.Redemption.Dialogue.ForestNymph.HomeNeedWaterDialogue"),
                                         };
-                                        Main.npcChatText = "It is suitable. I can see myself getting comfortable in here for now, however I see no pools of water nearby. " + line + "\n\n(" + score.ToString() + "/20 water required)" +
-                                            "\n[i:Redemption/GoodRoute][c/bbf160: This action may have a positive impact onto the world]";
+                                        Main.npcChatText = Language.GetTextValue("Mods.Redemption.Dialogue.ForestNymph.HomeNeedWaterDialogueStart") + line + Language.GetTextValue("Mods.Redemption.Dialogue.ForestNymph.NeedWaterRequirement", score.ToString());
                                     }
                                     else
                                     {
                                         string line = Personality switch
                                         {
-                                            PersonalityState.Calm => "This is a pleasant place. I am thankful for it, and all you have done. If only the other humans were so kind...",
-                                            PersonalityState.Shy => "This place is warm and cosy, I was very nervous around most humans, but it would seem my fear was misplaced...",
-                                            PersonalityState.Jolly => "Oh, it is beautiful! A wonderful little abode for me. I cannot thank you enough, to think a human would be so giving...",
-                                            PersonalityState.Aggressive => "It's alright. Nothing too special, I guess. Actually, nevermind, I am being too harsh. Most humans have not been too kind to me...",
-                                            _ => "It is a lovely abode. You have helped me more than most humans...",
+                                            PersonalityState.Calm => Language.GetTextValue("Mods.Redemption.Dialogue.ForestNymph.HasHomeDialogueCalm"),
+                                            PersonalityState.Shy => Language.GetTextValue("Mods.Redemption.Dialogue.ForestNymph.HasHomeDialogueShy"),
+                                            PersonalityState.Jolly => Language.GetTextValue("Mods.Redemption.Dialogue.ForestNymph.HasHomeDialogueJolly"),
+                                            PersonalityState.Aggressive => Language.GetTextValue("Mods.Redemption.Dialogue.ForestNymph.HasHomeDialogueAggressive"),
+                                            _ => Language.GetTextValue("Mods.Redemption.Dialogue.ForestNymph.HasHomeDialogue"),
                                         };
-                                        Main.npcChatText = line + " You are human, are you not? The World does not recognise you as its child, but no matter. You have my gratitude.";
+                                        Main.npcChatText = line + Language.GetTextValue("Mods.Redemption.Dialogue.ForestNymph.HasHomeDialogueCont");
 
                                         if (RedeQuest.forestNymphVar < 5)
                                         {
@@ -408,11 +407,11 @@ namespace Redemption.NPCs.Friendly
                         {
                             string line = Personality switch
                             {
-                                PersonalityState.Calm => "Sure. It better be worth it.",
-                                PersonalityState.Shy => "I'm not sure... Alright, fine, just don't take me too far from home.",
-                                PersonalityState.Jolly => "Follow? I'll agree, but to where I wonder?",
-                                PersonalityState.Aggressive => "Fine. But if you lead me into a pack of ghouls I will not be happy in the slightest.",
-                                _ => "As you wish. I will not be pleased if you make me wonder too far from my territory though.",
+                                PersonalityState.Calm => Language.GetTextValue("Mods.Redemption.Dialogue.ForestNymph.FollowDialogueCalm"),
+                                PersonalityState.Shy => Language.GetTextValue("Mods.Redemption.Dialogue.ForestNymph.FollowDialogueShy"),
+                                PersonalityState.Jolly => Language.GetTextValue("Mods.Redemption.Dialogue.ForestNymph.FollowDialogueJolly"),
+                                PersonalityState.Aggressive => Language.GetTextValue("Mods.Redemption.Dialogue.ForestNymph.FollowDialogueAggressive"),
+                                _ => Language.GetTextValue("Mods.Redemption.Dialogue.ForestNymph.FollowDialogue"),
                             };
                             Main.npcChatText = line;
                         }
@@ -430,7 +429,7 @@ namespace Redemption.NPCs.Friendly
                     case 6:
                         if (!Main.LocalPlayer.RedemptionAbility().SpiritwalkerActive)
                         {
-                            Main.npcChatText = "I cannot gift it to thee unless you're partly in the realm of spirits.";
+                            Main.npcChatText = Language.GetTextValue("Mods.Redemption.Dialogue.ForestNymph.NoRealmCruxDialogue");
                             ChatNumber--;
                             return;
                         }
@@ -442,13 +441,13 @@ namespace Redemption.NPCs.Friendly
                                 Main.LocalPlayer.inventory[card] = new Item();
 
                             Main.LocalPlayer.QuickSpawnItem(NPC.GetSource_Loot(), ModContent.ItemType<CruxCardForestNymph>());
-                            Main.npcChatText = "Fascinating. I never would've expected one such as yourself to have this ability. As you wish, I will give to thee the spirit of my kind.";
+                            Main.npcChatText = Language.GetTextValue("Mods.Redemption.Dialogue.ForestNymph.CruxDialogue");
                             Main.npcChatCornerItem = ModContent.ItemType<CruxCardForestNymph>();
                             SoundEngine.PlaySound(SoundID.Chat);
                         }
                         else
                         {
-                            Main.npcChatText = "You bare no object to imbue.";
+                            Main.npcChatText = Language.GetTextValue("Mods.Redemption.Dialogue.ForestNymph.NoCruxDialogue");
                             Main.npcChatCornerItem = ModContent.ItemType<EmptyCruxCard>();
                         }
                         ChatNumber--;
@@ -484,17 +483,17 @@ namespace Redemption.NPCs.Friendly
             string bothChat = BothChat();
             if (bothChat != null)
                 chat.Add(bothChat);
-            chat.Add("Do you wonder why there aren't more of us around? It is simply the matter of strict requirements for our seeds to grow, and the centuries it takes for them to fully blossom. We usually produce seeds in the Spring season once every decade - a long time for humans. If you see a peculiar bulb near my pond, I'd recommend saying farewell to me and this place indefinitely. A blooming nymph is a fragile thing, and I won't take any chances.");
-            chat.Add("I have learnt many things from my observations of humans, along with the languages they speak. I understand they have a false perception of us, some say we were created by the World to replicate the \"perfect image of humans\". Of course, that is merely a rumour fuelled with egotism. Humans are far from perfect, form or otherwise.");
-            chat.Add("Artistic depictions created by humans show us having a much more similar appearance to them than what is accurate. They seldom get the chance to get a close look at us so it is understandable. I came across such artwork in a book I stole, it was... the complete opposite of flattering.");
+            chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.ForestNymph.Dialogue1"));
+            chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.ForestNymph.Dialogue2"));
+            chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.ForestNymph.Dialogue3"));
             string s = "";
             if (NPC.GivenName == "Nyssa")
-                s = " I found it so humorous that I renamed myself to Nyssa.";
-            chat.Add("Humanity's intrigue of us have generated assumptions of how we act and our culture. I've even heard of a fictional figure known as Nyssa, the Forest Nymph Queen - which is based on the idea that we have some sort of hierarchy, which is false." + s);
+                s = Language.GetTextValue("Mods.Redemption.Dialogue.ForestNymph.Dialogue4Const");
+            chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.ForestNymph.Dialogue4") + s);
             if (RedeWorld.alignment >= 4)
-                chat.Add("You're curious about our connection with the World, are you not? It is a rather well-kept secret, but the World trusts you enough for me to say. With meditation, we nymphs are able to call upon Epidotra and speak to it; this grants insight beyond human limits, which can be used to figure out a creature's true intentions or to be alerted of dangers - natural and unnatural - that besiege the earth.");
+                chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.ForestNymph.Dialogue5"));
             else
-                chat.Add("You're curious about our connection with the World, are you not? Hmm... It is a secret well-kept from others, and I will keep it that way for the time being.");
+                chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.ForestNymph.Dialogue6"));
             return chat;
         }
         private string BothChat()
@@ -502,32 +501,32 @@ namespace Redemption.NPCs.Friendly
             WeightedRandom<string> chat = new(Main.rand);
             Player player = Main.player[Main.myPlayer];
             if (RedeBossDowned.downedTreebark)
-                chat.Add("A forewarning to you, I will never forget your act of felling towards the tree-folk. I only speak to you now for the good you have done despite that.");
+                chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.ForestNymph.Dialogue7"));
             if (RedeBossDowned.downedADD)
-                chat.Add("I had sensed the return of a great presence, however it was short-lived. You defeated her I presume? A wise decision - Akka was a friend of Nature only in soul. Her mind, however, was only filled with demand and grim desires. Ukko, her husband, was the same.");
+                chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.ForestNymph.Dialogue8"));
             if (RedeBossDowned.nukeDropped)
-                chat.Add("I do not approve of the horrific destruction you have caused to a portion of the land, what manner of power caused this? A blast that withers earth, mutates plant, and decays air. Such power is otherworldly.");
+                chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.ForestNymph.Dialogue9"));
             if (BasePlayer.HasArmorSet(player, "Common Guard", true) || BasePlayer.HasArmorSet(player, "Common Guard", false))
             {
-                chat.Add("Common Guard, are you? Members of their troop used to lurk around the forests I came from. They got too close for comfort so I left and found the portal here.");
+                chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.ForestNymph.Dialogue10"));
             }
             if (RedeBossDowned.downedThorn)
             {
-                chat.Add("The World tells me you slew that blighted warden of Faywood. Shame he had to fall, but at least that horrid blight is ceasing. I kept my distance from people back at my old home, though I do recall his name - Alder, it was.");
+                chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.ForestNymph.Dialogue11"));
             }
             if (BasePlayer.HasArmorSet(player, "Dryad", true) || BasePlayer.HasArmorSet(player, "Dryad", false))
-                chat.Add("I see you too have no use for neither fancy nor practical attire.");
+                chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.ForestNymph.Dialogue12"));
             if (BasePlayer.HasHelmet(player, ItemID.GarlandHat, true))
             {
                 string line = Personality switch
                 {
-                    PersonalityState.Calm => "Although, I do find it quite cute.",
-                    PersonalityState.Shy => "I'll take it as a compliment.",
-                    PersonalityState.Jolly => "It definitely suits you though!",
-                    PersonalityState.Aggressive => "Probably the latter.",
-                    _ => "It suits you.",
+                    PersonalityState.Calm => Language.GetTextValue("Mods.Redemption.Dialogue.ForestNymph.Dialogue13ContCalm"),
+                    PersonalityState.Shy => Language.GetTextValue("Mods.Redemption.Dialogue.ForestNymph.Dialogue13ContShy"),
+                    PersonalityState.Jolly => Language.GetTextValue("Mods.Redemption.Dialogue.ForestNymph.Dialogue13ContJolly"),
+                    PersonalityState.Aggressive => Language.GetTextValue("Mods.Redemption.Dialogue.ForestNymph.Dialogue13ContAggressive"),
+                    _ => Language.GetTextValue("Mods.Redemption.Dialogue.ForestNymph.Dialogue13Cont"),
                 };
-                chat.Add("I see you have decorated your hair with various flowers, to mimic or to mock me? That remains unclear. " + line);
+                chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.ForestNymph.Dialogue13") + line);
             }
             return chat;
         }
@@ -538,35 +537,35 @@ namespace Redemption.NPCs.Friendly
             Player player = Main.player[Main.myPlayer];
             WeightedRandom<string> chat = new(Main.rand);
             if ((RedeWorld.alignment < 0 && !RedeBossDowned.downedTreebark) || (RedeWorld.alignment < 2 && RedeBossDowned.downedTreebark))
-                return "Leave. The fae's trust in you was an act of folly, the World deems you a danger.";
+                return Language.GetTextValue("Mods.Redemption.Dialogue.ForestNymph.DialogueDistrust");
 
             if (Main.LocalPlayer.RedemptionAbility().SpiritwalkerActive)
-                chat.Add("Oh, how vulgar. You are able to see within the other realm and as such are bearing witness to my ethereal form. Or mayhaps you aren't submerged deep enough to see it in full? No matter.", 2);
+                chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.ForestNymph.Dialogue14"), 2);
             if (BasePlayer.HasHelmet(player, ModContent.ItemType<ThornMask>(), true))
-                chat.Add("You aren't blighted, are you? No, it is just a mask.");
+                chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.ForestNymph.Dialogue15"));
             if (BasePlayer.HasArmorSet(player, "Living Wood", true) || BasePlayer.HasArmorSet(player, "Living Wood", false))
             {
-                chat.Add("You better hope that wood you don is not from my home.");
-                chat.Add("You don the wood of a living tree. If I find out you've taken it from my home, I won't be happy.");
+                chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.ForestNymph.Dialogue16"));
+                chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.ForestNymph.Dialogue17"));
             }
             string bothChat = BothChat();
             if (bothChat != null)
                 chat.Add(bothChat);
 
             if (Personality is PersonalityState.Aggressive && RedeQuest.forestNymphVar < 2)
-                chat.Add("Better watch yourself.");
+                chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.ForestNymph.Dialogue18"));
             if (Personality is PersonalityState.Shy)
                 chat.Add("...");
             if (RedeQuest.forestNymphVar < 2)
-                chat.Add("Don't make yourself too comfy, I only trust you because of your fae's kind words about you.");
+                chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.ForestNymph.Dialogue19"));
             else
-                chat.Add("The blossom you gave me is often gifted to others to bring good luck and the blessing of a long life. Being who I am - a forest nymph, as you'd call me - I can use these blossoms to grant me a greater soul and connection with the World; Epidotra, people call it.");
+                chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.ForestNymph.Dialogue20"));
             if (Personality is PersonalityState.Jolly)
-                chat.Add("Come to talk to me? I don't mind the company, as long as nature deems you well.");
+                chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.ForestNymph.Dialogue21"));
             else if (RedeQuest.forestNymphVar < 2)
-                chat.Add("What do you want? I'd rather be left alone.");
+                chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.ForestNymph.Dialogue22"));
             else
-                chat.Add("We nymphs are rather solitary beings, so consider the fact that I don't mind your presence a blessing.");
+                chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.ForestNymph.Dialogue23"));
             return chat;
         }
         public override void LoadData(TagCompound tag)

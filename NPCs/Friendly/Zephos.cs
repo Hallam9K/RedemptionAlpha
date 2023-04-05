@@ -25,6 +25,7 @@ using ReLogic.Content;
 using Redemption.BaseExtension;
 using Redemption.Items.Weapons.PostML.Ranged;
 using Redemption.Items.Weapons.PreHM.Ranged;
+using Terraria.Localization;
 
 namespace Redemption.NPCs.Friendly
 {
@@ -181,25 +182,25 @@ namespace Redemption.NPCs.Friendly
             WeightedRandom<string> chat = new(Main.rand);
             if (RedeQuest.wayfarerVars[0] < 4)
             {
-                chat.Add("Hey there, sorry for the intrusion but I've lost my friend beyond that portal! Mind if I stay here to get some supplies? I'm sure I'll find him eventually.");
+                chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Zephos.IntroDialogue1"));
             }
             else
             {
                 if (!Main.LocalPlayer.Male)
-                    chat.Add("So... You like... pirates?");
+                    chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Zephos.FemaleDialogue"));
                 else
-                    chat.Add("How's it goin' bro!");
-                chat.Add("Hey I came from the mainland through that portal, but you don't mind me staying here, right?");
-                chat.Add("Yo, I have some pretty cool things, you can have them if you got the money.");
-                chat.Add("My favourite colour is orange! Donno why I'm tellin' ya though...");
-                chat.Add("I don't know what the deal with cats are. Dogs are definitely better!");
-                chat.Add("Have you seen a guy in a cloak, he carries a bow around. I lost him before travelling through the portal, hope he's alright.");
-                chat.Add("Wanna know about the time I was a pirate, sailing abroad the vast ocean with fellow pirate people... Actually, I don't remember a lot about being a pirate. I was very young at the time.");
-                chat.Add("Did I ever tell you about my victory against a powerful undead druid? It was a close match, it was giant, and its magic was insane! But yeah, I beat it, pretty cool huh? It had flowers growing everywhere on it!");
-                chat.Add("This island's gotta lotta chickens! Ever wonder where they came from? Back in Anglon, there are way deadlier chickens, called Anglonic Forest Hens. Funny story, I was with Daerel on one of his walks through the forest, then out of nowhere a giant hen charges through the bushes straight at him! I've never seen him run so fast!");
-                chat.Add("I swear I saw a Blobble around here. I didn't expect them to be here, they're native to, uh, Ithon I think. Don't quote me on that though, Daerel's a lot better at remembering useless info than I.");
+                    chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Zephos.Dialogue1"));
+                chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Zephos.Dialogue2"));
+                chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Zephos.Dialogue3"));
+                chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Zephos.Dialogue4"));
+                chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Zephos.Dialogue5"));
+                chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Zephos.Dialogue6"));
+                chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Zephos.Dialogue7"));
+                chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Zephos.Dialogue8"));
+                chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Zephos.Dialogue9"));
+                chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Zephos.Dialogue10"));
                 if (!Main.dayTime)
-                    chat.Add("You never told me there'd be undead here! What, they're called zombies? Well where I'm from they're called undead. There's also a few skeletons out here, normally they like to stay underground. This island is pretty weird. How do you live here?");
+                    chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Zephos.Dialogue11"));
             }
             return chat;
         }
@@ -252,14 +253,14 @@ namespace Redemption.NPCs.Friendly
                     default:
                         if (firstButton)
                         {
-                            Main.npcChatText = "Thanks bro! I may have been a pirate when I was a youngster, but rest assure I will not steal any of your possessions. Just a few bits and bobs needed to help me find my friend, ya know? I'm Zephos, by the way. Pleasure to meet ya.";
+                            Main.npcChatText = Language.GetTextValue("Mods.Redemption.Dialogue.Zephos.IntroDialogue2");
                             RedeQuest.wayfarerVars[0] = 4;
                             if (Main.netMode == NetmodeID.Server)
                                 NetMessage.SendData(MessageID.WorldData);
                         }
                         else
                         {
-                            Main.npcChatText = "Where are my manners! M'name is Zephos, I hold no grand title to my name yet, but once I figure out the blade I'm certain your humble abode shall have a fine swordsman one day! As of now, I must attend to the matter of my friend and gather a few helpful resources. I hope my presence doesn't annoy ya.";
+                            Main.npcChatText = Language.GetTextValue("Mods.Redemption.Dialogue.Zephos.IntroDialogue3");
                             RedeQuest.wayfarerVars[0] = 3;
                             if (Main.netMode == NetmodeID.Server)
                                 NetMessage.SendData(MessageID.WorldData);
@@ -268,7 +269,7 @@ namespace Redemption.NPCs.Friendly
                     case 3:
                         if (firstButton)
                         {
-                            Main.npcChatText = "Thanks bro! I may have been a pirate when I was a youngster, but rest assure I will not steal any of your possessions. Just a few bits and bobs needed to help me find my friend, ya know? Pleasure to meet ya.";
+                            Main.npcChatText = Language.GetTextValue("Mods.Redemption.Dialogue.Zephos.IntroDialogue4");
                             RedeQuest.wayfarerVars[0] = 4;
                             if (Main.netMode == NetmodeID.Server)
                                 NetMessage.SendData(MessageID.WorldData);
@@ -329,8 +330,8 @@ namespace Redemption.NPCs.Friendly
         public static string NoCoinsChat()
         {
             WeightedRandom<string> chat = new(Main.rand);
-            chat.Add("You're as poor as me?");
-            chat.Add("You really don't have enough money? Ah whatever, not like I can complain.");
+            chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Zephos.NoMoneyDialogue1"));
+            chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Zephos.NoMoneyDialogue2"));
             return chat;
         }
         private static int adviceNum;
@@ -338,30 +339,30 @@ namespace Redemption.NPCs.Friendly
         {
             List<string> chat = new();
             if (RedeBossDowned.downedPZ && !RedeBossDowned.downedNebuleus)
-                chat.Add("Honestly, I'm surprised you still come to me for advice! I know I certainly ain't the smartest fella out there. But anyway, I've recently been seeing peculiar lookin' wyverns in the sky - purple and gold. Give it a check!");
+                chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Zephos.AdviceDialogue1"));
             int FallenID = NPC.FindFirstNPC(ModContent.NPCType<Fallen>());
             if (FallenID >= 0 && Main.LocalPlayer.HasItem(ModContent.ItemType<GolemEye>()) && NPC.downedMoonlord && !RedeBossDowned.downedADD)
-                chat.Add("Hmm, that shinin' eye you got looks rather... mythical. And it's giving you a riddle too? \"Surround it with the stones of its origin\"... Eh, I got nothin', maybe ask " + Main.npc[FallenID].GivenName + ".");
+                chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Zephos.AdviceDialogue2", Main.npc[FallenID].GivenName));
             if (Main.hardMode && !RedeBossDowned.downedSlayer)
-                chat.Add("I've seen some strange metal folk meandering about the island, firing beams of light on random objects and creatures. No idea where they came from, but I did see one get attacked. Once it was weakened, it stopped moving and vanished into the air! Their purpose is a mystery to me. Maybe you could figure it out?");
+                chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Zephos.AdviceDialogue3"));
             int DryadID = NPC.FindFirstNPC(NPCID.Dryad);
             if (DryadID >= 0 && RedeQuest.forestNymphVar == 0)
-                chat.Add("Ya know " + Main.npc[DryadID].GivenName + "? She's seen a Forest Nymph on this island at one point, if you can believe that. Super rare creatures those are, you'd only be able to find them near giant trees. If you do come across one, I wouldn't linger around for too long, they don't like humans getting in their personal space. I wonder if there were a way to befriend one though?");
+                chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Zephos.AdviceDialogue4", Main.npc[DryadID].GivenName));
             if (FallenID >= 0 && !Main.LocalPlayer.RedemptionAbility().Spiritwalker)
-                chat.Add(Main.npc[FallenID].GivenName + " has told me he came from another portal underground. Apparently it leads to some catacombs, but you wouldn't be able to go through it. Still, he's told of some rather intriguing things lying by the portal, I'd give it a check if I were you!");
+                chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Zephos.AdviceDialogue5", Main.npc[FallenID].GivenName));
             if (!RedeBossDowned.downedEaglecrestGolem && NPC.downedBoss2)
-                chat.Add("While I was having a stroll I came across some oddly-shaped stones - looked like a boulder with legs. I was curious of course, so I gave it a WHAM with my sword! Nothing happened... and yet I sensed a presence inside it. You, as a slayer of many things, should search around and find it, might be another challenge to face!");
+                chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Zephos.AdviceDialogue6"));
             if (!Main.LocalPlayer.RedemptionAbility().Spiritwalker)
-                chat.Add("Ever see tiny lights skitterin' from a slain skeleton? Or perhaps a lantern-carrying ghost underground? Those are lost souls, and as far as I know, only arcane or holy weapons may bring them harm. Not that I'd suggest harming those helpless things.");
-            chat.Add("When encountering skeletons and undead, holy weapons are most effective against them. On the contrary, shadow weapons aren't as effective. I hate skeletons, used to think they looked kinda funny, until me and Daerel met a skeleton Vex.");
-            chat.Add("If you hate slimes, burn them! They'll burn brighter than my passion for attractive ladies" + (Main.LocalPlayer.Male ? "" : " (wink wink)") + ". Or, you could use ice weapons to freeze them, but that isn't as fun.");
-            chat.Add("Ever want to sneak up on an Epidotrian skeleton? Or perhaps a chicken? Well invisibility potions are real handy for the job!");
-            chat.Add("Skeletons can wield some super rusty weapons, not something you'd wanna get cut by. If you do get a dirty wound, take a dip in some water and it'll disappear!");
-            chat.Add("See foes wearing armor or holding shields? You'll need to smash their Guard to deal with them! A hammer or explosives will be your best bet, just make sure your weapon isn't super weak.");
+                chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Zephos.AdviceDialogue7"));
+            chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Zephos.AdviceDialogue8"));
+            chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Zephos.AdviceDialogue9", Main.LocalPlayer.Male ? "" : " (wink wink)"));
+            chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Zephos.AdviceDialogue10"));
+            chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Zephos.AdviceDialogue11"));
+            chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Zephos.AdviceDialogue12"));
             if (!RedeBossDowned.foundNewb)
-                chat.Add("I felt a weird presence beneath that portal I hopped out of, it was super uncanny! Maybe you should check it out.");
+                chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Zephos.AdviceDialogue13"));
             if (RedeBossDowned.erhanDeath == 0)
-                chat.Add("I saw a scroll sitting atop a small table next to the portal I came out of, did you pick it up yet? It looked rather... demonic.");
+                chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Zephos.AdviceDialogue14"));
 
             string[] chatStr = chat.ToArray();
             int maxAdvice = chatStr.Length;

@@ -14,6 +14,7 @@ using Redemption.BaseExtension;
 using Redemption.Items.Weapons.PreHM.Summon;
 using Redemption.Items.Materials.PreHM;
 using Terraria.Audio;
+using Terraria.Localization;
 
 namespace Redemption.NPCs.Friendly
 {
@@ -171,20 +172,20 @@ namespace Redemption.NPCs.Friendly
                 }
 
                 if ((BasePlayer.HasHelmet(Main.LocalPlayer, ItemID.TheBrideHat) && BasePlayer.HasChestplate(Main.LocalPlayer, ItemID.TheBrideDress)) || (BasePlayer.HasHelmet(Main.LocalPlayer, ItemID.TopHat) && BasePlayer.HasChestplate(Main.LocalPlayer, ItemID.TuxedoShirt) && BasePlayer.HasLeggings(Main.LocalPlayer, ItemID.TuxedoPants)))
-                    Main.npcChatText = "What's this..? A ring..? And your attire... Is this a proposal? ..Oh! Her spirit, her jolly spirit! It still remains infused within this ring. Why thank you, gracious soul, for this gift hath lifted my sorrowful shoulders. With this as a reminder, mayhaps I find peace too.";
+                    Main.npcChatText = Language.GetTextValue("Mods.Redemption.Dialogue.SkullDigger.WeddingRingDialogue2");
                 else
-                    Main.npcChatText = "What's this..? A ring..? Oh! Her spirit, her jolly spirit! It still remains infused within this ring. Why thank you, gracious soul, for this gift hath lifted my sorrowful shoulders. With this as a reminder, mayhaps I find peace too.";
+                    Main.npcChatText = Language.GetTextValue("Mods.Redemption.Dialogue.SkullDigger.WeddingRingDialogue1");
                 AIState = ActionState.Saved;
             }
         }
         public static string ChitChat()
         {
-            return "What would a meaningless protector offer in the ways of discussion..? Perhaps I may tell you about my past life... No, it's nothing but a blur now. Octavia resurrected me and kept my withering body moving for so long I have lost my old self. I'm barely an undead anymore, more so a spirit. But don't pity me, I enjoyed my time with her, it made me feel I had a purpose...";
+            return Language.GetTextValue("Mods.Redemption.Dialogue.SkullDigger.Talk");
         }
         public override string GetChat()
         {
             spoken = true;
-            return "Oh... I thank you for freeing my mistress from her sorrow. But now without her, what is my purpose. I do not yet feel fulfilled. If only I could have a token of her, an object of remembrance...";
+            return Language.GetTextValue("Mods.Redemption.Dialogue.SkullDigger.Dialogue");
         }
 
         public override void FindFrame(int frameHeight)
@@ -307,7 +308,7 @@ namespace Redemption.NPCs.Friendly
         public override void OnChatButtonClicked(bool firstButton, ref string shopName)
         {
             if (firstButton)
-                Main.npcChatText = "You see, I was expecting to join my mistress in this realm, seeing as we were both freed of our sorrows. Contrariwise, I have no sight of her, none at all... I have looked and looked, but alas, I feel I am searching for a ghost - in the metaphorical and literal sense. If you know not of where she lies, I suppose I must continue my search. I must not let my vexation sway me, lest I turn vengeful.";
+                Main.npcChatText = Language.GetTextValue("Mods.Redemption.Dialogue.SkullDigger.SpiritTalk");
             else
             {
                 int card = Main.LocalPlayer.FindItem(ModContent.ItemType<EmptyCruxCard>());
@@ -318,20 +319,20 @@ namespace Redemption.NPCs.Friendly
                         Main.LocalPlayer.inventory[card] = new Item();
 
                     Main.LocalPlayer.QuickSpawnItem(NPC.GetSource_Loot(), ModContent.ItemType<CruxCardSkullDigger>());
-                    Main.npcChatText = "For all the kindness you have brought, I will accept. May I serve you well.";
+                    Main.npcChatText = Language.GetTextValue("Mods.Redemption.Dialogue.SkullDigger.CruxSpiritDialogue");
                     Main.npcChatCornerItem = ModContent.ItemType<CruxCardSkullDigger>();
                     SoundEngine.PlaySound(SoundID.Chat);
                 }
                 else
                 {
-                    Main.npcChatText = "Of course, but I cannot without an object to imbue.";
+                    Main.npcChatText = Language.GetTextValue("Mods.Redemption.Dialogue.SkullDigger.NoCruxSpiritDialogue");
                     Main.npcChatCornerItem = ModContent.ItemType<EmptyCruxCard>();
                 }
             }
         }
         public override string GetChat()
         {
-            return "Hmmmm... Oh! I never expected for you to see me again, seeing as I am a full-fledged spirit now. Hm, I care not that our paths cross again so soon, as perhaps you may assist my worried thoughts.";
+            return Language.GetTextValue("Mods.Redemption.Dialogue.SkullDigger.SpiritDialogue");
         }
 
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)

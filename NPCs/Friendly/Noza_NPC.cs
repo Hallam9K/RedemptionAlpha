@@ -9,6 +9,7 @@ using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.Utilities;
 
@@ -153,7 +154,7 @@ namespace Redemption.NPCs.Friendly
         {
             return ChatNumber switch
             {
-                0 => "Wouldn't you like to know! I'm a bit early to the party - apparently I'm meant to be in the \"full 0.8 update\"... Whatever that means.\nBut I got impatient so here I am! With nothing to do! There isn't even anything unique here!",
+                0 => Language.GetTextValue("Mods.Redemption.Dialogue.Noza.Chat1"),
                 _ => "...",
             };
         }
@@ -165,25 +166,25 @@ namespace Redemption.NPCs.Friendly
             if (BasePlayer.HasHelmet(player, ItemID.DevilHorns, true) || BasePlayer.HasHelmet(player, ItemID.DemonHorns, true))
             {
                 EmoteState = EmotionState.Laugh;
-                chat.Add("Nice horns, did your MOM make them for you? WHEHEHEHEHE!");
+                chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Noza.Dialogue1"));
             }
             if (player.HeldItem.type == ModContent.ItemType<BlindJustice>())
-                return "EEK! Get that holy weapon AWAY from me!";
+                return Language.GetTextValue("Mods.Redemption.Dialogue.Noza.Dialogue2");
             if (BasePlayer.HasAccessory(player, ItemID.AngelHalo, true, true))
-                return "Yuck! What's with that ring over your head? No goody-two-shoes in MY bastion!";
+                chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Noza.Dialogue3"), 2);
 
             if (player.IsFullTBot())
             {
                 EmoteState = EmotionState.Laugh;
-                chat.Add("What is a SILLY LITTLE METAL BUCKET doing in MY bastion!?");
-                chat.Add("What even are you? Some sort of bucket cosplayer!? Wehehehe!");
+                chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Noza.Dialogue4TBot"));
+                chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Noza.Dialogue5TBot"));
             }
             else
             {
                 EmoteState = EmotionState.Laugh;
-                chat.Add("What is a SILLY LITTLE HUMAN doing in MY bastion!?");
-                chat.Add("Look at ITTY BITTY you! Whehehehe! Humans look so STUPID!");
-                chat.Add("Wow! I forgot how TINY humans were! Whehehehe!");
+                chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Noza.Dialogue4"));
+                chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Noza.Dialogue5"));
+                chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Noza.Dialogue6"));
             }
             return chat;
         }

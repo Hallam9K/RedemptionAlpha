@@ -1315,13 +1315,17 @@ namespace Redemption.Globals
         }
         public static void LockMoveRadius(this Terraria.NPC npc, Terraria.Player player, int radius = 1000)
         {
-            if (!RedeConfigClient.Instance.CameraLockDisable && npc.Distance(player.Center) > radius)
+            bool lockedScreen = player.RedemptionScreen().lockScreen;
+            if (!RedeConfigClient.Instance.CameraLockDisable && npc.DistanceSQ(player.Center) > radius * radius)
             {
-                Vector2 movement = npc.Center - player.Center;
-                float difference = movement.Length() - radius;
-                movement.Normalize();
-                movement *= difference < 17f ? difference : 17f;
-                player.position += movement;
+                if (!lockedScreen || npc.Distance(player.Center) < radius + 100)
+                {
+                    Vector2 movement = npc.Center - player.Center;
+                    float difference = movement.Length() - radius;
+                    movement.Normalize();
+                    movement *= difference < 17f ? difference : 17f;
+                    player.position += movement;
+                }
             }
         }
         public static bool DespawnHandler(this Terraria.NPC npc)

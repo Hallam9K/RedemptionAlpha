@@ -11,6 +11,7 @@ using Redemption.BaseExtension;
 using Redemption.Items.Weapons.PreHM.Summon;
 using Redemption.Items.Materials.PreHM;
 using Terraria.Audio;
+using Terraria.Localization;
 
 namespace Redemption.NPCs.Friendly
 {
@@ -141,7 +142,7 @@ namespace Redemption.NPCs.Friendly
                     {
                         if (!Main.LocalPlayer.RedemptionAbility().SpiritwalkerActive)
                         {
-                            Main.npcChatText = "Get a little more into the Spirit Realm, and I will give it to you.";
+                            Main.npcChatText = Language.GetTextValue("Mods.Redemption.Dialogue.SpiritDruid.NoRealmCruxDialogue");
                             ChatNumber = 3;
                             return;
                         }
@@ -157,20 +158,20 @@ namespace Redemption.NPCs.Friendly
                                 Main.LocalPlayer.inventory[card] = new Item();
 
                             Main.LocalPlayer.QuickSpawnItem(NPC.GetSource_Loot(), ModContent.ItemType<CruxCardMossyGoliath>());
-                            Main.npcChatText = "A fine flower. It'll do. Take it, take the spirit of a goliath. It will serve you well, as it had to I.";
+                            Main.npcChatText = Language.GetTextValue("Mods.Redemption.Dialogue.SpiritDruid.CruxDialogue");
                             Main.npcChatCornerItem = ModContent.ItemType<CruxCardMossyGoliath>();
                             SoundEngine.PlaySound(SoundID.Chat);
                             ChatNumber = 3;
                         }
                         else
                         {
-                            Main.npcChatText = "I'll need something to imbue first.";
+                            Main.npcChatText = Language.GetTextValue("Mods.Redemption.Dialogue.SpiritDruid.NoCruxDialogue");
                             Main.npcChatCornerItem = ModContent.ItemType<EmptyCruxCard>();
                         }
                     }
                     else
                     {
-                        Main.npcChatText = "You'll be lucky. I do not give to Anglonic fol'hakks freely. Assuming you are from that haughty place? It matters not, if you offer a blessing to me, I shall do the same to you. I request an enchanted flower to grow atop my grave - a blue one, preferably. Find one that looks pretty.";
+                        Main.npcChatText = Language.GetTextValue("Mods.Redemption.Dialogue.SpiritDruid.OfferCruxDialogue");
                         Main.npcChatCornerItem = ItemID.NaturesGift;
                     }
                     request = true;
@@ -190,16 +191,16 @@ namespace Redemption.NPCs.Friendly
         {
             return ChatNumber switch
             {
-                0 => "Sent me back to look upon my remains and now you ask for a friendly chat. Gralvr! What a strange thing. Speaking to spirits have become a bore, so I might as well. I come from the Kul'don rainforests in what most call Thamor. We lived as a commune of druids, far from others. To us, the world was a small thing, we kept to ourselves and never stepped foot beyond our territory.",
-                1 => "It is what the other spirits I've met call the domain I lived in. During my time of being alive, I had never thought of what the world was like beyond the rainforests, as we had never travelled beyond them. To us, the rainforests were our entire world, at least until we were forced out.",
-                2 => "A reasonable question. Of course, the portals here lead to Anglon and Gathuram, none are even close to Thamor, let alone the wilds of Kul'don. We were driven out by force, a posse of Anglonic soldiers came by in search of our goliaths - ones we had tamed and have been a part of our commune for generations. We retaliated of course, and drove them out. A short-lived victory, for they reappeared with their leader. They not only captured our goliaths, but us as well. To Anglon we were sent, and it is there I had escaped.",
+                0 => Language.GetTextValue("Mods.Redemption.Dialogue.SpiritDruid.Chat1"),
+                1 => Language.GetTextValue("Mods.Redemption.Dialogue.SpiritDruid.Chat2"),
+                2 => Language.GetTextValue("Mods.Redemption.Dialogue.SpiritDruid.Chat3"),
                 _ => "...",
             };
         }
         public override bool CanChat() => true;
         public override string GetChat()
         {
-            return "Tokk'gralvr! Dorvr'kok ok kolbv? Ah, groa'g Anglic fofolg. It's always Anglic speakers, never any of my own... Whatever. I don't know how you took me back to my place of defeat, do you want something from me?";
+            return Language.GetTextValue("Mods.Redemption.Dialogue.SpiritDruid.Dialogue");
         }
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {

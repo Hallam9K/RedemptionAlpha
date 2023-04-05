@@ -13,6 +13,7 @@ using Redemption.Items.Materials.PreHM;
 using Terraria.Audio;
 using Redemption.Items.Armor.Vanity;
 using Redemption.Base;
+using Terraria.Localization;
 
 namespace Redemption.NPCs.Friendly
 {
@@ -146,7 +147,7 @@ namespace Redemption.NPCs.Friendly
                 {
                     if (!Main.LocalPlayer.RedemptionAbility().SpiritwalkerActive)
                     {
-                        Main.npcChatText = "Sorry! Can't give ya anything while you're completely in the physical realm. Peak in and I'll give it to ya!";
+                        Main.npcChatText = Language.GetTextValue("Mods.Redemption.Dialogue.SpiritWalkerMan.NoRealmCruxDialogue");
                         ChatNumber = 4;
                         return;
                     }
@@ -161,13 +162,13 @@ namespace Redemption.NPCs.Friendly
                                 Main.LocalPlayer.inventory[oldTophat] = new Item();
 
                             Main.LocalPlayer.QuickSpawnItem(NPC.GetSource_Loot(), ModContent.ItemType<CruxCardTied>());
-                            Main.npcChatText = "I see, I see. Within this tophat lies an odd spirit. I don't believe I've ever met it before, but they appear ta be quite powerful.";
+                            Main.npcChatText = Language.GetTextValue("Mods.Redemption.Dialogue.SpiritWalkerMan.CruxAsherDialogue");
                             Main.npcChatCornerItem = ModContent.ItemType<CruxCardTied>();
                             SoundEngine.PlaySound(SoundID.Chat);
                         }
                         else
                         {
-                            Main.npcChatText = "There's somethin' in that hat I can use to imbue into something, however, ya don't have anythin' for me to imbue.";
+                            Main.npcChatText = Language.GetTextValue("Mods.Redemption.Dialogue.SpiritWalkerMan.NoCruxAsherDialogue");
                             Main.npcChatCornerItem = ModContent.ItemType<EmptyCruxCard>();
                         }
                         ChatNumber = 4;
@@ -180,13 +181,13 @@ namespace Redemption.NPCs.Friendly
                             Main.LocalPlayer.inventory[card] = new Item();
 
                         Main.LocalPlayer.QuickSpawnItem(NPC.GetSource_Loot(), ModContent.ItemType<CruxCardSkeleton>());
-                        Main.npcChatText = "Bravo! I 'ave infused ya card with the spirits of two skeletons, use some souls to summon 'em! They'll assist ya in battle, or make nice company if ya feelin' lonely. They do 'ave a mind of their own, so if they scurry off somewhere, use the card to tug their souls back! Keep in mind, other spirits may wish for somethin' in return for these.";
+                        Main.npcChatText = Language.GetTextValue("Mods.Redemption.Dialogue.SpiritWalkerMan.CruxDialogue");
                         Main.npcChatCornerItem = ModContent.ItemType<CruxCardSkeleton>();
                         SoundEngine.PlaySound(SoundID.Chat);
                     }
                     else
                     {
-                        Main.npcChatText = "Ya don't have anythin' I can imbue. If you want help findin' somethin', I'll say to look for those gathic tombs scattered aroun' the caverns. Ya might find somethin' in there.";
+                        Main.npcChatText = Language.GetTextValue("Mods.Redemption.Dialogue.SpiritWalkerMan.NoCruxDialogue");
                         Main.npcChatCornerItem = ModContent.ItemType<EmptyCruxCard>();
                     }
                     ChatNumber = 4;
@@ -214,11 +215,11 @@ namespace Redemption.NPCs.Friendly
         {
             return ChatNumber switch
             {
-                0 => "The ability given to ya gives you a peak into the Spirit Realm - A realm parallel to our own. Normally, neither realm can see each other, nor interact. You'll be able to kill foes connected to the realm while peakin', or find corpses to use that bell thing-a-ma-jig on. Such as mine! Another thing, we spirits can gift to you our \"crux\" if ya have somethin' to imbue it in - as long as you're submerged enough in our realm.",
-                1 => "A nifty artifact of Gathuram, that is. Usin' it on corpses will force their spirit back to their location while tuggin' them outta the Spirit Realm a tad, which is why you can see me now even if you stopped Spirit Walkin', despite me being a full-fledged spirit - not one of those Vagrants or Lost Souls.",
-                2 => "When folk die, their soul leaves their body to find anotha'. During this pilgrimage, they're still connected to the physical world, meanin' some with the arcane eye may see 'em, or even do... worse things with 'em. If a lost soul wanders too long, they can seep outta the spirit realm and become Vagrant Spirits - poor things forever lost.",
-                3 => !Main.rand.NextBool(8) ? "I couldn't tell ya where to find corpses to use it on, but I can recommend findin' spirit currents. They're only visible in my realm, and can take ya closer to a soulful corpse if ya travel through one. You'll only find 'em in caverns, as that'll be where our energy is most contained. If ya do find what you're lookin' for, be wary. Tombs of the mighty are seldom left unguarded." : "I once met anotha' spirit in a mind-bogglin' location! It felt outta this world, which says a lot considerin' I'm not in your realm. The walls were white, pipes with green fluids hung from ceilings, strange blue lights emitted from metal boxes an' tubes... And the spirit I saw was most intriguing! He just kept repeatin' about alarms, and wore a strange white an' blue suit. Very odd.",
-                4 => "Like I said, I've been a spirit so long that I forgot my own name, yet I still remember most other things 'bout me. Strange that. I'm from Gathuram, the portal behind me leads to the Catacombs of Gathuram, and is how the undead and skeleton folk came here. Doesn't seem like you can enter it though.",
+                0 => Language.GetTextValue("Mods.Redemption.Dialogue.SpiritWalkerMan.Chat1"),
+                1 => Language.GetTextValue("Mods.Redemption.Dialogue.SpiritWalkerMan.Chat2"),
+                2 => Language.GetTextValue("Mods.Redemption.Dialogue.SpiritWalkerMan.Chat3"),
+                3 => !Main.rand.NextBool(8) ? Language.GetTextValue("Mods.Redemption.Dialogue.SpiritWalkerMan.Chat4") : Language.GetTextValue("Mods.Redemption.Dialogue.SpiritWalkerMan.Chat4B"),
+                4 => Language.GetTextValue("Mods.Redemption.Dialogue.SpiritWalkerMan.Chat5"),
                 _ => "...",
             };
         }
@@ -226,12 +227,12 @@ namespace Redemption.NPCs.Friendly
         public override string GetChat()
         {
             bool wearingHat = BasePlayer.HasHelmet(Main.LocalPlayer, ModContent.ItemType<OldTophat>());
-            string s = "P";
+            string s = "";
             if (wearingHat)
-                s = "Take it off an' p";
+                s = Language.GetTextValue("Mods.Redemption.Dialogue.SpiritWalkerMan.Dialogue2Mid");
             if (Main.LocalPlayer.HasItem(ModContent.ItemType<OldTophat>()) || wearingHat)
-                return "Ey, that old tophat ya got has something spiritual 'bout it. " + s + "eak into the Spirit Realm for a bit so I can get a closer look.";
-            return "Great! You figured out how ta' call me! I hope ya take fancy to ma' gift. I'm err, let's just say a spiritual enthusiast. I don't remember my actual name. Ask me anythin'!";
+                return Language.GetTextValue("Mods.Redemption.Dialogue.SpiritWalkerMan.Dialogue2") + s + Language.GetTextValue("Mods.Redemption.Dialogue.SpiritWalkerMan.Dialogue2Cont");
+            return Language.GetTextValue("Mods.Redemption.Dialogue.SpiritWalkerMan.Dialogue1");
         }
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {

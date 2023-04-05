@@ -97,34 +97,17 @@ namespace Redemption.NPCs.Friendly
             if (NPC.altTexture == 1)
             {
                 Asset<Texture2D> hat = ModContent.Request<Texture2D>("Terraria/Images/Item_" + ItemID.PartyHat);
-                int offset;
-                switch (NPC.frame.Y / 52)
+                var offset = (NPC.frame.Y / 52) switch
                 {
-                    default:
-                        offset = 0;
-                        break;
-                    case 3:
-                        offset = 2;
-                        break;
-                    case 4:
-                        offset = 2;
-                        break;
-                    case 5:
-                        offset = 2;
-                        break;
-                    case 10:
-                        offset = 2;
-                        break;
-                    case 11:
-                        offset = 2;
-                        break;
-                    case 12:
-                        offset = 2;
-                        break;
-                    case 18:
-                        offset = 2;
-                        break;
-                }
+                    3 => 2,
+                    4 => 2,
+                    5 => 2,
+                    10 => 2,
+                    11 => 2,
+                    12 => 2,
+                    18 => 2,
+                    _ => 0,
+                };
                 var hatEffects = NPC.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
                 Vector2 origin = new(hat.Value.Width / 2f, hat.Value.Height / 2f);
                 spriteBatch.Draw(hat.Value, NPC.Center - new Vector2(4 * NPC.spriteDirection, 24 + offset) - screenPos, null, NPC.GetAlpha(drawColor), NPC.rotation, origin, NPC.scale, hatEffects, 0);
@@ -164,41 +147,36 @@ namespace Redemption.NPCs.Friendly
             {
                 if (RedeBossDowned.nebDeath > 6)
                 {
-                    chat.Add("I saw what you did.");
-                    chat.Add("It is all coming back to me... I saw what you did... I can comprehend more than just the dirt below my feet now. I have something to say to you, but I am still not ready.");
+                    chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Fool.WokeDialogue1"));
+                    chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Fool.WokeDialogue2"));
                 }
-                chat.Add("My death, my sleep within the earth, had undone myself. But as my time awake grows longer, my lost self returns.");
-                chat.Add("I can feel my memories arise from their deep slumber. There is something I must do, I know that much, yet I am uncertain as to what it is.");
-
+                chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Fool.WokeDialogue3"));
+                chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Fool.WokeDialogue4"));
             }
             else
             {
                 if (BasePlayer.HasHelmet(player, ModContent.ItemType<KingSlayerMask>(), true))
-                    chat.Add("Heheh! Hewwo mister slayer! Wait... who's that?");
+                    chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Fool.KingSlayerMaskDialogue"));
                 if (player.RedemptionPlayerBuff().ChickenForm)
-                    chat.Add("IT'S A CHICKEN! Come on mister chicken, time for your walk!");
+                    chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Fool.ChickenDialogue"));
                 else
-                    chat.Add("Chickens very funny! I fed chicken grain but I threw a crown on floor instead, but chicken pecked it anyway! ... And then it exploded!!");/*
-                if (BasePlayer.HasHelmet(player, ModContent.ItemType<ArmorHKHead>(), true) && BasePlayer.HasChestplate(player, ModContent.ItemType<ArmorHK>(), true) && BasePlayer.HasChestplate(player, ModContent.ItemType<ArmorHKLeggings>(), true))
-                {
-                    chat.Add("Do I know you?");
-                }*/
-                chat.Add("My shoes aren't muddy! Where is all the mud!?"); // 9.7%
-                chat.Add("Trees here are funny colours! Where are yellow leaves! They all green! ... Green is good colour too.", 0.6); // 5.8%
-                chat.Add("What's your name? Is it Garry? I bet it's Garry! Garry the Gentle is your name now!", 0.4); // 3.9%
-                chat.Add("This island is not MY island! Where are my people!?", 0.4);
-                chat.Add("They're coming, the red is coming! Don't stay! ... Oh hewwo!", 0.2); // 1.9%
-                chat.Add("Me like emeralds, they green! Rubies me hate! Too red!", 0.2);
-                chat.Add("What is beyond portal? Let's find out Johnny! ... Wait that isn't right name...", 0.2);
-                chat.Add("Me sowwy! Me go with shiny knight!", 0.2);
+                    chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Fool.Dialogue1"));
+                chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Fool.Dialogue2")); // 9.7%
+                chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Fool.Dialogue3"), 0.6); // 5.8%
+                chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Fool.Dialogue4"), 0.4); // 3.9%
+                chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Fool.Dialogue5"), 0.4);
+                chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Fool.Dialogue6"), 0.2); // 1.9%
+                chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Fool.Dialogue7"), 0.2);
+                chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Fool.Dialogue8"), 0.2);
+                chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Fool.Dialogue9"), 0.2);
                 if (RedeWorld.alignment < 0)
-                    chat.Add("Your ambitions are futile and will decayed, dare not proceed down the path of sin lest you face the very earth you walk upon. The death which lingers on your soul will consume you from within until you are but a husk unworthy of swift retribution.", 0.05); // 0.48%
-                chat.Add("Who you? You human?");
-                chat.Add("Me find shiny stones!");
-                chat.Add("You look stupid! Haha!");
-                chat.Add("My dirt is 10% off!");
-                chat.Add("Heheheh!");
-                chat.Add("Hewwo! I am Newb!");
+                    chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Fool.HuhDialogue"), 0.05); // 0.48%
+                chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Fool.Dialogue10"));
+                chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Fool.Dialogue11"));
+                chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Fool.Dialogue12"));
+                chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Fool.Dialogue13"));
+                chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Fool.Dialogue14"));
+                chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Fool.Dialogue15"));
             }
             return chat;
         }

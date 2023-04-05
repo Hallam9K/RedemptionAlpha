@@ -12,6 +12,7 @@ using Redemption.Items.Weapons.PreHM.Summon;
 using Redemption.Items.Materials.PreHM;
 using Terraria.Audio;
 using Redemption.Items.Weapons.PreHM.Melee;
+using Terraria.Localization;
 
 namespace Redemption.NPCs.Friendly
 {
@@ -134,7 +135,7 @@ namespace Redemption.NPCs.Friendly
                     {
                         if (!Main.LocalPlayer.RedemptionAbility().SpiritwalkerActive)
                         {
-                            Main.npcChatText = "Thou must be at least partly within the Spirit Realm for me to give thee what you ask.";
+                            Main.npcChatText = Language.GetTextValue("Mods.Redemption.Dialogue.SpiritCommonGuard.NoRealmCruxDialogue");
                             ChatNumber = 3;
                             return;
                         }
@@ -150,20 +151,20 @@ namespace Redemption.NPCs.Friendly
                                 Main.LocalPlayer.inventory[card] = new Item();
 
                             Main.LocalPlayer.QuickSpawnItem(NPC.GetSource_Loot(), ModContent.ItemType<CruxCardAnglonSkeletons>());
-                            Main.npcChatText = "Aye, take it, within me lies the Common Guard's spirit! May it protect and defend thee against the greatest of foes.";
+                            Main.npcChatText = Language.GetTextValue("Mods.Redemption.Dialogue.SpiritCommonGuard.CruxDialogue");
                             Main.npcChatCornerItem = ModContent.ItemType<CruxCardAnglonSkeletons>();
                             SoundEngine.PlaySound(SoundID.Chat);
                             ChatNumber = 3;
                         }
                         else
                         {
-                            Main.npcChatText = "I'll need something to imbue first.";
+                            Main.npcChatText = Language.GetTextValue("Mods.Redemption.Dialogue.SpiritCommonGuard.NoCruxDialogue");
                             Main.npcChatCornerItem = ModContent.ItemType<EmptyCruxCard>();
                         }
                     }
                     else
                     {
-                        Main.npcChatText = "Gladly, however I request something in return. My remains lay empty-handed, if thou'st may offer upon them a weapon of my unit, then I shall be complacent. A lone corpse tells a bare tale.";
+                        Main.npcChatText = Language.GetTextValue("Mods.Redemption.Dialogue.SpiritCommonGuard.OfferCruxDialogue");
                         Main.npcChatCornerItem = ModContent.ItemType<NoblesHalberd>();
                     }
                     request = true;
@@ -183,17 +184,17 @@ namespace Redemption.NPCs.Friendly
         {
             return ChatNumber switch
             {
-                0 => "Behold, for I am Kleo! Common Guard of Ricusa City! I'm sure if ye were a resident of Anglon you'd be jumping in shock to face such a legendary figure! Oh who am I kidding, my name barely made it past my own district. But no matter! I did my job well and that is all that matters!",
-                1 => "By Grace! To think anyone who walks this earth be unaware of the greatest domain in Epidotra! The Hallowed Dominion is where I'm from, and Ricusa City is where I resided. 'Tis a peaceful and prosperous land, home to great cities and castles and all the protection thou canst get! Well, sort of.",
-                2 => "Ah, Ricusa... It was such a grand capital - also one of the largest in the domain. Did you know it started as a humble village? Eventually the old capital was laid to ruin, and due to the village's steady growth it was promoted to the new capital. All seemed well for ages to come... That was until the demons came.",
-                3 => "A great demon terror invaded the capital with his underlings, never before had I seen such power and brute strength come from a single creature. The walls were broken down and the two legendary brothers - Archon and Vargo - fought against the them. They were great heroes, said they would trounce the demon forces back to Demonhollow. Yet for all their talk they were quickly killed by the leader with very little resistance, and so Ricusa City fell to the scourge. Like much else before it.",
+                0 => Language.GetTextValue("Mods.Redemption.Dialogue.SpiritCommonGuard.Chat1"),
+                1 => Language.GetTextValue("Mods.Redemption.Dialogue.SpiritCommonGuard.Chat2"),
+                2 => Language.GetTextValue("Mods.Redemption.Dialogue.SpiritCommonGuard.Chat3"),
+                3 => Language.GetTextValue("Mods.Redemption.Dialogue.SpiritCommonGuard.Chat4"),
                 _ => "...",
             };
         }
         public override bool CanChat() => true;
         public override string GetChat()
         {
-            return "What manner of sorcery is this? And here I thought us immune to the physical world's presence...";
+            return Language.GetTextValue("Mods.Redemption.Dialogue.SpiritCommonGuard.Dialogue");
         }
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {

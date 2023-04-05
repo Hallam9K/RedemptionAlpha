@@ -278,12 +278,12 @@ namespace Redemption.NPCs.Friendly
             WeightedRandom<string> chat = new(Main.rand);
 
             if (NPC.life < (int)(NPC.lifeMax * .8f) || RedeBossDowned.downedTreebark)
-                chat.Add("Do you fear the unknown? Does my size frighten you? Please, do not be afraid, I am just a lone ent.", 10);
+                chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.TreebarkDryad.FelledDialogue1"), 10);
             if (NPC.life < (int)(NPC.lifeMax * .5f) || RedeBossDowned.downedTreebark)
-                chat.Add("You are a peculiar thing. Do you chop for a reason, or for fun? You should be more considerate about your surroundings.", 10);
+                chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.TreebarkDryad.FelledDialogue2"), 10);
             if (RedeBossDowned.downedTreebark)
             {
-                chat.Add("I help no tree-feller.", 10);
+                chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.TreebarkDryad.FelledDialogue3"), 10);
                 return "Hmmmm... " + chat;
             }
 
@@ -302,30 +302,30 @@ namespace Redemption.NPCs.Friendly
             if (AITimer == 1)
             {
                 if (RedeWorld.DayNightCount >= 3)
-                    chat.Add("I think I have lingered here for long enough. I was told by the humans to guard this place, but it has been far too long an age... Dangers have come and gone, but none have ever sought to demolish this shrine. To Fairwood I return - I have missed its lush forests and bark'en friends. Mayhaps you be this shrine's new protector..? If it needs one, anyway.", 4);
-                chat.Add("What's that shrine behind me..? It was built by a group of humans, long dead by now, as a place of worship to some sort of figure... I don't recall their name, but I know they were a good friend of nature. Some may consider her the Mother of Nature..? Hmmm... My memory grows distant in my old age.", 2);
-                chat.Add("I have been here a long time, even for us. I was a bold sapling, far more than the others, and so I had come to this land far far earlier than the rest. Maybe I was unwise, but I have seen more of us coming from our lands in recent times, so perhaps the others grew adventurous too.");
+                    chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.TreebarkDryad.ShrineDialogue1"), 4);
+                chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.TreebarkDryad.ShrineDialogue2"), 2);
+                chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.TreebarkDryad.ShrineDialogue3"));
             }
 
             if (score == 0)
-                chat.Add("Where did all my tree friends go..? Perhaps they grew weary of me...", 2);
+                chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.TreebarkDryad.NoTreesDialogue1"), 2);
 
             if (score < 60)
-                chat.Add("You aren't using that axe of yours on my tree friends, are you..?");
+                chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.TreebarkDryad.NoTreesDialogue2"));
 
             if (RedeWorld.alignment < 0)
-                chat.Add("You don't look like a very pleasant fellow. I hope you don't try to chop me down... Haha.. Ha.");
+                chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.TreebarkDryad.Dialogue1"));
 
             if (AITimer != 1)
             {
                 if (RedeBossDowned.downedThorn)
-                    chat.Add("The forest we came from, Fairwood, has been freed of its curse. I was there to witness the forest's warden be tangled up by those cursed roots... But we toil with no humans, and our magic did nothing, so we roamed and roamed until we found this strange portal. It's what lead us here.");
+                    chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.TreebarkDryad.Dialogue2"));
                 else
-                    chat.Add("You wouldn't happen to see a brambly young man..? Poor thing was gulped up by the cursed forest we once lived in. I toil with no humans, but I do wonder if he's alright...");
+                    chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.TreebarkDryad.Dialogue3"));
                 if (BasePlayer.HasHelmet(Main.LocalPlayer, ModContent.ItemType<ThornMask>()))
-                    chat.Add("You remind me of that young warden, did the forest's curse get you too..?");
+                    chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.TreebarkDryad.Dialogue4"));
             }
-            chat.Add("Are you friend, or foe? As long as you don't use your axe on me, I don't care...");
+            chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.TreebarkDryad.Dialogue5"));
             return "Hmmmm... " + chat;
         }
 

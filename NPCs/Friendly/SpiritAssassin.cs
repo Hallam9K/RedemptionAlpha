@@ -12,6 +12,7 @@ using Redemption.Items.Weapons.PreHM.Summon;
 using Redemption.Items.Materials.PreHM;
 using Terraria.Audio;
 using Redemption.Items.Placeable.Plants;
+using Terraria.Localization;
 
 namespace Redemption.NPCs.Friendly
 {
@@ -149,7 +150,7 @@ namespace Redemption.NPCs.Friendly
                     {
                         if (!Main.LocalPlayer.RedemptionAbility().SpiritwalkerActive)
                         {
-                            Main.npcChatText = "You must be at least partly within the Spirit Realm for me to give you what you ask.";
+                            Main.npcChatText = Language.GetTextValue("Mods.Redemption.Dialogue.SpiritAssassin.NoRealmCruxDialogue");
                             ChatNumber = 3;
                             return;
                         }
@@ -165,20 +166,20 @@ namespace Redemption.NPCs.Friendly
                                 Main.LocalPlayer.inventory[card] = new Item();
 
                             Main.LocalPlayer.QuickSpawnItem(NPC.GetSource_Loot(), ModContent.ItemType<CruxCardSkeletonAssassin>());
-                            Main.npcChatText = "Hm, yes I can give you it. Within me lies the spirits of assassins, take it and may it give you a chance in this harsh world.";
+                            Main.npcChatText = Language.GetTextValue("Mods.Redemption.Dialogue.SpiritAssassin.CruxDialogue");
                             Main.npcChatCornerItem = ModContent.ItemType<CruxCardSkeletonAssassin>();
                             SoundEngine.PlaySound(SoundID.Chat);
                             ChatNumber = 3;
                         }
                         else
                         {
-                            Main.npcChatText = "I'll need something to imbue, if you please.";
+                            Main.npcChatText = Language.GetTextValue("Mods.Redemption.Dialogue.SpiritAssassin.NoCruxDialogue");
                             Main.npcChatCornerItem = ModContent.ItemType<EmptyCruxCard>();
                         }
                     }
                     else
                     {
-                        Main.npcChatText = "I shall, if only you give unto my remains three flowers of the night. One for each of my band to fall to that vile demon.";
+                        Main.npcChatText = Language.GetTextValue("Mods.Redemption.Dialogue.SpiritAssassin.OfferCruxDialogue");
                         Main.npcChatCornerItem = ModContent.ItemType<Nightshade>();
                     }
                     request = true;
@@ -199,14 +200,14 @@ namespace Redemption.NPCs.Friendly
         {
             if (!what)
             {
-                return "Hm? Ah, you must not know our language. Should've figured, this island has had nothing but Anglic speakers from what I've witnessed. You're lucky us spirits know all tongues, for we roam to hear and learn for eternity. What do you want?";
+                return Language.GetTextValue("Mods.Redemption.Dialogue.SpiritAssassin.WhatDialogue");
             }
             return ChatNumber switch
             {
-                0 => "Ta? I was once a resident of Gothrione - Gathuram's capital. I'm assuming you may know it better as the \"Iron Realm\"? I worked as an assassin there with a tight-knit group. We were some of the best; at least, that's what I told myself. In this realm of recollection I can only look back in light humour for how foolish my living-self was.",
-                1 => "I would have it guessed you've been on this island and only this island, hm? Gathuram is one of the six domains of the mainland - possibly the largest, too. In terms of landmass, anyway. I've seldom been beyond the outer fields of Gothrione in my time of living, neither have I in my time of unliving, so I cannot speak to you of it in detail.",
-                2 => "Gothione is the capital of the domain. It was quite the bustling city, however I cannot speak well of its ruler. Stubborn and snarky he was, in fact it was our mission to assassinate him. That was the last mission of our lives... As timing would have it, an invasion began on the day - it was horrific. In our last moments, we were gawking with heads bend up into the sky at a great demon terror.",
-                3 => "Hm, a subject I have no desire to sink into. It's name I shall not utter, just know it was the vastest being of trepidation we had ever seen. It was the reason I never returned there as a spirit - I dreaded the sight of it or the aftermath of its destruction. Now let us speak of it no more.",
+                0 => Language.GetTextValue("Mods.Redemption.Dialogue.SpiritAssassin.Chat1"),
+                1 => Language.GetTextValue("Mods.Redemption.Dialogue.SpiritAssassin.Chat2"),
+                2 => Language.GetTextValue("Mods.Redemption.Dialogue.SpiritAssassin.Chat3"),
+                3 => Language.GetTextValue("Mods.Redemption.Dialogue.SpiritAssassin.Chat4"),
                 _ => "...",
             };
         }
@@ -214,8 +215,8 @@ namespace Redemption.NPCs.Friendly
         public override string GetChat()
         {
             if (what)
-                return "Anything I can assist you with? I may not be able to interact with you, but I can make for some conversation.";
-            return "Gorhal'on! Mur ye bagaiha ta? Mudarok abo."; // (Word of great surprise)! (Word to make this sentence a question) you summoned me? (ba- past tense) Do tell your reason. (Mu- Possession of you. Starts with 'your reason' and ends with 'tell')
+                return Language.GetTextValue("Mods.Redemption.Dialogue.SpiritAssassin.Dialogue1");
+            return Language.GetTextValue("Mods.Redemption.Dialogue.SpiritAssassin.Dialogue2"); // (Word of great surprise)! (Word to make this sentence a question) you summoned me? (ba- past tense) Do tell your reason. (Mu- Possession of you. Starts with 'your reason' and ends with 'tell')
         }
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {

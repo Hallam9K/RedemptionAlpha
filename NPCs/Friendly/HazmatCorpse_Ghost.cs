@@ -7,6 +7,7 @@ using Terraria.DataStructures;
 using Redemption.Globals;
 using Terraria.GameContent;
 using Terraria.Graphics.Shaders;
+using Terraria.Localization;
 
 namespace Redemption.NPCs.Friendly
 {
@@ -102,7 +103,7 @@ namespace Redemption.NPCs.Friendly
         public override bool CanChat() => true;
         public override string GetChat()
         {
-            return "... What the hell is going on? Alarms are blaring, lockdown was initiated, yet no alerts over the intercom! I'm not going to wait, I want out of here ASAP!";
+            return Language.GetTextValue("Mods.Redemption.Dialogue.HazmatGhost.Dialogue");
         }
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {

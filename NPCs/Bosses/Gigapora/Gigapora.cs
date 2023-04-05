@@ -1050,6 +1050,7 @@ namespace Redemption.NPCs.Bosses.Gigapora
                 modifiers.DisableCrit();
                 modifiers.HideCombatText();
                 CombatText.NewText(NPC.getRect(), Color.Orange, 0, true, true);
+                NPC.life++;
                 return;
             }
             else

@@ -23,6 +23,7 @@ using Redemption.Items.Weapons.PostML.Ranged;
 using Redemption.Items.Materials.HM;
 using ReLogic.Content;
 using Redemption.BaseExtension;
+using Terraria.Localization;
 
 namespace Redemption.NPCs.Friendly
 {
@@ -177,40 +178,40 @@ namespace Redemption.NPCs.Friendly
             WeightedRandom<string> chat = new(Main.rand);
             if (RedeQuest.wayfarerVars[0] < 4)
             {
-                chat.Add("Hello again, sorry for the intrusion but I've lost my friend through that portal. Mind if I stay here to get some supplies? I'm sure I'll find him eventually.");
+                chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Daerel.IntroDialogue1"));
             }
             else
             {
                 int PartyGirlID = NPC.FindFirstNPC(NPCID.PartyGirl);
                 if (PartyGirlID >= 0)
-                    chat.Add("I swear " + Main.npc[PartyGirlID].GivenName + " reminds me of a technicoloured pony from another universe...", 0.2);
+                    chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Daerel.PartyGirlDialogue", Main.npc[PartyGirlID].GivenName), 0.2);
 
                 if (Main.LocalPlayer.ZoneGraveyard)
-                    chat.Add("The atmosphere here is making my spine shiver, please let me live somewhere less spooky.");
-                chat.Add("Need anything? I can restring your bow, or poison your weapon. It'll cost you though.");
+                    chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Daerel.Dialogue1"));
+                chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Daerel.Dialogue2"));
                 if (!NPC.homeless)
                 {
                     if (Main.raining && Main.LocalPlayer.ZoneOverworldHeight)
-                        chat.Add("The tipper-tapper of rain in the confines of a cosy home never gets old.");
+                        chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Daerel.Dialogue3"));
 
-                    chat.Add("You don't mind me staying here, right?");
-                    chat.Add("I've been travelling this land for a while, but staying in a house is nice.");
+                    chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Daerel.Dialogue4"));
+                    chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Daerel.Dialogue5"));
                 }
                 else
                 {
                     if (Main.raining && Main.LocalPlayer.ZoneOverworldHeight)
-                        chat.Add("I'm only a fan of rain while in the confines of a cosy home, not when it's dampening my clothes.");
+                        chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Daerel.Dialogue6"));
                 }
-                chat.Add("I got some pretty nice loot I can sell you, I kinda need money right now.");
-                chat.Add("My favourite colour is green, not sure why I'm telling you though...");
-                chat.Add("Cats are obviously superior to dogs.");
-                chat.Add("Have you seen a guy with slicked back, hazel hair? He carries a sword and wears a green tunic last I saw. I lost him before travelling through the portal, hope he's doing alright.");
-                chat.Add("One time me and Zephos were in a cave, and then a skeleton with flowers stuck in its ribcage appeared. Zephos thought it was a powerful druid skeleton. He likes to exaggerate. It didn't have any magic, it was just a normal skeleton.");
-                chat.Add("Cool Bug Fact: Coast Scarabs are small beetles that live on sandy beaches and eat grains of sand as their primary diet. When wet, their cyan shells will shine. Their shell is normally used to make cyan dyes.");
-                chat.Add("Cool Bug Fact: Sandskin Spiders live in deserts, roaming around at night when other tiny insects come out to eat. When the hot day arrives, the spider will borrow a feet under the sand to sleep. Yes, I like bugs.");
-                chat.Add("Living Blooms roam this island? They are native to Anglon's lush forests. Living Blooms are more plant than animal. Seems like many creatures got to this island from the portal.");
+                chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Daerel.Dialogue7"));
+                chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Daerel.Dialogue8"));
+                chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Daerel.Dialogue9"));
+                chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Daerel.Dialogue10"));
+                chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Daerel.Dialogue11"));
+                chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Daerel.Dialogue12"));
+                chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Daerel.Dialogue13"));
+                chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Daerel.Dialogue14"));
                 if (!Main.dayTime)
-                    chat.Add("There are zombies here? Not that I'm surprised, there are many types of undead on the mainland too.");
+                    chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Daerel.Dialogue15"));
             }
             return chat;
         }
@@ -263,14 +264,14 @@ namespace Redemption.NPCs.Friendly
                     default:
                         if (firstButton)
                         {
-                            Main.npcChatText = "Thank you. I'm just here for some resources, not any of your own possessions. Just a few things to help me find my friend. I'm Daerel, by the way. Nice to meet you.";
+                            Main.npcChatText = Language.GetTextValue("Mods.Redemption.Dialogue.Daerel.IntroDialogue2");
                             RedeQuest.wayfarerVars[0] = 4;
                             if (Main.netMode == NetmodeID.Server)
                                 NetMessage.SendData(MessageID.WorldData);
                         }
                         else
                         {
-                            Main.npcChatText = "Oh yes, sorry, I'm Daerel. I'm decent with a bow and that's about it right now. Soon I hope to be more skilled in my craft, once I do, I'm certain your humble little island will have a fine archer one day. As of now, I must attend to the matter of my friend and gather a few helpful resources. I hope my presence doesn't intrude on anything.";
+                            Main.npcChatText = Language.GetTextValue("Mods.Redemption.Dialogue.Daerel.IntroDialogue3");
                             RedeQuest.wayfarerVars[0] = 3;
                             if (Main.netMode == NetmodeID.Server)
                                 NetMessage.SendData(MessageID.WorldData);
@@ -279,7 +280,7 @@ namespace Redemption.NPCs.Friendly
                     case 3:
                         if (firstButton)
                         {
-                            Main.npcChatText = "Thank you. I'm just here for some resources, not any of your own possessions. Just a few things to help me find my friend. Nice to meet you.";
+                            Main.npcChatText = Language.GetTextValue("Mods.Redemption.Dialogue.Daerel.IntroDialogue4");
                             RedeQuest.wayfarerVars[0] = 4;
                             if (Main.netMode == NetmodeID.Server)
                                 NetMessage.SendData(MessageID.WorldData);
@@ -340,8 +341,8 @@ namespace Redemption.NPCs.Friendly
         public static string NoCoinsChat()
         {
             WeightedRandom<string> chat = new(Main.rand);
-            chat.Add("You're as poor as me?");
-            chat.Add("You really don't have enough money? Ah whatever, not like I can complain.");
+            chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Daerel.NoMoneyDialogue1"));
+            chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Daerel.NoMoneyDialogue2"));
             return chat;
         }
 
@@ -350,31 +351,31 @@ namespace Redemption.NPCs.Friendly
         {
             List<string> chat = new();
             if (RedeBossDowned.downedPZ && !RedeBossDowned.downedNebuleus)
-                chat.Add("Honestly, I'm surprised you still come to me for advice. You seem like a smart person, far more than I. But anyway, I've recently been seeing interesting wyverns in the sky - purple and gold. Give it a check if you wish.");
+                chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Daerel.AdviceDialogue1"));
             int FallenID = NPC.FindFirstNPC(ModContent.NPCType<Fallen>());
             if (FallenID >= 0 && Main.LocalPlayer.HasItem(ModContent.ItemType<GolemEye>()) && NPC.downedMoonlord && !RedeBossDowned.downedADD)
-                chat.Add("Hmm, that glowing eye you got looks rather... mythical. And it's giving you a riddle too? \"Surround it with the stones of its origin\"... Well you need to place some stone around it, the question is what kind? Maybe ask " + Main.npc[FallenID].GivenName + ".");
+                chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Daerel.AdviceDialogue2", Main.npc[FallenID].GivenName));
             if (Main.hardMode && !RedeBossDowned.downedSlayer)
-                chat.Add("I've seen some robots meandering about the island, scanning random objects and creatures. No idea where they came from, but I did see one get attacked. Once it was weakened, it stopped moving and teleported into the sky. Their purpose is a mystery to me. Maybe you could figure it out?");
+                chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Daerel.AdviceDialogue3"));
             int DryadID = NPC.FindFirstNPC(NPCID.Dryad);
             if (DryadID >= 0 && RedeQuest.forestNymphVar == 0)
-                chat.Add("The dryad, " + Main.npc[DryadID].GivenName + ", says she's seen a Forest Nymph on this island at one point, if you can believe that. They're seldom seen, you'd only be able to find them near giant trees. If you do come across one, I wouldn't linger around for too long, they don't like humans getting in their personal space. I wonder if there were a way to befriend one though?");
+                chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Daerel.AdviceDialogue4", Main.npc[DryadID].GivenName));
             if (FallenID >= 0 && !Main.LocalPlayer.RedemptionAbility().Spiritwalker)
-                chat.Add(Main.npc[FallenID].GivenName + " has told me he came from another portal underground. Apparently it leads to some catacombs in Gathuram, but you wouldn't be able to go through it. Still, he's told of some rather intriguing things lying by the portal, I'd give it a check if I were you.");
+                chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Daerel.AdviceDialogue5", Main.npc[FallenID].GivenName));
             if (!RedeBossDowned.downedEaglecrestGolem && NPC.downedBoss2)
-                chat.Add("While I was having a walk I came across some oddly-shaped stones - looked like a boulder with legs. I was curious of course, so I shot it from a safe distance. Nothing happened... and yet I sensed a presence inside it. You, as a slayer of many things, should search around and find it, might be another foe to face.");
+                chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Daerel.AdviceDialogue6"));
             if (!Main.LocalPlayer.RedemptionAbility().Spiritwalker)
-                chat.Add("Ever see tiny lights dancing from a slain skeleton? Or perhaps a lantern-carrying ghost underground? Those are lost souls, and as far as I know, only arcane or holy weapons may bring them harm. Not that I'd suggest harming those helpless things.");
-            chat.Add("Wanna know about some insects? If you wanna find leaf beetles, or tree bugs as they're called here, then chop down some trees. They live on tree tops, with their green shell camouflaging them in the foliage. Coast Scarabs can also be found on palm trees at the beach, their shells sparkle when wet. Grand larvae are, well, rather gross - though they can make excellent bait. That is, if you're brave enough to get close to one.");
-            chat.Add("When encountering skeletons and undead, I think its logical to assume shadow weapons aren't effective against them, while holy weapons are. I used to like the exploring caves, until me and Zephos encountered a skeleton Vex...");
-            chat.Add("Best way to deal with slimes? Burn them. Alternatively, ice weapons can freeze them in their place, THEN you can burn them!");
-            chat.Add("If you ever wanna sneak up on the Epidotrian skeletons or chickens, invisibility potions are real handy for the job.");
-            chat.Add("The weapons skeletons can wield are very rusty, so it'd be bad to be wounded by them. If you do, take a dip in some water and the dirty wound will disappear.");
-            chat.Add("See foes wearing armor or holding shields? You'll need to break their Guard to deal with them. A hammer or explosives should be most efficient, just make sure your weapon isn't super weak.");
+                chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Daerel.AdviceDialogue7"));
+            chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Daerel.AdviceDialogue8"));
+            chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Daerel.AdviceDialogue9"));
+            chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Daerel.AdviceDialogue10"));
+            chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Daerel.AdviceDialogue11"));
+            chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Daerel.AdviceDialogue12"));
+            chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Daerel.AdviceDialogue13"));
             if (!RedeBossDowned.foundNewb)
-                chat.Add("I felt a strange presence beneath that portal I hopped out of, which is quite peculiar. Maybe you should check it out.");
+                chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Daerel.AdviceDialogue14"));
             if (RedeBossDowned.erhanDeath == 0)
-                chat.Add("I noticed a scroll sitting atop a small table next to the portal I came out of, did you pick it up yet? It looked rather... demonic.");
+                chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Daerel.AdviceDialogue15"));
 
             string[] chatStr = chat.ToArray();
             int maxAdvice = chatStr.Length;

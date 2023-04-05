@@ -2080,7 +2080,7 @@ namespace Redemption.WorldGeneration
                         [new Color(200, 0, 0)] = ModContent.TileType<GathicGladestoneBrickTile>(),
                         [new Color(0, 255, 0)] = ModContent.TileType<GathicStoneTile>(),
                         [new Color(0, 200, 0)] = ModContent.TileType<GathicGladestoneTile>(),
-                        [new Color(0, 0, 255)] = TileID.BoneBlock,
+                        [new Color(0, 0, 255)] = ModContent.TileType<AncientGoldCoinPileTile>(),
                         [new Color(150, 150, 150)] = -2,
                         [Color.Black] = -1
                     };

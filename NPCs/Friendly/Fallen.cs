@@ -139,31 +139,16 @@ namespace Redemption.NPCs.Friendly
             if (NPC.altTexture == 1)
             {
                 Asset<Texture2D> hat = ModContent.Request<Texture2D>("Terraria/Images/Item_" + ItemID.PartyHat);
-                int offset;
-                switch (NPC.frame.Y / 54)
+                var offset = (NPC.frame.Y / 54) switch
                 {
-                    default:
-                        offset = 0;
-                        break;
-                    case 3:
-                        offset = 2;
-                        break;
-                    case 4:
-                        offset = 2;
-                        break;
-                    case 5:
-                        offset = 2;
-                        break;
-                    case 10:
-                        offset = 2;
-                        break;
-                    case 11:
-                        offset = 2;
-                        break;
-                    case 12:
-                        offset = 2;
-                        break;
-                }
+                    3 => 2,
+                    4 => 2,
+                    5 => 2,
+                    10 => 2,
+                    11 => 2,
+                    12 => 2,
+                    _ => 0,
+                };
                 var hatEffects = NPC.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
                 Vector2 origin = new(hat.Value.Width / 2f, hat.Value.Height / 2f);
                 spriteBatch.Draw(hat.Value, NPC.Center - new Vector2(3 * NPC.spriteDirection, 24 + offset) - screenPos, null, NPC.GetAlpha(drawColor), NPC.rotation, origin, NPC.scale, hatEffects, 0);
@@ -204,47 +189,47 @@ namespace Redemption.NPCs.Friendly
                 if (!player.HasItem(ModContent.ItemType<BlackenedHeart>()))
                     continue;
 
-                chat.Add("I wouldn't consume that Blackened Heart if I were you. Only bad things will come of it.");
+                chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Fallen.BlackenedHeartDialogue"));
             }
 
-            chat.Add("Wanna know what lost souls are? When a living thing dies, its soul leaves the body, these are lost souls. they search around the world to look for corpses to infuse with. To ordinary people, lost souls are invisible, but some who use magic can see them fade in and out of the Spirit Realm.");
-            chat.Add("The size of the Lost Souls depends on the original individual's power, the stronger the Will of the being, the bigger the soul. Once a soul leaves the body, they cannot infuse with it again. When the soul has found a worthy vessel, it fuses with it. On most occasions, a skeleton will be created. However, if the soul is strong enough, it will form pale-brown flesh on the skeleton, creating a Fallen.");
+            chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Fallen.Dialogue1"));
+            chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Fallen.Dialogue2"));
 
             switch (FallenType)
             {
                 case 0:
                     if (RedeBossDowned.keeperSaved)
-                        chat.Add("You saved the Keeper? Thank you for that, I can't imagine the pain she was feeling. However, I doubt this is over... Her husband died too, apparently of depression. But he didn't become an undead, his inverted soul made him into something far worse.", 3);
+                        chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Fallen.OkvotDialogue1"), 3);
 
-                    chat.Add("I may be undead, but I hope for a world where no tears are shed, and no pain is spread. A world of peace. That is who I was before dying, and despite the undead tendency to be more aggressive, I feel the same as I always have.");
-                    chat.Add("Do not worry, human. I bring no hatred where I go, despite my undead look, I won't harm you. And I hope you won't harm me either.");
-                    chat.Add("Times may come when you have hardship, maybe you struggle fighting a tough enemy, maybe you feel alone on this island with only enemies everywhere you go, but I'll still be here. Don't let my rotten looks deceive you, young one. I will help you.");
-                    chat.Add("The wind sings the longest tune... Do you hear it?");
-                    chat.Add("In the lowest level of the Catacombs of Gathuram, the floor is littered with broken bones and puddles of water. Dim blue lights often were visible in this level, and nothing is alive there. So if any were to survive the fall, they would be alone forever.");
-                    chat.Add("My name's Okvot, I usually sell equipment to other Fallen to help them survive in the Catacombs of Gathuram, however, destiny has brought me into the outside world. I hope my junk can be of use to you.", 2);
+                    chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Fallen.OkvotDialogue2"));
+                    chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Fallen.OkvotDialogue3"));
+                    chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Fallen.OkvotDialogue4"));
+                    chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Fallen.OkvotDialogue5"));
+                    chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Fallen.OkvotDialogue6"));
+                    chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Fallen.OkvotDialogue7"), 2);
                     break;
                 case 1:
                     if (RedeBossDowned.keeperSaved)
-                        chat.Add("You saved the Keeper? Bah, I guess that's nice of ya.", 3);
+                        chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Fallen.TenvonDialogue1"), 3);
 
-                    chat.Add("I'm not very interested in talking, what ya want?");
-                    chat.Add("Darkness... Ha! What a strange term. You humans fear it more than death itself. You cower in the face of the overwhelming shadow of the night. Pitiful creature! It is not the darkness you should fear, but what lurks within it. So, did I spook ya?! Hahaha!");
-                    chat.Add("Ya know what Willpower is, right? It's the essence of yer soul! The stronger yer will to live, the bigger the soul. Did you know you can die of depression? Apparently if you have no will to live, your soul can invert! I got a ton'a willpower! I ain't dying anytime soon... Again.");
-                    chat.Add("Give me some of ya sweet doruls! I got some junk to sell.");
-                    chat.Add("Once a soul leaves the body, they cannot infuse with it again. When the soul has found a worthy vessel, it fuses with it. Most of the time, a skeleton will be made. However, if the soul is strong enough, it will form pale-brown flesh on the skeleton, creating a Fallen. Like me!");
-                    chat.Add("Ever been to Spiritpeak Forest? A quarter of the forest is a giant graveyard, meaning there be a staggerin' number of skeletons, wandering souls and spirits. I used to take walks there when I was still alive.");
-                    chat.Add("M'name is Tenvon, I'm a blacksmith, but I guess I'm here now. I also should mention, I got some junk for sale, if ya interested.");
+                    chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Fallen.TenvonDialogue2"));
+                    chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Fallen.TenvonDialogue3"));
+                    chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Fallen.TenvonDialogue4"));
+                    chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Fallen.TenvonDialogue5"));
+                    chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Fallen.TenvonDialogue6"));
+                    chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Fallen.TenvonDialogue7"));
+                    chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Fallen.TenvonDialogue8"));
                     break;
                 case 2:
                     if (RedeBossDowned.keeperSaved)
-                        chat.Add("You saved the Keeper? That's great to hear, she gave me trouble when she had escaped the catacombs.", 3);
+                        chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Fallen.HappinsDialogue1"), 3);
 
-                    chat.Add("In my first few days of becoming Fallen, every other undead tried to kill me. It was a very scary experience, but I escaped the catacombs and now I'm here.");
-                    chat.Add("Do you want to know about Pure-Iron? It's an extremely durable metal only found in the southern region of the world, in Gathuram. I am wearing a Pure-Iron helmet right now in fact.");
-                    chat.Add("At the start, this whole 'Fallen' thing was a little overwhelming. I didn't want to 'live' with the fact that I had died, even though I'm not 'living', haha. But I'm more accepting of this now, I'm undead, humans hate me, deal with it. Actually, you're a human, right? Why aren't you attacking me?");
-                    chat.Add("You want to know about the Warriors of the Iron Realm? They are the domain of Gathuram's primary warriors. They normally wear Pure-Iron armour.");
-                    chat.Add("The Catacombs of Gathuram - where my soul found a vessel - are a seemingly endless network of underground tunnels, crypts, and dungeons spanning all across the Iron Realm. It is considered the largest underground structure in Epidotra.");
-                    chat.Add("Hello, the name's Happins. I used to be a Warrior of the Iron Realm... Until I was killed of course.", 2);
+                    chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Fallen.HappinsDialogue2"));
+                    chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Fallen.HappinsDialogue3"));
+                    chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Fallen.HappinsDialogue4"));
+                    chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Fallen.HappinsDialogue5"));
+                    chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Fallen.HappinsDialogue6"));
+                    chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Fallen.HappinsDialogue7"), 2);
                     break;
             }
             return chat;
@@ -269,7 +254,7 @@ namespace Redemption.NPCs.Friendly
             {
                 if (Main.LocalPlayer.HasItem(ModContent.ItemType<GolemEye>()) && NPC.downedMoonlord && !RedeBossDowned.downedADD)
                 {
-                    Main.npcChatText = "That eye comes from Ukon Veistos? Been many an age since I've heard tales of such things. It was carved from the stone of Gathuram, with the eye being placed in the center. Tales tell of an old God's spirit, said to reawaken once the time was right. The eye was said to be the catalyst, seeping its energy into stone moulded to take a diamond form. Tales as ancient as these twist and morph as time marches on, thus I believe not of what I speak of, yet I'd still be cautious of what you are about to do.";
+                    Main.npcChatText = Language.GetTextValue("Mods.Redemption.Dialogue.Fallen.GolemEyeDialogue");
                     return;
                 }
                 int[] Frag = new int[] {
@@ -288,7 +273,7 @@ namespace Redemption.NPCs.Friendly
                         player.inventory[Frag[1]] = new Item();
 
                     Main.npcChatCornerItem = ModContent.ItemType<Zweihander>();
-                    Main.npcChatText = "All done and repaired, here you go. The Zweihander is a fine blade, it originates from my home domain - Gathuram.";
+                    Main.npcChatText = Language.GetTextValue("Mods.Redemption.Dialogue.Fallen.ZweihanderRepairDialogue");
                     player.QuickSpawnItem(NPC.GetSource_Loot(), ModContent.ItemType<Zweihander>());
 
                     SoundEngine.PlaySound(SoundID.Item37, NPC.position);
@@ -304,7 +289,7 @@ namespace Redemption.NPCs.Friendly
                         player.inventory[Frag[3]] = new Item();
 
                     Main.npcChatCornerItem = ModContent.ItemType<ForgottenGreatsword>();
-                    Main.npcChatText = "I recall hearing mumblings about this \"Ophos\" man, even all the way in Gathuram. Although my memory is vague, these notes are testament enough of his high renown among Epidotra's blacksmiths.";
+                    Main.npcChatText = Language.GetTextValue("Mods.Redemption.Dialogue.Fallen.OphosRepairDialogue");
                     player.QuickSpawnItem(NPC.GetSource_Loot(), ModContent.ItemType<ForgottenGreatsword>());
 
                     SoundEngine.PlaySound(SoundID.Item37, NPC.position);
@@ -312,11 +297,11 @@ namespace Redemption.NPCs.Friendly
                 }
                 else
                 {
-                    Main.npcChatText = "You don't seem to have any fragments on your possession. Once a weapon is repaired by my hands, it'll never be broken again!";
+                    Main.npcChatText = Language.GetTextValue("Mods.Redemption.Dialogue.Fallen.NoRepairDialogue");
                     for (int k = 0; k < Frag.Length; k++)
                     {
                         if (Frag[k] >= 0)
-                            Main.npcChatText = "You have fragments, but none of them are for the same weapon.";
+                            Main.npcChatText = Language.GetTextValue("Mods.Redemption.Dialogue.Fallen.NotSameRepairDialogue");
                     }
                     SoundEngine.PlaySound(SoundID.MenuTick);
                 }

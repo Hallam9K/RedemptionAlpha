@@ -22,6 +22,7 @@ using Redemption.BaseExtension;
 using Redemption.Items.Donator.Lizzy;
 using Terraria.GameContent.UI;
 using Redemption.Items.Materials.PostML;
+using Terraria.Localization;
 
 namespace Redemption.NPCs.Friendly
 {
@@ -67,19 +68,12 @@ namespace Redemption.NPCs.Friendly
             if (Terraria.GameContent.Events.BirthdayParty.PartyIsUp)
             {
                 Asset<Texture2D> hat = ModContent.Request<Texture2D>("Terraria/Images/Item_" + ItemID.PartyHat);
-                int offset;
-                switch (NPC.frame.Y / 88)
+                var offset = (NPC.frame.Y / 88) switch
                 {
-                    default:
-                        offset = 0;
-                        break;
-                    case 3:
-                        offset = 2;
-                        break;
-                    case 4:
-                        offset = 2;
-                        break;
-                }
+                    3 => 2,
+                    4 => 2,
+                    _ => 0,
+                };
                 var hatEffects = NPC.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
                 Vector2 origin = new(hat.Value.Width / 2f, hat.Value.Height / 2f);
                 spriteBatch.Draw(hat.Value, NPC.Center - new Vector2(1 - offset * NPC.spriteDirection, 48) - screenPos, null, NPC.GetAlpha(drawColor), NPC.rotation, origin, NPC.scale, hatEffects, 0);
@@ -205,9 +199,9 @@ namespace Redemption.NPCs.Friendly
                             player.inventory[Urani] = new Item();
 
                         WeightedRandom<string> chat = new(Main.rand);
-                        chat.Add("You really went out of your way to give me some uranium. Thanks I guess.");
-                        chat.Add("I could've found some myself you know.");
-                        chat.Add("Thanks... ?");
+                        chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.KingSlayer.UraniumDialogue1"));
+                        chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.KingSlayer.UraniumDialogue2"));
+                        chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.KingSlayer.UraniumDialogue3"));
                         Main.npcChatText = chat;
 
                         player.QuickSpawnItem(NPC.GetSource_Loot(), ItemID.SilverCoin, 20);
@@ -224,7 +218,7 @@ namespace Redemption.NPCs.Friendly
                     else
                     {
                         Main.npcChatCornerItem = ModContent.ItemType<Uranium>();
-                        Main.npcChatText = "You don't have any uranium, idiot.";
+                        Main.npcChatText = Language.GetTextValue("Mods.Redemption.Dialogue.KingSlayer.NoUraniumDialogue3");
                         SoundEngine.PlaySound(SoundID.MenuTick);
                     }
                 }
@@ -239,7 +233,7 @@ namespace Redemption.NPCs.Friendly
                         if (player.inventory[WiringKit].stack <= 0)
                             player.inventory[WiringKit] = new Item();
 
-                        Main.npcChatText = "You actually bothered to do it... Good job.";
+                        Main.npcChatText = Language.GetTextValue("Mods.Redemption.Dialogue.KingSlayer.Quest1CompleteDialogue");
 
                         player.QuickSpawnItem(NPC.GetSource_Loot(), ItemID.GoldCoin, 4);
                         RedeWorld.slayerRep++;
@@ -284,7 +278,7 @@ namespace Redemption.NPCs.Friendly
                         if (player.inventory[HullPlating].stack <= 0)
                             player.inventory[HullPlating] = new Item();
 
-                        Main.npcChatText = "How can you even carry that? Uh, thanks, I suppose.";
+                        Main.npcChatText = Language.GetTextValue("Mods.Redemption.Dialogue.KingSlayer.Quest2CompleteDialogue");
 
                         player.QuickSpawnItem(NPC.GetSource_Loot(), ItemID.GoldCoin, 8);
                         RedeWorld.slayerRep++;
@@ -332,7 +326,7 @@ namespace Redemption.NPCs.Friendly
                             player.inventory[ShipEngine] = new Item();
 
                         Main.npcChatCornerItem = ModContent.ItemType<MemoryChip>();
-                        Main.npcChatText = "Was helping me with all that really necessary for you? You don't gain anything from it. But thank you regardless. I'll be leaving soon, but I want you to have this. I have yet to figure out a use for it, but take it.";
+                        Main.npcChatText = Language.GetTextValue("Mods.Redemption.Dialogue.KingSlayer.Quest3CompleteDialogue");
 
                         player.QuickSpawnItem(NPC.GetSource_Loot(), ItemID.GoldCoin, 12);
                         player.QuickSpawnItem(NPC.GetSource_Loot(), ModContent.ItemType<MemoryChip>());
@@ -439,11 +433,10 @@ namespace Redemption.NPCs.Friendly
         {
             return RedeWorld.slayerRep switch
             {
-                1 => "You want to do something? Craft me a wiring kit, should be simple enough. I would do it, but I can't be bothered to get off this chair. Use that Cyber Fabricator the room under me.\n\nRequires: [i/s20:Redemption/Cyberscrap], [i/s4:Redemption/Plating], [i:Redemption/Capacitor], [i/s2:Redemption/CarbonMyofibre], [i/s8:CopperBar]/[i/s8:TinBar], [i/s15:Wire]",
-                2 => "You seem rather eager to help... Well, just get me some hull plating would you? Thanks.\n\nRequires: [i/s50:Redemption/Cyberscrap], [i/s12:Redemption/Plating], [i/s6:Redemption/CarbonMyofibre]",
-                3 => "This is probably a bit too complicated for you, but craft me a AFTL engine. AFTL stands for 'Almost Faster Than Light' since, well, I don't know if going faster than light is even possible. I'm planning on leaving soon, so be quick.\n\nRequires: [i/s70:Redemption/Cyberscrap], [i/s8:Redemption/Plating], [i/s6:Redemption/Capacitor], [i/s8:Redemption/CarbonMyofibre], [i/s20:Redemption/Plutonium], [i/s20:Redemption/Uranium], [i/s50:Wire]",
-                4 => "You've done a lot for me, thank you, I guess. There isn't anything else that you can do now. But I appreciate the help you've given me.",
-                _ => "",
+                2 => Language.GetTextValue("Mods.Redemption.Dialogue.KingSlayer.Quest2Dialogue"),
+                3 => Language.GetTextValue("Mods.Redemption.Dialogue.KingSlayer.Quest3Dialogue"),
+                4 => Language.GetTextValue("Mods.Redemption.Dialogue.KingSlayer.Quest4Dialogue"),
+                _ => Language.GetTextValue("Mods.Redemption.Dialogue.KingSlayer.Quest1Dialogue"),
             };
         }
         public static string ChitChat()
@@ -452,69 +445,69 @@ namespace Redemption.NPCs.Friendly
             {
                 case 0:
                     if (RedeWorld.slayerRep >= 1 && RedeWorld.slayerRep < 4)
-                        return "Fixing this crashed ship, and just reflecting on our fight. Honestly I'm just doing it because I got nothing else to do.";
+                        return Language.GetTextValue("Mods.Redemption.Dialogue.KingSlayer.Chat1B");
                     else if (RedeWorld.slayerRep >= 4)
-                        return "The ship is fixed... I just can't be bothered to get up.";
+                        return Language.GetTextValue("Mods.Redemption.Dialogue.KingSlayer.Chat1C");
                     else
-                        return "I can ask you the same question. If you've come here to just chit-chat after our fight I'm not interested.";
+                        return Language.GetTextValue("Mods.Redemption.Dialogue.KingSlayer.Chat1");
                 case 1:
                     if (RedeWorld.slayerRep == 1)
-                        return "Yes. An android thought it'd be a good idea to 'borrow' it, and ended up yeeting it 20 feet under. The uranium you gave me should help.";
+                        return Language.GetTextValue("Mods.Redemption.Dialogue.KingSlayer.Chat2B");
                     else if (RedeWorld.slayerRep >= 2 && RedeWorld.slayerRep < 4)
-                        return "Yes. An android thought it'd be a good idea to 'borrow' it, and ended up yeeting it 20 feet under. The things you gave me should help.";
+                        return Language.GetTextValue("Mods.Redemption.Dialogue.KingSlayer.Chat2C");
                     else if (RedeWorld.slayerRep >= 4)
-                        return "Why are you still here? Ship's fixed now.";
+                        return Language.GetTextValue("Mods.Redemption.Dialogue.KingSlayer.Chat2D");
                     else
-                        return "What's the matter, you never seen a spaceship before? Some android thought it'd be a good idea to 'borrow' it, and ended up yeeting it 20 feet under. Unfortunately I've ran out of Uranium, but I can't be bothered to find it right now.";
+                        return Language.GetTextValue("Mods.Redemption.Dialogue.KingSlayer.Chat2");
                 case 3:
                     if (RedeWorld.slayerRep == 3)
-                        return "If you really want to fight, go ahead, use that cyber tech thing. I don't care.";
+                        return Language.GetTextValue("Mods.Redemption.Dialogue.KingSlayer.Chat3C");
                     else if (RedeWorld.slayerRep >= 4)
-                        return "After all you've done, I don't feel like fighting you. A duel, maybe.";
+                        return Language.GetTextValue("Mods.Redemption.Dialogue.KingSlayer.Chat3D");
                     else
-                        return Main.rand.NextBool(2) ? "Because unlike you, I actually have a life." : "Why would I want to fight now? I lost.";
+                        return Main.rand.NextBool(2) ? Language.GetTextValue("Mods.Redemption.Dialogue.KingSlayer.Chat3") : Language.GetTextValue("Mods.Redemption.Dialogue.KingSlayer.Chat3B");
                 case 4:
                     if (RedeWorld.slayerRep == 2)
-                        return "I was long ago, I became a robot when I realised it would be the only way to survive my world's end.";
+                        return Language.GetTextValue("Mods.Redemption.Dialogue.KingSlayer.Chat4B");
                     else if (RedeWorld.slayerRep >= 3)
-                        return "I wish I still was, mate. I can't eat or sleep in this robot body, but I still feel the pain of hunger and tiredness I can't satisfy. If it weren't for the AI I created for myself, I wouldn't be able to talk or move.";
+                        return Language.GetTextValue("Mods.Redemption.Dialogue.KingSlayer.Chat4C");
                     else
-                        return "I'm not some dude in a spacesuit, I'm a complete robot with a human mind. You may think that's cool, but it's really not. I seriously regret becoming one.";
+                        return Language.GetTextValue("Mods.Redemption.Dialogue.KingSlayer.Chat4");
                 case 5:
                     if (RedeWorld.slayerRep == 2)
-                        return "I did say I'm part of the Heroes, but I'm considering leaving. It's getting in the way of my... other projects.";
+                        return Language.GetTextValue("Mods.Redemption.Dialogue.KingSlayer.Chat5B");
                     else if (RedeWorld.slayerRep == 3)
-                        return "The members of the Heroes are all dingbats. The leader just travels around the world without aim, and I don't even know what the other 2 members are up to.";
+                        return Language.GetTextValue("Mods.Redemption.Dialogue.KingSlayer.Chat5C");
                     else if (RedeWorld.slayerRep >= 4)
-                        return Main.rand.NextBool(3) ? "... There's something strange about the Demigod's statue... It doesn't look like him. Did someone change it?" : "There are 4 members of the Heroes. The first is that demigod doofus, honestly he's a chill guy, I just hate how much stronger he is compared to me. The 2nd member is some moron who's supposedly invincible, not once have I seen him get hurt. 3rd is... Well she's probably the most normal out of all of us, but I don't know what she's up to now.";
+                        return Main.rand.NextBool(3) ? Language.GetTextValue("Mods.Redemption.Dialogue.KingSlayer.Chat5E") : Language.GetTextValue("Mods.Redemption.Dialogue.KingSlayer.Chat5D");
                     else
-                        return "You saw my statue there? Yeah, I'm part of the Heroes. But it's pretty boring, I'm always assigned to kill the weaklings, like the Keeper.";
+                        return Language.GetTextValue("Mods.Redemption.Dialogue.KingSlayer.Chat5");
                 case 6:
                     if (RedeWorld.slayerRep >= 4)
-                        return "I'm planning to check it out soon, it's located on the other world but I can easily fly there with the SoS.";
+                        return Language.GetTextValue("Mods.Redemption.Dialogue.KingSlayer.Chat6B");
                     else
-                        return "Haven't been there myself, but I'm looking into it. Could have plenty of supplies to fix this ship. It had a security system, but it malfunctioned, so I might take a look and maybe steal some supplies.";
+                        return Language.GetTextValue("Mods.Redemption.Dialogue.KingSlayer.Chat6");
                 case 7:
                     if (RedeWorld.slayerRep >= 2 && RedeWorld.slayerRep < 4)
-                        return "The world is called Epidotra, it's where the Heroes are from.";
+                        return Language.GetTextValue("Mods.Redemption.Dialogue.KingSlayer.Chat7B");
                     else if (RedeWorld.slayerRep >= 4)
-                        return "This tiny island appeared on this planet out of nowhere, I was going to check it out a year or so ago, but I remember seeing the demigod here so I didn't bother. The mainland has 6 domains, Anglon, Ithon, Gathuram, Nirin, Erellon, and Thamor. There's another domain which is it's own island called Swaylan, but that's disconnected from the rest of the world.";
+                        return Language.GetTextValue("Mods.Redemption.Dialogue.KingSlayer.Chat7C");
                     else
-                        return "What? You don't even know the name of the planet you're on? Maybe read a book for once in your life.";
+                        return Language.GetTextValue("Mods.Redemption.Dialogue.KingSlayer.Chat7");
                 case 8:
                     if (RedeWorld.slayerRep >= 2 && RedeWorld.slayerRep < 4)
-                        return "You see the planet on the right in that one hologram? That's what I've named Liden, a radioactive and desolate wasteland devoid of any life.";
+                        return Language.GetTextValue("Mods.Redemption.Dialogue.KingSlayer.Chat8B");
                     else if (RedeWorld.slayerRep >= 4)
-                        return "I'll be leaving soon to check it out. Scans show barely any life, just a frozen radioactive wasteland.";
+                        return Language.GetTextValue("Mods.Redemption.Dialogue.KingSlayer.Chat8C");
                     else
-                        return "The other world just suddenly appeared out of nowhere, I'm interested in it though. I've scanned the surface and it seems to be rather frozen, with so far no signs of human life. Reminds me of a planet I checked out while in space... In fact, reminds me of many planets.";
+                        return Language.GetTextValue("Mods.Redemption.Dialogue.KingSlayer.Chat8");
                 case 9:
                     if (RedeWorld.slayerRep == 2)
-                        return "I really just wrote those to keep my sanity. I don't want to tell you how boring travelling through space for a million years is.";
+                        return Language.GetTextValue("Mods.Redemption.Dialogue.KingSlayer.Chat9B");
                     else if (RedeWorld.slayerRep == 3)
-                        return "I wrote those every day I was in space, waiting for my world to be restored. Even though I'm back now, I don't feel satisfied.";
+                        return Language.GetTextValue("Mods.Redemption.Dialogue.KingSlayer.Chat9C");
                     else
-                        return "Can you not read through my data logs please.";
+                        return Language.GetTextValue("Mods.Redemption.Dialogue.KingSlayer.Chat9");
             }
             return "...";
         }
@@ -524,51 +517,43 @@ namespace Redemption.NPCs.Friendly
             WeightedRandom<string> chat = new(Main.rand);
 
             if (RedeBossDowned.downedSlayer && !Main.LocalPlayer.InModBiome<SlayerShipBiome>())
-                chat.Add("Wait a second... This isn't my ship. Did you move my chair?");
+                chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.KingSlayer.NotInShipDialogue"));
             else
             {
                 if (RedeWorld.slayerRep >= 2)
                 {
-                    chat.Add("Hey, I'm busy... Procrastinating.");
-                    chat.Add("What is it?");
-                    chat.Add("Come to help again or what?");
-                    chat.Add("Leave me alone.");
+                    chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.KingSlayer.Dialogue1"));
+                    chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.KingSlayer.Dialogue2"));
+                    chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.KingSlayer.Dialogue3"));
+                    chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.KingSlayer.Dialogue4"));
                 }
                 else if (RedeWorld.slayerRep >= 4)
                 {
-                    chat.Add("Hey, what's up?");
-                    chat.Add("Come by to talk or what?");
-                    chat.Add("You've been a big help, thanks.");
+                    chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.KingSlayer.Dialogue5"));
+                    chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.KingSlayer.Dialogue6"));
+                    chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.KingSlayer.Dialogue7"));
                 }
                 else
                 {
                     if (player.IsFullTBot())
-                        chat.Add("Oh great, the robot is here... What do you want?");
+                        chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.KingSlayer.Dialogue8TBot"));
                     else
-                        chat.Add("Oh great, the flesh bag is here... What do you want?");
+                        chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.KingSlayer.Dialogue8"));
 
-                    chat.Add("Did you really feel the need to break into my ship?");
-                    chat.Add("Fight's over. I'm busy. Get lost.");
-                    chat.Add("Could you just leave me alone.");
+                    chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.KingSlayer.Dialogue9"));
+                    chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.KingSlayer.Dialogue10"));
+                    chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.KingSlayer.Dialogue11"));
                 }
                 if (NPC.downedMoonlord)
-                    chat.Add("I'll be leaving here soon, make it quick.");
+                    chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.KingSlayer.Dialogue12"), 2);
 
                 if (BasePlayer.HasHelmet(player, ModContent.ItemType<KingSlayerMask>(), true))
-                    chat.Add("What have you got on your head? Are you trying to cosplay as me or something?");
+                    chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.KingSlayer.Dialogue13"));
 
-                /*if (BasePlayer.HasHelmet(player, ModContent.ItemType<AndroidHead>(), true) || BasePlayer.HasHelmet(player, ModContent.ItemType<PrototypeSilverHead>(), true))
-                {
-                    chat.Add("I'm not an idiot ya know, I know one of my own minions when I see one.");
-                }*/
                 if (player.wellFed && RedeWorld.slayerRep < 2)
-                {
-                    chat.Add("Look at you all well fed... Good for you.");
-                }
+                    chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.KingSlayer.Dialogue14"));
                 if (player.RedemptionPlayerBuff().ChickenForm)
-                {
-                    chat.Add("How did a chicken break into my ship?");
-                }
+                    chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.KingSlayer.Dialogue15"));
             }
             return chat;
         }

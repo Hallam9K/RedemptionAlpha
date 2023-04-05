@@ -11,6 +11,7 @@ using Redemption.BaseExtension;
 using Redemption.Items.Weapons.PreHM.Summon;
 using Redemption.Items.Materials.PreHM;
 using Terraria.Audio;
+using Terraria.Localization;
 
 namespace Redemption.NPCs.Friendly
 {
@@ -134,7 +135,7 @@ namespace Redemption.NPCs.Friendly
                     {
                         if (!Main.LocalPlayer.RedemptionAbility().SpiritwalkerActive)
                         {
-                            Main.npcChatText = "I'm unable to give you what you seek beyond my realm.";
+                            Main.npcChatText = Language.GetTextValue("Mods.Redemption.Dialogue.SpiritNiricLady.NoRealmCruxDialogue");
                             ChatNumber = 4;
                             return;
                         }
@@ -150,20 +151,20 @@ namespace Redemption.NPCs.Friendly
                                 Main.LocalPlayer.inventory[card] = new Item();
 
                             Main.LocalPlayer.QuickSpawnItem(NPC.GetSource_Loot(), ModContent.ItemType<CruxCardGladestone>());
-                            Main.npcChatText = "Take it. My blessings to you. Whoever you are.";
+                            Main.npcChatText = Language.GetTextValue("Mods.Redemption.Dialogue.SpiritNiricLady.CruxDialogue");
                             Main.npcChatCornerItem = ModContent.ItemType<CruxCardGladestone>();
                             SoundEngine.PlaySound(SoundID.Chat);
                             ChatNumber = 4;
                         }
                         else
                         {
-                            Main.npcChatText = "I would require an object to imbue for that.";
+                            Main.npcChatText = Language.GetTextValue("Mods.Redemption.Dialogue.SpiritNiricLady.NoCruxDialogue");
                             Main.npcChatCornerItem = ModContent.ItemType<EmptyCruxCard>();
                         }
                     }
                     else
                     {
-                        Main.npcChatText = "Only if you may, bring me six gemstones of the purest shine, and lay them around my remains. Six are the hands of an angel. Their arms hold us so...";
+                        Main.npcChatText = Language.GetTextValue("Mods.Redemption.Dialogue.SpiritNiricLady.OfferCruxDialogue");
                         Main.npcChatCornerItem = ItemID.Diamond;
                     }
                     request = true;
@@ -183,18 +184,18 @@ namespace Redemption.NPCs.Friendly
         {
             return ChatNumber switch
             {
-                0 => "Me? Unsure. I was from a place. My recollection fails me... It was cold, too cold for my liking. I split myself, and dug. Dug for our new kingdom.",
-                1 => "A new kingdom in snowy mountains, the old perished. We left, found ourselves here. The natives called it Nirin. They helped us, we helped them. Together we recreated our technology, we taught them our wisdom. All was well.",
-                2 => "Mine? Yes, and no. I am part of a piece, infused within the inanimate to become animate. Automatons we are. Powered by the permanent soul. My true spirit lies elsewhere, I alone am too frail. I wish to become whole again.",
-                3 => "Arctic Realm, it is known by. Frigid and open, a harsh change from our old home. It was warm and enclosed, as snug as sitting by a fireplace on a cold night. How I wish we stayed. How I wish the disaster never happened...\n\nHow did I get here?",
-                4 => "Oooooh...",
+                0 => Language.GetTextValue("Mods.Redemption.Dialogue.SpiritNiricLady.Chat1"),
+                1 => Language.GetTextValue("Mods.Redemption.Dialogue.SpiritNiricLady.Chat2"),
+                2 => Language.GetTextValue("Mods.Redemption.Dialogue.SpiritNiricLady.Chat3"),
+                3 => Language.GetTextValue("Mods.Redemption.Dialogue.SpiritNiricLady.Chat4"),
+                4 => Language.GetTextValue("Mods.Redemption.Dialogue.SpiritNiricLady.Chat5"),
                 _ => "...",
             };
         }
         public override bool CanChat() => true;
         public override string GetChat()
         {
-            return "Oooh...";
+            return Language.GetTextValue("Mods.Redemption.Dialogue.SpiritNiricLady.Dialogue");
         }
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
