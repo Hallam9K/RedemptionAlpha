@@ -37,7 +37,7 @@ namespace Redemption.UI
             Icon.Top.Set(20, 0f);
             Append(Icon);
 
-            IconHighlight = new UIHoverTextImageButton(AlignmentButton_MouseOverTexture, "Alignment: " + RedeWorld.alignment);
+            IconHighlight = new UIHoverTextImageButton(AlignmentButton_MouseOverTexture, "Alignment");
             IconHighlight.Left.Set(-2, 0f);
             IconHighlight.Top.Set(-2, 0f);
             IconHighlight.SetVisibility(1f, 0f);
@@ -130,9 +130,9 @@ namespace Redemption.UI
                     {
                         string s = "";
                         if (RedeWorld.alignment < 0)
-                            s = " Her past is a mystery, yet in my soul I know the importance of her role in this world's protection.\nBased on your past actions, I foresee a terrible future.";
+                            s = " Her past is a mystery,\nyet in my soul I know the importance of her role in this world's protection.\nBased on your past actions, I foresee a terrible future.";
                         if (!RedeBossDowned.downedNebuleus)
-                            RedeSystem.Instance.ChaliceUIElement.DisplayDialogue("This beckons a silent observer to test your strength." + s, 300, 30, 0, Color.DarkGoldenrod);
+                            RedeSystem.Instance.ChaliceUIElement.DisplayDialogue("This beckons a silent observer to test your strength." + s, RedeWorld.alignment < 0 ? 500 : 300, 30, 0, Color.DarkGoldenrod);
                         else
                         {
                             if (RedeBossDowned.nebDeath >= 7)

@@ -4471,10 +4471,7 @@ Mods: {
 
 			SlayerShipEngine: {
 				DisplayName: Ship AFTL Engine
-				Tooltip:
-					'''
-					'Stands for Almost-Faster-Than-Light'
-					'''
+				Tooltip: "'Stands for Almost-Faster-Than-Light'"
 			}
 
 			SlayerWiringKit: {
@@ -4575,10 +4572,7 @@ Mods: {
 
 			AbandonedTeddy: {
 				DisplayName: Abandoned Teddy
-				Tooltip:
-					'''
-					Let the Keeper's spirit rest
-					'''
+				Tooltip: Let the Keeper's spirit rest
 			}
 
 			AkkaBag: {
@@ -5037,10 +5031,7 @@ Mods: {
 
 			SorrowfulEssence: {
 				DisplayName: Sorrowful Essence
-				Tooltip:
-					'''
-					Having this in your inventory may attract the Keeper's first creation underground
-					'''
+				Tooltip: Having this in your inventory may attract the Keeper's first creation underground
 			}
 
 			AncientSigil: {
