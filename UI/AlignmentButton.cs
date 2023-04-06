@@ -7,6 +7,7 @@ using Redemption.Items.Quest.KingSlayer;
 using Redemption.Items.Usable;
 using Redemption.Items.Usable.Summons;
 using Redemption.Items.Weapons.PreHM.Summon;
+using Redemption.NPCs.Friendly;
 using ReLogic.Content;
 using Steamworks;
 using Terraria;
@@ -61,7 +62,7 @@ namespace Redemption.UI
         }
         private void IconHighlight_OnClick(UIMouseEvent evt, UIElement listeningElement)
         {
-            if (!RedeWorld.alignmentGiven || !Main.playerInventory)
+            if (!RedeWorld.alignmentGiven || !Main.playerInventory || NPC.AnyNPCs(ModContent.NPCType<Chalice_Intro>()))
                 return;
 
             SoundEngine.PlaySound(SoundID.Chat);

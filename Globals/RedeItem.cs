@@ -314,6 +314,7 @@ namespace Redemption.Globals
                     NetMessage.SendData(MessageID.WorldData);
 
                 RedeHelper.SpawnNPC(item.GetSource_FromAI(), (int)Main.LocalPlayer.Center.X, (int)Main.LocalPlayer.Center.Y, ModContent.NPCType<Chalice_Intro>());
+                item.TurnToAir();
             }
         }
         public static bool ChaliceInterest(int type)

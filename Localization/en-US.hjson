@@ -7392,7 +7392,12 @@ Mods: {
 
 			ThankYouLetter: {
 				DisplayName: Letter
-				Tooltip: "It reads - '[c/E5F3FB:Thank you for playing the mod, hope you had fun.]\n[c/E5F3FB:The mod is still in development so many things can change, and new content will be added, so stay tuned.]\n[c/E5F3FB:  -] [c/F9E5FB:Halm] & [c/E5FBE5:Tied]'"
+				Tooltip:
+					'''
+					It reads - '[c/E5F3FB:Thank you for playing the mod, hope you had fun.]
+					[c/E5F3FB:The mod is still in development so many things can change, and new content will be added, so stay tuned.]
+					[c/E5F3FB:  -] [c/F9E5FB:Halm] & [c/E5FBE5:Tied]'
+					'''
 			}
 		}
 

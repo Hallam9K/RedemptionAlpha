@@ -13,6 +13,7 @@ namespace Redemption.Items.Usable
             // DisplayName.SetDefault("");
             ItemID.Sets.ItemNoGravity[Item.type] = true;
             ItemID.Sets.ItemIconPulse[Item.type] = true;
+            ItemID.Sets.IsAPickup[Type] = true;
         }
 
         public override void SetDefaults()

@@ -22,6 +22,7 @@ namespace Redemption.Items.Usable
                 + "\n[c/ffea9b:A sentient treasure, cursed to judge those who wield it]"); */
             Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(4, 4));
             ItemID.Sets.AnimatesAsSoul[Item.type] = true;
+            ItemID.Sets.ItemsThatShouldNotBeInInventory[Type] = true;
 
             Item.ResearchUnlockCount = 1;
         }
@@ -53,13 +54,7 @@ namespace Redemption.Items.Usable
         }
         public override void UpdateInventory(Player player)
         {
-            int item = player.FindItem(Type);
-            if (item >= 0)
-            {
-                player.inventory[item].stack = 0;
-                if (player.inventory[item].stack <= 0)
-                    player.inventory[item] = new Item();
-            }
+            Item.TurnToAir();
         }
         public override void Update(ref float gravity, ref float maxFallSpeed)
         {

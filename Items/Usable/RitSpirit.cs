@@ -16,6 +16,7 @@ namespace Redemption.Items.Usable
         public override void SetStaticDefaults()
         {
             ItemID.Sets.ItemNoGravity[Item.type] = true;
+            ItemID.Sets.IsAPickup[Type] = true;
         }
 
         public override void SetDefaults()

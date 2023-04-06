@@ -70,7 +70,7 @@ namespace Redemption.NPCs.Friendly
                     {
                         RedeSystem.Instance.ChaliceUIElement.DisplayDialogue("Do you wish for an explanation of Alignment?", 800, 30, 0, Color.DarkGoldenrod);
                         if (!Main.dedServ)
-                            YesNoUI.Visible = true;
+                            RedeSystem.Instance.YesNoUIElement.DisplayYesNoButtons();
                         AITimer = 0;
                         TimerRand = 1;
                         NPC.netUpdate = true;

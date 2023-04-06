@@ -590,6 +590,18 @@ namespace Redemption
                     InterfaceScaleType.UI);
                 layers.Insert(index, OmegaTransmitterUI);
             }
+            if (YesNoUI.Visible && !Main.playerInventory)
+            {
+                int index = layers.FindIndex(layer => layer.Name.Equals("Vanilla: Ruler"));
+                LegacyGameInterfaceLayer ChoiceTextUI = new("Redemption: Choice Text UI",
+                    delegate
+                    {
+                        DrawChoiceText(Main.spriteBatch);
+                        return true;
+                    },
+                    InterfaceScaleType.UI);
+                layers.Insert(index, ChoiceTextUI);
+            }
             if (Main.LocalPlayer.Redemption().slayerCursor)
             {
                 int index = layers.FindIndex(layer => layer.Name.Equals("Vanilla: Interface Logic 4"));
@@ -781,6 +793,12 @@ namespace Redemption
 
             spriteBatch.End();
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.LinearClamp, DepthStencilState.Default, RasterizerState.CullNone, null, Main.UIScaleMatrix);
+        }
+        public static void DrawChoiceText(SpriteBatch spriteBatch)
+        {
+            string text = "Open Inventory to make your choice";
+            int textLength = (int)(FontAssets.DeathText.Value.MeasureString(text).X * .5f);
+            ChatManager.DrawColorCodedStringWithShadow(spriteBatch, FontAssets.DeathText.Value, text, new Vector2((Main.screenWidth / 2) - (textLength / 2), Main.screenHeight / 4), Color.White, 0, Vector2.Zero, Vector2.One * .5f);
         }
         public static void DrawSlayerCursor(SpriteBatch spriteBatch)
         {
