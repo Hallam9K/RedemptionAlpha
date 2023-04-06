@@ -50,6 +50,7 @@ namespace Redemption.Items.Usable
             itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<HamSandwich>()));
             itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<GalaxyHeart>()));
             itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<NebWings>()));
+            itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<ThankYouLetter>()));
         }
 
         public override Color? GetAlpha(Color lightColor)

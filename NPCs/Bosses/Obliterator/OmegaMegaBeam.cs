@@ -132,5 +132,9 @@ namespace Redemption.NPCs.Bosses.Obliterator
             return false;
         }
         #endregion
+        public override void OnHitPlayer(Player target, Player.HurtInfo info)
+        {
+            info.Dodgeable = false;
+        }
     }
 }
