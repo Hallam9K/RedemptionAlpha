@@ -148,10 +148,10 @@ namespace Redemption.NPCs.Friendly
                 chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.TBot.CyborgDialogue", Main.npc[cyborgID].GivenName));
 
             if (Main.hardMode && NPC.downedMechBoss1 && NPC.downedMechBoss2 && NPC.downedMechBoss3)
+            {
                 chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.TBot.Dialogue1"), 1.5);
-
-            if (Main.hardMode && NPC.downedMechBoss1 && NPC.downedMechBoss2 && NPC.downedMechBoss3)
                 chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.TBot.Dialogue2"), 1.5);
+            }
 
             if (NPC.downedPlantBoss)
                 chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.TBot.Dialogue3"), 1.5);
