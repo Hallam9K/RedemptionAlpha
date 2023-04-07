@@ -136,7 +136,7 @@ namespace Redemption.NPCs.Bosses.Neb.Phase2
                 Item.NewItem(NPC.GetSource_Loot(), NPC.getRect(), ModContent.ItemType<NebuleusMask>());
                 Item.NewItem(NPC.GetSource_Loot(), NPC.getRect(), ModContent.ItemType<NebuleusVanity>());
             }
-            if (!RedeBossDowned.downedNebuleus)
+            if (RedeBossDowned.nebDeath < 7)
             {
                 RedeWorld.alignment -= 6;
                 for (int p = 0; p < Main.maxPlayers; p++)
@@ -147,7 +147,7 @@ namespace Redemption.NPCs.Bosses.Neb.Phase2
 
                     CombatText.NewText(player.getRect(), Color.Gold, "-4", true, false);
 
-                    if (!player.HasItem(ModContent.ItemType<AlignmentTeller>()))
+                    if (!RedeWorld.alignmentGiven)
                         continue;
 
                     if (!Main.dedServ)

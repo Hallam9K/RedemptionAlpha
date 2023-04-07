@@ -45,7 +45,7 @@ namespace Redemption.Items.Usable
         }
         public override void ModifyItemLoot(ItemLoot itemLoot)
         {
-            itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<PZMask>(), 7));
+            itemLoot.Add(ItemDropRule.NotScalingWithLuck(ModContent.ItemType<PZMask>(), 7));
             itemLoot.Add(ItemDropRule.OneFromOptions(1, ModContent.ItemType<PZGauntlet>(), ModContent.ItemType<SwarmerCannon>(), ModContent.ItemType<Petridish>(), ModContent.ItemType<PortableHoloProjector>()));
             itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<MedicKit>()));
             itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<HeartOfInfection>()));

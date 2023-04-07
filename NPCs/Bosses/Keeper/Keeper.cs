@@ -178,7 +178,7 @@ namespace Redemption.NPCs.Bosses.Keeper
 
             LeadingConditionRule notExpertRule = new(new Conditions.NotExpert());
 
-            notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<KeepersVeil>(), 7));
+            notExpertRule.OnSuccess(ItemDropRule.NotScalingWithLuck(ModContent.ItemType<KeepersVeil>(), 7));
 
             //notExpertRule.OnSuccess(ItemDropRule.OneFromOptions(1, ModContent.ItemType<SoulScepter>(), ModContent.ItemType<KeepersClaw>(), ModContent.ItemType<FanOShivs>(), ModContent.ItemType<KeepersKnife>()));
             notExpertRule.OnSuccess(ItemDropRule.OneFromOptions(1, ModContent.ItemType<SoulScepter>(), ModContent.ItemType<KeepersClaw>(), ModContent.ItemType<FanOShivs>()));
@@ -203,7 +203,7 @@ namespace Redemption.NPCs.Bosses.Keeper
 
                     CombatText.NewText(player.getRect(), Color.Gray, "+0", true, false);
 
-                    if (!player.HasItem(ModContent.ItemType<AlignmentTeller>()))
+                    if (!RedeWorld.alignmentGiven)
                         continue;
 
                     if (!Main.dedServ)

@@ -201,7 +201,7 @@ namespace Redemption.NPCs.Bosses.PatientZero
             npcLoot.Add(ItemDropRule.MasterModeDropOnAllPlayers(ModContent.ItemType<Xenoemia>(), 4));
 
             LeadingConditionRule notExpertRule = new(new Conditions.NotExpert());
-            notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<PZMask>(), 7));
+            notExpertRule.OnSuccess(ItemDropRule.NotScalingWithLuck(ModContent.ItemType<PZMask>(), 7));
 
             notExpertRule.OnSuccess(ItemDropRule.OneFromOptions(1, ModContent.ItemType<PZGauntlet>(), ModContent.ItemType<SwarmerCannon>(), ModContent.ItemType<Petridish>(), ModContent.ItemType<PortableHoloProjector>()));
             notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<MedicKit>()));

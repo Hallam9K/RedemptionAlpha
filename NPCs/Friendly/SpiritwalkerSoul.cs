@@ -112,10 +112,10 @@ namespace Redemption.NPCs.Friendly
                     }
                     if (AITimer >= 260)
                     {
-                        string s = "Hold [Spirit Walker Ability Key] for 1 second to enter the Spirit Realm";
+                        string s = "Hold [Spirit Walker Ability Key] for 1 second to peek into the Spirit Realm";
                         foreach (string key in Redemption.RedeSpiritwalkerAbility.GetAssignedKeys())
                         {
-                            s = "Hold " + key + " for 1 second to enter the Spirit Realm";
+                            s = "Hold " + key + " for 1 second to peek into the Spirit Realm";
                         }
                         RedeSystem.Instance.TitleCardUIElement.DisplayTitle("-Spirit Walker-", 300, 90, 1f, 0, Color.White, s);
 

@@ -70,7 +70,6 @@ namespace Redemption.WorldGeneration
                 dragonLeadSpawn = true;
             else
                 dragonLeadSpawn = false;
-
             newbCavePoint = Point16.Zero;
             gathicPortalPoint = Point16.Zero;
             slayerShipPoint = Point16.Zero;
@@ -1541,7 +1540,7 @@ namespace Redemption.WorldGeneration
                         for (int j = originPoint.Y + 66; j < originPoint.Y + 74; j++)
                         {
                             if (!Framing.GetTileSafely(i, j).HasTile)
-                                WorldGen.PlaceLiquid(i, j, LiquidID.Water, 255);
+                                WorldGen.PlaceLiquid(i, j, (byte)LiquidID.Water, 255);
                         }
                     }
 
@@ -1994,8 +1993,8 @@ namespace Redemption.WorldGeneration
                     bool placed = false;
                     while (!placed)
                     {
-                        int placeX2 = WorldGen.genRand.Next((int)(Main.maxTilesX * .35f), (int)(Main.maxTilesX * .65f));
-                        int placeY2 = WorldGen.genRand.Next((int)(Main.maxTilesY * .4f), (int)(Main.maxTilesY * .6));
+                        int placeX2 = WorldGen.genRand.Next((int)(Main.maxTilesX * .4f), (int)(Main.maxTilesX * .6f));
+                        int placeY2 = WorldGen.genRand.Next((int)(Main.maxTilesY * .4f), (int)(Main.maxTilesY * .5f));
 
                         if (!WorldGen.InWorld(placeX2, placeY2))
                             continue;
@@ -2093,7 +2092,7 @@ namespace Redemption.WorldGeneration
                         [new Color(200, 0, 0)] = ModContent.TileType<GathicGladestoneBrickTile>(),
                         [new Color(0, 255, 0)] = ModContent.TileType<GathicStoneTile>(),
                         [new Color(0, 200, 0)] = ModContent.TileType<GathicGladestoneTile>(),
-                        [new Color(0, 0, 255)] = TileID.BoneBlock,
+                        [new Color(0, 0, 255)] = ModContent.TileType<AncientGoldCoinPileTile>(),
                         [new Color(150, 150, 150)] = -2,
                         [Color.Black] = -1
                     };
@@ -2462,7 +2461,6 @@ namespace Redemption.WorldGeneration
                     }
                     WorldGen.noTileActions = false;
                     WorldGen.gen = false;
-                    WorldGen.skipFramingDuringGen = false;
                     #endregion
                 }));
             }

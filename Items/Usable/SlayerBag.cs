@@ -42,7 +42,7 @@ namespace Redemption.Items.Usable
         public override bool CanRightClick() => true;
         public override void ModifyItemLoot(ItemLoot itemLoot)
         {
-            itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<KingSlayerMask>(), 7));
+            itemLoot.Add(ItemDropRule.NotScalingWithLuck(ModContent.ItemType<KingSlayerMask>(), 7));
             itemLoot.Add(ItemDropRule.OneFromOptions(1, ModContent.ItemType<SlayerGun>(), ModContent.ItemType<Nanoswarmer>(), ModContent.ItemType<SlayerFist>()));
             itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<SlayerController>(), 10));
             itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<Holokey>()));

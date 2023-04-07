@@ -347,7 +347,7 @@ namespace Redemption.NPCs.Friendly
                 chat.Add("Ya know " + Main.npc[DryadID].GivenName + "? She's seen a Forest Nymph on this island at one point, if you can believe that. Super rare creatures those are, you'd only be able to find them near giant trees. If you do come across one, I wouldn't linger around for too long, they don't like humans getting in their personal space. I wonder if there were a way to befriend one though?");
             if (FallenID >= 0 && !Main.LocalPlayer.RedemptionAbility().Spiritwalker)
                 chat.Add(Main.npc[FallenID].GivenName + " has told me he came from another portal underground. Apparently it leads to some catacombs, but you wouldn't be able to go through it. Still, he's told of some rather intriguing things lying by the portal, I'd give it a check if I were you!");
-            if (!RedeBossDowned.downedEaglecrestGolem)
+            if (!RedeBossDowned.downedEaglecrestGolem && NPC.downedBoss2)
                 chat.Add("While I was having a stroll I came across some oddly-shaped stones - looked like a boulder with legs. I was curious of course, so I gave it a WHAM with my sword! Nothing happened... and yet I sensed a presence inside it. You, as a slayer of many things, should search around and find it, might be another challenge to face!");
             if (!Main.LocalPlayer.RedemptionAbility().Spiritwalker)
                 chat.Add("Ever see tiny lights skitterin' from a slain skeleton? Or perhaps a lantern-carrying ghost underground? Those are lost souls, and as far as I know, only arcane or holy weapons may bring them harm. Not that I'd suggest harming those helpless things.");

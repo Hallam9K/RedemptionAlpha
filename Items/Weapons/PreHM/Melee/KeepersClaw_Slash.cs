@@ -89,7 +89,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
                                 player.statLife -= 15;
                                 if (player.statLife < 1)
                                     player.statLife = 1;
-                                CombatText.NewText(player.getRect(), Colors.RarityRed, 18, true, true);
+                                CombatText.NewText(player.getRect(), Colors.RarityRed, 15, true, true);
                                 SoundEngine.PlaySound(SoundID.NPCDeath19, Projectile.position);
                                 for (int i = 0; i < 4; i++)
                                 {

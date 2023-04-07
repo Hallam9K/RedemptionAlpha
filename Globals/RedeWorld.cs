@@ -71,6 +71,7 @@ namespace Redemption.Globals
         public static bool newbGone;
         public static bool slayerMessageGiven;
         public static bool keycardGiven;
+        public static bool alignmentGiven;
         public static bool[] spawnCleared = new bool[5];
 
         #region Nuke Shenanigans
@@ -442,9 +443,11 @@ namespace Redemption.Globals
             for (int i = 0; i < spawnCleared.Length; i++)
                 spawnCleared[i] = false;
         }
-
         public override void OnWorldUnload()
         {
+            if (Redemption.TrailManager != null)
+                Redemption.TrailManager.ClearAllTrails(); //trails break on world unload and reload(their projectile is still counted as being active???), so this just clears them all on reload
+
             alignment = 0;
             DayNightCount = 0;
             SkeletonInvasion = false;
@@ -460,6 +463,7 @@ namespace Redemption.Globals
             newbGone = false;
             slayerMessageGiven = false;
             keycardGiven = false;
+            alignmentGiven = false;
             omegaTransmitReady[0] = false;
             omegaTransmitReady[1] = false;
             omegaTransmitReady[2] = false;
@@ -485,6 +489,8 @@ namespace Redemption.Globals
                 lists.Add("slayerMessageGiven");
             if (keycardGiven)
                 lists.Add("keycardGiven");
+            if (alignmentGiven)
+                lists.Add("alignmentGiven");
 
             tag["lists"] = lists;
             tag["alignment"] = alignment;
@@ -512,6 +518,7 @@ namespace Redemption.Globals
             newbGone = lists.Contains("newbGone");
             slayerMessageGiven = lists.Contains("slayerMessageGiven");
             keycardGiven = lists.Contains("keycardGiven");
+            alignmentGiven = lists.Contains("alignmentGiven");
         }
 
         public override void NetSend(BinaryWriter writer)
@@ -524,6 +531,7 @@ namespace Redemption.Globals
             flags[4] = newbGone;
             flags[5] = slayerMessageGiven;
             flags[6] = keycardGiven;
+            flags[7] = alignmentGiven;
             writer.Write(flags);
 
             writer.Write(alignment);
@@ -544,6 +552,7 @@ namespace Redemption.Globals
             newbGone = flags[4];
             slayerMessageGiven = flags[5];
             keycardGiven = flags[6];
+            alignmentGiven = flags[7];
 
             alignment = reader.ReadInt32();
             DayNightCount = reader.ReadInt32();

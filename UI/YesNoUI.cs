@@ -7,88 +7,113 @@ using Terraria.UI;
 using Terraria.GameContent.UI.Elements;
 using Terraria.Audio;
 using Redemption.BaseExtension;
-using Terraria.GameInput;
+using ReLogic.Content;
+using Terraria.GameContent;
+using ReLogic.Graphics;
 
 namespace Redemption.UI
 {
     public class YesNoUI : UIState
     {
-        private readonly UIImage BgSprite = new(ModContent.Request<Texture2D>("Redemption/UI/YesButton", ReLogic.Content.AssetRequestMode.ImmediateLoad));
-        private readonly UIImageButton Button = new(ModContent.Request<Texture2D>("Redemption/UI/YesButton", ReLogic.Content.AssetRequestMode.ImmediateLoad));
-        private readonly UIImage BgSprite2 = new(ModContent.Request<Texture2D>("Redemption/UI/NoButton", ReLogic.Content.AssetRequestMode.ImmediateLoad));
-        private readonly UIImageButton Button2 = new(ModContent.Request<Texture2D>("Redemption/UI/NoButton", ReLogic.Content.AssetRequestMode.ImmediateLoad));
-        public Vector2 lastScreenSize;
+        private string YesText;
+        private string NoText;
+        public Vector2? YesTextOffset = null;
+        public Vector2? NoTextOffset = null;
+        public float YesTextScale = 1;
+        public float NoTextScale = 1;
+        public void DisplayYesNoButtons(string yesText = "Yes", string noText = "No", Vector2? textOffset = null, Vector2? textOffset2 = null, float textScale = 1, float textScale2 = 1)
+        {
+            if (!Main.dedServ)
+            {
+                YesText = yesText;
+                NoText = noText;
+                YesTextOffset = textOffset;
+                NoTextOffset = textOffset2;
+                YesTextScale = textScale;
+                NoTextScale = textScale2;
+                Visible = true;
+            }
+        }
 
+        private readonly UIImage YesButtonTexture = new(ModContent.Request<Texture2D>("Redemption/UI/YesButton", AssetRequestMode.ImmediateLoad));
+        private readonly UIImage NoButtonTexture = new(ModContent.Request<Texture2D>("Redemption/UI/NoButton", AssetRequestMode.ImmediateLoad));
+        private readonly Asset<Texture2D> Button_MouseOverTexture = ModContent.Request<Texture2D>("Redemption/UI/YesNoButton_Hover", AssetRequestMode.ImmediateLoad);
         public static bool Visible = false;
+
+        public UIImage YesIcon;
+        public UIImage NoIcon;
+        public UIHoverTextImageButton YesIconHighlight;
+        public UIHoverTextImageButton NoIconHighlight;
         public override void OnInitialize()
         {
-            lastScreenSize = new Vector2(Main.screenWidth, Main.screenHeight);
+            YesIcon = YesButtonTexture;
+            YesIcon.Left.Set(115, 0f);
+            YesIcon.Top.Set(258, 0f);
+            Append(YesIcon);
 
-            BgSprite.Width.Set(130, 0f);
-            BgSprite.Height.Set(70, 0f);
-            BgSprite.Left.Set((Main.screenWidth / 2f) - 200 + 130f / 2f, 0f);
-            BgSprite.Top.Set((Main.screenHeight / 2f) + 70f / 2f, 0f);
+            YesIconHighlight = new UIHoverTextImageButton(Button_MouseOverTexture, "Yes");
+            YesIconHighlight.Left.Set(-2, 0f);
+            YesIconHighlight.Top.Set(-2, 0f);
+            YesIconHighlight.SetVisibility(1f, 0f);
+            YesIconHighlight.OnClick += YesIconHighlight_OnClick;
+            YesIcon.Append(YesIconHighlight);
 
-            Button.Left.Set(0, 0f);
-            Button.Top.Set(0, 0f);
-            Button.Width.Set(130, 0f);
-            Button.Height.Set(70, 0f);
-            Button.OnClick += new MouseEvent(YesClicked);
-            BgSprite.Append(Button);
+            NoIcon = NoButtonTexture;
+            NoIcon.Left.Set(267, 0f);
+            NoIcon.Top.Set(258, 0f);
+            Append(NoIcon);
 
-            Append(BgSprite);
+            NoIconHighlight = new UIHoverTextImageButton(Button_MouseOverTexture, "No");
+            NoIconHighlight.Left.Set(-2, 0f);
+            NoIconHighlight.Top.Set(-2, 0f);
+            NoIconHighlight.SetVisibility(1f, 0f);
+            NoIconHighlight.OnClick += NoIconHighlight_OnClick;
+            NoIcon.Append(NoIconHighlight);
 
-            BgSprite2.Width.Set(130, 0f);
-            BgSprite2.Height.Set(70, 0f);
-            BgSprite2.Left.Set((Main.screenWidth / 2f) + 200 + 130f / 2f, 0f);
-            BgSprite2.Top.Set((Main.screenHeight / 2f) + 70f / 2f, 0f);
-
-            Button2.Left.Set(0, 0f);
-            Button2.Top.Set(0, 0f);
-            Button2.Width.Set(130, 0f);
-            Button2.Height.Set(70, 0f);
-            Button2.OnClick += new MouseEvent(NoClicked);
-            BgSprite2.Append(Button2);
-
-            Append(BgSprite2);
+            base.OnActivate();
         }
-        private void YesClicked(UIMouseEvent evt, UIElement listeningElement)
+        public override void MouseOver(UIMouseEvent evt)
         {
-            Main.isMouseLeftConsumedByUI = true;
-            SoundEngine.PlaySound(SoundID.MenuTick);
+            YesIconHighlight.Text = YesText;
+            NoIconHighlight.Text = NoText;
+        }
+        private void YesIconHighlight_OnClick(UIMouseEvent evt, UIElement listeningElement)
+        {
+            if (!Main.playerInventory)
+                return;
+
+            SoundEngine.PlaySound(SoundID.Chat);
             Main.LocalPlayer.Redemption().yesChoice = true;
             Visible = false;
         }
-        private void NoClicked(UIMouseEvent evt, UIElement listeningElement)
+        private void NoIconHighlight_OnClick(UIMouseEvent evt, UIElement listeningElement)
         {
-            Main.isMouseLeftConsumedByUI = true;
-            SoundEngine.PlaySound(SoundID.MenuTick);
+            if (!Main.playerInventory)
+                return;
+
+            SoundEngine.PlaySound(SoundID.Chat);
             Main.LocalPlayer.Redemption().noChoice = true;
             Visible = false;
         }
-        public override void Update(GameTime gameTime)
-        {
-            base.Update(gameTime);
-            if (ContainsPoint(Main.MouseScreen) && !PlayerInput.IgnoreMouseInterface)
-                Main.LocalPlayer.mouseInterface = true;
-        }
         public override void Draw(SpriteBatch spriteBatch)
         {
-            if (!Visible)
+            if (!Visible || !Main.playerInventory)
                 return;
-
-            if (lastScreenSize != new Vector2(Main.screenWidth, Main.screenHeight))
-            {
-                lastScreenSize = new Vector2(Main.screenWidth, Main.screenHeight);
-                BgSprite.Left.Pixels = (Main.screenWidth / 2f) - 200 - 130f / 2f;
-                BgSprite.Top.Pixels = (Main.screenHeight / 2f) - 70f / 2f;
-                BgSprite.Recalculate();
-                BgSprite2.Left.Pixels = (Main.screenWidth / 2f) + 200 - 130f / 2f;
-                BgSprite2.Top.Pixels = (Main.screenHeight / 2f) - 70f / 2f;
-                BgSprite2.Recalculate();
-            }
-
             base.Draw(spriteBatch);
+
+            DynamicSpriteFont font = FontAssets.DeathText.Value;
+            int textLength = (int)(font.MeasureString(YesText).X * YesTextScale);
+            int textHeight = (int)(font.MeasureString(YesText).Y * YesTextScale);
+            int textLength2 = (int)(font.MeasureString(NoText).X * NoTextScale);
+            int textHeight2 = (int)(font.MeasureString(NoText).Y * NoTextScale);
+
+            if (YesTextOffset == null)
+                YesTextOffset = Vector2.Zero;
+            if (NoTextOffset == null)
+                NoTextOffset = Vector2.Zero;
+
+            spriteBatch.DrawString(font, YesText, new Vector2(115 + 65 - (textLength / 2), 258 - 35 + (int)(textHeight * .6f)) + (Vector2)YesTextOffset, Color.White, 0, new Vector2(0, 0), YesTextScale, SpriteEffects.None, 0);
+            spriteBatch.DrawString(font, NoText, new Vector2(267 + 65 - (textLength2 / 2), 258 - 35 + (int)(textHeight2 * .6f)) + (Vector2)NoTextOffset, Color.White, 0, new Vector2(0, 0), NoTextScale, SpriteEffects.None, 0);
         }
     }
 }

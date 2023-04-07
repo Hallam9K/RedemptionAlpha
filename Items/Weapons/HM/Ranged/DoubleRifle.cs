@@ -13,7 +13,8 @@ namespace Redemption.Items.Weapons.HM.Ranged
         {
             DisplayName.SetDefault("Double Rifle");
             Tooltip.SetDefault("Converts normal bullets into high velocity bullets\n" +
-                "33% chance not to consume ammo");
+                "33% chance not to consume ammo" +
+                "\n'From Intrusion, with love'");
             SacrificeTotal = 1;
         }
 

@@ -22,7 +22,6 @@ using Redemption.Items.Weapons.HM.Ranged;
 using Redemption.Items;
 using Redemption.Items.Materials.HM;
 using Redemption.Items.Accessories.HM;
-using Redemption.Buffs.NPCBuffs;
 using Redemption.BaseExtension;
 using Redemption.Items.Weapons.HM.Magic;
 using Redemption.Items.Weapons.HM.Melee;
@@ -30,6 +29,7 @@ using Redemption.Items.Armor.Vanity;
 using ReLogic.Content;
 using Redemption.UI.ChatUI;
 using Redemption.UI;
+using Redemption.Buffs.NPCBuffs;
 
 namespace Redemption.NPCs.Bosses.KSIII
 {
@@ -186,7 +186,7 @@ namespace Redemption.NPCs.Bosses.KSIII
 
             LeadingConditionRule notExpertRule = new(new Conditions.NotExpert());
 
-            notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<KingSlayerMask>(), 7));
+            notExpertRule.OnSuccess(ItemDropRule.NotScalingWithLuck(ModContent.ItemType<KingSlayerMask>(), 7));
 
             notExpertRule.OnSuccess(ItemDropRule.OneFromOptions(1, ModContent.ItemType<SlayerGun>(), ModContent.ItemType<Nanoswarmer>(), ModContent.ItemType<SlayerFist>()));
             notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<SlayerController>(), 10));
@@ -218,7 +218,7 @@ namespace Redemption.NPCs.Bosses.KSIII
 
                     CombatText.NewText(player.getRect(), Color.Gold, NPC.ai[0] == 11 ? "+0" : "-2", true, false);
 
-                    if (!player.HasItem(ModContent.ItemType<AlignmentTeller>()))
+                    if (!RedeWorld.alignmentGiven)
                         continue;
 
                     if (!Main.dedServ)
@@ -1923,7 +1923,8 @@ namespace Redemption.NPCs.Bosses.KSIII
                     }
                     else
                     {
-                        player.RedemptionScreen().lockScreen = true;
+                        if (AITimer < 5000)
+                            player.RedemptionScreen().lockScreen = true;
                         if (AITimer == 20 && !Main.dedServ)
                         {
                             HeadType = 1;
@@ -2031,7 +2032,8 @@ namespace Redemption.NPCs.Bosses.KSIII
                     }
                     else
                     {
-                        player.RedemptionScreen().lockScreen = true;
+                        if (AITimer < 5000)
+                            player.RedemptionScreen().lockScreen = true;
                         if (AITimer == 20 && !Main.dedServ)
                         {
                             HeadType = 4;
@@ -2133,7 +2135,8 @@ namespace Redemption.NPCs.Bosses.KSIII
                     }
                     else
                     {
-                        player.RedemptionScreen().lockScreen = true;
+                        if (AITimer < 5000)
+                            player.RedemptionScreen().lockScreen = true;
                         if (AITimer == 20 && !Main.dedServ)
                         {
                             HeadType = 2;
@@ -2194,7 +2197,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                         {
                             HeadType = 3;
                             DialogueChain chain = new();
-                            chain.Add(new(NPC, "If you stop attacking,[0.1] I'll go back to more [0.1][@h2]IMPORTANT[0.1][@h3] business.", new Color(170, 255, 255), Color.Black, voice, .03f, 2f, .5f, true, null, bubble, null, modifier, 1));
+                            chain.Add(new(NPC, "If you stop attacking,[0.1] I'll go back to more [0.1]IMPORTANT[0.1] business.", new Color(170, 255, 255), Color.Black, voice, .03f, 2f, .5f, true, null, bubble, null, modifier, 1));
                             chain.OnSymbolTrigger += Chain_OnSymbolTrigger;
                             chain.OnEndTrigger += Chain_OnEndTrigger;
                             ChatUI.Visible = true;
@@ -2202,8 +2205,10 @@ namespace Redemption.NPCs.Bosses.KSIII
                         }
                         if (AITimer > 5000)
                         {
+                            player.Redemption().yesChoice = false;
+                            player.Redemption().noChoice = false;
+
                             NPC.life = 1;
-                            NPC.Shoot(NPC.Center, ModContent.ProjectileType<ProjDeath>(), 0, Vector2.Zero, false, SoundID.Item1);
                             HeadType = 0;
                             AttackChoice = 0;
                             AITimer = 0;
@@ -2227,7 +2232,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                             chain.Add(new(NPC, "Alright alright alright!", new Color(170, 255, 255), Color.Black, voice, .03f, 2f, 0, false, null, bubble, null, modifier))
                                  .Add(new(NPC, "[@h1]We'll...[0.5] call it a draw then.", new Color(170, 255, 255), Color.Black, voice, .03f, 2f, 0, false, null, bubble, null, modifier))
                                  .Add(new(NPC, line1, new Color(170, 255, 255), Color.Black, voice, .03f, 2f, 0, false, null, bubble, null, modifier))
-                                 .Add(new(NPC, "[@h2]If you stop attacking,[0.1] I'll go back to more [0.1][@h2]IMPORTANT[0.1][@h3] business.", new Color(170, 255, 255), Color.Black, voice, .03f, 2f, 0, false, null, bubble, null, modifier))
+                                 .Add(new(NPC, "[@h2]If you agree to stop,[0.1] I'll go back to more [0.1]IMPORTANT[0.1] business.", new Color(170, 255, 255), Color.Black, voice, .03f, 2f, 0, false, null, bubble, null, modifier))
                                  .Add(new(NPC, "[@h3]But,[0.1] if you so choose,[0.1] we can continue...[1] But I won't be happy if I lose.", new Color(170, 255, 255), Color.Black, voice, .03f, 2f, .5f, true, null, bubble, null, modifier, 1));
                             chain.OnSymbolTrigger += Chain_OnSymbolTrigger;
                             chain.OnEndTrigger += Chain_OnEndTrigger;
@@ -2236,11 +2241,13 @@ namespace Redemption.NPCs.Bosses.KSIII
                         }
                         if (AITimer > 5000)
                         {
-                            if (Main.LocalPlayer.HasItem(ModContent.ItemType<AlignmentTeller>()) && !Main.dedServ && !RedeBossDowned.downedSlayer)
+                            if (RedeWorld.alignmentGiven && !Main.dedServ && !RedeBossDowned.downedSlayer)
                                 RedeSystem.Instance.ChaliceUIElement.DisplayDialogue("I would leave him be, if I were you.", 180, 30, 0, Color.DarkGoldenrod);
 
+                            player.Redemption().yesChoice = false;
+                            player.Redemption().noChoice = false;
+
                             NPC.life = 1;
-                            NPC.Shoot(NPC.Center, ModContent.ProjectileType<ProjDeath>(), 0, Vector2.Zero, false, SoundID.Item1);
                             HeadType = 0;
                             AttackChoice = 0;
                             AITimer = 0;
@@ -2252,35 +2259,27 @@ namespace Redemption.NPCs.Bosses.KSIII
                     break;
                 case ActionState.SpareCountdown:
                     NPC.LookAtEntity(player);
-                    if (AITimer++ == 0)
-                    {
-                        NPC.chaseable = false;
-                        NPC.dontTakeDamage = false;
-                        if (Main.netMode == NetmodeID.Server && NPC.whoAmI < Main.maxNPCs)
-                            NetMessage.SendData(MessageID.SyncNPC, number: NPC.whoAmI);
-                    }
                     player.RedemptionScreen().lockScreen = true;
                     NPC.LockMoveRadius(player);
                     if (!Main.dedServ)
                         Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/silence");
 
-                    if (!Main.dedServ)
+                    if (!Main.dedServ && !YesNoUI.Visible)
+                        RedeSystem.Instance.YesNoUIElement.DisplayYesNoButtons("Call Draw", "Continue", new Vector2(0, 28), new Vector2(0, 28), .6f, .6f);
+
+                    if (player.Redemption().yesChoice)
+
                     {
-                        if (AITimer == 10) RedeSystem.Instance.DialogueUIElement.DisplayDialogue("5", 60, 1, 0.6f, null, 0, null, null, null, null);
-                        if (AITimer == 70) RedeSystem.Instance.DialogueUIElement.DisplayDialogue("4", 60, 1, 0.6f, null, 0, null, null, null, null);
-                        if (AITimer == 130) RedeSystem.Instance.DialogueUIElement.DisplayDialogue("3", 60, 1, 0.6f, null, 0, null, null, null, null);
-                        if (AITimer == 190) RedeSystem.Instance.DialogueUIElement.DisplayDialogue("2", 60, 1, 0.6f, null, 0, null, null, null, null);
-                        if (AITimer == 250) RedeSystem.Instance.DialogueUIElement.DisplayDialogue("1", 60, 1, 0.6f, null, 0, null, null, null, null);
-                    }
-                    if (AITimer >= 310)
-                    {
+                        if (ChaliceAlignmentUI.Visible)
+                            ChaliceAlignmentUI.Visible = false;
+
                         if (RedeBossDowned.slayerDeath < 7)
                         {
                             RedeBossDowned.slayerDeath = 7;
                             if (Main.netMode == NetmodeID.Server)
                                 NetMessage.SendData(MessageID.WorldData);
                         }
-
+                        YesNoUI.Visible = false;
                         NPC.dontTakeDamage = true;
                         AITimer = 0;
                         AIState = ActionState.Spared;
@@ -2288,13 +2287,21 @@ namespace Redemption.NPCs.Bosses.KSIII
                         if (Main.netMode == NetmodeID.Server && NPC.whoAmI < Main.maxNPCs)
                             NetMessage.SendData(MessageID.SyncNPC, number: NPC.whoAmI);
                     }
+                    else if (player.Redemption().noChoice)
+                    {
+                        if (!Main.dedServ)
+                            ChaliceAlignmentUI.Visible = false;
+                        YesNoUI.Visible = false;
+                        AITimer = 0;
+                        AIState = ActionState.Attacked;
+                        NPC.netUpdate = true;
+                    }
                     break;
                 case ActionState.Attacked:
                     #region Attacked
                     NPC.LookAtEntity(player);
                     if (AITimer++ == 0)
                     {
-                        NPC.chaseable = true;
                         NPC.dontTakeDamage = true;
                         if (Main.netMode == NetmodeID.Server && NPC.whoAmI < Main.maxNPCs)
                             NetMessage.SendData(MessageID.SyncNPC, number: NPC.whoAmI);
@@ -2404,8 +2411,11 @@ namespace Redemption.NPCs.Bosses.KSIII
                         if (Main.netMode == NetmodeID.Server && NPC.whoAmI < Main.maxNPCs)
                             NetMessage.SendData(MessageID.SyncNPC, number: NPC.whoAmI);
                     }
-                    player.RedemptionScreen().lockScreen = true;
-                    NPC.LockMoveRadius(player);
+                    if (AITimer < 4000)
+                    {
+                        player.RedemptionScreen().lockScreen = true;
+                        NPC.LockMoveRadius(player);
+                    }
                     if (AITimer < 120 && !Main.dedServ)
                         Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/silence");
                     else
@@ -2436,7 +2446,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                         DialogueChain chain = new();
                         chain.Add(new(NPC, line1, new Color(170, 255, 255), Color.Black, voice, .03f, 2f, 0, false, null, bubble, null, modifier))
                              .Add(new(NPC, "[@h4]" + line2, new Color(170, 255, 255), Color.Black, voice, .03f, 2f, 0, false, null, bubble, null, modifier))
-                             .Add(new(NPC, "[@h0]Let's begin.", new Color(170, 255, 255), Color.Black, voice, .03f, 2f, .5f, true, null, bubble, null, modifier, 1));
+                             .Add(new(NPC, "[@h0][@c]Let's begin.", new Color(170, 255, 255), Color.Black, voice, .03f, 2f, .5f, true, null, bubble, null, modifier, 1));
                         chain.OnSymbolTrigger += Chain_OnSymbolTrigger;
                         chain.OnEndTrigger += Chain_OnEndTrigger;
                         ChatUI.Visible = true;
@@ -2452,7 +2462,6 @@ namespace Redemption.NPCs.Bosses.KSIII
                         }
 
                         NPC.dontTakeDamage = false;
-                        NPC.chaseable = true;
                         phase = 5;
                         chance = Main.rand.NextFloat(0.5f, 1f);
                         AttackChoice = 1;
@@ -2477,6 +2486,8 @@ namespace Redemption.NPCs.Bosses.KSIII
         }
         private void Chain_OnSymbolTrigger(Dialogue dialogue, string signature)
         {
+            if (signature == "c")
+                AITimer = 4000;
             HeadType = signature switch
             {
                 "h1" => 1,
@@ -2509,14 +2520,6 @@ namespace Redemption.NPCs.Bosses.KSIII
                 return true;
             else
             {
-                if (NPC.ai[0] == 10)
-                {
-                    if (Main.LocalPlayer.HasItem(ModContent.ItemType<AlignmentTeller>()) && !Main.dedServ)
-                        ChaliceAlignmentUI.Visible = false;
-                    AITimer = 0;
-                    AIState = ActionState.Attacked;
-                    NPC.netUpdate = true;
-                }
                 NPC.life = 1;
                 NPC.netUpdate = true;
                 return false;

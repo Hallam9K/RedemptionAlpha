@@ -116,7 +116,7 @@ namespace Redemption.NPCs.Bosses.FowlEmperor
 
                     CombatText.NewText(player.getRect(), Color.Gray, "+0", true, false);
 
-                    if (!player.HasItem(ModContent.ItemType<AlignmentTeller>()))
+                    if (!RedeWorld.alignmentGiven)
                         continue;
 
                     if (!Main.dedServ)
@@ -131,7 +131,7 @@ namespace Redemption.NPCs.Bosses.FowlEmperor
         {
             npcLoot.Add(ItemDropRule.MasterModeCommonDrop(ModContent.ItemType<FowlEmperorRelic>()));
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<FowlEmperorTrophy>(), 10));
-            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<FowlCrown>(), 7));
+            npcLoot.Add(ItemDropRule.NotScalingWithLuck(ModContent.ItemType<FowlCrown>(), 7));
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<FowlWarHorn>()));
             npcLoot.Add(ItemDropRule.ByCondition(new OnFireCondition(), ModContent.ItemType<FriedChicken>(), 1, 5, 5));
         }

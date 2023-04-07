@@ -38,6 +38,7 @@ using Terraria.UI;
 using Terraria.UI.Chat;
 using static Redemption.Globals.RedeNet;
 using Redemption.WorldGeneration.Misc;
+using Redemption.Items.Usable.Summons;
 using SubworldLibrary;
 
 namespace Redemption
@@ -412,6 +413,12 @@ namespace Redemption
         public UserInterface ForestNymphTradeUILayer;
         public ForestNymphTradeUI ForestNymphTradeUIElement;
 
+        public UserInterface AlignmentButtonUILayer;
+        public AlignmentButton AlignmentButtonUIElement;
+
+        public UserInterface SpiritWalkerButtonUILayer;
+        public SpiritWalkerButton SpiritWalkerButtonUIElement;
+
         public override void Load()
         {
             RedeDetours.Initialize();
@@ -448,6 +455,14 @@ namespace Redemption
                 ForestNymphTradeUILayer = new UserInterface();
                 ForestNymphTradeUIElement = new ForestNymphTradeUI();
                 ForestNymphTradeUILayer.SetState(ForestNymphTradeUIElement);
+
+                AlignmentButtonUILayer = new UserInterface();
+                AlignmentButtonUIElement = new AlignmentButton();
+                AlignmentButtonUILayer.SetState(AlignmentButtonUIElement);
+
+                SpiritWalkerButtonUILayer = new UserInterface();
+                SpiritWalkerButtonUIElement = new SpiritWalkerButton();
+                SpiritWalkerButtonUILayer.SetState(SpiritWalkerButtonUIElement);
             }
         }
         public override void ModifyLightingBrightness(ref float scale)
@@ -562,6 +577,30 @@ namespace Redemption
                     InterfaceScaleType.UI);
                 layers.Insert(index, SpiritGaugeUI);
             }
+            if (NPC.downedGolemBoss && Main.LocalPlayer.HeldItem.type == ModContent.ItemType<OmegaTransmitter>())
+            {
+                int index = layers.FindIndex(layer => layer.Name.Equals("Vanilla: Ruler"));
+                LegacyGameInterfaceLayer OmegaTransmitterUI = new("Redemption: Omega Transmitter UI",
+                    delegate
+                    {
+                        DrawOmegaTransmitterText(Main.spriteBatch);
+                        return true;
+                    },
+                    InterfaceScaleType.UI);
+                layers.Insert(index, OmegaTransmitterUI);
+            }
+            if (YesNoUI.Visible && !Main.playerInventory)
+            {
+                int index = layers.FindIndex(layer => layer.Name.Equals("Vanilla: Ruler"));
+                LegacyGameInterfaceLayer ChoiceTextUI = new("Redemption: Choice Text UI",
+                    delegate
+                    {
+                        DrawChoiceText(Main.spriteBatch);
+                        return true;
+                    },
+                    InterfaceScaleType.UI);
+                layers.Insert(index, ChoiceTextUI);
+            }
             if (Main.LocalPlayer.Redemption().slayerCursor)
             {
                 int index = layers.FindIndex(layer => layer.Name.Equals("Vanilla: Interface Logic 4"));
@@ -620,6 +659,8 @@ namespace Redemption
                 AddInterfaceLayer(layers, TextBubbleUILayer, TextBubbleUIElement, MouseTextIndex + 5, ChatUI.Visible, "Text Bubble");
                 AddInterfaceLayer(layers, YesNoUILayer, YesNoUIElement, MouseTextIndex + 6, YesNoUI.Visible, "Yes No Choice");
                 AddInterfaceLayer(layers, ForestNymphTradeUILayer, ForestNymphTradeUIElement, MouseTextIndex + 7, ForestNymphTradeUI.Visible, "Nymph Trade");
+                AddInterfaceLayer(layers, SpiritWalkerButtonUILayer, SpiritWalkerButtonUIElement, MouseTextIndex + 8, Main.LocalPlayer.RedemptionAbility().Spiritwalker && Main.playerInventory, "Spirit Walker Button");
+                AddInterfaceLayer(layers, AlignmentButtonUILayer, AlignmentButtonUIElement, MouseTextIndex + 8, RedeWorld.alignmentGiven && Main.playerInventory, "Alignment Button");
             }
         }
 
@@ -740,6 +781,23 @@ namespace Redemption
 
             spriteBatch.End();
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.LinearClamp, DepthStencilState.Default, RasterizerState.CullNone, null, Main.UIScaleMatrix);
+        }
+        public static void DrawOmegaTransmitterText(SpriteBatch spriteBatch)
+        {
+            Player player = Main.LocalPlayer;
+            spriteBatch.End();
+            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.LinearClamp, DepthStencilState.Default, RasterizerState.CullNone, null, Main.GameViewMatrix.TransformationMatrix);
+
+            ChatManager.DrawColorCodedStringWithShadow(spriteBatch, FontAssets.MouseText.Value, "Right-click to switch Prototype", player.Center + new Vector2(-118, 36) - Main.screenPosition, Color.Red, 0, Vector2.Zero, Vector2.One);
+
+            spriteBatch.End();
+            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.LinearClamp, DepthStencilState.Default, RasterizerState.CullNone, null, Main.UIScaleMatrix);
+        }
+        public static void DrawChoiceText(SpriteBatch spriteBatch)
+        {
+            string text = "Open Inventory to make your choice";
+            int textLength = (int)(FontAssets.DeathText.Value.MeasureString(text).X * .5f);
+            ChatManager.DrawColorCodedStringWithShadow(spriteBatch, FontAssets.DeathText.Value, text, new Vector2((Main.screenWidth / 2) - (textLength / 2), Main.screenHeight / 4), Color.White, 0, Vector2.Zero, Vector2.One * .5f);
         }
         public static void DrawSlayerCursor(SpriteBatch spriteBatch)
         {

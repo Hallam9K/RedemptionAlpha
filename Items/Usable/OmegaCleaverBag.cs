@@ -46,7 +46,7 @@ namespace Redemption.Items.Usable
         }
         public override void ModifyItemLoot(ItemLoot itemLoot)
         {
-            itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<SwordHeadband>(), 7));
+            itemLoot.Add(ItemDropRule.NotScalingWithLuck(ModContent.ItemType<SwordHeadband>(), 7));
             itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<GonkPet>(), 10));
             itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<CorruptedXenomite>(), 1, 4, 8));
             itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<BrokenBlade>()));

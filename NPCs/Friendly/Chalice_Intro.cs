@@ -70,7 +70,7 @@ namespace Redemption.NPCs.Friendly
                     {
                         RedeSystem.Instance.ChaliceUIElement.DisplayDialogue("Do you wish for an explanation of Alignment?", 800, 30, 0, Color.DarkGoldenrod);
                         if (!Main.dedServ)
-                            YesNoUI.Visible = true;
+                            RedeSystem.Instance.YesNoUIElement.DisplayYesNoButtons();
                         AITimer = 0;
                         TimerRand = 1;
                         NPC.netUpdate = true;
@@ -110,35 +110,40 @@ namespace Redemption.NPCs.Friendly
                         extraPos[i] = NPC.Center + Vector2.One.RotatedBy(MathHelper.ToRadians((360 / 3 * i) + NPC.localAI[0])) * NPC.localAI[1];
                     }
                     if (AITimer++ == 30 + 60)
-                        RedeSystem.Instance.ChaliceUIElement.DisplayDialogue("Certain actions will align you with good or evil forces, indicated by these orbs.", 300, 20, 0, Color.DarkGoldenrod);
+                        RedeSystem.Instance.ChaliceUIElement.DisplayDialogue("Certain actions will align you with good or evil forces.", 300, 20, 0, Color.DarkGoldenrod);
                     if (AITimer == 340 + 60)
-                        RedeSystem.Instance.ChaliceUIElement.DisplayDialogue("Fighting evil or helping those in need sets you along a righteous path with unique items and quests.", 300, 20, 0, Color.Green);
-                    if (AITimer == 680 + 60)
-                        RedeSystem.Instance.ChaliceUIElement.DisplayDialogue("Assisting evil or slaying its opposition sets you along a path of abominable acts and forbidden power.", 300, 20, 0, Color.Red);
-                    if (AITimer == 1020 + 60)
+                        RedeSystem.Instance.ChaliceUIElement.DisplayDialogue("Fighting evil or helping those in need sets you along a righteous path with unique items and quests.", 400, 20, 0, Color.Green);
+                    if (AITimer == 780 + 60)
+                        RedeSystem.Instance.ChaliceUIElement.DisplayDialogue("Assisting evil or slaying its opposition sets you along a path of abominable acts and forbidden power.", 400, 20, 0, Color.Red);
+                    if (AITimer == 1220 + 60)
                         RedeSystem.Instance.ChaliceUIElement.DisplayDialogue("Battles and available materials will be altered by your path.", 300, 20, 0, Color.DarkGoldenrod);
-                    if (AITimer == 1360 + 60)
+                    if (AITimer == 1560 + 60)
                         RedeSystem.Instance.ChaliceUIElement.DisplayDialogue("Foes may take you more seriously, some less so.", 300, 20, 0, Color.DarkGoldenrod);
-                    if (AITimer >= 1700 + 60)
+                    if (AITimer >= 1900 + 60)
                     {
                         if (extraAlpha2 < 1)
                             extraAlpha2 += 0.02f;
 
                         extraPos[3] = NPC.Center + new Vector2(0, -170);
                     }
-                    if (AITimer == 1700 + 120)
+                    if (AITimer == 1900 + 120)
                         RedeSystem.Instance.ChaliceUIElement.DisplayDialogue("Some actions can be redeemed, restoring your lost alignment and possibly raising it higher.", 300, 20, 0, Color.Goldenrod);
-                    if (AITimer == 2040 + 120)
+                    if (AITimer == 2240 + 120)
                         RedeSystem.Instance.ChaliceUIElement.DisplayDialogue("The path you choose is up to you.", 180, 20, 0, Color.DarkGoldenrod);
-                    if (AITimer >= 2040 + 120)
+                    if (AITimer >= 2240 + 120)
                     {
                         extraAlpha -= 0.04f;
                         extraAlpha2 -= 0.04f;
                     }
-                    if (AITimer >= 2260 + 120)
+                    if (AITimer >= 2460 + 120)
                     {
                         SoundEngine.PlaySound(SoundID.Item68, NPC.position);
                         RedeDraw.SpawnExplosion(NPC.Center, Color.White, scale: 1, noDust: true, tex: ModContent.Request<Texture2D>("Redemption/Textures/HolyGlow2").Value);
+
+                        RedeWorld.alignmentGiven = true;
+                        if (Main.netMode == NetmodeID.Server)
+                            NetMessage.SendData(MessageID.WorldData);
+
                         NPC.active = false;
                     }
                     break;
@@ -149,6 +154,11 @@ namespace Redemption.NPCs.Friendly
                     {
                         SoundEngine.PlaySound(SoundID.Item68, NPC.position);
                         RedeDraw.SpawnExplosion(NPC.Center, Color.White, scale: 1, noDust: true, tex: ModContent.Request<Texture2D>("Redemption/Textures/HolyGlow2").Value);
+
+                        RedeWorld.alignmentGiven = true;
+                        if (Main.netMode == NetmodeID.Server)
+                            NetMessage.SendData(MessageID.WorldData);
+
                         NPC.active = false;
                     }
                     break;

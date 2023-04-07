@@ -135,7 +135,7 @@ namespace Redemption.NPCs.Bosses.SeedOfInfection
 
             LeadingConditionRule notExpertRule = new(new Conditions.NotExpert());
 
-            notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<InfectedMask>(), 7));
+            notExpertRule.OnSuccess(ItemDropRule.NotScalingWithLuck(ModContent.ItemType<InfectedMask>(), 7));
 
             notExpertRule.OnSuccess(ItemDropRule.OneFromOptions(1, ModContent.ItemType<XenoXyston>(), ModContent.ItemType<CystlingSummon>(), ModContent.ItemType<ContagionSpreader>()));
             notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<XenomiteShard>(), 1, 12, 22));

@@ -4,6 +4,7 @@ using Redemption.Items.Usable;
 using Redemption.Rarities;
 using System.Collections.Generic;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Redemption.BaseExtension;
@@ -19,6 +20,12 @@ using Redemption.Biomes;
 using Redemption.NPCs.Friendly;
 using Redemption.Tiles.Furniture.Misc;
 using Redemption.WorldGeneration.Misc;
+using Redemption.Items.Placeable.Plants;
+using Redemption.Items.Quest.KingSlayer;
+using Redemption.Items.Usable.Summons;
+using Redemption.Items.Weapons.PreHM.Summon;
+using Terraria.ModLoader.Core;
+using Terraria.Localization;
 using SubworldLibrary;
 
 namespace Redemption.Globals
@@ -275,7 +282,7 @@ namespace Redemption.Globals
         {
             if (ArenaWorld.arenaActive && bannedArenaItems.Any(x => x == item.type))
                 return false;
-            if (player.InModBiome<LabBiome>() && !RedeBossDowned.downedPZ && item.type == ItemID.RodofDiscord)
+            if (player.InModBiome<LabBiome>() && !RedeBossDowned.downedPZ && item.type is ItemID.RodofDiscord)
                 return false;
 
             #region C
@@ -294,14 +301,49 @@ namespace Redemption.Globals
         public override void OnCreate(Item item, ItemCreationContext context)
         {
             if (item.type == ModContent.ItemType<AlignmentTeller>() && !Terraria.NPC.AnyNPCs(ModContent.NPCType<Chalice_Intro>()))
-                RedeHelper.SpawnNPC(item.GetSource_FromAI(), (int)Main.LocalPlayer.Center.X, (int)Main.LocalPlayer.Center.Y, ModContent.NPCType<Chalice_Intro>());
-        }
+            {
+                RedeWorld.alignmentGiven = true;
+                if (Main.netMode == NetmodeID.Server)
+                    NetMessage.SendData(MessageID.WorldData);
 
+                RedeHelper.SpawnNPC(item.GetSource_FromAI(), (int)Main.LocalPlayer.Center.X, (int)Main.LocalPlayer.Center.Y, ModContent.NPCType<Chalice_Intro>());
+                item.TurnToAir();
+            }
+        }
+        public static bool ChaliceInterest(int type)
+        {
+            if (ItemLists.AlignmentInterest.Contains(type))
+            {
+                if (type == ModContent.ItemType<WeddingRing>() && (!RedeBossDowned.downedKeeper || RedeBossDowned.skullDiggerSaved))
+                    return false;
+                if (type == ModContent.ItemType<SorrowfulEssence>() && RedeBossDowned.downedSkullDigger)
+                    return false;
+                if (type == ModContent.ItemType<AbandonedTeddy>() && RedeBossDowned.keeperSaved)
+                    return false;
+                if (type == ModContent.ItemType<CyberTech>() && RedeBossDowned.downedSlayer)
+                    return false;
+                if (type == ModContent.ItemType<SlayerShipEngine>() && RedeWorld.slayerRep >= 4)
+                    return false;
+                if (type == ModContent.ItemType<AnglonicMysticBlossom>() && (RedeWorld.alignment <= 0 || RedeQuest.forestNymphVar >= 2))
+                    return false;
+                if (type == ModContent.ItemType<KingsOakStaff>() && (RedeWorld.alignment <= 0 || RedeQuest.forestNymphVar > 0))
+                    return false;
+                if (type == ModContent.ItemType<NebSummon>() && RedeBossDowned.downedNebuleus && RedeBossDowned.nebDeath < 7)
+                    return false;
+                return true;
+            }
+            return false;
+        }
         public const string axeBonus = "Axe Bonus: 3x critical strike damage, increased chance to decapitate humanoid enemies";
         public const string slashBonus = "Slash Bonus: Small chance to decapitate most humanoid enemies, killing them instantly";
         public const string hammerBonus = "Hammer Bonus: Deals quadruple damage to Guard Points";
         public override void ModifyTooltips(Item item, List<TooltipLine> tooltips)
         {
+            if (ChaliceInterest(item.type))
+            {
+                TooltipLine chaliceLine = new(Mod, "ChaliceLine", "[i:Redemption/RedemptionRoute]The chalice has something to say about this item") { OverrideColor = new Color(203, 189, 99) };
+                tooltips.Add(chaliceLine);
+            }
             TooltipLine axeLine = new(Mod, "AxeBonus", axeBonus) { OverrideColor = Colors.RarityOrange };
             if ((item.CountsAsClass(DamageClass.Melee) && item.damage > 0 && item.useStyle == ItemUseStyleID.Swing && !item.noUseGraphic))
             {

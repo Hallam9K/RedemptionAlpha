@@ -32,6 +32,10 @@ using Redemption.NPCs.HM;
 using Redemption.NPCs.Bosses.ADD;
 using Redemption.NPCs.Friendly.SpiritSummons;
 using Redemption.NPCs.FowlMorning;
+using Redemption.Items.Usable.Summons;
+using Redemption.Items.Quest.KingSlayer;
+using Redemption.Items.Placeable.Plants;
+using Redemption.Items.Weapons.PreHM.Summon;
 
 namespace Redemption.Globals
 {
@@ -228,7 +232,7 @@ namespace Redemption.Globals
         #endregion
 
         #region Cold
-        public static List<int> Cold = new() { NPCID.ZombieEskimo, NPCID.ArmedZombieEskimo, NPCID.IceBat, NPCID.IceSlime, NPCID.SpikedIceSlime, NPCID.SnowFlinx, NPCID.IceElemental, NPCID.IceMimic, NPCID.IceTortoise, NPCID.IcyMerman, NPCID.MisterStabby, NPCID.Wolf, NPCID.IceGolem, NPCID.SnowBalla, NPCID.SnowmanGangsta, NPCID.Flocko, NPCID.Yeti, NPCID.IceQueen, NPCID.Deerclops, NPCID.DeerclopsLeg, ModContent.NPCType<SneezyFlinx>(), ModContent.NPCType<SicklyPenguin>(), ModContent.NPCType<SicklyWolf>() };
+        public static List<int> Cold = new() { NPCID.ZombieEskimo, NPCID.ArmedZombieEskimo, NPCID.IceBat, NPCID.IceSlime, NPCID.SpikedIceSlime, NPCID.SnowFlinx, NPCID.IceElemental, NPCID.IceMimic, NPCID.IceTortoise, NPCID.IcyMerman, NPCID.MisterStabby, NPCID.Wolf, NPCID.IceGolem, NPCID.SnowBalla, NPCID.SnowmanGangsta, NPCID.Flocko, NPCID.Yeti, NPCID.IceQueen, NPCID.Deerclops, ModContent.NPCType<SneezyFlinx>(), ModContent.NPCType<SicklyPenguin>(), ModContent.NPCType<SicklyWolf>() };
         #endregion
 
         #region Hot
@@ -303,6 +307,9 @@ namespace Redemption.Globals
 
         public static List<int> NoElement = new()
         { ItemID.BlueSolution, ItemID.DarkBlueSolution, ItemID.GreenSolution, ItemID.PurpleSolution, ItemID.RedSolution, ItemID.RocketI, ItemID.RocketII, ItemID.RocketIII, ItemID.RocketIV, ModContent.ItemType<BleachedSolution>() };
+
+        public static List<int> AlignmentInterest = new()
+        { ModContent.ItemType<HeartOfThorns>(), ModContent.ItemType<DemonScroll>(), ModContent.ItemType<WeddingRing>(), ModContent.ItemType<SorrowfulEssence>(), ModContent.ItemType<AbandonedTeddy>(), ModContent.ItemType<CyberTech>(), ModContent.ItemType<SlayerShipEngine>(), ModContent.ItemType<MemoryChip>(), ModContent.ItemType<AnglonicMysticBlossom>(), ModContent.ItemType<KingsOakStaff>(), ModContent.ItemType<NebSummon>() };
 
         #endregion
     }
