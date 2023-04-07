@@ -13,7 +13,7 @@ namespace Redemption.Items.Usable.Summons
 		public override void SetStaticDefaults()
 		{
 			// DisplayName.SetDefault("Heart of Thorns");
-			/* Tooltip.SetDefault("Summons an unfortunate curse-bearer" 
+			/* Tooltip.SetDefault("Summons an unfortunate curse-bearer"
 				+ "\nOnly usable at day"
 				+ "\nNot consumable" +
 				"\n[i:" + ModContent.ItemType<GoodRoute>() + "][c/bbf160: This item may have a positive impact onto the world]"); */
@@ -37,7 +37,7 @@ namespace Redemption.Items.Usable.Summons
 
 		public override bool CanUseItem(Player player)
 		{
-			return //!SubworldSystem.IsActive<SoullessSub>() && 
+			return //!SubworldSystem.IsActive<SoullessSub>() &&
 				Main.dayTime && !NPC.AnyNPCs(ModContent.NPCType<Thorn>());
 		}
 

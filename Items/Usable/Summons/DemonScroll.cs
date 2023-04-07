@@ -40,7 +40,7 @@ namespace Redemption.Items.Usable.Summons
         }
         public override bool CanUseItem(Player player)
         {
-            return //!SubworldSystem.IsActive<SoullessSub>() && 
+            return //!SubworldSystem.IsActive<SoullessSub>() &&
                 (player.statLifeMax2 >= 140 || player.statLifeMax2 == 1) && !NPC.AnyNPCs(ModContent.NPCType<PalebatImp>()) && !NPC.AnyNPCs(ModContent.NPCType<Erhan>()) && !NPC.AnyNPCs(ModContent.NPCType<ErhanSpirit>());
         }
         public override bool? UseItem(Player player)
