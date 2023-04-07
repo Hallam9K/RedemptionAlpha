@@ -29,12 +29,8 @@ namespace Redemption.Tiles.Tiles
         }
         public override void FloorVisuals(Player player)
         {
-            if (player.velocity.X != 0f && Main.rand.NextBool(20))
-            {
-                Dust dust = Dust.NewDustDirect(player.Bottom, 0, 0, DustType, 0f, -Main.rand.NextFloat(2f));
-                dust.noGravity = true;
-                dust.fadeIn = 1f;
-            }
+            if (player.velocity.X != 0f && Main.rand.NextBool(4))
+                Dust.NewDustDirect(player.BottomLeft, player.width, 0, DustType, -player.velocity.X / 4, -Main.rand.NextFloat(1f));
         }
         public override void KillTile(int i, int j, ref bool fail, ref bool effectOnly, ref bool noItem)
         {

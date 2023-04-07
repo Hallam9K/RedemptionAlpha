@@ -53,10 +53,22 @@ namespace Redemption.Items.Usable
         }
         public override void UpdateInventory(Player player)
         {
+            if (!RedeWorld.alignmentGiven)
+            {
+                RedeWorld.alignmentGiven = true;
+                if (Main.netMode == NetmodeID.Server)
+                    NetMessage.SendData(MessageID.WorldData);
+            }
             Item.TurnToAir();
         }
         public override void Update(ref float gravity, ref float maxFallSpeed)
         {
+            if (!RedeWorld.alignmentGiven)
+            {
+                RedeWorld.alignmentGiven = true;
+                if (Main.netMode == NetmodeID.Server)
+                    NetMessage.SendData(MessageID.WorldData);
+            }
             if (Main.netMode != NetmodeID.MultiplayerClient)
             {
                 Item.active = false;

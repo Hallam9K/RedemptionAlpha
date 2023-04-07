@@ -376,12 +376,15 @@ namespace Redemption.NPCs.Friendly
                 shop.item[nextSlot++].SetDefaults(ModContent.ItemType<Capacitor>());
                 shop.item[nextSlot++].SetDefaults(ModContent.ItemType<Plating>());
             }
+            if (RedeBossDowned.nukeDropped || RedeWorld.labSafe)
+            {
+                shop.item[nextSlot++].SetDefaults(ModContent.ItemType<RadiationPill>());
+                shop.item[nextSlot++].SetDefaults(ModContent.ItemType<GeigerMuller>());
+            }
             if (NPC.downedMechBoss1 && NPC.downedMechBoss2 && NPC.downedMechBoss3)
             {
-                shop.item[nextSlot++].SetDefaults(ModContent.ItemType<MiniWarhead>());
-                shop.item[nextSlot++].SetDefaults(ModContent.ItemType<GeigerMuller>());
                 shop.item[nextSlot++].SetDefaults(ModContent.ItemType<IOLocator>());
-                shop.item[nextSlot++].SetDefaults(ModContent.ItemType<RadiationPill>());
+                shop.item[nextSlot++].SetDefaults(ModContent.ItemType<MiniWarhead>());
             }
             if (RedeBossDowned.downedSeed)
                 shop.item[nextSlot++].SetDefaults(ModContent.ItemType<AnomalyDetector>());
