@@ -81,11 +81,6 @@ namespace Redemption.Items.Usable.Summons
                     OverrideColor = Color.LightSkyBlue
                 };
                 tooltips.Insert(tooltips.FindIndex(TooltipLine => TooltipLine.Name.Equals("Tooltip2")), line);
-                int tooltipLocation = tooltips.FindIndex(TooltipLine => TooltipLine.Name.Equals("Tooltip2"));
-                if (tooltipLocation != -1)
-                {
-                    tooltips.Insert(tooltipLocation + 1, new TooltipLine(Mod, "GoodRouteLine", "[i:Redemption/GoodRoute][c/bbf160: This item may have a positive impact onto the world]"));
-                }
             }
         }
     }

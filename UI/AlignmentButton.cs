@@ -101,7 +101,7 @@ namespace Redemption.UI
                     else if (type == ModContent.ItemType<AbandonedTeddy>())
                     {
                         if (!RedeBossDowned.keeperSaved)
-                            RedeSystem.Instance.ChaliceUIElement.DisplayDialogue("A ragged teddy, and a reminder of a hopeful future.", 300, 30, 0, Color.DarkGoldenrod);
+                            RedeSystem.Instance.ChaliceUIElement.DisplayDialogue("A ragged teddy, and a bringer of peace to the misfortuned.", 300, 30, 0, Color.DarkGoldenrod);
                     }
                     else if (type == ModContent.ItemType<CyberTech>())
                     {

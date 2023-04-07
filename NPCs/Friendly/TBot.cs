@@ -368,6 +368,11 @@ namespace Redemption.NPCs.Friendly
                 .Add<ZoneAccessPanel6>(new Condition("", () => RedeBossDowned.downedPZ && !LabArea.labAccess[5]));
 
             npcShop.Register();
+            if (RedeBossDowned.nukeDropped || RedeWorld.labSafe)
+            {
+                shop.item[nextSlot++].SetDefaults(ModContent.ItemType<RadiationPill>());
+                shop.item[nextSlot++].SetDefaults(ModContent.ItemType<GeigerMuller>());
+            }
         }
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
