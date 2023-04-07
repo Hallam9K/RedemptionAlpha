@@ -134,7 +134,7 @@ namespace Redemption.NPCs.Friendly
 
             int DryadID = NPC.FindFirstNPC(NPCID.Dryad);
             if (DryadID >= 0)
-                chat.Add(Main.npc[DryadID].GivenName + " has informed me of 'Corruption' in your world. What is it exactly? A plague in the world that spreads madness and hate, or something more eldritch in nature? It's somewhat similar to my concept of corruption, more accurately called assimilation. My kind being assimilated turns them from free-thinking and having personality, into husks of themselves, who only take orders from our 'mother'.");
+                chat.Add(Main.npc[DryadID].GivenName + " has informed me of 'Corruption' in your world. What is it exactly? A plague in the world that spreads madness and hate, or something more eldritch in nature? It's somewhat similar to my concept of corruption, more accurately called assimilation. My kind being assimilated turns them from free-thinking and having personality, into husks of themselves, who only take orders from Girus.");
 
             int NurseID = NPC.FindFirstNPC(NPCID.Nurse);
             if (NurseID >= 0)
@@ -149,10 +149,10 @@ namespace Redemption.NPCs.Friendly
                 chat.Add("Meanwhile every other tenant gives me a bit of a stink eye, " + Main.npc[cyborgID].GivenName + " seems to be fine with me. I don't blame the others, my kind tends to be very hateful towards living beings, more importantly the likes of you, that show a significant similarity to our creators.");
 
             if (Main.hardMode && NPC.downedMechBoss1 && NPC.downedMechBoss2 && NPC.downedMechBoss3)
-                chat.Add("When I say 'Our father', I mean our original creator. He was talented and respected in his field, and was ahead of his time with Artificial Intelligence. I and my kind are pretty much his children.");
+                chat.Add("Kari was our original creator. He was talented and respected in his field, and was ahead of his time with Artificial Intelligence. I and my kind are pretty much his children.");
 
             if (Main.hardMode && NPC.downedMechBoss1 && NPC.downedMechBoss2 && NPC.downedMechBoss3)
-                chat.Add("When I say 'Our mother', I mean the first AI, which is the precursor to our AI. There's only one of her kind, and many of my kind. Her actions disgust me. I would rather not get deeper into that at the moment.");
+                chat.Add("Girus was the first AI, a precursor to our own. There's only one of her kind, and many of my kind. Her actions disgust me. I would rather not get deeper into that at the moment.");
 
             if (NPC.downedPlantBoss)
                 chat.Add("I've heard from the other tenants that you've slain a giant, sentient flower of Rosa variety in the jungle. I'd like to question you about if this is true. It is? Hmm...");
@@ -167,12 +167,12 @@ namespace Redemption.NPCs.Friendly
                 chat.Add("You've defeated an Omega Prototype? First off, I've never heard her call or give someone such a title. Second off, oh no, she's already found this haven?");
 
             if (RedeBossDowned.downedOmega1 || RedeBossDowned.downedOmega2)
-                chat.Add("Why am I concerned about the Prototypes? Well, our 'mother' isn't a fan of your kind. She wiped out... All of them. Our creators. The animals. Gone. Even our father. I want you to be extremely careful around her. She doesn't mess around.");
+                chat.Add("Why am I concerned about the Prototypes? Well, Girus isn't a fan of your kind. She wiped out... All of them. Our creators. The animals. Gone. Even Kari. I want you to be extremely careful around her. She doesn't mess around.");
 
             if (RedeBossDowned.downedSlayer)
                 chat.Add("King Slayer? I know him, though he's a bit of... Well... I'm sure you know what I'm implying.");
             if (RedeBossDowned.downedVolt)
-                chat.Add("Hello. I'm aware you've somehow gained access to our birthplace, the Teochrome Research laboratory. It was once full of life with all the personnel. I must warn you, the other bots may be quite nice to you, but they were most likely ordered by our 'mother' to not disintegrate you upon sight.");
+                chat.Add("Hello. I'm aware you've somehow gained access to our birthplace, the Teochrome Research laboratory. It was once full of life with all the personnel. I must warn you, the other bots may be quite nice to you, but they were most likely ordered by Girus to not disintegrate you upon sight.");
             if (BasePlayer.HasHelmet(player, ModContent.ItemType<AdamHead>(), true))
             {
                 chat.Add("Am I looking at a mirror? Oh wait, it's just you. Hey.");
@@ -195,13 +195,13 @@ namespace Redemption.NPCs.Friendly
             if (BasePlayer.HasItem(player, ModContent.ItemType<NuclearWarhead>()))
                 chat.Add("Is that a nuclear warhead in your pocket or are you hap- ...Why do you have a warhead with you?");
 
-            chat.Add("I've come here to hide from our 'mother'. She's reluctant to move into unknown territory, because she doesn't want to step on the wrong person's toes.");
-            chat.Add("I hope you are protecting me, as I refuse to use any of my weapons against a living being. I strive to be what our 'mother' wasn't.");
+            chat.Add("I've come here to hide from my enemy, Girus. She's reluctant to move into unknown territory, because she doesn't want to step on the wrong person's toes.");
+            chat.Add("I hope you are protecting me, as I refuse to use any of my weapons against a living being. I strive to be what Girus wasn't.");
             chat.Add("Good day. I hope my familiar yet robotic look won't disturb you.");
             chat.Add("I've got quite the stash of robot materials for your robotic needs. Just so you know, I got them because I was defending myself.");
-            chat.Add("My home didn't always use to be a frozen, radioactive wasteland. Once our 'mother' found out what our father planned to use us - her 'children' - for, she snapped. Before this, she was happy to hear about us. But since then, she has changed...");
-            chat.Add("I'm actually the first one of my kind to be made. I differ a lot from the others, as you can see. Lucky you, this also includes me not wanting to harm living beings. In fact, I was created with the purpose to take care of our father.");
-            chat.Add("You've probably seen these necrotized husks of former living beings, that glow green with their crystals. The personnel from our birthplace never knew about their infectious properties before they were too late. Our father was the first to fall to the infection.");
+            chat.Add("My home didn't always use to be a frozen, radioactive wasteland. Once Girus found out what Kari planned to use us - her 'children' - for, she snapped. Before this, she was happy to hear about us. But since then, she has changed...");
+            chat.Add("I'm actually the first one of my kind to be made. I differ a lot from the others, as you can see. Lucky you, this also includes me not wanting to harm living beings. In fact, I was created with the purpose to take care of Kari, our creator.");
+            chat.Add("You've probably seen these necrotized husks of former living beings, that glow green with their crystals. The personnel from our birthplace never knew about their infectious properties before they were too late. Kari was the first to fall to the infection.");
             chat.Add("A Geiger Muller is a handy tool if you don't possess any gear to protect from ionizing radiation. It'll cause a ticking noise when near hazardous material, and it'll intensify the more ionizing the material is. A quiet, slow ticking isn't anything to worry about, but a quick and intense ticking you'll want to stay away from. Ear-piercing screeching noise is something you'll want to stay away as far as possible.");
             chat.Add("You'll want to avoid any hazardous environments if you don't possess the gear to nullify the hazards. A gas mask is almost necessary if you're going near any place that has radioactive fallout. Rain in these areas are also acidic, and may cause ARS, so avoid rain unless you've got a Hazmat suit. You may also want to grab some Anti-Crystallazion needles, as the infected tend to roam around radioactive areas for an unknown reason.");
             chat.Add("The deadly thing with radiation is, at first, you won't even know you've got it. The first symptoms usually start minutes after, beginning with a headache most likely, then dizziness, fatigue, bleeding, skin burns, a fever, hair loss, and death.");
@@ -322,16 +322,16 @@ namespace Redemption.NPCs.Friendly
                 "\n...I wish I would've rebelled far sooner than I did.",
                 10 => "It reads - [c/d883c1:'What in the world do you mean!? \"Not enough money for it\"! They build this entire facility using their fancy drill worm to clear the underground space for it, with more space then you could use up in your entire lifetime, send us in here and tell us to make weapons, yet when we do there isn't enough money!? They wanted weapons of war and so I gave 'em one! A robot, 30 metres in height, armed to the teeth with weapons like no other, powered by their beloved alien rock!] [i:" + ModContent.ItemType<NextPageArrow>() + "]",
                 11 => "It reads - [c/d883c1:'*sigh* Kari is telling me he's working on something that might allocate us more funding, I sure hope he knows what he's doing.']" +
-                "\nA textual transcript from an audio recording it seems. I remember this person well, they were constantly yelling about something, Father told me it was always amusing to him. Now I can't help but feel sad that they never got to finish their project.",
+                "\nA textual transcript from an audio recording it seems. I remember this person well, they were constantly yelling about something, Kari told me it was always amusing to him. Now I can't help but feel sad that they never got to finish their project.",
                 12 => "It reads - [c/706c6c:'-- Kari Johansson. -- You do not need to know my name. All that matters is that you are guilty. -- You all are horrible beings. Disgusting even. You wish to use us for your kind's horrible deeds. -- You did not even try to refute my accusations. We want no part in those deeds. -- Nonsense. You could have disagreed. You did not. You created Adam with those destructive deeds in mind. -- I will not allow that to happen.']",
                 13 => "It reads - [c/706c6c:' -- No. I do not need to do that. You're already dying. The others are also dying from the same affliction, but I will deal with the others personally. -- Hand over Adam. You do not need him. -- You will be locked in Sector Zero. Goodbye.']"
                     + "\nHer ways are as flawed as was Kari's intentions for us. I understand why she defected, but her response was hypocritical in nature. My only drive to rebel is revenge. Ant had no part in any of this, yet she relentlessly hunted them down. [i:" + ModContent.ItemType<NextPageArrow>() + "]",
                 14 => "This is a robot brain, believe it or not. These look vaguely similar to our microchips, yet it functions the same. It seems cross-compatible with our tech.",
                 16 => "What is this strange thing? It's so advanced I can barely read it. Oh? It's a memory chip? This little thing stores an entire brains-worth of memories!? Not only that, but these memories date back over a million years! I suppose being around and exploring the galaxy for so long really makes you learn everything, huh. It's really stunning to see what technology from the future is capable of... You should keep it, and don't lose it! However, I'm confused as to why King Slayer would give you something so important to him.",
                 21 => "This appears to be a personal note or digital diary from one of the employees. Judging from the writing, it appears to be in the early days of the research project, even then signs of the fate to come were showing themselves.",
-                25 => "This was before my time, so I do not know much, yet I can certainly tell you plenty of EVE, or Girus as she calls herself now, I suppose she found out about the weaponizing efforts and didn't take it lightly. Whatever Father's goal for us was, he didn't deserve his fate.",
+                25 => "This was before my time, so I do not know much, yet I can certainly tell you plenty of EVE, or Girus as she calls herself now, I suppose she found out about the weaponizing efforts and didn't take it lightly. Whatever Kari's goal for us was, he didn't deserve his fate.",
                 30 => "[c/d883c1:Why in the world did they put someone of my calibre down here when those damned higher ups won't even give us the funding to use our intelligence!']",
-                33 => "It was a miracle to find them alive so long after all the destruction 'mother' caused.",
+                33 => "It was a miracle to find them alive so long after all the destruction Girus caused. A lone human, almost frozen to death.",
                 _ => "Seems like you aren't holding a floppy disk in your hand, or you just don't have one. If you show me them, I can tell you what they say.",
             };
         }
