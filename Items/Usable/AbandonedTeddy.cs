@@ -7,8 +7,7 @@ namespace Redemption.Items.Usable
     {
         public override void SetStaticDefaults()
         {
-            Tooltip.SetDefault("Let the Keeper's spirit rest" +
-                "\n[i:" + ModContent.ItemType<RedemptionRoute>() + "][c/f8f8bc: This item may redeem terrible actions]");
+            Tooltip.SetDefault("Let the Keeper's spirit rest");
 
             SacrificeTotal = 1;
         }

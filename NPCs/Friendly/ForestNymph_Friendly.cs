@@ -321,8 +321,7 @@ namespace Redemption.NPCs.Friendly
                             else if (RedeQuest.forestNymphVar == 4)
                             {
                                 if (NPC.homeless)
-                                    Main.npcChatText = "I would prefer if it was made of living wood - I give you permission to renovate an existing living tree if so inclined, but as long as it's made of living wood I'll be satisfied. Secondly, I need a body of water nearby. A small one is fine, just as long as I can submerge my roots into it." +
-                                        "\n\n[i:" + ModContent.ItemType<GoodRoute>() + "][c/bbf160: This action may have a positive impact onto the world]";
+                                    Main.npcChatText = "I would prefer if it was made of living wood - I give you permission to renovate an existing living tree if so inclined, but as long as it's made of living wood I'll be satisfied. Secondly, I need a body of water nearby. A small one is fine, just as long as I can submerge my roots into it.";
                                 else
                                 {
                                     int score = 0;
@@ -345,8 +344,7 @@ namespace Redemption.NPCs.Friendly
                                             PersonalityState.Aggressive => "I did ask for a body of water, did I not? Make one and I'll accept this place as my home.",
                                             _ => "If you can get a body of water to be close to my new home I will accept it.",
                                         };
-                                        Main.npcChatText = "It is suitable. I can see myself getting comfortable in here for now, however I see no pools of water nearby. " + line + "\n\n(" + score.ToString() + "/20 water required)" +
-                                            "\n[i:" + ModContent.ItemType<GoodRoute>() + "][c/bbf160: This action may have a positive impact onto the world]";
+                                        Main.npcChatText = "It is suitable. I can see myself getting comfortable in here for now, however I see no pools of water nearby. " + line + "\n\n(" + score.ToString() + "/20 water required)";
                                     }
                                     else
                                     {

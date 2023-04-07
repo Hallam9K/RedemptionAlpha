@@ -15,8 +15,7 @@ namespace Redemption.Items.Usable.Summons
 			DisplayName.SetDefault("Heart of Thorns");
 			Tooltip.SetDefault("Summons an unfortunate curse-bearer" 
 				+ "\nOnly usable at day"
-				+ "\nNot consumable" +
-				"\n[i:" + ModContent.ItemType<GoodRoute>() + "][c/bbf160: This item may have a positive impact onto the world]");
+				+ "\nNot consumable");
 
 			SacrificeTotal = 1;
 			ItemID.Sets.SortingPriorityBossSpawns[Type] = 12;
