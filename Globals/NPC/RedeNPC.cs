@@ -68,10 +68,7 @@ namespace Redemption.Globals.NPC
                     shop.item[nextSlot++].SetDefaults(ModContent.ItemType<EaglecrestGolemPlush>());
             }
             if (type == NPCID.Wizard)
-            {
-                shop.item[nextSlot++].SetDefaults(ModContent.ItemType<NoidanSauva>());
-                shop.item[nextSlot++].SetDefaults(ModContent.ItemType<Pommisauva>());
-            }
+                shop.item[nextSlot++].SetDefaults(ModContent.ItemType<Taikasauva>());
             if (type == NPCID.Princess)
             {
                 shop.item[nextSlot++].SetDefaults(ModContent.ItemType<HamPatPainting>());

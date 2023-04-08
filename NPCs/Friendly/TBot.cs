@@ -195,7 +195,7 @@ namespace Redemption.NPCs.Friendly
             if (BasePlayer.HasItem(player, ModContent.ItemType<NuclearWarhead>()))
                 chat.Add("Is that a nuclear warhead in your pocket or are you hap- ...Why do you have a warhead with you?");
 
-            chat.Add("I've come here to hide from my enemy, Girus. She's reluctant to move into unknown territory, because she doesn't want to step on the wrong person's toes.");
+            chat.Add("I've come here to hide from Girus. She's reluctant to move into unknown territory, because she doesn't want to step on the wrong person's toes.");
             chat.Add("I hope you are protecting me, as I refuse to use any of my weapons against a living being. I strive to be what Girus wasn't.");
             chat.Add("Good day. I hope my familiar yet robotic look won't disturb you.");
             chat.Add("I've got quite the stash of robot materials for your robotic needs. Just so you know, I got them because I was defending myself.");
