@@ -18,6 +18,8 @@ using ReLogic.Content;
 using Redemption.WorldGeneration;
 //using SubworldLibrary;
 using Redemption.WorldGeneration.Misc;
+using Redemption.Items.Weapons.HM.Magic;
+using Terraria.Audio;
 
 namespace Redemption.Globals.Player
 {
@@ -108,6 +110,12 @@ namespace Redemption.Globals.Player
                 hitTarget = target.whoAmI;
                 hitTarget2 = target.whoAmI;
             }
+        }
+        public override bool PreKill(double damage, int hitDirection, bool pvp, ref bool playSound, ref bool genGore, ref PlayerDeathReason damageSource)
+        {
+            if (Player.HasItem(ModContent.ItemType<Taikasauva>()))
+                SoundEngine.PlaySound(CustomSounds.NoitaDeath);
+            return base.PreKill(damage, hitDirection, pvp, ref playSound, ref genGore, ref damageSource);
         }
         public override void OnEnterWorld()
         {

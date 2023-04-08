@@ -64,10 +64,7 @@ namespace Redemption.Globals.NPC
                 shop.Add<EaglecrestGolemPlush>(RedeConditions.DownedEaglecrestGolem);
             }
             if (shop.NpcType == NPCID.Wizard)
-            {
-                shop.Add<NoidanSauva>();
-                shop.Add<Pommisauva>();
-            }
+                shop.Add<Taikasauva>();
             if (shop.NpcType == NPCID.Princess)
             {
                 shop.Add<HamPatPainting>();
