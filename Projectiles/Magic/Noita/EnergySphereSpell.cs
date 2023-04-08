@@ -27,7 +27,8 @@ namespace Redemption.Projectiles.Magic.Noita
             Projectile.tileCollide = true;
             Projectile.ignoreWater = true;
             Projectile.DamageType = DamageClass.Magic;
-            Projectile.timeLeft = 200;
+            Projectile.timeLeft = 900;
+            Projectile.extraUpdates = 6;
             DrawOffsetX = -6;
             DrawOriginOffsetY = -6;
         }
@@ -35,11 +36,9 @@ namespace Redemption.Projectiles.Magic.Noita
         {
             if (Projectile.localAI[1] is 1)
             {
-                DrawOffsetX = 0;
-                DrawOriginOffsetY = 0;
                 Projectile.width = 28;
                 Projectile.height = 28;
-                if (++Projectile.frameCounter >= 5)
+                if (++Projectile.frameCounter >= 5 * 6)
                 {
                     Projectile.frameCounter = 0;
                     if (++Projectile.frame >= 4)
@@ -53,7 +52,7 @@ namespace Redemption.Projectiles.Magic.Noita
             dust = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, ModContent.DustType<GlowingLanceDust>());
             Main.dust[dust].noGravity = true;
             Main.dust[dust].velocity *= .2f;
-            Projectile.velocity.Y += 0.1f;
+            Projectile.velocity.Y += 0.005f;
         }
         public override Color? GetAlpha(Color lightColor)
         {

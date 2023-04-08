@@ -25,18 +25,18 @@ namespace Redemption.Projectiles.Magic.Noita
             Projectile.tileCollide = true;
             Projectile.ignoreWater = true;
             Projectile.DamageType = DamageClass.Magic;
-            Projectile.timeLeft = 200;
-            Projectile.extraUpdates = 2;
+            Projectile.timeLeft = 1800;
+            Projectile.extraUpdates = 6;
         }
         public override void AI()
         {
             for (int i = 0; i < 2; i++)
             {
-                int dust = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, ModContent.DustType<GreenSpellDust>());
+                int dust = Dust.NewDust(Projectile.Center - new Vector2(2, 2), 4, 4, ModContent.DustType<GreenSpellDust>());
                 Main.dust[dust].noGravity = true;
-                Main.dust[dust].velocity *= .1f;
+                Main.dust[dust].velocity *= .01f;
             }
-            Projectile.velocity.Y += 0.02f;
+            Projectile.velocity.Y += 0.01f;
         }
         public override Color? GetAlpha(Color lightColor)
         {
