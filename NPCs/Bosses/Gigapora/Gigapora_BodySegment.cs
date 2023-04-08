@@ -514,7 +514,6 @@ namespace Redemption.NPCs.Bosses.Gigapora
                     return;
                 }
             }
-            modifiers.FinalDamage *= 1.8f;
         }
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {

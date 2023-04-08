@@ -16,6 +16,7 @@ namespace Redemption.Items.Weapons.HM.Magic
             Tooltip.SetDefault("A witch's staff that shoots a chaotic assortment of spells\n" +
                 "'From Noita, with love'");
             Item.staff[Item.type] = true;
+            ElementID.ItemWater[Type] = true;
             SacrificeTotal = 1;
         }
         private int spellType;
@@ -36,9 +37,33 @@ namespace Redemption.Items.Weapons.HM.Magic
             Item.rare = ItemRarityID.Orange;
             Item.UseSound = SoundID.Item20;
             Item.autoReuse = true;
-            Item.shoot = ModContent.ProjectileType<BubbleSparkSpell>();
-            Item.ExtraItemShoot(ModContent.ProjectileType<EnergySphereSpell>(), ModContent.ProjectileType<BlackHoleSpell>());
+            Item.shoot = ModContent.ProjectileType<EnergySphereSpell>();
+            Item.ExtraItemShoot(ModContent.ProjectileType<Pommisauva_Bomb>(), ModContent.ProjectileType<BlackHoleSpell>());
             Item.shootSpeed = 11f;
+        }
+        public override void ModifyManaCost(Player player, ref float reduce, ref float mult)
+        {
+            switch (spellType)
+            {
+                case 3:
+                    mult *= 1.2f;
+                    break;
+                case 5:
+                    mult *= 1.1f;
+                    break;
+                case 6:
+                    reduce -= .5f;
+                    break;
+                case 7:
+                    mult *= 2f;
+                    break;
+                case 9:
+                    mult *= 1.25f;
+                    break;
+                case 10:
+                    mult *= 3f;
+                    break;
+            }
         }
         public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback)
         {
@@ -50,17 +75,17 @@ namespace Redemption.Items.Weapons.HM.Magic
             switch (spellType)
             {
                 default:
-                    type = Item.shoot;
+                    type = ModContent.ProjectileType<BubbleSparkSpell>();
                     velocity = velocity.RotatedByRandom(MathHelper.ToRadians(15));
                     break;
                 case 1:
-                    type = ModContent.ProjectileType<EnergySphereSpell>();
-                    velocity *= 1.35f;
+                    type = Item.shoot;
+                    velocity *= 0.2f;
                     break;
                 case 2:
                     type = ModContent.ProjectileType<BouncingBurstSpell>();
                     velocity = velocity.RotatedByRandom(MathHelper.ToRadians(5));
-                    velocity *= 0.7f;
+                    velocity *= 0.4f;
                     break;
                 case 3:
                     type = ModContent.ProjectileType<ConcentratedLightSpell>();
@@ -102,6 +127,22 @@ namespace Redemption.Items.Weapons.HM.Magic
                     type = ModContent.ProjectileType<OmegaDiscSpell>();
                     damage = (int)(damage * 2.5f);
                     velocity *= 1.4f;
+                    break;
+                case 11:
+                    type = ModContent.ProjectileType<Pommisauva_Bomb>();
+                    damage = (int)(damage * 3f);
+                    knockback *= 3;
+                    break;
+                case 12:
+                    type = ModContent.ProjectileType<TntSpell>();
+                    damage = (int)(damage * 1.5f);
+                    knockback *= 2;
+                    break;
+                case 13:
+                    type = ModContent.ProjectileType<SpitterBoltSpell>();
+                    damage = (int)(damage * 1.25f);
+                    velocity = velocity.RotatedByRandom(MathHelper.ToRadians(5));
+                    velocity *= 1.1f;
                     break;
             }
         }
@@ -172,10 +213,25 @@ namespace Redemption.Items.Weapons.HM.Magic
                     player.itemAnimation = Item.useTime * 6;
                     spellCountMax = 1;
                     break;
+                case 11:
+                    player.itemAnimationMax = Item.useTime * 3;
+                    player.itemTime = Item.useTime * 3;
+                    player.itemAnimation = Item.useTime * 3;
+                    spellCountMax = 3;
+                    break;
+                case 12:
+                    player.itemAnimationMax = Item.useTime * 2;
+                    player.itemTime = Item.useTime * 2;
+                    player.itemAnimation = Item.useTime * 2;
+                    spellCountMax = 4;
+                    break;
+                case 13:
+                    spellCountMax = 8;
+                    break;
             }
             if (spellCount++ >= spellCountMax - 1)
             {
-                spellType = Main.rand.Next(11);
+                spellType = Main.rand.Next(14);
                 spellCount = 0;
             }
             return true;
