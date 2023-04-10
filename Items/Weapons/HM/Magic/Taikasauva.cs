@@ -6,6 +6,7 @@ using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
+using static Terraria.ModLoader.PlayerDrawLayer;
 
 namespace Redemption.Items.Weapons.HM.Magic
 {
@@ -229,6 +230,7 @@ namespace Redemption.Items.Weapons.HM.Magic
                     spellCountMax = 8;
                     break;
             }
+            CombatText.NewText(player.getRect(), Color.White, spellCountMax - (spellCount + 1), false, true);
             if (spellCount++ >= spellCountMax - 1)
             {
                 spellType = Main.rand.Next(14);

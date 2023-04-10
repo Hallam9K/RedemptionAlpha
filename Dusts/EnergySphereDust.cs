@@ -19,7 +19,7 @@ namespace Redemption.Dusts
                 float strength = dust.scale * 1.4f;
                 if (strength > 1f)
                     strength = 1f;
-                Lighting.AddLight(dust.position, 0.4f * strength, 0.4f * strength, 0.5f * strength);
+                Lighting.AddLight(dust.position, 0.3f * strength, 0.3f * strength, 0.5f * strength);
             }
 
             if (Collision.SolidCollision(dust.position + dust.velocity, 10, 10) && dust.fadeIn == 0f)

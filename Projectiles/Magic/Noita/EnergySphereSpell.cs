@@ -27,7 +27,7 @@ namespace Redemption.Projectiles.Magic.Noita
             Projectile.tileCollide = true;
             Projectile.ignoreWater = true;
             Projectile.DamageType = DamageClass.Magic;
-            Projectile.timeLeft = 900;
+            Projectile.timeLeft = 1600;
             Projectile.extraUpdates = 6;
             DrawOffsetX = -6;
             DrawOriginOffsetY = -6;

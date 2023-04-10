@@ -82,7 +82,7 @@ namespace Redemption.NPCs.Lab.Volt
             NPC.friendly = false;
             NPC.damage = 120;
             NPC.defense = 90;
-            NPC.lifeMax = 60000;
+            NPC.lifeMax = 90000;
             NPC.HitSound = SoundID.NPCHit4;
             NPC.DeathSound = SoundID.NPCDeath3;
             NPC.SpawnWithHigherTime(30);
