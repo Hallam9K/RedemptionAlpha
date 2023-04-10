@@ -305,7 +305,7 @@ namespace Redemption.CrossMod
                 #endregion
 
                 #region Omega Gigapora
-                bossChecklist.Call("AddBoss", mod, "2nd Omega Prototype", ModContent.NPCType<Gigapora>(), 13.5f, () => RedeBossDowned.downedOmega2, () => true,
+                bossChecklist.Call("AddBoss", mod, "2nd Omega Prototype", ModContent.NPCType<Gigapora>(), 14f, () => RedeBossDowned.downedOmega2, () => true,
                     new List<int>
                     {
                         ModContent.ItemType<GigaporaRelic>(),

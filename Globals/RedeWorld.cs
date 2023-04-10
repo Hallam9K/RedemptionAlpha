@@ -7,6 +7,7 @@ using Redemption.NPCs.Friendly;
 using Redemption.Projectiles.Misc;
 //using Redemption.WorldGeneration.Soulless;
 //using SubworldLibrary;
+using Redemption.UI.ChatUI;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -434,6 +435,9 @@ namespace Redemption.Globals
         {
             if (Redemption.TrailManager != null)
                 Redemption.TrailManager.ClearAllTrails(); //trails break on world unload and reload(their projectile is still counted as being active???), so this just clears them all on reload
+
+            if (ChatUI.Visible)
+                ChatUI.Clear();
 
             alignment = 0;
             DayNightCount = 0;
