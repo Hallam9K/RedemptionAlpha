@@ -12,7 +12,7 @@ namespace Redemption.Projectiles.Magic.Noita
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Magic Arrow");
+            // DisplayName.SetDefault("Magic Arrow");
             ElementID.ProjArcane[Type] = true;
         }
         public override void SetDefaults()

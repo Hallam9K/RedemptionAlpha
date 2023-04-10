@@ -11,7 +11,7 @@ namespace Redemption.Projectiles.Magic.Noita
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Disc");
+            // DisplayName.SetDefault("Disc");
         }
         public override void SetDefaults()
         {
@@ -32,7 +32,7 @@ namespace Redemption.Projectiles.Magic.Noita
             if (Projectile.localAI[0]++ % 6 == 0)
                 Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, Vector2.Zero, ModContent.ProjectileType<DiscAfterimage>(), 0, 0, Projectile.owner, Projectile.rotation);
         }
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             for (int i = 0; i < 10; i++)
             {
@@ -64,7 +64,7 @@ namespace Redemption.Projectiles.Magic.Noita
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("");
+            // DisplayName.SetDefault("");
             ProjectileID.Sets.DontAttachHideToAlpha[Type] = true;
         }
         public override void SetDefaults()

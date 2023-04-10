@@ -21,6 +21,7 @@ using Redemption.Items.Armor.Vanity;
 using Redemption.Items.Weapons.PreHM.Melee;
 using Redemption.BaseExtension;
 using Redemption.UI;
+using Terraria.Localization;
 
 namespace Redemption.NPCs.Minibosses.SkullDigger
 {
@@ -130,7 +131,7 @@ namespace Redemption.NPCs.Minibosses.SkullDigger
                         continue;
 
                     if (!Main.dedServ)
-                        RedeSystem.Instance.ChaliceUIElement.DisplayDialogue("A saddening conclusion to this protector and mistress, but perhaps there is another way..?", 180, 30, 0, Color.DarkGoldenrod);
+                        RedeSystem.Instance.ChaliceUIElement.DisplayDialogue(Language.GetTextValue("Mods.Redemption.UI.Chalice.SkullDiggerDefeat"), 300, 30, 0, Color.DarkGoldenrod);
 
                 }
             }

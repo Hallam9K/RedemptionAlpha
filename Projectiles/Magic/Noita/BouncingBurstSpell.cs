@@ -12,7 +12,7 @@ namespace Redemption.Projectiles.Magic.Noita
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Bouncing Burst");
+            // DisplayName.SetDefault("Bouncing Burst");
             ElementID.ProjArcane[Type] = true;
         }
         public override void SetDefaults()

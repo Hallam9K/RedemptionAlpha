@@ -341,8 +341,6 @@ namespace Redemption.Globals
             }
             return false;
         }
-        public const string slashBonus = "Slash Bonus: Small chance to decapitate most humanoid enemies, killing them instantly";
-        public const string hammerBonus = "Hammer Bonus: Deals quadruple damage to Guard Points";
         public override void ModifyTooltips(Item item, List<TooltipLine> tooltips)
         {
             if (ChaliceInterest(item.type))

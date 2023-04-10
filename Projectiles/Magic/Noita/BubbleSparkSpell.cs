@@ -11,7 +11,7 @@ namespace Redemption.Projectiles.Magic.Noita
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Bubble Spark");
+            // DisplayName.SetDefault("Bubble Spark");
             Main.projFrames[Projectile.type] = 4;
             ElementID.ProjWater[Type] = true;
             ElementID.ProjArcane[Type] = true;
@@ -64,7 +64,7 @@ namespace Redemption.Projectiles.Magic.Noita
                 Projectile.Kill();
             return false;
         }
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             if (Main.rand.NextBool(3))
                 target.AddBuff(BuffID.Wet, 180);

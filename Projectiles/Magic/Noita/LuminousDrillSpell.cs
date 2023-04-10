@@ -12,7 +12,7 @@ namespace Redemption.Projectiles.Magic.Noita
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Luminous Drill");
+            // DisplayName.SetDefault("Luminous Drill");
             ElementID.ProjArcane[Type] = true;
         }
         public override void SetDefaults()

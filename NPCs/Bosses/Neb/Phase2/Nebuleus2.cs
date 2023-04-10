@@ -24,6 +24,7 @@ using Redemption.BaseExtension;
 using Redemption.Items.Materials.PostML;
 using Terraria.DataStructures;
 using ReLogic.Content;
+using Terraria.Localization;
 
 namespace Redemption.NPCs.Bosses.Neb.Phase2
 {
@@ -151,7 +152,7 @@ namespace Redemption.NPCs.Bosses.Neb.Phase2
                         continue;
 
                     if (!Main.dedServ)
-                        RedeSystem.Instance.ChaliceUIElement.DisplayDialogue("Trust me when I say this, you've dug yourself a 1000-feet hole here.", 300, 30, 0, Color.DarkGoldenrod);
+                        RedeSystem.Instance.ChaliceUIElement.DisplayDialogue("...", 120, 30, 0, Color.DarkGoldenrod);
 
                 }
             }

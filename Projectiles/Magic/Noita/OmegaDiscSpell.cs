@@ -12,7 +12,7 @@ namespace Redemption.Projectiles.Magic.Noita
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Omega Disc");
+            // DisplayName.SetDefault("Omega Disc");
         }
         public override void SetDefaults()
         {
@@ -70,7 +70,7 @@ namespace Redemption.Projectiles.Magic.Noita
                 Main.dust[d].noGravity = true;
             }
         }
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             for (int i = 0; i < 20; i++)
             {

@@ -25,6 +25,7 @@ using Redemption.BaseExtension;
 using Redemption.Items.Materials.PostML;
 using Terraria.DataStructures;
 using ReLogic.Content;
+using Terraria.Localization;
 
 namespace Redemption.NPCs.Bosses.Neb
 {
@@ -1431,7 +1432,7 @@ namespace Redemption.NPCs.Bosses.Neb
                         if (NPC.ai[2] >= 2660)
                         {
                             if (RedeWorld.alignmentGiven && !Main.dedServ && !RedeBossDowned.downedSlayer)
-                                RedeSystem.Instance.ChaliceUIElement.DisplayDialogue("Don't go down the road you seek, please.", 180, 30, 0, Color.DarkGoldenrod);
+                                RedeSystem.Instance.ChaliceUIElement.DisplayDialogue(Language.GetTextValue("Mods.Redemption.UI.Chalice.NebChoice"), 180, 30, 0, Color.DarkGoldenrod);
 
                             player.Redemption().yesChoice = false;
                             player.Redemption().noChoice = false;

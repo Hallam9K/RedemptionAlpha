@@ -13,7 +13,7 @@ namespace Redemption.Projectiles.Magic.Noita
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Black Hole");
+            // DisplayName.SetDefault("Black Hole");
             Main.projFrames[Projectile.type] = 13;
             ElementID.ProjCelestial[Type] = true;
             ElementID.ProjShadow[Type] = true;

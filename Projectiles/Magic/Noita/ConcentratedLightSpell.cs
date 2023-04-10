@@ -12,7 +12,7 @@ namespace Redemption.Projectiles.Magic.Noita
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Concentrated Light");
+            // DisplayName.SetDefault("Concentrated Light");
             ElementID.ProjArcane[Type] = true;
         }
         public override void SetDefaults()

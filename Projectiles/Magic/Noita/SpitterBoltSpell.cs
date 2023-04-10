@@ -11,7 +11,7 @@ namespace Redemption.Projectiles.Magic.Noita
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Spitter Bolt");
+            // DisplayName.SetDefault("Spitter Bolt");
             Main.projFrames[Projectile.type] = 7;
             ElementID.ProjArcane[Type] = true;
         }
@@ -41,7 +41,7 @@ namespace Redemption.Projectiles.Magic.Noita
         {
             return new Color(255, 255, 255, 200);
         }
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             for (int i = 0; i < 10; i++)
             {

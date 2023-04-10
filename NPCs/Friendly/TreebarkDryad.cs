@@ -105,7 +105,7 @@ namespace Redemption.NPCs.Friendly
                         continue;
 
                     if (!Main.dedServ)
-                        RedeSystem.Instance.ChaliceUIElement.DisplayDialogue("Assisting the extinction of these dwindling dryads is not something I approve of.", 300, 30, 0, Color.DarkGoldenrod);
+                        RedeSystem.Instance.ChaliceUIElement.DisplayDialogue(Language.GetTextValue("Mods.Redemption.UI.Chalice.TreebarkFelled"), 300, 30, 0, Color.DarkGoldenrod);
                 }
             }
             RedeBossDowned.downedTreebark = true;

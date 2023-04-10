@@ -14,11 +14,11 @@ namespace Redemption.Items.Weapons.HM.Magic
     {
         public override void SetStaticDefaults()
         {
-            Tooltip.SetDefault("A witch's staff that shoots a chaotic assortment of spells\n" +
-                "'From Noita, with love'");
+            /* Tooltip.SetDefault("A witch's staff that shoots a chaotic assortment of spells\n" +
+                "'From Noita, with love'"); */
             Item.staff[Item.type] = true;
             ElementID.ItemWater[Type] = true;
-            SacrificeTotal = 1;
+            Item.ResearchUnlockCount = 1;
         }
         private int spellType;
         private int spellCount;

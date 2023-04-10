@@ -19,6 +19,7 @@ using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.GameContent.UI;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 
 namespace Redemption.NPCs.Bosses.FowlEmperor
@@ -120,7 +121,7 @@ namespace Redemption.NPCs.Bosses.FowlEmperor
                         continue;
 
                     if (!Main.dedServ)
-                        RedeSystem.Instance.ChaliceUIElement.DisplayDialogue("... What?", 120, 30, 0, Color.DarkGoldenrod);
+                        RedeSystem.Instance.ChaliceUIElement.DisplayDialogue(Language.GetTextValue("Mods.Redemption.UI.Chalice.FowlDefeat"), 120, 30, 0, Color.DarkGoldenrod);
 
                 }
             }

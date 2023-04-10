@@ -36,6 +36,7 @@ namespace Redemption.Globals
         public static Condition IsJanitor = new("Mods.Redemption.Conditions.IsJanitor", () => BasePlayer.HasChestplate(Main.LocalPlayer, ModContent.ItemType<JanitorOutfit>(), true) && BasePlayer.HasLeggings(Main.LocalPlayer, ModContent.ItemType<JanitorPants>(), true));
         public static Condition KeycardGiven = new("Mods.Redemption.Conditions.KeycardGiven", () => RedeWorld.keycardGiven);
         public static Condition NukeDropped = new("Mods.Redemption.Conditions.NukeDropped", () => RedeBossDowned.nukeDropped);
+        public static Condition NukeDroppedOrDownedMechBossAll = new("Mods.Redemption.Conditions.NukeDroppedOrDownedMechBossAll", () => RedeBossDowned.nukeDropped || Condition.DownedMechBossAny.IsMet());
         public static Condition IsFinlandDay = new("Mods.Redemption.Conditions.IsFinlandDay", () => Redemption.FinlandDay);
         public static Condition IsNotFinlandDay = new("Mods.Redemption.Conditions.IsNotFinlandDay", () => !Redemption.FinlandDay);
         public static Condition InMoonlight = new("Mods.Redemption.Conditions.InMoonlight", () => !Main.dayTime && Main.moonPhase != 4);

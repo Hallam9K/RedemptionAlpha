@@ -30,6 +30,7 @@ using Redemption.Items.Armor.Vanity;
 using ReLogic.Content;
 using Redemption.UI.ChatUI;
 using Redemption.UI;
+using Terraria.Localization;
 
 namespace Redemption.NPCs.Bosses.KSIII
 {
@@ -224,9 +225,9 @@ namespace Redemption.NPCs.Bosses.KSIII
                     if (!Main.dedServ)
                     {
                         if (AIState is ActionState.Spared)
-                            RedeSystem.Instance.ChaliceUIElement.DisplayDialogue("Good thing you left him be...", 240, 30, 0, Color.DarkGoldenrod);
+                            RedeSystem.Instance.ChaliceUIElement.DisplayDialogue(Language.GetTextValue("Mods.Redemption.UI.Chalice.KS3Spared"), 240, 30, 0, Color.DarkGoldenrod);
                         else
-                            RedeSystem.Instance.ChaliceUIElement.DisplayDialogue("Oh dear, he seems to have a very short temper, and you winning probably made it worse.\nI hope he doesn't do anything stupid.", 240, 30, 0, Color.DarkGoldenrod);
+                            RedeSystem.Instance.ChaliceUIElement.DisplayDialogue(Language.GetTextValue("Mods.Redemption.UI.Chalice.KS3Defeat"), 240, 30, 0, Color.DarkGoldenrod);
                     }
                 }
             }
@@ -2241,7 +2242,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                         if (AITimer > 5000)
                         {
                             if (RedeWorld.alignmentGiven && !Main.dedServ && !RedeBossDowned.downedSlayer)
-                                RedeSystem.Instance.ChaliceUIElement.DisplayDialogue("I would leave him be, if I were you.", 180, 30, 0, Color.DarkGoldenrod);
+                                RedeSystem.Instance.ChaliceUIElement.DisplayDialogue(Language.GetTextValue("Mods.Redemption.UI.Chalice.KS3Choice"), 180, 30, 0, Color.DarkGoldenrod);
 
                             player.Redemption().yesChoice = false;
                             player.Redemption().noChoice = false;

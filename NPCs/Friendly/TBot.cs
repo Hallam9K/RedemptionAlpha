@@ -351,10 +351,10 @@ namespace Redemption.NPCs.Friendly
                 .Add<CarbonMyofibre>(Condition.Hardmode)
                 .Add<Capacitor>(Condition.Hardmode)
                 .Add<Plating>(Condition.Hardmode)
-                .Add<MiniWarhead>(Condition.DownedMechBossAll)
-                .Add<GeigerMuller>(Condition.DownedMechBossAll)
+                .Add<RadiationPill>(RedeConditions.NukeDroppedOrDownedMechBossAll)
+                .Add<GeigerMuller>(RedeConditions.NukeDroppedOrDownedMechBossAll)
                 .Add<IOLocator>(Condition.DownedMechBossAll)
-                .Add<RadiationPill>(Condition.DownedMechBossAll)
+                .Add<MiniWarhead>(Condition.DownedMechBossAll)
                 .Add<AnomalyDetector>(RedeConditions.DownedSeed)
                 .Add<MedicOutfit>()
                 .Add<MedicLegs>()
@@ -368,11 +368,6 @@ namespace Redemption.NPCs.Friendly
                 .Add<ZoneAccessPanel6>(new Condition("", () => RedeBossDowned.downedPZ && !LabArea.labAccess[5]));
 
             npcShop.Register();
-            if (RedeBossDowned.nukeDropped || RedeWorld.labSafe)
-            {
-                shop.item[nextSlot++].SetDefaults(ModContent.ItemType<RadiationPill>());
-                shop.item[nextSlot++].SetDefaults(ModContent.ItemType<GeigerMuller>());
-            }
         }
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {

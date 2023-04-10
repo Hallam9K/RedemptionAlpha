@@ -513,12 +513,12 @@ namespace Redemption.NPCs.HM
                     int numtries = 0;
                     int x = (int)(origin.X / 16);
                     int y = (int)(origin.Y / 16);
-                    while (y < Main.maxTilesY - 10 && Main.tile[x, y] != null && !WorldGen.SolidTile2(x, y) && Main.tile[x - 1, y] != null && !WorldGen.SolidTile2(x - 1, y) && Main.tile[x + 1, y] != null && !WorldGen.SolidTile2(x + 1, y))
+                    while (WorldGen.InWorld(x, y) && Framing.GetTileSafely(x, y) != null && !WorldGen.SolidTile2(x, y) && Framing.GetTileSafely(x - 1, y) != null && !WorldGen.SolidTile2(x - 1, y) && Framing.GetTileSafely(x + 1, y) != null && !WorldGen.SolidTile2(x + 1, y))
                     {
                         y++;
                         origin.Y = y * 16;
                     }
-                    while ((WorldGen.SolidOrSlopedTile(x, y) || WorldGen.SolidTile2(x, y)) && numtries < 20)
+                    while (WorldGen.InWorld(x, y) && (WorldGen.SolidOrSlopedTile(x, y) || WorldGen.SolidTile2(x, y)) && numtries < 20)
                     {
                         numtries++;
                         y--;

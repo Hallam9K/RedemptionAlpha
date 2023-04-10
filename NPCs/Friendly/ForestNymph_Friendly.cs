@@ -374,7 +374,7 @@ namespace Redemption.NPCs.Friendly
                                                     continue;
 
                                                 if (!Main.dedServ)
-                                                    RedeSystem.Instance.ChaliceUIElement.DisplayDialogue("Sometimes it is the little acts of kindness that count.", 240, 30, 0, Color.DarkGoldenrod);
+                                                    RedeSystem.Instance.ChaliceUIElement.DisplayDialogue(Language.GetTextValue("Mods.Redemption.UI.Chalice.ForestNymphHoused"), 240, 30, 0, Color.DarkGoldenrod);
 
                                             }
                                             RedeQuest.forestNymphVar = 5;

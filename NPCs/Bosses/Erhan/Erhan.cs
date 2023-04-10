@@ -29,6 +29,7 @@ using ReLogic.Content;
 using Redemption.UI.ChatUI;
 using Redemption.Projectiles.Minions;
 using Redemption.Items.Weapons.PreHM.Summon;
+using Terraria.Localization;
 
 namespace Redemption.NPCs.Bosses.Erhan
 {
@@ -199,7 +200,7 @@ namespace Redemption.NPCs.Bosses.Erhan
 
             if (!RedeBossDowned.downedErhan)
             {
-                string fight = Spared ? "fighting" : "slaying";
+                string fight = Spared ? Language.GetTextValue("Mods.Redemption.GenericTerms.Words.Fighting") : Language.GetTextValue("Mods.Redemption.GenericTerms.Words.Slaying");
                 RedeWorld.alignment -= Spared ? 1 : 3;
                 for (int p = 0; p < Main.maxPlayers; p++)
                 {
@@ -213,7 +214,7 @@ namespace Redemption.NPCs.Bosses.Erhan
                         continue;
 
                     if (!Main.dedServ)
-                        RedeSystem.Instance.ChaliceUIElement.DisplayDialogue("Attempting to summon a demon and " + fight + " a priest... Are you alright in the head?", 240, 30, 0, Color.DarkGoldenrod);
+                        RedeSystem.Instance.ChaliceUIElement.DisplayDialogue(Language.GetTextValue("Mods.Redemption.UI.Chalice.DemonScroll2", fight), 240, 30, 0, Color.DarkGoldenrod);
 
                 }
             }

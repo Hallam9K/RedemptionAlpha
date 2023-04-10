@@ -21,6 +21,7 @@ using Terraria.GameContent;
 using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 
 namespace Redemption.NPCs.Minibosses.EaglecrestGolem
@@ -136,7 +137,7 @@ namespace Redemption.NPCs.Minibosses.EaglecrestGolem
                         continue;
 
                     if (!Main.dedServ)
-                        RedeSystem.Instance.ChaliceUIElement.DisplayDialogue("Living stones? Never seen that before.", 180, 30, 0, Color.DarkGoldenrod);
+                        RedeSystem.Instance.ChaliceUIElement.DisplayDialogue(Language.GetTextValue("Mods.Redemption.UI.Chalice.EaglecrestDefeat"), 180, 30, 0, Color.DarkGoldenrod);
 
                 }
             }

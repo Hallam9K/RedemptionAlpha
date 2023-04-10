@@ -12,7 +12,7 @@ namespace Redemption.Projectiles.Magic.Noita
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Glowing Lance");
+            // DisplayName.SetDefault("Glowing Lance");
             ElementID.ProjArcane[Type] = true;
         }
         public override void SetDefaults()

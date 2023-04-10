@@ -11,7 +11,7 @@ namespace Redemption.Projectiles.Magic.Noita
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Giga Disc");
+            // DisplayName.SetDefault("Giga Disc");
         }
         public override void SetDefaults()
         {
@@ -71,7 +71,7 @@ namespace Redemption.Projectiles.Magic.Noita
                 Main.dust[d].noGravity = true;
             }
         }
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             if (Projectile.localAI[1] < 120)
                 Projectile.localAI[1] = 0;

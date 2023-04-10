@@ -27,6 +27,7 @@ using Redemption.Dusts;
 using Redemption.NPCs.Friendly;
 using Redemption.BaseExtension;
 using ReLogic.Content;
+using Terraria.Localization;
 
 namespace Redemption.NPCs.Bosses.Keeper
 {
@@ -207,7 +208,7 @@ namespace Redemption.NPCs.Bosses.Keeper
                         continue;
 
                     if (!Main.dedServ)
-                        RedeSystem.Instance.ChaliceUIElement.DisplayDialogue("An undead... Something tells me she isn't out of her misery just yet.", 240, 30, 0, Color.DarkGoldenrod);
+                        RedeSystem.Instance.ChaliceUIElement.DisplayDialogue(Language.GetTextValue("Mods.Redemption.UI.Chalice.WeddingRing"), 240, 30, 0, Color.DarkGoldenrod);
 
                 }
             }
@@ -818,7 +819,7 @@ namespace Redemption.NPCs.Bosses.Keeper
                                     continue;
 
                                 if (!Main.dedServ)
-                                    RedeSystem.Instance.ChaliceUIElement.DisplayDialogue("You've redeemed yourself, Octavia may rest in undisturbed peac-", 180, 30, 0, Color.DarkGoldenrod);
+                                    RedeSystem.Instance.ChaliceUIElement.DisplayDialogue(Language.GetTextValue("Mods.Redemption.UI.Chalice.KeeperSave"), 180, 30, 0, Color.DarkGoldenrod);
 
                             }
                         }

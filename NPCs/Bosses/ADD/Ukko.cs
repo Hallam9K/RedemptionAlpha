@@ -26,6 +26,7 @@ using Redemption.Items.Weapons.PostML.Melee;
 using Redemption.Items.Accessories.PostML;
 using System.IO;
 using ReLogic.Content;
+using Terraria.Localization;
 
 namespace Redemption.NPCs.Bosses.ADD
 {
@@ -221,7 +222,7 @@ namespace Redemption.NPCs.Bosses.ADD
                         continue;
 
                     if (!Main.dedServ)
-                        RedeSystem.Instance.ChaliceUIElement.DisplayDialogue("It is unknown how these forgotten deities ruled, perhaps defeating them was for the best, or worst.", 300, 30, 0, Color.DarkGoldenrod);
+                        RedeSystem.Instance.ChaliceUIElement.DisplayDialogue(Language.GetTextValue("Mods.Redemption.UI.Chalice.ADDDefeat"), 300, 30, 0, Color.DarkGoldenrod);
 
                 }
             }
