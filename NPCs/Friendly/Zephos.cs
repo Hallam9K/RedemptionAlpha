@@ -352,10 +352,12 @@ namespace Redemption.NPCs.Friendly
                 chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Zephos.AdviceDialogue5", Main.npc[FallenID].GivenName));
             if (!RedeBossDowned.downedEaglecrestGolem && NPC.downedBoss2)
                 chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Zephos.AdviceDialogue6"));
+            if (!RedeWorld.alignmentGiven)
+                chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Daerel.AdviceDialogue15"));
             if (!Main.LocalPlayer.RedemptionAbility().Spiritwalker)
-                chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Zephos.AdviceDialogue7"));
-            chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Zephos.AdviceDialogue8"));
-            chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Zephos.AdviceDialogue9", Main.LocalPlayer.Male ? "" : " (wink wink)"));
+                chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Zephos.AdviceDialogue7", ElementID.ArcaneS, ElementID.HolyS));
+            chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Zephos.AdviceDialogue8", ElementID.HolyS, ElementID.ShadowS));
+            chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Zephos.AdviceDialogue9", Main.LocalPlayer.Male ? "" : " (wink wink)", ElementID.IceS));
             chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Zephos.AdviceDialogue10"));
             chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Zephos.AdviceDialogue11"));
             chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Zephos.AdviceDialogue12"));
@@ -386,6 +388,7 @@ namespace Redemption.NPCs.Friendly
                 .Add<SwordSlicer>(Condition.DownedEowOrBoc)
                 .Add<GolemEye>(RedeConditions.DownedEaglecrestGolem)
                 .Add<ChaliceFragments>()
+                .Add<GildedSeaEmblem>(Condition.InBeach)
                 .Add<OphosNotes>(Condition.DownedGolem)
                 .Add<KingChickenPainting>()
                 .Add<FowlEmperorPainting>(RedeConditions.DownedFowlEmperor)

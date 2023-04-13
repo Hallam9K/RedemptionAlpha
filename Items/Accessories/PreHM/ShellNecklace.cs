@@ -4,6 +4,7 @@ using Redemption.Globals.Player;
 using Redemption.Items.Materials.PreHM;
 using Terraria;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 
 namespace Redemption.Items.Accessories.PreHM
@@ -11,12 +12,14 @@ namespace Redemption.Items.Accessories.PreHM
     [AutoloadEquip(EquipType.Neck)]
     public class ShellNecklace : ModItem
     {
+        public override LocalizedText Tooltip => base.Tooltip.WithFormatArgs(ElementID.NatureS);
         public override void SetStaticDefaults()
         {
             // DisplayName.SetDefault("Shell Necklace");
             /* Tooltip.SetDefault("10% increased " + ElementID.NatureS + " elemental damage and resistance\n" +
                 "Increased chance of Nature Boons to drop from the " + ElementID.NatureS + " elemental bonus\n" +
                 "'Makes you feel one with nature'"); */
+            ElementID.ItemNature[Type] = true;
             Item.ResearchUnlockCount = 1;
         }
 

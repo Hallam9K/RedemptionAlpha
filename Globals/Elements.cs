@@ -377,9 +377,6 @@ namespace Redemption.Globals
         public override bool InstancePerEntity => true;
         public int[] OverrideElement = new int[16];
         public int[] ItemShootExtra = new int[2];
-        public override void UpdateInventory(Item item, Terraria.Player player)
-        {
-        }
         public override void ModifyWeaponCrit(Item item, Terraria.Player player, ref float crit)
         {
             BuffPlayer modPlayer = player.RedemptionPlayerBuff();
@@ -467,7 +464,7 @@ namespace Redemption.Globals
             {
                 #region Elemental Attributes
                 float multiplier = 1;
-                ElementalEffects(npc, player, item, ref multiplier, ref knockback);
+                ElementalEffects(npc, player, item, ref multiplier, ref modifiers);
                 for (int j = 0; j < npc.GetGlobalNPC<ElementalNPC>().elementDmg.Length; j++)
                 {
                     if (npc.GetGlobalNPC<ElementalNPC>().elementDmg[j] is 1 || !item.HasElement(j))
@@ -623,7 +620,7 @@ namespace Redemption.Globals
                 multiplier[ElementID.Blood] *= 0.75f;
             }
         }
-        public static void ElementalEffects(Terraria.NPC npc, Terraria.Player player, Item item, ref float multiplier, ref float knockback)
+        public static void ElementalEffects(Terraria.NPC npc, Terraria.Player player, Item item, ref float multiplier, ref Terraria.NPC.HitModifiers knockback)
         {
             if (item.HasElement(ElementID.Shadow) && NPCLists.Dark.Contains(npc.type) && player.RedemptionPlayerBuff().eldritchRoot)
                 multiplier *= 1.33333f;
@@ -644,7 +641,7 @@ namespace Redemption.Globals
             multiplier = (int)Math.Round(multiplier * 100);
             multiplier /= 100;
         }
-        public static void ElementalEffects(Terraria.NPC npc, Projectile proj, ref float multiplier, ref float knockback)
+        public static void ElementalEffects(Terraria.NPC npc, Projectile proj, ref float multiplier, ref Terraria.NPC.HitModifiers knockback)
         {
             if (proj.HasElement(ElementID.Shadow) && NPCLists.Dark.Contains(npc.type) && Main.player[proj.owner].RedemptionPlayerBuff().eldritchRoot)
                 multiplier *= 1.33333f;

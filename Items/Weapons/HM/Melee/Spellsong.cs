@@ -12,6 +12,7 @@ namespace Redemption.Items.Weapons.HM.Melee
 {
     public class Spellsong : ModItem
     {
+        public override LocalizedText Tooltip => base.Tooltip.WithFormatArgs(ElementID.ArcaneS);
         public override void SetStaticDefaults()
         {
             // DisplayName.SetDefault("Spellsong, Core of the West");

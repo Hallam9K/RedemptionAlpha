@@ -5,11 +5,13 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Redemption.BaseExtension;
 using Redemption.Globals;
+using Terraria.Localization;
 
 namespace Redemption.Items.Accessories.PreHM
 {
     public class HeartInsignia : ModItem
     {
+        public override LocalizedText Tooltip => base.Tooltip.WithFormatArgs(ElementID.ShadowS, ElementID.BloodS);
         public override void SetStaticDefaults()
         {
             // DisplayName.SetDefault("Heart Insignia");

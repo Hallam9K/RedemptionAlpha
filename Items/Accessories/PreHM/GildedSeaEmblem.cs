@@ -3,20 +3,23 @@ using Redemption.Globals;
 using Redemption.Globals.Player;
 using Terraria;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 
 namespace Redemption.Items.Accessories.PreHM
 {
     public class GildedSeaEmblem : ModItem
     {
+        public override LocalizedText Tooltip => base.Tooltip.WithFormatArgs(ElementID.WaterS, ElementID.IceS, ElementID.FireS);
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Gilded Sea Emblem");
+            /*DisplayName.SetDefault("Gilded Sea Emblem");
             Tooltip.SetDefault(ElementID.WaterS + " elemental weapons has a chance to soak enemies" +
                 "\nSoaked enemies are more sluggish and prone to " + ElementID.IceS + " damage" +
                 "\n15% increased " + ElementID.WaterS + " elemental damage and resistance" +
-                "\n10% decreased " + ElementID.FireS + " elemental damage and resistance");
-            SacrificeTotal = 1;
+                "\n10% decreased " + ElementID.FireS + " elemental damage and resistance");*/
+            ElementID.ItemWater[Type] = true;
+            Item.ResearchUnlockCount = 1;
         }
 
         public override void SetDefaults()
@@ -24,7 +27,6 @@ namespace Redemption.Items.Accessories.PreHM
             Item.width = 32;
             Item.height = 32;
             Item.value = Item.buyPrice(0, 3, 0, 0);
-            Item.canBePlacedInVanityRegardlessOfConditions = true;
             Item.rare = ItemRarityID.Blue;
             Item.accessory = true;
         }

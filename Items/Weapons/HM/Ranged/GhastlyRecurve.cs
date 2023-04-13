@@ -7,11 +7,13 @@ using Redemption.Projectiles.Ranged;
 using Terraria.DataStructures;
 using Terraria.Audio;
 using Redemption.Globals;
+using Terraria.Localization;
 
 namespace Redemption.Items.Weapons.HM.Ranged
 {
     public class GhastlyRecurve : ModItem
     {
+        public override LocalizedText Tooltip => base.Tooltip.WithFormatArgs(ElementID.ArcaneS);
         public override void SetStaticDefaults()
         {
             /* Tooltip.SetDefault("Right-click to fire a spirit to the aimed area, where they will linger there for a duration\n" +

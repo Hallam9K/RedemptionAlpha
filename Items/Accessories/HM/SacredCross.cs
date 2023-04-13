@@ -4,6 +4,7 @@ using Redemption.Globals.Player;
 using Redemption.Items.Materials.PreHM;
 using Terraria;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 
 namespace Redemption.Items.Accessories.HM
@@ -11,6 +12,7 @@ namespace Redemption.Items.Accessories.HM
     [AutoloadEquip(EquipType.Neck)]
     public class SacredCross : ModItem
     {
+        public override LocalizedText Tooltip => base.Tooltip.WithFormatArgs(ElementID.HolyS);
         public override void SetStaticDefaults()
         {
             /* Tooltip.SetDefault("12% increased " + ElementID.HolyS + " elemental damage and resistance\n" +

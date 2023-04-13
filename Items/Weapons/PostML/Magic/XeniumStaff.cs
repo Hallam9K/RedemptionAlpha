@@ -7,12 +7,14 @@ using Redemption.Tiles.Furniture.Lab;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 
 namespace Redemption.Items.Weapons.PostML.Magic
 {
     public class XeniumStaff : ModItem
     {
+        public override LocalizedText Tooltip => base.Tooltip.WithFormatArgs(ElementID.PoisonS);
         public override void SetStaticDefaults()
         {
             /* Tooltip.SetDefault("Casts two harmless bubble mines\n" +

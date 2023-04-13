@@ -6,13 +6,15 @@ using Redemption.Projectiles.Ranged;
 using Redemption.Rarities;
 using Terraria;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 
 namespace Redemption.Items.Weapons.PostML.Ranged
 {
     public class SwarmerCannon : ModItem
-	{
-		public override void SetStaticDefaults()
+    {
+        public override LocalizedText Tooltip => base.Tooltip.WithFormatArgs(ElementID.PoisonS);
+        public override void SetStaticDefaults()
 		{
             /* Tooltip.SetDefault("Holding left-click will grow a hive cyst inside the cannon\n" +
                 "Release when the cyst is fully grown to launch it at enemies, dealing " + ElementID.PoisonS + " damage\n" +

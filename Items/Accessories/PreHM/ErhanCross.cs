@@ -10,12 +10,14 @@ using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Redemption.BaseExtension;
+using Terraria.Localization;
 
 namespace Redemption.Items.Accessories.PreHM
 {
     public class ErhanCross : ModItem
-	{
-		public override void SetStaticDefaults()
+    {
+        public override LocalizedText Tooltip => base.Tooltip.WithFormatArgs(ElementID.HolyS, ElementID.ShadowS);
+        public override void SetStaticDefaults()
 		{
             // DisplayName.SetDefault("Erhan's Cross");
             /* Tooltip.SetDefault("Summons a holy shield to orbit around the user, reflecting most projectiles" +

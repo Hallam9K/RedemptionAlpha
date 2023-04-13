@@ -7,6 +7,7 @@ using Redemption.Globals.Player;
 using Redemption.Items.Materials.PreHM;
 using Terraria;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 
 namespace Redemption.Items.Accessories.HM
@@ -14,6 +15,7 @@ namespace Redemption.Items.Accessories.HM
     [AutoloadEquip(EquipType.Neck)]
     public class GracesGuidance : ModItem
     {
+        public override LocalizedText Tooltip => base.Tooltip.WithFormatArgs(ElementID.HolyS, ElementID.FireS);
         public override void SetStaticDefaults()
         {
             // DisplayName.SetDefault("Grace's Guidance");

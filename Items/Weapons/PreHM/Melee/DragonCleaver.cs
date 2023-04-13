@@ -12,6 +12,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
 {
     public class DragonCleaver : ModItem
     {
+        public override LocalizedText Tooltip => base.Tooltip.WithFormatArgs(ElementID.FireS, ElementID.WindS);
         public override void SetStaticDefaults()
         {
             /* Tooltip.SetDefault("Swings can block fire projectiles\n" +

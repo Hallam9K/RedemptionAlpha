@@ -4,11 +4,13 @@ using Terraria.ModLoader;
 using Redemption.BaseExtension;
 using Terraria.DataStructures;
 using Redemption.Globals;
+using Terraria.Localization;
 
 namespace Redemption.Items.Accessories.PostML
 {
     public class HeartOfInfection : ModItem
     {
+        public override LocalizedText Tooltip => base.Tooltip.WithFormatArgs(ElementID.PoisonS);
         public override void SetStaticDefaults()
         {
             // DisplayName.SetDefault("Heart of Infection");

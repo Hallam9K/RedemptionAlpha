@@ -14,6 +14,7 @@ namespace Redemption.Items.Weapons.HM.Melee
 {
     public class ForgottenGreatsword : ModItem
     {
+        public override LocalizedText Tooltip => base.Tooltip.WithFormatArgs(ElementID.WindS);
         public override void SetStaticDefaults()
         {
             // DisplayName.SetDefault("Ophos' Forgotten Greatsword");

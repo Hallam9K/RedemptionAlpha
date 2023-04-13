@@ -10,6 +10,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
 {
     public class PureIronSword : ModItem
     {
+        public override LocalizedText Tooltip => base.Tooltip.WithFormatArgs(ElementID.IceS);
         public override void SetStaticDefaults()
         {
             // DisplayName.SetDefault("Pure-Iron Sword");

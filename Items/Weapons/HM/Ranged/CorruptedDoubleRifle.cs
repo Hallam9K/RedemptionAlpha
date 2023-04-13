@@ -10,12 +10,14 @@ using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 
 namespace Redemption.Items.Weapons.HM.Ranged
 {
     public class CorruptedDoubleRifle : ModItem
     {
+        public override LocalizedText Tooltip => base.Tooltip.WithFormatArgs(ElementID.ThunderS);
         public override void SetStaticDefaults()
         {
             /* Tooltip.SetDefault("Converts normal bullets into high velocity bullets\n" +

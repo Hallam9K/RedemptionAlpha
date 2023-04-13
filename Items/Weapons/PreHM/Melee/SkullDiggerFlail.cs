@@ -10,11 +10,13 @@ using Terraria.ModLoader;
 using Redemption.BaseExtension;
 using Terraria.Audio;
 using Redemption.Globals;
+using Terraria.Localization;
 
 namespace Redemption.Items.Weapons.PreHM.Melee
 {
     public class SkullDiggerFlail : ModItem
     {
+        public override LocalizedText Tooltip => base.Tooltip.WithFormatArgs(ElementID.ArcaneS);
         public override void SetStaticDefaults()
         {
             // DisplayName.SetDefault("Skull Digger's Skull Digger");

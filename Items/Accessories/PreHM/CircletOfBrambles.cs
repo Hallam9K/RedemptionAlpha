@@ -3,13 +3,15 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Redemption.BaseExtension;
 using Redemption.Globals;
+using Terraria.Localization;
 
 namespace Redemption.Items.Accessories.PreHM
 {
     [AutoloadEquip(EquipType.Face)]
     public class CircletOfBrambles : ModItem
-	{
-		public override void SetStaticDefaults()
+    {
+        public override LocalizedText Tooltip => base.Tooltip.WithFormatArgs(ElementID.NatureS);
+        public override void SetStaticDefaults()
 		{
             // DisplayName.SetDefault("Circlet of Brambles");
             /* Tooltip.SetDefault("Every 5th use of a magic weapon shoots a spread of stingers" +

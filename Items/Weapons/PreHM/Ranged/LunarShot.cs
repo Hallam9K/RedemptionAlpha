@@ -14,6 +14,7 @@ namespace Redemption.Items.Weapons.PreHM.Ranged
 {
     public class LunarShot : ModItem
     {
+        public override LocalizedText Tooltip => base.Tooltip.WithFormatArgs(ElementID.FireS, ElementID.NatureS);
         public override void SetStaticDefaults()
         {
             // DisplayName.SetDefault("Lunar Shot");

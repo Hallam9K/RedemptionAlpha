@@ -4,12 +4,14 @@ using Redemption.Items.Weapons.PreHM.Melee;
 using Redemption.Projectiles.Magic;
 using Terraria;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 
 namespace Redemption.Items.Weapons.PreHM.Magic
 {
     public class EaglecrestGlove : ModItem
     {
+        public override LocalizedText Tooltip => base.Tooltip.WithFormatArgs(ElementID.ThunderS);
         public override void SetStaticDefaults()
         {
             // DisplayName.SetDefault("Eaglecrest Glove");

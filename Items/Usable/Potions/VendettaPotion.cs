@@ -4,13 +4,15 @@ using Redemption.Globals;
 using Redemption.Items.Placeable.Plants;
 using Terraria;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 
 namespace Redemption.Items.Usable.Potions
 {
     public class VendettaPotion : ModItem
-	{
-		public override void SetStaticDefaults()
+    {
+        public override LocalizedText Tooltip => base.Tooltip.WithFormatArgs(ElementID.PoisonS);
+        public override void SetStaticDefaults()
 		{
             /* Tooltip.SetDefault("Attackers also take damage, and get inflicted by poison\n" +
                 "10% increased " + ElementID.PoisonS + " elemental damage"); */

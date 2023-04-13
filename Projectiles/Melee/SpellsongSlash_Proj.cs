@@ -15,6 +15,7 @@ namespace Redemption.Projectiles.Melee
             // DisplayName.SetDefault("Arcane Wave");
             ProjectileID.Sets.TrailCacheLength[Projectile.type] = 5;
             ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
+            ElementID.ProjArcane[Type] = true;
             ElementID.ProjCelestial[Type] = true;
         }
         public override void SetDefaults()

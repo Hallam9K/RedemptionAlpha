@@ -3,12 +3,14 @@ using Redemption.Globals;
 using Redemption.Items.Materials.HM;
 using Terraria;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 
 namespace Redemption.Items.Usable.Potions
 {
     public class NitroglycerineFlask : ModItem
     {
+        public override LocalizedText Tooltip => base.Tooltip.WithFormatArgs(ElementID.ExplosiveS);
         public override void SetStaticDefaults()
         {
             // DisplayName.SetDefault("Flask of Nitroglycerine");

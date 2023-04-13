@@ -3,12 +3,14 @@ using Redemption.Globals;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 
 namespace Redemption.Items.Weapons.PreHM.Melee
 {
     public class EaglecrestJavelin : ModItem
     {
+        public override LocalizedText Tooltip => base.Tooltip.WithFormatArgs(ElementID.ThunderS);
         public override void SetStaticDefaults()
         {
             /* Tooltip.SetDefault("Hold left-click to charge the javelin, release to throw\n" +

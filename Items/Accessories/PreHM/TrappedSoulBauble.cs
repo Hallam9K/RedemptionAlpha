@@ -5,11 +5,13 @@ using Redemption.BaseExtension;
 using Terraria.DataStructures;
 using Redemption.Items.Materials.PreHM;
 using Redemption.Globals;
+using Terraria.Localization;
 
 namespace Redemption.Items.Accessories.PreHM
 {
     public class TrappedSoulBauble : ModItem
     {
+        public override LocalizedText Tooltip => base.Tooltip.WithFormatArgs(ElementID.ArcaneS);
         public override void SetStaticDefaults()
         {
             /* Tooltip.SetDefault("The player occasionally emits a strong force, causing every enemy caught in the blast to give a small magic damage boost" +

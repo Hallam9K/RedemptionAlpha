@@ -364,11 +364,13 @@ namespace Redemption.NPCs.Friendly
                 chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Daerel.AdviceDialogue5", Main.npc[FallenID].GivenName));
             if (!RedeBossDowned.downedEaglecrestGolem && NPC.downedBoss2)
                 chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Daerel.AdviceDialogue6"));
+            if (!RedeWorld.alignmentGiven)
+                chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Daerel.AdviceDialogue16"));
             if (!Main.LocalPlayer.RedemptionAbility().Spiritwalker)
-                chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Daerel.AdviceDialogue7"));
+                chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Daerel.AdviceDialogue7", ElementID.ArcaneS, ElementID.HolyS));
             chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Daerel.AdviceDialogue8"));
-            chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Daerel.AdviceDialogue9"));
-            chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Daerel.AdviceDialogue10"));
+            chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Daerel.AdviceDialogue9", ElementID.ShadowS, ElementID.HolyS));
+            chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Daerel.AdviceDialogue10", ElementID.IceS));
             chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Daerel.AdviceDialogue11"));
             chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Daerel.AdviceDialogue12"));
             chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Daerel.AdviceDialogue13"));
@@ -398,7 +400,7 @@ namespace Redemption.NPCs.Friendly
                 .Add<SilverwoodBow>(Condition.DownedEowOrBoc)
                 .Add<GolemEye>(RedeConditions.DownedEaglecrestGolem)
                 .Add<ChaliceFragments>()
-                .Add<GildedSeaEmblem>(condi)
+                .Add<GildedSeaEmblem>(Condition.InBeach)
                 .Add<OphosNotes>(Condition.DownedGolem)
                 .Add<KingChickenPainting>()
                 .Add<FowlEmperorPainting>(RedeConditions.DownedFowlEmperor)

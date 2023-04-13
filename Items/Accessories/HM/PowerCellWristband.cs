@@ -4,12 +4,14 @@ using Redemption.BaseExtension;
 using Redemption.Globals;
 using Terraria;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 
 namespace Redemption.Items.Accessories.HM
 {
     public class PowerCellWristband : ModItem
     {
+        public override LocalizedText Tooltip => base.Tooltip.WithFormatArgs(ElementID.FireS, ElementID.HolyS);
         public override void SetStaticDefaults()
         {
             // DisplayName.SetDefault("Power Cell Wristband");

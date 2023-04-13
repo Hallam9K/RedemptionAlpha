@@ -360,14 +360,14 @@ namespace Redemption.Globals.NPC
             if (incisored)
                 modifiers.ArmorPenetration += (player.GetModPlayer<RitualistPlayer>().SpiritLevel + 1) * 5;
             if (soaked && item.HasElement(ElementID.Ice))
-                damage = (int)(damage * 1.15f);
+                modifiers.FinalDamage *= 1.15f;
         }
         public override void ModifyHitByProjectile(Terraria.NPC npc, Projectile projectile, ref Terraria.NPC.HitModifiers modifiers)
         {
             if (incisored)
                 modifiers.ArmorPenetration += (Main.player[projectile.owner].GetModPlayer<RitualistPlayer>().SpiritLevel + 1) * 5;
             if (soaked && projectile.HasElement(ElementID.Ice))
-                damage = (int)(damage * 1.15f);
+                modifiers.FinalDamage *= 1.15f;
         }
         public override void ModifyIncomingHit(Terraria.NPC npc, ref Terraria.NPC.HitModifiers modifiers)
         {

@@ -5,25 +5,25 @@ Mods: {
 
 		GenericTooltips: {
 			Bonuses: {
-				AxeBonus: Axe Bonus: 3x critical strike damage, increased chance to decapitate humanoid enemies
-				SlashBonus: Slash Bonus: Small chance to decapitate most humanoid enemies, killing them instantly
-				HammerBonus: Hammer Bonus: Deals quadruple damage to Guard Points
+				AxeBonus: "[i:Redemption/Axe] 3x critical strike damage, increased chance to decapitate humanoid enemies"
+				SlashBonus: "[i:Redemption/Slash] Small chance to decapitate most humanoid enemies, killing them instantly"
+				HammerBonus: "[i:Redemption/Hammer] Deals quadruple damage to Guard Points"
 				ChaliceLine: "[i:Redemption/RedemptionRoute]The chalice has something to say about this item"
-				ExplodeBonus: Explosive Bonus: Deals double damage to Guard Points and penetrates through defense
-				ArcaneBonus: Arcane Bonus: Can hit enemies from the spirit realm
-				BloodBonus: Blood Bonus: Increased damage to organic enemies, but decreased to robotic
-				CelestialBonus: Celestial Bonus: Hitting foes can create stars around them, restoring life and mana once the foe is slain
-				EarthBonus: Earth Bonus: Deals extra damage and has a chance to stun grounded enemies
-				FireBonus: Fire Bonus: Chance to inflict a strong 'On Fire!' debuff on flammable enemies
-				HolyBonus: Holy Bonus: Increased damage to undead and demons
-				IceBonus: Ice Bonus: Chance to freeze slimes and slow down infected enemies
-				NatureBonus: Nature Bonus: Has a chance to drop a defence-increasing Nature Boon upon hitting enemies inflicted with a non-fire debuff
-				PoisonBonus: Poison Bonus: Increased damage to poisoned enemies
-				PsychicBonus: Psychic Bonus: Ignores enemy Guard Points
-				ShadowBonus: Shadow Bonus: Slain enemies have a chance to drop a pickup which increases Shadow damage
-				ThunderBonus: Thunder Bonus: Electrifies and deals extra damage if the target is in water
-				WaterBonus: Water Bonus: Increased damage to demons and can electrify robotic targets
-				WindBonus: Wind Bonus: Deals extra knockback to airborne targets
+				ExplodeBonus: "[i:Redemption/Explosive] Deals double damage to Guard Points and penetrates through defense"
+				ArcaneBonus: "[i:Redemption/Arcane] Can hit enemies from the spirit realm"
+				BloodBonus: "[i:Redemption/Blood] Increased damage to organic enemies, but decreased to robotic"
+				CelestialBonus: "[i:Redemption/Celestial] Hitting foes can create stars around them, restoring life and mana once the foe is slain"
+				EarthBonus: "[i:Redemption/Earth] Deals extra damage and has a chance to stun grounded enemies"
+				FireBonus: "[i:Redemption/Fire] Chance to inflict a strong 'On Fire!' debuff on flammable enemies"
+				HolyBonus: "[i:Redemption/Holy] Increased damage to undead and demons"
+				IceBonus: "[i:Redemption/Ice] Chance to freeze slimes and slow down infected enemies"
+				NatureBonus: "[i:Redemption/Nature] Has a chance to drop a defence-increasing Nature Boon upon hitting enemies inflicted with a non-fire debuff"
+				PoisonBonus: "[i:Redemption/Poison] Increased damage to poisoned enemies"
+				PsychicBonus: "[i:Redemption/Psychic] Ignores enemy Guard Points"
+				ShadowBonus: "[i:Redemption/Shadow] Slain enemies have a chance to drop a pickup which increases Shadow damage"
+				ThunderBonus: "[i:Redemption/Thunder] Electrifies and deals extra damage if the target is in water"
+				WaterBonus: "[i:Redemption/Water] Increased damage to demons and can electrify robotic targets"
+				WindBonus: "[i:Redemption/Wind] Deals extra knockback to airborne targets"
 			}
 		}
 
@@ -823,6 +823,11 @@ Mods: {
 				DisplayName: Island Debuff
 				Description: Mods.Redemption.Buffs.IslandDebuff.Description
 			}
+
+			SoakedDebuff: {
+				DisplayName: Soaked
+				Description: moist
+			}
 		}
 
 		Biomes: {
@@ -1041,15 +1046,24 @@ Mods: {
 				AdviceDialogue4: The dryad, {0}, says she's seen a Forest Nymph on this island at one point, if you can believe that. They're seldom seen, you'd only be able to find them near giant trees. If you do come across one, I wouldn't linger around for too long, they don't like humans getting in their personal space. I wonder if there were a way to befriend one though?
 				AdviceDialogue5: "{0} has told me he came from another portal underground. Apparently it leads to some catacombs in Gathuram, but you wouldn't be able to go through it. Still, he's told of some rather intriguing things lying by the portal, I'd give it a check if I were you."
 				AdviceDialogue6: While I was having a walk I came across some oddly-shaped stones - looked like a boulder with legs. I was curious of course, so I shot it from a safe distance. Nothing happened... and yet I sensed a presence inside it. You, as a slayer of many things, should search around and find it, might be another foe to face.
-				AdviceDialogue7: Ever see tiny lights dancing from a slain skeleton? Or perhaps a lantern-carrying ghost underground? Those are lost souls, and as far as I know, only arcane or holy weapons may bring them harm. Not that I'd suggest harming those helpless things.
+				AdviceDialogue7:
+                '''
+                Ever see tiny lights dancing from a slain skeleton? Or perhaps a lantern-carrying ghost underground? Those are lost souls, and as far as I know, only
+                {0} or {1} weapons may bring them harm. Not that I'd suggest harming those helpless things.
+                '''
 				AdviceDialogue8: Wanna know about some insects? If you wanna find leaf beetles, or tree bugs as they're called here, then chop down some trees. They live on tree tops, with their green shell camouflaging them in the foliage. Coast Scarabs can also be found on palm trees at the beach, their shells sparkle when wet. Grand larvae are, well, rather gross - though they can make excellent bait. That is, if you're brave enough to get close to one.
-				AdviceDialogue9: When encountering skeletons and undead, I think its logical to assume shadow weapons aren't effective against them, while holy weapons are. I used to like the exploring caves, until me and Zephos encountered a skeleton Vex...
-				AdviceDialogue10: Best way to deal with slimes? Burn them. Alternatively, ice weapons can freeze them in their place, THEN you can burn them!
+				AdviceDialogue9: When encountering skeletons and undead, I think its logical to assume {0} weapons aren't effective against them, while {1} weapons are. I used to like the exploring caves, until me and Zephos encountered a skeleton Vex...
+				AdviceDialogue10: Best way to deal with slimes? Burn them. Alternatively, {0} weapons can freeze them in their place, THEN you can burn them!
 				AdviceDialogue11: If you ever wanna sneak up on the Epidotrian skeletons or chickens, invisibility potions are real handy for the job.
 				AdviceDialogue12: The weapons skeletons can wield are very rusty, so it'd be bad to be wounded by them. If you do, take a dip in some water and the dirty wound will disappear.
-				AdviceDialogue13: See foes wearing armor or holding shields? You'll need to break their Guard to deal with them. A hammer or explosives should be most efficient, just make sure your weapon isn't super weak.
+				AdviceDialogue13:
+                '''
+                See foes wearing armor or holding shields? You'll need to break their Guard to deal with them.
+                A [i:Redemption/Hammer]hammer or [i:Redemption/Explosive]explosives should be most efficient, just make sure your weapon isn't super weak.
+                '''
 				AdviceDialogue14: I felt a strange presence beneath that portal I hopped out of, which is quite peculiar. Maybe you should check it out.
 				AdviceDialogue15: I noticed a scroll sitting atop a small table next to the portal I came out of, did you pick it up yet? It looked rather... demonic.
+				AdviceDialogue16: Did I drop something on my way back into the portal? Oh, those glowing fragments? It seems to be guiding you somewhere important, I'd follow it before taking on any major foes.
 			}
 
 			Zephos: {
@@ -1077,14 +1091,23 @@ Mods: {
 				AdviceDialogue4: Ya know {0}? She's seen a Forest Nymph on this island at one point, if you can believe that. Super rare creatures those are, you'd only be able to find them near giant trees. If you do come across one, I wouldn't linger around for too long, they don't like humans getting in their personal space. I wonder if there were a way to befriend one though?
 				AdviceDialogue5: "{0} has told me he came from another portal underground. Apparently it leads to some catacombs, but you wouldn't be able to go through it. Still, he's told of some rather intriguing things lying by the portal, I'd give it a check if I were you!"
 				AdviceDialogue6: While I was having a stroll I came across some oddly-shaped stones - looked like a boulder with legs. I was curious of course, so I gave it a WHAM with my sword! Nothing happened... and yet I sensed a presence inside it. You, as a slayer of many things, should search around and find it, might be another challenge to face!
-				AdviceDialogue7: Ever see tiny lights skitterin' from a slain skeleton? Or perhaps a lantern-carrying ghost underground? Those are lost souls, and as far as I know, only arcane or holy weapons may bring them harm. Not that I'd suggest harming those helpless things.
-				AdviceDialogue8: When encountering skeletons and undead, holy weapons are most effective against them. On the contrary, shadow weapons aren't as effective. I hate skeletons, used to think they looked kinda funny, until me and Daerel met a skeleton Vex.
-				AdviceDialogue9: If you hate slimes, burn them! They'll burn brighter than my passion for attractive ladies{0}. Or, you could use ice weapons to freeze them, but that isn't as fun.
+				AdviceDialogue7:
+                '''
+                Ever see tiny lights skitterin' from a slain skeleton? Or perhaps a lantern-carrying ghost underground? Those are lost souls, and as far as I know, only
+                {0} or {1} weapons may bring them harm. Not that I'd suggest harming those helpless things.
+                '''
+				AdviceDialogue8: When encountering skeletons and undead, {0} weapons are most effective against them. On the contrary, {1} weapons aren't as effective. I hate skeletons, used to think they looked kinda funny, until me and Daerel met a skeleton Vex.
+				AdviceDialogue9: If you hate slimes, burn them! They'll burn brighter than my passion for attractive ladies{0}. Or, you could use {1} weapons to freeze them, but that isn't as fun.
 				AdviceDialogue10: Ever want to sneak up on an Epidotrian skeleton? Or perhaps a chicken? Well invisibility potions are real handy for the job!
 				AdviceDialogue11: Skeletons can wield some super rusty weapons, not something you'd wanna get cut by. If you do get a dirty wound, take a dip in some water and it'll disappear!
-				AdviceDialogue12: See foes wearing armor or holding shields? You'll need to smash their Guard to deal with them! A hammer or explosives will be your best bet, just make sure your weapon isn't super weak.
+				AdviceDialogue12:
+                '''
+                See foes wearing armor or holding shields? You'll need to smash their Guard to deal with them!
+                A [i:Redemption/Hammer]hammer or [i:Redemption/Explosive]explosives will be your best bet, just make sure your weapon isn't super weak.
+                '''
 				AdviceDialogue13: I felt a weird presence beneath that portal I hopped out of, it was super uncanny! Maybe you should check it out.
 				AdviceDialogue14: I saw a scroll sitting atop a small table next to the portal I came out of, did you pick it up yet? It looked rather... demonic.
+				AdviceDialogue15: Did I drop something on my way back into the portal? Oh, those glowing fragments? Looks like it's guiding you somewhere important, I'd follow it before taking on any major foes!
 			}
 
 			Fallen: {
@@ -1474,11 +1497,11 @@ Mods: {
 				DisplayName: Grace's Guidance
 				Tooltip:
 					'''
-					12% increased [c/fafad2:Holy] elemental damage and resistance
-					6% increased [c/fafad2:Holy] and [c/FFA500:Fire] elemental critical strike chance
+					12% increased {0} elemental damage and resistance
+					6% increased {0} and {1} elemental critical strike chance
 					Stacks if both elements are present
-					Critical strikes with a [c/fafad2:Holy] elemental weapon has a chance to release homing lightmass
-					An aura of holy flames surrounds you while holding a [c/FFA500:Fire] or [c/fafad2:Holy] elemental weapon
+					Critical strikes with a {0} elemental weapon has a chance to release homing lightmass
+					An aura of holy flames surrounds you while holding a {1} or {0} elemental weapon
 					Increases length of invincibility after taking damage
 					'''
 			}
@@ -1570,9 +1593,9 @@ Mods: {
 				DisplayName: Power Cell Wristband
 				Tooltip:
 					'''
-					4% increased critical strike chance for [c/FFA500:Fire] and [c/fafad2:Holy] elemental weapons
+					4% increased critical strike chance for {0} and {1} elemental weapons
 					Stacks if both elements are present
-					An aura of fire surrounds you while holding a [c/FFA500:Fire] or [c/fafad2:Holy] elemental weapon
+					An aura of fire surrounds you while holding a {0} or {1} elemental weapon
 					'Fueled with the sun itself'
 					'''
 			}
@@ -1591,9 +1614,9 @@ Mods: {
 				DisplayName: Sacred Cross
 				Tooltip:
 					'''
-					12% increased [c/fafad2:Holy] elemental damage and resistance
-					6% increased [c/fafad2:Holy] elemental critical strike chance
-					Critical strikes with a [c/fafad2:Holy] elemental weapon has a chance to release homing lightmass
+					12% increased {0} elemental damage and resistance
+					6% increased {0} elemental critical strike chance
+					Critical strikes with a {0} elemental weapon has a chance to release homing lightmass
 					Increases length of invincibility after taking damage
 					'''
 			}
@@ -1632,8 +1655,8 @@ Mods: {
 				Tooltip:
 					'''
 					The player occasionally emits a life-draining force that steals life from debuffed enemies
-					20% increased [c/9370db:Poison] elemental resistance
-					10% increased [c/9370db:Poison] elemental damage
+					20% increased {0} elemental resistance
+					10% increased {0} elemental damage
 					'''
 			}
 
@@ -1762,7 +1785,7 @@ Mods: {
 					'''
 					Every 5th use of a magic weapon shoots a spread of stingers
 					Increased life regeneration while in the Jungle
-					6% increased [c/7cfc00:Nature] elemental critical strike chance
+					6% increased {0} elemental critical strike chance
 					'''
 			}
 
@@ -1828,8 +1851,8 @@ Mods: {
 					'''
 					Summons a holy shield to orbit around the user, reflecting most projectiles
 					The shield breaks once enough damage has been dealt to it
-					10% increased [c/fafad2:Holy] elemental resistance
-					10% decreased [c/7b68ee:Shadow] elemental resistance
+					10% increased {0} elemental resistance
+					10% decreased {1} elemental resistance
 					'''
 			}
 
@@ -1837,8 +1860,8 @@ Mods: {
 				DisplayName: Forest Core
 				Tooltip:
 					'''
-					Increased chance of Nature Boons to drop from the [c/7cfc00:Nature] elemental bonus
-					Nature Boons additionally increase critical strike chance for [c/7cfc00:Nature] weapons by 10%
+					Increased chance of Nature Boons to drop from the {0} elemental bonus
+					Nature Boons additionally increase critical strike chance for {0} weapons by 10%
 					Increased duration of Nature Boons' effect
 					'''
 			}
@@ -1853,7 +1876,7 @@ Mods: {
 				Tooltip:
 					'''
 					Picking up hearts give a short boost to life regen
-					15% increased [c/7b68ee:Shadow] and [c/cd5c5c:Blood] elemental damage and resistance
+					15% increased {0} and {1} elemental damage and resistance
 					'''
 			}
 
@@ -1902,8 +1925,8 @@ Mods: {
 				DisplayName: Shell Necklace
 				Tooltip:
 					'''
-					10% increased [c/7cfc00:Nature] elemental damage and resistance
-					Increased chance of Nature Boons to drop from the [c/7cfc00:Nature] elemental bonus
+					10% increased {0} elemental damage and resistance
+					Increased chance of Nature Boons to drop from the {0} elemental bonus
 					'Makes you feel one with nature'
 					'''
 			}
@@ -1918,7 +1941,7 @@ Mods: {
 				Tooltip:
 					'''
 					The player occasionally emits a strong force, causing every enemy caught in the blast to give a small magic damage boost
-					10% increased [c/ADD8E6:Arcane] elemental damage and resistance
+					10% increased {0} elemental damage and resistance
 					+20 max mana
 					'''
 			}
@@ -5428,7 +5451,7 @@ Mods: {
 
 			EvilJelly: {
 				DisplayName: Evil Jelly
-				Tooltip: Greatly increased chance of Shadow Fuel to drop upon slaying enemies with [c/7b68ee:Shadow] weapons
+				Tooltip: Greatly increased chance of Shadow Fuel to drop upon slaying enemies with {0} weapons
 			}
 
 			FirstAidKit: {
@@ -5469,7 +5492,7 @@ Mods: {
 
 			NitroglycerineFlask: {
 				DisplayName: Flask of Nitroglycerine
-				Tooltip: Melee attacks gain the Explosive Bonus
+				Tooltip: Melee attacks gain the {0} Bonus
 			}
 
 			Olives: {
@@ -5570,7 +5593,7 @@ Mods: {
 				Tooltip:
 					'''
 					Attackers also take damage, and get inflicted by poison
-					10% increased [c/9370db:Poison] elemental damage
+					10% increased {0} elemental damage
 					'''
 			}
 
@@ -5985,7 +6008,7 @@ Mods: {
 				Tooltip:
 					'''
 					Spins the blade around the player and sets ablaze
-					Forms a firestorm that engulfs the player, dealing [c/B4B4B4:Wind] damage
+					Forms a firestorm that engulfs the player, dealing {0} damage
 					Release left-click to disperse it, launching nearby enemies away
 					'''
 			}
@@ -6004,6 +6027,11 @@ Mods: {
 					Increased damage based on how fast the player is falling
 					Stuns enemies if falling above a certain speed
 					'''
+			}
+
+			Hammer: {
+				DisplayName: Hammer
+				Tooltip: ""
 			}
 
 			InfectiousGlaive: {
@@ -6044,7 +6072,7 @@ Mods: {
 				Tooltip:
 					'''
 					Punches enemies up-close
-					Holding down left-click and hitting an enemy will fire an [c/FFC896:Explosive] rocket fist if you are airborne
+					Holding down left-click and hitting an enemy will fire an {0} rocket fist if you are airborne
 					'''
 			}
 
@@ -6052,7 +6080,7 @@ Mods: {
 				DisplayName: Spellsong, Core of the West
 				Tooltip:
 					'''
-					Slashes emit arcane waves
+					Slashes emit {0} waves
 					Holding left-click will do a 3-swing combo, ending with Spellsong shooting a beam that conjures mirages of itself
 					'''
 			}
@@ -6117,7 +6145,7 @@ Mods: {
 				Tooltip:
 					'''
 					Converts normal bullets into high velocity bullets
-					(3[i:Redemption/EnergyCell]) Every 3rd shot fires a small laser beam if an Energy Pack is in your inventory, dealing [c/ffffe0:Thunder] damage
+					(3[i:Redemption/EnergyCell]) Every 3rd shot fires a small laser beam if an Energy Pack is in your inventory, dealing {0} damage
 					33% chance not to consume ammo
 					'''
 			}
@@ -6170,7 +6198,7 @@ Mods: {
 				Tooltip:
 					'''
 					Right-click to fire a spirit to the aimed area, where they will linger there for a duration
-					Arrows passing through the spirits are transformed into Spirit Arrows that split into homing shards upon impact, dealing [c/ADD8E6:Arcane] damage
+					Arrows passing through the spirits are transformed into Spirit Arrows that split into homing shards upon impact, dealing {0} damage
 					'''
 			}
 
@@ -6336,7 +6364,7 @@ Mods: {
 				Tooltip:
 					'''
 					Casts two harmless bubble mines
-					Right-click to fire a small [c/9370db:Poison] beam that detonates any mine it hits
+					Right-click to fire a small {0} beam that detonates any mine it hits
 					'''
 			}
 
@@ -6464,7 +6492,7 @@ Mods: {
 				Tooltip:
 					'''
 					Holding left-click will grow a hive cyst inside the cannon
-					Release when the cyst is fully grown to launch it at enemies, dealing [c/9370db:Poison] damage
+					Release when the cyst is fully grown to launch it at enemies, dealing {0} damage
 					Replaces normal bullets with bile bullets
 					'''
 			}
@@ -6594,7 +6622,7 @@ Mods: {
 				Tooltip:
 					'''
 					Throws a boulder which inherits your forward momentum
-					If thrown fast enough, lightning strikes the ground when it bounces, dealing [c/ffffe0:Thunder] damage
+					If thrown fast enough, lightning strikes the ground when it bounces, dealing {0} damage
 					'Don't like a guy? Throw a boulder at him!'
 					'''
 			}
@@ -6606,6 +6634,11 @@ Mods: {
 					Holding left-click will channel a bind at cursor point, stunning any enemies caught in it
 					The bind is less effective on targets with high knockback resistance
 					'''
+			}
+
+			Earth: {
+				DisplayName: Earth
+				Tooltip: ""
 			}
 
 			ErhanMagnifyingGlass: {
@@ -6625,6 +6658,11 @@ Mods: {
 			Icefall: {
 				DisplayName: Icefall
 				Tooltip: Lowers the air temperature at cursor point, forming damaging ice crystals that eventually fall to gravity
+			}
+
+			Ice: {
+				DisplayName: Ice
+				Tooltip: ""
 			}
 
 			Mistfall: {
@@ -6660,7 +6698,7 @@ Mods: {
 				DisplayName: Blade of the Mountain
 				Tooltip:
 					'''
-					Parries physical or ice projectiles
+					Parries physical or {0} projectiles
 					Deals more damage at the tip of the blade
 					Hitting on the very tip of the blade can freeze enemies
 					Enemies with knockback immunity cannot be frozen
@@ -6686,8 +6724,8 @@ Mods: {
 				DisplayName: Dragon Cleaver
 				Tooltip:
 					'''
-					Swings can block fire projectiles
-					Hold left-click to charge a Heat Wave, dealing [c/B4B4B4:Wind] damage
+					Swings can block {0} projectiles
+					Hold left-click to charge a Heat Wave, dealing {1} damage
 					Continue holding left-click to go into a fiery flurry
 					Deals more damage to dragon-like enemies
 					'''
@@ -6698,7 +6736,7 @@ Mods: {
 				Tooltip:
 					'''
 					Hold left-click to charge the javelin, release to throw
-					Strikes the ground and foe alike with lightning, dealing [c/ffffe0:Thunder] damage
+					Strikes the ground and foe alike with lightning, dealing {0} damage
 					'''
 			}
 
@@ -6710,6 +6748,11 @@ Mods: {
 			Firebreak: {
 				DisplayName: Firebreak
 				Tooltip: Rains down fire from the skies when hitting a target
+			}
+
+			Fire: {
+				DisplayName: Fire
+				Tooltip: ""
 			}
 
 			FlintAndSteel: {
@@ -6764,7 +6807,7 @@ Mods: {
 				DisplayName: Pure-Iron Sword
 				Tooltip:
 					'''
-					Swings can block ice projectiles
+					Swings can block {0} projectiles
 					Holding left-click and hitting enemies will charge an Arctic Spin Slash
 					'''
 			}
@@ -6778,7 +6821,7 @@ Mods: {
 				DisplayName: Skull Digger's Skull Digger
 				Tooltip:
 					'''
-					Spinning the weapon around you will conjure [c/ADD8E6:Arcane] mirages
+					Spinning the weapon around you will conjure {0} mirages
 					'Yes, he did name his weapon after himself...'
 					'''
 			}
@@ -6867,7 +6910,7 @@ Mods: {
 				DisplayName: Lunar Shot
 				Tooltip:
 					'''
-					Replaces Wooden Arrows with Lunar Bolts, dealing [c/FFA500:Fire] and [c/7cfc00:Nature] damage
+					Replaces Wooden Arrows with Lunar Bolts, dealing {0} and {1} damage
 					Lunar Bolts summon bats while the moon is out
 					Summons an extra bat while it's a full moon
 					'''
@@ -6913,6 +6956,11 @@ Mods: {
 					Right-click to swap between a normal slash and blood letting
 					Holding left-click in blood letting will drain the player's Spirit Gauge in exchange for increased life regeneration
 					'''
+			}
+
+			Blood: {
+				DisplayName: Blood
+				Tooltip: ""
 			}
 
 			BuddingBoline: {
@@ -7092,12 +7140,17 @@ Mods: {
 					'''
 			}
 
+			Holy: {
+				DisplayName: Holy
+				Tooltip: ""
+			}
+
 			KingsOakStaff: {
 				DisplayName: King's Oak Staff
 				Tooltip:
 					'''
 					Summons a Nature Pixie to fight for you
-					Occassionally shouts at their target, dealing [c/ffb6c1:Psychic] damage
+					Occassionally shouts at their target, dealing {0} damage
 					'''
 			}
 
@@ -7489,6 +7542,11 @@ Mods: {
 				Tooltip: ""
 			}
 
+			Nature: {
+				DisplayName: Nature
+				Tooltip: ""
+			}
+
 			RowanTreeSummon_Berries: {
 				DisplayName: Rowan Tree Summon_ Berries
 				Tooltip: ""
@@ -7496,6 +7554,11 @@ Mods: {
 
 			ShadowFuel: {
 				DisplayName: Shadow Fuel
+				Tooltip: ""
+			}
+
+			Shadow: {
+				DisplayName: Shadow
 				Tooltip: ""
 			}
 
@@ -7516,6 +7579,78 @@ Mods: {
 					A witch's staff that shoots a chaotic assortment of spells
 					'From Noita, with love'
 					'''
+			}
+
+			EldritchRoot: {
+				DisplayName: Eldritch Root
+				Tooltip:
+					'''
+					All {0} elemental weapons gain the {1} element
+					Your {1} weapons are more effective against Dark enemies
+					12% increased {1} elemental resistance
+					'Nature can reap, too.'
+					'''
+			}
+
+			GildedSeaEmblem: {
+				DisplayName: Gilded Sea Emblem
+				Tooltip:
+					'''
+					{0} elemental weapons has a chance to soak enemies
+					Soaked enemies are more sluggish and prone to {1} damage
+					15% increased {0} elemental damage and resistance
+					10% decreased {2} elemental damage and resistance
+					'''
+			}
+
+			Arcane: {
+				DisplayName: Arcane
+				Tooltip: ""
+			}
+
+			Axe: {
+				DisplayName: Axe
+				Tooltip: ""
+			}
+
+			Celestial: {
+				DisplayName: Celestial
+				Tooltip: ""
+			}
+
+			Explosive: {
+				DisplayName: Explosive
+				Tooltip: ""
+			}
+
+			Poison: {
+				DisplayName: Poison
+				Tooltip: ""
+			}
+
+			Psychic: {
+				DisplayName: Psychic
+				Tooltip: ""
+			}
+
+			Slash: {
+				DisplayName: Slash
+				Tooltip: ""
+			}
+
+			Thunder: {
+				DisplayName: Thunder
+				Tooltip: ""
+			}
+
+			Water: {
+				DisplayName: Water
+				Tooltip: ""
+			}
+
+			Wind: {
+				DisplayName: Wind
+				Tooltip: ""
 			}
 		}
 

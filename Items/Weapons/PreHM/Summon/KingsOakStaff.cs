@@ -9,12 +9,14 @@ using Redemption.Items.Materials.PreHM;
 using Redemption.Items.Placeable.Tiles;
 using System.Collections.Generic;
 using Redemption.Globals;
+using Terraria.Localization;
 
 namespace Redemption.Items.Weapons.PreHM.Summon
 {
     public class KingsOakStaff : ModItem
-	{
-		public override void SetStaticDefaults()
+    {
+        public override LocalizedText Tooltip => base.Tooltip.WithFormatArgs(ElementID.PsychicS);
+        public override void SetStaticDefaults()
 		{
 			// DisplayName.SetDefault("King's Oak Staff");
 			/* Tooltip.SetDefault("Summons a Nature Pixie to fight for you\n" +

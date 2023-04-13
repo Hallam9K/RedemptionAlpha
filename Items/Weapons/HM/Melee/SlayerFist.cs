@@ -4,11 +4,13 @@ using Terraria.ModLoader;
 using Redemption.Items.Materials.HM;
 using Redemption.Projectiles.Melee;
 using Redemption.Globals;
+using Terraria.Localization;
 
 namespace Redemption.Items.Weapons.HM.Melee
 {
     public class SlayerFist : ModItem
     {
+        public override LocalizedText Tooltip => base.Tooltip.WithFormatArgs(ElementID.ExplosiveS);
         public override void SetStaticDefaults()
         {
             // DisplayName.SetDefault("Slayer's Rocket Fist");

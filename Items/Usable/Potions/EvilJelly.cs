@@ -3,13 +3,15 @@ using Redemption.Globals;
 using Redemption.Items.Materials.PreHM;
 using Terraria;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 
 namespace Redemption.Items.Usable.Potions
 {
     public class EvilJelly : ModItem
-	{
-		public override void SetStaticDefaults()
+    {
+        public override LocalizedText Tooltip => base.Tooltip.WithFormatArgs(ElementID.ShadowS);
+        public override void SetStaticDefaults()
 		{
             // Tooltip.SetDefault("Greatly increased chance of Shadow Fuel to drop upon slaying enemies with " + ElementID.ShadowS + " weapons");
             Item.ResearchUnlockCount = 20;
