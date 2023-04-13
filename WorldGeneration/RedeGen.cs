@@ -125,6 +125,19 @@ namespace Redemption.WorldGeneration
                     }
                 }
             }*/
+            bool seaEmblemPlaced = false;
+            for (int chestIndex = 0; chestIndex < 1000; chestIndex++)
+            {
+                Chest chest = Main.chest[chestIndex];
+                if (chest != null && Main.tile[chest.x, chest.y].TileType == TileID.Containers && Main.tile[chest.x, chest.y].TileFrameX == 17 * 36)
+                {
+                    if (!seaEmblemPlaced || WorldGen.genRand.NextBool(4))
+                    {
+                        chest.item[0].SetDefaults(ModContent.ItemType<GildedSeaEmblem>());
+                        seaEmblemPlaced = true;
+                    }
+                }
+            }
             #region The Funnies
             if (RedeConfigClient.Instance.FunniSpiders)
             {
@@ -2169,6 +2182,7 @@ namespace Redemption.WorldGeneration
                 tasks.Add(new PassLegacy("Slayer Ship", delegate (GenerationProgress progress, GameConfiguration configuration)
                 {
                     progress.Message = "Crashing Spaceships";
+                    WorldGen.noTileActions = true;
                     Vector2 origin = new((int)(Main.maxTilesX * 0.65f), (int)Main.worldSurface - 180);
                     if (Main.dungeonX < Main.maxTilesX / 2)
                         origin = new Vector2((int)(Main.maxTilesX * 0.35f), (int)Main.worldSurface - 180);

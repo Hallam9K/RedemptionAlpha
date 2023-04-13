@@ -57,6 +57,7 @@ namespace Redemption.Globals.NPC
         public bool bInfection;
         public bool roosterBoost;
         public bool contagionShard;
+        public bool soaked;
 
         public override void ResetEffects(Terraria.NPC npc)
         {
@@ -85,6 +86,7 @@ namespace Redemption.Globals.NPC
             bInfection = false;
             roosterBoost = false;
             contagionShard = false;
+            soaked = false;
 
             if (!npc.HasBuff(ModContent.BuffType<InfestedDebuff>()))
             {
@@ -367,6 +369,8 @@ namespace Redemption.Globals.NPC
                 player.GetArmorPenetration(DamageClass.Generic) += (player.GetModPlayer<RitualistPlayer>().SpiritLevel + 1) * 5;
             if (badtime)
                 player.GetArmorPenetration(DamageClass.Generic) += 99;
+            if (soaked && item.HasElement(ElementID.Ice))
+                damage = (int)(damage * 1.15f);
         }
         public override void ModifyHitByProjectile(Terraria.NPC npc, Projectile projectile, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
         {
@@ -383,6 +387,8 @@ namespace Redemption.Globals.NPC
                 player.GetArmorPenetration(DamageClass.Generic) += (player.GetModPlayer<RitualistPlayer>().SpiritLevel + 1) * 5;
             if (badtime)
                 player.GetArmorPenetration(DamageClass.Generic) += 99;
+            if (soaked && projectile.HasElement(ElementID.Ice))
+                damage = (int)(damage * 1.15f);
         }
         public override bool StrikeNPC(Terraria.NPC npc, ref double damage, int defense, ref float knockback, int hitDirection, ref bool crit)
         {
@@ -528,6 +534,12 @@ namespace Redemption.Globals.NPC
                 if (Main.rand.NextBool(4) && !Main.gamePaused)
                     ParticleManager.NewParticle(npc.RandAreaInEntity(), new Vector2(0, -1), new GlowParticle2(), Color.LightGoldenrodYellow, 1, .45f, Main.rand.Next(50, 60));
             }
+            if (soaked)
+            {
+                drawColor = Color.Lerp(drawColor, new Color(100, 100, 255), 0.5f);
+                if (Main.rand.NextBool(3))
+                    Dust.NewDust(npc.position - new Vector2(2f, 2f), npc.width + 4, npc.height + 4, DustID.Water, npc.velocity.X * 0.4f, npc.velocity.Y * 0.4f, Scale: 2);
+            }
         }
 
         public override bool PreAI(Terraria.NPC npc)
@@ -623,6 +635,15 @@ namespace Redemption.Globals.NPC
                 if (npc.noGravity)
                     npc.velocity.Y *= 0.94f;
                 npc.velocity.X *= 0.94f;
+            }
+            if (soaked && npc.knockBackResist > 0 && !npc.boss)
+            {
+                if (npc.noGravity)
+                    npc.velocity.Y *= 0.96f;
+                if (!npc.noTileCollide)
+                    npc.velocity.Y += 0.04f;
+
+                npc.velocity.X *= 0.96f;
             }
         }
         public override void HitEffect(Terraria.NPC npc, int hitDirection, double damage)

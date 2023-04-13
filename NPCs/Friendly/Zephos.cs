@@ -349,13 +349,15 @@ namespace Redemption.NPCs.Friendly
                 chat.Add(Main.npc[FallenID].GivenName + " has told me he came from another portal underground. Apparently it leads to some catacombs, but you wouldn't be able to go through it. Still, he's told of some rather intriguing things lying by the portal, I'd give it a check if I were you!");
             if (!RedeBossDowned.downedEaglecrestGolem && NPC.downedBoss2)
                 chat.Add("While I was having a stroll I came across some oddly-shaped stones - looked like a boulder with legs. I was curious of course, so I gave it a WHAM with my sword! Nothing happened... and yet I sensed a presence inside it. You, as a slayer of many things, should search around and find it, might be another challenge to face!");
+            if (!RedeWorld.alignmentGiven)
+                chat.Add("Did I drop something on my way back into the portal? Oh, those glowing fragments? Looks like it's guiding you somewhere important, I'd follow it before taking on any major foes!");
             if (!Main.LocalPlayer.RedemptionAbility().Spiritwalker)
-                chat.Add("Ever see tiny lights skitterin' from a slain skeleton? Or perhaps a lantern-carrying ghost underground? Those are lost souls, and as far as I know, only arcane or holy weapons may bring them harm. Not that I'd suggest harming those helpless things.");
-            chat.Add("When encountering skeletons and undead, holy weapons are most effective against them. On the contrary, shadow weapons aren't as effective. I hate skeletons, used to think they looked kinda funny, until me and Daerel met a skeleton Vex.");
-            chat.Add("If you hate slimes, burn them! They'll burn brighter than my passion for attractive ladies" + (Main.LocalPlayer.Male ? "" : " (wink wink)") + ". Or, you could use ice weapons to freeze them, but that isn't as fun.");
+                chat.Add("Ever see tiny lights skitterin' from a slain skeleton? Or perhaps a lantern-carrying ghost underground? Those are lost souls, and as far as I know, only \n" + ElementID.ArcaneS + " or " + ElementID.HolyS + " weapons may bring them harm. Not that I'd suggest harming those helpless things.");
+            chat.Add("When encountering skeletons and undead, " + ElementID.HolyS + " weapons are most effective against them. On the contrary, " + ElementID.ShadowS + " weapons aren't as effective. I hate skeletons, used to think they looked kinda funny, until me and Daerel met a skeleton Vex.");
+            chat.Add("If you hate slimes, burn them! They'll burn brighter than my passion for attractive ladies" + (Main.LocalPlayer.Male ? "" : " (wink wink)") + ". Or, you could use " + ElementID.IceS + " weapons to freeze them, but that isn't as fun.");
             chat.Add("Ever want to sneak up on an Epidotrian skeleton? Or perhaps a chicken? Well invisibility potions are real handy for the job!");
             chat.Add("Skeletons can wield some super rusty weapons, not something you'd wanna get cut by. If you do get a dirty wound, take a dip in some water and it'll disappear!");
-            chat.Add("See foes wearing armor or holding shields? You'll need to smash their Guard to deal with them! A hammer or explosives will be your best bet, just make sure your weapon isn't super weak.");
+            chat.Add("See foes wearing armor or holding shields? You'll need to smash their Guard to deal with them!\nA [i:Redemption/Hammer]hammer or [i:Redemption/Explosive]explosives will be your best bet, just make sure your weapon isn't super weak.");
             if (!RedeBossDowned.foundNewb)
                 chat.Add("I felt a weird presence beneath that portal I hopped out of, it was super uncanny! Maybe you should check it out.");
             if (RedeBossDowned.erhanDeath == 0)
@@ -392,6 +394,8 @@ namespace Redemption.NPCs.Friendly
 
             shop.item[nextSlot++].SetDefaults(ModContent.ItemType<ChaliceFragments>());
 
+            if (Main.LocalPlayer.ZoneBeach)
+                shop.item[nextSlot++].SetDefaults(ModContent.ItemType<GildedSeaEmblem>());
             if (NPC.downedGolemBoss)
                 shop.item[nextSlot++].SetDefaults(ModContent.ItemType<OphosNotes>());
 
