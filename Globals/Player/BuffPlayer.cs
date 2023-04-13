@@ -93,6 +93,7 @@ namespace Redemption.Globals.Player
         public int infectionHeartTimer;
         public bool vasaraPendant;
         public bool crystalKnowledge;
+        public bool seaEmblem;
 
         public bool pureIronBonus;
         public bool dragonLeadBonus;
@@ -548,6 +549,8 @@ namespace Redemption.Globals.Player
                 Player.AddBuff(ModContent.BuffType<CrystalKnowledgeBuff>(), 10);
                 Projectile.NewProjectile(proj.GetSource_FromAI(), Player.Center, Vector2.Zero, ModContent.ProjectileType<ElementalCrystal>(), 40, 1, Main.myPlayer, 0, proj.GetFirstElement(true));
             }
+            if (seaEmblem && proj.HasElement(ElementID.Water) && Main.rand.NextBool(3))
+                target.AddBuff(ModContent.BuffType<SoakedDebuff>(), 600);
         }
         public override void OnHitNPCWithItem(Item item, Terraria.NPC target, Terraria.NPC.HitInfo hit, int damageDone)
         {
@@ -572,6 +575,8 @@ namespace Redemption.Globals.Player
                 Player.AddBuff(ModContent.BuffType<CrystalKnowledgeBuff>(), 10);
                 Projectile.NewProjectile(Player.GetSource_ItemUse(item), Player.Center, Vector2.Zero, ModContent.ProjectileType<ElementalCrystal>(), 40, 1, Main.myPlayer, 0, item.GetFirstElement(true));
             }
+            if (seaEmblem && item.HasElement(ElementID.Water) && Main.rand.NextBool(3))
+                target.AddBuff(ModContent.BuffType<SoakedDebuff>(), 600);
         }
         public override void UpdateBadLifeRegen()
         {

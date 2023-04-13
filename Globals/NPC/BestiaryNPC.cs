@@ -63,22 +63,22 @@ namespace Redemption.Globals.NPC
 
                 string s = i switch
                 {
-                    2 => "Fire: ",
-                    3 => "Water: ",
-                    4 => "Ice: ",
-                    5 => "Earth: ",
-                    6 => "Wind: ",
-                    7 => "Thunder: ",
-                    8 => "Holy: ",
-                    9 => "Shadow: ",
-                    10 => "Nature: ",
-                    11 => "Poison: ",
-                    12 => "Blood: ",
-                    13 => "Psychic: ",
-                    14 => "Celestial: ",
-                    _ => "Arcane: ",
+                    2 => "[i:Redemption/Fire] ",
+                    3 => "[i:Redemption/Water] ",
+                    4 => "[i:Redemption/Ice] ",
+                    5 => "[i:Redemption/Earth] ",
+                    6 => "[i:Redemption/Wind] ",
+                    7 => "[i:Redemption/Thunder] ",
+                    8 => "[i:Redemption/Holy] ",
+                    9 => "[i:Redemption/Shadow] ",
+                    10 => "[i:Redemption/Nature] ",
+                    11 => "[i:Redemption/Poison] ",
+                    12 => "[i:Redemption/Blood] ",
+                    13 => "[i:Redemption/Psychic] ",
+                    14 => "[i:Redemption/Celestial] ",
+                    _ => "[i:Redemption/Arcane] ",
                 };
-                entry += "\n" + s + (elementDmg[i] * 100).ToString() + "%";
+                entry += "\n" + s + ((int)(elementDmg[i] * 100)).ToString() + "%";
             }
             if (entry != "Elemental Multipliers")
                 bestiaryEntry.Info.Add(new ElementBestiaryText(entry));

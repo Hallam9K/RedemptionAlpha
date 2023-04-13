@@ -55,6 +55,9 @@ namespace Redemption.Globals
         public override void MeleeEffects(Item item, Terraria.Player player, Rectangle hitbox)
         {
             player.Redemption().meleeHitbox = hitbox;
+            if (player.RedemptionPlayerBuff().eldritchRoot && item.HasElementItem(ElementID.Nature))
+                item.GetGlobalItem<ElementalItem>().OverrideElement[ElementID.Shadow] = 1;
+
             if (item.DamageType == DamageClass.Melee && player.HasBuff<ExplosiveFlaskBuff>())
             {
                 if (Main.rand.NextBool(3))

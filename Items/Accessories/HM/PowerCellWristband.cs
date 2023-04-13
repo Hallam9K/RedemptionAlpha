@@ -19,6 +19,7 @@ namespace Redemption.Items.Accessories.HM
                 "'Fueled with the sun itself'"); */
             Item.ResearchUnlockCount = 1;
             ElementID.ItemFire[Type] = true;
+            ElementID.ItemHoly[Type] = true;
         }
 
         public override void SetDefaults()

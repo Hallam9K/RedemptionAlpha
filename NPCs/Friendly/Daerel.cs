@@ -398,6 +398,7 @@ namespace Redemption.NPCs.Friendly
                 .Add<SilverwoodBow>(Condition.DownedEowOrBoc)
                 .Add<GolemEye>(RedeConditions.DownedEaglecrestGolem)
                 .Add<ChaliceFragments>()
+                .Add<GildedSeaEmblem>(condi)
                 .Add<OphosNotes>(Condition.DownedGolem)
                 .Add<KingChickenPainting>()
                 .Add<FowlEmperorPainting>(RedeConditions.DownedFowlEmperor)

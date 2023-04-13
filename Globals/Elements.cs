@@ -1,7 +1,9 @@
 using Microsoft.Xna.Framework;
 using Redemption.BaseExtension;
 using Redemption.Globals.Player;
+using Redemption.Textures.Elements;
 using System;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -333,28 +335,27 @@ namespace Redemption.Globals
         public const short AddElement = 1;
         public const short RemoveElement = -1;
 
-        public const string ArcaneS = "[c/ADD8E6:Arcane]";
-        public const string FireS = "[c/FFA500:Fire]";
-        public const string WaterS = "[c/87CEEB:Water]";
-        public const string IceS = "[c/E0FFFF:Ice]";
-        public const string EarthS = "[c/f4a460:Earth]";
-        public const string WindS = "[c/B4B4B4:Wind]";
-        public const string ThunderS = "[c/ffffe0:Thunder]";
-        public const string HolyS = "[c/fafad2:Holy]";
-        public const string ShadowS = "[c/7b68ee:Shadow]";
-        public const string NatureS = "[c/7cfc00:Nature]";
-        public const string PoisonS = "[c/9370db:Poison]";
-        public const string BloodS = "[c/cd5c5c:Blood]";
-        public const string PsychicS = "[c/ffb6c1:Psychic]";
-        public const string CelestialS = "[c/ffc0cb:Celestial]";
-        public const string ExplosiveS = "[c/FFC896:Explosive]";
+        public const string ArcaneS = "[i:Redemption/Arcane][c/ADD8E6:Arcane]";
+        public const string FireS = "[i:Redemption/Fire][c/FFA500:Fire]";
+        public const string WaterS = "[i:Redemption/Water][c/87CEEB:Water]";
+        public const string IceS = "[i:Redemption/Ice][c/E0FFFF:Ice]";
+        public const string EarthS = "[i:Redemption/Earth][c/f4a460:Earth]";
+        public const string WindS = "[i:Redemption/Wind][c/B4B4B4:Wind]";
+        public const string ThunderS = "[i:Redemption/Thunder][c/ffffe0:Thunder]";
+        public const string HolyS = "[i:Redemption/Holy][c/fafad2:Holy]";
+        public const string ShadowS = "[i:Redemption/Shadow][c/7b68ee:Shadow]";
+        public const string NatureS = "[i:Redemption/Nature][c/7cfc00:Nature]";
+        public const string PoisonS = "[i:Redemption/Poison][c/9370db:Poison]";
+        public const string BloodS = "[i:Redemption/Blood][c/cd5c5c:Blood]";
+        public const string PsychicS = "[i:Redemption/Psychic][c/ffb6c1:Psychic]";
+        public const string CelestialS = "[i:Redemption/Celestial][c/ffc0cb:Celestial]";
+        public const string ExplosiveS = "[i:Redemption/Explosive][c/FFC896:Explosive]";
         #endregion
     }
     public class ElementalProjectile : GlobalProjectile
     {
         public override bool InstancePerEntity => true;
         public int[] OverrideElement = new int[16];
-
         public override void ModifyHitNPC(Projectile projectile, Terraria.NPC target, ref Terraria.NPC.HitModifiers modifiers)
         {
             if (!RedeConfigClient.Instance.ElementDisable)
@@ -363,13 +364,22 @@ namespace Redemption.Globals
                     modifiers.ScalingArmorPenetration += .2f;
             }
         }
+        public override bool PreAI(Projectile projectile)
+        {
+            if (Main.player[projectile.owner].RedemptionPlayerBuff().eldritchRoot && projectile.HasElement(ElementID.Nature))
+                OverrideElement[ElementID.Shadow] = 1;
+
+            return base.PreAI(projectile);
+        }
     }
     public class ElementalItem : GlobalItem
     {
         public override bool InstancePerEntity => true;
         public int[] OverrideElement = new int[16];
         public int[] ItemShootExtra = new int[2];
-
+        public override void UpdateInventory(Item item, Terraria.Player player)
+        {
+        }
         public override void ModifyWeaponCrit(Item item, Terraria.Player player, ref float crit)
         {
             BuffPlayer modPlayer = player.RedemptionPlayerBuff();
@@ -400,6 +410,11 @@ namespace Redemption.Globals
         public override void ModifyWeaponDamage(Item item, Terraria.Player player, ref StatModifier damage)
         {
             BuffPlayer modPlayer = player.RedemptionPlayerBuff();
+            if (player.RedemptionPlayerBuff().eldritchRoot && item.HasElementItem(ElementID.Nature))
+                OverrideElement[ElementID.Shadow] = 1;
+            else
+                OverrideElement[ElementID.Shadow] = 0;
+
             if (!RedeConfigClient.Instance.ElementDisable)
             {
                 #region Elemental Damage
@@ -452,7 +467,7 @@ namespace Redemption.Globals
             {
                 #region Elemental Attributes
                 float multiplier = 1;
-                ElementalEffects(npc, item, ref multiplier, ref modifiers);
+                ElementalEffects(npc, player, item, ref multiplier, ref knockback);
                 for (int j = 0; j < npc.GetGlobalNPC<ElementalNPC>().elementDmg.Length; j++)
                 {
                     if (npc.GetGlobalNPC<ElementalNPC>().elementDmg[j] is 1 || !item.HasElement(j))
@@ -596,7 +611,7 @@ namespace Redemption.Globals
             if (NPCLists.Dark.Contains(npc.type))
             {
                 multiplier[ElementID.Holy] *= 1.15f;
-                multiplier[ElementID.Nature] *= 0.9f;
+                multiplier[ElementID.Nature] *= 1.25f;
                 multiplier[ElementID.Shadow] *= 0.75f;
             }
             if (NPCLists.Blood.Contains(npc.type))
@@ -608,8 +623,11 @@ namespace Redemption.Globals
                 multiplier[ElementID.Blood] *= 0.75f;
             }
         }
-        public void ElementalEffects(Terraria.NPC npc, Item item, ref float multiplier, ref Terraria.NPC.HitModifiers knockback)
+        public static void ElementalEffects(Terraria.NPC npc, Terraria.Player player, Item item, ref float multiplier, ref float knockback)
         {
+            if (item.HasElement(ElementID.Shadow) && NPCLists.Dark.Contains(npc.type) && player.RedemptionPlayerBuff().eldritchRoot)
+                multiplier *= 1.33333f;
+
             if (item.HasElement(ElementID.Thunder) && ((npc.wet && !npc.lavaWet) || npc.HasBuff(BuffID.Wet) || NPCLists.Wet.Contains(npc.type)))
                 multiplier *= 1.1f;
             if (item.HasElement(ElementID.Earth) && !npc.noTileCollide && npc.collideY)
@@ -622,9 +640,15 @@ namespace Redemption.Globals
                 knockback.Knockback *= 1.25f;
                 knockback.Knockback.Flat += 2;
             }
+
+            multiplier = (int)Math.Round(multiplier * 100);
+            multiplier /= 100;
         }
-        public void ElementalEffects(Terraria.NPC npc, Projectile proj, ref float multiplier, ref Terraria.NPC.HitModifiers knockback)
+        public static void ElementalEffects(Terraria.NPC npc, Projectile proj, ref float multiplier, ref float knockback)
         {
+            if (proj.HasElement(ElementID.Shadow) && NPCLists.Dark.Contains(npc.type) && Main.player[proj.owner].RedemptionPlayerBuff().eldritchRoot)
+                multiplier *= 1.33333f;
+
             if (proj.HasElement(ElementID.Thunder) && ((npc.wet && !npc.lavaWet) || npc.HasBuff(BuffID.Wet) || NPCLists.Wet.Contains(npc.type)))
                 multiplier *= 1.1f;
             if (proj.HasElement(ElementID.Earth) && !npc.noTileCollide && npc.collideY)
@@ -637,6 +661,9 @@ namespace Redemption.Globals
                 knockback.Knockback *= 1.25f;
                 knockback.Knockback.Flat += 2;
             }
+
+            multiplier = (int)Math.Round(multiplier * 100);
+            multiplier /= 100;
         }
     }
 }

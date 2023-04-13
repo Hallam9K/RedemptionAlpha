@@ -38,7 +38,9 @@ using Redemption.Globals.World;
 using Redemption.Buffs.Cooldowns;
 using Redemption.Items.Weapons.PreHM.Ranged;
 using Redemption.WorldGeneration.Misc;
-//using SubworldLibrary;
+// using SubworldLibrary;
+using Redemption.Items.Accessories.PreHM;
+using Redemption.Tiles.Trees;
 
 namespace Redemption.Globals.NPC
 {
@@ -338,6 +340,8 @@ namespace Redemption.Globals.NPC
                 npcLoot.Add(ItemDropRule.ByCondition(new Conditions.NotExpert(), ModContent.ItemType<GolemStaff>(), 7));
             if (npc.type is NPCID.IceGolem or NPCID.RockGolem)
                 npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<LegoBrick>(), 50));
+            if (NPCLists.Dark.Contains(npc.type) && !npc.boss)
+                npcLoot.Add(ItemDropRule.Food(ModContent.ItemType<EldritchRoot>(), 400));
         }
         public override void ModifyGlobalLoot(GlobalLoot globalLoot)
         {
