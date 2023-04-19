@@ -42,6 +42,7 @@ using Redemption.Items.Weapons.PreHM.Magic;
 using Redemption.NPCs.PreHM;
 using Terraria.Audio;
 using Redemption.Tiles.Furniture.Lab;
+using Redemption.NPCs.Minibosses.Calavia;
 
 namespace Redemption.WorldGeneration
 {
@@ -874,6 +875,7 @@ namespace Redemption.WorldGeneration
             {
                 tasks.Add(new PassLegacy("Abandoned Lab", delegate (GenerationProgress progress, GameConfiguration configuration)
                 {
+                    WorldGen.noTileActions = true;
                     progress.Message = "Placing the Abandoned Lab in the island which is not\nactually canonically meant to be there but that'll change in 0.9";
                     Point16 origin = new((int)(Main.maxTilesX * 0.55f), (int)(Main.maxTilesY * 0.65f));
                     WorldUtils.Gen(origin.ToPoint(), new Shapes.Rectangle(289, 217), Actions.Chain(new GenAction[]
@@ -2170,7 +2172,6 @@ namespace Redemption.WorldGeneration
                 tasks.Add(new PassLegacy("Slayer Ship", delegate (GenerationProgress progress, GameConfiguration configuration)
                 {
                     progress.Message = "Crashing Spaceships";
-                    WorldGen.noTileActions = true;
                     Vector2 origin = new((int)(Main.maxTilesX * 0.65f), (int)Main.worldSurface - 180);
                     if (Main.dungeonX < Main.maxTilesX / 2)
                         origin = new Vector2((int)(Main.maxTilesX * 0.35f), (int)Main.worldSurface - 180);
@@ -2569,10 +2570,18 @@ namespace Redemption.WorldGeneration
                 Vector2 anglonPortalPos = new(((newbCavePoint.X + 35) * 16) - 8, ((newbCavePoint.Y + 12) * 16) - 4);
                 LabArea.SpawnNPCInWorld(anglonPortalPos, ModContent.NPCType<AnglonPortal>());
             }
-            if (gathicPortalPoint.X != 0 && !NPC.AnyNPCs(ModContent.NPCType<GathuramPortal>()))
+            if (gathicPortalPoint.X != 0)
             {
-                Vector2 gathicPortalPos = new(((gathicPortalPoint.X + 46) * 16) - 8, ((gathicPortalPoint.Y + 23) * 16) - 4);
-                LabArea.SpawnNPCInWorld(gathicPortalPos, ModContent.NPCType<GathuramPortal>());
+                if (!NPC.AnyNPCs(ModContent.NPCType<GathuramPortal>()))
+                {
+                    Vector2 gathicPortalPos = new(((gathicPortalPoint.X + 46) * 16) - 8, ((gathicPortalPoint.Y + 23) * 16) - 4);
+                    LabArea.SpawnNPCInWorld(gathicPortalPos, ModContent.NPCType<GathuramPortal>());
+                }
+                if ((RedeQuest.calaviaVar is 1 or 2) && !RedeBossDowned.downedCalavia && !NPC.AnyNPCs(ModContent.NPCType<Calavia_Intro>()) && !NPC.AnyNPCs(ModContent.NPCType<Calavia>()))
+                {
+                    Vector2 gathicPortalPos = new((gathicPortalPoint.X + 42) * 16, (gathicPortalPoint.Y + 22) * 16);
+                    LabArea.SpawnNPCInWorld(gathicPortalPos, ModContent.NPCType<Calavia_Intro>());
+                }
             }
             if (JoShrinePoint.X != 0 && !RedeBossDowned.downedTreebark && RedeWorld.DayNightCount < 4 && !NPC.AnyNPCs(ModContent.NPCType<TreebarkDryad>()))
             {

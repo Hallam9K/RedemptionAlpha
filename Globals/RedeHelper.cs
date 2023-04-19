@@ -64,6 +64,7 @@ namespace Redemption.Globals
             return 1;
         }
         public static bool RightOf(this Entity toRight, Entity toLeft) => toLeft.Center.X < toRight.Center.X;
+        public static bool RightOf(this Vector2 toRight, Vector2 toLeft) => toLeft.X < toRight.X;
         public static bool Below(this Entity toBelow, Entity toAbove) => toAbove.Center.Y < toBelow.Center.Y;
 
         public static Vector2 PolarVector(float radius, float theta) =>
@@ -988,18 +989,16 @@ namespace Redemption.Globals
             if (blind && codable.velocity.Length() <= moveThreshold)
                 return false;
 
-            if (lineOfSight)
-            {
-                if (!Collision.CanHit(npc.position - new Vector2(0, headOffset), npc.width, npc.height, codable.position, codable.width, codable.height))
-                    return false;
-            }
-
             if (range >= 0)
             {
                 if (npc.DistanceSQ(codable.Center) > range * range)
                     return false;
             }
-
+            if (lineOfSight)
+            {
+                if (!Collision.CanHit(npc.position - new Vector2(0, headOffset), npc.width, npc.height, codable.position, codable.width, codable.height))
+                    return false;
+            }
             if (facingTarget)
             {
                 if (npc.DistanceSQ(codable.Center) <= (codable.width + 32) * (codable.width + 32))

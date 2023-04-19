@@ -35,7 +35,6 @@ namespace Redemption.Items.Placeable.Tiles
                 .Register();
             CreateRecipe()
                 .AddIngredient(ModContent.ItemType<ElderWoodPlatform>(), 2)
-                .AddTile(TileID.WorkBenches)
                 .Register();
         }
     }

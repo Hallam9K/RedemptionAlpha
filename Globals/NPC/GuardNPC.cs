@@ -17,6 +17,7 @@ namespace Redemption.Globals.NPC
         public bool IgnoreArmour;
         public bool GuardBroken;
         public bool GuardPierce;
+        public double GuardDamage;
         public void GuardHit(ref Terraria.NPC.HitInfo info, Terraria.NPC npc, SoundStyle sound, float dmgReduction = .25f, bool noNPCHitSound = false, int dustType = 0, SoundStyle breakSound = default, int dustAmount = 10, float dustScale = 1, int damage = 0)
         {
             if (breakSound == default)
@@ -27,7 +28,7 @@ namespace Redemption.Globals.NPC
                 return;
             }
 
-            int guardDamage = (int)(info.Damage * dmgReduction);
+            int guardDamage = (int)(GuardDamage * dmgReduction);
             SoundEngine.PlaySound(sound, npc.position);
             CombatText.NewText(npc.getRect(), Colors.RarityPurple, guardDamage, true, true);
             GuardPoints -= guardDamage;
@@ -88,27 +89,27 @@ namespace Redemption.Globals.NPC
         {
             if (GuardPoints <= 0)
                 return;
-
+            GuardDamage = damage;
             if (npc.RedemptionNPCBuff().brokenArmor || npc.RedemptionNPCBuff().stunned)
                 GuardPierce = true;
             if (item.HasElement(ElementID.Psychic))
                 IgnoreArmour = true;
             if (item.hammer > 0 || item.Redemption().TechnicallyHammer)
-                modifiers.FinalDamage *= 4;
+                GuardDamage *= 4;
         }
         public override void ModifyHitByProjectile(Terraria.NPC npc, Projectile projectile, ref Terraria.NPC.HitModifiers modifiers)
         {
             if (GuardPoints <= 0)
                 return;
-
+            GuardDamage = damage;
             if (projectile.HasElement(ElementID.Psychic))
                 IgnoreArmour = true;
             if (projectile.Redemption().IsHammer || projectile.type == ProjectileID.PaladinsHammerFriendly)
-                modifiers.FinalDamage *= 4;
+                GuardDamage *= 4;
             if (npc.RedemptionNPCBuff().brokenArmor || npc.RedemptionNPCBuff().stunned || projectile.Redemption().EnergyBased)
                 GuardPierce = true;
             if (projectile.HasElement(ElementID.Explosive))
-                modifiers.FinalDamage *= 2;
+                GuardDamage *= 2;
         }
         public override void SetDefaults(Terraria.NPC npc)
         {

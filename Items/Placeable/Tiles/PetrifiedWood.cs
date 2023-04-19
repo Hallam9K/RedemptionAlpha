@@ -25,6 +25,9 @@ namespace Redemption.Items.Placeable.Tiles
         public override void AddRecipes()
         {
             CreateRecipe()
+                .AddIngredient(ModContent.ItemType<PetrifiedWoodPlatform>(), 2)
+                .Register();
+            CreateRecipe()
                 .AddIngredient(ModContent.ItemType<PetrifiedWoodWall>(), 4)
                 .AddTile(TileID.WorkBenches)
                 .Register();

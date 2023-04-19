@@ -41,6 +41,8 @@ using Redemption.WorldGeneration.Misc;
 using SubworldLibrary;
 using Redemption.Items.Accessories.PreHM;
 using Redemption.Tiles.Trees;
+using Redemption.Base;
+using Redemption.WorldGeneration;
 
 namespace Redemption.Globals.NPC
 {
@@ -385,6 +387,16 @@ namespace Redemption.Globals.NPC
                 pool.Clear();
                 return;
             }
+            if (RedeQuest.calaviaVar is 1 && spawnInfo.Player.ZoneRockLayerHeight)
+            {
+                Vector2 spawnPos = BaseUtility.TileToPos(new Vector2(spawnInfo.SpawnTileX, spawnInfo.SpawnTileY));
+                Vector2 calaPos = new((RedeGen.gathicPortalPoint.X + 42) * 16, (RedeGen.gathicPortalPoint.Y + 20) * 16);
+                if (calaPos.DistanceSQ(spawnPos) < 800 * 800)
+                {
+                    pool.Clear();
+                    return;
+                }
+            }
             if (RedeWorld.blobbleSwarm)
             {
                 pool.Clear();
@@ -405,7 +417,7 @@ namespace Redemption.Globals.NPC
             if (FowlMorningWorld.FowlMorningActive && spawnInfo.Player.ZoneOverworldHeight && !spawnInfo.Player.ZoneTowerNebula && !spawnInfo.Player.ZoneTowerSolar && !spawnInfo.Player.ZoneTowerStardust && !spawnInfo.Player.ZoneTowerVortex)
             {
                 pool.Clear();
-                if (Main.tile[spawnInfo.SpawnTileX, spawnInfo.SpawnTileY - 1].WallType is not WallID.DirtUnsafe)
+                if (Framing.GetTileSafely(spawnInfo.SpawnTileX, spawnInfo.SpawnTileY - 1).WallType is not WallID.DirtUnsafe)
                 {
                     IDictionary<int, float> spawnpool = FowlMorningNPC.SpawnPool.ElementAt(FowlMorningWorld.ChickWave);
                     foreach (KeyValuePair<int, float> key in spawnpool)

@@ -81,7 +81,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
                                 if (!target.active || target.whoAmI == Projectile.whoAmI || !target.hostile || target.damage > 100)
                                     continue;
 
-                                if (target.velocity.Length() == 0 || !projHitbox.Intersects(target.Hitbox) || !target.HasElement(ElementID.Ice) || target.alpha > 0 || target.minion || ProjectileID.Sets.CultistIsResistantTo[target.type] || Main.projPet[target.type])
+                                if (target.velocity.Length() == 0 || !projHitbox.Intersects(target.Hitbox) || (!target.HasElement(ElementID.Ice) && target.alpha > 0) || target.ProjBlockBlacklist(true))
                                     continue;
 
                                 SoundEngine.PlaySound(SoundID.Tink, Projectile.position);
@@ -96,9 +96,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
                             }
                         }
                         if (Projectile.frame > 9)
-                        {
                             Projectile.Kill();
-                        }
                     }
                 }
             }
