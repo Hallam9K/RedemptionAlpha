@@ -663,7 +663,19 @@ namespace Redemption
                 AddInterfaceLayer(layers, AlignmentButtonUILayer, AlignmentButtonUIElement, MouseTextIndex + 8, RedeWorld.alignmentGiven && Main.playerInventory, "Alignment Button");
             }
         }
-
+        public override void UpdateUI(GameTime gameTime)
+        {
+            if (AMemoryUILayer?.CurrentState != null && AMemoryUIState.Visible)
+                AMemoryUILayer.Update(gameTime);
+            if (NukeUILayer?.CurrentState != null && NukeDetonationUI.Visible)
+                NukeUILayer.Update(gameTime);
+            if (ForestNymphTradeUILayer?.CurrentState != null && ForestNymphTradeUI.Visible)
+                ForestNymphTradeUILayer.Update(gameTime);
+            if (YesNoUILayer?.CurrentState != null && YesNoUI.Visible)
+                YesNoUILayer.Update(gameTime);
+            if (AlignmentButtonUILayer?.CurrentState != null && RedeWorld.alignmentGiven && Main.playerInventory)
+                AlignmentButtonUILayer.Update(gameTime);
+        }
         public static void AddInterfaceLayer(List<GameInterfaceLayer> layers, UserInterface userInterface, UIState state, int index, bool visible, string customName = null) //Code created by Scalie
         {
             string name;
