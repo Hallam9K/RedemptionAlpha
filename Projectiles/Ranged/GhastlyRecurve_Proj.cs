@@ -61,7 +61,7 @@ namespace Redemption.Projectiles.Ranged
                     Main.dust[d].velocity *= 3f;
                 }
                 proj.active = false;
-                Projectile.NewProjectile(proj.GetSource_FromAI(), proj.position, proj.velocity, ModContent.ProjectileType<SpiritArrow_Proj>(), proj.damage, proj.knockBack, player.whoAmI);
+                Projectile.NewProjectile(Projectile.GetSource_FromAI(), proj.position, proj.velocity, ModContent.ProjectileType<SpiritArrow_Proj>(), proj.damage, proj.knockBack, player.whoAmI);
             }
         }
         public override Color? GetAlpha(Color lightColor)
