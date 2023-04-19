@@ -323,7 +323,7 @@ namespace Redemption.NPCs.PreHM
                         SoundEngine.PlaySound(SoundID.Item19, NPC.position);
                     if (AITimer >= 10 && globalNPC.attacker.Hitbox.Intersects(KnifeHitbox))
                     {
-                        int damage = NPC.RedemptionNPCBuff().disarmed ? (int)(NPC.damage * 0.2f) : NPC.damage;
+                        int damage = NPC.RedemptionNPCBuff().disarmed ? NPC.damage / 3 : NPC.damage;
                         if (globalNPC.attacker is NPC attackerNPC && attackerNPC.immune[NPC.whoAmI] <= 0)
                         {
                             attackerNPC.immune[NPC.whoAmI] = 20;

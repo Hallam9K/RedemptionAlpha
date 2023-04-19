@@ -418,7 +418,7 @@ namespace Redemption.Globals.NPC
             if (dragonblaze)
                 damage = (int)(damage * 0.85f);
             if (disarmed)
-                damage = (int)(damage * 0.2f);
+                damage /= 3;
         }
         public override void ModifyHitNPC(Terraria.NPC npc, Terraria.NPC target, ref int damage, ref float knockback, ref bool crit)
         {
@@ -427,7 +427,7 @@ namespace Redemption.Globals.NPC
             if (dragonblaze)
                 damage = (int)(damage * 0.85f);
             if (disarmed)
-                damage = (int)(damage * 0.2f);
+                damage /= 3;
         }
         public override void DrawEffects(Terraria.NPC npc, ref Color drawColor)
         {

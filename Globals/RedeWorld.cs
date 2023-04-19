@@ -4,8 +4,10 @@ using Redemption.Globals.Player;
 using Redemption.NPCs.Bosses.Erhan;
 using Redemption.NPCs.Bosses.Keeper;
 using Redemption.NPCs.Friendly;
+using Redemption.NPCs.Minibosses.Calavia;
 using Redemption.Projectiles.Misc;
 using Redemption.UI.ChatUI;
+using Redemption.WorldGeneration;
 using Redemption.WorldGeneration.Soulless;
 using SubworldLibrary;
 using System;
@@ -411,6 +413,12 @@ namespace Redemption.Globals
 
         public override void OnWorldLoad()
         {
+            if (RedeGen.gathicPortalPoint.X != 0 && (RedeQuest.calaviaVar is 1 or 2) && !Terraria.NPC.AnyNPCs(ModContent.NPCType<Calavia_Intro>()))
+            {
+                Vector2 gathicPortalPos = new((RedeGen.gathicPortalPoint.X + 42) * 16, (RedeGen.gathicPortalPoint.Y + 20) * 16);
+                LabArea.SpawnNPCInWorld(gathicPortalPos, ModContent.NPCType<Calavia_Intro>());
+            }
+
             if (Redemption.TrailManager != null)
                 Redemption.TrailManager.ClearAllTrails(); //trails break on world unload and reload(their projectile is still counted as being active???), so this just clears them all on reload
 

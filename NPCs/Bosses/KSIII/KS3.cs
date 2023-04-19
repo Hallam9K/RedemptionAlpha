@@ -1246,18 +1246,10 @@ namespace Redemption.NPCs.Bosses.KSIII
                                 if (AITimer == 21)
                                 {
                                     for (int k = 0; k < NPC.buffImmune.Length; k++)
-                                        NPC.buffImmune[k] = true;
-
-                                    if (Main.netMode != NetmodeID.MultiplayerClient)
                                     {
-                                        for (int i = 0; i < NPC.buffTime.Length; i++)
-                                        {
-                                            NPC.buffTime[i] = 0;
-                                            NPC.buffType[i] = 0;
-                                        }
-
-                                        if (Main.netMode == NetmodeID.Server)
-                                            NetMessage.SendData(MessageID.SendNPCBuffs, number: NPC.whoAmI);
+                                        if (BuffID.Sets.IsAnNPCWhipDebuff[k])
+                                            continue;
+                                        NPC.buffImmune[k] = true;
                                     }
                                     NPC.netUpdate = true;
                                 }

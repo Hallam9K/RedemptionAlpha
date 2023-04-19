@@ -7,6 +7,7 @@ using Redemption.Globals;
 using Redemption.Globals.NPC;
 using Redemption.Globals.World;
 using Redemption.Items.Accessories.PreHM;
+using Redemption.Items.Placeable.Trophies;
 using Redemption.Items.Usable.Potions;
 using Redemption.Items.Weapons.PreHM.Melee;
 using Redemption.Items.Weapons.PreHM.Ranged;
@@ -269,6 +270,7 @@ namespace Redemption.NPCs.FowlMorning
         }
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
+            npcLoot.Add(ItemDropRule.ByCondition(new Conditions.IsMasterMode(), ModContent.ItemType<CockatriceRelic>(), 2));
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<EggShield>(), 5));
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<GreneggLauncher>(), 5));
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Halbirdhouse>(), 5));
@@ -332,19 +334,14 @@ namespace Redemption.NPCs.FowlMorning
 
         public Vector2 OriginOffset(int index) //padding
         {
-            switch (index)
+            return index switch
             {
-                case 0:
-                    return new Vector2(0, 0);
-                case 1:
-                    return new Vector2(-2, 0);
-                case 2:
-                    return new Vector2(-4, 0);
-                case 3:
-                    return new Vector2(-6, 0);
-                default:
-                    return new Vector2(-8, 0);
-            }
+                0 => new Vector2(0, 0),
+                1 => new Vector2(-2, 0),
+                2 => new Vector2(-4, 0),
+                3 => new Vector2(-6, 0),
+                _ => new Vector2(-8, 0),
+            };
         }
 
         public int Length(int index)
