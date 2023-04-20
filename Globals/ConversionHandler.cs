@@ -15,6 +15,9 @@ namespace Redemption
 {
     class ConversionHandler
     {
+        public static bool GenningWasteland;
+        public static Vector2 WastelandCenter;
+        public static int Radius;
         public static void ConvertWasteland(Vector2 Center, int radius = 287, bool crater = true)
         {
             if (crater)
@@ -99,23 +102,36 @@ namespace Redemption
             if (radiusUp < 0) { radiusUp = 0; }
             if (radiusDown > Main.maxTilesY) { radiusDown = Main.maxTilesY; }
 
-            float distRad = radius * 16f;
+            GenningWasteland = true;
+            WastelandCenter = Center;
+            Radius = radius;
+            RadiusUp = radiusUp;
+        }
+        private static int RadiusUp;
+        public static void GenWasteland(int radiusLeft, int radiusRight, int radiusDown, Vector2 Center, int radius)
+        {
+            if (!GenningWasteland || RadiusUp > radiusDown)
+            {
+                if (RadiusUp > radiusDown)
+                {
+                    GenningWasteland = false;
+                    if (Main.netMode != NetmodeID.SinglePlayer)
+                        NetMessage.SendTileSquare(-1, (int)(Center.X / 16f), (int)(Center.Y / 16f), (radius * 2) + 2);
+                }
+                return;
+            }
+
+            RadiusUp++;
             for (int x1 = radiusLeft; x1 <= radiusRight; x1++)
             {
-                for (int y1 = radiusUp; y1 <= radiusDown; y1++)
-                {
-                    double dist = Vector2.Distance(new Vector2(x1 * 16f + 8f, y1 * 16f + 8f), Center);
-                    if (!WorldGen.InWorld(x1, y1, 0))
-                        continue;
+                double dist = Vector2.Distance(new Vector2(x1 * 16f + 8f, RadiusUp * 16f + 8f), Center);
+                if (!WorldGen.InWorld(x1, RadiusUp, 0))
+                    continue;
 
-                    Tile tile = Framing.GetTileSafely(x1, y1);
-                    if (dist < distRad && tile != null)
-                        WastelandTileConversion(tile, x1, y1);
-                }
+                Tile tile = Framing.GetTileSafely(x1, RadiusUp);
+                if (dist < radius * 16f && tile != null)
+                    WastelandTileConversion(tile, x1, RadiusUp);
             }
-            if (Main.netMode != NetmodeID.SinglePlayer)
-                NetMessage.SendTileSquare(-1, (int)(Center.X / 16f), (int)(Center.Y / 16f), (radius * 2) + 2);
-
         }
         public static void WastelandTileConversion(Tile tile, int x1, int y1)
         {

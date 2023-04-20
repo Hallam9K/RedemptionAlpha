@@ -298,6 +298,18 @@ namespace Redemption.Globals
                 blobbleSwarmCooldown--;
 
             UpdateNukeCountdown();
+
+            if (ConversionHandler.GenningWasteland)
+            {
+                int radiusLeft = (int)(ConversionHandler.WastelandCenter.X / 16f - ConversionHandler.Radius);
+                int radiusRight = (int)(ConversionHandler.WastelandCenter.X / 16f + ConversionHandler.Radius);
+                int radiusDown = (int)(ConversionHandler.WastelandCenter.Y / 16f + ConversionHandler.Radius);
+                if (radiusLeft < 0) { radiusLeft = 0; }
+                if (radiusRight > Main.maxTilesX) { radiusRight = Main.maxTilesX; }
+                if (radiusDown > Main.maxTilesY) { radiusDown = Main.maxTilesY; }
+                for (int i = 0; i < 2; i++)
+                    ConversionHandler.GenWasteland(radiusLeft, radiusRight, radiusDown, ConversionHandler.WastelandCenter, ConversionHandler.Radius);
+            }
         }
 
         public static void OmegaTransmitterMessage()
