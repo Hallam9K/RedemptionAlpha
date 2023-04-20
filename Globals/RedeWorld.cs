@@ -438,7 +438,7 @@ namespace Redemption.Globals
             if (Redemption.TrailManager != null)
                 Redemption.TrailManager.ClearAllTrails(); //trails break on world unload and reload(their projectile is still counted as being active???), so this just clears them all on reload
 
-            if (ChatUI.Visible)
+            if (!Main.dedServ && ChatUI.Visible)
                 ChatUI.Clear();
 
             alignment = 0;
