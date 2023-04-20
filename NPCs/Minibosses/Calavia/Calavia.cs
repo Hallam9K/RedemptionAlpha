@@ -185,6 +185,7 @@ namespace Redemption.NPCs.Minibosses.Calavia
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<BladeOfTheMountain>()));
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Icefall>()));
         }
         public override void BossLoot(ref string name, ref int potionType)
         {
@@ -329,7 +330,7 @@ namespace Redemption.NPCs.Minibosses.Calavia
             {
                 case ActionState.Begin:
                     origin = NPC.Center;
-                    NPC.Shoot(NPC.Center, ModContent.ProjectileType<Calavia_Icefall>(), 0, Vector2.Zero, false, SoundID.Item1, NPC.whoAmI);
+                    NPC.Shoot(NPC.Center, ModContent.ProjectileType<Calavia_IcefallArena>(), 0, Vector2.Zero, false, SoundID.Item1, NPC.whoAmI);
                     if (!Main.dedServ)
                         RedeSystem.Instance.TitleCardUIElement.DisplayTitle("Calavia", 60, 90, 0.8f, 0, Color.LightCyan, "Warrior of the Iron Realm");
 
@@ -610,10 +611,8 @@ namespace Redemption.NPCs.Minibosses.Calavia
                             BaseAI.AttemptOpenDoor(NPC, ref doorVars[0], ref doorVars[1], ref doorVars[2], 80, 1, 10, interactDoorStyle: 2);
                             NPC.PlatformFallCheck(ref NPC.Redemption().fallDownPlatform);
                             NPCHelper.HorizontallyMove(NPC, gathicPortalPos, 0.18f, 3, 18, 18, NPC.Center.Y > gathicPortalPos.Y);
-                            if (!Collision.CanHitLine(NPC.position, NPC.width, NPC.height, gathicPortalPos - Vector2.One, 2, 2) && NPC.velocity.X < 1 && NPC.velocity.X > -1)
-                            {
+                            if (!Collision.CanHitLine(NPC.position, NPC.width, NPC.height, gathicPortalPos - Vector2.One, 2, 2))
                                 TimerRand2++;
-                            }
                             if (TimerRand2 >= 180)
                             {
                                 HoldPotionType = ItemID.RecallPotion;
@@ -965,6 +964,8 @@ namespace Redemption.NPCs.Minibosses.Calavia
                     }
                     break;
             }
+            if (HoldIcefall)
+                BodyFrame = 2 * frameHeight;
         }
         public override void BossHeadSpriteEffects(ref SpriteEffects spriteEffects)
         {
@@ -997,6 +998,7 @@ namespace Redemption.NPCs.Minibosses.Calavia
         private int HoldPotionOriginX = 10;
         private bool customArm;
         public float customArmRot;
+        private bool HoldIcefall;
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
             var effects = NPC.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
@@ -1007,6 +1009,8 @@ namespace Redemption.NPCs.Minibosses.Calavia
             spriteBatch.Draw(Defeat ? AltTex.Value : TextureAssets.Npc[NPC.type].Value, NPC.Center - screenPos, new Rectangle?(rect), NPC.GetAlpha(drawColor), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
             if (!NPC.RedemptionGuard().GuardBroken)
                 spriteBatch.Draw(ShieldTex.Value, NPC.Center - screenPos, NPC.frame, NPC.GetAlpha(drawColor), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
+            if (HoldIcefall)
+                spriteBatch.Draw(TextureAssets.Item[ModContent.ItemType<Icefall>()].Value, NPC.Center + new Vector2(14 * NPC.spriteDirection, 0) - screenPos, null, NPC.GetAlpha(drawColor), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
             if (HoldPotionType != 0 && potion != null)
                 spriteBatch.Draw(potion, NPC.Center + new Vector2(14 * NPC.spriteDirection, HoldPotionPos) - screenPos, null, NPC.GetAlpha(drawColor), NPC.rotation + TimerRand2, (NPC.frame.Size() / 2) - new Vector2(HoldPotionOriginX, 10), NPC.scale, effects, 0);
             if (customArm)

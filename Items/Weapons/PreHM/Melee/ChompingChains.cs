@@ -41,7 +41,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
         public override void AddRecipes()
         {
             CreateRecipe()
-                .AddIngredient(ItemID.Mace)
+                .AddIngredient(ItemID.ChainKnife)
                 .AddIngredient(ModContent.ItemType<GraveSteelAlloy>(), 6)
                 .AddIngredient(ItemID.Bone, 12)
                 .AddTile(TileID.Anvils)
