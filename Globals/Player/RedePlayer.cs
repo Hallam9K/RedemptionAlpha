@@ -16,7 +16,7 @@ using Terraria.ID;
 using Terraria.GameContent;
 using ReLogic.Content;
 using Redemption.WorldGeneration;
-//using SubworldLibrary;
+using SubworldLibrary;
 using Redemption.WorldGeneration.Misc;
 using Redemption.Items.Weapons.HM.Magic;
 using Terraria.Audio;
@@ -119,8 +119,8 @@ namespace Redemption.Globals.Player
         }
         public override void OnEnterWorld()
         {
-            // if (SubworldSystem.Current != null)
-            //    return;
+            if (SubworldSystem.Current != null)
+                return;
             if (RedeGen.GoldenGatewayPoint.X == 0 || RedeGen.BastionPoint.X == 0 || RedeGen.gathicPortalPoint.X == 0 || RedeGen.HallOfHeroesPoint.X == 0 || RedeGen.slayerShipPoint.X == 0)
                 Main.NewText("WARNING: Unable to locate a certain structure, new world is recommended!", Colors.RarityRed);
             if (RedeGen.LabPoint.X == 0 || RedeGen.newbCavePoint.X == 0)
@@ -164,8 +164,7 @@ namespace Redemption.Globals.Player
             {
                 Player.buffImmune[BuffID.Shimmer] = true;
             }
-            // TODO: uncomment once sublib is ported
-            /*if (SubworldSystem.IsActive<CSub>())
+            if (SubworldSystem.IsActive<CSub>())
             {
                 Player.noBuilding = true;
                 Player.controlUseItem = false;
@@ -173,7 +172,7 @@ namespace Redemption.Globals.Player
                 Player.RedemptionScreen().lockScreen = true;
                 Player.RedemptionScreen().ScreenFocusPosition = new Vector2(100, 99) * 16;
                 Player.RedemptionScreen().interpolantTimer = 100;
-            }*/
+            }
         }
         public override void CatchFish(FishingAttempt attempt, ref int itemDrop, ref int npcSpawn, ref AdvancedPopupRequest sonar, ref Vector2 sonarPosition)
         {

@@ -38,7 +38,7 @@ using Redemption.Globals.World;
 using Redemption.Buffs.Cooldowns;
 using Redemption.Items.Weapons.PreHM.Ranged;
 using Redemption.WorldGeneration.Misc;
-// using SubworldLibrary;
+using SubworldLibrary;
 using Redemption.Items.Accessories.PreHM;
 using Redemption.Tiles.Trees;
 
@@ -380,7 +380,7 @@ namespace Redemption.Globals.NPC
         }
         public override void EditSpawnPool(IDictionary<int, float> pool, NPCSpawnInfo spawnInfo)
         {
-            if ((spawnInfo.Player.RedemptionScreen().cutscene && !RedeConfigClient.Instance.CameraLockDisable))// || SubworldSystem.IsActive<CSub>())
+            if ((spawnInfo.Player.RedemptionScreen().cutscene && !RedeConfigClient.Instance.CameraLockDisable) || SubworldSystem.IsActive<CSub>())
             {
                 pool.Clear();
                 return;

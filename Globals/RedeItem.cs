@@ -26,7 +26,7 @@ using Redemption.Items.Usable.Summons;
 using Redemption.Items.Weapons.PreHM.Summon;
 using Terraria.ModLoader.Core;
 using Terraria.Localization;
-//using SubworldLibrary;
+using SubworldLibrary;
 
 namespace Redemption.Globals
 {
@@ -294,9 +294,8 @@ namespace Redemption.Globals
             if (player.InModBiome<LabBiome>() && !RedeBossDowned.downedPZ && (item.type is ItemID.RodofDiscord or ItemID.RodOfHarmony))
                 return false;
 
-            // TODO: uncomment sublib
             #region C
-            /*Point coop = player.Center.ToTileCoordinates();
+            Point coop = player.Center.ToTileCoordinates();
             if (item.type is ItemID.TeleportationPotion && player.RedemptionPlayerBuff().ChickenForm && Framing.GetTileSafely(coop.X, coop.Y).TileType == ModContent.TileType<ChickenCoopTile>())
             {
                 if (!SubworldSystem.AnyActive<Redemption>())
@@ -304,7 +303,7 @@ namespace Redemption.Globals
                     SubworldSystem.Enter<CSub>();
                     return false;
                 }
-            }*/
+            }
             #endregion
             return base.CanUseItem(item, player);
         }

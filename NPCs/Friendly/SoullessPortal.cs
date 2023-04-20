@@ -3,8 +3,8 @@ using Terraria.ModLoader;
 using Terraria.ID;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
-//using SubworldLibrary;
-//using Redemption.WorldGeneration.Soulless;
+using SubworldLibrary;
+using Redemption.WorldGeneration.Soulless;
 using Terraria.Utilities;
 using Terraria.Audio;
 using Terraria.GameContent;
@@ -109,16 +109,16 @@ namespace Redemption.NPCs.Friendly
             if (firstButton)
             {
                 SoundEngine.PlaySound(SoundID.NPCDeath52, NPC.position);
-                /*if (!SubworldSystem.AnyActive<Redemption>())
+                if (!SubworldSystem.AnyActive<Redemption>())
                 {
                     Main.rand = new UnifiedRandom();
                     SubworldSystem.Enter<SoullessSub>();
                 }
                 if (SubworldSystem.IsActive<SoullessSub>())
-                    SubworldSystem.Exit();*/
+                    SubworldSystem.Exit();
             }
         }
-        /*public override string GetChat()
+        public override string GetChat()
         {
             if (SubworldSystem.IsActive<SoullessSub>())
             {
@@ -130,7 +130,7 @@ namespace Redemption.NPCs.Friendly
                 string s = "You hear an ominous hum from the portal...";
                 return s;
             }
-        }*/
+        }
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
             Texture2D texture = TextureAssets.Npc[NPC.type].Value;

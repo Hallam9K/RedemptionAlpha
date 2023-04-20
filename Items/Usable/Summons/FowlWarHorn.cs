@@ -1,6 +1,6 @@
 using Microsoft.Xna.Framework;
 using Redemption.Globals.World;
-//using SubworldLibrary;
+using SubworldLibrary;
 using Terraria;
 using Terraria.Chat;
 using Terraria.ID;
@@ -38,7 +38,7 @@ namespace Redemption.Items.Usable.Summons
 
         public override bool CanUseItem(Player player)
         {
-            if (player.ZoneTowerNebula || player.ZoneTowerSolar || player.ZoneTowerStardust || player.ZoneTowerVortex || FowlMorningWorld.FowlMorningActive || !Main.dayTime || Main.time >= 27000)// || SubworldSystem.AnyActive<Redemption>())
+            if (player.ZoneTowerNebula || player.ZoneTowerSolar || player.ZoneTowerStardust || player.ZoneTowerVortex || FowlMorningWorld.FowlMorningActive || !Main.dayTime || Main.time >= 27000 || SubworldSystem.AnyActive<Redemption>())
                 return false;
             return true;
         }

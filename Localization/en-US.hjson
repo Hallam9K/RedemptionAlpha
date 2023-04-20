@@ -1,4 +1,3 @@
-
 Mods: {
 	Redemption: {
 		Currencies.AntiqueDorulCurrency: antique doruls
@@ -1047,20 +1046,20 @@ Mods: {
 				AdviceDialogue5: "{0} has told me he came from another portal underground. Apparently it leads to some catacombs in Gathuram, but you wouldn't be able to go through it. Still, he's told of some rather intriguing things lying by the portal, I'd give it a check if I were you."
 				AdviceDialogue6: While I was having a walk I came across some oddly-shaped stones - looked like a boulder with legs. I was curious of course, so I shot it from a safe distance. Nothing happened... and yet I sensed a presence inside it. You, as a slayer of many things, should search around and find it, might be another foe to face.
 				AdviceDialogue7:
-                '''
-                Ever see tiny lights dancing from a slain skeleton? Or perhaps a lantern-carrying ghost underground? Those are lost souls, and as far as I know, only
-                {0} or {1} weapons may bring them harm. Not that I'd suggest harming those helpless things.
-                '''
+					'''
+					Ever see tiny lights dancing from a slain skeleton? Or perhaps a lantern-carrying ghost underground? Those are lost souls, and as far as I know, only
+					{0} or {1} weapons may bring them harm. Not that I'd suggest harming those helpless things.
+					'''
 				AdviceDialogue8: Wanna know about some insects? If you wanna find leaf beetles, or tree bugs as they're called here, then chop down some trees. They live on tree tops, with their green shell camouflaging them in the foliage. Coast Scarabs can also be found on palm trees at the beach, their shells sparkle when wet. Grand larvae are, well, rather gross - though they can make excellent bait. That is, if you're brave enough to get close to one.
 				AdviceDialogue9: When encountering skeletons and undead, I think its logical to assume {0} weapons aren't effective against them, while {1} weapons are. I used to like the exploring caves, until me and Zephos encountered a skeleton Vex...
 				AdviceDialogue10: Best way to deal with slimes? Burn them. Alternatively, {0} weapons can freeze them in their place, THEN you can burn them!
 				AdviceDialogue11: If you ever wanna sneak up on the Epidotrian skeletons or chickens, invisibility potions are real handy for the job.
 				AdviceDialogue12: The weapons skeletons can wield are very rusty, so it'd be bad to be wounded by them. If you do, take a dip in some water and the dirty wound will disappear.
 				AdviceDialogue13:
-                '''
-                See foes wearing armor or holding shields? You'll need to break their Guard to deal with them.
-                A [i:Redemption/Hammer]hammer or [i:Redemption/Explosive]explosives should be most efficient, just make sure your weapon isn't super weak.
-                '''
+					'''
+					See foes wearing armor or holding shields? You'll need to break their Guard to deal with them.
+					A [i:Redemption/Hammer]hammer or [i:Redemption/Explosive]explosives should be most efficient, just make sure your weapon isn't super weak.
+					'''
 				AdviceDialogue14: I felt a strange presence beneath that portal I hopped out of, which is quite peculiar. Maybe you should check it out.
 				AdviceDialogue15: I noticed a scroll sitting atop a small table next to the portal I came out of, did you pick it up yet? It looked rather... demonic.
 				AdviceDialogue16: Did I drop something on my way back into the portal? Oh, those glowing fragments? It seems to be guiding you somewhere important, I'd follow it before taking on any major foes.
@@ -1092,19 +1091,19 @@ Mods: {
 				AdviceDialogue5: "{0} has told me he came from another portal underground. Apparently it leads to some catacombs, but you wouldn't be able to go through it. Still, he's told of some rather intriguing things lying by the portal, I'd give it a check if I were you!"
 				AdviceDialogue6: While I was having a stroll I came across some oddly-shaped stones - looked like a boulder with legs. I was curious of course, so I gave it a WHAM with my sword! Nothing happened... and yet I sensed a presence inside it. You, as a slayer of many things, should search around and find it, might be another challenge to face!
 				AdviceDialogue7:
-                '''
-                Ever see tiny lights skitterin' from a slain skeleton? Or perhaps a lantern-carrying ghost underground? Those are lost souls, and as far as I know, only
-                {0} or {1} weapons may bring them harm. Not that I'd suggest harming those helpless things.
-                '''
+					'''
+					Ever see tiny lights skitterin' from a slain skeleton? Or perhaps a lantern-carrying ghost underground? Those are lost souls, and as far as I know, only
+					{0} or {1} weapons may bring them harm. Not that I'd suggest harming those helpless things.
+					'''
 				AdviceDialogue8: When encountering skeletons and undead, {0} weapons are most effective against them. On the contrary, {1} weapons aren't as effective. I hate skeletons, used to think they looked kinda funny, until me and Daerel met a skeleton Vex.
 				AdviceDialogue9: If you hate slimes, burn them! They'll burn brighter than my passion for attractive ladies{0}. Or, you could use {1} weapons to freeze them, but that isn't as fun.
 				AdviceDialogue10: Ever want to sneak up on an Epidotrian skeleton? Or perhaps a chicken? Well invisibility potions are real handy for the job!
 				AdviceDialogue11: Skeletons can wield some super rusty weapons, not something you'd wanna get cut by. If you do get a dirty wound, take a dip in some water and it'll disappear!
 				AdviceDialogue12:
-                '''
-                See foes wearing armor or holding shields? You'll need to smash their Guard to deal with them!
-                A [i:Redemption/Hammer]hammer or [i:Redemption/Explosive]explosives will be your best bet, just make sure your weapon isn't super weak.
-                '''
+					'''
+					See foes wearing armor or holding shields? You'll need to smash their Guard to deal with them!
+					A [i:Redemption/Hammer]hammer or [i:Redemption/Explosive]explosives will be your best bet, just make sure your weapon isn't super weak.
+					'''
 				AdviceDialogue13: I felt a weird presence beneath that portal I hopped out of, it was super uncanny! Maybe you should check it out.
 				AdviceDialogue14: I saw a scroll sitting atop a small table next to the portal I came out of, did you pick it up yet? It looked rather... demonic.
 				AdviceDialogue15: Did I drop something on my way back into the portal? Oh, those glowing fragments? Looks like it's guiding you somewhere important, I'd follow it before taking on any major foes!

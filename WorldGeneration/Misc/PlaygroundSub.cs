@@ -1,7 +1,7 @@
-/*using System.Collections.Generic;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.ModLoader;
-//using SubworldLibrary;
+using SubworldLibrary;
 using Redemption.Tiles.Tiles;
 using Terraria.WorldBuilding;
 using Terraria.IO;
@@ -89,4 +89,4 @@ namespace Redemption.WorldGeneration.Misc
         {
         }
     }
-}*/
+}

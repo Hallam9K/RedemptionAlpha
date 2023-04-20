@@ -3,8 +3,8 @@ using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Redemption.NPCs.Bosses.Thorn;
-//using Redemption.WorldGeneration.Soulless;
-//using SubworldLibrary;
+using Redemption.WorldGeneration.Soulless;
+using SubworldLibrary;
 
 namespace Redemption.Items.Usable.Summons
 {
@@ -37,8 +37,7 @@ namespace Redemption.Items.Usable.Summons
 
 		public override bool CanUseItem(Player player)
 		{
-			return //!SubworldSystem.IsActive<SoullessSub>() &&
-				Main.dayTime && !NPC.AnyNPCs(ModContent.NPCType<Thorn>());
+			return !SubworldSystem.IsActive<SoullessSub>() && Main.dayTime && !NPC.AnyNPCs(ModContent.NPCType<Thorn>());
 		}
 
 		public override bool? UseItem(Player player)

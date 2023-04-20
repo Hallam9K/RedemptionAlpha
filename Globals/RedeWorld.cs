@@ -5,8 +5,8 @@ using Redemption.NPCs.Bosses.Erhan;
 using Redemption.NPCs.Bosses.Keeper;
 using Redemption.NPCs.Friendly;
 using Redemption.Projectiles.Misc;
-//using Redemption.WorldGeneration.Soulless;
-//using SubworldLibrary;
+using Redemption.WorldGeneration.Soulless;
+using SubworldLibrary;
 using Redemption.UI.ChatUI;
 using System;
 using System.Collections.Generic;
@@ -26,9 +26,8 @@ namespace Redemption.Globals
 {
     public class RedeWorld : ModSystem
     {
-        // TODO: uncomment sublib
         #region Soulless Subworld
-        /*public override void PreUpdateWorld()
+        public override void PreUpdateWorld()
         {
             if (SubworldSystem.IsActive<SoullessSub>())
             {
@@ -49,7 +48,7 @@ namespace Redemption.Globals
                         tile.RandomUpdate(i, j);
                 }
             }
-        }*/
+        }
         #endregion
 
         public static bool blobbleSwarm;
@@ -99,8 +98,8 @@ namespace Redemption.Globals
             if (Main.time == 1)
                 DayNightCount++;
 
-            // if (SubworldSystem.Current != null)
-            //    return;
+            if (SubworldSystem.Current != null)
+                return;
 
             #region Skeleton Invasion
             if (DayNightCount >= 10 && !Main.hardMode && !Main.IsFastForwardingTime())

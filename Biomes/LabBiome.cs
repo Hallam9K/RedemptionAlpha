@@ -2,7 +2,7 @@ using Microsoft.Xna.Framework;
 using Redemption.BaseExtension;
 using Redemption.Globals;
 using Redemption.WorldGeneration;
-//using SubworldLibrary;
+using SubworldLibrary;
 using Terraria;
 using Terraria.ModLoader;
 namespace Redemption.Biomes
