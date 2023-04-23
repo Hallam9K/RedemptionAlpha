@@ -44,7 +44,7 @@ namespace Redemption.Items.Weapons.HM.Ranged
             Item.shootSpeed = 8;
             Item.useAmmo = AmmoID.Bullet;
             if (!Main.dedServ)
-                Item.RedemptionGlow().glowTexture = ModContent.Request<Texture2D>(Item.ModItem.Texture + "_Glow").Value;
+                Item.RedemptionGlow().glowTexture = ModContent.Request<Texture2D>(Texture + "_Glow").Value;
             Item.ExtraItemShoot(ModContent.ProjectileType<KS3_EnergyBolt>());
         }
 

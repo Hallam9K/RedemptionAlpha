@@ -305,9 +305,9 @@ namespace Redemption.Globals
                 int radiusLeft = (int)(ConversionHandler.WastelandCenter.X / 16f - ConversionHandler.Radius);
                 int radiusRight = (int)(ConversionHandler.WastelandCenter.X / 16f + ConversionHandler.Radius);
                 int radiusDown = (int)(ConversionHandler.WastelandCenter.Y / 16f + ConversionHandler.Radius);
-                if (radiusLeft < 0) { radiusLeft = 0; }
-                if (radiusRight > Main.maxTilesX) { radiusRight = Main.maxTilesX; }
-                if (radiusDown > Main.maxTilesY) { radiusDown = Main.maxTilesY; }
+                if (radiusLeft < 15) { radiusLeft = 15; }
+                if (radiusRight > Main.maxTilesX - 15) { radiusRight = Main.maxTilesX - 15; }
+                if (radiusDown > Main.maxTilesY - 15) { radiusDown = Main.maxTilesY - 15; }
                 for (int i = 0; i < 2; i++)
                     ConversionHandler.GenWasteland(radiusLeft, radiusRight, radiusDown, ConversionHandler.WastelandCenter, ConversionHandler.Radius);
             }

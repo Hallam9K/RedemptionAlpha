@@ -410,8 +410,8 @@ namespace Redemption
         public UserInterface YesNoUILayer;
         public YesNoUI YesNoUIElement;
 
-        public UserInterface ForestNymphTradeUILayer;
-        public ForestNymphTradeUI ForestNymphTradeUIElement;
+        public UserInterface TradeUILayer;
+        public TradeUI TradeUIElement;
 
         public UserInterface AlignmentButtonUILayer;
         public AlignmentButton AlignmentButtonUIElement;
@@ -452,9 +452,9 @@ namespace Redemption
                 YesNoUIElement = new YesNoUI();
                 YesNoUILayer.SetState(YesNoUIElement);
 
-                ForestNymphTradeUILayer = new UserInterface();
-                ForestNymphTradeUIElement = new ForestNymphTradeUI();
-                ForestNymphTradeUILayer.SetState(ForestNymphTradeUIElement);
+                TradeUILayer = new UserInterface();
+                TradeUIElement = new TradeUI();
+                TradeUILayer.SetState(TradeUIElement);
 
                 AlignmentButtonUILayer = new UserInterface();
                 AlignmentButtonUIElement = new AlignmentButton();
@@ -658,7 +658,7 @@ namespace Redemption
                 AddInterfaceLayer(layers, NukeUILayer, NukeUIElement, MouseTextIndex + 4, NukeDetonationUI.Visible, "Nuke UI");
                 AddInterfaceLayer(layers, TextBubbleUILayer, TextBubbleUIElement, MouseTextIndex + 5, ChatUI.Visible, "Text Bubble");
                 AddInterfaceLayer(layers, YesNoUILayer, YesNoUIElement, MouseTextIndex + 6, YesNoUI.Visible, "Yes No Choice");
-                AddInterfaceLayer(layers, ForestNymphTradeUILayer, ForestNymphTradeUIElement, MouseTextIndex + 7, ForestNymphTradeUI.Visible, "Nymph Trade");
+                AddInterfaceLayer(layers, TradeUILayer, TradeUIElement, MouseTextIndex + 7, TradeUI.Visible, "Trade");
                 AddInterfaceLayer(layers, SpiritWalkerButtonUILayer, SpiritWalkerButtonUIElement, MouseTextIndex + 8, Main.LocalPlayer.RedemptionAbility().Spiritwalker && Main.playerInventory, "Spirit Walker Button");
                 AddInterfaceLayer(layers, AlignmentButtonUILayer, AlignmentButtonUIElement, MouseTextIndex + 8, RedeWorld.alignmentGiven && Main.playerInventory, "Alignment Button");
             }
@@ -669,8 +669,8 @@ namespace Redemption
                 AMemoryUILayer.Update(gameTime);
             if (NukeUILayer?.CurrentState != null && NukeDetonationUI.Visible)
                 NukeUILayer.Update(gameTime);
-            if (ForestNymphTradeUILayer?.CurrentState != null && ForestNymphTradeUI.Visible)
-                ForestNymphTradeUILayer.Update(gameTime);
+            if (TradeUILayer?.CurrentState != null && TradeUI.Visible)
+                TradeUILayer.Update(gameTime);
             if (YesNoUILayer?.CurrentState != null && YesNoUI.Visible)
                 YesNoUILayer.Update(gameTime);
             if (AlignmentButtonUILayer?.CurrentState != null && RedeWorld.alignmentGiven && Main.playerInventory)

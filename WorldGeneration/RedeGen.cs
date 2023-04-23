@@ -49,6 +49,7 @@ namespace Redemption.WorldGeneration
     public class RedeGen : ModSystem
     {
         public static bool dragonLeadSpawn;
+        public static bool cryoCrystalSpawn;
         public static bool corpseCheck;
         public static Point16 newbCavePoint;
         public static Point16 gathicPortalPoint;
@@ -65,19 +66,10 @@ namespace Redemption.WorldGeneration
         public static Point16 SpiritOldLadyPoint;
         public static Point16 SpiritDruidPoint;
 
-        public override void OnWorldLoad()
-        {
-            if (NPC.downedBoss3)
-                dragonLeadSpawn = true;
-            else
-                dragonLeadSpawn = false;
-        }
-        public override void OnWorldUnload()
-        {
-            dragonLeadSpawn = false;
-        }
         public override void ClearWorld()
         {
+            cryoCrystalSpawn = false;
+            dragonLeadSpawn = false;
             newbCavePoint = Point16.Zero;
             gathicPortalPoint = Point16.Zero;
             slayerShipPoint = Point16.Zero;
@@ -373,18 +365,18 @@ namespace Redemption.WorldGeneration
         }
         public override void PostUpdateWorld()
         {
-            if (NPC.downedBoss3 && !dragonLeadSpawn)
+            if (NPC.downedBoss3 && !dragonLeadSpawn && !cryoCrystalSpawn)
             {
-                dragonLeadSpawn = true;
                 if (RedeWorld.alignment >= 0)
                 {
+                    cryoCrystalSpawn = true;
                     string status = "Crystals form in the icy caverns...";
                     if (Main.netMode == NetmodeID.Server)
                         ChatHelper.BroadcastChatMessage(NetworkText.FromLiteral(status), Color.LightBlue);
                     else if (Main.netMode == NetmodeID.SinglePlayer)
                         Main.NewText(Language.GetTextValue(status), Color.LightBlue);
 
-                    for (int k = 0; k < (int)(Main.maxTilesX * Main.maxTilesY * 0.007f); k++)
+                    for (int k = 0; k < (int)(Main.maxTilesX * Main.maxTilesY * 0.01f); k++)
                     {
                         int i2 = WorldGen.genRand.Next(200, Main.maxTilesX - 200);
                         int j2 = WorldGen.genRand.Next((int)(Main.maxTilesY * .25f), (int)(Main.maxTilesY * .7f));
@@ -412,6 +404,7 @@ namespace Redemption.WorldGeneration
                 }
                 else
                 {
+                    dragonLeadSpawn = true;
                     string status = "The caverns are heated with dragon bone...";
                     if (Main.netMode == NetmodeID.Server)
                         ChatHelper.BroadcastChatMessage(NetworkText.FromLiteral(status), Color.Orange);
@@ -2737,6 +2730,14 @@ namespace Redemption.WorldGeneration
         }
         public override void SaveWorldData(TagCompound tag)
         {
+            var lists = new List<string>();
+
+            if (dragonLeadSpawn)
+                lists.Add("DLeadSpawn");
+            if (cryoCrystalSpawn)
+                lists.Add("CCrystalSpawn");
+
+            tag["lists"] = lists;
             tag["nCaveX"] = newbCavePoint.X;
             tag["nCaveY"] = newbCavePoint.Y;
             tag["gPortalX"] = gathicPortalPoint.X;
@@ -2757,6 +2758,10 @@ namespace Redemption.WorldGeneration
 
         public override void LoadWorldData(TagCompound tag)
         {
+            var lists = tag.GetList<string>("lists");
+            dragonLeadSpawn = lists.Contains("DLeadSpawn");
+            cryoCrystalSpawn = lists.Contains("CCrystalSpawn");
+
             newbCavePoint = new Point16(tag.Get<ushort>("nCaveX"), tag.Get<ushort>("nCaveY"));
             gathicPortalPoint = new Point16(tag.Get<ushort>("gPortalX"), tag.Get<ushort>("gPortalY"));
             slayerShipPoint = new Point16(tag.Get<ushort>("sShipX"), tag.Get<ushort>("sShipY"));
@@ -2769,6 +2774,11 @@ namespace Redemption.WorldGeneration
 
         public override void NetSend(BinaryWriter writer)
         {
+            var flags = new BitsByte();
+            flags[0] = dragonLeadSpawn;
+            flags[1] = cryoCrystalSpawn;
+            writer.Write(flags);
+
             writer.Write(newbCavePoint.X);
             writer.Write(newbCavePoint.Y);
             writer.Write(gathicPortalPoint.X);
@@ -2788,6 +2798,10 @@ namespace Redemption.WorldGeneration
         }
         public override void NetReceive(BinaryReader reader)
         {
+            BitsByte flags = reader.ReadByte();
+            dragonLeadSpawn = flags[0];
+            cryoCrystalSpawn = flags[1];
+
             newbCavePoint = new Point16(reader.ReadUInt16(), reader.ReadUInt16());
             gathicPortalPoint = new Point16(reader.ReadUInt16(), reader.ReadUInt16());
             slayerShipPoint = new Point16(reader.ReadUInt16(), reader.ReadUInt16());

@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Redemption.Buffs.Debuffs;
 using Redemption.Buffs.NPCBuffs;
 using Redemption.Globals;
 using Terraria;
@@ -125,6 +126,12 @@ namespace Redemption.Projectiles.Magic
         }
         public override void AI()
         {
+            if (Projectile.ai[0] is 1)
+            {
+                Projectile.rotation += Projectile.velocity.X / 20 * Projectile.direction;
+                Projectile.velocity.Y += 0.2f;
+                return;
+            }
             if (Projectile.localAI[0] == 1)
                 Projectile.rotation -= 0.02f;
             else if (Projectile.localAI[0] == 2)

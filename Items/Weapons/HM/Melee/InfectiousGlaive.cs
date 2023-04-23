@@ -48,7 +48,7 @@ namespace Redemption.Items.Weapons.HM.Melee
             Item.shootSpeed = 3.7f;
             Item.shoot = ModContent.ProjectileType<InfectiousGlaive_Proj>();
             if (!Main.dedServ)
-                Item.RedemptionGlow().glowTexture = ModContent.Request<Texture2D>(Item.ModItem.Texture + "_Glow").Value;
+                Item.RedemptionGlow().glowTexture = ModContent.Request<Texture2D>(Texture + "_Glow").Value;
         }
         private bool side;
         public override bool AltFunctionUse(Player player) => true;

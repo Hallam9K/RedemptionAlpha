@@ -48,7 +48,7 @@ namespace Redemption.Items.Weapons.HM.Melee
             Item.noUseGraphic = false;
             Item.shoot = ModContent.ProjectileType<RemoteCleaver>();
             if (!Main.dedServ)
-                Item.RedemptionGlow().glowTexture = ModContent.Request<Texture2D>(Item.ModItem.Texture + "_Glow").Value;
+                Item.RedemptionGlow().glowTexture = ModContent.Request<Texture2D>(Texture + "_Glow").Value;
         }
         public override bool AltFunctionUse(Player player) => true;
         public int AttackMode;

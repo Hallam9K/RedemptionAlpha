@@ -387,7 +387,8 @@ namespace Redemption.NPCs.Friendly
                         }
                         break;
                     case 1:
-                        ForestNymphTradeUI.Visible = true;
+                        SoundEngine.PlaySound(SoundID.MenuOpen);
+                        TradeUI.Visible = true;
                         break;
                     case 2:
                         for (int i = 0; i < 20; i++)

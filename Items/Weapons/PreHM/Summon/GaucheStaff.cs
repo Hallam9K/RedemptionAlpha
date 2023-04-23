@@ -39,7 +39,7 @@ namespace Redemption.Items.Weapons.PreHM.Summon
             Item.shoot = ModContent.ProjectileType<GraniteGuardian>();
             Item.mana = 20;
             if (!Main.dedServ)
-                Item.RedemptionGlow().glowTexture = ModContent.Request<Texture2D>(Item.ModItem.Texture + "_Glow").Value;
+                Item.RedemptionGlow().glowTexture = ModContent.Request<Texture2D>(Texture + "_Glow").Value;
         }
         public override bool CanUseItem(Player player)
         {

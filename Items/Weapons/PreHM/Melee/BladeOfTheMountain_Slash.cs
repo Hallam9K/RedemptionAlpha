@@ -8,6 +8,8 @@ using Terraria.GameContent;
 using Redemption.Globals;
 using Redemption.Buffs.NPCBuffs;
 using Redemption.BaseExtension;
+using Redemption.NPCs.Minibosses.Calavia;
+using Redemption.Projectiles.Magic;
 
 namespace Redemption.Items.Weapons.PreHM.Melee
 {
@@ -78,7 +80,21 @@ namespace Redemption.Items.Weapons.PreHM.Melee
                             for (int i = 0; i < Main.maxProjectiles; i++)
                             {
                                 Projectile target = Main.projectile[i];
-                                if (!target.active || target.whoAmI == Projectile.whoAmI || !target.hostile || target.damage > 100)
+                                if (!target.active)
+                                    continue;
+
+                                if (target.ai[0] is 0 && (target.type == ModContent.ProjectileType<Icefall_Proj>() || target.type == ModContent.ProjectileType<Calavia_Icefall>()) && projHitbox.Intersects(target.Hitbox))
+                                {
+                                    DustHelper.DrawCircle(target.Center, DustID.IceTorch, 1, 2, 2, dustSize: 2, nogravity: true);
+                                    SoundEngine.PlaySound(CustomSounds.CrystalHit, Projectile.position);
+                                    target.velocity.Y = Main.rand.NextFloat(-2, 0);
+                                    target.velocity.X = player.direction * 18f;
+                                    target.damage *= 2;
+                                    target.friendly = true;
+                                    target.ai[0] = 1;
+                                    continue;
+                                }
+                                if (target.whoAmI == Projectile.whoAmI || !target.hostile || target.damage > 100)
                                     continue;
 
                                 if (target.velocity.Length() == 0 || !projHitbox.Intersects(target.Hitbox) || (!target.HasElement(ElementID.Ice) && target.alpha > 0) || target.ProjBlockBlacklist(true))
