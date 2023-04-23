@@ -39,7 +39,7 @@ namespace Redemption.Items.Weapons.PostML.Melee
             Item.shootSpeed = 9f;
             Item.rare = ModContent.RarityType<CosmicRarity>();
             if (!Main.dedServ)
-                Item.RedemptionGlow().glowTexture = ModContent.Request<Texture2D>(Item.ModItem.Texture).Value;
+                Item.RedemptionGlow().glowTexture = ModContent.Request<Texture2D>(Texture).Value;
         }
         public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback)
         {

@@ -1,4 +1,5 @@
 using Microsoft.Xna.Framework;
+using Redemption.Buffs.Debuffs;
 using Redemption.Buffs.NPCBuffs;
 using Redemption.Globals;
 using Redemption.Projectiles.Magic;
@@ -35,7 +36,7 @@ namespace Redemption.NPCs.Minibosses.Calavia
 
             if (Projectile.ai[1]++ % 6 == 0)
             {
-                Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center + Vector2.One.RotatedBy(RedeHelper.RandomRotation()) * Main.rand.Next(350, 400), Vector2.Zero, ModContent.ProjectileType<Icefall_Mist>(), 0, 0, Main.myPlayer, 1);
+                Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center + Vector2.One.RotatedBy(RedeHelper.RandomRotation()) * Main.rand.Next(400, 450), Vector2.Zero, ModContent.ProjectileType<Icefall_Mist>(), 0, 0, Main.myPlayer, 1);
             }
             for (int i = 0; i < Main.maxNPCs; i++)
             {
@@ -43,7 +44,7 @@ namespace Redemption.NPCs.Minibosses.Calavia
                 if (!target.active || !target.CanBeChasedBy())
                     continue;
 
-                if (Projectile.DistanceSQ(target.Center) > 480 * 480 && Projectile.DistanceSQ(target.Center) < 600 * 600)
+                if (Projectile.DistanceSQ(target.Center) > 540 * 540 && Projectile.DistanceSQ(target.Center) < 650 * 650)
                     target.AddBuff(ModContent.BuffType<PureChillDebuff>(), 180);
             }
             for (int i = 0; i < Main.maxPlayers; i++)
@@ -52,7 +53,7 @@ namespace Redemption.NPCs.Minibosses.Calavia
                 if (!target.active || target.dead)
                     continue;
 
-                if (Projectile.DistanceSQ(target.Center) > 480 * 480 && Projectile.DistanceSQ(target.Center) < 600 * 600)
+                if (Projectile.DistanceSQ(target.Center) > 540 * 540 && Projectile.DistanceSQ(target.Center) < 650 * 650)
                     target.AddBuff(ModContent.BuffType<PureChillDebuff>(), 180);
             }
         }
@@ -67,6 +68,7 @@ namespace Redemption.NPCs.Minibosses.Calavia
         public override void SetDefaults()
         {
             base.SetDefaults();
+            Projectile.timeLeft = Main.rand.Next(140, 180);
         }
         public override bool PreAI()
         {
@@ -79,9 +81,9 @@ namespace Redemption.NPCs.Minibosses.Calavia
             else if (Projectile.localAI[0] is 2)
                 Projectile.rotation += 0.003f;
 
-            if (Projectile.timeLeft < 120)
+            if (Projectile.timeLeft < 80)
             {
-                Projectile.alpha += 2;
+                Projectile.alpha += 3;
                 if (Projectile.alpha >= 255)
                     Projectile.Kill();
             }
@@ -89,10 +91,10 @@ namespace Redemption.NPCs.Minibosses.Calavia
             {
                 Projectile.alpha -= 5;
 
-                if (Main.rand.NextBool(30) && Projectile.alpha <= 100 && Main.myPlayer == Projectile.owner)
-                    Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.RandAreaInEntity(), Vector2.Zero, ModContent.ProjectileType<Calavia_Icefall>(), Projectile.damage, Projectile.knockBack, Projectile.owner);
+                if (Main.rand.NextBool(15) && Projectile.alpha <= 100 && Main.myPlayer == Projectile.owner)
+                    Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.RandAreaInEntity(), Vector2.Zero, ModContent.ProjectileType<Calavia_Icefall>(), Projectile.damage, Projectile.knockBack, Main.myPlayer);
 
-                if (Main.rand.NextBool(20) && Projectile.alpha <= 150)
+                if (Main.rand.NextBool(10) && Projectile.alpha <= 150)
                 {
                     int dust = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.SilverCoin);
                     Main.dust[dust].velocity *= 0;
@@ -121,7 +123,7 @@ namespace Redemption.NPCs.Minibosses.Calavia
                         if (!Projectile.Hitbox.Intersects(target.Hitbox))
                             continue;
 
-                        target.AddBuff(ModContent.BuffType<PureChillDebuff>(), 180);
+                        target.AddBuff(ModContent.BuffType<PureChillDebuff>(), 60);
                     }
                 }
             }

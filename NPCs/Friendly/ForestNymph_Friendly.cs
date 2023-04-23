@@ -369,7 +369,7 @@ namespace Redemption.NPCs.Friendly
 
                                                 CombatText.NewText(player2.getRect(), Color.Gold, "+1", true, false);
 
-                                                if (!player2.HasItem(ModContent.ItemType<AlignmentTeller>()))
+                                                if (!RedeWorld.alignmentGiven)
                                                     continue;
 
                                                 if (!Main.dedServ)
@@ -386,7 +386,8 @@ namespace Redemption.NPCs.Friendly
                         }
                         break;
                     case 1:
-                        ForestNymphTradeUI.Visible = true;
+                        SoundEngine.PlaySound(SoundID.MenuOpen);
+                        TradeUI.Visible = true;
                         break;
                     case 2:
                         for (int i = 0; i < 20; i++)

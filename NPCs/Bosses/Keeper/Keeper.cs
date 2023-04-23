@@ -814,7 +814,7 @@ namespace Redemption.NPCs.Bosses.Keeper
 
                                 CombatText.NewText(player2.getRect(), Color.Gold, "+3", true, false);
 
-                                if (!player2.HasItem(ModContent.ItemType<AlignmentTeller>()))
+                                if (!RedeWorld.alignmentGiven)
                                     continue;
 
                                 if (!Main.dedServ)

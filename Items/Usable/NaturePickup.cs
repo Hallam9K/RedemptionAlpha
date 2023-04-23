@@ -25,7 +25,7 @@ namespace Redemption.Items.Usable
             Item.maxStack = 1;
             Item.rare = ItemRarityID.White;
             if (!Main.dedServ)
-                Item.RedemptionGlow().glowTexture = ModContent.Request<Texture2D>(Item.ModItem.Texture).Value;
+                Item.RedemptionGlow().glowTexture = ModContent.Request<Texture2D>(Texture).Value;
         }
         public override bool OnPickup(Player player)
         {

@@ -37,7 +37,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
             Item.useTurn = true;
             Item.rare = ItemRarityID.Blue;
             if (!Main.dedServ)
-                Item.RedemptionGlow().glowTexture = ModContent.Request<Texture2D>(Item.ModItem.Texture + "_Glow").Value;
+                Item.RedemptionGlow().glowTexture = ModContent.Request<Texture2D>(Texture + "_Glow").Value;
         }
 
         public override void OnHitNPC(Player player, NPC target, int damage, float knockBack, bool crit)

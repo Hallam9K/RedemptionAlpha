@@ -132,6 +132,12 @@ namespace Redemption.Globals
                 .AddTile(TileID.WorkBenches)
                 .Register();
 
+            Recipe.Create(ItemID.ThrowingKnife, 33)
+                .AddIngredient<GraveSteelAlloy>()
+                .AddRecipeGroup(RecipeGroupID.Wood)
+                .AddTile(TileID.Anvils)
+                .Register();
+
             Recipe.Create(ItemID.ChainKnife)
                 .AddIngredient<GraveSteelAlloy>(9)
                 .AddIngredient(ItemID.Chain, 3)

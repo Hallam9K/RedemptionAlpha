@@ -2,7 +2,7 @@ using Terraria;
 using Terraria.ModLoader;
 using Redemption.BaseExtension;
 
-namespace Redemption.Buffs.NPCBuffs
+namespace Redemption.Buffs.Debuffs
 {
     public class PureChillDebuff : ModBuff
     {

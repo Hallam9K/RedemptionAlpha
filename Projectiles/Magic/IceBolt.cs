@@ -10,6 +10,7 @@ using Terraria.ModLoader;
 using Redemption.BaseExtension;
 using Redemption.Effects;
 using System.Collections.Generic;
+using Redemption.Buffs.Debuffs;
 
 namespace Redemption.Projectiles.Magic
 {

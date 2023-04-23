@@ -12,6 +12,7 @@ using Redemption.BaseExtension;
 using Redemption.Buffs.NPCBuffs;
 using Redemption.Projectiles.Melee;
 using static System.Formats.Asn1.AsnWriter;
+using Redemption.Projectiles.Magic;
 
 namespace Redemption.NPCs.Minibosses.Calavia
 {
@@ -82,7 +83,20 @@ namespace Redemption.NPCs.Minibosses.Calavia
                             for (int i = 0; i < Main.maxProjectiles; i++)
                             {
                                 Projectile target = Main.projectile[i];
-                                if (!target.active || target.whoAmI == Projectile.whoAmI || !target.friendly || target.damage > 100)
+                                if (!target.active)
+                                    continue;
+
+                                if (target.ai[0] is 0 && (target.type == ModContent.ProjectileType<Icefall_Proj>() || target.type == ModContent.ProjectileType<Calavia_Icefall>()) && projHitbox.Intersects(target.Hitbox))
+                                {
+                                    DustHelper.DrawCircle(target.Center, DustID.IceTorch, 1, 2, 2, dustSize: 2, nogravity: true);
+                                    SoundEngine.PlaySound(CustomSounds.CrystalHit, Projectile.position);
+                                    target.velocity.Y = Main.rand.NextFloat(-2, 0);
+                                    target.velocity.X = npc.spriteDirection * 18f;
+                                    target.hostile = true;
+                                    target.ai[0] = 1;
+                                    continue;
+                                }
+                                if (target.whoAmI == Projectile.whoAmI || !target.friendly || target.damage > 100)
                                     continue;
 
                                 if (target.velocity.Length() == 0 || !projHitbox.Intersects(target.Hitbox) || (!target.HasElement(ElementID.Ice) && (target.alpha > 0 || target.DamageType == DamageClass.Magic)) || target.ProjBlockBlacklist(true))
@@ -251,7 +265,7 @@ namespace Redemption.NPCs.Minibosses.Calavia
                         break;
                     case 2:
                         npc.ai[2] = 1;
-                        if (Timer++ == 0)
+                        if (Timer++ <= 10)
                             npc.velocity = vector / 3;
 
                         vector = startVector * Length;

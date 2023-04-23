@@ -37,6 +37,7 @@ using Redemption.Items.Quest.KingSlayer;
 using Redemption.Items.Placeable.Plants;
 using Redemption.Items.Weapons.PreHM.Summon;
 using Redemption.NPCs.Minibosses.Calavia;
+using Redemption.Tiles.Furniture.Misc;
 
 namespace Redemption.Globals
 {
@@ -168,12 +169,10 @@ namespace Redemption.Globals
             TileID.BeeHive,
             TileID.Granite,
             TileID.Marble,
-            ModContent.TileType<GathicStoneBrickTile>(),
-            ModContent.TileType<GathicGladestoneBrickTile>(),
-            ModContent.TileType<GathicFroststoneBrickTile>(),
             ModContent.TileType<AncientHallBrickTile>(),
             ModContent.TileType<SlayerShipPanelTile>(),
-            ModContent.TileType<LabPlatingTileUnsafe>()
+            ModContent.TileType<LabPlatingTileUnsafe>(),
+            ModContent.TileType<HangingTiedTile>()
         };
 
         public static List<int> ModdedChests = new();

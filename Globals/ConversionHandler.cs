@@ -97,10 +97,10 @@ namespace Redemption
             int radiusRight = (int)(Center.X / 16f + radius);
             int radiusUp = (int)(Center.Y / 16f - radius);
             int radiusDown = (int)(Center.Y / 16f + radius);
-            if (radiusLeft < 0) { radiusLeft = 0; }
-            if (radiusRight > Main.maxTilesX) { radiusRight = Main.maxTilesX; }
-            if (radiusUp < 0) { radiusUp = 0; }
-            if (radiusDown > Main.maxTilesY) { radiusDown = Main.maxTilesY; }
+            if (radiusLeft < 15) { radiusLeft = 15; }
+            if (radiusRight > Main.maxTilesX - 15) { radiusRight = Main.maxTilesX - 15; }
+            if (radiusUp < 15) { radiusUp = 15; }
+            if (radiusDown > Main.maxTilesY - 15) { radiusDown = Main.maxTilesY - 15; }
 
             GenningWasteland = true;
             WastelandCenter = Center;

@@ -19,10 +19,9 @@ using Redemption.UI.ChatUI;
 using Terraria.GameContent.UI;
 using ReLogic.Content;
 using Terraria.Utilities;
-using Redemption.NPCs.Bosses.Keeper;
 using Terraria.GameContent.ItemDropRules;
 using Redemption.Items.Weapons.PreHM.Melee;
-using Redemption.NPCs.Bosses.Neb.Phase2;
+using Redemption.Buffs.Debuffs;
 
 namespace Redemption.NPCs.Minibosses.Calavia
 {
@@ -65,6 +64,7 @@ namespace Redemption.NPCs.Minibosses.Calavia
             Bored,
             Stab,
             SpinSlash,
+            Icefall,
             DrinkRecall,
             DrinkRandom,
             Defeat
@@ -368,7 +368,7 @@ namespace Redemption.NPCs.Minibosses.Calavia
                     NPC.PlatformFallCheck(ref NPC.Redemption().fallDownPlatform);
                     NPCHelper.HorizontallyMove(NPC, player.Center, 0.18f, 3 * swiftness, 18, 18, NPC.Center.Y > player.Center.Y, player);
 
-                    if (NPC.RedemptionGuard().GuardBroken && dodgeCooldown <= 0 && NPC.velocity.Y == 0)
+                    if (NPC.RedemptionGuard().GuardBroken && dodgeCooldown <= 0 && BaseAI.HitTileOnSide(NPC, 3))
                     {
                         for (int i = 0; i < Main.maxProjectiles; i++)
                         {
@@ -385,7 +385,10 @@ namespace Redemption.NPCs.Minibosses.Calavia
                                 Main.dust[dust].velocity *= 0.2f;
                                 Main.dust[dust].noGravity = true;
                             }
-                            NPC.Dodge(proj, 6, 2, 12);
+                            if (Main.rand.NextBool())
+                                NPC.velocity.X *= -1;
+                            NPC.velocity.X *= 2f;
+                            NPC.velocity.Y -= Main.rand.NextFloat(1, 3);
                             dodgeCooldown = 30;
                         }
                     }
@@ -397,6 +400,7 @@ namespace Redemption.NPCs.Minibosses.Calavia
                         attacks.Add(ActionState.Slash);
                         attacks.Add(ActionState.Stab, NPC.DistanceSQ(player.Center) < 80 * 80 ? 0 : 0.5);
                         attacks.Add(ActionState.SpinSlash, 0.3);
+                        attacks.Add(ActionState.Icefall, 0.3);
                         ActionState choice = attacks;
                         if (!NPC.Sight(player, -1, false, true, true))
                             choice = ActionState.Stab;
@@ -548,41 +552,62 @@ namespace Redemption.NPCs.Minibosses.Calavia
                 case ActionState.SpinSlash:
                     NPC.knockBackResist = 0;
                     BaseAI.WalkupHalfBricks(NPC);
-                    switch (TimerRand)
+                    if (AITimer++ == 0)
                     {
-                        default:
-                            if (AITimer++ == 0)
-                            {
-                                NPC.velocity *= 0;
-                                customArm = true;
-                                int damage = NPC.RedemptionNPCBuff().disarmed ? NPC.damage / 3 : NPC.damage;
-                                NPC.Shoot(NPC.Center, ModContent.ProjectileType<Calavia_BladeOfTheMountain2>(), damage, Vector2.Zero, false, SoundID.Item1, NPC.whoAmI, 3);
-                            }
-                            if (AITimer == 100)
-                                NPC.velocity.Y = -12;
-                            if (AITimer >= 120)
-                            {
-                                dodgeCooldown = 20;
-                                NPC.rotation += 0.5f * NPC.spriteDirection;
-                                NPC.velocity.Y = -.49f;
-                                NPC.velocity.X += 0.04f * NPC.spriteDirection;
-                            }
-                            else
-                            {
-                                NPC.LookAtEntity(player);
-                                NPC.velocity *= 0.94f;
-                            }
-                            if (AITimer >= 240)
-                            {
-                                NPC.noGravity = false;
-                                customArm = false;
-                                customArmRot = 0;
-                                AITimer = 0;
-                                TimerRand = 0;
-                                TimerRand2 = 0;
-                                AIState = ActionState.JumpToOrigin;
-                            }
-                            break;
+                        NPC.velocity *= 0;
+                        customArm = true;
+                        int damage = NPC.RedemptionNPCBuff().disarmed ? NPC.damage / 3 : NPC.damage;
+                        NPC.Shoot(NPC.Center, ModContent.ProjectileType<Calavia_BladeOfTheMountain2>(), damage, Vector2.Zero, false, SoundID.Item1, NPC.whoAmI, 3);
+                    }
+                    if (AITimer == 100)
+                        NPC.velocity.Y = -12;
+                    if (AITimer >= 120)
+                    {
+                        dodgeCooldown = 20;
+                        NPC.rotation += 0.5f * NPC.spriteDirection;
+                        NPC.velocity.Y = -.49f;
+                        NPC.velocity.X += 0.04f * NPC.spriteDirection;
+                    }
+                    else
+                    {
+                        NPC.LookAtEntity(player);
+                        NPC.velocity *= 0.94f;
+                    }
+                    if (AITimer >= 240)
+                    {
+                        NPC.noGravity = false;
+                        customArm = false;
+                        customArmRot = 0;
+                        AITimer = 0;
+                        TimerRand = 0;
+                        TimerRand2 = 0;
+                        AIState = ActionState.JumpToOrigin;
+                    }
+                    break;
+                case ActionState.Icefall:
+                    BaseAI.WalkupHalfBricks(NPC);
+                    NPC.velocity.X *= .96f;
+                    if (AITimer++ == 0)
+                    {
+                        NPC.velocity *= 0;
+                        HoldIcefall = true;
+                        SoundEngine.PlaySound(CustomSounds.IceMist, NPC.position);
+                    }
+                    if (AITimer == 30)
+                    {
+                        for (int i = 0; i < 3; i++)
+                        {
+                            NPC.Shoot(NPC.Center + new Vector2(100, -10), ModContent.ProjectileType<Calavia_IcefallMist>(), NPC.damage, new Vector2(Main.rand.NextFloat(-1, 1), 0), false, SoundID.Item1);
+                            NPC.Shoot(NPC.Center + new Vector2(-100, -10), ModContent.ProjectileType<Calavia_IcefallMist>(), NPC.damage, new Vector2(Main.rand.NextFloat(-1, 1), 0), false, SoundID.Item1);
+                        }
+                    }
+                    if (AITimer >= 80)
+                    {
+                        HoldIcefall = false;
+                        AIState = ActionState.Slash;
+                        AITimer = 0;
+                        TimerRand = 0;
+                        TimerRand2 = 0;
                     }
                     break;
                 case ActionState.Bored:
@@ -863,6 +888,7 @@ namespace Redemption.NPCs.Minibosses.Calavia
             {
                 if (boredomTimer++ > 240)
                 {
+                    HoldIcefall = false;
                     NPC.noGravity = false;
                     customArm = false;
                     AITimer = 0;
@@ -891,6 +917,7 @@ namespace Redemption.NPCs.Minibosses.Calavia
         }
         private void Defeated()
         {
+            HoldIcefall = false;
             Defeat = true;
             NPC.noGravity = false;
             customArm = false;

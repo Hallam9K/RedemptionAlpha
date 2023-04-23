@@ -38,7 +38,7 @@ namespace Redemption.Items.Weapons.HM.Magic
             Item.shoot = ModContent.ProjectileType<Nanite_Proj>();
             Item.shootSpeed = 20f;
             if (!Main.dedServ)
-                Item.RedemptionGlow().glowTexture = ModContent.Request<Texture2D>(Item.ModItem.Texture + "_Glow").Value;
+                Item.RedemptionGlow().glowTexture = ModContent.Request<Texture2D>(Texture + "_Glow").Value;
         }
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
