@@ -16,13 +16,13 @@ using Terraria.ModLoader;
 
 namespace Redemption.Items.Weapons.PreHM.Summon
 {
-    public class CruxCardSkullDigger : ModItem
+    public class CruxCardCalavia : ModItem
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Crux Card: Skull Digger");
-            Tooltip.SetDefault("Summons the great spirit of Skull Digger\n" +
-                "Right-click to tug the spirit back to your position, consuming 3 [i:" + ModContent.ItemType<LostSoul>() + "]\n" +
+            DisplayName.SetDefault("Crux Card: Calavia");
+            Tooltip.SetDefault("Summons the great spirit of Calavia, Chief-Warrior of the Iron Realm\n" +
+                "Right-click to tug the spirit back to your position, consuming 2 [i:" + ModContent.ItemType<LostSoul>() + "]\n" +
                 "Consumes 30 [i:" + ModContent.ItemType<LostSoul>() + "] on use\n" +
                 "Can only use one Spirit Card at a time");
             SacrificeTotal = 1;
@@ -30,9 +30,9 @@ namespace Redemption.Items.Weapons.PreHM.Summon
 
         public override void SetDefaults()
         {
-            Item.damage = 28;
+            Item.damage = 60;
             Item.DamageType = DamageClass.Summon;
-            Item.knockBack = 3;
+            Item.knockBack = 7;
             Item.width = 40;
             Item.height = 40;
             Item.maxStack = 1;
@@ -63,9 +63,9 @@ namespace Redemption.Items.Weapons.PreHM.Summon
                     if (npc.ai[3] == player.whoAmI)
                         active2 = true;
                 }
-                if (active2 && soul >= 0 && player.inventory[soul].stack >= 2)
+                if (active2 && soul >= 0 && player.inventory[soul].stack >= 3)
                 {
-                    player.inventory[soul].stack -= 2;
+                    player.inventory[soul].stack -= 3;
                     if (player.inventory[soul].stack <= 0)
                         player.inventory[soul] = new Item();
                     return true;
@@ -140,8 +140,8 @@ namespace Redemption.Items.Weapons.PreHM.Summon
             int tooltipLocation = tooltips.FindIndex(TooltipLine => TooltipLine.Name.Equals("Damage"));
             if (tooltipLocation != -1)
             {
-                tooltips.Insert(tooltipLocation, new TooltipLine(Mod, "MaxLife", "2400 base health"));
-                tooltips.Insert(tooltipLocation + 2, new TooltipLine(Mod, "Defense", "0 defense"));
+                tooltips.Insert(tooltipLocation, new TooltipLine(Mod, "MaxLife", "3000 base health"));
+                tooltips.Insert(tooltipLocation + 2, new TooltipLine(Mod, "Defense", "23 defense"));
             }
         }
         private float drawTimer;

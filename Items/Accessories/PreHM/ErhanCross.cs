@@ -117,7 +117,7 @@ namespace Redemption.Items.Accessories.PreHM
                         target.hostile = false;
                     }
 
-                    target.damage *= 4;
+                    target.Redemption().ReflectDamageIncrease = 4; 
                     target.velocity = -target.velocity;
                 }
             }

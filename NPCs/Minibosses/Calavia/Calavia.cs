@@ -399,7 +399,7 @@ namespace Redemption.NPCs.Minibosses.Calavia
                         WeightedRandom<ActionState> attacks = new(Main.rand);
                         attacks.Add(ActionState.Slash);
                         attacks.Add(ActionState.Stab, NPC.DistanceSQ(player.Center) < 80 * 80 ? 0 : 0.5);
-                        attacks.Add(ActionState.SpinSlash, 0.3);
+                        attacks.Add(ActionState.SpinSlash, 0.2);
                         attacks.Add(ActionState.Icefall, 0.3);
                         ActionState choice = attacks;
                         if (!NPC.Sight(player, -1, false, true, true))
@@ -993,10 +993,6 @@ namespace Redemption.NPCs.Minibosses.Calavia
             }
             if (HoldIcefall)
                 BodyFrame = 2 * frameHeight;
-        }
-        public override void BossHeadSpriteEffects(ref SpriteEffects spriteEffects)
-        {
-            spriteEffects = NPC.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
         }
         private void DespawnHandler()
         {
