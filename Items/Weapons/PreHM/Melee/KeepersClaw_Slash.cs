@@ -8,6 +8,8 @@ using Terraria.GameContent;
 using Redemption.Globals;
 using Redemption.Buffs.NPCBuffs;
 using Redemption.Projectiles.Melee;
+using Redemption.BaseExtension;
+using System.Threading;
 
 namespace Redemption.Items.Weapons.PreHM.Melee
 {
@@ -36,11 +38,12 @@ namespace Redemption.Items.Weapons.PreHM.Melee
         int directionLock = 0;
         private float glow;
         Vector2 mousePoint;
+        private bool parried;
         public override void AI()
         {
             Player player = Main.player[Projectile.owner];
             player.heldProj = Projectile.whoAmI;
-
+            Projectile.Redemption().swordHitbox = new((int)(Projectile.spriteDirection == -1 ? Projectile.Center.X - 63 : Projectile.Center.X), (int)(Projectile.Center.Y - 55), 63, 104);
             SwingSpeed = SetSwingSpeed(20);
 
             if (player.noItems || player.CCed || player.dead || !player.active)
@@ -84,6 +87,14 @@ namespace Redemption.Items.Weapons.PreHM.Melee
                         Projectile.frame++;
                         if (Projectile.frame is 2)
                         {
+                            for (int i = 0; i < Main.maxProjectiles; i++)
+                            {
+                                Projectile target = Main.projectile[i];
+                                if (!target.active || target.whoAmI == Projectile.whoAmI || !target.hostile)
+                                    continue;
+
+                                RedeProjectile.SwordClashFriendly(Projectile, target, player, ref parried);
+                            }
                             if (Projectile.localAI[0] == 1)
                             {
                                 player.statLife -= 15;
@@ -120,7 +131,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
         }
         public override void ModifyDamageHitbox(ref Rectangle hitbox)
         {
-            hitbox = new((int)(Projectile.spriteDirection == -1 ? Projectile.Center.X - 63 : Projectile.Center.X), (int)(Projectile.Center.Y - 55), 63, 104);
+            hitbox = Projectile.Redemption().swordHitbox;
         }
         public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
         {

@@ -37,7 +37,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
         {
             Player player = Main.player[Projectile.owner];
             player.heldProj = Projectile.whoAmI;
-            Rectangle hitbox = new((int)(Projectile.spriteDirection == -1 ? Projectile.Center.X - 76 : Projectile.Center.X), (int)(Projectile.Center.Y - 70), 76, 136);
+            Projectile.Redemption().swordHitbox = new((int)(Projectile.spriteDirection == -1 ? Projectile.Center.X - 76 : Projectile.Center.X), (int)(Projectile.Center.Y - 70), 76, 136);
 
             SwingSpeed = SetSwingSpeed(30);
 
@@ -80,23 +80,13 @@ namespace Redemption.Items.Weapons.PreHM.Melee
                                 if (!target.active || target.whoAmI == Projectile.whoAmI || !target.hostile)
                                     continue;
 
-                                if (Projectile.frame is 4 && !parried && hitbox.Intersects(target.Hitbox) && target.type == ModContent.ProjectileType<Calavia_BladeOfTheMountain>() && target.frame >= 4 && target.frame <= 5)
-                                {
-                                    player.immune = true;
-                                    player.immuneTime = 60;
-                                    player.AddBuff(BuffID.ParryDamageBuff, 120);
-                                    player.velocity.X += 4 * player.RightOfDir(target);
-                                    RedeDraw.SpawnExplosion(RedeHelper.CenterPoint(Projectile.Center, target.Center), Color.White, shakeAmount: 0, scale: 1f, noDust: true, tex: ModContent.Request<Texture2D>("Redemption/Textures/HolyGlow2").Value);
-                                    SoundEngine.PlaySound(CustomSounds.SwordClash, Projectile.position);
-                                    DustHelper.DrawCircle(RedeHelper.CenterPoint(Projectile.Center, target.Center), DustID.SilverCoin, 1, 4, 4, nogravity: true);
-                                    parried = true;
-                                    break;
-                                }
+                                if (RedeProjectile.SwordClashFriendly(Projectile, target, player, ref parried, 4))
+                                    continue;
 
                                 if (target.damage > 100 / 4 || Projectile.alpha > 0 || target.width + target.height > Projectile.width + Projectile.height)
                                     continue;
 
-                                if (target.velocity.Length() == 0 || !hitbox.Intersects(target.Hitbox) || target.alpha > 0 || target.ProjBlockBlacklist(true))
+                                if (target.velocity.Length() == 0 || !Projectile.Redemption().swordHitbox.Intersects(target.Hitbox) || target.alpha > 0 || target.ProjBlockBlacklist(true))
                                     continue;
 
                                 SoundEngine.PlaySound(SoundID.Tink, Projectile.position);
@@ -126,7 +116,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
         }
         public override void ModifyDamageHitbox(ref Rectangle hitbox)
         {
-            hitbox = new((int)(Projectile.spriteDirection == -1 ? Projectile.Center.X - 76 : Projectile.Center.X), (int)(Projectile.Center.Y - 70), 76, 136);
+            hitbox = Projectile.Redemption().swordHitbox;
         }
         public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
         {

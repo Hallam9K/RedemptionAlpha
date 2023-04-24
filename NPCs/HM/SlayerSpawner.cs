@@ -234,7 +234,7 @@ namespace Redemption.NPCs.HM
                 return 0;
 
             float baseChance = SpawnCondition.OverworldDay.Chance;
-            float m = NPC.AnyNPCs(ModContent.NPCType<GiftDrone3>()) || NPC.AnyNPCs(ModContent.NPCType<Android>()) || NPC.AnyNPCs(Type) ? 0 : 10;
+            float m = NPC.AnyNPCs(ModContent.NPCType<GiftDrone3>()) || NPC.AnyNPCs(ModContent.NPCType<Android>()) || NPC.AnyNPCs(Type) ? 0 : 100;
 
             return baseChance * m;
         }

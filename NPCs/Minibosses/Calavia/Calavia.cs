@@ -250,7 +250,10 @@ namespace Redemption.NPCs.Minibosses.Calavia
             if (!projBlocked.Contains(projectile.whoAmI) && (!projectile.active || !projectile.friendly))
                 return;
 
-            if (projectile.Colliding(projectile.Hitbox, ShieldHitbox))
+            Rectangle projectileHitbox = projectile.Hitbox;
+            if (projectile.Redemption().swordHitbox != default)
+                projectileHitbox = projectile.Redemption().swordHitbox;
+            if (projectile.Colliding(projectileHitbox, ShieldHitbox))
             {
                 projBlocked.Remove(projectile.whoAmI);
                 if (!projectile.ProjBlockBlacklist() && projectile.penetrate > 1)
