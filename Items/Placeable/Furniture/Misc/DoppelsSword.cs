@@ -7,12 +7,13 @@ using Terraria.ModLoader;
 
 namespace Redemption.Items.Placeable.Furniture.Misc
 {
-    public class DoppelsSword : ModItem
+public class DoppelsSword : ModItem
 	{
 		public override void SetStaticDefaults()
 		{
-			// DisplayName.SetDefault("Steel Sword Fragment");
-        }
+			   // DisplayName.SetDefault("Steel Sword Fragment");
+         Item.ResearchUnlockCount = 1;
+    }
 
 		public override void SetDefaults()
 		{

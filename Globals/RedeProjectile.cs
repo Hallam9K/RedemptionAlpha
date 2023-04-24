@@ -22,6 +22,7 @@ namespace Redemption.Globals
         public bool ParryBlacklist;
         public bool friendlyHostile;
         public int DissolveTimer;
+        public float ReflectDamageIncrease;
         public override void SetDefaults(Projectile projectile)
         {
             if (ProjectileLists.IsTechnicallyMelee.Contains(projectile.type))
@@ -38,6 +39,12 @@ namespace Redemption.Globals
                 projectile.GetGlobalProjectile<ElementalProjectile>().OverrideElement[ElementID.Explosive] = 1;
             }
             return base.PreAI(projectile);
+        }
+        public override void ModifyHitNPC(Projectile projectile, Terraria.NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
+        {
+            if (ReflectDamageIncrease is 0)
+                return;
+            damage = (int)(damage * ReflectDamageIncrease);
         }
         private readonly int[] bannedArenaProjs = new int[]
         {

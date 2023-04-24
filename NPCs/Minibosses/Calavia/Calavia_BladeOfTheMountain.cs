@@ -13,6 +13,7 @@ using Redemption.Buffs.NPCBuffs;
 using Redemption.Projectiles.Melee;
 using static System.Formats.Asn1.AsnWriter;
 using Redemption.Projectiles.Magic;
+using Redemption.Items.Weapons.PreHM.Melee;
 
 namespace Redemption.NPCs.Minibosses.Calavia
 {
@@ -35,14 +36,39 @@ namespace Redemption.NPCs.Minibosses.Calavia
             Projectile.penetrate = -1;
         }
 
-        public override bool CanHitPlayer(Player target) => Projectile.frame is 5;
+        public override bool CanHitPlayer(Player target)
+        {
+            if (Projectile.frame is 5)
+            {
+                NPC npc = Main.npc[(int)Projectile.ai[0]];
+                Rectangle projHitbox = new((int)(Projectile.spriteDirection == -1 ? Projectile.Center.X - 100 : Projectile.Center.X), (int)(Projectile.Center.Y - 70), 100, 136);
+                for (int i = 0; i < Main.maxProjectiles; i++)
+                {
+                    Projectile proj = Main.projectile[i];
+                    if (!proj.active)
+                        continue;
+
+                    if (!parried && projHitbox.Intersects(proj.Hitbox) && ((proj.type == ModContent.ProjectileType<Zweihander_SlashProj>() && proj.frame is 4) || (proj.type == ModContent.ProjectileType<BladeOfTheMountain_Slash>() && proj.frame is 5 or 4)))
+                    {
+                        npc.velocity.X += 4 * npc.RightOfDir(proj);
+                        SoundEngine.PlaySound(CustomSounds.SwordClash, Projectile.position);
+                        RedeDraw.SpawnExplosion(RedeHelper.CenterPoint(Projectile.Center, proj.Center), Color.White, shakeAmount: 0, scale: 1f, noDust: true, tex: ModContent.Request<Texture2D>("Redemption/Textures/HolyGlow2").Value);
+                        DustHelper.DrawCircle(RedeHelper.CenterPoint(Projectile.Center, proj.Center), DustID.SilverCoin, 1, 4, 4, nogravity: true);
+                        parried = true;
+                        return false;
+                    }
+                }
+            }
+            return !parried && Projectile.frame is 5;
+        }
         public override bool? CanHitNPC(NPC target) => Projectile.frame is 5 ? null : false;
-        public const float SwingSpeed = 25;
+        public const float SwingSpeed = 30;
         public const int frameHeight = 56;
+        private bool parried;
         public override void AI()
         {
             NPC npc = Main.npc[(int)Projectile.ai[0]];
-            if (!npc.active || npc.ai[0] is 4 or 9 || npc.type != ModContent.NPCType<Calavia>())
+            if (!npc.active || npc.ai[0] is 4 or 9 or 10 || npc.type != ModContent.NPCType<Calavia>())
                 Projectile.Kill();
 
             Rectangle projHitbox = new((int)(Projectile.spriteDirection == -1 ? Projectile.Center.X - 100 : Projectile.Center.X), (int)(Projectile.Center.Y - 70), 100, 136);
@@ -227,7 +253,7 @@ namespace Redemption.NPCs.Minibosses.Calavia
         public override void AI()
         {
             NPC npc = Main.npc[(int)Projectile.ai[0]];
-            if (!npc.active || npc.ai[0] is 4 or 9 || npc.type != ModContent.NPCType<Calavia>())
+            if (!npc.active || npc.ai[0] is 4 or 9 or 10 || npc.type != ModContent.NPCType<Calavia>())
                 Projectile.Kill();
 
             if (npc.ModNPC is Calavia calavia)

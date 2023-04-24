@@ -6,6 +6,8 @@ using Terraria.Audio;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria.GameContent;
 using Redemption.Globals;
+using Redemption.BaseExtension;
+using Redemption.NPCs.Minibosses.Calavia;
 
 namespace Redemption.Items.Weapons.PreHM.Melee
 {
@@ -30,10 +32,12 @@ namespace Redemption.Items.Weapons.PreHM.Melee
         public override bool? CanHitNPC(NPC target) => Projectile.frame is 4 ? null : false;
         public float SwingSpeed;
         int directionLock = 0;
+        private bool parried;
         public override void AI()
         {
             Player player = Main.player[Projectile.owner];
             player.heldProj = Projectile.whoAmI;
+            Rectangle hitbox = new((int)(Projectile.spriteDirection == -1 ? Projectile.Center.X - 76 : Projectile.Center.X), (int)(Projectile.Center.Y - 70), 76, 136);
 
             SwingSpeed = SetSwingSpeed(30);
 
@@ -76,10 +80,23 @@ namespace Redemption.Items.Weapons.PreHM.Melee
                                 if (!target.active || target.whoAmI == Projectile.whoAmI || !target.hostile)
                                     continue;
 
+                                if (Projectile.frame is 4 && !parried && hitbox.Intersects(target.Hitbox) && target.type == ModContent.ProjectileType<Calavia_BladeOfTheMountain>() && target.frame >= 4 && target.frame <= 5)
+                                {
+                                    player.immune = true;
+                                    player.immuneTime = 60;
+                                    player.AddBuff(BuffID.ParryDamageBuff, 120);
+                                    player.velocity.X += 4 * player.RightOfDir(target);
+                                    RedeDraw.SpawnExplosion(RedeHelper.CenterPoint(Projectile.Center, target.Center), Color.White, shakeAmount: 0, scale: 1f, noDust: true, tex: ModContent.Request<Texture2D>("Redemption/Textures/HolyGlow2").Value);
+                                    SoundEngine.PlaySound(CustomSounds.SwordClash, Projectile.position);
+                                    DustHelper.DrawCircle(RedeHelper.CenterPoint(Projectile.Center, target.Center), DustID.SilverCoin, 1, 4, 4, nogravity: true);
+                                    parried = true;
+                                    break;
+                                }
+
                                 if (target.damage > 100 / 4 || Projectile.alpha > 0 || target.width + target.height > Projectile.width + Projectile.height)
                                     continue;
 
-                                if (target.velocity.Length() == 0 || !Projectile.Hitbox.Intersects(target.Hitbox) || target.alpha > 0 || target.ProjBlockBlacklist(true))
+                                if (target.velocity.Length() == 0 || !hitbox.Intersects(target.Hitbox) || target.alpha > 0 || target.ProjBlockBlacklist(true))
                                     continue;
 
                                 SoundEngine.PlaySound(SoundID.Tink, Projectile.position);
@@ -89,7 +106,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
                                     target.hostile = false;
                                     target.friendly = true;
                                 }
-                                target.damage *= 4;
+                                target.Redemption().ReflectDamageIncrease = 4;
                                 target.velocity.X = -target.velocity.X * 0.8f;
                             }
                         }
@@ -109,7 +126,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
         }
         public override void ModifyDamageHitbox(ref Rectangle hitbox)
         {
-            hitbox = new((int)(Projectile.spriteDirection == -1 ? Projectile.Center.X - 70 : Projectile.Center.X), (int)(Projectile.Center.Y - 70), 70, 136);
+            hitbox = new((int)(Projectile.spriteDirection == -1 ? Projectile.Center.X - 76 : Projectile.Center.X), (int)(Projectile.Center.Y - 70), 76, 136);
         }
         public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
         {

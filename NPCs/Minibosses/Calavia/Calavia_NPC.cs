@@ -16,6 +16,10 @@ using Redemption.Items.Weapons.PreHM.Melee;
 using Redemption.Items.Weapons.PreHM.Magic;
 using Redemption.Dusts;
 using Redemption.WorldGeneration;
+using Terraria.Utilities;
+using Redemption.Base;
+using Redemption.BaseExtension;
+using Redemption.NPCs.Friendly;
 
 namespace Redemption.NPCs.Minibosses.Calavia
 {
@@ -70,7 +74,16 @@ namespace Redemption.NPCs.Minibosses.Calavia
             if (NPC.target < 0 || NPC.target == 255 || player.dead || !player.active)
                 NPC.TargetClosest();
 
-            if (RedeQuest.calaviaVar > 20)
+            if (RedeQuest.calaviaVar == 20 && Main.LocalPlayer.talkNPC == -1)
+            {
+                if (HasShield && HasHelmet > 0)
+                    RedeQuest.calaviaVar = 22;
+                else
+                    RedeQuest.calaviaVar = 21;
+                if (Main.netMode == NetmodeID.Server)
+                    NetMessage.SendData(MessageID.WorldData);
+            }
+            else if (RedeQuest.calaviaVar > 20)
             {
                 Vector2 gathicPortalPos = new(((RedeGen.gathicPortalPoint.X + 46) * 16) - 8, (RedeGen.gathicPortalPoint.Y + 18) * 16);
                 if (AITimer++ == 60)
@@ -113,7 +126,25 @@ namespace Redemption.NPCs.Minibosses.Calavia
         }
         public override string GetChat()
         {
-            Main.LocalPlayer.currentShoppingSettings.HappinessReport = "";
+            Player player = Main.LocalPlayer;
+            player.currentShoppingSettings.HappinessReport = "";
+            if (RedeQuest.calaviaVar > 10)
+            {
+                WeightedRandom<string> chat = new();
+                chat.Add("You are the first khen I've met here - there's been floods of krhu around, so I prefer the change.");
+                if (!player.RedemptionAbility().Spiritwalker)
+                    chat.Add("That corpse by the portal is oddly soulful, I hope it doesn't come alive.");
+                else if (!NPC.AnyNPCs(ModContent.NPCType<SpiritWalkerMan>()))
+                    chat.Add("You got a strange ability from that soulful corpse by the portal? My worries of it becoming a danger must've been unfounded, though I yet sense a will therein.");
+                if (BasePlayer.HasArmorSet(player, "Pure-Iron", true) || BasePlayer.HasArmorSet(player, "Pure-Iron", false))
+                    chat.Add("Are you perhaps another warrior of the Iron Realm to stumble upon this place? Or did you rob that armour you wear?");
+                else if (BasePlayer.HasArmorSet(player, "Common Guard", true) || BasePlayer.HasArmorSet(player, "Common Guard", false))
+                    chat.Add("I am to assume you're an Anglic knight, based on your attire. Should've figured you wouldn't understand Gathic... Oh well.");
+                else if (BasePlayer.HasArmorSet(player, "Dragon-Lead", true) || BasePlayer.HasArmorSet(player, "Dragon-Lead", false))
+                    chat.Add("That armour you don is rather threatening. Where did it come from? Reminds me of the Thamor'in dragons that occassionally hinder the western countries.");
+
+                return chat;
+            }
             return "Again I must apologise for attacking ye, I asked for your purpose but clearly ye aren't Gathic. I should introduce myself, I am Calavia, a Chief-Warrior of the Iron Realm. It is such a pleasure to meet a khen here, I've seen naught but rotting khru ever since I got here.";
         }
         private bool NearFurnace;
@@ -223,7 +254,7 @@ namespace Redemption.NPCs.Minibosses.Calavia
                     default:
                         if (firstButton)
                         {
-                            Main.npcChatText = "Yes, I came from the portal, it was atop a snowy precipice back at home and lead me here. When I tried going back through however, it took me into what I can only assume to be Gathuram's catacombs. Back and forth I went, yet it was always the same. Here, catacombs, here, catacombs... It is infuriating! How these portals work!?";
+                            Main.npcChatText = "Yeah I came from the portal, 'twas atop a snowy precipice. When I tried going back through however, it took me into what I can only assume to be Gathuram's catacombs. Back and forth I went, yet it was always the same. Here, catacombs, here, catacombs... It is infuriating! How these portals work!?";
                             RedeQuest.calaviaVar = 4;
                             if (Main.netMode == NetmodeID.Server)
                                 NetMessage.SendData(MessageID.WorldData);
@@ -239,7 +270,7 @@ namespace Redemption.NPCs.Minibosses.Calavia
                         }
                         else
                         {
-                            Main.npcChatText = "Our squadron climbed up a mountain to retrieve a body, and came upon the portal. We should've reported it to the Gatewatch and carried on our business, but thanks to my witless curiousity, I chose to take a looksie. \"In and out, nice and quick\" I thought. Needless to say, ye can see how smart that idea was.";
+                            Main.npcChatText = "Our squadron climbed up a mountain to retrieve the body of a famous warrior, and came upon the portal. We should've reported it to the Gatewatch and carried on our business, but my witless curiousity said otherwise and chose to take a looksie. \"In and out, nice and quick\" I thought. Needless to say, ye can see how smart that idea was.";
                             RedeQuest.calaviaVar = 5;
                             if (Main.netMode == NetmodeID.Server)
                                 NetMessage.SendData(MessageID.WorldData);
@@ -253,13 +284,13 @@ namespace Redemption.NPCs.Minibosses.Calavia
                         break;
                     case 6:
                         EmoteBubble.NewBubble(1, new WorldUIAnchor(NPC), 120);
-                        Main.npcChatText = "How helpful. Not like I can blame ye, they're magic of a bygone age. Only the Gatewatch have knowledge of them. Speaking of which, they must've been here before, as this and the catacomb's portal has a stone base to stabilise it. The one I came from did not, however.";
+                        Main.npcChatText = "How helpful. Not like I can blame ye, they're magic of a bygone age. Only the Gatewatch have knowledge of 'em. Speaking of which, they must've been here before. Portals don't just appear with a stone ring and foundation pre-'rected - 'tis the Gatewatch's job to build those. To stabalize 'em, or so I've heard.";
                         RedeQuest.calaviaVar = 7;
                         if (Main.netMode == NetmodeID.Server)
                             NetMessage.SendData(MessageID.WorldData);
                         break;
                     case 7:
-                        Main.npcChatText = "Well I can't just mope around forever, the only way forward I see is scramming through the catacombs and praying to Sariel I find a way to the surface. It'll be a massive gamble, the catacombs are like a subterranean domain it its own right!";
+                        Main.npcChatText = "Well I can't just mope around forever, the only way forward is scramming through the catacombs and praying to Sariel I find a way to the surface. It'll be a massive gamble tho', the catacombs are like a subterranean domain in their own right!";
                         if (RedeGen.cryoCrystalSpawn)
                             RedeQuest.calaviaVar = 8;
                         else
@@ -289,7 +320,7 @@ namespace Redemption.NPCs.Minibosses.Calavia
                         }
                         else
                         {
-                            Main.npcChatText = "... So ye think I can survive the catacombs as I am now? If ye won't assist me, I suppose I have no choice but to give it a shot. I still have some of this place's potions left over, they've come in real handy. Guess I'll stick around in case ye change your mind.";
+                            Main.npcChatText = "... So ye think I can survive the catacombs as I stand? If ye won't assist me, I suppose I got no choice but to give it a shot. I still have some of this place's potions left over, they've come in real handy. Guess I'll stick around in case ye change your mind.";
                             RedeQuest.calaviaVar = 10;
                             if (Main.netMode == NetmodeID.Server)
                                 NetMessage.SendData(MessageID.WorldData);
@@ -305,7 +336,7 @@ namespace Redemption.NPCs.Minibosses.Calavia
                         }
                         else
                         {
-                            Main.npcChatText = "... If ye insist. *sigh* This'll be a challenge, but I'll trust your judgement. I'll make it through to reunite with my family, there is no better motivation than that. Farewell, stranger.";
+                            Main.npcChatText = "... If ye insist. *sigh* This'll be a challenge, but I'll trust your judgement. I'll make it through to reunite with my squadron and finally return to my family, there is no better motivation than that. Farewell, stranger.";
                             RedeQuest.calaviaVar = 20;
                             if (Main.netMode == NetmodeID.Server)
                                 NetMessage.SendData(MessageID.WorldData);
@@ -342,7 +373,7 @@ namespace Redemption.NPCs.Minibosses.Calavia
                         case 0:
                             if (HasHelmet > 0 && HasShield)
                             {
-                                Main.npcChatText = "As ready as I can be. I still have a few potions from this place, I've never seen such things before. They must've been created by a master alchemist.";
+                                Main.npcChatText = "As ready as I can be. I still have a few potions from this place, I've never seen such concoctions before... They must've been created by a master alchemist.";
                                 break;
                             }
                             int pureIronAlloy = Main.LocalPlayer.FindItem(ModContent.ItemType<PureIronAlloy>());
@@ -364,7 +395,7 @@ namespace Redemption.NPCs.Minibosses.Calavia
                                         Main.LocalPlayer.inventory[pureIronHelm2] = new Item();
                                     HasHelmet = 2;
                                 }
-                                Main.npcChatText = "Umgor'ye. The khru are ruthless creatures, a helmet to protect my neck is much appreciated.";
+                                Main.npcChatText = "Umgor'ye. The khru are ruthless creatures, a helmet to protect my neck an' head is much appreciated.";
                                 if (pureIronHelm < 0 && pureIronHelm2 >= 0)
                                     Main.npcChatText += " Oh, and it is an antique design too? The fur is a nice privilege.";
                                 SoundEngine.PlaySound(SoundID.Chat);
@@ -409,16 +440,16 @@ namespace Redemption.NPCs.Minibosses.Calavia
                             }
                             break;
                         case 2:
-                            Main.npcChatText = "Ta? I am a chief-warrior and blacksmith of the Iron Realm. Back in Khen Boldur I have a husband and two kids. I seldom have time to see them but we still love each other. I also lead a squadron of Arum that primarily scouts out unmarked lands. My men have probably given up on me by now.";
+                            Main.npcChatText = "Ta? I am a chief-warrior and blacksmith of the Iron Realm. Back in Khen Boldur I have a husband and two kids. I seldom have the time to see 'em, but staying far apart only makes the moments we're together all-the-more special, or am I just bein' too optimistic? It's regrettable, but my job leaves no room for indulgences. I lead a squadron of Arum that primarily scouts out unmarked lands. My men have probably given up on me by now. Typical.";
                             break;
                         case 3:
                             if (HasHelmet > 0 && HasShield)
                             {
-                                Main.npcChatText = "Thank you for the help, and sorry for the trouble. What lies ahead makes me uneasy, but I'll make it through to reunite with my family, there is no better motivation than that. Farewell, stranger.";
+                                Main.npcChatText = "Thank you for the help, and sorry for the trouble. What lies ahead makes me uneasy, but I'll make it through to reunite with my squadron and finally return to my family, there is no better motivation than that. Farewell, stranger.";
                             }
                             else
                             {
-                                Main.npcChatText = "... If ye insist. *sigh* This'll be a challenge, but I'll trust your judgement. I'll make it through to reunite with my family, there is no better motivation than that. Farewell, stranger.";
+                                Main.npcChatText = "... If ye insist. *sigh* This'll be a challenge, but I'll trust your judgement. I'll make it through  to reunite with my squadron and finally return to my family, there is no better motivation than that. Farewell, stranger.";
                             }
                             RedeQuest.calaviaVar = 20;
                             if (Main.netMode == NetmodeID.Server)

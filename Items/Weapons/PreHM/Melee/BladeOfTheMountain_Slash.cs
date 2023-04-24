@@ -35,6 +35,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
         public override bool? CanHitNPC(NPC target) => Projectile.frame is 5 ? null : false;
         public float SwingSpeed;
         int directionLock = 0;
+        private bool parried;
         public override void AI()
         {
             Player player = Main.player[Projectile.owner];
@@ -94,6 +95,18 @@ namespace Redemption.Items.Weapons.PreHM.Melee
                                     target.ai[0] = 1;
                                     continue;
                                 }
+                                if (Projectile.frame is 5 && !parried && projHitbox.Intersects(target.Hitbox) && target.type == ModContent.ProjectileType<Calavia_BladeOfTheMountain>() && target.frame >= 4 && target.frame <= 5)
+                                {
+                                    player.immune = true;
+                                    player.immuneTime = 60;
+                                    player.AddBuff(BuffID.ParryDamageBuff, 120);
+                                    player.velocity.X += 4 * player.RightOfDir(target);
+                                    RedeDraw.SpawnExplosion(RedeHelper.CenterPoint(Projectile.Center, target.Center), Color.White, shakeAmount: 0, scale: 1f, noDust: true, tex: ModContent.Request<Texture2D>("Redemption/Textures/HolyGlow2").Value);
+                                    SoundEngine.PlaySound(CustomSounds.SwordClash, Projectile.position);
+                                    DustHelper.DrawCircle(RedeHelper.CenterPoint(Projectile.Center, target.Center), DustID.SilverCoin, 1, 4, 4, nogravity: true);
+                                    parried = true;
+                                    break;
+                                }
                                 if (target.whoAmI == Projectile.whoAmI || !target.hostile || target.damage > 100)
                                     continue;
 
@@ -107,7 +120,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
                                     target.hostile = false;
                                     target.friendly = true;
                                 }
-                                target.damage *= 4;
+                                target.Redemption().ReflectDamageIncrease = 4;
                                 target.velocity.X = -target.velocity.X * 0.9f;
                             }
                         }
