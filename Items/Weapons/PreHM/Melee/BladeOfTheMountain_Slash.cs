@@ -43,7 +43,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
 
             SwingSpeed = SetSwingSpeed(25);
 
-            Rectangle projHitbox = new((int)(Projectile.spriteDirection == -1 ? Projectile.Center.X - 100 : Projectile.Center.X), (int)(Projectile.Center.Y - 70), 100, 136);
+            Projectile.Redemption().swordHitbox = new((int)(Projectile.spriteDirection == -1 ? Projectile.Center.X - 100 : Projectile.Center.X), (int)(Projectile.Center.Y - 70), 100, 136);
 
             if (player.noItems || player.CCed || player.dead || !player.active)
                 Projectile.Kill();
@@ -84,7 +84,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
                                 if (!target.active)
                                     continue;
 
-                                if (target.ai[0] is 0 && (target.type == ModContent.ProjectileType<Icefall_Proj>() || target.type == ModContent.ProjectileType<Calavia_Icefall>()) && projHitbox.Intersects(target.Hitbox))
+                                if (target.ai[0] is 0 && (target.type == ModContent.ProjectileType<Icefall_Proj>() || target.type == ModContent.ProjectileType<Calavia_Icefall>()) && Projectile.Redemption().swordHitbox.Intersects(target.Hitbox))
                                 {
                                     DustHelper.DrawCircle(target.Center, DustID.IceTorch, 1, 2, 2, dustSize: 2, nogravity: true);
                                     SoundEngine.PlaySound(CustomSounds.CrystalHit, Projectile.position);
@@ -95,22 +95,13 @@ namespace Redemption.Items.Weapons.PreHM.Melee
                                     target.ai[0] = 1;
                                     continue;
                                 }
-                                if (Projectile.frame is 5 && !parried && projHitbox.Intersects(target.Hitbox) && target.type == ModContent.ProjectileType<Calavia_BladeOfTheMountain>() && target.frame >= 4 && target.frame <= 5)
-                                {
-                                    player.immune = true;
-                                    player.immuneTime = 60;
-                                    player.AddBuff(BuffID.ParryDamageBuff, 120);
-                                    player.velocity.X += 4 * player.RightOfDir(target);
-                                    RedeDraw.SpawnExplosion(RedeHelper.CenterPoint(Projectile.Center, target.Center), Color.White, shakeAmount: 0, scale: 1f, noDust: true, tex: ModContent.Request<Texture2D>("Redemption/Textures/HolyGlow2").Value);
-                                    SoundEngine.PlaySound(CustomSounds.SwordClash, Projectile.position);
-                                    DustHelper.DrawCircle(RedeHelper.CenterPoint(Projectile.Center, target.Center), DustID.SilverCoin, 1, 4, 4, nogravity: true);
-                                    parried = true;
-                                    break;
-                                }
+                                if (RedeProjectile.SwordClashFriendly(Projectile, target, player, ref parried))
+                                    continue;
+
                                 if (target.whoAmI == Projectile.whoAmI || !target.hostile || target.damage > 100)
                                     continue;
 
-                                if (target.velocity.Length() == 0 || !projHitbox.Intersects(target.Hitbox) || (!target.HasElement(ElementID.Ice) && target.alpha > 0) || target.ProjBlockBlacklist(true))
+                                if (target.velocity.Length() == 0 || !Projectile.Redemption().swordHitbox.Intersects(target.Hitbox) || (!target.HasElement(ElementID.Ice) && target.alpha > 0) || target.ProjBlockBlacklist(true))
                                     continue;
 
                                 SoundEngine.PlaySound(SoundID.Tink, Projectile.position);
@@ -138,7 +129,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
         }
         public override void ModifyDamageHitbox(ref Rectangle hitbox)
         {
-            hitbox = new((int)(Projectile.spriteDirection == -1 ? Projectile.Center.X - 100 : Projectile.Center.X), (int)(Projectile.Center.Y - 70), 100, 136);
+            hitbox = Projectile.Redemption().swordHitbox;
         }
         public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
         {

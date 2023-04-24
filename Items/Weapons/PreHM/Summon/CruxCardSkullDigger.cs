@@ -22,7 +22,7 @@ namespace Redemption.Items.Weapons.PreHM.Summon
         {
             DisplayName.SetDefault("Crux Card: Skull Digger");
             Tooltip.SetDefault("Summons the great spirit of Skull Digger\n" +
-                "Right-click to tug the spirit back to your position, consuming 3 [i:" + ModContent.ItemType<LostSoul>() + "]\n" +
+                "Right-click to tug the spirit back to your position, consuming 2 [i:" + ModContent.ItemType<LostSoul>() + "]\n" +
                 "Consumes 30 [i:" + ModContent.ItemType<LostSoul>() + "] on use\n" +
                 "Can only use one Spirit Card at a time");
             SacrificeTotal = 1;

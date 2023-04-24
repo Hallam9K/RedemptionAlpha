@@ -150,6 +150,12 @@ namespace Redemption.Globals
                 .AddTile(TileID.Anvils)
                 .Register();
 
+            Recipe.Create(ItemID.Marrow)
+                .AddIngredient(ItemID.Bone, 20)
+                .AddIngredient<GraveSteelAlloy>(10)
+                .AddTile(TileID.MythrilAnvil)
+                .Register();
+
             // Living Furniture
             Recipe.Create(ItemID.LivingLoom)
                 .AddIngredient(ModContent.ItemType<LivingTwig>(), 10)

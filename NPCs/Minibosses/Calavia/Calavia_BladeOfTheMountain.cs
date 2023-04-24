@@ -41,22 +41,13 @@ namespace Redemption.NPCs.Minibosses.Calavia
             if (Projectile.frame is 5)
             {
                 NPC npc = Main.npc[(int)Projectile.ai[0]];
-                Rectangle projHitbox = new((int)(Projectile.spriteDirection == -1 ? Projectile.Center.X - 100 : Projectile.Center.X), (int)(Projectile.Center.Y - 70), 100, 136);
                 for (int i = 0; i < Main.maxProjectiles; i++)
                 {
                     Projectile proj = Main.projectile[i];
                     if (!proj.active)
                         continue;
 
-                    if (!parried && projHitbox.Intersects(proj.Hitbox) && ((proj.type == ModContent.ProjectileType<Zweihander_SlashProj>() && proj.frame is 4) || (proj.type == ModContent.ProjectileType<BladeOfTheMountain_Slash>() && proj.frame is 5 or 4)))
-                    {
-                        npc.velocity.X += 4 * npc.RightOfDir(proj);
-                        SoundEngine.PlaySound(CustomSounds.SwordClash, Projectile.position);
-                        RedeDraw.SpawnExplosion(RedeHelper.CenterPoint(Projectile.Center, proj.Center), Color.White, shakeAmount: 0, scale: 1f, noDust: true, tex: ModContent.Request<Texture2D>("Redemption/Textures/HolyGlow2").Value);
-                        DustHelper.DrawCircle(RedeHelper.CenterPoint(Projectile.Center, proj.Center), DustID.SilverCoin, 1, 4, 4, nogravity: true);
-                        parried = true;
-                        return false;
-                    }
+                    RedeProjectile.SwordClashHostile(Projectile, proj, npc, ref parried);
                 }
             }
             return !parried && Projectile.frame is 5;
@@ -71,7 +62,7 @@ namespace Redemption.NPCs.Minibosses.Calavia
             if (!npc.active || npc.ai[0] is 4 or 9 or 10 || npc.type != ModContent.NPCType<Calavia>())
                 Projectile.Kill();
 
-            Rectangle projHitbox = new((int)(Projectile.spriteDirection == -1 ? Projectile.Center.X - 100 : Projectile.Center.X), (int)(Projectile.Center.Y - 70), 100, 136);
+            Projectile.Redemption().swordHitbox = new((int)(Projectile.spriteDirection == -1 ? Projectile.Center.X - 100 : Projectile.Center.X), (int)(Projectile.Center.Y - 70), 100, 136);
 
             if (npc.ModNPC is Calavia calavia)
             {
@@ -112,7 +103,7 @@ namespace Redemption.NPCs.Minibosses.Calavia
                                 if (!target.active)
                                     continue;
 
-                                if (target.ai[0] is 0 && (target.type == ModContent.ProjectileType<Icefall_Proj>() || target.type == ModContent.ProjectileType<Calavia_Icefall>()) && projHitbox.Intersects(target.Hitbox))
+                                if (target.ai[0] is 0 && (target.type == ModContent.ProjectileType<Icefall_Proj>() || target.type == ModContent.ProjectileType<Calavia_Icefall>()) && Projectile.Redemption().swordHitbox.Intersects(target.Hitbox))
                                 {
                                     DustHelper.DrawCircle(target.Center, DustID.IceTorch, 1, 2, 2, dustSize: 2, nogravity: true);
                                     SoundEngine.PlaySound(CustomSounds.CrystalHit, Projectile.position);
@@ -125,7 +116,7 @@ namespace Redemption.NPCs.Minibosses.Calavia
                                 if (target.whoAmI == Projectile.whoAmI || !target.friendly || target.damage > 100)
                                     continue;
 
-                                if (target.velocity.Length() == 0 || !projHitbox.Intersects(target.Hitbox) || (!target.HasElement(ElementID.Ice) && (target.alpha > 0 || target.DamageType == DamageClass.Magic)) || target.ProjBlockBlacklist(true))
+                                if (target.velocity.Length() == 0 || !Projectile.Redemption().swordHitbox.Intersects(target.Hitbox) || (!target.HasElement(ElementID.Ice) && (target.alpha > 0 || target.DamageType == DamageClass.Magic)) || target.ProjBlockBlacklist(true))
                                     continue;
 
                                 SoundEngine.PlaySound(SoundID.Tink, Projectile.position);
@@ -149,7 +140,7 @@ namespace Redemption.NPCs.Minibosses.Calavia
         }
         public override void ModifyDamageHitbox(ref Rectangle hitbox)
         {
-            hitbox = new((int)(Projectile.spriteDirection == -1 ? Projectile.Center.X - 100 : Projectile.Center.X), (int)(Projectile.Center.Y - 70), 100, 136);
+            hitbox = Projectile.Redemption().swordHitbox;
         }
         public override void ModifyHitPlayer(Player target, ref int damage, ref bool crit)
         {

@@ -528,7 +528,7 @@ namespace Redemption.NPCs.Friendly
             if (!NPC.downedMoonlord || RedeWorld.keycardGiven || SubworldSystem.Current != null)
                 return 0;
 
-            float m = NPC.AnyNPCs(Type) || NPC.AnyNPCs(ModContent.NPCType<Android>()) || NPC.AnyNPCs(ModContent.NPCType<SlayerSpawner>()) ? 0 : 10;
+            float m = NPC.AnyNPCs(Type) || NPC.AnyNPCs(ModContent.NPCType<Android>()) || NPC.AnyNPCs(ModContent.NPCType<SlayerSpawner>()) ? 0 : 100;
             return m;
         }
     }
