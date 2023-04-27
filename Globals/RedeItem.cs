@@ -345,7 +345,7 @@ namespace Redemption.Globals
         }
         public override void ModifyTooltips(Item item, List<TooltipLine> tooltips)
         {
-            if (ChaliceInterest(item.type))
+            if (ChaliceInterest(item.type) && RedeWorld.alignmentGiven)
             {
                 TooltipLine chaliceLine = new(Mod, "ChaliceLine", Language.GetTextValue("Mods.Redemption.GenericTooltips.Bonuses.ChaliceLine")) { OverrideColor = new Color(203, 189, 99) };
                 tooltips.Add(chaliceLine);

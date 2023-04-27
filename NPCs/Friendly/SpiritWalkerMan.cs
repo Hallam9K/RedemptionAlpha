@@ -14,6 +14,7 @@ using Terraria.Audio;
 using Redemption.Items.Armor.Vanity;
 using Redemption.Base;
 using Terraria.Localization;
+using Redemption.NPCs.Minibosses.Calavia;
 
 namespace Redemption.NPCs.Friendly
 {
@@ -60,7 +61,8 @@ namespace Redemption.NPCs.Friendly
             if (NPC.target < 0 || NPC.target == 255 || player.dead || !player.active)
                 NPC.TargetClosest();
 
-            NPC.LookAtEntity(player);
+            if (RedeQuest.calaviaVar != 15)
+                NPC.LookAtEntity(player);
 
             if (AITimer < 60)
                 NPC.velocity *= 0.94f;
@@ -223,9 +225,25 @@ namespace Redemption.NPCs.Friendly
                 _ => "...",
             };
         }
-        public override bool CanChat() => true;
+        public override bool CanChat() => RedeQuest.calaviaVar != 15;
         public override string GetChat()
         {
+            if (RedeQuest.calaviaVar >= 11 && RedeQuest.calaviaVar != 20 && NPC.AnyNPCs(ModContent.NPCType<Calavia_NPC>()))
+            {
+                if (RedeQuest.calaviaVar < 12)
+                {
+                    RedeQuest.calaviaVar = 12;
+                    if (Main.netMode == NetmodeID.Server)
+                        NetMessage.SendData(MessageID.WorldData);
+                }
+
+                if (!Main.LocalPlayer.HasItem(ModContent.ItemType<CruxCardCalavia>()))
+                {
+                    if (RedeQuest.calaviaVar is 16)
+                        return "I can sense gratitude within Kyretha's spirit for confrontin' the lass and ultimately leading 'er to a path of freedom. I have a feelin' she'd be willin' to offer you something in return?";
+                    return "'Ey, ya see that lass over yonder? There be somethin' soulful she carries, I can sense it. Would you, out of the goodness of yer heart, confront her about it for me? Don't want to assume nothin', but she might be keepin' a spirit captive.";
+                }
+            }
             bool wearingHat = BasePlayer.HasHelmet(Main.LocalPlayer, ModContent.ItemType<OldTophat>());
             string s = "";
             if (wearingHat)

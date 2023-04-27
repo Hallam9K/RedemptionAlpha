@@ -28,13 +28,13 @@ namespace Redemption.NPCs.Minibosses.Calavia
     [AutoloadBossHead]
     public class Calavia : ModNPC
     {
-        private static Asset<Texture2D> ShieldTex;
-        private static Asset<Texture2D> CloakTex;
-        private static Asset<Texture2D> LegsTex;
-        private static Asset<Texture2D> ArmTex;
-        private static Asset<Texture2D> ArmTex2;
-        private static Asset<Texture2D> ShoulderTex;
-        private static Asset<Texture2D> AltTex;
+        public static Asset<Texture2D> ShieldTex;
+        public static Asset<Texture2D> CloakTex;
+        public static Asset<Texture2D> LegsTex;
+        public static Asset<Texture2D> ArmTex;
+        public static Asset<Texture2D> ArmTex2;
+        public static Asset<Texture2D> ShoulderTex;
+        public static Asset<Texture2D> AltTex;
         public override void Load()
         {
             ShieldTex = ModContent.Request<Texture2D>(Texture + "_Shield");
@@ -145,13 +145,17 @@ namespace Redemption.NPCs.Minibosses.Calavia
                     AITimer = 0;
                 SoundEngine.PlaySound(SoundID.NPCHit4);
             }
-            if (NPC.life <= 0)
+            if (NPC.life <= 0 && AIState is ActionState.Defeat)
             {
-                for (int i = 0; i < 35; i++)
+                for (int i = 0; i < 40; i++)
                 {
-                    int dustIndex = Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.Blood);
+                    int dustIndex = Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.Blood, Scale: 2);
                     Main.dust[dustIndex].velocity *= 2;
                 }
+                if (Main.netMode == NetmodeID.Server)
+                    return;
+                for (int i = 0; i < 5; i++)
+                    Gore.NewGore(NPC.GetSource_FromThis(), NPC.position, NPC.velocity, ModContent.Find<ModGore>("Redemption/CalaviaGore" + (i + 1)).Type, 1);
             }
             Dust.NewDust(NPC.position + NPC.velocity, NPC.width, NPC.height, DustID.Iron, NPC.velocity.X * 0.5f, NPC.velocity.Y * 0.5f);
         }
@@ -637,7 +641,7 @@ namespace Redemption.NPCs.Minibosses.Calavia
                         else
                         {
                             BaseAI.AttemptOpenDoor(NPC, ref doorVars[0], ref doorVars[1], ref doorVars[2], 80, 1, 10, interactDoorStyle: 2);
-                            NPC.PlatformFallCheck(ref NPC.Redemption().fallDownPlatform);
+                            NPC.PlatformFallCheck(ref NPC.Redemption().fallDownPlatform, 12, gathicPortalPos.Y);
                             NPCHelper.HorizontallyMove(NPC, gathicPortalPos, 0.18f, 3, 18, 18, NPC.Center.Y > gathicPortalPos.Y);
                             if (!Collision.CanHitLine(NPC.position, NPC.width, NPC.height, gathicPortalPos - Vector2.One, 2, 2))
                                 TimerRand2++;
@@ -777,6 +781,7 @@ namespace Redemption.NPCs.Minibosses.Calavia
                     {
                         default:
                             NPC.velocity.X *= .8f;
+                            NPC.chaseable = false;
                             if (AITimer++ == 0)
                             {
                                 NPC.LookAtEntity(player);
@@ -798,7 +803,8 @@ namespace Redemption.NPCs.Minibosses.Calavia
 
                                 string s1 = "Taborti! Taborti![0.2] I yield! I yield!";
                                 string s2 = "Grant me mercy!";
-
+                                if (player.MinionAttackTargetNPC == NPC.whoAmI)
+                                    s1 += "[0.2] Call your servants off!";
                                 DialogueChain chain = new();
                                 chain.Add(new(NPC, s1, Color.White, Color.Gray, voice, .05f, 2f, 0, false, bubble: bubble))
                                      .Add(new(NPC, s2, Color.White, Color.Gray, voice, .05f, 2f, 0, false, bubble: bubble));
@@ -852,7 +858,7 @@ namespace Redemption.NPCs.Minibosses.Calavia
                             else
                             {
                                 BaseAI.AttemptOpenDoor(NPC, ref doorVars[0], ref doorVars[1], ref doorVars[2], 80, 1, 10, interactDoorStyle: 2);
-                                NPC.PlatformFallCheck(ref NPC.Redemption().fallDownPlatform);
+                                NPC.PlatformFallCheck(ref NPC.Redemption().fallDownPlatform, 12, gathicPortalPos.Y);
                                 NPCHelper.HorizontallyMove(NPC, gathicPortalPos, 0.18f, 3, 18, 18, NPC.Center.Y > gathicPortalPos.Y);
                                 if (!Collision.CanHitLine(NPC.position, NPC.width, NPC.height, gathicPortalPos - Vector2.One, 2, 2))
                                     TimerRand2++;

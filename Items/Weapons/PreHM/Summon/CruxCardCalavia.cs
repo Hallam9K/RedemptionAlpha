@@ -20,10 +20,10 @@ namespace Redemption.Items.Weapons.PreHM.Summon
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Crux Card: Calavia");
-            Tooltip.SetDefault("Summons the great spirit of Calavia, Chief-Warrior of the Iron Realm\n" +
-                "Right-click to tug the spirit back to your position, consuming 3 [i:" + ModContent.ItemType<LostSoul>() + "]\n" +
-                "Consumes 30 [i:" + ModContent.ItemType<LostSoul>() + "] on use\n" +
+            DisplayName.SetDefault("Crux Card: Kyretha");
+            Tooltip.SetDefault("Summons the great spirit of Kyretha, Blade of the Mountain\n" +
+                "Right-click to tug the spirit back to your position, consuming 3 [i:Redemption/LostSoul]\n" +
+                "Consumes 30 [i:Redemption/LostSoul] on use\n" +
                 "Can only use one Spirit Card at a time");
             SacrificeTotal = 1;
         }
@@ -57,7 +57,7 @@ namespace Redemption.Items.Weapons.PreHM.Summon
                 for (int n = 0; n < Main.maxNPCs; n++)
                 {
                     NPC npc = Main.npc[n];
-                    if (!npc.active || npc.type != ModContent.NPCType<SkullDigger_SS>())
+                    if (!npc.active || npc.type != ModContent.NPCType<Calavia_SS>())
                         continue;
 
                     if (npc.ai[3] == player.whoAmI)
@@ -103,16 +103,16 @@ namespace Redemption.Items.Weapons.PreHM.Summon
                     for (int n = 0; n < Main.maxNPCs; n++)
                     {
                         NPC npc = Main.npc[n];
-                        if (!npc.active || npc.type != ModContent.NPCType<SkullDigger_SS>() || npc.ai[3] != player.whoAmI)
+                        if (!npc.active || npc.type != ModContent.NPCType<Calavia_SS>() || npc.ai[3] != player.whoAmI)
                             continue;
 
                         for (int i = 0; i < 20; i++)
                         {
-                            int dust = Dust.NewDust(npc.position + npc.velocity, npc.width, npc.height, DustID.DungeonSpirit, 0, 0, Scale: 4);
+                            int dust = Dust.NewDust(npc.position + npc.velocity, npc.width, npc.height, DustID.DungeonSpirit, 0, 0, Scale: 2);
                             Main.dust[dust].velocity *= 2f;
                             Main.dust[dust].noGravity = true;
                         }
-                        npc.ai[0] = 4;
+                        npc.ai[0] = 7;
                         npc.netUpdate = true;
                     }
                 }
@@ -120,12 +120,12 @@ namespace Redemption.Items.Weapons.PreHM.Summon
                 {
                     for (int i = 0; i < 16; i++)
                     {
-                        int dust = Dust.NewDust(player.Center - Vector2.One, 1, 1, ModContent.DustType<GlowDust>(), 0, 0, 0, default, 4f);
+                        int dust = Dust.NewDust(player.Center - Vector2.One, 1, 1, ModContent.DustType<GlowDust>(), 0, 0, 0, default, 2f);
                         Main.dust[dust].noGravity = true;
                         Color dustColor = new(188, 244, 227) { A = 0 };
                         Main.dust[dust].color = dustColor;
                     }
-                    int type = ModContent.NPCType<SkullDigger_SS>();
+                    int type = ModContent.NPCType<Calavia_SS>();
 
                     if (Main.netMode != NetmodeID.MultiplayerClient)
                         NPC.NewNPC(new EntitySource_BossSpawn(player), (int)player.Center.X + 10, (int)player.Center.Y, type, ai3: player.whoAmI);
@@ -141,7 +141,7 @@ namespace Redemption.Items.Weapons.PreHM.Summon
             if (tooltipLocation != -1)
             {
                 tooltips.Insert(tooltipLocation, new TooltipLine(Mod, "MaxLife", "3000 base health"));
-                tooltips.Insert(tooltipLocation + 2, new TooltipLine(Mod, "Defense", "23 defense"));
+                tooltips.Insert(tooltipLocation + 2, new TooltipLine(Mod, "Defense", "17 defense"));
             }
         }
         private float drawTimer;
