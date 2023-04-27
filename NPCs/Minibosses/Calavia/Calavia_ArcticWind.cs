@@ -1,9 +1,11 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Redemption.BaseExtension;
 using Redemption.Buffs.Debuffs;
 using Redemption.Buffs.NPCBuffs;
 using Redemption.Dusts;
 using Redemption.Globals;
+using Redemption.NPCs.Friendly.SpiritSummons;
 using Terraria;
 using Terraria.GameContent;
 using Terraria.ID;
@@ -34,7 +36,7 @@ namespace Redemption.NPCs.Minibosses.Calavia
         public override void AI()
         {
             NPC npc = Main.npc[(int)Projectile.ai[0]];
-            if (!npc.active || npc.ai[0] is 4 || npc.type != ModContent.NPCType<Calavia>())
+            if (!npc.active || npc.ai[0] is 4 || (npc.type != ModContent.NPCType<Calavia>() && npc.type != ModContent.NPCType<Calavia_SS>()))
                 Projectile.Kill();
 
             Projectile.rotation += 0.1f * npc.direction;
@@ -94,7 +96,12 @@ namespace Redemption.NPCs.Minibosses.Calavia
                     continue;
 
                 target.AddBuff(ModContent.BuffType<PureChillDebuff>(), 300);
+                if (Projectile.DistanceSQ(target.Center) > 140 * 140 || target.knockBackResist is 0 || target.RedemptionNPCBuff().iceFrozen)
+                    continue;
+                target.AddBuff(ModContent.BuffType<IceFrozen>(), 1000 - ((int)MathHelper.Clamp(npc.lifeMax, 60, 980)));
             }
+            if (npc.type != ModContent.NPCType<Calavia>())
+                return;
             for (int i = 0; i < Main.maxPlayers; i++)
             {
                 Player target = Main.player[i];

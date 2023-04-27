@@ -20,6 +20,9 @@ using Terraria.Utilities;
 using Redemption.Base;
 using Redemption.BaseExtension;
 using Redemption.NPCs.Friendly;
+using Redemption.NPCs.PreHM;
+using Redemption.UI.ChatUI;
+using Redemption.Items.Weapons.PreHM.Summon;
 
 namespace Redemption.NPCs.Minibosses.Calavia
 {
@@ -51,7 +54,12 @@ namespace Redemption.NPCs.Minibosses.Calavia
             NPC.townNPC = true;
             TownNPCStayingHomeless = true;
             NPC.dontTakeDamage = true;
+            bubble = ModContent.Request<Texture2D>("Redemption/UI/TextBubble_Epidotra").Value;
+            voice = CustomSounds.Voice1 with { Pitch = 0.6f };
         }
+        private Texture2D bubble;
+        private SoundStyle voice;
+
         private bool HasShield;
         private int HasHelmet;
         public override void LoadData(TagCompound tag)
@@ -66,15 +74,106 @@ namespace Redemption.NPCs.Minibosses.Calavia
             tag["HasHelmet"] = HasHelmet;
         }
         public override bool UsesPartyHat() => false;
-        public override bool CanChat() => RedeQuest.calaviaVar < 21;
+        public override bool CanChat() => RedeQuest.calaviaVar < 21 && RedeQuest.calaviaVar != 15;
         public override bool CheckActive() => false;
+        DialogueChain chain = new();
         public override void AI()
         {
             Player player = Main.player[NPC.target];
             if (NPC.target < 0 || NPC.target == 255 || player.dead || !player.active)
                 NPC.TargetClosest();
 
-            if (RedeQuest.calaviaVar == 20 && Main.LocalPlayer.talkNPC == -1)
+            int spiritWhoAmI = NPC.FindFirstNPC(ModContent.NPCType<SpiritWalkerMan>());
+            if (RedeQuest.calaviaVar == 14 && Main.LocalPlayer.talkNPC == -1)
+            {
+                if (spiritWhoAmI > -1)
+                {
+                    RedeQuest.calaviaVar = 15;
+                    if (Main.netMode == NetmodeID.Server)
+                        NetMessage.SendData(MessageID.WorldData);
+                }
+            }
+            else if (RedeQuest.calaviaVar is 15)
+            {
+                if (spiritWhoAmI > -1)
+                {
+                    NPC spirit = Main.npc[spiritWhoAmI];
+                    SoundStyle spiritVoice = CustomSounds.Voice2;
+
+                    if (AITimer++ == 0)
+                    {
+                        spirit.LookAtEntity(NPC);
+                        EmoteBubble.NewBubble(3, new WorldUIAnchor(spirit), 60);
+                    }
+                    if (AITimer == 60)
+                        NPC.LookAtEntity(spirit);
+
+                    if (AITimer == 60 && chain.Dialogue.Count == 0)
+                    {
+                        string s1 = "Oi!";
+                        string s2 = "I wouldn't take that spirit back to Arum if I were ya.";
+                        string s3 = "And why would that be?";
+                        string s4 = "Forgive my bluntness,[0.1] but the barons of Arum are nothing but rancorous demons.";
+                        string s5 = "[@b]Excuse me?[0.5] I haven't seen a single droplet of malice from them,[0.1] and I've been workin' with them for years!";
+                        string s6 = "As have I...[0.3][@c][@d] in a more direct sense.[0.5][@g] Just trust me lassie,[0.1] break free Kyretha's spirit.[0.5] Let her truly rest.";
+                        string s7 = "To doubt the wisdom of a liberated spirit would be most imprudent.";
+                        string s8 = ".^0.3^..^0.05^ [@e]Gorhal'on.[0.5][@f] Taborti.[0.6] I'll free it after I go through the portal.";
+                        string s9 = "Is that a promise?";
+                        string s10 = "Bi'oruen.";
+                        string s11 = "Very well.";
+
+                        chain.Add(new(spirit, s1, Color.LightBlue, Color.DarkBlue, spiritVoice, .05f, 2f, 0, false, bubble: bubble))
+                             .Add(new(spirit, s2, Color.LightBlue, Color.DarkBlue, spiritVoice, .05f, 2f, 0, false, bubble: bubble))
+                             .Add(new(NPC, s3, Color.White, Color.Gray, voice, .05f, 2f, 0, false, bubble: bubble))
+                             .Add(new(spirit, s4, Color.LightBlue, Color.DarkBlue, spiritVoice, .05f, 2f, 0, false, bubble: bubble))
+                             .Add(new(NPC, s5, Color.White, Color.Gray, voice, .05f, 2f, 0, false, bubble: bubble))
+                             .Add(new(spirit, s6, Color.LightBlue, Color.DarkBlue, spiritVoice, .05f, 2f, 0, false, bubble: bubble))
+                             .Add(new(spirit, s7, Color.LightBlue, Color.DarkBlue, spiritVoice, .05f, 2f, 0, false, bubble: bubble))
+                             .Add(new(NPC, s8, Color.White, Color.Gray, voice, .05f, 2f, 0, false, bubble: bubble))
+                             .Add(new(spirit, s9, Color.LightBlue, Color.DarkBlue, spiritVoice, .05f, 2f, 0, false, bubble: bubble))
+                             .Add(new(NPC, s10, Color.White, Color.Gray, voice, .05f, 2f, 0, false, bubble: bubble))
+                             .Add(new(spirit, s11, Color.LightBlue, Color.DarkBlue, spiritVoice, .05f, 2f, 0, false, bubble: bubble, endID: 1));
+                        chain.OnSymbolTrigger += Chain_OnSymbolTrigger;
+                        chain.OnEndTrigger += Chain_OnEndTrigger;
+                        ChatUI.Visible = true;
+                        ChatUI.Add(chain);
+                    }
+                    if (AITimer >= 10000)
+                    {
+                        AITimer = 0;
+                        RedeQuest.calaviaVar = 16;
+                        if (Main.netMode == NetmodeID.Server)
+                            NetMessage.SendData(MessageID.WorldData);
+                    }
+                    if (AITimer >= 60 && NPC.DistanceSQ(player.Center) <= 800 * 800)
+                    {
+                        Vector2 focus = RedeHelper.CenterPoint(NPC.Center, spirit.Center);
+                        player.RedemptionScreen().ScreenFocusPosition = Vector2.Lerp(focus, player.Center, player.DistanceSQ(focus) / (1200 * 1200));
+                        player.RedemptionScreen().lockScreen = true;
+                    }
+                }
+                else
+                {
+                    ChatUI.Remove(chain);
+                    chain.Dialogue.Clear();
+                    ChatUI.Visible = false;
+                    AITimer = 0;
+                    RedeQuest.calaviaVar = 13;
+                    if (Main.netMode == NetmodeID.Server)
+                        NetMessage.SendData(MessageID.WorldData);
+                }
+                if (player.DistanceSQ(NPC.Center) > 2000 * 2000)
+                {
+                    ChatUI.Remove(chain);
+                    chain.Dialogue.Clear();
+                    ChatUI.Visible = false;
+                    AITimer = 0;
+                    RedeQuest.calaviaVar = 13;
+                    if (Main.netMode == NetmodeID.Server)
+                        NetMessage.SendData(MessageID.WorldData);
+                }
+            }
+            else if (RedeQuest.calaviaVar == 20 && Main.LocalPlayer.talkNPC == -1)
             {
                 if (HasShield && HasHelmet > 0)
                     RedeQuest.calaviaVar = 22;
@@ -120,9 +219,40 @@ namespace Redemption.NPCs.Minibosses.Calavia
                 }
                 return;
             }
-
-            if (NPC.Sight(player, 600, false, true))
+            if (NPC.Sight(player, 600, false, true) && RedeQuest.calaviaVar != 15)
                 NPC.LookAtEntity(player);
+        }
+        private void Chain_OnSymbolTrigger(Dialogue dialogue, string signature)
+        {
+            int spiritWhoAmI = NPC.FindFirstNPC(ModContent.NPCType<SpiritWalkerMan>());
+            if (spiritWhoAmI == -1)
+                return;
+            NPC spirit = Main.npc[spiritWhoAmI];
+            switch (signature)
+            {
+                case "b":
+                    EmoteBubble.NewBubble(1, new WorldUIAnchor(NPC), 120);
+                    break;
+                case "c":
+                    EmoteBubble.NewBubble(2, new WorldUIAnchor(spirit), 120);
+                    break;
+                case "d":
+                    spirit.spriteDirection *= -1;
+                    break;
+                case "g":
+                    spirit.spriteDirection *= -1;
+                    break;
+                case "e":
+                    NPC.spriteDirection *= -1;
+                    break;
+                case "f":
+                    NPC.spriteDirection *= -1;
+                    break;
+            }
+        }
+        private void Chain_OnEndTrigger(Dialogue dialogue, int ID)
+        {
+            AITimer = 10000;
         }
         public override string GetChat()
         {
@@ -213,6 +343,8 @@ namespace Redemption.NPCs.Minibosses.Calavia
             {
                 if (!RedeGen.cryoCrystalSpawn && ChatNumber == 0)
                     ChatNumber++;
+                if (ChatNumber is 3 && (RedeQuest.calaviaVar < 12 || (RedeQuest.calaviaVar is 16 && !Main.LocalPlayer.RedemptionAbility().SpiritwalkerActive) || Main.LocalPlayer.HasItem(ModContent.ItemType<CruxCardCalavia>())))
+                    ChatNumber++;
                 button2 = "Cycle Options";
                 switch (ChatNumber)
                 {
@@ -240,6 +372,13 @@ namespace Redemption.NPCs.Minibosses.Calavia
                         button = "About you?";
                         break;
                     case 3:
+                        button = "Captive spirit?";
+                        if (RedeQuest.calaviaVar is 13 or 14)
+                            button = "Explain";
+                        if (RedeQuest.calaviaVar is 16)
+                            button = "Request Kyretha's Crux";
+                        break;
+                    case 4:
                         button = "[c/FF6600:You're ready to leave]";
                         break;
                 }
@@ -443,6 +582,54 @@ namespace Redemption.NPCs.Minibosses.Calavia
                             Main.npcChatText = "Ta? I am a chief-warrior and blacksmith of the Iron Realm. Back in Khen Boldur I have a husband and two kids. I seldom have the time to see 'em, but staying far apart only makes the moments we're together all-the-more special, or am I just bein' too optimistic? It's regrettable, but my job leaves no room for indulgences. I lead a squadron of Arum that primarily scouts out unmarked lands. My men have probably given up on me by now. Typical.";
                             break;
                         case 3:
+                            if (RedeQuest.calaviaVar is 16)
+                            {
+                                if (!Main.LocalPlayer.RedemptionAbility().SpiritwalkerActive)
+                                {
+                                    Main.npcChatText = "You'll need to be in the spirit realm to do that.";
+                                    break;
+                                }
+                                int card = Main.LocalPlayer.FindItem(ModContent.ItemType<EmptyCruxCard>());
+                                if (card >= 0)
+                                {
+                                    ChatNumber = 2;
+                                    Main.LocalPlayer.inventory[card].stack--;
+                                    if (Main.LocalPlayer.inventory[card].stack <= 0)
+                                        Main.LocalPlayer.inventory[card] = new Item();
+
+                                    Main.LocalPlayer.QuickSpawnItem(NPC.GetSource_Loot(), ModContent.ItemType<CruxCardCalavia>());
+                                    Main.npcChatText = "Kyretha's spirit feels lighter - less shrouded in negative emotion. Alas, that means what the spirit spoke of is true, the barons hide a darkness I have turned a blind eye to. Ya know what? If I ever get back to Arum, I'll look into it, all stealth-like. But anywho, I do believe she'll be willing to give ye her crux, she offers it freely.";
+                                    Main.npcChatCornerItem = ModContent.ItemType<CruxCardCalavia>();
+                                    SoundEngine.PlaySound(SoundID.Chat);
+                                }
+                                else
+                                {
+                                    Main.npcChatText = "Kyretha's spirit feels different now. I never realised the aura I felt was not of her power but of a strong negative emotion, it was foolish to assume the feeling was the norm for spirits of her splendour. I can comphrehend her emotions more clearer, and I do believe she's willing to give ye her crux, if ye have something to imbue.";
+                                    Main.npcChatCornerItem = ModContent.ItemType<EmptyCruxCard>();
+                                }
+                            }
+                            else if (RedeQuest.calaviaVar is 13 or 14)
+                            {
+                                Main.npcChatText = "The spirit I carry is of the original wielder of the Blade of the Mountain, Kyretha, who was slain in an isolated range. She was part of a \"unique\" group who's souls were bound to another, and due to this I was tasked with retrieving her body and soul to send back to the Bastion of Arum - The barons deemed this of utmost priority. I recognise the taboo nature of ensnaring a spirit in glass, but I hope ye understand now.";
+                                if (RedeQuest.calaviaVar < 14)
+                                {
+                                    RedeQuest.calaviaVar = 14;
+                                    if (Main.netMode == NetmodeID.Server)
+                                        NetMessage.SendData(MessageID.WorldData);
+                                }
+                            }
+                            else
+                            {
+                                Main.npcChatText = "Hm? Oh, so ye noticed. Yeah, I carry a bauble containing a spirit. I didn't elaborate on my job because it's none of ya business. Alas, clarification is in order so ye don't get any wrong ideas.";
+                                if (RedeQuest.calaviaVar < 13)
+                                {
+                                    RedeQuest.calaviaVar = 13;
+                                    if (Main.netMode == NetmodeID.Server)
+                                        NetMessage.SendData(MessageID.WorldData);
+                                }
+                            }
+                            break;
+                        case 4:
                             if (HasHelmet > 0 && HasShield)
                             {
                                 Main.npcChatText = "Thank you for the help, and sorry for the trouble. What lies ahead makes me uneasy, but I'll make it through to reunite with my squadron and finally return to my family, there is no better motivation than that. Farewell, stranger.";
@@ -460,7 +647,7 @@ namespace Redemption.NPCs.Minibosses.Calavia
                 else
                 {
                     ChatNumber++;
-                    if (ChatNumber > 3)
+                    if (ChatNumber > 4)
                         ChatNumber = 0;
                 }
             }
@@ -491,14 +678,11 @@ namespace Redemption.NPCs.Minibosses.Calavia
         }
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
-            Texture2D cloak = ModContent.Request<Texture2D>(Texture + "_Cloak").Value;
-            Texture2D legs = ModContent.Request<Texture2D>(Texture + "_Legs").Value;
-            Texture2D arm = ModContent.Request<Texture2D>(Texture + "_Arm").Value;
             Texture2D tex = ModContent.Request<Texture2D>(Texture + "2").Value;
             var effects = NPC.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
 
-            spriteBatch.Draw(cloak, NPC.Center - screenPos, NPC.frame, NPC.GetAlpha(drawColor), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
-            spriteBatch.Draw(legs, NPC.Center - screenPos, NPC.frame, NPC.GetAlpha(drawColor), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
+            spriteBatch.Draw(Calavia.CloakTex.Value, NPC.Center - screenPos, NPC.frame, NPC.GetAlpha(drawColor), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
+            spriteBatch.Draw(Calavia.LegsTex.Value, NPC.Center - screenPos, NPC.frame, NPC.GetAlpha(drawColor), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
             spriteBatch.Draw(tex, NPC.Center - screenPos, NPC.frame, NPC.GetAlpha(drawColor), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
             if (HasHelmet > 0)
             {
@@ -509,11 +693,8 @@ namespace Redemption.NPCs.Minibosses.Calavia
                 spriteBatch.Draw(helmet, NPC.Center - screenPos, NPC.frame, NPC.GetAlpha(drawColor), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects2, 0);
             }
             if (HasShield)
-            {
-                Texture2D shield = ModContent.Request<Texture2D>(Texture + "_Shield").Value;
-                spriteBatch.Draw(shield, NPC.Center - screenPos, NPC.frame, NPC.GetAlpha(drawColor), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
-            }
-            spriteBatch.Draw(arm, NPC.Center - screenPos, NPC.frame, NPC.GetAlpha(drawColor), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
+                spriteBatch.Draw(Calavia.ShieldTex.Value, NPC.Center - screenPos, NPC.frame, NPC.GetAlpha(drawColor), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
+            spriteBatch.Draw(Calavia.ArmTex.Value, NPC.Center - screenPos, NPC.frame, NPC.GetAlpha(drawColor), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
             return false;
         }
     }

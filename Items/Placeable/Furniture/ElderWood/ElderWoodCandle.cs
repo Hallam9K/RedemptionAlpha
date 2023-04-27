@@ -15,7 +15,7 @@ namespace Redemption.Items.Placeable.Furniture.ElderWood
 		{
 			Item.DefaultToPlaceableTile(ModContent.TileType<ElderWoodCandleTile>(), 0);
 			Item.width = 16;
-			Item.height = 18;
+			Item.height = 16;
 			Item.maxStack = 9999;
 		}
 

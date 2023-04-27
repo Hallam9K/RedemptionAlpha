@@ -13,6 +13,7 @@ using Redemption.NPCs.Minibosses.Calavia;
 using System.Threading;
 using Terraria.Audio;
 using Redemption.Items.Weapons.PreHM.Melee;
+using Redemption.NPCs.Friendly.SpiritSummons;
 
 namespace Redemption.Globals
 {
@@ -97,7 +98,7 @@ namespace Redemption.Globals
                 }
             }
         }
-        public static bool SwordClashFriendly(Projectile projectile, Projectile target, Terraria.Player player, ref bool parried, int frame = 5)
+        public static bool SwordClashFriendly(Projectile projectile, Projectile target, Entity player, ref bool parried, int frame = 5)
         {
             Rectangle targetHitbox = target.Hitbox;
             if (target.Redemption().swordHitbox != default)
@@ -105,9 +106,12 @@ namespace Redemption.Globals
 
             if (projectile.frame == frame && !parried && projectile.Redemption().swordHitbox.Intersects(targetHitbox) && target.type == ModContent.ProjectileType<Calavia_BladeOfTheMountain>() && target.frame >= 4 && target.frame <= 5)
             {
-                player.immune = true;
-                player.immuneTime = 60;
-                player.AddBuff(BuffID.ParryDamageBuff, 120);
+                if (player is Terraria.Player p)
+                {
+                    p.immune = true;
+                    p.immuneTime = 60;
+                    p.AddBuff(BuffID.ParryDamageBuff, 120);
+                }
                 player.velocity.X += 4 * player.RightOfDir(target);
                 RedeDraw.SpawnExplosion(RedeHelper.CenterPoint(projectile.Center, target.Center), Color.White, shakeAmount: 0, scale: 1f, noDust: true, tex: ModContent.Request<Texture2D>("Redemption/Textures/HolyGlow2").Value);
                 SoundEngine.PlaySound(CustomSounds.SwordClash, projectile.position);
@@ -123,10 +127,11 @@ namespace Redemption.Globals
             if (target.Redemption().swordHitbox != default)
                 targetHitbox = target.Redemption().swordHitbox;
 
-            if (!parried && projectile.Redemption().swordHitbox.Intersects(targetHitbox) && 
-                ((target.type == ModContent.ProjectileType<Zweihander_SlashProj>() && target.frame is 4 or 3) || 
-                (target.type == ModContent.ProjectileType<BladeOfTheMountain_Slash>() && target.frame is 5 or 4) ||
-                (target.type == ModContent.ProjectileType<SwordSlicer_Slash>() && target.frame is 5 or 4) ||
+            if (!parried && projectile.Redemption().swordHitbox.Intersects(targetHitbox) &&
+                ((target.type == ModContent.ProjectileType<Zweihander_SlashProj>() && target.frame is 4 or 3) ||
+                ((target.type == ModContent.ProjectileType<BladeOfTheMountain_Slash>() ||
+                target.type == ModContent.ProjectileType<Calavia_SS_BladeOfTheMountain>() ||
+                target.type == ModContent.ProjectileType<SwordSlicer_Slash>()) && target.frame is 5 or 4) ||
                 (target.type == ModContent.ProjectileType<KeepersClaw_Slash>() && target.frame is 2)))
             {
                 npc.velocity.X += 4 * npc.RightOfDir(target);

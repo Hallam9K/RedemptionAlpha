@@ -173,7 +173,12 @@ namespace Redemption.Projectiles.Magic
             if (Main.rand.NextBool(3))
                 target.AddBuff(BuffID.Frostburn, 180);
         }
-        public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection) => damage = (int)(damage * Projectile.scale);
+        public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
+        {
+            if (Projectile.ai[0] is 1)
+                damage *= 4;
+            damage = (int)(damage * Projectile.scale);
+        }
         public override void ModifyHitPlayer(Player target, ref int damage, ref bool crit) => damage = (int)(damage * Projectile.scale);
     }
 }

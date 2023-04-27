@@ -342,7 +342,7 @@ namespace Redemption.Globals
         public const string hammerBonus = "[i:Redemption/Hammer] Deals quadruple damage to Guard Points";
         public override void ModifyTooltips(Item item, List<TooltipLine> tooltips)
         {
-            if (ChaliceInterest(item.type))
+            if (ChaliceInterest(item.type) && RedeWorld.alignmentGiven)
             {
                 TooltipLine chaliceLine = new(Mod, "ChaliceLine", "[i:Redemption/RedemptionRoute]The chalice has something to say about this item") { OverrideColor = new Color(203, 189, 99) };
                 tooltips.Add(chaliceLine);

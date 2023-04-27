@@ -72,7 +72,8 @@ namespace Redemption.UI
                 AppendedNymph = false;
                 BgSprite.RemoveAllChildren();
                 int pad = 36;
-                BgSprite.Append(new TradePanelUI(new Item(ModContent.ItemType<Zweihander>()), new Item(ModContent.ItemType<BladeOfTheMountain>())));
+                BgSprite.Append(new TradePanelUI(new Item(ModContent.ItemType<Zweihander>()), new Item(ModContent.ItemType<BladeOfTheMountain>())) { Top = new StyleDimension(pad, 0) });
+                pad += 36;
                 BgSprite.Append(new TradePanelUI(new Item(ModContent.ItemType<Mistfall>()), new Item(ModContent.ItemType<Icefall>())) { Top = new StyleDimension(pad, 0) });
                 Append(BgSprite);
                 AppendedCalavia = true;

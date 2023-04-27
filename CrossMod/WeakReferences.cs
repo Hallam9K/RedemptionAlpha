@@ -40,6 +40,7 @@ using Redemption.Items.Weapons.PreHM.Summon;
 using Redemption.NPCs.Bosses.FowlEmperor;
 using Redemption.NPCs.FowlMorning;
 using Redemption.Items;
+using Redemption.NPCs.Minibosses.Calavia;
 
 namespace Redemption.CrossMod
 {
@@ -229,6 +230,19 @@ namespace Redemption.CrossMod
                     (SpriteBatch sb, Rectangle rect, Color color) =>
                     {
                         Texture2D texture = ModContent.Request<Texture2D>("Redemption/CrossMod/BossChecklist/EaglecrestGolem").Value;
+                        Vector2 centered = new(rect.X + (rect.Width / 2) - (texture.Width / 2), rect.Y + (rect.Height / 2) - (texture.Height / 2));
+                        sb.Draw(texture, centered, color);
+                    }, null);
+                #endregion
+
+                #region Calavia
+                bossChecklist.Call("AddMiniBoss", mod, "Calavia", ModContent.NPCType<Calavia>(), 5.2f, () => RedeBossDowned.downedCalavia, () => NPC.downedBoss3,
+                    null,
+                    null, "Appears at the Underground Portal sometime after Skeletron is defeated.",
+                    null,
+                    (SpriteBatch sb, Rectangle rect, Color color) =>
+                    {
+                        Texture2D texture = ModContent.Request<Texture2D>("Redemption/CrossMod/BossChecklist/Calavia").Value;
                         Vector2 centered = new(rect.X + (rect.Width / 2) - (texture.Width / 2), rect.Y + (rect.Height / 2) - (texture.Height / 2));
                         sb.Draw(texture, centered, color);
                     }, null);
