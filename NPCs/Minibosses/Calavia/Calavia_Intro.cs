@@ -15,7 +15,6 @@ using Redemption.Items.Usable;
 using Redemption.UI.ChatUI;
 using System;
 using Redemption.Items.Weapons.PreHM.Magic;
-using Redemption.NPCs.Lab.Janitor;
 
 namespace Redemption.NPCs.Minibosses.Calavia
 {

@@ -198,6 +198,8 @@ namespace Redemption.Globals
     {
         #region NPC Lists
 
+        public static List<int> DisablesSpawnsWhenNear = new() { ModContent.NPCType<Calavia_Intro>(), ModContent.NPCType<Calavia_NPC>() };
+
         public static List<int> HasLostSoul = new() { ModContent.NPCType<LostSoulNPC>(), ModContent.NPCType<EpidotrianSkeleton>(), ModContent.NPCType<CorpseWalkerPriest>(), ModContent.NPCType<SkeletonAssassin>(), ModContent.NPCType<SkeletonDuelist>(), ModContent.NPCType<SkeletonFlagbearer>(), ModContent.NPCType<SkeletonNoble>(), ModContent.NPCType<SkeletonWanderer>(), ModContent.NPCType<SkeletonWarden>(), ModContent.NPCType<VagrantSpirit>(), ModContent.NPCType<JollyMadman>(), ModContent.NPCType<RaveyardSkeleton>(), 77, 449, 450, 451, 452, 481, 201, 202, 203, 21, 324, 110, 323, 293, 291, 322, 292, 197, 167, 44, 635 };
 
         #region Skeleton

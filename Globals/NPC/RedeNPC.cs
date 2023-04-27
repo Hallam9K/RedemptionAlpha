@@ -396,11 +396,13 @@ namespace Redemption.Globals.NPC
                 pool.Clear();
                 return;
             }
-            if (RedeQuest.calaviaVar is 1 && spawnInfo.Player.ZoneRockLayerHeight)
+            for (int i = 0; i < Main.maxNPCs; i++)
             {
+                Terraria.NPC safe = Main.npc[i];
+                if (!safe.active || !NPCLists.DisablesSpawnsWhenNear.Contains(safe.type))
+                    continue;
                 Vector2 spawnPos = BaseUtility.TileToPos(new Vector2(spawnInfo.SpawnTileX, spawnInfo.SpawnTileY));
-                Vector2 calaPos = new((RedeGen.gathicPortalPoint.X + 42) * 16, (RedeGen.gathicPortalPoint.Y + 20) * 16);
-                if (calaPos.DistanceSQ(spawnPos) < 800 * 800)
+                if (safe.DistanceSQ(spawnPos) < 1600 * 1600)
                 {
                     pool.Clear();
                     return;
