@@ -136,7 +136,7 @@ namespace Redemption.NPCs.Bosses.ADD
             if (RedeBossDowned.downedGGBossFirst == 1 && RedeBossDowned.downedGGBossFirst == 2)
                 modifiers.FinalDamage *= .85f;
 
-            if (NPC.RedemptionGuard().GuardPoints >= 0)
+            if (NPC.RedemptionGuard().GuardPoints >= 0 && !NPC.RedemptionGuard().GuardBroken)
             {
                 modifiers.DisableCrit();
                 modifiers.ModifyHitInfo += (ref NPC.HitInfo n) => NPC.RedemptionGuard().GuardHit(ref n, NPC, SoundID.Dig with { Pitch = -.1f }, .25f, false, DustID.t_LivingWood, SoundID.Item43, 10, 1, 2000);

@@ -169,7 +169,7 @@ namespace Redemption.NPCs.Bosses.ADD
             if (RedeBossDowned.downedGGBossFirst == 1 && RedeBossDowned.downedGGBossFirst == 2)
                 modifiers.FinalDamage *= .85f;
 
-            if (NPC.RedemptionGuard().GuardPoints >= 0)
+            if (NPC.RedemptionGuard().GuardPoints >= 0 && !NPC.RedemptionGuard().GuardBroken)
             {
                 modifiers.DisableCrit();
                 modifiers.ModifyHitInfo += (ref NPC.HitInfo n) => NPC.RedemptionGuard().GuardHit(ref n, NPC, SoundID.DD2_WitherBeastCrystalImpact, .25f, false, DustID.Stone, CustomSounds.EarthBoom, 10, 1, 2000);

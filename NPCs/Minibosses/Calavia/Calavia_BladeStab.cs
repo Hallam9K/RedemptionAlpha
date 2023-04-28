@@ -12,7 +12,7 @@ namespace Redemption.NPCs.Minibosses.Calavia
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Frigid Stab");
+            // DisplayName.SetDefault("Frigid Stab");
             Main.projFrames[Projectile.type] = 4;
             ProjectileID.Sets.TrailCacheLength[Projectile.type] = 6;
             ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
@@ -44,7 +44,7 @@ namespace Redemption.NPCs.Minibosses.Calavia
             Projectile.velocity *= .9f;
         }
         public override bool CanHitPlayer(Player target) => Projectile.frame < 2;
-        public override void OnHitPlayer(Player target, int damage, bool crit) => target.AddBuff(BuffID.Frostburn, 120);
+        public override void OnHitPlayer(Player target, Player.HurtInfo info) => target.AddBuff(BuffID.Frostburn, 120);
         public override bool PreDraw(ref Color lightColor)
         {
             Texture2D texture = TextureAssets.Projectile[Projectile.type].Value;

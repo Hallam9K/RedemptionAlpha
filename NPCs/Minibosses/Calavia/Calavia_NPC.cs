@@ -23,6 +23,7 @@ using Redemption.NPCs.Friendly;
 using Redemption.NPCs.PreHM;
 using Redemption.UI.ChatUI;
 using Redemption.Items.Weapons.PreHM.Summon;
+using Terraria.Localization;
 
 namespace Redemption.NPCs.Minibosses.Calavia
 {
@@ -34,7 +35,7 @@ namespace Redemption.NPCs.Minibosses.Calavia
         public ref float TimerRand => ref NPC.ai[2];
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Calavia");
+            // DisplayName.SetDefault("Calavia");
             Main.npcFrameCount[Type] = 20;
             NPCID.Sets.NPCBestiaryDrawModifiers value = new(0) { Hide = true };
             NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, value);
@@ -261,21 +262,21 @@ namespace Redemption.NPCs.Minibosses.Calavia
             if (RedeQuest.calaviaVar > 10)
             {
                 WeightedRandom<string> chat = new();
-                chat.Add("You are the first khen I've met here - there's been floods of krhu around, so I prefer the change.");
+                chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Calavia.Chat2"));
                 if (!player.RedemptionAbility().Spiritwalker)
-                    chat.Add("That corpse by the portal is oddly soulful, I hope it doesn't come alive.");
+                    chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Calavia.Chat3"));
                 else if (!NPC.AnyNPCs(ModContent.NPCType<SpiritWalkerMan>()))
-                    chat.Add("You got a strange ability from that soulful corpse by the portal? My worries of it becoming a danger must've been unfounded, though I yet sense a will therein.");
+                    chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Calavia.Chat4"));
                 if (BasePlayer.HasArmorSet(player, "Pure-Iron", true) || BasePlayer.HasArmorSet(player, "Pure-Iron", false))
-                    chat.Add("Are you perhaps another warrior of the Iron Realm to stumble upon this place? Or did you rob that armour you wear?");
+                    chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Calavia.Chat5"));
                 else if (BasePlayer.HasArmorSet(player, "Common Guard", true) || BasePlayer.HasArmorSet(player, "Common Guard", false))
-                    chat.Add("I am to assume you're an Anglic knight, based on your attire. Should've figured you wouldn't understand Gathic... Oh well.");
+                    chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Calavia.Chat6"));
                 else if (BasePlayer.HasArmorSet(player, "Dragon-Lead", true) || BasePlayer.HasArmorSet(player, "Dragon-Lead", false))
-                    chat.Add("That armour you don is rather threatening. Where did it come from? Reminds me of the Thamor'in dragons that occassionally hinder the western countries.");
+                    chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Calavia.Chat7"));
 
                 return chat;
             }
-            return "Again I must apologise for attacking ye, I asked for your purpose but clearly ye aren't Gathic. I should introduce myself, I am Calavia, a Chief-Warrior of the Iron Realm. It is such a pleasure to meet a khen here, I've seen naught but rotting khru ever since I got here.";
+            return Language.GetTextValue("Mods.Redemption.Dialogue.Calavia.Chat1");
         }
         private bool NearFurnace;
         private void FurnaceNearMe()
@@ -384,7 +385,7 @@ namespace Redemption.NPCs.Minibosses.Calavia
                 }
             }
         }
-        public override void OnChatButtonClicked(bool firstButton, ref bool shop)
+        public override void OnChatButtonClicked(bool firstButton, ref string shopName)
         {
             if (RedeQuest.calaviaVar < 11 || RedeQuest.calaviaVar == 20)
             {
@@ -393,7 +394,7 @@ namespace Redemption.NPCs.Minibosses.Calavia
                     default:
                         if (firstButton)
                         {
-                            Main.npcChatText = "Yeah I came from the portal, 'twas atop a snowy precipice. When I tried going back through however, it took me into what I can only assume to be Gathuram's catacombs. Back and forth I went, yet it was always the same. Here, catacombs, here, catacombs... It is infuriating! How these portals work!?";
+                            Main.npcChatText = Language.GetTextValue("Mods.Redemption.Dialogue.Calavia.IntroLine1");
                             RedeQuest.calaviaVar = 4;
                             if (Main.netMode == NetmodeID.Server)
                                 NetMessage.SendData(MessageID.WorldData);
@@ -402,39 +403,39 @@ namespace Redemption.NPCs.Minibosses.Calavia
                     case 4:
                         if (firstButton)
                         {
-                            Main.npcChatText = "Precisely! I have a family anticipating my return, yet I see no way back to where I came from. Do ye know anything at all about portals?";
+                            Main.npcChatText = Language.GetTextValue("Mods.Redemption.Dialogue.Calavia.IntroLine2");
                             RedeQuest.calaviaVar = 6;
                             if (Main.netMode == NetmodeID.Server)
                                 NetMessage.SendData(MessageID.WorldData);
                         }
                         else
                         {
-                            Main.npcChatText = "Our squadron climbed up a mountain to retrieve the body of a famous warrior, and came upon the portal. We should've reported it to the Gatewatch and carried on our business, but my witless curiousity said otherwise and chose to take a looksie. \"In and out, nice and quick\" I thought. Needless to say, ye can see how smart that idea was.";
+                            Main.npcChatText = Language.GetTextValue("Mods.Redemption.Dialogue.Calavia.IntroLine3");
                             RedeQuest.calaviaVar = 5;
                             if (Main.netMode == NetmodeID.Server)
                                 NetMessage.SendData(MessageID.WorldData);
                         }
                         break;
                     case 5:
-                        Main.npcChatText = "Precisely! I have a family anticipating my return, yet I see no way back to where I came from. Do you know anything at all about portals?";
+                        Main.npcChatText = Language.GetTextValue("Mods.Redemption.Dialogue.Calavia.IntroLine2");
                         RedeQuest.calaviaVar = 6;
                         if (Main.netMode == NetmodeID.Server)
                             NetMessage.SendData(MessageID.WorldData);
                         break;
                     case 6:
                         EmoteBubble.NewBubble(1, new WorldUIAnchor(NPC), 120);
-                        Main.npcChatText = "How helpful. Not like I can blame ye, they're magic of a bygone age. Only the Gatewatch have knowledge of 'em. Speaking of which, they must've been here before. Portals don't just appear with a stone ring and foundation pre-'rected - 'tis the Gatewatch's job to build those. To stabalize 'em, or so I've heard.";
+                        Main.npcChatText = Language.GetTextValue("Mods.Redemption.Dialogue.Calavia.IntroLine4");
                         RedeQuest.calaviaVar = 7;
                         if (Main.netMode == NetmodeID.Server)
                             NetMessage.SendData(MessageID.WorldData);
                         break;
                     case 7:
-                        Main.npcChatText = "Well I can't just mope around forever, the only way forward is scramming through the catacombs and praying to Sariel I find a way to the surface. It'll be a massive gamble tho', the catacombs are like a subterranean domain in their own right!";
+                        Main.npcChatText = Language.GetTextValue("Mods.Redemption.Dialogue.Calavia.IntroLine5");
                         if (RedeGen.cryoCrystalSpawn)
                             RedeQuest.calaviaVar = 8;
                         else
                         {
-                            Main.npcChatText += " I'll stick around for now, maybe if ye give me a [i:Redemption/GathicCryoFurnace]furnace I could offer ye some smithing.";
+                            Main.npcChatText += Language.GetTextValue("Mods.Redemption.Dialogue.Calavia.IntroLine5B");
                             RedeQuest.calaviaVar = 11;
                         }
                         if (Main.netMode == NetmodeID.Server)
@@ -442,9 +443,9 @@ namespace Redemption.NPCs.Minibosses.Calavia
                         break;
                     case 8:
                         if (firstButton)
-                            Main.npcChatText = "How polite of ye to ask. After our little squabble my helm and shield are quite... thrashed. I have nobody to blame but myself, but anyway, if ye could give me some replacements and supplies to aid me, I will be most grateful.";
+                            Main.npcChatText = Language.GetTextValue("Mods.Redemption.Dialogue.Calavia.IntroLine6");
                         else
-                            Main.npcChatText = "I'll need it... Actually, would ye be a dear and get me some equipment to aid me? My shield and helm took quite a blow. Not like I can blame ye, I did initiate the clash.";
+                            Main.npcChatText = Language.GetTextValue("Mods.Redemption.Dialogue.Calavia.IntroLine7");
                         RedeQuest.calaviaVar = 9;
                         if (Main.netMode == NetmodeID.Server)
                             NetMessage.SendData(MessageID.WorldData);
@@ -452,14 +453,14 @@ namespace Redemption.NPCs.Minibosses.Calavia
                     case 9:
                         if (firstButton)
                         {
-                            Main.npcChatText = "A new [i:Redemption/PureIronHelmet]Pure-Iron Helmet, and some [i/s6:Redemption/PureIronAlloy]Pure-Iron Alloy for remaking my shield. That is all I ask of ye. If ye give me a [i:Redemption/GathicCryoFurnace]furnace I can offer some help back. I work as a blacksmith on the side.";
+                            Main.npcChatText = Language.GetTextValue("Mods.Redemption.Dialogue.Calavia.IntroLine8");
                             RedeQuest.calaviaVar = 11;
                             if (Main.netMode == NetmodeID.Server)
                                 NetMessage.SendData(MessageID.WorldData);
                         }
                         else
                         {
-                            Main.npcChatText = "... So ye think I can survive the catacombs as I stand? If ye won't assist me, I suppose I got no choice but to give it a shot. I still have some of this place's potions left over, they've come in real handy. Guess I'll stick around in case ye change your mind.";
+                            Main.npcChatText = Language.GetTextValue("Mods.Redemption.Dialogue.Calavia.IntroLine9");
                             RedeQuest.calaviaVar = 10;
                             if (Main.netMode == NetmodeID.Server)
                                 NetMessage.SendData(MessageID.WorldData);
@@ -468,14 +469,14 @@ namespace Redemption.NPCs.Minibosses.Calavia
                     case 10:
                         if (firstButton)
                         {
-                            Main.npcChatText = "Thank ye, stranger. I'll need a new [i:Redemption/PureIronHelmet]Pure-Iron Helmet, and some [i/s6:Redemption/PureIronAlloy]Pure-Iron Alloy for remaking my shield. That is all I ask of ye. If ye give me a [i:Redemption/GathicCryoFurnace]furnace I can offer some help back. I work as a blacksmith on the side.";
+                            Main.npcChatText = Language.GetTextValue("Mods.Redemption.Dialogue.Calavia.IntroLine10");
                             RedeQuest.calaviaVar = 11;
                             if (Main.netMode == NetmodeID.Server)
                                 NetMessage.SendData(MessageID.WorldData);
                         }
                         else
                         {
-                            Main.npcChatText = "... If ye insist. *sigh* This'll be a challenge, but I'll trust your judgement. I'll make it through to reunite with my squadron and finally return to my family, there is no better motivation than that. Farewell, stranger.";
+                            Main.npcChatText = Language.GetTextValue("Mods.Redemption.Dialogue.Calavia.IntroLine11");
                             RedeQuest.calaviaVar = 20;
                             if (Main.netMode == NetmodeID.Server)
                                 NetMessage.SendData(MessageID.WorldData);
@@ -495,7 +496,7 @@ namespace Redemption.NPCs.Minibosses.Calavia
                         }
                         else
                         {
-                            Main.npcChatText = "Still something you need? Or do you not feel I'm ready?";
+                            Main.npcChatText = Language.GetTextValue("Mods.Redemption.Dialogue.Calavia.IntroLine12");
                             RedeQuest.calaviaVar = 11;
                             if (Main.netMode == NetmodeID.Server)
                                 NetMessage.SendData(MessageID.WorldData);
@@ -512,7 +513,7 @@ namespace Redemption.NPCs.Minibosses.Calavia
                         case 0:
                             if (HasHelmet > 0 && HasShield)
                             {
-                                Main.npcChatText = "As ready as I can be. I still have a few potions from this place, I've never seen such concoctions before... They must've been created by a master alchemist.";
+                                Main.npcChatText = Language.GetTextValue("Mods.Redemption.Dialogue.Calavia.ReadyLine");
                                 break;
                             }
                             int pureIronAlloy = Main.LocalPlayer.FindItem(ModContent.ItemType<PureIronAlloy>());
@@ -534,9 +535,9 @@ namespace Redemption.NPCs.Minibosses.Calavia
                                         Main.LocalPlayer.inventory[pureIronHelm2] = new Item();
                                     HasHelmet = 2;
                                 }
-                                Main.npcChatText = "Umgor'ye. The khru are ruthless creatures, a helmet to protect my neck an' head is much appreciated.";
+                                Main.npcChatText = Language.GetTextValue("Mods.Redemption.Dialogue.Calavia.HelmetLine");
                                 if (pureIronHelm < 0 && pureIronHelm2 >= 0)
-                                    Main.npcChatText += " Oh, and it is an antique design too? The fur is a nice privilege.";
+                                    Main.npcChatText += Language.GetTextValue("Mods.Redemption.Dialogue.Calavia.HelmetLineB");
                                 SoundEngine.PlaySound(SoundID.Chat);
                                 SoundEngine.PlaySound(SoundID.Grab, NPC.position);
                                 NPC.netUpdate = true;
@@ -548,47 +549,42 @@ namespace Redemption.NPCs.Minibosses.Calavia
                                 if (Main.LocalPlayer.inventory[pureIronAlloy].stack <= 0)
                                     Main.LocalPlayer.inventory[pureIronAlloy] = new Item();
 
-                                Main.npcChatText = "Umgor'ye. I feel much safer with a shield.";
+                                Main.npcChatText = Language.GetTextValue("Mods.Redemption.Dialogue.Calavia.ShieldLine");
                                 SoundEngine.PlaySound(SoundID.Chat);
                                 SoundEngine.PlaySound(SoundID.Grab, NPC.position);
                                 HasShield = true;
                                 NPC.netUpdate = true;
                                 return;
                             }
-                            Main.npcChatText = "A new [i:Redemption/PureIronHelmet]Pure-Iron Helmet, and some [i/s6:Redemption/PureIronAlloy]Pure-Iron Alloy for remaking my shield. That is all I ask of ye.";
+                            Main.npcChatText = Language.GetTextValue("Mods.Redemption.Dialogue.Calavia.RequirementsLine");
                             if (HasHelmet > 0 && !HasShield)
-                                Main.npcChatText += "\nYe have given me the helmet so far. I don't doubt it'll be enough, yet I'd feel much safer with a shield too.";
+                                Main.npcChatText += Language.GetTextValue("Mods.Redemption.Dialogue.Calavia.RequirementsLineB");
                             else if (HasHelmet == 0 && HasShield)
-                                Main.npcChatText += "\nYe have given me the shield so far. I don't doubt it'll be enough, yet I'd feel much safer with my head covered too.";
+                                Main.npcChatText += Language.GetTextValue("Mods.Redemption.Dialogue.Calavia.RequirementsLineC");
                             break;
                         case 1:
                             FurnaceNearMe();
                             if (NearFurnace)
                             {
                                 if (Main.LocalPlayer.HasItem(ModContent.ItemType<Mistfall>()))
-                                    Main.npcChatText = "That spell tome ye hold is quite weak, would ye like it to become similar to my own?";
+                                    Main.npcChatText = Language.GetTextValue("Mods.Redemption.Dialogue.Calavia.MistfallLine");
                                 if (Main.LocalPlayer.HasItem(ModContent.ItemType<Zweihander>()))
-                                    Main.npcChatText = "Ye carry a Zweihander? That is a famous blade of the Iron Realm, and so too was it the original form of the Blade of the Mountain - a sword of a mighty warrior who unfortunately fell to a great beast, I am its new holder. Would ye like me to make a replica of it?";
+                                    Main.npcChatText = Language.GetTextValue("Mods.Redemption.Dialogue.Calavia.ZweihanderLine");
                                 SoundEngine.PlaySound(SoundID.MenuOpen);
                                 TradeUI.Visible = true;
                             }
                             else
                             {
-                                Main.npcChatText = "Yes, place down a [i:Redemption/GathicCryoFurnace]Gathic Cryo-Furnace near me and I will offer to forge some equipment for ye.";
+                                Main.npcChatText = Language.GetTextValue("Mods.Redemption.Dialogue.Calavia.FurnaceLine");
                                 SoundEngine.PlaySound(SoundID.Chat);
                             }
                             break;
                         case 2:
-                            Main.npcChatText = "Ta? I am a chief-warrior and blacksmith of the Iron Realm. Back in Khen Boldur I have a husband and two kids. I seldom have the time to see 'em, but staying far apart only makes the moments we're together all-the-more special, or am I just bein' too optimistic? It's regrettable, but my job leaves no room for indulgences. I lead a squadron of Arum that primarily scouts out unmarked lands. My men have probably given up on me by now. Typical.";
+                            Main.npcChatText = Language.GetTextValue("Mods.Redemption.Dialogue.Calavia.AboutMeLine");
                             break;
                         case 3:
                             if (RedeQuest.calaviaVar is 16)
                             {
-                                if (!Main.LocalPlayer.RedemptionAbility().SpiritwalkerActive)
-                                {
-                                    Main.npcChatText = "You'll need to be in the spirit realm to do that.";
-                                    break;
-                                }
                                 int card = Main.LocalPlayer.FindItem(ModContent.ItemType<EmptyCruxCard>());
                                 if (card >= 0)
                                 {
@@ -598,19 +594,19 @@ namespace Redemption.NPCs.Minibosses.Calavia
                                         Main.LocalPlayer.inventory[card] = new Item();
 
                                     Main.LocalPlayer.QuickSpawnItem(NPC.GetSource_Loot(), ModContent.ItemType<CruxCardCalavia>());
-                                    Main.npcChatText = "Kyretha's spirit feels lighter - less shrouded in negative emotion. Alas, that means what the spirit spoke of is true, the barons hide a darkness I have turned a blind eye to. Ya know what? If I ever get back to Arum, I'll look into it, all stealth-like. But anywho, I do believe she'll be willing to give ye her crux, she offers it freely.";
+                                    Main.npcChatText = Language.GetTextValue("Mods.Redemption.Dialogue.Calavia.CruxDialogue");
                                     Main.npcChatCornerItem = ModContent.ItemType<CruxCardCalavia>();
                                     SoundEngine.PlaySound(SoundID.Chat);
                                 }
                                 else
                                 {
-                                    Main.npcChatText = "Kyretha's spirit feels different now. I never realised the aura I felt was not of her power but of a strong negative emotion, it was foolish to assume the feeling was the norm for spirits of her splendour. I can comphrehend her emotions more clearer, and I do believe she's willing to give ye her crux, if ye have something to imbue.";
+                                    Main.npcChatText = Language.GetTextValue("Mods.Redemption.Dialogue.Calavia.NoCruxDialogue");
                                     Main.npcChatCornerItem = ModContent.ItemType<EmptyCruxCard>();
                                 }
                             }
                             else if (RedeQuest.calaviaVar is 13 or 14)
                             {
-                                Main.npcChatText = "The spirit I carry is of the original wielder of the Blade of the Mountain, Kyretha, who was slain in an isolated range. She was part of a \"unique\" group who's souls were bound to another, and due to this I was tasked with retrieving her body and soul to send back to the Bastion of Arum - The barons deemed this of utmost priority. I recognise the taboo nature of ensnaring a spirit in glass, but I hope ye understand now.";
+                                Main.npcChatText = Language.GetTextValue("Mods.Redemption.Dialogue.Calavia.ConfrontLine2");
                                 if (RedeQuest.calaviaVar < 14)
                                 {
                                     RedeQuest.calaviaVar = 14;
@@ -620,7 +616,7 @@ namespace Redemption.NPCs.Minibosses.Calavia
                             }
                             else
                             {
-                                Main.npcChatText = "Hm? Oh, so ye noticed. Yeah, I carry a bauble containing a spirit. I didn't elaborate on my job because it's none of ya business. Alas, clarification is in order so ye don't get any wrong ideas.";
+                                Main.npcChatText = Language.GetTextValue("Mods.Redemption.Dialogue.Calavia.ConfrontLine1");
                                 if (RedeQuest.calaviaVar < 13)
                                 {
                                     RedeQuest.calaviaVar = 13;
@@ -632,11 +628,11 @@ namespace Redemption.NPCs.Minibosses.Calavia
                         case 4:
                             if (HasHelmet > 0 && HasShield)
                             {
-                                Main.npcChatText = "Thank you for the help, and sorry for the trouble. What lies ahead makes me uneasy, but I'll make it through to reunite with my squadron and finally return to my family, there is no better motivation than that. Farewell, stranger.";
+                                Main.npcChatText = Language.GetTextValue("Mods.Redemption.Dialogue.Calavia.LeaveLine");
                             }
                             else
                             {
-                                Main.npcChatText = "... If ye insist. *sigh* This'll be a challenge, but I'll trust your judgement. I'll make it through  to reunite with my squadron and finally return to my family, there is no better motivation than that. Farewell, stranger.";
+                                Main.npcChatText = Language.GetTextValue("Mods.Redemption.Dialogue.Calavia.IntroLine11");
                             }
                             RedeQuest.calaviaVar = 20;
                             if (Main.netMode == NetmodeID.Server)

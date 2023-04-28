@@ -80,7 +80,7 @@ namespace Redemption.NPCs.Minibosses.Calavia
         public float[] oldrot = new float[6];
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Calavia");
+            //DisplayName.SetDefault("Calavia");
             Main.npcFrameCount[Type] = 20;
             NPCID.Sets.TrailCacheLength[NPC.type] = 6;
             NPCID.Sets.TrailingMode[NPC.type] = 1;
@@ -129,7 +129,7 @@ namespace Redemption.NPCs.Minibosses.Calavia
         }
         private Rectangle ShieldHitbox;
         public override bool CanHitPlayer(Player target, ref int cooldownSlot) => false;
-        public override bool? CanHitNPC(NPC target) => false;
+        public override bool CanHitNPC(NPC target) => false;
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
         {
             bestiaryEntry.Info.AddRange(new List<IBestiaryInfoElement> {
@@ -137,9 +137,9 @@ namespace Redemption.NPCs.Minibosses.Calavia
                 new FlavorTextBestiaryInfoElement(".")
             });
         }
-        public override void HitEffect(int hitDirection, double damage)
+        public override void HitEffect(NPC.HitInfo hit)
         {
-            if (damage > 1)
+            if (hit.Damage > 1)
             {
                 if (AIState is ActionState.Defeat && TimerRand > 0)
                     AITimer = 0;
@@ -196,38 +196,20 @@ namespace Redemption.NPCs.Minibosses.Calavia
             potionType = ItemID.Heart;
         }
         private bool blocked;
-        public override bool StrikeNPC(ref double damage, int defense, ref float knockback, int hitDirection, ref bool crit)
+        public override void ModifyIncomingHit(ref NPC.HitModifiers modifiers)
         {
+            if (potionCooldown[1] > 0)
+                modifiers.Defense.Base += 8;
             if (AIState is ActionState.Defeat && TimerRand is 0)
-                damage /= 50;
-            bool vDmg = false;
+                modifiers.FinalDamage /= 50;
             if (blocked && NPC.RedemptionGuard().GuardPoints >= 0)
             {
-                NPC.RedemptionGuard().GuardHit(NPC, ref vDmg, ref damage, ref knockback, SoundID.Tink, 0.1f, true);
-                blocked = false;
-                if (NPC.RedemptionGuard().GuardPoints >= 0)
-                    return vDmg;
+                modifiers.DisableCrit();
+                modifiers.ModifyHitInfo += (ref NPC.HitInfo n) => NPC.RedemptionGuard().GuardHit(ref n, NPC, SoundID.Tink, 0.1f, true, DustID.Iron, default, 10, 1, 200);
             }
-            if (NPC.RedemptionGuard().GuardPoints <= 0 && !NPC.RedemptionGuard().GuardBroken)
-            {
-                if (Main.netMode != NetmodeID.Server)
-                {
-                    Gore.NewGore(NPC.GetSource_FromThis(), NPC.position, NPC.velocity, ModContent.Find<ModGore>("Redemption/CalaviaShieldGore1").Type, 1);
-                    Gore.NewGore(NPC.GetSource_FromThis(), NPC.position, NPC.velocity, ModContent.Find<ModGore>("Redemption/CalaviaShieldGore2").Type, 1);
-                }
-                EmoteBubble.NewBubble(1, new WorldUIAnchor(NPC), 120);
-                if (!Main.dedServ)
-                {
-                    Dialogue d1 = new(NPC, "Oru'takh!", Color.White, Color.Gray, voice, 0.01f, 1f, .5f, true, bubble: bubble);
-                    ChatUI.Visible = true;
-                    ChatUI.Add(d1);
-                }
-            }
-            NPC.RedemptionGuard().GuardBreakCheck(NPC, DustID.Iron, CustomSounds.GuardBreak, 10, 1, 200);
             blocked = false;
-            return true;
         }
-        public override void ModifyHitByItem(Player player, Item item, ref int damage, ref float knockback, ref bool crit)
+        public override void ModifyHitByItem(Player player, Item item, ref NPC.HitModifiers modifiers)
         {
             if (NPC.RedemptionGuard().GuardBroken)
                 return;
@@ -239,10 +221,17 @@ namespace Redemption.NPCs.Minibosses.Calavia
                 return;
 
             if (player.Redemption().meleeHitbox.Intersects(ShieldHitbox))
-                blocked = true;
+            {
+                if (NPC.RedemptionGuard().GuardPoints >= 0)
+                {
+                    modifiers.DisableCrit();
+                    modifiers.ModifyHitInfo += (ref NPC.HitInfo n) => NPC.RedemptionGuard().GuardHit(ref n, NPC, SoundID.Tink, 0.1f, true, DustID.Iron, default, 10, 1, 200);
+                    blocked = false;
+                }
+            }
         }
         private readonly List<int> projBlocked = new();
-        public override void ModifyHitByProjectile(Projectile projectile, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
+        public override void ModifyHitByProjectile(Projectile projectile, ref NPC.HitModifiers modifiers)
         {
             if (NPC.RedemptionGuard().GuardBroken)
                 return;
@@ -262,7 +251,12 @@ namespace Redemption.NPCs.Minibosses.Calavia
                 projBlocked.Remove(projectile.whoAmI);
                 if (!projectile.ProjBlockBlacklist() && projectile.penetrate > 1)
                     projectile.timeLeft = Math.Min(projectile.timeLeft, 2);
-                blocked = true;
+                if (NPC.RedemptionGuard().GuardPoints >= 0)
+                {
+                    modifiers.DisableCrit();
+                    modifiers.ModifyHitInfo += (ref NPC.HitInfo n) => NPC.RedemptionGuard().GuardHit(ref n, NPC, SoundID.Tink, 0.1f, true, DustID.Iron, default, 10, 1, 200);
+                    blocked = false;
+                }
             }
         }
         private Texture2D bubble;
@@ -285,10 +279,6 @@ namespace Redemption.NPCs.Minibosses.Calavia
                 if (potionCooldown[i] > 0)
                     potionCooldown[i]--;
             }
-            if (potionCooldown[1] > 0) // TODO: 1.4 damage rework has defense stat
-                NPC.defense = 31;
-            else
-                NPC.defense = 23;
             dodgeCooldown--;
             dodgeCooldown = (int)MathHelper.Max(0, dodgeCooldown);
             RegenCheck();
@@ -308,8 +298,7 @@ namespace Redemption.NPCs.Minibosses.Calavia
                         if (!projectile.ProjBlockBlacklist() && projectile.penetrate != -1)
                         {
                             blocked = true;
-                            NPC.RedemptionGuard().GuardDamage = projectile.damage;
-                            NPC.StrikeNPC(projectile.damage, projectile.damage, 1, false);
+                            NPC.SimpleStrikeNPC(projectile.damage, 1);
                             projectile.Kill();
                         }
                         if (!projBlocked.Contains(projectile.whoAmI))
@@ -1018,9 +1007,9 @@ namespace Redemption.NPCs.Minibosses.Calavia
                 }
             }
         }
-        public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
+        public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)
         {
-            NPC.lifeMax = (int)(NPC.lifeMax * 0.75f * bossLifeScale);
+            NPC.lifeMax = (int)(NPC.lifeMax * 0.75f * balance * bossAdjustment);
             NPC.damage = (int)(NPC.damage * 0.6f);
         }
         public override bool? CanBeHitByItem(Player player, Item item) => dodgeCooldown <= 20 ? null : false;

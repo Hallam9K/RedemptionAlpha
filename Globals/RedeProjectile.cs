@@ -47,11 +47,11 @@ namespace Redemption.Globals
             }
             return base.PreAI(projectile);
         }
-        public override void ModifyHitNPC(Projectile projectile, Terraria.NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
+        public override void ModifyHitNPC(Projectile projectile, Terraria.NPC target, ref Terraria.NPC.HitModifiers modifiers)
         {
             if (ReflectDamageIncrease is 0)
                 return;
-            damage = (int)(damage * ReflectDamageIncrease);
+            modifiers.FinalDamage *= ReflectDamageIncrease;
         }
         private readonly int[] bannedArenaProjs = new int[]
         {

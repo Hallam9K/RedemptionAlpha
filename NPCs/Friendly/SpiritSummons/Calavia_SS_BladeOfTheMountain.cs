@@ -115,20 +115,20 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
             Projectile.Center = npc.Center;
             return false;
         }
-        public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
+        public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
         {
-            damage *= 4;
+            modifiers.FinalDamage *= 4;
             NPC npc = Main.npc[(int)Projectile.ai[0]];
             float tipBonus;
             tipBonus = npc.Distance(target.Center) / 3;
             tipBonus = MathHelper.Clamp(tipBonus, 0, 20);
 
-            damage += (int)tipBonus;
-
-            RedeProjectile.Decapitation(target, ref damage, ref crit);
+            modifiers.FlatBonusDamage += (int)tipBonus;
         }
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
+            RedeProjectile.Decapitation(target, ref damageDone, ref hit.Crit);
+
             NPC npc = Main.npc[(int)Projectile.ai[0]];
             if (target.DistanceSQ(npc.Center) > 100 * 100 && target.knockBackResist > 0 && !target.RedemptionNPCBuff().iceFrozen)
             {
@@ -174,7 +174,7 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
         public override string Texture => "Redemption/Items/Weapons/PreHM/Melee/BladeOfTheMountain";
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Blade of the Mountain");
+            // DisplayName.SetDefault("Blade of the Mountain");
             ProjectileID.Sets.TrailCacheLength[Projectile.type] = 4;
             ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
             ElementID.ProjIce[Type] = true;
@@ -187,7 +187,7 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
             Projectile.DamageType = DamageClass.Summon;
         }
         public override bool? CanHitNPC(NPC target) => Projectile.ai[1] > 1 && Projectile.ai[1] != 3 && Projectile.ai[1] != 4 ? null : false;
-        public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection) => damage *= 4;
+        public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers) => modifiers.FinalDamage *= 4;
         private Vector2 startVector;
         private Vector2 vector;
         private float speed;
@@ -402,8 +402,8 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
             Projectile.friendly = true;
             Projectile.hostile = false;
         }
-        public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection) => damage *= 4;
+        public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers) => modifiers.FinalDamage *= 4;
         public override bool? CanHitNPC(NPC target) => !target.friendly && Projectile.frame < 2;
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) => target.AddBuff(BuffID.Frostburn, 120);
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) => target.AddBuff(BuffID.Frostburn, 120);
     }
 }

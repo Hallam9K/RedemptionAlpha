@@ -50,7 +50,7 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
         public float[] oldrot = new float[6];
         public override void SetSafeStaticDefaults()
         {
-            DisplayName.SetDefault("Kyretha");
+            // DisplayName.SetDefault("Kyretha");
             Main.npcFrameCount[Type] = 20;
             NPCID.Sets.TrailCacheLength[NPC.type] = 6;
             NPCID.Sets.TrailingMode[NPC.type] = 1;
@@ -87,10 +87,10 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
             NPC.GetGlobalNPC<ElementalNPC>().OverrideMultiplier[ElementID.Fire] *= .8f;
         }
         public override bool CanHitPlayer(Player target, ref int cooldownSlot) => false;
-        public override bool? CanHitNPC(NPC target) => false;
-        public override void HitEffect(int hitDirection, double damage)
+        public override bool CanHitNPC(NPC target) => false;
+        public override void HitEffect(NPC.HitInfo hit)
         {
-            if (damage > 1)
+            if (hit.Damage > 1)
                 SoundEngine.PlaySound(SoundID.NPCHit4);
             if (NPC.life <= 0)
             {
@@ -571,6 +571,7 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
 
         public override bool? CanBeHitByItem(Player player, Item item) => dodgeCooldown <= 20 ? null : false;
         public override bool? CanBeHitByProjectile(Projectile projectile) => dodgeCooldown <= 20 ? null : false;
+        public override bool CanBeHitByNPC(NPC attacker) => dodgeCooldown <= 20;
         private bool customArm;
         public float customArmRot;
         private bool HoldIcefall;

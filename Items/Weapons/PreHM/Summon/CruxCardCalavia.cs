@@ -20,12 +20,12 @@ namespace Redemption.Items.Weapons.PreHM.Summon
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Crux Card: Kyretha");
-            Tooltip.SetDefault("Summons the great spirit of Kyretha, Blade of the Mountain\n" +
+            // DisplayName.SetDefault("Crux Card: Kyretha");
+            /* Tooltip.SetDefault("Summons the great spirit of Kyretha, Blade of the Mountain\n" +
                 "Right-click to tug the spirit back to your position, consuming 3 [i:Redemption/LostSoul]\n" +
                 "Consumes 30 [i:Redemption/LostSoul] on use\n" +
-                "Can only use one Spirit Card at a time");
-            SacrificeTotal = 1;
+                "Can only use one Spirit Card at a time"); */
+            Item.ResearchUnlockCount = 1;
         }
 
         public override void SetDefaults()
@@ -130,7 +130,7 @@ namespace Redemption.Items.Weapons.PreHM.Summon
                     if (Main.netMode != NetmodeID.MultiplayerClient)
                         NPC.NewNPC(new EntitySource_BossSpawn(player), (int)player.Center.X + 10, (int)player.Center.Y, type, ai3: player.whoAmI);
                     else
-                        NetMessage.SendData(MessageID.SpawnBoss, number: player.whoAmI, number2: type);
+                        NetMessage.SendData(MessageID.SpawnBossUseLicenseStartEvent, number: player.whoAmI, number2: type);
                 }
             }
             return true;

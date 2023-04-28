@@ -10,10 +10,7 @@ using System;
 using Redemption.Base;
 using Redemption.BaseExtension;
 using Redemption.Buffs.NPCBuffs;
-using Redemption.Projectiles.Melee;
-using static System.Formats.Asn1.AsnWriter;
 using Redemption.Projectiles.Magic;
-using Redemption.Items.Weapons.PreHM.Melee;
 
 namespace Redemption.NPCs.Minibosses.Calavia
 {
@@ -22,7 +19,7 @@ namespace Redemption.NPCs.Minibosses.Calavia
         public override string Texture => "Redemption/Items/Weapons/PreHM/Melee/BladeOfTheMountain_Slash";
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Blade of the Mountain");
+            // DisplayName.SetDefault("Blade of the Mountain");
             Main.projFrames[Projectile.type] = 10;
             ElementID.ProjIce[Type] = true;
         }
@@ -142,16 +139,16 @@ namespace Redemption.NPCs.Minibosses.Calavia
         {
             hitbox = Projectile.Redemption().swordHitbox;
         }
-        public override void ModifyHitPlayer(Player target, ref int damage, ref bool crit)
+        public override void ModifyHitPlayer(Player target, ref Player.HurtModifiers modifiers)
         {
             NPC npc = Main.npc[(int)Projectile.ai[0]];
             float tipBonus;
             tipBonus = npc.Distance(target.Center) / 3;
             tipBonus = MathHelper.Clamp(tipBonus, 0, 20);
 
-            damage += (int)tipBonus;
+            modifiers.FinalDamage.Base += (int)tipBonus;
         }
-        public override void OnHitPlayer(Player target, int damage, bool crit)
+        public override void OnHitPlayer(Player target, Player.HurtInfo info)
         {
             NPC npc = Main.npc[(int)Projectile.ai[0]];
             if (Main.rand.NextBool(2) && target.DistanceSQ(npc.Center) > 100 * 100 && !target.HasBuff(BuffID.Frozen))
@@ -161,19 +158,18 @@ namespace Redemption.NPCs.Minibosses.Calavia
                 target.AddBuff(BuffID.Frozen, 40);
             }
         }
-        public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
+        public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
         {
             NPC npc = Main.npc[(int)Projectile.ai[0]];
             float tipBonus;
             tipBonus = npc.Distance(target.Center) / 3;
             tipBonus = MathHelper.Clamp(tipBonus, 0, 20);
 
-            damage += (int)tipBonus;
-
-            RedeProjectile.Decapitation(target, ref damage, ref crit);
+            modifiers.FlatBonusDamage += (int)tipBonus;
         }
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
+            RedeProjectile.Decapitation(target, ref damageDone, ref hit.Crit);
             NPC npc = Main.npc[(int)Projectile.ai[0]];
             if (target.DistanceSQ(npc.Center) > 100 * 100 && target.knockBackResist > 0 && !target.RedemptionNPCBuff().iceFrozen)
             {
@@ -214,7 +210,7 @@ namespace Redemption.NPCs.Minibosses.Calavia
         public float[] oldrot = new float[4];
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Blade of the Mountain");
+            // DisplayName.SetDefault("Blade of the Mountain");
             ProjectileID.Sets.TrailCacheLength[Projectile.type] = 4;
             ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
             ElementID.ProjIce[Type] = true;

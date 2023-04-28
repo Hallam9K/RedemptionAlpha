@@ -25,7 +25,7 @@ namespace Redemption.NPCs.Minibosses.Calavia
         public ref float TimerRand => ref NPC.ai[2];
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Calavia");
+            // DisplayName.SetDefault("Calavia");
             Main.npcFrameCount[Type] = 20;
             NPCID.Sets.NPCBestiaryDrawModifiers value = new(0) { Hide = true };
             NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, value);

@@ -406,7 +406,7 @@ namespace Redemption.Globals.NPC
             if (dragonblaze)
                 modifiers.IncomingDamageMultiplier *= .85f;
             if (disarmed)
-                modifiers.IncomingDamageMultiplier *= .66f;
+                modifiers.IncomingDamageMultiplier /= 3;
         }
         public override void ModifyHitNPC(Terraria.NPC npc, Terraria.NPC target, ref Terraria.NPC.HitModifiers modifiers)
         {
@@ -415,7 +415,7 @@ namespace Redemption.Globals.NPC
             if (dragonblaze)
                 modifiers.FinalDamage *= .85f;
             if (disarmed)
-                modifiers.FinalDamage *= .66f;
+                modifiers.FinalDamage /= 3;
         }
         public override void DrawEffects(Terraria.NPC npc, ref Color drawColor)
         {

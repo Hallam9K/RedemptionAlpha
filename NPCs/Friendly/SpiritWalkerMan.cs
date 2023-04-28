@@ -240,8 +240,8 @@ namespace Redemption.NPCs.Friendly
                 if (!Main.LocalPlayer.HasItem(ModContent.ItemType<CruxCardCalavia>()))
                 {
                     if (RedeQuest.calaviaVar is 16)
-                        return "I can sense gratitude within Kyretha's spirit for confrontin' the lass and ultimately leading 'er to a path of freedom. I have a feelin' she'd be willin' to offer you something in return?";
-                    return "'Ey, ya see that lass over yonder? There be somethin' soulful she carries, I can sense it. Would you, out of the goodness of yer heart, confront her about it for me? Don't want to assume nothin', but she might be keepin' a spirit captive.";
+                        return Language.GetTextValue("Mods.Redemption.Dialogue.SpiritWalkerMan.CalaviaDialogue2");
+                    return Language.GetTextValue("Mods.Redemption.Dialogue.SpiritWalkerMan.CalaviaDialogue1");
                 }
             }
             bool wearingHat = BasePlayer.HasHelmet(Main.LocalPlayer, ModContent.ItemType<OldTophat>());

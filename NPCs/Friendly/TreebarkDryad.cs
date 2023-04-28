@@ -116,6 +116,7 @@ namespace Redemption.NPCs.Friendly
         public override bool CanHitNPC(NPC target) => false;
         public override bool? CanBeHitByItem(Player player, Item item) => item.axe > 0 ? null : false;
         public override bool? CanBeHitByProjectile(Projectile projectile) => projectile.Redemption().IsAxe ? null : false;
+        public override bool CanBeHitByNPC(NPC attacker) => false;
         private string setName;
         public override void ModifyTypeName(ref string typeName)
         {

@@ -9,8 +9,8 @@ namespace Redemption.Items.Placeable.Trophies
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Cockatrice Relic");
-			SacrificeTotal = 1;
+			// DisplayName.SetDefault("Cockatrice Relic");
+			Item.ResearchUnlockCount = 1;
 		}
 
 		public override void SetDefaults()

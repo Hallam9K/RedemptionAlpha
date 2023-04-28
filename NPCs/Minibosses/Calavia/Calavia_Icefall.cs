@@ -14,7 +14,7 @@ namespace Redemption.NPCs.Minibosses.Calavia
         public override string Texture => Redemption.EMPTY_TEXTURE;
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Ice Mist");
+            // DisplayName.SetDefault("Ice Mist");
         }
         public override void SetDefaults()
         {
@@ -63,7 +63,7 @@ namespace Redemption.NPCs.Minibosses.Calavia
         public override string Texture => "Redemption/Textures/IceMist";
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Ice Mist");
+            // DisplayName.SetDefault("Ice Mist");
         }
         public override void SetDefaults()
         {
