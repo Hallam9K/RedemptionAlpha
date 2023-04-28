@@ -76,7 +76,7 @@ namespace Redemption.NPCs.Minibosses.Calavia
         public override bool UsesPartyHat() => false;
         public override bool CanChat() => RedeQuest.calaviaVar < 21 && RedeQuest.calaviaVar != 15;
         public override bool CheckActive() => false;
-        DialogueChain chain = new();
+        readonly DialogueChain chain = new();
         public override void AI()
         {
             Player player = Main.player[NPC.target];

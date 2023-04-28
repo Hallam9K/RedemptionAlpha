@@ -149,11 +149,10 @@ namespace Redemption.NPCs.Friendly
                 chat.Add("Meanwhile every other tenant gives me a bit of a stink eye, " + Main.npc[cyborgID].GivenName + " seems to be fine with me. I don't blame the others, my kind tends to be very hateful towards living beings, more importantly the likes of you, that show a significant similarity to our creators.");
 
             if (Main.hardMode && NPC.downedMechBoss1 && NPC.downedMechBoss2 && NPC.downedMechBoss3)
+            {
                 chat.Add("Kari was our original creator. He was talented and respected in his field, and was ahead of his time with Artificial Intelligence. I and my kind are pretty much his children.");
-
-            if (Main.hardMode && NPC.downedMechBoss1 && NPC.downedMechBoss2 && NPC.downedMechBoss3)
                 chat.Add("Girus was the first AI, a precursor to our own. There's only one of her kind, and many of my kind. Her actions disgust me. I would rather not get deeper into that at the moment.");
-
+            }
             if (NPC.downedPlantBoss)
                 chat.Add("I've heard from the other tenants that you've slain a giant, sentient flower of Rosa variety in the jungle. I'd like to question you about if this is true. It is? Hmm...");
 
@@ -164,11 +163,10 @@ namespace Redemption.NPCs.Friendly
                 chat.Add("An eldritch lord of the moon... You know, this sounds like something right out of Epidotra. I'm not familiar with the lands outside this island, but I've met some of the more important figures. They seem like a good bunch.");
 
             if (RedeBossDowned.downedOmega1 || RedeBossDowned.downedOmega2)
+            {
                 chat.Add("You've defeated an Omega Prototype? First off, I've never heard her call or give someone such a title. Second off, oh no, she's already found this haven?");
-
-            if (RedeBossDowned.downedOmega1 || RedeBossDowned.downedOmega2)
                 chat.Add("Why am I concerned about the Prototypes? Well, Girus isn't a fan of your kind. She wiped out... All of them. Our creators. The animals. Gone. Even Kari. I want you to be extremely careful around her. She doesn't mess around.");
-
+            }
             if (RedeBossDowned.downedSlayer)
                 chat.Add("King Slayer? I know him, though he's a bit of... Well... I'm sure you know what I'm implying.");
             if (RedeBossDowned.downedVolt)
@@ -201,10 +199,14 @@ namespace Redemption.NPCs.Friendly
             chat.Add("I've got quite the stash of robot materials for your robotic needs. Just so you know, I got them because I was defending myself.");
             chat.Add("My home didn't always use to be a frozen, radioactive wasteland. Once Girus found out what Kari planned to use us - her 'children' - for, she snapped. Before this, she was happy to hear about us. But since then, she has changed...");
             chat.Add("I'm actually the first one of my kind to be made. I differ a lot from the others, as you can see. Lucky you, this also includes me not wanting to harm living beings. In fact, I was created with the purpose to take care of Kari, our creator.");
-            chat.Add("You've probably seen these necrotized husks of former living beings, that glow green with their crystals. The personnel from our birthplace never knew about their infectious properties before they were too late. Kari was the first to fall to the infection.");
-            chat.Add("A Geiger Muller is a handy tool if you don't possess any gear to protect from ionizing radiation. It'll cause a ticking noise when near hazardous material, and it'll intensify the more ionizing the material is. A quiet, slow ticking isn't anything to worry about, but a quick and intense ticking you'll want to stay away from. Ear-piercing screeching noise is something you'll want to stay away as far as possible.");
-            chat.Add("You'll want to avoid any hazardous environments if you don't possess the gear to nullify the hazards. A gas mask is almost necessary if you're going near any place that has radioactive fallout. Rain in these areas are also acidic, and may cause ARS, so avoid rain unless you've got a Hazmat suit. You may also want to grab some Anti-Crystallazion needles, as the infected tend to roam around radioactive areas for an unknown reason.");
-            chat.Add("The deadly thing with radiation is, at first, you won't even know you've got it. The first symptoms usually start minutes after, beginning with a headache most likely, then dizziness, fatigue, bleeding, skin burns, a fever, hair loss, and death.");
+            if (RedeBossDowned.downedJanitor)
+                chat.Add("You've probably seen these necrotized husks of former living beings, that glow green with their crystals. The personnel from our birthplace never knew about their infectious properties before they were too late. Kari was the first to fall to the infection.");
+            if (RedeBossDowned.nukeDropped || RedeBossDowned.downedJanitor)
+            {
+                chat.Add("A Geiger Muller is a handy tool if you don't possess any gear to protect from ionizing radiation. It'll cause a ticking noise when near hazardous material, and it'll intensify the more ionizing the material is. A quiet, slow ticking isn't anything to worry about, but a quick and intense ticking you'll want to stay away from. Ear-piercing screeching noise is something you'll want to stay away as far as possible.");
+                chat.Add("You'll want to avoid any hazardous environments if you don't possess the gear to nullify the hazards. A gas mask is almost necessary if you're going near any place that has radioactive fallout. Rain in these areas are also acidic, and may cause ARS, so avoid rain unless you've got a Hazmat suit. You may also want to grab some Anti-Crystallazion needles, as the infected tend to roam around radioactive areas for an unknown reason.");
+                chat.Add("The deadly thing with radiation is, at first, you won't even know you've got it. The first symptoms usually start minutes after, beginning with a headache most likely, then dizziness, fatigue, bleeding, skin burns, a fever, hair loss, and death.");
+            }
             chat.Add("Please, don't be afraid of me. I'm unlike the others of my kind, where I absolutely do not want to cause any harm to your kind.");
             return chat;
         }
