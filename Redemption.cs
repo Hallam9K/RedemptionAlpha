@@ -58,6 +58,7 @@ namespace Redemption
         public static bool AprilFools => DateTime.Now is DateTime { Month: 4, Day: 1 };
         public static bool FinlandDay => DateTime.Now is DateTime { Month: 12, Day: 6 };
 
+        public static BasicEffect basicEffect;
         public static RenderTargetManager Targets;
         public static Effect GlowTrailShader;
         public static TrailManager TrailManager;
@@ -88,6 +89,7 @@ namespace Redemption
             if (!Main.dedServ)
             {
                 TrailManager = new TrailManager(this);
+                AdditiveCallManager.Load();
 
                 dragonLeadCapeID = EquipLoader.AddEquipTexture(this, "Redemption/Items/Armor/PreHM/DragonLead/DragonLeadRibplate_Back", EquipType.Back, ModContent.GetInstance<DragonLeadRibplate>());
                 shinkiteCapeID = EquipLoader.AddEquipTexture(this, "Redemption/Items/Armor/PostML/Shinkite/ShinkiteChestplate_Back", EquipType.Back, ModContent.GetInstance<ShinkiteChestplate>());
@@ -100,9 +102,21 @@ namespace Redemption
                 halmMaleLegID = EquipLoader.AddEquipTexture(this, "Redemption/Items/Armor/Vanity/Dev/HallamLeggings_Legs", EquipType.Legs, ModContent.GetModItem(ModContent.ItemType<UnconLegs2>()));
                 halmFemLegID = EquipLoader.AddEquipTexture(this, "Redemption/Items/Armor/Vanity/Dev/HallamLeggings_FemaleLegs", EquipType.Legs, ModContent.GetModItem(ModContent.ItemType<UnconLegs2>()));
 
+                int width = Main.graphics.GraphicsDevice.Viewport.Width;
+                int height = Main.graphics.GraphicsDevice.Viewport.Height;
+                Vector2 zoom = Main.GameViewMatrix.Zoom;
+                Matrix view = Matrix.CreateLookAt(Vector3.Zero, Vector3.UnitZ, Vector3.Up) * Matrix.CreateTranslation(width / 2, height / -2, 0) * Matrix.CreateRotationZ(MathHelper.Pi) * Matrix.CreateScale(zoom.X, zoom.Y, 1f);
+                Matrix projection = Matrix.CreateOrthographic(width, height, 0, 1000);
+
                 AssetRequestMode immLoad = AssetRequestMode.ImmediateLoad;
                 Main.QueueMainThreadAction(() =>
                 {
+                    basicEffect = new BasicEffect(Main.graphics.GraphicsDevice)
+                    {
+                        VertexColorEnabled = true,
+                        View = view,
+                        Projection = projection
+                    };
                     Texture2D bubbleTex = ModContent.Request<Texture2D>("Redemption/Textures/BubbleShield", immLoad).Value;
                     PremultiplyTexture(ref bubbleTex);
                     Texture2D portalTex = ModContent.Request<Texture2D>("Redemption/Textures/PortalTex", immLoad).Value;
@@ -196,6 +210,7 @@ namespace Redemption
         public override void Unload()
         {
             TrailManager = null;
+            AdditiveCallManager.Unload();
         }
         public override void PostSetupContent()
         {

@@ -29,12 +29,10 @@ namespace Redemption.Tiles.Natural
             DustType = DustID.GreenTorch;
             Main.tileLighted[Type] = true;
         }
-
         public override void NumDust(int i, int j, bool fail, ref int num)
         {
             num = fail ? 1 : 3;
         }
-
         public override void KillMultiTile(int i, int j, int frameX, int frameY)
         {
             if (Main.hardMode)

@@ -14,10 +14,17 @@ namespace Redemption.Globals
 		/// (up -> down is back -> forward)
 		/// </summary>
 		Texture2D GetTexture(Mod mod);
+		Texture2D GetGlowmaskTexture(Mod mod);
 
-		int NumberOfSegments { get; }
+        int NumberOfSegments { get; }
+        int MaxFrames { get; }
+        int FrameCounterMax { get; }
+        bool Glow { get; }
+        bool HasGlowmask { get; }
+        int Shader { get; }
+        int GlowmaskShader { get; }
 
-		Rectangle GetSourceRect(Texture2D texture, int index);
+        Rectangle GetSourceRect(Texture2D texture, int index);
 
 		Color GetColor(PlayerDrawSet drawInfo, Color baseColour);
 

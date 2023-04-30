@@ -146,7 +146,7 @@ namespace Redemption.NPCs.Bosses.ADD
             Projectile.velocity *= 0;
             Projectile.timeLeft = 2;
             Projectile.tileCollide = false;
-            if (fakeTimer >= 60)
+            if (fakeTimer++ >= 60)
                 Projectile.Kill();
         }
         public override void ModifyHitPlayer(Player target, ref Player.HurtModifiers modifiers)

@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Redemption.BaseExtension;
 using Redemption.Biomes;
 using Redemption.Dusts;
+using Redemption.Effects;
 using Redemption.Globals;
 using Redemption.Globals.NPC;
 using Redemption.Globals.World;
@@ -12,6 +13,7 @@ using Redemption.Items.Usable.Potions;
 using Redemption.Items.Weapons.PreHM.Melee;
 using Redemption.Items.Weapons.PreHM.Ranged;
 using Redemption.Items.Weapons.PreHM.Summon;
+using Redemption.Projectiles.Minions;
 using System;
 using System.Collections.Generic;
 using Terraria;
@@ -26,7 +28,7 @@ using Terraria.ModLoader;
 namespace Redemption.NPCs.FowlMorning
 {
     [AutoloadBossHead]
-    public class Cockatrice : ModNPC
+    public class Cockatrice : ModNPC, IDrawAdditive
     {
         public enum ActionState
         {
@@ -41,7 +43,6 @@ namespace Redemption.NPCs.FowlMorning
         public ref float AITimer => ref NPC.ai[1];
         public ref float TimerRand => ref NPC.ai[2];
         public ref float TimerRand2 => ref NPC.ai[3];
-        public float[] oldrot = new float[5];
         public override void SetStaticDefaults()
         {
             Main.npcFrameCount[NPC.type] = 16;
@@ -105,6 +106,8 @@ namespace Redemption.NPCs.FowlMorning
         private float FlareTimer;
         private bool Flare;
         private static IPhysChain tailChain;
+        private Vector2 playerOld;
+        private float teleOpacity;
         public override void AI()
         {
             NPC.GetGlobalNPC<NPCPhysChain>().npcPhysChain[0] = tailChain;
@@ -123,6 +126,7 @@ namespace Redemption.NPCs.FowlMorning
             switch (AIState)
             {
                 case ActionState.Idle:
+                    teleOpacity = 0;
                     if (AITimer++ >= TimerRand && NPC.velocity.Y == 0)
                     {
                         AITimer = 0;
@@ -141,15 +145,23 @@ namespace Redemption.NPCs.FowlMorning
                     NPC.velocity.X *= .2f;
                     if (TimerRand == 0)
                     {
+                        teleOpacity += 0.01f;
+                        teleOpacity = MathHelper.Min(teleOpacity, 0.8f);
+                        if (AITimer < 110)
+                            playerOld = player.Center + player.velocity;
                         if (AITimer++ == 18)
                         {
                             FlareTimer = 0;
                             Flare = true;
-                            NPC.Shoot(NPC.Center, ModContent.ProjectileType<Cockatrice_Ray_Tele>(), NPC.damage, NPC.DirectionTo(player.Center + player.velocity), false, SoundID.Item1, ai1: NPC.whoAmI);
                         }
-                        if (AITimer == 108)
-                            SoundEngine.PlaySound(SoundID.Item4 with { Volume = .5f, Pitch = -.6f}, NPC.position);
-                        if (AITimer >= 138)
+                        if (AITimer == 110)
+                            SoundEngine.PlaySound(SoundID.Item4 with { Volume = .5f, Pitch = -.6f }, NPC.position);
+                        if (AITimer == 130)
+                        {
+                            Vector2 npcCenter = NPC.Center + new Vector2(20 * NPC.spriteDirection, -14);
+                            NPC.Shoot(npcCenter, ModContent.ProjectileType<Cockatrice_Ray>(), NPC.damage, npcCenter.DirectionTo(playerOld) * 3f, true, SoundID.NPCDeath17, NPC.whoAmI);
+                        }
+                        if (AITimer >= 130)
                         {
                             AITimer = 0;
                             TimerRand++;
@@ -157,6 +169,38 @@ namespace Redemption.NPCs.FowlMorning
                     }
                     break;
             }
+        }
+        private float BeamSize;
+        private float BeamStrength;
+        public void AdditiveCall(SpriteBatch sB, Vector2 screenPos)
+        {
+            int maxSize = 20;
+            BeamSize = Math.Min(BeamSize + 1, maxSize);
+            BeamStrength = BeamSize / maxSize;
+            if (AIState is ActionState.Stare && AITimer >= 18 && AITimer < 130)
+                DrawTether(Main.player[NPC.target], screenPos, Color.Red, Color.Red, BeamSize, BeamStrength * teleOpacity);
+        }
+        public void DrawTether(Player Target, Vector2 screenPos, Color color1, Color color2, float Size, float Strength)
+        {
+            Effect effect = ModContent.Request<Effect>("Redemption/Effects/Beam", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+            effect.Parameters["uTexture"].SetValue(ModContent.Request<Texture2D>("Redemption/Textures/Trails/GlowTrail", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value);
+            effect.Parameters["progress"].SetValue(Main.GlobalTimeWrappedHourly / 3);
+            effect.Parameters["uColor"].SetValue(color1.ToVector4());
+            effect.Parameters["uSecondaryColor"].SetValue(color2.ToVector4());
+
+            Vector2 npcCenter = NPC.Center + new Vector2(10 * NPC.spriteDirection, -24);
+            Vector2 dist =  playerOld - npcCenter;
+
+            TrianglePrimitive tri = new()
+            {
+                TipPosition = npcCenter - screenPos,
+                Rotation = dist.ToRotation(),
+                Height = Size + 20 + dist.Length() * 1.5f,
+                Color = Color.White * Strength,
+                Width = Size + ((Target.width + Target.height) / 2f)
+            };
+
+            PrimitiveRenderer.DrawPrimitiveShape(tri, effect);
         }
         public override bool? CanFallThroughPlatforms() => NPC.Redemption().fallDownPlatform;
         public override void FindFrame(int frameHeight)
@@ -275,6 +319,7 @@ namespace Redemption.NPCs.FowlMorning
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<GreneggLauncher>(), 5));
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Halbirdhouse>(), 5));
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<NestWand>(), 5));
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Grain>(), 100));
             npcLoot.Add(ItemDropRule.ByCondition(new OnFireCondition(), ModContent.ItemType<FriedChicken>(), 1, 2, 3));
         }
         public override void OnHitByItem(Player player, Item item, NPC.HitInfo hit, int damageDone)
@@ -322,8 +367,15 @@ namespace Redemption.NPCs.FowlMorning
         {
             return ModContent.Request<Texture2D>("Redemption/NPCs/FowlMorning/Cockatrice_Tail").Value;
         }
+        public Texture2D GetGlowmaskTexture(Mod mod) => null;
 
         public int NumberOfSegments => 5;
+        public int MaxFrames => 1;
+        public int FrameCounterMax => 0;
+        public bool Glow => false;
+        public bool HasGlowmask => false;
+        public int Shader => 0;
+        public int GlowmaskShader => 0;
 
         public Color GetColor(PlayerDrawSet drawInfo, Color baseColour)
         {

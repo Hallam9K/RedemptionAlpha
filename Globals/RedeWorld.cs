@@ -447,9 +447,9 @@ namespace Redemption.Globals
         }
         public override void ClearWorld()
         {
-            if (Redemption.TrailManager != null)
-                Redemption.TrailManager.ClearAllTrails(); //trails break on world unload and reload(their projectile is still counted as being active???), so this just clears them all on reload
-
+            Redemption.TrailManager?.ClearAllTrails();
+            if (!Main.dedServ)
+                AdditiveCallManager.Unload();
             if (!Main.dedServ && ChatUI.Visible)
                 ChatUI.Clear();
 

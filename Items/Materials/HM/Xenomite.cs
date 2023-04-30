@@ -1,5 +1,6 @@
 using Redemption.Buffs.Debuffs;
 using Redemption.Items.Materials.PreHM;
+using Redemption.Tiles.Furniture.Lab;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
@@ -27,7 +28,7 @@ namespace Redemption.Items.Materials.HM
         {
             CreateRecipe()
                 .AddIngredient(ModContent.ItemType<XenomiteShard>(), 4)
-                .AddTile(TileID.MythrilAnvil)
+                .AddTile(ModContent.TileType<XeniumRefineryTile>())
                 .DisableDecraft()
                 .Register();
 

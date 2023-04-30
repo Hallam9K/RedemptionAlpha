@@ -9,7 +9,7 @@ using Terraria.DataStructures;
 
 namespace Redemption.Tiles.Trophies
 {
-	public class OmegaTrophyTile : ModTile
+	public class OmegaCleaverTrophyTile : ModTile
 	{
 		public override void SetStaticDefaults()
 		{

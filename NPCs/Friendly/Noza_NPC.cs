@@ -213,8 +213,15 @@ namespace Redemption.NPCs.Friendly
         {
             return ModContent.Request<Texture2D>("Redemption/NPCs/Friendly/Noza_NPC_Tail").Value;
         }
+        public Texture2D GetGlowmaskTexture(Mod mod) => null;
 
         public int NumberOfSegments => 6;
+        public int MaxFrames => 1;
+        public int FrameCounterMax => 0;
+        public bool Glow => false;
+        public bool HasGlowmask => false;
+        public int Shader => 0;
+        public int GlowmaskShader => 0;
 
         public Color GetColor(PlayerDrawSet drawInfo, Color baseColour)
         {
