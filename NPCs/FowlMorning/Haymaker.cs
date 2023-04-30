@@ -17,6 +17,7 @@ using Microsoft.Xna.Framework;
 using Redemption.NPCs.Bosses.FowlEmperor;
 using Redemption.Items.Weapons.PreHM.Summon;
 using Redemption.Biomes;
+using Redemption.Items.Accessories.PreHM;
 
 namespace Redemption.NPCs.FowlMorning
 {
@@ -171,6 +172,7 @@ namespace Redemption.NPCs.FowlMorning
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<NestWand>(), 60));
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Grain>(), 200));
             npcLoot.Add(ItemDropRule.ByCondition(new OnFireCondition(), ModContent.ItemType<FriedChicken>(), 4));
         }
         public override void OnHitByItem(Player player, Item item, int damage, float knockback, bool crit)

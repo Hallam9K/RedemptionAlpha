@@ -112,7 +112,7 @@ namespace Redemption.Globals.World
                     4 => 60,
                     5 => 80,
                     6 => 100,
-                    7 => 300,
+                    7 => 500,
                     _ => 15,
                 };
                 if (FowlMorningWorld.ChickPoints >= maxPoints)
@@ -186,7 +186,8 @@ namespace Redemption.Globals.World
                 },
                 new Dictionary<int, float> { // 8
                     {ModContent.NPCType<RoosterBooster>(), Terraria.NPC.CountNPCS(ModContent.NPCType<RoosterBooster>()) < 4 ? .6f : 0f },
-                    {ModContent.NPCType<Cockatrice>(), Terraria.NPC.CountNPCS(ModContent.NPCType<Cockatrice>()) < 3 ? .2f : 0f },
+                    {ModContent.NPCType<Cockatrice>(), Terraria.NPC.CountNPCS(ModContent.NPCType<Cockatrice>()) < 2 ? .2f : 0f },
+                    {ModContent.NPCType<Basan>(), Terraria.NPC.CountNPCS(ModContent.NPCType<Basan>()) < 1 ? 10f : 0f },
                 },
             };
         }

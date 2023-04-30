@@ -430,9 +430,11 @@ namespace Redemption.Globals
                 Vector2 gathicPortalPos = new((RedeGen.gathicPortalPoint.X + 42) * 16, (RedeGen.gathicPortalPoint.Y + 20) * 16);
                 LabArea.SpawnNPCInWorld(gathicPortalPos, ModContent.NPCType<Calavia_Intro>());
             }
-
-            if (Redemption.TrailManager != null)
-                Redemption.TrailManager.ClearAllTrails(); //trails break on world unload and reload(their projectile is still counted as being active???), so this just clears them all on reload
+            if (!Main.dedServ)
+            {
+                AdditiveCallManager.Load();
+            }
+            Redemption.TrailManager?.ClearAllTrails();
 
             alignment = 0;
             DayNightCount = 0;
@@ -466,9 +468,11 @@ namespace Redemption.Globals
         }
         public override void OnWorldUnload()
         {
-            if (Redemption.TrailManager != null)
-                Redemption.TrailManager.ClearAllTrails(); //trails break on world unload and reload(their projectile is still counted as being active???), so this just clears them all on reload
-
+            Redemption.TrailManager?.ClearAllTrails();
+            if (!Main.dedServ)
+            {
+                AdditiveCallManager.Unload();
+            }
             if (!Main.dedServ && ChatUI.Visible)
                 ChatUI.Clear();
 

@@ -26,10 +26,11 @@ namespace Redemption.Projectiles.Magic
             Projectile.extraUpdates = 3;
             Projectile.timeLeft = 90;
         }
-
+        private float opacityFade = 1;
         public override void AI()
         {
             Lighting.AddLight(Projectile.Center, 0.6f, 0.3f, 0f);
+            Projectile.velocity.Y -= 0.01f;
             if (Projectile.ai[0]++ > 0)
             {
                 float scale = 1f;
@@ -53,9 +54,16 @@ namespace Redemption.Projectiles.Magic
                 {
                     ParticleManager.NewParticle(RedeHelper.RandAreaInEntity(Projectile), Projectile.velocity * 0.5f * velIncrease, new EmberParticle(), Color.White, scale * 0.6f, 10);
                 }
+                if (Main.rand.NextBool(Projectile.ai[0] > 40 ? 12 : 6))
+                {
+                    ParticleManager.NewParticle(RedeHelper.RandAreaInEntity(Projectile), Projectile.velocity * 0.5f * velIncrease, new EmberParticle(), Color.White, scale * 1f, 10, 2);
+                }
             }
         }
-
+        public override void OnHitPlayer(Player target, int damage, bool crit)
+        {
+            target.AddBuff(BuffID.OnFire, 200);
+        }
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
             target.AddBuff(BuffID.OnFire, 200);

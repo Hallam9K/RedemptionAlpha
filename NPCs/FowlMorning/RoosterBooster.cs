@@ -14,6 +14,7 @@ using Redemption.Items.Usable.Potions;
 using Terraria.DataStructures;
 using Redemption.Buffs.NPCBuffs;
 using Redemption.Biomes;
+using Redemption.Items.Accessories.PreHM;
 
 namespace Redemption.NPCs.FowlMorning
 {
@@ -73,7 +74,7 @@ namespace Redemption.NPCs.FowlMorning
                         if (!target.active || target.whoAmI == NPC.whoAmI)
                             continue;
 
-                        if (target.type != ModContent.NPCType<ChickenScratcher>() && target.type != ModContent.NPCType<ChickenBomber>() && target.type != ModContent.NPCType<Haymaker>() && target.type != ModContent.NPCType<Cockatrice>() && target.type != ModContent.NPCType<HeadlessChicken>())
+                        if (target.type != ModContent.NPCType<ChickenScratcher>() && target.type != ModContent.NPCType<ChickenBomber>() && target.type != ModContent.NPCType<Haymaker>() && target.type != ModContent.NPCType<Cockatrice>() && target.type != ModContent.NPCType<HeadlessChicken>() && target.type != ModContent.NPCType<Basan>())
                             continue;
 
                         if (NPC.DistanceSQ(target.Center) > 300 * 300)
@@ -162,6 +163,7 @@ namespace Redemption.NPCs.FowlMorning
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
             //npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Halbirdhouse>(), 60));
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Grain>(), 200));
             npcLoot.Add(ItemDropRule.ByCondition(new OnFireCondition(), ModContent.ItemType<FriedChicken>(), 4));
         }
         public override void OnHitByItem(Player player, Item item, int damage, float knockback, bool crit)

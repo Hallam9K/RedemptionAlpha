@@ -8,7 +8,7 @@ using Terraria.DataStructures;
 
 namespace Redemption.Tiles.Trophies
 {
-	public class OmegaTrophyTile : ModTile
+	public class OmegaObliteratorTrophyTile : ModTile
 	{
 		public override void SetStaticDefaults()
 		{
@@ -21,12 +21,12 @@ namespace Redemption.Tiles.Trophies
 			TileObjectData.addTile(Type);
 			DustType = DustID.WoodFurniture;
 			ModTranslation name = CreateMapEntryName();
-			name.SetDefault("Omega Prototype Trophy");
+			name.SetDefault("Omega Obliterator Trophy");
 			AddMapEntry(new Color(120, 85, 60), name);
 		}
 		public override void KillMultiTile(int i, int j, int frameX, int frameY)
 		{
-			Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 48, 48, ModContent.ItemType<OmegaTrophy>());
+			Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 48, 48, ModContent.ItemType<OmegaObliteratorTrophy>());
 		}
 	}
 }

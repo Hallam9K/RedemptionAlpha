@@ -14,6 +14,7 @@ using Redemption.Globals.World;
 using Redemption.Items.Usable.Potions;
 using Redemption.Biomes;
 using Redemption.Items.Placeable.Banners;
+using Redemption.Items.Accessories.PreHM;
 
 namespace Redemption.NPCs.FowlMorning
 {
@@ -114,6 +115,7 @@ namespace Redemption.NPCs.FowlMorning
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Halbirdhouse>(), 60));
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Grain>(), 200));
             npcLoot.Add(ItemDropRule.ByCondition(new OnFireCondition(), ModContent.ItemType<FriedChicken>(), 4));
         }
         public override void OnHitByItem(Player player, Item item, int damage, float knockback, bool crit)

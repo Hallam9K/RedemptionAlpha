@@ -85,8 +85,7 @@ namespace Redemption.Items.Weapons.PostML.Melee
                         if (Timer++ == (int)(5 * SwingSpeed))
                         {
                             Projectile.NewProjectile(Projectile.GetSource_FromAI(), player.Center,
-                                RedeHelper.PolarVector(Main.rand.Next(45, 66), (mouseOrig - player.Center).ToRotation() + Main.rand.NextFloat(-0.2f, 0.2f)),
-                                ModContent.ProjectileType<MythrilsBaneSlash_Proj>(), Projectile.damage, Projectile.knockBack, Projectile.owner);
+                                RedeHelper.PolarVector(Main.rand.Next(45, 66), (mouseOrig - player.Center).ToRotation() + Main.rand.NextFloat(-0.2f, 0.2f)), ModContent.ProjectileType<MythrilsBaneSlash_Proj>(), Projectile.damage, Projectile.knockBack, Projectile.owner);
                         }
                         if (Timer < 5 * SwingSpeed)
                         {
@@ -125,8 +124,7 @@ namespace Redemption.Items.Weapons.PostML.Melee
                         if (Timer++ == (int)(5 * SwingSpeed))
                         {
                             Projectile.NewProjectile(Projectile.GetSource_FromAI(), player.Center,
-                                RedeHelper.PolarVector(Main.rand.Next(45, 66), (mouseOrig - player.Center).ToRotation() + Main.rand.NextFloat(-0.2f, 0.2f)),
-                                ModContent.ProjectileType<MythrilsBaneSlash_Proj>(), Projectile.damage, Projectile.knockBack, Projectile.owner, 1);
+                                RedeHelper.PolarVector(Main.rand.Next(45, 66), (mouseOrig - player.Center).ToRotation() + Main.rand.NextFloat(-0.2f, 0.2f)), ModContent.ProjectileType<MythrilsBaneSlash_Proj>(), Projectile.damage, Projectile.knockBack, Projectile.owner, 1);
                         }
                         if (Timer < 5 * SwingSpeed)
                         {

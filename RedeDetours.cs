@@ -17,12 +17,18 @@ namespace Redemption
             On.Terraria.Main.DrawProjectiles += Main_DrawProjectiles;
             On.Terraria.Main.DrawCachedProjs += Main_DrawCachedProjs;
             On.Terraria.Projectile.NewProjectile_IEntitySource_float_float_float_float_int_int_float_int_float_float += TrailCheck;
+            On.Terraria.Main.DrawDust += AdditiveCalls;
 
             foreach (var item in typeof(RedeDetours).Assembly.GetTypes().Where(x => typeof(ILEdit).IsAssignableFrom(x) && !x.IsAbstract))
             {
                 var inst = (ILEdit)Activator.CreateInstance(item);
                 inst.Load(Redemption.Instance);
             }
+        }
+        private static void AdditiveCalls(On.Terraria.Main.orig_DrawDust orig, Main self)
+        {
+            AdditiveCallManager.DrawAdditiveCalls(Main.spriteBatch);
+            orig(self);
         }
         public static void Unload()
         {

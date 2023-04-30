@@ -29,7 +29,7 @@ namespace Redemption.Projectiles.Melee
             Projectile.DamageType = DamageClass.Melee;
             Projectile.timeLeft = 180;
         }
-        private float squish;
+        public float squish;
         public override void AI()
         {
             Projectile.LookByVelocity();
@@ -43,7 +43,7 @@ namespace Redemption.Projectiles.Melee
             if (Projectile.alpha >= 255)
                 Projectile.Kill();
         }
-
+        public override bool CanHitPlayer(Player target) => Projectile.alpha <= 200;
         public override bool? CanHitNPC(NPC target) => !target.friendly && Projectile.alpha <= 200 ? null : false;
 
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) => target.AddBuff(BuffID.OnFire, 120);
