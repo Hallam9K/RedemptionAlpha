@@ -196,7 +196,7 @@ namespace Redemption.NPCs.FowlMorning
             {
                 case ActionState.Idle:
                     float moveSpeed = 2.4f;
-                    if (player.Center.DistanceSQ(NPC.Center) > 800 * 800)
+                    if (player.Center.DistanceSQ(NPC.Center) > 400 * 400)
                         moveSpeed = 3.6f;
 
                     if (NPC.DistanceSQ(player.Center) <= 160 * 160)

@@ -15,6 +15,7 @@ using Terraria.DataStructures;
 using Redemption.Buffs.NPCBuffs;
 using Redemption.Biomes;
 using Redemption.Items.Accessories.PreHM;
+using Redemption.Items.Placeable.Banners;
 
 namespace Redemption.NPCs.FowlMorning
 {
@@ -40,6 +41,8 @@ namespace Redemption.NPCs.FowlMorning
             NPC.aiStyle = -1;
             NPC.knockBackResist = 0.3f;
             SpawnModBiomes = new int[1] { ModContent.GetInstance<FowlMorningBiome>().Type };
+            Banner = NPC.type;
+            BannerItem = ModContent.ItemType<RoosterBoosterBanner>();
         }
         public override void OnSpawn(IEntitySource source)
         {
