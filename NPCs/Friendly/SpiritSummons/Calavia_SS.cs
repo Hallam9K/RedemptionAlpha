@@ -70,7 +70,6 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
                 }
             });
         }
-
         public override void SetSafeDefaults()
         {
             NPC.width = 26;
@@ -79,7 +78,7 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
             NPC.defense = 17;
             NPC.lifeMax = 3000;
             NPC.knockBackResist = 0.2f;
-            NPC.HitSound = SoundID.FemaleHit with { Pitch = .1f };
+            NPC.HitSound = SoundID.FemaleHit with { Pitch = .3f, Volume = .5f };
             NPC.DeathSound = SoundID.PlayerKilled with { Pitch = .1f };
             NPC.aiStyle = -1;
             NPC.noGravity = false;

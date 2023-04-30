@@ -2185,9 +2185,9 @@ namespace Redemption.WorldGeneration
                 tasks.Add(new PassLegacy("Slayer Ship", delegate (GenerationProgress progress, GameConfiguration configuration)
                 {
                     progress.Message = "Crashing Spaceships";
-                    Vector2 origin = new((int)(Main.maxTilesX * 0.65f), (int)Main.worldSurface - 180);
+                    Vector2 origin = new((int)(Main.maxTilesX * 0.65f), (int)Main.worldSurface - 160);
                     if (Main.dungeonX < Main.maxTilesX / 2)
-                        origin = new Vector2((int)(Main.maxTilesX * 0.35f), (int)Main.worldSurface - 180);
+                        origin = new Vector2((int)(Main.maxTilesX * 0.35f), (int)Main.worldSurface - 160);
 
                     origin.Y = GetTileFloorIgnoreTree((int)origin.X, (int)origin.Y, true);
                     origin.X -= 60;
@@ -2206,7 +2206,7 @@ namespace Redemption.WorldGeneration
                                     checkType++;
                                 }
                                 origin.X++;
-                                origin.Y = GetTileFloorIgnoreTree((int)origin.X + 60, (int)Main.worldSurface - 170, true);
+                                origin.Y = GetTileFloorIgnoreTree((int)origin.X + 60, (int)Main.worldSurface - 160, true);
                                 inSpawn = false;
                                 if (origin.X > Main.spawnTileX - 300 && origin.X < Main.spawnTileX + 300)
                                     inSpawn = true;
@@ -2220,7 +2220,7 @@ namespace Redemption.WorldGeneration
                                     checkType++;
                                 }
                                 origin.X--;
-                                origin.Y = GetTileFloorIgnoreTree((int)origin.X + 60, (int)Main.worldSurface - 170, true);
+                                origin.Y = GetTileFloorIgnoreTree((int)origin.X + 60, (int)Main.worldSurface - 160, true);
                                 inSpawn = false;
                                 if (origin.X > Main.spawnTileX - 300 && origin.X < Main.spawnTileX + 300)
                                     inSpawn = true;
@@ -2229,7 +2229,7 @@ namespace Redemption.WorldGeneration
                                 break;
                             case 2:
                                 origin.X = WorldGen.genRand.Next(150, Main.maxTilesX - 150);
-                                origin.Y = GetTileFloorIgnoreTree((int)origin.X + 60, (int)Main.worldSurface - 170, true);
+                                origin.Y = GetTileFloorIgnoreTree((int)origin.X + 60, (int)Main.worldSurface - 160, true);
                                 origin.X -= 60;
                                 inSpawn = false;
                                 if (origin.X > Main.spawnTileX - 300 && origin.X < Main.spawnTileX + 300)
@@ -2244,9 +2244,9 @@ namespace Redemption.WorldGeneration
                     }
                     if (failed)
                     {
-                        origin = new((int)(Main.maxTilesX * 0.65f), (int)Main.worldSurface - 180);
+                        origin = new((int)(Main.maxTilesX * 0.65f), (int)Main.worldSurface - 160);
                         if (Main.dungeonX < Main.maxTilesX / 2)
-                            origin = new Vector2((int)(Main.maxTilesX * 0.35f), (int)Main.worldSurface - 180);
+                            origin = new Vector2((int)(Main.maxTilesX * 0.35f), (int)Main.worldSurface - 160);
 
                         origin.Y = GetTileFloorIgnoreTree((int)origin.X, (int)origin.Y, true);
                         origin.X -= 60;

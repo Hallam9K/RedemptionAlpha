@@ -5,7 +5,7 @@ using Redemption.Tiles.Banners;
 
 namespace Redemption.Items.Placeable.Banners
 {
-    public class ChickenBanner : ModItem
+    public class HaymakerBanner : ModItem
     {
         public override void SetStaticDefaults()
         {
@@ -13,7 +13,7 @@ namespace Redemption.Items.Placeable.Banners
         }
         public override void SetDefaults()
         {
-            Item.DefaultToPlaceableTile(ModContent.TileType<ChickenBannerTile>(), 0);
+            Item.DefaultToPlaceableTile(ModContent.TileType<HaymakerBannerTile>(), 0);
             Item.width = 12;
             Item.height = 32;
             Item.maxStack = 9999;

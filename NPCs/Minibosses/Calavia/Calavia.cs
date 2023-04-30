@@ -104,7 +104,6 @@ namespace Redemption.NPCs.Minibosses.Calavia
             NPCID.Sets.NPCBestiaryDrawModifiers value = new(0) { Velocity = 1 };
             NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, value);
         }
-
         public override void SetDefaults()
         {
             NPC.width = 26;
@@ -114,7 +113,7 @@ namespace Redemption.NPCs.Minibosses.Calavia
             NPC.lifeMax = 3000;
             NPC.knockBackResist = 0.2f;
             NPC.SpawnWithHigherTime(30);
-            NPC.HitSound = SoundID.FemaleHit with { Pitch = .1f };
+            NPC.HitSound = SoundID.FemaleHit with { Pitch = .3f, Volume = .5f };
             NPC.DeathSound = SoundID.PlayerKilled with { Pitch = .1f };
             NPC.npcSlots = 10f;
             NPC.aiStyle = -1;

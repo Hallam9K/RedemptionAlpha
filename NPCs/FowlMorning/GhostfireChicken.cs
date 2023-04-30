@@ -9,7 +9,6 @@ using Terraria.DataStructures;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Biomes;
 using Terraria.Audio;
-using Redemption.NPCs.Bosses.KSIII;
 using System;
 
 namespace Redemption.NPCs.FowlMorning
@@ -18,6 +17,7 @@ namespace Redemption.NPCs.FowlMorning
     {
         public override void SetStaticDefaults()
         {
+            DisplayName.SetDefault("Ghost-fire Chicken");
             Main.npcFrameCount[NPC.type] = 4;
             NPCID.Sets.CantTakeLunchMoney[Type] = true;
             NPCID.Sets.BossBestiaryPriority.Add(Type);

@@ -3,6 +3,11 @@ using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Microsoft.Xna.Framework.Graphics;
+using Redemption.Effects;
+using System;
+using System.Transactions;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace Redemption.Projectiles.Ranged
 {
@@ -51,9 +56,13 @@ namespace Redemption.Projectiles.Ranged
             for (int i = 0; i < Main.maxProjectiles; i++)
             {
                 Projectile proj = Main.projectile[i];
-                if (!proj.active || !proj.arrow || !proj.friendly || proj.type == ModContent.ProjectileType<SpiritArrow_Proj>() || proj.type == ModContent.ProjectileType<SpiritArrow_Shard>() || !Projectile.Hitbox.Intersects(proj.Hitbox))
+                if (!proj.active || !proj.arrow || !proj.friendly || proj.type == ModContent.ProjectileType<SpiritArrow_Proj>() || proj.type == ModContent.ProjectileType<SpiritArrow_Shard>())
                     continue;
 
+                if (other != null && other.active && other.type == Type && Collision.CheckAABBvLineCollision(Projectile.position, Projectile.Size, Projectile.Center, other.Center))
+                {
+
+                }
                 SoundEngine.PlaySound(SoundID.Zombie53 with { Volume = 0.6f }, Projectile.Center);
                 for (int j = 0; j < 10; j++)
                 {
@@ -63,6 +72,30 @@ namespace Redemption.Projectiles.Ranged
                 proj.active = false;
                 Projectile.NewProjectile(Projectile.GetSource_FromAI(), proj.position, proj.velocity, ModContent.ProjectileType<SpiritArrow_Proj>(), proj.damage, proj.knockBack, player.whoAmI);
             }
+        }
+        private readonly Projectile other;
+        public void AdditiveCall(SpriteBatch sB, Vector2 screenPos)
+        {
+            if (other != null && other.active && other.type == Type)
+                DrawTether(other, screenPos, Color.Red, Color.Red, 40, 1);
+        }
+        public void DrawTether(Projectile Target, Vector2 screenPos, Color color1, Color color2, float Size, float Strength)
+        {
+            Effect effect = ModContent.Request<Effect>("Redemption/Effects/Beam", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+            effect.Parameters["uTexture"].SetValue(ModContent.Request<Texture2D>("Redemption/Textures/Trails/GlowTrail", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value);
+            effect.Parameters["progress"].SetValue(Main.GlobalTimeWrappedHourly / 3);
+            effect.Parameters["uColor"].SetValue(color1.ToVector4());
+            effect.Parameters["uSecondaryColor"].SetValue(color2.ToVector4());
+            Vector2 dist = Target.Center - Projectile.Center;
+            TrianglePrimitive tri = new()
+            {
+                TipPosition = Projectile.Center - screenPos,
+                Rotation = dist.ToRotation(),
+                Height = Size + 20 + dist.Length() * 1.5f,
+                Color = Color.White * Strength,
+                Width = Size + ((Target.width + Target.height) / 2f)
+            };
+            PrimitiveRenderer.DrawPrimitiveShape(tri, effect);
         }
         public override Color? GetAlpha(Color lightColor)
         {
