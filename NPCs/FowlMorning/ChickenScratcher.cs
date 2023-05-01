@@ -48,6 +48,7 @@ namespace Redemption.NPCs.FowlMorning
             Player player = Main.player[NPC.target];
             NPC.TargetClosest();
             NPC.LookByVelocity();
+            DespawnHandler();
 
             if (Main.rand.NextBool(3000))
                 SoundEngine.PlaySound(CustomSounds.ChickenCluck, NPC.position);
@@ -67,6 +68,24 @@ namespace Redemption.NPCs.FowlMorning
             }
             else
                 NPCHelper.HorizontallyMove(NPC, player.Center, 0.13f, 3f, 18, 18, NPC.Center.Y > player.Center.Y, player);
+        }
+        private void DespawnHandler()
+        {
+            Player player = Main.player[NPC.target];
+            if (!player.active || player.dead || !FowlMorningWorld.FowlMorningActive)
+            {
+                NPC.TargetClosest(false);
+                player = Main.player[NPC.target];
+                if (!player.active || player.dead || !FowlMorningWorld.FowlMorningActive)
+                {
+                    NPC.alpha += 2;
+                    if (NPC.alpha >= 255)
+                        NPC.active = false;
+                    if (NPC.timeLeft > 10)
+                        NPC.timeLeft = 10;
+                    return;
+                }
+            }
         }
         public override void OnHitPlayer(Player target, Player.HurtInfo hurtInfo)
         {

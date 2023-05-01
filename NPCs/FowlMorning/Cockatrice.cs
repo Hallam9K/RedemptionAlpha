@@ -10,10 +10,10 @@ using Redemption.Globals.World;
 using Redemption.Items.Accessories.PreHM;
 using Redemption.Items.Placeable.Trophies;
 using Redemption.Items.Usable.Potions;
+using Redemption.Items.Weapons.PreHM.Magic;
 using Redemption.Items.Weapons.PreHM.Melee;
 using Redemption.Items.Weapons.PreHM.Ranged;
 using Redemption.Items.Weapons.PreHM.Summon;
-using Redemption.Projectiles.Minions;
 using System;
 using System.Collections.Generic;
 using Terraria;
@@ -49,13 +49,12 @@ namespace Redemption.NPCs.FowlMorning
             NPCID.Sets.BossBestiaryPriority.Add(Type);
             NPCID.Sets.NPCBestiaryDrawModifiers value = new(0)
             {
-                Velocity = 1,
+                CustomTexturePath = "Redemption/CrossMod/BossChecklist/Cockatrice",
                 Position = new Vector2(0, 10),
                 PortraitPositionYOverride = 0
             };
             NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, value);
         }
-
         public override void SetDefaults()
         {
             NPC.lifeMax = 440;
@@ -315,10 +314,7 @@ namespace Redemption.NPCs.FowlMorning
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
             npcLoot.Add(ItemDropRule.ByCondition(new Conditions.IsMasterMode(), ModContent.ItemType<CockatriceRelic>(), 2));
-            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<EggShield>(), 5));
-            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<GreneggLauncher>(), 5));
-            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Halbirdhouse>(), 5));
-            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<NestWand>(), 5));
+            npcLoot.Add(ItemDropRule.OneFromOptions(5, ModContent.ItemType<EggShield>(), ModContent.ItemType<GreneggLauncher>(), ModContent.ItemType<Halbirdhouse>(), ModContent.ItemType<NestWand>(), ModContent.ItemType<ChickendWand>()));
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Grain>(), 100));
             npcLoot.Add(ItemDropRule.ByCondition(new OnFireCondition(), ModContent.ItemType<FriedChicken>(), 1, 2, 3));
         }

@@ -8,6 +8,7 @@ using Terraria.DataStructures;
 using Terraria.Audio;
 using Redemption.Globals;
 using Terraria.Localization;
+using Redemption.Base;
 
 namespace Redemption.Items.Weapons.HM.Ranged
 {
@@ -16,8 +17,8 @@ namespace Redemption.Items.Weapons.HM.Ranged
         public override LocalizedText Tooltip => base.Tooltip.WithFormatArgs(ElementID.ArcaneS);
         public override void SetStaticDefaults()
         {
-            /* Tooltip.SetDefault("Right-click to fire a spirit to the aimed area, where they will linger there for a duration\n" +
-                "Arrows passing through the spirits are transformed into Spirit Arrows that split into homing shards upon impact, dealing " + ElementID.ArcaneS + " damage"); */
+            /* Tooltip.SetDefault("Right-click to fire a lingering spirit at the aimed area, a spiritual rift will form between two spirits\n" +
+                "Arrows passing through the rift are transformed into Spirit Arrows that split into homing shards upon impact, dealing " + ElementID.ArcaneS + " damage"); */
             Item.ResearchUnlockCount = 1;
         }
         public override void SetDefaults()
@@ -74,7 +75,20 @@ namespace Redemption.Items.Weapons.HM.Ranged
             if (player.altFunctionUse == 2)
             {
                 Vector2 vector = Main.MouseWorld;
-                Projectile.NewProjectile(source, position, velocity, type, damage, knockback, player.whoAmI, vector.X, vector.Y);
+                int p = Projectile.NewProjectile(source, position, velocity, type, damage, knockback, player.whoAmI, vector.X, vector.Y);
+                for (int i = 0; i < Main.maxProjectiles; i++)
+                {
+                    Projectile proj = Main.projectile[i];
+                    if (!proj.active || proj.type != type || i == p || proj.owner != player.whoAmI)
+                        continue;
+                    if (player.ownedProjectileCounts[type] > 1)
+                    {
+                        proj.timeLeft = 2;
+                        continue;
+                    }
+                    (proj.ModProjectile as GhastlyRecurve_Proj).other = Main.projectile[p];
+                    (Main.projectile[p].ModProjectile as GhastlyRecurve_Proj).other = Main.projectile[i];
+                }
                 return false;
             }
             return true;

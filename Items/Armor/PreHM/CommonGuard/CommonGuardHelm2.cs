@@ -15,7 +15,7 @@ namespace Redemption.Items.Armor.PreHM.CommonGuard
         public override void SetStaticDefaults()
         {
             // DisplayName.SetDefault("Common Guard Bucket Helm");
-            // Tooltip.SetDefault("+2 increased melee damage");
+            // Tooltip.SetDefault("+1 increased melee damage");
             ArmorIDs.Head.Sets.DrawHead[EquipLoader.GetEquipSlot(Mod, Name, EquipType.Head)] = false;
 
             Item.ResearchUnlockCount = 1;
@@ -27,7 +27,7 @@ namespace Redemption.Items.Armor.PreHM.CommonGuard
             Item.height = 26;
             Item.sellPrice(silver: 30);
             Item.rare = ItemRarityID.Green;
-            Item.defense = 4;
+            Item.defense = 5;
         }
 
         public override bool IsArmorSet(Item head, Item body, Item legs)
@@ -37,7 +37,7 @@ namespace Redemption.Items.Armor.PreHM.CommonGuard
 
         public override void UpdateEquip(Player player)
         {
-            player.GetDamage(DamageClass.Melee).Flat += 2;
+            player.GetDamage(DamageClass.Melee).Flat += 1;
         }
 
         public override void UpdateArmorSet(Player player)
