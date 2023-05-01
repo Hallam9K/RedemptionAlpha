@@ -368,6 +368,37 @@ namespace Redemption.Globals
             //  spriteBatch.Draw(neckTex2D, new Vector2(head.Center.X - Main.screenPosition.X, head.Center.Y - Main.screenPosition.Y), head.frame, drawColor, head.rotation, new Vector2(36 * 0.5f, 32 * 0.5f), 1f, SpriteEffects.None, 0f);
             //spriteBatch.Draw(mod.GetTexture(glowMaskTexture), new Vector2(head.Center.X - Main.screenPosition.X, head.Center.Y - Main.screenPosition.Y), head.frame, Color.White, head.rotation, new Vector2(36 * 0.5f, 32 * 0.5f), 1f, SpriteEffects.None, 0f);
         }
+        public static Vector2 GetArcVel(Vector2 startingPos, Vector2 targetPos, float gravity, float? minArcHeight = null, float? maxArcHeight = null, float? maxXvel = null, float? heightabovetarget = null, float downwardsYVelMult = 1f)
+        {
+            Vector2 DistanceToTravel = targetPos - startingPos;
+            float MaxHeight = DistanceToTravel.Y - (heightabovetarget ?? 0);
+            if (minArcHeight != null)
+                MaxHeight = Math.Min(MaxHeight, -(float)minArcHeight);
+
+            if (maxArcHeight != null)
+                MaxHeight = Math.Max(MaxHeight, -(float)maxArcHeight);
+
+            float TravelTime;
+            float neededYvel;
+            if (MaxHeight <= 0)
+            {
+                neededYvel = -(float)Math.Sqrt(-2 * gravity * MaxHeight);
+                TravelTime = (float)Math.Sqrt(-2 * MaxHeight / gravity) + (float)Math.Sqrt(2 * Math.Max(DistanceToTravel.Y - MaxHeight, 0) / gravity); //time up, then time down
+            }
+
+            else
+            {
+                neededYvel = Vector2.Normalize(DistanceToTravel).Y * downwardsYVelMult;
+                TravelTime = (-neededYvel + (float)Math.Sqrt(Math.Pow(neededYvel, 2) - (4 * -DistanceToTravel.Y * gravity / 2))) / (gravity); //time down
+            }
+
+            if (maxXvel != null)
+                return new Vector2(MathHelper.Clamp(DistanceToTravel.X / TravelTime, -(float)maxXvel, (float)maxXvel), neededYvel);
+
+            return new Vector2(DistanceToTravel.X / TravelTime, neededYvel);
+        }
+
+        public static Vector2 GetArcVel(this Entity ent, Vector2 targetPos, float gravity, float? minArcHeight = null, float? maxArcHeight = null, float? maxXvel = null, float? heightabovetarget = null, float downwardsYVelMult = 1f) => GetArcVel(ent.Center, targetPos, gravity, minArcHeight, maxArcHeight, maxXvel, heightabovetarget, downwardsYVelMult);
 
         public static bool BossActive()
         {

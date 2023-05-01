@@ -11,6 +11,7 @@ using Redemption.Globals.World;
 using Redemption.Items.Accessories.PreHM;
 using Redemption.Items.Placeable.Trophies;
 using Redemption.Items.Usable.Potions;
+using Redemption.Items.Weapons.PreHM.Magic;
 using Redemption.Items.Weapons.PreHM.Melee;
 using Redemption.Items.Weapons.PreHM.Ranged;
 using Redemption.Items.Weapons.PreHM.Summon;
@@ -76,7 +77,7 @@ namespace Redemption.NPCs.FowlMorning
             NPCID.Sets.BossBestiaryPriority.Add(Type);
             NPCID.Sets.NPCBestiaryDrawModifiers value = new(0)
             {
-                Velocity = 1,
+                CustomTexturePath = "Redemption/CrossMod/BossChecklist/Basan",
                 Position = new Vector2(0, 10),
                 PortraitPositionYOverride = 0
             };
@@ -171,7 +172,7 @@ namespace Redemption.NPCs.FowlMorning
             if (NPC.target < 0 || NPC.target == 255 || player.dead || !player.active)
                 NPC.TargetClosest();
 
-            //DespawnHandler();
+            DespawnHandler();
 
             if (Main.rand.NextBool(3))
             {
@@ -437,7 +438,14 @@ namespace Redemption.NPCs.FowlMorning
                             NPC.frameCounter = 0;
                             NPC.frame.Y += frameHeight;
                             if (NPC.frame.Y == 7 * frameHeight)
+                            {
                                 SoundEngine.PlaySound(SoundID.DD2_PhantomPhoenixShot, NPC.position);
+                                for (int i = 0; i < 20; i++)
+                                {
+                                    ParticleManager.NewParticle(NPC.Center + new Vector2(-52 + Main.rand.Next(102), -4 + Main.rand.Next(34)), new Vector2(Main.rand.Next(-3, 4), -Main.rand.Next(0, 2)), new EmberParticle(), Color.White, Main.rand.NextFloat(.4f, 1f), Layer: Particle.Layer.BeforeNPCs);
+                                    ParticleManager.NewParticle(NPC.Center + new Vector2(-52 + Main.rand.Next(102), -4 + Main.rand.Next(34)), new Vector2(Main.rand.Next(-3, 4), -Main.rand.Next(0, 2)), new EmberParticle(), Color.White, Main.rand.NextFloat(.4f, 1f));
+                                }
+                            }
 
                             if (NPC.frame.Y > 9 * frameHeight)
                                 NPC.frame.Y = 4 * frameHeight;
@@ -454,6 +462,14 @@ namespace Redemption.NPCs.FowlMorning
                     {
                         NPC.frameCounter = 0;
                         NPC.frame.Y += frameHeight;
+                        if (NPC.frame.Y == 5 * frameHeight)
+                        {
+                            for (int i = 0; i < 20; i++)
+                            {
+                                ParticleManager.NewParticle(NPC.Center + new Vector2(-52 + Main.rand.Next(102), -14 + Main.rand.Next(54)), new Vector2(Main.rand.Next(3, 7) * NPC.spriteDirection, 0), new EmberParticle(), Color.White, Main.rand.NextFloat(.4f, 1f), Layer: Particle.Layer.BeforeNPCs);
+                                ParticleManager.NewParticle(NPC.Center + new Vector2(-52 + Main.rand.Next(102), -14 + Main.rand.Next(54)), new Vector2(Main.rand.Next(3, 7) * NPC.spriteDirection, 0), new EmberParticle(), Color.White, Main.rand.NextFloat(.4f, 1f));
+                            }
+                        }
                         if (NPC.frame.Y > 7 * frameHeight)
                         {
                             AniType = (int)AnimType.None;
@@ -550,7 +566,7 @@ namespace Redemption.NPCs.FowlMorning
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
             //npcLoot.Add(ItemDropRule.ByCondition(new Conditions.IsMasterMode(), ModContent.ItemType<CockatriceRelic>(), 2));
-            npcLoot.Add(ItemDropRule.OneFromOptions(1, ModContent.ItemType<EggShield>(), ModContent.ItemType<GreneggLauncher>(), ModContent.ItemType<Halbirdhouse>(), ModContent.ItemType<NestWand>()));
+            npcLoot.Add(ItemDropRule.OneFromOptions(1, ModContent.ItemType<EggShield>(), ModContent.ItemType<GreneggLauncher>(), ModContent.ItemType<Halbirdhouse>(), ModContent.ItemType<NestWand>(), ModContent.ItemType<ChickendWand>()));
             npcLoot.Add(ItemDropRule.ByCondition(new OnFireCondition(), ModContent.ItemType<FriedChicken>(), 1, 6, 8));
         }
         public override void OnHitByItem(Player player, Item item, int damage, float knockback, bool crit)

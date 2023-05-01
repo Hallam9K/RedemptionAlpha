@@ -352,7 +352,7 @@ namespace Redemption.NPCs.Friendly
             if (!RedeWorld.alignmentGiven)
                 chat.Add("Did I drop something on my way back into the portal? Oh, those glowing fragments? Looks like it's guiding you somewhere important, I'd follow it before taking on any major foes!");
             if (!Main.LocalPlayer.RedemptionAbility().Spiritwalker)
-                chat.Add("Ever see tiny lights skitterin' from a slain skeleton? Or perhaps a lantern-carrying ghost underground? Those are lost souls, and as far as I know, only \n" + ElementID.ArcaneS + " or " + ElementID.HolyS + " weapons may bring them harm. Not that I'd suggest harming those helpless things.");
+                chat.Add("Ever see tiny lights skitterin' from a slain skeleton? Or perhaps a lantern-carrying ghost underground? Those are lost souls, and as far as I know, only " + ElementID.ArcaneS + " or " + ElementID.HolyS + " weapons may bring them harm. Not that I'd suggest harming those helpless things.");
             chat.Add("When encountering skeletons and undead, " + ElementID.HolyS + " weapons are most effective against them. On the contrary, " + ElementID.ShadowS + " weapons aren't as effective. I hate skeletons, used to think they looked kinda funny, until me and Daerel met a skeleton Vex.");
             chat.Add("If you hate slimes, burn them! They'll burn brighter than my passion for attractive ladies" + (Main.LocalPlayer.Male ? "" : " (wink wink)") + ". Or, you could use " + ElementID.IceS + " weapons to freeze them, but that isn't as fun.");
             chat.Add("Ever want to sneak up on an Epidotrian skeleton? Or perhaps a chicken? Well invisibility potions are real handy for the job!");

@@ -59,6 +59,7 @@ namespace Redemption.NPCs.FowlMorning
             Player player = Main.player[NPC.target];
             NPC.TargetClosest();
             NPC.LookByVelocity();
+            DespawnHandler();
 
             if (Main.rand.NextBool(3000))
                 SoundEngine.PlaySound(CustomSounds.ChickenCluck with { Pitch = -.1f }, NPC.position);
@@ -101,6 +102,24 @@ namespace Redemption.NPCs.FowlMorning
                 NPC.Shoot(nestPos, ModContent.ProjectileType<Rooster_EggBomb>(), (int)(NPC.damage * 1.1f), new Vector2(speed * player.Center.RightOfDir(nestPos), -Main.rand.Next(9, 10)).RotatedBy(Main.rand.NextFloat(-.2f, .2f)), true, SoundID.Item1);
                 NPC.localAI[0] = Main.rand.Next(60, 301);
                 NPC.ai[3] = 0;
+            }
+        }
+        private void DespawnHandler()
+        {
+            Player player = Main.player[NPC.target];
+            if (!player.active || player.dead || !FowlMorningWorld.FowlMorningActive)
+            {
+                NPC.TargetClosest(false);
+                player = Main.player[NPC.target];
+                if (!player.active || player.dead || !FowlMorningWorld.FowlMorningActive)
+                {
+                    NPC.alpha += 2;
+                    if (NPC.alpha >= 255)
+                        NPC.active = false;
+                    if (NPC.timeLeft > 10)
+                        NPC.timeLeft = 10;
+                    return;
+                }
             }
         }
         public override bool? CanFallThroughPlatforms() => NPC.Redemption().fallDownPlatform;
