@@ -1,4 +1,5 @@
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Redemption.NPCs.Critters;
 using Terraria;
 using Terraria.Audio;
@@ -43,7 +44,14 @@ namespace Redemption.Projectiles.Magic
                 Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.Gold, Projectile.velocity.X * 0.5f,
                     Projectile.velocity.Y * 0.5f);
         }
+        public override void PostDraw(Color lightColor)
+        {
+            Texture2D glow = ModContent.Request<Texture2D>(Projectile.ModProjectile.Texture + "_Glow").Value;
+            Vector2 drawOrigin = new(glow.Width / 2, Projectile.height / 2);
+            var effects = Projectile.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
 
+            Main.EntitySpriteDraw(glow, Projectile.Center - Main.screenPosition, null, Color.White * Projectile.Opacity, Projectile.rotation, drawOrigin, Projectile.scale, effects, 0);
+        }
         public override bool OnTileCollide(Vector2 oldVelocity)
         {
             if (Projectile.penetrate == 0)

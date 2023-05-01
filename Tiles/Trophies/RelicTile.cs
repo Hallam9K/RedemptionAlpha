@@ -18,7 +18,7 @@ namespace Redemption.Tiles.Trophies
 		public const int FrameWidth = 18 * 3;
 		public const int FrameHeight = 18 * 4;
 		public const int HorizontalFrames = 1;
-		public const int VerticalFrames = 14;
+		public const int VerticalFrames = 15;
 
 		public Asset<Texture2D> RelicTexture;
 
@@ -110,6 +110,9 @@ namespace Redemption.Tiles.Trophies
 					break;
 				case 13:
 					itemType = ModContent.ItemType<CockatriceRelic>();
+					break;
+				case 14:
+					itemType = ModContent.ItemType<BasanRelic>();
 					break;
 
 			}
