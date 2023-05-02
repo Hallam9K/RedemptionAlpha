@@ -4,6 +4,7 @@ using Redemption.Base;
 using Redemption.BaseExtension;
 using Redemption.Dusts;
 using Redemption.Globals;
+using Redemption.Items.Accessories.PreHM;
 using Redemption.Items.Armor.Vanity;
 using Redemption.Items.Placeable.Trophies;
 using Redemption.Items.Usable;
@@ -130,6 +131,7 @@ namespace Redemption.NPCs.Bosses.FowlEmperor
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
             npcLoot.Add(ItemDropRule.MasterModeCommonDrop(ModContent.ItemType<FowlEmperorRelic>()));
+            npcLoot.Add(ItemDropRule.MasterModeDropOnAllPlayers(ModContent.ItemType<EggPet>(), 4));
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<FowlEmperorTrophy>(), 10));
             npcLoot.Add(ItemDropRule.NotScalingWithLuck(ModContent.ItemType<FowlCrown>(), 7));
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<FowlWarHorn>()));

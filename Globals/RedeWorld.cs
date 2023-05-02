@@ -427,7 +427,7 @@ namespace Redemption.Globals
         {
             if (RedeGen.gathicPortalPoint.X != 0 && (RedeQuest.calaviaVar is 1 or 2) && !Terraria.NPC.AnyNPCs(ModContent.NPCType<Calavia_Intro>()))
             {
-                Vector2 gathicPortalPos = new((RedeGen.gathicPortalPoint.X + 42) * 16, (RedeGen.gathicPortalPoint.Y + 20) * 16);
+                Vector2 gathicPortalPos = new((RedeGen.gathicPortalPoint.X + 47) * 16, (RedeGen.gathicPortalPoint.Y + 20) * 16);
                 LabArea.SpawnNPCInWorld(gathicPortalPos, ModContent.NPCType<Calavia_Intro>());
             }
             if (!Main.dedServ)

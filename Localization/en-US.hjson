@@ -90,6 +90,7 @@ Mods: {
             MiniGigaporaPetBuff: "Mini Gigapora"
             XenoemiaBuff: "Xenoemia"
             CleaverPetBuff: "Omini Cleaver"
+            EggPetBuff: "The Egg"
 		}
 		
 		BuffDescription: {
@@ -172,6 +173,7 @@ Mods: {
             MiniGigaporaPetBuff: "You know the drill"
             XenoemiaBuff: "A walking infection"
             CleaverPetBuff: "*Loud metal clank noise*"
+            EggPetBuff: "The Egg"
 		}
 		BiomeName: {
 			WastelandPurityBiome: Wasteland

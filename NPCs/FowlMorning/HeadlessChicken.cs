@@ -35,7 +35,7 @@ namespace Redemption.NPCs.FowlMorning
             NPC.friendly = false;
             NPC.damage = 18;
             NPC.defense = 0;
-            NPC.lifeMax = 14;
+            NPC.lifeMax = 10;
             NPC.value = 20;
             NPC.HitSound = SoundID.NPCHit1;
             NPC.DeathSound = SoundID.NPCDeath1;

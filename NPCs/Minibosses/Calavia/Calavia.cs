@@ -344,7 +344,7 @@ namespace Redemption.NPCs.Minibosses.Calavia
                     NPC.netUpdate = true;
                     break;
                 case ActionState.JumpToOrigin:
-                    Vector2 landPos = new((RedeGen.gathicPortalPoint.X + Main.rand.Next(33, 59)) * 16, (RedeGen.gathicPortalPoint.Y + 21) * 16);
+                    Vector2 landPos = new((RedeGen.gathicPortalPoint.X + Main.rand.Next(38, 64)) * 16, (RedeGen.gathicPortalPoint.Y + 21) * 16);
                     if (AITimer++ == 0)
                     {
                         if (landPos.DistanceSQ(NPC.Center) < 120 * 120 || !BaseAI.HitTileOnSide(NPC, 3))
@@ -399,7 +399,7 @@ namespace Redemption.NPCs.Minibosses.Calavia
                         }
                     }
                     BaseAI.AttemptOpenDoor(NPC, ref doorVars[0], ref doorVars[1], ref doorVars[2], 80, 1, 10, interactDoorStyle: 2);
-                    Vector2 gathicPortalPos = new((RedeGen.gathicPortalPoint.X + 42) * 16, (RedeGen.gathicPortalPoint.Y + 20) * 16 + 8);
+                    Vector2 gathicPortalPos = new((RedeGen.gathicPortalPoint.X + 47) * 16, (RedeGen.gathicPortalPoint.Y + 20) * 16 + 8);
                     if (NPC.DistanceSQ(player.Center) < 180 * 180 || (AITimer >= 60 && !NPC.Sight(player, -1, false, true) && Collision.CanHitLine(NPC.position, NPC.width, NPC.height, gathicPortalPos - new Vector2(8, 8), 16, 16)))
                     {
                         WeightedRandom<ActionState> attacks = new(Main.rand);
@@ -632,7 +632,7 @@ namespace Redemption.NPCs.Minibosses.Calavia
                         ChatUI.Visible = true;
                         ChatUI.Add(chain);
                     }
-                    gathicPortalPos = new((RedeGen.gathicPortalPoint.X + 42) * 16, (RedeGen.gathicPortalPoint.Y + 20) * 16 + 8);
+                    gathicPortalPos = new((RedeGen.gathicPortalPoint.X + 47) * 16, (RedeGen.gathicPortalPoint.Y + 20) * 16 + 8);
                     if (TimerRand > 0)
                     {
                         if (NPC.DistanceSQ(gathicPortalPos) < 6 * 6)
@@ -686,7 +686,7 @@ namespace Redemption.NPCs.Minibosses.Calavia
                         }
                         for (int i = 0; i < 30; i++)
                             Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.MagicMirror);
-                        gathicPortalPos = new((RedeGen.gathicPortalPoint.X + 42) * 16, (RedeGen.gathicPortalPoint.Y + 20) * 16 + 8);
+                        gathicPortalPos = new((RedeGen.gathicPortalPoint.X + 47) * 16, (RedeGen.gathicPortalPoint.Y + 20) * 16 + 8);
                         NPC.Center = gathicPortalPos;
                         NPC.velocity *= 0;
                         if (TimerRand is 0)
@@ -851,7 +851,7 @@ namespace Redemption.NPCs.Minibosses.Calavia
                         case 3:
                             NPC.LookByVelocity();
                             NPC.dontTakeDamage = true;
-                            gathicPortalPos = new((RedeGen.gathicPortalPoint.X + 42) * 16, (RedeGen.gathicPortalPoint.Y + 20) * 16 + 8);
+                            gathicPortalPos = new((RedeGen.gathicPortalPoint.X + 47) * 16, (RedeGen.gathicPortalPoint.Y + 20) * 16 + 8);
                             if (NPC.DistanceSQ(gathicPortalPos) < 6 * 6)
                                 NPC.velocity.X *= .4f;
                             else

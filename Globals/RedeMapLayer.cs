@@ -37,7 +37,7 @@ namespace Redemption.Globals
                     const float scaleIfSelected = scaleIfNotSelected * 1.2f;
                     var hintTexture = ModContent.Request<Texture2D>("Redemption/Items/HintIcon").Value;
 
-                    Vector2 pos = new(RedeGen.gathicPortalPoint.X + 46, RedeGen.gathicPortalPoint.Y + 17);
+                    Vector2 pos = new(RedeGen.gathicPortalPoint.X + 51, RedeGen.gathicPortalPoint.Y + 17);
                     context.Draw(hintTexture, pos, Color.White, new SpriteFrame(1, 1, 0, 0), scaleIfNotSelected, scaleIfSelected, Alignment.Center);
                 }
             }

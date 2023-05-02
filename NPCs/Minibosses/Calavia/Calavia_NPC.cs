@@ -184,7 +184,7 @@ namespace Redemption.NPCs.Minibosses.Calavia
             }
             else if (RedeQuest.calaviaVar > 20)
             {
-                Vector2 gathicPortalPos = new(((RedeGen.gathicPortalPoint.X + 46) * 16) - 8, (RedeGen.gathicPortalPoint.Y + 18) * 16);
+                Vector2 gathicPortalPos = new(((RedeGen.gathicPortalPoint.X + 51) * 16) - 8, (RedeGen.gathicPortalPoint.Y + 18) * 16);
                 if (AITimer++ == 60)
                 {
                     NPC.velocity.Y = -7;
