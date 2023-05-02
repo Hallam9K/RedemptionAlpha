@@ -1769,15 +1769,15 @@ namespace Redemption.WorldGeneration
                         Texture2D texSlope = ModContent.Request<Texture2D>("Redemption/WorldGeneration/GathicPortalSlopes", AssetRequestMode.ImmediateLoad).Value;
                         Texture2D texClear = ModContent.Request<Texture2D>("Redemption/WorldGeneration/GathicPortalClear", AssetRequestMode.ImmediateLoad).Value;
 
-                        Vector2 origin = new(placeX - 46, placeY - 23);
+                        Vector2 origin = new(placeX - 51, placeY - 23);
 
                         bool whitelist = false;
-                        for (int i = 0; i <= 88; i++)
+                        for (int i = 0; i <= 98; i++)
                         {
                             for (int j = 0; j <= 47; j++)
                             {
                                 int type = Framing.GetTileSafely((int)origin.X + i, (int)origin.Y + j).TileType;
-                                if (!WorldGen.InWorld((int)origin.X + i, (int)origin.Y + j) || type == TileID.SnowBlock || type == TileID.Sandstone || TileLists.BlacklistTiles.Contains(type))
+                                if (!WorldGen.InWorld((int)origin.X + i, (int)origin.Y + j) || type == TileID.SnowBlock || type == TileID.WoodBlock || type == TileID.Sandstone || TileLists.BlacklistTiles.Contains(type))
                                 {
                                     whitelist = true;
                                     break;
@@ -1787,7 +1787,7 @@ namespace Redemption.WorldGeneration
                         if (whitelist)
                             continue;
 
-                        WorldUtils.Gen(origin.ToPoint(), new Shapes.Rectangle(88, 47), Actions.Chain(new GenAction[]
+                        WorldUtils.Gen(origin.ToPoint(), new Shapes.Rectangle(98, 47), Actions.Chain(new GenAction[]
                         {
                             new Actions.SetLiquid(0, 0)
                         }));
@@ -1806,20 +1806,20 @@ namespace Redemption.WorldGeneration
                     }
 
                     Point originPoint = gathicPortalPoint.ToPoint();
-                    GenUtils.ObjectPlace(originPoint.X + 45, originPoint.Y + 21, (ushort)ModContent.TileType<GathuramPortalTile>());
+                    GenUtils.ObjectPlace(originPoint.X + 50, originPoint.Y + 21, (ushort)ModContent.TileType<GathuramPortalTile>());
                     GenUtils.ObjectPlace(originPoint.X + 16, originPoint.Y + 22, (ushort)ModContent.TileType<ElderWoodTableTile>());
                     GenUtils.ObjectPlace(originPoint.X + 18, originPoint.Y + 22, (ushort)ModContent.TileType<ElderWoodChairTile>());
                     GenUtils.ObjectPlace(originPoint.X + 12, originPoint.Y + 22, (ushort)ModContent.TileType<ElderWoodDoorClosed>());
                     GenUtils.ObjectPlace(originPoint.X + 21, originPoint.Y + 22, (ushort)ModContent.TileType<ElderWoodDoorClosed>());
-                    GenUtils.ObjectPlace(originPoint.X + 69, originPoint.Y + 22, (ushort)ModContent.TileType<ElderWoodDoorClosed>());
-                    GenUtils.ObjectPlace(originPoint.X + 78, originPoint.Y + 22, (ushort)ModContent.TileType<ElderWoodDoorClosed>());
-                    GenUtils.ObjectPlace(originPoint.X + 71, originPoint.Y + 22, (ushort)ModContent.TileType<ElderWoodClockTile>());
-                    GenUtils.ObjectPlace(originPoint.X + 56, originPoint.Y + 21, (ushort)ModContent.TileType<SkeletonRemainsTile1_Special>());
+                    GenUtils.ObjectPlace(originPoint.X + 79, originPoint.Y + 22, (ushort)ModContent.TileType<ElderWoodDoorClosed>());
+                    GenUtils.ObjectPlace(originPoint.X + 88, originPoint.Y + 22, (ushort)ModContent.TileType<ElderWoodDoorClosed>());
+                    GenUtils.ObjectPlace(originPoint.X + 81, originPoint.Y + 22, (ushort)ModContent.TileType<ElderWoodClockTile>());
+                    GenUtils.ObjectPlace(originPoint.X + 61, originPoint.Y + 21, (ushort)ModContent.TileType<SkeletonRemainsTile1_Special>());
 
-                    ElderWoodChest(originPoint.X + 73, originPoint.Y + 22, 2);
-                    ElderWoodChest(originPoint.X + 62, originPoint.Y + 36);
+                    ElderWoodChest(originPoint.X + 83, originPoint.Y + 22, 2);
+                    ElderWoodChest(originPoint.X + 72, originPoint.Y + 36);
 
-                    for (int i = originPoint.X; i < originPoint.X + 88; i++)
+                    for (int i = originPoint.X; i < originPoint.X + 98; i++)
                     {
                         for (int j = originPoint.Y; j < originPoint.Y + 47; j++)
                         {
@@ -1896,7 +1896,7 @@ namespace Redemption.WorldGeneration
                             for (int j = 0; j <= 21; j++)
                             {
                                 int type = Framing.GetTileSafely(origin.X + i, origin.Y + j).TileType;
-                                if (!WorldGen.InWorld(origin.X + i, origin.Y + j) || type == TileID.SnowBlock || type == TileID.Sandstone || TileLists.BlacklistTiles.Contains(type))
+                                if (!WorldGen.InWorld(origin.X + i, origin.Y + j) || type == TileID.SnowBlock || type == TileID.WoodBlock || type == TileID.Sandstone || TileLists.BlacklistTiles.Contains(type))
                                 {
                                     whitelist = true;
                                     break;
@@ -2006,7 +2006,7 @@ namespace Redemption.WorldGeneration
                             for (int j = 0; j <= 47; j++)
                             {
                                 int type = Framing.GetTileSafely((int)origin2.X + i, (int)origin2.Y + j).TileType;
-                                if (TileLists.BlacklistTiles.Contains(type) || !WorldGen.InWorld(placeX2, placeY2))
+                                if (TileLists.BlacklistTiles.Contains(type) || type == TileID.WoodBlock || !WorldGen.InWorld(placeX2, placeY2))
                                 {
                                     blacklist = true;
                                     break;
@@ -2131,7 +2131,7 @@ namespace Redemption.WorldGeneration
                             for (int j = 0; j <= 16; j++)
                             {
                                 int type = Framing.GetTileSafely(origin.X + i, origin.Y + j).TileType;
-                                if (!WorldGen.InWorld(origin.X + i, origin.Y + j) || type == TileID.SnowBlock || type == TileID.Sandstone || TileLists.BlacklistTiles.Contains(type))
+                                if (!WorldGen.InWorld(origin.X + i, origin.Y + j) || type == TileID.SnowBlock || type == TileID.WoodBlock || type == TileID.Sandstone || TileLists.BlacklistTiles.Contains(type))
                                 {
                                     whitelist = true;
                                     break;
@@ -2567,12 +2567,12 @@ namespace Redemption.WorldGeneration
             {
                 if (!NPC.AnyNPCs(ModContent.NPCType<GathuramPortal>()))
                 {
-                    Vector2 gathicPortalPos = new(((gathicPortalPoint.X + 46) * 16) - 8, ((gathicPortalPoint.Y + 23) * 16) - 4);
+                    Vector2 gathicPortalPos = new(((gathicPortalPoint.X + 51) * 16) - 8, ((gathicPortalPoint.Y + 23) * 16) - 4);
                     LabArea.SpawnNPCInWorld(gathicPortalPos, ModContent.NPCType<GathuramPortal>());
                 }
                 if ((RedeQuest.calaviaVar is 1 or 2) && !RedeBossDowned.downedCalavia && !NPC.AnyNPCs(ModContent.NPCType<Calavia_Intro>()) && !NPC.AnyNPCs(ModContent.NPCType<Calavia>()))
                 {
-                    Vector2 gathicPortalPos = new((gathicPortalPoint.X + 42) * 16, (gathicPortalPoint.Y + 22) * 16);
+                    Vector2 gathicPortalPos = new((gathicPortalPoint.X + 47) * 16, (gathicPortalPoint.Y + 22) * 16);
                     LabArea.SpawnNPCInWorld(gathicPortalPos, ModContent.NPCType<Calavia_Intro>());
                 }
             }

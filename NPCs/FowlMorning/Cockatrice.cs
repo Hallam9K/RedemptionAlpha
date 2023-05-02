@@ -57,7 +57,7 @@ namespace Redemption.NPCs.FowlMorning
         }
         public override void SetDefaults()
         {
-            NPC.lifeMax = 440;
+            NPC.lifeMax = 340;
             NPC.damage = 30;
             NPC.defense = 4;
             NPC.knockBackResist = 0.1f;
@@ -315,7 +315,8 @@ namespace Redemption.NPCs.FowlMorning
         {
             npcLoot.Add(ItemDropRule.ByCondition(new Conditions.IsMasterMode(), ModContent.ItemType<CockatriceRelic>(), 2));
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<CockatriceTrophy>(), 10));
-            npcLoot.Add(ItemDropRule.OneFromOptions(5, ModContent.ItemType<EggShield>(), ModContent.ItemType<GreneggLauncher>(), ModContent.ItemType<Halbirdhouse>(), ModContent.ItemType<NestWand>(), ModContent.ItemType<ChickendWand>()));
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<EggShield>(), 5));
+            npcLoot.Add(ItemDropRule.OneFromOptions(5, ModContent.ItemType<GreneggLauncher>(), ModContent.ItemType<Halbirdhouse>(), ModContent.ItemType<NestWand>(), ModContent.ItemType<ChickendWand>()));
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Grain>(), 100));
             npcLoot.Add(ItemDropRule.ByCondition(new OnFireCondition(), ModContent.ItemType<FriedChicken>(), 1, 2, 3));
         }
