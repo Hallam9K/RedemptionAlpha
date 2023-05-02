@@ -5,11 +5,11 @@ using Terraria;
 using Terraria.GameContent;
 using Terraria.ModLoader;
 
-namespace Redemption.NPCs.Bosses.FowlEmperor
+namespace Redemption.NPCs.Minibosses.FowlEmperor
 {
     public class FowlEmperor_Crown_Proj : ModProjectile
     {
-        public override string Texture => "Redemption/NPCs/Bosses/FowlEmperor/FowlEmperor_Crown";
+        public override string Texture => "Redemption/NPCs/Minibosses/FowlEmperor/FowlEmperor_Crown";
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Fowl Crown");

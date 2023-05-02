@@ -90,7 +90,7 @@ namespace Redemption.NPCs.FowlMorning
         public override void OnHitPlayer(Player target, int damage, bool crit)
         {
             if (Main.rand.NextBool() && Main.expertMode)
-                target.AddBuff(BuffID.Bleeding, 300);
+                target.AddBuff(BuffID.Bleeding, Main.rand.Next(60, 121));
         }
         public override bool? CanFallThroughPlatforms() => NPC.Redemption().fallDownPlatform;
         public override void FindFrame(int frameHeight)

@@ -10,7 +10,7 @@ using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
 using Redemption.Items.Weapons.PreHM.Ranged;
 using Terraria.DataStructures;
-using Redemption.NPCs.Bosses.FowlEmperor;
+using Redemption.NPCs.Minibosses.FowlEmperor;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria.GameContent;
 using Redemption.Biomes;

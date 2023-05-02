@@ -14,7 +14,7 @@ using Terraria.DataStructures;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria.GameContent;
 using Microsoft.Xna.Framework;
-using Redemption.NPCs.Bosses.FowlEmperor;
+using Redemption.NPCs.Minibosses.FowlEmperor;
 using Redemption.Items.Weapons.PreHM.Summon;
 using Redemption.Biomes;
 using Redemption.Items.Accessories.PreHM;

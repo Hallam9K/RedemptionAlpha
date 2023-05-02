@@ -2,63 +2,41 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Base;
 using Redemption.Globals;
-using System.Collections.Generic;
 using Terraria;
 using Terraria.Audio;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace Redemption.NPCs.Bosses.FowlEmperor
+namespace Redemption.NPCs.Minibosses.FowlEmperor
 {
-    public class Rooster_EggBomb : ModProjectile
+    public class EggCracker_Proj : ModProjectile
     {
-        public override string Texture => "Redemption/Items/Weapons/PreHM/Ranged/EggBomb";
+        public override string Texture => "Redemption/NPCs/Minibosses/FowlEmperor/EggCracker";
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Egg Bomb");
-            ProjectileID.Sets.DontAttachHideToAlpha[Type] = true;
+            DisplayName.SetDefault("Egg Cracker");
         }
         public override void SetDefaults()
         {
             Projectile.width = 16;
             Projectile.height = 16;
-            Projectile.friendly = false;
-            Projectile.hostile = true;
+            Projectile.friendly = true;
+            Projectile.hostile = false;
             Projectile.penetrate = 1;
-            Projectile.tileCollide = false;
+            Projectile.DamageType = DamageClass.Default;
+            Projectile.tileCollide = true;
             Projectile.timeLeft = 300;
-            Projectile.hide = true;
-        }
-        public override void DrawBehind(int index, List<int> behindNPCsAndTiles, List<int> behindNPCs, List<int> behindProjectiles, List<int> overPlayers, List<int> overWiresUI)
-        {
-            behindNPCs.Add(index);
-        }
-        public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough, ref Vector2 hitboxCenterFrac)
-        {
-            Player player = Main.player[Projectile.owner];
-            if (Projectile.Center.Y < player.Center.Y)
-                fallThrough = true;
-            else
-                fallThrough = false;
-            return true;
         }
         public override void AI()
         {
             Projectile.LookByVelocity();
             Projectile.rotation += Projectile.velocity.X / 20;
             Projectile.velocity.Y += 0.2f;
-
-            if (Projectile.timeLeft < 260)
-                Projectile.tileCollide = true;
-        }
-        public override void OnHitPlayer(Player target, int damage, bool crit)
-        {
-            Projectile.timeLeft = 2;
         }
         public override void Kill(int timeLeft)
         {
-            SoundEngine.PlaySound(SoundID.Item14, Projectile.position);
+            SoundEngine.PlaySound(SoundID.DD2_KoboldExplosion, Projectile.position);
             SoundEngine.PlaySound(SoundID.NPCDeath11 with { Volume = .5f }, Projectile.position);
             for (int i = 0; i < 8; i++)
                 Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.MothronEgg, Projectile.velocity.X * 0.5f,
@@ -68,6 +46,9 @@ namespace Redemption.NPCs.Bosses.FowlEmperor
             {
                 int dust = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.Torch, Projectile.velocity.X * 0.5f, Projectile.velocity.Y * 0.5f, Scale: 3);
                 Main.dust[dust].velocity *= 3;
+                Main.dust[dust].noGravity = true;
+                dust = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.Firework_Red, 0, 0, Scale: 3);
+                Main.dust[dust].velocity *= 10;
                 Main.dust[dust].noGravity = true;
             }
             for (int i = 0; i < 10; i++)
@@ -85,26 +66,42 @@ namespace Redemption.NPCs.Bosses.FowlEmperor
                     Main.gore[goreIndex].velocity.Y = Main.gore[goreIndex].velocity.Y + 1.5f;
                 }
             }
-            int radius = Main.expertMode ? 60 : 50;
-            for (int i = 0; i < Main.maxPlayers; i++)
+            Rectangle boom = new((int)Projectile.Center.X - 40, (int)Projectile.Center.Y - 40, 80, 80);
+            for (int i = 0; i < Main.maxNPCs; i++)
             {
-                Player target = Main.player[i];
-                if (!target.active || target.dead)
+                NPC target = Main.npc[i];
+                if (!target.active || !target.CanBeChasedBy())
                     continue;
 
-                if (Projectile.DistanceSQ(target.Center) > radius * radius)
+                if (target.immune[Projectile.whoAmI] > 0 || !target.Hitbox.Intersects(boom))
                     continue;
 
+                target.immune[Projectile.whoAmI] = 20;
                 int hitDirection = target.RightOfDir(Projectile);
-                BaseAI.DamagePlayer(target, Projectile.damage * 4, Projectile.knockBack, hitDirection, Projectile);
+                BaseAI.DamageNPC(target, Projectile.damage, Projectile.knockBack, hitDirection, Projectile, crit: Projectile.HeldItemCrit());
             }
         }
+        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        {
+            target.immune[Projectile.whoAmI] = 20;
+        }
+
         public override bool PreDraw(ref Color lightColor)
         {
             Texture2D texture = TextureAssets.Projectile[Projectile.type].Value;
-            Vector2 drawOrigin = new(texture.Width / 2, texture.Height / 2 + 6);
+            Vector2 drawOrigin = new(texture.Width / 2, texture.Height / 2 + 2);
 
             Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition, null, Projectile.GetAlpha(lightColor), Projectile.rotation, drawOrigin, Projectile.scale, SpriteEffects.None, 0);
+            return false;
+        }
+        public override bool OnTileCollide(Vector2 oldVelocity)
+        {
+            if (Projectile.velocity.X != oldVelocity.X)
+                Projectile.velocity.X = -oldVelocity.X;
+            if (Projectile.velocity.Y != oldVelocity.Y)
+                Projectile.velocity.Y = -oldVelocity.Y;
+            Projectile.velocity.Y *= 0.6f;
+            Projectile.velocity.X *= 0.6f;
             return false;
         }
     }

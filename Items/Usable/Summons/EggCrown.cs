@@ -1,6 +1,6 @@
 using Redemption.Globals;
 using Redemption.Items.Weapons.PreHM.Ranged;
-using Redemption.NPCs.Bosses.FowlEmperor;
+using Redemption.NPCs.Minibosses.FowlEmperor;
 using Redemption.WorldGeneration.Soulless;
 using SubworldLibrary;
 using Terraria;
