@@ -2,7 +2,7 @@ using Redemption.NPCs.Minibosses.SkullDigger;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ModLoader;
 using Redemption.BaseExtension;
-using Redemption.NPCs.Bosses.FowlEmperor;
+using Redemption.NPCs.Minibosses.FowlEmperor;
 using Terraria;
 using Redemption.Base;
 using Redemption.Items.Armor.Vanity.TBot;

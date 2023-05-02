@@ -3,8 +3,6 @@ using Terraria;
 using Terraria.ModLoader;
 using Terraria.ID;
 using Redemption.Globals;
-using Redemption.Buffs.Debuffs;
-using Redemption.NPCs.Bosses.FowlEmperor;
 using Terraria.Audio;
 
 namespace Redemption.NPCs.Bosses.SeedOfInfection

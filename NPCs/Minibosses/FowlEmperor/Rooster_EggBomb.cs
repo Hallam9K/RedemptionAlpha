@@ -9,7 +9,7 @@ using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace Redemption.NPCs.Bosses.FowlEmperor
+namespace Redemption.NPCs.Minibosses.FowlEmperor
 {
     public class Rooster_EggBomb : ModProjectile
     {

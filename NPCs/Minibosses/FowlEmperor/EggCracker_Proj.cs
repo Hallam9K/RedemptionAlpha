@@ -8,11 +8,11 @@ using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace Redemption.NPCs.Bosses.FowlEmperor
+namespace Redemption.NPCs.Minibosses.FowlEmperor
 {
     public class EggCracker_Proj : ModProjectile
     {
-        public override string Texture => "Redemption/NPCs/Bosses/FowlEmperor/EggCracker";
+        public override string Texture => "Redemption/NPCs/Minibosses/FowlEmperor/EggCracker";
         public override void SetStaticDefaults()
         {
             // DisplayName.SetDefault("Egg Cracker");

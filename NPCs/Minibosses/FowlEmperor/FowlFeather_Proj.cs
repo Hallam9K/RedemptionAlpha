@@ -3,7 +3,7 @@ using Redemption.Dusts;
 using Terraria;
 using Terraria.ModLoader;
 
-namespace Redemption.NPCs.Bosses.FowlEmperor
+namespace Redemption.NPCs.Minibosses.FowlEmperor
 {
     public class FowlFeather_Proj : ModProjectile
     {

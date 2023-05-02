@@ -11,14 +11,13 @@ using Redemption.Base;
 using Redemption.Items.Usable.Potions;
 using Terraria.GameContent.ItemDropRules;
 
-namespace Redemption.NPCs.Bosses.FowlEmperor
+namespace Redemption.NPCs.Minibosses.FowlEmperor
 {
-    public class Chickenvoy : ModNPC
+    public class Chickadier : ModNPC
     {
         public override void SetStaticDefaults()
         {
-            // DisplayName.SetDefault("Chick Envoy");
-            Main.npcFrameCount[NPC.type] = 9;
+            Main.npcFrameCount[NPC.type] = 13;
 
             NPCID.Sets.NPCBestiaryDrawModifiers value = new(0)
             {
@@ -34,15 +33,15 @@ namespace Redemption.NPCs.Bosses.FowlEmperor
             NPC.width = 30;
             NPC.height = 34;
             NPC.friendly = false;
-            NPC.damage = 13;
-            NPC.defense = 1;
-            NPC.lifeMax = 22;
+            NPC.damage = 18;
+            NPC.defense = 4;
+            NPC.lifeMax = 32;
             NPC.HitSound = SoundID.NPCHit1;
             NPC.DeathSound = SoundID.NPCDeath1;
             NPC.noTileCollide = true;
             NPC.noGravity = true;
             NPC.aiStyle = -1;
-            NPC.knockBackResist = 0.5f;
+            NPC.knockBackResist = 0.4f;
         }
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
@@ -109,6 +108,7 @@ namespace Redemption.NPCs.Bosses.FowlEmperor
                             NPC.scale -= 0.01f;
                             if (NPC.ai[2]++ > 0 && BaseAI.HitTileOnSide(NPC, 3))
                             {
+                                NPC.ai[1] = Main.rand.Next(120, 301);
                                 NPC.scale = 1;
                                 NPC.ai[0] = 1;
                                 NPC.netUpdate = true;
@@ -118,7 +118,31 @@ namespace Redemption.NPCs.Bosses.FowlEmperor
                     break;
                 case 1:
                     NPC.PlatformFallCheck(ref NPC.Redemption().fallDownPlatform);
-                    NPCHelper.HorizontallyMove(NPC, player.Center, 0.15f, 2.6f, 14, 14, NPC.Center.Y > player.Center.Y, player);
+                    NPCHelper.HorizontallyMove(NPC, player.Center, 0.15f, 2.2f, 14, 14, NPC.Center.Y > player.Center.Y, player);
+
+                    if (NPC.ai[2]++ >= NPC.ai[1] && BaseAI.HitTileOnSide(NPC, 3))
+                    {
+                        NPC.velocity *= 0;
+                        NPC.ai[2] = 0;
+                        NPC.ai[0] = 2;
+                        NPC.ai[1] = 0;
+                        NPC.netUpdate = true;
+                    }
+                    break;
+                case 2:
+                    if (NPC.ai[2]++ <= 50)
+                        NPC.frameCounter = 0;
+
+                    if (NPC.ai[2] <= 55)
+                        NPC.LookAtEntity(player);
+
+                    if (NPC.velocity.Y < 0)
+                        NPC.velocity.Y = 0;
+                    if (NPC.velocity.Y == 0)
+                        NPC.velocity.X *= 0.9f;
+
+                    if (NPC.ai[2] == 55)
+                        NPC.Shoot(NPC.Center, ModContent.ProjectileType<Chickadier_Bomb>(), NPC.damage, NPC.DirectionTo(player.Center) * Main.rand.Next(8, 13) - new Vector2(0, 4), true, SoundID.Item1);
                     break;
             }
             NPC.scale = MathHelper.Max(1, NPC.scale);
@@ -126,6 +150,26 @@ namespace Redemption.NPCs.Bosses.FowlEmperor
         public override bool? CanFallThroughPlatforms() => NPC.Redemption().fallDownPlatform;
         public override void FindFrame(int frameHeight)
         {
+            if (NPC.ai[0] is 2)
+            {
+                if (NPC.frame.Y < 9 * frameHeight)
+                    NPC.frame.Y = 9 * frameHeight;
+
+                if (++NPC.frameCounter >= 5)
+                {
+                    NPC.frameCounter = 0;
+                    NPC.frame.Y += frameHeight;
+                    if (NPC.frame.Y > 12 * frameHeight)
+                    {
+                        NPC.frame.Y = 0;
+                        NPC.ai[2] = 0;
+                        NPC.ai[0] = 1;
+                        NPC.ai[1] = Main.rand.Next(120, 301);
+                        NPC.netUpdate = true;
+                    }
+                }
+                return;
+            }
             if (NPC.velocity.Y == 0)
             {
                 NPC.rotation = 0;
@@ -153,7 +197,8 @@ namespace Redemption.NPCs.Bosses.FowlEmperor
             }
         }
 
-        public override bool CanHitPlayer(Player target, ref int cooldownSlot) => NPC.ai[0] > 0;
+        public override bool CanHitNPC(NPC target) => false;
+        public override bool CanHitPlayer(Player target, ref int cooldownSlot) => false;
         public override void HitEffect(NPC.HitInfo hit)
         {
             if (NPC.life <= 0)
@@ -183,7 +228,7 @@ namespace Redemption.NPCs.Bosses.FowlEmperor
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Times.DayTime,
 
                 new FlavorTextBestiaryInfoElement(
-                    "A loyal messenger of the Fowl Emperor. Don't ask where they got their hats from.")
+                    "A soldier of the Fowl Emperor. Don't ask where they get their explosive eggs from.")
             });
         }
     }

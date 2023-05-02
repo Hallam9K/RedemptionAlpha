@@ -219,7 +219,7 @@ namespace Redemption.Globals
 
         #region Spirit
 
-        public static List<int> Spirit = new() { NPCID.EnchantedSword, NPCID.CrimsonAxe, NPCID.CursedHammer, NPCID.DesertDjinn, NPCID.DungeonSpirit, NPCID.FloatyGross, NPCID.Ghost, NPCID.PossessedArmor, NPCID.Wraith, NPCID.Reaper, NPCID.Poltergeist, NPCID.PirateGhost, ModContent.NPCType<SkullDigger>(), ModContent.NPCType<VagrantSpirit>(), ModContent.NPCType<KeeperSpirit>(), ModContent.NPCType<ErhanSpirit>(), ModContent.NPCType<LostSoulNPC>(), ModContent.NPCType<NuclearShadow>(), ModContent.NPCType<WraithSlayer_Samurai>(), ModContent.NPCType<EpidotrianSkeleton_SS>(), ModContent.NPCType<ForestNymph_SS>(), ModContent.NPCType<SkeletonAssassin_SS>(), ModContent.NPCType<SkeletonFlagbearer_SS>(), ModContent.NPCType<SkeletonNoble_SS>(), ModContent.NPCType<SkeletonWarden_SS>(), ModContent.NPCType<HazmatZombie_SS>(), ModContent.NPCType<SkeletonDuelist_SS>(), ModContent.NPCType<SkeletonWanderer_SS>(), ModContent.NPCType<Asher_SS>(), ModContent.NPCType<AncientGladestoneGolem_SS>(), ModContent.NPCType<MossyGoliath_SS>(), ModContent.NPCType<HeadlessChicken>() };
+        public static List<int> Spirit = new() { NPCID.EnchantedSword, NPCID.CrimsonAxe, NPCID.CursedHammer, NPCID.DesertDjinn, NPCID.DungeonSpirit, NPCID.FloatyGross, NPCID.Ghost, NPCID.PossessedArmor, NPCID.Wraith, NPCID.Reaper, NPCID.Poltergeist, NPCID.PirateGhost, ModContent.NPCType<SkullDigger>(), ModContent.NPCType<VagrantSpirit>(), ModContent.NPCType<KeeperSpirit>(), ModContent.NPCType<ErhanSpirit>(), ModContent.NPCType<LostSoulNPC>(), ModContent.NPCType<NuclearShadow>(), ModContent.NPCType<WraithSlayer_Samurai>(), ModContent.NPCType<EpidotrianSkeleton_SS>(), ModContent.NPCType<ForestNymph_SS>(), ModContent.NPCType<SkeletonAssassin_SS>(), ModContent.NPCType<SkeletonFlagbearer_SS>(), ModContent.NPCType<SkeletonNoble_SS>(), ModContent.NPCType<SkeletonWarden_SS>(), ModContent.NPCType<HazmatZombie_SS>(), ModContent.NPCType<SkeletonDuelist_SS>(), ModContent.NPCType<SkeletonWanderer_SS>(), ModContent.NPCType<Asher_SS>(), ModContent.NPCType<AncientGladestoneGolem_SS>(), ModContent.NPCType<MossyGoliath_SS>(), ModContent.NPCType<HeadlessChicken>(), ModContent.NPCType<GhostfireChicken>() };
 
         #endregion
 
@@ -246,7 +246,7 @@ namespace Redemption.Globals
         #endregion
 
         #region Dragonlike
-        public static List<int> Dragonlike = new() { NPCID.DD2Betsy, NPCID.DD2WyvernT1, NPCID.DD2WyvernT2, NPCID.DD2WyvernT3, NPCID.PigronCorruption, NPCID.PigronCrimson, NPCID.PigronHallow, NPCID.DukeFishron, NPCID.WyvernHead, NPCID.WyvernBody, NPCID.WyvernBody2, NPCID.WyvernBody3, NPCID.WyvernLegs, NPCID.WyvernTail, NPCID.CultistDragonHead, NPCID.CultistDragonBody1, NPCID.CultistDragonBody2, NPCID.CultistDragonBody3, NPCID.CultistDragonBody4, NPCID.CultistDragonTail };
+        public static List<int> Dragonlike = new() { NPCID.DD2Betsy, NPCID.DD2WyvernT1, NPCID.DD2WyvernT2, NPCID.DD2WyvernT3, NPCID.PigronCorruption, NPCID.PigronCrimson, NPCID.PigronHallow, NPCID.DukeFishron, NPCID.WyvernHead, NPCID.WyvernBody, NPCID.WyvernBody2, NPCID.WyvernBody3, NPCID.WyvernLegs, NPCID.WyvernTail, NPCID.CultistDragonHead, NPCID.CultistDragonBody1, NPCID.CultistDragonBody2, NPCID.CultistDragonBody3, NPCID.CultistDragonBody4, NPCID.CultistDragonTail, ModContent.NPCType<Cockatrice>() };
         #endregion
 
         #region Inorganic

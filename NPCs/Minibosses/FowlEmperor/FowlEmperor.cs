@@ -23,7 +23,7 @@ using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 
-namespace Redemption.NPCs.Bosses.FowlEmperor
+namespace Redemption.NPCs.Minibosses.FowlEmperor
 {
     [AutoloadBossHead]
     public class FowlEmperor : ModNPC
@@ -89,7 +89,7 @@ namespace Redemption.NPCs.Bosses.FowlEmperor
             NPC.boss = true;
             NPC.netAlways = true;
             if (!Main.dedServ)
-                Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/BossForest1");
+                Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/BossFowl");
         }
 
         public override bool CanHitPlayer(Player target, ref int cooldownSlot) => AniType is (int)AnimType.Throw && NPC.frame.Y >= 17 * 80;

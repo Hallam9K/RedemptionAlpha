@@ -15,7 +15,7 @@ using Redemption.Items.Weapons.PreHM.Magic;
 using Redemption.Items.Weapons.PreHM.Melee;
 using Redemption.Items.Weapons.PreHM.Ranged;
 using Redemption.Items.Weapons.PreHM.Summon;
-using Redemption.NPCs.Bosses.FowlEmperor;
+using Redemption.NPCs.Minibosses.FowlEmperor;
 using Redemption.NPCs.Bosses.Keeper;
 using Redemption.Particles;
 using ReLogic.Content;

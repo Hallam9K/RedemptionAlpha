@@ -37,7 +37,7 @@ using Redemption.NPCs.Bosses.ADD;
 using Redemption.Items.Accessories.PostML;
 using Redemption.NPCs.Friendly;
 using Redemption.Items.Weapons.PreHM.Summon;
-using Redemption.NPCs.Bosses.FowlEmperor;
+using Redemption.NPCs.Minibosses.FowlEmperor;
 using Redemption.NPCs.FowlMorning;
 using Redemption.Items;
 using Redemption.NPCs.Minibosses.Calavia;
@@ -58,11 +58,11 @@ namespace Redemption.CrossMod
             if (ModLoader.TryGetMod("BossChecklist", out Mod bossChecklist))
             {
                 #region Fowl Emperor
-                bossChecklist.Call("AddBoss", mod, "Fowl Emperor", ModContent.NPCType<FowlEmperor>(), 0.1f, () => RedeBossDowned.downedFowlEmperor, () => RedeBossDowned.downedFowlEmperor,
+                bossChecklist.Call("AddMiniBoss", mod, "Fowl Emperor", ModContent.NPCType<FowlEmperor>(), 0.1f, () => RedeBossDowned.downedFowlEmperor, () => RedeBossDowned.downedFowlEmperor,
                     new List<int>
                     {
                         ModContent.ItemType<FowlEmperorRelic>(),
-                        //ModContent.ItemType<BouquetOfThorns>(),
+                        ModContent.ItemType<EggPet>(),
                         ModContent.ItemType<FowlEmperorTrophy>(),
                         ModContent.ItemType<FowlCrown>(),
                         ModContent.ItemType<ForestBossBox>()
@@ -90,10 +90,12 @@ namespace Redemption.CrossMod
                     }, 0.11f, () => RedeBossDowned.downedFowlMorning, () => RedeBossDowned.downedFowlEmperor,
                     new List<int>
                     {
-                        //ModContent.ItemType<ThornRelic>(),
-                        //ModContent.ItemType<BouquetOfThorns>(),
-                        //ModContent.ItemType<ThornTrophy>(),
-                        //ModContent.ItemType<ThornMask>(),
+                        ModContent.ItemType<CockatriceRelic>(),
+                        ModContent.ItemType<FowlFeather>(),
+                        ModContent.ItemType<CockatriceTrophy>(),
+                        ModContent.ItemType<BasanRelic>(),
+                        ModContent.ItemType<SpicyDrumstick>(),
+                        ModContent.ItemType<BasanTrophy>(),
                         ModContent.ItemType<FowlMorningBox>()
                     },
                     ModContent.ItemType<FowlWarHorn>(), "Use a [i:Redemption/FowlWarHorn] before midday.",
@@ -110,9 +112,8 @@ namespace Redemption.CrossMod
                     new List<int>
                     {
                         ModContent.ItemType<CockatriceRelic>(),
-                        //ModContent.ItemType<BouquetOfThorns>(),
-                        //ModContent.ItemType<FowlEmperorTrophy>(),
-                        //ModContent.ItemType<FowlCrown>(),
+                        ModContent.ItemType<FowlFeather>(),
+                        ModContent.ItemType<CockatriceTrophy>(),
                         ModContent.ItemType<FowlMorningBox>()
                     },
                     null, "Appears in the last 3 waves of the Fowl Morning.",
@@ -129,10 +130,9 @@ namespace Redemption.CrossMod
                 bossChecklist.Call("AddMiniBoss", mod, "Basan", ModContent.NPCType<Basan>(), 0.112f, () => RedeBossDowned.downedFowlMorning, () => RedeBossDowned.downedFowlEmperor,
                     new List<int>
                     {
-                        //ModContent.ItemType<CockatriceRelic>(),
-                        //ModContent.ItemType<BouquetOfThorns>(),
-                        //ModContent.ItemType<FowlEmperorTrophy>(),
-                        //ModContent.ItemType<FowlCrown>(),
+                        ModContent.ItemType<BasanRelic>(),
+                        ModContent.ItemType<SpicyDrumstick>(),
+                        ModContent.ItemType<BasanTrophy>(),
                         ModContent.ItemType<FowlMorningBox>()
                     },
                     null, "Appears in the last wave of the Fowl Morning.",

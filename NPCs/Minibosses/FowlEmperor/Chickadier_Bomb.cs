@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using Terraria;
 using Terraria.ModLoader;
 
-namespace Redemption.NPCs.Bosses.FowlEmperor
+namespace Redemption.NPCs.Minibosses.FowlEmperor
 {
     public class Chickadier_Bomb : Rooster_EggBomb
     {
@@ -32,7 +32,7 @@ namespace Redemption.NPCs.Bosses.FowlEmperor
         }
         public override bool PreDraw(ref Color lightColor)
         {
-            Texture2D texture = ModContent.Request<Texture2D>("Redemption/NPCs/Bosses/FowlEmperor/Chickadier_Bomb").Value;
+            Texture2D texture = ModContent.Request<Texture2D>("Redemption/NPCs/Minibosses/FowlEmperor/Chickadier_Bomb").Value;
             Vector2 drawOrigin = new(texture.Width / 2, texture.Height / 2 + 2);
 
             Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition, null, Projectile.GetAlpha(lightColor), Projectile.rotation, drawOrigin, Projectile.scale, SpriteEffects.None, 0);
