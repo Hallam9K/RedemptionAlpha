@@ -48,7 +48,7 @@ namespace Redemption.Globals
                     else if (Main.netMode == NetmodeID.SinglePlayer)
                         Main.NewText(Language.GetTextValue(status), new Color(48, 121, 248));
 
-                    Vector2 anglonPortalPos = new(((RedeGen.newbCavePoint.X + 35) * 16) - 8, ((RedeGen.newbCavePoint.Y + 6) * 16) - 4);
+                    Vector2 anglonPortalPos = new(((RedeGen.newbCaveVector.X + 35) * 16) - 8, ((RedeGen.newbCaveVector.Y + 6) * 16) - 4);
                     int wayfarer = WorldGen.crimson ? ModContent.NPCType<Daerel>() : ModContent.NPCType<Zephos>();
                     SoundEngine.PlaySound(SoundID.DD2_EtherianPortalSpawnEnemy, anglonPortalPos);
                     for (int i = 0; i < 30; i++)
@@ -59,7 +59,7 @@ namespace Redemption.Globals
                         Main.dust[dust].color = dustColor;
                         Main.dust[dust].velocity *= 3f;
                     }
-                    if (RedeGen.newbCavePoint.X != 0 && !RedeHelper.WayfarerActive())
+                    if (RedeGen.newbCaveVector.X != -1 && !RedeHelper.WayfarerActive())
                         LabArea.SpawnNPCInWorld(anglonPortalPos, wayfarer);
 
                     if (Main.netMode == NetmodeID.Server)
@@ -69,7 +69,7 @@ namespace Redemption.Globals
             #endregion
             if (calaviaVar == 0 && Main.dayTime && Terraria.NPC.downedBoss3)
             {
-                Point originPoint = RedeGen.gathicPortalPoint.ToPoint();
+                Point originPoint = RedeGen.gathicPortalVector.ToPoint();
                 GenUtils.ObjectPlace(originPoint.X + 36, originPoint.Y + 17, TileID.Torches);
 
                 calaviaVar = 1;

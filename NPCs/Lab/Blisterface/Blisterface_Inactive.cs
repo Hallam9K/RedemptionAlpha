@@ -48,13 +48,13 @@ namespace Redemption.NPCs.Lab.Blisterface
         }
         public override void AI()
         {
-            if (NPC.Center.Y < (RedeGen.LabPoint.Y + 186) * 16)
+            if (NPC.Center.Y < (RedeGen.LabVector.Y + 186) * 16)
                 NPC.velocity.Y += 0.1f;
-            if (NPC.Center.Y > (RedeGen.LabPoint.Y + 191) * 16)
+            if (NPC.Center.Y > (RedeGen.LabVector.Y + 191) * 16)
                 NPC.velocity.Y -= 0.1f;
 
             Player player = Main.player[Main.myPlayer];
-            Rectangle activeZone = new((RedeGen.LabPoint.X + 204) * 16, (RedeGen.LabPoint.Y + 168) * 16, 7 * 16, 20 * 16);
+            Rectangle activeZone = new((int)(RedeGen.LabVector.X + 204) * 16, (int)(RedeGen.LabVector.Y + 168) * 16, 7 * 16, 20 * 16);
             if (player.Hitbox.Intersects(activeZone) && !player.dead && player.active)
             {
                 if (!Main.dedServ)
