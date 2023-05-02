@@ -37,7 +37,7 @@ namespace Redemption.NPCs.Lab.MACE
         public override void AI()
         {
             Player player = Main.player[Main.myPlayer];
-            Rectangle activeZone = new((RedeGen.LabPoint.X + 65) * 16, (RedeGen.LabPoint.Y + 167) * 16, 15 * 16, 18 * 16);
+            Rectangle activeZone = new((int)(RedeGen.LabVector.X + 65) * 16, (int)(RedeGen.LabVector.Y + 167) * 16, 15 * 16, 18 * 16);
             if (player.Hitbox.Intersects(activeZone) && !player.dead && player.active)
             {
                 NPC.SetDefaults(ModContent.NPCType<MACEProject>());

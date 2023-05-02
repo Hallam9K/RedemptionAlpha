@@ -255,7 +255,7 @@ namespace Redemption.NPCs.Friendly
 
                         Texture2D tex = ModContent.Request<Texture2D>("Redemption/WorldGeneration/SlayerShipFix1", AssetRequestMode.ImmediateLoad).Value;
 
-                        Point origin = RedeGen.slayerShipPoint.ToPoint();
+                        Point origin = RedeGen.slayerShipVector.ToPoint();
 
                         GenUtils.InvokeOnMainThread(() =>
                         {
@@ -302,7 +302,7 @@ namespace Redemption.NPCs.Friendly
 
                         Texture2D tex = ModContent.Request<Texture2D>("Redemption/WorldGeneration/SlayerShipFix2", AssetRequestMode.ImmediateLoad).Value;
 
-                        Point origin = RedeGen.slayerShipPoint.ToPoint();
+                        Point origin = RedeGen.slayerShipVector.ToPoint();
 
                         GenUtils.InvokeOnMainThread(() =>
                         {
@@ -361,7 +361,7 @@ namespace Redemption.NPCs.Friendly
                         Texture2D tex = ModContent.Request<Texture2D>("Redemption/WorldGeneration/SlayerShipFix2", AssetRequestMode.ImmediateLoad).Value;
                         Texture2D texWalls = ModContent.Request<Texture2D>("Redemption/WorldGeneration/SlayerShipWallsFix", AssetRequestMode.ImmediateLoad).Value;
 
-                        Point origin = RedeGen.slayerShipPoint.ToPoint();
+                        Point origin = RedeGen.slayerShipVector.ToPoint();
 
                         GenUtils.InvokeOnMainThread(() =>
                         {

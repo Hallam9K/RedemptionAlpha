@@ -301,7 +301,7 @@ namespace Redemption.NPCs.Lab.MACE
                                 case 0:
                                     if (AITimer++ == 0)
                                         JawOpen = true;
-                                    Vector2 v = new((RedeGen.LabPoint.X + 48) * 16, NPC.Center.Y);
+                                    Vector2 v = new((RedeGen.LabVector.X + 48) * 16, NPC.Center.Y);
                                     if (NPC.DistanceSQ(v) < 10 * 10)
                                     {
                                         TimerRand++;
@@ -312,7 +312,7 @@ namespace Redemption.NPCs.Lab.MACE
                                         NPC.Move(v, 7, 30);
                                     break;
                                 case 1:
-                                    Vector2 v2 = new((RedeGen.LabPoint.X + 98) * 16, NPC.Center.Y);
+                                    Vector2 v2 = new((RedeGen.LabVector.X + 98) * 16, NPC.Center.Y);
                                     if (NPC.DistanceSQ(v2) < 10 * 10)
                                     {
                                         JawOpen = false;

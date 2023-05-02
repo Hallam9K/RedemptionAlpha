@@ -55,7 +55,7 @@ namespace Redemption.NPCs.Lab.Janitor
             NPC.LookByVelocity();
             SoundStyle voice = CustomSounds.Voice6 with { Pitch = 0.2f };
 
-            moveTo = new((RedeGen.LabPoint.X + 190) * 16, (RedeGen.LabPoint.Y + 21) * 16);
+            moveTo = new((RedeGen.LabVector.X + 190) * 16, (RedeGen.LabVector.Y + 21) * 16);
             switch (State)
             {
                 case 0:

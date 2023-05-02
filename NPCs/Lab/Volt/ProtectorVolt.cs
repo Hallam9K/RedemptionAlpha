@@ -167,7 +167,7 @@ namespace Redemption.NPCs.Lab.Volt
                 case ActionState.Fly:
                     if (NPC.life <= (int)(NPC.lifeMax * 0.01f))
                     {
-                        Pos = (RedeGen.LabPoint.ToVector2() + new Vector2(86, 119)) * 16;
+                        Pos = (RedeGen.LabVector + new Vector2(86, 119)) * 16;
                         NPC.dontTakeDamage = true;
                         NPC.noGravity = true;
                         NPC.noTileCollide = true;
@@ -371,7 +371,7 @@ namespace Redemption.NPCs.Lab.Volt
                             dust2.velocity = dust2.position.DirectionTo(GunOrigin) * 4f;
                         }
 
-                        if (NPC.Center.Y > (RedeGen.LabPoint.Y + 112) * 16)
+                        if (NPC.Center.Y > (RedeGen.LabVector.Y + 112) * 16)
                             gunRot.SlowRotation(-MathHelper.PiOver2, (float)Math.PI / 30f);
                         else
                             gunRot.SlowRotation(MathHelper.PiOver2, (float)Math.PI / 30f);
@@ -380,7 +380,7 @@ namespace Redemption.NPCs.Lab.Volt
                     {
                         NPC.noGravity = true;
                         NPC.noTileCollide = true;
-                        if (NPC.Center.Y > (RedeGen.LabPoint.Y + 112) * 16)
+                        if (NPC.Center.Y > (RedeGen.LabVector.Y + 112) * 16)
                             gunRot = -MathHelper.PiOver2;
                         else
                         {
@@ -391,12 +391,12 @@ namespace Redemption.NPCs.Lab.Volt
                     if (AITimer == 60)
                     {
                         NPC.Shoot(GunOrigin, ModContent.ProjectileType<TeslaBeam>(), NPC.damage, RedeHelper.PolarVector(10, gunRot), true, SoundID.Item73, NPC.whoAmI);
-                        if (NPC.Center.X > (RedeGen.LabPoint.X + 86) * 16)
+                        if (NPC.Center.X > (RedeGen.LabVector.X + 86) * 16)
                             TimerRand = 1;
                     }
                     if (TimerRand < 2 && AITimer >= 60)
                     {
-                        Vector2 v = new(TimerRand == 0 ? (RedeGen.LabPoint.X + 125) * 16 : (RedeGen.LabPoint.X + 48) * 16, Pos.Y - 30);
+                        Vector2 v = new(TimerRand == 0 ? (RedeGen.LabVector.X + 125) * 16 : (RedeGen.LabVector.X + 48) * 16, Pos.Y - 30);
                         if (NPC.DistanceSQ(v) < 10 * 10)
                         {
                             NPC.noGravity = false;
@@ -472,7 +472,7 @@ namespace Redemption.NPCs.Lab.Volt
                             }
                             break;
                         case 2:
-                            Vector2 VoltPos = new((RedeGen.LabPoint.X + 49) * 16, (RedeGen.LabPoint.Y + 120) * 16);
+                            Vector2 VoltPos = new((RedeGen.LabVector.X + 49) * 16, (RedeGen.LabVector.Y + 120) * 16);
                             if (NPC.DistanceSQ(VoltPos) < 10 * 10)
                             {
                                 NPC.noGravity = false;
@@ -529,7 +529,7 @@ namespace Redemption.NPCs.Lab.Volt
             else
                 FloatPos = false;
 
-            return (RedeGen.LabPoint.ToVector2() + selection) * 16;
+            return (RedeGen.LabVector + selection) * 16;
         }
         public Vector2 PickSidePos()
         {
@@ -540,7 +540,7 @@ namespace Redemption.NPCs.Lab.Volt
             choice.Add(new Vector2(126, 103));
 
             FloatPos = false;
-            return (RedeGen.LabPoint.ToVector2() + choice) * 16;
+            return (RedeGen.LabVector + choice) * 16;
         }
         public override bool CheckDead()
         {
