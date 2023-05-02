@@ -1,22 +1,24 @@
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using Redemption.Base;
+using Redemption.BaseExtension;
 using Redemption.Projectiles.Minions;
-using Redemption.Rarities;
+using Redemption.Projectiles.Ranged;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace Redemption.Items.Weapons.PostML.Summon
+namespace Redemption.Items.Weapons.PreHM.Summon
 {
-    public class Pihlajasauva : ModItem
+    public class DawnHerald : ModItem
     {
         public override void SetStaticDefaults()
         {
-            /* Tooltip.SetDefault("Summons a rowan tree that emits an empowering aura\n" +
-                "Within the aura, your minions can cause rowan berries to drop from their targets and their damage is increased by 8%\n" +
-                "Rowan berries will heal for a small amount and give major improvements to all stats for a short time\n" +
-                "Right-click to disable the sentry");*/
-            Item.ResearchUnlockCount = 1;
+            Tooltip.SetDefault("Summons a Rooster Booster in a nest that crows an empowering aura\n" +
+                "Within the aura, players gain increased jump height and 20% increased movement speed\n" +
+                "Right-click to disable the sentry");
+            SacrificeTotal = 1;
 
             ItemID.Sets.GamepadWholeScreenUseRange[Item.type] = true;
             ItemID.Sets.LockOnIgnoresCollision[Item.type] = true;
@@ -26,18 +28,18 @@ namespace Redemption.Items.Weapons.PostML.Summon
         {
             Item.DamageType = DamageClass.Summon;
             Item.sentry = true;
-            Item.width = 34;
-            Item.height = 34;
+            Item.width = 38;
+            Item.height = 38;
             Item.useTime = 36;
             Item.useAnimation = 36;
             Item.useStyle = ItemUseStyleID.Swing;
             Item.noMelee = true;
-            Item.value = Item.sellPrice(0, 25);
-            Item.rare = ModContent.RarityType<TurquoiseRarity>();
+            Item.value = Item.sellPrice(0, 0, 24, 0);
+            Item.rare = ItemRarityID.Blue;
             Item.UseSound = SoundID.DD2_DefenseTowerSpawn;
             Item.autoReuse = false;
-            Item.shoot = ModContent.ProjectileType<RowanTreeSummon>();
-            Item.mana = 28;
+            Item.shoot = ModContent.ProjectileType<DawnHerald_Rooster>();
+            Item.mana = 20;
         }
         public override bool AltFunctionUse(Player player) => true;
         public override bool CanUseItem(Player player)
@@ -50,7 +52,8 @@ namespace Redemption.Items.Weapons.PostML.Summon
         }
         public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback)
         {
-            position = Main.MouseWorld;
+            int floor = BaseWorldGen.GetFirstTileFloor((int)Main.MouseWorld.X / 16, (int)Main.MouseWorld.Y / 16);
+            position = new Vector2(Main.MouseWorld.X, floor * 16 - 30);
         }
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
@@ -67,6 +70,7 @@ namespace Redemption.Items.Weapons.PostML.Summon
             }
             var projectile = Projectile.NewProjectileDirect(source, position, velocity, type, damage, knockback, Main.myPlayer, player.direction);
             projectile.originalDamage = Item.damage;
+
             player.UpdateMaxTurrets();
             return false;
         }

@@ -5,19 +5,19 @@ using Terraria.ModLoader;
 
 namespace Redemption.Buffs.Pets
 {
-	public class XenomiteElementalPetBuff : ModBuff
+	public class CockatricePetBuff : ModBuff
 	{
 		public override void SetStaticDefaults()
 		{
 			Main.buffNoTimeDisplay[Type] = true;
-            Main.lightPet[Type] = true;
-        }
+			Main.vanityPet[Type] = true;
+		}
 
-        public override void Update(Player player, ref int buffIndex)
+		public override void Update(Player player, ref int buffIndex)
 		{
 			player.buffTime[buffIndex] = 18000;
 
-			int projType = ModContent.ProjectileType<XenomiteElementalPet>();
+			int projType = ModContent.ProjectileType<CockatricePet_Proj>();
 
 			if (player.whoAmI == Main.myPlayer && player.ownedProjectileCounts[projType] <= 0)
 			{

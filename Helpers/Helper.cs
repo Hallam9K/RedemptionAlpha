@@ -48,10 +48,6 @@ namespace Redemption.Helpers
 
             projection = Matrix.CreateOrthographic(width, height, 0, 1000);
         }
-
-        private static int tiltTime;
-        private static float tiltMax;
-
         public static Rectangle ToRectangle(this Vector2 vector) => new Rectangle(0, 0, (int)vector.X, (int)vector.Y);
 
         public static Vector2 Round(this Vector2 vector) => new Vector2((float)Math.Round(vector.X), (float)Math.Round(vector.Y));

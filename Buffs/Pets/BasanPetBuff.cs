@@ -1,3 +1,4 @@
+using Terraria.ID;
 using Microsoft.Xna.Framework;
 using Redemption.Projectiles.Pets;
 using Terraria;
@@ -5,7 +6,7 @@ using Terraria.ModLoader;
 
 namespace Redemption.Buffs.Pets
 {
-	public class XenomiteElementalPetBuff : ModBuff
+	public class BasanPetBuff : ModBuff
 	{
 		public override void SetStaticDefaults()
 		{
@@ -17,7 +18,7 @@ namespace Redemption.Buffs.Pets
 		{
 			player.buffTime[buffIndex] = 18000;
 
-			int projType = ModContent.ProjectileType<XenomiteElementalPet>();
+			int projType = ModContent.ProjectileType<BasanPet_Proj>();
 
 			if (player.whoAmI == Main.myPlayer && player.ownedProjectileCounts[projType] <= 0)
 			{
