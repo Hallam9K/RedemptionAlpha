@@ -272,7 +272,7 @@ namespace Redemption.NPCs.Friendly
             return texture.Frame(NumberOfSegments, 1, NumberOfSegments - 1 - index, 0);
         }
 
-        public Vector2 Force(Player player, int index, int dir, float gravDir, float time, NPC npc = null)
+        public Vector2 Force(Player player, int index, int dir, float gravDir, float time, NPC npc = null, Projectile proj = null)
         {
             Vector2 force = new(
                 -dir * 0.5f,

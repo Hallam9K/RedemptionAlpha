@@ -91,6 +91,8 @@ Mods: {
             XenoemiaBuff: "Xenoemia"
             CleaverPetBuff: "Omini Cleaver"
             EggPetBuff: "The Egg"
+            BasanPetBuff: "Baby Basan"
+            CockatricePetBuff: "Baby Cockatrice"
 		}
 		
 		BuffDescription: {
@@ -174,6 +176,8 @@ Mods: {
             XenoemiaBuff: "A walking infection"
             CleaverPetBuff: "*Loud metal clank noise*"
             EggPetBuff: "The Egg"
+            BasanPetBuff: "Flamin' hot"
+            CockatricePetBuff: "It's giving you a deadly glare"
 		}
 		BiomeName: {
 			WastelandPurityBiome: Wasteland

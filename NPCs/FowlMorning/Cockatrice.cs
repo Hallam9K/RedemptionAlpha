@@ -85,7 +85,7 @@ namespace Redemption.NPCs.FowlMorning
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Surface,
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Times.DayTime,
 
-                new FlavorTextBestiaryInfoElement("Squawk!")
+                new FlavorTextBestiaryInfoElement("50% chicken, 50% dragon, yet somehow still tastes 100% like chicken.")
             });
         }
         public override void BossLoot(ref string name, ref int potionType)
@@ -314,6 +314,7 @@ namespace Redemption.NPCs.FowlMorning
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
             npcLoot.Add(ItemDropRule.ByCondition(new Conditions.IsMasterMode(), ModContent.ItemType<CockatriceRelic>(), 2));
+            npcLoot.Add(ItemDropRule.MasterModeDropOnAllPlayers(ModContent.ItemType<FowlFeather>(), 4));
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<CockatriceTrophy>(), 10));
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<EggShield>(), 5));
             npcLoot.Add(ItemDropRule.OneFromOptions(5, ModContent.ItemType<GreneggLauncher>(), ModContent.ItemType<Halbirdhouse>(), ModContent.ItemType<NestWand>(), ModContent.ItemType<ChickendWand>()));
@@ -407,7 +408,7 @@ namespace Redemption.NPCs.FowlMorning
         {
             return texture.Frame(NumberOfSegments, 1, NumberOfSegments - 1 - index, 0);
         }
-        public Vector2 Force(Player player, int index, int dir, float gravDir, float time, NPC npc = null)
+        public Vector2 Force(Player player, int index, int dir, float gravDir, float time, NPC npc = null, Projectile proj = null)
         {
             Vector2 force = new(
                 -dir * 0.5f,

@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Redemption.Base;
 using Redemption.BaseExtension;
 using Redemption.Projectiles.Minions;
+using Redemption.Projectiles.Ranged;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
@@ -10,12 +11,12 @@ using Terraria.ModLoader;
 
 namespace Redemption.Items.Weapons.PreHM.Summon
 {
-    public class GaucheStaff : ModItem
+    public class DawnHerald : ModItem
     {
         public override void SetStaticDefaults()
         {
-            Tooltip.SetDefault("Summons a granite guardian that emits an empowering aura\n" +
-                "Within the aura, whip speed and damage is increased by 15%\n" +
+            Tooltip.SetDefault("Summons a Rooster Booster in a nest that crows an empowering aura\n" +
+                "Within the aura, players gain increased jump height and 20% increased movement speed\n" +
                 "Right-click to disable the sentry");
             SacrificeTotal = 1;
 
@@ -27,20 +28,18 @@ namespace Redemption.Items.Weapons.PreHM.Summon
         {
             Item.DamageType = DamageClass.Summon;
             Item.sentry = true;
-            Item.width = 48;
-            Item.height = 56;
+            Item.width = 38;
+            Item.height = 38;
             Item.useTime = 36;
             Item.useAnimation = 36;
             Item.useStyle = ItemUseStyleID.Swing;
             Item.noMelee = true;
-            Item.value = Item.sellPrice(0, 1, 80, 0);
-            Item.rare = ItemRarityID.Green;
+            Item.value = Item.sellPrice(0, 0, 24, 0);
+            Item.rare = ItemRarityID.Blue;
             Item.UseSound = SoundID.DD2_DefenseTowerSpawn;
             Item.autoReuse = false;
-            Item.shoot = ModContent.ProjectileType<GraniteGuardian>();
+            Item.shoot = ModContent.ProjectileType<DawnHerald_Rooster>();
             Item.mana = 20;
-            if (!Main.dedServ)
-                Item.RedemptionGlow().glowTexture = ModContent.Request<Texture2D>(Texture + "_Glow").Value;
         }
         public override bool AltFunctionUse(Player player) => true;
         public override bool CanUseItem(Player player)

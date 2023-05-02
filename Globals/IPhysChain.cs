@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Terraria;
 using Terraria.DataStructures;
 using Terraria.ModLoader;
 
@@ -45,6 +46,6 @@ namespace Redemption.Globals
 		/// </summary>
 		int Length(int index);
 
-		Vector2 Force(Terraria.Player player, int index, int dir, float gravDir, float time, Terraria.NPC npc = null);
+		Vector2 Force(Terraria.Player player, int index, int dir, float gravDir, float time, Terraria.NPC npc = null, Projectile proj = null);
 	}
 }

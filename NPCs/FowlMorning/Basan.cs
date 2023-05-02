@@ -130,7 +130,7 @@ namespace Redemption.NPCs.FowlMorning
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Surface,
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Times.DayTime,
 
-                new FlavorTextBestiaryInfoElement("Those are some hot wings.")
+                new FlavorTextBestiaryInfoElement("A legendary bird of Ithonic mythos said to live in the Fractured Highlands. It is said the spicy goodness is unheard of among the chicken connoisseurs, putting all other chicken to shame with its tender chicken wings and juicy drumsticks. Only at Arbys will you find a better source of spicy chicken goodness. Arbys. We have the meats.")
             });
         }
         public override void BossLoot(ref string name, ref int potionType)
@@ -567,7 +567,9 @@ namespace Redemption.NPCs.FowlMorning
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
             npcLoot.Add(ItemDropRule.ByCondition(new Conditions.IsMasterMode(), ModContent.ItemType<BasanRelic>()));
+            npcLoot.Add(ItemDropRule.MasterModeDropOnAllPlayers(ModContent.ItemType<SpicyDrumstick>(), 4));
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<BasanTrophy>(), 10));
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<CuckooCloak>()));
             npcLoot.Add(ItemDropRule.OneFromOptions(1, ModContent.ItemType<EggShield>(), ModContent.ItemType<GreneggLauncher>(), ModContent.ItemType<Halbirdhouse>(), ModContent.ItemType<NestWand>(), ModContent.ItemType<ChickendWand>()));
             npcLoot.Add(ItemDropRule.ByCondition(new OnFireCondition(), ModContent.ItemType<FriedChicken>(), 1, 6, 8));
         }
@@ -664,7 +666,7 @@ namespace Redemption.NPCs.FowlMorning
         {
             return texture.Frame(NumberOfSegments, MaxFrames, NumberOfSegments - 1 - index, 0);
         }
-        public Vector2 Force(Player player, int index, int dir, float gravDir, float time, NPC npc = null)
+        public Vector2 Force(Player player, int index, int dir, float gravDir, float time, NPC npc = null, Projectile proj = null)
         {
             Vector2 force = new(
                 -dir * 0.5f,
