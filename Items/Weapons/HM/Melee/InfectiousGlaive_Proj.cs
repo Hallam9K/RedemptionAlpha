@@ -9,6 +9,9 @@ using ReLogic.Content;
 using Redemption.BaseExtension;
 using Redemption.Effects.PrimitiveTrails;
 using Redemption.Buffs.Debuffs;
+using Redemption.NPCs.Bosses.SeedOfInfection;
+using Redemption.Projectiles.Melee;
+using Terraria.Audio;
 
 namespace Redemption.Items.Weapons.HM.Melee
 {
@@ -16,7 +19,7 @@ namespace Redemption.Items.Weapons.HM.Melee
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Xenomite Glaive");
+            DisplayName.SetDefault("Infectious Glaive");
             ElementID.ProjPoison[Type] = true;
         }
         private Vector2 startVector;
@@ -63,6 +66,11 @@ namespace Redemption.Items.Weapons.HM.Melee
                     {
                         startVector = RedeHelper.PolarVector(1, Projectile.velocity.ToRotation() - (MathHelper.PiOver2 * Projectile.spriteDirection));
                         speed = MathHelper.ToRadians(3);
+                    }
+                    if (Timer > 8 && Timer < 14 && Main.myPlayer == Projectile.owner)
+                    {
+                        SoundEngine.PlaySound(SoundID.Item42 with { Volume = 0.3f }, Projectile.position);
+                        Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, RedeHelper.PolarVector(12, vector.ToRotation()), ModContent.ProjectileType<InfectiousGlaive_Shard>(), (int)(Projectile.damage * .5f), Projectile.knockBack, Projectile.owner);
                     }
                     if (Timer < 10)
                     {
