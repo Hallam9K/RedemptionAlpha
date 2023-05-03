@@ -33,7 +33,7 @@ namespace Redemption.Globals
         }
         public static bool HasFireDebuff(Terraria.NPC npc)
         {
-            return npc.HasBuff(BuffID.OnFire) || npc.HasBuff(BuffID.OnFire3) || npc.HasBuff(BuffID.ShadowFlame) || npc.HasBuff(BuffID.CursedInferno) || npc.HasBuff(BuffID.Frostburn) || npc.HasBuff(BuffID.Frostburn2) || npc.HasBuff(BuffID.Frostburn2) || npc.HasBuff<HolyFireDebuff>() || npc.HasBuff<DragonblazeDebuff>();
+            return npc.HasBuff(BuffID.OnFire) || npc.HasBuff(BuffID.OnFire3) || npc.HasBuff(BuffID.ShadowFlame) || npc.HasBuff(BuffID.CursedInferno) || npc.HasBuff(BuffID.Frostburn) || npc.HasBuff(BuffID.Frostburn2) || npc.HasBuff<HolyFireDebuff>() || npc.HasBuff<DragonblazeDebuff>();
         }
         public static bool ProjBlockBlacklist(this Projectile proj, bool countHoming = false)
         {
