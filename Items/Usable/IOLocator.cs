@@ -53,7 +53,7 @@ namespace Redemption.Items.Usable
 
         public override void AI()
         {
-            Vector2 LabPos = new((RedeGen.LabVector.X + 104) * 16, (RedeGen.LabVector.Y + 14) * 16);
+            Vector2 LabPos = new((RedeGen.LabPoint.X + 104) * 16, (RedeGen.LabPoint.Y + 14) * 16);
             Player player = Main.player[Projectile.owner];
 
             if (player.HeldItem.type == ModContent.ItemType<IOLocator>())
