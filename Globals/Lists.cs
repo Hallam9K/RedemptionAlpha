@@ -41,7 +41,6 @@ using Redemption.NPCs.FowlMorning;
 using Redemption.Items.Usable.Summons;
 using Redemption.Items.Quest.KingSlayer;
 using Redemption.Items.Placeable.Plants;
-using Redemption.Items.Weapons.PreHM.Summon;
 using Redemption.NPCs.Minibosses.Calavia;
 using Redemption.Tiles.Furniture.Misc;
 using Redemption.Items.Weapons.PostML.Melee;

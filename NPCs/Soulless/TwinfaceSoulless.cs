@@ -40,12 +40,6 @@ namespace Redemption.NPCs.Soulless
             get => (ActionState)NPC.ai[0];
             set => NPC.ai[0] = (int)value;
         }
-        public static void UnloadChain()
-        {
-            Tendril1 = null;
-            Tendril2 = null;
-            Tendril3 = null;
-        }
         public override void SetSafeStaticDefaults()
         {
             Main.npcFrameCount[NPC.type] = 6;
@@ -75,7 +69,6 @@ namespace Redemption.NPCs.Soulless
             //Banner = NPC.type;
             //BannerItem = ModContent.ItemType<EpidotrianSkeletonBanner>();
 
-            NPC.GetGlobalNPC<NPCPhysChain>().glowChain = true;
             Tendril1 = new RedTendrilScarfPhys();
             Tendril2 = new RedTendrilScarfPhys();
             Tendril3 = new RedTendrilScarfPhys();
@@ -312,7 +305,7 @@ namespace Redemption.NPCs.Soulless
                     }
                     if ((AniFrameY == 6 && globalNPC.attacker.Hitbox.Intersects(SlashHitbox1)) || (AniFrameY == 10 && globalNPC.attacker.Hitbox.Intersects(SlashHitbox2)))
                     {
-                        int damage = NPC.RedemptionNPCBuff().disarmed ? (int)(NPC.damage * 0.2f) : NPC.damage;
+                        int damage = NPC.RedemptionNPCBuff().disarmed ? NPC.damage / 3 : NPC.damage;
                         if (globalNPC.attacker is NPC && (globalNPC.attacker as NPC).immune[NPC.whoAmI] <= 0)
                         {
                             (globalNPC.attacker as NPC).immune[NPC.whoAmI] = 10;
@@ -346,7 +339,7 @@ namespace Redemption.NPCs.Soulless
                             NPC.velocity.X = 4 * NPC.spriteDirection;
                             if (powerUp)
                             {
-                                int damage = NPC.RedemptionNPCBuff().disarmed ? (int)(NPC.damage * 0.2f) : NPC.damage;
+                                int damage = NPC.RedemptionNPCBuff().disarmed ? NPC.damage / 3 : NPC.damage;
                                 if (AniFrameY is 6)
                                     NPC.Shoot(NPC.Center, ModContent.ProjectileType<TwinfaceSoulless_Slash_Proj>(), damage, new Vector2(26 * NPC.spriteDirection, 0), true, SoundID.DD2_PhantomPhoenixShot, NPC.whoAmI);
                                 if (AniFrameY is 10)
@@ -511,8 +504,15 @@ namespace Redemption.NPCs.Soulless
         {
             return ModContent.Request<Texture2D>("Redemption/NPCs/Soulless/Soulless_RedTendril").Value;
         }
+        public Texture2D GetGlowmaskTexture(Mod mod) => null;
 
         public int NumberOfSegments => 11;
+        public int MaxFrames => 1;
+        public int FrameCounterMax => 1;
+        public bool Glow => true;
+        public bool HasGlowmask => false;
+        public int Shader => 0;
+        public int GlowmaskShader => 0;
 
         public Color GetColor(PlayerDrawSet drawInfo, Color baseColour)
         {
@@ -552,7 +552,7 @@ namespace Redemption.NPCs.Soulless
         {
             return texture.Frame(NumberOfSegments, 1, NumberOfSegments - 1 - index, 0);
         }
-        public Vector2 Force(Player player, int index, int dir, float gravDir, float time, NPC npc = null)
+        public Vector2 Force(Player player, int index, int dir, float gravDir, float time, NPC npc = null, Projectile proj = null)
         {
             Vector2 force = new(
                 -dir * 0.5f,

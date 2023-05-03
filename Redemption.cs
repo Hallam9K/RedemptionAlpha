@@ -44,7 +44,6 @@ using static Redemption.Globals.RedeNet;
 using Redemption.Items.Placeable.Furniture.SlayerShip;
 using Redemption.WorldGeneration.Misc;
 using Redemption.Items.Usable.Summons;
-using SubworldLibrary;
 
 namespace Redemption
 {

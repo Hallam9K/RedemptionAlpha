@@ -1439,13 +1439,20 @@ namespace Redemption.WorldGeneration
 
                     bool placed = false;
                     int liquidAttempts = 0;
+                    int attempts2 = 0;
                     while (!placed)
                     {
+                        attempts2++;
                         int placeX = WorldGen.genRand.Next(0, Main.maxTilesX);
 
                         int placeY = (int)Main.worldSurface - 160;
 
-                        if (!WorldGen.InWorld(placeX, placeY) || (placeX > Main.spawnTileX - 200 && placeX < Main.spawnTileX + 200))
+                        int spawnNear = 200;
+                        if (attempts2 > 5000)
+                            spawnNear = 100;
+                        if (attempts2 > 10000)
+                            spawnNear = 50;
+                        if (!WorldGen.InWorld(placeX, placeY) || (placeX > Main.spawnTileX - spawnNear && placeX < Main.spawnTileX + spawnNear))
                             continue;
                         // We go down until we hit a solid tile or go under the world's surface
                         while (!WorldGen.SolidTile(placeX, placeY) && placeY <= Main.worldSurface)

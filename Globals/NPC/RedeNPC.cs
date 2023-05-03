@@ -49,7 +49,6 @@ using Redemption.Buffs.Cooldowns;
 using Redemption.Items.Weapons.PreHM.Ranged;
 using Redemption.WorldGeneration.Misc;
 using Redemption.NPCs.Critters;
-using SubworldLibrary;
 using Redemption.Items.Accessories.PreHM;
 using Redemption.Tiles.Trees;
 using Redemption.Base;

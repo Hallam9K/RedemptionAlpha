@@ -185,6 +185,7 @@ namespace Redemption.Globals.Player
             maskOfGrief = false;
             crystalKnowledge = false;
             pureChill = false;
+            seaEmblem = false;
 
             for (int k = 0; k < ElementalResistance.Length; k++)
                 ElementalResistance[k] = 0;

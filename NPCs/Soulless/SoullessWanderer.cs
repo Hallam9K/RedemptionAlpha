@@ -40,12 +40,6 @@ namespace Redemption.NPCs.Soulless
             get => (ActionState)NPC.ai[0];
             set => NPC.ai[0] = (int)value;
         }
-        public static void UnloadChain()
-        {
-            Tendril1 = null;
-            Tendril2 = null;
-            Tendril3 = null;
-        }
         public override void SetSafeStaticDefaults()
         {
             Main.npcFrameCount[NPC.type] = 3;
@@ -74,7 +68,6 @@ namespace Redemption.NPCs.Soulless
             //Banner = NPC.type;
             //BannerItem = ModContent.ItemType<EpidotrianSkeletonBanner>();
 
-            NPC.GetGlobalNPC<NPCPhysChain>().glowChain = true;
             Tendril1 = new LightTendrilScarfPhys();
             Tendril2 = new LightTendrilScarfPhys();
             Tendril3 = new LightTendrilScarfPhys();
@@ -254,7 +247,7 @@ namespace Redemption.NPCs.Soulless
                             RedeNPC globalNPC = NPC.Redemption();
                             SoundEngine.PlaySound(SoundID.Item1, NPC.position);
                             NPC.velocity.X = 2 * NPC.spriteDirection;
-                            int damage = NPC.RedemptionNPCBuff().disarmed ? (int)(NPC.damage * 0.2f) : NPC.damage;
+                            int damage = NPC.RedemptionNPCBuff().disarmed ? NPC.damage / 3 : NPC.damage;
                             NPC.Shoot(NPC.Center, ModContent.ProjectileType<ShadeJavelin_Proj>(), damage,
                                 RedeHelper.PolarVector(powerUp ? 19 : 14, (globalNPC.attacker.Center - NPC.Center).ToRotation() - (0.16f * NPC.spriteDirection)), true, SoundID.Item1, NPC.whoAmI, powerUp ? 1 : 0);
                         }

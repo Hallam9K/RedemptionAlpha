@@ -16,6 +16,7 @@ namespace Redemption.Globals.NPC
 
         private static readonly int maxChains = 6;
         private int frameCounter;
+        public bool glowTrail;
 
         /// <summary>
         /// The physchain.
@@ -83,11 +84,15 @@ namespace Redemption.Globals.NPC
                         anchor = NPCChainHelper.SetSegmentAnchor(anchor, segType, dir, gravDir, scale, true);
 
                         Color rendercolor = Color.White;
-
-                        if (!Main.gameMenu)
+                        if (glowTrail)
+                            rendercolor = npc.GetAlpha(new Color(255, 255, 255, 0));
+                        else
                         {
-                            Point lightOrigin = new((int)((npc.Center.X - 16 * dir) / 16), (int)(npc.Center.Y / 16));
-                            rendercolor = npc.GetAlpha(Lighting.GetColor(lightOrigin.X, lightOrigin.Y, rendercolor));
+                            if (!Main.gameMenu)
+                            {
+                                Point lightOrigin = new((int)((npc.Center.X - 16 * dir) / 16), (int)(npc.Center.Y / 16));
+                                rendercolor = npc.GetAlpha(Lighting.GetColor(lightOrigin.X, lightOrigin.Y, rendercolor));
+                            }
                         }
 
                         if (npcPhysChain[i].MaxFrames > 1)

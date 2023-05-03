@@ -166,20 +166,19 @@ namespace Redemption.NPCs.Bosses.Keeper
         {
             if (!RedeBossDowned.downedKeeper)
             {
-                RedeWorld.alignment++;
                 for (int p = 0; p < Main.maxPlayers; p++)
                 {
                     Player player = Main.player[p];
                     if (!player.active)
                         continue;
 
-                    CombatText.NewText(player.getRect(), Color.Gold, "+1", true, false);
+                    CombatText.NewText(player.getRect(), Color.Gold, "+0", true, false);
 
-                    if (!player.HasItem(ModContent.ItemType<AlignmentTeller>()))
+                    if (!RedeWorld.alignmentGiven)
                         continue;
 
                     if (!Main.dedServ)
-                        RedeSystem.Instance.ChaliceUIElement.DisplayDialogue("A soulless... disgusting. Good thing you killed it.", 240, 30, 0, Color.DarkGoldenrod);
+                        RedeSystem.Instance.ChaliceUIElement.DisplayDialogue("Here she plummeted, dragged into the woe of another. Her story is not over yet.", 300, 30, 0, Color.DarkGoldenrod);
 
                 }
             }

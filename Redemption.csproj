@@ -26,18 +26,6 @@
     <Reference Include="StructureHelper">
       <HintPath>..\ModAssemblies\StructureHelper_v2.0.9.dll</HintPath>
     </Reference>
-    <Reference Include="StructureHelper">
-      <HintPath>..\ModAssemblies\StructureHelper_v2.0.9.dll</HintPath>
-    </Reference>
-    <Reference Include="StructureHelper">
-      <HintPath>..\ModAssemblies\StructureHelper_v2.0.9.dll</HintPath>
-    </Reference>
-    <Reference Include="StructureHelper">
-      <HintPath>..\ModAssemblies\StructureHelper_v2.0.9.dll</HintPath>
-    </Reference>
-    <Reference Include="StructureHelper">
-      <HintPath>..\ModAssemblies\StructureHelper_v2.0.9.dll</HintPath>
-    </Reference>
     <Reference Include="SubworldLibrary">
       <HintPath>..\ModAssemblies\SubworldLibrary.dll</HintPath>
     </Reference>
