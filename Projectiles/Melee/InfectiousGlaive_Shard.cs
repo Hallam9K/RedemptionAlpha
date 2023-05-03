@@ -14,7 +14,7 @@ namespace Redemption.NPCs.Bosses.SeedOfInfection
         public override string Texture => "Redemption/NPCs/Bosses/SeedOfInfection/SoI_SplitShard";
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Splitting Shard");
+            //DisplayName.SetDefault("Splitting Shard");
             Main.projFrames[Projectile.type] = 7;
             ProjectileID.Sets.TrailCacheLength[Projectile.type] = 6;
             ProjectileID.Sets.TrailingMode[Projectile.type] = 0;

@@ -6115,7 +6115,7 @@ Mods: {
 
 			InfectiousGlaive: {
 				DisplayName: Infectious Glaive
-				Tooltip: ""
+				Tooltip: Fires a spread of xenomite shards every two swings
 			}
 
 			Midnight: {
@@ -7873,7 +7873,7 @@ Mods: {
 			ForgottenGreatsword_Proj.DisplayName: Ophos' Forgotten Greatsword
 			GravityHammer_Proj.DisplayName: Gravity Hammer
 			HammerOfProving_Proj.DisplayName: Hammer of Proving
-			InfectiousGlaive_Proj.DisplayName: Xenomite Glaive
+			InfectiousGlaive_Proj.DisplayName: Infectious Glaive
 			Midnight_SlashProj.DisplayName: Midnight, Defiler of the Prince
 			OversizedScrewdriver_Proj.DisplayName: Oversized Screwdriver
 			RemoteCleaver.DisplayName: Omega Cleaver
@@ -8454,6 +8454,8 @@ Mods: {
 			BasanPet_Proj.DisplayName: Baby Basan
 			CockatricePet_Proj.DisplayName: Baby Cockatrice
 			EggPet_Proj.DisplayName: The Egg
+			SoI_ShardShot_Friendly.DisplayName: Shard Shot
+			InfectiousGlaive_Shard.DisplayName: Splitting Shard
 		}
 
 		NPCs: {

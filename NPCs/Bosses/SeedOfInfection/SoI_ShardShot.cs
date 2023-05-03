@@ -60,7 +60,7 @@ namespace Redemption.NPCs.Bosses.SeedOfInfection
         public override string Texture => "Redemption/NPCs/Bosses/SeedOfInfection/SoI_ShardShot";
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Shard Shot");
+            //DisplayName.SetDefault("Shard Shot");
             Main.projFrames[Projectile.type] = 3;
             ElementID.ProjPoison[Type] = true;
         }
