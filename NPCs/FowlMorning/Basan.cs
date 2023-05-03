@@ -31,6 +31,7 @@ using Terraria.GameContent.ItemDropRules;
 using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Redemption.Buffs.NPCBuffs;
 
 namespace Redemption.NPCs.FowlMorning
 {
@@ -71,7 +72,10 @@ namespace Redemption.NPCs.FowlMorning
             NPCID.Sets.DebuffImmunitySets.Add(Type, new NPCDebuffImmunityData
             {
                 SpecificallyImmuneTo = new int[] {
-                    BuffID.Confused
+                    BuffID.Confused,
+                    BuffID.OnFire,
+                    BuffID.OnFire3,
+                    ModContent.BuffType<DragonblazeDebuff>()
                 }
             });
             NPCID.Sets.BossBestiaryPriority.Add(Type);
