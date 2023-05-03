@@ -9,8 +9,8 @@ namespace Redemption.Items.Placeable.Trophies
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Omega Gigapora Trophy");
-            SacrificeTotal = 1;
+			// DisplayName.SetDefault("Omega Gigapora Trophy");
+            Item.ResearchUnlockCount = 1;
         }
 		public override void SetDefaults()
 		{

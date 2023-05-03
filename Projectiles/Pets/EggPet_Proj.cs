@@ -12,9 +12,10 @@ namespace Redemption.Projectiles.Pets
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("The Egg");
+            // DisplayName.SetDefault("The Egg");
             Main.projFrames[Projectile.type] = 28;
             Main.projPet[Projectile.type] = true;
+            ProjectileID.Sets.CharacterPreviewAnimations[Projectile.type] = ProjectileID.Sets.SimpleLoop(1, 10, 4).WithOffset(2, 0).WithSpriteDirection(-1);
         }
 
         public override void SetDefaults()

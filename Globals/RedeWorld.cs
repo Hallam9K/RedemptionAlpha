@@ -10,7 +10,6 @@ using Redemption.UI.ChatUI;
 using Redemption.WorldGeneration;
 using Redemption.WorldGeneration.Soulless;
 using SubworldLibrary;
-using Redemption.UI.ChatUI;
 using System;
 using System.Collections.Generic;
 using System.IO;

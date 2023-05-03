@@ -14,7 +14,7 @@ namespace Redemption.NPCs.FowlMorning
         public override string Texture => Redemption.EMPTY_TEXTURE;
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Firebreath");
+            // DisplayName.SetDefault("Firebreath");
             ElementID.ProjFire[Type] = true;
         }
         public override void SetDefaults()

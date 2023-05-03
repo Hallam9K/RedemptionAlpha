@@ -12,11 +12,11 @@ namespace Redemption.Items.Accessories.PreHM
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("The Egg");
-			Tooltip.SetDefault("Summons The Egg\n" +
-                "'... It's hardboiled.'");
+			// DisplayName.SetDefault("The Egg");
+			/* Tooltip.SetDefault("Summons The Egg\n" +
+                "'... It's hardboiled.'"); */
 
-			SacrificeTotal = 1;
+			Item.ResearchUnlockCount = 1;
 		}
 
 		public override void SetDefaults()

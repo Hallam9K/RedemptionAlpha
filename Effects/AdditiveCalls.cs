@@ -31,7 +31,10 @@ namespace Redemption
 
 			// For particles and such
 			for (int i = 0; i < MaxCalls; i++)
-				if (AdditiveCalls[i] != null) CallList.Add(AdditiveCalls[i]);
+			{
+				if (AdditiveCalls != null && AdditiveCalls[i] != null)
+					CallList.Add(AdditiveCalls[i]);
+			}
 
 			if (CallList.Count > 0)
 			{

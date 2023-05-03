@@ -15,10 +15,10 @@ namespace Redemption.Items.Weapons.PreHM.Summon
     {
         public override void SetStaticDefaults()
         {
-            Tooltip.SetDefault("Summons a Rooster Booster in a nest that crows an empowering aura\n" +
+            /* Tooltip.SetDefault("Summons a Rooster Booster in a nest that crows an empowering aura\n" +
                 "Within the aura, players gain increased jump height and 20% increased movement speed\n" +
-                "Right-click to disable the sentry");
-            SacrificeTotal = 1;
+                "Right-click to disable the sentry"); */
+            Item.ResearchUnlockCount = 1;
 
             ItemID.Sets.GamepadWholeScreenUseRange[Item.type] = true;
             ItemID.Sets.LockOnIgnoresCollision[Item.type] = true;

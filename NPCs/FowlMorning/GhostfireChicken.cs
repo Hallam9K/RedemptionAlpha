@@ -17,7 +17,7 @@ namespace Redemption.NPCs.FowlMorning
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Ghost-fire Chicken");
+            // DisplayName.SetDefault("Ghost-fire Chicken");
             Main.npcFrameCount[NPC.type] = 4;
             NPCID.Sets.CantTakeLunchMoney[Type] = true;
             NPCID.Sets.BossBestiaryPriority.Add(Type);
@@ -42,7 +42,7 @@ namespace Redemption.NPCs.FowlMorning
             NPC.noTileCollide = true;
             SpawnModBiomes = new int[1] { ModContent.GetInstance<FowlMorningBiome>().Type };
         }
-        public override void HitEffect(int hitDirection, double damage)
+        public override void HitEffect(NPC.HitInfo hit)
         {
             if (NPC.life <= 0)
             {

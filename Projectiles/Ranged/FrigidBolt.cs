@@ -112,8 +112,9 @@ namespace Redemption.Projectiles.Ranged
         }
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
-            if (Projectile.localAI[0] < 400)
+            if (Projectile.localAI[0] < 400 && origDamage == 0)
             {
+                origDamage = Projectile.damage;
                 Projectile.damage = 0;
             }
         }

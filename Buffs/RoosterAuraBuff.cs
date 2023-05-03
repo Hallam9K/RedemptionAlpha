@@ -7,8 +7,8 @@ namespace Redemption.Buffs
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Rooster Boost");
-            Description.SetDefault("You feel bucked up... and annoyed");
+            // DisplayName.SetDefault("Rooster Boost");
+            // Description.SetDefault("You feel bucked up... and annoyed");
             Main.buffNoTimeDisplay[Type] = true;
         }
         public override void Update(Player player, ref int buffIndex)

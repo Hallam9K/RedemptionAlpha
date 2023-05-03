@@ -113,13 +113,13 @@ namespace Redemption.NPCs.FowlMorning
         }
 
         public override bool CanHitPlayer(Player target, ref int cooldownSlot) => AniType is (int)AnimType.None && NPC.velocity.Y != 0;
-        public override bool? CanHitNPC(NPC target) => NPC.friendly && AniType is (int)AnimType.None && NPC.velocity.Y != 0 ? null : false;
-        public override void OnHitPlayer(Player target, int damage, bool crit)
+        public override bool CanHitNPC(NPC target) => NPC.friendly && AniType is (int)AnimType.None && NPC.velocity.Y != 0;
+        public override void OnHitPlayer(Player target, Player.HurtInfo hurtInfo)
         {
             if (Main.expertMode)
                 target.AddBuff(BuffID.OnFire, 180);
         }
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit)
         {
             if (Main.expertMode)
                 target.AddBuff(BuffID.OnFire, 180);
@@ -137,9 +137,9 @@ namespace Redemption.NPCs.FowlMorning
         {
             potionType = ItemID.Heart;
         }
-        public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
+        public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)
         {
-            NPC.lifeMax = (int)(NPC.lifeMax * 0.6f * bossLifeScale);
+            NPC.lifeMax = (int)(NPC.lifeMax * 0.6f * balance * bossAdjustment);
             NPC.damage = (int)(NPC.damage * 0.6f);
         }
         public override void OnSpawn(IEntitySource source)
@@ -573,7 +573,7 @@ namespace Redemption.NPCs.FowlMorning
             npcLoot.Add(ItemDropRule.OneFromOptions(1, ModContent.ItemType<EggShield>(), ModContent.ItemType<GreneggLauncher>(), ModContent.ItemType<Halbirdhouse>(), ModContent.ItemType<NestWand>(), ModContent.ItemType<ChickendWand>()));
             npcLoot.Add(ItemDropRule.ByCondition(new OnFireCondition(), ModContent.ItemType<FriedChicken>(), 1, 6, 8));
         }
-        public override void OnHitByItem(Player player, Item item, int damage, float knockback, bool crit)
+        public override void OnHitByItem(Player player, Item item, NPC.HitInfo hit, int damageDone)
         {
             if (NPC.life <= 0)
             {
@@ -583,7 +583,7 @@ namespace Redemption.NPCs.FowlMorning
                     Item.NewItem(NPC.GetSource_Loot(), NPC.getRect(), ModContent.ItemType<FriedChicken>(), Main.rand.Next(6, 8));
             }
         }
-        public override void OnHitByProjectile(Projectile projectile, int damage, float knockback, bool crit)
+        public override void OnHitByProjectile(Projectile projectile, NPC.HitInfo hit, int damageDone)
         {
             if (NPC.life <= 0)
             {
@@ -593,7 +593,7 @@ namespace Redemption.NPCs.FowlMorning
                     Item.NewItem(NPC.GetSource_Loot(), NPC.getRect(), ModContent.ItemType<FriedChicken>(), Main.rand.Next(6, 8));
             }
         }
-        public override void HitEffect(int hitDirection, double damage)
+        public override void HitEffect(NPC.HitInfo hit)
         {
             if (NPC.life <= 0)
             {

@@ -12,8 +12,8 @@ namespace Redemption.Items.Accessories.PreHM
 	{
 		public override void SetStaticDefaults()
 		{
-			Tooltip.SetDefault("Summons a baby Cockatrice");
-			SacrificeTotal = 1;
+			// Tooltip.SetDefault("Summons a baby Cockatrice");
+			Item.ResearchUnlockCount = 1;
 		}
 
 		public override void SetDefaults()

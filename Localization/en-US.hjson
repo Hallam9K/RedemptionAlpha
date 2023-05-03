@@ -483,6 +483,21 @@ Mods: {
 				Description: *Loud metal clank noise*
 			}
 
+			EggPetBuff: {
+				DisplayName: The Egg
+				Description: The Egg
+			}
+
+			BasanPetBuff: {
+				DisplayName: Baby Basan
+				Description: Flamin' hot
+			}
+
+			CockatricePetBuff: {
+				DisplayName: Baby Cockatrice
+				Description: It's giving you a deadly glare
+			}
+
 			BileFlaskBuff: {
 				DisplayName: Weapon Imbue: Bile
 				Description: Melee attacks inflict Burning Acid
@@ -826,6 +841,11 @@ Mods: {
 			SoakedDebuff: {
 				DisplayName: Soaked
 				Description: moist
+			}
+
+			RoosterAuraBuff: {
+				DisplayName: Rooster Boost
+				Description: You feel bucked up... and annoyed
 			}
 		}
 
@@ -2089,7 +2109,7 @@ Mods: {
 				Tooltip:
 					'''
 					5% increased damage
-					4% increased critical strike chance
+					7% increased critical strike chance
 					'''
 			}
 
@@ -2231,7 +2251,7 @@ Mods: {
 
 			CommonGuardHelm2: {
 				DisplayName: Common Guard Bucket Helm
-				Tooltip: +2 increased melee damage
+				Tooltip: +1 increased melee damage
 			}
 
 			CommonGuardPlateMail: {
@@ -5087,8 +5107,18 @@ Mods: {
 				Tooltip: ""
 			}
 
-			OmegaTrophy: {
-				DisplayName: Omega Prototype Trophy
+			OmegaCleaverTrophy: {
+				DisplayName: Omega Cleaver Trophy
+				Tooltip: ""
+			}
+
+			OmegaGigaporaTrophy: {
+				DisplayName: Omega Gigapora Trophy
+				Tooltip: ""
+			}
+
+			OmegaObliteratorTrophy: {
+				DisplayName: Omega Obliterator Trophy
 				Tooltip: ""
 			}
 
@@ -5893,9 +5923,10 @@ Mods: {
 				DisplayName: Energy Pack
 				Tooltip:
 					'''
-					While in inventory, allows the user to use energy-based weaponry
-					Energy-based weaponry can pierce through Guard Points
-					Can be stacked up to 3 times, each giving +100 energy
+					               While in inventory, allows the user to use energy-based weaponry
+					               Energy-based weaponry can pierce through Guard Points
+					               Can be stacked up to 3 times, each giving +100 energy
+					               Having more than 3 in your inventory will not increase energy further
 					'''
 			}
 
@@ -6245,8 +6276,8 @@ Mods: {
 				DisplayName: Ghastly Recurve
 				Tooltip:
 					'''
-					Right-click to fire a spirit to the aimed area, where they will linger there for a duration
-					Arrows passing through the spirits are transformed into Spirit Arrows that split into homing shards upon impact, dealing {0} damage
+					Right-click to fire a lingering spirit at the aimed area, a spiritual rift will form between two spirits
+					Arrows passing through the rift are transformed into Spirit Arrows that split into homing shards upon impact, dealing {0} damage
 					'''
 			}
 
@@ -6328,6 +6359,7 @@ Mods: {
 					'''
 					Summons a golem guardian that emits an empowering aura
 					Within the aura, minions inflict a strong 'On Fire!' debuff and their damage is increased by 8%
+					Right-click to disable the sentry
 					'''
 			}
 
@@ -6574,6 +6606,7 @@ Mods: {
 					Summons a rowan tree that emits an empowering aura
 					Within the aura, your minions can cause rowan berries to drop from their targets and their damage is increased by 8%
 					Rowan berries will heal for a small amount and give major improvements to all stats for a short time
+					Right-click to disable the sentry
 					'''
 			}
 
@@ -7175,6 +7208,7 @@ Mods: {
 					'''
 					Summons a granite guardian that emits an empowering aura
 					Within the aura, whip speed and damage is increased by 15%
+					               Right-click to disable the sentry
 					'''
 			}
 
@@ -7714,6 +7748,83 @@ Mods: {
 					Right-click to tug the spirit back to your position, consuming 3 [i:Redemption/LostSoul]
 					Consumes 30 [i:Redemption/LostSoul] on use
 					Can only use one Spirit Card at a time
+					'''
+			}
+
+			CuckooCloak: {
+				DisplayName: Cuckoo Cloak
+				Tooltip: ""
+			}
+
+			EggPet: {
+				DisplayName: The Egg
+				Tooltip:
+					'''
+					Summons The Egg
+					'... It's hardboiled.'
+					'''
+			}
+
+			FowlFeather: {
+				DisplayName: Fowl Feather
+				Tooltip: Summons a baby Cockatrice
+			}
+
+			SpicyDrumstick: {
+				DisplayName: Spicy Drumstick
+				Tooltip:
+					'''
+					Summons a baby Basan
+					'Eat spicy goodness... like a boss!'
+					'''
+			}
+
+			HaymakerBanner: {
+				DisplayName: Haymaker Banner
+				Tooltip: ""
+			}
+
+			RoosterBoosterBanner: {
+				DisplayName: Rooster Booster Banner
+				Tooltip: ""
+			}
+
+			BasanRelic: {
+				DisplayName: Basan Relic
+				Tooltip: ""
+			}
+
+			BasanTrophy: {
+				DisplayName: Basan Trophy
+				Tooltip: ""
+			}
+
+			CockatriceTrophy: {
+				DisplayName: Cockatrice Trophy
+				Tooltip: ""
+			}
+
+			ChickenSoup: {
+				DisplayName: Chicken Soup
+				Tooltip:
+					'''
+					{$CommonItemTooltip.MinorStats}
+					'Waiter, there's a beak in my soup'
+					'''
+			}
+
+			ChickendWand: {
+				DisplayName: Chickend Wand
+				Tooltip: Lobs an arching egg that hatches into a chick upon impact
+			}
+
+			DawnHerald: {
+				DisplayName: Dawn Herald
+				Tooltip:
+					'''
+					Summons a Rooster Booster in a nest that crows an empowering aura
+					Within the aura, players gain increased jump height and 20% increased movement speed
+					Right-click to disable the sentry
 					'''
 			}
 		}
@@ -8335,6 +8446,14 @@ Mods: {
 			Calavia_Icefall.DisplayName: Icefall
 			Calavia_IcefallArena.DisplayName: Icefall
 			Calavia_IcefallMist.DisplayName: Ice Mist
+			Basan_Firebreath.DisplayName: Firebreath
+			Basan_HeatWave.DisplayName: Heat Wave
+			Chick_Proj.DisplayName: Chick
+			ChickendEgg_Proj.DisplayName: Chickend Egg
+			DawnHerald_Rooster.DisplayName: Rooster Booster
+			BasanPet_Proj.DisplayName: Baby Basan
+			CockatricePet_Proj.DisplayName: Baby Cockatrice
+			EggPet_Proj.DisplayName: The Egg
 		}
 
 		NPCs: {
@@ -8534,6 +8653,8 @@ Mods: {
 			Calavia.DisplayName: Calavia
 			Calavia_Intro.DisplayName: Calavia
 			Calavia_NPC.DisplayName: Calavia
+			Basan.DisplayName: Basan
+			GhostfireChicken.DisplayName: Ghost-fire Chicken
 		}
 
 		Tiles: {
@@ -8780,17 +8901,6 @@ Mods: {
 			IrradiatedBorealSapling.MapEntry: Petrified Boreal Sapling
 			IrradiatedPalmSapling.MapEntry: Petrified Palm Sapling
 			IrradiatedPuritySapling.MapEntry: Petrified Sapling
-			AkanKirvesTrophyTile.MapEntry: Akan Kirves Trophy
-			ErhanTrophyTile.MapEntry: Erhan Trophy
-			FowlEmperorTrophyTile.MapEntry: Fowl Emperor Trophy
-			KeeperTrophyTile.MapEntry: The Keeper Trophy
-			KS3TrophyTile.MapEntry: King Slayer III Trophy
-			NebuleusTrophyTile.MapEntry: Nebuleus Trophy
-			OmegaTrophyTile.MapEntry: Omega Prototype Trophy
-			PZTrophyTile.MapEntry: Patient Zero Trophy
-			SoITrophyTile.MapEntry: Seed of Infection Trophy
-			ThornTrophyTile.MapEntry: Thorn Trophy
-			UkonKirvesTrophyTile.MapEntry: Ukon Kirves Trophy
 		}
 
 		Keybinds: {

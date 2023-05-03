@@ -9,8 +9,8 @@ namespace Redemption.Items.Placeable.Trophies
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Basan Relic");
-			SacrificeTotal = 1;
+			// DisplayName.SetDefault("Basan Relic");
+			Item.ResearchUnlockCount = 1;
 		}
 
 		public override void SetDefaults()

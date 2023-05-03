@@ -12,7 +12,7 @@ namespace Redemption.Projectiles.Magic
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Chickend Egg");
+            // DisplayName.SetDefault("Chickend Egg");
         }
         public override void SetDefaults()
         {

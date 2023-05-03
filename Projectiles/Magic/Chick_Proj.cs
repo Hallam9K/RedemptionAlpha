@@ -12,7 +12,7 @@ namespace Redemption.Projectiles.Magic
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Chick");
+            // DisplayName.SetDefault("Chick");
         }
         public override void SetDefaults()
         {

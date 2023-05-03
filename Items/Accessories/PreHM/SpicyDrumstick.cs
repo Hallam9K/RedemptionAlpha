@@ -12,10 +12,10 @@ namespace Redemption.Items.Accessories.PreHM
 	{
 		public override void SetStaticDefaults()
 		{
-			Tooltip.SetDefault("Summons a baby Basan\n" +
-                "'Eat spicy goodness... like a boss!'");
+			/* Tooltip.SetDefault("Summons a baby Basan\n" +
+                "'Eat spicy goodness... like a boss!'"); */
 
-			SacrificeTotal = 1;
+			Item.ResearchUnlockCount = 1;
 		}
 
 		public override void SetDefaults()

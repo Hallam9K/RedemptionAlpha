@@ -181,11 +181,10 @@ namespace Redemption.NPCs.FowlMorning
             spriteBatch.Draw(nestTex, nestPos - screenPos, null, NPC.GetAlpha(color) * nestOpacity, 0, new Vector2(nestTex.Width / 2, nestTex.Height / 2), NPC.scale, 0, 0f);
             return false;
         }
-        public override bool StrikeNPC(ref double damage, int defense, ref float knockback, int hitDirection, ref bool crit)
+        public override void ModifyIncomingHit(ref NPC.HitModifiers modifiers)
         {
             if (NPC.ai[2] is 1)
-                knockback = 0;
-            return true;
+                modifiers.Knockback *= 0f;
         }
         public override bool PreKill()
         {

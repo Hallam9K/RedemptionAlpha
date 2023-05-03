@@ -11,7 +11,7 @@ namespace Redemption.NPCs.FowlMorning
         public override string Texture => "Redemption/Projectiles/Melee/FireSlash_Proj";
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Heat Wave");
+            // DisplayName.SetDefault("Heat Wave");
             ProjectileID.Sets.TrailCacheLength[Projectile.type] = 8;
             ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
             ElementID.ProjFire[Type] = true;

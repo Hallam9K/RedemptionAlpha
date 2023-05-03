@@ -11,8 +11,8 @@ namespace Redemption.Items.Usable.Potions
     {
         public override void SetStaticDefaults()
         {
-            Tooltip.SetDefault("Minor improvements to all stats" +
-                "\n'Waiter, there's a beak in my soup'");
+            /* Tooltip.SetDefault("Minor improvements to all stats" +
+                "\n'Waiter, there's a beak in my soup'"); */
             Main.RegisterItemAnimation(Type, new DrawAnimationVertical(int.MaxValue, 3));
             ItemID.Sets.DrinkParticleColors[Item.type] = new Color[3] {
                 new Color(246, 200, 71),
@@ -20,7 +20,7 @@ namespace Redemption.Items.Usable.Potions
                 new Color(174, 194, 14)
             };
             ItemID.Sets.IsFood[Type] = true;
-            SacrificeTotal = 5;
+            Item.ResearchUnlockCount = 5;
         }
 
         public override void SetDefaults()

@@ -14,9 +14,9 @@ namespace Redemption
             On_Main.DrawProjectiles += Main_DrawProjectiles;
             On_Main.DrawCachedProjs += Main_DrawCachedProjs;
             On_Projectile.NewProjectile_IEntitySource_float_float_float_float_int_int_float_int_float_float_float += TrailCheck;
-            On_Terraria.Main.DrawDust += AdditiveCalls;
+            On_Main.DrawDust += AdditiveCalls;
         }
-        private static void AdditiveCalls(On.Terraria.Main.orig_DrawDust orig, Main self)
+        private static void AdditiveCalls(Terraria.On_Main.orig_DrawDust orig, Main self)
         {
             AdditiveCallManager.DrawAdditiveCalls(Main.spriteBatch);
             orig(self);
