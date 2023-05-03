@@ -4,7 +4,6 @@ using Redemption.Items.Usable;
 using Redemption.Rarities;
 using System.Collections.Generic;
 using Terraria;
-using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Redemption.BaseExtension;
@@ -27,8 +26,6 @@ using Redemption.Items.Placeable.Plants;
 using Redemption.Items.Quest.KingSlayer;
 using Redemption.Items.Usable.Summons;
 using Redemption.Items.Weapons.PreHM.Summon;
-using Terraria.ModLoader.Core;
-using Terraria.Localization;
 
 namespace Redemption.Globals
 {

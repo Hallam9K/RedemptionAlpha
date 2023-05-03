@@ -4,10 +4,8 @@ using Redemption.Base;
 using Redemption.Tiles.Furniture.Lab;
 using Redemption.Tiles.Furniture.SlayerShip;
 using Redemption.Tiles.Tiles;
-using Redemption.UI;
 using Redemption.Walls;
 using Redemption.WorldGeneration;
-using Redemption.WorldGeneration.Space;
 using ReLogic.Content;
 using System.Collections.Generic;
 using Redemption.UI.ChatUI;
@@ -15,7 +13,6 @@ using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
-using static Humanizer.In;
 using static Redemption.Effects.RenderTargets.BasicLayer;
 
 namespace Redemption.Items

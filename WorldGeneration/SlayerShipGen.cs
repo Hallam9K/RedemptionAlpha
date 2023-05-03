@@ -18,7 +18,6 @@ using Redemption.Items.Weapons.HM.Ranged;
 using Redemption.Items.Weapons.HM.Summon;
 using Redemption.Items.Placeable.Furniture.SlayerShip;
 using Redemption.Items.Weapons.HM.Melee;
-using Redemption.Projectiles.Minions;
 using Redemption.Items.Weapons.HM.Magic;
 
 namespace Redemption.WorldGeneration

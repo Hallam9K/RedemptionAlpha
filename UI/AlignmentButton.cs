@@ -9,14 +9,10 @@ using Redemption.Items.Usable.Summons;
 using Redemption.Items.Weapons.PreHM.Summon;
 using Redemption.NPCs.Friendly;
 using ReLogic.Content;
-using Steamworks;
 using Terraria;
 using Terraria.Audio;
-using Terraria.Chat;
-using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.UI.Elements;
 using Terraria.ID;
-using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.UI;
 

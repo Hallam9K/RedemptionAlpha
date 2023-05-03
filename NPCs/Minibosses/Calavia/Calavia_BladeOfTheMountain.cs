@@ -10,10 +10,7 @@ using System;
 using Redemption.Base;
 using Redemption.BaseExtension;
 using Redemption.Buffs.NPCBuffs;
-using Redemption.Projectiles.Melee;
-using static System.Formats.Asn1.AsnWriter;
 using Redemption.Projectiles.Magic;
-using Redemption.Items.Weapons.PreHM.Melee;
 
 namespace Redemption.NPCs.Minibosses.Calavia
 {

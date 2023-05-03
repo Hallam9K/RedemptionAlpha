@@ -1,5 +1,4 @@
 using Terraria.ModLoader;
-using Terraria.ID;
 using Redemption.Tiles.Furniture.PetrifiedWood;
 
 namespace Redemption.Items.Placeable.Furniture.PetrifiedWood

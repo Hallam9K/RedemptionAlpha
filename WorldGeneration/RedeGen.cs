@@ -41,8 +41,6 @@ using System.Threading;
 using Redemption.Items.Weapons.PreHM.Magic;
 using Redemption.NPCs.PreHM;
 using SubworldLibrary;
-using System.Reflection;
-using Terraria.ModLoader.Config;
 using Terraria.Audio;
 using Redemption.Tiles.Furniture.Lab;
 using Redemption.NPCs.Minibosses.Calavia;

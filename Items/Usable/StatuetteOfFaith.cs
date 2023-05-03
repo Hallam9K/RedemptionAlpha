@@ -5,7 +5,6 @@ using Redemption.Buffs;
 using Microsoft.Xna.Framework;
 using Redemption.Buffs.Debuffs;
 using Redemption.Rarities;
-using Terraria.GameContent.Creative;
 using Redemption.Textures;
 using Redemption.Globals;
 

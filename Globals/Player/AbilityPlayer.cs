@@ -12,7 +12,6 @@ using Terraria.GameInput;
 using Terraria.Audio;
 using Redemption.Biomes;
 using Terraria.DataStructures;
-using Redemption.Dusts;
 using System;
 
 namespace Redemption.Globals.Player

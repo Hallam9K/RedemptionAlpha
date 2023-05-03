@@ -1,11 +1,6 @@
-using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using Redemption.Base;
 using Redemption.Dusts.Tiles;
 using Redemption.Globals;
-using Redemption.Items;
-using Redemption.Items.Placeable.Furniture.Shade;
 using Redemption.NPCs.Soulless;
 using Terraria;
 using Terraria.Audio;

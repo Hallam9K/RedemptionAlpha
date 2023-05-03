@@ -3,7 +3,6 @@ using Microsoft.Xna.Framework.Graphics;
 using Redemption.Dusts.Tiles;
 using Redemption.Globals;
 using Redemption.Items.Quest.KingSlayer;
-using Redemption.Tiles.Furniture.Misc;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.Enums;

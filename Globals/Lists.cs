@@ -27,12 +27,10 @@ using Redemption.NPCs.Bosses.Gigapora;
 using Redemption.Tiles.Furniture.ElderWood;
 using Redemption.Tiles.Furniture.PetrifiedWood;
 using Redemption.Tiles.Furniture.Lab;
-using Redemption.Items.Tools.PostML;
 using Redemption.NPCs.PostML;
 using Redemption.NPCs.Soulless;
 using Redemption.Tiles.Furniture.Shade;
 using Redemption.Items.Weapons.PreHM.Summon;
-using Redemption.Items.Weapons.PreHM.Ritualist;
 using Redemption.NPCs.Bosses.Obliterator;
 using Redemption.NPCs.HM;
 using Redemption.NPCs.Bosses.ADD;
@@ -43,10 +41,6 @@ using Redemption.Items.Quest.KingSlayer;
 using Redemption.Items.Placeable.Plants;
 using Redemption.NPCs.Minibosses.Calavia;
 using Redemption.Tiles.Furniture.Misc;
-using Redemption.Items.Weapons.PostML.Melee;
-using Redemption.Projectiles.Magic;
-using Redemption.Items.Weapons.PostML.Ranged;
-using Redemption.Projectiles.Melee;
 
 namespace Redemption.Globals
 {

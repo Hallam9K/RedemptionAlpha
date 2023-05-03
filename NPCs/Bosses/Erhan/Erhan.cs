@@ -23,7 +23,6 @@ using Redemption.Items.Accessories.PreHM;
 using Redemption.BaseExtension;
 using Terraria.GameContent.UI;
 using Redemption.Projectiles.Misc;
-using Redemption.Projectiles.Magic;
 using Redemption.Items.Weapons.HM.Melee;
 using ReLogic.Content;
 using Redemption.UI.ChatUI;

@@ -1,6 +1,5 @@
 using Redemption.Globals;
 using Terraria;
-using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
 

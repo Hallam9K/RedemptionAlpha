@@ -5,7 +5,6 @@ using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Redemption.BaseExtension;
-using Redemption.Buffs.Debuffs;
 using Redemption.Globals;
 
 namespace Redemption.NPCs.Soulless

@@ -4,7 +4,6 @@ using Redemption.Dusts.Tiles;
 using Redemption.Globals;
 using Redemption.Items;
 using Redemption.Items.Placeable.Furniture.SlayerShip;
-using Redemption.UI;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.Enums;

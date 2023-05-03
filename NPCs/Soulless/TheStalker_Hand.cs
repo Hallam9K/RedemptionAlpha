@@ -7,7 +7,6 @@ using Redemption.Globals;
 using System.Collections.Generic;
 using Terraria.Audio;
 using Redemption.Buffs.Debuffs;
-using Redemption.Items.Weapons.PreHM.Magic;
 using Terraria.ID;
 
 namespace Redemption.NPCs.Soulless

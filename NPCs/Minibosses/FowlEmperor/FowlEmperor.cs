@@ -7,7 +7,6 @@ using Redemption.Globals;
 using Redemption.Items.Accessories.PreHM;
 using Redemption.Items.Armor.Vanity;
 using Redemption.Items.Placeable.Trophies;
-using Redemption.Items.Usable;
 using Redemption.Items.Usable.Potions;
 using Redemption.Items.Usable.Summons;
 using System;

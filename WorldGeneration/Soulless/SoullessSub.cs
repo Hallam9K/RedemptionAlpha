@@ -21,8 +21,6 @@ using Redemption.NPCs.Soulless;
 using Redemption.Tiles.Containers;
 using Redemption.Items.Materials.PreHM;
 using Redemption.Items.Materials.PostML;
-using Redemption.Items.Placeable.Furniture.Shade;
-using Terraria.Utilities;
 using Redemption.Items.Usable;
 using Redemption.Items.Accessories.PostML;
 using Redemption.Items.Weapons.PostML.Melee;
@@ -33,7 +31,6 @@ using Terraria.GameInput;
 using Terraria.UI.Chat;
 using Terraria.GameContent;
 using Redemption.Items.Weapons.PostML.Ranged;
-using Redemption.Tiles.Furniture.Kingdom;
 
 namespace Redemption.WorldGeneration.Soulless
 {

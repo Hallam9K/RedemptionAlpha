@@ -3,7 +3,6 @@ using Redemption.Buffs.Debuffs;
 using Redemption.Dusts;
 using Redemption.Globals;
 using Redemption.Items.Materials.PostML;
-using Redemption.WorldGeneration.Soulless;
 using Terraria;
 using Terraria.Audio;
 using Terraria.GameContent.Bestiary;

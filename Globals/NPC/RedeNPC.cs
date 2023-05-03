@@ -28,7 +28,6 @@ using Redemption.NPCs.Soulless;
 using Redemption.Items.Weapons.HM.Magic;
 using Redemption.Items.Donator.Megaswave;
 using Redemption.Items.Usable.Potions;
-using Redemption.Items.Weapons.PreHM.Ritualist;
 using Redemption.WorldGeneration.Space;
 using Redemption.NPCs.HM;
 using Redemption.Items.Weapons.HM.Melee;
@@ -41,18 +40,13 @@ using Redemption.Items.Weapons.PreHM.Summon;
 using System;
 using Redemption.Items.Weapons.HM.Summon;
 using Redemption.Items.Donator.Lordfunnyman;
-using Terraria.GameContent.Bestiary;
-using Terraria.UI;
-using Terraria.ModLoader.Utilities;
 using Redemption.Globals.World;
 using Redemption.Buffs.Cooldowns;
 using Redemption.Items.Weapons.PreHM.Ranged;
 using Redemption.WorldGeneration.Misc;
 using Redemption.NPCs.Critters;
 using Redemption.Items.Accessories.PreHM;
-using Redemption.Tiles.Trees;
 using Redemption.Base;
-using Redemption.WorldGeneration;
 
 namespace Redemption.Globals.NPC
 {

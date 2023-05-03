@@ -1,8 +1,6 @@
 using Microsoft.Xna.Framework;
 using Redemption.Biomes;
 using Redemption.NPCs.Space;
-using Redemption.WorldGeneration.Space;
-using SubworldLibrary;
 using System.IO;
 using Terraria;
 using Terraria.DataStructures;

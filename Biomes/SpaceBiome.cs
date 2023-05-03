@@ -3,9 +3,7 @@ using Redemption.WorldGeneration.Space;
 using SubworldLibrary;
 using Terraria;
 using Terraria.Graphics.Effects;
-using Terraria.ID;
 using Terraria.ModLoader;
-using Redemption.Globals;
 
 namespace Redemption.Biomes
 {

@@ -16,7 +16,6 @@ using Redemption.Dusts;
 using Redemption.NPCs.PostML;
 using Redemption.Items.Materials.PostML;
 using Redemption.Biomes;
-using Redemption.Projectiles.Hostile;
 using ParticleLibrary;
 using Redemption.Particles;
 using Terraria.DataStructures;

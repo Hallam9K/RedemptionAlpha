@@ -1,8 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Graphics.PackedVector;
 using Redemption.Globals;
-using Redemption.WorldGeneration;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent;

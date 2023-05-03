@@ -1,11 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
 using Redemption.Globals;
-using Redemption.Items.Materials.HM;
 using Redemption.Items.Materials.PostML;
 using Redemption.Projectiles.Melee;
 using Redemption.Rarities;
-using Redemption.WorldGeneration;
-using System.Threading;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;

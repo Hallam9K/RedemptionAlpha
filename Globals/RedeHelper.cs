@@ -19,8 +19,6 @@ using Redemption.NPCs.HM;
 using Redemption.Buffs.Debuffs;
 using Redemption.Buffs.NPCBuffs;
 using Redemption.Biomes;
-using Redemption.NPCs.Friendly.SpiritSummons;
-using System.Linq;
 
 namespace Redemption.Globals
 {

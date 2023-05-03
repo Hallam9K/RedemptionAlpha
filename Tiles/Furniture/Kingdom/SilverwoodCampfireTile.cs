@@ -1,4 +1,3 @@
-using Humanizer;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Items.Placeable.Furniture.Kingdom;

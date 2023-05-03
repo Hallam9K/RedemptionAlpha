@@ -4,7 +4,6 @@ using Redemption.Rarities;
 using Redemption.Tiles.Furniture.Shade;
 using System.Collections.Generic;
 using Terraria;
-using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
 

@@ -1,6 +1,5 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Redemption.NPCs.Critters;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;

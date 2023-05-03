@@ -23,7 +23,6 @@ using Redemption.BaseExtension;
 using Redemption.Items.Accessories.HM;
 using Redemption.Items.Accessories.PreHM;
 using Redemption.Items.Accessories.PostML;
-using Terraria.ModLoader.IO;
 using System;
 using ParticleLibrary;
 using Redemption.Particles;

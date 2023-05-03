@@ -1,6 +1,5 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Redemption.BaseExtension;
 using Redemption.Effects.PrimitiveTrails;
 using Redemption.Globals;
 using ReLogic.Content;

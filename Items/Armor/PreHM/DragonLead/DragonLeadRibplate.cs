@@ -1,6 +1,5 @@
 using Microsoft.Xna.Framework;
 using Redemption.Buffs.Debuffs;
-using Redemption.Buffs.NPCBuffs;
 using Redemption.Items.Materials.PreHM;
 using System.Collections.Generic;
 using Terraria;

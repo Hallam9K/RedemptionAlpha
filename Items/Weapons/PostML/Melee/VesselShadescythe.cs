@@ -4,7 +4,6 @@ using Terraria.ModLoader;
 using Terraria.ID;
 using System.Collections.Generic;
 using Redemption.Buffs.Debuffs;
-using Terraria.GameContent.Creative;
 using Redemption.BaseExtension;
 using Redemption.Globals.Player;
 using Redemption.Items.Materials.PostML;

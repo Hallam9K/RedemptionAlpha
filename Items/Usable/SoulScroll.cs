@@ -5,7 +5,6 @@ using Microsoft.Xna.Framework;
 using Redemption.NPCs.Friendly;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Buffs.Cooldowns;
-using Terraria.GameContent.Creative;
 using Redemption.Rarities;
 using Terraria.DataStructures;
 using Terraria.Audio;

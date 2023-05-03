@@ -1,9 +1,6 @@
-using Redemption.Tiles.Furniture.Misc;
 using Redemption.WorldGeneration.Space;
 using SubworldLibrary;
 using Terraria;
-using Terraria.Audio;
-using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Utilities;
