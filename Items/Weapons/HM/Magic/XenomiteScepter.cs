@@ -2,6 +2,8 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.BaseExtension;
 using Redemption.Items.Materials.HM;
+using Redemption.Items.Weapons.PreHM.Magic;
+using Redemption.Items.Weapons.PreHM.Melee;
 using Redemption.Projectiles.Magic;
 using Terraria;
 using Terraria.DataStructures;
@@ -41,7 +43,7 @@ namespace Redemption.Items.Weapons.HM.Magic
             Item.shoot = ModContent.ProjectileType<XenomiteScepter_Proj>();
             Item.shootSpeed = 5f;
             if (!Main.dedServ)
-                Item.RedemptionGlow().glowTexture = ModContent.Request<Texture2D>(Item.ModItem.Texture + "_Glow").Value;
+                Item.RedemptionGlow().glowTexture = ModContent.Request<Texture2D>(Texture + "_Glow").Value;
         }
         private int CastCount;
         public override void HoldItem(Player player)
@@ -71,8 +73,9 @@ namespace Redemption.Items.Weapons.HM.Magic
         public override void AddRecipes()
         {
             CreateRecipe()
-                .AddIngredient(ModContent.ItemType<Xenomite>(), 10)
-                .AddIngredient(ModContent.ItemType<ToxicBile>(), 6)
+                .AddIngredient(ModContent.ItemType<ContagionSpreader>())
+                .AddIngredient(ModContent.ItemType<Xenomite>(), 6)
+                .AddIngredient(ModContent.ItemType<ToxicBile>(), 7)
                 .AddTile(TileID.MythrilAnvil)
                 .Register();
         }

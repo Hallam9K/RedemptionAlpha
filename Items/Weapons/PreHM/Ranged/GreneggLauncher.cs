@@ -16,7 +16,7 @@ namespace Redemption.Items.Weapons.PreHM.Ranged
 
         public override void SetDefaults()
         {
-            Item.damage = 32;
+            Item.damage = 28;
             Item.DamageType = DamageClass.Ranged;
             Item.width = 40;
             Item.height = 20;
@@ -35,7 +35,7 @@ namespace Redemption.Items.Weapons.PreHM.Ranged
         }
         public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback)
         {
-            damage -= 32;
+            damage -= 28;
         }
         public override Vector2? HoldoutOffset()
         {

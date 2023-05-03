@@ -58,8 +58,8 @@ namespace Redemption.Items.Materials.PreHM
         public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI)
         {
             Texture2D texture = TextureAssets.Item[Item.type].Value;
-            Texture2D textureFaded = ModContent.Request<Texture2D>(Item.ModItem.Texture + "_Faded").Value;
-            Texture2D textureGlow = ModContent.Request<Texture2D>(Item.ModItem.Texture + "_Glow").Value;
+            Texture2D textureFaded = ModContent.Request<Texture2D>(Texture + "_Faded").Value;
+            Texture2D textureGlow = ModContent.Request<Texture2D>(Texture + "_Glow").Value;
             Vector2 originFaded = new(textureFaded.Width / 2, textureFaded.Height / 2);
             Rectangle frame;
             if (Main.itemAnimations[Item.type] != null)

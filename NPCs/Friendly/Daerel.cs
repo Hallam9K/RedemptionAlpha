@@ -134,31 +134,16 @@ namespace Redemption.NPCs.Friendly
             if (NPC.altTexture == 1)
             {
                 Asset<Texture2D> hat = ModContent.Request<Texture2D>("Terraria/Images/Item_" + ItemID.PartyHat);
-                int offset;
-                switch (NPC.frame.Y / 56)
+                var offset = (NPC.frame.Y / 56) switch
                 {
-                    default:
-                        offset = 0;
-                        break;
-                    case 3:
-                        offset = 2;
-                        break;
-                    case 4:
-                        offset = 2;
-                        break;
-                    case 5:
-                        offset = 2;
-                        break;
-                    case 10:
-                        offset = 2;
-                        break;
-                    case 11:
-                        offset = 2;
-                        break;
-                    case 12:
-                        offset = 2;
-                        break;
-                }
+                    3 => 2,
+                    4 => 2,
+                    5 => 2,
+                    10 => 2,
+                    11 => 2,
+                    12 => 2,
+                    _ => 0,
+                };
                 var hatEffects = NPC.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
                 Vector2 origin = new(hat.Value.Width / 2f, hat.Value.Height / 2f);
                 spriteBatch.Draw(hat.Value, NPC.Center - new Vector2(1 * NPC.spriteDirection, 25 + offset) - screenPos, null, NPC.GetAlpha(drawColor), NPC.rotation, origin, NPC.scale, hatEffects, 0);
@@ -265,9 +250,6 @@ namespace Redemption.NPCs.Friendly
                     case 3:
                         button = "Poison Weapon (25 silver)";
                         break;
-                    case 4:
-                        button = "Quest";
-                        break;
                 }
             }
         }
@@ -322,7 +304,7 @@ namespace Redemption.NPCs.Friendly
                             if (Main.LocalPlayer.BuyItem(1000))
                             {
                                 SoundEngine.PlaySound(SoundID.Item37, NPC.position);
-                                Main.LocalPlayer.AddBuff(BuffID.Archery, 36000);
+                                Main.LocalPlayer.AddBuff(BuffID.Archery, 21600);
                             }
                             else
                             {
@@ -342,16 +324,12 @@ namespace Redemption.NPCs.Friendly
                                 SoundEngine.PlaySound(SoundID.MenuTick);
                             }
                             break;
-                        case 4:
-                            Main.npcChatText = "(Quests will become available in v0.8.1 - Wayfarer Update)";
-                            SoundEngine.PlaySound(SoundID.MenuTick);
-                            break;
                     }
                 }
                 else
                 {
                     ChatNumber++;
-                    if (ChatNumber > 4)
+                    if (ChatNumber > 3)
                         ChatNumber = 0;
                 }
             }
@@ -383,16 +361,18 @@ namespace Redemption.NPCs.Friendly
                 chat.Add("The dryad, " + Main.npc[DryadID].GivenName + ", says she's seen a Forest Nymph on this island at one point, if you can believe that. They're seldom seen, you'd only be able to find them near giant trees. If you do come across one, I wouldn't linger around for too long, they don't like humans getting in their personal space. I wonder if there were a way to befriend one though?");
             if (FallenID >= 0 && !Main.LocalPlayer.RedemptionAbility().Spiritwalker)
                 chat.Add(Main.npc[FallenID].GivenName + " has told me he came from another portal underground. Apparently it leads to some catacombs in Gathuram, but you wouldn't be able to go through it. Still, he's told of some rather intriguing things lying by the portal, I'd give it a check if I were you.");
-            if (!RedeBossDowned.downedEaglecrestGolem)
+            if (!RedeBossDowned.downedEaglecrestGolem && NPC.downedBoss2)
                 chat.Add("While I was having a walk I came across some oddly-shaped stones - looked like a boulder with legs. I was curious of course, so I shot it from a safe distance. Nothing happened... and yet I sensed a presence inside it. You, as a slayer of many things, should search around and find it, might be another foe to face.");
+            if (!RedeWorld.alignmentGiven)
+                chat.Add("Did I drop something on my way back into the portal? Oh, those glowing fragments? It seems to be guiding you somewhere important, I'd follow it before taking on any major foes.");
             if (!Main.LocalPlayer.RedemptionAbility().Spiritwalker)
-                chat.Add("Ever see tiny lights dancing from a slain skeleton? Or perhaps a lantern-carrying ghost underground? Those are lost souls, and as far as I know, only arcane or holy weapons may bring them harm. Not that I'd suggest harming those helpless things.");
+                chat.Add("Ever see tiny lights dancing from a slain skeleton? Or perhaps a lantern-carrying ghost underground? Those are lost souls, and as far as I know, only \n" + ElementID.ArcaneS + " or " + ElementID.HolyS + " weapons may bring them harm. Not that I'd suggest harming those helpless things.");
             chat.Add("Wanna know about some insects? If you wanna find leaf beetles, or tree bugs as they're called here, then chop down some trees. They live on tree tops, with their green shell camouflaging them in the foliage. Coast Scarabs can also be found on palm trees at the beach, their shells sparkle when wet. Grand larvae are, well, rather gross - though they can make excellent bait. That is, if you're brave enough to get close to one.");
-            chat.Add("When encountering skeletons and undead, I think its logical to assume shadow weapons aren't effective against them, while holy weapons are. I used to like the exploring caves, until me and Zephos encountered a skeleton Vex...");
-            chat.Add("Best way to deal with slimes? Burn them. Alternatively, ice weapons can freeze them in their place, THEN you can burn them!");
+            chat.Add("When encountering skeletons and undead, I think its logical to assume " + ElementID.ShadowS + " weapons aren't effective against them, while " + ElementID.HolyS + " weapons are. I used to like the exploring caves, until me and Zephos encountered a skeleton Vex...");
+            chat.Add("Best way to deal with slimes? Burn them. Alternatively, " + ElementID.IceS + " weapons can freeze them in their place, THEN you can burn them!");
             chat.Add("If you ever wanna sneak up on the Epidotrian skeletons or chickens, invisibility potions are real handy for the job.");
             chat.Add("The weapons skeletons can wield are very rusty, so it'd be bad to be wounded by them. If you do, take a dip in some water and the dirty wound will disappear.");
-            chat.Add("See foes wearing armor or holding shields? You'll need to break their Guard to deal with them. A hammer or explosives should be most efficient, just make sure your weapon isn't super weak.");
+            chat.Add("See foes wearing armor or holding shields? You'll need to break their Guard to deal with them.\nA [i:Redemption/Hammer]hammer or [i:Redemption/Explosive]explosives should be most efficient, just make sure your weapon isn't super weak.");
             if (!RedeBossDowned.foundNewb)
                 chat.Add("I felt a strange presence beneath that portal I hopped out of, which is quite peculiar. Maybe you should check it out.");
             if (RedeBossDowned.erhanDeath == 0)
@@ -427,6 +407,8 @@ namespace Redemption.NPCs.Friendly
 
             shop.item[nextSlot++].SetDefaults(ModContent.ItemType<ChaliceFragments>());
 
+            if (Main.LocalPlayer.ZoneBeach)
+                shop.item[nextSlot++].SetDefaults(ModContent.ItemType<GildedSeaEmblem>());
             if (NPC.downedGolemBoss)
                 shop.item[nextSlot++].SetDefaults(ModContent.ItemType<OphosNotes>());
 

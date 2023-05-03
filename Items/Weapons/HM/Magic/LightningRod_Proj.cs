@@ -73,17 +73,20 @@ namespace Redemption.Items.Weapons.HM.Magic
                         int dmg = (int)Projectile.ai[1] * 2;
                         DustHelper.DrawParticleElectricity(Projectile.Center + new Vector2(36 * player.direction, -36), Main.MouseWorld, new LightningParticle(), 1.3f, 30, 0.05f);
                         DustHelper.DrawParticleElectricity(Projectile.Center + new Vector2(36 * player.direction, -36), Main.MouseWorld, new LightningParticle(), 1.3f, 30, 0.05f);
-                        for (int i = 0; i < Main.maxNPCs; i++)
+                        if (glow < 0.8f)
                         {
-                            NPC npc = Main.npc[i];
-                            if (!npc.active || npc.friendly || npc.dontTakeDamage)
-                                continue;
+                            for (int i = 0; i < Main.maxNPCs; i++)
+                            {
+                                NPC npc = Main.npc[i];
+                                if (!npc.active || npc.friendly || npc.dontTakeDamage)
+                                    continue;
 
-                            if (npc.DistanceSQ(Main.MouseWorld) > 60 * 60)
-                                continue;
+                                if (npc.DistanceSQ(Main.MouseWorld) > 60 * 60)
+                                    continue;
 
-                            int hitDirection = npc.RightOfDir(Projectile);
-                            BaseAI.DamageNPC(npc, Projectile.damage + dmg * 2, Projectile.knockBack, hitDirection, Projectile, crit: Projectile.HeldItemCrit());
+                                int hitDirection = npc.RightOfDir(Projectile);
+                                BaseAI.DamageNPC(npc, Projectile.damage + dmg * 2, Projectile.knockBack, hitDirection, Projectile, crit: Projectile.HeldItemCrit());
+                            }
                         }
                         for (int i = 0; i < Main.maxNPCs; i++)
                         {

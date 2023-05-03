@@ -32,6 +32,7 @@ namespace Redemption.Tiles.Natural
             TileObjectData.addAlternate(1);
             TileObjectData.addTile(Type);
             DustType = DustID.Bone;
+            HitSound = CustomSounds.BoneHit;
             ModTranslation name = CreateMapEntryName();
             name.SetDefault("Skeletal Remains");
             AddMapEntry(new Color(129, 129, 95));
@@ -62,6 +63,7 @@ namespace Redemption.Tiles.Natural
             TileObjectData.addAlternate(1);
             TileObjectData.addTile(Type);
             DustType = DustID.Bone;
+            HitSound = CustomSounds.BoneHit;
             ModTranslation name = CreateMapEntryName();
             name.SetDefault("Skeletal Remains");
             AddMapEntry(new Color(129, 129, 95));
@@ -92,6 +94,7 @@ namespace Redemption.Tiles.Natural
             TileObjectData.addAlternate(1);
             TileObjectData.addTile(Type);
             DustType = DustID.Bone;
+            HitSound = CustomSounds.BoneHit;
             ModTranslation name = CreateMapEntryName();
             name.SetDefault("Skeletal Remains");
             AddMapEntry(new Color(129, 129, 95));
@@ -121,6 +124,7 @@ namespace Redemption.Tiles.Natural
             TileObjectData.addAlternate(1);
             TileObjectData.addTile(Type);
             DustType = DustID.Bone;
+            HitSound = CustomSounds.BoneHit;
             ModTranslation name = CreateMapEntryName();
             name.SetDefault("Skeletal Remains");
             AddMapEntry(new Color(129, 129, 95));
@@ -150,6 +154,7 @@ namespace Redemption.Tiles.Natural
             TileObjectData.addAlternate(1);
             TileObjectData.addTile(Type);
             DustType = DustID.Bone;
+            HitSound = CustomSounds.BoneHit;
             ModTranslation name = CreateMapEntryName();
             name.SetDefault("Skeletal Remains");
             AddMapEntry(new Color(129, 129, 95));
@@ -179,6 +184,7 @@ namespace Redemption.Tiles.Natural
             TileObjectData.addAlternate(1);
             TileObjectData.addTile(Type);
             DustType = DustID.Bone;
+            HitSound = CustomSounds.BoneHit;
             ModTranslation name = CreateMapEntryName();
             name.SetDefault("Skeletal Remains");
             AddMapEntry(new Color(129, 129, 95));
@@ -208,6 +214,7 @@ namespace Redemption.Tiles.Natural
             TileObjectData.addAlternate(1);
             TileObjectData.addTile(Type);
             DustType = DustID.Bone;
+            HitSound = CustomSounds.BoneHit;
             ModTranslation name = CreateMapEntryName();
             name.SetDefault("Skeletal Remains");
             AddMapEntry(new Color(129, 129, 95));

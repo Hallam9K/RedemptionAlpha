@@ -33,6 +33,7 @@ namespace Redemption.Tiles.Furniture.Misc
             TileObjectData.addAlternate(1);
             TileObjectData.addTile(Type);
             DustType = ModContent.DustType<SlateDust>();
+            HitSound = CustomSounds.StoneHit;
             MinPick = 500;
             MineResist = 15f;
             AddMapEntry(new Color(104, 91, 83));

@@ -28,10 +28,19 @@ namespace Redemption.Tiles.Tiles
             ItemDrop = ModContent.ItemType<Shadestone>();
             MinPick = 350;
             MineResist = 11f;
-            HitSound = SoundID.Tink;
+            HitSound = CustomSounds.StoneHit;
             ModTranslation name = CreateMapEntryName();
             name.SetDefault("Mossy Shadestone");
             AddMapEntry(new Color(22, 26, 35));
+        }
+        public override void FloorVisuals(Player player)
+        {
+            if (player.velocity.X != 0f && Main.rand.NextBool(20))
+            {
+                Dust dust = Dust.NewDustDirect(player.Bottom, 0, 0, ModContent.DustType<VoidFlame>(), 0f, -Main.rand.NextFloat(2f));
+                dust.noGravity = true;
+                dust.fadeIn = 1f;
+            }
         }
         public override void DrawEffects(int i, int j, SpriteBatch spriteBatch, ref TileDrawInfo drawData)
         {

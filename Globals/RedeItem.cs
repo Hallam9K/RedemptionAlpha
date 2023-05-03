@@ -4,6 +4,7 @@ using Redemption.Items.Usable;
 using Redemption.Rarities;
 using System.Collections.Generic;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Redemption.BaseExtension;
@@ -22,6 +23,13 @@ using Redemption.WorldGeneration.Soulless;
 using Redemption.NPCs.Friendly;
 using Redemption.Tiles.Furniture.Misc;
 using Redemption.WorldGeneration.Misc;
+using Redemption.Items.Placeable.Plants;
+using Redemption.Items.Quest.KingSlayer;
+using Redemption.Items.Usable.Summons;
+using Redemption.Items.Weapons.PreHM.Summon;
+using Terraria.ModLoader.Core;
+using Terraria.Localization;
+using SubworldLibrary;
 
 namespace Redemption.Globals
 {
@@ -50,6 +58,9 @@ namespace Redemption.Globals
         public override void MeleeEffects(Item item, Terraria.Player player, Rectangle hitbox)
         {
             player.Redemption().meleeHitbox = hitbox;
+            if (player.RedemptionPlayerBuff().eldritchRoot && item.HasElementItem(ElementID.Nature))
+                item.GetGlobalItem<ElementalItem>().OverrideElement[ElementID.Shadow] = 1;
+
             if (item.DamageType == DamageClass.Melee && player.HasBuff<ExplosiveFlaskBuff>())
             {
                 if (Main.rand.NextBool(3))
@@ -300,14 +311,49 @@ namespace Redemption.Globals
         public override void OnCreate(Item item, ItemCreationContext context)
         {
             if (item.type == ModContent.ItemType<AlignmentTeller>() && !Terraria.NPC.AnyNPCs(ModContent.NPCType<Chalice_Intro>()))
-                RedeHelper.SpawnNPC(item.GetSource_FromAI(), (int)Main.LocalPlayer.Center.X, (int)Main.LocalPlayer.Center.Y, ModContent.NPCType<Chalice_Intro>());
-        }
+            {
+                RedeWorld.alignmentGiven = true;
+                if (Main.netMode == NetmodeID.Server)
+                    NetMessage.SendData(MessageID.WorldData);
 
-        public const string axeBonus = "Axe Bonus: 3x critical strike damage, increased chance to decapitate humanoid enemies";
-        public const string slashBonus = "Slash Bonus: Small chance to decapitate most humanoid enemies, killing them instantly";
-        public const string hammerBonus = "Hammer Bonus: Deals quadruple damage to Guard Points";
+                RedeHelper.SpawnNPC(item.GetSource_FromAI(), (int)Main.LocalPlayer.Center.X, (int)Main.LocalPlayer.Center.Y, ModContent.NPCType<Chalice_Intro>());
+                item.TurnToAir();
+            }
+        }
+        public static bool ChaliceInterest(int type)
+        {
+            if (ItemLists.AlignmentInterest.Contains(type))
+            {
+                if (type == ModContent.ItemType<WeddingRing>() && (!RedeBossDowned.downedKeeper || RedeBossDowned.skullDiggerSaved))
+                    return false;
+                if (type == ModContent.ItemType<SorrowfulEssence>() && RedeBossDowned.downedSkullDigger)
+                    return false;
+                if (type == ModContent.ItemType<AbandonedTeddy>() && RedeBossDowned.keeperSaved)
+                    return false;
+                if (type == ModContent.ItemType<CyberTech>() && RedeBossDowned.downedSlayer)
+                    return false;
+                if (type == ModContent.ItemType<SlayerShipEngine>() && RedeWorld.slayerRep >= 4)
+                    return false;
+                if (type == ModContent.ItemType<AnglonicMysticBlossom>() && (RedeWorld.alignment <= 0 || RedeQuest.forestNymphVar >= 2))
+                    return false;
+                if (type == ModContent.ItemType<KingsOakStaff>() && (RedeWorld.alignment <= 0 || RedeQuest.forestNymphVar > 0))
+                    return false;
+                if (type == ModContent.ItemType<NebSummon>() && RedeBossDowned.downedNebuleus && RedeBossDowned.nebDeath < 7)
+                    return false;
+                return true;
+            }
+            return false;
+        }
+        public const string axeBonus = "[i:Redemption/Axe] 3x critical strike damage, increased chance to decapitate humanoid enemies";
+        public const string slashBonus = "[i:Redemption/Slash] Small chance to decapitate most humanoid enemies, killing them instantly";
+        public const string hammerBonus = "[i:Redemption/Hammer] Deals quadruple damage to Guard Points";
         public override void ModifyTooltips(Item item, List<TooltipLine> tooltips)
         {
+            if (ChaliceInterest(item.type) && RedeWorld.alignmentGiven)
+            {
+                TooltipLine chaliceLine = new(Mod, "ChaliceLine", "[i:Redemption/RedemptionRoute]The chalice has something to say about this item") { OverrideColor = new Color(203, 189, 99) };
+                tooltips.Add(chaliceLine);
+            }
             TooltipLine axeLine = new(Mod, "AxeBonus", axeBonus) { OverrideColor = Colors.RarityOrange };
             if ((item.CountsAsClass(DamageClass.Melee) && item.damage > 0 && item.useStyle == ItemUseStyleID.Swing && !item.noUseGraphic))
             {
@@ -330,7 +376,7 @@ namespace Redemption.Globals
             }
             if (!RedeConfigClient.Instance.ElementDisable && item.HasElementItem(ElementID.Explosive))
             {
-                TooltipLine explodeLine = new(Mod, "ExplodeBonus", "Explosive Bonus: Deals quadruple damage to Guard Points") { OverrideColor = Colors.RarityOrange };
+                TooltipLine explodeLine = new(Mod, "ExplodeBonus", "[i:Redemption/Explosive] Deals quadruple damage to Guard Points") { OverrideColor = Colors.RarityOrange };
                 tooltips.Add(explodeLine);
             }
 
@@ -338,72 +384,72 @@ namespace Redemption.Globals
             {
                 if (item.HasElementItem(ElementID.Arcane))
                 {
-                    TooltipLine line = new(Mod, "Element", "Arcane Bonus: Can hit enemies from the spirit realm") { OverrideColor = Color.LightBlue };
+                    TooltipLine line = new(Mod, "Element", "[i:Redemption/Arcane] Can hit enemies from the spirit realm") { OverrideColor = Color.LightBlue };
                     tooltips.Add(line);
                 }
                 if (item.HasElementItem(ElementID.Blood))
                 {
-                    TooltipLine line = new(Mod, "Element", "Blood Bonus: Increased damage to organic enemies, but decreased to robotic") { OverrideColor = Color.IndianRed };
+                    TooltipLine line = new(Mod, "Element", "[i:Redemption/Blood] Increased damage to organic enemies, but decreased to robotic") { OverrideColor = Color.IndianRed };
                     tooltips.Add(line);
                 }
                 if (item.HasElementItem(ElementID.Celestial))
                 {
-                    TooltipLine line = new(Mod, "Element", "Celestial Bonus: Hitting foes can create stars around them, restoring life and mana once the foe is slain") { OverrideColor = Color.Pink };
+                    TooltipLine line = new(Mod, "Element", "[i:Redemption/Celestial] Hitting foes can create stars around them, restoring life and mana once the foe is slain") { OverrideColor = Color.Pink };
                     tooltips.Add(line);
                 }
                 if (item.HasElementItem(ElementID.Earth))
                 {
-                    TooltipLine line = new(Mod, "Element", "Earth Bonus: Deals extra damage and has a chance to stun grounded enemies") { OverrideColor = Color.SandyBrown };
+                    TooltipLine line = new(Mod, "Element", "[i:Redemption/Earth] Deals extra damage and has a chance to stun grounded enemies") { OverrideColor = Color.SandyBrown };
                     tooltips.Add(line);
                 }
                 if (item.HasElementItem(ElementID.Fire))
                 {
-                    TooltipLine line = new(Mod, "Element", "Fire Bonus: Chance to inflict a strong 'On Fire!' debuff on flammable enemies") { OverrideColor = Color.Orange };
+                    TooltipLine line = new(Mod, "Element", "[i:Redemption/Fire] Chance to inflict a strong 'On Fire!' debuff on flammable enemies") { OverrideColor = Color.Orange };
                     tooltips.Add(line);
                 }
                 if (item.HasElementItem(ElementID.Holy))
                 {
-                    TooltipLine line = new(Mod, "Element", "Holy Bonus: Increased damage to undead and demons") { OverrideColor = Color.LightGoldenrodYellow };
+                    TooltipLine line = new(Mod, "Element", "[i:Redemption/Holy] Increased damage to undead and demons") { OverrideColor = Color.LightGoldenrodYellow };
                     tooltips.Add(line);
                 }
                 if (item.HasElementItem(ElementID.Ice))
                 {
-                    TooltipLine line = new(Mod, "Element", "Ice Bonus: Chance to freeze slimes and slow down infected enemies") { OverrideColor = Color.LightCyan };
+                    TooltipLine line = new(Mod, "Element", "[i:Redemption/Ice] Chance to freeze slimes and slow down infected enemies") { OverrideColor = Color.LightCyan };
                     tooltips.Add(line);
                 }
                 if (item.HasElementItem(ElementID.Nature))
                 {
-                    TooltipLine line = new(Mod, "Element", "Nature Bonus: Has a chance to drop a defence-increasing Nature Boon upon hitting enemies inflicted with a non-fire debuff") { OverrideColor = Color.LawnGreen };
+                    TooltipLine line = new(Mod, "Element", "[i:Redemption/Nature] Has a chance to drop a defence-increasing Nature Boon upon hitting enemies inflicted with a non-fire debuff") { OverrideColor = Color.LawnGreen };
                     tooltips.Add(line);
                 }
                 if (item.HasElementItem(ElementID.Poison))
                 {
-                    TooltipLine line = new(Mod, "Element", "Poison Bonus: Increased damage to poisoned enemies") { OverrideColor = Color.MediumPurple };
+                    TooltipLine line = new(Mod, "Element", "[i:Redemption/Poison] Increased damage to poisoned enemies") { OverrideColor = Color.MediumPurple };
                     tooltips.Add(line);
                 }
                 if (item.HasElementItem(ElementID.Psychic))
                 {
-                    TooltipLine line = new(Mod, "Element", "Psychic Bonus: Ignores enemy Guard Points") { OverrideColor = Color.LightPink };
+                    TooltipLine line = new(Mod, "Element", "[i:Redemption/Psychic] Ignores enemy Guard Points") { OverrideColor = Color.LightPink };
                     tooltips.Add(line);
                 }
                 if (item.HasElementItem(ElementID.Shadow))
                 {
-                    TooltipLine line = new(Mod, "Element", "Shadow Bonus: Slain enemies have a chance to drop a pickup which increases Shadow damage") { OverrideColor = Color.MediumSlateBlue };
+                    TooltipLine line = new(Mod, "Element", "[i:Redemption/Shadow] Slain enemies have a chance to drop a pickup which increases Shadow damage") { OverrideColor = Color.MediumSlateBlue };
                     tooltips.Add(line);
                 }
                 if (item.HasElementItem(ElementID.Thunder))
                 {
-                    TooltipLine line = new(Mod, "Element", "Thunder Bonus: Electrifies and deals extra damage if the target is in water") { OverrideColor = Color.LightYellow };
+                    TooltipLine line = new(Mod, "Element", "[i:Redemption/Thunder] Electrifies and deals extra damage if the target is in water") { OverrideColor = Color.LightYellow };
                     tooltips.Add(line);
                 }
                 if (item.HasElementItem(ElementID.Water))
                 {
-                    TooltipLine line = new(Mod, "Element", "Water Bonus: Increased damage to demons and can electrify robotic targets") { OverrideColor = Color.SkyBlue };
+                    TooltipLine line = new(Mod, "Element", "[i:Redemption/Water] Increased damage to demons and can electrify robotic targets") { OverrideColor = Color.SkyBlue };
                     tooltips.Add(line);
                 }
                 if (item.HasElementItem(ElementID.Wind))
                 {
-                    TooltipLine line = new(Mod, "Element", "Wind Bonus: Deals extra knockback to airborne targets") { OverrideColor = Color.LightGray };
+                    TooltipLine line = new(Mod, "Element", "[i:Redemption/Wind] Deals extra knockback to airborne targets") { OverrideColor = Color.LightGray };
                     tooltips.Add(line);
                 }
             }

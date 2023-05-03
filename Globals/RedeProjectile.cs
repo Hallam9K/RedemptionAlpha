@@ -8,6 +8,12 @@ using Terraria.ID;
 using System.Linq;
 using Terraria.Enums;
 using Redemption.Buffs;
+using Microsoft.Xna.Framework.Graphics;
+using Redemption.NPCs.Minibosses.Calavia;
+using System.Threading;
+using Terraria.Audio;
+using Redemption.Items.Weapons.PreHM.Melee;
+using Redemption.NPCs.Friendly.SpiritSummons;
 
 namespace Redemption.Globals
 {
@@ -22,6 +28,8 @@ namespace Redemption.Globals
         public bool ParryBlacklist;
         public bool friendlyHostile;
         public int DissolveTimer;
+        public float ReflectDamageIncrease;
+        public Rectangle swordHitbox;
         public override void SetDefaults(Projectile projectile)
         {
             if (ProjectileLists.IsTechnicallyMelee.Contains(projectile.type))
@@ -38,6 +46,12 @@ namespace Redemption.Globals
                 projectile.GetGlobalProjectile<ElementalProjectile>().OverrideElement[ElementID.Explosive] = 1;
             }
             return base.PreAI(projectile);
+        }
+        public override void ModifyHitNPC(Projectile projectile, Terraria.NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
+        {
+            if (ReflectDamageIncrease is 0)
+                return;
+            damage = (int)(damage * ReflectDamageIncrease);
         }
         private readonly int[] bannedArenaProjs = new int[]
         {
@@ -83,6 +97,51 @@ namespace Redemption.Globals
                     crit = true;
                 }
             }
+        }
+        public static bool SwordClashFriendly(Projectile projectile, Projectile target, Entity player, ref bool parried, int frame = 5)
+        {
+            Rectangle targetHitbox = target.Hitbox;
+            if (target.Redemption().swordHitbox != default)
+                targetHitbox = target.Redemption().swordHitbox;
+
+            if (projectile.frame == frame && !parried && projectile.Redemption().swordHitbox.Intersects(targetHitbox) && target.type == ModContent.ProjectileType<Calavia_BladeOfTheMountain>() && target.frame >= 4 && target.frame <= 5)
+            {
+                if (player is Terraria.Player p)
+                {
+                    p.immune = true;
+                    p.immuneTime = 60;
+                    p.AddBuff(BuffID.ParryDamageBuff, 120);
+                }
+                player.velocity.X += 4 * player.RightOfDir(target);
+                RedeDraw.SpawnExplosion(RedeHelper.CenterPoint(projectile.Center, target.Center), Color.White, shakeAmount: 0, scale: 1f, noDust: true, tex: ModContent.Request<Texture2D>("Redemption/Textures/HolyGlow2").Value);
+                SoundEngine.PlaySound(CustomSounds.SwordClash, projectile.position);
+                DustHelper.DrawCircle(RedeHelper.CenterPoint(projectile.Center, target.Center), DustID.SilverCoin, 1, 4, 4, nogravity: true);
+                parried = true;
+                return true;
+            }
+            return false;
+        }
+        public static bool SwordClashHostile(Projectile projectile, Projectile target, Terraria.NPC npc, ref bool parried)
+        {
+            Rectangle targetHitbox = target.Hitbox;
+            if (target.Redemption().swordHitbox != default)
+                targetHitbox = target.Redemption().swordHitbox;
+
+            if (!parried && projectile.Redemption().swordHitbox.Intersects(targetHitbox) &&
+                ((target.type == ModContent.ProjectileType<Zweihander_SlashProj>() && target.frame is 4 or 3) ||
+                ((target.type == ModContent.ProjectileType<BladeOfTheMountain_Slash>() ||
+                target.type == ModContent.ProjectileType<Calavia_SS_BladeOfTheMountain>() ||
+                target.type == ModContent.ProjectileType<SwordSlicer_Slash>()) && target.frame is 5 or 4) ||
+                (target.type == ModContent.ProjectileType<KeepersClaw_Slash>() && target.frame is 2)))
+            {
+                npc.velocity.X += 4 * npc.RightOfDir(target);
+                SoundEngine.PlaySound(CustomSounds.SwordClash, projectile.position);
+                RedeDraw.SpawnExplosion(RedeHelper.CenterPoint(projectile.Center, target.Center), Color.White, shakeAmount: 0, scale: 1f, noDust: true, tex: ModContent.Request<Texture2D>("Redemption/Textures/HolyGlow2").Value);
+                DustHelper.DrawCircle(RedeHelper.CenterPoint(projectile.Center, target.Center), DustID.SilverCoin, 1, 4, 4, nogravity: true);
+                parried = true;
+                return true;
+            }
+            return false;
         }
         public static Dictionary<int, (Entity entity, IEntitySource source)> projOwners = new();
         public override void OnSpawn(Projectile projectile, IEntitySource source)

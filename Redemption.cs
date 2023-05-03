@@ -43,6 +43,8 @@ using Terraria.UI.Chat;
 using static Redemption.Globals.RedeNet;
 using Redemption.Items.Placeable.Furniture.SlayerShip;
 using Redemption.WorldGeneration.Misc;
+using Redemption.Items.Usable.Summons;
+using SubworldLibrary;
 
 namespace Redemption
 {
@@ -62,6 +64,7 @@ namespace Redemption
         public static bool AprilFools => DateTime.Now is DateTime { Month: 4, Day: 1 };
         public static bool FinlandDay => DateTime.Now is DateTime { Month: 12, Day: 6 };
 
+        public static BasicEffect basicEffect;
         public static RenderTargetManager Targets;
         public static Effect GlowTrailShader;
         public static TrailManager TrailManager;
@@ -93,6 +96,7 @@ namespace Redemption
             if (!Main.dedServ)
             {
                 TrailManager = new TrailManager(this);
+                AdditiveCallManager.Load();
 
                 dragonLeadCapeID = EquipLoader.AddEquipTexture(this, "Redemption/Items/Armor/PreHM/DragonLead/DragonLeadRibplate_Back", EquipType.Back, ModContent.GetInstance<DragonLeadRibplate>());
                 shinkiteCapeID = EquipLoader.AddEquipTexture(this, "Redemption/Items/Armor/PostML/Shinkite/ShinkiteChestplate_Back", EquipType.Back, ModContent.GetInstance<ShinkiteChestplate>());
@@ -106,9 +110,21 @@ namespace Redemption
                 halmMaleLegID = EquipLoader.AddEquipTexture(this, "Redemption/Items/Armor/Vanity/Dev/HallamLeggings_Legs", EquipType.Legs, ModContent.GetModItem(ModContent.ItemType<UnconLegs2>()));
                 halmFemLegID = EquipLoader.AddEquipTexture(this, "Redemption/Items/Armor/Vanity/Dev/HallamLeggings_FemaleLegs", EquipType.Legs, ModContent.GetModItem(ModContent.ItemType<UnconLegs2>()));
 
+                int width = Main.graphics.GraphicsDevice.Viewport.Width;
+                int height = Main.graphics.GraphicsDevice.Viewport.Height;
+                Vector2 zoom = Main.GameViewMatrix.Zoom;
+                Matrix view = Matrix.CreateLookAt(Vector3.Zero, Vector3.UnitZ, Vector3.Up) * Matrix.CreateTranslation(width / 2, height / -2, 0) * Matrix.CreateRotationZ(MathHelper.Pi) * Matrix.CreateScale(zoom.X, zoom.Y, 1f);
+                Matrix projection = Matrix.CreateOrthographic(width, height, 0, 1000);
+
                 AssetRequestMode immLoad = AssetRequestMode.ImmediateLoad;
                 Main.QueueMainThreadAction(() =>
                 {
+                    basicEffect = new BasicEffect(Main.graphics.GraphicsDevice)
+                    {
+                        VertexColorEnabled = true,
+                        View = view,
+                        Projection = projection
+                    };
                     Texture2D bubbleTex = ModContent.Request<Texture2D>("Redemption/Textures/BubbleShield", immLoad).Value;
                     PremultiplyTexture(ref bubbleTex);
                     Texture2D portalTex = ModContent.Request<Texture2D>("Redemption/Textures/PortalTex", immLoad).Value;
@@ -209,6 +225,7 @@ namespace Redemption
         public override void Unload()
         {
             TrailManager = null;
+            AdditiveCallManager.Unload();
         }
         public override void PostSetupContent()
         {
@@ -429,8 +446,14 @@ namespace Redemption
         public UserInterface YesNoUILayer;
         public YesNoUI YesNoUIElement;
 
-        public UserInterface ForestNymphTradeUILayer;
-        public ForestNymphTradeUI ForestNymphTradeUIElement;
+        public UserInterface TradeUILayer;
+        public TradeUI TradeUIElement;
+
+        public UserInterface AlignmentButtonUILayer;
+        public AlignmentButton AlignmentButtonUIElement;
+
+        public UserInterface SpiritWalkerButtonUILayer;
+        public SpiritWalkerButton SpiritWalkerButtonUIElement;
 
         public override void Load()
         {
@@ -472,9 +495,17 @@ namespace Redemption
                 YesNoUIElement = new YesNoUI();
                 YesNoUILayer.SetState(YesNoUIElement);
 
-                ForestNymphTradeUILayer = new UserInterface();
-                ForestNymphTradeUIElement = new ForestNymphTradeUI();
-                ForestNymphTradeUILayer.SetState(ForestNymphTradeUIElement);
+                TradeUILayer = new UserInterface();
+                TradeUIElement = new TradeUI();
+                TradeUILayer.SetState(TradeUIElement);
+
+                AlignmentButtonUILayer = new UserInterface();
+                AlignmentButtonUIElement = new AlignmentButton();
+                AlignmentButtonUILayer.SetState(AlignmentButtonUIElement);
+
+                SpiritWalkerButtonUILayer = new UserInterface();
+                SpiritWalkerButtonUIElement = new SpiritWalkerButton();
+                SpiritWalkerButtonUILayer.SetState(SpiritWalkerButtonUIElement);
             }
         }
         public override void ModifyLightingBrightness(ref float scale)
@@ -647,6 +678,30 @@ namespace Redemption
                     InterfaceScaleType.UI);
                 layers.Insert(index, SpiritGaugeUI);
             }
+            if (NPC.downedGolemBoss && Main.LocalPlayer.HeldItem.type == ModContent.ItemType<OmegaTransmitter>())
+            {
+                int index = layers.FindIndex(layer => layer.Name.Equals("Vanilla: Ruler"));
+                LegacyGameInterfaceLayer OmegaTransmitterUI = new("Redemption: Omega Transmitter UI",
+                    delegate
+                    {
+                        DrawOmegaTransmitterText(Main.spriteBatch);
+                        return true;
+                    },
+                    InterfaceScaleType.UI);
+                layers.Insert(index, OmegaTransmitterUI);
+            }
+            if (YesNoUI.Visible && !Main.playerInventory)
+            {
+                int index = layers.FindIndex(layer => layer.Name.Equals("Vanilla: Ruler"));
+                LegacyGameInterfaceLayer ChoiceTextUI = new("Redemption: Choice Text UI",
+                    delegate
+                    {
+                        DrawChoiceText(Main.spriteBatch);
+                        return true;
+                    },
+                    InterfaceScaleType.UI);
+                layers.Insert(index, ChoiceTextUI);
+            }
             if (Main.LocalPlayer.Redemption().slayerCursor)
             {
                 int index = layers.FindIndex(layer => layer.Name.Equals("Vanilla: Interface Logic 4"));
@@ -704,12 +759,26 @@ namespace Redemption
                 AddInterfaceLayer(layers, TitleUILayer, TitleCardUIElement, MouseTextIndex + 3, TitleCard.Showing, "Title Card");
                 AddInterfaceLayer(layers, NukeUILayer, NukeUIElement, MouseTextIndex + 4, NukeDetonationUI.Visible, "Nuke UI");
                 AddInterfaceLayer(layers, CyberTeleporterUILayer, CyberTeleporterUIElement, MouseTextIndex + 5, CyberTeleporterUI.Visible, "Cyber Teleporter UI");
-                AddInterfaceLayer(layers, TextBubbleUILayer, TextBubbleUIElement, MouseTextIndex + 6, ChatUI.Visible, "Text Bubble");
-                AddInterfaceLayer(layers, YesNoUILayer, YesNoUIElement, MouseTextIndex + 7, YesNoUI.Visible, "Yes No Choice");
-                AddInterfaceLayer(layers, ForestNymphTradeUILayer, ForestNymphTradeUIElement, MouseTextIndex + 8, ForestNymphTradeUI.Visible, "Nymph Trade");
+                AddInterfaceLayer(layers, TextBubbleUILayer, TextBubbleUIElement, MouseTextIndex + 5, ChatUI.Visible, "Text Bubble");
+                AddInterfaceLayer(layers, YesNoUILayer, YesNoUIElement, MouseTextIndex + 6, YesNoUI.Visible, "Yes No Choice");
+                AddInterfaceLayer(layers, TradeUILayer, TradeUIElement, MouseTextIndex + 7, TradeUI.Visible, "Trade");
+                AddInterfaceLayer(layers, SpiritWalkerButtonUILayer, SpiritWalkerButtonUIElement, MouseTextIndex + 8, Main.LocalPlayer.RedemptionAbility().Spiritwalker && Main.playerInventory, "Spirit Walker Button");
+                AddInterfaceLayer(layers, AlignmentButtonUILayer, AlignmentButtonUIElement, MouseTextIndex + 8, RedeWorld.alignmentGiven && Main.playerInventory, "Alignment Button");
             }
         }
-
+        public override void UpdateUI(GameTime gameTime)
+        {
+            if (AMemoryUILayer?.CurrentState != null && AMemoryUIState.Visible)
+                AMemoryUILayer.Update(gameTime);
+            if (NukeUILayer?.CurrentState != null && NukeDetonationUI.Visible)
+                NukeUILayer.Update(gameTime);
+            if (TradeUILayer?.CurrentState != null && TradeUI.Visible)
+                TradeUILayer.Update(gameTime);
+            if (YesNoUILayer?.CurrentState != null && YesNoUI.Visible)
+                YesNoUILayer.Update(gameTime);
+            if (AlignmentButtonUILayer?.CurrentState != null && RedeWorld.alignmentGiven && Main.playerInventory)
+                AlignmentButtonUILayer.Update(gameTime);
+        }
         public static void AddInterfaceLayer(List<GameInterfaceLayer> layers, UserInterface userInterface, UIState state, int index, bool visible, string customName = null) //Code created by Scalie
         {
             string name;
@@ -827,6 +896,23 @@ namespace Redemption
 
             spriteBatch.End();
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.LinearClamp, DepthStencilState.Default, RasterizerState.CullNone, null, Main.UIScaleMatrix);
+        }
+        public static void DrawOmegaTransmitterText(SpriteBatch spriteBatch)
+        {
+            Player player = Main.LocalPlayer;
+            spriteBatch.End();
+            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.LinearClamp, DepthStencilState.Default, RasterizerState.CullNone, null, Main.GameViewMatrix.TransformationMatrix);
+
+            ChatManager.DrawColorCodedStringWithShadow(spriteBatch, FontAssets.MouseText.Value, "Right-click to switch Prototype", player.Center + new Vector2(-118, 36) - Main.screenPosition, Color.Red, 0, Vector2.Zero, Vector2.One);
+
+            spriteBatch.End();
+            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.LinearClamp, DepthStencilState.Default, RasterizerState.CullNone, null, Main.UIScaleMatrix);
+        }
+        public static void DrawChoiceText(SpriteBatch spriteBatch)
+        {
+            string text = "Open Inventory to make your choice";
+            int textLength = (int)(FontAssets.DeathText.Value.MeasureString(text).X * .5f);
+            ChatManager.DrawColorCodedStringWithShadow(spriteBatch, FontAssets.DeathText.Value, text, new Vector2((Main.screenWidth / 2) - (textLength / 2), Main.screenHeight / 4), Color.White, 0, Vector2.Zero, Vector2.One * .5f);
         }
         public static void DrawSlayerCursor(SpriteBatch spriteBatch)
         {

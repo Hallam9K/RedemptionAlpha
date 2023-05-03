@@ -10,6 +10,7 @@ using Redemption.Buffs.NPCBuffs;
 using Redemption.Projectiles.Melee;
 using Redemption.Base;
 using Redemption.BaseExtension;
+using Redemption.Buffs.Debuffs;
 
 namespace Redemption.Items.Weapons.PreHM.Melee
 {
@@ -59,10 +60,6 @@ namespace Redemption.Items.Weapons.PreHM.Melee
         private float glow;
         public override void AI()
         {
-            for (int k = Projectile.oldPos.Length - 1; k > 0; k--)
-                oldrot[k] = oldrot[k - 1];
-            oldrot[0] = Projectile.rotation;
-
             Player player = Main.player[Projectile.owner];
             if (player.noItems || player.CCed || player.dead || !player.active)
                 Projectile.Kill();
@@ -232,7 +229,9 @@ namespace Redemption.Items.Weapons.PreHM.Melee
             }
             if (Timer > 1)
                 Projectile.alpha = 0;
-
+            for (int k = Projectile.oldPos.Length - 1; k > 0; k--)
+                oldrot[k] = oldrot[k - 1];
+            oldrot[0] = Projectile.rotation;
         }
         private void BlockProj()
         {

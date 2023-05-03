@@ -26,8 +26,17 @@ namespace Redemption.Tiles.Tiles
             Main.tileBlockLight[Type] = true;
             ItemDrop = ModContent.ItemType<AncientDirt>();
 			AddMapEntry(new Color(115, 88, 69));
-		}
-		public override void NumDust(int i, int j, bool fail, ref int num)
+        }
+        public override void FloorVisuals(Player player)
+        {
+            if (player.velocity.X != 0f && Main.rand.NextBool(20))
+            {
+                Dust dust = Dust.NewDustDirect(player.Bottom, 0, 0, DustType, 0f, -Main.rand.NextFloat(2f));
+                dust.noGravity = true;
+                dust.fadeIn = 1f;
+            }
+        }
+        public override void NumDust(int i, int j, bool fail, ref int num)
 		{
 			num = fail ? 1 : 3;
 		}

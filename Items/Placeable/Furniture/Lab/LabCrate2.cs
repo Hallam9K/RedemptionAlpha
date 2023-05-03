@@ -9,6 +9,7 @@ using Redemption.Items.Weapons.HM.Magic;
 using Redemption.Items.Weapons.HM.Melee;
 using Redemption.Items.Weapons.HM.Ranged;
 using Redemption.Items.Weapons.HM.Summon;
+using Redemption.Items.Weapons.PostML.Magic;
 using Redemption.Items.Weapons.PostML.Melee;
 using Redemption.Items.Weapons.PostML.Ranged;
 using Redemption.Tiles.Furniture.Lab;
@@ -46,7 +47,7 @@ namespace Redemption.Items.Placeable.Furniture.Lab
         {
             var entitySource = player.GetSource_OpenItem(Type);
             int[] LabChestLoot = new int[] { ModContent.ItemType<GasMask>(), ModContent.ItemType<Holoshield>(), ModContent.ItemType<PrototypeAtomRifle>(), ModContent.ItemType<MiniWarhead>(), ModContent.ItemType<GravityHammer>(), ModContent.ItemType<TeslaGenerator>(), ModContent.ItemType<LightningRod>() };
-            int[] LabChestLoot4 = new int[] { ModContent.ItemType<HazmatSuit>(), ModContent.ItemType<MysteriousXenomiteFragment>(), ModContent.ItemType<EmptyMutagen>(), ModContent.ItemType<Hacksaw>(), ModContent.ItemType<DepletedCrossbow>() };
+            int[] LabChestLoot4 = new int[] { ModContent.ItemType<HazmatSuit>(), ModContent.ItemType<MysteriousXenomiteFragment>(), ModContent.ItemType<EmptyMutagen>(), ModContent.ItemType<Hacksaw>(), ModContent.ItemType<DepletedCrossbow>(), ModContent.ItemType<TeslaCoil>() };
             int[] FloppyDiskLoot = new int[]
             {
                 ModContent.ItemType<FloppyDisk1>(),

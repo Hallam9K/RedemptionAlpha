@@ -12,7 +12,7 @@ namespace Redemption.Tiles.Furniture.ElderWood
 	{
 		public override void SetStaticDefaults()
 		{
-            Main.tileSolidTop[Type] = false;
+            Main.tileSolidTop[Type] = true;
             Main.tileFrameImportant[Type] = true;
             Main.tileNoAttach[Type] = true;
             Main.tileLavaDeath[Type] = true;

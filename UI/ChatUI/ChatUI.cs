@@ -178,7 +178,7 @@ namespace Redemption.UI.ChatUI
                 {
                     dialogue.TriggerSymbol(numbers[1..]);
                     dialogue.chain.TriggerSymbol(numbers[1..]);
-                    dialogue.text = dialogue.text.Replace(text, "");
+                    dialogue.text = dialogue.text.Remove(dialogue.displayingText.Length - 1, index + 2 - dialogue.displayingText.Length);
                     dialogue.displayingText = dialogue.displayingText[0..^1];
                     return;
                 }
@@ -187,8 +187,8 @@ namespace Redemption.UI.ChatUI
                 if (!parsed) return;
 
                 dialogue.pauseTime = result;
-                dialogue.text = dialogue.text.Replace(text, "");
-                dialogue.displayingText = dialogue.displayingText[0..^1];
+				dialogue.text = dialogue.text.Remove(dialogue.displayingText.Length - 1, index + 2 - dialogue.displayingText.Length);
+				dialogue.displayingText = dialogue.displayingText[0..^1];
                 return;
             }
 
@@ -201,8 +201,8 @@ namespace Redemption.UI.ChatUI
                 float.TryParse(numbers, out float result);
 
                 dialogue.charTime = result;
-                dialogue.text = dialogue.text.Replace(text, "");
-                dialogue.displayingText = dialogue.displayingText[0..^1];
+				dialogue.text = dialogue.text.Remove(dialogue.displayingText.Length - 1, index + 2 - dialogue.displayingText.Length);
+				dialogue.displayingText = dialogue.displayingText[0..^1];
                 return;
             }
         }

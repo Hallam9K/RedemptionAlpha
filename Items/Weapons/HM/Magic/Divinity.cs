@@ -41,7 +41,7 @@ namespace Redemption.Items.Weapons.HM.Magic
             Item.shootSpeed = 2f;
             Item.shoot = ModContent.ProjectileType<Divinity_Sun>();
             if (!Main.dedServ)
-                Item.RedemptionGlow().glowTexture = ModContent.Request<Texture2D>(Item.ModItem.Texture + "_Glow").Value;
+                Item.RedemptionGlow().glowTexture = ModContent.Request<Texture2D>(Texture + "_Glow").Value;
         }
         public override bool CanUseItem(Player player)
         {

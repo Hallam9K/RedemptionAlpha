@@ -76,7 +76,7 @@ namespace Redemption.Projectiles.Magic
             for (int i = 0; i < Main.maxNPCs; i++)
             {
                 NPC target = Main.npc[i];
-                if (!target.active || target.dontTakeDamage)
+                if (!target.active || target.dontTakeDamage || target.friendly)
                     continue;
 
                 if (target.immune[Projectile.whoAmI] > 0 || Projectile.DistanceSQ(target.Center) > 140 * 140)

@@ -4,6 +4,7 @@ using Redemption.Items.Materials.PreHM;
 using Terraria;
 using Redemption.Buffs.NPCBuffs;
 using Redemption.BaseExtension;
+using Redemption.Buffs.Debuffs;
 
 namespace Redemption.Items.Tools.PreHM
 {

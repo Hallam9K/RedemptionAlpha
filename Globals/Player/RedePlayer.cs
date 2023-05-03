@@ -28,6 +28,8 @@ using Terraria.GameContent;
 using ReLogic.Content;
 using Redemption.WorldGeneration;
 using Redemption.WorldGeneration.Misc;
+using Redemption.Items.Weapons.HM.Magic;
+using Terraria.Audio;
 
 namespace Redemption.Globals.Player
 {
@@ -131,6 +133,12 @@ namespace Redemption.Globals.Player
                 hitTarget2 = target.whoAmI;
             }
         }
+        public override bool PreKill(double damage, int hitDirection, bool pvp, ref bool playSound, ref bool genGore, ref PlayerDeathReason damageSource)
+        {
+            if (Player.HasItem(ModContent.ItemType<Taikasauva>()))
+                SoundEngine.PlaySound(CustomSounds.NoitaDeath);
+            return base.PreKill(damage, hitDirection, pvp, ref playSound, ref genGore, ref damageSource);
+        }
         public override void OnEnterWorld(Terraria.Player player)
         {
             Main.NewText("===IMPORTANT===\n" +
@@ -140,9 +148,9 @@ namespace Redemption.Globals.Player
 
             if (SubworldSystem.Current != null)
                 return;
-            if (RedeGen.GoldenGatewayPoint.X == 0 || RedeGen.BastionPoint.X == 0 || RedeGen.gathicPortalPoint.X == 0 || RedeGen.HallOfHeroesPoint.X == 0 || RedeGen.slayerShipPoint.X == 0)
+            if (RedeGen.GoldenGatewayVector.X == -1 || RedeGen.BastionVector.X == -1 || RedeGen.gathicPortalVector.X == -1 || RedeGen.HallOfHeroesVector.X == -1 || RedeGen.slayerShipVector.X == -1)
                 Main.NewText("WARNING: Unable to locate a certain structure, new world is recommended!", Colors.RarityRed);
-            if (RedeGen.LabPoint.X == 0 || RedeGen.newbCavePoint.X == 0)
+            if (RedeGen.LabVector.X == -1 || RedeGen.newbCaveVector.X == -1)
                 Main.NewText("WARNING: Unable to locate important structure, new world is required!", Colors.RarityRed);
 
             if (RedeConfigClient.Instance.FunniAllWasteland || RedeConfigClient.Instance.FunniJanitor || RedeConfigClient.Instance.FunniSpiders || RedeConfigClient.Instance.FunniWasteland)

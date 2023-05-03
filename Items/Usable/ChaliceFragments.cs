@@ -43,7 +43,7 @@ namespace Redemption.Items.Usable
         public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI)
         {
             Texture2D texture = TextureAssets.Item[Item.type].Value;
-            Texture2D textureGlow = ModContent.Request<Texture2D>(Item.ModItem.Texture + "_Glow").Value;
+            Texture2D textureGlow = ModContent.Request<Texture2D>(Texture + "_Glow").Value;
             Rectangle frame;
             if (Main.itemAnimations[Item.type] != null)
                 frame = Main.itemAnimations[Item.type].GetFrame(texture, Main.itemFrameCounter[whoAmI]);
@@ -79,7 +79,7 @@ namespace Redemption.Items.Usable
 
         public override void AI()
         {
-            Vector2 HallPos = new((RedeGen.HallOfHeroesPoint.X + 36) * 16, (RedeGen.HallOfHeroesPoint.Y + 17) * 16);
+            Vector2 HallPos = new((RedeGen.HallOfHeroesVector.X + 36) * 16, (RedeGen.HallOfHeroesVector.Y + 17) * 16);
             Player player = Main.player[Projectile.owner];
 
             if (player.HeldItem.type == ModContent.ItemType<ChaliceFragments>())

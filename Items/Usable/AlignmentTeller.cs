@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Redemption.Base;
 using Redemption.Globals;
 using Redemption.Items.Materials.PreHM;
+using Redemption.NPCs.Minibosses.FowlEmperor;
 using Redemption.NPCs.Friendly;
 using Terraria;
 using Terraria.DataStructures;
@@ -48,43 +49,31 @@ namespace Redemption.Items.Usable
             CreateRecipe()
                 .AddIngredient(ModContent.ItemType<CursedGem>())
                 .AddIngredient(ModContent.ItemType<ChaliceFragments>())
-                .AddTile(TileID.DemonAltar)
                 .Register();
         }
-        public override bool? UseItem(Player player)
+        public override void UpdateInventory(Player player)
         {
-            CombatText.NewText(player.Hitbox, Color.DarkGoldenrod, RedeWorld.alignment, true, false);
-
-            if (!Main.dedServ)
+            if (!RedeWorld.alignmentGiven)
             {
-                if (RedeWorld.alignment == 0)
-                    RedeSystem.Instance.ChaliceUIElement.DisplayDialogue("You are truly neutral...", 120, 30, 0, Color.DarkGoldenrod);
-                else if (RedeWorld.alignment == -1)
-                    RedeSystem.Instance.ChaliceUIElement.DisplayDialogue("You have done harm, but you are safe for now...", 120, 30, 0, Color.DarkGoldenrod);
-                else if (RedeWorld.alignment == 1)
-                    RedeSystem.Instance.ChaliceUIElement.DisplayDialogue("You have done good so far...", 120, 30, 0, Color.DarkGoldenrod);
-                else if (RedeWorld.alignment >= 2 && RedeWorld.alignment <= 3)
-                    RedeSystem.Instance.ChaliceUIElement.DisplayDialogue("You are choosing the right path. Please, continue.", 120, 30, 0, Color.DarkGoldenrod);
-                else if (RedeWorld.alignment >= -3 && RedeWorld.alignment <= -2)
-                    RedeSystem.Instance.ChaliceUIElement.DisplayDialogue("Be wary, you are straying from the path of good...", 120, 30, 0, Color.DarkGoldenrod);
-                else if (RedeWorld.alignment >= -5 && RedeWorld.alignment <= -4)
-                    RedeSystem.Instance.ChaliceUIElement.DisplayDialogue("You are really pushing it aren't you... If you continue down this road, justice will await you.", 120, 30, 0, Color.DarkGoldenrod);
-                else if (RedeWorld.alignment >= 4 && RedeWorld.alignment <= 5)
-                    RedeSystem.Instance.ChaliceUIElement.DisplayDialogue("I am proud of you for keeping the light within you bright...", 120, 30, 0, Color.DarkGoldenrod);
-                else if (RedeWorld.alignment >= -7 && RedeWorld.alignment <= -6)
-                    RedeSystem.Instance.ChaliceUIElement.DisplayDialogue("... Listen, you are following the wrong path here... Please, go back.", 120, 30, 0, Color.DarkGoldenrod);
-                else if (RedeWorld.alignment >= 6 && RedeWorld.alignment <= 7)
-                    RedeSystem.Instance.ChaliceUIElement.DisplayDialogue("Vanquishing the evil of the world... You really are something.", 120, 30, 0, Color.DarkGoldenrod);
-                else if (RedeWorld.alignment >= -9 && RedeWorld.alignment <= -8)
-                    RedeSystem.Instance.ChaliceUIElement.DisplayDialogue("I am sorry, you can't go back now...", 120, 30, 0, Color.DarkGoldenrod);
-                else if (RedeWorld.alignment >= 8 && RedeWorld.alignment <= 9)
-                    RedeSystem.Instance.ChaliceUIElement.DisplayDialogue("Light shines within you, but I am sure more dangerous foes lie ahead...", 120, 30, 0, Color.DarkGoldenrod);
-                else if (RedeWorld.alignment <= -10)
-                    RedeSystem.Instance.ChaliceUIElement.DisplayDialogue("You are past redemption...", 120, 30, 0, Color.DarkGoldenrod);
-                else if (RedeWorld.alignment >= 10)
-                    RedeSystem.Instance.ChaliceUIElement.DisplayDialogue("You are the redemption this world needed...", 120, 30, 0, Color.DarkGoldenrod);
+                RedeWorld.alignmentGiven = true;
+                if (Main.netMode == NetmodeID.Server)
+                    NetMessage.SendData(MessageID.WorldData);
             }
-            return true;
+            Item.TurnToAir();
+        }
+        public override void Update(ref float gravity, ref float maxFallSpeed)
+        {
+            if (!RedeWorld.alignmentGiven)
+            {
+                RedeWorld.alignmentGiven = true;
+                if (Main.netMode == NetmodeID.Server)
+                    NetMessage.SendData(MessageID.WorldData);
+            }
+            if (Main.netMode != NetmodeID.MultiplayerClient)
+            {
+                Item.active = false;
+                NetMessage.SendData(MessageID.SyncItem, -1, -1, null, Item.whoAmI);
+            }
         }
 
         public override void PostUpdate()
@@ -109,7 +98,7 @@ namespace Redemption.Items.Usable
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
 
             Texture2D texture = TextureAssets.Item[Item.type].Value;
-            Texture2D textureGlow = ModContent.Request<Texture2D>(Item.ModItem.Texture + "_Glow").Value;
+            Texture2D textureGlow = ModContent.Request<Texture2D>(Texture + "_Glow").Value;
             Rectangle frame;
             if (Main.itemAnimations[Item.type] != null)
                 frame = Main.itemAnimations[Item.type].GetFrame(texture, Main.itemFrameCounter[whoAmI]);

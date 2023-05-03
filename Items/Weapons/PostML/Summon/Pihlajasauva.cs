@@ -14,7 +14,8 @@ namespace Redemption.Items.Weapons.PostML.Summon
         {
             Tooltip.SetDefault("Summons a rowan tree that emits an empowering aura\n" +
                 "Within the aura, your minions can cause rowan berries to drop from their targets and their damage is increased by 8%\n" +
-                "Rowan berries will heal for a small amount and give major improvements to all stats for a short time");
+                "Rowan berries will heal for a small amount and give major improvements to all stats for a short time\n" +
+                "Right-click to disable the sentry");
             SacrificeTotal = 1;
 
             ItemID.Sets.GamepadWholeScreenUseRange[Item.type] = true;
@@ -38,6 +39,7 @@ namespace Redemption.Items.Weapons.PostML.Summon
             Item.shoot = ModContent.ProjectileType<RowanTreeSummon>();
             Item.mana = 28;
         }
+        public override bool AltFunctionUse(Player player) => true;
         public override bool CanUseItem(Player player)
         {
             Tile tile = Framing.GetTileSafely(Player.tileTargetX, Player.tileTargetY);
@@ -52,6 +54,17 @@ namespace Redemption.Items.Weapons.PostML.Summon
         }
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
+            if (player.altFunctionUse == 2)
+            {
+                for (int i = 0; i < Main.maxProjectiles; i++)
+                {
+                    Projectile proj = Main.projectile[i];
+                    if (!proj.active || proj.type != type || proj.owner != player.whoAmI)
+                        continue;
+                    proj.timeLeft = 2;
+                }
+                return false;
+            }
             var projectile = Projectile.NewProjectileDirect(source, position, velocity, type, damage, knockback, Main.myPlayer, player.direction);
             projectile.originalDamage = Item.damage;
             player.UpdateMaxTurrets();

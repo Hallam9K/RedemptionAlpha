@@ -19,6 +19,7 @@ namespace Redemption.Items.Accessories.HM
                 "'Fueled with the sun itself'");
             SacrificeTotal = 1;
             ElementID.ItemFire[Type] = true;
+            ElementID.ItemHoly[Type] = true;
         }
 
         public override void SetDefaults()
@@ -29,7 +30,7 @@ namespace Redemption.Items.Accessories.HM
             Item.rare = ItemRarityID.Lime;
             Item.accessory = true;
             if (!Main.dedServ)
-                Item.RedemptionGlow().glowTexture = ModContent.Request<Texture2D>(Item.ModItem.Texture + "_Glow").Value;
+                Item.RedemptionGlow().glowTexture = ModContent.Request<Texture2D>(Texture + "_Glow").Value;
         }
         public override void AddRecipes()
         {

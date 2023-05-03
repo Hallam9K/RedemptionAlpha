@@ -40,7 +40,7 @@ namespace Redemption.NPCs.Lab.Behemoth
         public override void AI()
         {
             Player player = Main.player[Main.myPlayer];
-            Rectangle activeZone = new((RedeGen.LabPoint.X + 201) * 16, (RedeGen.LabPoint.Y + 106) * 16, 25 * 16, 8 * 16);
+            Rectangle activeZone = new((int)(RedeGen.LabVector.X + 201) * 16, (int)(RedeGen.LabVector.Y + 106) * 16, 25 * 16, 8 * 16);
             if (player.Hitbox.Intersects(activeZone) && !player.dead && player.active)
             {
                 NPC.SetDefaults(ModContent.NPCType<IrradiatedBehemoth>());

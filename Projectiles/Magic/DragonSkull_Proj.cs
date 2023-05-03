@@ -83,8 +83,7 @@ namespace Redemption.Projectiles.Magic
                     SoundEngine.PlaySound(SoundID.DD2_BetsyFlameBreath, Projectile.position);
                 if (Projectile.ai[0] >= 40 && Projectile.ai[0] % 3 == 0 && Projectile.ai[0] <= 180)
                 {
-                    Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center + RedeHelper.PolarVector(6, Projectile.rotation + MathHelper.PiOver2),
-                        RedeHelper.PolarVector(5, Projectile.rotation + (Projectile.spriteDirection == -1 ? (float)Math.PI : 0)), ModContent.ProjectileType<DragonSkullFlames_Proj>(), Projectile.damage, Projectile.knockBack, Projectile.owner);
+                    Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center + RedeHelper.PolarVector(6, Projectile.rotation + MathHelper.PiOver2), RedeHelper.PolarVector(5, Projectile.rotation + (Projectile.spriteDirection == -1 ? (float)Math.PI : 0)), ModContent.ProjectileType<DragonSkullFlames_Proj>(), Projectile.damage, Projectile.knockBack, Projectile.owner);
                 }
 
                 if (Projectile.ai[0] == 180)

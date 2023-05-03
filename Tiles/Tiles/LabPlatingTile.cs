@@ -22,7 +22,7 @@ namespace Redemption.Tiles.Tiles
             ItemDrop = ModContent.ItemType<LabPlating>();
             MinPick = 200;
             MineResist = 5f;
-            HitSound = SoundID.Tink;
+            HitSound = CustomSounds.MetalHit;
             AddMapEntry(new Color(202, 210, 210));
         }
         public override void NumDust(int i, int j, bool fail, ref int num) => num = fail ? 1 : 3;

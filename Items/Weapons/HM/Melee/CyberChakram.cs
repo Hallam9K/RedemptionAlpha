@@ -31,7 +31,7 @@ namespace Redemption.Items.Weapons.HM.Melee
             Item.shoot = ModContent.ProjectileType<CyberChakram_Proj>();
             Item.shootSpeed = 18;
             if (!Main.dedServ)
-                Item.RedemptionGlow().glowTexture = ModContent.Request<Texture2D>(Item.ModItem.Texture + "_Glow").Value;
+                Item.RedemptionGlow().glowTexture = ModContent.Request<Texture2D>(Texture + "_Glow").Value;
         }
         public override bool CanUseItem(Player player)
         {

@@ -21,7 +21,7 @@ namespace Redemption.Items.Usable
             Item.rare = ItemRarityID.Purple;
             Item.maxStack = 1;
             if (!Main.dedServ)
-                Item.RedemptionGlow().glowTexture = ModContent.Request<Texture2D>(Item.ModItem.Texture + "_Glow").Value;
+                Item.RedemptionGlow().glowTexture = ModContent.Request<Texture2D>(Texture + "_Glow").Value;
         }
     }
 }

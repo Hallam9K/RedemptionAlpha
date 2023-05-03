@@ -34,8 +34,8 @@ namespace Redemption.Biomes
         {
             if (SubworldSystem.Current != null)
                 return false;
-            Rectangle lab = new(RedeGen.LabPoint.X * 16, RedeGen.LabPoint.Y * 16, 289 * 16, 217 * 16);
-            return ModContent.GetInstance<RedeTileCount>().LabTileCount >= 100 || player.Hitbox.Intersects(lab);
+            Rectangle lab = new((int)RedeGen.LabVector.X * 16, (int)RedeGen.LabVector.Y * 16, 289 * 16, 217 * 16);
+            return ModContent.GetInstance<RedeTileCount>().LabTileCount >= 1500 || player.Hitbox.Intersects(lab);
         }
     }
 }

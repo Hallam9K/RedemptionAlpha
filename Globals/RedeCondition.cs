@@ -4,7 +4,7 @@ using Terraria.ModLoader;
 using Redemption.BaseExtension;
 using Terraria;
 using Redemption.Biomes;
-using Redemption.NPCs.Bosses.FowlEmperor;
+using Redemption.NPCs.Minibosses.FowlEmperor;
 
 namespace Redemption.Globals
 {

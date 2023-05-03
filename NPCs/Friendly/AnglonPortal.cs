@@ -41,6 +41,7 @@ namespace Redemption.NPCs.Friendly
             NPC.npcSlots = 0;
             NPC.hide = true;
             NPC.behindTiles = true;
+            NPC.ShowNameOnHover = false;
         }
 
         public override void DrawBehind(int index)

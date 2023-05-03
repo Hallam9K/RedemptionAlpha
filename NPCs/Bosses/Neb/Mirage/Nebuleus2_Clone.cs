@@ -88,7 +88,7 @@ namespace Redemption.NPCs.Bosses.Neb.Clone
 
         public override void SetDefaults()
         {
-            NPC.lifeMax = 440000;
+            NPC.lifeMax = 600000;
             NPC.defense = 85;
             NPC.damage = 180;
             NPC.width = 90;

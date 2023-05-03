@@ -4,7 +4,6 @@ TODO
 
 - Bio-Mechanical Heart(?) accessory that converts overflown energy to life (increased life regen when max energy), found in Holochests
 - Accessory that turns mana star drops into something else that do something upon pickup, found in Holochests
-- Reduced player knockback effect from the Egg Shelld accessory (player knockback changing is wack)
 
 MULTIPLAYER BUGS (PLS HELP US :sadcat:)
 - (Potentially fixed) Erhan text repeats and the fight doesnt begin

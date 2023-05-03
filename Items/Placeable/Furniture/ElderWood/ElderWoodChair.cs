@@ -15,7 +15,7 @@ namespace Redemption.Items.Placeable.Furniture.ElderWood
 		{
 			Item.DefaultToPlaceableTile(ModContent.TileType<ElderWoodChairTile>(), 0);
 			Item.width = 16;
-			Item.height = 30;
+			Item.height = 34;
 			Item.maxStack = 9999;
 			Item.value = 150;
 		}

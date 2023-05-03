@@ -28,6 +28,7 @@ namespace Redemption.Tiles.Tiles
             Main.tileMerge[TileID.Mudstone][Type] = true;
             ItemDrop = ModContent.ItemType<GathicStoneBrick>();
             DustType = ModContent.DustType<SlateDust>();
+            HitSound = CustomSounds.StoneHit;
             MinPick = 0;
             MineResist = 1.5f;
             AddMapEntry(new Color(81, 72, 65));

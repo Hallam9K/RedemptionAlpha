@@ -6,6 +6,7 @@ using Redemption.NPCs.Critters;
 using Redemption.Tiles.Natural;
 using Redemption.Tiles.Plants;
 using Redemption.Tiles.Tiles;
+using Redemption.WorldGeneration;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
@@ -84,7 +85,7 @@ namespace Redemption.Globals
                         WorldGen.PlaceTile(i, j - 1, ModContent.TileType<RadRootTile>(), true);
                 }
             }
-            if (Terraria.NPC.downedBoss3 && TileID.Sets.Conversion.Ice[type] && RedeWorld.alignment >= 0)
+            if (RedeGen.cryoCrystalSpawn && TileID.Sets.Conversion.Ice[type])
             {
                 bool tileUp = !Framing.GetTileSafely(i, j - 1).HasTile;
                 bool tileDown = !Framing.GetTileSafely(i, j + 1).HasTile;

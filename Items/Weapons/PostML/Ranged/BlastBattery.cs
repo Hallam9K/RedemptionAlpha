@@ -43,7 +43,7 @@ namespace Redemption.Items.Weapons.PostML.Ranged
             Item.shoot = ModContent.ProjectileType<BlastBattery_Missile>();
             Item.useAmmo = AmmoID.Rocket;
             if (!Main.dedServ)
-                Item.RedemptionGlow().glowTexture = ModContent.Request<Texture2D>(Item.ModItem.Texture + "_Glow").Value;
+                Item.RedemptionGlow().glowTexture = ModContent.Request<Texture2D>(Texture + "_Glow").Value;
         }
         public override bool CanConsumeAmmo(Item ammo, Player player)
         {

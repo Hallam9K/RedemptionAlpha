@@ -34,9 +34,8 @@ namespace Redemption.Items.Placeable.Tiles
                 .AddIngredient(ModContent.ItemType<LabPlatingWall>(), 4)
                 .AddTile(TileID.WorkBenches)
                 .Register();
-            CreateRecipe(2)
+            CreateRecipe()
                .AddIngredient(ModContent.ItemType<LabPlatform>(), 2)
-               .AddTile(TileID.WorkBenches)
                .Register();
         }
     }

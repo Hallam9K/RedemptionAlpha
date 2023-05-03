@@ -101,7 +101,7 @@ namespace Redemption.Items.Accessories.HM
 
             if (DashTimer > 0)
             {
-                Player.eocDash = DashTimer;
+                Player.eocDash = DashTimer - 1;
                 Player.armorEffectDrawShadowEOCShield = true;
 
                 if (ShieldHit < 0 && DashTimer > 15)
@@ -147,6 +147,7 @@ namespace Redemption.Items.Accessories.HM
                         Player.velocity.X = -Player.velocity.X;
                         Player.velocity.Y = -4f;
                         ShieldHit = 1;
+                        DashTimer = 0;
                     }
                     for (int i = 0; i < Main.maxProjectiles; i++)
                     {
@@ -170,9 +171,9 @@ namespace Redemption.Items.Accessories.HM
                         Player.velocity.X = -Player.velocity.X;
                         Player.velocity.Y = -4f;
                         ShieldHit = 1;
+                        DashTimer = 0;
                     }
                 }
-
                 DashTimer--;
             }
         }

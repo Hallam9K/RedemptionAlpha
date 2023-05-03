@@ -43,7 +43,7 @@ namespace Redemption.Items.Weapons.HM.Ranged
             Item.shootSpeed = 90;
             Item.useAmmo = AmmoID.Bullet;
             if (!Main.dedServ)
-                Item.RedemptionGlow().glowTexture = ModContent.Request<Texture2D>(Item.ModItem.Texture + "_Glow").Value;
+                Item.RedemptionGlow().glowTexture = ModContent.Request<Texture2D>(Texture + "_Glow").Value;
         }
         public override bool AltFunctionUse(Player player) => true;
         public override bool CanConsumeAmmo(Item ammo, Player player) => false;

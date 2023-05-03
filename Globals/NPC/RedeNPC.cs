@@ -49,6 +49,11 @@ using Redemption.Buffs.Cooldowns;
 using Redemption.Items.Weapons.PreHM.Ranged;
 using Redemption.WorldGeneration.Misc;
 using Redemption.NPCs.Critters;
+using SubworldLibrary;
+using Redemption.Items.Accessories.PreHM;
+using Redemption.Tiles.Trees;
+using Redemption.Base;
+using Redemption.WorldGeneration;
 
 namespace Redemption.Globals.NPC
 {
@@ -78,10 +83,7 @@ namespace Redemption.Globals.NPC
                     shop.item[nextSlot++].SetDefaults(ModContent.ItemType<EaglecrestGolemPlush>());
             }
             if (type == NPCID.Wizard)
-            {
-                shop.item[nextSlot++].SetDefaults(ModContent.ItemType<NoidanSauva>());
-                shop.item[nextSlot++].SetDefaults(ModContent.ItemType<Pommisauva>());
-            }
+                shop.item[nextSlot++].SetDefaults(ModContent.ItemType<Taikasauva>());
             if (type == NPCID.Princess)
             {
                 shop.item[nextSlot++].SetDefaults(ModContent.ItemType<HamPatPainting>());
@@ -360,6 +362,8 @@ namespace Redemption.Globals.NPC
                 npcLoot.Add(ItemDropRule.ByCondition(new Conditions.NotExpert(), ModContent.ItemType<GolemStaff>(), 7));
             if (npc.type is NPCID.IceGolem or NPCID.RockGolem)
                 npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<LegoBrick>(), 50));
+            if (NPCLists.Dark.Contains(npc.type) && !npc.boss)
+                npcLoot.Add(ItemDropRule.Food(ModContent.ItemType<EldritchRoot>(), 400));
         }
         public override void ModifyGlobalLoot(GlobalLoot globalLoot)
         {
@@ -408,6 +412,18 @@ namespace Redemption.Globals.NPC
                 pool.Clear();
                 return;
             }
+            for (int i = 0; i < Main.maxNPCs; i++)
+            {
+                Terraria.NPC safe = Main.npc[i];
+                if (!safe.active || !NPCLists.DisablesSpawnsWhenNear.Contains(safe.type))
+                    continue;
+                Vector2 spawnPos = BaseUtility.TileToPos(new Vector2(spawnInfo.SpawnTileX, spawnInfo.SpawnTileY));
+                if (safe.DistanceSQ(spawnPos) < 1600 * 1600)
+                {
+                    pool.Clear();
+                    return;
+                }
+            }
             if (RedeWorld.blobbleSwarm)
             {
                 pool.Clear();
@@ -432,7 +448,7 @@ namespace Redemption.Globals.NPC
             if (FowlMorningWorld.FowlMorningActive && spawnInfo.Player.ZoneOverworldHeight && !spawnInfo.Player.ZoneTowerNebula && !spawnInfo.Player.ZoneTowerSolar && !spawnInfo.Player.ZoneTowerStardust && !spawnInfo.Player.ZoneTowerVortex)
             {
                 pool.Clear();
-                if (Main.tile[spawnInfo.SpawnTileX, spawnInfo.SpawnTileY - 1].WallType is not WallID.DirtUnsafe)
+                if (Framing.GetTileSafely(spawnInfo.SpawnTileX, spawnInfo.SpawnTileY - 1).WallType is not WallID.DirtUnsafe)
                 {
                     IDictionary<int, float> spawnpool = FowlMorningNPC.SpawnPool.ElementAt(FowlMorningWorld.ChickWave);
                     foreach (KeyValuePair<int, float> key in spawnpool)

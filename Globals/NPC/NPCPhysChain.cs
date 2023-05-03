@@ -1,8 +1,11 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Redemption.Items.Placeable.Tiles;
 using System;
 using Terraria;
 using Terraria.DataStructures;
+using Terraria.Enums;
+using Terraria.Graphics.Shaders;
 using Terraria.ModLoader;
 
 namespace Redemption.Globals.NPC
@@ -12,13 +15,12 @@ namespace Redemption.Globals.NPC
         public override bool InstancePerEntity => true;
 
         private static readonly int maxChains = 6;
+        private int frameCounter;
 
         /// <summary>
         /// The physchain.
         /// </summary>
         public IPhysChain[] npcPhysChain;
-
-        public bool glowChain;
 
         /// <summary>
         /// The positions of all segments of the chain
@@ -30,14 +32,10 @@ namespace Redemption.Globals.NPC
         public int[] npcPhysChainDir;
         public override void OnSpawn(Terraria.NPC npc, IEntitySource source)
         {
-            if (npcPhysChain == null)
-                npcPhysChain = new IPhysChain[maxChains];
-            if (bodyPhysChainPositions == null)
-                bodyPhysChainPositions = new Vector3[maxChains][];
-            if (npcPhysChainOffset == null)
-                npcPhysChainOffset = new Vector2[maxChains];
-            if (npcPhysChainDir == null)
-                npcPhysChainDir = new int[maxChains];
+            npcPhysChain ??= new IPhysChain[maxChains];
+            bodyPhysChainPositions ??= new Vector3[maxChains][];
+            npcPhysChainOffset ??= new Vector2[maxChains];
+            npcPhysChainDir ??= new int[maxChains];
         }
         public override void ResetEffects(Terraria.NPC npc)
         {
@@ -85,19 +83,17 @@ namespace Redemption.Globals.NPC
                         anchor = NPCChainHelper.SetSegmentAnchor(anchor, segType, dir, gravDir, scale, true);
 
                         Color rendercolor = Color.White;
-                        if (glowChain)
-                            rendercolor = npc.GetAlpha(new Color(255, 255, 255, 0));
-                        else
+
+                        if (!Main.gameMenu)
                         {
-                            if (!Main.gameMenu)
-                            {
-                                Point lightOrigin = new((int)((npc.Center.X - 16 * dir) / 16), (int)(npc.Center.Y / 16));
-                                rendercolor = npc.GetAlpha(Lighting.GetColor(lightOrigin.X, lightOrigin.Y, rendercolor));
-                            }
+                            Point lightOrigin = new((int)((npc.Center.X - 16 * dir) / 16), (int)(npc.Center.Y / 16));
+                            rendercolor = npc.GetAlpha(Lighting.GetColor(lightOrigin.X, lightOrigin.Y, rendercolor));
                         }
 
-                        NPCChainHelper.DrawSegments(spriteBatch, npc, globalNPC.Mod, segType, ref globalNPC.bodyPhysChainPositions[i], anchor,
-                            dir, gravDir, 1f, 0, rendercolor);
+                        if (npcPhysChain[i].MaxFrames > 1)
+                            NPCChainHelper.DrawSegmentsAnimated(spriteBatch, npc, globalNPC.Mod, segType, ref globalNPC.bodyPhysChainPositions[i], anchor, dir, gravDir, 1f, npcPhysChain[i].Shader, rendercolor, ref frameCounter, npcPhysChain[i].MaxFrames, npcPhysChain[i].FrameCounterMax);
+                        else
+                            NPCChainHelper.DrawSegments(spriteBatch, npc, globalNPC.Mod, segType, ref globalNPC.bodyPhysChainPositions[i], anchor, dir, gravDir, 1f, npcPhysChain[i].Shader, rendercolor);
                     }
                 }
             }
@@ -110,7 +106,7 @@ namespace Redemption.Globals.NPC
         /// <param name="physChain"></param>
         /// <param name="segments"></param>
         /// <param name="anchor"></param>
-        /// 
+        ///
         public static void ModifyChainPhysics(Terraria.NPC npc, IPhysChain physChain, ref Vector3[] segments, Vector2 anchor, Vector2 force)
         {
             bool staticDisplay = Main.gameMenu;
@@ -186,6 +182,9 @@ namespace Redemption.Globals.NPC
 
             // Input textures in reverse (tip to base)
             Texture2D texture = physChain.GetTexture(mod);
+            Texture2D glowMask = null;
+            if (physChain.HasGlowmask)
+                glowMask = physChain.GetGlowmaskTexture(mod);
             for (int i = segmentLength - 1; i >= 0; i--)
             {
                 Vector2 drawPos;
@@ -207,8 +206,93 @@ namespace Redemption.Globals.NPC
 
                 // Draw it!
                 Rectangle frame = physChain.GetSourceRect(texture, i);
+                if (shader != 0)
+                {
+                    spriteBatch.End();
+                    spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.NonPremultiplied, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+                    GameShaders.Armor.ApplySecondary(shader, Main.player[Main.myPlayer], null);
+                }
+                spriteBatch.Draw(texture, drawPos - Main.screenPosition, frame, physChain.Glow ? Color.White : chaincolor, chainPositions[i].Z, frame.Size() / 2 + origin, 1f, spriteEffect, 0);
+                if (physChain.HasGlowmask)
+                {
+                    if (physChain.GlowmaskShader != 0)
+                    {
+                        spriteBatch.End();
+                        spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.NonPremultiplied, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+                        GameShaders.Armor.ApplySecondary(physChain.GlowmaskShader, Main.player[Main.myPlayer], null);
+                    }
+                    spriteBatch.Draw(glowMask, drawPos - Main.screenPosition, frame, Color.White, chainPositions[i].Z, frame.Size() / 2 + origin, 1f, spriteEffect, 0);
+                }
+                if (shader != 0 || physChain.GlowmaskShader != 0)
+                {
+                    spriteBatch.End();
+                    spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+                }
+            }
+        }
+        private static int OnFrame;
+        public static void DrawSegmentsAnimated(SpriteBatch spriteBatch, Terraria.NPC npc, Mod mod, IPhysChain physChain, ref Vector3[] chainPositions, Vector2 anchor, int dir, float gravDir, float scale, int shader, Color chaincolor, ref int frameCounter, int frames = 0, int frameCounterMax = 5)
+        {
+            // Run physics on each segment node
+            int segmentLength = RunSegmentPhysics(npc, physChain, ref chainPositions, anchor, dir, gravDir, scale,
+                Main.gameMenu);
 
-                spriteBatch.Draw(texture, drawPos - Main.screenPosition, frame, chaincolor, chainPositions[i].Z, frame.Size() / 2 + origin, 1f, spriteEffect, 0);
+            // Input textures in reverse (tip to base)
+            Texture2D texture = physChain.GetTexture(mod);
+            Texture2D glowMask = null;
+            if (physChain.HasGlowmask)
+                glowMask = physChain.GetGlowmaskTexture(mod);
+            for (int i = segmentLength - 1; i >= 0; i--)
+            {
+                Vector2 drawPos;
+                // Base should pixel snap to match player position
+                if (i == 0)
+                { drawPos = new Vector2((int)(chainPositions[i].X), (int)chainPositions[i].Y); }
+                else
+                { drawPos = new Vector2(chainPositions[i].X - 0.5f, chainPositions[i].Y); }
+
+                Vector2 origin = physChain.OriginOffset(i);
+
+                // Flip if facing left, invert if upside down
+                SpriteEffects spriteEffect = SpriteEffects.None;
+                if (dir < 0 == gravDir > 0)
+                {
+                    spriteEffect = SpriteEffects.FlipVertically;
+                    origin.Y *= -1f;
+                }
+
+                // Draw it!
+                Rectangle frame = physChain.GetSourceRect(texture, i);
+                if (frameCounter++ >= frameCounterMax * physChain.NumberOfSegments)
+                {
+                    frameCounter = 0;
+                    OnFrame += frame.Height;
+                    if (OnFrame >= frames * frame.Height)
+                        OnFrame = 0;
+                }
+                frame.Y += OnFrame;
+                if (shader != 0)
+                {
+                    spriteBatch.End();
+                    spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.NonPremultiplied, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+                    GameShaders.Armor.ApplySecondary(shader, Main.player[Main.myPlayer], null);
+                }
+                spriteBatch.Draw(texture, drawPos - Main.screenPosition, frame, physChain.Glow ? Color.White : chaincolor, chainPositions[i].Z, frame.Size() / 2 + origin, 1f, spriteEffect, 0);
+                if (physChain.HasGlowmask)
+                {
+                    if (physChain.GlowmaskShader != 0)
+                    {
+                        spriteBatch.End();
+                        spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.NonPremultiplied, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+                        GameShaders.Armor.ApplySecondary(physChain.GlowmaskShader, Main.player[Main.myPlayer], null);
+                    }
+                    spriteBatch.Draw(glowMask, drawPos - Main.screenPosition, frame, Color.White, chainPositions[i].Z, frame.Size() / 2 + origin, 1f, spriteEffect, 0);
+                }
+                if (shader != 0 || physChain.GlowmaskShader != 0)
+                {
+                    spriteBatch.End();
+                    spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+                }
             }
         }
 

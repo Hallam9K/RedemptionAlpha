@@ -27,7 +27,7 @@ namespace Redemption.Items.Armor.PreHM.CommonGuard
             Item.height = 26;
             Item.sellPrice(silver: 30);
             Item.rare = ItemRarityID.Green;
-            Item.defense = 3;
+            Item.defense = 4;
         }
 
         public override bool IsArmorSet(Item head, Item body, Item legs)

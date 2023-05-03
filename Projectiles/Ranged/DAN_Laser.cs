@@ -72,7 +72,7 @@ namespace Redemption.Projectiles.Ranged
                     if (numtries >= 20)
                         break;
 
-                    int p = Projectile.NewProjectile(Projectile.GetSource_FromAI(), origin, new Vector2(0, -6), ProjectileID.GeyserTrap, Projectile.damage / 5, Projectile.knockBack, player.whoAmI);
+                    int p = Projectile.NewProjectile(Projectile.GetSource_FromAI(), origin, new Vector2(0, -6), ProjectileID.GeyserTrap, Projectile.damage / 6, Projectile.knockBack, player.whoAmI);
                     Main.projectile[p].hostile = false;
                     Main.projectile[p].friendly = true;
                     Main.projectile[p].netUpdate = true;

@@ -43,7 +43,7 @@ namespace Redemption.NPCs.Lab.Janitor
             switch (NPC.ai[0])
             {
                 case 0:
-                    Vector2 JanitorPos = new((RedeGen.LabPoint.X + 173) * 16, (RedeGen.LabPoint.Y + 19) * 16 + 6);
+                    Vector2 JanitorPos = new((RedeGen.LabVector.X + 173) * 16, (RedeGen.LabVector.Y + 19) * 16 + 6);
                     NPC.position = JanitorPos;
                     NPC.alpha -= 10;
                     if (NPC.alpha <= 0)

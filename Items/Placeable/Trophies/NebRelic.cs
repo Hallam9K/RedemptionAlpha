@@ -17,7 +17,7 @@ namespace Redemption.Items.Placeable.Trophies
 		{
 			Item.DefaultToPlaceableTile(ModContent.TileType<RelicTile>(), 11);
 			Item.width = 30;
-			Item.height = 38;
+			Item.height = 42;
 			Item.maxStack = 9999;
 			Item.rare = ItemRarityID.Master;
 			Item.master = true;

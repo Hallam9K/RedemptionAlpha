@@ -26,6 +26,7 @@ namespace Redemption.Tiles.Furniture.Misc
             TileObjectData.newTile.Origin = new Point16(5, 10);
             TileObjectData.newTile.AnchorBottom = new AnchorData(AnchorType.SolidTile | AnchorType.SolidWithTop | AnchorType.SolidSide, TileObjectData.newTile.Width, 0);
             TileObjectData.addTile(Type);
+            HitSound = CustomSounds.StoneHit;
             DustType = ModContent.DustType<SlateDust>();
             ModTranslation name = CreateMapEntryName();
             name.SetDefault("Anglon Portal");

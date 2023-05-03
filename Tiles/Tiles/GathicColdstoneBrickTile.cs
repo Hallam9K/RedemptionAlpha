@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using Redemption.Globals;
 using Redemption.Items.Placeable.Tiles;
 using Redemption.Tiles.Natural;
+using Redemption.WorldGeneration;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -49,6 +50,7 @@ namespace Redemption.Tiles.Tiles
             Main.tileMerge[Type][TileID.HallowedIce] = true;
             ItemDrop = ModContent.ItemType<GathicFroststoneBrick>();
             DustType = DustID.Ice;
+            HitSound = CustomSounds.StoneHit;
             MinPick = 0;
             MineResist = 1.5f;
             AddMapEntry(new Color(125, 135, 186));
@@ -59,7 +61,7 @@ namespace Redemption.Tiles.Tiles
             bool tileDown = !Framing.GetTileSafely(i, j + 1).HasTile;
             bool tileLeft = !Framing.GetTileSafely(i - 1, j).HasTile;
             bool tileRight = !Framing.GetTileSafely(i + 1, j).HasTile;
-            if (Main.rand.NextBool(1000) && j > (int)(Main.maxTilesY * .25f) && NPC.downedBoss3 && RedeWorld.alignment >= 0)
+            if (Main.rand.NextBool(1000) && j > (int)(Main.maxTilesY * .25f) && RedeGen.cryoCrystalSpawn)
             {
                 if (tileUp)
                 {

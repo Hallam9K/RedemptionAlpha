@@ -139,6 +139,12 @@ namespace Redemption.Globals
                 .AddTile(TileID.WorkBenches)
                 .Register();
 
+            Recipe.Create(ItemID.ThrowingKnife, 33)
+                .AddIngredient<GraveSteelAlloy>()
+                .AddRecipeGroup(RecipeGroupID.Wood)
+                .AddTile(TileID.Anvils)
+                .Register();
+
             Recipe.Create(ItemID.ChainKnife)
                 .AddIngredient<GraveSteelAlloy>(9)
                 .AddIngredient(ItemID.Chain, 3)
@@ -149,6 +155,12 @@ namespace Redemption.Globals
                 .AddIngredient<GraveSteelAlloy>(4)
                 .AddIngredient<ElderWood>(20)
                 .AddTile(TileID.Anvils)
+                .Register();
+
+            Recipe.Create(ItemID.Marrow)
+                .AddIngredient(ItemID.Bone, 20)
+                .AddIngredient<GraveSteelAlloy>(10)
+                .AddTile(TileID.MythrilAnvil)
                 .Register();
 
             // Living Furniture

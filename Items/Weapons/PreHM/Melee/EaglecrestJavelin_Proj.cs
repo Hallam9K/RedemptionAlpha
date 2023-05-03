@@ -43,10 +43,6 @@ namespace Redemption.Items.Weapons.PreHM.Melee
         private int thunderCooldown;
         public override void AI()
         {
-            for (int k = Projectile.oldPos.Length - 1; k > 0; k--)
-                oldrot[k] = oldrot[k - 1];
-            oldrot[0] = Projectile.rotation;
-
             Player player = Main.player[Projectile.owner];
             if (player.noItems || player.CCed || player.dead || !player.active)
                 Projectile.Kill();
@@ -104,6 +100,9 @@ namespace Redemption.Items.Weapons.PreHM.Melee
                 player.itemRotation -= MathHelper.ToRadians(-20f * player.direction);
 
             thunderCooldown--;
+            for (int k = Projectile.oldPos.Length - 1; k > 0; k--)
+                oldrot[k] = oldrot[k - 1];
+            oldrot[0] = Projectile.rotation;
         }
         public override void Kill(int timeLeft)
         {

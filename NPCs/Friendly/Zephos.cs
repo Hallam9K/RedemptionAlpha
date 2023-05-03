@@ -135,34 +135,17 @@ namespace Redemption.NPCs.Friendly
             if (NPC.altTexture == 1)
             {
                 Asset<Texture2D> hat = ModContent.Request<Texture2D>("Terraria/Images/Item_" + ItemID.PartyHat);
-                int offset;
-                switch (NPC.frame.Y / 52)
+                var offset = (NPC.frame.Y / 52) switch
                 {
-                    default:
-                        offset = 0;
-                        break;
-                    case 3:
-                        offset = 2;
-                        break;
-                    case 4:
-                        offset = 2;
-                        break;
-                    case 5:
-                        offset = 2;
-                        break;
-                    case 10:
-                        offset = 2;
-                        break;
-                    case 11:
-                        offset = 2;
-                        break;
-                    case 12:
-                        offset = 2;
-                        break;
-                    case 18:
-                        offset = 2;
-                        break;
-                }
+                    3 => 2,
+                    4 => 2,
+                    5 => 2,
+                    10 => 2,
+                    11 => 2,
+                    12 => 2,
+                    18 => 2,
+                    _ => 0,
+                };
                 var hatEffects = NPC.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
                 Vector2 origin = new(hat.Value.Width / 2f, hat.Value.Height / 2f);
                 spriteBatch.Draw(hat.Value, NPC.Center - new Vector2(4 * NPC.spriteDirection, 24 + offset) - screenPos, null, NPC.GetAlpha(drawColor), NPC.rotation, origin, NPC.scale, hatEffects, 0);
@@ -254,9 +237,6 @@ namespace Redemption.NPCs.Friendly
                     case 3:
                         button = "Shine Armor (15 silver)";
                         break;
-                    case 4:
-                        button = "Quest";
-                        break;
                 }
             }
         }
@@ -331,16 +311,12 @@ namespace Redemption.NPCs.Friendly
                                 SoundEngine.PlaySound(SoundID.MenuTick);
                             }
                             break;
-                        case 4:
-                            Main.npcChatText = "(Quests will become available in v0.8.1 - Wayfarer Update)";
-                            SoundEngine.PlaySound(SoundID.MenuTick);
-                            break;
                     }
                 }
                 else
                 {
                     ChatNumber++;
-                    if (ChatNumber > 4)
+                    if (ChatNumber > 3)
                         ChatNumber = 0;
                 }
             }
@@ -371,15 +347,17 @@ namespace Redemption.NPCs.Friendly
                 chat.Add("Ya know " + Main.npc[DryadID].GivenName + "? She's seen a Forest Nymph on this island at one point, if you can believe that. Super rare creatures those are, you'd only be able to find them near giant trees. If you do come across one, I wouldn't linger around for too long, they don't like humans getting in their personal space. I wonder if there were a way to befriend one though?");
             if (FallenID >= 0 && !Main.LocalPlayer.RedemptionAbility().Spiritwalker)
                 chat.Add(Main.npc[FallenID].GivenName + " has told me he came from another portal underground. Apparently it leads to some catacombs, but you wouldn't be able to go through it. Still, he's told of some rather intriguing things lying by the portal, I'd give it a check if I were you!");
-            if (!RedeBossDowned.downedEaglecrestGolem)
+            if (!RedeBossDowned.downedEaglecrestGolem && NPC.downedBoss2)
                 chat.Add("While I was having a stroll I came across some oddly-shaped stones - looked like a boulder with legs. I was curious of course, so I gave it a WHAM with my sword! Nothing happened... and yet I sensed a presence inside it. You, as a slayer of many things, should search around and find it, might be another challenge to face!");
+            if (!RedeWorld.alignmentGiven)
+                chat.Add("Did I drop something on my way back into the portal? Oh, those glowing fragments? Looks like it's guiding you somewhere important, I'd follow it before taking on any major foes!");
             if (!Main.LocalPlayer.RedemptionAbility().Spiritwalker)
-                chat.Add("Ever see tiny lights skitterin' from a slain skeleton? Or perhaps a lantern-carrying ghost underground? Those are lost souls, and as far as I know, only arcane or holy weapons may bring them harm. Not that I'd suggest harming those helpless things.");
-            chat.Add("When encountering skeletons and undead, holy weapons are most effective against them. On the contrary, shadow weapons aren't as effective. I hate skeletons, used to think they looked kinda funny, until me and Daerel met a skeleton Vex.");
-            chat.Add("If you hate slimes, burn them! They'll burn brighter than my passion for attractive ladies" + (Main.LocalPlayer.Male ? "" : " (wink wink)") + ". Or, you could use ice weapons to freeze them, but that isn't as fun.");
+                chat.Add("Ever see tiny lights skitterin' from a slain skeleton? Or perhaps a lantern-carrying ghost underground? Those are lost souls, and as far as I know, only " + ElementID.ArcaneS + " or " + ElementID.HolyS + " weapons may bring them harm. Not that I'd suggest harming those helpless things.");
+            chat.Add("When encountering skeletons and undead, " + ElementID.HolyS + " weapons are most effective against them. On the contrary, " + ElementID.ShadowS + " weapons aren't as effective. I hate skeletons, used to think they looked kinda funny, until me and Daerel met a skeleton Vex.");
+            chat.Add("If you hate slimes, burn them! They'll burn brighter than my passion for attractive ladies" + (Main.LocalPlayer.Male ? "" : " (wink wink)") + ". Or, you could use " + ElementID.IceS + " weapons to freeze them, but that isn't as fun.");
             chat.Add("Ever want to sneak up on an Epidotrian skeleton? Or perhaps a chicken? Well invisibility potions are real handy for the job!");
             chat.Add("Skeletons can wield some super rusty weapons, not something you'd wanna get cut by. If you do get a dirty wound, take a dip in some water and it'll disappear!");
-            chat.Add("See foes wearing armor or holding shields? You'll need to smash their Guard to deal with them! A hammer or explosives will be your best bet, just make sure your weapon isn't super weak.");
+            chat.Add("See foes wearing armor or holding shields? You'll need to smash their Guard to deal with them!\nA [i:Redemption/Hammer]hammer or [i:Redemption/Explosive]explosives will be your best bet, just make sure your weapon isn't super weak.");
             if (!RedeBossDowned.foundNewb)
                 chat.Add("I felt a weird presence beneath that portal I hopped out of, it was super uncanny! Maybe you should check it out.");
             if (RedeBossDowned.erhanDeath == 0)
@@ -416,6 +394,8 @@ namespace Redemption.NPCs.Friendly
 
             shop.item[nextSlot++].SetDefaults(ModContent.ItemType<ChaliceFragments>());
 
+            if (Main.LocalPlayer.ZoneBeach)
+                shop.item[nextSlot++].SetDefaults(ModContent.ItemType<GildedSeaEmblem>());
             if (NPC.downedGolemBoss)
                 shop.item[nextSlot++].SetDefaults(ModContent.ItemType<OphosNotes>());
 

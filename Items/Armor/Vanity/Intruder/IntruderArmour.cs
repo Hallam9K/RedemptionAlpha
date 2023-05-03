@@ -9,6 +9,7 @@ namespace Redemption.Items.Armor.Vanity.Intruder
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Intruder's Body Armor");
+            Tooltip.SetDefault("'From Intrusion, with love'");
             ArmorIDs.Body.Sets.HidesHands[EquipLoader.GetEquipSlot(Mod, Name, EquipType.Body)] = false;
             SacrificeTotal = 1;
         }

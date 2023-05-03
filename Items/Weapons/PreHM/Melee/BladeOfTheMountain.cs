@@ -14,7 +14,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Blade of the Mountain");
-            Tooltip.SetDefault("Parries physical or ice projectiles" +
+            Tooltip.SetDefault("Parries physical or ice projectiles, including your own Icefall crystals" +
                 "\nDeals more damage at the tip of the blade" +
                 "\nHitting on the very tip of the blade can freeze enemies" +
                 "\nEnemies with knockback immunity cannot be frozen\n" +
@@ -61,15 +61,6 @@ namespace Redemption.Items.Weapons.PreHM.Melee
                 DustID.IceTorch, 0, 0, 20);
             Main.dust[sparkle].velocity *= 0;
             Main.dust[sparkle].noGravity = true;
-        }
-
-        public override void AddRecipes()
-        {
-            CreateRecipe()
-                .AddIngredient(ModContent.ItemType<Zweihander>())
-                .AddIngredient(ModContent.ItemType<GathicCryoCrystal>(), 12)
-                .AddTile(TileID.Anvils)
-                .Register();
         }
         private static readonly int[] unwantedPrefixes = new int[] { PrefixID.Terrible, PrefixID.Dull, PrefixID.Shameful, PrefixID.Annoying, PrefixID.Broken, PrefixID.Damaged, PrefixID.Shoddy, PrefixID.Weak };
         public override bool AllowPrefix(int pre)

@@ -14,6 +14,7 @@ namespace Redemption.Globals.NPC
         public bool IgnoreArmour;
         public bool GuardBroken;
         public bool GuardPierce;
+        public double GuardDamage;
 
         public void GuardHit(Terraria.NPC npc, ref bool vanillaDamage, ref double damage, ref float knockback, SoundStyle sound, float dmgReduction = 0.25f, bool noNPCHitSound = false)
         {
@@ -24,7 +25,7 @@ namespace Redemption.Globals.NPC
                 return;
             }
 
-            int guardDamage = (int)(damage * dmgReduction);
+            int guardDamage = (int)(GuardDamage * dmgReduction);
             SoundEngine.PlaySound(sound, npc.position);
             CombatText.NewText(npc.getRect(), Colors.RarityPurple, guardDamage, true, true);
             GuardPoints -= guardDamage;
@@ -64,25 +65,25 @@ namespace Redemption.Globals.NPC
         {
             if (GuardPoints <= 0)
                 return;
-
+            GuardDamage = damage;
             if (item.HasElement(ElementID.Psychic))
                 IgnoreArmour = true;
             if (item.hammer > 0 || item.Redemption().TechnicallyHammer)
-                damage *= 4;
+                GuardDamage *= 4;
         }
         public override void ModifyHitByProjectile(Terraria.NPC npc, Projectile projectile, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
         {
             if (GuardPoints <= 0)
                 return;
-
+            GuardDamage = damage;
             if (projectile.HasElement(ElementID.Psychic))
                 IgnoreArmour = true;
             if (projectile.Redemption().IsHammer || projectile.type == ProjectileID.PaladinsHammerFriendly)
-                damage *= 4;
+                GuardDamage *= 4;
             if (projectile.Redemption().EnergyBased)
                 GuardPierce = true;
             if (projectile.HasElement(ElementID.Explosive))
-                damage *= 4;
+                GuardDamage *= 4;
         }
         public override void SetDefaults(Terraria.NPC npc)
         {

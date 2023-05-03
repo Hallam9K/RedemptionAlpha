@@ -53,7 +53,9 @@ namespace Redemption.Items
             RedeBossDowned.nebDeath = 0;
             RedeBossDowned.oblitDeath = 0;
             RedeBossDowned.ADDDeath = 0;
+            RedeBossDowned.downedCalavia = false;
             player.Redemption().slayerStarRating = 0;
+            player.RedemptionAbility().Spiritwalker = false;
             RedeQuest.wayfarerVars[0] = 1;
             RedeQuest.shadesoulVar = 0;
             SoullessArea.soullessBools[0] = false;
@@ -66,6 +68,7 @@ namespace Redemption.Items
             SoullessArea.soullessInts[2] = 0;
             RedeQuest.forestNymphVar = 0;
             RedeBossDowned.downedGGBossFirst = 0;
+            RedeQuest.calaviaVar = 0;
 
             if (Main.netMode == NetmodeID.Server)
                 NetMessage.SendData(MessageID.WorldData);

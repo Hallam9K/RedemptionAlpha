@@ -161,7 +161,7 @@ namespace Redemption.NPCs.Bosses.Neb
 
                     CombatText.NewText(player.getRect(), Color.Gold, "+0", true, false);
 
-                    if (!player.HasItem(ModContent.ItemType<AlignmentTeller>()))
+                    if (!RedeWorld.alignmentGiven)
                         continue;
 
                     if (!Main.dedServ)
@@ -465,7 +465,7 @@ namespace Redemption.NPCs.Bosses.Neb
 
             if (NPC.ai[0] > 4)
             {
-                if (NPC.ai[0] != 7 && NPC.ai[0] != 8 && NPC.ai[0] != 10 && NPC.ai[0] != 11)
+                if (NPC.ai[0] != 7 && NPC.ai[0] < 8)
                     NPC.dontTakeDamage = false;
                 else
                     NPC.dontTakeDamage = true;
@@ -1428,13 +1428,15 @@ namespace Redemption.NPCs.Bosses.Neb
                     else
                     {
                         if (NPC.ai[2] == 2480 && !Main.dedServ)
-                            RedeSystem.Instance.DialogueUIElement.DisplayDialogue("If you don't attack me now, I'll leave you be.", 180, 1, 0.6f, "Nebuleus:", 1, RedeColor.NebColour, null, null, NPC.Center, 0, 0, true);
+                            RedeSystem.Instance.DialogueUIElement.DisplayDialogue("If you don't wish to fight me now, I'll leave you be.", 180, 1, 0.6f, "Nebuleus:", 1, RedeColor.NebColour, null, null, NPC.Center, 0, 0, true);
                         if (NPC.ai[2] >= 2660)
                         {
-                            if (Main.LocalPlayer.HasItem(ModContent.ItemType<AlignmentTeller>()) && !Main.dedServ && !RedeBossDowned.downedSlayer)
+                            if (RedeWorld.alignmentGiven && !Main.dedServ && !RedeBossDowned.downedNebuleus)
                                 RedeSystem.Instance.ChaliceUIElement.DisplayDialogue("Don't go down the road you seek, please.", 180, 30, 0, Color.DarkGoldenrod);
 
-                            NPC.Shoot(NPC.Center, ModContent.ProjectileType<ProjDeath>(), 0, Vector2.Zero, false, SoundID.Item1);
+                            player.Redemption().yesChoice = false;
+                            player.Redemption().noChoice = false;
+
                             NPC.life = 1;
                             NPC.ai[2] = 0;
                             NPC.ai[0] = 9;
@@ -1444,30 +1446,30 @@ namespace Redemption.NPCs.Bosses.Neb
                     break;
                 case 9:
                     NPC.LookAtEntity(player);
-                    NPC.chaseable = false;
                     player.RedemptionScreen().ScreenFocusPosition = NPC.Center;
                     player.RedemptionScreen().lockScreen = true;
                     NPC.LockMoveRadius(player);
-                    NPC.ai[2]++;
                     if (!Main.dedServ)
                         Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/silence");
-                    if (!Main.dedServ)
+                    if (!Main.dedServ && !YesNoUI.Visible)
+                        RedeSystem.Instance.YesNoUIElement.DisplayYesNoButtons("Spare", "Fight", new Vector2(0, 15), new Vector2(0, 15), .75f, .75f);
+
+                    if (player.Redemption().yesChoice)
                     {
-                        if (NPC.ai[2] == 10)
-                            RedeSystem.Instance.DialogueUIElement.DisplayDialogue("5", 60, 1, 0.6f, null, 0, null, null, null, null, 0, 1);
-                        if (NPC.ai[2] == 70)
-                            RedeSystem.Instance.DialogueUIElement.DisplayDialogue("4", 60, 1, 0.6f, null, 0, null, null, null, null, 0, 1);
-                        if (NPC.ai[2] == 130)
-                            RedeSystem.Instance.DialogueUIElement.DisplayDialogue("3", 60, 1, 0.6f, null, 0, null, null, null, null, 0, 1);
-                        if (NPC.ai[2] == 190)
-                            RedeSystem.Instance.DialogueUIElement.DisplayDialogue("2", 60, 1, 0.6f, null, 0, null, null, null, null, 0, 1);
-                        if (NPC.ai[2] == 250)
-                            RedeSystem.Instance.DialogueUIElement.DisplayDialogue("1", 60, 1, 0.6f, null, 0, null, null, null, null, 0, 1);
-                    }
-                    if (NPC.ai[2] >= 310)
-                    {
+                        if (ChaliceAlignmentUI.Visible)
+                            ChaliceAlignmentUI.Visible = false;
+                        YesNoUI.Visible = false;
                         NPC.ai[2] = 0;
                         NPC.ai[0] = 11;
+                        NPC.netUpdate = true;
+                    }
+                    else if (player.Redemption().noChoice)
+                    {
+                        if (!Main.dedServ)
+                            ChaliceAlignmentUI.Visible = false;
+                        YesNoUI.Visible = false;
+                        NPC.ai[2] = 0;
+                        NPC.ai[0] = 10;
                         NPC.netUpdate = true;
                     }
                     break;
@@ -1591,14 +1593,6 @@ namespace Redemption.NPCs.Bosses.Neb
             if (NPC.ai[0] == 11)
                 return true;
 
-            if (NPC.ai[0] == 9)
-            {
-                if (Main.LocalPlayer.HasItem(ModContent.ItemType<AlignmentTeller>()) && !Main.dedServ)
-                    ChaliceAlignmentUI.Visible = false;
-                NPC.ai[2] = 0;
-                NPC.ai[0] = 10;
-                NPC.netUpdate = true;
-            }
             NPC.life = 1;
             NPC.netUpdate = true;
             return false;

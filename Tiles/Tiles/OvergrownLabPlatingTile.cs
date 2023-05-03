@@ -24,8 +24,17 @@ namespace Redemption.Tiles.Tiles
             ItemDrop = ModContent.ItemType<LabPlatingUnsafe>();
             MinPick = 500;
             MineResist = 3f;
-            HitSound = SoundID.Tink;
+            HitSound = CustomSounds.MetalHit;
             AddMapEntry(new Color(202, 210, 210));
+        }
+        public override void FloorVisuals(Player player)
+        {
+            if (player.velocity.X != 0f && Main.rand.NextBool(20))
+            {
+                Dust dust = Dust.NewDustDirect(player.Bottom, 0, 0, DustID.GrassBlades, 0f, -Main.rand.NextFloat(2f));
+                dust.noGravity = true;
+                dust.fadeIn = 1f;
+            }
         }
         public override void RandomUpdate(int i, int j)
         {

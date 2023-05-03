@@ -96,9 +96,11 @@ namespace Redemption.NPCs.Minibosses.SkullDigger
         public override void SetDefaults()
         {
             base.SetDefaults();
+            Projectile.penetrate = 3;
             Projectile.friendly = true;
             Projectile.hostile = false;
         }
+        public override bool? CanCutTiles() => false;
         public override bool PreAI()
         {
             Projectile host = Main.projectile[(int)Projectile.ai[0]];

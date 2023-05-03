@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Base;
+using Redemption.BaseExtension;
 using Redemption.Globals;
 using Terraria;
 using Terraria.GameContent;
@@ -31,6 +32,7 @@ namespace Redemption.NPCs.Bosses.ADD
             Projectile.ignoreWater = true;
             Projectile.alpha = 0;
             Projectile.timeLeft = 400;
+            Projectile.Redemption().TechnicallyMelee = true;
         }
 
         public override void AI()

@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Terraria;
 using Terraria.DataStructures;
 using Terraria.ModLoader;
 
@@ -14,10 +15,17 @@ namespace Redemption.Globals
 		/// (up -> down is back -> forward)
 		/// </summary>
 		Texture2D GetTexture(Mod mod);
+		Texture2D GetGlowmaskTexture(Mod mod);
 
-		int NumberOfSegments { get; }
+        int NumberOfSegments { get; }
+        int MaxFrames { get; }
+        int FrameCounterMax { get; }
+        bool Glow { get; }
+        bool HasGlowmask { get; }
+        int Shader { get; }
+        int GlowmaskShader { get; }
 
-		Rectangle GetSourceRect(Texture2D texture, int index);
+        Rectangle GetSourceRect(Texture2D texture, int index);
 
 		Color GetColor(PlayerDrawSet drawInfo, Color baseColour);
 
@@ -38,6 +46,6 @@ namespace Redemption.Globals
 		/// </summary>
 		int Length(int index);
 
-		Vector2 Force(Terraria.Player player, int index, int dir, float gravDir, float time, Terraria.NPC npc = null);
+		Vector2 Force(Terraria.Player player, int index, int dir, float gravDir, float time, Terraria.NPC npc = null, Projectile proj = null);
 	}
 }

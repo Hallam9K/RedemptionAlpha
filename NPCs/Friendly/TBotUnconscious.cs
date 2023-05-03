@@ -54,6 +54,8 @@ namespace Redemption.NPCs.Friendly
         }
         public override void AI()
         {
+            if (NPC.AnyNPCs(ModContent.NPCType<TBot>()))
+                NPC.active = false;
             NPC.dontTakeDamage = true;
             NPC.velocity.X = 0;
             if (Main.netMode != NetmodeID.MultiplayerClient)

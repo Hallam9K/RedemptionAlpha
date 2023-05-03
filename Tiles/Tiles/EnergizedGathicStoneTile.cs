@@ -35,6 +35,7 @@ namespace Redemption.Tiles.Tiles
             Main.tileMerge[ModContent.TileType<GathicStoneTile>()][Type] = true;
             ItemDrop = ModContent.ItemType<GathicStone>();
             DustType = ModContent.DustType<SlateDust>();
+            HitSound = CustomSounds.StoneHit;
             MinPick = 0;
             MineResist = 5f;
             AddMapEntry(new Color(206, 130, 68));

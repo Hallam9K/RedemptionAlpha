@@ -53,10 +53,6 @@ namespace Redemption.Items.Weapons.PreHM.Melee
         private float glow;
         public override void AI()
         {
-            for (int k = Projectile.oldPos.Length - 1; k > 0; k--)
-                oldrot[k] = oldrot[k - 1];
-            oldrot[0] = Projectile.rotation;
-
             Player player = Main.player[Projectile.owner];
             if (player.noItems || player.CCed || player.dead || !player.active)
                 Projectile.Kill();
@@ -250,6 +246,9 @@ namespace Redemption.Items.Weapons.PreHM.Melee
                 Projectile.alpha = 0;
 
             Projectile.Center = player.MountedCenter + vector;
+            for (int k = Projectile.oldPos.Length - 1; k > 0; k--)
+                oldrot[k] = oldrot[k - 1];
+            oldrot[0] = Projectile.rotation;
         }
         private void BlockProj()
         {

@@ -18,8 +18,7 @@ namespace Redemption.Items.Usable.Summons
             DisplayName.SetDefault("Forbidden Ritual");
             Tooltip.SetDefault("May draw unwanted attention\n" +
                 "Requires the user to have at least 140 max life"
-                + "\nNot consumable" +
-                "\n[i:" + ModContent.ItemType<BadRoute>() + "][c/ff5533: This item may have a negative impact onto the world]");
+                + "\nNot consumable");
             SacrificeTotal = 1;
             ItemID.Sets.SortingPriorityBossSpawns[Type] = 12;
         }

@@ -51,6 +51,11 @@ namespace Redemption.NPCs.Minibosses.EaglecrestGolem
         {
             Dust.NewDust(NPC.position + NPC.velocity, NPC.width, NPC.height, DustID.Stone, NPC.velocity.X * 0.5f, NPC.velocity.Y * 0.5f, 20, default, 3f);
         }
+        public override void ModifyHitByItem(Player player, Item item, ref int damage, ref float knockback, ref bool crit)
+        {
+            if (item.pick > 0)
+                damage += item.pick / 2;
+        }
         public override bool CheckDead()
         {
             NPC.SetDefaults(ModContent.NPCType<EaglecrestGolem>());

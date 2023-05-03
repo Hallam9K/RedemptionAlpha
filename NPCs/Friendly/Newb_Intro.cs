@@ -10,6 +10,7 @@ using ReLogic.Content;
 using Terraria.GameContent.UI;
 using Terraria.GameContent;
 using Redemption.UI.ChatUI;
+using System;
 
 namespace Redemption.NPCs.Friendly
 {
@@ -115,12 +116,13 @@ namespace Redemption.NPCs.Friendly
             }
             if (RedeConfigClient.Instance.CameraLockDisable)
                 return;
-            player.RedemptionScreen().ScreenFocusPosition = NPC.Center;
-            player.RedemptionScreen().lockScreen = true;
-            player.RedemptionScreen().cutscene = true;
-            NPC.LockMoveRadius(player);
-            Terraria.Graphics.Effects.Filters.Scene["MoR:FogOverlay"]?.GetShader().UseOpacity(1f).UseIntensity(1f).UseColor(Color.Black).UseImage(ModContent.Request<Texture2D>("Redemption/Effects/Vignette", AssetRequestMode.ImmediateLoad).Value);
-            player.ManageSpecialBiomeVisuals("MoR:FogOverlay", true);
+            if (NPC.DistanceSQ(player.Center) <= 600 * 600)
+            {
+                player.RedemptionScreen().ScreenFocusPosition = Vector2.Lerp(NPC.Center, player.Center, player.DistanceSQ(NPC.Center) / (1200 * 1200));
+                player.RedemptionScreen().lockScreen = true;
+                Terraria.Graphics.Effects.Filters.Scene["MoR:FogOverlay"]?.GetShader().UseOpacity(MathHelper.Lerp(1, 0, player.DistanceSQ(NPC.Center) / (600 * 600))).UseIntensity(1f).UseColor(Color.Black).UseImage(ModContent.Request<Texture2D>("Redemption/Effects/Vignette", AssetRequestMode.ImmediateLoad).Value);
+                player.ManageSpecialBiomeVisuals("MoR:FogOverlay", true);
+            }
         }
         private void Chain_OnEndTrigger(Dialogue dialogue, int ID)
         {

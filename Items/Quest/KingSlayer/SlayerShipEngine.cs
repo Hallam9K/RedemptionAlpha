@@ -12,8 +12,7 @@ namespace Redemption.Items.Quest.KingSlayer
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Ship AFTL Engine");
-            Tooltip.SetDefault("'Stands for Almost-Faster-Than-Light'" +
-            "\n[i:" + ModContent.ItemType<RedemptionRoute>() + "][c/f8f8bc: This item may redeem terrible actions]");
+            Tooltip.SetDefault("'Stands for Almost-Faster-Than-Light'");
             SacrificeTotal = 1;
         }
 

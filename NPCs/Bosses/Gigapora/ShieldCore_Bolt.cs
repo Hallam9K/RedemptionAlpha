@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ModLoader;
 using Redemption.Effects.PrimitiveTrails;
+using Redemption.Globals;
 
 namespace Redemption.NPCs.Bosses.Gigapora
 {
@@ -13,6 +14,8 @@ namespace Redemption.NPCs.Bosses.Gigapora
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Energy Bolt");
+            ElementID.ProjThunder[Type] = true;
+            ElementID.ProjFire[Type] = true;
         }
 
         public override void SetDefaults()
@@ -38,8 +41,8 @@ namespace Redemption.NPCs.Bosses.Gigapora
             flareOpacity += Main.rand.NextFloat(-.2f, .2f);
             flareOpacity = MathHelper.Clamp(flareOpacity, 0.6f, 1.1f);
         }
-        private float flareScale;
-        private float flareOpacity;
+        public float flareScale;
+        public float flareOpacity;
         public override void PostDraw(Color lightColor)
         {
             Main.spriteBatch.End();

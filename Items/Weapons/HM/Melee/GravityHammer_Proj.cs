@@ -45,7 +45,7 @@ namespace Redemption.Items.Weapons.HM.Melee
         {
             Player player = Main.player[Projectile.owner];
             player.heldProj = Projectile.whoAmI;
-            Rectangle projHitbox = new((int)(Projectile.spriteDirection == -1 ? Projectile.Center.X - 96 : Projectile.Center.X), (int)(Projectile.Center.Y - 66), 96, 94);
+            Projectile.Redemption().swordHitbox = new((int)(Projectile.spriteDirection == -1 ? Projectile.Center.X - 96 : Projectile.Center.X), (int)(Projectile.Center.Y - 66), 96, 94);
 
             SwingSpeed = SetSwingSpeed(52);
 
@@ -100,8 +100,8 @@ namespace Redemption.Items.Weapons.HM.Melee
                         player.position.Y += dist / 10;
                         if (player.position.Y >= tilePosY * 16 - 32)
                             player.position.Y = tilePosY * 16 - 32;
-                        Point tileBelow = new Vector2(projHitbox.Center.X + (30 * Projectile.spriteDirection), projHitbox.Bottom).ToTileCoordinates();
-                        Point tileBelow2 = new Vector2(projHitbox.Center.X + (16 * Projectile.spriteDirection), projHitbox.Bottom).ToTileCoordinates();
+                        Point tileBelow = new Vector2(Projectile.Redemption().swordHitbox.Center.X + (30 * Projectile.spriteDirection), Projectile.Redemption().swordHitbox.Bottom).ToTileCoordinates();
+                        Point tileBelow2 = new Vector2(Projectile.Redemption().swordHitbox.Center.X + (16 * Projectile.spriteDirection), Projectile.Redemption().swordHitbox.Bottom).ToTileCoordinates();
                         Tile tile = Framing.GetTileSafely(tileBelow.X, tileBelow.Y);
                         Tile tile2 = Framing.GetTileSafely(tileBelow2.X, tileBelow2.Y);
                         if ((tile is { HasUnactuatedTile: true } && Main.tileSolid[tile.TileType]) || (tile2 is { HasUnactuatedTile: true } && Main.tileSolid[tile2.TileType]))
@@ -158,7 +158,7 @@ namespace Redemption.Items.Weapons.HM.Melee
         }
         public override void ModifyDamageHitbox(ref Rectangle hitbox)
         {
-            hitbox = new((int)(Projectile.spriteDirection == -1 ? Projectile.Center.X - 96 : Projectile.Center.X), (int)(Projectile.Center.Y - 66), 96, 94);
+            hitbox = Projectile.Redemption().swordHitbox;
         }
         public override bool PreDraw(ref Color lightColor)
         {

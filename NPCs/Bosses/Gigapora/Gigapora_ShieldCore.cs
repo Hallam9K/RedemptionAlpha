@@ -84,7 +84,7 @@ namespace Redemption.NPCs.Bosses.Gigapora
         }
         public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
         {
-            NPC.lifeMax = (int)(NPC.lifeMax * 0.75f * bossLifeScale);
+            NPC.lifeMax = (int)(NPC.lifeMax * 0.6f * bossLifeScale);
             NPC.damage = (int)(NPC.damage * 0.6f);
         }
         public override bool CheckDead()
@@ -120,6 +120,15 @@ namespace Redemption.NPCs.Bosses.Gigapora
                     SoundEngine.PlaySound(CustomSounds.MissileExplosion, seg.position);
                     RedeDraw.SpawnExplosion(seg.Center, Color.OrangeRed, DustID.RedTorch);
 
+                    int drill = NPC.FindFirstNPC(ModContent.NPCType<Gigapora>());
+                    if (drill != -1 && Main.npc[drill].active)
+                    {
+                        Main.npc[drill].life -= Main.npc[drill].lifeMax / 6;
+                        if (Main.npc[drill].life <= 0)
+                            Main.npc[drill].life = 1;
+                        Main.npc[drill].netUpdate = true;
+                    }
+
                     seg.ai[0] = 2;
                     Main.npc[seg.whoAmI - 1].ai[0] = 2;
                     Main.npc[seg.whoAmI + 1].ai[0] = 2;
@@ -127,7 +136,6 @@ namespace Redemption.NPCs.Bosses.Gigapora
                         Main.npc[seg.whoAmI + 2].ai[0] = 2;
                     if (Main.npc[seg.whoAmI].ai[2] == 1)
                     {
-                        int drill = NPC.FindFirstNPC(ModContent.NPCType<Gigapora>());
                         if (drill != -1 && Main.npc[drill].active)
                             Main.npc[drill].ai[3] = 1;
                     }

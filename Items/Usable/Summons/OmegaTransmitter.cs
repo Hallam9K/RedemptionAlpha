@@ -44,7 +44,7 @@ namespace Redemption.Items.Usable.Summons
             Item.UseSound = SoundID.Item44;
             Item.consumable = false;
             if (!Main.dedServ)
-                Item.RedemptionGlow().glowTexture = ModContent.Request<Texture2D>(Item.ModItem.Texture + "_Glow").Value;
+                Item.RedemptionGlow().glowTexture = ModContent.Request<Texture2D>(Texture + "_Glow").Value;
         }
         public override bool AltFunctionUse(Player player) => true;
         public override bool CanUseItem(Player player)

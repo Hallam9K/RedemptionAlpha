@@ -116,7 +116,7 @@ namespace Redemption.NPCs.Bosses.Gigapora
             NPC.height = 140;
             NPC.damage = 100;
             NPC.defense = 20;
-            NPC.lifeMax = 60000;
+            NPC.lifeMax = 300000;
             NPC.HitSound = SoundID.NPCHit4;
             NPC.DeathSound = SoundID.NPCDeath14;
             NPC.npcSlots = 10f;
@@ -181,14 +181,14 @@ namespace Redemption.NPCs.Bosses.Gigapora
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
             npcLoot.Add(ItemDropRule.BossBag(ModContent.ItemType<OmegaGigaporaBag>()));
-            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<OmegaTrophy>(), 10));
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<OmegaGigaporaTrophy>(), 10));
 
             npcLoot.Add(ItemDropRule.MasterModeCommonDrop(ModContent.ItemType<GigaporaRelic>()));
             npcLoot.Add(ItemDropRule.MasterModeDropOnAllPlayers(ModContent.ItemType<PowerDrill>(), 4));
 
             LeadingConditionRule notExpertRule = new(new Conditions.NotExpert());
 
-            notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<DrillHeadHead>(), 7));
+            notExpertRule.OnSuccess(ItemDropRule.NotScalingWithLuck(ModContent.ItemType<DrillHeadHead>(), 7));
             notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<OmegaPowerCell>(), 1, 2, 4));
             notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<CorruptedXenomite>(), 1, 8, 16));
             npcLoot.Add(notExpertRule);
@@ -1051,7 +1051,6 @@ namespace Redemption.NPCs.Bosses.Gigapora
                 damage = 0;
                 return false;
             }
-            damage *= 1.8f;
             return true;
         }
         private void DespawnHandler()

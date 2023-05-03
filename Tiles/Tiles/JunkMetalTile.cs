@@ -18,7 +18,7 @@ namespace Redemption.Tiles.Tiles
 			ItemDrop = ModContent.ItemType<Cyberscrap>();
             MinPick = 200;
             MineResist = 4f;
-            HitSound = SoundID.Tink;
+            HitSound = CustomSounds.MetalHit;
             ModTranslation name = CreateMapEntryName();
             name.SetDefault("Cyberscrap");
             AddMapEntry(new Color(189, 191, 200), name);

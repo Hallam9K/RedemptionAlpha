@@ -21,7 +21,7 @@ namespace Redemption.Tiles.Ores
 			ItemDrop = ModContent.ItemType<DragonLeadOre>();
             MinPick = 100;
             MineResist = 1.4f;
-            HitSound = SoundID.Tink;
+            HitSound = CustomSounds.DragonLeadHit;
             ModTranslation name = CreateMapEntryName();
             name.SetDefault("Dragon-Lead Ore");
             AddMapEntry(new Color(177, 142, 142), name);
