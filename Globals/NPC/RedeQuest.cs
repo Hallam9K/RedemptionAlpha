@@ -70,7 +70,7 @@ namespace Redemption.Globals
             if (calaviaVar == 0 && Main.dayTime && Terraria.NPC.downedBoss3)
             {
                 Point originPoint = RedeGen.gathicPortalVector.ToPoint();
-                GenUtils.ObjectPlace(originPoint.X + 36, originPoint.Y + 17, TileID.Torches);
+                GenUtils.ObjectPlace(originPoint.X + 40, originPoint.Y + 17, TileID.Torches);
 
                 calaviaVar = 1;
                 if (Main.netMode == NetmodeID.Server)
