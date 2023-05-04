@@ -695,6 +695,7 @@ namespace Redemption.NPCs.Minibosses.Calavia
                         {
                             if (RedeQuest.calaviaVar < 3)
                                 RedeQuest.calaviaVar = 3;
+                            RedeBossDowned.downedCalavia = true;
                             if (Main.netMode != NetmodeID.SinglePlayer)
                                 NetMessage.SendData(MessageID.WorldData);
 
@@ -875,6 +876,7 @@ namespace Redemption.NPCs.Minibosses.Calavia
                             {
                                 if (RedeQuest.calaviaVar < 3)
                                     RedeQuest.calaviaVar = 3;
+                                RedeBossDowned.downedCalavia = true;
                                 if (Main.netMode != NetmodeID.SinglePlayer)
                                     NetMessage.SendData(MessageID.WorldData);
 
