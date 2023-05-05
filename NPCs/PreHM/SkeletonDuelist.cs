@@ -21,6 +21,7 @@ using Terraria.ModLoader;
 using Terraria.Utilities;
 using Redemption.BaseExtension;
 using Terraria.DataStructures;
+using System.Threading;
 
 namespace Redemption.NPCs.PreHM
 {
@@ -124,6 +125,7 @@ namespace Redemption.NPCs.PreHM
 
         private int AniFrameY;
         private int AniFrameX;
+        private bool parried;
         public override void OnSpawn(IEntitySource source)
         {
             ChoosePersonality();
@@ -277,25 +279,37 @@ namespace Redemption.NPCs.PreHM
 
                     if ((AniFrameY == 3 && globalNPC.attacker.Hitbox.Intersects(SlashHitbox1)) || (AniFrameY == 6 && globalNPC.attacker.Hitbox.Intersects(SlashHitbox2)))
                     {
+                        if (NPC.frameCounter == 0)
+                            parried = false;
                         int damage = NPC.RedemptionNPCBuff().disarmed ? NPC.damage / 3 : NPC.damage;
                         if (globalNPC.attacker is NPC attackerNPC && attackerNPC.immune[NPC.whoAmI] <= 0)
                         {
-                            attackerNPC.immune[NPC.whoAmI] = 10;
-                            int hitDirection = attackerNPC.RightOfDir(NPC);
-                            BaseAI.DamageNPC(attackerNPC, damage, 6, hitDirection, NPC);
-                            if (Main.rand.NextBool(3))
-                                attackerNPC.AddBuff(ModContent.BuffType<DirtyWoundDebuff>(), Main.rand.Next(400, 1200));
+                            RedeProjectile.SwordClashHostile(AniFrameY == 3 ? SlashHitbox1 : SlashHitbox2, NPC, ref parried);
+                            if (!parried)
+                            {
+                                attackerNPC.immune[NPC.whoAmI] = 10;
+                                int hitDirection = attackerNPC.RightOfDir(NPC);
+                                BaseAI.DamageNPC(attackerNPC, damage, 6, hitDirection, NPC);
+                            }
                         }
                         else if (globalNPC.attacker is Player attackerPlayer2)
                         {
-                            int hitDirection = attackerPlayer2.RightOfDir(NPC);
-                            BaseAI.DamagePlayer(attackerPlayer2, damage, 6, hitDirection, NPC);
-                            if (Main.rand.NextBool(3) && globalNPC.attacker is Player)
-                                attackerPlayer2.AddBuff(ModContent.BuffType<DirtyWoundDebuff>(), Main.rand.Next(400, 1200));
+                            RedeProjectile.SwordClashHostile(AniFrameY == 3 ? SlashHitbox1 : SlashHitbox2, NPC, ref parried);
+                            if (!parried)
+                            {
+                                int hitDirection = attackerPlayer2.RightOfDir(NPC);
+                                BaseAI.DamagePlayer(attackerPlayer2, damage, 6, hitDirection, NPC);
+                            }
                         }
                     }
                     break;
             }
+            bool parryActive = false;
+            if (AniFrameY is 2 or 3 or 6)
+                parryActive = true;
+
+            NPC.Redemption().CreateParryWindow(AniFrameY == 3 ? SlashHitbox1 : SlashHitbox2, ref parryActive);
+
             if (Personality != PersonalityState.Greedy)
                 return;
 
@@ -583,6 +597,16 @@ namespace Redemption.NPCs.PreHM
         }
         public override bool? CanHitNPC(NPC target) => false;
         public override bool CanHitPlayer(Player target, ref int cooldownSlot) => false;
+        public override void OnHitPlayer(Player target, int damage, bool crit)
+        {
+            if (Main.rand.NextBool(3))
+                target.AddBuff(ModContent.BuffType<DirtyWoundDebuff>(), Main.rand.Next(400, 1200));
+        }
+        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        {
+            if (Main.rand.NextBool(3))
+                target.AddBuff(ModContent.BuffType<DirtyWoundDebuff>(), Main.rand.Next(400, 1200));
+        }
         public override void OnKill()
         {
             if (HasEyes)

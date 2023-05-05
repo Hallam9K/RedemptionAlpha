@@ -223,7 +223,8 @@ namespace Redemption.NPCs.Bosses.Cleaver
                 NPC.dontTakeDamage = true;
 
             NPC host = Main.npc[(int)NPC.ai[3]];
-            DespawnHandler();
+            if (NPC.DespawnHandler())
+                return;
             Player player = Main.player[NPC.target];
             if (player.active && !player.dead && !Main.dayTime)
                 NPC.DiscourageDespawn(60);
@@ -886,19 +887,6 @@ namespace Redemption.NPCs.Bosses.Cleaver
         public override void BossHeadRotation(ref float rotation)
         {
             rotation = NPC.rotation;
-        }
-
-        private void DespawnHandler()
-        {
-            Player player = Main.player[NPC.target];
-            if (!player.active || player.dead)
-            {
-                NPC.velocity *= 0.96f;
-                NPC.velocity.Y -= 1;
-                if (NPC.timeLeft > 10)
-                    NPC.timeLeft = 10;
-                return;
-            }
         }
     }
     public class CleaverHitbox : ModProjectile

@@ -270,7 +270,8 @@ namespace Redemption.NPCs.Bosses.Gigapora
                 target.Kill();
             }
 
-            DespawnHandler();
+            if (NPC.DespawnHandler(0, 5))
+                return;
 
             if (!spawned)
             {
@@ -1052,18 +1053,6 @@ namespace Redemption.NPCs.Bosses.Gigapora
                 return false;
             }
             return true;
-        }
-        private void DespawnHandler()
-        {
-            Player player = Main.player[NPC.target];
-            if (!player.active || player.dead)
-            {
-                NPC.velocity *= 0.96f;
-                NPC.velocity.Y -= 5;
-                if (NPC.timeLeft > 10)
-                    NPC.timeLeft = 10;
-                return;
-            }
         }
         private void WormMovement(Player player, float maxSpeed = 18f, float turnSpeed = 0.07f, float acceleration = 0.25f)
         {

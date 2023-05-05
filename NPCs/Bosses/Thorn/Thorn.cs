@@ -222,7 +222,8 @@ namespace Redemption.NPCs.Bosses.Thorn
 
             Player player = Main.player[NPC.target];
 
-            DespawnHandler();
+            if (DespawnHandler())
+                return;
 
             if (AIState != ActionState.TeleportStart && AIState != ActionState.TeleportEnd && AIState != ActionState.Death)
                 NPC.LookAtEntity(player);
@@ -631,7 +632,7 @@ namespace Redemption.NPCs.Bosses.Thorn
             return false;
         }
 
-        private void DespawnHandler()
+        private bool DespawnHandler()
         {
             Player player = Main.player[NPC.target];
             if (!player.active || player.dead)
@@ -648,10 +649,13 @@ namespace Redemption.NPCs.Bosses.Thorn
                         NPC.active = false;
                     if (NPC.timeLeft > 10)
                         NPC.timeLeft = 10;
-                    return;
+                    NPC.dontTakeDamage = true;
+                    if (Main.netMode == NetmodeID.Server && NPC.whoAmI < Main.maxNPCs)
+                        NetMessage.SendData(MessageID.SyncNPC, number: NPC.whoAmI);
+                    return true;
                 }
             }
+            return false;
         }
-
     }
 }

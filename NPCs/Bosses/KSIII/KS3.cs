@@ -320,7 +320,8 @@ namespace Redemption.NPCs.Bosses.KSIII
             if (NPC.target < 0 || NPC.target == 255 || player.dead || !player.active)
                 NPC.TargetClosest();
 
-            DespawnHandler();
+            if (NPC.DespawnHandler())
+                return;
             chance = MathHelper.Clamp(chance, 0, 1);
             if (NPC.life < (int)(NPC.lifeMax * 0.75f) && phase < 1)
                 AIState = ActionState.PhaseChange;
@@ -2982,19 +2983,6 @@ namespace Redemption.NPCs.Bosses.KSIII
                     4 => HeadFrame = (NPC.frame.X / NPC.frame.Width) + 16, // Confused
                     _ => HeadFrame = NPC.frame.X / NPC.frame.Width // Normal
                 };
-            }
-        }
-
-        private void DespawnHandler()
-        {
-            Player player = Main.player[NPC.target];
-            if (!player.active || player.dead)
-            {
-                NPC.velocity *= 0.96f;
-                NPC.velocity.Y -= 1;
-                if (NPC.timeLeft > 10)
-                    NPC.timeLeft = 10;
-                return;
             }
         }
 

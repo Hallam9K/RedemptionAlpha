@@ -239,7 +239,8 @@ namespace Redemption.NPCs.Bosses.KSIII
             if (NPC.target < 0 || NPC.target == 255 || player.dead || !player.active)
                 NPC.TargetClosest();
 
-            DespawnHandler();
+            if (NPC.DespawnHandler())
+                return;
             chance = MathHelper.Clamp(chance, 0, 1);
 
             player.RedemptionScreen().ScreenFocusPosition = NPC.Center;
@@ -1970,20 +1971,6 @@ namespace Redemption.NPCs.Bosses.KSIII
                 #endregion
             }
         }
-
-        private void DespawnHandler()
-        {
-            Player player = Main.player[NPC.target];
-            if (!player.active || player.dead)
-            {
-                NPC.velocity *= 0.96f;
-                NPC.velocity.Y -= 1;
-                if (NPC.timeLeft > 10)
-                    NPC.timeLeft = 10;
-                return;
-            }
-        }
-
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
             var effects = NPC.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;

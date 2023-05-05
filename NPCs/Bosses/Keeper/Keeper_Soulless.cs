@@ -29,6 +29,7 @@ using Redemption.Buffs.NPCBuffs;
 using ParticleLibrary;
 using Redemption.Particles;
 using Redemption.Biomes;
+using System.Threading;
 
 namespace Redemption.NPCs.Bosses.Keeper
 {
@@ -225,6 +226,7 @@ namespace Redemption.NPCs.Bosses.Keeper
         private float speed = 4;
         private bool Reap;
         private Vector2 origin;
+        private bool parried;
 
         public int ID { get => (int)NPC.ai[3]; set => NPC.ai[3] = value; }
 
@@ -239,11 +241,12 @@ namespace Redemption.NPCs.Bosses.Keeper
 
             Rectangle SlashHitbox = new((int)(NPC.spriteDirection == -1 ? NPC.Center.X - 64 : NPC.Center.X + 26), (int)(NPC.Center.Y - 38), 38, 86);
 
-            DespawnHandler();
+            if (NPC.DespawnHandler(1))
+                return;
 
             if (AIState != ActionState.Death && AIState != ActionState.Attacks)
                 NPC.LookAtEntity(player);
-
+            bool parryActive = false;
             switch (AIState)
             {
                 case ActionState.Begin:
@@ -323,39 +326,46 @@ namespace Redemption.NPCs.Bosses.Keeper
                                 }
                                 if (NPC.alpha <= 0 && AITimer < 200)
                                 {
+                                    parried = false;
                                     AITimer = 200;
                                     NPC.frameCounter = 0;
                                     slashFrame = 0;
                                 }
                                 if (AITimer >= 200 && slashFrame >= 3 && slashFrame <= 4)
                                 {
-                                    for (int i = 0; i < Main.maxNPCs; i++)
+                                    if (slashFrame is 3)
+                                        parryActive = true;
+                                    RedeProjectile.SwordClashHostile(SlashHitbox, NPC, ref parried);
+                                    if (!parried)
                                     {
-                                        NPC target = Main.npc[i];
-                                        if (!target.active || target.whoAmI == NPC.whoAmI || (!target.friendly &&
-                                            !NPCID.Sets.TakesDamageFromHostilesWithoutBeingFriendly[target.type]))
-                                            continue;
+                                        for (int i = 0; i < Main.maxNPCs; i++)
+                                        {
+                                            NPC target = Main.npc[i];
+                                            if (!target.active || target.whoAmI == NPC.whoAmI || (!target.friendly &&
+                                                !NPCID.Sets.TakesDamageFromHostilesWithoutBeingFriendly[target.type]))
+                                                continue;
 
-                                        if (target.immune[NPC.whoAmI] > 0 || !target.Hitbox.Intersects(SlashHitbox))
-                                            continue;
+                                            if (target.immune[NPC.whoAmI] > 0 || !target.Hitbox.Intersects(SlashHitbox))
+                                                continue;
 
-                                        target.immune[NPC.whoAmI] = 30;
-                                        int hitDirection = NPC.Center.X > target.Center.X ? -1 : 1;
-                                        BaseAI.DamageNPC(target, NPC.damage, 3, hitDirection, NPC);
-                                        target.AddBuff(BuffID.Bleeding, 600);
-                                    }
-                                    for (int p = 0; p < Main.maxPlayers; p++)
-                                    {
-                                        Player target = Main.player[p];
-                                        if (!target.active || target.dead)
-                                            continue;
+                                            target.immune[NPC.whoAmI] = 30;
+                                            int hitDirection = NPC.Center.X > target.Center.X ? -1 : 1;
+                                            BaseAI.DamageNPC(target, NPC.damage, 3, hitDirection, NPC);
+                                            target.AddBuff(BuffID.Bleeding, 600);
+                                        }
+                                        for (int p = 0; p < Main.maxPlayers; p++)
+                                        {
+                                            Player target = Main.player[p];
+                                            if (!target.active || target.dead)
+                                                continue;
 
-                                        if (!target.Hitbox.Intersects(SlashHitbox))
-                                            continue;
+                                            if (!target.Hitbox.Intersects(SlashHitbox))
+                                                continue;
 
-                                        int hitDirection = NPC.Center.X > target.Center.X ? -1 : 1;
-                                        BaseAI.DamagePlayer(target, NPC.damage, 3, hitDirection, NPC);
-                                        target.AddBuff(BuffID.Bleeding, 600);
+                                            int hitDirection = NPC.Center.X > target.Center.X ? -1 : 1;
+                                            BaseAI.DamagePlayer(target, NPC.damage, 3, hitDirection, NPC);
+                                            target.AddBuff(BuffID.Bleeding, 600);
+                                        }
                                     }
                                 }
                                 if (AITimer >= 235)
@@ -595,6 +605,7 @@ namespace Redemption.NPCs.Bosses.Keeper
                     }
                     break;
             }
+            NPC.Redemption().CreateParryWindow(SlashHitbox, ref parryActive);
         }
 
         public void MoveClamp()
@@ -737,25 +748,6 @@ namespace Redemption.NPCs.Bosses.Keeper
                 return NPC.GetBestiaryEntryColor();
             }
             return null;
-        }
-
-        private void DespawnHandler()
-        {
-            Player player = Main.player[NPC.target];
-            if (!player.active || player.dead)
-            {
-                NPC.TargetClosest(false);
-                player = Main.player[NPC.target];
-                if (!player.active || player.dead)
-                {
-                    NPC.alpha += 2;
-                    if (NPC.alpha >= 255)
-                        NPC.active = false;
-                    if (NPC.timeLeft > 10)
-                        NPC.timeLeft = 10;
-                    return;
-                }
-            }
         }
     }
 }

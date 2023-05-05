@@ -11,6 +11,7 @@ using Redemption.Base;
 using Redemption.BaseExtension;
 using Redemption.Buffs.NPCBuffs;
 using Redemption.Projectiles.Magic;
+using Redemption.Globals.NPC;
 
 namespace Redemption.NPCs.Minibosses.Calavia
 {
@@ -38,14 +39,7 @@ namespace Redemption.NPCs.Minibosses.Calavia
             if (Projectile.frame is 5)
             {
                 NPC npc = Main.npc[(int)Projectile.ai[0]];
-                for (int i = 0; i < Main.maxProjectiles; i++)
-                {
-                    Projectile proj = Main.projectile[i];
-                    if (!proj.active)
-                        continue;
-
-                    RedeProjectile.SwordClashHostile(Projectile, proj, npc, ref parried);
-                }
+                RedeProjectile.SwordClashHostile(Projectile, npc, ref parried);
             }
             return !parried && Projectile.frame is 5;
         }
@@ -132,6 +126,11 @@ namespace Redemption.NPCs.Minibosses.Calavia
                     }
                 }
             }
+            bool parryActive = false;
+            if (Projectile.frame is 5)
+                parryActive = true;
+
+            npc.Redemption().CreateParryWindow(Projectile.Redemption().swordHitbox, ref parryActive);
             Projectile.spriteDirection = npc.spriteDirection;
             Projectile.Center = npc.Center;
         }

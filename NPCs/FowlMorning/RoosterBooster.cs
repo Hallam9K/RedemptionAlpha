@@ -56,7 +56,8 @@ namespace Redemption.NPCs.FowlMorning
             Player player = Main.player[NPC.target];
             NPC.TargetClosest();
             NPC.LookByVelocity();
-            DespawnHandler();
+            if (NPC.DespawnHandler(3))
+                return;
 
             if (Main.rand.NextBool(3000))
                 SoundEngine.PlaySound(CustomSounds.ChickenCluck with { Pitch = -.1f }, NPC.position);
@@ -110,24 +111,6 @@ namespace Redemption.NPCs.FowlMorning
             }
             if (NPC.ai[0] > 0)
                 NPC.ai[0]--;
-        }
-        private void DespawnHandler()
-        {
-            Player player = Main.player[NPC.target];
-            if (!player.active || player.dead || !FowlMorningWorld.FowlMorningActive)
-            {
-                NPC.TargetClosest(false);
-                player = Main.player[NPC.target];
-                if (!player.active || player.dead || !FowlMorningWorld.FowlMorningActive)
-                {
-                    NPC.alpha += 2;
-                    if (NPC.alpha >= 255)
-                        NPC.active = false;
-                    if (NPC.timeLeft > 10)
-                        NPC.timeLeft = 10;
-                    return;
-                }
-            }
         }
         public override bool? CanFallThroughPlatforms() => NPC.Redemption().fallDownPlatform;
         public override void FindFrame(int frameHeight)

@@ -128,7 +128,8 @@ namespace Redemption.NPCs.Lab.Volt
         public override void AI()
         {
             Player player = Main.player[NPC.target];
-            DespawnHandler();
+            if (NPC.DespawnHandler(1, 5))
+                return;
             if (NPC.target < 0 || NPC.target == 255 || player.dead || !player.active)
                 NPC.TargetClosest();
 
@@ -600,22 +601,6 @@ namespace Redemption.NPCs.Lab.Volt
                 spriteBatch.Draw(GunTex, gunCenter - screenPos, new Rectangle?(new Rectangle(0, 0, GunTex.Width, height)), NPC.GetAlpha(drawColor), (AIState is ActionState.SweepingBeam ? 0 : NPC.rotation) + gunRot + (NPC.spriteDirection == -1 ? (float)Math.PI : 0), new Vector2(GunTex.Width / 2f, height / 2f), NPC.scale, effects, 0f);
             return false;
         }
-        private void DespawnHandler()
-        {
-            Player player = Main.player[NPC.target];
-            if (!player.active || player.dead)
-            {
-                NPC.TargetClosest(false);
-                player = Main.player[NPC.target];
-                if (!player.active || player.dead)
-                {
-                    NPC.alpha += 5;
-                    if (NPC.alpha >= 255)
-                        NPC.active = false;
-                }
-            }
-        }
-
         public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
         {
             NPC.lifeMax = (int)(NPC.lifeMax * 0.6f * bossLifeScale);

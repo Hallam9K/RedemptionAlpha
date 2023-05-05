@@ -19,6 +19,7 @@ using Redemption.NPCs.HM;
 using Redemption.Buffs.Debuffs;
 using Redemption.Buffs.NPCBuffs;
 using Redemption.Biomes;
+using Redemption.Globals.World;
 
 namespace Redemption.Globals
 {
@@ -1384,20 +1385,53 @@ namespace Redemption.Globals
                 }
             }
         }
-        public static bool DespawnHandler(this Terraria.NPC npc)
+        public static bool DespawnHandler(this Terraria.NPC npc, int type = 0, int vel = 2)
         {
             Terraria.Player player = Main.player[npc.target];
-            if (!player.active || player.dead)
+            switch (type)
             {
-                npc.TargetClosest(false);
-                player = Main.player[npc.target];
-                if (!player.active || player.dead)
-                {
-                    npc.velocity.Y -= 1;
-                    if (npc.timeLeft > 10)
-                        npc.timeLeft = 10;
-                    return true;
-                }
+                default:
+                    if (!player.active || player.dead)
+                    {
+                        npc.TargetClosest(false);
+                        player = Main.player[npc.target];
+                        if (!player.active || player.dead)
+                        {
+                            if (type is 1)
+                            {
+                                npc.alpha += vel;
+                                if (npc.alpha >= 255)
+                                    npc.active = false;
+                            }
+                            else if (type is 2)
+                                npc.active = false;
+                            else
+                            {
+                                npc.velocity *= 0.96f;
+                                npc.velocity.Y -= vel;
+                            }
+                            if (npc.timeLeft > 10)
+                                npc.timeLeft = 10;
+                            return true;
+                        }
+                    }
+                    break;
+                case 3:
+                    if (!player.active || player.dead || !FowlMorningWorld.FowlMorningActive)
+                    {
+                        npc.TargetClosest(false);
+                        player = Main.player[npc.target];
+                        if (!player.active || player.dead || !FowlMorningWorld.FowlMorningActive)
+                        {
+                            npc.alpha += 2;
+                            if (npc.alpha >= 255)
+                                npc.active = false;
+                            if (npc.timeLeft > 10)
+                                npc.timeLeft = 10;
+                            return true;
+                        }
+                    }
+                    break;
             }
             return false;
         }

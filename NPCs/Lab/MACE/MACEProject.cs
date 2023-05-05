@@ -163,7 +163,8 @@ namespace Redemption.NPCs.Lab.MACE
         public override void AI()
         {
             Player player = Main.player[NPC.target];
-            DespawnHandler();
+            if (NPC.DespawnHandler(1, 5))
+                return;
 
             if (!player.active || player.dead)
                 return;
@@ -747,21 +748,6 @@ namespace Redemption.NPCs.Lab.MACE
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
         }
         public override bool CanHitPlayer(Player target, ref int cooldownSlot) => Phase == 2 && (TimerRand2 == 3 || TimerRand2 == 6);
-        private void DespawnHandler()
-        {
-            Player player = Main.player[NPC.target];
-            if (!player.active || player.dead)
-            {
-                NPC.TargetClosest(false);
-                player = Main.player[NPC.target];
-                if (!player.active || player.dead)
-                {
-                    NPC.alpha += 5;
-                    if (NPC.alpha >= 255)
-                        NPC.active = false;
-                }
-            }
-        }
         public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
         {
             NPC.lifeMax = (int)(NPC.lifeMax * 0.6f * bossLifeScale);

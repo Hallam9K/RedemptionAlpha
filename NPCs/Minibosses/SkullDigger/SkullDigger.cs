@@ -201,7 +201,8 @@ namespace Redemption.NPCs.Minibosses.SkullDigger
             if (!RedeHelper.AnyProjectiles(ModContent.ProjectileType<SkullDigger_FlailBlade>()))
                 NPC.Shoot(NPC.Center, ModContent.ProjectileType<SkullDigger_FlailBlade>(), NPC.damage, Vector2.Zero, false, SoundID.Item1, NPC.whoAmI);
 
-            DespawnHandler();
+            if (NPC.DespawnHandler(1))
+                return;
 
             if (AIState != ActionState.Death && AIState != ActionState.Attacks)
                 NPC.LookAtEntity(player);
@@ -564,26 +565,6 @@ namespace Redemption.NPCs.Minibosses.SkullDigger
                 return NPC.GetBestiaryEntryColor();
             return null;
         }
-
-        private void DespawnHandler()
-        {
-            Player player = Main.player[NPC.target];
-            if (!player.active || player.dead)
-            {
-                NPC.TargetClosest(false);
-                player = Main.player[NPC.target];
-                if (!player.active || player.dead)
-                {
-                    NPC.alpha += 2;
-                    if (NPC.alpha >= 255)
-                        NPC.active = false;
-                    if (NPC.timeLeft > 10)
-                        NPC.timeLeft = 10;
-                    return;
-                }
-            }
-        }
-
         public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
         {
             NPC.lifeMax = (int)(NPC.lifeMax * 0.6f * bossLifeScale);

@@ -49,6 +49,7 @@ namespace Redemption.Items.Weapons.PostML.Melee
         private float speed;
         private float SwingSpeed;
         private Vector2 mouseOrig;
+        private bool parried;
         public override void AI()
         {
             Player player = Main.player[Projectile.owner];
@@ -63,7 +64,7 @@ namespace Redemption.Items.Weapons.PostML.Melee
 
             Projectile.spriteDirection = player.direction;
             Projectile.rotation = (Projectile.Center - player.Center).ToRotation() + MathHelper.PiOver2;
-
+            bool parryActive = false;
             if (Main.myPlayer == Projectile.owner)
             {
                 switch (Projectile.ai[0])
@@ -77,6 +78,11 @@ namespace Redemption.Items.Weapons.PostML.Melee
                             SoundEngine.PlaySound(CustomSounds.ElectricSlash, player.position);
                             startVector = RedeHelper.PolarVector(1, Projectile.velocity.ToRotation() - (MathHelper.PiOver2 * Projectile.spriteDirection));
                             speed = MathHelper.ToRadians(Main.rand.Next(2, 4));
+                        }
+                        if (Timer >= 5 && Timer <= 10)
+                        {
+                            parryActive = true;
+                            RedeProjectile.SwordClashFriendly(Projectile, player, ref parried);
                         }
                         if (Timer == (int)(4 * SwingSpeed))
                         {
@@ -120,6 +126,11 @@ namespace Redemption.Items.Weapons.PostML.Melee
                         break;
                     case 1:
                         player.SetCompositeArmFront(true, Player.CompositeArmStretchAmount.Full, (player.Center - Projectile.Center).ToRotation() + MathHelper.PiOver2);
+                        if (Timer >= 5 && Timer <= 10)
+                        {
+                            parryActive = true;
+                            RedeProjectile.SwordClashFriendly(Projectile, player, ref parried);
+                        }
                         if (Timer == (int)(4 * SwingSpeed))
                         {
                             Projectile.NewProjectile(Projectile.GetSource_FromAI(), player.Center,
@@ -162,6 +173,11 @@ namespace Redemption.Items.Weapons.PostML.Melee
                         break;
                     case 2:
                         player.SetCompositeArmFront(true, Player.CompositeArmStretchAmount.Full, (player.Center - Projectile.Center).ToRotation() + MathHelper.PiOver2);
+                        if (Timer >= 1 && Timer <= 3)
+                        {
+                            parryActive = true;
+                            RedeProjectile.SwordClashFriendly(Projectile, player, ref parried);
+                        }
                         if (Timer == (int)(3 * SwingSpeed))
                         {
                             Projectile.NewProjectile(Projectile.GetSource_FromAI(), player.Center,
@@ -197,6 +213,7 @@ namespace Redemption.Items.Weapons.PostML.Melee
                         break;
                 }
             }
+            player.Redemption().CreateParryWindow(Projectile.Hitbox, ref parryActive);
             if (Timer > 1)
                 Projectile.alpha = 0;
             for (int k = Projectile.oldPos.Length - 1; k > 0; k--)

@@ -270,7 +270,8 @@ namespace Redemption.NPCs.Bosses.ADD
 
             Target();
 
-            DespawnHandler();
+            if (NPC.DespawnHandler(0, 20))
+                return;
 
             Player player = Main.player[NPC.target];
             if (player.active && !player.dead)
@@ -1252,21 +1253,6 @@ namespace Redemption.NPCs.Bosses.ADD
         private void Target()
         {
             player = Main.player[NPC.target];
-        }
-        private void DespawnHandler()
-        {
-            if (!player.active || player.dead)
-            {
-                NPC.TargetClosest(false);
-                player = Main.player[NPC.target];
-                if (!player.active || player.dead)
-                {
-                    NPC.velocity = new Vector2(0f, -20f);
-                    if (NPC.timeLeft > 10)
-                        NPC.timeLeft = 10;
-                    return;
-                }
-            }
         }
         private void Rain()
         {

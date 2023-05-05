@@ -152,7 +152,8 @@ namespace Redemption.NPCs.Lab.Janitor
         public override void AI()
         {
             Player player = Main.player[NPC.target];
-            DespawnHandler();
+            if (NPC.DespawnHandler(1, 5))
+                return;
             NPC.LookAtEntity(player);
 
             if (!player.active || player.dead)
@@ -430,21 +431,6 @@ namespace Redemption.NPCs.Lab.Janitor
             else
                 spriteBatch.Draw(texture, NPC.Center - screenPos, NPC.frame, NPC.GetAlpha(drawColor), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0f);
             return false;
-        }
-        private void DespawnHandler()
-        {
-            Player player = Main.player[NPC.target];
-            if (!player.active || player.dead)
-            {
-                NPC.TargetClosest(false);
-                player = Main.player[NPC.target];
-                if (!player.active || player.dead)
-                {
-                    NPC.alpha += 5;
-                    if (NPC.alpha >= 255)
-                        NPC.active = false;
-                }
-            }
         }
         public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
         {

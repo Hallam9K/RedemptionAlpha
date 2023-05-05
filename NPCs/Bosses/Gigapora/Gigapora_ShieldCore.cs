@@ -15,6 +15,7 @@ using Redemption.Base;
 using System;
 using Terraria.Audio;
 using Redemption.Dusts;
+using IL.Terraria.IO;
 
 namespace Redemption.NPCs.Bosses.Gigapora
 {
@@ -175,7 +176,8 @@ namespace Redemption.NPCs.Bosses.Gigapora
             NPC seg = Main.npc[(int)NPC.ai[0]];
             if (!seg.active || seg.type != ModContent.NPCType<Gigapora_BodySegment>())
                 NPC.active = false;
-            DespawnHandler();
+            if (DespawnHandler())
+                return;
 
             bool another = NPC.CountNPCS(ModContent.NPCType<Gigapora_ShieldCore>()) > 1;
 
@@ -360,7 +362,7 @@ namespace Redemption.NPCs.Bosses.Gigapora
             return false;
         }
 
-        private void DespawnHandler()
+        private bool DespawnHandler()
         {
             NPC seg = Main.npc[(int)NPC.ai[0]];
             Player player = Main.player[NPC.target];
@@ -373,9 +375,10 @@ namespace Redemption.NPCs.Bosses.Gigapora
                     NPC.velocity.Y = -10;
                     if (NPC.timeLeft > 10)
                         NPC.timeLeft = 10;
-                    return;
+                    return true;
                 }
             }
+            return false;
         }
     }
 }

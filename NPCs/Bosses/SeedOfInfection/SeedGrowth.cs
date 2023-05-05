@@ -90,7 +90,8 @@ namespace Redemption.NPCs.Bosses.SeedOfInfection
 
         public override void AI()
         {
-            DespawnHandler();
+            if (NPC.DespawnHandler(0, 10))
+                return;
 
             NPC.Move(Vector2.Zero, 8, 60, true);
 
@@ -119,23 +120,6 @@ namespace Redemption.NPCs.Bosses.SeedOfInfection
 
                 new FlavorTextBestiaryInfoElement("Absolute BEBE")
             });
-        }
-
-        private void DespawnHandler()
-        {
-            Player player = Main.player[NPC.target];
-            if (!player.active || player.dead)
-            {
-                NPC.TargetClosest(false);
-                player = Main.player[NPC.target];
-                if (!player.active || player.dead)
-                {
-                    NPC.velocity.Y = -10;
-                    if (NPC.timeLeft > 10)
-                        NPC.timeLeft = 10;
-                    return;
-                }
-            }
         }
     }
 }

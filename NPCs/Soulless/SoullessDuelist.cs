@@ -24,6 +24,7 @@ using Redemption.Items.Usable;
 using Terraria.UI;
 using SubworldLibrary;
 using Redemption.WorldGeneration.Soulless;
+using System.Threading;
 
 namespace Redemption.NPCs.Soulless
 {
@@ -104,6 +105,7 @@ namespace Redemption.NPCs.Soulless
         private int runCooldown;
         private int dodgeCooldown;
         private bool powerUp;
+        private bool parried;
         public override void OnSpawn(IEntitySource source)
         {
             ChoosePersonality();
@@ -245,21 +247,37 @@ namespace Redemption.NPCs.Soulless
                     }
                     if ((AniFrameY == 6 && globalNPC.attacker.Hitbox.Intersects(SlashHitbox1)) || (AniFrameY == 10 && globalNPC.attacker.Hitbox.Intersects(SlashHitbox2)))
                     {
+                        if (NPC.frameCounter == 0)
+                            parried = false;
                         int damage = NPC.RedemptionNPCBuff().disarmed ? NPC.damage / 3 : NPC.damage;
                         if (globalNPC.attacker is NPC attackerNPC && attackerNPC.immune[NPC.whoAmI] <= 0)
                         {
-                            attackerNPC.immune[NPC.whoAmI] = 10;
-                            int hitDirection = attackerNPC.RightOfDir(NPC);
-                            BaseAI.DamageNPC(attackerNPC, damage, 6, hitDirection, NPC);
+                            RedeProjectile.SwordClashHostile(AniFrameY == 3 ? SlashHitbox1 : SlashHitbox2, NPC, ref parried);
+                            if (!parried)
+                            {
+                                attackerNPC.immune[NPC.whoAmI] = 10;
+                                int hitDirection = attackerNPC.RightOfDir(NPC);
+                                BaseAI.DamageNPC(attackerNPC, damage, 6, hitDirection, NPC);
+                            }
                         }
                         else if (globalNPC.attacker is Player attackerPlayer)
                         {
-                            int hitDirection = attackerPlayer.RightOfDir(NPC);
-                            BaseAI.DamagePlayer(attackerPlayer, (int)(damage * 1.2f), 6, hitDirection, NPC);
+                            RedeProjectile.SwordClashHostile(AniFrameY == 3 ? SlashHitbox1 : SlashHitbox2, NPC, ref parried);
+                            if (!parried)
+                            {
+                                int hitDirection = attackerPlayer.RightOfDir(NPC);
+                                BaseAI.DamagePlayer(attackerPlayer, (int)(damage * 1.2f), 6, hitDirection, NPC);
+                            }
                         }
                     }
                     break;
             }
+            bool parryActive = false;
+            if (AniFrameY is 6 or 10)
+                parryActive = true;
+
+            NPC.Redemption().CreateParryWindow(AniFrameY == 6 ? SlashHitbox1 : SlashHitbox2, ref parryActive);
+
             if (HasEyes && Main.rand.NextBool(18))
             {
                 int dust = Dust.NewDust(NPC.position + NPC.velocity, NPC.width, NPC.height, DustID.DungeonSpirit, Scale: 2);

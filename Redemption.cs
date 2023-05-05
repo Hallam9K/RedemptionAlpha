@@ -42,6 +42,7 @@ using Terraria.UI.Chat;
 using static Redemption.Globals.RedeNet;
 using Redemption.WorldGeneration.Misc;
 using Redemption.Items.Usable.Summons;
+using System.Text;
 
 namespace Redemption
 {

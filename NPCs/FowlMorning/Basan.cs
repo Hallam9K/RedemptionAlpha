@@ -173,7 +173,8 @@ namespace Redemption.NPCs.FowlMorning
             if (NPC.target < 0 || NPC.target == 255 || player.dead || !player.active)
                 NPC.TargetClosest();
 
-            DespawnHandler();
+            if (NPC.DespawnHandler(3))
+                return;
 
             if (Main.rand.NextBool(3))
             {
@@ -535,24 +536,6 @@ namespace Redemption.NPCs.FowlMorning
                 spriteBatch.Draw(fireBreath.Value, firePos - screenPos, new Rectangle?(rect), NPC.GetAlpha(Color.White), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0f);
             }
             return false;
-        }
-        private void DespawnHandler()
-        {
-            Player player = Main.player[NPC.target];
-            if (!player.active || player.dead || !FowlMorningWorld.FowlMorningActive)
-            {
-                NPC.TargetClosest(false);
-                player = Main.player[NPC.target];
-                if (!player.active || player.dead || !FowlMorningWorld.FowlMorningActive)
-                {
-                    NPC.alpha += 2;
-                    if (NPC.alpha >= 255)
-                        NPC.active = false;
-                    if (NPC.timeLeft > 10)
-                        NPC.timeLeft = 10;
-                    return;
-                }
-            }
         }
         public override bool PreKill()
         {

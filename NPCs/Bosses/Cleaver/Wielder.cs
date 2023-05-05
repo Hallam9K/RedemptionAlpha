@@ -197,7 +197,8 @@ namespace Redemption.NPCs.Bosses.Cleaver
 
         public override void AI()
         {
-            DespawnHandler();
+            if (NPC.DespawnHandler())
+                return;
             Player player = Main.player[NPC.target];
             if (AIState >= ActionState.Idle && AIState != ActionState.Death && AIState != ActionState.Death2)
                 NPC.dontTakeDamage = false;
@@ -780,20 +781,6 @@ namespace Redemption.NPCs.Bosses.Cleaver
                 dust.velocity.X = 0;
             }
         }
-
-        private void DespawnHandler()
-        {
-            Player player = Main.player[NPC.target];
-            if (!player.active || player.dead)
-            {
-                NPC.velocity *= 0.96f;
-                NPC.velocity.Y -= 1;
-                if (NPC.timeLeft > 10)
-                    NPC.timeLeft = 10;
-                return;
-            }
-        }
-
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
             Texture2D texture = TextureAssets.Npc[NPC.type].Value;

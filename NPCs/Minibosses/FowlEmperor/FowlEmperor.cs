@@ -179,8 +179,7 @@ namespace Redemption.NPCs.Minibosses.FowlEmperor
             if (NPC.target < 0 || NPC.target == 255 || player.dead || !player.active)
                 NPC.TargetClosest();
 
-            DespawnHandler();
-            if (!player.active || player.dead)
+            if (DespawnHandler())
                 return;
 
             NPC.LookByVelocity();
@@ -748,7 +747,7 @@ namespace Redemption.NPCs.Minibosses.FowlEmperor
             return false;
         }
 
-        private void DespawnHandler()
+        private bool DespawnHandler()
         {
             Player player = Main.player[NPC.target];
             if (!player.active || player.dead)
@@ -763,9 +762,10 @@ namespace Redemption.NPCs.Minibosses.FowlEmperor
                         NPC.active = false;
                     if (NPC.timeLeft > 10)
                         NPC.timeLeft = 10;
-                    return;
+                    return true;
                 }
             }
+            return false;
         }
         public override void HitEffect(int hitDirection, double damage)
         {

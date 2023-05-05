@@ -98,6 +98,16 @@ namespace Redemption.Globals.Player
             parryStance = false;
             parried = false;
         }
+        public Rectangle parryHitbox;
+        public void CreateParryWindow(Rectangle hitbox, ref bool active)
+        {
+            if (active)
+            {
+                parryHitbox = hitbox;
+                return;
+            }
+            parryHitbox = Rectangle.Empty;
+        }
         public override bool PreHurt(bool pvp, bool quiet, ref int damage, ref int hitDirection, ref bool crit, ref bool customDamage, ref bool playSound, ref bool genGore, ref PlayerDeathReason damageSource, ref int cooldownCounter)
         {
             if ((damageSource.SourceNPCIndex >= 0 || (damageSource.SourceProjectileIndex >= 0 && Main.projectile[damageSource.SourceProjectileIndex].Redemption().TechnicallyMelee)) && contactImmuneTrue)

@@ -207,7 +207,8 @@ namespace Redemption.NPCs.Bosses.SeedOfInfection
                 NPC.TargetClosest();
 
             Player player = Main.player[NPC.target];
-            DespawnHandler();
+            if (NPC.DespawnHandler())
+                return;
 
             if (AIState != ActionState.Death)
                 NPC.LookAtEntity(player, true);
@@ -797,23 +798,6 @@ namespace Redemption.NPCs.Bosses.SeedOfInfection
                 return NPC.GetBestiaryEntryColor();
             }
             return null;
-        }
-
-        private void DespawnHandler()
-        {
-            Player player = Main.player[NPC.target];
-            if (!player.active || player.dead)
-            {
-                NPC.TargetClosest(false);
-                player = Main.player[NPC.target];
-                if (!player.active || player.dead)
-                {
-                    NPC.velocity.Y -= 2;
-                    if (NPC.timeLeft > 10)
-                        NPC.timeLeft = 10;
-                    return;
-                }
-            }
         }
         private float trailOpacity;
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)

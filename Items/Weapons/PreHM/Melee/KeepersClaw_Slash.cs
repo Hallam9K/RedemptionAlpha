@@ -86,14 +86,6 @@ namespace Redemption.Items.Weapons.PreHM.Melee
                         Projectile.frame++;
                         if (Projectile.frame is 2)
                         {
-                            for (int i = 0; i < Main.maxProjectiles; i++)
-                            {
-                                Projectile target = Main.projectile[i];
-                                if (!target.active || target.whoAmI == Projectile.whoAmI || !target.hostile)
-                                    continue;
-
-                                RedeProjectile.SwordClashFriendly(Projectile, target, player, ref parried);
-                            }
                             if (Projectile.localAI[0] == 1)
                             {
                                 player.statLife -= 15;
@@ -121,6 +113,14 @@ namespace Redemption.Items.Weapons.PreHM.Melee
                     }
                 }
             }
+            bool parryActive = false;
+            if (Projectile.frame is 2)
+            {
+                parryActive = true;
+                RedeProjectile.SwordClashFriendly(Projectile, player, ref parried);
+            }
+
+            player.Redemption().CreateParryWindow(Projectile.Redemption().swordHitbox, ref parryActive);
 
             Projectile.spriteDirection = player.direction;
 

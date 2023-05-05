@@ -299,7 +299,8 @@ namespace Redemption.NPCs.Bosses.PatientZero
         public override void AI()
         {
             Player player = Main.player[NPC.target];
-            DespawnHandler();
+            if (NPC.DespawnHandler(2))
+                return;
 
             if (!player.active || player.dead)
                 return;
@@ -893,19 +894,6 @@ namespace Redemption.NPCs.Bosses.PatientZero
         {
             NPC.lifeMax = (int)(NPC.lifeMax * 0.75f * bossLifeScale);
             NPC.damage = (int)(NPC.damage * 0.6f);
-        }
-        private void DespawnHandler()
-        {
-            Player player = Main.player[NPC.target];
-            if (!player.active || player.dead)
-            {
-                NPC.TargetClosest(false);
-                player = Main.player[NPC.target];
-                if (!player.active || player.dead)
-                {
-                    NPC.active = false;
-                }
-            }
         }
         public override bool CheckDead()
         {

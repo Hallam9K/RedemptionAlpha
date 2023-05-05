@@ -51,6 +51,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
         private float speed;
         private float SwingSpeed;
         private float glow;
+        private bool parried;
         public override void AI()
         {
             Player player = Main.player[Projectile.owner];
@@ -67,7 +68,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
                 Projectile.rotation = (Projectile.Center - player.Center).ToRotation() + MathHelper.PiOver4;
             else
                 Projectile.rotation = (Projectile.Center - player.Center).ToRotation() - MathHelper.Pi - MathHelper.PiOver4;
-
+            bool parryActive = false;
             if (Main.myPlayer == Projectile.owner)
             {
                 switch (Projectile.ai[0])
@@ -80,6 +81,11 @@ namespace Redemption.Items.Weapons.PreHM.Melee
                         }
                         if (Timer < 15)
                             BlockProj();
+                        if (Timer >= 3 && Timer <= 8)
+                        {
+                            parryActive = true;
+                            RedeProjectile.SwordClashFriendly(Projectile, player, ref parried);
+                        }
                         if (Timer < 5 * SwingSpeed)
                         {
                             Rot += speed / SwingSpeed * Projectile.spriteDirection;
@@ -135,6 +141,11 @@ namespace Redemption.Items.Weapons.PreHM.Melee
                         }
                         if (Timer < 15 * SwingSpeed)
                             BlockProj();
+                        if (Timer >= 3 && Timer <= 8)
+                        {
+                            parryActive = true;
+                            RedeProjectile.SwordClashFriendly(Projectile, player, ref parried);
+                        }
                         if (Timer < 5 * SwingSpeed)
                         {
                             Rot += speed / SwingSpeed * Projectile.spriteDirection;
@@ -189,6 +200,11 @@ namespace Redemption.Items.Weapons.PreHM.Melee
                         }
                         if (Timer < 15 * SwingSpeed)
                             BlockProj();
+                        if (Timer >= 3 && Timer <= 8)
+                        {
+                            parryActive = true;
+                            RedeProjectile.SwordClashFriendly(Projectile, player, ref parried);
+                        }
                         if (Timer < 5 * SwingSpeed)
                         {
                             Rot -= speed / SwingSpeed * Projectile.spriteDirection;
@@ -242,6 +258,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
                 Main.dust[dustIndex].velocity.X = 0;
                 Main.dust[dustIndex].noGravity = true;
             }
+            player.Redemption().CreateParryWindow(Projectile.Hitbox, ref parryActive);
             if (Timer > 1)
                 Projectile.alpha = 0;
 

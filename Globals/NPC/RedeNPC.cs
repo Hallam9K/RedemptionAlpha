@@ -92,7 +92,16 @@ namespace Redemption.Globals.NPC
         {
             invisible = false;
         }
-
+        public Rectangle parryHitbox;
+        public void CreateParryWindow(Rectangle hitbox, ref bool active)
+        {
+            if (active)
+            {
+                parryHitbox = hitbox;
+                return;
+            }
+            parryHitbox = Rectangle.Empty;
+        }
         public override bool StrikeNPC(Terraria.NPC npc, ref double damage, int defense, ref float knockback, int hitDirection, ref bool crit)
         {
             if (spiritSummon)

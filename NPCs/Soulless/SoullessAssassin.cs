@@ -259,7 +259,7 @@ namespace Redemption.NPCs.Soulless
                                 Main.dust[dust].noGravity = true;
                             }
                             SoundEngine.PlaySound(SoundID.DD2_WitherBeastAuraPulse with { Pitch = .2f }, NPC.position);
-                            NPC.Center = telePos - new Vector2(0, 30);
+                            NPC.Center = telePos - new Vector2(0, 26);
                             for (int i = 0; i < 20; i++)
                             {
                                 int dust = Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.Wraith);

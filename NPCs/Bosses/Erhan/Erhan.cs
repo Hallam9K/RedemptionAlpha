@@ -285,7 +285,8 @@ namespace Redemption.NPCs.Bosses.Erhan
 
             Player player = Main.player[NPC.target];
 
-            DespawnHandler();
+            if (NPC.DespawnHandler(1))
+                return;
 
             if (AIState is not ActionState.Fallen && AIState is not ActionState.Death && AIState is not ActionState.Bible)
             {
@@ -1485,25 +1486,6 @@ namespace Redemption.NPCs.Bosses.Erhan
         {
             if (AIState is ActionState.Fallen && TimerRand == 2 && projectile.Redemption().TechnicallyMelee)
                 damage *= 2;
-        }
-
-        private void DespawnHandler()
-        {
-            Player player = Main.player[NPC.target];
-            if (!player.active || player.dead)
-            {
-                NPC.TargetClosest(false);
-                player = Main.player[NPC.target];
-                if (!player.active || player.dead)
-                {
-                    NPC.alpha += 2;
-                    if (NPC.alpha >= 255)
-                        NPC.active = false;
-                    if (NPC.timeLeft > 10)
-                        NPC.timeLeft = 10;
-                    return;
-                }
-            }
         }
     }
 }

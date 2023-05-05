@@ -142,7 +142,8 @@ namespace Redemption.NPCs.Bosses.ADD
             if (NPC.target < 0 || NPC.target == 255 || player.dead || !player.active)
                 NPC.TargetClosest();
 
-            DespawnHandler();
+            if (NPC.DespawnHandler(1))
+                return;
 
             if (AIState != ActionState.Slash && AIState != ActionState.Laser)
                 NPC.LookAtEntity(player);
@@ -629,25 +630,6 @@ namespace Redemption.NPCs.Bosses.ADD
                 if (AIState == ActionState.Roll)
                     position = NPC.Center - screenPos;
                 RedeDraw.DrawEyeFlare(spriteBatch, ref FlareTimer, position, Color.Orange, NPC.rotation);
-            }
-        }
-
-        private void DespawnHandler()
-        {
-            Player player = Main.player[NPC.target];
-            if (!player.active || player.dead)
-            {
-                NPC.TargetClosest(false);
-                player = Main.player[NPC.target];
-                if (!player.active || player.dead)
-                {
-                    NPC.alpha += 2;
-                    if (NPC.alpha >= 255)
-                        NPC.active = false;
-                    if (NPC.timeLeft > 10)
-                        NPC.timeLeft = 10;
-                    return;
-                }
             }
         }
 
