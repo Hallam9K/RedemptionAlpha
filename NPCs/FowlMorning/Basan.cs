@@ -574,7 +574,7 @@ namespace Redemption.NPCs.FowlMorning
             npcLoot.Add(ItemDropRule.MasterModeDropOnAllPlayers(ModContent.ItemType<SpicyDrumstick>(), 4));
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<BasanTrophy>(), 10));
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<CuckooCloak>()));
-            npcLoot.Add(ItemDropRule.OneFromOptions(1, ModContent.ItemType<EggShield>(), ModContent.ItemType<GreneggLauncher>(), ModContent.ItemType<Halbirdhouse>(), ModContent.ItemType<NestWand>(), ModContent.ItemType<ChickendWand>()));
+            npcLoot.Add(ItemDropRule.OneFromOptions(1, ModContent.ItemType<EggShield>(), ModContent.ItemType<GreneggLauncher>(), ModContent.ItemType<Halbirdhouse>(), ModContent.ItemType<NestWand>(), ModContent.ItemType<ChickendWand>(), ModContent.ItemType<DawnHerald>()));
             npcLoot.Add(ItemDropRule.ByCondition(new OnFireCondition(), ModContent.ItemType<FriedChicken>(), 1, 6, 8));
         }
         public override void OnHitByItem(Player player, Item item, int damage, float knockback, bool crit)

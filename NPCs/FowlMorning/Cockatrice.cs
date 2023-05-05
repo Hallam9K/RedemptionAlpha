@@ -317,7 +317,7 @@ namespace Redemption.NPCs.FowlMorning
             npcLoot.Add(ItemDropRule.MasterModeDropOnAllPlayers(ModContent.ItemType<FowlFeather>(), 4));
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<CockatriceTrophy>(), 10));
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<EggShield>(), 5));
-            npcLoot.Add(ItemDropRule.OneFromOptions(5, ModContent.ItemType<GreneggLauncher>(), ModContent.ItemType<Halbirdhouse>(), ModContent.ItemType<NestWand>(), ModContent.ItemType<ChickendWand>()));
+            npcLoot.Add(ItemDropRule.OneFromOptions(5, ModContent.ItemType<GreneggLauncher>(), ModContent.ItemType<Halbirdhouse>(), ModContent.ItemType<NestWand>(), ModContent.ItemType<ChickendWand>(), ModContent.ItemType<DawnHerald>()));
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Grain>(), 100));
             npcLoot.Add(ItemDropRule.ByCondition(new OnFireCondition(), ModContent.ItemType<FriedChicken>(), 1, 2, 3));
         }

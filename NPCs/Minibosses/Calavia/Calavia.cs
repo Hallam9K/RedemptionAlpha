@@ -222,7 +222,7 @@ namespace Redemption.NPCs.Minibosses.Calavia
                     ChatUI.Add(d1);
                 }
             }
-            NPC.RedemptionGuard().GuardBreakCheck(NPC, DustID.Iron, CustomSounds.GuardBreak, 10, 1, 200);
+            NPC.RedemptionGuard().GuardBreakCheck(NPC, DustID.Iron, CustomSounds.GuardBreak, 10, 1, 500);
             blocked = false;
             return true;
         }
