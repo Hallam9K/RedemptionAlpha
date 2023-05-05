@@ -425,8 +425,9 @@ namespace Redemption.Globals.NPC
             }
             if (spawnInfo.Player.ZoneRockLayerHeight && Terraria.NPC.downedMoonlord)
             {
-                pool.Add(ModContent.NPCType<SoullessWanderer>(), .1f);
-                pool.Add(ModContent.NPCType<SoullessDuelist>(), .1f);
+                pool.Add(ModContent.NPCType<SoullessWanderer>(), .08f);
+                pool.Add(ModContent.NPCType<SoullessDuelist>(), .07f);
+                pool.Add(ModContent.NPCType<SoullessAssassin>(), .06f);
             }
             if (RedeWorld.SkeletonInvasion && spawnInfo.Player.ZoneOverworldHeight && !spawnInfo.Player.ZoneTowerNebula && !spawnInfo.Player.ZoneTowerSolar && !spawnInfo.Player.ZoneTowerStardust && !spawnInfo.Player.ZoneTowerVortex)
             {
@@ -532,6 +533,7 @@ namespace Redemption.Globals.NPC
                     {
                         pool.Add(ModContent.NPCType<SoullessWanderer>(), .03f);
                         pool.Add(ModContent.NPCType<SoullessDuelist>(), .03f);
+                        pool.Add(ModContent.NPCType<SoullessAssassin>(), .03f);
                         pool.Add(ModContent.NPCType<ShadesoulNPC>(), .02f);
                         pool.Add(ModContent.NPCType<Shadebug>(), .02f);
                         if (!Terraria.NPC.AnyNPCs(ModContent.NPCType<SoullessMarionette_Doll>()))

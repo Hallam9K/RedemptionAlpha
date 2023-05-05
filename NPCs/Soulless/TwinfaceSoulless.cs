@@ -67,6 +67,7 @@ namespace Redemption.NPCs.Soulless
             //Banner = NPC.type;
             //BannerItem = ModContent.ItemType<EpidotrianSkeletonBanner>();
 
+            NPC.GetGlobalNPC<NPCPhysChain>().glowTrail = true;
             Tendril1 = new RedTendrilScarfPhys();
             Tendril2 = new RedTendrilScarfPhys();
             Tendril3 = new RedTendrilScarfPhys();
@@ -304,16 +305,16 @@ namespace Redemption.NPCs.Soulless
                     if ((AniFrameY == 6 && globalNPC.attacker.Hitbox.Intersects(SlashHitbox1)) || (AniFrameY == 10 && globalNPC.attacker.Hitbox.Intersects(SlashHitbox2)))
                     {
                         int damage = NPC.RedemptionNPCBuff().disarmed ? NPC.damage / 3 : NPC.damage;
-                        if (globalNPC.attacker is NPC && (globalNPC.attacker as NPC).immune[NPC.whoAmI] <= 0)
+                        if (globalNPC.attacker is NPC attackerNPC && attackerNPC.immune[NPC.whoAmI] <= 0)
                         {
-                            (globalNPC.attacker as NPC).immune[NPC.whoAmI] = 10;
-                            int hitDirection = NPC.Center.X > globalNPC.attacker.Center.X ? -1 : 1;
-                            BaseAI.DamageNPC(globalNPC.attacker as NPC, damage, 6, hitDirection, NPC);
+                            attackerNPC.immune[NPC.whoAmI] = 10;
+                            int hitDirection = attackerNPC.RightOfDir(NPC);
+                            BaseAI.DamageNPC(attackerNPC, damage, 6, hitDirection, NPC);
                         }
-                        else if (globalNPC.attacker is Player)
+                        else if (globalNPC.attacker is Player attackerPlayer)
                         {
-                            int hitDirection = NPC.Center.X > globalNPC.attacker.Center.X ? -1 : 1;
-                            BaseAI.DamagePlayer(globalNPC.attacker as Player, (int)(damage * 1.2f), 6, hitDirection, NPC);
+                            int hitDirection = attackerPlayer.RightOfDir(NPC);
+                            BaseAI.DamagePlayer(attackerPlayer, (int)(damage * 1.2f), 6, hitDirection, NPC);
                         }
                     }
                     break;

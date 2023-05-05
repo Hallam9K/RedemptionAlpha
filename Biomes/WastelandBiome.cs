@@ -36,10 +36,10 @@ namespace Redemption.Biomes
                     SkyManager.Instance.Activate("MoR:WastelandSky");
                 Filters.Scene["MoR:FogOverlay"]?.GetShader().UseOpacity(fogSafe ? 0.25f : 0.3f).UseIntensity(fogSafe ? 0.6f : 1f)
                 .UseColor(Color.DarkOliveGreen).UseImage(ModContent.Request<Texture2D>("Redemption/Effects/Perlin", AssetRequestMode.ImmediateLoad).Value);
+                player.ManageSpecialBiomeVisuals("MoR:FogOverlay", isActive);
             }
             else
                 SkyManager.Instance.Deactivate("MoR:WastelandSky");
-            player.ManageSpecialBiomeVisuals("MoR:FogOverlay", isActive);
             player.ManageSpecialBiomeVisuals("MoR:WastelandSky", isActive, player.Center);
         }
         public override void OnInBiome(Player player)

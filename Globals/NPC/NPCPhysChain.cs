@@ -81,7 +81,7 @@ namespace Redemption.Globals.NPC
                         float scale = 1f;
                         anchor = NPCChainHelper.SetSegmentAnchor(anchor, segType, dir, gravDir, scale, true);
 
-                        Color rendercolor = Color.White;
+                        Color rendercolor = npc.GetAlpha(Color.White);
                         if (glowTrail)
                             rendercolor = npc.GetAlpha(new Color(255, 255, 255, 0));
                         else
@@ -215,7 +215,7 @@ namespace Redemption.Globals.NPC
                     spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.NonPremultiplied, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
                     GameShaders.Armor.ApplySecondary(shader, Main.player[Main.myPlayer], null);
                 }
-                spriteBatch.Draw(texture, drawPos - Main.screenPosition, frame, physChain.Glow ? Color.White : chaincolor, chainPositions[i].Z, frame.Size() / 2 + origin, 1f, spriteEffect, 0);
+                spriteBatch.Draw(texture, drawPos - Main.screenPosition, frame, physChain.Glow ? npc.GetAlpha(Color.White) : chaincolor, chainPositions[i].Z, frame.Size() / 2 + origin, 1f, spriteEffect, 0);
                 if (physChain.HasGlowmask)
                 {
                     if (physChain.GlowmaskShader != 0)
@@ -224,7 +224,7 @@ namespace Redemption.Globals.NPC
                         spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.NonPremultiplied, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
                         GameShaders.Armor.ApplySecondary(physChain.GlowmaskShader, Main.player[Main.myPlayer], null);
                     }
-                    spriteBatch.Draw(glowMask, drawPos - Main.screenPosition, frame, Color.White, chainPositions[i].Z, frame.Size() / 2 + origin, 1f, spriteEffect, 0);
+                    spriteBatch.Draw(glowMask, drawPos - Main.screenPosition, frame, npc.GetAlpha(Color.White), chainPositions[i].Z, frame.Size() / 2 + origin, 1f, spriteEffect, 0);
                 }
                 if (shader != 0 || physChain.GlowmaskShader != 0)
                 {

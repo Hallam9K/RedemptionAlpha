@@ -765,6 +765,8 @@ namespace Redemption
         }
         public override void UpdateUI(GameTime gameTime)
         {
+            if (CyberTeleporterUILayer?.CurrentState != null && CyberTeleporterUI.Visible)
+                CyberTeleporterUILayer.Update(gameTime);
             if (AMemoryUILayer?.CurrentState != null && AMemoryUIState.Visible)
                 AMemoryUILayer.Update(gameTime);
             if (NukeUILayer?.CurrentState != null && NukeDetonationUI.Visible)

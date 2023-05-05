@@ -47,7 +47,7 @@ namespace Redemption.NPCs.Soulless
             switch (Projectile.ai[1])
             {
                 case 1:
-                    SoundEngine.PlaySound(CustomSounds.MaskBreak, Projectile.Center);
+                    SoundEngine.PlaySound(CustomSounds.StalkerHandSnap, Projectile.Center);
                     for (int i = 0; i < 6; i++)
                     {
                         origPoint = Projectile.Center;
@@ -56,7 +56,6 @@ namespace Redemption.NPCs.Soulless
                         Projectile.Center = origPoint + offset;
                         seg.Add(Projectile.Center);
                         segRot.Add(Projectile.rotation);
-                        SoundEngine.PlaySound(CustomSounds.MaskBreak, Projectile.Center);
                         Projectile.localAI[0] = 0;
                     }
                     Projectile.ai[1] = 2;
@@ -92,7 +91,7 @@ namespace Redemption.NPCs.Soulless
                             Projectile.Center = seg[seg.Count - 1];
                             Projectile.rotation = segRot[segRot.Count - 1];
                         }
-                        SoundEngine.PlaySound(CustomSounds.MaskBreak, Projectile.Center);
+                        SoundEngine.PlaySound(CustomSounds.StalkerHandSnap, Projectile.Center);
                         Projectile.localAI[0] = 0;
                     }
                     break;
@@ -144,7 +143,7 @@ namespace Redemption.NPCs.Soulless
                         }
                     }
                     player.Center = Projectile.Center;
-                    SoundEngine.PlaySound(CustomSounds.MaskBreak, Projectile.Center);
+                    SoundEngine.PlaySound(CustomSounds.StalkerHandSnap, Projectile.Center);
                     Projectile.localAI[0] = 0;
                 }
                 player.velocity *= 0;
@@ -209,7 +208,7 @@ namespace Redemption.NPCs.Soulless
                         seg.Add(Projectile.Center);
                         segRot.Add(Projectile.rotation);
                     }
-                    SoundEngine.PlaySound(CustomSounds.MaskBreak, Projectile.Center);
+                    SoundEngine.PlaySound(CustomSounds.StalkerHandSnap, Projectile.Center);
                     Projectile.localAI[0] = 0;
                 }
                 if (speedUp <= 0 && Main.rand.NextBool(6) && player.DistanceSQ(Projectile.Center) > 200 * 200)

@@ -16,24 +16,27 @@ using Redemption.Dusts;
 using Redemption.NPCs.PostML;
 using Redemption.Items.Materials.PostML;
 using Redemption.Biomes;
-using Redemption.Projectiles.Hostile;
 using ParticleLibrary;
 using Redemption.Particles;
 using Terraria.DataStructures;
+using System;
 using Redemption.Items.Usable;
-using Redemption.WorldGeneration.Soulless;
+using Terraria.UI;
 using SubworldLibrary;
+using Redemption.WorldGeneration.Soulless;
 
 namespace Redemption.NPCs.Soulless
 {
-    public class SoullessWanderer : SoullessBase
+    public class SoullessAssassin : SoullessBase
     {
         public enum ActionState
         {
             Idle,
             Wander,
+            Hiding,
+            Stalk,
             Alert,
-            Throw
+            Stab
         }
         public ActionState AIState
         {
@@ -50,12 +53,12 @@ namespace Redemption.NPCs.Soulless
         }
         public override void SetDefaults()
         {
-            NPC.width = 24;
-            NPC.height = 48;
-            NPC.damage = 80;
+            NPC.width = 38;
+            NPC.height = 42;
+            NPC.damage = 92;
             NPC.friendly = false;
             NPC.defense = 12;
-            NPC.lifeMax = 2750;
+            NPC.lifeMax = 2500;
             NPC.HitSound = SoundID.NPCHit48;
             NPC.DeathSound = SoundID.NPCDeath50;
             NPC.value = 5000;
@@ -64,7 +67,7 @@ namespace Redemption.NPCs.Soulless
             NPC.aiStyle = -1;
             NPC.lavaImmune = true;
             SpawnModBiomes = new int[1] { ModContent.GetInstance<SoullessBiome>().Type };
-            // TODO: Banner for soulless wanderer
+            // TODO: Banner for soulless assassin
             //Banner = NPC.type;
             //BannerItem = ModContent.ItemType<EpidotrianSkeletonBanner>();
 
@@ -92,7 +95,7 @@ namespace Redemption.NPCs.Soulless
             }
             Dust.NewDust(NPC.position + NPC.velocity, NPC.width, NPC.height, ModContent.DustType<VoidFlame>());
 
-            if (AIState is ActionState.Idle or ActionState.Wander)
+            if (AIState <= ActionState.Stalk)
             {
                 AITimer = 0;
                 AIState = ActionState.Alert;
@@ -101,14 +104,15 @@ namespace Redemption.NPCs.Soulless
 
         private Vector2 moveTo;
         private int runCooldown;
-        private bool powerUp;
         public override void OnSpawn(IEntitySource source)
         {
             ChoosePersonality();
             SetStats();
 
             TimerRand = Main.rand.Next(80, 280);
+            AIState = Main.rand.NextBool(2) ? ActionState.Hiding : ActionState.Idle;
             NPC.alpha = 0;
+            NPC.netUpdate = true;
         }
         public override void AI()
         {
@@ -127,11 +131,26 @@ namespace Redemption.NPCs.Soulless
                 NPCPhysChain.ModifyChainPhysics(NPC, Tendril1, ref chains.bodyPhysChainPositions[1], NPCChainHelper.GetNPCDrawAnchor(chains.npcPhysChainOffset[1], NPC), new Vector2(0, 0));
                 NPCPhysChain.ModifyChainPhysics(NPC, Tendril1, ref chains.bodyPhysChainPositions[2], NPCChainHelper.GetNPCDrawAnchor(chains.npcPhysChainOffset[2], NPC), new Vector2(-9, 16f));
             }
+
             Player player = Main.player[NPC.target];
             RedeNPC globalNPC = NPC.Redemption();
             NPC.TargetClosest();
-            if (AIState != ActionState.Throw)
+            if (AIState != ActionState.Stab)
                 NPC.LookByVelocity();
+
+            Rectangle SlashHitbox = new((int)(NPC.spriteDirection == -1 ? NPC.Center.X - 30 : NPC.Center.X), (int)(NPC.Center.Y - 8), 30, 18);
+            if (AIState is ActionState.Hiding or ActionState.Stalk)
+            {
+                if (NPC.alpha < 240)
+                    NPC.alpha += 4;
+            }
+            else
+            {
+                if (NPC.alpha > 0)
+                    NPC.alpha -= 8;
+            }
+            if (NPC.alpha > 200)
+                NPC.Redemption().invisible = true;
 
             switch (AIState)
             {
@@ -143,8 +162,34 @@ namespace Redemption.NPCs.Soulless
                     {
                         moveTo = NPC.FindGround(20);
                         AITimer = 0;
+                        if (Main.rand.NextBool(3))
+                        {
+                            TimerRand = Main.rand.Next(120, 260);
+                            AIState = ActionState.Wander;
+                        }
+                        else
+                        {
+                            TimerRand = Main.rand.Next(80, 280);
+                            AIState = ActionState.Hiding;
+                        }
+                        NPC.netUpdate = true;
+                    }
+
+                    SightCheck();
+                    break;
+
+                case ActionState.Hiding:
+                    if (NPC.velocity.Y == 0)
+                        NPC.velocity.X = 0;
+
+                    AITimer++;
+                    if (AITimer >= TimerRand * 6)
+                    {
+                        moveTo = NPC.FindGround(20);
+                        AITimer = 0;
                         TimerRand = Main.rand.Next(120, 260);
                         AIState = ActionState.Wander;
+                        NPC.netUpdate = true;
                     }
 
                     SightCheck();
@@ -166,11 +211,92 @@ namespace Redemption.NPCs.Soulless
                     NPCHelper.HorizontallyMove(NPC, moveTo * 16, 0.4f, 1 * SpeedMultiplier, 12, 12, NPC.Center.Y > moveTo.Y * 16);
                     break;
 
+                case ActionState.Stalk:
+                    if (NPC.ThreatenedCheck(ref runCooldown, 600))
+                    {
+                        runCooldown = 0;
+                        AITimer = 0;
+                        AIState = ActionState.Hiding;
+                    }
+                    if (NPC.PlayerDead())
+                    {
+                        runCooldown = 0;
+                        AITimer = 0;
+                        AIState = ActionState.Hiding;
+                    }
+
+                    if (globalNPC.attacker.direction == NPC.direction * -1 && NPC.Sight(globalNPC.attacker, 100, true, true))
+                    {
+                        runCooldown = 0;
+                        AITimer = 0;
+                        AIState = ActionState.Alert;
+                    }
+                    if (HasEyes && Main.rand.NextBool(200) && NPC.DistanceSQ(globalNPC.attacker.Center) >= 150 * 150)
+                    {
+                        Vector2 pos = new(globalNPC.attacker.Center.X, BaseWorldGen.GetFirstTileFloor((int)globalNPC.attacker.Center.X / 16, (int)globalNPC.attacker.Center.Y / 16) * 16);
+                        bool landed = false;
+                        int attempts = 0;
+                        Vector2 telePos = Vector2.Zero;
+                        while (!landed && attempts < 1000)
+                        {
+                            attempts++;
+                            telePos = NPCHelper.FindGroundVector(pos, 6);
+                            if (telePos.X > pos.X && globalNPC.attacker.direction == 1)
+                                continue;
+                            if (telePos.X < pos.X && globalNPC.attacker.direction == -1)
+                                continue;
+                            if (telePos.DistanceSQ(pos) < 40 * 40)
+                                continue;
+
+                            landed = true;
+                        }
+                        if (landed)
+                        {
+                            for (int i = 0; i < 20; i++)
+                            {
+                                int dust = Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.Wraith);
+                                Main.dust[dust].velocity *= 0;
+                                Main.dust[dust].noGravity = true;
+                            }
+                            SoundEngine.PlaySound(SoundID.DD2_WitherBeastAuraPulse with { Pitch = .2f }, NPC.position);
+                            NPC.Center = telePos - new Vector2(0, 30);
+                            for (int i = 0; i < 20; i++)
+                            {
+                                int dust = Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.Wraith);
+                                Main.dust[dust].velocity *= 0;
+                                Main.dust[dust].noGravity = true;
+                            }
+                        }
+                    }
+                    if (NPC.velocity.Y == 0 && NPC.Sight(globalNPC.attacker, 50, false, true))
+                    {
+                        NPC.LookAtEntity(globalNPC.attacker);
+                        AITimer = 0;
+                        NPC.frameCounter = 0;
+                        NPC.velocity *= 0;
+                        AIState = ActionState.Stab;
+                    }
+
+                    if (!NPC.Sight(globalNPC.attacker, VisionRange + 200, HasEyes, HasEyes))
+                        runCooldown++;
+                    else if (runCooldown > 0)
+                        runCooldown--;
+
+                    NPC.PlatformFallCheck(ref NPC.Redemption().fallDownPlatform, 20, globalNPC.attacker.Center.Y);
+                    NPCHelper.HorizontallyMove(NPC, globalNPC.attacker.Center, 0.2f, 0.8f * SpeedMultiplier, 12, 8, NPC.Center.Y > globalNPC.attacker.Center.Y, globalNPC.attacker);
+                    break;
+
                 case ActionState.Alert:
                     if (NPC.ThreatenedCheck(ref runCooldown))
                     {
                         runCooldown = 0;
                         AIState = ActionState.Wander;
+                    }
+                    if (NPC.PlayerDead())
+                    {
+                        runCooldown = 0;
+                        AITimer = 0;
+                        AIState = ActionState.Hiding;
                     }
                     BaseAI.AttemptOpenDoor(NPC, ref doorVars[0], ref doorVars[1], ref doorVars[2], 80, 1, interactDoorStyle: 2);
 
@@ -179,28 +305,25 @@ namespace Redemption.NPCs.Soulless
                     else if (runCooldown > 0)
                         runCooldown--;
 
-                    if (NPC.velocity.Y == 0 && NPC.Sight(globalNPC.attacker, VisionRange, false, true))
+                    if (NPC.velocity.Y == 0 && NPC.Sight(globalNPC.attacker, 50, false, true))
                     {
                         NPC.LookAtEntity(globalNPC.attacker);
                         AITimer = 0;
                         NPC.frameCounter = 0;
                         NPC.velocity *= 0;
-                        AIState = ActionState.Throw;
-                        if (HasEyes && Main.rand.NextBool(2))
-                            powerUp = true;
+                        AIState = ActionState.Stab;
                     }
-
                     NPC.PlatformFallCheck(ref NPC.Redemption().fallDownPlatform, 20, globalNPC.attacker.Center.Y);
-                    NPCHelper.HorizontallyMove(NPC, globalNPC.attacker.Center, 0.2f, 2f * SpeedMultiplier, 12, 12, NPC.Center.Y > globalNPC.attacker.Center.Y, globalNPC.attacker);
+                    NPCHelper.HorizontallyMove(NPC, globalNPC.attacker.Center, 0.2f, 5f * SpeedMultiplier, 12, 12, NPC.Center.Y > globalNPC.attacker.Center.Y, globalNPC.attacker);
                     break;
 
-                case ActionState.Throw:
+                case ActionState.Stab:
                     if (NPC.ThreatenedCheck(ref runCooldown))
                     {
                         runCooldown = 0;
                         AITimer = 0;
                         TimerRand = Main.rand.Next(120, 260);
-                        AIState = ActionState.Wander;
+                        AIState = NPC.alpha < 10 ? ActionState.Wander : ActionState.Hiding;
                     }
 
                     if (NPC.velocity.Y < 0)
@@ -208,20 +331,34 @@ namespace Redemption.NPCs.Soulless
                     if (NPC.velocity.Y == 0)
                         NPC.velocity.X *= 0.9f;
 
-                    if (AniFrameY == 2 && AITimer++ < (powerUp ? 50 : 30))
+                    if (AniFrameY == 2 && AITimer++ < 5)
                     {
                         NPC.LookAtEntity(globalNPC.attacker);
                         NPC.frameCounter = 0;
                     }
+                    if (AniFrameY == 3 && globalNPC.attacker.Hitbox.Intersects(SlashHitbox))
+                    {
+                        int damage = NPC.RedemptionNPCBuff().disarmed ? NPC.damage / 3 : NPC.damage;
+                        if (globalNPC.attacker is NPC attackerNPC && attackerNPC.immune[NPC.whoAmI] <= 0)
+                        {
+                            attackerNPC.immune[NPC.whoAmI] = 10;
+                            int hitDirection = attackerNPC.RightOfDir(NPC);
+                            BaseAI.DamageNPC(attackerNPC, damage * (NPC.alpha > 50 ? 2 : 1), 4, hitDirection, NPC);
+                        }
+                        else if (globalNPC.attacker is Player attackerPlayer)
+                        {
+                            int hitDirection = attackerPlayer.RightOfDir(NPC);
+                            BaseAI.DamagePlayer(attackerPlayer, damage * (NPC.alpha > 50 ? 2 : 1), 4, hitDirection, NPC);
+                        }
+                    }
                     break;
             }
-            if (HasEyes && Main.rand.NextBool(18))
+            if (HasEyes && Main.rand.NextBool(18) && NPC.alpha <= 50)
             {
                 int dust = Dust.NewDust(NPC.position + NPC.velocity, NPC.width, NPC.height, DustID.DungeonSpirit, Scale: 2);
                 Main.dust[dust].velocity.Y = -2;
                 Main.dust[dust].velocity.X = 0;
                 Main.dust[dust].noGravity = true;
-
             }
         }
         public override bool? CanFallThroughPlatforms() => NPC.Redemption().fallDownPlatform;
@@ -237,20 +374,16 @@ namespace Redemption.NPCs.Soulless
                     _ => 0,
                 };
 
-                if (AIState is ActionState.Throw)
+                if (AIState is ActionState.Stab)
                 {
-                    if (++NPC.frameCounter >= 5)
+                    if (++NPC.frameCounter >= 4)
                     {
                         NPC.frameCounter = 0;
                         AniFrameY++;
                         if (AniFrameY is 3)
                         {
-                            RedeNPC globalNPC = NPC.Redemption();
-                            SoundEngine.PlaySound(SoundID.Item1, NPC.position);
-                            NPC.velocity.X = 2 * NPC.spriteDirection;
-                            int damage = NPC.RedemptionNPCBuff().disarmed ? NPC.damage / 3 : NPC.damage;
-                            NPC.Shoot(NPC.Center, ModContent.ProjectileType<ShadeJavelin_Proj>(), damage,
-                                RedeHelper.PolarVector(powerUp ? 19 : 14, (globalNPC.attacker.Center - NPC.Center).ToRotation() - (0.16f * NPC.spriteDirection)), true, SoundID.Item1, NPC.whoAmI, powerUp ? 1 : 0);
+                            SoundEngine.PlaySound(SoundID.Item19, NPC.position);
+                            NPC.velocity.X = 6 * NPC.spriteDirection;
                         }
                         if (AniFrameY > 5)
                         {
@@ -259,14 +392,8 @@ namespace Redemption.NPCs.Soulless
                             AITimer = 0;
 
                             RedeNPC globalNPC = NPC.Redemption();
-                            if (NPC.velocity.Y == 0 && NPC.Sight(globalNPC.attacker, VisionRange, false, true))
-                            {
+                            if (NPC.velocity.Y == 0 && NPC.Sight(globalNPC.attacker, 50, false, true))
                                 NPC.LookAtEntity(globalNPC.attacker);
-                                if (HasEyes && Main.rand.NextBool(2))
-                                    powerUp = true;
-                                else
-                                    powerUp = false;
-                            }
                             else
                                 AIState = ActionState.Alert;
                         }
@@ -276,7 +403,6 @@ namespace Redemption.NPCs.Soulless
                     return;
                 }
                 AniFrameY = 0;
-                powerUp = false;
 
                 if (NPC.collideY || NPC.velocity.Y == 0)
                 {
@@ -298,7 +424,7 @@ namespace Redemption.NPCs.Soulless
                 else
                 {
                     NPC.rotation = NPC.velocity.X * 0.05f;
-                    NPC.frame.Y = 2 * frameHeight;
+                    NPC.frame.Y = 0;
                 }
             }
             HeadOffsetY = SetHeadOffsetY(ref frameHeight);
@@ -306,12 +432,12 @@ namespace Redemption.NPCs.Soulless
         }
         public override int SetHeadOffsetY(ref int frameHeight)
         {
-            if (AIState is ActionState.Throw)
+            if (AIState is ActionState.Stab)
             {
                 return AniFrameY switch
                 {
-                    4 => -2,
-                    5 => -2,
+                    4 => 2,
+                    5 => 2,
                     _ => 0,
                 };
             }
@@ -319,22 +445,21 @@ namespace Redemption.NPCs.Soulless
             {
                 return (NPC.frame.Y / frameHeight) switch
                 {
-                    1 => -2,
-                    _ => 0,
+                    0 => 0,
+                    _ => -2,
                 };
             }
         }
         public override int SetHeadOffsetX(ref int frameHeight)
         {
-            if (AIState is ActionState.Throw)
+            if (AIState is ActionState.Stab)
             {
                 return AniFrameY switch
                 {
-                    0 => 2,
                     1 => 2,
-                    3 => -2,
-                    4 => -4,
-                    5 => -4,
+                    2 => 2,
+                    4 => -2,
+                    5 => -2,
                     _ => 0,
                 };
             }
@@ -371,21 +496,19 @@ namespace Redemption.NPCs.Soulless
             int gotNPC = GetNearestNPC();
             if (NPC.Sight(player, VisionRange, false, true))
             {
-                SoundEngine.PlaySound(SoundID.NPCHit48, NPC.position);
                 globalNPC.attacker = player;
                 moveTo = NPC.FindGround(20);
                 AITimer = 0;
-                AIState = ActionState.Alert;
+                AIState = ActionState.Stalk;
             }
             if (Main.rand.NextBool(MaskType == MaskState.Angry ? 600 : 1800))
             {
                 if (gotNPC != -1 && NPC.Sight(Main.npc[gotNPC], VisionRange, false, true))
                 {
-                    SoundEngine.PlaySound(SoundID.NPCHit48, NPC.position);
                     globalNPC.attacker = Main.npc[gotNPC];
                     moveTo = NPC.FindGround(20);
                     AITimer = 0;
-                    AIState = ActionState.Alert;
+                    AIState = ActionState.Stalk;
                 }
                 return;
             }
@@ -393,8 +516,8 @@ namespace Redemption.NPCs.Soulless
         public void ChoosePersonality()
         {
             WeightedRandom<MaskState> choice = new(Main.rand);
-            choice.Add(MaskState.Normal, .75);
-            choice.Add(MaskState.Happy, 1);
+            choice.Add(MaskState.Normal, 1);
+            choice.Add(MaskState.Happy, .75);
             choice.Add(MaskState.Angry, .75);
 
             MaskType = choice;
@@ -405,8 +528,8 @@ namespace Redemption.NPCs.Soulless
         {
             Texture2D head = ModContent.Request<Texture2D>("Redemption/NPCs/Soulless/Soulless_Masks").Value;
             Texture2D glow = ModContent.Request<Texture2D>(NPC.ModNPC.Texture + "_Glow").Value;
-            Texture2D throwAni = ModContent.Request<Texture2D>(NPC.ModNPC.Texture + "_Throw").Value;
-            Texture2D throwGlow = ModContent.Request<Texture2D>(NPC.ModNPC.Texture + "_Throw_Glow").Value;
+            Texture2D stabAni = ModContent.Request<Texture2D>(NPC.ModNPC.Texture + "_Stab").Value;
+            Texture2D stabGlow = ModContent.Request<Texture2D>(NPC.ModNPC.Texture + "_Stab_Glow").Value;
             var effects = NPC.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
 
             int HeightH = head.Height / 3;
@@ -414,41 +537,41 @@ namespace Redemption.NPCs.Soulless
             int yH = HeightH * (int)MaskType;
             int xH = WidthH * HeadX;
             Rectangle rectH = new(xH, yH, WidthH, HeightH);
-            if (AIState is ActionState.Throw)
+            if (AIState is ActionState.Stab)
             {
-                int Height = throwAni.Height / 6;
+                int Height = stabAni.Height / 6;
                 int y = Height * AniFrameY;
-                Rectangle rect = new(0, y, throwAni.Width, Height);
-                Vector2 origin = new(throwAni.Width / 2f, Height / 2f);
-                spriteBatch.Draw(throwAni, NPC.Center - screenPos - new Vector2(0, 5), new Rectangle?(rect), drawColor, NPC.rotation, origin, NPC.scale, effects, 0);
+                Rectangle rect = new(0, y, stabAni.Width, Height);
+                Vector2 origin = new(stabAni.Width / 2f, Height / 2f);
+                spriteBatch.Draw(stabAni, NPC.Center - screenPos - new Vector2(0, 5), new Rectangle?(rect), NPC.GetAlpha(drawColor), NPC.rotation, origin, NPC.scale, effects, 0);
 
                 if (HasEyes)
                 {
                     for (int i = 0; i < NPCID.Sets.TrailCacheLength[NPC.type]; i++)
                     {
                         Vector2 oldPos = NPC.oldPos[i];
-                        spriteBatch.Draw(throwGlow, oldPos + NPC.Size / 2f - screenPos - new Vector2(0, 5), new Rectangle?(rect), Color.White * 0.5f, NPC.rotation, origin, NPC.scale, effects, 0);
+                        spriteBatch.Draw(stabGlow, oldPos + NPC.Size / 2f - screenPos - new Vector2(0, 5), new Rectangle?(rect), NPC.GetAlpha(Color.White) * 0.5f, NPC.rotation, origin, NPC.scale, effects, 0);
                     }
-                    spriteBatch.Draw(throwGlow, NPC.Center - screenPos - new Vector2(0, 5), new Rectangle?(rect), Color.White, NPC.rotation, origin, NPC.scale, effects, 0);
+                    spriteBatch.Draw(stabGlow, NPC.Center - screenPos - new Vector2(0, 5), new Rectangle?(rect), NPC.GetAlpha(Color.White), NPC.rotation, origin, NPC.scale, effects, 0);
                 }
 
-                spriteBatch.Draw(head, NPC.Center - screenPos, new Rectangle?(rectH), drawColor, NPC.rotation, NPC.frame.Size() / 2 + new Vector2((NPC.spriteDirection == 1 ? -32 : -26) + (HeadOffsetX * NPC.spriteDirection), -8 + HeadOffsetY), NPC.scale, effects, 0);
+                spriteBatch.Draw(head, NPC.Center - new Vector2(0, 5) - screenPos, new Rectangle?(rectH), NPC.GetAlpha(drawColor), NPC.rotation, NPC.frame.Size() / 2 + new Vector2((NPC.spriteDirection == 1 ? -14 : -6) + (HeadOffsetX * NPC.spriteDirection), -3 - HeadOffsetY), NPC.scale, effects, 0);
             }
             else
             {
-                spriteBatch.Draw(TextureAssets.Npc[NPC.type].Value, NPC.Center - new Vector2(0, 2) - screenPos, NPC.frame, NPC.IsABestiaryIconDummy ? drawColor : NPC.GetAlpha(drawColor), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
+                spriteBatch.Draw(TextureAssets.Npc[NPC.type].Value, NPC.Center - new Vector2(0, 1) - screenPos, NPC.frame, NPC.IsABestiaryIconDummy ? drawColor : NPC.GetAlpha(drawColor), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
 
                 if (HasEyes)
                 {
                     for (int i = 0; i < NPCID.Sets.TrailCacheLength[NPC.type]; i++)
                     {
                         Vector2 oldPos = NPC.oldPos[i];
-                        spriteBatch.Draw(glow, oldPos - new Vector2(0, 2) + NPC.Size / 2f - screenPos, NPC.frame, Color.White * 0.5f, NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
+                        spriteBatch.Draw(glow, oldPos - new Vector2(0, 1) + NPC.Size / 2f - screenPos, NPC.frame, NPC.GetAlpha(Color.White) * 0.5f, NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
                     }
-                    spriteBatch.Draw(glow, NPC.Center - new Vector2(0, 2) - screenPos, NPC.frame, Color.White, NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
+                    spriteBatch.Draw(glow, NPC.Center - new Vector2(0, 1) - screenPos, NPC.frame, NPC.GetAlpha(Color.White), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
                 }
 
-                spriteBatch.Draw(head, NPC.Center - screenPos, new Rectangle?(rectH), drawColor, NPC.rotation, NPC.frame.Size() / 2 + new Vector2(NPC.spriteDirection == 1 ? -32 : -26, -8 + HeadOffsetY), NPC.scale, effects, 0);
+                spriteBatch.Draw(head, NPC.Center - screenPos, new Rectangle?(rectH), NPC.GetAlpha(drawColor), NPC.rotation, NPC.frame.Size() / 2 + new Vector2((NPC.spriteDirection == 1 ? -18 : -2) + (HeadOffsetX * NPC.spriteDirection), -7 - HeadOffsetY), NPC.scale, effects, 0);
             }
             return false;
         }
@@ -458,10 +581,10 @@ namespace Redemption.NPCs.Soulless
         {
             if (HasEyes)
             {
-                RedeHelper.SpawnNPC(NPC.GetSource_FromAI(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<ShadesoulNPC>(), Main.rand.NextFloat(0, 0.4f));
+                RedeHelper.SpawnNPC(NPC.GetSource_FromAI(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<ShadesoulNPC>(), Main.rand.NextFloat(0, 0.6f));
             }
             else if (Main.rand.NextBool(3))
-                RedeHelper.SpawnNPC(NPC.GetSource_FromAI(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<ShadesoulNPC>(), Main.rand.NextFloat(0, 0.2f));
+                RedeHelper.SpawnNPC(NPC.GetSource_FromAI(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<ShadesoulNPC>(), Main.rand.NextFloat(0, 0.4f));
         }
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
