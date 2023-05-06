@@ -327,6 +327,8 @@ namespace Redemption.Globals.Player
                 Player.wingsLogic = 0;
                 if (!ItemID.Sets.Torches[Player.HeldItem.type] && Player.HeldItem.pick == 0)
                     Player.noBuilding = true;
+                if (Player.HeldItem.damage > 0 && Player.HeldItem.pick == 0)
+                    Player.controlUseItem = false;
                 Player.controlHook = false;
             }
         }

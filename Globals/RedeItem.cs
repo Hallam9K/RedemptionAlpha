@@ -304,6 +304,15 @@ namespace Redemption.Globals
             #endregion
             return base.CanUseItem(item, player);
         }
+        public override bool AltFunctionUse(Item item, Terraria.Player player)
+        {
+            if (player.Redemption().stalkerSilence)
+            {
+                if (player.HeldItem.damage > 0 && player.HeldItem.pick == 0)
+                    return false;
+            }
+            return base.AltFunctionUse(item, player);
+        }
         public override void OnCreate(Item item, ItemCreationContext context)
         {
             if (item.type == ModContent.ItemType<AlignmentTeller>() && !Terraria.NPC.AnyNPCs(ModContent.NPCType<Chalice_Intro>()))

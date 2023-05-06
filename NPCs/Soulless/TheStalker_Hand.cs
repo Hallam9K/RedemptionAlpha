@@ -61,7 +61,7 @@ namespace Redemption.NPCs.Soulless
                     Projectile.ai[1] = 2;
                     break;
                 case 2:
-                    Rectangle activeZone = new((449 + SoullessArea.Offset.X) * 16, (1182 + SoullessArea.Offset.Y) * 16, 25 * 16, 5 * 16);
+                    Rectangle activeZone = new((449 + SoullessArea.Offset.X) * 16, (1182 + SoullessArea.Offset.Y) * 16, 22 * 16, 5 * 16);
                     if (player.Hitbox.Intersects(activeZone))
                         Projectile.ai[1] = 3;
                     break;

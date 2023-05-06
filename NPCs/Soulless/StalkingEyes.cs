@@ -43,6 +43,7 @@ namespace Redemption.NPCs.Soulless
         public override void OnSpawn(IEntitySource source)
         {
             NPC.rotation = RedeHelper.RandomRotation();
+            NPC.scale = Main.rand.NextFloat(.8f, 1);
         }
         public override void AI()
         {
@@ -50,9 +51,22 @@ namespace Redemption.NPCs.Soulless
             if (NPC.target < 0 || NPC.target == 255 || player.dead || !player.active)
                 NPC.TargetClosest();
 
+            if (NPC.localAI[0]++ < 20)
+            {
+                for (int i = 0; i < Main.maxNPCs; i++)
+                {
+                    NPC other = Main.npc[i];
+                    if (!other.active || other.whoAmI == NPC.whoAmI || other.type != Type || !other.Hitbox.Intersects(NPC.Hitbox))
+                        continue;
+
+                    Vector2 eyesPos = RedeHelper.RandomPosition(new Vector2(510 + SoullessArea.Offset.X, 1118 + SoullessArea.Offset.Y), new Vector2(554 + SoullessArea.Offset.X, 1125 + SoullessArea.Offset.Y)) * 16;
+                    other.position = eyesPos;
+                }
+            }
             if (NPC.DistanceSQ(player.Center) < 100 * 100 || SoullessArea.soullessInts[2] != 1)
             {
-                SoundEngine.PlaySound(SoundID.NPCDeath6 with { Pitch = -1, Volume = .5f }, NPC.position);
+                SoundEngine.PlaySound(SoundID.NPCDeath6 with { Pitch = -1, Volume = .5f, SoundLimitBehavior = SoundLimitBehavior.IgnoreNew }, NPC.position);
+                player.velocity *= .98f;
                 player.AddBuff(BuffID.Slow, 60);
                 NPC.ai[1] = 2;
             }
@@ -98,7 +112,7 @@ namespace Redemption.NPCs.Soulless
             Texture2D glow = ModContent.Request<Texture2D>(Texture + "_Glow").Value;
             var effects = NPC.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
             spriteBatch.Draw(texture2, NPC.Center + RedeHelper.Spread(2) - screenPos, NPC.frame, NPC.GetAlpha(drawColor) * .5f, NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
-            spriteBatch.Draw(TextureAssets.Npc[NPC.type].Value, NPC.Center + RedeHelper.Spread(2) - screenPos, NPC.frame, NPC.GetAlpha(drawColor), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
+            spriteBatch.Draw(TextureAssets.Npc[NPC.type].Value, NPC.Center + RedeHelper.Spread(2) - screenPos, NPC.frame, NPC.GetAlpha(drawColor) * .8f, NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
             spriteBatch.Draw(glow, NPC.Center - screenPos, NPC.frame, NPC.GetAlpha(Color.White), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
             return false;
         }

@@ -22,7 +22,7 @@ namespace Redemption.Tiles.Tiles
             TileID.Sets.Falling[Type] = true;
             DustType = ModContent.DustType<ShadestoneDust>();
             MinPick = 225;
-            MineResist = 6f;
+            MineResist = 4f;
             HitSound = SoundID.Tink;
             ModTranslation name = CreateMapEntryName();
             name.SetDefault("Shadestone Rubble");

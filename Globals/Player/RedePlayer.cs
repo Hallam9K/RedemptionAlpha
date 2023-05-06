@@ -63,7 +63,7 @@ namespace Redemption.Globals.Player
 
         public override void ResetEffects()
         {
-            if (stalkerSilence && SoullessArea.soullessInts[2] is 0)
+            if (stalkerSilence)
                 visionAmt += 0.02f;
             else
                 visionAmt -= 0.05f;
@@ -292,7 +292,7 @@ namespace Redemption.Globals.Player
                 SubworldSystem.Exit();
         }
 
-        public static readonly SoundStyle SoullessLoopSound = new("Redemption/Sounds/Custom/SoullessAmbient");
+        public static readonly SoundStyle SoullessLoopSound = new("Redemption/Sounds/Custom/SoullessAmbient") { Type = SoundType.Ambient };
         private SlotId soullessLoopSoundSlot;
         private float soullessEffectIntensity;
         public override void PostUpdate()

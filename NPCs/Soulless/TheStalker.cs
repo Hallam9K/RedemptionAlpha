@@ -43,6 +43,7 @@ namespace Redemption.NPCs.Soulless
             switch (NPC.ai[0])
             {
                 case 0:
+                    Lighting.AddLight(NPC.Center, .5f, .5f, .5f);
                     if (SoullessArea.soullessInts[1] > 1)
                         NPC.active = false;
                     break;
