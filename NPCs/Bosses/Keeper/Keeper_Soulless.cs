@@ -30,6 +30,8 @@ using ParticleLibrary;
 using Redemption.Particles;
 using Redemption.Biomes;
 using System.Threading;
+using Redemption.WorldGeneration.Soulless;
+using SubworldLibrary;
 
 namespace Redemption.NPCs.Bosses.Keeper
 {
@@ -232,6 +234,8 @@ namespace Redemption.NPCs.Bosses.Keeper
 
         public override void AI()
         {
+            if (!SubworldSystem.IsActive<SoullessSub>())
+                NPC.active = false;
             if (AIState == ActionState.Death)
                 NPC.DiscourageDespawn(120);
             if (NPC.target < 0 || NPC.target == 255 || Main.player[NPC.target].dead || !Main.player[NPC.target].active)
