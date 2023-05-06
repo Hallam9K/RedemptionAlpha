@@ -44,6 +44,7 @@ namespace Redemption.Projectiles.Minions
         public override void OnSpawn(IEntitySource source)
         {
             Projectile.localAI[1] = Main.rand.Next(4);
+            Projectile.ai[1] = 30;
             Projectile.netUpdate = true;
         }
         public override bool? CanDamage() => false;
@@ -54,10 +55,10 @@ namespace Redemption.Projectiles.Minions
             if (!CheckActive(owner))
                 return;
 
-            if (RedeHelper.ClosestNPC(ref target, 900, Projectile.Center, false, owner.MinionAttackTargetNPC))
+            if (RedeHelper.ClosestNPC(ref target, 900, Projectile.Center - new Vector2(0, 10), false, owner.MinionAttackTargetNPC))
             {
                 Projectile.LookAtEntity(target);
-                if (Projectile.localAI[0]++ <= 30 && Projectile.frame == 1)
+                if (Projectile.localAI[0]++ <= Projectile.ai[1] && Projectile.frame == 1)
                     Projectile.frameCounter = 0;
 
                 if (++Projectile.frameCounter >= 5)
@@ -79,6 +80,7 @@ namespace Redemption.Projectiles.Minions
                         Projectile.localAI[0] = 0;
                     }
                 }
+                Projectile.ai[1] = 30;
             }
             else
             {
