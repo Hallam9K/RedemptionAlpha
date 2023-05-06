@@ -307,7 +307,6 @@ namespace Redemption.NPCs.Minibosses.Calavia
                         if (!projectile.ProjBlockBlacklist() && projectile.penetrate != -1)
                         {
                             blocked = true;
-                            NPC.RedemptionGuard().GuardDamage = projectile.damage;
                             NPC.StrikeNPC(projectile.damage, projectile.damage, 1, false);
                             projectile.Kill();
                         }
