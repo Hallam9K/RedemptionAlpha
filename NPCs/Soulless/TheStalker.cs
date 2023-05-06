@@ -1,6 +1,8 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Globals;
+using Redemption.WorldGeneration.Soulless;
+using SubworldLibrary;
 using System.Threading;
 using Terraria;
 using Terraria.DataStructures;
@@ -35,6 +37,8 @@ namespace Redemption.NPCs.Soulless
         }
         public override void AI()
         {
+            if (!SubworldSystem.IsActive<SoullessSub>())
+                NPC.active = false;
             Player player = Main.player[Main.myPlayer];
             switch (NPC.ai[0])
             {
@@ -134,7 +138,7 @@ namespace Redemption.NPCs.Soulless
         public override bool PreAI()
         {
             Player player = Main.player[Main.myPlayer];
-            if (SoullessArea.soullessInts[2] != 1)
+            if (SoullessArea.soullessInts[2] != 1 || !SubworldSystem.IsActive<SoullessSub>())
                 NPC.active = false;
             switch (NPC.ai[0])
             {
