@@ -273,7 +273,7 @@ namespace Redemption.NPCs.HM
                         NPC.netUpdate = true;
                     }
                     if (AITimer == 10)
-                        NPC.Shoot(NPC.Center + new Vector2(19 * NPC.spriteDirection, -4), ModContent.ProjectileType<Scan_Proj>(), 0, Vector2.Zero, true, CustomSounds.BallFire, NPC.whoAmI);
+                        NPC.Shoot(NPC.Center + new Vector2(19 * NPC.spriteDirection, -4), ModContent.ProjectileType<Scan_Proj>(), 0, Vector2.Zero, CustomSounds.BallFire, NPC.whoAmI);
 
                     if (AITimer == 180 && !Main.dedServ)
                     {
@@ -458,7 +458,7 @@ namespace Redemption.NPCs.HM
                         if (NPC.frame.Y == 20 * frameHeight)
                         {
                             SoundEngine.PlaySound(CustomSounds.MissileFire1 with { Volume = 0.5f }, NPC.position);
-                            NPC.Shoot(NPC.Center + new Vector2(19 * NPC.spriteDirection, -1), ModContent.ProjectileType<Android_Proj>(), NPC.damage, new Vector2(14 * NPC.spriteDirection, 0), false, SoundID.Item1, NPC.whoAmI, var);
+                            NPC.Shoot(NPC.Center + new Vector2(19 * NPC.spriteDirection, -1), ModContent.ProjectileType<Android_Proj>(), NPC.damage, new Vector2(14 * NPC.spriteDirection, 0), NPC.whoAmI, var);
                             NPC.velocity.X -= 3 * NPC.spriteDirection;
                             Main.LocalPlayer.RedemptionScreen().ScreenShakeOrigin = NPC.Center;
                             Main.LocalPlayer.RedemptionScreen().ScreenShakeIntensity += 3;

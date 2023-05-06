@@ -248,7 +248,7 @@ namespace Redemption.NPCs.Minibosses.EaglecrestGolem
                     {
                         for (int i = 0; i < 2; i++)
                         {
-                            NPC.Shoot(NPC.Center, ModContent.ProjectileType<RockPileSummon>(), 0, RedeHelper.SpreadUp(16), false, SoundID.Item1, NPC.whoAmI);
+                            NPC.Shoot(NPC.Center, ModContent.ProjectileType<RockPileSummon>(), 0, RedeHelper.SpreadUp(16), NPC.whoAmI);
                         }
                         summonTimer = 600;
                         NPC.netUpdate = true;
@@ -310,8 +310,7 @@ namespace Redemption.NPCs.Minibosses.EaglecrestGolem
                     }
                     if (TimerRand2 == 60)
                     {
-                        NPC.Shoot(origin, ModContent.ProjectileType<GolemEyeRay>(), NPC.damage, RedeHelper.PolarVector(10, (player.Center - NPC.Center).ToRotation()
-                            + MathHelper.ToRadians(20 * NPC.spriteDirection)), true, SoundID.Item109, NPC.whoAmI);
+                        NPC.Shoot(origin, ModContent.ProjectileType<GolemEyeRay>(), NPC.damage, RedeHelper.PolarVector(10, (player.Center - NPC.Center).ToRotation() + MathHelper.ToRadians(20 * NPC.spriteDirection)), SoundID.Item109, NPC.whoAmI);
                     }
                     if (TimerRand2 >= 60)
                     {
@@ -356,7 +355,7 @@ namespace Redemption.NPCs.Minibosses.EaglecrestGolem
                     {
                         Player player = Main.player[NPC.target];
                         NPC.Shoot(NPC.Center, ModContent.ProjectileType<RockSlash_Proj>(), NPC.damage, RedeHelper.PolarVector(7,
-                            (player.Center - NPC.Center).ToRotation()), true, SoundID.Item71);
+                            (player.Center - NPC.Center).ToRotation()), SoundID.Item71);
                     }
                     if (AniFrameY > 8)
                     {

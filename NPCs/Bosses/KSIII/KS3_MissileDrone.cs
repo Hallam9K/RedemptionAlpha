@@ -130,7 +130,7 @@ namespace Redemption.NPCs.Bosses.KSIII
             {
                 if (NPC.ai[2] % 30 == 0)
                 {
-                    NPC.Shoot(NPC.Center, ModContent.ProjectileType<SlayerMissile>(), 96, RedeHelper.PolarVector(10, (player.Center - NPC.Center).ToRotation() + Main.rand.NextFloat(0.2f, 0.2f)), true, SoundID.Item74);
+                    NPC.Shoot(NPC.Center, ModContent.ProjectileType<SlayerMissile>(), 96, RedeHelper.PolarVector(10, (player.Center - NPC.Center).ToRotation() + Main.rand.NextFloat(0.2f, 0.2f)), SoundID.Item74);
                     shotCount++;
                 }
             }

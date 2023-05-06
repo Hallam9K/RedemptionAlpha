@@ -270,7 +270,7 @@ namespace Redemption.NPCs.PreHM
                             {
                                 SoundEngine.PlaySound(SoundID.Zombie64, NPC.position);
                                 int tilePosY = BaseWorldGen.GetFirstTileFloor((int)globalNPC.attacker.Center.X / 16, (int)globalNPC.attacker.Center.Y / 16);
-                                NPC.Shoot(new Vector2(globalNPC.attacker.Center.X, (tilePosY * 16) + 55), ModContent.ProjectileType<AncientGladestonePillar>(), NPC.damage, Vector2.Zero, false, SoundID.Item1);
+                                NPC.Shoot(new Vector2(globalNPC.attacker.Center.X, (tilePosY * 16) + 55), ModContent.ProjectileType<AncientGladestonePillar>(), NPC.damage, Vector2.Zero);
                             }
                             if (NPC.frame.Y == 7 * frameHeight)
                             {
@@ -295,7 +295,7 @@ namespace Redemption.NPCs.PreHM
                             {
                                 SoundEngine.PlaySound(SoundID.Zombie64, NPC.position);
                                 int tilePosY = BaseWorldGen.GetFirstTileFloor((int)NPC.Center.X / 16, (int)NPC.Center.Y / 16);
-                                NPC.Shoot(new Vector2(NPC.Center.X, (tilePosY * 16) + 55), ModContent.ProjectileType<AncientGladestonePillar>(), NPC.damage, Vector2.Zero, false, SoundID.Item1);
+                                NPC.Shoot(new Vector2(NPC.Center.X, (tilePosY * 16) + 55), ModContent.ProjectileType<AncientGladestonePillar>(), NPC.damage, Vector2.Zero);
                             }
                             if (NPC.frame.Y == 6 * frameHeight)
                                 NPC.velocity.X += NPC.spriteDirection == 1 ? Main.rand.Next(2, 7) : Main.rand.Next(-7, -2);

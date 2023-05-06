@@ -100,7 +100,7 @@ namespace Redemption.NPCs.FowlMorning
             {
                 float speed = MathHelper.Distance(player.Center.X, nestPos.X) / 100;
                 speed = MathHelper.Clamp(speed, 1, 7);
-                NPC.Shoot(nestPos, ModContent.ProjectileType<Rooster_EggBomb>(), (int)(NPC.damage * 1.1f), new Vector2(speed * player.Center.RightOfDir(nestPos), -Main.rand.Next(9, 10)).RotatedBy(Main.rand.NextFloat(-.2f, .2f)), true, SoundID.Item1);
+                NPC.Shoot(nestPos, ModContent.ProjectileType<Rooster_EggBomb>(), (int)(NPC.damage * 1.1f), new Vector2(speed * player.Center.RightOfDir(nestPos), -Main.rand.Next(9, 10)).RotatedBy(Main.rand.NextFloat(-.2f, .2f)), SoundID.Item1);
                 NPC.localAI[0] = Main.rand.Next(60, 301);
                 NPC.ai[3] = 0;
             }

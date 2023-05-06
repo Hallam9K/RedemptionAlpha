@@ -773,12 +773,13 @@ namespace Redemption.Globals
         /// <summary>
         /// For methods that have 'this NPC npc', instead of doing RedeHelper.Shoot(), you can do NPC.Shoot() instead.
         /// </summary>
-        public static void Shoot(this Terraria.NPC npc, Vector2 position, int projType, int damage, Vector2 velocity,
-            bool playSound, SoundStyle sound, float ai0 = 0, float ai1 = 0, int knockback = 0)
+        public static void Shoot(this Terraria.NPC npc, Vector2 position, int projType, int damage, Vector2 velocity, SoundStyle sound, float ai0 = 0, float ai1 = 0, int knockback = 0)
         {
-            if (playSound)
-                SoundEngine.PlaySound(sound, npc.position);
-
+            SoundEngine.PlaySound(sound, npc.position);
+            Shoot(npc, position, projType, damage, velocity, ai0, ai1, knockback);
+        }
+        public static void Shoot(this Terraria.NPC npc, Vector2 position, int projType, int damage, Vector2 velocity, float ai0 = 0, float ai1 = 0, int knockback = 0)
+        {
             damage /= 2;
             if (Main.expertMode)
                 damage /= Main.masterMode ? 3 : 2;

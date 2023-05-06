@@ -86,7 +86,7 @@ namespace Redemption.NPCs.PreHM
                     AITimer++;
                     if (AITimer % 8 == 0)
                     {
-                        NPC.Shoot(NPC.Center, ModContent.ProjectileType<DevilsTongueCloud>(), 0, RedeHelper.Spread(3), false, SoundID.Item1);
+                        NPC.Shoot(NPC.Center, ModContent.ProjectileType<DevilsTongueCloud>(), 0, RedeHelper.Spread(3));
                     }
                     if (AITimer > 60)
                     {

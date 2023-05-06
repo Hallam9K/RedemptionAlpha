@@ -522,7 +522,7 @@ namespace Redemption.NPCs.Bosses.ADD
                                     if (AITimer++ % 2 == 0 && AITimer < 70)
                                     {
                                         for (int i = 0; i < 2; i++)
-                                            NPC.Shoot(NPC.Center, ModContent.ProjectileType<AkkaBubble>(), NPC.damage, RedeHelper.Spread(16), false, SoundID.Item1);
+                                            NPC.Shoot(NPC.Center, ModContent.ProjectileType<AkkaBubble>(), NPC.damage, RedeHelper.Spread(16));
                                     }
                                     if (AITimer >= 120)
                                     {

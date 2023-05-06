@@ -107,7 +107,7 @@ namespace Redemption.NPCs.HM
         {
             TimerRand = Main.rand.Next(80, 120);
             NPC.netUpdate = true;
-            NPC.Shoot(NPC.Center, ModContent.ProjectileType<PrototypeSilver_Shield>(), 0, Vector2.Zero, true, CustomSounds.ShieldActivate, NPC.whoAmI);
+            NPC.Shoot(NPC.Center, ModContent.ProjectileType<PrototypeSilver_Shield>(), 0, Vector2.Zero, CustomSounds.ShieldActivate, NPC.whoAmI);
         }
         public override void AI()
         {
@@ -183,7 +183,7 @@ namespace Redemption.NPCs.HM
                     }
                     if (!shieldUp && NPC.ai[3] == 0 && NPC.life <= NPC.lifeMax / 2)
                     {
-                        NPC.Shoot(NPC.Center, ModContent.ProjectileType<PrototypeSilver_Shield>(), 0, Vector2.Zero, true, CustomSounds.ShieldActivate, NPC.whoAmI);
+                        NPC.Shoot(NPC.Center, ModContent.ProjectileType<PrototypeSilver_Shield>(), 0, Vector2.Zero, CustomSounds.ShieldActivate, NPC.whoAmI);
                         shieldUp = true;
                     }
                     if (NPC.life <= NPC.lifeMax / 5 && player.Redemption().slayerStarRating <= 3)
@@ -260,7 +260,7 @@ namespace Redemption.NPCs.HM
                         p = globalNPC.attacker.Center;
                     if (AITimer == 60 || AITimer == 70 || AITimer == 80)
                     {
-                        NPC.Shoot(originPos + new Vector2(-2 * NPC.spriteDirection, 4), ModContent.ProjectileType<PrototypeSilver_Beam>(), NPC.damage, RedeHelper.PolarVector(2, (p - originPos).ToRotation()), true, CustomSounds.Zap2 with { Pitch = 0.2f, Volume = 0.6f }, NPC.whoAmI);
+                        NPC.Shoot(originPos + new Vector2(-2 * NPC.spriteDirection, 4), ModContent.ProjectileType<PrototypeSilver_Beam>(), NPC.damage, RedeHelper.PolarVector(2, (p - originPos).ToRotation()), CustomSounds.Zap2 with { Pitch = 0.2f, Volume = 0.6f }, NPC.whoAmI);
                         NPC.velocity.X -= 1 * NPC.spriteDirection;
                     }
                     if (AITimer >= 100)
@@ -292,7 +292,7 @@ namespace Redemption.NPCs.HM
                     if (AITimer == 0)
                     {
                         Vector2 originPos2 = NPC.Center + new Vector2(-11 * NPC.spriteDirection, -9);
-                        NPC.Shoot(originPos2, ModContent.ProjectileType<PrototypeSilver_Hook>(), NPC.damage, Vector2.Zero, true, CustomSounds.Launch2 with { Volume = 0.6f }, NPC.whoAmI);
+                        NPC.Shoot(originPos2, ModContent.ProjectileType<PrototypeSilver_Hook>(), NPC.damage, Vector2.Zero, CustomSounds.Launch2 with { Volume = 0.6f }, NPC.whoAmI);
                         AITimer = 1;
                     }
                     if (AITimer >= 100)

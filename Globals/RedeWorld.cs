@@ -5,8 +5,10 @@ using Redemption.Globals.Player;
 using Redemption.NPCs.Bosses.Erhan;
 using Redemption.NPCs.Bosses.Keeper;
 using Redemption.NPCs.Friendly;
+using Redemption.NPCs.Minibosses.Calavia;
 using Redemption.Projectiles.Misc;
 using Redemption.UI.ChatUI;
+using Redemption.WorldGeneration;
 using Redemption.WorldGeneration.Space;
 using SubworldLibrary;
 using System;
@@ -129,7 +131,14 @@ namespace Redemption.Globals
             if (SubworldSystem.AnyActive<Redemption>())
                 return;
             if (Main.time == 1)
+            {
                 DayNightCount++;
+                if (RedeQuest.calaviaVar >= 3 && RedeQuest.calaviaVar < 20 && RedeQuest.shadesoulVar is 0 && RedeBossDowned.downedCalavia && !Terraria.NPC.AnyNPCs(ModContent.NPCType<Calavia_NPC>()))
+                {
+                    Vector2 gathicPortalPos = new((RedeGen.gathicPortalPoint.X + 47) * 16, (RedeGen.gathicPortalPoint.Y + 22) * 16);
+                    LabArea.SpawnNPCInWorld(gathicPortalPos, ModContent.NPCType<Calavia_NPC>());
+                }
+            }
 
             if (SubworldSystem.Current != null)
                 return;

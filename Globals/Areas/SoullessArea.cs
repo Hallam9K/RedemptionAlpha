@@ -24,7 +24,7 @@ namespace Redemption.Globals
         public static bool[] soullessBools = new bool[5];
         public static int[] soullessInts = new int[3];
         public static Rectangle stalkerZone = new((200 + Offset.X) * 16, (950 + Offset.Y) * 16, 423 * 16, 187 * 16);
-        public static Rectangle stalkerZone2 = new((315 + Offset.X) * 16, (1141 + Offset.Y) * 16, 281 * 16, 146 * 16);
+        public static Rectangle stalkerZone2 = new((315 + Offset.X) * 16, (1141 + Offset.Y) * 16, 331 * 16, 146 * 16);
         public static int keyEventTimer;
         public static readonly Point Offset = new(40, 0);
         public override void PreUpdateWorld()
@@ -221,14 +221,14 @@ namespace Redemption.Globals
                 Point StalkerPos = new((Offset.X + 463) * 16, (Offset.Y + 1103) * 16);
                 Terraria.NPC.NewNPC(new EntitySource_SpawnNPC(), StalkerPos.X, StalkerPos.Y, ModContent.NPCType<TheStalker>(), 0, 1);
             }
-            if (soullessInts[1] >= 6 && !Terraria.NPC.AnyNPCs(ModContent.NPCType<TheStalker>()))
+            if (soullessInts[1] >= 5 && !Terraria.NPC.AnyNPCs(ModContent.NPCType<TheStalker>()))
             {
                 Point StalkerPos = new((Offset.X + 425) * 16, (Offset.Y + 1181) * 16);
                 Terraria.NPC.NewNPC(new EntitySource_SpawnNPC(), StalkerPos.X, StalkerPos.Y, ModContent.NPCType<TheStalker>(), 0, 2);
             }
             if (soullessInts[1] <= 1 && !Terraria.NPC.AnyNPCs(ModContent.NPCType<SpookyEyes2>()))
             {
-                for (int i = 0; i < 30; i++)
+                for (int i = 0; i < 10; i++)
                 {
                     Vector2 eyesPos = RedeHelper.RandomPosition(new Vector2(312 + Offset.X, 1074 + Offset.Y), new Vector2(332 + Offset.X, 1083 + Offset.Y)) * 16;
                     Terraria.NPC.NewNPC(new EntitySource_SpawnNPC(), (int)eyesPos.X, (int)eyesPos.Y, ModContent.NPCType<SpookyEyes2>());
@@ -238,7 +238,7 @@ namespace Redemption.Globals
                 RedeHelper.SpawnNPC(new EntitySource_WorldGen(), (309 + Offset.X) * 16, (1084 + Offset.Y) * 16, ModContent.NPCType<LostLight>(), 2);
             if (soullessInts[1] is 5 && !Terraria.NPC.AnyNPCs(ModContent.NPCType<SpookyEyes2>()))
             {
-                for (int i = 0; i < 40; i++)
+                for (int i = 0; i < 20; i++)
                 {
                     Vector2 eyesPos = RedeHelper.RandomPosition(new Vector2(507 + Offset.X, 1178 + Offset.Y), new Vector2(527 + Offset.X, 1186 + Offset.Y)) * 16;
                     Terraria.NPC.NewNPC(new EntitySource_SpawnNPC(), (int)eyesPos.X, (int)eyesPos.Y, ModContent.NPCType<SpookyEyes2>());

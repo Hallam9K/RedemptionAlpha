@@ -49,6 +49,8 @@ namespace Redemption.NPCs.Minibosses.Calavia
         private SoundStyle voice;
         public override void AI()
         {
+            if (RedeQuest.shadesoulVar > 0)
+                NPC.active = false;
             Player player = Main.player[NPC.target];
             if (NPC.target < 0 || NPC.target == 255 || player.dead || !player.active)
                 NPC.TargetClosest();
@@ -173,7 +175,7 @@ namespace Redemption.NPCs.Minibosses.Calavia
                 case 3:
                     HoldIcefall = true;
                     if (AITimer++ == 0)
-                        NPC.Shoot(NPC.Center, ModContent.ProjectileType<Calavia_IcefallArena>(), 0, Vector2.Zero, true, CustomSounds.IceMist, NPC.whoAmI);
+                        NPC.Shoot(NPC.Center, ModContent.ProjectileType<Calavia_IcefallArena>(), 0, Vector2.Zero, CustomSounds.IceMist, NPC.whoAmI);
                     if (AITimer % 2 == 0 && AITimer <= 80)
                     {
                         SoundEngine.PlaySound(CustomSounds.IceMist with { Pitch = AITimer / 80 }, NPC.position);

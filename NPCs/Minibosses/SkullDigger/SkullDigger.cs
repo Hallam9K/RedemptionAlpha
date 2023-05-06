@@ -199,7 +199,7 @@ namespace Redemption.NPCs.Minibosses.SkullDigger
             Player player = Main.player[NPC.target];
 
             if (!RedeHelper.AnyProjectiles(ModContent.ProjectileType<SkullDigger_FlailBlade>()))
-                NPC.Shoot(NPC.Center, ModContent.ProjectileType<SkullDigger_FlailBlade>(), NPC.damage, Vector2.Zero, false, SoundID.Item1, NPC.whoAmI);
+                NPC.Shoot(NPC.Center, ModContent.ProjectileType<SkullDigger_FlailBlade>(), NPC.damage, Vector2.Zero, NPC.whoAmI);
 
             if (NPC.DespawnHandler(1))
                 return;
@@ -379,7 +379,7 @@ namespace Redemption.NPCs.Minibosses.SkullDigger
 
                                 if (AITimer % 2 == 0)
                                 {
-                                    NPC.Shoot(NPC.Center, ModContent.ProjectileType<KeeperSoulCharge>(), (int)(NPC.damage * 1.4f), RedeHelper.PolarVector(Main.rand.NextFloat(10, 12), (origin - NPC.Center).ToRotation()), true, SoundID.NPCDeath52 with { Volume = .5f });
+                                    NPC.Shoot(NPC.Center, ModContent.ProjectileType<KeeperSoulCharge>(), (int)(NPC.damage * 1.4f), RedeHelper.PolarVector(Main.rand.NextFloat(10, 12), (origin - NPC.Center).ToRotation()), SoundID.NPCDeath52 with { Volume = .5f });
                                 }
                             }
                             if (AITimer >= 120)

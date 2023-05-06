@@ -36,7 +36,7 @@ namespace Redemption.NPCs.Soulless
         {
             Player player = Main.player[Projectile.owner];
             NPC npc = Main.npc[(int)Projectile.ai[0]];
-            if (!npc.active || npc.type != ModContent.NPCType<TheStalker>())
+            if (!npc.active || (npc.type != ModContent.NPCType<TheStalker>() && npc.type != ModContent.NPCType<TheStalker_Fake>()))
             {
                 seg.Clear();
                 segRot.Clear();
@@ -61,19 +61,9 @@ namespace Redemption.NPCs.Soulless
                     Projectile.ai[1] = 2;
                     break;
                 case 2:
-                    Rectangle activeZone = new((449 + SoullessArea.Offset.X) * 16, (1182 + SoullessArea.Offset.Y) * 16, 21 * 16, 5 * 16);
+                    Rectangle activeZone = new((449 + SoullessArea.Offset.X) * 16, (1182 + SoullessArea.Offset.Y) * 16, 25 * 16, 5 * 16);
                     if (player.Hitbox.Intersects(activeZone))
-                    {
                         Projectile.ai[1] = 3;
-                        SoundStyle s = CustomSounds.SpookyNoise with { Pitch = -.2f };
-                        if (!Main.dedServ)
-                            SoundEngine.PlaySound(s);
-
-                        player.AddBuff(ModContent.BuffType<StalkerDebuff>(), 1200);
-                        SoullessArea.soullessInts[1] = 7;
-                        if (Main.netMode == NetmodeID.Server)
-                            NetMessage.SendData(MessageID.WorldData);
-                    }
                     break;
                 case 3:
                     if (Projectile.localAI[0]++ >= 2)
@@ -88,8 +78,57 @@ namespace Redemption.NPCs.Soulless
                         {
                             seg.RemoveAt(seg.Count - 1);
                             segRot.RemoveAt(segRot.Count - 1);
-                            Projectile.Center = seg[seg.Count - 1];
-                            Projectile.rotation = segRot[segRot.Count - 1];
+                            Projectile.Center = seg[^1];
+                            Projectile.rotation = segRot[^1];
+                        }
+                        SoundEngine.PlaySound(CustomSounds.StalkerHandSnap, Projectile.Center);
+                        Projectile.localAI[0] = 0;
+                    }
+                    break;
+                case 4:
+                    SoundEngine.PlaySound(CustomSounds.StalkerHandSnap, Projectile.Center);
+                    for (int i = 0; i < 6; i++)
+                    {
+                        origPoint = Projectile.Center;
+                        Vector2 offset = new(Main.rand.Next(-2, 3), -22);
+                        Projectile.rotation = (origPoint - (origPoint + offset)).ToRotation();
+                        Projectile.Center = origPoint + offset;
+                        seg.Add(Projectile.Center);
+                        segRot.Add(Projectile.rotation);
+                        Projectile.localAI[0] = 0;
+                    }
+                    Projectile.ai[1] = 5;
+                    break;
+                case 5:
+                    activeZone = new((484 + SoullessArea.Offset.X) * 16, (1160 + SoullessArea.Offset.Y) * 16, 51 * 16, 52 * 16);
+                    if (player.Hitbox.Intersects(activeZone))
+                    {
+                        Projectile.ai[1] = 6;
+                        SoundStyle s = CustomSounds.SpookyNoise with { Pitch = -.2f };
+                        if (!Main.dedServ)
+                            SoundEngine.PlaySound(s);
+
+                        player.AddBuff(ModContent.BuffType<StalkerDebuff>(), 1200);
+                        SoullessArea.soullessInts[1] = 7;
+                        if (Main.netMode == NetmodeID.Server)
+                            NetMessage.SendData(MessageID.WorldData);
+                    }
+                    break;
+                case 6:
+                    if (Projectile.localAI[0]++ >= 2)
+                    {
+                        if (seg.Count <= 1)
+                        {
+                            seg.Clear();
+                            segRot.Clear();
+                            Projectile.Kill();
+                        }
+                        else
+                        {
+                            seg.RemoveAt(seg.Count - 1);
+                            segRot.RemoveAt(segRot.Count - 1);
+                            Projectile.Center = seg[^1];
+                            Projectile.rotation = segRot[^1];
                         }
                         SoundEngine.PlaySound(CustomSounds.StalkerHandSnap, Projectile.Center);
                         Projectile.localAI[0] = 0;
@@ -115,6 +154,8 @@ namespace Redemption.NPCs.Soulless
                     {
                         Main.musicFade = Redemption.OldMusicFade;
                         SoullessArea.soullessInts[2] = 0;
+                        if (Main.netMode == NetmodeID.Server)
+                            NetMessage.SendData(MessageID.WorldData);
                         player.AddBuff(ModContent.BuffType<StunnedDebuff>(), 120);
                         player.Center = new Vector2(347 + SoullessArea.Offset.X, 1069 + SoullessArea.Offset.Y) * 16;
                         seg.Clear();
@@ -127,6 +168,13 @@ namespace Redemption.NPCs.Soulless
                 {
                     if (seg.Count <= 8)
                     {
+                        for (int i = 0; i < Main.maxProjectiles; i++)
+                        {
+                            Projectile other = Main.projectile[i];
+                            if (!other.active || other.whoAmI == Projectile.whoAmI || other.type != Type)
+                                continue;
+                            other.Kill();
+                        }
                         Redemption.OldMusicFade = Main.musicFade;
                         SoundEngine.PlaySound(CustomSounds.StalkerScare, player.position);
                         Projectile.Center = npc.Center;
@@ -138,8 +186,8 @@ namespace Redemption.NPCs.Soulless
                         {
                             seg.RemoveAt(seg.Count - 1);
                             segRot.RemoveAt(segRot.Count - 1);
-                            Projectile.Center = seg[seg.Count - 1];
-                            Projectile.rotation = segRot[segRot.Count - 1];
+                            Projectile.Center = seg[^1];
+                            Projectile.rotation = segRot[^1];
                         }
                     }
                     player.Center = Projectile.Center;
@@ -151,7 +199,7 @@ namespace Redemption.NPCs.Soulless
             }
             int speed = 20;
             if (player.DistanceSQ(Projectile.Center) < 100 * 100)
-                speed = 30;
+                speed = 40;
             else if (player.DistanceSQ(Projectile.Center) > 400 * 400)
                 speed = 10;
             if (player.DistanceSQ(Projectile.Center) > 600 * 600)

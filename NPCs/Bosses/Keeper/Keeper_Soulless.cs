@@ -402,7 +402,7 @@ namespace Redemption.NPCs.Bosses.Keeper
                             if (AITimer == 60)
                             {
                                 NPC.Shoot(NPC.Center, ModContent.ProjectileType<Keeper_SoullessDusksong>(), (int)(NPC.damage * 1.1f),
-                                    RedeHelper.PolarVector(8, (player.Center - NPC.Center).ToRotation()), true, SoundID.NPCDeath6, NPC.whoAmI);
+                                    RedeHelper.PolarVector(8, (player.Center - NPC.Center).ToRotation()), SoundID.NPCDeath6, NPC.whoAmI);
                                 for (int i = 0; i < 30; i++)
                                 {
                                     int dustIndex = Dust.NewDust(NPC.position + NPC.velocity, NPC.width, NPC.height, DustID.AncientLight, Scale: 3);
@@ -436,7 +436,7 @@ namespace Redemption.NPCs.Bosses.Keeper
                             {
                                 Vector2 pos = NPC.Center + Vector2.One.RotatedBy(MathHelper.ToRadians(TimerRand)) * 60;
                                 NPC.Shoot(pos, ModContent.ProjectileType<ShadowBolt_Soulless>(), NPC.damage,
-                                       RedeHelper.PolarVector(0.5f, (player.Center - pos).ToRotation()), true, SoundID.Item20);
+                                       RedeHelper.PolarVector(0.5f, (player.Center - pos).ToRotation()), SoundID.Item20);
 
                                 TimerRand += 45;
                             }
@@ -509,7 +509,7 @@ namespace Redemption.NPCs.Bosses.Keeper
 
                                     if (AITimer % 2 == 0)
                                     {
-                                        NPC.Shoot(NPC.Center, ModContent.ProjectileType<KeeperSoulCharge>(), (int)(NPC.damage * 1.4f), RedeHelper.PolarVector(Main.rand.NextFloat(14, 16), (origin - NPC.Center).ToRotation()), true, SoundID.NPCDeath52 with { Volume = .5f });
+                                        NPC.Shoot(NPC.Center, ModContent.ProjectileType<KeeperSoulCharge>(), (int)(NPC.damage * 1.4f), RedeHelper.PolarVector(Main.rand.NextFloat(14, 16), (origin - NPC.Center).ToRotation()), SoundID.NPCDeath52 with { Volume = .5f });
                                     }
                                 }
                                 if (AITimer >= 320)
@@ -539,9 +539,7 @@ namespace Redemption.NPCs.Bosses.Keeper
                                 speed *= 0.96f;
                             if (AITimer >= 30 && AITimer % 30 == 0)
                             {
-                                NPC.Shoot(new Vector2(NPC.Center.X + 3 * NPC.spriteDirection, NPC.Center.Y - 37), ModContent.ProjectileType<KeeperDreadCoil_Soulless>(),
-                                    NPC.damage, RedeHelper.PolarVector(9, (player.Center - NPC.Center).ToRotation() + Main.rand.NextFloat(-0.12f, 0.12f)),
-                                    true, SoundID.Item20);
+                                NPC.Shoot(new Vector2(NPC.Center.X + 3 * NPC.spriteDirection, NPC.Center.Y - 37), ModContent.ProjectileType<KeeperDreadCoil_Soulless>(), NPC.damage, RedeHelper.PolarVector(9, (player.Center - NPC.Center).ToRotation() + Main.rand.NextFloat(-0.12f, 0.12f)), SoundID.Item20);
                             }
                             if (AITimer >= 130)
                             {

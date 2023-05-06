@@ -78,6 +78,15 @@ namespace Redemption.NPCs.Minibosses.Calavia
         readonly DialogueChain chain = new();
         public override void AI()
         {
+            if (RedeQuest.shadesoulVar > 0)
+            {
+                RedeQuest.calaviaVar = 21;
+                if (Main.netMode == NetmodeID.Server)
+                    NetMessage.SendData(MessageID.WorldData);
+
+                NPC.active = false;
+            }
+
             Player player = Main.player[NPC.target];
             if (NPC.target < 0 || NPC.target == 255 || player.dead || !player.active)
                 NPC.TargetClosest();

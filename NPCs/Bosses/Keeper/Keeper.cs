@@ -510,7 +510,7 @@ namespace Redemption.NPCs.Bosses.Keeper
                                 for (int i = 0; i < 6; i++)
                                 {
                                     NPC.Shoot(NPC.Center, ModContent.ProjectileType<KeeperBloodWave>(), NPC.damage,
-                                        RedeHelper.PolarVector(Main.rand.NextFloat(8, 16), (player.Center - NPC.Center).ToRotation() + Main.rand.NextFloat(-0.3f, 0.3f)), true, SoundID.NPCDeath19, NPC.whoAmI);
+                                        RedeHelper.PolarVector(Main.rand.NextFloat(8, 16), (player.Center - NPC.Center).ToRotation() + Main.rand.NextFloat(-0.3f, 0.3f)), SoundID.NPCDeath19, NPC.whoAmI);
                                 }
                                 for (int i = 0; i < 30; i++)
                                 {
@@ -544,8 +544,7 @@ namespace Redemption.NPCs.Bosses.Keeper
                             if (AITimer >= 60 && AITimer % (Unveiled ? 20 : 25) == 0)
                             {
                                 Vector2 pos = NPC.Center + Vector2.One.RotatedBy(MathHelper.ToRadians(TimerRand)) * 60;
-                                NPC.Shoot(pos, ModContent.ProjectileType<ShadowBolt>(), NPC.damage,
-                                       RedeHelper.PolarVector(Main.expertMode ? 0.5f : 0.3f, (player.Center - pos).ToRotation()), true, SoundID.Item20);
+                                NPC.Shoot(pos, ModContent.ProjectileType<ShadowBolt>(), NPC.damage, RedeHelper.PolarVector(Main.expertMode ? 0.5f : 0.3f, (player.Center - pos).ToRotation()), SoundID.Item20);
 
                                 TimerRand += 45;
                             }
@@ -619,7 +618,7 @@ namespace Redemption.NPCs.Bosses.Keeper
 
                                     if (AITimer % 2 == 0)
                                     {
-                                        NPC.Shoot(NPC.Center, ModContent.ProjectileType<KeeperSoulCharge>(), (int)(NPC.damage * 1.4f), RedeHelper.PolarVector(Main.rand.NextFloat(14, 16), (origin - NPC.Center).ToRotation()), true, SoundID.NPCDeath52 with { Volume = .5f });
+                                        NPC.Shoot(NPC.Center, ModContent.ProjectileType<KeeperSoulCharge>(), (int)(NPC.damage * 1.4f), RedeHelper.PolarVector(Main.rand.NextFloat(14, 16), (origin - NPC.Center).ToRotation()), SoundID.NPCDeath52 with { Volume = .5f });
                                     }
                                 }
                                 if (AITimer >= 320)
@@ -651,9 +650,7 @@ namespace Redemption.NPCs.Bosses.Keeper
                                     speed *= 0.96f;
                                 if (AITimer >= 30 && AITimer % 30 == 0)
                                 {
-                                    NPC.Shoot(new Vector2(NPC.Center.X + 3 * NPC.spriteDirection, NPC.Center.Y - 37), ModContent.ProjectileType<KeeperDreadCoil>(),
-                                        NPC.damage, RedeHelper.PolarVector(7, (player.Center - NPC.Center).ToRotation() + Main.rand.NextFloat(-0.08f, 0.08f)),
-                                        true, SoundID.Item20);
+                                    NPC.Shoot(new Vector2(NPC.Center.X + 3 * NPC.spriteDirection, NPC.Center.Y - 37), ModContent.ProjectileType<KeeperDreadCoil>(), NPC.damage, RedeHelper.PolarVector(7, (player.Center - NPC.Center).ToRotation() + Main.rand.NextFloat(-0.08f, 0.08f)), SoundID.Item20);
                                 }
                                 if (AITimer >= 130)
                                 {
@@ -694,7 +691,7 @@ namespace Redemption.NPCs.Bosses.Keeper
                         if (!Main.dedServ)
                             SoundEngine.PlaySound(CustomSounds.Shriek, NPC.position);
 
-                        NPC.Shoot(new Vector2(NPC.Center.X + 3 * NPC.spriteDirection, NPC.Center.Y - 37), ModContent.ProjectileType<VeilFX>(), 0, Vector2.Zero, false, SoundID.Item1);
+                        NPC.Shoot(new Vector2(NPC.Center.X + 3 * NPC.spriteDirection, NPC.Center.Y - 37), ModContent.ProjectileType<VeilFX>(), 0, Vector2.Zero);
 
                         NPC.dontTakeDamage = true;
                         if (Main.netMode == NetmodeID.Server && NPC.whoAmI < Main.maxNPCs)
@@ -757,7 +754,7 @@ namespace Redemption.NPCs.Bosses.Keeper
                             NetMessage.SendData(MessageID.SyncNPC, number: NPC.whoAmI);
 
                         NPC.alpha = 0;
-                        NPC.Shoot(new Vector2(NPC.Center.X + 3 * NPC.spriteDirection, NPC.Center.Y - 37), ModContent.ProjectileType<VeilFX>(), 0, Vector2.Zero, false, SoundID.Item1);
+                        NPC.Shoot(new Vector2(NPC.Center.X + 3 * NPC.spriteDirection, NPC.Center.Y - 37), ModContent.ProjectileType<VeilFX>(), 0, Vector2.Zero);
                     }
 
                     if (AITimer == 60)
@@ -812,7 +809,7 @@ namespace Redemption.NPCs.Bosses.Keeper
                         Main.NewText("The Keeper's Spirit fades away... ?", Colors.RarityPurple.R, Colors.RarityPurple.G, Colors.RarityPurple.B);
                         Item.NewItem(NPC.GetSource_Loot(), (int)NPC.position.X, (int)NPC.position.Y, NPC.width, NPC.height, ModContent.ItemType<KeepersCirclet>());
                         Item.NewItem(NPC.GetSource_Loot(), (int)NPC.position.X, (int)NPC.position.Y, NPC.width, NPC.height, ModContent.ItemType<KeeperTrophy>());
-                        NPC.Shoot(NPC.Center, ModContent.ProjectileType<KeeperSoul>(), 0, Vector2.Zero, false, SoundID.Item1);
+                        NPC.Shoot(NPC.Center, ModContent.ProjectileType<KeeperSoul>(), 0, Vector2.Zero);
                         if (!RedeBossDowned.keeperSaved)
                         {
                             RedeWorld.alignment += 3;

@@ -301,7 +301,7 @@ namespace Redemption.NPCs.Bosses.Cleaver
                             if (Main.netMode != NetmodeID.MultiplayerClient)
                             {
                                 for (int i = 0; i < 4; i++)
-                                    NPC.Shoot(NPC.Center, ModContent.ProjectileType<WielderOrb>(), 0, Vector2.Zero, false, SoundID.Item1, NPC.whoAmI, i * 90);
+                                    NPC.Shoot(NPC.Center, ModContent.ProjectileType<WielderOrb>(), 0, Vector2.Zero, NPC.whoAmI, i * 90);
                             }
                             AIHost = 0;
                             AIState = ActionState.Idle;

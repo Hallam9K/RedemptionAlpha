@@ -187,7 +187,7 @@ namespace Redemption.NPCs.Lab.Behemoth
                         for (int i = 0; i < 3; i++)
                         {
                             int rot = 25 * i;
-                            NPC.Shoot(NPC.Center + new Vector2(0, 40), ModContent.ProjectileType<GreenGas_Tele>(), 0, RedeHelper.PolarVector(5, MathHelper.PiOver2 + MathHelper.ToRadians(rot - 25)), false, SoundID.Item1);
+                            NPC.Shoot(NPC.Center + new Vector2(0, 40), ModContent.ProjectileType<GreenGas_Tele>(), 0, RedeHelper.PolarVector(5, MathHelper.PiOver2 + MathHelper.ToRadians(rot - 25)));
                         }
                     }
                     if (AITimer == 60)
@@ -195,7 +195,7 @@ namespace Redemption.NPCs.Lab.Behemoth
                         for (int i = 0; i < 5; i++)
                         {
                             int rot = 20 * i;
-                            NPC.Shoot(NPC.Center + new Vector2(0, 40), ModContent.ProjectileType<GreenGas_Tele>(), 0, RedeHelper.PolarVector(5, MathHelper.PiOver2 + MathHelper.ToRadians(rot - 40)), false, SoundID.Item1);
+                            NPC.Shoot(NPC.Center + new Vector2(0, 40), ModContent.ProjectileType<GreenGas_Tele>(), 0, RedeHelper.PolarVector(5, MathHelper.PiOver2 + MathHelper.ToRadians(rot - 40)));
                         }
                     }
                     if (AITimer == 60 || AITimer == 140)
@@ -203,7 +203,7 @@ namespace Redemption.NPCs.Lab.Behemoth
                         for (int i = 0; i < 3; i++)
                         {
                             int rot = 25 * i;
-                            NPC.Shoot(NPC.Center + new Vector2(0, 40), ModContent.ProjectileType<GreenGas_Proj>(), 75, RedeHelper.PolarVector(5, MathHelper.PiOver2 + MathHelper.ToRadians(rot - 25)), true, SoundID.NPCDeath13);
+                            NPC.Shoot(NPC.Center + new Vector2(0, 40), ModContent.ProjectileType<GreenGas_Proj>(), 75, RedeHelper.PolarVector(5, MathHelper.PiOver2 + MathHelper.ToRadians(rot - 25)), SoundID.NPCDeath13);
                         }
                     }
                     if (AITimer == 100)
@@ -211,7 +211,7 @@ namespace Redemption.NPCs.Lab.Behemoth
                         for (int i = 0; i < 5; i++)
                         {
                             int rot = 20 * i;
-                            NPC.Shoot(NPC.Center + new Vector2(0, 40), ModContent.ProjectileType<GreenGas_Proj>(), 75, RedeHelper.PolarVector(5, MathHelper.PiOver2 + MathHelper.ToRadians(rot - 40)), true, SoundID.NPCDeath13);
+                            NPC.Shoot(NPC.Center + new Vector2(0, 40), ModContent.ProjectileType<GreenGas_Proj>(), 75, RedeHelper.PolarVector(5, MathHelper.PiOver2 + MathHelper.ToRadians(rot - 40)), SoundID.NPCDeath13);
                         }
                     }
                     if (AITimer++ >= 180)
@@ -223,7 +223,7 @@ namespace Redemption.NPCs.Lab.Behemoth
                     break;
                 case ActionState.Sludge:
                     if (AITimer++ == 0 || AITimer == 8 || AITimer == 16)
-                        NPC.Shoot(NPC.Center + new Vector2(0, 20), ModContent.ProjectileType<GreenGloop_Tele>(), 0, Vector2.Zero, false, SoundID.Item1);
+                        NPC.Shoot(NPC.Center + new Vector2(0, 20), ModContent.ProjectileType<GreenGloop_Tele>(), 0, Vector2.Zero);
 
                     if (AITimer == 60)
                     {
@@ -236,7 +236,7 @@ namespace Redemption.NPCs.Lab.Behemoth
 
                     if (AITimer >= 60 && AITimer <= 100 && NPC.frameCounter % 3 == 0)
                     {
-                        NPC.Shoot(NPC.Center + new Vector2(0, 40), ModContent.ProjectileType<GreenGloop_Proj>(), 90, RedeHelper.PolarVector(12, TimerRand), false, SoundID.Item1, NPC.whoAmI);
+                        NPC.Shoot(NPC.Center + new Vector2(0, 40), ModContent.ProjectileType<GreenGloop_Proj>(), 90, RedeHelper.PolarVector(12, TimerRand), NPC.whoAmI);
                         TimerRand += TimerRand2 == 1 ? 0.2f : -0.2f;
                     }
                     if (AITimer >= 180)
@@ -250,7 +250,7 @@ namespace Redemption.NPCs.Lab.Behemoth
                     break;
             }
             if (Main.LocalPlayer.Center.Y < NPC.Center.Y && Main.rand.NextBool(5))
-                NPC.Shoot(new Vector2(NPC.position.X + Main.rand.Next(0, NPC.width), NPC.Center.Y), ModContent.ProjectileType<GreenGas_Proj>(), 200, new Vector2(0, Main.rand.Next(-20, -10)), false, SoundID.Item1);
+                NPC.Shoot(new Vector2(NPC.position.X + Main.rand.Next(0, NPC.width), NPC.Center.Y), ModContent.ProjectileType<GreenGas_Proj>(), 200, new Vector2(0, Main.rand.Next(-20, -10)));
 
             if (NPC.Center.Y > (RedeGen.LabPoint.Y + 119) * 16)
             {

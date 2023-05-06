@@ -238,7 +238,7 @@ namespace Redemption.NPCs.Bosses.Cleaver
             Vector2 PosPlayer3Check = new(player.Center.X + (200 * NPC.RightOfDir(player)), player.Center.Y - 160);
 
             if (!RedeHelper.AnyProjectiles(ModContent.ProjectileType<CleaverHitbox>()))
-                NPC.Shoot(NPC.Center, ModContent.ProjectileType<CleaverHitbox>(), NPC.damage, Vector2.Zero, false, SoundID.Item1, NPC.whoAmI);
+                NPC.Shoot(NPC.Center, ModContent.ProjectileType<CleaverHitbox>(), NPC.damage, Vector2.Zero, NPC.whoAmI);
 
             if (!player.active || player.dead)
                 return;
@@ -277,9 +277,9 @@ namespace Redemption.NPCs.Bosses.Cleaver
                         rot = NPC.rotation;
                         if (AITimer > 20)
                         {
-                            NPC.Shoot(new Vector2(NPC.Center.X - (120 * 16) - 10, NPC.Center.Y + 8), ModContent.ProjectileType<OOBarrier>(), 0, Vector2.Zero, false, SoundID.Item1, 0, 1);
+                            NPC.Shoot(new Vector2(NPC.Center.X - (120 * 16) - 10, NPC.Center.Y + 8), ModContent.ProjectileType<OOBarrier>(), 0, Vector2.Zero, 0, 1);
 
-                            NPC.Shoot(new Vector2(NPC.Center.X + (120 * 16) + 26, NPC.Center.Y + 8), ModContent.ProjectileType<OOBarrier>(), 0, Vector2.Zero, false, SoundID.Item1, 0, -1);
+                            NPC.Shoot(new Vector2(NPC.Center.X + (120 * 16) + 26, NPC.Center.Y + 8), ModContent.ProjectileType<OOBarrier>(), 0, Vector2.Zero, 0, -1);
 
                             ArenaWorld.arenaBoss = "OC";
                             ArenaWorld.arenaTopLeft = new Vector2(NPC.Center.X - (120 * 16) + 8, NPC.Center.Y - (800 * 16) + 8);
@@ -352,7 +352,7 @@ namespace Redemption.NPCs.Bosses.Cleaver
                                     AITimer++;
                                     if (AITimer < 20)
                                     {
-                                        NPC.Shoot(new Vector2(NPC.Center.X, NPC.Center.Y) + RedeHelper.PolarVector(134, NPC.rotation + (float)-Math.PI / 2), ModContent.ProjectileType<OmegaBlast>(), (int)(NPC.damage * 0.7f), RedeHelper.PolarVector(2, NPC.rotation + (float)-Math.PI / 2), false, SoundID.Item1);
+                                        NPC.Shoot(new Vector2(NPC.Center.X, NPC.Center.Y) + RedeHelper.PolarVector(134, NPC.rotation + (float)-Math.PI / 2), ModContent.ProjectileType<OmegaBlast>(), (int)(NPC.damage * 0.7f), RedeHelper.PolarVector(2, NPC.rotation + (float)-Math.PI / 2));
                                         NPC.velocity -= NPC.velocity.RotatedBy(Math.PI / 2) * NPC.velocity.Length() / NPC.Distance(host.Center);
                                     }
                                     else
@@ -404,7 +404,7 @@ namespace Redemption.NPCs.Bosses.Cleaver
                                     AITimer++;
                                     if (AITimer % 10 == 0)
                                     {
-                                        NPC.Shoot(new Vector2(NPC.Center.X, NPC.Center.Y) + RedeHelper.PolarVector(134, NPC.rotation + (float)-Math.PI / 2), ModContent.ProjectileType<OmegaBlast>(), (int)(NPC.damage * 0.7f), RedeHelper.PolarVector(5, NPC.rotation + (float)-Math.PI / 2), false, SoundID.Item1);
+                                        NPC.Shoot(new Vector2(NPC.Center.X, NPC.Center.Y) + RedeHelper.PolarVector(134, NPC.rotation + (float)-Math.PI / 2), ModContent.ProjectileType<OmegaBlast>(), (int)(NPC.damage * 0.7f), RedeHelper.PolarVector(5, NPC.rotation + (float)-Math.PI / 2));
                                     }
                                     if (AITimer < 60)
                                         NPC.MoveToNPC(host, RedeHelper.PolarVector(-200, host.rotation), 18, 20);
@@ -468,7 +468,7 @@ namespace Redemption.NPCs.Bosses.Cleaver
                                     {
                                         NPC.velocity *= .96f;
                                         if (AITimer >= 130 && AITimer % 5 == 0 && AITimer < 200)
-                                            NPC.Shoot(NPC.Center, ModContent.ProjectileType<PhantomCleaver>(), (int)(NPC.damage * 0.9f), new Vector2(Main.rand.NextFloat(-6, 7), Main.rand.NextFloat(-6, 7)), false, SoundID.Item1);
+                                            NPC.Shoot(NPC.Center, ModContent.ProjectileType<PhantomCleaver>(), (int)(NPC.damage * 0.9f), new Vector2(Main.rand.NextFloat(-6, 7), Main.rand.NextFloat(-6, 7)));
                                     }
                                 }
                                 break;
@@ -494,7 +494,7 @@ namespace Redemption.NPCs.Bosses.Cleaver
                                         if (NPC.Distance(PosPlayer) < 300 || AITimer > 40)
                                         {
                                             NPC.rotation = 0;
-                                            NPC.Shoot(NPC.Center + RedeHelper.PolarVector(134, NPC.rotation + (float)-Math.PI / 2), ModContent.ProjectileType<RedPrism>(), (int)(NPC.damage * 0.9f), RedeHelper.PolarVector(9, NPC.rotation + (float)-Math.PI / 2), false, SoundID.Item1, ai0: NPC.whoAmI);
+                                            NPC.Shoot(NPC.Center + RedeHelper.PolarVector(134, NPC.rotation + (float)-Math.PI / 2), ModContent.ProjectileType<RedPrism>(), (int)(NPC.damage * 0.9f), RedeHelper.PolarVector(9, NPC.rotation + (float)-Math.PI / 2), NPC.whoAmI);
                                             AITimer = 100;
                                         }
                                         else
@@ -550,7 +550,7 @@ namespace Redemption.NPCs.Bosses.Cleaver
                                         if (AITimer == 20)
                                         {
                                             SoundEngine.PlaySound(CustomSounds.OODashReady with { Pitch = 0.9f }, NPC.position);
-                                            NPC.Shoot(NPC.Center, ModContent.ProjectileType<PhantomCleaver2_Spawner>(), (int)(NPC.damage * 0.9f), Vector2.Zero, false, SoundID.Item1);
+                                            NPC.Shoot(NPC.Center, ModContent.ProjectileType<PhantomCleaver2_Spawner>(), (int)(NPC.damage * 0.9f), Vector2.Zero);
                                         }
 
                                         if (AITimer == 50)

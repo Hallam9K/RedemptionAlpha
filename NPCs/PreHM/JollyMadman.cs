@@ -196,6 +196,7 @@ namespace Redemption.NPCs.PreHM
             TimerRand = Main.rand.Next(80, 280);
             NPC.netUpdate = true;
         }
+        private bool parried;
         public override void AI()
         {
             Player player = Main.player[NPC.target];
@@ -203,7 +204,7 @@ namespace Redemption.NPCs.PreHM
             NPC.TargetClosest();
             if (AIState != ActionState.Slash)
                 NPC.LookByVelocity();
-
+            bool parryActive = false;
             Rectangle SlashHitbox = new((int)(NPC.spriteDirection == -1 ? NPC.Center.X - 45 : NPC.Center.X + 7), (int)(NPC.Center.Y - 34), 38, 60);
             dodgeCooldown--;
             dodgeCooldown = (int)MathHelper.Max(0, dodgeCooldown);
@@ -309,43 +310,44 @@ namespace Redemption.NPCs.PreHM
 
                     if (NPC.frame.Y == 6 * 62 && globalNPC.attacker.Hitbox.Intersects(SlashHitbox))
                     {
-                        int damage = NPC.RedemptionNPCBuff().disarmed ? NPC.damage / 3 : NPC.damage;
-                        if (globalNPC.attacker is NPC attackerNPC && attackerNPC.immune[NPC.whoAmI] <= 0)
+                        if (NPC.frameCounter == 0)
+                            parried = false;
+                        parryActive = true;
+                        RedeProjectile.SwordClashHostile(SlashHitbox, NPC, ref parried);
+                        if (!parried)
                         {
-                            attackerNPC.immune[NPC.whoAmI] = 10;
-                            int hitDirection = attackerNPC.RightOfDir(NPC);
-                            BaseAI.DamageNPC(attackerNPC, damage, 5, hitDirection, NPC);
-                            attackerNPC.AddBuff(BuffID.Bleeding, 1000);
-                            attackerNPC.AddBuff(ModContent.BuffType<DirtyWoundDebuff>(), 1400);
-                            if (attackerNPC.life <= 0)
+                            int damage = NPC.RedemptionNPCBuff().disarmed ? NPC.damage / 3 : NPC.damage;
+                            if (globalNPC.attacker is NPC attackerNPC && attackerNPC.immune[NPC.whoAmI] <= 0)
                             {
-                                for (int i = 0; i < 30; i++)
+                                attackerNPC.immune[NPC.whoAmI] = 10;
+                                int hitDirection = attackerNPC.RightOfDir(NPC);
+                                BaseAI.DamageNPC(attackerNPC, damage, 5, hitDirection, NPC);
+                                if (attackerNPC.life <= 0)
                                 {
-                                    int dustIndex = Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.LifeDrain);
-                                    Main.dust[dustIndex].velocity.Y = -3;
-                                    Main.dust[dustIndex].velocity.X = 0;
-                                    Main.dust[dustIndex].noGravity = true;
+                                    for (int i = 0; i < 30; i++)
+                                    {
+                                        int dustIndex = Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.LifeDrain);
+                                        Main.dust[dustIndex].velocity.Y = -3;
+                                        Main.dust[dustIndex].velocity.X = 0;
+                                        Main.dust[dustIndex].noGravity = true;
+                                    }
+                                    SoundEngine.PlaySound(SoundID.NPCHit48, NPC.position);
+                                    NPC.life += 250;
+                                    if (NPC.life >= NPC.lifeMax)
+                                        NPC.life = NPC.lifeMax;
+                                    NPC.HealEffect(250);
                                 }
-                                SoundEngine.PlaySound(SoundID.NPCHit48, NPC.position);
-                                NPC.life += 250;
-                                if (NPC.life >= NPC.lifeMax)
-                                    NPC.life = NPC.lifeMax;
-                                NPC.HealEffect(250);
                             }
-                        }
-                        else if (globalNPC.attacker is Player attackerPlayer)
-                        {
-                            int hitDirection = attackerPlayer.RightOfDir(NPC);
-                            BaseAI.DamagePlayer(attackerPlayer, damage, 5, hitDirection, NPC);
-                            if (globalNPC.attacker is Player && (Main.rand.NextBool(2) || Main.expertMode))
+                            else if (globalNPC.attacker is Player attackerPlayer)
                             {
-                                attackerPlayer.AddBuff(BuffID.Bleeding, 1000);
-                                attackerPlayer.AddBuff(ModContent.BuffType<DirtyWoundDebuff>(), 1400);
+                                int hitDirection = attackerPlayer.RightOfDir(NPC);
+                                BaseAI.DamagePlayer(attackerPlayer, damage, 5, hitDirection, NPC);
                             }
                         }
                     }
                     break;
             }
+            NPC.Redemption().CreateParryWindow(SlashHitbox, ref parryActive);
         }
         public override bool? CanFallThroughPlatforms() => NPC.Redemption().fallDownPlatform;
         private bool Flare;
@@ -485,7 +487,19 @@ namespace Redemption.NPCs.PreHM
                 NPC.netUpdate = true;
             }
         }
-
+        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        {
+            target.AddBuff(BuffID.Bleeding, 1000);
+            target.AddBuff(ModContent.BuffType<DirtyWoundDebuff>(), 1400);
+        }
+        public override void OnHitPlayer(Player target, int damage, bool crit)
+        {
+            if (Main.rand.NextBool(2) || Main.expertMode)
+            {
+                target.AddBuff(BuffID.Bleeding, 1000);
+                target.AddBuff(ModContent.BuffType<DirtyWoundDebuff>(), 1400);
+            }
+        }
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
             var effects = NPC.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;

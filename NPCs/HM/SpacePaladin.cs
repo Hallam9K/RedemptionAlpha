@@ -282,7 +282,7 @@ namespace Redemption.NPCs.HM
                         p = globalNPC.attacker.Center;
                     if (AITimer == 60 || AITimer == 65 || AITimer == 70 || AITimer == 75)
                     {
-                        NPC.Shoot(originPos + new Vector2(-2 * NPC.spriteDirection, 4), ModContent.ProjectileType<PrototypeSilver_Beam>(), NPC.damage, RedeHelper.PolarVector(2, (p - originPos).ToRotation()), true, CustomSounds.Zap2 with { Pitch = 0.2f, Volume = 0.6f }, NPC.whoAmI);
+                        NPC.Shoot(originPos + new Vector2(-2 * NPC.spriteDirection, 4), ModContent.ProjectileType<PrototypeSilver_Beam>(), NPC.damage, RedeHelper.PolarVector(2, (p - originPos).ToRotation()), CustomSounds.Zap2 with { Pitch = 0.2f, Volume = 0.6f }, NPC.whoAmI);
                         NPC.velocity.X -= 1 * NPC.spriteDirection;
                     }
                     if (AITimer >= 90)
@@ -527,7 +527,7 @@ namespace Redemption.NPCs.HM
                     if (numtries >= 20)
                         break;
 
-                    NPC.Shoot(origin - new Vector2(0, 8), ModContent.ProjectileType<SpacePaladin_GroundShock>(), NPC.damage, Vector2.Zero, false, SoundID.DD2_MonkStaffGroundImpact with { Volume = 0.2f });
+                    NPC.Shoot(origin - new Vector2(0, 8), ModContent.ProjectileType<SpacePaladin_GroundShock>(), NPC.damage, Vector2.Zero, SoundID.DD2_MonkStaffGroundImpact with { Volume = 0.2f });
                 }
             }
             if (slamTimer >= 60)

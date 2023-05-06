@@ -192,7 +192,7 @@ namespace Redemption.NPCs.Wasteland
                             Main.dust[dustIndex].velocity *= 10f;
                         }
                         for (int i = 0; i < 16; i++)
-                            NPC.Shoot(NPC.Center, ModContent.ProjectileType<OozeBall_Proj>(), NPC.damage, RedeHelper.SpreadUp(12), false, SoundID.Item, NPC.whoAmI);
+                            NPC.Shoot(NPC.Center, ModContent.ProjectileType<OozeBall_Proj>(), NPC.damage, RedeHelper.SpreadUp(12), NPC.whoAmI);
                         player.ApplyDamageToNPC(NPC, 9999, 0, 0, false);
                     }
                     break;

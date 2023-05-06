@@ -2602,7 +2602,7 @@ namespace Redemption.WorldGeneration
                     Vector2 gathicPortalPos = new(((gathicPortalPoint.X + 51) * 16) - 8, ((gathicPortalPoint.Y + 23) * 16) - 4);
                     LabArea.SpawnNPCInWorld(gathicPortalPos, ModContent.NPCType<GathuramPortal>());
                 }
-                if ((RedeQuest.calaviaVar is 1 or 2) && !RedeBossDowned.downedCalavia && !NPC.AnyNPCs(ModContent.NPCType<Calavia_Intro>()) && !NPC.AnyNPCs(ModContent.NPCType<Calavia>()))
+                if ((RedeQuest.calaviaVar is 1 or 2) && RedeQuest.shadesoulVar is 0 && !RedeBossDowned.downedCalavia && !NPC.AnyNPCs(ModContent.NPCType<Calavia_Intro>()) && !NPC.AnyNPCs(ModContent.NPCType<Calavia>()))
                 {
                     Vector2 gathicPortalPos = new((gathicPortalPoint.X + 47) * 16, (gathicPortalPoint.Y + 22) * 16);
                     LabArea.SpawnNPCInWorld(gathicPortalPos, ModContent.NPCType<Calavia_Intro>());

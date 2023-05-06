@@ -86,7 +86,8 @@ namespace Redemption.NPCs.Soulless
             Player player = Main.player[NPC.target];
             if (NPC.target < 0 || NPC.target == 255 || player.dead || !player.active)
                 NPC.TargetClosest(true);
-
+            if (SoullessArea.soullessInts[1] is 7 && player.Hitbox.Intersects(SoullessArea.stalkerZone2))
+                NPC.ai[1] = 1;
             bool playerActive = player != null && player.active && !player.dead;
             BaseAI.LookAt(playerActive ? player.Center : (NPC.Center + NPC.velocity), NPC, 0);
 
@@ -101,7 +102,7 @@ namespace Redemption.NPCs.Soulless
                 if (!Main.dedServ)
                     SoundEngine.PlaySound(CustomSounds.MaskLaugh1);
 
-                NPC.Shoot(NPC.Center, ProjectileID.LostSoulHostile, NPC.damage, RedeHelper.PolarVector(15, (player.Center - NPC.Center).ToRotation()), false, SoundID.Item1);
+                NPC.Shoot(NPC.Center, ProjectileID.LostSoulHostile, NPC.damage, RedeHelper.PolarVector(15, (player.Center - NPC.Center).ToRotation()));
                 NPC.ai[1] = 1;
             }
             else if (NPC.ai[1] == 1)

@@ -250,7 +250,7 @@ namespace Redemption.NPCs.Soulless
                             NPC.velocity.X = 2 * NPC.spriteDirection;
                             int damage = NPC.RedemptionNPCBuff().disarmed ? NPC.damage / 3 : NPC.damage;
                             NPC.Shoot(NPC.Center, ModContent.ProjectileType<ShadeJavelin_Proj>(), damage,
-                                RedeHelper.PolarVector(powerUp ? 19 : 14, (globalNPC.attacker.Center - NPC.Center).ToRotation() - (0.16f * NPC.spriteDirection)), true, SoundID.Item1, NPC.whoAmI, powerUp ? 1 : 0);
+                                RedeHelper.PolarVector(powerUp ? 19 : 14, (globalNPC.attacker.Center - NPC.Center).ToRotation() - (0.16f * NPC.spriteDirection)), SoundID.Item1, NPC.whoAmI, powerUp ? 1 : 0);
                         }
                         if (AniFrameY > 5)
                         {

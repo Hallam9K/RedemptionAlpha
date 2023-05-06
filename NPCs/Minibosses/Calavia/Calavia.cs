@@ -179,8 +179,8 @@ namespace Redemption.NPCs.Minibosses.Calavia
 
                 }
             }
-            if (RedeQuest.calaviaVar < 3)
-                RedeQuest.calaviaVar = 3;
+            if (RedeQuest.calaviaVar < 30)
+                RedeQuest.calaviaVar = 30;
             if (Main.netMode != NetmodeID.SinglePlayer)
                 NetMessage.SendData(MessageID.WorldData);
             NPC.SetEventFlagCleared(ref RedeBossDowned.downedCalavia, -1);
@@ -337,7 +337,7 @@ namespace Redemption.NPCs.Minibosses.Calavia
             {
                 case ActionState.Begin:
                     origin = NPC.Center;
-                    NPC.Shoot(NPC.Center, ModContent.ProjectileType<Calavia_IcefallArena>(), 0, Vector2.Zero, false, SoundID.Item1, NPC.whoAmI);
+                    NPC.Shoot(NPC.Center, ModContent.ProjectileType<Calavia_IcefallArena>(), 0, Vector2.Zero, NPC.whoAmI);
                     if (!Main.dedServ)
                         RedeSystem.Instance.TitleCardUIElement.DisplayTitle("Calavia", 60, 90, 0.8f, 0, Color.LightCyan, "Warrior of the Iron Realm");
 
@@ -454,7 +454,7 @@ namespace Redemption.NPCs.Minibosses.Calavia
                                 CustomBodyAni = 2;
                                 TimerRand2 = Main.rand.Next(20, 31);
                                 int damage = NPC.RedemptionNPCBuff().disarmed ? NPC.damage / 3 : NPC.damage;
-                                NPC.Shoot(NPC.Center, ModContent.ProjectileType<Calavia_BladeOfTheMountain>(), damage, Vector2.Zero, false, SoundID.Item1, NPC.whoAmI, TimerRand2);
+                                NPC.Shoot(NPC.Center, ModContent.ProjectileType<Calavia_BladeOfTheMountain>(), damage, Vector2.Zero, NPC.whoAmI, TimerRand2);
                             }
                             if (AITimer < TimerRand2 + 10)
                             {
@@ -491,7 +491,7 @@ namespace Redemption.NPCs.Minibosses.Calavia
                                 CustomBodyAni = 2;
                                 TimerRand2 = Main.rand.Next(10, 21);
                                 int damage = NPC.RedemptionNPCBuff().disarmed ? NPC.damage / 3 : NPC.damage;
-                                NPC.Shoot(NPC.Center, ModContent.ProjectileType<Calavia_BladeOfTheMountain>(), damage, Vector2.Zero, false, SoundID.Item1, NPC.whoAmI, TimerRand2);
+                                NPC.Shoot(NPC.Center, ModContent.ProjectileType<Calavia_BladeOfTheMountain>(), damage, Vector2.Zero, NPC.whoAmI, TimerRand2);
                             }
                             if (AITimer >= 0 && AITimer < TimerRand2 + 10)
                             {
@@ -531,7 +531,7 @@ namespace Redemption.NPCs.Minibosses.Calavia
                                 NPC.velocity *= 0;
                                 customArm = true;
                                 int damage = NPC.RedemptionNPCBuff().disarmed ? NPC.damage / 3 : NPC.damage;
-                                NPC.Shoot(NPC.Center, ModContent.ProjectileType<Calavia_BladeOfTheMountain2>(), damage, Vector2.Zero, false, SoundID.Item1, NPC.whoAmI, TimerRand2);
+                                NPC.Shoot(NPC.Center, ModContent.ProjectileType<Calavia_BladeOfTheMountain2>(), damage, Vector2.Zero, NPC.whoAmI, TimerRand2);
                             }
                             break;
                         case 1:
@@ -564,7 +564,7 @@ namespace Redemption.NPCs.Minibosses.Calavia
                         NPC.velocity *= 0;
                         customArm = true;
                         int damage = NPC.RedemptionNPCBuff().disarmed ? NPC.damage / 3 : NPC.damage;
-                        NPC.Shoot(NPC.Center, ModContent.ProjectileType<Calavia_BladeOfTheMountain2>(), damage, Vector2.Zero, false, SoundID.Item1, NPC.whoAmI, 3);
+                        NPC.Shoot(NPC.Center, ModContent.ProjectileType<Calavia_BladeOfTheMountain2>(), damage, Vector2.Zero, NPC.whoAmI, 3);
                     }
                     if (AITimer == 100)
                         NPC.velocity.Y = -12;
@@ -604,8 +604,8 @@ namespace Redemption.NPCs.Minibosses.Calavia
                     {
                         for (int i = 0; i < 3; i++)
                         {
-                            NPC.Shoot(NPC.Center + new Vector2(100, -10), ModContent.ProjectileType<Calavia_IcefallMist>(), NPC.damage, new Vector2(Main.rand.NextFloat(-1, 1), 0), false, SoundID.Item1);
-                            NPC.Shoot(NPC.Center + new Vector2(-100, -10), ModContent.ProjectileType<Calavia_IcefallMist>(), NPC.damage, new Vector2(Main.rand.NextFloat(-1, 1), 0), false, SoundID.Item1);
+                            NPC.Shoot(NPC.Center + new Vector2(100, -10), ModContent.ProjectileType<Calavia_IcefallMist>(), NPC.damage, new Vector2(Main.rand.NextFloat(-1, 1), 0));
+                            NPC.Shoot(NPC.Center + new Vector2(-100, -10), ModContent.ProjectileType<Calavia_IcefallMist>(), NPC.damage, new Vector2(Main.rand.NextFloat(-1, 1), 0));
                         }
                     }
                     if (AITimer >= 80)

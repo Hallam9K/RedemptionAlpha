@@ -193,7 +193,7 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
                     if (AITimer == 0)
                     {
                         NPC.Shoot(NPC.Center, ModContent.ProjectileType<SkeletonWanderer_SS_SpearProj>(), NPC.damage,
-                            RedeHelper.PolarVector(8, (globalNPC.attacker.Center - NPC.Center).ToRotation()), true, SoundID.Item1, NPC.whoAmI);
+                            RedeHelper.PolarVector(8, (globalNPC.attacker.Center - NPC.Center).ToRotation()), SoundID.Item1, NPC.whoAmI);
                         AITimer = 1;
                     }
                     break;

@@ -231,7 +231,7 @@ namespace Redemption.NPCs.Minibosses.FowlEmperor
                             {
                                 NPC.LookAtEntity(player);
                                 EmoteBubble.NewBubble(15, new WorldUIAnchor(NPC), 90);
-                                NPC.Shoot(NPC.Center + new Vector2(10 * NPC.spriteDirection, -16), ModContent.ProjectileType<FowlEmperor_Crown_Proj>(), 0, NPC.velocity / 4, false, SoundID.Item1, NPC.whoAmI);
+                                NPC.Shoot(NPC.Center + new Vector2(10 * NPC.spriteDirection, -16), ModContent.ProjectileType<FowlEmperor_Crown_Proj>(), 0, NPC.velocity / 4, NPC.whoAmI);
                                 NPC.velocity.X = 0;
                                 hideCrown = true;
                                 TimerRand++;
@@ -352,7 +352,7 @@ namespace Redemption.NPCs.Minibosses.FowlEmperor
                                 for (int i = 0; i < (Main.expertMode ? 5 : 3); i++)
                                 {
                                     int rot = spread * i;
-                                    NPC.Shoot(NPC.Center, ModContent.ProjectileType<FowlFeather_Proj>(), NPC.damage, new Vector2(speed * NPC.spriteDirection, -Main.rand.Next(9, 12)).RotatedBy(MathHelper.ToRadians(rot - (Main.expertMode ? 20 : 16))), true, SoundID.Item1);
+                                    NPC.Shoot(NPC.Center, ModContent.ProjectileType<FowlFeather_Proj>(), NPC.damage, new Vector2(speed * NPC.spriteDirection, -Main.rand.Next(9, 12)).RotatedBy(MathHelper.ToRadians(rot - (Main.expertMode ? 20 : 16))), SoundID.Item1);
                                 }
                             }
                             if (AITimer == 24 && TimerRand <= (NPC.life <= NPC.lifeMax / 2 ? 1 : 0) && (player.velocity.X >= 2 || player.velocity.X <= -2))
@@ -404,7 +404,7 @@ namespace Redemption.NPCs.Minibosses.FowlEmperor
                                 if (AITimer % (NPC.life <= NPC.lifeMax / 2 ? 4 : 6) == 0 && Main.rand.NextBool())
                                 {
                                     SoundEngine.PlaySound(SoundID.Item16, NPC.position);
-                                    NPC.Shoot(NPC.Center, ModContent.ProjectileType<Rooster_EggBomb>(), NPC.damage * 2, new Vector2(0, -4) + RedeHelper.SpreadUp(4), false, SoundID.Item1);
+                                    NPC.Shoot(NPC.Center, ModContent.ProjectileType<Rooster_EggBomb>(), NPC.damage * 2, new Vector2(0, -4) + RedeHelper.SpreadUp(4));
 
                                 }
                             }

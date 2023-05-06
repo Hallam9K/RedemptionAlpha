@@ -85,7 +85,7 @@ namespace Redemption.NPCs.Friendly
                 NPC.TargetClosest();
 
             if (!RedeHelper.AnyProjectiles(ModContent.ProjectileType<SkullDiggerFriendly_FlailBlade>()))
-                NPC.Shoot(NPC.Center, ModContent.ProjectileType<SkullDiggerFriendly_FlailBlade>(), NPC.damage, Vector2.Zero, false, SoundID.Item1, NPC.whoAmI);
+                NPC.Shoot(NPC.Center, ModContent.ProjectileType<SkullDiggerFriendly_FlailBlade>(), NPC.damage, Vector2.Zero, NPC.whoAmI);
 
             if (!floatTimer)
             {
@@ -280,7 +280,7 @@ namespace Redemption.NPCs.Friendly
             }
 
             if (!RedeHelper.AnyProjectiles(ModContent.ProjectileType<SkullDiggerFriendly_FlailBlade>()))
-                NPC.Shoot(NPC.Center, ModContent.ProjectileType<SkullDiggerFriendly_FlailBlade>(), NPC.damage, Vector2.Zero, false, SoundID.Item1, NPC.whoAmI, 1);
+                NPC.Shoot(NPC.Center, ModContent.ProjectileType<SkullDiggerFriendly_FlailBlade>(), NPC.damage, Vector2.Zero, NPC.whoAmI, 1);
 
             if (!floatTimer)
             {

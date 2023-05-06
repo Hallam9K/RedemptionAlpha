@@ -240,7 +240,7 @@ namespace Redemption.NPCs.FowlMorning
                             {
                                 SoundEngine.PlaySound(SoundID.DD2_BetsyWindAttack, NPC.Center);
                                 for (int i = 0; i < 2; i++)
-                                    NPC.Shoot(NPC.Center, ModContent.ProjectileType<Basan_HeatWave>(), NPC.damage, new Vector2((4 + i + TimerRand2) * NPC.spriteDirection, 0), true, SoundID.DD2_PhantomPhoenixShot with { Volume = 0.5f + (TimerRand2 / 12) }, i);
+                                    NPC.Shoot(NPC.Center, ModContent.ProjectileType<Basan_HeatWave>(), NPC.damage, new Vector2((4 + i + TimerRand2) * NPC.spriteDirection, 0), SoundID.DD2_PhantomPhoenixShot with { Volume = 0.5f + (TimerRand2 / 12) }, i);
                             }
                             if (AniType is (int)AnimType.None)
                             {
@@ -357,7 +357,7 @@ namespace Redemption.NPCs.FowlMorning
                             if (AITimer++ >= 35 && AITimer % 2 == 0)
                             {
                                 NPC.Shoot(NPC.Center + new Vector2(28 * NPC.spriteDirection, -18), ModContent.ProjectileType<Basan_Firebreath>(), NPC.damage, RedeHelper.PolarVector(5, (playerOld - NPC.Center).ToRotation()
-                                        + TimerRand2 - MathHelper.ToRadians(45)), false, SoundID.Item1);
+                                        + TimerRand2 - MathHelper.ToRadians(45)));
                                 TimerRand2 += MathHelper.ToRadians(2);
                             }
                             if (AITimer >= 120)

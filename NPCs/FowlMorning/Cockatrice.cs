@@ -159,7 +159,7 @@ namespace Redemption.NPCs.FowlMorning
                         if (AITimer == 130)
                         {
                             Vector2 npcCenter = NPC.Center + new Vector2(20 * NPC.spriteDirection, -14);
-                            NPC.Shoot(npcCenter, ModContent.ProjectileType<Cockatrice_Ray>(), NPC.damage, npcCenter.DirectionTo(playerOld) * 3f, true, SoundID.NPCDeath17, NPC.whoAmI);
+                            NPC.Shoot(npcCenter, ModContent.ProjectileType<Cockatrice_Ray>(), NPC.damage, npcCenter.DirectionTo(playerOld) * 3f, SoundID.NPCDeath17, NPC.whoAmI);
                         }
                         if (AITimer >= 130)
                         {

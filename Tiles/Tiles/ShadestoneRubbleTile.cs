@@ -20,7 +20,6 @@ namespace Redemption.Tiles.Tiles
             Main.tileBrick[Type] = true;
             TileID.Sets.TouchDamageSands[Type] = 50;
             TileID.Sets.Falling[Type] = true;
-            ItemDrop = ModContent.ItemType<ShadestoneRubble>();
             DustType = ModContent.DustType<ShadestoneDust>();
             MinPick = 225;
             MineResist = 6f;

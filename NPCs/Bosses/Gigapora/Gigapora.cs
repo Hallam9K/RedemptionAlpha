@@ -552,7 +552,7 @@ namespace Redemption.NPCs.Bosses.Gigapora
                                 if (!Main.dedServ)
                                     SoundEngine.PlaySound(CustomSounds.GigaLaserFire, NPC.position);
                                 Main.LocalPlayer.RedemptionScreen().ScreenShakeIntensity += 30;
-                                NPC.Shoot(NPC.Center, ModContent.ProjectileType<Gigabeam>(), (int)(NPC.damage * 1.5f), Vector2.Zero, false, SoundID.Item1, NPC.whoAmI);
+                                NPC.Shoot(NPC.Center, ModContent.ProjectileType<Gigabeam>(), (int)(NPC.damage * 1.5f), Vector2.Zero, NPC.whoAmI);
                             }
 
                             if (AITimer == 453 && !Main.dedServ)
@@ -708,7 +708,7 @@ namespace Redemption.NPCs.Bosses.Gigapora
                                 TimerRand = 0;
                                 for (int i = 0; i < Main.rand.Next(24, 31); i++)
                                 {
-                                    NPC.Shoot(NPC.Center, ModContent.ProjectileType<Gigapora_Rubble>(), NPC.damage, new Vector2(Main.rand.Next(-14, 15), Main.rand.Next(-30, -19)), false, SoundID.Item1);
+                                    NPC.Shoot(NPC.Center, ModContent.ProjectileType<Gigapora_Rubble>(), NPC.damage, new Vector2(Main.rand.Next(-14, 15), Main.rand.Next(-30, -19)));
                                 }
                             }
                             NPC.rotation = NPC.velocity.ToRotation() + 1.57f;

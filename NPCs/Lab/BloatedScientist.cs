@@ -216,7 +216,7 @@ namespace Redemption.NPCs.Lab
                 }
                 if (NPC.frame.Y >= 16 * frameHeight && NPC.frame.Y <= 19 * frameHeight && NPC.frameCounter % 3 == 0)
                 {
-                    NPC.Shoot(NPC.Center + RedeHelper.PolarVector(10, -MathHelper.PiOver2 + (angle * NPC.spriteDirection)), ModContent.ProjectileType<OozeBall_Proj>(), NPC.damage, RedeHelper.PolarVector(11, -MathHelper.PiOver2 + (angle * NPC.spriteDirection)), false, SoundID.Item1, NPC.whoAmI);
+                    NPC.Shoot(NPC.Center + RedeHelper.PolarVector(10, -MathHelper.PiOver2 + (angle * NPC.spriteDirection)), ModContent.ProjectileType<OozeBall_Proj>(), NPC.damage, RedeHelper.PolarVector(11, -MathHelper.PiOver2 + (angle * NPC.spriteDirection)), NPC.whoAmI);
                     angle += 0.12f;
                 }
                 return;

@@ -150,7 +150,7 @@ namespace Redemption.NPCs.Bosses.SeedOfInfection
         {
             if (!RedeBossDowned.downedSeed && !RedeHelper.TBotActive())
             {
-                NPC.Shoot(NPC.Center, ModContent.ProjectileType<AdamPortal>(), 0, Vector2.Zero, false, SoundID.Item1, NPC.target);
+                NPC.Shoot(NPC.Center, ModContent.ProjectileType<AdamPortal>(), 0, Vector2.Zero, NPC.target);
             }
             NPC.SetEventFlagCleared(ref RedeBossDowned.downedSeed, -1);
         }
@@ -237,7 +237,7 @@ namespace Redemption.NPCs.Bosses.SeedOfInfection
                                 int dustIndex = Dust.NewDust(NPC.position + NPC.velocity, NPC.width, NPC.height, DustID.GreenFairy, 0f, 0f, 100, default, 3.5f);
                                 Main.dust[dustIndex].velocity *= 2.9f;
                             }
-                            NPC.Shoot(NPC.Center, ModContent.ProjectileType<StrangePortal>(), 0, Vector2.Zero, false, SoundID.Item1);
+                            NPC.Shoot(NPC.Center, ModContent.ProjectileType<StrangePortal>(), 0, Vector2.Zero);
 
                             TimerRand = 1;
                             NPC.netUpdate = true;
@@ -353,7 +353,7 @@ namespace Redemption.NPCs.Bosses.SeedOfInfection
                                 {
                                     int rot = 20 * i;
                                     NPC.Shoot(NPC.Center, ModContent.ProjectileType<SoI_ShardShot>(), NPC.damage, RedeHelper.PolarVector(8,
-                                        (player.Center - NPC.Center).ToRotation() + MathHelper.ToRadians(rot - 20)), true, SoundID.Item42);
+                                        (player.Center - NPC.Center).ToRotation() + MathHelper.ToRadians(rot - 20)), SoundID.Item42);
                                 }
                                 if (NPC.life < NPC.lifeMax / 2)
                                 {
@@ -361,7 +361,7 @@ namespace Redemption.NPCs.Bosses.SeedOfInfection
                                     {
                                         int rot = 80 * i;
                                         NPC.Shoot(NPC.Center, ModContent.ProjectileType<SoI_ShardShot>(), NPC.damage, RedeHelper.PolarVector(8,
-                                            (player.Center - NPC.Center).ToRotation() + MathHelper.ToRadians(rot - 40)), true, SoundID.Item42);
+                                            (player.Center - NPC.Center).ToRotation() + MathHelper.ToRadians(rot - 40)), SoundID.Item42);
                                     }
                                 }
                             }
@@ -388,7 +388,7 @@ namespace Redemption.NPCs.Bosses.SeedOfInfection
                                 for (int i = 0; i < (NPC.life < NPC.lifeMax / 2 ? 14 : 8); i++)
                                 {
                                     NPC.Shoot(NPC.Center, ModContent.ProjectileType<SoI_ShardShot>(), NPC.damage,
-                                        new Vector2(Main.rand.Next(-8, 9), Main.rand.Next(-14, -4)), true, SoundID.Item42, 1);
+                                        new Vector2(Main.rand.Next(-8, 9), Main.rand.Next(-14, -4)), SoundID.Item42, 1);
                                 }
                             }
                             if (AITimer >= 150)
@@ -410,7 +410,7 @@ namespace Redemption.NPCs.Bosses.SeedOfInfection
                                 {
                                     for (int i = 0; i < Main.rand.Next(2, 4); i++)
                                     {
-                                        NPC.Shoot(NPC.Center, ModContent.ProjectileType<SoI_ToxicSludge>(), NPC.damage, RedeHelper.PolarVector(12, (player.Center - NPC.Center).ToRotation() + Main.rand.NextFloat(-0.06f, 0.06f)), true, SoundID.Item60);
+                                        NPC.Shoot(NPC.Center, ModContent.ProjectileType<SoI_ToxicSludge>(), NPC.damage, RedeHelper.PolarVector(12, (player.Center - NPC.Center).ToRotation() + Main.rand.NextFloat(-0.06f, 0.06f)), SoundID.Item60);
                                     }
                                     NPC.velocity += player.Center.DirectionTo(NPC.Center) * 4;
                                 }
@@ -459,7 +459,7 @@ namespace Redemption.NPCs.Bosses.SeedOfInfection
                                 {
                                     if (Main.rand.NextBool(10))
                                         NPC.Shoot(NPC.Center, ModContent.ProjectileType<SoI_XenomiteShot>(), NPC.damage,
-                                            new Vector2(Main.rand.Next(-10, 11), Main.rand.Next(-14, -4)), true, SoundID.Item17);
+                                            new Vector2(Main.rand.Next(-10, 11), Main.rand.Next(-14, -4)), SoundID.Item17);
                                 }
 
                                 if (AITimer >= 250)
@@ -511,7 +511,7 @@ namespace Redemption.NPCs.Bosses.SeedOfInfection
                                 {
                                     if (Main.rand.NextBool(10))
                                     {
-                                        NPC.Shoot(NPC.Center, ModContent.ProjectileType<SoI_ToxicSludge>(), NPC.damage, new Vector2(Main.rand.Next(-8, 9), Main.rand.Next(-14, 15)), true, SoundID.Item17);
+                                        NPC.Shoot(NPC.Center, ModContent.ProjectileType<SoI_ToxicSludge>(), NPC.damage, new Vector2(Main.rand.Next(-8, 9), Main.rand.Next(-14, 15)), SoundID.Item17);
                                     }
                                 }
                                 if (AITimer < 160)
@@ -548,7 +548,7 @@ namespace Redemption.NPCs.Bosses.SeedOfInfection
                                     NPC.velocity *= 0.8f;
 
                                 if (++AITimer == 70)
-                                    NPC.Shoot(NPC.Center, ModContent.ProjectileType<SeedLaser>(), (int)(NPC.damage * 1.1f), new Vector2(0, 10), true, SoundID.Item103, ai0: NPC.whoAmI);
+                                    NPC.Shoot(NPC.Center, ModContent.ProjectileType<SeedLaser>(), (int)(NPC.damage * 1.1f), new Vector2(0, 10), SoundID.Item103, ai0: NPC.whoAmI);
 
                                 if (AITimer >= 100)
                                 {
@@ -581,7 +581,7 @@ namespace Redemption.NPCs.Bosses.SeedOfInfection
                             {
                                 NPC.Shoot(NPC.Center, ModContent.ProjectileType<SoI_SplitShard>(), NPC.damage,
                                     RedeHelper.PolarVector(12, (target - NPC.Center).ToRotation()
-                                    + TimerRand - MathHelper.ToRadians(15)), true, SoundID.Item42);
+                                    + TimerRand - MathHelper.ToRadians(15)), SoundID.Item42);
 
                                 NPC.velocity += target.DirectionTo(NPC.Center) * 1;
                                 TimerRand += MathHelper.ToRadians(15);
@@ -597,7 +597,7 @@ namespace Redemption.NPCs.Bosses.SeedOfInfection
                                 {
                                     NPC.Shoot(NPC.Center, ModContent.ProjectileType<SoI_SplitShard>(), NPC.damage,
                                         RedeHelper.PolarVector(8, (target - NPC.Center).ToRotation()
-                                        + TimerRand + MathHelper.ToRadians(40)), true, SoundID.Item42);
+                                        + TimerRand + MathHelper.ToRadians(40)), SoundID.Item42);
 
                                     NPC.velocity += target.DirectionTo(NPC.Center) * 1;
                                     TimerRand -= MathHelper.ToRadians(20);
@@ -627,7 +627,7 @@ namespace Redemption.NPCs.Bosses.SeedOfInfection
                                     NPC.Move(player.Center + new Vector2(600 * TimerRand, -Main.rand.Next(400, 451)), 12, 40);
                                     if (AITimer % (NPC.life <= NPC.lifeMax / 4 ? 3 : 4) == 0 && Main.rand.NextBool())
                                     {
-                                        NPC.Shoot(NPC.Center, ModContent.ProjectileType<SoI_ShardShot>(), NPC.damage, new Vector2(0, Main.rand.Next(6, 10)), true, SoundID.Item42);
+                                        NPC.Shoot(NPC.Center, ModContent.ProjectileType<SoI_ShardShot>(), NPC.damage, new Vector2(0, Main.rand.Next(6, 10)), SoundID.Item42);
 
                                     }
                                 }
@@ -678,7 +678,7 @@ namespace Redemption.NPCs.Bosses.SeedOfInfection
                         SoundEngine.PlaySound(SoundID.NPCDeath10, NPC.position);
                         for (int i = -32; i <= 32; i++)
                         {
-                            NPC.Shoot(NPC.Center, ModContent.ProjectileType<InfectionDust>(), 0, 10 * Vector2.UnitX.RotatedBy(Math.PI / 32 * i), false, SoundID.Item1);
+                            NPC.Shoot(NPC.Center, ModContent.ProjectileType<InfectionDust>(), 0, 10 * Vector2.UnitX.RotatedBy(Math.PI / 32 * i));
                         }
 
                         if (Main.netMode != NetmodeID.Server)

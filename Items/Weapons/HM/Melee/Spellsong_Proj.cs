@@ -8,6 +8,8 @@ using Terraria.ModLoader;
 using Redemption.Globals;
 using Redemption.Projectiles.Melee;
 using Redemption.BaseExtension;
+using Redemption.Effects;
+using System.Collections.Generic;
 
 namespace Redemption.Items.Weapons.HM.Melee
 {
@@ -50,6 +52,16 @@ namespace Redemption.Items.Weapons.HM.Melee
         private float speed;
         private float SwingSpeed;
         private bool parried;
+
+        private readonly int NUMPOINTS = 20;
+        public Color baseColor = Color.LightPink;
+        public Color endColor = Color.Purple;
+        public Color edgeColor = Color.Purple;
+        private List<Vector2> cache;
+        private List<Vector2> cache2;
+        private DanTrail trail;
+        private DanTrail trail2;
+        private readonly float thickness = 5f;
         public override void AI()
         {
             Player player = Main.player[Projectile.owner];
@@ -209,6 +221,11 @@ namespace Redemption.Items.Weapons.HM.Melee
             for (int k = Projectile.oldPos.Length - 1; k > 0; k--)
                 oldrot[k] = oldrot[k - 1];
             oldrot[0] = Projectile.rotation;
+            if (Main.netMode != NetmodeID.Server)
+            {
+                TrailHelper.ManageBasicCaches(ref cache, ref cache2, NUMPOINTS, player.MountedCenter + (vector * 1.2f));
+                TrailHelper.ManageBasicTrail(ref cache, ref cache2, ref trail, ref trail2, NUMPOINTS, player.MountedCenter + (vector * 1.2f), baseColor, endColor, edgeColor, thickness, true);
+            }
         }
 
         public override bool? CanHitNPC(NPC target)
@@ -222,6 +239,23 @@ namespace Redemption.Items.Weapons.HM.Melee
 
         public override bool PreDraw(ref Color lightColor)
         {
+            Main.spriteBatch.End();
+            Effect effect = Terraria.Graphics.Effects.Filters.Scene["MoR:GlowTrailShader"]?.GetShader().Shader;
+
+            Matrix world = Matrix.CreateTranslation(-Main.screenPosition.Vec3());
+            Matrix view = Main.GameViewMatrix.ZoomMatrix;
+            Matrix projection = Matrix.CreateOrthographicOffCenter(0, Main.screenWidth, Main.screenHeight, 0, -1, 1);
+
+            effect.Parameters["transformMatrix"].SetValue(world * view * projection);
+            effect.Parameters["sampleTexture"].SetValue(ModContent.Request<Texture2D>("Redemption/Textures/Trails/GlowTrail").Value);
+            effect.Parameters["time"].SetValue(Main.GameUpdateCount * 0.05f);
+            effect.Parameters["repeats"].SetValue(1f);
+
+            trail?.Render(effect);
+            trail2?.Render(effect);
+
+            Main.spriteBatch.Begin(default, default, default, default, default, default, Main.GameViewMatrix.ZoomMatrix);
+
             Player player = Main.player[Projectile.owner];
             SpriteEffects spriteEffects = Projectile.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
             Texture2D texture = TextureAssets.Projectile[Projectile.type].Value;
