@@ -495,7 +495,7 @@ namespace Redemption.NPCs.Friendly
                     if (RedeWorld.slayerRep >= 2 && RedeWorld.slayerRep < 4)
                         return "The world is called Epidotra, it's where the Heroes are from.";
                     else if (RedeWorld.slayerRep >= 4)
-                        return "This tiny island appeared on this planet out of nowhere, I was going to check it out a year or so ago, but I remember seeing the demigod here so I didn't bother. The mainland has 6 domains, Anglon, Ithon, Gathuram, Nirin, Erellon, and Thamor. There's another domain which is it's own island called Swaylan, but that's disconnected from the rest of the world.";
+                        return "This tiny island appeared on this planet out of nowhere, I was going to check it out a year or so ago, but I remember seeing the demigod here so I didn't bother. The mainland has 6 continents, with Anglon, Ithon, Gathuram, Nirin, Erellon, and Thamor as the primary domains. There's another domain which is it's own island called Swaylan, but that's disconnected from the rest of the world.";
                     else
                         return "What? You don't even know the name of the planet you're on? Maybe read a book for once in your life.";
                 case 8:

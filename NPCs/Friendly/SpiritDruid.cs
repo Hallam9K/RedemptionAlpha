@@ -191,7 +191,7 @@ namespace Redemption.NPCs.Friendly
             return ChatNumber switch
             {
                 0 => "Sent me back to look upon my remains and now you ask for a friendly chat. Gralvr! What a strange thing. Speaking to spirits have become a bore, so I might as well. I come from the Kul'don rainforests in what most call Thamor. We lived as a commune of druids, far from others. To us, the world was a small thing, we kept to ourselves and never stepped foot beyond our territory.",
-                1 => "It is what the other spirits I've met call the domain I lived in. During my time of being alive, I had never thought of what the world was like beyond the rainforests, as we had never travelled beyond them. To us, the rainforests were our entire world, at least until we were forced out.",
+                1 => "It is what the other spirits I've met call the region I lived in. During my time of being alive, I had never thought of what the world was like beyond the rainforests, as we had never travelled beyond them. To us, the rainforests were our entire world, at least until we were forced out.",
                 2 => "A reasonable question. Of course, the portals here lead to Anglon and Gathuram, none are even close to Thamor, let alone the wilds of Kul'don. We were driven out by force, a posse of Anglonic soldiers came by in search of our goliaths - ones we had tamed and have been a part of our commune for generations. We retaliated of course, and drove them out. A short-lived victory, for they reappeared with their leader. They not only captured our goliaths, but us as well. To Anglon we were sent, and it is there I had escaped.",
                 _ => "...",
             };
