@@ -782,8 +782,22 @@ namespace Redemption.NPCs.Minibosses.Calavia
                         default:
                             NPC.velocity.X *= .8f;
                             NPC.chaseable = false;
+
+                            if (NPC.whoAmI == player.MinionAttackTargetNPC)
+                            {
+                                player.MinionAttackTargetNPC = -1;
+                                player.UpdateMinionTarget();
+                            }
                             if (AITimer++ == 0)
                             {
+                                for (int k = 0; k < NPC.buffImmune.Length; k++)
+                                {
+                                    if (BuffID.Sets.IsAnNPCWhipDebuff[k])
+                                        continue;
+                                    NPC.buffImmune[k] = true;
+                                }
+                                NPC.netUpdate = true;
+
                                 NPC.LookAtEntity(player);
                                 NPC.velocity = new Vector2(-4 * NPC.spriteDirection, -3);
 
@@ -811,7 +825,7 @@ namespace Redemption.NPCs.Minibosses.Calavia
                                 ChatUI.Visible = true;
                                 ChatUI.Add(chain);
                             }
-                            if (AITimer >= 180)
+                            if (AITimer >= 240)
                             {
                                 if (RedeWorld.alignmentGiven && !Main.dedServ && !RedeBossDowned.downedCalavia)
                                     RedeSystem.Instance.ChaliceUIElement.DisplayDialogue("She is wishing to be spared.", 180, 30, 0, Color.DarkGoldenrod);
