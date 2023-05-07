@@ -395,6 +395,7 @@ namespace Redemption.NPCs.Minibosses.Calavia
                             NPC.velocity.X *= 2f;
                             NPC.velocity.Y -= Main.rand.NextFloat(1, 3);
                             dodgeCooldown = 30;
+                            break;
                         }
                     }
                     BaseAI.AttemptOpenDoor(NPC, ref doorVars[0], ref doorVars[1], ref doorVars[2], 80, 1, 10, interactDoorStyle: 2);
