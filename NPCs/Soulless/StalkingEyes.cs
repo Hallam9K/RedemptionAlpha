@@ -60,6 +60,8 @@ namespace Redemption.NPCs.Soulless
                         continue;
 
                     Vector2 eyesPos = RedeHelper.RandomPosition(new Vector2(510 + SoullessArea.Offset.X, 1118 + SoullessArea.Offset.Y), new Vector2(554 + SoullessArea.Offset.X, 1125 + SoullessArea.Offset.Y)) * 16;
+                    if (NPC.ai[0] is 1)
+                        eyesPos = RedeHelper.RandomPosition(new Vector2(411 + SoullessArea.Offset.X, 1202 + SoullessArea.Offset.Y), new Vector2(448 + SoullessArea.Offset.X, 1210 + SoullessArea.Offset.Y)) * 16;
                     other.position = eyesPos;
                 }
             }

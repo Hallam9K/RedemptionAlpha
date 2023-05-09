@@ -4,6 +4,7 @@ using Terraria.ModLoader;
 using Redemption.Items.Placeable.Tiles;
 using Redemption.Dusts.Tiles;
 using Redemption.Tiles.Furniture.Lab;
+using Terraria.ID;
 
 namespace Redemption.Tiles.Tiles
 {
@@ -14,6 +15,7 @@ namespace Redemption.Tiles.Tiles
             Main.tileSolid[Type] = true;
             Main.tileMergeDirt[Type] = true;
             Main.tileBlockLight[Type] = true;
+            TileID.Sets.DisableSmartCursor[Type] = true;
             Main.tileMerge[Type][ModContent.TileType<OvergrownLabPlatingTile>()] = true;
             Main.tileMerge[ModContent.TileType<OvergrownLabPlatingTile>()][Type] = true;
             Main.tileMerge[Type][ModContent.TileType<LabPlatingTile>()] = true;

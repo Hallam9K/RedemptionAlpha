@@ -132,6 +132,15 @@ namespace Redemption.NPCs.Soulless
             NPC.TargetClosest();
             if (AIState != ActionState.Throw)
                 NPC.LookByVelocity();
+            if (SoullessArea.soullessInts[1] is 6 && player.Hitbox.Intersects(SoullessArea.stalkerZone2))
+                NPC.ai[0] = 10;
+            if (NPC.ai[0] is 10)
+            {
+                NPC.alpha += 5;
+                if (NPC.alpha >= 255)
+                    NPC.active = false;
+                return;
+            }
 
             switch (AIState)
             {
@@ -420,7 +429,7 @@ namespace Redemption.NPCs.Soulless
                 int y = Height * AniFrameY;
                 Rectangle rect = new(0, y, throwAni.Width, Height);
                 Vector2 origin = new(throwAni.Width / 2f, Height / 2f);
-                spriteBatch.Draw(throwAni, NPC.Center - screenPos - new Vector2(0, 5), new Rectangle?(rect), drawColor, NPC.rotation, origin, NPC.scale, effects, 0);
+                spriteBatch.Draw(throwAni, NPC.Center - screenPos - new Vector2(0, 5), new Rectangle?(rect), NPC.GetAlpha(drawColor), NPC.rotation, origin, NPC.scale, effects, 0);
 
                 if (HasEyes)
                 {
@@ -432,7 +441,7 @@ namespace Redemption.NPCs.Soulless
                     spriteBatch.Draw(throwGlow, NPC.Center - screenPos - new Vector2(0, 5), new Rectangle?(rect), Color.White, NPC.rotation, origin, NPC.scale, effects, 0);
                 }
 
-                spriteBatch.Draw(head, NPC.Center - screenPos, new Rectangle?(rectH), drawColor, NPC.rotation, NPC.frame.Size() / 2 + new Vector2((NPC.spriteDirection == 1 ? -32 : -26) + (HeadOffsetX * NPC.spriteDirection), -8 + HeadOffsetY), NPC.scale, effects, 0);
+                spriteBatch.Draw(head, NPC.Center - screenPos, new Rectangle?(rectH), NPC.GetAlpha(drawColor), NPC.rotation, NPC.frame.Size() / 2 + new Vector2((NPC.spriteDirection == 1 ? -32 : -26) + (HeadOffsetX * NPC.spriteDirection), -8 + HeadOffsetY), NPC.scale, effects, 0);
             }
             else
             {
@@ -443,12 +452,12 @@ namespace Redemption.NPCs.Soulless
                     for (int i = 0; i < NPCID.Sets.TrailCacheLength[NPC.type]; i++)
                     {
                         Vector2 oldPos = NPC.oldPos[i];
-                        spriteBatch.Draw(glow, oldPos - new Vector2(0, 2) + NPC.Size / 2f - screenPos, NPC.frame, Color.White * 0.5f, NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
+                        spriteBatch.Draw(glow, oldPos - new Vector2(0, 2) + NPC.Size / 2f - screenPos, NPC.frame, NPC.GetAlpha(Color.White) * 0.5f, NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
                     }
-                    spriteBatch.Draw(glow, NPC.Center - new Vector2(0, 2) - screenPos, NPC.frame, Color.White, NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
+                    spriteBatch.Draw(glow, NPC.Center - new Vector2(0, 2) - screenPos, NPC.frame, NPC.GetAlpha(Color.White), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
                 }
 
-                spriteBatch.Draw(head, NPC.Center - screenPos, new Rectangle?(rectH), drawColor, NPC.rotation, NPC.frame.Size() / 2 + new Vector2(NPC.spriteDirection == 1 ? -32 : -26, -8 + HeadOffsetY), NPC.scale, effects, 0);
+                spriteBatch.Draw(head, NPC.Center - screenPos, new Rectangle?(rectH), NPC.GetAlpha(drawColor), NPC.rotation, NPC.frame.Size() / 2 + new Vector2(NPC.spriteDirection == 1 ? -32 : -26, -8 + HeadOffsetY), NPC.scale, effects, 0);
             }
             return false;
         }

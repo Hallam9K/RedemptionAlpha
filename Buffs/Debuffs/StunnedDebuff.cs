@@ -20,7 +20,7 @@ namespace Redemption.Buffs.Debuffs
             player.wingsLogic = 0;
             player.noFallDmg = true;
             player.noBuilding = true;
-
+            player.RemoveAllGrapplingHooks();
             player.controlJump = false;
             player.controlDown = false;
             player.controlLeft = false;

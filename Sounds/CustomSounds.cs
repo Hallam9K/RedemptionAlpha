@@ -146,6 +146,8 @@ namespace Redemption
         public static readonly SoundStyle SwordClash = new("Redemption/Sounds/Custom/SwordClash") { PitchVariance = .1f };
         public static readonly SoundStyle StalkerHandSnap = new("Redemption/Sounds/Custom/StalkerHandSnap") { PitchVariance = .3f };
 
+        public static readonly SoundStyle SoullessNoise = new("Redemption/Sounds/Ambient/SoullessNoise", 4) { Volume = .5f, SoundLimitBehavior = SoundLimitBehavior.IgnoreNew, MaxInstances = 1, PitchVariance = .05f };
+
         public static readonly SoundStyle BoneHit = new("Redemption/Sounds/Tiles/BoneHit", 3);
         public static readonly SoundStyle BrickHit = new("Redemption/Sounds/Tiles/BrickHit", 3);
         public static readonly SoundStyle ChainHit = new("Redemption/Sounds/Tiles/ChainHit", 3);

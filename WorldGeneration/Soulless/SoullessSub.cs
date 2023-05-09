@@ -423,8 +423,13 @@ namespace Redemption.WorldGeneration.Soulless
             GenUtils.ObjectPlace(487 + offsetX, 1163 + offsetY, ModContent.TileType<SoullessRemainsTile>());
             GenUtils.ObjectPlace(691 + offsetX, 1106 + offsetY, ModContent.TileType<SoullessRemainsTile>());
             GenUtils.ObjectPlace(500 + offsetX, 1210 + offsetY, ModContent.TileType<SoullessRemainsTile2>());
+            GenUtils.ObjectPlace(467 + offsetX, 1244 + offsetY, ModContent.TileType<SoullessRemainsTile2>());
+            GenUtils.ObjectPlace(485 + offsetX, 1223 + offsetY, ModContent.TileType<SoullessRemainsTile2>());
+            GenUtils.ObjectPlace(508 + offsetX, 1247 + offsetY, ModContent.TileType<SoullessRemainsTile2>());
+            GenUtils.ObjectPlace(591 + offsetX, 1243 + offsetY, ModContent.TileType<SoullessRemainsTile2>());
 
             GenUtils.ObjectPlace(378 + offsetX, 1054 + offsetY, ModContent.TileType<ShadestoneMonolith1Tile>());
+            GenUtils.ObjectPlace(568 + offsetX, 1243 + offsetY, ModContent.TileType<ShadestoneMonolith2Tile>());
 
             GenUtils.ObjectPlace(602 + offsetX, 820 + offsetY, ModContent.TileType<ShadesteelLeverTile>());
             GenUtils.ObjectPlace(612 + offsetX, 862 + offsetY, ModContent.TileType<ShadesteelLeverTile>());
@@ -452,6 +457,7 @@ namespace Redemption.WorldGeneration.Soulless
             SpookChest(242, 924);
             SpookChest(666, 1080);
             SpookChest(485, 1168);
+            SpookChest(379, 1169);
 
             for (int i = offsetX; i < 1800 + offsetX; i++)
             {
@@ -461,17 +467,9 @@ namespace Redemption.WorldGeneration.Soulless
                         Framing.GetTileSafely(i, j).TileColor = PaintID.WhitePaint;
                 }
             }
-            for (int i = 68 + offsetX; i < 82 + offsetX; i++)
+            for (int i = 80 + offsetX; i < 140 + offsetX; i++)
             {
-                for (int j = 837 + offsetY; j < 844 + offsetY; j++)
-                {
-                    if (Framing.GetTileSafely(i, j).WallType == ModContent.WallType<LeadFenceBlackWall>() && WorldGen.InWorld(i, j))
-                        Framing.GetTileSafely(i, j).WallColor = PaintID.ShadowPaint;
-                }
-            }
-            for (int i = 106 + offsetX; i < 120 + offsetX; i++)
-            {
-                for (int j = 837 + offsetY; j < 844 + offsetY; j++)
+                for (int j = 836 + offsetY; j < 846 + offsetY; j++)
                 {
                     if (Framing.GetTileSafely(i, j).WallType == ModContent.WallType<LeadFenceBlackWall>() && WorldGen.InWorld(i, j))
                         Framing.GetTileSafely(i, j).WallColor = PaintID.ShadowPaint;

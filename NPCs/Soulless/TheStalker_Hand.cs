@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using Terraria.Audio;
 using Redemption.Buffs.Debuffs;
 using Terraria.ID;
+using System;
 
 namespace Redemption.NPCs.Soulless
 {
@@ -100,7 +101,7 @@ namespace Redemption.NPCs.Soulless
                     Projectile.ai[1] = 5;
                     break;
                 case 5:
-                    activeZone = new((484 + SoullessArea.Offset.X) * 16, (1160 + SoullessArea.Offset.Y) * 16, 51 * 16, 52 * 16);
+                    activeZone = new((484 + SoullessArea.Offset.X) * 16, (1160 + SoullessArea.Offset.Y) * 16, 47 * 16, 52 * 16);
                     if (player.Hitbox.Intersects(activeZone))
                     {
                         Projectile.ai[1] = 6;
@@ -109,7 +110,7 @@ namespace Redemption.NPCs.Soulless
                             SoundEngine.PlaySound(s);
 
                         player.AddBuff(ModContent.BuffType<StalkerDebuff>(), 1200);
-                        SoullessArea.soullessInts[1] = 7;
+                        SoullessArea.soullessInts[1] = 6;
                         if (Main.netMode == NetmodeID.Server)
                             NetMessage.SendData(MessageID.WorldData);
                     }
@@ -135,7 +136,7 @@ namespace Redemption.NPCs.Soulless
                     }
                     break;
             }
-            if (Projectile.ai[1] > 0)
+            if (Projectile.ai[1] > 0 && Projectile.ai[1] != 10)
                 return;
             if (player.whoAmI == Projectile.owner && player.Hitbox.Intersects(Projectile.Hitbox))
                 grabbed = true;
@@ -157,7 +158,10 @@ namespace Redemption.NPCs.Soulless
                         if (Main.netMode == NetmodeID.Server)
                             NetMessage.SendData(MessageID.WorldData);
                         player.AddBuff(ModContent.BuffType<StunnedDebuff>(), 120);
-                        player.Center = new Vector2(347 + SoullessArea.Offset.X, 1069 + SoullessArea.Offset.Y) * 16;
+                        if (Projectile.ai[1] is 10)
+                            player.Center = new Vector2(601 + SoullessArea.Offset.X, 1157 + SoullessArea.Offset.Y) * 16;
+                        else
+                            player.Center = new Vector2(347 + SoullessArea.Offset.X, 1069 + SoullessArea.Offset.Y) * 16;
                         seg.Clear();
                         segRot.Clear();
                         Projectile.Kill();
@@ -175,6 +179,10 @@ namespace Redemption.NPCs.Soulless
                                 continue;
                             other.Kill();
                         }
+                        if (npc.ModNPC is TheStalker stalker)
+                            stalker.RAAGH = true;
+                        if (npc.ModNPC is TheStalker_Fake stalker2)
+                            stalker2.RAAGH = true;
                         Redemption.OldMusicFade = Main.musicFade;
                         SoundEngine.PlaySound(CustomSounds.StalkerScare, player.position);
                         Projectile.Center = npc.Center;
@@ -275,7 +283,7 @@ namespace Redemption.NPCs.Soulless
             Texture2D texture = TextureAssets.Projectile[Projectile.type].Value;
             Texture2D texture2 = ModContent.Request<Texture2D>(Texture + "2").Value;
             Texture2D arm = ModContent.Request<Texture2D>(Texture + "_Arm").Value;
-            Vector2 drawOrigin = new(texture.Width / 2 + 18, texture.Height / 2 + 13);
+            Vector2 drawOrigin = new(texture.Width / 2 + 14, texture.Height / 2 + 6);
             Vector2 drawOrigin2 = new(texture.Width / 2 + 9, texture.Height / 2 + 9);
             SpriteEffects effects = Projectile.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
 

@@ -88,7 +88,7 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
         public override void HitEffect(int hitDirection, double damage)
         {
             if (damage > 1)
-                SoundEngine.PlaySound(SoundID.NPCHit4);
+                SoundEngine.PlaySound(SoundID.NPCHit4, NPC.position);
             if (NPC.life <= 0)
             {
                 for (int i = 0; i < 35; i++)

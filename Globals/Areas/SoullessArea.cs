@@ -156,10 +156,19 @@ namespace Redemption.Globals
                         break;
                     }
                 }
-                if (soullessInts[1] == 7)
+                if (soullessInts[1] is 6)
                 {
                     if (player.Hitbox.Intersects(stalkerZone2))
                         player.AddBuff(ModContent.BuffType<StalkerDebuff>(), 30);
+                }
+                else if (soullessInts[1] is 7)
+                {
+                    RedeSystem.Silence = true;
+                    if (player.position.X < (561 + Offset.X) * 16)
+                    {
+                        player.velocity.X = MathHelper.Max(player.velocity.X, 0);
+                        player.velocity.X += 2;
+                    }
                 }
             }
             if (soullessInts[1] == 2)
@@ -223,7 +232,7 @@ namespace Redemption.Globals
             }
             if (soullessInts[1] >= 5 && !Terraria.NPC.AnyNPCs(ModContent.NPCType<TheStalker>()))
             {
-                Point StalkerPos = new((Offset.X + 425) * 16, (Offset.Y + 1181) * 16);
+                Point StalkerPos = new((Offset.X + 378) * 16, (Offset.Y + 1209) * 16);
                 Terraria.NPC.NewNPC(new EntitySource_SpawnNPC(), StalkerPos.X, StalkerPos.Y, ModContent.NPCType<TheStalker>(), 0, 2);
             }
             if (soullessInts[1] <= 1 && !Terraria.NPC.AnyNPCs(ModContent.NPCType<SpookyEyes2>()))

@@ -453,7 +453,7 @@ namespace Redemption.NPCs.Minibosses.Calavia
                             {
                                 CustomBodyAni = 2;
                                 TimerRand2 = Main.rand.Next(20, 31);
-                                int damage = NPC.RedemptionNPCBuff().disarmed ? NPC.damage / 3 : NPC.damage;
+                                int damage = NPC.RedemptionNPCBuff().disarmed ? (int)(NPC.damage * .75f) : NPC.damage;
                                 NPC.Shoot(NPC.Center, ModContent.ProjectileType<Calavia_BladeOfTheMountain>(), damage, Vector2.Zero, NPC.whoAmI, TimerRand2);
                             }
                             if (AITimer < TimerRand2 + 10)
@@ -490,7 +490,7 @@ namespace Redemption.NPCs.Minibosses.Calavia
                             {
                                 CustomBodyAni = 2;
                                 TimerRand2 = Main.rand.Next(10, 21);
-                                int damage = NPC.RedemptionNPCBuff().disarmed ? NPC.damage / 3 : NPC.damage;
+                                int damage = NPC.RedemptionNPCBuff().disarmed ? (int)(NPC.damage * .75f) : NPC.damage;
                                 NPC.Shoot(NPC.Center, ModContent.ProjectileType<Calavia_BladeOfTheMountain>(), damage, Vector2.Zero, NPC.whoAmI, TimerRand2);
                             }
                             if (AITimer >= 0 && AITimer < TimerRand2 + 10)
@@ -530,7 +530,7 @@ namespace Redemption.NPCs.Minibosses.Calavia
                             {
                                 NPC.velocity *= 0;
                                 customArm = true;
-                                int damage = NPC.RedemptionNPCBuff().disarmed ? NPC.damage / 3 : NPC.damage;
+                                int damage = NPC.RedemptionNPCBuff().disarmed ? (int)(NPC.damage * .75f) : NPC.damage;
                                 NPC.Shoot(NPC.Center, ModContent.ProjectileType<Calavia_BladeOfTheMountain2>(), damage, Vector2.Zero, NPC.whoAmI, TimerRand2);
                             }
                             break;
@@ -563,7 +563,7 @@ namespace Redemption.NPCs.Minibosses.Calavia
                     {
                         NPC.velocity *= 0;
                         customArm = true;
-                        int damage = NPC.RedemptionNPCBuff().disarmed ? NPC.damage / 3 : NPC.damage;
+                        int damage = NPC.RedemptionNPCBuff().disarmed ? (int)(NPC.damage * .75f) : NPC.damage;
                         NPC.Shoot(NPC.Center, ModContent.ProjectileType<Calavia_BladeOfTheMountain2>(), damage, Vector2.Zero, NPC.whoAmI, 3);
                     }
                     if (AITimer == 100)

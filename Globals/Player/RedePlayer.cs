@@ -67,7 +67,7 @@ namespace Redemption.Globals.Player
                 visionAmt += 0.02f;
             else
                 visionAmt -= 0.05f;
-            visionAmt = MathHelper.Clamp(visionAmt, 0, 2f);
+            visionAmt = MathHelper.Clamp(visionAmt, 0, SoullessArea.soullessInts[2] is 1 ? 1f : 2f);
 
             hitTarget = -1;
             hitTarget2 = -1;
@@ -292,7 +292,7 @@ namespace Redemption.Globals.Player
                 SubworldSystem.Exit();
         }
 
-        public static readonly SoundStyle SoullessLoopSound = new("Redemption/Sounds/Custom/SoullessAmbient") { Type = SoundType.Ambient };
+        public static readonly SoundStyle SoullessLoopSound = new("Redemption/Sounds/Ambient/SoullessAmbient") { Type = SoundType.Ambient };
         private SlotId soullessLoopSoundSlot;
         private float soullessEffectIntensity;
         public override void PostUpdate()
@@ -303,6 +303,8 @@ namespace Redemption.Globals.Player
             float soullessEffectPitch = 0f;
             if (SubworldSystem.IsActive<SoullessSub>() && Player.InModBiome<SoullessBiome>())
             {
+                if (SoullessArea.soullessInts[2] == 0 && Main.rand.NextBool(20000))
+                    SoundEngine.PlaySound(CustomSounds.SoullessNoise);
                 if (stalkerSilence)
                 {
                     soullessEffectIntensity = MathHelper.Min(0.05f, Main.ambientVolume);

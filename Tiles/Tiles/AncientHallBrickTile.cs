@@ -3,6 +3,7 @@ using Terraria;
 using Terraria.ModLoader;
 using Redemption.Tiles.Plants;
 using Redemption.Dusts.Tiles;
+using Terraria.ID;
 
 namespace Redemption.Tiles.Tiles
 {
@@ -15,6 +16,7 @@ namespace Redemption.Tiles.Tiles
             Main.tileBlendAll[Type] = true;
             Main.tileLighted[Type] = false;
             Main.tileBlockLight[Type] = true;
+            TileID.Sets.DisableSmartCursor[Type] = true;
             Main.tileMerge[Type][ModContent.TileType<GathicGladestoneTile>()] = true;
             Main.tileMerge[Type][ModContent.TileType<GathicGladestoneBrickTile>()] = true;
             Main.tileMerge[Type][ModContent.TileType<AncientDirtTile>()] = true;

@@ -85,7 +85,19 @@ namespace Redemption.NPCs.Soulless
         }
         public override void AI()
         {
-            NPC.TargetClosest();
+            Player player = Main.player[NPC.target];
+            if (NPC.target < 0 || NPC.target == 255 || player.dead || !player.active)
+                NPC.TargetClosest();
+
+            if (SoullessArea.soullessInts[1] is 6 && player.Hitbox.Intersects(SoullessArea.stalkerZone2))
+                NPC.ai[0] = 10;
+            if (NPC.ai[0] is 10)
+            {
+                NPC.alpha += 5;
+                if (NPC.alpha >= 255)
+                    NPC.active = false;
+                return;
+            }
             NPC.LookByVelocity();
             RedeNPC globalNPC = NPC.Redemption();
 

@@ -73,6 +73,15 @@ namespace Redemption.NPCs.Soulless
             Player player = Main.player[NPC.target];
             if (NPC.target < 0 || NPC.target == 255 || player.dead || !player.active)
                 NPC.TargetClosest(true);
+            if (SoullessArea.soullessInts[1] is 6 && player.Hitbox.Intersects(SoullessArea.stalkerZone2))
+                NPC.ai[2] = 10;
+            if (NPC.ai[2] is 10)
+            {
+                NPC.alpha += 5;
+                if (NPC.alpha >= 255)
+                    NPC.active = false;
+                return;
+            }
 
             NPC doll = Main.npc[(int)NPC.ai[0]];
             if (!doll.active || doll.type != ModContent.NPCType<SoullessMarionette_Doll>())

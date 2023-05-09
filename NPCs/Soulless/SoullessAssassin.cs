@@ -137,7 +137,15 @@ namespace Redemption.NPCs.Soulless
             NPC.TargetClosest();
             if (AIState != ActionState.Stab)
                 NPC.LookByVelocity();
-
+            if (SoullessArea.soullessInts[1] is 6 && player.Hitbox.Intersects(SoullessArea.stalkerZone2))
+                NPC.ai[0] = 10;
+            if (NPC.ai[0] is 10)
+            {
+                NPC.alpha += 5;
+                if (NPC.alpha >= 255)
+                    NPC.active = false;
+                return;
+            }
             Rectangle SlashHitbox = new((int)(NPC.spriteDirection == -1 ? NPC.Center.X - 30 : NPC.Center.X), (int)(NPC.Center.Y - 8), 30, 18);
             if (AIState is ActionState.Hiding or ActionState.Stalk)
             {

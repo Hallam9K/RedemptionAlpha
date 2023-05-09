@@ -15,6 +15,7 @@ using Redemption.Particles;
 using Redemption.Globals.NPC;
 using Redemption.Tiles.Tiles;
 using Terraria.Audio;
+using Redemption.BaseExtension;
 
 namespace Redemption.NPCs.Soulless
 {
@@ -228,25 +229,22 @@ namespace Redemption.NPCs.Soulless
                             NPC.Move(v, 3, 1);
                             NPC.velocity *= .9f;
                             NPC.scale += 0.2f;
-                            if (NPC.ai[2]++ < 120)
+                            canFade = true;
+                            NPC.velocity *= 0.96f;
+                            NPC.alpha += 2;
+                            if (NPC.alpha >= 255)
                             {
-                                canFade = true;
-                                NPC.velocity *= 0.96f;
-                                NPC.alpha += 2;
-                                if (NPC.alpha >= 255)
+                                for (int x = 573 + offset.X; x < 585 + offset.X; x++)
                                 {
-                                    for (int x = 573 + offset.X; x < 585 + offset.X; x++)
+                                    for (int y = 1117 + offset.Y; y < 1127 + offset.Y; y++)
                                     {
-                                        for (int y = 1117 + offset.Y; y < 1127 + offset.Y; y++)
-                                        {
-                                            if (Framing.GetTileSafely(x, y).TileType == ModContent.TileType<ShadestoneTile>())
-                                                WorldGen.KillTile(x, y, false, false, true);
-                                        }
+                                        if (Framing.GetTileSafely(x, y).TileType == ModContent.TileType<ShadestoneTile>())
+                                            WorldGen.KillTile(x, y, false, false, true);
                                     }
-                                    RedeHelper.SpawnNPC(new EntitySource_WorldGen(), (414 + offset.X) * 16, (1059 + offset.Y) * 16, ModContent.NPCType<LostLight>(), 3);
-                                    CombatText.NewText(NPC.getRect(), Color.GhostWhite, "Qua lyht'ned...", true, false);
-                                    NPC.active = false;
                                 }
+                                RedeHelper.SpawnNPC(new EntitySource_WorldGen(), (414 + offset.X) * 16, (1059 + offset.Y) * 16, ModContent.NPCType<LostLight>(), 3);
+                                CombatText.NewText(NPC.getRect(), Color.GhostWhite, "Qua lyht'ned...", true, false);
+                                NPC.active = false;
                             }
                             break;
                     }
@@ -303,6 +301,63 @@ namespace Redemption.NPCs.Soulless
                             if (NPC.alpha >= 255)
                             {
                                 CombatText.NewText(NPC.getRect(), Color.GhostWhite, "Jugh...", true, false);
+                                NPC.active = false;
+                            }
+                            break;
+                    }
+                    break;
+                case 4:
+                    if (SoullessArea.soullessInts[2] == 0)
+                        NPC.active = false;
+                    switch (NPC.ai[1])
+                    {
+                        case 0:
+                            if (Main.LocalPlayer.DistanceSQ(NPC.Center) < 100 * 100)
+                                NPC.ai[1]++;
+                            break;
+                        case 1:
+                            v = (new Vector2(568, 1242) + offset.ToVector2()) * 16;
+                            if (NPC.DistanceSQ(v) <= 80 * 80)
+                                NPC.ai[1]++;
+
+                            NPC.Move(v, 8, 20);
+                            break;
+                        case 2:
+                            NPC.velocity *= .9f;
+                            Rectangle activeZone = new((567 + SoullessArea.Offset.X) * 16, (1233 + SoullessArea.Offset.Y) * 16, 28 * 16, 11 * 16);
+                            if (Main.LocalPlayer.Hitbox.Intersects(activeZone))
+                            {
+                                SoullessArea.soullessInts[1] = 7;
+                                SoullessArea.soullessInts[2] = 3;
+                                if (Main.netMode == NetmodeID.Server)
+                                    NetMessage.SendData(MessageID.WorldData);
+
+                                NPC.ai[1]++;
+                            }
+                            break;
+                        case 3:
+                            Vector2 stalkerPos = (new Vector2(552, 1242) + offset.ToVector2()) * 16;
+                            NPC.velocity *= .9f;
+
+                            if (NPC.ai[2]++ == 120)
+                                RedeHelper.SpawnNPC(NPC.GetSource_FromAI(), (int)stalkerPos.X, (int)stalkerPos.Y, ModContent.NPCType<TheStalker_Fake>(), 3);
+
+                            if (NPC.ai[2] >= 160)
+                            {
+                                v = (new Vector2(558, 1238) + offset.ToVector2()) * 16;
+                                NPC.Move(v, 5, 30);
+                            }
+                            if (NPC.ai[2] == 320)
+                                SoundEngine.PlaySound(SoundID.AbigailCry with { Pitch = -.1f }, NPC.position);
+                            if (NPC.ai[2] >= 320)
+                            {
+                                NPC.scale += 0.4f;
+                                canFade = true;
+                                NPC.alpha += 2;
+                            }
+                            if (NPC.alpha >= 255)
+                            {
+                                CombatText.NewText(NPC.getRect(), Color.GhostWhite, "Fall...", true, false);
                                 NPC.active = false;
                             }
                             break;

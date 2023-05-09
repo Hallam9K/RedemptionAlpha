@@ -546,7 +546,7 @@ namespace Redemption.Globals.NPC
                         pool.Add(ModContent.NPCType<ShadesoulNPC>(), .02f);
                         pool.Add(ModContent.NPCType<Shadebug>(), .02f);
                         if (!Terraria.NPC.AnyNPCs(ModContent.NPCType<SoullessMarionette_Doll>()))
-                            pool.Add(ModContent.NPCType<SoullessMarionette_Doll>(), .009f);
+                            pool.Add(ModContent.NPCType<SoullessMarionette_Doll>(), .01f);
 
                         pool.Add(ModContent.NPCType<LaughingMaskSmall>(), .01f);
                         pool.Add(ModContent.NPCType<LaughingMaskMedium>(), .01f);

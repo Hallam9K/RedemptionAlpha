@@ -5,6 +5,7 @@ using Redemption.Items.Placeable.Tiles;
 using Redemption.Dusts.Tiles;
 using Redemption.Items.Tools.PostML;
 using Redemption.Globals;
+using Terraria.ID;
 
 namespace Redemption.Tiles.Tiles
 {
@@ -17,6 +18,7 @@ namespace Redemption.Tiles.Tiles
             Main.tileBlockLight[Type] = true;
             DustType = ModContent.DustType<LabPlatingDust>();
             ItemDrop = ModContent.ItemType<SlayerShipPanel>();
+            TileID.Sets.DisableSmartCursor[Type] = true;
             MinPick = 500;
             MineResist = 7f;
             HitSound = CustomSounds.MetalHit;
