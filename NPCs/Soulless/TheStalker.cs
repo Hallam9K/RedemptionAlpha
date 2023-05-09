@@ -131,7 +131,7 @@ namespace Redemption.NPCs.Soulless
                                 }
                                 NPC.Shoot(NPC.Center + new Vector2(18, 0), ModContent.ProjectileType<TheStalker_Hand>(), 0, Vector2.Zero, NPC.whoAmI, 10);
                                 RedeHelper.SpawnNPC(NPC.GetSource_FromAI(), (439 + SoullessArea.Offset.X) * 16, (1234 + SoullessArea.Offset.Y) * 16, ModContent.NPCType<TheStalker_Fake>(), 2);
-                                RedeHelper.SpawnNPC(NPC.GetSource_FromAI(), (520 + SoullessArea.Offset.X) * 16, (1237 + SoullessArea.Offset.Y) * 16, ModContent.NPCType<LostLight>(), 4);
+                                RedeHelper.SpawnNPC(NPC.GetSource_FromAI(), (520 + SoullessArea.Offset.X) * 16, (1238 + SoullessArea.Offset.Y) * 16, ModContent.NPCType<LostLight>(), 4);
                             }
                             if (!RedeHelper.AnyProjectiles(ModContent.ProjectileType<TheStalker_Hand>()))
                             {
@@ -282,14 +282,25 @@ namespace Redemption.NPCs.Soulless
                         case 2:
                             if (NPC.ai[2]++ == 200)
                                 SoundEngine.PlaySound(new("Redemption/Sounds/Ambient/SoullessNoise3"), NPC.position);
-                            if (NPC.ai[2] == 400)
+                            NPC light = Main.npc[(int)NPC.ai[3]];
+                            if (light.ai[1] is 4)
                             {
                                 for (int i = 0; i < 40; i++)
                                 {
                                     Vector2 particlePos = RedeHelper.RandomPosition(new Vector2(545 + SoullessArea.Offset.X, 1244 + SoullessArea.Offset.Y), new Vector2(560 + SoullessArea.Offset.X, 1245 + SoullessArea.Offset.Y)) * 16;
                                     ParticleManager.NewParticle(particlePos, new Vector2(Main.rand.NextFloat(-1, 1), -Main.rand.NextFloat(1, 6)), new SoulParticle(), Color.White, 0.5f);
                                 }
-
+                                if (Main.netMode != NetmodeID.Server)
+                                {
+                                    for (int x = 544 + SoullessArea.Offset.X; x < 559 + SoullessArea.Offset.X; x += 3)
+                                    {
+                                        Gore.NewGore(NPC.GetSource_OnHit(NPC), new Vector2(x, 1244) * 16, NPC.velocity, ModContent.Find<ModGore>("Redemption/ShadestoneSlabGore").Type, 1);
+                                    }
+                                    for (int x = 546 + SoullessArea.Offset.X; x < 558 + SoullessArea.Offset.X; x += 3)
+                                    {
+                                        Gore.NewGore(NPC.GetSource_OnHit(NPC), new Vector2(x, 1244) * 16, NPC.velocity, ModContent.Find<ModGore>("Redemption/ShadestoneSlabGore").Type, 1);
+                                    }
+                                }
                                 for (int x = 545 + SoullessArea.Offset.X; x < 560 + SoullessArea.Offset.X; x++)
                                 {
                                     for (int y = 1242 + SoullessArea.Offset.Y; y < 1247 + SoullessArea.Offset.Y; y++)
@@ -308,7 +319,7 @@ namespace Redemption.NPCs.Soulless
                             Main.dust[dustIndex].velocity.X = 0f;
                             Main.dust[dustIndex].velocity.Y = -2f;
 
-                            NPC.velocity.X *=  .97f;
+                            NPC.velocity.X *= .97f;
                             NPC.rotation -= .01f;
                             if (NPC.ai[2]++ == 20)
                                 SoundEngine.PlaySound(new("Redemption/Sounds/Ambient/SoullessNoise4") { Pitch = .2f }, NPC.position);

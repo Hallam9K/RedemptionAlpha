@@ -65,7 +65,9 @@ namespace Redemption.NPCs.Soulless
                     other.position = eyesPos;
                 }
             }
-            if (NPC.DistanceSQ(player.Center) < 100 * 100 || SoullessArea.soullessInts[2] != 1)
+            if (SoullessArea.soullessInts[2] != 1)
+                NPC.ai[1] = 2;
+            if (NPC.DistanceSQ(player.Center) < 100 * 100)
             {
                 SoundEngine.PlaySound(SoundID.NPCDeath6 with { Pitch = -1, Volume = .5f, SoundLimitBehavior = SoundLimitBehavior.IgnoreNew }, NPC.position);
                 player.velocity *= .98f;

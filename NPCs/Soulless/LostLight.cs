@@ -340,26 +340,61 @@ namespace Redemption.NPCs.Soulless
                             NPC.velocity *= .9f;
 
                             if (NPC.ai[2]++ == 120)
-                                RedeHelper.SpawnNPC(NPC.GetSource_FromAI(), (int)stalkerPos.X, (int)stalkerPos.Y, ModContent.NPCType<TheStalker_Fake>(), 3);
+                                RedeHelper.SpawnNPC(NPC.GetSource_FromAI(), (int)stalkerPos.X, (int)stalkerPos.Y, ModContent.NPCType<TheStalker_Fake>(), 3, 0, 0, NPC.whoAmI);
 
-                            if (NPC.ai[2] >= 160)
+                            if (NPC.ai[2] >= 160 && NPC.ai[2] < 365)
                             {
-                                v = (new Vector2(558, 1238) + offset.ToVector2()) * 16;
-                                NPC.Move(v, 5, 30);
+                                float aiOffset = NPC.ai[2] - 160;
+                                v = stalkerPos + (Vector2.One.RotatedBy(MathHelper.ToRadians(NPC.ai[2] * (aiOffset / 100))) * (100 - (aiOffset / 4)));
+                                NPC.Move(v, 5 + (aiOffset / 2), 30);
+                                if (NPC.ai[2] == 220)
+                                    SoundEngine.PlaySound(SoundID.AbigailCry with { Pitch = -.4f }, NPC.position);
+                                if (NPC.ai[2] >= 220)
+                                {
+                                    Vector2 vector2;
+                                    vector2.X = (float)(Math.Sin(angle2) * 200);
+                                    vector2.Y = (float)(Math.Cos(angle2) * 200);
+                                    Dust dust4 = Main.dust[Dust.NewDust(NPC.Center + vector2, 2, 2, DustID.AncientLight, 0f, 0f, 100, default, 2f)];
+                                    dust4.noGravity = true;
+                                    dust4.velocity = -NPC.DirectionTo(dust3.position) * 10f;
+                                }
                             }
-                            if (NPC.ai[2] == 320)
-                                SoundEngine.PlaySound(SoundID.AbigailCry with { Pitch = -.1f }, NPC.position);
-                            if (NPC.ai[2] >= 320)
+                            else if (NPC.ai[2] >= 365 && NPC.ai[2] < 500)
                             {
-                                NPC.scale += 0.4f;
-                                canFade = true;
-                                NPC.alpha += 2;
+                                v = (new Vector2(552, 1242 - 18) + offset.ToVector2()) * 16;
+                                if (NPC.DistanceSQ(v) <= 80 * 80)
+                                    NPC.ai[2] = 500;
+                                NPC.Move(v, 40, 40);
                             }
+                            else if (NPC.ai[2] >= 500)
+                            {
+                                if (NPC.ai[2] == 500)
+                                    SoundEngine.PlaySound(SoundID.DD2_WitherBeastAuraPulse with { Pitch = .5f }, NPC.position);
+                                NPC.velocity.X *= .7f;
+                                if (NPC.ai[2] < 540)
+                                {
+                                    if (NPC.Center.X < stalkerPos.X)
+                                        NPC.velocity.X += 1;
+                                    else if (NPC.Center.X > stalkerPos.X)
+                                        NPC.velocity.X -= 1;
+                                }
+                                else
+                                    NPC.velocity.Y += 8;
+
+                                if (NPC.Center.Y >= stalkerPos.Y + 16)
+                                {
+                                    SoundEngine.PlaySound(SoundID.AbigailCry with { Pitch = -.1f }, NPC.position);
+                                    NPC.velocity *= 0;
+                                    NPC.ai[1]++;
+                                }
+                            }
+                            break;
+                        case 4:
+                            NPC.scale += 0.4f;
+                            canFade = true;
+                            NPC.alpha += 5;
                             if (NPC.alpha >= 255)
-                            {
-                                CombatText.NewText(NPC.getRect(), Color.GhostWhite, "Fall...", true, false);
                                 NPC.active = false;
-                            }
                             break;
                     }
                     break;

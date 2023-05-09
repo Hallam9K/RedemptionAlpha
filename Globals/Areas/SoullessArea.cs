@@ -230,7 +230,7 @@ namespace Redemption.Globals
                 Point StalkerPos = new((Offset.X + 463) * 16, (Offset.Y + 1103) * 16);
                 Terraria.NPC.NewNPC(new EntitySource_SpawnNPC(), StalkerPos.X, StalkerPos.Y, ModContent.NPCType<TheStalker>(), 0, 1);
             }
-            if (soullessInts[1] >= 5 && !Terraria.NPC.AnyNPCs(ModContent.NPCType<TheStalker>()))
+            if ((soullessInts[1] is 5 or 6) && !Terraria.NPC.AnyNPCs(ModContent.NPCType<TheStalker>()))
             {
                 Point StalkerPos = new((Offset.X + 378) * 16, (Offset.Y + 1209) * 16);
                 Terraria.NPC.NewNPC(new EntitySource_SpawnNPC(), StalkerPos.X, StalkerPos.Y, ModContent.NPCType<TheStalker>(), 0, 2);
