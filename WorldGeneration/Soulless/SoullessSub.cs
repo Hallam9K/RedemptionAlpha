@@ -439,6 +439,8 @@ namespace Redemption.WorldGeneration.Soulless
             GenUtils.ObjectPlace(313 + offsetX, 1004 + offsetY, ModContent.TileType<StalkerGateTile>());
 
             GenUtils.ObjectPlace(734 + offsetX, 1055 + offsetY, ModContent.TileType<AngelStatue_SC>());
+            GenUtils.ObjectPlace(824 + offsetX, 802 + offsetY, ModContent.TileType<AngelStatue_SC>());
+            GenUtils.ObjectPlace(234 + offsetX, 1529 + offsetY, ModContent.TileType<AngelStatue_SC>());
             GenUtils.ObjectPlace(801 + offsetX, 1130 + offsetY, ModContent.TileType<CelestineDreamsongTile>());
             //Chests
             SpookChest(265, 854);
