@@ -4,6 +4,7 @@ using Terraria.ModLoader;
 using Redemption.Dusts.Tiles;
 using Redemption.Items.Placeable.Tiles;
 using Redemption.Items.Tools.PostML;
+using System;
 
 namespace Redemption.Tiles.Tiles
 {
@@ -15,11 +16,6 @@ namespace Redemption.Tiles.Tiles
             Main.tileMergeDirt[Type] = false;
             Main.tileBlockLight[Type] = true;
             Main.tileBrick[Type] = true;
-            Main.tileMerge[Type][ModContent.TileType<ShadestoneTile>()] = true;
-            Main.tileMerge[Type][ModContent.TileType<ShadestoneRubbleTile>()] = true;
-            Main.tileMerge[Type][ModContent.TileType<ShadestoneSlabTile>()] = true;
-            Main.tileMerge[Type][ModContent.TileType<ShadestoneMossyTile>()] = true;
-            Main.tileMerge[Type][ModContent.TileType<ShadestoneBrickMossyTile>()] = true;
             ItemDrop = ModContent.ItemType<ShadestoneBrick>();
             DustType = ModContent.DustType<ShadestoneDust>();
             MinPick = 500;

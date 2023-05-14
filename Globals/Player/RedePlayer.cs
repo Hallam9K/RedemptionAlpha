@@ -60,6 +60,7 @@ namespace Redemption.Globals.Player
         public bool yesChoice;
         public bool noChoice;
         public bool onHit;
+        public bool handymanGrab;
 
         public override void ResetEffects()
         {
@@ -82,6 +83,7 @@ namespace Redemption.Globals.Player
             contactImmune = false;
             parried = false;
             onHit = false;
+            handymanGrab = false;
         }
         public override void Initialize()
         {
@@ -97,6 +99,7 @@ namespace Redemption.Globals.Player
             slayerStarRating = 0;
             parryStance = false;
             parried = false;
+            handymanGrab = false;
         }
         public Rectangle parryHitbox;
         public void CreateParryWindow(Rectangle hitbox, ref bool active)

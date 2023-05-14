@@ -8,7 +8,7 @@ using System.Collections.Generic;
 using Terraria.Audio;
 using Redemption.Buffs.Debuffs;
 using Terraria.ID;
-using System;
+using Redemption.BaseExtension;
 
 namespace Redemption.NPCs.Soulless
 {
@@ -17,6 +17,7 @@ namespace Redemption.NPCs.Soulless
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Handyman's Hand");
+            Main.projFrames[Projectile.type] = 4;
         }
         public override void SetDefaults()
         {
@@ -35,6 +36,12 @@ namespace Redemption.NPCs.Soulless
         public bool pause;
         public override void AI()
         {
+            if (Projectile.frameCounter++ >= 5)
+            {
+                Projectile.frameCounter = 0;
+                if (++Projectile.frame > 3)
+                    Projectile.frame = 0;
+            }
             Player player = Main.player[Projectile.owner];
             NPC npc = Main.npc[(int)Projectile.ai[0]];
             if (!npc.active || (npc.type != ModContent.NPCType<TheStalker>() && npc.type != ModContent.NPCType<TheStalker_Fake>()))
@@ -139,7 +146,10 @@ namespace Redemption.NPCs.Soulless
             if (Projectile.ai[1] > 0 && Projectile.ai[1] != 10)
                 return;
             if (player.whoAmI == Projectile.owner && player.Hitbox.Intersects(Projectile.Hitbox))
+            {
                 grabbed = true;
+                player.Redemption().handymanGrab = true;
+            }
             if (grabbed && player.whoAmI == Projectile.owner)
             {
                 if (consumed)
@@ -283,18 +293,27 @@ namespace Redemption.NPCs.Soulless
             Texture2D texture = TextureAssets.Projectile[Projectile.type].Value;
             Texture2D texture2 = ModContent.Request<Texture2D>(Texture + "2").Value;
             Texture2D arm = ModContent.Request<Texture2D>(Texture + "_Arm").Value;
-            Vector2 drawOrigin = new(texture.Width / 2 + 14, texture.Height / 2 + 6);
-            Vector2 drawOrigin2 = new(texture.Width / 2 + 9, texture.Height / 2 + 9);
+            int height = texture.Height / 4;
+            int y = height * Projectile.frame;
+            Rectangle rect = new(0, y, texture.Width, height);
+            Vector2 drawOrigin = new(texture.Width / 2 + 14, height / 2 + 10);
             SpriteEffects effects = Projectile.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
 
-            Main.EntitySpriteDraw(texture2, Projectile.Center + RedeHelper.Spread(2) - Main.screenPosition, null, Projectile.GetAlpha(lightColor) * .5f, Projectile.rotation - .4f, drawOrigin, Projectile.scale, effects, 0);
-            Main.EntitySpriteDraw(texture, Projectile.Center + RedeHelper.Spread(2) - Main.screenPosition, null, Projectile.GetAlpha(Color.White), Projectile.rotation - .4f, drawOrigin, Projectile.scale, effects, 0);
             if (seg != null)
             {
+                int height2 = arm.Height / 4;
+                int y2 = height2 * Projectile.frame;
+                Rectangle rect2 = new(0, y2, arm.Width, height2);
+                Vector2 drawOrigin2 = new(arm.Width / 2 + 9, height2 / 2 + 9);
                 for (int i = 0; i < seg.Count; i++)
                 {
-                    Main.EntitySpriteDraw(arm, seg[i] - Main.screenPosition, null, Projectile.GetAlpha(Color.White), segRot[i] - MathHelper.Pi - MathHelper.PiOver4, drawOrigin2, Projectile.scale, effects, 0);
+                    Main.EntitySpriteDraw(arm, seg[i] - Main.screenPosition, new Rectangle?(rect2), Projectile.GetAlpha(Color.White), segRot[i] - MathHelper.Pi - MathHelper.PiOver4, drawOrigin2, Projectile.scale, effects, 0);
                 }
+            }
+            if (!grabbed)
+            {
+                Main.EntitySpriteDraw(texture2, Projectile.Center + RedeHelper.Spread(2) - Main.screenPosition, new Rectangle?(rect), Projectile.GetAlpha(lightColor) * .5f, Projectile.rotation - .4f, drawOrigin, Projectile.scale, effects, 0);
+                Main.EntitySpriteDraw(texture, Projectile.Center + RedeHelper.Spread(2) - Main.screenPosition, new Rectangle?(rect), Projectile.GetAlpha(lightColor), Projectile.rotation - .4f, drawOrigin, Projectile.scale, effects, 0);
             }
             return false;
         }

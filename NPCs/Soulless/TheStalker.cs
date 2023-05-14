@@ -24,14 +24,15 @@ namespace Redemption.NPCs.Soulless
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("");
+            Main.npcFrameCount[NPC.type] = 8;
             NPCID.Sets.DebuffImmunitySets.Add(Type, new NPCDebuffImmunityData { ImmuneToAllBuffsThatAreNotWhips = true });
             NPCID.Sets.NPCBestiaryDrawModifiers value = new(0) { Hide = true };
             NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, value);
         }
         public override void SetDefaults()
         {
-            NPC.width = 60;
-            NPC.height = 74;
+            NPC.width = 54;
+            NPC.height = 66;
             NPC.lifeMax = 1000;
             NPC.damage = 0;
             NPC.immortal = true;
@@ -46,13 +47,14 @@ namespace Redemption.NPCs.Soulless
         {
             if (!SubworldSystem.IsActive<SoullessSub>() || SoullessArea.soullessInts[2] > 1)
                 NPC.active = false;
+
             Player player = Main.player[Main.myPlayer];
             if (!player.Hitbox.Intersects(NPC.Hitbox))
                 RAAGH = false;
             switch (NPC.ai[0])
             {
                 case 0:
-                    Lighting.AddLight(NPC.Center, .55f, .55f, .55f);
+                    Lighting.AddLight(NPC.Center, .1f, .1f, .1f);
                     if (SoullessArea.soullessInts[1] > 1)
                         NPC.active = false;
                     break;
@@ -144,6 +146,16 @@ namespace Redemption.NPCs.Soulless
                     break;
             }
         }
+        public override void FindFrame(int frameHeight)
+        {
+            if (++NPC.frameCounter >= 7)
+            {
+                NPC.frameCounter = 0;
+                NPC.frame.Y += frameHeight;
+                if (NPC.frame.Y > 3 * frameHeight)
+                    NPC.frame.Y = 0;
+            }
+        }
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
             Texture2D angy = ModContent.Request<Texture2D>(Texture + "2").Value;
@@ -176,6 +188,7 @@ namespace Redemption.NPCs.Soulless
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("");
+            Main.npcFrameCount[NPC.type] = 8;
             NPCID.Sets.DebuffImmunitySets.Add(Type, new NPCDebuffImmunityData { ImmuneToAllBuffsThatAreNotWhips = true });
             NPCID.Sets.NPCBestiaryDrawModifiers value = new(0) { Hide = true };
             NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, value);

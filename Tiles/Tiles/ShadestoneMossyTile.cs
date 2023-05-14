@@ -7,6 +7,7 @@ using Redemption.Items.Placeable.Tiles;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria.DataStructures;
 using Redemption.Biomes;
+using System;
 
 namespace Redemption.Tiles.Tiles
 {
@@ -18,11 +19,6 @@ namespace Redemption.Tiles.Tiles
             Main.tileMergeDirt[Type] = false;
             Main.tileBlockLight[Type] = true;
             Main.tileBrick[Type] = true;
-            Main.tileMerge[Type][ModContent.TileType<ShadestoneBrickTile>()] = true;
-            Main.tileMerge[Type][ModContent.TileType<ShadestoneRubbleTile>()] = true;
-            Main.tileMerge[Type][ModContent.TileType<ShadestoneSlabTile>()] = true;
-            Main.tileMerge[Type][ModContent.TileType<ShadestoneTile>()] = true;
-            Main.tileMerge[Type][ModContent.TileType<ShadestoneBrickMossyTile>()] = true;
             DustType = ModContent.DustType<VoidFlame>();
             ItemDrop = ModContent.ItemType<Shadestone>();
             MinPick = 350;

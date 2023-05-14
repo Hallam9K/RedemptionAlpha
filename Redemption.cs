@@ -639,6 +639,18 @@ namespace Redemption
                     InterfaceScaleType.UI);
                 layers.Insert(index, StunUI);
             }
+            if (Main.LocalPlayer.Redemption().handymanGrab)
+            {
+                int index = layers.FindIndex(layer => layer.Name.Equals("Vanilla: Ruler"));
+                LegacyGameInterfaceLayer GrabUI = new("Redemption: Handyman Grab UI",
+                    delegate
+                    {
+                        DrawHandymanGrab(Main.spriteBatch);
+                        return true;
+                    },
+                    InterfaceScaleType.UI);
+                layers.Insert(index, GrabUI);
+            }
             if (BasePlayer.HasAccessory(Main.LocalPlayer, ModContent.ItemType<PocketShieldGenerator>(), true, true))
             {
                 int index = layers.FindIndex(layer => layer.Name.Equals("Vanilla: Ruler"));
@@ -893,6 +905,20 @@ namespace Redemption
             Vector2 drawOrigin = new(starTex.Width / 2, height / 2);
 
             spriteBatch.Draw(starTex, player.Center - new Vector2(0, 34) - Main.screenPosition, new Rectangle?(new Rectangle(0, y, starTex.Width, height)), Color.White * ((255 - Main.BlackFadeIn) / 255f), 0, drawOrigin, 1, 0, 0);
+
+            spriteBatch.End();
+            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.LinearClamp, DepthStencilState.Default, RasterizerState.CullNone, null, Main.UIScaleMatrix);
+        }
+        public static void DrawHandymanGrab(SpriteBatch spriteBatch)
+        {
+            Player player = Main.LocalPlayer;
+            spriteBatch.End();
+            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.LinearClamp, DepthStencilState.Default, RasterizerState.CullNone, null, Main.GameViewMatrix.TransformationMatrix);
+
+            Texture2D handTex = ModContent.Request<Texture2D>("Redemption/Textures/Handyman_Grab").Value;
+            Vector2 drawOrigin = new(handTex.Width / 2, handTex.Height / 2);
+
+            spriteBatch.Draw(handTex, player.Center - Main.screenPosition, null, Color.White * ((255 - Main.BlackFadeIn) / 255f), 0, drawOrigin, 1, 0, 0);
 
             spriteBatch.End();
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.LinearClamp, DepthStencilState.Default, RasterizerState.CullNone, null, Main.UIScaleMatrix);
