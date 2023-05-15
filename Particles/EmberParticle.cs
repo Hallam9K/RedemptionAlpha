@@ -66,10 +66,6 @@ namespace Redemption.Particles
         }
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color lightColor)
         {
-            Texture2D circle = ModContent.Request<Texture2D>("Redemption/Textures/Circle").Value;
-            Texture2D ember = ModContent.Request<Texture2D>("Redemption/Particles/EmberParticle").Value;
-            Texture2D glow = ModContent.Request<Texture2D>("Redemption/Textures/SoftGlow").Value;
-
             Color bright = Color.Multiply(new(240, 149, 46, 0), opacity);
             Color mid = Color.Multiply(new(187, 63, 25, 0), opacity);
             Color dark = Color.Multiply(new(131, 23, 37, 0), opacity);
@@ -78,10 +74,10 @@ namespace Redemption.Particles
             Color glowColor = Color.Multiply(Color.Lerp(mid, dark, (float)(timeLeftMax - timeLeft) / timeLeftMax), 1f);
 
             float pixelRatio = 1f / 64f;
-            spriteBatch.Draw(glow, VisualPosition, new Rectangle(0, 0, 64, 64), glowColor, rotation, new Vector2(32f, 32f), 1f * size * scale, SpriteEffects.None, 0f);
-            spriteBatch.Draw(circle, VisualPosition - new Vector2(1.5f, 1.5f), new Rectangle(0, 0, 64, 64), emberColor, rotation, Vector2.Zero, 1f * pixelRatio * 3f * size * scale, SpriteEffects.None, 0f);
+            spriteBatch.Draw(Redemption.SoftGlow.Value, VisualPosition, new Rectangle(0, 0, 64, 64), glowColor, rotation, new Vector2(32f, 32f), 1f * size * scale, SpriteEffects.None, 0f);
+            spriteBatch.Draw(Redemption.Circle.Value, VisualPosition - new Vector2(1.5f, 1.5f), new Rectangle(0, 0, 64, 64), emberColor, rotation, Vector2.Zero, 1f * pixelRatio * 3f * size * scale, SpriteEffects.None, 0f);
             if (ai[1] < 1)
-                spriteBatch.Draw(ember, VisualPosition, new Rectangle(0, 0, 3, 3), color, rotation, new Vector2(1.5f, 1.5f), 1f * scale, SpriteEffects.None, 0f);
+                spriteBatch.Draw(Redemption.EmberParticle.Value, VisualPosition, new Rectangle(0, 0, 3, 3), color, rotation, new Vector2(1.5f, 1.5f), 1f * scale, SpriteEffects.None, 0f);
             return false;
         }
         private void Spawn()

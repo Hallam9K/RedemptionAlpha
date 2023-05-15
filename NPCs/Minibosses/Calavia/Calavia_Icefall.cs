@@ -59,7 +59,7 @@ namespace Redemption.NPCs.Minibosses.Calavia
     }
     public class Calavia_IcefallMist : Icefall_Mist
     {
-        public override string Texture => "Redemption/Textures/IceMist";
+        public override string Texture => "Redemption/" + Redemption.IceMist.Name;
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Ice Mist");

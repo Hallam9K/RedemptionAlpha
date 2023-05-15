@@ -1760,7 +1760,7 @@ namespace Redemption.NPCs.Bosses.Neb.Phase2
             spriteBatch.End();
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
 
-            Texture2D teleportGlow = ModContent.Request<Texture2D>("Redemption/Textures/WhiteGlow").Value;
+            Texture2D teleportGlow = Redemption.WhiteGlow.Value;
             Rectangle rect2 = new(0, 0, teleportGlow.Width, teleportGlow.Height);
             Vector2 origin2 = new(teleportGlow.Width / 2, teleportGlow.Height / 2);
             Vector2 position3 = teleVector - screenPos;

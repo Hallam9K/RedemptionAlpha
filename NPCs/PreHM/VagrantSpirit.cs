@@ -236,7 +236,7 @@ namespace Redemption.NPCs.PreHM
         {
             if (!NPC.IsABestiaryIconDummy)
             {
-                Texture2D LightGlow = ModContent.Request<Texture2D>("Redemption/Textures/WhiteFlare").Value;
+                Texture2D LightGlow = Redemption.WhiteFlare.Value;
                 float scale = BaseUtility.MultiLerp(Main.LocalPlayer.miscCounter % 100 / 100f, 1.2f, 0.8f, 1.2f);
                 Color color = BaseUtility.MultiLerpColor(Main.LocalPlayer.miscCounter % 100 / 100f, new Color(255, 246, 182), new Color(234, 133, 66), new Color(255, 246, 182));
                 Rectangle rect = new(0, 0, LightGlow.Width, LightGlow.Height);

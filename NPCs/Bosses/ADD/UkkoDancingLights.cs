@@ -10,7 +10,7 @@ namespace Redemption.NPCs.Bosses.ADD
 {
     public class UkkoDancingLights : ModProjectile
     {
-        public override string Texture => "Redemption/Textures/WhiteOrb";
+        public override string Texture => "Redemption/" + Redemption.WhiteOrb.Name;
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Dancing Light");

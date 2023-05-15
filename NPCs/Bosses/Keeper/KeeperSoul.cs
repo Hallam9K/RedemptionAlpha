@@ -101,7 +101,7 @@ namespace Redemption.NPCs.Bosses.Keeper
                 return false;
 
             Texture2D texture = ModContent.Request<Texture2D>("Redemption/NPCs/Friendly/SoullessPortal").Value;
-            Texture2D flare = ModContent.Request<Texture2D>("Redemption/Textures/WhiteFlare").Value;
+            Texture2D flare = Redemption.WhiteFlare.Value;
             Texture2D keeper = ModContent.Request<Texture2D>("Redemption/NPCs/Bosses/Keeper/Keeper_Closure").Value;
             Main.spriteBatch.End();
             Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);

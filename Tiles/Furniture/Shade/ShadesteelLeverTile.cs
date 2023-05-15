@@ -76,6 +76,27 @@ namespace Redemption.Tiles.Furniture.Shade
                             }
                         }
                     }
+                    else if (liftNPC.ModNPC is ShadestoneLiftBig modLiftBig && (modLiftBig.buttonPressed == 0 || modLiftBig.buttonY >= 14))
+                    {
+                        if (liftNPC.position.Y < (liftNPC.ai[2] - ((liftNPC.ai[2] / 2) - (liftNPC.ai[3] / 2))) * 16)
+                        {
+                            if (liftNPC.Center.Y < j * 16)
+                            {
+                                SoundEngine.PlaySound(CustomSounds.Switch1, liftNPC.position);
+                                modLiftBig.buttonPressed = 1;
+                                activate = true;
+                            }
+                        }
+                        else
+                        {
+                            if (liftNPC.Center.Y > (j + 6) * 16)
+                            {
+                                SoundEngine.PlaySound(CustomSounds.Switch1, liftNPC.position);
+                                modLiftBig.buttonPressed = 2;
+                                activate = true;
+                            }
+                        }
+                    }
                 }
             }
             if (!activate)
@@ -115,7 +136,7 @@ namespace Redemption.Tiles.Furniture.Shade
                 if (!npc.active)
                     continue;
 
-                if (npc.type != ModContent.NPCType<ShadestoneLift>())
+                if (npc.type != ModContent.NPCType<ShadestoneLift>() && npc.type != ModContent.NPCType<ShadestoneLiftBig>())
                     continue;
 
                 if (nearestNPCDist != -1 && !(npc.Distance(point) < nearestNPCDist))

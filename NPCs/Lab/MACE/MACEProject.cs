@@ -735,7 +735,7 @@ namespace Redemption.NPCs.Lab.MACE
             spriteBatch.End();
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
 
-            Texture2D mouthGlow = ModContent.Request<Texture2D>("Redemption/Textures/WhiteGlow").Value;
+            Texture2D mouthGlow = Redemption.WhiteGlow.Value;
             Rectangle rect2 = new(0, 0, mouthGlow.Width, mouthGlow.Height);
             Vector2 origin2 = new(mouthGlow.Width / 2, mouthGlow.Height / 2);
             Vector2 position2 = new Vector2(NPC.Center.X - 1, NPC.Center.Y + 38) - screenPos;

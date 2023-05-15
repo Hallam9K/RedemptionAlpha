@@ -144,7 +144,7 @@ namespace Redemption.NPCs.Bosses.Gigapora
         }
         public override void PostDraw(Color lightColor)
         {
-            Texture2D glowRadius = ModContent.Request<Texture2D>("Redemption/Textures/WhiteGlow").Value;
+            Texture2D glowRadius = Redemption.WhiteGlow.Value;
             Main.spriteBatch.End();
             Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
 

@@ -10,7 +10,7 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
 {
     public class MossyGoliath_SS_ToxicBreath : ModProjectile
     {
-        public override string Texture => "Redemption/Textures/IceMist";
+        public override string Texture => "Redemption/" + Redemption.IceMist.Name;
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Toxic Breath");

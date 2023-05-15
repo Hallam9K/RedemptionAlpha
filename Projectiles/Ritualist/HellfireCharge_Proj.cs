@@ -85,7 +85,7 @@ namespace Redemption.Projectiles.Ritualist
         }
         public override bool PreDraw(ref Color lightColor)
         {
-            Texture2D glow = ModContent.Request<Texture2D>("Redemption/Textures/WhiteFlare").Value;
+            Texture2D glow = Redemption.WhiteFlare.Value;
             Vector2 drawOrigin = new(glow.Width / 2, glow.Height / 2);
 
             Main.spriteBatch.End();

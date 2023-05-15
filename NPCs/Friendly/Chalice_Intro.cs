@@ -138,7 +138,7 @@ namespace Redemption.NPCs.Friendly
                     if (AITimer >= 2460 + 120)
                     {
                         SoundEngine.PlaySound(SoundID.Item68, NPC.position);
-                        RedeDraw.SpawnExplosion(NPC.Center, Color.White, scale: 1, noDust: true, tex: ModContent.Request<Texture2D>("Redemption/Textures/HolyGlow2").Value);
+                        RedeDraw.SpawnExplosion(NPC.Center, Color.White, scale: 1, noDust: true, tex: Redemption.HolyGlow2.Value);
 
                         RedeWorld.alignmentGiven = true;
                         if (Main.netMode == NetmodeID.Server)
@@ -153,7 +153,7 @@ namespace Redemption.NPCs.Friendly
                     if (AITimer >= 62)
                     {
                         SoundEngine.PlaySound(SoundID.Item68, NPC.position);
-                        RedeDraw.SpawnExplosion(NPC.Center, Color.White, scale: 1, noDust: true, tex: ModContent.Request<Texture2D>("Redemption/Textures/HolyGlow2").Value);
+                        RedeDraw.SpawnExplosion(NPC.Center, Color.White, scale: 1, noDust: true, tex: Redemption.HolyGlow2.Value);
 
                         RedeWorld.alignmentGiven = true;
                         if (Main.netMode == NetmodeID.Server)

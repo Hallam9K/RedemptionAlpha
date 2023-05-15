@@ -14,7 +14,7 @@ namespace Redemption.Projectiles.Magic
         public override string Texture => "Redemption/Projectiles/Minions/NaturePixie";
         public override void SetStaticDefaults()
         {
-            Main.projFrames[Projectile.type] = 4;
+            Main.projFrames[Projectile.type] = 6;
             ProjectileID.Sets.TrailCacheLength[Projectile.type] = 6;
             ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
             ProjectileID.Sets.CultistIsResistantTo[Projectile.type] = true;
@@ -53,7 +53,7 @@ namespace Redemption.Projectiles.Magic
             if (++Projectile.frameCounter >= 5)
             {
                 Projectile.frameCounter = 0;
-                if (++Projectile.frame >= 4)
+                if (++Projectile.frame >= 6)
                     Projectile.frame = 0;
             }
             Projectile.LookByVelocity();
@@ -111,7 +111,7 @@ namespace Redemption.Projectiles.Magic
         public override bool PreDraw(ref Color lightColor)
         {
             Texture2D texture = TextureAssets.Projectile[Projectile.type].Value;
-            int height = texture.Height / 4;
+            int height = texture.Height / 6;
             int y = height * Projectile.frame;
             Rectangle rect = new(0, y, texture.Width, height);
             Vector2 drawOrigin = new(texture.Width / 2, Projectile.height / 2);
@@ -121,7 +121,7 @@ namespace Redemption.Projectiles.Magic
 
             for (int k = 0; k < Projectile.oldPos.Length; k++)
             {
-                Vector2 drawPos = Projectile.oldPos[k] - Main.screenPosition + drawOrigin - new Vector2(8, 0) + new Vector2(0f, Projectile.gfxOffY);
+                Vector2 drawPos = Projectile.oldPos[k] - Main.screenPosition + drawOrigin + new Vector2(-12f, Projectile.gfxOffY);
                 Color color = Projectile.GetAlpha(Color.White) * ((Projectile.oldPos.Length - k) / (float)Projectile.oldPos.Length);
                 Main.EntitySpriteDraw(texture, drawPos, new Rectangle?(rect), color, Projectile.rotation, drawOrigin, Projectile.scale, effects, 0);
             }

@@ -183,7 +183,7 @@ namespace Redemption.NPCs.FowlMorning
         public void DrawTether(Player Target, Vector2 screenPos, Color color1, Color color2, float Size, float Strength)
         {
             Effect effect = ModContent.Request<Effect>("Redemption/Effects/Beam", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
-            effect.Parameters["uTexture"].SetValue(ModContent.Request<Texture2D>("Redemption/Textures/Trails/GlowTrail", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value);
+            effect.Parameters["uTexture"].SetValue(Redemption.GlowTrail.Value);
             effect.Parameters["progress"].SetValue(Main.GlobalTimeWrappedHourly / 3);
             effect.Parameters["uColor"].SetValue(color1.ToVector4());
             effect.Parameters["uSecondaryColor"].SetValue(color2.ToVector4());

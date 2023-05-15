@@ -83,7 +83,7 @@ namespace Redemption.Items.Usable
 
         public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI)
         {
-            Texture2D glow = ModContent.Request<Texture2D>("Redemption/Textures/WhiteFlare").Value;
+            Texture2D glow = Redemption.WhiteFlare.Value;
             Color color = BaseUtility.MultiLerpColor(Main.LocalPlayer.miscCounter % 100 / 100f, new Color(211, 232, 169), new Color(247, 247, 169), new Color(211, 232, 169));
             Vector2 origin = new(glow.Width / 2, glow.Height / 2);
 

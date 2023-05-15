@@ -37,7 +37,7 @@ namespace Redemption.WorldGeneration.Soulless
     public class SoullessSub : Subworld
     {
         public override int Width => 2200;
-        public override int Height => 1800;
+        public override int Height => 2000;
         public override bool NormalUpdates => false;
         public override bool ShouldSave => true;
         public override bool NoPlayerSaving => false;
@@ -136,6 +136,25 @@ namespace Redemption.WorldGeneration.Soulless
             Main.rockLayer = 635 + SoullessArea.Offset.Y;
 
             Mod mod = Redemption.Instance;
+            for (int i = 235; i <= 455; i += 22)
+                StructureHelper.Generator.GenerateStructure("WorldGeneration/Soulless/SCAquaductSeg", new Point16(i + SoullessArea.Offset.X, 1576 + SoullessArea.Offset.Y), mod);
+            for (int i = 246; i <= 422; i += 22)
+                StructureHelper.Generator.GenerateStructure("WorldGeneration/Soulless/SCAquaductSeg", new Point16(i + SoullessArea.Offset.X, 1551 + SoullessArea.Offset.Y), mod);
+            for (int i = 326; i <= 392; i += 22)
+                StructureHelper.Generator.GenerateStructure("WorldGeneration/Soulless/SCAquaductSeg", new Point16(i + SoullessArea.Offset.X, 1669 + SoullessArea.Offset.Y), mod);
+            StructureHelper.Generator.GenerateStructure("WorldGeneration/Soulless/SCAquaductSeg", new Point16(337 + SoullessArea.Offset.X, 1644 + SoullessArea.Offset.Y), mod);
+
+            for (int i = 551; i <= 595; i += 22)
+                StructureHelper.Generator.GenerateStructure("WorldGeneration/Soulless/SCAquaductSeg", new Point16(i + SoullessArea.Offset.X, 1649 + SoullessArea.Offset.Y), mod);
+            for (int i = 540; i <= 606; i += 22)
+                StructureHelper.Generator.GenerateStructure("WorldGeneration/Soulless/SCAquaductSeg", new Point16(i + SoullessArea.Offset.X, 1624 + SoullessArea.Offset.Y), mod);
+            for (int i = 529; i <= 595; i += 22)
+                StructureHelper.Generator.GenerateStructure("WorldGeneration/Soulless/SCAquaductSeg", new Point16(i + SoullessArea.Offset.X, 1599 + SoullessArea.Offset.Y), mod);
+            for (int i = 540; i <= 606; i += 22)
+                StructureHelper.Generator.GenerateStructure("WorldGeneration/Soulless/SCAquaductSeg", new Point16(i + SoullessArea.Offset.X, 1574 + SoullessArea.Offset.Y), mod);
+            for (int i = 551; i <= 595; i += 22)
+                StructureHelper.Generator.GenerateStructure("WorldGeneration/Soulless/SCAquaductSeg", new Point16(i + SoullessArea.Offset.X, 1549 + SoullessArea.Offset.Y), mod);
+
             Dictionary<Color, int> colorToTile = new()
             {
                 [new Color(0, 255, 0)] = ModContent.TileType<ShadestoneTile>(),
@@ -148,6 +167,7 @@ namespace Redemption.WorldGeneration.Soulless
                 [new Color(22, 26, 35)] = ModContent.TileType<ShadestoneMossyTile>(),
                 [new Color(0, 26, 35)] = ModContent.TileType<ShadestoneBrickMossyTile>(),
                 [new Color(0, 255, 255)] = ModContent.TileType<ShadestoneSlabTile>(),
+                [new Color(0, 100, 255)] = ModContent.TileType<ShadestonePillarTile>(),
                 [new Color(70, 70, 70)] = ModContent.TileType<ShadesteelChainTile>(),
                 [new Color(200, 200, 100)] = ModContent.TileType<AncientAlloyBrickTile>(),
                 [new Color(200, 100, 200)] = ModContent.TileType<AncientAlloyPipeTile>(),
@@ -435,6 +455,8 @@ namespace Redemption.WorldGeneration.Soulless
             GenUtils.ObjectPlace(612 + offsetX, 862 + offsetY, ModContent.TileType<ShadesteelLeverTile>());
             GenUtils.ObjectPlace(338 + offsetX, 761 + offsetY, ModContent.TileType<ShadesteelLeverTile>());
             GenUtils.ObjectPlace(328 + offsetX, 786 + offsetY, ModContent.TileType<ShadesteelLeverTile>());
+            GenUtils.ObjectPlace(498 + offsetX, 1573 + offsetY, ModContent.TileType<ShadesteelLeverTile>());
+            GenUtils.ObjectPlace(498 + offsetX, 1656 + offsetY, ModContent.TileType<ShadesteelLeverTile>());
 
             GenUtils.ObjectPlace(313 + offsetX, 1004 + offsetY, ModContent.TileType<StalkerGateTile>());
 
@@ -468,6 +490,8 @@ namespace Redemption.WorldGeneration.Soulless
                 {
                     if (Framing.GetTileSafely(i, j).TileType == TileID.Books && WorldGen.InWorld(i, j))
                         Framing.GetTileSafely(i, j).TileColor = PaintID.WhitePaint;
+                    if ((Framing.GetTileSafely(i, j).WallType is WallID.WroughtIronFence or WallID.Waterfall) && WorldGen.InWorld(i, j))
+                        Framing.GetTileSafely(i, j).WallColor = PaintID.BlackPaint;
                 }
             }
             for (int i = 80 + offsetX; i < 140 + offsetX; i++)

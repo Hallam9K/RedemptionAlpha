@@ -54,8 +54,8 @@ namespace Redemption.Tiles.Furniture.Shade
             if (Main.tile[left, top].TileFrameX != 0)
                 return true;
 
-            Texture2D flare = ModContent.Request<Texture2D>("Redemption/Textures/WhiteFlare").Value;
-            Texture2D glow = ModContent.Request<Texture2D>("Redemption/Textures/WhiteGlow").Value;
+            Texture2D flare = Redemption.WhiteFlare.Value;
+            Texture2D glow = Redemption.WhiteGlow.Value;
             Vector2 zero = new(Main.offScreenRange, Main.offScreenRange);
             if (Main.drawToScreen)
                 zero = Vector2.Zero;

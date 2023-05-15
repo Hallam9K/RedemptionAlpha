@@ -109,7 +109,7 @@ namespace Redemption.Projectiles.Melee
     }
     public class NebulaSpark : ModProjectile, ITrailProjectile
     {
-        public override string Texture => "Redemption/Textures/WhiteFlare";
+        public override string Texture => "Redemption/" + Redemption.WhiteFlare.Name;
         public override void SetStaticDefaults()
         {
             ProjectileID.Sets.CultistIsResistantTo[Projectile.type] = true;

@@ -17,7 +17,7 @@ namespace Redemption.Projectiles.Minions
     {
         public override void SetStaticDefaults()
         {
-            Main.projFrames[Projectile.type] = 4;
+            Main.projFrames[Projectile.type] = 6;
             ProjectileID.Sets.TrailCacheLength[Projectile.type] = 6;
             ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
             ProjectileID.Sets.MinionSacrificable[Projectile.type] = true;
@@ -29,8 +29,8 @@ namespace Redemption.Projectiles.Minions
 
         public override void SetDefaults()
         {
-            Projectile.width = 14;
-            Projectile.height = 14;
+            Projectile.width = 34;
+            Projectile.height = 28;
             Projectile.tileCollide = false;
 
             Projectile.friendly = true;
@@ -58,7 +58,7 @@ namespace Redemption.Projectiles.Minions
             if (++Projectile.frameCounter >= 5)
             {
                 Projectile.frameCounter = 0;
-                if (++Projectile.frame >= 4)
+                if (++Projectile.frame >= 6)
                     Projectile.frame = 0;
             }
             Projectile.LookByVelocity();
@@ -232,7 +232,7 @@ namespace Redemption.Projectiles.Minions
         {
             Texture2D texture = TextureAssets.Projectile[Projectile.type].Value;
             Texture2D glow = ModContent.Request<Texture2D>(Projectile.ModProjectile.Texture + "_Glow").Value;
-            int height = texture.Height / 4;
+            int height = texture.Height / 6;
             int y = height * Projectile.frame;
             Rectangle rect = new(0, y, texture.Width, height);
             Vector2 drawOrigin = new(texture.Width / 2, Projectile.height / 2);
@@ -242,7 +242,7 @@ namespace Redemption.Projectiles.Minions
 
             for (int k = 0; k < Projectile.oldPos.Length; k++)
             {
-                Vector2 drawPos = Projectile.oldPos[k] - Main.screenPosition + drawOrigin - new Vector2(8, 0) + new Vector2(0f, Projectile.gfxOffY);
+                Vector2 drawPos = Projectile.oldPos[k] - Main.screenPosition + drawOrigin + new Vector2(0f, Projectile.gfxOffY);
                 Color color = Projectile.GetAlpha(Color.White) * ((Projectile.oldPos.Length - k) / (float)Projectile.oldPos.Length);
                 Main.EntitySpriteDraw(glow, drawPos, new Rectangle?(rect), color, Projectile.rotation, drawOrigin, Projectile.scale, effects, 0);
             }

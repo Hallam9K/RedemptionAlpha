@@ -59,7 +59,7 @@ namespace Redemption.Projectiles.Magic
     }
     public class DigestiveAcid_Mist : ModProjectile
     {
-        public override string Texture => "Redemption/Textures/IceMist";
+        public override string Texture => "Redemption/" + Redemption.IceMist.Name;
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Acid Mist");

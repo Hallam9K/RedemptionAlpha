@@ -255,7 +255,7 @@ namespace Redemption.Globals
 
                     SoundEngine.PlaySound(SoundID.Item68, item.position);
                     SoundEngine.PlaySound(CustomSounds.Choir with { Pitch = 0.1f }, item.position);
-                    RedeDraw.SpawnExplosion(item.Center, Color.White, noDust: true, tex: ModContent.Request<Texture2D>("Redemption/Textures/HolyGlow3", AssetRequestMode.ImmediateLoad).Value);
+                    RedeDraw.SpawnExplosion(item.Center, Color.White, noDust: true, tex: Redemption.HolyGlow3.Value);
                     chicken.active = false;
                     if (Main.netMode != NetmodeID.MultiplayerClient)
                     {

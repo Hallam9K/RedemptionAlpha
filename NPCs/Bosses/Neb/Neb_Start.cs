@@ -158,7 +158,7 @@ namespace Redemption.NPCs.Bosses.Neb
         }
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
-            Texture2D glow = ModContent.Request<Texture2D>("Redemption/Textures/WhiteFlare").Value;
+            Texture2D glow = Redemption.WhiteFlare.Value;
             Vector2 drawOrigin = new(glow.Width / 2, glow.Height / 2);
 
             Main.spriteBatch.End();

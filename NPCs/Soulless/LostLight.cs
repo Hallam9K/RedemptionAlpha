@@ -414,7 +414,7 @@ namespace Redemption.NPCs.Soulless
         public override bool CheckActive() => false;
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
-            Texture2D LightGlow = ModContent.Request<Texture2D>("Redemption/Textures/WhiteGlow").Value;
+            Texture2D LightGlow = Redemption.WhiteGlow.Value;
             var effects = NPC.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
             float scale = BaseUtility.MultiLerp(Main.LocalPlayer.miscCounter % 100 / 100f, 1.2f, 0.8f, 1.2f);
             float scale2 = BaseUtility.MultiLerp(Main.LocalPlayer.miscCounter % 100 / 100f, 0.4f, 0.8f, 0.4f);

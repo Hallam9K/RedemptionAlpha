@@ -1010,7 +1010,7 @@ namespace Redemption.NPCs.Bosses.Erhan
             spriteBatch.End();
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
 
-            Texture2D flare = ModContent.Request<Texture2D>("Redemption/Textures/HolyGlow2").Value;
+            Texture2D flare = Redemption.HolyGlow2.Value;
             Rectangle rect = new(0, 0, flare.Width, flare.Height);
             Vector2 origin = new(flare.Width / 2, flare.Height / 2);
             Vector2 position = NPC.Center - screenPos;
@@ -1021,7 +1021,7 @@ namespace Redemption.NPCs.Bosses.Erhan
                 spriteBatch.Draw(flare, position, new Rectangle?(rect), colour * 0.4f, NPC.rotation, origin, 2.5f, SpriteEffects.None, 0);
             }
 
-            Texture2D teleportGlow = ModContent.Request<Texture2D>("Redemption/Textures/HolyGlow3").Value;
+            Texture2D teleportGlow = Redemption.HolyGlow3.Value;
             Rectangle rect2 = new(0, 0, teleportGlow.Width, teleportGlow.Height);
             Vector2 origin2 = new(teleportGlow.Width / 2, teleportGlow.Height / 2);
             Vector2 position2 = NPC.Center - screenPos;

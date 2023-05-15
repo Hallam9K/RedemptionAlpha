@@ -175,7 +175,7 @@ namespace Redemption.Items.Weapons.HM.Magic
                         {
                             if (charged == 0)
                             {
-                                RedeDraw.SpawnExplosion(Projectile.Center, Color.White, shakeAmount: 0, scale: 2, noDust: true, tex: ModContent.Request<Texture2D>("Redemption/Textures/HolyGlow2").Value);
+                                RedeDraw.SpawnExplosion(Projectile.Center, Color.White, shakeAmount: 0, scale: 2, noDust: true, tex: Redemption.HolyGlow2.Value);
                                 SoundEngine.PlaySound(CustomSounds.NebSound2 with { Pitch = .2f, Volume = .5f }, Projectile.position);
                                 charged = 1;
                             }
@@ -183,7 +183,7 @@ namespace Redemption.Items.Weapons.HM.Magic
                         }
                         if (Projectile.scale >= 3 && charged < 2)
                         {
-                            RedeDraw.SpawnExplosion(Projectile.Center, Color.White, shakeAmount: 0, scale: 5, noDust: true, tex: ModContent.Request<Texture2D>("Redemption/Textures/HolyGlow2").Value);
+                            RedeDraw.SpawnExplosion(Projectile.Center, Color.White, shakeAmount: 0, scale: 5, noDust: true, tex: Redemption.HolyGlow2.Value);
                             SoundEngine.PlaySound(CustomSounds.NebSound2 with { Volume = .5f }, Projectile.position);
                             charged = 2;
                         }
@@ -308,7 +308,7 @@ namespace Redemption.Items.Weapons.HM.Magic
     }
     public class Divinity_Ball : ModProjectile
     {
-        public override string Texture => "Redemption/Textures/WhiteOrb";
+        public override string Texture => "Redemption/" + Redemption.WhiteOrb.Name;
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Divinity Charge");
@@ -371,7 +371,7 @@ namespace Redemption.Items.Weapons.HM.Magic
             Matrix projection = Matrix.CreateOrthographicOffCenter(0, Main.screenWidth, Main.screenHeight, 0, -1, 1);
 
             effect.Parameters["transformMatrix"].SetValue(world * view * projection);
-            effect.Parameters["sampleTexture"].SetValue(ModContent.Request<Texture2D>("Redemption/Textures/Trails/GlowTrail").Value);
+            effect.Parameters["sampleTexture"].SetValue(Redemption.GlowTrail.Value);
             effect.Parameters["time"].SetValue(Main.GameUpdateCount * 0.05f);
             effect.Parameters["repeats"].SetValue(1f);
 

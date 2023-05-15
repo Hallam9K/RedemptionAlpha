@@ -13,7 +13,7 @@ namespace Redemption.Projectiles.Magic
 {
     public class Icefall_Mist : ModProjectile
     {
-        public override string Texture => "Redemption/Textures/IceMist";
+        public override string Texture => "Redemption/" + Redemption.IceMist.Name;
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Ice Mist");

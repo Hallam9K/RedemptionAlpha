@@ -14,7 +14,7 @@ namespace Redemption.Projectiles.Melee
 {
     public class Lightmass : ModProjectile
     {
-        public override string Texture => "Redemption/Textures/WhiteFlare";
+        public override string Texture => "Redemption/" + Redemption.WhiteFlare.Name;
         public override void SetStaticDefaults()
         {
             ProjectileID.Sets.CultistIsResistantTo[Projectile.type] = true;

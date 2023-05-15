@@ -210,6 +210,11 @@ namespace Redemption.Globals
                 Point LiftPos2 = new((Offset.X + 334) * 16, ((Offset.Y + 763) * 16) + 8);
                 Terraria.NPC.NewNPC(new EntitySource_SpawnNPC(), LiftPos2.X, LiftPos2.Y, ModContent.NPCType<ShadestoneLift>(), 0, 0, 0, 787, 762);
             }
+            if (!Terraria.NPC.AnyNPCs(ModContent.NPCType<ShadestoneLiftBig>()))
+            {
+                Point LiftPos = new((Offset.X + 492) * 16, ((Offset.Y + 1575) * 16) + 8);
+                Terraria.NPC.NewNPC(new EntitySource_SpawnNPC(), LiftPos.X, LiftPos.Y, ModContent.NPCType<ShadestoneLiftBig>(), 0, 0, 0, 1657, 1574);
+            }
             if (!soullessBools[2] && !Terraria.NPC.AnyNPCs(ModContent.NPCType<ShadestoneLift2>()))
             {
                 Point LiftPos3 = new((Offset.X + 510) * 16, ((Offset.Y + 863) * 16) + 8);

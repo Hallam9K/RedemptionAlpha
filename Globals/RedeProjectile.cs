@@ -123,7 +123,7 @@ namespace Redemption.Globals
                         p.AddBuff(BuffID.ParryDamageBuff, 120);
                     }
                     player.velocity.X += 4 * player.RightOfDir(npc);
-                    RedeDraw.SpawnExplosion(RedeHelper.CenterPoint(projectile.Center, target.Center.ToVector2()), Color.White, shakeAmount: 0, scale: 1f, noDust: true, tex: ModContent.Request<Texture2D>("Redemption/Textures/HolyGlow2").Value);
+                    RedeDraw.SpawnExplosion(RedeHelper.CenterPoint(projectile.Center, target.Center.ToVector2()), Color.White, shakeAmount: 0, scale: 1f, noDust: true, tex: Redemption.HolyGlow2.Value);
                     SoundEngine.PlaySound(CustomSounds.SwordClash, projectile.position);
                     DustHelper.DrawCircle(RedeHelper.CenterPoint(projectile.Center, target.Center.ToVector2()), DustID.SilverCoin, 1, 4, 4, nogravity: true);
                     parried = true;

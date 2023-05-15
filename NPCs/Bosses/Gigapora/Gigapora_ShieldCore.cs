@@ -326,7 +326,7 @@ namespace Redemption.NPCs.Bosses.Gigapora
         {
             Texture2D texture = TextureAssets.Npc[NPC.type].Value;
             Texture2D glowMask = ModContent.Request<Texture2D>(Texture + "_Glow").Value;
-            Texture2D glowRadius = ModContent.Request<Texture2D>("Redemption/Textures/WhiteGlow").Value;
+            Texture2D glowRadius = Redemption.WhiteGlow.Value;
             var effects = NPC.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
 
             if (!NPC.IsABestiaryIconDummy)
