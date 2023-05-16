@@ -6,6 +6,7 @@ using Redemption.Items.Usable;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.Enums;
+using Terraria.GameContent.ObjectInteractions;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
@@ -19,6 +20,7 @@ namespace Redemption.Tiles.Natural
             Main.tileFrameImportant[Type] = true;
             Main.tileLavaDeath[Type] = false;
             Main.tileNoAttach[Type] = true;
+            TileID.Sets.HasOutlines[Type] = true;
             TileObjectData.newTile.Width = 3;
             TileObjectData.newTile.Height = 1;
             TileObjectData.newTile.CoordinateHeights = new int[] { 16 };
@@ -36,6 +38,7 @@ namespace Redemption.Tiles.Natural
             name.SetDefault("Soulless Remains");
             AddMapEntry(new Color(210, 200, 191), name);
         }
+        public override bool HasSmartInteract(int i, int j, SmartInteractScanSettings settings) => Main.tile[i, j].TileFrameX < 54;
         public override void MouseOver(int i, int j)
         {
             Player player = Main.LocalPlayer;
@@ -90,7 +93,9 @@ namespace Redemption.Tiles.Natural
                         Main.tile[x, y].TileFrameX += 54;
                 }
             }
-            return true;
+            if (Main.tile[left, top].TileFrameX == 0)
+                return true;
+            return false;
         }
         public override void KillMultiTile(int i, int j, int frameX, int frameY)
         {
@@ -123,7 +128,9 @@ namespace Redemption.Tiles.Natural
                         Main.tile[x, y].TileFrameX += 54;
                 }
             }
-            return true;
+            if (Main.tile[left, top].TileFrameX == 0)
+                return true;
+            return false;
         }
         public override void KillMultiTile(int i, int j, int frameX, int frameY)
         {

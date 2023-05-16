@@ -36,7 +36,7 @@ namespace Redemption.Items.Usable
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Prison Gate Key");
+            DisplayName.SetDefault("Reinforced Prison Gate Key");
             Tooltip.SetDefault("Unlocks reinforced gates in the Soulless Prison");
             SacrificeTotal = 1;
         }

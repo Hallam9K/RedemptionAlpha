@@ -1,5 +1,6 @@
 using Redemption.Rarities;
 using Redemption.Tiles.Tiles;
+using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Redemption.Items.Placeable.Tiles
@@ -19,6 +20,13 @@ namespace Redemption.Items.Placeable.Tiles
             Item.height = 16;
             Item.maxStack = 9999;
             Item.rare = ModContent.RarityType<TurquoiseRarity>();
+        }
+        public override void AddRecipes()
+        {
+            CreateRecipe()
+                .AddIngredient(ModContent.ItemType<ShinkiteBrickOrnateWall>(), 4)
+                .AddTile(TileID.WorkBenches)
+                .Register();
         }
     }
 }

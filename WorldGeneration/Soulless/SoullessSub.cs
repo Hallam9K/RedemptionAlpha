@@ -43,6 +43,7 @@ namespace Redemption.WorldGeneration.Soulless
         public override bool NoPlayerSaving => false;
         public override List<GenPass> Tasks => new()
         {
+            new SoullessPass0("Pre-Loading", .1f),
             new SoullessPass1("Loading", 1),
             new SoullessPass2("Furnishing Caverns", 0.3f),
             new SoullessPass3("Sprinkling Spooky Pots", 0.1f),
@@ -124,7 +125,7 @@ namespace Redemption.WorldGeneration.Soulless
         {
         }
     }
-    public class SoullessPass1 : GenPass
+    public class SoullessPass0 : GenPass
     {
         protected override void ApplyPass(GenerationProgress progress, GameConfiguration configuration)
         {
@@ -154,7 +155,15 @@ namespace Redemption.WorldGeneration.Soulless
                 StructureHelper.Generator.GenerateStructure("WorldGeneration/Soulless/SCAquaductSeg", new Point16(i + SoullessArea.Offset.X, 1574 + SoullessArea.Offset.Y), mod);
             for (int i = 551; i <= 595; i += 22)
                 StructureHelper.Generator.GenerateStructure("WorldGeneration/Soulless/SCAquaductSeg", new Point16(i + SoullessArea.Offset.X, 1549 + SoullessArea.Offset.Y), mod);
-
+        }
+        public SoullessPass0(string name, float loadWeight) : base(name, loadWeight)
+        {
+        }
+    }
+    public class SoullessPass1 : GenPass
+    {
+        protected override void ApplyPass(GenerationProgress progress, GameConfiguration configuration)
+        {
             Dictionary<Color, int> colorToTile = new()
             {
                 [new Color(0, 255, 0)] = ModContent.TileType<ShadestoneTile>(),
@@ -690,7 +699,7 @@ namespace Redemption.WorldGeneration.Soulless
         {
             progress.Message = "Here, Have a Fungus";
             #region Let it Grow
-            //WorldGen.AddTrees();
+            /*WorldGen.AddTrees();
             for (int num = 0; num < 1800; num++)
             {
                 int xAxis = WorldGen.genRand.Next(1800 + SoullessArea.Offset.X - 45);
@@ -700,14 +709,21 @@ namespace Redemption.WorldGeneration.Soulless
                     for (int DecoY = yAxis; DecoY < yAxis + 45; DecoY++)
                     {
                         ushort type = Framing.GetTileSafely(DecoX, DecoY).TileType;
-                        if ((type == ModContent.TileType<ShadestoneMossyTile>() || type == ModContent.TileType<ShadestoneBrickMossyTile>()) && !Framing.GetTileSafely(DecoX, DecoY + 1).HasTile)
+                    }
+                }
+            }*/
+            for (int i = 0; i < 1800 + SoullessArea.Offset.X; i++)
+            {
+                for (int j = 0; j < 1800 + SoullessArea.Offset.Y; j++)
+                {
+                    Tile tile = Framing.GetTileSafely(i, j);
+                    if (tile.HasTile && (tile.TileType == ModContent.TileType<ShadestoneBrickMossyTile>() || tile.TileType == ModContent.TileType<ShadestoneMossyTile>() || tile.TileType == ModContent.TileType<NooserootVines>()))
+                    {
+                        ModTile tile2 = TileLoader.GetTile(Main.tile[i, j].TileType);
+                        if (tile2 != null)
                         {
-                            if (WorldGen.genRand.NextBool(15))
-                                WorldGen.PlaceObject(DecoX, DecoY + 1, ModContent.TileType<Nooseroot_Large>(), true, Main.rand.Next(3));
-                            if (WorldGen.genRand.NextBool(15))
-                                WorldGen.PlaceObject(DecoX, DecoY + 1, ModContent.TileType<Nooseroot_Medium>(), true, Main.rand.Next(3));
-                            if (WorldGen.genRand.NextBool(15))
-                                WorldGen.PlaceObject(DecoX, DecoY + 1, ModContent.TileType<Nooseroot_Small>(), true, Main.rand.Next(3));
+                            for (int v = 0; v < 50; v++)
+                                tile2.RandomUpdate(i, j);
                         }
                     }
                 }

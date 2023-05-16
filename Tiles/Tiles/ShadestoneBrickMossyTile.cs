@@ -6,6 +6,7 @@ using Redemption.Dusts.Tiles;
 using Redemption.Items.Tools.PostML;
 using Redemption.Dusts;
 using System;
+using Terraria.ID;
 
 namespace Redemption.Tiles.Tiles
 {
@@ -52,25 +53,20 @@ namespace Redemption.Tiles.Tiles
         }
         public override void RandomUpdate(int i, int j)
         {
-            if (!Framing.GetTileSafely(i, j + 1).HasTile && Framing.GetTileSafely(i, j).HasTile)
+            Tile tileBelow = Framing.GetTileSafely(i, j + 1);
+            Tile tile = Framing.GetTileSafely(i, j);
+            if (WorldGen.genRand.NextBool(15) && !tileBelow.HasTile && tileBelow.LiquidType != LiquidID.Lava)
             {
-                if (Main.rand.NextBool(5))
+                if (tile.Slope != SlopeType.SlopeUpLeft && tile.Slope != SlopeType.SlopeUpRight)
                 {
-                    WorldGen.PlaceObject(i, j + 1, ModContent.TileType<Nooseroot_Small>(), true, Main.rand.Next(3));
-                    NetMessage.SendObjectPlacment(-1, i, j + 1, ModContent.TileType<Nooseroot_Small>(), Main.rand.Next(3), 0, -1, -1);
-                }
-                if (Main.rand.NextBool(7))
-                {
-                    WorldGen.PlaceObject(i, j + 1, ModContent.TileType<Nooseroot_Medium>(), true, Main.rand.Next(3));
-                    NetMessage.SendObjectPlacment(-1, i, j + 1, ModContent.TileType<Nooseroot_Medium>(), Main.rand.Next(3), 0, -1, -1);
-                }
-                if (Main.rand.NextBool(12))
-                {
-                    WorldGen.PlaceObject(i, j + 1, ModContent.TileType<Nooseroot_Large>(), true, Main.rand.Next(3));
-                    NetMessage.SendObjectPlacment(-1, i, j + 1, ModContent.TileType<Nooseroot_Large>(), Main.rand.Next(3), 0, -1, -1);
+                    tileBelow.TileType = (ushort)ModContent.TileType<NooserootVines>();
+                    tileBelow.HasTile = true;
+                    WorldGen.SquareTileFrame(i, j + 1, true);
+                    if (Main.netMode == NetmodeID.Server)
+                        NetMessage.SendTileSquare(-1, i, j + 1, 3, TileChangeType.None);
                 }
             }
-            if (Main.rand.NextBool(8))
+            if (WorldGen.genRand.NextBool(8))
                 WorldGen.SpreadGrass(i + Main.rand.Next(-1, 1), j + Main.rand.Next(-1, 1), ModContent.TileType<ShadestoneBrickTile>(), Type, false, 0);
         }
     }
