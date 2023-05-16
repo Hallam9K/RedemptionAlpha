@@ -8,7 +8,7 @@ namespace Redemption.Items.Placeable.Furniture.ElderWood
 	{
 		public override void SetStaticDefaults()
 		{
-            Tooltip.SetDefault("'Strange... It has only 8 numbers...'");
+            Tooltip.SetDefault("'Strange... It has only 8 numbers'");
 
 			SacrificeTotal = 1;
 		}
@@ -28,7 +28,7 @@ namespace Redemption.Items.Placeable.Furniture.ElderWood
 				.AddIngredient(ModContent.ItemType<Tiles.ElderWood>(), 10)
 				.AddRecipeGroup(RecipeGroupID.IronBar, 3)
 				.AddIngredient(ItemID.Glass, 6)
-				.AddTile(TileID.WorkBenches)
+				.AddTile(TileID.Sawmill)
 				.Register();
         }
 	}

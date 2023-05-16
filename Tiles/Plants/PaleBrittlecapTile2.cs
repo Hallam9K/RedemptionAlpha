@@ -1,0 +1,42 @@
+﻿using Microsoft.Xna.Framework;
+using Redemption.Dusts.Tiles;
+using Redemption.Items.Placeable.Plants;
+using Redemption.Tiles.Tiles;
+using Terraria;
+using Terraria.DataStructures;
+using Terraria.ID;
+using Terraria.ModLoader;
+using Terraria.ObjectData;
+
+namespace Redemption.Tiles.Plants
+{
+    public class PaleBrittlecapTile2 : ModTile
+    {
+        public override void SetStaticDefaults()
+        {
+            Main.tileSolidTop[Type] = false;
+            Main.tileFrameImportant[Type] = true;
+            Main.tileNoAttach[Type] = true;
+            Main.tileLavaDeath[Type] = true;
+            Main.tileWaterDeath[Type] = false;
+            Main.tileCut[Type] = false;
+            Main.tileSpelunker[Type] = true;
+            TileObjectData.newTile.CopyFrom(TileObjectData.Style2x2);
+            TileObjectData.newTile.StyleHorizontal = true;
+            TileObjectData.newTile.RandomStyleRange = 2;
+            TileObjectData.newTile.DrawYOffset = 2;
+            TileObjectData.newTile.AnchorValidTiles = new int[] { ModContent.TileType<AncientGrassTile>(), ModContent.TileType<AncientDirtTile>() }; //ModContent.TileType<AncientSlateTile>() };
+            TileObjectData.addTile(Type);
+            HitSound = SoundID.Grass;
+            DustType = ModContent.DustType<SlateDust>();
+            ModTranslation name = CreateMapEntryName();
+            name.SetDefault("Pale Brittlecap");
+            AddMapEntry(new Color(170, 150, 110), name);
+        }
+        public override void KillMultiTile(int i, int j, int frameX, int frameY)
+        {
+            Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 32, 32, ModContent.ItemType<PaleBrittlecap>(), 4);
+        }
+        public override void NumDust(int i, int j, bool fail, ref int num) => num = 10;
+    }
+}

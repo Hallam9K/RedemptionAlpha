@@ -29,6 +29,7 @@ using ReLogic.Content;
 using Redemption.WorldGeneration;
 using Redemption.WorldGeneration.Misc;
 using Redemption.Items.Weapons.HM.Magic;
+using Redemption.Items.Weapons.PostML.Summon;
 
 namespace Redemption.Globals.Player
 {

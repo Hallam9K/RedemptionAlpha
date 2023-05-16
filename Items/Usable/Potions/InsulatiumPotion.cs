@@ -1,5 +1,6 @@
 ﻿using Redemption.Buffs;
 using Redemption.Items.Materials.PostML;
+using Redemption.Items.Placeable.Plants;
 using Redemption.Rarities;
 using Terraria;
 using Terraria.DataStructures;
@@ -41,6 +42,7 @@ namespace Redemption.Items.Usable.Potions
         {
             CreateRecipe()
                 .AddIngredient(ModContent.ItemType<AbyssStinger>())
+                .AddIngredient(ModContent.ItemType<Nooseroot>(), 2)
                 .AddIngredient(ItemID.BottledWater)
                 .AddTile(TileID.Bottles)
                 .Register();

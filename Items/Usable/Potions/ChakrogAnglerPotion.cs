@@ -1,5 +1,6 @@
 ﻿using Redemption.Buffs;
 using Redemption.Items.Materials.PostML;
+using Redemption.Items.Placeable.Plants;
 using Redemption.Rarities;
 using Terraria;
 using Terraria.ID;
@@ -38,6 +39,7 @@ namespace Redemption.Items.Usable.Potions
         {
             CreateRecipe()
                 .AddIngredient(ModContent.ItemType<ChakrogAngler>())
+                .AddIngredient(ModContent.ItemType<Nooseroot>(), 2)
                 .AddIngredient(ItemID.BottledWater)
                 .AddTile(TileID.Bottles)
                 .Register();

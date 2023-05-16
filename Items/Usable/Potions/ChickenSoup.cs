@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Redemption.Globals;
+using Redemption.Items.Critters;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
@@ -35,6 +36,11 @@ namespace Redemption.Items.Usable.Potions
             CreateRecipe()
                 .AddRecipeGroup(RedeRecipe.ChickenRecipeGroup)
                 .AddIngredient(ItemID.Mushroom)
+                .AddTile(TileID.CookingPots)
+                .Register();
+            CreateRecipe(2)
+                .AddIngredient<LongChickenItem>()
+                .AddIngredient(ItemID.Mushroom, 2)
                 .AddTile(TileID.CookingPots)
                 .Register();
         }

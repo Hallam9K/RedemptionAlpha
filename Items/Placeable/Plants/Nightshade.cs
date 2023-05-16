@@ -8,7 +8,6 @@ namespace Redemption.Items.Placeable.Plants
         public override void SetStaticDefaults()
         {
             Tooltip.SetDefault("'A purple plant that blooms in the night'");
-
 			SacrificeTotal = 25;
 		}
         public override void SetDefaults()
