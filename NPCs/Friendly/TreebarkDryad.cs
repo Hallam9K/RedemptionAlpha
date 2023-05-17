@@ -17,7 +17,6 @@ using Redemption.Items.Materials.PreHM;
 using Redemption.Items.Accessories.PreHM;
 using Redemption.BaseExtension;
 using Terraria.Audio;
-using Redemption.Items.Usable;
 using Terraria.GameContent.ItemDropRules;
 using Redemption.UI.ChatUI;
 using Redemption.Items.Materials.HM;

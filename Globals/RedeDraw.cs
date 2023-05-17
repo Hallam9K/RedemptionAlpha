@@ -111,7 +111,7 @@ namespace Redemption.Globals
             spriteBatch.End();
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
 
-            tex ??= ModContent.Request<Texture2D>("Redemption/Textures/WhiteFlare").Value;
+            tex ??= Redemption.WhiteFlare.Value;
             Rectangle rect = new(0, 0, tex.Width, tex.Height);
             if (origin == default)
                 origin = new(tex.Width / 2, tex.Height / 2);

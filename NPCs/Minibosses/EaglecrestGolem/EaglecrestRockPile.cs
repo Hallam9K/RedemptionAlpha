@@ -35,7 +35,8 @@ namespace Redemption.NPCs.Minibosses.EaglecrestGolem
                     ModContent.BuffType<InfestedDebuff>(),
                     ModContent.BuffType<NecroticGougeDebuff>(),
                     ModContent.BuffType<ViralityDebuff>(),
-                    ModContent.BuffType<DirtyWoundDebuff>()
+                    ModContent.BuffType<DirtyWoundDebuff>(),
+                    ModContent.BuffType<LaceratedDebuff>()
                 }
             });
 

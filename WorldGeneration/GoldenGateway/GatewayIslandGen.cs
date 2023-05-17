@@ -171,6 +171,9 @@ namespace Redemption.WorldGeneration
                 {
                     if (TileArray.Contains(Framing.GetTileSafely(i, j).TileType) && WorldGen.InWorld(i, j))
                         BaseWorldGen.SmoothTiles(i, j, i + 1, j + 1);
+
+                    if (Framing.GetTileSafely(i, j).TileType == TileID.Platforms && WorldGen.InWorld(i, j))
+                        WorldGen.KillTile(i, j, true);
                 }
             }
             GenVars.structures.AddProtectedStructure(new Rectangle(origin.X, origin.Y, WIDTH, HEIGHT));

@@ -8,7 +8,7 @@ using Terraria.UI;
 
 namespace Redemption.Globals
 {
-    public class RedeMapLayer : ModMapLayer
+    public class SurfacePortalMapLayer : ModMapLayer
     {
         public override void Draw(ref MapOverlayDrawContext context, ref string text)
         {
@@ -40,6 +40,21 @@ namespace Redemption.Globals
                     Vector2 pos = new(RedeGen.gathicPortalVector.X + 51, RedeGen.gathicPortalVector.Y + 17);
                     context.Draw(hintTexture, pos, Color.White, new SpriteFrame(1, 1, 0, 0), scaleIfNotSelected, scaleIfSelected, Alignment.Center);
                 }
+            }
+        }
+    }
+    public class UGPortalMapLayer : ModMapLayer
+    {
+        public override void Draw(ref MapOverlayDrawContext context, ref string text)
+        {
+            if ((RedeQuest.calaviaVar == 1 && RedeGen.gathicPortalPoint.X != 0) || (RedeQuest.shadesoulVar == 1 && RedeGen.gathicPortalPoint.X != 0))
+            {
+                const float scaleIfNotSelected = 1f;
+                const float scaleIfSelected = scaleIfNotSelected * 1.2f;
+                var hintTexture = ModContent.Request<Texture2D>("Redemption/Items/HintIcon").Value;
+
+                Vector2 pos = new(RedeGen.gathicPortalPoint.X + 51, RedeGen.gathicPortalPoint.Y + 17);
+                context.Draw(hintTexture, pos, Color.White, new SpriteFrame(1, 1, 0, 0), scaleIfNotSelected, scaleIfSelected, Alignment.Center);
             }
         }
     }

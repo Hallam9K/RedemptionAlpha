@@ -117,7 +117,7 @@ namespace Redemption.Globals.NPC
             if (item.HasElement(ElementID.Psychic))
                 IgnoreArmour = true;
             if (item.hammer > 0 || item.Redemption().TechnicallyHammer)
-                GuardDamage *= 4;
+                GuardDamage = 4;
         }
         public override void ModifyHitByProjectile(Terraria.NPC npc, Projectile projectile, ref Terraria.NPC.HitModifiers modifiers)
         {
@@ -127,11 +127,11 @@ namespace Redemption.Globals.NPC
             if (projectile.HasElement(ElementID.Psychic))
                 IgnoreArmour = true;
             if (projectile.Redemption().IsHammer || projectile.type == ProjectileID.PaladinsHammerFriendly)
-                GuardDamage *= 4;
+                GuardDamage = 4;
             if (npc.RedemptionNPCBuff().brokenArmor || npc.RedemptionNPCBuff().stunned || projectile.Redemption().EnergyBased)
                 GuardPierce = true;
             if (projectile.HasElement(ElementID.Explosive))
-                GuardDamage *= 2;
+                GuardDamage = 2;
         }
         public override void SetDefaults(Terraria.NPC npc)
         {

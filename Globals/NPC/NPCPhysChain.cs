@@ -16,6 +16,7 @@ namespace Redemption.Globals.NPC
 
         private static readonly int maxChains = 6;
         private int frameCounter;
+        public bool glowTrail;
 
         /// <summary>
         /// The physchain.
@@ -82,12 +83,16 @@ namespace Redemption.Globals.NPC
                         float scale = 1f;
                         anchor = NPCChainHelper.SetSegmentAnchor(anchor, segType, dir, gravDir, scale, true);
 
-                        Color rendercolor = Color.White;
-
-                        if (!Main.gameMenu)
+                        Color rendercolor = npc.GetAlpha(Color.White);
+                        if (glowTrail)
+                            rendercolor = npc.GetAlpha(new Color(255, 255, 255, 0));
+                        else
                         {
-                            Point lightOrigin = new((int)((npc.Center.X - 16 * dir) / 16), (int)(npc.Center.Y / 16));
-                            rendercolor = npc.GetAlpha(Lighting.GetColor(lightOrigin.X, lightOrigin.Y, rendercolor));
+                            if (!Main.gameMenu)
+                            {
+                                Point lightOrigin = new((int)((npc.Center.X - 16 * dir) / 16), (int)(npc.Center.Y / 16));
+                                rendercolor = npc.GetAlpha(Lighting.GetColor(lightOrigin.X, lightOrigin.Y, rendercolor));
+                            }
                         }
 
                         if (npcPhysChain[i].MaxFrames > 1)
@@ -106,7 +111,7 @@ namespace Redemption.Globals.NPC
         /// <param name="physChain"></param>
         /// <param name="segments"></param>
         /// <param name="anchor"></param>
-        /// 
+        ///
         public static void ModifyChainPhysics(Terraria.NPC npc, IPhysChain physChain, ref Vector3[] segments, Vector2 anchor, Vector2 force)
         {
             bool staticDisplay = Main.gameMenu;
@@ -212,7 +217,7 @@ namespace Redemption.Globals.NPC
                     spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.NonPremultiplied, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
                     GameShaders.Armor.ApplySecondary(shader, Main.player[Main.myPlayer], null);
                 }
-                spriteBatch.Draw(texture, drawPos - Main.screenPosition, frame, physChain.Glow ? Color.White : chaincolor, chainPositions[i].Z, frame.Size() / 2 + origin, 1f, spriteEffect, 0);
+                spriteBatch.Draw(texture, drawPos - Main.screenPosition, frame, physChain.Glow ? npc.GetAlpha(Color.White) : chaincolor, chainPositions[i].Z, frame.Size() / 2 + origin, 1f, spriteEffect, 0);
                 if (physChain.HasGlowmask)
                 {
                     if (physChain.GlowmaskShader != 0)
@@ -221,7 +226,7 @@ namespace Redemption.Globals.NPC
                         spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.NonPremultiplied, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
                         GameShaders.Armor.ApplySecondary(physChain.GlowmaskShader, Main.player[Main.myPlayer], null);
                     }
-                    spriteBatch.Draw(glowMask, drawPos - Main.screenPosition, frame, Color.White, chainPositions[i].Z, frame.Size() / 2 + origin, 1f, spriteEffect, 0);
+                    spriteBatch.Draw(glowMask, drawPos - Main.screenPosition, frame, npc.GetAlpha(Color.White), chainPositions[i].Z, frame.Size() / 2 + origin, 1f, spriteEffect, 0);
                 }
                 if (shader != 0 || physChain.GlowmaskShader != 0)
                 {

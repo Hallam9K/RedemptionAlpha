@@ -8,7 +8,8 @@ namespace Redemption.Items.Armor.Vanity.Intruder
     {
         public override void SetStaticDefaults()
         {
-            // DisplayName.SetDefault("Intruder's Mask");
+            //DisplayName.SetDefault("Intruder's Mask");
+            //Tooltip.SetDefault("'From Intrusion, with love'");
             ArmorIDs.Head.Sets.DrawFullHair[EquipLoader.GetEquipSlot(Mod, Name, EquipType.Head)] = true;
             Item.ResearchUnlockCount = 1;
         }

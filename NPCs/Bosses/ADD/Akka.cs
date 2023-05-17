@@ -209,7 +209,8 @@ namespace Redemption.NPCs.Bosses.ADD
         {
             Target();
 
-            DespawnHandler();
+            if (NPC.DespawnHandler(0, 20))
+                return;
 
             Player player = Main.player[NPC.target];
             NPC.rotation = 0f;
@@ -517,7 +518,7 @@ namespace Redemption.NPCs.Bosses.ADD
                                     if (AITimer++ % 2 == 0 && AITimer < 70)
                                     {
                                         for (int i = 0; i < 2; i++)
-                                            NPC.Shoot(NPC.Center, ModContent.ProjectileType<AkkaBubble>(), NPC.damage, RedeHelper.Spread(16), false, SoundID.Item1);
+                                            NPC.Shoot(NPC.Center, ModContent.ProjectileType<AkkaBubble>(), NPC.damage, RedeHelper.Spread(16));
                                     }
                                     if (AITimer >= 120)
                                     {
@@ -611,22 +612,6 @@ namespace Redemption.NPCs.Bosses.ADD
         private void Target()
         {
             player = Main.player[NPC.target];
-        }
-
-        private void DespawnHandler()
-        {
-            if (!player.active || player.dead)
-            {
-                NPC.TargetClosest(false);
-                player = Main.player[NPC.target];
-                if (!player.active || player.dead)
-                {
-                    NPC.velocity = new Vector2(0f, -20f);
-                    if (NPC.timeLeft > 10)
-                        NPC.timeLeft = 10;
-                    return;
-                }
-            }
         }
         private float drawTimer;
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)

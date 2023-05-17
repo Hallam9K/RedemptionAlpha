@@ -107,6 +107,13 @@ namespace Redemption.Items.Weapons.PreHM.Melee
                     }
                 }
             }
+            bool parryActive = false;
+            if (Projectile.frame is 3 or 4)
+                parryActive = true;
+            if (Projectile.frame is 4)
+                RedeProjectile.SwordClashFriendly(Projectile, player, ref parried);
+
+            player.Redemption().CreateParryWindow(Projectile.Redemption().swordHitbox, ref parryActive);
 
             Projectile.spriteDirection = player.direction;
 

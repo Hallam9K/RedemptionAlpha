@@ -314,6 +314,14 @@ namespace Redemption.WorldGeneration
                     }
                 }
             }
+            for (int i = origin.X; i < origin.X + WIDTH; i++)
+            {
+                for (int j = origin.Y; j < origin.Y + HEIGHT; j++)
+                {
+                    if (Framing.GetTileSafely(i, j).TileType == TileID.Platforms && WorldGen.InWorld(i, j))
+                        WorldGen.KillTile(i, j, true);
+                }
+            }
             return true;
         }
         public static void MiniTower(Point origin)

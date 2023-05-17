@@ -22,5 +22,12 @@ namespace Redemption.Items.Placeable.Tiles
             Item.maxStack = Item.CommonMaxStack;
             Item.rare = ModContent.RarityType<TurquoiseRarity>();
         }
+        public override void AddRecipes()
+        {
+            CreateRecipe()
+                .AddIngredient(ModContent.ItemType<ShinkiteBrickOrnateWall>(), 4)
+                .AddTile(TileID.WorkBenches)
+                .Register();
+        }
     }
 }

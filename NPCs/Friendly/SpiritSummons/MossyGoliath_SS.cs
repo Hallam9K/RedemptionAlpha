@@ -271,7 +271,7 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
                                 Main.LocalPlayer.RedemptionScreen().ScreenShakeIntensity += 10;
                             }
                             if (AITimer > 25 && AITimer % 10 == 0)
-                                NPC.Shoot(new Vector2(NPC.Center.X + (64 * NPC.spriteDirection), NPC.Center.Y - 8), ModContent.ProjectileType<MossyGoliath_SS_Screech>(), 0, new Vector2(3 * NPC.spriteDirection, 0), false, SoundID.Item1);
+                                NPC.Shoot(new Vector2(NPC.Center.X + (64 * NPC.spriteDirection), NPC.Center.Y - 8), ModContent.ProjectileType<MossyGoliath_SS_Screech>(), 0, new Vector2(3 * NPC.spriteDirection, 0));
                             if (AITimer >= 80)
                             {
                                 AniType = 0;
@@ -441,7 +441,7 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
                                 SoundEngine.PlaySound(CustomSounds.Roar1 with { Pitch = -.5f }, NPC.position);
 
                             if (AITimer > 25 && AITimer % 4 == 0)
-                                NPC.Shoot(new Vector2(NPC.Center.X + (64 * NPC.spriteDirection), NPC.Center.Y - 8), ModContent.ProjectileType<MossyGoliath_SS_ToxicBreath>(), NPC.damage / 3, new Vector2(7 * NPC.spriteDirection, Main.rand.NextFloat(-1f, 1f)), false, SoundID.Item1);
+                                NPC.Shoot(new Vector2(NPC.Center.X + (64 * NPC.spriteDirection), NPC.Center.Y - 8), ModContent.ProjectileType<MossyGoliath_SS_ToxicBreath>(), NPC.damage / 3, new Vector2(7 * NPC.spriteDirection, Main.rand.NextFloat(-1f, 1f)));
 
                             if (AITimer >= 80)
                             {

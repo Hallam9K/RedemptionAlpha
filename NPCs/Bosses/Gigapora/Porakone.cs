@@ -109,7 +109,8 @@ namespace Redemption.NPCs.Bosses.Gigapora
         public int boosterFrame;
         public override void AI()
         {
-            DespawnHandler();
+            if (NPC.DespawnHandler())
+                return;
             Player player = Main.player[NPC.target];
 
             if (NPC.target < 0 || NPC.target == 255 || player.dead || !player.active)
@@ -239,19 +240,6 @@ namespace Redemption.NPCs.Bosses.Gigapora
                 Dust dust = Main.dust[dustIndex];
                 dust.velocity.Y = 3;
                 dust.velocity.X = 0;
-            }
-        }
-
-        private void DespawnHandler()
-        {
-            Player player = Main.player[NPC.target];
-            if (!player.active || player.dead)
-            {
-                NPC.velocity *= 0.96f;
-                NPC.velocity.Y -= 1;
-                if (NPC.timeLeft > 10)
-                    NPC.timeLeft = 10;
-                return;
             }
         }
 

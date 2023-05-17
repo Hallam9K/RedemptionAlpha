@@ -48,7 +48,7 @@ namespace Redemption.Items.Weapons.PreHM.Magic
 
         public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI)
         {
-            Texture2D glow = ModContent.Request<Texture2D>("Redemption/Textures/WhiteGlow").Value;
+            Texture2D glow = Redemption.WhiteGlow.Value;
             BaseUtility.MultiLerp(Main.LocalPlayer.miscCounter % 100 / 100f, scale, scale * 0.8f, scale);
             Color color = BaseUtility.MultiLerpColor(Main.LocalPlayer.miscCounter % 100 / 100f, new Color(46, 32, 54), new Color(111, 83, 188), new Color(46, 32, 54));
             Vector2 origin = new(glow.Width / 2, glow.Height / 2);

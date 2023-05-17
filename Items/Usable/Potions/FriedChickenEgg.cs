@@ -36,6 +36,10 @@ namespace Redemption.Items.Usable.Potions
                 .AddIngredient(ModContent.ItemType<ChickenEgg>())
                 .AddTile(TileID.CookingPots)
                 .Register();
+            CreateRecipe(2)
+                .AddIngredient(ModContent.ItemType<LongEgg>())
+                .AddTile(TileID.CookingPots)
+                .Register();
         }
     }
 }

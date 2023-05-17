@@ -29,7 +29,8 @@ namespace Redemption.NPCs.Bosses.KSIII
                     ModContent.BuffType<InfestedDebuff>(),
                     ModContent.BuffType<NecroticGougeDebuff>(),
                     ModContent.BuffType<ViralityDebuff>(),
-                    ModContent.BuffType<DirtyWoundDebuff>()
+                    ModContent.BuffType<DirtyWoundDebuff>(),
+                    ModContent.BuffType<LaceratedDebuff>()
                 }
             };
             NPCID.Sets.DebuffImmunitySets.Add(Type, debuffData);
@@ -119,7 +120,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                 case 1: // Stop and Scan
                     NPC.velocity *= 0.96f;
                     if (NPC.ai[2]++ == 30)
-                        NPC.Shoot(NPC.Center, ModContent.ProjectileType<Scan_Proj>(), 0, Vector2.Zero, true, CustomSounds.BallFire, NPC.whoAmI);
+                        NPC.Shoot(NPC.Center, ModContent.ProjectileType<Scan_Proj>(), 0, Vector2.Zero, CustomSounds.BallFire, NPC.whoAmI);
 
                     if (NPC.ai[2] > 240)
                     {

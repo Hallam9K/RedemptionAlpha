@@ -33,7 +33,8 @@ namespace Redemption.NPCs.Wasteland
                     ModContent.BuffType<FleshCrystalsDebuff>(),
                     ModContent.BuffType<InfestedDebuff>(),
                     ModContent.BuffType<NecroticGougeDebuff>(),
-                    ModContent.BuffType<DirtyWoundDebuff>()
+                    ModContent.BuffType<DirtyWoundDebuff>(),
+                    ModContent.BuffType<LaceratedDebuff>()
                 }
             });
 

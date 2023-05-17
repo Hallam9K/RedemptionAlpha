@@ -23,7 +23,6 @@ using Redemption.Items.Accessories.PreHM;
 using Redemption.BaseExtension;
 using Terraria.GameContent.UI;
 using Redemption.Projectiles.Misc;
-using Redemption.Projectiles.Magic;
 using Redemption.Items.Weapons.HM.Melee;
 using ReLogic.Content;
 using Redemption.UI.ChatUI;
@@ -287,7 +286,8 @@ namespace Redemption.NPCs.Bosses.Erhan
 
             Player player = Main.player[NPC.target];
 
-            DespawnHandler();
+            if (NPC.DespawnHandler(1))
+                return;
 
             if (AIState is not ActionState.Fallen && AIState is not ActionState.Death && AIState is not ActionState.Bible)
             {
@@ -489,7 +489,7 @@ namespace Redemption.NPCs.Bosses.Erhan
                                     TeleGlowTimer = 0;
                                     for (int i = 0; i < Main.rand.Next(4, 7); i++)
                                         NPC.Shoot(NPC.Center, ModContent.ProjectileType<Erhan_Lightmass>(), NPC.damage,
-                                            new Vector2(Main.rand.NextFloat(-3, 3), Main.rand.NextFloat(-9, -5)), true, SoundID.Item101);
+                                            new Vector2(Main.rand.NextFloat(-3, 3), Main.rand.NextFloat(-9, -5)), SoundID.Item101);
                                     NPC.netUpdate = true;
                                 }
                             }
@@ -501,7 +501,7 @@ namespace Redemption.NPCs.Bosses.Erhan
                                     TeleGlowTimer = 0;
                                     for (int i = 0; i < Main.rand.Next(4, 7); i++)
                                         NPC.Shoot(NPC.Center, ModContent.ProjectileType<Erhan_Lightmass>(), NPC.damage,
-                                            new Vector2(Main.rand.NextFloat(-3, 3), Main.rand.NextFloat(-9, -5)), true, SoundID.Item101);
+                                            new Vector2(Main.rand.NextFloat(-3, 3), Main.rand.NextFloat(-9, -5)), SoundID.Item101);
                                     NPC.netUpdate = true;
                                 }
                                 NPC.netUpdate = true;
@@ -541,13 +541,13 @@ namespace Redemption.NPCs.Bosses.Erhan
                             {
                                 NPC.Shoot(new Vector2(player.Center.X, player.Center.Y - 600),
                                     ModContent.ProjectileType<ScorchingRay>(), (int)(NPC.damage * 1.5f),
-                                    new Vector2(Main.rand.NextFloat(-1, 1), 10), true, SoundID.Item162);
+                                    new Vector2(Main.rand.NextFloat(-1, 1), 10), SoundID.Item162);
                             }
                             if (AITimer >= 70 && AITimer % 30 == 0 && AITimer <= 220)
                             {
                                 NPC.Shoot(new Vector2(player.Center.X + Main.rand.Next(-600, 600), player.Center.Y - 600),
                                     ModContent.ProjectileType<ScorchingRay>(), (int)(NPC.damage * 1.5f),
-                                    new Vector2(Main.rand.NextFloat(-1, 1), 10), true, SoundID.Item162);
+                                    new Vector2(Main.rand.NextFloat(-1, 1), 10), SoundID.Item162);
                             }
                             if (AttackNumber > 5 && AITimer >= 80 && AITimer % 80 == 0 && AITimer <= 360)
                             {
@@ -555,7 +555,7 @@ namespace Redemption.NPCs.Bosses.Erhan
                                 TeleGlowTimer = 0;
                                 for (int i = 0; i < Main.rand.Next(4, 7); i++)
                                     NPC.Shoot(NPC.Center, ModContent.ProjectileType<Erhan_Lightmass>(), NPC.damage,
-                                        new Vector2(Main.rand.NextFloat(-3, 3), Main.rand.NextFloat(-9, -5)), true, SoundID.Item101);
+                                        new Vector2(Main.rand.NextFloat(-3, 3), Main.rand.NextFloat(-9, -5)), SoundID.Item101);
                                 NPC.netUpdate = true;
                             }
                             if (AITimer == 340)
@@ -593,14 +593,14 @@ namespace Redemption.NPCs.Bosses.Erhan
                                     TimerRand -= (float)Math.PI * 2;
                                 }
                                 NPC.Shoot(NPC.Center, ModContent.ProjectileType<HolySpear_Proj>(), NPC.damage,
-                                    new Vector2(0.1f, 0).RotatedBy(TimerRand + Math.PI / 2), true, SoundID.Item125);
+                                    new Vector2(0.1f, 0).RotatedBy(TimerRand + Math.PI / 2), SoundID.Item125);
                                 NPC.Shoot(NPC.Center, ModContent.ProjectileType<HolySpear_Proj>(), NPC.damage,
-                                    new Vector2(0.1f, 0).RotatedBy(-TimerRand + Math.PI / 2), true, SoundID.Item125);
+                                    new Vector2(0.1f, 0).RotatedBy(-TimerRand + Math.PI / 2), SoundID.Item125);
 
                                 NPC.Shoot(NPC.Center, ModContent.ProjectileType<HolySpear_Tele>(), 0,
-                                    new Vector2(0.1f, 0).RotatedBy(TimerRand + Math.PI / 2), false, SoundID.Item1);
+                                    new Vector2(0.1f, 0).RotatedBy(TimerRand + Math.PI / 2), SoundID.Item1);
                                 NPC.Shoot(NPC.Center, ModContent.ProjectileType<HolySpear_Tele>(), 0,
-                                    new Vector2(0.1f, 0).RotatedBy(-TimerRand + Math.PI / 2), false, SoundID.Item1);
+                                    new Vector2(0.1f, 0).RotatedBy(-TimerRand + Math.PI / 2), SoundID.Item1);
                             }
                             if (AttackNumber > 5)
                             {
@@ -614,14 +614,14 @@ namespace Redemption.NPCs.Bosses.Erhan
                                         TimerRand -= (float)Math.PI * 2;
                                     }
                                     NPC.Shoot(NPC.Center, ModContent.ProjectileType<HolySpear_Proj>(), NPC.damage,
-                                        new Vector2(0.1f, 0).RotatedBy(TimerRand + Math.PI / 2), true, SoundID.Item125, 1);
+                                        new Vector2(0.1f, 0).RotatedBy(TimerRand + Math.PI / 2), SoundID.Item125, 1);
                                     NPC.Shoot(NPC.Center, ModContent.ProjectileType<HolySpear_Proj>(), NPC.damage,
-                                        new Vector2(0.1f, 0).RotatedBy(-TimerRand + Math.PI / 2), true, SoundID.Item125, 1);
+                                        new Vector2(0.1f, 0).RotatedBy(-TimerRand + Math.PI / 2), SoundID.Item125, 1);
 
                                     NPC.Shoot(NPC.Center, ModContent.ProjectileType<HolySpear_Tele>(), 0,
-                                        new Vector2(0.1f, 0).RotatedBy(TimerRand + Math.PI / 2), false, SoundID.Item1);
+                                        new Vector2(0.1f, 0).RotatedBy(TimerRand + Math.PI / 2), SoundID.Item1);
                                     NPC.Shoot(NPC.Center, ModContent.ProjectileType<HolySpear_Tele>(), 0,
-                                        new Vector2(0.1f, 0).RotatedBy(-TimerRand + Math.PI / 2), false, SoundID.Item1);
+                                        new Vector2(0.1f, 0).RotatedBy(-TimerRand + Math.PI / 2), SoundID.Item1);
                                 }
                             }
                             if (AttackNumber > 5 ? AITimer == 180 : AITimer == 150)
@@ -650,7 +650,7 @@ namespace Redemption.NPCs.Bosses.Erhan
                             if (AITimer == 80)
                             {
                                 for (int i = 0; i < 2; i++)
-                                    NPC.Shoot(new Vector2(player.Center.X + 600 * (i == 0 ? -1 : 1), player.Center.Y - 600), ModContent.ProjectileType<ScorchingRay>(), (int)(NPC.damage * 1.5f), new Vector2(Main.rand.NextFloat(-1, 1), 10), true, SoundID.Item162);
+                                    NPC.Shoot(new Vector2(player.Center.X + 600 * (i == 0 ? -1 : 1), player.Center.Y - 600), ModContent.ProjectileType<ScorchingRay>(), (int)(NPC.damage * 1.5f), new Vector2(Main.rand.NextFloat(-1, 1), 10), SoundID.Item162);
                             }
                             if (AITimer >= 90 && AITimer % 7 == 0 && AITimer <= 130 && Main.netMode != NetmodeID.MultiplayerClient)
                             {
@@ -697,7 +697,7 @@ namespace Redemption.NPCs.Bosses.Erhan
                             {
                                 NPC.Shoot(new Vector2(player.Center.X + (Main.rand.NextBool(2) ? 300 : -300), player.Center.Y - 800),
                                     ModContent.ProjectileType<RayOfGuidance>(), (int)(NPC.damage * 2f),
-                                    Vector2.Zero, true, SoundID.Item162);
+                                    Vector2.Zero, SoundID.Item162);
                                 NPC.netUpdate = true;
                             }
                             if (AttackNumber > 7)
@@ -706,7 +706,7 @@ namespace Redemption.NPCs.Bosses.Erhan
                                 {
                                     NPC.Shoot(new Vector2(player.Center.X + (Main.rand.Next(600, 900) *
                                         (Main.rand.NextBool() ? -1 : 1)), player.Center.Y - 600), ModContent.ProjectileType<ScorchingRay>(),
-                                        (int)(NPC.damage * 1.5f), new Vector2(Main.rand.NextFloat(-1, 1), 10), true, SoundID.Item162);
+                                        (int)(NPC.damage * 1.5f), new Vector2(Main.rand.NextFloat(-1, 1), 10), SoundID.Item162);
                                     NPC.netUpdate = true;
                                 }
                             }
@@ -716,7 +716,7 @@ namespace Redemption.NPCs.Bosses.Erhan
                                 TeleGlowTimer = 0;
                                 for (int i = 0; i < Main.rand.Next(4, 7); i++)
                                     NPC.Shoot(NPC.Center, ModContent.ProjectileType<Erhan_Lightmass>(), NPC.damage,
-                                        new Vector2(Main.rand.NextFloat(-3, 3), Main.rand.NextFloat(-9, -5)), true, SoundID.Item101);
+                                        new Vector2(Main.rand.NextFloat(-3, 3), Main.rand.NextFloat(-9, -5)), SoundID.Item101);
                                 NPC.netUpdate = true;
                             }
                             if (AITimer == 420)
@@ -760,7 +760,7 @@ namespace Redemption.NPCs.Bosses.Erhan
                             {
                                 ArmType = 3;
                                 HeadFrameY = 2;
-                                NPC.Shoot(NPC.Center + new Vector2(80 * NPC.spriteDirection, 20), ModContent.ProjectileType<Erhan_Bible>(), NPC.damage, new Vector2(0, -1), true, CustomSounds.Choir, NPC.whoAmI);
+                                NPC.Shoot(NPC.Center + new Vector2(80 * NPC.spriteDirection, 20), ModContent.ProjectileType<Erhan_Bible>(), NPC.damage, new Vector2(0, -1), CustomSounds.Choir, NPC.whoAmI);
                             }
                             if (AITimer == 180)
                             {
@@ -796,12 +796,12 @@ namespace Redemption.NPCs.Bosses.Erhan
                             {
                                 playerOrigin = player.Center;
                                 for (int i = 0; i < 2; i++)
-                                    NPC.Shoot(new Vector2(player.Center.X + 800 * (i == 0 ? -1 : 1), player.Center.Y - 600), ModContent.ProjectileType<ScorchingRay>(), (int)(NPC.damage * 1.5f), new Vector2(Main.rand.NextFloat(-1, 1), 10), true, SoundID.Item162);
+                                    NPC.Shoot(new Vector2(player.Center.X + 800 * (i == 0 ? -1 : 1), player.Center.Y - 600), ModContent.ProjectileType<ScorchingRay>(), (int)(NPC.damage * 1.5f), new Vector2(Main.rand.NextFloat(-1, 1), 10), SoundID.Item162);
                             }
                             if (AITimer == 100 || AITimer == 200 || AITimer == 300)
                             {
                                 for (int i = 0; i < 2; i++)
-                                    NPC.Shoot(new Vector2(playerOrigin.X + 800 * (i == 0 ? -1 : 1), playerOrigin.Y - 600), ModContent.ProjectileType<ScorchingRay>(), (int)(NPC.damage * 1.5f), new Vector2(Main.rand.NextFloat(-1, 1), 10), true, SoundID.Item162);
+                                    NPC.Shoot(new Vector2(playerOrigin.X + 800 * (i == 0 ? -1 : 1), playerOrigin.Y - 600), ModContent.ProjectileType<ScorchingRay>(), (int)(NPC.damage * 1.5f), new Vector2(Main.rand.NextFloat(-1, 1), 10), SoundID.Item162);
                             }
                             if (AITimer < 120)
                                 NPC.Move(new Vector2(playerOrigin.X + 600, player.Center.Y - 270), 18, 20, false);
@@ -887,8 +887,7 @@ namespace Redemption.NPCs.Bosses.Erhan
                             {
                                 DustHelper.DrawCircle(NPC.Center, DustID.GoldFlame, 5, 5, 5, 1, 2, nogravity: true);
                                 for (int i = 0; i < 4; i++)
-                                    NPC.Shoot(NPC.Center, ModContent.ProjectileType<Erhan_HolyShield>(), 0, Vector2.Zero, true,
-                                        SoundID.Item29, NPC.whoAmI, i);
+                                    NPC.Shoot(NPC.Center, ModContent.ProjectileType<Erhan_HolyShield>(), 0, Vector2.Zero, SoundID.Item29, NPC.whoAmI, i);
                             }
 
                             if (RedeBossDowned.erhanDeath < 2 && !Main.dedServ)
@@ -1005,7 +1004,7 @@ namespace Redemption.NPCs.Bosses.Erhan
                                     {
                                         ArmType = 1;
                                         NPC.Shoot(NPC.Center + new Vector2(40 * NPC.spriteDirection, -80),
-                                            ModContent.ProjectileType<HolyHandGrenadeOfAnglon>(), 0, Vector2.Zero, true, SoundID.Item30, NPC.whoAmI);
+                                            ModContent.ProjectileType<HolyHandGrenadeOfAnglon>(), 0, Vector2.Zero, SoundID.Item30, NPC.whoAmI);
                                     }
                                     if (AITimer == 1536)
                                     {
@@ -1072,7 +1071,7 @@ namespace Redemption.NPCs.Bosses.Erhan
                                     NPC.life = 10;
                                     NPC.dontTakeDamage = false;
                                     NPC.chaseable = false;
-                                    NPC.Shoot(NPC.Center, ModContent.ProjectileType<ProjDeath>(), 0, Vector2.Zero, false, SoundID.Item1);
+                                    NPC.Shoot(NPC.Center, ModContent.ProjectileType<ProjDeath>(), 0, Vector2.Zero);
                                     if (Main.netMode == NetmodeID.Server && NPC.whoAmI < Main.maxNPCs)
                                         NetMessage.SendData(MessageID.SyncNPC, number: NPC.whoAmI);
                                 }
@@ -1183,8 +1182,8 @@ namespace Redemption.NPCs.Bosses.Erhan
                     SoundEngine.PlaySound(SoundID.Item68, NPC.position);
                     Main.LocalPlayer.RedemptionScreen().ScreenShakeOrigin = NPC.Center;
                     Main.LocalPlayer.RedemptionScreen().ScreenShakeIntensity += 14;
-                    RedeDraw.SpawnExplosion(NPC.Center, Color.White, 6, 0, scale: 2, noDust: true, tex: ModContent.Request<Texture2D>("Redemption/Textures/HolyGlow3").Value);
-                    RedeDraw.SpawnExplosion(NPC.Center, Color.White, 6, 0, scale: 3, noDust: true, tex: ModContent.Request<Texture2D>("Redemption/Textures/HolyGlow2").Value);
+                    RedeDraw.SpawnExplosion(NPC.Center, Color.White, 6, 0, scale: 2, noDust: true, tex: Redemption.HolyGlow3.Value);
+                    RedeDraw.SpawnExplosion(NPC.Center, Color.White, 6, 0, scale: 3, noDust: true, tex: Redemption.HolyGlow2.Value);
                     NPC.active = false;
                     break;
                 case 5:
@@ -1448,7 +1447,7 @@ namespace Redemption.NPCs.Bosses.Erhan
             spriteBatch.End();
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
 
-            Texture2D flare = ModContent.Request<Texture2D>("Redemption/Textures/HolyGlow2").Value;
+            Texture2D flare = Redemption.HolyGlow2.Value;
             Rectangle rect = new(0, 0, flare.Width, flare.Height);
             Vector2 origin = new(flare.Width / 2, flare.Height / 2);
             Vector2 position = NPC.Center - screenPos;
@@ -1464,7 +1463,7 @@ namespace Redemption.NPCs.Bosses.Erhan
                 spriteBatch.Draw(flare, position, new Rectangle?(rect), colour * 0.4f, NPC.rotation, origin, 2.5f, SpriteEffects.None, 0);
             }
 
-            Texture2D teleportGlow = ModContent.Request<Texture2D>("Redemption/Textures/HolyGlow3").Value;
+            Texture2D teleportGlow = Redemption.HolyGlow3.Value;
             Rectangle rect2 = new(0, 0, teleportGlow.Width, teleportGlow.Height);
             Vector2 origin2 = new(teleportGlow.Width / 2, teleportGlow.Height / 2);
             Vector2 position2 = NPC.Center - screenPos;
@@ -1487,25 +1486,6 @@ namespace Redemption.NPCs.Bosses.Erhan
         {
             if (AIState is ActionState.Fallen && TimerRand == 2 && projectile.Redemption().TechnicallyMelee)
                 modifiers.FinalDamage *= 2;
-        }
-
-        private void DespawnHandler()
-        {
-            Player player = Main.player[NPC.target];
-            if (!player.active || player.dead)
-            {
-                NPC.TargetClosest(false);
-                player = Main.player[NPC.target];
-                if (!player.active || player.dead)
-                {
-                    NPC.alpha += 2;
-                    if (NPC.alpha >= 255)
-                        NPC.active = false;
-                    if (NPC.timeLeft > 10)
-                        NPC.timeLeft = 10;
-                    return;
-                }
-            }
         }
     }
 }

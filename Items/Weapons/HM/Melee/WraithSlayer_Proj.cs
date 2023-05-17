@@ -7,6 +7,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Redemption.Globals;
 using Redemption.NPCs.Friendly;
+using Redemption.BaseExtension;
 
 namespace Redemption.Items.Weapons.HM.Melee
 {
@@ -42,6 +43,7 @@ namespace Redemption.Items.Weapons.HM.Melee
         public float Timer;
         private float speed;
         private float SwingSpeed;
+        private bool parried;
         public override void AI()
         {
             Player player = Main.player[Projectile.owner];
@@ -59,7 +61,7 @@ namespace Redemption.Items.Weapons.HM.Melee
                 Projectile.rotation = (Projectile.Center - player.Center).ToRotation() + MathHelper.PiOver4 - (Projectile.ai[0] == 0 ? 0 : MathHelper.PiOver2);
             else
                 Projectile.rotation = (Projectile.Center - player.Center).ToRotation() - MathHelper.Pi - MathHelper.PiOver4 + (Projectile.ai[0] == 0 ? 0 : MathHelper.PiOver2);
-
+            bool parryActive = false;
             if (Main.myPlayer == Projectile.owner)
             {
                 switch (Projectile.ai[0])
@@ -72,6 +74,11 @@ namespace Redemption.Items.Weapons.HM.Melee
                                 SoundEngine.PlaySound(CustomSounds.Swing1, player.position);
                             startVector = RedeHelper.PolarVector(1, Projectile.velocity.ToRotation() - (MathHelper.PiOver2 * Projectile.spriteDirection));
                             speed = MathHelper.ToRadians(10);
+                        }
+                        if (Timer >= 3 && Timer <= 8)
+                        {
+                            parryActive = true;
+                            RedeProjectile.SwordClashFriendly(Projectile, player, ref parried);
                         }
                         if (Timer < 5 * SwingSpeed)
                         {
@@ -96,6 +103,11 @@ namespace Redemption.Items.Weapons.HM.Melee
                         break;
                     case 1:
                         player.SetCompositeArmFront(true, Player.CompositeArmStretchAmount.Full, (player.Center - Projectile.Center).ToRotation() + MathHelper.PiOver2);
+                        if (Timer >= 3 && Timer <= 8)
+                        {
+                            parryActive = true;
+                            RedeProjectile.SwordClashFriendly(Projectile, player, ref parried);
+                        }
                         if (Timer++ < 4 * SwingSpeed)
                         {
                             Rot -= speed / SwingSpeed * Projectile.spriteDirection;
@@ -113,6 +125,7 @@ namespace Redemption.Items.Weapons.HM.Melee
                         break;
                 }
             }
+            player.Redemption().CreateParryWindow(Projectile.Hitbox, ref parryActive);
             if (Timer > 1)
                 Projectile.alpha = 0;
             for (int k = Projectile.oldPos.Length - 1; k > 0; k--)

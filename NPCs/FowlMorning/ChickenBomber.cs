@@ -75,7 +75,7 @@ namespace Redemption.NPCs.FowlMorning
         {
             Player player = Main.player[NPC.target];
             NPC.LookByVelocity();
-            if (NPC.DespawnHandler())
+            if (NPC.DespawnHandler(3))
                 return;
             if (NPC.ai[0]++ % 120 == 0)
             {

@@ -15,6 +15,7 @@ using Redemption.Base;
 using System;
 using Terraria.Audio;
 using Redemption.Dusts;
+using IL.Terraria.IO;
 
 namespace Redemption.NPCs.Bosses.Gigapora
 {
@@ -54,7 +55,8 @@ namespace Redemption.NPCs.Bosses.Gigapora
                     ModContent.BuffType<InfestedDebuff>(),
                     ModContent.BuffType<NecroticGougeDebuff>(),
                     ModContent.BuffType<ViralityDebuff>(),
-                    ModContent.BuffType<DirtyWoundDebuff>()
+                    ModContent.BuffType<DirtyWoundDebuff>(),
+                    ModContent.BuffType<LaceratedDebuff>()
                 }
             };
             NPCID.Sets.DebuffImmunitySets.Add(Type, debuffData);
@@ -174,7 +176,8 @@ namespace Redemption.NPCs.Bosses.Gigapora
             NPC seg = Main.npc[(int)NPC.ai[0]];
             if (!seg.active || seg.type != ModContent.NPCType<Gigapora_BodySegment>())
                 NPC.active = false;
-            DespawnHandler();
+            if (DespawnHandler())
+                return;
 
             bool another = NPC.CountNPCS(ModContent.NPCType<Gigapora_ShieldCore>()) > 1;
 
@@ -199,7 +202,7 @@ namespace Redemption.NPCs.Bosses.Gigapora
 
                     if (AITimer++ % (another ? 120 : 90) == 0)
                     {
-                        NPC.Shoot(NPC.Center, ModContent.ProjectileType<ShieldCore_Bolt>(), NPC.damage, NPC.DirectionTo(player.Center) * 8, true, CustomSounds.Laser1);
+                        NPC.Shoot(NPC.Center, ModContent.ProjectileType<ShieldCore_Bolt>(), NPC.damage, NPC.DirectionTo(player.Center) * 8, CustomSounds.Laser1);
                     }
                     if (AITimer >= (another ? 340 : 220) && NPC.DistanceSQ(player.Center) <= 600 * 600)
                     {
@@ -217,7 +220,7 @@ namespace Redemption.NPCs.Bosses.Gigapora
                     {
                         NPC.velocity = player.Center.DirectionTo(NPC.Center) * 3;
                         for (int i = -1; i <= 1; i += 2)
-                            NPC.Shoot(NPC.Center, ModContent.ProjectileType<ShieldCore_DualcastBall>(), (int)(NPC.damage * 1.15f), RedeHelper.PolarVector(14, (player.Center - NPC.Center).ToRotation() - MathHelper.ToRadians(80 * i)), true, CustomSounds.Zap2);
+                            NPC.Shoot(NPC.Center, ModContent.ProjectileType<ShieldCore_DualcastBall>(), (int)(NPC.damage * 1.15f), RedeHelper.PolarVector(14, (player.Center - NPC.Center).ToRotation() - MathHelper.ToRadians(80 * i)), CustomSounds.Zap2);
                     }
                     if (AITimer >= 60)
                     {
@@ -230,7 +233,7 @@ namespace Redemption.NPCs.Bosses.Gigapora
                     NPC.Move(new Vector2(Main.rand.Next(-100, 100), -400), 18, 50, true);
                     if (AITimer++ >= 20 && AITimer % (another ? 8 : 5) == 0 && AITimer <= 80)
                     {
-                        NPC.Shoot(player.Center + player.velocity + RedeHelper.Spread(300), ModContent.ProjectileType<ShieldCore_Zap>(), NPC.damage, Vector2.Zero, true, CustomSounds.ElectricSlash, NPC.whoAmI);
+                        NPC.Shoot(player.Center + player.velocity + RedeHelper.Spread(300), ModContent.ProjectileType<ShieldCore_Zap>(), NPC.damage, Vector2.Zero, CustomSounds.ElectricSlash, NPC.whoAmI);
                     }
                     if (AITimer >= 140)
                     {
@@ -323,7 +326,7 @@ namespace Redemption.NPCs.Bosses.Gigapora
         {
             Texture2D texture = TextureAssets.Npc[NPC.type].Value;
             Texture2D glowMask = ModContent.Request<Texture2D>(Texture + "_Glow").Value;
-            Texture2D glowRadius = ModContent.Request<Texture2D>("Redemption/Textures/WhiteGlow").Value;
+            Texture2D glowRadius = Redemption.WhiteGlow.Value;
             var effects = NPC.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
 
             if (!NPC.IsABestiaryIconDummy)
@@ -359,7 +362,7 @@ namespace Redemption.NPCs.Bosses.Gigapora
             return false;
         }
 
-        private void DespawnHandler()
+        private bool DespawnHandler()
         {
             NPC seg = Main.npc[(int)NPC.ai[0]];
             Player player = Main.player[NPC.target];
@@ -372,9 +375,10 @@ namespace Redemption.NPCs.Bosses.Gigapora
                     NPC.velocity.Y = -10;
                     if (NPC.timeLeft > 10)
                         NPC.timeLeft = 10;
-                    return;
+                    return true;
                 }
             }
+            return false;
         }
     }
 }

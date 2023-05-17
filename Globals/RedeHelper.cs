@@ -18,11 +18,19 @@ using Redemption.BaseExtension;
 using Redemption.NPCs.HM;
 using Redemption.Buffs.Debuffs;
 using Redemption.Buffs.NPCBuffs;
+using Redemption.Biomes;
+using Redemption.Globals.World;
+using Redemption.Items.Accessories.HM;
+using Redemption.Items.Accessories.PostML;
 
 namespace Redemption.Globals
 {
     public static class RedeHelper
     {
+        public static bool IsRadiationProtected(this Terraria.Player player)
+        {
+            return BasePlayer.HasAccessory(player, ModContent.ItemType<GasMask>(), true, false) || player.RedemptionPlayerBuff().hazmatSuit;
+        }
         public static bool IsFullTBot(this Terraria.Player player)
         {
             return ((BasePlayer.HasChestplate(player, ModContent.ItemType<TBotVanityChestplate>(), true) && BasePlayer.HasLeggings(player, ModContent.ItemType<TBotVanityLegs>(), true)) || (BasePlayer.HasChestplate(player, ModContent.ItemType<AndroidArmour>(), true) && BasePlayer.HasLeggings(player, ModContent.ItemType<AndroidPants>(), true)) || (BasePlayer.HasChestplate(player, ModContent.ItemType<JanitorOutfit>(), true) && BasePlayer.HasLeggings(player, ModContent.ItemType<JanitorPants>(), true))) && (BasePlayer.HasHelmet(player, ModContent.ItemType<TBotEyes_Femi>(), true) || BasePlayer.HasHelmet(player, ModContent.ItemType<TBotEyes_Masc>(), true) || BasePlayer.HasHelmet(player, ModContent.ItemType<TBotVanityEyes>(), true) || BasePlayer.HasHelmet(player, ModContent.ItemType<TBotGoggles_Femi>(), true) || BasePlayer.HasHelmet(player, ModContent.ItemType<TBotGoggles_Masc>(), true) || BasePlayer.HasHelmet(player, ModContent.ItemType<TBotVanityGoggles>(), true) || BasePlayer.HasHelmet(player, ModContent.ItemType<AdamHead>(), true) || BasePlayer.HasHelmet(player, ModContent.ItemType<OperatorHead>(), true) || BasePlayer.HasHelmet(player, ModContent.ItemType<VoltHead>(), true));
@@ -41,12 +49,12 @@ namespace Redemption.Globals
         }
         public static bool? CanHitSpiritCheck(Terraria.Player player, Item item)
         {
-            return player.RedemptionAbility().SpiritwalkerActive || item.HasElement(ElementID.Arcane) || item.HasElement(ElementID.Celestial) || item.HasElement(ElementID.Holy) || item.HasElement(ElementID.Psychic) || RedeConfigClient.Instance.ElementDisable ? null : false;
+            return player.RedemptionAbility().SpiritwalkerActive || player.InModBiome<SoullessBiome>() || item.HasElement(ElementID.Arcane) || item.HasElement(ElementID.Celestial) || item.HasElement(ElementID.Holy) || item.HasElement(ElementID.Psychic) || RedeConfigClient.Instance.ElementDisable ? null : false;
         }
         public static bool? CanHitSpiritCheck(Projectile proj)
         {
             Terraria.Player player = Main.player[proj.owner];
-            return player.RedemptionAbility().SpiritwalkerActive || proj.Redemption().RitDagger || proj.HasElement(ElementID.Arcane) || proj.HasElement(ElementID.Celestial) || proj.HasElement(ElementID.Holy) || proj.HasElement(ElementID.Psychic) || RedeConfigClient.Instance.ElementDisable ? null : false;
+            return player.RedemptionAbility().SpiritwalkerActive || player.InModBiome<SoullessBiome>() || proj.Redemption().RitDagger || proj.HasElement(ElementID.Arcane) || proj.HasElement(ElementID.Celestial) || proj.HasElement(ElementID.Holy) || proj.HasElement(ElementID.Psychic) || RedeConfigClient.Instance.ElementDisable ? null : false;
         }
         public static float RandomRotation() => Main.rand.NextFloat() * MathHelper.TwoPi;
         public static Vector2 TurnRight(this Vector2 vec) => new(-vec.Y, vec.X);
@@ -539,7 +547,32 @@ namespace Redemption.Globals
 
             return nearestPlayer;
         }
+        public static int GetNearestProj(Vector2 point, bool friendly = false, int type = -1)
+        {
+            float nearestProjDist = -1;
+            int nearestProj = -1;
 
+            for (int i = 0; i < Main.maxProjectiles; i++)
+            {
+                Projectile proj = Main.projectile[i];
+                if (!proj.active)
+                    continue;
+
+                if (type != -1 && proj.type != type)
+                    continue;
+
+                if (!friendly && proj.friendly)
+                    continue;
+
+                if (nearestProjDist != -1 && !(proj.Distance(point) < nearestProjDist))
+                    continue;
+
+                nearestProjDist = proj.Distance(point);
+                nearestProj = proj.whoAmI;
+            }
+
+            return nearestProj;
+        }
         public static Vector2 VelocityToPoint(Vector2 a, Vector2 b, float speed)
         {
             Vector2 move = b - a;
@@ -746,12 +779,13 @@ namespace Redemption.Globals
         /// <summary>
         /// For methods that have 'this NPC npc', instead of doing RedeHelper.Shoot(), you can do NPC.Shoot() instead.
         /// </summary>
-        public static void Shoot(this Terraria.NPC npc, Vector2 position, int projType, int damage, Vector2 velocity,
-            bool playSound, SoundStyle sound, float ai0 = 0, float ai1 = 0, int knockback = 0)
+        public static void Shoot(this Terraria.NPC npc, Vector2 position, int projType, int damage, Vector2 velocity, SoundStyle sound, float ai0 = 0, float ai1 = 0, int knockback = 0)
         {
-            if (playSound)
-                SoundEngine.PlaySound(sound, npc.position);
-
+            SoundEngine.PlaySound(sound, npc.position);
+            Shoot(npc, position, projType, damage, velocity, ai0, ai1, knockback);
+        }
+        public static void Shoot(this Terraria.NPC npc, Vector2 position, int projType, int damage, Vector2 velocity, float ai0 = 0, float ai1 = 0, int knockback = 0)
+        {
             damage /= 2;
             if (Main.expertMode)
                 damage /= Main.masterMode ? 3 : 2;
@@ -1358,20 +1392,53 @@ namespace Redemption.Globals
                 }
             }
         }
-        public static bool DespawnHandler(this Terraria.NPC npc)
+        public static bool DespawnHandler(this Terraria.NPC npc, int type = 0, int vel = 2)
         {
             Terraria.Player player = Main.player[npc.target];
-            if (!player.active || player.dead)
+            switch (type)
             {
-                npc.TargetClosest(false);
-                player = Main.player[npc.target];
-                if (!player.active || player.dead)
-                {
-                    npc.velocity.Y -= 1;
-                    if (npc.timeLeft > 10)
-                        npc.timeLeft = 10;
-                    return true;
-                }
+                default:
+                    if (!player.active || player.dead)
+                    {
+                        npc.TargetClosest(false);
+                        player = Main.player[npc.target];
+                        if (!player.active || player.dead)
+                        {
+                            if (type is 1)
+                            {
+                                npc.alpha += vel;
+                                if (npc.alpha >= 255)
+                                    npc.active = false;
+                            }
+                            else if (type is 2)
+                                npc.active = false;
+                            else
+                            {
+                                npc.velocity *= 0.96f;
+                                npc.velocity.Y -= vel;
+                            }
+                            if (npc.timeLeft > 10)
+                                npc.timeLeft = 10;
+                            return true;
+                        }
+                    }
+                    break;
+                case 3:
+                    if (!player.active || player.dead || !FowlMorningWorld.FowlMorningActive)
+                    {
+                        npc.TargetClosest(false);
+                        player = Main.player[npc.target];
+                        if (!player.active || player.dead || !FowlMorningWorld.FowlMorningActive)
+                        {
+                            npc.alpha += 2;
+                            if (npc.alpha >= 255)
+                                npc.active = false;
+                            if (npc.timeLeft > 10)
+                                npc.timeLeft = 10;
+                            return true;
+                        }
+                    }
+                    break;
             }
             return false;
         }
@@ -1415,5 +1482,110 @@ namespace Redemption.Globals
             return false;
         }
         #endregion
+    }
+    public class TileRunner
+    {
+        public Vector2 pos;
+        public Vector2 speed;
+        public Point16 hRange;
+        public Point16 vRange;
+        public double strength;
+        public double str;
+        public int steps;
+        public int stepsLeft;
+        public ushort type;
+        public bool addTile;
+        public bool overRide;
+
+        public TileRunner(Vector2 pos, Vector2 speed, Point16 hRange, Point16 vRange, double strength, int steps, ushort type, bool addTile, bool overRide)
+        {
+            this.pos = pos;
+            if (speed.X == 0 && speed.Y == 0)
+            {
+                this.speed = new Vector2(WorldGen.genRand.Next(hRange.X, hRange.Y + 1) * 0.1f, WorldGen.genRand.Next(vRange.X, vRange.Y + 1) * 0.1f);
+            }
+            else
+            {
+                this.speed = speed;
+            }
+            this.hRange = hRange;
+            this.vRange = vRange;
+            this.strength = strength;
+            str = strength;
+            this.steps = steps;
+            stepsLeft = steps;
+            this.type = type;
+            this.addTile = addTile;
+            this.overRide = overRide;
+        }
+
+        public void Start()
+        {
+            while (str > 0 && stepsLeft > 0)
+            {
+                str = strength * stepsLeft / steps;
+
+                PreUpdate();
+
+                int a = (int)Math.Max(pos.X - str * 0.5, 1);
+                int b = (int)Math.Min(pos.X + str * 0.5, Main.maxTilesX - 1);
+                int c = (int)Math.Max(pos.Y - str * 0.5, 1);
+                int d = (int)Math.Min(pos.Y + str * 0.5, Main.maxTilesY - 1);
+
+                for (int i = a; i < b; i++)
+                {
+                    for (int j = c; j < d; j++)
+                    {
+                        Tile tile = Main.tile[i, j];
+
+                        if (!ValidTile(tile, i, j) || Math.Abs(i - pos.X) + Math.Abs(j - pos.Y) >= strength * StrengthRange())
+                            continue;
+
+                        if (type == 0)
+                        {
+                            tile.HasTile = false;
+                            continue;
+                        }
+                        if (overRide || !tile.HasTile)
+                        {
+                            tile.TileType = type;
+                        }
+                        if (addTile)
+                        {
+                            tile.HasTile = true;
+                            tile.LiquidAmount = 0;
+                        }
+                    }
+                }
+
+                str += 50;
+                while (str > 50)
+                {
+                    pos += speed;
+                    stepsLeft--;
+                    str -= 50;
+                    speed.X += WorldGen.genRand.Next(hRange.X, hRange.Y + 1) * 0.05f;
+                    speed.Y += WorldGen.genRand.Next(vRange.X, vRange.Y + 1) * 0.05f;
+                }
+
+                speed = Vector2.Clamp(speed, new Vector2(-1, -1), new Vector2(1, 1));
+
+                PostUpdate();
+            }
+        }
+
+        public virtual double StrengthRange()
+        {
+            return 0.5 + WorldGen.genRand.Next(-10, 11) * 0.0075;
+        }
+
+        public virtual void PreUpdate() { }
+
+        public virtual bool ValidTile(Tile tile, int x, int y)
+        {
+            return true;
+        }
+
+        public virtual void PostUpdate() { }
     }
 }

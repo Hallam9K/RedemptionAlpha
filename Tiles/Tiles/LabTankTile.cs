@@ -12,6 +12,7 @@ namespace Redemption.Tiles.Tiles
 			Main.tileSolid[Type] = false;
 			Main.tileMergeDirt[Type] = false;
             Main.tileLighted[Type] = true;
+            TileID.Sets.DisableSmartCursor[Type] = true;
             DustType = DustID.Glass;
             MinPick = 500;
             MineResist = 5f;

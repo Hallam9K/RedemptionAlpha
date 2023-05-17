@@ -14,6 +14,7 @@ using System.Threading;
 using Terraria.Audio;
 using Redemption.Items.Weapons.PreHM.Melee;
 using Redemption.NPCs.Friendly.SpiritSummons;
+using Redemption.Globals.NPC;
 
 namespace Redemption.Globals
 {
@@ -98,48 +99,76 @@ namespace Redemption.Globals
                 }
             }
         }
-        public static bool SwordClashFriendly(Projectile projectile, Projectile target, Entity player, ref bool parried, int frame = 5)
+        public static bool SwordClashFriendly(Projectile projectile, Entity player, ref bool parried)
         {
-            Rectangle targetHitbox = target.Hitbox;
-            if (target.Redemption().swordHitbox != default)
-                targetHitbox = target.Redemption().swordHitbox;
+            Rectangle projectileHitbox = projectile.Hitbox;
+            if (projectile.Redemption().swordHitbox != default)
+                projectileHitbox = projectile.Redemption().swordHitbox;
 
-            if (projectile.frame == frame && !parried && projectile.Redemption().swordHitbox.Intersects(targetHitbox) && target.type == ModContent.ProjectileType<Calavia_BladeOfTheMountain>() && target.frame >= 4 && target.frame <= 5)
+            for (int i = 0; i < Main.maxNPCs; i++)
             {
-                if (player is Terraria.Player p)
+                Terraria.NPC npc = Main.npc[i];
+                if (!npc.active)
+                    continue;
+                Rectangle target = npc.Redemption().parryHitbox;
+                if (target == Rectangle.Empty)
+                    continue;
+
+                if (!parried && target.Intersects(projectileHitbox))
                 {
-                    p.immune = true;
-                    p.immuneTime = 60;
-                    p.AddBuff(BuffID.ParryDamageBuff, 120);
+                    if (player is Terraria.Player p)
+                    {
+                        p.immune = true;
+                        p.immuneTime = 60;
+                        p.AddBuff(BuffID.ParryDamageBuff, 120);
+                    }
+                    player.velocity.X += 4 * player.RightOfDir(npc);
+                    RedeDraw.SpawnExplosion(RedeHelper.CenterPoint(projectile.Center, target.Center.ToVector2()), Color.White, shakeAmount: 0, scale: 1f, noDust: true, tex: Redemption.HolyGlow2.Value);
+                    SoundEngine.PlaySound(CustomSounds.SwordClash, projectile.position);
+                    DustHelper.DrawCircle(RedeHelper.CenterPoint(projectile.Center, target.Center.ToVector2()), DustID.SilverCoin, 1, 4, 4, nogravity: true);
+                    parried = true;
+                    return true;
                 }
-                player.velocity.X += 4 * player.RightOfDir(target);
-                RedeDraw.SpawnExplosion(RedeHelper.CenterPoint(projectile.Center, target.Center), Color.White, shakeAmount: 0, scale: 1f, noDust: true, tex: ModContent.Request<Texture2D>("Redemption/Textures/HolyGlow2").Value);
-                SoundEngine.PlaySound(CustomSounds.SwordClash, projectile.position);
-                DustHelper.DrawCircle(RedeHelper.CenterPoint(projectile.Center, target.Center), DustID.SilverCoin, 1, 4, 4, nogravity: true);
-                parried = true;
-                return true;
             }
             return false;
         }
-        public static bool SwordClashHostile(Projectile projectile, Projectile target, Terraria.NPC npc, ref bool parried)
+        public static bool SwordClashHostile(Projectile projectile, Terraria.NPC npc, ref bool parried)
         {
-            Rectangle targetHitbox = target.Hitbox;
-            if (target.Redemption().swordHitbox != default)
-                targetHitbox = target.Redemption().swordHitbox;
-
-            if (!parried && projectile.Redemption().swordHitbox.Intersects(targetHitbox) &&
-                ((target.type == ModContent.ProjectileType<Zweihander_SlashProj>() && target.frame is 4 or 3) ||
-                ((target.type == ModContent.ProjectileType<BladeOfTheMountain_Slash>() ||
-                target.type == ModContent.ProjectileType<Calavia_SS_BladeOfTheMountain>() ||
-                target.type == ModContent.ProjectileType<SwordSlicer_Slash>()) && target.frame is 5 or 4) ||
-                (target.type == ModContent.ProjectileType<KeepersClaw_Slash>() && target.frame is 2)))
+            for (int i = 0; i < Main.maxPlayers; i++)
             {
-                npc.velocity.X += 4 * npc.RightOfDir(target);
-                SoundEngine.PlaySound(CustomSounds.SwordClash, projectile.position);
-                RedeDraw.SpawnExplosion(RedeHelper.CenterPoint(projectile.Center, target.Center), Color.White, shakeAmount: 0, scale: 1f, noDust: true, tex: ModContent.Request<Texture2D>("Redemption/Textures/HolyGlow2").Value);
-                DustHelper.DrawCircle(RedeHelper.CenterPoint(projectile.Center, target.Center), DustID.SilverCoin, 1, 4, 4, nogravity: true);
-                parried = true;
-                return true;
+                Terraria.Player player = Main.player[i];
+                if (!player.active || player.dead)
+                    continue;
+                Rectangle target = player.Redemption().parryHitbox;
+                if (target == Rectangle.Empty)
+                    continue;
+
+                if (!parried && target.Intersects(projectile.Redemption().swordHitbox))
+                {
+                    npc.velocity.X += 4 * npc.RightOfDir(player);
+                    parried = true;
+                    return true;
+                }
+            }
+            return false;
+        }
+        public static bool SwordClashHostile(Rectangle rect, Terraria.NPC npc, ref bool parried)
+        {
+            for (int i = 0; i < Main.maxPlayers; i++)
+            {
+                Terraria.Player player = Main.player[i];
+                if (!player.active || player.dead)
+                    continue;
+                Rectangle target = player.Redemption().parryHitbox;
+                if (target == Rectangle.Empty)
+                    continue;
+
+                if (!parried && target.Intersects(rect))
+                {
+                    npc.velocity.X += 4 * npc.Center.RightOfDir(target.Center.ToVector2());
+                    parried = true;
+                    return true;
+                }
             }
             return false;
         }

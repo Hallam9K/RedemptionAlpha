@@ -177,7 +177,8 @@ namespace Redemption.NPCs.FowlMorning
             if (NPC.target < 0 || NPC.target == 255 || player.dead || !player.active)
                 NPC.TargetClosest();
 
-            DespawnHandler();
+            if (NPC.DespawnHandler(3))
+                return;
 
             if (Main.rand.NextBool(3))
             {
@@ -243,7 +244,7 @@ namespace Redemption.NPCs.FowlMorning
                             {
                                 SoundEngine.PlaySound(SoundID.DD2_BetsyWindAttack, NPC.Center);
                                 for (int i = 0; i < 2; i++)
-                                    NPC.Shoot(NPC.Center, ModContent.ProjectileType<Basan_HeatWave>(), NPC.damage, new Vector2((4 + i + TimerRand2) * NPC.spriteDirection, 0), true, SoundID.DD2_PhantomPhoenixShot with { Volume = 0.5f + (TimerRand2 / 12) }, i);
+                                    NPC.Shoot(NPC.Center, ModContent.ProjectileType<Basan_HeatWave>(), NPC.damage, new Vector2((4 + i + TimerRand2) * NPC.spriteDirection, 0), SoundID.DD2_PhantomPhoenixShot with { Volume = 0.5f + (TimerRand2 / 12) }, i);
                             }
                             if (AniType is (int)AnimType.None)
                             {
@@ -359,8 +360,7 @@ namespace Redemption.NPCs.FowlMorning
                             }
                             if (AITimer++ >= 35 && AITimer % 2 == 0)
                             {
-                                NPC.Shoot(NPC.Center + new Vector2(28 * NPC.spriteDirection, -18), ModContent.ProjectileType<Basan_Firebreath>(), NPC.damage, RedeHelper.PolarVector(5, (playerOld - NPC.Center).ToRotation()
-                                        + TimerRand2 - MathHelper.ToRadians(45)), false, SoundID.Item1);
+                                NPC.Shoot(NPC.Center + new Vector2(28 * NPC.spriteDirection, -18), ModContent.ProjectileType<Basan_Firebreath>(), NPC.damage, RedeHelper.PolarVector(5, (playerOld - NPC.Center).ToRotation() + TimerRand2 - MathHelper.ToRadians(45)));
                                 TimerRand2 += MathHelper.ToRadians(2);
                             }
                             if (AITimer >= 120)
@@ -540,24 +540,6 @@ namespace Redemption.NPCs.FowlMorning
             }
             return false;
         }
-        private void DespawnHandler()
-        {
-            Player player = Main.player[NPC.target];
-            if (!player.active || player.dead || !FowlMorningWorld.FowlMorningActive)
-            {
-                NPC.TargetClosest(false);
-                player = Main.player[NPC.target];
-                if (!player.active || player.dead || !FowlMorningWorld.FowlMorningActive)
-                {
-                    NPC.alpha += 2;
-                    if (NPC.alpha >= 255)
-                        NPC.active = false;
-                    if (NPC.timeLeft > 10)
-                        NPC.timeLeft = 10;
-                    return;
-                }
-            }
-        }
         public override bool PreKill()
         {
             if (FowlMorningWorld.FowlMorningActive)
@@ -574,7 +556,7 @@ namespace Redemption.NPCs.FowlMorning
             npcLoot.Add(ItemDropRule.MasterModeDropOnAllPlayers(ModContent.ItemType<SpicyDrumstick>(), 4));
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<BasanTrophy>(), 10));
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<CuckooCloak>()));
-            npcLoot.Add(ItemDropRule.OneFromOptions(1, ModContent.ItemType<EggShield>(), ModContent.ItemType<GreneggLauncher>(), ModContent.ItemType<Halbirdhouse>(), ModContent.ItemType<NestWand>(), ModContent.ItemType<ChickendWand>()));
+            npcLoot.Add(ItemDropRule.OneFromOptions(1, ModContent.ItemType<EggShield>(), ModContent.ItemType<GreneggLauncher>(), ModContent.ItemType<Halbirdhouse>(), ModContent.ItemType<NestWand>(), ModContent.ItemType<ChickendWand>(), ModContent.ItemType<DawnHerald>()));
             npcLoot.Add(ItemDropRule.ByCondition(new OnFireCondition(), ModContent.ItemType<FriedChicken>(), 1, 6, 8));
         }
         public override void OnHitByItem(Player player, Item item, NPC.HitInfo hit, int damageDone)

@@ -117,7 +117,8 @@ namespace Redemption.NPCs.FowlMorning
             if (NPC.target < 0 || NPC.target == 255 || player.dead || !player.active)
                 NPC.TargetClosest();
 
-            DespawnHandler();
+            if (NPC.DespawnHandler(3))
+                return;
 
             if (AIState != ActionState.Stare || (TimerRand <= 0 && AITimer < 108))
                 NPC.LookAtEntity(player);
@@ -158,7 +159,7 @@ namespace Redemption.NPCs.FowlMorning
                         if (AITimer == 130)
                         {
                             Vector2 npcCenter = NPC.Center + new Vector2(20 * NPC.spriteDirection, -14);
-                            NPC.Shoot(npcCenter, ModContent.ProjectileType<Cockatrice_Ray>(), NPC.damage, npcCenter.DirectionTo(playerOld) * 3f, true, SoundID.NPCDeath17, NPC.whoAmI);
+                            NPC.Shoot(npcCenter, ModContent.ProjectileType<Cockatrice_Ray>(), NPC.damage, npcCenter.DirectionTo(playerOld) * 3f, SoundID.NPCDeath17, NPC.whoAmI);
                         }
                         if (AITimer >= 130)
                         {
@@ -182,7 +183,7 @@ namespace Redemption.NPCs.FowlMorning
         public void DrawTether(Player Target, Vector2 screenPos, Color color1, Color color2, float Size, float Strength)
         {
             Effect effect = ModContent.Request<Effect>("Redemption/Effects/Beam", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
-            effect.Parameters["uTexture"].SetValue(ModContent.Request<Texture2D>("Redemption/Textures/Trails/GlowTrail", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value);
+            effect.Parameters["uTexture"].SetValue(Redemption.GlowTrail.Value);
             effect.Parameters["progress"].SetValue(Main.GlobalTimeWrappedHourly / 3);
             effect.Parameters["uColor"].SetValue(color1.ToVector4());
             effect.Parameters["uSecondaryColor"].SetValue(color2.ToVector4());
@@ -283,24 +284,6 @@ namespace Redemption.NPCs.FowlMorning
                 RedeDraw.DrawEyeFlare(spriteBatch, ref FlareTimer, position, Color.Orange, NPC.rotation);
             }
         }
-        private void DespawnHandler()
-        {
-            Player player = Main.player[NPC.target];
-            if (!player.active || player.dead || !FowlMorningWorld.FowlMorningActive)
-            {
-                NPC.TargetClosest(false);
-                player = Main.player[NPC.target];
-                if (!player.active || player.dead || !FowlMorningWorld.FowlMorningActive)
-                {
-                    NPC.alpha += 2;
-                    if (NPC.alpha >= 255)
-                        NPC.active = false;
-                    if (NPC.timeLeft > 10)
-                        NPC.timeLeft = 10;
-                    return;
-                }
-            }
-        }
         public override bool PreKill()
         {
             if (FowlMorningWorld.FowlMorningActive)
@@ -317,7 +300,7 @@ namespace Redemption.NPCs.FowlMorning
             npcLoot.Add(ItemDropRule.MasterModeDropOnAllPlayers(ModContent.ItemType<FowlFeather>(), 4));
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<CockatriceTrophy>(), 10));
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<EggShield>(), 5));
-            npcLoot.Add(ItemDropRule.OneFromOptions(5, ModContent.ItemType<GreneggLauncher>(), ModContent.ItemType<Halbirdhouse>(), ModContent.ItemType<NestWand>(), ModContent.ItemType<ChickendWand>()));
+            npcLoot.Add(ItemDropRule.OneFromOptions(5, ModContent.ItemType<GreneggLauncher>(), ModContent.ItemType<Halbirdhouse>(), ModContent.ItemType<NestWand>(), ModContent.ItemType<ChickendWand>(), ModContent.ItemType<DawnHerald>()));
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Grain>(), 100));
             npcLoot.Add(ItemDropRule.ByCondition(new OnFireCondition(), ModContent.ItemType<FriedChicken>(), 1, 2, 3));
         }

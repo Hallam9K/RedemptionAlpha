@@ -22,6 +22,13 @@ using Redemption.Items.Weapons.PreHM.Magic;
 using Redemption.BaseExtension;
 using Redemption.Items.Weapons.PreHM.Melee;
 using Redemption.Items.Weapons.PreHM.Ranged;
+using Redemption.WorldGeneration.Soulless;
+using SubworldLibrary;
+using Redemption.Biomes;
+using Redemption.Dusts;
+using ParticleLibrary;
+using Redemption.Particles;
+using System.Threading;
 
 namespace Redemption.NPCs.Bosses.Keeper
 {
@@ -32,7 +39,8 @@ namespace Redemption.NPCs.Bosses.Keeper
         {
             Begin,
             Idle,
-            Attacks
+            Attacks,
+            Soulless
         }
 
         public ActionState AIState
@@ -181,6 +189,7 @@ namespace Redemption.NPCs.Bosses.Keeper
         private float move;
         private float speed = 6;
         private Vector2 origin;
+        private bool parried;
 
         public int ID { get => (int)NPC.ai[3]; set => NPC.ai[3] = value; }
 
@@ -193,11 +202,12 @@ namespace Redemption.NPCs.Bosses.Keeper
 
             Rectangle SlashHitbox = new((int)(NPC.spriteDirection == -1 ? NPC.Center.X - 64 : NPC.Center.X + 26), (int)(NPC.Center.Y - 38), 38, 86);
 
-            DespawnHandler();
+            if (NPC.DespawnHandler(1))
+                return;
 
             if (AIState != ActionState.Attacks)
                 NPC.LookAtEntity(player);
-
+            bool parryActive = false;
             switch (AIState)
             {
                 case ActionState.Begin:
@@ -209,7 +219,13 @@ namespace Redemption.NPCs.Bosses.Keeper
                     NPC.alpha -= 2;
                     if (NPC.alpha <= 0)
                     {
-                        AIState = ActionState.Idle;
+                        if (SubworldSystem.IsActive<SoullessSub>() && player.InModBiome<SoullessBiome>())
+                        {
+                            NPC.frameCounter = 0;
+                            AIState = ActionState.Soulless;
+                        }
+                        else
+                            AIState = ActionState.Idle;
                         AITimer = 0;
                         NPC.netUpdate = true;
                     }
@@ -297,33 +313,39 @@ namespace Redemption.NPCs.Bosses.Keeper
                                 }
                                 if (AITimer >= 200 && NPC.frame.Y >= 4 * 71 && NPC.frame.Y <= 6 * 71)
                                 {
-                                    for (int i = 0; i < Main.maxNPCs; i++)
+                                    if (NPC.frame.Y is 4 * 71)
+                                        parryActive = true;
+                                    RedeProjectile.SwordClashHostile(SlashHitbox, NPC, ref parried);
+                                    if (!parried)
                                     {
-                                        NPC target = Main.npc[i];
-                                        if (!target.active || target.whoAmI == NPC.whoAmI || (!target.friendly &&
-                                            !NPCID.Sets.TakesDamageFromHostilesWithoutBeingFriendly[target.type]))
-                                            continue;
+                                        for (int i = 0; i < Main.maxNPCs; i++)
+                                        {
+                                            NPC target = Main.npc[i];
+                                            if (!target.active || target.whoAmI == NPC.whoAmI || (!target.friendly &&
+                                                !NPCID.Sets.TakesDamageFromHostilesWithoutBeingFriendly[target.type]))
+                                                continue;
 
-                                        if (target.immune[NPC.whoAmI] > 0 || !target.Hitbox.Intersects(SlashHitbox))
-                                            continue;
+                                            if (target.immune[NPC.whoAmI] > 0 || !target.Hitbox.Intersects(SlashHitbox))
+                                                continue;
 
-                                        target.immune[NPC.whoAmI] = 30;
-                                        int hitDirection = target.RightOfDir(NPC);
-                                        BaseAI.DamageNPC(target, NPC.damage, 3, hitDirection, NPC);
-                                        target.AddBuff(BuffID.Bleeding, 600);
-                                    }
-                                    for (int p = 0; p < Main.maxPlayers; p++)
-                                    {
-                                        Player target = Main.player[p];
-                                        if (!target.active || target.dead)
-                                            continue;
+                                            target.immune[NPC.whoAmI] = 30;
+                                            int hitDirection = target.RightOfDir(NPC);
+                                            BaseAI.DamageNPC(target, NPC.damage, 3, hitDirection, NPC);
+                                            target.AddBuff(BuffID.Bleeding, 600);
+                                        }
+                                        for (int p = 0; p < Main.maxPlayers; p++)
+                                        {
+                                            Player target = Main.player[p];
+                                            if (!target.active || target.dead)
+                                                continue;
 
-                                        if (!target.Hitbox.Intersects(SlashHitbox))
-                                            continue;
+                                            if (!target.Hitbox.Intersects(SlashHitbox))
+                                                continue;
 
-                                        int hitDirection = target.RightOfDir(NPC);
-                                        BaseAI.DamagePlayer(target, NPC.damage, 3, hitDirection, NPC);
-                                        target.AddBuff(BuffID.Bleeding, 600);
+                                            int hitDirection = target.RightOfDir(NPC);
+                                            BaseAI.DamagePlayer(target, NPC.damage, 3, hitDirection, NPC);
+                                            target.AddBuff(BuffID.Bleeding, 600);
+                                        }
                                     }
                                 }
                                 if (AITimer >= 235)
@@ -363,9 +385,7 @@ namespace Redemption.NPCs.Bosses.Keeper
                                 BaseAI.DamageNPC(NPC, 50, 0, player, false, true);
                                 for (int i = 0; i < 6; i++)
                                 {
-                                    NPC.Shoot(NPC.Center, ModContent.ProjectileType<KeeperBloodWave>(), NPC.damage,
-                                        RedeHelper.PolarVector(Main.rand.NextFloat(8, 16), (player.Center - NPC.Center).ToRotation() + Main.rand.NextFloat(-0.3f, 0.3f)),
-                                        true, SoundID.NPCDeath19, NPC.whoAmI);
+                                    NPC.Shoot(NPC.Center, ModContent.ProjectileType<KeeperBloodWave>(), NPC.damage, RedeHelper.PolarVector(Main.rand.NextFloat(8, 16), (player.Center - NPC.Center).ToRotation() + Main.rand.NextFloat(-0.3f, 0.3f)), NPC.whoAmI);
                                 }
                                 for (int i = 0; i < 30; i++)
                                 {
@@ -399,8 +419,7 @@ namespace Redemption.NPCs.Bosses.Keeper
                             if (AITimer >= 60 && AITimer % (Unveiled ? 20 : 25) == 0)
                             {
                                 Vector2 pos = NPC.Center + Vector2.One.RotatedBy(MathHelper.ToRadians(TimerRand)) * 60;
-                                NPC.Shoot(pos, ModContent.ProjectileType<ShadowBolt>(), NPC.damage,
-                                       RedeHelper.PolarVector(Main.expertMode ? 0.5f : 0.3f, (player.Center - pos).ToRotation()), true, SoundID.Item20);
+                                NPC.Shoot(pos, ModContent.ProjectileType<ShadowBolt>(), NPC.damage, RedeHelper.PolarVector(Main.expertMode ? 0.5f : 0.3f, (player.Center - pos).ToRotation()), SoundID.Item20);
 
                                 TimerRand += 45;
                             }
@@ -473,7 +492,7 @@ namespace Redemption.NPCs.Bosses.Keeper
 
                                     if (AITimer % 2 == 0)
                                     {
-                                        NPC.Shoot(NPC.Center, ModContent.ProjectileType<KeeperSoulCharge>(), (int)(NPC.damage * 1.4f), RedeHelper.PolarVector(Main.rand.NextFloat(14, 16), (origin - NPC.Center).ToRotation()), true, SoundID.NPCDeath52 with { Volume = .5f });
+                                        NPC.Shoot(NPC.Center, ModContent.ProjectileType<KeeperSoulCharge>(), (int)(NPC.damage * 1.4f), RedeHelper.PolarVector(Main.rand.NextFloat(14, 16), (origin - NPC.Center).ToRotation()), SoundID.NPCDeath52 with { Volume = .5f });
                                     }
                                 }
                                 if (AITimer >= 320)
@@ -505,9 +524,7 @@ namespace Redemption.NPCs.Bosses.Keeper
                                     speed *= 0.96f;
                                 if (AITimer >= 30 && AITimer % 30 == 0)
                                 {
-                                    NPC.Shoot(new Vector2(NPC.Center.X + 3 * NPC.spriteDirection, NPC.Center.Y - 37), ModContent.ProjectileType<KeeperDreadCoil>(),
-                                        NPC.damage, RedeHelper.PolarVector(7, (player.Center - NPC.Center).ToRotation() + Main.rand.NextFloat(-0.08f, 0.08f)),
-                                        true, SoundID.Item20);
+                                    NPC.Shoot(new Vector2(NPC.Center.X + 3 * NPC.spriteDirection, NPC.Center.Y - 37), ModContent.ProjectileType<KeeperDreadCoil>(), NPC.damage, RedeHelper.PolarVector(7, (player.Center - NPC.Center).ToRotation() + Main.rand.NextFloat(-0.08f, 0.08f)), SoundID.Item20);
                                 }
                                 if (AITimer >= 130)
                                 {
@@ -528,7 +545,67 @@ namespace Redemption.NPCs.Bosses.Keeper
                             #endregion
                     }
                     break;
+                case ActionState.Soulless:
+                    player.RedemptionScreen().ScreenFocusPosition = NPC.Center;
+                    player.RedemptionScreen().lockScreen = true;
+                    player.RedemptionScreen().cutscene = true;
+                    NPC.LockMoveRadius(player);
+                    player.RedemptionScreen().ScreenShakeIntensity = MathHelper.Max(player.RedemptionScreen().ScreenShakeIntensity, 5);
+
+                    NPC.velocity *= 0f;
+                    if (AITimer++ == 1)
+                    {
+                        if (!Main.dedServ)
+                            SoundEngine.PlaySound(CustomSounds.Shriek, NPC.position);
+
+                        NPC.dontTakeDamage = true;
+                        NPC.netUpdate = true;
+                        if (Main.netMode == NetmodeID.Server && NPC.whoAmI < Main.maxNPCs)
+                            NetMessage.SendData(MessageID.SyncNPC, number: NPC.whoAmI);
+
+                    }
+                    if (AITimer < 120)
+                    {
+                        for (int k = 0; k < 3; k++)
+                        {
+                            Vector2 vector;
+                            double angle = Main.rand.NextDouble() * 2d * Math.PI;
+                            vector.X = (float)(Math.Sin(angle) * 100);
+                            vector.Y = (float)(Math.Cos(angle) * 100);
+                            Dust dust2 = Main.dust[Dust.NewDust(NPC.Center + vector, 2, 2, DustID.AncientLight, Scale: 2f)];
+                            dust2.noGravity = true;
+                            dust2.velocity = -NPC.DirectionTo(dust2.position) * 5f;
+                        }
+                    }
+                    if (AITimer > 120)
+                    {
+                        for (int k = 0; k < 6; k++)
+                        {
+                            Vector2 vector;
+                            double angle = Main.rand.NextDouble() * 2d * Math.PI;
+                            vector.X = (float)(Math.Sin(angle) * 100);
+                            vector.Y = (float)(Math.Cos(angle) * 100);
+                            Dust dust2 = Main.dust[Dust.NewDust(NPC.Center + vector, 2, 2, ModContent.DustType<VoidFlame>(), Scale: 3f)];
+                            dust2.noGravity = true;
+                            dust2.velocity = -NPC.DirectionTo(dust2.position) * 10f;
+                        }
+                    }
+                    if (AITimer > 200)
+                    {
+                        SoundEngine.PlaySound(CustomSounds.SpookyNoise, NPC.position);
+                        for (int i = 0; i < 30; i++)
+                            ParticleManager.NewParticle(NPC.Center, RedeHelper.Spread(10), new SoulParticle(), Color.White, 1);
+                        for (int i = 0; i < 50; i++)
+                        {
+                            int dustIndex = Dust.NewDust(NPC.position + NPC.velocity, NPC.width, NPC.height, ModContent.DustType<VoidFlame>(), Scale: 3f);
+                            Main.dust[dustIndex].velocity *= 6f;
+                        }
+                        NPC.SetDefaults(ModContent.NPCType<Keeper_Soulless>());
+                        NPC.netUpdate = true;
+                    }
+                    break;
             }
+            NPC.Redemption().CreateParryWindow(SlashHitbox, ref parryActive);
         }
 
         public void MoveClamp()
@@ -623,25 +700,6 @@ namespace Redemption.NPCs.Bosses.Keeper
             spriteBatch.End();
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
             return false;
-        }
-
-        private void DespawnHandler()
-        {
-            Player player = Main.player[NPC.target];
-            if (!player.active || player.dead)
-            {
-                NPC.TargetClosest(false);
-                player = Main.player[NPC.target];
-                if (!player.active || player.dead)
-                {
-                    NPC.alpha += 2;
-                    if (NPC.alpha >= 255)
-                        NPC.active = false;
-                    if (NPC.timeLeft > 10)
-                        NPC.timeLeft = 10;
-                    return;
-                }
-            }
         }
     }
 }

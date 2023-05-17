@@ -9,6 +9,7 @@ using Terraria.Enums;
 using Redemption.Dusts.Tiles;
 using Terraria.Audio;
 using Terraria.GameContent.ObjectInteractions;
+using Redemption.Items.Usable;
 
 namespace Redemption.Tiles.Furniture.Shade
 {
@@ -48,6 +49,29 @@ namespace Redemption.Tiles.Furniture.Shade
             ItemDrop = -1;
             DustType = ModContent.DustType<ShadesteelDust>();
             AdjTiles = new int[] { TileID.ClosedDoor };
+        }
+        public override void MouseOver(int i, int j)
+        {
+            Player player = Main.LocalPlayer;
+            player.noThrow = 2;
+            player.cursorItemIconEnabled = true;
+            player.cursorItemIconID = ModContent.ItemType<PrisonGateKey>();
+        }
+        public override bool RightClick(int i, int j)
+        {
+            Player player = Main.LocalPlayer;
+            if (player.ConsumeItem(ModContent.ItemType<PrisonGateKey>()))
+            {
+                SoundEngine.PlaySound(SoundID.Unlock);
+                SoundEngine.PlaySound(SoundID.DoorOpen);
+                int left = i - Main.tile[i, j].TileFrameX / 18 % 1;
+                int top = j - Main.tile[i, j].TileFrameY / 18 % 3;
+                WorldGen.KillTile(i, j, noItem: true);
+                WorldGen.PlaceObject(i, j, ModContent.TileType<ShadesteelPortcullisOpen>());
+                NetMessage.SendObjectPlacment(-1, i, j, ModContent.TileType<ShadesteelPortcullisOpen>(), 0, 0, -1, -1);
+                NetMessage.SendTileSquare(-1, left, top + 1, 2);
+            }
+            return true;
         }
         public override bool HasSmartInteract(int i, int j, SmartInteractScanSettings settings) => true;
         public override void NumDust(int i, int j, bool fail, ref int num) => num = 1;
@@ -141,6 +165,96 @@ namespace Redemption.Tiles.Furniture.Shade
         {
             base.SetDefaults();
             Item.createTile = ModContent.TileType<ShadesteelPortcullisClose>();
+        }
+    }
+    public class ShadesteelPortcullis2Close : ShadesteelPortcullisClose
+    {
+        public override void SetStaticDefaults()
+        {
+            base.SetStaticDefaults();
+            ModTranslation name = CreateMapEntryName();
+            name.SetDefault("Reinforced Shadesteel Portcullis");
+            AddMapEntry(new Color(83, 87, 123), name);
+        }
+        public override void MouseOver(int i, int j)
+        {
+            Player player = Main.LocalPlayer;
+            player.noThrow = 2;
+            player.cursorItemIconEnabled = true;
+            player.cursorItemIconID = ModContent.ItemType<PrisonGateKey2>();
+        }
+        public override bool RightClick(int i, int j)
+        {
+            Player player = Main.LocalPlayer;
+            if (player.ConsumeItem(ModContent.ItemType<PrisonGateKey2>()))
+            {
+                SoundEngine.PlaySound(SoundID.Unlock);
+                SoundEngine.PlaySound(SoundID.DoorOpen);
+                int left = i - Main.tile[i, j].TileFrameX / 18 % 1;
+                int top = j - Main.tile[i, j].TileFrameY / 18 % 3;
+                WorldGen.KillTile(i, j, noItem: true);
+                WorldGen.PlaceObject(i, j, ModContent.TileType<ShadesteelPortcullis2Open>());
+                NetMessage.SendObjectPlacment(-1, i, j, ModContent.TileType<ShadesteelPortcullis2Open>(), 0, 0, -1, -1);
+                NetMessage.SendTileSquare(-1, left, top + 1, 2);
+            }
+            return true;
+        }
+    }
+    public class ShadesteelPortcullis2Close_Unlocked : ShadesteelPortcullis2Close
+    {
+        public override string Texture => "Redemption/Tiles/Furniture/Shade/ShadesteelPortcullis2Close";
+        public override void SetStaticDefaults() => base.SetStaticDefaults();
+        public override void MouseOver(int i, int j)
+        {
+            Player player = Main.LocalPlayer;
+            player.cursorItemIconEnabled = false;
+        }
+        public override bool RightClick(int i, int j)
+        {
+            SoundEngine.PlaySound(SoundID.DoorOpen);
+            int left = i - Main.tile[i, j].TileFrameX / 18 % 1;
+            int top = j - Main.tile[i, j].TileFrameY / 18 % 3;
+            WorldGen.KillTile(i, j, noItem: true);
+            WorldGen.PlaceObject(i, j, ModContent.TileType<ShadesteelPortcullis2Open>());
+            NetMessage.SendObjectPlacment(-1, i, j, ModContent.TileType<ShadesteelPortcullis2Open>(), 0, 0, -1, -1);
+            NetMessage.SendTileSquare(-1, left, top + 1, 2);
+            return true;
+        }
+    }
+    public class ShadesteelPortcullis2Open : ShadesteelPortcullisOpen
+    {
+        public override string Texture => "Redemption/Tiles/Furniture/Shade/ShadesteelPortcullisOpen";
+        public override void SetStaticDefaults()
+        {
+            base.SetStaticDefaults();
+            ModTranslation name = CreateMapEntryName();
+            name.SetDefault("Shadesteel Portcullis");
+            AddMapEntry(new Color(83, 87, 123), name);
+        }
+        public override bool RightClick(int i, int j)
+        {
+            SoundEngine.PlaySound(SoundID.DoorClosed);
+            int left = i - Main.tile[i, j].TileFrameX / 18 % 1;
+            int top = j - Main.tile[i, j].TileFrameY / 18 % 3;
+            WorldGen.KillTile(i, j, noItem: true);
+            WorldGen.PlaceObject(i, j, ModContent.TileType<ShadesteelPortcullis2Close_Unlocked>());
+            NetMessage.SendObjectPlacment(-1, i, j, ModContent.TileType<ShadesteelPortcullis2Close_Unlocked>(), 0, 0, -1, -1);
+            NetMessage.SendTileSquare(-1, left, top + 1, 2);
+            return true;
+        }
+    }
+    public class ShadePortcullis2 : PlaceholderTile
+    {
+        public override string Texture => "Redemption/Placeholder";
+        public override void SetStaticDefaults()
+        {
+            DisplayName.SetDefault("Reinforced Shade Portcullis");
+            Tooltip.SetDefault("[c/ff0000:Unbreakable (500% Pickaxe Power)]");
+        }
+        public override void SetDefaults()
+        {
+            base.SetDefaults();
+            Item.createTile = ModContent.TileType<ShadesteelPortcullis2Close>();
         }
     }
 }

@@ -73,6 +73,13 @@ namespace Redemption.Globals.Player
         public float trappedSoulBoost;
         public bool brokenBlade;
         public bool shellCap;
+        public bool anglerPot;
+        public bool zapField;
+        public bool dreamsong;
+        public bool shadowBinder;
+        public int shadowBinderCharge;
+        public bool lacerated;
+        public bool shadevision;
         public bool shieldGenerator;
         public int shieldGeneratorLife = 200;
         public int shieldGeneratorCD;
@@ -92,6 +99,7 @@ namespace Redemption.Globals.Player
         public bool infectionHeart;
         public int infectionHeartTimer;
         public bool vasaraPendant;
+        public bool maskOfGrief;
         public bool crystalKnowledge;
         public bool seaEmblem;
         public bool pureChill;
@@ -154,6 +162,12 @@ namespace Redemption.Globals.Player
             brokenBlade = false;
             TrueMeleeDamage = 1f;
             shellCap = false;
+            anglerPot = false;
+            zapField = false;
+            dreamsong = false;
+            shadowBinder = false;
+            lacerated = false;
+            shadevision = false;
             ChickenForm = false;
             blastBattery = false;
             xenomiteBonus = false;
@@ -170,8 +184,10 @@ namespace Redemption.Globals.Player
             forestCore = false;
             infectionHeart = false;
             vasaraPendant = false;
+            maskOfGrief = false;
             crystalKnowledge = false;
             pureChill = false;
+            seaEmblem = false;
 
             for (int k = 0; k < ElementalResistance.Length; k++)
                 ElementalResistance[k] = 0;
@@ -207,6 +223,7 @@ namespace Redemption.Globals.Player
             trappedSoulBoost = 0;
             shieldGenerator = false;
             shieldGeneratorAlpha = 0;
+            lacerated = false;
             sandDust = false;
             badtime = false;
             infectionHeart = false;
@@ -291,6 +308,18 @@ namespace Redemption.Globals.Player
             }
             if (Terraria.NPC.AnyNPCs(ModContent.NPCType<Nebuleus2>()) || Terraria.NPC.AnyNPCs(ModContent.NPCType<Nebuleus2_Clone>()))
                 Player.wingTime = Player.wingTimeMax;
+            if (Player.Redemption().stalkerSilence)
+            {
+                if (Player.mount.CanFly())
+                    Player.mount.Dismount(Player);
+                Player.wings = 0;
+                Player.wingsLogic = 0;
+                if (!ItemID.Sets.Torches[Player.HeldItem.type] && Player.HeldItem.pick == 0)
+                    Player.noBuilding = true;
+                if (Player.HeldItem.damage > 0 && Player.HeldItem.pick == 0)
+                    Player.controlUseItem = false;
+                Player.controlHook = false;
+            }
         }
         public override void PostUpdateEquips()
         {
@@ -540,6 +569,20 @@ namespace Redemption.Globals.Player
             {
                 Projectile.NewProjectile(proj.GetSource_FromAI(), new Vector2(target.Center.X, target.position.Y - 200), Vector2.Zero, ModContent.ProjectileType<PhantomCleaver_F2>(), proj.damage * 3, proj.knockBack, Main.myPlayer, target.whoAmI);
             }
+            if (shadowBinder)
+            {
+                if (target.life <= 0 && target.lifeMax >= 5000)
+                {
+                    for (int i = 0; i < 10; ++i)
+                    {
+                        Dust dust = Dust.NewDustDirect(target.position, target.width, target.height, DustID.DungeonSpirit, Scale: 2f);
+                        dust.velocity = -Player.DirectionTo(dust.position) * 20;
+                        dust.noGravity = true;
+                    }
+                    if (shadowBinderCharge < 100)
+                        shadowBinderCharge += 1;
+                }
+            }
             if ((sacredCross || gracesGuidance) && proj.HasElement(ElementID.Holy) && hit.Crit && Main.rand.NextBool(2) && proj.type != ModContent.ProjectileType<Lightmass>())
             {
                 SoundEngine.PlaySound(SoundID.Item101, Player.Center);
@@ -565,6 +608,20 @@ namespace Redemption.Globals.Player
             if (brokenBlade && Player.ownedProjectileCounts[ModContent.ProjectileType<PhantomCleaver_F2>()] == 0 && RedeHelper.Chance(0.1f))
             {
                 Projectile.NewProjectile(Player.GetSource_ItemUse(item), new Vector2(target.Center.X, target.position.Y - 200), Vector2.Zero, ModContent.ProjectileType<PhantomCleaver_F2>(), item.damage * 3, item.knockBack, Main.myPlayer, target.whoAmI);
+            }
+            if (shadowBinder)
+            {
+                if (target.life <= 0 && target.lifeMax >= 5000)
+                {
+                    for (int i = 0; i < 10; ++i)
+                    {
+                        Dust dust = Dust.NewDustDirect(target.position, target.width, target.height, DustID.DungeonSpirit, Scale: 2f);
+                        dust.velocity = -Player.DirectionTo(dust.position) * 20;
+                        dust.noGravity = true;
+                    }
+                    if (shadowBinderCharge < 100)
+                        shadowBinderCharge += 1;
+                }
             }
             if ((sacredCross || gracesGuidance) && item.HasElement(ElementID.Holy) && hit.Crit && Main.rand.NextBool(2))
             {
@@ -630,6 +687,13 @@ namespace Redemption.Globals.Player
 
                 Player.lifeRegenTime = 0;
                 Player.lifeRegen -= 60;
+            }
+            if (lacerated)
+            {
+                if (Player.lifeRegen > 0)
+                    Player.lifeRegen = 0;
+                Player.lifeRegenTime = 0;
+                Player.lifeRegen -= (int)(Player.statLifeMax2 * 0.04f);
             }
             if (holyFire)
             {
@@ -802,7 +866,6 @@ namespace Redemption.Globals.Player
                     SoundEngine.PlaySound(SoundID.NPCHit4, Player.position);
             }
         }
-
         public override bool PreKill(double damage, int hitDirection, bool pvp, ref bool playSound, ref bool genGore, ref PlayerDeathReason damageSource)
         {
             if (infested && infestedTime >= 60)

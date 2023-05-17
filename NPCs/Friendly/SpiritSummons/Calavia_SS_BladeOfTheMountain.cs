@@ -86,8 +86,6 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
                                     target.ai[0] = 1;
                                     continue;
                                 }
-                                if (RedeProjectile.SwordClashFriendly(Projectile, target, npc, ref parried))
-                                    continue;
 
                                 if (target.whoAmI == Projectile.whoAmI || !target.hostile || target.damage > 100)
                                     continue;
@@ -111,6 +109,14 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
                     }
                 }
             }
+            bool parryActive = false;
+            if (Projectile.frame is 4 or 5)
+                parryActive = true;
+            if (Projectile.frame is 5)
+                RedeProjectile.SwordClashFriendly(Projectile, npc, ref parried);
+
+            Main.LocalPlayer.Redemption().CreateParryWindow(Projectile.Redemption().swordHitbox, ref parryActive);
+
             Projectile.spriteDirection = npc.spriteDirection;
             Projectile.Center = npc.Center;
             return false;

@@ -8,6 +8,9 @@ using System;
 using Terraria.Audio;
 using ParticleLibrary;
 using Redemption.Particles;
+using Redemption.NPCs.Soulless;
+using Redemption.Dusts;
+using Redemption.Globals;
 
 namespace Redemption.NPCs.Friendly
 {
@@ -55,7 +58,44 @@ namespace Redemption.NPCs.Friendly
         {
             NPC.dontTakeDamage = true;
             NPC.rotation += .02f;
-
+            Player player = Main.player[RedeHelper.GetNearestAlivePlayer(NPC)];
+            if (RedeQuest.shadesoulVar == 1 && !NPC.AnyNPCs(ModContent.NPCType<TwinfaceSoulless>()))
+            {
+                for (int i = 0; i < 10; i++)
+                {
+                    float distance = Main.rand.Next(10) * 4;
+                    Vector2 dustRotation = new Vector2(distance, 0f).RotatedBy(MathHelper.ToRadians(i * 36));
+                    Vector2 dustPosition = NPC.Center + dustRotation;
+                    Vector2 nextDustPosition = NPC.Center + dustRotation.RotatedBy(MathHelper.ToRadians(-4));
+                    Vector2 dustVelocity = dustPosition - nextDustPosition + NPC.velocity;
+                    if (Main.rand.NextBool(10))
+                    {
+                        Dust dust = Dust.NewDustPerfect(dustPosition, DustID.RedTorch, dustVelocity, Scale: 2f);
+                        dust.scale = distance / 30;
+                        dust.scale = MathHelper.Clamp(dust.scale, 0.2f, 4);
+                        dust.noGravity = true;
+                        dust.noLight = true;
+                        dust.alpha += 10;
+                        dust.rotation = dustRotation.ToRotation();
+                    }
+                }
+            }
+            if (RedeQuest.shadesoulVar == 1 && NPC.DistanceSQ(player.Center) < 200 * 200)
+            {
+                if (player.active && !player.dead && !RedeHelper.BossActive() && !NPC.AnyNPCs(ModContent.NPCType<TwinfaceSoulless>()))
+                {
+                    for (int i = 0; i < 30; i++)
+                    {
+                        int dust = Dust.NewDust(NPC.Center - new Vector2(20, 20), 40, 40, ModContent.DustType<GlowDust>(), 1, 0, 0, default, 0.5f);
+                        Main.dust[dust].noGravity = true;
+                        Color dustColor = new(Color.CornflowerBlue.R, Color.CornflowerBlue.G, Color.CornflowerBlue.B) { A = 0 };
+                        Main.dust[dust].color = dustColor;
+                        Main.dust[dust].velocity *= 3f;
+                    }
+                    SoundEngine.PlaySound(SoundID.DD2_EtherianPortalSpawnEnemy, NPC.position);
+                    RedeHelper.SpawnNPC(NPC.GetSource_FromAI(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<TwinfaceSoulless>(), 1, ai3: NPC.whoAmI);
+                }
+            }
             if (Vector2.Distance(Main.screenPosition + new Vector2(Main.screenWidth / 2, Main.screenHeight / 2), NPC.Center) <= Main.screenWidth / 2 + 100)
             {
                 if (NPC.ai[0]++ % 20 == 0)

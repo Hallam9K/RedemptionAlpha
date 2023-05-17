@@ -8,7 +8,6 @@ using Redemption.Items.Accessories.PreHM;
 using Redemption.Items.Armor.Vanity;
 using Redemption.Items.Materials.PreHM;
 using Redemption.Items.Placeable.Tiles;
-using Redemption.Items.Usable;
 using Redemption.Items.Weapons.PreHM.Magic;
 using Redemption.Items.Weapons.PreHM.Melee;
 using Redemption.Items.Weapons.PreHM.Ranged;
@@ -69,7 +68,8 @@ namespace Redemption.NPCs.Minibosses.EaglecrestGolem
                     ModContent.BuffType<InfestedDebuff>(),
                     ModContent.BuffType<NecroticGougeDebuff>(),
                     ModContent.BuffType<ViralityDebuff>(),
-                    ModContent.BuffType<DirtyWoundDebuff>()
+                    ModContent.BuffType<DirtyWoundDebuff>(),
+                    ModContent.BuffType<LaceratedDebuff>()
                 }
             });
 
@@ -193,7 +193,8 @@ namespace Redemption.NPCs.Minibosses.EaglecrestGolem
             if (NPC.target < 0 || NPC.target == 255 || player.dead || !player.active)
                 NPC.TargetClosest();
 
-            DespawnHandler();
+            if (NPC.DespawnHandler(1))
+                return;
 
             if (AIState != ActionState.Slash && AIState != ActionState.Laser)
                 NPC.LookAtEntity(player);
@@ -248,7 +249,7 @@ namespace Redemption.NPCs.Minibosses.EaglecrestGolem
                     {
                         for (int i = 0; i < 2; i++)
                         {
-                            NPC.Shoot(NPC.Center, ModContent.ProjectileType<RockPileSummon>(), 0, RedeHelper.SpreadUp(16), false, SoundID.Item1, NPC.whoAmI);
+                            NPC.Shoot(NPC.Center, ModContent.ProjectileType<RockPileSummon>(), 0, RedeHelper.SpreadUp(16), NPC.whoAmI);
                         }
                         summonTimer = 600;
                         NPC.netUpdate = true;
@@ -310,8 +311,7 @@ namespace Redemption.NPCs.Minibosses.EaglecrestGolem
                     }
                     if (TimerRand2 == 60)
                     {
-                        NPC.Shoot(origin, ModContent.ProjectileType<GolemEyeRay>(), NPC.damage, RedeHelper.PolarVector(10, (player.Center - NPC.Center).ToRotation()
-                            + MathHelper.ToRadians(20 * NPC.spriteDirection)), true, SoundID.Item109, NPC.whoAmI);
+                        NPC.Shoot(origin, ModContent.ProjectileType<GolemEyeRay>(), NPC.damage, RedeHelper.PolarVector(10, (player.Center - NPC.Center).ToRotation() + MathHelper.ToRadians(20 * NPC.spriteDirection)), SoundID.Item109, NPC.whoAmI);
                     }
                     if (TimerRand2 >= 60)
                     {
@@ -356,7 +356,7 @@ namespace Redemption.NPCs.Minibosses.EaglecrestGolem
                     {
                         Player player = Main.player[NPC.target];
                         NPC.Shoot(NPC.Center, ModContent.ProjectileType<RockSlash_Proj>(), NPC.damage, RedeHelper.PolarVector(7,
-                            (player.Center - NPC.Center).ToRotation()), true, SoundID.Item71);
+                            (player.Center - NPC.Center).ToRotation()), SoundID.Item71);
                     }
                     if (AniFrameY > 8)
                     {
@@ -442,25 +442,6 @@ namespace Redemption.NPCs.Minibosses.EaglecrestGolem
             {
                 Vector2 position = NPC.Center - screenPos - new Vector2(-2 * NPC.spriteDirection, 18);
                 RedeDraw.DrawEyeFlare(spriteBatch, ref FlareTimer, position, Color.Orange, NPC.rotation);
-            }
-        }
-
-        private void DespawnHandler()
-        {
-            Player player = Main.player[NPC.target];
-            if (!player.active || player.dead)
-            {
-                NPC.TargetClosest(false);
-                player = Main.player[NPC.target];
-                if (!player.active || player.dead)
-                {
-                    NPC.alpha += 2;
-                    if (NPC.alpha >= 255)
-                        NPC.active = false;
-                    if (NPC.timeLeft > 10)
-                        NPC.timeLeft = 10;
-                    return;
-                }
             }
         }
         public override void HitEffect(NPC.HitInfo hit)

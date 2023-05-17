@@ -1,6 +1,9 @@
 ﻿using Microsoft.Xna.Framework;
 using Redemption.Dusts.Tiles;
 using Redemption.Items.Placeable.Furniture.Shade;
+using Redemption.Items.Usable.Potions;
+using Redemption.Items.Weapons.PostML.Ranged;
+using Redemption.NPCs.Soulless;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.Enums;
@@ -49,39 +52,36 @@ namespace Redemption.Tiles.Natural
             {
                 if (Main.expertMode ? Main.rand.Next(45) < 2 : Main.rand.NextBool(45))
                 {
-                    switch (Main.rand.Next(11))
+                    switch (Main.rand.Next(10))
                     {
                         case 0:
-                            //Item.NewItem(source, i * 16, j * 16, 32, 16, ModContent.ItemType<ElectrifiedPotion>());
+                            Item.NewItem(source, i * 16, j * 16, 32, 16, ModContent.ItemType<InsulatiumPotion>());
                             break;
                         case 1:
-                            //Item.NewItem(source, i * 16, j * 16, 32, 16, ModContent.ItemType<LurkingKetredPotion>());
+                            Item.NewItem(source, i * 16, j * 16, 32, 16, ModContent.ItemType<LurkingKetredPotion>());
                             break;
                         case 2:
-                            //Item.NewItem(source, i * 16, j * 16, 32, 16, ModContent.ItemType<ChakrogAnglerPotion>());
+                            Item.NewItem(source, i * 16, j * 16, 32, 16, ModContent.ItemType<ChakrogAnglerPotion>());
                             break;
                         case 3:
-                            //Item.NewItem(source, i * 16, j * 16, 32, 16, ModContent.ItemType<AbyssBloskusPotion>());
-                            break;
-                        case 4:
                             Item.NewItem(source, i * 16, j * 16, 32, 16, ItemID.BattlePotion);
                             break;
-                        case 5:
+                        case 4:
                             Item.NewItem(source, i * 16, j * 16, 32, 16, ItemID.EndurancePotion);
                             break;
-                        case 6:
+                        case 5:
                             Item.NewItem(source, i * 16, j * 16, 32, 16, ItemID.InvisibilityPotion);
                             break;
-                        case 7:
+                        case 6:
                             Item.NewItem(source, i * 16, j * 16, 32, 16, ItemID.ManaRegenerationPotion);
                             break;
-                        case 8:
+                        case 7:
                             Item.NewItem(source, i * 16, j * 16, 32, 16, ItemID.MagicPowerPotion);
                             break;
-                        case 9:
+                        case 8:
                             Item.NewItem(source, i * 16, j * 16, 32, 16, ItemID.TitanPotion);
                             break;
-                        case 10:
+                        case 9:
                             Item.NewItem(source, i * 16, j * 16, 32, 16, ItemID.WrathPotion);
                             break;
                     }
@@ -102,7 +102,7 @@ namespace Redemption.Tiles.Natural
                                 Item.NewItem(source, i * 16, j * 16, 32, 16, ModContent.ItemType<ShadeTorch>(), Main.rand.Next(Main.expertMode ? 5 : 4, Main.expertMode ? 18 : 12));
                             break;
                         case 2:
-                            //Item.NewItem(source, i * 16, j * 16, 32, 16, ModContent.ItemType<ShadeKnife>(), Main.rand.Next(10, 20));
+                            Item.NewItem(source, i * 16, j * 16, 32, 16, ModContent.ItemType<VesselDagger>(), Main.rand.Next(10, 21));
                             break;
                         case 3:
                             Item.NewItem(source, i * 16, j * 16, 32, 16, ItemID.SuperHealingPotion);
@@ -128,9 +128,9 @@ namespace Redemption.Tiles.Natural
                         case 6:
                             goto case 5;
                         case 7:
-                            //int index1 = NPC.NewNPC(source, (int)((i + 1.5f) * 16), (int)((j + 1.5f) * 16), ModContent.NPCType<LaughingMaskSmall>());
-                            //if (index1 < Main.maxNPCs && Main.netMode == NetmodeID.MultiplayerClient)
-                            //    NetMessage.SendData(MessageID.SyncNPC, number: index1);
+                            int index1 = NPC.NewNPC(source, (int)((i + 1.5f) * 16), (int)((j + 1.5f) * 16), ModContent.NPCType<LaughingMaskSmall>());
+                            if (index1 < Main.maxNPCs && Main.netMode == NetmodeID.MultiplayerClient)
+                                NetMessage.SendData(MessageID.SyncNPC, number: index1);
                             break;
                     }
                 }
@@ -138,14 +138,14 @@ namespace Redemption.Tiles.Natural
             if (Main.netMode == NetmodeID.Server)
                 return;
 
-            Vector2 v = new(Main.rand.Next(-4, 5), Main.rand.Next(-4, 5));
-            Gore.NewGore(new EntitySource_TileBreak(i, j), new Vector2(i * 16, j * 16), v, ModContent.Find<ModGore>("Redemption/ShadePotGore1").Type);
+            Vector2 v = new(Main.rand.Next(-2, 4), Main.rand.Next(-2, 4));
+            Gore.NewGore(new EntitySource_TileBreak(i, j), new Vector2(i * 16 + 8, j * 16 + 8), v, ModContent.Find<ModGore>("Redemption/ShadePotGore1").Type);
             if (Main.rand.NextBool(2))
-                Gore.NewGore(new EntitySource_TileBreak(i, j), new Vector2(i * 16, j * 16), v, ModContent.Find<ModGore>("Redemption/ShadePotGore2").Type);
+                Gore.NewGore(new EntitySource_TileBreak(i, j), new Vector2(i * 16 + 8, j * 16 + 8), v, ModContent.Find<ModGore>("Redemption/ShadePotGore2").Type);
             if (Main.rand.NextBool(2))
-                Gore.NewGore(new EntitySource_TileBreak(i, j), new Vector2(i * 16, j * 16), v, ModContent.Find<ModGore>("Redemption/ShadePotGore3").Type);
+                Gore.NewGore(new EntitySource_TileBreak(i, j), new Vector2(i * 16 + 8, j * 16 + 8), v, ModContent.Find<ModGore>("Redemption/ShadePotGore3").Type);
             if (Main.rand.NextBool(2))
-                Gore.NewGore(new EntitySource_TileBreak(i, j), new Vector2(i * 16, j * 16), v, ModContent.Find<ModGore>("Redemption/ShadePotGore4").Type);
+                Gore.NewGore(new EntitySource_TileBreak(i, j), new Vector2(i * 16 + 8, j * 16 + 8), v, ModContent.Find<ModGore>("Redemption/ShadePotGore4").Type);
         }
     }
     public class ShadePotsItem : PlaceholderTile

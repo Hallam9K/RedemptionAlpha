@@ -619,9 +619,19 @@ namespace Redemption.Globals
                 multiplier[ElementID.Shadow] *= 0.9f;
                 multiplier[ElementID.Blood] *= 0.75f;
             }
+            if (NPCLists.Soulless.Contains(npc.type))
+            {
+                multiplier[ElementID.Blood] *= 0.75f;
+                multiplier[ElementID.Celestial] *= 1.25f;
+                multiplier[ElementID.Holy] *= 1.25f;
+                multiplier[ElementID.Psychic] *= 1.75f;
+                multiplier[ElementID.Shadow] *= 0.5f;
+            }
         }
         public static void ElementalEffects(Terraria.NPC npc, Terraria.Player player, Item item, ref float multiplier, ref Terraria.NPC.HitModifiers knockback)
         {
+            if (item.HasElement(ElementID.Shadow) && NPCLists.Soulless.Contains(npc.type) && player.RedemptionPlayerBuff().maskOfGrief)
+                multiplier *= 2f;
             if (item.HasElement(ElementID.Shadow) && NPCLists.Dark.Contains(npc.type) && player.RedemptionPlayerBuff().eldritchRoot)
                 multiplier *= 1.33333f;
 
@@ -643,6 +653,8 @@ namespace Redemption.Globals
         }
         public static void ElementalEffects(Terraria.NPC npc, Projectile proj, ref float multiplier, ref Terraria.NPC.HitModifiers knockback)
         {
+            if (proj.HasElement(ElementID.Shadow) && NPCLists.Soulless.Contains(npc.type) && Main.player[proj.owner].RedemptionPlayerBuff().maskOfGrief)
+                multiplier *= 2f;
             if (proj.HasElement(ElementID.Shadow) && NPCLists.Dark.Contains(npc.type) && Main.player[proj.owner].RedemptionPlayerBuff().eldritchRoot)
                 multiplier *= 1.33333f;
 

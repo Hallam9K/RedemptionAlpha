@@ -10,7 +10,7 @@ namespace Redemption.Projectiles.Melee
 {
     public class BlindJustice_Aura : ModProjectile
     {
-        public override string Texture => "Redemption/Textures/HolyGlow2";
+        public override string Texture => "Redemption/" + Redemption.HolyGlow2.Name;
         public override void SetStaticDefaults()
         {
             // DisplayName.SetDefault("Holy Aura");
@@ -69,7 +69,7 @@ namespace Redemption.Projectiles.Melee
         public override bool PreDraw(ref Color lightColor)
         {
             Texture2D texture = TextureAssets.Projectile[Projectile.type].Value;
-            Texture2D flare = ModContent.Request<Texture2D>("Redemption/Textures/WhiteFlare").Value;
+            Texture2D flare = Redemption.WhiteFlare.Value;
             Vector2 drawOrigin = new(texture.Width / 2, texture.Height / 2);
             Vector2 flareOrigin = new(flare.Width / 2, flare.Height / 2);
             SpriteEffects effects = Projectile.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;

@@ -1,4 +1,5 @@
 using Microsoft.Xna.Framework;
+using SubworldLibrary;
 using Redemption.Dusts;
 using Redemption.NPCs.Friendly;
 using Redemption.WorldGeneration;
@@ -18,10 +19,13 @@ namespace Redemption.Globals
     {
         public static int[] wayfarerVars = new int[2];
         public static bool[] voltVars = new bool[4];
+        public static int shadesoulVar;
         public static int forestNymphVar;
         public static int calaviaVar;
         public override void PostUpdateWorld()
         {
+            if (SubworldSystem.AnyActive<Redemption>())
+                return;
             #region Wayfarer Event
             if (wayfarerVars[0] == 0 && Main.dayTime && RedeWorld.DayNightCount >= 1 && !RedeHelper.WayfarerActive())
             {
@@ -67,10 +71,19 @@ namespace Redemption.Globals
                 }
             }
             #endregion
+            if (shadesoulVar == 0 && !Main.dayTime && Terraria.NPC.downedMoonlord)
+            {
+                shadesoulVar = 1;
+                string status = "A portal rumbles... (Check Minimap for the location)";
+                if (Main.netMode == NetmodeID.Server)
+                    ChatHelper.BroadcastChatMessage(NetworkText.FromLiteral(status), Color.LightBlue);
+                else if (Main.netMode == NetmodeID.SinglePlayer)
+                    Main.NewText(Language.GetTextValue(status), Color.LightBlue);
+            }
             if (calaviaVar == 0 && Main.dayTime && Terraria.NPC.downedBoss3)
             {
-                Point originPoint = RedeGen.gathicPortalVector.ToPoint();
-                GenUtils.ObjectPlace(originPoint.X + 36, originPoint.Y + 17, TileID.Torches);
+                Point originPoint = RedeGen.gathicPortalPoint.ToPoint();
+                GenUtils.ObjectPlace(originPoint.X + 40, originPoint.Y + 17, TileID.Torches);
 
                 calaviaVar = 1;
                 if (Main.netMode == NetmodeID.Server)
@@ -90,6 +103,7 @@ namespace Redemption.Globals
                 wayfarerVars[k] = 0;
             for (int k = 0; k < voltVars.Length; k++)
                 voltVars[k] = false;
+            shadesoulVar = 0;
             forestNymphVar = 0;
             calaviaVar = 0;
         }
@@ -105,6 +119,7 @@ namespace Redemption.Globals
             tag["lists"] = lists;
             for (int k = 0; k < wayfarerVars.Length; k++)
                 tag["WV" + k] = wayfarerVars[k];
+            tag["shadesoulVar"] = shadesoulVar;
             tag["FNV"] = forestNymphVar;
             tag["CV"] = calaviaVar;
         }
@@ -117,6 +132,7 @@ namespace Redemption.Globals
 
             for (int k = 0; k < wayfarerVars.Length; k++)
                 wayfarerVars[k] = tag.GetInt("WV" + k);
+            shadesoulVar = tag.GetInt("shadesoulVar");
             forestNymphVar = tag.GetInt("FNV");
             calaviaVar = tag.GetInt("CV");
         }
@@ -130,6 +146,7 @@ namespace Redemption.Globals
 
             for (int k = 0; k < wayfarerVars.Length; k++)
                 writer.Write(wayfarerVars[k]);
+            writer.Write(shadesoulVar);
             writer.Write(forestNymphVar);
             writer.Write(calaviaVar);
         }
@@ -142,6 +159,7 @@ namespace Redemption.Globals
 
             for (int k = 0; k < wayfarerVars.Length; k++)
                 wayfarerVars[k] = reader.ReadInt32();
+            shadesoulVar = reader.ReadInt32();
             forestNymphVar = reader.ReadInt32();
             calaviaVar = reader.ReadInt32();
         }

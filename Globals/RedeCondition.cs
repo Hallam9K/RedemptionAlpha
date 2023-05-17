@@ -6,6 +6,7 @@ using Redemption.NPCs.Minibosses.FowlEmperor;
 using Terraria;
 using Redemption.Base;
 using Redemption.Items.Armor.Vanity.TBot;
+using Redemption.Biomes;
 
 namespace Redemption.Globals
 {
@@ -48,64 +49,76 @@ namespace Redemption.Globals
         public static Condition DeadRingerGiven = new("Mods.Redemption.Conditions.DeadRingerGiven", () => RedeWorld.deadRingerGiven);
     }
     public class DecapitationCondition : IItemDropRuleCondition
-	{
-		public bool CanDrop(DropAttemptInfo info)
-		{
-			if (!info.IsInSimulation && (NPCLists.SkeletonHumanoid.Contains(info.npc.type) || NPCLists.Humanoid.Contains(info.npc.type)))
-			{
-				return info.npc.Redemption().decapitated;
-			}
-			return false;
-		}
-		public bool CanShowItemDropInUI() => false;
-		public string GetConditionDescription() => "Drops when decapitated";
-	}
-	public class LostSoulCondition : IItemDropRuleCondition
-	{
-		public bool CanDrop(DropAttemptInfo info) => false;
-		public bool CanShowItemDropInUI() => true;
-		public string GetConditionDescription() => "Appears as an NPC";
-	}
-	public class OnFireCondition : IItemDropRuleCondition
-	{
-		public bool CanDrop(DropAttemptInfo info) => false;
-		public bool CanShowItemDropInUI() => true;
-		public string GetConditionDescription() => "Dropped while on fire";
-	}
-	public class TeddyCondition : IItemDropRuleCondition
-	{
-		public bool CanDrop(DropAttemptInfo info)
-		{
-			if (!info.IsInSimulation && info.npc.type == ModContent.NPCType<SkullDigger>() && !(info.npc.ModNPC as SkullDigger).KeeperSpawn)
-				return true;
+    {
+        public bool CanDrop(DropAttemptInfo info)
+        {
+            if (!info.IsInSimulation && (NPCLists.SkeletonHumanoid.Contains(info.npc.type) || NPCLists.Humanoid.Contains(info.npc.type)))
+            {
+                return info.npc.Redemption().decapitated;
+            }
+            return false;
+        }
+        public bool CanShowItemDropInUI() => false;
+        public string GetConditionDescription() => "Drops when decapitated";
+    }
+    public class LostSoulCondition : IItemDropRuleCondition
+    {
+        public bool CanDrop(DropAttemptInfo info) => false;
+        public bool CanShowItemDropInUI() => true;
+        public string GetConditionDescription() => "Appears as an NPC";
+    }
+    public class OnFireCondition : IItemDropRuleCondition
+    {
+        public bool CanDrop(DropAttemptInfo info) => false;
+        public bool CanShowItemDropInUI() => true;
+        public string GetConditionDescription() => "Dropped while on fire";
+    }
+    public class TeddyCondition : IItemDropRuleCondition
+    {
+        public bool CanDrop(DropAttemptInfo info)
+        {
+            if (!info.IsInSimulation && info.npc.type == ModContent.NPCType<SkullDigger>() && !(info.npc.ModNPC as SkullDigger).KeeperSpawn)
+                return true;
 
-			return false;
-		}
-		public bool CanShowItemDropInUI() => true;
-		public string GetConditionDescription() => "Dropped when spawned naturally in the caverns";
-	}
-	public class YoyosTidalWake : IItemDropRuleCondition
-	{
-		public bool CanDrop(DropAttemptInfo info)
-		{
-			if (!info.IsInSimulation && !info.npc.SpawnedFromStatue && info.player.ZoneBeach && Terraria.NPC.downedMechBossAny)
-				return true;
+            return false;
+        }
+        public bool CanShowItemDropInUI() => true;
+        public string GetConditionDescription() => "Dropped when spawned naturally in the caverns";
+    }
+    public class YoyosTidalWake : IItemDropRuleCondition
+    {
+        public bool CanDrop(DropAttemptInfo info)
+        {
+            if (!info.IsInSimulation && !info.npc.SpawnedFromStatue && info.player.ZoneBeach && Terraria.NPC.downedMechBossAny)
+                return true;
 
-			return false;
-		}
-		public bool CanShowItemDropInUI() => true;
-		public string GetConditionDescription() => "Dropped from enemies at the beach after any mech boss is defeated";
-	}
-	public class EggCrackerCondition : IItemDropRuleCondition
-	{
-		public bool CanDrop(DropAttemptInfo info)
-		{
-			if (!info.IsInSimulation && Terraria.NPC.AnyNPCs(ModContent.NPCType<FowlEmperor>()))
-				return true;
+            return false;
+        }
+        public bool CanShowItemDropInUI() => true;
+        public string GetConditionDescription() => "Dropped from enemies at the beach after any mech boss is defeated";
+    }
+    public class SoullessCondition : IItemDropRuleCondition
+    {
+        public bool CanDrop(DropAttemptInfo info)
+        {
+            if (!info.IsInSimulation && !info.npc.SpawnedFromStatue && !info.player.InModBiome<SoullessBiome>())
+                return true;
 
-			return false;
-		}
-		public bool CanShowItemDropInUI() => true;
-		public string GetConditionDescription() => "Dropped while the Fowl Emperor is alive";
-	}
+            return false;
+        }
+        public bool CanShowItemDropInUI() => true;
+        public string GetConditionDescription() => "Dropped while outside the Soulless Caverns";
+    }
+    public class EggCrackerCondition : IItemDropRuleCondition
+    {
+        public bool CanDrop(DropAttemptInfo info)
+        {
+            if (!info.IsInSimulation && Terraria.NPC.AnyNPCs(ModContent.NPCType<FowlEmperor>()))
+                return true;
+
+            return false;
+        }
+        public bool CanShowItemDropInUI() => true;
+        public string GetConditionDescription() => "Dropped while the Fowl Emperor is alive";
+    }
 }

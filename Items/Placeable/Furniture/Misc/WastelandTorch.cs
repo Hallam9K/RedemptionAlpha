@@ -13,6 +13,7 @@ namespace Redemption.Items.Placeable.Furniture.Misc
 	{
 		public override void SetStaticDefaults()
 		{
+            ItemID.Sets.Torches[Type] = true;
             ItemID.Sets.ShimmerTransformToItem[Type] = ItemID.ShimmerTorch;
             Item.ResearchUnlockCount = 100;
 		}

@@ -57,6 +57,15 @@ namespace Redemption.Items
             player.Redemption().slayerStarRating = 0;
             player.RedemptionAbility().Spiritwalker = false;
             RedeQuest.wayfarerVars[0] = 1;
+            RedeQuest.shadesoulVar = 0;
+            SoullessArea.soullessBools[0] = false;
+            SoullessArea.soullessBools[1] = false;
+            SoullessArea.soullessBools[2] = false;
+            SoullessArea.soullessBools[3] = false;
+            SoullessArea.soullessBools[4] = false;
+            SoullessArea.soullessInts[0] = 0;
+            SoullessArea.soullessInts[1] = 0;
+            SoullessArea.soullessInts[2] = 0;
             RedeQuest.forestNymphVar = 0;
             RedeBossDowned.downedGGBossFirst = 0;
             RedeQuest.calaviaVar = 0;

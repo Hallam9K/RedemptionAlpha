@@ -1,4 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
+using Redemption.Globals;
+using Redemption.Projectiles.Misc;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.Enums;
@@ -44,6 +46,18 @@ namespace Redemption.Tiles.Natural
             }
         }
         public override void NumDust(int i, int j, bool fail, ref int num) => num = fail ? 1 : 3;
+        public override void KillMultiTile(int i, int j, int frameX, int frameY)
+        {
+            for (int k = 0; k < Main.rand.Next(6, 12); k++)
+            {
+                if (Main.netMode != NetmodeID.MultiplayerClient)
+                {
+                    int p = Projectile.NewProjectile(new EntitySource_TileBreak(i, j), new Vector2((i + Main.rand.NextFloat(1, 4)) * 16f, (j + Main.rand.NextFloat(1, 2.5f)) * 16f), RedeHelper.PolarVector(Main.rand.Next(3, 14), Main.rand.NextFloat(0, MathHelper.TwoPi)), ModContent.ProjectileType<Echo_Friendly>(), 300, 0, Main.myPlayer);
+                    Main.projectile[p].DamageType = DamageClass.Default;
+                    Main.projectile[p].netUpdate = true;
+                }
+            }
+        }
     }
     public class ShadeCystItem : PlaceholderTile
     {

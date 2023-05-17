@@ -17,6 +17,9 @@ using ReLogic.Content;
 using Terraria.GameContent.ItemDropRules;
 using Redemption.Items.Weapons.HM.Summon;
 using Redemption.Biomes;
+using Redemption.Items.Placeable.Furniture.Shade;
+using SubworldLibrary;
+using Redemption.WorldGeneration.Soulless;
 using Redemption.NPCs.Friendly;
 using Redemption.Tiles.Furniture.Misc;
 using Redemption.WorldGeneration.Misc;
@@ -256,7 +259,7 @@ namespace Redemption.Globals
 
                     SoundEngine.PlaySound(SoundID.Item68, item.position);
                     SoundEngine.PlaySound(CustomSounds.Choir with { Pitch = 0.1f }, item.position);
-                    RedeDraw.SpawnExplosion(item.Center, Color.White, noDust: true, tex: ModContent.Request<Texture2D>("Redemption/Textures/HolyGlow3", AssetRequestMode.ImmediateLoad).Value);
+                    RedeDraw.SpawnExplosion(item.Center, Color.White, noDust: true, tex: Redemption.HolyGlow3.Value);
                     chicken.active = false;
                     if (Main.netMode != NetmodeID.MultiplayerClient)
                     {
@@ -291,7 +294,11 @@ namespace Redemption.Globals
         {
             if (ArenaWorld.arenaActive && bannedArenaItems.Any(x => x == item.type))
                 return false;
-            if (player.InModBiome<LabBiome>() && !RedeBossDowned.downedPZ && (item.type is ItemID.RodofDiscord or ItemID.RodOfHarmony))
+            if ((SubworldSystem.IsActive<SoullessSub>() || (player.InModBiome<LabBiome>() && !RedeBossDowned.downedPZ)) && (item.type is ItemID.RodofDiscord or ItemID.RodOfHarmony))
+                return false;
+            if (SubworldSystem.IsActive<SoullessSub>() && (item.type is ItemID.TeleportationPotion or ItemID.Teleporter))
+                return false;
+            if (player.InModBiome<SoullessBiome>() && ItemID.Sets.Torches[item.type] && item.type != ModContent.ItemType<ShadeTorch>())
                 return false;
 
             #region C
@@ -307,7 +314,16 @@ namespace Redemption.Globals
             #endregion
             return base.CanUseItem(item, player);
         }
-        public override void OnCreated(Item item, ItemCreationContext context)
+        public override bool AltFunctionUse(Item item, Terraria.Player player)
+        {
+            if (player.Redemption().stalkerSilence)
+            {
+                if (player.HeldItem.damage > 0 && player.HeldItem.pick == 0)
+                    return false;
+            }
+            return base.AltFunctionUse(item, player);
+        }
+        public override void OnCreate(Item item, ItemCreationContext context)
         {
             if (item.type == ModContent.ItemType<AlignmentTeller>() && !Terraria.NPC.AnyNPCs(ModContent.NPCType<Chalice_Intro>()))
             {

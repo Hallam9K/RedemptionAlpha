@@ -10,16 +10,27 @@ using Redemption.BaseExtension;
 using Terraria.DataStructures;
 using Microsoft.Xna.Framework;
 using Redemption.Items.Placeable.Furniture.Lab;
+using Redemption.Items.Materials.PostML;
+using Redemption.Items.Placeable.Furniture.Shade;
+using Redemption.Items.Weapons.PostML.Melee;
+using Terraria.Utilities;
+using SubworldLibrary;
+using Redemption.WorldGeneration.Soulless;
+using Terraria.Audio;
+using ReLogic.Utilities;
+using Terraria.ID;
+using Redemption.Walls;
+using Redemption.Base;
+using Redemption.Items.Accessories.HM;
 using Redemption.Items.Placeable.Furniture.PetrifiedWood;
 using Microsoft.Xna.Framework.Graphics;
-using Terraria.ID;
 using Terraria.GameContent;
 using ReLogic.Content;
 using Redemption.WorldGeneration;
-using SubworldLibrary;
 using Redemption.WorldGeneration.Misc;
 using Redemption.Items.Weapons.HM.Magic;
 using Terraria.Audio;
+using Redemption.Items.Weapons.PostML.Summon;
 
 namespace Redemption.Globals.Player
 {
@@ -38,6 +49,7 @@ namespace Redemption.Globals.Player
         public bool stalkerSilence;
         public float musicVolume;
         public int slayerStarRating;
+        public int SpaceBreathTimer = 0;
         public bool contactImmune;
         public bool contactImmuneTrue;
         public bool slayerCursor;
@@ -46,12 +58,24 @@ namespace Redemption.Globals.Player
         public int crystalGlaiveShotCount;
         public bool parryStance;
         public bool parried;
+        public float visionAmt;
         public bool yesChoice;
         public bool noChoice;
         public bool onHit;
+        public bool handymanGrab;
 
         public override void ResetEffects()
         {
+            if (stalkerSilence)
+                visionAmt += 0.02f;
+            else
+                visionAmt -= 0.05f;
+            visionAmt = MathHelper.Clamp(visionAmt, 0, SoullessArea.soullessInts[2] is 1 ? 1f : 2f);
+
+            hitTarget = -1;
+            hitTarget2 = -1;
+            stalkerSilence = false;
+            contactImmune = false;
             if (contactImmune)
                 contactImmuneTrue = true;
             else
@@ -61,6 +85,7 @@ namespace Redemption.Globals.Player
             contactImmune = false;
             parried = false;
             onHit = false;
+            handymanGrab = false;
         }
         public override void Initialize()
         {
@@ -76,6 +101,17 @@ namespace Redemption.Globals.Player
             slayerStarRating = 0;
             parryStance = false;
             parried = false;
+            handymanGrab = false;
+        }
+        public Rectangle parryHitbox;
+        public void CreateParryWindow(Rectangle hitbox, ref bool active)
+        {
+            if (active)
+            {
+                parryHitbox = hitbox;
+                return;
+            }
+            parryHitbox = Rectangle.Empty;
         }
         public override bool ImmuneTo(PlayerDeathReason damageSource, int cooldownCounter, bool dodgeable)
         {
@@ -119,6 +155,11 @@ namespace Redemption.Globals.Player
         }
         public override void OnEnterWorld()
         {
+            Main.NewText("===IMPORTANT===\n" +
+                "You are using the Spoiler branch, which as you can guess, contains spoilers we don't yet want to reveal to public.\n" +
+                "Keep your findings in this branch to yourself please.\n" +
+                "===============", 244, 71, 255);
+
             if (SubworldSystem.Current != null)
                 return;
             if (RedeGen.GoldenGatewayVector.X == -1 || RedeGen.BastionVector.X == -1 || RedeGen.gathicPortalVector.X == -1 || RedeGen.HallOfHeroesVector.X == -1 || RedeGen.slayerShipVector.X == -1)
@@ -174,6 +215,104 @@ namespace Redemption.Globals.Player
                 Player.RedemptionScreen().interpolantTimer = 100;
             }
         }
+
+        public string GetSpaceDeathQuote()
+        {
+            string[] SpaceDeathQuotes = new string[]
+            {
+                " was eaten by space",
+                " burned while freezing",
+                " forgot they needed to breathe",
+                " was trapped in orbit",
+                " took the wrong step for mankind",
+                " wanted to be a satellite",
+                " boldly went where no man has gone before",
+                " thought the sky was the limit",
+                " needed some space"
+            };
+            int randomQuote = Main.rand.Next(SpaceDeathQuotes.Length);
+
+            return Player.name + SpaceDeathQuotes[randomQuote];
+        }
+        public override void PreUpdate()
+        {
+            if (Player.position.Y >= 16210 && Player.InModBiome<SpaceBiome>() && Player.whoAmI == Main.myPlayer)
+            {
+                int damage = 8;
+                Player.AddBuff(BuffID.Obstructed, 3);
+                Player.statLife -= damage;
+                NetMessage.SendData(MessageID.SpiritHeal, -1, -1, null, Player.whoAmI, -damage, 0f, 0f, 0, 0, 0);
+                if (Player.statLife <= 0)
+                    Player.KillMe(PlayerDeathReason.ByCustomReason(Player.name + " fell into deep space..."), 10, 0, false);
+            }
+
+            if (Player.InModBiome<SpaceBiome>() && Player.whoAmI == Main.myPlayer)
+            {
+                Point point = Player.Center.ToTileCoordinates();
+                ushort wallType = Framing.GetTileSafely(point.X, point.Y).WallType;
+                if (wallType != ModContent.WallType<SlayerShipPanelWallTile>() && wallType != WallID.MartianConduit && wallType != WallID.Glass && wallType != ModContent.WallType<DangerTapeWall2Tile>())
+                {
+                    Player.gravity /= 20;
+                    Player.breath -= 3;
+                    int airCD = 1;
+                    if (Player.accDivingHelm || BasePlayer.HasAccessory(Player, ModContent.ItemType<GasMask>(), true, true) || Player.RedemptionPlayerBuff().hazmatSuit || Player.RedemptionPlayerBuff().HEVSuit)
+                        airCD = 2;
+                    if (++SpaceBreathTimer % airCD == 0)
+                    {
+                        SpaceBreathTimer = 0;
+                        Player.breath--;
+                    }
+                    if (Player.breath < -5)
+                    {
+                        Player.lifeRegen = 0;
+                        Player.lifeRegenTime = 0;
+                        Player.breath = -5;
+                        Player.statLife -= 2;
+                        NetMessage.SendData(MessageID.SpiritHeal, -1, -1, null, Player.whoAmI, -2, 0f, 0f, 0, 0, 0);
+                        if (Player.statLife <= 0)
+                        {
+                            Player.statLife = 0;
+                            PlayerDeathReason damageSource = PlayerDeathReason.ByCustomReason(GetSpaceDeathQuote());
+                            Player.KillMe(damageSource, 10.0, 0);
+                        }
+                    }
+                }
+                Player.accDepthMeter = 0;
+            }
+        }
+        public override void OnRespawn(Terraria.Player player)
+        {
+            if (Player.InModBiome<SpaceBiome>())
+                SubworldSystem.Exit();
+        }
+
+        public static readonly SoundStyle SoullessLoopSound = new("Redemption/Sounds/Ambient/SoullessAmbient") { Type = SoundType.Ambient };
+        private SlotId soullessLoopSoundSlot;
+        private float soullessEffectIntensity;
+        public override void PostUpdate()
+        {
+            if (Player.whoAmI != Main.myPlayer)
+                return;
+
+            float soullessEffectPitch = 0f;
+            if (SubworldSystem.IsActive<SoullessSub>() && Player.InModBiome<SoullessBiome>())
+            {
+                if (SoullessArea.soullessInts[2] == 0 && Main.rand.NextBool(20000))
+                    SoundEngine.PlaySound(CustomSounds.SoullessNoise);
+                if (stalkerSilence)
+                {
+                    soullessEffectIntensity = MathHelper.Min(0.05f, Main.ambientVolume);
+                    soullessEffectPitch = -0.5f;
+                }
+                else
+                {
+                    soullessEffectIntensity = Main.ambientVolume;
+                }
+            }
+            else
+                soullessEffectIntensity = 0;
+            CustomSounds.UpdateLoopingSound(ref soullessLoopSoundSlot, SoullessLoopSound, soullessEffectIntensity, soullessEffectPitch);
+        }
         public override void CatchFish(FishingAttempt attempt, ref int itemDrop, ref int npcSpawn, ref AdvancedPopupRequest sonar, ref Vector2 sonarPosition)
         {
             if (Main.rand.Next(100) < (10 + (Player.cratePotion ? 10 : 0)))
@@ -187,6 +326,23 @@ namespace Redemption.Globals.Player
                 }
                 if (Player.InModBiome<WastelandPurityBiome>())
                     itemDrop = ModContent.ItemType<PetrifiedCrate>();
+            }
+            if (Player.InModBiome<SoullessBiome>())
+            {
+                if (Main.rand.Next(100) < (10 + (Player.cratePotion ? 10 : 0)))
+                    itemDrop = ModContent.ItemType<ShadestoneCrate>();
+                else
+                {
+                    WeightedRandom<int> choice = new(Main.rand);
+                    choice.Add(ModContent.ItemType<AbyssBloskus>(), 1);
+                    choice.Add(ModContent.ItemType<SlumberEel>(), 1);
+                    choice.Add(ModContent.ItemType<ChakrogAngler>(), 3);
+                    choice.Add(ModContent.ItemType<AbyssStinger>(), 3);
+                    choice.Add(ModContent.ItemType<DarkStar>(), 1);
+                    choice.Add(ModContent.ItemType<LurkingKetred>(), 10);
+                    choice.Add(ModContent.ItemType<ShadeFish>(), 9);
+                    itemDrop = choice;
+                }
             }
         }
         public override IEnumerable<Item> AddStartingItems(bool mediumCoreDeath)

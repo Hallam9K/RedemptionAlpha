@@ -189,7 +189,7 @@ namespace Redemption.Items.Usable.Summons
                 glowing = true;
             if (glowing)
             {
-                Texture2D glow = ModContent.Request<Texture2D>("Redemption/Textures/WhiteGlow").Value;
+                Texture2D glow = Redemption.WhiteGlow.Value;
                 BaseUtility.MultiLerp(Main.LocalPlayer.miscCounter % 100 / 100f, scale, scale * 0.8f, scale);
                 Color color = BaseUtility.MultiLerpColor(Main.LocalPlayer.miscCounter % 100 / 100f, Color.Red, Color.DarkRed, Color.Red);
                 Vector2 origin2 = new(glow.Width / 2, glow.Height / 2);
@@ -215,7 +215,7 @@ namespace Redemption.Items.Usable.Summons
                 glowing = true;
             if (glowing)
             {
-                Texture2D glow = ModContent.Request<Texture2D>("Redemption/Textures/WhiteGlow").Value;
+                Texture2D glow = Redemption.WhiteGlow.Value;
                 BaseUtility.MultiLerp(Main.LocalPlayer.miscCounter % 100 / 100f, scale, scale * 0.8f, scale);
                 Color color = BaseUtility.MultiLerpColor(Main.LocalPlayer.miscCounter % 100 / 100f, Color.Red, Color.DarkRed, Color.Red);
                 Vector2 origin = new(glow.Width / 2, glow.Height / 2);

@@ -13,6 +13,8 @@ using Redemption.Base;
 using Redemption.BaseExtension;
 using ParticleLibrary;
 using Redemption.Particles;
+using Redemption.Effects;
+using System.Collections.Generic;
 
 namespace Redemption.Items.Weapons.PreHM.Melee
 {
@@ -51,6 +53,17 @@ namespace Redemption.Items.Weapons.PreHM.Melee
         private float speed;
         private float SwingSpeed;
         private float glow;
+        private bool parried;
+
+        private readonly int NUMPOINTS = 15;
+        public Color baseColor = Color.OrangeRed * .7f;
+        public Color endColor = Color.OrangeRed * .2f;
+        public Color edgeColor = Color.Orange * .4f;
+        private List<Vector2> cache;
+        private List<Vector2> cache2;
+        private DanTrail trail;
+        private DanTrail trail2;
+        private readonly float thickness = 5f;
         public override void AI()
         {
             Player player = Main.player[Projectile.owner];
@@ -67,7 +80,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
                 Projectile.rotation = (Projectile.Center - player.Center).ToRotation() + MathHelper.PiOver4;
             else
                 Projectile.rotation = (Projectile.Center - player.Center).ToRotation() - MathHelper.Pi - MathHelper.PiOver4;
-
+            bool parryActive = false;
             if (Main.myPlayer == Projectile.owner)
             {
                 switch (Projectile.ai[0])
@@ -80,6 +93,11 @@ namespace Redemption.Items.Weapons.PreHM.Melee
                         }
                         if (Timer < 15)
                             BlockProj();
+                        if (Timer >= 3 && Timer <= 8)
+                        {
+                            parryActive = true;
+                            RedeProjectile.SwordClashFriendly(Projectile, player, ref parried);
+                        }
                         if (Timer < 5 * SwingSpeed)
                         {
                             Rot += speed / SwingSpeed * Projectile.spriteDirection;
@@ -135,6 +153,11 @@ namespace Redemption.Items.Weapons.PreHM.Melee
                         }
                         if (Timer < 15 * SwingSpeed)
                             BlockProj();
+                        if (Timer >= 3 && Timer <= 8)
+                        {
+                            parryActive = true;
+                            RedeProjectile.SwordClashFriendly(Projectile, player, ref parried);
+                        }
                         if (Timer < 5 * SwingSpeed)
                         {
                             Rot += speed / SwingSpeed * Projectile.spriteDirection;
@@ -189,6 +212,11 @@ namespace Redemption.Items.Weapons.PreHM.Melee
                         }
                         if (Timer < 15 * SwingSpeed)
                             BlockProj();
+                        if (Timer >= 3 && Timer <= 8)
+                        {
+                            parryActive = true;
+                            RedeProjectile.SwordClashFriendly(Projectile, player, ref parried);
+                        }
                         if (Timer < 5 * SwingSpeed)
                         {
                             Rot -= speed / SwingSpeed * Projectile.spriteDirection;
@@ -242,6 +270,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
                 Main.dust[dustIndex].velocity.X = 0;
                 Main.dust[dustIndex].noGravity = true;
             }
+            player.Redemption().CreateParryWindow(Projectile.Hitbox, ref parryActive);
             if (Timer > 1)
                 Projectile.alpha = 0;
 
@@ -249,6 +278,11 @@ namespace Redemption.Items.Weapons.PreHM.Melee
             for (int k = Projectile.oldPos.Length - 1; k > 0; k--)
                 oldrot[k] = oldrot[k - 1];
             oldrot[0] = Projectile.rotation;
+            if (Projectile.ai[0] != 0 && Main.netMode != NetmodeID.Server)
+            {
+                TrailHelper.ManageBasicCaches(ref cache, ref cache2, NUMPOINTS, player.MountedCenter + (vector * 1.7f));
+                TrailHelper.ManageBasicTrail(ref cache, ref cache2, ref trail, ref trail2, NUMPOINTS, player.MountedCenter + (vector * 1.7f), baseColor, endColor, edgeColor, thickness, true);
+            }
         }
         private void BlockProj()
         {
@@ -287,6 +321,23 @@ namespace Redemption.Items.Weapons.PreHM.Melee
 
         public override bool PreDraw(ref Color lightColor)
         {
+            Main.spriteBatch.End();
+            Effect effect = Terraria.Graphics.Effects.Filters.Scene["MoR:GlowTrailShader"]?.GetShader().Shader;
+
+            Matrix world = Matrix.CreateTranslation(-Main.screenPosition.Vec3());
+            Matrix view = Main.GameViewMatrix.ZoomMatrix;
+            Matrix projection = Matrix.CreateOrthographicOffCenter(0, Main.screenWidth, Main.screenHeight, 0, -1, 1);
+
+            effect.Parameters["transformMatrix"].SetValue(world * view * projection);
+            effect.Parameters["sampleTexture"].SetValue(Redemption.GlowTrail.Value);
+            effect.Parameters["time"].SetValue(Main.GameUpdateCount * 0.05f);
+            effect.Parameters["repeats"].SetValue(1f);
+
+            trail?.Render(effect);
+            trail2?.Render(effect);
+
+            Main.spriteBatch.Begin(default, default, default, default, default, default, Main.GameViewMatrix.ZoomMatrix);
+
             SpriteEffects spriteEffects = Projectile.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
             Texture2D texture = TextureAssets.Projectile[Projectile.type].Value;
             Vector2 origin = new(texture.Width / 2f, texture.Height / 2f);

@@ -2,13 +2,14 @@ using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.Localization;
 using Terraria.ModLoader;
-using Terraria.ID;
 using Redemption.Dusts;
 using Redemption.Tiles.Plants;
 using Redemption.Items.Placeable.Tiles;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria.DataStructures;
 using Redemption.Biomes;
+using System;
+using Terraria.ID;
 
 namespace Redemption.Tiles.Tiles
 {
@@ -20,11 +21,6 @@ namespace Redemption.Tiles.Tiles
             Main.tileMergeDirt[Type] = false;
             Main.tileBlockLight[Type] = true;
             Main.tileBrick[Type] = true;
-            Main.tileMerge[Type][ModContent.TileType<ShadestoneBrickTile>()] = true;
-            Main.tileMerge[Type][ModContent.TileType<ShadestoneRubbleTile>()] = true;
-            Main.tileMerge[Type][ModContent.TileType<ShadestoneSlabTile>()] = true;
-            Main.tileMerge[Type][ModContent.TileType<ShadestoneTile>()] = true;
-            Main.tileMerge[Type][ModContent.TileType<ShadestoneBrickMossyTile>()] = true;
             DustType = ModContent.DustType<VoidFlame>();
             ItemDrop = ModContent.ItemType<Shadestone>();
             MinPick = 350;
@@ -60,26 +56,21 @@ namespace Redemption.Tiles.Tiles
         }
         public override void RandomUpdate(int i, int j)
         {
-            if (!Framing.GetTileSafely(i, j + 1).HasTile && Framing.GetTileSafely(i, j).HasTile)
+            Tile tileBelow = Framing.GetTileSafely(i, j + 1);
+            Tile tile = Framing.GetTileSafely(i, j);
+            if (WorldGen.genRand.NextBool(15) && !tileBelow.HasTile && tileBelow.LiquidType != LiquidID.Lava)
             {
-                if (Main.rand.NextBool(5))
+                if (tile.Slope != SlopeType.SlopeUpLeft && tile.Slope != SlopeType.SlopeUpRight)
                 {
-                    WorldGen.PlaceObject(i, j + 1, ModContent.TileType<Nooseroot_Small>(), true, Main.rand.Next(3));
-                    NetMessage.SendObjectPlacement(-1, i, j + 1, ModContent.TileType<Nooseroot_Small>(), Main.rand.Next(3), 0, -1, -1);
-                }
-                if (Main.rand.NextBool(7))
-                {
-                    WorldGen.PlaceObject(i, j + 1, ModContent.TileType<Nooseroot_Medium>(), true, Main.rand.Next(3));
-                    NetMessage.SendObjectPlacement(-1, i, j + 1, ModContent.TileType<Nooseroot_Medium>(), Main.rand.Next(3), 0, -1, -1);
-                }
-                if (Main.rand.NextBool(12))
-                {
-                    WorldGen.PlaceObject(i, j + 1, ModContent.TileType<Nooseroot_Large>(), true, Main.rand.Next(3));
-                    NetMessage.SendObjectPlacement(-1, i, j + 1, ModContent.TileType<Nooseroot_Large>(), Main.rand.Next(3), 0, -1, -1);
+                    tileBelow.TileType = (ushort)ModContent.TileType<NooserootVines>();
+                    tileBelow.HasTile = true;
+                    WorldGen.SquareTileFrame(i, j + 1, true);
+                    if (Main.netMode == NetmodeID.Server)
+                        NetMessage.SendTileSquare(-1, i, j + 1, 3, TileChangeType.None);
                 }
             }
-            if (Main.rand.NextBool(8))
-                WorldGen.SpreadGrass(i + Main.rand.Next(-1, 1), j + Main.rand.Next(-1, 1), ModContent.TileType<ShadestoneTile>(), Type, false);
+            if (WorldGen.genRand.NextBool(8))
+                WorldGen.SpreadGrass(i + Main.rand.Next(-1, 1), j + Main.rand.Next(-1, 1), ModContent.TileType<ShadestoneTile>(), Type, false, 0);
         }
     }
 }

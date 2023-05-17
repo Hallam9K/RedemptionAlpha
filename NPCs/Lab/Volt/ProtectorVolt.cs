@@ -65,7 +65,8 @@ namespace Redemption.NPCs.Lab.Volt
                     ModContent.BuffType<InfestedDebuff>(),
                     ModContent.BuffType<NecroticGougeDebuff>(),
                     ModContent.BuffType<ViralityDebuff>(),
-                    ModContent.BuffType<DirtyWoundDebuff>()
+                    ModContent.BuffType<DirtyWoundDebuff>(),
+                    ModContent.BuffType<LaceratedDebuff>()
                 }
             });
             NPCID.Sets.NPCBestiaryDrawModifiers value = new(0)
@@ -127,7 +128,8 @@ namespace Redemption.NPCs.Lab.Volt
         public override void AI()
         {
             Player player = Main.player[NPC.target];
-            DespawnHandler();
+            if (NPC.DespawnHandler(1, 5))
+                return;
             if (NPC.target < 0 || NPC.target == 255 || player.dead || !player.active)
                 NPC.TargetClosest();
 
@@ -252,7 +254,7 @@ namespace Redemption.NPCs.Lab.Volt
                         }
                         TimerRand = Main.rand.NextBool() ? 1 : 0;
                     }
-                    
+
 
                     if (AITimer >= 40 && AITimer % (TimerRand == 0 ? 10 : 20) == 0 && Main.netMode != NetmodeID.MultiplayerClient)
                     {
@@ -278,7 +280,7 @@ namespace Redemption.NPCs.Lab.Volt
                     if (AITimer++ == 60)
                     {
                         for (int i = 0; i < 5; i++)
-                            NPC.Shoot(GunOrigin, ModContent.ProjectileType<Volt_OrbProj>(), NPC.damage, RedeHelper.PolarVector(5 + (i * 3), gunRot), true, SoundID.Item61);
+                            NPC.Shoot(GunOrigin, ModContent.ProjectileType<Volt_OrbProj>(), NPC.damage, RedeHelper.PolarVector(5 + (i * 3), gunRot), SoundID.Item61);
                     }
                     if (AITimer >= 170)
                     {
@@ -305,7 +307,7 @@ namespace Redemption.NPCs.Lab.Volt
                     }
                     if (AITimer == 60)
                     {
-                        NPC.Shoot(GunOrigin, ModContent.ProjectileType<TeslaBeam>(), NPC.damage, RedeHelper.PolarVector(10, gunRot), true, SoundID.Item73, NPC.whoAmI);
+                        NPC.Shoot(GunOrigin, ModContent.ProjectileType<TeslaBeam>(), NPC.damage, RedeHelper.PolarVector(10, gunRot), SoundID.Item73, NPC.whoAmI);
                     }
                     if (AITimer > 60)
                         gunRot += 0.01f;
@@ -347,7 +349,7 @@ namespace Redemption.NPCs.Lab.Volt
                     if (AITimer == 60)
                     {
                         for (int i = 0; i < 2; i++)
-                            NPC.Shoot(GunOrigin, ModContent.ProjectileType<TeslaZapBeam>(), NPC.damage, RedeHelper.PolarVector(1, gunRot + (i == 0 ? -1f : 1f)), true, CustomSounds.BallFire, NPC.whoAmI, i);
+                            NPC.Shoot(GunOrigin, ModContent.ProjectileType<TeslaZapBeam>(), NPC.damage, RedeHelper.PolarVector(1, gunRot + (i == 0 ? -1f : 1f)), CustomSounds.BallFire, NPC.whoAmI, i);
                     }
                     if (AITimer >= 160)
                     {
@@ -390,8 +392,8 @@ namespace Redemption.NPCs.Lab.Volt
                     }
                     if (AITimer == 60)
                     {
-                        NPC.Shoot(GunOrigin, ModContent.ProjectileType<TeslaBeam>(), NPC.damage, RedeHelper.PolarVector(10, gunRot), true, SoundID.Item73, NPC.whoAmI);
-                        if (NPC.Center.X > (RedeGen.LabVector.X + 86) * 16)
+                        NPC.Shoot(GunOrigin, ModContent.ProjectileType<TeslaBeam>(), NPC.damage, RedeHelper.PolarVector(10, gunRot), SoundID.Item73, NPC.whoAmI);
+                        if (NPC.Center.X > (RedeGen.LabPoint.X + 86) * 16)
                             TimerRand = 1;
                     }
                     if (TimerRand < 2 && AITimer >= 60)
@@ -599,22 +601,6 @@ namespace Redemption.NPCs.Lab.Volt
                 spriteBatch.Draw(GunTex, gunCenter - screenPos, new Rectangle?(new Rectangle(0, 0, GunTex.Width, height)), NPC.GetAlpha(drawColor), (AIState is ActionState.SweepingBeam ? 0 : NPC.rotation) + gunRot + (NPC.spriteDirection == -1 ? (float)Math.PI : 0), new Vector2(GunTex.Width / 2f, height / 2f), NPC.scale, effects, 0f);
             return false;
         }
-        private void DespawnHandler()
-        {
-            Player player = Main.player[NPC.target];
-            if (!player.active || player.dead)
-            {
-                NPC.TargetClosest(false);
-                player = Main.player[NPC.target];
-                if (!player.active || player.dead)
-                {
-                    NPC.alpha += 5;
-                    if (NPC.alpha >= 255)
-                        NPC.active = false;
-                }
-            }
-        }
-
         public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)
         {
             NPC.lifeMax = (int)(NPC.lifeMax * 0.6f * balance * bossAdjustment);

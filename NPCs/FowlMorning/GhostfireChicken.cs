@@ -87,7 +87,7 @@ namespace Redemption.NPCs.FowlMorning
         {
             Player player = Main.player[NPC.target];
             NPC.LookByVelocity();
-            if (NPC.DespawnHandler())
+            if (NPC.DespawnHandler(3))
                 return;
 
             NPC.Move(player.Center, 5, 60);

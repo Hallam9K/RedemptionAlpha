@@ -1,7 +1,6 @@
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ModLoader;
-using Terraria.ID;
 using Redemption.Dusts.Tiles;
 using Redemption.Items.Placeable.Tiles;
 

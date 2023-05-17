@@ -28,7 +28,7 @@ namespace Redemption.Items.Placeable.Furniture.ElderWood
 			CreateRecipe()
 				.AddIngredient(ModContent.ItemType<Tiles.ElderWood>(), 15)
 				.AddIngredient(ItemID.Silk, 5)
-				.AddTile(TileID.WorkBenches)
+				.AddTile(TileID.Sawmill)
 				.Register();
 		}
 	}

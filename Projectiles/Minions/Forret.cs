@@ -1,7 +1,6 @@
 using Microsoft.Xna.Framework;
 using Redemption.Base;
 using Redemption.Buffs.Minions;
-using Redemption.Buffs.NPCBuffs;
 using Redemption.Globals;
 using System;
 using Terraria;

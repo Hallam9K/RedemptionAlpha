@@ -23,6 +23,15 @@ namespace Redemption.Globals
             return RedeSystem.Silence || player.RedemptionRad().irradiatedEffect == 2;
         }
     }
+    public class StalkerEffect : ModSceneEffect
+    {
+        public override int Music => SoullessArea.soullessInts[2] is 1 ? MusicLoader.GetMusicSlot("Redemption/Sounds/Music/Stalker2") : MusicLoader.GetMusicSlot("Redemption/Sounds/Music/Stalker1");
+        public override SceneEffectPriority Priority => SceneEffectPriority.BossHigh;
+        public override bool IsSceneEffectActive(Terraria.Player player)
+        {
+            return player.Redemption().stalkerSilence;
+        }
+    }
     public class SkeletonInvasionMusic : ModSceneEffect
     {
         public override int Music => MusicLoader.GetMusicSlot("Redemption/Sounds/Music/Spooky");

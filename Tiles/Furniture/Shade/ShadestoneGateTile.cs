@@ -1,6 +1,8 @@
 using Microsoft.Xna.Framework;
 using Redemption.Dusts;
+using Redemption.Items.Usable;
 using Terraria;
+using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.Enums;
 using Terraria.ID;
@@ -50,6 +52,23 @@ namespace Redemption.Tiles.Furniture.Shade
         public override void NumDust(int i, int j, bool fail, ref int num)
         {
             num = 1;
+        }
+        public override bool RightClick(int i, int j)
+        {
+            Player player = Main.LocalPlayer;
+            if (player.HasItem(ModContent.ItemType<WardensKey>()) && !_activated)
+            {
+                SoundEngine.PlaySound(SoundID.Unlock);
+                _activated = true;
+            }
+            return true;
+        }
+        public override void MouseOver(int i, int j)
+        {
+            Player player = Main.LocalPlayer;
+            player.noThrow = 2;
+            player.cursorItemIconEnabled = true;
+            player.cursorItemIconID = ModContent.ItemType<WardensKey>();
         }
         public override bool CanKillTile(int i, int j, ref bool blockDamaged) => false;
         public override bool CanExplode(int i, int j) => false;

@@ -142,7 +142,7 @@ namespace Redemption.NPCs.Minibosses.FowlEmperor
                         NPC.velocity.X *= 0.9f;
 
                     if (NPC.ai[2] == 55)
-                        NPC.Shoot(NPC.Center, ModContent.ProjectileType<Chickadier_Bomb>(), NPC.damage, NPC.DirectionTo(player.Center) * Main.rand.Next(8, 13) - new Vector2(0, 4), true, SoundID.Item1);
+                        NPC.Shoot(NPC.Center, ModContent.ProjectileType<Chickadier_Bomb>(), NPC.damage, NPC.DirectionTo(player.Center) * Main.rand.Next(8, 13) - new Vector2(0, 4), SoundID.Item1);
                     break;
             }
             NPC.scale = MathHelper.Max(1, NPC.scale);

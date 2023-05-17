@@ -38,7 +38,7 @@ namespace Redemption.NPCs.Friendly
             NPC.aiStyle = -1;
             NPC.noGravity = false;
             NPC.dontTakeDamage = true;
-            bubble = ModContent.Request<Texture2D>("Redemption/UI/TextBubble_Epidotra").Value;
+            bubble = ModContent.Request<Texture2D>("Redemption/UI/TextBubble_Kingdom").Value;
             voice1 = CustomSounds.Voice3 with { Pitch = -0.8f };
             voice2 = CustomSounds.Voice3 with { Pitch = -0.1f };
         }

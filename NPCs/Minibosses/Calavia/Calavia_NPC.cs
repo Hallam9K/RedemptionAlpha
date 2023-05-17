@@ -80,6 +80,15 @@ namespace Redemption.NPCs.Minibosses.Calavia
         readonly DialogueChain chain = new();
         public override void AI()
         {
+            if (RedeQuest.shadesoulVar > 0)
+            {
+                RedeQuest.calaviaVar = 21;
+                if (Main.netMode == NetmodeID.Server)
+                    NetMessage.SendData(MessageID.WorldData);
+
+                NPC.active = false;
+            }
+
             Player player = Main.player[NPC.target];
             if (NPC.target < 0 || NPC.target == 255 || player.dead || !player.active)
                 NPC.TargetClosest();
@@ -148,8 +157,7 @@ namespace Redemption.NPCs.Minibosses.Calavia
                     }
                     if (AITimer >= 60 && NPC.DistanceSQ(player.Center) <= 800 * 800)
                     {
-                        Vector2 focus = RedeHelper.CenterPoint(NPC.Center, spirit.Center);
-                        player.RedemptionScreen().ScreenFocusPosition = Vector2.Lerp(focus, player.Center, player.DistanceSQ(focus) / (1200 * 1200));
+                        player.RedemptionScreen().ScreenFocusPosition = Vector2.Lerp(NPC.Center, player.Center, player.DistanceSQ(NPC.Center) / (1200 * 1200));
                         player.RedemptionScreen().lockScreen = true;
                     }
                 }
@@ -185,7 +193,7 @@ namespace Redemption.NPCs.Minibosses.Calavia
             }
             else if (RedeQuest.calaviaVar > 20)
             {
-                Vector2 gathicPortalPos = new(((RedeGen.gathicPortalVector.X + 51) * 16) - 8, (RedeGen.gathicPortalVector.Y + 18) * 16);
+                Vector2 gathicPortalPos = new(((RedeGen.gathicPortalPoint.X + 51) * 16) - 8, (RedeGen.gathicPortalPoint.Y + 18) * 16);
                 if (AITimer++ == 60)
                 {
                     NPC.velocity.Y = -7;
@@ -380,6 +388,11 @@ namespace Redemption.NPCs.Minibosses.Calavia
                             button = "Request Kyretha's Crux";
                         break;
                     case 4:
+                        if (ModLoader.TryGetMod("DialogueTweak", out _))
+                        {
+                            button = "You're ready to leave";
+                            break;
+                        }
                         button = "[c/FF6600:You're ready to leave]";
                         break;
                 }

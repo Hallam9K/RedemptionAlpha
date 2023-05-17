@@ -8,7 +8,7 @@ namespace Redemption.Globals
 		public AntiqueDorulCurrency(int coinItemID, long currencyCap, string CurrencyTextKey) : base(coinItemID, currencyCap)
 		{
 			this.CurrencyTextKey = CurrencyTextKey;
-			CurrencyTextColor = Color.LightGray;
+			CurrencyTextColor = new Color(208, 200, 48);
 		}
 	}
 }

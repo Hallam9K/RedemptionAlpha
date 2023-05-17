@@ -16,6 +16,7 @@ namespace Redemption.Tiles.Tiles
             Main.tileSolid[Type] = true;
             Main.tileMergeDirt[Type] = true;
             Main.tileBlockLight[Type] = true;
+            TileID.Sets.DisableSmartCursor[Type] = true;
             Main.tileMerge[Type][ModContent.TileType<LabPlatingTileUnsafe>()] = true;
             Main.tileMerge[ModContent.TileType<LabPlatingTileUnsafe>()][Type] = true;
             Main.tileMerge[Type][ModContent.TileType<LabPlatingTile>()] = true;

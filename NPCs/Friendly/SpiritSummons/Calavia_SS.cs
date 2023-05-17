@@ -90,7 +90,7 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
         public override void HitEffect(NPC.HitInfo hit)
         {
             if (hit.Damage > 1)
-                SoundEngine.PlaySound(SoundID.NPCHit4);
+                SoundEngine.PlaySound(SoundID.NPCHit4, NPC.position);
             if (NPC.life <= 0)
             {
                 for (int i = 0; i < 35; i++)
@@ -261,7 +261,7 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
                                 CustomBodyAni = 2;
                                 TimerRand2 = Main.rand.Next(10, 21);
                                 int damage = NPC.RedemptionNPCBuff().disarmed ? NPC.damage / 3 : NPC.damage;
-                                NPC.Shoot(NPC.Center, ModContent.ProjectileType<Calavia_SS_BladeOfTheMountain>(), damage, Vector2.Zero, false, SoundID.Item1, NPC.whoAmI, TimerRand2, knockback: 7);
+                                NPC.Shoot(NPC.Center, ModContent.ProjectileType<Calavia_SS_BladeOfTheMountain>(), damage, Vector2.Zero, NPC.whoAmI, TimerRand2, knockback: 7);
                             }
                             if (AITimer < TimerRand2 + 10)
                             {
@@ -298,7 +298,7 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
                                 CustomBodyAni = 2;
                                 TimerRand2 = Main.rand.Next(0, 11);
                                 int damage = NPC.RedemptionNPCBuff().disarmed ? NPC.damage / 3 : NPC.damage;
-                                NPC.Shoot(NPC.Center, ModContent.ProjectileType<Calavia_SS_BladeOfTheMountain>(), damage, Vector2.Zero, false, SoundID.Item1, NPC.whoAmI, TimerRand2, knockback: 7);
+                                NPC.Shoot(NPC.Center, ModContent.ProjectileType<Calavia_SS_BladeOfTheMountain>(), damage, Vector2.Zero, NPC.whoAmI, TimerRand2, knockback: 7);
                             }
                             if (AITimer >= 0 && AITimer < TimerRand2 + 10)
                             {
@@ -338,7 +338,7 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
                                 NPC.velocity *= 0;
                                 customArm = true;
                                 int damage = NPC.RedemptionNPCBuff().disarmed ? NPC.damage / 3 : NPC.damage;
-                                NPC.Shoot(NPC.Center, ModContent.ProjectileType<Calavia_SS_BladeOfTheMountain2>(), damage, Vector2.Zero, false, SoundID.Item1, NPC.whoAmI, TimerRand2, knockback: 7);
+                                NPC.Shoot(NPC.Center, ModContent.ProjectileType<Calavia_SS_BladeOfTheMountain2>(), damage, Vector2.Zero, NPC.whoAmI, TimerRand2, knockback: 7);
                             }
                             break;
                         case 1:
@@ -371,7 +371,7 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
                         NPC.velocity *= 0;
                         customArm = true;
                         int damage = NPC.RedemptionNPCBuff().disarmed ? NPC.damage / 3 : NPC.damage;
-                        NPC.Shoot(NPC.Center, ModContent.ProjectileType<Calavia_SS_BladeOfTheMountain2>(), damage, Vector2.Zero, false, SoundID.Item1, NPC.whoAmI, 3, knockback: 7);
+                        NPC.Shoot(NPC.Center, ModContent.ProjectileType<Calavia_SS_BladeOfTheMountain2>(), damage, Vector2.Zero, NPC.whoAmI, 3, knockback: 7);
                     }
                     if (AITimer == 60)
                         NPC.velocity.Y = -12;
@@ -411,8 +411,8 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
                     {
                         for (int i = 0; i < 3; i++)
                         {
-                            NPC.Shoot(NPC.Center + new Vector2(100, -10), ModContent.ProjectileType<Calavia_IcefallMist>(), NPC.damage, new Vector2(Main.rand.NextFloat(-1, 1), 0), false, SoundID.Item1, 1, knockback: 2);
-                            NPC.Shoot(NPC.Center + new Vector2(-100, -10), ModContent.ProjectileType<Calavia_IcefallMist>(), NPC.damage, new Vector2(Main.rand.NextFloat(-1, 1), 0), false, SoundID.Item1, 1, knockback: 2);
+                            NPC.Shoot(NPC.Center + new Vector2(100, -10), ModContent.ProjectileType<Calavia_IcefallMist>(), NPC.damage, new Vector2(Main.rand.NextFloat(-1, 1), 0), 1, knockback: 2);
+                            NPC.Shoot(NPC.Center + new Vector2(-100, -10), ModContent.ProjectileType<Calavia_IcefallMist>(), NPC.damage, new Vector2(Main.rand.NextFloat(-1, 1), 0), 1, knockback: 2);
                         }
                     }
                     if (AITimer >= 80)

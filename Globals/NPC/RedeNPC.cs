@@ -21,9 +21,15 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Redemption.BaseExtension;
 using Redemption.Items.Weapons.PreHM.Magic;
+using SubworldLibrary;
+using Redemption.WorldGeneration.Soulless;
+using Redemption.NPCs.PostML;
+using Redemption.NPCs.Soulless;
 using Redemption.Items.Weapons.HM.Magic;
 using Redemption.Items.Donator.Megaswave;
 using Redemption.Items.Usable.Potions;
+using Redemption.WorldGeneration.Space;
+using Redemption.NPCs.HM;
 using Redemption.Items.Weapons.HM.Melee;
 using Redemption.Items.Placeable.Furniture.Misc;
 using Redemption.Items.Weapons.PreHM.Melee;
@@ -43,6 +49,7 @@ using Redemption.Items.Accessories.PreHM;
 using Redemption.Tiles.Trees;
 using Redemption.Base;
 using Redemption.WorldGeneration;
+using Redemption.NPCs.Critters;
 
 namespace Redemption.Globals.NPC
 {
@@ -81,7 +88,16 @@ namespace Redemption.Globals.NPC
         {
             invisible = false;
         }
-
+        public Rectangle parryHitbox;
+        public void CreateParryWindow(Rectangle hitbox, ref bool active)
+        {
+            if (active)
+            {
+                parryHitbox = hitbox;
+                return;
+            }
+            parryHitbox = Rectangle.Empty;
+        }
         public override void ModifyIncomingHit(Terraria.NPC npc, ref Terraria.NPC.HitModifiers modifiers)
         {
             if (spiritSummon)
@@ -379,6 +395,11 @@ namespace Redemption.Globals.NPC
                 spawnRate = 35;
                 maxSpawns = 10;
             }
+            if (SubworldSystem.IsActive<SpaceSub>() && player.InModBiome<SpaceBiome>())
+            {
+                spawnRate = 40;
+                maxSpawns = 6;
+            }
         }
         public override void EditSpawnPool(IDictionary<int, float> pool, NPCSpawnInfo spawnInfo)
         {
@@ -405,7 +426,12 @@ namespace Redemption.Globals.NPC
                 pool.Add(ModContent.NPCType<Blobble>(), 10);
                 return;
             }
-
+            if (spawnInfo.Player.ZoneRockLayerHeight && Terraria.NPC.downedMoonlord)
+            {
+                pool.Add(ModContent.NPCType<SoullessWanderer>(), .08f);
+                pool.Add(ModContent.NPCType<SoullessDuelist>(), .07f);
+                pool.Add(ModContent.NPCType<SoullessAssassin>(), .06f);
+            }
             if (RedeWorld.SkeletonInvasion && spawnInfo.Player.ZoneOverworldHeight && !spawnInfo.Player.ZoneTowerNebula && !spawnInfo.Player.ZoneTowerSolar && !spawnInfo.Player.ZoneTowerStardust && !spawnInfo.Player.ZoneTowerVortex)
             {
                 pool.Clear();
@@ -498,6 +524,40 @@ namespace Redemption.Globals.NPC
                     pool.Add(NPCID.HellArmoredBonesSpikeShield, 0.2f);
                     pool.Add(NPCID.HellArmoredBonesSword, 0.2f);
                 }
+            }
+            if (SubworldSystem.IsActive<SoullessSub>() && spawnInfo.Player.InModBiome<SoullessBiome>())
+            {
+                pool.Clear();
+                //if (NPC.AnyNPCs(ModContent.NPCType<WardenIdle>()) || NPC.AnyNPCs(ModContent.NPCType<WardenSaved>()))
+                //    return;
+                if (!spawnInfo.Player.Hitbox.Intersects(SoullessArea.stalkerZone) && !spawnInfo.Player.Hitbox.Intersects(SoullessArea.stalkerZone2))
+                {
+                    if (SoullessArea.soullessBools[0] && !spawnInfo.Water)
+                    {
+                        pool.Add(ModContent.NPCType<SoullessWanderer>(), .03f);
+                        pool.Add(ModContent.NPCType<SoullessDuelist>(), .03f);
+                        pool.Add(ModContent.NPCType<SoullessAssassin>(), .03f);
+                        pool.Add(ModContent.NPCType<ShadesoulNPC>(), .02f);
+                        pool.Add(ModContent.NPCType<Shadebug>(), .02f);
+                        if (!Terraria.NPC.AnyNPCs(ModContent.NPCType<SoullessMarionette_Doll>()))
+                            pool.Add(ModContent.NPCType<SoullessMarionette_Doll>(), .01f);
+
+                        pool.Add(ModContent.NPCType<LaughingMaskSmall>(), .01f);
+                        pool.Add(ModContent.NPCType<LaughingMaskMedium>(), .01f);
+                        pool.Add(ModContent.NPCType<LaughingMaskBig>(), .01f);
+                        pool.Add(ModContent.NPCType<AntiJohnSnail>(), .0005f);
+                    }
+
+                    pool.Add(ModContent.NPCType<SpookyEyes>(), .02f);
+                    pool.Add(ModContent.NPCType<Echo>(), .02f);
+                }
+            }
+            if (SubworldSystem.IsActive<SpaceSub>() && spawnInfo.Player.InModBiome<SpaceBiome>())
+            {
+                pool.Clear();
+                bool tileCheck = spawnInfo.SpawnTileType == ModContent.TileType<SlayerShipPanelTile>();
+                bool tileWall = Framing.GetTileSafely(spawnInfo.SpawnTileX, spawnInfo.SpawnTileY - 2).WallType != WallID.None;
+                pool.Add(ModContent.NPCType<Android>(), tileCheck && tileWall ? .01f : 0);
             }
         }
     }

@@ -180,7 +180,7 @@ namespace Redemption.UI
 
             if (fade > 0)
             {
-                Texture2D glowTex = ModContent.Request<Texture2D>("Redemption/Textures/WhiteGlow").Value;
+                Texture2D glowTex = Redemption.WhiteGlow.Value;
                 Vector2 drawOrigin = new(glowTex.Width / 2, glowTex.Height / 2);
                 Color c = Color.Orange;
                 c.A = 0;

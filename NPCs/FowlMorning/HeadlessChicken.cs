@@ -54,14 +54,15 @@ namespace Redemption.NPCs.FowlMorning
         {
             if (!spawnFire)
             {
-                NPC.Shoot(NPC.Center + new Vector2(5 * NPC.spriteDirection, -20), ModContent.ProjectileType<HeadlessChicken_Fire>(), NPC.damage, Vector2.Zero, false, SoundID.Item1, NPC.whoAmI);
+                NPC.Shoot(NPC.Center + new Vector2(5 * NPC.spriteDirection, -20), ModContent.ProjectileType<HeadlessChicken_Fire>(), NPC.damage, Vector2.Zero, NPC.whoAmI);
                 spawnFire = true;
             }
 
             Player player = Main.player[NPC.target];
             NPC.TargetClosest();
             NPC.LookByVelocity();
-            DespawnHandler();
+            if (NPC.DespawnHandler(3))
+                return;
 
             NPC.PlatformFallCheck(ref NPC.Redemption().fallDownPlatform);
             if (NPC.ai[0]++ == 0)

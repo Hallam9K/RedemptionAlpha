@@ -33,7 +33,8 @@ namespace Redemption.NPCs.Bosses.KSIII
                     ModContent.BuffType<InfestedDebuff>(),
                     ModContent.BuffType<NecroticGougeDebuff>(),
                     ModContent.BuffType<ViralityDebuff>(),
-                    ModContent.BuffType<DirtyWoundDebuff>()
+                    ModContent.BuffType<DirtyWoundDebuff>(),
+                    ModContent.BuffType<LaceratedDebuff>()
                 }
             };
             NPCID.Sets.DebuffImmunitySets.Add(Type, debuffData);
@@ -146,7 +147,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                     if (!target.active || target.width >= 40 || target.height >= 40 || NPC.DistanceSQ(target.Center) >= 200 * 200 || !target.friendly || target.damage <= 0 || target.ProjBlockBlacklist())
                         continue;
 
-                    NPC.Shoot(target.Center, ModContent.ProjectileType<KS3_MagnetPulse>(), 0, Vector2.Zero, false, SoundID.Item1, NPC.whoAmI);
+                    NPC.Shoot(target.Center, ModContent.ProjectileType<KS3_MagnetPulse>(), 0, Vector2.Zero, NPC.whoAmI);
                     NPC.ai[3] += target.damage;
                     target.Kill();
                 }
@@ -169,7 +170,7 @@ namespace Redemption.NPCs.Bosses.KSIII
             if (NPC.ai[2] == 240 && NPC.ai[3] > 10)
             {
                 NPC.Shoot(NPC.Center, ModContent.ProjectileType<KS3_MagnetBeam>(), (int)NPC.ai[3] / 4,
-                    RedeHelper.PolarVector(10, (playerOrigin - NPC.Center).ToRotation()), true, CustomSounds.BallFire, NPC.whoAmI);
+                    RedeHelper.PolarVector(10, (playerOrigin - NPC.Center).ToRotation()), CustomSounds.BallFire, NPC.whoAmI);
             }
             if (NPC.ai[2] >= 400)
             {

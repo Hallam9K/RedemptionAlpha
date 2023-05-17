@@ -169,7 +169,7 @@ namespace Redemption.Base
 
         /*
 		 * Custom AI that works similarly to fighter minion AI. (uses ai[0, 1])
-		 * 
+		 *
 		 * owner : The Projectile or NPC who is this minion's owner.
 		 * tileCollide : A bool, set to say wether or not the minion can tile collide or not.
 		 * netUpdate : set to say wether or not the minion should sync if in multiplayer.
@@ -249,7 +249,7 @@ namespace Redemption.Base
 
         /*
 		 * Custom AI that works similarly to fighter minion AI. (uses ai[0, 1])
-		 * 
+		 *
 		 * owner : The Projectile or NPC who is this minion's owner.
 		 * tileCollide : A bool, set to say wether or not the minion can tile collide or not.
 		 * netUpdate : set to say wether or not the minion should sync if in multiplayer.
@@ -363,7 +363,7 @@ namespace Redemption.Base
 
         /*
 		 * Custom AI that works similarly to slime minion AI. (uses ai[0, 1])
-		 * 
+		 *
 		 * owner : The Projectile or NPC who is this minion's owner.
 		 * tileCollide : A bool, set to say wether or not the minion can tile collide or not.
 		 * netUpdate : set to say wether or not the minion should sync if in multiplayer.
@@ -429,7 +429,7 @@ namespace Redemption.Base
                         if (codable.velocity != newVec) { codable.velocity = newVec; netUpdate = true; }
                     }
                 }
-                else { codable.velocity.Y += 0.35f; } //gravity*/			
+                else { codable.velocity.Y += 0.35f; } //gravity*/
                 /*if (isOwner && owner.velocity.X < 0.025f && codable.velocity.Y == 0f && targetDistX < 8f)
 				{
 					codable.velocity.X *= (Math.Abs(codable.velocity.X) > 0.01f ? 0.8f : 0f);
@@ -488,7 +488,7 @@ namespace Redemption.Base
 
         /*
 		 * Custom AI that will cause the npc to rotate around a point in a fixed circle.
-		 * 
+		 *
 		 * rotation : The codable's rotation.
 		 * moveRot : A value storing the internal rotation of the codable.
 		 * rotateCenter : The center to be rotating around.
@@ -550,7 +550,7 @@ namespace Redemption.Base
 
         /*
          * Custom AI that will cause the npc to 'pounce' at the given target when it is within range.
-         * 
+         *
          * pounceCenter : the central point of which to pounce.
          * pounceScalar : How much to scale the X-axis velocity by.
          * maxSpeed : the maximum speed to pounce by on the X-axis of the codable.
@@ -577,7 +577,7 @@ namespace Redemption.Base
 
         /*
          * Custom AI that will cause the npc to follow the path of given points. (uses ai[0, 1, 2])
-         * 
+         *
          * ai : A float array that stores AI data. (Note projectile array should be synced!)
          * points : the array of points to follow.
          * moveInterval : the amount to move by per tick.
@@ -614,7 +614,7 @@ namespace Redemption.Base
 
         /*
          * Custom AI that will cause the npc to 'tackle' a specific point given. (uses ai[0, 1, 2])
-         * 
+         *
          * ai : A float array that stores AI data. (Note projectile array should be synced!)
          * point : the central point of which to 'gravitate'.
          * moveInterval : the amount to move by per tick.
@@ -655,7 +655,7 @@ namespace Redemption.Base
 
         /*
          * Custom AI that will cause the npc to 'gravitate' near a specific point given. (uses ai[0, 1, 2])
-         * 
+         *
          * ai : A float array that stores AI data. (Note projectile array should be synced!)
          * rand : a Random which should be syncronized on both sides of an npc.
          * point : the central point of which to 'gravitate'.
@@ -749,12 +749,12 @@ namespace Redemption.Base
 
         #region Vanilla Projectile AI Copy Methods
         /*-----------------------------------------
-         * 
+         *
          * These are methods of vanilla projectile AIs
          * cleaned up. If a method has Entity instead
          * of Projectile as it's first argument, it
          * means npcs can use the method too.
-         * 
+         *
          * ----------------------------------------
          */
 
@@ -1654,9 +1654,9 @@ namespace Redemption.Base
 				vector7.Normalize();
 				vector7 *= num10;
 				p.velocity = (p.velocity * (num11 - 1f) + vector7) / num11;
-			}	
+			}
 		}
-	
+
 		*/
 
         public static void TileCollideYoyo(Projectile p, ref Vector2 velocity, Vector2 newVelocity)
@@ -1711,7 +1711,7 @@ namespace Redemption.Base
 
         /*
 		 * A cleaned up (and edited) copy of Star AI. (Starfury stars, etc.) (AIStyle 5)
-		 * 
+		 *
 		 * landingHorizon: The Y value at which the star should begin tile colliding. (-1 == always tile collide)
 		 * fadein: If true, projectile fades in when first spawned.
 		 * delayedCollide: If true, star does not collide with tiles until it's past the horizon of it's target
@@ -1736,7 +1736,7 @@ namespace Redemption.Base
 
         /*
 		 * A cleaned up (and edited) copy of Explosives AI. (Grenades, Bombs, etc.)
-		 * 
+		 *
 		 * rocket : changes behavior to act like rockets.
 		 * rotate : wether to rotate based on velocity or not.
 		 * beginGravity : what tick to begin applying gravity. (not applied if rocket == true)
@@ -1793,7 +1793,7 @@ namespace Redemption.Base
 
         /*
 		 * A cleaned up (and edited) copy of Arrow AI. (Arrows, etc.) (AIStyle 1) (Can be used with NPCs or Projectiles)
-		 * 
+		 *
 		 * gravApplyInterval: The rate at which to apply gravity. Higher values == less gravity, greater values == more gravity.
 		 * gravity: the amount to induce gravity upon the codable.
 		 * maxSpeedY: The maximum speed the projectile can be doing down.
@@ -1807,7 +1807,7 @@ namespace Redemption.Base
 
         /*
 		 * A cleaned up (and edited) copy of Demon Scythe AI. (Demon Scythe, etc.) (AIStyle 18) (Can be used with NPCs or Projectiles)
-		 * 
+		 *
 		 * startSpeedupInterval : The value to begin velocity speedup.
 		 * stopSpeedupInterval : The value to stop velocity speedup.
 		 * rotateScalar : The scalar for rotational increase.
@@ -1831,7 +1831,7 @@ namespace Redemption.Base
 
         /*
          * A cleaned up (and edited) copy of Vilethorn AI. (Vilethorn, etc.)
-         * 
+         *
          * alphaInterval : The amount of alpha to add each tick. (higher values == faster spawning)
          * alphaReduction : The amount of alpha to reduce after spawning the next piece. (higher values == faster despawning)
          * length : How many segments to spawn.
@@ -1869,7 +1869,7 @@ namespace Redemption.Base
 
         /*
          * A cleaned up (and edited) copy of Stream AI. (Aqua Scepter, Golden Shower, etc.)
-         * 
+         *
          * scaleReduce: the amount to reduce the scale of the codable each tick.
          * gravity : the amount of gravity to apply each tick.
 		 * goldenShower : If true, acts more like golden shower then aqua specter.
@@ -1928,7 +1928,7 @@ namespace Redemption.Base
 
         /*
          * A cleaned up (and edited) copy of Thrown Weapon AI. (throwing knife, shuriken, etc.)
-         * 
+         *
          * ai : A float array that stores AI data. (Note projectile array should be synced!)
          * spin : wether to continously spin with velocity or point in the direction of velocity until slowdown.
          * timeUntilDrop : How many ticks to move until slowing down.
@@ -1963,7 +1963,7 @@ namespace Redemption.Base
 
         /*
          * A cleaned up (and edited) copy of Spear AI.
-         * 
+         *
          * ai : A float array that stores AI data. (Note projectile array should be synced!)
          * center : the center of what is holding the spear.
          * ownerDirection : the direction of the owner of the spear.
@@ -1995,7 +1995,7 @@ namespace Redemption.Base
 
         /*
          * A cleaned up (and edited) copy of Boomerang AI.
-         * 
+         *
          * ai : A float array that stores AI data. (Note projectile array should be synced!)
          * center : the center of where the boomerang should return to.
          * playSound : If true, plays the air sound boomerangs make while in the air.
@@ -2112,7 +2112,7 @@ namespace Redemption.Base
 
         /*
          * A cleaned up (and edited) copy of Flail AI.
-         * 
+         *
          * ai : A float array that stores AI data. (Note projectile array should be synced!)
          * connectedPoint : The point for the flail to be 'attached' to, and rebound to, etc.
          * connectedPointVelocity : The velocity of the connected point, if it is moving.
@@ -2230,10 +2230,10 @@ namespace Redemption.Base
 
         /*
 		 * (Edited) Sticky code used by projectiles to stick to tiles. Returns true if it is 'sticking' to a tile.
-		 * 
+		 *
 		 * beginGravity : the time (in ticks) when to begin applying gravity
-		 * 
-		 * 
+		 *
+		 *
 		 */
         public static bool StickToTiles(Vector2 position, ref Vector2 velocity, int width, int height, Func<int, int, bool> canStick = null)
         {
@@ -2271,7 +2271,7 @@ namespace Redemption.Base
 
         /*
 		 * A cleaned up (and edited) copy of Shadowflame Ghost AI. (aiStyle 86) (Shadowflame Apparition, etc.)
-		 * 
+		 *
 		 * speedupOverTime: Wether or not to speed up when aligned to the player over time.
 		 * distanceBeforeTakeoff: The distance from the target player before the NPC turns around.
 		 */
@@ -2460,7 +2460,7 @@ namespace Redemption.Base
 
         /*
 		 * A cleaned up (and edited) copy of Elemental AI. (aiStyle 91) (Granite Elemental, etc.)
-		 * 
+		 *
 		 * idleTimer : A localized value, which is randomly ticked up to 5.
 		 * noDamageMode : A bool?. Set to true to force on no damage mode, set to false to force it off, return null to have it only on in expert.
 		 * noDamageTimeMax : The maximum amount of ticks before no damage mode returns to normal. (default 120)
@@ -2665,13 +2665,13 @@ namespace Redemption.Base
 
         /*
 		 * A cleaned up (and edited) copy of Possessed Weapon AI. (aiStyle 23) (Enchanted Sword, Demon Hammer, etc.)
-		 * 
+		 *
 		 * targetPos : The center of the target of projectile codable.
 		 * justHit : Set true to reset the AI (ie return it to a rotating state), false otherwise
 		 * rotTime : The time (in ticks) for the codable to rotate.
 		 * moveTime : The time (in ticks) for the codable to move.
 		 * movementScalar : A scalar for how much to move per tick.
-		 * 
+		 *
 		 */
         public static void AIWeapon(Entity codable, ref float[] ai, ref float rotation, Vector2 targetPos, bool justHit = false, int rotTime = 120, int moveTime = 100, float maxSpeed = 6f, float movementScalar = 1f, float rotScalar = 1f)
         {
@@ -2727,7 +2727,7 @@ namespace Redemption.Base
 
         /*
          * A cleaned up (and edited) copy of Snail AI. (Snail, etc.) (AIStyle 67)
-         * 
+         *
          * ai : A float array that stores AI data. (Note projectile array should be synced!)
 		 * snailStatus: An int value which is set to the 'gravity' status of the AI. (0 == down (ground), 1 == left wall, 2 == right wall, 3 == up (ceiling))
 		 * moveInterval : The amount to move by per tick.
@@ -2922,7 +2922,7 @@ namespace Redemption.Base
 
         /*
          * A cleaned up (and edited) copy of Spore AI. (Fungi Spore, Plantera Spore, etc.) (AIStyle 50)
-         * 
+         *
          * ai : A float array that stores AI data. (Note projectile array should be synced!)
 		 * target : The center of the target.
 		 * targetWidth : The width of the target.
@@ -2952,9 +2952,9 @@ namespace Redemption.Base
 
         /*
 		 * *UNTESTED, MAY NOT WORK PROPERLY*
-		 * 
+		 *
          * A cleaned up (and edited) copy of Charger AI. (Unicorns, wolves, etc.) (AIStyle 26)
-         * 
+         *
          * ai : A float array that stores AI data. (Note projectile array should be synced!)
          * moveInterval : How much to move each tick.
 		 * maxSpeed : The maxium speed the npc can move per tick.
@@ -3018,7 +3018,7 @@ namespace Redemption.Base
 
         /*
          * A cleaned up (and edited) copy of Friendly AI. (Town NPCs, Bunnies, Penguins, etc.) (AIStyle 7)
-         * 
+         *
          * ai : A float array that stores AI data. (Note projectile array should be synced!)
 		 * critter : If true, targets players when idle and follows them.
          * moveInterval : how much to move each tick.
@@ -3319,7 +3319,7 @@ namespace Redemption.Base
 
         /*
 		 * A cleaned up (and edited) copy of Eater of Souls AI. (EoS, Corruptor, etc.) (AIStyle 5)
-		 * 
+		 *
 		 * ai : A float array that stores AI data. (Note projectile array should be synced!)
 		 * moveInterval : how much to move each tick.
 		 * distanceDivider : The amount that is divided by the distance; determines velocity.
@@ -3402,7 +3402,7 @@ namespace Redemption.Base
 
         /*
 		 * A cleaned up (and edited) copy of Wheel AI. (Blazing Wheel) (AIStyle 21)
-		 * 
+		 *
 		 * ai : A float array that stores AI data. (Note projectile array should be synced!)
 		 * moveInterval : How much to move each tick (NOTE: very high numbers can result in the AI breaking!)
 		 * rotate : If true, rotates the npc like a Blazing Wheel.
@@ -3445,7 +3445,7 @@ namespace Redemption.Base
 
         /*
 		 * A cleaned up (and edited) copy of Spider Wallwalking AI. (Blood Crawler, etc.) (AIStyle 40)
-		 * 
+		 *
 		 * ai : A float array that stores AI data. (Note projectile array should be synced!)
 		 * ignoreSight : If true, ignores if the npc can see the player or not.
 		 * moveInterval : how much to move each tick.
@@ -3568,7 +3568,7 @@ namespace Redemption.Base
 
         /*
 		 * A cleaned up (and edited) copy of Skull AI. (Cursed Skull) (AIStyle 10)
-		 * 
+		 *
 		 * ai : A float array that stores AI data. (Note projectile array should be synced!)
 		 * tacklePlayer : If true, the npc will occasionally charge at the player.
 		 * maxDistanceAmt : The maxmimum amount of 'distance' the npc is allowed to wander to from the player.
@@ -3636,7 +3636,7 @@ namespace Redemption.Base
 
         /*
 		 * A cleaned up (and edited) copy of Floater AI. (Pixie, Gastropod, etc.) (AIStyle 22)
-		 * 
+		 *
 		 * ai : A float array that stores AI data. (Note projectile array should be synced!)
 		 * ignoreWet : If true, does not slow down in liquids.
 		 * moveInterval : how much to move each tick.
@@ -3778,7 +3778,7 @@ namespace Redemption.Base
 
         /*
 		 * A cleaned up (and edited) copy of Flier AI. (Bat, Demon, etc.) (AIStyle 14)
-		 * 
+		 *
 		 * ai : A float array that stores AI data. (Note projectile array should be synced!)
 		 * sporadic : If true, npc will overshoot targets.
 		 * maxSpeedX/maxSpeedY : the max speed of the npc on the X and Y axis, respectively.
@@ -3869,10 +3869,10 @@ namespace Redemption.Base
 
         /*
 		 * A cleaned up (and edited) copy of Plant AI. (Man Eater, etc.) (AIStyle 13)
-		 * 
+		 *
 		 * ai : A float array that stores AI data. (Note projectile array should be synced!)
 		 * checkTilePoint : If true, check if the tile the npc is connected to is there. If it isn't, kill the npc.
-		 * endPoint : the end point of the npc. 
+		 * endPoint : the end point of the npc.
 		 * isTilePos : true if the endPoint is an tile coordinates, false if it's an npc position.
 		 * vineLength : the distance from the endPoint the npc can go up to.
 		 * vineTimeExtend : the time until the vine's distance is extended.
@@ -3989,7 +3989,7 @@ namespace Redemption.Base
 
         /*
 		 * A cleaned up (and edited) copy of Worm AI. (Giant Worm, EoW, Wyvern, etc.) (AIStyle 6)
-		 * 
+		 *
 		 * wormTypes: An array of the worm npc types. The first type is for the head, the last type is for the tail, and the rest are body types in the order they appear on the worm.
 		 *            If wormTypes has a length of 1, then it will spawn the head but not any other parts. This lets you make single npcs that dig like worms.
 		 * partDistanceAddon : an addon to the distance between parts of the worm.
@@ -4058,7 +4058,7 @@ namespace Redemption.Base
                             //Main.npc[newnpcID].realLife = npc.whoAmI;
                             //Main.npc[newnpcID].ai[1] = (float)npcID;
                             //Main.npc[npcID].ai[0] = (float)newnpcID;
-                            //Main.npc[newnpcID].netUpdate = true;							
+                            //Main.npc[newnpcID].netUpdate = true;
                             //NetMessage.SendData(23, -1, -1, NetworkText.FromLiteral(""), newnpcID, 0f, 0f, 0f, 0);
                             npcID = newnpcID;
                         }
@@ -4420,7 +4420,7 @@ namespace Redemption.Base
 
         /*
 		 * A cleaned up (and edited) copy of Teleporter AI. (Fire Imps, Tim, Chaos Elementals, etc.) (AIStyle 8)
-		 * 
+		 *
 		 * ai : A float array that stores AI data.
 		 * checkGround: If true, npc checks for ground underneath where it teleports to.
 		 * immobile : If true, npc's x velocity is continuously shrunken until it stops moving.
@@ -4503,7 +4503,7 @@ namespace Redemption.Base
 
         /*
          * A cleaned up (and edited) copy of Fish AI. (Goldfish, Angler Fish, etc.)
-         * 
+         *
          * ai : A float array that stores AI data. (Note projectile array should be synced!)
          * hostile : If true, will target players.
          * ignoreNonWetPlayer : If false, npc will target players even if they are out of water.
@@ -4602,13 +4602,13 @@ namespace Redemption.Base
 
         /*
          * A cleaned up (and edited) copy of Zombie AI. (Stripped Fighter AI)
-         * 
+         *
          * ai : A float array that stores AI data. (Note projectile array should be synced!)
          * fleeWhenDay : If true, flees when it is daytime.
          * allowBoredom : If false, npc will not get 'bored' trying to harass a target and wander off.
          * openDoors : -1 == do not interact with doors, 0 == go up to door but do not break it, 1 == attempt to break down doors, 2 == attempt to open doors.
          * velMaxX : the maximum velocity on the X axis.
-         * maxJumpTilesX/maxJumpTilesY : The max tiles it can jump across and over, respectively. 
+         * maxJumpTilesX/maxJumpTilesY : The max tiles it can jump across and over, respectively.
          * ticksUntilBoredom : the amount of ticks until the npc gets 'bored' following a target.
          * targetPlayers : If false, will not target players actively.
          * doorBeatCounterMax : how many beat ticks until the door is opened/broken.
@@ -4712,7 +4712,7 @@ namespace Redemption.Base
 
         /*
          * A cleaned up copy of Demon Eye AI. (Flier AI)
-         * 
+         *
          * ai : A float array that stores AI data. (Note projectile array should be synced!)
          * fleeWhenDay : If true, npc will lose interest in players and fly away.
          * ignoreWet : If true, ignores code for forcing the npc out of water.
@@ -4808,7 +4808,7 @@ namespace Redemption.Base
 
         /*
          * A cleaned up copy of Slime AI.
-         * 
+         *
          * ai : A float array that stores AI data. (Note projectile array should be synced!)
          * jumpTime : the amount of cooldown after the slime has jumped.
          */
@@ -4816,7 +4816,7 @@ namespace Redemption.Base
         {
             //ai[0] is a timer that iterates after the npc has jumped. If it is >= 0, the npc will attempt to jump again.
             //ai[1] is used to determine what jump type to do. (if 2, large jump, else smaller jump.)
-            //ai[2] is used for target updating. 
+            //ai[2] is used for target updating.
             //ai[3] is used to house the landing position of the npc for bigger jumps. This is used to make it turn around when it hits
             //      an impassible wall.
 
@@ -4958,7 +4958,7 @@ namespace Redemption.Base
 
         /*
          *  Code based on vanilla jumping code, checks for and attempts to jump over tiles and gaps when needed.
-         *  
+         *
          *  direction/directionY : the direction and directionY of the object jumping (usually an NPC)
          *  tileDistX/tileDistY : the tile amounts the object can jump across and over, respectively.
          *  float maxSpeedX : The maximum speed of the npc.
@@ -5064,7 +5064,7 @@ namespace Redemption.Base
 
         /*
          * Attempts to interact with a door.
-         * 
+         *
          * Returns : true if it found and is trying to open a door, false otherwise.
          * doorBeatCounter : counter that goes from 0-10. When it hits 10 or more the door is opened.
          * doorCounter : counter that goes from 0-60. When it hits 60 it increments doorBeatCounter by one.
@@ -5150,7 +5150,7 @@ namespace Redemption.Base
 
         /*
          * Checks if a Entity object (Player, NPC, Item or Projectile) has hit a tile on it's sides.
-         * 
+         *
          * noYMovement : If true, will not calculate unless the Entity is not moving on the Y axis.
          */
         public static bool HitTileOnSide(Entity codable, int dir, bool noYMovement = true)
@@ -5165,7 +5165,7 @@ namespace Redemption.Base
 
         /*
          * Checks if a bounding box has hit a tile on it's sides.
-         * 
+         *
          * position : the position of the bounding box.
          * width : the width of the bounding box.
          * height : the height of the bounding box.
@@ -5271,7 +5271,7 @@ namespace Redemption.Base
 
         /*
          *  Damages the player by the given amount.
-         * 
+         *
          *  dmgAmt : The amount of damage to inflict.
          *  knockback : The amount of knockback to inflict.
          *  hitDirection : The direction of the damage.
@@ -5298,7 +5298,7 @@ namespace Redemption.Base
                 player.Hurt(PlayerDeathReason.ByOther(-1), parsedDamage, hitDirection);
             else if (damager is Projectile p)
             {
-                if (p.friendly)
+                if (p.friendly && !p.hostile)
                 {
                     p.playerImmune[player.whoAmI] = 40;
 
@@ -5350,7 +5350,7 @@ namespace Redemption.Base
 
         /*
          *  Damages the NPC by the given amount.
-         *  
+         *
          *  dmgAmt : The amount of damage to inflict.
          *  knockback : The amount of knockback to inflict.
          *  hitDirection : The direction of the damage.
@@ -5463,7 +5463,7 @@ namespace Redemption.Base
         }
         /*
 		 * Gets the closest Projectile with the given type within the given distance from the center. If distance is -1, it gets the closest Projectile.
-		 * 
+		 *
 		 * projType : If -1, check for ANY projectiles in the area. If not, check for the projectiles who match the type given.
 		 * projsToExclude : An array of projectile whoAmIs to exclude from the search.
 		 * distance : The distance to check.
@@ -5501,7 +5501,7 @@ namespace Redemption.Base
         }
         /*
 		 * Gets the all Projectiles with the given type within the given distance from the center.
-		 * 
+		 *
          * projType : If -1, check for ANY projectiles in the area. If not, check for the projectiles who match the type given.
          * projsToExclude : An array of projectile whoAmIs to exclude from the search.
          * distance : The distance to check.
@@ -5537,7 +5537,7 @@ namespace Redemption.Base
 
         /*
 		 * Gets the all Projectiles with the given type within the given distance from the center.
-		 * 
+		 *
          * projType : If -1, check for ANY projectiles in the area. If not, check for the projectiles who match the type given.
          * projsToExclude : An array of projectile whoAmIs to exclude from the search.
          * distance : The distance to check.
@@ -5570,7 +5570,7 @@ namespace Redemption.Base
 
         /*
 		 * Gets all NPCs of the given type within the given rectangle.
-		 * 
+		 *
 		 * rect : The box to check.
 		 * npcType : If -1, check for ANY npcs in the area. If not, check for the npcs who match the type given.
 		 * npcsToExclude : An array of npc whoAmIs to exclude from the search.
@@ -5605,7 +5605,7 @@ namespace Redemption.Base
         }
         /*
          * Gets the closest NPC with the given type within the given distance from the center. If distance is -1, it gets the closest NPC.
-         * 
+         *
          * npcType : If -1, check for ANY npcs in the area. If not, check for the npcs who match the type given.
          * npcsToExclude : An array of npc whoAmIs to exclude from the search.
          * distance : The distance to check.
@@ -5643,7 +5643,7 @@ namespace Redemption.Base
         }
         /*
          * Gets all NPCs of the given type within a given distance from the center.
-         * 
+         *
          * npcType : If -1, check for ANY npcs in the area. If not, check for the npcs who match the type given.
          * npcsToExclude : an array of npc whoAmIs to exclude from the search.
          * distance : the distance to check.
@@ -5673,7 +5673,7 @@ namespace Redemption.Base
 
         /*
          * Gets all players colliding with the given rectangle.
-         * 
+         *
          * rect : The rectangle to search.
          * playersToExclude : An array of player whoAmis that will be excluded from the search.
          */
@@ -5703,7 +5703,7 @@ namespace Redemption.Base
 
         /*
          * Gets the player whoAmI connected to the player with the given name, or -1 if they aren't found.
-         * 
+         *
          * aliveOnly : If true, it only returns the player whoAmI if the player is not dead.
          */
         public static int GetPlayerByName(string name, bool aliveOnly = true)
@@ -5725,7 +5725,7 @@ namespace Redemption.Base
         }
         /*
          * Gets the closest player within the given distance from the center. If distance is -1, it gets the closest player.
-         * 
+         *
          * playersToExclude : An array of player whoAmis that will be excluded from the search.
          * aliveOnly : If true, it only returns the player whoAmI if the player is not dead.
          * distance : The distance to search.
@@ -5763,7 +5763,7 @@ namespace Redemption.Base
         }
         /*
          * Gets all players within a given distance from the center.
-         * 
+         *
          * playersToExclude is an array of player ids you do not want included in the array.
          * aliveOnly : If true, it only returns the player whoAmI if the player is not dead.
          */
@@ -5836,7 +5836,7 @@ namespace Redemption.Base
          *        1 -> changes spriteDirection based on velocity.
          *        2 -> Rotates the entity based on velocity.
          *        3 -> Smoothly rotate and change sprite direction based on velocity.
-         *        4 -> Smoothly rotate based on velocity. 
+         *        4 -> Smoothly rotate based on velocity.
          * rotAddon : the amount to add to the rotation. (only used by lookType 3/4)
          * rotAmount: the amount to rotate by. (only used by lookType 3/4)
          */
@@ -5870,7 +5870,7 @@ namespace Redemption.Base
          *        1 -> change spriteDirection based on the look target.
          *        2 -> Rotate the entity based on the look target.
          *        3 -> Smoothly rotate and change sprite direction based on the look target.
-         *        4 -> Smoothly rotate based on the look target.       
+         *        4 -> Smoothly rotate based on the look target.
          * rotAddon : the amount to add to the rotation. (only used by lookType 3/4)
          * rotAmount: the amount to rotate by. (only used by lookType 3/4)
          */
@@ -5975,9 +5975,9 @@ namespace Redemption.Base
         }
 
         /* **Code edited from Yoraiz0r's 'Holowires' Mod!**
-         * 
+         *
          * From the start point, it iterates to the end point. If it hits anything on the way, it will return the collision point. If not it returns the end point.
-         * 
+         *
          * dim : a Rectangle instance of the collision's dimensions. Can be null.
          * npcCheck : If true, Check for npc collision while iterating.
          * tileCheck : If true, check for tile collision while iterating.
@@ -6069,7 +6069,7 @@ namespace Redemption.Base
         }
 
         /*
-         * 
+         *
          * Returns an array of points in a straight line from start to end.
          * jump : the interval between points.
          */

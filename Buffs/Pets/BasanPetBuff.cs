@@ -6,7 +6,7 @@ using Terraria.ModLoader;
 
 namespace Redemption.Buffs.Pets
 {
-	public class BasanPetBuff : ModBuff
+    public class BasanPetBuff : ModBuff
 	{
 		public override void SetStaticDefaults()
 		{

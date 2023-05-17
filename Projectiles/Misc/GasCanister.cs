@@ -85,7 +85,7 @@ namespace Redemption.Projectiles.Misc
 
     public class GasCanister_Gas : ModProjectile
     {
-        public override string Texture => "Redemption/Textures/IceMist";
+        public override string Texture => "Redemption/" + Redemption.IceMist.Name;
         public override void SetStaticDefaults()
         {
             // DisplayName.SetDefault("Virulent Gas");

@@ -97,7 +97,8 @@ namespace Redemption.NPCs.Bosses.Gigapora
                     ModContent.BuffType<InfestedDebuff>(),
                     ModContent.BuffType<NecroticGougeDebuff>(),
                     ModContent.BuffType<ViralityDebuff>(),
-                    ModContent.BuffType<DirtyWoundDebuff>()
+                    ModContent.BuffType<DirtyWoundDebuff>(),
+                    ModContent.BuffType<LaceratedDebuff>()
                 }
             };
             NPCID.Sets.DebuffImmunitySets.Add(Type, debuffData);
@@ -269,7 +270,8 @@ namespace Redemption.NPCs.Bosses.Gigapora
                 target.Kill();
             }
 
-            DespawnHandler();
+            if (NPC.DespawnHandler(0, 5))
+                return;
 
             if (!spawned)
             {
@@ -550,7 +552,7 @@ namespace Redemption.NPCs.Bosses.Gigapora
                                 if (!Main.dedServ)
                                     SoundEngine.PlaySound(CustomSounds.GigaLaserFire, NPC.position);
                                 Main.LocalPlayer.RedemptionScreen().ScreenShakeIntensity += 30;
-                                NPC.Shoot(NPC.Center, ModContent.ProjectileType<Gigabeam>(), (int)(NPC.damage * 1.5f), Vector2.Zero, false, SoundID.Item1, NPC.whoAmI);
+                                NPC.Shoot(NPC.Center, ModContent.ProjectileType<Gigabeam>(), (int)(NPC.damage * 1.5f), Vector2.Zero, NPC.whoAmI);
                             }
 
                             if (AITimer == 453 && !Main.dedServ)
@@ -706,7 +708,7 @@ namespace Redemption.NPCs.Bosses.Gigapora
                                 TimerRand = 0;
                                 for (int i = 0; i < Main.rand.Next(24, 31); i++)
                                 {
-                                    NPC.Shoot(NPC.Center, ModContent.ProjectileType<Gigapora_Rubble>(), NPC.damage, new Vector2(Main.rand.Next(-14, 15), Main.rand.Next(-30, -19)), false, SoundID.Item1);
+                                    NPC.Shoot(NPC.Center, ModContent.ProjectileType<Gigapora_Rubble>(), NPC.damage, new Vector2(Main.rand.Next(-14, 15), Main.rand.Next(-30, -19)));
                                 }
                             }
                             NPC.rotation = NPC.velocity.ToRotation() + 1.57f;
@@ -1055,18 +1057,6 @@ namespace Redemption.NPCs.Bosses.Gigapora
             }
             else
                 NPC.HitSound = SoundID.NPCHit4;
-        }
-        private void DespawnHandler()
-        {
-            Player player = Main.player[NPC.target];
-            if (!player.active || player.dead)
-            {
-                NPC.velocity *= 0.96f;
-                NPC.velocity.Y -= 5;
-                if (NPC.timeLeft > 10)
-                    NPC.timeLeft = 10;
-                return;
-            }
         }
         private void WormMovement(Player player, float maxSpeed = 18f, float turnSpeed = 0.07f, float acceleration = 0.25f)
         {

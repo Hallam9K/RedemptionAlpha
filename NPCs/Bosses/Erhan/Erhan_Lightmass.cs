@@ -13,7 +13,7 @@ namespace Redemption.NPCs.Bosses.Erhan
 {
     public class Erhan_Lightmass : ModProjectile
     {
-        public override string Texture => "Redemption/Textures/WhiteFlare";
+        public override string Texture => "Redemption/" + Redemption.WhiteFlare.Name;
         public override void SetStaticDefaults()
         {
             // DisplayName.SetDefault("Lightmass");

@@ -90,7 +90,7 @@ namespace Redemption.Textures
         public override void PostDraw(Color lightColor)
         {
             if (texture == null)
-                texture = ModContent.Request<Texture2D>("Redemption/Textures/WhiteGlow").Value;
+                texture = Redemption.WhiteGlow.Value;
 
             Main.spriteBatch.End();
             Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);

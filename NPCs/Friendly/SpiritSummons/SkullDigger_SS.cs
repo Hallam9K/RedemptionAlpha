@@ -152,7 +152,7 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
             NPC.LookByVelocity();
 
             if (!RedeHelper.AnyProjectiles(ModContent.ProjectileType<SkullDigger_SS_FlailBlade>()))
-                NPC.Shoot(NPC.Center, ModContent.ProjectileType<SkullDigger_SS_FlailBlade>(), NPC.damage, Vector2.Zero, false, SoundID.Item1, NPC.whoAmI);
+                NPC.Shoot(NPC.Center, ModContent.ProjectileType<SkullDigger_SS_FlailBlade>(), NPC.damage, Vector2.Zero, NPC.whoAmI);
 
             if (!floatTimer)
             {

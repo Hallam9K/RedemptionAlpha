@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Redemption.Backgrounds.Skies;
+using Redemption.Biomes;
 using Redemption.Base;
 using Redemption.BaseExtension;
 using Redemption.Buffs.Debuffs;
@@ -13,6 +14,7 @@ using Redemption.Globals.Player;
 using Redemption.Globals.World;
 using Redemption.Items.Accessories.HM;
 using Redemption.Items.Armor.PostML.Shinkite;
+using Redemption.Items.Armor.PostML.Vorti;
 using Redemption.Items.Armor.PreHM.DragonLead;
 using Redemption.Items.Donator.Arche;
 using Redemption.Items.Donator.Uncon;
@@ -20,6 +22,7 @@ using Redemption.Items.Usable;
 using Redemption.UI;
 using Redemption.UI.ChatUI;
 using ReLogic.Content;
+using SubworldLibrary;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -40,6 +43,7 @@ using static Redemption.Globals.RedeNet;
 using Redemption.WorldGeneration.Misc;
 using Redemption.Items.Usable.Summons;
 using SubworldLibrary;
+using System.Text;
 
 namespace Redemption
 {
@@ -53,6 +57,7 @@ namespace Redemption
         public Vector2 cameraOffset;
         public Rectangle currentScreen;
         public static int grooveTimer;
+        public static float[] OldMusicFade = new float[Main.musicFade.Length];
         public static ModKeybind RedeSpecialAbility;
         public static ModKeybind RedeSpiritwalkerAbility;
         public static bool AprilFools => DateTime.Now is DateTime { Month: 4, Day: 1 };
@@ -68,6 +73,7 @@ namespace Redemption
         public static int AntiqueDorulCurrencyId;
         public static int dragonLeadCapeID;
         public static int shinkiteCapeID;
+        public static int vortiCapeID;
         public static int archeFemLegID;
         public static int archeMaleLegID;
         public static int unconFemLegID;
@@ -76,6 +82,19 @@ namespace Redemption
         public static int unconMaleLeg2ID;
         public static int halmFemLegID;
         public static int halmMaleLegID;
+
+        public static Asset<Texture2D> Circle;
+        public static Asset<Texture2D> SoftGlow;
+        public static Asset<Texture2D> EmberParticle;
+        public static Asset<Texture2D> GlowParticle;
+        public static Asset<Texture2D> WhiteGlow;
+        public static Asset<Texture2D> WhiteFlare;
+        public static Asset<Texture2D> WhiteOrb;
+        public static Asset<Texture2D> IceMist;
+        public static Asset<Texture2D> HolyGlow2;
+        public static Asset<Texture2D> HolyGlow3;
+
+        public static Asset<Texture2D> GlowTrail;
 
         public Redemption()
         {
@@ -91,8 +110,22 @@ namespace Redemption
                 TrailManager = new TrailManager(this);
                 AdditiveCallManager.Load();
 
+                Circle = ModContent.Request<Texture2D>("Redemption/Textures/Circle");
+                SoftGlow = ModContent.Request<Texture2D>("Redemption/Textures/SoftGlow");
+                EmberParticle = ModContent.Request<Texture2D>("Redemption/Particles/EmberParticle");
+                GlowParticle = ModContent.Request<Texture2D>("Redemption/Particles/GlowParticle");
+                WhiteGlow = ModContent.Request<Texture2D>("Redemption/Textures/WhiteGlow");
+                WhiteFlare = ModContent.Request<Texture2D>("Redemption/Textures/WhiteFlare");
+                WhiteOrb = ModContent.Request<Texture2D>("Redemption/Textures/WhiteOrb");
+                IceMist = ModContent.Request<Texture2D>("Redemption/Textures/IceMist");
+                HolyGlow2 = ModContent.Request<Texture2D>("Redemption/Textures/HolyGlow2");
+                HolyGlow3 = ModContent.Request<Texture2D>("Redemption/Textures/HolyGlow3");
+
+                GlowTrail = ModContent.Request<Texture2D>("Redemption/Textures/Trails/GlowTrail", AssetRequestMode.ImmediateLoad);
+
                 dragonLeadCapeID = EquipLoader.AddEquipTexture(this, "Redemption/Items/Armor/PreHM/DragonLead/DragonLeadRibplate_Back", EquipType.Back, ModContent.GetInstance<DragonLeadRibplate>());
                 shinkiteCapeID = EquipLoader.AddEquipTexture(this, "Redemption/Items/Armor/PostML/Shinkite/ShinkiteChestplate_Back", EquipType.Back, ModContent.GetInstance<ShinkiteChestplate>());
+                vortiCapeID = EquipLoader.AddEquipTexture(this, "Redemption/Items/Armor/PostML/Vorti/VortiRobes_Back", EquipType.Back, ModContent.GetInstance<VortiRobes>());
                 archeMaleLegID = EquipLoader.AddEquipTexture(this, "Redemption/Items/Donator/Arche/ArchePatreonVanityLegs_Legs", EquipType.Legs, ModContent.GetModItem(ModContent.ItemType<ArchePatreonVanityLegs>()));
                 archeFemLegID = EquipLoader.AddEquipTexture(this, "Redemption/Items/Donator/Arche/ArchePatreonVanityLegs_FemaleLegs", EquipType.Legs, ModContent.GetModItem(ModContent.ItemType<ArchePatreonVanityLegs>()));
                 unconMaleLegID = EquipLoader.AddEquipTexture(this, "Redemption/Items/Donator/Uncon/UnconLegs_Legs", EquipType.Legs, ModContent.GetModItem(ModContent.ItemType<UnconLegs>()));
@@ -123,11 +156,11 @@ namespace Redemption
                     PremultiplyTexture(ref portalTex);
                     Texture2D soullessPortal = ModContent.Request<Texture2D>("Redemption/NPCs/Friendly/SoullessPortal", immLoad).Value;
                     PremultiplyTexture(ref soullessPortal);
-                    Texture2D holyGlowTex = ModContent.Request<Texture2D>("Redemption/Textures/WhiteGlow", immLoad).Value;
+                    Texture2D holyGlowTex = ModContent.Request<Texture2D>("Redemption/" + WhiteGlow.Name, immLoad).Value;
                     PremultiplyTexture(ref holyGlowTex);
-                    Texture2D whiteFlareTex = ModContent.Request<Texture2D>("Redemption/Textures/WhiteFlare", immLoad).Value;
+                    Texture2D whiteFlareTex = ModContent.Request<Texture2D>("Redemption/" + WhiteFlare.Name, immLoad).Value;
                     PremultiplyTexture(ref whiteFlareTex);
-                    Texture2D whiteOrbTex = ModContent.Request<Texture2D>("Redemption/Textures/WhiteOrb", immLoad).Value;
+                    Texture2D whiteOrbTex = ModContent.Request<Texture2D>("Redemption/" + WhiteOrb.Name, immLoad).Value;
                     PremultiplyTexture(ref whiteOrbTex);
                     Texture2D whiteLightBeamTex = ModContent.Request<Texture2D>("Redemption/Textures/WhiteLightBeam", immLoad).Value;
                     PremultiplyTexture(ref whiteLightBeamTex);
@@ -135,7 +168,7 @@ namespace Redemption
                     PremultiplyTexture(ref transitionTex);
                     Texture2D staticBallTex = ModContent.Request<Texture2D>("Redemption/Textures/StaticBall", immLoad).Value;
                     PremultiplyTexture(ref staticBallTex);
-                    Texture2D iceMistTex = ModContent.Request<Texture2D>("Redemption/Textures/IceMist", immLoad).Value;
+                    Texture2D iceMistTex = ModContent.Request<Texture2D>("Redemption/" + IceMist.Name, immLoad).Value;
                     PremultiplyTexture(ref iceMistTex);
                     Texture2D glowDustTex = ModContent.Request<Texture2D>("Redemption/Dusts/GlowDust", immLoad).Value;
                     PremultiplyTexture(ref glowDustTex);
@@ -164,6 +197,12 @@ namespace Redemption
                     PremultiplyTexture(ref ruinedKingdomSurfaceFar_MenuTex);
                     Texture2D ruinedKingdomSurfaceMid_MenuTex = ModContent.Request<Texture2D>("Redemption/Backgrounds/RuinedKingdomSurfaceMid_Menu", immLoad).Value;
                     PremultiplyTexture(ref ruinedKingdomSurfaceMid_MenuTex);
+                    Texture2D SpaceBG1Tex = ModContent.Request<Texture2D>("Redemption/Backgrounds/SpaceBG1", immLoad).Value;
+                    PremultiplyTexture(ref SpaceBG1Tex);
+                    Texture2D EpidotraPlanetTex = ModContent.Request<Texture2D>("Redemption/Backgrounds/EpidotraPlanet", immLoad).Value;
+                    PremultiplyTexture(ref EpidotraPlanetTex);
+                    Texture2D EpidotraPlanet_BrighterTex = ModContent.Request<Texture2D>("Redemption/Backgrounds/EpidotraPlanet_Brighter", immLoad).Value;
+                    PremultiplyTexture(ref EpidotraPlanet_BrighterTex);
                     Texture2D UkkoCloudsTex = ModContent.Request<Texture2D>("Redemption/Backgrounds/Skies/UkkoClouds", immLoad).Value;
                     PremultiplyTexture(ref UkkoCloudsTex);
                     Texture2D UkkoSkyBeamTex = ModContent.Request<Texture2D>("Redemption/Backgrounds/Skies/UkkoSkyBeam", immLoad).Value;
@@ -200,7 +239,8 @@ namespace Redemption
             Filters.Scene["MoR:SpiritSky"] = new Filter(new ScreenShaderData("FilterMiniTower").UseColor(0.4f, 0.8f, 0.8f), EffectPriority.VeryHigh);
             Filters.Scene["MoR:IslandEffect"] = new Filter(new ScreenShaderData("FilterMiniTower").UseColor(0.4f, 0.4f, 0.4f).UseOpacity(0.5f), EffectPriority.VeryHigh);
             SkyManager.Instance["MoR:RuinedKingdomSky"] = new RuinedKingdomSky();
-            Filters.Scene["MoR:SoullessSky"] = new Filter(new ScreenShaderData("FilterMiniTower").UseColor(0f, 0f, 0f).UseOpacity(0.55f), EffectPriority.High);
+            SkyManager.Instance["MoR:SpaceSky"] = new SpaceSky();
+            Filters.Scene["MoR:SoullessSky"] = new Filter(new ScreenShaderData("FilterMiniTower").UseColor(0f, 0f, 0f).UseOpacity(0.4f), EffectPriority.High);
             Filters.Scene["MoR:FowlMorningSky"] = new Filter(new ScreenShaderData("FilterMiniTower").UseColor(0.7f, 0.3f, 0.02f).UseOpacity(0.3f), EffectPriority.High);
 
             RedeSpecialAbility = KeybindLoader.RegisterKeybind(this, "Special Ability Key", Keys.F);
@@ -209,6 +249,19 @@ namespace Redemption
         }
         public override void Unload()
         {
+            Circle = null;
+            SoftGlow = null;
+            EmberParticle = null;
+            GlowParticle = null;
+            WhiteGlow = null;
+            WhiteFlare = null;
+            WhiteOrb = null;
+            IceMist = null;
+            HolyGlow2 = null;
+            HolyGlow3 = null;
+
+            GlowTrail = null;
+
             TrailManager = null;
             AdditiveCallManager.Unload();
         }
@@ -224,6 +277,7 @@ namespace Redemption
                     OnBodyDraw.RegisterBodies();
                 });
             }
+            WeakReferences.PerformModSupport();
         }
         public override object Call(params object[] args)
         {
@@ -422,6 +476,11 @@ namespace Redemption
         public UserInterface TextBubbleUILayer;
         public ChatUI TextBubbleUIElement;
 
+        public UserInterface DatalogUILayer;
+        public DatalogUIState DatalogUIElement;
+        public UserInterface CyberTeleporterUILayer;
+        public CyberTeleporterUI CyberTeleporterUIElement;
+
         public UserInterface YesNoUILayer;
         public YesNoUI YesNoUIElement;
 
@@ -462,6 +521,13 @@ namespace Redemption
                 TextBubbleUILayer = new UserInterface();
                 TextBubbleUIElement = new ChatUI();
                 TextBubbleUILayer.SetState(TextBubbleUIElement);
+
+                DatalogUILayer = new UserInterface();
+                DatalogUIElement = new DatalogUIState();
+                DatalogUILayer.SetState(DatalogUIElement);
+                CyberTeleporterUILayer = new UserInterface();
+                CyberTeleporterUIElement = new CyberTeleporterUI();
+                CyberTeleporterUILayer.SetState(CyberTeleporterUIElement);
 
                 YesNoUILayer = new UserInterface();
                 YesNoUIElement = new YesNoUI();
@@ -511,6 +577,64 @@ namespace Redemption
                 backgroundColor.G = (byte)sunG;
                 backgroundColor.B = (byte)sunB;
             }
+            if (Main.LocalPlayer.InModBiome<SpaceBiome>())
+            {
+                int sunR = backgroundColor.R;
+                int sunG = backgroundColor.G;
+                int sunB = backgroundColor.B;
+                // Remove all colors
+                sunR -= (int)(255f * 3f * (backgroundColor.R / 255f));
+                sunG -= (int)(255f * 3f * (backgroundColor.G / 255f));
+                sunB -= (int)(200f * 2f * (backgroundColor.B / 255f));
+                sunR = Utils.Clamp(sunR, 15, 255);
+                sunG = Utils.Clamp(sunG, 15, 255);
+                sunB = Utils.Clamp(sunB, 15, 255);
+                backgroundColor.R = (byte)sunR;
+                backgroundColor.G = (byte)sunG;
+                backgroundColor.B = (byte)sunB;
+
+                float centerDist = 0;
+                float bgParallax2 = 0.37f + 0.2f - 0.1f;
+                int bgStart2 = (int)(-Math.IEEERemainder(Main.screenPosition.X / 40 * bgParallax2, 818) - (818 * 1.3f));
+                if (bgStart2 > 0)
+                    bgStart2 = -680;
+
+                if (Main.LocalPlayer.InModBiome<SpaceBiome>())
+                {
+                    if (Main.dayTime)
+                    {
+                        if (Main.time < 65000 + (bgStart2 * 30))
+                        {
+                            centerDist = MathHelper.Distance((float)Main.time, 65000 + (bgStart2 * 30));
+                            centerDist /= 3000;
+                        }
+                        else if (Main.time < 62000 + (bgStart2 * 30))
+                            centerDist = 1;
+                    }
+                    else
+                    {
+                        if (Main.time > 28400)
+                        {
+                            centerDist = MathHelper.Distance((float)Main.time, 28400);
+                            centerDist /= 4000;
+                        }
+                    }
+                }
+                centerDist = MathHelper.Clamp(centerDist, 0f, 1f);
+
+                int sunR2 = tileColor.R;
+                int sunG2 = tileColor.G;
+                int sunB2 = tileColor.B;
+                sunR2 -= (int)(255f * centerDist * (tileColor.R / 255f));
+                sunB2 -= (int)(255f * centerDist * (tileColor.B / 255f));
+                sunG2 -= (int)(255f * centerDist * (tileColor.G / 255f));
+                sunR2 = Utils.Clamp(sunR2, 15, 255);
+                sunG2 = Utils.Clamp(sunG2, 15, 255);
+                sunB2 = Utils.Clamp(sunB2, 15, 255);
+                tileColor.R = (byte)sunR2;
+                tileColor.G = (byte)sunG2;
+                tileColor.B = (byte)sunB2;
+            }
             if (SubworldSystem.IsActive<CSub>())
             {
                 backgroundColor.R = 15;
@@ -554,6 +678,18 @@ namespace Redemption
                     },
                     InterfaceScaleType.UI);
                 layers.Insert(index, StunUI);
+            }
+            if (Main.LocalPlayer.Redemption().handymanGrab)
+            {
+                int index = layers.FindIndex(layer => layer.Name.Equals("Vanilla: Ruler"));
+                LegacyGameInterfaceLayer GrabUI = new("Redemption: Handyman Grab UI",
+                    delegate
+                    {
+                        DrawHandymanGrab(Main.spriteBatch);
+                        return true;
+                    },
+                    InterfaceScaleType.UI);
+                layers.Insert(index, GrabUI);
             }
             if (BasePlayer.HasAccessory(Main.LocalPlayer, ModContent.ItemType<PocketShieldGenerator>(), true, true))
             {
@@ -667,10 +803,12 @@ namespace Redemption
             if (MouseTextIndex != -1)
             {
                 AddInterfaceLayer(layers, AMemoryUILayer, AMemoryUIElement, MouseTextIndex, AMemoryUIState.Visible, "Lab Photo");
+                AddInterfaceLayer(layers, DatalogUILayer, DatalogUIElement, MouseTextIndex, DatalogUIState.Visible, "Datalog UI");
                 AddInterfaceLayer(layers, ChaliceUILayer, ChaliceUIElement, MouseTextIndex + 1, ChaliceAlignmentUI.Visible, "Chalice");
                 AddInterfaceLayer(layers, DialogueUILayer, DialogueUIElement, MouseTextIndex + 2, MoRDialogueUI.Visible, "Dialogue");
                 AddInterfaceLayer(layers, TitleUILayer, TitleCardUIElement, MouseTextIndex + 3, TitleCard.Showing, "Title Card");
                 AddInterfaceLayer(layers, NukeUILayer, NukeUIElement, MouseTextIndex + 4, NukeDetonationUI.Visible, "Nuke UI");
+                AddInterfaceLayer(layers, CyberTeleporterUILayer, CyberTeleporterUIElement, MouseTextIndex + 5, CyberTeleporterUI.Visible, "Cyber Teleporter UI");
                 AddInterfaceLayer(layers, TextBubbleUILayer, TextBubbleUIElement, MouseTextIndex + 5, ChatUI.Visible, "Text Bubble");
                 AddInterfaceLayer(layers, YesNoUILayer, YesNoUIElement, MouseTextIndex + 6, YesNoUI.Visible, "Yes No Choice");
                 AddInterfaceLayer(layers, TradeUILayer, TradeUIElement, MouseTextIndex + 7, TradeUI.Visible, "Trade");
@@ -680,6 +818,8 @@ namespace Redemption
         }
         public override void UpdateUI(GameTime gameTime)
         {
+            if (CyberTeleporterUILayer?.CurrentState != null && CyberTeleporterUI.Visible)
+                CyberTeleporterUILayer.Update(gameTime);
             if (AMemoryUILayer?.CurrentState != null && AMemoryUIState.Visible)
                 AMemoryUILayer.Update(gameTime);
             if (NukeUILayer?.CurrentState != null && NukeDetonationUI.Visible)
@@ -805,6 +945,20 @@ namespace Redemption
             Vector2 drawOrigin = new(starTex.Width / 2, height / 2);
 
             spriteBatch.Draw(starTex, player.Center - new Vector2(0, 34) - Main.screenPosition, new Rectangle?(new Rectangle(0, y, starTex.Width, height)), Color.White * ((255 - Main.BlackFadeIn) / 255f), 0, drawOrigin, 1, 0, 0);
+
+            spriteBatch.End();
+            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.LinearClamp, DepthStencilState.Default, RasterizerState.CullNone, null, Main.UIScaleMatrix);
+        }
+        public static void DrawHandymanGrab(SpriteBatch spriteBatch)
+        {
+            Player player = Main.LocalPlayer;
+            spriteBatch.End();
+            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.LinearClamp, DepthStencilState.Default, RasterizerState.CullNone, null, Main.GameViewMatrix.TransformationMatrix);
+
+            Texture2D handTex = ModContent.Request<Texture2D>("Redemption/Textures/Handyman_Grab").Value;
+            Vector2 drawOrigin = new(handTex.Width / 2, handTex.Height / 2);
+
+            spriteBatch.Draw(handTex, player.Center - Main.screenPosition, null, Color.White * ((255 - Main.BlackFadeIn) / 255f), 0, drawOrigin, 1, 0, 0);
 
             spriteBatch.End();
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.LinearClamp, DepthStencilState.Default, RasterizerState.CullNone, null, Main.UIScaleMatrix);

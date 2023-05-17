@@ -10,8 +10,8 @@ using ParticleLibrary;
 using Redemption.Particles;
 using Terraria.GameInput;
 using Terraria.Audio;
+using Redemption.Biomes;
 using Terraria.DataStructures;
-using Redemption.Dusts;
 using System;
 
 namespace Redemption.Globals.Player
@@ -40,7 +40,7 @@ namespace Redemption.Globals.Player
         }
         public override void ProcessTriggers(TriggersSet triggersSet)
         {
-            if (Spiritwalker && SpiritwalkerCooldown <= 0 && Redemption.RedeSpiritwalkerAbility.Current && Player.active && !Player.dead)
+            if (Spiritwalker && SpiritwalkerCooldown <= 0 && Redemption.RedeSpiritwalkerAbility.Current && Player.active && !Player.dead && !Player.InModBiome<SoullessBiome>())
             {
                 if (SpiritwalkerTimer++ >= 60)
                 {

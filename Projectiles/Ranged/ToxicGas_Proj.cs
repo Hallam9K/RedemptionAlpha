@@ -10,7 +10,7 @@ namespace Redemption.Projectiles.Misc
 {
     public class ToxicGas_Proj : ModProjectile
     {
-        public override string Texture => "Redemption/Textures/IceMist";
+        public override string Texture => "Redemption/" + Redemption.IceMist.Name;
         public override void SetStaticDefaults()
         {
             // DisplayName.SetDefault("Toxic Gas");

@@ -16,6 +16,7 @@ using Redemption.Buffs.NPCBuffs;
 using Redemption.Biomes;
 using Redemption.Items.Accessories.PreHM;
 using Redemption.Items.Placeable.Banners;
+using Redemption.Items.Weapons.PreHM.Summon;
 
 namespace Redemption.NPCs.FowlMorning
 {
@@ -55,7 +56,8 @@ namespace Redemption.NPCs.FowlMorning
             Player player = Main.player[NPC.target];
             NPC.TargetClosest();
             NPC.LookByVelocity();
-            DespawnHandler();
+            if (NPC.DespawnHandler(3))
+                return;
 
             if (Main.rand.NextBool(3000))
                 SoundEngine.PlaySound(CustomSounds.ChickenCluck with { Pitch = -.1f }, NPC.position);
@@ -184,7 +186,7 @@ namespace Redemption.NPCs.FowlMorning
         }
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
-            //npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Halbirdhouse>(), 60));
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<DawnHerald>(), 60));
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Grain>(), 200));
             npcLoot.Add(ItemDropRule.ByCondition(new OnFireCondition(), ModContent.ItemType<FriedChicken>(), 4));
         }

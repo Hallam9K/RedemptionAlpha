@@ -37,7 +37,8 @@ namespace Redemption.NPCs.PreHM
                     ModContent.BuffType<InfestedDebuff>(),
                     ModContent.BuffType<DevilScentedDebuff>(),
                     BuffID.Confused,
-                    ModContent.BuffType<NecroticGougeDebuff>()
+                    ModContent.BuffType<NecroticGougeDebuff>(),
+                    ModContent.BuffType<LaceratedDebuff>()
                 }
             });
             NPCID.Sets.NPCBestiaryDrawModifiers value = new(0);
@@ -85,7 +86,7 @@ namespace Redemption.NPCs.PreHM
                     AITimer++;
                     if (AITimer % 8 == 0)
                     {
-                        NPC.Shoot(NPC.Center, ModContent.ProjectileType<DevilsTongueCloud>(), 0, RedeHelper.Spread(3), false, SoundID.Item1);
+                        NPC.Shoot(NPC.Center, ModContent.ProjectileType<DevilsTongueCloud>(), 0, RedeHelper.Spread(3));
                     }
                     if (AITimer > 60)
                     {

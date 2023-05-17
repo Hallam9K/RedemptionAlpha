@@ -40,7 +40,6 @@ namespace Redemption.Items.Weapons.PreHM.Melee
         {
             Player player = Main.player[Projectile.owner];
             player.heldProj = Projectile.whoAmI;
-
             SwingSpeed = SetSwingSpeed(25);
 
             Projectile.Redemption().swordHitbox = new((int)(Projectile.spriteDirection == -1 ? Projectile.Center.X - 100 : Projectile.Center.X), (int)(Projectile.Center.Y - 70), 100, 136);
@@ -120,7 +119,13 @@ namespace Redemption.Items.Weapons.PreHM.Melee
                     }
                 }
             }
+            bool parryActive = false;
+            if (Projectile.frame is 4 or 5)
+                parryActive = true;
+            if (Projectile.frame is 5)
+                RedeProjectile.SwordClashFriendly(Projectile, player, ref parried);
 
+            player.Redemption().CreateParryWindow(Projectile.Redemption().swordHitbox, ref parryActive);
             Projectile.spriteDirection = player.direction;
 
             Projectile.Center = player.Center;

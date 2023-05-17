@@ -21,6 +21,11 @@ namespace Redemption
             AdditiveCallManager.DrawAdditiveCalls(Main.spriteBatch);
             orig(self);
         }
+        private static void AdditiveCalls(On.Terraria.Main.orig_DrawDust orig, Main self)
+        {
+            AdditiveCallManager.DrawAdditiveCalls(Main.spriteBatch);
+            orig(self);
+        }
         public static void Unload()
         {
             On_Main.DrawProjectiles -= Main_DrawProjectiles;

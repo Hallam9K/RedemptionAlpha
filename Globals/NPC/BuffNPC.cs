@@ -46,6 +46,9 @@ namespace Redemption.Globals.NPC
         public bool stunned;
         public bool infected;
         public int infectedTime;
+        public bool dreamsong;
+        public bool smashed;
+        public bool lacerated;
         public bool stomachAcid;
         public bool incisored;
         public bool stoneskin;
@@ -75,6 +78,9 @@ namespace Redemption.Globals.NPC
             bileDebuff = false;
             electrified = false;
             stunned = false;
+            dreamsong = false;
+            smashed = false;
+            lacerated = false;
             stomachAcid = false;
             incisored = false;
             stoneskin = false;
@@ -140,7 +146,8 @@ namespace Redemption.Globals.NPC
                     AddDebuffImmunity(i, new int[] {
                     ModContent.BuffType<NecroticGougeDebuff>(),
                     ModContent.BuffType<DirtyWoundDebuff>(),
-                    ModContent.BuffType<InfestedDebuff>() });
+                    ModContent.BuffType<InfestedDebuff>(),
+                    ModContent.BuffType<LaceratedDebuff>() });
                 }
                 if (NPCLists.Dragonlike.Contains(i))
                 {
@@ -153,7 +160,8 @@ namespace Redemption.Globals.NPC
                     ModContent.BuffType<InfestedDebuff>(),
                     ModContent.BuffType<NecroticGougeDebuff>(),
                     ModContent.BuffType<ViralityDebuff>(),
-                    ModContent.BuffType<DirtyWoundDebuff>() });
+                    ModContent.BuffType<DirtyWoundDebuff>(),
+                    ModContent.BuffType<LaceratedDebuff>() });
                 }
                 if (NPCLists.Infected.Contains(i))
                 {
@@ -168,7 +176,8 @@ namespace Redemption.Globals.NPC
                     AddDebuffImmunity(i, new int[] {
                     ModContent.BuffType<InfestedDebuff>(),
                     ModContent.BuffType<NecroticGougeDebuff>(),
-                    ModContent.BuffType<DirtyWoundDebuff>() });
+                    ModContent.BuffType<DirtyWoundDebuff>(),
+                    ModContent.BuffType<LaceratedDebuff>() });
                 }
             }
         }
@@ -292,6 +301,24 @@ namespace Redemption.Globals.NPC
                 if (damage < 6)
                     damage = 6;
             }
+            if (dreamsong)
+            {
+                if (npc.lifeRegen > 0)
+                    npc.lifeRegen = 0;
+
+                npc.lifeRegen -= 1000;
+                if (damage < 100)
+                    damage = 100;
+            }
+            if (lacerated)
+            {
+                if (npc.lifeRegen > 0)
+                    npc.lifeRegen = 0;
+
+                npc.lifeRegen -= (int)(npc.lifeMax * 0.02f);
+                if (damage < (int)(npc.lifeMax * 0.02f))
+                    damage = (int)(npc.lifeMax * 0.02f);
+            }
             if (badtime)
             {
                 if (npc.lifeRegen > 0)
@@ -394,6 +421,8 @@ namespace Redemption.Globals.NPC
                 modifiers.FinalDamage *= 0.9f;
             if (stoneskin)
                 modifiers.FinalDamage *= 0.75f;
+            if (smashed)
+                modifiers.FinalDamage *= 1.15f;
             if (brokenArmor)
                 modifiers.Defense *= .5f;
             if (sandDust)
@@ -510,6 +539,18 @@ namespace Redemption.Globals.NPC
                     DustHelper.DrawParticleElectricity(new Vector2(npc.position.X, npc.position.Y + Main.rand.Next(0, npc.height)), new Vector2(npc.TopRight.X, npc.TopRight.Y + Main.rand.Next(0, npc.height)), new LightningParticle(), .5f, 10, 0.2f);
                     DustHelper.DrawParticleElectricity(new Vector2(npc.TopRight.X, npc.TopRight.Y + Main.rand.Next(0, npc.height)), new Vector2(npc.position.X, npc.position.Y + Main.rand.Next(0, npc.height)), new LightningParticle(), .5f, 10, 0.2f);
                 }
+            }
+            if (dreamsong)
+            {
+                if (Main.rand.NextBool(10) && !Main.gamePaused)
+                {
+                    ParticleManager.NewParticle(RedeHelper.RandAreaInEntity(npc), RedeHelper.SpreadUp(1), new SoulParticle(), Color.White, 0.2f);
+                }
+            }
+            if (lacerated)
+            {
+                if (Main.rand.NextBool(3) && npc.alpha < 200)
+                    Dust.NewDust(npc.position, npc.width, npc.height, DustID.Blood, npc.velocity.X * 0.4f, npc.velocity.Y * 0.4f);
             }
             if (stomachAcid)
             {

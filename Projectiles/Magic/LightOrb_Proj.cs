@@ -14,7 +14,7 @@ namespace Redemption.Projectiles.Magic
 {
     public class LightOrb_Proj : ModProjectile
     {
-        public override string Texture => "Redemption/Textures/WhiteOrb";
+        public override string Texture => "Redemption/" + Redemption.WhiteOrb.Name;
         public override void SetStaticDefaults()
         {
             // DisplayName.SetDefault("Light Orb");
