@@ -1,5 +1,4 @@
 ﻿using Microsoft.Xna.Framework;
-using Redemption.Buffs;
 using Redemption.Items.Placeable.Furniture.Silverwood;
 using Terraria;
 using Terraria.Audio;

@@ -1,10 +1,8 @@
 using Microsoft.Xna.Framework;
-using Redemption.Items.Placeable.Furniture.Archcloth;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
-using Terraria.DataStructures;
 using Terraria.Localization;
 
 namespace Redemption.Tiles.Furniture.Archcloth

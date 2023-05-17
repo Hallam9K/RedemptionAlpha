@@ -4,7 +4,6 @@ using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ID;
 using Redemption.Dusts.Tiles;
-using Redemption.Items.Placeable.Tiles;
 using Terraria.DataStructures;
 using System;
 

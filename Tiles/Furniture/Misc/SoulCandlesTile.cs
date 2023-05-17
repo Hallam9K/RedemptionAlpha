@@ -2,7 +2,6 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Dusts.Tiles;
 using Redemption.Globals;
-using Redemption.Items.Placeable.Furniture.Misc;
 using System;
 using System.Linq;
 using Terraria;
@@ -80,7 +79,7 @@ namespace Redemption.Tiles.Furniture.Misc
             int height = tile.TileFrameY % AnimationFrameHeight >= 16 ? 18 : 16;
             int animate = Main.tileFrame[Type] * AnimationFrameHeight;
 
-            Texture2D texture = ModContent.Request<Texture2D>("Redemption/Tiles/Furniture/Misc/SoulCandlesTile_Glow").Value;
+            Texture2D texture = ModContent.Request<Texture2D>(Texture + "_Glow").Value;
             Rectangle frame = new(tile.TileFrameX, tile.TileFrameY + animate, 16, height);
             ulong randSeed = Main.TileFrameSeed ^ (ulong)((long)j << 32 | (uint)i);
             Color color = new(100, 100, 100, 0);

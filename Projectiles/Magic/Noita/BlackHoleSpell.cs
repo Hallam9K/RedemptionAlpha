@@ -1,10 +1,8 @@
 using Microsoft.Xna.Framework;
-using Redemption.Buffs.NPCBuffs;
 using Redemption.Dusts;
 using Redemption.Globals;
 using System;
 using Terraria;
-using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Redemption.Projectiles.Magic.Noita

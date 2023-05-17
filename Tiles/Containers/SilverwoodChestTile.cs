@@ -1,5 +1,4 @@
 using Microsoft.Xna.Framework;
-using Redemption.Dusts.Tiles;
 using Redemption.Items.Placeable.Containers;
 using Terraria;
 using Terraria.Audio;

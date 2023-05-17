@@ -24,7 +24,6 @@ using Redemption.Items.Usable;
 using Terraria.UI;
 using SubworldLibrary;
 using Redemption.WorldGeneration.Soulless;
-using System.Threading;
 
 namespace Redemption.NPCs.Soulless
 {

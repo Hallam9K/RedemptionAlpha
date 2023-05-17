@@ -1,6 +1,5 @@
 using Redemption.Items.Materials.PostML;
 using Redemption.Rarities;
-using Redemption.Tiles.Furniture.ElderWood;
 using Redemption.Tiles.Furniture.Silverwood;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -18,7 +17,7 @@ namespace Redemption.Items.Placeable.Furniture.Silverwood
             Item.DefaultToPlaceableTile(ModContent.TileType<SilverwoodTableTile>());
             Item.width = 38;
             Item.height = 24;
-            Item.maxStack = 9999;
+            Item.maxStack = Item.CommonMaxStack;
             Item.value = 500;
             Item.rare = ModContent.RarityType<KingdomRarity>();
         }

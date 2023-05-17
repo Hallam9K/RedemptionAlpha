@@ -19,14 +19,6 @@ using Redemption.BaseExtension;
 using Terraria.Audio;
 using Terraria.GameContent.ItemDropRules;
 using Redemption.UI.ChatUI;
-using Redemption.Items.Materials.HM;
-using Redemption.Items.Placeable.Furniture.Misc;
-using Redemption.Items.Tools.PreHM;
-using Redemption.Items.Usable.Summons;
-using Redemption.Items.Weapons.PostML.Ranged;
-using Redemption.Items.Weapons.PreHM.Magic;
-using Redemption.Items.Weapons.PreHM.Melee;
-using Redemption.Items.Weapons.PreHM.Ranged;
 using Terraria.ModLoader.IO;
 using System.Linq;
 

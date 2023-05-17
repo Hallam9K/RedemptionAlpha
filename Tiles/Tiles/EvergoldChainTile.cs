@@ -3,7 +3,6 @@ using Terraria;
 using Terraria.ModLoader;
 using Terraria.ID;
 using Redemption.Items.Placeable.Tiles;
-using Terraria.Audio;
 
 namespace Redemption.Tiles.Tiles
 {

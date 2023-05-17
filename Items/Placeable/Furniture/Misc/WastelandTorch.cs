@@ -5,7 +5,6 @@ using Terraria.ModLoader;
 using Redemption.Tiles.Furniture.Misc;
 using Redemption.Dusts.Tiles;
 using Redemption.Items.Placeable.Tiles;
-using Redemption.Tiles.Furniture.Shade;
 
 namespace Redemption.Items.Placeable.Furniture.Misc
 {

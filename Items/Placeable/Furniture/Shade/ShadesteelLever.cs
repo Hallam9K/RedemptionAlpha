@@ -18,7 +18,7 @@ namespace Redemption.Items.Placeable.Furniture.Shade
 			Item.DefaultToPlaceableTile(ModContent.TileType<ShadesteelLeverTile>(), 0);
 			Item.width = 32;
 			Item.height = 32;
-			Item.maxStack = 9999;
+			Item.maxStack = Item.CommonMaxStack;
 			Item.rare = ItemRarityID.Blue;
 		}
 	}

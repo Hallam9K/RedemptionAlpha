@@ -1,5 +1,4 @@
 ﻿using Redemption.BaseExtension;
-using Redemption.Globals.Player;
 using Redemption.Rarities;
 using Terraria;
 using Terraria.Audio;

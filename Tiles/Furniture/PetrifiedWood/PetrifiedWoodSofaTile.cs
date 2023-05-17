@@ -1,5 +1,4 @@
 ﻿using Microsoft.Xna.Framework;
-using Redemption.Items.Placeable.Furniture.PetrifiedWood;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
@@ -9,7 +8,7 @@ using Terraria.ObjectData;
 
 namespace Redemption.Tiles.Furniture.PetrifiedWood
 {
-	public class PetrifiedWoodSofaTile : ModTile
+    public class PetrifiedWoodSofaTile : ModTile
 	{
 		public override void SetStaticDefaults()
 		{

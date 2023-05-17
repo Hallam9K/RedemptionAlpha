@@ -1,7 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Dusts.Tiles;
-using Redemption.Items.Placeable.Furniture.SlayerShip;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.Enums;
@@ -55,8 +54,8 @@ namespace Redemption.Tiles.Furniture.SlayerShip
                 zero = Vector2.Zero;
 
             int height = tile.TileFrameY == 36 ? 18 : 16;
-            Main.spriteBatch.Draw(ModContent.Request<Texture2D>("Redemption/Tiles/Furniture/SlayerShip/ChessTable4DTile_Glow").Value, new Vector2((i * 16) - (int)Main.screenPosition.X, (j * 16) - (int)Main.screenPosition.Y) + zero, new Rectangle(tile.TileFrameX, tile.TileFrameY, 16, height), RedeColor.COLOR_GLOWPULSE, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
-            Main.spriteBatch.Draw(ModContent.Request<Texture2D>("Redemption/Tiles/Furniture/SlayerShip/ChessTable4DTile_Holo").Value, new Vector2((i * 16) - (int)Main.screenPosition.X, (j * 16) - 32 - (int)Main.screenPosition.Y) + zero, new Rectangle(tile.TileFrameX, tile.TileFrameY, 16, height), RedeColor.COLOR_GLOWPULSE * 0.8f, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
+            Main.spriteBatch.Draw(ModContent.Request<Texture2D>(Texture + "_Glow").Value, new Vector2((i * 16) - (int)Main.screenPosition.X, (j * 16) - (int)Main.screenPosition.Y) + zero, new Rectangle(tile.TileFrameX, tile.TileFrameY, 16, height), RedeColor.COLOR_GLOWPULSE, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
+            Main.spriteBatch.Draw(ModContent.Request<Texture2D>(Texture + "_Holo").Value, new Vector2((i * 16) - (int)Main.screenPosition.X, (j * 16) - 32 - (int)Main.screenPosition.Y) + zero, new Rectangle(tile.TileFrameX, tile.TileFrameY, 16, height), RedeColor.COLOR_GLOWPULSE * 0.8f, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
         }
         public override void AnimateTile(ref int frame, ref int frameCounter)
         {

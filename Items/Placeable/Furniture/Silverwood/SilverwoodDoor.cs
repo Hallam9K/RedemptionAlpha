@@ -17,7 +17,7 @@ namespace Redemption.Items.Placeable.Furniture.Silverwood
             Item.DefaultToPlaceableTile(ModContent.TileType<SilverwoodDoorClosed>());
             Item.width = 20;
             Item.height = 34;
-            Item.maxStack = 9999;
+            Item.maxStack = Item.CommonMaxStack;
             Item.value = 150;
             Item.rare = ModContent.RarityType<KingdomRarity>();
         }

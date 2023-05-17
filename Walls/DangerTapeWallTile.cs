@@ -1,5 +1,4 @@
 using Microsoft.Xna.Framework;
-using Redemption.Items.Placeable.Tiles;
 using Terraria;
 using Terraria.ModLoader;
 

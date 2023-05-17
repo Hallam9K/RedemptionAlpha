@@ -29,7 +29,7 @@ namespace Redemption.Items.Usable.Potions
         {
             Item.DefaultToFood(36, 22, ModContent.BuffType<WellFed4>(), 6000);
             Item.value = 55;
-            Item.maxStack = 9999;
+            Item.maxStack = Item.CommonMaxStack;
             Item.rare = ModContent.RarityType<SoullessRarity>();
         }
         public override void AddRecipes()

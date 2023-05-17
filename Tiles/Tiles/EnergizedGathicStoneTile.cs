@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Redemption.Dusts.Tiles;
 using Redemption.Globals;
 using Redemption.Items.Placeable.Tiles;
+using ReLogic.Content;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
@@ -12,6 +13,7 @@ namespace Redemption.Tiles.Tiles
 {
     public class EnergizedGathicStoneTile : ModTile
     {
+        private Asset<Texture2D> glowTexture;
         public override void SetStaticDefaults()
         {
             Main.tileSolid[Type] = true;
@@ -39,21 +41,22 @@ namespace Redemption.Tiles.Tiles
             MinPick = 0;
             MineResist = 5f;
             AddMapEntry(new Color(206, 130, 68));
+            if (!Main.dedServ)
+                glowTexture = ModContent.Request<Texture2D>(Texture + "_Glow");
         }
         private float drawTimer;
         public override void PostDraw(int i, int j, SpriteBatch spriteBatch)
         {
             Tile tile = Framing.GetTileSafely(i, j);
-            Texture2D texture = ModContent.Request<Texture2D>("Redemption/Tiles/Tiles/EnergizedGathicStoneTile_Glow").Value;
             Vector2 zero = new(Main.offScreenRange, Main.offScreenRange);
             if (Main.drawToScreen)
                 zero = Vector2.Zero;
 
             int height = tile.TileFrameY == 36 ? 18 : 16;
 
-            RedeDraw.DrawTreasureBagEffect(spriteBatch, texture, ref drawTimer, new Vector2((i * 16) - (int)Main.screenPosition.X, (j * 16) - (int)Main.screenPosition.Y) + zero, new Rectangle(tile.TileFrameX, tile.TileFrameY, 16, height), RedeColor.FadeColour1, 0, Vector2.Zero, 1f, 0);
+            RedeDraw.DrawTreasureBagEffect(spriteBatch, glowTexture.Value, ref drawTimer, new Vector2((i * 16) - (int)Main.screenPosition.X, (j * 16) - (int)Main.screenPosition.Y) + zero, new Rectangle(tile.TileFrameX, tile.TileFrameY, 16, height), RedeColor.FadeColour1, 0, Vector2.Zero, 1f, 0);
 
-            Main.spriteBatch.Draw(texture, new Vector2((i * 16) - (int)Main.screenPosition.X, (j * 16) - (int)Main.screenPosition.Y) + zero, new Rectangle(tile.TileFrameX, tile.TileFrameY, 16, height), RedeColor.COLOR_GLOWPULSE, 0f, Vector2.Zero, 1f, 0, 0f);
+            Main.spriteBatch.Draw(glowTexture.Value, new Vector2((i * 16) - (int)Main.screenPosition.X, (j * 16) - (int)Main.screenPosition.Y) + zero, new Rectangle(tile.TileFrameX, tile.TileFrameY, 16, height), RedeColor.COLOR_GLOWPULSE, 0f, Vector2.Zero, 1f, 0, 0f);
         }
         public override void DrawEffects(int i, int j, SpriteBatch spriteBatch, ref TileDrawInfo drawData)
         {

@@ -1,8 +1,6 @@
-using System;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
-using Terraria.Enums;
 using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;

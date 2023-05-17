@@ -5,7 +5,6 @@ using Terraria.ModLoader;
 using Redemption.Dusts.Tiles;
 using Redemption.Items.Placeable.Tiles;
 using Redemption.Items.Tools.PostML;
-using System;
 
 namespace Redemption.Tiles.Tiles
 {

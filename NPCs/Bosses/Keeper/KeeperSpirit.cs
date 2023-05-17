@@ -28,7 +28,6 @@ using Redemption.Biomes;
 using Redemption.Dusts;
 using ParticleLibrary;
 using Redemption.Particles;
-using System.Threading;
 
 namespace Redemption.NPCs.Bosses.Keeper
 {

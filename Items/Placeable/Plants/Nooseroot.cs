@@ -1,6 +1,5 @@
 using Terraria.ModLoader;
 using Redemption.Rarities;
-using Redemption.Tiles.Tiles;
 using Redemption.Tiles.Plants;
 
 namespace Redemption.Items.Placeable.Plants
@@ -14,7 +13,7 @@ namespace Redemption.Items.Placeable.Plants
         public override void SetDefaults()
 		{
             Item.DefaultToPlaceableTile(ModContent.TileType<NooserootVines>(), 0);
-            Item.maxStack = 9999;
+            Item.maxStack = Item.CommonMaxStack;
             Item.width = 18;
             Item.height = 32;
             Item.value = 200;

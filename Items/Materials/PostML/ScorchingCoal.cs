@@ -1,7 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Redemption.Base;
+using ParticleLibrary;
 using Redemption.Globals;
+using Redemption.Particles;
 using Redemption.Rarities;
 using Redemption.Tiles.Tiles;
 using Terraria;
@@ -24,9 +25,16 @@ namespace Redemption.Items.Materials.PostML
             Item.DefaultToPlaceableTile(ModContent.TileType<ScorchedCoalTile>(), 0);
             Item.width = 22;
             Item.height = 20;
-            Item.maxStack = 9999;
+            Item.maxStack = Item.CommonMaxStack;
             Item.value = 0;
             Item.rare = ModContent.RarityType<KingdomRarity>();
+        }
+        public override void PostUpdate()
+        {
+            if (!Main.rand.NextBool(30))
+                return;
+
+            ParticleManager.NewParticle(Item.Center, RedeHelper.SpreadUp(1), new EmberParticle(), Color.White, 1);
         }
         private float drawTimer;
         public override bool PreDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)

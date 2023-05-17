@@ -9,7 +9,6 @@ using Redemption.NPCs.Minibosses.Calavia;
 using Redemption.Projectiles.Misc;
 using Redemption.UI.ChatUI;
 using Redemption.WorldGeneration;
-using Redemption.WorldGeneration.Soulless;
 using Redemption.WorldGeneration.Space;
 using SubworldLibrary;
 using System;

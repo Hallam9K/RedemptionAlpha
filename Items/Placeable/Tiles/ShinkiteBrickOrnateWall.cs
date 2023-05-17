@@ -18,7 +18,7 @@ namespace Redemption.Items.Placeable.Tiles
             Item.DefaultToPlacableWall((ushort)ModContent.WallType<ShinkiteBrickOrnateWallTile>());
             Item.width = 24;
             Item.height = 24;
-            Item.maxStack = 9999;
+            Item.maxStack = Item.CommonMaxStack;
             Item.rare = ModContent.RarityType<TurquoiseRarity>();
         }
 

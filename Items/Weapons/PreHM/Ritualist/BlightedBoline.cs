@@ -1,6 +1,5 @@
 using Microsoft.Xna.Framework;
 using Redemption.DamageClasses;
-using Redemption.Globals;
 using Redemption.Globals.Player;
 using Redemption.Projectiles.Ritualist;
 using System.Collections.Generic;

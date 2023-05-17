@@ -1,8 +1,5 @@
 using Microsoft.Xna.Framework;
-using Redemption.Globals;
-using Redemption.Items.Materials.PreHM;
 using Redemption.Items.Weapons.PostML.Ranged;
-using Redemption.Items.Weapons.PreHM.Magic;
 using Redemption.Projectiles.Melee;
 using System.Collections.Generic;
 using Terraria;

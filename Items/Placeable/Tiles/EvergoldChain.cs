@@ -18,7 +18,7 @@ namespace Redemption.Items.Placeable.Tiles
             Item.DefaultToPlaceableTile(ModContent.TileType<EvergoldChainTile>());
             Item.width = 24;
             Item.height = 26;
-            Item.maxStack = 9999;
+            Item.maxStack = Item.CommonMaxStack;
             Item.rare = ModContent.RarityType<KingdomRarity>();
         }
         public override void AddRecipes()
@@ -45,7 +45,7 @@ namespace Redemption.Items.Placeable.Tiles
             Item.DefaultToPlaceableTile(ModContent.TileType<EvergoldChainSolidTile>());
             Item.width = 24;
             Item.height = 26;
-            Item.maxStack = 9999;
+            Item.maxStack = Item.CommonMaxStack;
             Item.rare = ModContent.RarityType<KingdomRarity>();
         }
         public override void AddRecipes()

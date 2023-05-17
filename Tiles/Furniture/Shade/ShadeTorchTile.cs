@@ -62,7 +62,7 @@ namespace Redemption.Tiles.Furniture.Shade
 			// Assets
 			if (!Main.dedServ)
 			{
-				flameTexture = ModContent.Request<Texture2D>("Redemption/Tiles/Furniture/Shade/ShadeTorchTile_Flame");
+				flameTexture = ModContent.Request<Texture2D>(Texture + "_Flame");
 			}
 		}
 

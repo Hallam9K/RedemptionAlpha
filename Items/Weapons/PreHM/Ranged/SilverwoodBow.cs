@@ -4,7 +4,6 @@ using Terraria;
 using Microsoft.Xna.Framework;
 using Redemption.Projectiles.Ranged;
 using System.Collections.Generic;
-using Redemption.Items.Weapons.PreHM.Magic;
 using Redemption.Items.Weapons.PreHM.Melee;
 
 namespace Redemption.Items.Weapons.PreHM.Ranged

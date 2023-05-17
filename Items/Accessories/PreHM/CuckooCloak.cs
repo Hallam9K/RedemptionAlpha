@@ -1,4 +1,3 @@
-using Redemption.Globals;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -10,7 +9,7 @@ namespace Redemption.Items.Accessories.PreHM
     {
         public override void SetStaticDefaults()
         {
-            SacrificeTotal = 1;
+            Item.ResearchUnlockCount = 1;
         }
         public override void SetDefaults()
         {

@@ -1,6 +1,5 @@
 using Microsoft.Xna.Framework;
 using Redemption.Buffs.Pets;
-using Redemption.Items.Accessories.HM;
 using Redemption.Projectiles.Pets;
 using Terraria;
 using Terraria.DataStructures;

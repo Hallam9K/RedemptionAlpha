@@ -1,7 +1,5 @@
 using Microsoft.Xna.Framework;
-using Redemption.Items.Placeable.Furniture.ElderWood;
 using Terraria;
-using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
@@ -9,7 +7,7 @@ using Terraria.ObjectData;
 
 namespace Redemption.Tiles.Furniture.ElderWood
 {
-	public class ElderWoodWorkbenchTile : ModTile
+    public class ElderWoodWorkbenchTile : ModTile
 	{
 		public override void SetStaticDefaults()
 		{

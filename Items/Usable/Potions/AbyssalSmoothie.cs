@@ -30,7 +30,7 @@ namespace Redemption.Items.Usable.Potions
         {
             Item.DefaultToFood(20, 44, ModContent.BuffType<WellFed4>(), 18000, true);
             Item.value = 8000;
-            Item.maxStack = 9999;
+            Item.maxStack = Item.CommonMaxStack;
             Item.rare = ModContent.RarityType<SoullessRarity>();
         }
         public override bool? UseItem(Player player)

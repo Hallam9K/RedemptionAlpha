@@ -17,7 +17,7 @@ namespace Redemption.Items.Placeable.Furniture.Silverwood
             Item.DefaultToPlaceableTile(ModContent.TileType<SilverwoodSofaTile>());
             Item.width = 40;
             Item.height = 24;
-            Item.maxStack = 9999;
+            Item.maxStack = Item.CommonMaxStack;
             Item.value = 60;
             Item.rare = ModContent.RarityType<KingdomRarity>();
         }

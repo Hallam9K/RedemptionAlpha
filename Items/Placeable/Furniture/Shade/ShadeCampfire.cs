@@ -19,7 +19,7 @@ namespace Redemption.Items.Placeable.Furniture.Shade
 			Item.DefaultToPlaceableTile(ModContent.TileType<ShadeCampfireTile>(), 0);
 			Item.width = 32;
 			Item.height = 18;
-			Item.maxStack = 9999;
+			Item.maxStack = Item.CommonMaxStack;
 			Item.value = Item.sellPrice(0, 0, 0, 0);
             Item.rare = ModContent.RarityType<SoullessRarity>();
         }

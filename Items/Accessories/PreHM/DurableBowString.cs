@@ -1,6 +1,4 @@
 using Redemption.BaseExtension;
-using Redemption.Items.Accessories.PostML;
-using Redemption.Items.Materials.PreHM;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;

@@ -19,9 +19,7 @@ using Redemption.Biomes;
 using ParticleLibrary;
 using Redemption.Particles;
 using Terraria.DataStructures;
-using System;
 using Redemption.Items.Usable;
-using Terraria.UI;
 using SubworldLibrary;
 using Redemption.WorldGeneration.Soulless;
 

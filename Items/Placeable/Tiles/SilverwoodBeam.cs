@@ -16,7 +16,7 @@ namespace Redemption.Items.Placeable.Tiles
             Item.DefaultToPlaceableTile(ModContent.TileType<SilverwoodBeamTile>(), 0);
             Item.width = 16;
             Item.height = 18;
-            Item.maxStack = 9999;
+            Item.maxStack = Item.CommonMaxStack;
             Item.rare = ModContent.RarityType<KingdomRarity>();
         }
         public override void AddRecipes()

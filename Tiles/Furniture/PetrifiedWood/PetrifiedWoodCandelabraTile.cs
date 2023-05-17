@@ -4,8 +4,6 @@ using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ID;
 using Terraria.ObjectData;
-using Redemption.Items.Placeable.Furniture.PetrifiedWood;
-using Terraria.DataStructures;
 using Terraria.Enums;
 
 namespace Redemption.Tiles.Furniture.PetrifiedWood

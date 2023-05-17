@@ -5,7 +5,6 @@ using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 using Terraria.DataStructures;
-using Redemption.Items.Placeable.Furniture.Lab;
 using Redemption.Dusts.Tiles;
 
 namespace Redemption.Tiles.Furniture.Lab

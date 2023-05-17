@@ -6,7 +6,6 @@ using Redemption.Globals;
 using Redemption.Items.Materials.PreHM;
 using Redemption.Items.Usable.Summons;
 using Redemption.Tiles.Tiles;
-using ReLogic.Content;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;

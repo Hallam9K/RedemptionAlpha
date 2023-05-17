@@ -4,16 +4,13 @@ using Redemption.Items.Usable;
 using Redemption.Rarities;
 using System.Collections.Generic;
 using Terraria;
-using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Redemption.BaseExtension;
 using System.Linq;
 using Redemption.NPCs.Critters;
 using Terraria.Audio;
-using Microsoft.Xna.Framework.Graphics;
 using Redemption.Items.Accessories.PreHM;
-using ReLogic.Content;
 using Terraria.GameContent.ItemDropRules;
 using Redemption.Items.Weapons.HM.Summon;
 using Redemption.Biomes;
@@ -27,9 +24,7 @@ using Redemption.Items.Placeable.Plants;
 using Redemption.Items.Quest.KingSlayer;
 using Redemption.Items.Usable.Summons;
 using Redemption.Items.Weapons.PreHM.Summon;
-using Terraria.ModLoader.Core;
 using Terraria.Localization;
-using SubworldLibrary;
 
 namespace Redemption.Globals
 {

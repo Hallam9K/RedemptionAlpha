@@ -1,5 +1,4 @@
-﻿using Microsoft.Xna.Framework;
-using Redemption.Globals;
+﻿using Redemption.Globals;
 using Redemption.Tiles.Plants;
 using Terraria;
 using Terraria.ID;
@@ -19,7 +18,7 @@ namespace Redemption.Items.Placeable.Plants
             Item.DefaultToPlaceableTile(ModContent.TileType<ToxicAngelTile>());
             Item.width = 26;
             Item.height = 26;
-            Item.maxStack = 9999;
+            Item.maxStack = Item.CommonMaxStack;
             Item.rare = ItemRarityID.Lime;
         }
         public override void HoldItem(Player player)

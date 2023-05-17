@@ -29,7 +29,6 @@ using Redemption.Buffs.NPCBuffs;
 using ParticleLibrary;
 using Redemption.Particles;
 using Redemption.Biomes;
-using System.Threading;
 using Redemption.WorldGeneration.Soulless;
 using SubworldLibrary;
 

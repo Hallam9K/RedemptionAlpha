@@ -1,12 +1,10 @@
 using Microsoft.Xna.Framework;
 using Redemption.Buffs.Debuffs;
-using Redemption.Items.Usable.Summons;
 using Terraria;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
-using Terraria.DataStructures;
 using Terraria.GameContent.Metadata;
 
 namespace Redemption.Tiles.Plants

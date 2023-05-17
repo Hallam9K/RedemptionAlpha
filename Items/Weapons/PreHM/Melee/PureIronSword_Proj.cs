@@ -10,7 +10,6 @@ using Redemption.Projectiles.Melee;
 using Redemption.Base;
 using Redemption.BaseExtension;
 using Redemption.Buffs.Debuffs;
-using System.Threading;
 using Redemption.Effects;
 using System.Collections.Generic;
 

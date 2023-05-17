@@ -28,7 +28,7 @@ namespace Redemption.Items.Usable.Potions
         {
             Item.DefaultToFood(38, 26, BuffID.WellFed, 54000, true);
             Item.value = 2500;
-            Item.maxStack = 9999;
+            Item.maxStack = Item.CommonMaxStack;
             Item.rare = ItemRarityID.Blue;
         }
         public override void AddRecipes()

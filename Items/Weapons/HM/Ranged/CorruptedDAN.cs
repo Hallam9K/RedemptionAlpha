@@ -2,7 +2,6 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.BaseExtension;
 using Redemption.Items.Materials.HM;
-using Redemption.Items.Weapons.HM.Ammo;
 using Redemption.Projectiles.Ranged;
 using Terraria;
 using Terraria.ID;

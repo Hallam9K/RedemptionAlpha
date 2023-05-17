@@ -17,7 +17,7 @@ namespace Redemption.Items.Placeable.Trophies
 			Item.DefaultToPlaceableTile(ModContent.TileType<OmegaObliteratorTrophyTile>(), 0);
 			Item.width = 32;
 			Item.height = 32;
-			Item.maxStack = 9999;
+			Item.maxStack = Item.CommonMaxStack;
 			Item.value = Item.sellPrice(0, 1, 33, 0);
 			Item.rare = ItemRarityID.Blue;
 		}

@@ -1,13 +1,10 @@
-using System;
 using Microsoft.Xna.Framework;
 using Terraria;
-using Terraria.Enums;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Redemption.Items.Placeable.Furniture.Silverwood;
-using Redemption.Items.Placeable.Furniture.PetrifiedWood;
 
 namespace Redemption.Tiles.Furniture.Silverwood
 {

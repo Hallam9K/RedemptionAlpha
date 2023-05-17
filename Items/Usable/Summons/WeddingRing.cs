@@ -38,10 +38,10 @@ namespace Redemption.Items.Usable.Summons
             Item.consumable = false;
         }
 
-		public override bool CanUseItem(Player player)
-		{
-			return (!Main.dayTime || (player.InModBiome<SoullessBiome>() && RedeBossDowned.keeperSaved)) && !NPC.AnyNPCs(ModContent.NPCType<Keeper>()) && !NPC.AnyNPCs(ModContent.NPCType<SkullDigger>()) && !NPC.AnyNPCs(ModContent.NPCType<KeeperSpirit>()) && !NPC.AnyNPCs(ModContent.NPCType<Keeper_Soulless>());
-		}
+        public override bool CanUseItem(Player player)
+        {
+            return (!Main.dayTime || (player.InModBiome<SoullessBiome>() && RedeBossDowned.keeperSaved)) && !NPC.AnyNPCs(ModContent.NPCType<Keeper>()) && !NPC.AnyNPCs(ModContent.NPCType<SkullDigger>()) && !NPC.AnyNPCs(ModContent.NPCType<KeeperSpirit>()) && !NPC.AnyNPCs(ModContent.NPCType<Keeper_Soulless>());
+        }
 
         public override bool? UseItem(Player player)
         {

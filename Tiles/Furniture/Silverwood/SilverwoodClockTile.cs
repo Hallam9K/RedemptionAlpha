@@ -1,10 +1,8 @@
 using Microsoft.Xna.Framework;
-using Redemption.Items.Placeable.Furniture.ElderWood;
 using Redemption.Items.Placeable.Furniture.Silverwood;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
-using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 

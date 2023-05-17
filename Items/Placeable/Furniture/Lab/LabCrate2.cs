@@ -1,6 +1,5 @@
 using Redemption.Items.Accessories.HM;
 using Redemption.Items.Accessories.PostML;
-using Redemption.Items.Armor.PreHM.PureIron;
 using Redemption.Items.Lore;
 using Redemption.Items.Materials.HM;
 using Redemption.Items.Materials.PostML;

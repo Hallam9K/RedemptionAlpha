@@ -20,7 +20,6 @@ using Redemption.Particles;
 using Terraria.DataStructures;
 using System;
 using Redemption.Items.Usable;
-using System.Threading;
 
 namespace Redemption.NPCs.Soulless
 {

@@ -20,7 +20,7 @@ namespace Redemption.Items.Placeable.Furniture.Silverwood
             Item.DefaultToPlaceableTile(ModContent.TileType<SilverwoodCrateTile>());
             Item.width = 32;
             Item.height = 32;
-            Item.maxStack = 9999;
+            Item.maxStack = Item.CommonMaxStack;
             Item.rare = ModContent.RarityType<KingdomRarity>();
         }
         public override void ModifyResearchSorting(ref ContentSamples.CreativeHelper.ItemGroup itemGroup)

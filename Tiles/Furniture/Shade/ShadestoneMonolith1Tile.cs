@@ -15,7 +15,7 @@ namespace Redemption.Tiles.Furniture.Shade
     {
         public Asset<Texture2D> GlowTexture;
 
-        public virtual string GlowTextureName => "Redemption/Tiles/Furniture/Shade/ShadestoneMonolith1Tile_Glow";
+        public virtual string GlowTextureName => Texture + "_Glow";
         public override void Load()
         {
             if (!Main.dedServ)

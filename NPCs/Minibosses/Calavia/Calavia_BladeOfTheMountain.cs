@@ -11,7 +11,6 @@ using Redemption.Base;
 using Redemption.BaseExtension;
 using Redemption.Buffs.NPCBuffs;
 using Redemption.Projectiles.Magic;
-using Redemption.Globals.NPC;
 
 namespace Redemption.NPCs.Minibosses.Calavia
 {

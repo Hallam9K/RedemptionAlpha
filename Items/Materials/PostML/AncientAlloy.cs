@@ -16,7 +16,7 @@ namespace Redemption.Items.Materials.PostML
             Item.DefaultToPlaceableTile(ModContent.TileType<AncientAlloyTile>(), 0);
             Item.width = 30;
             Item.height = 24;
-            Item.maxStack = 9999;
+            Item.maxStack = Item.CommonMaxStack;
             Item.value = Item.sellPrice(0, 1, 40, 0);
             Item.rare = ModContent.RarityType<KingdomRarity>();
         }

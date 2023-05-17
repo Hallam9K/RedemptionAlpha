@@ -6,11 +6,17 @@ using System;
 using Redemption.Items.Materials.PostML;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria.DataStructures;
+using ParticleLibrary;
+using Redemption.Globals;
+using Redemption.Particles;
+using ReLogic.Content;
 
 namespace Redemption.Tiles.Tiles
 {
     public class ScorchedCoalTile : ModTile
     {
+        private Asset<Texture2D> flameTexture;
+        private Asset<Texture2D> glowTexture;
         public override void SetStaticDefaults()
         {
             Main.tileSolid[Type] = false;
@@ -19,23 +25,35 @@ namespace Redemption.Tiles.Tiles
             Main.tileBlockLight[Type] = false;
             TileID.Sets.IsBeam[Type] = true;
             TileID.Sets.Falling[Type] = true;
-            DustType = DustID.RedTorch;
+            DustType = DustID.Torch;
             HitSound = SoundID.Tink;
             AddMapEntry(new Color(28, 28, 35));
             ItemDrop = ModContent.ItemType<ScorchingCoal>();
+            if (!Main.dedServ)
+            {
+                flameTexture = ModContent.Request<Texture2D>(Texture + "_Glow2");
+                glowTexture = ModContent.Request<Texture2D>(Texture + "_Glow");
+            }
         }
         public override void NumDust(int i, int j, bool fail, ref int num) => num = fail ? 1 : 3;
         public override void NearbyEffects(int i, int j, bool closer)
         {
-            if (closer)
+            if (closer && Main.rand.NextBool(40))
             {
-                if (Main.rand.NextBool(40))
-                {
-                    int d = Dust.NewDust(new Vector2(i * 16, j * 16 - 10), Main.rand.Next(-2, 2), Main.rand.Next(-2, 2), DustID.RedTorch, 0.0f, -1, 0, new Color(), 0.95f);
-                    Main.dust[d].velocity *= .8f;
-                    Main.dust[d].noGravity = true;
-                }
+                ParticleManager.NewParticle(new Vector2(i * 16, j * 16) + new Vector2(Main.rand.Next(0, 16), Main.rand.Next(0, 16)), RedeHelper.SpreadUp(1), new EmberParticle(), Color.White, 1);
             }
+        }
+        private float drawTimer;
+        public override bool PreDraw(int i, int j, SpriteBatch spriteBatch)
+        {
+            Tile tile = Main.tile[i, j];
+            Vector2 zero = new(Main.offScreenRange, Main.offScreenRange);
+            if (Main.drawToScreen)
+                zero = Vector2.Zero;
+
+            int height = tile.TileFrameY == 36 ? 18 : 16;
+            RedeDraw.DrawTreasureBagEffect(spriteBatch, flameTexture.Value, ref drawTimer, new Vector2((i * 16) - (int)Main.screenPosition.X, (j * 16) - (int)Main.screenPosition.Y) + zero, new Rectangle(tile.TileFrameX, tile.TileFrameY, 16, height), RedeColor.HeatColour, 0, Vector2.Zero, 1f, 0);
+            return true;
         }
         public override void PostDraw(int i, int j, SpriteBatch spriteBatch)
         {
@@ -45,7 +63,7 @@ namespace Redemption.Tiles.Tiles
                 zero = Vector2.Zero;
 
             int height = tile.TileFrameY == 36 ? 18 : 16;
-            Main.spriteBatch.Draw(ModContent.Request<Texture2D>(Texture + "_Glow").Value, new Vector2((i * 16) - (int)Main.screenPosition.X, (j * 16) - (int)Main.screenPosition.Y) + zero, new Rectangle(tile.TileFrameX, tile.TileFrameY, 16, height), RedeColor.HeatColour, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
+            Main.spriteBatch.Draw(glowTexture.Value, new Vector2((i * 16) - (int)Main.screenPosition.X, (j * 16) - (int)Main.screenPosition.Y) + zero, new Rectangle(tile.TileFrameX, tile.TileFrameY, 16, height), RedeColor.HeatColour, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
         }
         public override bool TileFrame(int i, int j, ref bool resetFrame, ref bool noBreak)
         {
@@ -129,7 +147,7 @@ namespace Redemption.Tiles.Tiles
             Projectile.hostile = false;
             Projectile.penetrate = -1;
             tileType = ModContent.TileType<ScorchedCoalTile>();
-            dustType = DustID.RedTorch;
+            dustType = DustID.Torch;
         }
 
         public override void AI()

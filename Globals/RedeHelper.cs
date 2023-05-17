@@ -21,7 +21,6 @@ using Redemption.Buffs.NPCBuffs;
 using Redemption.Biomes;
 using Redemption.Globals.World;
 using Redemption.Items.Accessories.HM;
-using Redemption.Items.Accessories.PostML;
 
 namespace Redemption.Globals
 {

@@ -1,6 +1,4 @@
 using Microsoft.Xna.Framework;
-using Redemption.Items.Accessories.PostML;
-using Redemption.Items.Weapons.PostML.Melee;
 using Redemption.Projectiles.Magic;
 using Terraria;
 using Terraria.ID;

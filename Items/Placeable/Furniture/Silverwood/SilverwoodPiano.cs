@@ -1,4 +1,3 @@
-using MonoMod.RuntimeDetour;
 using Redemption.Items.Materials.PostML;
 using Redemption.Rarities;
 using Redemption.Tiles.Furniture.Silverwood;
@@ -18,7 +17,7 @@ namespace Redemption.Items.Placeable.Furniture.Silverwood
             Item.DefaultToPlaceableTile(ModContent.TileType<SilverwoodPianoTile>());
             Item.width = 34;
             Item.height = 32;
-            Item.maxStack = 9999;
+            Item.maxStack = Item.CommonMaxStack;
             Item.value = 2000;
             Item.rare = ModContent.RarityType<KingdomRarity>();
         }

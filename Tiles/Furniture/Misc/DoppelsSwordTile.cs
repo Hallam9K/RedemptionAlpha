@@ -1,12 +1,10 @@
 using Microsoft.Xna.Framework;
 using Redemption.Dusts.Tiles;
-using Redemption.Items.Placeable.Furniture.Misc;
 using Terraria;
 using Terraria.Enums;
 using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
-using Terraria.DataStructures;
 
 namespace Redemption.Tiles.Furniture.Misc
 {

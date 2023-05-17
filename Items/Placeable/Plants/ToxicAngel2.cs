@@ -1,5 +1,4 @@
 ﻿using Redemption.Rarities;
-using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Redemption.Items.Placeable.Plants
@@ -16,7 +15,7 @@ namespace Redemption.Items.Placeable.Plants
         {
             Item.width = 26;
             Item.height = 26;
-            Item.maxStack = 9999;
+            Item.maxStack = Item.CommonMaxStack;
             Item.rare = ModContent.RarityType<KingdomRarity>();
         }
     }

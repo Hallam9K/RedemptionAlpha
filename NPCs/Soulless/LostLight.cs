@@ -15,7 +15,6 @@ using Redemption.Particles;
 using Redemption.Globals.NPC;
 using Redemption.Tiles.Tiles;
 using Terraria.Audio;
-using Redemption.BaseExtension;
 
 namespace Redemption.NPCs.Soulless
 {

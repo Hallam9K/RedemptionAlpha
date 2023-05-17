@@ -16,7 +16,7 @@ namespace Redemption.Items.Placeable.Furniture.SlayerShip
             Item.DefaultToPlaceableTile(ModContent.TileType<KSBattlestationTile>(), 0);
             Item.width = 60;
             Item.height = 62;
-            Item.maxStack = 9999;
+            Item.maxStack = Item.CommonMaxStack;
             Item.rare = ItemRarityID.LightPurple;
 		}
     }

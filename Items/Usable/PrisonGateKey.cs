@@ -18,7 +18,7 @@ namespace Redemption.Items.Usable
             Item.width = 14;
             Item.height = 26;
             Item.rare = ItemRarityID.Blue;
-            Item.maxStack = 9999;
+            Item.maxStack = Item.CommonMaxStack;
         }
         public override bool OnPickup(Player player)
         {
@@ -45,7 +45,7 @@ namespace Redemption.Items.Usable
             Item.width = 18;
             Item.height = 32;
             Item.rare = ItemRarityID.Blue;
-            Item.maxStack = 9999;
+            Item.maxStack = Item.CommonMaxStack;
         }
         public override bool OnPickup(Player player)
         {

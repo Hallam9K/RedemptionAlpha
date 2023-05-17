@@ -60,7 +60,7 @@ namespace Redemption.Tiles.Furniture.Kingdom
 			// Assets
 			if (!Main.dedServ)
 			{
-				flameTexture = ModContent.Request<Texture2D>("Redemption/Tiles/Furniture/Kingdom/KingdomTorchTile_Flame");
+				flameTexture = ModContent.Request<Texture2D>(Texture + "_Flame");
 			}
 		}
 

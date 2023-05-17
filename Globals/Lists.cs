@@ -39,128 +39,15 @@ using Redemption.NPCs.FowlMorning;
 using Redemption.Items.Usable.Summons;
 using Redemption.Items.Quest.KingSlayer;
 using Redemption.Items.Placeable.Plants;
-using Redemption.Items.Weapons.PreHM.Summon;
 using Redemption.NPCs.Minibosses.Calavia;
 using Redemption.Tiles.Furniture.Misc;
+using Redemption.Tiles.Furniture.Silverwood;
 
 namespace Redemption.Globals
 {
     public static class TileLists
     {
         #region Tile Lists
-
-        public static List<int> CorruptTiles = new()
-        {
-            23,
-            25,
-            112,
-            163,
-            398,
-            400
-        };
-
-        public static List<int> CrimsonTiles = new()
-        {
-            199,
-            203,
-            234,
-            200,
-            399,
-            401,
-            205
-        };
-
-        public static List<int> EvilTiles = new()
-        {
-            23,
-            25,
-            112,
-            163,
-            398,
-            400,
-            199,
-            203,
-            234,
-            200,
-            399,
-            401,
-            205
-        };
-
-        public static List<int> HallowTiles = new()
-        {
-            109,
-            117,
-            116,
-            164,
-            402,
-            403,
-            115
-        };
-
-        public static List<int> CloudTiles = new()
-        {
-            189,
-            196,
-            460
-        };
-
-        public static List<int> HellTiles = new()
-        {
-            57,
-            198,
-            58,
-            76,
-            75
-        };
-
-        public static List<int> SnowTiles = new()
-        {
-            161,
-            206,
-            164,
-            200,
-            163,
-            162,
-            147,
-            148
-        };
-
-        public static List<int> DesertTiles = new()
-        {
-            53,
-            396,
-            397,
-            403,
-            402,
-            401,
-            399,
-            400,
-            398
-        };
-
-        public static List<int> JungleTiles = new()
-        {
-            59,
-            120,
-            60,
-        };
-
-        public static List<int> DirtTiles = new()
-        {
-            TileID.Dirt,
-            59,
-            40
-        };
-
-        public static List<int> NatureTiles = new()
-        {
-            2,
-            59,
-            120,
-            60
-        };
-
         public static List<int> BlacklistTiles = new()
         {
             TileID.BlueDungeonBrick,
@@ -186,7 +73,8 @@ namespace Redemption.Globals
             ModContent.TileType<ElderWoodDoorClosed>(),
             ModContent.TileType<LabDoorClosed>(),
             ModContent.TileType<PetrifiedWoodDoorClosed>(),
-            ModContent.TileType<ShadestoneDoorClosed>()
+            ModContent.TileType<ShadestoneDoorClosed>(),
+            ModContent.TileType<SilverwoodDoorClosed>()
         };
 
         public static List<int> AncientTileArray = new()

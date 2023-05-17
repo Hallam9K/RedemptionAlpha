@@ -8,13 +8,7 @@ using Terraria.ID;
 using System.Linq;
 using Terraria.Enums;
 using Redemption.Buffs;
-using Microsoft.Xna.Framework.Graphics;
-using Redemption.NPCs.Minibosses.Calavia;
-using System.Threading;
 using Terraria.Audio;
-using Redemption.Items.Weapons.PreHM.Melee;
-using Redemption.NPCs.Friendly.SpiritSummons;
-using Redemption.Globals.NPC;
 
 namespace Redemption.Globals
 {

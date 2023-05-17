@@ -17,7 +17,7 @@ namespace Redemption.Items.Placeable.Containers
             Item.DefaultToPlaceableTile(ModContent.TileType<SilverwoodChestTile>(), 0);
             Item.width = 32;
             Item.height = 30;
-            Item.maxStack = 9999;
+            Item.maxStack = Item.CommonMaxStack;
             Item.value = 2000;
             Item.rare = ModContent.RarityType<KingdomRarity>();
         }

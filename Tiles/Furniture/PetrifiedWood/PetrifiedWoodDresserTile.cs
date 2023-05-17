@@ -1,8 +1,6 @@
-using System;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
-using Terraria.Enums;
 using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
@@ -10,7 +8,6 @@ using Terraria.DataStructures;
 using Redemption.Items.Placeable.Furniture.PetrifiedWood;
 using Terraria.Audio;
 using Terraria.GameContent.ObjectInteractions;
-using Redemption.Items.Placeable.Furniture.ElderWood;
 
 namespace Redemption.Tiles.Furniture.PetrifiedWood
 {

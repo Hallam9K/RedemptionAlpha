@@ -16,7 +16,7 @@ namespace Redemption.Items.Placeable.Plants
             Item.DefaultToPlaceableTile(ModContent.TileType<PaleBrittlecapTile>());
             Item.width = 20;
             Item.height = 22;
-            Item.maxStack = 9999;
+            Item.maxStack = Item.CommonMaxStack;
             Item.rare = ItemRarityID.Gray;
 		}
     }
@@ -32,7 +32,7 @@ namespace Redemption.Items.Placeable.Plants
             Item.DefaultToPlaceableTile(ModContent.TileType<PaleBrittlecapTile2>());
             Item.width = 30;
             Item.height = 32;
-            Item.maxStack = 9999;
+            Item.maxStack = Item.CommonMaxStack;
             Item.rare = ItemRarityID.Gray;
         }
     }

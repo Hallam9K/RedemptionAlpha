@@ -1,5 +1,4 @@
 using Microsoft.Xna.Framework;
-using Redemption.Items.Materials.PreHM;
 using Terraria;
 using Terraria.ID;
 using Terraria.Localization;

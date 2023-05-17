@@ -1,5 +1,4 @@
 ﻿using Redemption.Rarities;
-using Redemption.Tiles.Ores;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -18,7 +17,7 @@ namespace Redemption.Items.Materials.PostML
             //Item.DefaultToPlaceableTile(ModContent.TileType<AncientSlateGemTile>(), 0);
             Item.width = 24;
             Item.height = 16;
-            Item.maxStack = 9999;
+            Item.maxStack = Item.CommonMaxStack;
             Item.value = Item.sellPrice(0, 0, 25, 0);
             Item.rare = ModContent.RarityType<KingdomRarity>();
         }

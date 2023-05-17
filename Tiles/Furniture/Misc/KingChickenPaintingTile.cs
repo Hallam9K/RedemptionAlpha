@@ -2,9 +2,7 @@ using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
-using Terraria.DataStructures;
 using Terraria.ID;
-using Redemption.Items.Placeable.Furniture.Misc;
 using Terraria.Localization;
 
 namespace Redemption.Tiles.Furniture.Misc

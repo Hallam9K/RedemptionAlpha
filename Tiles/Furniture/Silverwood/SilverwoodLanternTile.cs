@@ -6,7 +6,6 @@ using Terraria.ModLoader;
 using Terraria.ObjectData;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Items.Placeable.Furniture.Silverwood;
-using Redemption.Items.Placeable.Furniture.ElderWood;
 using Terraria.DataStructures;
 
 namespace Redemption.Tiles.Furniture.Silverwood

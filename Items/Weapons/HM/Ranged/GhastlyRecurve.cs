@@ -8,7 +8,6 @@ using Terraria.DataStructures;
 using Terraria.Audio;
 using Redemption.Globals;
 using Terraria.Localization;
-using Redemption.Base;
 
 namespace Redemption.Items.Weapons.HM.Ranged
 {

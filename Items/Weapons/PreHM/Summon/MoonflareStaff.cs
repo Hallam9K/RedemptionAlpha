@@ -6,7 +6,6 @@ using Terraria.DataStructures;
 using Redemption.Buffs.Minions;
 using Redemption.Projectiles.Minions;
 using Redemption.Items.Materials.PreHM;
-using Terraria.Localization;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.BaseExtension;

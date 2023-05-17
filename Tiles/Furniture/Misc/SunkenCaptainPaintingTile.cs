@@ -1,8 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Redemption.Items.Placeable.Furniture.Misc;
 using Terraria;
-using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
@@ -54,7 +52,7 @@ namespace Redemption.Tiles.Furniture.Misc
             int height = tile.TileFrameY % AnimationFrameHeight >= 16 ? 18 : 16;
             int animate = Main.tileFrame[Type] * AnimationFrameHeight;
             Rectangle frame = new(tile.TileFrameX, tile.TileFrameY + animate, 16, height);
-            Main.spriteBatch.Draw(ModContent.Request<Texture2D>("Redemption/Tiles/Furniture/Misc/SunkenCaptainPaintingTile_Glow").Value, new Vector2((i * 16) - (int)Main.screenPosition.X, (j * 16) - (int)Main.screenPosition.Y) + zero, frame, Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
+            Main.spriteBatch.Draw(ModContent.Request<Texture2D>(Texture + "_Glow").Value, new Vector2((i * 16) - (int)Main.screenPosition.X, (j * 16) - (int)Main.screenPosition.Y) + zero, frame, Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
         }
     }
 }

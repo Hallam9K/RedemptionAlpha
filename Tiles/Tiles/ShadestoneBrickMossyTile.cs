@@ -6,7 +6,6 @@ using Redemption.Tiles.Plants;
 using Redemption.Dusts.Tiles;
 using Redemption.Items.Tools.PostML;
 using Redemption.Dusts;
-using System;
 using Terraria.ID;
 
 namespace Redemption.Tiles.Tiles

@@ -1,12 +1,11 @@
 using Microsoft.Xna.Framework;
 using Redemption.Dusts.Tiles;
-using Redemption.Items.Placeable.Tiles;
 using Terraria;
 using Terraria.ModLoader;
 
 namespace Redemption.Walls
 {
-	public class AncientHallPillarWallTile : ModWall
+    public class AncientHallPillarWallTile : ModWall
 	{
 		public override void SetStaticDefaults()
 		{

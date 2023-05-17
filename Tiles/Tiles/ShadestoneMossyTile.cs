@@ -8,7 +8,6 @@ using Redemption.Items.Placeable.Tiles;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria.DataStructures;
 using Redemption.Biomes;
-using System;
 using Terraria.ID;
 
 namespace Redemption.Tiles.Tiles

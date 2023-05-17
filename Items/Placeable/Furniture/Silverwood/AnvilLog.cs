@@ -20,7 +20,7 @@ namespace Redemption.Items.Placeable.Furniture.Silverwood
             Item.DefaultToPlaceableTile(ModContent.TileType<AnvilLogTile>(), 0);
             Item.width = 32;
             Item.height = 26;
-            Item.maxStack = 9999;
+            Item.maxStack = Item.CommonMaxStack;
             Item.value = 250;
             Item.rare = ModContent.RarityType<KingdomRarity>();
         }

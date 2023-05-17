@@ -1,5 +1,3 @@
-using Redemption.Items.Accessories.PreHM;
-using Redemption.Items.Weapons.PostML.Melee;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;

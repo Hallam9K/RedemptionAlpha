@@ -15,7 +15,7 @@ namespace Redemption.Items.Placeable.Furniture.Shade
             Item.DefaultToPlaceableTile(ModContent.TileType<WaxCandlesTile>(), 0);
             Item.width = 14;
             Item.height = 20;
-            Item.maxStack = 9999;
+            Item.maxStack = Item.CommonMaxStack;
             Item.rare = ItemRarityID.Blue; 
         }
     }

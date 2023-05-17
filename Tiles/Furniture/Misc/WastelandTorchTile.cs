@@ -61,7 +61,7 @@ namespace Redemption.Tiles.Furniture.Misc
 			// Assets
 			if (!Main.dedServ)
 			{
-				flameTexture = ModContent.Request<Texture2D>("Redemption/Tiles/Furniture/Misc/WastelandTorchTile_Flame");
+				flameTexture = ModContent.Request<Texture2D>(Texture + "_Flame");
 			}
 		}
 

@@ -1,10 +1,8 @@
 using Microsoft.Xna.Framework;
-using Redemption.Items.Placeable.Banners;
 using Redemption.NPCs.Wasteland;
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
-using Terraria.DataStructures;
 using Terraria.Localization;
 
 namespace Redemption.Tiles.Banners

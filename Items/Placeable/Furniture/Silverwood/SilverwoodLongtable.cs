@@ -17,7 +17,7 @@ namespace Redemption.Items.Placeable.Furniture.Silverwood
             Item.DefaultToPlaceableTile(ModContent.TileType<SilverwoodLongtableTile_End>());
             Item.width = 18;
             Item.height = 34;
-            Item.maxStack = 9999;
+            Item.maxStack = Item.CommonMaxStack;
             Item.value = 500;
             Item.rare = ModContent.RarityType<KingdomRarity>();
         }
@@ -41,7 +41,7 @@ namespace Redemption.Items.Placeable.Furniture.Silverwood
             Item.DefaultToPlaceableTile(ModContent.TileType<SilverwoodLongtableTile_Mid>());
             Item.width = 32;
             Item.height = 22;
-            Item.maxStack = 9999;
+            Item.maxStack = Item.CommonMaxStack;
             Item.value = 500;
             Item.rare = ModContent.RarityType<KingdomRarity>();
         }
@@ -65,7 +65,7 @@ namespace Redemption.Items.Placeable.Furniture.Silverwood
             Item.DefaultToPlaceableTile(ModContent.TileType<SilverwoodLongtableTile_Mid2>());
             Item.width = 32;
             Item.height = 34;
-            Item.maxStack = 9999;
+            Item.maxStack = Item.CommonMaxStack;
             Item.value = 500;
             Item.rare = ModContent.RarityType<KingdomRarity>();
         }

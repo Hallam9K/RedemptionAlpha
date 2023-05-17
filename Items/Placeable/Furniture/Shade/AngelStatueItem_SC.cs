@@ -18,7 +18,7 @@ namespace Redemption.Items.Placeable.Furniture.Shade
 			Item.DefaultToPlaceableTile(ModContent.TileType<AngelStatue_SC>(), 0);
 			Item.width = 44;
 			Item.height = 50;
-			Item.maxStack = 9999;
+			Item.maxStack = Item.CommonMaxStack;
 			Item.rare = ItemRarityID.Blue;
 		}
 	}

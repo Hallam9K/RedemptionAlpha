@@ -1,7 +1,5 @@
 using Microsoft.Xna.Framework;
-using Redemption.Items.Placeable.Furniture.PetrifiedWood;
 using Redemption.Items.Placeable.Furniture.Silverwood;
-using Redemption.Tiles.Furniture.PetrifiedWood;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.Enums;

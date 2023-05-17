@@ -19,7 +19,7 @@ namespace Redemption.Items.Placeable.Furniture.Kingdom
 			Item.DefaultToPlaceableTile(ModContent.TileType<SilverwoodCampfireTile>(), 0);
 			Item.width = 30;
 			Item.height = 16;
-			Item.maxStack = 9999;
+			Item.maxStack = Item.CommonMaxStack;
 			Item.value = Item.sellPrice(0, 0, 0, 0);
             Item.rare = ModContent.RarityType<KingdomRarity>();
         }

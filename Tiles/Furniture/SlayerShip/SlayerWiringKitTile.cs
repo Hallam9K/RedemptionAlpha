@@ -1,5 +1,4 @@
 using Microsoft.Xna.Framework;
-using Redemption.Items.Quest.KingSlayer;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.Enums;

@@ -1,5 +1,4 @@
-﻿using Redemption.Globals;
-using Redemption.Items.Materials.PostML;
+﻿using Redemption.Items.Materials.PostML;
 using Redemption.Rarities;
 using Redemption.Tiles.Tiles;
 using Terraria.ID;
@@ -18,7 +17,7 @@ namespace Redemption.Items.Placeable.Tiles
             Item.DefaultToPlaceableTile(ModContent.TileType<AncientChainTile>());
             Item.width = 16;
             Item.height = 16;
-            Item.maxStack = 9999;
+            Item.maxStack = Item.CommonMaxStack;
             Item.rare = ModContent.RarityType<KingdomRarity>();
         }
         public override void AddRecipes()
@@ -45,7 +44,7 @@ namespace Redemption.Items.Placeable.Tiles
             Item.DefaultToPlaceableTile(ModContent.TileType<AncientChainSolidTile>());
             Item.width = 16;
             Item.height = 16;
-            Item.maxStack = 9999;
+            Item.maxStack = Item.CommonMaxStack;
             Item.rare = ModContent.RarityType<KingdomRarity>();
         }
         public override void AddRecipes()

@@ -1,5 +1,10 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using ParticleLibrary;
+using Redemption.Globals;
 using Redemption.Items.Materials.PostML;
+using Redemption.Particles;
+using ReLogic.Content;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.Enums;
@@ -11,6 +16,7 @@ namespace Redemption.Tiles.Furniture.Silverwood
 {
     public class SilverwoodMinecartTiles : ModTile
     {
+        private Asset<Texture2D> flameTexture;
         public override void SetStaticDefaults()
         {
             Main.tileFrameImportant[Type] = true;
@@ -32,6 +38,33 @@ namespace Redemption.Tiles.Furniture.Silverwood
             AddMapEntry(new Color(228, 213, 173));
             MinPick = 350;
             MineResist = 8f;
+            if (!Main.dedServ)
+                flameTexture = ModContent.Request<Texture2D>(Texture + "_Glow");
+        }
+        public override void NearbyEffects(int i, int j, bool closer)
+        {
+            if (Main.tile[i, j].TileFrameX / 54 < 1)
+            {
+                if (closer)
+                {
+                    if (Main.rand.NextBool(40))
+                    {
+                        ParticleManager.NewParticle(new Vector2(i * 16, j * 16) + new Vector2(Main.rand.Next(8, 42), Main.rand.Next(0, 6)), RedeHelper.SpreadUp(1), new EmberParticle(), Color.White, 1);
+                    }
+                }
+            }
+        }
+        private float drawTimer;
+        public override bool PreDraw(int i, int j, SpriteBatch spriteBatch)
+        {
+            Tile tile = Main.tile[i, j];
+            Vector2 zero = new(Main.offScreenRange, Main.offScreenRange);
+            if (Main.drawToScreen)
+                zero = Vector2.Zero;
+
+            int height = tile.TileFrameY == 36 ? 18 : 16;
+            RedeDraw.DrawTreasureBagEffect(spriteBatch, flameTexture.Value, ref drawTimer, new Vector2((i * 16) - (int)Main.screenPosition.X, (j * 16) - (int)Main.screenPosition.Y) + zero, new Rectangle(tile.TileFrameX, tile.TileFrameY, 16, height), RedeColor.HeatColour, 0, Vector2.Zero, 1f, 0);
+            return true;
         }
         public override void MouseOver(int i, int j)
         {
@@ -72,7 +105,7 @@ namespace Redemption.Tiles.Furniture.Silverwood
             for (int x = left; x < left + 3; x++)
             {
                 for (int y = top; y < top + 2; y++)
-                {          
+                {
                     if (Main.tile[x, y].TileFrameX < 108 && Main.tile[x, y].TileFrameX >= 54)
                         Main.tile[x, y].TileFrameX += 54;
                     else if (Main.tile[x, y].TileFrameX < 54)
