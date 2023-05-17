@@ -54,7 +54,6 @@ namespace Redemption.Tiles.Natural
 
             HitSound = CustomSounds.CrystalHit;
             DustType = DustID.IceTorch;
-            ItemDrop = ModContent.ItemType<GathicCryoCrystal>();
             LocalizedText name = CreateMapEntryName();
             // name.SetDefault("Gathic Cryo-Crystal");
             AddMapEntry(new Color(159, 188, 215), name);

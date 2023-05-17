@@ -33,7 +33,7 @@ namespace Redemption.Tiles.Tiles
             Main.tileMerge[ModContent.TileType<GathicGladestoneTile>()][Type] = true;
             Main.tileMerge[Type][ModContent.TileType<GathicStoneTile>()] = true;
             Main.tileMerge[ModContent.TileType<GathicStoneTile>()][Type] = true;
-            ItemDrop = ModContent.ItemType<GathicStone>();
+            RegisterItemDrop(ModContent.ItemType<GathicStone>());
             DustType = ModContent.DustType<SlateDust>();
             HitSound = CustomSounds.StoneHit;
             MinPick = 0;

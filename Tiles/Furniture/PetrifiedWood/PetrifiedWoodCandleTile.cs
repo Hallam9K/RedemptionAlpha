@@ -27,7 +27,6 @@ namespace Redemption.Tiles.Furniture.PetrifiedWood
 			// name.SetDefault("Petrified Wood Candle");
             AddMapEntry(new Color(100, 100, 100), name);
 			AdjTiles = new int[]{ TileID.Candles };
-            ItemDrop = ModContent.ItemType<PetrifiedWoodCandle>();
             AddToArray(ref TileID.Sets.RoomNeeds.CountsAsTorch);
             DustType = DustID.Ash;
         }

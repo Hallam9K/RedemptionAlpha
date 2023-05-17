@@ -22,7 +22,6 @@ namespace Redemption.Tiles.Ores
             Main.tileShine[Type] = 975;
             Main.tileOreFinderPriority[Type] = 300;
             DustType = DustID.GreenTorch;
-            ItemDrop = ModContent.ItemType<XenomiteShard>();
             MinPick = 100;
             MineResist = 4f;
             HitSound = SoundID.Item27;

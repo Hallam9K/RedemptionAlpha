@@ -27,7 +27,6 @@ namespace Redemption.Tiles.Furniture.Misc
             TileObjectData.addTile(Type);
             DustType = DustID.Bone;
             HitSound = CustomSounds.BoneHit;
-            ItemDrop = ModContent.ItemType<OldTophat>();
             LocalizedText name = CreateMapEntryName();
             // name.SetDefault("Hanging Tied");
             AddMapEntry(new Color(81, 81, 81), name);

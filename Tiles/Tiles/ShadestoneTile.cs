@@ -21,7 +21,6 @@ namespace Redemption.Tiles.Tiles
             Main.tileBlockLight[Type] = true;
             Main.tileBrick[Type] = true;
             DustType = ModContent.DustType<ShadestoneDust>();
-            ItemDrop = ModContent.ItemType<Shadestone>();
             MinPick = 350;
             MineResist = 11f;
             HitSound = CustomSounds.StoneHit;

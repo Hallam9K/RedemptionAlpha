@@ -22,7 +22,6 @@ namespace Redemption.Tiles.Tiles
             HitSound = SoundID.Tink;
             AddMapEntry(new Color(200, 255, 255));
             AnimationFrameHeight = 90;
-            ItemDrop = ModContent.ItemType<ElectricHazard>();
         }
         public override bool IsTileDangerous(int i, int j, Player player) => true;
         public override void AnimateTile(ref int frame, ref int frameCounter)

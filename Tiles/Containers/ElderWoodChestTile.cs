@@ -34,7 +34,6 @@ namespace Redemption.Tiles.Containers
 
             DustType = DustID.t_BorealWood;
             AdjTiles = new int[] { TileID.Containers };
-            ItemDrop = ModContent.ItemType<ElderWoodChest>();
 
             // Names
             //ContainerName/* tModPorter Note: Removed. Override DefaultContainerName instead */.SetDefault("Elder Wood Chest");

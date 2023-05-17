@@ -27,7 +27,6 @@ namespace Redemption.Tiles.Tiles
             DustType = DustID.Ash;
             HitSound = SoundID.Item126;
             AddMapEntry(new Color(204, 215, 191));
-            ItemDrop = ModContent.ItemType<IrradiatedSnow>();
         }
         public override void FloorVisuals(Player player)
         {

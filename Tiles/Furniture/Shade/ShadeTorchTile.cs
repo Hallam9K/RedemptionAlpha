@@ -30,7 +30,6 @@ namespace Redemption.Tiles.Furniture.Shade
 			TileID.Sets.DisableSmartCursor[Type] = true;
 			TileID.Sets.Torch[Type] = true;
 
-			ItemDrop = ModContent.ItemType<ShadeTorch>();
 			DustType = DustID.AncientLight;
 			AdjTiles = new int[] { TileID.Torches };
 

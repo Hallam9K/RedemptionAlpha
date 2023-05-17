@@ -16,7 +16,6 @@ namespace Redemption.Tiles.Tiles
             Main.tileBlockLight[Type] = true;
             Main.tileOreFinderPriority[Type] = 650;
             DustType = DustID.Electric;
-			ItemDrop = ModContent.ItemType<Cyberscrap>();
             MinPick = 200;
             MineResist = 4f;
             HitSound = CustomSounds.MetalHit;

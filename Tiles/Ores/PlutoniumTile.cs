@@ -24,7 +24,6 @@ namespace Redemption.Tiles.Ores
             TileID.Sets.Ore[Type] = true;
             Main.tileOreFinderPriority[Type] = 680;
             DustType = DustID.Electric;
-            ItemDrop = ModContent.ItemType<Plutonium>();
             MinPick = 220;
             MineResist = 6f;
             HitSound = SoundID.Tink;

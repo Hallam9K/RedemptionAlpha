@@ -35,7 +35,6 @@ namespace Redemption.Tiles.Furniture.Misc
             TileObjectData.addTile(Type);
             HitSound = CustomSounds.CrystalHit;
             DustType = DustID.Sandnado;
-            ItemDrop = ModContent.ItemType<GolemEye>();
             MinPick = 0;
             MineResist = 2f;
             AddMapEntry(new Color(241, 215, 108));

@@ -36,7 +36,8 @@ namespace Redemption.Tiles.Containers
 
             DustType = DustID.Electric;
             AdjTiles = new int[] { TileID.Containers };
-            ItemDrop = ModContent.ItemType<Holochest>();
+            RegisterItemDrop(ModContent.ItemType<Holochest>(), 1);
+            RegisterItemDrop(ItemID.Chest);
 
             // Names
             //ContainerName/* tModPorter Note: Removed. Override DefaultContainerName instead */.SetDefault("Holochest");
@@ -61,15 +62,6 @@ namespace Redemption.Tiles.Containers
             TileObjectData.newTile.LavaDeath = false;
             TileObjectData.newTile.AnchorBottom = new AnchorData(AnchorType.SolidTile | AnchorType.SolidWithTop | AnchorType.SolidSide, TileObjectData.newTile.Width, 0);
             TileObjectData.addTile(Type);
-        }
-        public override IEnumerable<Item> GetItemDrops(int i, int j)
-        {
-            Tile tile = Main.tile[i, j];
-            int style = TileObjectData.GetTileStyle(tile);
-            if (style == 0)
-                yield return new Item(ModContent.ItemType<Holochest>());
-            if (style == 1)
-                yield return new Item(ModContent.ItemType<Holochest>());
         }
         public override ushort GetMapOption(int i, int j) => (ushort)(Main.tile[i, j].TileFrameX / 36);
         public override LocalizedText DefaultContainerName(int frameX, int frameY)

@@ -1,4 +1,5 @@
 using Microsoft.Xna.Framework;
+using Redemption.Items.Placeable.Tiles;
 using Redemption.NPCs.Critters;
 using Terraria;
 using Terraria.DataStructures;
@@ -17,7 +18,7 @@ namespace Redemption.Tiles.Tiles
             Main.tileBlockLight[Type] = true;
             Main.tileBrick[Type] = true;
             Main.tileMerge[Type][TileID.Stone] = true;
-            ItemDrop = ItemID.StoneBlock;
+            RegisterItemDrop(ItemID.StoneBlock);
             DustType = DustID.Stone;
             HitSound = SoundID.Tink;
             MinPick = 0;

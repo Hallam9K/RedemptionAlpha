@@ -16,7 +16,6 @@ namespace Redemption.Tiles.Tiles
             Main.tileBlockLight[Type] = false;
             TileID.Sets.IsBeam[Type] = true;
             DustType = ModContent.DustType<LabPlatingDust>();
-            ItemDrop = ModContent.ItemType<MetalSupportBeam>();
             MinPick = 200;
             MineResist = 6f;
             HitSound = SoundID.Tink;

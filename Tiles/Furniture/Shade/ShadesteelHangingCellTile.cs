@@ -7,6 +7,7 @@ using Terraria.ObjectData;
 using Terraria.DataStructures;
 using Redemption.Dusts.Tiles;
 using Redemption.Items.Placeable.Furniture.Shade;
+using Redemption.Items.Placeable.Tiles;
 
 namespace Redemption.Tiles.Furniture.Shade
 {
@@ -62,7 +63,7 @@ namespace Redemption.Tiles.Furniture.Shade
             AnimationFrameHeight = 72;
             MinPick = 310;
             MineResist = 11f;
-            ItemDrop = ModContent.ItemType<ShadesteelHangingCell>();
+            RegisterItemDrop(ModContent.ItemType<ShadesteelHangingCell>());
         }
         public override void AnimateTile(ref int frame, ref int frameCounter)
         {

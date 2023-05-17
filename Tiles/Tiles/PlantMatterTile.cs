@@ -35,7 +35,6 @@ namespace Redemption.Tiles.Tiles
             Main.tileSpelunker[Type] = true;
             Main.tileBlockLight[Type] = true;
             DustType = DustID.GrassBlades;
-			ItemDrop = ModContent.ItemType<PlantMatter>();
             MinPick = 0;
             MineResist = 1f;
             HitSound = SoundID.Grass;

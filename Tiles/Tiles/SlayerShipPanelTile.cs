@@ -15,7 +15,6 @@ namespace Redemption.Tiles.Tiles
             Main.tileMergeDirt[Type] = true;
             Main.tileBlockLight[Type] = true;
             DustType = ModContent.DustType<LabPlatingDust>();
-            ItemDrop = ModContent.ItemType<SlayerShipPanel>();
             MinPick = 500;
             MineResist = 7f;
             HitSound = CustomSounds.MetalHit;
@@ -36,7 +35,6 @@ namespace Redemption.Tiles.Tiles
             base.SetStaticDefaults();
             Main.tileMerge[Type][ModContent.TileType<SlayerShipPanelTile>()] = true;
             Main.tileMerge[ModContent.TileType<SlayerShipPanelTile>()][Type] = true;
-            ItemDrop = ModContent.ItemType<SlayerShipPanel2>();
             MinPick = 100;
             MineResist = 3f;
         }

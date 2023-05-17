@@ -216,7 +216,6 @@ namespace Redemption.Tiles.Natural
             TileObjectData.addTile(Type);
             DustType = DustID.Bone;
             HitSound = CustomSounds.BoneHit;
-            ItemDrop = -1;
             LocalizedText name = CreateMapEntryName();
             // name.SetDefault("Skeletal Remains");
             AddMapEntry(new Color(129, 129, 95), name);

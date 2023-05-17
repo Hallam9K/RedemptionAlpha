@@ -5,6 +5,7 @@ using Terraria.ModLoader;
 using Terraria.ID;
 using Terraria.ObjectData;
 using Redemption.Items.Usable.Summons;
+using Redemption.Items.Placeable.Tiles;
 
 namespace Redemption.Tiles.Natural
 {
@@ -20,7 +21,7 @@ namespace Redemption.Tiles.Natural
 			LocalizedText name = CreateMapEntryName();
 			// name.SetDefault("Forbidden Ritual");
             AddMapEntry(new Color(180, 141, 119), name);
-            ItemDrop = ModContent.ItemType<DemonScroll>();
+            RegisterItemDrop(ModContent.ItemType<DemonScroll>());
         }
 
         public override bool RightClick(int i, int j)

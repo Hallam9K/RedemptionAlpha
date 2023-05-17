@@ -37,7 +37,6 @@ namespace Redemption.Tiles.Containers
 
             DustType = ModContent.DustType<LabPlatingDust>();
             AdjTiles = new int[] { TileID.Containers };
-            ItemDrop = ModContent.ItemType<StandardLabLocker>();
 
             // Names
             //ContainerName/* tModPorter Note: Removed. Override DefaultContainerName instead */.SetDefault("Standard Security Locker");

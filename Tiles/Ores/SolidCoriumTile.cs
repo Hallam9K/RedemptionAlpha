@@ -22,7 +22,6 @@ namespace Redemption.Tiles.Ores
             TileID.Sets.Ore[Type] = true;
             Main.tileOreFinderPriority[Type] = 900;
             DustType = DustID.FlameBurst;
-            ItemDrop = ModContent.ItemType<Corium>();
             MinPick = 500;
             MineResist = 10f;
             HitSound = SoundID.Tink;

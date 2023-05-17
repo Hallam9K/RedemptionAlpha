@@ -27,7 +27,6 @@ namespace Redemption.Tiles.Furniture.Shade
 			AddMapEntry(new Color(59, 61, 87));
 
 			DustType = ModContent.DustType<ShadestoneDust>();
-			ItemDrop = ModContent.ItemType<ShadestonePlatform>();
 			AdjTiles = new int[] { TileID.Platforms };
 
             // Placement

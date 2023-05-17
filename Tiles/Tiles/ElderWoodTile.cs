@@ -14,7 +14,6 @@ namespace Redemption.Tiles.Tiles
             Main.tileBlendAll[Type] = true;
             Main.tileBlockLight[Type] = true;
             Main.tileBrick[Type] = true;
-            ItemDrop = ModContent.ItemType<ElderWood>();
             MinPick = 0;
             MineResist = 2.5f;
             AddMapEntry(new Color(109, 87, 78));

@@ -38,7 +38,8 @@ namespace Redemption.Tiles.Containers
 
             DustType = ModContent.DustType<LabPlatingDust>();
             AdjTiles = new int[] { TileID.Containers };
-            ItemDrop = ModContent.ItemType<LabChest>();
+            RegisterItemDrop(ModContent.ItemType<LabChest>(), 1);
+            RegisterItemDrop(ItemID.Chest);
 
             // Names
             //ContainerName/* tModPorter Note: Removed. Override DefaultContainerName instead */.SetDefault("High Security Crate");
@@ -63,15 +64,6 @@ namespace Redemption.Tiles.Containers
             TileObjectData.newTile.LavaDeath = false;
             TileObjectData.newTile.AnchorBottom = new AnchorData(AnchorType.SolidTile | AnchorType.SolidWithTop | AnchorType.SolidSide, TileObjectData.newTile.Width, 0);
             TileObjectData.addTile(Type);
-        }
-        public override IEnumerable<Item> GetItemDrops(int i, int j)
-        {
-            Tile tile = Main.tile[i, j];
-            int style = TileObjectData.GetTileStyle(tile);
-            if (style == 0)
-                yield return new Item(ModContent.ItemType<LabChest>());
-            if (style == 1)
-                yield return new Item(ModContent.ItemType<LabChest>());
         }
         public override ushort GetMapOption(int i, int j) => (ushort)(Main.tile[i, j].TileFrameX / 36);
         public override LocalizedText DefaultContainerName(int frameX, int frameY)

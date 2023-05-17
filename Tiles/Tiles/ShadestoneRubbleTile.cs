@@ -25,7 +25,6 @@ namespace Redemption.Tiles.Tiles
             MinPick = 225;
             MineResist = 6f;
             HitSound = SoundID.Tink;
-            ItemDrop = -1;
             LocalizedText name = CreateMapEntryName();
             // name.SetDefault("Shadestone Rubble");
             AddMapEntry(new Color(65, 68, 83));

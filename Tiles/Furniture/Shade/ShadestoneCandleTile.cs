@@ -29,7 +29,6 @@ namespace Redemption.Tiles.Furniture.Shade
             // name.SetDefault("Shadestone Candle");
             AddMapEntry(new Color(59, 61, 87), name);
             AdjTiles = new int[] { TileID.Candles };
-            ItemDrop = ModContent.ItemType<ShadestoneCandle>();
             AddToArray(ref TileID.Sets.RoomNeeds.CountsAsTorch);
             DustType = ModContent.DustType<ShadestoneDust>();
             AnimationFrameHeight = 20;

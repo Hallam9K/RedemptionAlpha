@@ -17,7 +17,6 @@ namespace Redemption.Tiles.Tiles
             DustType = DustID.Electric;
             MinPick = 10;
             MineResist = 3f;
-            ItemDrop = ModContent.ItemType<HalogenLamp>();
             HitSound = SoundID.Tink;
             AddMapEntry(new Color(193, 255, 219));
             AnimationFrameHeight = 90;

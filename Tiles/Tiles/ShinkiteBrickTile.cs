@@ -17,7 +17,6 @@ namespace Redemption.Tiles.Tiles
             Main.tileBlockLight[Type] = true;
             Main.tileBrick[Type] = true;
             DustType = ModContent.DustType<ShinkiteDust>();
-            ItemDrop = ModContent.ItemType<ShinkiteBrick>();
             MinPick = 200;
             MineResist = 4f;
             HitSound = CustomSounds.BrickHit;

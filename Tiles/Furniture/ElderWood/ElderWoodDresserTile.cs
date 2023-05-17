@@ -48,7 +48,6 @@ namespace Redemption.Tiles.Furniture.ElderWood
 			AddMapEntry(new Color(109, 87, 78), name);
 			//ContainerName/* tModPorter Note: Removed. Override DefaultContainerName instead */.SetDefault("Elder Wood Dresser");
 			AdjTiles = new int[] { TileID.Dressers };
-			ItemDrop = ModContent.ItemType<ElderWoodDresser>();
 			DustType = DustID.t_BorealWood;
 		}
 

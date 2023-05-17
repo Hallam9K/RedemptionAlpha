@@ -20,7 +20,6 @@ namespace Redemption.Tiles.Tiles
             Main.tileBlockLight[Type] = true;
             Main.tileBrick[Type] = true;
             Main.tileStone[Type] = true;
-            ItemDrop = ModContent.ItemType<IrradiatedStone>();
             TileID.Sets.Stone[Type] = true;
             TileID.Sets.Conversion.Stone[Type] = true;
             DustType = DustID.Ash;

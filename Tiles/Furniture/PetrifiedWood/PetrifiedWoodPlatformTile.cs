@@ -26,7 +26,6 @@ namespace Redemption.Tiles.Furniture.PetrifiedWood
             AddMapEntry(new Color(109, 87, 78));
 
             DustType = DustID.Ash;
-            ItemDrop = ModContent.ItemType<PetrifiedWoodPlatform>();
             AdjTiles = new int[] { TileID.Platforms };
 
             // Placement

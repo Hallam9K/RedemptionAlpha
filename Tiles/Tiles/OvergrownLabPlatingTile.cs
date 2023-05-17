@@ -21,7 +21,6 @@ namespace Redemption.Tiles.Tiles
             Main.tileMerge[Type][ModContent.TileType<LabPlatingTile>()] = true;
             Main.tileMerge[ModContent.TileType<LabPlatingTile>()][Type] = true;
             DustType = ModContent.DustType<LabPlatingDust>();
-            ItemDrop = ModContent.ItemType<LabPlatingUnsafe>();
             MinPick = 500;
             MineResist = 3f;
             HitSound = CustomSounds.MetalHit;

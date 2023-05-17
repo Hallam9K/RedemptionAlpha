@@ -18,7 +18,6 @@ namespace Redemption.Tiles.Tiles
             MineResist = 5f;
             HitSound = SoundID.Tink;
             AddMapEntry(new Color(149, 106, 54));
-            ItemDrop = ModContent.ItemType<NiricPipe>();
         }
         public override void NumDust(int i, int j, bool fail, ref int num) => num = fail ? 1 : 3;
         public override bool CanExplode(int i, int j) => false;

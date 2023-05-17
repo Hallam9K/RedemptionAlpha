@@ -10,7 +10,6 @@ namespace Redemption.Walls
 		public override void SetStaticDefaults()
 		{
 			Main.wallHouse[Type] = false;
-			ItemDrop = ModContent.ItemType<LabPlatingWall>();
             AddMapEntry(new Color(53, 54, 60));
         }
         public override bool CanExplode(int i, int j) => false;

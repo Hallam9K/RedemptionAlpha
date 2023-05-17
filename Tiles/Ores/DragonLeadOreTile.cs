@@ -21,7 +21,6 @@ namespace Redemption.Tiles.Ores
             Main.tileOreFinderPriority[Type] = 320;
             TileID.Sets.Ore[Type] = true;
             DustType = DustID.Torch;
-			ItemDrop = ModContent.ItemType<DragonLeadOre>();
             MinPick = 100;
             MineResist = 1.4f;
             HitSound = CustomSounds.DragonLeadHit;
