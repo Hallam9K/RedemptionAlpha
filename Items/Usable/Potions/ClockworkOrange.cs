@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Redemption.Buffs;
+using Redemption.Rarities;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
@@ -28,7 +29,7 @@ namespace Redemption.Items.Usable.Potions
             Item.DefaultToFood(36, 30, ModContent.BuffType<WellFed4>(), 9000);
             Item.value = 80;
             Item.maxStack = Item.CommonMaxStack;
-            Item.rare = ItemRarityID.Cyan;
+            Item.rare = ModContent.RarityType<KingdomRarity>();
         }
     }
 }

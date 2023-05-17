@@ -17,6 +17,7 @@ namespace Redemption.Items.Accessories.PostML
                 "\nVictims below 5000 life are too weak to be contained" +
                 "\nUp to 100 Shadowbound Souls can be contained at once\n" +
                 "'A gift, a curse, but not my own...'"); */
+            ItemID.Sets.DisableAutomaticPlaceableDrop[Type] = true;
             Item.ResearchUnlockCount = 1;
         }
 

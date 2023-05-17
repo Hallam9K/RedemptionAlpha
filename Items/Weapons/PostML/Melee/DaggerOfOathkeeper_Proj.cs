@@ -17,6 +17,7 @@ namespace Redemption.Items.Weapons.PostML.Melee
         public override void SetStaticDefaults()
         {
             // DisplayName.SetDefault("Dagger of the Oathkeeper");
+            ProjectileID.Sets.DontCancelChannelOnKill[Type] = true;
         }
 
         public override bool ShouldUpdatePosition() => false;

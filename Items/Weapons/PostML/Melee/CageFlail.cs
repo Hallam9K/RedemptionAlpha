@@ -106,7 +106,7 @@ namespace Redemption.Items.Weapons.PostML.Melee
             Player player = Main.player[Projectile.owner];
             Texture2D ballTexture = TextureAssets.Projectile[Projectile.type].Value;
             Vector2 anchorPos = Projectile.Center;
-            Texture2D chainTexture = ModContent.Request<Texture2D>(Texture + "_Chain").Value;
+            Texture2D chainTexture = ModContent.Request<Texture2D>("Redemption/Items/Weapons/PostML/Melee/CageFlail_Chain").Value;
             Vector2 HeadPos = player.MountedCenter;
             Rectangle sourceRectangle = new(0, 0, chainTexture.Width, chainTexture.Height);
             Vector2 origin = new(chainTexture.Width * 0.5f, chainTexture.Height * 0.5f);

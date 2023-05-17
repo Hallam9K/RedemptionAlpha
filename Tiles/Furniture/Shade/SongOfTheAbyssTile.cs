@@ -36,6 +36,11 @@ namespace Redemption.Tiles.Furniture.Shade
             g = .5f;
             b = .5f;
         }
+        public override bool RightClick(int i, int j)
+        {
+            Main.player[Main.myPlayer].PickTile(i, j, 100);
+            return true;
+        }
         public override void MouseOver(int i, int j)
         {
             Player player = Main.LocalPlayer;

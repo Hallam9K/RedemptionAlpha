@@ -29,7 +29,7 @@ namespace Redemption.Tiles.Furniture.Silverwood
             TileObjectData.newTile.StyleHorizontal = false;
             TileObjectData.newTile.StyleLineSkip = 2;
             TileObjectData.addTile(Type);
-            AddMapEntry(new Color(109, 87, 78), Language.GetText("MapObject.Chandelier"));
+            AddMapEntry(new Color(228, 213, 173), Language.GetText("MapObject.Chandelier"));
             AdjTiles = new int[] { TileID.Chandeliers };
             AddToArray(ref TileID.Sets.RoomNeeds.CountsAsTorch);
             DustType = DustID.Pearlwood;

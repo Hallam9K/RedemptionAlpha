@@ -18,7 +18,7 @@ namespace Redemption.Tiles.Tiles
             DustType = DustID.Pearlwood;
             MinPick = 50;
             MineResist = 7f;
-            AddMapEntry(new Color(111, 100, 93));
+            AddMapEntry(new Color(228, 213, 173));
         }
     }
 }

@@ -28,6 +28,7 @@ namespace Redemption.Tiles.Plants
             TileObjectData.addTile(Type);
             HitSound = SoundID.Grass;
             DustType = DustID.PinkFairy;
+            RegisterItemDrop(ModContent.ItemType<ToxicAngel2>());
             LocalizedText name = CreateMapEntryName();
             // name.SetDefault("Purified Toxic Angel");
             AddMapEntry(new Color(240, 200, 120), name);

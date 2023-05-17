@@ -32,6 +32,7 @@ namespace Redemption.NPCs.Soulless
             NPC.immortal = true;
             NPC.chaseable = false;
             NPC.npcSlots = 0;
+            NPC.ShowNameOnHover = false;
             SpawnModBiomes = new int[1] { ModContent.GetInstance<SoullessBiome>().Type };
         }
 

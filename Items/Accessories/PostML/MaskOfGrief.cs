@@ -3,14 +3,16 @@ using Redemption.Biomes;
 using Redemption.Globals;
 using Redemption.Rarities;
 using Terraria;
+using Terraria.Localization;
 using Terraria.ModLoader;
 
 namespace Redemption.Items.Accessories.PostML
 {
     [AutoloadEquip(EquipType.Face)]
     public class MaskOfGrief : ModItem
-	{
-		public override void SetStaticDefaults()
+    {
+        public override LocalizedText Tooltip => base.Tooltip.WithFormatArgs(ElementID.ShadowS);
+        public override void SetStaticDefaults()
 		{
             // DisplayName.SetDefault("Mask of Grief");
             /* Tooltip.SetDefault("Decreases enemy aggro while in Soulless Caverns"

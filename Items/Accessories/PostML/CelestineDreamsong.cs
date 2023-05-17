@@ -19,6 +19,7 @@ namespace Redemption.Items.Accessories.PostML
                 "\nImmunity to the 'Soulless' debuff" +
                 "\nAn aura of light surrounds you, damaging soulless enemies\n" +
                 "'Those of us who hide a darkness see a different kind of light'"); */
+            ItemID.Sets.DisableAutomaticPlaceableDrop[Type] = true;
             Item.ResearchUnlockCount = 1;
         }
 

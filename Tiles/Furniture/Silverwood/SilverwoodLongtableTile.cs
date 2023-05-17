@@ -33,6 +33,7 @@ namespace Redemption.Tiles.Furniture.Silverwood
             TileObjectData.addAlternate(1);
             TileObjectData.addTile(Type);
             DustType = DustID.Pearlwood;
+            RegisterItemDrop(ModContent.ItemType<SilverwoodLongtable_End>());
             AddToArray(ref TileID.Sets.RoomNeeds.CountsAsTable);
             AddMapEntry(new Color(228, 213, 173));
             AdjTiles = new int[] { TileID.Tables };

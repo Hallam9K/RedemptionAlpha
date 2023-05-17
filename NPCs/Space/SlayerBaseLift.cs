@@ -31,6 +31,7 @@ namespace Redemption.NPCs.Space
             NPC.noTileCollide = true;
             NPC.knockBackResist = 0;
             NPC.aiStyle = -1;
+            NPC.ShowNameOnHover = false;
         }
         public override bool CheckActive() => false;
         public override bool PreAI()

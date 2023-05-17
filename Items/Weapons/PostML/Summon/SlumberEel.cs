@@ -27,7 +27,7 @@ namespace Redemption.Items.Weapons.PostML.Summon
         {
             Item.width = 30;
             Item.height = 34;
-            Item.DefaultToWhip(ModContent.ProjectileType<SlumberEel_Proj>(), 200, 6, 7, 28);
+            Item.DefaultToWhip(ModContent.ProjectileType<SlumberEel_Proj>(), 200, 6, 7, 30);
             Item.shootSpeed = 7;
             Item.rare = ModContent.RarityType<SoullessRarity>();
             Item.channel = true;
@@ -49,7 +49,7 @@ namespace Redemption.Items.Weapons.PostML.Summon
             Projectile.DefaultToWhip();
 
             Projectile.WhipSettings.Segments = 32;
-            Projectile.WhipSettings.RangeMultiplier = 1.6f;
+            Projectile.WhipSettings.RangeMultiplier = 1.4f;
             Projectile.Redemption().TechnicallyMelee = true;
         }
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)

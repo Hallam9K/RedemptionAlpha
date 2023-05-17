@@ -1,5 +1,7 @@
 using Microsoft.Xna.Framework;
 using Redemption.Items.Accessories.PostML;
+using Redemption.Items.Placeable.Trophies;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
@@ -10,11 +12,11 @@ using Terraria.ObjectData;
 namespace Redemption.Tiles.Furniture.Shade
 {
     public class SielukaivoShadowbinderTile : ModTile
-	{
+    {
         public override void SetStaticDefaults()
-		{
-			Main.tileFrameImportant[Type] = true;
-			Main.tileLavaDeath[Type] = false;
+        {
+            Main.tileFrameImportant[Type] = true;
+            Main.tileLavaDeath[Type] = false;
             Main.tileNoAttach[Type] = true;
             Main.tileLighted[Type] = true;
             TileObjectData.newTile.CopyFrom(TileObjectData.Style2x2);
@@ -28,11 +30,20 @@ namespace Redemption.Tiles.Furniture.Shade
             // name.SetDefault("Sielukaivo Shadowbinder");
             AddMapEntry(new Color(210, 200, 191), name);
         }
+        public override IEnumerable<Item> GetItemDrops(int i, int j)
+        {
+            yield return new Item(ModContent.ItemType<SielukaivoShadowbinder>());
+        }
         public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)
         {
             r = 0.3f;
             g = 0f;
             b = 0.6f;
+        }
+        public override bool RightClick(int i, int j)
+        {
+            Main.player[Main.myPlayer].PickTile(i, j, 100);
+            return true;
         }
         public override void MouseOver(int i, int j)
         {

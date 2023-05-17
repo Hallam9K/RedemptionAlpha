@@ -23,7 +23,7 @@ namespace Redemption.Tiles.Furniture.Silverwood
             TileID.Sets.DisableSmartCursor[Type] = true;
 
             AddToArray(ref TileID.Sets.RoomNeeds.CountsAsDoor);
-            AddMapEntry(new Color(228, 213, 173));
+            AddMapEntry(new Color(116, 102, 84));
 
             DustType = DustID.Pearlwood;
             AdjTiles = new int[] { TileID.Platforms };

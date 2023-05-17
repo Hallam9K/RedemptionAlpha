@@ -32,6 +32,7 @@ namespace Redemption.NPCs.Soulless
             NPC.noTileCollide = true;
             NPC.aiStyle = -1;
             NPC.behindTiles = true;
+            NPC.ShowNameOnHover = false;
         }
         public override bool CheckActive() => false;
         public override bool CanHitPlayer(Player target, ref int cooldownSlot) => NPC.velocity.X < -2;

@@ -42,7 +42,7 @@ namespace Redemption.WorldGeneration.Soulless
         public override bool ShouldSave => true;
         public override bool NoPlayerSaving => false;
 
-        /*public override void CopyMainWorldData()
+        public override void CopyMainWorldData()
         {
             SubworldSystem.CopyWorldData(nameof(RedeWorld.alignment), RedeWorld.alignment);
             SubworldSystem.CopyWorldData(nameof(RedeWorld.alignmentGiven), RedeWorld.alignmentGiven);
@@ -74,7 +74,7 @@ namespace Redemption.WorldGeneration.Soulless
             RedeBossDowned.downedGGBossFirst = SubworldSystem.ReadCopiedWorldData<int>(nameof(RedeBossDowned.downedGGBossFirst));
             RedeBossDowned.downedWarden = SubworldSystem.ReadCopiedWorldData<bool>(nameof(RedeBossDowned.downedWarden));
         }
-        public override bool ChangeAudio()
+        /*public override bool ChangeAudio()
         {
             if (Main.gameMenu)
             {

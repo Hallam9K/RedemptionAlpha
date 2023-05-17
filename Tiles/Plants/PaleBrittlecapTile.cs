@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Redemption.Dusts.Tiles;
 using Redemption.Items.Placeable.Plants;
+using Redemption.Items.Placeable.Tiles;
 using Redemption.Tiles.Tiles;
 using Terraria;
 using Terraria.ID;
@@ -29,6 +30,7 @@ namespace Redemption.Tiles.Plants
             TileObjectData.addTile(Type);
             HitSound = SoundID.Grass;
             DustType = ModContent.DustType<SlateDust>();
+            RegisterItemDrop(ModContent.ItemType<PaleBrittlecap>());
             LocalizedText name = CreateMapEntryName();
             // name.SetDefault("Pale Brittlecap");
             AddMapEntry(new Color(170, 150, 110), name);

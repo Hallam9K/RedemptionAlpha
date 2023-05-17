@@ -202,8 +202,8 @@ namespace Redemption.Projectiles.Pets
                 float windPower = 0.6f * dir * -10;
 
                 // Wave in the wind
-                force.X += 16f * proj.spriteDirection;
-                force.Y -= 8;
+                force.X += 32f * proj.spriteDirection;
+                force.Y -= 16;
                 force -= proj.velocity * 2;
                 force.Y += (float)(Math.Sin(time * 1f * windPower - index * Math.Sign(force.X)) * 0.25f * windPower) * 6f * dir;
             }

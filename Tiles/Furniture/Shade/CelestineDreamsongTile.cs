@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Items.Accessories.PostML;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
@@ -36,6 +37,10 @@ namespace Redemption.Tiles.Furniture.Shade
             r = 1f;
             g = 1f;
             b = 1f;
+        }
+        public override IEnumerable<Item> GetItemDrops(int i, int j)
+        {
+            yield return new Item(ModContent.ItemType<CelestineDreamsong>());
         }
         public override bool RightClick(int i, int j)
         {

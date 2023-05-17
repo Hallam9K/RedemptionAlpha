@@ -8,9 +8,9 @@ using Terraria.ModLoader;
 namespace Redemption.Items.Usable.Potions
 {
     public class DreambinderElixir : ModItem
-	{
-		public override void SetStaticDefaults()
-		{
+    {
+        public override void SetStaticDefaults()
+        {
             /* Tooltip.SetDefault("Increases length of invincibility after taking damage" +
                 "\nNot consumable\n" +
                 "'Remembering the warmth of a much brighter day'"); */
@@ -18,8 +18,8 @@ namespace Redemption.Items.Usable.Potions
         }
 
         public override void SetDefaults()
-		{
-			Item.width = 28;
+        {
+            Item.width = 28;
             Item.height = 42;
             Item.useTurn = true;
             Item.maxStack = 1;
@@ -34,11 +34,6 @@ namespace Redemption.Items.Usable.Potions
             Item.buffTime = 1200;
             Item.value = Item.sellPrice(0, 15, 50, 0);
             Item.rare = ModContent.RarityType<SoullessRarity>();
-        }
-        public override void GetHealLife(Player player, bool quickHeal, ref int healValue)
-        {
-            //if (quickHeal)
-            //    player.AddBuff(ModContent.BuffType<DreambinderBuff>(), 1200);
         }
         public override bool ConsumeItem(Player player) => false;
     }

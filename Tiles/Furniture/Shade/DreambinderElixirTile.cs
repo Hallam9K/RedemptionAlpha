@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Redemption.Items.Accessories.PostML;
 using Redemption.Items.Usable.Potions;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
@@ -11,11 +12,11 @@ using Terraria.ObjectData;
 namespace Redemption.Tiles.Furniture.Shade
 {
     public class DreambinderElixirTile : ModTile
-	{
+    {
         public override void SetStaticDefaults()
-		{
-			Main.tileFrameImportant[Type] = true;
-			Main.tileLavaDeath[Type] = false;
+        {
+            Main.tileFrameImportant[Type] = true;
+            Main.tileLavaDeath[Type] = false;
             Main.tileNoAttach[Type] = true;
             Main.tileLighted[Type] = true;
             TileObjectData.newTile.CopyFrom(TileObjectData.Style2xX);
@@ -36,6 +37,11 @@ namespace Redemption.Tiles.Furniture.Shade
             r = 1f;
             g = 1f;
             b = 1f;
+        }
+        public override bool RightClick(int i, int j)
+        {
+            Main.player[Main.myPlayer].PickTile(i, j, 100);
+            return true;
         }
         public override void MouseOver(int i, int j)
         {

@@ -31,6 +31,7 @@ namespace Redemption.Tiles.Furniture.Silverwood
             TileObjectData.addAlternate(1);
             TileObjectData.addTile(Type);
             DustType = DustID.Pearlwood;
+            RegisterItemDrop(ModContent.ItemType<AleHorn>());
             AddMapEntry(new Color(228, 213, 173));
         }
         public override bool RightClick(int i, int j)

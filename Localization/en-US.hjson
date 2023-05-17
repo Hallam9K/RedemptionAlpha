@@ -849,58 +849,58 @@ Mods: {
 			}
 
 			AnglerPotionBuff: {
-				DisplayName: Angler Potion Buff
-				Description: Mods.Redemption.Buffs.AnglerPotionBuff.Description
+				DisplayName: Angler Vision
+				Description: Increases damage and emits light while submerged
 			}
 
 			SoulScrollCooldown: {
 				DisplayName: Soul Scroll Cooldown
-				Description: Mods.Redemption.Buffs.SoulScrollCooldown.Description
+				Description: You cannot use the Soul Scroll
 			}
 
 			LaceratedDebuff: {
 				DisplayName: Lacerated Debuff
-				Description: Mods.Redemption.Buffs.LaceratedDebuff.Description
+				Description: A deep cut
 			}
 
 			StalkerDebuff: {
-				DisplayName: Stalker Debuff
-				Description: Mods.Redemption.Buffs.StalkerDebuff.Description
+				DisplayName: ""
+				Description: ""
 			}
 
 			DreambinderBuff: {
-				DisplayName: Dreambinder Buff
-				Description: Mods.Redemption.Buffs.DreambinderBuff.Description
+				DisplayName: Dreambound
+				Description: Increases length of invincibility
 			}
 
 			DreamsongBuff: {
-				DisplayName: Dreamsong Buff
-				Description: Mods.Redemption.Buffs.DreamsongBuff.Description
+				DisplayName: Dreamsong
+				Description: Your vision is increased in the Soulless Caverns
 			}
 
 			InsulatiumPotionBuff: {
-				DisplayName: Insulatium Potion Buff
-				Description: Mods.Redemption.Buffs.InsulatiumPotionBuff.Description
+				DisplayName: Insulated
+				Description: You are immune to Electrified
 			}
 
 			SmashedDebuff: {
-				DisplayName: Smashed Debuff
-				Description: Mods.Redemption.Buffs.SmashedDebuff.Description
+				DisplayName: Smashed!
+				Description: ""
 			}
 
 			OathkeeperDaggerBuff: {
-				DisplayName: Oathkeeper Dagger Buff
-				Description: Mods.Redemption.Buffs.OathkeeperDaggerBuff.Description
+				DisplayName: Stabbed
+				Description: Your damage is increased at the cost of decreased max life
 			}
 
 			ShadevisionPotionBuff: {
-				DisplayName: Shadevision Potion Buff
-				Description: Mods.Redemption.Buffs.ShadevisionPotionBuff.Description
+				DisplayName: Shadevision
+				Description: You can see clearer in the Soulless Caverns
 			}
 
 			VesselPickBuff: {
-				DisplayName: Vessel Pick Buff
-				Description: Mods.Redemption.Buffs.VesselPickBuff.Description
+				DisplayName: Shadesurge
+				Description: Your mining speed is greatly increased
 			}
 		}
 
@@ -918,7 +918,7 @@ Mods: {
 			FowlMorningBiome.DisplayName: Fowl Morning
 			BlazingBastionBiome.DisplayName: Blazing Bastion
 			SoullessBiome.DisplayName: Soulless Caverns
-			SpaceBiome.DisplayName: Space Biome
+			SpaceBiome.DisplayName: Deep Space
 		}
 
 		TownNPCMood: {
@@ -7891,96 +7891,113 @@ Mods: {
 
 			CelestineDreamsong: {
 				DisplayName: Celestine Dreamsong
-				Tooltip: ""
+				Tooltip:
+					'''
+					Increases vision within the Soulless Caverns
+					Immunity to the 'Soulless' debuff
+					An aura of light surrounds you, damaging soulless enemies
+					'Those of us who hide a darkness see a different kind of light'
+					'''
 			}
 
 			MaskOfGrief: {
-				DisplayName: Mask Of Grief
-				Tooltip: ""
+				DisplayName: Mask of Grief
+				Tooltip:
+					'''
+					Decreases enemy aggro while in Soulless Caverns
+					10% increased damage while in the Soulless Cavern
+					Makes {0} elemental weapons more effective against Soulless targets
+					'''
 			}
 
 			SielukaivoShadowbinder: {
 				DisplayName: Sielukaivo Shadowbinder
-				Tooltip: ""
+				Tooltip:
+					'''
+					Absorbs the souls of victims slain
+					Victims below 5000 life are too weak to be contained
+					Up to 100 Shadowbound Souls can be contained at once
+					'A gift, a curse, but not my own...'
+					'''
 			}
 
 			WallDatalog: {
-				DisplayName: Wall Datalog
+				DisplayName: Data Log #466110
 				Tooltip: ""
 			}
 
 			WallDatalog10: {
-				DisplayName: Wall Datalog10
+				DisplayName: Data Log #9145620
 				Tooltip: ""
 			}
 
 			WallDatalog11: {
-				DisplayName: Wall Datalog11
+				DisplayName: Data Log #9145621
 				Tooltip: ""
 			}
 
 			WallDatalog12: {
-				DisplayName: Wall Datalog12
+				DisplayName: Data Log #9145622
 				Tooltip: ""
 			}
 
 			WallDatalog13: {
-				DisplayName: Wall Datalog13
+				DisplayName: Data Log #9145629
 				Tooltip: ""
 			}
 
 			WallDatalog14: {
-				DisplayName: Wall Datalog14
+				DisplayName: Data Log #9145630
 				Tooltip: ""
 			}
 
 			WallDatalog15: {
-				DisplayName: Wall Datalog15
+				DisplayName: Data Log #170001202
 				Tooltip: ""
 			}
 
 			WallDatalog16: {
-				DisplayName: Wall Datalog16
+				DisplayName: Data Log #365000663
 				Tooltip: ""
 			}
 
 			WallDatalog2: {
-				DisplayName: Wall Datalog2
+				DisplayName: Data Log #466111
 				Tooltip: ""
 			}
 
 			WallDatalog3: {
-				DisplayName: Wall Datalog3
+				DisplayName: Data Log #933
 				Tooltip: ""
 			}
 
 			WallDatalog4: {
-				DisplayName: Wall Datalog4
+				DisplayName: Data Log #184999
 				Tooltip: ""
 			}
 
 			WallDatalog5: {
-				DisplayName: Wall Datalog5
+				DisplayName: Data Log #18500
 				Tooltip: ""
 			}
 
 			WallDatalog6: {
-				DisplayName: Wall Datalog6
+				DisplayName: Data Log #2042280
 				Tooltip: ""
 			}
 
 			WallDatalog7: {
-				DisplayName: Wall Datalog7
+				DisplayName: Data Log #2042281
 				Tooltip: ""
 			}
 
 			WallDatalog8: {
-				DisplayName: Wall Datalog8
+				DisplayName: Data Log #5385431
 				Tooltip: ""
 			}
 
 			WallDatalog9: {
-				DisplayName: Wall Datalog9
+				DisplayName: Data Log #8022208
 				Tooltip: ""
 			}
 
@@ -8011,7 +8028,7 @@ Mods: {
 
 			EvergoldBar: {
 				DisplayName: Evergold Bar
-				Tooltip: ""
+				Tooltip: "'Eternal gold'"
 			}
 
 			EvergoldNautilus: {
@@ -8020,8 +8037,8 @@ Mods: {
 			}
 
 			EvergoldOre: {
-				DisplayName: Evergold Ore
-				Tooltip: ""
+				DisplayName: Evergold Nugget
+				Tooltip: "'Eternal gold'"
 			}
 
 			GhostCrab: {
@@ -8036,7 +8053,7 @@ Mods: {
 
 			ScorchingCoal: {
 				DisplayName: Scorching Coal
-				Tooltip: ""
+				Tooltip: Fuel for the Ancient Smeltery
 			}
 
 			ShadeFish: {
@@ -8066,32 +8083,32 @@ Mods: {
 
 			SilverwoodCampfire: {
 				DisplayName: Silverwood Campfire
-				Tooltip: ""
+				Tooltip: Life regen is increased when near a campfire
 			}
 
 			AngelStatueItem_SC: {
-				DisplayName: Angel Statue Item_ S C
-				Tooltip: ""
+				DisplayName: Angel of the Depths Statue (Masked)
+				Tooltip: "[c/ff0000:Unbreakable]"
 			}
 
 			ShadeCampfire: {
 				DisplayName: Shade Campfire
-				Tooltip: ""
+				Tooltip: Life regen is increased when near a campfire
 			}
 
 			ShadesteelLever: {
 				DisplayName: Shadesteel Lever
-				Tooltip: ""
+				Tooltip: "[c/ff0000:Unbreakable]"
 			}
 
 			AleHorn: {
-				DisplayName: Ale Horn
-				Tooltip: ""
+				DisplayName: Silverwood Ale Horn
+				Tooltip: Makes you tipsy
 			}
 
 			AnvilLog: {
-				DisplayName: Anvil Log
-				Tooltip: ""
+				DisplayName: Ancient Anvil
+				Tooltip: Functions as a normal anvil
 			}
 
 			SilverwoodBarrel: {
@@ -8100,8 +8117,8 @@ Mods: {
 			}
 
 			SilverwoodBarrel2: {
-				DisplayName: Silverwood Barrel2
-				Tooltip: ""
+				DisplayName: Silverwood Barrel
+				Tooltip: "'Looks slightly broken'"
 			}
 
 			SilverwoodBathtub: {
@@ -8146,22 +8163,22 @@ Mods: {
 
 			SilverwoodCrate: {
 				DisplayName: Silverwood Crate
-				Tooltip: ""
+				Tooltip: "{$CommonItemTooltip.RightClickToOpen}"
 			}
 
 			SilverwoodCrateCoal: {
-				DisplayName: Silverwood Crate Coal
-				Tooltip: ""
+				DisplayName: Silverwood Coal Crate
+				Tooltip: Filled with coal
 			}
 
 			SilverwoodCrateEvergold: {
-				DisplayName: Silverwood Crate Evergold
-				Tooltip: ""
+				DisplayName: Silverwood Evergold Crate
+				Tooltip: Filled with evergold
 			}
 
 			SilverwoodCrateTNT: {
-				DisplayName: Silverwood Crate T N T
-				Tooltip: ""
+				DisplayName: Silverwood TNT Crate
+				Tooltip: Filled with dynamite
 			}
 
 			SilverwoodDoor: {
@@ -8185,17 +8202,17 @@ Mods: {
 			}
 
 			SilverwoodLongtable_End: {
-				DisplayName: Silverwood Longtable_ End
+				DisplayName: Silverwood Longtable (End)
 				Tooltip: ""
 			}
 
 			SilverwoodLongtable_Mid: {
-				DisplayName: Silverwood Longtable_ Mid
+				DisplayName: Silverwood Longtable (Middle)
 				Tooltip: ""
 			}
 
 			SilverwoodLongtable_Mid2: {
-				DisplayName: Silverwood Longtable_ Mid2
+				DisplayName: Silverwood Longtable (Middle with Chair)
 				Tooltip: ""
 			}
 
@@ -8215,7 +8232,7 @@ Mods: {
 			}
 
 			SilverwoodSign: {
-				DisplayName: Silverwood Sign
+				DisplayName: Silverwood Danger Sign
 				Tooltip: ""
 			}
 
@@ -8251,11 +8268,11 @@ Mods: {
 
 			CyberTeleporter: {
 				DisplayName: Cyber Teleporter
-				Tooltip: ""
+				Tooltip: Transports you to Deep Space
 			}
 
 			KSBattlestation: {
-				DisplayName: K S Battlestation
+				DisplayName: Observatory Station
 				Tooltip: ""
 			}
 
@@ -8265,7 +8282,7 @@ Mods: {
 			}
 
 			PaleBrittlecap2: {
-				DisplayName: Pale Brittlecap2
+				DisplayName: Pale Brittlecap (Big)
 				Tooltip: ""
 			}
 
@@ -8275,8 +8292,8 @@ Mods: {
 			}
 
 			ToxicAngel2: {
-				DisplayName: Toxic Angel2
-				Tooltip: ""
+				DisplayName: Purified Toxic Angel
+				Tooltip: "'Tastes like jelly'"
 			}
 
 			AncientAlloyBrick: {
@@ -8295,7 +8312,7 @@ Mods: {
 			}
 
 			AncientChainSolid: {
-				DisplayName: Ancient Chain Solid
+				DisplayName: Ancient Chain (Solid)
 				Tooltip: ""
 			}
 
@@ -8310,12 +8327,12 @@ Mods: {
 			}
 
 			EvergoldChainSolid: {
-				DisplayName: Evergold Chain Solid
+				DisplayName: Evergold Chain (Solid)
 				Tooltip: ""
 			}
 
 			ShinkiteBrickOrnateWall: {
-				DisplayName: Shinkite Brick Ornate Wall
+				DisplayName: Ornate Shinkite Brick Wall
 				Tooltip: ""
 			}
 
@@ -8325,123 +8342,192 @@ Mods: {
 			}
 
 			SpaceSubSpawner: {
-				DisplayName: Space Sub Spawner
-				Tooltip: ""
+				DisplayName: Placeholder Deep Space Sender of DOOM!!!
+				Tooltip: It reads - [c/b8eff5:'SPAAAAAAAAAAAAAAAAAAAAAAAAAACE']
 			}
 
 			VesselPickaxeAxe: {
 				DisplayName: Vessel Pickaxe Axe
-				Tooltip: ""
+				Tooltip:
+					'''
+					Hitting an enemy will make them bleed heavily for a long period of time
+					Can mine Vessel Fragments
+					'''
 			}
 
 			VesselSmasher: {
 				DisplayName: Vessel Smasher
-				Tooltip: ""
+				Tooltip: Smashing an enemy will make it take 15% more damage for 5 seconds
 			}
 
 			ManiacsLantern: {
-				DisplayName: Maniacs Lantern
-				Tooltip: ""
+				DisplayName: Maniac's Lantern
+				Tooltip: When held, creates an invisible force that repels soulless enemies away from you
 			}
 
 			AbyssalSmoothie: {
 				DisplayName: Abyssal Smoothie
-				Tooltip: ""
+				Tooltip:
+					'''
+					Massive improvements to all stats
+					Causes blindness for a short duration
+					'Tastes abyssmal'
+					'''
 			}
 
 			AncientMushroomSoup: {
 				DisplayName: Ancient Mushroom Soup
-				Tooltip: ""
+				Tooltip:
+					'''
+					Massive improvements to all stats
+					'Mushroom, mushroom'
+					'''
 			}
 
 			ChakrogAnglerPotion: {
-				DisplayName: Chakrog Angler Potion
-				Tooltip: ""
+				DisplayName: Angler Potion
+				Tooltip:
+					'''
+					You emit bright light while submerged
+					Clears the Soulless Cavern's waters
+					Increased damage while submerged
+					'''
 			}
 
 			ClockworkOrange: {
 				DisplayName: Clockwork Orange
-				Tooltip: ""
+				Tooltip:
+					'''
+					Minor improvements to all stats
+					'We can destroy what we have eaten, but we cannot uneat it.'
+					'''
 			}
 
 			CookedBoulderslate: {
 				DisplayName: Cooked Boulderslate
-				Tooltip: ""
+				Tooltip:
+					'''
+					Massive improvements to all stats
+					'Tastes like slate... and boulders'
+					'''
 			}
 
 			DeepDwellDish: {
 				DisplayName: Deep Dwell Dish
-				Tooltip: ""
+				Tooltip:
+					'''
+					Massive improvements to all stats
+					'Tastes like [REDACTED]'
+					'''
 			}
 
 			DreambinderElixir: {
 				DisplayName: Dreambinder Elixir
-				Tooltip: ""
+				Tooltip:
+					'''
+					Increases length of invincibility after taking damage
+					Not consumable
+					'Remembering the warmth of a much brighter day'
+					'''
 			}
 
 			DreambinderElixirPlaceable: {
-				DisplayName: Dreambinder Elixir Placeable
+				DisplayName: Dreambinder Elixir (Placeable)
 				Tooltip: ""
 			}
 
 			EvergoldSoup: {
 				DisplayName: Evergold Soup
-				Tooltip: ""
+				Tooltip:
+					'''
+					Massive improvements to all stats
+					'Tastes like royalty'
+					'''
 			}
 
 			InsulatiumPotion: {
 				DisplayName: Insulatium Potion
-				Tooltip: ""
+				Tooltip:
+					'''
+					Provides immunity to the Electrified debuff
+					Electrifies nearby enemies
+					'''
 			}
 
 			LurkingKetredPotion: {
-				DisplayName: Lurking Ketred Potion
-				Tooltip: ""
+				DisplayName: Shadevision Potion
+				Tooltip: Clears the haze of the Soulless Caverns
 			}
 
 			PrisonGateKey: {
 				DisplayName: Prison Gate Key
-				Tooltip: ""
+				Tooltip: Unlocks gates in the Soulless Prison
 			}
 
 			PrisonGateKey2: {
-				DisplayName: Prison Gate Key2
-				Tooltip: ""
+				DisplayName: Reinforced Prison Gate Key
+				Tooltip: Unlocks reinforced gates in the Soulless Prison
 			}
 
 			SoulScroll: {
 				DisplayName: Soul Scroll
-				Tooltip: ""
+				Tooltip:
+					'''
+					Converts all soulless enemies on screen into a normal lost soul
+					1 minute cooldown
+					'It's blank...'
+					'''
 			}
 
 			StatuetteOfFaith: {
-				DisplayName: Statuette Of Faith
-				Tooltip: ""
+				DisplayName: Statuette of Faith
+				Tooltip:
+					'''
+					Temporarily creates a large Celestine Dreamsong aura around the location of use
+					Players in the aura will see better in the Soulless Caverns
+					'Have a little faith'
+					'''
 			}
 
 			WardensKey: {
-				DisplayName: Wardens Key
-				Tooltip: ""
+				DisplayName: Warden's Key
+				Tooltip: Used to open a gate in the temple
 			}
 
 			SongOfTheAbyss: {
-				DisplayName: Song Of The Abyss
-				Tooltip: ""
+				DisplayName: Song of the Abyss
+				Tooltip:
+					'''
+					Plays a sorrowful tune
+					'Cry a requiem for sunlight'
+					'''
 			}
 
 			VesselShadestaff: {
 				DisplayName: Vessel Shadestaff
-				Tooltip: ""
+				Tooltip:
+					'''
+					Hold left-click to summon Shadesouls that float around the player
+					Release left-click to make them fly towards cursor point at high speeds
+					'''
 			}
 
 			CageFlail: {
-				DisplayName: Cage Flail
-				Tooltip: ""
+				DisplayName: Cage Crusher
+				Tooltip:
+					'''
+					Hitting an enemy once per use will cause echos to appear and fight for you
+					The cage deals increased damage to enemies with less knockback resistance
+					'''
 			}
 
 			DaggerOfOathkeeper: {
-				DisplayName: Dagger Of Oathkeeper
-				Tooltip: ""
+				DisplayName: Dagger of the Oathkeeper
+				Tooltip:
+					'''
+					Inflicts soulless
+					Slashes up and down, hold down left-click to follow up with a rapid flurry of stabs
+					'''
 			}
 
 			DarkStar: {
@@ -8450,73 +8536,84 @@ Mods: {
 			}
 
 			LightOfTheAbyss: {
-				DisplayName: Light Of The Abyss
-				Tooltip: ""
+				DisplayName: Light of the Abyss
+				Tooltip: "'The abyss hungers'"
 			}
 
 			VesselShadescythe: {
 				DisplayName: Vessel Shadescythe
-				Tooltip: ""
+				Tooltip:
+					'''
+					Inflicts soulless
+					Melee swings deal double damage
+					Right-clicking is a normal swing
+					'''
 			}
 
 			VesselDagger: {
 				DisplayName: Vessel Dagger
-				Tooltip: ""
+				Tooltip: Daggers burst into candle light after a small distance
 			}
 
 			SlumberEel: {
 				DisplayName: Slumber Eel
-				Tooltip: ""
+				Tooltip:
+					'''
+					20 summon tag damage
+					10% summon tag critical strike chance
+					Your summons will focus struck enemies
+					Strike enemies to do something idk
+					'''
 			}
 
 			SoADevelopment: {
-				DisplayName: So A Development
+				DisplayName: SoA Development
 				Tooltip: ""
 			}
 
 			ShadePortcullis2: {
-				DisplayName: Shade Portcullis2
-				Tooltip: ""
+				DisplayName: Reinforced Shade Portcullis
+				Tooltip: "[c/ff0000:Unbreakable (500% Pickaxe Power)]"
 			}
 
 			ShadestoneMirrorSpecial: {
-				DisplayName: Shadestone Mirror Special
-				Tooltip: ""
+				DisplayName: Shadestone Mirror
+				Tooltip: "[c/ff0000:Unbreakable]"
 			}
 
 			StalkerGate: {
-				DisplayName: Stalker Gate
-				Tooltip: ""
+				DisplayName: Handyman Gate
+				Tooltip: "[c/ff0000:Unbreakable]"
 			}
 
 			SilverwoodMinecartCoal: {
-				DisplayName: Silverwood Minecart Coal
+				DisplayName: Silverwood Minecart (Scorched Coal)
 				Tooltip: ""
 			}
 
 			SilverwoodMinecartEvergold: {
-				DisplayName: Silverwood Minecart Evergold
+				DisplayName: Silverwood Minecart (Evergold Ore)
 				Tooltip: ""
 			}
 
 			SilverwoodMinecartItem: {
-				DisplayName: Silverwood Minecart Item
+				DisplayName: Silverwood Minecart
 				Tooltip: ""
 			}
 
 			VesselChamber: {
 				DisplayName: Vessel Chamber
-				Tooltip: ""
+				Tooltip: "[c/ff0000:Unbreakable]"
 			}
 
 			SoullessRemains: {
 				DisplayName: Soulless Remains
-				Tooltip: ""
+				Tooltip: Gives Prison Gate Key
 			}
 
 			SoullessRemains2: {
-				DisplayName: Soulless Remains2
-				Tooltip: ""
+				DisplayName: Soulless Remains (Reinforced Gate Key)
+				Tooltip: Gives Reinforced Prison Gate Key
 			}
 		}
 
@@ -9147,41 +9244,41 @@ Mods: {
 			EggPet_Proj.DisplayName: The Egg
 			SoI_ShardShot_Friendly.DisplayName: Shard Shot
 			InfectiousGlaive_Shard.DisplayName: Splitting Shard
-			ZapField_Proj.DisplayName: Zap Field_ Proj
+			ZapField_Proj.DisplayName: Electricity Field
 			BlindingLight.DisplayName: Blinding Light
-			DreamsongLight_Visual2.DisplayName: Dreamsong Light_ Visual2
-			DreamsongLight_Visual.DisplayName: Dreamsong Light_ Visual
-			ManiacsLantern_Proj.DisplayName: Maniacs Lantern_ Proj
-			SoulScroll_Proj.DisplayName: Soul Scroll_ Proj
-			StatuetteOfFaith_Proj.DisplayName: Statuette Of Faith_ Proj
-			CageFlail_Ball.DisplayName: Cage Flail_ Ball
-			DaggerOfOathkeeper_Proj.DisplayName: Dagger Of Oathkeeper_ Proj
-			DaggerOfOathkeeper_Proj2.DisplayName: Dagger Of Oathkeeper_ Proj2
-			DaggerStab_Proj.DisplayName: Dagger Stab_ Proj
-			DarkStar_Proj.DisplayName: Dark Star_ Proj
-			LightOfTheAbyss_Proj.DisplayName: Light Of The Abyss_ Proj
-			VesselDagger_Proj.DisplayName: Vessel Dagger_ Proj
-			SlumberEel_Proj.DisplayName: Slumber Eel_ Proj
-			Keeper_SoullessDusksong.DisplayName: Keeper_ Soulless Dusksong
-			KeeperDreadCoil_Soulless.DisplayName: Keeper Dread Coil_ Soulless
-			ShadowBolt_Soulless.DisplayName: Shadow Bolt_ Soulless
-			SoullessDuelist_Slash_Proj.DisplayName: Soulless Duelist_ Slash_ Proj
-			SoullessDuelist_Slash_Proj2.DisplayName: Soulless Duelist_ Slash_ Proj2
-			TheStalker_Hand.DisplayName: The Stalker_ Hand
-			TwinfaceSoulless_Slash_Proj.DisplayName: Twinface Soulless_ Slash_ Proj
-			TwinfaceSoulless_Slash_Proj2.DisplayName: Twinface Soulless_ Slash_ Proj2
-			ShadeJavelin_Proj.DisplayName: Shade Javelin_ Proj
-			EnergySphereSpell_Blast.DisplayName: Energy Sphere Spell_ Blast
-			ShadeNote_Proj.DisplayName: Shade Note_ Proj
-			ShadeTreble_Proj.DisplayName: Shade Treble_ Proj
-			SongDust.DisplayName: Song Dust
-			VesselStaff_Proj.DisplayName: Vessel Staff_ Proj
-			VesselStaff_Proj2.DisplayName: Vessel Staff_ Proj2
-			CandleLight_Proj.DisplayName: Candle Light_ Proj
-			ShadeStab_Proj.DisplayName: Shade Stab_ Proj
-			VesselScythe_Proj.DisplayName: Vessel Scythe_ Proj
-			WhiteNeedle_Proj.DisplayName: White Needle_ Proj
-			Echo_Friendly.DisplayName: Echo_ Friendly
+			DreamsongLight_Visual2.DisplayName: Celestine Light
+			DreamsongLight_Visual.DisplayName: Celestine Light
+			ManiacsLantern_Proj.DisplayName: Maniac's Lantern
+			SoulScroll_Proj.DisplayName: Soul Scroll
+			StatuetteOfFaith_Proj.DisplayName: Statuette of Faith
+			CageFlail_Ball.DisplayName: Cage Crusher
+			DaggerOfOathkeeper_Proj.DisplayName: Dagger of the Oathkeeper
+			DaggerOfOathkeeper_Proj2.DisplayName: Dagger of the Oathkeeper
+			DaggerStab_Proj.DisplayName: Dagger of the Oathkeeper
+			DarkStar_Proj.DisplayName: Dark Star
+			LightOfTheAbyss_Proj.DisplayName: Light Of The Abyss
+			VesselDagger_Proj.DisplayName: Vessel Dagger
+			SlumberEel_Proj.DisplayName: Slumber Eel
+			Keeper_SoullessDusksong.DisplayName: Dark Soul
+			KeeperDreadCoil_Soulless.DisplayName: Dread Coil
+			ShadowBolt_Soulless.DisplayName: Shadow Bolt
+			SoullessDuelist_Slash_Proj.DisplayName: Light Slash
+			SoullessDuelist_Slash_Proj2.DisplayName: Light Slash
+			TheStalker_Hand.DisplayName: Handyman's Hand
+			TwinfaceSoulless_Slash_Proj.DisplayName: Wrath Slash
+			TwinfaceSoulless_Slash_Proj2.DisplayName: Wrath Slash
+			ShadeJavelin_Proj.DisplayName: Shade Javelin
+			EnergySphereSpell_Blast.DisplayName: Energy Sphere
+			ShadeNote_Proj.DisplayName: Song of the Abyss
+			ShadeTreble_Proj.DisplayName: Song of the Abyss
+			SongDust.DisplayName: Song of the Abyss
+			VesselStaff_Proj.DisplayName: Shadesoul
+			VesselStaff_Proj2.DisplayName: Shade Ring
+			CandleLight_Proj.DisplayName: Candle Light
+			ShadeStab_Proj.DisplayName: Shade Stab
+			VesselScythe_Proj.DisplayName: Shadescythe
+			WhiteNeedle_Proj.DisplayName: White Needle
+			Echo_Friendly.DisplayName: Echo
 			ScorchedCoalBall.DisplayName: Scorched Coal Ball
 		}
 
@@ -9384,32 +9481,32 @@ Mods: {
 			Calavia_NPC.DisplayName: Calavia
 			Basan.DisplayName: Basan
 			GhostfireChicken.DisplayName: Ghost-fire Chicken
-			Keeper_Soulless.DisplayName: Keeper_ Soulless
+			Keeper_Soulless.DisplayName: The Keeper
 			Echo.DisplayName: Echo
-			LaughingMaskBig.DisplayName: Laughing Mask Big
-			LaughingMaskMedium.DisplayName: Laughing Mask Medium
-			LaughingMaskSmall.DisplayName: Laughing Mask Small
+			LaughingMaskBig.DisplayName: Laughing Mask
+			LaughingMaskMedium.DisplayName: Laughing Mask
+			LaughingMaskSmall.DisplayName: Laughing Mask
 			LostLight.DisplayName: Lost Light
-			RuhRoh.DisplayName: Ruh Roh
+			RuhRoh.DisplayName: Giant Mask
 			Shadebug.DisplayName: Shadebug
 			ShadestoneLift.DisplayName: Shadestone Lift
-			ShadestoneLift2.DisplayName: Shadestone Lift2
-			ShadestoneLiftBig.DisplayName: Shadestone Lift Big
+			ShadestoneLift2.DisplayName: Shadestone Lift
+			ShadestoneLiftBig.DisplayName: Shadestone Lift
 			SoullessAssassin.DisplayName: Soulless Assassin
 			SoullessDuelist.DisplayName: Soulless Duelist
-			SoullessMarionette_Cross.DisplayName: Soulless Marionette_ Cross
-			SoullessMarionette_Doll.DisplayName: Soulless Marionette_ Doll
+			SoullessMarionette_Cross.DisplayName: Marionette Cross
+			SoullessMarionette_Doll.DisplayName: Soulless Marionette
 			SoullessWanderer.DisplayName: Soulless Wanderer
 			SpookyEyes.DisplayName: Spooky Eyes
-			SpookyEyes2.DisplayName: Spooky Eyes2
+			SpookyEyes2.DisplayName: Spooky Eyes
 			StalkingEyes.DisplayName: Stalking Eyes
-			TheStalker.DisplayName: The Stalker
-			TheStalker_Fake.DisplayName: The Stalker_ Fake
+			TheStalker.DisplayName: The Handyman
+			TheStalker_Fake.DisplayName: The Handyman?
 			TwinfaceSoulless.DisplayName: Twinface Soulless
-			AndroidSitting.DisplayName: Android Sitting
-			SlayerBaseLift.DisplayName: Slayer Base Lift
-			SlayerBaseLift2.DisplayName: Slayer Base Lift2
-			SlayerBaseLift3.DisplayName: Slayer Base Lift3
+			AndroidSitting.DisplayName: Android Mk.I
+			SlayerBaseLift.DisplayName: Platform
+			SlayerBaseLift2.DisplayName: Platform
+			SlayerBaseLift3.DisplayName: Platform
 		}
 
 		Tiles: {
@@ -9656,41 +9753,40 @@ Mods: {
 			IrradiatedBorealSapling.MapEntry: Petrified Boreal Sapling
 			IrradiatedPalmSapling.MapEntry: Petrified Palm Sapling
 			IrradiatedPuritySapling.MapEntry: Petrified Sapling
-			SilverwoodChestTile.MapEntry: Silverwood Chest Tile
-			SilverwoodCampfireTile.MapEntry: Silverwood Campfire Tile
-			AngelStatue_SC.MapEntry: Angel Statue_ S C
-			CelestineDreamsongTile.MapEntry: Celestine Dreamsong Tile
-			DreambinderElixirTile.MapEntry: Dreambinder Elixir Tile
-			ShadeCampfireTile.MapEntry: Shade Campfire Tile
-			ShadesteelLeverTile.MapEntry: Shadesteel Lever Tile
-			ShadesteelPortcullis2Close.MapEntry: Shadesteel Portcullis2 Close
-			ShadesteelPortcullis2Close_Unlocked.MapEntry: Shadesteel Portcullis2 Close_ Unlocked
-			ShadesteelPortcullis2Open.MapEntry: Shadesteel Portcullis2 Open
-			ShadestoneMirrorTile2.MapEntry: Shadestone Mirror Tile2
-			ShadestoneMonolith1Tile.MapEntry: Shadestone Monolith1 Tile
-			ShadestoneMonolith2Tile.MapEntry: Shadestone Monolith2 Tile
-			SielukaivoShadowbinderTile.MapEntry: Sielukaivo Shadowbinder Tile
-			SongOfTheAbyssTile.MapEntry: Song Of The Abyss Tile
-			StalkerGateTile.MapEntry: Stalker Gate Tile
-			SilverwoodBathtubTile.MapEntry: Silverwood Bathtub Tile
-			SilverwoodBookcaseTile.MapEntry: Silverwood Bookcase Tile
-			SilverwoodCandelabraTile.MapEntry: Silverwood Candelabra Tile
-			SilverwoodCandleTile.MapEntry: Silverwood Candle Tile
-			SilverwoodCrateTile.MapEntry: Silverwood Crate Tile
-			SilverwoodDresserTile.MapEntry: Silverwood Dresser Tile
-			SilverwoodPewTile.MapEntry: Silverwood Pew Tile
-			SilverwoodPianoTile.MapEntry: Silverwood Piano Tile
-			SilverwoodSofaTile.MapEntry: Silverwood Sofa Tile
-			CyberTeleporterTile.MapEntry: Cyber Teleporter Tile
-			KSBattlestationTile.MapEntry: K S Battlestation Tile
-			VesselChamberTile.MapEntry: Vessel Chamber Tile
-			SoullessRemainsTile.MapEntry: Soulless Remains Tile
-			SoullessRemainsTile2.MapEntry: Soulless Remains Tile2
-			PaleBrittlecapTile.MapEntry: Pale Brittlecap Tile
-			PaleBrittlecapTile2.MapEntry: Pale Brittlecap Tile2
-			ToxicAngel2Tile.MapEntry: Toxic Angel2 Tile
-			ToxicAngelTile.MapEntry: Toxic Angel Tile
-			ShadestonePillarTile.MapEntry: Shadestone Pillar Tile
+			SilverwoodChestTile.MapEntry: Silverwood Chest
+			SilverwoodCampfireTile.MapEntry: Silverwood Campfire
+			AngelStatue_SC.MapEntry: Angel of the Depths Statue
+			CelestineDreamsongTile.MapEntry: Celestine Dreamsong
+			DreambinderElixirTile.MapEntry: Dreambinder Elixir
+			ShadeCampfireTile.MapEntry: Shade Campfire
+			ShadesteelLeverTile.MapEntry: Shadesteel Lever
+			ShadesteelPortcullis2Close.MapEntry: Shadesteel Portcullis
+			ShadesteelPortcullis2Close_Unlocked.MapEntry: Shadesteel Portcullis
+			ShadesteelPortcullis2Open.MapEntry: Shadesteel Portcullis
+			ShadestoneMirrorTile2.MapEntry: Shadestone Mirror
+			ShadestoneMonolith1Tile.MapEntry: Shadestone Monolith
+			ShadestoneMonolith2Tile.MapEntry: Shadestone Monolith
+			SielukaivoShadowbinderTile.MapEntry: Sielukaivo Shadowbinder
+			SongOfTheAbyssTile.MapEntry: Song of the Abyss
+			StalkerGateTile.MapEntry: Shadesteel Grate
+			SilverwoodBathtubTile.MapEntry: Silverwood Bathtub
+			SilverwoodBookcaseTile.MapEntry: Silverwood Bookcase
+			SilverwoodCandelabraTile.MapEntry: Silverwood Candelabra
+			SilverwoodCandleTile.MapEntry: Silverwood Candle
+			SilverwoodCrateTile.MapEntry: Silverwood Crate
+			SilverwoodDresserTile.MapEntry: Silverwood Dresser
+			SilverwoodPewTile.MapEntry: Silverwood Pew
+			SilverwoodPianoTile.MapEntry: Silverwood Piano
+			SilverwoodSofaTile.MapEntry: Silverwood Sofa
+			CyberTeleporterTile.MapEntry: Cyber Teleporter
+			KSBattlestationTile.MapEntry: Observatory Station
+			VesselChamberTile.MapEntry: Vessel Chamber
+			SoullessRemainsTile.MapEntry: Soulless Remains
+			SoullessRemainsTile2.MapEntry: Soulless Remains
+			PaleBrittlecapTile.MapEntry: Pale Brittlecap
+			PaleBrittlecapTile2.MapEntry: Pale Brittlecap
+			ToxicAngel2Tile.MapEntry: Purified Toxic Angel
+			ToxicAngelTile.MapEntry: Toxic Angel
 		}
 
 		Keybinds: {

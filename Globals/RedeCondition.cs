@@ -47,7 +47,7 @@ namespace Redemption.Globals
         public static Condition DownedSkeletronOrSeed = new("Mods.Redemption.Conditions.DownedSkeletronOrSeed", () => Terraria.NPC.downedBoss3 || RedeBossDowned.downedSeed);
         public static Condition HasSpiritWalker = new("Mods.Redemption.Conditions.HasSpiritWalker", () => Main.LocalPlayer.RedemptionAbility().Spiritwalker);
         public static Condition DeadRingerGiven = new("Mods.Redemption.Conditions.DeadRingerGiven", () => RedeWorld.deadRingerGiven);
-        public static Condition InSoullessCaverns = new("Mods.Redemption.Conditions.InSoullessCaverns", Main.LocalPlayer.InModBiome<SoullessBiome>);
+        public static Condition InSoullessCaverns = new("Mods.Redemption.Conditions.InSoullessCaverns", () => Main.LocalPlayer.InModBiome<SoullessBiome>());
     }
     public class DecapitationCondition : IItemDropRuleCondition
     {
