@@ -12,11 +12,11 @@ namespace Redemption.Items.Usable.Potions
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Angler Potion");
-            Tooltip.SetDefault("You emit bright light while submerged" +
+            // DisplayName.SetDefault("Angler Potion");
+            /* Tooltip.SetDefault("You emit bright light while submerged" +
                 "\nClears the Soulless Cavern's waters" +
-                "\nIncreased damage while submerged");
-            SacrificeTotal = 20;
+                "\nIncreased damage while submerged"); */
+            Item.ResearchUnlockCount = 20;
         }
 
         public override void SetDefaults()

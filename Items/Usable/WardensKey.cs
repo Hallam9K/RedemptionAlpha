@@ -8,9 +8,9 @@ namespace Redemption.Items.Usable
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Warden's Key");
-            Tooltip.SetDefault("Used to open a gate in the temple");
-            SacrificeTotal = 1;
+            // DisplayName.SetDefault("Warden's Key");
+            // Tooltip.SetDefault("Used to open a gate in the temple");
+            Item.ResearchUnlockCount = 1;
         }
         public override void SetDefaults()
         {

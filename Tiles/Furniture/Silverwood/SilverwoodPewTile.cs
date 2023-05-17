@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Terraria;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 using Terraria.DataStructures;
@@ -20,8 +21,8 @@ namespace Redemption.Tiles.Furniture.Silverwood
             TileObjectData.newTile.DrawYOffset = 2;
             TileObjectData.addTile(Type);
 
-            ModTranslation name = CreateMapEntryName();
-            name.SetDefault("Silverwood Pew");
+            LocalizedText name = CreateMapEntryName();
+            // name.SetDefault("Silverwood Pew");
             AddMapEntry(new Color(228, 213, 173), name);
 
             AddToArray(ref TileID.Sets.RoomNeeds.CountsAsChair);
@@ -29,6 +30,5 @@ namespace Redemption.Tiles.Furniture.Silverwood
             DustType = DustID.Pearlwood;
         }
         public override void NumDust(int i, int j, bool fail, ref int num) => num = fail ? 1 : 3;
-        public override void KillMultiTile(int i, int j, int frameX, int frameY) => Item.NewItem(new EntitySource_TileBreak(i, j), new Vector2(i, j) * 16f, ModContent.ItemType<SilverwoodSofa>());
     }
 }

@@ -6,6 +6,7 @@ using Terraria.Enums;
 using Terraria.GameContent;
 using Terraria.GameContent.ObjectInteractions;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 
@@ -30,10 +31,7 @@ namespace Redemption.Tiles.Furniture.Silverwood
             DustType = DustID.Pearlwood;
             AdjTiles = new int[] { TileID.Chairs };
 
-            // Names
-            ModTranslation name = CreateMapEntryName();
-            name.SetDefault("Silverwood Chair");
-            AddMapEntry(new Color(228, 213, 173), name);
+            AddMapEntry(new Color(228, 213, 173), Language.GetText("MapObject.Chair"));
 
             // Placement
             TileObjectData.newTile.CopyFrom(TileObjectData.Style1x2);
@@ -49,9 +47,6 @@ namespace Redemption.Tiles.Furniture.Silverwood
         }
 
         public override void NumDust(int i, int j, bool fail, ref int num) => num = fail ? 1 : 3;
-
-        public override void KillMultiTile(int i, int j, int frameX, int frameY) => Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 16, 32, ModContent.ItemType<SilverwoodChair>());
-
         public override bool HasSmartInteract(int i, int j, SmartInteractScanSettings settings)
         {
             return settings.player.IsWithinSnappngRangeToTile(i, j, PlayerSittingHelper.ChairSittingMaxDistance);

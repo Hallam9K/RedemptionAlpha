@@ -3,6 +3,7 @@ using Redemption.Items.Placeable.Furniture.Silverwood;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 
@@ -19,14 +20,10 @@ namespace Redemption.Tiles.Furniture.Silverwood
             Main.tileLavaDeath[Type] = true;
             TileObjectData.newTile.CopyFrom(TileObjectData.Style2x2);
             TileObjectData.addTile(Type);
-            ModTranslation name = CreateMapEntryName();
-            name.SetDefault("Silverwood Crate");
+            LocalizedText name = CreateMapEntryName();
+            // name.SetDefault("Silverwood Crate");
             AddMapEntry(new Color(228, 213, 173), name);
             DustType = DustID.Pearlwood;
-        }
-        public override void KillMultiTile(int i, int j, int frameX, int frameY)
-        {
-            Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 32, 32, ModContent.ItemType<SilverwoodCrate>());
         }
     }
 }

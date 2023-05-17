@@ -16,7 +16,6 @@ namespace Redemption.Tiles.Tiles
             Main.tileBlockLight[Type] = true;
             Main.tileBlendAll[Type] = true;
             DustType = ModContent.DustType<SlateDust>();
-            ItemDrop = ModContent.ItemType<AncientAlloyBrick>();
             MinPick = 350;
             MineResist = 18f;
             HitSound = SoundID.Tink;

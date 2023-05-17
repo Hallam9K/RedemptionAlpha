@@ -81,9 +81,9 @@ namespace Redemption.WorldGeneration
             WorldGen.PlaceObject(origin.X + 91, origin.Y + 27, (ushort)ModContent.TileType<SlayerChairTile>());
             NetMessage.SendObjectPlacement(-1, origin.X + 91, origin.Y + 27, (ushort)ModContent.TileType<SlayerChairTile>(), 0, 0, -1, -1);
             WorldGen.PlaceObject(origin.X + 84, origin.Y + 36, (ushort)ModContent.TileType<SlayerFabricatorTile>());
-            NetMessage.SendObjectPlacment(-1, origin.X + 84, origin.Y + 36, (ushort)ModContent.TileType<SlayerFabricatorTile>(), 0, 0, -1, -1);
+            NetMessage.SendObjectPlacement(-1, origin.X + 84, origin.Y + 36, (ushort)ModContent.TileType<SlayerFabricatorTile>(), 0, 0, -1, -1);
             WorldGen.PlaceObject(origin.X + 63, origin.Y + 48, (ushort)ModContent.TileType<CyberTeleporterTile>());
-            NetMessage.SendObjectPlacment(-1, origin.X + 63, origin.Y + 48, (ushort)ModContent.TileType<CyberTeleporterTile>(), 0, 0, -1, -1);
+            NetMessage.SendObjectPlacement(-1, origin.X + 63, origin.Y + 48, (ushort)ModContent.TileType<CyberTeleporterTile>(), 0, 0, -1, -1);
             holochestMainLoot = new List<int> {
                 ModContent.ItemType<HyperTechRevolvers>(), ModContent.ItemType<CyberChakram>(), ModContent.ItemType<AndroidHologram>(), ModContent.ItemType<WireTaser>(), ModContent.ItemType<Biocontainer>(), ModContent.ItemType<GlobalDischarge>()
             };

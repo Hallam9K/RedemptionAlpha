@@ -1,5 +1,6 @@
 using Terraria.ModLoader;
 using Terraria.ID;
+using Terraria;
 using Redemption.Tiles.Furniture.SlayerShip;
 
 namespace Redemption.Items.Placeable.Furniture.SlayerShip
@@ -8,8 +9,8 @@ namespace Redemption.Items.Placeable.Furniture.SlayerShip
 	{
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Observatory Station");
-            SacrificeTotal = 1;
+            // DisplayName.SetDefault("Observatory Station");
+            Item.ResearchUnlockCount = 1;
         }
         public override void SetDefaults()
 		{

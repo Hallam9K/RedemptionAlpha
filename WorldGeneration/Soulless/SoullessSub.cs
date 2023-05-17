@@ -41,6 +41,48 @@ namespace Redemption.WorldGeneration.Soulless
         public override bool NormalUpdates => false;
         public override bool ShouldSave => true;
         public override bool NoPlayerSaving => false;
+
+        /*public override void CopyMainWorldData()
+        {
+            SubworldSystem.CopyWorldData(nameof(RedeWorld.alignment), RedeWorld.alignment);
+            SubworldSystem.CopyWorldData(nameof(RedeWorld.alignmentGiven), RedeWorld.alignmentGiven);
+            SubworldSystem.CopyWorldData(nameof(RedeWorld.newbGone), RedeWorld.newbGone);
+            SubworldSystem.CopyWorldData(nameof(RedeBossDowned.downedGGBossFirst), RedeBossDowned.downedGGBossFirst);
+            SubworldSystem.CopyWorldData(nameof(RedeBossDowned.downedKeeper), RedeBossDowned.downedKeeper);
+            SubworldSystem.CopyWorldData(nameof(RedeBossDowned.keeperSaved), RedeBossDowned.keeperSaved);
+            SubworldSystem.CopyWorldData(nameof(RedeBossDowned.nebDeath), RedeBossDowned.nebDeath);
+        }
+        public override void ReadCopiedMainWorldData()
+        {
+            RedeWorld.alignment = SubworldSystem.ReadCopiedWorldData<int>(nameof(RedeWorld.alignment));
+            RedeWorld.alignmentGiven = SubworldSystem.ReadCopiedWorldData<bool>(nameof(RedeWorld.alignmentGiven));
+            RedeWorld.newbGone = SubworldSystem.ReadCopiedWorldData<bool>(nameof(RedeWorld.newbGone));
+            RedeBossDowned.downedGGBossFirst = SubworldSystem.ReadCopiedWorldData<int>(nameof(RedeBossDowned.downedGGBossFirst));
+            RedeBossDowned.downedKeeper = SubworldSystem.ReadCopiedWorldData<bool>(nameof(RedeBossDowned.downedKeeper));
+            RedeBossDowned.keeperSaved = SubworldSystem.ReadCopiedWorldData<bool>(nameof(RedeBossDowned.keeperSaved));
+            RedeBossDowned.nebDeath = SubworldSystem.ReadCopiedWorldData<int>(nameof(RedeBossDowned.nebDeath));
+        }
+        public override void CopySubworldData()
+        {
+            SubworldSystem.CopyWorldData(nameof(RedeWorld.alignment), RedeWorld.alignment);
+            SubworldSystem.CopyWorldData(nameof(RedeBossDowned.downedGGBossFirst), RedeBossDowned.downedGGBossFirst);
+            SubworldSystem.CopyWorldData(nameof(RedeBossDowned.downedWarden), RedeBossDowned.downedWarden);
+        }
+        public override void ReadCopiedSubworldData()
+        {
+            RedeWorld.alignment = SubworldSystem.ReadCopiedWorldData<int>(nameof(RedeWorld.alignment));
+            RedeBossDowned.downedGGBossFirst = SubworldSystem.ReadCopiedWorldData<int>(nameof(RedeBossDowned.downedGGBossFirst));
+            RedeBossDowned.downedWarden = SubworldSystem.ReadCopiedWorldData<bool>(nameof(RedeBossDowned.downedWarden));
+        }
+        public override bool ChangeAudio()
+        {
+            if (Main.gameMenu)
+            {
+                Main.newMusic = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/Island");
+                return true;
+            }
+            return false;
+        }*/
         public override List<GenPass> Tasks => new()
         {
             new SoullessPass0("Pre-Loading", .1f),

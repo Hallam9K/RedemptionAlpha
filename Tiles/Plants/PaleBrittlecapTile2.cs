@@ -5,6 +5,7 @@ using Redemption.Tiles.Tiles;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 
@@ -29,8 +30,8 @@ namespace Redemption.Tiles.Plants
             TileObjectData.addTile(Type);
             HitSound = SoundID.Grass;
             DustType = ModContent.DustType<SlateDust>();
-            ModTranslation name = CreateMapEntryName();
-            name.SetDefault("Pale Brittlecap");
+            LocalizedText name = CreateMapEntryName();
+            // name.SetDefault("Pale Brittlecap");
             AddMapEntry(new Color(170, 150, 110), name);
         }
         public override void KillMultiTile(int i, int j, int frameX, int frameY)

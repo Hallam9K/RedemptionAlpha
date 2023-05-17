@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Dusts;
 using Redemption.Items.Placeable.Plants;
+using Redemption.Items.Usable.Potions;
 using Redemption.Tiles.Tiles;
 using System;
 using Terraria;
@@ -23,14 +24,11 @@ namespace Redemption.Tiles.Plants
             Main.tileLighted[Type] = true;
             HitSound = SoundID.Grass;
             DustType = ModContent.DustType<VoidFlame>();
-
             AddMapEntry(new Color(10, 14, 23));
         }
-        public override bool Drop(int i, int j)
+        public override bool CanDrop(int i, int j)
         {
-            if (Main.rand.NextBool(30))
-                Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 16, 16, ModContent.ItemType<Nooseroot>());
-            return true;
+            return Main.rand.NextBool(30);
         }
         public override void KillTile(int i, int j, ref bool fail, ref bool effectOnly, ref bool noItem)
         {

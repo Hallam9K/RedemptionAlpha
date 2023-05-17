@@ -6,6 +6,7 @@ using Terraria;
 using Terraria.DataStructures;
 using Terraria.Enums;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 
@@ -28,7 +29,6 @@ namespace Redemption.Tiles.Furniture.Kingdom
 			TileID.Sets.DisableSmartCursor[Type] = true;
 			TileID.Sets.Torch[Type] = true;
 
-			ItemDrop = ModContent.ItemType<KingdomTorch>();
 			DustType = DustID.OrangeTorch;
 			AdjTiles = new int[] { TileID.Torches };
 
@@ -50,12 +50,7 @@ namespace Redemption.Tiles.Furniture.Kingdom
 			TileObjectData.addAlternate(0);
 			TileObjectData.addTile(Type);
 
-			// Etc
-			ModTranslation name = CreateMapEntryName();
-
-			name.SetDefault("Torch");
-
-			AddMapEntry(new Color(255, 169, 47), name);
+			AddMapEntry(new Color(255, 169, 47), Language.GetText("ItemName.Torch"));
 
 			// Assets
 			if (!Main.dedServ)

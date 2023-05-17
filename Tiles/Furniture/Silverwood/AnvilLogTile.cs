@@ -31,7 +31,6 @@ namespace Redemption.Tiles.Furniture.Silverwood
             AddMapEntry(new Color(200, 160, 120));
             AdjTiles = new int[] { TileID.Anvils };
         }
-        public override void KillMultiTile(int i, int j, int frameX, int frameY) => Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 32, 32, ModContent.ItemType<AnvilLog>());
         public override void NumDust(int i, int j, bool fail, ref int num) => num = fail ? 1 : 3;
     }
 }

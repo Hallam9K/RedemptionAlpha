@@ -26,9 +26,7 @@ namespace Redemption.Tiles.Furniture.PetrifiedWood
             TileObjectData.newTile.CoordinateHeights = new[] { 16, 18 };
             TileObjectData.newTile.CoordinatePaddingFix = new Point16(0, -2);
             TileObjectData.addTile(Type);
-            LocalizedText name = CreateMapEntryName();
-			// name.SetDefault("Petrified Wood Bed");
-			AddMapEntry(new Color(12, 128, 26), name);
+			AddMapEntry(new Color(12, 128, 26), Language.GetText("ItemName.Bed"));
 			DustType = DustID.Ash;
 			AddToArray(ref TileID.Sets.RoomNeeds.CountsAsChair);
 			AdjTiles = new int[] { TileID.Beds };

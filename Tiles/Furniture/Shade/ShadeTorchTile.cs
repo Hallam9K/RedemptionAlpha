@@ -30,7 +30,6 @@ namespace Redemption.Tiles.Furniture.Shade
 			TileID.Sets.DisableSmartCursor[Type] = true;
 			TileID.Sets.Torch[Type] = true;
 
-			ItemDrop = ModContent.ItemType<ShadeTorch>();
 			DustType = DustID.AncientLight;
 			AdjTiles = new int[] { TileID.Torches };
 
@@ -52,12 +51,7 @@ namespace Redemption.Tiles.Furniture.Shade
 			TileObjectData.addAlternate(0);
 			TileObjectData.addTile(Type);
 
-			// Etc
-			LocalizedText name = CreateMapEntryName();
-
-			// name.SetDefault("Torch");
-
-			AddMapEntry(new Color(250, 250, 250), name);
+			AddMapEntry(new Color(250, 250, 250), Language.GetText("ItemName.Torch"));
 
 			// Assets
 			if (!Main.dedServ)

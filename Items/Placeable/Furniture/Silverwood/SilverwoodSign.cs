@@ -10,8 +10,8 @@ namespace Redemption.Items.Placeable.Furniture.Silverwood
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Silverwood Danger Sign");
-            SacrificeTotal = 1;
+            // DisplayName.SetDefault("Silverwood Danger Sign");
+            Item.ResearchUnlockCount = 1;
         }
 
         public override void SetDefaults()

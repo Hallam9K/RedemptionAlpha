@@ -16,8 +16,8 @@ namespace Redemption.Items.Tools.PostML
     {
         public override void SetStaticDefaults()
         {
-            Tooltip.SetDefault("Smashing an enemy will make it take 15% more damage for 5 seconds");
-            SacrificeTotal = 1;
+            // Tooltip.SetDefault("Smashing an enemy will make it take 15% more damage for 5 seconds");
+            Item.ResearchUnlockCount = 1;
             ElementID.ItemShadow[Type] = true;
         }
         public override void SetDefaults()
@@ -37,15 +37,15 @@ namespace Redemption.Items.Tools.PostML
             Item.useTurn = true;
             Item.rare = ModContent.RarityType<SoullessRarity>();
         }
-        public override void OnHitNPC(Player player, NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(Player player, NPC target, NPC.HitInfo hit, int damageDone)
         {
             target.AddBuff(ModContent.BuffType<SmashedDebuff>(), 300);
         }
         public override bool AltFunctionUse(Player player) => true;
-        public override void ModifyHitNPC(Player player, NPC target, ref int damage, ref float knockBack, ref bool crit)
+        public override void ModifyHitNPC(Player player, NPC target, ref NPC.HitModifiers modifiers)
         {
             if (player.altFunctionUse == 2)
-                knockBack *= 4;
+                modifiers.Knockback *= 4;
         }
         public bool activate;
         public override bool? UseItem(Player player)

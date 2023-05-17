@@ -24,7 +24,6 @@ namespace Redemption.Tiles.Bars
             TileObjectData.newTile.LavaDeath = false;
             TileObjectData.addTile(Type);
 
-            ItemDrop = ModContent.ItemType<EvergoldBar>();
             DustType = DustID.GoldCoin;
             AddMapEntry(new Color(232, 177, 18));
             MinPick = 0;

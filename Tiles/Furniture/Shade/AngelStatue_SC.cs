@@ -7,6 +7,7 @@ using Terraria.DataStructures;
 using Terraria.Enums;
 using Terraria.GameContent.ObjectInteractions;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 
@@ -29,8 +30,8 @@ namespace Redemption.Tiles.Furniture.Shade
             TileObjectData.newTile.Origin = new Point16(4, 15);
             TileObjectData.newTile.AnchorBottom = new AnchorData(AnchorType.SolidTile | AnchorType.SolidWithTop | AnchorType.SolidSide, TileObjectData.newTile.Width, 0);
             TileObjectData.addTile(Type);
-            ModTranslation name = CreateMapEntryName();
-            name.SetDefault("Angel of the Depths Statue");
+            LocalizedText name = CreateMapEntryName();
+            // name.SetDefault("Angel of the Depths Statue");
             AddMapEntry(new Color(144, 149, 166), name);
             MinPick = 500;
             MineResist = 30f;

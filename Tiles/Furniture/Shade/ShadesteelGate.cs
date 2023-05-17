@@ -45,7 +45,6 @@ namespace Redemption.Tiles.Furniture.Shade
             AddMapEntry(new Color(83, 87, 123), name);
             MinPick = 500;
             MineResist = 12f;
-            ItemDrop = -1;
             DustType = ModContent.DustType<ShadesteelDust>();
             AdjTiles = new int[] { TileID.ClosedDoor };
         }

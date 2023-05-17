@@ -7,8 +7,8 @@ namespace Redemption.Buffs
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Dreambound");
-            Description.SetDefault("\"Increases length of invincibility\"");
+            // DisplayName.SetDefault("Dreambound");
+            // Description.SetDefault("\"Increases length of invincibility\"");
             Main.buffNoTimeDisplay[Type] = false;
         }
         public override void Update(Player player, ref int buffIndex)

@@ -5,6 +5,7 @@ using Terraria;
 using Terraria.DataStructures;
 using Terraria.Enums;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 
@@ -32,8 +33,8 @@ namespace Redemption.Tiles.Furniture.Shade
             TileObjectData.newTile.AnchorLeft = new AnchorData(AnchorType.SolidTile, TileObjectData.newTile.Height, 0);
             TileObjectData.newTile.AnchorRight = new AnchorData(AnchorType.SolidTile, TileObjectData.newTile.Height, 0);
             TileObjectData.addTile(Type);
-            ModTranslation name = CreateMapEntryName();
-            name.SetDefault("Shadesteel Grate");
+            LocalizedText name = CreateMapEntryName();
+            // name.SetDefault("Shadesteel Grate");
             AddMapEntry(new Color(83, 87, 123), name);
             MinPick = 500;
             MineResist = 30f;
@@ -72,9 +73,9 @@ namespace Redemption.Tiles.Furniture.Shade
     }
     public class StalkerGate : PlaceholderTile
     {
-        public override void SetStaticDefaults()
+        public override void SetSafeStaticDefaults()
         {
-            Tooltip.SetDefault("[c/ff0000:Unbreakable]");
+            // Tooltip.SetDefault("[c/ff0000:Unbreakable]");
         }
 
         public override void SetDefaults()

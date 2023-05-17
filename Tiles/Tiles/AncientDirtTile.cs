@@ -24,7 +24,6 @@ namespace Redemption.Tiles.Tiles
             Main.tileMerge[Type][TileID.Mudstone] = true;
             Main.tileMerge[TileID.Mudstone][Type] = true;
             Main.tileBlockLight[Type] = true;
-            ItemDrop = ModContent.ItemType<AncientDirt>();
 			AddMapEntry(new Color(115, 88, 69));
         }
         public override void FloorVisuals(Player player)

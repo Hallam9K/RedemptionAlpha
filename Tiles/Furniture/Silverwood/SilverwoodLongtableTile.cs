@@ -38,7 +38,6 @@ namespace Redemption.Tiles.Furniture.Silverwood
             AdjTiles = new int[] { TileID.Tables };
         }
         public override void NumDust(int i, int j, bool fail, ref int num) => num = fail ? 1 : 3;
-        public override void KillMultiTile(int i, int j, int frameX, int frameY) => Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 16, 32, ModContent.ItemType<SilverwoodLongtable_End>());
     }
     public class SilverwoodLongtableTile_Mid : ModTile
     {
@@ -65,7 +64,6 @@ namespace Redemption.Tiles.Furniture.Silverwood
             AdjTiles = new int[] { TileID.Tables };
         }
         public override void NumDust(int i, int j, bool fail, ref int num) => num = fail ? 1 : 3;
-        public override void KillMultiTile(int i, int j, int frameX, int frameY) => Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 32, 32, ModContent.ItemType<SilverwoodLongtable_Mid>());
     }
     public class SilverwoodLongtableTile_Mid2 : ModTile
     {
@@ -92,6 +90,5 @@ namespace Redemption.Tiles.Furniture.Silverwood
             AdjTiles = new int[] { TileID.Tables };
         }
         public override void NumDust(int i, int j, bool fail, ref int num) => num = fail ? 1 : 3;
-        public override void KillMultiTile(int i, int j, int frameX, int frameY) => Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 32, 32, ModContent.ItemType<SilverwoodLongtable_Mid2>());
     }
 }

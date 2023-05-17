@@ -28,10 +28,9 @@ namespace Redemption.Tiles.Furniture.Lab
             DustType = DustID.GreenBlood;
             MinPick = 500;
             MineResist = 3f;
-            ItemDrop = -1;
             LocalizedText name = CreateMapEntryName();
             // name.SetDefault("Kari's Hospital Bed");
-            AddMapEntry(new Color(56, 78, 210));
+            AddMapEntry(new Color(56, 78, 210), name);
         }
         public override bool CanKillTile(int i, int j, ref bool blockDamaged) => false;
         public override bool CanExplode(int i, int j) => false;

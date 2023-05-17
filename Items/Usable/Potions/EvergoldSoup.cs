@@ -12,8 +12,8 @@ namespace Redemption.Items.Usable.Potions
     {
         public override void SetStaticDefaults()
         {
-            Tooltip.SetDefault("Massive improvements to all stats\n" +
-                "'Tastes like royalty'");
+            /* Tooltip.SetDefault("Massive improvements to all stats\n" +
+                "'Tastes like royalty'"); */
             Main.RegisterItemAnimation(Type, new DrawAnimationVertical(int.MaxValue, 3));
             ItemID.Sets.DrinkParticleColors[Item.type] = new Color[3] {
                 new Color(231, 84, 211),
@@ -21,7 +21,7 @@ namespace Redemption.Items.Usable.Potions
                 new Color(118, 51, 51)
             };
             ItemID.Sets.IsFood[Type] = true;
-            SacrificeTotal = 5;
+            Item.ResearchUnlockCount = 5;
         }
 
         public override void SetDefaults()

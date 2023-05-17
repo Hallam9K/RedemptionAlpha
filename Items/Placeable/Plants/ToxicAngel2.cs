@@ -1,4 +1,7 @@
 ﻿using Redemption.Rarities;
+using Redemption.Tiles.Plants;
+using Terraria;
+using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Redemption.Items.Placeable.Plants
@@ -7,12 +10,13 @@ namespace Redemption.Items.Placeable.Plants
 	{
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Purified Toxic Angel");
-            Tooltip.SetDefault("'Tastes like jelly'");
-            SacrificeTotal = 5;
+            // DisplayName.SetDefault("Purified Toxic Angel");
+            // Tooltip.SetDefault("'Tastes like jelly'");
+            Item.ResearchUnlockCount = 5;
         }
         public override void SetDefaults()
         {
+            Item.DefaultToPlaceableTile(ModContent.TileType<ToxicAngel2Tile>());
             Item.width = 26;
             Item.height = 26;
             Item.maxStack = Item.CommonMaxStack;

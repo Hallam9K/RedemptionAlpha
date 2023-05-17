@@ -17,8 +17,8 @@ namespace Redemption.Items.Weapons.PostML.Melee
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Dark Star");
-            SacrificeTotal = 1;
+            // DisplayName.SetDefault("Dark Star");
+            Item.ResearchUnlockCount = 1;
         }
 
         public override void SetDefaults()
@@ -51,7 +51,7 @@ namespace Redemption.Items.Weapons.PostML.Melee
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Dark Star");
+            // DisplayName.SetDefault("Dark Star");
             ProjectileID.Sets.TrailCacheLength[Projectile.type] = 5;
             ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
             ElementID.ProjShadow[Type] = true;
@@ -92,7 +92,7 @@ namespace Redemption.Items.Weapons.PostML.Melee
             if (cooldown > 0)
                 cooldown--;
         }
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             if (cooldown <= 0 && Main.myPlayer == Projectile.owner)
             {

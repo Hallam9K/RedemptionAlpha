@@ -10,8 +10,8 @@ namespace Redemption.Items.Placeable.Plants
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Toxic Angel");
-            SacrificeTotal = 5;
+            // DisplayName.SetDefault("Toxic Angel");
+            Item.ResearchUnlockCount = 5;
         }
         public override void SetDefaults()
         {

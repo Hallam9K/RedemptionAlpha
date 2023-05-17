@@ -11,7 +11,7 @@ namespace Redemption.Projectiles.Melee
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Candle Light");
+            // DisplayName.SetDefault("Candle Light");
             Main.projFrames[Projectile.type] = 4;
             ElementID.ProjShadow[Type] = true;
             ElementID.ProjFire[Type] = true;
@@ -47,7 +47,7 @@ namespace Redemption.Projectiles.Melee
                 Main.dust[dustIndex].noGravity = true;
             }
         }
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             target.AddBuff(ModContent.BuffType<BlackenedHeartDebuff>(), 120);
         }

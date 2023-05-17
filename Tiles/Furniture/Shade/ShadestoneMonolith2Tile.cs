@@ -6,6 +6,7 @@ using ReLogic.Content;
 using System;
 using Terraria;
 using Terraria.DataStructures;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 
@@ -45,8 +46,8 @@ namespace Redemption.Tiles.Furniture.Shade
             TileObjectData.addTile(Type);
 
             // Etc
-            ModTranslation name = CreateMapEntryName();
-            name.SetDefault("Shadestone Monolith");
+            LocalizedText name = CreateMapEntryName();
+            // name.SetDefault("Shadestone Monolith");
             AddMapEntry(new Color(133, 135, 174), name);
         }
         private int pulseTimer;

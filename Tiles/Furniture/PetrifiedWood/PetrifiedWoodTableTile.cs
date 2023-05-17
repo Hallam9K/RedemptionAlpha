@@ -35,7 +35,6 @@ namespace Redemption.Tiles.Furniture.PetrifiedWood
 
 			AddMapEntry(new Color(100, 100, 100), Language.GetText("MapObject.Table"));
         }
-
 		public override void NumDust(int i, int j, bool fail, ref int num)
 		{
 			num = fail ? 1 : 3;

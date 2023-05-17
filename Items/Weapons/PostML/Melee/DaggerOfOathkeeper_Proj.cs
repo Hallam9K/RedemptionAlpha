@@ -16,7 +16,7 @@ namespace Redemption.Items.Weapons.PostML.Melee
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Dagger of the Oathkeeper");
+            // DisplayName.SetDefault("Dagger of the Oathkeeper");
         }
 
         public override bool ShouldUpdatePosition() => false;
@@ -114,14 +114,12 @@ namespace Redemption.Items.Weapons.PostML.Melee
 
             Projectile.Center = player.MountedCenter + vector;
         }
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
-        {
-            target.AddBuff(ModContent.BuffType<BlackenedHeartDebuff>(), 120);
-        }
-        public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             if (Projectile.ai[0] < 3)
-                RedeProjectile.Decapitation(target, ref damage, ref crit);
+                RedeProjectile.Decapitation(target, ref damageDone, ref hit.Crit);
+
+            target.AddBuff(ModContent.BuffType<BlackenedHeartDebuff>(), 120);
         }
 
         public override bool PreDraw(ref Color lightColor)
@@ -142,7 +140,7 @@ namespace Redemption.Items.Weapons.PostML.Melee
         public override string Texture => "Redemption/Items/Weapons/PostML/Melee/DaggerOfOathkeeper_Proj";
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Dagger of the Oathkeeper");
+            // DisplayName.SetDefault("Dagger of the Oathkeeper");
         }
         private Vector2 startVector;
         public override void SetDefaults()
@@ -208,7 +206,7 @@ namespace Redemption.Items.Weapons.PostML.Melee
             Projectile.Center = player.MountedCenter + vector;
             return false;
         }
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             target.AddBuff(ModContent.BuffType<BlackenedHeartDebuff>(), 120);
         }

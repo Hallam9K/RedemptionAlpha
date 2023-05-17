@@ -1,6 +1,7 @@
 using Redemption.Rarities;
 using Redemption.Tiles.Furniture.Silverwood;
 using Terraria.ModLoader;
+using Terraria;
 
 namespace Redemption.Items.Placeable.Furniture.Silverwood
 {
@@ -8,7 +9,7 @@ namespace Redemption.Items.Placeable.Furniture.Silverwood
 	{
         public override void SetStaticDefaults()
         {
-            SacrificeTotal = 200;
+            Item.ResearchUnlockCount = 200;
         }
         public override void SetDefaults()
         {

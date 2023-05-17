@@ -10,8 +10,8 @@ namespace Redemption.Items.Placeable.Furniture.Shade
 	{
 		public override void SetStaticDefaults()
 		{
-            Tooltip.SetDefault("Life regen is increased when near a campfire");
-			SacrificeTotal = 1;
+            // Tooltip.SetDefault("Life regen is increased when near a campfire");
+			Item.ResearchUnlockCount = 1;
 		}
 
 		public override void SetDefaults()

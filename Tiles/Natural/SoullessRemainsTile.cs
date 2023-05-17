@@ -8,6 +8,7 @@ using Terraria.DataStructures;
 using Terraria.Enums;
 using Terraria.GameContent.ObjectInteractions;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 
@@ -34,8 +35,8 @@ namespace Redemption.Tiles.Natural
             MinPick = 200;
             MineResist = 6f;
             HitSound = SoundID.NPCHit48;
-            ModTranslation name = CreateMapEntryName();
-            name.SetDefault("Soulless Remains");
+            LocalizedText name = CreateMapEntryName();
+            // name.SetDefault("Soulless Remains");
             AddMapEntry(new Color(210, 200, 191), name);
         }
         public override bool HasSmartInteract(int i, int j, SmartInteractScanSettings settings) => Main.tile[i, j].TileFrameX < 54;
@@ -146,10 +147,10 @@ namespace Redemption.Tiles.Natural
     public class SoullessRemains : PlaceholderTile
     {
         public override string Texture => "Redemption/Placeholder";
-        public override void SetStaticDefaults()
+        public override void SetSafeStaticDefaults()
         {
-            DisplayName.SetDefault("Soulless Remains");
-            Tooltip.SetDefault("Gives Prison Gate Key");
+            // DisplayName.SetDefault("Soulless Remains");
+            // Tooltip.SetDefault("Gives Prison Gate Key");
         }
 
         public override void SetDefaults()
@@ -161,10 +162,10 @@ namespace Redemption.Tiles.Natural
     public class SoullessRemains2 : PlaceholderTile
     {
         public override string Texture => "Redemption/Placeholder";
-        public override void SetStaticDefaults()
+        public override void SetSafeStaticDefaults()
         {
-            DisplayName.SetDefault("Soulless Remains (Reinforced Gate Key)");
-            Tooltip.SetDefault("Gives Prison Gate Key");
+            // DisplayName.SetDefault("Soulless Remains (Reinforced Gate Key)");
+            // Tooltip.SetDefault("Gives Prison Gate Key");
         }
 
         public override void SetDefaults()

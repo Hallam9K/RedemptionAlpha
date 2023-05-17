@@ -38,7 +38,7 @@ namespace Redemption.NPCs.Soulless
         public ref float TimerRand => ref NPC.ai[2];
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Shadebug");
+            // DisplayName.SetDefault("Shadebug");
             Main.npcFrameCount[NPC.type] = 9;
             NPCID.Sets.CountsAsCritter[Type] = true;
             NPCID.Sets.TakesDamageFromHostilesWithoutBeingFriendly[Type] = true;
@@ -271,7 +271,7 @@ namespace Redemption.NPCs.Soulless
                 new FlavorTextBestiaryInfoElement("A pathetic mass of soulless too weak to take a humanoid form. These \"bugs\" are at the bottom of the food chain in this dark competition of growth, either created this way due to their meager souls in past life or half-devoured by their competitors.")
             });
         }
-        public override void HitEffect(int hitDirection, double damage)
+        public override void HitEffect(NPC.HitInfo hit)
         {
             if (AIState is not ActionState.Alert)
             {
@@ -288,8 +288,8 @@ namespace Redemption.NPCs.Soulless
             }
         }
         public override bool CanHitPlayer(Player target, ref int cooldownSlot) => AIState == ActionState.Hop;
-        public override bool? CanHitNPC(NPC target) => target.whoAmI != NPC.whoAmI && AIState == ActionState.Hop ? null : false;
-        public override void OnHitPlayer(Player target, int damage, bool crit) => target.AddBuff(ModContent.BuffType<BlackenedHeartDebuff>(), 10);
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) => target.AddBuff(ModContent.BuffType<BlackenedHeartDebuff>(), 10);
+        public override bool CanHitNPC(NPC target) => target.whoAmI != NPC.whoAmI && AIState == ActionState.Hop;
+        public override void OnHitPlayer(Player target, Player.HurtInfo hurtInfo) => target.AddBuff(ModContent.BuffType<BlackenedHeartDebuff>(), 10);
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit) => target.AddBuff(ModContent.BuffType<BlackenedHeartDebuff>(), 10);
     }
 }

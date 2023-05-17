@@ -14,10 +14,10 @@ namespace Redemption.Items.Weapons.PostML.Magic
     {
         public override void SetStaticDefaults()
         {
-            Tooltip.SetDefault("Hold left-click to summon Shadesouls that float around the player" +
-                "\nRelease left-click to make them fly towards cursor point at high speeds");
+            /* Tooltip.SetDefault("Hold left-click to summon Shadesouls that float around the player" +
+                "\nRelease left-click to make them fly towards cursor point at high speeds"); */
             Item.staff[Item.type] = true;
-            SacrificeTotal = 1;
+            Item.ResearchUnlockCount = 1;
         }
 
         public override void SetDefaults()

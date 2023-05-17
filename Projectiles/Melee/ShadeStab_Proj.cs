@@ -12,7 +12,7 @@ namespace Redemption.Projectiles.Melee
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Shade Stab");
+            // DisplayName.SetDefault("Shade Stab");
             ProjectileID.Sets.TrailCacheLength[Projectile.type] = 6;
             ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
         }
@@ -42,13 +42,13 @@ namespace Redemption.Projectiles.Melee
 
         public override bool? CanHitNPC(NPC target) => !target.friendly && Projectile.alpha <= 200 ? null : false;
 
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             Projectile.localNPCImmunity[target.whoAmI] = 5;
             target.immune[Projectile.owner] = 0;
             target.AddBuff(ModContent.BuffType<BlackenedHeartDebuff>(), 60); 
         }
-        public override void OnHitPlayer(Player target, int damage, bool crit) => target.AddBuff(ModContent.BuffType<BlackenedHeartDebuff>(), 60);
+        public override void OnHitPlayer(Player target, Player.HurtInfo info) => target.AddBuff(ModContent.BuffType<BlackenedHeartDebuff>(), 60);
 
         public override bool? CanCutTiles() => false;
 

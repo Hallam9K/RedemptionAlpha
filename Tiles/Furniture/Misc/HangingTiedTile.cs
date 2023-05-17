@@ -10,6 +10,7 @@ using Terraria.Audio;
 using Redemption.BaseExtension;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Globals;
+using Redemption.Items.Usable.Potions;
 
 namespace Redemption.Tiles.Furniture.Misc
 {
@@ -26,7 +27,7 @@ namespace Redemption.Tiles.Furniture.Misc
             TileObjectData.addTile(Type);
             DustType = DustID.Bone;
             HitSound = CustomSounds.BoneHit;
-            ItemDrop = ModContent.ItemType<OldTophat>();
+            RegisterItemDrop(ModContent.ItemType<OldTophat>());
             LocalizedText name = CreateMapEntryName();
             // name.SetDefault("Hanging Tied");
             AddMapEntry(new Color(81, 81, 81), name);

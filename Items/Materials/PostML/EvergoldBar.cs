@@ -10,8 +10,8 @@ namespace Redemption.Items.Materials.PostML
 	{
         public override void SetStaticDefaults()
         {
-            Tooltip.SetDefault("'Eternal gold'");
-            SacrificeTotal = 25;
+            // Tooltip.SetDefault("'Eternal gold'");
+            Item.ResearchUnlockCount = 25;
         }
 
         public override void SetDefaults()

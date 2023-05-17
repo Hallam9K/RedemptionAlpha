@@ -8,8 +8,8 @@ namespace Redemption.Items.Materials.PostML
 	{
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Evergold Nugget");
-            Tooltip.SetDefault("'Eternal gold'");
+            // DisplayName.SetDefault("Evergold Nugget");
+            // Tooltip.SetDefault("'Eternal gold'");
         }
 
 		public override void SetDefaults()

@@ -86,14 +86,6 @@ namespace Redemption.Items.Weapons.PreHM.Melee
                         Projectile.frame++;
                         if (Projectile.frame is 2)
                         {
-                            for (int i = 0; i < Main.maxProjectiles; i++)
-                            {
-                                Projectile target = Main.projectile[i];
-                                if (!target.active || target.whoAmI == Projectile.whoAmI || !target.hostile)
-                                    continue;
-
-                                RedeProjectile.SwordClashFriendly(Projectile, target, player, ref parried);
-                            }
                             if (Projectile.localAI[0] == 1)
                             {
                                 player.statLife -= 15;

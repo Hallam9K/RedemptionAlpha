@@ -2,7 +2,9 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Items.Placeable.Furniture.Silverwood;
 using Terraria;
+using Terraria.Enums;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 
@@ -17,13 +19,15 @@ namespace Redemption.Tiles.Furniture.Silverwood
             Main.tileLighted[Type] = true;
             TileID.Sets.DisableSmartCursor[Type] = true;
             TileObjectData.newTile.CopyFrom(TileObjectData.StyleOnTable1x1);
+            TileObjectData.newTile.WaterDeath = true;
+            TileObjectData.newTile.WaterPlacement = LiquidPlacement.NotAllowed;
+            TileObjectData.newTile.LavaPlacement = LiquidPlacement.NotAllowed;
             TileObjectData.newTile.CoordinateHeights = new int[] { 20 };
             TileObjectData.addTile(Type);
-            ModTranslation name = CreateMapEntryName();
-            name.SetDefault("Silverwood Candle");
+            LocalizedText name = CreateMapEntryName();
+            // name.SetDefault("Silverwood Candle");
             AddMapEntry(new Color(228, 213, 173), name);
             AdjTiles = new int[] { TileID.Candles };
-            ItemDrop = ModContent.ItemType<SilverwoodCandle>();
             AddToArray(ref TileID.Sets.RoomNeeds.CountsAsTorch);
             DustType = DustID.Pearlwood;
         }

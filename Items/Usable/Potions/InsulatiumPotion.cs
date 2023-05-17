@@ -13,12 +13,12 @@ namespace Redemption.Items.Usable.Potions
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Insulatium Potion");
-            Tooltip.SetDefault("Provides immunity to the Electrified debuff" +
-                "\nElectrifies nearby enemies");
+            // DisplayName.SetDefault("Insulatium Potion");
+            /* Tooltip.SetDefault("Provides immunity to the Electrified debuff" +
+                "\nElectrifies nearby enemies"); */
             ItemID.Sets.AnimatesAsSoul[Item.type] = true;
             Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(4, 4));
-            SacrificeTotal = 20;
+            Item.ResearchUnlockCount = 20;
         }
 
         public override void SetDefaults()

@@ -94,9 +94,6 @@ namespace Redemption.Items.Weapons.PreHM.Melee
                                     target.ai[0] = 1;
                                     continue;
                                 }
-                                if (RedeProjectile.SwordClashFriendly(Projectile, target, player, ref parried))
-                                    continue;
-
                                 if (target.whoAmI == Projectile.whoAmI || !target.hostile || target.damage > 100)
                                     continue;
 

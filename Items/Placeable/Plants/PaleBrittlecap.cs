@@ -1,5 +1,6 @@
 ﻿using Redemption.Tiles.Plants;
 using Terraria.ID;
+using Terraria;
 using Terraria.ModLoader;
 
 namespace Redemption.Items.Placeable.Plants
@@ -8,8 +9,8 @@ namespace Redemption.Items.Placeable.Plants
 	{
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Pale Brittlecap");
-            SacrificeTotal = 25;
+            // DisplayName.SetDefault("Pale Brittlecap");
+            Item.ResearchUnlockCount = 25;
         }
         public override void SetDefaults()
         {
@@ -24,7 +25,8 @@ namespace Redemption.Items.Placeable.Plants
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Pale Brittlecap (Big)");
+            // DisplayName.SetDefault("Pale Brittlecap (Big)");
+            ItemID.Sets.DisableAutomaticPlaceableDrop[Type] = true;
         }
 
         public override void SetDefaults()

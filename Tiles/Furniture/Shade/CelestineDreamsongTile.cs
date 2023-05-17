@@ -4,6 +4,7 @@ using Redemption.Items.Accessories.PostML;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 
@@ -25,9 +26,10 @@ namespace Redemption.Tiles.Furniture.Shade
             TileObjectData.addTile(Type);
             DustType = DustID.AncientLight;
             HitSound = SoundID.Tink;
-			ModTranslation name = CreateMapEntryName();
-            name.SetDefault("Celestine Dreamsong");
-            AddMapEntry(new Color(223, 230, 238));
+            RegisterItemDrop(ModContent.ItemType<CelestineDreamsong>());
+            LocalizedText name = CreateMapEntryName();
+            // name.SetDefault("Celestine Dreamsong");
+            AddMapEntry(new Color(223, 230, 238), name);
         }
         public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)
         {
@@ -74,10 +76,6 @@ namespace Redemption.Tiles.Furniture.Shade
                 spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null);
             }
             return true;
-        }
-        public override void KillMultiTile(int i, int j, int frameX, int frameY)
-        {
-            Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 32, 32, ModContent.ItemType<CelestineDreamsong>());
         }
         public override bool CanExplode(int i, int j) => false;
     }

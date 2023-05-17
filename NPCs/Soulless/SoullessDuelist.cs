@@ -78,7 +78,7 @@ namespace Redemption.NPCs.Soulless
         private static IPhysChain Tendril2;
         private static IPhysChain Tendril3;
 
-        public override void HitEffect(int hitDirection, double damage)
+        public override void HitEffect(NPC.HitInfo hit)
         {
             if (NPC.life <= 0)
             {
@@ -563,7 +563,7 @@ namespace Redemption.NPCs.Soulless
             }
             return false;
         }
-        public override bool? CanHitNPC(NPC target) => false;
+        public override bool CanHitNPC(NPC target) => false;
         public override bool CanHitPlayer(Player target, ref int cooldownSlot) => false;
         public override void OnKill()
         {

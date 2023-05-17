@@ -12,7 +12,7 @@ namespace Redemption.Textures
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Celestine Light");
+            // DisplayName.SetDefault("Celestine Light");
         }
         public override void SetDefaults()
         {

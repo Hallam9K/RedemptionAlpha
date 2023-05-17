@@ -19,7 +19,6 @@ namespace Redemption.Tiles.Tiles
             Main.tileMerge[ModContent.TileType<IrradiatedDirtTile>()][Type] = true;
             Main.tileMerge[Type][TileID.SpookyWood] = true;
             Main.tileMerge[TileID.SpookyWood][Type] = true;
-            ItemDrop = ModContent.ItemType<PetrifiedWood>();
             DustType = DustID.Ash;
             MinPick = 0;
             MineResist = 1.5f;

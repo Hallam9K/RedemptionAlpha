@@ -14,10 +14,10 @@ namespace Redemption.Items.Weapons.PostML.Magic
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Song of the Abyss");
-            Tooltip.SetDefault("Plays a sorrowful tune\n" +
-                "'Cry a requiem for sunlight'");
-            SacrificeTotal = 1;
+            // DisplayName.SetDefault("Song of the Abyss");
+            /* Tooltip.SetDefault("Plays a sorrowful tune\n" +
+                "'Cry a requiem for sunlight'"); */
+            Item.ResearchUnlockCount = 1;
         }
 
         public override void SetDefaults()

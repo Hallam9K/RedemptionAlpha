@@ -8,8 +8,8 @@ namespace Redemption.Buffs
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Angler Vision");
-            Description.SetDefault("Increases damage and emits light while submerged");
+            // DisplayName.SetDefault("Angler Vision");
+            // Description.SetDefault("Increases damage and emits light while submerged");
             Main.buffNoTimeDisplay[Type] = false;
         }
         public override void Update(Player player, ref int buffIndex)

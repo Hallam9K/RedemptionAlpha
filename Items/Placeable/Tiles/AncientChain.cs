@@ -2,6 +2,7 @@
 using Redemption.Rarities;
 using Redemption.Tiles.Tiles;
 using Terraria.ID;
+using Terraria;
 using Terraria.ModLoader;
 
 namespace Redemption.Items.Placeable.Tiles
@@ -10,7 +11,7 @@ namespace Redemption.Items.Placeable.Tiles
     {
         public override void SetStaticDefaults()
         {
-            SacrificeTotal = 100;
+            Item.ResearchUnlockCount = 100;
         }
         public override void SetDefaults()
         {
@@ -36,8 +37,8 @@ namespace Redemption.Items.Placeable.Tiles
         public override string Texture => "Redemption/Items/Placeable/Tiles/AncientChain";
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Ancient Chain (Solid)");
-            SacrificeTotal = 100;
+            // DisplayName.SetDefault("Ancient Chain (Solid)");
+            Item.ResearchUnlockCount = 100;
         }
         public override void SetDefaults()
         {

@@ -18,11 +18,11 @@ namespace Redemption.Items.Weapons.PostML.Melee
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Cage Crusher");
-            Tooltip.SetDefault("Hitting an enemy once per use will cause echos to appear and fight for you" +
-                "\nThe cage deals increased damage to enemies with less knockback resistance");
+            // DisplayName.SetDefault("Cage Crusher");
+            /* Tooltip.SetDefault("Hitting an enemy once per use will cause echos to appear and fight for you" +
+                "\nThe cage deals increased damage to enemies with less knockback resistance"); */
             ItemID.Sets.ToolTipDamageMultiplier[Type] = 2f;
-            SacrificeTotal = 1;
+            Item.ResearchUnlockCount = 1;
         }
         public override void SetDefaults()
         {
@@ -49,7 +49,7 @@ namespace Redemption.Items.Weapons.PostML.Melee
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Cage Crusher");
+            // DisplayName.SetDefault("Cage Crusher");
         }
         public override void SetDefaults()
         {
@@ -68,7 +68,7 @@ namespace Redemption.Items.Weapons.PostML.Melee
             recoverDistance2 = 36f;
             attackCooldown = 15;
         }
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             if (Projectile.ai[0] != 0 && Projectile.localAI[0] == 1)
             {
@@ -97,16 +97,16 @@ namespace Redemption.Items.Weapons.PostML.Melee
             Vector2 vector2_4 = mountedCenter - position;
             Projectile.rotation = (float)Math.Atan2(vector2_4.Y, vector2_4.X) + 1.57f;
         }
-        public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
+        public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
         {
-            damage *= (int)(target.knockBackResist + 1);
+            modifiers.FinalDamage *= (int)(target.knockBackResist + 1);
         }
         public override bool PreDraw(ref Color lightColor)
         {
             Player player = Main.player[Projectile.owner];
             Texture2D ballTexture = TextureAssets.Projectile[Projectile.type].Value;
             Vector2 anchorPos = Projectile.Center;
-            Texture2D chainTexture = ModContent.Request<Texture2D>("Redemption/Items/Weapons/PostML/Melee/CageFlail_Chain").Value;
+            Texture2D chainTexture = ModContent.Request<Texture2D>(Texture + "_Chain").Value;
             Vector2 HeadPos = player.MountedCenter;
             Rectangle sourceRectangle = new(0, 0, chainTexture.Width, chainTexture.Height);
             Vector2 origin = new(chainTexture.Width * 0.5f, chainTexture.Height * 0.5f);

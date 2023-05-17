@@ -11,9 +11,9 @@ namespace Redemption.Items.Placeable.Furniture.Silverwood
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Silverwood Ale Horn");
-            Tooltip.SetDefault("Makes you tipsy");
-            SacrificeTotal = 1;
+            // DisplayName.SetDefault("Silverwood Ale Horn");
+            // Tooltip.SetDefault("Makes you tipsy");
+            Item.ResearchUnlockCount = 1;
         }
         public override void SetDefaults()
         {

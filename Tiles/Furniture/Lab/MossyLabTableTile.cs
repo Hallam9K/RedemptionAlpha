@@ -33,7 +33,6 @@ namespace Redemption.Tiles.Furniture.Lab
             TileObjectData.newTile.StyleHorizontal = true;
             TileObjectData.addTile(Type);
 
-            ItemDrop = ModContent.ItemType<LabTable>();
             AddToArray(ref TileID.Sets.RoomNeeds.CountsAsTable);
 
             // Etc

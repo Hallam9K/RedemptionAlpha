@@ -4,6 +4,7 @@ using Redemption.Items.Placeable.Plants;
 using Redemption.Tiles.Tiles;
 using Terraria;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 
@@ -28,9 +29,8 @@ namespace Redemption.Tiles.Plants
             TileObjectData.addTile(Type);
             HitSound = SoundID.Grass;
             DustType = DustID.GreenFairy;
-            ItemDrop = ModContent.ItemType<ToxicAngel>();
-            ModTranslation name = CreateMapEntryName();
-            name.SetDefault("Toxic Angel");
+            LocalizedText name = CreateMapEntryName();
+            // name.SetDefault("Toxic Angel");
             AddMapEntry(new Color(120, 240, 120), name);
         }
         public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)

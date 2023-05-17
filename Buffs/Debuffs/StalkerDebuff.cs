@@ -9,8 +9,8 @@ namespace Redemption.Buffs.Debuffs
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("");
-            Description.SetDefault("");
+            // DisplayName.SetDefault("");
+            // Description.SetDefault("");
             Main.debuff[Type] = true;
             Main.buffNoSave[Type] = true;
             Main.buffNoTimeDisplay[Type] = true;

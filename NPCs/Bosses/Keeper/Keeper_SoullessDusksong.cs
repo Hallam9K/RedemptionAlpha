@@ -21,7 +21,7 @@ namespace Redemption.NPCs.Bosses.Keeper
         public override string Texture => "Redemption/Textures/DarkSoulTex";
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Dark Soul");
+            // DisplayName.SetDefault("Dark Soul");
             ProjectileID.Sets.TrailCacheLength[Projectile.type] = 8;
             ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
         }
@@ -101,7 +101,7 @@ namespace Redemption.NPCs.Bosses.Keeper
             if (fakeTimer >= 60)
                 Projectile.Kill();
         }
-        public override void OnHitPlayer(Player target, int damage, bool crit)
+        public override void OnHitPlayer(Player target, Player.HurtInfo info)
         {
             if (CD > 0)
                 return;

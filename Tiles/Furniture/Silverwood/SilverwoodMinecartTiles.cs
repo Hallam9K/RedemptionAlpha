@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using ParticleLibrary;
 using Redemption.Globals;
 using Redemption.Items.Materials.PostML;
+using Redemption.Items.Placeable.Furniture.Silverwood;
 using Redemption.Particles;
 using ReLogic.Content;
 using Terraria;
@@ -134,9 +135,9 @@ namespace Redemption.Tiles.Furniture.Silverwood
     public class SilverwoodMinecartCoal : PlaceholderTile
     {
         public override string Texture => Redemption.PLACEHOLDER_TEXTURE;
-        public override void SetStaticDefaults()
+        public override void SetSafeStaticDefaults()
         {
-            DisplayName.SetDefault("Silverwood Minecart (Scorched Coal)");
+            // DisplayName.SetDefault("Silverwood Minecart (Scorched Coal)");
         }
         public override void SetDefaults()
         {
@@ -147,9 +148,9 @@ namespace Redemption.Tiles.Furniture.Silverwood
     public class SilverwoodMinecartEvergold : PlaceholderTile
     {
         public override string Texture => Redemption.PLACEHOLDER_TEXTURE;
-        public override void SetStaticDefaults()
+        public override void SetSafeStaticDefaults()
         {
-            DisplayName.SetDefault("Silverwood Minecart (Evergold Ore)");
+            // DisplayName.SetDefault("Silverwood Minecart (Evergold Ore)");
         }
         public override void SetDefaults()
         {
@@ -161,9 +162,9 @@ namespace Redemption.Tiles.Furniture.Silverwood
     public class SilverwoodMinecartItem : PlaceholderTile
     {
         public override string Texture => Redemption.PLACEHOLDER_TEXTURE;
-        public override void SetStaticDefaults()
+        public override void SetSafeStaticDefaults()
         {
-            DisplayName.SetDefault("Silverwood Minecart");
+            // DisplayName.SetDefault("Silverwood Minecart");
         }
         public override void SetDefaults()
         {

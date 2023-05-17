@@ -27,9 +27,7 @@ namespace Redemption.Tiles.Furniture.Shade
             TileObjectData.newTile.CoordinateHeights = new[] { 16, 18 };
             TileObjectData.newTile.CoordinatePaddingFix = new Point16(0, -2);
             TileObjectData.addTile(Type);
-            LocalizedText name = CreateMapEntryName();
-			// name.SetDefault("Shadestone Bed");
-			AddMapEntry(new Color(59, 61, 87), name);
+			AddMapEntry(new Color(59, 61, 87), Language.GetText("ItemName.Bed"));
 			DustType = ModContent.DustType<ShadestoneDust>();
 			AddToArray(ref TileID.Sets.RoomNeeds.CountsAsChair);
 			AdjTiles = new int[] { TileID.Beds };

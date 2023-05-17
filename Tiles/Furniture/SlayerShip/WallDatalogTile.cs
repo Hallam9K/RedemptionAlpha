@@ -6,6 +6,7 @@ using Terraria.DataStructures;
 using Terraria.ID;
 using Redemption.Items.Lore;
 using Terraria.GameContent.ObjectInteractions;
+using Redemption.Items.Placeable.Furniture.Silverwood;
 
 namespace Redemption.Tiles.Furniture.SlayerShip
 {
@@ -32,61 +33,24 @@ namespace Redemption.Tiles.Furniture.SlayerShip
             MinPick = 200;
             MineResist = 7f;
             AddMapEntry(new Color(0, 242, 170));
+            RegisterItemDrop(ModContent.ItemType<WallDatalog>(), 0);
+            RegisterItemDrop(ModContent.ItemType<WallDatalog2>(), 1);
+            RegisterItemDrop(ModContent.ItemType<WallDatalog3>(), 2);
+            RegisterItemDrop(ModContent.ItemType<WallDatalog4>(), 3);
+            RegisterItemDrop(ModContent.ItemType<WallDatalog5>(), 4);
+            RegisterItemDrop(ModContent.ItemType<WallDatalog6>(), 5);
+            RegisterItemDrop(ModContent.ItemType<WallDatalog7>(), 6);
+            RegisterItemDrop(ModContent.ItemType<WallDatalog8>(), 7);
+            RegisterItemDrop(ModContent.ItemType<WallDatalog9>(), 8);
+            RegisterItemDrop(ModContent.ItemType<WallDatalog10>(), 9);
+            RegisterItemDrop(ModContent.ItemType<WallDatalog11>(), 10);
+            RegisterItemDrop(ModContent.ItemType<WallDatalog12>(), 11);
+            RegisterItemDrop(ModContent.ItemType<WallDatalog13>(), 12);
+            RegisterItemDrop(ModContent.ItemType<WallDatalog14>(), 13);
+            RegisterItemDrop(ModContent.ItemType<WallDatalog15>(), 14);
+            RegisterItemDrop(ModContent.ItemType<WallDatalog16>(), 15);
         }
         public override bool HasSmartInteract(int i, int j, SmartInteractScanSettings settings) => true;
-        public override void KillMultiTile(int i, int j, int frameX, int frameY)
-        {
-            int itemDrop = ModContent.ItemType<WallDatalog>();
-            switch (frameX / 36)
-            {
-                case 1:
-                    itemDrop = ModContent.ItemType<WallDatalog2>();
-                    break;
-                case 2:
-                    itemDrop = ModContent.ItemType<WallDatalog3>();
-                    break;
-                case 3:
-                    itemDrop = ModContent.ItemType<WallDatalog4>();
-                    break;
-                case 4:
-                    itemDrop = ModContent.ItemType<WallDatalog5>();
-                    break;
-                case 5:
-                    itemDrop = ModContent.ItemType<WallDatalog6>();
-                    break;
-                case 6:
-                    itemDrop = ModContent.ItemType<WallDatalog7>();
-                    break;
-                case 7:
-                    itemDrop = ModContent.ItemType<WallDatalog8>();
-                    break;
-                case 8:
-                    itemDrop = ModContent.ItemType<WallDatalog9>();
-                    break;
-                case 9:
-                    itemDrop = ModContent.ItemType<WallDatalog10>();
-                    break;
-                case 10:
-                    itemDrop = ModContent.ItemType<WallDatalog11>();
-                    break;
-                case 11:
-                    itemDrop = ModContent.ItemType<WallDatalog12>();
-                    break;
-                case 12:
-                    itemDrop = ModContent.ItemType<WallDatalog13>();
-                    break;
-                case 13:
-                    itemDrop = ModContent.ItemType<WallDatalog14>();
-                    break;
-                case 14:
-                    itemDrop = ModContent.ItemType<WallDatalog15>();
-                    break;
-                case 15:
-                    itemDrop = ModContent.ItemType<WallDatalog16>();
-                    break;
-            }
-            Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 32, 32, itemDrop);
-        }
         public override void MouseOver(int i, int j)
         {
             Player player = Main.LocalPlayer;

@@ -9,8 +9,8 @@ namespace Redemption.Items.Usable
     {
         public override void SetStaticDefaults()
         {
-            Tooltip.SetDefault("Unlocks gates in the Soulless Prison");
-            SacrificeTotal = 1;
+            // Tooltip.SetDefault("Unlocks gates in the Soulless Prison");
+            Item.ResearchUnlockCount = 1;
         }
 
         public override void SetDefaults()
@@ -36,9 +36,9 @@ namespace Redemption.Items.Usable
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Reinforced Prison Gate Key");
-            Tooltip.SetDefault("Unlocks reinforced gates in the Soulless Prison");
-            SacrificeTotal = 1;
+            // DisplayName.SetDefault("Reinforced Prison Gate Key");
+            // Tooltip.SetDefault("Unlocks reinforced gates in the Soulless Prison");
+            Item.ResearchUnlockCount = 1;
         }
         public override void SetDefaults()
         {

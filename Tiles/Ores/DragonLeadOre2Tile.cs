@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.ID;
+using Redemption.Items.Usable.Potions;
 
 namespace Redemption.Tiles.Ores
 {
@@ -15,7 +16,7 @@ namespace Redemption.Tiles.Ores
             Main.tileBlockLight[Type] = true;
             Main.tileMerge[Type][TileID.Stone] = true;
             DustType = DustID.Stone;
-			ItemDrop = ItemID.StoneBlock;
+            RegisterItemDrop(ItemID.StoneBlock);
             MinPick = 10;
             MineResist = 1.4f;
             HitSound = SoundID.Tink;

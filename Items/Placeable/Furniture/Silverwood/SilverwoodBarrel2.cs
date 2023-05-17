@@ -3,6 +3,7 @@ using Redemption.Rarities;
 using Redemption.Tiles.Furniture.Silverwood;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria;
 
 namespace Redemption.Items.Placeable.Furniture.Silverwood
 {
@@ -10,9 +11,9 @@ namespace Redemption.Items.Placeable.Furniture.Silverwood
 	{
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Silverwood Barrel");
-            Tooltip.SetDefault("'Looks slightly broken'");
-            SacrificeTotal = 1;
+            // DisplayName.SetDefault("Silverwood Barrel");
+            // Tooltip.SetDefault("'Looks slightly broken'");
+            Item.ResearchUnlockCount = 1;
         }
 
         public override void SetDefaults()

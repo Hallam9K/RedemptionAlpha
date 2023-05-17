@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Terraria;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Redemption.Dusts.Tiles;
 using Redemption.Items.Placeable.Tiles;
@@ -15,12 +16,11 @@ namespace Redemption.Tiles.Tiles
             Main.tileMergeDirt[Type] = false;
             Main.tileBlockLight[Type] = true;
             Main.tileBrick[Type] = true;
-            ItemDrop = ModContent.ItemType<ShadestoneBrick>();
             DustType = ModContent.DustType<ShadestoneDust>();
             MinPick = 500;
             MineResist = 18f;
             HitSound = CustomSounds.BrickHit;
-            ModTranslation name = CreateMapEntryName();
+            LocalizedText name = CreateMapEntryName();
             AddMapEntry(new Color(83, 87, 123));
         }
         public override void NumDust(int i, int j, bool fail, ref int num) => num = fail ? 1 : 3;

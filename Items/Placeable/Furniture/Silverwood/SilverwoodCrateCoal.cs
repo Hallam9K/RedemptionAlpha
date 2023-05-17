@@ -2,6 +2,7 @@
 using Redemption.Rarities;
 using Redemption.Tiles.Furniture.Silverwood;
 using Terraria.ID;
+using Terraria;
 using Terraria.ModLoader;
 
 namespace Redemption.Items.Placeable.Furniture.Silverwood
@@ -10,9 +11,9 @@ namespace Redemption.Items.Placeable.Furniture.Silverwood
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Silverwood Crate");
-            Tooltip.SetDefault("Filled with coal");
-            SacrificeTotal = 1;
+            // DisplayName.SetDefault("Silverwood Crate");
+            // Tooltip.SetDefault("Filled with coal");
+            Item.ResearchUnlockCount = 1;
         }
         public override void SetDefaults()
         {

@@ -39,7 +39,6 @@ namespace Redemption.Tiles.Furniture.Silverwood
             Main.LocalPlayer.AddBuff(BuffID.Tipsy, 3600);
             return true;
         }
-        public override void KillMultiTile(int i, int j, int frameX, int frameY) => Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 32, 16, ModContent.ItemType<AleHorn>());
         public override void NumDust(int i, int j, bool fail, ref int num) => num = fail ? 1 : 3;
     }
 }

@@ -42,6 +42,7 @@ namespace Redemption.Globals
         public static bool downedFowlMorning;
         public static bool downedTreebark;
         public static bool downedCalavia;
+        public static bool downedWarden;
 
         public override void ClearWorld()
         {
@@ -79,6 +80,7 @@ namespace Redemption.Globals
             downedFowlMorning = false;
             downedTreebark = false;
             downedCalavia = false;
+            downedWarden = false;
         }
 
         public override void SaveWorldData(TagCompound tag)
@@ -141,6 +143,8 @@ namespace Redemption.Globals
                 downed.Add("downedTreebark");
             if (downedCalavia)
                 downed.Add("downedCalavia");
+            if (downedWarden)
+                downed.Add("downedWarden");
 
             tag["downed"] = downed;
             tag["erhanDeath"] = erhanDeath;
@@ -189,6 +193,7 @@ namespace Redemption.Globals
             downedFowlMorning = downed.Contains("downedFowlMorning");
             downedTreebark = downed.Contains("downedTreebark");
             downedCalavia = downed.Contains("downedCalavia");
+            downedWarden = downed.Contains("downedWarden");
         }
 
         public override void NetSend(BinaryWriter writer)
@@ -228,6 +233,7 @@ namespace Redemption.Globals
             flags4[1] = downedFowlMorning;
             flags4[2] = downedTreebark;
             flags4[3] = downedCalavia;
+            flags4[4] = downedWarden;
             writer.Write(flags4);
 
             writer.Write(erhanDeath);
@@ -272,6 +278,7 @@ namespace Redemption.Globals
             downedFowlMorning = flags4[1];
             downedTreebark = flags4[2];
             downedCalavia = flags4[3];
+            downedWarden = flags4[4];
 
             erhanDeath = reader.ReadInt32();
             slayerDeath = reader.ReadInt32();

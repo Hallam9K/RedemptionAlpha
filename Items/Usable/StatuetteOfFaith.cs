@@ -14,11 +14,11 @@ namespace Redemption.Items.Usable
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Statuette of Faith");
-            Tooltip.SetDefault("Temporarily creates a large Celestine Dreamsong aura around the location of use"
+            // DisplayName.SetDefault("Statuette of Faith");
+            /* Tooltip.SetDefault("Temporarily creates a large Celestine Dreamsong aura around the location of use"
                 + "\nPlayers in the aura will see better in the Soulless Caverns\n" +
-                "'Have a little faith'");
-            SacrificeTotal = 1;
+                "'Have a little faith'"); */
+            Item.ResearchUnlockCount = 1;
         }
 
         public override void SetDefaults()
@@ -44,7 +44,7 @@ namespace Redemption.Items.Usable
         public override string Texture => "Redemption/Items/Usable/StatuetteOfFaith";
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Statuette of Faith");
+            // DisplayName.SetDefault("Statuette of Faith");
         }
         public override void SetDefaults()
         {
@@ -95,7 +95,7 @@ namespace Redemption.Items.Usable
         public override string Texture => "Redemption/Textures/DreamsongLight_Visual";
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Celestine Light");
+            // DisplayName.SetDefault("Celestine Light");
         }
         public override void SetDefaults() => base.SetDefaults();
         public override bool PreAI()

@@ -10,10 +10,10 @@ namespace Redemption.Items.Placeable.Furniture.Silverwood
     {
         public override void SetStaticDefaults()
         {
-            Tooltip.SetDefault("{$CommonItemTooltip.RightClickToOpen}");
+            // Tooltip.SetDefault("{$CommonItemTooltip.RightClickToOpen}");
             ItemID.Sets.IsFishingCrate[Type] = true;
             ItemID.Sets.IsFishingCrateHardmode[Type] = true;
-            SacrificeTotal = 10;
+            Item.ResearchUnlockCount = 10;
         }
         public override void SetDefaults()
         {

@@ -41,7 +41,7 @@ namespace Redemption.NPCs.Bosses.PatientZero
             switch (NPC.ai[0])
             {
                 case 0:
-                    Vector2 KariPos = new((RedeGen.LabVector.X + 144) * 16, ((RedeGen.LabVector.Y + 193) * 16) + 1);
+                    Vector2 KariPos = new((RedeGen.LabPoint.X + 144) * 16, ((RedeGen.LabPoint.Y + 193) * 16) + 1);
                     NPC.Center = KariPos;
                     NPC.alpha -= 10;
                     if (NPC.alpha <= 0)

@@ -16,7 +16,7 @@ namespace Redemption.NPCs.Soulless
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Handyman's Hand");
+            // DisplayName.SetDefault("Handyman's Hand");
             Main.projFrames[Projectile.type] = 4;
         }
         public override void SetDefaults()

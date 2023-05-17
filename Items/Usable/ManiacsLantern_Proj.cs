@@ -12,7 +12,7 @@ namespace Redemption.Items.Usable
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Maniac's Lantern");
+            // DisplayName.SetDefault("Maniac's Lantern");
             Main.projFrames[Projectile.type] = 2;
         }
         public override void SetDefaults()

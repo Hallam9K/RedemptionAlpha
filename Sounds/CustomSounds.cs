@@ -144,8 +144,6 @@ namespace Redemption
         public static readonly SoundStyle NoitaDeath = new("Redemption/Sounds/Custom/NoitaDeath");
         public static readonly SoundStyle SwordClash = new("Redemption/Sounds/Custom/SwordClash") { PitchVariance = .1f };
         public static readonly SoundStyle StalkerScare = new("Redemption/Sounds/Custom/StalkerScare");
-        public static readonly SoundStyle NoitaDeath = new("Redemption/Sounds/Custom/NoitaDeath");
-        public static readonly SoundStyle SwordClash = new("Redemption/Sounds/Custom/SwordClash") { PitchVariance = .1f };
         public static readonly SoundStyle StalkerHandSnap = new("Redemption/Sounds/Custom/StalkerHandSnap") { PitchVariance = .3f };
 
         public static readonly SoundStyle SoullessNoise = new("Redemption/Sounds/Ambient/SoullessNoise", 4) { Volume = .5f, SoundLimitBehavior = SoundLimitBehavior.IgnoreNew, MaxInstances = 1, PitchVariance = .05f };

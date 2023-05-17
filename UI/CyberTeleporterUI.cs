@@ -45,7 +45,7 @@ namespace Redemption.UI
             Button.Top.Set(0, 0f);
             Button.Width.Set(320, 0f);
             Button.Height.Set(132, 0f);
-            Button.OnClick += new MouseEvent(ButtonClicked);
+            Button.OnLeftClick += new MouseEvent(ButtonClicked);
             BgSprite.Append(Button);
 
             UIImageButton closeButton = new(ModContent.Request<Texture2D>("Redemption/UI/ButtonClosePlaceholder", ReLogic.Content.AssetRequestMode.ImmediateLoad));
@@ -55,7 +55,7 @@ namespace Redemption.UI
             closeButton.Left.Set(320f - 30, 0f);
             closeButton.Top.Set(8, 0f);
 
-            closeButton.OnClick += new MouseEvent(CloseMenu);
+            closeButton.OnLeftClick += new MouseEvent(CloseMenu);
             BgSprite.Append(closeButton);
 
             Append(BgSprite);

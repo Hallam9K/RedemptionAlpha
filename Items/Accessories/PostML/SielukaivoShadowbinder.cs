@@ -13,11 +13,11 @@ namespace Redemption.Items.Accessories.PostML
     {
         public override void SetStaticDefaults()
         {
-            Tooltip.SetDefault("Absorbs the souls of victims slain" +
+            /* Tooltip.SetDefault("Absorbs the souls of victims slain" +
                 "\nVictims below 5000 life are too weak to be contained" +
                 "\nUp to 100 Shadowbound Souls can be contained at once\n" +
-                "'A gift, a curse, but not my own...'");
-            SacrificeTotal = 1;
+                "'A gift, a curse, but not my own...'"); */
+            Item.ResearchUnlockCount = 1;
         }
 
         public override void SetDefaults()

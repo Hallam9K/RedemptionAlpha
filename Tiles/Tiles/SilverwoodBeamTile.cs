@@ -15,7 +15,6 @@ namespace Redemption.Tiles.Tiles
             Main.tileBlockLight[Type] = false;
             TileID.Sets.IsBeam[Type] = true;
             DustType = DustID.Pearlwood;
-            ItemDrop = ModContent.ItemType<SilverwoodBeam>();
             MinPick = 50;
             MineResist = 7f;
             AddMapEntry(new Color(116, 102, 84));

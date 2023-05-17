@@ -31,10 +31,7 @@ namespace Redemption.Tiles.Furniture.Shade
             TileObjectData.newTile.Origin = new Point16(0, 4);
             TileObjectData.addTile(Type);
 
-            // Etc
-            LocalizedText name = CreateMapEntryName();
-            // name.SetDefault("Shadestone Clock");
-            AddMapEntry(new Color(59, 61, 87), name);
+            AddMapEntry(new Color(59, 61, 87), Language.GetText("ItemName.GrandfatherClock"));
         }
 
         public override bool RightClick(int x, int y)

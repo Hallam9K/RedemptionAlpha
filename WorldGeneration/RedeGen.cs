@@ -52,13 +52,13 @@ namespace Redemption.WorldGeneration
         public static bool dragonLeadSpawn;
         public static bool cryoCrystalSpawn;
         public static bool corpseCheck;
-        public static Vector2 newbCaveVector = new(-1, -1);
-        public static Vector2 gathicPortalVector = new(-1, -1);
-        public static Vector2 slayerShipVector = new(-1, -1);
-        public static Vector2 HallOfHeroesVector = new(-1, -1);
-        public static Vector2 LabVector = new(-1, -1);
-        public static Vector2 BastionVector = new(-1, -1);
-        public static Vector2 GoldenGatewayVector = new(-1, -1);
+        public static Point16 newbCavePoint;
+        public static Point16 gathicPortalPoint;
+        public static Point16 slayerShipPoint;
+        public static Point16 HallOfHeroesPoint;
+        public static Point16 LabPoint;
+        public static Point16 BastionPoint;
+        public static Point16 GoldenGatewayPoint;
         public static Point16 JoShrinePoint;
         public static Point16 SpiritAssassinPoint;
         public static Point16 SpiritCommonGuardPoint;
@@ -878,7 +878,7 @@ namespace Redemption.WorldGeneration
                     {
                         new Actions.SetLiquid(0, 0)
                     }));
-                    LabVector = origin.ToVector2();
+                    LabPoint = origin;
 
                     AbandonedLab biome = new();
                     LabClear delete = new();
@@ -1514,11 +1514,11 @@ namespace Redemption.WorldGeneration
                             gen.Generate((int)origin.X, (int)origin.Y, true, true);
                         });
 
-                        newbCaveVector = origin;
+                        newbCavePoint = origin.ToPoint16();
                         placed = true;
                     }
 
-                    Point originPoint = newbCaveVector.ToPoint();
+                    Point originPoint = newbCavePoint.ToPoint();
                     GenUtils.ObjectPlace(originPoint.X + 34, originPoint.Y + 10, (ushort)ModContent.TileType<AnglonPortalTile>());
                     GenUtils.ObjectPlace(originPoint.X + 22, originPoint.Y + 9, (ushort)ModContent.TileType<ElderWoodWorkbenchTile>());
                     GenUtils.ObjectPlace(originPoint.X + 23, originPoint.Y + 8, (ushort)ModContent.TileType<DemonScrollTile>());
@@ -1681,7 +1681,7 @@ namespace Redemption.WorldGeneration
                     {
                         new Actions.SetLiquid(0, 0)
                     }));
-                    BastionVector = origin.ToVector2();
+                    BastionPoint = origin;
 
                     BlazingBastion biome = new();
                     BastionClear delete = new();
@@ -1725,7 +1725,7 @@ namespace Redemption.WorldGeneration
                         delete.Place(origin.ToPoint(), GenVars.structures);
                         biome.Place(origin.ToPoint(), GenVars.structures);
 
-                        GoldenGatewayVector = origin.ToVector2();
+                        GoldenGatewayPoint = origin;
                         placed = true;
                     }
                 }));
@@ -1811,7 +1811,7 @@ namespace Redemption.WorldGeneration
                             gen.Generate((int)origin.X, (int)origin.Y, true, true);
                         });
 
-                        gathicPortalVector = origin;
+                        gathicPortalPoint = origin.ToPoint16();
                         placed = true;
                     }
 
@@ -2042,10 +2042,10 @@ namespace Redemption.WorldGeneration
                             TexGen gen = BaseWorldGenTex.GetTexGenerator(tex, colorToTile, texWall, colorToWall, null, texSlope);
                             gen.Generate((int)origin2.X, (int)origin2.Y, true, true);
                         });
-                        HallOfHeroesVector = origin2;
+                        HallOfHeroesPoint = origin2.ToPoint16();
                         placed = true;
                     }
-                    Point HallPoint = HallOfHeroesVector.ToPoint();
+                    Point16 HallPoint = HallOfHeroesPoint;
                     GenUtils.ObjectPlace(HallPoint.X + 24, HallPoint.Y + 24, (ushort)ModContent.TileType<KSStatueTile>());
                     GenUtils.ObjectPlace(HallPoint.X + 54, HallPoint.Y + 24, (ushort)ModContent.TileType<NStatueTile>());
                     GenUtils.ObjectPlace(HallPoint.X + 43, HallPoint.Y + 20, (ushort)ModContent.TileType<JStatueTile>());
@@ -2245,7 +2245,7 @@ namespace Redemption.WorldGeneration
                     {
                         new Actions.SetLiquid(0, 0)
                     }));
-                    slayerShipVector = origin;
+                    slayerShipPoint = origin.ToPoint16();
 
                     SlayerShipClear delete = new();
                     SlayerShip biome = new();
@@ -2572,7 +2572,7 @@ namespace Redemption.WorldGeneration
                 return;
             if (newbCavePoint.X != 0 && !NPC.AnyNPCs(ModContent.NPCType<AnglonPortal>()))
             {
-                Vector2 anglonPortalPos = new(((newbCaveVector.X + 35) * 16) - 8, ((newbCaveVector.Y + 12) * 16) - 4);
+                Vector2 anglonPortalPos = new(((newbCavePoint.X + 35) * 16) - 8, ((newbCavePoint.Y + 12) * 16) - 4);
                 LabArea.SpawnNPCInWorld(anglonPortalPos, ModContent.NPCType<AnglonPortal>());
             }
             if (gathicPortalPoint.X != 0)
@@ -2593,9 +2593,9 @@ namespace Redemption.WorldGeneration
                 Vector2 shrinePos = new((JoShrinePoint.X + 9) * 16, (JoShrinePoint.Y + 13) * 16);
                 LabArea.SpawnNPCInWorld(shrinePos, ModContent.NPCType<TreebarkDryad>(), 0, 1, 0, 2);
             }
-            if (slayerShipVector.X != -1 && RedeBossDowned.downedSlayer && !RedeBossDowned.downedOmega3 && !RedeBossDowned.downedNebuleus && !NPC.AnyNPCs(ModContent.NPCType<KS3Sitting>()) && !NPC.AnyNPCs(ModContent.NPCType<KS3>()))
+            if (slayerShipPoint.X != -1 && RedeBossDowned.downedSlayer && !RedeBossDowned.downedOmega3 && !RedeBossDowned.downedNebuleus && !NPC.AnyNPCs(ModContent.NPCType<KS3Sitting>()) && !NPC.AnyNPCs(ModContent.NPCType<KS3>()))
             {
-                Vector2 slayerSittingPos = new((slayerShipVector.X + 92) * 16, (slayerShipVector.Y + 28) * 16);
+                Vector2 slayerSittingPos = new((slayerShipPoint.X + 92) * 16, (slayerShipPoint.Y + 28) * 16);
                 LabArea.SpawnNPCInWorld(slayerSittingPos, ModContent.NPCType<KS3Sitting>());
             }
             if (!corpseCheck)

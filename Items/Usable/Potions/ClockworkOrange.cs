@@ -11,8 +11,8 @@ namespace Redemption.Items.Usable.Potions
     {
         public override void SetStaticDefaults()
         {
-            Tooltip.SetDefault("Minor improvements to all stats" +
-                "\n'We can destroy what we have eaten, but we cannot uneat it.'");
+            /* Tooltip.SetDefault("Minor improvements to all stats" +
+                "\n'We can destroy what we have eaten, but we cannot uneat it.'"); */
             Main.RegisterItemAnimation(Type, new DrawAnimationVertical(int.MaxValue, 3));
             ItemID.Sets.FoodParticleColors[Item.type] = new Color[3] {
                 new Color(236, 161, 31),
@@ -20,7 +20,7 @@ namespace Redemption.Items.Usable.Potions
                 new Color(161, 54, 12)
             };
             ItemID.Sets.IsFood[Type] = true;
-            SacrificeTotal = 5;
+            Item.ResearchUnlockCount = 5;
         }
 
         public override void SetDefaults()

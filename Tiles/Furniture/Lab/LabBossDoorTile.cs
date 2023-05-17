@@ -101,7 +101,6 @@ namespace Redemption.Tiles.Furniture.Lab
             AddMapEntry(new Color(110, 106, 120), name);
             MinPick = 500;
             MineResist = 10f;
-            ItemDrop = -1;
             DustType = ModContent.DustType<LabPlatingDust>();
             AnimationFrameHeight = 18;
         }

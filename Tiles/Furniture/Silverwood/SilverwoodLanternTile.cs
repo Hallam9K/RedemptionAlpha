@@ -2,11 +2,10 @@ using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.Enums;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 using Microsoft.Xna.Framework.Graphics;
-using Redemption.Items.Placeable.Furniture.Silverwood;
-using Terraria.DataStructures;
 
 namespace Redemption.Tiles.Furniture.Silverwood
 {
@@ -19,13 +18,11 @@ namespace Redemption.Tiles.Furniture.Silverwood
             Main.tileLavaDeath[Type] = true;
             TileObjectData.newTile.CopyFrom(TileObjectData.Style1x2Top);
             TileObjectData.newSubTile.CopyFrom(TileObjectData.newTile);
-            TileObjectData.newSubTile.LavaDeath = false;
-            TileObjectData.newTile.StyleHorizontal = true;
-            TileObjectData.newSubTile.LavaPlacement = LiquidPlacement.Allowed;
+            TileObjectData.newTile.WaterDeath = true;
+            TileObjectData.newTile.WaterPlacement = LiquidPlacement.NotAllowed;
+            TileObjectData.newTile.LavaPlacement = LiquidPlacement.NotAllowed;
             TileObjectData.addTile(Type);
-            ModTranslation name = CreateMapEntryName();
-            name.SetDefault("Silverwood Lantern");
-            AddMapEntry(new Color(228, 213, 173), name);
+            AddMapEntry(new Color(228, 213, 173), Language.GetText("MapObject.Lantern"));
             AdjTiles = new int[] { TileID.HangingLanterns };
             AddToArray(ref TileID.Sets.RoomNeeds.CountsAsTorch);
             DustType = DustID.Pearlwood;
@@ -80,11 +77,6 @@ namespace Redemption.Tiles.Furniture.Silverwood
 
                 Main.spriteBatch.Draw(ModContent.Request<Texture2D>(Texture + "_Glow").Value, new Vector2((i * 16) - (int)Main.screenPosition.X + xx, (j * 16) - (int)Main.screenPosition.Y + yy) + zero, new Rectangle(tile.TileFrameX, tile.TileFrameY, 16, height), color, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
             }
-        }
-        public override void KillMultiTile(int i, int j, int frameX, int frameY)
-        {
-            Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 16, 32, ModContent.ItemType<SilverwoodLantern>());
-            Chest.DestroyChest(i, j);
         }
     }
 }

@@ -1,6 +1,7 @@
 using Terraria.ModLoader;
 using Terraria.ID;
 using Redemption.Tiles.Furniture.SlayerShip;
+using Terraria;
 
 namespace Redemption.Items.Placeable.Furniture.SlayerShip
 {
@@ -8,7 +9,7 @@ namespace Redemption.Items.Placeable.Furniture.SlayerShip
 	{
         public override void SetStaticDefaults()
         {
-            SacrificeTotal = 1;
+            Item.ResearchUnlockCount = 1;
         }
         public override void SetDefaults()
 		{

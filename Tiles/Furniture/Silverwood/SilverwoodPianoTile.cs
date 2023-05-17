@@ -1,10 +1,10 @@
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 using Terraria.DataStructures;
-using Redemption.Items.Placeable.Furniture.Silverwood;
 
 namespace Redemption.Tiles.Furniture.Silverwood
 {
@@ -20,14 +20,13 @@ namespace Redemption.Tiles.Furniture.Silverwood
             TileObjectData.newTile.DrawYOffset = 2;
             TileObjectData.addTile(Type);
 
-            ModTranslation name = CreateMapEntryName();
-            name.SetDefault("Silverwood Piano");
+            LocalizedText name = CreateMapEntryName();
+            // name.SetDefault("Silverwood Piano");
             AddMapEntry(new Color(228, 213, 173), name);
 
             AdjTiles = new int[] { TileID.Pianos };
             DustType = DustID.Pearlwood;
         }
         public override void NumDust(int i, int j, bool fail, ref int num) => num = fail ? 1 : 3;
-        public override void KillMultiTile(int i, int j, int frameX, int frameY) => Item.NewItem(new EntitySource_TileBreak(i, j), new Vector2(i, j) * 16f, ModContent.ItemType<SilverwoodPiano>());
     }
 }

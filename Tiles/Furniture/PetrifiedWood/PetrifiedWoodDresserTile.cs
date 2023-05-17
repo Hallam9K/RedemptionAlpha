@@ -44,9 +44,7 @@ namespace Redemption.Tiles.Furniture.PetrifiedWood
 			LocalizedText name = CreateMapEntryName();
 			// name.SetDefault("Petrified Wood Dresser");
 			AddMapEntry(new Color(100, 100, 100), name);
-			//ContainerName/* tModPorter Note: Removed. Override DefaultContainerName instead */.SetDefault("Petrified Wood Dresser");
 			AdjTiles = new int[] { TileID.Dressers };
-			ItemDrop = ModContent.ItemType<PetrifiedWoodDresser>();
 			DustType = DustID.Ash;
 		}
 

@@ -29,11 +29,7 @@ namespace Redemption.Tiles.Furniture.ElderWood
 			TileObjectData.addTile(Type);
 
 			AddToArray(ref TileID.Sets.RoomNeeds.CountsAsTable);
-
-			// Etc
-			LocalizedText name = CreateMapEntryName();
-			// name.SetDefault("Elder Wood Work Bench");
-			AddMapEntry(new Color(109, 87, 78), name);
+			AddMapEntry(new Color(109, 87, 78), Language.GetText("ItemName.WorkBench"));
 		}
 
 		public override void NumDust(int x, int y, bool fail, ref int num) => num = fail ? 1 : 3;

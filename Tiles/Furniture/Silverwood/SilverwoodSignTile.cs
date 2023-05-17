@@ -31,6 +31,5 @@ namespace Redemption.Tiles.Furniture.Silverwood
             AddMapEntry(new Color(228, 213, 173));
         }
         public override void NumDust(int i, int j, bool fail, ref int num) => num = fail ? 1 : 3;
-        public override void KillMultiTile(int i, int j, int frameX, int frameY) => Item.NewItem(new EntitySource_TileBreak(i, j), new Vector2(i, j) * 16f, ModContent.ItemType<SilverwoodSign>());
     }
 }

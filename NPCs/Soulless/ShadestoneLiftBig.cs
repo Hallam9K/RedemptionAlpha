@@ -1,3 +1,4 @@
+using CollisionLib;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.BaseExtension;
@@ -16,7 +17,7 @@ namespace Redemption.NPCs.Soulless
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Platform");
+            // DisplayName.SetDefault("Platform");
             NPCID.Sets.DebuffImmunitySets.Add(Type, new NPCDebuffImmunityData { ImmuneToAllBuffsThatAreNotWhips = true });
             NPCID.Sets.NPCBestiaryDrawModifiers value = new(0) { Hide = true };
             NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, value);

@@ -78,7 +78,7 @@ namespace Redemption.Projectiles.Magic.Noita
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Energy Sphere");
+            // DisplayName.SetDefault("Energy Sphere");
             Main.projFrames[Projectile.type] = 8;
             ElementID.ProjThunder[Type] = true;
             ElementID.ProjArcane[Type] = true;
@@ -104,9 +104,9 @@ namespace Redemption.Projectiles.Magic.Noita
                     Projectile.Kill();
             }
         }
-        public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
+        public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
         {
-            hitDirection = target.RightOfDir(Projectile);
+            modifiers.HitDirectionOverride = target.RightOfDir(Projectile);
         }
         public override Color? GetAlpha(Color lightColor)
         {

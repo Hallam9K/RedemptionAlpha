@@ -28,27 +28,10 @@ namespace Redemption.Tiles.Furniture.Silverwood
             TileObjectData.newTile.AnchorBottom = new AnchorData(AnchorType.SolidTile | AnchorType.SolidWithTop | AnchorType.SolidSide, TileObjectData.newTile.Width, 0);
             TileObjectData.addTile(Type);
             DustType = DustID.Pearlwood;
+            RegisterItemDrop(ModContent.ItemType<SilverwoodCrateCoal>(), 0);
+            RegisterItemDrop(ModContent.ItemType<SilverwoodCrateEvergold>(), 1);
+            RegisterItemDrop(ModContent.ItemType<SilverwoodCrateTNT>(), 2);
             AddMapEntry(new Color(228, 213, 173));
-        }
-        public override void KillMultiTile(int i, int j, int frameX, int frameY)
-        {
-            int item = 0;
-            switch (frameX / 36)
-            {
-                case 0:
-                    item = ModContent.ItemType<SilverwoodCrateCoal>();
-                    break;
-                case 1:
-                    item = ModContent.ItemType<SilverwoodCrateEvergold>();
-                    break;
-                case 2:
-                    item = ModContent.ItemType<SilverwoodCrateTNT>();
-                    break;
-            }
-            if (item > 0)
-            {
-                Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 36, 36, item);
-            }
         }
         public override void NumDust(int i, int j, bool fail, ref int num) => num = fail ? 1 : 3;
     }

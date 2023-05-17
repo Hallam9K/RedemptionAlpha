@@ -8,6 +8,7 @@ using Terraria.DataStructures;
 using Terraria.Enums;
 using Terraria.GameContent.ObjectInteractions;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 
@@ -33,8 +34,8 @@ namespace Redemption.Tiles.Furniture.SlayerShip
             TileObjectData.newTile.AnchorBottom = new AnchorData(AnchorType.SolidTile | AnchorType.SolidWithTop | AnchorType.SolidSide, TileObjectData.newTile.Width, 0);
             TileObjectData.newTile.StyleHorizontal = true;
             TileObjectData.addTile(Type);
-            ModTranslation name = CreateMapEntryName();
-            name.SetDefault("Vessel Chamber");
+            LocalizedText name = CreateMapEntryName();
+            // name.SetDefault("Vessel Chamber");
             AddMapEntry(new Color(0, 160, 170), name);
             DustType = ModContent.DustType<LabPlatingDust>();
         }
@@ -77,10 +78,10 @@ namespace Redemption.Tiles.Furniture.SlayerShip
     public class VesselChamber : PlaceholderTile
     {
         public override string Texture => "Redemption/Placeholder";
-        public override void SetStaticDefaults()
+        public override void SetSafeStaticDefaults()
         {
-            DisplayName.SetDefault("Vessel Chamber");
-            Tooltip.SetDefault("[c/ff0000:Unbreakable]");
+            // DisplayName.SetDefault("Vessel Chamber");
+            // Tooltip.SetDefault("[c/ff0000:Unbreakable]");
         }
         public override void SetDefaults()
         {

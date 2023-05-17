@@ -21,7 +21,7 @@ namespace Redemption.Tiles.Tiles
             Main.tileBlockLight[Type] = true;
             Main.tileBrick[Type] = true;
             DustType = ModContent.DustType<VoidFlame>();
-            ItemDrop = ModContent.ItemType<Shadestone>();
+            RegisterItemDrop(ModContent.ItemType<Shadestone>(), 0);
             MinPick = 350;
             MineResist = 11f;
             HitSound = CustomSounds.StoneHit;
@@ -69,7 +69,7 @@ namespace Redemption.Tiles.Tiles
                 }
             }
             if (WorldGen.genRand.NextBool(8))
-                WorldGen.SpreadGrass(i + Main.rand.Next(-1, 1), j + Main.rand.Next(-1, 1), ModContent.TileType<ShadestoneTile>(), Type, false, 0);
+                WorldGen.SpreadGrass(i + Main.rand.Next(-1, 1), j + Main.rand.Next(-1, 1), ModContent.TileType<ShadestoneTile>(), Type, false);
         }
     }
 }

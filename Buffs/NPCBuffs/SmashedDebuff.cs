@@ -8,7 +8,7 @@ namespace Redemption.Buffs.NPCBuffs
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Smashed!");
+			// DisplayName.SetDefault("Smashed!");
             Main.debuff[Type] = true;
             Main.buffNoSave[Type] = true;
             Main.pvpBuff[Type] = true;

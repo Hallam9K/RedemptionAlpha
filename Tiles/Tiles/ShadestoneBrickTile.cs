@@ -16,7 +16,6 @@ namespace Redemption.Tiles.Tiles
             Main.tileMergeDirt[Type] = false;
             Main.tileBlockLight[Type] = true;
             Main.tileBrick[Type] = true;
-            ItemDrop = ModContent.ItemType<ShadestoneBrick>();
             DustType = ModContent.DustType<ShadestoneDust>();
             MinPick = 500;
             MineResist = 18f;

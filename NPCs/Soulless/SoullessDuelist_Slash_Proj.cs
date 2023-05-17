@@ -13,7 +13,7 @@ namespace Redemption.NPCs.Soulless
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Light Slash");
+            // DisplayName.SetDefault("Light Slash");
             ProjectileID.Sets.TrailCacheLength[Projectile.type] = 6;
             ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
             ElementID.ProjHoly[Type] = true;
@@ -43,7 +43,7 @@ namespace Redemption.NPCs.Soulless
             NPC host = Main.npc[(int)Projectile.ai[0]];
             return Projectile.alpha <= 200 && target == host.Redemption().attacker ? null : false;
         }
-        public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection) => damage *= 4;
+        public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers) => modifiers.FinalDamage *= 4;
 
         public override bool CanHitPlayer(Player target) => Projectile.alpha <= 200;
         public override bool? CanCutTiles() => false;

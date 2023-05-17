@@ -12,8 +12,8 @@ namespace Redemption.Items.Weapons.PostML.Melee
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Light of the Abyss");
-            Tooltip.SetDefault("'The abyss hungers...'");
+            // DisplayName.SetDefault("Light of the Abyss");
+            // Tooltip.SetDefault("'The abyss hungers...'");
             Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(5, 3));
         }
 

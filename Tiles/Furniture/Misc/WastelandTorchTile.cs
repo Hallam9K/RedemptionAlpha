@@ -31,7 +31,6 @@ namespace Redemption.Tiles.Furniture.Misc
 			TileID.Sets.DisableSmartCursor[Type] = true;
 			TileID.Sets.Torch[Type] = true;
 
-			ItemDrop = ModContent.ItemType<WastelandTorch>();
 			DustType = ModContent.DustType<WastelandTorchDust>();
 			AdjTiles = new int[] { TileID.Torches };
 
@@ -53,10 +52,7 @@ namespace Redemption.Tiles.Furniture.Misc
 			TileObjectData.addAlternate(0);
 			TileObjectData.addTile(Type);
 
-			// Etc
-			LocalizedText name = CreateMapEntryName();
-			// name.SetDefault("Torch");
-			AddMapEntry(new Color(255, 199, 199), name);
+			AddMapEntry(new Color(255, 199, 199), Language.GetText("ItemName.Torch"));
 
 			// Assets
 			if (!Main.dedServ)

@@ -11,9 +11,9 @@ namespace Redemption.Items.Usable.Potions
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Shadevision Potion");
-            Tooltip.SetDefault("Clears the haze of the Soulless Caverns");
-            SacrificeTotal = 20;
+            // DisplayName.SetDefault("Shadevision Potion");
+            // Tooltip.SetDefault("Clears the haze of the Soulless Caverns");
+            Item.ResearchUnlockCount = 20;
         }
 
         public override void SetDefaults()

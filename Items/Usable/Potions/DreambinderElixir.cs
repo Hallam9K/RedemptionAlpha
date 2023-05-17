@@ -11,10 +11,10 @@ namespace Redemption.Items.Usable.Potions
 	{
 		public override void SetStaticDefaults()
 		{
-            Tooltip.SetDefault("Increases length of invincibility after taking damage" +
+            /* Tooltip.SetDefault("Increases length of invincibility after taking damage" +
                 "\nNot consumable\n" +
-                "'Remembering the warmth of a much brighter day'");
-            SacrificeTotal = 1;
+                "'Remembering the warmth of a much brighter day'"); */
+            Item.ResearchUnlockCount = 1;
         }
 
         public override void SetDefaults()
@@ -47,7 +47,8 @@ namespace Redemption.Items.Usable.Potions
         public override string Texture => "Redemption/Items/Usable/Potions/DreambinderElixir";
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Dreambinder Elixir (Placeable)");
+            // DisplayName.SetDefault("Dreambinder Elixir (Placeable)");
+            ItemID.Sets.DisableAutomaticPlaceableDrop[Type] = true;
         }
 
         public override void SetDefaults()

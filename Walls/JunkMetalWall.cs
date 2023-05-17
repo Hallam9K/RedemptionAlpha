@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Redemption.Items.Materials.HM;
+using Redemption.Items.Placeable.Tiles;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -10,8 +11,8 @@ namespace Redemption.Walls
 		public override void SetStaticDefaults()
 		{
 			Main.wallHouse[Type] = false;
-			ItemDrop = ModContent.ItemType<Cyberscrap>();
-			AddMapEntry(new Color(113, 115, 120));
+            RegisterItemDrop(ModContent.ItemType<Cyberscrap>());
+            AddMapEntry(new Color(113, 115, 120));
 		}
         public override bool CanExplode(int i, int j) => false;
     }

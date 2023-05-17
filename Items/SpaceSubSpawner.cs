@@ -12,8 +12,8 @@ namespace Redemption.Items
         public override string Texture => "Redemption/Items/SlayerMedal";
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Placeholder Upper Atmosphere/Space Sender of DOOM!!!");
-            Tooltip.SetDefault("It reads - [c/b8eff5:'SPAAAAAAAAAAAAAAAAAAAAAAAAAACE']");
+            // DisplayName.SetDefault("Placeholder Upper Atmosphere/Space Sender of DOOM!!!");
+            // Tooltip.SetDefault("It reads - [c/b8eff5:'SPAAAAAAAAAAAAAAAAAAAAAAAAAACE']");
         }
 
         public override void SetDefaults()

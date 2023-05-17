@@ -20,7 +20,7 @@ namespace Redemption.NPCs.Soulless
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("");
+            // DisplayName.SetDefault("");
             Main.npcFrameCount[NPC.type] = 8;
             NPCID.Sets.DebuffImmunitySets.Add(Type, new NPCDebuffImmunityData { ImmuneToAllBuffsThatAreNotWhips = true });
             NPCID.Sets.NPCBestiaryDrawModifiers value = new(0) { Hide = true };
@@ -184,7 +184,7 @@ namespace Redemption.NPCs.Soulless
         public override string Texture => "Redemption/NPCs/Soulless/TheStalker";
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("");
+            // DisplayName.SetDefault("");
             Main.npcFrameCount[NPC.type] = 8;
             NPCID.Sets.DebuffImmunitySets.Add(Type, new NPCDebuffImmunityData { ImmuneToAllBuffsThatAreNotWhips = true });
             NPCID.Sets.NPCBestiaryDrawModifiers value = new(0) { Hide = true };

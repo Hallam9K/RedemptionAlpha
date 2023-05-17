@@ -847,6 +847,61 @@ Mods: {
 				DisplayName: Rooster Boost
 				Description: You feel bucked up... and annoyed
 			}
+
+			AnglerPotionBuff: {
+				DisplayName: Angler Potion Buff
+				Description: Mods.Redemption.Buffs.AnglerPotionBuff.Description
+			}
+
+			SoulScrollCooldown: {
+				DisplayName: Soul Scroll Cooldown
+				Description: Mods.Redemption.Buffs.SoulScrollCooldown.Description
+			}
+
+			LaceratedDebuff: {
+				DisplayName: Lacerated Debuff
+				Description: Mods.Redemption.Buffs.LaceratedDebuff.Description
+			}
+
+			StalkerDebuff: {
+				DisplayName: Stalker Debuff
+				Description: Mods.Redemption.Buffs.StalkerDebuff.Description
+			}
+
+			DreambinderBuff: {
+				DisplayName: Dreambinder Buff
+				Description: Mods.Redemption.Buffs.DreambinderBuff.Description
+			}
+
+			DreamsongBuff: {
+				DisplayName: Dreamsong Buff
+				Description: Mods.Redemption.Buffs.DreamsongBuff.Description
+			}
+
+			InsulatiumPotionBuff: {
+				DisplayName: Insulatium Potion Buff
+				Description: Mods.Redemption.Buffs.InsulatiumPotionBuff.Description
+			}
+
+			SmashedDebuff: {
+				DisplayName: Smashed Debuff
+				Description: Mods.Redemption.Buffs.SmashedDebuff.Description
+			}
+
+			OathkeeperDaggerBuff: {
+				DisplayName: Oathkeeper Dagger Buff
+				Description: Mods.Redemption.Buffs.OathkeeperDaggerBuff.Description
+			}
+
+			ShadevisionPotionBuff: {
+				DisplayName: Shadevision Potion Buff
+				Description: Mods.Redemption.Buffs.ShadevisionPotionBuff.Description
+			}
+
+			VesselPickBuff: {
+				DisplayName: Vessel Pick Buff
+				Description: Mods.Redemption.Buffs.VesselPickBuff.Description
+			}
 		}
 
 		Biomes: {
@@ -863,6 +918,7 @@ Mods: {
 			FowlMorningBiome.DisplayName: Fowl Morning
 			BlazingBastionBiome.DisplayName: Blazing Bastion
 			SoullessBiome.DisplayName: Soulless Caverns
+			SpaceBiome.DisplayName: Space Biome
 		}
 
 		TownNPCMood: {
@@ -4420,6 +4476,11 @@ Mods: {
 					'''
 			}
 
+			ShadestonePillar: {
+				DisplayName: Shadestone Pillar
+				Tooltip: ""
+			}
+
 			ShadestonePlatform: {
 				DisplayName: Shadestone Platform
 				Tooltip: ""
@@ -7827,6 +7888,636 @@ Mods: {
 					Right-click to disable the sentry
 					'''
 			}
+
+			CelestineDreamsong: {
+				DisplayName: Celestine Dreamsong
+				Tooltip: ""
+			}
+
+			MaskOfGrief: {
+				DisplayName: Mask Of Grief
+				Tooltip: ""
+			}
+
+			SielukaivoShadowbinder: {
+				DisplayName: Sielukaivo Shadowbinder
+				Tooltip: ""
+			}
+
+			WallDatalog: {
+				DisplayName: Wall Datalog
+				Tooltip: ""
+			}
+
+			WallDatalog10: {
+				DisplayName: Wall Datalog10
+				Tooltip: ""
+			}
+
+			WallDatalog11: {
+				DisplayName: Wall Datalog11
+				Tooltip: ""
+			}
+
+			WallDatalog12: {
+				DisplayName: Wall Datalog12
+				Tooltip: ""
+			}
+
+			WallDatalog13: {
+				DisplayName: Wall Datalog13
+				Tooltip: ""
+			}
+
+			WallDatalog14: {
+				DisplayName: Wall Datalog14
+				Tooltip: ""
+			}
+
+			WallDatalog15: {
+				DisplayName: Wall Datalog15
+				Tooltip: ""
+			}
+
+			WallDatalog16: {
+				DisplayName: Wall Datalog16
+				Tooltip: ""
+			}
+
+			WallDatalog2: {
+				DisplayName: Wall Datalog2
+				Tooltip: ""
+			}
+
+			WallDatalog3: {
+				DisplayName: Wall Datalog3
+				Tooltip: ""
+			}
+
+			WallDatalog4: {
+				DisplayName: Wall Datalog4
+				Tooltip: ""
+			}
+
+			WallDatalog5: {
+				DisplayName: Wall Datalog5
+				Tooltip: ""
+			}
+
+			WallDatalog6: {
+				DisplayName: Wall Datalog6
+				Tooltip: ""
+			}
+
+			WallDatalog7: {
+				DisplayName: Wall Datalog7
+				Tooltip: ""
+			}
+
+			WallDatalog8: {
+				DisplayName: Wall Datalog8
+				Tooltip: ""
+			}
+
+			WallDatalog9: {
+				DisplayName: Wall Datalog9
+				Tooltip: ""
+			}
+
+			AbyssBloskus: {
+				DisplayName: Abyss Bloskus
+				Tooltip: ""
+			}
+
+			AbyssStinger: {
+				DisplayName: Abyss Stinger
+				Tooltip: ""
+			}
+
+			AncientAlloy: {
+				DisplayName: Ancient Alloy
+				Tooltip: ""
+			}
+
+			Boulderslate: {
+				DisplayName: Boulderslate
+				Tooltip: ""
+			}
+
+			ChakrogAngler: {
+				DisplayName: Chakrog Angler
+				Tooltip: ""
+			}
+
+			EvergoldBar: {
+				DisplayName: Evergold Bar
+				Tooltip: ""
+			}
+
+			EvergoldNautilus: {
+				DisplayName: Evergold Nautilus
+				Tooltip: ""
+			}
+
+			EvergoldOre: {
+				DisplayName: Evergold Ore
+				Tooltip: ""
+			}
+
+			GhostCrab: {
+				DisplayName: Ghost Crab
+				Tooltip: ""
+			}
+
+			LurkingKetred: {
+				DisplayName: Lurking Ketred
+				Tooltip: ""
+			}
+
+			ScorchingCoal: {
+				DisplayName: Scorching Coal
+				Tooltip: ""
+			}
+
+			ShadeFish: {
+				DisplayName: Shade Fish
+				Tooltip: ""
+			}
+
+			SlateShell: {
+				DisplayName: Slate Shell
+				Tooltip: ""
+			}
+
+			StormShrimp: {
+				DisplayName: Storm Shrimp
+				Tooltip: ""
+			}
+
+			SilverwoodChest: {
+				DisplayName: Silverwood Chest
+				Tooltip: ""
+			}
+
+			KingdomTorch: {
+				DisplayName: Kingdom Torch
+				Tooltip: ""
+			}
+
+			SilverwoodCampfire: {
+				DisplayName: Silverwood Campfire
+				Tooltip: ""
+			}
+
+			AngelStatueItem_SC: {
+				DisplayName: Angel Statue Item_ S C
+				Tooltip: ""
+			}
+
+			ShadeCampfire: {
+				DisplayName: Shade Campfire
+				Tooltip: ""
+			}
+
+			ShadesteelLever: {
+				DisplayName: Shadesteel Lever
+				Tooltip: ""
+			}
+
+			AleHorn: {
+				DisplayName: Ale Horn
+				Tooltip: ""
+			}
+
+			AnvilLog: {
+				DisplayName: Anvil Log
+				Tooltip: ""
+			}
+
+			SilverwoodBarrel: {
+				DisplayName: Silverwood Barrel
+				Tooltip: ""
+			}
+
+			SilverwoodBarrel2: {
+				DisplayName: Silverwood Barrel2
+				Tooltip: ""
+			}
+
+			SilverwoodBathtub: {
+				DisplayName: Silverwood Bathtub
+				Tooltip: ""
+			}
+
+			SilverwoodBed: {
+				DisplayName: Silverwood Bed
+				Tooltip: ""
+			}
+
+			SilverwoodBookcase: {
+				DisplayName: Silverwood Bookcase
+				Tooltip: ""
+			}
+
+			SilverwoodCandelabra: {
+				DisplayName: Silverwood Candelabra
+				Tooltip: ""
+			}
+
+			SilverwoodCandle: {
+				DisplayName: Silverwood Candle
+				Tooltip: ""
+			}
+
+			SilverwoodChair: {
+				DisplayName: Silverwood Chair
+				Tooltip: ""
+			}
+
+			SilverwoodChandelier: {
+				DisplayName: Silverwood Chandelier
+				Tooltip: ""
+			}
+
+			SilverwoodClock: {
+				DisplayName: Silverwood Clock
+				Tooltip: ""
+			}
+
+			SilverwoodCrate: {
+				DisplayName: Silverwood Crate
+				Tooltip: ""
+			}
+
+			SilverwoodCrateCoal: {
+				DisplayName: Silverwood Crate Coal
+				Tooltip: ""
+			}
+
+			SilverwoodCrateEvergold: {
+				DisplayName: Silverwood Crate Evergold
+				Tooltip: ""
+			}
+
+			SilverwoodCrateTNT: {
+				DisplayName: Silverwood Crate T N T
+				Tooltip: ""
+			}
+
+			SilverwoodDoor: {
+				DisplayName: Silverwood Door
+				Tooltip: ""
+			}
+
+			SilverwoodDresser: {
+				DisplayName: Silverwood Dresser
+				Tooltip: ""
+			}
+
+			SilverwoodLamp: {
+				DisplayName: Silverwood Lamp
+				Tooltip: ""
+			}
+
+			SilverwoodLantern: {
+				DisplayName: Silverwood Lantern
+				Tooltip: ""
+			}
+
+			SilverwoodLongtable_End: {
+				DisplayName: Silverwood Longtable_ End
+				Tooltip: ""
+			}
+
+			SilverwoodLongtable_Mid: {
+				DisplayName: Silverwood Longtable_ Mid
+				Tooltip: ""
+			}
+
+			SilverwoodLongtable_Mid2: {
+				DisplayName: Silverwood Longtable_ Mid2
+				Tooltip: ""
+			}
+
+			SilverwoodPew: {
+				DisplayName: Silverwood Pew
+				Tooltip: ""
+			}
+
+			SilverwoodPiano: {
+				DisplayName: Silverwood Piano
+				Tooltip: ""
+			}
+
+			SilverwoodPlatform: {
+				DisplayName: Silverwood Platform
+				Tooltip: ""
+			}
+
+			SilverwoodSign: {
+				DisplayName: Silverwood Sign
+				Tooltip: ""
+			}
+
+			SilverwoodSink: {
+				DisplayName: Silverwood Sink
+				Tooltip: ""
+			}
+
+			SilverwoodSofa: {
+				DisplayName: Silverwood Sofa
+				Tooltip: ""
+			}
+
+			SilverwoodTable: {
+				DisplayName: Silverwood Table
+				Tooltip: ""
+			}
+
+			SilverwoodToilet: {
+				DisplayName: Silverwood Toilet
+				Tooltip: ""
+			}
+
+			SilverwoodWorkBench: {
+				DisplayName: Silverwood Work Bench
+				Tooltip: ""
+			}
+
+			Silverwood: {
+				DisplayName: Silverwood
+				Tooltip: ""
+			}
+
+			CyberTeleporter: {
+				DisplayName: Cyber Teleporter
+				Tooltip: ""
+			}
+
+			KSBattlestation: {
+				DisplayName: K S Battlestation
+				Tooltip: ""
+			}
+
+			PaleBrittlecap: {
+				DisplayName: Pale Brittlecap
+				Tooltip: ""
+			}
+
+			PaleBrittlecap2: {
+				DisplayName: Pale Brittlecap2
+				Tooltip: ""
+			}
+
+			ToxicAngel: {
+				DisplayName: Toxic Angel
+				Tooltip: ""
+			}
+
+			ToxicAngel2: {
+				DisplayName: Toxic Angel2
+				Tooltip: ""
+			}
+
+			AncientAlloyBrick: {
+				DisplayName: Ancient Alloy Brick
+				Tooltip: ""
+			}
+
+			AncientAlloyPipe: {
+				DisplayName: Ancient Alloy Pipe
+				Tooltip: ""
+			}
+
+			AncientChain: {
+				DisplayName: Ancient Chain
+				Tooltip: ""
+			}
+
+			AncientChainSolid: {
+				DisplayName: Ancient Chain Solid
+				Tooltip: ""
+			}
+
+			EvergoldBrick: {
+				DisplayName: Evergold Brick
+				Tooltip: ""
+			}
+
+			EvergoldChain: {
+				DisplayName: Evergold Chain
+				Tooltip: ""
+			}
+
+			EvergoldChainSolid: {
+				DisplayName: Evergold Chain Solid
+				Tooltip: ""
+			}
+
+			ShinkiteBrickOrnateWall: {
+				DisplayName: Shinkite Brick Ornate Wall
+				Tooltip: ""
+			}
+
+			SilverwoodBeam: {
+				DisplayName: Silverwood Beam
+				Tooltip: ""
+			}
+
+			SpaceSubSpawner: {
+				DisplayName: Space Sub Spawner
+				Tooltip: ""
+			}
+
+			VesselPickaxeAxe: {
+				DisplayName: Vessel Pickaxe Axe
+				Tooltip: ""
+			}
+
+			VesselSmasher: {
+				DisplayName: Vessel Smasher
+				Tooltip: ""
+			}
+
+			ManiacsLantern: {
+				DisplayName: Maniacs Lantern
+				Tooltip: ""
+			}
+
+			AbyssalSmoothie: {
+				DisplayName: Abyssal Smoothie
+				Tooltip: ""
+			}
+
+			AncientMushroomSoup: {
+				DisplayName: Ancient Mushroom Soup
+				Tooltip: ""
+			}
+
+			ChakrogAnglerPotion: {
+				DisplayName: Chakrog Angler Potion
+				Tooltip: ""
+			}
+
+			ClockworkOrange: {
+				DisplayName: Clockwork Orange
+				Tooltip: ""
+			}
+
+			CookedBoulderslate: {
+				DisplayName: Cooked Boulderslate
+				Tooltip: ""
+			}
+
+			DeepDwellDish: {
+				DisplayName: Deep Dwell Dish
+				Tooltip: ""
+			}
+
+			DreambinderElixir: {
+				DisplayName: Dreambinder Elixir
+				Tooltip: ""
+			}
+
+			DreambinderElixirPlaceable: {
+				DisplayName: Dreambinder Elixir Placeable
+				Tooltip: ""
+			}
+
+			EvergoldSoup: {
+				DisplayName: Evergold Soup
+				Tooltip: ""
+			}
+
+			InsulatiumPotion: {
+				DisplayName: Insulatium Potion
+				Tooltip: ""
+			}
+
+			LurkingKetredPotion: {
+				DisplayName: Lurking Ketred Potion
+				Tooltip: ""
+			}
+
+			PrisonGateKey: {
+				DisplayName: Prison Gate Key
+				Tooltip: ""
+			}
+
+			PrisonGateKey2: {
+				DisplayName: Prison Gate Key2
+				Tooltip: ""
+			}
+
+			SoulScroll: {
+				DisplayName: Soul Scroll
+				Tooltip: ""
+			}
+
+			StatuetteOfFaith: {
+				DisplayName: Statuette Of Faith
+				Tooltip: ""
+			}
+
+			WardensKey: {
+				DisplayName: Wardens Key
+				Tooltip: ""
+			}
+
+			SongOfTheAbyss: {
+				DisplayName: Song Of The Abyss
+				Tooltip: ""
+			}
+
+			VesselShadestaff: {
+				DisplayName: Vessel Shadestaff
+				Tooltip: ""
+			}
+
+			CageFlail: {
+				DisplayName: Cage Flail
+				Tooltip: ""
+			}
+
+			DaggerOfOathkeeper: {
+				DisplayName: Dagger Of Oathkeeper
+				Tooltip: ""
+			}
+
+			DarkStar: {
+				DisplayName: Dark Star
+				Tooltip: ""
+			}
+
+			LightOfTheAbyss: {
+				DisplayName: Light Of The Abyss
+				Tooltip: ""
+			}
+
+			VesselShadescythe: {
+				DisplayName: Vessel Shadescythe
+				Tooltip: ""
+			}
+
+			VesselDagger: {
+				DisplayName: Vessel Dagger
+				Tooltip: ""
+			}
+
+			SlumberEel: {
+				DisplayName: Slumber Eel
+				Tooltip: ""
+			}
+
+			SoADevelopment: {
+				DisplayName: So A Development
+				Tooltip: ""
+			}
+
+			ShadePortcullis2: {
+				DisplayName: Shade Portcullis2
+				Tooltip: ""
+			}
+
+			ShadestoneMirrorSpecial: {
+				DisplayName: Shadestone Mirror Special
+				Tooltip: ""
+			}
+
+			StalkerGate: {
+				DisplayName: Stalker Gate
+				Tooltip: ""
+			}
+
+			SilverwoodMinecartCoal: {
+				DisplayName: Silverwood Minecart Coal
+				Tooltip: ""
+			}
+
+			SilverwoodMinecartEvergold: {
+				DisplayName: Silverwood Minecart Evergold
+				Tooltip: ""
+			}
+
+			SilverwoodMinecartItem: {
+				DisplayName: Silverwood Minecart Item
+				Tooltip: ""
+			}
+
+			VesselChamber: {
+				DisplayName: Vessel Chamber
+				Tooltip: ""
+			}
+
+			SoullessRemains: {
+				DisplayName: Soulless Remains
+				Tooltip: ""
+			}
+
+			SoullessRemains2: {
+				DisplayName: Soulless Remains2
+				Tooltip: ""
+			}
 		}
 
 		Projectiles: {
@@ -8456,6 +9147,42 @@ Mods: {
 			EggPet_Proj.DisplayName: The Egg
 			SoI_ShardShot_Friendly.DisplayName: Shard Shot
 			InfectiousGlaive_Shard.DisplayName: Splitting Shard
+			ZapField_Proj.DisplayName: Zap Field_ Proj
+			BlindingLight.DisplayName: Blinding Light
+			DreamsongLight_Visual2.DisplayName: Dreamsong Light_ Visual2
+			DreamsongLight_Visual.DisplayName: Dreamsong Light_ Visual
+			ManiacsLantern_Proj.DisplayName: Maniacs Lantern_ Proj
+			SoulScroll_Proj.DisplayName: Soul Scroll_ Proj
+			StatuetteOfFaith_Proj.DisplayName: Statuette Of Faith_ Proj
+			CageFlail_Ball.DisplayName: Cage Flail_ Ball
+			DaggerOfOathkeeper_Proj.DisplayName: Dagger Of Oathkeeper_ Proj
+			DaggerOfOathkeeper_Proj2.DisplayName: Dagger Of Oathkeeper_ Proj2
+			DaggerStab_Proj.DisplayName: Dagger Stab_ Proj
+			DarkStar_Proj.DisplayName: Dark Star_ Proj
+			LightOfTheAbyss_Proj.DisplayName: Light Of The Abyss_ Proj
+			VesselDagger_Proj.DisplayName: Vessel Dagger_ Proj
+			SlumberEel_Proj.DisplayName: Slumber Eel_ Proj
+			Keeper_SoullessDusksong.DisplayName: Keeper_ Soulless Dusksong
+			KeeperDreadCoil_Soulless.DisplayName: Keeper Dread Coil_ Soulless
+			ShadowBolt_Soulless.DisplayName: Shadow Bolt_ Soulless
+			SoullessDuelist_Slash_Proj.DisplayName: Soulless Duelist_ Slash_ Proj
+			SoullessDuelist_Slash_Proj2.DisplayName: Soulless Duelist_ Slash_ Proj2
+			TheStalker_Hand.DisplayName: The Stalker_ Hand
+			TwinfaceSoulless_Slash_Proj.DisplayName: Twinface Soulless_ Slash_ Proj
+			TwinfaceSoulless_Slash_Proj2.DisplayName: Twinface Soulless_ Slash_ Proj2
+			ShadeJavelin_Proj.DisplayName: Shade Javelin_ Proj
+			EnergySphereSpell_Blast.DisplayName: Energy Sphere Spell_ Blast
+			ShadeNote_Proj.DisplayName: Shade Note_ Proj
+			ShadeTreble_Proj.DisplayName: Shade Treble_ Proj
+			SongDust.DisplayName: Song Dust
+			VesselStaff_Proj.DisplayName: Vessel Staff_ Proj
+			VesselStaff_Proj2.DisplayName: Vessel Staff_ Proj2
+			CandleLight_Proj.DisplayName: Candle Light_ Proj
+			ShadeStab_Proj.DisplayName: Shade Stab_ Proj
+			VesselScythe_Proj.DisplayName: Vessel Scythe_ Proj
+			WhiteNeedle_Proj.DisplayName: White Needle_ Proj
+			Echo_Friendly.DisplayName: Echo_ Friendly
+			ScorchedCoalBall.DisplayName: Scorched Coal Ball
 		}
 
 		NPCs: {
@@ -8657,6 +9384,32 @@ Mods: {
 			Calavia_NPC.DisplayName: Calavia
 			Basan.DisplayName: Basan
 			GhostfireChicken.DisplayName: Ghost-fire Chicken
+			Keeper_Soulless.DisplayName: Keeper_ Soulless
+			Echo.DisplayName: Echo
+			LaughingMaskBig.DisplayName: Laughing Mask Big
+			LaughingMaskMedium.DisplayName: Laughing Mask Medium
+			LaughingMaskSmall.DisplayName: Laughing Mask Small
+			LostLight.DisplayName: Lost Light
+			RuhRoh.DisplayName: Ruh Roh
+			Shadebug.DisplayName: Shadebug
+			ShadestoneLift.DisplayName: Shadestone Lift
+			ShadestoneLift2.DisplayName: Shadestone Lift2
+			ShadestoneLiftBig.DisplayName: Shadestone Lift Big
+			SoullessAssassin.DisplayName: Soulless Assassin
+			SoullessDuelist.DisplayName: Soulless Duelist
+			SoullessMarionette_Cross.DisplayName: Soulless Marionette_ Cross
+			SoullessMarionette_Doll.DisplayName: Soulless Marionette_ Doll
+			SoullessWanderer.DisplayName: Soulless Wanderer
+			SpookyEyes.DisplayName: Spooky Eyes
+			SpookyEyes2.DisplayName: Spooky Eyes2
+			StalkingEyes.DisplayName: Stalking Eyes
+			TheStalker.DisplayName: The Stalker
+			TheStalker_Fake.DisplayName: The Stalker_ Fake
+			TwinfaceSoulless.DisplayName: Twinface Soulless
+			AndroidSitting.DisplayName: Android Sitting
+			SlayerBaseLift.DisplayName: Slayer Base Lift
+			SlayerBaseLift2.DisplayName: Slayer Base Lift2
+			SlayerBaseLift3.DisplayName: Slayer Base Lift3
 		}
 
 		Tiles: {
@@ -8903,6 +9656,41 @@ Mods: {
 			IrradiatedBorealSapling.MapEntry: Petrified Boreal Sapling
 			IrradiatedPalmSapling.MapEntry: Petrified Palm Sapling
 			IrradiatedPuritySapling.MapEntry: Petrified Sapling
+			SilverwoodChestTile.MapEntry: Silverwood Chest Tile
+			SilverwoodCampfireTile.MapEntry: Silverwood Campfire Tile
+			AngelStatue_SC.MapEntry: Angel Statue_ S C
+			CelestineDreamsongTile.MapEntry: Celestine Dreamsong Tile
+			DreambinderElixirTile.MapEntry: Dreambinder Elixir Tile
+			ShadeCampfireTile.MapEntry: Shade Campfire Tile
+			ShadesteelLeverTile.MapEntry: Shadesteel Lever Tile
+			ShadesteelPortcullis2Close.MapEntry: Shadesteel Portcullis2 Close
+			ShadesteelPortcullis2Close_Unlocked.MapEntry: Shadesteel Portcullis2 Close_ Unlocked
+			ShadesteelPortcullis2Open.MapEntry: Shadesteel Portcullis2 Open
+			ShadestoneMirrorTile2.MapEntry: Shadestone Mirror Tile2
+			ShadestoneMonolith1Tile.MapEntry: Shadestone Monolith1 Tile
+			ShadestoneMonolith2Tile.MapEntry: Shadestone Monolith2 Tile
+			SielukaivoShadowbinderTile.MapEntry: Sielukaivo Shadowbinder Tile
+			SongOfTheAbyssTile.MapEntry: Song Of The Abyss Tile
+			StalkerGateTile.MapEntry: Stalker Gate Tile
+			SilverwoodBathtubTile.MapEntry: Silverwood Bathtub Tile
+			SilverwoodBookcaseTile.MapEntry: Silverwood Bookcase Tile
+			SilverwoodCandelabraTile.MapEntry: Silverwood Candelabra Tile
+			SilverwoodCandleTile.MapEntry: Silverwood Candle Tile
+			SilverwoodCrateTile.MapEntry: Silverwood Crate Tile
+			SilverwoodDresserTile.MapEntry: Silverwood Dresser Tile
+			SilverwoodPewTile.MapEntry: Silverwood Pew Tile
+			SilverwoodPianoTile.MapEntry: Silverwood Piano Tile
+			SilverwoodSofaTile.MapEntry: Silverwood Sofa Tile
+			CyberTeleporterTile.MapEntry: Cyber Teleporter Tile
+			KSBattlestationTile.MapEntry: K S Battlestation Tile
+			VesselChamberTile.MapEntry: Vessel Chamber Tile
+			SoullessRemainsTile.MapEntry: Soulless Remains Tile
+			SoullessRemainsTile2.MapEntry: Soulless Remains Tile2
+			PaleBrittlecapTile.MapEntry: Pale Brittlecap Tile
+			PaleBrittlecapTile2.MapEntry: Pale Brittlecap Tile2
+			ToxicAngel2Tile.MapEntry: Toxic Angel2 Tile
+			ToxicAngelTile.MapEntry: Toxic Angel Tile
+			ShadestonePillarTile.MapEntry: Shadestone Pillar Tile
 		}
 
 		Keybinds: {
@@ -8946,6 +9734,7 @@ Mods: {
 			DownedSkeletronOrSeed: After any late-pre-hardmode boss is defeated
 			HasSpiritWalker: After Spirit Walker is unlocked
 			DeadRingerGiven: After finding the Dead Ringer
+			InSoullessCaverns: Mods.Redemption.Conditions.InSoullessCaverns
 		}
 	}
 }

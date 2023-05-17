@@ -9,9 +9,9 @@ namespace Redemption.Items.Placeable.Furniture.Shade
 	{
         public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Angel of the Depths Statue (Masked)");
-            Tooltip.SetDefault("[c/ff0000:Unbreakable]");
-            SacrificeTotal = 1;
+			// DisplayName.SetDefault("Angel of the Depths Statue (Masked)");
+            // Tooltip.SetDefault("[c/ff0000:Unbreakable]");
+            Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults()
 		{

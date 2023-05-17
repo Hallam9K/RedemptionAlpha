@@ -44,7 +44,6 @@ namespace Redemption.Tiles.Tiles
             Main.tileMerge[Type][TileID.FleshIce] = true;
             Main.tileMerge[TileID.HallowedIce][Type] = true;
             Main.tileMerge[Type][TileID.HallowedIce] = true;
-            ItemDrop = ModContent.ItemType<GathicFroststone>();
             DustType = DustID.Ice;
             HitSound = SoundID.Item50;
             MinPick = 0;

@@ -36,7 +36,7 @@ namespace Redemption.UI
             closeButton.Left.Set(1030 - 30, 0f);
             closeButton.Top.Set(8, 0f);
 
-            closeButton.OnClick += new MouseEvent(CloseMenu);
+            closeButton.OnLeftClick += new MouseEvent(CloseMenu);
             BgSprite.Append(closeButton);
 
             Append(BgSprite);

@@ -7,6 +7,7 @@ using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameContent.ObjectInteractions;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 
@@ -27,8 +28,8 @@ namespace Redemption.Tiles.Furniture.Shade
             DustType = ModContent.DustType<ShadesteelDust>();
             MinPick = 500;
             MineResist = 30f;
-            ModTranslation name = CreateMapEntryName();
-            name.SetDefault("Shadesteel Lever");
+            LocalizedText name = CreateMapEntryName();
+            // name.SetDefault("Shadesteel Lever");
             AddMapEntry(new Color(110, 111, 135), name);
         }
         public override bool HasSmartInteract(int i, int j, SmartInteractScanSettings settings) => true;

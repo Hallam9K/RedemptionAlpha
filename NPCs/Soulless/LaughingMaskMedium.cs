@@ -21,7 +21,7 @@ namespace Redemption.NPCs.Soulless
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Laughing Mask");
+            // DisplayName.SetDefault("Laughing Mask");
             Main.npcFrameCount[NPC.type] = 3;
             NPCID.Sets.DebuffImmunitySets.Add(Type, new NPCDebuffImmunityData
             {
@@ -56,7 +56,7 @@ namespace Redemption.NPCs.Soulless
             NPC.DeathSound = SoundID.NPCDeath50;
             SpawnModBiomes = new int[1] { ModContent.GetInstance<SoullessBiome>().Type };
         }
-        public override void HitEffect(int hitDirection, double damage)
+        public override void HitEffect(NPC.HitInfo hit)
         {
             if (NPC.life <= 0)
             {
@@ -146,6 +146,6 @@ namespace Redemption.NPCs.Soulless
             });
         }
         public override bool CanHitPlayer(Player target, ref int cooldownSlot) => false;
-        public override bool? CanHitNPC(NPC target) => false;
+        public override bool CanHitNPC(NPC target) => false;
     }
 }

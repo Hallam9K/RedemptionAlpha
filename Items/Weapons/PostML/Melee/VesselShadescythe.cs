@@ -17,10 +17,10 @@ namespace Redemption.Items.Weapons.PostML.Melee
     {
         public override void SetStaticDefaults()
         {
-            Tooltip.SetDefault("Inflicts soulless" +
+            /* Tooltip.SetDefault("Inflicts soulless" +
                 "\nMelee swings deal double damage" +
-                "\nRight-clicking is a normal swing"); // TODO: Make similar to Blind Justice
-            SacrificeTotal = 1;
+                "\nRight-clicking is a normal swing"); */ // TODO: Make similar to Blind Justice
+            Item.ResearchUnlockCount = 1;
             ElementID.ItemShadow[Type] = true;
         }
 
@@ -48,16 +48,16 @@ namespace Redemption.Items.Weapons.PostML.Melee
                 return false;
             return true;
         }
-        public override void OnHitNPC(Player player, NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(Player player, NPC target, NPC.HitInfo hit, int damageDone)
         {
             BuffPlayer modPlayer = player.RedemptionPlayerBuff();
             target.AddBuff(ModContent.BuffType<BlackenedHeartDebuff>(), 120);
             if (target.life <= 0 && modPlayer.shadowBinder && modPlayer.shadowBinderCharge < 100)
                 modPlayer.shadowBinderCharge += 1;
         }
-        public override void ModifyHitNPC(Player player, NPC target, ref int damage, ref float knockBack, ref bool crit)
+        public override void ModifyHitNPC(Player player, NPC target, ref NPC.HitModifiers modifiers)
         {
-            damage *= 2;
+            modifiers.FinalDamage *= 2;
         }
         public override void ModifyTooltips(List<TooltipLine> tooltips)
         {

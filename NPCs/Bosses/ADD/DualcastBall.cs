@@ -149,38 +149,6 @@ namespace Redemption.NPCs.Bosses.ADD
             if (fakeTimer++ >= 60)
                 Projectile.Kill();
         }
-        public override bool PreDraw(ref Color lightColor)
-        {
-            Main.spriteBatch.End();
-            Effect effect = Terraria.Graphics.Effects.Filters.Scene["MoR:GlowTrailShader"]?.GetShader().Shader;
-
-            Matrix world = Matrix.CreateTranslation(-Main.screenPosition.Vec3());
-            Matrix view = Main.GameViewMatrix.ZoomMatrix;
-            Matrix projection = Matrix.CreateOrthographicOffCenter(0, Main.screenWidth, Main.screenHeight, 0, -1, 1);
-
-            effect.Parameters["transformMatrix"].SetValue(world * view * projection);
-            effect.Parameters["sampleTexture"].SetValue(ModContent.Request<Texture2D>("Redemption/Textures/Trails/Lightning2").Value);
-            effect.Parameters["time"].SetValue(Main.GameUpdateCount * 0.05f);
-            effect.Parameters["repeats"].SetValue(1f);
-
-            trail?.Render(effect);
-            trail2?.Render(effect);
-
-            Main.spriteBatch.Begin(default, default, default, default, default, default, Main.GameViewMatrix.ZoomMatrix);
-            return true;
-        }
-        private int fakeTimer;
-        private void FakeKill()
-        {
-            Projectile.alpha = 255;
-            Projectile.friendly = false;
-            Projectile.hostile = false;
-            Projectile.velocity *= 0;
-            Projectile.timeLeft = 2;
-            Projectile.tileCollide = false;
-            if (fakeTimer++ >= 60)
-                Projectile.Kill();
-        }
         public override void ModifyHitPlayer(Player target, ref Player.HurtModifiers modifiers)
         {
             if (Main.rand.NextBool(2))

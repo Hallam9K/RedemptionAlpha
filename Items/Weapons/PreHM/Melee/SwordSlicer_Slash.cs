@@ -72,9 +72,6 @@ namespace Redemption.Items.Weapons.PreHM.Melee
                                 if (!target.active || target.whoAmI == Projectile.whoAmI || !target.hostile)
                                     continue;
 
-                                if (RedeProjectile.SwordClashFriendly(Projectile, target, player, ref parried))
-                                    continue;
-
                                 if (target.damage > 100 / 4 || Projectile.alpha > 0 || target.width + target.height > Projectile.width + Projectile.height)
                                     continue;
 

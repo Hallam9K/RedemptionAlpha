@@ -28,7 +28,6 @@ namespace Redemption.Tiles.Tiles
             DustType = DustID.Torch;
             HitSound = SoundID.Tink;
             AddMapEntry(new Color(28, 28, 35));
-            ItemDrop = ModContent.ItemType<ScorchingCoal>();
             if (!Main.dedServ)
             {
                 flameTexture = ModContent.Request<Texture2D>(Texture + "_Glow2");
@@ -134,7 +133,7 @@ namespace Redemption.Tiles.Tiles
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Scorched Coal Ball");
+            // DisplayName.SetDefault("Scorched Coal Ball");
             ProjectileID.Sets.ForcePlateDetection[Projectile.type] = true;
         }
 

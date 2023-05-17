@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Redemption.Dusts.Tiles;
 using Redemption.Globals;
 using Redemption.Items.Placeable.Furniture.Shade;
+using Redemption.Items.Usable.Potions;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.Localization;
@@ -40,6 +41,7 @@ namespace Redemption.Tiles.Furniture.Shade
             TileObjectData.newTile.CoordinateHeights = new[] { 16, 16, 16 };
             TileObjectData.newTile.Origin = new Point16(0, 2);
             TileObjectData.addTile(Type);
+            RegisterItemDrop(ModContent.ItemType<ShadestoneMirror>());
 
             // Etc
             LocalizedText name = CreateMapEntryName();
@@ -47,7 +49,6 @@ namespace Redemption.Tiles.Furniture.Shade
             AddMapEntry(new Color(85, 101, 158), name);
         }
         public override void NumDust(int i, int j, bool fail, ref int num) => num = fail ? 1 : 3;
-        public override void KillMultiTile(int i, int j, int frameX, int frameY) => Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 32, 48, ModContent.ItemType<ShadestoneMirror>());
         public override void PostDraw(int i, int j, SpriteBatch spriteBatch)
         {
             Tile tile = Framing.GetTileSafely(i, j);
@@ -61,10 +62,10 @@ namespace Redemption.Tiles.Furniture.Shade
     }
     public class ShadestoneMirrorSpecial : PlaceholderTile
     {
-        public override void SetStaticDefaults()
+        public override void SetSafeStaticDefaults()
         {
-            DisplayName.SetDefault("Shadestone Mirror");
-            Tooltip.SetDefault("[c/ff0000:Unbreakable]");
+            // DisplayName.SetDefault("Shadestone Mirror");
+            // Tooltip.SetDefault("[c/ff0000:Unbreakable]");
         }
         public override void SetDefaults()
         {

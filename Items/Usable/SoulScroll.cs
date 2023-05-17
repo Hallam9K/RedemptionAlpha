@@ -18,11 +18,11 @@ namespace Redemption.Items.Usable
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Soul Scroll");
-            Tooltip.SetDefault("Converts all soulless enemies on screen into a normal lost soul"
+            // DisplayName.SetDefault("Soul Scroll");
+            /* Tooltip.SetDefault("Converts all soulless enemies on screen into a normal lost soul"
                 + "\n1 minute cooldown\n" +
-                "'It's blank...'");
-            SacrificeTotal = 1;
+                "'It's blank...'"); */
+            Item.ResearchUnlockCount = 1;
         }
 
         public override void SetDefaults()
@@ -55,7 +55,7 @@ namespace Redemption.Items.Usable
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Soul Scroll");
+            // DisplayName.SetDefault("Soul Scroll");
             Main.projFrames[Projectile.type] = 8;
         }
         public override void SetDefaults()
@@ -123,7 +123,7 @@ namespace Redemption.Items.Usable
         public override string Texture => "Redemption/Textures/TransitionTex";
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Blinding Light");
+            // DisplayName.SetDefault("Blinding Light");
         }
         public override void SetDefaults()
         {

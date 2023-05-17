@@ -12,7 +12,7 @@ namespace Redemption.Items.Placeable.Furniture.Kingdom
         public override void SetStaticDefaults()
         {
             ItemID.Sets.Torches[Type] = true;
-            SacrificeTotal = 100;
+            Item.ResearchUnlockCount = 100;
         }
 
         public override void SetDefaults()

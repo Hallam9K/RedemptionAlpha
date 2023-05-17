@@ -16,8 +16,8 @@ namespace Redemption.Items.Materials.PostML
 	{
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Scorching Coal");
-            Tooltip.SetDefault("Fuel for the Ancient Smeltery");
+            // DisplayName.SetDefault("Scorching Coal");
+            // Tooltip.SetDefault("Fuel for the Ancient Smeltery");
         }
 
 		public override void SetDefaults()

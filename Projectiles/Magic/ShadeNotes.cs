@@ -15,7 +15,7 @@ namespace Redemption.Projectiles.Magic
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Song of the Abyss");
+            // DisplayName.SetDefault("Song of the Abyss");
             ElementID.ProjShadow[Type] = true;
             ElementID.ProjArcane[Type] = true;
         }
@@ -88,7 +88,7 @@ namespace Redemption.Projectiles.Magic
                 Main.dust[dustIndex].noGravity = true;
             }
         }
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             switch (Projectile.ai[0])
             {
@@ -115,7 +115,7 @@ namespace Redemption.Projectiles.Magic
         public override string Texture => Redemption.EMPTY_TEXTURE;
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Song of the Abyss");
+            // DisplayName.SetDefault("Song of the Abyss");
         }
         public override void SetDefaults()
         {
@@ -149,7 +149,7 @@ namespace Redemption.Projectiles.Magic
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Song of the Abyss");
+            // DisplayName.SetDefault("Song of the Abyss");
             ProjectileID.Sets.CultistIsResistantTo[Projectile.type] = true;
             ElementID.ProjShadow[Type] = true;
             ElementID.ProjArcane[Type] = true;
@@ -207,7 +207,7 @@ namespace Redemption.Projectiles.Magic
             Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition, null, Projectile.GetAlpha(lightColor), Projectile.rotation, drawOrigin, Projectile.scale, effects, 0);
             return false;
         }
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             target.AddBuff(ModContent.BuffType<BlackenedHeartDebuff>(), 120);
         }

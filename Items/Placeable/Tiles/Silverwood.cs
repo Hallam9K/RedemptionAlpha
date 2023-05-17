@@ -2,6 +2,7 @@
 using Redemption.Rarities;
 using Redemption.Tiles.Tiles;
 using Terraria.ModLoader;
+using Terraria;
 
 namespace Redemption.Items.Placeable.Tiles
 {
@@ -9,7 +10,7 @@ namespace Redemption.Items.Placeable.Tiles
 	{
         public override void SetStaticDefaults()
         {
-            SacrificeTotal = 100;
+            Item.ResearchUnlockCount = 100;
         }
         public override void SetDefaults()
         {

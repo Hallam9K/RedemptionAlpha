@@ -46,7 +46,6 @@ namespace Redemption.Tiles.Furniture.Shade
             AddMapEntry(new Color(83, 87, 123), name);
             MinPick = 500;
             MineResist = 12f;
-            ItemDrop = -1;
             DustType = ModContent.DustType<ShadesteelDust>();
             AdjTiles = new int[] { TileID.ClosedDoor };
         }
@@ -68,7 +67,7 @@ namespace Redemption.Tiles.Furniture.Shade
                 int top = j - Main.tile[i, j].TileFrameY / 18 % 3;
                 WorldGen.KillTile(i, j, noItem: true);
                 WorldGen.PlaceObject(i, j, ModContent.TileType<ShadesteelPortcullisOpen>());
-                NetMessage.SendObjectPlacment(-1, i, j, ModContent.TileType<ShadesteelPortcullisOpen>(), 0, 0, -1, -1);
+                NetMessage.SendObjectPlacement(-1, i, j, ModContent.TileType<ShadesteelPortcullisOpen>(), 0, 0, -1, -1);
                 NetMessage.SendTileSquare(-1, left, top + 1, 2);
             }
             return true;
@@ -172,8 +171,8 @@ namespace Redemption.Tiles.Furniture.Shade
         public override void SetStaticDefaults()
         {
             base.SetStaticDefaults();
-            ModTranslation name = CreateMapEntryName();
-            name.SetDefault("Reinforced Shadesteel Portcullis");
+            LocalizedText name = CreateMapEntryName();
+            // name.SetDefault("Reinforced Shadesteel Portcullis");
             AddMapEntry(new Color(83, 87, 123), name);
         }
         public override void MouseOver(int i, int j)
@@ -194,7 +193,7 @@ namespace Redemption.Tiles.Furniture.Shade
                 int top = j - Main.tile[i, j].TileFrameY / 18 % 3;
                 WorldGen.KillTile(i, j, noItem: true);
                 WorldGen.PlaceObject(i, j, ModContent.TileType<ShadesteelPortcullis2Open>());
-                NetMessage.SendObjectPlacment(-1, i, j, ModContent.TileType<ShadesteelPortcullis2Open>(), 0, 0, -1, -1);
+                NetMessage.SendObjectPlacement(-1, i, j, ModContent.TileType<ShadesteelPortcullis2Open>(), 0, 0, -1, -1);
                 NetMessage.SendTileSquare(-1, left, top + 1, 2);
             }
             return true;
@@ -216,7 +215,7 @@ namespace Redemption.Tiles.Furniture.Shade
             int top = j - Main.tile[i, j].TileFrameY / 18 % 3;
             WorldGen.KillTile(i, j, noItem: true);
             WorldGen.PlaceObject(i, j, ModContent.TileType<ShadesteelPortcullis2Open>());
-            NetMessage.SendObjectPlacment(-1, i, j, ModContent.TileType<ShadesteelPortcullis2Open>(), 0, 0, -1, -1);
+            NetMessage.SendObjectPlacement(-1, i, j, ModContent.TileType<ShadesteelPortcullis2Open>(), 0, 0, -1, -1);
             NetMessage.SendTileSquare(-1, left, top + 1, 2);
             return true;
         }
@@ -227,8 +226,8 @@ namespace Redemption.Tiles.Furniture.Shade
         public override void SetStaticDefaults()
         {
             base.SetStaticDefaults();
-            ModTranslation name = CreateMapEntryName();
-            name.SetDefault("Shadesteel Portcullis");
+            LocalizedText name = CreateMapEntryName();
+            // name.SetDefault("Shadesteel Portcullis");
             AddMapEntry(new Color(83, 87, 123), name);
         }
         public override bool RightClick(int i, int j)
@@ -238,7 +237,7 @@ namespace Redemption.Tiles.Furniture.Shade
             int top = j - Main.tile[i, j].TileFrameY / 18 % 3;
             WorldGen.KillTile(i, j, noItem: true);
             WorldGen.PlaceObject(i, j, ModContent.TileType<ShadesteelPortcullis2Close_Unlocked>());
-            NetMessage.SendObjectPlacment(-1, i, j, ModContent.TileType<ShadesteelPortcullis2Close_Unlocked>(), 0, 0, -1, -1);
+            NetMessage.SendObjectPlacement(-1, i, j, ModContent.TileType<ShadesteelPortcullis2Close_Unlocked>(), 0, 0, -1, -1);
             NetMessage.SendTileSquare(-1, left, top + 1, 2);
             return true;
         }
@@ -246,10 +245,10 @@ namespace Redemption.Tiles.Furniture.Shade
     public class ShadePortcullis2 : PlaceholderTile
     {
         public override string Texture => "Redemption/Placeholder";
-        public override void SetStaticDefaults()
+        public override void SetSafeStaticDefaults()
         {
-            DisplayName.SetDefault("Reinforced Shade Portcullis");
-            Tooltip.SetDefault("[c/ff0000:Unbreakable (500% Pickaxe Power)]");
+            // DisplayName.SetDefault("Reinforced Shade Portcullis");
+            // Tooltip.SetDefault("[c/ff0000:Unbreakable (500% Pickaxe Power)]");
         }
         public override void SetDefaults()
         {

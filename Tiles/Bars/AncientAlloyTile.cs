@@ -23,8 +23,6 @@ namespace Redemption.Tiles.Bars
             TileObjectData.newTile.StyleHorizontal = true;
             TileObjectData.newTile.LavaDeath = false;
             TileObjectData.addTile(Type);
-
-            ItemDrop = ModContent.ItemType<AncientAlloy>();   
             DustType = DustID.Lead;
             AddMapEntry(new Color(105, 97, 102));
 			MinPick = 0;

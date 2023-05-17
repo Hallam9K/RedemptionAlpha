@@ -67,7 +67,7 @@ namespace Redemption.Tiles.Tiles
                 }
             }
             if (WorldGen.genRand.NextBool(8))
-                WorldGen.SpreadGrass(i + Main.rand.Next(-1, 1), j + Main.rand.Next(-1, 1), ModContent.TileType<ShadestoneBrickTile>(), Type, false, 0);
+                WorldGen.SpreadGrass(i + Main.rand.Next(-1, 1), j + Main.rand.Next(-1, 1), ModContent.TileType<ShadestoneBrickTile>(), Type, false);
         }
     }
 }

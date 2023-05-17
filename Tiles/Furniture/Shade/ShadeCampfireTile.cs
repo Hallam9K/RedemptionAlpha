@@ -4,6 +4,7 @@ using Redemption.Items.Placeable.Furniture.Shade;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 
@@ -20,8 +21,8 @@ namespace Redemption.Tiles.Furniture.Shade
             TileObjectData.newTile.Origin = new Point16(1, 1);
             TileObjectData.newTile.WaterDeath = true;
             TileObjectData.addTile(Type);
-            ModTranslation name = CreateMapEntryName();
-            name.SetDefault("Shade Campfire");
+            LocalizedText name = CreateMapEntryName();
+            // name.SetDefault("Shade Campfire");
             AddMapEntry(new Color(110, 111, 135), name);
             DustType = DustID.AncientLight;
             AnimationFrameHeight = 36;
@@ -81,10 +82,6 @@ namespace Redemption.Tiles.Furniture.Shade
                 Vector2 drawPosition = new Vector2(i * 16 - (int)Main.screenPosition.X + xx, j * 16 - (int)Main.screenPosition.Y + yy) + zero;
                 spriteBatch.Draw(texture, drawPosition, frame, color, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
             }
-        }
-        public override void KillMultiTile(int i, int j, int frameX, int frameY)
-        {
-            Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 48, 32, ModContent.ItemType<ShadeCampfire>());
         }
     }
 }

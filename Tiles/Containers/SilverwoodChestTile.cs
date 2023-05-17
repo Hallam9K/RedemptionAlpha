@@ -30,13 +30,9 @@ namespace Redemption.Tiles.Containers
 
             DustType = DustID.Pearlwood;
             AdjTiles = new int[] { TileID.Containers };
-            ChestDrop = ModContent.ItemType<SilverwoodChest>();
 
-            // Names
-            ContainerName.SetDefault("Silverwood Chest");
-
-            ModTranslation name = CreateMapEntryName();
-            name.SetDefault("Silverwood Chest");
+            LocalizedText name = CreateMapEntryName();
+            // name.SetDefault("Silverwood Chest");
             AddMapEntry(new Color(228, 213, 173), name, MapChestName);
 
             // Placement
@@ -87,7 +83,6 @@ namespace Redemption.Tiles.Containers
 
         public override void KillMultiTile(int i, int j, int frameX, int frameY)
         {
-            Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 32, 32, ChestDrop);
             Chest.DestroyChest(i, j);
         }
 

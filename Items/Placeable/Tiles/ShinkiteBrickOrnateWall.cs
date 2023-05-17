@@ -1,5 +1,6 @@
 using Terraria.ModLoader;
 using Terraria.ID;
+using Terraria;
 using Redemption.Walls;
 using Redemption.Rarities;
 
@@ -9,13 +10,13 @@ namespace Redemption.Items.Placeable.Tiles
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Ornate Shinkite Brick Wall");
-            SacrificeTotal = 400;
+            // DisplayName.SetDefault("Ornate Shinkite Brick Wall");
+            Item.ResearchUnlockCount = 400;
         }
 
         public override void SetDefaults()
         {
-            Item.DefaultToPlacableWall((ushort)ModContent.WallType<ShinkiteBrickOrnateWallTile>());
+            Item.DefaultToPlaceableWall((ushort)ModContent.WallType<ShinkiteBrickOrnateWallTile>());
             Item.width = 24;
             Item.height = 24;
             Item.maxStack = Item.CommonMaxStack;

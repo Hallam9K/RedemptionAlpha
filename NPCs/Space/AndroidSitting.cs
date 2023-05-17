@@ -18,7 +18,7 @@ namespace Redemption.NPCs.Space
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Android Mk.I");
+            // DisplayName.SetDefault("Android Mk.I");
             NPCID.Sets.ActsLikeTownNPC[Type] = true;
             NPCID.Sets.NPCBestiaryDrawModifiers value = new(0) { Hide = true };
             NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, value);
@@ -38,7 +38,7 @@ namespace Redemption.NPCs.Space
         }
 
         public override bool UsesPartyHat() => false;
-        public override bool CanTownNPCSpawn(int numTownNPCs, int money) => false;
+        public override bool CanTownNPCSpawn(int numTownNPCs) => false;
         public override bool CanChat() => true;
         public override bool CheckActive() => false;
         public override void AI()

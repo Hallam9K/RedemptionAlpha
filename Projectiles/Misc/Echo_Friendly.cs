@@ -12,7 +12,7 @@ namespace Redemption.Projectiles.Misc
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Echo");
+            // DisplayName.SetDefault("Echo");
             Main.projFrames[Projectile.type] = 10;
             ElementID.ProjShadow[Type] = true;
         }
@@ -56,6 +56,6 @@ namespace Redemption.Projectiles.Misc
             for (int i = 0; i < 5; i++)
                 Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.AncientLight, Scale: 2f);
         }
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) => target.AddBuff(ModContent.BuffType<BlackenedHeartDebuff>(), 120);
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) => target.AddBuff(ModContent.BuffType<BlackenedHeartDebuff>(), 120);
     }
 }

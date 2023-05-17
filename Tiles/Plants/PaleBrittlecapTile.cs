@@ -4,6 +4,7 @@ using Redemption.Items.Placeable.Plants;
 using Redemption.Tiles.Tiles;
 using Terraria;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 
@@ -28,9 +29,8 @@ namespace Redemption.Tiles.Plants
             TileObjectData.addTile(Type);
             HitSound = SoundID.Grass;
             DustType = ModContent.DustType<SlateDust>();
-            ItemDrop = ModContent.ItemType<PaleBrittlecap>();
-            ModTranslation name = CreateMapEntryName();
-            name.SetDefault("Pale Brittlecap");
+            LocalizedText name = CreateMapEntryName();
+            // name.SetDefault("Pale Brittlecap");
             AddMapEntry(new Color(170, 150, 110), name);
         }
         public override void NumDust(int i, int j, bool fail, ref int num) => num = 10;

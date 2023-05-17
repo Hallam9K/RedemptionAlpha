@@ -15,7 +15,6 @@ namespace Redemption.Tiles.Tiles
             Main.tileBlockLight[Type] = true;
             Main.tileBlendAll[Type] = true;
             Main.tileBrick[Type] = true;
-            ItemDrop = ModContent.ItemType<PetrifiedWood>();
             DustType = DustID.Pearlwood;
             MinPick = 50;
             MineResist = 7f;

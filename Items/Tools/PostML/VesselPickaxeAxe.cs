@@ -18,9 +18,9 @@ namespace Redemption.Items.Tools.PostML
     {
         public override void SetStaticDefaults()
         {
-            Tooltip.SetDefault("Hitting an enemy will make them bleed heavily for a long period of time\n" +
-                "Can mine Vessel Fragments");
-            SacrificeTotal = 1;
+            /* Tooltip.SetDefault("Hitting an enemy will make them bleed heavily for a long period of time\n" +
+                "Can mine Vessel Fragments"); */
+            Item.ResearchUnlockCount = 1;
             ElementID.ItemShadow[Type] = true;
         }
 
@@ -42,7 +42,7 @@ namespace Redemption.Items.Tools.PostML
             Item.useTurn = true;
             Item.rare = ModContent.RarityType<SoullessRarity>();
         }
-        public override void OnHitNPC(Player player, NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(Player player, NPC target, NPC.HitInfo hit, int damageDone)
         {
             target.AddBuff(ModContent.BuffType<LaceratedDebuff>(), 1200);
         }

@@ -16,11 +16,11 @@ namespace Redemption.Items.Weapons.PostML.Melee
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Dagger of the Oathkeeper");
-            Tooltip.SetDefault("Inflicts soulless\n" +
-                "Slashes up and down, hold down left-click to follow up with a rapid flurry of stabs");
+            // DisplayName.SetDefault("Dagger of the Oathkeeper");
+            /* Tooltip.SetDefault("Inflicts soulless\n" +
+                "Slashes up and down, hold down left-click to follow up with a rapid flurry of stabs"); */
             ItemID.Sets.SkipsInitialUseSound[Item.type] = true;
-            SacrificeTotal = 1;
+            Item.ResearchUnlockCount = 1;
             ElementID.ItemShadow[Type] = true;
         }
 
@@ -80,7 +80,7 @@ namespace Redemption.Items.Weapons.PostML.Melee
         public override string Texture => "Redemption/Items/Weapons/PostML/Melee/DaggerOfOathkeeper";
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Dagger of the Oathkeeper");
+            // DisplayName.SetDefault("Dagger of the Oathkeeper");
         }
         public override void SetDefaults()
         {

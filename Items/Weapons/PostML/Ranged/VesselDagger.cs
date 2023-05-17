@@ -14,8 +14,8 @@ namespace Redemption.Items.Weapons.PostML.Ranged
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Vessel Dagger");
-            Tooltip.SetDefault("Daggers burst into candle light after a small distance");
+            // DisplayName.SetDefault("Vessel Dagger");
+            // Tooltip.SetDefault("Daggers burst into candle light after a small distance");
         }
         public override void SetDefaults()
         {
@@ -53,7 +53,7 @@ namespace Redemption.Items.Weapons.PostML.Ranged
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Vessel Dagger");
+            // DisplayName.SetDefault("Vessel Dagger");
             ElementID.ProjShadow[Type] = true;
         }
 

@@ -26,7 +26,6 @@ namespace Redemption.Tiles.Furniture.Silverwood
             AddMapEntry(new Color(228, 213, 173));
 
             DustType = DustID.Pearlwood;
-            ItemDrop = ModContent.ItemType<SilverwoodPlatform>();
             AdjTiles = new int[] { TileID.Platforms };
 
             // Placement

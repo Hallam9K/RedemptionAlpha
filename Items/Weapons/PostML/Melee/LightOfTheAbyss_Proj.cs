@@ -14,7 +14,7 @@ namespace Redemption.Items.Weapons.PostML.Melee
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Light of the Abyss");
+            // DisplayName.SetDefault("Light of the Abyss");
             ElementID.ProjShadow[Type] = true;
             ElementID.ProjFire[Type] = true;
         }
@@ -53,7 +53,7 @@ namespace Redemption.Items.Weapons.PostML.Melee
 
             return false;
         }
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
 		{
 			target.immune[Projectile.owner] = 4;
 		}

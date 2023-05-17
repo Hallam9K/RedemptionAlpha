@@ -24,15 +24,13 @@ namespace Redemption.Tiles.Furniture.Silverwood
             TileID.Sets.DisableSmartCursor[Type] = true;
             TileObjectData.newTile.CopyFrom(TileObjectData.Style4x2);
             TileObjectData.newTile.CoordinateHeights = new int[] { 16, 18 };
+            TileObjectData.newTile.CoordinatePaddingFix = new Point16(0, -2);
             TileObjectData.addTile(Type);
-            ModTranslation name = CreateMapEntryName();
-            name.SetDefault("Silverwood Bed");
-            AddMapEntry(new Color(228, 213, 173), name);
+            AddMapEntry(new Color(228, 213, 173), Language.GetText("ItemName.Bed"));
             DustType = DustID.Pearlwood;
             AddToArray(ref TileID.Sets.RoomNeeds.CountsAsChair);
             AdjTiles = new int[] { TileID.Beds };
         }
-
         public override bool HasSmartInteract(int i, int j, SmartInteractScanSettings settings) => true;
         public override void ModifySmartInteractCoords(ref int width, ref int height, ref int frameWidth, ref int frameHeight, ref int extraY)
         {
@@ -45,9 +43,6 @@ namespace Redemption.Tiles.Furniture.Silverwood
         }
 
         public override void NumDust(int i, int j, bool fail, ref int num) => num = 1;
-
-        public override void KillMultiTile(int i, int j, int frameX, int frameY) => Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 64, 32, ModContent.ItemType<SilverwoodBed>());
-
         public override bool RightClick(int i, int j)
         {
             Player player = Main.LocalPlayer;

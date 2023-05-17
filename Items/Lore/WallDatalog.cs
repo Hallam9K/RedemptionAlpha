@@ -11,8 +11,8 @@ namespace Redemption.Items.Lore
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Data Log #466110");
-            SacrificeTotal = 1;
+            // DisplayName.SetDefault("Data Log #466110");
+            Item.ResearchUnlockCount = 1;
         }
         public override void SetDefaults()
         {
@@ -57,7 +57,7 @@ namespace Redemption.Items.Lore
         public override void SetStaticDefaults()
         {
             base.SetStaticDefaults();
-            DisplayName.SetDefault("Data Log #466111");
+            // DisplayName.SetDefault("Data Log #466111");
         }
         public override void SetDefaults()
         {
@@ -98,7 +98,7 @@ namespace Redemption.Items.Lore
         public override void SetStaticDefaults()
         {
             base.SetStaticDefaults();
-            DisplayName.SetDefault("Data Log #933");
+            // DisplayName.SetDefault("Data Log #933");
         }
         public override void SetDefaults()
         {
@@ -140,7 +140,7 @@ namespace Redemption.Items.Lore
         public override void SetStaticDefaults()
         {
             base.SetStaticDefaults();
-            DisplayName.SetDefault("Data Log #184999");
+            // DisplayName.SetDefault("Data Log #184999");
         }
         public override void SetDefaults()
         {
@@ -179,7 +179,7 @@ namespace Redemption.Items.Lore
         public override void SetStaticDefaults()
         {
             base.SetStaticDefaults();
-            DisplayName.SetDefault("Data Log #18500");
+            // DisplayName.SetDefault("Data Log #18500");
         }
         public override void SetDefaults()
         {
@@ -217,7 +217,7 @@ namespace Redemption.Items.Lore
         public override void SetStaticDefaults()
         {
             base.SetStaticDefaults();
-            DisplayName.SetDefault("Data Log #2042280");
+            // DisplayName.SetDefault("Data Log #2042280");
         }
         public override void SetDefaults()
         {
@@ -255,7 +255,7 @@ namespace Redemption.Items.Lore
         public override void SetStaticDefaults()
         {
             base.SetStaticDefaults();
-            DisplayName.SetDefault("Data Log #2042281");
+            // DisplayName.SetDefault("Data Log #2042281");
         }
         public override void SetDefaults()
         {
@@ -293,7 +293,7 @@ namespace Redemption.Items.Lore
         public override void SetStaticDefaults()
         {
             base.SetStaticDefaults();
-            DisplayName.SetDefault("Data Log #5385431");
+            // DisplayName.SetDefault("Data Log #5385431");
         }
         public override void SetDefaults()
         {
@@ -333,7 +333,7 @@ namespace Redemption.Items.Lore
         public override void SetStaticDefaults()
         {
             base.SetStaticDefaults();
-            DisplayName.SetDefault("Data Log #8022208");
+            // DisplayName.SetDefault("Data Log #8022208");
         }
         public override void SetDefaults()
         {
@@ -370,7 +370,7 @@ namespace Redemption.Items.Lore
         public override void SetStaticDefaults()
         {
             base.SetStaticDefaults();
-            DisplayName.SetDefault("Data Log #9145620");
+            // DisplayName.SetDefault("Data Log #9145620");
         }
         public override void SetDefaults()
         {
@@ -409,7 +409,7 @@ namespace Redemption.Items.Lore
         public override void SetStaticDefaults()
         {
             base.SetStaticDefaults();
-            DisplayName.SetDefault("Data Log #9145621");
+            // DisplayName.SetDefault("Data Log #9145621");
         }
         public override void SetDefaults()
         {
@@ -450,7 +450,7 @@ namespace Redemption.Items.Lore
         public override void SetStaticDefaults()
         {
             base.SetStaticDefaults();
-            DisplayName.SetDefault("Data Log #9145622");
+            // DisplayName.SetDefault("Data Log #9145622");
         }
         public override void SetDefaults()
         {
@@ -490,7 +490,7 @@ namespace Redemption.Items.Lore
         public override void SetStaticDefaults()
         {
             base.SetStaticDefaults();
-            DisplayName.SetDefault("Data Log #9145629");
+            // DisplayName.SetDefault("Data Log #9145629");
         }
         public override void SetDefaults()
         {
@@ -530,7 +530,7 @@ namespace Redemption.Items.Lore
         public override void SetStaticDefaults()
         {
             base.SetStaticDefaults();
-            DisplayName.SetDefault("Data Log #9145630");
+            // DisplayName.SetDefault("Data Log #9145630");
         }
         public override void SetDefaults()
         {
@@ -570,7 +570,7 @@ namespace Redemption.Items.Lore
         public override void SetStaticDefaults()
         {
             base.SetStaticDefaults();
-            DisplayName.SetDefault("Data Log #170001202");
+            // DisplayName.SetDefault("Data Log #170001202");
         }
         public override void SetDefaults()
         {
@@ -608,7 +608,7 @@ namespace Redemption.Items.Lore
         public override void SetStaticDefaults()
         {
             base.SetStaticDefaults();
-            DisplayName.SetDefault("Data Log #365000663");
+            // DisplayName.SetDefault("Data Log #365000663");
         }
         public override void SetDefaults()
         {

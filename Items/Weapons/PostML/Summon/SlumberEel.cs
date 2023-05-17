@@ -15,12 +15,12 @@ namespace Redemption.Items.Weapons.PostML.Summon
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Slumber Eel");
-            Tooltip.SetDefault("20 summon tag damage\n" +
+            // DisplayName.SetDefault("Slumber Eel");
+            /* Tooltip.SetDefault("20 summon tag damage\n" +
                 "10% summon tag critical strike chance\n" +
                 "Your summons will focus struck enemies\n" +
-                "Strike enemies to do something idk");
-            SacrificeTotal = 1;
+                "Strike enemies to do something idk"); */
+            Item.ResearchUnlockCount = 1;
         }
 
         public override void SetDefaults()
@@ -39,7 +39,7 @@ namespace Redemption.Items.Weapons.PostML.Summon
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Slumber Eel");
+            // DisplayName.SetDefault("Slumber Eel");
             ProjectileID.Sets.IsAWhip[Type] = true;
             ElementID.ProjShadow[Type] = true;
             ElementID.ProjWater[Type] = true;
@@ -52,7 +52,7 @@ namespace Redemption.Items.Weapons.PostML.Summon
             Projectile.WhipSettings.RangeMultiplier = 1.6f;
             Projectile.Redemption().TechnicallyMelee = true;
         }
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             Player player = Main.player[Projectile.owner];
             target.AddBuff(BuffID.RainbowWhipNPCDebuff, 180);

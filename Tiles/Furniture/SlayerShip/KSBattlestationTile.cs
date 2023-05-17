@@ -7,6 +7,7 @@ using Terraria.DataStructures;
 using Terraria.Enums;
 using Terraria.GameContent.ObjectInteractions;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 
@@ -34,16 +35,12 @@ namespace Redemption.Tiles.Furniture.SlayerShip
             DustType = ModContent.DustType<LabPlatingDust>();
             MinPick = 500;
             MineResist = 30f;
-            ModTranslation name = CreateMapEntryName();
-            name.SetDefault("Observatory Station");
+            LocalizedText name = CreateMapEntryName();
+            // name.SetDefault("Observatory Station");
             AddMapEntry(new Color(151, 153, 160), name);
             AnimationFrameHeight = 90;
         }
         public override bool HasSmartInteract(int i, int j, SmartInteractScanSettings settings) => true;
-        public override void KillMultiTile(int i, int j, int frameX, int frameY)
-        {
-            Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 128, 80, ModContent.ItemType<KSBattlestation>());
-        }
         public override void MouseOver(int i, int j)
         {
             Player player = Main.LocalPlayer;

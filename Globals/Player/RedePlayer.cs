@@ -161,9 +161,9 @@ namespace Redemption.Globals.Player
 
             if (SubworldSystem.Current != null)
                 return;
-            if (RedeGen.GoldenGatewayVector.X == -1 || RedeGen.BastionVector.X == -1 || RedeGen.gathicPortalVector.X == -1 || RedeGen.HallOfHeroesVector.X == -1 || RedeGen.slayerShipVector.X == -1)
+            if (RedeGen.GoldenGatewayPoint.X == -1 || RedeGen.BastionPoint.X == -1 || RedeGen.gathicPortalPoint.X == -1 || RedeGen.HallOfHeroesPoint.X == -1 || RedeGen.slayerShipPoint.X == -1)
                 Main.NewText("WARNING: Unable to locate a certain structure, new world is recommended!", Colors.RarityRed);
-            if (RedeGen.LabVector.X == -1 || RedeGen.newbCaveVector.X == -1)
+            if (RedeGen.LabPoint.X == -1 || RedeGen.newbCavePoint.X == -1)
                 Main.NewText("WARNING: Unable to locate important structure, new world is required!", Colors.RarityRed);
 
             if (RedeConfigClient.Instance.FunniAllWasteland || RedeConfigClient.Instance.FunniJanitor || RedeConfigClient.Instance.FunniSpiders || RedeConfigClient.Instance.FunniWasteland)
@@ -279,7 +279,7 @@ namespace Redemption.Globals.Player
                 Player.accDepthMeter = 0;
             }
         }
-        public override void OnRespawn(Terraria.Player player)
+        public override void OnRespawn()
         {
             if (Player.InModBiome<SpaceBiome>())
                 SubworldSystem.Exit();

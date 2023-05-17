@@ -12,8 +12,8 @@ namespace Redemption.Buffs
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Insulated");
-            Description.SetDefault("\"You are immune to Electrified\"");
+            // DisplayName.SetDefault("Insulated");
+            // Description.SetDefault("\"You are immune to Electrified\"");
         }
         public override void Update(Player player, ref int buffIndex)
         {
@@ -29,7 +29,7 @@ namespace Redemption.Buffs
         public override string Texture => Redemption.EMPTY_TEXTURE;
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Electricity Field");
+            // DisplayName.SetDefault("Electricity Field");
         }
         public override void SetDefaults()
         {

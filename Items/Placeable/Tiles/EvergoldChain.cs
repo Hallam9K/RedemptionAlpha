@@ -3,6 +3,7 @@ using Redemption.Rarities;
 using Redemption.Tiles.Tiles;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria;
 
 namespace Redemption.Items.Placeable.Tiles
 {
@@ -10,8 +11,8 @@ namespace Redemption.Items.Placeable.Tiles
 	{
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Evergold Chain");
-            SacrificeTotal = 100;
+            // DisplayName.SetDefault("Evergold Chain");
+            Item.ResearchUnlockCount = 100;
         }
         public override void SetDefaults()
         {
@@ -37,8 +38,8 @@ namespace Redemption.Items.Placeable.Tiles
         public override string Texture => "Redemption/Items/Placeable/Tiles/EvergoldChain";
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Evergold Chain (Solid)");
-            SacrificeTotal = 100;
+            // DisplayName.SetDefault("Evergold Chain (Solid)");
+            Item.ResearchUnlockCount = 100;
         }
         public override void SetDefaults()
         {

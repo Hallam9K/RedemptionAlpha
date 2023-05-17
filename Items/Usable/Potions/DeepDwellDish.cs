@@ -13,9 +13,9 @@ namespace Redemption.Items.Usable.Potions
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Deep Dwell Dish");
-            Tooltip.SetDefault("Massive improvements to all stats" +
-                "\n'Tastes like [REDACTED]'");
+            // DisplayName.SetDefault("Deep Dwell Dish");
+            /* Tooltip.SetDefault("Massive improvements to all stats" +
+                "\n'Tastes like [REDACTED]'"); */
             Main.RegisterItemAnimation(Type, new DrawAnimationVertical(int.MaxValue, 3));
             ItemID.Sets.FoodParticleColors[Item.type] = new Color[3] {
                 new Color(229, 124, 206),
@@ -23,7 +23,7 @@ namespace Redemption.Items.Usable.Potions
                 new Color(120, 146, 19)
             };
             ItemID.Sets.IsFood[Type] = true;
-            SacrificeTotal = 5;
+            Item.ResearchUnlockCount = 5;
         }
         public override void SetDefaults()
         {

@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 
@@ -28,7 +29,7 @@ namespace Redemption.Tiles.Furniture.ElderWood
 			TileObjectData.newTile.Origin = new Point16(0, 4);
 			TileObjectData.addTile(Type);
 
-			AddMapEntry(new Color(109, 87, 78), CreateMapEntryName());
+			AddMapEntry(new Color(109, 87, 78), Language.GetText("ItemName.GrandfatherClock"));
 		}
 
         public override bool RightClick(int x, int y)

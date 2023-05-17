@@ -1,6 +1,5 @@
 using Microsoft.Xna.Framework;
 using Redemption.Dusts.Tiles;
-using Redemption.Items.Placeable.Furniture.Shade;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.Enums;
@@ -10,6 +9,7 @@ using Terraria.ObjectData;
 using Terraria.Localization;
 using Terraria.GameContent.ObjectInteractions;
 using Terraria.GameContent;
+using Redemption.Items.Placeable.Furniture.Shade;
 
 namespace Redemption.Tiles.Furniture.Shade
 {

@@ -25,7 +25,6 @@ namespace Redemption.Tiles.Ores
             LocalizedText name = CreateMapEntryName();
             // name.SetDefault("Vessel Fragments");
             AddMapEntry(new Color(210, 200, 191), name);
-            ItemDrop = ModContent.ItemType<VesselFragment>();
         }
         public override bool CanDrop(int i, int j) => Main.rand.NextBool(8);
         public override void DrawEffects(int i, int j, SpriteBatch spriteBatch, ref TileDrawInfo drawData)

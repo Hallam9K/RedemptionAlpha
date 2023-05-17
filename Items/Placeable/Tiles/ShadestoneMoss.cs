@@ -11,7 +11,8 @@ namespace Redemption.Items.Placeable.Tiles
 		public override void SetStaticDefaults()
         {
             // DisplayName.SetDefault("Black Moss");
-            // Tooltip.SetDefault("Plants moss on Shadestone and Shadestone Bricks"); ;	
+            // Tooltip.SetDefault("Plants moss on Shadestone and Shadestone Bricks");
+            ItemID.Sets.DisableAutomaticPlaceableDrop[Type] = true;
             Item.ResearchUnlockCount = 25;
         }
         public override void SetDefaults()

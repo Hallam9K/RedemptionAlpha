@@ -15,11 +15,11 @@ namespace Redemption.Items.Accessories.PostML
     {
         public override void SetStaticDefaults()
         {
-            Tooltip.SetDefault("Increases vision within the Soulless Caverns" +
+            /* Tooltip.SetDefault("Increases vision within the Soulless Caverns" +
                 "\nImmunity to the 'Soulless' debuff" +
                 "\nAn aura of light surrounds you, damaging soulless enemies\n" +
-                "'Those of us who hide a darkness see a different kind of light'");
-            SacrificeTotal = 1;
+                "'Those of us who hide a darkness see a different kind of light'"); */
+            Item.ResearchUnlockCount = 1;
         }
 
         public override void SetDefaults()

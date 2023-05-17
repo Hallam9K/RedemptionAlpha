@@ -491,12 +491,12 @@ namespace Redemption.NPCs.PreHM
                 NPC.netUpdate = true;
             }
         }
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit)
         {
             target.AddBuff(BuffID.Bleeding, 1000);
             target.AddBuff(ModContent.BuffType<DirtyWoundDebuff>(), 1400);
         }
-        public override void OnHitPlayer(Player target, int damage, bool crit)
+        public override void OnHitPlayer(Player target, Player.HurtInfo hurtInfo)
         {
             if (Main.rand.NextBool(2) || Main.expertMode)
             {

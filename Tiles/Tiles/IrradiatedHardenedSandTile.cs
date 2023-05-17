@@ -40,7 +40,6 @@ namespace Redemption.Tiles.Tiles
             AddMapEntry(new Color(149, 133, 121));
             MineResist = 1.5f;
             DustType = DustID.Ash;
-            ItemDrop = ModContent.ItemType<IrradiatedHardenedSand>();
         }
         public override void FloorVisuals(Player player)
         {

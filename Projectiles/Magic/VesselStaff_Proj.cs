@@ -17,7 +17,7 @@ namespace Redemption.Projectiles.Magic
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Shadesoul");
+            // DisplayName.SetDefault("Shadesoul");
             Main.projFrames[Projectile.type] = 8;
             ProjectileID.Sets.TrailCacheLength[Projectile.type] = 6;
             ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
@@ -100,7 +100,7 @@ namespace Redemption.Projectiles.Magic
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Shade Ring");
+            // DisplayName.SetDefault("Shade Ring");
             ProjectileID.Sets.CultistIsResistantTo[Projectile.type] = true;
             ElementID.ProjShadow[Type] = true;
         }

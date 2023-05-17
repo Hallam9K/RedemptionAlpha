@@ -63,7 +63,7 @@ namespace Redemption.Items.Placeable.Furniture.Shade
                 .Register();
             CreateRecipe()
                 .AddRecipeGroup(RedeRecipe.TorchRecipeGroup)
-                .AddCondition(new Recipe.Condition(NetworkText.FromLiteral("In the Soulless Caverns"), _ => Main.LocalPlayer.InModBiome<SoullessBiome>()))
+                .AddCondition(RedeConditions.InSoullessCaverns)
                 .Register();
         }
     }

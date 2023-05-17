@@ -1,6 +1,7 @@
 ﻿using Redemption.Rarities;
 using Redemption.Tiles.Tiles;
 using Terraria.ModLoader;
+using Terraria;
 
 namespace Redemption.Items.Placeable.Tiles
 {
@@ -8,8 +9,8 @@ namespace Redemption.Items.Placeable.Tiles
 	{
         public override void SetStaticDefaults()
         {
-            Tooltip.SetDefault("[c/ff0000:Unbreakable]");
-            SacrificeTotal = 100;
+            // Tooltip.SetDefault("[c/ff0000:Unbreakable]");
+            Item.ResearchUnlockCount = 100;
         }
         public override void SetDefaults()
         {

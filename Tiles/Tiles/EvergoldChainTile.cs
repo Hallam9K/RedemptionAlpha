@@ -18,7 +18,6 @@ namespace Redemption.Tiles.Tiles
             MinPick = 100;
             MineResist = 7f;
             HitSound = CustomSounds.ChainHit;
-            ItemDrop = ModContent.ItemType<EvergoldChain>();
             AddMapEntry(new Color(230, 230, 50));
         }
         public override void NumDust(int i, int j, bool fail, ref int num) => num = fail ? 1 : 3;
@@ -36,7 +35,6 @@ namespace Redemption.Tiles.Tiles
             MinPick = 100;
             MineResist = 7f;
             HitSound = CustomSounds.ChainHit;
-            ItemDrop = ModContent.ItemType<EvergoldChain>();
             AddMapEntry(new Color(230, 230, 50));
         }
         public override void NumDust(int i, int j, bool fail, ref int num) => num = fail ? 1 : 3;

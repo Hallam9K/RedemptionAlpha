@@ -7,8 +7,8 @@ namespace Redemption.Buffs
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Stabbed");
-			Description.SetDefault("Your damage is increased at the cost of decreased max life");
+			// DisplayName.SetDefault("Stabbed");
+			// Description.SetDefault("Your damage is increased at the cost of decreased max life");
 			Main.buffNoTimeDisplay[Type] = false;
             Main.debuff[Type] = true;
 		}

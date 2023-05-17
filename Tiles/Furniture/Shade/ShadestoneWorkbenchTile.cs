@@ -31,11 +31,7 @@ namespace Redemption.Tiles.Furniture.Shade
 			TileObjectData.addTile(Type);
 
 			AddToArray(ref TileID.Sets.RoomNeeds.CountsAsTable);
-
-			// Etc
-			LocalizedText name = CreateMapEntryName();
-			// name.SetDefault("Shadestone Work Bench");
-			AddMapEntry(new Color(59, 61, 87), name);
+			AddMapEntry(new Color(59, 61, 87), Language.GetText("ItemName.WorkBench"));
 		}
 
 		public override void NumDust(int x, int y, bool fail, ref int num) => num = fail ? 1 : 3;

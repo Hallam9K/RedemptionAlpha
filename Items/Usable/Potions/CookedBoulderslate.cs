@@ -13,8 +13,8 @@ namespace Redemption.Items.Usable.Potions
     {
         public override void SetStaticDefaults()
         {
-            Tooltip.SetDefault("Massive improvements to all stats" +
-                "\n'Tastes like slate... and boulders'");
+            /* Tooltip.SetDefault("Massive improvements to all stats" +
+                "\n'Tastes like slate... and boulders'"); */
             Main.RegisterItemAnimation(Type, new DrawAnimationVertical(int.MaxValue, 3));
             ItemID.Sets.FoodParticleColors[Item.type] = new Color[3] {
                 new Color(251, 151, 108),
@@ -22,7 +22,7 @@ namespace Redemption.Items.Usable.Potions
                 new Color(160, 83, 63)
             };
             ItemID.Sets.IsFood[Type] = true;
-            SacrificeTotal = 5;
+            Item.ResearchUnlockCount = 5;
         }
         public override void SetDefaults()
         {

@@ -9,9 +9,9 @@ namespace Redemption.Items.Usable
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Maniac's Lantern");
-            Tooltip.SetDefault("When held, creates an invisible force that repels soulless enemies away from you");
-            SacrificeTotal = 1;
+            // DisplayName.SetDefault("Maniac's Lantern");
+            // Tooltip.SetDefault("When held, creates an invisible force that repels soulless enemies away from you");
+            Item.ResearchUnlockCount = 1;
         }
         public override void SetDefaults()
         {

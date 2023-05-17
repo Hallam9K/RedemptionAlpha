@@ -28,7 +28,7 @@ namespace Redemption.Tiles.Tiles
             MinPick = 10;
             MineResist = 0.1f;
             DustType = DustID.GrassBlades;
-            ItemDrop = ModContent.ItemType<AncientDirt>();
+            RegisterItemDrop(ModContent.ItemType<AncientDirt>());
         }
         public override void FloorVisuals(Player player)
         {

@@ -8,8 +8,8 @@ namespace Redemption.Buffs
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Dreamsong");
-            Description.SetDefault("Your vision is increased in the Soulless Caverns");
+            // DisplayName.SetDefault("Dreamsong");
+            // Description.SetDefault("Your vision is increased in the Soulless Caverns");
             Main.buffNoTimeDisplay[Type] = true;
         }
         public override void Update(Player player, ref int buffIndex)

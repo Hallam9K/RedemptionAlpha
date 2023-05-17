@@ -33,7 +33,6 @@ namespace Redemption.Tiles.Tiles
             Main.tileMerge[ModContent.TileType<IrradiatedDirtTile>()][Type] = true;
             Main.tileMerge[Type][ModContent.TileType<IrradiatedStoneTile>()] = true;
             Main.tileMerge[Type][ModContent.TileType<IrradiatedEbonstoneTile>()] = true;
-            ItemDrop = ModContent.ItemType<IrradiatedCrimstone>();
             TileID.Sets.Conversion.Stone[Type] = true;
             TileID.Sets.Stone[Type] = true;
             TileID.Sets.GeneralPlacementTiles[Type] = true;

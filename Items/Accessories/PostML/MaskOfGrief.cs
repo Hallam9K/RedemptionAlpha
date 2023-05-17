@@ -12,11 +12,11 @@ namespace Redemption.Items.Accessories.PostML
 	{
 		public override void SetStaticDefaults()
 		{
-            DisplayName.SetDefault("Mask of Grief");
-            Tooltip.SetDefault("Decreases enemy aggro while in Soulless Caverns"
+            // DisplayName.SetDefault("Mask of Grief");
+            /* Tooltip.SetDefault("Decreases enemy aggro while in Soulless Caverns"
                 + "\n10% increased damage while in the Soulless Cavern\n" +
-                "Makes " + ElementID.ShadowS + " elemental weapons more effective against Soulless targets");
-            SacrificeTotal = 1;
+                "Makes " + ElementID.ShadowS + " elemental weapons more effective against Soulless targets"); */
+            Item.ResearchUnlockCount = 1;
         }
         public override void SetDefaults()
 		{
@@ -24,7 +24,6 @@ namespace Redemption.Items.Accessories.PostML
             Item.height = 24;
             Item.value = Item.sellPrice(0, 7, 50, 0);
             Item.rare = ModContent.RarityType<SoullessRarity>();
-            Item.canBePlacedInVanityRegardlessOfConditions = true;
             Item.accessory = true;
         }
         public override void UpdateAccessory(Player player, bool hideVisual)

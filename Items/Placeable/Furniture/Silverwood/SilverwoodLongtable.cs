@@ -1,6 +1,7 @@
 using Redemption.Rarities;
 using Redemption.Tiles.Furniture.Silverwood;
 using Terraria.ID;
+using Terraria;
 using Terraria.ModLoader;
 
 namespace Redemption.Items.Placeable.Furniture.Silverwood
@@ -9,8 +10,8 @@ namespace Redemption.Items.Placeable.Furniture.Silverwood
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Silverwood Longtable (End)");
-            SacrificeTotal = 1;
+            // DisplayName.SetDefault("Silverwood Longtable (End)");
+            Item.ResearchUnlockCount = 1;
         }
         public override void SetDefaults()
         {
@@ -33,8 +34,8 @@ namespace Redemption.Items.Placeable.Furniture.Silverwood
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Silverwood Longtable (Middle)");
-            SacrificeTotal = 1;
+            // DisplayName.SetDefault("Silverwood Longtable (Middle)");
+            Item.ResearchUnlockCount = 1;
         }
         public override void SetDefaults()
         {
@@ -57,8 +58,8 @@ namespace Redemption.Items.Placeable.Furniture.Silverwood
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Silverwood Longtable (Middle with Chair)");
-            SacrificeTotal = 1;
+            // DisplayName.SetDefault("Silverwood Longtable (Middle with Chair)");
+            Item.ResearchUnlockCount = 1;
         }
         public override void SetDefaults()
         {

@@ -24,7 +24,6 @@ namespace Redemption.Tiles.Ores
             Main.tileShine[Type] = 975;
             Main.tileOreFinderPriority[Type] = 440;
             DustType = DustID.Electric;
-            ItemDrop = ModContent.ItemType<Uranium>();
             MinPick = 210;
             MineResist = 7f;
             HitSound = SoundID.Tink;

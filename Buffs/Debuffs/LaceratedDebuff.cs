@@ -9,8 +9,8 @@ namespace Redemption.Buffs.Debuffs
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Lacerated");
-			Description.SetDefault("A deep cut");
+			// DisplayName.SetDefault("Lacerated");
+			// Description.SetDefault("A deep cut");
             Main.debuff[Type] = true;
             Main.buffNoSave[Type] = true;
             Main.pvpBuff[Type] = true;
