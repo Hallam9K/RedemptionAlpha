@@ -36,7 +36,7 @@ namespace Redemption.Tiles.Furniture.Shade
             LocalizedText name = CreateMapEntryName();
             // name.SetDefault("Shadesteel Grate");
             AddMapEntry(new Color(83, 87, 123), name);
-            MinPick = 500;
+            MinPick = 1000;
             MineResist = 30f;
             DustType = ModContent.DustType<ShadesteelDust>();
             AnimationFrameHeight = 36;

@@ -44,7 +44,7 @@ namespace Redemption.Tiles.Furniture.Shade
             LocalizedText name = CreateMapEntryName();
             // name.SetDefault("Shadesteel Portcullis");
             AddMapEntry(new Color(83, 87, 123), name);
-            MinPick = 500;
+            MinPick = 1000;
             MineResist = 12f;
             DustType = ModContent.DustType<ShadesteelDust>();
             AdjTiles = new int[] { TileID.ClosedDoor };
@@ -133,7 +133,7 @@ namespace Redemption.Tiles.Furniture.Shade
             LocalizedText name = CreateMapEntryName();
             // name.SetDefault("Shadesteel Portcullis");
             AddMapEntry(new Color(83, 87, 123), name);
-            MinPick = 500;
+            MinPick = 1000;
             MineResist = 12f;
             DustType = ModContent.DustType<ShadesteelDust>();
             AdjTiles = new int[] { TileID.OpenDoor };

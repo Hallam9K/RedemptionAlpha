@@ -33,7 +33,7 @@ namespace Redemption.Tiles.Furniture.SlayerShip
             TileObjectData.addAlternate(1);
             TileObjectData.addTile(Type);
             DustType = DustID.Electric;
-            MinPick = 500;
+            MinPick = 1000;
             MineResist = 10f;
             LocalizedText name = CreateMapEntryName();
             // name.SetDefault("Slayer's Gaming Chair");

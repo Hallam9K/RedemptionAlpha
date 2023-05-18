@@ -18,7 +18,7 @@ namespace Redemption.Tiles.Tiles
             Main.tileLighted[Type] = true;
             TileID.Sets.DisableSmartCursor[Type] = true;
             DustType = DustID.Electric;
-            MinPick = 500;
+            MinPick = 1000;
             MineResist = 3f;
             HitSound = SoundID.Tink;
             AddMapEntry(new Color(255, 56, 13));

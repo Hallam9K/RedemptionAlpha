@@ -39,6 +39,7 @@ namespace Redemption.Items.Usable.Potions
                 .AddIngredient(ModContent.ItemType<LurkingKetred>())
                 .AddIngredient(ItemID.BottledWater)
                 .AddTile(TileID.Bottles)
+                .DisableDecraft()
                 .Register();
         }
     }

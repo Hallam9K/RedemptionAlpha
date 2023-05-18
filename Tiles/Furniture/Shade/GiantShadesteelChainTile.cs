@@ -25,7 +25,7 @@ namespace Redemption.Tiles.Furniture.Shade
             TileObjectData.addTile(Type);
             DustType = ModContent.DustType<ShadesteelDust>();
             AddMapEntry(new Color(83, 87, 123));
-            MinPick = 500;
+            MinPick = 1000;
             MineResist = 10f;
             HitSound = CustomSounds.ChainHit;
         }

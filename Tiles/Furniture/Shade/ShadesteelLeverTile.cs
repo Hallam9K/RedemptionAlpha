@@ -26,7 +26,7 @@ namespace Redemption.Tiles.Furniture.Shade
             TileObjectData.newTile.Origin = new Point16(0, 1);
             TileObjectData.addTile(Type);
             DustType = ModContent.DustType<ShadesteelDust>();
-            MinPick = 500;
+            MinPick = 1000;
             MineResist = 30f;
             LocalizedText name = CreateMapEntryName();
             // name.SetDefault("Shadesteel Lever");

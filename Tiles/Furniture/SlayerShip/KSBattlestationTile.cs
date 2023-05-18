@@ -33,7 +33,7 @@ namespace Redemption.Tiles.Furniture.SlayerShip
             TileObjectData.newTile.AnchorBottom = new AnchorData(AnchorType.SolidTile | AnchorType.SolidWithTop | AnchorType.SolidSide, TileObjectData.newTile.Width, 0);
             TileObjectData.addTile(Type);
             DustType = ModContent.DustType<LabPlatingDust>();
-            MinPick = 500;
+            MinPick = 1000;
             MineResist = 30f;
             LocalizedText name = CreateMapEntryName();
             // name.SetDefault("Observatory Station");

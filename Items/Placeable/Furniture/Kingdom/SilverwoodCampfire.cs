@@ -11,7 +11,8 @@ namespace Redemption.Items.Placeable.Furniture.Kingdom
 		public override void SetStaticDefaults()
 		{
             // Tooltip.SetDefault("Life regen is increased when near a campfire");
-			Item.ResearchUnlockCount = 1;
+            ItemID.Sets.ShimmerTransformToItem[Type] = ItemID.ShimmerCampfire;
+            Item.ResearchUnlockCount = 1;
 		}
 
 		public override void SetDefaults()

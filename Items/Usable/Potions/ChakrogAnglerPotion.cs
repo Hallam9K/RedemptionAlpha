@@ -42,6 +42,7 @@ namespace Redemption.Items.Usable.Potions
                 .AddIngredient(ModContent.ItemType<Nooseroot>(), 2)
                 .AddIngredient(ItemID.BottledWater)
                 .AddTile(TileID.Bottles)
+                .DisableDecraft()
                 .Register();
         }
     }

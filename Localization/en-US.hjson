@@ -3860,7 +3860,7 @@ Mods: {
 
 			LabBackDoor: {
 				DisplayName: Laboratory Back Door
-				Tooltip: "[c/ff0000:Unbreakable (500% Pickaxe Power)]"
+				Tooltip: "[c/ff0000:Unbreakable (1000% Pickaxe Power)]"
 			}
 
 			LabBackDoor2: {
@@ -3985,7 +3985,7 @@ Mods: {
 
 			SewerHole: {
 				DisplayName: Sewer Hole
-				Tooltip: "[c/ff0000:Unbreakable (500% Pickaxe Power)]"
+				Tooltip: "[c/ff0000:Unbreakable (1000% Pickaxe Power)]"
 			}
 
 			SkullSign: {
@@ -4114,7 +4114,7 @@ Mods: {
 					[c/ffea9b:Holding back a fate of endless slumber,]
 					[c/ffea9b:I want to stay to keep you strong,]
 					[c/ffea9b:Side by side is where we belong...']
-					[c/ff0000:Unbreakable (500% Pickaxe Power)]
+					[c/ff0000:Unbreakable (1000% Pickaxe Power)]
 					'''
 			}
 
@@ -4126,7 +4126,7 @@ Mods: {
 					[c/ffea9b:Too many battles lost to tell,]
 					[c/ffea9b:If I could turn back to time to find you,]
 					[c/ffea9b:I'd find our confidence as well']
-					[c/ff0000:Unbreakable (500% Pickaxe Power)]
+					[c/ff0000:Unbreakable (1000% Pickaxe Power)]
 					'''
 			}
 
@@ -4154,7 +4154,7 @@ Mods: {
 					[c/ffea9b:Hate to bloodshed; From rise to fall]
 					[c/ffea9b:If I never have to die,]
 					[c/ffea9b:Am I alive at all?']
-					[c/ff0000:Unbreakable (500% Pickaxe Power)]
+					[c/ff0000:Unbreakable (1000% Pickaxe Power)]
 					'''
 			}
 
@@ -4191,7 +4191,7 @@ Mods: {
 					[c/ffea9b:So here we remain,]
 					[c/ffea9b:We're incandescent,]
 					[c/ffea9b:A glorious flame...']
-					[c/ff0000:Unbreakable (500% Pickaxe Power)]
+					[c/ff0000:Unbreakable (1000% Pickaxe Power)]
 					'''
 			}
 
@@ -4463,7 +4463,7 @@ Mods: {
 				Tooltip:
 					'''
 					4x20
-					[c/ff0000:Unbreakable (500% Pickaxe Power)]
+					[c/ff0000:Unbreakable (1000% Pickaxe Power)]
 					'''
 			}
 
@@ -4472,7 +4472,7 @@ Mods: {
 				Tooltip:
 					'''
 					4x10
-					[c/ff0000:Unbreakable (500% Pickaxe Power)]
+					[c/ff0000:Unbreakable (1000% Pickaxe Power)]
 					'''
 			}
 
@@ -4571,7 +4571,7 @@ Mods: {
 					'''
 					Used to craft from Cyberscrap
 					Found on Slayer's Crashed Ship
-					[c/ff0000:Unbreakable (500% Pickaxe Power)]
+					[c/ff0000:Unbreakable (1000% Pickaxe Power)]
 					'''
 			}
 
@@ -4722,7 +4722,7 @@ Mods: {
 
 			AncientHallBrick: {
 				DisplayName: Ancient Hall Brick
-				Tooltip: "[c/ff0000:Unbreakable (500% Pickaxe Power)]"
+				Tooltip: "[c/ff0000:Unbreakable (1000% Pickaxe Power)]"
 			}
 
 			AncientHallPillarWall: {
@@ -4757,7 +4757,7 @@ Mods: {
 
 			DangerTape: {
 				DisplayName: Danger Tape
-				Tooltip: "[c/ff0000:Unbreakable (500% Pickaxe Power)]"
+				Tooltip: "[c/ff0000:Unbreakable (1000% Pickaxe Power)]"
 			}
 
 			DangerTape2: {
@@ -4767,7 +4767,7 @@ Mods: {
 
 			DangerTapeWall: {
 				DisplayName: Danger Tape
-				Tooltip: "[c/ff0000:Unbreakable (500% Pickaxe Power)]"
+				Tooltip: "[c/ff0000:Unbreakable (1000% Pickaxe Power)]"
 			}
 
 			DangerTapeWall2: {
@@ -4867,7 +4867,7 @@ Mods: {
 
 			GreenLaser: {
 				DisplayName: Green Laser Block
-				Tooltip: "[c/ff0000:Unbreakable (500% Pickaxe Power)]"
+				Tooltip: "[c/ff0000:Unbreakable (1000% Pickaxe Power)]"
 			}
 
 			HalogenLamp: {
@@ -4947,7 +4947,7 @@ Mods: {
 
 			LabPlatingUnsafe: {
 				DisplayName: Laboratory Panel (Unsafe)
-				Tooltip: ""
+				Tooltip: "[c/ff0000:Unbreakable (1000% Pickaxe Power)]"
 			}
 
 			LabPlatingWall: {
@@ -4960,7 +4960,7 @@ Mods: {
 				Tooltip:
 					'''
 					'Filled with green sludge'
-					[c/ff0000:Unbreakable (500% Pickaxe Power)]
+					[c/ff0000:Unbreakable (1000% Pickaxe Power)]
 					'''
 			}
 
@@ -4969,7 +4969,7 @@ Mods: {
 				Tooltip:
 					'''
 					'Filled with green sludge'
-					[c/ff0000:Unbreakable (500% Pickaxe Power)]
+					[c/ff0000:Unbreakable (1000% Pickaxe Power)]
 					'''
 			}
 
@@ -4990,7 +4990,7 @@ Mods: {
 
 			OvergrownLabPlating: {
 				DisplayName: Overgrown Laboratory Panel (Unsafe)
-				Tooltip: "[c/ff0000:Unbreakable (500% Pickaxe Power)]"
+				Tooltip: "[c/ff0000:Unbreakable (1000% Pickaxe Power)]"
 			}
 
 			PetrifiedWood: {
@@ -5015,7 +5015,7 @@ Mods: {
 
 			RedLaser: {
 				DisplayName: Red Laser Block
-				Tooltip: "[c/ff0000:Unbreakable (500% Pickaxe Power)]"
+				Tooltip: "[c/ff0000:Unbreakable (1000% Pickaxe Power)]"
 			}
 
 			ShadesteelChain: {
@@ -7352,12 +7352,12 @@ Mods: {
 
 			BigMaceTurret: {
 				DisplayName: Laboratory MACE Turret
-				Tooltip: "[c/ff0000:Unbreakable (500% Pickaxe Power)]"
+				Tooltip: "[c/ff0000:Unbreakable (1000% Pickaxe Power)]"
 			}
 
 			BrokenLabBackDoor: {
 				DisplayName: Broken Laboratory Back Door
-				Tooltip: "[c/ff0000:Unbreakable (500% Pickaxe Power)]"
+				Tooltip: "[c/ff0000:Unbreakable (1000% Pickaxe Power)]"
 			}
 
 			HazmatCorpse: {
@@ -7365,13 +7365,13 @@ Mods: {
 				Tooltip:
 					'''
 					Gives Hazmat Suit
-					[c/ff0000:Unbreakable (500% Pickaxe Power)]
+					[c/ff0000:Unbreakable (1000% Pickaxe Power)]
 					'''
 			}
 
 			JanitorEquipment: {
 				DisplayName: Janitor Equipment
-				Tooltip: "[c/ff0000:Unbreakable (500% Pickaxe Power)]"
+				Tooltip: "[c/ff0000:Unbreakable (1000% Pickaxe Power)]"
 			}
 
 			KariBed: {
@@ -7407,7 +7407,7 @@ Mods: {
 				Tooltip:
 					'''
 					Opens using a Keycard
-					[c/ff0000:Unbreakable (500% Pickaxe Power)]
+					[c/ff0000:Unbreakable (1000% Pickaxe Power)]
 					'''
 			}
 
@@ -7428,7 +7428,7 @@ Mods: {
 
 			OpenVent: {
 				DisplayName: Open Vent
-				Tooltip: "[c/ff0000:Unbreakable (500% Pickaxe Power)]"
+				Tooltip: "[c/ff0000:Unbreakable (1000% Pickaxe Power)]"
 			}
 
 			RadPillDeco: {
@@ -7482,17 +7482,17 @@ Mods: {
 
 			GiantShadesteelChain: {
 				DisplayName: Giant Shadesteel Chain
-				Tooltip: "[c/ff0000:Unbreakable (500% Pickaxe Power)]"
+				Tooltip: "[c/ff0000:Unbreakable (1000% Pickaxe Power)]"
 			}
 
 			ShadePortcullis: {
 				DisplayName: Shade Portcullis
-				Tooltip: "[c/ff0000:Unbreakable (500% Pickaxe Power)]"
+				Tooltip: "[c/ff0000:Unbreakable (1000% Pickaxe Power)]"
 			}
 
 			ShadesteelGate: {
 				DisplayName: Shadesteel Gate
-				Tooltip: "[c/ff0000:Unbreakable (500% Pickaxe Power)]"
+				Tooltip: "[c/ff0000:Unbreakable (1000% Pickaxe Power)]"
 			}
 
 			ShadesteelHangingCell2: {
@@ -8573,7 +8573,7 @@ Mods: {
 
 			ShadePortcullis2: {
 				DisplayName: Reinforced Shade Portcullis
-				Tooltip: "[c/ff0000:Unbreakable (500% Pickaxe Power)]"
+				Tooltip: "[c/ff0000:Unbreakable (1000% Pickaxe Power)]"
 			}
 
 			ShadestoneMirrorSpecial: {
@@ -8614,6 +8614,31 @@ Mods: {
 			SoullessRemains2: {
 				DisplayName: Soulless Remains (Reinforced Gate Key)
 				Tooltip: Gives Reinforced Prison Gate Key
+			}
+
+			LabPlatingUnsafe2: {
+				DisplayName: Unsafe Laboratory Panel
+				Tooltip: ""
+			}
+
+			LabPlatingWallUnsafe2: {
+				DisplayName: Unsafe Laboratory Panel Wall
+				Tooltip: ""
+			}
+
+			LabTank2: {
+				DisplayName: Laboratory Tank
+				Tooltip: "'Filled with sludge'"
+			}
+
+			LabTubes2: {
+				DisplayName: Laboratory Tubes
+				Tooltip: "'Filled with sludge'"
+			}
+
+			OvergrownLabPlating2: {
+				DisplayName: Overgrown Laboratory Panel
+				Tooltip: ""
 			}
 		}
 

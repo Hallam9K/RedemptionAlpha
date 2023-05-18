@@ -18,8 +18,10 @@ namespace Redemption.Tiles.Tiles
 			Main.tileMergeDirt[Type] = true;
             Main.tileBlockLight[Type] = true;
             Main.tileMerge[Type][ModContent.TileType<LabPlatingTileUnsafe>()] = true;
+            Main.tileMerge[Type][ModContent.TileType<LabPlatingTileUnsafe2>()] = true;
             Main.tileMerge[Type][ModContent.TileType<OvergrownLabPlatingTile>()] = true;
             Main.tileMerge[Type][ModContent.TileType<LabPlatingTile>()] = true;
+            Main.tileMerge[Type][ModContent.TileType<OvergrownLabPlatingTile2>()] = true;
             DustType = ModContent.DustType<SludgeDust>();
             MinPick = 300;
             MineResist = 8f;

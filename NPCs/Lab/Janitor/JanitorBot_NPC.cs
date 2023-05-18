@@ -187,7 +187,7 @@ namespace Redemption.NPCs.Lab.Janitor
                 {
                     Point tileToNPC = NPC.Center.ToTileCoordinates();
                     int type = Main.tile[tileToNPC.X + x, tileToNPC.Y + y].TileType;
-                    if (type == ModContent.TileType<LabPlatingTileUnsafe>())
+                    if (type == ModContent.TileType<LabPlatingTileUnsafe>() || type == ModContent.TileType<LabPlatingTileUnsafe2>())
                     {
                         LabClean = false;
                         break;

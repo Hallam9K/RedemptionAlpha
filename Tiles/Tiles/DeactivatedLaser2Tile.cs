@@ -13,7 +13,7 @@ namespace Redemption.Tiles.Tiles
             Main.tileLighted[Type] = false;
             TileID.Sets.DisableSmartCursor[Type] = true;
             DustType = DustID.Electric;
-            MinPick = 500;
+            MinPick = 1000;
             MineResist = 3f;
             HitSound = SoundID.Tink;
         }

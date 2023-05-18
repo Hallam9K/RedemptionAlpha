@@ -2,6 +2,7 @@ using Redemption.Items.Placeable.Tiles;
 using Redemption.Rarities;
 using Redemption.Tiles.Furniture.Shade;
 using Terraria;
+using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Redemption.Items.Placeable.Furniture.Shade
@@ -11,7 +12,8 @@ namespace Redemption.Items.Placeable.Furniture.Shade
 		public override void SetStaticDefaults()
 		{
             // Tooltip.SetDefault("Life regen is increased when near a campfire");
-			Item.ResearchUnlockCount = 1;
+            ItemID.Sets.ShimmerTransformToItem[Type] = ItemID.ShimmerCampfire;
+            Item.ResearchUnlockCount = 1;
 		}
 
 		public override void SetDefaults()

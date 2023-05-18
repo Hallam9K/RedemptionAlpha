@@ -5,18 +5,18 @@ using Redemption.Walls;
 
 namespace Redemption.Items.Placeable.Tiles
 {
-    public class LabPlatingWall : ModItem
+    public class LabPlatingWallUnsafe2 : ModItem
     {
         public override void SetStaticDefaults()
         {
-            // DisplayName.SetDefault("Laboratory Panel Wall"); 
-            ItemID.Sets.ShimmerTransformToItem[Type] = ModContent.ItemType<LabPlatingWallUnsafe2>();
+            // DisplayName.SetDefault("Unsafe Laboratory Panel Wall"); 
+            ItemID.Sets.ShimmerTransformToItem[Type] = ModContent.ItemType<LabPlatingWall>();
             Item.ResearchUnlockCount = 400;
         }
 
         public override void SetDefaults()
 		{
-            Item.DefaultToPlaceableWall((ushort)ModContent.WallType<LabPlatingWallTile>());
+            Item.DefaultToPlaceableWall((ushort)ModContent.WallType<LabPlatingWallTileUnsafe2>());
             Item.width = 24;
             Item.height = 24;
             Item.maxStack = Item.CommonMaxStack;
@@ -26,7 +26,7 @@ namespace Redemption.Items.Placeable.Tiles
         public override void AddRecipes()
         {
             CreateRecipe(4)
-                .AddIngredient(ModContent.ItemType<LabPlating>())
+                .AddIngredient(ModContent.ItemType<LabPlatingUnsafe2>())
                 .AddTile(TileID.WorkBenches)
                 .Register();
         }

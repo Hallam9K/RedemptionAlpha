@@ -31,7 +31,7 @@ namespace Redemption.Tiles.Furniture.Misc
             TileObjectData.newTile.Origin = new Point16(0, 2);
             TileObjectData.addTile(Type);
             DustType = 7;
-            MinPick = 500;
+            MinPick = 1000;
             MineResist = 3f;
             HitSound = CustomSounds.StoneHit;
             LocalizedText name = CreateMapEntryName();

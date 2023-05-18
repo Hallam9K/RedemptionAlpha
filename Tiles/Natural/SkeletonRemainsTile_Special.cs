@@ -23,7 +23,7 @@ namespace Redemption.Tiles.Natural
             base.SetStaticDefaults();
             Main.tileLighted[Type] = true;
             DustType = DustID.DungeonSpirit;
-            MinPick = 500;
+            MinPick = 1000;
             MineResist = 50;
             LocalizedText name = CreateMapEntryName();
             // name.SetDefault("Skeletal Remains");
@@ -154,7 +154,7 @@ namespace Redemption.Tiles.Natural
             base.SetStaticDefaults();
             Main.tileLighted[Type] = true;
             DustType = DustID.DungeonSpirit;
-            MinPick = 500;
+            MinPick = 1000;
             MineResist = 50;
             LocalizedText name = CreateMapEntryName();
             // name.SetDefault("Skeletal Remains");
@@ -269,7 +269,7 @@ namespace Redemption.Tiles.Natural
             base.SetStaticDefaults();
             Main.tileLighted[Type] = true;
             DustType = DustID.DungeonSpirit;
-            MinPick = 500;
+            MinPick = 1000;
             MineResist = 50;
             LocalizedText name = CreateMapEntryName();
             // name.SetDefault("Skeletal Remains");
@@ -384,7 +384,7 @@ namespace Redemption.Tiles.Natural
             base.SetStaticDefaults();
             Main.tileLighted[Type] = true;
             DustType = DustID.DungeonSpirit;
-            MinPick = 500;
+            MinPick = 1000;
             MineResist = 50;
             LocalizedText name = CreateMapEntryName();
             // name.SetDefault("Skeletal Remains");
@@ -498,7 +498,7 @@ namespace Redemption.Tiles.Natural
             base.SetStaticDefaults();
             Main.tileLighted[Type] = true;
             DustType = DustID.DungeonSpirit;
-            MinPick = 500;
+            MinPick = 1000;
             MineResist = 50;
             LocalizedText name = CreateMapEntryName();
             // name.SetDefault("Skeletal Remains");

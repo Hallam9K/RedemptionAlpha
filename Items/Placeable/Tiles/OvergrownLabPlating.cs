@@ -23,4 +23,25 @@ namespace Redemption.Items.Placeable.Tiles
             Item.rare = ItemRarityID.LightPurple;
         }
     }
+    public class OvergrownLabPlating2 : OvergrownLabPlating
+    {
+        public override string Texture => "Redemption/Items/Placeable/Tiles/OvergrownLabPlating";
+        public override void SetStaticDefaults()
+        {
+            // DisplayName.SetDefault("Overgrown Laboratory Panel");
+            Item.ResearchUnlockCount = 100;
+        }
+        public override void SetDefaults()
+        {
+            base.SetDefaults();
+            Item.DefaultToPlaceableTile(ModContent.TileType<OvergrownLabPlatingTile2>(), 0);
+        }
+        public override void AddRecipes()
+        {
+            CreateRecipe(10)
+                .AddIngredient<LabPlatingUnsafe2>(10)
+                .AddIngredient(ItemID.GrassSeeds)
+                .Register();
+        }
+    }
 }

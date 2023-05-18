@@ -34,7 +34,7 @@ namespace Redemption.Tiles.Furniture.Lab
             TileObjectData.newTile.AnchorBottom = new AnchorData(AnchorType.SolidTile | AnchorType.SolidWithTop | AnchorType.SolidSide, TileObjectData.newTile.Width, 0);
             TileObjectData.addTile(Type);
             DustType = DustID.GreenBlood;
-            MinPick = 500;
+            MinPick = 1000;
             MineResist = 8f;
             HitSound = SoundID.NPCHit13;
             LocalizedText name = CreateMapEntryName();

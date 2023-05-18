@@ -23,7 +23,7 @@ namespace Redemption.Tiles.Tiles
             Main.tileMerge[Type][ModContent.TileType<GathicStoneTile>()] = true;
             Main.tileMerge[Type][ModContent.TileType<GathicStoneBrickTile>()] = true;
             DustType = ModContent.DustType<SlateDust>();
-            MinPick = 500;
+            MinPick = 1000;
             MineResist = 10f;
             HitSound = CustomSounds.StoneHit;
             AddMapEntry(new Color(81, 72, 65));

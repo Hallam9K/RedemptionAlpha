@@ -35,7 +35,7 @@ namespace Redemption.Tiles.Furniture.Lab
             TileObjectData.addAlternate(1);
             TileObjectData.addTile(Type);
             DustType = DustID.Electric;
-            MinPick = 500;
+            MinPick = 1000;
             MineResist = 20f;
             LocalizedText name = CreateMapEntryName();
 			// name.SetDefault("Laboratory MACE Turret");

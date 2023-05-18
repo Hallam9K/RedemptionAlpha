@@ -18,7 +18,7 @@ namespace Redemption.Tiles.Tiles
             Main.tileBlockLight[Type] = true;
             DustType = ModContent.DustType<LabPlatingDust>();
             TileID.Sets.DisableSmartCursor[Type] = true;
-            MinPick = 500;
+            MinPick = 1000;
             MineResist = 7f;
             HitSound = CustomSounds.MetalHit;
             AddMapEntry(new Color(72, 70, 79));

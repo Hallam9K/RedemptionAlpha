@@ -17,7 +17,7 @@ namespace Redemption.Tiles.Tiles
             Main.tileMerge[ModContent.TileType<AncientDirtTile>()][Type] = true;
             Main.tileMerge[ModContent.TileType<AncientAlloyBrickTile>()][Type] = true;
             DustType = DustID.GoldCoin;
-            MinPick = 500;
+            MinPick = 1000;
             MineResist = 18f;
             HitSound = SoundID.Tink;
             AddMapEntry(new Color(230, 230, 50));

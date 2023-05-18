@@ -33,7 +33,7 @@ namespace Redemption.Tiles.Furniture.Shade
             LocalizedText name = CreateMapEntryName();
             // name.SetDefault("Angel of the Depths Statue");
             AddMapEntry(new Color(144, 149, 166), name);
-            MinPick = 500;
+            MinPick = 1000;
             MineResist = 30f;
             HitSound = SoundID.Tink;
             DustType = DustID.AncientLight;

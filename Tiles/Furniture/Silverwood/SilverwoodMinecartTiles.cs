@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using Humanizer;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ParticleLibrary;
 using Redemption.Globals;
@@ -44,13 +45,13 @@ namespace Redemption.Tiles.Furniture.Silverwood
         }
         public override void NearbyEffects(int i, int j, bool closer)
         {
-            if (Main.tile[i, j].TileFrameX / 54 < 1)
+            if (Main.tile[i, j].TileFrameX == 0 && Main.tile[i, j].TileFrameY == 0)
             {
-                if (closer)
+                if (closer && !Main.gamePaused)
                 {
                     if (Main.rand.NextBool(40))
                     {
-                        ParticleManager.NewParticle(new Vector2(i * 16, j * 16) + new Vector2(Main.rand.Next(8, 42), Main.rand.Next(0, 6)), RedeHelper.SpreadUp(1), new EmberParticle(), Color.White, 1);
+                        ParticleManager.NewParticle(new Vector2(i * 16, j * 16) + new Vector2(Main.rand.Next(8, 42), Main.rand.Next(0, 2)), RedeHelper.SpreadUp(1), new EmberParticle(), Color.White, 1);
                     }
                 }
             }
@@ -64,7 +65,7 @@ namespace Redemption.Tiles.Furniture.Silverwood
                 zero = Vector2.Zero;
 
             int height = tile.TileFrameY == 36 ? 18 : 16;
-            RedeDraw.DrawTreasureBagEffect(spriteBatch, flameTexture.Value, ref drawTimer, new Vector2((i * 16) - (int)Main.screenPosition.X, (j * 16) - (int)Main.screenPosition.Y) + zero, new Rectangle(tile.TileFrameX, tile.TileFrameY, 16, height), RedeColor.HeatColour, 0, Vector2.Zero, 1f, 0);
+            Main.spriteBatch.Draw(flameTexture.Value, new Vector2((i * 16) - (int)Main.screenPosition.X, (j * 16) - (int)Main.screenPosition.Y) + zero, new Rectangle(tile.TileFrameX, tile.TileFrameY, 16, height), RedeColor.HeatColour, 0f, Vector2.Zero, 1.2f, SpriteEffects.None, 0f);
             return true;
         }
         public override void MouseOver(int i, int j)

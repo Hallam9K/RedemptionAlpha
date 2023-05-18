@@ -1285,7 +1285,7 @@ namespace Redemption.WorldGeneration
                     while (!placed5 && attempts5++ < 10000)
                     {
                         int tilesX = WorldGen.genRand.Next((int)(Main.maxTilesX * .1f), (int)(Main.maxTilesX * .9f));
-                        int tilesY = WorldGen.genRand.Next((int)(Main.maxTilesY * .5f), (int)(Main.maxTilesY * .8f));
+                        int tilesY = WorldGen.genRand.Next((int)(Main.maxTilesY * .5f), (int)(Main.maxTilesY * .7f));
                         if (!WorldGen.InWorld(tilesX, tilesY))
                             continue;
 

@@ -21,6 +21,7 @@ namespace Redemption.Items.Usable.Potions
                 new Color(161, 54, 12)
             };
             ItemID.Sets.IsFood[Type] = true;
+            ItemID.Sets.ShimmerTransformToItem[Type] = ItemID.Ambrosia;
             Item.ResearchUnlockCount = 5;
         }
 

@@ -17,7 +17,7 @@ namespace Redemption.Tiles.Tiles
             Main.tileBlockLight[Type] = true;
             Main.tileBrick[Type] = true;
             DustType = ModContent.DustType<ShadestoneDust>();
-            MinPick = 500;
+            MinPick = 1000;
             MineResist = 18f;
             HitSound = CustomSounds.BrickHit;
             LocalizedText name = CreateMapEntryName();
