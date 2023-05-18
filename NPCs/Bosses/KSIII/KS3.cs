@@ -313,6 +313,8 @@ namespace Redemption.NPCs.Bosses.KSIII
         public readonly Vector2 modifier = new(0, -260);
         public override void AI()
         {
+            if (NPC.DespawnHandler())
+                return;
             if (AIState > ActionState.PhysicalAttacks || AIState is ActionState.Dialogue)
                 NPC.DiscourageDespawn(120);
             Player player = Main.player[NPC.target];
@@ -320,8 +322,6 @@ namespace Redemption.NPCs.Bosses.KSIII
             if (NPC.target < 0 || NPC.target == 255 || player.dead || !player.active)
                 NPC.TargetClosest();
 
-            if (NPC.DespawnHandler())
-                return;
             chance = MathHelper.Clamp(chance, 0, 1);
             if (NPC.life < (int)(NPC.lifeMax * 0.75f) && phase < 1)
                 AIState = ActionState.PhaseChange;

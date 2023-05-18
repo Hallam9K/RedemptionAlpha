@@ -39,7 +39,7 @@ namespace Redemption.Backgrounds.Skies
                 if (!Main.dayTime)
                 {
                     Vector2 SkyPos = new(Main.screenWidth / 2, Main.screenHeight / 2);
-                    spriteBatch.Draw(SkyTex, SkyPos, null, Color.White, Rotation, new Vector2(SkyTex.Width >> 1, SkyTex.Height >> 1), 2f, SpriteEffects.None, 1f);
+                    spriteBatch.Draw(SkyTex, SkyPos, null, Color.White * .9f, Rotation, new Vector2(SkyTex.Width >> 1, SkyTex.Height >> 1), 2f, SpriteEffects.None, 1f);
                 }
             }
         }

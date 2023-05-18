@@ -28,6 +28,30 @@ namespace Redemption.WorldGeneration.Space
         public override bool NormalUpdates => false;
         public override bool ShouldSave => true;
         public override bool NoPlayerSaving => false;
+        public override void CopyMainWorldData()
+        {
+            SubworldSystem.CopyWorldData(nameof(RedeWorld.alignment), RedeWorld.alignment);
+            SubworldSystem.CopyWorldData(nameof(RedeWorld.alignmentGiven), RedeWorld.alignmentGiven);
+            SubworldSystem.CopyWorldData(nameof(RedeWorld.slayerRep), RedeWorld.slayerRep);
+            SubworldSystem.CopyWorldData(nameof(RedeBossDowned.downedNebuleus), RedeBossDowned.downedNebuleus);
+            SubworldSystem.CopyWorldData(nameof(RedeBossDowned.downedOmega3), RedeBossDowned.downedOmega3);
+        }
+        public override void ReadCopiedMainWorldData()
+        {
+            RedeWorld.alignment = SubworldSystem.ReadCopiedWorldData<int>(nameof(RedeWorld.alignment));
+            RedeWorld.alignmentGiven = SubworldSystem.ReadCopiedWorldData<bool>(nameof(RedeWorld.alignmentGiven));
+            RedeWorld.slayerRep = SubworldSystem.ReadCopiedWorldData<int>(nameof(RedeWorld.slayerRep));
+            RedeBossDowned.downedNebuleus = SubworldSystem.ReadCopiedWorldData<bool>(nameof(RedeBossDowned.downedNebuleus));
+            RedeBossDowned.downedOmega3 = SubworldSystem.ReadCopiedWorldData<bool>(nameof(RedeBossDowned.downedOmega3));
+        }
+        public override void CopySubworldData()
+        {
+            SubworldSystem.CopyWorldData(nameof(RedeWorld.slayerRep), RedeWorld.slayerRep);
+        }
+        public override void ReadCopiedSubworldData()
+        {
+            RedeWorld.slayerRep = SubworldSystem.ReadCopiedWorldData<int>(nameof(RedeWorld.slayerRep));
+        }
         public override List<GenPass> Tasks => new()
         {
             new SpacePass1("Loading", 1),
@@ -37,9 +61,6 @@ namespace Redemption.WorldGeneration.Space
         };
         public override void OnLoad()
         {
-            RedeWorld.slayerRep = 4;
-            RedeBossDowned.downedOmega3 = true;
-
             SubworldSystem.hideUnderworld = true;
             Main.cloudAlpha = 0;
             Main.cloudBGAlpha = 0;
