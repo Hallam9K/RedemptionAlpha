@@ -48,6 +48,7 @@ namespace Redemption.Globals
         public static Condition HasSpiritWalker = new("Mods.Redemption.Conditions.HasSpiritWalker", () => Main.LocalPlayer.RedemptionAbility().Spiritwalker);
         public static Condition DeadRingerGiven = new("Mods.Redemption.Conditions.DeadRingerGiven", () => RedeWorld.deadRingerGiven);
         public static Condition InSoullessCaverns = new("Mods.Redemption.Conditions.InSoullessCaverns", () => Main.LocalPlayer.InModBiome<SoullessBiome>());
+        public static Condition ForestNymphTrust = new("Mods.Redemption.Conditions.ForestNymphTrust", () => RedeQuest.forestNymphVar > 0);
     }
     public class DecapitationCondition : IItemDropRuleCondition
     {

@@ -921,6 +921,12 @@ Mods: {
 			SpaceBiome.DisplayName: Deep Space
 		}
 
+		Subworlds: {
+			SoullessSub.DisplayName: Soulless Dimension
+			SpaceSub.DisplayName: Deep Space
+			CSub.DisplayName: Purgatory
+		}
+
 		TownNPCMood: {
 			Daerel: {
 				Content: I'm rather content right now.
@@ -9855,7 +9861,8 @@ Mods: {
 			DownedSkeletronOrSeed: After any late-pre-hardmode boss is defeated
 			HasSpiritWalker: After Spirit Walker is unlocked
 			DeadRingerGiven: After finding the Dead Ringer
-			InSoullessCaverns: Mods.Redemption.Conditions.InSoullessCaverns
+			InSoullessCaverns: While in the Soulless Caverns
+			ForestNymphTrust: While having a Forest Nymph's trust
 		}
 	}
 }

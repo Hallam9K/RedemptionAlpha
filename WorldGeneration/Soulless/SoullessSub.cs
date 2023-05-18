@@ -31,6 +31,7 @@ using Terraria.GameInput;
 using Terraria.UI.Chat;
 using Terraria.GameContent;
 using Redemption.Items.Weapons.PostML.Ranged;
+using System;
 
 namespace Redemption.WorldGeneration.Soulless
 {
@@ -74,7 +75,7 @@ namespace Redemption.WorldGeneration.Soulless
             RedeBossDowned.downedGGBossFirst = SubworldSystem.ReadCopiedWorldData<int>(nameof(RedeBossDowned.downedGGBossFirst));
             RedeBossDowned.downedWarden = SubworldSystem.ReadCopiedWorldData<bool>(nameof(RedeBossDowned.downedWarden));
         }
-        /*public override bool ChangeAudio()
+        public override bool ChangeAudio()
         {
             if (Main.gameMenu)
             {
@@ -82,7 +83,7 @@ namespace Redemption.WorldGeneration.Soulless
                 return true;
             }
             return false;
-        }*/
+        }
         public override List<GenPass> Tasks => new()
         {
             new SoullessPass0("Pre-Loading", .1f),
@@ -171,6 +172,7 @@ namespace Redemption.WorldGeneration.Soulless
     {
         protected override void ApplyPass(GenerationProgress progress, GameConfiguration configuration)
         {
+            WorldGenerator.CurrentGenerationProgress = progress;
             progress.Message = "Loading";
             WorldGen.noTileActions = true;
             Main.spawnTileY = 799 + SoullessArea.Offset.Y;
@@ -206,6 +208,8 @@ namespace Redemption.WorldGeneration.Soulless
     {
         protected override void ApplyPass(GenerationProgress progress, GameConfiguration configuration)
         {
+            WorldGenerator.CurrentGenerationProgress = progress;
+
             Dictionary<Color, int> colorToTile = new()
             {
                 [new Color(0, 255, 0)] = ModContent.TileType<ShadestoneTile>(),
@@ -255,6 +259,8 @@ namespace Redemption.WorldGeneration.Soulless
     {
         protected override void ApplyPass(GenerationProgress progress, GameConfiguration configuration)
         {
+            WorldGenerator.CurrentGenerationProgress = progress;
+
             progress.Message = "Furnishing Caverns";
             Mod mod = Redemption.Instance;
             int offsetX = SoullessArea.Offset.X;
@@ -605,6 +611,8 @@ namespace Redemption.WorldGeneration.Soulless
     {
         protected override void ApplyPass(GenerationProgress progress, GameConfiguration configuration)
         {
+            WorldGenerator.CurrentGenerationProgress = progress;
+
             progress.Message = "Sprinkling Spooky Pots";
             #region Pots for Soulless Caverns
             for (int num = 0; num < 1800; num++)
@@ -638,6 +646,8 @@ namespace Redemption.WorldGeneration.Soulless
     {
         protected override void ApplyPass(GenerationProgress progress, GameConfiguration configuration)
         {
+            WorldGenerator.CurrentGenerationProgress = progress;
+
             progress.Message = "Growing Cysts";
             #region Ambient Tiles
             for (int i = SoullessArea.Offset.X; i < 1800 + SoullessArea.Offset.X; i++)
@@ -662,6 +672,8 @@ namespace Redemption.WorldGeneration.Soulless
     {
         protected override void ApplyPass(GenerationProgress progress, GameConfiguration configuration)
         {
+            WorldGenerator.CurrentGenerationProgress = progress;
+
             progress.Message = "Sprinkling Spooky Objects";
             #region Random Deco for Soulless Caverns
             for (int num = 0; num < 1800; num++)
@@ -739,6 +751,8 @@ namespace Redemption.WorldGeneration.Soulless
     {
         protected override void ApplyPass(GenerationProgress progress, GameConfiguration configuration)
         {
+            WorldGenerator.CurrentGenerationProgress = progress;
+
             progress.Message = "Here, Have a Fungus";
             #region Let it Grow
             /*WorldGen.AddTrees();
@@ -780,6 +794,8 @@ namespace Redemption.WorldGeneration.Soulless
     {
         protected override void ApplyPass(GenerationProgress progress, GameConfiguration configuration)
         {
+            WorldGenerator.CurrentGenerationProgress = progress;
+
             progress.Message = "Smoothing Tiles";
             int[] TileArray = { ModContent.TileType<ShadestoneTile>(),
                 ModContent.TileType<MasksTile>(),
