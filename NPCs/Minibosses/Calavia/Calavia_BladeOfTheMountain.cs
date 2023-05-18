@@ -31,6 +31,7 @@ namespace Redemption.NPCs.Minibosses.Calavia
             Projectile.friendly = false;
             Projectile.hostile = true;
             Projectile.penetrate = -1;
+            Projectile.DamageType = DamageClass.Default;
         }
 
         public override bool CanHitPlayer(Player target)
@@ -216,6 +217,7 @@ namespace Redemption.NPCs.Minibosses.Calavia
         public override bool ShouldUpdatePosition() => false;
         public override void SetSafeDefaults()
         {
+            Projectile.DamageType = DamageClass.Default;
             Projectile.width = 76;
             Projectile.height = 80;
             Projectile.friendly = false;

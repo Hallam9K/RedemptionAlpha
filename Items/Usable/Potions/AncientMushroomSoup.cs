@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Redemption.Buffs;
+using Redemption.Items.Placeable.Plants;
 using Redemption.Rarities;
 using Terraria;
 using Terraria.DataStructures;
@@ -31,14 +32,13 @@ namespace Redemption.Items.Usable.Potions
             Item.maxStack = Item.CommonMaxStack;
             Item.rare = ModContent.RarityType<KingdomRarity>();
         }
-        // TODO: Ancient Mushroom Soup recipe
-        /*public override void AddRecipes() 
+        public override void AddRecipes() 
         {
             CreateRecipe()
-                .AddIngredient(ModContent.ItemType<Caveshroom>(), 7)
+                .AddIngredient(ModContent.ItemType<PaleBrittlecap>(), 7)
                 .AddIngredient(ModContent.ItemType<ToxicAngel2>(), 2)
                 .AddTile(TileID.CookingPots)
                 .Register();
-        }*/
+        }
     }
 }

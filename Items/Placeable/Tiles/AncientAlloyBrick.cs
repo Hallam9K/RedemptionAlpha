@@ -2,6 +2,8 @@
 using Redemption.Tiles.Tiles;
 using Terraria.ModLoader;
 using Terraria;
+using Terraria.ID;
+using Redemption.Items.Materials.PostML;
 
 namespace Redemption.Items.Placeable.Tiles
 {
@@ -21,7 +23,11 @@ namespace Redemption.Items.Placeable.Tiles
         }
         public override void AddRecipes()
         {
-            // TODO: ancient alloy brick recipe
+            CreateRecipe(15)
+                .AddIngredient(ItemID.StoneBlock, 15)
+                .AddIngredient<AncientAlloy>()
+                .AddTile(TileID.Furnaces)
+                .Register();
         }
     }
 }

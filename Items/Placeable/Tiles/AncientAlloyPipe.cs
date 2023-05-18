@@ -1,6 +1,8 @@
-﻿using Redemption.Rarities;
+﻿using Redemption.Items.Materials.PostML;
+using Redemption.Rarities;
 using Redemption.Tiles.Tiles;
 using Terraria;
+using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Redemption.Items.Placeable.Tiles
@@ -21,7 +23,10 @@ namespace Redemption.Items.Placeable.Tiles
         }
         public override void AddRecipes()
         {
-            // TODO: Alloy pipe recipe
+            CreateRecipe(2)
+                .AddIngredient<AncientAlloy>()
+                .AddTile(TileID.HeavyWorkBench)
+                .Register();
         }
     }
 }

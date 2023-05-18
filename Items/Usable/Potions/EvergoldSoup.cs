@@ -1,5 +1,7 @@
 using Microsoft.Xna.Framework;
 using Redemption.Buffs;
+using Redemption.Items.Materials.PostML;
+using Redemption.Items.Placeable.Plants;
 using Redemption.Rarities;
 using Terraria;
 using Terraria.DataStructures;
@@ -31,16 +33,15 @@ namespace Redemption.Items.Usable.Potions
             Item.maxStack = Item.CommonMaxStack;
             Item.rare = ModContent.RarityType<KingdomRarity>();
         }
-        // TODO: Evergold Soup recipe
-        /*public override void AddRecipes()
+        public override void AddRecipes()
         {
             CreateRecipe()
                 .AddIngredient(ModContent.ItemType<EvergoldNautilus>())
                 .AddIngredient(ModContent.ItemType<SlateShell>(), 2)
-                .AddIngredient(ModContent.ItemType<Caveshroom>(), 3)
+                .AddIngredient(ModContent.ItemType<PaleBrittlecap>(), 3)
                 .AddIngredient(ModContent.ItemType<ToxicAngel2>())
                 .AddTile(TileID.CookingPots)
                 .Register();
-        }*/
+        }
     }
 }
