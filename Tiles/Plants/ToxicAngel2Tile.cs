@@ -24,7 +24,7 @@ namespace Redemption.Tiles.Plants
             TileObjectData.newTile.StyleHorizontal = true;
             TileObjectData.newTile.RandomStyleRange = 5;
             TileObjectData.newTile.DrawYOffset = 2;
-            TileObjectData.newTile.AnchorValidTiles = new int[] { ModContent.TileType<AncientGrassTile>(), ModContent.TileType<AncientDirtTile>() }; //ModContent.TileType<AncientSlateTile>() };
+            TileObjectData.newTile.AnchorValidTiles = new int[] { ModContent.TileType<AncientGrassTile>(), ModContent.TileType<AncientDirtTile>(), ModContent.TileType<AncientSlateTile>(), ModContent.TileType<AncientLushGrassTile>(), ModContent.TileType<OvergrownAncientSlateBeamTile>(), ModContent.TileType<OvergrownAncientSlateBrickTile>() };
             TileObjectData.addTile(Type);
             HitSound = SoundID.Grass;
             DustType = DustID.PinkFairy;

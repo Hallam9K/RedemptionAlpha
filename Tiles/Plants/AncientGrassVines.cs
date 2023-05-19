@@ -9,10 +9,10 @@ using Terraria.ModLoader;
 
 namespace Redemption.Tiles.Plants
 {
-	public class AncientGrassVines : ModTile
-	{
-		public override void SetStaticDefaults()
-		{
+    public class AncientGrassVines : ModTile
+    {
+        public override void SetStaticDefaults()
+        {
             Main.tileCut[Type] = true;
             Main.tileBlockLight[Type] = true;
             Main.tileLavaDeath[Type] = true;
@@ -44,7 +44,7 @@ namespace Redemption.Tiles.Plants
                 type = tileAbove.TileType;
             }
 
-            if (type == ModContent.TileType<AncientGrassTile>() || type == Type)
+            if (type == ModContent.TileType<AncientGrassTile>() || type == ModContent.TileType<AncientLushGrassTile>() || type == ModContent.TileType<OvergrownAncientSlateBeamTile>() || type == ModContent.TileType<OvergrownAncientSlateBrickTile>() || type == Type)
             {
                 return true;
             }
@@ -67,7 +67,7 @@ namespace Redemption.Tiles.Plants
                     {
                         break;
                     }
-                    else if (!testTile.HasTile || testTile.TileType != ModContent.TileType<AncientGrassTile>())
+                    else if (!testTile.HasTile || (testTile.TileType != ModContent.TileType<AncientGrassTile>() && testTile.TileType != ModContent.TileType<AncientLushGrassTile>() && testTile.TileType != ModContent.TileType<OvergrownAncientSlateBeamTile>() && testTile.TileType != ModContent.TileType<OvergrownAncientSlateBrickTile>()))
                     {
                         yTest--;
                         continue;

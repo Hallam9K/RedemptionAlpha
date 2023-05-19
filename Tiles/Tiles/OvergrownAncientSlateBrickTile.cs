@@ -45,6 +45,7 @@ namespace Redemption.Tiles.Tiles
         {
             Tile tileBelow = Framing.GetTileSafely(i, j + 1);
             Tile tileAbove = Framing.GetTileSafely(i, j - 1);
+            Tile tileAbove2 = Framing.GetTileSafely(i + 1, j - 1);
             Tile tile = Framing.GetTileSafely(i, j);
             if (WorldGen.genRand.NextBool(15) && !tileBelow.HasTile && tileBelow.LiquidType != LiquidID.Lava)
             {
@@ -68,7 +69,7 @@ namespace Redemption.Tiles.Tiles
                 WorldGen.PlaceObject(i, j - 1, ModContent.TileType<AncientShrub2>(), true, Main.rand.Next(10));
                 NetMessage.SendObjectPlacement(-1, i, j - 1, ModContent.TileType<AncientShrub2>(), Main.rand.Next(10), 0, -1, -1);
             }
-            if (!tileAbove.HasTile && Main.tile[i, j].HasTile && Main.rand.NextBool(20) && Main.tile[i, j - 1].LiquidAmount == 0)
+            if (!tileAbove.HasTile && !tileAbove2.HasTile && Main.tile[i, j].HasTile && Main.rand.NextBool(20) && Main.tile[i, j - 1].LiquidAmount == 0)
             {
                 WorldGen.PlaceObject(i, j - 1, ModContent.TileType<AncientShrub3>(), true, Main.rand.Next(6));
                 NetMessage.SendObjectPlacement(-1, i, j - 1, ModContent.TileType<AncientShrub3>(), Main.rand.Next(6), 0, -1, -1);
@@ -78,7 +79,7 @@ namespace Redemption.Tiles.Tiles
                 WorldGen.PlaceObject(i, j - 1, ModContent.TileType<PaleBrittlecapTile>(), true, Main.rand.Next(5));
                 NetMessage.SendObjectPlacement(-1, i, j - 1, ModContent.TileType<PaleBrittlecapTile>(), Main.rand.Next(5), 0, -1, -1);
             }
-            if (!tileAbove.HasTile && Main.tile[i, j].HasTile && Main.rand.NextBool(400) && Main.tile[i, j - 1].LiquidAmount == 0)
+            if (!tileAbove.HasTile && !tileAbove2.HasTile && Main.tile[i, j].HasTile && Main.rand.NextBool(400) && Main.tile[i, j - 1].LiquidAmount == 0)
             {
                 WorldGen.PlaceObject(i, j - 1, ModContent.TileType<PaleBrittlecapTile2>(), true, Main.rand.Next(2));
                 NetMessage.SendObjectPlacement(-1, i, j - 1, ModContent.TileType<PaleBrittlecapTile2>(), Main.rand.Next(2), 0, -1, -1);

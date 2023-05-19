@@ -34,8 +34,16 @@ namespace Redemption.Items.Placeable.Plants
             Tile tile = Framing.GetTileSafely(Player.tileTargetX, Player.tileTargetY);
             if (tile != null && tile.HasTile && tile.TileType == ModContent.TileType<AncientDirtTile>())
             {
+                Item.createTile = ModContent.TileType<AncientGrassTile>();
                 WorldGen.destroyObject = true;
                 TileID.Sets.BreakableWhenPlacing[ModContent.TileType<AncientDirtTile>()] = true;
+                return base.CanUseItem(p);
+            }
+            if (tile != null && tile.HasTile && tile.TileType == ModContent.TileType<AncientLushDirtTile>())
+            {
+                Item.createTile = ModContent.TileType<AncientLushGrassTile>();
+                WorldGen.destroyObject = true;
+                TileID.Sets.BreakableWhenPlacing[ModContent.TileType<AncientLushDirtTile>()] = true;
                 return base.CanUseItem(p);
             }
             return false;
@@ -44,6 +52,7 @@ namespace Redemption.Items.Placeable.Plants
         {
             WorldGen.destroyObject = false;
             TileID.Sets.BreakableWhenPlacing[ModContent.TileType<AncientDirtTile>()] = false;
+            TileID.Sets.BreakableWhenPlacing[ModContent.TileType<AncientLushDirtTile>()] = false;
             return base.UseItem(p);
         }
     }

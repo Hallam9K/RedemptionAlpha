@@ -39,6 +39,8 @@ namespace Redemption.Globals
                 return false;
             if (type == ModContent.TileType<ShadestoneTile>() && TileID.Sets.BreakableWhenPlacing[ModContent.TileType<ShadestoneTile>()])
                 return false;
+            if (type == ModContent.TileType<AncientLushDirtTile>() && TileID.Sets.BreakableWhenPlacing[ModContent.TileType<AncientLushDirtTile>()])
+                return false;
             return base.CanDrop(i, j, type);
         }
         public override void Drop(int i, int j, int type)

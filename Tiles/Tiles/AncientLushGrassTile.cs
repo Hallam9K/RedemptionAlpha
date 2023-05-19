@@ -1,45 +1,55 @@
 using Microsoft.Xna.Framework;
-using Terraria;
-using Terraria.ModLoader;
-using Terraria.ID;
 using Redemption.Items.Placeable.Tiles;
-using Redemption.Tiles.Ores;
-using Redemption.Dusts.Tiles;
 using Redemption.Tiles.Plants;
-using Redemption.Items.Tools.PostML;
+using Terraria;
+using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace Redemption.Tiles.Tiles
 {
-    public class OvergrownAncientSlateBeamTile : ModTile
+    public class AncientLushGrassTile : ModTile
     {
         public override void SetStaticDefaults()
         {
-            Main.tileSolid[Type] = true;
-            Main.tileMergeDirt[Type] = false;
             Main.tileBlockLight[Type] = true;
             Main.tileBrick[Type] = true;
-            DustType = ModContent.DustType<SlateDust>();
-            MinPick = 1000;
-            MineResist = 18f;
-            HitSound = CustomSounds.BrickHit;
-            AddMapEntry(new Color(180, 170, 180));
+            Main.tileSolid[Type] = true;
+
+            TileID.Sets.CanBeDugByShovel[Type] = true;
+            TileID.Sets.Grass[Type] = true;
+            TileID.Sets.ChecksForMerge[Type] = true;
+            TileID.Sets.NeedsGrassFraming[Type] = true;
+            TileID.Sets.NeedsGrassFramingDirt[Type] = ModContent.TileType<AncientLushDirtTile>();
+            TileID.Sets.ForcedDirtMerging[Type] = true;
+            TileID.Sets.Conversion.MergesWithDirtInASpecialWay[Type] = true;
+            TileID.Sets.ResetsHalfBrickPlacementAttempt[Type] = false;
+            TileID.Sets.DoesntPlaceWithTileReplacement[Type] = true;
+            AddMapEntry(new Color(69, 119, 38));
+            MinPick = 10;
+            MineResist = 0.1f;
+            DustType = DustID.GrassBlades;
+            RegisterItemDrop(ModContent.ItemType<AncientLushDirt>());
         }
         public override void FloorVisuals(Player player)
         {
             if (player.velocity.X != 0f && Main.rand.NextBool(20))
             {
-                Dust dust = Dust.NewDustDirect(player.Bottom, 0, 0, DustID.GrassBlades, 0f, -Main.rand.NextFloat(2f));
+                Dust dust = Dust.NewDustDirect(player.Bottom, 0, 0, DustType, 0f, -Main.rand.NextFloat(2f));
                 dust.noGravity = true;
                 dust.fadeIn = 1f;
             }
         }
-        public override void NumDust(int i, int j, bool fail, ref int num) => num = fail ? 1 : 3;
-        public override bool CanExplode(int i, int j) => false;
-        public override bool CanKillTile(int i, int j, ref bool blockDamaged)
+        public override void KillTile(int i, int j, ref bool fail, ref bool effectOnly, ref bool noItem)
         {
-            if (Main.LocalPlayer.HeldItem.type == ModContent.ItemType<NanoAxe2>())
-                return true;
-            return WorldGen.gen;
+            if (!effectOnly)
+            {
+                fail = true;
+                Main.tile[i, j].TileType = (ushort)ModContent.TileType<AncientLushDirtTile>();
+                WorldGen.SquareTileFrame(i, j);
+
+                for (int k = 0; k < 3; k++)
+                    Dust.NewDust(new Vector2(i * 16, j * 16), 16, 16, DustID.GrassBlades);
+            }
         }
         public override void RandomUpdate(int i, int j)
         {
@@ -69,7 +79,7 @@ namespace Redemption.Tiles.Tiles
                 WorldGen.PlaceObject(i, j - 1, ModContent.TileType<AncientShrub2>(), true, Main.rand.Next(10));
                 NetMessage.SendObjectPlacement(-1, i, j - 1, ModContent.TileType<AncientShrub2>(), Main.rand.Next(10), 0, -1, -1);
             }
-            if (!tileAbove.HasTile && !tileAbove2.HasTile && Main.tile[i, j].HasTile && Main.rand.NextBool(20) && Main.tile[i, j - 1].LiquidAmount == 0)
+            if (!tileAbove.HasTile && !tileAbove2.HasTile && Main.tile[i, j].HasTile && Main.rand.NextBool(30) && Main.tile[i, j - 1].LiquidAmount == 0)
             {
                 WorldGen.PlaceObject(i, j - 1, ModContent.TileType<AncientShrub3>(), true, Main.rand.Next(6));
                 NetMessage.SendObjectPlacement(-1, i, j - 1, ModContent.TileType<AncientShrub3>(), Main.rand.Next(6), 0, -1, -1);
@@ -89,8 +99,8 @@ namespace Redemption.Tiles.Tiles
                 WorldGen.PlaceObject(i, j - 1, ModContent.TileType<ToxicAngelTile>(), true, Main.rand.Next(5));
                 NetMessage.SendObjectPlacement(-1, i, j - 1, ModContent.TileType<ToxicAngelTile>(), Main.rand.Next(5), 0, -1, -1);
             }
-            if (Main.rand.NextBool(40))
-                WorldGen.SpreadGrass(i + Main.rand.Next(-1, 1), j + Main.rand.Next(-1, 1), ModContent.TileType<AncientSlateBeamTile>(), Type, false);
+            if (Main.rand.NextBool(4))
+                WorldGen.SpreadGrass(i + Main.rand.Next(-1, 1), j + Main.rand.Next(-1, 1), ModContent.TileType<AncientLushDirtTile>(), Type, false);
         }
     }
 }
