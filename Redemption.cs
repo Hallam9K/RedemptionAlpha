@@ -219,6 +219,8 @@ namespace Redemption
                     PremultiplyTexture(ref WastelandCorruptSkyTex);
                     Texture2D WastelandCrimsonSkyTex = ModContent.Request<Texture2D>("Redemption/Backgrounds/Skies/WastelandCrimsonSkyTex", immLoad).Value;
                     PremultiplyTexture(ref WastelandCrimsonSkyTex);
+                    Texture2D SpaceBG1 = ModContent.Request<Texture2D>("Redemption/Backgrounds/SpaceBG1", immLoad).Value;
+                    PremultiplyTexture(ref SpaceBG1);
                 });
 
                 Filters.Scene["MoR:OOSky"] = new Filter(new ScreenShaderData("FilterMiniTower").UseColor(0.2f, 0f, 0f).UseOpacity(0.2f), EffectPriority.VeryHigh);
