@@ -13,6 +13,8 @@ using Redemption.Buffs.NPCBuffs;
 using Redemption.Particles;
 using ParticleLibrary;
 using Redemption.Globals.NPC;
+using Redemption.Items.Usable;
+using Terraria.GameContent.ItemDropRules;
 
 namespace Redemption.NPCs.Soulless
 {
@@ -113,6 +115,10 @@ namespace Redemption.NPCs.Soulless
                 if (NPC.frame.Y > 3 * frameHeight)
                     NPC.frame.Y = 0;
             }
+        }
+        public override void ModifyNPCLoot(NPCLoot npcLoot)
+        {
+            npcLoot.Add(ItemDropRule.ByCondition(new PrisonKeyCondition(), ModContent.ItemType<PrisonGateKey>(), 2));
         }
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
         {

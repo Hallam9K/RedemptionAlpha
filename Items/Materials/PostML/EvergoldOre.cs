@@ -1,4 +1,5 @@
 ﻿using Redemption.Rarities;
+using Redemption.Tiles.Ores;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -14,7 +15,7 @@ namespace Redemption.Items.Materials.PostML
 
 		public override void SetDefaults()
         {
-            //Item.DefaultToPlaceableTile(ModContent.TileType<AncientSlateGemTile>(), 0);
+            Item.DefaultToPlaceableTile(ModContent.TileType<AncientSlateGemTile>(), 0);
             Item.width = 24;
             Item.height = 16;
             Item.maxStack = Item.CommonMaxStack;

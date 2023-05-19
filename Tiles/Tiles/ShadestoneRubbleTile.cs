@@ -17,14 +17,11 @@ namespace Redemption.Tiles.Tiles
             Main.tileBrick[Type] = true;
             Main.tileMergeDirt[Type] = false;
             Main.tileBlockLight[Type] = true;
-            Main.tileBrick[Type] = true;
             TileID.Sets.Suffocate[Type] = true;
             TileID.Sets.Falling[Type] = true;
             DustType = ModContent.DustType<ShadestoneDust>();
             MinPick = 225;
             MineResist = 4f;
-            HitSound = SoundID.Tink;
-            // name.SetDefault("Shadestone Rubble");
             AddMapEntry(new Color(65, 68, 83));
         }
         public override void NumDust(int i, int j, bool fail, ref int num) => num = fail ? 1 : 3;

@@ -111,6 +111,18 @@ namespace Redemption.Globals
         public bool CanShowItemDropInUI() => true;
         public string GetConditionDescription() => "Dropped while outside the Soulless Caverns";
     }
+    public class PrisonKeyCondition : IItemDropRuleCondition
+    {
+        public bool CanDrop(DropAttemptInfo info)
+        {
+            if (!info.IsInSimulation && SoullessArea.soullessInts[1] >= 7)
+                return true;
+
+            return false;
+        }
+        public bool CanShowItemDropInUI() => true;
+        public string GetConditionDescription() => "Dropped after leaving the Soulless Prison";
+    }
     public class EggCrackerCondition : IItemDropRuleCondition
     {
         public bool CanDrop(DropAttemptInfo info)

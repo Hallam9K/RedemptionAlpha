@@ -8646,6 +8646,176 @@ Mods: {
 				DisplayName: Overgrown Laboratory Panel
 				Tooltip: ""
 			}
+
+			KeepHook: {
+				DisplayName: Keep Hook
+				Tooltip: ""
+			}
+
+			JoesBoots: {
+				DisplayName: Joe's Bardic Pants
+				Tooltip: ""
+			}
+
+			JoesHat: {
+				DisplayName: Joe's Feathered Fedora
+				Tooltip: ""
+			}
+
+			JoesShirt: {
+				DisplayName: Joe's Bardic Shirt
+				Tooltip: ""
+			}
+
+			WardenMask: {
+				DisplayName: Warden's Mask
+				Tooltip: ""
+			}
+
+			CeilingBrazier: {
+				DisplayName: Ceiling Brazier
+				Tooltip: ""
+			}
+
+			GroundBrazier: {
+				DisplayName: Ground Brazier
+				Tooltip: ""
+			}
+
+			SmallKeepBanner: {
+				DisplayName: Small Keep Banner
+				Tooltip: ""
+			}
+
+			WallBrazier: {
+				DisplayName: Wall Brazier
+				Tooltip: ""
+			}
+
+			AncientSlate: {
+				DisplayName: Ancient Slate
+				Tooltip: ""
+			}
+
+			AncientSlateBeam: {
+				DisplayName: Ancient Slate Beam
+				Tooltip: "[c/ff0000:Unbreakable]"
+			}
+
+			AncientSlateBeamWall: {
+				DisplayName: Ancient Slate Beam Wall
+				Tooltip: "[c/ff0000:Unbreakable]"
+			}
+
+			AncientSlateBrick: {
+				DisplayName: Ancient Slate Brick
+				Tooltip: "[c/ff0000:Unbreakable]"
+			}
+
+			AncientSlateBrickWall: {
+				DisplayName: Ancient Slate Brick Wall
+				Tooltip: "[c/ff0000:Unbreakable]"
+			}
+
+			AncientSlatePillar: {
+				DisplayName: Ancient Slate Pillar
+				Tooltip: "[c/ff0000:Unbreakable]"
+			}
+
+			AncientSlatePillarWall: {
+				DisplayName: Ancient Slate Pillar Wall
+				Tooltip: "[c/ff0000:Unbreakable]"
+			}
+
+			AncientSlateWall: {
+				DisplayName: Ancient Slate Wall
+				Tooltip: ""
+			}
+
+			AncientSpike: {
+				DisplayName: Ancient Spike
+				Tooltip: "[c/ff0000:Unbreakable]"
+			}
+
+			GildedSlateBrick: {
+				DisplayName: Gilded Ancient Slate Brick
+				Tooltip: "[c/ff0000:Unbreakable]"
+			}
+
+			KeepAncientSlab: {
+				DisplayName: Ancient Keep Slab
+				Tooltip: "[c/ff0000:Unbreakable]"
+			}
+
+			KeepAncientSlabWall: {
+				DisplayName: Ancient Keep Slab Wall
+				Tooltip: "[c/ff0000:Unbreakable]"
+			}
+
+			LivingSilverwoodWall: {
+				DisplayName: Living Silverwood Wall
+				Tooltip: ""
+			}
+
+			MagmaSlate: {
+				DisplayName: Ancient Magma Slate
+				Tooltip: ""
+			}
+
+			OvergrownAncientSlateBeam: {
+				DisplayName: Overgrown Ancient Slate Beam
+				Tooltip: ""
+			}
+
+			OvergrownAncientSlateBrick: {
+				DisplayName: Overgrown Ancient Slate Brick
+				Tooltip: ""
+			}
+
+			SilverwoodFloorboard: {
+				DisplayName: Silverwood Floorboard
+				Tooltip: ""
+			}
+
+			SilverwoodLeafWall: {
+				DisplayName: Living Silverwood Leaf Wall
+				Tooltip: ""
+			}
+
+			KeepGateKeys: {
+				DisplayName: Keep Key
+				Tooltip: "Used to open a gate to the Keep"
+			}
+
+			LivingSilverwoodLeafWand: {
+				DisplayName: Silverwood Leaf Wand
+				Tooltip: "Places silverwood leaves"
+			}
+
+			LivingSilverwoodWand: {
+				DisplayName: Living Silverwood Wand
+				Tooltip: "Places living silverwood"
+			}
+
+			LivingSilverwoodWand2: {
+				DisplayName: Living Twisted Silverwood Wand
+				Tooltip: "Places living twisted silverwood"
+			}
+
+			CoalPileItem: {
+				DisplayName: Scorching Coal Pile
+				Tooltip: ""
+			}
+
+			GiantEvergoldChainItem: {
+				DisplayName: Giant Evergold Chain
+				Tooltip: "[c/ff0000:Unbreakable (1000% Pickaxe Power)]"
+			}
+
+			LucernaItem: {
+				DisplayName: Lucerna
+				Tooltip: "[c/ff0000:Unbreakable (1000% Pickaxe Power)]"
+			}
 		}
 
 		Projectiles: {
@@ -9311,6 +9481,8 @@ Mods: {
 			WhiteNeedle_Proj.DisplayName: White Needle
 			Echo_Friendly.DisplayName: Echo
 			ScorchedCoalBall.DisplayName: Scorched Coal Ball
+			KeepHook_End.DisplayName: Keep Hook
+			SlateRubbleBall.DisplayName: Slate Rubble Ball
 		}
 
 		NPCs: {
@@ -9818,6 +9990,11 @@ Mods: {
 			PaleBrittlecapTile2.MapEntry: Pale Brittlecap
 			ToxicAngel2Tile.MapEntry: Purified Toxic Angel
 			ToxicAngelTile.MapEntry: Toxic Angel
+			CeilingBrazierTile.MapEntry: Ceiling Brazier
+			GroundBrazierTile.MapEntry: Ground Brazier
+			Lucerna.MapEntry: Lucerna
+			WallBrazierTile.MapEntry: Wall Brazier
+			AncientSlateGemTile.MapEntry: Evergold
 		}
 
 		Keybinds: {

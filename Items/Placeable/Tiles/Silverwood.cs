@@ -27,6 +27,10 @@ namespace Redemption.Items.Placeable.Tiles
             CreateRecipe()
                 .AddIngredient(ModContent.ItemType<SilverwoodPlatform>(), 2)
                 .Register();
+            CreateRecipe()
+                .AddIngredient<LivingSilverwoodWall>(4)
+                .AddTile(TileID.WorkBenches)
+                .Register();
         }
     }
 }

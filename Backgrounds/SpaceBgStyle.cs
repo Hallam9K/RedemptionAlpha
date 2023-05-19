@@ -118,7 +118,7 @@ namespace Redemption.Backgrounds
                     {
                         spriteBatch.Draw(TextureAssets.Background[textureSlot].Value,
                             new Vector2(bgStart + bgW * k, MathHelper.Clamp(bgTop, -600, 3000)),
-                            new Rectangle(0, 0, Main.backgroundWidth[textureSlot], Main.backgroundHeight[textureSlot]),
+                            new Rectangle(0, 0, Main.screenWidth, Main.backgroundHeight[textureSlot]),
                             backColor, 0f, default, bgScale, SpriteEffects.None, 0f);
                     }
                 }

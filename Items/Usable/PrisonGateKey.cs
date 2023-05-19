@@ -20,6 +20,11 @@ namespace Redemption.Items.Usable
             Item.rare = ItemRarityID.Blue;
             Item.maxStack = Item.CommonMaxStack;
         }
+        public override void UpdateInventory(Player player)
+        {
+            if (SoullessArea.soullessInts[1] < 7)
+                Item.favorited = true;
+        }
         public override bool OnPickup(Player player)
         {
             if (SoullessArea.soullessBools[0])
@@ -46,6 +51,11 @@ namespace Redemption.Items.Usable
             Item.height = 32;
             Item.rare = ItemRarityID.Blue;
             Item.maxStack = Item.CommonMaxStack;
+        }
+        public override void UpdateInventory(Player player)
+        {
+            if (SoullessArea.soullessInts[1] < 7)
+                Item.favorited = true;
         }
         public override bool OnPickup(Player player)
         {
