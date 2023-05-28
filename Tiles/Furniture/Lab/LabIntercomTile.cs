@@ -36,7 +36,8 @@ namespace Redemption.Tiles.Furniture.Lab
             DustType = ModContent.DustType<LabPlatingDust>();
             MinPick = 200;
             MineResist = 4f;
-			LocalizedText name = CreateMapEntryName();
+            RegisterItemDrop(ModContent.ItemType<LabIntercom>());
+            LocalizedText name = CreateMapEntryName();
 			// name.SetDefault("Laboratory Intercom");
 			AddMapEntry(new Color(145, 153, 159), name);
 		}

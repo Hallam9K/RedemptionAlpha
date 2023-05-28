@@ -1,6 +1,5 @@
 using Microsoft.Xna.Framework;
 using Redemption.Dusts.Tiles;
-using Redemption.Items.Placeable.Furniture.SlayerShip;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.Enums;

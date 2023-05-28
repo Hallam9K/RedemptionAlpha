@@ -1,7 +1,6 @@
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
-using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 
@@ -25,7 +24,7 @@ namespace Redemption.Tiles.Furniture.Lab
             TileObjectData.newTile.AnchorWall = true;
             TileObjectData.addTile(Type);
             DustType = DustID.Tungsten;
-            MinPick = 500;
+            MinPick = 1000;
             MineResist = 3f;
             AddMapEntry(new Color(51, 61, 54));
         }

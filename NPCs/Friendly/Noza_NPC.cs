@@ -35,6 +35,7 @@ namespace Redemption.NPCs.Friendly
             // DisplayName.SetDefault("Noza, Tamer of Evil");
             Main.npcFrameCount[NPC.type] = 10;
             NPCID.Sets.ActsLikeTownNPC[Type] = true;
+            NPCID.Sets.NoTownNPCHappiness[Type] = true;
             NPCID.Sets.NPCBestiaryDrawModifiers value = new(0) { Hide = true };
             NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, value);
         }

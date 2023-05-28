@@ -6,8 +6,6 @@ using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 using Microsoft.Xna.Framework.Graphics;
-using Redemption.Items.Placeable.Furniture.Shade;
-using Terraria.DataStructures;
 using Redemption.Dusts.Tiles;
 
 namespace Redemption.Tiles.Furniture.Shade
@@ -23,7 +21,9 @@ namespace Redemption.Tiles.Furniture.Shade
             TileObjectData.newSubTile.CopyFrom(TileObjectData.newTile);
             TileObjectData.newTile.WaterDeath = true;
             TileObjectData.newTile.WaterPlacement = LiquidPlacement.NotAllowed;
-            TileObjectData.newTile.LavaPlacement = LiquidPlacement.NotAllowed; TileObjectData.addTile(Type);
+            TileObjectData.newTile.LavaPlacement = LiquidPlacement.NotAllowed;
+            TileObjectData.newTile.StyleLineSkip = 2;
+            TileObjectData.addTile(Type);
             AddMapEntry(new Color(59, 61, 87), Language.GetText("MapObject.Lantern"));
             AdjTiles = new int[] { TileID.HangingLanterns };
             AddToArray(ref TileID.Sets.RoomNeeds.CountsAsTorch);
@@ -83,7 +83,7 @@ namespace Redemption.Tiles.Furniture.Shade
             int height = tile.TileFrameY % AnimationFrameHeight >= 16 ? 18 : 16;
             int animate = Main.tileFrame[Type] * AnimationFrameHeight;
 
-            Texture2D texture = ModContent.Request<Texture2D>("Redemption/Tiles/Furniture/Shade/ShadestoneLanternTile_Glow").Value;
+            Texture2D texture = ModContent.Request<Texture2D>(Texture + "_Glow").Value;
             Rectangle frame = new(tile.TileFrameX, tile.TileFrameY + animate, 16, height);
             ulong randSeed = Main.TileFrameSeed ^ (ulong)((long)j << 32 | (uint)i);
             Color color = new(100, 100, 100, 0);

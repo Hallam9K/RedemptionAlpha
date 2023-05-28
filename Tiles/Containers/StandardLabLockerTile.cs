@@ -38,9 +38,6 @@ namespace Redemption.Tiles.Containers
             DustType = ModContent.DustType<LabPlatingDust>();
             AdjTiles = new int[] { TileID.Containers };
 
-            // Names
-            //ContainerName/* tModPorter Note: Removed. Override DefaultContainerName instead */.SetDefault("Standard Security Locker");
-
             LocalizedText name = CreateMapEntryName();
             // name.SetDefault("Standard Security Locker");
             AddMapEntry(new Color(109, 87, 78), name, MapChestName);

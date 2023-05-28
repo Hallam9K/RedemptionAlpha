@@ -15,6 +15,7 @@ using Redemption.Items.Weapons.PreHM.Summon;
 using Redemption.Items.Materials.PreHM;
 using Terraria.Audio;
 using Terraria.Localization;
+using Redemption.Items.Usable;
 
 namespace Redemption.NPCs.Friendly
 {
@@ -45,6 +46,7 @@ namespace Redemption.NPCs.Friendly
             NPCID.Sets.TrailCacheLength[NPC.type] = 5;
             NPCID.Sets.TrailingMode[NPC.type] = 1;
             NPCID.Sets.ActsLikeTownNPC[Type] = true;
+            NPCID.Sets.NoTownNPCHappiness[Type] = true;
 
             NPCID.Sets.DebuffImmunitySets.Add(Type, new NPCDebuffImmunityData
             {
@@ -231,7 +233,10 @@ namespace Redemption.NPCs.Friendly
 
         public override float SpawnChance(NPCSpawnInfo spawnInfo)
         {
-            return SpawnCondition.Cavern.Chance * (!NPC.AnyNPCs(NPC.type) && !RedeBossDowned.skullDiggerSaved && RedeBossDowned.keeperSaved ? 0.03f : 0);
+            if (RedeBossDowned.skullDiggerSaved || !RedeBossDowned.keeperSaved || NPC.AnyNPCs(NPC.type))
+                return 0;
+            bool sorrow = spawnInfo.Player.HasItem(ModContent.ItemType<SorrowfulEssence>());
+            return SpawnCondition.Cavern.Chance * (sorrow ? 0.08f : 0.03f);
         }
 
         public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)
@@ -361,8 +366,14 @@ namespace Redemption.NPCs.Friendly
 
         public override float SpawnChance(NPCSpawnInfo spawnInfo)
         {
+            if (!RedeBossDowned.skullDiggerSaved || NPC.AnyNPCs(NPC.type))
+                return 0;
+
             if (spawnInfo.Player.RedemptionAbility().SpiritwalkerActive && !spawnInfo.Player.ZoneTowerNebula && !spawnInfo.Player.ZoneTowerSolar && !spawnInfo.Player.ZoneTowerStardust && !spawnInfo.Player.ZoneTowerVortex)
-                return !NPC.AnyNPCs(NPC.type) && RedeBossDowned.skullDiggerSaved ? 0.4f : 0;
+            {
+                bool sorrow = spawnInfo.Player.HasItem(ModContent.ItemType<SorrowfulEssence>());
+                return sorrow ? 0.8f : 0.4f;
+            }
             return 0;
         }
     }

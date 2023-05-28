@@ -27,7 +27,7 @@ namespace Redemption.Tiles.Furniture.Shade
             TileObjectData.addTile(Type);
             DustType = ModContent.DustType<ShadestoneDust>();
             AddMapEntry(new Color(59, 61, 87));
-            MinPick = 500;
+            MinPick = 1000;
             MineResist = 35f;
         }
         public override void NumDust(int i, int j, bool fail, ref int num) => num = fail ? 1 : 3;

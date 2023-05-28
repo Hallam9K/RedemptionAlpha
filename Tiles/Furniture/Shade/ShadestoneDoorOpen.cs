@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Redemption.Dusts.Tiles;
+using Redemption.Items.Placeable.Furniture.PetrifiedWood;
 using Redemption.Items.Placeable.Furniture.Shade;
 using Terraria;
 using Terraria.DataStructures;
@@ -30,6 +31,7 @@ namespace Redemption.Tiles.Furniture.Shade
             DustType = ModContent.DustType<ShadestoneDust>();
             AdjTiles = new int[] { TileID.OpenDoor };
             TileID.Sets.CloseDoorID[Type] = ModContent.TileType<ShadestoneDoorClosed>();
+            RegisterItemDrop(ModContent.ItemType<ShadestoneDoor>(), 0);
 
             AddMapEntry(new Color(59, 61, 87), Language.GetText("MapObject.Door"));
 

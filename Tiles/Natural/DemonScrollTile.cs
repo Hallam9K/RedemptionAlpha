@@ -2,10 +2,9 @@ using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.Localization;
 using Terraria.ModLoader;
-using Terraria.ID;
 using Terraria.ObjectData;
 using Redemption.Items.Usable.Summons;
-using Redemption.Items.Placeable.Tiles;
+using Redemption.Items.Usable.Potions;
 
 namespace Redemption.Tiles.Natural
 {

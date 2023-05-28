@@ -39,9 +39,6 @@ namespace Redemption.Tiles.Containers
             RegisterItemDrop(ModContent.ItemType<Holochest>(), 1);
             RegisterItemDrop(ItemID.Chest);
 
-            // Names
-            //ContainerName/* tModPorter Note: Removed. Override DefaultContainerName instead */.SetDefault("Holochest");
-
             AddMapEntry(new Color(0, 242, 170), this.GetLocalization("MapEntry0"), MapChestName);
             AddMapEntry(new Color(0, 242, 170), this.GetLocalization("MapEntry1"), MapChestName);
 

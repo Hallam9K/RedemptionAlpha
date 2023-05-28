@@ -1,5 +1,4 @@
 using Microsoft.Xna.Framework;
-using Redemption.Globals;
 using System.Collections.Generic;
 using System.Linq;
 using Terraria;
@@ -26,8 +25,8 @@ namespace Redemption.Items.Weapons.PreHM.Melee
         public override void SetDefaults()
         {
             // Common Properties
-            Item.width = 60;
-            Item.height = 68;
+            Item.width = 62;
+            Item.height = 76;
             Item.rare = ItemRarityID.Green;
             Item.value = Item.sellPrice(gold: 5);
 

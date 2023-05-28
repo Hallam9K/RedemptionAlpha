@@ -1,8 +1,7 @@
 using Microsoft.Xna.Framework;
 using Redemption.Items.Materials.HM;
-using Redemption.Items.Placeable.Containers;
+using Redemption.Items.Placeable.Tiles;
 using Terraria;
-using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Redemption.Walls

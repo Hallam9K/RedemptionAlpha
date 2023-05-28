@@ -1,9 +1,7 @@
 using Microsoft.Xna.Framework;
-using Redemption.Items.Placeable.Banners;
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
-using Terraria.DataStructures;
 using Redemption.NPCs.FowlMorning;
 
 namespace Redemption.Tiles.Banners
@@ -23,12 +21,7 @@ namespace Redemption.Tiles.Banners
             TileObjectData.addTile(Type);
             AddMapEntry(Color.SandyBrown);
         }
-
-        public override void KillMultiTile(int i, int j, int frameX, int frameY)
-        {
-            Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 16, 48, ModContent.ItemType<HaymakerBanner>());
-        }
-
+        public override bool CreateDust(int i, int j, ref int type) => false;
         public override void NearbyEffects(int i, int j, bool closer)
         {
             if (closer)

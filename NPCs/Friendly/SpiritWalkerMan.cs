@@ -26,6 +26,7 @@ namespace Redemption.NPCs.Friendly
             // DisplayName.SetDefault("Spirit Stranger");
             Main.npcFrameCount[NPC.type] = 4;
             NPCID.Sets.ActsLikeTownNPC[Type] = true;
+            NPCID.Sets.NoTownNPCHappiness[Type] = true;
 
             NPCID.Sets.DebuffImmunitySets.Add(Type, new NPCDebuffImmunityData
             {

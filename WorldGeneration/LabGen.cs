@@ -29,6 +29,7 @@ using Redemption.Items.Weapons.HM.Magic;
 using Redemption.Items.Weapons.PostML.Melee;
 using System.Linq;
 using Redemption.Items.Weapons.PostML.Magic;
+using Redemption.Items.Weapons.PostML.Summon;
 
 namespace Redemption.WorldGeneration
 {
@@ -405,6 +406,7 @@ namespace Redemption.WorldGeneration
             LabChest(origin.X + 279, origin.Y + 164, 29);
 
             SpecialLabChest(origin.X + 151, origin.Y + 154);
+            PZLabChest(origin.X + 76, origin.Y + 194);
 
             LabLocker(origin.X + 130, origin.Y + 37);
             LabLocker(origin.X + 27, origin.Y + 49, 1);
@@ -582,6 +584,25 @@ namespace Redemption.WorldGeneration
                 chest.item[slot++].stack = WorldGen.genRand.Next(68, 92);
                 chest.item[slot].SetDefaults(ItemID.LunarOre);
                 chest.item[slot++].stack = WorldGen.genRand.Next(40, 50);
+            }
+        }
+        public static void PZLabChest(int x, int y)
+        {
+            int PlacementSuccess = WorldGen.PlaceChest(x, y, (ushort)ModContent.TileType<LabChestTileLocked2>(), false, 1);
+            if (PlacementSuccess >= 0)
+            {
+                int slot = 0;
+                Chest chest = Main.chest[PlacementSuccess];
+
+                chest.item[slot++].SetDefaults(ModContent.ItemType<PZGauntlet>());
+                chest.item[slot++].SetDefaults(ModContent.ItemType<SwarmerCannon>());
+                chest.item[slot++].SetDefaults(ModContent.ItemType<Petridish>());
+                chest.item[slot++].SetDefaults(ModContent.ItemType<PortableHoloProjector>());
+
+                chest.item[slot].SetDefaults(ModContent.ItemType<RawXenium>());
+                chest.item[slot++].stack = WorldGen.genRand.Next(140, 160);
+                chest.item[slot].SetDefaults(ItemID.LunarOre);
+                chest.item[slot++].stack = WorldGen.genRand.Next(140, 160);
             }
         }
     }

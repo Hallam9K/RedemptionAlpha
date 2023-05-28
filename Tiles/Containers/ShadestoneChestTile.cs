@@ -36,9 +36,6 @@ namespace Redemption.Tiles.Containers
             DustType = ModContent.DustType<ShadestoneDust>();
             AdjTiles = new int[] { TileID.Containers };
 
-            // Names
-            //ContainerName/* tModPorter Note: Removed. Override DefaultContainerName instead */.SetDefault("Shadestone Chest");
-
             LocalizedText name = CreateMapEntryName();
             // name.SetDefault("Shadestone Chest");
             AddMapEntry(new Color(59, 61, 87), name, MapChestName);

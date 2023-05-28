@@ -57,8 +57,10 @@ namespace Redemption.NPCs.Friendly
                 case 0:
                     if (AITimer++ == 0)
                     {
-                        for (int i = 0; i < 40; i++)
-                            Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.Dirt);
+                        for (int i = 0; i < 60; i++)
+                            Dust.NewDust(NPC.position - new Vector2(20, 0), NPC.width + 40, NPC.height, DustID.Dirt, Scale: 2);
+                        for (int i = 0; i < 20; i++)
+                            Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.Dirt, 0, -6, Scale: 1.5f);
 
                         NPC.spriteDirection = 1;
                         if (!Main.dedServ)

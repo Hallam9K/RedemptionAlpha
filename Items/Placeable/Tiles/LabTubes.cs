@@ -1,3 +1,4 @@
+using Redemption.Items.Materials.PreHM;
 using Redemption.Tiles.Tiles;
 using Terraria;
 using Terraria.ID;
@@ -22,6 +23,27 @@ namespace Redemption.Items.Placeable.Tiles
             Item.maxStack = Item.CommonMaxStack;
             Item.value = Item.buyPrice(0, 0, 2, 0);
             Item.rare = ItemRarityID.LightPurple;
+        }
+    }
+    public class LabTubes2 : LabTubes
+    {
+        public override string Texture => "Redemption/Items/Placeable/Tiles/LabTubes";
+        public override void SetStaticDefaults()
+        {
+            // DisplayName.SetDefault("Laboratory Tubes");
+            /* Tooltip.SetDefault("'Filled with green sludge'"); */
+        }
+        public override void SetDefaults()
+        {
+            base.SetDefaults();
+            Item.DefaultToPlaceableTile(ModContent.TileType<LabTubeTile2>(), 0);
+        }
+        public override void AddRecipes()
+        {
+            CreateRecipe()
+                .AddIngredient<LabPlatingUnsafe2>()
+                .AddIngredient<XenomiteShard>(2)
+                .Register();
         }
     }
 }

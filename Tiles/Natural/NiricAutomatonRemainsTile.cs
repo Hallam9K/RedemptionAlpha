@@ -9,7 +9,6 @@ using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.Enums;
 using Terraria.ID;
-using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 using static Redemption.Globals.RedeNet;
@@ -35,7 +34,7 @@ namespace Redemption.Tiles.Natural
             TileObjectData.newTile.AnchorBottom = new AnchorData(AnchorType.SolidTile | AnchorType.SolidWithTop | AnchorType.SolidSide, TileObjectData.newTile.Width, 0);
             TileObjectData.addTile(Type);
             DustType = DustID.DungeonSpirit;
-            MinPick = 500;
+            MinPick = 1000;
             MineResist = 50;
             HitSound = SoundID.Tink;
             AddMapEntry(new Color(117, 117, 126));
@@ -93,14 +92,13 @@ namespace Redemption.Tiles.Natural
                 }
             }
             return true;
-
         }
         public override bool PreDraw(int i, int j, SpriteBatch spriteBatch)
         {
             if (!Main.LocalPlayer.RedemptionAbility().SpiritwalkerActive)
                 return true;
 
-            Texture2D flare = ModContent.Request<Texture2D>("Redemption/Textures/WhiteFlare").Value;
+            Texture2D flare = Redemption.WhiteFlare.Value;
             Rectangle rect = new(0, 0, flare.Width, flare.Height);
             Vector2 zero = new(Main.offScreenRange, Main.offScreenRange);
             if (Main.drawToScreen)

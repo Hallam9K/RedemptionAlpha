@@ -2,6 +2,7 @@
 using Redemption.Tiles.Tiles;
 using Terraria.ModLoader;
 using Terraria;
+using Terraria.ID;
 
 namespace Redemption.Items.Placeable.Tiles
 {
@@ -10,6 +11,7 @@ namespace Redemption.Items.Placeable.Tiles
         public override void SetStaticDefaults()
         {
             Item.ResearchUnlockCount = 100;
+            ItemID.Sets.DisableAutomaticPlaceableDrop[Type] = true;
         }
         public override void SetDefaults()
 		{

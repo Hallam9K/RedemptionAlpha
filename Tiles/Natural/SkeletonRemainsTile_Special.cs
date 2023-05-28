@@ -23,7 +23,7 @@ namespace Redemption.Tiles.Natural
             base.SetStaticDefaults();
             Main.tileLighted[Type] = true;
             DustType = DustID.DungeonSpirit;
-            MinPick = 500;
+            MinPick = 1000;
             MineResist = 50;
             LocalizedText name = CreateMapEntryName();
             // name.SetDefault("Skeletal Remains");
@@ -55,7 +55,7 @@ namespace Redemption.Tiles.Natural
                 zero = Vector2.Zero;
 
             int height = tile.TileFrameY == 36 ? 18 : 16;
-            Main.spriteBatch.Draw(ModContent.Request<Texture2D>("Redemption/Tiles/Natural/SkeletonRemainsTile1_Glow").Value, new Vector2((i * 16) - (int)Main.screenPosition.X, (j * 16) - (int)Main.screenPosition.Y) + zero, new Rectangle(tile.TileFrameX, tile.TileFrameY, 16, height), Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
+            Main.spriteBatch.Draw(ModContent.Request<Texture2D>(Texture + "_Glow").Value, new Vector2((i * 16) - (int)Main.screenPosition.X, (j * 16) - (int)Main.screenPosition.Y) + zero, new Rectangle(tile.TileFrameX, tile.TileFrameY, 16, height), Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
         }
         public override bool CanExplode(int i, int j) => false;
         public override void MouseOver(int i, int j)
@@ -118,7 +118,7 @@ namespace Redemption.Tiles.Natural
             if (!Main.LocalPlayer.RedemptionAbility().SpiritwalkerActive)
                 return true;
 
-            Texture2D flare = ModContent.Request<Texture2D>("Redemption/Textures/WhiteFlare").Value;
+            Texture2D flare = Redemption.WhiteFlare.Value;
             Rectangle rect = new(0, 0, flare.Width, flare.Height);
             Vector2 zero = new(Main.offScreenRange, Main.offScreenRange);
             if (Main.drawToScreen)
@@ -154,7 +154,7 @@ namespace Redemption.Tiles.Natural
             base.SetStaticDefaults();
             Main.tileLighted[Type] = true;
             DustType = DustID.DungeonSpirit;
-            MinPick = 500;
+            MinPick = 1000;
             MineResist = 50;
             LocalizedText name = CreateMapEntryName();
             // name.SetDefault("Skeletal Remains");
@@ -186,7 +186,7 @@ namespace Redemption.Tiles.Natural
                 zero = Vector2.Zero;
 
             int height = tile.TileFrameY == 36 ? 18 : 16;
-            Main.spriteBatch.Draw(ModContent.Request<Texture2D>("Redemption/Tiles/Natural/SkeletonRemainsTile3_Glow").Value, new Vector2((i * 16) - (int)Main.screenPosition.X, (j * 16) - (int)Main.screenPosition.Y) + zero, new Rectangle(tile.TileFrameX, tile.TileFrameY + 8, 16, height), Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
+            Main.spriteBatch.Draw(ModContent.Request<Texture2D>(Texture + "_Glow").Value, new Vector2((i * 16) - (int)Main.screenPosition.X, (j * 16) - (int)Main.screenPosition.Y) + zero, new Rectangle(tile.TileFrameX, tile.TileFrameY + 8, 16, height), Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
         }
         public override bool CanExplode(int i, int j) => false;
         public override void MouseOver(int i, int j)
@@ -239,7 +239,7 @@ namespace Redemption.Tiles.Natural
             if (!Main.LocalPlayer.RedemptionAbility().SpiritwalkerActive)
                 return true;
 
-            Texture2D flare = ModContent.Request<Texture2D>("Redemption/Textures/WhiteFlare").Value;
+            Texture2D flare = Redemption.WhiteFlare.Value;
             Rectangle rect = new(0, 0, flare.Width, flare.Height);
             Vector2 zero = new(Main.offScreenRange, Main.offScreenRange);
             if (Main.drawToScreen)
@@ -269,7 +269,7 @@ namespace Redemption.Tiles.Natural
             base.SetStaticDefaults();
             Main.tileLighted[Type] = true;
             DustType = DustID.DungeonSpirit;
-            MinPick = 500;
+            MinPick = 1000;
             MineResist = 50;
             LocalizedText name = CreateMapEntryName();
             // name.SetDefault("Skeletal Remains");
@@ -301,7 +301,7 @@ namespace Redemption.Tiles.Natural
                 zero = Vector2.Zero;
 
             int height = tile.TileFrameY == 36 ? 18 : 16;
-            Main.spriteBatch.Draw(ModContent.Request<Texture2D>("Redemption/Tiles/Natural/SkeletonRemainsTile4_Glow").Value, new Vector2((i * 16) - (int)Main.screenPosition.X, (j * 16) - (int)Main.screenPosition.Y) + zero, new Rectangle(tile.TileFrameX, tile.TileFrameY - 2, 16, height), Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
+            Main.spriteBatch.Draw(ModContent.Request<Texture2D>(Texture + "_Glow").Value, new Vector2((i * 16) - (int)Main.screenPosition.X, (j * 16) - (int)Main.screenPosition.Y) + zero, new Rectangle(tile.TileFrameX, tile.TileFrameY - 2, 16, height), Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
         }
         public override bool CanExplode(int i, int j) => false;
         public override void MouseOver(int i, int j)
@@ -354,7 +354,7 @@ namespace Redemption.Tiles.Natural
             if (!Main.LocalPlayer.RedemptionAbility().SpiritwalkerActive)
                 return true;
 
-            Texture2D flare = ModContent.Request<Texture2D>("Redemption/Textures/WhiteFlare").Value;
+            Texture2D flare = Redemption.WhiteFlare.Value;
             Rectangle rect = new(0, 0, flare.Width, flare.Height);
             Vector2 zero = new(Main.offScreenRange, Main.offScreenRange);
             if (Main.drawToScreen)
@@ -384,7 +384,7 @@ namespace Redemption.Tiles.Natural
             base.SetStaticDefaults();
             Main.tileLighted[Type] = true;
             DustType = DustID.DungeonSpirit;
-            MinPick = 500;
+            MinPick = 1000;
             MineResist = 50;
             LocalizedText name = CreateMapEntryName();
             // name.SetDefault("Skeletal Remains");
@@ -416,7 +416,7 @@ namespace Redemption.Tiles.Natural
                 zero = Vector2.Zero;
 
             int height = tile.TileFrameY == 36 ? 18 : 16;
-            Main.spriteBatch.Draw(ModContent.Request<Texture2D>("Redemption/Tiles/Natural/SkeletonRemainsTile5_Glow").Value, new Vector2((i * 16) - (int)Main.screenPosition.X, (j * 16) - (int)Main.screenPosition.Y) + zero, new Rectangle(tile.TileFrameX, tile.TileFrameY + 2, 16, height), Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
+            Main.spriteBatch.Draw(ModContent.Request<Texture2D>(Texture + "_Glow").Value, new Vector2((i * 16) - (int)Main.screenPosition.X, (j * 16) - (int)Main.screenPosition.Y) + zero, new Rectangle(tile.TileFrameX, tile.TileFrameY + 2, 16, height), Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
         }
         public override bool CanExplode(int i, int j) => false;
         public override void MouseOver(int i, int j)
@@ -469,7 +469,7 @@ namespace Redemption.Tiles.Natural
             if (!Main.LocalPlayer.RedemptionAbility().SpiritwalkerActive)
                 return true;
 
-            Texture2D flare = ModContent.Request<Texture2D>("Redemption/Textures/WhiteFlare").Value;
+            Texture2D flare = Redemption.WhiteFlare.Value;
             Rectangle rect = new(0, 0, flare.Width, flare.Height);
             Vector2 zero = new(Main.offScreenRange, Main.offScreenRange);
             if (Main.drawToScreen)
@@ -498,7 +498,7 @@ namespace Redemption.Tiles.Natural
             base.SetStaticDefaults();
             Main.tileLighted[Type] = true;
             DustType = DustID.DungeonSpirit;
-            MinPick = 500;
+            MinPick = 1000;
             MineResist = 50;
             LocalizedText name = CreateMapEntryName();
             // name.SetDefault("Skeletal Remains");
@@ -530,7 +530,7 @@ namespace Redemption.Tiles.Natural
                 zero = Vector2.Zero;
 
             int height = tile.TileFrameY == 36 ? 18 : 16;
-            Main.spriteBatch.Draw(ModContent.Request<Texture2D>("Redemption/Tiles/Natural/SkeletonRemainsTile7_Glow").Value, new Vector2((i * 16) - (int)Main.screenPosition.X, (j * 16) - (int)Main.screenPosition.Y) + zero, new Rectangle(tile.TileFrameX, tile.TileFrameY - 2, 16, height), Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
+            Main.spriteBatch.Draw(ModContent.Request<Texture2D>(Texture + "_Glow").Value, new Vector2((i * 16) - (int)Main.screenPosition.X, (j * 16) - (int)Main.screenPosition.Y) + zero, new Rectangle(tile.TileFrameX, tile.TileFrameY - 2, 16, height), Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
         }
         public override bool CanExplode(int i, int j) => false;
         public override void MouseOver(int i, int j)
@@ -583,7 +583,7 @@ namespace Redemption.Tiles.Natural
             if (!Main.LocalPlayer.RedemptionAbility().SpiritwalkerActive)
                 return true;
 
-            Texture2D flare = ModContent.Request<Texture2D>("Redemption/Textures/WhiteFlare").Value;
+            Texture2D flare = Redemption.WhiteFlare.Value;
             Rectangle rect = new(0, 0, flare.Width, flare.Height);
             Vector2 zero = new(Main.offScreenRange, Main.offScreenRange);
             if (Main.drawToScreen)

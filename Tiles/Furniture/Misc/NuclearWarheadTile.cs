@@ -1,5 +1,4 @@
 using Microsoft.Xna.Framework;
-using Redemption.Items.Placeable.Furniture.Misc;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.Enums;
@@ -10,6 +9,8 @@ using Terraria.ObjectData;
 using Redemption.UI;
 using Redemption.Items;
 using Redemption.Globals;
+using Redemption.Items.Placeable.Furniture.Lab;
+using Redemption.Items.Placeable.Furniture.Misc;
 
 namespace Redemption.Tiles.Furniture.Misc
 {
@@ -39,7 +40,8 @@ namespace Redemption.Tiles.Furniture.Misc
             DustType = DustID.Electric;
             MinPick = 10;
             MineResist = 7f;
-            
+
+            RegisterItemDrop(ModContent.ItemType<NuclearWarhead>());
             HitSound = SoundID.Tink;
             LocalizedText name = CreateMapEntryName();
             // name.SetDefault("Nuclear Warhead");

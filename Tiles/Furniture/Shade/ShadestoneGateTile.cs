@@ -1,6 +1,8 @@
 using Microsoft.Xna.Framework;
 using Redemption.Dusts;
+using Redemption.Items.Usable;
 using Terraria;
+using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.Enums;
 using Terraria.ID;
@@ -35,7 +37,7 @@ namespace Redemption.Tiles.Furniture.Shade
             LocalizedText name = CreateMapEntryName();
             // name.SetDefault("Shadestone Gate");
             AddMapEntry(new Color(50, 50, 50), name);
-            MinPick = 500;
+            MinPick = 1000;
             MineResist = 30f;
             DustType = ModContent.DustType<VoidFlame>();
             AnimationFrameHeight = 180;

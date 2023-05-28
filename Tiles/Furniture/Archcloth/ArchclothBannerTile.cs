@@ -1,10 +1,8 @@
 using Microsoft.Xna.Framework;
-using Redemption.Items.Placeable.Furniture.Archcloth;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
-using Terraria.DataStructures;
 using Terraria.Localization;
 
 namespace Redemption.Tiles.Furniture.Archcloth
@@ -25,5 +23,6 @@ namespace Redemption.Tiles.Furniture.Archcloth
             AddMapEntry(new Color(123, 44, 122), Language.GetText("MapObject.Banner"));
             DustType = DustID.DungeonPink;
         }
+        public override bool CreateDust(int i, int j, ref int type) => false;
     }
 }

@@ -5,7 +5,6 @@ using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 using Terraria.DataStructures;
-using Redemption.Items.Placeable.Furniture.PetrifiedWood;
 
 namespace Redemption.Tiles.Furniture.PetrifiedWood
 {
@@ -36,7 +35,6 @@ namespace Redemption.Tiles.Furniture.PetrifiedWood
 
 			AddMapEntry(new Color(100, 100, 100), Language.GetText("MapObject.Table"));
         }
-
 		public override void NumDust(int i, int j, bool fail, ref int num)
 		{
 			num = fail ? 1 : 3;

@@ -242,7 +242,7 @@ namespace Redemption.NPCs.PreHM
                     }
                     BaseAI.AttemptOpenDoor(NPC, ref doorVars[0], ref doorVars[1], ref doorVars[2], 80, 4, 30, interactDoorStyle: 2);
 
-                    NPC.PlatformFallCheck(ref NPC.Redemption().fallDownPlatform, 20, moveTo.Y * 16);
+                    NPC.PlatformFallCheck(ref NPC.Redemption().fallDownPlatform, 20, (moveTo.Y - 32) * 16);
                     NPCHelper.HorizontallyMove(NPC, moveTo * 16, 0.4f, 0.8f, 6, 6, NPC.Center.Y > moveTo.Y * 16);
                     break;
 

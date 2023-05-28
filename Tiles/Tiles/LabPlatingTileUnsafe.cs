@@ -1,10 +1,10 @@
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ModLoader;
-using Terraria.ID;
 using Redemption.Items.Placeable.Tiles;
 using Redemption.Dusts.Tiles;
 using Redemption.Tiles.Furniture.Lab;
+using Terraria.ID;
 
 namespace Redemption.Tiles.Tiles
 {
@@ -15,12 +15,17 @@ namespace Redemption.Tiles.Tiles
             Main.tileSolid[Type] = true;
             Main.tileMergeDirt[Type] = true;
             Main.tileBlockLight[Type] = true;
+            TileID.Sets.DisableSmartCursor[Type] = true;
             Main.tileMerge[Type][ModContent.TileType<OvergrownLabPlatingTile>()] = true;
             Main.tileMerge[ModContent.TileType<OvergrownLabPlatingTile>()][Type] = true;
             Main.tileMerge[Type][ModContent.TileType<LabPlatingTile>()] = true;
             Main.tileMerge[ModContent.TileType<LabPlatingTile>()][Type] = true;
+            Main.tileMerge[Type][ModContent.TileType<LabPlatingTileUnsafe2>()] = true;
+            Main.tileMerge[ModContent.TileType<LabPlatingTileUnsafe2>()][Type] = true;
+            Main.tileMerge[Type][ModContent.TileType<OvergrownLabPlatingTile2>()] = true;
+            Main.tileMerge[ModContent.TileType<OvergrownLabPlatingTile2>()][Type] = true;
             DustType = ModContent.DustType<LabPlatingDust>();
-            MinPick = 500;
+            MinPick = 1000;
             MineResist = 3f;
             HitSound = CustomSounds.MetalHit;
             AddMapEntry(new Color(202, 210, 210));
@@ -37,5 +42,18 @@ namespace Redemption.Tiles.Tiles
 
         public override void NumDust(int i, int j, bool fail, ref int num) => num = fail ? 1 : 3;
         public override bool CanExplode(int i, int j) => false;
+    }
+    public class LabPlatingTileUnsafe2 : LabPlatingTileUnsafe
+    {
+        public override string Texture => "Redemption/Tiles/Tiles/LabPlatingTileUnsafe";
+        public override void SetStaticDefaults()
+        {
+            base.SetStaticDefaults();
+            TileID.Sets.DisableSmartCursor[Type] = false;
+            Main.tileMerge[Type][ModContent.TileType<LabPlatingTileUnsafe>()] = true;
+            Main.tileMerge[ModContent.TileType<LabPlatingTileUnsafe>()][Type] = true;
+            MinPick = 200;
+            MineResist = 5f;
+        }
     }
 }

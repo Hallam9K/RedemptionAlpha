@@ -182,7 +182,7 @@ namespace Redemption.NPCs.HM
                         NPC.netUpdate = true;
                     }
 
-                    NPC.PlatformFallCheck(ref NPC.Redemption().fallDownPlatform, 30, moveTo.Y * 16);
+                    NPC.PlatformFallCheck(ref NPC.Redemption().fallDownPlatform, 30, (moveTo.Y - 32) * 16);
                     NPCHelper.HorizontallyMove(NPC, moveTo * 16, 0.4f, 0.6f, 28, 36, NPC.Center.Y > moveTo.Y * 16);
                     break;
 

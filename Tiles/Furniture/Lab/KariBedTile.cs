@@ -1,4 +1,5 @@
 using Microsoft.Xna.Framework;
+using Redemption.Items.Tools.PostML;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.Enums;
@@ -26,13 +27,18 @@ namespace Redemption.Tiles.Furniture.Lab
             TileObjectData.newTile.AnchorBottom = new AnchorData(AnchorType.SolidTile | AnchorType.SolidWithTop | AnchorType.SolidSide, TileObjectData.newTile.Width, 0);
             TileObjectData.addTile(Type);
             DustType = DustID.GreenBlood;
-            MinPick = 500;
+            MinPick = 1000;
             MineResist = 3f;
             LocalizedText name = CreateMapEntryName();
             // name.SetDefault("Kari's Hospital Bed");
-            AddMapEntry(new Color(56, 78, 210));
+            AddMapEntry(new Color(56, 78, 210), name);
         }
-        public override bool CanKillTile(int i, int j, ref bool blockDamaged) => false;
+        public override bool CanKillTile(int i, int j, ref bool blockDamaged)
+        {
+            if (Main.LocalPlayer.HeldItem.type == ModContent.ItemType<NanoAxe2>())
+                return true;
+            return false;
+        }
         public override bool CanExplode(int i, int j) => false;
     }
     public class KariBed : PlaceholderTile

@@ -8,6 +8,7 @@ using Redemption.Items.Materials.PreHM;
 using Terraria.DataStructures;
 using Terraria.Enums;
 using Redemption.Tiles.Tiles;
+using Redemption.Items.Placeable.Plants;
 
 namespace Redemption.Tiles.Natural
 {
@@ -54,6 +55,7 @@ namespace Redemption.Tiles.Natural
 
             HitSound = CustomSounds.CrystalHit;
             DustType = DustID.IceTorch;
+            RegisterItemDrop(ModContent.ItemType<GathicCryoCrystal>());
             LocalizedText name = CreateMapEntryName();
             // name.SetDefault("Gathic Cryo-Crystal");
             AddMapEntry(new Color(159, 188, 215), name);

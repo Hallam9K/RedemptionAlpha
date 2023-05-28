@@ -77,6 +77,19 @@ namespace Redemption
         public static int halmFemLegID;
         public static int halmMaleLegID;
 
+        public static Asset<Texture2D> Circle;
+        public static Asset<Texture2D> SoftGlow;
+        public static Asset<Texture2D> EmberParticle;
+        public static Asset<Texture2D> GlowParticle;
+        public static Asset<Texture2D> WhiteGlow;
+        public static Asset<Texture2D> WhiteFlare;
+        public static Asset<Texture2D> WhiteOrb;
+        public static Asset<Texture2D> IceMist;
+        public static Asset<Texture2D> HolyGlow2;
+        public static Asset<Texture2D> HolyGlow3;
+
+        public static Asset<Texture2D> GlowTrail;
+
         public Redemption()
         {
             Instance = this;
@@ -90,6 +103,19 @@ namespace Redemption
             {
                 TrailManager = new TrailManager(this);
                 AdditiveCallManager.Load();
+
+                Circle = ModContent.Request<Texture2D>("Redemption/Textures/Circle");
+                SoftGlow = ModContent.Request<Texture2D>("Redemption/Textures/SoftGlow");
+                EmberParticle = ModContent.Request<Texture2D>("Redemption/Particles/EmberParticle");
+                GlowParticle = ModContent.Request<Texture2D>("Redemption/Particles/GlowParticle");
+                WhiteGlow = ModContent.Request<Texture2D>("Redemption/Textures/WhiteGlow");
+                WhiteFlare = ModContent.Request<Texture2D>("Redemption/Textures/WhiteFlare");
+                WhiteOrb = ModContent.Request<Texture2D>("Redemption/Textures/WhiteOrb");
+                IceMist = ModContent.Request<Texture2D>("Redemption/Textures/IceMist");
+                HolyGlow2 = ModContent.Request<Texture2D>("Redemption/Textures/HolyGlow2");
+                HolyGlow3 = ModContent.Request<Texture2D>("Redemption/Textures/HolyGlow3");
+
+                GlowTrail = ModContent.Request<Texture2D>("Redemption/Textures/Trails/GlowTrail", AssetRequestMode.ImmediateLoad);
 
                 dragonLeadCapeID = EquipLoader.AddEquipTexture(this, "Redemption/Items/Armor/PreHM/DragonLead/DragonLeadRibplate_Back", EquipType.Back, ModContent.GetInstance<DragonLeadRibplate>());
                 shinkiteCapeID = EquipLoader.AddEquipTexture(this, "Redemption/Items/Armor/PostML/Shinkite/ShinkiteChestplate_Back", EquipType.Back, ModContent.GetInstance<ShinkiteChestplate>());
@@ -209,6 +235,19 @@ namespace Redemption
         }
         public override void Unload()
         {
+            Circle = null;
+            SoftGlow = null;
+            EmberParticle = null;
+            GlowParticle = null;
+            WhiteGlow = null;
+            WhiteFlare = null;
+            WhiteOrb = null;
+            IceMist = null;
+            HolyGlow2 = null;
+            HolyGlow3 = null;
+
+            GlowTrail = null;
+
             TrailManager = null;
             AdditiveCallManager.Unload();
         }

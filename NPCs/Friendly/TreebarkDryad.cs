@@ -61,6 +61,7 @@ namespace Redemption.NPCs.Friendly
         {
             Main.npcFrameCount[NPC.type] = 9;
             NPCID.Sets.ActsLikeTownNPC[Type] = true;
+            NPCID.Sets.NoTownNPCHappiness[Type] = true;
             NPCID.Sets.TownNPCBestiaryPriority.Add(Type);
 
             NPCID.Sets.DebuffImmunitySets.Add(Type, new NPCDebuffImmunityData
@@ -428,7 +429,7 @@ namespace Redemption.NPCs.Friendly
             }
 
             float baseChance = SpawnCondition.OverworldDay.Chance;
-            float multiplier = Framing.GetTileSafely(spawnInfo.SpawnTileX, spawnInfo.SpawnTileY).TileType == TileID.Grass ? (Main.raining ? 0.02f : 0.005f) : 0f;
+            float multiplier = Framing.GetTileSafely(spawnInfo.SpawnTileX, spawnInfo.SpawnTileY).TileType == TileID.Grass ? (Main.raining ? 0.025f : 0.008f) : 0f;
             float trees = score >= 60 ? 1 : 0;
 
             return baseChance * multiplier * trees;

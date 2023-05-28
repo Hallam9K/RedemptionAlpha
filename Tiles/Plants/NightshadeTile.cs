@@ -3,7 +3,6 @@ using Microsoft.Xna.Framework.Graphics;
 using Redemption.Items.Placeable.Plants;
 using System.Collections.Generic;
 using Terraria;
-using Terraria.DataStructures;
 using Terraria.GameContent.Metadata;
 using Terraria.ID;
 using Terraria.ModLoader;

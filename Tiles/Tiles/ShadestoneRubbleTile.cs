@@ -4,7 +4,6 @@ using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ID;
 using Redemption.Dusts.Tiles;
-using Redemption.Items.Placeable.Tiles;
 using Terraria.DataStructures;
 using System;
 
@@ -18,15 +17,11 @@ namespace Redemption.Tiles.Tiles
             Main.tileBrick[Type] = true;
             Main.tileMergeDirt[Type] = false;
             Main.tileBlockLight[Type] = true;
-            Main.tileBrick[Type] = true;
             TileID.Sets.Suffocate[Type] = true;
             TileID.Sets.Falling[Type] = true;
             DustType = ModContent.DustType<ShadestoneDust>();
             MinPick = 225;
-            MineResist = 6f;
-            HitSound = SoundID.Tink;
-            LocalizedText name = CreateMapEntryName();
-            // name.SetDefault("Shadestone Rubble");
+            MineResist = 4f;
             AddMapEntry(new Color(65, 68, 83));
         }
         public override void NumDust(int i, int j, bool fail, ref int num) => num = fail ? 1 : 3;

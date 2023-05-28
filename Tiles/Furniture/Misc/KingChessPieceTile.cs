@@ -1,5 +1,4 @@
 using Microsoft.Xna.Framework;
-using Redemption.Items.Placeable.Furniture.Misc;
 using Terraria;
 using Terraria.Enums;
 using Terraria.Localization;
@@ -7,6 +6,8 @@ using Terraria.ModLoader;
 using Terraria.ObjectData;
 using Terraria.DataStructures;
 using Terraria.ID;
+using Redemption.Items.Placeable.Furniture.Lab;
+using Redemption.Items.Placeable.Furniture.Misc;
 
 namespace Redemption.Tiles.Furniture.Misc
 {
@@ -30,6 +31,7 @@ namespace Redemption.Tiles.Furniture.Misc
 			LocalizedText name = CreateMapEntryName();
 			// name.SetDefault("Marble King Chess Piece");
 			AddMapEntry(new Color(168, 178, 204), name);
+            RegisterItemDrop(ModContent.ItemType<KingChessPiece>());
             DustType = DustID.Marble;
 		}
         public override void NumDust(int i, int j, bool fail, ref int num) => num = fail ? 1 : 3;

@@ -35,9 +35,6 @@ namespace Redemption.Tiles.Containers
             DustType = DustID.Ash;
             AdjTiles = new int[] { TileID.Containers };
 
-            // Names
-            //ContainerName/* tModPorter Note: Removed. Override DefaultContainerName instead */.SetDefault("Petrified Wood Chest");
-
             LocalizedText name = CreateMapEntryName();
             // name.SetDefault("Petrified Wood Chest");
             AddMapEntry(new Color(100, 100, 100), name, MapChestName);

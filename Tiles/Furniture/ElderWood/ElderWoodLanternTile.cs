@@ -5,9 +5,7 @@ using Terraria.ModLoader;
 using Terraria.ID;
 using Terraria.Enums;
 using Terraria.ObjectData;
-using Redemption.Items.Placeable.Furniture.ElderWood;
 using Microsoft.Xna.Framework.Graphics;
-using Terraria.DataStructures;
 
 namespace Redemption.Tiles.Furniture.ElderWood
 {
@@ -22,7 +20,9 @@ namespace Redemption.Tiles.Furniture.ElderWood
             TileObjectData.newSubTile.CopyFrom(TileObjectData.newTile);
             TileObjectData.newTile.WaterDeath = true;
             TileObjectData.newTile.WaterPlacement = LiquidPlacement.NotAllowed;
-            TileObjectData.newTile.LavaPlacement = LiquidPlacement.NotAllowed; TileObjectData.newTile.StyleHorizontal = true;
+            TileObjectData.newTile.LavaPlacement = LiquidPlacement.NotAllowed;
+            TileObjectData.newTile.StyleHorizontal = true;
+            TileObjectData.newTile.StyleLineSkip = 2;
             TileObjectData.addTile(Type);
             AddMapEntry(new Color(109, 87, 78), Language.GetText("MapObject.Lantern"));
             AdjTiles = new int[] { TileID.HangingLanterns };
@@ -77,7 +77,7 @@ namespace Redemption.Tiles.Furniture.ElderWood
                 float xx = Utils.RandomInt(ref randSeed, -10, 11) * 0.15f;
                 float yy = Utils.RandomInt(ref randSeed, -10, 1) * 0.35f;
 
-                Main.spriteBatch.Draw(ModContent.Request<Texture2D>("Redemption/Tiles/Furniture/ElderWood/ElderWoodLanternTile_Glow").Value, new Vector2((i * 16) - (int)Main.screenPosition.X + xx, (j * 16) - (int)Main.screenPosition.Y + yy) + zero, new Rectangle(tile.TileFrameX, tile.TileFrameY, 16, height), color, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
+                Main.spriteBatch.Draw(ModContent.Request<Texture2D>(Texture + "_Glow").Value, new Vector2((i * 16) - (int)Main.screenPosition.X + xx, (j * 16) - (int)Main.screenPosition.Y + yy) + zero, new Rectangle(tile.TileFrameX, tile.TileFrameY, 16, height), color, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
             }
         }
     }

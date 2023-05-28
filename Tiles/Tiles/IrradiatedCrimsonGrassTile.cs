@@ -30,7 +30,7 @@ namespace Redemption.Tiles.Tiles
             MinPick = 10;
             MineResist = 0.1f;
             DustType = DustID.Ash;
-            RegisterItemDrop(ModContent.ItemType<IrradiatedDirt>());
+            RegisterItemDrop(ModContent.ItemType<IrradiatedDirt>(), 0);
         }
         public override void FloorVisuals(Player player)
         {

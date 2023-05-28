@@ -1,7 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Dusts.Tiles;
-using Redemption.Items.Placeable.Furniture.Shade;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
@@ -25,6 +24,7 @@ namespace Redemption.Tiles.Furniture.Shade
             TileObjectData.newTile.StyleHorizontal = true;
             TileObjectData.newTile.RandomStyleRange = 5;
             TileObjectData.newTile.DrawYOffset = 2;
+            TileObjectData.newTile.StyleLineSkip = 5;
             TileObjectData.addTile(Type);
             LocalizedText name = CreateMapEntryName();
             // name.SetDefault("Wax Candles");
@@ -62,7 +62,7 @@ namespace Redemption.Tiles.Furniture.Shade
             int height = tile.TileFrameY % AnimationFrameHeight >= 16 ? 18 : 16;
             int animate = Main.tileFrame[Type] * AnimationFrameHeight;
 
-            Texture2D texture = ModContent.Request<Texture2D>("Redemption/Tiles/Furniture/Shade/WaxCandlesTile_Glow").Value;
+            Texture2D texture = ModContent.Request<Texture2D>(Texture + "_Glow").Value;
             Rectangle frame = new(tile.TileFrameX, tile.TileFrameY + animate, 16, height);
             ulong randSeed = Main.TileFrameSeed ^ (ulong)((long)j << 32 | (uint)i);
             Color color = new(100, 100, 100, 0);

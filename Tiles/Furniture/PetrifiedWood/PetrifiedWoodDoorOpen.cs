@@ -29,8 +29,9 @@ namespace Redemption.Tiles.Furniture.PetrifiedWood
 			DustType = DustID.Ash;
 			AdjTiles = new int[] { TileID.OpenDoor };
 			TileID.Sets.CloseDoorID[Type] = ModContent.TileType<PetrifiedWoodDoorClosed>();
+            RegisterItemDrop(ModContent.ItemType<PetrifiedWoodDoor>(), 0);
 
-			AddMapEntry(new Color(100, 100, 100), Language.GetText("MapObject.Door"));
+            AddMapEntry(new Color(100, 100, 100), Language.GetText("MapObject.Door"));
 
             // Placement
             TileObjectData.newTile.Width = 2;

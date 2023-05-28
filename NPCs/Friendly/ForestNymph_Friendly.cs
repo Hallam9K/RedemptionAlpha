@@ -35,6 +35,7 @@ namespace Redemption.NPCs.Friendly
             // DisplayName.SetDefault("Forest Nymph");
             Main.npcFrameCount[NPC.type] = 10;
             NPCID.Sets.AllowDoorInteraction[Type] = true;
+            NPCID.Sets.NoTownNPCHappiness[Type] = true;
             NPCID.Sets.DebuffImmunitySets.Add(Type, new NPCDebuffImmunityData
             {
                 SpecificallyImmuneTo = new int[] {
@@ -533,8 +534,6 @@ namespace Redemption.NPCs.Friendly
         }
         public override string GetChat()
         {
-            Main.LocalPlayer.currentShoppingSettings.HappinessReport = "";
-
             Player player = Main.player[Main.myPlayer];
             WeightedRandom<string> chat = new(Main.rand);
             if ((RedeWorld.alignment < 0 && !RedeBossDowned.downedTreebark) || (RedeWorld.alignment < 2 && RedeBossDowned.downedTreebark))

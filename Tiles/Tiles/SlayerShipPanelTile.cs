@@ -1,9 +1,11 @@
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ModLoader;
-using Terraria.ID;
 using Redemption.Items.Placeable.Tiles;
 using Redemption.Dusts.Tiles;
+using Redemption.Items.Tools.PostML;
+using Redemption.Globals;
+using Terraria.ID;
 
 namespace Redemption.Tiles.Tiles
 {
@@ -15,7 +17,8 @@ namespace Redemption.Tiles.Tiles
             Main.tileMergeDirt[Type] = true;
             Main.tileBlockLight[Type] = true;
             DustType = ModContent.DustType<LabPlatingDust>();
-            MinPick = 500;
+            TileID.Sets.DisableSmartCursor[Type] = true;
+            MinPick = 1000;
             MineResist = 7f;
             HitSound = CustomSounds.MetalHit;
             AddMapEntry(new Color(72, 70, 79));
@@ -24,7 +27,13 @@ namespace Redemption.Tiles.Tiles
         {
             num = fail ? 1 : 3;
         }
-        public override bool CanKillTile(int i, int j, ref bool blockDamaged) => false;
+        public override bool CanKillTile(int i, int j, ref bool blockDamaged)
+        {
+            if (Main.LocalPlayer.HeldItem.type == ModContent.ItemType<NanoAxe2>())
+                return true;
+            return WorldGen.gen || RedeBossDowned.downedOmega3 || RedeBossDowned.downedNebuleus;
+        }
+        public override bool Slope(int i, int j) => true;
         public override bool CanExplode(int i, int j) => false;
     }
     public class SlayerShipPanelTile2 : SlayerShipPanelTile

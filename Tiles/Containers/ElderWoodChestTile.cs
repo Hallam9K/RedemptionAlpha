@@ -35,9 +35,6 @@ namespace Redemption.Tiles.Containers
             DustType = DustID.t_BorealWood;
             AdjTiles = new int[] { TileID.Containers };
 
-            // Names
-            //ContainerName/* tModPorter Note: Removed. Override DefaultContainerName instead */.SetDefault("Elder Wood Chest");
-
             LocalizedText name = CreateMapEntryName();
             // name.SetDefault("Elder Wood Chest");
             AddMapEntry(new Color(109, 87, 78), name, MapChestName);

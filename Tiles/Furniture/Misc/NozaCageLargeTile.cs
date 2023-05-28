@@ -1,4 +1,5 @@
 using Microsoft.Xna.Framework;
+using Redemption.Items.Placeable.Furniture.Lab;
 using Redemption.Items.Placeable.Furniture.Misc;
 using Terraria;
 using Terraria.DataStructures;
@@ -37,7 +38,7 @@ namespace Redemption.Tiles.Furniture.Misc
             DustType = DustID.Lead;
             MinPick = 50;
             MineResist = 7f;
-
+            RegisterItemDrop(ModContent.ItemType<NozaCageLarge>());
             HitSound = SoundID.Tink;
             LocalizedText name = CreateMapEntryName();
             // name.SetDefault("Cage");

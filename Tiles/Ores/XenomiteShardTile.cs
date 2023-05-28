@@ -6,6 +6,7 @@ using Terraria.ID;
 using Redemption.Items.Materials.PreHM;
 using Redemption.Buffs.Debuffs;
 using Redemption.Tiles.Natural;
+using Redemption.Items.Usable.Potions;
 
 namespace Redemption.Tiles.Ores
 {

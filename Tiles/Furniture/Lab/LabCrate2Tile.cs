@@ -1,8 +1,6 @@
 using Microsoft.Xna.Framework;
 using Redemption.Dusts.Tiles;
-using Redemption.Items.Placeable.Furniture.Lab;
 using Terraria;
-using Terraria.DataStructures;
 using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;

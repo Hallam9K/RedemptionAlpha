@@ -1,11 +1,9 @@
 using Microsoft.Xna.Framework;
-using Redemption.Items.Placeable.Trophies;
 using Terraria;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
-using Terraria.DataStructures;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace Redemption.Tiles.Trophies

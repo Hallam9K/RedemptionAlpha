@@ -7,7 +7,6 @@ using Terraria.ObjectData;
 using Terraria.DataStructures;
 using Terraria.Enums;
 using Redemption.Items.Usable.Potions;
-using Redemption.Items.Placeable.Tiles;
 
 namespace Redemption.Tiles.Furniture.Lab
 {

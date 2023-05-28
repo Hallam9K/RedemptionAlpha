@@ -6,7 +6,6 @@ using Redemption.Globals;
 using Redemption.Items.Materials.PreHM;
 using Redemption.Items.Usable.Summons;
 using Redemption.Tiles.Tiles;
-using ReLogic.Content;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
@@ -70,7 +69,7 @@ namespace Redemption.Tiles.Furniture.Misc
                 Main.StartRain();
                 Main.SyncRain();
                 Main.NewLightning();
-                RedeDraw.SpawnExplosion(new Vector2(i * 16 + 8, j * 16 + 8), Color.White, noDust: true, tex: ModContent.Request<Texture2D>("Redemption/Textures/HolyGlow3", AssetRequestMode.ImmediateLoad).Value);
+                RedeDraw.SpawnExplosion(new Vector2(i * 16 + 8, j * 16 + 8), Color.White, noDust: true, tex: Redemption.HolyGlow3.Value);
                 SoundEngine.PlaySound(SoundID.Item68, new Vector2(i * 16, j * 16));
                 SoundEngine.PlaySound(CustomSounds.Thunderstrike, new Vector2(i * 16, j * 16));
                 Main.LocalPlayer.RedemptionScreen().ScreenShakeOrigin = new Vector2(i * 16, j * 16);
@@ -92,7 +91,7 @@ namespace Redemption.Tiles.Furniture.Misc
             if (!NPC.downedMoonlord)
                 return true;
 
-            Texture2D flare = ModContent.Request<Texture2D>("Redemption/Textures/WhiteFlare").Value;
+            Texture2D flare = Redemption.WhiteFlare.Value;
             Rectangle rect = new(0, 0, flare.Width, flare.Height);
             Vector2 zero = new(Main.offScreenRange, Main.offScreenRange);
             if (Main.drawToScreen)

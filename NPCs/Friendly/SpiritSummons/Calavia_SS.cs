@@ -90,7 +90,7 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
         public override void HitEffect(NPC.HitInfo hit)
         {
             if (hit.Damage > 1)
-                SoundEngine.PlaySound(SoundID.NPCHit4);
+                SoundEngine.PlaySound(SoundID.NPCHit4, NPC.position);
             if (NPC.life <= 0)
             {
                 for (int i = 0; i < 35; i++)
@@ -181,7 +181,7 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
                     }
                     BaseAI.AttemptOpenDoor(NPC, ref doorVars[0], ref doorVars[1], ref doorVars[2], 80, 1, 10, interactDoorStyle: 2);
 
-                    NPC.PlatformFallCheck(ref NPC.Redemption().fallDownPlatform, 20, moveTo.Y * 16);
+                    NPC.PlatformFallCheck(ref NPC.Redemption().fallDownPlatform, 20, (moveTo.Y - 32) * 16);
                     NPCHelper.HorizontallyMove(NPC, moveTo * 16, 0.4f, 3, 18, 18, NPC.Center.Y > moveTo.Y * 16, player);
                     break;
                 case ActionState.Alert:

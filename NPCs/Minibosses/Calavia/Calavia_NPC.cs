@@ -36,6 +36,7 @@ namespace Redemption.NPCs.Minibosses.Calavia
         public override void SetStaticDefaults()
         {
             // DisplayName.SetDefault("Calavia");
+            NPCID.Sets.NoTownNPCHappiness[Type] = true;
             Main.npcFrameCount[Type] = 20;
             NPCID.Sets.NPCBestiaryDrawModifiers value = new(0) { Hide = true };
             NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, value);
@@ -80,6 +81,8 @@ namespace Redemption.NPCs.Minibosses.Calavia
         readonly DialogueChain chain = new();
         public override void AI()
         {
+            if (++NPC.breath <= 0)
+                NPC.breath = 9000;
             Player player = Main.player[NPC.target];
             if (NPC.target < 0 || NPC.target == 255 || player.dead || !player.active)
                 NPC.TargetClosest();
@@ -258,7 +261,6 @@ namespace Redemption.NPCs.Minibosses.Calavia
         public override string GetChat()
         {
             Player player = Main.LocalPlayer;
-            player.currentShoppingSettings.HappinessReport = "";
             if (RedeQuest.calaviaVar > 10)
             {
                 WeightedRandom<string> chat = new();

@@ -22,7 +22,7 @@ namespace Redemption.Tiles.Ores
             TileID.Sets.Ore[Type] = true;
             Main.tileOreFinderPriority[Type] = 900;
             DustType = DustID.FlameBurst;
-            MinPick = 500;
+            MinPick = 1000;
             MineResist = 10f;
             HitSound = SoundID.Tink;
             LocalizedText name = CreateMapEntryName();

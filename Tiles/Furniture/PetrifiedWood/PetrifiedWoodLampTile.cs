@@ -6,7 +6,6 @@ using Terraria.ID;
 using Terraria.Enums;
 using Terraria.ObjectData;
 using Terraria.DataStructures;
-using Redemption.Items.Placeable.Furniture.PetrifiedWood;
 
 namespace Redemption.Tiles.Furniture.PetrifiedWood
 {
@@ -31,6 +30,7 @@ namespace Redemption.Tiles.Furniture.PetrifiedWood
             TileObjectData.newTile.WaterDeath = true;
             TileObjectData.newTile.WaterPlacement = LiquidPlacement.NotAllowed;
             TileObjectData.newTile.LavaPlacement = LiquidPlacement.NotAllowed;
+            TileObjectData.newTile.StyleLineSkip = 2;
             TileObjectData.addTile(Type);
             AddMapEntry(new Color(100, 100, 100), Language.GetText("MapObject.FloorLamp"));
             AddToArray(ref TileID.Sets.RoomNeeds.CountsAsTorch);

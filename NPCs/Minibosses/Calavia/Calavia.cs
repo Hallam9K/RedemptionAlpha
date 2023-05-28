@@ -133,7 +133,7 @@ namespace Redemption.NPCs.Minibosses.Calavia
         {
             bestiaryEntry.Info.AddRange(new List<IBestiaryInfoElement> {
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Caverns,
-                new FlavorTextBestiaryInfoElement(".")
+                new FlavorTextBestiaryInfoElement("A Chief-Warrior of the Iron Realm, lost and troubled by her distant venture from her home of Khen Boldur, which was spurred on by the barons of Arum. Swordplay and smithing is her expertise, along with familiarity of Blizzard magic.")
             });
         }
         public override void HitEffect(NPC.HitInfo hit)

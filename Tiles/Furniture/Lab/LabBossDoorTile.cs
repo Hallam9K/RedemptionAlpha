@@ -32,7 +32,7 @@ namespace Redemption.Tiles.Furniture.Lab
             LocalizedText name = CreateMapEntryName();
             // name.SetDefault("Reinforced Door");
             AddMapEntry(new Color(110, 106, 120), name);
-            MinPick = 500;
+            MinPick = 1000;
             MineResist = 10f;
             DustType = ModContent.DustType<LabPlatingDust>();
             AnimationFrameHeight = 54;
@@ -99,7 +99,7 @@ namespace Redemption.Tiles.Furniture.Lab
             LocalizedText name = CreateMapEntryName();
             // name.SetDefault("Reinforced Door");
             AddMapEntry(new Color(110, 106, 120), name);
-            MinPick = 500;
+            MinPick = 1000;
             MineResist = 10f;
             DustType = ModContent.DustType<LabPlatingDust>();
             AnimationFrameHeight = 18;

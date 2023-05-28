@@ -42,6 +42,7 @@ namespace Redemption.Tiles.Furniture.Lab
             AddMapEntry(new Color(189, 191, 200), name);
             DustType = ModContent.DustType<LabPlatingDust>();
             AnimationFrameHeight = 72;
+            RegisterItemDrop(ModContent.ItemType<ServerCabinet>());
         }
         public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)
         {

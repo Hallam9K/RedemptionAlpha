@@ -16,8 +16,8 @@ namespace Redemption.Items.Placeable.Furniture.Misc
 		public override void SetDefaults()
 		{
 			Item.DefaultToPlaceableTile(ModContent.TileType<ThornPlushTile>(), 0);
-			Item.width = 38;
-			Item.height = 40;
+			Item.width = 46;
+			Item.height = 42;
 			Item.maxStack = Item.CommonMaxStack;
 			Item.rare = ItemRarityID.Blue;
 			Item.value = Item.buyPrice(0, 1, 0, 0);

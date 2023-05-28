@@ -1,4 +1,5 @@
 using Microsoft.Xna.Framework;
+using Redemption.Items.Placeable.Furniture.Lab;
 using Redemption.Items.Quest.KingSlayer;
 using Terraria;
 using Terraria.DataStructures;
@@ -22,6 +23,7 @@ namespace Redemption.Tiles.Furniture.SlayerShip
             TileObjectData.newTile.UsesCustomCanPlace = true;
             TileObjectData.newTile.Direction = TileObjectDirection.PlaceLeft;
             TileObjectData.newTile.StyleHorizontal = true;
+            TileObjectData.newTile.Origin = new Point16(0, 1);
             TileObjectData.newAlternate.CopyFrom(TileObjectData.newTile);
             TileObjectData.newAlternate.Direction = TileObjectDirection.PlaceRight;
             TileObjectData.addAlternate(1);
@@ -32,6 +34,7 @@ namespace Redemption.Tiles.Furniture.SlayerShip
             DustType = DustID.Electric;
             MinPick = 200;
             MineResist = 6f;
+            RegisterItemDrop(ModContent.ItemType<SlayerWiringKit>());
             AddMapEntry(new Color(189, 191, 200));
         }
     }

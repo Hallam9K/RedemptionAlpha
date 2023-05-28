@@ -258,7 +258,7 @@ Mods: {
 			}
 
 			HemorrhageDebuff: {
-				DisplayName: Hemhorraging
+				DisplayName: Hemorrhaging
 				Description: The crystals... they're sharp... it hurts to move...
 			}
 
@@ -524,7 +524,7 @@ Mods: {
 			}
 
 			HolyFireDebuff: {
-				DisplayName: Incandesence
+				DisplayName: Incandescence
 				Description: NO! TOO GLORIOUS! STOP!
 			}
 
@@ -850,106 +850,74 @@ Mods: {
 		}
 
 		Biomes: {
-			WastelandPurityBiome.DisplayName: Wasteland
-			WastelandSnowBiome.DisplayName: Snow Wasteland
-			WastelandDesertBiome.DisplayName: Desert Wasteland
-			WastelandCorruptionBiome.DisplayName: Corrupt Wasteland
-			WastelandCrimsonBiome.DisplayName: Crimson Wasteland
-			LabBiome.DisplayName: Abandoned Laboratory
-			SlayerShipBiome.DisplayName: Slayer's Crashed Cruiser
-			LidenBiome.DisplayName: Liden
-			LidenBiomeAlpha.DisplayName: The Alpha
-			LidenBiomeOmega.DisplayName: The Omega
-			FowlMorningBiome.DisplayName: Fowl Morning
-			BlazingBastionBiome.DisplayName: Blazing Bastion
-			SoullessBiome.DisplayName: Soulless Caverns
+			WastelandPurityBiome: {
+				DisplayName: Wasteland
+				TownNPCDialogueName: the Wasteland
+			}
+
+			WastelandSnowBiome: {
+				DisplayName: Snow Wasteland
+				TownNPCDialogueName: the snowy Wasteland
+			}
+
+			WastelandDesertBiome: {
+				DisplayName: Desert Wasteland
+				TownNPCDialogueName: the Desert Wasteland
+			}
+
+			WastelandCorruptionBiome: {
+				DisplayName: Corrupt Wasteland
+				TownNPCDialogueName: the Corrupt Wasteland
+			}
+
+			WastelandCrimsonBiome: {
+				DisplayName: Crimson Wasteland
+				TownNPCDialogueName: the Crimson Wasteland
+			}
+
+			LabBiome: {
+				DisplayName: Abandoned Laboratory
+				TownNPCDialogueName: the Abandoned Laboratory
+			}
+
+			SlayerShipBiome: {
+				DisplayName: Slayer's Crashed Cruiser
+				TownNPCDialogueName: Slayer's Crashed Cruiser
+			}
+
+			LidenBiome: {
+				DisplayName: Liden
+				TownNPCDialogueName: Liden
+			}
+
+			LidenBiomeAlpha: {
+				DisplayName: The Alpha
+				TownNPCDialogueName: The Alpha
+			}
+
+			LidenBiomeOmega: {
+				DisplayName: The Omega
+				TownNPCDialogueName: The Omega
+			}
+
+			FowlMorningBiome: {
+				DisplayName: Fowl Morning
+				TownNPCDialogueName: the Fowl Morning
+			}
+
+			BlazingBastionBiome: {
+				DisplayName: Blazing Bastion
+				TownNPCDialogueName: the Blazing Bastion
+			}
+
+			SoullessBiome: {
+				DisplayName: Soulless Caverns
+				TownNPCDialogueName: the Soulless Caverns
+			}
 		}
 
-		TownNPCMood: {
-			Daerel: {
-				Content: I'm rather content right now.
-				NoHome: Hey, I'd quite like a roof under my head if that's alright with you.
-				LoveSpace: I like the space I have here, plenty of room to practice my archery.
-				FarFromHome: Could you please get me back to my house? This land is quite scary.
-				DislikeCrowded: I'm somewhat of an introvert, so all these people near me is quite unnerving.
-				HateCrowded: I'm somewhat of an introvert, so all these people near me is quite unnerving.
-				LikeBiome: I think {BiomeName} is a very nice place, I hardly see any snow where I was from.
-				LoveBiome: I think {BiomeName} is perfect, calm and tranquil.
-				DislikeBiome: I don't really like {BiomeName}, I'd hate to have a run-in with skeletons!
-				HateBiome: Why'd you put me in {BiomeName}? You know how hostile jungles are!?
-				LikeNPC: "{NPCName} is good company, she's great at styling my hair too... That's not weird, right?"
-				LoveNPC: Me and {NPCName} are great friends, thank you for letting us live in the same town.
-				DislikeNPC: "{NPCName} keeps trying to get me to buy his dirt."
-				HateNPC: Psst, could you move {NPCName} far away from me, I'm already super broke as is.
-			}
-
-			Fallen: {
-				Content: Nice little place ya got here.
-				NoHome: I'd prefer to have a house.
-				LoveSpace: This place is a wee bit spacious, not complaining though, I quite like it.
-				FarFromHome: Could ya take me back to my home?
-				DislikeCrowded: All these humans are makin' my bones rattle.
-				HateCrowded: All these humans are makin' my bones rattle.
-				LikeBiome: Aah, {BiomeName} reminds me of when I was still alive in Gathuram. Good times they were.
-				LoveBiome: The caverns are perfect for us Fallen, not many humans come and go here.
-				DislikeBiome: I'm staying in {BiomeName}? Not my preferred place to live, I'd hate to have a run-in with aggressive humans!
-				HateBiome: I hate it here, {BiomeName} has some holy energy in it makin' my flesh crawl.
-				LikeNPC: "{NPCName} got somethin' about him I like."
-				LoveNPC: "{NPCName} sells some nifty gadgets, knows how to rip people off too. I like that."
-				DislikeNPC: "{NPCName} keeps lookin' at me with suspicion. Probably wants to 'purify' me."
-				HateNPC: "{NPCName} keeps thinking I'm some dying old man, insisting that she'll heal me. Please get me away from her."
-			}
-
-			Newb: {
-				Content: Me like here!
-				NoHome: Where home?
-				LoveSpace: So little people, yay!
-				FarFromHome: Me lost, can you find home?
-				DislikeCrowded: Too many faces!
-				HateCrowded: Too many faces!
-				LikeBiome: Me like {BiomeName}.
-				LoveBiome: Me love {BiomeName}! It give memory of... Uh..
-				DislikeBiome: Too boring here, me hate sand!
-				HateBiome: Me feel {BiomeName} make me sad!
-				LikeNPC: Me like {NPCName}!
-				LoveNPC: "{NPCName} knows magic like me!"
-				DislikeNPC: I feel evil within {NPCName}, very bad!
-				HateNPC: My hatred towards {NPCName} is beyond your mortal comprehension.
-			}
-
-			Zephos: {
-				Content: I'm alright.
-				NoHome: Yo, mind if you give me a house to stay in?
-				LoveSpace: This place is super spacious, good for practicing my swordsmanship!
-				FarFromHome: Yo bro, I can't find my house, you wanna help me out?
-				DislikeCrowded: Is it crowded in here or what!
-				HateCrowded: Is it crowded in here or what!
-				LikeBiome: I think {BiomeName} is a nice place, I can hear the birds singing and flowers blooming.
-				LoveBiome: Staying at {BiomeName} reminds me of when I was a young pirate, sailing the seas!
-				DislikeBiome: Not a fan of {BiomeName}, I'd rather live on the surface.
-				HateBiome: It's so cold here, I'm shaking in my boots!
-				LikeNPC: "{NPCName} is cool, I'd like to sail the seas with him sometime."
-				LoveNPC: "{NPCName} and I are great friends, so living near each other is great!"
-				DislikeNPC: "{NPCName} wants to get his greedy little fingers on my money!"
-				HateNPC: "{NPCName} will never take my money! NEVER!!"
-			}
-
-			TBot: {
-				Content: Feeling rather content, thank you for asking.
-				NoHome: I don't like being exposed to the elements. Do you have any housing or shelter I could inhabit for now?
-				LoveSpace: It's rather quiet around here.
-				FarFromHome: ...I believe we're very lost. I'm not familiar with our surroundings.
-				DislikeCrowded: Other tenants seem unhappy with the amount of crowding here, and frankly, so am I.
-				HateCrowded: Other tenants seem unhappy with the amount of crowding here, and frankly, so am I.
-				LikeBiome: This environment is mildly pleasant.
-				LoveBiome: I like this environment. It's very pleasant.
-				DislikeBiome: My current environment is rather... undesirable.
-				HateBiome: ...Just like home. I really do not like this environment.
-				LikeNPC: "{NPCName} and I have things in common. We get along well."
-				LoveNPC: "{NPCName}'s knowledge on medicine rivals that of mine! It's really impressive."
-				DislikeNPC: I find {NPCName} rather unsettling.
-				HateNPC: "{NPCName} reminds me of home. I'd rather not be reminded of that place."
-			}
+		Subworlds: {
+			SoullessSub.DisplayName: Soulless Dimension
 		}
 
 		Dialogue: {
@@ -1152,7 +1120,7 @@ Mods: {
 				HappinsDialogue2: In my first few days of becoming Fallen, every other undead tried to kill me. It was a very scary experience, but I escaped the catacombs and now I'm here.
 				HappinsDialogue3: Do you want to know about Pure-Iron? It's an extremely durable metal only found in the southern region of the world, in Gathuram. I am wearing a Pure-Iron helmet right now in fact.
 				HappinsDialogue4: At the start, this whole 'Fallen' thing was a little overwhelming. I didn't want to 'live' with the fact that I had died, even though I'm not 'living', haha. But I'm more accepting of this now, I'm undead, humans hate me, deal with it. Actually, you're a human, right? Why aren't you attacking me?
-				HappinsDialogue5: You want to know about the Warriors of the Iron Realm? They are the domain of Gathuram's primary warriors. They normally wear Pure-Iron armour.
+				HappinsDialogue5: Would you like to know about the Warriors of the Iron Realm? They are the domain of Gathuram's primary warriors. They normally wear Pure-Iron armour.
 				HappinsDialogue6: The Catacombs of Gathuram - where my soul found a vessel - are a seemingly endless network of underground tunnels, crypts, and dungeons spanning all across the Iron Realm. It is considered the largest underground structure in Epidotra.
 				HappinsDialogue7: Hello, the name's Happins. I used to be a Warrior of the Iron Realm... Until I was killed of course.
 				GolemEyeDialogue: That eye comes from Ukon Veistos? Been many an age since I've heard tales of such things. It was carved from the stone of Gathuram, with the eye being placed in the center. Tales tell of an old God's spirit, said to reawaken once the time was right. The eye was said to be the catalyst, seeping its energy into stone moulded to take a diamond form. Tales as ancient as these twist and morph as time marches on, thus I believe not of what I speak of, yet I'd still be cautious of what you are about to do.
@@ -1303,7 +1271,7 @@ Mods: {
 				Chat6B: I'm planning to check it out soon, it's located on the other world but I can easily fly there with the SoS.
 				Chat7: What? You don't even know the name of the planet you're on? Maybe read a book for once in your life.
 				Chat7B: The world is called Epidotra, it's where the Heroes are from.
-				Chat7C: This tiny island appeared on this planet out of nowhere, I was going to check it out a year or so ago, but I remember seeing the demigod here so I didn't bother. The mainland has 6 domains, Anglon, Ithon, Gathuram, Nirin, Erellon, and Thamor. There's another domain which is it's own island called Swaylan, but that's disconnected from the rest of the world.
+				Chat7C: This tiny island appeared on this planet out of nowhere, I was going to check it out a year or so ago, but I remember seeing the demigod here so I didn't bother. The mainland has 6 continents, with Anglon, Ithon, Gathuram, Nirin, Erellon, and Thamor as the primary domains. There's another domain which is it's own island called Swaylan, but that's disconnected from the rest of the world.
 				Chat8: The other world just suddenly appeared out of nowhere, I'm interested in it though. I've scanned the surface and it seems to be rather frozen, with so far no signs of human life. Reminds me of a planet I checked out while in space... In fact, reminds me of many planets.
 				Chat8B: You see the planet on the right in that one hologram? That's what I've named Liden, a radioactive and desolate wasteland devoid of any life.
 				Chat8C: I'll be leaving soon to check it out. Scans show barely any life, just a frozen radioactive wasteland.
@@ -1373,7 +1341,7 @@ Mods: {
 				Dialogue2: Gorhal'on! Mur ye bagaiha ta? Mudarok abo.
 				WhatDialogue: Hm? Ah, you must not know our language. Should've figured, this island has had nothing but Anglic speakers from what I've witnessed. You're lucky us spirits know all tongues, for we roam to hear and learn for eternity. What do you want?
 				Chat1: Ta? I was once a resident of Gothrione - Gathuram's capital. I'm assuming you may know it better as the "Iron Realm"? I worked as an assassin there with a tight-knit group. We were some of the best; at least, that's what I told myself. In this realm of recollection I can only look back in light humour for how foolish my living-self was.
-				Chat2: I would have it guessed you've been on this island and only this island, hm? Gathuram is one of the six domains of the mainland - possibly the largest, too. In terms of landmass, anyway. I've seldom been beyond the outer fields of Gothrione in my time of living, neither have I in my time of unliving, so I cannot speak to you of it in detail.
+				Chat2: I would have it guessed you've been on this island and only this island, hm? Gathuram is one of the six primary domains of the mainland - possibly the largest, too. In terms of landmass, anyway. I've seldom been beyond the outer fields of Gothrione in my time of living, neither have I in my time of unliving, so I cannot speak to you of it in detail.
 				Chat3: Gothione is the capital of the domain. It was quite the bustling city, however I cannot speak well of its ruler. Stubborn and snarky he was, in fact it was our mission to assassinate him. That was the last mission of our lives... As timing would have it, an invasion began on the day - it was horrific. In our last moments, we were gawking with heads bend up into the sky at a great demon terror.
 				Chat4: Hm, a subject I have no desire to sink into. It's name I shall not utter, just know it was the vastest being of trepidation we had ever seen. It was the reason I never returned there as a spirit - I dreaded the sight of it or the aftermath of its destruction. Now let us speak of it no more.
 			}
@@ -1396,8 +1364,8 @@ Mods: {
 				NoCruxDialogue: I'll need something to imbue first.
 				OfferCruxDialogue: You'll be lucky. I do not give to Anglonic fol'hakks freely. Assuming you are from that haughty place? It matters not, if you offer a blessing to me, I shall do the same to you. I request an enchanted flower to grow atop my grave - a blue one, preferably. Find one that looks pretty.
 				Dialogue: Tokk'gralvr! Dorvr'kok ok kolbv? Ah, groa'g Anglic fofolg. It's always Anglic speakers, never any of my own... Whatever. I don't know how you took me back to my place of defeat, do you want something from me?
-				Chat1: Sent me back to look upon my remains and now you ask for a friendly chat. Gralvr! What a strange thing. Speaking to spirits have become a bore, so I might as well. I come from the Kul'don rainforests in what most call Thamor. We lived as a commune of druids, far from others. To us, the world was a small thing, we kept to ourselves and never stepped foot beyond our territory.
-				Chat2: It is what the other spirits I've met call the domain I lived in. During my time of being alive, I had never thought of what the world was like beyond the rainforests, as we had never travelled beyond them. To us, the rainforests were our entire world, at least until we were forced out.
+				Chat1: Sent me back to look upon my remains and now you ask for a friendly chat. Gralvr! What a strange thing. Speaking to spirits has become a bore, so I might as well. I come from the Kul'don rainforests in what most call Thamor. We lived as a commune of druids, far from others. To us, the world was a small thing, we kept to ourselves and never stepped foot beyond our territory.
+				Chat2: It is what the other spirits I've met call the region I lived in. During my time of being alive, I had never thought of what the world was like beyond the rainforests, as we had never travelled beyond them. To us, the rainforests were our entire world, at least until we were forced out.
 				Chat3: A reasonable question. Of course, the portals here lead to Anglon and Gathuram, none are even close to Thamor, let alone the wilds of Kul'don. We were driven out by force, a posse of Anglonic soldiers came by in search of our goliaths - ones we had tamed and have been a part of our commune for generations. We retaliated of course, and drove them out. A short-lived victory, for they reappeared with their leader. They not only captured our goliaths, but us as well. To Anglon we were sent, and it is there I had escaped.
 			}
 
@@ -1408,7 +1376,7 @@ Mods: {
 				OfferCruxDialogue: Of course! But first, I'd like ya to give ma corpse a weapon. Let the bone-heads and tomb raiders know I died fightin'! A big ol' battleaxe will do.
 				Dialogue: RAAAARRGGGHH! Haha! I saw ya comin' with ya fancy artifact, knew ya might call me with it, so I was ready to give ya a jump! No reaction? Come on, I yelled pretty loud. Not even a slight shiver in ya boots? Whatever, what is it?
 				Chat1: They called me the "Brain Cleaver" back in ma prime, for reasons I'm sure ya can figure out. My real name was somethin' less intense - Bromal. I was a warrior of Iful's Capital in the ol' kingdom of Kol Duluramodul before the undead took over. Now it's known as the Olden Ruins.
-				Chat2: A rotting mass of land home to Gathuram, a domain of Epidotra. During ma time there were no such things as "domains", the kingdom was just about all I knew. The folk of it ere the fall came from up north-east, migrating from the sinking Eranmount. They named their new land Odulmount - meaning Great Swamp in your tongue - but after lifetimes of glory, it was renamed to Kol Duluramodul - meaning Immovable Swamp Kingdom. It was indeed an impenetrable land, until the God of Decay appeared.
+				Chat2: A rotting mass of land east of Gathuram, a domain. During ma time there were no such things as "domains", the kingdom was just about all I knew. The folk of it ere the fall came from up north-east, migrating from the sinking Eranmount. They named their new land Odulmount - meaning Great Swamp in your tongue - but after lifetimes of glory, it was renamed to Kol Duluramodul - meaning Immovable Swamp Kingdom. It was indeed an impenetrable land, until the God of Decay appeared.
 				Chat3: A disease swept through Kol Duluramodul like an air-borne tsunami. The cause was the False God of Decay who roamed Tethuram - Gathuram's name in ancient times. It rotted and corroded flesh and turned humans into undead. The swamps, we discovered, were where the infection thrived most, so the folk who yet lived abandoned the kingdom and travelled further west. Such hard times they were, I only look back in anguish for my people.
 				Chat4: Be thankful for the present ya live in now. The Ancient World was an unforgiving age, made worse by the False Gods. We only knew of one at the time - after becoming a spirit I learnt a lot more about them from others of the realm. Apparently there was also one in Anglon, Blight I believe. For all the knowledge a thousand spirits can give, not one knows of the False Gods' origins. They're all dead though, the last of 'em was felled by ye olde Light. And I'm not talking about the Light you may know.
 				Chat5: Aye, I know of the artifact you carry, in fact it was created in Iful's Capital! 'Tis designed to call upon the spirits of corpses. Originally, the purpose was for gainin' knowledge of the past, but overtime we used it for more personal reasons - such as lettin' the dead talk to their family an' friends. I am unsure why it was found beneath this island though.
@@ -2601,7 +2569,7 @@ Mods: {
 			}
 
 			AntiJohnSnailItem: {
-				DisplayName: Anti-John Snail
+				DisplayName: ANTI JOHN SNAIL
 				Tooltip: ""
 			}
 
@@ -3695,7 +3663,7 @@ Mods: {
 
 			ElderWoodClock: {
 				DisplayName: Elder Wood Clock
-				Tooltip: "'Strange... It has only 8 numbers...'"
+				Tooltip: "'Strange... It has only 8 numbers'"
 			}
 
 			ElderWoodDoor: {
@@ -3804,7 +3772,7 @@ Mods: {
 
 			LabBackDoor: {
 				DisplayName: Laboratory Back Door
-				Tooltip: "[c/ff0000:Unbreakable (500% Pickaxe Power)]"
+				Tooltip: "[c/ff0000:Unbreakable (1000% Pickaxe Power)]"
 			}
 
 			LabBackDoor2: {
@@ -3929,7 +3897,7 @@ Mods: {
 
 			SewerHole: {
 				DisplayName: Sewer Hole
-				Tooltip: "[c/ff0000:Unbreakable (500% Pickaxe Power)]"
+				Tooltip: "[c/ff0000:Unbreakable (1000% Pickaxe Power)]"
 			}
 
 			SkullSign: {
@@ -4058,7 +4026,7 @@ Mods: {
 					[c/ffea9b:Holding back a fate of endless slumber,]
 					[c/ffea9b:I want to stay to keep you strong,]
 					[c/ffea9b:Side by side is where we belong...']
-					[c/ff0000:Unbreakable (500% Pickaxe Power)]
+					[c/ff0000:Unbreakable (1000% Pickaxe Power)]
 					'''
 			}
 
@@ -4070,7 +4038,7 @@ Mods: {
 					[c/ffea9b:Too many battles lost to tell,]
 					[c/ffea9b:If I could turn back to time to find you,]
 					[c/ffea9b:I'd find our confidence as well']
-					[c/ff0000:Unbreakable (500% Pickaxe Power)]
+					[c/ff0000:Unbreakable (1000% Pickaxe Power)]
 					'''
 			}
 
@@ -4098,7 +4066,7 @@ Mods: {
 					[c/ffea9b:Hate to bloodshed; From rise to fall]
 					[c/ffea9b:If I never have to die,]
 					[c/ffea9b:Am I alive at all?']
-					[c/ff0000:Unbreakable (500% Pickaxe Power)]
+					[c/ff0000:Unbreakable (1000% Pickaxe Power)]
 					'''
 			}
 
@@ -4135,7 +4103,7 @@ Mods: {
 					[c/ffea9b:So here we remain,]
 					[c/ffea9b:We're incandescent,]
 					[c/ffea9b:A glorious flame...']
-					[c/ff0000:Unbreakable (500% Pickaxe Power)]
+					[c/ff0000:Unbreakable (1000% Pickaxe Power)]
 					'''
 			}
 
@@ -4407,7 +4375,7 @@ Mods: {
 				Tooltip:
 					'''
 					4x20
-					[c/ff0000:Unbreakable (500% Pickaxe Power)]
+					[c/ff0000:Unbreakable (1000% Pickaxe Power)]
 					'''
 			}
 
@@ -4416,7 +4384,7 @@ Mods: {
 				Tooltip:
 					'''
 					4x10
-					[c/ff0000:Unbreakable (500% Pickaxe Power)]
+					[c/ff0000:Unbreakable (1000% Pickaxe Power)]
 					'''
 			}
 
@@ -4457,7 +4425,7 @@ Mods: {
 
 			ShadeTorch: {
 				DisplayName: Shade Torch
-				Tooltip: ""
+				Tooltip: "{$ItemTooltip.IchorTorch}"
 			}
 
 			WaxCandles: {
@@ -4510,7 +4478,7 @@ Mods: {
 					'''
 					Used to craft from Cyberscrap
 					Found on Slayer's Crashed Ship
-					[c/ff0000:Unbreakable (500% Pickaxe Power)]
+					[c/ff0000:Unbreakable (1000% Pickaxe Power)]
 					'''
 			}
 
@@ -4661,7 +4629,7 @@ Mods: {
 
 			AncientHallBrick: {
 				DisplayName: Ancient Hall Brick
-				Tooltip: "[c/ff0000:Unbreakable (500% Pickaxe Power)]"
+				Tooltip: "[c/ff0000:Unbreakable (1000% Pickaxe Power)]"
 			}
 
 			AncientHallPillarWall: {
@@ -4696,7 +4664,7 @@ Mods: {
 
 			DangerTape: {
 				DisplayName: Danger Tape
-				Tooltip: "[c/ff0000:Unbreakable (500% Pickaxe Power)]"
+				Tooltip: "[c/ff0000:Unbreakable (1000% Pickaxe Power)]"
 			}
 
 			DangerTape2: {
@@ -4706,7 +4674,7 @@ Mods: {
 
 			DangerTapeWall: {
 				DisplayName: Danger Tape
-				Tooltip: "[c/ff0000:Unbreakable (500% Pickaxe Power)]"
+				Tooltip: "[c/ff0000:Unbreakable (1000% Pickaxe Power)]"
 			}
 
 			DangerTapeWall2: {
@@ -4806,7 +4774,7 @@ Mods: {
 
 			GreenLaser: {
 				DisplayName: Green Laser Block
-				Tooltip: "[c/ff0000:Unbreakable (500% Pickaxe Power)]"
+				Tooltip: "[c/ff0000:Unbreakable (1000% Pickaxe Power)]"
 			}
 
 			HalogenLamp: {
@@ -4886,7 +4854,7 @@ Mods: {
 
 			LabPlatingUnsafe: {
 				DisplayName: Laboratory Panel (Unsafe)
-				Tooltip: ""
+				Tooltip: "[c/ff0000:Unbreakable (1000% Pickaxe Power)]"
 			}
 
 			LabPlatingWall: {
@@ -4899,7 +4867,7 @@ Mods: {
 				Tooltip:
 					'''
 					'Filled with green sludge'
-					[c/ff0000:Unbreakable (500% Pickaxe Power)]
+					[c/ff0000:Unbreakable (1000% Pickaxe Power)]
 					'''
 			}
 
@@ -4908,7 +4876,7 @@ Mods: {
 				Tooltip:
 					'''
 					'Filled with green sludge'
-					[c/ff0000:Unbreakable (500% Pickaxe Power)]
+					[c/ff0000:Unbreakable (1000% Pickaxe Power)]
 					'''
 			}
 
@@ -4929,7 +4897,7 @@ Mods: {
 
 			OvergrownLabPlating: {
 				DisplayName: Overgrown Laboratory Panel (Unsafe)
-				Tooltip: "[c/ff0000:Unbreakable (500% Pickaxe Power)]"
+				Tooltip: "[c/ff0000:Unbreakable (1000% Pickaxe Power)]"
 			}
 
 			PetrifiedWood: {
@@ -4954,7 +4922,7 @@ Mods: {
 
 			RedLaser: {
 				DisplayName: Red Laser Block
-				Tooltip: "[c/ff0000:Unbreakable (500% Pickaxe Power)]"
+				Tooltip: "[c/ff0000:Unbreakable (1000% Pickaxe Power)]"
 			}
 
 			ShadesteelChain: {
@@ -5387,7 +5355,7 @@ Mods: {
 
 			Keycard2: {
 				DisplayName: Special Keycard
-				Tooltip: Unlocks a special Laboratory Chest
+				Tooltip: Unlocks black Laboratory Chests
 			}
 
 			MedicKit: {
@@ -6939,7 +6907,7 @@ Mods: {
 
 			CursedThornBow: {
 				DisplayName: Cursed Thorn Bow
-				Tooltip: Replaces wooden arrows with seed-laden arrows that sprout small thorn traps
+				Tooltip: Replaces wooden arrows with seed-laden arrows that sprout small thorn traps, dealing {0} damage
 			}
 
 			DragonSlayersBow: {
@@ -7291,12 +7259,12 @@ Mods: {
 
 			BigMaceTurret: {
 				DisplayName: Laboratory MACE Turret
-				Tooltip: "[c/ff0000:Unbreakable (500% Pickaxe Power)]"
+				Tooltip: "[c/ff0000:Unbreakable (1000% Pickaxe Power)]"
 			}
 
 			BrokenLabBackDoor: {
 				DisplayName: Broken Laboratory Back Door
-				Tooltip: "[c/ff0000:Unbreakable (500% Pickaxe Power)]"
+				Tooltip: "[c/ff0000:Unbreakable (1000% Pickaxe Power)]"
 			}
 
 			HazmatCorpse: {
@@ -7304,13 +7272,13 @@ Mods: {
 				Tooltip:
 					'''
 					Gives Hazmat Suit
-					[c/ff0000:Unbreakable (500% Pickaxe Power)]
+					[c/ff0000:Unbreakable (1000% Pickaxe Power)]
 					'''
 			}
 
 			JanitorEquipment: {
 				DisplayName: Janitor Equipment
-				Tooltip: "[c/ff0000:Unbreakable (500% Pickaxe Power)]"
+				Tooltip: "[c/ff0000:Unbreakable (1000% Pickaxe Power)]"
 			}
 
 			KariBed: {
@@ -7346,7 +7314,7 @@ Mods: {
 				Tooltip:
 					'''
 					Opens using a Keycard
-					[c/ff0000:Unbreakable (500% Pickaxe Power)]
+					[c/ff0000:Unbreakable (1000% Pickaxe Power)]
 					'''
 			}
 
@@ -7367,7 +7335,7 @@ Mods: {
 
 			OpenVent: {
 				DisplayName: Open Vent
-				Tooltip: "[c/ff0000:Unbreakable (500% Pickaxe Power)]"
+				Tooltip: "[c/ff0000:Unbreakable (1000% Pickaxe Power)]"
 			}
 
 			RadPillDeco: {
@@ -7421,17 +7389,17 @@ Mods: {
 
 			GiantShadesteelChain: {
 				DisplayName: Giant Shadesteel Chain
-				Tooltip: "[c/ff0000:Unbreakable (500% Pickaxe Power)]"
+				Tooltip: "[c/ff0000:Unbreakable (1000% Pickaxe Power)]"
 			}
 
 			ShadePortcullis: {
 				DisplayName: Shade Portcullis
-				Tooltip: "[c/ff0000:Unbreakable (500% Pickaxe Power)]"
+				Tooltip: "[c/ff0000:Unbreakable (1000% Pickaxe Power)]"
 			}
 
 			ShadesteelGate: {
 				DisplayName: Shadesteel Gate
-				Tooltip: "[c/ff0000:Unbreakable (500% Pickaxe Power)]"
+				Tooltip: "[c/ff0000:Unbreakable (1000% Pickaxe Power)]"
 			}
 
 			ShadesteelHangingCell2: {
@@ -7678,7 +7646,7 @@ Mods: {
 				DisplayName: Gilded Sea Emblem
 				Tooltip:
 					'''
-					{0} elemental weapons has a chance to soak enemies
+					{0} elemental weapons have a chance to soak enemies
 					Soaked enemies are more sluggish and prone to {1} damage
 					15% increased {0} elemental damage and resistance
 					10% decreased {2} elemental damage and resistance
@@ -7826,6 +7794,31 @@ Mods: {
 					Within the aura, players gain increased jump height and 20% increased movement speed
 					Right-click to disable the sentry
 					'''
+			}
+
+			LabPlatingUnsafe2: {
+				DisplayName: Unsafe Laboratory Panel
+				Tooltip: ""
+			}
+
+			LabPlatingWallUnsafe2: {
+				DisplayName: Unsafe Laboratory Panel Wall
+				Tooltip: ""
+			}
+
+			LabTank2: {
+				DisplayName: Laboratory Tank
+				Tooltip: "'Filled with sludge'"
+			}
+
+			LabTubes2: {
+				DisplayName: Laboratory Tubes
+				Tooltip: "'Filled with sludge'"
+			}
+
+			OvergrownLabPlating2: {
+				DisplayName: Overgrown Laboratory Panel
+				Tooltip: ""
 			}
 		}
 
@@ -8456,6 +8449,7 @@ Mods: {
 			EggPet_Proj.DisplayName: The Egg
 			SoI_ShardShot_Friendly.DisplayName: Shard Shot
 			InfectiousGlaive_Shard.DisplayName: Splitting Shard
+			EnergySphereSpell_Blast.DisplayName: Energy Sphere
 		}
 
 		NPCs: {
@@ -8498,7 +8492,7 @@ Mods: {
 			SeedGrowth.DisplayName: Hive Growth
 			SoI.DisplayName: Seed of Infection
 			Thorn.DisplayName: Thorn, Bane of the Forest
-			AntiJohnSnail.DisplayName: Anti-John Snail
+			AntiJohnSnail.DisplayName: ANTI JOHN SNAIL
 			BoneSpider.DisplayName: Bone Spider
 			Chicken.DisplayName: Chicken
 			ChickenGold.DisplayName: Gold Chicken
@@ -8522,10 +8516,56 @@ Mods: {
 			RoosterBooster.DisplayName: Rooster Booster
 			AnglonPortal.DisplayName: Mysterious Gateway
 			Chalice_Intro.DisplayName: Chalice of Alignment
-			Daerel.DisplayName: Wayfarer
+
+			Daerel: {
+				DisplayName: Wayfarer
+
+				TownNPCMood: {
+					Content: I'm rather content right now.
+					NoHome: Hey, I'd quite like a roof under my head if that's alright with you.
+					FarFromHome: Could you please get me back to my house? This land is quite scary.
+					LoveSpace: I like the space I have here, plenty of room to practice my archery.
+					DislikeCrowded: I'm somewhat of an introvert, so all these people near me is quite unnerving.
+					HateCrowded: I'm somewhat of an introvert, so all these people near me is quite unnerving.
+					LoveBiome: I think {BiomeName} is perfect, calm and tranquil.
+					LikeBiome: I think {BiomeName} is a very nice place, I hardly see any snow where I was from.
+					DislikeBiome: I don't really like {BiomeName}, I'd hate to have a run-in with skeletons!
+					HateBiome: Why'd you put me in {BiomeName}? You know how hostile jungles are!?
+					LoveNPC: Me and {NPCName} are great friends, thank you for letting us live in the same town.
+					LikeNPC: "{NPCName} is good company, she's great at styling my hair too... That's not weird, right?"
+					DislikeNPC: "{NPCName} keeps trying to get me to buy his dirt."
+					HateNPC: Psst, could you move {NPCName} far away from me, I'm already super broke as is.
+					LikeNPC_Princess: I like {NPCName}.
+					Princess_LovesNPC: I like {NPCName}.
+				}
+			}
+
 			Daerel_Intro.DisplayName: Daerel
 			DaerelUnconscious.DisplayName: Daerel
-			Fallen.DisplayName: Fallen
+
+			Fallen: {
+				DisplayName: Fallen
+
+				TownNPCMood: {
+					Content: Nice little place ya got here.
+					NoHome: I'd prefer to have a house.
+					FarFromHome: Could ya take me back to my home?
+					LoveSpace: This place is a wee bit spacious, not complaining though, I quite like it.
+					DislikeCrowded: All these humans are makin' my bones rattle.
+					HateCrowded: All these humans are makin' my bones rattle.
+					LoveBiome: The caverns are perfect for us Fallen, not many humans come and go here.
+					LikeBiome: Aah, {BiomeName} reminds me of when I was still alive in Gathuram. Good times they were.
+					DislikeBiome: I'm staying in {BiomeName}? Not my preferred place to live, I'd hate to have a run-in with aggressive humans!
+					HateBiome: I hate it here, {BiomeName} has some holy energy in it makin' my flesh crawl.
+					LoveNPC: "{NPCName} sells some nifty gadgets, knows how to rip people off too. I like that."
+					LikeNPC: "{NPCName} got somethin' about him I like."
+					DislikeNPC: "{NPCName} keeps lookin' at me with suspicion. Probably wants to 'purify' me."
+					HateNPC: "{NPCName} keeps thinking I'm some dying old man, insisting that she'll heal me. Please get me away from her."
+					LikeNPC_Princess: I like {NPCName}, she's alright.
+					Princess_LovesNPC: I like {NPCName}, he reminds me of an old man.
+				}
+			}
+
 			ForestNymph_Friendly.DisplayName: Forest Nymph
 			GathuramPortal.DisplayName: Mysterious Gateway
 			GiftDrone.DisplayName: Gift Drone
@@ -8535,7 +8575,30 @@ Mods: {
 			HazmatCorpse_Ghost.DisplayName: Hazmat Ghost
 			KS3Sitting.DisplayName: King Slayer III
 			LostSoulNPC.DisplayName: Lost Soul
-			Newb.DisplayName: Fool
+
+			Newb: {
+				DisplayName: Fool
+
+				TownNPCMood: {
+					Content: Me like here!
+					NoHome: Where home?
+					FarFromHome: Me lost, can you find home?
+					LoveSpace: So little people, yay!
+					DislikeCrowded: Too many faces!
+					HateCrowded: Too many faces!
+					LoveBiome: Me love {BiomeName}! It give memory of... Uh..
+					LikeBiome: Me like {BiomeName}.
+					DislikeBiome: Too boring here, me hate sand!
+					HateBiome: Me feel {BiomeName} make me sad!
+					LoveNPC: "{NPCName} knows magic like me!"
+					LikeNPC: Me like {NPCName}!
+					DislikeNPC: I feel evil within {NPCName}, very bad!
+					HateNPC: My hatred towards {NPCName} is beyond your mortal comprehension.
+					LikeNPC_Princess: Me like {NPCName}.
+					Princess_LovesNPC: I like {NPCName}, he's goofy!
+				}
+			}
+
 			Newb_Intro.DisplayName: Newb
 			Noza_NPC.DisplayName: Noza, Tamer of Evil
 			SkullDiggerFriendly.DisplayName: Skull Digger
@@ -8562,12 +8625,58 @@ Mods: {
 			SkullDigger_SS.DisplayName: Skull Digger
 			SpiritWalkerMan.DisplayName: Spirit Stranger
 			SpiritwalkerSoul.DisplayName: Lost Soul
-			TBot.DisplayName: Friendly T-Bot
+
+			TBot: {
+				DisplayName: Friendly T-Bot
+
+				TownNPCMood: {
+					Content: Feeling rather content, thank you for asking.
+					NoHome: I don't like being exposed to the elements. Do you have any housing or shelter I could inhabit for now?
+					FarFromHome: ... I believe we're very lost. I'm not familiar with our surroundings.
+					LoveSpace: It's rather quiet around here.
+					DislikeCrowded: Other tenants seem unhappy with the amount of crowding here, and frankly, so am I.
+					HateCrowded: Other tenants seem unhappy with the amount of crowding here, and frankly, so am I.
+					LoveBiome: I like this environment. It's very pleasant.
+					LikeBiome: This environment is mildly pleasant.
+					DislikeBiome: My current environment is rather... undesirable.
+					HateBiome: ... Just like home. I really do not like this environment.
+					LoveNPC: "{NPCName}'s knowledge on medicine rivals that of mine! It's really impressive."
+					LikeNPC: "{NPCName} and I have things in common. We get along well."
+					DislikeNPC: I find {NPCName} rather unsettling.
+					HateNPC: "{NPCName} reminds me of home. I'd rather not be reminded of that place."
+					LikeNPC_Princess: I like {NPCName}.
+					Princess_LovesNPC: I like {NPCName}.
+				}
+			}
+
 			TBot_Intro.DisplayName: Adam
 			TBotUnconscious.DisplayName: Adam
 			TreebarkDryad.DisplayName: Treebark Dryad
 			WraithSlayer_Samurai.DisplayName: Cursed Samurai
-			Zephos.DisplayName: Wayfarer
+
+			Zephos: {
+				DisplayName: Wayfarer
+
+				TownNPCMood: {
+					Content: I'm alright.
+					NoHome: Yo, mind if you give me a house to stay in?
+					FarFromHome: Yo bro, I can't find my house, you wanna help me out?
+					LoveSpace: This place is super spacious, good for practicing my swordsmanship!
+					DislikeCrowded: Is it crowded in here or what!
+					HateCrowded: Is it crowded in here or what!
+					LoveBiome: Staying at {BiomeName} reminds me of when I was a young pirate, sailing the seas!
+					LikeBiome: I think {BiomeName} is a nice place, I can hear the birds singing and flowers blooming.
+					DislikeBiome: Not a fan of {BiomeName}, I'd rather live on the surface.
+					HateBiome: It's so cold here, I'm shaking in my boots!
+					LoveNPC: "{NPCName} and I are great friends, so living near each other is great!"
+					LikeNPC: "{NPCName} is cool, I'd like to sail the seas with him sometime."
+					DislikeNPC: "{NPCName} wants to get his greedy little fingers on my money!"
+					HateNPC: "{NPCName} will never take my money! NEVER!!"
+					LikeNPC_Princess: I like {NPCName}.
+					Princess_LovesNPC: I like {NPCName}.
+				}
+			}
+
 			Zephos_Intro.DisplayName: Zephos
 			ZephosUnconscious.DisplayName: Zephos
 			Android.DisplayName: Android Mk.I
@@ -8645,11 +8754,11 @@ Mods: {
 			SicklyPenguin.DisplayName: Sickly Penguin
 			SicklyWolf.DisplayName: Sickly Wolf
 			SneezyFlinx.DisplayName: Sneezy Snow Flinx
-			KS3_Start.DisplayName: K S3_ Start
-			Neb_Start.DisplayName: Neb_ Start
-			PZ_Inactive.DisplayName: P Z_ Inactive
-			IrradiatedBehemoth_Inactive.DisplayName: Irradiated Behemoth_ Inactive
-			Blisterface_Inactive.DisplayName: Blisterface_ Inactive
+			KS3_Start.DisplayName: King Slayer III
+			Neb_Start.DisplayName: Nebuleus
+			PZ_Inactive.DisplayName: Patient Zero
+			IrradiatedBehemoth_Inactive.DisplayName: Irradiated Behemoth
+			Blisterface_Inactive.DisplayName: Blisterface
 			JustANormalToaster.DisplayName: Just A Normal Toaster
 			Calavia_SS.DisplayName: Kyretha
 			Calavia.DisplayName: Calavia
@@ -8799,8 +8908,6 @@ Mods: {
 			SoulCandlesTile.MapEntry: Soul Candles
 			ThornPlushTile.MapEntry: Thorn Plushie
 			TrojanChickenTile.MapEntry: Trojan Chicken Replica
-			WastelandCampfireTile.MapEntry: Wasteland Campfire
-			WastelandTorchTile.MapEntry: Torch
 			PetrifiedCrateTile.MapEntry: Petrified Crate
 			PetrifiedWoodBathtubTile.MapEntry: Petrified Wood Bathtub
 			PetrifiedWoodBedTile.MapEntry: Petrified Wood Bed
@@ -8830,7 +8937,6 @@ Mods: {
 			ShadestonePianoTile.MapEntry: Shadestone Piano
 			ShadestoneSofaTile.MapEntry: Shadestone Sofa
 			ShadestoneWorkbenchTile.MapEntry: Shadestone Work Bench
-			ShadeTorchTile.MapEntry: Torch
 			WaxCandlesTile.MapEntry: Wax Candles
 			AndroidInactiveTile.MapEntry: Inactive Android Mk.I
 			BiocontainerTile.MapEntry: Life Fruit Bio-Container
@@ -8840,23 +8946,6 @@ Mods: {
 			SlayerChairTile.MapEntry: Slayer's Gaming Chair
 			SlayerFabricatorTile.MapEntry: Cyber Fabricator
 			SolarPanelTile.MapEntry: Solar Panels
-			ErhanBoxTile.MapEntry: Music Box
-			ForestBossBoxTile.MapEntry: Music Box
-			ForestBossBoxTile2.MapEntry: Music Box
-			FowlMorningBoxTile.MapEntry: Music Box
-			HallOfHeroesBoxTile.MapEntry: Music Box
-			KeeperBoxTile.MapEntry: Music Box
-			KSBoxTile.MapEntry: Music Box
-			LabBossMusicBoxTile.MapEntry: Music Box
-			LabMusicBoxTile.MapEntry: Music Box
-			NebBox2Tile.MapEntry: Music Box
-			NebBoxTile.MapEntry: Music Box
-			OmegaBoxTile.MapEntry: Music Box
-			OmegaBoxTile2.MapEntry: Music Box
-			PZMusicBoxTile.MapEntry: Music Box
-			SlayerShipBoxTile.MapEntry: Music Box
-			SoIBoxTile.MapEntry: Music Box
-			WastelandBoxTile.MapEntry: Music Box
 			CryoCrystalTile.MapEntry: Gathic Cryo-Crystal
 			DemonScrollTile.MapEntry: Forbidden Ritual
 			GrubNestTile.MapEntry: Grub Nest
@@ -8946,6 +9035,83 @@ Mods: {
 			DownedSkeletronOrSeed: After any late-pre-hardmode boss is defeated
 			HasSpiritWalker: After Spirit Walker is unlocked
 			DeadRingerGiven: After finding the Dead Ringer
+			ForestNymphTrust: While having a Forest Nymph's trust
+		}
+
+		Configs: {
+			RedeConfigClient: {
+				DisplayName: Redemption Config Client
+
+				DialogueWaitTime: {
+					Label: Extra Dialogue Wait Time
+					Tooltip:
+						'''
+						Increases duration of dialogue text persisting before moving on, increase if you're a slow reader
+						Value is in seconds.
+						'''
+				}
+
+				DialogueSpeed: {
+					Label: Dialogue Text Speed
+					Tooltip:
+						'''
+						Only recommend changing if the dialogue speed is too slow or fast normally.
+						This is how much less time measured in seconds for each letter to appear, higher = faster.
+						The faster you make it, the harder it is to read before finishing, so also adjust Extra Dialogue Wait Time
+						'''
+				}
+
+				NoBossIntroText: {
+					Label: Disable Zelda-Styled Boss Titles
+					Tooltip: Disables the Legend of Zelda-style boss introduction text for bosses.
+				}
+
+				CameraLockDisable: {
+					Label: Disable Camera Lock
+					Tooltip:
+						'''
+						Disables the locked camera during cutscenes, along with the invincibility and vignette effect
+						Not recommended, at least on a first playthrough, as it can ruin the feel of things.
+						'''
+				}
+
+				ElementDisable: {
+					Label: Disable Elements
+					Tooltip: Disables elemental resistances and damage
+				}
+
+				NoPZBuildUp: {
+					Label: No Patient Zero Build-Up
+					Tooltip: Makes the boss begin the fight instantly, mainly for no-hitters. (This will cause the boss's pulse effect to not sync well with the music)
+				}
+
+				FunniHeader: The Funnies (Remember to disable these before intending to generate a normal world!)
+
+				FunniSpiders: {
+					Label: Oops! All spider!
+					Tooltip: Generating a new world will cause all stone blocks to become infested stone
+				}
+
+				FunniWasteland: {
+					Label: Alright, who set off the nuke?
+					Tooltip: Generating a new world will have a Wasteland biome naturally generate (This can break progression, obviously)
+				}
+
+				FunniAllWasteland: {
+					Label: Liden at home:
+					Tooltip: Generating a new world will convert every tile into it's irradiated version (This can break progression, obviously)
+				}
+
+				FunniJanitor: {
+					Label: The Janitor's Last Stand
+					Tooltip: Generating a new world will create a clean lab with safe laboratory tiles and no sludge (This can break progression, obviously)
+				}
+
+				FunniAncient: {
+					Label: Ancient World
+					Tooltip: Generating a new world will convert tiles to their ancient or gathic version, and gathic tombs will gen more frequently
+				}
+			}
 		}
 	}
 }

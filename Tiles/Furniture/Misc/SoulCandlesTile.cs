@@ -1,7 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Dusts.Tiles;
-using Redemption.Items.Placeable.Furniture.Misc;
+using Redemption.Globals;
 using System;
 using System.Linq;
 using Terraria;
@@ -53,7 +53,7 @@ namespace Redemption.Tiles.Furniture.Misc
         public override void NearbyEffects(int i, int j, bool closer)
         {
             Player player = Main.LocalPlayer;
-            Tile tile = Main.tile[i, j];
+            Tile tile = Framing.GetTileSafely(i, j);
             if (!Main.projectile.Any(projectile => projectile.type == ModContent.ProjectileType<SoulCandles_Proj>() && (projectile.ModProjectile as SoulCandles_Proj).Parent == Main.tile[i, j] && projectile.active))
             {
                 if (Main.netMode != NetmodeID.MultiplayerClient)
@@ -72,20 +72,23 @@ namespace Redemption.Tiles.Furniture.Misc
         }
         public override void PostDraw(int i, int j, SpriteBatch spriteBatch)
         {
-            Tile tile = Main.tile[i, j];
+            Tile tile = Framing.GetTileSafely(i, j);
             Vector2 zero = new(Main.offScreenRange, Main.offScreenRange);
             if (Main.drawToScreen)
                 zero = Vector2.Zero;
-            int height = tile.TileFrameY == 36 ? 18 : 16;
+            int height = tile.TileFrameY % AnimationFrameHeight >= 16 ? 18 : 16;
+            int animate = Main.tileFrame[Type] * AnimationFrameHeight;
 
+            Texture2D texture = ModContent.Request<Texture2D>(Texture + "_Glow").Value;
+            Rectangle frame = new(tile.TileFrameX, tile.TileFrameY + animate, 16, height);
             ulong randSeed = Main.TileFrameSeed ^ (ulong)((long)j << 32 | (uint)i);
             Color color = new(100, 100, 100, 0);
             for (int k = 0; k < 7; k++)
             {
                 float xx = Utils.RandomInt(ref randSeed, -10, 11) * 0.15f;
                 float yy = Utils.RandomInt(ref randSeed, -10, 1) * 0.35f;
-
-                Main.spriteBatch.Draw(ModContent.Request<Texture2D>("Redemption/Tiles/Furniture/Misc/SoulCandlesTile_Glow").Value, new Vector2((i * 16) - (int)Main.screenPosition.X + xx, (j * 16) - (int)Main.screenPosition.Y + yy) + zero, new Rectangle(tile.TileFrameX, tile.TileFrameY, 16, height), color, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
+                Vector2 drawPosition = new Vector2(i * 16 - (int)Main.screenPosition.X + xx, j * 16 - (int)Main.screenPosition.Y + yy) + zero;
+                spriteBatch.Draw(texture, drawPosition, frame, color, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
             }
         }
     }
@@ -115,17 +118,17 @@ namespace Redemption.Tiles.Furniture.Misc
             if (!Parent.HasTile)
                 Projectile.Kill();
             Projectile.timeLeft = 10;
-            for (int n = 0; n < Main.maxNPCs; n++)
+            /*for (int n = 0; n < Main.maxNPCs; n++)
             {
                 NPC target = Main.npc[n];
-                if (!target.boss && target.Distance(Projectile.Center) <= 100)
-                {
-                    //if (NPCLists.IsSoulless.Contains(target.type)) // TODO: Soul Candles kill enemy
-                    //{
-                    //    player.ApplyDamageToNPC(target, 9999, 0, 0, false);
-                    //}
-                }
-            }
+                if (!target.active || target.boss || target.DistanceSQ(Projectile.Center) > 100 * 100)
+                    continue;
+
+                if (!NPCLists.Soulless.Contains(target.type))
+                    continue;
+
+                player.ApplyDamageToNPC(target, 9999, 0, 0, false);
+            }*/
             for (int p = 0; p < Main.maxPlayers; p++)
             {
                 Player playerTarget = Main.player[p];

@@ -29,8 +29,9 @@ namespace Redemption.Tiles.Furniture.ElderWood
 			DustType = DustID.Ash;
 			AdjTiles = new int[] { TileID.OpenDoor };
 			TileID.Sets.CloseDoorID[Type] = ModContent.TileType<ElderWoodDoorClosed>();
+            RegisterItemDrop(ModContent.ItemType<ElderWoodDoor>(), 0);
 
-			AddMapEntry(new Color(109, 87, 78), Language.GetText("MapObject.Door"));
+            AddMapEntry(new Color(109, 87, 78), Language.GetText("MapObject.Door"));
 
             // Placement
             TileObjectData.newTile.Width = 2;

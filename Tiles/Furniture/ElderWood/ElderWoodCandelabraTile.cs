@@ -5,8 +5,6 @@ using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ID;
 using Terraria.ObjectData;
-using Redemption.Items.Placeable.Furniture.ElderWood;
-using Terraria.DataStructures;
 using Terraria.Enums;
 
 namespace Redemption.Tiles.Furniture.ElderWood
@@ -25,6 +23,7 @@ namespace Redemption.Tiles.Furniture.ElderWood
             TileObjectData.newTile.WaterDeath = true;
             TileObjectData.newTile.WaterPlacement = LiquidPlacement.NotAllowed;
             TileObjectData.newTile.LavaPlacement = LiquidPlacement.NotAllowed;
+            TileObjectData.newTile.StyleLineSkip = 2;
             TileObjectData.addTile(Type);
             LocalizedText name = CreateMapEntryName();
             // name.SetDefault("Elder Wood Candelabra");
@@ -84,7 +83,7 @@ namespace Redemption.Tiles.Furniture.ElderWood
                 float xx = Utils.RandomInt(ref randSeed, -10, 11) * 0.15f;
                 float yy = Utils.RandomInt(ref randSeed, -10, 1) * 0.35f;
 
-                Main.spriteBatch.Draw(ModContent.Request<Texture2D>("Redemption/Tiles/Furniture/ElderWood/ElderWoodCandelabraTile_Glow").Value, new Vector2((i * 16) - (int)Main.screenPosition.X + xx, (j * 16) - (int)Main.screenPosition.Y + yy) + zero, new Rectangle(tile.TileFrameX, tile.TileFrameY, 16, height), color, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
+                Main.spriteBatch.Draw(ModContent.Request<Texture2D>(Texture + "_Glow").Value, new Vector2((i * 16) - (int)Main.screenPosition.X + xx, (j * 16) - (int)Main.screenPosition.Y + yy) + zero, new Rectangle(tile.TileFrameX, tile.TileFrameY, 16, height), color, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
             }
         }
     }

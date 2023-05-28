@@ -40,10 +40,7 @@ namespace Redemption.Tiles.Containers
             AdjTiles = new int[] { TileID.Containers };
             RegisterItemDrop(ModContent.ItemType<LabChest>(), 1);
             RegisterItemDrop(ItemID.Chest);
-
-            // Names
-            //ContainerName/* tModPorter Note: Removed. Override DefaultContainerName instead */.SetDefault("High Security Crate");
-
+            
             AddMapEntry(new Color(0, 242, 170), this.GetLocalization("MapEntry0"), MapChestName);
             AddMapEntry(new Color(0, 242, 170), this.GetLocalization("MapEntry1"), MapChestName);
 

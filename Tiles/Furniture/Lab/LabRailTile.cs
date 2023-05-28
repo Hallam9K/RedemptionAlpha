@@ -34,6 +34,7 @@ namespace Redemption.Tiles.Furniture.Lab
             LocalizedText name = CreateMapEntryName();
             // name.SetDefault("Laboratory Railing");
             AddMapEntry(new Color(200, 246, 254), name);
+            RegisterItemDrop(ModContent.ItemType<LabRail_L>());
             DustType = DustID.Glass;
         }
         public override void NumDust(int i, int j, bool fail, ref int num) => num = fail ? 1 : 3;
@@ -62,6 +63,7 @@ namespace Redemption.Tiles.Furniture.Lab
             LocalizedText name = CreateMapEntryName();
             // name.SetDefault("Laboratory Railing");
             AddMapEntry(new Color(200, 246, 254), name);
+            RegisterItemDrop(ModContent.ItemType<LabRail_Mid>());
             DustType = DustID.Glass;
         }
         public override void NumDust(int i, int j, bool fail, ref int num) => num = fail ? 1 : 3;
@@ -89,6 +91,7 @@ namespace Redemption.Tiles.Furniture.Lab
             LocalizedText name = CreateMapEntryName();
             // name.SetDefault("Laboratory Railing");
             AddMapEntry(new Color(200, 246, 254), name);
+            RegisterItemDrop(ModContent.ItemType<LabRail_R>());
             DustType = DustID.Glass;
         }
         public override void NumDust(int i, int j, bool fail, ref int num) => num = fail ? 1 : 3;

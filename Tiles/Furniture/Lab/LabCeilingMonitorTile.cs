@@ -36,6 +36,7 @@ namespace Redemption.Tiles.Furniture.Lab
             TileObjectData.addAlternate(1);
             TileObjectData.addTile(Type);
             DustType = DustID.Electric;
+            RegisterItemDrop(ModContent.ItemType<LabCeilingMonitor>());
             MinPick = 200;
             MineResist = 6f;
 			LocalizedText name = CreateMapEntryName();

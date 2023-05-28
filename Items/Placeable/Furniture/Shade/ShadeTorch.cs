@@ -1,11 +1,14 @@
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
-using Terraria.GameContent.Creative;
 using Terraria.ModLoader;
 using Redemption.Dusts.Tiles;
 using Redemption.Items.Placeable.Tiles;
 using Redemption.Tiles.Furniture.Shade;
+using Terraria.Localization;
+using Redemption.Biomes;
+using Redemption.Globals;
+using Redemption.Rarities;
 
 namespace Redemption.Items.Placeable.Furniture.Shade
 {
@@ -13,20 +16,19 @@ namespace Redemption.Items.Placeable.Furniture.Shade
     {
         public override void SetStaticDefaults()
         {
+            ItemID.Sets.Torches[Type] = true;
+            ItemID.Sets.WaterTorches[Type] = true;
+            ItemID.Sets.SingleUseInGamepad[Type] = true;
             ItemID.Sets.ShimmerTransformToItem[Type] = ItemID.ShimmerTorch;
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 100;
+            Item.ResearchUnlockCount = 100;
         }
 
         public override void SetDefaults()
         {
-            Item.DefaultToTorch(ModContent.TileType<ShadeTorchTile>(), 0, false);
+            Item.DefaultToTorch(ModContent.TileType<ShadeTorchTile>(), 1, true);
+            Item.value = 50;
+            Item.rare = ModContent.RarityType<SoullessRarity>();
         }
-
-        public override void ModifyResearchSorting(ref ContentSamples.CreativeHelper.ItemGroup itemGroup)
-        {
-            itemGroup = ContentSamples.CreativeHelper.ItemGroup.Torches;
-        }
-
         public override void HoldItem(Player player)
         {
             if (Main.rand.NextBool(player.itemAnimation > 0 ? 40 : 80))
@@ -42,11 +44,6 @@ namespace Redemption.Items.Placeable.Furniture.Shade
         public override void PostUpdate()
         {
             Lighting.AddLight(Item.Center, 0.7f, 0.7f, 0.8f);
-        }
-
-        public override void AutoLightSelect(ref bool dryTorch, ref bool wetTorch, ref bool glowstick)
-        {
-            wetTorch = true;
         }
 
         public override void AddRecipes()

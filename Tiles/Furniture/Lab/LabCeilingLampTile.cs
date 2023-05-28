@@ -6,6 +6,7 @@ using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 using Terraria.DataStructures;
+using Redemption.Items.Materials.PreHM;
 using Redemption.Items.Placeable.Furniture.Lab;
 
 namespace Redemption.Tiles.Furniture.Lab
@@ -31,6 +32,7 @@ namespace Redemption.Tiles.Furniture.Lab
             AddMapEntry(new Color(189, 191, 200), name);
             DustType = DustID.Electric;
             AdjTiles = new int[] { TileID.Chandeliers };
+            RegisterItemDrop(ModContent.ItemType<LabCeilingLamp>());
             AddToArray(ref TileID.Sets.RoomNeeds.CountsAsTorch);
         }
         public override void HitWire(int i, int j)

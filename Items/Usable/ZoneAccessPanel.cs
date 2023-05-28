@@ -269,6 +269,7 @@ namespace Redemption.Items.Usable
             {
                 [new Color(220, 255, 255)] = ModContent.TileType<DeactivatedLaserTile>(),
                 [new Color(255, 0, 0)] = ModContent.TileType<DeactivatedLaser2Tile>(),
+                [new Color(0, 0, 255)] = ModContent.TileType<HalogenLampTile>(),
                 [Color.Black] = -1
             };
 

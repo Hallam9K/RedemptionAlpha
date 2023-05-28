@@ -1,5 +1,4 @@
 using Microsoft.Xna.Framework;
-using Redemption.Items.Placeable.Furniture.Misc;
 using Redemption.Items.Weapons.PostML.Ranged;
 using Redemption.Items.Weapons.PreHM.Ranged;
 using Terraria;

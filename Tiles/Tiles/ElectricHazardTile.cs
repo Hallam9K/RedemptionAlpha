@@ -4,7 +4,6 @@ using Terraria.ModLoader;
 using Terraria.ID;
 using Redemption.Items.Placeable.Tiles;
 using Microsoft.Xna.Framework.Graphics;
-using Redemption.Globals;
 
 namespace Redemption.Tiles.Tiles
 {

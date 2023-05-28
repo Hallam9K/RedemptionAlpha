@@ -1,8 +1,10 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Dusts.Tiles;
+using Redemption.Globals;
 using Redemption.Items.Placeable.Containers;
 using Redemption.Items.Usable;
+using Redemption.WorldGeneration;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.Audio;
@@ -40,9 +42,6 @@ namespace Redemption.Tiles.Containers
             AdjTiles = new int[] { TileID.Containers };
             RegisterItemDrop(ModContent.ItemType<LabChest2>(), 1);
             RegisterItemDrop(ItemID.Chest);
-
-            // Names
-            //ContainerName/* tModPorter Note: Removed. Override DefaultContainerName instead */.SetDefault("High Security Crate");
 
             AddMapEntry(new Color(0, 242, 170), this.GetLocalization("MapEntry0"), MapChestName);
             AddMapEntry(new Color(0, 242, 170), this.GetLocalization("MapEntry1"), MapChestName);
@@ -157,6 +156,9 @@ namespace Redemption.Tiles.Containers
             {
                 if (isLocked)
                 {
+                    if (!RedeBossDowned.downedPZ && i >= RedeGen.LabVector.X + 74 && i <= RedeGen.LabVector.X + 79 && j >= RedeGen.LabVector.Y + 190 && j <= RedeGen.LabVector.Y + 195)
+                        return false;
+
                     int key = ModContent.ItemType<Keycard2>();
                     if (player.HasItemInInventoryOrOpenVoidBag(key) && Chest.Unlock(left, top))
                     {
@@ -238,7 +240,7 @@ namespace Redemption.Tiles.Containers
                 zero = Vector2.Zero;
 
             int height = tile.TileFrameY == 36 ? 18 : 16;
-            Main.spriteBatch.Draw(ModContent.Request<Texture2D>("Redemption/Tiles/Containers/LabChestTileLocked2_Glow").Value, new Vector2((i * 16) - (int)Main.screenPosition.X, (j * 16) - (int)Main.screenPosition.Y) + zero, new Rectangle(tile.TileFrameX, tile.TileFrameY, 16, height), Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
+            Main.spriteBatch.Draw(ModContent.Request<Texture2D>(Texture + "_Glow").Value, new Vector2((i * 16) - (int)Main.screenPosition.X, (j * 16) - (int)Main.screenPosition.Y) + zero, new Rectangle(tile.TileFrameX, tile.TileFrameY, 16, height), Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
         }
     }
 }

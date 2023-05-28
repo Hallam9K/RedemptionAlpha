@@ -23,12 +23,7 @@ namespace Redemption.Tiles.Banners
             TileObjectData.addTile(Type);
             AddMapEntry(Color.SandyBrown);
         }
-
-        public override void KillMultiTile(int i, int j, int frameX, int frameY)
-        {
-            Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 16, 48, ModContent.ItemType<RoosterBoosterBanner>());
-        }
-
+        public override bool CreateDust(int i, int j, ref int type) => false;
         public override void NearbyEffects(int i, int j, bool closer)
         {
             if (closer)

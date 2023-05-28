@@ -5,7 +5,6 @@ using Terraria.ModLoader;
 using Redemption.Tiles.Furniture.Misc;
 using Redemption.Dusts.Tiles;
 using Redemption.Items.Placeable.Tiles;
-using Redemption.Tiles.Furniture.Shade;
 
 namespace Redemption.Items.Placeable.Furniture.Misc
 {
@@ -13,6 +12,8 @@ namespace Redemption.Items.Placeable.Furniture.Misc
 	{
 		public override void SetStaticDefaults()
 		{
+            ItemID.Sets.Torches[Type] = true;
+            ItemID.Sets.SingleUseInGamepad[Type] = true;
             ItemID.Sets.ShimmerTransformToItem[Type] = ItemID.ShimmerTorch;
             Item.ResearchUnlockCount = 100;
 		}
@@ -20,13 +21,8 @@ namespace Redemption.Items.Placeable.Furniture.Misc
 		public override void SetDefaults()
         {
             Item.DefaultToTorch(ModContent.TileType<WastelandTorchTile>(), 0, false);
-		}
-
-		public override void ModifyResearchSorting(ref ContentSamples.CreativeHelper.ItemGroup itemGroup)
-		{
-			itemGroup = ContentSamples.CreativeHelper.ItemGroup.Torches;
-		}
-
+            Item.value = 50;
+        }
 		public override void HoldItem(Player player)
 		{
 			if (Main.rand.NextBool(player.itemAnimation > 0 ? 40 : 80))
@@ -43,11 +39,6 @@ namespace Redemption.Items.Placeable.Furniture.Misc
 		{
 			if (!Item.wet)
 				Lighting.AddLight(Item.Center, 0.85f, 0.7f, 0.7f);
-		}
-
-		public override void AutoLightSelect(ref bool dryTorch, ref bool wetTorch, ref bool glowstick)
-		{
-			dryTorch = true;
 		}
 
 		public override void AddRecipes()

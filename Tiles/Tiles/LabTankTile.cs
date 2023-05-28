@@ -12,8 +12,10 @@ namespace Redemption.Tiles.Tiles
 			Main.tileSolid[Type] = false;
 			Main.tileMergeDirt[Type] = false;
             Main.tileLighted[Type] = true;
+            TileID.Sets.IsBeam[Type] = true;
+            TileID.Sets.DisableSmartCursor[Type] = true;
             DustType = DustID.Glass;
-            MinPick = 500;
+            MinPick = 1000;
             MineResist = 5f;
             HitSound = SoundID.Tink;
             AddMapEntry(new Color(54, 193, 59));
@@ -26,5 +28,15 @@ namespace Redemption.Tiles.Tiles
             b = 0.0f;
         }
         public override bool CanExplode(int i, int j) => false;
+    }
+    public class LabTankTile2 : LabTankTile
+    {
+        public override string Texture => "Redemption/Tiles/Tiles/LabTankTile";
+        public override void SetStaticDefaults()
+		{
+            base.SetStaticDefaults();
+            TileID.Sets.DisableSmartCursor[Type] = false;
+            MinPick = 200;
+		}
     }
 }

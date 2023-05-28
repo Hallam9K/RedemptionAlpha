@@ -3,16 +3,19 @@ using Terraria.ModLoader;
 using Terraria;
 using Microsoft.Xna.Framework;
 using Redemption.Projectiles.Ranged;
+using Redemption.Globals;
+using Terraria.Localization;
 
 namespace Redemption.Items.Weapons.PreHM.Ranged
 {
     public class CursedThornBow : ModItem
     {
+        public override LocalizedText Tooltip => base.Tooltip.WithFormatArgs(ElementID.NatureS);
         public override void SetStaticDefaults()
         {
-            // Tooltip.SetDefault("Replaces wooden arrows with seed-laden arrows that sprout small thorn traps");
-
+            // Tooltip.SetDefault("Replaces wooden arrows with seed-laden arrows that sprout small thorn traps, dealing Nature damage");
             Item.ResearchUnlockCount = 1;
+            ElementID.ItemNature[Type] = true;
         }
 
         public override void SetDefaults()

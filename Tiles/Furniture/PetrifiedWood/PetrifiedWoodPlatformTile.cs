@@ -39,9 +39,7 @@ namespace Redemption.Tiles.Furniture.PetrifiedWood
             TileObjectData.newTile.LavaDeath = true;
             TileObjectData.addTile(Type);
         }
-
         public override void PostSetDefaults() => Main.tileNoSunLight[Type] = false;
-
         public override void NumDust(int i, int j, bool fail, ref int num) => num = fail ? 1 : 3;
     }
 }

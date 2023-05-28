@@ -12,6 +12,7 @@ namespace Redemption.Walls
 		{
 			Main.wallHouse[Type] = false;
 			AddMapEntry(new Color(8, 64, 39));
+            RegisterItemDrop(ModContent.ItemType<LabPlating>());
             HitSound = SoundID.Grass;
         }
         public override bool CanExplode(int i, int j) => false;

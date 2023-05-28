@@ -36,35 +36,29 @@ namespace Redemption.Tiles.Furniture.Misc
 
 			AddToArray(ref TileID.Sets.RoomNeeds.CountsAsTorch);
 
-			// Placement
-			TileObjectData.newTile.CopyFrom(TileObjectData.StyleTorch);
-			TileObjectData.newTile.AnchorBottom = new AnchorData(AnchorType.SolidTile | AnchorType.SolidSide, TileObjectData.newTile.Width, 0);
-			TileObjectData.newAlternate.CopyFrom(TileObjectData.StyleTorch);
-			TileObjectData.newAlternate.AnchorLeft = new AnchorData(AnchorType.SolidTile | AnchorType.SolidSide | AnchorType.Tree | AnchorType.AlternateTile, TileObjectData.newTile.Height, 0);
-			TileObjectData.newAlternate.AnchorAlternateTiles = new[] { 124 };
-			TileObjectData.addAlternate(1);
-			TileObjectData.newAlternate.CopyFrom(TileObjectData.StyleTorch);
-			TileObjectData.newAlternate.AnchorRight = new AnchorData(AnchorType.SolidTile | AnchorType.SolidSide | AnchorType.Tree | AnchorType.AlternateTile, TileObjectData.newTile.Height, 0);
-			TileObjectData.newAlternate.AnchorAlternateTiles = new[] { 124 };
-			TileObjectData.addAlternate(2);
-			TileObjectData.newAlternate.CopyFrom(TileObjectData.StyleTorch);
-			TileObjectData.newAlternate.AnchorWall = true;
-			TileObjectData.addAlternate(0);
-			TileObjectData.addTile(Type);
+            // Placement
+            TileObjectData.newTile.CopyFrom(TileObjectData.GetTileData(TileID.Torches, 0));
+            TileObjectData.addTile(Type);
 
-			// Etc
-			LocalizedText name = CreateMapEntryName();
-			// name.SetDefault("Torch");
-			AddMapEntry(new Color(255, 199, 199), name);
+			AddMapEntry(new Color(255, 199, 199), Language.GetText("ItemName.Torch"));
 
 			// Assets
 			if (!Main.dedServ)
 			{
-				flameTexture = ModContent.Request<Texture2D>("Redemption/Tiles/Furniture/Misc/WastelandTorchTile_Flame");
+				flameTexture = ModContent.Request<Texture2D>(Texture + "_Flame");
 			}
 		}
+        public override void MouseOver(int i, int j)
+        {
+            Player player = Main.LocalPlayer;
+            player.noThrow = 2;
+            player.cursorItemIconEnabled = true;
 
-		public override float GetTorchLuck(Player player)
+            // We can determine the item to show on the cursor by getting the tile style and looking up the corresponding item drop.
+            int style = TileObjectData.GetTileStyle(Main.tile[i, j]);
+            player.cursorItemIconID = TileLoader.GetItemDropFromTypeAndStyle(Type, style);
+        }
+        public override float GetTorchLuck(Player player)
 		{
 			bool inWastelandBiome = Main.LocalPlayer.InModBiome<WastelandPurityBiome>();
 			return inWastelandBiome ? 1f : 0;
@@ -88,22 +82,14 @@ namespace Redemption.Tiles.Furniture.Misc
 		{
 			offsetY = 0;
 			if (WorldGen.SolidTile(i, j - 1))
-			{
-				offsetY = 2;
-				if (WorldGen.SolidTile(i - 1, j + 1) || WorldGen.SolidTile(i + 1, j + 1))
-					offsetY = 4;
-			}
+                offsetY = 4;
 		}
 
 		public override void PostDraw(int i, int j, SpriteBatch spriteBatch)
 		{
 			int offsetY = 0;
 			if (WorldGen.SolidTile(i, j - 1))
-			{
-				offsetY = 2;
-				if (WorldGen.SolidTile(i - 1, j + 1) || WorldGen.SolidTile(i + 1, j + 1))
-					offsetY = 4;
-			}
+                offsetY = 4; 
 			Vector2 zero = new(Main.offScreenRange, Main.offScreenRange);
 			if (Main.drawToScreen)
 				zero = Vector2.Zero;
@@ -115,8 +101,7 @@ namespace Redemption.Tiles.Furniture.Misc
 			var tile = Main.tile[i, j];
 			int frameX = tile.TileFrameX;
 			int frameY = tile.TileFrameY;
-
-			for (int k = 0; k < 7; k++)
+            for (int k = 0; k < 7; k++)
 			{
 				float xx = Utils.RandomInt(ref randSeed, -10, 11) * 0.15f;
 				float yy = Utils.RandomInt(ref randSeed, -10, 1) * 0.35f;

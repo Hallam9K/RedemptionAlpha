@@ -4,8 +4,8 @@ using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ID;
 using Terraria.ObjectData;
-using Redemption.Items.Placeable.Furniture.PetrifiedWood;
 using Terraria.Enums;
+using Redemption.Items.Placeable.Furniture.PetrifiedWood;
 
 namespace Redemption.Tiles.Furniture.PetrifiedWood
 {
@@ -22,6 +22,7 @@ namespace Redemption.Tiles.Furniture.PetrifiedWood
             TileObjectData.newTile.WaterPlacement = LiquidPlacement.NotAllowed;
             TileObjectData.newTile.LavaPlacement = LiquidPlacement.NotAllowed;
             TileObjectData.newTile.CoordinateHeights = new int[] { 20 };
+            TileObjectData.newTile.StyleLineSkip = 2;
             TileObjectData.addTile(Type);
 			LocalizedText name = CreateMapEntryName();
 			// name.SetDefault("Petrified Wood Candle");
