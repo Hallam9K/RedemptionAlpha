@@ -29,6 +29,7 @@ namespace Redemption.Tiles.Furniture.ElderWood
             LocalizedText name = CreateMapEntryName();
             // name.SetDefault("Elder Wood Candle");
             AddMapEntry(new Color(109, 87, 78), name);
+            RegisterItemDrop(ModContent.ItemType<ElderWoodCandle>());
             AdjTiles = new int[] { TileID.Candles };
             AddToArray(ref TileID.Sets.RoomNeeds.CountsAsTorch);
             DustType = DustID.t_BorealWood;

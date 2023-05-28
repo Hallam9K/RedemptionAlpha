@@ -7,6 +7,7 @@ using Terraria.Enums;
 using Terraria.ObjectData;
 using Terraria.DataStructures;
 using Microsoft.Xna.Framework.Graphics;
+using Redemption.Items.Placeable.Furniture.ElderWood;
 
 namespace Redemption.Tiles.Furniture.ElderWood
 {
@@ -36,6 +37,7 @@ namespace Redemption.Tiles.Furniture.ElderWood
             TileObjectData.addTile(Type);
             AddMapEntry(new Color(109, 87, 78), Language.GetText("MapObject.FloorLamp"));
             AddToArray(ref TileID.Sets.RoomNeeds.CountsAsTorch);
+            RegisterItemDrop(ModContent.ItemType<ElderWoodLamp>());
             DustType = DustID.t_BorealWood;
         }
         public override void HitWire(int i, int j)

@@ -916,9 +916,7 @@ Mods: {
 			}
 		}
 
-		Subworlds: {
-			SoullessSub.DisplayName: Soulless Dimension
-		}
+		Subworlds.SoullessSub.DisplayName: Soulless Dimension
 
 		Dialogue: {
 			TBot: {
@@ -7820,6 +7818,16 @@ Mods: {
 				DisplayName: Overgrown Laboratory Panel
 				Tooltip: ""
 			}
+
+			ShinkiteBrickOrnateWall: {
+				DisplayName: Shinkite Brick Ornate Wall
+				Tooltip: ""
+			}
+
+			ShadestoneMirrorSpecial: {
+				DisplayName: Shadestone Mirror Special
+				Tooltip: ""
+			}
 		}
 
 		Projectiles: {
@@ -8992,6 +9000,7 @@ Mods: {
 			IrradiatedBorealSapling.MapEntry: Petrified Boreal Sapling
 			IrradiatedPalmSapling.MapEntry: Petrified Palm Sapling
 			IrradiatedPuritySapling.MapEntry: Petrified Sapling
+			ShadestoneMirrorTile2.MapEntry: Shadestone Mirror Tile2
 		}
 
 		Keybinds: {

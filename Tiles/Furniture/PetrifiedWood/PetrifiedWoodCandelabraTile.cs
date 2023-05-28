@@ -5,6 +5,7 @@ using Terraria.ModLoader;
 using Terraria.ID;
 using Terraria.ObjectData;
 using Terraria.Enums;
+using Redemption.Items.Placeable.Furniture.PetrifiedWood;
 
 namespace Redemption.Tiles.Furniture.PetrifiedWood
 {
@@ -26,6 +27,7 @@ namespace Redemption.Tiles.Furniture.PetrifiedWood
 			LocalizedText name = CreateMapEntryName();
 			// name.SetDefault("Petrified Wood Candelabra");
             AddMapEntry(new Color(100, 100, 100), name);
+            RegisterItemDrop(ModContent.ItemType<PetrifiedWoodCandelabra>());
             AddToArray(ref TileID.Sets.RoomNeeds.CountsAsTorch);
             AdjTiles = new int[]{ TileID.Candelabras };
             DustType = DustID.Ash;

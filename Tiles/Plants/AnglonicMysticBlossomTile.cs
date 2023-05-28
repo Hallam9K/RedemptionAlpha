@@ -5,6 +5,7 @@ using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 using Terraria.GameContent.Metadata;
+using Redemption.Items.Placeable.Plants;
 
 namespace Redemption.Tiles.Plants
 {
@@ -26,6 +27,7 @@ namespace Redemption.Tiles.Plants
             LocalizedText name = CreateMapEntryName();
             // name.SetDefault("Anglonic Mystic Blossom");
             AddMapEntry(new Color(235, 175, 255), name);
+            RegisterItemDrop(ModContent.ItemType<AnglonicMysticBlossom>());
             DustType = DustID.GrassBlades;
             HitSound = SoundID.Grass;
             TileMaterials.SetForTileId(Type, TileMaterials._materialsByName["Plant"]);

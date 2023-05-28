@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Dusts.Tiles;
+using Redemption.Items.Placeable.Furniture.Shade;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
@@ -31,6 +32,7 @@ namespace Redemption.Tiles.Furniture.Shade
             AddMapEntry(new Color(141, 132, 172), name);
             AdjTiles = new int[] { TileID.Candles };
             AddToArray(ref TileID.Sets.RoomNeeds.CountsAsTorch);
+            RegisterItemDrop(ModContent.ItemType<WaxCandles>());
             DustType = ModContent.DustType<MaskDust>();
             AnimationFrameHeight = 36;
         }

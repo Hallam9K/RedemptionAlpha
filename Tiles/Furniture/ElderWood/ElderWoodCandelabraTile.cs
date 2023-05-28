@@ -6,6 +6,8 @@ using Terraria.ModLoader;
 using Terraria.ID;
 using Terraria.ObjectData;
 using Terraria.Enums;
+using Redemption.Items.Placeable.Furniture.Lab;
+using Redemption.Items.Placeable.Furniture.ElderWood;
 
 namespace Redemption.Tiles.Furniture.ElderWood
 {
@@ -28,6 +30,7 @@ namespace Redemption.Tiles.Furniture.ElderWood
             LocalizedText name = CreateMapEntryName();
             // name.SetDefault("Elder Wood Candelabra");
             AddMapEntry(new Color(109, 87, 78), name);
+            RegisterItemDrop(ModContent.ItemType<ElderWoodCandelabra>());
             AddToArray(ref TileID.Sets.RoomNeeds.CountsAsTorch);
             AdjTiles = new int[] { TileID.Candelabras };
             DustType = DustID.t_BorealWood;

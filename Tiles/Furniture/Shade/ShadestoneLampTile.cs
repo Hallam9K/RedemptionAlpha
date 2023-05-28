@@ -8,6 +8,7 @@ using Terraria.ObjectData;
 using Terraria.DataStructures;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Dusts.Tiles;
+using Redemption.Items.Placeable.Furniture.Shade;
 
 namespace Redemption.Tiles.Furniture.Shade
 {
@@ -37,6 +38,7 @@ namespace Redemption.Tiles.Furniture.Shade
             TileObjectData.addTile(Type);
             AddMapEntry(new Color(59, 61, 87), Language.GetText("MapObject.FloorLamp"));
             AddToArray(ref TileID.Sets.RoomNeeds.CountsAsTorch);
+            RegisterItemDrop(ModContent.ItemType<ShadestoneLamp>());
             DustType = ModContent.DustType<ShadestoneDust>();
             AnimationFrameHeight = 54;
         }

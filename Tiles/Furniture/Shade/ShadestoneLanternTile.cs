@@ -7,6 +7,7 @@ using Terraria.ModLoader;
 using Terraria.ObjectData;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Dusts.Tiles;
+using Redemption.Items.Placeable.Furniture.Shade;
 
 namespace Redemption.Tiles.Furniture.Shade
 {
@@ -27,6 +28,7 @@ namespace Redemption.Tiles.Furniture.Shade
             AddMapEntry(new Color(59, 61, 87), Language.GetText("MapObject.Lantern"));
             AdjTiles = new int[] { TileID.HangingLanterns };
             AddToArray(ref TileID.Sets.RoomNeeds.CountsAsTorch);
+            RegisterItemDrop(ModContent.ItemType<ShadestoneLantern>());
             DustType = ModContent.DustType<ShadestoneDust>();
             AnimationFrameHeight = 36;
         }

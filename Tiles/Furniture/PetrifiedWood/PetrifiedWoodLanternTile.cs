@@ -5,6 +5,7 @@ using Terraria.ModLoader;
 using Terraria.ID;
 using Terraria.Enums;
 using Terraria.ObjectData;
+using Redemption.Items.Placeable.Furniture.PetrifiedWood;
 
 namespace Redemption.Tiles.Furniture.PetrifiedWood
 {
@@ -24,6 +25,7 @@ namespace Redemption.Tiles.Furniture.PetrifiedWood
             TileObjectData.addTile(Type);
             AddMapEntry(new Color(100, 100, 100), Language.GetText("MapObject.Lantern"));
             AdjTiles = new int[] { TileID.HangingLanterns };
+            RegisterItemDrop(ModContent.ItemType<PetrifiedWoodLantern>());
             AddToArray(ref TileID.Sets.RoomNeeds.CountsAsTorch);
             DustType = DustID.Ash;
         }

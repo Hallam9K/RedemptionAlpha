@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Dusts.Tiles;
+using Redemption.Items.Placeable.Furniture.Shade;
 using Terraria;
 using Terraria.Enums;
 using Terraria.ID;
@@ -29,6 +30,7 @@ namespace Redemption.Tiles.Furniture.Shade
             // name.SetDefault("Shadestone Candelabra");
             AddMapEntry(new Color(59, 61, 87), name);
             AddToArray(ref TileID.Sets.RoomNeeds.CountsAsTorch);
+            RegisterItemDrop(ModContent.ItemType<ShadestoneCandelabra>());
             AdjTiles = new int[] { TileID.Candelabras };
             DustType = ModContent.DustType<ShadestoneDust>();
             AnimationFrameHeight = 36;
