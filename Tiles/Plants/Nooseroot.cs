@@ -1,5 +1,4 @@
 using Redemption.Dusts;
-using Redemption.Items.Placeable.Plants;
 using Redemption.Tiles.Tiles;
 using Terraria;
 using Terraria.DataStructures;

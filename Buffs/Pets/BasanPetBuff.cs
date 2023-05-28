@@ -1,4 +1,3 @@
-using Terraria.ID;
 using Microsoft.Xna.Framework;
 using Redemption.Projectiles.Pets;
 using Terraria;
@@ -6,7 +5,7 @@ using Terraria.ModLoader;
 
 namespace Redemption.Buffs.Pets
 {
-	public class BasanPetBuff : ModBuff
+    public class BasanPetBuff : ModBuff
 	{
 		public override void SetStaticDefaults()
 		{

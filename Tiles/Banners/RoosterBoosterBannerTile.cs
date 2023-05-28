@@ -1,9 +1,7 @@
 using Microsoft.Xna.Framework;
-using Redemption.Items.Placeable.Banners;
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
-using Terraria.DataStructures;
 using Redemption.NPCs.FowlMorning;
 
 namespace Redemption.Tiles.Banners

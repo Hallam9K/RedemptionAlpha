@@ -15,7 +15,6 @@ using Microsoft.Xna.Framework.Graphics;
 using Redemption.Biomes;
 using Redemption.Items.Placeable.Banners;
 using Redemption.Items.Accessories.PreHM;
-using Redemption.Items.Weapons.PreHM.Melee;
 using Redemption.Items.Weapons.PreHM.Magic;
 
 namespace Redemption.NPCs.FowlMorning

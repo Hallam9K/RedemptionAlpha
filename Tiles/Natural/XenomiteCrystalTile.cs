@@ -7,7 +7,6 @@ using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 using Terraria.ID;
-using Redemption.Items.Usable.Potions;
 
 namespace Redemption.Tiles.Natural
 {

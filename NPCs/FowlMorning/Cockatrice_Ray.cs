@@ -1,11 +1,8 @@
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ModLoader;
-using Terraria.GameContent;
 using Terraria.ID;
 using Redemption.Globals;
-using Terraria.Audio;
 using Redemption.Dusts;
 
 namespace Redemption.NPCs.FowlMorning

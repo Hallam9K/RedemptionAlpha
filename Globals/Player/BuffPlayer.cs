@@ -29,9 +29,6 @@ using Redemption.Particles;
 using Redemption.NPCs.Bosses.Neb.Phase2;
 using Redemption.NPCs.Bosses.Neb.Clone;
 using Redemption.Base;
-using System.Threading;
-using Terraria.WorldBuilding;
-using System.Transactions;
 
 namespace Redemption.Globals.Player
 {

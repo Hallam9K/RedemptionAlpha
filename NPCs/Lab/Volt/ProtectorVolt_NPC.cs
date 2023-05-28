@@ -2,7 +2,6 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Base;
 using Redemption.Globals;
-using Redemption.Items;
 using Redemption.Items.Armor.Vanity.TBot;
 using Terraria;
 using Terraria.GameContent;

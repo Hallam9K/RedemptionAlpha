@@ -6,7 +6,6 @@ using Terraria.ModLoader;
 using Terraria.ID;
 using Terraria.ObjectData;
 using Terraria.Enums;
-using Redemption.Items.Placeable.Furniture.Lab;
 using Redemption.Items.Placeable.Furniture.ElderWood;
 
 namespace Redemption.Tiles.Furniture.ElderWood

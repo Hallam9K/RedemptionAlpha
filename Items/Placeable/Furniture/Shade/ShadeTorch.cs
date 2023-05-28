@@ -5,8 +5,6 @@ using Terraria.ModLoader;
 using Redemption.Dusts.Tiles;
 using Redemption.Items.Placeable.Tiles;
 using Redemption.Tiles.Furniture.Shade;
-using Terraria.Localization;
-using Redemption.Biomes;
 using Redemption.Globals;
 using Redemption.Rarities;
 

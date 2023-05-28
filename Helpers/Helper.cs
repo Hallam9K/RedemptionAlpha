@@ -9,9 +9,7 @@ using System.Linq;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
-using Terraria.Graphics;
 using Terraria.ID;
-using Terraria.ModLoader;
 using Terraria.Utilities;
 
 namespace Redemption.Helpers

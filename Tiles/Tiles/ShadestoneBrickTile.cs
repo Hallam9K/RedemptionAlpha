@@ -3,7 +3,6 @@ using Terraria;
 using Terraria.Localization;
 using Terraria.ModLoader;
 using Redemption.Dusts.Tiles;
-using Redemption.Items.Placeable.Tiles;
 using Redemption.Items.Tools.PostML;
 
 namespace Redemption.Tiles.Tiles

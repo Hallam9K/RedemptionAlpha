@@ -10,7 +10,6 @@ using Redemption.BaseExtension;
 using Redemption.Effects.PrimitiveTrails;
 using Redemption.Buffs.Debuffs;
 using Redemption.NPCs.Bosses.SeedOfInfection;
-using Redemption.Projectiles.Melee;
 using Terraria.Audio;
 
 namespace Redemption.Items.Weapons.HM.Melee

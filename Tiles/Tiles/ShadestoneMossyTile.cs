@@ -2,14 +2,12 @@ using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.Localization;
 using Terraria.ModLoader;
-using Terraria.ID;
 using Redemption.Dusts;
 using Redemption.Tiles.Plants;
 using Redemption.Items.Placeable.Tiles;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria.DataStructures;
 using Redemption.Biomes;
-using Redemption.Items.Placeable.Containers;
 
 namespace Redemption.Tiles.Tiles
 {

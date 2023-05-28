@@ -7,8 +7,6 @@ using Terraria.ObjectData;
 using Terraria.DataStructures;
 using Redemption.Dusts.Tiles;
 using Redemption.Items.Placeable.Furniture.Shade;
-using Terraria.ID;
-using Redemption.Items.Usable.Potions;
 
 namespace Redemption.Tiles.Furniture.Shade
 {

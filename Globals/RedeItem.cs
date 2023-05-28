@@ -24,7 +24,6 @@ using Redemption.Items.Placeable.Plants;
 using Redemption.Items.Quest.KingSlayer;
 using Redemption.Items.Usable.Summons;
 using Redemption.Items.Weapons.PreHM.Summon;
-using Terraria.ModLoader.Core;
 using Terraria.Localization;
 using SubworldLibrary;
 

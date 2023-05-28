@@ -40,9 +40,7 @@ using Redemption.Items.Weapons.PreHM.Ranged;
 using Redemption.WorldGeneration.Misc;
 using SubworldLibrary;
 using Redemption.Items.Accessories.PreHM;
-using Redemption.Tiles.Trees;
 using Redemption.Base;
-using Redemption.WorldGeneration;
 
 namespace Redemption.Globals.NPC
 {

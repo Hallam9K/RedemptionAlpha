@@ -10,10 +10,6 @@ using Terraria.Utilities;
 using Terraria.ModLoader;
 using Redemption.BaseExtension;
 using Redemption.Globals;
-using Redemption.NPCs.Bosses.Cleaver;
-using Terraria.GameContent.Biomes;
-using log4net.Filter;
-using System.Net.Http.Headers;
 
 namespace Redemption.Base
 {

@@ -4,7 +4,6 @@ using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Redemption.BaseExtension;
-using log4net.Filter;
 using Redemption.NPCs.PreHM;
 using Redemption.NPCs.Friendly.SpiritSummons;
 using Redemption.NPCs.Minibosses.Calavia;

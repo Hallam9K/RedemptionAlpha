@@ -11,7 +11,6 @@ using Redemption.Particles;
 using Terraria.GameInput;
 using Terraria.Audio;
 using Terraria.DataStructures;
-using Redemption.Dusts;
 using System;
 
 namespace Redemption.Globals.Player

@@ -3,7 +3,6 @@ using Microsoft.Xna.Framework.Graphics;
 using Redemption.Dusts.Tiles;
 using Redemption.Globals;
 using Redemption.Items.Placeable.Furniture.Shade;
-using Redemption.Items.Usable.Potions;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.Localization;

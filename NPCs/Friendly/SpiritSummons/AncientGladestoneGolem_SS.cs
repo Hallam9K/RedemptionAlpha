@@ -18,7 +18,6 @@ using ParticleLibrary;
 using Redemption.Dusts;
 using Redemption.Particles;
 using Terraria.Graphics.Shaders;
-using log4net.Filter;
 
 namespace Redemption.NPCs.Friendly.SpiritSummons
 {

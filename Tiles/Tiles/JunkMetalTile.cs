@@ -3,7 +3,6 @@ using Terraria;
 using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ID;
-using Redemption.Items.Materials.HM;
 
 namespace Redemption.Tiles.Tiles
 {

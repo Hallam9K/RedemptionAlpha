@@ -2,7 +2,6 @@ using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.ID;
-using Redemption.Items.Placeable.Tiles;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace Redemption.Tiles.Tiles

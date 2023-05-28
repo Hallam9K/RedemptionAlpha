@@ -7,7 +7,6 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Redemption.BaseExtension;
 using Microsoft.Xna.Framework.Graphics;
-using Terraria.GameContent;
 
 namespace Redemption.NPCs.Bosses.Keeper
 {

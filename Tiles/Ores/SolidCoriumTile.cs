@@ -3,7 +3,6 @@ using Terraria;
 using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ID;
-using Redemption.Items.Materials.PostML;
 using Redemption.Items.Accessories.HM;
 using Redemption.Globals.Player;
 using Terraria.Audio;

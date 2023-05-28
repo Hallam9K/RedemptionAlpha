@@ -1,6 +1,5 @@
 using Microsoft.Xna.Framework;
 using Redemption.Dusts;
-using Redemption.NPCs.Critters;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;

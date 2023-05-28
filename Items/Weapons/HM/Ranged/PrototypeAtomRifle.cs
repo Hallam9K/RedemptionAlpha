@@ -7,7 +7,6 @@ using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Redemption.BaseExtension;
-using Redemption.Items.Weapons.HM.Ammo;
 using Redemption.Globals.Player;
 using Redemption.Globals;
 

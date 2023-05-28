@@ -9,7 +9,6 @@ using Redemption.Globals;
 using Redemption.Buffs.NPCBuffs;
 using Redemption.Projectiles.Melee;
 using Redemption.BaseExtension;
-using System.Threading;
 
 namespace Redemption.Items.Weapons.PreHM.Melee
 {

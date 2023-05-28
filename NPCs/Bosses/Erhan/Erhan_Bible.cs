@@ -8,7 +8,6 @@ using Terraria.Audio;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Redemption.Projectiles.Magic;
 using Redemption.Projectiles.Minions;
 
 namespace Redemption.NPCs.Bosses.Erhan

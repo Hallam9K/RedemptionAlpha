@@ -16,7 +16,6 @@ using Redemption.WorldGeneration;
 using Redemption.Base;
 using System;
 using Redemption.UI.ChatUI;
-using Terraria.GameContent.UI;
 using ReLogic.Content;
 using Terraria.Utilities;
 using Terraria.GameContent.ItemDropRules;

@@ -10,10 +10,8 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Core;
-using Redemption.Projectiles.Magic;
 using System.Collections.Generic;
 using Terraria;
-using Terraria.DataStructures;
 using Terraria.ID;
 using Redemption.Helpers;
 using Terraria.ModLoader;

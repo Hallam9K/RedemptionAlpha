@@ -14,7 +14,6 @@ using Terraria.GameContent;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria.Audio;
 using Redemption.Base;
-using Redemption.Projectiles.Misc;
 using Redemption.Dusts;
 using Terraria.GameContent.ItemDropRules;
 using Redemption.Items.Placeable.Trophies;

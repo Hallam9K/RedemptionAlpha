@@ -7,7 +7,6 @@ using Microsoft.Xna.Framework.Graphics;
 using Terraria.GameContent;
 using Redemption.Globals;
 using Redemption.BaseExtension;
-using Redemption.NPCs.Minibosses.Calavia;
 
 namespace Redemption.Items.Weapons.PreHM.Melee
 {

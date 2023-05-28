@@ -23,8 +23,6 @@ using Redemption.Items.Accessories.PreHM;
 using Redemption.Items.Materials.HM;
 using ReLogic.Content;
 using Redemption.BaseExtension;
-using Redemption.Items.Weapons.PostML.Ranged;
-using Redemption.Items.Weapons.PreHM.Ranged;
 using Terraria.Localization;
 
 namespace Redemption.NPCs.Friendly

@@ -1,6 +1,5 @@
 using Microsoft.Xna.Framework;
 using Redemption.Globals;
-using Redemption.Items.Materials.PreHM;
 using System;
 using System.Collections.Generic;
 using Terraria;

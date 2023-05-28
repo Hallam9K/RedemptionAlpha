@@ -9,7 +9,6 @@ using Terraria.ObjectData;
 using Redemption.BaseExtension;
 using Redemption.Globals;
 using Microsoft.Xna.Framework.Graphics;
-using Redemption.Items.Placeable.Furniture.Lab;
 using Redemption.Items.Placeable.Furniture.Misc;
 
 namespace Redemption.Tiles.Furniture.Misc

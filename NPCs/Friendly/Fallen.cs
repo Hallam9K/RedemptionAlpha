@@ -23,7 +23,6 @@ using Redemption.Items.Usable;
 using Redemption.Items.Placeable.Furniture.Misc;
 using Redemption.Items.Materials.HM;
 using Redemption.Items.Weapons.HM.Melee;
-using Redemption.BaseExtension;
 using Redemption.Items.Weapons.PreHM.Summon;
 using Redemption.Items.Armor.Vanity;
 using ReLogic.Content;

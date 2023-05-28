@@ -3,7 +3,6 @@ using Microsoft.Xna.Framework.Graphics;
 using Redemption.Base;
 using Redemption.Globals;
 using Redemption.Items.Materials.PreHM;
-using Redemption.NPCs.Minibosses.FowlEmperor;
 using Redemption.NPCs.Friendly;
 using Terraria;
 using Terraria.DataStructures;

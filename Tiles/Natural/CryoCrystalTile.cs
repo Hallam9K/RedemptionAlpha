@@ -8,7 +8,6 @@ using Redemption.Items.Materials.PreHM;
 using Terraria.DataStructures;
 using Terraria.Enums;
 using Redemption.Tiles.Tiles;
-using Redemption.Items.Placeable.Plants;
 
 namespace Redemption.Tiles.Natural
 {

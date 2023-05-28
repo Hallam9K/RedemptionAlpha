@@ -14,7 +14,6 @@ using Terraria.Audio;
 using Redemption.Dusts;
 using System.IO;
 using ReLogic.Content;
-using static Terraria.ModLoader.PlayerDrawLayer;
 
 namespace Redemption.NPCs.Bosses.Gigapora
 {

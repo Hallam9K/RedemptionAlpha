@@ -8,7 +8,6 @@ using Terraria.GameContent;
 using Redemption.Globals;
 using Redemption.Buffs.NPCBuffs;
 using Redemption.BaseExtension;
-using System.Threading;
 
 namespace Redemption.Items.Weapons.PreHM.Melee
 {

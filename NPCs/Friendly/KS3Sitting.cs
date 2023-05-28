@@ -21,7 +21,6 @@ using Redemption.Biomes;
 using Redemption.BaseExtension;
 using Redemption.Items.Donator.Lizzy;
 using Terraria.GameContent.UI;
-using Redemption.Items.Materials.PostML;
 using Terraria.Localization;
 
 namespace Redemption.NPCs.Friendly

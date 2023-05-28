@@ -20,7 +20,6 @@ using Terraria.Utilities;
 using Redemption.Base;
 using Redemption.BaseExtension;
 using Redemption.NPCs.Friendly;
-using Redemption.NPCs.PreHM;
 using Redemption.UI.ChatUI;
 using Redemption.Items.Weapons.PreHM.Summon;
 using Terraria.Localization;

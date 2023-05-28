@@ -4,7 +4,6 @@ using Redemption.BaseExtension;
 using Redemption.Globals;
 using Redemption.Globals.Player;
 using Redemption.Items.Materials.HM;
-using Redemption.Items.Weapons.HM.Ammo;
 using Redemption.Projectiles.Ranged;
 using Terraria;
 using Terraria.Audio;

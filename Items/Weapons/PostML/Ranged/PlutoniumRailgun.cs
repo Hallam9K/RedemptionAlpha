@@ -10,7 +10,6 @@ using Redemption.Items.Materials.HM;
 using Terraria.DataStructures;
 using Redemption.Globals.Player;
 using Redemption.Globals;
-using Redemption.Items.Weapons.HM.Ammo;
 using Terraria.Audio;
 
 namespace Redemption.Items.Weapons.PostML.Ranged

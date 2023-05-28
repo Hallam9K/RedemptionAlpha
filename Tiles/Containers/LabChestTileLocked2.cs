@@ -5,7 +5,6 @@ using Redemption.Globals;
 using Redemption.Items.Placeable.Containers;
 using Redemption.Items.Usable;
 using Redemption.WorldGeneration;
-using System.Collections.Generic;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;

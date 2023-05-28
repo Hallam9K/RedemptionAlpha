@@ -1,5 +1,4 @@
 using Microsoft.Xna.Framework;
-using Redemption.Items.Placeable.Tiles;
 using Redemption.NPCs.Critters;
 using Terraria;
 using Terraria.DataStructures;

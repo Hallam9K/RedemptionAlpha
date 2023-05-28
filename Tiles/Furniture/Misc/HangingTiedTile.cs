@@ -10,7 +10,6 @@ using Terraria.Audio;
 using Redemption.BaseExtension;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Globals;
-using Redemption.Items.Usable.Potions;
 
 namespace Redemption.Tiles.Furniture.Misc
 {

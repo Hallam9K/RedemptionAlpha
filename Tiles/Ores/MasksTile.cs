@@ -6,7 +6,6 @@ using Redemption.Dusts;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria.DataStructures;
 using Redemption.Biomes;
-using Redemption.Items.Materials.PostML;
 using Redemption.Dusts.Tiles;
 
 namespace Redemption.Tiles.Ores

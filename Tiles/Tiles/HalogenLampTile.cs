@@ -3,7 +3,6 @@ using Terraria;
 using Terraria.ModLoader;
 using Terraria.ID;
 using Microsoft.Xna.Framework.Graphics;
-using Redemption.Items.Placeable.Tiles;
 using ReLogic.Content;
 
 namespace Redemption.Tiles.Tiles

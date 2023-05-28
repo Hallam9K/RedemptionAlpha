@@ -3,7 +3,6 @@ using Microsoft.Xna.Framework.Graphics;
 using Redemption.Base;
 using Redemption.BaseExtension;
 using Redemption.Globals;
-using Redemption.Items.Materials.PreHM;
 using Redemption.Items.Usable.Summons;
 using Redemption.Tiles.Tiles;
 using Terraria;

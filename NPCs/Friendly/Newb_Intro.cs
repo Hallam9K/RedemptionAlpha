@@ -10,7 +10,6 @@ using ReLogic.Content;
 using Terraria.GameContent.UI;
 using Terraria.GameContent;
 using Redemption.UI.ChatUI;
-using System;
 
 namespace Redemption.NPCs.Friendly
 {

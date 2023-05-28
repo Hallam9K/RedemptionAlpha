@@ -6,7 +6,6 @@ using Redemption.Items.Materials.PreHM;
 using Redemption.Items.Placeable.Plants;
 using Redemption.Items.Placeable.Tiles;
 using Redemption.Items.Usable.Potions;
-using Redemption.Items.Weapons.PostML.Melee;
 using Redemption.Items.Weapons.PreHM.Ranged;
 using Terraria;
 using Terraria.ID;

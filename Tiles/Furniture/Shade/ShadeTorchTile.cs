@@ -1,10 +1,8 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Biomes;
-using Redemption.Items.Placeable.Furniture.Shade;
 using ReLogic.Content;
 using Terraria;
-using Terraria.DataStructures;
 using Terraria.Enums;
 using Terraria.ID;
 using Terraria.Localization;
@@ -13,7 +11,7 @@ using Terraria.ObjectData;
 
 namespace Redemption.Tiles.Furniture.Shade
 {
-	public class ShadeTorchTile : ModTile
+    public class ShadeTorchTile : ModTile
 	{
 		private Asset<Texture2D> flameTexture;
 

@@ -1,4 +1,3 @@
-using Redemption.Buffs.NPCBuffs;
 using Redemption.Items.Materials.PreHM;
 using Terraria;
 using Terraria.ID;
