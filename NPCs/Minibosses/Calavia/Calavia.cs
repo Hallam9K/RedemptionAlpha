@@ -384,6 +384,7 @@ namespace Redemption.NPCs.Minibosses.Calavia
                             NPC.velocity.X *= 2f;
                             NPC.velocity.Y -= Main.rand.NextFloat(1, 3);
                             dodgeCooldown = 30;
+                            break;
                         }
                     }
                     BaseAI.AttemptOpenDoor(NPC, ref doorVars[0], ref doorVars[1], ref doorVars[2], 80, 1, 10, interactDoorStyle: 2);
@@ -685,7 +686,7 @@ namespace Redemption.NPCs.Minibosses.Calavia
                                 RedeQuest.calaviaVar = 3;
                             if (Main.netMode != NetmodeID.SinglePlayer)
                                 NetMessage.SendData(MessageID.WorldData);
-
+                            Main.BestiaryTracker.Kills.RegisterKill(NPC);
                             NPC.SetDefaults(ModContent.NPCType<Calavia_NPC>());
                         }
                         else
@@ -868,6 +869,7 @@ namespace Redemption.NPCs.Minibosses.Calavia
 
                                 NPC.Center = gathicPortalPos;
                                 NPC.velocity *= 0;
+                                Main.BestiaryTracker.Kills.RegisterKill(NPC);
                                 NPC.SetDefaults(ModContent.NPCType<Calavia_NPC>());
                                 NPC.netUpdate = true;
                             }

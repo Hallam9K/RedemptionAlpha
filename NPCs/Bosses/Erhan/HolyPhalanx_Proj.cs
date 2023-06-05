@@ -15,7 +15,7 @@ namespace Redemption.NPCs.Bosses.Erhan
         public override void SetStaticDefaults()
         {
             // DisplayName.SetDefault("Holy Phalanx");
-            ProjectileID.Sets.TrailCacheLength[Projectile.type] = 5;
+            ProjectileID.Sets.TrailCacheLength[Projectile.type] = 16;
             ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
             ElementID.ProjHoly[Type] = true;
         }
@@ -111,7 +111,7 @@ namespace Redemption.NPCs.Bosses.Erhan
             {
                 Vector2 drawPos = Projectile.oldPos[k] - Main.screenPosition + drawOrigin;
                 Color color = new Color(255, 255, 120) * ((Projectile.oldPos.Length - k) / (float)Projectile.oldPos.Length);
-                Main.EntitySpriteDraw(texture, drawPos, null, color, Projectile.rotation, drawOrigin, Projectile.scale, SpriteEffects.None, 0);
+                Main.EntitySpriteDraw(texture, drawPos, null, color * .5f, Projectile.rotation, drawOrigin, Projectile.scale, SpriteEffects.None, 0);
             }
 
             Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition, null, Projectile.GetAlpha(Color.White), Projectile.rotation, drawOrigin, Projectile.scale, SpriteEffects.None, 0);

@@ -59,7 +59,7 @@ namespace Redemption.NPCs.Bosses.Erhan
                     {
                         openBook = true;
                         SoundEngine.PlaySound(SoundID.Item68, Projectile.position);
-                        RedeDraw.SpawnExplosion(Projectile.Center, Color.White, scale: 2, noDust: true, tex: ModContent.Request<Texture2D>("Redemption/Textures/HolyGlow2").Value);
+                        RedeDraw.SpawnExplosion(Projectile.Center, Color.White, scale: 2, noDust: true, tex: Redemption.HolyGlow2.Value);
                         Projectile.velocity *= 0;
                         Projectile.localAI[0]++;
                     }
@@ -191,11 +191,11 @@ namespace Redemption.NPCs.Bosses.Erhan
                                 int tilePosY = BaseWorldGen.GetFirstTileFloor((int)(player.Center.X / 16), (int)(player.Center.Y / 16));
                                 playerOrigin = new Vector2(player.Center.X, (tilePosY * 16) + 38);
                                 SoundEngine.PlaySound(SoundID.Item68, Projectile.position);
-                                RedeDraw.SpawnExplosion(Projectile.Center, Color.White, scale: 2, noDust: true, tex: ModContent.Request<Texture2D>("Redemption/Textures/HolyGlow2").Value);
+                                RedeDraw.SpawnExplosion(Projectile.Center, Color.White, scale: 2, noDust: true, tex: Redemption.HolyGlow2.Value);
                                 Projectile.position = playerOrigin + new Vector2(-600, 120);
                                 Projectile.netUpdate = true;
                                 SoundEngine.PlaySound(SoundID.Item68, Projectile.position);
-                                RedeDraw.SpawnExplosion(Projectile.Center, Color.White, scale: 2, noDust: true, tex: ModContent.Request<Texture2D>("Redemption/Textures/HolyGlow2").Value);
+                                RedeDraw.SpawnExplosion(Projectile.Center, Color.White, scale: 2, noDust: true, tex: Redemption.HolyGlow2.Value);
                                 Projectile.Shoot(Projectile.Center, ModContent.ProjectileType<Bible_Ray>(), Projectile.damage * 12, new Vector2(2, 0), true, SoundID.Item162, Projectile.whoAmI);
                             }
                             if (AITimer >= 80)
@@ -260,7 +260,7 @@ namespace Redemption.NPCs.Bosses.Erhan
         public override void Kill(int timeLeft)
         {
             SoundEngine.PlaySound(SoundID.Item68, Projectile.position);
-            RedeDraw.SpawnExplosion(Projectile.Center, Color.White, scale: 2, noDust: true, tex: ModContent.Request<Texture2D>("Redemption/Textures/HolyGlow2").Value);
+            RedeDraw.SpawnExplosion(Projectile.Center, Color.White, scale: 2, noDust: true, tex: Redemption.HolyGlow2.Value);
         }
         private float drawTimer;
         public override bool PreDraw(ref Color lightColor)

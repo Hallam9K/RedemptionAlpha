@@ -178,7 +178,7 @@ namespace Redemption.NPCs.Bosses.ADD
         public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)
         {
             NPC.lifeMax = (int)(NPC.lifeMax * 0.75f * balance * bossAdjustment);
-            NPC.damage = (int)(NPC.damage * 0.6f);
+            NPC.damage = (int)(NPC.damage * 0.75f);
         }
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
         {

@@ -24,7 +24,6 @@ namespace Redemption.Items.Weapons.PreHM.Melee
             Projectile.width = 20;
             Projectile.height = 20;
             Projectile.alpha = 255;
-            Projectile.ArmorPenetration = 6;
             Projectile.usesIDStaticNPCImmunity = true;
             Projectile.idStaticNPCHitCooldown = 8;
             Projectile.Redemption().TechnicallyMelee = true;

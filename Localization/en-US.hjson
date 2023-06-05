@@ -5955,6 +5955,7 @@ Mods: {
 				Tooltip:
 					'''
 					Fires a barrage of nanites that enter enemies and destroy them from within
+					Ignores a substantial amount of enemy defense
 					'Nanomachines, son'
 					'''
 			}
@@ -6861,7 +6862,7 @@ Mods: {
 
 			SilverRapier: {
 				DisplayName: Silver Rapier
-				Tooltip: Causes armor penetration
+				Tooltip: Pierces through enemy defense
 			}
 
 			SkullDiggerFlail: {

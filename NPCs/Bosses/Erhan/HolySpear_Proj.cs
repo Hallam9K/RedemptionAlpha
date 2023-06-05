@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Redemption.Dusts;
 using Redemption.Globals;
 using Terraria;
 using Terraria.GameContent;
@@ -59,7 +60,7 @@ namespace Redemption.NPCs.Bosses.Erhan
                 Main.EntitySpriteDraw(texture, drawPos, null, color, Projectile.rotation, drawOrigin, Projectile.scale + 0.2f, SpriteEffects.None, 0);
             }
 
-            Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition, null, Projectile.GetAlpha(Color.White), Projectile.rotation, drawOrigin, Projectile.scale, SpriteEffects.None, 0);
+            Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition, null, Projectile.GetAlpha(new Color(255, 255, 255, 50)), Projectile.rotation, drawOrigin, Projectile.scale, SpriteEffects.None, 0);
 
             return false;
         }
@@ -67,6 +68,14 @@ namespace Redemption.NPCs.Bosses.Erhan
         {
             for (int i = 0; i < 20; i++)
             {
+                int num5 = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, ModContent.DustType<GlowDust>(), Projectile.velocity.X * 0.5f,
+                    Projectile.velocity.Y * 0.5f);
+                Color dustColor = new(255, 255, 209) { A = 0 };
+                Main.dust[num5].fadeIn = 0.1f;
+                Main.dust[num5].noGravity = true;
+                Main.dust[num5].velocity.Y = -7;
+                Main.dust[num5].color = dustColor * Projectile.Opacity;
+
                 int dust = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.GoldFlame, Projectile.velocity.X * 0.5f,
                     Projectile.velocity.Y * 0.5f, Scale: 3);
                 Main.dust[dust].noGravity = true;

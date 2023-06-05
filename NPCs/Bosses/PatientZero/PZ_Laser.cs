@@ -9,6 +9,7 @@ using Redemption.Globals;
 using Redemption.WorldGeneration;
 using Redemption.BaseExtension;
 using Redemption.Buffs.Debuffs;
+using Redemption.Dusts;
 
 namespace Redemption.NPCs.Bosses.PatientZero
 {
@@ -56,6 +57,19 @@ namespace Redemption.NPCs.Bosses.PatientZero
                 Main.LocalPlayer.RedemptionScreen().ScreenShakeIntensity = MathHelper.Max(Main.LocalPlayer.RedemptionScreen().ScreenShakeIntensity, 2);
                 Projectile.alpha -= 10;
                 Projectile.alpha = (int)MathHelper.Clamp(Projectile.alpha, 0, 255);
+                if (Projectile.timeLeft > 10)
+                {
+                    for (int i = 0; i < 2; i++)
+                    {
+                        int num5 = Dust.NewDust(Projectile.Center + Vector2.UnitX.RotatedBy(Projectile.rotation) * (LaserLength + 30) - new Vector2(5, 5), 10, 10, ModContent.DustType<GlowDust>(), 0, 0, Scale: 2);
+                        Color dustColor = new(219, 247, 171) { A = 0 };
+                        if (Main.rand.NextBool())
+                            dustColor = new(88, 204, 92) { A = 0 };
+                        Main.dust[num5].velocity = -Projectile.velocity * Main.rand.NextFloat(.1f, .3f);
+                        Main.dust[num5].color = dustColor * Projectile.Opacity;
+                        Main.dust[num5].noGravity = true;
+                    }
+                }
             }
             else
             {

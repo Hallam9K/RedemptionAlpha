@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Redemption.Backgrounds.Skies;
+using Redemption.Biomes;
 using Redemption.Base;
 using Redemption.BaseExtension;
 using Redemption.Buffs.Debuffs;
@@ -13,6 +14,7 @@ using Redemption.Globals.Player;
 using Redemption.Globals.World;
 using Redemption.Items.Accessories.HM;
 using Redemption.Items.Armor.PostML.Shinkite;
+using Redemption.Items.Armor.PostML.Vorti;
 using Redemption.Items.Armor.PreHM.DragonLead;
 using Redemption.Items.Donator.Arche;
 using Redemption.Items.Donator.Uncon;
@@ -20,6 +22,7 @@ using Redemption.Items.Usable;
 using Redemption.UI;
 using Redemption.UI.ChatUI;
 using ReLogic.Content;
+using SubworldLibrary;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -39,11 +42,11 @@ using Terraria.UI.Chat;
 using static Redemption.Globals.RedeNet;
 using Redemption.WorldGeneration.Misc;
 using Redemption.Items.Usable.Summons;
-using SubworldLibrary;
+using Redemption.Helpers;
 
 namespace Redemption
 {
-    public class Redemption : Mod
+    public partial class Redemption : Mod
     {
         public static Redemption Instance { get; private set; }
 
@@ -149,11 +152,11 @@ namespace Redemption
                     PremultiplyTexture(ref portalTex);
                     Texture2D soullessPortal = ModContent.Request<Texture2D>("Redemption/NPCs/Friendly/SoullessPortal", immLoad).Value;
                     PremultiplyTexture(ref soullessPortal);
-                    Texture2D holyGlowTex = ModContent.Request<Texture2D>("Redemption/Textures/WhiteGlow", immLoad).Value;
+                    Texture2D holyGlowTex = ModContent.Request<Texture2D>("Redemption/" + WhiteGlow.Name, immLoad).Value;
                     PremultiplyTexture(ref holyGlowTex);
-                    Texture2D whiteFlareTex = ModContent.Request<Texture2D>("Redemption/Textures/WhiteFlare", immLoad).Value;
+                    Texture2D whiteFlareTex = ModContent.Request<Texture2D>("Redemption/" + WhiteFlare.Name, immLoad).Value;
                     PremultiplyTexture(ref whiteFlareTex);
-                    Texture2D whiteOrbTex = ModContent.Request<Texture2D>("Redemption/Textures/WhiteOrb", immLoad).Value;
+                    Texture2D whiteOrbTex = ModContent.Request<Texture2D>("Redemption/" + WhiteOrb.Name, immLoad).Value;
                     PremultiplyTexture(ref whiteOrbTex);
                     Texture2D whiteLightBeamTex = ModContent.Request<Texture2D>("Redemption/Textures/WhiteLightBeam", immLoad).Value;
                     PremultiplyTexture(ref whiteLightBeamTex);
@@ -161,7 +164,7 @@ namespace Redemption
                     PremultiplyTexture(ref transitionTex);
                     Texture2D staticBallTex = ModContent.Request<Texture2D>("Redemption/Textures/StaticBall", immLoad).Value;
                     PremultiplyTexture(ref staticBallTex);
-                    Texture2D iceMistTex = ModContent.Request<Texture2D>("Redemption/Textures/IceMist", immLoad).Value;
+                    Texture2D iceMistTex = ModContent.Request<Texture2D>("Redemption/" + IceMist.Name, immLoad).Value;
                     PremultiplyTexture(ref iceMistTex);
                     Texture2D glowDustTex = ModContent.Request<Texture2D>("Redemption/Dusts/GlowDust", immLoad).Value;
                     PremultiplyTexture(ref glowDustTex);
@@ -207,7 +210,6 @@ namespace Redemption
                     Texture2D WastelandCrimsonSkyTex = ModContent.Request<Texture2D>("Redemption/Backgrounds/Skies/WastelandCrimsonSkyTex", immLoad).Value;
                     PremultiplyTexture(ref WastelandCrimsonSkyTex);
                 });
-
                 Filters.Scene["MoR:OOSky"] = new Filter(new ScreenShaderData("FilterMiniTower").UseColor(0.2f, 0f, 0f).UseOpacity(0.2f), EffectPriority.VeryHigh);
                 SkyManager.Instance["MoR:OOSky"] = new OOSky();
                 Filters.Scene["MoR:NebP1"] = new Filter(new ScreenShaderData("FilterMiniTower").UseColor(0.2f, 0f, 0.3f).UseOpacity(0.5f), EffectPriority.VeryHigh);
@@ -263,37 +265,6 @@ namespace Redemption
                     OnBodyDraw.RegisterBodies();
                 });
             }
-        }
-        public override object Call(params object[] args)
-        {
-            try
-            {
-                string code = args[0].ToString();
-
-                switch (code)
-                {
-                    case "AbominationnClearEvents":
-                        bool eventOccurring = FowlMorningWorld.FowlMorningActive;
-                        bool canClearEvents = Convert.ToBoolean(args[1]);
-                        if (eventOccurring && canClearEvents)
-                        {
-                            FowlMorningWorld.FowlMorningActive = false;
-                            FowlMorningWorld.ChickPoints = 0;
-                            FowlMorningWorld.ChickWave = 0;
-
-                            if (Main.netMode == NetmodeID.Server)
-                                NetMessage.SendData(MessageID.WorldData);
-
-                            FowlMorningWorld.SendInfoPacket();
-                        }
-                        return eventOccurring;
-                }
-            }
-            catch (Exception e)
-            {
-                Logger.Error("Call Error: " + e.StackTrace + e.Message);
-            }
-            return base.Call(args);
         }
         public static void PremultiplyTexture(ref Texture2D texture)
         {
@@ -370,13 +341,10 @@ namespace Redemption
                         int npcCenterY = bb.ReadInt32();
 
                         if (NPC.AnyNPCs(bossType))
-                        {
                             return;
-                        }
 
-                        int npcID = NPC.NewNPC(null, npcCenterX, npcCenterY, bossType);
-                        Main.npc[npcID].Center = new Vector2(npcCenterX, npcCenterY);
-                        Main.npc[npcID].netUpdate = true;
+                        int npcID = NPC.NewNPC(Entity.GetSource_NaturalSpawn(), npcCenterX, npcCenterY, bossType);
+                        Main.npc[npcID].netUpdate2 = true;
                         ChatHelper.BroadcastChatMessage(NetworkText.FromKey("Announcement.HasAwoken", Main.npc[npcID].GetTypeNetName()), new Color(175, 75, 255));
                     }
                     break;
@@ -384,25 +352,25 @@ namespace Redemption
                     if (Main.netMode == NetmodeID.Server)
                     {
                         int NPCType = bb.ReadInt32();
-                        Vector2 npcCenter = bb.ReadVector2();
+                        int npcCenterX = bb.ReadInt32();
+                        int npcCenterY = bb.ReadInt32();
 
                         if (NPC.AnyNPCs(NPCType))
                             return;
 
-                        int npcID = NPC.NewNPC(null, (int)npcCenter.X, (int)npcCenter.Y, NPCType);
-                        Main.npc[npcID].Center = npcCenter;
-                        Main.npc[npcID].netUpdate = true;
+                        int npcID = NPC.NewNPC(Entity.GetSource_NaturalSpawn(), npcCenterX, npcCenterY, NPCType);
+                        Main.npc[npcID].netUpdate2 = true;
                     }
                     break;
                 case ModMessageType.NPCSpawnFromClient2:
                     if (Main.netMode == NetmodeID.Server)
                     {
                         int NPCType = bb.ReadInt32();
-                        Vector2 npcCenter = bb.ReadVector2();
+                        int npcCenterX = bb.ReadInt32();
+                        int npcCenterY = bb.ReadInt32();
 
-                        int npcID = NPC.NewNPC(null, (int)npcCenter.X, (int)npcCenter.Y, NPCType);
-                        Main.npc[npcID].Center = npcCenter;
-                        Main.npc[npcID].netUpdate = true;
+                        int npcID = NPC.NewNPC(Entity.GetSource_NaturalSpawn(), npcCenterX, npcCenterY, NPCType);
+                        Main.npc[npcID].netUpdate2 = true;
                     }
                     break;
                 case ModMessageType.SpawnTrail:
@@ -416,7 +384,7 @@ namespace Redemption
                     }
 
                     if (Main.projectile[projindex].ModProjectile is IManualTrailProjectile trailProj)
-                        trailProj.DoTrailCreation(Redemption.TrailManager);
+                        trailProj.DoTrailCreation(TrailManager);
                     break;
                 case ModMessageType.StartFowlMorning:
                     FowlMorningWorld.FowlMorningActive = true;
@@ -427,6 +395,7 @@ namespace Redemption
                     break;
             }
         }
+        public static void SpawnBossFromClient(byte whoAmI, int type, int x, int y) => WriteToPacket(Instance.GetPacket(), (byte)ModMessageType.BossSpawnFromClient, whoAmI, type, x, y).Send();
     }
     public class RedeSystem : ModSystem
     {
@@ -522,7 +491,7 @@ namespace Redemption
         public override void ModifyLightingBrightness(ref float scale)
         {
             if (ModContent.GetInstance<RedeTileCount>().WastelandCrimsonTileCount >= 50 || ModContent.GetInstance<RedeTileCount>().WastelandCorruptTileCount >= 50)
-                scale = 0.9f;
+                scale = .9f;
         }
         public override void PreUpdateItems()
         {

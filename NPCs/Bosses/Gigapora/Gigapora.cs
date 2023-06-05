@@ -203,7 +203,7 @@ namespace Redemption.NPCs.Bosses.Gigapora
         public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)
         {
             NPC.lifeMax = (int)(NPC.lifeMax * 0.6f * balance * bossAdjustment);
-            NPC.damage = (int)(NPC.damage * 0.6f);
+            NPC.damage = (int)(NPC.damage * 0.75f);
         }
         public override void SendExtraAI(BinaryWriter writer)
         {

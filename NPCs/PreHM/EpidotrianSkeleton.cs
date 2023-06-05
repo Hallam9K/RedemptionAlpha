@@ -57,7 +57,6 @@ namespace Redemption.NPCs.PreHM
             NPC.DeathSound = SoundID.DD2_SkeletonDeath;
             NPC.value = 95;
             NPC.knockBackResist = 0.5f;
-            NPC.alpha = 255;
             NPC.aiStyle = -1;
             Banner = NPC.type;
             BannerItem = ModContent.ItemType<EpidotrianSkeletonBanner>();
@@ -121,7 +120,6 @@ namespace Redemption.NPCs.PreHM
             SetStats();
 
             TimerRand = Main.rand.Next(80, 280);
-            NPC.alpha = 0;
             NPC.netUpdate = true;
         }
         public override void AI()

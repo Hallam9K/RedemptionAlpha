@@ -747,7 +747,7 @@ namespace Redemption.Globals.Player
 
             if (shieldGenerator && shieldGeneratorCD <= 0)
             {
-                modifiers.ScalingArmorPenetration += .75f;
+                modifiers.ScalingArmorPenetration += .5f;
                 modifiers.ModifyHurtInfo += ModifyDamage;
             }
         }

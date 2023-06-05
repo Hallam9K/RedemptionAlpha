@@ -42,7 +42,7 @@ namespace Redemption.Projectiles.Minions
             Projectile.rotation = Projectile.velocity.ToRotation();
             if (proj.type == ModContent.ProjectileType<Erhan_Bible>())
             {
-                MaxLaserLength = 64;
+                MaxLaserLength = 77;
                 Projectile.hostile = true;
                 Projectile.friendly = false;
             }

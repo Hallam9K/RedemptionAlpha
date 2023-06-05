@@ -9,6 +9,7 @@ using Redemption.Base;
 using Terraria.ID;
 using Redemption.Globals;
 using Redemption.BaseExtension;
+using Redemption.Dusts;
 
 namespace Redemption.NPCs.Lab.Volt
 {
@@ -89,9 +90,20 @@ namespace Redemption.NPCs.Lab.Volt
 
                 LaserScale -= 0.1f;
             }
+            else
+            {
+                for (int i = 0; i < 2; i++)
+                {
+                    int num5 = Dust.NewDust(Projectile.Center + Vector2.UnitX.RotatedBy(Projectile.rotation) * (LaserLength + 30) - new Vector2(5, 5), 10, 10, ModContent.DustType<GlowDust>(), 0, 0, Scale: 2);
+                    Color dustColor = new(193, 255, 219) { A = 0 };
+                    Main.dust[num5].velocity *= 0;
+                    Main.dust[num5].color = dustColor * Projectile.Opacity;
+                    Main.dust[num5].noGravity = true;
+                }
+            }
 
             Projectile.rotation = Projectile.velocity.ToRotation();
-            Projectile.velocity = Vector2.Normalize(Projectile.velocity);        
+            Projectile.velocity = Vector2.Normalize(Projectile.velocity);
 
             #endregion
 

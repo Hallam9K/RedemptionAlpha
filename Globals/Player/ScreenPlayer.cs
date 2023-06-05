@@ -49,11 +49,11 @@ namespace Redemption
             }
             if (lockScreen)
             {
-                if (interpolantTimer < 100) interpolantTimer += 2;
+                if (interpolantTimer < 100) interpolantTimer += 1;
             }
             else
             {
-                if (interpolantTimer > 0) interpolantTimer -= 2;
+                if (interpolantTimer > 0) interpolantTimer -= 1;
             }
             ScreenFocusInterpolant = Utils.GetLerpValue(15f, 80f, interpolantTimer, true);
             lockScreen = false;
@@ -175,7 +175,7 @@ namespace Redemption
             if (ScreenFocusInterpolant > 0f && !RedeConfigClient.Instance.CameraLockDisable)
             {
                 Vector2 idealScreenPosition = ScreenFocusPosition - new Vector2(Main.screenWidth, Main.screenHeight) * 0.5f;
-                Main.screenPosition = Vector2.Lerp(Main.screenPosition, idealScreenPosition, ScreenFocusInterpolant);
+                Main.screenPosition = Vector2.Lerp(Main.screenPosition, idealScreenPosition, lockScreen ? EaseFunction.EaseCubicOut.Ease(ScreenFocusInterpolant) : EaseFunction.EaseCubicIn.Ease(ScreenFocusInterpolant));
             }
             Redemption.Instance.cameraOffset *= 0.9f;
             Main.screenPosition += Redemption.Instance.cameraOffset;

@@ -84,8 +84,9 @@ namespace Redemption.NPCs.PreHM
                 NPC.Transform(ModContent.NPCType<EpidotrianSkeleton>());
                 NPC.life = life;
                 (Main.npc[NPC.whoAmI].ModNPC as EpidotrianSkeleton).HasEyes = HasEyes;
+                NPC.frame.Width = TextureAssets.Npc[NPC.type].Width() / 3;
                 TimerRand = Main.rand.Next(80, 280);
-                NPC.alpha = 0;
+                NPC.netUpdate = true;
             }
         }
         public override void SendExtraAI(BinaryWriter writer)

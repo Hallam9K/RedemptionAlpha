@@ -21,7 +21,7 @@ namespace Redemption.Items.Weapons.HM.Magic
 
         public override void SetDefaults()
         {
-            Item.damage = 32;
+            Item.damage = 22;
             Item.DamageType = DamageClass.Magic;
             Item.mana = 10;
             Item.width = 60;
@@ -29,6 +29,7 @@ namespace Redemption.Items.Weapons.HM.Magic
             Item.useTime = 42;
             Item.useAnimation = 42;
             Item.useStyle = ItemUseStyleID.Shoot;
+            Item.ArmorPenetration = 15;
             Item.noMelee = true;
             Item.knockBack = 0;
             Item.value = Item.sellPrice(0, 15, 0, 0);

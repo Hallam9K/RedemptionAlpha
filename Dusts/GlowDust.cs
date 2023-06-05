@@ -25,7 +25,7 @@ namespace Redemption.Dusts
 
 			Vector2 currentCenter = dust.position + Vector2.One.RotatedBy(dust.rotation) * 32 * dust.scale;
 
-			dust.scale *= 0.95f;
+			dust.scale *= 0.95f - dust.fadeIn;
 			Vector2 nextCenter = dust.position + Vector2.One.RotatedBy(dust.rotation + 0.06f) * 32 * dust.scale;
 
 			dust.rotation += 0.06f;
