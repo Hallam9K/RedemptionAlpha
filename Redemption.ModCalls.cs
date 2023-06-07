@@ -55,7 +55,7 @@ namespace Redemption
                         if (args[1] is not int elementID)
                             throw new Exception($"Expected an argument of type int when setting element ID, but got type {args[1].GetType().Name} instead.");
                         if (args[2] is not int npcID)
-                            throw new Exception($"Expected an argument of type int when setting NPC type, but got type {args[1].GetType().Name} instead.");
+                            throw new Exception($"Expected an argument of type int when setting NPC type, but got type {args[2].GetType().Name} instead.");
                         return elementID switch
                         {
                             1 => ElementID.NPCArcane[npcID] = true,
@@ -79,7 +79,7 @@ namespace Redemption
                         if (args[1] is not int elementID2)
                             throw new Exception($"Expected an argument of type int when setting element ID, but got type {args[1].GetType().Name} instead.");
                         if (args[2] is not int itemID)
-                            throw new Exception($"Expected an argument of type int when setting Item type, but got type {args[1].GetType().Name} instead.");
+                            throw new Exception($"Expected an argument of type int when setting Item type, but got type {args[2].GetType().Name} instead.");
                         return elementID2 switch
                         {
                             1 => ElementID.ItemArcane[itemID] = true,
@@ -103,7 +103,7 @@ namespace Redemption
                         if (args[1] is not int elementID3)
                             throw new Exception($"Expected an argument of type int when setting element ID, but got type {args[1].GetType().Name} instead.");
                         if (args[2] is not int projID)
-                            throw new Exception($"Expected an argument of type int when setting Projectile type, but got type {args[1].GetType().Name} instead.");
+                            throw new Exception($"Expected an argument of type int when setting Projectile type, but got type {args[2].GetType().Name} instead.");
                         return elementID3 switch
                         {
                             1 => ElementID.ProjArcane[projID] = true,
@@ -123,6 +123,74 @@ namespace Redemption
                             15 => ElementID.ProjExplosive[projID] = true,
                             _ => false,
                         };
+                    case "addItemToBluntSwing": // Disables automatic Slash Bonus
+                        if (args[1] is not int ItemID)
+                            throw new Exception($"Expected an argument of type int when setting Projectile type, but got type {args[1].GetType().Name} instead.");
+                        ItemLists.BluntSwing.Add(ItemID);
+                        break;
+                    case "addNPCToElementTypeList":
+                        if (args[1] is not string typeString)
+                            throw new Exception($"Expected an argument of type string when setting Type Name, but got type {args[1].GetType().Name} instead.");
+                        if (args[2] is not int NPCID)
+                            throw new Exception($"Expected an argument of type int when setting NPC type, but got type {args[2].GetType().Name} instead.");
+                        switch (typeString)
+                        {
+                            case "Skeleton":
+                                NPCLists.Skeleton.Add(NPCID);
+                                break;
+                            case "SkeletonHumanoid":
+                                NPCLists.SkeletonHumanoid.Add(NPCID);
+                                break;
+                            case "Humanoid": // Doesn't have to include SkeletonHumanoid
+                                NPCLists.Humanoid.Add(NPCID);
+                                break;
+                            case "Undead":
+                                NPCLists.Undead.Add(NPCID);
+                                break;
+                            case "Spirit":
+                                NPCLists.Spirit.Add(NPCID);
+                                break;
+                            case "Plantlike":
+                                NPCLists.Plantlike.Add(NPCID);
+                                break;
+                            case "Demon":
+                                NPCLists.Demon.Add(NPCID);
+                                break;
+                            case "Cold":
+                                NPCLists.Cold.Add(NPCID);
+                                break;
+                            case "Hot":
+                                NPCLists.Hot.Add(NPCID);
+                                break;
+                            case "Wet":
+                                NPCLists.Wet.Add(NPCID);
+                                break;
+                            case "Dragonlike":
+                                NPCLists.Dragonlike.Add(NPCID);
+                                break;
+                            case "Inorganic":
+                                NPCLists.Inorganic.Add(NPCID);
+                                break;
+                            case "Robotic": // Also add these into Inorganic
+                                NPCLists.Robotic.Add(NPCID);
+                                break;
+                            case "Armed":
+                                NPCLists.Armed.Add(NPCID);
+                                break;
+                            case "Hallowed":
+                                NPCLists.Hallowed.Add(NPCID);
+                                break;
+                            case "Dark":
+                                NPCLists.Dark.Add(NPCID);
+                                break;
+                            case "Blood":
+                                NPCLists.Blood.Add(NPCID);
+                                break;
+                            case "Slime":
+                                NPCLists.IsSlime.Add(NPCID);
+                                break;
+                        }
+                        break;
                 }
             }
             /*
