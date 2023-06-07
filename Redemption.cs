@@ -362,14 +362,14 @@ namespace Redemption
                         Main.npc[npcID].netUpdate2 = true;
                     }
                     break;
-                case ModMessageType.NPCSpawnFromClient2:
+                case ModMessageType.SpawnNPCFromClient:
                     if (Main.netMode == NetmodeID.Server)
                     {
-                        int NPCType = bb.ReadInt32();
+                        int npcIndex = bb.ReadInt32();
                         int npcCenterX = bb.ReadInt32();
                         int npcCenterY = bb.ReadInt32();
 
-                        int npcID = NPC.NewNPC(Entity.GetSource_NaturalSpawn(), npcCenterX, npcCenterY, NPCType);
+                        int npcID = NPC.NewNPC(Entity.GetSource_NaturalSpawn(), npcCenterX, npcCenterY, npcIndex);
                         Main.npc[npcID].netUpdate2 = true;
                     }
                     break;
