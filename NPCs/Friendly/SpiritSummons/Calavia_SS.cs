@@ -223,7 +223,8 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
                         }
                     }
                     BaseAI.AttemptOpenDoor(NPC, ref doorVars[0], ref doorVars[1], ref doorVars[2], 80, 1, 10, interactDoorStyle: 2);
-                    if (NPC.DistanceSQ(globalNPC.attacker.Center) < 180 * 180 || (AITimer++ >= 60 && !NPC.Sight(globalNPC.attacker, -1, false, true)))
+                    Rectangle tooHighCheck = new((int)NPC.Center.X - 60, (int)NPC.Center.Y - 240, 120, 240);
+                    if (NPC.DistanceSQ(globalNPC.attacker.Center) < 180 * 180 || globalNPC.attacker.Hitbox.Intersects(tooHighCheck) || (AITimer++ >= 60 && !NPC.Sight(globalNPC.attacker, -1, false, true)))
                     {
                         WeightedRandom<ActionState> attacks = new(Main.rand);
                         attacks.Add(ActionState.Slash);

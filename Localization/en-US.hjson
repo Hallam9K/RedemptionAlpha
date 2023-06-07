@@ -8547,6 +8547,8 @@ Mods: {
 					LikeNPC_Princess: I like {NPCName}.
 					Princess_LovesNPC: I like {NPCName}.
 				}
+
+				Census.SpawnCondition: Have a suitable house in a Crimson world, after meeting him at the surface portal after the first night
 			}
 
 			Daerel_Intro.DisplayName: Daerel
@@ -8573,9 +8575,19 @@ Mods: {
 					LikeNPC_Princess: I like {NPCName}, she's alright.
 					Princess_LovesNPC: I like {NPCName}, he reminds me of an old man.
 				}
+
+				Census.SpawnCondition: Defeat the Keeper and have a suitable house
 			}
 
-			ForestNymph_Friendly.DisplayName: Forest Nymph
+			ForestNymph_Friendly: {
+				DisplayName: Forest Nymph
+				Census.SpawnCondition:
+					'''
+					Use the [i:Redemption/KingsOakStaff] to gain a Forest Nymph's trust, requires positive alignment.
+					Requires +3 alignment if a Treebark Dryad was slain.
+					'''
+			}
+
 			GathuramPortal.DisplayName: Mysterious Gateway
 			GiftDrone.DisplayName: Gift Drone
 			GiftDrone2.DisplayName: Gift Drone
@@ -8606,6 +8618,8 @@ Mods: {
 					LikeNPC_Princess: Me like {NPCName}.
 					Princess_LovesNPC: I like {NPCName}, he's goofy!
 				}
+
+				Census.SpawnCondition: Dig up the dirt mound beneath the surface portal
 			}
 
 			Newb_Intro.DisplayName: Newb
@@ -8656,6 +8670,8 @@ Mods: {
 					LikeNPC_Princess: I like {NPCName}.
 					Princess_LovesNPC: I like {NPCName}.
 				}
+
+				Census.SpawnCondition: Defeat the Seed of Infection and have a suitable house
 			}
 
 			TBot_Intro.DisplayName: Adam
@@ -8684,6 +8700,8 @@ Mods: {
 					LikeNPC_Princess: I like {NPCName}.
 					Princess_LovesNPC: I like {NPCName}.
 				}
+
+				Census.SpawnCondition: Have a suitable house in a Corruption world, after meeting him at the surface portal after the first night
 			}
 
 			Zephos_Intro.DisplayName: Zephos

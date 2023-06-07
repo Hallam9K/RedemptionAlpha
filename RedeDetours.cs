@@ -1,4 +1,6 @@
-﻿using Redemption.Effects.PrimitiveTrails;
+﻿using Microsoft.Xna.Framework;
+using Redemption.Effects.PrimitiveTrails;
+using Redemption.Globals;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
@@ -15,8 +17,9 @@ namespace Redemption
             On_Main.DrawCachedProjs += Main_DrawCachedProjs;
             On_Projectile.NewProjectile_IEntitySource_float_float_float_float_int_int_float_int_float_float_float += TrailCheck;
             On_Main.DrawDust += AdditiveCalls;
+            On_Player.CheckForGoodTeleportationSpot += DontTeleport;
         }
-        private static void AdditiveCalls(Terraria.On_Main.orig_DrawDust orig, Main self)
+        private static void AdditiveCalls(On_Main.orig_DrawDust orig, Main self)
         {
             AdditiveCallManager.DrawAdditiveCalls(Main.spriteBatch);
             orig(self);
@@ -24,6 +27,18 @@ namespace Redemption
         public static void Unload()
         {
             On_Main.DrawProjectiles -= Main_DrawProjectiles;
+        }
+        private static Vector2 DontTeleport(On_Player.orig_CheckForGoodTeleportationSpot orig, Player self, ref bool canSpawn, int teleportStartX, int teleportRangeX, int teleportStartY, int teleportRangeY, Player.RandomTeleportationAttemptSettings settings)
+        {
+            Vector2 result = orig(self, ref canSpawn, teleportStartX, teleportRangeX, teleportStartY, teleportRangeY, settings);
+
+            // If invalid spot, recurse untill a valid one is found
+            if (RedeTileHelper.CannotTeleportInFront[Framing.GetTileSafely((int)result.X, (int)result.Y).WallType])
+            {
+                settings.attemptsBeforeGivingUp--;
+                result = self.CheckForGoodTeleportationSpot(ref canSpawn, teleportStartX, teleportRangeX, teleportStartY, teleportRangeY, settings);
+            }
+            return result;
         }
         private static void Main_DrawCachedProjs(On_Main.orig_DrawCachedProjs orig, Main self, List<int> projCache, bool startSpriteBatch)
         {

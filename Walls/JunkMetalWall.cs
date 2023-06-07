@@ -1,5 +1,7 @@
 using Microsoft.Xna.Framework;
+using Redemption.Globals;
 using Redemption.Items.Materials.HM;
+using Redemption.Items.Placeable.Tiles;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -8,8 +10,9 @@ namespace Redemption.Walls
     public class JunkMetalWall : ModWall
 	{
 		public override void SetStaticDefaults()
-		{
-			Main.wallHouse[Type] = false;
+        {
+            RedeTileHelper.CannotTeleportInFront[Type] = true;
+            Main.wallHouse[Type] = false;
             RegisterItemDrop(ModContent.ItemType<Cyberscrap>());
             AddMapEntry(new Color(113, 115, 120));
 		}

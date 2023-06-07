@@ -148,5 +148,6 @@ namespace Redemption.Globals
     {
         public static bool[] CannotMineTileBelow = TileID.Sets.Factory.CreateBoolSet();
         public static bool[] CannotMineTileAbove = TileID.Sets.Factory.CreateBoolSet();
+        public static bool[] CannotTeleportInFront = WallID.Sets.Factory.CreateBoolSet();
     }
 }

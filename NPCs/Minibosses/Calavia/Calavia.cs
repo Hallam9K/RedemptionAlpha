@@ -389,7 +389,8 @@ namespace Redemption.NPCs.Minibosses.Calavia
                     }
                     BaseAI.AttemptOpenDoor(NPC, ref doorVars[0], ref doorVars[1], ref doorVars[2], 80, 1, 10, interactDoorStyle: 2);
                     Vector2 gathicPortalPos = new((RedeGen.gathicPortalVector.X + 47) * 16, (RedeGen.gathicPortalVector.Y + 20) * 16 + 8);
-                    if (NPC.DistanceSQ(player.Center) < 180 * 180 || (AITimer >= 60 && !NPC.Sight(player, -1, false, true) && Collision.CanHitLine(NPC.position, NPC.width, NPC.height, gathicPortalPos - new Vector2(8, 8), 16, 16)))
+                    Rectangle tooHighCheck = new((int)NPC.Center.X - 60, (int)NPC.Center.Y - 240, 120, 240);
+                    if (NPC.DistanceSQ(player.Center) < 180 * 180 || player.Hitbox.Intersects(tooHighCheck) || (AITimer >= 60 && !NPC.Sight(player, -1, false, true) && Collision.CanHitLine(NPC.position, NPC.width, NPC.height, gathicPortalPos - new Vector2(8, 8), 16, 16)))
                     {
                         WeightedRandom<ActionState> attacks = new(Main.rand);
                         attacks.Add(ActionState.Slash);
