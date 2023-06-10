@@ -3435,7 +3435,7 @@ Mods: {
 				Tooltip: ""
 			}
 
-			.Banner: {
+			ForestNymphBanner: {
 				DisplayName: Forest Nymph Banner
 				Tooltip: ""
 			}
