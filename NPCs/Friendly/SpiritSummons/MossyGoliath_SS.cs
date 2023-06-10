@@ -171,7 +171,7 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
                         NPC.netUpdate = true;
                     }
 
-                    NPC.PlatformFallCheck(ref NPC.Redemption().fallDownPlatform, 40, moveTo.Y * 16);
+                    NPC.PlatformFallCheck(ref NPC.Redemption().fallDownPlatform, 40, (moveTo.Y - 32) * 16);
                     NPCHelper.HorizontallyMove(NPC, moveTo * 16, 0.3f, 4f, 26, 26, NPC.Center.Y > moveTo.Y * 16, player);
                     break;
                 case ActionState.AlertRun:

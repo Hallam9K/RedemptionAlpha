@@ -4,7 +4,6 @@ using Redemption.BaseExtension;
 using Redemption.Globals;
 using Redemption.Globals.Player;
 using Redemption.Items.Materials.HM;
-using Redemption.Items.Weapons.HM.Ammo;
 using Redemption.Projectiles.Ranged;
 using Terraria;
 using Terraria.Audio;
@@ -46,7 +45,7 @@ namespace Redemption.Items.Weapons.HM.Ranged
             Item.useAmmo = AmmoID.Bullet;
             Item.ExtraItemShoot(ModContent.ProjectileType<CorruptedDoubleRifle_Beam>());
             if (!Main.dedServ)
-                Item.RedemptionGlow().glowTexture = ModContent.Request<Texture2D>(Item.ModItem.Texture + "_Glow").Value;
+                Item.RedemptionGlow().glowTexture = ModContent.Request<Texture2D>(Texture + "_Glow").Value;
         }
         public override bool CanConsumeAmmo(Item ammo, Player player)
         {

@@ -1,6 +1,5 @@
 using Microsoft.Xna.Framework;
 using Redemption.Dusts.Tiles;
-using Redemption.Items.Placeable.Furniture.Lab;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
@@ -28,7 +27,7 @@ namespace Redemption.Tiles.Furniture.Lab
             TileObjectData.newTile.AnchorWall = true;
             TileObjectData.addTile(Type);
             DustType = ModContent.DustType<LabPlatingDust>();
-            MinPick = 500;
+            MinPick = 1000;
             MineResist = 13f;
             LocalizedText name = CreateMapEntryName();
             // name.SetDefault("Laboratory Door");

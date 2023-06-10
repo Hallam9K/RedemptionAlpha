@@ -25,12 +25,14 @@ namespace Redemption.Tiles.Furniture.Shade
             TileObjectData.newTile.StyleHorizontal = true;
             TileObjectData.newTile.RandomStyleRange = 5;
             TileObjectData.newTile.DrawYOffset = 2;
+            TileObjectData.newTile.StyleLineSkip = 5;
             TileObjectData.addTile(Type);
             LocalizedText name = CreateMapEntryName();
             // name.SetDefault("Wax Candles");
             AddMapEntry(new Color(141, 132, 172), name);
             AdjTiles = new int[] { TileID.Candles };
             AddToArray(ref TileID.Sets.RoomNeeds.CountsAsTorch);
+            RegisterItemDrop(ModContent.ItemType<WaxCandles>());
             DustType = ModContent.DustType<MaskDust>();
             AnimationFrameHeight = 36;
         }
@@ -62,7 +64,7 @@ namespace Redemption.Tiles.Furniture.Shade
             int height = tile.TileFrameY % AnimationFrameHeight >= 16 ? 18 : 16;
             int animate = Main.tileFrame[Type] * AnimationFrameHeight;
 
-            Texture2D texture = ModContent.Request<Texture2D>("Redemption/Tiles/Furniture/Shade/WaxCandlesTile_Glow").Value;
+            Texture2D texture = ModContent.Request<Texture2D>(Texture + "_Glow").Value;
             Rectangle frame = new(tile.TileFrameX, tile.TileFrameY + animate, 16, height);
             ulong randSeed = Main.TileFrameSeed ^ (ulong)((long)j << 32 | (uint)i);
             Color color = new(100, 100, 100, 0);

@@ -48,7 +48,7 @@ namespace Redemption.Items.Weapons.HM.Melee
             Item.noUseGraphic = false;
             Item.shoot = ModContent.ProjectileType<RemoteCleaver>();
             if (!Main.dedServ)
-                Item.RedemptionGlow().glowTexture = ModContent.Request<Texture2D>(Item.ModItem.Texture + "_Glow").Value;
+                Item.RedemptionGlow().glowTexture = ModContent.Request<Texture2D>(Texture + "_Glow").Value;
         }
         public override bool AltFunctionUse(Player player) => true;
         public int AttackMode;
@@ -165,10 +165,6 @@ namespace Redemption.Items.Weapons.HM.Melee
         NPC target;
         public override void AI()
         {
-            for (int k = Projectile.oldPos.Length - 1; k > 0; k--)
-                oldrot[k] = oldrot[k - 1];
-
-            oldrot[0] = Projectile.rotation;
             Player player = Main.player[Projectile.owner];
             switch (Projectile.ai[0])
             {
@@ -392,6 +388,9 @@ namespace Redemption.Items.Weapons.HM.Melee
                     }
                     break;
             }
+            for (int k = Projectile.oldPos.Length - 1; k > 0; k--)
+                oldrot[k] = oldrot[k - 1];
+            oldrot[0] = Projectile.rotation;
         }
         public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox)
         {

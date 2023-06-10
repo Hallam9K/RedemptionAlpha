@@ -30,6 +30,7 @@ namespace Redemption.Tiles.Furniture.Shade
             DustType = ModContent.DustType<ShadestoneDust>();
             AdjTiles = new int[] { TileID.OpenDoor };
             TileID.Sets.CloseDoorID[Type] = ModContent.TileType<ShadestoneDoorClosed>();
+            RegisterItemDrop(ModContent.ItemType<ShadestoneDoor>(), 0);
 
             AddMapEntry(new Color(59, 61, 87), Language.GetText("MapObject.Door"));
 

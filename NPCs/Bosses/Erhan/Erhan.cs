@@ -23,13 +23,13 @@ using Redemption.Items.Accessories.PreHM;
 using Redemption.BaseExtension;
 using Terraria.GameContent.UI;
 using Redemption.Projectiles.Misc;
-using Redemption.Projectiles.Magic;
 using Redemption.Items.Weapons.HM.Melee;
 using ReLogic.Content;
 using Redemption.UI.ChatUI;
 using Redemption.Projectiles.Minions;
 using Redemption.Items.Weapons.PreHM.Summon;
 using Terraria.Localization;
+using Redemption.Dusts;
 
 namespace Redemption.NPCs.Bosses.Erhan
 {
@@ -191,7 +191,7 @@ namespace Redemption.NPCs.Bosses.Erhan
 
         public override void OnKill()
         {
-            if (!Spared && RedeBossDowned.erhanDeath < 3)
+            if (!Spared && RedeBossDowned.erhanDeath < 3 && Main.netMode != NetmodeID.MultiplayerClient)
             {
                 RedeBossDowned.erhanDeath = 3;
                 if (Main.netMode == NetmodeID.Server)
@@ -288,7 +288,6 @@ namespace Redemption.NPCs.Bosses.Erhan
             Player player = Main.player[NPC.target];
 
             DespawnHandler();
-
             if (AIState is not ActionState.Fallen && AIState is not ActionState.Death && AIState is not ActionState.Bible)
             {
                 NPC.LookAtEntity(player);
@@ -378,7 +377,7 @@ namespace Redemption.NPCs.Bosses.Erhan
                                             "Anglonic High Priest");
                                         Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/BossErhan");
                                     }
-                                    if (RedeBossDowned.erhanDeath == 0)
+                                    if (RedeBossDowned.erhanDeath == 0 && Main.netMode != NetmodeID.MultiplayerClient)
                                     {
                                         RedeBossDowned.erhanDeath = 1;
                                         if (Main.netMode == NetmodeID.Server)
@@ -887,8 +886,7 @@ namespace Redemption.NPCs.Bosses.Erhan
                             {
                                 DustHelper.DrawCircle(NPC.Center, DustID.GoldFlame, 5, 5, 5, 1, 2, nogravity: true);
                                 for (int i = 0; i < 4; i++)
-                                    NPC.Shoot(NPC.Center, ModContent.ProjectileType<Erhan_HolyShield>(), 0, Vector2.Zero, true,
-                                        SoundID.Item29, NPC.whoAmI, i);
+                                    NPC.Shoot(NPC.Center, ModContent.ProjectileType<Erhan_HolyShield>(), 0, Vector2.Zero, true, SoundID.Item29, NPC.whoAmI, i);
                             }
 
                             if (RedeBossDowned.erhanDeath < 2 && !Main.dedServ)
@@ -910,7 +908,7 @@ namespace Redemption.NPCs.Bosses.Erhan
                             }
                             if (AITimer >= (RedeBossDowned.erhanDeath < 2 ? 500 : 360))
                             {
-                                if (RedeBossDowned.erhanDeath < 2)
+                                if (RedeBossDowned.erhanDeath < 2 && Main.netMode != NetmodeID.MultiplayerClient)
                                 {
                                     RedeBossDowned.erhanDeath = 2;
                                     if (Main.netMode == NetmodeID.Server)
@@ -1183,8 +1181,8 @@ namespace Redemption.NPCs.Bosses.Erhan
                     SoundEngine.PlaySound(SoundID.Item68, NPC.position);
                     Main.LocalPlayer.RedemptionScreen().ScreenShakeOrigin = NPC.Center;
                     Main.LocalPlayer.RedemptionScreen().ScreenShakeIntensity += 14;
-                    RedeDraw.SpawnExplosion(NPC.Center, Color.White, 6, 0, scale: 2, noDust: true, tex: ModContent.Request<Texture2D>("Redemption/Textures/HolyGlow3").Value);
-                    RedeDraw.SpawnExplosion(NPC.Center, Color.White, 6, 0, scale: 3, noDust: true, tex: ModContent.Request<Texture2D>("Redemption/Textures/HolyGlow2").Value);
+                    RedeDraw.SpawnExplosion(NPC.Center, Color.White, 6, 0, scale: 2, noDust: true, tex: Redemption.HolyGlow3.Value);
+                    RedeDraw.SpawnExplosion(NPC.Center, Color.White, 6, 0, scale: 3, noDust: true, tex: Redemption.HolyGlow2.Value);
                     NPC.active = false;
                     break;
                 case 5:
@@ -1448,7 +1446,7 @@ namespace Redemption.NPCs.Bosses.Erhan
             spriteBatch.End();
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
 
-            Texture2D flare = ModContent.Request<Texture2D>("Redemption/Textures/HolyGlow2").Value;
+            Texture2D flare = Redemption.HolyGlow2.Value;
             Rectangle rect = new(0, 0, flare.Width, flare.Height);
             Vector2 origin = new(flare.Width / 2, flare.Height / 2);
             Vector2 position = NPC.Center - screenPos;
@@ -1464,7 +1462,7 @@ namespace Redemption.NPCs.Bosses.Erhan
                 spriteBatch.Draw(flare, position, new Rectangle?(rect), colour * 0.4f, NPC.rotation, origin, 2.5f, SpriteEffects.None, 0);
             }
 
-            Texture2D teleportGlow = ModContent.Request<Texture2D>("Redemption/Textures/HolyGlow3").Value;
+            Texture2D teleportGlow = Redemption.HolyGlow3.Value;
             Rectangle rect2 = new(0, 0, teleportGlow.Width, teleportGlow.Height);
             Vector2 origin2 = new(teleportGlow.Width / 2, teleportGlow.Height / 2);
             Vector2 position2 = NPC.Center - screenPos;
@@ -1488,7 +1486,6 @@ namespace Redemption.NPCs.Bosses.Erhan
             if (AIState is ActionState.Fallen && TimerRand == 2 && projectile.Redemption().TechnicallyMelee)
                 modifiers.FinalDamage *= 2;
         }
-
         private void DespawnHandler()
         {
             Player player = Main.player[NPC.target];

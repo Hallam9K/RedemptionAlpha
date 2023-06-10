@@ -169,7 +169,7 @@ namespace Redemption.NPCs.Bosses.ADD
             if (RedeBossDowned.downedGGBossFirst == 1 && RedeBossDowned.downedGGBossFirst == 2)
                 modifiers.FinalDamage *= .85f;
 
-            if (NPC.RedemptionGuard().GuardPoints >= 0)
+            if (NPC.RedemptionGuard().GuardPoints >= 0 && !NPC.RedemptionGuard().GuardBroken)
             {
                 modifiers.DisableCrit();
                 modifiers.ModifyHitInfo += (ref NPC.HitInfo n) => NPC.RedemptionGuard().GuardHit(ref n, NPC, SoundID.DD2_WitherBeastCrystalImpact, .25f, false, DustID.Stone, CustomSounds.EarthBoom, 10, 1, 2000);
@@ -178,7 +178,7 @@ namespace Redemption.NPCs.Bosses.ADD
         public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)
         {
             NPC.lifeMax = (int)(NPC.lifeMax * 0.75f * balance * bossAdjustment);
-            NPC.damage = (int)(NPC.damage * 0.6f);
+            NPC.damage = (int)(NPC.damage * 0.75f);
         }
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
         {

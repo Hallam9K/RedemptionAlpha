@@ -1,5 +1,4 @@
 using Microsoft.Xna.Framework;
-using Redemption.Items.Placeable.Furniture.Misc;
 using Terraria;
 using Terraria.Enums;
 using Terraria.ModLoader;
@@ -7,6 +6,7 @@ using Terraria.ObjectData;
 using Terraria.DataStructures;
 using Redemption.Dusts.Tiles;
 using Terraria.ID;
+using Redemption.Items.Placeable.Furniture.Misc;
 
 namespace Redemption.Tiles.Furniture.Misc
 {
@@ -31,6 +31,7 @@ namespace Redemption.Tiles.Furniture.Misc
             MinPick = 50;
             MineResist = 7f;
             HitSound = CustomSounds.StoneHit;
+            RegisterItemDrop(ModContent.ItemType<HKMiniStatue>());
             AddMapEntry(new Color(104, 91, 83));
             DustType = ModContent.DustType<SlateDust>();
         }

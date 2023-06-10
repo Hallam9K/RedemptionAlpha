@@ -46,9 +46,8 @@ namespace Redemption.Tiles.Furniture.Lab
             LocalizedText name = CreateMapEntryName();
             // name.SetDefault("Keycard Door");
             AddMapEntry(new Color(189, 191, 200), name);
-            MinPick = 500;
+            MinPick = 1000;
             MineResist = 20f;
-            ItemDrop = -1;
             DustType = DustID.Electric;
             AdjTiles = new int[] { TileID.ClosedDoor };
             AnimationFrameHeight = 72;
@@ -132,7 +131,7 @@ namespace Redemption.Tiles.Furniture.Lab
             LocalizedText name = CreateMapEntryName();
             // name.SetDefault("Keycard Door");
             AddMapEntry(new Color(189, 191, 200), name);
-            MinPick = 500;
+            MinPick = 1000;
             MineResist = 20f;
             DustType = DustID.Electric;
             AdjTiles = new int[] { TileID.OpenDoor };

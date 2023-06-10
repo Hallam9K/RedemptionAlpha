@@ -38,9 +38,9 @@ using Redemption.Globals.World;
 using Redemption.Buffs.Cooldowns;
 using Redemption.Items.Weapons.PreHM.Ranged;
 using Redemption.WorldGeneration.Misc;
-// using SubworldLibrary;
+using SubworldLibrary;
 using Redemption.Items.Accessories.PreHM;
-using Redemption.Tiles.Trees;
+using Redemption.Base;
 
 namespace Redemption.Globals.NPC
 {
@@ -380,10 +380,22 @@ namespace Redemption.Globals.NPC
         }
         public override void EditSpawnPool(IDictionary<int, float> pool, NPCSpawnInfo spawnInfo)
         {
-            if ((spawnInfo.Player.RedemptionScreen().cutscene && !RedeConfigClient.Instance.CameraLockDisable))// || SubworldSystem.IsActive<CSub>())
+            if ((spawnInfo.Player.RedemptionScreen().cutscene && !RedeConfigClient.Instance.CameraLockDisable) || SubworldSystem.IsActive<CSub>())
             {
                 pool.Clear();
                 return;
+            }
+            for (int i = 0; i < Main.maxNPCs; i++)
+            {
+                Terraria.NPC safe = Main.npc[i];
+                if (!safe.active || !NPCLists.DisablesSpawnsWhenNear.Contains(safe.type))
+                    continue;
+                Vector2 spawnPos = BaseUtility.TileToPos(new Vector2(spawnInfo.SpawnTileX, spawnInfo.SpawnTileY));
+                if (safe.DistanceSQ(spawnPos) < 1600 * 1600)
+                {
+                    pool.Clear();
+                    return;
+                }
             }
             if (RedeWorld.blobbleSwarm)
             {
@@ -405,7 +417,7 @@ namespace Redemption.Globals.NPC
             if (FowlMorningWorld.FowlMorningActive && spawnInfo.Player.ZoneOverworldHeight && !spawnInfo.Player.ZoneTowerNebula && !spawnInfo.Player.ZoneTowerSolar && !spawnInfo.Player.ZoneTowerStardust && !spawnInfo.Player.ZoneTowerVortex)
             {
                 pool.Clear();
-                if (Main.tile[spawnInfo.SpawnTileX, spawnInfo.SpawnTileY - 1].WallType is not WallID.DirtUnsafe)
+                if (Framing.GetTileSafely(spawnInfo.SpawnTileX, spawnInfo.SpawnTileY - 1).WallType is not WallID.DirtUnsafe)
                 {
                     IDictionary<int, float> spawnpool = FowlMorningNPC.SpawnPool.ElementAt(FowlMorningWorld.ChickWave);
                     foreach (KeyValuePair<int, float> key in spawnpool)

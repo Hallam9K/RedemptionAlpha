@@ -19,6 +19,7 @@ namespace Redemption.Globals
         public static int[] wayfarerVars = new int[2];
         public static bool[] voltVars = new bool[4];
         public static int forestNymphVar;
+        public static int calaviaVar;
         public override void PostUpdateWorld()
         {
             #region Wayfarer Event
@@ -47,7 +48,7 @@ namespace Redemption.Globals
                     else if (Main.netMode == NetmodeID.SinglePlayer)
                         Main.NewText(Language.GetTextValue(status), new Color(48, 121, 248));
 
-                    Vector2 anglonPortalPos = new(((RedeGen.newbCavePoint.X + 35) * 16) - 8, ((RedeGen.newbCavePoint.Y + 6) * 16) - 4);
+                    Vector2 anglonPortalPos = new(((RedeGen.newbCaveVector.X + 35) * 16) - 8, ((RedeGen.newbCaveVector.Y + 6) * 16) - 4);
                     int wayfarer = WorldGen.crimson ? ModContent.NPCType<Daerel>() : ModContent.NPCType<Zephos>();
                     SoundEngine.PlaySound(SoundID.DD2_EtherianPortalSpawnEnemy, anglonPortalPos);
                     for (int i = 0; i < 30; i++)
@@ -58,7 +59,7 @@ namespace Redemption.Globals
                         Main.dust[dust].color = dustColor;
                         Main.dust[dust].velocity *= 3f;
                     }
-                    if (RedeGen.newbCavePoint.X != 0 && !RedeHelper.WayfarerActive())
+                    if (RedeGen.newbCaveVector.X != -1 && !RedeHelper.WayfarerActive())
                         LabArea.SpawnNPCInWorld(anglonPortalPos, wayfarer);
 
                     if (Main.netMode == NetmodeID.Server)
@@ -66,6 +67,22 @@ namespace Redemption.Globals
                 }
             }
             #endregion
+            if (calaviaVar == 0 && Main.dayTime && Terraria.NPC.downedBoss3)
+            {
+                Point originPoint = RedeGen.gathicPortalVector.ToPoint();
+                GenUtils.ObjectPlace(originPoint.X + 36, originPoint.Y + 17, TileID.Torches);
+
+                calaviaVar = 1;
+                if (Main.netMode == NetmodeID.Server)
+                    NetMessage.SendData(MessageID.WorldData);
+
+                string status = "A portal rumbles... (Check Minimap for the location)";
+                if (Main.netMode == NetmodeID.Server)
+                    ChatHelper.BroadcastChatMessage(NetworkText.FromLiteral(status), Color.LightBlue);
+                else if (Main.netMode == NetmodeID.SinglePlayer)
+                    Main.NewText(Language.GetTextValue(status), Color.LightBlue);
+            }
+
         }
         public override void ClearWorld()
         {
@@ -74,6 +91,7 @@ namespace Redemption.Globals
             for (int k = 0; k < voltVars.Length; k++)
                 voltVars[k] = false;
             forestNymphVar = 0;
+            calaviaVar = 0;
         }
         public override void SaveWorldData(TagCompound tag)
         {
@@ -88,6 +106,7 @@ namespace Redemption.Globals
             for (int k = 0; k < wayfarerVars.Length; k++)
                 tag["WV" + k] = wayfarerVars[k];
             tag["FNV"] = forestNymphVar;
+            tag["CV"] = calaviaVar;
         }
 
         public override void LoadWorldData(TagCompound tag)
@@ -99,6 +118,7 @@ namespace Redemption.Globals
             for (int k = 0; k < wayfarerVars.Length; k++)
                 wayfarerVars[k] = tag.GetInt("WV" + k);
             forestNymphVar = tag.GetInt("FNV");
+            calaviaVar = tag.GetInt("CV");
         }
 
         public override void NetSend(BinaryWriter writer)
@@ -111,6 +131,7 @@ namespace Redemption.Globals
             for (int k = 0; k < wayfarerVars.Length; k++)
                 writer.Write(wayfarerVars[k]);
             writer.Write(forestNymphVar);
+            writer.Write(calaviaVar);
         }
 
         public override void NetReceive(BinaryReader reader)
@@ -122,6 +143,7 @@ namespace Redemption.Globals
             for (int k = 0; k < wayfarerVars.Length; k++)
                 wayfarerVars[k] = reader.ReadInt32();
             forestNymphVar = reader.ReadInt32();
+            calaviaVar = reader.ReadInt32();
         }
     }
 }

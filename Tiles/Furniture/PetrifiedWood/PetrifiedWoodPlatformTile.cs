@@ -1,5 +1,4 @@
 using Microsoft.Xna.Framework;
-using Redemption.Items.Placeable.Furniture.PetrifiedWood;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -26,7 +25,6 @@ namespace Redemption.Tiles.Furniture.PetrifiedWood
             AddMapEntry(new Color(109, 87, 78));
 
             DustType = DustID.Ash;
-            ItemDrop = ModContent.ItemType<PetrifiedWoodPlatform>();
             AdjTiles = new int[] { TileID.Platforms };
 
             // Placement
@@ -40,9 +38,7 @@ namespace Redemption.Tiles.Furniture.PetrifiedWood
             TileObjectData.newTile.LavaDeath = true;
             TileObjectData.addTile(Type);
         }
-
         public override void PostSetDefaults() => Main.tileNoSunLight[Type] = false;
-
         public override void NumDust(int i, int j, bool fail, ref int num) => num = fail ? 1 : 3;
     }
 }

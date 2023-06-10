@@ -21,7 +21,7 @@ namespace Redemption.Items.Weapons.HM.Magic
 
         public override void SetDefaults()
         {
-            Item.damage = 32;
+            Item.damage = 22;
             Item.DamageType = DamageClass.Magic;
             Item.mana = 10;
             Item.width = 60;
@@ -29,6 +29,7 @@ namespace Redemption.Items.Weapons.HM.Magic
             Item.useTime = 42;
             Item.useAnimation = 42;
             Item.useStyle = ItemUseStyleID.Shoot;
+            Item.ArmorPenetration = 15;
             Item.noMelee = true;
             Item.knockBack = 0;
             Item.value = Item.sellPrice(0, 15, 0, 0);
@@ -38,7 +39,7 @@ namespace Redemption.Items.Weapons.HM.Magic
             Item.shoot = ModContent.ProjectileType<Nanite_Proj>();
             Item.shootSpeed = 20f;
             if (!Main.dedServ)
-                Item.RedemptionGlow().glowTexture = ModContent.Request<Texture2D>(Item.ModItem.Texture + "_Glow").Value;
+                Item.RedemptionGlow().glowTexture = ModContent.Request<Texture2D>(Texture + "_Glow").Value;
         }
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {

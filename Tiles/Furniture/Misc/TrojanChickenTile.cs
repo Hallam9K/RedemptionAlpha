@@ -35,6 +35,7 @@ namespace Redemption.Tiles.Furniture.Misc
             DustType = DustID.WoodFurniture;
             MinPick = 10;
             MineResist = 2f;
+            RegisterItemDrop(ModContent.ItemType<TrojanChicken>());
             LocalizedText name = CreateMapEntryName();
             // name.SetDefault("Trojan Chicken Replica");
             AddMapEntry(new Color(151, 107, 75), name);

@@ -15,6 +15,7 @@ namespace Redemption.NPCs.Lab
             // DisplayName.SetDefault("");
             NPCID.Sets.DontDoHardmodeScaling[Type] = true;
             NPCID.Sets.ActsLikeTownNPC[Type] = true;
+            NPCID.Sets.NoTownNPCHappiness[Type] = true;
 
             NPCID.Sets.NPCBestiaryDrawModifiers value = new(0)
             {

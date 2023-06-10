@@ -31,8 +31,9 @@ namespace Redemption.Tiles.Furniture.Misc
             TileObjectData.addTile(Type);
             DustType = ModContent.DustType<SlateDust>();
             HitSound = CustomSounds.StoneHit;
-            MinPick = 500;
+            MinPick = 1000;
             MineResist = 15f;
+            RegisterItemDrop(ModContent.ItemType<JStatue>());
             AddMapEntry(new Color(104, 91, 83));
         }
         public override bool CanExplode(int i, int j) => false;

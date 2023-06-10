@@ -1,8 +1,8 @@
 using Redemption.Globals;
 using Redemption.Items.Weapons.PreHM.Ranged;
-using Redemption.NPCs.Bosses.FowlEmperor;
-//using Redemption.WorldGeneration.Soulless;
-//using SubworldLibrary;
+using Redemption.NPCs.Minibosses.FowlEmperor;
+using Redemption.WorldGeneration.Soulless;
+using SubworldLibrary;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
@@ -35,8 +35,7 @@ namespace Redemption.Items.Usable.Summons
 		}
         public override bool CanUseItem(Player player)
         {
-            return //!SubworldSystem.IsActive<SoullessSub>() &&
-                   Main.dayTime && !NPC.AnyNPCs(ModContent.NPCType<FowlEmperor>());
+            return !SubworldSystem.IsActive<SoullessSub>() && Main.dayTime && !NPC.AnyNPCs(ModContent.NPCType<FowlEmperor>());
         }
 
         public override bool? UseItem(Player player)

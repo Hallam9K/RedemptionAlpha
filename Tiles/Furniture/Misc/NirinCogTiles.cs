@@ -11,7 +11,7 @@ namespace Redemption.Tiles.Furniture.Misc
 {
     public class NirinCogMediumTile : ModTile
     {
-        public override string Texture => "Redemption/Tiles/Furniture/Misc/NirinCogTile";
+        public override string Texture => "Redemption/Tiles/Furniture/Misc/CogTile";
         public override void SetStaticDefaults()
         {
             Main.tileFrameImportant[Type] = true;
@@ -26,6 +26,7 @@ namespace Redemption.Tiles.Furniture.Misc
             TileObjectData.newTile.CoordinatePadding = 2;
             TileObjectData.newTile.AnchorWall = true;
             TileObjectData.addTile(Type);
+            RegisterItemDrop(ModContent.ItemType<NirinCogMedium>());
             LocalizedText name = CreateMapEntryName();
             // name.SetDefault("Niric Cog");
             AddMapEntry(new Color(117, 117, 126), name);
@@ -70,6 +71,7 @@ namespace Redemption.Tiles.Furniture.Misc
         public override void SetStaticDefaults()
         {
             // DisplayName.SetDefault("Niric Cog");
+            Item.ResearchUnlockCount = 1;
         }
         public override void SetDefaults()
         {
@@ -83,7 +85,7 @@ namespace Redemption.Tiles.Furniture.Misc
     }
     public class NirinCogBigTile : ModTile
     {
-        public override string Texture => "Redemption/Tiles/Furniture/Misc/NirinCogTile";
+        public override string Texture => "Redemption/Tiles/Furniture/Misc/CogTile";
         public override void SetStaticDefaults()
         {
             Main.tileFrameImportant[Type] = true;
@@ -96,6 +98,7 @@ namespace Redemption.Tiles.Furniture.Misc
             TileObjectData.newTile.CoordinatePadding = 2;
             TileObjectData.newTile.AnchorWall = true;
             TileObjectData.addTile(Type);
+            RegisterItemDrop(ModContent.ItemType<NirinCogBig>());
             LocalizedText name = CreateMapEntryName();
             // name.SetDefault("Niric Cog");
             AddMapEntry(new Color(117, 117, 126), name);
@@ -140,6 +143,7 @@ namespace Redemption.Tiles.Furniture.Misc
         public override void SetStaticDefaults()
         {
             // DisplayName.SetDefault("Big Niric Cog");
+            Item.ResearchUnlockCount = 1;
         }
         public override void SetDefaults()
         {

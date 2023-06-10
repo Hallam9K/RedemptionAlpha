@@ -2,8 +2,6 @@ using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.Localization;
 using Terraria.ModLoader;
-using Terraria.ID;
-using Redemption.Items.Placeable.Tiles;
 using Redemption.Dusts.Tiles;
 using Redemption.Items.Tools.PostML;
 
@@ -18,8 +16,7 @@ namespace Redemption.Tiles.Tiles
             Main.tileBlockLight[Type] = true;
             Main.tileBrick[Type] = true;
             DustType = ModContent.DustType<ShadestoneDust>();
-            ItemDrop = ModContent.ItemType<ShadestoneSlab>();
-            MinPick = 500;
+            MinPick = 1000;
             MineResist = 18f;
             HitSound = CustomSounds.BrickHit;
             LocalizedText name = CreateMapEntryName();

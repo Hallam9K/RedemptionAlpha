@@ -2,7 +2,6 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Base;
 using Redemption.Globals;
-using Redemption.Items;
 using Redemption.Items.Armor.Vanity.TBot;
 using Terraria;
 using Terraria.GameContent;
@@ -19,6 +18,7 @@ namespace Redemption.NPCs.Lab.Volt
             // DisplayName.SetDefault("Protector Volt");
             Main.npcFrameCount[NPC.type] = 2;
             NPCID.Sets.ActsLikeTownNPC[Type] = true;
+            NPCID.Sets.NoTownNPCHappiness[Type] = true;
             NPCID.Sets.NPCBestiaryDrawModifiers value = new(0) { Hide = true };
             NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, value);
         }

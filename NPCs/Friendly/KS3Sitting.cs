@@ -21,7 +21,6 @@ using Redemption.Biomes;
 using Redemption.BaseExtension;
 using Redemption.Items.Donator.Lizzy;
 using Terraria.GameContent.UI;
-using Redemption.Items.Materials.PostML;
 using Terraria.Localization;
 
 namespace Redemption.NPCs.Friendly
@@ -35,6 +34,7 @@ namespace Redemption.NPCs.Friendly
             // DisplayName.SetDefault("King Slayer III");
             Main.npcFrameCount[NPC.type] = 7;
             NPCID.Sets.ActsLikeTownNPC[Type] = true;
+            NPCID.Sets.NoTownNPCHappiness[Type] = true;
             NPCID.Sets.NPCBestiaryDrawModifiers value = new(0)
             {
                 Hide = true
@@ -249,7 +249,7 @@ namespace Redemption.NPCs.Friendly
 
                         Texture2D tex = ModContent.Request<Texture2D>("Redemption/WorldGeneration/SlayerShipFix1", AssetRequestMode.ImmediateLoad).Value;
 
-                        Point origin = RedeGen.slayerShipPoint.ToPoint();
+                        Point origin = RedeGen.slayerShipVector.ToPoint();
 
                         GenUtils.InvokeOnMainThread(() =>
                         {
@@ -296,7 +296,7 @@ namespace Redemption.NPCs.Friendly
 
                         Texture2D tex = ModContent.Request<Texture2D>("Redemption/WorldGeneration/SlayerShipFix2", AssetRequestMode.ImmediateLoad).Value;
 
-                        Point origin = RedeGen.slayerShipPoint.ToPoint();
+                        Point origin = RedeGen.slayerShipVector.ToPoint();
 
                         GenUtils.InvokeOnMainThread(() =>
                         {
@@ -355,7 +355,7 @@ namespace Redemption.NPCs.Friendly
                         Texture2D tex = ModContent.Request<Texture2D>("Redemption/WorldGeneration/SlayerShipFix2", AssetRequestMode.ImmediateLoad).Value;
                         Texture2D texWalls = ModContent.Request<Texture2D>("Redemption/WorldGeneration/SlayerShipWallsFix", AssetRequestMode.ImmediateLoad).Value;
 
-                        Point origin = RedeGen.slayerShipPoint.ToPoint();
+                        Point origin = RedeGen.slayerShipVector.ToPoint();
 
                         GenUtils.InvokeOnMainThread(() =>
                         {

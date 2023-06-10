@@ -38,7 +38,8 @@ namespace Redemption.Projectiles.Pets
 			Player player = Main.player[Projectile.owner];
 			CheckActive(player);
 
-			Projectile.rotation = Projectile.velocity.X * 0.05f;
+            Lighting.AddLight(Projectile.Center, .4f * Projectile.Opacity, Projectile.Opacity, .4f * Projectile.Opacity);
+            Projectile.rotation = Projectile.velocity.X * 0.05f;
 
 			Projectile.frameCounter++;
 			if (Projectile.frameCounter >= 5)

@@ -4,12 +4,10 @@ using Redemption.BaseExtension;
 using Redemption.Buffs.Debuffs;
 using Redemption.Buffs.NPCBuffs;
 using Redemption.Globals;
-using Redemption.Items;
 using Redemption.Items.Accessories.PreHM;
 using Redemption.Items.Armor.Vanity;
 using Redemption.Items.Materials.PreHM;
 using Redemption.Items.Placeable.Plants;
-using Redemption.Items.Usable;
 using Redemption.Items.Weapons.PreHM.Melee;
 using Redemption.Items.Weapons.PreHM.Summon;
 using Redemption.NPCs.PreHM;
@@ -35,6 +33,7 @@ namespace Redemption.NPCs.Friendly
             // DisplayName.SetDefault("Forest Nymph");
             Main.npcFrameCount[NPC.type] = 10;
             NPCID.Sets.AllowDoorInteraction[Type] = true;
+            NPCID.Sets.NoTownNPCHappiness[Type] = true;
             NPCID.Sets.DebuffImmunitySets.Add(Type, new NPCDebuffImmunityData
             {
                 SpecificallyImmuneTo = new int[] {
@@ -387,7 +386,8 @@ namespace Redemption.NPCs.Friendly
                         }
                         break;
                     case 1:
-                        ForestNymphTradeUI.Visible = true;
+                        SoundEngine.PlaySound(SoundID.MenuOpen);
+                        TradeUI.Visible = true;
                         break;
                     case 2:
                         for (int i = 0; i < 20; i++)
@@ -532,8 +532,6 @@ namespace Redemption.NPCs.Friendly
         }
         public override string GetChat()
         {
-            Main.LocalPlayer.currentShoppingSettings.HappinessReport = "";
-
             Player player = Main.player[Main.myPlayer];
             WeightedRandom<string> chat = new(Main.rand);
             if ((RedeWorld.alignment < 0 && !RedeBossDowned.downedTreebark) || (RedeWorld.alignment < 2 && RedeBossDowned.downedTreebark))

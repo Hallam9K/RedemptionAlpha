@@ -35,7 +35,7 @@ namespace Redemption.Tiles.Furniture.Shade
             LocalizedText name = CreateMapEntryName();
             // name.SetDefault("Shadestone Gate");
             AddMapEntry(new Color(50, 50, 50), name);
-            MinPick = 500;
+            MinPick = 1000;
             MineResist = 30f;
             DustType = ModContent.DustType<VoidFlame>();
             AnimationFrameHeight = 180;

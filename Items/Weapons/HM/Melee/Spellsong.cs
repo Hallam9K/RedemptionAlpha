@@ -50,7 +50,7 @@ namespace Redemption.Items.Weapons.HM.Melee
             Item.shootSpeed = 5f;
             Item.shoot = ModContent.ProjectileType<Spellsong_Proj>();
             if (!Main.dedServ)
-                Item.RedemptionGlow().glowTexture = ModContent.Request<Texture2D>(Item.ModItem.Texture + "_Glow").Value;
+                Item.RedemptionGlow().glowTexture = ModContent.Request<Texture2D>(Texture + "_Glow").Value;
         }
 
         public override void AddRecipes()

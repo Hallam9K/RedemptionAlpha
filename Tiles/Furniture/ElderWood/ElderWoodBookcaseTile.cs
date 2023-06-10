@@ -1,11 +1,9 @@
 using Microsoft.Xna.Framework;
-using Redemption.Items.Placeable.Furniture.ElderWood;
 using Terraria;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
-using Terraria.DataStructures;
 
 namespace Redemption.Tiles.Furniture.ElderWood
 {
@@ -13,7 +11,7 @@ namespace Redemption.Tiles.Furniture.ElderWood
 	{
 		public override void SetStaticDefaults()
 		{
-            Main.tileSolidTop[Type] = false;
+            Main.tileSolidTop[Type] = true;
             Main.tileFrameImportant[Type] = true;
             Main.tileNoAttach[Type] = true;
             Main.tileLavaDeath[Type] = true;

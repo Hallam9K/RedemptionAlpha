@@ -2,9 +2,7 @@ using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.ID;
-using Redemption.Items.Placeable.Tiles;
 using Microsoft.Xna.Framework.Graphics;
-using Redemption.Globals;
 
 namespace Redemption.Tiles.Tiles
 {
@@ -22,7 +20,6 @@ namespace Redemption.Tiles.Tiles
             HitSound = SoundID.Tink;
             AddMapEntry(new Color(200, 255, 255));
             AnimationFrameHeight = 90;
-            ItemDrop = ModContent.ItemType<ElectricHazard>();
         }
         public override bool IsTileDangerous(int i, int j, Player player) => true;
         public override void AnimateTile(ref int frame, ref int frameCounter)

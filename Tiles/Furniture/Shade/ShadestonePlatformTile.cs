@@ -3,7 +3,6 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
-using Redemption.Items.Placeable.Furniture.Shade;
 using Redemption.Dusts.Tiles;
 
 namespace Redemption.Tiles.Furniture.Shade
@@ -27,7 +26,6 @@ namespace Redemption.Tiles.Furniture.Shade
 			AddMapEntry(new Color(59, 61, 87));
 
 			DustType = ModContent.DustType<ShadestoneDust>();
-			ItemDrop = ModContent.ItemType<ShadestonePlatform>();
 			AdjTiles = new int[] { TileID.Platforms };
 
             // Placement

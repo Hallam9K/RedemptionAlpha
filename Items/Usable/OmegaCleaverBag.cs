@@ -32,7 +32,7 @@ namespace Redemption.Items.Usable
 			Item.rare = ItemRarityID.Expert;
 			Item.expert = true;
             if (!Main.dedServ)
-                Item.RedemptionGlow().glowTexture = ModContent.Request<Texture2D>(Item.ModItem.Texture + "_Glow").Value;
+                Item.RedemptionGlow().glowTexture = ModContent.Request<Texture2D>(Texture + "_Glow").Value;
         }
 		public override bool CanRightClick() => true;
         public override void RightClick(Player player)

@@ -182,7 +182,7 @@ namespace Redemption.NPCs.HM
                         NPC.netUpdate = true;
                     }
 
-                    NPC.PlatformFallCheck(ref NPC.Redemption().fallDownPlatform, 30, moveTo.Y * 16);
+                    NPC.PlatformFallCheck(ref NPC.Redemption().fallDownPlatform, 30, (moveTo.Y - 32) * 16);
                     NPCHelper.HorizontallyMove(NPC, moveTo * 16, 0.4f, 0.6f, 28, 36, NPC.Center.Y > moveTo.Y * 16);
                     break;
 
@@ -560,7 +560,10 @@ namespace Redemption.NPCs.HM
             if (!projBlocked.Contains(projectile.whoAmI) && (!projectile.active || (NPC.RightOf(projectile) && NPC.spriteDirection == 1) || (projectile.RightOf(NPC) && NPC.spriteDirection == -1)))
                 return;
 
-            if (projectile.Colliding(projectile.Hitbox, ShieldHitbox))
+            Rectangle projectileHitbox = projectile.Hitbox;
+            if (projectile.Redemption().swordHitbox != default)
+                projectileHitbox = projectile.Redemption().swordHitbox;
+            if (projectile.Colliding(projectileHitbox, ShieldHitbox))
             {
                 projBlocked.Remove(projectile.whoAmI);
                 if (projectile.penetrate > 1)

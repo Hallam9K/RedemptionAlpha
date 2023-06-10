@@ -1,9 +1,9 @@
-using Redemption.Buffs.NPCBuffs;
 using Redemption.Items.Materials.PreHM;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Redemption.BaseExtension;
+using Redemption.Buffs.Debuffs;
 
 namespace Redemption.Items.Tools.PreHM
 {

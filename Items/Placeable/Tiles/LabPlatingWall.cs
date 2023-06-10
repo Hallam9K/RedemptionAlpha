@@ -10,6 +10,7 @@ namespace Redemption.Items.Placeable.Tiles
         public override void SetStaticDefaults()
         {
             // DisplayName.SetDefault("Laboratory Panel Wall"); 
+            ItemID.Sets.ShimmerTransformToItem[Type] = ModContent.ItemType<LabPlatingWallUnsafe2>();
             Item.ResearchUnlockCount = 400;
         }
 

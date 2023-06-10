@@ -7,7 +7,6 @@ using Redemption.BaseExtension;
 using ParticleLibrary;
 using Redemption.Particles;
 using Redemption.Buffs;
-using Microsoft.CodeAnalysis;
 
 namespace Redemption.NPCs.Friendly.SpiritSummons
 {

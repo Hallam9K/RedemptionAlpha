@@ -103,10 +103,10 @@ namespace Redemption.Globals.World
                     1 => 30,
                     2 => 40,
                     3 => 50,
-                    4 => 60,
-                    5 => 80,
-                    6 => 100,
-                    7 => 300,
+                    4 => 80,
+                    5 => 100,
+                    6 => 150,
+                    7 => 500,
                     _ => 15,
                 };
                 if (FowlMorningWorld.ChickPoints >= maxPoints)
@@ -170,17 +170,18 @@ namespace Redemption.Globals.World
                     {ModContent.NPCType<RoosterBooster>(), Terraria.NPC.CountNPCS(ModContent.NPCType<RoosterBooster>()) < 3 ? .6f : 0f },
                     {ModContent.NPCType<Haymaker>(), Terraria.NPC.CountNPCS(ModContent.NPCType<Haymaker>()) < 3 ? .5f : 0f },
                     {ModContent.NPCType<Cockatrice>(), Terraria.NPC.CountNPCS(ModContent.NPCType<Cockatrice>()) < 1 ? .3f : 0f },
-                    {ModContent.NPCType<HeadlessChicken>(), .8f}
+                    {ModContent.NPCType<HeadlessChicken>(), .5f}
                 },
                 new Dictionary<int, float> { // 7
                     {ModContent.NPCType<RoosterBooster>(), Terraria.NPC.CountNPCS(ModContent.NPCType<RoosterBooster>()) < 4 ? .6f : 0f },
                     {ModContent.NPCType<Haymaker>(), Terraria.NPC.CountNPCS(ModContent.NPCType<Haymaker>()) < 3 ? .4f : 0f },
-                    {ModContent.NPCType<HeadlessChicken>(), .8f},
+                    {ModContent.NPCType<HeadlessChicken>(), .6f},
                     {ModContent.NPCType<Cockatrice>(), Terraria.NPC.CountNPCS(ModContent.NPCType<Cockatrice>()) < 2 ? .6f : 0f },
                 },
                 new Dictionary<int, float> { // 8
                     {ModContent.NPCType<RoosterBooster>(), Terraria.NPC.CountNPCS(ModContent.NPCType<RoosterBooster>()) < 4 ? .6f : 0f },
-                    {ModContent.NPCType<Cockatrice>(), Terraria.NPC.CountNPCS(ModContent.NPCType<Cockatrice>()) < 3 ? .2f : 0f },
+                    {ModContent.NPCType<Cockatrice>(), Terraria.NPC.CountNPCS(ModContent.NPCType<Cockatrice>()) < 2 ? .2f : 0f },
+                    {ModContent.NPCType<Basan>(), Terraria.NPC.CountNPCS(ModContent.NPCType<Basan>()) < 1 ? 10f : 0f },
                 },
             };
         }

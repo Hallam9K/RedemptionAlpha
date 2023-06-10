@@ -6,7 +6,6 @@ using Redemption.Projectiles.Ranged;
 using System.Collections.Generic;
 using Redemption.Globals;
 using Terraria.DataStructures;
-using Redemption.Items.Weapons.PreHM.Magic;
 using Redemption.Items.Weapons.PostML.Melee;
 
 namespace Redemption.Items.Weapons.PostML.Ranged

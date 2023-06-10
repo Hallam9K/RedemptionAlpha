@@ -34,6 +34,7 @@ namespace Redemption.Tiles.Furniture.Lab
             DustType = ModContent.DustType<LabPlatingDust>();
             MinPick = 300;
             MineResist = 30f;
+            RegisterItemDrop(ModContent.ItemType<LabReactor>());
             LocalizedText name = CreateMapEntryName();
             // name.SetDefault("Laboratory Reactor");
             AddMapEntry(new Color(189, 191, 200), name);

@@ -4,7 +4,6 @@ using Redemption.Items.Materials.PreHM;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.ID;
-using Terraria.Localization;
 using Terraria.ModLoader;
 using Redemption.BaseExtension;
 using Redemption.Globals;
@@ -37,7 +36,7 @@ namespace Redemption.Items.Weapons.PreHM.Ammo
 			Item.shootSpeed = 7f;
 			Item.ammo = AmmoID.Arrow;
 			if (!Main.dedServ)
-				Item.RedemptionGlow().glowTexture = ModContent.Request<Texture2D>(Item.ModItem.Texture + "_Glow").Value;
+				Item.RedemptionGlow().glowTexture = ModContent.Request<Texture2D>(Texture + "_Glow").Value;
 		}
 		public override void ModifyTooltips(List<TooltipLine> tooltips)
 		{

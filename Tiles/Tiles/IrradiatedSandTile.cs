@@ -36,7 +36,6 @@ namespace Redemption.Tiles.Tiles
             Main.tileBlockLight[Type] = true;
             AddMapEntry(new Color(132, 127, 111));
             DustType = DustID.Ash;
-            ItemDrop = ModContent.ItemType<IrradiatedSand>();
         }
         public override void FloorVisuals(Player player)
         {

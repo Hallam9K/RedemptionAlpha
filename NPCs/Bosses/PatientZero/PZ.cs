@@ -303,6 +303,13 @@ namespace Redemption.NPCs.Bosses.PatientZero
             if (!player.active || player.dead)
                 return;
 
+            if (AIState is ActionState.MiscAttacks && !NPC.Sight(player, -1, false, true))
+            {
+                NPC.dontTakeDamage = true;
+                OpenEye = false;
+                return;
+            }
+
             if (AIState != ActionState.Death && !NPC.AnyNPCs(ModContent.NPCType<PZ_Kari>()))
                 RedeHelper.SpawnNPC(NPC.GetSource_FromAI(), (int)NPC.Center.X + 3, (int)NPC.Center.Y + 149, ModContent.NPCType<PZ_Kari>(), NPC.whoAmI);
 
@@ -332,6 +339,7 @@ namespace Redemption.NPCs.Bosses.PatientZero
                     break;
                 case ActionState.LaserAttacks:
                     OpenEye = true;
+                    NPC.dontTakeDamage = false;
                     switch (ID)
                     {
                         #region Phase 1
@@ -591,6 +599,7 @@ namespace Redemption.NPCs.Bosses.PatientZero
                     break;
                 case ActionState.MiscAttacks:
                     OpenEye = true;
+                    NPC.dontTakeDamage = false;
                     switch (ID)
                     {
                         #region Phase 1
@@ -742,7 +751,6 @@ namespace Redemption.NPCs.Bosses.PatientZero
                             case 3:
                                 ID = 6;
                                 break;
-
                         }
                         NPC.dontTakeDamage = false;
                         NPC.netUpdate = true;
@@ -883,7 +891,7 @@ namespace Redemption.NPCs.Bosses.PatientZero
         public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)
         {
             NPC.lifeMax = (int)(NPC.lifeMax * 0.75f * balance * bossAdjustment);
-            NPC.damage = (int)(NPC.damage * 0.6f);
+            NPC.damage = (int)(NPC.damage * 0.75f);
         }
         private void DespawnHandler()
         {

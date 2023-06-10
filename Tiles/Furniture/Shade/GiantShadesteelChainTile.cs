@@ -14,6 +14,7 @@ namespace Redemption.Tiles.Furniture.Shade
             Main.tileFrameImportant[Type] = true;
             Main.tileNoAttach[Type] = true;
             TileID.Sets.IsBeam[Type] = true;
+            TileID.Sets.FramesOnKillWall[Type] = true;
             TileObjectData.newTile.Width = 3;
             TileObjectData.newTile.Height = 4;
             TileObjectData.newTile.CoordinateHeights = new int[] { 16, 16, 16, 16 };
@@ -24,7 +25,7 @@ namespace Redemption.Tiles.Furniture.Shade
             TileObjectData.addTile(Type);
             DustType = ModContent.DustType<ShadesteelDust>();
             AddMapEntry(new Color(83, 87, 123));
-            MinPick = 500;
+            MinPick = 1000;
             MineResist = 10f;
             HitSound = CustomSounds.ChainHit;
         }

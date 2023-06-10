@@ -1,4 +1,3 @@
-using Redemption.Globals;
 using Redemption.Items.Materials.HM;
 using System.Collections.Generic;
 using Terraria;

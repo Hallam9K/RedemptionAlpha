@@ -43,7 +43,7 @@ namespace Redemption.Items
             chain.Add(new(npc, "Hey there, don't mind me, I'm just testing this UI. I'll be out of your^0.3^...[1.5]uh^0.3^...[1.5]^0.1^hair[0.5] in no time.", Color.LightGreen, Color.DarkCyan, boxFade: true))
                  .Add(new(npc, "It's such a lovely day out! I hope nothing bad happens to me...", Color.LightGreen, Color.DarkCyan, boxFade: true))
                  .Add(new(npc, "What could go wrong anyway? Seems pretty safe out here.", Color.LightGreen, Color.DarkCyan, boxFade: true))
-                 .Add(new(npc, "Plus! I could just run away at any time! I'm SUPER[@BOO!] good at jumping.", Color.LightGreen, Color.DarkCyan, boxFade: true))
+                 .Add(new(npc, "Plus! I could just run away at any time! I'm SUPER[@BOO!][@BOO!][@BOO!] good at jumping.", Color.LightGreen, Color.DarkCyan, boxFade: true))
                  .Add(new(npc, "[@Gotcha!]Apparently there's a slime out there that can jump a bajillion feet into the air! Something like the King of all slimes...", Color.LightGreen, Color.DarkCyan, boxFade: true));
             chain.OnSymbolTrigger += Chain_OnSymbolTrigger;
 

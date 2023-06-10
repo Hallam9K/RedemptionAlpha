@@ -6,6 +6,7 @@ using Terraria.Audio;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria.GameContent;
 using Redemption.Globals;
+using Redemption.BaseExtension;
 
 namespace Redemption.Items.Weapons.PreHM.Melee
 {
@@ -30,10 +31,12 @@ namespace Redemption.Items.Weapons.PreHM.Melee
         public override bool? CanHitNPC(NPC target) => Projectile.frame is 4 ? null : false;
         public float SwingSpeed;
         int directionLock = 0;
+        private bool parried;
         public override void AI()
         {
             Player player = Main.player[Projectile.owner];
             player.heldProj = Projectile.whoAmI;
+            Projectile.Redemption().swordHitbox = new((int)(Projectile.spriteDirection == -1 ? Projectile.Center.X - 76 : Projectile.Center.X), (int)(Projectile.Center.Y - 70), 76, 136);
 
             SwingSpeed = SetSwingSpeed(30);
 
@@ -76,10 +79,13 @@ namespace Redemption.Items.Weapons.PreHM.Melee
                                 if (!target.active || target.whoAmI == Projectile.whoAmI || !target.hostile)
                                     continue;
 
+                                if (RedeProjectile.SwordClashFriendly(Projectile, target, player, ref parried, 4))
+                                    continue;
+
                                 if (target.damage > 100 / 4 || Projectile.alpha > 0 || target.width + target.height > Projectile.width + Projectile.height)
                                     continue;
 
-                                if (target.velocity.Length() == 0 || !Projectile.Hitbox.Intersects(target.Hitbox) || target.alpha > 0 || target.ProjBlockBlacklist(true))
+                                if (target.velocity.Length() == 0 || !Projectile.Redemption().swordHitbox.Intersects(target.Hitbox) || target.alpha > 0 || target.ProjBlockBlacklist(true))
                                     continue;
 
                                 SoundEngine.PlaySound(SoundID.Tink, Projectile.position);
@@ -89,7 +95,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
                                     target.hostile = false;
                                     target.friendly = true;
                                 }
-                                target.damage *= 4;
+                                target.Redemption().ReflectDamageIncrease = 4;
                                 target.velocity.X = -target.velocity.X * 0.8f;
                             }
                         }
@@ -109,7 +115,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
         }
         public override void ModifyDamageHitbox(ref Rectangle hitbox)
         {
-            hitbox = new((int)(Projectile.spriteDirection == -1 ? Projectile.Center.X - 70 : Projectile.Center.X), (int)(Projectile.Center.Y - 70), 70, 136);
+            hitbox = Projectile.Redemption().swordHitbox;
         }
         public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
         {

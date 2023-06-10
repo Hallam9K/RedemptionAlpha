@@ -29,9 +29,6 @@ using Redemption.Particles;
 using Redemption.NPCs.Bosses.Neb.Phase2;
 using Redemption.NPCs.Bosses.Neb.Clone;
 using Redemption.Base;
-using System.Threading;
-using Terraria.WorldBuilding;
-using System.Transactions;
 
 namespace Redemption.Globals.Player
 {
@@ -94,6 +91,7 @@ namespace Redemption.Globals.Player
         public bool vasaraPendant;
         public bool crystalKnowledge;
         public bool seaEmblem;
+        public bool pureChill;
 
         public bool pureIronBonus;
         public bool dragonLeadBonus;
@@ -170,6 +168,7 @@ namespace Redemption.Globals.Player
             infectionHeart = false;
             vasaraPendant = false;
             crystalKnowledge = false;
+            pureChill = false;
 
             for (int k = 0; k < ElementalResistance.Length; k++)
                 ElementalResistance[k] = 0;
@@ -647,6 +646,14 @@ namespace Redemption.Globals.Player
                 Player.lifeRegen -= 1000;
                 Player.statDefense -= 99;
             }
+            if (pureChill)
+            {
+                if (Player.lifeRegen > 0)
+                    Player.lifeRegen = 0;
+
+                Player.lifeRegenTime = 0;
+                Player.lifeRegen -= 8;
+            }
         }
         public override void DrawEffects(PlayerDrawSet drawInfo, ref float r, ref float g, ref float b, ref float a, ref bool fullBright)
         {
@@ -704,6 +711,18 @@ namespace Redemption.Globals.Player
                 if (Main.rand.NextBool(4) && !Main.gamePaused)
                     ParticleManager.NewParticle(RedeHelper.RandAreaInEntity(Player), new Vector2(0, -1), new GlowParticle2(), Color.LightGoldenrodYellow, 1, .45f, Main.rand.Next(50, 60));
             }
+            if (pureChill)
+            {
+                r = MathHelper.Lerp(r, .7f, 0.3f);
+                g = MathHelper.Lerp(g, .85f, 0.3f);
+                b = MathHelper.Lerp(b, .85f, 0.3f);
+                if (Main.rand.NextBool(14))
+                {
+                    int sparkle = Dust.NewDust(drawInfo.Position, Player.width, Player.height, ModContent.DustType<SnowflakeDust>(), newColor: Color.White);
+                    Main.dust[sparkle].velocity *= 0.5f;
+                    Main.dust[sparkle].noGravity = true;
+                }
+            }
         }
         public override void HideDrawLayers(PlayerDrawSet drawInfo)
         {
@@ -728,7 +747,7 @@ namespace Redemption.Globals.Player
 
             if (shieldGenerator && shieldGeneratorCD <= 0)
             {
-                modifiers.ScalingArmorPenetration += .75f;
+                modifiers.ScalingArmorPenetration += .5f;
                 modifiers.ModifyHurtInfo += ModifyDamage;
             }
         }

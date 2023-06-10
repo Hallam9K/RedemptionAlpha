@@ -5,9 +5,9 @@ using Redemption.NPCs.Bosses.Erhan;
 using Redemption.NPCs.Bosses.Keeper;
 using Redemption.NPCs.Friendly;
 using Redemption.Projectiles.Misc;
-//using Redemption.WorldGeneration.Soulless;
-//using SubworldLibrary;
 using Redemption.UI.ChatUI;
+using Redemption.WorldGeneration.Soulless;
+using SubworldLibrary;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -26,9 +26,8 @@ namespace Redemption.Globals
 {
     public class RedeWorld : ModSystem
     {
-        // TODO: uncomment sublib
         #region Soulless Subworld
-        /*public override void PreUpdateWorld()
+        public override void PreUpdateWorld()
         {
             if (SubworldSystem.IsActive<SoullessSub>())
             {
@@ -49,7 +48,7 @@ namespace Redemption.Globals
                         tile.RandomUpdate(i, j);
                 }
             }
-        }*/
+        }
         #endregion
 
         public static bool blobbleSwarm;
@@ -99,8 +98,8 @@ namespace Redemption.Globals
             if (Main.time == 1)
                 DayNightCount++;
 
-            // if (SubworldSystem.Current != null)
-            //    return;
+            if (SubworldSystem.Current != null)
+                return;
 
             #region Skeleton Invasion
             if (DayNightCount >= 10 && !Main.hardMode && !Main.IsFastForwardingTime())
@@ -297,6 +296,18 @@ namespace Redemption.Globals
                 blobbleSwarmCooldown--;
 
             UpdateNukeCountdown();
+
+            if (ConversionHandler.GenningWasteland)
+            {
+                int radiusLeft = (int)(ConversionHandler.WastelandCenter.X / 16f - ConversionHandler.Radius);
+                int radiusRight = (int)(ConversionHandler.WastelandCenter.X / 16f + ConversionHandler.Radius);
+                int radiusDown = (int)(ConversionHandler.WastelandCenter.Y / 16f + ConversionHandler.Radius);
+                if (radiusLeft < 15) { radiusLeft = 15; }
+                if (radiusRight > Main.maxTilesX - 15) { radiusRight = Main.maxTilesX - 15; }
+                if (radiusDown > Main.maxTilesY - 15) { radiusDown = Main.maxTilesY - 15; }
+                for (int i = 0; i < 2; i++)
+                    ConversionHandler.GenWasteland(radiusLeft, radiusRight, radiusDown, ConversionHandler.WastelandCenter, ConversionHandler.Radius);
+            }
         }
 
         public static void OmegaTransmitterMessage()
@@ -433,10 +444,10 @@ namespace Redemption.Globals
         }
         public override void ClearWorld()
         {
-            if (Redemption.TrailManager != null)
-                Redemption.TrailManager.ClearAllTrails(); //trails break on world unload and reload(their projectile is still counted as being active???), so this just clears them all on reload
-
-            if (ChatUI.Visible)
+            Redemption.TrailManager?.ClearAllTrails();
+            if (!Main.dedServ)
+                AdditiveCallManager.Unload();
+            if (!Main.dedServ && ChatUI.Visible)
                 ChatUI.Clear();
 
             alignment = 0;

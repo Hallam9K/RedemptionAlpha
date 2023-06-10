@@ -25,7 +25,7 @@ namespace Redemption.Tiles.Furniture.Lab
             TileObjectData.newTile.CoordinatePadding = 2;
             TileObjectData.newTile.AnchorBottom = new AnchorData(AnchorType.SolidTile | AnchorType.SolidWithTop | AnchorType.SolidSide | AnchorType.Table, TileObjectData.newTile.Width, 0);
             TileObjectData.addTile(Type);
-            ItemDrop = ModContent.ItemType<RadiationPill>();
+            RegisterItemDrop(ModContent.ItemType<RadiationPill>());
             DustType = DustID.OrangeStainedGlass;
             MinPick = 0;
             MineResist = 0.1f;

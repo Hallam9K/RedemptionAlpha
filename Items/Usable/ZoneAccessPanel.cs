@@ -57,7 +57,7 @@ namespace Redemption.Items.Usable
             };
 
             Texture2D tex = ModContent.Request<Texture2D>("Redemption/WorldGeneration/ALabAccess1", AssetRequestMode.ImmediateLoad).Value;
-            Point origin = RedeGen.LabPoint.ToPoint();
+            Point origin = RedeGen.LabVector.ToPoint();
             GenUtils.InvokeOnMainThread(() =>
             {
                 TexGen gen = BaseWorldGenTex.GetTexGenerator(tex, colorToTile);
@@ -100,7 +100,7 @@ namespace Redemption.Items.Usable
             };
 
             Texture2D tex = ModContent.Request<Texture2D>("Redemption/WorldGeneration/ALabAccess2", AssetRequestMode.ImmediateLoad).Value;
-            Point origin = RedeGen.LabPoint.ToPoint();
+            Point origin = RedeGen.LabVector.ToPoint();
             GenUtils.InvokeOnMainThread(() =>
             {
                 TexGen gen = BaseWorldGenTex.GetTexGenerator(tex, colorToTile);
@@ -144,7 +144,7 @@ namespace Redemption.Items.Usable
             };
 
             Texture2D tex = ModContent.Request<Texture2D>("Redemption/WorldGeneration/ALabAccess3", AssetRequestMode.ImmediateLoad).Value;
-            Point origin = RedeGen.LabPoint.ToPoint();
+            Point origin = RedeGen.LabVector.ToPoint();
             GenUtils.InvokeOnMainThread(() =>
             {
                 TexGen gen = BaseWorldGenTex.GetTexGenerator(tex, colorToTile);
@@ -186,7 +186,7 @@ namespace Redemption.Items.Usable
             };
 
             Texture2D tex = ModContent.Request<Texture2D>("Redemption/WorldGeneration/ALabAccess4", AssetRequestMode.ImmediateLoad).Value;
-            Point origin = RedeGen.LabPoint.ToPoint();
+            Point origin = RedeGen.LabVector.ToPoint();
             GenUtils.InvokeOnMainThread(() =>
             {
                 TexGen gen = BaseWorldGenTex.GetTexGenerator(tex, colorToTile);
@@ -230,7 +230,7 @@ namespace Redemption.Items.Usable
             };
 
             Texture2D tex = ModContent.Request<Texture2D>("Redemption/WorldGeneration/ALabAccess5", AssetRequestMode.ImmediateLoad).Value;
-            Point origin = RedeGen.LabPoint.ToPoint();
+            Point origin = RedeGen.LabVector.ToPoint();
             GenUtils.InvokeOnMainThread(() =>
             {
                 TexGen gen = BaseWorldGenTex.GetTexGenerator(tex, colorToTile);
@@ -269,11 +269,12 @@ namespace Redemption.Items.Usable
             {
                 [new Color(220, 255, 255)] = ModContent.TileType<DeactivatedLaserTile>(),
                 [new Color(255, 0, 0)] = ModContent.TileType<DeactivatedLaser2Tile>(),
+                [new Color(0, 0, 255)] = ModContent.TileType<HalogenLampTile>(),
                 [Color.Black] = -1
             };
 
             Texture2D tex = ModContent.Request<Texture2D>("Redemption/WorldGeneration/ALabAccess6", AssetRequestMode.ImmediateLoad).Value;
-            Point origin = RedeGen.LabPoint.ToPoint();
+            Point origin = RedeGen.LabVector.ToPoint();
             GenUtils.InvokeOnMainThread(() =>
             {
                 TexGen gen = BaseWorldGenTex.GetTexGenerator(tex, colorToTile);

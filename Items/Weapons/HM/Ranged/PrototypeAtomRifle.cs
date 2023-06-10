@@ -7,7 +7,6 @@ using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Redemption.BaseExtension;
-using Redemption.Items.Weapons.HM.Ammo;
 using Redemption.Globals.Player;
 using Redemption.Globals;
 
@@ -42,7 +41,7 @@ namespace Redemption.Items.Weapons.HM.Ranged
             Item.shootSpeed = 12;
             Item.useAmmo = AmmoID.Bullet;
             if (!Main.dedServ)
-                Item.RedemptionGlow().glowTexture = ModContent.Request<Texture2D>(Item.ModItem.Texture + "_Glow").Value;
+                Item.RedemptionGlow().glowTexture = ModContent.Request<Texture2D>(Texture + "_Glow").Value;
         }
         public override bool CanUseItem(Player player)
         {

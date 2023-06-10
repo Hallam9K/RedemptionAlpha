@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Base;
 using Redemption.BaseExtension;
+using Redemption.Buffs.Debuffs;
 using Redemption.Buffs.NPCBuffs;
 using Redemption.Dusts;
 using Redemption.Globals;
@@ -111,8 +112,9 @@ namespace Redemption.Projectiles.Ranged
         }
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
-            if (Projectile.localAI[0] < 400)
+            if (Projectile.localAI[0] < 400 && origDamage == 0)
             {
+                origDamage = Projectile.damage;
                 Projectile.damage = 0;
             }
         }

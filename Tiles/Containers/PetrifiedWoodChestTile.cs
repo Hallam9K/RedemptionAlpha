@@ -34,10 +34,6 @@ namespace Redemption.Tiles.Containers
 
             DustType = DustID.Ash;
             AdjTiles = new int[] { TileID.Containers };
-            ItemDrop = ModContent.ItemType<PetrifiedWoodChest>();
-
-            // Names
-            //ContainerName/* tModPorter Note: Removed. Override DefaultContainerName instead */.SetDefault("Petrified Wood Chest");
 
             LocalizedText name = CreateMapEntryName();
             // name.SetDefault("Petrified Wood Chest");

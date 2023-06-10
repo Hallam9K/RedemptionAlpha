@@ -17,8 +17,8 @@ namespace Redemption.Items.Placeable.Furniture.Misc
 		public override void SetDefaults()
 		{
 			Item.DefaultToPlaceableTile(ModContent.TileType<AkkaPaintingTile>(), 0);
-			Item.width = 50;
-			Item.height = 34;
+			Item.width = 48;
+			Item.height = 32;
 			Item.maxStack = Item.CommonMaxStack;
 			Item.rare = ItemRarityID.White;
 			Item.value = Item.buyPrice(0, 2, 0, 0);

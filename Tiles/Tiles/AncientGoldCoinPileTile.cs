@@ -23,7 +23,6 @@ namespace Redemption.Tiles.Tiles
             DustType = DustID.GoldCoin;
             HitSound = SoundID.Coins;
             AddMapEntry(new Color(208, 200, 48));
-            ItemDrop = ModContent.ItemType<AncientGoldCoin>();
         }
         public override void NumDust(int i, int j, bool fail, ref int num)
 		{

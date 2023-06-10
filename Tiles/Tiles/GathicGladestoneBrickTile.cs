@@ -1,7 +1,6 @@
 using Terraria.ID;
 using Microsoft.Xna.Framework;
 using Redemption.Dusts.Tiles;
-using Redemption.Items.Placeable.Tiles;
 using Redemption.Tiles.Plants;
 using Terraria;
 using Terraria.ModLoader;
@@ -27,7 +26,6 @@ namespace Redemption.Tiles.Tiles
             Main.tileMerge[TileID.Mud][Type] = true;
             Main.tileMerge[Type][TileID.Mudstone] = true;
             Main.tileMerge[TileID.Mudstone][Type] = true;
-            ItemDrop = ModContent.ItemType<GathicGladestoneBrick>();
             DustType = ModContent.DustType<SlateDust>();
             HitSound = CustomSounds.StoneHit;
             MinPick = 0;

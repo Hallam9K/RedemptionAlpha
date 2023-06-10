@@ -1,6 +1,5 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Redemption.Buffs.NPCBuffs;
 using Redemption.Globals;
 using Terraria;
 using Terraria.Audio;
@@ -10,6 +9,7 @@ using Terraria.ModLoader;
 using Redemption.BaseExtension;
 using Redemption.Effects;
 using System.Collections.Generic;
+using Redemption.Buffs.Debuffs;
 
 namespace Redemption.Projectiles.Magic
 {

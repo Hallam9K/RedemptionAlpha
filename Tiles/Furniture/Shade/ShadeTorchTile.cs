@@ -1,10 +1,8 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Biomes;
-using Redemption.Items.Placeable.Furniture.Shade;
 using ReLogic.Content;
 using Terraria;
-using Terraria.DataStructures;
 using Terraria.Enums;
 using Terraria.ID;
 using Terraria.Localization;
@@ -13,7 +11,7 @@ using Terraria.ObjectData;
 
 namespace Redemption.Tiles.Furniture.Shade
 {
-	public class ShadeTorchTile : ModTile
+    public class ShadeTorchTile : ModTile
 	{
 		private Asset<Texture2D> flameTexture;
 
@@ -30,43 +28,41 @@ namespace Redemption.Tiles.Furniture.Shade
 			TileID.Sets.DisableSmartCursor[Type] = true;
 			TileID.Sets.Torch[Type] = true;
 
-			ItemDrop = ModContent.ItemType<ShadeTorch>();
 			DustType = DustID.AncientLight;
 			AdjTiles = new int[] { TileID.Torches };
 
 			AddToArray(ref TileID.Sets.RoomNeeds.CountsAsTorch);
 
-			// Placement
-			TileObjectData.newTile.CopyFrom(TileObjectData.StyleTorch);
-			TileObjectData.newTile.AnchorBottom = new AnchorData(AnchorType.SolidTile | AnchorType.SolidSide, TileObjectData.newTile.Width, 0);
-			TileObjectData.newAlternate.CopyFrom(TileObjectData.StyleTorch);
-			TileObjectData.newAlternate.AnchorLeft = new AnchorData(AnchorType.SolidTile | AnchorType.SolidSide | AnchorType.Tree | AnchorType.AlternateTile, TileObjectData.newTile.Height, 0);
-			TileObjectData.newAlternate.AnchorAlternateTiles = new[] { 124 };
-			TileObjectData.addAlternate(1);
-			TileObjectData.newAlternate.CopyFrom(TileObjectData.StyleTorch);
-			TileObjectData.newAlternate.AnchorRight = new AnchorData(AnchorType.SolidTile | AnchorType.SolidSide | AnchorType.Tree | AnchorType.AlternateTile, TileObjectData.newTile.Height, 0);
-			TileObjectData.newAlternate.AnchorAlternateTiles = new[] { 124 };
-			TileObjectData.addAlternate(2);
-			TileObjectData.newAlternate.CopyFrom(TileObjectData.StyleTorch);
-			TileObjectData.newAlternate.AnchorWall = true;
-			TileObjectData.addAlternate(0);
-			TileObjectData.addTile(Type);
+            // Placement
+            TileObjectData.newTile.CopyFrom(TileObjectData.GetTileData(TileID.Torches, 0));
+            TileObjectData.newSubTile.CopyFrom(TileObjectData.newTile);
+            TileObjectData.newSubTile.LinkedAlternates = true;
+            TileObjectData.newSubTile.WaterDeath = false;
+            TileObjectData.newSubTile.LavaDeath = false;
+            TileObjectData.newSubTile.WaterPlacement = LiquidPlacement.Allowed;
+            TileObjectData.newSubTile.LavaPlacement = LiquidPlacement.Allowed;
+            TileObjectData.addSubTile(1);
+            TileObjectData.addTile(Type);
 
-			// Etc
-			LocalizedText name = CreateMapEntryName();
-
-			// name.SetDefault("Torch");
-
-			AddMapEntry(new Color(250, 250, 250), name);
+			AddMapEntry(new Color(250, 250, 250), Language.GetText("ItemName.Torch"));
 
 			// Assets
 			if (!Main.dedServ)
 			{
-				flameTexture = ModContent.Request<Texture2D>("Redemption/Tiles/Furniture/Shade/ShadeTorchTile_Flame");
+				flameTexture = ModContent.Request<Texture2D>(Texture + "_Flame");
 			}
 		}
+        public override void MouseOver(int i, int j)
+        {
+            Player player = Main.LocalPlayer;
+            player.noThrow = 2;
+            player.cursorItemIconEnabled = true;
 
-		public override float GetTorchLuck(Player player)
+            // We can determine the item to show on the cursor by getting the tile style and looking up the corresponding item drop.
+            int style = TileObjectData.GetTileStyle(Main.tile[i, j]);
+            player.cursorItemIconID = TileLoader.GetItemDropFromTypeAndStyle(Type, style);
+        }
+        public override float GetTorchLuck(Player player)
 		{
 			bool inSoullessBiome = Main.LocalPlayer.InModBiome<SoullessBiome>();
 			return inSoullessBiome ? 1f : 0;
@@ -89,22 +85,14 @@ namespace Redemption.Tiles.Furniture.Shade
 		{
 			offsetY = 0;
 			if (WorldGen.SolidTile(i, j - 1))
-			{
-				offsetY = 2;
-				if (WorldGen.SolidTile(i - 1, j + 1) || WorldGen.SolidTile(i + 1, j + 1))
-					offsetY = 4;
-			}
+                offsetY = 4;
 		}
 
 		public override void PostDraw(int i, int j, SpriteBatch spriteBatch)
 		{
 			int offsetY = 0;
 			if (WorldGen.SolidTile(i, j - 1))
-			{
-				offsetY = 2;
-				if (WorldGen.SolidTile(i - 1, j + 1) || WorldGen.SolidTile(i + 1, j + 1))
-					offsetY = 4;
-			}
+                offsetY = 4; 
 			Vector2 zero = new(Main.offScreenRange, Main.offScreenRange);
 			if (Main.drawToScreen)
 				zero = Vector2.Zero;

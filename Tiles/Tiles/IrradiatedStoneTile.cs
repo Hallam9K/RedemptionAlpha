@@ -1,7 +1,6 @@
 using Microsoft.Xna.Framework;
 using Redemption.Globals.Player;
 using Redemption.Items.Accessories.HM;
-using Redemption.Items.Placeable.Tiles;
 using Redemption.Tiles.Natural;
 using Terraria;
 using Terraria.Audio;
@@ -20,7 +19,6 @@ namespace Redemption.Tiles.Tiles
             Main.tileBlockLight[Type] = true;
             Main.tileBrick[Type] = true;
             Main.tileStone[Type] = true;
-            ItemDrop = ModContent.ItemType<IrradiatedStone>();
             TileID.Sets.Stone[Type] = true;
             TileID.Sets.Conversion.Stone[Type] = true;
             DustType = DustID.Ash;

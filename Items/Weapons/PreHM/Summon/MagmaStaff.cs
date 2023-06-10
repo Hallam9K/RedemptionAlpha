@@ -41,7 +41,7 @@ namespace Redemption.Items.Weapons.PreHM.Summon
 			Item.shoot = ModContent.ProjectileType<MagmaCube>();
 			Item.mana = 10;
 			if (!Main.dedServ)
-				Item.RedemptionGlow().glowTexture = ModContent.Request<Texture2D>(Item.ModItem.Texture + "_Glow").Value;
+				Item.RedemptionGlow().glowTexture = ModContent.Request<Texture2D>(Texture + "_Glow").Value;
 		}
 
 		public override void AddRecipes()

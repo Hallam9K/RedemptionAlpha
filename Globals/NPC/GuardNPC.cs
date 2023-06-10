@@ -4,9 +4,13 @@ using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Redemption.BaseExtension;
-using log4net.Filter;
 using Redemption.NPCs.PreHM;
 using Redemption.NPCs.Friendly.SpiritSummons;
+using Redemption.NPCs.Minibosses.Calavia;
+using Redemption.UI.ChatUI;
+using Terraria.GameContent.UI;
+using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework;
 
 namespace Redemption.Globals.NPC
 {
@@ -17,6 +21,7 @@ namespace Redemption.Globals.NPC
         public bool IgnoreArmour;
         public bool GuardBroken;
         public bool GuardPierce;
+        public double GuardDamage = 1;
         public void GuardHit(ref Terraria.NPC.HitInfo info, Terraria.NPC npc, SoundStyle sound, float dmgReduction = .25f, bool noNPCHitSound = false, int dustType = 0, SoundStyle breakSound = default, int dustAmount = 10, float dustScale = 1, int damage = 0)
         {
             if (breakSound == default)
@@ -27,7 +32,7 @@ namespace Redemption.Globals.NPC
                 return;
             }
 
-            int guardDamage = (int)(info.Damage * dmgReduction);
+            int guardDamage = (int)(info.Damage * GuardDamage * dmgReduction);
             SoundEngine.PlaySound(sound, npc.position);
             CombatText.NewText(npc.getRect(), Colors.RarityPurple, guardDamage, true, true);
             GuardPoints -= guardDamage;
@@ -83,32 +88,49 @@ namespace Redemption.Globals.NPC
                     Main.dust[dust].noGravity = true;
                 }
             }
+            else if (npc.type == ModContent.NPCType<Calavia>())
+            {
+                if (Main.netMode != NetmodeID.Server)
+                {
+                    Gore.NewGore(npc.GetSource_FromThis(), npc.position, npc.velocity, ModContent.Find<ModGore>("Redemption/CalaviaShieldGore1").Type, 1);
+                    Gore.NewGore(npc.GetSource_FromThis(), npc.position, npc.velocity, ModContent.Find<ModGore>("Redemption/CalaviaShieldGore2").Type, 1);
+                }
+                EmoteBubble.NewBubble(1, new WorldUIAnchor(npc), 120);
+                Texture2D bubble = ModContent.Request<Texture2D>("Redemption/UI/TextBubble_Epidotra").Value;
+                SoundStyle voice = CustomSounds.Voice1 with { Pitch = 0.6f };
+                if (!Main.dedServ)
+                {
+                    Dialogue d1 = new(npc, "Oru'takh!", Color.White, Color.Gray, voice, 0.01f, 1f, .5f, true, bubble: bubble);
+                    ChatUI.Visible = true;
+                    ChatUI.Add(d1);
+                }
+            }
         }
         public override void ModifyHitByItem(Terraria.NPC npc, Terraria.Player player, Item item, ref Terraria.NPC.HitModifiers modifiers)
         {
             if (GuardPoints <= 0)
                 return;
-
+            GuardDamage = 1;
             if (npc.RedemptionNPCBuff().brokenArmor || npc.RedemptionNPCBuff().stunned)
                 GuardPierce = true;
             if (item.HasElement(ElementID.Psychic))
                 IgnoreArmour = true;
             if (item.hammer > 0 || item.Redemption().TechnicallyHammer)
-                modifiers.FinalDamage *= 4;
+                GuardDamage *= 4;
         }
         public override void ModifyHitByProjectile(Terraria.NPC npc, Projectile projectile, ref Terraria.NPC.HitModifiers modifiers)
         {
             if (GuardPoints <= 0)
                 return;
-
+            GuardDamage = 1;
             if (projectile.HasElement(ElementID.Psychic))
                 IgnoreArmour = true;
             if (projectile.Redemption().IsHammer || projectile.type == ProjectileID.PaladinsHammerFriendly)
-                modifiers.FinalDamage *= 4;
+                GuardDamage *= 4;
             if (npc.RedemptionNPCBuff().brokenArmor || npc.RedemptionNPCBuff().stunned || projectile.Redemption().EnergyBased)
                 GuardPierce = true;
             if (projectile.HasElement(ElementID.Explosive))
-                modifiers.FinalDamage *= 2;
+                GuardDamage *= 2;
         }
         public override void SetDefaults(Terraria.NPC npc)
         {

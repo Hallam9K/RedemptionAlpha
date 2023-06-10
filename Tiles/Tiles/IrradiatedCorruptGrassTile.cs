@@ -9,9 +9,9 @@ using Terraria.ModLoader;
 namespace Redemption.Tiles.Tiles
 {
     public class IrradiatedCorruptGrassTile : ModTile
-	{
-		public override void SetStaticDefaults()
-		{
+    {
+        public override void SetStaticDefaults()
+        {
             Main.tileBlockLight[Type] = true;
             Main.tileBrick[Type] = true;
             Main.tileSolid[Type] = true;
@@ -30,7 +30,7 @@ namespace Redemption.Tiles.Tiles
             MinPick = 10;
             MineResist = 0.1f;
             DustType = DustID.Ash;
-            ItemDrop = ModContent.ItemType<IrradiatedDirt>();
+            RegisterItemDrop(ModContent.ItemType<IrradiatedDirt>(), 0);
         }
         public override void FloorVisuals(Player player)
         {
@@ -93,6 +93,6 @@ namespace Redemption.Tiles.Tiles
             g = 0.02f;
             b = 0.1f;
         }
-	}
+    }
 }
 

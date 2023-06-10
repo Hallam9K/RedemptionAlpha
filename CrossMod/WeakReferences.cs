@@ -36,10 +36,10 @@ using Terraria;
 using Redemption.NPCs.Bosses.ADD;
 using Redemption.Items.Accessories.PostML;
 using Redemption.NPCs.Friendly;
-using Redemption.Items.Weapons.PreHM.Summon;
-using Redemption.NPCs.Bosses.FowlEmperor;
+using Redemption.NPCs.Minibosses.FowlEmperor;
 using Redemption.NPCs.FowlMorning;
 using Redemption.Items;
+using Redemption.NPCs.Minibosses.Calavia;
 
 namespace Redemption.CrossMod
 {
@@ -49,16 +49,7 @@ namespace Redemption.CrossMod
         {
             PerformBossChecklistSupport();
             PerformCencusSupport();
-            PerformAchievementSupport();
             PerformFargosSupport();
-        }
-        private static void PerformAchievementSupport()
-        {
-            Redemption mod = Redemption.Instance;
-            /*if (ModLoader.TryGetMod("TMLAchievements", out Mod ach))
-            {
-                ach.Call("AddAchievement", mod, "PZKill", AchievementCategory.Slayer, "Redemption/Textures/Achievements/Ach_PZ", null, false, true, 37f, new string[] { "Kill_" + ModContent.NPCType<PZ>() });
-            }*/
         }
         private static void PerformBossChecklistSupport()
         {
@@ -66,11 +57,11 @@ namespace Redemption.CrossMod
             if (ModLoader.TryGetMod("BossChecklist", out Mod bossChecklist))
             {
                 #region Fowl Emperor
-                bossChecklist.Call("AddBoss", mod, "Fowl Emperor", ModContent.NPCType<FowlEmperor>(), 0.1f, () => RedeBossDowned.downedFowlEmperor, () => RedeBossDowned.downedFowlEmperor,
+                bossChecklist.Call("AddMiniBoss", mod, "Fowl Emperor", ModContent.NPCType<FowlEmperor>(), 0.1f, () => RedeBossDowned.downedFowlEmperor, () => RedeBossDowned.downedFowlEmperor,
                     new List<int>
                     {
                         ModContent.ItemType<FowlEmperorRelic>(),
-                        //ModContent.ItemType<BouquetOfThorns>(),
+                        ModContent.ItemType<EggPet>(),
                         ModContent.ItemType<FowlEmperorTrophy>(),
                         ModContent.ItemType<FowlCrown>(),
                         ModContent.ItemType<ForestBossBox>()
@@ -93,15 +84,18 @@ namespace Redemption.CrossMod
                         ModContent.NPCType<RoosterBooster>(),
                         ModContent.NPCType<Haymaker>(),
                         ModContent.NPCType<HeadlessChicken>(),
-                        ModContent.NPCType<Cockatrice>()
+                        ModContent.NPCType<Cockatrice>(),
+                        ModContent.NPCType<Basan>()
                     }, 0.11f, () => RedeBossDowned.downedFowlMorning, () => RedeBossDowned.downedFowlEmperor,
                     new List<int>
                     {
-                        //ModContent.ItemType<ThornRelic>(),
-                        //ModContent.ItemType<BouquetOfThorns>(),
-                        //ModContent.ItemType<ThornTrophy>(),
-                        //ModContent.ItemType<ThornMask>(),
-                        //ModContent.ItemType<ForestBossBox>()
+                        ModContent.ItemType<CockatriceRelic>(),
+                        ModContent.ItemType<FowlFeather>(),
+                        ModContent.ItemType<CockatriceTrophy>(),
+                        ModContent.ItemType<BasanRelic>(),
+                        ModContent.ItemType<SpicyDrumstick>(),
+                        ModContent.ItemType<BasanTrophy>(),
+                        ModContent.ItemType<FowlMorningBox>()
                     },
                     ModContent.ItemType<FowlWarHorn>(), "Use a [i:Redemption/FowlWarHorn] before midday.",
                     (SpriteBatch sb, Rectangle rect, Color color) =>
@@ -110,6 +104,44 @@ namespace Redemption.CrossMod
                         Vector2 centered = new(rect.X + (rect.Width / 2) - (texture.Width / 2), rect.Y + (rect.Height / 2) - (texture.Height / 2));
                         sb.Draw(texture, centered, color);
                     }, "Redemption/Gores/Boss/FowlEmperor_Crown");
+                #endregion
+
+                #region Cockatrice
+                bossChecklist.Call("AddMiniBoss", mod, "Cockatrice", ModContent.NPCType<Cockatrice>(), 0.111f, () => RedeBossDowned.downedFowlMorning, () => RedeBossDowned.downedFowlEmperor,
+                    new List<int>
+                    {
+                        ModContent.ItemType<CockatriceRelic>(),
+                        ModContent.ItemType<FowlFeather>(),
+                        ModContent.ItemType<CockatriceTrophy>(),
+                        ModContent.ItemType<FowlMorningBox>()
+                    },
+                    null, "Appears in the last 3 waves of the Fowl Morning.",
+                    null,
+                    (SpriteBatch sb, Rectangle rect, Color color) =>
+                    {
+                        Texture2D texture = ModContent.Request<Texture2D>("Redemption/CrossMod/BossChecklist/Cockatrice").Value;
+                        Vector2 centered = new(rect.X + (rect.Width / 2) - (texture.Width / 2), rect.Y + (rect.Height / 2) - (texture.Height / 2));
+                        sb.Draw(texture, centered, color);
+                    }, null);
+                #endregion
+
+                #region Basan
+                bossChecklist.Call("AddMiniBoss", mod, "Basan", ModContent.NPCType<Basan>(), 0.112f, () => RedeBossDowned.downedFowlMorning, () => RedeBossDowned.downedFowlEmperor,
+                    new List<int>
+                    {
+                        ModContent.ItemType<BasanRelic>(),
+                        ModContent.ItemType<SpicyDrumstick>(),
+                        ModContent.ItemType<BasanTrophy>(),
+                        ModContent.ItemType<FowlMorningBox>()
+                    },
+                    null, "Appears in the last wave of the Fowl Morning.",
+                    null,
+                    (SpriteBatch sb, Rectangle rect, Color color) =>
+                    {
+                        Texture2D texture = ModContent.Request<Texture2D>("Redemption/CrossMod/BossChecklist/Basan").Value;
+                        Vector2 centered = new(rect.X + (rect.Width / 2) - (texture.Width / 2), rect.Y + (rect.Height / 2) - (texture.Height / 2));
+                        sb.Draw(texture, centered, color);
+                    }, null);
                 #endregion
 
                 #region Thorn
@@ -234,6 +266,19 @@ namespace Redemption.CrossMod
                     }, null);
                 #endregion
 
+                #region Calavia
+                bossChecklist.Call("AddMiniBoss", mod, "Calavia", ModContent.NPCType<Calavia>(), 5.2f, () => RedeBossDowned.downedCalavia, () => NPC.downedBoss3,
+                    null,
+                    null, "Appears at the Underground Portal sometime after Skeletron is defeated.",
+                    null,
+                    (SpriteBatch sb, Rectangle rect, Color color) =>
+                    {
+                        Texture2D texture = ModContent.Request<Texture2D>("Redemption/CrossMod/BossChecklist/Calavia").Value;
+                        Vector2 centered = new(rect.X + (rect.Width / 2) - (texture.Width / 2), rect.Y + (rect.Height / 2) - (texture.Height / 2));
+                        sb.Draw(texture, centered, color);
+                    }, null);
+                #endregion
+
                 #region The Abandoned Lab
                 bossChecklist.Call("AddEvent", mod, "The Abandoned Laboratory",
                     new List<int>()
@@ -291,7 +336,7 @@ namespace Redemption.CrossMod
                     new List<int>
                     {
                         ModContent.ItemType<CleaverRelic>(),
-                        ModContent.ItemType<OmegaTrophy>(),
+                        ModContent.ItemType<OmegaCleaverTrophy>(),
                         ModContent.ItemType<OmegaBox>(),
                         ModContent.ItemType<SwordRemote>()
                     },
@@ -310,7 +355,7 @@ namespace Redemption.CrossMod
                     {
                         ModContent.ItemType<GigaporaRelic>(),
                         ModContent.ItemType<PowerDrill>(),
-                        ModContent.ItemType<OmegaTrophy>(),
+                        ModContent.ItemType<OmegaGigaporaTrophy>(),
                         ModContent.ItemType<OmegaBox>()
                     },
                     ModContent.ItemType<OmegaTransmitter>(), "Use a [i:Redemption/OmegaTransmitter] at night after Golem has been defeated.", null,
@@ -328,7 +373,7 @@ namespace Redemption.CrossMod
                     {
                         ModContent.ItemType<ToasterPet>(),
                         ModContent.ItemType<OORelic>(),
-                        ModContent.ItemType<OmegaTrophy>(),
+                        ModContent.ItemType<OmegaObliteratorTrophy>(),
                         ModContent.ItemType<OmegaBox2>()
                     },
                     ModContent.ItemType<OmegaTransmitter>(), "Use a [i:Redemption/OmegaTransmitter] at night after Moon Lord has been defeated.", null,

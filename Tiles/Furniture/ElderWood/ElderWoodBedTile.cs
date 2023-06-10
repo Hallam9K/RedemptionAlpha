@@ -26,9 +26,7 @@ namespace Redemption.Tiles.Furniture.ElderWood
             TileObjectData.newTile.CoordinateHeights = new[] { 16, 18 };
             TileObjectData.newTile.CoordinatePaddingFix = new Point16(0, -2);
             TileObjectData.addTile(Type);
-			LocalizedText name = CreateMapEntryName();
-			// name.SetDefault("Elder Wood Bed");
-			AddMapEntry(new Color(109, 87, 78), name);
+			AddMapEntry(new Color(109, 87, 78), Language.GetText("ItemName.Bed"));
             DustType = DustID.t_BorealWood;
 			AddToArray(ref TileID.Sets.RoomNeeds.CountsAsChair);
 			AdjTiles = new int[]{ TileID.Beds };

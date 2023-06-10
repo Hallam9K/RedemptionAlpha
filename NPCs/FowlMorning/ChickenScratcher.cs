@@ -14,6 +14,7 @@ using Redemption.Globals.World;
 using Redemption.Items.Usable.Potions;
 using Redemption.Biomes;
 using Redemption.Items.Placeable.Banners;
+using Redemption.Items.Accessories.PreHM;
 
 namespace Redemption.NPCs.FowlMorning
 {
@@ -32,7 +33,7 @@ namespace Redemption.NPCs.FowlMorning
             NPC.friendly = false;
             NPC.damage = 13;
             NPC.defense = 1;
-            NPC.lifeMax = 22;
+            NPC.lifeMax = 12;
             NPC.value = 10;
             NPC.HitSound = SoundID.NPCHit1;
             NPC.DeathSound = SoundID.NPCDeath1;
@@ -47,6 +48,7 @@ namespace Redemption.NPCs.FowlMorning
             Player player = Main.player[NPC.target];
             NPC.TargetClosest();
             NPC.LookByVelocity();
+            DespawnHandler();
 
             if (Main.rand.NextBool(3000))
                 SoundEngine.PlaySound(CustomSounds.ChickenCluck, NPC.position);
@@ -67,10 +69,28 @@ namespace Redemption.NPCs.FowlMorning
             else
                 NPCHelper.HorizontallyMove(NPC, player.Center, 0.13f, 3f, 18, 18, NPC.Center.Y > player.Center.Y, player);
         }
+        private void DespawnHandler()
+        {
+            Player player = Main.player[NPC.target];
+            if (!player.active || player.dead || !FowlMorningWorld.FowlMorningActive)
+            {
+                NPC.TargetClosest(false);
+                player = Main.player[NPC.target];
+                if (!player.active || player.dead || !FowlMorningWorld.FowlMorningActive)
+                {
+                    NPC.alpha += 2;
+                    if (NPC.alpha >= 255)
+                        NPC.active = false;
+                    if (NPC.timeLeft > 10)
+                        NPC.timeLeft = 10;
+                    return;
+                }
+            }
+        }
         public override void OnHitPlayer(Player target, Player.HurtInfo hurtInfo)
         {
             if (Main.rand.NextBool() && Main.expertMode)
-                target.AddBuff(BuffID.Bleeding, 300);
+                target.AddBuff(BuffID.Bleeding, Main.rand.Next(60, 121));
         }
         public override bool? CanFallThroughPlatforms() => NPC.Redemption().fallDownPlatform;
         public override void FindFrame(int frameHeight)
@@ -114,6 +134,7 @@ namespace Redemption.NPCs.FowlMorning
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Halbirdhouse>(), 60));
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Grain>(), 200));
             npcLoot.Add(ItemDropRule.ByCondition(new OnFireCondition(), ModContent.ItemType<FriedChicken>(), 4));
         }
         public override void OnHitByItem(Player player, Item item, NPC.HitInfo hit, int damageDone)

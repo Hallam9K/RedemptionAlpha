@@ -1,7 +1,6 @@
 using Microsoft.Xna.Framework;
 using Redemption.Buffs;
 using Redemption.Dusts.Tiles;
-using Redemption.Items.Placeable.Furniture.Misc;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.Enums;
@@ -10,6 +9,7 @@ using Terraria.ObjectData;
 using Redemption.BaseExtension;
 using Redemption.Globals;
 using Microsoft.Xna.Framework.Graphics;
+using Redemption.Items.Placeable.Furniture.Misc;
 
 namespace Redemption.Tiles.Furniture.Misc
 {
@@ -34,8 +34,9 @@ namespace Redemption.Tiles.Furniture.Misc
             TileObjectData.addTile(Type);
             DustType = ModContent.DustType<SlateDust>();
             HitSound = CustomSounds.StoneHit;
-            MinPick = 500;
+            MinPick = 1000;
             MineResist = 15f;
+            RegisterItemDrop(ModContent.ItemType<HKStatue>());
             AddMapEntry(new Color(104, 91, 83));
         }
         public override bool IsTileDangerous(int i, int j, Player player) => true;
@@ -58,7 +59,7 @@ namespace Redemption.Tiles.Furniture.Misc
                 zero = Vector2.Zero;
 
             int height = tile.TileFrameY == 36 ? 18 : 16;
-            Main.spriteBatch.Draw(ModContent.Request<Texture2D>("Redemption/Tiles/Furniture/Misc/HKStatueTile_Glow").Value, new Vector2((i * 16) - (int)Main.screenPosition.X, (j * 16) - (int)Main.screenPosition.Y) + zero, new Rectangle(tile.TileFrameX, tile.TileFrameY, 16, height), Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
+            Main.spriteBatch.Draw(ModContent.Request<Texture2D>(Texture + "_Glow").Value, new Vector2((i * 16) - (int)Main.screenPosition.X, (j * 16) - (int)Main.screenPosition.Y) + zero, new Rectangle(tile.TileFrameX, tile.TileFrameY, 16, height), Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
         }
         public override bool CanExplode(int i, int j) => false;
     }

@@ -7,6 +7,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Terraria.GameContent;
 using Redemption.Globals;
 using Redemption.Buffs.NPCBuffs;
+using Redemption.BaseExtension;
 
 namespace Redemption.Items.Weapons.PreHM.Melee
 {
@@ -31,11 +32,12 @@ namespace Redemption.Items.Weapons.PreHM.Melee
         public override bool? CanHitNPC(NPC target) => Projectile.frame is 5 ? null : false;
         public float SwingSpeed;
         int directionLock = 0;
+        private bool parried;
         public override void AI()
         {
             Player player = Main.player[Projectile.owner];
             player.heldProj = Projectile.whoAmI;
-
+            Projectile.Redemption().swordHitbox = new((int)(Projectile.spriteDirection == -1 ? Projectile.Center.X - 90 : Projectile.Center.X), (int)(Projectile.Center.Y - 67), 90, 126);
             SwingSpeed = SetSwingSpeed(26);
 
             if (player.noItems || player.CCed || player.dead || !player.active)
@@ -70,6 +72,9 @@ namespace Redemption.Items.Weapons.PreHM.Melee
                                 if (!target.active || target.whoAmI == Projectile.whoAmI || !target.hostile)
                                     continue;
 
+                                if (RedeProjectile.SwordClashFriendly(Projectile, target, player, ref parried))
+                                    continue;
+
                                 if (target.damage > 100 / 4 || Projectile.alpha > 0 || target.width + target.height > Projectile.width + Projectile.height)
                                     continue;
 
@@ -98,7 +103,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
         }
         public override void ModifyDamageHitbox(ref Rectangle hitbox)
         {
-            hitbox = new((int)(Projectile.spriteDirection == -1 ? Projectile.Center.X - 90 : Projectile.Center.X), (int)(Projectile.Center.Y - 67), 90, 126);
+            hitbox = Projectile.Redemption().swordHitbox;
         }
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {

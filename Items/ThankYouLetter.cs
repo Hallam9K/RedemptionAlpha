@@ -2,9 +2,7 @@ using Terraria.ID;
 using Terraria;
 using Terraria.ModLoader;
 using System.Collections.Generic;
-using Terraria.Localization;
 using Redemption.Globals;
-using Redemption.WorldGeneration;
 using Redemption.BaseExtension;
 using Microsoft.Xna.Framework;
 

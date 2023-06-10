@@ -37,7 +37,7 @@ namespace Redemption.Tiles.Furniture.Misc
             DustType = DustID.Lead;
             MinPick = 50;
             MineResist = 3f;
-
+            RegisterItemDrop(ModContent.ItemType<NozaCageSmall>());
             HitSound = SoundID.Tink;
             LocalizedText name = CreateMapEntryName();
             // name.SetDefault("Cage");

@@ -17,17 +17,8 @@ using Redemption.Items.Materials.PreHM;
 using Redemption.Items.Accessories.PreHM;
 using Redemption.BaseExtension;
 using Terraria.Audio;
-using Redemption.Items.Usable;
 using Terraria.GameContent.ItemDropRules;
 using Redemption.UI.ChatUI;
-using Redemption.Items.Materials.HM;
-using Redemption.Items.Placeable.Furniture.Misc;
-using Redemption.Items.Tools.PreHM;
-using Redemption.Items.Usable.Summons;
-using Redemption.Items.Weapons.PostML.Ranged;
-using Redemption.Items.Weapons.PreHM.Magic;
-using Redemption.Items.Weapons.PreHM.Melee;
-using Redemption.Items.Weapons.PreHM.Ranged;
 using Terraria.ModLoader.IO;
 using System.Linq;
 
@@ -61,6 +52,7 @@ namespace Redemption.NPCs.Friendly
         {
             Main.npcFrameCount[NPC.type] = 9;
             NPCID.Sets.ActsLikeTownNPC[Type] = true;
+            NPCID.Sets.NoTownNPCHappiness[Type] = true;
             NPCID.Sets.TownNPCBestiaryPriority.Add(Type);
 
             NPCID.Sets.DebuffImmunitySets.Add(Type, new NPCDebuffImmunityData
@@ -116,6 +108,7 @@ namespace Redemption.NPCs.Friendly
         public override bool CanHitNPC(NPC target) => false;
         public override bool? CanBeHitByItem(Player player, Item item) => item.axe > 0 ? null : false;
         public override bool? CanBeHitByProjectile(Projectile projectile) => projectile.Redemption().IsAxe ? null : false;
+        public override bool CanBeHitByNPC(NPC attacker) => false;
         private string setName;
         public override void ModifyTypeName(ref string typeName)
         {
@@ -427,7 +420,7 @@ namespace Redemption.NPCs.Friendly
             }
 
             float baseChance = SpawnCondition.OverworldDay.Chance;
-            float multiplier = Framing.GetTileSafely(spawnInfo.SpawnTileX, spawnInfo.SpawnTileY).TileType == TileID.Grass ? (Main.raining ? 0.02f : 0.005f) : 0f;
+            float multiplier = Framing.GetTileSafely(spawnInfo.SpawnTileX, spawnInfo.SpawnTileY).TileType == TileID.Grass ? (Main.raining ? 0.025f : 0.008f) : 0f;
             float trees = score >= 60 ? 1 : 0;
 
             return baseChance * multiplier * trees;

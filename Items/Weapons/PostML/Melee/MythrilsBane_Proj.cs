@@ -55,10 +55,6 @@ namespace Redemption.Items.Weapons.PostML.Melee
         private float SwingSpeed;
         public override void AI()
         {
-            for (int k = Projectile.oldPos.Length - 1; k > 0; k--)
-                oldrot[k] = oldrot[k - 1];
-            oldrot[0] = Projectile.rotation;
-
             Player player = Main.player[Projectile.owner];
             if (player.noItems || player.CCed || player.dead || !player.active)
                 Projectile.Kill();
@@ -91,8 +87,7 @@ namespace Redemption.Items.Weapons.PostML.Melee
                         if (Timer++ == (int)(5 * SwingSpeed))
                         {
                             Projectile.NewProjectile(Projectile.GetSource_FromAI(), player.Center,
-                                RedeHelper.PolarVector(Main.rand.Next(45, 66), (mouseOrig - player.Center).ToRotation() + Main.rand.NextFloat(-0.2f, 0.2f)),
-                                ModContent.ProjectileType<MythrilsBaneSlash_Proj>(), Projectile.damage, Projectile.knockBack, Projectile.owner);
+                                RedeHelper.PolarVector(Main.rand.Next(45, 66), (mouseOrig - player.Center).ToRotation() + Main.rand.NextFloat(-0.2f, 0.2f)), ModContent.ProjectileType<MythrilsBaneSlash_Proj>(), Projectile.damage, Projectile.knockBack, Projectile.owner);
                         }
                         if (Timer < 5 * SwingSpeed)
                         {
@@ -131,8 +126,7 @@ namespace Redemption.Items.Weapons.PostML.Melee
                         if (Timer++ == (int)(5 * SwingSpeed))
                         {
                             Projectile.NewProjectile(Projectile.GetSource_FromAI(), player.Center,
-                                RedeHelper.PolarVector(Main.rand.Next(45, 66), (mouseOrig - player.Center).ToRotation() + Main.rand.NextFloat(-0.2f, 0.2f)),
-                                ModContent.ProjectileType<MythrilsBaneSlash_Proj>(), Projectile.damage, Projectile.knockBack, Projectile.owner, 1);
+                                RedeHelper.PolarVector(Main.rand.Next(45, 66), (mouseOrig - player.Center).ToRotation() + Main.rand.NextFloat(-0.2f, 0.2f)), ModContent.ProjectileType<MythrilsBaneSlash_Proj>(), Projectile.damage, Projectile.knockBack, Projectile.owner, 1);
                         }
                         if (Timer < 5 * SwingSpeed)
                         {
@@ -172,6 +166,9 @@ namespace Redemption.Items.Weapons.PostML.Melee
             }
             if (Timer > 1)
                 Projectile.alpha = 0;
+            for (int k = Projectile.oldPos.Length - 1; k > 0; k--)
+                oldrot[k] = oldrot[k - 1];
+            oldrot[0] = Projectile.rotation;
         }
 
         public override bool? CanHitNPC(NPC target)

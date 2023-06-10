@@ -168,7 +168,7 @@ namespace Redemption.NPCs.Minibosses.SkullDigger
         {
             NPC host = Main.npc[(int)Projectile.ai[0]];
             if (host.RedemptionNPCBuff().disarmed)
-                modifiers.FinalDamage *= 0.2f;
+                modifiers.FinalDamage *= 0.66f;
         }
 
         public override bool CanHitPlayer(Player target)

@@ -1,6 +1,4 @@
 using Microsoft.Xna.Framework;
-using Redemption.Globals;
-using Redemption.Items.Weapons.PreHM.Magic;
 using Redemption.Items.Weapons.PreHM.Ranged;
 using System.Collections.Generic;
 using Terraria;

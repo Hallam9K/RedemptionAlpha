@@ -1,6 +1,5 @@
 using Microsoft.Xna.Framework;
 using Redemption.Globals;
-using System.Threading;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;

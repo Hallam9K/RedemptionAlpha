@@ -1,5 +1,4 @@
 using Microsoft.Xna.Framework;
-using Redemption.Items.Placeable.Furniture.SlayerShip;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.Enums;
@@ -25,7 +24,6 @@ namespace Redemption.Tiles.Furniture.SlayerShip
             TileObjectData.newTile.CoordinatePadding = 2;
             TileObjectData.newTile.DrawYOffset = 2;
             TileObjectData.newTile.Origin = new Point16(2, 1);
-            TileObjectData.newTile.DrawYOffset = 2;
             TileObjectData.newTile.AnchorBottom = new AnchorData(AnchorType.SolidTile | AnchorType.SolidWithTop | AnchorType.SolidSide, TileObjectData.newTile.Width, 0);
             TileObjectData.newTile.StyleHorizontal = true;
             TileObjectData.addTile(Type);

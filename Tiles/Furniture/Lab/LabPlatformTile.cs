@@ -1,6 +1,5 @@
 using Microsoft.Xna.Framework;
 using Redemption.Dusts.Tiles;
-using Redemption.Items.Placeable.Furniture.Lab;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -26,7 +25,6 @@ namespace Redemption.Tiles.Furniture.Lab
 			AddMapEntry(new Color(189, 191, 200));
 
 			DustType = ModContent.DustType<LabPlatingDust>();
-			ItemDrop = ModContent.ItemType<LabPlatform>();
 			AdjTiles = new int[] { TileID.Platforms };
 
 			// Placement

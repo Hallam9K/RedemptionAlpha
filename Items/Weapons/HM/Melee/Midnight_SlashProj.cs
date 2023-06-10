@@ -33,7 +33,6 @@ namespace Redemption.Items.Weapons.HM.Melee
             Projectile.Redemption().IsAxe = true;
             Projectile.usesLocalNPCImmunity = true;
         }
-        private Rectangle projHitbox;
         public override bool? CanCutTiles() => Projectile.frame is 5;
         public override bool? CanHitNPC(NPC target) => Projectile.frame is 5 ? null : false;
         public float SwingSpeed;
@@ -43,8 +42,8 @@ namespace Redemption.Items.Weapons.HM.Melee
         {
             Player player = Main.player[Projectile.owner];
             player.heldProj = Projectile.whoAmI;
-            projHitbox = new((int)(Projectile.spriteDirection == -1 ? Projectile.Center.X - 140 : Projectile.Center.X), (int)(Projectile.Center.Y - 100), 140, 130);
-            Point tileBelow = new Vector2(projHitbox.Center.X + 10, projHitbox.Bottom).ToTileCoordinates();
+            Projectile.Redemption().swordHitbox = new((int)(Projectile.spriteDirection == -1 ? Projectile.Center.X - 140 : Projectile.Center.X), (int)(Projectile.Center.Y - 100), 140, 130);
+            Point tileBelow = new Vector2(Projectile.Redemption().swordHitbox.Center.X + 10, Projectile.Redemption().swordHitbox.Bottom).ToTileCoordinates();
             Tile tile = Framing.GetTileSafely(tileBelow.X, tileBelow.Y);
 
             SwingSpeed = SetSwingSpeed(25);
@@ -110,7 +109,7 @@ namespace Redemption.Items.Weapons.HM.Melee
                             player.velocity.X += 2 * player.direction;
 
                             for (int i = 0; i < 12; i++)
-                                ParticleManager.NewParticle(RedeHelper.RandomPointInArea(projHitbox), RedeHelper.Spread(4), new RainbowParticle(), Color.White, 0.2f);
+                                ParticleManager.NewParticle(RedeHelper.RandomPointInArea(Projectile.Redemption().swordHitbox), RedeHelper.Spread(4), new RainbowParticle(), Color.White, 0.2f);
                         }
                         if (Projectile.frame > 8)
                         {
@@ -150,7 +149,7 @@ namespace Redemption.Items.Weapons.HM.Melee
                 for (int i = 0; i < num; i++)
                 {
                     if (Projectile.owner == Main.myPlayer)
-                        Projectile.NewProjectile(Projectile.GetSource_FromThis(), RedeHelper.RandomPointInArea(projHitbox), RedeHelper.SpreadUp(10), ModContent.ProjectileType<NebulaStar>(), (int)(Projectile.damage * 0.75f), 2, player.whoAmI);
+                        Projectile.NewProjectile(Projectile.GetSource_FromThis(), RedeHelper.RandomPointInArea(Projectile.Redemption().swordHitbox), RedeHelper.SpreadUp(10), ModContent.ProjectileType<NebulaStar>(), (int)(Projectile.damage * 0.75f), 2, player.whoAmI);
                 }
             }
         }
@@ -160,7 +159,7 @@ namespace Redemption.Items.Weapons.HM.Melee
             RedeProjectile.Decapitation(target, ref damageDone, ref hit.Crit, 80);
             if (!hitOnce)
             {
-                Point tileBelow = new Vector2(projHitbox.Center.X, projHitbox.Bottom).ToTileCoordinates();
+                Point tileBelow = new Vector2(Projectile.Redemption().swordHitbox.Center.X, Projectile.Redemption().swordHitbox.Bottom).ToTileCoordinates();
                 Tile tile = Framing.GetTileSafely(tileBelow.X, tileBelow.Y);
                 if (tile is not { HasUnactuatedTile: true } || !Main.tileSolid[tile.TileType])
                     SlamVisuals(tileBelow);
@@ -170,7 +169,7 @@ namespace Redemption.Items.Weapons.HM.Melee
         }
         public override void ModifyDamageHitbox(ref Rectangle hitbox)
         {
-            hitbox = new((int)(Projectile.spriteDirection == -1 ? Projectile.Center.X - 140 : Projectile.Center.X), (int)(Projectile.Center.Y - 100), 140, 130);
+            hitbox = Projectile.Redemption().swordHitbox;
         }
         public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
         {

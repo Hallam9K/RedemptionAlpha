@@ -1,6 +1,5 @@
 using Microsoft.Xna.Framework;
 using Redemption.Dusts.Tiles;
-using Redemption.Items.Placeable.Tiles;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -12,7 +11,6 @@ namespace Redemption.Tiles.Tiles
         public override void SetStaticDefaults()
         {
             Main.tileSolid[Type] = true;
-            Main.tileSpelunker[Type] = false;
             Main.tileMergeDirt[Type] = true;
             Main.tileBlockLight[Type] = true;
             Main.tileBlendAll[Type] = true;
@@ -26,7 +24,6 @@ namespace Redemption.Tiles.Tiles
             Main.tileMerge[TileID.Mud][Type] = true;
             Main.tileMerge[Type][TileID.Mudstone] = true;
             Main.tileMerge[TileID.Mudstone][Type] = true;
-            ItemDrop = ModContent.ItemType<GathicStone>();
             DustType = ModContent.DustType<SlateDust>();
             HitSound = CustomSounds.StoneHit;
             MinPick = 0;

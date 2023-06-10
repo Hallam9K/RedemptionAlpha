@@ -10,10 +10,6 @@ using Terraria.Utilities;
 using Terraria.ModLoader;
 using Redemption.BaseExtension;
 using Redemption.Globals;
-using Redemption.NPCs.Bosses.Cleaver;
-using Terraria.GameContent.Biomes;
-using log4net.Filter;
-using System.Net.Http.Headers;
 
 namespace Redemption.Base
 {
@@ -4995,12 +4991,19 @@ namespace Redemption.Base
                         {
                             if (!Main.tileSolidTop[tile.TileType])
                             {
-                                Rectangle tileHitbox = new(tileX * 16, y * 16, 16, 16);
-                                tileHitbox.Y = hitbox.Y;
+                                Rectangle tileHitbox = new(tileX * 16, y * 16, 16, 16)
+                                {
+                                    Y = hitbox.Y
+                                };
                                 if (tileHitbox.Intersects(hitbox)) { newVelocity = velocity; break; }
                             }
-                            if (tileNear.HasUnactuatedTile && Main.tileSolid[tileNear.TileType] && !Main.tileSolidTop[tileNear.TileType]) { newVelocity = velocity; break; }
-                            if (target != null && y * 16 < target.Center.Y) { continue; }
+                            if (tileNear.HasUnactuatedTile && Main.tileSolid[tileNear.TileType] && !Main.tileSolidTop[tileNear.TileType])
+                            {
+                                newVelocity = velocity;
+                                break;
+                            }
+                            if (target != null && y * 16 < target.Center.Y)
+                                continue;
                             lastY = y;
                             newVelocity.Y = -(5f + (tileY - y) * (tileY - y > 3 ? 1f - (tileY - y - 2) * 0.0525f : 1f));
                         }
@@ -5167,6 +5170,25 @@ namespace Redemption.Base
          */
         public static bool HitTileOnSide(Vector2 position, int width, int height, int dir, ref Vector2 hitTilePos)
         {
+            switch (dir)
+            {
+                case 0:
+                    if (Collision.SolidCollision(position - new Vector2(1, 0), 8, height))
+                        return true;
+                    break;
+                case 1:
+                    if (Collision.SolidCollision(position + new Vector2(width - 8, 0), 9, height))
+                        return true;
+                    break;
+                case 2:
+                    if (Collision.SolidCollision(position - new Vector2(0, 1), width, 8))
+                        return true;
+                    break;
+                case 3:
+                    if (Collision.SolidCollision(position + new Vector2(0, height - 8), width, 9, true))
+                        return true;
+                    break;
+            }
             int tilePosX = 0;
             int tilePosY = 0;
             int tilePosWidth = 0;
@@ -5206,8 +5228,10 @@ namespace Redemption.Base
             {
                 for (int y2 = tilePosY; y2 < tilePosHeight; y2++)
                 {
-                    if (Main.tile[x2, y2] == null) { return false; }
-                    if (Main.tile[x2, y2].HasUnactuatedTile && Main.tileSolid[Main.tile[x2, y2].TileType])
+                    if (Framing.GetTileSafely(x2, y2) == null)
+                        return false;
+                    bool solidTop = dir == 3 && Main.tileSolidTop[Framing.GetTileSafely(x2, y2).TileType];
+                    if (Framing.GetTileSafely(x2, y2).HasUnactuatedTile && (Main.tileSolid[Framing.GetTileSafely(x2, y2).TileType] || solidTop))
                     {
                         hitTilePos = new Vector2(x2, y2);
                         return true;

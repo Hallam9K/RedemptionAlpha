@@ -10,7 +10,7 @@ namespace Redemption.Items.Armor.HM.Xenomite
         public override void SetStaticDefaults()
         {
             /* Tooltip.SetDefault("5% increased damage\n" +
-            "4% increased critical strike chance"); */
+            "7% increased critical strike chance"); */
 
             Item.ResearchUnlockCount = 1;
         }
@@ -18,7 +18,7 @@ namespace Redemption.Items.Armor.HM.Xenomite
         public override void UpdateEquip(Player player)
         {
             player.GetDamage(DamageClass.Generic) += .05f;
-            player.GetCritChance(DamageClass.Generic) += 4;
+            player.GetCritChance(DamageClass.Generic) += 7;
         }
 
         public override void SetDefaults()
@@ -27,7 +27,7 @@ namespace Redemption.Items.Armor.HM.Xenomite
             Item.height = 24;
             Item.sellPrice(silver:50);
             Item.rare = ItemRarityID.Pink;
-            Item.defense = 14;
+            Item.defense = 16;
         }
 
         public override void AddRecipes()

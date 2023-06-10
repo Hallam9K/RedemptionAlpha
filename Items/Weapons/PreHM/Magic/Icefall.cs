@@ -1,6 +1,5 @@
 using Microsoft.Xna.Framework;
 using Redemption.Globals;
-using Redemption.Items.Materials.PreHM;
 using Redemption.Projectiles.Magic;
 using Terraria;
 using Terraria.ID;
@@ -52,15 +51,6 @@ namespace Redemption.Items.Weapons.PreHM.Magic
         {
             position = Main.MouseWorld;
             velocity = new Vector2(Main.rand.NextFloat(-2, 2), 0);
-        }
-
-        public override void AddRecipes()
-        {
-            CreateRecipe()
-            .AddIngredient(ModContent.ItemType<Mistfall>())
-            .AddIngredient(ModContent.ItemType<GathicCryoCrystal>(), 5)
-            .AddTile(TileID.Bookcases)
-            .Register();
         }
     }
 }

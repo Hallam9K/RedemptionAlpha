@@ -10,10 +10,10 @@ namespace Redemption.Buffs.Pets
 		public override void SetStaticDefaults()
 		{
 			Main.buffNoTimeDisplay[Type] = true;
-			Main.vanityPet[Type] = true;
-		}
+            Main.lightPet[Type] = true;
+        }
 
-		public override void Update(Player player, ref int buffIndex)
+        public override void Update(Player player, ref int buffIndex)
 		{
 			player.buffTime[buffIndex] = 18000;
 

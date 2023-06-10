@@ -119,7 +119,10 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
             if (!projBlocked.Contains(projectile.whoAmI) && (!projectile.active || projectile.friendly))
                 return;
 
-            if (projectile.Colliding(projectile.Hitbox, ShieldHitbox))
+            Rectangle projectileHitbox = projectile.Hitbox;
+            if (projectile.Redemption().swordHitbox != default)
+                projectileHitbox = projectile.Redemption().swordHitbox;
+            if (projectile.Colliding(projectileHitbox, ShieldHitbox))
             {
                 projBlocked.Remove(projectile.whoAmI);
                 if (!projectile.ProjBlockBlacklist() && projectile.penetrate > 1)
@@ -247,7 +250,7 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
                         NPC.netUpdate = true;
                     }
 
-                    NPC.PlatformFallCheck(ref NPC.Redemption().fallDownPlatform, 20, moveTo.Y * 16);
+                    NPC.PlatformFallCheck(ref NPC.Redemption().fallDownPlatform, 20, (moveTo.Y - 32) * 16);
                     NPCHelper.HorizontallyMove(NPC, moveTo * 16, 0.4f, 0.9f * SpeedMultiplier, 6, 6, NPC.Center.Y > moveTo.Y * 16, player);
                     break;
 

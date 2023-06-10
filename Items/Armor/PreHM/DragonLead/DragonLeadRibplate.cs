@@ -1,4 +1,5 @@
 using Microsoft.Xna.Framework;
+using Redemption.Buffs.Debuffs;
 using Redemption.Items.Materials.PreHM;
 using System.Collections.Generic;
 using Terraria;
@@ -38,6 +39,7 @@ namespace Redemption.Items.Armor.PreHM.DragonLead
             player.buffImmune[BuffID.Frostburn] = true;
             player.buffImmune[BuffID.Frostburn2] = true;
             player.buffImmune[BuffID.Wet] = true;
+            player.buffImmune[ModContent.BuffType<PureChillDebuff>()] = true;
         }
 
         public override void AddRecipes()

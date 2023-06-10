@@ -14,7 +14,6 @@ using Terraria.GameContent;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria.Audio;
 using Redemption.Base;
-using Redemption.Projectiles.Misc;
 using Redemption.Dusts;
 using Terraria.GameContent.ItemDropRules;
 using Redemption.Items.Placeable.Trophies;
@@ -163,7 +162,7 @@ namespace Redemption.NPCs.Bosses.KSIII
         public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)
         {
             NPC.lifeMax = (int)(NPC.lifeMax * 0.6f * balance * bossAdjustment);
-            NPC.damage = (int)(NPC.damage * 0.6f);
+            NPC.damage = (int)(NPC.damage * 0.75f);
         }
 
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
@@ -1246,18 +1245,10 @@ namespace Redemption.NPCs.Bosses.KSIII
                                 if (AITimer == 21)
                                 {
                                     for (int k = 0; k < NPC.buffImmune.Length; k++)
-                                        NPC.buffImmune[k] = true;
-
-                                    if (Main.netMode != NetmodeID.MultiplayerClient)
                                     {
-                                        for (int i = 0; i < NPC.buffTime.Length; i++)
-                                        {
-                                            NPC.buffTime[i] = 0;
-                                            NPC.buffType[i] = 0;
-                                        }
-
-                                        if (Main.netMode == NetmodeID.Server)
-                                            NetMessage.SendData(MessageID.NPCBuffs, number: NPC.whoAmI);
+                                        if (BuffID.Sets.IsAnNPCWhipDebuff[k])
+                                            continue;
+                                        NPC.buffImmune[k] = true;
                                     }
                                     NPC.netUpdate = true;
                                 }

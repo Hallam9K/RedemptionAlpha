@@ -18,7 +18,6 @@ using ParticleLibrary;
 using Redemption.Dusts;
 using Redemption.Particles;
 using Terraria.Graphics.Shaders;
-using log4net.Filter;
 
 namespace Redemption.NPCs.Friendly.SpiritSummons
 {
@@ -175,7 +174,7 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
                         NPC.netUpdate = true;
                     }
 
-                    NPC.PlatformFallCheck(ref NPC.Redemption().fallDownPlatform, 30, moveTo.Y * 16);
+                    NPC.PlatformFallCheck(ref NPC.Redemption().fallDownPlatform, 30, (moveTo.Y - 32) * 16);
                     NPCHelper.HorizontallyMove(NPC, moveTo * 16, 0.1f, 1, 10, 2, NPC.Center.Y > moveTo.Y * 16);
                     break;
 

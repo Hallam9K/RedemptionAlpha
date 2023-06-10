@@ -31,6 +31,7 @@ namespace Redemption.Tiles.Furniture.Lab
             AddMapEntry(new Color(189, 191, 200), name);
             DustType = DustID.Electric;
             AdjTiles = new int[] { TileID.Chandeliers };
+            RegisterItemDrop(ModContent.ItemType<LabCeilingLamp>());
             AddToArray(ref TileID.Sets.RoomNeeds.CountsAsTorch);
         }
         public override void HitWire(int i, int j)

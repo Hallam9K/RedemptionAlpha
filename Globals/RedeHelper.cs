@@ -33,7 +33,7 @@ namespace Redemption.Globals
         }
         public static bool HasFireDebuff(Terraria.NPC npc)
         {
-            return npc.HasBuff(BuffID.OnFire) || npc.HasBuff(BuffID.OnFire3) || npc.HasBuff(BuffID.ShadowFlame) || npc.HasBuff(BuffID.CursedInferno) || npc.HasBuff(BuffID.Frostburn) || npc.HasBuff(BuffID.Frostburn2) || npc.HasBuff(BuffID.Frostburn2) || npc.HasBuff<HolyFireDebuff>() || npc.HasBuff<DragonblazeDebuff>();
+            return npc.HasBuff(BuffID.OnFire) || npc.HasBuff(BuffID.OnFire3) || npc.HasBuff(BuffID.ShadowFlame) || npc.HasBuff(BuffID.CursedInferno) || npc.HasBuff(BuffID.Frostburn) || npc.HasBuff(BuffID.Frostburn2) || npc.HasBuff<HolyFireDebuff>() || npc.HasBuff<DragonblazeDebuff>();
         }
         public static bool ProjBlockBlacklist(this Projectile proj, bool countHoming = false)
         {
@@ -64,6 +64,7 @@ namespace Redemption.Globals
             return 1;
         }
         public static bool RightOf(this Entity toRight, Entity toLeft) => toLeft.Center.X < toRight.Center.X;
+        public static bool RightOf(this Vector2 toRight, Vector2 toLeft) => toLeft.X < toRight.X;
         public static bool Below(this Entity toBelow, Entity toAbove) => toAbove.Center.Y < toBelow.Center.Y;
 
         public static Vector2 PolarVector(float radius, float theta) =>
@@ -367,6 +368,37 @@ namespace Redemption.Globals
             //  spriteBatch.Draw(neckTex2D, new Vector2(head.Center.X - Main.screenPosition.X, head.Center.Y - Main.screenPosition.Y), head.frame, drawColor, head.rotation, new Vector2(36 * 0.5f, 32 * 0.5f), 1f, SpriteEffects.None, 0f);
             //spriteBatch.Draw(mod.GetTexture(glowMaskTexture), new Vector2(head.Center.X - Main.screenPosition.X, head.Center.Y - Main.screenPosition.Y), head.frame, Color.White, head.rotation, new Vector2(36 * 0.5f, 32 * 0.5f), 1f, SpriteEffects.None, 0f);
         }
+        public static Vector2 GetArcVel(Vector2 startingPos, Vector2 targetPos, float gravity, float? minArcHeight = null, float? maxArcHeight = null, float? maxXvel = null, float? heightabovetarget = null, float downwardsYVelMult = 1f)
+        {
+            Vector2 DistanceToTravel = targetPos - startingPos;
+            float MaxHeight = DistanceToTravel.Y - (heightabovetarget ?? 0);
+            if (minArcHeight != null)
+                MaxHeight = Math.Min(MaxHeight, -(float)minArcHeight);
+
+            if (maxArcHeight != null)
+                MaxHeight = Math.Max(MaxHeight, -(float)maxArcHeight);
+
+            float TravelTime;
+            float neededYvel;
+            if (MaxHeight <= 0)
+            {
+                neededYvel = -(float)Math.Sqrt(-2 * gravity * MaxHeight);
+                TravelTime = (float)Math.Sqrt(-2 * MaxHeight / gravity) + (float)Math.Sqrt(2 * Math.Max(DistanceToTravel.Y - MaxHeight, 0) / gravity); //time up, then time down
+            }
+
+            else
+            {
+                neededYvel = Vector2.Normalize(DistanceToTravel).Y * downwardsYVelMult;
+                TravelTime = (-neededYvel + (float)Math.Sqrt(Math.Pow(neededYvel, 2) - (4 * -DistanceToTravel.Y * gravity / 2))) / (gravity); //time down
+            }
+
+            if (maxXvel != null)
+                return new Vector2(MathHelper.Clamp(DistanceToTravel.X / TravelTime, -(float)maxXvel, (float)maxXvel), neededYvel);
+
+            return new Vector2(DistanceToTravel.X / TravelTime, neededYvel);
+        }
+
+        public static Vector2 GetArcVel(this Entity ent, Vector2 targetPos, float gravity, float? minArcHeight = null, float? maxArcHeight = null, float? maxXvel = null, float? heightabovetarget = null, float downwardsYVelMult = 1f) => GetArcVel(ent.Center, targetPos, gravity, minArcHeight, maxArcHeight, maxXvel, heightabovetarget, downwardsYVelMult);
 
         public static bool BossActive()
         {
@@ -715,7 +747,7 @@ namespace Redemption.Globals
         /// For methods that have 'this NPC npc', instead of doing RedeHelper.Shoot(), you can do NPC.Shoot() instead.
         /// </summary>
         public static void Shoot(this Terraria.NPC npc, Vector2 position, int projType, int damage, Vector2 velocity,
-            bool playSound, SoundStyle sound, float ai0 = 0, float ai1 = 0)
+            bool playSound, SoundStyle sound, float ai0 = 0, float ai1 = 0, int knockback = 0)
         {
             if (playSound)
                 SoundEngine.PlaySound(sound, npc.position);
@@ -725,7 +757,7 @@ namespace Redemption.Globals
                 damage /= Main.masterMode ? 3 : 2;
             if (Main.netMode != NetmodeID.MultiplayerClient)
             {
-                Projectile.NewProjectile(npc.GetSource_FromAI(), position, velocity, projType, damage, 0,
+                Projectile.NewProjectile(npc.GetSource_FromAI(), position, velocity, projType, damage, knockback,
                     Main.myPlayer, ai0, ai1);
             }
         }
@@ -988,18 +1020,16 @@ namespace Redemption.Globals
             if (blind && codable.velocity.Length() <= moveThreshold)
                 return false;
 
-            if (lineOfSight)
-            {
-                if (!Collision.CanHit(npc.position - new Vector2(0, headOffset), npc.width, npc.height, codable.position, codable.width, codable.height))
-                    return false;
-            }
-
             if (range >= 0)
             {
                 if (npc.DistanceSQ(codable.Center) > range * range)
                     return false;
             }
-
+            if (lineOfSight)
+            {
+                if (!Collision.CanHit(npc.position - new Vector2(0, headOffset), npc.width, npc.height, codable.position, codable.width, codable.height))
+                    return false;
+            }
             if (facingTarget)
             {
                 if (npc.DistanceSQ(codable.Center) <= (codable.width + 32) * (codable.width + 32))

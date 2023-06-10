@@ -1,7 +1,5 @@
 using Microsoft.Xna.Framework;
-using Redemption.Items.Placeable.Furniture.PetrifiedWood;
 using Terraria;
-using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
@@ -31,11 +29,7 @@ namespace Redemption.Tiles.Furniture.PetrifiedWood
 			TileObjectData.addTile(Type);
 
 			AddToArray(ref TileID.Sets.RoomNeeds.CountsAsTable);
-
-			// Etc
-			LocalizedText name = CreateMapEntryName();
-			// name.SetDefault("Petrified Wood Work Bench");
-			AddMapEntry(new Color(100, 100, 100), name);
+			AddMapEntry(new Color(100, 100, 100), Language.GetText("ItemName.WorkBench"));
 		}
 
 		public override void NumDust(int x, int y, bool fail, ref int num) => num = fail ? 1 : 3;
