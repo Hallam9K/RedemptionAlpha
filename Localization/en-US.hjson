@@ -3424,7 +3424,7 @@ Mods: {
 				Tooltip: ""
 			}
 
-			ForestNymphBanner: {
+			.Banner: {
 				DisplayName: Forest Nymph Banner
 				Tooltip: ""
 			}
@@ -6804,6 +6804,8 @@ Mods: {
 					Deals 50% more damage to dark enemies
 					Right-click to swap between Melee and Magic abilities
 					'''
+				MeleeText: Hitting an enemy with the weapon will drain a twentieth of the damage dealt
+				MagicText: Twirl the sickle around to conjure nature pixies that will charge into enemies
 			}
 
 			ForgottenSword: {
