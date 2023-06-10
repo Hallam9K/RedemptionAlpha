@@ -46,6 +46,26 @@ Mods: {
 					Hood: "Summons 2 missile drones and a magnet drone"
 					Visor: "Fires a missile barrage from the SoS, targetting the enemy nearest to the cursor position"
 				}
+				
+				Xenomite: {
+					Press:
+						'''
+
+						Press 
+						'''
+					Keybind:
+						'''
+						6% increased damage
+						Increased Energy regeneration if an Energy Pack is in your inventory
+						Select a keybind for [Special Ability Key] in Controls
+						'''
+					Bonus1:
+						'''
+						6% increased damage 
+						Increased Energy regeneration if an Energy Pack is in your inventory
+						'''
+					Bonus2: " to unleash toxic gas in a radius around the player, inflicting Burning Acid"
+				}
 			}
 		}
 
