@@ -6684,11 +6684,6 @@ Mods: {
 					'''
 			}
 
-			Earth: {
-				DisplayName: Earth
-				Tooltip: ""
-			}
-
 			ErhanMagnifyingGlass: {
 				DisplayName: Holy Magnifying Glass
 				Tooltip:
@@ -6796,11 +6791,6 @@ Mods: {
 			Firebreak: {
 				DisplayName: Firebreak
 				Tooltip: Rains down fire from the skies when hitting a target
-			}
-
-			Fire: {
-				DisplayName: Fire
-				Tooltip: ""
 			}
 
 			FlintAndSteel: {
@@ -7006,11 +6996,6 @@ Mods: {
 					'''
 			}
 
-			Blood: {
-				DisplayName: Blood
-				Tooltip: ""
-			}
-
 			BuddingBoline: {
 				DisplayName: Budding Boline
 				Tooltip:
@@ -7187,11 +7172,6 @@ Mods: {
 					Shoots 4 short-ranged rays of light
 					'You dare question the words of the mighty Jimmy!?'
 					'''
-			}
-
-			Holy: {
-				DisplayName: Holy
-				Tooltip: ""
 			}
 
 			KingsOakStaff: {
@@ -7591,11 +7571,6 @@ Mods: {
 				Tooltip: ""
 			}
 
-			Nature: {
-				DisplayName: Nature
-				Tooltip: ""
-			}
-
 			RowanTreeSummon_Berries: {
 				DisplayName: Rowan Tree Summon_ Berries
 				Tooltip: ""
@@ -7603,11 +7578,6 @@ Mods: {
 
 			ShadowFuel: {
 				DisplayName: Shadow Fuel
-				Tooltip: ""
-			}
-
-			Shadow: {
-				DisplayName: Shadow
 				Tooltip: ""
 			}
 
@@ -7652,8 +7622,38 @@ Mods: {
 					'''
 			}
 
+			Earth: {
+				DisplayName: "[i:Redemption/Earth][c/f4a460:Earth]"
+				Tooltip: ""
+			}
+
+			Shadow: {
+				DisplayName: "[i:Redemption/Shadow][c/7b68ee:Shadow]"
+				Tooltip: ""
+			}
+
+			Nature: {
+				DisplayName: "[i:Redemption/Nature][c/7cfc00:Nature]"
+				Tooltip: ""
+			}
+
+			Holy: {
+				DisplayName: "[i:Redemption/Holy][c/fafad2:Holy]"
+				Tooltip: ""
+			}
+
+			Blood: {
+				DisplayName: "[i:Redemption/Blood][c/cd5c5c:Blood]"
+				Tooltip: ""
+			}
+
+			Fire: {
+				DisplayName: "[i:Redemption/Fire][c/FFA500:Fire]"
+				Tooltip: ""
+			}
+
 			Arcane: {
-				DisplayName: Arcane
+				DisplayName: "[i:Redemption/Arcane][c/ADD8E6:Arcane]"
 				Tooltip: ""
 			}
 
@@ -7663,22 +7663,22 @@ Mods: {
 			}
 
 			Celestial: {
-				DisplayName: Celestial
+				DisplayName: "[i:Redemption/Celestial][c/ffc0cb:Celestial]"
 				Tooltip: ""
 			}
 
 			Explosive: {
-				DisplayName: Explosive
+				DisplayName: "[i:Redemption/Explosive][c/FFC896:Explosive]"
 				Tooltip: ""
 			}
 
 			Poison: {
-				DisplayName: Poison
+				DisplayName: "[i:Redemption/Poison][c/9370db:Poison]"
 				Tooltip: ""
 			}
 
 			Psychic: {
-				DisplayName: Psychic
+				DisplayName: "[i:Redemption/Psychic][c/ffb6c1:Psychic]"
 				Tooltip: ""
 			}
 
@@ -7688,20 +7688,20 @@ Mods: {
 			}
 
 			Thunder: {
-				DisplayName: Thunder
+				DisplayName: "[i:Redemption/Thunder][c/ffffe0:Thunder]"
 				Tooltip: ""
 			}
 
 			Water: {
-				DisplayName: Water
+				DisplayName: "[i:Redemption/Water][c/87CEEB:Water]"
 				Tooltip: ""
 			}
 
 			Wind: {
-				DisplayName: Wind
+				DisplayName: "[i:Redemption/Wind][c/B4B4B4:Wind]"
 				Tooltip: ""
 			}
-
+			
 			CockatriceRelic: {
 				DisplayName: Cockatrice Relic
 				Tooltip: ""
