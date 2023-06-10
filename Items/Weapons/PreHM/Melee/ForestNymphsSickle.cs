@@ -12,12 +12,15 @@ namespace Redemption.Items.Weapons.PreHM.Melee
 {
     public class ForestNymphsSickle : ModItem
     {
+        public static LocalizedText MeleeText { get; private set; }
+        public static LocalizedText MagicText { get; private set; }
         public override void SetStaticDefaults()
         {
             // DisplayName.SetDefault("Forest Nymph's Sickle");
             /* Tooltip.SetDefault("Deals 50% more damage to dark enemies\n" +
                 "Right-click to swap between Melee and Magic abilities"); */
-
+            MeleeText = this.GetLocalization(nameof(MeleeText));
+            MagicText = this.GetLocalization(nameof(MagicText));
             ItemID.Sets.SkipsInitialUseSound[Item.type] = true;
             Item.ResearchUnlockCount = 1;
         }
@@ -111,9 +114,9 @@ namespace Redemption.Items.Weapons.PreHM.Melee
             if (tooltipLocation != -1)
             {
                 if (!MagicMode)
-                    tooltips.Insert(tooltipLocation, new TooltipLine(Mod, "Tooltip", "Hitting an enemy with the weapon will drain a twentieth of the damage dealt"));
+                    tooltips.Insert(tooltipLocation, new TooltipLine(Mod, "Tooltip", Language.GetTextValue("Mods.Redemption.Items.ForestNymphsSickle.MeleeText")));
                 else
-                    tooltips.Insert(tooltipLocation, new TooltipLine(Mod, "Tooltip", "Twirl the sickle around to conjure nature pixies that will charge into enemies"));
+                    tooltips.Insert(tooltipLocation, new TooltipLine(Mod, "Tooltip", Language.GetTextValue("Mods.Redemption.Items.ForestNymphsSickle.MagicText")));
             }
             if (!MagicMode)
             {
