@@ -66,6 +66,21 @@ Mods: {
 						'''
 					Bonus2: " to unleash toxic gas in a radius around the player, inflicting Burning Acid"
 				}
+				
+				Xenium: {
+					Press:
+						'''
+
+						Press 
+						'''
+					Keybind:
+						'''
+						Increased Energy regeneration if an Energy Pack is in your inventory
+						Select a keybind for [Special Ability Key] in Controls
+						'''
+					Bonus1: Increased Energy regeneration if an Energy Pack is in your inventory
+					Bonus2: " to fire a virulent grenade from your shoulder launcher"
+				}
 			}
 		}
 
