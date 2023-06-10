@@ -83,7 +83,28 @@ Mods: {
 				}
 			}
 		}
+		
+		SpecialTooltips: {
+			Viewer: Hold [Shift] to view lore
+			PureIron:{
+				AntiquePureIronHelmet:
+					'''
+					'An outdated design of the Iron Realm's warrior's helmet.
+					Discovered in the Catacombs of Gathuram by Happins, a fallen.
+					This design has fur to keep the neck and shoulders warm in the harsh environment.'
+					'''
+				PureIronHelmet:
+					'''
+					'A visored helmet used by the Warriors of the Iron Realm.
+					The metal emits a constant chill mist and is cold to the touch,
+					however the Iron Realm's warriors have been trained to resist such harsh temperatures.
 
+					The Warriors of the Iron Realm are Gathuram's main military force,
+					with units spanning all across the domain.'
+					'''
+			}
+		}
+		
 		GenericTerms: {
 			Words: {
 				Fighting: fighting
