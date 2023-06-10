@@ -26,13 +26,26 @@ Mods: {
 			}
 			
 			ArmorSetBonus: {
-				20Increased:
-					'''
+				VanillaArmor: {
+					20Increased:
+						'''
 
-					20% increased 
-					'''
-				Resistance: " elemental resistance"
-				Damage: " elemental Damage"
+						20% increased 
+						'''
+					Resistance: " elemental resistance"
+					Damage: " elemental Damage"
+				}
+
+				Hardlight: {
+					Keybind: "Select a keybind for [Special Ability Key] in Controls"
+					Press: "Press "
+					Support: " to get support from the Ship of the Slayer\n"
+					Casque: "Summons a hologram of King Slayer III to help, higher spirit levels give the hologram stronger weapons"
+					Cowl: "Summons a drone that gives a continuous feed of mana for 10 seconds"
+					Helm: "Summons 2 mini spaceships that orbit you, firing lasers whenever you attack using a melee weapon"
+					Hood: "Summons 2 missile drones and a magnet drone"
+					Visor: "Fires a missile barrage from the SoS, targetting the enemy nearest to the cursor position"
+				}
 			}
 		}
 
