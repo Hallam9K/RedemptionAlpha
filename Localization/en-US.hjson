@@ -24,6 +24,16 @@ Mods: {
 				WaterBonus: "[i:Redemption/Water] Increased damage to demons and can electrify robotic targets"
 				WindBonus: "[i:Redemption/Wind] Deals extra knockback to airborne targets"
 			}
+			
+			ArmorSetBonus: {
+				20Increased:
+					'''
+
+					20% increased 
+					'''
+				Resistance: " elemental resistance"
+				Damage: " elemental Damage"
+			}
 		}
 
 		GenericTerms: {
