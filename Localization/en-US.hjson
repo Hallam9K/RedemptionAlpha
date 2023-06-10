@@ -6703,11 +6703,6 @@ Mods: {
 				Tooltip: Lowers the air temperature at cursor point, forming damaging ice crystals that eventually fall to gravity
 			}
 
-			Ice: {
-				DisplayName: Ice
-				Tooltip: ""
-			}
-
 			Mistfall: {
 				DisplayName: Mistfall
 				Tooltip: Lowers the air temperature at cursor point, slowing enemies caught in the mist
@@ -7620,6 +7615,11 @@ Mods: {
 					15% increased {0} elemental damage and resistance
 					10% decreased {2} elemental damage and resistance
 					'''
+			}
+
+			Ice: {
+				DisplayName: "[i:Redemption/Ice][c/E0FFFF:Ice]"
+				Tooltip: ""
 			}
 
 			Earth: {
