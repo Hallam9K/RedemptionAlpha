@@ -1525,6 +1525,17 @@ Mods: {
 			GeigerMuller: {
 				DisplayName: Geiger-Muller
 				Tooltip: Lab issued Geiger counter. The louder it gets, the higher the chance of you getting irradiated.
+				Status1: No
+				Status2: Low
+				Status3: Medium
+				Status4: High
+				Status5: Very high
+				Status6: Extreme
+				StatusEnd: " doses of radiation detected on self, "
+				Note1: nothing to note.
+				Note2: have teochrome-issued pills on hand just in case.
+				Note3: high chance of irradiation and suffering ARS.
+				Note4: Acute Radiation Syndrome detected.
 			}
 
 			GracesGuidance: {
