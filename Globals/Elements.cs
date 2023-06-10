@@ -333,21 +333,21 @@ namespace Redemption.Globals
         public const short AddElement = 1;
         public const short RemoveElement = -1;
 
-        public const string ArcaneS = "[i:Redemption/Arcane][c/ADD8E6:Arcane]";
-        public const string FireS = "[i:Redemption/Fire][c/FFA500:Fire]";
-        public const string WaterS = "[i:Redemption/Water][c/87CEEB:Water]";
-        public const string IceS = "[i:Redemption/Ice][c/E0FFFF:Ice]";
-        public const string EarthS = "[i:Redemption/Earth][c/f4a460:Earth]";
-        public const string WindS = "[i:Redemption/Wind][c/B4B4B4:Wind]";
-        public const string ThunderS = "[i:Redemption/Thunder][c/ffffe0:Thunder]";
-        public const string HolyS = "[i:Redemption/Holy][c/fafad2:Holy]";
-        public const string ShadowS = "[i:Redemption/Shadow][c/7b68ee:Shadow]";
-        public const string NatureS = "[i:Redemption/Nature][c/7cfc00:Nature]";
-        public const string PoisonS = "[i:Redemption/Poison][c/9370db:Poison]";
-        public const string BloodS = "[i:Redemption/Blood][c/cd5c5c:Blood]";
-        public const string PsychicS = "[i:Redemption/Psychic][c/ffb6c1:Psychic]";
-        public const string CelestialS = "[i:Redemption/Celestial][c/ffc0cb:Celestial]";
-        public const string ExplosiveS = "[i:Redemption/Explosive][c/FFC896:Explosive]";
+        public static string ArcaneS = Language.GetTextValue("Mods.Redemption.Items.Arcane.DisplayName");
+        public static string FireS = Language.GetTextValue("Mods.Redemption.Items.Fire.DisplayName");
+        public static string WaterS = Language.GetTextValue("Mods.Redemption.Items.Water.DisplayName");
+        public static string IceS = Language.GetTextValue("Mods.Redemption.Items.Ice.DisplayName");
+        public static string EarthS = Language.GetTextValue("Mods.Redemption.Items.Earth.DisplayName");
+        public static string WindS = Language.GetTextValue("Mods.Redemption.Items.Wind.DisplayName");
+        public static string ThunderS = Language.GetTextValue("Mods.Redemption.Items.Thunder.DisplayName");
+        public static string HolyS = Language.GetTextValue("Mods.Redemption.Items.Holy.DisplayName");
+        public static string ShadowS = Language.GetTextValue("Mods.Redemption.Items.Shadow.DisplayName");
+        public static string NatureS = Language.GetTextValue("Mods.Redemption.Items.Nature.DisplayName");
+        public static string PoisonS = Language.GetTextValue("Mods.Redemption.Items.Poison.DisplayName");
+        public static string BloodS = Language.GetTextValue("Mods.Redemption.Items.Blood.DisplayName");
+        public static string PsychicS = Language.GetTextValue("Mods.Redemption.Items.Psychic.DisplayName");
+        public static string CelestialS = Language.GetTextValue("Mods.Redemption.Items.Celestial.DisplayName");
+        public static string ExplosiveS = Language.GetTextValue("Mods.Redemption.Items.Explosive.DisplayName");
         #endregion
     }
     public class ElementalProjectile : GlobalProjectile
