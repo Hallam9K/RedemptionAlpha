@@ -165,62 +165,62 @@ namespace Redemption.Globals
         {
             if (set == copperSet || set == tinSet)
             {
-                player.setBonus += "\n20% increased " + ElementID.ThunderS + " elemental resistance";
+                player.setBonus += Language.GetTextValue("Mods.Redemption.GenericTooltips.ArmorSetBonus.20Increased") + ElementID.ThunderS + Language.GetTextValue("Mods.Redemption.GenericTooltips.ArmorSetBonus.Resistance");
                 player.RedemptionPlayerBuff().ElementalResistance[ElementID.Thunder] += 0.2f;
             }
             if (set == silverSet || set == tungstenSet || set == titaniumSet)
             {
-                player.setBonus += "\n20% increased " + ElementID.ThunderS + " elemental damage";
+                player.setBonus += Language.GetTextValue("Mods.Redemption.GenericTooltips.ArmorSetBonus.20Increased") + ElementID.ThunderS + Language.GetTextValue("Mods.Redemption.GenericTooltips.ArmorSetBonus.Damage");
                 player.RedemptionPlayerBuff().ElementalDamage[ElementID.Thunder] += 0.2f;
             }
             if (set == cactusSet || set == jungleSet || set == orichalcumSet || set == beetleSet || set == turtleSet)
             {
-                player.setBonus += "\n20% increased " + ElementID.NatureS + " elemental resistance";
+                player.setBonus += Language.GetTextValue("Mods.Redemption.GenericTooltips.ArmorSetBonus.20Increased") + ElementID.NatureS + Language.GetTextValue("Mods.Redemption.GenericTooltips.ArmorSetBonus.Resistance");
                 player.RedemptionPlayerBuff().ElementalResistance[ElementID.Nature] += 0.2f;
             }
             if (set == goldSet || set == mythrilSet || set == spectreSet)
             {
-                player.setBonus += "\n20% increased " + ElementID.ArcaneS + " elemental resistance";
+                player.setBonus += Language.GetTextValue("Mods.Redemption.GenericTooltips.ArmorSetBonus.20Increased") + ElementID.ArcaneS + Language.GetTextValue("Mods.Redemption.GenericTooltips.ArmorSetBonus.Resistance");
                 player.RedemptionPlayerBuff().ElementalResistance[ElementID.Arcane] += 0.2f;
             }
             if (set == platinumSet)
             {
-                player.setBonus += "\n20% increased " + ElementID.ArcaneS + " elemental damage";
+                player.setBonus += Language.GetTextValue("Mods.Redemption.GenericTooltips.ArmorSetBonus.20Increased") + ElementID.ArcaneS + Language.GetTextValue("Mods.Redemption.GenericTooltips.ArmorSetBonus.Damage");
                 player.RedemptionPlayerBuff().ElementalDamage[ElementID.Arcane] += 0.2f;
             }
             if (set == fossilSet || set == adamantiteSet || set == forbiddenSet || set == turtleSet || set == beetleSet || set == ironSet || set == leadSet)
             {
-                player.setBonus += "\n20% increased " + ElementID.EarthS + " elemental resistance";
+                player.setBonus += Language.GetTextValue("Mods.Redemption.GenericTooltips.ArmorSetBonus.20Increased") + ElementID.EarthS + Language.GetTextValue("Mods.Redemption.GenericTooltips.ArmorSetBonus.Resistance");
                 player.RedemptionPlayerBuff().ElementalDamage[ElementID.Earth] += 0.2f;
             }
             if (set == shadowSet)
             {
-                player.setBonus += "\n20% increased " + ElementID.ShadowS + " elemental resistance";
+                player.setBonus += Language.GetTextValue("Mods.Redemption.GenericTooltips.ArmorSetBonus.20Increased") + ElementID.ShadowS + Language.GetTextValue("Mods.Redemption.GenericTooltips.ArmorSetBonus.Resistance");
                 player.RedemptionPlayerBuff().ElementalDamage[ElementID.Shadow] += 0.2f;
             }
             if (set == crimsonSet)
             {
-                player.setBonus += "\n20% increased " + ElementID.BloodS + " elemental resistance";
+                player.setBonus += Language.GetTextValue("Mods.Redemption.GenericTooltips.ArmorSetBonus.20Increased") + ElementID.BloodS + Language.GetTextValue("Mods.Redemption.GenericTooltips.ArmorSetBonus.Resistance");
                 player.RedemptionPlayerBuff().ElementalDamage[ElementID.Blood] += 0.2f;
             }
             if (set == moltenSet)
             {
-                player.setBonus += "\n20% increased " + ElementID.FireS + " elemental resistance";
+                player.setBonus += Language.GetTextValue("Mods.Redemption.GenericTooltips.ArmorSetBonus.20Increased") + ElementID.FireS + Language.GetTextValue("Mods.Redemption.GenericTooltips.ArmorSetBonus.Resistance");
                 player.RedemptionPlayerBuff().ElementalDamage[ElementID.Fire] += 0.2f;
             }
             if (set == cobaltSet)
             {
-                player.setBonus += "\n20% increased " + ElementID.WaterS + " elemental resistance";
+                player.setBonus += Language.GetTextValue("Mods.Redemption.GenericTooltips.ArmorSetBonus.20Increased") + ElementID.WaterS + Language.GetTextValue("Mods.Redemption.GenericTooltips.ArmorSetBonus.Resistance");
                 player.RedemptionPlayerBuff().ElementalDamage[ElementID.Water] += 0.2f;
             }
             if (set == palladiumSet || set == hallowedSet)
             {
-                player.setBonus += "\n20% increased " + ElementID.HolyS + " elemental resistance";
+                player.setBonus += Language.GetTextValue("Mods.Redemption.GenericTooltips.ArmorSetBonus.20Increased") + ElementID.HolyS + Language.GetTextValue("Mods.Redemption.GenericTooltips.ArmorSetBonus.Resistance");
                 player.RedemptionPlayerBuff().ElementalDamage[ElementID.Holy] += 0.2f;
             }
             if (set == frostSet)
             {
-                player.setBonus += "\n20% increased " + ElementID.IceS + " elemental resistance";
+                player.setBonus += Language.GetTextValue("Mods.Redemption.GenericTooltips.ArmorSetBonus.20Increased") + ElementID.IceS + Language.GetTextValue("Mods.Redemption.GenericTooltips.ArmorSetBonus.Resistance");
                 player.RedemptionPlayerBuff().ElementalDamage[ElementID.Ice] += 0.2f;
             }
         }
