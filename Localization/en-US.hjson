@@ -6350,6 +6350,11 @@ Mods: {
 					Right-Click to switch mode of attack
 					15 second cooldown
 					'''
+				Mode1: Swing Mode
+				Mode2: Stab Mode
+				Mode3: Sword Burst Mode
+				Mode4: Red Prism Mode
+			}
 			}
 
 			TidalWake: {
