@@ -1,4 +1,4 @@
-﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
 using Terraria;
@@ -6,6 +6,7 @@ using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.Localization;
 
 namespace Redemption.Items.Materials.PreHM
 {
@@ -34,7 +35,7 @@ namespace Redemption.Items.Materials.PreHM
         }
         public override void ModifyTooltips(List<TooltipLine> tooltips)
         {
-            string text = "There is no moonlight to reflect...";
+            string text = Language.GetTextValue("Mods.Redemption.Items.MoonflareFragment.NoMoon");
             if (Main.dayTime || Main.moonPhase == 4)
             {
                 TooltipLine line = new(Mod, "text", text)
