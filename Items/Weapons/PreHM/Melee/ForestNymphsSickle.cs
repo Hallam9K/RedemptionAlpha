@@ -12,15 +12,11 @@ namespace Redemption.Items.Weapons.PreHM.Melee
 {
     public class ForestNymphsSickle : ModItem
     {
-        public static LocalizedText MeleeText { get; private set; }
-        public static LocalizedText MagicText { get; private set; }
         public override void SetStaticDefaults()
         {
             // DisplayName.SetDefault("Forest Nymph's Sickle");
             /* Tooltip.SetDefault("Deals 50% more damage to dark enemies\n" +
                 "Right-click to swap between Melee and Magic abilities"); */
-            MeleeText = this.GetLocalization(nameof(MeleeText));
-            MagicText = this.GetLocalization(nameof(MagicText));
             ItemID.Sets.SkipsInitialUseSound[Item.type] = true;
             Item.ResearchUnlockCount = 1;
         }
