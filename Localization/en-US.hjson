@@ -36,17 +36,45 @@ Mods: {
 					Damage: " elemental Damage"
 				}
 
-				Hardlight: {
-					Keybind: "Select a keybind for [Special Ability Key] in Controls"
-					Press: "Press "
-					Support: " to get support from the Ship of the Slayer\n"
-					Casque: "Summons a hologram of King Slayer III to help, higher spirit levels give the hologram stronger weapons"
-					Cowl: "Summons a drone that gives a continuous feed of mana for 10 seconds"
-					Helm: "Summons 2 mini spaceships that orbit you, firing lasers whenever you attack using a melee weapon"
-					Hood: "Summons 2 missile drones and a magnet drone"
-					Visor: "Fires a missile barrage from the SoS, targetting the enemy nearest to the cursor position"
+				LivingWood: Immune to poison, increases your max number of minions
+				CommonGuardHelm1: 12% increased melee speed
+				CommonGuardHelm2: Reduces damage taken by 6%
+
+				PureIron: {
+					20Increased: "20% increased "
+					Bonus:
+						'''
+
+						33% chance for weapons to inflict Pure Chill
+						100% chance for all Pure-Iron weapons to inflict Pure Chill
+						'''
 				}
-				
+
+				DragonLead: {
+					20Increased: "20% increased "
+					Bonus:
+						'''
+
+						33% chance for weapons to inflict Dragonblaze
+						100% chance for all Dragon-Lead weapons to inflict Dragonblaze
+						'''
+				}
+
+				Hardlight: {
+					Keybind: Select a keybind for [Special Ability Key] in Controls
+					Press: "Press "
+					Support:
+						'''
+						 to get support from the Ship of the Slayer
+
+						'''
+					Casque: Summons a hologram of King Slayer III to help, higher spirit levels give the hologram stronger weapons
+					Cowl: Summons a drone that gives a continuous feed of mana for 10 seconds
+					Helm: Summons 2 mini spaceships that orbit you, firing lasers whenever you attack using a melee weapon
+					Hood: Summons 2 missile drones and a magnet drone
+					Visor: Fires a missile barrage from the SoS, targetting the enemy nearest to the cursor position
+				}
+
 				Xenomite: {
 					Press:
 						'''
@@ -66,7 +94,7 @@ Mods: {
 						'''
 					Bonus2: " to unleash toxic gas in a radius around the player, inflicting Burning Acid"
 				}
-				
+
 				Xenium: {
 					Press:
 						'''
@@ -83,10 +111,58 @@ Mods: {
 				}
 			}
 		}
-		
+
 		SpecialTooltips: {
 			Viewer: Hold [Shift] to view lore
-			PureIron:{
+
+			CommonGuard: {
+				CommonGuardGreaves:
+					'''
+					'Plate mail greaves of the Common Guard unit of Anglon that were scavenged by skeletons.
+					Originally shining steel, the metal has since dulled with time and coated with layers of dust.
+
+					The Common Guard was founded when an Overlord's city was completely obliterated
+					by a stray demon that sneaked through an unguarded portal to Demonhollow.
+
+					They now guard cities and landmarks of great importance. Despite being stronger than the average
+					knight, they don't get involved in wars.'
+					'''
+				CommonGuardHelm1:
+					'''
+					'Visored plate mail helm of the Common Guard unit of Anglon that were scavenged by skeletons.
+					Originally shining steel, the metal has since dulled with time and coated with layers of dust.
+
+					The Common Guard was founded when an Overlord's city was completely obliterated
+					by a stray demon that sneaked through an unguarded portal to Demonhollow.
+
+					They now guard cities and landmarks of great importance. Despite being stronger than the average
+					knight, they don't get involved in wars.'"
+					'''
+				CommonGuardHelm2:
+					'''
+					"'Bucket helm of the Common Guard unit of Anglon that were scavenged by skeletons.
+					Originally shining steel, the metal has since dulled with time and coated with layers of dust.
+
+					The Common Guard was founded when an Overlord's city was completely obliterated
+					by a stray demon that sneaked through an unguarded portal to Demonhollow.
+
+					They now guard cities and landmarks of great importance. Despite being stronger than the average
+					knight, they don't get involved in wars.'"
+					'''
+				CommonGuardPlateMail:
+					'''
+					'Plate mail of the Common Guard unit of Anglon that were scavenged by skeletons.
+					Originally shining steel, the metal has since dulled with time and coated with layers of dust.
+
+					The Common Guard was founded when an Overlord's city was completely obliterated
+					by a stray demon that sneaked through an unguarded portal to Demonhollow.
+
+					They now guard cities and landmarks of great importance. Despite being stronger than the average
+					knight, they don't get involved in wars.'"
+					'''
+			}
+
+			PureIron: {
 				AntiquePureIronHelmet:
 					'''
 					'An outdated design of the Iron Realm's warrior's helmet.
@@ -102,9 +178,50 @@ Mods: {
 					The Warriors of the Iron Realm are Gathuram's main military force,
 					with units spanning all across the domain.'
 					'''
+				PureIronChestplate:
+					'''
+					'A chestplate made of metal and leather used by the Warriors of the Iron Realm.
+					The metal emits a constant chill mist and is cold to the touch,
+					however the Iron Realm's warriors have been trained to resist such harsh temperatures.
+
+					The Warriors of the Iron Realm are Gathuram's main military force,
+					with units spanning all across the domain.'
+					'''
+				PureIronGreaves:
+					'''
+					'Greaves made of metal and leather used by the Warriors of the Iron Realm.
+					The metal emits a constant chill mist and is cold to the touch,
+					however the Iron Realm's warriors have been trained to resist such harsh temperatures.
+
+					The Warriors of the Iron Realm are Gathuram's main military force,
+					with units spanning all across the domain.'
+					'''
+			}
+
+			DragonLead: {
+				DragonLeadSkull:
+					'''
+					'A horned helmet forged from melted dragon bone and metal, made to look like a dragon's skull. It is said
+					to be used by the ancient warlords of Dragonrest.
+					The warlords were famous dragon slayers who used the bones of their victims for weaponry and armour,
+					nearly bringing the dragons to extinction. That was until every single one was wiped out by Goliathon, the Dragon God.
+					'''
+				DragonLeadRibplate:
+					'''
+					'Armour forged from melted dragon bone and metal, made to look like a ribcage. It is said to be used by
+					the ancient warlords of Dragonrest.
+					The warlords were famous dragon slayers who used the bones of their victims for weaponry and armour,
+					nearly bringing the dragons to extinction. That was until every single one was wiped out by Goliathon, the Dragon God.'
+					'''
+				DragonLeadGreaves:
+					'''
+					'Leg armour forged from melted dragon bone and metal, said to be used by the ancient warlords of Dragonrest.
+					The warlords were famous dragon slayers who used the bones of their victims for weaponry and armour,
+					nearly bringing the dragons to extinction. That was until every single one was wiped out by Goliathon, the Dragon God.'
+					'''
 			}
 		}
-		
+	
 		GenericTerms: {
 			Words: {
 				Fighting: fighting
