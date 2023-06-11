@@ -6930,6 +6930,11 @@ Mods: {
 					Casts an icy snowflake
 					Hold down left click to increase the size of the snowflake
 					'''
+				Lore:
+					'''
+					'A staff made of Pure-Iron with a diamond gemstone.
+					It is cold to the touch, and can channel ice magic abnormally well.'
+					'''					
 			}
 
 			SoulScepter: {
@@ -6945,6 +6950,12 @@ Mods: {
 			Bindeklinge: {
 				DisplayName: Bindeklinge
 				Tooltip: Critical strikes release homing lightmass
+				Lore:
+					'''
+					'A broadsword once wielded by the leader of Lighthelm's forgotten Oracles of Rebirth.
+					This holy blade's slice is said to strip the light out of one's body, which would travel to corpses
+					and bring the slain's life into them. This was what the ancient world thought birthed undead.'
+					'''				
 			}
 
 			BladeOfTheMountain: {
@@ -7039,6 +7050,12 @@ Mods: {
 			ForgottenSword: {
 				DisplayName: Sword of the Forgotten
 				Tooltip: Spins the blade around the player and sets ablaze, flinging embers in its wake
+				Lore:
+					'''
+					'Found in the Demonhollow by a set of human explorers from Anglon. The weapon is crafted from bone and
+					a metal named \"Charred Iron\" by those whom discovered it, and was attributed to a fabled blacksmith named
+					Ophos due to its use of Firestorm magic. Yet the lack of many of his trademarks put doubt on that claim.'
+					'''				
 			}
 
 			Halbirdhouse: {
@@ -7112,6 +7129,11 @@ Mods: {
 					Deals more damage at the tip of the blade
 					'Parry this you filthy casual!'
 					'''
+				Lore:
+					'''
+					'A famous greatsword of Madmount. A lot of strength is needed to use such a grand weapon,
+					but for most Warriors of the Iron Realm this was a trivial issue.'
+					'''					
 			}
 
 			ChickenEgg: {
