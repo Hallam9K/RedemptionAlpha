@@ -3516,6 +3516,7 @@ Mods: {
 			MoonflareFragment: {
 				DisplayName: Moonflare Fragment
 				Tooltip: "'Shines in the moon's reflective light'"
+				NoMoon: There is no moonlight to reflect...
 			}
 
 			PureIronAlloy: {
