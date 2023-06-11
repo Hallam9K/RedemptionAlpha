@@ -74,11 +74,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
         {
             if (Main.keyState.PressingShift())
             {
-                TooltipLine line = new(Mod, "Lore",
-                    "'Once a normal greatsword wielded by a well-known warrior of the Iron Realm, her final battle being against\n" +
-                    "a great bear in the mountains. The bear was slain, but the warrior's injuries sealed her death shortly after.\n" +
-                    "The icy blood of the bear fused with the blade, chilling it with an enchanting glow.\n" +
-                    "The blade laid to rest besides it's owner, until another warrior discovered it many years later.'")
+                TooltipLine line = new(Mod, "Lore", Language.GetTextValue("Mods.Redemption.Items.BladeOfTheMountain.Lore"))
                 {
                     OverrideColor = Color.LightGray
                 };
@@ -86,7 +82,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
             }
             else
             {
-                TooltipLine line = new(Mod, "HoldShift", "Hold [Shift] to view lore")
+                TooltipLine line = new(Mod, "HoldShift", Language.GetTextValue("Mods.Redemption.SpecialTooltips.Viewer"))
                 {
                     OverrideColor = Color.Gray,
                 };
