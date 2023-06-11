@@ -1,6 +1,7 @@
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.ID;
+using Terraria.Localization;
 using System.Collections.Generic;
 using Redemption.Items.Materials.PreHM;
 using Microsoft.Xna.Framework;
@@ -47,10 +48,7 @@ namespace Redemption.Items.Armor.PreHM.DragonLead
         {
             if (Main.keyState.PressingShift())
             {
-                TooltipLine line = new(Mod, "Lore",
-                    "'Leg armour forged from melted dragon bone and metal, said to be used by the ancient warlords of Dragonrest.\n" +
-                    "The warlords were famous dragon slayers who used the bones of their victims for weaponry and armour,\n" +
-                    "nearly bringing the dragons to extinction. That was until every single one was wiped out by Goliathon, the Dragon God.'")
+                TooltipLine line = new(Mod, "Lore", Language.GetTextValue("Mods.Redemption.SpecialTooltips.DragonLead.DragonLeadGreaves"))
                 {
                     OverrideColor = Color.LightGray
                 };
@@ -58,7 +56,7 @@ namespace Redemption.Items.Armor.PreHM.DragonLead
             }
             else
             {
-                TooltipLine line = new(Mod, "HoldShift", "Hold [Shift] to view lore")
+                TooltipLine line = new(Mod, "HoldShift", Language.GetTextValue("Mods.Redemption.SpecialTooltips.Viewer"))
                 {
                     OverrideColor = Color.Gray,
                 };
