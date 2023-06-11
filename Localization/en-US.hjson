@@ -3480,6 +3480,8 @@ Mods: {
 			GolemEye: {
 				DisplayName: Eye of the Eaglecrest Golem
 				Tooltip: ""
+				Tip1: Contains a storm of energy, it would be best to keep it around
+				Tip2: Place down and encase the eye within the stones of its origins, and it's true power will present itself
 			}
 
 			GraveSteelAlloy: {
