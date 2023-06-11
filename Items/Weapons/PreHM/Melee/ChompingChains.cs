@@ -51,10 +51,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
         {
             if (Main.keyState.PressingShift())
             {
-                TooltipLine line = new(Mod, "Lore",
-                    "'A tool of torture used by a skeleton known as the Tormenter, infamous among the catacombs\n" +
-                    "of Gathuram's undead residents for his unforgiving command over his skeletal servants.\n" +
-                    "The Tormenter met an ironic end by his own weapon when his minions revolted against his control.'")
+                TooltipLine line = new(Mod, "Lore", Language.GetTextValue("Mods.Redemption.Items.ChompingChains.Lore"))
                 {
                     OverrideColor = Color.LightGray
                 };
@@ -62,7 +59,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
             }
             else
             {
-                TooltipLine line = new(Mod, "HoldShift", "Hold [Shift] to view lore")
+                TooltipLine line = new(Mod, "HoldShift", Language.GetTextValue("Mods.Redemption.SpecialTooltips.Viewer"))
                 {
                     OverrideColor = Color.Gray,
                 };
