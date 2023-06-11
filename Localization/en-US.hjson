@@ -6957,6 +6957,13 @@ Mods: {
 					Enemies with knockback immunity cannot be frozen
 					'Send them to their snowy grave'
 					'''
+				Lore:
+					'''
+					'Once a normal greatsword wielded by a well-known warrior of the Iron Realm, her final battle being against
+					a great bear in the mountains. The bear was slain, but the warrior's injuries sealed her death shortly after.
+					The icy blood of the bear fused with the blade, chilling it with an enchanting glow.
+					The blade laid to rest besides it's owner, until another warrior discovered it many years later.'
+					'''
 			}
 
 			ChompingChains: {
