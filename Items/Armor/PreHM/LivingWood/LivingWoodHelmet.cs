@@ -1,6 +1,7 @@
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.ID;
+using Terraria.Localization;
 using Microsoft.Xna.Framework;
 using System;
 using Redemption.Items.Materials.PreHM;
@@ -40,7 +41,7 @@ namespace Redemption.Items.Armor.PreHM.LivingWood
 
         public override void UpdateArmorSet(Player player)
         {
-            player.setBonus = "Immune to poison, increases your max number of minions";
+            player.setBonus = Language.GetTextValue("Mods.Redemption.GenericTooltips.ArmorSetBonus.LivingWood");
             player.buffImmune[BuffID.Poisoned] = true;
             player.maxMinions += 1;
             if (Main.rand.NextBool(25) && Math.Abs(player.velocity.X) + Math.Abs(player.velocity.Y) > 1f && !player.rocketFrame)
