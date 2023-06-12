@@ -10,6 +10,7 @@ using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Redemption.Buffs;
 using Redemption.Biomes;
@@ -805,7 +806,7 @@ namespace Redemption.Globals.Player
             if (infested && infestedTime >= 60)
             {
                 if (damage == 10.0 && hitDirection == 0 && damageSource.SourceOtherIndex == 8)
-                    damageSource = PlayerDeathReason.ByCustomReason(Player.name + " burst into larva!");
+                    damageSource = PlayerDeathReason.ByCustomReason(Player.name + Language.GetTextValue("Mods.Redemption.StatusMessage.Death.Infested");
 
                 SoundEngine.PlaySound(SoundID.NPCDeath19, Player.position);
                 for (int i = 0; i < 20; i++)
@@ -821,22 +822,22 @@ namespace Redemption.Globals.Player
                 }
             }
             if (dirtyWound && damage == 10.0 && hitDirection == 0 && damageSource.SourceOtherIndex == 8)
-                damageSource = PlayerDeathReason.ByCustomReason(Player.name + " had an infection");
+                damageSource = PlayerDeathReason.ByCustomReason(Player.name + Language.GetTextValue("Mods.Redemption.StatusMessage.Death.DirtyWound"));
 
             if (spiderSwarmed && damage == 10.0 && hitDirection == 0 && damageSource.SourceOtherIndex == 8)
-                damageSource = PlayerDeathReason.ByCustomReason(Player.name + " got nibbled to death");
+                damageSource = PlayerDeathReason.ByCustomReason(Player.name + Language.GetTextValue("Mods.Redemption.StatusMessage.Death.Swarmed"));
 
             if ((fleshCrystals || shockDebuff) && damage == 10.0 && hitDirection == 0 && damageSource.SourceOtherIndex == 8)
-                damageSource = PlayerDeathReason.ByCustomReason(Player.name + " was turned into a crystal");
+                damageSource = PlayerDeathReason.ByCustomReason(Player.name + Language.GetTextValue("Mods.Redemption.StatusMessage.Death.Xenomite"));
 
             if (Player.FindBuffIndex(ModContent.BuffType<RadiationDebuff>()) != -1 && damage == 10.0 && hitDirection == 0 && damageSource.SourceOtherIndex == 8)
-                damageSource = PlayerDeathReason.ByCustomReason(Player.name + " was irradiated");
+                damageSource = PlayerDeathReason.ByCustomReason(Player.name + Language.GetTextValue("Mods.Redemption.StatusMessage.Death.Radiation"));
 
             if (Player.FindBuffIndex(ModContent.BuffType<HolyFireDebuff>()) != -1 && damage == 10.0 && hitDirection == 0 && damageSource.SourceOtherIndex == 8)
-                damageSource = PlayerDeathReason.ByCustomReason(Player.name + " was too glorious");
+                damageSource = PlayerDeathReason.ByCustomReason(Player.name + Language.GetTextValue("Mods.Redemption.StatusMessage.Death.Incandesence"));
 
             if (Player.FindBuffIndex(ModContent.BuffType<EnsnaredDebuff>()) != -1 && damage == 10.0 && hitDirection == 0 && damageSource.SourceOtherIndex == 8)
-                damageSource = PlayerDeathReason.ByCustomReason(Player.name + " got consumed by the thorns");
+                damageSource = PlayerDeathReason.ByCustomReason(Player.name + Language.GetTextValue("Mods.Redemption.StatusMessage.Death.Ensnared"));
 
             return true;
         }
