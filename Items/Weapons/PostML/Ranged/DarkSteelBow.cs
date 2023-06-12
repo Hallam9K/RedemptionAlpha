@@ -1,6 +1,7 @@
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria;
+using Terraria.Localization;
 using Microsoft.Xna.Framework;
 using Redemption.Projectiles.Ranged;
 using System.Collections.Generic;
@@ -69,10 +70,7 @@ namespace Redemption.Items.Weapons.PostML.Ranged
         {
             if (Main.keyState.PressingShift())
             {
-                TooltipLine line = new(Mod, "Lore",
-                    "'This bow was forged by the legendary bowsmith Raiktu Shadeheart, and became the reward for a special competition\n" +
-                    "held in Arrgath - Erellon's Capital. The winner was Daerel Foremaul, who received this weapon after a close victory.\n" +
-                    "The bow is made from rosewood of Erellon's jungles and Dark-Steel, a metal scavenged from the remains of a terrible demon.'")
+                TooltipLine line = new(Mod, "HoldShift", Language.GetTextValue("Mods.Redemption.Items.DarkSteelBow.Lore"))
                 {
                     OverrideColor = Color.LightGray
                 };
@@ -80,7 +78,7 @@ namespace Redemption.Items.Weapons.PostML.Ranged
             }
             else
             {
-                TooltipLine line = new(Mod, "HoldShift", "Hold [Shift] to view lore")
+                TooltipLine line = new(Mod, "HoldShift", Language.GetTextValue("Mods.Redemption.SpecialTooltips.Viewer"))
                 {
                     OverrideColor = Color.Gray,
                 };
