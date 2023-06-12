@@ -53,9 +53,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
         {
             if (Main.keyState.PressingShift())
             {
-                TooltipLine line = new(Mod, "Lore",
-                    "'An ancient spear used in rituals to the great god Ukko in ancient Gathuram.\n" +
-                    "Charged with electric magic to signify Ukko, while the blade has dulled it still works as a fine weapon.'")
+                TooltipLine line = new(Mod, "Lore", Language.GetTextValue("Mods.Redemption.Items.EaglecrestJavelin.Lore"))
                 {
                     OverrideColor = Color.LightGray
                 };
@@ -63,7 +61,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
             }
             else
             {
-                TooltipLine line = new(Mod, "HoldShift", "Hold [Shift] to view lore")
+                TooltipLine line = new(Mod, "HoldShift", Language.GetTextValue("Mods.Redemption.SpecialTooltips.Viewer"))
                 {
                     OverrideColor = Color.Gray,
                 };
