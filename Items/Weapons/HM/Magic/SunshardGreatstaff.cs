@@ -2,6 +2,7 @@ using Terraria;
 using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.DataStructures;
 using System.Collections.Generic;
 using Redemption.Projectiles.Magic;
@@ -96,10 +97,7 @@ namespace Redemption.Items.Weapons.HM.Magic
         {
             if (Main.keyState.PressingShift())
             {
-                TooltipLine line = new(Mod, "Lore",
-                    "'A golden staff, protected by a monastery of clerics in Thamor.\n" +
-                    "Imbued with holy magic, it was primarily revered for its healing capabilities,\n" +
-                    "with numerous quantities of people pursuing its power to heal themselves or their loved ones.'")
+                TooltipLine line = new(Mod, "HoldShift", Language.GetTextValue("Mods.Redemption.Items.SunshardGreatstaff.Lore"))
                 {
                     OverrideColor = Color.LightGray
                 };
@@ -107,7 +105,7 @@ namespace Redemption.Items.Weapons.HM.Magic
             }
             else
             {
-                TooltipLine line = new(Mod, "HoldShift", "Hold [Shift] to view lore")
+                TooltipLine line = new(Mod, "HoldShift", Language.GetTextValue("Mods.Redemption.SpecialTooltips.Viewer"))
                 {
                     OverrideColor = Color.Gray,
                 };
