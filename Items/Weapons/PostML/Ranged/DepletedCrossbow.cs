@@ -4,6 +4,7 @@ using Redemption.Projectiles.Ranged;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 
 namespace Redemption.Items.Weapons.PostML.Ranged
@@ -57,8 +58,7 @@ namespace Redemption.Items.Weapons.PostML.Ranged
         {
             if (Main.keyState.PressingShift())
             {
-                TooltipLine line = new(Mod, "Lore",
-                    "\"Please remember to turn the safety on after testing. We don't need holes in our staff, the radiation is enough of a problem.\"")
+                TooltipLine line = new(Mod, "HoldShift", Language.GetTextValue("Mods.Redemption.Items.DepletedCrossbow.Lore"))
                 {
                     OverrideColor = Color.LightGray
                 };
@@ -66,7 +66,7 @@ namespace Redemption.Items.Weapons.PostML.Ranged
             }
             else
             {
-                TooltipLine line = new(Mod, "HoldShift", "There's a sticky note attached [Hold Shift to Read]")
+                TooltipLine line = new(Mod, "HoldShift", Language.GetTextValue("Mods.Redemption.Items.DepletedCrossbow.Viewer"))
                 {
                     OverrideColor = Color.Gray,
                 };
