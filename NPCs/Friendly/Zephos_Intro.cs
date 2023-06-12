@@ -1,5 +1,6 @@
 using Terraria;
 using Terraria.ID;
+using Terraria.Localization;
 using Microsoft.Xna.Framework;
 using Terraria.ModLoader;
 using Redemption.Globals;
@@ -75,7 +76,7 @@ namespace Redemption.NPCs.Friendly
                         }
                         if (!Main.dedServ)
                         {
-                            Dialogue d1 = new(NPC, "WAH!", Color.White, Color.Gray, voice, .01f, .5f, .5f, true, bubble: bubble); // 64
+                            Dialogue d1 = new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.ZephosIntro.1"), Color.White, Color.Gray, voice, .01f, .5f, .5f, true, bubble: bubble); // 64
 
                             ChatUI.Visible = true;
                             ChatUI.Add(d1);
@@ -110,7 +111,7 @@ namespace Redemption.NPCs.Friendly
                     {
                         EmoteBubble.NewBubble(1, new WorldUIAnchor(NPC), 120);
                         DialogueChain chain = new();
-                        chain.Add(new(NPC, "Jeez,[0.1] bad landing.", Color.White, Color.Gray, voice, .05f, 2, .5f, true, bubble: bubble, endID: 1)); // 187
+                        chain.Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.ZephosIntro.2"), Color.White, Color.Gray, voice, .05f, 2, .5f, true, bubble: bubble, endID: 1)); // 187
                         chain.OnEndTrigger += Chain_OnEndTrigger;
                         ChatUI.Visible = true;
                         ChatUI.Add(chain);
@@ -128,12 +129,12 @@ namespace Redemption.NPCs.Friendly
                     if (AITimer++ == 5 && !Main.dedServ)
                     {
                         DialogueChain chain = new();
-                        chain.Add(new(NPC, "Ey Daerel,[0.1] know where we are?", Color.White, Color.Gray, voice, .05f, 2f, 0, false, bubble: bubble)) // 197
-                             .Add(new(NPC, "[@a]Uh..[0.5] Daerel?", Color.White, Color.Gray, voice, .05f, 2f, 0, false, bubble: bubble)) // 166
-                             .Add(new(NPC, "[@b]Oh,[0.1] hey there![0.1] Didn't notice you.", Color.White, Color.Gray, voice, .05f, 2f, 0, false, bubble: bubble)) // 219
-                             .Add(new(NPC, "You haven't happened upon a boy cloaked in black,[0.1] have you?", Color.White, Color.Gray, voice, .05f, 2f, 0, false, bubble: bubble)) // 287
-                             .Add(new(NPC, "Guess he didn't jump in.[0.5] Oh well![0.1] I'll head back to get him.", Color.White, Color.Gray, voice, .05f, 2f, 0, false, bubble: bubble)) // 320
-                             .Add(new(NPC, "I'll come back once I find him,[0.1] so ya better have a place for us to stay!", Color.White, Color.Gray, voice, .05f, 2, .5f, true, bubble: bubble, endID: 1)); // 349
+                        chain.Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.ZephosIntro.3"), Color.White, Color.Gray, voice, .05f, 2f, 0, false, bubble: bubble)) // 197
+                             .Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.ZephosIntro.4"), Color.White, Color.Gray, voice, .05f, 2f, 0, false, bubble: bubble)) // 166
+                             .Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.ZephosIntro.5"), Color.White, Color.Gray, voice, .05f, 2f, 0, false, bubble: bubble)) // 219
+                             .Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.ZephosIntro.6"), Color.White, Color.Gray, voice, .05f, 2f, 0, false, bubble: bubble)) // 287
+                             .Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.ZephosIntro.7"), Color.White, Color.Gray, voice, .05f, 2f, 0, false, bubble: bubble)) // 320
+                             .Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.ZephosIntro.8"), Color.White, Color.Gray, voice, .05f, 2, .5f, true, bubble: bubble, endID: 1)); // 349
                         chain.OnSymbolTrigger += Chain_OnSymbolTrigger;
                         chain.OnEndTrigger += Chain_OnEndTrigger;
                         ChatUI.Visible = true;
