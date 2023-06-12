@@ -546,6 +546,17 @@ Mods: {
 				8: I'm going to need a place for me to stay if I come back,[0.1] so, see you soon I suppose.
 			}
 
+			ZephosIntro: {
+				1: WAH!
+				2: Jeez,[0.1] bad landing.
+				3: Ey Daerel,[0.1] know where we are?
+				4: "[@a]Uh..[0.5] Daerel?"
+				5: "[@b]Oh,[0.1] hey there![0.1] Didn't notice you."
+				6: You haven't happened upon a boy cloaked in black,[0.1] have you?
+				7: Guess he didn't jump in.[0.5] Oh well![0.1] I'll head back to get him.
+				8: I'll come back once I find him,[0.1] so ya better have a place for us to stay!
+			}
+
 			TBotIntro: {
 				Normal1: AH!
 				Normal2: ...I-[0.1]I thought you were someone else.[0.5] Sorry about that.
