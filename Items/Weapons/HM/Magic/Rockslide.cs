@@ -4,6 +4,7 @@ using Redemption.Projectiles.Magic;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 
 namespace Redemption.Items.Weapons.HM.Magic
@@ -46,11 +47,7 @@ namespace Redemption.Items.Weapons.HM.Magic
         {
             if (Main.keyState.PressingShift())
             {
-                TooltipLine line = new(Mod, "Lore",
-                    "'An ancient relic owned by King Tenebris. The texts contained within this tome were said\n" +
-                    "to hold the knowledge necessary to master psychic magic.\n\n" +
-                    "King Tenebris reigns over Erellon within the capital of Arrgath, a province protected by\n" +
-                    "lands of plentiful life and barren death. It is said his knowledge of the ancient times is truly boundless.'")
+                TooltipLine line = new(Mod, "HoldShift", Language.GetTextValue("Mods.Redemption.Items.Rockslide.Lore"))
                 {
                     OverrideColor = Color.LightGray
                 };
@@ -58,7 +55,7 @@ namespace Redemption.Items.Weapons.HM.Magic
             }
             else
             {
-                TooltipLine line = new(Mod, "HoldShift", "Hold [Shift] to view lore")
+                TooltipLine line = new(Mod, "HoldShift", Language.GetTextValue("Mods.Redemption.SpecialTooltips.Viewer"))
                 {
                     OverrideColor = Color.Gray,
                 };
