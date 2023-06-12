@@ -1,5 +1,6 @@
 using Terraria;
 using Terraria.ID;
+using Terraria.Localization;
 using Microsoft.Xna.Framework;
 using Terraria.ModLoader;
 using Redemption.Globals;
@@ -102,8 +103,8 @@ namespace Redemption.NPCs.Friendly
                         if (AITimer++ == 18 && !Main.dedServ)
                         {
                             DialogueChain chain = new();
-                            chain.Add(new(NPC, "HUH?", Color.LightGreen, Color.DarkGreen, null, .05f, 2, 0, false)) // 112
-                                 .Add(new(NPC, "How-[0.1] Wh-[0.1] I-", Color.LightGreen, Color.DarkGreen, null, .05f, 2, .5f, boxFade: true, endID: 1)); // 183
+                            chain.Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.TBotIntro.Robot1"), Color.LightGreen, Color.DarkGreen, null, .05f, 2, 0, false)) // 112
+                                 .Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.TBotIntro.Robot2"), Color.LightGreen, Color.DarkGreen, null, .05f, 2, .5f, boxFade: true, endID: 1)); // 183
                             chain.OnEndTrigger += Chain_OnEndTrigger;
                             ChatUI.Visible = true;
                             ChatUI.Add(chain);
@@ -120,8 +121,8 @@ namespace Redemption.NPCs.Friendly
                         if (AITimer++ == 18 && !Main.dedServ)
                         {
                             DialogueChain chain = new();
-                            chain.Add(new(NPC, "AH!", Color.LightGreen, Color.DarkGreen, null, .05f, 2, 0, false)) // 109
-                                 .Add(new(NPC, "...I-[0.1]I thought you were someone else.[0.5] Sorry about that.", Color.LightGreen, Color.DarkGreen, null, .05f, 2, .5f, boxFade: true, endID: 1)); // 335
+                            chain.Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.TBotIntro.Normal1"), Color.LightGreen, Color.DarkGreen, null, .05f, 2, 0, false)) // 109
+                                 .Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.TBotIntro.Normal2"), Color.LightGreen, Color.DarkGreen, null, .05f, 2, .5f, boxFade: true, endID: 1)); // 335
                             chain.OnEndTrigger += Chain_OnEndTrigger;
                             ChatUI.Visible = true;
                             ChatUI.Add(chain);
@@ -142,9 +143,9 @@ namespace Redemption.NPCs.Friendly
                         if (AITimer++ == 5 && !Main.dedServ)
                         {
                             DialogueChain chain = new();
-                            chain.Add(new(NPC, "*Sigh*[0.1] I wasn't expecting to see the likes of us here.", Color.LightGreen, Color.DarkGreen, null, .05f, 2, 0, false)) // 272
-                                 .Add(new(NPC, "Not going back there now.[0.5] Since you're here and not there,[0.1] I can safely assume you're not with Her..?", Color.LightGreen, Color.DarkGreen, null, .05f, 2, .5f, boxFade: true)) // 473
-                                 .Add(new(NPC, "[@a]...Alright.[0.5] We can safely ignore each other then.", Color.LightGreen, Color.DarkGreen, null, .05f, 2, .5f, boxFade: true, endID: 1)); // 307
+                            chain.Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.TBotIntro.Robot3"), Color.LightGreen, Color.DarkGreen, null, .05f, 2, 0, false)) // 272
+                                 .Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.TBotIntro.Robot4"), Color.LightGreen, Color.DarkGreen, null, .05f, 2, .5f, boxFade: true)) // 473
+                                 .Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.TBotIntro.Robot5"), Color.LightGreen, Color.DarkGreen, null, .05f, 2, .5f, boxFade: true, endID: 1)); // 307
                             chain.OnSymbolTrigger += Chain_OnSymbolTrigger;
                             chain.OnEndTrigger += Chain_OnEndTrigger;
                             ChatUI.Visible = true;
@@ -155,7 +156,7 @@ namespace Redemption.NPCs.Friendly
                         if (AITimer >= 3000)
                         {
                             NPC.SetDefaults(ModContent.NPCType<TBot>());
-                            NPC.GivenName = "Adam";
+                            NPC.GivenName = Language.GetTextValue("Mods.Redemption.NPCs.TBot_Intro.DisplayName");
                             NPC.netUpdate = true;
                         }
                     }
@@ -166,8 +167,8 @@ namespace Redemption.NPCs.Friendly
                         if (AITimer++ == 5 && !Main.dedServ)
                         {
                             DialogueChain chain = new();
-                            chain.Add(new(NPC, "Anyways,[0.1] hello.[0.5] I'm Adam,[0.1] and I'm an Android originating from a faraway snowy wasteland.", Color.LightGreen, Color.DarkGreen, null, .05f, 2, 0, false)) // 414
-                                 .Add(new(NPC, "[@b]Seeing as I won't be returning to that frozen hell for a good while,[0.1] mind if I stay here?[0.5] I assume you've some shelter to stay at.", Color.LightGreen, Color.DarkGreen, null, .05f, 2, .5f, boxFade: true, endID: 1)); // 560
+                            chain.Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.TBotIntro.Normal3"), Color.LightGreen, Color.DarkGreen, null, .05f, 2, 0, false)) // 414
+                                 .Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.TBotIntro.Normal4"), Color.LightGreen, Color.DarkGreen, null, .05f, 2, .5f, boxFade: true, endID: 1)); // 560
                             chain.OnSymbolTrigger += Chain_OnSymbolTrigger;
                             chain.OnEndTrigger += Chain_OnEndTrigger;
                             ChatUI.Visible = true;
@@ -175,7 +176,7 @@ namespace Redemption.NPCs.Friendly
                         }
                         if (AITimer == 3000 && !Main.dedServ)
                         {
-                            Dialogue d4 = new(NPC, "...The resemblance between them is uncanny...", Color.LightGreen, Color.DarkGreen, null, .05f, 2, .5f, boxFade: true); // 265
+                            Dialogue d4 = new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.TBotIntro.Normal5"), Color.LightGreen, Color.DarkGreen, null, .05f, 2, .5f, boxFade: true); // 265
 
                             EmoteBubble.NewBubble(10, new WorldUIAnchor(NPC), 265);
                             NPC.spriteDirection = -NPC.spriteDirection;
@@ -185,7 +186,7 @@ namespace Redemption.NPCs.Friendly
                         if (AITimer >= 3265)
                         {
                             NPC.SetDefaults(ModContent.NPCType<TBot>());
-                            NPC.GivenName = "Adam";
+                            NPC.GivenName = Language.GetTextValue("Mods.Redemption.NPCs.TBot_Intro.DisplayName");
                             NPC.netUpdate = true;
                         }
                     }
