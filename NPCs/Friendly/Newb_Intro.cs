@@ -1,5 +1,6 @@
 using Terraria;
 using Terraria.ID;
+using Terraria.Localization;
 using Microsoft.Xna.Framework;
 using Terraria.ModLoader;
 using Redemption.Globals;
@@ -80,7 +81,7 @@ namespace Redemption.NPCs.Friendly
                     if (AITimer++ == 30 && !Main.dedServ)
                     {
                         DialogueChain chain = new();
-                        chain.Add(new(NPC, "What do you think, Jo-", Color.White, Color.Gray, voice1, .05f, .5f, 2f, true, bubble: bubble, endID: 1)); // 187
+                        chain.Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.NewbIntro.1"), Color.White, Color.Gray, voice1, .05f, .5f, 2f, true, bubble: bubble, endID: 1)); // 187
                         chain.OnEndTrigger += Chain_OnEndTrigger;
                         ChatUI.Visible = true;
                         ChatUI.Add(chain);
@@ -97,9 +98,9 @@ namespace Redemption.NPCs.Friendly
                     {
                         EmoteBubble.NewBubble(87, new WorldUIAnchor(NPC), 120);
                         DialogueChain chain = new();
-                        chain.Add(new(NPC, "Who you?!", Color.White, Color.Gray, voice2, .05f, 2f, 0, false, bubble: bubble)) // 166
-                             .Add(new(NPC, "Where am I?", Color.White, Color.Gray, voice2, .05f, 2f, 0, false, bubble: bubble)) // 166
-                             .Add(new(NPC, "Heyo, I'm Newb![1] Want to be friends?", Color.White, Color.Gray, voice2, .05f, 2f, .5f, true, bubble: bubble, endID: 1)); // 196
+                        chain.Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.NewbIntro.2"), Color.White, Color.Gray, voice2, .05f, 2f, 0, false, bubble: bubble)) // 166
+                             .Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.NewbIntro.3"), Color.White, Color.Gray, voice2, .05f, 2f, 0, false, bubble: bubble)) // 166
+                             .Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.NewbIntro.4"), Color.White, Color.Gray, voice2, .05f, 2f, .5f, true, bubble: bubble, endID: 1)); // 196
                         chain.OnEndTrigger += Chain_OnEndTrigger;
                         ChatUI.Visible = true;
                         ChatUI.Add(chain);
@@ -110,7 +111,7 @@ namespace Redemption.NPCs.Friendly
                     if (AITimer >= 2000)
                     {
                         NPC.SetDefaults(ModContent.NPCType<Newb>());
-                        NPC.GivenName = "Newb";
+                        NPC.GivenName = Language.GetTextValue("Mods.Redemption.NPCs.Newb_Intro.DisplayName");
                         NPC.netUpdate = true;
                     }
                     break;
