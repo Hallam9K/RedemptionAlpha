@@ -6258,7 +6258,7 @@ Mods: {
 				DisplayName: Cyber Chakram
 				Tooltip: ""
 			}
-
+			
 			ForgottenGreatsword: {
 				DisplayName: Ophos' Forgotten Greatsword
 				Tooltip:
@@ -6266,6 +6266,12 @@ Mods: {
 					Spins the blade around the player and sets ablaze
 					Forms a firestorm that engulfs the player, dealing {0} damage
 					Release left-click to disperse it, launching nearby enemies away
+					'''
+				Lore:
+					'''
+					'A silver sword with a steel handle, forged by Ophos, a fabled blacksmith from what is now Hye Anglon.
+					Said to be proficient in Firestorm magic, he would mark his works with a gem that imbued his weapons with his magical power.
+					This weapon in particular uses a traditional design of the Territory of Northhill.'
 					'''
 			}
 
@@ -6304,6 +6310,12 @@ Mods: {
 					Nebula Stars slowly chase targets while spewing nebula sparks
 					Can't create nebula stars while at least 4 are already active
 					'''
+				Lore:
+					'''
+					'A blade crafted in the mountains of Erellon, imbued with celestial magic by an unknown source.
+					It was used by a rebel to assassinate the heir of Erellon. Afterwards the assassin was soon caught,
+					and the weapon was held in a museum'
+					'''
 			}
 
 			OversizedScrewdriver: {
@@ -6338,6 +6350,11 @@ Mods: {
 					'''
 					Slashes emit {0} waves
 					Holding left-click will do a 3-swing combo, ending with Spellsong shooting a beam that conjures mirages of itself
+					'''
+				Lore:
+					'''
+					'A sword from Anglic myth, said to come from the far western lands beyond the Ravencrag mountains.
+					It is just a replica, but the original was supposedly wielded by a man from the west, who vanquished many great evils with it.'
 					'''
 			}
 
@@ -6378,6 +6395,12 @@ Mods: {
 					Slaying enemies has a chance to summon Cursed Samurai in their place
 					Cursed Samurai will act as temporary minions to aid you
 					Deals more damage to ghostly enemies
+					'''
+				Lore:
+					'''
+					'An old sword found in a mansion of Northern Ithon. Said to be possessed by its creator's spirit.
+					It is told that a man had once bought the blade, driving him to madness while in his possession,
+					and ending with him slaughtering his family.'
 					'''
 			}
 
@@ -6633,6 +6656,19 @@ Mods: {
 			Hacksaw: {
 				DisplayName: Automated Hacksaw
 				Tooltip: Right-click to change attack modes
+				Mode1: Attack Mode 1
+				Mode2: Attack Mode 2
+				Mode3: Attack Mode 3
+				AttackMode1: Attack Mode 1: Swings the hacksaw in a circle around the user
+
+				AttackMode2: {
+					1: "Attack Mode 2: Revves up the blade, causing it to overheat and firing a powerful heat blast which deals "
+					2: " damage"
+				}
+
+				AttackMode3: Attack Mode 3: Acts like a normal chainsaw, doing increasing damage over the time spent damaging a target
+				Lore: '''"Alright, who's dumb enough to confuse a chainsaw and a hacksaw, seriously guys"'''
+				Viewer: There's a sticky note attached [Hold Shift to Read]
 			}
 
 			MythrilsBane: {
@@ -6642,6 +6678,11 @@ Mods: {
 					Hitting armed enemies with the blade inflicts Disarmed and Broken Armor
 					Disarmed heavily decreases contact damage and their weapon damage
 					Blocks weak physical projectiles
+					'''
+				Lore:
+					'''
+					'The mighty blade of Zephos, recieved during his time in Arrgath - Capital of Erellon.
+					Similarly to his previous weapon, this sword has a slit for catching opponent's blades and snapping them.'
 					'''
 			}
 
@@ -6672,11 +6713,31 @@ Mods: {
 					Release left-click to shrink it back down, overcharging will cause it to explode and set the player on fire
 					'The power of the sun, in the palm of my hand'
 					'''
+				Lore:
+					'''
+					"Utilizing the same, revolutionary heat-sink technology Obliterator's super heatray uses,
+					but instead of being buried in your chest, it's in your palm! It's just that simple!!
+
+					Caution: Girus is not responsible for irresponsible and/or dangerous use of the Sun-In-Palm product.
+					Please hold the Sun-In-Palm product far away from yourself while in use."
+					'''
+				Viewer: There's a label attached [Hold Shift to Read]
 			}
 
 			Ukonvasara: {
 				DisplayName: Ukonvasara
 				Tooltip: Right-click to change attack modes
+				Mode1: Sword Mode
+				Mode2: Hammer Mode
+				Mode3: Axe Mode
+				SwordMode: Swing Mode : Does a three combo slash before being thrown
+				HammerMode: Hammer Mode : Launches the player at cursor point, leaves an electric trail behind and strikes enemies hit by the weapon with lighting
+				AxeMode: Axe Mode : While airborne, the axe will launch the player onto the ground, striking that location with lighting
+				Lore:
+					'''
+					'The hammer of Ukko, crafted by his ancestors and refined by him. Upon his human death,
+					the hammer was laid atop his grave as is custom in local tradition. It is a great conductor of Thunder magic.'
+					'''				
 			}
 
 			XeniumLance: {
