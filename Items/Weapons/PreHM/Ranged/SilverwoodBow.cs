@@ -1,6 +1,7 @@
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria;
+using Terraria.Localization;
 using Microsoft.Xna.Framework;
 using Redemption.Projectiles.Ranged;
 using System.Collections.Generic;
@@ -61,9 +62,7 @@ namespace Redemption.Items.Weapons.PreHM.Ranged
         {
             if (Main.keyState.PressingShift())
             {
-                TooltipLine line = new(Mod, "Lore",
-                    "'Given to Daerel by Syllessa, a half-Forest Nymph, during training. The wood is beyond ancient,\n" +
-                    "and the string is made from a golden flexible thread. It is capable of shooting arrows at high velocities.'")
+                TooltipLine line = new(Mod, "HoldShift", Language.GetTextValue("Mods.Redemption.Items.SilverwoodBow.Lore"))
                 {
                     OverrideColor = Color.LightGray
                 };
@@ -71,7 +70,7 @@ namespace Redemption.Items.Weapons.PreHM.Ranged
             }
             else
             {
-                TooltipLine line = new(Mod, "HoldShift", "Hold [Shift] to view lore")
+                TooltipLine line = new(Mod, "HoldShift", Language.GetTextValue("Mods.Redemption.SpecialTooltips.Viewer"))
                 {
                     OverrideColor = Color.Gray,
                 };
