@@ -2490,7 +2490,6 @@ Mods: {
 					10% increased {0} elemental damage and resistance
 					+20 max mana
 					'''
-				ArcaneS: Mods.Redemption.Items.TrappedSoulBauble.ArcaneS
 			}
 
 			AlignmentChanger: {
@@ -4900,11 +4899,6 @@ Mods: {
 					4x10
 					[c/ff0000:Unbreakable (1000% Pickaxe Power)]
 					'''
-			}
-
-			ShadestonePillar: {
-				DisplayName: 셰이드스톤 기둥
-				Tooltip: ""
 			}
 
 			ShadestonePlatform: {
