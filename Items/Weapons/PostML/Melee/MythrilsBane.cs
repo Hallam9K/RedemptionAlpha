@@ -57,9 +57,7 @@ namespace Redemption.Items.Weapons.PostML.Melee
         {
             if (Main.keyState.PressingShift())
             {
-                TooltipLine line = new(Mod, "Lore",
-                    "'The mighty blade of Zephos, recieved during his time in Arrgath - Capital of Erellon.\n" +
-                    "Similarly to his previous weapon, this sword has a slit for catching opponent's blades and snapping them.'")
+                TooltipLine line = new(Mod, "Lore", Language.GetTextValue("Mods.Redemption.Items.MythrilsBane.Lore"))
                 {
                     OverrideColor = Color.LightGray
                 };
@@ -67,7 +65,7 @@ namespace Redemption.Items.Weapons.PostML.Melee
             }
             else
             {
-                TooltipLine line = new(Mod, "HoldShift", "Hold [Shift] to view lore")
+                TooltipLine line = new(Mod, "HoldShift", Language.GetTextValue("Mods.Redemption.SpecialTooltips.Viewer"))
                 {
                     OverrideColor = Color.Gray,
                 };
