@@ -66,9 +66,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
         {
             if (Main.keyState.PressingShift())
             {
-                TooltipLine line = new(Mod, "Lore",
-                    "'A cleaver cast in melted dragon bone and metal, said to be used by the ancient warlords of Dragonrest.\n" +
-                    "This weapon is a great catalyst for fire magic, shooting out a wave of burning heat by channelling a swing.'")
+                TooltipLine line = new(Mod, "Lore", Language.GetTextValue("Mods.Redemption.Items.DragonCleaver.Lore"))
                 {
                     OverrideColor = Color.LightGray
                 };
@@ -76,7 +74,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
             }
             else
             {
-                TooltipLine line = new(Mod, "HoldShift", "Hold [Shift] to view lore")
+                TooltipLine line = new(Mod, "HoldShift", Language.GetTextValue("Mods.Redemption.SpecialTooltips.Viewer"))
                 {
                     OverrideColor = Color.Gray,
                 };
