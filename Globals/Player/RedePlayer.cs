@@ -20,6 +20,7 @@ using SubworldLibrary;
 using Redemption.WorldGeneration.Misc;
 using Redemption.Items.Weapons.HM.Magic;
 using Terraria.Audio;
+using Terraria.Localization;
 
 namespace Redemption.Globals.Player
 {
@@ -122,12 +123,12 @@ namespace Redemption.Globals.Player
             if (SubworldSystem.Current != null)
                 return;
             if (RedeGen.GoldenGatewayVector.X == -1 || RedeGen.BastionVector.X == -1 || RedeGen.gathicPortalVector.X == -1 || RedeGen.HallOfHeroesVector.X == -1 || RedeGen.slayerShipVector.X == -1)
-                Main.NewText("WARNING: Unable to locate a certain structure, new world is recommended!", Colors.RarityRed);
+                Main.NewText(Language.GetTextValue("Mods.Redemption.StatusMessage.Other.Warning1"), Colors.RarityRed);
             if (RedeGen.LabVector.X == -1 || RedeGen.newbCaveVector.X == -1)
-                Main.NewText("WARNING: Unable to locate important structure, new world is required!", Colors.RarityRed);
+                Main.NewText(Language.GetTextValue("Mods.Redemption.StatusMessage.Other.Warning2"), Colors.RarityRed);
 
             if (RedeConfigClient.Instance.FunniAllWasteland || RedeConfigClient.Instance.FunniJanitor || RedeConfigClient.Instance.FunniSpiders || RedeConfigClient.Instance.FunniWasteland)
-                Main.NewText("CAUTION: You have a Funni config enabled that affects world gen. If you created a world just now, check which one you have enabled and disable it for next time.", Colors.RarityOrange);
+                Main.NewText(Language.GetTextValue("Mods.Redemption.StatusMessage.Other.Caution"), Colors.RarityOrange);
         }
         public override void ModifyMaxStats(out StatModifier health, out StatModifier mana)
         {
