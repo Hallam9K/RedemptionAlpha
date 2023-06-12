@@ -1,6 +1,7 @@
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.ID;
+using Terraria.Localization;
 using Microsoft.Xna.Framework;
 using Terraria.DataStructures;
 using System.Collections.Generic;
@@ -56,9 +57,9 @@ namespace Redemption.Items.Weapons.PostML.Magic
                 AttackMode = !AttackMode;
 
                 if (!AttackMode)
-                    CombatText.NewText(player.getRect(), Color.LightCyan, "Multi-target", true, true);
+                    CombatText.NewText(player.getRect(), Color.LightCyan, Language.GetTextValue("Mods.Redemption.Items.TeslaCoil.Multi"), true, true);
                 else
-                    CombatText.NewText(player.getRect(), Color.LightCyan, "Single Target", true, true);
+                    CombatText.NewText(player.getRect(), Color.LightCyan, Language.GetTextValue("Mods.Redemption.Items.TeslaCoil.Single"), true, true);
             }
             else
             {
@@ -73,9 +74,9 @@ namespace Redemption.Items.Weapons.PostML.Magic
         {
             string shotType;
             if (!AttackMode)
-                shotType = "Multi-target";
+                shotType = Language.GetTextValue("Mods.Redemption.Items.TeslaCoil.Multi");
             else
-                shotType = "Single Target";
+                shotType = Language.GetTextValue("Mods.Redemption.Items.TeslaCoil.Single");
             TooltipLine line = new(Mod, "ShotName", shotType)
             {
                 OverrideColor = Color.LightCyan,
