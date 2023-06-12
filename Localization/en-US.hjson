@@ -1989,7 +1989,6 @@ Mods: {
 					10% increased {0} elemental damage and resistance
 					+20 max mana
 					'''
-				ArcaneS: Mods.Redemption.Items.TrappedSoulBauble.ArcaneS
 			}
 
 			AlignmentChanger: {
