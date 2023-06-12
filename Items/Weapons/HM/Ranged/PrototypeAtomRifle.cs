@@ -6,6 +6,7 @@ using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.Localization;
 using Redemption.BaseExtension;
 using Redemption.Globals.Player;
 using Redemption.Globals;
@@ -69,10 +70,7 @@ namespace Redemption.Items.Weapons.HM.Ranged
         {
             if (Main.keyState.PressingShift())
             {
-                TooltipLine line = new(Mod, "Lore",
-                    "'A Teochrome experimental weapon, it was created after a board meeting, in which military contractors wanted a\n" +
-                    "nuclear powered sniper rifle for seemingly little reason, it miraculously had a functioning prototype\n" +
-                    "created, and the death toll from radiation exposure has been surprisingly miniscule.'")
+                TooltipLine line = new(Mod, "HoldShift", Language.GetTextValue("Mods.Redemption.Items.PrototypeAtomRifle.Lore"))
                 {
                     OverrideColor = Color.LightGray
                 };
@@ -80,7 +78,7 @@ namespace Redemption.Items.Weapons.HM.Ranged
             }
             else
             {
-                TooltipLine line = new(Mod, "HoldShift", "Hold [Shift] to view lore")
+                TooltipLine line = new(Mod, "HoldShift", Language.GetTextValue("Mods.Redemption.SpecialTooltips.Viewer"))
                 {
                     OverrideColor = Color.Gray,
                 };
