@@ -20,29 +20,43 @@ Mods: {
 				LabAccessPanelUsed4: Omicron laser security already deactivated
 				LabAccessPanelUsed5: Vault laser security already deactivated
 				LabAccessPanelUsed6: Laser security already deactivated
-				Fool: The Fool has left...
+				OmegaCall: A new Omega Prototype can be called using the Omega Transmitter
+				FoolLeft: The Fool has left...
 			}
 
 			Death: {
-				Infested: <PlayerName> burst into larva!
-				DirtyWound: <PlayerName> had an infection
-				Swarmed: <PlayerName> got nibbled to death
-				Xenomite: <PlayerName> was turned into a crystal
-				Radiation: <PlayerName> was irradiated
-				Incandesence: <PlayerName> was too glorious
-				Ensnared: <PlayerName> got consumed by the thorns
-				Nuclear1: <PlayerName> saw a second sunrise
-				Nuclear2: <PlayerName> was wiped off the face of <world name>
-				Nuclear3: <PlayerName> experienced doomsday
-				Nuclear4: <PlayerName> became a shadow on the ground
-				Nuclear5: <PlayerName> went out with a bang
-				Nuclear6: <PlayerName> couldn't find the fridge in time
-				DoorStuck: <PlayerName> experienced DOOR STUCK.
+				Infested: " burst into larva!"
+				DirtyWound: " had an infection"
+				Swarmed: " got nibbled to death"
+				Xenomite: " was turned into a crystal"
+				Radiation: " was irradiated"
+				Incandesence: " was too glorious"
+				Ensnared: " got consumed by the thorns"
+				Nuclear1: " saw a second sunrise"
+				Nuclear2: " was wiped off the face of "
+				Nuclear3: " experienced doomsday"
+				Nuclear4: " became a shadow on the ground"
+				Nuclear5: " went out with a bang"
+				Nuclear6: " couldn't find the fridge in time"
+				DoorStuck: " experienced DOOR STUCK."
+			}
+
+			Event:{
+				ChickRetreat: The chickens retreat!
+				SkeletonParty1: The skeletons are plotting a party at dusk...
+				SkeletonParty2: The skeletons are partying!
+				SkeletonParty3: The skeletons reconsidered partying tonight...
+				SkeletonParty4: The skeletons got bored and went home!
+				Again: " Again."
 			}
 
 			Other: {
-				Keeper1: The Keeper noticed the abandoned teddy you're holding...
-				Keeper2: The Keeper's spirit fades away... ?
+				Warning1: "WARNING: Unable to locate a certain structure, new world is recommended!"
+				Warning2: "WARNING: Unable to locate important structure, new world is required!"
+				Caution: "CAUTION: You have a Funni config enabled that affects world gen. If you created a world just now, check which one you have enabled and disable it for next time."
+				Keeper1: Shrieks echo through the night...
+				Keeper2: The Keeper noticed the abandoned teddy you're holding...
+				Keeper3: The Keeper's spirit fades away... ?
 				GolemSpawn: A sleeping stone appears...
 				NebGone: Nebuleus is nowhere to be seen...
 			}
