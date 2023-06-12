@@ -62,10 +62,7 @@ namespace Redemption.Items.Weapons.HM.Melee
         {
             if (Main.keyState.PressingShift())
             {
-                TooltipLine line = new(Mod, "Lore",
-                    "'An old sword found in a mansion of Northern Ithon. Said to be possessed by its creator's spirit.\n" +
-                    "It is told that a man had once bought the blade, driving him to madness while in his possession,\n" +
-                    "and ending with him slaughtering his family.'")
+                TooltipLine line = new(Mod, "Lore", Language.GetTextValue("Mods.Redemption.Items.WraithSlayer.Lore"))
                 {
                     OverrideColor = Color.LightGray
                 };
@@ -73,7 +70,7 @@ namespace Redemption.Items.Weapons.HM.Melee
             }
             else
             {
-                TooltipLine line = new(Mod, "HoldShift", "Hold [Shift] to view lore")
+                TooltipLine line = new(Mod, "HoldShift", Language.GetTextValue("Mods.Redemption.SpecialTooltips.Viewer"))
                 {
                     OverrideColor = Color.Gray,
                 };
