@@ -2,49 +2,49 @@ Mods: {
 	Redemption: {
 		Currencies.AntiqueDorulCurrency: antique doruls
 
-		StatusMessage:{
-			Progression:{
-				ThornDowned: "The forest flora blooms..."
-				GoodSkeletron: "Crystals form in the icy caverns..."
-				BadSkeletron: "The caverns are heated with dragon bone..."
-				LabOpen: "The laboratory's defense systems have malfunctioned..."
-				LabAccessPanel1: "Alpha sector laser security has been deactivated"
-				LabAccessPanel2: "Gamma sector laser security has been deactivated"
-				LabAccessPanel3: "Sigma sector laser security has been deactivated"
-				LabAccessPanel4: "Omicron sector laser security has been deactivated"
-				LabAccessPanel5: "Vault laser security has been deactivated"
-				LabAccessPanel6: "All laser security has been deactivated"
-				LabAccessPanelUsed1: "Alpha laser security already deactivated"
-				LabAccessPanelUsed2: "Gamma laser security already deactivated"
-				LabAccessPanelUsed3: "Sigma laser security already deactivated"
-				LabAccessPanelUsed4: "Omicron laser security already deactivated"
-				LabAccessPanelUsed5: "Vault laser security already deactivated"
-				LabAccessPanelUsed6: "Laser security already deactivated"
-				Fool: "The Fool has left..."
+		StatusMessage: {
+			Progression: {
+				ThornDowned: The forest flora blooms...
+				GoodSkeletron: Crystals form in the icy caverns...
+				BadSkeletron: The caverns are heated with dragon bone...
+				LabOpen: The laboratory's defense systems have malfunctioned...
+				LabAccessPanel1: Alpha sector laser security has been deactivated
+				LabAccessPanel2: Gamma sector laser security has been deactivated
+				LabAccessPanel3: Sigma sector laser security has been deactivated
+				LabAccessPanel4: Omicron sector laser security has been deactivated
+				LabAccessPanel5: Vault laser security has been deactivated
+				LabAccessPanel6: All laser security has been deactivated
+				LabAccessPanelUsed1: Alpha laser security already deactivated
+				LabAccessPanelUsed2: Gamma laser security already deactivated
+				LabAccessPanelUsed3: Sigma laser security already deactivated
+				LabAccessPanelUsed4: Omicron laser security already deactivated
+				LabAccessPanelUsed5: Vault laser security already deactivated
+				LabAccessPanelUsed6: Laser security already deactivated
+				Fool: The Fool has left...
 			}
 
-			Death:{
-				Infested: "<PlayerName> burst into larva!"
-				DirtyWound: "<PlayerName> had an infection"
-				Swarmed: "<PlayerName> got nibbled to death"
-				Xenomite: "<PlayerName> was turned into a crystal"
-				Radiation: "<PlayerName> was irradiated"
-				Incandesence: "<PlayerName> was too glorious"
-				Ensnared: "<PlayerName> got consumed by the thorns"
-				Nuclear1: "<PlayerName> saw a second sunrise"
-				Nuclear2: "<PlayerName> was wiped off the face of <world name>"	
-				Nuclear3: "<PlayerName> experienced doomsday"
-				Nuclear4: "<PlayerName> became a shadow on the ground"
-				Nuclear5: "<PlayerName> went out with a bang"
-				Nuclear6: "<PlayerName> couldn't find the fridge in time"
-				DoorStuck: "<PlayerName> experienced DOOR STUCK."
+			Death: {
+				Infested: <PlayerName> burst into larva!
+				DirtyWound: <PlayerName> had an infection
+				Swarmed: <PlayerName> got nibbled to death
+				Xenomite: <PlayerName> was turned into a crystal
+				Radiation: <PlayerName> was irradiated
+				Incandesence: <PlayerName> was too glorious
+				Ensnared: <PlayerName> got consumed by the thorns
+				Nuclear1: <PlayerName> saw a second sunrise
+				Nuclear2: <PlayerName> was wiped off the face of <world name>
+				Nuclear3: <PlayerName> experienced doomsday
+				Nuclear4: <PlayerName> became a shadow on the ground
+				Nuclear5: <PlayerName> went out with a bang
+				Nuclear6: <PlayerName> couldn't find the fridge in time
+				DoorStuck: <PlayerName> experienced DOOR STUCK.
 			}
 
-			Other:{
-				Keeper1: "The Keeper noticed the abandoned teddy you're holding..."
-				Keeper2: "The Keeper's spirit fades away... ?"
-				GolemSpawn: "A sleeping stone appears..."
-				NebGone: "Nebuleus is nowhere to be seen..."
+			Other: {
+				Keeper1: The Keeper noticed the abandoned teddy you're holding...
+				Keeper2: The Keeper's spirit fades away... ?
+				GolemSpawn: A sleeping stone appears...
+				NebGone: Nebuleus is nowhere to be seen...
 			}
 		}
 
@@ -265,6 +265,251 @@ Mods: {
 					The warlords were famous dragon slayers who used the bones of their victims for weaponry and armour,
 					nearly bringing the dragons to extinction. That was until every single one was wiped out by Goliathon, the Dragon God.'
 					'''
+			}
+
+			KS3Datalog: {
+				DatalogViewer: Hold [Shift] to view datalog
+				Datalog1:
+					'''
+					'I have successfully reached the outer atmosphere and escaped my world's Reset."
+					I realise there is no going back now, a normal human's lifespan sounds miniscule"
+					compared to the time I must travel through space, but it is my goal to withstand this infinite voyage."
+					I just hope it'll all be worth it when I return to the new world. I've decided to write these"
+					logs every day until I return, and preserve my encounters for when I get back."
+					But that's a million years from now. I just hope I won't regret it.'
+					'''
+				Datalog2:
+					'''
+					'If I ever forget why I'm doing this, I will write it down here."
+					When a Great Era ends, all life dies and the world resets. I am from a previous era"
+					and successfully escaped into space, as the reset won't affect me outside of the world."
+					A reset apparently takes a million years, so I must travel through space during that time period,"
+					and with luck, I should come back here a million years from now, and see the new world in all it's beauty."
+					As far as I know, I am the sole survivor, and the first living thing to ever escape."
+					I transferred my human mind into a robotic body as no living thing can break through the planet's barrier,"
+					and I won't need to worry about thirst, hunger, or sleep.'
+					'''
+				Datalog3:
+					'''
+					'Strange."
+					I'm starting to get symptoms of thirst and tiredness..."
+					This shouldn't be happening, as a robot, I shouldn't require these basic human needs!"
+					If for whatever reason these needs still affect me, this could make this voyage even worse."
+					I can't go to sleep without eyes, I can't drink without a mouth, I can't eat without a digestive system..."
+					So I have no way of stopping these symptoms."
+					I'm still 2 years from reaching the nearest planet - Nabu III"
+					Actually, I should come up with a new name for my robotic body... Something other than Survival Robot Mk. 78.'
+					'''
+				Datalog4:
+					'''
+					'My worst fear is coming true."
+					I have a strong feeling of tiredness and thirst, and my hunger has begun to take hold."
+					It's only been 6 days damn it! Roughly 359,000,000 days to go..."
+					I've tried all I can, but these painful feelings can't go away."
+					The human mind is more complicated than I imagined, and combined with all this technical junk"
+					only makes it harder for me to look into it!"
+					If only I had more time back then! I could've looked through this body's code and easily discovered the error!"
+					Guess I'll just have to deal with it.'
+					'''
+				Datalog5:
+					'''
+					'About a year to go until I reach Nabu III."
+					I am STILL dealing with these damn feelings of hunger and tiredness,"
+					and have only been getting worse from here. Humans can last 11 days without sleep,"
+					the only thing that stopped them from feeling worse was death."
+					I can't even bloody die from fatigue, I can't starve to death either,"
+					I'm just stuck like this - for a million damn years!'
+					'''
+				Datalog6:
+					'''
+					'Finally!"
+					I am close enough to Nabu III to get a scan of the planet."
+					Seems to be a standard ocean planet with a radius of 5605.77km."
+					35.3% iron, 32.0% oxygen, 15.1% silicon, 6.1% sodium, 4.2% aluminum, 2.7% other metals."
+					Gravitational pull is 7.84 m/s? less than my planet, but whatever..."
+					A cycle lasts 23.89 hours with an axis tilt of 28.37?"
+					80% ice sheets, 19.8% ocean, 0.2% land. Atmospheric pressure of 91.83 kPa."
+					The atmosphere is 78.4% sulphur dioxide, and the average temperature is -10K."
+					Basically, an uninhabitable frozen planet... Great.'
+					'''
+				Datalog7:
+					'''
+					'Alright. I have constructed a temporary base on Nabu III."
+					The amount of iron and sulfur here has come in handy."
+					I mean, if I was a human I'd be dead with the lack of proper air."
+					My blueprint for a country-sized spaceship is also finished. Now begins the long construction."
+					The design will be a crescent moon shape, not sure why..."
+					Probably because I used to look up at the moon of my world a lot"
+					when I was human. I wish I still was.'
+					'''
+				Datalog8:
+					'''
+					'My god how have I not died from this pain yet,"
+					it just keeps growing. Whenever I think it can't get any worse the next day it does!"
+					On brighter news my big-arse spaceship is finished. Now I can leave this planet."
+					I'm getting real sick of snow, the old world was nothing but snow as well, I just want some greenery for once."
+					Unfortunately my next planet is even further from the sun so I'm not really hopeful...'
+					'''
+				Datalog9:
+					'''
+					'Today marks 500 years away from home."
+					It took 5.5 years but I'm at the next planet - Alkonost. I expected to get there faster,"
+					but I REALLY underestimated the amount of fuel this giant spaceship would consume."
+					I'm certain I wouldn't have made that mistake if I just didn't feel so terrible!"
+					Living like this is absolute hell. I'll write down this planet's statistics next data log.'
+					'''
+				Datalog10:
+					'''
+					'Alright. Alkonost. And of course, it's ANOTHER DAMN ICE PLANET!"
+					Radius: 6059.58km, Composition: 36.1% titanium, 35.6% iron, 17.5% oxygen,"
+					7.4% silicon, 3.4% other metals. High amounts of titanium, huh?"
+					That's gonna be useful, Nabu III had barely any titanium."
+					Gravity is 11.13 m/s? A cycle is 32.65 hours, with an axis tilt of 11.58?"
+					Oh. 100% of the surface is just ice. The atmosphere is toxic, with a pressure of 91.63 kPa."
+					The temperature is -223K... I don't think even my robotic body can handle that! Oh whatever.'
+					'''
+				Datalog11:
+					'''
+					'Holy..."
+					After exploring Alkonost's surface, I've finally found something other than ice!"
+					Took so long since I can't last down there for more than half a minute."
+					From the looks of things, it looks man-made. Or I guess alien-made... Heh."
+					First time I've felt this amused in forever, but anyways, the structure."
+					It was under the thick ice sheet so I had to drill quite far down."
+					The water under there must be freezing, but curiosity is getting the better of me here."
+					I have found an entrance, inside is just as cold though, so I should go back up into my ship before exploring further.'
+					'''
+				Datalog12:
+					'''
+					'I have basically harvested this planet's titanium dry."
+					The alien tech I found in that strange structure has come in handy,"
+					I've augmented it into my spaceship's thrusters, so I can reach planets much faster."
+					Hmm... I should give the ship a name... Well, I called robot-self King Slayer III,"
+					so the ship must be just as cool. How about: Ship of the Slayer! Or SoS for short?"
+					Well, it's finally time to explore beyond the Vorti Star System."
+					I have 999,493.8 years to go... And my overwhelming pain still hasn't settled."
+					I'll just have to live with it forever now.'
+					'''
+				Datalog13:
+					'''
+					'On my journey to the nearest solar system, I decided to dabble with AI."
+					I have set up blueprints for a simple android with the purpose of"
+					maintaining the SoS while I'm away. It's something for me to do so why not."
+					It's estimated to take 770 years to reach the next solar system,"
+					and I haven't encountered another moving thing for 506 years."
+					Having robots going about the SoS would be nice, and I'll be less lonely.'
+					'''
+				Datalog14:
+					'''
+					'Welp, I've reached the next solar system."
+					3 planets have been scanned, which is quite a disappointment..."
+					I was hoping for there to be more to do."
+					But it's fine I guess, the androids I've created have been keeping me company."
+					I'll go to the planet nearest the habitable zone, 'cos robots have become pretty boring now,"
+					and I'm dying to see actual greenery, not some dull frozen wasteland.'
+					'''
+				Datalog15:
+					'''
+					'I have named this planet Asherah, it appears to be iron/silicate-based."
+					A big radius of 8845.27 km, 40.8% iron, 32.9% oxygen, 15.6% silicon, 4.2% carbon, 2.9% magnesium..."
+					Quite strong gravity, 34.70 hour cycle, an axis tilt of 53.09?.."
+					Only 1% of the surface is water, the rest looks like... boring stone and sand. Hm."
+					Oh! The scanner has found life! Microbes, fungi, sentient animals... What is that?"
+					Well I've found life here, only problem is they look ugly as hell."
+					2.01 million of these intelligent creatures have been scanned, so they've been around for a while.'
+					'''
+				Datalog16:
+					'''
+					'I'm done with Asherah, the aliens there attacked me so I had to make some weaponry."
+					I decided to make a new android, one for military purposes, I've named it the Prototype Silver."
+					Despite its name, it's mainly composed of the spare titanium from Alkonost."
+					I did find a metric ton of coal from Asherah's caverns, so that's nice."
+					Well... Onto the next planet, I just hope THIS one will be lush and green."
+					All the planets I've been to were either frozen or barren.'
+					'''
+				Datalog17:
+					'''
+					'Wow, this planet blew my expectations away..."
+					I have named it Alatar V. It's very small, and on the surface it looks barren."
+					However, it's cave systems are beautiful. Like, there's so many colours and valuable ores."
+					I've been exploring them overtime for probably years now. But that's fine,"
+					Not like I got anything better to do."
+					I'll be leaving this planet soon and moving onto the next solar system.'
+					'''
+				Datalog18:
+					'''
+					'I haven't done one of these in forever, but I should explain what happened."
+					I was travelling to the next solar system, when suddenly some wormhole appeared."
+					The SoS couldn't turn fast enough so it got sucked in. Wormholes are like portals of the universe,"
+					so I expected to just reach the end instantly, but no, I was stuck in the wormhole for almost 1000 years."
+					God it was boring, but I had the androids to keep me company. Unfortunately, I don't know where I am now."
+					I can't tell how far away I am from home, but I see a nearby star, so hopefully there's some planets.'
+					'''
+				Datalog19:
+					'''
+					'Today is the millionth day in space. When I was writing that down,"
+					I had a dumb moment where I thought it was a million years. But no."
+					It has only been 2739.7 years, so... 364,000,000 days left? It feels like forever,"
+					and yet it's only been 0.27% of a million. Why am I still doing this. What's the point anymore?"
+					Every day is a pain, I just want to eat, I want to sleep."
+					I would say I want to be human again, but to be honest, I don't even want to be alive anymore.'
+					'''
+				Datalog20:
+					'''
+					'About damn time. I've finally found a green planet. But am I happy about this?"
+					Not really. I thought this would make me feel something, but it's hopeless."
+					I can't remember the last time I felt happy, the memory of my home is starting to get foggy."
+					But anyway, it looks like this planet has intelligent life, so I'll land and see if they're friendly."
+					If they're not, I'll just shoot them. Simple.'
+					'''
+				Datalog21:
+					'''
+					'Today is the 10,000th year in space, only 1% of a million..."
+					I feel like living beings shouldn't be allowed to live for this long."
+					A hundred years for a human is forever, and I've been around for 100x that!"
+					I've redesigned my robotic body again, but I still haven't figured out how to get into my"
+					human mind and get rid of this STUPID HUNGER. I DON'T HAVE A STOMACH, WHY AM I HUNGRY!?"
+					I DON'T HAVE EYES, WHY AM I SO TIRED!? WHY DO I HAVE TO ENDURE THIS DAMN IT!?'
+					'''
+				Datalog22:
+					'''
+					'The SoS got attacked by some Space Pirates."
+					Not like I care, I destroyed their ships so what can they do now?"
+					The SoS's scanner picked up a lifeform in the engine room, so I should probably check it out."
+					I can't be asked to do anything really. But whatever.'
+					'''
+				Datalog23: "'Nice'"
+				Datalog24:
+					'''
+					'It's been 10% of a million years now. Yay."
+					I accidently skipped a day in the data logs so 10% was really yesterday, but not like I care."
+					I have explored... 2853 planets now, and they are starting to all look the same."
+					I'm sick of ice planets, sick of lush green ones, sick of barren ones... I guess I'm not satisfied anymore.'
+					'''
+				Datalog25:
+					'''
+					'I haven't felt like this in forever."
+					I upgraded my robotic self again, this time with more attack power. Xehito let me test it on him,"
+					so we had a fight. The intensity of it was almost exhilarating, lasers firing everywhere,"
+					explosions all around, it was generally a fun time. But something tells me he only let me"
+					fight him to cheer me up, and I'm sorry Xehito, but that moment didn't last, I still feel empty.'
+					'''
+				Datalog26:
+					'''
+					'Only 1000 years until a million, and I can return home."
+					I've already set my course, but the problem is, because of that wormhole,"
+					I don't know which way is home... All I can do now is go to a random direction"
+					and hope for the best. But the galaxy is vast, I fear by the time I reach home again,"
+					The next reset would've already started, and I'd have to wait another million years."
+					If that happens, I won't try anymore, I'll just give up.'
+					'''
+				Datalog27:
+					'''
+					'Today is the millionth year in space!"
+					Unfortunately, I won't be able to see the new Great Era for some time."
+					I'm still lost in space.'
+					'''
+				Datalog28: "'I've made it back, I'm home again.'"
 			}
 		}
 
@@ -6248,7 +6493,7 @@ Mods: {
 					'''
 					'An ancient relic owned by King Tenebris. The texts contained within this tome were said
 					to hold the knowledge necessary to master psychic magic.
-					
+
 					King Tenebris reigns over Erellon within the capital of Arrgath, a province protected by
 					lands of plentiful life and barren death. It is said his knowledge of the ancient times is truly boundless.'
 					'''
@@ -6873,10 +7118,7 @@ Mods: {
 					No ammo cost if the user has at least 10 uranium
 					'''
 				Viewer: There's a sticky note attached [Hold Shift to Read]
-				Lore:
-					'''
-					"Please remember to turn the safety on after testing. We don't need holes in our staff, the radiation is enough of a problem."
-					'''
+				Lore: '''"Please remember to turn the safety on after testing. We don't need holes in our staff, the radiation is enough of a problem."'''
 			}
 
 			Electronade: {
