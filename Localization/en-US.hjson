@@ -2,6 +2,52 @@ Mods: {
 	Redemption: {
 		Currencies.AntiqueDorulCurrency: antique doruls
 
+		StatusMessage:{
+			Progression:{
+				ThornDowned: "The forest flora blooms..."
+				GoodSkeletron: "Crystals form in the icy caverns..."
+				BadSkeletron: "The caverns are heated with dragon bone..."
+				LabOpen: "The laboratory's defense systems have malfunctioned..."
+				LabAccessPanel1: "Alpha sector laser security has been deactivated"
+				LabAccessPanel2: "Gamma sector laser security has been deactivated"
+				LabAccessPanel3: "Sigma sector laser security has been deactivated"
+				LabAccessPanel4: "Omicron sector laser security has been deactivated"
+				LabAccessPanel5: "Vault laser security has been deactivated"
+				LabAccessPanel6: "All laser security has been deactivated"
+				LabAccessPanelUsed1: "Alpha laser security already deactivated"
+				LabAccessPanelUsed2: "Gamma laser security already deactivated"
+				LabAccessPanelUsed3: "Sigma laser security already deactivated"
+				LabAccessPanelUsed4: "Omicron laser security already deactivated"
+				LabAccessPanelUsed5: "Vault laser security already deactivated"
+				LabAccessPanelUsed6: "Laser security already deactivated"
+				Fool: "The Fool has left..."
+			}
+
+			Death:{
+				Infested: "<PlayerName> burst into larva!"
+				DirtyWound: "<PlayerName> had an infection"
+				Swarmed: "<PlayerName> got nibbled to death"
+				Xenomite: "<PlayerName> was turned into a crystal"
+				Radiation: "<PlayerName> was irradiated"
+				Incandesence: "<PlayerName> was too glorious"
+				Ensnared: "<PlayerName> got consumed by the thorns"
+				Nuclear1: "<PlayerName> saw a second sunrise"
+				Nuclear2: "<PlayerName> was wiped off the face of <world name>"	
+				Nuclear3: "<PlayerName> experienced doomsday"
+				Nuclear4: "<PlayerName> became a shadow on the ground"
+				Nuclear5: "<PlayerName> went out with a bang"
+				Nuclear6: "<PlayerName> couldn't find the fridge in time"
+				DoorStuck: "<PlayerName> experienced DOOR STUCK."
+			}
+
+			Other:{
+				Keeper1: "The Keeper noticed the abandoned teddy you're holding..."
+				Keeper2: "The Keeper's spirit fades away... ?"
+				GolemSpawn: "A sleeping stone appears..."
+				NebGone: "Nebuleus is nowhere to be seen..."
+			}
+		}
+
 		GenericTooltips: {
 			Bonuses: {
 				AxeBonus: "[i:Redemption/Axe] 3x critical strike damage, increased chance to decapitate humanoid enemies"
@@ -6198,6 +6244,14 @@ Mods: {
 					Casts a large amount of rocks to float above the player
 					Release left-click to launch them at cursor point
 					'''
+				Lore:
+					'''
+					'An ancient relic owned by King Tenebris. The texts contained within this tome were said
+					to hold the knowledge necessary to master psychic magic.
+					
+					King Tenebris reigns over Erellon within the capital of Arrgath, a province protected by
+					lands of plentiful life and barren death. It is said his knowledge of the ancient times is truly boundless.'
+					'''
 			}
 
 			SunshardGreatstaff: {
@@ -6206,6 +6260,12 @@ Mods: {
 					'''
 					Casts a burst of redemptive sparks
 					Casts a holy ray of light every 3 consecutive shots
+					'''
+				Lore:
+					'''
+					'A golden staff, protected by a monastery of clerics in Thamor.
+					Imbued with holy magic, it was primarily revered for its healing capabilities,
+					with numerous quantities of people pursuing its power to heal themselves or their loved ones.'
 					'''
 			}
 
@@ -6514,6 +6574,12 @@ Mods: {
 					(4[i:Redemption/EnergyCell]) Replaces normal bullets with Plasma Rounds
 					Requires an Energy Pack to be in your inventory
 					'''
+				Lore:
+					'''
+					'A Teochrome experimental weapon, it was created after a board meeting, in which military contractors wanted a
+					nuclear powered sniper rifle for seemingly little reason, it miraculously had a functioning prototype
+					created, and the death toll from radiation exposure has been surprisingly miniscule.'
+					'''
 			}
 
 			SlayerGun: {
@@ -6525,6 +6591,9 @@ Mods: {
 					Right-clicking changes type of fire
 					Requires an Energy Pack to be in your inventory
 					'''
+				Mode1: Barrage Shot
+				Mode2: Spread Shot
+				Mode3: Rebound Shot
 			}
 
 			SteampunkMinigun: {
@@ -6535,6 +6604,12 @@ Mods: {
 					Shooting duration scales with the amount of time charged up, capping at 5 seconds
 					Replaces normal bullets with high velocity bullets
 					66% chance to not consume ammo
+					'''
+				Lore:
+					'''
+					'A relic of Nirin's ancient brass technology, first uncovered and brought to light by a hermit with a rusty metal arm.
+					The mountains of the frozen domain hold many secrets and crafts long neglected, first created by dwindling
+					natives of the Arctic Realm and preserved by refugees of a ruined kingdom, yet only for a fleeting time did it last.'
 					'''
 			}
 
@@ -6653,6 +6728,8 @@ Mods: {
 					Arcs lightning from coil, targeting multiple enemies at the same time
 					Right-click to change firing modes between multi-target and single target
 					'''
+				Multi: Multi-target
+				Single: Single target
 			}
 
 			XeniumStaff: {
@@ -6779,6 +6856,12 @@ Mods: {
 					Shoots Dark-Steel arrows that create shadow tendrils upon hitting a target
 					20% chance not to consume ammo
 					'''
+				Lore:
+					'''
+					'This bow was forged by the legendary bowsmith Raiktu Shadeheart, and became the reward for a special competition
+					held in Arrgath - Erellon's Capital. The winner was Daerel Foremaul, who received this weapon after a close victory.
+					The bow is made from rosewood of Erellon's jungles and Dark-Steel, a metal scavenged from the remains of a terrible demon.'
+					'''
 			}
 
 			DepletedCrossbow: {
@@ -6788,6 +6871,11 @@ Mods: {
 					Fires depleted uranium rods that explode upon impact
 					Consumes uranium as ammo
 					No ammo cost if the user has at least 10 uranium
+					'''
+				Viewer: There's a sticky note attached [Hold Shift to Read]
+				Lore:
+					'''
+					"Please remember to turn the safety on after testing. We don't need holes in our staff, the radiation is enough of a problem."
 					'''
 			}
 
@@ -6914,6 +7002,12 @@ Mods: {
 					Casts two unstable zig-zagging water orbs
 					Water orbs home in on enemies after 6 consecutive shots
 					'''
+				Lore:
+					'''
+					'A bronze wand with an aquamarine orb, once used by a trickster sorcerer of Kohldur.
+					The sorcerer used the element of water to play harmless pranks on the barons of the capital,
+					until they grew weary of her antics and ordered the duke to exile her.'
+					'''
 			}
 
 			CalciteWand: {
@@ -6931,6 +7025,12 @@ Mods: {
 					'''
 					Casts a ball of ember
 					Casts a larger fireball every 4 consecutive shots
+					'''
+				Lore:
+					'''
+					'A simple wooden staff with a white crystal on top, commonly given to apprentices
+					of sorcerers to practice storing and releasing their mana.
+					An overload of mana from a stronger mage can easily break this.'
 					'''
 			}
 
@@ -7305,6 +7405,11 @@ Mods: {
 					20% chance not to consume ammo
 					Shoots silverwood arrows that stick onto enemies, draining their life
 					'''
+				Lore:
+					'''
+					'Given to Daerel by Syllessa, a half-Forest Nymph, during training. The wood is beyond ancient,
+					and the string is made from a golden flexible thread. It is capable of shooting arrows at high velocities.'
+					'''
 			}
 
 			BlazingBalisong: {
@@ -7514,6 +7619,14 @@ Mods: {
 					'''
 					Summons a Nature Pixie to fight for you
 					Occassionally shouts at their target, dealing {0} damage
+					'''
+				Lore:
+					'''
+					'A staff made from the King's Oak - a great lone tree housing the souls of Timbervalley's past and present monarchs.
+					The wellbeing of oak and king are connected as one, grounding their emotion and vigour within the roots of the kingdom;
+					a bottomless well of strength for all who walk and grow.
+					Dancing orbs of light are often witnessed coming and going from the tree, said to be the embodiment of ardour between nature and man.
+					These are known by many names - Faes, Fairies, Pixies - and are the companions of Forest Nymphs.'
 					'''
 			}
 
