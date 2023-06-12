@@ -526,6 +526,39 @@ Mods: {
 				Datalog28: "'I've made it back, I'm home again.'"
 			}
 		}
+		
+		Cutscene: {
+			NewbIntro: {
+				1: What do you think, Jo-
+				2: Who you?!
+				3: Where am I?
+				4: Heyo, I'm Newb![1] Want to be friends?
+			}
+
+			DaerelIntro: {
+				1: Woah!
+				2: Ow, my head hurts..
+				3: Hey Zephos,[0.1] do you know where we are?
+				4: "[@a]Uh..[0.5] Zephos?"
+				5: "[@b]Oh, hi there![0.1] Didn't notice you."
+				6: You haven't seen my friend around here,[0.1] have you?
+				7: Guess he didn't jump in.[0.5] Oh well,[0.1] I'll head back to get him.
+				8: I'm going to need a place for me to stay if I come back,[0.1] so, see you soon I suppose.
+			}
+
+			TBotIntro: {
+				Normal1: AH!
+				Normal2: ...I-[0.1]I thought you were someone else.[0.5] Sorry about that.
+				Normal3: Anyways,[0.1] hello.[0.5] I'm Adam,[0.1] and I'm an Android originating from a faraway snowy wasteland.
+				Normal4: "[@b]Seeing as I won't be returning to that frozen hell for a good while,[0.1] mind if I stay here?[0.5] I assume you've some shelter to stay at."
+				Normal5: ...The resemblance between them is uncanny...
+				Robot1: HUH?
+				Robot2: How-[0.1] Wh-[0.1] I-
+				Robot3: *Sigh*[0.1] I wasn't expecting to see the likes of us here.
+				Robot4: Not going back there now.[0.5] Since you're here and not there,[0.1] I can safely assume you're not with Her..?
+				Robot5: "[@a]...Alright.[0.5] We can safely ignore each other then."
+			}
+		}		
 
 		GenericTerms: {
 			Words: {
