@@ -24,204 +24,8 @@ Mods: {
 				WaterBonus: "[i:Redemption/Water] Increased damage to demons and can electrify robotic targets"
 				WindBonus: "[i:Redemption/Wind] Deals extra knockback to airborne targets"
 			}
-			
-			ArmorSetBonus: {
-				VanillaArmor: {
-					20Increased:
-						'''
-
-						20% increased 
-						'''
-					Resistance: " elemental resistance"
-					Damage: " elemental Damage"
-				}
-
-				LivingWood: Immune to poison, increases your max number of minions
-				CommonGuardHelm1: 12% increased melee speed
-				CommonGuardHelm2: Reduces damage taken by 6%
-
-				PureIron: {
-					20Increased: "20% increased "
-					Bonus:
-						'''
-
-						33% chance for weapons to inflict Pure Chill
-						100% chance for all Pure-Iron weapons to inflict Pure Chill
-						'''
-				}
-
-				DragonLead: {
-					20Increased: "20% increased "
-					Bonus:
-						'''
-
-						33% chance for weapons to inflict Dragonblaze
-						100% chance for all Dragon-Lead weapons to inflict Dragonblaze
-						'''
-				}
-
-				Hardlight: {
-					Keybind: Select a keybind for [Special Ability Key] in Controls
-					Press: "Press "
-					Support:
-						'''
-						 to get support from the Ship of the Slayer
-
-						'''
-					Casque: Summons a hologram of King Slayer III to help, higher spirit levels give the hologram stronger weapons
-					Cowl: Summons a drone that gives a continuous feed of mana for 10 seconds
-					Helm: Summons 2 mini spaceships that orbit you, firing lasers whenever you attack using a melee weapon
-					Hood: Summons 2 missile drones and a magnet drone
-					Visor: Fires a missile barrage from the SoS, targetting the enemy nearest to the cursor position
-				}
-
-				Xenomite: {
-					Press:
-						'''
-
-						Press 
-						'''
-					Keybind:
-						'''
-						6% increased damage
-						Increased Energy regeneration if an Energy Pack is in your inventory
-						Select a keybind for [Special Ability Key] in Controls
-						'''
-					Bonus1:
-						'''
-						6% increased damage 
-						Increased Energy regeneration if an Energy Pack is in your inventory
-						'''
-					Bonus2: " to unleash toxic gas in a radius around the player, inflicting Burning Acid"
-				}
-
-				Xenium: {
-					Press:
-						'''
-
-						Press 
-						'''
-					Keybind:
-						'''
-						Increased Energy regeneration if an Energy Pack is in your inventory
-						Select a keybind for [Special Ability Key] in Controls
-						'''
-					Bonus1: Increased Energy regeneration if an Energy Pack is in your inventory
-					Bonus2: " to fire a virulent grenade from your shoulder launcher"
-				}
-			}
 		}
 
-		SpecialTooltips: {
-			Viewer: Hold [Shift] to view lore
-
-			CommonGuard: {
-				CommonGuardGreaves:
-					'''
-					'Plate mail greaves of the Common Guard unit of Anglon that were scavenged by skeletons.
-					Originally shining steel, the metal has since dulled with time and coated with layers of dust.
-
-					The Common Guard was founded when an Overlord's city was completely obliterated
-					by a stray demon that sneaked through an unguarded portal to Demonhollow.
-
-					They now guard cities and landmarks of great importance. Despite being stronger than the average
-					knight, they don't get involved in wars.'
-					'''
-				CommonGuardHelm1:
-					'''
-					'Visored plate mail helm of the Common Guard unit of Anglon that were scavenged by skeletons.
-					Originally shining steel, the metal has since dulled with time and coated with layers of dust.
-
-					The Common Guard was founded when an Overlord's city was completely obliterated
-					by a stray demon that sneaked through an unguarded portal to Demonhollow.
-
-					They now guard cities and landmarks of great importance. Despite being stronger than the average
-					knight, they don't get involved in wars.'"
-					'''
-				CommonGuardHelm2:
-					'''
-					"'Bucket helm of the Common Guard unit of Anglon that were scavenged by skeletons.
-					Originally shining steel, the metal has since dulled with time and coated with layers of dust.
-
-					The Common Guard was founded when an Overlord's city was completely obliterated
-					by a stray demon that sneaked through an unguarded portal to Demonhollow.
-
-					They now guard cities and landmarks of great importance. Despite being stronger than the average
-					knight, they don't get involved in wars.'"
-					'''
-				CommonGuardPlateMail:
-					'''
-					'Plate mail of the Common Guard unit of Anglon that were scavenged by skeletons.
-					Originally shining steel, the metal has since dulled with time and coated with layers of dust.
-
-					The Common Guard was founded when an Overlord's city was completely obliterated
-					by a stray demon that sneaked through an unguarded portal to Demonhollow.
-
-					They now guard cities and landmarks of great importance. Despite being stronger than the average
-					knight, they don't get involved in wars.'"
-					'''
-			}
-
-			PureIron: {
-				AntiquePureIronHelmet:
-					'''
-					'An outdated design of the Iron Realm's warrior's helmet.
-					Discovered in the Catacombs of Gathuram by Happins, a fallen.
-					This design has fur to keep the neck and shoulders warm in the harsh environment.'
-					'''
-				PureIronHelmet:
-					'''
-					'A visored helmet used by the Warriors of the Iron Realm.
-					The metal emits a constant chill mist and is cold to the touch,
-					however the Iron Realm's warriors have been trained to resist such harsh temperatures.
-
-					The Warriors of the Iron Realm are Gathuram's main military force,
-					with units spanning all across the domain.'
-					'''
-				PureIronChestplate:
-					'''
-					'A chestplate made of metal and leather used by the Warriors of the Iron Realm.
-					The metal emits a constant chill mist and is cold to the touch,
-					however the Iron Realm's warriors have been trained to resist such harsh temperatures.
-
-					The Warriors of the Iron Realm are Gathuram's main military force,
-					with units spanning all across the domain.'
-					'''
-				PureIronGreaves:
-					'''
-					'Greaves made of metal and leather used by the Warriors of the Iron Realm.
-					The metal emits a constant chill mist and is cold to the touch,
-					however the Iron Realm's warriors have been trained to resist such harsh temperatures.
-
-					The Warriors of the Iron Realm are Gathuram's main military force,
-					with units spanning all across the domain.'
-					'''
-			}
-
-			DragonLead: {
-				DragonLeadSkull:
-					'''
-					'A horned helmet forged from melted dragon bone and metal, made to look like a dragon's skull. It is said
-					to be used by the ancient warlords of Dragonrest.
-					The warlords were famous dragon slayers who used the bones of their victims for weaponry and armour,
-					nearly bringing the dragons to extinction. That was until every single one was wiped out by Goliathon, the Dragon God.
-					'''
-				DragonLeadRibplate:
-					'''
-					'Armour forged from melted dragon bone and metal, made to look like a ribcage. It is said to be used by
-					the ancient warlords of Dragonrest.
-					The warlords were famous dragon slayers who used the bones of their victims for weaponry and armour,
-					nearly bringing the dragons to extinction. That was until every single one was wiped out by Goliathon, the Dragon God.'
-					'''
-				DragonLeadGreaves:
-					'''
-					'Leg armour forged from melted dragon bone and metal, said to be used by the ancient warlords of Dragonrest.
-					The warlords were famous dragon slayers who used the bones of their victims for weaponry and armour,
-					nearly bringing the dragons to extinction. That was until every single one was wiped out by Goliathon, the Dragon God.'
-					'''
-			}
-		}
-	
 		GenericTerms: {
 			Words: {
 				Fighting: fighting
@@ -2185,6 +1989,7 @@ Mods: {
 					10% increased {0} elemental damage and resistance
 					+20 max mana
 					'''
+				ArcaneS: Mods.Redemption.Items.TrappedSoulBauble.ArcaneS
 			}
 
 			AlignmentChanger: {
@@ -4596,6 +4401,11 @@ Mods: {
 					'''
 			}
 
+			ShadestonePillar: {
+				DisplayName: 셰이드스톤 기둥
+				Tooltip: ""
+			}
+
 			ShadestonePlatform: {
 				DisplayName: Shadestone Platform
 				Tooltip: ""
@@ -6227,6 +6037,12 @@ Mods: {
 					After a successful parry, left-click to counter with an instant Radiance Spin Slash
 					Deals double damage against demonic enemies
 					'''
+				Lore:
+					'''
+					'Elegant and holy, this weapon was owned by Eymen - a well-renowned member of the High Templars.
+					He imbued the blade with part of his permanent soul to keep it holy far past his own death.
+					Eymen treated his weapon like his own flesh, and used it to smite numerous demons of high calibre.'
+					'''
 			}
 
 			BloodstainedPike: {
@@ -6258,7 +6074,7 @@ Mods: {
 				DisplayName: Cyber Chakram
 				Tooltip: ""
 			}
-			
+
 			ForgottenGreatsword: {
 				DisplayName: Ophos' Forgotten Greatsword
 				Tooltip:
@@ -6371,7 +6187,6 @@ Mods: {
 				Mode2: Stab Mode
 				Mode3: Sword Burst Mode
 				Mode4: Red Prism Mode
-			}
 			}
 
 			TidalWake: {
@@ -6737,7 +6552,7 @@ Mods: {
 					'''
 					'The hammer of Ukko, crafted by his ancestors and refined by him. Upon his human death,
 					the hammer was laid atop his grave as is custom in local tradition. It is a great conductor of Thunder magic.'
-					'''				
+					'''
 			}
 
 			XeniumLance: {
@@ -6995,7 +6810,7 @@ Mods: {
 					'''
 					'A staff made of Pure-Iron with a diamond gemstone.
 					It is cold to the touch, and can channel ice magic abnormally well.'
-					'''					
+					'''
 			}
 
 			SoulScepter: {
@@ -7016,7 +6831,7 @@ Mods: {
 					'A broadsword once wielded by the leader of Lighthelm's forgotten Oracles of Rebirth.
 					This holy blade's slice is said to strip the light out of one's body, which would travel to corpses
 					and bring the slain's life into them. This was what the ancient world thought birthed undead.'
-					'''				
+					'''
 			}
 
 			BladeOfTheMountain: {
@@ -7067,6 +6882,11 @@ Mods: {
 					Continue holding left-click to go into a fiery flurry
 					Deals more damage to dragon-like enemies
 					'''
+				Lore:
+					'''
+					'A cleaver cast in melted dragon bone and metal, said to be used by the ancient warlords of Dragonrest.
+					This weapon is a great catalyst for fire magic, shooting out a wave of burning heat by channelling a swing.'
+					'''
 			}
 
 			EaglecrestJavelin: {
@@ -7075,6 +6895,11 @@ Mods: {
 					'''
 					Hold left-click to charge the javelin, release to throw
 					Strikes the ground and foe alike with lightning, dealing {0} damage
+					'''
+				Lore:
+					'''
+					'An ancient spear used in rituals to the great god Ukko in ancient Gathuram.
+					Charged with electric magic to signify Ukko, while the blade has dulled it still works as a fine weapon.'
 					'''
 			}
 
@@ -7116,7 +6941,7 @@ Mods: {
 					'Found in the Demonhollow by a set of human explorers from Anglon. The weapon is crafted from bone and
 					a metal named \"Charred Iron\" by those whom discovered it, and was attributed to a fabled blacksmith named
 					Ophos due to its use of Firestorm magic. Yet the lack of many of his trademarks put doubt on that claim.'
-					'''				
+					'''
 			}
 
 			Halbirdhouse: {
@@ -7175,6 +7000,11 @@ Mods: {
 					Disarmed heavily decreases contact damage and their weapon damage
 					Blocks weak physical projectiles
 					'''
+				Lore:
+					'''
+					'Given to Zephos by Draven, his uncle, during training. The slit in the middle is used to catch the opponent's blades,
+					one with great strength can use this advantage to twist the opponent's blade until it snaps, leaving them disarmed.'
+					'''
 			}
 
 			XenoXyston: {
@@ -7194,7 +7024,7 @@ Mods: {
 					'''
 					'A famous greatsword of Madmount. A lot of strength is needed to use such a grand weapon,
 					but for most Warriors of the Iron Realm this was a trivial issue.'
-					'''					
+					'''
 			}
 
 			ChickenEgg: {
@@ -8014,7 +7844,7 @@ Mods: {
 				DisplayName: "[i:Redemption/Wind][c/B4B4B4:Wind]"
 				Tooltip: ""
 			}
-			
+
 			CockatriceRelic: {
 				DisplayName: Cockatrice Relic
 				Tooltip: ""
