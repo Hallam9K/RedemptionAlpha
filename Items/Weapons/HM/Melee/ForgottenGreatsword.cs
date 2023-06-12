@@ -72,10 +72,7 @@ namespace Redemption.Items.Weapons.HM.Melee
         {
             if (Main.keyState.PressingShift())
             {
-                TooltipLine line = new(Mod, "Lore",
-                    "'A silver sword with a steel handle, forged by Ophos, a fabled blacksmith from what is now Hye Anglon.\n" +
-                    "Said to be proficient in Firestorm magic, he would mark his works with a gem that imbued his weapons with his magical power.\n" +
-                    "This weapon in particular uses a traditional design of the Territory of Northhill.'")
+                TooltipLine line = new(Mod, "Lore", Language.GetTextValue("Mods.Redemption.Items.ForgottenGreatsword.Lore"))
                 {
                     OverrideColor = Color.LightGray
                 };
@@ -83,7 +80,7 @@ namespace Redemption.Items.Weapons.HM.Melee
             }
             else
             {
-                TooltipLine line = new(Mod, "HoldShift", "Hold [Shift] to view lore")
+                TooltipLine line = new(Mod, "HoldShift", Language.GetTextValue("Mods.Redemption.SpecialTooltips.Viewer"))
                 {
                     OverrideColor = Color.Gray,
                 };
