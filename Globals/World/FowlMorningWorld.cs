@@ -58,7 +58,7 @@ namespace Redemption.Globals.World
         }
         public static void ChickArmyEnd()
         {
-            string status = "The chickens retreat!";
+            string status = Language.GetTextValue("Mods.Redemption.StatusMessage.Event.ChickRetreat");
             if (Main.netMode == NetmodeID.Server)
                 ChatHelper.BroadcastChatMessage(NetworkText.FromLiteral(status), new Color(250, 170, 50));
             else if (Main.netMode == NetmodeID.SinglePlayer)
