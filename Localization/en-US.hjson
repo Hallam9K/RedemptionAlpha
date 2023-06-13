@@ -9,7 +9,16 @@ Mods: {
 			}
 		}
 
-		Bestiary.KS3: "'What? You want my lore? Go get your own lore!'"
+		FlavorTextBestiary:{
+			TreebarkDryad: These slow-thinking ents only appear in heavily forested areas. They have only recently arrived on this island, coming from the portal on the surface. Once every century, they find a shallow pond and hibernate in the centre. The water from the pond feeds the ent during the process.
+			KS3: "'What? You want my lore? Go get your own lore!'"
+			Android: Fodder sent down to the island by King Slayer III to scan. These are the first iteration of the Android Unit and the first robots designed by King Slayer during his million year voyage. Their original purpose was to bring company and life to the SoS, however they have since been fitted with more combat-oriented parts. When damaged, they will retreat back to the SoS and alert the network.
+			}
+
+		Bestiary:{
+			Android: Apidroids were an experiment with a highly durable metal from a distant star system. The metal - dubbed 'Rose Titanium' by King Slayer III - is one of the strongest materials discovered in the galaxy. However, King Slayer III hated its pink tinge, and so stubbornly refused to use it after making a few Androids out of it.
+		}
+
 
 		StatusMessage: {
 			Progression: {
@@ -544,6 +553,14 @@ Mods: {
 				4: Heyo, I'm Newb![1] Want to be friends?
 			}
 
+			TreebarkDryad:{
+				1:"Now,[0.1] now.[0.5] Watch where you swing that axe of yours...[1] I don't want you chopping down any of my friends."
+				2:"It will do no good,[0.1] young "
+				3:"man"
+				4:"lady"
+				5:".[0.5] We bring no harm to you.[1] Chopping us down will only bring bad omens."
+			}
+
 			DaerelIntro: {
 				1: Woah!
 				2: Ow, my head hurts..
@@ -577,6 +594,14 @@ Mods: {
 				Robot3: *Sigh*[0.1] I wasn't expecting to see the likes of us here.
 				Robot4: Not going back there now.[0.5] Since you're here and not there,[0.1] I can safely assume you're not with Her..?
 				Robot5: "[@a]...Alright.[0.5] We can safely ignore each other then."
+			}
+
+			AndroidScan:{
+				Human:"Human"
+				Robot:"Robot"
+				Chicken:"Chicken"
+				Scan:" scanned..."
+				Unknown:"Unknown entity"
 			}
 
 			KS3: {
@@ -664,6 +689,111 @@ Mods: {
 					IfHuman: ... And for an annoying brat no less.
 					Begin: "[@h0][@c]Let's begin."
 				}
+			}
+
+			KS3Message:{
+				Attacked1: "Well aren't you a little trigger-happy."
+				Attacked2: "You know there's like[0.1] a million of us, right?[1] Anyway,[0.1] I've come to relay a message from King Slayer -"
+				Message: "\"I'll be heading off to the other world soon,[0.1] so if you have any unfinished business with me,[0.3] I'd get on that sooner rather than later.\""
+				Variant: "Screw you too I guess."
+				1:"Don't attack."
+				2:"I've come to relay a message from King Slayer -"
+			}
+		}
+
+		GenericTerms: {
+			Words: {
+				Fighting: fighting
+				Slaying: slaying
+			}
+		}
+
+		UI: {
+			Chalice: {
+				Alignment: Alignment
+				ItemInterested: "[c/ffea9b:There is something to say about the item you hold]"
+				HeartOfThorns:
+					'''
+					A piece of blight from Faywood forest, cursed by an ancient power.
+					Slaying whatever this may attract will surely do good.
+					'''
+				HeartOfThorns2: The blight should quell with this unfortunate warden slain.
+				DemonScroll:
+					'''
+					A forbidden scroll, used to summon great demon terrors to the land.
+					These are risky things, do not be tempted by it; lest you desire the path of sin.
+					'''
+				DemonScroll2: Attempting to summon a demon and {0} a priest... Are you alright in the head?
+				WeddingRing: An undead... Something tells me she isn't out of her misery just yet.
+				WeddingRing2: A part of the mistress's spirit remains in this ring. Mayhaps a certain protector may find solace in keeping it.
+				SorrowfulEssence:
+					'''
+					Octavia's protector is in search of you. A conflict will be inevitable.
+					However, mayhaps this may bring a chance for a courteous ending.
+					'''
+				AbandonedTeddy: A ragged teddy, and a bringer of peace to the misfortuned.
+				CyberTech:
+					'''
+					A signal-sender to one of the Heroes of the Golden Age.
+					Be warned, he has a rather short temper.
+					'''
+				SlayerShipEngine:
+					'''
+					Although a small thing, this shows your willingness to help.
+					I'm sure King Slayer will appreciate it.
+					'''
+				MemoryChip:
+					'''
+					On first glance, it seems like a useless gift to someone like you.
+					And although it may be true, I don't doubt this may play a crucial role in the future.
+					'''
+				AnglonicMysticBlossom:
+					'''
+					A beauty of nature, often gifted to those whom wish eternal blessings.
+					Perhaps you'll find a worthy friend to gift this to one day.
+					'''
+				KingsOakStaff:
+					'''
+					A staff that calls to the critters of Nature.
+					Do not be perturbed by their verbose spirit, for they may even convince a certain creature of your friendship.
+					'''
+				NebSummon: This beckons a silent observer to test your strength.
+				NebSummon2:
+					'''
+					 Her past is a mystery,
+					yet in my soul I know the importance of her role in this world's protection.
+					Based on your past actions, I foresee a terrible future.
+					'''
+				NebSummon3: ... I see it now.
+				A0: You are truly neutral...
+				A1N: You have done harm, but you are safe for now...
+				A1: You have done good so far...
+				A2: You are choosing the right path. Please, continue.
+				A2N: Be wary, you are straying from the path of good...
+				A3N: You are really pushing it aren't you... If you continue down this road, justice will await you.
+				A3: I am proud of you for keeping the light within you bright...
+				A4N: ... Listen, you are following the wrong path here... Please, go back.
+				A4: Vanquishing the evil of the world... You really are something.
+				A5N: I am sorry, you can't go back now...
+				A5: Light shines within you, but I am sure more dangerous foes lie ahead...
+				A6N: You are past redemption...
+				A6: You are the redemption this world needed...
+				ADDDefeat: It is unknown how these forgotten deities ruled, perhaps defeating them was for the best, or worst.
+				FowlDefeat: ... What?
+				KeeperSave: You've redeemed yourself, Octavia may rest in undisturbed peac-
+				KS3Spared: Good thing you left him be...
+				KS3Defeat:
+					'''
+					Oh dear, he seems to have a very short temper, and you winning probably made it worse.
+					I hope he doesn't do anything stupid.
+					'''
+				KS3Choice: I would leave him be, if I were you.
+				NebChoice: Don't go down the road you seek, please.
+				NebDefeat: Trust me when I say this, you've dug yourself a 1000-feet hole here.
+				ForestNymphHoused: Sometimes it is the little acts of kindness that count.
+				TreebarkFelled: Assisting the extinction of these dwindling dryads is not something I approve of.
+				EaglecrestDefeat: Living stones? Never seen that before.
+				SkullDiggerDefeat: A saddening conclusion to this protector and mistress, but perhaps there is another way..?
 			}
 		}
 
