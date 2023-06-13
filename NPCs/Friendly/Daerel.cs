@@ -82,14 +82,14 @@ namespace Redemption.NPCs.Friendly
             bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Surface,
 
-                new FlavorTextBestiaryInfoElement("A traveller from mainland Epidotra who is friends with Zephos. Most skilled at archery and stealth."),
+                new FlavorTextBestiaryInfoElement(Language.GetTextValue("Mods.Redemption.FlavorTextBestiary.Daerel")),
             });
         }
 
         public override bool CheckDead()
         {
             RedeWorld.daerelDownedTimer = 0;
-            Main.NewText("Daerel the Wayfarer was knocked unconscious...", Color.Red.R, Color.Red.G, Color.Red.B);
+            Main.NewText(Language.GetTextValue("Mods.Redemption.DialogueBox.Daerel.Unconscious"), Color.Red.R, Color.Red.G, Color.Red.B);
             NPC.SetDefaults(ModContent.NPCType<DaerelUnconscious>());
             NPC.life = 1;
 
@@ -224,18 +224,18 @@ namespace Redemption.NPCs.Friendly
                 switch (RedeQuest.wayfarerVars[0])
                 {
                     default:
-                        button = "Feel free to stay here";
-                        button2 = "Who are you?";
+                        button = Language.GetTextValue("Mods.Redemption.DialogueBox.Daerel.Stay1");
+                        button2 = Language.GetTextValue("Mods.Redemption.DialogueBox.Daerel.Stay2");
                         break;
                     case 3:
-                        button = "Feel free to stay here";
+                        button = Language.GetTextValue("Mods.Redemption.DialogueBox.Daerel.Stay1");
                         button2 = "";
                         break;
                 }
             }
             else
             {
-                button2 = "Cycle Options";
+                button2 = Language.GetTextValue("Mods.Redemption.DialogueBox.Cycle");
 
                 switch (ChatNumber)
                 {
@@ -243,13 +243,13 @@ namespace Redemption.NPCs.Friendly
                         button = "Shop";
                         break;
                     case 1:
-                        button = "Advice";
+                        button = Language.GetTextValue("Mods.Redemption.DialogueBox.Daerel.Advice");
                         break;
                     case 2:
-                        button = "Restring Bow (10 silver)";
+                        button = Language.GetTextValue("Mods.Redemption.DialogueBox.Daerel.Bow");
                         break;
                     case 3:
-                        button = "Poison Weapon (25 silver)";
+                        button = Language.GetTextValue("Mods.Redemption.DialogueBox.Daerel.Poison");
                         break;
                 }
             }
