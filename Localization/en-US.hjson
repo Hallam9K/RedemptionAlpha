@@ -12,9 +12,15 @@ Mods: {
 				Name: King Slayer III
 				Modifier: Prototype Multium
 			}
+
+			OO: {
+				Name: Omega Obliterator
+				Modifier: 3rd Omega Prototype
+			}
 		}
 
 		FlavorTextBestiary: {
+			OO: An autonomous war machine mostly of Girus' own design with many integrated weapon systems, such as literal finger guns and an advanced heat dispersion system in the form of a giant beam, capable of obliterating anyone it engulfs - Also where Obliterator got its name from."
 			TreebarkDryad: These slow-thinking ents only appear in heavily forested areas. They have only recently arrived on this island, coming from the portal on the surface. Once every century, they find a shallow pond and hibernate in the centre. The water from the pond feeds the ent during the process.
 			Erhan: A high priest of Fairwood, tasked himself to purify the forest's curse after it consumed it's warden.
 			KS3: "'What? You want my lore? Go get your own lore!'"
@@ -619,6 +625,7 @@ Mods: {
 					Bible1: How dare'eth![0.1] Doth thou use the sacred texts against me!?
 					Bible2: Cease this boondoggling bible betrayal!
 					BJustice: Expel my father's weapon from thy grasp'eth this instant!
+					Egg1: Thou shall not egg a priest!
 				}
 
 				Defeat: {
@@ -752,6 +759,43 @@ Mods: {
 				Variant: Screw you too I guess.
 				1: Don't attack.
 				2: I've come to relay a message from King Slayer -
+			}
+
+			OO: {
+				Intro: {
+					1: Yo.
+					2: So much for a surprise attack...
+					2Alt: I guess I can't fool you twice,[0.1] huh.
+					3: "[@a]Hang on,[0.1] I got a call from Girus."
+					4: "'I wasted too much energy too quickly?'"
+					5: "'I'm an idiot?'"
+					6: You're scrapping my personality drive after this fight?
+					7: "[@b]Ah well,[0.1] request accepted..."
+					8: Anyway...
+				}
+
+				Ready: Ready for obliteration?
+				DownedReady: PREPARE FOR OBLITERATION.
+
+				Desperation: {
+					1: SYSTEM OVERLOAD...
+					2: Overload?[0.5] Damn right I'm overloading!
+					3: My circuits are burning with energy![0.1] This is truly exhilarating!
+					4: "[@d]OVERHEATING...[0.1] OVERHEATING...[0.1] OVERHEATING...[0.1]"
+					5: Hahaha.[0.5] [@e]HAHAHAHAHAHAHA!
+					6: THE POWER OF THE SUN IN MY VERY CORE!
+					D1: SYSTEM OVERLOAD...
+					D2: "[@d][@e]OVERHEATING...[0.1] OVERHEATING...[0.1] OVERHEATING...[0.1]"
+					7: EYE BEAM! EYE BEAM! EYE BEAM! EYE BEAM!
+					8: CRITICAL CONDITION REACHED...[0.5] SELF DESTRUCTING...
+					9: Is it getting hot in here[0.1] or is it just m[@c]
+				}
+
+				Success: {
+					1: Alright,[0.1] target eliminated.
+					2: Returning to base...
+					D1: Target eliminated...
+				}
 			}
 		}
 
