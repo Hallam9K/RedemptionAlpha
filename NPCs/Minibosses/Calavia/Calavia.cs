@@ -21,6 +21,7 @@ using Terraria.Utilities;
 using Terraria.GameContent.ItemDropRules;
 using Redemption.Items.Weapons.PreHM.Melee;
 using Redemption.Buffs.Debuffs;
+using Terraria.Localization;
 
 namespace Redemption.NPCs.Minibosses.Calavia
 {
@@ -132,7 +133,7 @@ namespace Redemption.NPCs.Minibosses.Calavia
         {
             bestiaryEntry.Info.AddRange(new List<IBestiaryInfoElement> {
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Caverns,
-                new FlavorTextBestiaryInfoElement("A Chief-Warrior of the Iron Realm, lost and troubled by her distant venture from her home of Khen Boldur, which was spurred on by the barons of Arum. Swordplay and smithing is her expertise, along with familiarity of Blizzard magic.")
+                new FlavorTextBestiaryInfoElement(Language.GetTextValue("Mods.Redemption.FlavorTextBestiary.Calavia"))
             });
         }
         public override void HitEffect(NPC.HitInfo hit)
@@ -174,7 +175,7 @@ namespace Redemption.NPCs.Minibosses.Calavia
                         continue;
 
                     if (!Main.dedServ)
-                        RedeSystem.Instance.ChaliceUIElement.DisplayDialogue("How ruthless...", 180, 30, 0, Color.DarkGoldenrod);
+                        RedeSystem.Instance.ChaliceUIElement.DisplayDialogue(Language.GetTextValue("Mods.Redemption.UI.Chalice.Calaviakilled"), 180, 30, 0, Color.DarkGoldenrod);
 
                 }
             }
@@ -326,7 +327,7 @@ namespace Redemption.NPCs.Minibosses.Calavia
                     origin = NPC.Center;
                     NPC.Shoot(NPC.Center, ModContent.ProjectileType<Calavia_IcefallArena>(), 0, Vector2.Zero, false, SoundID.Item1, NPC.whoAmI);
                     if (!Main.dedServ)
-                        RedeSystem.Instance.TitleCardUIElement.DisplayTitle("Calavia", 60, 90, 0.8f, 0, Color.LightCyan, "Warrior of the Iron Realm");
+                        RedeSystem.Instance.TitleCardUIElement.DisplayTitle(Language.GetTextValue("Mods.Redemption.TitleCard.Calavia.Name"), 60, 90, 0.8f, 0, Color.LightCyan, Language.GetTextValue("Mods.Redemption.TitleCard.Calavia.Modifier"));
 
                     AIState = ActionState.JumpToOrigin;
                     NPC.netUpdate = true;
@@ -790,10 +791,10 @@ namespace Redemption.NPCs.Minibosses.Calavia
                                     Gore.NewGore(NPC.GetSource_FromThis(), NPC.position, NPC.velocity, ModContent.Find<ModGore>("Redemption/CalaviaHelmGore1").Type, 1);
                                 SoundEngine.PlaySound(CustomSounds.GuardBreak, NPC.position);
 
-                                string s1 = "Taborti! Taborti![0.2] I yield! I yield!";
-                                string s2 = "Grant me mercy!";
+                                string s1 = Language.GetTextValue("Mods.Redemption.Cutscene.Calavia.Fight.Defeat1");
+                                string s2 = Language.GetTextValue("Mods.Redemption.Cutscene.Calavia.Fight.Defeat2");
                                 if (player.MinionAttackTargetNPC == NPC.whoAmI)
-                                    s1 += "[0.2] Call your servants off!";
+                                    s1 += Language.GetTextValue("Mods.Redemption.Cutscene.Calavia.Fight.Defeat3");
                                 DialogueChain chain = new();
                                 chain.Add(new(NPC, s1, Color.White, Color.Gray, voice, .05f, 2f, 0, false, bubble: bubble))
                                      .Add(new(NPC, s2, Color.White, Color.Gray, voice, .05f, 2f, 0, false, bubble: bubble));
@@ -803,7 +804,7 @@ namespace Redemption.NPCs.Minibosses.Calavia
                             if (AITimer >= 180)
                             {
                                 if (RedeWorld.alignmentGiven && !Main.dedServ && !RedeBossDowned.downedCalavia)
-                                    RedeSystem.Instance.ChaliceUIElement.DisplayDialogue("She is wishing to be spared.", 180, 30, 0, Color.DarkGoldenrod);
+                                    RedeSystem.Instance.ChaliceUIElement.DisplayDialogue(Language.GetTextValue("Mods.Redemption.UI.Chalice.CalaviaChoice"), 180, 30, 0, Color.DarkGoldenrod);
 
                                 AITimer = 0;
                                 TimerRand = 1;
@@ -815,9 +816,9 @@ namespace Redemption.NPCs.Minibosses.Calavia
                             if (AITimer++ >= 400)
                             {
                                 NPC.dontTakeDamage = true;
-                                string s1 = "You understood?[0.2] So you aren't a khru?";
-                                string s2 = "Apologies for the startled reaction,[0.1] I never expected to meet a khen here.";
-                                string s3 = "I am actually in need of some assistance,[0.1] I'll explain more by the portal.";
+                                string s1 = Language.GetTextValue("Mods.Redemption.Cutscene.Calavia.Fight.Mercy1");
+                                string s2 = Language.GetTextValue("Mods.Redemption.Cutscene.Calavia.Fight.Mercy2");
+                                string s3 = Language.GetTextValue("Mods.Redemption.Cutscene.Calavia.Fight.Mercy3");
 
                                 DialogueChain chain = new();
                                 chain.Add(new(NPC, s1, Color.White, Color.Gray, voice, .05f, 2f, 0, false, bubble: bubble))
