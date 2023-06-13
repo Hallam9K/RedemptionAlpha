@@ -6,6 +6,7 @@ using Redemption.Globals.NPC;
 using Redemption.Items.Placeable.Banners;
 using Terraria;
 using Terraria.Audio;
+using Terraria.Localization;
 using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.GameContent.Bestiary;
@@ -140,20 +141,20 @@ namespace Redemption.NPCs.HM
                     DialogueChain chain = new();
                     if (Variant == 11)
                     {
-                        chain.Add(new(NPC, "Well aren't you a little trigger-happy.", Color.LightBlue, Color.DarkCyan, voice, .03f, 2f, 0, false, bubble: bubble))
-                             .Add(new(NPC, "You know there's like[0.1] a million of us, right?[1] Anyway,[0.1] I've come to relay a message from King Slayer -", Color.LightBlue, Color.DarkCyan, voice, .03f, 2f, 0, false, bubble: bubble))
-                             .Add(new(NPC, "\"I'll be heading off to the other world soon,[0.1] so if you have any unfinished business with me,[0.3] I'd get on that sooner rather than later.\"", Color.LightBlue, Color.DarkCyan, CustomSounds.Voice6 with { Pitch = 0.2f }, .03f, 3f, .5f, true, bubble: bubble, endID: 1));
+                        chain.Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.KS3Leaving.Attacked1"), Color.LightBlue, Color.DarkCyan, voice, .03f, 2f, 0, false, bubble: bubble))
+                             .Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.KS3Leaving.Attacked2"), Color.LightBlue, Color.DarkCyan, voice, .03f, 2f, 0, false, bubble: bubble))
+                             .Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.KS3Leaving.Message"), Color.LightBlue, Color.DarkCyan, CustomSounds.Voice6 with { Pitch = 0.2f }, .03f, 3f, .5f, true, bubble: bubble, endID: 1));
                     }
                     else if (Variant == 12)
                     {
                         NPC.dontTakeDamage = true;
-                        chain.Add(new(NPC, "Screw you too I guess.", Color.LightBlue, Color.DarkCyan, voice, .03f, 2f, 0, false, bubble: bubble));
+                        chain.Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.KS3Leaving.Variant"), Color.LightBlue, Color.DarkCyan, voice, .03f, 2f, 0, false, bubble: bubble));
                     }
                     else
                     {
-                        chain.Add(new(NPC, "Don't attack.", Color.LightBlue, Color.DarkCyan, voice, .03f, 2f, 0, false, bubble: bubble))
-                             .Add(new(NPC, "I've come to relay a message from King Slayer -", Color.LightBlue, Color.DarkCyan, voice, .03f, 2f, 0, false, bubble: bubble))
-                             .Add(new(NPC, "\"I'll be heading off to the other world soon,[0.1] so if you have any unfinished business with me,[0.3] I'd get on that sooner rather than later.\"", Color.LightBlue, Color.DarkCyan, CustomSounds.Voice6 with { Pitch = 0.2f }, .03f, 3f, .5f, true, bubble: bubble, endID: 1));
+                        chain.Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.KS3Leaving.1"), Color.LightBlue, Color.DarkCyan, voice, .03f, 2f, 0, false, bubble: bubble))
+                             .Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.KS3Leaving.2"), Color.LightBlue, Color.DarkCyan, voice, .03f, 2f, 0, false, bubble: bubble))
+                             .Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.KS3Leaving.Message"), Color.LightBlue, Color.DarkCyan, CustomSounds.Voice6 with { Pitch = 0.2f }, .03f, 3f, .5f, true, bubble: bubble, endID: 1));
                     }
                     chain.OnEndTrigger += Chain_OnEndTrigger;
                     ChatUI.Visible = true;
@@ -279,12 +280,12 @@ namespace Redemption.NPCs.HM
                     {
                         if (TimerRand == 1)
                         {
-                            string s = "Human";
+                            string s = Language.GetTextValue("Mods.Redemption.Cutscene.AndriodScan.Human");
                             if (player.IsFullTBot())
-                                s = "Robot";
+                                s = Language.GetTextValue("Mods.Redemption.Cutscene.AndriodScan.Robot");
                             else if (player.RedemptionPlayerBuff().ChickenForm)
-                                s = "Chicken";
-                            Dialogue d1 = new(NPC, s + " scanned...", Color.LightBlue, Color.DarkCyan, voice, .01f, .5f, .5f, true, bubble: bubble); // 65
+                                s = Language.GetTextValue("Mods.Redemption.Cutscene.AndriodScan.Chicken");
+                            Dialogue d1 = new(NPC, s + Language.GetTextValue("Mods.Redemption.Cutscene.AndriodScan.Scan"), Color.LightBlue, Color.DarkCyan, voice, .01f, .5f, .5f, true, bubble: bubble); // 65
                             ChatUI.Visible = true;
                             ChatUI.Add(d1);
                         }
@@ -292,8 +293,8 @@ namespace Redemption.NPCs.HM
                         {
                             string s = closeNPC.TypeName;
                             if (closeNPC.TypeName == "")
-                                s = "Unknown entity";
-                            Dialogue d1 = new(NPC, s + " scanned...", Color.LightBlue, Color.DarkCyan, voice, .01f, .5f, .5f, true, bubble: bubble); // 65
+                                s = Language.GetTextValue("Mods.Redemption.Cutscene.AndriodScan.Unknown");
+                            Dialogue d1 = new(NPC, s + Language.GetTextValue("Mods.Redemption.Cutscene.AndriodScan.Scan"), Color.LightBlue, Color.DarkCyan, voice, .01f, .5f, .5f, true, bubble: bubble); // 65
                             ChatUI.Visible = true;
                             ChatUI.Add(d1);
                         }
@@ -619,9 +620,8 @@ namespace Redemption.NPCs.HM
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Surface,
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Times.DayTime,
 
-                new FlavorTextBestiaryInfoElement(
-                    "Fodder sent down to the island by King Slayer III to scan. These are the first iteration of the Android Unit and the first robots designed by King Slayer during his million year voyage. Their original purpose was to bring company and life to the SoS, however they have since been fitted with more combat-oriented parts. When damaged, they will retreat back to the SoS and alert the network."),
-                new AndroidBestiaryText("Apidroids were an experiment with a highly durable metal from a distant star system. The metal - dubbed 'Rose Titanium' by King Slayer III - is one of the strongest materials discovered in the galaxy. However, King Slayer III hated its pink tinge, and so stubbornly refused to use it after making a few Androids out of it.")
+                new FlavorTextBestiaryInfoElement(Language.GetTextValue("Mods.Redemption.FlavorTextBestiary.Android")),
+                new AndroidBestiaryText(Language.GetTextValue("Mods.Redemption.Bestiary.Android"))
             });
         }
     }
