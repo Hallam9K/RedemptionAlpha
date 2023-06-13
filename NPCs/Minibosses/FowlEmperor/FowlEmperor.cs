@@ -100,8 +100,8 @@ namespace Redemption.NPCs.Minibosses.FowlEmperor
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Surface,
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Times.DayTime,
 
-                new FlavorTextBestiaryInfoElement("An Anglonic forest rooster with quite the personality. Was this intelligent animal the handiwork of a human's soul, or perhaps he was some mythological creature? We may never know."),
-                new FlavorTextBestiaryInfoElement("It may have just been a chicken, but it was a reminder of the hideous truth that, regardless of species, monarchy perpetuates archaic views of class and degrades others based on arbitrary standards.")
+                new FlavorTextBestiaryInfoElement(Language.GetTextValue("Mods.Redemption.FlavorTextBestiary.FowlEmperor1")),
+                new FlavorTextBestiaryInfoElement(Language.GetTextValue("Mods.Redemption.FlavorTextBestiary.FowlEmperor2"))
             });
         }
 
@@ -193,7 +193,7 @@ namespace Redemption.NPCs.Minibosses.FowlEmperor
                     {
                         case 0:
                             if (!Main.dedServ)
-                                RedeSystem.Instance.TitleCardUIElement.DisplayTitle("Fowl Emperor", 60, 90, 0.8f, 0, Color.PeachPuff, "A Pompous Rooster");
+                                RedeSystem.Instance.TitleCardUIElement.DisplayTitle(Language.GetTextValue("Mods.Redemption.TitleCard.FowlEmperor.Name"), 60, 90, 0.8f, 0, Color.PeachPuff, Language.GetTextValue("Mods.Redemption.TitleCard.FowlEmperor.Modifier"));
 
                             NPC.noTileCollide = true;
                             NPC.noGravity = true;
