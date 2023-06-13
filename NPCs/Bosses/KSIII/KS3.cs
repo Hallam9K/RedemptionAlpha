@@ -171,7 +171,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Sky,
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Times.DayTime,
 
-                new FlavorTextBestiaryInfoElement(Language.GetTextValue("Mods.Redemption.Bestiary.KS3"))
+                new FlavorTextBestiaryInfoElement(Language.GetTextValue("Mods.Redemption.FlavorTextBestiary.KS3"))
             });
         }
 
