@@ -12,6 +12,7 @@ using System;
 using Redemption.Dusts;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria.GameContent;
+using Terraria.Localization;
 
 namespace Redemption.NPCs.Friendly
 {
@@ -112,12 +113,12 @@ namespace Redemption.NPCs.Friendly
                     }
                     if (AITimer >= 260)
                     {
-                        string s = "Hold [Spirit Walker Ability Key] for 1 second to peek into the Spirit Realm";
+                        string s = Language.GetTextValue("Mods.Redemption.UI.SpiritWalker.Keybind");
                         foreach (string key in Redemption.RedeSpiritwalkerAbility.GetAssignedKeys())
                         {
-                            s = "Hold " + key + " for 1 second to peek into the Spirit Realm";
+                            s = Language.GetTextValue("Mods.Redemption.UI.SpiritWalker.Hold") + key + Language.GetTextValue("Mods.Redemption.UI.SpiritWalker.Context");
                         }
-                        RedeSystem.Instance.TitleCardUIElement.DisplayTitle("-Spirit Walker-", 300, 90, 1f, 0, Color.White, s);
+                        RedeSystem.Instance.TitleCardUIElement.DisplayTitle(Language.GetTextValue("Mods.Redemption.UI.SpiritWalker.Name"), 300, 90, 1f, 0, Color.White, s);
 
                         SoundEngine.PlaySound(CustomSounds.NewLocation, player.position);
                         player.RedemptionAbility().Spiritwalker = true;
