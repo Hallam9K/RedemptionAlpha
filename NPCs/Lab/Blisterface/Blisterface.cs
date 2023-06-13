@@ -13,6 +13,7 @@ using System.Collections.Generic;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.WorldGeneration;
 using Redemption.Base;
+using Terraria.Localization;
 
 namespace Redemption.NPCs.Lab.Blisterface
 {
@@ -70,8 +71,8 @@ namespace Redemption.NPCs.Lab.Blisterface
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
         {
             bestiaryEntry.Info.AddRange(new List<IBestiaryInfoElement> {
-                new FlavorTextBestiaryInfoElement("An unfortunate fish, disfigured and mutilated beyond recognition by the Xenomite infection. This strain seems to be similar to that of the Blistered Scientists..."),
-                new FlavorTextBestiaryInfoElement("That's a bigass fish.")
+                new FlavorTextBestiaryInfoElement(Language.GetTextValue("Mods.Redemption.FlavorTextBestiary.Blisterface1")),
+                new FlavorTextBestiaryInfoElement(Language.GetTextValue("Mods.Redemption.FlavorTextBestiary.Blisterface2"))
             });
         }
         public override bool CheckActive()
