@@ -1,4 +1,4 @@
-﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -117,28 +117,28 @@ namespace Redemption.NPCs.Friendly
             switch (ChatNumber)
             {
                 case 0:
-                    button = "Spirit Walking?";
+                    button = Language.GetTextValue("Mods.Redemption.DialogueBox.SpiritWalkerMan.1");
                     break;
                 case 1:
-                    button = "Dead Ringer?";
+                    button = Language.GetTextValue("Mods.Redemption.DialogueBox.SpiritWalkerMan.2");
                     break;
                 case 2:
-                    button = "Lost Souls & Vagrants?";
+                    button = Language.GetTextValue("Mods.Redemption.DialogueBox.SpiritWalkerMan.3");
                     break;
                 case 3:
-                    button = "Other uses for Dead Ringer?";
+                    button = Language.GetTextValue("Mods.Redemption.DialogueBox.SpiritWalkerMan.4");
                     break;
                 case 4:
-                    button = "About you?";
+                    button = Language.GetTextValue("Mods.Redemption.DialogueBox.SpiritWalkerMan.5");
                     break;
                 case 5:
                     if (Main.LocalPlayer.HasItem(ModContent.ItemType<OldTophat>()))
-                        button = "Request Old Tophat's Crux";
+                        button = Language.GetTextValue("Mods.Redemption.DialogueBox.SpiritWalkerMan.Tophat");
                     else
-                        button = "Request Crux";
+                        button = Language.GetTextValue("Mods.Redemption.DialogueBox.SpiritWalkerMan.Crux");
                     break;
             }
-            button2 = "Cycle Dialogue";
+            button2 = Language.GetTextValue("Mods.Redemption.DialogueBox.CycleD");
         }
 
         public override void OnChatButtonClicked(bool firstButton, ref string shopName)
