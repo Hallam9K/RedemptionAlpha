@@ -16,6 +16,7 @@ using Redemption.Items.Weapons.HM.Melee;
 using Terraria.Audio;
 using ReLogic.Content;
 using Redemption.UI.ChatUI;
+using Terraria.Localization;
 
 namespace Redemption.NPCs.Bosses.Cleaver
 {
@@ -251,8 +252,8 @@ namespace Redemption.NPCs.Bosses.Cleaver
                         if (AITimer == 60)
                         {
                             DialogueChain chain = new();
-                            chain.Add(new(NPC, "I came here to kick gum", Colors.RarityRed, Color.DarkRed, voice, .03f, 2f, 0, false, null, bubble))
-                                 .Add(new(NPC, "and chew ass...", Colors.RarityRed, Color.DarkRed, voice, .03f, 2f, .5f, true, null, bubble, endID: 1));
+                            chain.Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.WielderBot.Funny1"), Colors.RarityRed, Color.DarkRed, voice, .03f, 2f, 0, false, null, bubble))
+                                 .Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.WielderBot.Funny2"), Colors.RarityRed, Color.DarkRed, voice, .03f, 2f, .5f, true, null, bubble, endID: 1));
                             chain.OnEndTrigger += Chain_OnEndTrigger;
                             ChatUI.Visible = true;
                             ChatUI.Add(chain);
@@ -289,7 +290,7 @@ namespace Redemption.NPCs.Bosses.Cleaver
                         if (Funny && AITimer == 1 && !Main.dedServ)
                         {
                             DialogueChain chain = new();
-                            chain.Add(new(NPC, "...And I'm all out of ass.", Colors.RarityRed, Color.DarkRed, voice, .03f, 2f, .5f, true, null, bubble));
+                            chain.Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.WielderBot.Funny3"), Colors.RarityRed, Color.DarkRed, voice, .03f, 2f, .5f, true, null, bubble));
                             ChatUI.Visible = true;
                             ChatUI.Add(chain);
                         }
@@ -674,7 +675,7 @@ namespace Redemption.NPCs.Bosses.Cleaver
                     if (AITimer == 180)
                     {
                         DialogueChain chain = new();
-                        chain.Add(new(NPC, "...Nah.", Colors.RarityRed, Color.DarkRed, voice, .01f, 2f, 0, false, null, bubble));
+                        chain.Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.WielderBot.Defeat"), Colors.RarityRed, Color.DarkRed, voice, .01f, 2f, 0, false, null, bubble));
                         ChatUI.Visible = true;
                         ChatUI.Add(chain);
                     }
