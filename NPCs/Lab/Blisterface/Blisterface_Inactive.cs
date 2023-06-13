@@ -6,6 +6,7 @@ using Redemption.WorldGeneration;
 using Terraria.Audio;
 using Redemption.Base;
 using Redemption.Biomes;
+using Terraria.Localization;
 
 namespace Redemption.NPCs.Lab.Blisterface
 {
@@ -59,7 +60,7 @@ namespace Redemption.NPCs.Lab.Blisterface
             {
                 if (!Main.dedServ)
                 {
-                    RedeSystem.Instance.TitleCardUIElement.DisplayTitle("Blisterface", 60, 90, 0.8f, 0, Color.Green, "An Unfortunate Goldfish");
+                    RedeSystem.Instance.TitleCardUIElement.DisplayTitle(Language.GetTextValue("Mods.Redemption.TitleCard.Blisterface.Name"), 60, 90, 0.8f, 0, Color.Green, Language.GetTextValue("Mods.Redemption.TitleCard.Blisterface.Modifier"));
                     SoundEngine.PlaySound(CustomSounds.SpookyNoise, NPC.position);
                 }
                 NPC.SetDefaults(ModContent.NPCType<Blisterface>());
