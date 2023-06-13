@@ -107,7 +107,7 @@ namespace Redemption.NPCs.Minibosses.SkullDigger
             bestiaryEntry.Info.AddRange(new List<IBestiaryInfoElement> {
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Caverns,
 
-                new FlavorTextBestiaryInfoElement("The first successful reanimation from the Keeper. Skull Digger swore to protect and care for her, while she would use forbidden necromancy to keep his fading body alive. At this point, his lower half is nothing more than a spirit.")
+                new FlavorTextBestiaryInfoElement(Language.GetTextValue("Mods.Redemption.FlavorTextBestiary.SkullDigger"))
             });
         }
 
@@ -230,7 +230,7 @@ namespace Redemption.NPCs.Minibosses.SkullDigger
                             {
                                 if (!Main.dedServ)
                                 {
-                                    RedeSystem.Instance.TitleCardUIElement.DisplayTitle("Skull Digger", 60, 90, 0.8f, 0, Color.LightCyan, "The Keeper's First Creation");
+                                    RedeSystem.Instance.TitleCardUIElement.DisplayTitle(Language.GetTextValue("Mods.Redemption.TitleCard.SkullDigger.Name"), 60, 90, 0.8f, 0, Color.LightCyan, Language.GetTextValue("Mods.Redemption.TitleCard.SkullDigger.Modifier"));
                                     SoundEngine.PlaySound(CustomSounds.SpookyNoise, NPC.position);
                                 }
                                 if (!NPC.AnyNPCs(ModContent.NPCType<Keeper>()))
