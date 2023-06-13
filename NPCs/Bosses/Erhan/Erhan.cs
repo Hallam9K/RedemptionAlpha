@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using System;
 using Terraria;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using System.IO;
 using Redemption.Items.Usable;
@@ -165,7 +166,7 @@ namespace Redemption.NPCs.Bosses.Erhan
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Surface,
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Times.DayTime,
 
-                new FlavorTextBestiaryInfoElement("A high priest of Fairwood, tasked himself to purify the forest's curse after it consumed it's warden.")
+                new FlavorTextBestiaryInfoElement(Language.GetTextValue("Mods.Redemption.FlavorTextBestiary.Erhan"))
             });
         }
 
@@ -337,7 +338,7 @@ namespace Redemption.NPCs.Bosses.Erhan
                                     if (!Main.dedServ)
                                     {
                                         DialogueChain chain = new();
-                                        chain.Add(new(NPC, "Great heavens!!", Color.LightGoldenrodYellow, new Color(100, 86, 0), voice, .03f, 2f, 0, false, null, bubble, null, modifier, 1));
+                                        chain.Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.Erhan.Intro.1"), Color.LightGoldenrodYellow, new Color(100, 86, 0), voice, .03f, 2f, 0, false, null, bubble, null, modifier, 1));
                                         chain.OnSymbolTrigger += Chain_OnSymbolTrigger;
                                         chain.OnEndTrigger += Chain_OnEndTrigger;
                                         ChatUI.Visible = true;
@@ -359,10 +360,10 @@ namespace Redemption.NPCs.Bosses.Erhan
                                     if (!Main.dedServ)
                                     {
                                         DialogueChain chain = new();
-                                        chain.Add(new(NPC, "Doth thine brain be stuck in a well!?", Color.LightGoldenrodYellow, new Color(100, 86, 0), voice, .03f, 2f, 0, false, null, bubble, null, modifier)) // 174
-                                             .Add(new(NPC, "To summon a demon,[0.1] so close to my land...[0.5] 'Tis heresy!", Color.LightGoldenrodYellow, new Color(100, 86, 0), voice, .03f, 2f, 0, false, null, bubble, null, modifier)) // 248
-                                             .Add(new(NPC, "[@b]Repent![0.5] Repent for thy sins!", Color.LightGoldenrodYellow, new Color(100, 86, 0), voice, .03f, 2f, 0, false, null, bubble, null, modifier)) // 186
-                                             .Add(new(NPC, "[@c]Lest I smack'eth thine buttocks with the Hand of Judgement!", Color.LightGoldenrodYellow, new Color(100, 86, 0), voice, .03f, 2f, .5f, true, null, bubble, null, modifier, 2)); // 248
+                                        chain.Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.Erhan.Intro.2"), Color.LightGoldenrodYellow, new Color(100, 86, 0), voice, .03f, 2f, 0, false, null, bubble, null, modifier)) // 174
+                                             .Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.Erhan.Intro.3"), Color.LightGoldenrodYellow, new Color(100, 86, 0), voice, .03f, 2f, 0, false, null, bubble, null, modifier)) // 248
+                                             .Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.Erhan.Intro.4"), Color.LightGoldenrodYellow, new Color(100, 86, 0), voice, .03f, 2f, 0, false, null, bubble, null, modifier)) // 186
+                                             .Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.Erhan.Intro.5"), Color.LightGoldenrodYellow, new Color(100, 86, 0), voice, .03f, 2f, .5f, true, null, bubble, null, modifier, 2)); // 248
                                         chain.OnSymbolTrigger += Chain_OnSymbolTrigger;
                                         chain.OnEndTrigger += Chain_OnEndTrigger;
                                         ChatUI.Visible = true;
@@ -373,8 +374,8 @@ namespace Redemption.NPCs.Bosses.Erhan
                                 {
                                     if (!Main.dedServ)
                                     {
-                                        RedeSystem.Instance.TitleCardUIElement.DisplayTitle("Erhan", 60, 90, 0.8f, 0, Color.Goldenrod,
-                                            "Anglonic High Priest");
+                                        RedeSystem.Instance.TitleCardUIElement.DisplayTitle(Language.GetTextValue("Mods.Redemption.TitleCard.Erhan.Name"), 60, 90, 0.8f, 0, Color.Goldenrod,
+                                            Language.GetTextValue("Mods.Redemption.TitleCard.Erhan.Modifier"));
                                         Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/BossErhan");
                                     }
                                     if (RedeBossDowned.erhanDeath == 0 && Main.netMode != NetmodeID.MultiplayerClient)
@@ -400,13 +401,13 @@ namespace Redemption.NPCs.Bosses.Erhan
                                     DialogueChain chain = new();
                                     if (player.ZoneUnderworldHeight)
                                     {
-                                        chain.Add(new(NPC, "CEA-", Color.LightGoldenrodYellow, new Color(100, 86, 0), voice, .03f, .3f, 0, false, null, bubble, null, modifier));
-                                        chain.Add(new(NPC, "...[1] A-[0.1]are we in...", Color.LightGoldenrodYellow, new Color(100, 86, 0), voice, .03f, 2f, 0, false, null, bubble, null, modifier));
-                                        chain.Add(new(NPC, "[@j]Why didst thou summon me here!?[0.5] I dareth not fight in such demonic lands!!", Color.LightGoldenrodYellow, new Color(100, 86, 0), voice, .03f, 2f, 0, false, null, bubble, null, modifier));
-                                        chain.Add(new(NPC, "Farewell!", Color.LightGoldenrodYellow, new Color(100, 86, 0), voice, .03f, 1, 0, false, null, bubble, null, modifier, 4));
+                                        chain.Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.Erhan.Resummon.Underworld.1"), Color.LightGoldenrodYellow, new Color(100, 86, 0), voice, .03f, .3f, 0, false, null, bubble, null, modifier));
+                                        chain.Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.Erhan.Resummon.Underworld.2"), Color.LightGoldenrodYellow, new Color(100, 86, 0), voice, .03f, 2f, 0, false, null, bubble, null, modifier));
+                                        chain.Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.Erhan.Resummon.Underworld.3"), Color.LightGoldenrodYellow, new Color(100, 86, 0), voice, .03f, 2f, 0, false, null, bubble, null, modifier));
+                                        chain.Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.Erhan.Resummon.Underworld.4"), Color.LightGoldenrodYellow, new Color(100, 86, 0), voice, .03f, 1, 0, false, null, bubble, null, modifier, 4));
                                     }
                                     else
-                                        chain.Add(new(NPC, "CEASE!", Color.LightGoldenrodYellow, new Color(100, 86, 0), voice, .03f, 2f, .5f, true, null, bubble, null, modifier, 2));
+                                        chain.Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.Erhan.Resummon.Normal"), Color.LightGoldenrodYellow, new Color(100, 86, 0), voice, .03f, 2f, .5f, true, null, bubble, null, modifier, 2));
                                     chain.OnSymbolTrigger += Chain_OnSymbolTrigger;
                                     chain.OnEndTrigger += Chain_OnEndTrigger;
                                     ChatUI.Visible = true;
@@ -417,8 +418,8 @@ namespace Redemption.NPCs.Bosses.Erhan
                                 {
                                     if (!Main.dedServ)
                                     {
-                                        RedeSystem.Instance.TitleCardUIElement.DisplayTitle("Erhan", 60, 90, 0.8f, 0, Color.Goldenrod,
-                                            "Anglonic High Priest");
+                                        RedeSystem.Instance.TitleCardUIElement.DisplayTitle(Language.GetTextValue("Mods.Redemption.TitleCard.Erhan.Name"), 60, 90, 0.8f, 0, Color.Goldenrod,
+                                            Language.GetTextValue("Mods.Redemption.TitleCard.Erhan.Modifier"));
                                         Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/BossErhan");
                                     }
                                     TimerRand = 0;
@@ -894,14 +895,14 @@ namespace Redemption.NPCs.Bosses.Erhan
                                 if (AITimer == 60)
                                 {
                                     DialogueChain chain = new();
-                                    chain.Add(new(NPC, "Huzzah! [0.5]*pant*[0.5] A shield!", Color.LightGoldenrodYellow, new Color(100, 86, 0), voice, .03f, 2f, 0, false, null, bubble, null, modifier)) // 184
-                                         .Add(new(NPC, "But alas,[0.1] this shield is useless against a blade!", Color.LightGoldenrodYellow, new Color(100, 86, 0), voice, .03f, 2f, .5f, true, null, bubble, null, modifier)); // 238
+                                    chain.Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.Erhan.Interval.1"), Color.LightGoldenrodYellow, new Color(100, 86, 0), voice, .03f, 2f, 0, false, null, bubble, null, modifier)) // 184
+                                         .Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.Erhan.Interval.2"), Color.LightGoldenrodYellow, new Color(100, 86, 0), voice, .03f, 2f, .5f, true, null, bubble, null, modifier)); // 238
                                     ChatUI.Visible = true;
                                     ChatUI.Add(chain);
                                 }
                                 if (AITimer == 500)
                                 {
-                                    Dialogue d1 = new(NPC, "*pant* *pant*[0.5] Alright'eth![0.5] I hath regained my breath.[0.5] Have at thee!", Color.LightGoldenrodYellow, new Color(100, 86, 0), voice, .03f, 2f, .5f, true, null, bubble, null, modifier); // 354
+                                    Dialogue d1 = new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.Erhan.Interval.3"), Color.LightGoldenrodYellow, new Color(100, 86, 0), voice, .03f, 2f, .5f, true, null, bubble, null, modifier); // 354
                                     ChatUI.Visible = true;
                                     ChatUI.Add(d1);
                                 }
@@ -991,9 +992,9 @@ namespace Redemption.NPCs.Bosses.Erhan
                                     {
                                         ID = 0;
                                         DialogueChain chain = new();
-                                        chain.Add(new(NPC, "I foresee my defeat creeping up on me.", Color.LightGoldenrodYellow, new Color(100, 86, 0), voice, .03f, 2f, 0, false, null, bubble, null, modifier)) // 176
-                                             .Add(new(NPC, "Well...", Color.LightGoldenrodYellow, new Color(100, 86, 0), voice, .03f, 2f, 0, false, null, bubble, null, modifier)) // 114
-                                             .Add(new(NPC, "If all else fail'eth...", Color.LightGoldenrodYellow, new Color(100, 86, 0), voice, .03f, 1.6f, .3f, true, null, bubble, null, modifier, 3)); // 166
+                                        chain.Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.Erhan.Defeat.1"), Color.LightGoldenrodYellow, new Color(100, 86, 0), voice, .03f, 2f, 0, false, null, bubble, null, modifier)) // 176
+                                             .Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.Erhan.Defeat.2"), Color.LightGoldenrodYellow, new Color(100, 86, 0), voice, .03f, 2f, 0, false, null, bubble, null, modifier)) // 114
+                                             .Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.Erhan.Defeat.3"), Color.LightGoldenrodYellow, new Color(100, 86, 0), voice, .03f, 1.6f, .3f, true, null, bubble, null, modifier, 3)); // 166
                                         chain.OnSymbolTrigger += Chain_OnSymbolTrigger;
                                         chain.OnEndTrigger += Chain_OnEndTrigger;
                                         ChatUI.Visible = true;
@@ -1008,9 +1009,9 @@ namespace Redemption.NPCs.Bosses.Erhan
                                     if (AITimer == 1536)
                                     {
                                         DialogueChain chain = new();
-                                        chain.Add(new(NPC, "Grenade.", Color.LightGoldenrodYellow, new Color(100, 86, 0), voice, .03f, 2f, 0, false, null, bubble, null, modifier)) // 116
+                                        chain.Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.Erhan.Defeat.4"), Color.LightGoldenrodYellow, new Color(100, 86, 0), voice, .03f, 2f, 0, false, null, bubble, null, modifier)) // 116
                                              .Add(new(NPC, "[@f]...", Color.LightGoldenrodYellow, new Color(100, 86, 0), voice, .03f, 2.16f, 0, false, null, bubble, null, modifier)) // 136
-                                             .Add(new(NPC, "[@g]How doth one use this thing?[@h]", Color.LightGoldenrodYellow, new Color(100, 86, 0), voice, .03f, .16f, 0, false, null, bubble, null, modifier)); // 66
+                                             .Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.Erhan.Defeat.5"), Color.LightGoldenrodYellow, new Color(100, 86, 0), voice, .03f, .16f, 0, false, null, bubble, null, modifier)); // 66
                                         chain.OnSymbolTrigger += Chain_OnSymbolTrigger;
                                         ChatUI.Visible = true;
                                         ChatUI.Add(chain);
@@ -1078,19 +1079,19 @@ namespace Redemption.NPCs.Bosses.Erhan
                                 {
                                     if (AITimer == 60)
                                     {
-                                        Dialogue d1 = new(NPC, "It would[0.1] appear'eth,[0.3] I hath lost.", Color.LightGoldenrodYellow, new Color(100, 86, 0), voice, .03f, 2f, .5f, true, null, bubble, null, modifier); // 216
+                                        Dialogue d1 = new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.Erhan.Choice.1"), Color.LightGoldenrodYellow, new Color(100, 86, 0), voice, .03f, 2f, .5f, true, null, bubble, null, modifier); // 216
                                         ChatUI.Visible = true;
                                         ChatUI.Add(d1);
                                     }
                                     if (AITimer == 300)
                                     {
-                                        Dialogue d2 = new(NPC, "If,[0.3] mayhaps you shan't[0.1] spare my life...", Color.LightGoldenrodYellow, new Color(100, 86, 0), voice, .03f, 2f, .5f, true, null, bubble, null, modifier); // 238
+                                        Dialogue d2 = new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.Erhan.Choice.2"), Color.LightGoldenrodYellow, new Color(100, 86, 0), voice, .03f, 2f, .5f, true, null, bubble, null, modifier); // 238
                                         ChatUI.Visible = true;
                                         ChatUI.Add(d2);
                                     }
                                     if (AITimer == 600)
                                     {
-                                        Dialogue d3 = new(NPC, "Send master Hallowed Knight[0.3] my regards.", Color.LightGoldenrodYellow, new Color(100, 86, 0), voice, .03f, 2f, .5f, true, null, bubble, null, modifier); // 228
+                                        Dialogue d3 = new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.Erhan.Choice.3"), Color.LightGoldenrodYellow, new Color(100, 86, 0), voice, .03f, 2f, .5f, true, null, bubble, null, modifier); // 228
                                         ChatUI.Visible = true;
                                         ChatUI.Add(d3);
                                     }
@@ -1100,7 +1101,7 @@ namespace Redemption.NPCs.Bosses.Erhan
                                     if (!Main.dedServ)
                                     {
                                         DialogueChain chain = new();
-                                        chain.Add(new(NPC, "Well...[0.5] 'Til we meet again!", Color.LightGoldenrodYellow, new Color(100, 86, 0), voice, .03f, 2f, 0, false, null, bubble, null, modifier, 5)); // 184
+                                        chain.Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.Erhan.Choice.4"), Color.LightGoldenrodYellow, new Color(100, 86, 0), voice, .03f, 2f, 0, false, null, bubble, null, modifier, 5)); // 184
                                         chain.OnEndTrigger += Chain_OnEndTrigger;
                                         ChatUI.Visible = true;
                                         ChatUI.Add(chain);
@@ -1198,16 +1199,16 @@ namespace Redemption.NPCs.Bosses.Erhan
         {
             if (!egged && AIState is ActionState.Attacks && (projectile.type == ModContent.ProjectileType<ChickenEgg_Proj>() || projectile.type == ModContent.ProjectileType<GoldChickenEgg_Proj>()))
             {
-                Dialogue d = new(NPC, "Thou shall not egg a priest!", Color.LightGoldenrodYellow, new Color(100, 86, 0), voice, .03f, 2f, .5f, true, null, bubble, null, modifier);
+                Dialogue d = new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.Erhan.Interaction.Egg"), Color.LightGoldenrodYellow, new Color(100, 86, 0), voice, .03f, 2f, .5f, true, null, bubble, null, modifier);
                 ChatUI.Visible = true;
                 ChatUI.Add(d);
                 egged = true;
             }
             if (!grenaded && AIState is ActionState.Attacks && (projectile.type == ModContent.ProjectileType<HallowedHandGrenade_Proj>()))
             {
-                string s = "Oh...[0.5] So that is how it's used'eth...";
+                string s = Language.GetTextValue("Mods.Redemption.Cutscene.Erhan.Interaction.Grenade1");
                 if (Main.rand.NextBool())
-                    s = "What in God's name!?";
+                    s = Language.GetTextValue("Mods.Redemption.Cutscene.Erhan.Interaction.Grenade2");
                 Dialogue d = new(NPC, s, Color.LightGoldenrodYellow, new Color(100, 86, 0), voice, .03f, 2f, .5f, true, null, bubble, null, modifier);
                 ChatUI.Visible = true;
                 ChatUI.Add(d);
@@ -1215,9 +1216,9 @@ namespace Redemption.NPCs.Bosses.Erhan
             }
             if (!bibled && AIState is ActionState.Attacks && (projectile.type == ModContent.ProjectileType<HolyBible_Ray>()))
             {
-                string s = "How dare'eth![0.1] Doth thou use the sacred texts against me!?";
+                string s = Language.GetTextValue("Mods.Redemption.Cutscene.Erhan.Interaction.Bible1");
                 if (Main.rand.NextBool())
-                    s = "Cease this boondoggling bible betrayal!";
+                    s = Language.GetTextValue("Mods.Redemption.Cutscene.Erhan.Interaction.Bible2");
                 Dialogue d = new(NPC, s, Color.LightGoldenrodYellow, new Color(100, 86, 0), voice, .03f, 2f, .5f, true, null, bubble, null, modifier);
                 ChatUI.Visible = true;
                 ChatUI.Add(d);
@@ -1225,9 +1226,9 @@ namespace Redemption.NPCs.Bosses.Erhan
             }
             if (!blindJusted && AIState is ActionState.Attacks && (projectile.type == ModContent.ProjectileType<BlindJustice_Proj>()))
             {
-                string s = "F-Father!?[0.5] Nay, 'tis merely a weapon thief!";
+                string s = Language.GetTextValue("Mods.Redemption.Cutscene.Erhan.Interaction.BJustice2");
                 if (Main.rand.NextBool())
-                    s = "Expel my father's weapon from thy grasp'eth this instant!";
+                    s = Language.GetTextValue("Mods.Redemption.Cutscene.Erhan.Interaction.BJustice2");
                 Dialogue d = new(NPC, s, Color.LightGoldenrodYellow, new Color(100, 86, 0), voice, .03f, 2f, .5f, true, null, bubble, null, modifier);
                 ChatUI.Visible = true;
                 ChatUI.Add(d);
