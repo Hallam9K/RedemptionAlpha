@@ -80,8 +80,8 @@ namespace Redemption.NPCs.Friendly
         {
             bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
 
-                new FlavorTextBestiaryInfoElement("Quiet, mildly melancholic but happy to help you, Adam is an android and the leader of a small group called the Alpha. They are your go-to guide for all-things Liden."),
-                new FlavorTextBestiaryInfoElement("\"I may be the only one of my kind to honor all Three Laws... I can't assure the others will take you in with open arms like I did. Stay safe out there.\"")
+                new FlavorTextBestiaryInfoElement(Language.GetTextValue("Mods.Redemption.FlavorTextBestiary.TBot1")),
+                new FlavorTextBestiaryInfoElement(Language.GetTextValue("Mods.Redemption.FlavorTextBestiary.TBot2"))
             });
         }
 
@@ -97,7 +97,7 @@ namespace Redemption.NPCs.Friendly
         public override bool CheckDead()
         {
             RedeWorld.tbotDownedTimer = 0;
-            Main.NewText("Adam the Friendly T-Bot was knocked unconscious...", Color.Red.R, Color.Red.G, Color.Red.B);
+            Main.NewText(Language.GetTextValue("Mods.Redemption.DialogueBox.TBot.Unconscious"), Color.Red.R, Color.Red.G, Color.Red.B);
             NPC.SetDefaults(ModContent.NPCType<TBotUnconscious>());
             NPC.life = 1;
 
@@ -217,11 +217,11 @@ namespace Redemption.NPCs.Friendly
         {
             button = Language.GetTextValue("LegacyInterface.28");
 
-            button2 = "Read Floppy Disk";
+            button2 = Language.GetTextValue("Mods.Redemption.Dialogue.TBot.FloppyDisk");
             if (NextPage)
-                button2 = "Next Page (1/2)";
+                button2 = Language.GetTextValue("Mods.Redemption.Dialogue.TBot.NextPage");
             if (FDisk >= 20)
-                button2 += " (2/2)";
+                button2 += Language.GetTextValue("Mods.Redemption.Dialogue.TBot.Next");
         }
 
         public static int FDisk;
