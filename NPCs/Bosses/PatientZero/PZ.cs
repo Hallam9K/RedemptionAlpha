@@ -16,6 +16,7 @@ using Redemption.Items.Usable;
 using Terraria.GameContent.ItemDropRules;
 using Redemption.Items.Lore;
 using Terraria.Audio;
+using Terraria.Localization;
 using Terraria.GameContent.Events;
 using ReLogic.Content;
 using Redemption.Buffs.Debuffs;
@@ -128,7 +129,7 @@ namespace Redemption.NPCs.Bosses.PatientZero
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
         {
             bestiaryEntry.Info.AddRange(new List<IBestiaryInfoElement> {
-                new FlavorTextBestiaryInfoElement("An unfortunate scientist, mutilated and disfigured by the Xenomite infection. This specimen was Kari Johannson, the father of all T-Bots and patient zero of the xenomite infection. He's been stuck for 50 years, conscious and aware of the situation around him... God, that must be tormentous.")
+                new FlavorTextBestiaryInfoElement(Language.GetTextValue("Mods.Redemption.FlavorTextBestiary.PZ"))
             });
         }
         public override void HitEffect(NPC.HitInfo hit)
@@ -327,7 +328,7 @@ namespace Redemption.NPCs.Bosses.PatientZero
                 case ActionState.Begin:
                     if (AITimer++ >= 978 || RedeConfigClient.Instance.NoPZBuildUp)
                     {
-                        RedeSystem.Instance.TitleCardUIElement.DisplayTitle("Kari Johansson", 60, 90, 0.8f, 0, Color.Green, "Patient Zero");
+                        RedeSystem.Instance.TitleCardUIElement.DisplayTitle(Language.GetTextValue("Mods.Redemption.TitleCard.PZ.Name"), 60, 90, 0.8f, 0, Color.Green, Language.GetTextValue("Mods.Redemption.TitleCard.PZ.Modifier"));
                         AITimer = 0;
                         OpenEye = true;
                         NPC.dontTakeDamage = false;
