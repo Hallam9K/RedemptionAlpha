@@ -277,7 +277,7 @@ namespace Redemption.NPCs.Friendly
             if (RedeBossDowned.downedTreebark)
             {
                 chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.TreebarkDryad.FelledDialogue3"), 10);
-                return "Hmmmm... " + chat;
+                return Language.GetTextValue("Mods.Redemption.Dialogue.TreebarkDryad.Felled") + chat;
             }
 
             int score = 0;
