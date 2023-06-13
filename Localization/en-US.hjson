@@ -1188,6 +1188,23 @@ Mods: {
 				Crux: Request Crux
 			}
 
+			ForestNymph: {
+				1: Offer Herb Bag
+				2: Offer Anglonic Mystic Blossom
+				3: Home?
+				4: Offer building a home
+				HomeRequirements: Home Requirements
+				5: How is your home?
+				Talk: Talk
+				Trade: Trade
+				Blessing: Nature's Blessing
+				Follow: Follow
+				SFollow: Stop Following
+				DHair: Decorate Hair
+				SHair: Style Hair
+				Crux: Request Crux
+			}
+
 			KS3: {
 				0: Why are you here?
 				1: Crashed Spaceship?
