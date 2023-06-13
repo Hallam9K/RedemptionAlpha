@@ -113,17 +113,17 @@ namespace Redemption.NPCs.Minibosses.Calavia
 
                     if (AITimer == 60 && chain.Dialogue.Count == 0)
                     {
-                        string s1 = "Oi!";
-                        string s2 = "I wouldn't take that spirit back to Arum if I were ya.";
-                        string s3 = "And why would that be?";
-                        string s4 = "Forgive my bluntness,[0.1] but the barons of Arum are nothing but rancorous demons.";
-                        string s5 = "[@b]Excuse me?[0.5] I haven't seen a single droplet of malice from them,[0.1] and I've been workin' with them for years!";
-                        string s6 = "As have I...[0.3][@c][@d] in a more direct sense.[0.5][@g] Just trust me lassie,[0.1] break free Kyretha's spirit.[0.5] Let her truly rest.";
-                        string s7 = "To doubt the wisdom of a liberated spirit would be most imprudent.";
-                        string s8 = ".^0.3^..^0.05^ [@e]Gorhal'on.[0.5][@f] Taborti.[0.6] I'll free it after I go through the portal.";
-                        string s9 = "Is that a promise?";
-                        string s10 = "Bi'oruen.";
-                        string s11 = "Very well.";
+                        string s1 = Language.GetTextValue("Mods.Redemption.Cutscene.Calavia.Talk.1");
+                        string s2 = Language.GetTextValue("Mods.Redemption.Cutscene.Calavia.Talk.2");
+                        string s3 = Language.GetTextValue("Mods.Redemption.Cutscene.Calavia.Talk.3");
+                        string s4 = Language.GetTextValue("Mods.Redemption.Cutscene.Calavia.Talk.4");
+                        string s5 = Language.GetTextValue("Mods.Redemption.Cutscene.Calavia.Talk.5");
+                        string s6 = Language.GetTextValue("Mods.Redemption.Cutscene.Calavia.Talk.6");
+                        string s7 = Language.GetTextValue("Mods.Redemption.Cutscene.Calavia.Talk.7");
+                        string s8 = Language.GetTextValue("Mods.Redemption.Cutscene.Calavia.Talk.8");
+                        string s9 = Language.GetTextValue("Mods.Redemption.Cutscene.Calavia.Talk.9");
+                        string s10 = Language.GetTextValue("Mods.Redemption.Cutscene.Calavia.Talk.10");
+                        string s11 = Language.GetTextValue("Mods.Redemption.Cutscene.Calavia.Talk.11");
 
                         chain.Add(new(spirit, s1, Color.LightBlue, Color.DarkBlue, spiritVoice, .05f, 2f, 0, false, bubble: bubble))
                              .Add(new(spirit, s2, Color.LightBlue, Color.DarkBlue, spiritVoice, .05f, 2f, 0, false, bubble: bubble))
