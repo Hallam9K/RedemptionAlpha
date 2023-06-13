@@ -148,7 +148,7 @@ namespace Redemption.NPCs.Bosses.ADD
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Surface,
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Visuals.Rain,
 
-                new FlavorTextBestiaryInfoElement("Little has been recorded of Akka during her youth, it is believed by the locals that her spirit infused with a great tree in the Spirit Realm, where she would sleep until awoken by her husband to be worshipped once more.")
+                new FlavorTextBestiaryInfoElement(Language.GetTextValue("Mods.Redemption.FlaverTextBestiary.Akka"))
             });
         }
         public override void ModifyNPCLoot(NPCLoot npcLoot)
@@ -250,7 +250,7 @@ namespace Redemption.NPCs.Bosses.ADD
                                 if (AITimer == 60)
                                 {
                                     if (!Main.dedServ)
-                                        RedeSystem.Instance.TitleCardUIElement.DisplayTitle("Akka", 60, 90, 0.8f, 0, Color.PaleGreen, "Ancient Goddess of Nature");
+                                        RedeSystem.Instance.TitleCardUIElement.DisplayTitle(Language.GetTextValue("Mods.Redemption.TitleCard.Akka.Name"), 60, 90, 0.8f, 0, Color.PaleGreen, Language.GetTextValue("Mods.Redemption.TitleCard.Akka.Modifier"));
 
                                     EmoteBubble.NewBubble(0, new WorldUIAnchor(NPC), 50);
                                 }
@@ -268,7 +268,7 @@ namespace Redemption.NPCs.Bosses.ADD
                     else
                     {
                         if (!Main.dedServ)
-                            RedeSystem.Instance.TitleCardUIElement.DisplayTitle("Akka", 60, 90, 0.8f, 0, Color.LightGreen, "Ancient Goddess of Nature");
+                            RedeSystem.Instance.TitleCardUIElement.DisplayTitle(Language.GetTextValue("Mods.Redemption.TitleCard.Akka.Name"), 60, 90, 0.8f, 0, Color.PaleGreen, Language.GetTextValue("Mods.Redemption.TitleCard.Akka.Modifier"));
 
                         AIState = ActionState.ResetVars;
                         AITimer = 0;
