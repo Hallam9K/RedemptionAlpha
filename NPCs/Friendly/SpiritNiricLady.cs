@@ -1,4 +1,4 @@
-﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -114,14 +114,14 @@ namespace Redemption.NPCs.Friendly
             bool offering = Main.LocalPlayer.HasItem(ItemID.Diamond);
             button = ChatNumber switch
             {
-                1 => "New kingdom?",
-                2 => "Your corpse?",
-                3 => "Nirin?",
-                4 => "Disaster?",
-                5 => request && offering ? "Offer 6 Diamonds" : "Request Crux",
-                _ => "About you?",
+                1 => Language.GetTextValue("Mods.Redemption.DialogueBox.SpiritNiricLady.1"),
+                2 => Language.GetTextValue("Mods.Redemption.DialogueBox.SpiritNiricLady.2"),
+                3 => Language.GetTextValue("Mods.Redemption.DialogueBox.SpiritNiricLady.3"),
+                4 => Language.GetTextValue("Mods.Redemption.DialogueBox.SpiritNiricLady.4"),
+                5 => request && offering ? Language.GetTextValue("Mods.Redemption.DialogueBox.SpiritNiricLady.Offer") : Language.GetTextValue("Mods.Redemption.DialogueBox.SpiritNiricLady.Crux"),
+                _ => Language.GetTextValue("Mods.Redemption.DialogueBox.SpiritNiricLady.5"),
             };
-            button2 = "Cycle Dialogue";
+            button2 = Language.GetTextValue("Mods.Redemption.DialogueBox.CycleD");
         }
 
         public override void OnChatButtonClicked(bool firstButton, ref string shopName)
