@@ -17,6 +17,16 @@ Mods: {
 				Name: Omega Obliterator
 				Modifier: 3rd Omega Prototype
 			}
+
+			Ukko: {
+				Name: Ukko
+				Modifier: Ancient God of Weather
+			}
+
+			Akka: {
+				Name: Akka
+				Modifier: Ancient Goddess of Nature
+			}
 		}
 
 		FlavorTextBestiary: {
@@ -24,6 +34,8 @@ Mods: {
 			TreebarkDryad: These slow-thinking ents only appear in heavily forested areas. They have only recently arrived on this island, coming from the portal on the surface. Once every century, they find a shallow pond and hibernate in the centre. The water from the pond feeds the ent during the process.
 			Erhan: A high priest of Fairwood, tasked himself to purify the forest's curse after it consumed it's warden.
 			KS3: "'What? You want my lore? Go get your own lore!'"
+			Akka: Little has been recorded of Akka during her youth, it is believed by the locals that her spirit infused with a great tree in the Spirit Realm, where she would sleep until awoken by her husband to be worshipped once more."
+			Ukko: Once a blacksmith in ancient Tethuram who had an immense talent in magic, growing to be seen as a god by many who witnessed his strengths. In his old age, growing weary of his mortality, Ukko infused his soul into a bundle of rocks, allowing him to eventually reform when the time comes. The locals worshipped this golem, until the knowledge of Ukko's soul inside slowly faded away.
 			Android: Fodder sent down to the island by King Slayer III to scan. These are the first iteration of the Android Unit and the first robots designed by King Slayer during his million year voyage. Their original purpose was to bring company and life to the SoS, however they have since been fitted with more combat-oriented parts. When damaged, they will retreat back to the SoS and alert the network.
 		}
 
@@ -642,6 +654,13 @@ Mods: {
 					3: Send master Hallowed Knight[0.3] my regards.
 					4: Well...[0.5] 'Til we meet again!
 				}
+			}
+
+			ErhanS: {
+				Funny: GOD IS REAL AND HE SENT ME BACK TO KICK YOUR ASS.
+				1: Thou may inquire,[0.1] how hath I returned...
+				2: I am but the holiest of men,[0.1] thus the Lord has returned me to beat thine buttocks once more!
+				3: Guess whom'st've's back!
 			}
 
 			TBotIntro: {
