@@ -160,55 +160,55 @@ namespace Redemption.NPCs.Friendly
         {
             if ((RedeWorld.alignment < 0 && !RedeBossDowned.downedTreebark) || (RedeWorld.alignment < 2 && RedeBossDowned.downedTreebark))
                 return;
-            button2 = "Cycle Options";
+            button2 = Language.GetTextValue("Mods.Redemption.DialogueBox.Cycle");
             switch (ChatNumber)
             {
                 case 0:
                     switch (RedeQuest.forestNymphVar)
                     {
                         default:
-                            button = "Offer Herb Bag";
+                            button = Language.GetTextValue("Mods.Redemption.DialogueBox.ForestNymph.1");
                             break;
                         case 1:
-                            button = "Offer Anglonic Mystic Blossom";
+                            button = Language.GetTextValue("Mods.Redemption.DialogueBox.ForestNymph.2");
                             break;
                         case 2:
-                            button = "Home?";
+                            button = Language.GetTextValue("Mods.Redemption.DialogueBox.ForestNymph.3");
                             break;
                         case 3:
-                            button = "Offer building a home";
+                            button = Language.GetTextValue("Mods.Redemption.DialogueBox.ForestNymph.4");
                             break;
                         case 4:
                             if (NPC.homeless)
-                                button = "Home Requirements";
+                                button = Language.GetTextValue("Mods.Redemption.DialogueBox.ForestNymph.HomeRequirements");
                             else
-                                button = "How is your home?";
+                                button = Language.GetTextValue("Mods.Redemption.DialogueBox.ForestNymph.5");
                             break;
                         case 5:
-                            button = "Talk";
+                            button = Language.GetTextValue("Mods.Redemption.DialogueBox.ForestNymph.Talk");
                             break;
                     }
                     break;
                 case 1:
-                    button = "Trade";
+                    button = Language.GetTextValue("Mods.Redemption.DialogueBox.ForestNymph.Trade");
                     break;
                 case 2:
-                    button = "Nature's Blessing";
+                    button = Language.GetTextValue("Mods.Redemption.DialogueBox.ForestNymph.Blessing");
                     break;
                 case 3:
                     if (!following)
-                        button = "Follow";
+                        button = Language.GetTextValue("Mods.Redemption.DialogueBox.ForestNymph.Follow");
                     else
-                        button = "Stop Following";
+                        button = Language.GetTextValue("Mods.Redemption.DialogueBox.ForestNymph.SFollow");
                     break;
                 case 4:
-                    button = "Decorate Hair";
+                    button = Language.GetTextValue("Mods.Redemption.DialogueBox.ForestNymph.Dhair");
                     break;
                 case 5:
-                    button = "Style Hair";
+                    button = Language.GetTextValue("Mods.Redemption.DialogueBox.ForestNymph.Shair");
                     break;
                 case 6:
-                    button = "Request Crux";
+                    button = Language.GetTextValue("Mods.Redemption.DialogueBox.ForestNymph.Crux");
                     break;
             }
         }
