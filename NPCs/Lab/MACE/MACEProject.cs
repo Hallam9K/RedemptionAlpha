@@ -11,6 +11,7 @@ using Redemption.Items.Usable;
 using Redemption.Items.Lore;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.Audio;
+using Terraria.Localization;
 using Redemption.Biomes;
 using Terraria.GameContent.Bestiary;
 using System.Collections.Generic;
@@ -97,7 +98,7 @@ namespace Redemption.NPCs.Lab.MACE
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
         {
             bestiaryEntry.Info.AddRange(new List<IBestiaryInfoElement> {
-                new FlavorTextBestiaryInfoElement("An old, unfinished war machine that went haywire. Looks like it never saw the light of day, as it's in progress of being scrapped for parts and components.")
+                new FlavorTextBestiaryInfoElement(Language.GetTextValue("Mods.Redemption.FlavorTextBestiary.MACE"))
             });
         }
         public override void HitEffect(NPC.HitInfo hit)
@@ -187,7 +188,7 @@ namespace Redemption.NPCs.Lab.MACE
                     {
                         if (!Main.dedServ)
                         {
-                            RedeSystem.Instance.TitleCardUIElement.DisplayTitle("MACE Project", 60, 90, 0.8f, 0, Color.Yellow, "Incomplete War Machine"); SoundEngine.PlaySound(CustomSounds.SpookyNoise, NPC.position);
+                            RedeSystem.Instance.TitleCardUIElement.DisplayTitle(Language.GetTextValue("Mods.Redemption.TitleCard.MACE.Name"), 60, 90, 0.8f, 0, Color.Yellow, Language.GetTextValue("Mods.Redemption.TitleCard.MACE.Modifier")); SoundEngine.PlaySound(CustomSounds.SpookyNoise, NPC.position);
                         }
                         GuardPointMax = NPC.RedemptionGuard().GuardPoints;
                         CraneOrigin = NPC.Center;
