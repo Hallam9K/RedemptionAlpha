@@ -3,6 +3,11 @@ Mods: {
 		Currencies.AntiqueDorulCurrency: antique doruls
 
 		TitleCard: {
+			FowlEmperor: {
+				Name: Fowl Emperor
+				Modifier: A Pompous Rooster
+			}
+
 			Erhan: {
 				Name: Erhan
 				Modifier: Anglonic High Priest
@@ -23,14 +28,49 @@ Mods: {
 				Modifier: Octavia von Gailon
 			}
 
+			SkullDigger: {
+				Name: Skull Digger
+				Modifier: The Keeper's First Creation
+			}
+
 			Calavia: {
 				Name: Calavia
 				Modifier: Warrior of the Iron Realm
 			}
 
+			Golem: {
+				Name: Eaglecrest Golem
+				Modifier: Guardian of Eaglecrest Meadows
+			}
+
 			KS3: {
 				Name: King Slayer III
 				Modifier: Prototype Multium
+			}
+
+			Behemoth: {
+				Name: Irradiated Behemoth
+				Modifier: An Unfortunate Scientist
+			}
+
+			Blisterface: {
+				Name: Blisterface
+				Modifier: An Unfortunate Goldfish
+			}
+
+			Janitor: {
+				Name: The Janitor
+				Modifier: A Janitor
+			}
+
+			Volt: {
+				Name: Protector Volt
+				Modifier: Omega Division Commander
+			}
+
+			MACE: {
+				Name: MACE Project
+				Modifier: Incomplete War Machine
 			}
 
 			Cleaver: {
@@ -71,13 +111,23 @@ Mods: {
 		}
 
 		FlavorTextBestiary: {
+			FowlEmperor1: An Anglonic forest rooster with quite the personality. Was this intelligent animal the handiwork of a human's soul, or perhaps he was some mythological creature? We may never know.
+			FowlEmperor2: It may have just been a chicken, but it was a reminder of the hideous truth that, regardless of species, monarchy perpetuates archaic views of class and degrades others based on arbitrary standards.
 			Thorn: An unfortunate warden of a cursed forest, doomed to be consumed by blighted thorns.
 			Keeper: A powerful fallen who had learnt forbidden necromancy, its prolonged usage having mutated her body.
+			SkullDigger: The first successful reanimation from the Keeper. Skull Digger swore to protect and care for her, while she would use forbidden necromancy to keep his fading body alive. At this point, his lower half is nothing more than a spirit.
 			SoI: A blistering pocket of the Xenomite infection.
+			Golem: Constructed in Gathuram and sent to Ithon as a gift in a time of peace between the domains. Although the people of Gathuram forgot to mention one thing...
 			Calavia: A Chief-Warrior of the Iron Realm, lost and troubled by her distant venture from her home of Khen Boldur, which was spurred on by the barons of Arum. Swordplay and smithing is her expertise, along with familiarity of Blizzard magic.
 			OO: An autonomous war machine mostly of Girus' own design with many integrated weapon systems, such as literal finger guns and an advanced heat dispersion system in the form of a giant beam, capable of obliterating anyone it engulfs - Also where Obliterator got its name from."
 			TreebarkDryad: These slow-thinking ents only appear in heavily forested areas. They have only recently arrived on this island, coming from the portal on the surface. Once every century, they find a shallow pond and hibernate in the centre. The water from the pond feeds the ent during the process.
 			Erhan: A high priest of Fairwood, tasked himself to purify the forest's curse after it consumed it's warden.
+			Behemoth: An unfortunate scientist, disfigured and mutilated beyond recognition by the Xenomite infection. This specimen is entering the final stage of the infection, and has had its body transform into a sludgy slurry on the ceiling... God, that must be agonizing.
+			Blisterface1: An unfortunate fish, disfigured and mutilated beyond recognition by the Xenomite infection. This strain seems to be similar to that of the Blistered Scientists...
+			Blisterface2: That's a bigass fish.
+			Janitor: Amidst all the ailments that germs can conjure, all the grime mankind can produce. We'll send unto them, only you. Scrape and Clean until it is done.
+			Volt: A gentle giant who keeps his sentences short and acts as a Guard inside the Laboratory. Volt used to be part of the Bear Unit on the surface, but retired after a violent altercation.
+			MACE: An old, unfinished war machine that went haywire. Looks like it never saw the light of day, as it's in progress of being scrapped for parts and components.
 			KS3: "'What? You want my lore? Go get your own lore!'"
 			Cleaver: A proof-of-concept weapon of war modified by Girus, the Omega Cleaver is a giant sword controlled by a small remote stick that was wielded by another machine.
 			Gigapora: A modified tunnelling machine, originally of Teochrome design, retrofitted with rocket boosters, various weaponry and very experimental projected shield technology. Gigapora's shield projectors are prone to overheating and melting if they're inside the projected shield, hence why they're outside.
@@ -899,6 +949,24 @@ Mods: {
 					1: Alright,[0.1] target eliminated.
 					2: Returning to base...
 					D1: Target eliminated...
+				}
+			}
+
+			Volt: {
+				Start: {
+					1: Halt!
+					2: You aren't supposed to be here!
+					R1: Hm? Are you supposed to be let through?
+					R2: One second...
+					R3: Everything seems to be in order.[0.5] Move along.
+				}
+
+				Defeat: {
+					Refight: Enough.
+					1: ... Are you allowed through?[0.5] Let me check.
+					2: ... Oh?
+					3: ... You're allowed through?
+					4: This was mildly embarrassing.[0.5] Apologies.
 				}
 			}
 		}
