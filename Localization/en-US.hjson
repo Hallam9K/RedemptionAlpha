@@ -111,6 +111,12 @@ Mods: {
 		}
 
 		FlavorTextBestiary: {
+			Daerel: A traveller from mainland Epidotra who is friends with Zephos. Most skilled at archery and stealth.
+			Zephos: A traveller from mainland Epidotra who is friends with Daerel. Most skilled at swordplay.
+			Fallen: Fallen are a category of undead with a soul strong enough to form pale brown flesh. Most being aggressive towards humans, this one is a rare case who can sell ritualist equipment and repair fragments of ancient weapons.
+			TBot1: Quiet, mildly melancholic but happy to help you, Adam is an android and the leader of a small group called the Alpha. They are your go-to guide for all-things Liden.
+			TBot2: '''"I may be the only one of my kind to honor all Three Laws... I can't assure the others will take you in with open arms like I did. Stay safe out there."'''
+			LostSoul: Lost Souls search around the world to look for corpses to infuse with. They roam catacombs and graveyards, sometimes taking many days to find a compatible vessel.
 			FowlEmperor1: An Anglonic forest rooster with quite the personality. Was this intelligent animal the handiwork of a human's soul, or perhaps he was some mythological creature? We may never know.
 			FowlEmperor2: It may have just been a chicken, but it was a reminder of the hideous truth that, regardless of species, monarchy perpetuates archaic views of class and degrades others based on arbitrary standards.
 			Thorn: An unfortunate warden of a cursed forest, doomed to be consumed by blighted thorns.
@@ -194,6 +200,7 @@ Mods: {
 				Keeper1: Shrieks echo through the night...
 				Keeper2: The Keeper noticed the abandoned teddy you're holding...
 				Keeper3: The Keeper's spirit fades away... ?
+				SkullDigger: Skull Digger's Spirit fades away...
 				GolemSpawn: A sleeping stone appears...
 				NebGone: Nebuleus is nowhere to be seen...
 			}
@@ -766,6 +773,11 @@ Mods: {
 				2: You...
 			}
 
+			SkullDigger: {
+				1: Thank...
+				2: You...
+			}
+
 			TBotIntro: {
 				Normal1: AH!
 				Normal2: ...I-[0.1]I thought you were someone else.[0.5] Sorry about that.
@@ -1066,6 +1078,127 @@ Mods: {
 				SkullDiggerDefeat: A saddening conclusion to this protector and mistress, but perhaps there is another way..?
 				CalaviaChoice: She is wishing to be spared.
 				CalaviaKilled: How ruthless...
+			}
+
+			SpiritWalker: {
+				Keybind: Hold [Spirit Walker Ability Key] for 1 second to peek into the Spirit Realm
+				Hold: "Hold "
+				Context: " for 1 second to peek into the Spirit Realm"
+				Name: -Spirit Walker-
+			}
+		}
+
+		DialogueBox: {
+			Cycle: Cycle Options
+			CycleD: Cycle Dialogue
+			Quest: Quest
+			New: New Dialogue Available
+
+			Daerel: {
+				Unconscious: Daerel the Wayfarer was knocked unconscious...
+				Stay1: Feel free to stay here
+				Stay2: Who are you?
+				Advice: Advice
+				Bow: Restring Bow (10 silver)
+				Poison: Poison Weapon (25 silver)
+				Shop: Shop
+			}
+
+			Zephos: {
+				Unconscious: Zephos the Wayfarer was knocked unconscious...
+				Stay1: Feel free to stay here
+				Stay2: Who are you?
+				Advice: Advice
+				Sharpen: Sharpen (5 silver)
+				ShineArmor: Shine Armor (15 silver)
+			}
+
+			SpiritWalkerMan: {
+				1: Spirit Walking?
+				2: Dead Ringer?
+				3: Lost Souls & Vagrants?
+				4: Other uses for Dead Ringer?
+				5: About you?
+				Tophat: Request Old Tophat's Crux
+				Crux: Request Crux
+			}
+
+			SpiritNiricLady: {
+				1: New kingdom?
+				2: Your corpse?
+				3: Nirin?
+				4: Disaster?
+				5: About you?
+				Offer: Offer 6 Diamonds
+				Crux: Request Crux
+			}
+
+			SpiritGathicMan: {
+				1: Olden Ruins?
+				2: God of Decay?
+				3: False Gods?
+				4: Dead Ringer?
+				5: About you?
+				Offer: Offer Grave Steel Battleaxe
+				Crux: Request Crux
+			}
+
+			SpiritDruid: {
+				1: About you?
+				2: Thamor?
+				3: How did you get here?
+				Offer: Offer Nature's Gift
+				Crux: Request Crux
+			}
+
+			SpiritCommonGuard: {
+				1: Anglon?
+				2: Ricusa?
+				3: Demons?
+				4: About you?
+				Offer: Offer Noble's Halberd
+				Crux: Request Crux
+			}
+
+			SpiritAssassin: {
+				1: About you?
+				2: What?
+				3: Gathuram?
+				4: Gothrione?
+				5: Demon?
+				Offer: Offer 3 Nightshade
+				Crux: Request Crux
+			}
+
+			Fallen: {
+				Repair: Repair Fragments
+				Eye: Eye's Origins?
+			}
+
+			TBot: {
+				Unconscious: Adam the Friendly T-Bot was knocked unconscious...
+				FloppyDisc: Read Floppy Disk
+				NextPage: Next Page (1/2)
+				Next: " (2/2)"
+			}
+
+			SkullDigger: {
+				Talk: Talk
+				Give: Give Wedding Ring
+				Crux: Request Crux
+			}
+
+			KS3: {
+				0: Why are you here?
+				1: Crashed Spaceship?
+				2: (Give Uranium)
+				3: You aren't fighting me?
+				4: Are you a human?
+				5: Hall of Heroes?
+				6: Abandoned Lab?
+				7: Epidotra?
+				8: Other world?
+				9: Data Logs?
 			}
 		}
 
@@ -2417,6 +2550,7 @@ Mods: {
 				FelledDialogue1: Do you fear the unknown? Does my size frighten you? Please, do not be afraid, I am just a lone ent.
 				FelledDialogue2: You are a peculiar thing. Do you chop for a reason, or for fun? You should be more considerate about your surroundings.
 				FelledDialogue3: I help no tree-feller.
+				Felled: "Hmmmm... "
 				ShrineDialogue1: I think I have lingered here for long enough. I was told by the humans to guard this place, but it has been far too long an age... Dangers have come and gone, but none have ever sought to demolish this shrine. To Fairwood I return - I have missed its lush forests and bark'en friends. Mayhaps you be this shrine's new protector..? If it needs one, anyway.
 				ShrineDialogue2: What's that shrine behind me..? It was built by a group of humans, long dead by now, as a place of worship to some sort of figure... I don't recall their name, but I know they were a good friend of nature. Some may consider her the Mother of Nature..? Hmmm... My memory grows distant in my old age.
 				ShrineDialogue3: I have been here a long time, even for us. I was a bold sapling, far more than the others, and so I had come to this land far far earlier than the rest. Maybe I was unwise, but I have seen more of us coming from our lands in recent times, so perhaps the others grew adventurous too.
