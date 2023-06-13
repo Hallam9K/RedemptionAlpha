@@ -17,6 +17,7 @@ using Redemption.Buffs.Debuffs;
 using Redemption.Buffs.NPCBuffs;
 using Terraria.Audio;
 using Redemption.UI.ChatUI;
+using Terraria.Localization;
 
 namespace Redemption.NPCs.Lab.Volt
 {
@@ -104,7 +105,7 @@ namespace Redemption.NPCs.Lab.Volt
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
         {
             bestiaryEntry.Info.AddRange(new List<IBestiaryInfoElement> {
-                new FlavorTextBestiaryInfoElement("A gentle giant who keeps his sentences short and acts as a Guard inside the Laboratory. Volt used to be part of the Bear Unit on the surface, but retired after a violent altercation.")
+                new FlavorTextBestiaryInfoElement(Language.GetTextValue("Mods.Redemption.FlavorTextBestiary.Volt"))
             });
         }
         public override void OnKill()
@@ -158,7 +159,7 @@ namespace Redemption.NPCs.Lab.Volt
             {
                 case ActionState.Begin:
                     if (!Main.dedServ)
-                        RedeSystem.Instance.TitleCardUIElement.DisplayTitle("Protector Volt", 60, 90, 0.8f, 0, Color.Yellow, "Omega Division Commander");
+                        RedeSystem.Instance.TitleCardUIElement.DisplayTitle(Language.GetTextValue("Mods.Redemption.TitleCard.Volt.Name"), 60, 90, 0.8f, 0, Color.Yellow, Language.GetTextValue("Mods.Redemption.TitleCard.Volt.Modifier"));
 
                     AIState = ActionState.Fly;
                     NPC.netUpdate = true;
@@ -438,7 +439,7 @@ namespace Redemption.NPCs.Lab.Volt
                             {
                                 if (AITimer == 10 && !Main.dedServ)
                                 {
-                                    Dialogue d1 = new(NPC, "Enough.", Colors.RarityYellow, new Color(100, 86, 0), voice, .03f, 2f, .5f, true, modifier: modifier); // 144
+                                    Dialogue d1 = new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.Volt.Defeat.Refight"), Colors.RarityYellow, new Color(100, 86, 0), voice, .03f, 2f, .5f, true, modifier: modifier); // 144
 
                                     ChatUI.Visible = true;
                                     ChatUI.Add(d1);
@@ -455,10 +456,10 @@ namespace Redemption.NPCs.Lab.Volt
                                 if (AITimer == 10 && !Main.dedServ)
                                 {
                                     DialogueChain chain = new();
-                                    chain.Add(new(NPC, "... Are you allowed through?[0.5] Let me check.", Colors.RarityYellow, new Color(100, 86, 0), voice, .03f, 2f, 0, false, modifier: modifier)) // 214
-                                         .Add(new(NPC, "... Oh?", Colors.RarityYellow, new Color(100, 86, 0), voice, .03f, 2f, 0, false, modifier: modifier)) // 114
-                                         .Add(new(NPC, "... You're allowed through?", Colors.RarityYellow, new Color(100, 86, 0), voice, .03f, 2f, 0, false, modifier: modifier)) // 154
-                                         .Add(new(NPC, "This was mildly embarrassing.[0.5] Apologies.", Colors.RarityYellow, new Color(100, 86, 0), voice, .03f, 2f, .5f, true, modifier: modifier, endID: 1)); // 240
+                                    chain.Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.Volt.Defeat.1"), Colors.RarityYellow, new Color(100, 86, 0), voice, .03f, 2f, 0, false, modifier: modifier)) // 214
+                                         .Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.Volt.Defeat.2"), Colors.RarityYellow, new Color(100, 86, 0), voice, .03f, 2f, 0, false, modifier: modifier)) // 114
+                                         .Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.Volt.Defeat.3"), Colors.RarityYellow, new Color(100, 86, 0), voice, .03f, 2f, 0, false, modifier: modifier)) // 154
+                                         .Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.Volt.Defeat.4"), Colors.RarityYellow, new Color(100, 86, 0), voice, .03f, 2f, .5f, true, modifier: modifier, endID: 1)); // 240
                                     chain.OnEndTrigger += Chain_OnEndTrigger;
                                     ChatUI.Visible = true;
                                     ChatUI.Add(chain);
