@@ -11,6 +11,7 @@ using Redemption.Items.Usable;
 using System.IO;
 using Terraria.DataStructures;
 using Terraria.Audio;
+using Terraria.Localization;
 using System;
 using Terraria.GameContent.ItemDropRules;
 using Redemption.Items.Placeable.Trophies;
@@ -117,7 +118,7 @@ namespace Redemption.NPCs.Bosses.SeedOfInfection
             bestiaryEntry.Info.AddRange(new List<IBestiaryInfoElement> {
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Times.DayTime,
 
-                new FlavorTextBestiaryInfoElement("A blistering pocket of the Xenomite infection.")
+                new FlavorTextBestiaryInfoElement(Language.GetTextValue("Mods.Redemption.FlavorTextBestiary.SoI"))
             });
         }
 
@@ -247,7 +248,7 @@ namespace Redemption.NPCs.Bosses.SeedOfInfection
                             if (AITimer >= 180)
                             {
                                 if (!Main.dedServ)
-                                    RedeSystem.Instance.TitleCardUIElement.DisplayTitle("Seed of Infection", 60, 90, 0.8f, 0, Color.ForestGreen);
+                                    RedeSystem.Instance.TitleCardUIElement.DisplayTitle(Language.GetTextValue("Mods.Redemption.TitleCard.SoI.Name"), 60, 90, 0.8f, 0, Color.ForestGreen);
 
                                 NPC.dontTakeDamage = false;
                                 NPC.alpha = 0;
