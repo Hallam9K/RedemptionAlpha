@@ -116,7 +116,7 @@ namespace Redemption.NPCs.Minibosses.EaglecrestGolem
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Surface,
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Times.DayTime,
 
-                new FlavorTextBestiaryInfoElement("Constructed in Gathuram and sent to Ithon as a gift in a time of peace between the domains. Although the people of Gathuram forgot to mention one thing...")
+                new FlavorTextBestiaryInfoElement(Language.GetTextValue("Mods.Redemption.FlavorTextBestiary.Golem"))
             });
         }
 
@@ -210,7 +210,7 @@ namespace Redemption.NPCs.Minibosses.EaglecrestGolem
                 case ActionState.Start:
                     NPC.target = RedeHelper.GetNearestAlivePlayer(NPC);
                     if (!Main.dedServ)
-                        RedeSystem.Instance.TitleCardUIElement.DisplayTitle("Eaglecrest Golem", 60, 90, 0.8f, 0, Color.Gray, "Guardian of Eaglecrest Meadows");
+                        RedeSystem.Instance.TitleCardUIElement.DisplayTitle(Language.GetTextValue("Mods.Redemption.TitleCard.Golem.Name"), 60, 90, 0.8f, 0, Color.Gray, Language.GetTextValue("Mods.Redemption.TitleCard.Golem.Modifier"));
 
                     TimerRand = Main.rand.Next(300, 700);
                     AIState = ActionState.Idle;
