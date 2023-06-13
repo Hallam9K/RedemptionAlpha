@@ -565,7 +565,7 @@ namespace Redemption.NPCs.Bosses.Neb
                         if (NPC.ai[2] >= 150)
                         {
                             if (!Main.dedServ)
-                                RedeSystem.Instance.TitleCardUIElement.DisplayTitle("Nebuleus", 60, 90, 0.8f, 0, Color.HotPink, "Angel of the Cosmos");
+                                RedeSystem.Instance.TitleCardUIElement.DisplayTitle(Language.GetTextValue("Mods.Redemption.TitleCard.Neb.Name"), 60, 90, 0.8f, 0, Color.HotPink, Language.GetTextValue("Mods.Redemption.TitleCard.Neb.Modifier"));
                             NPC.ai[3] = 0;
                             NPC.ai[2] = 0;
                             NPC.ai[0] = 3;
