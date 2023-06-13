@@ -186,7 +186,7 @@ namespace Redemption.NPCs.Bosses.ADD
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Surface,
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Visuals.Rain,
 
-                new FlavorTextBestiaryInfoElement("Once a blacksmith in ancient Tethuram who had an immense talent in magic, growing to be seen as a god by many who witnessed his strengths. In his old age, growing weary of his mortality, Ukko infused his soul into a bundle of rocks, allowing him to eventually reform when the time comes. The locals worshipped this golem, until the knowledge of Ukko's soul inside slowly faded away.")
+                new FlavorTextBestiaryInfoElement(Language.GetTextValue("Mods.Redemption.FlaverTextBestiary.Ukko"))
             });
         }
         public override void ModifyNPCLoot(NPCLoot npcLoot)
@@ -307,7 +307,7 @@ namespace Redemption.NPCs.Bosses.ADD
             {
                 case ActionState.Start:
                     if (!Main.dedServ)
-                        RedeSystem.Instance.TitleCardUIElement.DisplayTitle("Ukko", 60, 90, 0.8f, 0, Color.LightGoldenrodYellow, "Ancient God of Weather");
+                        RedeSystem.Instance.TitleCardUIElement.DisplayTitle(Language.GetTextValue("Mods.Redemption.TitleCard.Ukko.Name"), 60, 90, 0.8f, 0, Color.LightGoldenrodYellow, Language.GetTextValue("Mods.Redemption.TitleCard.Ukko.Modifier"));
 
                     NPC.Shoot(new Vector2(NPC.Center.X - (118 * 16) - 10, NPC.Center.Y + 8), ModContent.ProjectileType<UkkoBarrier>(), 0, Vector2.Zero, false, SoundID.Item1, 0, 1);
                     NPC.Shoot(new Vector2(NPC.Center.X + (118 * 16) + 26, NPC.Center.Y + 8), ModContent.ProjectileType<UkkoBarrier>(), 0, Vector2.Zero, false, SoundID.Item1, 0, -1);
