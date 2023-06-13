@@ -13,6 +13,7 @@ using Redemption.Globals;
 using ParticleLibrary;
 using Redemption.Particles;
 using Terraria.Audio;
+using Terraria.Localization;
 using Redemption.Base;
 using Redemption.UI;
 using Terraria.GameContent;
@@ -541,7 +542,7 @@ namespace Redemption.NPCs.Bosses.Neb.Phase2
                             NPC.ai[3] = 0;
                             NPC.ai[0] = 2;
                             if (!Main.dedServ)
-                                RedeSystem.Instance.TitleCardUIElement.DisplayTitle("Nebuleus", 60, 90, 0.8f, 0, Color.HotPink, "Ultimate Form");
+                                RedeSystem.Instance.TitleCardUIElement.DisplayTitle(Language.GetTextValue("Mods.Redemption.TitleCard.Neb.Name"), 60, 90, 0.8f, 0, Color.HotPink, Language.GetTextValue("Mods.Redemption.TitleCard.Neb.Ultimate"));
                             NPC.netUpdate = true;
                             if (Main.netMode == NetmodeID.Server)
                                 NetMessage.SendData(MessageID.WorldData);
@@ -552,7 +553,7 @@ namespace Redemption.NPCs.Bosses.Neb.Phase2
                         if (NPC.ai[2] >= 120)
                         {
                             if (!Main.dedServ)
-                                RedeSystem.Instance.TitleCardUIElement.DisplayTitle("Nebuleus", 60, 90, 0.8f, 0, Color.HotPink, "Ultimate Form");
+                                RedeSystem.Instance.TitleCardUIElement.DisplayTitle(Language.GetTextValue("Mods.Redemption.TitleCard.Neb.Name"), 60, 90, 0.8f, 0, Color.HotPink, Language.GetTextValue("Mods.Redemption.TitleCard.Neb.Ultimate"));
                             NPC.ai[3] = 0;
                             NPC.ai[2] = 0;
                             NPC.ai[0] = 2;
