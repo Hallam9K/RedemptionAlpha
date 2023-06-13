@@ -113,7 +113,7 @@ namespace Redemption.NPCs.Bosses.Thorn
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Surface,
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Times.DayTime,
 
-                new FlavorTextBestiaryInfoElement("An unfortunate warden of a cursed forest, doomed to be consumed by blighted thorns.")
+                new FlavorTextBestiaryInfoElement(Language.GetTextValue("Mods.Redemption.FlavorTextBestiary.Thorn"))
             });
         }
 
@@ -140,7 +140,7 @@ namespace Redemption.NPCs.Bosses.Thorn
         {
             if (!RedeBossDowned.downedThorn)
             {
-                string status = "The forest's flora blooms...";
+                string status = Language.GetTextValue("Mods.Redemption.StatusMessage.ThornDowned");
                 if (Main.netMode == NetmodeID.Server)
                     ChatHelper.BroadcastChatMessage(NetworkText.FromLiteral(status), Color.LawnGreen);
                 else if (Main.netMode == NetmodeID.SinglePlayer)
@@ -245,7 +245,7 @@ namespace Redemption.NPCs.Bosses.Thorn
             {
                 case ActionState.Begin:
                     if (!Main.dedServ)
-                        RedeSystem.Instance.TitleCardUIElement.DisplayTitle("Thorn", 60, 90, 0.8f, 0, Color.LawnGreen, "Bane of the Forest");
+                        RedeSystem.Instance.TitleCardUIElement.DisplayTitle(Language.GetTextValue("Mods.Redemption.TitleCard.Thorn.Name"), 60, 90, 0.8f, 0, Color.LawnGreen, Language.GetTextValue("Mods.Redemption.TitleCard.Thorn.Modifier"));
 
                     AIState = ActionState.TeleportStart;
                     NPC.netUpdate = true;
