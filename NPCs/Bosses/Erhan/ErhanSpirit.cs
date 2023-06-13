@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using System;
 using Terraria;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using System.IO;
 using Redemption.Globals;
@@ -286,7 +287,7 @@ namespace Redemption.NPCs.Bosses.Erhan
                                 {
                                     if (AITimer == 1 && !Main.dedServ)
                                     {
-                                        Dialogue d1 = new(NPC, "GOD IS REAL AND HE SENT ME BACK TO KICK YOUR ASS.", Color.LightGoldenrodYellow, new Color(100, 86, 0), voice, .03f, 2f, .5f, true, null, bubble, null, modifier); // 228
+                                        Dialogue d1 = new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.ErhanS.Funny"), Color.LightGoldenrodYellow, new Color(100, 86, 0), voice, .03f, 2f, .5f, true, null, bubble, null, modifier); // 228
                                         ChatUI.Visible = true;
                                         ChatUI.Add(d1);
                                     }
@@ -316,8 +317,8 @@ namespace Redemption.NPCs.Bosses.Erhan
                                     if (AITimer == 1 && !Main.dedServ)
                                     {
                                         DialogueChain chain = new();
-                                        chain.Add(new(NPC, "Thou may inquire,[0.1] how hath I returned...", Color.LightGoldenrodYellow, new Color(100, 86, 0), voice, .03f, 2f, 0, false, null, bubble, null, modifier)) // 190
-                                             .Add(new(NPC, "I am but the holiest of men,[0.1] thus the Lord has returned me to beat thine buttocks once more!", Color.LightGoldenrodYellow, new Color(100, 86, 0), voice, .03f, 2f, .5f, true, null, bubble, null, modifier, 1)); // 324
+                                        chain.Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.ErhanS.1"), Color.LightGoldenrodYellow, new Color(100, 86, 0), voice, .03f, 2f, 0, false, null, bubble, null, modifier)) // 190
+                                             .Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.ErhanS.2"), Color.LightGoldenrodYellow, new Color(100, 86, 0), voice, .03f, 2f, .5f, true, null, bubble, null, modifier, 1)); // 324
                                         chain.OnEndTrigger += Chain_OnEndTrigger;
                                         ChatUI.Visible = true;
                                         ChatUI.Add(chain);
@@ -348,7 +349,7 @@ namespace Redemption.NPCs.Bosses.Erhan
                             {
                                 if (AITimer++ == 0 && !Main.dedServ)
                                 {
-                                    Dialogue d1 = new(NPC, "Guess whom'st've's back!", Color.LightGoldenrodYellow, new Color(100, 86, 0), voice, .03f, 2f, .5f, true, null, bubble, null, modifier); // 178
+                                    Dialogue d1 = new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.ErhanS.3"), Color.LightGoldenrodYellow, new Color(100, 86, 0), voice, .03f, 2f, .5f, true, null, bubble, null, modifier); // 178
                                     ChatUI.Visible = true;
                                     ChatUI.Add(d1);
                                 }
