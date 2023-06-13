@@ -178,7 +178,7 @@ namespace Redemption.NPCs.Friendly
                         SoundStyle voice = CustomSounds.Voice2 with { Pitch = -1f };
 
                         DialogueChain chain = new();
-                        chain.Add(new(NPC, "Now,[0.1] now.[0.5] Watch where you swing that axe of yours...[1] I don't want you chopping down any of my friends.", Color.LightGreen, Color.ForestGreen, voice, .06f, 2f, .5f, true, bubble: bubble, endID: 1));
+                        chain.Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.TreebarkDryad.1"), Color.LightGreen, Color.ForestGreen, voice, .06f, 2f, .5f, true, bubble: bubble, endID: 1));
                         chain.OnEndTrigger += Chain_OnEndTrigger;
                         ChatUI.Visible = true;
                         ChatUI.Add(chain);
@@ -192,9 +192,9 @@ namespace Redemption.NPCs.Friendly
                         Texture2D bubble = ModContent.Request<Texture2D>("Redemption/UI/TextBubble_Epidotra").Value;
                         SoundStyle voice = CustomSounds.Voice2 with { Pitch = -1f };
 
-                        string gender = player.Male ? "man" : "lady";
+                        string gender = player.Male ? Language.GetTextValue("Mods.Redemption.Cutscene.TreebarkDryad.3") : Language.GetTextValue("Mods.Redemption.Cutscene.TreebarkDryad.4");
                         DialogueChain chain = new();
-                        chain.Add(new(NPC, "It will do no good,[0.1] young " + gender + ".[0.5] We bring no harm to you.[1] Chopping us down will only bring bad omens.", Color.LightGreen, Color.ForestGreen, voice, .06f, 2, .5f, true, bubble: bubble));
+                        chain.Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.TreebarkDryad.2") + gender + Language.GetTextValue("Mods.Redemption.Cutscene.TreebarkDryad.5"), Color.LightGreen, Color.ForestGreen, voice, .06f, 2, .5f, true, bubble: bubble));
                         ChatUI.Visible = true;
                         ChatUI.Add(chain);
                         TimerRand = 4;
@@ -456,7 +456,7 @@ namespace Redemption.NPCs.Friendly
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Surface,
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Times.DayTime,
 
-                new FlavorTextBestiaryInfoElement("These slow-thinking ents only appear in heavily forested areas. They have only recently arrived on this island, coming from the portal on the surface. Once every century, they find a shallow pond and hibernate in the centre. The water from the pond feeds the ent during the process.")
+                new FlavorTextBestiaryInfoElement(Language.GetTextValue("Mods.Redemption.FlavorTextBestiary.TreebarkDryad"))
             });
         }
     }
