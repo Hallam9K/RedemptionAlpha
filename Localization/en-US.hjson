@@ -2,6 +2,15 @@ Mods: {
 	Redemption: {
 		Currencies.AntiqueDorulCurrency: antique doruls
 
+		TitleCard: {
+			KS3: {
+				Name: King Slayer III
+				Modifier: Prototype Multium
+			}
+		}
+
+		Bestiary.KS3: "'What? You want my lore? Go get your own lore!'"
+
 		StatusMessage: {
 			Progression: {
 				ThornDowned: The forest flora blooms...
@@ -41,7 +50,7 @@ Mods: {
 				DoorStuck: " experienced DOOR STUCK."
 			}
 
-			Event:{
+			Event: {
 				ChickRetreat: The chickens retreat!
 				SkeletonParty1: The skeletons are plotting a party at dusk...
 				SkeletonParty2: The skeletons are partying!
@@ -51,9 +60,9 @@ Mods: {
 			}
 
 			Other: {
-				Warning1: "WARNING: Unable to locate a certain structure, new world is recommended!"
-				Warning2: "WARNING: Unable to locate important structure, new world is required!"
-				Caution: "CAUTION: You have a Funni config enabled that affects world gen. If you created a world just now, check which one you have enabled and disable it for next time."
+				Warning1: WARNING: Unable to locate a certain structure, new world is recommended!
+				Warning2: WARNING: Unable to locate important structure, new world is required!
+				Caution: CAUTION: You have a Funni config enabled that affects world gen. If you created a world just now, check which one you have enabled and disable it for next time.
 				Keeper1: Shrieks echo through the night...
 				Keeper2: The Keeper noticed the abandoned teddy you're holding...
 				Keeper3: The Keeper's spirit fades away... ?
@@ -526,7 +535,7 @@ Mods: {
 				Datalog28: "'I've made it back, I'm home again.'"
 			}
 		}
-		
+
 		Cutscene: {
 			NewbIntro: {
 				1: What do you think, Jo-
@@ -569,101 +578,92 @@ Mods: {
 				Robot4: Not going back there now.[0.5] Since you're here and not there,[0.1] I can safely assume you're not with Her..?
 				Robot5: "[@a]...Alright.[0.5] We can safely ignore each other then."
 			}
-		}		
 
-		GenericTerms: {
-			Words: {
-				Fighting: fighting
-				Slaying: slaying
-			}
-		}
+			KS3: {
+				Intro: {
+					DroneBreak: Did you seriously just destroy my drones?
+					DroneIfChicken: Alright listen here you little chicken nugget.
+					DroneIfRobot: Alright listen here you little scrap of metal.
+					DroneHuman: Alright listen here you little fleshbag.
+					NoDroneIfRobot: Ah,[0.1] this little scrap of metal decided to save me the trouble of finding it.
+					NoDroneIfChicken: Ah,[0.1] this little chicken nugget decided to save me the trouble of finding it.
+					NoDroneIfHuman: Ah,[0.1] this little fleshbag decided to save me the trouble of finding it.
+					Start: Eh,[0.1] not like I got a shortage of them,[0.1] but I'm still gonna blast ya for it!
+					StartGood: I warned you,[0.1] so don't go crying to your mummy when I crush you into the ground!
+					StartSSR: Do you understand how annoying it is to be spam-pinged by my units because of your trigger-happy arse?[1] Maybe I should teach you a lesson!
+					StartEvil: You were on my hitlist,[0.1] so lets skip the small talk and get on with it!
+					KeeperDowned1: "[@b0][@h0]Actually...[0.5] You were the one that fought the Keeper, weren't you!"
+					KeeperDowned2: "[@h2]That was my job!"
+					KeeperDowned3: "[@h0]Great,[0.1] now I have even more reason to pummel you to ash!"
+				}
 
-		UI: {
-			Chalice: {
-				Alignment: Alignment
-				ItemInterested: "[c/ffea9b:There is something to say about the item you hold]"
-				HeartOfThorns:
-					'''
-					A piece of blight from Faywood forest, cursed by an ancient power.
-					Slaying whatever this may attract will surely do good.
-					'''
-				HeartOfThorns2: The blight should quell with this unfortunate warden slain.
-				DemonScroll:
-					'''
-					A forbidden scroll, used to summon great demon terrors to the land.
-					These are risky things, do not be tempted by it; lest you desire the path of sin.
-					'''
-				DemonScroll2: Attempting to summon a demon and {0} a priest... Are you alright in the head?
-				WeddingRing: An undead... Something tells me she isn't out of her misery just yet.
-				WeddingRing2: A part of the mistress's spirit remains in this ring. Mayhaps a certain protector may find solace in keeping it.
-				SorrowfulEssence:
-					'''
-					Octavia's protector is in search of you. A conflict will be inevitable.
-					However, mayhaps this may bring a chance for a courteous ending.
-					'''
-				AbandonedTeddy: A ragged teddy, and a bringer of peace to the misfortuned.
-				CyberTech:
-					'''
-					A signal-sender to one of the Heroes of the Golden Age.
-					Be warned, he has a rather short temper.
-					'''
-				SlayerShipEngine:
-					'''
-					Although a small thing, this shows your willingness to help.
-					I'm sure King Slayer will appreciate it.
-					'''
-				MemoryChip:
-					'''
-					On first glance, it seems like a useless gift to someone like you.
-					And although it may be true, I don't doubt this may play a crucial role in the future.
-					'''
-				AnglonicMysticBlossom:
-					'''
-					A beauty of nature, often gifted to those whom wish eternal blessings.
-					Perhaps you'll find a worthy friend to gift this to one day.
-					'''
-				KingsOakStaff:
-					'''
-					A staff that calls to the critters of Nature.
-					Do not be perturbed by their verbose spirit, for they may even convince a certain creature of your friendship.
-					'''
-				NebSummon: This beckons a silent observer to test your strength.
-				NebSummon2:
-					'''
-					 Her past is a mystery,
-					yet in my soul I know the importance of her role in this world's protection.
-					Based on your past actions, I foresee a terrible future.
-					'''
-				NebSummon3: ... I see it now.
-				A0: You are truly neutral...
-				A1N: You have done harm, but you are safe for now...
-				A1: You have done good so far...
-				A2: You are choosing the right path. Please, continue.
-				A2N: Be wary, you are straying from the path of good...
-				A3N: You are really pushing it aren't you... If you continue down this road, justice will await you.
-				A3: I am proud of you for keeping the light within you bright...
-				A4N: ... Listen, you are following the wrong path here... Please, go back.
-				A4: Vanquishing the evil of the world... You really are something.
-				A5N: I am sorry, you can't go back now...
-				A5: Light shines within you, but I am sure more dangerous foes lie ahead...
-				A6N: You are past redemption...
-				A6: You are the redemption this world needed...
-				ADDDefeat: It is unknown how these forgotten deities ruled, perhaps defeating them was for the best, or worst.
-				FowlDefeat: ... What?
-				KeeperSave: You've redeemed yourself, Octavia may rest in undisturbed peac-
-				KS3Spared: Good thing you left him be...
-				KS3Defeat:
-					'''
-					Oh dear, he seems to have a very short temper, and you winning probably made it worse.
-					I hope he doesn't do anything stupid.
-					'''
-				KS3Choice: I would leave him be, if I were you.
-				NebChoice: Don't go down the road you seek, please.
-				NebDefeat: Trust me when I say this, you've dug yourself a 1000-feet hole here.
-				ForestNymphHoused: Sometimes it is the little acts of kindness that count.
-				TreebarkFelled: Assisting the extinction of these dwindling dryads is not something I approve of.
-				EaglecrestDefeat: Living stones? Never seen that before.
-				SkullDiggerDefeat: A saddening conclusion to this protector and mistress, but perhaps there is another way..?
+				Resummon: {
+					Downed1: "[@h1]Why must you summon me again?"
+					Downed2: "[@h2]Could you maybe possibly probably potentially LEAVE ME ALONE?"
+					Downed3: "[@h1]Really,[0.1] a rematch?[0.5] Fine."
+					Downed4: "[@h1]Why don't you go preemptively die and save me the effort."
+					Downed5: "[@h4]What?[0.5] Do you want to fight me again?"
+					1: "[@h3]Could've sworn you died..."
+					2: Ready for a rematch?
+					3: Welp,[0.1] time to win again!
+					4: Still wanna fight?
+					5: "[@h3]You're quite a resilient fellow..."
+				}
+
+				Interval1: {
+					Effort1: What a nuisance.[1] It would seem my Auto-Shield is ineffective to your attacks.
+					Effort2: What a nuisance.[1] Your petty projectiles are going through my Auto-Shield.
+					Effort3: What a nuisance.[1] You are only wasting both of our efforts here.
+					RunAway: Why'd you summon me if you're just gonna run away the entire time?
+					End: Might as well blow you to pieces with a few missiles.
+				}
+
+				Interval2: {
+					StartIfRobot: This rusty little tincan is more persistent than I thought...
+					StartIfChicken: The concept of losing to a chicken does not bode well with me...
+					StartIfHuman: You pack more of a punch than I thought for such a small fleshbag...
+					Ranged: You like shooting things,[0.1] correct?[0.5] Well try shooting me now.
+					Normal: Go ahead,[0.1] shoot me if you can.
+					Joke1: "[@h3]I might even have to take you seriously..."
+					Joke2: "[@h0]PAH![0.5] What a joke!"
+				}
+
+				Interval3: {
+					1: This is getting ridiculous![0.5] Why can't I kill you?
+					2: "[@h3]*Ahem*[1] Your persistence is admirable,[0.1] I'll give you that."
+					3: "[@h2]But you better realise I'm hardly trying.[1][@h1] I ain't bluffing either."
+				}
+
+				Inverval4: {
+					Stop: If you stop attacking,[0.1] I'll go back to more [0.1]IMPORTANT[0.1] business.
+					RunAway: You've just been flying away the entire fight.[1] Seriously.
+					Normal: I'm too tired to get mad about this nonsense.
+					Alright: Alright alright alright!
+					Draw1: "[@h1]We'll...[0.5] call it a draw then."
+					Draw2: "[@h2]If you agree to stop,[0.1] I'll go back to more [0.1]IMPORTANT[0.1] business."
+					Draw3: "[@h3]But,[0.1] if you so choose,[0.1] we can continue...[1] But I won't be happy if I lose."
+				}
+
+				Choice: {
+					CallDraw: Call Draw
+					Continue: Continue
+				}
+
+				Spare: {
+					Accept: Tie it is then.[1] Now don't distract me again.
+					Adios: "[@h1]Adios,[0.1] dingus."
+				}
+
+				Continue: {
+					Accept: I see how it is...
+					Overclock1: Once again,[0.1] you really are eager to win...
+					Overclock2: I'm disappointed I actually have to overclock this vessel...
+					Overclock3: ... I guess you like doing things the hard way.
+					IfRobot: ... And for a heap of scrap no less.
+					IfChicken: ... And for what?[0.5] A bloody chicken!?
+					IfHuman: ... And for an annoying brat no less.
+					Begin: "[@h0][@c]Let's begin."
+				}
 			}
 		}
 
