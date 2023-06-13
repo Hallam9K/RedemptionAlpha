@@ -202,10 +202,10 @@ namespace Redemption.NPCs.Friendly
                         button = Language.GetTextValue("Mods.Redemption.DialogueBox.ForestNymph.SFollow");
                     break;
                 case 4:
-                    button = Language.GetTextValue("Mods.Redemption.DialogueBox.ForestNymph.Dhair");
+                    button = Language.GetTextValue("Mods.Redemption.DialogueBox.ForestNymph.DHair");
                     break;
                 case 5:
-                    button = Language.GetTextValue("Mods.Redemption.DialogueBox.ForestNymph.Shair");
+                    button = Language.GetTextValue("Mods.Redemption.DialogueBox.ForestNymph.SHair");
                     break;
                 case 6:
                     button = Language.GetTextValue("Mods.Redemption.DialogueBox.ForestNymph.Crux");
