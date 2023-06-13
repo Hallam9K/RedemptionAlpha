@@ -8,14 +8,49 @@ Mods: {
 				Modifier: Anglonic High Priest
 			}
 
+			Thorn: {
+				Name: Thorn
+				Modifier: Bane of the Forest
+			}
+
+			SoI: {
+				Name: Seed of Infection
+				Modifier: ""
+			}
+
+			Keeper: {
+				Name: Keeper
+				Modifier: Octavia von Gailon
+			}
+
+			Calavia: {
+				Name: Calavia
+				Modifier: Warrior of the Iron Realm
+			}
+
 			KS3: {
 				Name: King Slayer III
 				Modifier: Prototype Multium
 			}
 
+			Cleaver: {
+				Name: Omega Cleaver
+				Modifier: 1st Omega Prototype
+			}
+
+			Gigapora: {
+				Name: Omega Gigapora
+				Modifier: 2nd Omega Prototype
+			}
+
 			OO: {
 				Name: Omega Obliterator
 				Modifier: 3rd Omega Prototype
+			}
+
+			PZ: {
+				Name: Kari Johansson
+				Modifier: Patient Zero
 			}
 
 			Ukko: {
@@ -27,15 +62,28 @@ Mods: {
 				Name: Akka
 				Modifier: Ancient Goddess of Nature
 			}
+
+			Neb: {
+				Name: Nebuleus
+				Modifier: Angel of the Cosmos
+				Ultimate: Ultimate Form
+			}
 		}
 
 		FlavorTextBestiary: {
+			Thorn: An unfortunate warden of a cursed forest, doomed to be consumed by blighted thorns.
+			Keeper: A powerful fallen who had learnt forbidden necromancy, its prolonged usage having mutated her body.
+			SoI: A blistering pocket of the Xenomite infection.
+			Calavia: A Chief-Warrior of the Iron Realm, lost and troubled by her distant venture from her home of Khen Boldur, which was spurred on by the barons of Arum. Swordplay and smithing is her expertise, along with familiarity of Blizzard magic.
 			OO: An autonomous war machine mostly of Girus' own design with many integrated weapon systems, such as literal finger guns and an advanced heat dispersion system in the form of a giant beam, capable of obliterating anyone it engulfs - Also where Obliterator got its name from."
 			TreebarkDryad: These slow-thinking ents only appear in heavily forested areas. They have only recently arrived on this island, coming from the portal on the surface. Once every century, they find a shallow pond and hibernate in the centre. The water from the pond feeds the ent during the process.
 			Erhan: A high priest of Fairwood, tasked himself to purify the forest's curse after it consumed it's warden.
 			KS3: "'What? You want my lore? Go get your own lore!'"
+			Cleaver: A proof-of-concept weapon of war modified by Girus, the Omega Cleaver is a giant sword controlled by a small remote stick that was wielded by another machine.
+			Gigapora: A modified tunnelling machine, originally of Teochrome design, retrofitted with rocket boosters, various weaponry and very experimental projected shield technology. Gigapora's shield projectors are prone to overheating and melting if they're inside the projected shield, hence why they're outside.
 			Akka: Little has been recorded of Akka during her youth, it is believed by the locals that her spirit infused with a great tree in the Spirit Realm, where she would sleep until awoken by her husband to be worshipped once more."
 			Ukko: Once a blacksmith in ancient Tethuram who had an immense talent in magic, growing to be seen as a god by many who witnessed his strengths. In his old age, growing weary of his mortality, Ukko infused his soul into a bundle of rocks, allowing him to eventually reform when the time comes. The locals worshipped this golem, until the knowledge of Ukko's soul inside slowly faded away.
+			PZ: An unfortunate scientist, mutilated and disfigured by the Xenomite infection. This specimen was Kari Johannson, the father of all T-Bots and patient zero of the xenomite infection. He's been stuck for 50 years, conscious and aware of the situation around him... God, that must be tormentous."
 			Android: Fodder sent down to the island by King Slayer III to scan. These are the first iteration of the Android Unit and the first robots designed by King Slayer during his million year voyage. Their original purpose was to bring company and life to the SoS, however they have since been fitted with more combat-oriented parts. When damaged, they will retreat back to the SoS and alert the network.
 		}
 
@@ -663,6 +711,11 @@ Mods: {
 				3: Guess whom'st've's back!
 			}
 
+			Keeper: {
+				1: Thank...
+				2: You...
+			}
+
 			TBotIntro: {
 				Normal1: AH!
 				Normal2: ...I-[0.1]I thought you were someone else.[0.5] Sorry about that.
@@ -674,6 +727,31 @@ Mods: {
 				Robot3: *Sigh*[0.1] I wasn't expecting to see the likes of us here.
 				Robot4: Not going back there now.[0.5] Since you're here and not there,[0.1] I can safely assume you're not with Her..?
 				Robot5: "[@a]...Alright.[0.5] We can safely ignore each other then."
+			}
+
+			Calavia: {
+				Fight: {
+					Defeat1: Taborti! Taborti![0.2] I yield! I yield!
+					Defeat2: Grant me mercy!
+					Defeat3: "[0.2] Call your servants off!"
+					Mercy1: You understood?[0.2] So you aren't a khru?
+					Mercy2: Apologies for the startled reaction,[0.1] I never expected to meet a khen here.
+					Mercy3: I am actually in need of some assistance,[0.1] I'll explain more by the portal.
+				}
+
+				Talk: {
+					1: Oi!
+					2: I wouldn't take that spirit back to Arum if I were ya.
+					3: And why would that be?
+					4: Forgive my bluntness,[0.1] but the barons of Arum are nothing but rancorous demons.
+					5: "[@b]Excuse me?[0.5] I haven't seen a single droplet of malice from them,[0.1] and I've been workin' with them for years!"
+					6: As have I...[0.3][@c][@d] in a more direct sense.[0.5][@g] Just trust me lassie,[0.1] break free Kyretha's spirit.[0.5] Let her truly rest.
+					7: To doubt the wisdom of a liberated spirit would be most imprudent.
+					8: .^0.3^..^0.05^ [@e]Gorhal'on.[0.5][@f] Taborti.[0.6] I'll free it after I go through the portal.
+					9: Is that a promise?
+					10: Bi'oruen.
+					11: Very well.
+				}
 			}
 
 			AndroidScan: {
@@ -778,6 +856,13 @@ Mods: {
 				Variant: Screw you too I guess.
 				1: Don't attack.
 				2: I've come to relay a message from King Slayer -
+			}
+
+			WielderBot: {
+				Funny1: I came here to kick gum
+				Funny2: and chew ass...
+				Funny3: ...And I'm all out of ass.
+				Defeat: ...Nah.
 			}
 
 			OO: {
@@ -911,6 +996,8 @@ Mods: {
 				TreebarkFelled: Assisting the extinction of these dwindling dryads is not something I approve of.
 				EaglecrestDefeat: Living stones? Never seen that before.
 				SkullDiggerDefeat: A saddening conclusion to this protector and mistress, but perhaps there is another way..?
+				CalaviaChoice: She is wishing to be spared.
+				CalaviaKilled: How ruthless...
 			}
 		}
 
