@@ -7167,6 +7167,35 @@ Mods: {
 					Only usable after Plantera has been defeated
 					Not consumable
 					'''
+				Nothing: Nothing happens...
+				NoOther: No other Prototypes available...
+				First: 1st Omega Prototype
+				Second: 2nd Omega Prototype
+				Third: 3rd Omega Prototype
+				Fourth: 4th Omega Prototype
+				TooltipNone: No Omega Prototypes can be called right now
+				TooltipFirst:
+					'''
+					1st Omega Prototype
+					'The corrupted blade draws near the power, thus beginning the final hour'
+					'''
+				TooltipSecond:
+					'''
+					2nd Omega Prototype
+					'Mechanical whirls beneath the ground, be wary of the deadly sound'
+					'''
+				TooltipThird:
+					'''
+					3rd Omega Prototype
+					'Feel the sense of frustration, prepare for obliteration
+					Only usable after the first 2 Omega Prototypes have been defeated
+					'''
+				TooltipFourth:
+					'''
+					4th Omega Prototype
+					'As the noise dies down, the end draws near; ******* **** **** ******, *** ****** ** ****
+					Only usable after Nebuleus has been defeated
+					'''					
 			}
 
 			WeddingRing: {
