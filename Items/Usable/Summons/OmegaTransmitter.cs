@@ -14,6 +14,8 @@ using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.Localization;
+
 
 namespace Redemption.Items.Usable.Summons
 {
@@ -79,20 +81,20 @@ namespace Redemption.Items.Usable.Summons
                 {
                     case 0:
                         if (limit == -1)
-                            CombatText.NewText(player.getRect(), Color.Red, "Nothing happens...", true, false);
+                            CombatText.NewText(player.getRect(), Color.Red, Language.GetTextValue("Mods.Redemption.Items.OmegaTransmitter.Nothing"), true, false);
                         else if (limit == 0)
-                            CombatText.NewText(player.getRect(), Color.Red, "No other Prototypes available...", true, false);
+                            CombatText.NewText(player.getRect(), Color.Red, Language.GetTextValue("Mods.Redemption.Items.OmegaTransmitter.NoOther"), true, false);
                         else
-                            CombatText.NewText(player.getRect(), Color.Red, "1st Omega Prototype", true, false);
+                            CombatText.NewText(player.getRect(), Color.Red, Language.GetTextValue("Mods.Redemption.Items.OmegaTransmitter.First"), true, false);
                         break;
                     case 1:
-                        CombatText.NewText(player.getRect(), Color.Red, "2nd Omega Prototype", true, false);
+                        CombatText.NewText(player.getRect(), Color.Red, Language.GetTextValue("Mods.Redemption.Items.OmegaTransmitter.Second"), true, false);
                         break;
                     case 2:
-                        CombatText.NewText(player.getRect(), Color.Red, "3rd Omega Prototype", true, false);
+                        CombatText.NewText(player.getRect(), Color.Red, Language.GetTextValue("Mods.Redemption.Items.OmegaTransmitter.Third"), true, false);
                         break;
                     case 3:
-                        CombatText.NewText(player.getRect(), Color.Red, "4th Omega Prototype", true, false);
+                        CombatText.NewText(player.getRect(), Color.Red, Language.GetTextValue("Mods.Redemption.Items.OmegaTransmitter.Fourth"), true, false);
                         break;
                 }
             }
@@ -102,7 +104,7 @@ namespace Redemption.Items.Usable.Summons
                 {
                     case 0:
                         if (limit == -1)
-                            CombatText.NewText(player.getRect(), Color.Red, "Nothing happens...", true, false);
+                            CombatText.NewText(player.getRect(), Color.Red, Language.GetTextValue("Mods.Redemption.Items.OmegaTransmitter.Nothing"), true, false);
                         else
                         {
                             if (player.whoAmI == Main.myPlayer)
@@ -152,24 +154,18 @@ namespace Redemption.Items.Usable.Summons
             {
                 case 0:
                     if (!NPC.downedPlantBoss)
-                        omegaType = "No Omega Prototypes can be called right now";
+                        omegaType = Language.GetTextValue("Mods.Redemption.Items.OmegaTransmitter.TooltipNone");
                     else
-                        omegaType = "1st Omega Prototype\n" +
-                            "'The corrupted blade draws near the power, thus beginning the final hour'";
+                        omegaType = Language.GetTextValue("Mods.Redemption.Items.OmegaTransmitter.TooltipFirst");
                     break;
                 case 1:
-                    omegaType = "2nd Omega Prototype\n" +
-                        "'Mechanical whirls beneath the ground, be wary of the deadly sound'";
+                    omegaType = Language.GetTextValue("Mods.Redemption.Items.OmegaTransmitter.TooltipSecond");
                     break;
                 case 2:
-                    omegaType = "3rd Omega Prototype\n" +
-                        "'Feel the sense of frustration, prepare for obliteration'\n" +
-                        "Only usable after the first 2 Omega Prototypes have been defeated";
+                    omegaType = Language.GetTextValue("Mods.Redemption.Items.OmegaTransmitter.TooltipThird");
                     break;
                 case 3:
-                    omegaType = "4th Omega Prototype\n" +
-                        "'As the noise dies down, the end draws near; ******* **** **** ******, *** ****** ** ****'\n" +
-                        "Only usable after Nebuleus has been defeated";
+                    omegaType = Language.GetTextValue("Mods.Redemption.Items.OmegaTransmitter.TooltipFourth");
                     break;
             }
             TooltipLine line = new(Mod, "OmegaName", omegaType)
