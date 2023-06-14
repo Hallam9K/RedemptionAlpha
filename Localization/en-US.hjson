@@ -790,7 +790,9 @@ Mods: {
 				Robot4: Not going back there now.[0.5] Since you're here and not there,[0.1] I can safely assume you're not with Her..?
 				Robot5: "[@a]...Alright.[0.5] We can safely ignore each other then."
 			}
-
+			
+			SoI: A portal to another world has opened!
+			
 			Calavia: {
 				Fight: {
 					Defeat1: Taborti! Taborti![0.2] I yield! I yield!
