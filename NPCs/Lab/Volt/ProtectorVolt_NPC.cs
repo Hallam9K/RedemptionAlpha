@@ -7,6 +7,7 @@ using Terraria;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.Localization;
 using Terraria.Utilities;
 
 namespace Redemption.NPCs.Lab.Volt
@@ -59,51 +60,51 @@ namespace Redemption.NPCs.Lab.Volt
         public static bool NextPage;
         public override void SetChatButtons(ref string button, ref string button2)
         {
-            button2 = "Cycle Dialogue";
+            button2 = Language.GetTextValue("Mods.Redemption.DialogueBox.CycleD");
             switch (ChatNumber)
             {
                 case 0:
-                    button = "Other T-Bots?";
+                    button = Language.GetTextValue("Mods.Redemption.DialogueBox.Volt.1");
                     break;
                 case 1:
-                    button = "Adam?";
+                    button = Language.GetTextValue("Mods.Redemption.DialogueBox.Volt.2");
                     break;
                 case 2:
-                    button = "Insurgents";
+                    button = Language.GetTextValue("Mods.Redemption.DialogueBox.Volt.3");
                     break;
                 case 3:
-                    button = "Fourth Insurgent";
+                    button = Language.GetTextValue("Mods.Redemption.DialogueBox.Volt.4");
                     break;
                 case 4:
-                    button = "Independent Bots?";
+                    button = Language.GetTextValue("Mods.Redemption.DialogueBox.Volt.5");
                     break;
                 case 5:
-                    button = "MACE Project?";
+                    button = Language.GetTextValue("Mods.Redemption.DialogueBox.Volt.6");
                     break;
                 case 6:
-                    button = "Crane Operator?";
+                    button = Language.GetTextValue("Mods.Redemption.DialogueBox.Volt.7");
                     break;
                 case 7:
-                    button = "What's at the bottom of the lab?";
+                    button = Language.GetTextValue("Mods.Redemption.DialogueBox.Volt.8");
                     break;
                 case 8:
-                    button = "Girus?";
+                    button = Language.GetTextValue("Mods.Redemption.DialogueBox.Volt.9");
                     break;
                 case 9:
-                    button = "Assimilated?";
+                    button = Language.GetTextValue("Mods.Redemption.DialogueBox.Volt.10");
                     break;
                 case 10:
-                    button = "Why follow Girus?";
+                    button = Language.GetTextValue("Mods.Redemption.DialogueBox.Volt.11");
                     break;
                 case 11:
-                    button = "Challenge!";
+                    button = Language.GetTextValue("Mods.Redemption.DialogueBox.Volt.12");
                     break;
                 case 22:
-                    button = "Insurgents (2/2)";
+                    button = Language.GetTextValue("Mods.Redemption.DialogueBox.Volt.13");
                     break;
             }
             if (NextPage)
-                button = "Next Page (1/2)";
+                button = Language.GetTextValue("Mods.Redemption.DialogueBox.TBot.NextPage");
         }
 
         public override void OnChatButtonClicked(bool firstButton, ref string shopName)
