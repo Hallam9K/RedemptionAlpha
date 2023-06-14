@@ -5,6 +5,7 @@ using Redemption.UI;
 using Redemption.WorldGeneration;
 using Terraria;
 using Terraria.ModLoader;
+using Terraria.Localization;
 
 namespace Redemption.NPCs.Lab.Behemoth
 {
@@ -32,13 +33,13 @@ namespace Redemption.NPCs.Lab.Behemoth
                     RedeSystem.Instance.DialogueUIElement.DisplayDialogue("...", 100, 1, 0.6f, "???:", 1, RedeColor.GirusTier, null, null, null, 0, sound: true);
 
                 if (Projectile.ai[0] == 640)
-                    RedeSystem.Instance.DialogueUIElement.DisplayDialogue("Hello, I don't believe we've met.", 260, 1, 0.6f, "???:", 1, RedeColor.GirusTier, null, null, null, 0, sound: true);
+                    RedeSystem.Instance.DialogueUIElement.DisplayDialogue(Language.GetTextValue("Mods.Redemption.Cutscene.Girus.Encounter1.1"), 260, 1, 0.6f, "???:", 1, RedeColor.GirusTier, null, null, null, 0, sound: true);
 
                 if (Projectile.ai[0] == 900)
-                    RedeSystem.Instance.DialogueUIElement.DisplayDialogue("You don't know anything about me, but I know a lot about you.", 340, 1, 0.6f, "???:", 1, RedeColor.GirusTier, null, null, null, 0, sound: true);
+                    RedeSystem.Instance.DialogueUIElement.DisplayDialogue(Language.GetTextValue("Mods.Redemption.Cutscene.Girus.Encounter1.2"), 340, 1, 0.6f, "???:", 1, RedeColor.GirusTier, null, null, null, 0, sound: true);
 
                 if (Projectile.ai[0] == 1240)
-                    RedeSystem.Instance.DialogueUIElement.DisplayDialogue("Let's keep it that way for now.", 260, 1, 0.6f, "???:", 1, RedeColor.GirusTier, null, null, null, 0, sound: true);
+                    RedeSystem.Instance.DialogueUIElement.DisplayDialogue(Language.GetTextValue("Mods.Redemption.Cutscene.Girus.Encounter1.3"), 260, 1, 0.6f, "???:", 1, RedeColor.GirusTier, null, null, null, 0, sound: true);
 
                 if (Projectile.ai[0] == 1500)
                 {
@@ -51,10 +52,10 @@ namespace Redemption.NPCs.Lab.Behemoth
 
                         RedeHelper.SpawnNPC(Projectile.GetSource_FromAI(), (int)DronePos.X, (int)DronePos.Y, ModContent.NPCType<GiftDrone2>(), 0, i);
                     }
-                    RedeSystem.Instance.DialogueUIElement.DisplayDialogue("Here, I've sent a drone to offer you a gift, please accept it.", 300, 1, 0.6f, "???:", 1, RedeColor.GirusTier, null, null, null, 0, sound: true);
+                    RedeSystem.Instance.DialogueUIElement.DisplayDialogue(Language.GetTextValue("Mods.Redemption.Cutscene.Girus.Encounter1.4"), 300, 1, 0.6f, "???:", 1, RedeColor.GirusTier, null, null, null, 0, sound: true);
                 }
                 if (Projectile.ai[0] == 1800)
-                    RedeSystem.Instance.DialogueUIElement.DisplayDialogue("Till we meet again.", 200, 1, 0.6f, "???:", 1, RedeColor.GirusTier, null, null, null, 0, sound: true);
+                    RedeSystem.Instance.DialogueUIElement.DisplayDialogue(Language.GetTextValue("Mods.Redemption.Cutscene.Girus.Encounter1.5"), 200, 1, 0.6f, "???:", 1, RedeColor.GirusTier, null, null, null, 0, sound: true);
             }
             if (Projectile.ai[0] >= 2000)
                 Projectile.Kill();
