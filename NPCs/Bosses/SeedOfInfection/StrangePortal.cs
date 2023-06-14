@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.Localization;
 using Redemption.BaseExtension;
 using ParticleLibrary;
 using Redemption.Particles;
@@ -32,7 +33,7 @@ namespace Redemption.NPCs.Bosses.SeedOfInfection
             if (Projectile.localAI[0]++ == 0)
             {
                 if (!Main.dedServ)
-                    RedeSystem.Instance.DialogueUIElement.DisplayDialogue("A portal to another world has opened!", 120, 30, 0.8f, null, 1f, Color.Green);
+                    RedeSystem.Instance.DialogueUIElement.DisplayDialogue(Language.GetTextValue("Mods.Redemption.Cutscene.SoI"), 120, 30, 0.8f, null, 1f, Color.Green);
 
                 modPlayer.Rumble(180, 3);
             }
