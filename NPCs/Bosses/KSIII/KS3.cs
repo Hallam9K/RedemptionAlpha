@@ -2257,7 +2257,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                         Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/silence");
 
                     if (!Main.dedServ && !YesNoUI.Visible)
-                        RedeSystem.Instance.YesNoUIElement.DisplayYesNoButtons(Language.GetTextValue("Mods.Redemption.Cutscene.Choice.CallDraw"), Language.GetTextValue("Mods.Redemption.Cutscene.KS3.Choice.Continue"), new Vector2(0, 28), new Vector2(0, 28), .6f, .6f);
+                        RedeSystem.Instance.YesNoUIElement.DisplayYesNoButtons(Language.GetTextValue("Mods.Redemption.GenericTerms.Choice.CallDraw"), Language.GetTextValue("Mods.Redemption.GenericTerms.Choice.Continue"), new Vector2(0, 28), new Vector2(0, 28), .6f, .6f);
 
                     if (player.Redemption().yesChoice)
 
