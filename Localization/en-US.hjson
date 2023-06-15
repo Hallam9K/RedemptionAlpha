@@ -887,22 +887,7 @@ Mods: {
 					2: "[@h3]*Ahem*[1] Your persistence is admirable,[0.1] I'll give you that."
 					3: "[@h2]But you better realise I'm hardly trying.[1][@h1] I ain't bluffing either."
 				}
-
-				Inverval4: {
-					Stop: If you stop attacking,[0.1] I'll go back to more [0.1]IMPORTANT[0.1] business.
-					RunAway: You've just been flying away the entire fight.[1] Seriously.
-					Normal: I'm too tired to get mad about this nonsense.
-					Alright: Alright alright alright!
-					Draw1: "[@h1]We'll...[0.5] call it a draw then."
-					Draw2: "[@h2]If you agree to stop,[0.1] I'll go back to more [0.1]IMPORTANT[0.1] business."
-					Draw3: "[@h3]But,[0.1] if you so choose,[0.1] we can continue...[1] But I won't be happy if I lose."
-				}
-
-				Choice: {
-					CallDraw: Call Draw
-					Continue: Continue
-				}
-
+				
 				Spare: {
 					Accept: Tie it is then.[1] Now don't distract me again.
 					Adios: "[@h1]Adios,[0.1] dingus."
