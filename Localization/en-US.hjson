@@ -912,6 +912,14 @@ Mods: {
 					Begin: "[@h0][@c]Let's begin."
 				}
 			}
+			
+			KS3Clone: {
+				Intro: {
+					1: "SCANNING TARGET..."
+					2: "TARGET DEEMED -[0.5] 'A WASTE OF TIME'"
+					3: "RELAYING MESSAGE-[0.5] 'KING SLAYER NO LONGER HAS TIME FOR YOU'"
+				}
+			}			
 
 			KS3Message: {
 				Attacked1: Well aren't you a little trigger-happy.
