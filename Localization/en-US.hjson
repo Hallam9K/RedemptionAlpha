@@ -1406,7 +1406,7 @@ Mods: {
 				11:Captive spirit?
 				12:Explain
 				Crux:Request Kyretha's Crux
-				Leave:[c/FF6600:You're ready to leave]
+				Leave:"[c/FF6600:You're ready to leave]"
 			}
 				
 			KS3: {
