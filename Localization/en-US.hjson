@@ -1258,7 +1258,7 @@ Mods: {
 				Keybind: Hold [Spirit Walker Ability Key] for 1 second to peek into the Spirit Realm
 				Hold: "Hold "
 				Context: " for 1 second to peek into the Spirit Realm"
-				Name: -Spirit Walker-
+				Name: '''-Spirit Walker-'''
 			}
 		}
 
