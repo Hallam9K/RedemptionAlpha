@@ -270,11 +270,11 @@ namespace Redemption.NPCs.Minibosses.SkullDigger
                                 if (!Main.dedServ)
                                 {
                                     if (AITimer == 40)
-                                        RedeSystem.Instance.DialogueUIElement.DisplayDialogue("Mistress Octavia, are you harmed?", 120, 30, 0.6f, "Skull Digger:", 0.3f, Color.LightCyan, null, text, NPC.Center, 0);
+                                        RedeSystem.Instance.DialogueUIElement.DisplayDialogue(Language.GetTextValue("Mods.Redemption.Cutscene.SkullDigger.Fight1"), 120, 30, 0.6f, Language.GetTextValue("Mods.Redemption.Cutscene.SkullDigger.Name"), 0.3f, Color.LightCyan, null, text, NPC.Center, 0);
                                     if (AITimer == 220)
-                                        RedeSystem.Instance.DialogueUIElement.DisplayDialogue("My lady, you need not worry, I shall crush this vermin.", 120, 30, 0.6f, "Skull Digger:", 0.6f, Color.LightCyan, null, text, NPC.Center, 0);
+                                        RedeSystem.Instance.DialogueUIElement.DisplayDialogue(Language.GetTextValue("Mods.Redemption.Cutscene.SkullDigger.Fight2"), 120, 30, 0.6f, Language.GetTextValue("Mods.Redemption.Cutscene.SkullDigger.Name"), 0.6f, Color.LightCyan, null, text, NPC.Center, 0);
                                     if (AITimer == 400)
-                                        RedeSystem.Instance.DialogueUIElement.DisplayDialogue("Prepare to reap what you sow...", 120, 30, 0.6f, "Skull Digger:", 0.6f, Color.LightCyan, null, text, NPC.Center, 0);
+                                        RedeSystem.Instance.DialogueUIElement.DisplayDialogue(Language.GetTextValue("Mods.Redemption.Cutscene.SkullDigger.Fight3"), 120, 30, 0.6f, Language.GetTextValue("Mods.Redemption.Cutscene.SkullDigger.Name"), 0.6f, Color.LightCyan, null, text, NPC.Center, 0);
                                 }
                                 if (AITimer >= 580)
                                 {
@@ -292,9 +292,9 @@ namespace Redemption.NPCs.Minibosses.SkullDigger
                                 if (!Main.dedServ)
                                 {
                                     if (AITimer == 40)
-                                        RedeSystem.Instance.DialogueUIElement.DisplayDialogue("I have finally found you, vermin...", 120, 30, 0.6f, "Skull Digger:", 0.3f, Color.LightCyan, null, text, NPC.Center, 0);
+                                        RedeSystem.Instance.DialogueUIElement.DisplayDialogue(Language.GetTextValue("Mods.Redemption.Cutscene.SkullDigger.Fight4"), 120, 30, 0.6f, Language.GetTextValue("Mods.Redemption.Cutscene.SkullDigger.Name"), 0.3f, Color.LightCyan, null, text, NPC.Center, 0);
                                     if (AITimer == 220)
-                                        RedeSystem.Instance.DialogueUIElement.DisplayDialogue("Prepare to reap what you sow...", 120, 30, 0.6f, "Skull Digger:", 0.3f, Color.LightCyan, null, text, NPC.Center, 0);
+                                        RedeSystem.Instance.DialogueUIElement.DisplayDialogue(Language.GetTextValue("Mods.Redemption.Cutscene.SkullDigger.Fight3"), 120, 30, 0.6f, Language.GetTextValue("Mods.Redemption.Cutscene.SkullDigger.Name"), 0.3f, Color.LightCyan, null, text, NPC.Center, 0);
                                 }
                                 if (AITimer >= 400)
                                 {
@@ -435,9 +435,9 @@ namespace Redemption.NPCs.Minibosses.SkullDigger
                         if (!Main.dedServ)
                         {
                             if (AITimer == 40)
-                                RedeSystem.Instance.DialogueUIElement.DisplayDialogue("My dear mistress, I have failed you.", 120, 30, 0.6f, "Skull Digger:", 0.3f, Color.LightCyan, null, text, NPC.Center, 0);
+                                RedeSystem.Instance.DialogueUIElement.DisplayDialogue(Language.GetTextValue("Mods.Redemption.Cutscene.SkullDigger.Defeat1"), 120, 30, 0.6f, Language.GetTextValue("Mods.Redemption.Cutscene.SkullDigger.Name"), 0.3f, Color.LightCyan, null, text, NPC.Center, 0);
                             if (AITimer == 220)
-                                RedeSystem.Instance.DialogueUIElement.DisplayDialogue("It seems our torment stays eternal.", 120, 30, 0.6f, "Skull Digger:", 0.6f, Color.LightCyan, null, text, NPC.Center, 0);
+                                RedeSystem.Instance.DialogueUIElement.DisplayDialogue(Language.GetTextValue("Mods.Redemption.Cutscene.SkullDigger.Defeat2"), 120, 30, 0.6f, Language.GetTextValue("Mods.Redemption.Cutscene.SkullDigger.Name"), 0.6f, Color.LightCyan, null, text, NPC.Center, 0);
                         }
 
                         if (AITimer >= 220)
