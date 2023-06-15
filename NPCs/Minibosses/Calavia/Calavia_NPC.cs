@@ -305,39 +305,39 @@ namespace Redemption.NPCs.Minibosses.Calavia
                 switch (RedeQuest.calaviaVar)
                 {
                     default:
-                        button = "Assistance?";
+                        button = Language.GetTextValue("Mods.Redemption.DialoguBox.Calavia.1");
                         break;
                     case 4:
-                        button = "You want to go back?";
-                        button2 = "Why did you enter?";
+                        button = Language.GetTextValue("Mods.Redemption.DialoguBox.Calavia.2");
+                        button2 = Language.GetTextValue("Mods.Redemption.DialoguBox.Calavia.2Alt");
                         break;
                     case 5:
-                        button = "You want to go back?";
+                        button = Language.GetTextValue("Mods.Redemption.DialoguBox.Calavia.3");
                         button2 = "";
                         break;
                     case 6:
-                        button = "Just as clueless as you";
-                        button2 = "Nothing at all";
+                        button = Language.GetTextValue("Mods.Redemption.DialoguBox.Calavia.4");
+                        button2 = Language.GetTextValue("Mods.Redemption.DialoguBox.Calavia.4Alt");
                         break;
                     case 7:
-                        button = "What will you do?";
+                        button = Language.GetTextValue("Mods.Redemption.DialoguBox.Calavia.5");
                         button2 = "";
                         break;
                     case 8:
-                        button = "Anything I can help with?";
-                        button2 = "Good luck with that";
+                        button = Language.GetTextValue("Mods.Redemption.DialoguBox.Calavia.6");
+                        button2 = Language.GetTextValue("Mods.Redemption.DialoguBox.Calavia.6Alt");
                         break;
                     case 9:
-                        button = "What do you need?";
-                        button2 = "I refuse";
+                        button = Language.GetTextValue("Mods.Redemption.DialoguBox.Calavia.7");
+                        button2 = Language.GetTextValue("Mods.Redemption.DialoguBox.Calavia.7Alt");
                         break;
                     case 10:
-                        button = "I will offer help";
-                        button2 = "You're ready to leave";
+                        button = Language.GetTextValue("Mods.Redemption.DialoguBox.Calavia.8");
+                        button2 = Language.GetTextValue("Mods.Redemption.DialoguBox.Calavia.8Alt");
                         break;
                     case 20:
-                        button = "Farewell";
-                        button2 = "Don't leave yet";
+                        button = Language.GetTextValue("Mods.Redemption.DialoguBox.Calavia.9");
+                        button2 = Language.GetTextValue("Mods.Redemption.DialoguBox.Calavia.9Alt");
                         break;
                 }
             }
@@ -347,41 +347,41 @@ namespace Redemption.NPCs.Minibosses.Calavia
                     ChatNumber++;
                 if (ChatNumber is 3 && (RedeQuest.calaviaVar < 12 || (RedeQuest.calaviaVar is 16 && !Main.LocalPlayer.RedemptionAbility().SpiritwalkerActive) || Main.LocalPlayer.HasItem(ModContent.ItemType<CruxCardCalavia>())))
                     ChatNumber++;
-                button2 = "Cycle Options";
+                button2 = Language.GetTextValue("Mods.Redemption.DialoguBox.Cycle");
                 switch (ChatNumber)
                 {
                     case 0:
                         if (HasHelmet > 0 && HasShield)
                         {
-                            button = "Feeling ready?";
+                            button = Language.GetTextValue("Mods.Redemption.DialoguBox.Calavia.Ready");
                             break;
                         }
-                        button = "Requirements";
+                        button = Language.GetTextValue("Mods.Redemption.DialoguBox.Calavia.Require");
                         if (!HasShield && Main.LocalPlayer.HasItem(ModContent.ItemType<PureIronAlloy>()))
-                            button = "Offer 6 Pure-Iron Alloy";
+                            button = Language.GetTextValue("Mods.Redemption.DialoguBox.Calavia.Alloy");
                         if (HasHelmet == 0 && Main.LocalPlayer.HasItem(ModContent.ItemType<AntiquePureIronHelmet>()))
-                            button = "Offer Antique Pure-Iron Helmet";
+                            button = Language.GetTextValue("Mods.Redemption.DialoguBox.Calavia.AntiqueHelmet");
                         if (HasHelmet == 0 && Main.LocalPlayer.HasItem(ModContent.ItemType<PureIronHelmet>()))
-                            button = "Offer Pure-Iron Helmet";
+                            button = Language.GetTextValue("Mods.Redemption.DialoguBox.Calavia.Helmet");
                         break;
                     case 1:
                         FurnaceNearMe();
-                        button = "Gathic Cryo-Furnace?";
+                        button = Language.GetTextValue("Mods.Redemption.DialoguBox.Calavia.Furnace");
                         if (NearFurnace)
-                            button = "Forge";
+                            button = Language.GetTextValue("Mods.Redemption.DialoguBox.Calavia.Forge");
                         break;
                     case 2:
-                        button = "About you?";
+                        button = Language.GetTextValue("Mods.Redemption.DialoguBox.Calavia.10");
                         break;
                     case 3:
-                        button = "Captive spirit?";
+                        button = Language.GetTextValue("Mods.Redemption.DialoguBox.Calavia.11");
                         if (RedeQuest.calaviaVar is 13 or 14)
-                            button = "Explain";
+                            button = Language.GetTextValue("Mods.Redemption.DialoguBox.Calavia.12");
                         if (RedeQuest.calaviaVar is 16)
-                            button = "Request Kyretha's Crux";
+                            button = Language.GetTextValue("Mods.Redemption.DialoguBox.Calavia.Crux");
                         break;
                     case 4:
-                        button = "[c/FF6600:You're ready to leave]";
+                        button = Language.GetTextValue("Mods.Redemption.DialoguBox.Calavia.Leave");
                         break;
                 }
             }
