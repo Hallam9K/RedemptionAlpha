@@ -1386,6 +1386,36 @@ Mods: {
 				SHair: Style Hair
 				Crux: Request Crux
 			}
+			
+			Calavia:{
+				1: Assistance?
+				2:You want to go back?
+				2Alt:Why did you enter?"
+				3:You want to go back?
+				4:Just as clueless as you
+				4Alt:Nothing at all
+				5:What will you do?
+				6:Anything I can help with?
+				6Alt:Good luck with that
+				7:What do you need?
+				7Alt:I refuse
+				8:I will offer help
+				8Alt:You're ready to leave
+				9:Farewell
+				9Alt:Don't leave yet
+				Ready:Feeling ready?
+				Require:Requirements
+				Alloy:Offer 6 Pure-Iron Alloy
+				AntiqueHelmet:Offer Antique Pure-Iron Helmet
+				Helmet:Offer Pure-Iron Helmet
+				Furnace:Gathic Cryo-Furnace?
+				Forge:Forge
+				10:About you?
+				11:Captive spirit?
+				12:Explain
+				Crux:Request Kyretha's Crux
+				Leave:[c/FF6600:You're ready to leave]
+				
 
 			KS3: {
 				0: Why are you here?
