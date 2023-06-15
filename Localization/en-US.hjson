@@ -774,6 +774,13 @@ Mods: {
 			}
 
 			SkullDigger: {
+				Name: Skull Digger:
+				Fight1: Mistress Octavia, are you harmed?
+				Fight2:My lady, you need not worry, I shall crush this vermin.
+				Fight3:Prepare to reap what you sow...
+				Fight4:I have finally found you, vermin..
+				Defeat1:My dear mistress, I have failed you.
+				Defeat2:It seems our torment stays eternal.
 				1: Thank...
 				2: You...
 			}
