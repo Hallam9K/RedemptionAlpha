@@ -3,7 +3,6 @@ using Terraria;
 using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ID;
-using Redemption.Items.Materials.PostML;
 using Redemption.Items.Accessories.HM;
 using Redemption.Globals.Player;
 using Terraria.Audio;
@@ -22,8 +21,7 @@ namespace Redemption.Tiles.Ores
             TileID.Sets.Ore[Type] = true;
             Main.tileOreFinderPriority[Type] = 900;
             DustType = DustID.FlameBurst;
-            ItemDrop = ModContent.ItemType<Corium>();
-            MinPick = 500;
+            MinPick = 1000;
             MineResist = 10f;
             HitSound = SoundID.Tink;
             LocalizedText name = CreateMapEntryName();

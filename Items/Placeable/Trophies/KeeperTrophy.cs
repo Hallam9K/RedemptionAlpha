@@ -10,7 +10,6 @@ namespace Redemption.Items.Placeable.Trophies
         public override void SetStaticDefaults()
         {
             // DisplayName.SetDefault("The Keeper Trophy");
-
 			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults()

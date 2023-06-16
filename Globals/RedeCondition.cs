@@ -2,7 +2,7 @@ using Redemption.NPCs.Minibosses.SkullDigger;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ModLoader;
 using Redemption.BaseExtension;
-using Redemption.NPCs.Bosses.FowlEmperor;
+using Redemption.NPCs.Minibosses.FowlEmperor;
 using Terraria;
 using Redemption.Base;
 using Redemption.Items.Armor.Vanity.TBot;
@@ -46,6 +46,7 @@ namespace Redemption.Globals
         public static Condition DownedSkeletronOrSeed = new("Mods.Redemption.Conditions.DownedSkeletronOrSeed", () => Terraria.NPC.downedBoss3 || RedeBossDowned.downedSeed);
         public static Condition HasSpiritWalker = new("Mods.Redemption.Conditions.HasSpiritWalker", () => Main.LocalPlayer.RedemptionAbility().Spiritwalker);
         public static Condition DeadRingerGiven = new("Mods.Redemption.Conditions.DeadRingerGiven", () => RedeWorld.deadRingerGiven);
+        public static Condition ForestNymphTrust = new("Mods.Redemption.Conditions.ForestNymphTrust", () => RedeQuest.forestNymphVar > 0);
     }
     public class DecapitationCondition : IItemDropRuleCondition
 	{

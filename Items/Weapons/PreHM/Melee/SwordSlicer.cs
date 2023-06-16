@@ -1,6 +1,4 @@
 using Microsoft.Xna.Framework;
-using Redemption.Globals;
-using Redemption.Items.Weapons.PreHM.Magic;
 using Redemption.Items.Weapons.PreHM.Ranged;
 using System.Collections.Generic;
 using Terraria;
@@ -53,9 +51,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
         {
             if (Main.keyState.PressingShift())
             {
-                TooltipLine line = new(Mod, "Lore",
-                    "'Given to Zephos by Draven, his uncle, during training. The slit in the middle is used to catch the opponent's blades,\n" +
-                    "one with great strength can use this advantage to twist the opponent's blade until it snaps, leaving them disarmed.'")
+                TooltipLine line = new(Mod, "Lore", Language.GetTextValue("Mods.Redemption.Items.SwordSlicer.Lore"))
                 {
                     OverrideColor = Color.LightGray
                 };
@@ -63,7 +59,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
             }
             else
             {
-                TooltipLine line = new(Mod, "HoldShift", "Hold [Shift] to view lore")
+                TooltipLine line = new(Mod, "HoldShift", Language.GetTextValue("Mods.Redemption.SpecialTooltips.Viewer"))
                 {
                     OverrideColor = Color.Gray,
                 };

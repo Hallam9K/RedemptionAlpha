@@ -1,6 +1,7 @@
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.Localization;
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 using Redemption.Items.Materials.PreHM;
@@ -41,7 +42,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
         public override void AddRecipes()
         {
             CreateRecipe()
-                .AddIngredient(ItemID.Mace)
+                .AddIngredient(ItemID.ChainKnife)
                 .AddIngredient(ModContent.ItemType<GraveSteelAlloy>(), 6)
                 .AddIngredient(ItemID.Bone, 12)
                 .AddTile(TileID.Anvils)
@@ -51,10 +52,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
         {
             if (Main.keyState.PressingShift())
             {
-                TooltipLine line = new(Mod, "Lore",
-                    "'A tool of torture used by a skeleton known as the Tormenter, infamous among the catacombs\n" +
-                    "of Gathuram's undead residents for his unforgiving command over his skeletal servants.\n" +
-                    "The Tormenter met an ironic end by his own weapon when his minions revolted against his control.'")
+                TooltipLine line = new(Mod, "Lore", Language.GetTextValue("Mods.Redemption.Items.ChompingChains.Lore"))
                 {
                     OverrideColor = Color.LightGray
                 };
@@ -62,7 +60,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
             }
             else
             {
-                TooltipLine line = new(Mod, "HoldShift", "Hold [Shift] to view lore")
+                TooltipLine line = new(Mod, "HoldShift", Language.GetTextValue("Mods.Redemption.SpecialTooltips.Viewer"))
                 {
                     OverrideColor = Color.Gray,
                 };

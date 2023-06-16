@@ -14,9 +14,11 @@ using Terraria.DataStructures;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria.GameContent;
 using Microsoft.Xna.Framework;
-using Redemption.NPCs.Bosses.FowlEmperor;
+using Redemption.NPCs.Minibosses.FowlEmperor;
 using Redemption.Items.Weapons.PreHM.Summon;
 using Redemption.Biomes;
+using Redemption.Items.Accessories.PreHM;
+using Redemption.Items.Placeable.Banners;
 
 namespace Redemption.NPCs.FowlMorning
 {
@@ -42,6 +44,8 @@ namespace Redemption.NPCs.FowlMorning
             NPC.aiStyle = -1;
             NPC.knockBackResist = 0.2f;
             SpawnModBiomes = new int[1] { ModContent.GetInstance<FowlMorningBiome>().Type };
+            Banner = NPC.type;
+            BannerItem = ModContent.ItemType<HaymakerBanner>();
         }
         public override void OnSpawn(IEntitySource source)
         {
@@ -55,6 +59,7 @@ namespace Redemption.NPCs.FowlMorning
             Player player = Main.player[NPC.target];
             NPC.TargetClosest();
             NPC.LookByVelocity();
+            DespawnHandler();
 
             if (Main.rand.NextBool(3000))
                 SoundEngine.PlaySound(CustomSounds.ChickenCluck with { Pitch = -.1f }, NPC.position);
@@ -97,6 +102,24 @@ namespace Redemption.NPCs.FowlMorning
                 NPC.Shoot(nestPos, ModContent.ProjectileType<Rooster_EggBomb>(), (int)(NPC.damage * 1.1f), new Vector2(speed * player.Center.RightOfDir(nestPos), -Main.rand.Next(9, 10)).RotatedBy(Main.rand.NextFloat(-.2f, .2f)), true, SoundID.Item1);
                 NPC.localAI[0] = Main.rand.Next(60, 301);
                 NPC.ai[3] = 0;
+            }
+        }
+        private void DespawnHandler()
+        {
+            Player player = Main.player[NPC.target];
+            if (!player.active || player.dead || !FowlMorningWorld.FowlMorningActive)
+            {
+                NPC.TargetClosest(false);
+                player = Main.player[NPC.target];
+                if (!player.active || player.dead || !FowlMorningWorld.FowlMorningActive)
+                {
+                    NPC.alpha += 2;
+                    if (NPC.alpha >= 255)
+                        NPC.active = false;
+                    if (NPC.timeLeft > 10)
+                        NPC.timeLeft = 10;
+                    return;
+                }
             }
         }
         public override bool? CanFallThroughPlatforms() => NPC.Redemption().fallDownPlatform;
@@ -158,6 +181,11 @@ namespace Redemption.NPCs.FowlMorning
             spriteBatch.Draw(nestTex, nestPos - screenPos, null, NPC.GetAlpha(color) * nestOpacity, 0, new Vector2(nestTex.Width / 2, nestTex.Height / 2), NPC.scale, 0, 0f);
             return false;
         }
+        public override void ModifyIncomingHit(ref NPC.HitModifiers modifiers)
+        {
+            if (NPC.ai[2] is 1)
+                modifiers.Knockback *= 0f;
+        }
         public override bool PreKill()
         {
             if (FowlMorningWorld.FowlMorningActive)
@@ -171,6 +199,7 @@ namespace Redemption.NPCs.FowlMorning
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<NestWand>(), 60));
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Grain>(), 200));
             npcLoot.Add(ItemDropRule.ByCondition(new OnFireCondition(), ModContent.ItemType<FriedChicken>(), 4));
         }
         public override void OnHitByItem(Player player, Item item, NPC.HitInfo hit, int damageDone)

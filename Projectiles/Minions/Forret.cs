@@ -1,14 +1,13 @@
 using Microsoft.Xna.Framework;
 using Redemption.Base;
 using Redemption.Buffs.Minions;
-using Redemption.Buffs.NPCBuffs;
 using Redemption.Globals;
 using System;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Redemption.BaseExtension;
-using Terraria.WorldBuilding;
+using Redemption.Buffs.Debuffs;
 
 namespace Redemption.Projectiles.Minions
 {

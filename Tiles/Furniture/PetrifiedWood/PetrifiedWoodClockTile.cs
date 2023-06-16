@@ -1,5 +1,4 @@
 using Microsoft.Xna.Framework;
-using Redemption.Items.Placeable.Furniture.PetrifiedWood;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
@@ -30,10 +29,7 @@ namespace Redemption.Tiles.Furniture.PetrifiedWood
 			TileObjectData.newTile.Origin = new Point16(0, 4);
 			TileObjectData.addTile(Type);
 
-			// Etc
-			LocalizedText name = CreateMapEntryName();
-			// name.SetDefault("Petrified Wood Clock");
-			AddMapEntry(new Color(100, 100, 100), name);
+			AddMapEntry(new Color(100, 100, 100), Language.GetText("ItemName.GrandfatherClock"));
 		}
 
 		public override bool RightClick(int x, int y)

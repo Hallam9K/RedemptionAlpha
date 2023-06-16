@@ -4,7 +4,6 @@ using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 using Terraria.DataStructures;
-using Redemption.Items.Placeable.Furniture.Shade;
 using Terraria.ID;
 using Redemption.Dusts.Tiles;
 

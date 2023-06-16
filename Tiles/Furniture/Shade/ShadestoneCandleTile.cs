@@ -24,13 +24,14 @@ namespace Redemption.Tiles.Furniture.Shade
             TileObjectData.newTile.WaterDeath = true;
             TileObjectData.newTile.WaterPlacement = LiquidPlacement.NotAllowed;
             TileObjectData.newTile.LavaPlacement = LiquidPlacement.NotAllowed;
+            TileObjectData.newTile.StyleLineSkip = 2;
             TileObjectData.addTile(Type);
             LocalizedText name = CreateMapEntryName();
             // name.SetDefault("Shadestone Candle");
             AddMapEntry(new Color(59, 61, 87), name);
             AdjTiles = new int[] { TileID.Candles };
-            ItemDrop = ModContent.ItemType<ShadestoneCandle>();
             AddToArray(ref TileID.Sets.RoomNeeds.CountsAsTorch);
+            RegisterItemDrop(ModContent.ItemType<ShadestoneCandle>());
             DustType = ModContent.DustType<ShadestoneDust>();
             AnimationFrameHeight = 20;
         }
@@ -89,7 +90,7 @@ namespace Redemption.Tiles.Furniture.Shade
             int height = tile.TileFrameY % AnimationFrameHeight >= 16 ? 18 : 16;
             int animate = Main.tileFrame[Type] * AnimationFrameHeight;
 
-            Texture2D texture = ModContent.Request<Texture2D>("Redemption/Tiles/Furniture/Shade/ShadestoneCandleTile_Glow").Value;
+            Texture2D texture = ModContent.Request<Texture2D>(Texture + "_Glow").Value;
             Rectangle frame = new(tile.TileFrameX, tile.TileFrameY + animate, 16, height);
             ulong randSeed = Main.TileFrameSeed ^ (ulong)((long)j << 32 | (uint)i);
             Color color = new(100, 100, 100, 0);

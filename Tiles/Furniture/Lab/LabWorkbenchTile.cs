@@ -1,7 +1,5 @@
-using Terraria.DataStructures;
 using Microsoft.Xna.Framework;
 using Redemption.Dusts.Tiles;
-using Redemption.Items.Placeable.Furniture.Lab;
 using Terraria;
 using Terraria.ID;
 using Terraria.Localization;
@@ -32,11 +30,7 @@ namespace Redemption.Tiles.Furniture.Lab
 			TileObjectData.addTile(Type);
 
 			AddToArray(ref TileID.Sets.RoomNeeds.CountsAsTable);
-
-			// Etc
-			LocalizedText name = CreateMapEntryName();
-			// name.SetDefault("Laboratory Work Bench");
-			AddMapEntry(new Color(189, 191, 200), name);
+			AddMapEntry(new Color(189, 191, 200), Language.GetText("ItemName.WorkBench"));
 		}
 
 		public override void NumDust(int x, int y, bool fail, ref int num) => num = fail ? 1 : 3;

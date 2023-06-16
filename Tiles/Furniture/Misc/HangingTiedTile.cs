@@ -5,7 +5,6 @@ using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
-using Terraria.DataStructures;
 using Redemption.Items.Usable;
 using Terraria.Audio;
 using Redemption.BaseExtension;
@@ -27,7 +26,7 @@ namespace Redemption.Tiles.Furniture.Misc
             TileObjectData.addTile(Type);
             DustType = DustID.Bone;
             HitSound = CustomSounds.BoneHit;
-            ItemDrop = ModContent.ItemType<OldTophat>();
+            RegisterItemDrop(ModContent.ItemType<OldTophat>());
             LocalizedText name = CreateMapEntryName();
             // name.SetDefault("Hanging Tied");
             AddMapEntry(new Color(81, 81, 81), name);
@@ -68,7 +67,7 @@ namespace Redemption.Tiles.Furniture.Misc
             if (!Main.LocalPlayer.RedemptionAbility().SpiritwalkerActive)
                 return true;
 
-            Texture2D flare = ModContent.Request<Texture2D>("Redemption/Textures/WhiteFlare").Value;
+            Texture2D flare = Redemption.WhiteFlare.Value;
             Rectangle rect = new(0, 0, flare.Width, flare.Height);
             Vector2 zero = new(Main.offScreenRange, Main.offScreenRange);
             if (Main.drawToScreen)

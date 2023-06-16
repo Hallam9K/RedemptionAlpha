@@ -11,6 +11,7 @@ using Redemption.Items.Usable;
 using Terraria.GameContent;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria.Audio;
+using Terraria.Localization;
 using Redemption.Base;
 using Terraria.GameContent.ItemDropRules;
 using Redemption.Items.Accessories.HM;
@@ -131,7 +132,7 @@ namespace Redemption.NPCs.Bosses.KSIII
         public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)
         {
             NPC.lifeMax = (int)(NPC.lifeMax * 0.6f * balance * bossAdjustment);
-            NPC.damage = (int)(NPC.damage * 0.6f);
+            NPC.damage = (int)(NPC.damage * 0.75f);
         }
 
         public override void HitEffect(NPC.HitInfo hit)
@@ -281,9 +282,9 @@ namespace Redemption.NPCs.Bosses.KSIII
                     if (AITimer == 60)
                     {
                         DialogueChain chain = new();
-                        chain.Add(new(NPC, "SCANNING TARGET...", new Color(170, 255, 255), Color.Black, voice, .03f, 2f, 0, false, null, bubble, null, modifier))
-                             .Add(new(NPC, "TARGET DEEMED -[0.5] 'A WASTE OF TIME'", new Color(170, 255, 255), Color.Black, voice, .03f, 2f, 0, false, null, bubble, null, modifier))
-                             .Add(new(NPC, "RELAYING MESSAGE -[0.5] 'KING SLAYER NO LONGER HAS TIME FOR YOU'", new Color(170, 255, 255), Color.Black, voice, .03f, 1.6f, .16f, true, null, bubble, null, modifier, 1));
+                        chain.Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.KS3Clone.Intro.1"), new Color(170, 255, 255), Color.Black, voice, .03f, 2f, 0, false, null, bubble, null, modifier))
+                             .Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.KS3Clone.Intro.2"), new Color(170, 255, 255), Color.Black, voice, .03f, 2f, 0, false, null, bubble, null, modifier))
+                             .Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.KS3Clone.Intro.3"), new Color(170, 255, 255), Color.Black, voice, .03f, 1.6f, .16f, true, null, bubble, null, modifier, 1));
                         chain.OnEndTrigger += Chain_OnEndTrigger;
                         ChatUI.Visible = true;
                         ChatUI.Add(chain);

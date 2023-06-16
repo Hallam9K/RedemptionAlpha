@@ -1,6 +1,7 @@
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.ID;
+using Terraria.Localization;
 using System.Collections.Generic;
 using Redemption.Items.Materials.PreHM;
 using Microsoft.Xna.Framework;
@@ -45,12 +46,7 @@ namespace Redemption.Items.Armor.PreHM.PureIron
         {
             if (Main.keyState.PressingShift())
             {
-                TooltipLine line = new(Mod, "Lore",
-                    "'Greaves made of metal and leather used by the Warriors of the Iron Realm.\n" +
-                    "The metal emits a constant chill mist and is cold to the touch,\n" +
-                    "however the Iron Realm's warriors have been trained to resist such harsh temperatures.\n\n" +
-                    "The Warriors of the Iron Realm are Gathuram's main military force,\n" +
-                    "with units spanning all across the domain.'")
+                TooltipLine line = new(Mod, "Lore", Language.GetTextValue("Mods.Redemption.SpecialTooltips.PureIron.PureIronGreaves"))
                 {
                     OverrideColor = Color.LightGray
                 };
@@ -58,7 +54,7 @@ namespace Redemption.Items.Armor.PreHM.PureIron
             }
             else
             {
-                TooltipLine line = new(Mod, "HoldShift", "Hold [Shift] to view lore")
+                TooltipLine line = new(Mod, "HoldShift", Language.GetTextValue("Mods.Redemption.SpecialTooltips.Viewer"))
                 {
                     OverrideColor = Color.Gray,
                 };

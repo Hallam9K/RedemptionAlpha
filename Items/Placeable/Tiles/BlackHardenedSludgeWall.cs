@@ -10,6 +10,7 @@ namespace Redemption.Items.Placeable.Tiles
         public override void SetStaticDefaults()
         {
             // Tooltip.SetDefault("[c/ff0000:Unbreakable]");
+            ItemID.Sets.DisableAutomaticPlaceableDrop[Type] = true;
         }
 
         public override void SetDefaults()

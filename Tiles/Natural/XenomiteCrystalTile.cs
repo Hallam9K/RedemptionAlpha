@@ -18,7 +18,7 @@ namespace Redemption.Tiles.Natural
             Main.tileBlockLight[Type] = false;
             Main.tileLighted[Type] = true;
             DustType = DustID.GreenTorch;
-            ItemDrop = ModContent.ItemType<XenomiteShard>();
+            RegisterItemDrop(ModContent.ItemType<XenomiteShard>());
             LocalizedText name = CreateMapEntryName();
             // name.SetDefault("Xenomite");
             AddMapEntry(new Color(54, 193, 59), name);

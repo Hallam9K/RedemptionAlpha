@@ -10,6 +10,7 @@ using Terraria.DataStructures;
 using Redemption.BaseExtension;
 using ParticleLibrary;
 using Redemption.Particles;
+using Terraria.Localization;
 
 namespace Redemption.NPCs.Friendly
 {
@@ -112,8 +113,7 @@ namespace Redemption.NPCs.Friendly
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Times.NightTime,
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Caverns,
 
-                new FlavorTextBestiaryInfoElement(
-                    "Lost Souls search around the world to look for corpses to infuse with. They roam catacombs and graveyards, sometimes taking many days to find a compatible vessel.")
+                new FlavorTextBestiaryInfoElement(Language.GetTextValue("Mods.Redemption.FlavorTextBestiary.LostSoul"))
             });
         }
     }

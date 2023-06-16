@@ -3,7 +3,6 @@ using Terraria;
 using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ID;
-using Redemption.Items.Materials.PostML;
 using Redemption.Globals.Player;
 using Redemption.Items.Accessories.HM;
 using Terraria.Audio;
@@ -24,7 +23,6 @@ namespace Redemption.Tiles.Ores
             TileID.Sets.Ore[Type] = true;
             Main.tileOreFinderPriority[Type] = 680;
             DustType = DustID.Electric;
-            ItemDrop = ModContent.ItemType<Plutonium>();
             MinPick = 220;
             MineResist = 6f;
             HitSound = SoundID.Tink;

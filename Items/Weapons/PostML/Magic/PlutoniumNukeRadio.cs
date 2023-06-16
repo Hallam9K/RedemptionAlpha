@@ -42,7 +42,7 @@ namespace Redemption.Items.Weapons.PostML.Magic
             Item.shoot = ModContent.ProjectileType<PlutoniumNuke_Proj>();
             Item.shootSpeed = 25f;
             if (!Main.dedServ)
-                Item.RedemptionGlow().glowTexture = ModContent.Request<Texture2D>(Item.ModItem.Texture + "_Glow").Value;
+                Item.RedemptionGlow().glowTexture = ModContent.Request<Texture2D>(Texture + "_Glow").Value;
         }
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {

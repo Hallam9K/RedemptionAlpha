@@ -1,4 +1,4 @@
-//using CollisionLib;
+using CollisionLib;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Base;
@@ -11,14 +11,13 @@ namespace Redemption.NPCs.Bosses.Erhan
 {
     public class Bible_Platform : ModNPC
     {
-        // TODO: uncomment stuff when collisonlib is ported
         public override void SetStaticDefaults()
         {
             // DisplayName.SetDefault("Platform");
             NPCID.Sets.NPCBestiaryDrawModifiers value = new(0) { Hide = true };
             NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, value);
         }
-        //public CollisionSurface[] colliders = null;
+        public CollisionSurface[] colliders = null;
         public override void SetDefaults()
         {
             NPC.width = 132;
@@ -32,7 +31,7 @@ namespace Redemption.NPCs.Bosses.Erhan
             NPC.alpha = 255;
         }
         public override bool CheckActive() => true;
-        /*public override bool PreAI()
+        public override bool PreAI()
         {
             if (colliders == null || colliders.Length != 1)
             {
@@ -51,18 +50,17 @@ namespace Redemption.NPCs.Bosses.Erhan
              * value 1 = collides without the ability to drop through
              * value 2 = collides but the player can drop through, doesn't do anything different from value 1 unless the index is zero (Ie, the surface is set to collide with the bottom of the player)
              *
-
+            */
             return true;
-        }*/
+        }
         public override void AI()
         {
-            /*
             if (colliders != null && colliders.Length == 1 && NPC.alpha < 100)
             {
                 colliders[0].Update();
                 colliders[0].endPoints[0] = NPC.Center + (NPC.TopLeft - NPC.Center).RotatedBy(NPC.rotation);
                 colliders[0].endPoints[1] = NPC.Center + (NPC.TopRight - NPC.Center).RotatedBy(NPC.rotation);
-            }*/
+            }
             NPC.velocity *= 0.9f;
             if (NPC.ai[0]++ >= 200)
             {
@@ -81,7 +79,7 @@ namespace Redemption.NPCs.Bosses.Erhan
                     NPC.alpha -= 10;
             }
         }
-        /*public override void PostAI()
+        public override void PostAI()
         {
             if (colliders != null)
             {
@@ -90,7 +88,7 @@ namespace Redemption.NPCs.Bosses.Erhan
                     collider.PostUpdate();
                 }
             }
-        }*/
+        }
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
             Texture2D texture = TextureAssets.Npc[NPC.type].Value;
@@ -116,7 +114,7 @@ namespace Redemption.NPCs.Bosses.Erhan
             NPCID.Sets.NPCBestiaryDrawModifiers value = new(0) { Hide = true };
             NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, value);
         }
-        //public CollisionSurface[] colliders = null;
+        public CollisionSurface[] colliders = null;
         public override void SetDefaults()
         {
             NPC.width = 264;
@@ -130,7 +128,7 @@ namespace Redemption.NPCs.Bosses.Erhan
             NPC.alpha = 255;
         }
         public override bool CheckActive() => true;
-        /*public override bool PreAI()
+        public override bool PreAI()
         {
             if (colliders == null || colliders.Length != 1)
             {
@@ -139,15 +137,15 @@ namespace Redemption.NPCs.Bosses.Erhan
                     new CollisionSurface(NPC.TopLeft, NPC.TopRight, new int[] { 2, 0, 0, 0 }, true) };
             }
             return true;
-        }*/
+        }
         public override void AI()
         {
-            /*if (colliders != null && colliders.Length == 1 && NPC.alpha < 100)
+            if (colliders != null && colliders.Length == 1 && NPC.alpha < 100)
             {
                 colliders[0].Update();
                 colliders[0].endPoints[0] = NPC.Center + (NPC.TopLeft - NPC.Center).RotatedBy(NPC.rotation);
                 colliders[0].endPoints[1] = NPC.Center + (NPC.TopRight - NPC.Center).RotatedBy(NPC.rotation);
-            }*/
+            }
             NPC.velocity *= 0.9f;
             if (NPC.ai[0]++ >= 120)
             {
@@ -163,7 +161,7 @@ namespace Redemption.NPCs.Bosses.Erhan
                     NPC.alpha -= 10;
             }
         }
-        /*public override void PostAI()
+        public override void PostAI()
         {
             if (colliders != null)
             {
@@ -172,7 +170,7 @@ namespace Redemption.NPCs.Bosses.Erhan
                     collider.PostUpdate();
                 }
             }
-        }*/
+        }
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
             Texture2D texture = TextureAssets.Npc[NPC.type].Value;

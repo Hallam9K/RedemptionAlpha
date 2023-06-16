@@ -43,9 +43,8 @@ namespace Redemption.Tiles.Furniture.Shade
             LocalizedText name = CreateMapEntryName();
             // name.SetDefault("Shadesteel Gate");
             AddMapEntry(new Color(83, 87, 123), name);
-            MinPick = 500;
+            MinPick = 1000;
             MineResist = 12f;
-            ItemDrop = -1;
             DustType = ModContent.DustType<ShadesteelDust>();
             AdjTiles = new int[] { TileID.ClosedDoor };
         }
@@ -83,6 +82,7 @@ namespace Redemption.Tiles.Furniture.Shade
             TileObjectData.newTile.CoordinateHeights = new int[] { 16, 16, 16 };
             TileObjectData.newTile.CoordinateWidth = 16;
             TileObjectData.newTile.CoordinatePadding = 2;
+            TileObjectData.newTile.StyleLineSkip = 3;
             TileObjectData.newTile.AnchorTop = new AnchorData(AnchorType.SolidTile, TileObjectData.newTile.Width, 0);
             TileObjectData.newTile.AnchorBottom = new AnchorData(AnchorType.SolidTile, TileObjectData.newTile.Width, 0);
             TileObjectData.newAlternate.CopyFrom(TileObjectData.newTile);
@@ -97,7 +97,7 @@ namespace Redemption.Tiles.Furniture.Shade
             LocalizedText name = CreateMapEntryName();
             // name.SetDefault("Shadesteel Gate");
             AddMapEntry(new Color(83, 87, 123), name);
-            MinPick = 500;
+            MinPick = 1000;
             MineResist = 12f;
             DustType = ModContent.DustType<ShadesteelDust>();
             AdjTiles = new int[] { TileID.OpenDoor };

@@ -1,7 +1,6 @@
 using Microsoft.Xna.Framework;
 using Redemption.Globals.Player;
 using Redemption.Items.Accessories.HM;
-using Redemption.Items.Placeable.Tiles;
 using Redemption.Tiles.Natural;
 using Terraria;
 using Terraria.Audio;
@@ -42,7 +41,6 @@ namespace Redemption.Tiles.Tiles
 			AddMapEntry(new Color(137, 120, 112));
             MineResist = 2.5f;
             DustType = DustID.Ash;
-            ItemDrop = ModContent.ItemType<IrradiatedSandstone>();
         }
         public override void FloorVisuals(Player player)
         {

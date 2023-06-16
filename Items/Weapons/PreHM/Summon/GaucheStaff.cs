@@ -15,7 +15,8 @@ namespace Redemption.Items.Weapons.PreHM.Summon
         public override void SetStaticDefaults()
         {
             /* Tooltip.SetDefault("Summons a granite guardian that emits an empowering aura\n" +
-                "Within the aura, whip speed and damage is increased by 15%"); */
+                "Within the aura, whip speed and damage is increased by 15%\n" +
+                "Right-click to disable the sentry"); */
             Item.ResearchUnlockCount = 1;
 
             ItemID.Sets.GamepadWholeScreenUseRange[Item.type] = true;
@@ -39,8 +40,9 @@ namespace Redemption.Items.Weapons.PreHM.Summon
             Item.shoot = ModContent.ProjectileType<GraniteGuardian>();
             Item.mana = 20;
             if (!Main.dedServ)
-                Item.RedemptionGlow().glowTexture = ModContent.Request<Texture2D>(Item.ModItem.Texture + "_Glow").Value;
+                Item.RedemptionGlow().glowTexture = ModContent.Request<Texture2D>(Texture + "_Glow").Value;
         }
+        public override bool AltFunctionUse(Player player) => true;
         public override bool CanUseItem(Player player)
         {
             Tile tile = Framing.GetTileSafely(Player.tileTargetX, Player.tileTargetY);
@@ -56,6 +58,17 @@ namespace Redemption.Items.Weapons.PreHM.Summon
         }
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
+            if (player.altFunctionUse == 2)
+            {
+                for (int i = 0; i < Main.maxProjectiles; i++)
+                {
+                    Projectile proj = Main.projectile[i];
+                    if (!proj.active || proj.type != type || proj.owner != player.whoAmI)
+                        continue;
+                    proj.timeLeft = 2;
+                }
+                return false;
+            }
             var projectile = Projectile.NewProjectileDirect(source, position, velocity, type, damage, knockback, Main.myPlayer, player.direction);
             projectile.originalDamage = Item.damage;
 

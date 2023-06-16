@@ -1,4 +1,4 @@
-﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -14,6 +14,7 @@ using Terraria.Audio;
 using Redemption.Items.Armor.Vanity;
 using Redemption.Base;
 using Terraria.Localization;
+using Redemption.NPCs.Minibosses.Calavia;
 
 namespace Redemption.NPCs.Friendly
 {
@@ -25,6 +26,7 @@ namespace Redemption.NPCs.Friendly
             // DisplayName.SetDefault("Spirit Stranger");
             Main.npcFrameCount[NPC.type] = 4;
             NPCID.Sets.ActsLikeTownNPC[Type] = true;
+            NPCID.Sets.NoTownNPCHappiness[Type] = true;
 
             NPCID.Sets.DebuffImmunitySets.Add(Type, new NPCDebuffImmunityData
             {
@@ -60,7 +62,8 @@ namespace Redemption.NPCs.Friendly
             if (NPC.target < 0 || NPC.target == 255 || player.dead || !player.active)
                 NPC.TargetClosest();
 
-            NPC.LookAtEntity(player);
+            if (RedeQuest.calaviaVar != 15)
+                NPC.LookAtEntity(player);
 
             if (AITimer < 60)
                 NPC.velocity *= 0.94f;
@@ -114,28 +117,28 @@ namespace Redemption.NPCs.Friendly
             switch (ChatNumber)
             {
                 case 0:
-                    button = "Spirit Walking?";
+                    button = Language.GetTextValue("Mods.Redemption.DialogueBox.SpiritWalkerMan.1");
                     break;
                 case 1:
-                    button = "Dead Ringer?";
+                    button = Language.GetTextValue("Mods.Redemption.DialogueBox.SpiritWalkerMan.2");
                     break;
                 case 2:
-                    button = "Lost Souls & Vagrants?";
+                    button = Language.GetTextValue("Mods.Redemption.DialogueBox.SpiritWalkerMan.3");
                     break;
                 case 3:
-                    button = "Other uses for Dead Ringer?";
+                    button = Language.GetTextValue("Mods.Redemption.DialogueBox.SpiritWalkerMan.4");
                     break;
                 case 4:
-                    button = "About you?";
+                    button = Language.GetTextValue("Mods.Redemption.DialogueBox.SpiritWalkerMan.5");
                     break;
                 case 5:
                     if (Main.LocalPlayer.HasItem(ModContent.ItemType<OldTophat>()))
-                        button = "Request Old Tophat's Crux";
+                        button = Language.GetTextValue("Mods.Redemption.DialogueBox.SpiritWalkerMan.Tophat");
                     else
-                        button = "Request Crux";
+                        button = Language.GetTextValue("Mods.Redemption.DialogueBox.SpiritWalkerMan.Crux");
                     break;
             }
-            button2 = "Cycle Dialogue";
+            button2 = Language.GetTextValue("Mods.Redemption.DialogueBox.CycleD");
         }
 
         public override void OnChatButtonClicked(bool firstButton, ref string shopName)
@@ -223,9 +226,25 @@ namespace Redemption.NPCs.Friendly
                 _ => "...",
             };
         }
-        public override bool CanChat() => true;
+        public override bool CanChat() => RedeQuest.calaviaVar != 15;
         public override string GetChat()
         {
+            if (RedeQuest.calaviaVar >= 11 && RedeQuest.calaviaVar != 20 && NPC.AnyNPCs(ModContent.NPCType<Calavia_NPC>()))
+            {
+                if (RedeQuest.calaviaVar < 12)
+                {
+                    RedeQuest.calaviaVar = 12;
+                    if (Main.netMode == NetmodeID.Server)
+                        NetMessage.SendData(MessageID.WorldData);
+                }
+
+                if (!Main.LocalPlayer.HasItem(ModContent.ItemType<CruxCardCalavia>()))
+                {
+                    if (RedeQuest.calaviaVar is 16)
+                        return Language.GetTextValue("Mods.Redemption.Dialogue.SpiritWalkerMan.CalaviaDialogue2");
+                    return Language.GetTextValue("Mods.Redemption.Dialogue.SpiritWalkerMan.CalaviaDialogue1");
+                }
+            }
             bool wearingHat = BasePlayer.HasHelmet(Main.LocalPlayer, ModContent.ItemType<OldTophat>());
             string s = "";
             if (wearingHat)

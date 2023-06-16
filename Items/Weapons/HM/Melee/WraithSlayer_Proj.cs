@@ -12,11 +12,11 @@ namespace Redemption.Items.Weapons.HM.Melee
 {
     public class WraithSlayer_Proj : TrueMeleeProjectile
     {
-        public float[] oldrot = new float[4];
+        public float[] oldrot = new float[8];
         public override void SetStaticDefaults()
         {
             // DisplayName.SetDefault("Wraith Slayer");
-            ProjectileID.Sets.TrailCacheLength[Projectile.type] = 4;
+            ProjectileID.Sets.TrailCacheLength[Projectile.type] = 8;
             ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
             ElementID.ProjArcane[Type] = true;
             ElementID.ProjShadow[Type] = true;
@@ -44,10 +44,6 @@ namespace Redemption.Items.Weapons.HM.Melee
         private float SwingSpeed;
         public override void AI()
         {
-            for (int k = Projectile.oldPos.Length - 1; k > 0; k--)
-                oldrot[k] = oldrot[k - 1];
-            oldrot[0] = Projectile.rotation;
-
             Player player = Main.player[Projectile.owner];
             if (player.noItems || player.CCed || player.dead || !player.active)
                 Projectile.Kill();
@@ -119,6 +115,9 @@ namespace Redemption.Items.Weapons.HM.Melee
             }
             if (Timer > 1)
                 Projectile.alpha = 0;
+            for (int k = Projectile.oldPos.Length - 1; k > 0; k--)
+                oldrot[k] = oldrot[k - 1];
+            oldrot[0] = Projectile.rotation;
         }
 
         public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)

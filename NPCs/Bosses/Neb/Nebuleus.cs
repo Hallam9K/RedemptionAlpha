@@ -524,22 +524,22 @@ namespace Redemption.NPCs.Bosses.Neb
                         if (!Main.dedServ)
                         {
                             if (NPC.ai[2] == 60)
-                                RedeSystem.Instance.DialogueUIElement.DisplayDialogue("Ah, you have brought me here yourself.", 300, 1, 0.6f, "Nebuleus:", 1, RedeColor.NebColour, null, null, NPC.Center, 0, 0, true);
+                                RedeSystem.Instance.DialogueUIElement.DisplayDialogue(Language.GetTextValue("Mods.Redemption.Cutscene.Nebuleus.Intro.1"), 300, 1, 0.6f, Language.GetTextValue("Mods.Redemption.Cutscene.Nebuleus.Name"), 1, RedeColor.NebColour, null, null, NPC.Center, 0, 0, true);
                             if (NPC.ai[2] == 360)
                             {
                                 if (RedeWorld.alignment < 0)
-                                    RedeSystem.Instance.DialogueUIElement.DisplayDialogue("My eyes have loomed upon thee long enough, it is time to take action.", 300, 1, 0.6f, "Nebuleus:", 1, RedeColor.NebColour, null, null, NPC.Center, 0, 0, true);
+                                    RedeSystem.Instance.DialogueUIElement.DisplayDialogue(Language.GetTextValue("Mods.Redemption.Cutscene.Nebuleus.Intro.2"), 300, 1, 0.6f, Language.GetTextValue("Mods.Redemption.Cutscene.Nebuleus.Name"), 1, RedeColor.NebColour, null, null, NPC.Center, 0, 0, true);
                                 else
-                                    RedeSystem.Instance.DialogueUIElement.DisplayDialogue("Forgive my prying eyes, for I have been observing thee from afar.", 300, 1, 0.6f, "Nebuleus:", 1, RedeColor.NebColour, null, null, NPC.Center, 0, 0, true);
+                                    RedeSystem.Instance.DialogueUIElement.DisplayDialogue(Language.GetTextValue("Mods.Redemption.Cutscene.Nebuleus.Intro.2Alt"), 300, 1, 0.6f, Language.GetTextValue("Mods.Redemption.Cutscene.Nebuleus.Name"), 1, RedeColor.NebColour, null, null, NPC.Center, 0, 0, true);
                             }
                             if (NPC.ai[2] == 660)
-                                RedeSystem.Instance.DialogueUIElement.DisplayDialogue("The daring hunt of all that threaten you brings a chill through my body.", 300, 1, 0.6f, "Nebuleus:", 1, RedeColor.NebColour, null, null, NPC.Center, 0, 0, true);
+                                RedeSystem.Instance.DialogueUIElement.DisplayDialogue(Language.GetTextValue("Mods.Redemption.Cutscene.Nebuleus.Intro.3"), 300, 1, 0.6f, Language.GetTextValue("Mods.Redemption.Cutscene.Nebuleus.Name"), 1, RedeColor.NebColour, null, null, NPC.Center, 0, 0, true);
                             if (NPC.ai[2] == 960)
-                                RedeSystem.Instance.DialogueUIElement.DisplayDialogue("Thy presence is all-consuming within my thoughts, but I shan't run from this opportunity gifted to me.", 300, 1, 0.6f, "Nebuleus:", 1, RedeColor.NebColour, null, null, NPC.Center, 0, 0, true);
+                                RedeSystem.Instance.DialogueUIElement.DisplayDialogue(Language.GetTextValue("Mods.Redemption.Cutscene.Nebuleus.Intro.4"), 300, 1, 0.6f, Language.GetTextValue("Mods.Redemption.Cutscene.Nebuleus.Name"), 1, RedeColor.NebColour, null, null, NPC.Center, 0, 0, true);
                             if (NPC.ai[2] == 1260)
-                                RedeSystem.Instance.DialogueUIElement.DisplayDialogue("The chatter ends here. Prove to me your resolve, and I will show my own.", 300, 1, 0.6f, "Nebuleus:", 1, RedeColor.NebColour, null, null, NPC.Center, 0, 0, true);
+                                RedeSystem.Instance.DialogueUIElement.DisplayDialogue(Language.GetTextValue("Mods.Redemption.Cutscene.Nebuleus.Intro.5"), 300, 1, 0.6f, Language.GetTextValue("Mods.Redemption.Cutscene.Nebuleus.Name"), 1, RedeColor.NebColour, null, null, NPC.Center, 0, 0, true);
                             if (NPC.ai[2] == 1560)
-                                RedeSystem.Instance.DialogueUIElement.DisplayDialogue("If you lose to me, you may be spared from watchers far greater than I.", 300, 1, 0.6f, "Nebuleus:", 1, RedeColor.NebColour, null, null, NPC.Center, 0, 0, true);
+                                RedeSystem.Instance.DialogueUIElement.DisplayDialogue(Language.GetTextValue("Mods.Redemption.Cutscene.Nebuleus.Intro.6"), 300, 1, 0.6f, Language.GetTextValue("Mods.Redemption.Cutscene.Nebuleus.Name"), 1, RedeColor.NebColour, null, null, NPC.Center, 0, 0, true);
                         }
                         if (NPC.ai[2] >= 1860)
                         {
@@ -548,7 +548,7 @@ namespace Redemption.NPCs.Bosses.Neb
                             NPC.ai[2] = 0;
                             NPC.ai[0] = 3;
                             if (!Main.dedServ)
-                                RedeSystem.Instance.TitleCardUIElement.DisplayTitle("Nebuleus", 60, 90, 0.8f, 0, Color.HotPink, "Angel of the Cosmos");
+                                RedeSystem.Instance.TitleCardUIElement.DisplayTitle(Language.GetTextValue("Mods.Redemption.TitleCard.Neb.Name"), 60, 90, 0.8f, 0, Color.HotPink, Language.GetTextValue("Mods.Redemption.TitleCard.Neb.Modifier"));
                             NPC.netUpdate = true;
                             if (Main.netMode == NetmodeID.Server)
                                 NetMessage.SendData(MessageID.WorldData);
@@ -559,13 +559,13 @@ namespace Redemption.NPCs.Bosses.Neb
                         if (NPC.ai[2] == 30)
                         {
                             if (!Main.dedServ)
-                                RedeSystem.Instance.DialogueUIElement.DisplayDialogue(RedeBossDowned.nebDeath < 5 ? "You... are still alive?" : "You still want to fight?", 120, 1, 0.6f, "Nebuleus:", 1, RedeColor.NebColour, null, null, NPC.Center, 0, 0, true);
+                                RedeSystem.Instance.DialogueUIElement.DisplayDialogue(RedeBossDowned.nebDeath < 5 ? Language.GetTextValue("Mods.Redemption.Cutscene.Nebuleus.Resummon.1") : Language.GetTextValue("Mods.Redemption.Cutscene.Nebuleus.Resummon.2"), 120, 1, 0.6f, Language.GetTextValue("Mods.Redemption.Cutscene.Nebuleus.Name"), 1, RedeColor.NebColour, null, null, NPC.Center, 0, 0, true);
                             NPC.netUpdate = true;
                         }
                         if (NPC.ai[2] >= 150)
                         {
                             if (!Main.dedServ)
-                                RedeSystem.Instance.TitleCardUIElement.DisplayTitle("Nebuleus", 60, 90, 0.8f, 0, Color.HotPink, "Angel of the Cosmos");
+                                RedeSystem.Instance.TitleCardUIElement.DisplayTitle(Language.GetTextValue("Mods.Redemption.TitleCard.Neb.Name"), 60, 90, 0.8f, 0, Color.HotPink, Language.GetTextValue("Mods.Redemption.TitleCard.Neb.Modifier"));
                             NPC.ai[3] = 0;
                             NPC.ai[2] = 0;
                             NPC.ai[0] = 3;
@@ -1332,17 +1332,17 @@ namespace Redemption.NPCs.Bosses.Neb
                             if (phase <= 1)
                             {
                                 if (RedeBossDowned.nebDeath < 2)
-                                    RedeSystem.Instance.DialogueUIElement.DisplayDialogue("Why do you blindly fight? What is your goal?", 200, 1, 0.6f, "Nebuleus:", 2, RedeColor.NebColour, null, null, NPC.Center, 0, 0, true);
+                                    RedeSystem.Instance.DialogueUIElement.DisplayDialogue(Language.GetTextValue("Mods.Redemption.Cutscene.Nebuleus.Interval.1"), 200, 1, 0.6f, Language.GetTextValue("Mods.Redemption.Cutscene.Nebuleus.Name"), 2, RedeColor.NebColour, null, null, NPC.Center, 0, 0, true);
                             }
                             else if (phase == 2)
                             {
                                 if (RedeBossDowned.nebDeath < 3)
-                                    RedeSystem.Instance.DialogueUIElement.DisplayDialogue("Do you even have a motive for your actions?", 200, 1, 0.6f, "Nebuleus:", 2, RedeColor.NebColour, null, null, NPC.Center, 0, 0, true);
+                                    RedeSystem.Instance.DialogueUIElement.DisplayDialogue(Language.GetTextValue("Mods.Redemption.Cutscene.Nebuleus.Interval.2"), 200, 1, 0.6f, Language.GetTextValue("Mods.Redemption.Cutscene.Nebuleus.Name"), 2, RedeColor.NebColour, null, null, NPC.Center, 0, 0, true);
                             }
                             else if (phase == 3)
                             {
                                 if (RedeBossDowned.nebDeath < 4)
-                                    RedeSystem.Instance.DialogueUIElement.DisplayDialogue("Still fighting? Well I'm not done yet!", 200, 1, 0.6f, "Nebuleus:", 2, RedeColor.NebColour, null, null, NPC.Center, 0, 0, true);
+                                    RedeSystem.Instance.DialogueUIElement.DisplayDialogue(Language.GetTextValue("Mods.Redemption.Cutscene.Nebuleus.Interval.3"), 200, 1, 0.6f, Language.GetTextValue("Mods.Redemption.Cutscene.Nebuleus.Name"), 2, RedeColor.NebColour, null, null, NPC.Center, 0, 0, true);
                             }
                         }
                         NPC.netUpdate = true;
@@ -1387,36 +1387,36 @@ namespace Redemption.NPCs.Bosses.Neb
                     if (!Main.dedServ)
                     {
                         if (NPC.ai[2] == 100)
-                            RedeSystem.Instance.DialogueUIElement.DisplayDialogue("I would appear to be fighting a hopeless battle...", 180, 1, 0.6f, "Nebuleus:", 1, RedeColor.NebColour, null, null, NPC.Center, 0, 0, true);
+                            RedeSystem.Instance.DialogueUIElement.DisplayDialogue(Language.GetTextValue("Mods.Redemption.Cutscene.Nebuleus.Transition.1"), 180, 1, 0.6f, Language.GetTextValue("Mods.Redemption.Cutscene.Nebuleus.Name"), 1, RedeColor.NebColour, null, null, NPC.Center, 0, 0, true);
                         if (NPC.ai[2] == 280)
-                            RedeSystem.Instance.DialogueUIElement.DisplayDialogue("Ever since this island suddenly appeared, I have been watching.", 180, 1, 0.6f, "Nebuleus:", 1, RedeColor.NebColour, null, null, NPC.Center, 0, 0, true);
+                            RedeSystem.Instance.DialogueUIElement.DisplayDialogue(Language.GetTextValue("Mods.Redemption.Cutscene.Nebuleus.Transition.2"), 180, 1, 0.6f, Language.GetTextValue("Mods.Redemption.Cutscene.Nebuleus.Name"), 1, RedeColor.NebColour, null, null, NPC.Center, 0, 0, true);
                         if (NPC.ai[2] == 460)
-                            RedeSystem.Instance.DialogueUIElement.DisplayDialogue("I've seen you be slain countless times,\nHowever you never truly die.", 240, 1, 0.6f, "Nebuleus:", 1, RedeColor.NebColour, null, null, NPC.Center, 0, 0, true);
+                            RedeSystem.Instance.DialogueUIElement.DisplayDialogue(Language.GetTextValue("Mods.Redemption.Cutscene.Nebuleus.Transition.3"), 240, 1, 0.6f, Language.GetTextValue("Mods.Redemption.Cutscene.Nebuleus.Name"), 1, RedeColor.NebColour, null, null, NPC.Center, 0, 0, true);
                         if (NPC.ai[2] == 700)
-                            RedeSystem.Instance.DialogueUIElement.DisplayDialogue("It would seem most who've fought you never realise this.", 180, 1, 0.6f, "Nebuleus:", 1, RedeColor.NebColour, null, null, NPC.Center, 0, 0, true);
+                            RedeSystem.Instance.DialogueUIElement.DisplayDialogue(Language.GetTextValue("Mods.Redemption.Cutscene.Nebuleus.Transition.4"), 180, 1, 0.6f, Language.GetTextValue("Mods.Redemption.Cutscene.Nebuleus.Name"), 1, RedeColor.NebColour, null, null, NPC.Center, 0, 0, true);
                         if (NPC.ai[2] == 880)
-                            RedeSystem.Instance.DialogueUIElement.DisplayDialogue("But I do.", 100, 1, 0.6f, "Nebuleus:", 1, RedeColor.NebColour, null, null, NPC.Center, 0, 0, true);
+                            RedeSystem.Instance.DialogueUIElement.DisplayDialogue(Language.GetTextValue("Mods.Redemption.Cutscene.Nebuleus.Transition.5"), 100, 1, 0.6f, Language.GetTextValue("Mods.Redemption.Cutscene.Nebuleus.Name"), 1, RedeColor.NebColour, null, null, NPC.Center, 0, 0, true);
                         if (NPC.ai[2] == 980)
-                            RedeSystem.Instance.DialogueUIElement.DisplayDialogue("Whether it be intelligence, power, or something else,\nI still remember...", 240, 1, 0.6f, "Nebuleus:", 1, RedeColor.NebColour, null, null, NPC.Center, 0, 0, true);
+                            RedeSystem.Instance.DialogueUIElement.DisplayDialogue(Language.GetTextValue("Mods.Redemption.Cutscene.Nebuleus.Transition.6"), 240, 1, 0.6f, Language.GetTextValue("Mods.Redemption.Cutscene.Nebuleus.Name"), 1, RedeColor.NebColour, null, null, NPC.Center, 0, 0, true);
                         if (NPC.ai[2] == 1220)
-                            RedeSystem.Instance.DialogueUIElement.DisplayDialogue("Time in the confines of this island seems to be dictated by powers unknown.", 240, 1, 0.6f, "Nebuleus:", 1, RedeColor.NebColour, null, null, NPC.Center, 0, 0, true);
+                            RedeSystem.Instance.DialogueUIElement.DisplayDialogue(Language.GetTextValue("Mods.Redemption.Cutscene.Nebuleus.Transition.7"), 240, 1, 0.6f, Language.GetTextValue("Mods.Redemption.Cutscene.Nebuleus.Name"), 1, RedeColor.NebColour, null, null, NPC.Center, 0, 0, true);
                         if (NPC.ai[2] == 1460)
-                            RedeSystem.Instance.DialogueUIElement.DisplayDialogue("...", 80, 1, 0.6f, "Nebuleus:", 1, RedeColor.NebColour, null, null, NPC.Center, 0, 0, true);
+                            RedeSystem.Instance.DialogueUIElement.DisplayDialogue("...", 80, 1, 0.6f, Language.GetTextValue("Mods.Redemption.Cutscene.Nebuleus.Name"), 1, RedeColor.NebColour, null, null, NPC.Center, 0, 0, true);
                         if (NPC.ai[2] == 1540)
-                            RedeSystem.Instance.DialogueUIElement.DisplayDialogue("... Say, if you killed someone unaffected by such powers...", 180, 1, 0.6f, "Nebuleus:", 1, RedeColor.NebColour, null, null, NPC.Center, 0, 0, true);
+                            RedeSystem.Instance.DialogueUIElement.DisplayDialogue(Language.GetTextValue("Mods.Redemption.Cutscene.Nebuleus.Transition.8"), 180, 1, 0.6f, Language.GetTextValue("Mods.Redemption.Cutscene.Nebuleus.Name"), 1, RedeColor.NebColour, null, null, NPC.Center, 0, 0, true);
                         if (NPC.ai[2] == 1720)
-                            RedeSystem.Instance.DialogueUIElement.DisplayDialogue("... Would they die for good?", 180, 1, 0.6f, "Nebuleus:", 1, RedeColor.NebColour, null, null, NPC.Center, 0, 0, true);
+                            RedeSystem.Instance.DialogueUIElement.DisplayDialogue(Language.GetTextValue("Mods.Redemption.Cutscene.Nebuleus.Transition.9"), 180, 1, 0.6f, Language.GetTextValue("Mods.Redemption.Cutscene.Nebuleus.Name"), 1, RedeColor.NebColour, null, null, NPC.Center, 0, 0, true);
                         if (NPC.ai[2] == 1900)
-                            RedeSystem.Instance.DialogueUIElement.DisplayDialogue("Whatever the case may be, I no longer wish to fight you...", 220, 1, 0.6f, "Nebuleus:", 1, RedeColor.NebColour, null, null, NPC.Center, 0, 0, true);
+                            RedeSystem.Instance.DialogueUIElement.DisplayDialogue(Language.GetTextValue("Mods.Redemption.Cutscene.Nebuleus.Transition.10"), 220, 1, 0.6f, Language.GetTextValue("Mods.Redemption.Cutscene.Nebuleus.Name"), 1, RedeColor.NebColour, null, null, NPC.Center, 0, 0, true);
                         if (NPC.ai[2] == 2120)
-                            RedeSystem.Instance.DialogueUIElement.DisplayDialogue(RedeWorld.alignment >= 0 ? "You hath proven thy resolve." : "Not like I could do anything to stop you.", 180, 1, 0.6f, "Nebuleus:", 1, RedeColor.NebColour, null, null, NPC.Center, 0, 0, true);
+                            RedeSystem.Instance.DialogueUIElement.DisplayDialogue(RedeWorld.alignment >= 0 ? Language.GetTextValue("Mods.Redemption.Cutscene.Nebuleus.Transition.11") : Language.GetTextValue("Mods.Redemption.Cutscene.Nebuleus.Transition.11Alt"), 180, 1, 0.6f, Language.GetTextValue("Mods.Redemption.Cutscene.Nebuleus.Name"), 1, RedeColor.NebColour, null, null, NPC.Center, 0, 0, true);
                         if (NPC.ai[2] == 2300)
-                            RedeSystem.Instance.DialogueUIElement.DisplayDialogue(RedeWorld.alignment >= 0 ? "And I... hath failed once more." : "I hope you find it in thine heart to stop thy rampage.", 180, 1, 0.6f, "Nebuleus:", 1, RedeColor.NebColour, null, null, NPC.Center, 0, 0, true);
+                            RedeSystem.Instance.DialogueUIElement.DisplayDialogue(RedeWorld.alignment >= 0 ? Language.GetTextValue("Mods.Redemption.Cutscene.Nebuleus.Transition.12") : Language.GetTextValue("Mods.Redemption.Cutscene.Nebuleus.Transition.12Alt"), 180, 1, 0.6f, Language.GetTextValue("Mods.Redemption.Cutscene.Nebuleus.Name"), 1, RedeColor.NebColour, null, null, NPC.Center, 0, 0, true);
                     }
                     if (RedeWorld.alignment >= 0)
                     {
                         if (NPC.ai[2] == 2480 && RedeBossDowned.nebDeath < 5 && !Main.dedServ)
-                            RedeSystem.Instance.DialogueUIElement.DisplayDialogue("I will be leaving forthwith, but we can always spar again. Farewell.", 180, 1, 0.6f, "Nebuleus:", 1, RedeColor.NebColour, null, null, NPC.Center, 0, 0, true);
+                            RedeSystem.Instance.DialogueUIElement.DisplayDialogue(Language.GetTextValue("Mods.Redemption.Cutscene.Nebuleus.Transition.13"), 180, 1, 0.6f, Language.GetTextValue("Mods.Redemption.Cutscene.Nebuleus.Name"), 1, RedeColor.NebColour, null, null, NPC.Center, 0, 0, true);
                         if (NPC.ai[2] >= 2660)
                         {
                             NPC.life = 1;
@@ -1428,7 +1428,7 @@ namespace Redemption.NPCs.Bosses.Neb
                     else
                     {
                         if (NPC.ai[2] == 2480 && !Main.dedServ)
-                            RedeSystem.Instance.DialogueUIElement.DisplayDialogue("If you don't wish to fight me now, I'll leave you be.", 180, 1, 0.6f, "Nebuleus:", 1, RedeColor.NebColour, null, null, NPC.Center, 0, 0, true);
+                            RedeSystem.Instance.DialogueUIElement.DisplayDialogue(Language.GetTextValue("Mods.Redemption.Cutscene.Nebuleus.Transition.13Alt"), 180, 1, 0.6f, Language.GetTextValue("Mods.Redemption.Cutscene.Nebuleus.Name"), 1, RedeColor.NebColour, null, null, NPC.Center, 0, 0, true);
                         if (NPC.ai[2] >= 2660)
                         {
                             if (RedeWorld.alignmentGiven && !Main.dedServ && !RedeBossDowned.downedSlayer)
@@ -1452,7 +1452,7 @@ namespace Redemption.NPCs.Bosses.Neb
                     if (!Main.dedServ)
                         Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/silence");
                     if (!Main.dedServ && !YesNoUI.Visible)
-                        RedeSystem.Instance.YesNoUIElement.DisplayYesNoButtons("Spare", "Fight", new Vector2(0, 15), new Vector2(0, 15), .75f, .75f);
+                        RedeSystem.Instance.YesNoUIElement.DisplayYesNoButtons(Language.GetTextValue("Mods.Redemption.GenericTerms.Choice.Spare", Language.GetTextValue("Mods.Redemption.GenericTerms.Choice.Fight"), new Vector2(0, 15), new Vector2(0, 15), .75f, .75f));
 
                     if (player.Redemption().yesChoice)
                     {
@@ -1485,13 +1485,13 @@ namespace Redemption.NPCs.Bosses.Neb
                     if (!Main.dedServ)
                     {
                         if (NPC.ai[2] == 30)
-                            RedeSystem.Instance.DialogueUIElement.DisplayDialogue("You still want to fight?", 150, 1, 0.6f, "Nebuleus:", 1, RedeColor.NebColour, null, null, NPC.Center, 0, 0, true);
+                            RedeSystem.Instance.DialogueUIElement.DisplayDialogue(Language.GetTextValue("Mods.Redemption.Cutscene.Nebuleus.Transition.14"), 150, 1, 0.6f, Language.GetTextValue("Mods.Redemption.Cutscene.Nebuleus.Name"), 1, RedeColor.NebColour, null, null, NPC.Center, 0, 0, true);
                         if (NPC.ai[2] == 170)
-                            RedeSystem.Instance.DialogueUIElement.DisplayDialogue("Of course it wouldn't be that easy...", 180, 1, 0.6f, "Nebuleus:", 1, RedeColor.NebColour, null, null, NPC.Center, 0, 0, true);
+                            RedeSystem.Instance.DialogueUIElement.DisplayDialogue(Language.GetTextValue("Mods.Redemption.Cutscene.Nebuleus.Transition.15"), 180, 1, 0.6f, Language.GetTextValue("Mods.Redemption.Cutscene.Nebuleus.Name"), 1, RedeColor.NebColour, null, null, NPC.Center, 0, 0, true);
                         if (NPC.ai[2] == 350)
-                            RedeSystem.Instance.DialogueUIElement.DisplayDialogue("You've had thy chance at redemption, so don't blame me...", 180, 1, 0.6f, "Nebuleus:", 1, RedeColor.NebColour, null, null, NPC.Center, 0, 0, true);
+                            RedeSystem.Instance.DialogueUIElement.DisplayDialogue(Language.GetTextValue("Mods.Redemption.Cutscene.Nebuleus.Transition.16"), 180, 1, 0.6f, Language.GetTextValue("Mods.Redemption.Cutscene.Nebuleus.Name"), 1, RedeColor.NebColour, null, null, NPC.Center, 0, 0, true);
                         if (NPC.ai[2] == 530)
-                            RedeSystem.Instance.DialogueUIElement.DisplayDialogue("... When you die a thousand times!", 180, 1, 0.6f, "Nebuleus:", 1.5f, RedeColor.NebColour, null, null, NPC.Center, 0, 0, true);
+                            RedeSystem.Instance.DialogueUIElement.DisplayDialogue(Language.GetTextValue("Mods.Redemption.Cutscene.Nebuleus.Transition.17"), 180, 1, 0.6f, Language.GetTextValue("Mods.Redemption.Cutscene.Nebuleus.Name"), 1.5f, RedeColor.NebColour, null, null, NPC.Center, 0, 0, true);
                         if (NPC.ai[2] == 420)
                             SoundEngine.PlaySound(CustomSounds.Transformation, NPC.position);
                     }
@@ -1546,9 +1546,9 @@ namespace Redemption.NPCs.Bosses.Neb
                         if (!Main.dedServ)
                         {
                             if (NPC.ai[2] == 30)
-                                RedeSystem.Instance.DialogueUIElement.DisplayDialogue("...", 120, 1, 0.6f, "Nebuleus:", 1, RedeColor.NebColour, null, null, NPC.Center, 0, 0, true);
+                                RedeSystem.Instance.DialogueUIElement.DisplayDialogue("...", 120, 1, 0.6f, Language.GetTextValue("Mods.Redemption.Cutscene.Nebuleus.Name"), 1, RedeColor.NebColour, null, null, NPC.Center, 0, 0, true);
                             if (NPC.ai[2] == 150)
-                                RedeSystem.Instance.DialogueUIElement.DisplayDialogue(RedeWorld.alignment >= 0 ? "Thank you...\nPlease, continue slaying evil, this world could do with a hero." : "Thank you...\nAt first I thought the concept of mercy was foreign to you.", 200, 1, 0.6f, "Nebuleus:", 1, RedeColor.NebColour, null, null, NPC.Center, 0, 0, true);
+                                RedeSystem.Instance.DialogueUIElement.DisplayDialogue(RedeWorld.alignment >= 0 ? Language.GetTextValue("Mods.Redemption.Cutscene.Nebuleus.Spare.1") : Language.GetTextValue("Mods.Redemption.Cutscene.Nebuleus.Spare.2"), 200, 1, 0.6f, Language.GetTextValue("Mods.Redemption.Cutscene.Nebuleus.Name"), 1, RedeColor.NebColour, null, null, NPC.Center, 0, 0, true);
                         }
                         if (NPC.ai[2] > 380)
                         {

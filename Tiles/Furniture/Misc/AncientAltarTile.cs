@@ -31,7 +31,7 @@ namespace Redemption.Tiles.Furniture.Misc
             TileObjectData.newTile.Origin = new Point16(0, 2);
             TileObjectData.addTile(Type);
             DustType = 7;
-            MinPick = 500;
+            MinPick = 1000;
             MineResist = 3f;
             HitSound = CustomSounds.StoneHit;
             LocalizedText name = CreateMapEntryName();
@@ -86,7 +86,7 @@ namespace Redemption.Tiles.Furniture.Misc
         }
         public override bool PreDraw(int i, int j, SpriteBatch spriteBatch)
         {
-            Texture2D flare = ModContent.Request<Texture2D>("Redemption/Textures/WhiteFlare").Value;
+            Texture2D flare = Redemption.WhiteFlare.Value;
             Rectangle rect = new(0, 0, flare.Width, flare.Height);
             Color color = BaseUtility.MultiLerpColor(Main.LocalPlayer.miscCounter % 100 / 100f, new Color(211, 232, 169), new Color(247, 247, 169), new Color(211, 232, 169));
             Vector2 zero = new(Main.offScreenRange, Main.offScreenRange);

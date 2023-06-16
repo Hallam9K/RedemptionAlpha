@@ -1,4 +1,4 @@
-﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -24,6 +24,7 @@ namespace Redemption.NPCs.Friendly
             // DisplayName.SetDefault("Spirit Common Guard");
             Main.npcFrameCount[NPC.type] = 4;
             NPCID.Sets.ActsLikeTownNPC[Type] = true;
+            NPCID.Sets.NoTownNPCHappiness[Type] = true;
 
             NPCID.Sets.DebuffImmunitySets.Add(Type, new NPCDebuffImmunityData
             {
@@ -114,13 +115,13 @@ namespace Redemption.NPCs.Friendly
             bool offering = Main.LocalPlayer.HasItem(ModContent.ItemType<NoblesHalberd>());
             button = ChatNumber switch
             {
-                1 => "Anglon?",
-                2 => "Ricusa?",
-                3 => "Demons?",
-                4 => request && offering ? "Offer Noble's Halberd" : "Request Crux",
-                _ => "About you?",
+                1 => Language.GetTextValue("Mods.Redemption.DialogueBox.SpiritCommonGuard.1"),
+                2 => Language.GetTextValue("Mods.Redemption.DialogueBox.SpiritCommonGuard.2"),
+                3 => Language.GetTextValue("Mods.Redemption.DialogueBox.SpiritCommonGuard.3"),
+                4 => request && offering ? Language.GetTextValue("Mods.Redemption.DialogueBox.SpiritCommonGuard.Offer") : Language.GetTextValue("Mods.Redemption.DialogueBox.SpiritCommonGuard.Crux"),
+                _ => Language.GetTextValue("Mods.Redemption.DialogueBox.SpiritCommonGuard.4"),
             };
-            button2 = "Cycle Dialogue";
+            button2 = Language.GetTextValue("Mods.Redemption.DialogueBox.CycleD");
         }
 
         public override void OnChatButtonClicked(bool firstButton, ref string shopName)

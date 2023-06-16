@@ -1,4 +1,4 @@
-﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -21,7 +21,6 @@ using Redemption.Biomes;
 using Redemption.BaseExtension;
 using Redemption.Items.Donator.Lizzy;
 using Terraria.GameContent.UI;
-using Redemption.Items.Materials.PostML;
 using Terraria.Localization;
 
 namespace Redemption.NPCs.Friendly
@@ -35,6 +34,7 @@ namespace Redemption.NPCs.Friendly
             // DisplayName.SetDefault("King Slayer III");
             Main.npcFrameCount[NPC.type] = 7;
             NPCID.Sets.ActsLikeTownNPC[Type] = true;
+            NPCID.Sets.NoTownNPCHappiness[Type] = true;
             NPCID.Sets.NPCBestiaryDrawModifiers value = new(0)
             {
                 Hide = true
@@ -141,42 +141,42 @@ namespace Redemption.NPCs.Friendly
         private static int ChatNumber = 0;
         public override void SetChatButtons(ref string button, ref string button2)
         {
-            button2 = "Cycle Dialogue";
+            button2 = Language.GetTextValue("Mods.Redemption.DialogueBox.CycleD");
 
             switch (ChatNumber)
             {
                 case 0:
-                    button = "Why are you here?";
+                    button = Language.GetTextValue("Mods.Redemption.DialogueBox.KS3.0");
                     break;
                 case 1:
-                    button = "Crashed Spaceship?";
+                    button = Language.GetTextValue("Mods.Redemption.DialogueBox.KS3.1");
                     break;
                 case 2:
-                    button = "(Give Uranium)";
+                    button = Language.GetTextValue("Mods.Redemption.DialogueBox.KS3.2");
                     break;
                 case 3:
-                    button = "You aren't fighting me?";
+                    button = Language.GetTextValue("Mods.Redemption.DialogueBox.KS3.3");
                     break;
                 case 4:
-                    button = "Are you a human?";
+                    button = Language.GetTextValue("Mods.Redemption.DialogueBox.KS3.4");
                     break;
                 case 5:
-                    button = "Hall of Heroes?";
+                    button = Language.GetTextValue("Mods.Redemption.DialogueBox.KS3.5");
                     break;
                 case 6:
-                    button = "Abandoned Lab?";
+                    button = Language.GetTextValue("Mods.Redemption.DialogueBox.KS3.6");
                     break;
                 case 7:
-                    button = "Epidotra?";
+                    button = Language.GetTextValue("Mods.Redemption.DialogueBox.KS3.7");
                     break;
                 case 8:
-                    button = "Other world?";
+                    button = Language.GetTextValue("Mods.Redemption.DialogueBox.KS3.8");
                     break;
                 case 9:
-                    button = "Data Logs?";
+                    button = Language.GetTextValue("Mods.Redemption.DialogueBox.KS3.9");
                     break;
                 case 10:
-                    button = "Quest";
+                    button = Language.GetTextValue("Mods.Redemption.DialogueBox.Quest");
                     break;
             }
         }
@@ -210,7 +210,7 @@ namespace Redemption.NPCs.Friendly
                         if (Main.netMode == NetmodeID.Server)
                             NetMessage.SendData(MessageID.WorldData);
 
-                        CombatText.NewText(NPC.getRect(), Color.LightCyan, "New Dialogue Available", true, false);
+                        CombatText.NewText(NPC.getRect(), Color.LightCyan, Language.GetTextValue("Mods.Redemption.DialogueBox.New"), true, false);
 
                         SoundEngine.PlaySound(SoundID.Chat);
                         return;
@@ -237,7 +237,7 @@ namespace Redemption.NPCs.Friendly
 
                         player.QuickSpawnItem(NPC.GetSource_Loot(), ItemID.GoldCoin, 4);
                         RedeWorld.slayerRep++;
-                        CombatText.NewText(NPC.getRect(), Color.LightCyan, "New Dialogue Available", true, false);
+                        CombatText.NewText(NPC.getRect(), Color.LightCyan, Language.GetTextValue("Mods.Redemption.DialogueBox.New"), true, false);
 
                         SoundEngine.PlaySound(SoundID.Chat);
 
@@ -249,7 +249,7 @@ namespace Redemption.NPCs.Friendly
 
                         Texture2D tex = ModContent.Request<Texture2D>("Redemption/WorldGeneration/SlayerShipFix1", AssetRequestMode.ImmediateLoad).Value;
 
-                        Point origin = RedeGen.slayerShipPoint.ToPoint();
+                        Point origin = RedeGen.slayerShipVector.ToPoint();
 
                         GenUtils.InvokeOnMainThread(() =>
                         {
@@ -282,7 +282,7 @@ namespace Redemption.NPCs.Friendly
 
                         player.QuickSpawnItem(NPC.GetSource_Loot(), ItemID.GoldCoin, 8);
                         RedeWorld.slayerRep++;
-                        CombatText.NewText(NPC.getRect(), Color.LightCyan, "New Dialogue Available", true, false);
+                        CombatText.NewText(NPC.getRect(), Color.LightCyan, Language.GetTextValue("Mods.Redemption.DialogueBox.New"), true, false);
 
                         SoundEngine.PlaySound(SoundID.Chat);
 
@@ -296,7 +296,7 @@ namespace Redemption.NPCs.Friendly
 
                         Texture2D tex = ModContent.Request<Texture2D>("Redemption/WorldGeneration/SlayerShipFix2", AssetRequestMode.ImmediateLoad).Value;
 
-                        Point origin = RedeGen.slayerShipPoint.ToPoint();
+                        Point origin = RedeGen.slayerShipVector.ToPoint();
 
                         GenUtils.InvokeOnMainThread(() =>
                         {
@@ -333,7 +333,7 @@ namespace Redemption.NPCs.Friendly
                         RedeWorld.slayerRep++;
                         RedeWorld.alignment += 2;
 
-                        CombatText.NewText(NPC.getRect(), Color.LightCyan, "New Dialogue Available", true, false);
+                        CombatText.NewText(NPC.getRect(), Color.LightCyan, Language.GetTextValue("Mods.Redemption.DialogueBox.New"), true, false);
                         CombatText.NewText(player.getRect(), Color.Gold, "+2", true, false);
 
                         SoundEngine.PlaySound(SoundID.Chat);
@@ -355,7 +355,7 @@ namespace Redemption.NPCs.Friendly
                         Texture2D tex = ModContent.Request<Texture2D>("Redemption/WorldGeneration/SlayerShipFix2", AssetRequestMode.ImmediateLoad).Value;
                         Texture2D texWalls = ModContent.Request<Texture2D>("Redemption/WorldGeneration/SlayerShipWallsFix", AssetRequestMode.ImmediateLoad).Value;
 
-                        Point origin = RedeGen.slayerShipPoint.ToPoint();
+                        Point origin = RedeGen.slayerShipVector.ToPoint();
 
                         GenUtils.InvokeOnMainThread(() =>
                         {

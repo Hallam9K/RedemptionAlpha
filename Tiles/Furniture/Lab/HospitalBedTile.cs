@@ -35,9 +35,7 @@ namespace Redemption.Tiles.Furniture.Lab
 			TileObjectData.addAlternate(1);
 			TileObjectData.newTile.CoordinateHeights = new int[] { 16, 16, 16 };
 			TileObjectData.addTile(Type);
-			LocalizedText name = CreateMapEntryName();
-			// name.SetDefault("Hospital Bed");
-			AddMapEntry(new Color(57, 62, 162), name);
+			AddMapEntry(new Color(57, 62, 162), Language.GetText("ItemName.Bed"));
 			DustType = ModContent.DustType<LabPlatingDust>();
 			AddToArray(ref TileID.Sets.RoomNeeds.CountsAsChair);
 			AdjTiles = new int[] { TileID.Beds };

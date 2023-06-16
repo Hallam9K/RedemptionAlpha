@@ -3,6 +3,7 @@ using Redemption.Projectiles.Magic;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 
 namespace Redemption.Items.Weapons.PreHM.Magic
@@ -68,10 +69,7 @@ namespace Redemption.Items.Weapons.PreHM.Magic
         {
             if (Main.keyState.PressingShift())
             {
-                TooltipLine line = new(Mod, "Lore",
-                    "'A simple wooden staff with a white crystal on top, commonly given to apprentices\n" +
-                    "of sorcerers to practice storing and releasing their mana.\n" +
-                    "An overload of mana from a stronger mage can easily break this.'")
+                TooltipLine line = new(Mod, "HoldShift", Language.GetTextValue("Mods.Redemption.Items.CantripStaff.Lore"))
                 {
                     OverrideColor = Color.LightGray
                 };
@@ -79,7 +77,7 @@ namespace Redemption.Items.Weapons.PreHM.Magic
             }
             else
             {
-                TooltipLine line = new(Mod, "HoldShift", "Hold [Shift] to view lore")
+                TooltipLine line = new(Mod, "HoldShift", Language.GetTextValue("Mods.Redemption.SpecialTooltips.Viewer"))
                 {
                     OverrideColor = Color.Gray,
                 };

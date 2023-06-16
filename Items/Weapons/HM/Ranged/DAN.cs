@@ -1,7 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.BaseExtension;
-using Redemption.Items.Weapons.HM.Ammo;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -42,7 +41,7 @@ namespace Redemption.Items.Weapons.HM.Ranged
             Item.shootSpeed = 10;
             Item.useAmmo = AmmoID.Bullet;
             if (!Main.dedServ)
-                Item.RedemptionGlow().glowTexture = ModContent.Request<Texture2D>(Item.ModItem.Texture + "_Glow").Value;
+                Item.RedemptionGlow().glowTexture = ModContent.Request<Texture2D>(Texture + "_Glow").Value;
         }
         public override bool CanConsumeAmmo(Item ammo, Player player) => false;
         public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback)

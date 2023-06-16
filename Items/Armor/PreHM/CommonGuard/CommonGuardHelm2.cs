@@ -1,6 +1,7 @@
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.ID;
+using Terraria.Localization;
 using Redemption.Items.Materials.PreHM;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
@@ -15,7 +16,7 @@ namespace Redemption.Items.Armor.PreHM.CommonGuard
         public override void SetStaticDefaults()
         {
             // DisplayName.SetDefault("Common Guard Bucket Helm");
-            // Tooltip.SetDefault("+2 increased melee damage");
+            // Tooltip.SetDefault("+1 increased melee damage");
             ArmorIDs.Head.Sets.DrawHead[EquipLoader.GetEquipSlot(Mod, Name, EquipType.Head)] = false;
 
             Item.ResearchUnlockCount = 1;
@@ -27,7 +28,7 @@ namespace Redemption.Items.Armor.PreHM.CommonGuard
             Item.height = 26;
             Item.sellPrice(silver: 30);
             Item.rare = ItemRarityID.Green;
-            Item.defense = 4;
+            Item.defense = 5;
         }
 
         public override bool IsArmorSet(Item head, Item body, Item legs)
@@ -37,12 +38,12 @@ namespace Redemption.Items.Armor.PreHM.CommonGuard
 
         public override void UpdateEquip(Player player)
         {
-            player.GetDamage(DamageClass.Melee).Flat += 2;
+            player.GetDamage(DamageClass.Melee).Flat += 1;
         }
 
         public override void UpdateArmorSet(Player player)
         {
-            player.setBonus = "Reduces damage taken by 6%";
+            player.setBonus = Language.GetTextValue("Mods.Redemption.GenericTooltips.ArmorSetBonus.CommonGuardHelm2");
             player.endurance += .06f;
             player.RedemptionPlayerBuff().MetalSet = true;
 
@@ -69,13 +70,7 @@ namespace Redemption.Items.Armor.PreHM.CommonGuard
         {
             if (Main.keyState.PressingShift())
             {
-                TooltipLine line = new(Mod, "Lore",
-                    "'Bucket helm of the Common Guard unit of Anglon that were scavenged by skeletons.\n" +
-                    "Originally shining steel, the metal has since dulled with time and coated with layers of dust.\n\n" +
-                    "The Common Guard was founded when an Overlord's city was completely obliterated\n" +
-                    "by a stray demon that sneaked through an unguarded portal to Demonhollow.\n\n" +
-                    "They now guard cities and landmarks of great importance. Despite being stronger than the average\n" +
-                    "knight, they don't get involved in wars.'")
+                TooltipLine line = new(Mod, "Lore", Language.GetTextValue("Mods.Redemption.SpecialTooltips.CommonGuard.CommonGuardHelm2"))
                 {
                     OverrideColor = Color.LightGray
                 };
@@ -83,7 +78,7 @@ namespace Redemption.Items.Armor.PreHM.CommonGuard
             }
             else
             {
-                TooltipLine line = new(Mod, "HoldShift", "Hold [Shift] to view lore")
+                TooltipLine line = new(Mod, "HoldShift", Language.GetTextValue("Mods.Redemption.SpecialTooltips.Viewer"))
                 {
                     OverrideColor = Color.Gray,
                 };

@@ -28,6 +28,7 @@ namespace Redemption.Tiles.Furniture.Shade
             TileObjectData.newTile.UsesCustomCanPlace = true;
             TileObjectData.newTile.CoordinateWidth = 16;
             TileObjectData.newTile.CoordinatePadding = 2;
+            TileObjectData.newTile.StyleLineSkip = 3;
             TileObjectData.addTile(Type);
             LocalizedText name = CreateMapEntryName();
             // name.SetDefault("Hanging Cell");
@@ -55,6 +56,7 @@ namespace Redemption.Tiles.Furniture.Shade
             TileObjectData.newTile.CoordinateWidth = 16;
             TileObjectData.newTile.CoordinatePadding = 2;
             TileObjectData.addTile(Type);
+            RegisterItemDrop(ModContent.ItemType<ShadesteelHangingCell>());
             LocalizedText name = CreateMapEntryName();
             // name.SetDefault("Hanging Cell");
             AddMapEntry(new Color(83, 87, 123), name);
@@ -62,7 +64,6 @@ namespace Redemption.Tiles.Furniture.Shade
             AnimationFrameHeight = 72;
             MinPick = 310;
             MineResist = 11f;
-            ItemDrop = ModContent.ItemType<ShadesteelHangingCell>();
         }
         public override void AnimateTile(ref int frame, ref int frameCounter)
         {

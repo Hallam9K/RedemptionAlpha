@@ -2,7 +2,6 @@ using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.ID;
-using Redemption.Items.Placeable.Tiles;
 
 namespace Redemption.Tiles.Tiles
 {
@@ -20,9 +19,12 @@ namespace Redemption.Tiles.Tiles
             Main.tileMerge[ModContent.TileType<LabPlatingTile>()][Type] = true;
             Main.tileMerge[Type][ModContent.TileType<OvergrownLabPlatingTile>()] = true;
             Main.tileMerge[ModContent.TileType<OvergrownLabPlatingTile>()][Type] = true;
+            Main.tileMerge[Type][ModContent.TileType<LabPlatingTileUnsafe2>()] = true;
+            Main.tileMerge[ModContent.TileType<LabPlatingTileUnsafe2>()][Type] = true;
+            Main.tileMerge[Type][ModContent.TileType<OvergrownLabPlatingTile2>()] = true;
+            Main.tileMerge[ModContent.TileType<OvergrownLabPlatingTile2>()][Type] = true;
             DustType = DustID.Electric;
-            ItemDrop = ModContent.ItemType<DangerTape>();
-            MinPick = 500;
+            MinPick = 1000;
             MineResist = 3f;
             HitSound = SoundID.Tink;
             AddMapEntry(new Color(49, 49, 52));
@@ -45,8 +47,11 @@ namespace Redemption.Tiles.Tiles
             Main.tileMerge[ModContent.TileType<LabPlatingTile>()][Type] = true;
             Main.tileMerge[Type][ModContent.TileType<OvergrownLabPlatingTile>()] = true;
             Main.tileMerge[ModContent.TileType<OvergrownLabPlatingTile>()][Type] = true;
+            Main.tileMerge[Type][ModContent.TileType<LabPlatingTileUnsafe2>()] = true;
+            Main.tileMerge[ModContent.TileType<LabPlatingTileUnsafe2>()][Type] = true;
+            Main.tileMerge[Type][ModContent.TileType<OvergrownLabPlatingTile2>()] = true;
+            Main.tileMerge[ModContent.TileType<OvergrownLabPlatingTile2>()][Type] = true;
             DustType = DustID.Electric;
-            ItemDrop = ModContent.ItemType<DangerTape2>();
             MinPick = 50;
             MineResist = 1f;
             HitSound = SoundID.Tink;

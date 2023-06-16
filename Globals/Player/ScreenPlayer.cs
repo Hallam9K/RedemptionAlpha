@@ -5,7 +5,7 @@ using Redemption.NPCs.Bosses.Neb;
 using Redemption.NPCs.Bosses.Neb.Clone;
 using Redemption.NPCs.Bosses.Neb.Phase2;
 using Redemption.WorldGeneration.Misc;
-//using SubworldLibrary;
+using SubworldLibrary;
 using System;
 using Terraria;
 using Terraria.DataStructures;
@@ -49,11 +49,11 @@ namespace Redemption
             }
             if (lockScreen)
             {
-                if (interpolantTimer < 100) interpolantTimer += 2;
+                if (interpolantTimer < 100) interpolantTimer += 1;
             }
             else
             {
-                if (interpolantTimer > 0) interpolantTimer -= 2;
+                if (interpolantTimer > 0) interpolantTimer -= 1;
             }
             ScreenFocusInterpolant = Utils.GetLerpValue(15f, 80f, interpolantTimer, true);
             lockScreen = false;
@@ -65,8 +65,8 @@ namespace Redemption
             }
             cutscene = false;
             customZoom = 0;
-            //if (SubworldSystem.IsActive<CSub>())
-            //    customZoom = 2f;
+            if (SubworldSystem.IsActive<CSub>())
+                customZoom = 2f;
         }
         public override void UpdateEquips()
         {
@@ -175,7 +175,7 @@ namespace Redemption
             if (ScreenFocusInterpolant > 0f && !RedeConfigClient.Instance.CameraLockDisable)
             {
                 Vector2 idealScreenPosition = ScreenFocusPosition - new Vector2(Main.screenWidth, Main.screenHeight) * 0.5f;
-                Main.screenPosition = Vector2.Lerp(Main.screenPosition, idealScreenPosition, ScreenFocusInterpolant);
+                Main.screenPosition = Vector2.Lerp(Main.screenPosition, idealScreenPosition, lockScreen ? EaseFunction.EaseCubicOut.Ease(ScreenFocusInterpolant) : EaseFunction.EaseCubicIn.Ease(ScreenFocusInterpolant));
             }
             Redemption.Instance.cameraOffset *= 0.9f;
             Main.screenPosition += Redemption.Instance.cameraOffset;

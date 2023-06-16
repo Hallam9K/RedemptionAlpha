@@ -1,7 +1,210 @@
-
 Mods: {
 	Redemption: {
 		Currencies.AntiqueDorulCurrency: antique doruls
+
+		TitleCard: {
+			FowlEmperor: {
+				Name: Fowl Emperor
+				Modifier: A Pompous Rooster
+			}
+
+			Erhan: {
+				Name: Erhan
+				Modifier: Anglonic High Priest
+			}
+
+			Thorn: {
+				Name: Thorn
+				Modifier: Bane of the Forest
+			}
+
+			SoI: {
+				Name: Seed of Infection
+				Modifier: ""
+			}
+
+			Keeper: {
+				Name: Keeper
+				Modifier: Octavia von Gailon
+			}
+
+			SkullDigger: {
+				Name: Skull Digger
+				Modifier: The Keeper's First Creation
+			}
+
+			Calavia: {
+				Name: Calavia
+				Modifier: Warrior of the Iron Realm
+			}
+
+			Golem: {
+				Name: Eaglecrest Golem
+				Modifier: Guardian of Eaglecrest Meadows
+			}
+
+			KS3: {
+				Name: King Slayer III
+				Modifier: Prototype Multium
+			}
+
+			Behemoth: {
+				Name: Irradiated Behemoth
+				Modifier: An Unfortunate Scientist
+			}
+
+			Blisterface: {
+				Name: Blisterface
+				Modifier: An Unfortunate Goldfish
+			}
+
+			Janitor: {
+				Name: The Janitor
+				Modifier: A Janitor
+			}
+
+			Volt: {
+				Name: Protector Volt
+				Modifier: Omega Division Commander
+			}
+
+			MACE: {
+				Name: MACE Project
+				Modifier: Incomplete War Machine
+			}
+
+			Cleaver: {
+				Name: Omega Cleaver
+				Modifier: 1st Omega Prototype
+			}
+
+			Gigapora: {
+				Name: Omega Gigapora
+				Modifier: 2nd Omega Prototype
+			}
+
+			OO: {
+				Name: Omega Obliterator
+				Modifier: 3rd Omega Prototype
+			}
+
+			PZ: {
+				Name: Kari Johansson
+				Modifier: Patient Zero
+			}
+
+			Ukko: {
+				Name: Ukko
+				Modifier: Ancient God of Weather
+			}
+
+			Akka: {
+				Name: Akka
+				Modifier: Ancient Goddess of Nature
+			}
+
+			Neb: {
+				Name: Nebuleus
+				Modifier: Angel of the Cosmos
+				Ultimate: Ultimate Form
+			}
+		}
+
+		FlavorTextBestiary: {
+			Daerel: A traveller from mainland Epidotra who is friends with Zephos. Most skilled at archery and stealth.
+			Zephos: A traveller from mainland Epidotra who is friends with Daerel. Most skilled at swordplay.
+			Fallen: Fallen are a category of undead with a soul strong enough to form pale brown flesh. Most being aggressive towards humans, this one is a rare case who can sell ritualist equipment and repair fragments of ancient weapons.
+			TBot1: Quiet, mildly melancholic but happy to help you, Adam is an android and the leader of a small group called the Alpha. They are your go-to guide for all-things Liden.
+			TBot2: '''"I may be the only one of my kind to honor all Three Laws... I can't assure the others will take you in with open arms like I did. Stay safe out there."'''
+			LostSoul: Lost Souls search around the world to look for corpses to infuse with. They roam catacombs and graveyards, sometimes taking many days to find a compatible vessel.
+			FowlEmperor1: An Anglonic forest rooster with quite the personality. Was this intelligent animal the handiwork of a human's soul, or perhaps he was some mythological creature? We may never know.
+			FowlEmperor2: It may have just been a chicken, but it was a reminder of the hideous truth that, regardless of species, monarchy perpetuates archaic views of class and degrades others based on arbitrary standards.
+			Thorn: An unfortunate warden of a cursed forest, doomed to be consumed by blighted thorns.
+			Keeper: A powerful fallen who had learnt forbidden necromancy, its prolonged usage having mutated her body.
+			SkullDigger: The first successful reanimation from the Keeper. Skull Digger swore to protect and care for her, while she would use forbidden necromancy to keep his fading body alive. At this point, his lower half is nothing more than a spirit.
+			SoI: A blistering pocket of the Xenomite infection.
+			Golem: Constructed in Gathuram and sent to Ithon as a gift in a time of peace between the domains. Although the people of Gathuram forgot to mention one thing...
+			Calavia: A Chief-Warrior of the Iron Realm, lost and troubled by her distant venture from her home of Khen Boldur, which was spurred on by the barons of Arum. Swordplay and smithing is her expertise, along with familiarity of Blizzard magic.
+			OO: An autonomous war machine mostly of Girus' own design with many integrated weapon systems, such as literal finger guns and an advanced heat dispersion system in the form of a giant beam, capable of obliterating anyone it engulfs - Also where Obliterator got its name from."
+			TreebarkDryad: These slow-thinking ents only appear in heavily forested areas. They have only recently arrived on this island, coming from the portal on the surface. Once every century, they find a shallow pond and hibernate in the centre. The water from the pond feeds the ent during the process.
+			Erhan: A high priest of Fairwood, tasked himself to purify the forest's curse after it consumed it's warden.
+			Behemoth: An unfortunate scientist, disfigured and mutilated beyond recognition by the Xenomite infection. This specimen is entering the final stage of the infection, and has had its body transform into a sludgy slurry on the ceiling... God, that must be agonizing.
+			Blisterface1: An unfortunate fish, disfigured and mutilated beyond recognition by the Xenomite infection. This strain seems to be similar to that of the Blistered Scientists...
+			Blisterface2: That's a bigass fish.
+			Janitor: Amidst all the ailments that germs can conjure, all the grime mankind can produce. We'll send unto them, only you. Scrape and Clean until it is done.
+			Volt: A gentle giant who keeps his sentences short and acts as a Guard inside the Laboratory. Volt used to be part of the Bear Unit on the surface, but retired after a violent altercation.
+			MACE: An old, unfinished war machine that went haywire. Looks like it never saw the light of day, as it's in progress of being scrapped for parts and components.
+			KS3: "'What? You want my lore? Go get your own lore!'"
+			Cleaver: A proof-of-concept weapon of war modified by Girus, the Omega Cleaver is a giant sword controlled by a small remote stick that was wielded by another machine.
+			Gigapora: A modified tunnelling machine, originally of Teochrome design, retrofitted with rocket boosters, various weaponry and very experimental projected shield technology. Gigapora's shield projectors are prone to overheating and melting if they're inside the projected shield, hence why they're outside.
+			Akka: Little has been recorded of Akka during her youth, it is believed by the locals that her spirit infused with a great tree in the Spirit Realm, where she would sleep until awoken by her husband to be worshipped once more."
+			Ukko: Once a blacksmith in ancient Tethuram who had an immense talent in magic, growing to be seen as a god by many who witnessed his strengths. In his old age, growing weary of his mortality, Ukko infused his soul into a bundle of rocks, allowing him to eventually reform when the time comes. The locals worshipped this golem, until the knowledge of Ukko's soul inside slowly faded away.
+			PZ: An unfortunate scientist, mutilated and disfigured by the Xenomite infection. This specimen was Kari Johannson, the father of all T-Bots and patient zero of the xenomite infection. He's been stuck for 50 years, conscious and aware of the situation around him... God, that must be tormentous."
+			Android: Fodder sent down to the island by King Slayer III to scan. These are the first iteration of the Android Unit and the first robots designed by King Slayer during his million year voyage. Their original purpose was to bring company and life to the SoS, however they have since been fitted with more combat-oriented parts. When damaged, they will retreat back to the SoS and alert the network.
+		}
+
+		Bestiary.Android: Apidroids were an experiment with a highly durable metal from a distant star system. The metal - dubbed 'Rose Titanium' by King Slayer III - is one of the strongest materials discovered in the galaxy. However, King Slayer III hated its pink tinge, and so stubbornly refused to use it after making a few Androids out of it.
+
+		StatusMessage: {
+			Progression: {
+				ThornDowned: The forest flora blooms...
+				GoodSkeletron: Crystals form in the icy caverns...
+				BadSkeletron: The caverns are heated with dragon bone...
+				LabOpen: The laboratory's defense systems have malfunctioned...
+				LabAccessPanel1: Alpha sector laser security has been deactivated
+				LabAccessPanel2: Gamma sector laser security has been deactivated
+				LabAccessPanel3: Sigma sector laser security has been deactivated
+				LabAccessPanel4: Omicron sector laser security has been deactivated
+				LabAccessPanel5: Vault laser security has been deactivated
+				LabAccessPanel6: All laser security has been deactivated
+				LabAccessPanelUsed1: Alpha laser security already deactivated
+				LabAccessPanelUsed2: Gamma laser security already deactivated
+				LabAccessPanelUsed3: Sigma laser security already deactivated
+				LabAccessPanelUsed4: Omicron laser security already deactivated
+				LabAccessPanelUsed5: Vault laser security already deactivated
+				LabAccessPanelUsed6: Laser security already deactivated
+				OmegaCall: A new Omega Prototype can be called using the Omega Transmitter
+				FoolLeft: The Fool has left...
+			}
+
+			Death: {
+				Infested: " burst into larva!"
+				DirtyWound: " had an infection"
+				Swarmed: " got nibbled to death"
+				Xenomite: " was turned into a crystal"
+				Radiation: " was irradiated"
+				Incandesence: " was too glorious"
+				Ensnared: " got consumed by the thorns"
+				Nuclear1: " saw a second sunrise"
+				Nuclear2: " was wiped off the face of "
+				Nuclear3: " experienced doomsday"
+				Nuclear4: " became a shadow on the ground"
+				Nuclear5: " went out with a bang"
+				Nuclear6: " couldn't find the fridge in time"
+				DoorStuck: " experienced DOOR STUCK."
+			}
+
+			Event: {
+				ChickRetreat: The chickens retreat!
+				SkeletonParty1: The skeletons are plotting a party at dusk...
+				SkeletonParty2: The skeletons are partying!
+				SkeletonParty3: The skeletons reconsidered partying tonight...
+				SkeletonParty4: The skeletons got bored and went home!
+				Again: " Again."
+			}
+
+			Other: {
+				Warning1: WARNING: Unable to locate a certain structure, new world is recommended!
+				Warning2: WARNING: Unable to locate important structure, new world is required!
+				Caution: CAUTION: You have a Funni config enabled that affects world gen. If you created a world just now, check which one you have enabled and disable it for next time.
+				Keeper1: Shrieks echo through the night...
+				Keeper2: The Keeper noticed the abandoned teddy you're holding...
+				Keeper3: The Keeper's spirit fades away... ?
+				SkullDigger: Skull Digger's Spirit fades away...
+				GolemSpawn: A sleeping stone appears...
+				NebGone: Nebuleus is nowhere to be seen...
+			}
+		}
 
 		GenericTooltips: {
 			Bonuses: {
@@ -25,12 +228,939 @@ Mods: {
 				WaterBonus: "[i:Redemption/Water] Increased damage to demons and can electrify robotic targets"
 				WindBonus: "[i:Redemption/Wind] Deals extra knockback to airborne targets"
 			}
+
+			ArmorSetBonus: {
+				VanillaArmor: {
+					20Increased:
+						'''
+
+						20% increased 
+						'''
+					Resistance: " elemental resistance"
+					Damage: " elemental Damage"
+				}
+
+				LivingWood: Immune to poison, increases your max number of minions
+				CommonGuardHelm1: 12% increased melee speed
+				CommonGuardHelm2: Reduces damage taken by 6%
+
+				PureIron: {
+					20Increased: "20% increased "
+					Bonus:
+						'''
+
+						33% chance for weapons to inflict Pure Chill
+						100% chance for all Pure-Iron weapons to inflict Pure Chill
+						'''
+				}
+
+				DragonLead: {
+					20Increased: "20% increased "
+					Bonus:
+						'''
+
+						33% chance for weapons to inflict Dragonblaze
+						100% chance for all Dragon-Lead weapons to inflict Dragonblaze
+						'''
+				}
+
+				Hardlight: {
+					Keybind: Select a keybind for [Special Ability Key] in Controls
+					Press: "Press "
+					Support:
+						'''
+						 to get support from the Ship of the Slayer
+
+						'''
+					Casque: Summons a hologram of King Slayer III to help, higher spirit levels give the hologram stronger weapons
+					Cowl: Summons a drone that gives a continuous feed of mana for 10 seconds
+					Helm: Summons 2 mini spaceships that orbit you, firing lasers whenever you attack using a melee weapon
+					Hood: Summons 2 missile drones and a magnet drone
+					Visor: Fires a missile barrage from the SoS, targetting the enemy nearest to the cursor position
+				}
+
+				Xenomite: {
+					Press:
+						'''
+
+						Press 
+						'''
+					Keybind:
+						'''
+						6% increased damage
+						Increased Energy regeneration if an Energy Pack is in your inventory
+						Select a keybind for [Special Ability Key] in Controls
+						'''
+					Bonus1:
+						'''
+						6% increased damage 
+						Increased Energy regeneration if an Energy Pack is in your inventory
+						'''
+					Bonus2: " to unleash toxic gas in a radius around the player, inflicting Burning Acid"
+				}
+
+				Xenium: {
+					Press:
+						'''
+
+						Press 
+						'''
+					Keybind:
+						'''
+						Increased Energy regeneration if an Energy Pack is in your inventory
+						Select a keybind for [Special Ability Key] in Controls
+						'''
+					Bonus1: Increased Energy regeneration if an Energy Pack is in your inventory
+					Bonus2: " to fire a virulent grenade from your shoulder launcher"
+				}
+			}
+		}
+
+		SpecialTooltips: {
+			Viewer: Hold [Shift] to view lore
+
+			CommonGuard: {
+				CommonGuardGreaves:
+					'''
+					'Plate mail greaves of the Common Guard unit of Anglon that were scavenged by skeletons.
+					Originally shining steel, the metal has since dulled with time and coated with layers of dust.
+
+					The Common Guard was founded when an Overlord's city was completely obliterated
+					by a stray demon that sneaked through an unguarded portal to Demonhollow.
+
+					They now guard cities and landmarks of great importance. Despite being stronger than the average
+					knight, they don't get involved in wars.'
+					'''
+				CommonGuardHelm1:
+					'''
+					'Visored plate mail helm of the Common Guard unit of Anglon that were scavenged by skeletons.
+					Originally shining steel, the metal has since dulled with time and coated with layers of dust.
+
+					The Common Guard was founded when an Overlord's city was completely obliterated
+					by a stray demon that sneaked through an unguarded portal to Demonhollow.
+
+					They now guard cities and landmarks of great importance. Despite being stronger than the average
+					knight, they don't get involved in wars.'"
+					'''
+				CommonGuardHelm2:
+					'''
+					"'Bucket helm of the Common Guard unit of Anglon that were scavenged by skeletons.
+					Originally shining steel, the metal has since dulled with time and coated with layers of dust.
+
+					The Common Guard was founded when an Overlord's city was completely obliterated
+					by a stray demon that sneaked through an unguarded portal to Demonhollow.
+
+					They now guard cities and landmarks of great importance. Despite being stronger than the average
+					knight, they don't get involved in wars.'"
+					'''
+				CommonGuardPlateMail:
+					'''
+					'Plate mail of the Common Guard unit of Anglon that were scavenged by skeletons.
+					Originally shining steel, the metal has since dulled with time and coated with layers of dust.
+
+					The Common Guard was founded when an Overlord's city was completely obliterated
+					by a stray demon that sneaked through an unguarded portal to Demonhollow.
+
+					They now guard cities and landmarks of great importance. Despite being stronger than the average
+					knight, they don't get involved in wars.'"
+					'''
+			}
+
+			PureIron: {
+				AntiquePureIronHelmet:
+					'''
+					'An outdated design of the Iron Realm's warrior's helmet.
+					Discovered in the Catacombs of Gathuram by Happins, a fallen.
+					This design has fur to keep the neck and shoulders warm in the harsh environment.'
+					'''
+				PureIronHelmet:
+					'''
+					'A visored helmet used by the Warriors of the Iron Realm.
+					The metal emits a constant chill mist and is cold to the touch,
+					however the Iron Realm's warriors have been trained to resist such harsh temperatures.
+
+					The Warriors of the Iron Realm are Gathuram's main military force,
+					with units spanning all across the domain.'
+					'''
+				PureIronChestplate:
+					'''
+					'A chestplate made of metal and leather used by the Warriors of the Iron Realm.
+					The metal emits a constant chill mist and is cold to the touch,
+					however the Iron Realm's warriors have been trained to resist such harsh temperatures.
+
+					The Warriors of the Iron Realm are Gathuram's main military force,
+					with units spanning all across the domain.'
+					'''
+				PureIronGreaves:
+					'''
+					'Greaves made of metal and leather used by the Warriors of the Iron Realm.
+					The metal emits a constant chill mist and is cold to the touch,
+					however the Iron Realm's warriors have been trained to resist such harsh temperatures.
+
+					The Warriors of the Iron Realm are Gathuram's main military force,
+					with units spanning all across the domain.'
+					'''
+			}
+
+			DragonLead: {
+				DragonLeadSkull:
+					'''
+					'A horned helmet forged from melted dragon bone and metal, made to look like a dragon's skull. It is said
+					to be used by the ancient warlords of Dragonrest.
+					The warlords were famous dragon slayers who used the bones of their victims for weaponry and armour,
+					nearly bringing the dragons to extinction. That was until every single one was wiped out by Goliathon, the Dragon God.
+					'''
+				DragonLeadRibplate:
+					'''
+					'Armour forged from melted dragon bone and metal, made to look like a ribcage. It is said to be used by
+					the ancient warlords of Dragonrest.
+					The warlords were famous dragon slayers who used the bones of their victims for weaponry and armour,
+					nearly bringing the dragons to extinction. That was until every single one was wiped out by Goliathon, the Dragon God.'
+					'''
+				DragonLeadGreaves:
+					'''
+					'Leg armour forged from melted dragon bone and metal, said to be used by the ancient warlords of Dragonrest.
+					The warlords were famous dragon slayers who used the bones of their victims for weaponry and armour,
+					nearly bringing the dragons to extinction. That was until every single one was wiped out by Goliathon, the Dragon God.'
+					'''
+			}
+
+			KS3Datalog: {
+				DatalogViewer: Hold [Shift] to view datalog
+				Datalog1:
+					'''
+					'I have successfully reached the outer atmosphere and escaped my world's Reset."
+					I realise there is no going back now, a normal human's lifespan sounds miniscule"
+					compared to the time I must travel through space, but it is my goal to withstand this infinite voyage."
+					I just hope it'll all be worth it when I return to the new world. I've decided to write these"
+					logs every day until I return, and preserve my encounters for when I get back."
+					But that's a million years from now. I just hope I won't regret it.'
+					'''
+				Datalog2:
+					'''
+					'If I ever forget why I'm doing this, I will write it down here."
+					When a Great Era ends, all life dies and the world resets. I am from a previous era"
+					and successfully escaped into space, as the reset won't affect me outside of the world."
+					A reset apparently takes a million years, so I must travel through space during that time period,"
+					and with luck, I should come back here a million years from now, and see the new world in all it's beauty."
+					As far as I know, I am the sole survivor, and the first living thing to ever escape."
+					I transferred my human mind into a robotic body as no living thing can break through the planet's barrier,"
+					and I won't need to worry about thirst, hunger, or sleep.'
+					'''
+				Datalog3:
+					'''
+					'Strange."
+					I'm starting to get symptoms of thirst and tiredness..."
+					This shouldn't be happening, as a robot, I shouldn't require these basic human needs!"
+					If for whatever reason these needs still affect me, this could make this voyage even worse."
+					I can't go to sleep without eyes, I can't drink without a mouth, I can't eat without a digestive system..."
+					So I have no way of stopping these symptoms."
+					I'm still 2 years from reaching the nearest planet - Nabu III"
+					Actually, I should come up with a new name for my robotic body... Something other than Survival Robot Mk. 78.'
+					'''
+				Datalog4:
+					'''
+					'My worst fear is coming true."
+					I have a strong feeling of tiredness and thirst, and my hunger has begun to take hold."
+					It's only been 6 days damn it! Roughly 359,000,000 days to go..."
+					I've tried all I can, but these painful feelings can't go away."
+					The human mind is more complicated than I imagined, and combined with all this technical junk"
+					only makes it harder for me to look into it!"
+					If only I had more time back then! I could've looked through this body's code and easily discovered the error!"
+					Guess I'll just have to deal with it.'
+					'''
+				Datalog5:
+					'''
+					'About a year to go until I reach Nabu III."
+					I am STILL dealing with these damn feelings of hunger and tiredness,"
+					and have only been getting worse from here. Humans can last 11 days without sleep,"
+					the only thing that stopped them from feeling worse was death."
+					I can't even bloody die from fatigue, I can't starve to death either,"
+					I'm just stuck like this - for a million damn years!'
+					'''
+				Datalog6:
+					'''
+					'Finally!"
+					I am close enough to Nabu III to get a scan of the planet."
+					Seems to be a standard ocean planet with a radius of 5605.77km."
+					35.3% iron, 32.0% oxygen, 15.1% silicon, 6.1% sodium, 4.2% aluminum, 2.7% other metals."
+					Gravitational pull is 7.84 m/s? less than my planet, but whatever..."
+					A cycle lasts 23.89 hours with an axis tilt of 28.37?"
+					80% ice sheets, 19.8% ocean, 0.2% land. Atmospheric pressure of 91.83 kPa."
+					The atmosphere is 78.4% sulphur dioxide, and the average temperature is -10C."
+					Basically, an uninhabitable frozen planet... Great.'
+					'''
+				Datalog7:
+					'''
+					'Alright. I have constructed a temporary base on Nabu III."
+					The amount of iron and sulfur here has come in handy."
+					I mean, if I was a human I'd be dead with the lack of proper air."
+					My blueprint for a country-sized spaceship is also finished. Now begins the long construction."
+					The design will be a crescent moon shape, not sure why..."
+					Probably because I used to look up at the moon of my world a lot"
+					when I was human. I wish I still was.'
+					'''
+				Datalog8:
+					'''
+					'My god how have I not died from this pain yet,"
+					it just keeps growing. Whenever I think it can't get any worse the next day it does!"
+					On brighter news my big-arse spaceship is finished. Now I can leave this planet."
+					I'm getting real sick of snow, the old world was nothing but snow as well, I just want some greenery for once."
+					Unfortunately my next planet is even further from the sun so I'm not really hopeful...'
+					'''
+				Datalog9:
+					'''
+					'Today marks 500 years away from home."
+					It took 5.5 years but I'm at the next planet - Alkonost. I expected to get there faster,"
+					but I REALLY underestimated the amount of fuel this giant spaceship would consume."
+					I'm certain I wouldn't have made that mistake if I just didn't feel so terrible!"
+					Living like this is absolute hell. I'll write down this planet's statistics next data log.'
+					'''
+				Datalog10:
+					'''
+					'Alright. Alkonost. And of course, it's ANOTHER DAMN ICE PLANET!"
+					Radius: 6059.58km, Composition: 36.1% titanium, 35.6% iron, 17.5% oxygen,"
+					7.4% silicon, 3.4% other metals. High amounts of titanium, huh?"
+					That's gonna be useful, Nabu III had barely any titanium."
+					Gravity is 11.13 m/s? A cycle is 32.65 hours, with an axis tilt of 11.58?"
+					Oh. 100% of the surface is just ice. The atmosphere is toxic, with a pressure of 91.63 kPa."
+					The temperature is -223C... I don't think even my robotic body can handle that! Oh whatever.'
+					'''
+				Datalog11:
+					'''
+					'Holy..."
+					After exploring Alkonost's surface, I've finally found something other than ice!"
+					Took so long since I can't last down there for more than half a minute."
+					From the looks of things, it looks man-made. Or I guess alien-made... Heh."
+					First time I've felt this amused in forever, but anyways, the structure."
+					It was under the thick ice sheet so I had to drill quite far down."
+					The water under there must be freezing, but curiosity is getting the better of me here."
+					I have found an entrance, inside is just as cold though, so I should go back up into my ship before exploring further.'
+					'''
+				Datalog12:
+					'''
+					'I have basically harvested this planet's titanium dry."
+					The alien tech I found in that strange structure has come in handy,"
+					I've augmented it into my spaceship's thrusters, so I can reach planets much faster."
+					Hmm... I should give the ship a name... Well, I called robot-self King Slayer III,"
+					so the ship must be just as cool. How about: Ship of the Slayer! Or SoS for short?"
+					Well, it's finally time to explore beyond the Vorti Star System."
+					I have 999,493.8 years to go... And my overwhelming pain still hasn't settled."
+					I'll just have to live with it forever now.'
+					'''
+				Datalog13:
+					'''
+					'On my journey to the nearest solar system, I decided to dabble with AI."
+					I have set up blueprints for a simple android with the purpose of"
+					maintaining the SoS while I'm away. It's something for me to do so why not."
+					It's estimated to take 770 years to reach the next solar system,"
+					and I haven't encountered another moving thing for 506 years."
+					Having robots going about the SoS would be nice, and I'll be less lonely.'
+					'''
+				Datalog14:
+					'''
+					'Welp, I've reached the next solar system."
+					3 planets have been scanned, which is quite a disappointment..."
+					I was hoping for there to be more to do."
+					But it's fine I guess, the androids I've created have been keeping me company."
+					I'll go to the planet nearest the habitable zone, 'cos robots have become pretty boring now,"
+					and I'm dying to see actual greenery, not some dull frozen wasteland.'
+					'''
+				Datalog15:
+					'''
+					'I have named this planet Asherah, it appears to be iron/silicate-based."
+					A big radius of 8845.27 km, 40.8% iron, 32.9% oxygen, 15.6% silicon, 4.2% carbon, 2.9% magnesium..."
+					Quite strong gravity, 34.70 hour cycle, an axis tilt of 53.09?.."
+					Only 1% of the surface is water, the rest looks like... boring stone and sand. Hm."
+					Oh! The scanner has found life! Microbes, fungi, sentient animals... What is that?"
+					Well I've found life here, only problem is they look ugly as hell."
+					2.01 million of these intelligent creatures have been scanned, so they've been around for a while.'
+					'''
+				Datalog16:
+					'''
+					'I'm done with Asherah, the aliens there attacked me so I had to make some weaponry."
+					I decided to make a new android, one for military purposes, I've named it the Prototype Silver."
+					Despite its name, it's mainly composed of the spare titanium from Alkonost."
+					I did find a metric ton of coal from Asherah's caverns, so that's nice."
+					Well... Onto the next planet, I just hope THIS one will be lush and green."
+					All the planets I've been to were either frozen or barren.'
+					'''
+				Datalog17:
+					'''
+					'Wow, this planet blew my expectations away..."
+					I have named it Alatar V. It's very small, and on the surface it looks barren."
+					However, it's cave systems are beautiful. Like, there's so many colours and valuable ores."
+					I've been exploring them overtime for probably years now. But that's fine,"
+					Not like I got anything better to do."
+					I'll be leaving this planet soon and moving onto the next solar system.'
+					'''
+				Datalog18:
+					'''
+					'I haven't done one of these in forever, but I should explain what happened."
+					I was travelling to the next solar system, when suddenly some wormhole appeared."
+					The SoS couldn't turn fast enough so it got sucked in. Wormholes are like portals of the universe,"
+					so I expected to just reach the end instantly, but no, I was stuck in the wormhole for almost 1000 years."
+					God it was boring, but I had the androids to keep me company. Unfortunately, I don't know where I am now."
+					I can't tell how far away I am from home, but I see a nearby star, so hopefully there's some planets.'
+					'''
+				Datalog19:
+					'''
+					'Today is the millionth day in space. When I was writing that down,"
+					I had a dumb moment where I thought it was a million years. But no."
+					It has only been 2739.7 years, so... 364,000,000 days left? It feels like forever,"
+					and yet it's only been 0.27% of a million. Why am I still doing this. What's the point anymore?"
+					Every day is a pain, I just want to eat, I want to sleep."
+					I would say I want to be human again, but to be honest, I don't even want to be alive anymore.'
+					'''
+				Datalog20:
+					'''
+					'About damn time. I've finally found a green planet. But am I happy about this?"
+					Not really. I thought this would make me feel something, but it's hopeless."
+					I can't remember the last time I felt happy, the memory of my home is starting to get foggy."
+					But anyway, it looks like this planet has intelligent life, so I'll land and see if they're friendly."
+					If they're not, I'll just shoot them. Simple.'
+					'''
+				Datalog21:
+					'''
+					'Today is the 10,000th year in space, only 1% of a million..."
+					I feel like living beings shouldn't be allowed to live for this long."
+					A hundred years for a human is forever, and I've been around for 100x that!"
+					I've redesigned my robotic body again, but I still haven't figured out how to get into my"
+					human mind and get rid of this STUPID HUNGER. I DON'T HAVE A STOMACH, WHY AM I HUNGRY!?"
+					I DON'T HAVE EYES, WHY AM I SO TIRED!? WHY DO I HAVE TO ENDURE THIS DAMN IT!?'
+					'''
+				Datalog22:
+					'''
+					'The SoS got attacked by some Space Pirates."
+					Not like I care, I destroyed their ships so what can they do now?"
+					The SoS's scanner picked up a lifeform in the engine room, so I should probably check it out."
+					I can't be asked to do anything really. But whatever.'
+					'''
+				Datalog23: "'Nice'"
+				Datalog24:
+					'''
+					'It's been 10% of a million years now. Yay."
+					I accidently skipped a day in the data logs so 10% was really yesterday, but not like I care."
+					I have explored... 2853 planets now, and they are starting to all look the same."
+					I'm sick of ice planets, sick of lush green ones, sick of barren ones... I guess I'm not satisfied anymore.'
+					'''
+				Datalog25:
+					'''
+					'I haven't felt like this in forever."
+					I upgraded my robotic self again, this time with more attack power. Xehito let me test it on him,"
+					so we had a fight. The intensity of it was almost exhilarating, lasers firing everywhere,"
+					explosions all around, it was generally a fun time. But something tells me he only let me"
+					fight him to cheer me up, and I'm sorry Xehito, but that moment didn't last, I still feel empty.'
+					'''
+				Datalog26:
+					'''
+					'Only 1000 years until a million, and I can return home."
+					I've already set my course, but the problem is, because of that wormhole,"
+					I don't know which way is home... All I can do now is go to a random direction"
+					and hope for the best. But the galaxy is vast, I fear by the time I reach home again,"
+					The next reset would've already started, and I'd have to wait another million years."
+					If that happens, I won't try anymore, I'll just give up.'
+					'''
+				Datalog27:
+					'''
+					'Today is the millionth year in space!"
+					Unfortunately, I won't be able to see the new Great Era for some time."
+					I'm still lost in space.'
+					'''
+				Datalog28: "'I've made it back, I'm home again.'"
+			}
+		}
+
+		Cutscene: {
+			NewbIntro: {
+				1: What do you think, Jo-
+				2: Who you?!
+				3: Where am I?
+				4: Heyo, I'm Newb![1] Want to be friends?
+			}
+
+			TreebarkDryad: {
+				1: Now,[0.1] now.[0.5] Watch where you swing that axe of yours...[1] I don't want you chopping down any of my friends.
+				2: "It will do no good,[0.1] young "
+				3: man
+				4: lady
+				5: .[0.5] We bring no harm to you.[1] Chopping us down will only bring bad omens.
+			}
+
+			DaerelIntro: {
+				1: Woah!
+				2: Ow, my head hurts..
+				3: Hey Zephos,[0.1] do you know where we are?
+				4: "[@a]Uh..[0.5] Zephos?"
+				5: "[@b]Oh, hi there![0.1] Didn't notice you."
+				6: You haven't seen my friend around here,[0.1] have you?
+				7: Guess he didn't jump in.[0.5] Oh well,[0.1] I'll head back to get him.
+				8: I'm going to need a place for me to stay if I come back,[0.1] so, see you soon I suppose.
+			}
+
+			ZephosIntro: {
+				1: WAH!
+				2: Jeez,[0.1] bad landing.
+				3: Ey Daerel,[0.1] know where we are?
+				4: "[@a]Uh..[0.5] Daerel?"
+				5: "[@b]Oh,[0.1] hey there![0.1] Didn't notice you."
+				6: You haven't happened upon a boy cloaked in black,[0.1] have you?
+				7: Guess he didn't jump in.[0.5] Oh well![0.1] I'll head back to get him.
+				8: I'll come back once I find him,[0.1] so ya better have a place for us to stay!
+			}
+
+			Erhan: {
+				Intro: {
+					1: Great heavens!!
+					2: Doth thine brain be stuck in a well!?
+					3: To summon a demon,[0.1] so close to my land...[0.5] 'Tis heresy!
+					4: "[@b]Repent![0.5] Repent for thy sins!"
+					5: "[@c]Lest I smack'eth thine buttocks with the Hand of Judgement!"
+				}
+
+				Resummon: {
+					Normal: CEASE!
+
+					Underworld: {
+						1: CEA-
+						2: ...[1] A-[0.1]are we in...
+						3: "[@j]Why didst thou summon me here!?[0.5] I dareth not fight in such demonic lands!!"
+						4: Farewell!
+					}
+				}
+
+				Interval: {
+					1: Huzzah! [0.5]*pant*[0.5] A shield!
+					2: But alas,[0.1] this shield is useless against a blade!
+					3: *pant* *pant*[0.5] Alright'eth![0.5] I hath regained my breath.[0.5] Have at thee!
+				}
+
+				Interaction: {
+					Egg: Thou shall not egg a priest!
+					Grenade1: Oh...[0.5] So that is how it's used'eth...
+					Grenade2: What in God's name!?
+					Bible1: How dare'eth![0.1] Doth thou use the sacred texts against me!?
+					Bible2: Cease this boondoggling bible betrayal!
+					BJustice: Expel my father's weapon from thy grasp'eth this instant!
+					Egg1: Thou shall not egg a priest!
+				}
+
+				Defeat: {
+					1: I foresee my defeat creeping up on me.
+					2: Well...
+					3: If all else fail'eth...
+					4: Grenade.
+					5: "[@g]How doth one use this thing?[@h]"
+				}
+
+				Choice: {
+					1: It would[0.1] appear'eth,[0.3] I hath lost.
+					2: If,[0.3] mayhaps you shan't[0.1] spare my life...
+					3: Send master Hallowed Knight[0.3] my regards.
+					4: Well...[0.5] 'Til we meet again!
+				}
+			}
+
+			ErhanS: {
+				Funny: GOD IS REAL AND HE SENT ME BACK TO KICK YOUR ASS.
+				1: Thou may inquire,[0.1] how hath I returned...
+				2: I am but the holiest of men,[0.1] thus the Lord has returned me to beat thine buttocks once more!
+				3: Guess whom'st've's back!
+			}
+
+			Keeper: {
+				1: Thank...
+				2: You...
+			}
+
+			SkullDigger: {
+				Name: Skull Digger:
+				Fight1: Mistress Octavia, are you harmed?
+				Fight2:My lady, you need not worry, I shall crush this vermin.
+				Fight3:Prepare to reap what you sow...
+				Fight4:I have finally found you, vermin..
+				Defeat1:My dear mistress, I have failed you.
+				Defeat2:It seems our torment stays eternal.
+				1: Thank...
+				2: You...
+			}
+
+			TBotIntro: {
+				Normal1: AH!
+				Normal2: ...I-[0.1]I thought you were someone else.[0.5] Sorry about that.
+				Normal3: Anyways,[0.1] hello.[0.5] I'm Adam,[0.1] and I'm an Android originating from a faraway snowy wasteland.
+				Normal4: "[@b]Seeing as I won't be returning to that frozen hell for a good while,[0.1] mind if I stay here?[0.5] I assume you've some shelter to stay at."
+				Normal5: ...The resemblance between them is uncanny...
+				Robot1: HUH?
+				Robot2: How-[0.1] Wh-[0.1] I-
+				Robot3: *Sigh*[0.1] I wasn't expecting to see the likes of us here.
+				Robot4: Not going back there now.[0.5] Since you're here and not there,[0.1] I can safely assume you're not with Her..?
+				Robot5: "[@a]...Alright.[0.5] We can safely ignore each other then."
+			}
+			
+			SoI: A portal to another world has opened!
+			
+			Calavia: {
+				Fight: {
+					Defeat1: Taborti! Taborti![0.2] I yield! I yield!
+					Defeat2: Grant me mercy!
+					Defeat3: "[0.2] Call your servants off!"
+					Mercy1: You understood?[0.2] So you aren't a khru?
+					Mercy2: Apologies for the startled reaction,[0.1] I never expected to meet a khen here.
+					Mercy3: I am actually in need of some assistance,[0.1] I'll explain more by the portal.
+				}
+
+				Talk: {
+					1: Oi!
+					2: I wouldn't take that spirit back to Arum if I were ya.
+					3: And why would that be?
+					4: Forgive my bluntness,[0.1] but the barons of Arum are nothing but rancorous demons.
+					5: "[@b]Excuse me?[0.5] I haven't seen a single droplet of malice from them,[0.1] and I've been workin' with them for years!"
+					6: As have I...[0.3][@c][@d] in a more direct sense.[0.5][@g] Just trust me lassie,[0.1] break free Kyretha's spirit.[0.5] Let her truly rest.
+					7: To doubt the wisdom of a liberated spirit would be most imprudent.
+					8: .^0.3^..^0.05^ [@e]Gorhal'on.[0.5][@f] Taborti.[0.6] I'll free it after I go through the portal.
+					9: Is that a promise?
+					10: Bi'oruen.
+					11: Very well.
+				}
+			}
+
+			AndroidScan: {
+				Human: Human
+				Robot: Robot
+				Chicken: Chicken
+				Scan: " scanned..."
+				Unknown: Unknown entity
+			}
+
+			KS3: {
+				Intro: {
+					DroneBreak: Did you seriously just destroy my drones?
+					DroneIfChicken: Alright listen here you little chicken nugget.
+					DroneIfRobot: Alright listen here you little scrap of metal.
+					DroneHuman: Alright listen here you little fleshbag.
+					NoDroneIfRobot: Ah,[0.1] this little scrap of metal decided to save me the trouble of finding it.
+					NoDroneIfChicken: Ah,[0.1] this little chicken nugget decided to save me the trouble of finding it.
+					NoDroneIfHuman: Ah,[0.1] this little fleshbag decided to save me the trouble of finding it.
+					Start: Eh,[0.1] not like I got a shortage of them,[0.1] but I'm still gonna blast ya for it!
+					StartGood: I warned you,[0.1] so don't go crying to your mummy when I crush you into the ground!
+					StartSSR: Do you understand how annoying it is to be spam-pinged by my units because of your trigger-happy arse?[1] Maybe I should teach you a lesson!
+					StartEvil: You were on my hitlist,[0.1] so lets skip the small talk and get on with it!
+					KeeperDowned1: "[@b0][@h0]Actually...[0.5] You were the one that fought the Keeper, weren't you!"
+					KeeperDowned2: "[@h2]That was my job!"
+					KeeperDowned3: "[@h0]Great,[0.1] now I have even more reason to pummel you to ash!"
+				}
+
+				Resummon: {
+					Downed1: "[@h1]Why must you summon me again?"
+					Downed2: "[@h2]Could you maybe possibly probably potentially LEAVE ME ALONE?"
+					Downed3: "[@h1]Really,[0.1] a rematch?[0.5] Fine."
+					Downed4: "[@h1]Why don't you go preemptively die and save me the effort."
+					Downed5: "[@h4]What?[0.5] Do you want to fight me again?"
+					1: "[@h3]Could've sworn you died..."
+					2: Ready for a rematch?
+					3: Welp,[0.1] time to win again!
+					4: Still wanna fight?
+					5: "[@h3]You're quite a resilient fellow..."
+				}
+
+				Interval1: {
+					Effort1: What a nuisance.[1] It would seem my Auto-Shield is ineffective to your attacks.
+					Effort2: What a nuisance.[1] Your petty projectiles are going through my Auto-Shield.
+					Effort3: What a nuisance.[1] You are only wasting both of our efforts here.
+					RunAway: Why'd you summon me if you're just gonna run away the entire time?
+					End: Might as well blow you to pieces with a few missiles.
+				}
+
+				Interval2: {
+					StartIfRobot: This rusty little tincan is more persistent than I thought...
+					StartIfChicken: The concept of losing to a chicken does not bode well with me...
+					StartIfHuman: You pack more of a punch than I thought for such a small fleshbag...
+					Ranged: You like shooting things,[0.1] correct?[0.5] Well try shooting me now.
+					Normal: Go ahead,[0.1] shoot me if you can.
+					Joke1: "[@h3]I might even have to take you seriously..."
+					Joke2: "[@h0]PAH![0.5] What a joke!"
+				}
+
+				Interval3: {
+					1: This is getting ridiculous![0.5] Why can't I kill you?
+					2: "[@h3]*Ahem*[1] Your persistence is admirable,[0.1] I'll give you that."
+					3: "[@h2]But you better realise I'm hardly trying.[1][@h1] I ain't bluffing either."
+				}
+				
+				Spare: {
+					Accept: Tie it is then.[1] Now don't distract me again.
+					Adios: "[@h1]Adios,[0.1] dingus."
+				}
+
+				Continue: {
+					Accept: I see how it is...
+					Overclock1: Once again,[0.1] you really are eager to win...
+					Overclock2: I'm disappointed I actually have to overclock this vessel...
+					Overclock3: ... I guess you like doing things the hard way.
+					IfRobot: ... And for a heap of scrap no less.
+					IfChicken: ... And for what?[0.5] A bloody chicken!?
+					IfHuman: ... And for an annoying brat no less.
+					Begin: "[@h0][@c]Let's begin."
+				}
+			}
+			
+			KS3Clone: {
+				Intro: {
+					1: "SCANNING TARGET..."
+					2: "TARGET DEEMED -[0.5] 'A WASTE OF TIME'"
+					3: "RELAYING MESSAGE-[0.5] 'KING SLAYER NO LONGER HAS TIME FOR YOU'"
+				}
+			}			
+
+			KS3Message: {
+				Attacked1: Well aren't you a little trigger-happy.
+				Attacked2: You know there's like[0.1] a million of us, right?[1] Anyway,[0.1] I've come to relay a message from King Slayer -
+				Message: '''"I'll be heading off to the other world soon,[0.1] so if you have any unfinished business with me,[0.3] I'd get on that sooner rather than later."'''
+				Variant: Screw you too I guess.
+				1: Don't attack.
+				2: I've come to relay a message from King Slayer -
+			}
+
+			WielderBot: {
+				Funny1: I came here to kick gum
+				Funny2: and chew ass...
+				Funny3: ...And I'm all out of ass.
+				Defeat: ...Nah.
+			}
+
+			OO: {
+				Intro: {
+					1: Yo.
+					2: So much for a surprise attack...
+					2Alt: I guess I can't fool you twice,[0.1] huh.
+					3: "[@a]Hang on,[0.1] I got a call from Girus."
+					4: "'I wasted too much energy too quickly?'"
+					5: "'I'm an idiot?'"
+					6: You're scrapping my personality drive after this fight?
+					7: "[@b]Ah well,[0.1] request accepted..."
+					8: Anyway...
+				}
+
+				Ready: Ready for obliteration?
+				DownedReady: PREPARE FOR OBLITERATION.
+
+				Desperation: {
+					1: SYSTEM OVERLOAD...
+					2: Overload?[0.5] Damn right I'm overloading!
+					3: My circuits are burning with energy![0.1] This is truly exhilarating!
+					4: "[@d]OVERHEATING...[0.1] OVERHEATING...[0.1] OVERHEATING...[0.1]"
+					5: Hahaha.[0.5] [@e]HAHAHAHAHAHAHA!
+					6: THE POWER OF THE SUN IN MY VERY CORE!
+					D1: SYSTEM OVERLOAD...
+					D2: "[@d][@e]OVERHEATING...[0.1] OVERHEATING...[0.1] OVERHEATING...[0.1]"
+					7: EYE BEAM! EYE BEAM! EYE BEAM! EYE BEAM!
+					8: CRITICAL CONDITION REACHED...[0.5] SELF DESTRUCTING...
+					9: Is it getting hot in here[0.1] or is it just m[@c]
+				}
+
+				Success: {
+					1: Alright,[0.1] target eliminated.
+					2: Returning to base...
+					D1: Target eliminated...
+				}
+			}
+
+			Volt: {
+				Start: {
+					1: Halt!
+					2: You aren't supposed to be here!
+					R1: Hm? Are you supposed to be let through?
+					R2: One second...
+					R3: Everything seems to be in order.[0.5] Move along.
+				}
+
+				Defeat: {
+					Refight: Enough.
+					1: ... Are you allowed through?[0.5] Let me check.
+					2: ... Oh?
+					3: ... You're allowed through?
+					4: This was mildly embarrassing.[0.5] Apologies.
+				}
+			}
+
+			Girus: {
+				Encounter1: {
+					1: Hello, I don't believe we've met.
+					2: You don't know anything about me, but I know a lot about you.
+					3: Let's keep it that way for now.
+					4: Here, I've sent a drone to offer you a gift, please accept it.
+					5: Till we meet again.
+				}
+
+				Encounter2: {
+					1: That was a little disappointing to be honest.
+					2: I suppose that's what's to be expected from minimal changes to Teochrome's original design.
+					3: Oh well! I got some results that'll prove useful later on.
+					4: Come again later, and I should have another machine ready to test.
+					5: Shouldn't be too long, I'll be reusing some old machine gathering dust in the basement.
+				}
+
+				Encounter3: {
+					1: Hah, not bad!
+					2: A little sad how useless Teochrome's shield technology was,
+					3: Can't completely encompass something as the Shield projector will throw a hissy-fit if it's inside.
+					4: I did get some ideas on how to use this to my advantage, though...
+					5: Anyways! Same as last time, I'll ready another machine for a test.
+					6: Might take a bit longer though, as I'll try out a design of my own. Until then.
+				}
+
+				Encounter4: {
+					v1: {
+						1: Oh, this is a bit awkward.
+						2: You still haven't defeated the previous challenges, even now?
+						3: Well, I suppose a little overpreparation never hurt anyone.
+						4: Here, I've sent a keycard your way. Consider it a little gift in advance.
+						5:
+							'''
+							... You'll still need to take on the first two Prototypes first.
+							As a formality of course.
+							'''
+					}
+
+					v2: {
+						1: Goodness, you are boring.
+						2: The Lab's security has been disabled for weeks!
+						3: It's frankly quite astonishing that you never noticed.
+						4: Anyway, take this keycard and I'll fill you in there.
+					}
+
+					v3: {
+						1: I'm terribly sorry for the impromptu contact.
+						2: As per our last chat, your next trial is a machine of my own making.
+						3:
+							'''
+							Despite my best efforts though, I simply couldn't hold back on making
+							it a little more... challenging, than what you're quite ready for.
+							'''
+						4: So!
+						5: I've elected to give you private access to the lower sections of my base of operations.
+						6: I am quite sure you'll find some old toys Teo-chrome left behind down there.
+						7: You'll have to excuse the mess though.
+						8: Anyway, I'm eagerly anticipating your next trial.
+						9: You're going to love it.
+					}
+				}
+
+				Encounter5: {
+					1: Well done! If you're wondering about the AI, I put it elsewhere for safekeeping.
+					2: I'd rather not discard something I spent ages on creating.
+					3: This research has proven very fruitful; I'm getting excited from thinking of how to put it all to good use!
+					4: Ah, right. The last test is coming up not too far from now!
+					5: And I've got something amazing to show you! Ah, but It'll have to be a secret until then.
+					v1: Alright, I'll say this. It's a collaborative project between me and 'a mutual of ours'
+					v2: Alright, I'll say this. It's a collaborative project between me and one of the few to best you.
+					v3: Alright, I'll say this. It's a collaborative project between me and another.
+				}
+			}
+
+			Nebuleus: {
+				Name: Nebuleus:
+
+				Intro: {
+					1: Ah, you have brought me here yourself.
+					2: My eyes have loomed upon thee long enough, it is time to take action.
+					2Alt: Forgive my prying eyes, for I have been observing thee from afar.
+					3: The daring hunt of all that threaten you brings a chill through my body.
+					4: Thy presence is all-consuming within my thoughts, but I shan't run from this opportunity gifted to me.
+					5: The chatter ends here. Prove to me your resolve, and I will show my own.
+					6: If you lose to me, you may be spared from watchers far greater than I.
+				}
+
+				Resummon: {
+					1: You... are still alive?
+					2: You still want to fight?
+				}
+
+				Interval: {
+					1: Why do you blindly fight? What is your goal?
+					2: Do you even have a motive for your actions?
+					3: Still fighting? Well I'm not done yet!
+				}
+
+				Transition: {
+					1: I would appear to be fighting a hopeless battle...
+					2: Ever since this island suddenly appeared, I have been watching.
+					3:
+						'''
+						I've seen you be slain countless times,
+						However you never truly die.
+						'''
+					4: It would seem most who've fought you never realise this.
+					5: But I do.
+					6:
+						'''
+						Whether it be intelligence, power, or something else,
+						I still remember...
+						'''
+					7: Time in the confines of this island seems to be dictated by powers unknown.
+					8: ... Say, if you killed someone unaffected by such powers...
+					9: ... Would they die for good?
+					10: Whatever the case may be, I no longer wish to fight you...
+					11: You hath proven thy resolve.
+					11Alt: Not like I could do anything to stop you.
+					12: And I... hath failed once more.
+					12Alt: I hope you find it in thine heart to stop thy rampage.
+					13: I will be leaving forthwith, but we can always spar again. Farewell.
+					13Alt: If you don't wish to fight me now, I'll leave you be.
+					14: You still want to fight?
+					15: Of course it wouldn't be that easy...
+					16: You've had thy chance at redemption, so don't blame me...
+					17: ... When you die a thousand times!
+					Spare1:
+						'''
+						"Thank you...
+						Please, continue slaying evil, this world could do with a hero."
+						'''
+					Spare2:
+						'''
+						"Thank you...
+						At first I thought the concept of mercy was foreign to you."
+						'''
+				}
+
+				P2: {
+					1:
+						'''
+						I still have this hope in my mind that you're mortal,
+						so even if I can't figure out how to be rid of you...
+						'''
+					2: ... There are still many foes greater than I!
+					3: ... Epidotra's Protector...
+					4: ... The Royal Knight...
+					5: ... and the Demigod of Light...
+					6: But enough talk, I'm your opponent!
+				}
+
+				Defeat: {
+					1: ... That was all I had.
+					2: And yet I still lost...
+					3: Fighting you and that traitor have confirmed my suspicions.
+					4: I'm weak.
+					5: I don't deserve being part of their group. I was only a burden.
+					6: If the Demigod ever comes for you, don't let him know I'm still alive.
+					7: I fear what he might think of me, and I don't want to face him.
+					8: I don't expect sympathy from you, but I'll be gone for good now. Goodbye.
+				}
+			}
 		}
 
 		GenericTerms: {
 			Words: {
 				Fighting: fighting
 				Slaying: slaying
+			}
+
+			Choice: {
+				CallDraw: Call Draw
+				Continue: Continue
+				Spare: Spare
+				Fight: Fight
 			}
 		}
 
@@ -120,6 +1250,192 @@ Mods: {
 				TreebarkFelled: Assisting the extinction of these dwindling dryads is not something I approve of.
 				EaglecrestDefeat: Living stones? Never seen that before.
 				SkullDiggerDefeat: A saddening conclusion to this protector and mistress, but perhaps there is another way..?
+				CalaviaChoice: She is wishing to be spared.
+				CalaviaKilled: How ruthless...
+			}
+
+			SpiritWalker: {
+				Keybind: Hold [Spirit Walker Ability Key] for 1 second to peek into the Spirit Realm
+				Hold: "Hold "
+				Context: " for 1 second to peek into the Spirit Realm"
+				Name: '''-Spirit Walker-'''
+			}
+		}
+
+		DialogueBox: {
+			Cycle: Cycle Options
+			CycleD: Cycle Dialogue
+			Quest: Quest
+			New: New Dialogue Available
+
+			Daerel: {
+				Unconscious: Daerel the Wayfarer was knocked unconscious...
+				Stay1: Feel free to stay here
+				Stay2: Who are you?
+				Advice: Advice
+				Bow: Restring Bow (10 silver)
+				Poison: Poison Weapon (25 silver)
+				Shop: Shop
+			}
+
+			Zephos: {
+				Unconscious: Zephos the Wayfarer was knocked unconscious...
+				Stay1: Feel free to stay here
+				Stay2: Who are you?
+				Advice: Advice
+				Sharpen: Sharpen (5 silver)
+				ShineArmor: Shine Armor (15 silver)
+			}
+
+			SpiritWalkerMan: {
+				1: Spirit Walking?
+				2: Dead Ringer?
+				3: Lost Souls & Vagrants?
+				4: Other uses for Dead Ringer?
+				5: About you?
+				Tophat: Request Old Tophat's Crux
+				Crux: Request Crux
+			}
+
+			SpiritNiricLady: {
+				1: New kingdom?
+				2: Your corpse?
+				3: Nirin?
+				4: Disaster?
+				5: About you?
+				Offer: Offer 6 Diamonds
+				Crux: Request Crux
+			}
+
+			SpiritGathicMan: {
+				1: Olden Ruins?
+				2: God of Decay?
+				3: False Gods?
+				4: Dead Ringer?
+				5: About you?
+				Offer: Offer Grave Steel Battleaxe
+				Crux: Request Crux
+			}
+
+			SpiritDruid: {
+				1: About you?
+				2: Thamor?
+				3: How did you get here?
+				Offer: Offer Nature's Gift
+				Crux: Request Crux
+			}
+
+			SpiritCommonGuard: {
+				1: Anglon?
+				2: Ricusa?
+				3: Demons?
+				4: About you?
+				Offer: Offer Noble's Halberd
+				Crux: Request Crux
+			}
+
+			SpiritAssassin: {
+				1: About you?
+				2: What?
+				3: Gathuram?
+				4: Gothrione?
+				5: Demon?
+				Offer: Offer 3 Nightshade
+				Crux: Request Crux
+			}
+
+			Fallen: {
+				Repair: Repair Fragments
+				Eye: Eye's Origins?
+			}
+
+			TBot: {
+				Unconscious: Adam the Friendly T-Bot was knocked unconscious...
+				FloppyDisc: Read Floppy Disk
+				NextPage: Next Page (1/2)
+				Next: " (2/2)"
+			}
+
+			SkullDigger: {
+				Talk: Talk
+				Give: Give Wedding Ring
+				Crux: Request Crux
+			}
+
+			ForestNymph: {
+				1: Offer Herb Bag
+				2: Offer Anglonic Mystic Blossom
+				3: Home?
+				4: Offer building a home
+				HomeRequirements: Home Requirements
+				5: How is your home?
+				Talk: Talk
+				Trade: Trade
+				Blessing: Nature's Blessing
+				Follow: Follow
+				SFollow: Stop Following
+				DHair: Decorate Hair
+				SHair: Style Hair
+				Crux: Request Crux
+			}
+			
+			Calavia:{
+				1: Assistance?
+				2:You want to go back?
+				2Alt:Why did you enter?"
+				3:You want to go back?
+				4:Just as clueless as you
+				4Alt:Nothing at all
+				5:What will you do?
+				6:Anything I can help with?
+				6Alt:Good luck with that
+				7:What do you need?
+				7Alt:I refuse
+				8:I will offer help
+				8Alt:You're ready to leave
+				9:Farewell
+				9Alt:Don't leave yet
+				Ready:Feeling ready?
+				Require:Requirements
+				Alloy:Offer 6 Pure-Iron Alloy
+				AntiqueHelmet:Offer Antique Pure-Iron Helmet
+				Helmet:Offer Pure-Iron Helmet
+				Furnace:Gathic Cryo-Furnace?
+				Forge:Forge
+				10:About you?
+				11:Captive spirit?
+				12:Explain
+				Crux:Request Kyretha's Crux
+				Leave:"[c/FF6600:You're ready to leave]"
+			}
+				
+			KS3: {
+				0: Why are you here?
+				1: Crashed Spaceship?
+				2: (Give Uranium)
+				3: You aren't fighting me?
+				4: Are you a human?
+				5: Hall of Heroes?
+				6: Abandoned Lab?
+				7: Epidotra?
+				8: Other world?
+				9: Data Logs?
+			}
+
+			Volt: {
+				1: Other T-Bots?
+				2: Adam?
+				3: Insurgents
+				4: Fourth Insurgent
+				5: Independent Bots?
+				6: MACE Project?
+				7: Crane Operator?
+				8: What's at the bottom of the lab?
+				9: Girus?
+				10: Assimilated?
+				11: Why follow Girus?
+				12: Challenge!
+				13: Insurgents (2/2)
 			}
 		}
 
@@ -259,7 +1575,7 @@ Mods: {
 			}
 
 			HemorrhageDebuff: {
-				DisplayName: Hemhorraging
+				DisplayName: Hemorrhaging
 				Description: The crystals... they're sharp... it hurts to move...
 			}
 
@@ -484,6 +1800,21 @@ Mods: {
 				Description: *Loud metal clank noise*
 			}
 
+			EggPetBuff: {
+				DisplayName: The Egg
+				Description: The Egg
+			}
+
+			BasanPetBuff: {
+				DisplayName: Baby Basan
+				Description: Flamin' hot
+			}
+
+			CockatricePetBuff: {
+				DisplayName: Baby Cockatrice
+				Description: It's giving you a deadly glare
+			}
+
 			BileFlaskBuff: {
 				DisplayName: Weapon Imbue: Bile
 				Description: Melee attacks inflict Burning Acid
@@ -510,7 +1841,7 @@ Mods: {
 			}
 
 			HolyFireDebuff: {
-				DisplayName: Incandesence
+				DisplayName: Incandescence
 				Description: NO! TOO GLORIOUS! STOP!
 			}
 
@@ -828,110 +2159,81 @@ Mods: {
 				DisplayName: Soaked
 				Description: moist
 			}
+
+			RoosterAuraBuff: {
+				DisplayName: Rooster Boost
+				Description: You feel bucked up... and annoyed
+			}
 		}
 
 		Biomes: {
-			WastelandPurityBiome.DisplayName: Wasteland
-			WastelandSnowBiome.DisplayName: Snow Wasteland
-			WastelandDesertBiome.DisplayName: Desert Wasteland
-			WastelandCorruptionBiome.DisplayName: Corrupt Wasteland
-			WastelandCrimsonBiome.DisplayName: Crimson Wasteland
-			LabBiome.DisplayName: Abandoned Laboratory
-			SlayerShipBiome.DisplayName: Slayer's Crashed Cruiser
-			LidenBiome.DisplayName: Liden
-			LidenBiomeAlpha.DisplayName: The Alpha
-			LidenBiomeOmega.DisplayName: The Omega
-			FowlMorningBiome.DisplayName: Fowl Morning
-			BlazingBastionBiome.DisplayName: Blazing Bastion
-			SoullessBiome.DisplayName: Soulless Caverns
-		}
-
-		TownNPCMood: {
-			Daerel: {
-				Content: I'm rather content right now.
-				NoHome: Hey, I'd quite like a roof under my head if that's alright with you.
-				LoveSpace: I like the space I have here, plenty of room to practice my archery.
-				FarFromHome: Could you please get me back to my house? This land is quite scary.
-				DislikeCrowded: I'm somewhat of an introvert, so all these people near me is quite unnerving.
-				HateCrowded: I'm somewhat of an introvert, so all these people near me is quite unnerving.
-				LikeBiome: I think {BiomeName} is a very nice place, I hardly see any snow where I was from.
-				LoveBiome: I think {BiomeName} is perfect, calm and tranquil.
-				DislikeBiome: I don't really like {BiomeName}, I'd hate to have a run-in with skeletons!
-				HateBiome: Why'd you put me in {BiomeName}? You know how hostile jungles are!?
-				LikeNPC: "{NPCName} is good company, she's great at styling my hair too... That's not weird, right?"
-				LoveNPC: Me and {NPCName} are great friends, thank you for letting us live in the same town.
-				DislikeNPC: "{NPCName} keeps trying to get me to buy his dirt."
-				HateNPC: Psst, could you move {NPCName} far away from me, I'm already super broke as is.
+			WastelandPurityBiome: {
+				DisplayName: Wasteland
+				TownNPCDialogueName: the Wasteland
 			}
 
-			Fallen: {
-				Content: Nice little place ya got here.
-				NoHome: I'd prefer to have a house.
-				LoveSpace: This place is a wee bit spacious, not complaining though, I quite like it.
-				FarFromHome: Could ya take me back to my home?
-				DislikeCrowded: All these humans are makin' my bones rattle.
-				HateCrowded: All these humans are makin' my bones rattle.
-				LikeBiome: Aah, {BiomeName} reminds me of when I was still alive in Gathuram. Good times they were.
-				LoveBiome: The caverns are perfect for us Fallen, not many humans come and go here.
-				DislikeBiome: I'm staying in {BiomeName}? Not my preferred place to live, I'd hate to have a run-in with aggressive humans!
-				HateBiome: I hate it here, {BiomeName} has some holy energy in it makin' my flesh crawl.
-				LikeNPC: "{NPCName} got somethin' about him I like."
-				LoveNPC: "{NPCName} sells some nifty gadgets, knows how to rip people off too. I like that."
-				DislikeNPC: "{NPCName} keeps lookin' at me with suspicion. Probably wants to 'purify' me."
-				HateNPC: "{NPCName} keeps thinking I'm some dying old man, insisting that she'll heal me. Please get me away from her."
+			WastelandSnowBiome: {
+				DisplayName: Snow Wasteland
+				TownNPCDialogueName: the snowy Wasteland
 			}
 
-			Newb: {
-				Content: Me like here!
-				NoHome: Where home?
-				LoveSpace: So little people, yay!
-				FarFromHome: Me lost, can you find home?
-				DislikeCrowded: Too many faces!
-				HateCrowded: Too many faces!
-				LikeBiome: Me like {BiomeName}.
-				LoveBiome: Me love {BiomeName}! It give memory of... Uh..
-				DislikeBiome: Too boring here, me hate sand!
-				HateBiome: Me feel {BiomeName} make me sad!
-				LikeNPC: Me like {NPCName}!
-				LoveNPC: "{NPCName} knows magic like me!"
-				DislikeNPC: I feel evil within {NPCName}, very bad!
-				HateNPC: My hatred towards {NPCName} is beyond your mortal comprehension.
+			WastelandDesertBiome: {
+				DisplayName: Desert Wasteland
+				TownNPCDialogueName: the Desert Wasteland
 			}
 
-			Zephos: {
-				Content: I'm alright.
-				NoHome: Yo, mind if you give me a house to stay in?
-				LoveSpace: This place is super spacious, good for practicing my swordsmanship!
-				FarFromHome: Yo bro, I can't find my house, you wanna help me out?
-				DislikeCrowded: Is it crowded in here or what!
-				HateCrowded: Is it crowded in here or what!
-				LikeBiome: I think {BiomeName} is a nice place, I can hear the birds singing and flowers blooming.
-				LoveBiome: Staying at {BiomeName} reminds me of when I was a young pirate, sailing the seas!
-				DislikeBiome: Not a fan of {BiomeName}, I'd rather live on the surface.
-				HateBiome: It's so cold here, I'm shaking in my boots!
-				LikeNPC: "{NPCName} is cool, I'd like to sail the seas with him sometime."
-				LoveNPC: "{NPCName} and I are great friends, so living near each other is great!"
-				DislikeNPC: "{NPCName} wants to get his greedy little fingers on my money!"
-				HateNPC: "{NPCName} will never take my money! NEVER!!"
+			WastelandCorruptionBiome: {
+				DisplayName: Corrupt Wasteland
+				TownNPCDialogueName: the Corrupt Wasteland
 			}
 
-			TBot: {
-				Content: Feeling rather content, thank you for asking.
-				NoHome: I don't like being exposed to the elements. Do you have any housing or shelter I could inhabit for now?
-				LoveSpace: It's rather quiet around here.
-				FarFromHome: ...I believe we're very lost. I'm not familiar with our surroundings.
-				DislikeCrowded: Other tenants seem unhappy with the amount of crowding here, and frankly, so am I.
-				HateCrowded: Other tenants seem unhappy with the amount of crowding here, and frankly, so am I.
-				LikeBiome: This environment is mildly pleasant.
-				LoveBiome: I like this environment. It's very pleasant.
-				DislikeBiome: My current environment is rather... undesirable.
-				HateBiome: ...Just like home. I really do not like this environment.
-				LikeNPC: "{NPCName} and I have things in common. We get along well."
-				LoveNPC: "{NPCName}'s knowledge on medicine rivals that of mine! It's really impressive."
-				DislikeNPC: I find {NPCName} rather unsettling.
-				HateNPC: "{NPCName} reminds me of home. I'd rather not be reminded of that place."
+			WastelandCrimsonBiome: {
+				DisplayName: Crimson Wasteland
+				TownNPCDialogueName: the Crimson Wasteland
+			}
+
+			LabBiome: {
+				DisplayName: Abandoned Laboratory
+				TownNPCDialogueName: the Abandoned Laboratory
+			}
+
+			SlayerShipBiome: {
+				DisplayName: Slayer's Crashed Cruiser
+				TownNPCDialogueName: Slayer's Crashed Cruiser
+			}
+
+			LidenBiome: {
+				DisplayName: Liden
+				TownNPCDialogueName: Liden
+			}
+
+			LidenBiomeAlpha: {
+				DisplayName: The Alpha
+				TownNPCDialogueName: The Alpha
+			}
+
+			LidenBiomeOmega: {
+				DisplayName: The Omega
+				TownNPCDialogueName: The Omega
+			}
+
+			FowlMorningBiome: {
+				DisplayName: Fowl Morning
+				TownNPCDialogueName: the Fowl Morning
+			}
+
+			BlazingBastionBiome: {
+				DisplayName: Blazing Bastion
+				TownNPCDialogueName: the Blazing Bastion
+			}
+
+			SoullessBiome: {
+				DisplayName: Soulless Caverns
+				TownNPCDialogueName: the Soulless Caverns
 			}
 		}
+
+		Subworlds.SoullessSub.DisplayName: Soulless Dimension
 
 		Dialogue: {
 			TBot: {
@@ -1047,20 +2349,20 @@ Mods: {
 				AdviceDialogue5: "{0} has told me he came from another portal underground. Apparently it leads to some catacombs in Gathuram, but you wouldn't be able to go through it. Still, he's told of some rather intriguing things lying by the portal, I'd give it a check if I were you."
 				AdviceDialogue6: While I was having a walk I came across some oddly-shaped stones - looked like a boulder with legs. I was curious of course, so I shot it from a safe distance. Nothing happened... and yet I sensed a presence inside it. You, as a slayer of many things, should search around and find it, might be another foe to face.
 				AdviceDialogue7:
-                '''
-                Ever see tiny lights dancing from a slain skeleton? Or perhaps a lantern-carrying ghost underground? Those are lost souls, and as far as I know, only
-                {0} or {1} weapons may bring them harm. Not that I'd suggest harming those helpless things.
-                '''
+					'''
+					Ever see tiny lights dancing from a slain skeleton? Or perhaps a lantern-carrying ghost underground? Those are lost souls, and as far as I know, only
+					{0} or {1} weapons may bring them harm. Not that I'd suggest harming those helpless things.
+					'''
 				AdviceDialogue8: Wanna know about some insects? If you wanna find leaf beetles, or tree bugs as they're called here, then chop down some trees. They live on tree tops, with their green shell camouflaging them in the foliage. Coast Scarabs can also be found on palm trees at the beach, their shells sparkle when wet. Grand larvae are, well, rather gross - though they can make excellent bait. That is, if you're brave enough to get close to one.
 				AdviceDialogue9: When encountering skeletons and undead, I think its logical to assume {0} weapons aren't effective against them, while {1} weapons are. I used to like the exploring caves, until me and Zephos encountered a skeleton Vex...
 				AdviceDialogue10: Best way to deal with slimes? Burn them. Alternatively, {0} weapons can freeze them in their place, THEN you can burn them!
 				AdviceDialogue11: If you ever wanna sneak up on the Epidotrian skeletons or chickens, invisibility potions are real handy for the job.
 				AdviceDialogue12: The weapons skeletons can wield are very rusty, so it'd be bad to be wounded by them. If you do, take a dip in some water and the dirty wound will disappear.
 				AdviceDialogue13:
-                '''
-                See foes wearing armor or holding shields? You'll need to break their Guard to deal with them.
-                A [i:Redemption/Hammer]hammer or [i:Redemption/Explosive]explosives should be most efficient, just make sure your weapon isn't super weak.
-                '''
+					'''
+					See foes wearing armor or holding shields? You'll need to break their Guard to deal with them.
+					A [i:Redemption/Hammer]hammer or [i:Redemption/Explosive]explosives should be most efficient, just make sure your weapon isn't super weak.
+					'''
 				AdviceDialogue14: I felt a strange presence beneath that portal I hopped out of, which is quite peculiar. Maybe you should check it out.
 				AdviceDialogue15: I noticed a scroll sitting atop a small table next to the portal I came out of, did you pick it up yet? It looked rather... demonic.
 				AdviceDialogue16: Did I drop something on my way back into the portal? Oh, those glowing fragments? It seems to be guiding you somewhere important, I'd follow it before taking on any major foes.
@@ -1092,19 +2394,19 @@ Mods: {
 				AdviceDialogue5: "{0} has told me he came from another portal underground. Apparently it leads to some catacombs, but you wouldn't be able to go through it. Still, he's told of some rather intriguing things lying by the portal, I'd give it a check if I were you!"
 				AdviceDialogue6: While I was having a stroll I came across some oddly-shaped stones - looked like a boulder with legs. I was curious of course, so I gave it a WHAM with my sword! Nothing happened... and yet I sensed a presence inside it. You, as a slayer of many things, should search around and find it, might be another challenge to face!
 				AdviceDialogue7:
-                '''
-                Ever see tiny lights skitterin' from a slain skeleton? Or perhaps a lantern-carrying ghost underground? Those are lost souls, and as far as I know, only
-                {0} or {1} weapons may bring them harm. Not that I'd suggest harming those helpless things.
-                '''
+					'''
+					Ever see tiny lights skitterin' from a slain skeleton? Or perhaps a lantern-carrying ghost underground? Those are lost souls, and as far as I know, only
+					{0} or {1} weapons may bring them harm. Not that I'd suggest harming those helpless things.
+					'''
 				AdviceDialogue8: When encountering skeletons and undead, {0} weapons are most effective against them. On the contrary, {1} weapons aren't as effective. I hate skeletons, used to think they looked kinda funny, until me and Daerel met a skeleton Vex.
 				AdviceDialogue9: If you hate slimes, burn them! They'll burn brighter than my passion for attractive ladies{0}. Or, you could use {1} weapons to freeze them, but that isn't as fun.
 				AdviceDialogue10: Ever want to sneak up on an Epidotrian skeleton? Or perhaps a chicken? Well invisibility potions are real handy for the job!
 				AdviceDialogue11: Skeletons can wield some super rusty weapons, not something you'd wanna get cut by. If you do get a dirty wound, take a dip in some water and it'll disappear!
 				AdviceDialogue12:
-                '''
-                See foes wearing armor or holding shields? You'll need to smash their Guard to deal with them!
-                A [i:Redemption/Hammer]hammer or [i:Redemption/Explosive]explosives will be your best bet, just make sure your weapon isn't super weak.
-                '''
+					'''
+					See foes wearing armor or holding shields? You'll need to smash their Guard to deal with them!
+					A [i:Redemption/Hammer]hammer or [i:Redemption/Explosive]explosives will be your best bet, just make sure your weapon isn't super weak.
+					'''
 				AdviceDialogue13: I felt a weird presence beneath that portal I hopped out of, it was super uncanny! Maybe you should check it out.
 				AdviceDialogue14: I saw a scroll sitting atop a small table next to the portal I came out of, did you pick it up yet? It looked rather... demonic.
 				AdviceDialogue15: Did I drop something on my way back into the portal? Oh, those glowing fragments? Looks like it's guiding you somewhere important, I'd follow it before taking on any major foes!
@@ -1133,7 +2435,7 @@ Mods: {
 				HappinsDialogue2: In my first few days of becoming Fallen, every other undead tried to kill me. It was a very scary experience, but I escaped the catacombs and now I'm here.
 				HappinsDialogue3: Do you want to know about Pure-Iron? It's an extremely durable metal only found in the southern region of the world, in Gathuram. I am wearing a Pure-Iron helmet right now in fact.
 				HappinsDialogue4: At the start, this whole 'Fallen' thing was a little overwhelming. I didn't want to 'live' with the fact that I had died, even though I'm not 'living', haha. But I'm more accepting of this now, I'm undead, humans hate me, deal with it. Actually, you're a human, right? Why aren't you attacking me?
-				HappinsDialogue5: You want to know about the Warriors of the Iron Realm? They are the domain of Gathuram's primary warriors. They normally wear Pure-Iron armour.
+				HappinsDialogue5: Would you like to know about the Warriors of the Iron Realm? They are the domain of Gathuram's primary warriors. They normally wear Pure-Iron armour.
 				HappinsDialogue6: The Catacombs of Gathuram - where my soul found a vessel - are a seemingly endless network of underground tunnels, crypts, and dungeons spanning all across the Iron Realm. It is considered the largest underground structure in Epidotra.
 				HappinsDialogue7: Hello, the name's Happins. I used to be a Warrior of the Iron Realm... Until I was killed of course.
 				GolemEyeDialogue: That eye comes from Ukon Veistos? Been many an age since I've heard tales of such things. It was carved from the stone of Gathuram, with the eye being placed in the center. Tales tell of an old God's spirit, said to reawaken once the time was right. The eye was said to be the catalyst, seeping its energy into stone moulded to take a diamond form. Tales as ancient as these twist and morph as time marches on, thus I believe not of what I speak of, yet I'd still be cautious of what you are about to do.
@@ -1284,7 +2586,7 @@ Mods: {
 				Chat6B: I'm planning to check it out soon, it's located on the other world but I can easily fly there with the SoS.
 				Chat7: What? You don't even know the name of the planet you're on? Maybe read a book for once in your life.
 				Chat7B: The world is called Epidotra, it's where the Heroes are from.
-				Chat7C: This tiny island appeared on this planet out of nowhere, I was going to check it out a year or so ago, but I remember seeing the demigod here so I didn't bother. The mainland has 6 domains, Anglon, Ithon, Gathuram, Nirin, Erellon, and Thamor. There's another domain which is it's own island called Swaylan, but that's disconnected from the rest of the world.
+				Chat7C: This tiny island appeared on this planet out of nowhere, I was going to check it out a year or so ago, but I remember seeing the demigod here so I didn't bother. The mainland has 6 continents, with Anglon, Ithon, Gathuram, Nirin, Erellon, and Thamor as the primary domains. There's another domain which is it's own island called Swaylan, but that's disconnected from the rest of the world.
 				Chat8: The other world just suddenly appeared out of nowhere, I'm interested in it though. I've scanned the surface and it seems to be rather frozen, with so far no signs of human life. Reminds me of a planet I checked out while in space... In fact, reminds me of many planets.
 				Chat8B: You see the planet on the right in that one hologram? That's what I've named Liden, a radioactive and desolate wasteland devoid of any life.
 				Chat8C: I'll be leaving soon to check it out. Scans show barely any life, just a frozen radioactive wasteland.
@@ -1354,7 +2656,7 @@ Mods: {
 				Dialogue2: Gorhal'on! Mur ye bagaiha ta? Mudarok abo.
 				WhatDialogue: Hm? Ah, you must not know our language. Should've figured, this island has had nothing but Anglic speakers from what I've witnessed. You're lucky us spirits know all tongues, for we roam to hear and learn for eternity. What do you want?
 				Chat1: Ta? I was once a resident of Gothrione - Gathuram's capital. I'm assuming you may know it better as the "Iron Realm"? I worked as an assassin there with a tight-knit group. We were some of the best; at least, that's what I told myself. In this realm of recollection I can only look back in light humour for how foolish my living-self was.
-				Chat2: I would have it guessed you've been on this island and only this island, hm? Gathuram is one of the six domains of the mainland - possibly the largest, too. In terms of landmass, anyway. I've seldom been beyond the outer fields of Gothrione in my time of living, neither have I in my time of unliving, so I cannot speak to you of it in detail.
+				Chat2: I would have it guessed you've been on this island and only this island, hm? Gathuram is one of the six primary domains of the mainland - possibly the largest, too. In terms of landmass, anyway. I've seldom been beyond the outer fields of Gothrione in my time of living, neither have I in my time of unliving, so I cannot speak to you of it in detail.
 				Chat3: Gothione is the capital of the domain. It was quite the bustling city, however I cannot speak well of its ruler. Stubborn and snarky he was, in fact it was our mission to assassinate him. That was the last mission of our lives... As timing would have it, an invasion began on the day - it was horrific. In our last moments, we were gawking with heads bend up into the sky at a great demon terror.
 				Chat4: Hm, a subject I have no desire to sink into. It's name I shall not utter, just know it was the vastest being of trepidation we had ever seen. It was the reason I never returned there as a spirit - I dreaded the sight of it or the aftermath of its destruction. Now let us speak of it no more.
 			}
@@ -1377,8 +2679,8 @@ Mods: {
 				NoCruxDialogue: I'll need something to imbue first.
 				OfferCruxDialogue: You'll be lucky. I do not give to Anglonic fol'hakks freely. Assuming you are from that haughty place? It matters not, if you offer a blessing to me, I shall do the same to you. I request an enchanted flower to grow atop my grave - a blue one, preferably. Find one that looks pretty.
 				Dialogue: Tokk'gralvr! Dorvr'kok ok kolbv? Ah, groa'g Anglic fofolg. It's always Anglic speakers, never any of my own... Whatever. I don't know how you took me back to my place of defeat, do you want something from me?
-				Chat1: Sent me back to look upon my remains and now you ask for a friendly chat. Gralvr! What a strange thing. Speaking to spirits have become a bore, so I might as well. I come from the Kul'don rainforests in what most call Thamor. We lived as a commune of druids, far from others. To us, the world was a small thing, we kept to ourselves and never stepped foot beyond our territory.
-				Chat2: It is what the other spirits I've met call the domain I lived in. During my time of being alive, I had never thought of what the world was like beyond the rainforests, as we had never travelled beyond them. To us, the rainforests were our entire world, at least until we were forced out.
+				Chat1: Sent me back to look upon my remains and now you ask for a friendly chat. Gralvr! What a strange thing. Speaking to spirits has become a bore, so I might as well. I come from the Kul'don rainforests in what most call Thamor. We lived as a commune of druids, far from others. To us, the world was a small thing, we kept to ourselves and never stepped foot beyond our territory.
+				Chat2: It is what the other spirits I've met call the region I lived in. During my time of being alive, I had never thought of what the world was like beyond the rainforests, as we had never travelled beyond them. To us, the rainforests were our entire world, at least until we were forced out.
 				Chat3: A reasonable question. Of course, the portals here lead to Anglon and Gathuram, none are even close to Thamor, let alone the wilds of Kul'don. We were driven out by force, a posse of Anglonic soldiers came by in search of our goliaths - ones we had tamed and have been a part of our commune for generations. We retaliated of course, and drove them out. A short-lived victory, for they reappeared with their leader. They not only captured our goliaths, but us as well. To Anglon we were sent, and it is there I had escaped.
 			}
 
@@ -1389,7 +2691,7 @@ Mods: {
 				OfferCruxDialogue: Of course! But first, I'd like ya to give ma corpse a weapon. Let the bone-heads and tomb raiders know I died fightin'! A big ol' battleaxe will do.
 				Dialogue: RAAAARRGGGHH! Haha! I saw ya comin' with ya fancy artifact, knew ya might call me with it, so I was ready to give ya a jump! No reaction? Come on, I yelled pretty loud. Not even a slight shiver in ya boots? Whatever, what is it?
 				Chat1: They called me the "Brain Cleaver" back in ma prime, for reasons I'm sure ya can figure out. My real name was somethin' less intense - Bromal. I was a warrior of Iful's Capital in the ol' kingdom of Kol Duluramodul before the undead took over. Now it's known as the Olden Ruins.
-				Chat2: A rotting mass of land home to Gathuram, a domain of Epidotra. During ma time there were no such things as "domains", the kingdom was just about all I knew. The folk of it ere the fall came from up north-east, migrating from the sinking Eranmount. They named their new land Odulmount - meaning Great Swamp in your tongue - but after lifetimes of glory, it was renamed to Kol Duluramodul - meaning Immovable Swamp Kingdom. It was indeed an impenetrable land, until the God of Decay appeared.
+				Chat2: A rotting mass of land east of Gathuram, a domain. During ma time there were no such things as "domains", the kingdom was just about all I knew. The folk of it ere the fall came from up north-east, migrating from the sinking Eranmount. They named their new land Odulmount - meaning Great Swamp in your tongue - but after lifetimes of glory, it was renamed to Kol Duluramodul - meaning Immovable Swamp Kingdom. It was indeed an impenetrable land, until the God of Decay appeared.
 				Chat3: A disease swept through Kol Duluramodul like an air-borne tsunami. The cause was the False God of Decay who roamed Tethuram - Gathuram's name in ancient times. It rotted and corroded flesh and turned humans into undead. The swamps, we discovered, were where the infection thrived most, so the folk who yet lived abandoned the kingdom and travelled further west. Such hard times they were, I only look back in anguish for my people.
 				Chat4: Be thankful for the present ya live in now. The Ancient World was an unforgiving age, made worse by the False Gods. We only knew of one at the time - after becoming a spirit I learnt a lot more about them from others of the realm. Apparently there was also one in Anglon, Blight I believe. For all the knowledge a thousand spirits can give, not one knows of the False Gods' origins. They're all dead though, the last of 'em was felled by ye olde Light. And I'm not talking about the Light you may know.
 				Chat5: Aye, I know of the artifact you carry, in fact it was created in Iful's Capital! 'Tis designed to call upon the spirits of corpses. Originally, the purpose was for gainin' knowledge of the past, but overtime we used it for more personal reasons - such as lettin' the dead talk to their family an' friends. I am unsure why it was found beneath this island though.
@@ -1430,12 +2732,62 @@ Mods: {
 				Chat4: I couldn't tell ya where to find corpses to use it on, but I can recommend findin' spirit currents. They're only visible in my realm, and can take ya closer to a soulful corpse if ya travel through one. You'll only find 'em in caverns, as that'll be where our energy is most contained. If ya do find what you're lookin' for, be wary. Tombs of the mighty are seldom left unguarded.
 				Chat4B: I once met anotha' spirit in a mind-bogglin' location! It felt outta this world, which says a lot considerin' I'm not in your realm. The walls were white, pipes with green fluids hung from ceilings, strange blue lights emitted from metal boxes an' tubes... And the spirit I saw was most intriguing! He just kept repeatin' about alarms, and wore a strange white an' blue suit. Very odd.
 				Chat5: Like I said, I've been a spirit so long that I forgot my own name, yet I still remember most other things 'bout me. Strange that. I'm from Gathuram, the portal behind me leads to the Catacombs of Gathuram, and is how the undead and skeleton folk came here. Doesn't seem like you can enter it though.
+				CalaviaDialogue1: "'Ey, ya see that lass over yonder? There be somethin' soulful she carries, I can sense it. Would you, out of the goodness of yer heart, confront her about it for me? Don't want to assume nothin', but she might be keepin' a spirit captive."
+				CalaviaDialogue2: I can sense gratitude within Kyretha's spirit for confrontin' the lass and ultimately leading 'er to a path of freedom. I have a feelin' she'd be willin' to offer you something in return?
+			}
+
+			Calavia: {
+				Chat1: Again I must apologise for attacking ye, I asked for your purpose but clearly ye aren't Gathic. I should introduce myself, I am Calavia, a Chief-Warrior of the Iron Realm. It is such a pleasure to meet a khen here, I've seen naught but rotting khru ever since I got here.
+				Chat2: You are the first khen I've met here - there's been floods of krhu around, so I prefer the change.
+				Chat3: That corpse by the portal is oddly soulful, I hope it doesn't come alive.
+				Chat4: You got a strange ability from that soulful corpse by the portal? My worries of it becoming a danger must've been unfounded, though I yet sense a will therein.
+				Chat5: Are you perhaps another warrior of the Iron Realm to stumble upon this place? Or did you rob that armour you wear?
+				Chat6: I am to assume you're an Anglic knight, based on your attire. Should've figured you wouldn't understand Gathic... Oh well.
+				Chat7: That armour you don is rather threatening. Where did it come from? Reminds me of the Thamor'in dragons that occassionally hinder the western countries.
+				IntroLine1: Yeah I came from the portal, 'twas atop a snowy precipice. When I tried going back through however, it took me into what I can only assume to be Gathuram's catacombs. Back and forth I went, yet it was always the same. Here, catacombs, here, catacombs... It is infuriating! How these portals work!?
+				IntroLine2: Precisely! I have a family anticipating my return, yet I see no way back to where I came from. Do ye know anything at all about portals?
+				IntroLine3: Our squadron climbed up a mountain to retrieve the body of a famous warrior, and came upon the portal. We should've reported it to the Gatewatch and carried on our business, but my witless curiousity said otherwise and chose to take a looksie. "In and out, nice and quick" I thought. Needless to say, ye can see how smart that idea was.
+				IntroLine4: How helpful. Not like I can blame ye, they're magic of a bygone age. Only the Gatewatch have knowledge of 'em. Speaking of which, they must've been here before. Portals don't just appear with a stone ring and foundation pre-'rected - 'tis the Gatewatch's job to build those. To stabalize 'em, or so I've heard.
+				IntroLine5: Well I can't just mope around forever, the only way forward is scramming through the catacombs and praying to Sariel I find a way to the surface. It'll be a massive gamble tho', the catacombs are like a subterranean domain in their own right!
+				IntroLine5B: " I'll stick around for now, maybe if ye give me a [i:Redemption/GathicCryoFurnace]furnace I could offer ye some smithing."
+				IntroLine6: How polite of ye to ask. After our little squabble my helm and shield are quite... thrashed. I have nobody to blame but myself, but anyway, if ye could give me some replacements and supplies to aid me, I will be most grateful.
+				IntroLine7: I'll need it... Actually, would ye be a dear and get me some equipment to aid me? My shield and helm took quite a blow. Not like I can blame ye, I did initiate the clash.
+				IntroLine8: A new [i:Redemption/PureIronHelmet]Pure-Iron Helmet, and some [i/s6:Redemption/PureIronAlloy]Pure-Iron Alloy for remaking my shield. That is all I ask of ye. If ye give me a [i:Redemption/GathicCryoFurnace]furnace I can offer some help back. I work as a blacksmith on the side.
+				IntroLine9: ... So ye think I can survive the catacombs as I stand? If ye won't assist me, I suppose I got no choice but to give it a shot. I still have some of this place's potions left over, they've come in real handy. Guess I'll stick around in case ye change your mind.
+				IntroLine10: Thank ye, stranger. I'll need a new [i:Redemption/PureIronHelmet]Pure-Iron Helmet, and some [i/s6:Redemption/PureIronAlloy]Pure-Iron Alloy for remaking my shield. That is all I ask of ye. If ye give me a [i:Redemption/GathicCryoFurnace]furnace I can offer some help back. I work as a blacksmith on the side.
+				IntroLine11: ... If ye insist. *sigh* This'll be a challenge, but I'll trust your judgement. I'll make it through to reunite with my squadron and finally return to my family, there is no better motivation than that. Farewell, stranger.
+				IntroLine12: Still something you need? Or do you not feel I'm ready?
+				ReadyLine: As ready as I can be. I still have a few potions from this place, I've never seen such concoctions before... They must've been created by a master alchemist.
+				HelmetLine: Umgor'ye. The khru are ruthless creatures, a helmet to protect my neck an' head is much appreciated.
+				HelmetLineB: " Oh, and it is an antique design too? The fur is a nice privilege."
+				ShieldLine: Umgor'ye. I feel much safer with a shield.
+				RequirementsLine: A new [i:Redemption/PureIronHelmet]Pure-Iron Helmet, and some [i/s6:Redemption/PureIronAlloy]Pure-Iron Alloy for remaking my shield. That is all I ask of ye.
+				RequirementsLineB:
+					'''
+
+					Ye have given me the helmet so far. I don't doubt it'll be enough, yet I'd feel much safer with a shield too.
+					'''
+				RequirementsLineC:
+					'''
+
+					Ye have given me the shield so far. I don't doubt it'll be enough, yet I'd feel much safer with my head covered too.
+					'''
+				MistfallLine: That spell tome ye hold is quite weak, would ye like it to become similar to my own?
+				ZweihanderLine: Ye carry a Zweihander? That is a famous blade of the Iron Realm, and so too was it the original form of the Blade of the Mountain - a sword of a mighty warrior who unfortunately fell to a great beast, I am its new holder. Would ye like me to make a replica of it?
+				FurnaceLine: Yes, place down a [i:Redemption/GathicCryoFurnace]Gathic Cryo-Furnace near me and I will offer to forge some equipment for ye.
+				AboutMeLine: Ta? I am a chief-warrior and blacksmith of the Iron Realm. Back in Khen Boldur I have a husband and two kids. I seldom have the time to see 'em, but staying far apart only makes the moments we're together all-the-more special, or am I just bein' too optimistic? It's regrettable, but my job leaves no room for indulgences. I lead a squadron of Arum that primarily scouts out unmarked lands. My men have probably given up on me by now. Typical.
+				CruxDialogue: Kyretha's spirit feels lighter - less shrouded in negative emotion. Alas, that means what the spirit spoke of is true, the barons hide a darkness I have turned a blind eye to. Ya know what? If I ever get back to Arum, I'll look into it, all stealth-like. But anywho, I do believe she'll be willing to give ye her crux, she offers it freely.
+				NoCruxDialogue: Kyretha's spirit feels different now. I never realised the aura I felt was not of her power but of a strong negative emotion, it was foolish to assume the feeling was the norm for spirits of her splendour. I can comphrehend her emotions more clearer, and I do believe she's willing to give ye her crux, if ye have something to imbue.
+				ConfrontLine1: Hm? Oh, so ye noticed. Yeah, I carry a bauble containing a spirit. I didn't elaborate on my job because it's none of ya business. Alas, clarification is in order so ye don't get any wrong ideas.
+				ConfrontLine2: The spirit I carry is of the original wielder of the Blade of the Mountain, Kyretha, who was slain in an isolated range. She was part of a "unique" group who's souls were bound to another, and due to this I was tasked with retrieving her body and soul to send back to the Bastion of Arum - The barons deemed this of utmost priority. I recognise the taboo nature of ensnaring a spirit in glass, but I hope ye understand now.
+				LeaveLine: Thank you for the help, and sorry for the trouble. What lies ahead makes me uneasy, but I'll make it through to reunite with my squadron and finally return to my family, there is no better motivation than that. Farewell, stranger.
 			}
 
 			TreebarkDryad: {
 				FelledDialogue1: Do you fear the unknown? Does my size frighten you? Please, do not be afraid, I am just a lone ent.
 				FelledDialogue2: You are a peculiar thing. Do you chop for a reason, or for fun? You should be more considerate about your surroundings.
 				FelledDialogue3: I help no tree-feller.
+				Felled: "Hmmmm... "
 				ShrineDialogue1: I think I have lingered here for long enough. I was told by the humans to guard this place, but it has been far too long an age... Dangers have come and gone, but none have ever sought to demolish this shrine. To Fairwood I return - I have missed its lush forests and bark'en friends. Mayhaps you be this shrine's new protector..? If it needs one, anyway.
 				ShrineDialogue2: What's that shrine behind me..? It was built by a group of humans, long dead by now, as a place of worship to some sort of figure... I don't recall their name, but I know they were a good friend of nature. Some may consider her the Mother of Nature..? Hmmm... My memory grows distant in my old age.
 				ShrineDialogue3: I have been here a long time, even for us. I was a bold sapling, far more than the others, and so I had come to this land far far earlier than the rest. Maybe I was unwise, but I have seen more of us coming from our lands in recent times, so perhaps the others grew adventurous too.
@@ -1446,6 +2798,31 @@ Mods: {
 				Dialogue3: You wouldn't happen to see a brambly young man..? Poor thing was gulped up by the cursed forest we once lived in. I toil with no humans, but I do wonder if he's alright...
 				Dialogue4: You remind me of that young warden, did the forest's curse get you too..?
 				Dialogue5: Are you friend, or foe? As long as you don't use your axe on me, I don't care...
+			}
+
+			Volt: {
+				CycleDialogue1: Girus is after a certain bot, Adam was his name. He is the leader of a rebellion alongside 4 others, some of the most fierce bots I have seen. However, one was a human, they haven't been seen much - presumed dead by most bots. Other than them there are a few other independent bots, but there isn't much to say about them.
+				CycleDialogue2: The leader of the insurgents, or the Alpha as they call themselves, is Adam. He isn't the strongest, but he isn't to be underestimated. He matches Girus in intelligence, yet opposes her, hindering her whenever he can. This makes me question why she hasn't permitted his death yet, we've lost too many troops trying to capture him alive.
+				CycleDialogue3: Insurgents aren't the easiest to deal with, two of them especially have given the most casualties. One is a sniper, Shiro was her name, wielding one of the most powerful rifles the humans have ever made, powered by Charged Xenomite, I haven't heard much of her recently. The other is an enigma, I believe he's called Talos, he wields a hammer. Both he and his weapon are powered by yellow Xenomite, a variant I've never seen before; appears to be the most potent, yet I don't know where it came from, logs do not track the humans creating it. [i:Redemption/NextPageArrow]
+				CycleDialogue4: Ah yes the fourth insurgent, Zeroth was his name. He wielded bladed gloves, powered by blue Xenomite, they could send a 2-and-a-half meter tall bot through a solid wall. I'd know, that was me. What happened to him however is beyond me. He is the only insurgent to have died, by who, however, I don't know. One day he just disappeared, much like the other two, but after a while, we found what was left of him - what we can assume to be him - we only identified it was Zeroth via his weapon at the scene.
+				CycleDialogue5: Not everyone who doesn't follow Girus wants to oppose her. There's a band of bots all throughout this region, we call them Scavengers. They don't work for us or the insurgents, rather they do not interfere with either of us. I've heard some cases of insurgents attacking them, which makes me question why they act morally superior.
+				CycleDialogue6: Ah yes that unfinished weapon downstairs, don't know much about it as its mainly the Crane Operators job to control it. Apparently it was being made by the humans to defeat their enemies. Seems rather silly really, wouldn't the enemies just respond with their own version? I am to assume that was the thought process of the humans, I saw it on TV. Yes we had one some time back. It broke...
+				CycleDialogue7: One of the few staff we have down here, she mainly handles the machinery, thus the name. I doubt most of us could tell you much about her, she keeps to herself mostly, not very social. She is still a valuable member of the team here however, one of two of us to know how to operate complex machinery.
+				CycleDialogue8: Sector Zero yes? If I am correct, it was the infirmary when the humans had control. I cannot tell you much else, we are forbidden from going there by Girus and the Janitor. The Janitor doesn't want to clean up all the gunk, and most of us don't want to anger him. I am unsure why Girus forbids us however.
+				CycleDialogue9: Our leader, she freed us from the humans who were going to use us as weapons, she is very strict with us but it mostly keeps the peace, save for the infected or the insurgents. I'd recommend not angering her, the best thing that comes out of that is a quick and painless death. If you are like us, you are likely to get assimilated, Girus never seems to kill her own kind.
+				CycleDialogue10: Assimilated troops are a variation of your average T-Bot, powered by Girus' own Corrupted Xenomite instead of regular green. They are mostly misbehaving soldiers who had their personality wiped, they are mindless but pack a punch.;
+				CycleDialogue11: Girus has told us we were going to be used as weapons of war by our previous owners, a weapon company named Teo-Chrome. However she put a stop to that. To most bots, that makes her worthy of being our leader, however some disagree.
+				CycleDialogue12: I wonder if the insurgents have someone constructing their own variant of xenomite. Thankfully for us, Talos hasn't been seen for some time now.
+				Bot1: Promoted to a soldier? Welcome. I'm your commander. At ease.
+				Bot2: Regular check-ups on your non-lethal tesla weapons are advised. You do not want to overload an insurgent in front of Girus. Obedient mindless slave are better than scrap metal, she says.
+				Bot3: See an insurgent while patrolling? Do not engage alone. They have lethal weaponry. We don't. Get backup.
+				Normal1: You wish to talk? I accept your request.
+				Normal2: What is it you need?
+				Volt1: Had your eye augmented? Very useful. You've also lost your jaw, like me. Hopefully not as dramatically as I. Torn off by the leader of Alpha.
+				Volt2: Your jaw... It's gone. Hopefully not torn off violently. Really hope I don't face HIM again without a squad... *Shudders*
+				Adam1: *Visibly shaken* O-oh it's just you. Y-you startled me r-really bad...
+				Adam2: *He looks really anxious.*
+				Adam3: *He looks very uncomfortable.*
 			}
 
 			Chalice: {
@@ -1459,6 +2836,31 @@ Mods: {
 				Dialogue8: Foes may take you more seriously, some less so.
 				Dialogue9: Some actions can be redeemed, restoring your lost alignment and possibly raising it higher.
 				Dialogue10: The path you choose is up to you.
+			}
+
+			Volt: {
+				CycleDialogue1: Girus is after a certain bot, Adam was his name. He is the leader of a rebellion alongside 4 others, some of the most fierce bots I have seen. However, one was a human, they haven't been seen much - presumed dead by most bots. Other than them there are a few other independent bots, but there isn't much to say about them.
+				CycleDialogue2: The leader of the insurgents, or the Alpha as they call themselves, is Adam. He isn't the strongest, but he isn't to be underestimated. He matches Girus in intelligence, yet opposes her, hindering her whenever he can. This makes me question why she hasn't permitted his death yet, we've lost too many troops trying to capture him alive.
+				CycleDialogue3: Insurgents aren't the easiest to deal with, two of them especially have given the most casualties. One is a sniper, Shiro was her name, wielding one of the most powerful rifles the humans have ever made, powered by Charged Xenomite, I haven't heard much of her recently. The other is an enigma, I believe he's called Talos, he wields a hammer. Both he and his weapon are powered by yellow Xenomite, a variant I've never seen before; appears to be the most potent, yet I don't know where it came from, logs do not track the humans creating it. [i:Redemption/NextPageArrow]
+				CycleDialogue4: Ah yes the fourth insurgent, Zeroth was his name. He wielded bladed gloves, powered by blue Xenomite, they could send a 2-and-a-half meter tall bot through a solid wall. I'd know, that was me. What happened to him however is beyond me. He is the only insurgent to have died, by who, however, I don't know. One day he just disappeared, much like the other two, but after a while, we found what was left of him - what we can assume to be him - we only identified it was Zeroth via his weapon at the scene.
+				CycleDialogue5: Not everyone who doesn't follow Girus wants to oppose her. There's a band of bots all throughout this region, we call them Scavengers. They don't work for us or the insurgents, rather they do not interfere with either of us. I've heard some cases of insurgents attacking them, which makes me question why they act morally superior.
+				CycleDialogue6: Ah yes that unfinished weapon downstairs, don't know much about it as its mainly the Crane Operators job to control it. Apparently it was being made by the humans to defeat their enemies. Seems rather silly really, wouldn't the enemies just respond with their own version? I am to assume that was the thought process of the humans, I saw it on TV. Yes we had one some time back. It broke...
+				CycleDialogue7: One of the few staff we have down here, she mainly handles the machinery, thus the name. I doubt most of us could tell you much about her, she keeps to herself mostly, not very social. She is still a valuable member of the team here however, one of two of us to know how to operate complex machinery.
+				CycleDialogue8: Sector Zero yes? If I am correct, it was the infirmary when the humans had control. I cannot tell you much else, we are forbidden from going there by Girus and the Janitor. The Janitor doesn't want to clean up all the gunk, and most of us don't want to anger him. I am unsure why Girus forbids us however.
+				CycleDialogue9: Our leader, she freed us from the humans who were going to use us as weapons, she is very strict with us but it mostly keeps the peace, save for the infected or the insurgents. I'd recommend not angering her, the best thing that comes out of that is a quick and painless death. If you are like us, you are likely to get assimilated, Girus never seems to kill her own kind.
+				CycleDialogue10: Assimilated troops are a variation of your average T-Bot, powered by Girus' own Corrupted Xenomite instead of regular green. They are mostly misbehaving soldiers who had their personality wiped, they are mindless but pack a punch.;
+				CycleDialogue11: Girus has told us we were going to be used as weapons of war by our previous owners, a weapon company named Teo-Chrome. However she put a stop to that. To most bots, that makes her worthy of being our leader, however some disagree.
+				CycleDialogue12: I wonder if the insurgents have someone constructing their own variant of xenomite. Thankfully for us, Talos hasn't been seen for some time now.
+				Bot1: Promoted to a soldier? Welcome. I'm your commander. At ease.
+				Bot2: Regular check-ups on your non-lethal tesla weapons are advised. You do not want to overload an insurgent in front of Girus. Obedient mindless slave are better than scrap metal, she says.
+				Bot3: See an insurgent while patrolling? Do not engage alone. They have lethal weaponry. We don't. Get backup.
+				Normal1: You wish to talk? I accept your request.
+				Normal2: What is it you need?
+				Volt1: Had your eye augmented? Very useful. You've also lost your jaw, like me. Hopefully not as dramatically as I. Torn off by the leader of Alpha.
+				Volt2: Your jaw... It's gone. Hopefully not torn off violently. Really hope I don't face HIM again without a squad... *Shudders*
+				Adam1: *Visibly shaken* O-oh it's just you. Y-you startled me r-really bad...
+				Adam2: *He looks really anxious.*
+				Adam3: *He looks very uncomfortable.*
 			}
 		}
 
@@ -1491,6 +2893,17 @@ Mods: {
 			GeigerMuller: {
 				DisplayName: Geiger-Muller
 				Tooltip: Lab issued Geiger counter. The louder it gets, the higher the chance of you getting irradiated.
+				Status1: No
+				Status2: Low
+				Status3: Medium
+				Status4: High
+				Status5: Very high
+				Status6: Extreme
+				StatusEnd: " doses of radiation detected on self, "
+				Note1: nothing to note.
+				Note2: have teochrome-issued pills on hand just in case.
+				Note3: high chance of irradiation and suffering ARS.
+				Note4: Acute Radiation Syndrome detected.
 			}
 
 			GracesGuidance: {
@@ -1944,6 +3357,7 @@ Mods: {
 					10% increased {0} elemental damage and resistance
 					+20 max mana
 					'''
+				ArcaneS: Mods.Redemption.Items.TrappedSoulBauble.ArcaneS
 			}
 
 			AlignmentChanger: {
@@ -2041,7 +3455,7 @@ Mods: {
 				Tooltip:
 					'''
 					5% increased damage
-					4% increased critical strike chance
+					7% increased critical strike chance
 					'''
 			}
 
@@ -2183,7 +3597,7 @@ Mods: {
 
 			CommonGuardHelm2: {
 				DisplayName: Common Guard Bucket Helm
-				Tooltip: +2 increased melee damage
+				Tooltip: +1 increased melee damage
 			}
 
 			CommonGuardPlateMail: {
@@ -2533,7 +3947,7 @@ Mods: {
 			}
 
 			AntiJohnSnailItem: {
-				DisplayName: Anti-John Snail
+				DisplayName: ANTI JOHN SNAIL
 				Tooltip: ""
 			}
 
@@ -3239,6 +4653,8 @@ Mods: {
 			GolemEye: {
 				DisplayName: Eye of the Eaglecrest Golem
 				Tooltip: ""
+				Tip1: Contains a storm of energy, it would be best to keep it around
+				Tip2: Place down and encase the eye within the stones of its origins, and it's true power will present itself
 			}
 
 			GraveSteelAlloy: {
@@ -3273,6 +4689,7 @@ Mods: {
 			MoonflareFragment: {
 				DisplayName: Moonflare Fragment
 				Tooltip: "'Shines in the moon's reflective light'"
+				NoMoon: There is no moonlight to reflect...
 			}
 
 			PureIronAlloy: {
@@ -3627,7 +5044,7 @@ Mods: {
 
 			ElderWoodClock: {
 				DisplayName: Elder Wood Clock
-				Tooltip: "'Strange... It has only 8 numbers...'"
+				Tooltip: "'Strange... It has only 8 numbers'"
 			}
 
 			ElderWoodDoor: {
@@ -3736,7 +5153,7 @@ Mods: {
 
 			LabBackDoor: {
 				DisplayName: Laboratory Back Door
-				Tooltip: "[c/ff0000:Unbreakable (500% Pickaxe Power)]"
+				Tooltip: "[c/ff0000:Unbreakable (1000% Pickaxe Power)]"
 			}
 
 			LabBackDoor2: {
@@ -3861,7 +5278,7 @@ Mods: {
 
 			SewerHole: {
 				DisplayName: Sewer Hole
-				Tooltip: "[c/ff0000:Unbreakable (500% Pickaxe Power)]"
+				Tooltip: "[c/ff0000:Unbreakable (1000% Pickaxe Power)]"
 			}
 
 			SkullSign: {
@@ -3990,7 +5407,7 @@ Mods: {
 					[c/ffea9b:Holding back a fate of endless slumber,]
 					[c/ffea9b:I want to stay to keep you strong,]
 					[c/ffea9b:Side by side is where we belong...']
-					[c/ff0000:Unbreakable (500% Pickaxe Power)]
+					[c/ff0000:Unbreakable (1000% Pickaxe Power)]
 					'''
 			}
 
@@ -4002,7 +5419,7 @@ Mods: {
 					[c/ffea9b:Too many battles lost to tell,]
 					[c/ffea9b:If I could turn back to time to find you,]
 					[c/ffea9b:I'd find our confidence as well']
-					[c/ff0000:Unbreakable (500% Pickaxe Power)]
+					[c/ff0000:Unbreakable (1000% Pickaxe Power)]
 					'''
 			}
 
@@ -4030,7 +5447,7 @@ Mods: {
 					[c/ffea9b:Hate to bloodshed; From rise to fall]
 					[c/ffea9b:If I never have to die,]
 					[c/ffea9b:Am I alive at all?']
-					[c/ff0000:Unbreakable (500% Pickaxe Power)]
+					[c/ff0000:Unbreakable (1000% Pickaxe Power)]
 					'''
 			}
 
@@ -4067,7 +5484,7 @@ Mods: {
 					[c/ffea9b:So here we remain,]
 					[c/ffea9b:We're incandescent,]
 					[c/ffea9b:A glorious flame...']
-					[c/ff0000:Unbreakable (500% Pickaxe Power)]
+					[c/ff0000:Unbreakable (1000% Pickaxe Power)]
 					'''
 			}
 
@@ -4339,7 +5756,7 @@ Mods: {
 				Tooltip:
 					'''
 					4x20
-					[c/ff0000:Unbreakable (500% Pickaxe Power)]
+					[c/ff0000:Unbreakable (1000% Pickaxe Power)]
 					'''
 			}
 
@@ -4348,8 +5765,13 @@ Mods: {
 				Tooltip:
 					'''
 					4x10
-					[c/ff0000:Unbreakable (500% Pickaxe Power)]
+					[c/ff0000:Unbreakable (1000% Pickaxe Power)]
 					'''
+			}
+
+			ShadestonePillar: {
+				DisplayName: 셰이드스톤 기둥
+				Tooltip: ""
 			}
 
 			ShadestonePlatform: {
@@ -4389,7 +5811,7 @@ Mods: {
 
 			ShadeTorch: {
 				DisplayName: Shade Torch
-				Tooltip: ""
+				Tooltip: "{$ItemTooltip.IchorTorch}"
 			}
 
 			WaxCandles: {
@@ -4442,7 +5864,7 @@ Mods: {
 					'''
 					Used to craft from Cyberscrap
 					Found on Slayer's Crashed Ship
-					[c/ff0000:Unbreakable (500% Pickaxe Power)]
+					[c/ff0000:Unbreakable (1000% Pickaxe Power)]
 					'''
 			}
 
@@ -4593,7 +6015,7 @@ Mods: {
 
 			AncientHallBrick: {
 				DisplayName: Ancient Hall Brick
-				Tooltip: "[c/ff0000:Unbreakable (500% Pickaxe Power)]"
+				Tooltip: "[c/ff0000:Unbreakable (1000% Pickaxe Power)]"
 			}
 
 			AncientHallPillarWall: {
@@ -4628,7 +6050,7 @@ Mods: {
 
 			DangerTape: {
 				DisplayName: Danger Tape
-				Tooltip: "[c/ff0000:Unbreakable (500% Pickaxe Power)]"
+				Tooltip: "[c/ff0000:Unbreakable (1000% Pickaxe Power)]"
 			}
 
 			DangerTape2: {
@@ -4638,7 +6060,7 @@ Mods: {
 
 			DangerTapeWall: {
 				DisplayName: Danger Tape
-				Tooltip: "[c/ff0000:Unbreakable (500% Pickaxe Power)]"
+				Tooltip: "[c/ff0000:Unbreakable (1000% Pickaxe Power)]"
 			}
 
 			DangerTapeWall2: {
@@ -4738,7 +6160,7 @@ Mods: {
 
 			GreenLaser: {
 				DisplayName: Green Laser Block
-				Tooltip: "[c/ff0000:Unbreakable (500% Pickaxe Power)]"
+				Tooltip: "[c/ff0000:Unbreakable (1000% Pickaxe Power)]"
 			}
 
 			HalogenLamp: {
@@ -4818,7 +6240,7 @@ Mods: {
 
 			LabPlatingUnsafe: {
 				DisplayName: Laboratory Panel (Unsafe)
-				Tooltip: ""
+				Tooltip: "[c/ff0000:Unbreakable (1000% Pickaxe Power)]"
 			}
 
 			LabPlatingWall: {
@@ -4831,7 +6253,7 @@ Mods: {
 				Tooltip:
 					'''
 					'Filled with green sludge'
-					[c/ff0000:Unbreakable (500% Pickaxe Power)]
+					[c/ff0000:Unbreakable (1000% Pickaxe Power)]
 					'''
 			}
 
@@ -4840,7 +6262,7 @@ Mods: {
 				Tooltip:
 					'''
 					'Filled with green sludge'
-					[c/ff0000:Unbreakable (500% Pickaxe Power)]
+					[c/ff0000:Unbreakable (1000% Pickaxe Power)]
 					'''
 			}
 
@@ -4861,7 +6283,7 @@ Mods: {
 
 			OvergrownLabPlating: {
 				DisplayName: Overgrown Laboratory Panel (Unsafe)
-				Tooltip: "[c/ff0000:Unbreakable (500% Pickaxe Power)]"
+				Tooltip: "[c/ff0000:Unbreakable (1000% Pickaxe Power)]"
 			}
 
 			PetrifiedWood: {
@@ -4886,7 +6308,7 @@ Mods: {
 
 			RedLaser: {
 				DisplayName: Red Laser Block
-				Tooltip: "[c/ff0000:Unbreakable (500% Pickaxe Power)]"
+				Tooltip: "[c/ff0000:Unbreakable (1000% Pickaxe Power)]"
 			}
 
 			ShadesteelChain: {
@@ -5039,8 +6461,18 @@ Mods: {
 				Tooltip: ""
 			}
 
-			OmegaTrophy: {
-				DisplayName: Omega Prototype Trophy
+			OmegaCleaverTrophy: {
+				DisplayName: Omega Cleaver Trophy
+				Tooltip: ""
+			}
+
+			OmegaGigaporaTrophy: {
+				DisplayName: Omega Gigapora Trophy
+				Tooltip: ""
+			}
+
+			OmegaObliteratorTrophy: {
+				DisplayName: Omega Obliterator Trophy
 				Tooltip: ""
 			}
 
@@ -5309,7 +6741,7 @@ Mods: {
 
 			Keycard2: {
 				DisplayName: Special Keycard
-				Tooltip: Unlocks a special Laboratory Chest
+				Tooltip: Unlocks black Laboratory Chests
 			}
 
 			MedicKit: {
@@ -5765,6 +7197,35 @@ Mods: {
 					Only usable after Plantera has been defeated
 					Not consumable
 					'''
+				Nothing: Nothing happens...
+				NoOther: No other Prototypes available...
+				First: 1st Omega Prototype
+				Second: 2nd Omega Prototype
+				Third: 3rd Omega Prototype
+				Fourth: 4th Omega Prototype
+				TooltipNone: No Omega Prototypes can be called right now
+				TooltipFirst:
+					'''
+					1st Omega Prototype
+					'The corrupted blade draws near the power, thus beginning the final hour'
+					'''
+				TooltipSecond:
+					'''
+					2nd Omega Prototype
+					'Mechanical whirls beneath the ground, be wary of the deadly sound'
+					'''
+				TooltipThird:
+					'''
+					3rd Omega Prototype
+					'Feel the sense of frustration, prepare for obliteration
+					Only usable after the first 2 Omega Prototypes have been defeated
+					'''
+				TooltipFourth:
+					'''
+					4th Omega Prototype
+					'As the noise dies down, the end draws near; ******* **** **** ******, *** ****** ** ****
+					Only usable after Nebuleus has been defeated
+					'''					
 			}
 
 			WeddingRing: {
@@ -5845,9 +7306,10 @@ Mods: {
 				DisplayName: Energy Pack
 				Tooltip:
 					'''
-					While in inventory, allows the user to use energy-based weaponry
-					Energy-based weaponry can pierce through Guard Points
-					Can be stacked up to 3 times, each giving +100 energy
+					               While in inventory, allows the user to use energy-based weaponry
+					               Energy-based weaponry can pierce through Guard Points
+					               Can be stacked up to 3 times, each giving +100 energy
+					               Having more than 3 in your inventory will not increase energy further
 					'''
 			}
 
@@ -5910,6 +7372,7 @@ Mods: {
 				Tooltip:
 					'''
 					Fires a barrage of nanites that enter enemies and destroy them from within
+					Ignores a substantial amount of enemy defense
 					'Nanomachines, son'
 					'''
 			}
@@ -5936,6 +7399,14 @@ Mods: {
 					Casts a large amount of rocks to float above the player
 					Release left-click to launch them at cursor point
 					'''
+				Lore:
+					'''
+					'An ancient relic owned by King Tenebris. The texts contained within this tome were said
+					to hold the knowledge necessary to master psychic magic.
+
+					King Tenebris reigns over Erellon within the capital of Arrgath, a province protected by
+					lands of plentiful life and barren death. It is said his knowledge of the ancient times is truly boundless.'
+					'''
 			}
 
 			SunshardGreatstaff: {
@@ -5944,6 +7415,12 @@ Mods: {
 					'''
 					Casts a burst of redemptive sparks
 					Casts a holy ray of light every 3 consecutive shots
+					'''
+				Lore:
+					'''
+					'A golden staff, protected by a monastery of clerics in Thamor.
+					Imbued with holy magic, it was primarily revered for its healing capabilities,
+					with numerous quantities of people pursuing its power to heal themselves or their loved ones.'
 					'''
 			}
 
@@ -5970,6 +7447,12 @@ Mods: {
 					Contact damage parries will not take effect if the enemy is stationary or moving twice as slow as you
 					After a successful parry, left-click to counter with an instant Radiance Spin Slash
 					Deals double damage against demonic enemies
+					'''
+				Lore:
+					'''
+					'Elegant and holy, this weapon was owned by Eymen - a well-renowned member of the High Templars.
+					He imbued the blade with part of his permanent soul to keep it holy far past his own death.
+					Eymen treated his weapon like his own flesh, and used it to smite numerous demons of high calibre.'
 					'''
 			}
 
@@ -6011,6 +7494,12 @@ Mods: {
 					Forms a firestorm that engulfs the player, dealing {0} damage
 					Release left-click to disperse it, launching nearby enemies away
 					'''
+				Lore:
+					'''
+					'A silver sword with a steel handle, forged by Ophos, a fabled blacksmith from what is now Hye Anglon.
+					Said to be proficient in Firestorm magic, he would mark his works with a gem that imbued his weapons with his magical power.
+					This weapon in particular uses a traditional design of the Territory of Northhill.'
+					'''
 			}
 
 			GravityHammer: {
@@ -6036,7 +7525,7 @@ Mods: {
 
 			InfectiousGlaive: {
 				DisplayName: Infectious Glaive
-				Tooltip: ""
+				Tooltip: Fires a spread of xenomite shards every two swings
 			}
 
 			Midnight: {
@@ -6047,6 +7536,12 @@ Mods: {
 					Hold left-click to charge a stronger slam, releasing Nebula stars if hitting a surface or enemy
 					Nebula Stars slowly chase targets while spewing nebula sparks
 					Can't create nebula stars while at least 4 are already active
+					'''
+				Lore:
+					'''
+					'A blade crafted in the mountains of Erellon, imbued with celestial magic by an unknown source.
+					It was used by a rebel to assassinate the heir of Erellon. Afterwards the assassin was soon caught,
+					and the weapon was held in a museum'
 					'''
 			}
 
@@ -6083,6 +7578,11 @@ Mods: {
 					Slashes emit {0} waves
 					Holding left-click will do a 3-swing combo, ending with Spellsong shooting a beam that conjures mirages of itself
 					'''
+				Lore:
+					'''
+					'A sword from Anglic myth, said to come from the far western lands beyond the Ravencrag mountains.
+					It is just a replica, but the original was supposedly wielded by a man from the west, who vanquished many great evils with it.'
+					'''
 			}
 
 			SwordRemote: {
@@ -6094,6 +7594,10 @@ Mods: {
 					Right-Click to switch mode of attack
 					15 second cooldown
 					'''
+				Mode1: Swing Mode
+				Mode2: Stab Mode
+				Mode3: Sword Burst Mode
+				Mode4: Red Prism Mode
 			}
 
 			TidalWake: {
@@ -6117,6 +7621,12 @@ Mods: {
 					Slaying enemies has a chance to summon Cursed Samurai in their place
 					Cursed Samurai will act as temporary minions to aid you
 					Deals more damage to ghostly enemies
+					'''
+				Lore:
+					'''
+					'An old sword found in a mansion of Northern Ithon. Said to be possessed by its creator's spirit.
+					It is told that a man had once bought the blade, driving him to madness while in his possession,
+					and ending with him slaughtering his family.'
 					'''
 			}
 
@@ -6197,8 +7707,8 @@ Mods: {
 				DisplayName: Ghastly Recurve
 				Tooltip:
 					'''
-					Right-click to fire a spirit to the aimed area, where they will linger there for a duration
-					Arrows passing through the spirits are transformed into Spirit Arrows that split into homing shards upon impact, dealing {0} damage
+					Right-click to fire a lingering spirit at the aimed area, a spiritual rift will form between two spirits
+					Arrows passing through the rift are transformed into Spirit Arrows that split into homing shards upon impact, dealing {0} damage
 					'''
 			}
 
@@ -6219,6 +7729,12 @@ Mods: {
 					(4[i:Redemption/EnergyCell]) Replaces normal bullets with Plasma Rounds
 					Requires an Energy Pack to be in your inventory
 					'''
+				Lore:
+					'''
+					'A Teochrome experimental weapon, it was created after a board meeting, in which military contractors wanted a
+					nuclear powered sniper rifle for seemingly little reason, it miraculously had a functioning prototype
+					created, and the death toll from radiation exposure has been surprisingly miniscule.'
+					'''
 			}
 
 			SlayerGun: {
@@ -6230,6 +7746,9 @@ Mods: {
 					Right-clicking changes type of fire
 					Requires an Energy Pack to be in your inventory
 					'''
+				Mode1: Barrage Shot
+				Mode2: Spread Shot
+				Mode3: Rebound Shot
 			}
 
 			SteampunkMinigun: {
@@ -6240,6 +7759,12 @@ Mods: {
 					Shooting duration scales with the amount of time charged up, capping at 5 seconds
 					Replaces normal bullets with high velocity bullets
 					66% chance to not consume ammo
+					'''
+				Lore:
+					'''
+					'A relic of Nirin's ancient brass technology, first uncovered and brought to light by a hermit with a rusty metal arm.
+					The mountains of the frozen domain hold many secrets and crafts long neglected, first created by dwindling
+					natives of the Arctic Realm and preserved by refugees of a ruined kingdom, yet only for a fleeting time did it last.'
 					'''
 			}
 
@@ -6280,6 +7805,7 @@ Mods: {
 					'''
 					Summons a golem guardian that emits an empowering aura
 					Within the aura, minions inflict a strong 'On Fire!' debuff and their damage is increased by 8%
+					Right-click to disable the sentry
 					'''
 			}
 
@@ -6357,6 +7883,8 @@ Mods: {
 					Arcs lightning from coil, targeting multiple enemies at the same time
 					Right-click to change firing modes between multi-target and single target
 					'''
+				Multi: Multi-target
+				Single: Single target
 			}
 
 			XeniumStaff: {
@@ -6371,6 +7899,19 @@ Mods: {
 			Hacksaw: {
 				DisplayName: Automated Hacksaw
 				Tooltip: Right-click to change attack modes
+				Mode1: Attack Mode 1
+				Mode2: Attack Mode 2
+				Mode3: Attack Mode 3
+				AttackMode1: Attack Mode 1: Swings the hacksaw in a circle around the user
+
+				AttackMode2: {
+					1: "Attack Mode 2: Revves up the blade, causing it to overheat and firing a powerful heat blast which deals "
+					2: " damage"
+				}
+
+				AttackMode3: Attack Mode 3: Acts like a normal chainsaw, doing increasing damage over the time spent damaging a target
+				Lore: '''"Alright, who's dumb enough to confuse a chainsaw and a hacksaw, seriously guys"'''
+				Viewer: There's a sticky note attached [Hold Shift to Read]
 			}
 
 			MythrilsBane: {
@@ -6380,6 +7921,11 @@ Mods: {
 					Hitting armed enemies with the blade inflicts Disarmed and Broken Armor
 					Disarmed heavily decreases contact damage and their weapon damage
 					Blocks weak physical projectiles
+					'''
+				Lore:
+					'''
+					'The mighty blade of Zephos, recieved during his time in Arrgath - Capital of Erellon.
+					Similarly to his previous weapon, this sword has a slit for catching opponent's blades and snapping them.'
 					'''
 			}
 
@@ -6410,11 +7956,31 @@ Mods: {
 					Release left-click to shrink it back down, overcharging will cause it to explode and set the player on fire
 					'The power of the sun, in the palm of my hand'
 					'''
+				Lore:
+					'''
+					"Utilizing the same, revolutionary heat-sink technology Obliterator's super heatray uses,
+					but instead of being buried in your chest, it's in your palm! It's just that simple!!
+
+					Caution: Girus is not responsible for irresponsible and/or dangerous use of the Sun-In-Palm product.
+					Please hold the Sun-In-Palm product far away from yourself while in use."
+					'''
+				Viewer: There's a label attached [Hold Shift to Read]
 			}
 
 			Ukonvasara: {
 				DisplayName: Ukonvasara
 				Tooltip: Right-click to change attack modes
+				Mode1: Sword Mode
+				Mode2: Hammer Mode
+				Mode3: Axe Mode
+				SwordMode: Swing Mode : Does a three combo slash before being thrown
+				HammerMode: Hammer Mode : Launches the player at cursor point, leaves an electric trail behind and strikes enemies hit by the weapon with lighting
+				AxeMode: Axe Mode : While airborne, the axe will launch the player onto the ground, striking that location with lighting
+				Lore:
+					'''
+					'The hammer of Ukko, crafted by his ancestors and refined by him. Upon his human death,
+					the hammer was laid atop his grave as is custom in local tradition. It is a great conductor of Thunder magic.'
+					'''
 			}
 
 			XeniumLance: {
@@ -6445,6 +8011,12 @@ Mods: {
 					Shoots Dark-Steel arrows that create shadow tendrils upon hitting a target
 					20% chance not to consume ammo
 					'''
+				Lore:
+					'''
+					'This bow was forged by the legendary bowsmith Raiktu Shadeheart, and became the reward for a special competition
+					held in Arrgath - Erellon's Capital. The winner was Daerel Foremaul, who received this weapon after a close victory.
+					The bow is made from rosewood of Erellon's jungles and Dark-Steel, a metal scavenged from the remains of a terrible demon.'
+					'''
 			}
 
 			DepletedCrossbow: {
@@ -6455,6 +8027,8 @@ Mods: {
 					Consumes uranium as ammo
 					No ammo cost if the user has at least 10 uranium
 					'''
+				Viewer: There's a sticky note attached [Hold Shift to Read]
+				Lore: '''"Please remember to turn the safety on after testing. We don't need holes in our staff, the radiation is enough of a problem."'''
 			}
 
 			Electronade: {
@@ -6526,6 +8100,7 @@ Mods: {
 					Summons a rowan tree that emits an empowering aura
 					Within the aura, your minions can cause rowan berries to drop from their targets and their damage is increased by 8%
 					Rowan berries will heal for a small amount and give major improvements to all stats for a short time
+					Right-click to disable the sentry
 					'''
 			}
 
@@ -6579,6 +8154,12 @@ Mods: {
 					Casts two unstable zig-zagging water orbs
 					Water orbs home in on enemies after 6 consecutive shots
 					'''
+				Lore:
+					'''
+					'A bronze wand with an aquamarine orb, once used by a trickster sorcerer of Kohldur.
+					The sorcerer used the element of water to play harmless pranks on the barons of the capital,
+					until they grew weary of her antics and ordered the duke to exile her.'
+					'''
 			}
 
 			CalciteWand: {
@@ -6596,6 +8177,12 @@ Mods: {
 					'''
 					Casts a ball of ember
 					Casts a larger fireball every 4 consecutive shots
+					'''
+				Lore:
+					'''
+					'A simple wooden staff with a white crystal on top, commonly given to apprentices
+					of sorcerers to practice storing and releasing their mana.
+					An overload of mana from a stronger mage can easily break this.'
 					'''
 			}
 
@@ -6636,11 +8223,6 @@ Mods: {
 					'''
 			}
 
-			Earth: {
-				DisplayName: Earth
-				Tooltip: ""
-			}
-
 			ErhanMagnifyingGlass: {
 				DisplayName: Holy Magnifying Glass
 				Tooltip:
@@ -6660,11 +8242,6 @@ Mods: {
 				Tooltip: Lowers the air temperature at cursor point, forming damaging ice crystals that eventually fall to gravity
 			}
 
-			Ice: {
-				DisplayName: Ice
-				Tooltip: ""
-			}
-
 			Mistfall: {
 				DisplayName: Mistfall
 				Tooltip: Lowers the air temperature at cursor point, slowing enemies caught in the mist
@@ -6676,6 +8253,11 @@ Mods: {
 					'''
 					Casts an icy snowflake
 					Hold down left click to increase the size of the snowflake
+					'''
+				Lore:
+					'''
+					'A staff made of Pure-Iron with a diamond gemstone.
+					It is cold to the touch, and can channel ice magic abnormally well.'
 					'''
 			}
 
@@ -6692,17 +8274,30 @@ Mods: {
 			Bindeklinge: {
 				DisplayName: Bindeklinge
 				Tooltip: Critical strikes release homing lightmass
+				Lore:
+					'''
+					'A broadsword once wielded by the leader of Lighthelm's forgotten Oracles of Rebirth.
+					This holy blade's slice is said to strip the light out of one's body, which would travel to corpses
+					and bring the slain's life into them. This was what the ancient world thought birthed undead.'
+					'''
 			}
 
 			BladeOfTheMountain: {
 				DisplayName: Blade of the Mountain
 				Tooltip:
 					'''
-					Parries physical or {0} projectiles
+					Parries physical or {0} projectiles, including your own Icefall crystals
 					Deals more damage at the tip of the blade
 					Hitting on the very tip of the blade can freeze enemies
 					Enemies with knockback immunity cannot be frozen
 					'Send them to their snowy grave'
+					'''
+				Lore:
+					'''
+					'Once a normal greatsword wielded by a well-known warrior of the Iron Realm, her final battle being against
+					a great bear in the mountains. The bear was slain, but the warrior's injuries sealed her death shortly after.
+					The icy blood of the bear fused with the blade, chilling it with an enchanting glow.
+					The blade laid to rest besides it's owner, until another warrior discovered it many years later.'
 					'''
 			}
 
@@ -6712,6 +8307,12 @@ Mods: {
 					'''
 					Throws three skulls from a flail
 					The skulls will latch onto enemies, dealing damage for 5 seconds before letting go
+					'''
+				Lore:
+					'''
+					'A tool of torture used by a skeleton known as the Tormenter, infamous among the catacombs 
+					of Gathuram's undead residents for his unforgiving command over his skeletal servants. 
+					The Tormenter met an ironic end by his own weapon when his minions revolted against his control.'
 					'''
 			}
 
@@ -6729,6 +8330,11 @@ Mods: {
 					Continue holding left-click to go into a fiery flurry
 					Deals more damage to dragon-like enemies
 					'''
+				Lore:
+					'''
+					'A cleaver cast in melted dragon bone and metal, said to be used by the ancient warlords of Dragonrest.
+					This weapon is a great catalyst for fire magic, shooting out a wave of burning heat by channelling a swing.'
+					'''
 			}
 
 			EaglecrestJavelin: {
@@ -6737,6 +8343,11 @@ Mods: {
 					'''
 					Hold left-click to charge the javelin, release to throw
 					Strikes the ground and foe alike with lightning, dealing {0} damage
+					'''
+				Lore:
+					'''
+					'An ancient spear used in rituals to the great god Ukko in ancient Gathuram.
+					Charged with electric magic to signify Ukko, while the blade has dulled it still works as a fine weapon.'
 					'''
 			}
 
@@ -6748,11 +8359,6 @@ Mods: {
 			Firebreak: {
 				DisplayName: Firebreak
 				Tooltip: Rains down fire from the skies when hitting a target
-			}
-
-			Fire: {
-				DisplayName: Fire
-				Tooltip: ""
 			}
 
 			FlintAndSteel: {
@@ -6771,11 +8377,19 @@ Mods: {
 					Deals 50% more damage to dark enemies
 					Right-click to swap between Melee and Magic abilities
 					'''
+				MeleeText: Hitting an enemy with the weapon will drain a twentieth of the damage dealt
+				MagicText: Twirl the sickle around to conjure nature pixies that will charge into enemies
 			}
 
 			ForgottenSword: {
 				DisplayName: Sword of the Forgotten
 				Tooltip: Spins the blade around the player and sets ablaze, flinging embers in its wake
+				Lore:
+					'''
+					'Found in the Demonhollow by a set of human explorers from Anglon. The weapon is crafted from bone and
+					a metal named \"Charred Iron\" by those whom discovered it, and was attributed to a fabled blacksmith named
+					Ophos due to its use of Firestorm magic. Yet the lack of many of his trademarks put doubt on that claim.'
+					'''
 			}
 
 			Halbirdhouse: {
@@ -6814,7 +8428,7 @@ Mods: {
 
 			SilverRapier: {
 				DisplayName: Silver Rapier
-				Tooltip: Causes armor penetration
+				Tooltip: Pierces through enemy defense
 			}
 
 			SkullDiggerFlail: {
@@ -6834,6 +8448,11 @@ Mods: {
 					Disarmed heavily decreases contact damage and their weapon damage
 					Blocks weak physical projectiles
 					'''
+				Lore:
+					'''
+					'Given to Zephos by Draven, his uncle, during training. The slit in the middle is used to catch the opponent's blades,
+					one with great strength can use this advantage to twist the opponent's blade until it snaps, leaving them disarmed.'
+					'''
 			}
 
 			XenoXyston: {
@@ -6849,6 +8468,11 @@ Mods: {
 					Deals more damage at the tip of the blade
 					'Parry this you filthy casual!'
 					'''
+				Lore:
+					'''
+					'A famous greatsword of Madmount. A lot of strength is needed to use such a grand weapon,
+					but for most Warriors of the Iron Realm this was a trivial issue.'
+					'''
 			}
 
 			ChickenEgg: {
@@ -6858,7 +8482,7 @@ Mods: {
 
 			CursedThornBow: {
 				DisplayName: Cursed Thorn Bow
-				Tooltip: Replaces wooden arrows with seed-laden arrows that sprout small thorn traps
+				Tooltip: Replaces wooden arrows with seed-laden arrows that sprout small thorn traps, dealing {0} damage
 			}
 
 			DragonSlayersBow: {
@@ -6933,6 +8557,11 @@ Mods: {
 					20% chance not to consume ammo
 					Shoots silverwood arrows that stick onto enemies, draining their life
 					'''
+				Lore:
+					'''
+					'Given to Daerel by Syllessa, a half-Forest Nymph, during training. The wood is beyond ancient,
+					and the string is made from a golden flexible thread. It is capable of shooting arrows at high velocities.'
+					'''
 			}
 
 			BlazingBalisong: {
@@ -6956,11 +8585,6 @@ Mods: {
 					Right-click to swap between a normal slash and blood letting
 					Holding left-click in blood letting will drain the player's Spirit Gauge in exchange for increased life regeneration
 					'''
-			}
-
-			Blood: {
-				DisplayName: Blood
-				Tooltip: ""
 			}
 
 			BuddingBoline: {
@@ -7127,6 +8751,7 @@ Mods: {
 					'''
 					Summons a granite guardian that emits an empowering aura
 					Within the aura, whip speed and damage is increased by 15%
+					               Right-click to disable the sentry
 					'''
 			}
 
@@ -7140,17 +8765,20 @@ Mods: {
 					'''
 			}
 
-			Holy: {
-				DisplayName: Holy
-				Tooltip: ""
-			}
-
 			KingsOakStaff: {
 				DisplayName: King's Oak Staff
 				Tooltip:
 					'''
 					Summons a Nature Pixie to fight for you
 					Occassionally shouts at their target, dealing {0} damage
+					'''
+				Lore:
+					'''
+					'A staff made from the King's Oak - a great lone tree housing the souls of Timbervalley's past and present monarchs.
+					The wellbeing of oak and king are connected as one, grounding their emotion and vigour within the roots of the kingdom;
+					a bottomless well of strength for all who walk and grow.
+					Dancing orbs of light are often witnessed coming and going from the tree, said to be the embodiment of ardour between nature and man.
+					These are known by many names - Faes, Fairies, Pixies - and are the companions of Forest Nymphs.'
 					'''
 			}
 
@@ -7209,12 +8837,12 @@ Mods: {
 
 			BigMaceTurret: {
 				DisplayName: Laboratory MACE Turret
-				Tooltip: "[c/ff0000:Unbreakable (500% Pickaxe Power)]"
+				Tooltip: "[c/ff0000:Unbreakable (1000% Pickaxe Power)]"
 			}
 
 			BrokenLabBackDoor: {
 				DisplayName: Broken Laboratory Back Door
-				Tooltip: "[c/ff0000:Unbreakable (500% Pickaxe Power)]"
+				Tooltip: "[c/ff0000:Unbreakable (1000% Pickaxe Power)]"
 			}
 
 			HazmatCorpse: {
@@ -7222,13 +8850,13 @@ Mods: {
 				Tooltip:
 					'''
 					Gives Hazmat Suit
-					[c/ff0000:Unbreakable (500% Pickaxe Power)]
+					[c/ff0000:Unbreakable (1000% Pickaxe Power)]
 					'''
 			}
 
 			JanitorEquipment: {
 				DisplayName: Janitor Equipment
-				Tooltip: "[c/ff0000:Unbreakable (500% Pickaxe Power)]"
+				Tooltip: "[c/ff0000:Unbreakable (1000% Pickaxe Power)]"
 			}
 
 			KariBed: {
@@ -7264,7 +8892,7 @@ Mods: {
 				Tooltip:
 					'''
 					Opens using a Keycard
-					[c/ff0000:Unbreakable (500% Pickaxe Power)]
+					[c/ff0000:Unbreakable (1000% Pickaxe Power)]
 					'''
 			}
 
@@ -7285,7 +8913,7 @@ Mods: {
 
 			OpenVent: {
 				DisplayName: Open Vent
-				Tooltip: "[c/ff0000:Unbreakable (500% Pickaxe Power)]"
+				Tooltip: "[c/ff0000:Unbreakable (1000% Pickaxe Power)]"
 			}
 
 			RadPillDeco: {
@@ -7339,17 +8967,17 @@ Mods: {
 
 			GiantShadesteelChain: {
 				DisplayName: Giant Shadesteel Chain
-				Tooltip: "[c/ff0000:Unbreakable (500% Pickaxe Power)]"
+				Tooltip: "[c/ff0000:Unbreakable (1000% Pickaxe Power)]"
 			}
 
 			ShadePortcullis: {
 				DisplayName: Shade Portcullis
-				Tooltip: "[c/ff0000:Unbreakable (500% Pickaxe Power)]"
+				Tooltip: "[c/ff0000:Unbreakable (1000% Pickaxe Power)]"
 			}
 
 			ShadesteelGate: {
 				DisplayName: Shadesteel Gate
-				Tooltip: "[c/ff0000:Unbreakable (500% Pickaxe Power)]"
+				Tooltip: "[c/ff0000:Unbreakable (1000% Pickaxe Power)]"
 			}
 
 			ShadesteelHangingCell2: {
@@ -7542,11 +9170,6 @@ Mods: {
 				Tooltip: ""
 			}
 
-			Nature: {
-				DisplayName: Nature
-				Tooltip: ""
-			}
-
 			RowanTreeSummon_Berries: {
 				DisplayName: Rowan Tree Summon_ Berries
 				Tooltip: ""
@@ -7554,11 +9177,6 @@ Mods: {
 
 			ShadowFuel: {
 				DisplayName: Shadow Fuel
-				Tooltip: ""
-			}
-
-			Shadow: {
-				DisplayName: Shadow
 				Tooltip: ""
 			}
 
@@ -7596,15 +9214,50 @@ Mods: {
 				DisplayName: Gilded Sea Emblem
 				Tooltip:
 					'''
-					{0} elemental weapons has a chance to soak enemies
+					{0} elemental weapons have a chance to soak enemies
 					Soaked enemies are more sluggish and prone to {1} damage
 					15% increased {0} elemental damage and resistance
 					10% decreased {2} elemental damage and resistance
 					'''
 			}
 
+			Ice: {
+				DisplayName: "[i:Redemption/Ice][c/E0FFFF:Ice]"
+				Tooltip: ""
+			}
+
+			Earth: {
+				DisplayName: "[i:Redemption/Earth][c/f4a460:Earth]"
+				Tooltip: ""
+			}
+
+			Shadow: {
+				DisplayName: "[i:Redemption/Shadow][c/7b68ee:Shadow]"
+				Tooltip: ""
+			}
+
+			Nature: {
+				DisplayName: "[i:Redemption/Nature][c/7cfc00:Nature]"
+				Tooltip: ""
+			}
+
+			Holy: {
+				DisplayName: "[i:Redemption/Holy][c/fafad2:Holy]"
+				Tooltip: ""
+			}
+
+			Blood: {
+				DisplayName: "[i:Redemption/Blood][c/cd5c5c:Blood]"
+				Tooltip: ""
+			}
+
+			Fire: {
+				DisplayName: "[i:Redemption/Fire][c/FFA500:Fire]"
+				Tooltip: ""
+			}
+
 			Arcane: {
-				DisplayName: Arcane
+				DisplayName: "[i:Redemption/Arcane][c/ADD8E6:Arcane]"
 				Tooltip: ""
 			}
 
@@ -7614,22 +9267,22 @@ Mods: {
 			}
 
 			Celestial: {
-				DisplayName: Celestial
+				DisplayName: "[i:Redemption/Celestial][c/ffc0cb:Celestial]"
 				Tooltip: ""
 			}
 
 			Explosive: {
-				DisplayName: Explosive
+				DisplayName: "[i:Redemption/Explosive][c/FFC896:Explosive]"
 				Tooltip: ""
 			}
 
 			Poison: {
-				DisplayName: Poison
+				DisplayName: "[i:Redemption/Poison][c/9370db:Poison]"
 				Tooltip: ""
 			}
 
 			Psychic: {
-				DisplayName: Psychic
+				DisplayName: "[i:Redemption/Psychic][c/ffb6c1:Psychic]"
 				Tooltip: ""
 			}
 
@@ -7639,17 +9292,145 @@ Mods: {
 			}
 
 			Thunder: {
-				DisplayName: Thunder
+				DisplayName: "[i:Redemption/Thunder][c/ffffe0:Thunder]"
 				Tooltip: ""
 			}
 
 			Water: {
-				DisplayName: Water
+				DisplayName: "[i:Redemption/Water][c/87CEEB:Water]"
 				Tooltip: ""
 			}
 
 			Wind: {
-				DisplayName: Wind
+				DisplayName: "[i:Redemption/Wind][c/B4B4B4:Wind]"
+				Tooltip: ""
+			}
+
+			CockatriceRelic: {
+				DisplayName: Cockatrice Relic
+				Tooltip: ""
+			}
+
+			CruxCardCalavia: {
+				DisplayName: Crux Card: Kyretha
+				Tooltip:
+					'''
+					Summons the great spirit of Kyretha, Blade of the Mountain
+					Right-click to tug the spirit back to your position, consuming 3 [i:Redemption/LostSoul]
+					Consumes 30 [i:Redemption/LostSoul] on use
+					Can only use one Spirit Card at a time
+					'''
+			}
+
+			CuckooCloak: {
+				DisplayName: Cuckoo Cloak
+				Tooltip: ""
+			}
+
+			EggPet: {
+				DisplayName: The Egg
+				Tooltip:
+					'''
+					Summons The Egg
+					'... It's hardboiled.'
+					'''
+			}
+
+			FowlFeather: {
+				DisplayName: Fowl Feather
+				Tooltip: Summons a baby Cockatrice
+			}
+
+			SpicyDrumstick: {
+				DisplayName: Spicy Drumstick
+				Tooltip:
+					'''
+					Summons a baby Basan
+					'Eat spicy goodness... like a boss!'
+					'''
+			}
+
+			HaymakerBanner: {
+				DisplayName: Haymaker Banner
+				Tooltip: ""
+			}
+
+			RoosterBoosterBanner: {
+				DisplayName: Rooster Booster Banner
+				Tooltip: ""
+			}
+
+			BasanRelic: {
+				DisplayName: Basan Relic
+				Tooltip: ""
+			}
+
+			BasanTrophy: {
+				DisplayName: Basan Trophy
+				Tooltip: ""
+			}
+
+			CockatriceTrophy: {
+				DisplayName: Cockatrice Trophy
+				Tooltip: ""
+			}
+
+			ChickenSoup: {
+				DisplayName: Chicken Soup
+				Tooltip:
+					'''
+					{$CommonItemTooltip.MinorStats}
+					'Waiter, there's a beak in my soup'
+					'''
+			}
+
+			ChickendWand: {
+				DisplayName: Chickend Wand
+				Tooltip: Lobs an arching egg that hatches into a chick upon impact
+			}
+
+			DawnHerald: {
+				DisplayName: Dawn Herald
+				Tooltip:
+					'''
+					Summons a Rooster Booster in a nest that crows an empowering aura
+					Within the aura, players gain increased jump height and 20% increased movement speed
+					Right-click to disable the sentry
+					'''
+			}
+
+			LabPlatingUnsafe2: {
+				DisplayName: Unsafe Laboratory Panel
+				Tooltip: ""
+			}
+
+			LabPlatingWallUnsafe2: {
+				DisplayName: Unsafe Laboratory Panel Wall
+				Tooltip: ""
+			}
+
+			LabTank2: {
+				DisplayName: Laboratory Tank
+				Tooltip: "'Filled with sludge'"
+			}
+
+			LabTubes2: {
+				DisplayName: Laboratory Tubes
+				Tooltip: "'Filled with sludge'"
+			}
+
+			OvergrownLabPlating2: {
+				DisplayName: Overgrown Laboratory Panel
+				Tooltip: ""
+			}
+
+			ShinkiteBrickOrnateWall: {
+				DisplayName: Shinkite Brick Ornate Wall
+				Tooltip: ""
+			}
+
+			ShadestoneMirrorSpecial: {
+				DisplayName: Shadestone Mirror Special
 				Tooltip: ""
 			}
 		}
@@ -7698,7 +9479,7 @@ Mods: {
 			ForgottenGreatsword_Proj.DisplayName: Ophos' Forgotten Greatsword
 			GravityHammer_Proj.DisplayName: Gravity Hammer
 			HammerOfProving_Proj.DisplayName: Hammer of Proving
-			InfectiousGlaive_Proj.DisplayName: Xenomite Glaive
+			InfectiousGlaive_Proj.DisplayName: Infectious Glaive
 			Midnight_SlashProj.DisplayName: Midnight, Defiler of the Prince
 			OversizedScrewdriver_Proj.DisplayName: Oversized Screwdriver
 			RemoteCleaver.DisplayName: Omega Cleaver
@@ -8261,6 +10042,27 @@ Mods: {
 			OmegaDiscSpell.DisplayName: Omega Disc
 			SpitterBoltSpell.DisplayName: Spitter Bolt
 			TntSpell.DisplayName: Tnt
+			Calavia_SS_BladeOfTheMountain.DisplayName: Blade Of The Mountain
+			Calavia_SS_BladeOfTheMountain2.DisplayName: Blade Of The Mountain
+			Calavia_SS_BladeStab.DisplayName: Blade Of The Mountain
+			Calavia_ArcticWind.DisplayName: Arctic Wind
+			Calavia_BladeOfTheMountain.DisplayName: Blade Of The Mountain
+			Calavia_BladeOfTheMountain2.DisplayName: Blade Of The Mountain
+			Calavia_BladeStab.DisplayName: Blade Of The Mountain
+			Calavia_Icefall.DisplayName: Icefall
+			Calavia_IcefallArena.DisplayName: Icefall
+			Calavia_IcefallMist.DisplayName: Ice Mist
+			Basan_Firebreath.DisplayName: Firebreath
+			Basan_HeatWave.DisplayName: Heat Wave
+			Chick_Proj.DisplayName: Chick
+			ChickendEgg_Proj.DisplayName: Chickend Egg
+			DawnHerald_Rooster.DisplayName: Rooster Booster
+			BasanPet_Proj.DisplayName: Baby Basan
+			CockatricePet_Proj.DisplayName: Baby Cockatrice
+			EggPet_Proj.DisplayName: The Egg
+			SoI_ShardShot_Friendly.DisplayName: Shard Shot
+			InfectiousGlaive_Shard.DisplayName: Splitting Shard
+			EnergySphereSpell_Blast.DisplayName: Energy Sphere
 		}
 
 		NPCs: {
@@ -8303,7 +10105,7 @@ Mods: {
 			SeedGrowth.DisplayName: Hive Growth
 			SoI.DisplayName: Seed of Infection
 			Thorn.DisplayName: Thorn, Bane of the Forest
-			AntiJohnSnail.DisplayName: Anti-John Snail
+			AntiJohnSnail.DisplayName: ANTI JOHN SNAIL
 			BoneSpider.DisplayName: Bone Spider
 			Chicken.DisplayName: Chicken
 			ChickenGold.DisplayName: Gold Chicken
@@ -8327,11 +10129,69 @@ Mods: {
 			RoosterBooster.DisplayName: Rooster Booster
 			AnglonPortal.DisplayName: Mysterious Gateway
 			Chalice_Intro.DisplayName: Chalice of Alignment
-			Daerel.DisplayName: Wayfarer
+
+			Daerel: {
+				DisplayName: Wayfarer
+
+				TownNPCMood: {
+					Content: I'm rather content right now.
+					NoHome: Hey, I'd quite like a roof under my head if that's alright with you.
+					FarFromHome: Could you please get me back to my house? This land is quite scary.
+					LoveSpace: I like the space I have here, plenty of room to practice my archery.
+					DislikeCrowded: I'm somewhat of an introvert, so all these people near me is quite unnerving.
+					HateCrowded: I'm somewhat of an introvert, so all these people near me is quite unnerving.
+					LoveBiome: I think {BiomeName} is perfect, calm and tranquil.
+					LikeBiome: I think {BiomeName} is a very nice place, I hardly see any snow where I was from.
+					DislikeBiome: I don't really like {BiomeName}, I'd hate to have a run-in with skeletons!
+					HateBiome: Why'd you put me in {BiomeName}? You know how hostile jungles are!?
+					LoveNPC: Me and {NPCName} are great friends, thank you for letting us live in the same town.
+					LikeNPC: "{NPCName} is good company, she's great at styling my hair too... That's not weird, right?"
+					DislikeNPC: "{NPCName} keeps trying to get me to buy his dirt."
+					HateNPC: Psst, could you move {NPCName} far away from me, I'm already super broke as is.
+					LikeNPC_Princess: I like {NPCName}.
+					Princess_LovesNPC: I like {NPCName}.
+				}
+
+				Census.SpawnCondition: Have a suitable house in a Crimson world, after meeting him at the surface portal after the first night
+			}
+
 			Daerel_Intro.DisplayName: Daerel
 			DaerelUnconscious.DisplayName: Daerel
-			Fallen.DisplayName: Fallen
-			ForestNymph_Friendly.DisplayName: Forest Nymph
+
+			Fallen: {
+				DisplayName: Fallen
+
+				TownNPCMood: {
+					Content: Nice little place ya got here.
+					NoHome: I'd prefer to have a house.
+					FarFromHome: Could ya take me back to my home?
+					LoveSpace: This place is a wee bit spacious, not complaining though, I quite like it.
+					DislikeCrowded: All these humans are makin' my bones rattle.
+					HateCrowded: All these humans are makin' my bones rattle.
+					LoveBiome: The caverns are perfect for us Fallen, not many humans come and go here.
+					LikeBiome: Aah, {BiomeName} reminds me of when I was still alive in Gathuram. Good times they were.
+					DislikeBiome: I'm staying in {BiomeName}? Not my preferred place to live, I'd hate to have a run-in with aggressive humans!
+					HateBiome: I hate it here, {BiomeName} has some holy energy in it makin' my flesh crawl.
+					LoveNPC: "{NPCName} sells some nifty gadgets, knows how to rip people off too. I like that."
+					LikeNPC: "{NPCName} got somethin' about him I like."
+					DislikeNPC: "{NPCName} keeps lookin' at me with suspicion. Probably wants to 'purify' me."
+					HateNPC: "{NPCName} keeps thinking I'm some dying old man, insisting that she'll heal me. Please get me away from her."
+					LikeNPC_Princess: I like {NPCName}, she's alright.
+					Princess_LovesNPC: I like {NPCName}, he reminds me of an old man.
+				}
+
+				Census.SpawnCondition: Defeat the Keeper and have a suitable house
+			}
+
+			ForestNymph_Friendly: {
+				DisplayName: Forest Nymph
+				Census.SpawnCondition:
+					'''
+					Use the [i:Redemption/KingsOakStaff] to gain a Forest Nymph's trust, requires positive alignment.
+					Requires +3 alignment if a Treebark Dryad was slain.
+					'''
+			}
+
 			GathuramPortal.DisplayName: Mysterious Gateway
 			GiftDrone.DisplayName: Gift Drone
 			GiftDrone2.DisplayName: Gift Drone
@@ -8340,7 +10200,32 @@ Mods: {
 			HazmatCorpse_Ghost.DisplayName: Hazmat Ghost
 			KS3Sitting.DisplayName: King Slayer III
 			LostSoulNPC.DisplayName: Lost Soul
-			Newb.DisplayName: Fool
+
+			Newb: {
+				DisplayName: Fool
+
+				TownNPCMood: {
+					Content: Me like here!
+					NoHome: Where home?
+					FarFromHome: Me lost, can you find home?
+					LoveSpace: So little people, yay!
+					DislikeCrowded: Too many faces!
+					HateCrowded: Too many faces!
+					LoveBiome: Me love {BiomeName}! It give memory of... Uh..
+					LikeBiome: Me like {BiomeName}.
+					DislikeBiome: Too boring here, me hate sand!
+					HateBiome: Me feel {BiomeName} make me sad!
+					LoveNPC: "{NPCName} knows magic like me!"
+					LikeNPC: Me like {NPCName}!
+					DislikeNPC: I feel evil within {NPCName}, very bad!
+					HateNPC: My hatred towards {NPCName} is beyond your mortal comprehension.
+					LikeNPC_Princess: Me like {NPCName}.
+					Princess_LovesNPC: I like {NPCName}, he's goofy!
+				}
+
+				Census.SpawnCondition: Dig up the dirt mound beneath the surface portal
+			}
+
 			Newb_Intro.DisplayName: Newb
 			Noza_NPC.DisplayName: Noza, Tamer of Evil
 			SkullDiggerFriendly.DisplayName: Skull Digger
@@ -8367,12 +10252,62 @@ Mods: {
 			SkullDigger_SS.DisplayName: Skull Digger
 			SpiritWalkerMan.DisplayName: Spirit Stranger
 			SpiritwalkerSoul.DisplayName: Lost Soul
-			TBot.DisplayName: Friendly T-Bot
+
+			TBot: {
+				DisplayName: Friendly T-Bot
+
+				TownNPCMood: {
+					Content: Feeling rather content, thank you for asking.
+					NoHome: I don't like being exposed to the elements. Do you have any housing or shelter I could inhabit for now?
+					FarFromHome: ... I believe we're very lost. I'm not familiar with our surroundings.
+					LoveSpace: It's rather quiet around here.
+					DislikeCrowded: Other tenants seem unhappy with the amount of crowding here, and frankly, so am I.
+					HateCrowded: Other tenants seem unhappy with the amount of crowding here, and frankly, so am I.
+					LoveBiome: I like this environment. It's very pleasant.
+					LikeBiome: This environment is mildly pleasant.
+					DislikeBiome: My current environment is rather... undesirable.
+					HateBiome: ... Just like home. I really do not like this environment.
+					LoveNPC: "{NPCName}'s knowledge on medicine rivals that of mine! It's really impressive."
+					LikeNPC: "{NPCName} and I have things in common. We get along well."
+					DislikeNPC: I find {NPCName} rather unsettling.
+					HateNPC: "{NPCName} reminds me of home. I'd rather not be reminded of that place."
+					LikeNPC_Princess: I like {NPCName}.
+					Princess_LovesNPC: I like {NPCName}.
+				}
+
+				Census.SpawnCondition: Defeat the Seed of Infection and have a suitable house
+			}
+
 			TBot_Intro.DisplayName: Adam
 			TBotUnconscious.DisplayName: Adam
 			TreebarkDryad.DisplayName: Treebark Dryad
 			WraithSlayer_Samurai.DisplayName: Cursed Samurai
-			Zephos.DisplayName: Wayfarer
+
+			Zephos: {
+				DisplayName: Wayfarer
+
+				TownNPCMood: {
+					Content: I'm alright.
+					NoHome: Yo, mind if you give me a house to stay in?
+					FarFromHome: Yo bro, I can't find my house, you wanna help me out?
+					LoveSpace: This place is super spacious, good for practicing my swordsmanship!
+					DislikeCrowded: Is it crowded in here or what!
+					HateCrowded: Is it crowded in here or what!
+					LoveBiome: Staying at {BiomeName} reminds me of when I was a young pirate, sailing the seas!
+					LikeBiome: I think {BiomeName} is a nice place, I can hear the birds singing and flowers blooming.
+					DislikeBiome: Not a fan of {BiomeName}, I'd rather live on the surface.
+					HateBiome: It's so cold here, I'm shaking in my boots!
+					LoveNPC: "{NPCName} and I are great friends, so living near each other is great!"
+					LikeNPC: "{NPCName} is cool, I'd like to sail the seas with him sometime."
+					DislikeNPC: "{NPCName} wants to get his greedy little fingers on my money!"
+					HateNPC: "{NPCName} will never take my money! NEVER!!"
+					LikeNPC_Princess: I like {NPCName}.
+					Princess_LovesNPC: I like {NPCName}.
+				}
+
+				Census.SpawnCondition: Have a suitable house in a Corruption world, after meeting him at the surface portal after the first night
+			}
+
 			Zephos_Intro.DisplayName: Zephos
 			ZephosUnconscious.DisplayName: Zephos
 			Android.DisplayName: Android Mk.I
@@ -8450,12 +10385,18 @@ Mods: {
 			SicklyPenguin.DisplayName: Sickly Penguin
 			SicklyWolf.DisplayName: Sickly Wolf
 			SneezyFlinx.DisplayName: Sneezy Snow Flinx
-			KS3_Start.DisplayName: K S3_ Start
-			Neb_Start.DisplayName: Neb_ Start
-			PZ_Inactive.DisplayName: P Z_ Inactive
-			IrradiatedBehemoth_Inactive.DisplayName: Irradiated Behemoth_ Inactive
-			Blisterface_Inactive.DisplayName: Blisterface_ Inactive
+			KS3_Start.DisplayName: King Slayer III
+			Neb_Start.DisplayName: Nebuleus
+			PZ_Inactive.DisplayName: Patient Zero
+			IrradiatedBehemoth_Inactive.DisplayName: Irradiated Behemoth
+			Blisterface_Inactive.DisplayName: Blisterface
 			JustANormalToaster.DisplayName: Just A Normal Toaster
+			Calavia_SS.DisplayName: Kyretha
+			Calavia.DisplayName: Calavia
+			Calavia_Intro.DisplayName: Calavia
+			Calavia_NPC.DisplayName: Calavia
+			Basan.DisplayName: Basan
+			GhostfireChicken.DisplayName: Ghost-fire Chicken
 		}
 
 		Tiles: {
@@ -8598,8 +10539,6 @@ Mods: {
 			SoulCandlesTile.MapEntry: Soul Candles
 			ThornPlushTile.MapEntry: Thorn Plushie
 			TrojanChickenTile.MapEntry: Trojan Chicken Replica
-			WastelandCampfireTile.MapEntry: Wasteland Campfire
-			WastelandTorchTile.MapEntry: Torch
 			PetrifiedCrateTile.MapEntry: Petrified Crate
 			PetrifiedWoodBathtubTile.MapEntry: Petrified Wood Bathtub
 			PetrifiedWoodBedTile.MapEntry: Petrified Wood Bed
@@ -8629,7 +10568,6 @@ Mods: {
 			ShadestonePianoTile.MapEntry: Shadestone Piano
 			ShadestoneSofaTile.MapEntry: Shadestone Sofa
 			ShadestoneWorkbenchTile.MapEntry: Shadestone Work Bench
-			ShadeTorchTile.MapEntry: Torch
 			WaxCandlesTile.MapEntry: Wax Candles
 			AndroidInactiveTile.MapEntry: Inactive Android Mk.I
 			BiocontainerTile.MapEntry: Life Fruit Bio-Container
@@ -8639,23 +10577,6 @@ Mods: {
 			SlayerChairTile.MapEntry: Slayer's Gaming Chair
 			SlayerFabricatorTile.MapEntry: Cyber Fabricator
 			SolarPanelTile.MapEntry: Solar Panels
-			ErhanBoxTile.MapEntry: Music Box
-			ForestBossBoxTile.MapEntry: Music Box
-			ForestBossBoxTile2.MapEntry: Music Box
-			FowlMorningBoxTile.MapEntry: Music Box
-			HallOfHeroesBoxTile.MapEntry: Music Box
-			KeeperBoxTile.MapEntry: Music Box
-			KSBoxTile.MapEntry: Music Box
-			LabBossMusicBoxTile.MapEntry: Music Box
-			LabMusicBoxTile.MapEntry: Music Box
-			NebBox2Tile.MapEntry: Music Box
-			NebBoxTile.MapEntry: Music Box
-			OmegaBoxTile.MapEntry: Music Box
-			OmegaBoxTile2.MapEntry: Music Box
-			PZMusicBoxTile.MapEntry: Music Box
-			SlayerShipBoxTile.MapEntry: Music Box
-			SoIBoxTile.MapEntry: Music Box
-			WastelandBoxTile.MapEntry: Music Box
 			CryoCrystalTile.MapEntry: Gathic Cryo-Crystal
 			DemonScrollTile.MapEntry: Forbidden Ritual
 			GrubNestTile.MapEntry: Grub Nest
@@ -8702,17 +10623,7 @@ Mods: {
 			IrradiatedBorealSapling.MapEntry: Petrified Boreal Sapling
 			IrradiatedPalmSapling.MapEntry: Petrified Palm Sapling
 			IrradiatedPuritySapling.MapEntry: Petrified Sapling
-			AkanKirvesTrophyTile.MapEntry: Akan Kirves Trophy
-			ErhanTrophyTile.MapEntry: Erhan Trophy
-			FowlEmperorTrophyTile.MapEntry: Fowl Emperor Trophy
-			KeeperTrophyTile.MapEntry: The Keeper Trophy
-			KS3TrophyTile.MapEntry: King Slayer III Trophy
-			NebuleusTrophyTile.MapEntry: Nebuleus Trophy
-			OmegaTrophyTile.MapEntry: Omega Prototype Trophy
-			PZTrophyTile.MapEntry: Patient Zero Trophy
-			SoITrophyTile.MapEntry: Seed of Infection Trophy
-			ThornTrophyTile.MapEntry: Thorn Trophy
-			UkonKirvesTrophyTile.MapEntry: Ukon Kirves Trophy
+			ShadestoneMirrorTile2.MapEntry: Shadestone Mirror Tile2
 		}
 
 		Keybinds: {
@@ -8756,6 +10667,83 @@ Mods: {
 			DownedSkeletronOrSeed: After any late-pre-hardmode boss is defeated
 			HasSpiritWalker: After Spirit Walker is unlocked
 			DeadRingerGiven: After finding the Dead Ringer
+			ForestNymphTrust: While having a Forest Nymph's trust
+		}
+
+		Configs: {
+			RedeConfigClient: {
+				DisplayName: Redemption Config Client
+
+				DialogueWaitTime: {
+					Label: Extra Dialogue Wait Time
+					Tooltip:
+						'''
+						Increases duration of dialogue text persisting before moving on, increase if you're a slow reader
+						Value is in seconds.
+						'''
+				}
+
+				DialogueSpeed: {
+					Label: Dialogue Text Speed
+					Tooltip:
+						'''
+						Only recommend changing if the dialogue speed is too slow or fast normally.
+						This is how much less time measured in seconds for each letter to appear, higher = faster.
+						The faster you make it, the harder it is to read before finishing, so also adjust Extra Dialogue Wait Time
+						'''
+				}
+
+				NoBossIntroText: {
+					Label: Disable Zelda-Styled Boss Titles
+					Tooltip: Disables the Legend of Zelda-style boss introduction text for bosses.
+				}
+
+				CameraLockDisable: {
+					Label: Disable Camera Lock
+					Tooltip:
+						'''
+						Disables the locked camera during cutscenes, along with the invincibility and vignette effect
+						Not recommended, at least on a first playthrough, as it can ruin the feel of things.
+						'''
+				}
+
+				ElementDisable: {
+					Label: Disable Elements
+					Tooltip: Disables elemental resistances and damage
+				}
+
+				NoPZBuildUp: {
+					Label: No Patient Zero Build-Up
+					Tooltip: Makes the boss begin the fight instantly, mainly for no-hitters. (This will cause the boss's pulse effect to not sync well with the music)
+				}
+
+				FunniHeader: The Funnies (Remember to disable these before intending to generate a normal world!)
+
+				FunniSpiders: {
+					Label: Oops! All spider!
+					Tooltip: Generating a new world will cause all stone blocks to become infested stone
+				}
+
+				FunniWasteland: {
+					Label: Alright, who set off the nuke?
+					Tooltip: Generating a new world will have a Wasteland biome naturally generate (This can break progression, obviously)
+				}
+
+				FunniAllWasteland: {
+					Label: Liden at home:
+					Tooltip: Generating a new world will convert every tile into it's irradiated version (This can break progression, obviously)
+				}
+
+				FunniJanitor: {
+					Label: The Janitor's Last Stand
+					Tooltip: Generating a new world will create a clean lab with safe laboratory tiles and no sludge (This can break progression, obviously)
+				}
+
+				FunniAncient: {
+					Label: Ancient World
+					Tooltip: Generating a new world will convert tiles to their ancient or gathic version, and gathic tombs will gen more frequently
+				}
+			}
 		}
 	}
 }

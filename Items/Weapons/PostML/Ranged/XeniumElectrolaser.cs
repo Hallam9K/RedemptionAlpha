@@ -2,7 +2,6 @@ using Microsoft.Xna.Framework;
 using Redemption.Globals.Player;
 using Redemption.Items.Materials.HM;
 using Redemption.Items.Materials.PostML;
-using Redemption.Items.Weapons.HM.Ammo;
 using Redemption.Projectiles.Ranged;
 using Redemption.Tiles.Furniture.Lab;
 using Terraria;

@@ -1,6 +1,7 @@
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.ID;
+using Terraria.Localization;
 using Redemption.Items.Materials.PostML;
 using Redemption.Items.Materials.HM;
 using Redemption.Tiles.Furniture.Lab;
@@ -42,12 +43,11 @@ namespace Redemption.Items.Armor.PostML.Xenium
 
         public override void UpdateArmorSet(Player player)
         {
-            player.setBonus = "Increased Energy regeneration if an Energy Pack is in your inventory\n" +
-                "Select a keybind for [Special Ability Key] in Controls";
+            player.setBonus = Language.GetTextValue("Mods.Redemption.GenericTooltips.ArmorSetBonus.Xenium.Keybind");
             foreach (string key in Redemption.RedeSpecialAbility.GetAssignedKeys())
             {
-                player.setBonus = "Increased Energy regeneration if an Energy Pack is in your inventory\n" +
-                    "Press " + key + " to fire a virulent grenade from your shoulder launcher";
+                player.setBonus = Language.GetTextValue("Mods.Redemption.GenericTooltips.ArmorSetBonus.Xenium.Bonus1") +
+                    Language.GetTextValue("Mods.Redemption.GenericTooltips.ArmorSetBonus.Xenium.Press") + key + Language.GetTextValue("Mods.Redemption.GenericTooltips.ArmorSetBonus.Xenium.Bonus2");
             }
             player.RedemptionPlayerBuff().xeniumBonus = true;
             player.GetModPlayer<EnergyPlayer>().energyRegen += 15;

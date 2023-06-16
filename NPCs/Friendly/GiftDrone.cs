@@ -11,11 +11,12 @@ using Redemption.Buffs.NPCBuffs;
 using Redemption.Buffs.Debuffs;
 using Redemption.Items.Usable;
 using Terraria.ModLoader.Utilities;
+using Terraria.Localization;
 using Redemption.BaseExtension;
 using Redemption.Items.Usable.Summons;
 using Redemption.NPCs.HM;
 using Redemption.UI;
-//using SubworldLibrary;
+using SubworldLibrary;
 
 namespace Redemption.NPCs.Friendly
 {
@@ -416,20 +417,19 @@ namespace Redemption.NPCs.Friendly
                         RedeSystem.Instance.DialogueUIElement.DisplayDialogue("...", 180, 1, 0.6f, "???:", 1, RedeColor.GirusTier, null, null, null, 0, sound: true);
 
                     if (NPC.ai[3] == 720)
-                        RedeSystem.Instance.DialogueUIElement.DisplayDialogue("Oh, this is a bit awkward.", 260, 1, 0.6f, "???:", 1, RedeColor.GirusTier, null, null, null, 0, sound: true);
+                        RedeSystem.Instance.DialogueUIElement.DisplayDialogue(Language.GetTextValue("Mods.Redemption.Cutscene.Girus.Encounter4.v1.1"), 260, 1, 0.6f, "???:", 1, RedeColor.GirusTier, null, null, null, 0, sound: true);
 
                     if (NPC.ai[3] == 980)
-                        RedeSystem.Instance.DialogueUIElement.DisplayDialogue("You still haven't defeated the previous challenges, even now?", 400, 1, 0.6f, "???:", 1, RedeColor.GirusTier, null, null, null, 0, sound: true);
+                        RedeSystem.Instance.DialogueUIElement.DisplayDialogue(Language.GetTextValue("Mods.Redemption.Cutscene.Girus.Encounter4.v1.2"), 400, 1, 0.6f, "???:", 1, RedeColor.GirusTier, null, null, null, 0, sound: true);
 
                     if (NPC.ai[3] == 1380)
-                        RedeSystem.Instance.DialogueUIElement.DisplayDialogue("Well, I suppose a little overpreparation never hurt anyone.", 400, 1, 0.6f, "???:", 1, RedeColor.GirusTier, null, null, null, 0, sound: true);
+                        RedeSystem.Instance.DialogueUIElement.DisplayDialogue(Language.GetTextValue("Mods.Redemption.Cutscene.Girus.Encounter4.v1.3"), 400, 1, 0.6f, "???:", 1, RedeColor.GirusTier, null, null, null, 0, sound: true);
 
                     if (NPC.ai[3] == 1780)
-                        RedeSystem.Instance.DialogueUIElement.DisplayDialogue("Here, I've sent a keycard your way. Consider it a little gift in advance.", 400, 1, 0.6f, "???:", 1, RedeColor.GirusTier, null, null, null, 0, sound: true);
+                        RedeSystem.Instance.DialogueUIElement.DisplayDialogue(Language.GetTextValue("Mods.Redemption.Cutscene.Girus.Encounter4.v1.4"), 400, 1, 0.6f, "???:", 1, RedeColor.GirusTier, null, null, null, 0, sound: true);
 
                     if (NPC.ai[3] == endTime)
-                        RedeSystem.Instance.DialogueUIElement.DisplayDialogue("... You'll still need to take on the first two Prototypes first." +
-                            "\nAs a formality of course.", 460, 1, 0.6f, "???:", 1, RedeColor.GirusTier, null, null, null, 0, sound: true);
+                        RedeSystem.Instance.DialogueUIElement.DisplayDialogue(Language.GetTextValue("Mods.Redemption.Cutscene.Girus.Encounter4.v1.5"), 460, 1, 0.6f, "???:", 1, RedeColor.GirusTier, null, null, null, 0, sound: true);
                 }
             }
             else if (!RedeBossDowned.downedBehemoth)
@@ -443,16 +443,16 @@ namespace Redemption.NPCs.Friendly
                         RedeSystem.Instance.DialogueUIElement.DisplayDialogue("...", 180, 1, 0.6f, "???:", 1, RedeColor.GirusTier, null, null, null, 0, sound: true);
 
                     if (NPC.ai[3] == 720)
-                        RedeSystem.Instance.DialogueUIElement.DisplayDialogue("Goodness, you are boring.", 260, 1, 0.6f, "???:", 1, RedeColor.GirusTier, null, null, null, 0, sound: true);
+                        RedeSystem.Instance.DialogueUIElement.DisplayDialogue(Language.GetTextValue("Mods.Redemption.Cutscene.Girus.Encounter4.v2.1"), 260, 1, 0.6f, "???:", 1, RedeColor.GirusTier, null, null, null, 0, sound: true);
 
                     if (NPC.ai[3] == 980)
-                        RedeSystem.Instance.DialogueUIElement.DisplayDialogue("The Lab's security has been disabled for weeks!", 400, 1, 0.6f, "???:", 1, RedeColor.GirusTier, null, null, null, 0, sound: true);
+                        RedeSystem.Instance.DialogueUIElement.DisplayDialogue(Language.GetTextValue("Mods.Redemption.Cutscene.Girus.Encounter4.v2.2"), 400, 1, 0.6f, "???:", 1, RedeColor.GirusTier, null, null, null, 0, sound: true);
 
                     if (NPC.ai[3] == 1380)
-                        RedeSystem.Instance.DialogueUIElement.DisplayDialogue("It's frankly quite astonishing that you never noticed.", 400, 1, 0.6f, "???:", 1, RedeColor.GirusTier, null, null, null, 0, sound: true);
+                        RedeSystem.Instance.DialogueUIElement.DisplayDialogue(Language.GetTextValue("Mods.Redemption.Cutscene.Girus.Encounter4.v2.2"), 400, 1, 0.6f, "???:", 1, RedeColor.GirusTier, null, null, null, 0, sound: true);
 
                     if (NPC.ai[3] == endTime)
-                        RedeSystem.Instance.DialogueUIElement.DisplayDialogue("Anyway, take this keycard and I'll fill you in there.", 400, 1, 0.6f, "???:", 1, RedeColor.GirusTier, null, null, null, 0, sound: true);
+                        RedeSystem.Instance.DialogueUIElement.DisplayDialogue(Language.GetTextValue("Mods.Redemption.Cutscene.Girus.Encounter4.v2.4"), 400, 1, 0.6f, "???:", 1, RedeColor.GirusTier, null, null, null, 0, sound: true);
                 }
             }
             else
@@ -466,32 +466,31 @@ namespace Redemption.NPCs.Friendly
                         RedeSystem.Instance.DialogueUIElement.DisplayDialogue("...", 180, 1, 0.6f, "???:", 1, RedeColor.GirusTier, null, null, null, 0, sound: true);
 
                     if (NPC.ai[3] == 720)
-                        RedeSystem.Instance.DialogueUIElement.DisplayDialogue("I'm terribly sorry for the impromptu contact.", 260, 1, 0.6f, "???:", 1, RedeColor.GirusTier, null, null, null, 0, sound: true);
+                        RedeSystem.Instance.DialogueUIElement.DisplayDialogue(Language.GetTextValue("Mods.Redemption.Cutscene.Girus.Encounter4.v3.1"), 260, 1, 0.6f, "???:", 1, RedeColor.GirusTier, null, null, null, 0, sound: true);
 
                     if (NPC.ai[3] == 980)
-                        RedeSystem.Instance.DialogueUIElement.DisplayDialogue("As per our last chat, your next trial is a machine of my own making.", 400, 1, 0.6f, "???:", 1, RedeColor.GirusTier, null, null, null, 0, sound: true);
+                        RedeSystem.Instance.DialogueUIElement.DisplayDialogue(Language.GetTextValue("Mods.Redemption.Cutscene.Girus.Encounter4.v3.2"), 400, 1, 0.6f, "???:", 1, RedeColor.GirusTier, null, null, null, 0, sound: true);
 
                     if (NPC.ai[3] == 1380)
-                        RedeSystem.Instance.DialogueUIElement.DisplayDialogue("Despite my best efforts though, I simply couldn't hold back on making\n" +
-                            "it a little more... challenging, than what you're quite ready for.", 600, 1, 0.6f, "???:", 1, RedeColor.GirusTier, null, null, null, 0, sound: true);
+                        RedeSystem.Instance.DialogueUIElement.DisplayDialogue(Language.GetTextValue("Mods.Redemption.Cutscene.Girus.Encounter4.v3.3"), 600, 1, 0.6f, "???:", 1, RedeColor.GirusTier, null, null, null, 0, sound: true);
 
                     if (NPC.ai[3] == 1980)
-                        RedeSystem.Instance.DialogueUIElement.DisplayDialogue("So!", 180, 1, 0.6f, "???:", 1, RedeColor.GirusTier, null, null, null, 0, sound: true);
+                        RedeSystem.Instance.DialogueUIElement.DisplayDialogue(Language.GetTextValue("Mods.Redemption.Cutscene.Girus.Encounter4.v3.4"), 180, 1, 0.6f, "???:", 1, RedeColor.GirusTier, null, null, null, 0, sound: true);
 
                     if (NPC.ai[3] == 2160)
-                        RedeSystem.Instance.DialogueUIElement.DisplayDialogue("I've elected to give you private access to the lower sections of my base of operations.", 400, 1, 0.6f, "???:", 1, RedeColor.GirusTier, null, null, null, 0, sound: true);
+                        RedeSystem.Instance.DialogueUIElement.DisplayDialogue(Language.GetTextValue("Mods.Redemption.Cutscene.Girus.Encounter4.v3.5"), 400, 1, 0.6f, "???:", 1, RedeColor.GirusTier, null, null, null, 0, sound: true);
 
                     if (NPC.ai[3] == 2560)
-                        RedeSystem.Instance.DialogueUIElement.DisplayDialogue("I am quite sure you'll find some old toys Teo-chrome left behind down there.", 400, 1, 0.6f, "???:", 1, RedeColor.GirusTier, null, null, null, 0, sound: true);
+                        RedeSystem.Instance.DialogueUIElement.DisplayDialogue(Language.GetTextValue("Mods.Redemption.Cutscene.Girus.Encounter4.v3.6"), 400, 1, 0.6f, "???:", 1, RedeColor.GirusTier, null, null, null, 0, sound: true);
 
                     if (NPC.ai[3] == 2960)
-                        RedeSystem.Instance.DialogueUIElement.DisplayDialogue("You'll have to excuse the mess though.", 400, 1, 0.6f, "???:", 1, RedeColor.GirusTier, null, null, null, 0, sound: true);
+                        RedeSystem.Instance.DialogueUIElement.DisplayDialogue(Language.GetTextValue("Mods.Redemption.Cutscene.Girus.Encounter4.v3.7"), 400, 1, 0.6f, "???:", 1, RedeColor.GirusTier, null, null, null, 0, sound: true);
 
                     if (NPC.ai[3] == 3360)
-                        RedeSystem.Instance.DialogueUIElement.DisplayDialogue("Anyway, I'm eagerly anticipating your next trial.", 400, 1, 0.6f, "???:", 1, RedeColor.GirusTier, null, null, null, 0, sound: true);
+                        RedeSystem.Instance.DialogueUIElement.DisplayDialogue(Language.GetTextValue("Mods.Redemption.Cutscene.Girus.Encounter4.v3.8"), 400, 1, 0.6f, "???:", 1, RedeColor.GirusTier, null, null, null, 0, sound: true);
 
                     if (NPC.ai[3] == endTime)
-                        RedeSystem.Instance.DialogueUIElement.DisplayDialogue("You're going to love it.", 300, 1, 0.6f, "???:", 1, RedeColor.GirusTier, null, null, null, 0, sound: true);
+                        RedeSystem.Instance.DialogueUIElement.DisplayDialogue(Language.GetTextValue("Mods.Redemption.Cutscene.Girus.Encounter4.v3.9"), 300, 1, 0.6f, "???:", 1, RedeColor.GirusTier, null, null, null, 0, sound: true);
                 }
             }
             if (MoRDialogueUI.Visible)
@@ -525,10 +524,10 @@ namespace Redemption.NPCs.Friendly
         }
         public override float SpawnChance(NPCSpawnInfo spawnInfo)
         {
-            if (!NPC.downedMoonlord || RedeWorld.keycardGiven)// || SubworldSystem.Current != null)
+            if (!NPC.downedMoonlord || RedeWorld.keycardGiven || SubworldSystem.Current != null)
                 return 0;
 
-            float m = NPC.AnyNPCs(Type) || NPC.AnyNPCs(ModContent.NPCType<Android>()) || NPC.AnyNPCs(ModContent.NPCType<SlayerSpawner>()) ? 0 : 10;
+            float m = NPC.AnyNPCs(Type) || NPC.AnyNPCs(ModContent.NPCType<Android>()) || NPC.AnyNPCs(ModContent.NPCType<SlayerSpawner>()) ? 0 : 100;
             return m;
         }
     }

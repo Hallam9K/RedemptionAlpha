@@ -1,4 +1,4 @@
-﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -24,6 +24,7 @@ namespace Redemption.NPCs.Friendly
             // DisplayName.SetDefault("Spirit Assassin");
             Main.npcFrameCount[NPC.type] = 4;
             NPCID.Sets.ActsLikeTownNPC[Type] = true;
+            NPCID.Sets.NoTownNPCHappiness[Type] = true;
 
             NPCID.Sets.DebuffImmunitySets.Add(Type, new NPCDebuffImmunityData
             {
@@ -117,25 +118,25 @@ namespace Redemption.NPCs.Friendly
             {
                 case 0:
                     if (what)
-                        button = "About you?";
+                        button = Language.GetTextValue("Mods.Redemption.DialogueBox.SpiritAssassin.1");
                     else
-                        button = "What?";
+                        button = Language.GetTextValue("Mods.Redemption.DialogueBox.SpiritAssassin.2");
                     break;
                 case 1:
-                    button = "Gathuram?";
+                    button = Language.GetTextValue("Mods.Redemption.DialogueBox.SpiritAssassin.3");
                     break;
                 case 2:
-                    button = "Gothrione?";
+                    button = Language.GetTextValue("Mods.Redemption.DialogueBox.SpiritAssassin.4");
                     break;
                 case 3:
-                    button = "Demon?";
+                    button = Language.GetTextValue("Mods.Redemption.DialogueBox.SpiritAssassin.5");
                     break;
                 case 4:
-                    button = request && offering ? "Offer 3 Nightshade" : "Request Crux";
+                    button = request && offering ? Language.GetTextValue("Mods.Redemption.DialogueBox.SpiritAssassin.Offer") : Language.GetTextValue("Mods.Redemption.DialogueBox.SpiritCommonGuard.Crux");
                     break;
             }
             if (what)
-                button2 = "Cycle Dialogue";
+                button2 = Language.GetTextValue("Mods.Redemption.DialogueBox.CycleD");
         }
 
         public override void OnChatButtonClicked(bool firstButton, ref string shopName)

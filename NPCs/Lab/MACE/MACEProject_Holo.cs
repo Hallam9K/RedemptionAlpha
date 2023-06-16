@@ -41,8 +41,8 @@ namespace Redemption.NPCs.Lab.MACE
             switch (NPC.ai[0])
             {
                 case 0:
-                    Vector2 MacePos = new(((RedeGen.LabPoint.X + 74) * 16) - 8, (RedeGen.LabPoint.Y + 169) * 16);
-                    Vector2 MacePos2 = new(((RedeGen.LabPoint.X + 74) * 16) - 8, (RedeGen.LabPoint.Y + 164) * 16);
+                    Vector2 MacePos = new(((RedeGen.LabVector.X + 74) * 16) - 8, (RedeGen.LabVector.Y + 169) * 16);
+                    Vector2 MacePos2 = new(((RedeGen.LabVector.X + 74) * 16) - 8, (RedeGen.LabVector.Y + 164) * 16);
                     NPC.Center = MacePos2;
                     NPC.alpha -= 10;
                     if (NPC.alpha <= 0)

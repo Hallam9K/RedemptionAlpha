@@ -1,5 +1,4 @@
 using Microsoft.Xna.Framework;
-using Redemption.Globals;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.ID;
@@ -49,10 +48,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
         {
             if (Main.keyState.PressingShift())
             {
-                TooltipLine line = new(Mod, "Lore",
-                    "'Found in the Demonhollow by a set of human explorers from Anglon. The weapon is crafted from bone and\n" +
-                    "a metal named \"Charred Iron\" by those whom discovered it, and was attributed to a fabled blacksmith named\n" +
-                    "Ophos due to its use of Firestorm magic. Yet the lack of many of his trademarks put doubt on that claim.'")
+                TooltipLine line = new(Mod, "Lore", Language.GetTextValue("Mods.Redemption.Items.ForgottenSword.Lore"))
                 {
                     OverrideColor = Color.LightGray
                 };
@@ -60,7 +56,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
             }
             else
             {
-                TooltipLine line = new(Mod, "HoldShift", "Hold [Shift] to view lore")
+                TooltipLine line = new(Mod, "HoldShift", Language.GetTextValue("Mods.Redemption.SpecialTooltips.Viewer"))
                 {
                     OverrideColor = Color.Gray,
                 };

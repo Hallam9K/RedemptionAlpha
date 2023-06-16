@@ -1,6 +1,7 @@
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.ID;
+using Terraria.Localization;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Buffs.Debuffs;
@@ -153,7 +154,7 @@ namespace Redemption.NPCs.Bosses.Obliterator
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
         {
             bestiaryEntry.Info.AddRange(new List<IBestiaryInfoElement> {
-                new FlavorTextBestiaryInfoElement("An autonomous war machine mostly of Girus' own design with many integrated weapon systems, such as literal finger guns and an advanced heat dispersion system in the form of a giant beam, capable of obliterating anyone it engulfs - Also where Obliterator got its name from.")
+                new FlavorTextBestiaryInfoElement(Language.GetTextValue("Mods.Redemption.FlavorTextBestiary.OO"))
             });
         }
         public override void HitEffect(NPC.HitInfo hit)
@@ -197,7 +198,7 @@ namespace Redemption.NPCs.Bosses.Obliterator
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
             npcLoot.Add(ItemDropRule.BossBag(ModContent.ItemType<OmegaOblitBag>()));
-            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<OmegaTrophy>(), 10));
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<OmegaObliteratorTrophy>(), 10));
 
             npcLoot.Add(ItemDropRule.MasterModeCommonDrop(ModContent.ItemType<OORelic>()));
 
@@ -225,7 +226,7 @@ namespace Redemption.NPCs.Bosses.Obliterator
         public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)
         {
             NPC.lifeMax = (int)(NPC.lifeMax * 0.6f * balance * bossAdjustment);
-            NPC.damage = (int)(NPC.damage * 0.6f);
+            NPC.damage = (int)(NPC.damage * 0.75f);
         }
 
         public override void SendExtraAI(BinaryWriter writer)
@@ -351,7 +352,7 @@ namespace Redemption.NPCs.Bosses.Obliterator
                                 SoundEngine.PlaySound(CustomSounds.ObliteratorYo, NPC.position);
                                 if (!Main.dedServ)
                                 {
-                                    Dialogue d1 = new(NPC, "Yo.", Colors.RarityRed, Color.DarkRed, CustomSounds.Voice1 with { Volume = 0 }, .03f, 1, 0, false, null, bubble, modifier: modifier); // 69
+                                    Dialogue d1 = new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.OO.Intro.1"), Colors.RarityRed, Color.DarkRed, CustomSounds.Voice1 with { Volume = 0 }, .03f, 1, 0, false, null, bubble, modifier: modifier); // 69
 
                                     ChatUI.Visible = true;
                                     ChatUI.Add(d1);
@@ -397,18 +398,18 @@ namespace Redemption.NPCs.Bosses.Obliterator
                             }
                             if (AITimer == 400 && !Main.dedServ)
                             {
-                                Dialogue d1 = new(NPC, "So much for a surprise attack...", Colors.RarityRed, Color.DarkRed, voice, .03f, 2f, 0, false, null, bubble, modifier: modifier);
+                                Dialogue d1 = new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.OO.Intro.2"), Colors.RarityRed, Color.DarkRed, voice, .03f, 2f, 0, false, null, bubble, modifier: modifier);
                                 if (RedeBossDowned.oblitDeath == 1)
-                                    d1 = new(NPC, "I guess I can't fool you twice,[0.1] huh.", Colors.RarityRed, Color.DarkRed, voice, .03f, 2f, 0, false, null, bubble, modifier: modifier);
+                                    d1 = new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.OO.Intro.2Alt"), Colors.RarityRed, Color.DarkRed, voice, .03f, 2f, 0, false, null, bubble, modifier: modifier);
 
                                 DialogueChain chain = new();
                                 chain.Add(d1)
-                                     .Add(new(NPC, "[@a]Hang on,[0.1] I got a call from Girus.", Colors.RarityRed, Color.DarkRed, voice, .03f, 2f, 0, false, null, bubble, modifier: modifier)) // 166
-                                     .Add(new(NPC, "'I wasted too much energy too quickly?'", Colors.RarityRed, Color.DarkRed, voice, .03f, 2f, 0, false, null, bubble, modifier: modifier)) // 178
-                                     .Add(new(NPC, "'I'm an idiot?'", Colors.RarityRed, Color.DarkRed, voice, .03f, 2f, 0, false, null, bubble, modifier: modifier)) // 130
-                                     .Add(new(NPC, "You're scrapping my personality drive after this fight?", Colors.RarityRed, Color.DarkRed, voice, .03f, 2f, 0, false, null, bubble, modifier: modifier)) // 210
-                                     .Add(new(NPC, "[@b]Ah well,[0.1] request accepted...", Colors.RarityRed, Color.DarkRed, voice, .03f, 2f, 0, false, null, bubble, modifier: modifier)) // 156
-                                     .Add(new(NPC, "Anyway...", Colors.RarityRed, Color.DarkRed, voice, .03f, 2f, .5f, true, null, bubble, modifier: modifier, endID: 1));
+                                     .Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.OO.Intro.3"), Colors.RarityRed, Color.DarkRed, voice, .03f, 2f, 0, false, null, bubble, modifier: modifier)) // 166
+                                     .Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.OO.Intro.4"), Colors.RarityRed, Color.DarkRed, voice, .03f, 2f, 0, false, null, bubble, modifier: modifier)) // 178
+                                     .Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.OO.Intro.5"), Colors.RarityRed, Color.DarkRed, voice, .03f, 2f, 0, false, null, bubble, modifier: modifier)) // 130
+                                     .Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.OO.Intro.6"), Colors.RarityRed, Color.DarkRed, voice, .03f, 2f, 0, false, null, bubble, modifier: modifier)) // 210
+                                     .Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.OO.Intro.7"), Colors.RarityRed, Color.DarkRed, voice, .03f, 2f, 0, false, null, bubble, modifier: modifier)) // 156
+                                     .Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.OO.Intro.8"), Colors.RarityRed, Color.DarkRed, voice, .03f, 2f, .5f, true, null, bubble, modifier: modifier, endID: 1));
                                 chain.OnSymbolTrigger += Chain_OnSymbolTrigger;
                                 chain.OnEndTrigger += Chain_OnEndTrigger;
                                 ChatUI.Visible = true;
@@ -441,7 +442,7 @@ namespace Redemption.NPCs.Bosses.Obliterator
                     NPC.LookAtEntity(player);
                     ArmRot[0] = MathHelper.PiOver2 + (NPC.spriteDirection == -1 ? 0 : MathHelper.Pi);
                     if (AITimer++ == 0 && Main.dedServ)
-                        RedeSystem.Instance.TitleCardUIElement.DisplayTitle("Omega Obliterator", 60, 90, 0.8f, 0, Color.Red, "3rd Omega Prototype");
+                        RedeSystem.Instance.TitleCardUIElement.DisplayTitle(Language.GetTextValue("Mods.Redemption.TitleCard.OO.Name"), 60, 90, 0.8f, 0, Color.Red, Language.GetTextValue("Mods.Redemption.TitleCard.OO.Modifier"));
                     if (AITimer < 60)
                         NPC.Move(DefaultPos2, 9, 10);
                     else
@@ -464,9 +465,9 @@ namespace Redemption.NPCs.Bosses.Obliterator
 
                         if (!Main.dedServ)
                         {
-                            string s = "Ready for obliteration?";
+                            string s = Language.GetTextValue("Mods.Redemption.Cutscene.OO.Ready");
                             if (RedeBossDowned.downedOmega3)
-                                s = "PREPARE FOR OBLITERATION.";
+                                s = Language.GetTextValue("Mods.Redemption.Cutscene.OO.DownedReady");
 
                             Dialogue d1 = new(NPC, s, Colors.RarityRed, Color.DarkRed, voice, .03f, 2f, .5f, true, null, bubble, modifier: modifier); // 176
 
@@ -1015,12 +1016,12 @@ namespace Redemption.NPCs.Bosses.Obliterator
                                     if (!RedeBossDowned.downedOmega3)
                                     {
                                         DialogueChain chain = new();
-                                        chain.Add(new(NPC, "SYSTEM OVERLOAD...", Colors.RarityRed, Color.DarkRed, voice with { Pitch = -0.5f }, .03f, 2f, 0, false, null, bubble, modifier: modifier)) // 136
-                                             .Add(new(NPC, "Overload?[0.5] Damn right I'm overloading!", Colors.RarityRed, Color.DarkRed, voice, .03f, 2f, 0, false, null, bubble, modifier: modifier)) // 204
-                                             .Add(new(NPC, "My circuits are burning with energy![0.1] This is truly exhilarating!", Colors.RarityRed, Color.DarkRed, voice, .03f, 2f, 0, false, null, bubble, modifier: modifier)) // 238
-                                             .Add(new(NPC, "[@d]OVERHEATING...[0.1] OVERHEATING...[0.1] OVERHEATING...[0.1]", Colors.RarityRed, Color.DarkRed, voice with { Pitch = -0.5f }, .03f, 2f, 0, false, null, bubble, modifier: modifier)) // 218
-                                             .Add(new(NPC, "Hahaha.[0.5] [@e]HAHAHAHAHAHAHA!", Colors.RarityRed, Color.DarkRed, voice with { Pitch = 0.1f, PitchVariance = 0.1f }, .03f, 2f, 0, false, null, bubble, modifier: modifier)) // 156
-                                             .Add(new(NPC, "THE POWER OF THE SUN IN MY VERY CORE!", Colors.RarityRed, Color.DarkRed, voice with { Pitch = 0.3f, PitchVariance = 0.3f }, .03f, 2f, .5f, true, null, bubble, modifier: modifier, endID: 1)); // 204
+                                        chain.Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.OO.Desperation.1"), Colors.RarityRed, Color.DarkRed, voice with { Pitch = -0.5f }, .03f, 2f, 0, false, null, bubble, modifier: modifier)) // 136
+                                             .Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.OO.Desperation.2"), Colors.RarityRed, Color.DarkRed, voice, .03f, 2f, 0, false, null, bubble, modifier: modifier)) // 204
+                                             .Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.OO.Desperation.3"), Colors.RarityRed, Color.DarkRed, voice, .03f, 2f, 0, false, null, bubble, modifier: modifier)) // 238
+                                             .Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.OO.Desperation.4"), Colors.RarityRed, Color.DarkRed, voice with { Pitch = -0.5f }, .03f, 2f, 0, false, null, bubble, modifier: modifier)) // 218
+                                             .Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.OO.Desperation.5"), Colors.RarityRed, Color.DarkRed, voice with { Pitch = 0.1f, PitchVariance = 0.1f }, .03f, 2f, 0, false, null, bubble, modifier: modifier)) // 156
+                                             .Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.OO.Desperation.6"), Colors.RarityRed, Color.DarkRed, voice with { Pitch = 0.3f, PitchVariance = 0.3f }, .03f, 2f, .5f, true, null, bubble, modifier: modifier, endID: 1)); // 204
                                         chain.OnSymbolTrigger += Chain_OnSymbolTrigger;
                                         chain.OnEndTrigger += Chain_OnEndTrigger;
                                         ChatUI.Visible = true;
@@ -1029,8 +1030,8 @@ namespace Redemption.NPCs.Bosses.Obliterator
                                     else
                                     {
                                         DialogueChain chain = new();
-                                        chain.Add(new(NPC, "SYSTEM OVERLOAD...", Colors.RarityRed, Color.DarkRed, voice, .03f, 2f, 0, false, null, bubble, modifier: modifier)) // 136
-                                             .Add(new(NPC, "[@d][@e]OVERHEATING...[0.1] OVERHEATING...[0.1] OVERHEATING...[0.1]", Colors.RarityRed, Color.DarkRed, voice, .03f, 2f, 0, false, null, bubble, modifier: modifier, endID: 1)); // 218
+                                        chain.Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.OO.Desperation.D1"), Colors.RarityRed, Color.DarkRed, voice, .03f, 2f, 0, false, null, bubble, modifier: modifier)) // 136
+                                             .Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.OO.Desperation.D2"), Colors.RarityRed, Color.DarkRed, voice, .03f, 2f, 0, false, null, bubble, modifier: modifier, endID: 1)); // 218
                                         chain.OnSymbolTrigger += Chain_OnSymbolTrigger;
                                         chain.OnEndTrigger += Chain_OnEndTrigger;
                                         ChatUI.Visible = true;
@@ -1172,7 +1173,7 @@ namespace Redemption.NPCs.Bosses.Obliterator
                                 NPC.MoveToVector2(ShootPos + new Vector2(0, 40), 8 + SpeedBoost);
                                 if (AITimer == 305 && !RedeBossDowned.downedOmega3 && !Main.dedServ)
                                 {
-                                    Dialogue d1 = new(NPC, "EYE BEAM! EYE BEAM! EYE BEAM! EYE BEAM!", Colors.RarityRed, Color.DarkRed, voice with { Pitch = 0.3f, PitchVariance = 0.3f }, .01f, 1.16f, .5f, true, null, bubble, modifier: modifier);
+                                    Dialogue d1 = new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.OO.Desperation.7"), Colors.RarityRed, Color.DarkRed, voice with { Pitch = 0.3f, PitchVariance = 0.3f }, .01f, 1.16f, .5f, true, null, bubble, modifier: modifier);
                                     ChatUI.Visible = true;
                                     ChatUI.Add(d1);
                                 }
@@ -1401,8 +1402,8 @@ namespace Redemption.NPCs.Bosses.Obliterator
                                         if (!RedeBossDowned.downedOmega3)
                                         {
                                             DialogueChain chain = new();
-                                            chain.Add(new(NPC, "CRITICAL CONDITION REACHED...[0.5] SELF DESTRUCTING...", Colors.RarityRed, Color.DarkRed, voice with { Pitch = -0.5f }, .03f, 2f, 0, false, null, bubble, modifier: modifier)) // 228
-                                                 .Add(new(NPC, "Is it getting hot in here[0.1] or is it just m[@c]", Colors.RarityRed, Color.DarkRed, voice with { Pitch = 0.3f, PitchVariance = 0.3f }, .05f, .05f, 0, false, null, bubble, modifier: modifier)); // 124
+                                            chain.Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.OO.Desperation.8"), Colors.RarityRed, Color.DarkRed, voice with { Pitch = -0.5f }, .03f, 2f, 0, false, null, bubble, modifier: modifier)) // 228
+                                                 .Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.OO.Desperation.9"), Colors.RarityRed, Color.DarkRed, voice with { Pitch = 0.3f, PitchVariance = 0.3f }, .05f, .05f, 0, false, null, bubble, modifier: modifier)); // 124
                                             chain.OnSymbolTrigger += Chain_OnSymbolTrigger;
                                             ChatUI.Visible = true;
                                             ChatUI.Add(chain);
@@ -1410,7 +1411,7 @@ namespace Redemption.NPCs.Bosses.Obliterator
                                         else
                                         {
                                             DialogueChain chain = new();
-                                            chain.Add(new(NPC, "CRITICAL CONDITION REACHED...[0.5] SELF DESTRUCTING...", Colors.RarityRed, Color.DarkRed, voice, .03f, 2f, 0, false, null, bubble, modifier: modifier, endID: 1)); // 228
+                                            chain.Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.OO.Desperation.8"), Colors.RarityRed, Color.DarkRed, voice, .03f, 2f, 0, false, null, bubble, modifier: modifier, endID: 1)); // 228
                                             chain.OnSymbolTrigger += Chain_OnSymbolTrigger;
                                             chain.OnEndTrigger += Chain_OnEndTrigger;
                                             ChatUI.Visible = true;
@@ -1561,8 +1562,8 @@ namespace Redemption.NPCs.Bosses.Obliterator
                     if (AITimer++ == 100 && !Main.dedServ)
                     {
                         DialogueChain chain = new();
-                        chain.Add(new(NPC, "Alright,[0.1] target eliminated.", Colors.RarityRed, Color.DarkRed, voice, .03f, 2f, 0, false, null, bubble, modifier: modifier)) // 154
-                             .Add(new(NPC, "Returning to base...", Colors.RarityRed, Color.DarkRed, voice, .03f, 2f, .5f, true, null, bubble, modifier: modifier)); // 170
+                        chain.Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.OO.Success.1"), Colors.RarityRed, Color.DarkRed, voice, .03f, 2f, 0, false, null, bubble, modifier: modifier)) // 154
+                             .Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.OO.Success.2"), Colors.RarityRed, Color.DarkRed, voice, .03f, 2f, .5f, true, null, bubble, modifier: modifier)); // 170
 
                         ChatUI.Visible = true;
                         ChatUI.Add(chain);
@@ -1582,7 +1583,7 @@ namespace Redemption.NPCs.Bosses.Obliterator
                     {
                         if (!Main.dedServ)
                         {
-                            Dialogue d1 = new(NPC, "Target eliminated...", Colors.RarityRed, Color.DarkRed, voice, .03f, 2f, .5f, true, null, bubble, modifier: modifier); // 150
+                            Dialogue d1 = new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.OO.Success.D1"), Colors.RarityRed, Color.DarkRed, voice, .03f, 2f, .5f, true, null, bubble, modifier: modifier); // 150
 
                             ChatUI.Visible = true;
                             ChatUI.Add(d1);

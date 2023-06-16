@@ -13,6 +13,7 @@ using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.GameContent.Bestiary;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Redemption.BaseExtension;
 using ReLogic.Content;
@@ -105,7 +106,7 @@ namespace Redemption.NPCs.Lab.Janitor
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
         {
             bestiaryEntry.Info.AddRange(new List<IBestiaryInfoElement> {
-                new FlavorTextBestiaryInfoElement("Amidst all the ailments that germs can conjure, all the grime mankind can produce. We'll send unto them, only you. Scrape and Clean until it is done.")
+                new FlavorTextBestiaryInfoElement(Language.GetTextValue("Mods.Redemption.FlavorTextBestiary.Janitor"))
             });
         }
         public override void ModifyIncomingHit(ref NPC.HitModifiers modifiers)
@@ -158,7 +159,7 @@ namespace Redemption.NPCs.Lab.Janitor
             {
                 case ActionState.Begin:
                     if (!Main.dedServ)
-                        RedeSystem.Instance.TitleCardUIElement.DisplayTitle("The Janitor", 60, 90, 0.8f, 0, Color.Yellow, "A Janitor");
+                        RedeSystem.Instance.TitleCardUIElement.DisplayTitle(Language.GetTextValue("Mods.Redemption.TitleCard.Janitor.Name"), 60, 90, 0.8f, 0, Color.Yellow, Language.GetTextValue("Mods.Redemption.TitleCard.Janitor.Modifier"));
 
                     AIState = ActionState.Jump;
                     NPC.netUpdate = true;

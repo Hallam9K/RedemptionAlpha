@@ -31,7 +31,7 @@ namespace Redemption.Items.Weapons.PreHM.Summon
 		{
 			Item.damage = 17;
 			Item.DamageType = DamageClass.Summon;
-			Item.width = 54;
+			Item.width = 46;
 			Item.height = 58;
 			Item.useTime = 18;
 			Item.useAnimation = 18;
@@ -65,12 +65,7 @@ namespace Redemption.Items.Weapons.PreHM.Summon
         {
             if (Main.keyState.PressingShift())
             {
-                TooltipLine line = new(Mod, "Lore",
-                    "'A staff made from the King's Oak - a great lone tree housing the souls of Timbervalley's past and present monarchs.\n" +
-                    "The wellbeing of oak and king are connected as one, grounding their emotion and vigour within the roots of the kingdom;\n" +
-                    "a bottomless well of strength for all who walk and grow.\n" +
-                    "Dancing orbs of light are often witnessed coming and going from the tree, said to be the embodiment of ardour between nature and man.\n" +
-                    "These are known by many names - Faes, Fairies, Pixies - and are the companions of Forest Nymphs.'")
+                TooltipLine line = new(Mod, "HoldShift", Language.GetTextValue("Mods.Redemption.Items.KingsOakStaff.Lore"))
                 {
                     OverrideColor = Color.LightGray
                 };
@@ -78,7 +73,7 @@ namespace Redemption.Items.Weapons.PreHM.Summon
             }
             else
             {
-                TooltipLine line = new(Mod, "HoldShift", "Hold [Shift] to view lore")
+                TooltipLine line = new(Mod, "HoldShift", Language.GetTextValue("Mods.Redemption.SpecialTooltips.Viewer"))
                 {
                     OverrideColor = Color.Gray,
                 };

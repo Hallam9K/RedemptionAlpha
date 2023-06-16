@@ -17,11 +17,17 @@
     <PackageReference Include="tModLoader.CodeAssist" Version="0.1.*" />
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="CollisionLib">
+      <HintPath>Dependancies\CollisionLib.dll</HintPath>
+    </Reference>
     <Reference Include="ParticleLibrary">
       <HintPath>Dependancies\ParticleLibrary.dll</HintPath>
     </Reference>
     <Reference Include="StructureHelper">
       <HintPath>Dependancies\StructureHelper.dll</HintPath>
+    </Reference>
+    <Reference Include="SubworldLibrary">
+      <HintPath>Dependancies\SubworldLibrary.dll</HintPath>
     </Reference>
   </ItemGroup>
 </Project>

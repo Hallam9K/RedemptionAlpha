@@ -6,7 +6,6 @@ using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 using Terraria.DataStructures;
-using Redemption.Items.Placeable.Furniture.Misc;
 
 namespace Redemption.Tiles.Furniture.Misc
 {

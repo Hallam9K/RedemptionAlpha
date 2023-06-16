@@ -3,6 +3,7 @@ using Redemption.Items.Placeable.Tiles;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 
 namespace Redemption.Items.Weapons.HM.Ranged
@@ -49,10 +50,7 @@ namespace Redemption.Items.Weapons.HM.Ranged
         {
             if (Main.keyState.PressingShift())
             {
-                TooltipLine line = new(Mod, "Lore",
-                    "'A relic of Nirin's ancient brass technology, first uncovered and brought to light by a hermit with a rusty metal arm.\n" +
-                    "The mountains of the frozen domain hold many secrets and crafts long neglected, first created by dwindling\n" +
-                    "natives of the Arctic Realm and preserved by refugees of a ruined kingdom, yet only for a fleeting time did it last.'")
+                TooltipLine line = new(Mod, "HoldShift", Language.GetTextValue("Mods.Redemption.Items.SteampunkMinigun.Lore"))
                 {
                     OverrideColor = Color.LightGray
                 };
@@ -60,7 +58,7 @@ namespace Redemption.Items.Weapons.HM.Ranged
             }
             else
             {
-                TooltipLine line = new(Mod, "HoldShift", "Hold [Shift] to view lore")
+                TooltipLine line = new(Mod, "HoldShift", Language.GetTextValue("Mods.Redemption.SpecialTooltips.Viewer"))
                 {
                     OverrideColor = Color.Gray,
                 };

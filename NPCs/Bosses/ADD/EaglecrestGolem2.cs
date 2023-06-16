@@ -20,6 +20,7 @@ using Terraria.GameContent;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.Graphics.Shaders;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 
 namespace Redemption.NPCs.Bosses.ADD
@@ -168,7 +169,7 @@ namespace Redemption.NPCs.Bosses.ADD
                 case ActionState.Start:
                     NPC.target = RedeHelper.GetNearestAlivePlayer(NPC);
                     if (!Main.dedServ)
-                        RedeSystem.Instance.TitleCardUIElement.DisplayTitle("Eaglecrest Golem", 60, 90, 0.8f, 0, Color.Gray, "Guardian of Eaglecrest Meadows");
+                        RedeSystem.Instance.TitleCardUIElement.DisplayTitle(Language.GetTextValue("Mods.Redemption.TitleCard.Golem.Name"), 60, 90, 0.8f, 0, Color.Gray, Language.GetTextValue("Mods.Redemption.TitleCard.Golem.Modifier"));
 
                     TimerRand = Main.rand.Next(300, 600);
                     AIState = ActionState.Idle;

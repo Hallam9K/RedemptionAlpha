@@ -3,7 +3,6 @@ using Microsoft.Xna.Framework.Graphics;
 using Redemption.Base;
 using Redemption.Globals;
 using Redemption.Items.Materials.PreHM;
-using Redemption.NPCs.Bosses.FowlEmperor;
 using Redemption.NPCs.Friendly;
 using Terraria;
 using Terraria.DataStructures;
@@ -99,7 +98,7 @@ namespace Redemption.Items.Usable
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
 
             Texture2D texture = TextureAssets.Item[Item.type].Value;
-            Texture2D textureGlow = ModContent.Request<Texture2D>(Item.ModItem.Texture + "_Glow").Value;
+            Texture2D textureGlow = ModContent.Request<Texture2D>(Texture + "_Glow").Value;
             Rectangle frame;
             if (Main.itemAnimations[Item.type] != null)
                 frame = Main.itemAnimations[Item.type].GetFrame(texture, Main.itemFrameCounter[whoAmI]);

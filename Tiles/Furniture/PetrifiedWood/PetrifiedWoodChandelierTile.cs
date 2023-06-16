@@ -31,6 +31,7 @@ namespace Redemption.Tiles.Furniture.PetrifiedWood
             TileObjectData.addTile(Type);
             AddMapEntry(new Color(100, 100, 100), Language.GetText("MapObject.Chandelier"));
             AdjTiles = new int[] { TileID.Chandeliers };
+            RegisterItemDrop(ModContent.ItemType<PetrifiedWoodChandelier>());
             AddToArray(ref TileID.Sets.RoomNeeds.CountsAsTorch);
             DustType = DustID.Ash;
 

@@ -33,10 +33,11 @@ namespace Redemption.Tiles.Furniture.Misc
             TileObjectData.newAlternate.AnchorBottom = new AnchorData(AnchorType.SolidTile | AnchorType.SolidWithTop | AnchorType.SolidSide, 4, 1);
             TileObjectData.addAlternate(1);
             TileObjectData.addTile(Type);
-            MinPick = 500;
+            MinPick = 1000;
             MineResist = 15f;
             HitSound = CustomSounds.StoneHit;
             AddMapEntry(new Color(104, 91, 83));
+            RegisterItemDrop(ModContent.ItemType<AncientFallenStatue>());
             DustType = ModContent.DustType<SlateDust>();
         }
         public override bool CanExplode(int i, int j) => false;

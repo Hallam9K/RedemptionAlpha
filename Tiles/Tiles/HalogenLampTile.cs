@@ -3,13 +3,14 @@ using Terraria;
 using Terraria.ModLoader;
 using Terraria.ID;
 using Microsoft.Xna.Framework.Graphics;
-using Redemption.Items.Placeable.Tiles;
+using ReLogic.Content;
 
 namespace Redemption.Tiles.Tiles
 {
     public class HalogenLampTile : ModTile
-	{
-		public override void SetStaticDefaults()
+    {
+        private Asset<Texture2D> glowTexture;
+        public override void SetStaticDefaults()
 		{
             Main.tileSolid[Type] = false;
             Main.tileMergeDirt[Type] = false;
@@ -17,10 +18,11 @@ namespace Redemption.Tiles.Tiles
             DustType = DustID.Electric;
             MinPick = 10;
             MineResist = 3f;
-            ItemDrop = ModContent.ItemType<HalogenLamp>();
             HitSound = SoundID.Tink;
             AddMapEntry(new Color(193, 255, 219));
             AnimationFrameHeight = 90;
+            if (!Main.dedServ)
+                glowTexture = ModContent.Request<Texture2D>(Texture + "_Glow");
         }
         public override void NumDust(int i, int j, bool fail, ref int num)
 		{
@@ -41,7 +43,7 @@ namespace Redemption.Tiles.Tiles
                 zero = Vector2.Zero;
 
             int height = tile.TileFrameY == 36 ? 18 : 16;
-            Main.spriteBatch.Draw(ModContent.Request<Texture2D>("Redemption/Tiles/Tiles/HalogenLampTile_Glow").Value, new Vector2((i * 16) - (int)Main.screenPosition.X, (j * 16) - (int)Main.screenPosition.Y) + zero, new Rectangle(tile.TileFrameX, tile.TileFrameY, 16, height), Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
+            Main.spriteBatch.Draw(glowTexture.Value, new Vector2((i * 16) - (int)Main.screenPosition.X, (j * 16) - (int)Main.screenPosition.Y) + zero, new Rectangle(tile.TileFrameX, tile.TileFrameY, 16, height), Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
         }
         public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)
         {

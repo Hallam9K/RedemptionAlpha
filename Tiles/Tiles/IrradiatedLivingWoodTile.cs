@@ -31,7 +31,7 @@ namespace Redemption.Tiles.Tiles
 			AddMapEntry(new Color(111, 100, 93));
             DustType = DustID.Ash;
             MineResist = 2.5f;
-            ItemDrop = ModContent.ItemType<PetrifiedWood>();
+            RegisterItemDrop(ModContent.ItemType<PetrifiedWood>(), 0);
         }
         public override void FloorVisuals(Player player)
         {

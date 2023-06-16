@@ -2,6 +2,7 @@ using System;
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.ID;
+using Terraria.Localization;
 using Microsoft.Xna.Framework;
 using System.IO;
 using Terraria.DataStructures;
@@ -14,7 +15,6 @@ using Terraria.GameContent;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria.Audio;
 using Redemption.Base;
-using Redemption.Projectiles.Misc;
 using Redemption.Dusts;
 using Terraria.GameContent.ItemDropRules;
 using Redemption.Items.Placeable.Trophies;
@@ -30,7 +30,6 @@ using Redemption.Items.Armor.Vanity;
 using ReLogic.Content;
 using Redemption.UI.ChatUI;
 using Redemption.UI;
-using Terraria.Localization;
 
 namespace Redemption.NPCs.Bosses.KSIII
 {
@@ -163,7 +162,7 @@ namespace Redemption.NPCs.Bosses.KSIII
         public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)
         {
             NPC.lifeMax = (int)(NPC.lifeMax * 0.6f * balance * bossAdjustment);
-            NPC.damage = (int)(NPC.damage * 0.6f);
+            NPC.damage = (int)(NPC.damage * 0.75f);
         }
 
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
@@ -172,7 +171,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Sky,
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Times.DayTime,
 
-                new FlavorTextBestiaryInfoElement("'What? You want my lore? Go get your own lore!'")
+                new FlavorTextBestiaryInfoElement(Language.GetTextValue("Mods.Redemption.FlavorTextBestiary.KS3"))
             });
         }
 
@@ -343,7 +342,7 @@ namespace Redemption.NPCs.Bosses.KSIII
             {
                 case ActionState.Begin:
                     if (!Main.dedServ)
-                        RedeSystem.Instance.TitleCardUIElement.DisplayTitle("King Slayer III", 60, 90, 0.8f, 0, Color.Cyan, "Prototype Multium");
+                        RedeSystem.Instance.TitleCardUIElement.DisplayTitle(Language.GetTextValue("Mods.Redemption.TitleCard.KS3.Name"), 60, 90, 0.8f, 0, Color.Cyan, Language.GetTextValue("Mods.Redemption.TitleCard.KS3.Modifier"));
 
                     NPC.LookAtEntity(player);
                     BodyState = (int)BodyAnim.Crossed;
@@ -374,42 +373,43 @@ namespace Redemption.NPCs.Bosses.KSIII
                             {
                                 string line1;
                                 if (RedeHelper.AnyProjectiles(ModContent.ProjectileType<KS3_DroneKillCheck>()))
-                                    line1 = "Did you seriously just destroy my drones?";
+                                    line1 = Language.GetTextValue("Mods.Redemption.Cutscene.KS3.Intro.DroneBreak");
                                 else
                                 {
                                     if (RedeWorld.alignment >= 0)
                                     {
                                         if (player.IsFullTBot())
-                                            line1 = "Alright listen here you little scrap of metal.";
+                                            line1 = Language.GetTextValue("Mods.Redemption.Cutscene.KS3.Intro.DroneIfRobot");
                                         else if (player.RedemptionPlayerBuff().ChickenForm)
-                                            line1 = "Alright listen here you little chicken nugget.";
+                                            line1 = Language.GetTextValue("Mods.Redemption.Cutscene.KS3.Intro.DroneIfChicken");
                                         else
-                                            line1 = "Alright listen here you little fleshbag.";
+                                            line1 = Language.GetTextValue("Mods.Redemption.Cutscene.KS3.Intro.DroneHuman");
                                     }
                                     else
                                     {
                                         if (player.IsFullTBot())
-                                            line1 = "Ah,[0.1] this little scrap of metal decided to save me the trouble of finding it.";
+                                            line1 = Language.GetTextValue("Mods.Redemption.Cutscene.KS3.Intro.NoDroneIfRobot");
                                         else if (player.RedemptionPlayerBuff().ChickenForm)
-                                            line1 = "Ah,[0.1] this little chicken nugget decided to save me the trouble of finding it.";
+                                            line1 = Language.GetTextValue("Mods.Redemption.Cutscene.KS3.Intro.NoDroneIfChicken");
                                         else
-                                            line1 = "Ah,[0.1] this little fleshbag decided to save me the trouble of finding it.";
+                                            line1 = Language.GetTextValue("Mods.Redemption.Cutscene.KS3.Intro.NoDroneIfHuman");
                                     }
                                 }
                                 string line2;
                                 if (RedeHelper.AnyProjectiles(ModContent.ProjectileType<KS3_DroneKillCheck>()))
-                                    line2 = "Eh,[0.1] not like I got a shortage of them,[0.1] but I'm still gonna blast ya for it!";
+                                    line2 = Language.GetTextValue("Mods.Redemption.Cutscene.KS3.Intro.Start");
                                 else
                                 {
                                     if (RedeWorld.alignment >= 0)
                                     {
-                                        line2 = "I warned you,[0.1] so don't go crying to your mummy when I crush you into the ground!";
+                                        line2 = Language.GetTextValue("Mods.Redemption.Cutscene.KS3.Intro.StartGood");
                                         if (player.Redemption().slayerStarRating >= 6)
-                                            line2 = "Do you understand how annoying it is to be spam-pinged by my units because of your trigger-happy arse?[1] Maybe I should teach you a lesson!";
+                                            line2 = Language.GetTextValue("Mods.Redemption.Cutscene.KS3.Intro.StartSSR");
                                     }
                                     else
-                                        line2 = "You were on my hitlist,[0.1] so lets skip the small talk and get on with it!";
-                                }
+                                        line2 = Language.GetTextValue("Mods.Redemption.Cutscene.KS3.Intro.StartEvil");
+                                };
+                                
                                 player.Redemption().slayerStarRating = 0;
 
                                 DialogueChain chain = new();
@@ -417,9 +417,9 @@ namespace Redemption.NPCs.Bosses.KSIII
                                      .Add(new(NPC, "[@h1]" + line2, new Color(170, 255, 255), Color.Black, voice, .03f, 2f, .5f, !RedeBossDowned.downedKeeper, null, bubble, null, modifier, RedeBossDowned.downedKeeper ? 0 : 1));
                                 if (RedeBossDowned.downedKeeper)
                                 {
-                                    chain.Add(new(NPC, "[@b0][@h0]Actually...[0.5] You were the one that fought the Keeper, weren't you!", new Color(170, 255, 255), Color.Black, voice, .03f, 2f, 0, false, null, bubble, null, modifier));
-                                    chain.Add(new(NPC, "[@h2]That was my job!", new Color(170, 255, 255), Color.Black, voice, .03f, 2f, 0, false, null, bubble, null, modifier));
-                                    chain.Add(new(NPC, "[@h0]Great,[0.1] now I have even more reason to pummel you to ash!", new Color(170, 255, 255), Color.Black, voice, .03f, 2f, .5f, true, null, bubble, null, modifier, 1));
+                                    chain.Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.KS3.Intro.KeeperDowned1"), new Color(170, 255, 255), Color.Black, voice, .03f, 2f, 0, false, null, bubble, null, modifier));
+                                    chain.Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.KS3.Intro.KeeperDowned2"), new Color(170, 255, 255), Color.Black, voice, .03f, 2f, 0, false, null, bubble, null, modifier));
+                                    chain.Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.KS3.Intro.KeeperDowned3"), new Color(170, 255, 255), Color.Black, voice, .03f, 2f, .5f, true, null, bubble, null, modifier, 1));
                                 }
                                 chain.OnSymbolTrigger += Chain_OnSymbolTrigger;
                                 chain.OnEndTrigger += Chain_OnEndTrigger;
@@ -438,7 +438,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                         if (AITimer >= 5060)
                         {
                             if (!Main.dedServ)
-                                RedeSystem.Instance.TitleCardUIElement.DisplayTitle("King Slayer III", 60, 90, 0.8f, 0, Color.Cyan, "Prototype Multium");
+                                RedeSystem.Instance.TitleCardUIElement.DisplayTitle(Language.GetTextValue("Mods.Redemption.TitleCard.KS3.Name"), 60, 90, 0.8f, 0, Color.Cyan, Language.GetTextValue("Mods.Redemption.TitleCard.KS3.Modifier"));
 
                             ShootPos = new Vector2(Main.rand.Next(300, 400) * NPC.RightOfDir(player), Main.rand.Next(-60, 60));
                             if (RedeBossDowned.slayerDeath < 3)
@@ -467,22 +467,22 @@ namespace Redemption.NPCs.Bosses.KSIII
                             {
                                 line1 = Main.rand.Next(5) switch
                                 {
-                                    1 => "[@h1]Why must you summon me again?",
-                                    2 => "[@h2]Could you maybe possibly probably potentially LEAVE ME ALONE?",
-                                    3 => "[@h1]Really,[0.1] a rematch?[0.5] Fine.",
-                                    4 => "[@h1]Why don't you go preemptively die and save me the effort.",
-                                    _ => "[@h4]What?[0.5] Do you want to fight me again?",
+                                    1 => Language.GetTextValue("Mods.Redemption.Cutscene.KS3.Resummon.Downed1"),
+                                    2 => Language.GetTextValue("Mods.Redemption.Cutscene.KS3.Resummon.Downed2"),
+                                    3 => Language.GetTextValue("Mods.Redemption.Cutscene.KS3.Resummon.Downed3"),
+                                    4 => Language.GetTextValue("Mods.Redemption.Cutscene.KS3.Resummon.Downed4"),
+                                    _ => Language.GetTextValue("Mods.Redemption.Cutscene.KS3.Resummon.Downed5"),
                                 };
                             }
                             else
                             {
                                 line1 = Main.rand.Next(5) switch
                                 {
-                                    1 => "[@h3]Could've sworn you died...",
-                                    2 => "Ready for a rematch?",
-                                    3 => "Welp,[0.1] time to win again!",
-                                    4 => "Still wanna fight?",
-                                    _ => "[@h3]You're quite a resilient fellow...",
+                                    1 => Language.GetTextValue("Mods.Redemption.Cutscene.KS3.Resummon.1"),
+                                    2 => Language.GetTextValue("Mods.Redemption.Cutscene.KS3.Resummon.2"),
+                                    3 => Language.GetTextValue("Mods.Redemption.Cutscene.KS3.Resummon.3"),
+                                    4 => Language.GetTextValue("Mods.Redemption.Cutscene.KS3.Resummon.4"),
+                                    _ => Language.GetTextValue("Mods.Redemption.Cutscene.KS3.Resummon.5"),
                                 };
                             }
                             DialogueChain chain = new();
@@ -502,7 +502,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                         if (AITimer >= 5060)
                         {
                             if (!Main.dedServ)
-                                RedeSystem.Instance.TitleCardUIElement.DisplayTitle("King Slayer III", 60, 90, 0.8f, 0, Color.Cyan, "Prototype Multium");
+                                RedeSystem.Instance.TitleCardUIElement.DisplayTitle(Language.GetTextValue("Mods.Redemption.TitleCard.KS3.Name"), 60, 90, 0.8f, 0, Color.Cyan, Language.GetTextValue("Mods.Redemption.TitleCard.KS3.Modifier"));
 
                             NPC.dontTakeDamage = false;
                             ShootPos = new Vector2(Main.rand.Next(300, 400) * NPC.RightOfDir(player), Main.rand.Next(-60, 60));
@@ -1246,18 +1246,10 @@ namespace Redemption.NPCs.Bosses.KSIII
                                 if (AITimer == 21)
                                 {
                                     for (int k = 0; k < NPC.buffImmune.Length; k++)
-                                        NPC.buffImmune[k] = true;
-
-                                    if (Main.netMode != NetmodeID.MultiplayerClient)
                                     {
-                                        for (int i = 0; i < NPC.buffTime.Length; i++)
-                                        {
-                                            NPC.buffTime[i] = 0;
-                                            NPC.buffType[i] = 0;
-                                        }
-
-                                        if (Main.netMode == NetmodeID.Server)
-                                            NetMessage.SendData(MessageID.NPCBuffs, number: NPC.whoAmI);
+                                        if (BuffID.Sets.IsAnNPCWhipDebuff[k])
+                                            continue;
+                                        NPC.buffImmune[k] = true;
                                     }
                                     NPC.netUpdate = true;
                                 }
@@ -1932,18 +1924,18 @@ namespace Redemption.NPCs.Bosses.KSIII
                             if (RedeHelper.AnyProjectiles(ModContent.ProjectileType<KS3_Shield>()))
                             {
                                 if (player.HeldItem.DamageType == DamageClass.Melee)
-                                    line1 = "What a nuisance.[1] It would seem my Auto-Shield is ineffective to your attacks.";
+                                    line1 = Language.GetTextValue("Mods.Redemption.Cutscene.KS3.Interval1.Effort1");
                                 else
-                                    line1 = "What a nuisance.[1] Your petty projectiles are going through my Auto-Shield.";
+                                    line1 = Language.GetTextValue("Mods.Redemption.Cutscene.KS3.Interval1.Effort2");
                             }
                             else
-                                line1 = "What a nuisance.[1] You are only wasting both of our efforts here.";
+                                line1 = Language.GetTextValue("Mods.Redemption.Cutscene.KS3.Interval1.Effort3");
 
                             string line2;
                             if (TeleportCount > 6)
-                                line2 = "Why'd you summon me if you're just gonna run away the entire time?";
+                                line2 = Language.GetTextValue("Mods.Redemption.Cutscene.KS3.Interval1.RunAway");
                             else
-                                line2 = "Might as well blow you to pieces with a few missiles.";
+                                line2 = Language.GetTextValue("Mods.Redemption.Cutscene.KS3.Interval1.End");
 
                             DialogueChain chain = new();
                             chain.Add(new(NPC, line1, new Color(170, 255, 255), Color.Black, voice, .03f, 2f, 0, false, null, bubble, null, modifier))
@@ -2039,22 +2031,22 @@ namespace Redemption.NPCs.Bosses.KSIII
                             HeadType = 4;
                             string line1;
                             if (player.IsFullTBot())
-                                line1 = "This rusty little tincan is more persistent than I thought...";
+                                line1 = Language.GetTextValue("Mods.Redemption.Cutscene.KS3.Interval2.StartIfRobot");
                             else if (player.RedemptionPlayerBuff().ChickenForm)
-                                line1 = "The concept of losing to a chicken does not bode well with me...";
+                                line1 = Language.GetTextValue("Mods.Redemption.Cutscene.KS3.Interval2.StartIfChicken");
                             else
-                                line1 = "You pack more of a punch than I thought for such a small fleshbag...";
+                                line1 = Language.GetTextValue("Mods.Redemption.Cutscene.KS3.Interval2.StartIfHuman");
 
                             string line2;
                             if (player.HeldItem.DamageType == DamageClass.Ranged || player.HeldItem.DamageType == DamageClass.Magic)
-                                line2 = "You like shooting things,[0.1] correct?[0.5] Well try shooting me now.";
+                                line2 = Language.GetTextValue("Mods.Redemption.Cutscene.KS3.Interval2.Ranged");
                             else
-                                line2 = "Go ahead,[0.1] shoot me if you can.";
+                                line2 = Language.GetTextValue("Mods.Redemption.Cutscene.KS3.Interval2.Normal");
 
                             DialogueChain chain = new();
                             chain.Add(new(NPC, line1, new Color(170, 255, 255), Color.Black, voice, .03f, 2f, 0, false, null, bubble, null, modifier))
-                                 .Add(new(NPC, "[@h3]I might even have to take you seriously...", new Color(170, 255, 255), Color.Black, voice, .03f, 2f, 0, false, null, bubble, null, modifier))
-                                 .Add(new(NPC, "[@h0]PAH![0.5] What a joke!", new Color(170, 255, 255), Color.Black, voice, .03f, 2f, 0, false, null, bubble, null, modifier))
+                                 .Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.KS3.Interval2.Joke1"), new Color(170, 255, 255), Color.Black, voice, .03f, 2f, 0, false, null, bubble, null, modifier))
+                                 .Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.KS3.Interval2.Joke2"), new Color(170, 255, 255), Color.Black, voice, .03f, 2f, 0, false, null, bubble, null, modifier))
                                  .Add(new(NPC, "[@h2]" + line2, new Color(170, 255, 255), Color.Black, voice, .03f, 2f, .5f, true, null, bubble, null, modifier, 1));
                             chain.OnSymbolTrigger += Chain_OnSymbolTrigger;
                             chain.OnEndTrigger += Chain_OnEndTrigger;
@@ -2141,9 +2133,9 @@ namespace Redemption.NPCs.Bosses.KSIII
                         {
                             HeadType = 2;
                             DialogueChain chain = new();
-                            chain.Add(new(NPC, "This is getting ridiculous![0.5] Why can't I kill you?", new Color(170, 255, 255), Color.Black, voice, .03f, 2f, 0, false, null, bubble, null, modifier))
-                                 .Add(new(NPC, "[@h3]*Ahem*[1] Your persistence is admirable,[0.1] I'll give you that.", new Color(170, 255, 255), Color.Black, voice, .03f, 2f, 0, false, null, bubble, null, modifier))
-                                 .Add(new(NPC, "[@h2]But you better realise I'm hardly trying.[1][@h1] I ain't bluffing either.", new Color(170, 255, 255), Color.Black, voice, .03f, 2f, .5f, true, null, bubble, null, modifier, 1));
+                            chain.Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.KS3.Interval3.1"), new Color(170, 255, 255), Color.Black, voice, .03f, 2f, 0, false, null, bubble, null, modifier))
+                                 .Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.KS3.Interval3.2"), new Color(170, 255, 255), Color.Black, voice, .03f, 2f, 0, false, null, bubble, null, modifier))
+                                 .Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.KS3.Interval3.3"), new Color(170, 255, 255), Color.Black, voice, .03f, 2f, .5f, true, null, bubble, null, modifier, 1));
                             chain.OnSymbolTrigger += Chain_OnSymbolTrigger;
                             chain.OnEndTrigger += Chain_OnEndTrigger;
                             ChatUI.Visible = true;
@@ -2197,7 +2189,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                         {
                             HeadType = 3;
                             DialogueChain chain = new();
-                            chain.Add(new(NPC, "If you stop attacking,[0.1] I'll go back to more [0.1]IMPORTANT[0.1] business.", new Color(170, 255, 255), Color.Black, voice, .03f, 2f, .5f, true, null, bubble, null, modifier, 1));
+                            chain.Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.KS3.Interval4.Stop"), new Color(170, 255, 255), Color.Black, voice, .03f, 2f, .5f, true, null, bubble, null, modifier, 1));
                             chain.OnSymbolTrigger += Chain_OnSymbolTrigger;
                             chain.OnEndTrigger += Chain_OnEndTrigger;
                             ChatUI.Visible = true;
@@ -2224,16 +2216,16 @@ namespace Redemption.NPCs.Bosses.KSIII
 
                             string line1;
                             if (TeleportCount > 16)
-                                line1 = "You've just been flying away the entire fight.[1] Seriously.";
+                                line1 = Language.GetTextValue("Mods.Redemption.Cutscene.KS3.Interval4.RunAway");
                             else
-                                line1 = "I'm too tired to get mad about this nonsense.";
+                                line1 = Language.GetTextValue("Mods.Redemption.Cutscene.KS3.Interval4.Normal");
 
                             DialogueChain chain = new();
-                            chain.Add(new(NPC, "Alright alright alright!", new Color(170, 255, 255), Color.Black, voice, .03f, 2f, 0, false, null, bubble, null, modifier))
-                                 .Add(new(NPC, "[@h1]We'll...[0.5] call it a draw then.", new Color(170, 255, 255), Color.Black, voice, .03f, 2f, 0, false, null, bubble, null, modifier))
+                            chain.Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.KS3.Interval4.Alright"), new Color(170, 255, 255), Color.Black, voice, .03f, 2f, 0, false, null, bubble, null, modifier))
+                                 .Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.KS3.Interval4.Draw1"), new Color(170, 255, 255), Color.Black, voice, .03f, 2f, 0, false, null, bubble, null, modifier))
                                  .Add(new(NPC, line1, new Color(170, 255, 255), Color.Black, voice, .03f, 2f, 0, false, null, bubble, null, modifier))
-                                 .Add(new(NPC, "[@h2]If you agree to stop,[0.1] I'll go back to more [0.1]IMPORTANT[0.1] business.", new Color(170, 255, 255), Color.Black, voice, .03f, 2f, 0, false, null, bubble, null, modifier))
-                                 .Add(new(NPC, "[@h3]But,[0.1] if you so choose,[0.1] we can continue...[1] But I won't be happy if I lose.", new Color(170, 255, 255), Color.Black, voice, .03f, 2f, .5f, true, null, bubble, null, modifier, 1));
+                                 .Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.KS3.Interval4.Draw2"), new Color(170, 255, 255), Color.Black, voice, .03f, 2f, 0, false, null, bubble, null, modifier))
+                                 .Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.KS3.Interval4.Draw3"), new Color(170, 255, 255), Color.Black, voice, .03f, 2f, .5f, true, null, bubble, null, modifier, 1));
                             chain.OnSymbolTrigger += Chain_OnSymbolTrigger;
                             chain.OnEndTrigger += Chain_OnEndTrigger;
                             ChatUI.Visible = true;
@@ -2265,7 +2257,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                         Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/silence");
 
                     if (!Main.dedServ && !YesNoUI.Visible)
-                        RedeSystem.Instance.YesNoUIElement.DisplayYesNoButtons("Call Draw", "Continue", new Vector2(0, 28), new Vector2(0, 28), .6f, .6f);
+                        RedeSystem.Instance.YesNoUIElement.DisplayYesNoButtons(Language.GetTextValue("Mods.Redemption.GenericTerms.Choice.CallDraw"), Language.GetTextValue("Mods.Redemption.GenericTerms.Choice.Continue"), new Vector2(0, 28), new Vector2(0, 28), .6f, .6f);
 
                     if (player.Redemption().yesChoice)
 
@@ -2319,7 +2311,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                     {
                         HeadType = 1;
                         DialogueChain chain = new();
-                        chain.Add(new(NPC, "I see how it is...", new Color(170, 255, 255), Color.Black, voice, .03f, 2f, .5f, true, null, bubble, null, modifier));
+                        chain.Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.KS3.Continue.Accept"), new Color(170, 255, 255), Color.Black, voice, .03f, 2f, .5f, true, null, bubble, null, modifier));
                         ChatUI.Visible = true;
                         ChatUI.Add(chain);
                     }
@@ -2379,8 +2371,8 @@ namespace Redemption.NPCs.Bosses.KSIII
                     {
                         HeadType = 0;
                         DialogueChain chain = new();
-                        chain.Add(new(NPC, "Tie it is then.[1] Now don't distract me again.", new Color(170, 255, 255), Color.Black, voice, .03f, 2f, 0, false, null, bubble, null, modifier))
-                             .Add(new(NPC, "[@h1]Adios,[0.1] dingus.", new Color(170, 255, 255), Color.Black, voice, .03f, 2f, .5f, true, null, bubble, null, modifier, 1));
+                        chain.Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.KS3.Spare.Accept"), new Color(170, 255, 255), Color.Black, voice, .03f, 2f, 0, false, null, bubble, null, modifier))
+                             .Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.KS3.Spare.Adios"), new Color(170, 255, 255), Color.Black, voice, .03f, 2f, .5f, true, null, bubble, null, modifier, 1));
                         chain.OnSymbolTrigger += Chain_OnSymbolTrigger;
                         chain.OnEndTrigger += Chain_OnEndTrigger;
                         ChatUI.Visible = true;
@@ -2426,27 +2418,27 @@ namespace Redemption.NPCs.Bosses.KSIII
                         HeadType = 2;
                         string line1;
                         if (RedeBossDowned.slayerDeath >= 8)
-                            line1 = "Once again,[0.1] you really are eager to win...";
+                            line1 = Language.GetTextValue("Mods.Redemption.Cutscene.KS3.Continue.Overclock1");
                         else
-                            line1 = "I'm disappointed I actually have to overclock this vessel...";
+                            line1 = Language.GetTextValue("Mods.Redemption.Cutscene.KS3.Continue.Overclock2");
 
                         string line2;
                         if (RedeBossDowned.slayerDeath >= 8)
-                            line2 = "... I guess you like doing things the hard way.";
+                            line2 = Language.GetTextValue("Mods.Redemption.Cutscene.KS3.Continue.Overclock3");
                         else
                         {
                             if (player.IsFullTBot())
-                                line2 = "... And for a heap of scrap no less.";
+                                line2 = Language.GetTextValue("Mods.Redemption.Cutscene.KS3.Continue.IfRobot");
                             else if (player.RedemptionPlayerBuff().ChickenForm)
-                                line2 = "... And for what?[0.5] A bloody chicken!?";
+                                line2 = Language.GetTextValue("Mods.Redemption.Cutscene.KS3.Continue.IfChicken");
                             else
-                                line2 = "... And for an annoying brat no less.";
+                                line2 = Language.GetTextValue("Mods.Redemption.Cutscene.KS3.Continue.IfHuman");
                         }
 
                         DialogueChain chain = new();
                         chain.Add(new(NPC, line1, new Color(170, 255, 255), Color.Black, voice, .03f, 2f, 0, false, null, bubble, null, modifier))
                              .Add(new(NPC, "[@h4]" + line2, new Color(170, 255, 255), Color.Black, voice, .03f, 2f, 0, false, null, bubble, null, modifier))
-                             .Add(new(NPC, "[@h0][@c]Let's begin.", new Color(170, 255, 255), Color.Black, voice, .03f, 2f, .5f, true, null, bubble, null, modifier, 1));
+                             .Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.KS3.Continue.Begin"), new Color(170, 255, 255), Color.Black, voice, .03f, 2f, .5f, true, null, bubble, null, modifier, 1));
                         chain.OnSymbolTrigger += Chain_OnSymbolTrigger;
                         chain.OnEndTrigger += Chain_OnEndTrigger;
                         ChatUI.Visible = true;

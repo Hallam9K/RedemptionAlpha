@@ -23,6 +23,7 @@ using Terraria.GameContent;
 using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.Utilities;
 
@@ -137,7 +138,7 @@ namespace Redemption.NPCs.Bosses.Gigapora
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
         {
             bestiaryEntry.Info.AddRange(new List<IBestiaryInfoElement> {
-                new FlavorTextBestiaryInfoElement("A modified tunnelling machine, originally of Teochrome design, retrofitted with rocket boosters, various weaponry and very experimental projected shield technology. Gigapora's shield projectors are prone to overheating and melting if they're inside the projected shield, hence why they're outside.")
+                new FlavorTextBestiaryInfoElement(Language.GetTextValue("Mods.Redemption.FlavorTextBestiary.Gigapora"))
             });
         }
         public override void HitEffect(NPC.HitInfo hit)
@@ -180,7 +181,7 @@ namespace Redemption.NPCs.Bosses.Gigapora
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
             npcLoot.Add(ItemDropRule.BossBag(ModContent.ItemType<OmegaGigaporaBag>()));
-            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<OmegaTrophy>(), 10));
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<OmegaGigaporaTrophy>(), 10));
 
             npcLoot.Add(ItemDropRule.MasterModeCommonDrop(ModContent.ItemType<GigaporaRelic>()));
             npcLoot.Add(ItemDropRule.MasterModeDropOnAllPlayers(ModContent.ItemType<PowerDrill>(), 4));
@@ -203,7 +204,7 @@ namespace Redemption.NPCs.Bosses.Gigapora
         public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)
         {
             NPC.lifeMax = (int)(NPC.lifeMax * 0.6f * balance * bossAdjustment);
-            NPC.damage = (int)(NPC.damage * 0.6f);
+            NPC.damage = (int)(NPC.damage * 0.75f);
         }
         public override void SendExtraAI(BinaryWriter writer)
         {
@@ -326,8 +327,8 @@ namespace Redemption.NPCs.Bosses.Gigapora
                         NPC.velocity.X = -4;
                     }
                     if (AITimer == 60 && !Main.dedServ)
-                        RedeSystem.Instance.TitleCardUIElement.DisplayTitle("Omega Gigapora", 60, 90, 0.8f, 0, Color.Red,
-                            "2nd Omega Prototype");
+                        RedeSystem.Instance.TitleCardUIElement.DisplayTitle(Language.GetTextValue("Mods.Redemption.TitleCard.Gigapora.Name"), 60, 90, 0.8f, 0, Color.Red,
+                            Language.GetTextValue("Mods.Redemption.TitleCard.Gigapora.Modifier"));
                     if (AITimer >= 80 && AITimer < 140)
                     {
                         NPC.velocity *= 0.96f;

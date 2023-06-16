@@ -1,9 +1,10 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Dusts.Tiles;
+using Redemption.Globals;
 using Redemption.Items.Placeable.Containers;
 using Redemption.Items.Usable;
-using System.Collections.Generic;
+using Redemption.WorldGeneration;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
@@ -38,10 +39,8 @@ namespace Redemption.Tiles.Containers
 
             DustType = ModContent.DustType<LabPlatingDust>();
             AdjTiles = new int[] { TileID.Containers };
-            ItemDrop = ModContent.ItemType<LabChest2>();
-
-            // Names
-            //ContainerName/* tModPorter Note: Removed. Override DefaultContainerName instead */.SetDefault("High Security Crate");
+            RegisterItemDrop(ModContent.ItemType<LabChest2>(), 1);
+            RegisterItemDrop(ItemID.Chest);
 
             AddMapEntry(new Color(0, 242, 170), this.GetLocalization("MapEntry0"), MapChestName);
             AddMapEntry(new Color(0, 242, 170), this.GetLocalization("MapEntry1"), MapChestName);
@@ -63,15 +62,6 @@ namespace Redemption.Tiles.Containers
             TileObjectData.newTile.LavaDeath = false;
             TileObjectData.newTile.AnchorBottom = new AnchorData(AnchorType.SolidTile | AnchorType.SolidWithTop | AnchorType.SolidSide, TileObjectData.newTile.Width, 0);
             TileObjectData.addTile(Type);
-        }
-        public override IEnumerable<Item> GetItemDrops(int i, int j)
-        {
-            Tile tile = Main.tile[i, j];
-            int style = TileObjectData.GetTileStyle(tile);
-            if (style == 0)
-                yield return new Item(ModContent.ItemType<LabChest2>());
-            if (style == 1)
-                yield return new Item(ModContent.ItemType<LabChest2>());
         }
         public override ushort GetMapOption(int i, int j) => (ushort)(Main.tile[i, j].TileFrameX / 36);
         public override LocalizedText DefaultContainerName(int frameX, int frameY)
@@ -165,6 +155,9 @@ namespace Redemption.Tiles.Containers
             {
                 if (isLocked)
                 {
+                    if (!RedeBossDowned.downedPZ && i >= RedeGen.LabVector.X + 74 && i <= RedeGen.LabVector.X + 79 && j >= RedeGen.LabVector.Y + 190 && j <= RedeGen.LabVector.Y + 195)
+                        return false;
+
                     int key = ModContent.ItemType<Keycard2>();
                     if (player.HasItemInInventoryOrOpenVoidBag(key) && Chest.Unlock(left, top))
                     {
@@ -246,7 +239,7 @@ namespace Redemption.Tiles.Containers
                 zero = Vector2.Zero;
 
             int height = tile.TileFrameY == 36 ? 18 : 16;
-            Main.spriteBatch.Draw(ModContent.Request<Texture2D>("Redemption/Tiles/Containers/LabChestTileLocked2_Glow").Value, new Vector2((i * 16) - (int)Main.screenPosition.X, (j * 16) - (int)Main.screenPosition.Y) + zero, new Rectangle(tile.TileFrameX, tile.TileFrameY, 16, height), Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
+            Main.spriteBatch.Draw(ModContent.Request<Texture2D>(Texture + "_Glow").Value, new Vector2((i * 16) - (int)Main.screenPosition.X, (j * 16) - (int)Main.screenPosition.Y) + zero, new Rectangle(tile.TileFrameX, tile.TileFrameY, 16, height), Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
         }
     }
 }

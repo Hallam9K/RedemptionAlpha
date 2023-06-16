@@ -6,7 +6,6 @@ using Terraria.DataStructures;
 using Redemption.Buffs.Minions;
 using Redemption.Projectiles.Minions;
 using Redemption.Items.Materials.PreHM;
-using Terraria.Localization;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.BaseExtension;
@@ -46,7 +45,7 @@ namespace Redemption.Items.Weapons.PreHM.Summon
             Item.shoot = ModContent.ProjectileType<MoonflareGuardian>();
             Item.mana = 10;
             if (!Main.dedServ)
-                Item.RedemptionGlow().glowTexture = ModContent.Request<Texture2D>(Item.ModItem.Texture + "_Glow").Value;
+                Item.RedemptionGlow().glowTexture = ModContent.Request<Texture2D>(Texture + "_Glow").Value;
         }
         public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback)
         {

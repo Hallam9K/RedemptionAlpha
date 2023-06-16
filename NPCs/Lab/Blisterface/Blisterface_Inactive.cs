@@ -6,6 +6,7 @@ using Redemption.WorldGeneration;
 using Terraria.Audio;
 using Redemption.Base;
 using Redemption.Biomes;
+using Terraria.Localization;
 
 namespace Redemption.NPCs.Lab.Blisterface
 {
@@ -48,18 +49,18 @@ namespace Redemption.NPCs.Lab.Blisterface
         }
         public override void AI()
         {
-            if (NPC.Center.Y < (RedeGen.LabPoint.Y + 186) * 16)
+            if (NPC.Center.Y < (RedeGen.LabVector.Y + 186) * 16)
                 NPC.velocity.Y += 0.1f;
-            if (NPC.Center.Y > (RedeGen.LabPoint.Y + 191) * 16)
+            if (NPC.Center.Y > (RedeGen.LabVector.Y + 191) * 16)
                 NPC.velocity.Y -= 0.1f;
 
             Player player = Main.player[Main.myPlayer];
-            Rectangle activeZone = new((RedeGen.LabPoint.X + 204) * 16, (RedeGen.LabPoint.Y + 168) * 16, 7 * 16, 20 * 16);
+            Rectangle activeZone = new((int)(RedeGen.LabVector.X + 204) * 16, (int)(RedeGen.LabVector.Y + 168) * 16, 7 * 16, 20 * 16);
             if (player.Hitbox.Intersects(activeZone) && !player.dead && player.active)
             {
                 if (!Main.dedServ)
                 {
-                    RedeSystem.Instance.TitleCardUIElement.DisplayTitle("Blisterface", 60, 90, 0.8f, 0, Color.Green, "An Unfortunate Goldfish");
+                    RedeSystem.Instance.TitleCardUIElement.DisplayTitle(Language.GetTextValue("Mods.Redemption.TitleCard.Blisterface.Name"), 60, 90, 0.8f, 0, Color.Green, Language.GetTextValue("Mods.Redemption.TitleCard.Blisterface.Modifier"));
                     SoundEngine.PlaySound(CustomSounds.SpookyNoise, NPC.position);
                 }
                 NPC.SetDefaults(ModContent.NPCType<Blisterface>());

@@ -1,7 +1,7 @@
 using Redemption.Tiles.Furniture.Shade;
-using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria;
 
 namespace Redemption.Items.Placeable.Furniture.Shade
 {
@@ -9,14 +9,14 @@ namespace Redemption.Items.Placeable.Furniture.Shade
 	{
         public override void SetStaticDefaults()
         {
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            Item.ResearchUnlockCount = 1;
         }
         public override void SetDefaults()
         {
             Item.DefaultToPlaceableTile(ModContent.TileType<WaxCandlesTile>(), 0);
             Item.width = 14;
             Item.height = 20;
-            Item.maxStack = 999;
+            Item.maxStack = Item.CommonMaxStack;
             Item.rare = ItemRarityID.Blue; 
         }
     }

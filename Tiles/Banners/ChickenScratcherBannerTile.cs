@@ -1,9 +1,7 @@
 using Microsoft.Xna.Framework;
-using Redemption.Items.Placeable.Banners;
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
-using Terraria.DataStructures;
 using Redemption.NPCs.FowlMorning;
 using Terraria.Localization;
 
@@ -24,6 +22,7 @@ namespace Redemption.Tiles.Banners
             TileObjectData.addTile(Type);
             AddMapEntry(Color.SandyBrown, Language.GetText("MapObject.Banner"));
         }
+        public override bool CreateDust(int i, int j, ref int type) => false;
         public override void NearbyEffects(int i, int j, bool closer)
         {
             if (closer)

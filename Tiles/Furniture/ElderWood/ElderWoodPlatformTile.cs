@@ -1,5 +1,4 @@
 using Microsoft.Xna.Framework;
-using Redemption.Items.Placeable.Furniture.ElderWood;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -26,7 +25,6 @@ namespace Redemption.Tiles.Furniture.ElderWood
             AddMapEntry(new Color(109, 87, 78));
 
             DustType = DustID.t_BorealWood;
-            ItemDrop = ModContent.ItemType<ElderWoodPlatform>();
             AdjTiles = new int[] { TileID.Platforms };
 
             // Placement

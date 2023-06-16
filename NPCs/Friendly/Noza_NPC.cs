@@ -35,6 +35,7 @@ namespace Redemption.NPCs.Friendly
             // DisplayName.SetDefault("Noza, Tamer of Evil");
             Main.npcFrameCount[NPC.type] = 10;
             NPCID.Sets.ActsLikeTownNPC[Type] = true;
+            NPCID.Sets.NoTownNPCHappiness[Type] = true;
             NPCID.Sets.NPCBestiaryDrawModifiers value = new(0) { Hide = true };
             NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, value);
         }
@@ -213,8 +214,15 @@ namespace Redemption.NPCs.Friendly
         {
             return ModContent.Request<Texture2D>("Redemption/NPCs/Friendly/Noza_NPC_Tail").Value;
         }
+        public Texture2D GetGlowmaskTexture(Mod mod) => null;
 
         public int NumberOfSegments => 6;
+        public int MaxFrames => 1;
+        public int FrameCounterMax => 0;
+        public bool Glow => false;
+        public bool HasGlowmask => false;
+        public int Shader => 0;
+        public int GlowmaskShader => 0;
 
         public Color GetColor(PlayerDrawSet drawInfo, Color baseColour)
         {
@@ -266,7 +274,7 @@ namespace Redemption.NPCs.Friendly
             return texture.Frame(NumberOfSegments, 1, NumberOfSegments - 1 - index, 0);
         }
 
-        public Vector2 Force(Player player, int index, int dir, float gravDir, float time, NPC npc = null)
+        public Vector2 Force(Player player, int index, int dir, float gravDir, float time, NPC npc = null, Projectile proj = null)
         {
             Vector2 force = new(
                 -dir * 0.5f,

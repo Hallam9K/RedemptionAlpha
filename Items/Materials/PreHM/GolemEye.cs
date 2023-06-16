@@ -1,5 +1,6 @@
 using Terraria.ID;
 using Terraria;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -42,11 +43,11 @@ namespace Redemption.Items.Materials.PreHM
         }
         public override void ModifyTooltips(List<TooltipLine> tooltips)
         {
-            string text = "Contains a storm of energy, it would be best to keep it around";
+            string text = Language.GetTextValue("Mods.Redemption.Items.GolemEye.Tip1");
             TooltipLine line = new(Mod, "text", text) { OverrideColor = Color.White };
             if (NPC.downedMoonlord)
             {
-                text = "Place down and encase the eye within the stones of its origins, and it's true power will present itself";
+                text = Language.GetTextValue("Mods.Redemption.Items.GolemEye.Tip2");
                 line = new(Mod, "text", text) { OverrideColor = Color.LightGoldenrodYellow };
             }
             tooltips.Insert(2, line);

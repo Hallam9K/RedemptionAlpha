@@ -1,6 +1,5 @@
 using Microsoft.Xna.Framework;
 using Redemption.Globals;
-using Redemption.Items.Materials.PreHM;
 using System;
 using System.Collections.Generic;
 using Terraria;
@@ -16,7 +15,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
         public override void SetStaticDefaults()
         {
             // DisplayName.SetDefault("Blade of the Mountain");
-            /* Tooltip.SetDefault("Parries physical or ice projectiles" +
+            /* Tooltip.SetDefault("Parries physical or ice projectiles, including your own Icefall crystals" +
                 "\nDeals more damage at the tip of the blade" +
                 "\nHitting on the very tip of the blade can freeze enemies" +
                 "\nEnemies with knockback immunity cannot be frozen\n" +
@@ -64,15 +63,6 @@ namespace Redemption.Items.Weapons.PreHM.Melee
             Main.dust[sparkle].velocity *= 0;
             Main.dust[sparkle].noGravity = true;
         }
-
-        public override void AddRecipes()
-        {
-            CreateRecipe()
-                .AddIngredient(ModContent.ItemType<Zweihander>())
-                .AddIngredient(ModContent.ItemType<GathicCryoCrystal>(), 12)
-                .AddTile(TileID.Anvils)
-                .Register();
-        }
         private static readonly int[] unwantedPrefixes = new int[] { PrefixID.Terrible, PrefixID.Dull, PrefixID.Shameful, PrefixID.Annoying, PrefixID.Broken, PrefixID.Damaged, PrefixID.Shoddy, PrefixID.Weak };
         public override bool AllowPrefix(int pre)
         {
@@ -84,11 +74,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
         {
             if (Main.keyState.PressingShift())
             {
-                TooltipLine line = new(Mod, "Lore",
-                    "'Once a normal greatsword wielded by a well-known warrior of the Iron Realm, her final battle being against\n" +
-                    "a great bear in the mountains. The bear was slain, but the warrior's injuries sealed her death shortly after.\n" +
-                    "The icy blood of the bear fused with the blade, chilling it with an enchanting glow.\n" +
-                    "The blade laid to rest besides it's owner, until another warrior discovered it many years later.'")
+                TooltipLine line = new(Mod, "Lore", Language.GetTextValue("Mods.Redemption.Items.BladeOfTheMountain.Lore"))
                 {
                     OverrideColor = Color.LightGray
                 };
@@ -96,7 +82,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
             }
             else
             {
-                TooltipLine line = new(Mod, "HoldShift", "Hold [Shift] to view lore")
+                TooltipLine line = new(Mod, "HoldShift", Language.GetTextValue("Mods.Redemption.SpecialTooltips.Viewer"))
                 {
                     OverrideColor = Color.Gray,
                 };

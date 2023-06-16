@@ -22,7 +22,7 @@ namespace Redemption.Tiles.Tiles
             Main.tileMerge[Type][ModContent.TileType<ShadestoneMossyTile>()] = true;
             Main.tileMerge[Type][ModContent.TileType<ShadestoneBrickMossyTile>()] = true;
             DustType = ModContent.DustType<ShadestoneDust>();
-            MinPick = 500;
+            MinPick = 1000;
             MineResist = 18f;
             HitSound = SoundID.Tink;
             LocalizedText name = CreateMapEntryName();

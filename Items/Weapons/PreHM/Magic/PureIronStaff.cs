@@ -4,6 +4,7 @@ using Redemption.Projectiles.Magic;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 
 namespace Redemption.Items.Weapons.PreHM.Magic
@@ -62,9 +63,7 @@ namespace Redemption.Items.Weapons.PreHM.Magic
         {
             if (Main.keyState.PressingShift())
             {
-                TooltipLine line = new(Mod, "Lore",
-                    "'A staff made of Pure-Iron with a diamond gemstone.\n" +                    
-                    "It is cold to the touch, and can channel ice magic abnormally well.'")
+                TooltipLine line = new(Mod, "Lore", Language.GetTextValue("Mods.Redemption.Items.PureIronStaff.Lore"))
                 {
                     OverrideColor = Color.LightGray
                 };
@@ -72,7 +71,7 @@ namespace Redemption.Items.Weapons.PreHM.Magic
             }
             else
             {
-                TooltipLine line = new(Mod, "HoldShift", "Hold [Shift] to view lore")
+                TooltipLine line = new(Mod, "HoldShift", Language.GetTextValue("Mods.Redemption.SpecialTooltips.Viewer"))
                 {
                     OverrideColor = Color.Gray,
                 };

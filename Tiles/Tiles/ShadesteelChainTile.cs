@@ -1,8 +1,6 @@
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ModLoader;
-using Terraria.ID;
-using Redemption.Items.Placeable.Tiles;
 using Redemption.Dusts.Tiles;
 
 namespace Redemption.Tiles.Tiles
@@ -18,7 +16,6 @@ namespace Redemption.Tiles.Tiles
             MinPick = 100;
             MineResist = 7f;
             HitSound = CustomSounds.ChainHit;
-            ItemDrop = ModContent.ItemType<ShadesteelChain>();
             AddMapEntry(new Color(83, 87, 123));
         }
         public override void NumDust(int i, int j, bool fail, ref int num) => num = fail ? 1 : 3;

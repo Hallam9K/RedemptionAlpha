@@ -8,6 +8,8 @@ using Terraria.GameContent;
 using Redemption.Globals;
 using Redemption.Buffs.NPCBuffs;
 using Redemption.BaseExtension;
+using Redemption.NPCs.Minibosses.Calavia;
+using Redemption.Projectiles.Magic;
 
 namespace Redemption.Items.Weapons.PreHM.Melee
 {
@@ -33,6 +35,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
         public override bool? CanHitNPC(NPC target) => Projectile.frame is 5 ? null : false;
         public float SwingSpeed;
         int directionLock = 0;
+        private bool parried;
         public override void AI()
         {
             Player player = Main.player[Projectile.owner];
@@ -40,7 +43,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
 
             SwingSpeed = SetSwingSpeed(25);
 
-            Rectangle projHitbox = new((int)(Projectile.spriteDirection == -1 ? Projectile.Center.X - 100 : Projectile.Center.X), (int)(Projectile.Center.Y - 70), 100, 136);
+            Projectile.Redemption().swordHitbox = new((int)(Projectile.spriteDirection == -1 ? Projectile.Center.X - 100 : Projectile.Center.X), (int)(Projectile.Center.Y - 70), 100, 136);
 
             if (player.noItems || player.CCed || player.dead || !player.active)
                 Projectile.Kill();
@@ -78,10 +81,27 @@ namespace Redemption.Items.Weapons.PreHM.Melee
                             for (int i = 0; i < Main.maxProjectiles; i++)
                             {
                                 Projectile target = Main.projectile[i];
-                                if (!target.active || target.whoAmI == Projectile.whoAmI || !target.hostile || target.damage > 100)
+                                if (!target.active)
                                     continue;
 
-                                if (target.velocity.Length() == 0 || !projHitbox.Intersects(target.Hitbox) || !target.HasElement(ElementID.Ice) || target.alpha > 0 || target.minion || ProjectileID.Sets.CultistIsResistantTo[target.type] || Main.projPet[target.type])
+                                if (target.ai[0] is 0 && (target.type == ModContent.ProjectileType<Icefall_Proj>() || target.type == ModContent.ProjectileType<Calavia_Icefall>()) && Projectile.Redemption().swordHitbox.Intersects(target.Hitbox))
+                                {
+                                    DustHelper.DrawCircle(target.Center, DustID.IceTorch, 1, 2, 2, dustSize: 2, nogravity: true);
+                                    SoundEngine.PlaySound(CustomSounds.CrystalHit, Projectile.position);
+                                    target.velocity.Y = Main.rand.NextFloat(-2, 0);
+                                    target.velocity.X = player.direction * 18f;
+                                    target.damage *= 2;
+                                    target.friendly = true;
+                                    target.ai[0] = 1;
+                                    continue;
+                                }
+                                if (RedeProjectile.SwordClashFriendly(Projectile, target, player, ref parried))
+                                    continue;
+
+                                if (target.whoAmI == Projectile.whoAmI || !target.hostile || target.damage > 100)
+                                    continue;
+
+                                if (target.velocity.Length() == 0 || !Projectile.Redemption().swordHitbox.Intersects(target.Hitbox) || (!target.HasElement(ElementID.Ice) && target.alpha > 0) || target.ProjBlockBlacklist(true))
                                     continue;
 
                                 SoundEngine.PlaySound(SoundID.Tink, Projectile.position);
@@ -91,14 +111,12 @@ namespace Redemption.Items.Weapons.PreHM.Melee
                                     target.hostile = false;
                                     target.friendly = true;
                                 }
-                                target.damage *= 4;
+                                target.Redemption().ReflectDamageIncrease = 4;
                                 target.velocity.X = -target.velocity.X * 0.9f;
                             }
                         }
                         if (Projectile.frame > 9)
-                        {
                             Projectile.Kill();
-                        }
                     }
                 }
             }
@@ -111,7 +129,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
         }
         public override void ModifyDamageHitbox(ref Rectangle hitbox)
         {
-            hitbox = new((int)(Projectile.spriteDirection == -1 ? Projectile.Center.X - 100 : Projectile.Center.X), (int)(Projectile.Center.Y - 70), 100, 136);
+            hitbox = Projectile.Redemption().swordHitbox;
         }
         public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
         {

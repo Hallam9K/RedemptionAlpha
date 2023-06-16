@@ -6,7 +6,6 @@ using Terraria.Enums;
 using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
-using Terraria.DataStructures;
 
 namespace Redemption.Tiles.Furniture.Misc
 {
@@ -29,7 +28,8 @@ namespace Redemption.Tiles.Furniture.Misc
 			// name.SetDefault("Doppel's Steel Sword");
 			AddMapEntry(new Color(81, 72, 65), name);
             DustType = ModContent.DustType<SlateDust>();
-		}
+            RegisterItemDrop(ModContent.ItemType<DoppelsSword>());
+        }
 
         public override void NumDust(int i, int j, bool fail, ref int num)
 		{

@@ -5,7 +5,6 @@ using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 using Terraria.DataStructures;
-using Redemption.Items.Placeable.Furniture.ElderWood;
 
 namespace Redemption.Tiles.Furniture.ElderWood
 {

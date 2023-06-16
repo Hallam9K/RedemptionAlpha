@@ -50,7 +50,7 @@ namespace Redemption.Items.Weapons.HM.Melee
             Item.shootSpeed = 5f;
             Item.shoot = ModContent.ProjectileType<Spellsong_Proj>();
             if (!Main.dedServ)
-                Item.RedemptionGlow().glowTexture = ModContent.Request<Texture2D>(Item.ModItem.Texture + "_Glow").Value;
+                Item.RedemptionGlow().glowTexture = ModContent.Request<Texture2D>(Texture + "_Glow").Value;
         }
 
         public override void AddRecipes()
@@ -67,9 +67,7 @@ namespace Redemption.Items.Weapons.HM.Melee
         {
             if (Main.keyState.PressingShift())
             {
-                TooltipLine line = new(Mod, "Lore",
-                    "'A sword from Anglic myth, said to come from the far western lands beyond the Ravencrag mountains.\n" +
-                    "It is just a replica, but the original was supposedly wielded by a man from the west, who vanquished many great evils with it.'")
+                TooltipLine line = new(Mod, "Lore", Language.GetTextValue("Mods.Redemption.Items.Spellsong.Lore"))
                 {
                     OverrideColor = Color.LightGray
                 };
@@ -77,7 +75,7 @@ namespace Redemption.Items.Weapons.HM.Melee
             }
             else
             {
-                TooltipLine line = new(Mod, "HoldShift", "Hold [Shift] to view lore")
+                TooltipLine line = new(Mod, "HoldShift", Language.GetTextValue("Mods.Redemption.SpecialTooltips.Viewer"))
                 {
                     OverrideColor = Color.Gray,
                 };

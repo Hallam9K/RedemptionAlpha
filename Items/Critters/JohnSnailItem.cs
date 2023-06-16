@@ -21,21 +21,14 @@ namespace Redemption.Items.Critters
             Item.maxStack = Item.CommonMaxStack;
             Item.value = Item.buyPrice(silver: 80);
             Item.rare = ItemRarityID.Blue;
-            Item.useAnimation = 30;
-            Item.useTime = 30;
             Item.bait = 80;
-            Item.useStyle = ItemUseStyleID.HoldUp;
+            Item.useStyle = ItemUseStyleID.Swing;
+            Item.useTime = Item.useAnimation = 20;
+            Item.noUseGraphic = true;
+            Item.noMelee = true;
             Item.consumable = true;
-        }
-        public override bool? UseItem(Player player)
-        {
-            int index = NPC.NewNPC(new EntitySource_SpawnNPC(), (int)(player.position.X + Main.rand.Next(-20, 20)), (int)player.position.Y,
-                ModContent.NPCType<JohnSnail>());
-
-            if (Main.netMode == NetmodeID.Server && index < Main.maxNPCs)
-                NetMessage.SendData(MessageID.SyncNPC, number: index);
-
-            return true;
+            Item.autoReuse = true;
+            Item.makeNPC = ModContent.NPCType<JohnSnail>();
         }
     }
 }

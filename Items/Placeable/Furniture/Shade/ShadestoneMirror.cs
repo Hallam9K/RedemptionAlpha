@@ -1,6 +1,6 @@
 using Redemption.Tiles.Furniture.Shade;
-using Terraria.GameContent.Creative;
 using Terraria.ID;
+using Terraria;
 using Terraria.ModLoader;
 
 namespace Redemption.Items.Placeable.Furniture.Shade
@@ -9,14 +9,14 @@ namespace Redemption.Items.Placeable.Furniture.Shade
 	{
         public override void SetStaticDefaults()
         {
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            Item.ResearchUnlockCount = 1;
         }
         public override void SetDefaults()
         {
-            Item.DefaultToPlaceableTile(ModContent.TileType<ShadestoneMirrorTile>(), 0);
+            Item.DefaultToPlaceableTile(ModContent.TileType<ShadestoneMirrorTile2>(), 0);
             Item.width = 18;
             Item.height = 28;
-            Item.maxStack = 99;
+            Item.maxStack = Item.CommonMaxStack;
             Item.value = 700;
             Item.rare = ItemRarityID.Blue;
         }

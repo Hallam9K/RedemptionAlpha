@@ -4,6 +4,7 @@ using Terraria.ID;
 using Redemption.Items.Materials.HM;
 using Redemption.BaseExtension;
 using Redemption.Globals.Player;
+using Terraria.Localization;
 
 namespace Redemption.Items.Armor.HM.Hardlight
 {
@@ -52,11 +53,11 @@ namespace Redemption.Items.Armor.HM.Hardlight
 
         public override void UpdateArmorSet(Player player)
         {
-            player.setBonus = "Select a keybind for [Special Ability Key] in Controls";
+            player.setBonus = Language.GetTextValue("Mods.Redemption.GenericTooltips.ArmorSetBonus.Hardlight.Keybind");
             foreach (string key in Redemption.RedeSpecialAbility.GetAssignedKeys())
             {
-                player.setBonus = "Press " + key + " to get support from the Ship of the Slayer\n" +
-                    "Fires a missile barrage from the SoS, targetting the enemy nearest to the cursor position";
+                player.setBonus = Language.GetTextValue("Mods.Redemption.GenericTooltips.ArmorSetBonus.Hardlight.Press") + key + Language.GetTextValue("Mods.Redemption.GenericTooltips.ArmorSetBonus.Hardlight.Support") +
+                    Language.GetTextValue("Mods.Redemption.GenericTooltips.ArmorSetBonus.Hardlight.Visor");
             }
             player.RedemptionPlayerBuff().hardlightBonus = 5;
             player.RedemptionPlayerBuff().MetalSet = true;

@@ -1,9 +1,7 @@
 using Microsoft.Xna.Framework;
-using Redemption.Items.Quest.KingSlayer;
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
-using Terraria.DataStructures;
 
 namespace Redemption.Tiles.Furniture.SlayerShip
 {

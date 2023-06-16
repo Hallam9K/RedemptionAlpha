@@ -1,6 +1,7 @@
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.Localization;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Redemption.Items.Materials.HM;
@@ -81,11 +82,7 @@ namespace Redemption.Items.Weapons.PostML.Melee
         {
             if (Main.keyState.PressingShift())
             {
-                TooltipLine line2 = new(Mod, "Lore",
-                    "\"Utilizing the same, revolutionary heat-sink technology Obliterator's super heatray uses,\n" +
-                    "but instead of being buried in your chest, it's in your palm! It's just that simple!!\n\n" +
-                    "Caution: Girus is not responsible for irresponsible and/or dangerous use of the Sun-In-Palm product.\n" +
-                    "Please hold the Sun-In-Palm product far away from yourself while in use.\"")
+                TooltipLine line2 = new(Mod, "Lore", Language.GetTextValue("Mods.Redemption.Items.SunInThePalm.Lore"))
                 {
                     OverrideColor = Color.LightGray
                 };
@@ -93,7 +90,7 @@ namespace Redemption.Items.Weapons.PostML.Melee
             }
             else
             {
-                TooltipLine line2 = new(Mod, "HoldShift", "There's a label attached [Hold Shift to Read]")
+                TooltipLine line2 = new(Mod, "HoldShift", Language.GetTextValue("Mods.Redemption.Items.SunInThePalm.Viewer"))
                 {
                     OverrideColor = Color.Gray,
                 };

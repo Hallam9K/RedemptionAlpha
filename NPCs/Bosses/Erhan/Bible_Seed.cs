@@ -5,6 +5,7 @@ using Terraria.ModLoader;
 using Terraria.Audio;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria.GameContent;
+using Redemption.Dusts;
 
 namespace Redemption.NPCs.Bosses.Erhan
 {
@@ -68,8 +69,14 @@ namespace Redemption.NPCs.Bosses.Erhan
             Player player = Main.player[Projectile.owner];
             for (int i = 0; i < 30; i++)
             {
-                int dust = Dust.NewDust(Projectile.position - new Vector2(90, 14), Projectile.width + 180, Projectile.height + 14, DustID.GoldFlame, Projectile.velocity.X * 0.5f,
-                    Projectile.velocity.Y * 0.5f, Scale: 3);
+                int num5 = Dust.NewDust(Projectile.position - new Vector2(90, 14), Projectile.width + 180, Projectile.height + 14, ModContent.DustType<GlowDust>(), Projectile.velocity.X * 0.5f, Projectile.velocity.Y * 0.5f);
+                Color dustColor = new(255, 255, 209) { A = 0 };
+                Main.dust[num5].fadeIn = 0.05f;
+                Main.dust[num5].noGravity = true;
+                Main.dust[num5].velocity.Y = -7;
+                Main.dust[num5].color = dustColor * Projectile.Opacity;
+
+                int dust = Dust.NewDust(Projectile.position - new Vector2(90, 14), Projectile.width + 180, Projectile.height + 14, DustID.GoldFlame, Projectile.velocity.X * 0.5f, Projectile.velocity.Y * 0.5f, Scale: 3);
                 Main.dust[dust].noGravity = true;
                 Main.dust[dust].velocity.Y = -7;
             }

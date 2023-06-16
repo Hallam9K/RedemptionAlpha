@@ -1,5 +1,6 @@
 using Terraria;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
 using Redemption.Projectiles.Melee;
@@ -37,7 +38,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
             Item.useTurn = true;
             Item.rare = ItemRarityID.Blue;
             if (!Main.dedServ)
-                Item.RedemptionGlow().glowTexture = ModContent.Request<Texture2D>(Item.ModItem.Texture + "_Glow").Value;
+                Item.RedemptionGlow().glowTexture = ModContent.Request<Texture2D>(Texture + "_Glow").Value;
         }
 
         public override void OnHitNPC(Player player, NPC target, NPC.HitInfo hit, int damageDone)
@@ -54,10 +55,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
         {
             if (Main.keyState.PressingShift())
             {
-                TooltipLine line = new(Mod, "Lore",
-                    "'A broadsword once wielded by the leader of Lighthelm's forgotten Oracles of Rebirth.\n" +
-                    "This holy blade's slice is said to strip the light out of one's body, which would travel to corpses\n" +
-                    "and bring the slain's life into them. This was what the ancient world thought birthed undead.'")
+                TooltipLine line = new(Mod, "Lore", Language.GetTextValue("Mods.Redemption.Items.Bindeklinge.Lore"))
                 {
                     OverrideColor = Color.LightGray
                 };
@@ -65,7 +63,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
             }
             else
             {
-                TooltipLine line = new(Mod, "HoldShift", "Hold [Shift] to view lore")
+                TooltipLine line = new(Mod, "HoldShift", Language.GetTextValue("Mods.Redemption.SpecialTooltips.Viewer"))
                 {
                     OverrideColor = Color.Gray,
                 };

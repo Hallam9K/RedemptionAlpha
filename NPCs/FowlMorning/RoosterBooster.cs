@@ -14,6 +14,8 @@ using Redemption.Items.Usable.Potions;
 using Terraria.DataStructures;
 using Redemption.Buffs.NPCBuffs;
 using Redemption.Biomes;
+using Redemption.Items.Accessories.PreHM;
+using Redemption.Items.Placeable.Banners;
 
 namespace Redemption.NPCs.FowlMorning
 {
@@ -32,13 +34,15 @@ namespace Redemption.NPCs.FowlMorning
             NPC.friendly = false;
             NPC.damage = 15;
             NPC.defense = 3;
-            NPC.lifeMax = 56;
+            NPC.lifeMax = 46;
             NPC.value = 20;
             NPC.HitSound = SoundID.NPCHit1;
             NPC.DeathSound = SoundID.NPCDeath1;
             NPC.aiStyle = -1;
             NPC.knockBackResist = 0.3f;
             SpawnModBiomes = new int[1] { ModContent.GetInstance<FowlMorningBiome>().Type };
+            Banner = NPC.type;
+            BannerItem = ModContent.ItemType<RoosterBoosterBanner>();
         }
         public override void OnSpawn(IEntitySource source)
         {
@@ -51,6 +55,7 @@ namespace Redemption.NPCs.FowlMorning
             Player player = Main.player[NPC.target];
             NPC.TargetClosest();
             NPC.LookByVelocity();
+            DespawnHandler();
 
             if (Main.rand.NextBool(3000))
                 SoundEngine.PlaySound(CustomSounds.ChickenCluck with { Pitch = -.1f }, NPC.position);
@@ -73,7 +78,7 @@ namespace Redemption.NPCs.FowlMorning
                         if (!target.active || target.whoAmI == NPC.whoAmI)
                             continue;
 
-                        if (target.type != ModContent.NPCType<ChickenScratcher>() && target.type != ModContent.NPCType<ChickenBomber>() && target.type != ModContent.NPCType<Haymaker>() && target.type != ModContent.NPCType<Cockatrice>() && target.type != ModContent.NPCType<HeadlessChicken>())
+                        if (target.type != ModContent.NPCType<ChickenScratcher>() && target.type != ModContent.NPCType<ChickenBomber>() && target.type != ModContent.NPCType<Haymaker>() && target.type != ModContent.NPCType<Cockatrice>() && target.type != ModContent.NPCType<HeadlessChicken>() && target.type != ModContent.NPCType<Basan>())
                             continue;
 
                         if (NPC.DistanceSQ(target.Center) > 300 * 300)
@@ -104,6 +109,24 @@ namespace Redemption.NPCs.FowlMorning
             }
             if (NPC.ai[0] > 0)
                 NPC.ai[0]--;
+        }
+        private void DespawnHandler()
+        {
+            Player player = Main.player[NPC.target];
+            if (!player.active || player.dead || !FowlMorningWorld.FowlMorningActive)
+            {
+                NPC.TargetClosest(false);
+                player = Main.player[NPC.target];
+                if (!player.active || player.dead || !FowlMorningWorld.FowlMorningActive)
+                {
+                    NPC.alpha += 2;
+                    if (NPC.alpha >= 255)
+                        NPC.active = false;
+                    if (NPC.timeLeft > 10)
+                        NPC.timeLeft = 10;
+                    return;
+                }
+            }
         }
         public override bool? CanFallThroughPlatforms() => NPC.Redemption().fallDownPlatform;
         public override void FindFrame(int frameHeight)
@@ -162,6 +185,7 @@ namespace Redemption.NPCs.FowlMorning
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
             //npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Halbirdhouse>(), 60));
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Grain>(), 200));
             npcLoot.Add(ItemDropRule.ByCondition(new OnFireCondition(), ModContent.ItemType<FriedChicken>(), 4));
         }
         public override void OnHitByItem(Player player, Item item, NPC.HitInfo hit, int damageDone)

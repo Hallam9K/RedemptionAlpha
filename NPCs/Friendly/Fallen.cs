@@ -23,7 +23,6 @@ using Redemption.Items.Usable;
 using Redemption.Items.Placeable.Furniture.Misc;
 using Redemption.Items.Materials.HM;
 using Redemption.Items.Weapons.HM.Melee;
-using Redemption.BaseExtension;
 using Redemption.Items.Weapons.PreHM.Summon;
 using Redemption.Items.Armor.Vanity;
 using ReLogic.Content;
@@ -85,7 +84,7 @@ namespace Redemption.NPCs.Friendly
             bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Caverns,
 
-                new FlavorTextBestiaryInfoElement("Fallen are a category of undead with a soul strong enough to form pale brown flesh. Most being aggressive towards humans, this one is a rare case who can sell ritualist equipment and repair fragments of ancient weapons."),
+                new FlavorTextBestiaryInfoElement(Language.GetTextValue("Mods.Redemption.FlavorTextBestiary.Fallen")),
             });
         }
 
@@ -239,9 +238,9 @@ namespace Redemption.NPCs.Friendly
         {
             button = Language.GetTextValue("LegacyInterface.28");
 
-            button2 = "Repair Fragments";
+            button2 = Language.GetTextValue("Mods.Redemption.DialogueBox.Fallen.Repair");
             if (Main.LocalPlayer.HasItem(ModContent.ItemType<GolemEye>()) && NPC.downedMoonlord && !RedeBossDowned.downedADD)
-                button2 = "Eye's Origins?";
+                button2 = Language.GetTextValue("Mods.Redemption.DialogueBox.Fallen.Eye");
         }
 
         public override void OnChatButtonClicked(bool firstButton, ref string shopName)

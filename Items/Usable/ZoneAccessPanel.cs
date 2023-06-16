@@ -39,11 +39,11 @@ namespace Redemption.Items.Usable
         {
             if (LabArea.labAccess[0])
             {
-                Main.NewText("Alpha laser security already deactivated", Color.Cyan);
+                Main.NewText(Language.GetTextValue("Mods.Redemption.StatusMessage.Progression.LabAccessPanelUsed1"), Color.Cyan);
                 return true;
             }
             LabArea.labAccess[0] = true;
-            string status = "Alpha sector laser security has been deactivated";
+            string status = Language.GetTextValue("Mods.Redemption.StatusMessage.Progression.LabAccessPanel1");
             if (Main.netMode == NetmodeID.Server)
                 ChatHelper.BroadcastChatMessage(NetworkText.FromLiteral(status), Color.Cyan);
             else if (Main.netMode == NetmodeID.SinglePlayer)
@@ -57,7 +57,7 @@ namespace Redemption.Items.Usable
             };
 
             Texture2D tex = ModContent.Request<Texture2D>("Redemption/WorldGeneration/ALabAccess1", AssetRequestMode.ImmediateLoad).Value;
-            Point origin = RedeGen.LabPoint.ToPoint();
+            Point origin = RedeGen.LabVector.ToPoint();
             GenUtils.InvokeOnMainThread(() =>
             {
                 TexGen gen = BaseWorldGenTex.GetTexGenerator(tex, colorToTile);
@@ -82,11 +82,11 @@ namespace Redemption.Items.Usable
         {
             if (LabArea.labAccess[1])
             {
-                Main.NewText("Gamma laser security already deactivated", Color.Cyan);
+                Main.NewText(Language.GetTextValue("Mods.Redemption.StatusMessage.Progression.LabAccessPanelUsed2"), Color.Cyan);
                 return true;
             }
             LabArea.labAccess[1] = true;
-            string status = "Gamma sector laser security has been deactivated";
+            string status = Language.GetTextValue("Mods.Redemption.StatusMessage.Progression.LabAccessPanel2");
             if (Main.netMode == NetmodeID.Server)
                 ChatHelper.BroadcastChatMessage(NetworkText.FromLiteral(status), Color.Cyan);
             else if (Main.netMode == NetmodeID.SinglePlayer)
@@ -100,7 +100,7 @@ namespace Redemption.Items.Usable
             };
 
             Texture2D tex = ModContent.Request<Texture2D>("Redemption/WorldGeneration/ALabAccess2", AssetRequestMode.ImmediateLoad).Value;
-            Point origin = RedeGen.LabPoint.ToPoint();
+            Point origin = RedeGen.LabVector.ToPoint();
             GenUtils.InvokeOnMainThread(() =>
             {
                 TexGen gen = BaseWorldGenTex.GetTexGenerator(tex, colorToTile);
@@ -125,11 +125,11 @@ namespace Redemption.Items.Usable
         {
             if (LabArea.labAccess[2])
             {
-                Main.NewText("Sigma laser security already deactivated", Color.Cyan);
+                Main.NewText(Language.GetTextValue("Mods.Redemption.StatusMessage.Progression.LabAccessPanelUsed3"), Color.Cyan);
                 return true;
             }
             LabArea.labAccess[2] = true;
-            string status = "Sigma sector laser security has been deactivated";
+            string status = Language.GetTextValue("Mods.Redemption.StatusMessage.Progression.LabAccessPanel3");
             if (Main.netMode == NetmodeID.Server)
                 ChatHelper.BroadcastChatMessage(NetworkText.FromLiteral(status), Color.Cyan);
             else if (Main.netMode == NetmodeID.SinglePlayer)
@@ -144,7 +144,7 @@ namespace Redemption.Items.Usable
             };
 
             Texture2D tex = ModContent.Request<Texture2D>("Redemption/WorldGeneration/ALabAccess3", AssetRequestMode.ImmediateLoad).Value;
-            Point origin = RedeGen.LabPoint.ToPoint();
+            Point origin = RedeGen.LabVector.ToPoint();
             GenUtils.InvokeOnMainThread(() =>
             {
                 TexGen gen = BaseWorldGenTex.GetTexGenerator(tex, colorToTile);
@@ -168,11 +168,11 @@ namespace Redemption.Items.Usable
         {
             if (LabArea.labAccess[3])
             {
-                Main.NewText("Omicron laser security already deactivated", Color.Cyan);
+                Main.NewText(Language.GetTextValue("Mods.Redemption.StatusMessage.Progression.LabAccessPanelUsed4"), Color.Cyan);
                 return true;
             }
             LabArea.labAccess[3] = true;
-            string status = "Omicron sector laser security has been deactivated";
+            string status = Language.GetTextValue("Mods.Redemption.StatusMessage.Progression.LabAccessPanel4");
             if (Main.netMode == NetmodeID.Server)
                 ChatHelper.BroadcastChatMessage(NetworkText.FromLiteral(status), Color.Cyan);
             else if (Main.netMode == NetmodeID.SinglePlayer)
@@ -186,7 +186,7 @@ namespace Redemption.Items.Usable
             };
 
             Texture2D tex = ModContent.Request<Texture2D>("Redemption/WorldGeneration/ALabAccess4", AssetRequestMode.ImmediateLoad).Value;
-            Point origin = RedeGen.LabPoint.ToPoint();
+            Point origin = RedeGen.LabVector.ToPoint();
             GenUtils.InvokeOnMainThread(() =>
             {
                 TexGen gen = BaseWorldGenTex.GetTexGenerator(tex, colorToTile);
@@ -212,11 +212,11 @@ namespace Redemption.Items.Usable
         {
             if (LabArea.labAccess[4])
             {
-                Main.NewText("Vault laser security already deactivated", Color.Cyan);
+                Main.NewText(Language.GetTextValue("Mods.Redemption.StatusMessage.Progression.LabAccessPanelUsed5"), Color.Cyan);
                 return true;
             }
             LabArea.labAccess[4] = true;
-            string status = "Vault sector laser security has been deactivated";
+            string status = Language.GetTextValue("Mods.Redemption.StatusMessage.Progression.LabAccessPanel5");
             if (Main.netMode == NetmodeID.Server)
                 ChatHelper.BroadcastChatMessage(NetworkText.FromLiteral(status), Color.Cyan);
             else if (Main.netMode == NetmodeID.SinglePlayer)
@@ -230,7 +230,7 @@ namespace Redemption.Items.Usable
             };
 
             Texture2D tex = ModContent.Request<Texture2D>("Redemption/WorldGeneration/ALabAccess5", AssetRequestMode.ImmediateLoad).Value;
-            Point origin = RedeGen.LabPoint.ToPoint();
+            Point origin = RedeGen.LabVector.ToPoint();
             GenUtils.InvokeOnMainThread(() =>
             {
                 TexGen gen = BaseWorldGenTex.GetTexGenerator(tex, colorToTile);
@@ -254,12 +254,12 @@ namespace Redemption.Items.Usable
         {
             if (LabArea.labAccess[5])
             {
-                Main.NewText("Laser security already deactivated", Color.Cyan);
+                Main.NewText(Language.GetTextValue("Mods.Redemption.StatusMessage.Progression.LabAccessPanelUsed6"), Color.Cyan);
                 return true;
             }
             RedeWorld.labSafe = true;
             LabArea.labAccess[5] = true;
-            string status = "All laser security systems have been deactivated";
+            string status = Language.GetTextValue("Mods.Redemption.StatusMessage.Progression.LabAccessPanel6");
             if (Main.netMode == NetmodeID.Server)
                 ChatHelper.BroadcastChatMessage(NetworkText.FromLiteral(status), Color.Cyan);
             else if (Main.netMode == NetmodeID.SinglePlayer)
@@ -269,11 +269,12 @@ namespace Redemption.Items.Usable
             {
                 [new Color(220, 255, 255)] = ModContent.TileType<DeactivatedLaserTile>(),
                 [new Color(255, 0, 0)] = ModContent.TileType<DeactivatedLaser2Tile>(),
+                [new Color(0, 0, 255)] = ModContent.TileType<HalogenLampTile>(),
                 [Color.Black] = -1
             };
 
             Texture2D tex = ModContent.Request<Texture2D>("Redemption/WorldGeneration/ALabAccess6", AssetRequestMode.ImmediateLoad).Value;
-            Point origin = RedeGen.LabPoint.ToPoint();
+            Point origin = RedeGen.LabVector.ToPoint();
             GenUtils.InvokeOnMainThread(() =>
             {
                 TexGen gen = BaseWorldGenTex.GetTexGenerator(tex, colorToTile);

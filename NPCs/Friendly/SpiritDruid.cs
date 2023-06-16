@@ -1,4 +1,4 @@
-﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -23,6 +23,7 @@ namespace Redemption.NPCs.Friendly
             // DisplayName.SetDefault("Spirit Druid");
             Main.npcFrameCount[NPC.type] = 4;
             NPCID.Sets.ActsLikeTownNPC[Type] = true;
+            NPCID.Sets.NoTownNPCHappiness[Type] = true;
 
             NPCID.Sets.DebuffImmunitySets.Add(Type, new NPCDebuffImmunityData
             {
@@ -115,19 +116,19 @@ namespace Redemption.NPCs.Friendly
             switch (ChatNumber)
             {
                 case 0:
-                    button = "About you?";
+                    button = Language.GetTextValue("Mods.Redemption.DialogueBox.SpiritDruid.1");
                     break;
                 case 1:
-                    button = "Thamor?";
+                    button = Language.GetTextValue("Mods.Redemption.DialogueBox.SpiritDruid.2");
                     break;
                 case 2:
-                    button = "How did you get here?";
+                    button = Language.GetTextValue("Mods.Redemption.DialogueBox.SpiritDruid.3");
                     break;
                 case 3:
-                    button = request && offering ? "Offer Nature's Gift" : "Request Crux";
+                    button = request && offering ? Language.GetTextValue("Mods.Redemption.DialogueBox.SpiritDruid.Offer") : Language.GetTextValue("Mods.Redemption.DialogueBox.SpiritDruid.Crux");
                     break;
             }
-            button2 = "Cycle Dialogue";
+            button2 = Language.GetTextValue("Mods.Redemption.DialogueBox.CycleD");
         }
 
         public override void OnChatButtonClicked(bool firstButton, ref string shopName)

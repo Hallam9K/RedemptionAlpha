@@ -36,9 +36,9 @@ namespace Redemption.Items.Materials.PreHM
         }
         public override void OnSpawn(IEntitySource source)
         {
-            if (source is EntitySource_CatchEntity sourceParent)
+            if (source is EntitySource_Caught sourceParent)
             {
-                if (sourceParent.CaughtEntity is NPC caughtNPC)
+                if (sourceParent.Entity is NPC caughtNPC)
                 {
                     float scale = (Main.npc[caughtNPC.whoAmI].ModNPC as LostSoulNPC).Scale;
                     int dropAmount = (int)(scale / 2 * 10);

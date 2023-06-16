@@ -136,7 +136,7 @@ namespace Redemption.NPCs.Bosses.ADD
             if (RedeBossDowned.downedGGBossFirst == 1 && RedeBossDowned.downedGGBossFirst == 2)
                 modifiers.FinalDamage *= .85f;
 
-            if (NPC.RedemptionGuard().GuardPoints >= 0)
+            if (NPC.RedemptionGuard().GuardPoints >= 0 && !NPC.RedemptionGuard().GuardBroken)
             {
                 modifiers.DisableCrit();
                 modifiers.ModifyHitInfo += (ref NPC.HitInfo n) => NPC.RedemptionGuard().GuardHit(ref n, NPC, SoundID.Dig with { Pitch = -.1f }, .25f, false, DustID.t_LivingWood, SoundID.Item43, 10, 1, 2000);
@@ -148,7 +148,7 @@ namespace Redemption.NPCs.Bosses.ADD
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Surface,
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Visuals.Rain,
 
-                new FlavorTextBestiaryInfoElement("Little has been recorded of Akka during her youth, it is believed by the locals that her spirit infused with a great tree in the Spirit Realm, where she would sleep until awoken by her husband to be worshipped once more.")
+                new FlavorTextBestiaryInfoElement(Language.GetTextValue("Mods.Redemption.FlaverTextBestiary.Akka"))
             });
         }
         public override void ModifyNPCLoot(NPCLoot npcLoot)
@@ -196,7 +196,7 @@ namespace Redemption.NPCs.Bosses.ADD
         public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)
         {
             NPC.lifeMax = (int)(NPC.lifeMax * 0.75f * balance * bossAdjustment);
-            NPC.damage = (int)(NPC.damage * 0.6f);
+            NPC.damage = (int)(NPC.damage * 0.75f);
         }
 
         private Vector2 MoveVector2;
@@ -250,7 +250,7 @@ namespace Redemption.NPCs.Bosses.ADD
                                 if (AITimer == 60)
                                 {
                                     if (!Main.dedServ)
-                                        RedeSystem.Instance.TitleCardUIElement.DisplayTitle("Akka", 60, 90, 0.8f, 0, Color.PaleGreen, "Ancient Goddess of Nature");
+                                        RedeSystem.Instance.TitleCardUIElement.DisplayTitle(Language.GetTextValue("Mods.Redemption.TitleCard.Akka.Name"), 60, 90, 0.8f, 0, Color.PaleGreen, Language.GetTextValue("Mods.Redemption.TitleCard.Akka.Modifier"));
 
                                     EmoteBubble.NewBubble(0, new WorldUIAnchor(NPC), 50);
                                 }
@@ -268,7 +268,7 @@ namespace Redemption.NPCs.Bosses.ADD
                     else
                     {
                         if (!Main.dedServ)
-                            RedeSystem.Instance.TitleCardUIElement.DisplayTitle("Akka", 60, 90, 0.8f, 0, Color.LightGreen, "Ancient Goddess of Nature");
+                            RedeSystem.Instance.TitleCardUIElement.DisplayTitle(Language.GetTextValue("Mods.Redemption.TitleCard.Akka.Name"), 60, 90, 0.8f, 0, Color.PaleGreen, Language.GetTextValue("Mods.Redemption.TitleCard.Akka.Modifier"));
 
                         AIState = ActionState.ResetVars;
                         AITimer = 0;

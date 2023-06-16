@@ -2,7 +2,6 @@ using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.Localization;
 using Terraria.ModLoader;
-using Terraria.ID;
 using Redemption.Dusts;
 using Redemption.Tiles.Plants;
 using Redemption.Items.Placeable.Tiles;
@@ -26,7 +25,7 @@ namespace Redemption.Tiles.Tiles
             Main.tileMerge[Type][ModContent.TileType<ShadestoneTile>()] = true;
             Main.tileMerge[Type][ModContent.TileType<ShadestoneBrickMossyTile>()] = true;
             DustType = ModContent.DustType<VoidFlame>();
-            ItemDrop = ModContent.ItemType<Shadestone>();
+            RegisterItemDrop(ModContent.ItemType<Shadestone>());
             MinPick = 350;
             MineResist = 11f;
             HitSound = CustomSounds.StoneHit;

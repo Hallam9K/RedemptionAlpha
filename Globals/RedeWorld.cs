@@ -5,9 +5,9 @@ using Redemption.NPCs.Bosses.Erhan;
 using Redemption.NPCs.Bosses.Keeper;
 using Redemption.NPCs.Friendly;
 using Redemption.Projectiles.Misc;
-//using Redemption.WorldGeneration.Soulless;
-//using SubworldLibrary;
 using Redemption.UI.ChatUI;
+using Redemption.WorldGeneration.Soulless;
+using SubworldLibrary;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -26,9 +26,8 @@ namespace Redemption.Globals
 {
     public class RedeWorld : ModSystem
     {
-        // TODO: uncomment sublib
         #region Soulless Subworld
-        /*public override void PreUpdateWorld()
+        public override void PreUpdateWorld()
         {
             if (SubworldSystem.IsActive<SoullessSub>())
             {
@@ -49,7 +48,7 @@ namespace Redemption.Globals
                         tile.RandomUpdate(i, j);
                 }
             }
-        }*/
+        }
         #endregion
 
         public static bool blobbleSwarm;
@@ -99,8 +98,8 @@ namespace Redemption.Globals
             if (Main.time == 1)
                 DayNightCount++;
 
-            // if (SubworldSystem.Current != null)
-            //    return;
+            if (SubworldSystem.Current != null)
+                return;
 
             #region Skeleton Invasion
             if (DayNightCount >= 10 && !Main.hardMode && !Main.IsFastForwardingTime())
@@ -113,7 +112,7 @@ namespace Redemption.Globals
                         {
                             spawnSkeletonInvasion = true;
 
-                            string status = "The skeletons are plotting a party at dusk..." + (RedeBossDowned.downedSkeletonInvasion ? " Again." : "");
+                            string status = Language.GetTextValue("Mods.Redemption.StatusMessage.Event.SkeletonParty1") + (RedeBossDowned.downedSkeletonInvasion ? Language.GetTextValue("Mods.Redemption.StatusMessage.Event.Again") : "");
                             if (Main.netMode == NetmodeID.Server)
                                 ChatHelper.BroadcastChatMessage(NetworkText.FromLiteral(status), Color.LightGray);
                             else if (Main.netMode == NetmodeID.SinglePlayer)
@@ -123,9 +122,9 @@ namespace Redemption.Globals
                 }
                 if (!Main.dayTime && spawnSkeletonInvasion && Main.netMode != NetmodeID.MultiplayerClient && Main.time > 1)
                 {
-                    string status = "The skeletons are partying!";
+                    string status = Language.GetTextValue("Mods.Redemption.StatusMessage.Event.SkeletonParty2");
                     if (WorldGen.spawnEye || Main.bloodMoon || WorldGen.spawnHardBoss > 0)
-                        status = "The skeletons reconsidered partying tonight...";
+                        status = Language.GetTextValue("Mods.Redemption.StatusMessage.Event.SkeletonParty3");
                     else
                         SkeletonInvasion = true;
 
@@ -145,7 +144,7 @@ namespace Redemption.Globals
                 SkeletonInvasion = false;
                 RedeBossDowned.downedSkeletonInvasion = true;
 
-                string status = "The skeletons got bored and went home!";
+                string status = Language.GetTextValue("Mods.Redemption.StatusMessage.Event.SkeletonParty4");
                 if (Main.netMode == NetmodeID.Server)
                     ChatHelper.BroadcastChatMessage(NetworkText.FromLiteral(status), Color.LightGray);
                 else if (Main.netMode == NetmodeID.SinglePlayer)
@@ -177,7 +176,7 @@ namespace Redemption.Globals
                         {
                             spawnKeeper = true;
 
-                            string status = "Shrieks echo through the night...";
+                            string status = Language.GetTextValue("Mods.Redemption.StatusMessage.Other.Keeper1");
                             if (Main.netMode == NetmodeID.Server)
                                 ChatHelper.BroadcastChatMessage(NetworkText.FromLiteral(status), Color.MediumPurple);
                             else if (Main.netMode == NetmodeID.SinglePlayer)
@@ -213,7 +212,7 @@ namespace Redemption.Globals
                 if (Main.time == 1 && Main.rand.NextBool(2))
                 {
                     newbGone = true;
-                    string status = "The Fool has left...";
+                    string status = Language.GetTextValue("Mods.Redemption.StatusMessage.Progression.FoolLeft");
                     if (Main.netMode == NetmodeID.Server)
                         ChatHelper.BroadcastChatMessage(NetworkText.FromLiteral(status), Color.SandyBrown);
                     else if (Main.netMode == NetmodeID.SinglePlayer)
@@ -228,7 +227,7 @@ namespace Redemption.Globals
                 {
                     labSafe = true;
 
-                    string status = "The laboratory's defense systems have malfunctioned...";
+                    string status = Language.GetTextValue("Mods.Redemption.StatusMessage.Progression.LabOpen");
                     if (Main.netMode == NetmodeID.Server)
                         ChatHelper.BroadcastChatMessage(NetworkText.FromLiteral(status), Color.Cyan);
                     else if (Main.netMode == NetmodeID.SinglePlayer)
@@ -297,11 +296,23 @@ namespace Redemption.Globals
                 blobbleSwarmCooldown--;
 
             UpdateNukeCountdown();
+
+            if (ConversionHandler.GenningWasteland)
+            {
+                int radiusLeft = (int)(ConversionHandler.WastelandCenter.X / 16f - ConversionHandler.Radius);
+                int radiusRight = (int)(ConversionHandler.WastelandCenter.X / 16f + ConversionHandler.Radius);
+                int radiusDown = (int)(ConversionHandler.WastelandCenter.Y / 16f + ConversionHandler.Radius);
+                if (radiusLeft < 15) { radiusLeft = 15; }
+                if (radiusRight > Main.maxTilesX - 15) { radiusRight = Main.maxTilesX - 15; }
+                if (radiusDown > Main.maxTilesY - 15) { radiusDown = Main.maxTilesY - 15; }
+                for (int i = 0; i < 2; i++)
+                    ConversionHandler.GenWasteland(radiusLeft, radiusRight, radiusDown, ConversionHandler.WastelandCenter, ConversionHandler.Radius);
+            }
         }
 
         public static void OmegaTransmitterMessage()
         {
-            string status = "A new Omega Prototype can be called using the Omega Transmitter";
+            string status = Language.GetTextValue("Mods.Redemption.StatusMessage.Progression.OmegaCall");
             if (Main.netMode == NetmodeID.Server)
                 ChatHelper.BroadcastChatMessage(NetworkText.FromLiteral(status), Color.IndianRed);
             else if (Main.netMode == NetmodeID.SinglePlayer)
@@ -380,12 +391,12 @@ namespace Redemption.Globals
                     string nukeDeathReason;
 
                     WeightedRandom<string> nukeDeaths = new(Main.rand);
-                    nukeDeaths.Add(player.name + " saw a second sunrise", 5);
-                    nukeDeaths.Add(player.name + " was wiped off the face of " + Main.worldName + "", 5);
-                    nukeDeaths.Add(player.name + " experienced doomsday", 5);
-                    nukeDeaths.Add(player.name + " became a shadow on the ground", 5);
-                    nukeDeaths.Add(player.name + " went out with a bang", 5);
-                    nukeDeaths.Add(player.name + " couldn't find the fridge in time", 1);
+                    nukeDeaths.Add(player.name + Language.GetTextValue("Mods.Redemption.StatusMessage.Death.Nuclear1"), 5);
+                    nukeDeaths.Add(player.name + Language.GetTextValue("Mods.Redemption.StatusMessage.Death.Nuclear2") + Main.worldName + "", 5);
+                    nukeDeaths.Add(player.name + Language.GetTextValue("Mods.Redemption.StatusMessage.Death.Nuclear3"), 5);
+                    nukeDeaths.Add(player.name + Language.GetTextValue("Mods.Redemption.StatusMessage.Death.Nuclear4"), 5);
+                    nukeDeaths.Add(player.name + Language.GetTextValue("Mods.Redemption.StatusMessage.Death.Nuclear5"), 5);
+                    nukeDeaths.Add(player.name + Language.GetTextValue("Mods.Redemption.StatusMessage.Death.Nuclear6"), 1);
 
                     nukeDeathReason = nukeDeaths;
                     if (!Main.dedServ)
@@ -433,10 +444,10 @@ namespace Redemption.Globals
         }
         public override void ClearWorld()
         {
-            if (Redemption.TrailManager != null)
-                Redemption.TrailManager.ClearAllTrails(); //trails break on world unload and reload(their projectile is still counted as being active???), so this just clears them all on reload
-
-            if (ChatUI.Visible)
+            Redemption.TrailManager?.ClearAllTrails();
+            if (!Main.dedServ)
+                AdditiveCallManager.Unload();
+            if (!Main.dedServ && ChatUI.Visible)
                 ChatUI.Clear();
 
             alignment = 0;

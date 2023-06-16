@@ -1,6 +1,7 @@
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.ID;
+using Terraria.Localization;
 using Redemption.DamageClasses;
 using Redemption.BaseExtension;
 
@@ -42,11 +43,11 @@ namespace Redemption.Items.Armor.HM.Hardlight
 
         public override void UpdateArmorSet(Player player)
         {
-            player.setBonus = "Select a keybind for [Special Ability Key] in Controls"; // TODO: Hardlight ritualist bonus
+            player.setBonus = Language.GetTextValue("Mods.Redemption.GenericTooltips.ArmorSetBonus.Hardlight.Keybind"); // TODO: Hardlight ritualist bonus
             foreach (string key in Redemption.RedeSpecialAbility.GetAssignedKeys())
             {
-                player.setBonus = "Press " + key + " to get support from the Ship of the Slayer\n" +
-                    "Summons a hologram of King Slayer III to help, higher spirit levels give the hologram stronger weapons";
+                player.setBonus = Language.GetTextValue("Mods.Redemption.GenericTooltips.ArmorSetBonus.Hardlight.Press") + key + Language.GetTextValue("Mods.Redemption.GenericTooltips.ArmorSetBonus.Hardlight.Support") +
+                    Language.GetTextValue("Mods.Redemption.GenericTooltips.ArmorSetBonus.Hardlight.Casque");
             }
             player.RedemptionPlayerBuff().hardlightBonus = 1;
             player.RedemptionPlayerBuff().MetalSet = true;

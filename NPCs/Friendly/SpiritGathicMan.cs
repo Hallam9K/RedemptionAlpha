@@ -1,4 +1,4 @@
-﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -24,6 +24,7 @@ namespace Redemption.NPCs.Friendly
             // DisplayName.SetDefault("Old Spirit Man");
             Main.npcFrameCount[NPC.type] = 4;
             NPCID.Sets.ActsLikeTownNPC[Type] = true;
+            NPCID.Sets.NoTownNPCHappiness[Type] = true;
 
             NPCID.Sets.DebuffImmunitySets.Add(Type, new NPCDebuffImmunityData
             {
@@ -114,14 +115,14 @@ namespace Redemption.NPCs.Friendly
             bool offering = Main.LocalPlayer.HasItem(ModContent.ItemType<GraveSteelBattleaxe>());
             button = ChatNumber switch
             {
-                1 => "Olden Ruins?",
-                2 => "God of Decay?",
-                3 => "False Gods?",
-                4 => "Dead Ringer?",
-                5 => request && offering ? "Offer Grave Steel Battleaxe" : "Request Crux",
-                _ => "About you?",
+                1 => Language.GetTextValue("Mods.Redemption.DialogueBox.SpiritGathicMan.1"),
+                2 => Language.GetTextValue("Mods.Redemption.DialogueBox.SpiritGathicMan.2"),
+                3 => Language.GetTextValue("Mods.Redemption.DialogueBox.SpiritGathicMan.3"),
+                4 => Language.GetTextValue("Mods.Redemption.DialogueBox.SpiritGathicMan.4"),
+                5 => request && offering ? Language.GetTextValue("Mods.Redemption.DialogueBox.SpiritGathicMan.Offer") : Language.GetTextValue("Mods.Redemption.DialogueBox.SpiritGathicMan.Crux"),
+                _ => Language.GetTextValue("Mods.Redemption.DialogueBox.SpiritGathicMan.5"),
             };
-            button2 = "Cycle Dialogue";
+            button2 = Language.GetTextValue("Mods.Redemption.DialogueBox.CycleD");
         }
 
         public override void OnChatButtonClicked(bool firstButton, ref string shopName)

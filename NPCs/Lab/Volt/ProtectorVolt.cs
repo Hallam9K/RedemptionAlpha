@@ -17,6 +17,7 @@ using Redemption.Buffs.Debuffs;
 using Redemption.Buffs.NPCBuffs;
 using Terraria.Audio;
 using Redemption.UI.ChatUI;
+using Terraria.Localization;
 
 namespace Redemption.NPCs.Lab.Volt
 {
@@ -104,7 +105,7 @@ namespace Redemption.NPCs.Lab.Volt
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
         {
             bestiaryEntry.Info.AddRange(new List<IBestiaryInfoElement> {
-                new FlavorTextBestiaryInfoElement("A gentle giant who keeps his sentences short and acts as a Guard inside the Laboratory. Volt used to be part of the Bear Unit on the surface, but retired after a violent altercation.")
+                new FlavorTextBestiaryInfoElement(Language.GetTextValue("Mods.Redemption.FlavorTextBestiary.Volt"))
             });
         }
         public override void OnKill()
@@ -158,7 +159,7 @@ namespace Redemption.NPCs.Lab.Volt
             {
                 case ActionState.Begin:
                     if (!Main.dedServ)
-                        RedeSystem.Instance.TitleCardUIElement.DisplayTitle("Protector Volt", 60, 90, 0.8f, 0, Color.Yellow, "Omega Division Commander");
+                        RedeSystem.Instance.TitleCardUIElement.DisplayTitle(Language.GetTextValue("Mods.Redemption.TitleCard.Volt.Name"), 60, 90, 0.8f, 0, Color.Yellow, Language.GetTextValue("Mods.Redemption.TitleCard.Volt.Modifier"));
 
                     AIState = ActionState.Fly;
                     NPC.netUpdate = true;
@@ -167,7 +168,7 @@ namespace Redemption.NPCs.Lab.Volt
                 case ActionState.Fly:
                     if (NPC.life <= (int)(NPC.lifeMax * 0.01f))
                     {
-                        Pos = (RedeGen.LabPoint.ToVector2() + new Vector2(86, 119)) * 16;
+                        Pos = (RedeGen.LabVector + new Vector2(86, 119)) * 16;
                         NPC.dontTakeDamage = true;
                         NPC.noGravity = true;
                         NPC.noTileCollide = true;
@@ -371,7 +372,7 @@ namespace Redemption.NPCs.Lab.Volt
                             dust2.velocity = dust2.position.DirectionTo(GunOrigin) * 4f;
                         }
 
-                        if (NPC.Center.Y > (RedeGen.LabPoint.Y + 112) * 16)
+                        if (NPC.Center.Y > (RedeGen.LabVector.Y + 112) * 16)
                             gunRot.SlowRotation(-MathHelper.PiOver2, (float)Math.PI / 30f);
                         else
                             gunRot.SlowRotation(MathHelper.PiOver2, (float)Math.PI / 30f);
@@ -380,7 +381,7 @@ namespace Redemption.NPCs.Lab.Volt
                     {
                         NPC.noGravity = true;
                         NPC.noTileCollide = true;
-                        if (NPC.Center.Y > (RedeGen.LabPoint.Y + 112) * 16)
+                        if (NPC.Center.Y > (RedeGen.LabVector.Y + 112) * 16)
                             gunRot = -MathHelper.PiOver2;
                         else
                         {
@@ -391,12 +392,12 @@ namespace Redemption.NPCs.Lab.Volt
                     if (AITimer == 60)
                     {
                         NPC.Shoot(GunOrigin, ModContent.ProjectileType<TeslaBeam>(), NPC.damage, RedeHelper.PolarVector(10, gunRot), true, SoundID.Item73, NPC.whoAmI);
-                        if (NPC.Center.X > (RedeGen.LabPoint.X + 86) * 16)
+                        if (NPC.Center.X > (RedeGen.LabVector.X + 86) * 16)
                             TimerRand = 1;
                     }
                     if (TimerRand < 2 && AITimer >= 60)
                     {
-                        Vector2 v = new(TimerRand == 0 ? (RedeGen.LabPoint.X + 125) * 16 : (RedeGen.LabPoint.X + 48) * 16, Pos.Y - 30);
+                        Vector2 v = new(TimerRand == 0 ? (RedeGen.LabVector.X + 125) * 16 : (RedeGen.LabVector.X + 48) * 16, Pos.Y - 30);
                         if (NPC.DistanceSQ(v) < 10 * 10)
                         {
                             NPC.noGravity = false;
@@ -438,7 +439,7 @@ namespace Redemption.NPCs.Lab.Volt
                             {
                                 if (AITimer == 10 && !Main.dedServ)
                                 {
-                                    Dialogue d1 = new(NPC, "Enough.", Colors.RarityYellow, new Color(100, 86, 0), voice, .03f, 2f, .5f, true, modifier: modifier); // 144
+                                    Dialogue d1 = new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.Volt.Defeat.Refight"), Colors.RarityYellow, new Color(100, 86, 0), voice, .03f, 2f, .5f, true, modifier: modifier); // 144
 
                                     ChatUI.Visible = true;
                                     ChatUI.Add(d1);
@@ -455,10 +456,10 @@ namespace Redemption.NPCs.Lab.Volt
                                 if (AITimer == 10 && !Main.dedServ)
                                 {
                                     DialogueChain chain = new();
-                                    chain.Add(new(NPC, "... Are you allowed through?[0.5] Let me check.", Colors.RarityYellow, new Color(100, 86, 0), voice, .03f, 2f, 0, false, modifier: modifier)) // 214
-                                         .Add(new(NPC, "... Oh?", Colors.RarityYellow, new Color(100, 86, 0), voice, .03f, 2f, 0, false, modifier: modifier)) // 114
-                                         .Add(new(NPC, "... You're allowed through?", Colors.RarityYellow, new Color(100, 86, 0), voice, .03f, 2f, 0, false, modifier: modifier)) // 154
-                                         .Add(new(NPC, "This was mildly embarrassing.[0.5] Apologies.", Colors.RarityYellow, new Color(100, 86, 0), voice, .03f, 2f, .5f, true, modifier: modifier, endID: 1)); // 240
+                                    chain.Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.Volt.Defeat.1"), Colors.RarityYellow, new Color(100, 86, 0), voice, .03f, 2f, 0, false, modifier: modifier)) // 214
+                                         .Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.Volt.Defeat.2"), Colors.RarityYellow, new Color(100, 86, 0), voice, .03f, 2f, 0, false, modifier: modifier)) // 114
+                                         .Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.Volt.Defeat.3"), Colors.RarityYellow, new Color(100, 86, 0), voice, .03f, 2f, 0, false, modifier: modifier)) // 154
+                                         .Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.Volt.Defeat.4"), Colors.RarityYellow, new Color(100, 86, 0), voice, .03f, 2f, .5f, true, modifier: modifier, endID: 1)); // 240
                                     chain.OnEndTrigger += Chain_OnEndTrigger;
                                     ChatUI.Visible = true;
                                     ChatUI.Add(chain);
@@ -472,7 +473,7 @@ namespace Redemption.NPCs.Lab.Volt
                             }
                             break;
                         case 2:
-                            Vector2 VoltPos = new((RedeGen.LabPoint.X + 49) * 16, (RedeGen.LabPoint.Y + 120) * 16);
+                            Vector2 VoltPos = new((RedeGen.LabVector.X + 49) * 16, (RedeGen.LabVector.Y + 120) * 16);
                             if (NPC.DistanceSQ(VoltPos) < 10 * 10)
                             {
                                 NPC.noGravity = false;
@@ -529,7 +530,7 @@ namespace Redemption.NPCs.Lab.Volt
             else
                 FloatPos = false;
 
-            return (RedeGen.LabPoint.ToVector2() + selection) * 16;
+            return (RedeGen.LabVector + selection) * 16;
         }
         public Vector2 PickSidePos()
         {
@@ -540,7 +541,7 @@ namespace Redemption.NPCs.Lab.Volt
             choice.Add(new Vector2(126, 103));
 
             FloatPos = false;
-            return (RedeGen.LabPoint.ToVector2() + choice) * 16;
+            return (RedeGen.LabVector + choice) * 16;
         }
         public override bool CheckDead()
         {

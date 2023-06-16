@@ -164,7 +164,7 @@ namespace Redemption.NPCs.Bosses.Keeper
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Surface,
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Times.NightTime,
 
-                new FlavorTextBestiaryInfoElement("A powerful fallen who had learnt forbidden necromancy, its prolonged usage having mutated her body.")
+                new FlavorTextBestiaryInfoElement(Language.GetTextValue("Mods.Redemption.FlavorTextBestiary.Keeper"))
             });
         }
 
@@ -297,7 +297,7 @@ namespace Redemption.NPCs.Bosses.Keeper
                     if (AITimer++ == 0)
                     {
                         if (!Main.dedServ)
-                            RedeSystem.Instance.TitleCardUIElement.DisplayTitle("The Keeper", 60, 90, 0.8f, 0, Color.MediumPurple, "Octavia von Gailon");
+                            RedeSystem.Instance.TitleCardUIElement.DisplayTitle(Language.GetTextValue("Mods.Redemption.TitleCard.Keeper.Name"), 60, 90, 0.8f, 0, Color.MediumPurple, Language.GetTextValue("Mods.Redemption.TitleCard.Keeper.Modifier"));
 
                         NPC.position = new Vector2(Main.rand.NextBool(2) ? player.Center.X - 160 : player.Center.X + 160, player.Center.Y - 90);
                         NPC.netUpdate = true;
@@ -752,7 +752,7 @@ namespace Redemption.NPCs.Bosses.Keeper
                     }
 
                     if (AITimer == 60)
-                        Main.NewText("The Keeper noticed the abandoned teddy you're holding...", Colors.RarityPurple.R, Colors.RarityPurple.G, Colors.RarityPurple.B);
+                        Main.NewText(Language.GetTextValue("Mods.Redemption.StatusMessage.Other.Keeper2"), Colors.RarityPurple.R, Colors.RarityPurple.G, Colors.RarityPurple.B);
                     if (AITimer == 120)
                         TimerRand = 1;
                     if (AITimer == 400)
@@ -775,9 +775,9 @@ namespace Redemption.NPCs.Bosses.Keeper
                             Dust.NewDust(new Vector2(NPC.position.X, NPC.position.Y), NPC.width, NPC.height, DustID.PurificationPowder);
                     }
                     if (AITimer == 900)
-                        CombatText.NewText(NPC.getRect(), Color.GhostWhite, "Thank...", true, false);
+                        CombatText.NewText(NPC.getRect(), Color.GhostWhite, Language.GetTextValue("Mods.Redemption.Cutscene.Keeper.1"), true, false);
                     if (AITimer == 960)
-                        CombatText.NewText(NPC.getRect(), Color.GhostWhite, "You...", true, false);
+                        CombatText.NewText(NPC.getRect(), Color.GhostWhite, Language.GetTextValue("Mods.Redemption.Cutscene.Keeper.2"), true, false);
                     if (AITimer >= 960)
                     {
                         for (int k = 0; k < 1; k++)
@@ -800,7 +800,7 @@ namespace Redemption.NPCs.Bosses.Keeper
                             int dustIndex2 = Dust.NewDust(NPC.position + NPC.velocity, NPC.width, NPC.height, ModContent.DustType<VoidFlame>(), 0f, 0f, 100, default, 3f);
                             Main.dust[dustIndex2].velocity *= 2.6f;
                         }
-                        Main.NewText("The Keeper's Spirit fades away... ?", Colors.RarityPurple.R, Colors.RarityPurple.G, Colors.RarityPurple.B);
+                        Main.NewText(Language.GetTextValue("Mods.Redemption.StatusMessage.Other.Keeper3"), Colors.RarityPurple.R, Colors.RarityPurple.G, Colors.RarityPurple.B);
                         Item.NewItem(NPC.GetSource_Loot(), (int)NPC.position.X, (int)NPC.position.Y, NPC.width, NPC.height, ModContent.ItemType<KeepersCirclet>());
                         Item.NewItem(NPC.GetSource_Loot(), (int)NPC.position.X, (int)NPC.position.Y, NPC.width, NPC.height, ModContent.ItemType<KeeperTrophy>());
                         NPC.Shoot(NPC.Center, ModContent.ProjectileType<KeeperSoul>(), 0, Vector2.Zero, false, SoundID.Item1);

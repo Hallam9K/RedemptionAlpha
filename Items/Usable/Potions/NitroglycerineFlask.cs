@@ -1,6 +1,5 @@
 using Redemption.Buffs;
 using Redemption.Globals;
-using Redemption.Items.Materials.HM;
 using Terraria;
 using Terraria.ID;
 using Terraria.Localization;

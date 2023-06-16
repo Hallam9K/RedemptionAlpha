@@ -41,7 +41,7 @@ namespace Redemption.Items.Weapons.HM.Magic
             Item.shootSpeed = 16f;
             Item.shoot = ModContent.ProjectileType<GlobalDischarge_Sphere>();
             if (!Main.dedServ)
-                Item.RedemptionGlow().glowTexture = ModContent.Request<Texture2D>(Item.ModItem.Texture + "_Glow").Value;
+                Item.RedemptionGlow().glowTexture = ModContent.Request<Texture2D>(Texture + "_Glow").Value;
         }
         public override bool CanUseItem(Player player)
         {

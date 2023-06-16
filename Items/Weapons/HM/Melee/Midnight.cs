@@ -1,6 +1,7 @@
 using Terraria.ModLoader;
 using Terraria.ID;
 using Terraria;
+using Terraria.Localization;
 using Microsoft.Xna.Framework;
 using Redemption.BaseExtension;
 using Redemption.Items.Weapons.PreHM.Melee;
@@ -62,10 +63,7 @@ namespace Redemption.Items.Weapons.HM.Melee
         {
             if (Main.keyState.PressingShift())
             {
-                TooltipLine line = new(Mod, "Lore",
-                    "'A blade crafted in the mountains of Erellon, imbued with celestial magic by an unknown source.\n" +
-                    "It was used by a rebel to assassinate the heir of Erellon. Afterwards the assassin was soon caught,\n" +
-                    "and the weapon was held in a museum'")
+                TooltipLine line = new(Mod, "Lore", Language.GetTextValue("Mods.Redemption.Items.Midnight.Lore"))
                 {
                     OverrideColor = Color.LightGray
                 };
@@ -73,7 +71,7 @@ namespace Redemption.Items.Weapons.HM.Melee
             }
             else
             {
-                TooltipLine line = new(Mod, "HoldShift", "Hold [Shift] to view lore")
+                TooltipLine line = new(Mod, "HoldShift", Language.GetTextValue("Mods.Redemption.SpecialTooltips.Viewer"))
                 {
                     OverrideColor = Color.Gray,
                 };

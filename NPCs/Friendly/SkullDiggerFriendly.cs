@@ -15,6 +15,7 @@ using Redemption.Items.Weapons.PreHM.Summon;
 using Redemption.Items.Materials.PreHM;
 using Terraria.Audio;
 using Terraria.Localization;
+using Redemption.Items.Usable;
 
 namespace Redemption.NPCs.Friendly
 {
@@ -45,6 +46,7 @@ namespace Redemption.NPCs.Friendly
             NPCID.Sets.TrailCacheLength[NPC.type] = 5;
             NPCID.Sets.TrailingMode[NPC.type] = 1;
             NPCID.Sets.ActsLikeTownNPC[Type] = true;
+            NPCID.Sets.NoTownNPCHappiness[Type] = true;
 
             NPCID.Sets.DebuffImmunitySets.Add(Type, new NPCDebuffImmunityData
             {
@@ -115,9 +117,9 @@ namespace Redemption.NPCs.Friendly
                             Dust.NewDust(new Vector2(NPC.position.X, NPC.position.Y), NPC.width, NPC.height, DustID.PurificationPowder);
 
                         if (AITimer == 60)
-                            CombatText.NewText(NPC.getRect(), Color.GhostWhite, "Thank...", true, false);
+                            CombatText.NewText(NPC.getRect(), Color.GhostWhite, Language.GetTextValue("Mods.Redemption.Cutscene.SkullDigger.1"), true, false);
                         if (AITimer == 120)
-                            CombatText.NewText(NPC.getRect(), Color.GhostWhite, "You...", true, false);
+                            CombatText.NewText(NPC.getRect(), Color.GhostWhite, Language.GetTextValue("Mods.Redemption.Cutscene.SkullDigger.2"), true, false);
                         if (NPC.alpha >= 255)
                         {
                             for (int i = 0; i < 50; i++)
@@ -125,7 +127,7 @@ namespace Redemption.NPCs.Friendly
                                 int dustIndex = Dust.NewDust(NPC.position + NPC.velocity, NPC.width, NPC.height, DustID.PurificationPowder, 0f, 0f, 100, default, 2.5f);
                                 Main.dust[dustIndex].velocity *= 2.6f;
                             }
-                            Main.NewText("Skull Digger's Spirit fades away...", Colors.RarityPurple.R, Colors.RarityPurple.G, Colors.RarityPurple.B);
+                            Main.NewText(Language.GetTextValue("Mods.Redemption.StatusMessage.Other.SkullDigger"), Colors.RarityPurple.R, Colors.RarityPurple.G, Colors.RarityPurple.B);
                             if (!RedeBossDowned.skullDiggerSaved)
                             {
                                 RedeWorld.alignment++;
@@ -151,9 +153,9 @@ namespace Redemption.NPCs.Friendly
         public override bool CanChat() => true;
         public override void SetChatButtons(ref string button, ref string button2)
         {
-            button = "Talk";
+            button = Language.GetTextValue("Mods.Redemption.DialogueBox.SkullDigger.Talk");
             if (Main.LocalPlayer.HasItem(ModContent.ItemType<WeddingRing>()))
-                button2 = "Give Wedding Ring";
+                button2 = Language.GetTextValue("Mods.Redemption.DialogueBox.SkullDigger.Give");
         }
         public override void OnChatButtonClicked(bool firstButton, ref string shopName)
         {
@@ -231,7 +233,10 @@ namespace Redemption.NPCs.Friendly
 
         public override float SpawnChance(NPCSpawnInfo spawnInfo)
         {
-            return SpawnCondition.Cavern.Chance * (!NPC.AnyNPCs(NPC.type) && !RedeBossDowned.skullDiggerSaved && RedeBossDowned.keeperSaved ? 0.03f : 0);
+            if (RedeBossDowned.skullDiggerSaved || !RedeBossDowned.keeperSaved || NPC.AnyNPCs(NPC.type))
+                return 0;
+            bool sorrow = spawnInfo.Player.HasItem(ModContent.ItemType<SorrowfulEssence>());
+            return SpawnCondition.Cavern.Chance * (sorrow ? 0.08f : 0.03f);
         }
 
         public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)
@@ -301,9 +306,9 @@ namespace Redemption.NPCs.Friendly
         }
         public override void SetChatButtons(ref string button, ref string button2)
         {
-            button = "Talk";
+            button = Language.GetTextValue("Mods.Redemption.DialogueBox.SkullDigger.Talk");
             if (Main.LocalPlayer.RedemptionAbility().SpiritwalkerActive && !Main.LocalPlayer.HasItem(ModContent.ItemType<CruxCardSkullDigger>()))
-                button2 = "Request Crux";
+                button2 = Language.GetTextValue("Mods.Redemption.DialogueBox.SkullDigger.Crux");
         }
         public override void OnChatButtonClicked(bool firstButton, ref string shopName)
         {
@@ -361,8 +366,14 @@ namespace Redemption.NPCs.Friendly
 
         public override float SpawnChance(NPCSpawnInfo spawnInfo)
         {
+            if (!RedeBossDowned.skullDiggerSaved || NPC.AnyNPCs(NPC.type))
+                return 0;
+
             if (spawnInfo.Player.RedemptionAbility().SpiritwalkerActive && !spawnInfo.Player.ZoneTowerNebula && !spawnInfo.Player.ZoneTowerSolar && !spawnInfo.Player.ZoneTowerStardust && !spawnInfo.Player.ZoneTowerVortex)
-                return !NPC.AnyNPCs(NPC.type) && RedeBossDowned.skullDiggerSaved ? 0.4f : 0;
+            {
+                bool sorrow = spawnInfo.Player.HasItem(ModContent.ItemType<SorrowfulEssence>());
+                return sorrow ? 0.8f : 0.4f;
+            }
             return 0;
         }
     }

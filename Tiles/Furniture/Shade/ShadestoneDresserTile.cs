@@ -1,8 +1,6 @@
-using System;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
-using Terraria.Enums;
 using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
@@ -49,7 +47,6 @@ namespace Redemption.Tiles.Furniture.Shade
 			AddMapEntry(new Color(59, 61, 87), name);
 			//ContainerName/* tModPorter Note: Removed. Override DefaultContainerName instead */.SetDefault("Shadestone Dresser");
 			AdjTiles = new int[] { TileID.Dressers };
-			ItemDrop = ModContent.ItemType<ShadestoneDresser>();
 			DustType = ModContent.DustType<ShadestoneDust>();
 		}
         public override bool HasSmartInteract(int i, int j, SmartInteractScanSettings settings) => true;

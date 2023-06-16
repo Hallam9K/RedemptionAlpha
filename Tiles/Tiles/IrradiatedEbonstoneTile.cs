@@ -1,7 +1,6 @@
 using Microsoft.Xna.Framework;
 using Redemption.Globals.Player;
 using Redemption.Items.Accessories.HM;
-using Redemption.Items.Placeable.Tiles;
 using Redemption.Tiles.Natural;
 using Terraria;
 using Terraria.Audio;
@@ -33,7 +32,6 @@ namespace Redemption.Tiles.Tiles
             Main.tileMerge[ModContent.TileType<IrradiatedDirtTile>()][Type] = true;
             Main.tileMerge[Type][ModContent.TileType<IrradiatedStoneTile>()] = true;
             Main.tileMerge[Type][ModContent.TileType<IrradiatedCrimstoneTile>()] = true;
-            ItemDrop = ModContent.ItemType<IrradiatedEbonstone>();
             TileID.Sets.Conversion.Stone[Type] = true;
             TileID.Sets.Stone[Type] = true;
             TileID.Sets.GeneralPlacementTiles[Type] = true;

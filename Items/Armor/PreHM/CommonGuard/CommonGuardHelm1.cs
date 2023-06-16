@@ -1,6 +1,7 @@
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.ID;
+using Terraria.Localization;
 using Redemption.Items.Materials.PreHM;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
@@ -42,7 +43,7 @@ namespace Redemption.Items.Armor.PreHM.CommonGuard
 
         public override void UpdateArmorSet(Player player)
         {
-            player.setBonus = "12% increased melee speed";
+            player.setBonus = Language.GetTextValue("Mods.Redemption.GenericTooltips.ArmorSetBonus.CommonGuardHelm1");
             player.GetAttackSpeed(DamageClass.Melee) += .12f;
             player.RedemptionPlayerBuff().MetalSet = true;
 
@@ -69,13 +70,7 @@ namespace Redemption.Items.Armor.PreHM.CommonGuard
         {
             if (Main.keyState.PressingShift())
             {
-                TooltipLine line = new(Mod, "Lore",
-                    "'Visored plate mail helm of the Common Guard unit of Anglon that were scavenged by skeletons.\n" +
-                    "Originally shining steel, the metal has since dulled with time and coated with layers of dust.\n\n" +
-                    "The Common Guard was founded when an Overlord's city was completely obliterated\n" +
-                    "by a stray demon that sneaked through an unguarded portal to Demonhollow.\n\n" +
-                    "They now guard cities and landmarks of great importance. Despite being stronger than the average\n" +
-                    "knight, they don't get involved in wars.'")
+                TooltipLine line = new(Mod, "Lore", Language.GetTextValue("Mods.Redemption.SpecialTooltips.CommonGuard.CommonGuardHelm1"))
                 {
                     OverrideColor = Color.LightGray
                 };
@@ -83,7 +78,7 @@ namespace Redemption.Items.Armor.PreHM.CommonGuard
             }
             else
             {
-                TooltipLine line = new(Mod, "HoldShift", "Hold [Shift] to view lore")
+                TooltipLine line = new(Mod, "HoldShift", Language.GetTextValue("Mods.Redemption.SpecialTooltips.Viewer"))
                 {
                     OverrideColor = Color.Gray,
                 };

@@ -1,6 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Redemption.Buffs.NPCBuffs;
+using Redemption.Buffs.Debuffs;
 using Redemption.Globals;
 using Terraria;
 using Terraria.Audio;
@@ -125,6 +125,12 @@ namespace Redemption.Projectiles.Magic
         }
         public override void AI()
         {
+            if (Projectile.ai[0] is 1)
+            {
+                Projectile.rotation += Projectile.velocity.X / 20 * Projectile.direction;
+                Projectile.velocity.Y += 0.2f;
+                return;
+            }
             if (Projectile.localAI[0] == 1)
                 Projectile.rotation -= 0.02f;
             else if (Projectile.localAI[0] == 2)
@@ -166,7 +172,12 @@ namespace Redemption.Projectiles.Magic
             if (Main.rand.NextBool(3))
                 target.AddBuff(BuffID.Frostburn, 180);
         }
-        public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers) => modifiers.FinalDamage *= Projectile.scale;
+        public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
+        {
+            if (Projectile.ai[0] is 1)
+                modifiers.FinalDamage *= 4;
+            modifiers.FinalDamage *= Projectile.scale;
+        }
         public override void ModifyHitPlayer(Player target, ref Player.HurtModifiers modifiers) => modifiers.FinalDamage *= Projectile.scale;
     }
 }

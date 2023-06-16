@@ -15,6 +15,7 @@ using Redemption.Base;
 using System;
 using Terraria.Audio;
 using Redemption.Dusts;
+using Redemption.BaseExtension;
 
 namespace Redemption.NPCs.Bosses.Gigapora
 {
@@ -84,14 +85,15 @@ namespace Redemption.NPCs.Bosses.Gigapora
         public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)
         {
             NPC.lifeMax = (int)(NPC.lifeMax * 0.6f * balance * bossAdjustment);
-            NPC.damage = (int)(NPC.damage * 0.6f);
+            NPC.damage = (int)(NPC.damage * 0.75f);
         }
         public override bool CheckDead()
         {
             if (AIState is ActionState.Death && godrayFade >= 1f)
                 return true;
 
-            SoundEngine.PlaySound(CustomSounds.OODashReady with { Volume = 1.5f, Pitch = -.3f }, NPC.position);
+            if (!Main.dedServ)
+                SoundEngine.PlaySound(CustomSounds.OODashReady with { Volume = 1.5f, Pitch = -.3f }, NPC.position);
             NPC.life = 1;
             AIState = ActionState.Death;
             AITimer = 0;
@@ -116,7 +118,8 @@ namespace Redemption.NPCs.Bosses.Gigapora
                         dust.color = dustColor;
                         dust.velocity = -seg.DirectionTo(dust.position) * 2;
                     }
-                    SoundEngine.PlaySound(CustomSounds.MissileExplosion, seg.position);
+                    if (!Main.dedServ)
+                        SoundEngine.PlaySound(CustomSounds.MissileExplosion, seg.position);
                     RedeDraw.SpawnExplosion(seg.Center, Color.OrangeRed, DustID.RedTorch);
 
                     int drill = NPC.FindFirstNPC(ModContent.NPCType<Gigapora>());
@@ -174,7 +177,8 @@ namespace Redemption.NPCs.Bosses.Gigapora
             NPC seg = Main.npc[(int)NPC.ai[0]];
             if (!seg.active || seg.type != ModContent.NPCType<Gigapora_BodySegment>())
                 NPC.active = false;
-            DespawnHandler();
+            if (DespawnHandler())
+                return;
 
             bool another = NPC.CountNPCS(ModContent.NPCType<Gigapora_ShieldCore>()) > 1;
 
@@ -190,9 +194,9 @@ namespace Redemption.NPCs.Bosses.Gigapora
                     }
                     break;
                 case ActionState.Idle:
-                    if (NPC.DistanceSQ(player.Center) < 500 * 500)
+                    if (NPC.DistanceSQ(player.Center) < 400 * 400)
                         NPC.Move(Vector2.Zero, NPC.DistanceSQ(player.Center) < 300 * 300 ? 18 : 10, 60, true, true);
-                    else if (NPC.DistanceSQ(player.Center) >= 600 * 600)
+                    else if (NPC.DistanceSQ(player.Center) >= 500 * 500)
                         NPC.Move(Vector2.Zero, NPC.DistanceSQ(player.Center) > 1100 * 1100 ? 18 : 10, 60, true);
                     else
                         NPC.velocity *= 0.98f;
@@ -246,7 +250,8 @@ namespace Redemption.NPCs.Bosses.Gigapora
                     godraySize += 0.01f;
                     if (godrayFade >= 1f)
                     {
-                        SoundEngine.PlaySound(CustomSounds.MissileExplosion with { Pitch = .1f }, NPC.position);
+                        if (!Main.dedServ)
+                            SoundEngine.PlaySound(CustomSounds.MissileExplosion with { Pitch = .1f }, NPC.position);
                         RedeDraw.SpawnExplosion(NPC.Center, Color.OrangeRed, DustID.RedTorch);
                         NPC.dontTakeDamage = false;
                         player.ApplyDamageToNPC(NPC, 9999, 0, 0, false);
@@ -323,7 +328,7 @@ namespace Redemption.NPCs.Bosses.Gigapora
         {
             Texture2D texture = TextureAssets.Npc[NPC.type].Value;
             Texture2D glowMask = ModContent.Request<Texture2D>(Texture + "_Glow").Value;
-            Texture2D glowRadius = ModContent.Request<Texture2D>("Redemption/Textures/WhiteGlow").Value;
+            Texture2D glowRadius = Redemption.WhiteGlow.Value;
             var effects = NPC.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
 
             if (!NPC.IsABestiaryIconDummy)
@@ -338,8 +343,11 @@ namespace Redemption.NPCs.Bosses.Gigapora
                 spriteBatch.Draw(glowRadius, NPC.Center - screenPos, null, Color.Red * glowOpacity, 0, glowOrigin, glowSize, effects, 0);
                 spriteBatch.Draw(glowRadius, NPC.Center - screenPos, null, Color.Red * glowOpacity * 0.7f, 0, glowOrigin, glowSize2 * 1.5f, effects, 0);
 
-                spriteBatch.Draw(ModContent.Request<Texture2D>("Redemption/Textures/FadeTelegraph").Value, NPC.Center - screenPos, new Rectangle(0, 0, 64, 128), Color.Red * glowOpacity, (Main.npc[(int)NPC.ai[0]].Center - NPC.Center).ToRotation(), new Vector2(0, 64), new Vector2(NPC.Distance(Main.npc[(int)NPC.ai[0]].Center) / 150, NPC.width / 128f), SpriteEffects.None, 0f);
-                spriteBatch.Draw(ModContent.Request<Texture2D>("Redemption/Textures/FadeTelegraphCap").Value, NPC.Center - screenPos, new Rectangle(0, 0, 64, 128), Color.Red * glowOpacity, (NPC.Center - Main.npc[(int)NPC.ai[0]].Center).ToRotation(), new Vector2(0, 64), new Vector2(NPC.width / 128f, NPC.width / 128f), SpriteEffects.None, 0f);
+                float dist = NPC.Distance(Main.npc[(int)NPC.ai[0]].Center);
+                float heatOpacity = 1500f / dist;
+
+                spriteBatch.Draw(ModContent.Request<Texture2D>("Redemption/Textures/FadeTelegraph").Value, NPC.Center - screenPos, new Rectangle(0, 0, 64, 128), Color.Red * glowOpacity * MathHelper.Lerp(0f, 1f, heatOpacity), (Main.npc[(int)NPC.ai[0]].Center - NPC.Center).ToRotation(), new Vector2(0, 64), new Vector2(dist / 100, NPC.width / 128f), SpriteEffects.None, 0f);
+                spriteBatch.Draw(ModContent.Request<Texture2D>("Redemption/Textures/FadeTelegraphCap").Value, NPC.Center - screenPos, new Rectangle(0, 0, 64, 128), Color.Red * glowOpacity * MathHelper.Lerp(0f, 1f, heatOpacity), (NPC.Center - Main.npc[(int)NPC.ai[0]].Center).ToRotation(), new Vector2(0, 64), new Vector2(NPC.width / 128f, NPC.width / 128f), SpriteEffects.None, 0f);
 
                 spriteBatch.End();
                 spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
@@ -359,7 +367,7 @@ namespace Redemption.NPCs.Bosses.Gigapora
             return false;
         }
 
-        private void DespawnHandler()
+        private bool DespawnHandler()
         {
             NPC seg = Main.npc[(int)NPC.ai[0]];
             Player player = Main.player[NPC.target];
@@ -372,9 +380,10 @@ namespace Redemption.NPCs.Bosses.Gigapora
                     NPC.velocity.Y = -10;
                     if (NPC.timeLeft > 10)
                         NPC.timeLeft = 10;
-                    return;
+                    return true;
                 }
             }
+            return false;
         }
     }
 }

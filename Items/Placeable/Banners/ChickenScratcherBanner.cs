@@ -15,7 +15,7 @@ namespace Redemption.Items.Placeable.Banners
         {
             Item.DefaultToPlaceableTile(ModContent.TileType<ChickenScratcherBannerTile>(), 0);
             Item.width = 12;
-            Item.height = 28;
+            Item.height = 32;
             Item.maxStack = Item.CommonMaxStack;
             Item.rare = ItemRarityID.Blue;
             Item.value = Item.buyPrice(0, 0, 10, 0);

@@ -1,5 +1,4 @@
 using Microsoft.Xna.Framework;
-using Redemption.Globals;
 using System.Collections.Generic;
 using System.Linq;
 using Terraria;
@@ -18,7 +17,6 @@ namespace Redemption.Items.Weapons.PreHM.Melee
             // DisplayName.SetDefault("Forest Nymph's Sickle");
             /* Tooltip.SetDefault("Deals 50% more damage to dark enemies\n" +
                 "Right-click to swap between Melee and Magic abilities"); */
-
             ItemID.Sets.SkipsInitialUseSound[Item.type] = true;
             Item.ResearchUnlockCount = 1;
         }
@@ -26,8 +24,8 @@ namespace Redemption.Items.Weapons.PreHM.Melee
         public override void SetDefaults()
         {
             // Common Properties
-            Item.width = 60;
-            Item.height = 68;
+            Item.width = 62;
+            Item.height = 76;
             Item.rare = ItemRarityID.Green;
             Item.value = Item.sellPrice(gold: 5);
 
@@ -112,9 +110,9 @@ namespace Redemption.Items.Weapons.PreHM.Melee
             if (tooltipLocation != -1)
             {
                 if (!MagicMode)
-                    tooltips.Insert(tooltipLocation, new TooltipLine(Mod, "Tooltip", "Hitting an enemy with the weapon will drain a twentieth of the damage dealt"));
+                    tooltips.Insert(tooltipLocation, new TooltipLine(Mod, "Tooltip", Language.GetTextValue("Mods.Redemption.Items.ForestNymphsSickle.MeleeText")));
                 else
-                    tooltips.Insert(tooltipLocation, new TooltipLine(Mod, "Tooltip", "Twirl the sickle around to conjure nature pixies that will charge into enemies"));
+                    tooltips.Insert(tooltipLocation, new TooltipLine(Mod, "Tooltip", Language.GetTextValue("Mods.Redemption.Items.ForestNymphsSickle.MagicText")));
             }
             if (!MagicMode)
             {

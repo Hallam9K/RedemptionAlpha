@@ -16,10 +16,11 @@ using Terraria.ID;
 using Terraria.GameContent;
 using ReLogic.Content;
 using Redemption.WorldGeneration;
-//using SubworldLibrary;
+using SubworldLibrary;
 using Redemption.WorldGeneration.Misc;
 using Redemption.Items.Weapons.HM.Magic;
 using Terraria.Audio;
+using Terraria.Localization;
 
 namespace Redemption.Globals.Player
 {
@@ -119,15 +120,15 @@ namespace Redemption.Globals.Player
         }
         public override void OnEnterWorld()
         {
-            // if (SubworldSystem.Current != null)
-            //    return;
-            if (RedeGen.GoldenGatewayPoint.X == 0 || RedeGen.BastionPoint.X == 0 || RedeGen.gathicPortalPoint.X == 0 || RedeGen.HallOfHeroesPoint.X == 0 || RedeGen.slayerShipPoint.X == 0)
-                Main.NewText("WARNING: Unable to locate a certain structure, new world is recommended!", Colors.RarityRed);
-            if (RedeGen.LabPoint.X == 0 || RedeGen.newbCavePoint.X == 0)
-                Main.NewText("WARNING: Unable to locate important structure, new world is required!", Colors.RarityRed);
+            if (SubworldSystem.Current != null)
+                return;
+            if (RedeGen.GoldenGatewayVector.X == -1 || RedeGen.BastionVector.X == -1 || RedeGen.gathicPortalVector.X == -1 || RedeGen.HallOfHeroesVector.X == -1 || RedeGen.slayerShipVector.X == -1)
+                Main.NewText(Language.GetTextValue("Mods.Redemption.StatusMessage.Other.Warning1"), Colors.RarityRed);
+            if (RedeGen.LabVector.X == -1 || RedeGen.newbCaveVector.X == -1)
+                Main.NewText(Language.GetTextValue("Mods.Redemption.StatusMessage.Other.Warning2"), Colors.RarityRed);
 
             if (RedeConfigClient.Instance.FunniAllWasteland || RedeConfigClient.Instance.FunniJanitor || RedeConfigClient.Instance.FunniSpiders || RedeConfigClient.Instance.FunniWasteland)
-                Main.NewText("CAUTION: You have a Funni config enabled that affects world gen. If you created a world just now, check which one you have enabled and disable it for next time.", Colors.RarityOrange);
+                Main.NewText(Language.GetTextValue("Mods.Redemption.StatusMessage.Other.Caution"), Colors.RarityOrange);
         }
         public override void ModifyMaxStats(out StatModifier health, out StatModifier mana)
         {
@@ -164,8 +165,7 @@ namespace Redemption.Globals.Player
             {
                 Player.buffImmune[BuffID.Shimmer] = true;
             }
-            // TODO: uncomment once sublib is ported
-            /*if (SubworldSystem.IsActive<CSub>())
+            if (SubworldSystem.IsActive<CSub>())
             {
                 Player.noBuilding = true;
                 Player.controlUseItem = false;
@@ -173,7 +173,7 @@ namespace Redemption.Globals.Player
                 Player.RedemptionScreen().lockScreen = true;
                 Player.RedemptionScreen().ScreenFocusPosition = new Vector2(100, 99) * 16;
                 Player.RedemptionScreen().interpolantTimer = 100;
-            }*/
+            }
         }
         public override void CatchFish(FishingAttempt attempt, ref int itemDrop, ref int npcSpawn, ref AdvancedPopupRequest sonar, ref Vector2 sonarPosition)
         {

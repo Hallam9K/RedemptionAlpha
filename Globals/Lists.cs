@@ -36,6 +36,8 @@ using Redemption.Items.Usable.Summons;
 using Redemption.Items.Quest.KingSlayer;
 using Redemption.Items.Placeable.Plants;
 using Redemption.Items.Weapons.PreHM.Summon;
+using Redemption.NPCs.Minibosses.Calavia;
+using Redemption.Tiles.Furniture.Misc;
 
 namespace Redemption.Globals
 {
@@ -167,12 +169,10 @@ namespace Redemption.Globals
             TileID.BeeHive,
             TileID.Granite,
             TileID.Marble,
-            ModContent.TileType<GathicStoneBrickTile>(),
-            ModContent.TileType<GathicGladestoneBrickTile>(),
-            ModContent.TileType<GathicFroststoneBrickTile>(),
             ModContent.TileType<AncientHallBrickTile>(),
             ModContent.TileType<SlayerShipPanelTile>(),
-            ModContent.TileType<LabPlatingTileUnsafe>()
+            ModContent.TileType<LabPlatingTileUnsafe>(),
+            ModContent.TileType<HangingTiedTile>()
         };
 
         public static List<int> ModdedChests = new();
@@ -198,6 +198,8 @@ namespace Redemption.Globals
     {
         #region NPC Lists
 
+        public static List<int> DisablesSpawnsWhenNear = new() { ModContent.NPCType<Calavia_Intro>(), ModContent.NPCType<Calavia_NPC>() };
+
         public static List<int> HasLostSoul = new() { ModContent.NPCType<LostSoulNPC>(), ModContent.NPCType<EpidotrianSkeleton>(), ModContent.NPCType<CorpseWalkerPriest>(), ModContent.NPCType<SkeletonAssassin>(), ModContent.NPCType<SkeletonDuelist>(), ModContent.NPCType<SkeletonFlagbearer>(), ModContent.NPCType<SkeletonNoble>(), ModContent.NPCType<SkeletonWanderer>(), ModContent.NPCType<SkeletonWarden>(), ModContent.NPCType<VagrantSpirit>(), ModContent.NPCType<JollyMadman>(), ModContent.NPCType<RaveyardSkeleton>(), 77, 449, 450, 451, 452, 481, 201, 202, 203, 21, 324, 110, 323, 293, 291, 322, 292, 197, 167, 44, 635 };
 
         #region Skeleton
@@ -217,7 +219,7 @@ namespace Redemption.Globals
 
         #region Spirit
 
-        public static List<int> Spirit = new() { NPCID.EnchantedSword, NPCID.CrimsonAxe, NPCID.CursedHammer, NPCID.DesertDjinn, NPCID.DungeonSpirit, NPCID.FloatyGross, NPCID.Ghost, NPCID.PossessedArmor, NPCID.Wraith, NPCID.Reaper, NPCID.Poltergeist, NPCID.PirateGhost, ModContent.NPCType<SkullDigger>(), ModContent.NPCType<VagrantSpirit>(), ModContent.NPCType<KeeperSpirit>(), ModContent.NPCType<ErhanSpirit>(), ModContent.NPCType<LostSoulNPC>(), ModContent.NPCType<NuclearShadow>(), ModContent.NPCType<WraithSlayer_Samurai>(), ModContent.NPCType<EpidotrianSkeleton_SS>(), ModContent.NPCType<ForestNymph_SS>(), ModContent.NPCType<SkeletonAssassin_SS>(), ModContent.NPCType<SkeletonFlagbearer_SS>(), ModContent.NPCType<SkeletonNoble_SS>(), ModContent.NPCType<SkeletonWarden_SS>(), ModContent.NPCType<HazmatZombie_SS>(), ModContent.NPCType<SkeletonDuelist_SS>(), ModContent.NPCType<SkeletonWanderer_SS>(), ModContent.NPCType<Asher_SS>(), ModContent.NPCType<AncientGladestoneGolem_SS>(), ModContent.NPCType<MossyGoliath_SS>(), ModContent.NPCType<HeadlessChicken>() };
+        public static List<int> Spirit = new() { NPCID.EnchantedSword, NPCID.CrimsonAxe, NPCID.CursedHammer, NPCID.DesertDjinn, NPCID.DungeonSpirit, NPCID.FloatyGross, NPCID.Ghost, NPCID.PossessedArmor, NPCID.Wraith, NPCID.Reaper, NPCID.Poltergeist, NPCID.PirateGhost, ModContent.NPCType<SkullDigger>(), ModContent.NPCType<VagrantSpirit>(), ModContent.NPCType<KeeperSpirit>(), ModContent.NPCType<ErhanSpirit>(), ModContent.NPCType<LostSoulNPC>(), ModContent.NPCType<NuclearShadow>(), ModContent.NPCType<WraithSlayer_Samurai>(), ModContent.NPCType<EpidotrianSkeleton_SS>(), ModContent.NPCType<ForestNymph_SS>(), ModContent.NPCType<SkeletonAssassin_SS>(), ModContent.NPCType<SkeletonFlagbearer_SS>(), ModContent.NPCType<SkeletonNoble_SS>(), ModContent.NPCType<SkeletonWarden_SS>(), ModContent.NPCType<HazmatZombie_SS>(), ModContent.NPCType<SkeletonDuelist_SS>(), ModContent.NPCType<SkeletonWanderer_SS>(), ModContent.NPCType<Asher_SS>(), ModContent.NPCType<AncientGladestoneGolem_SS>(), ModContent.NPCType<MossyGoliath_SS>(), ModContent.NPCType<HeadlessChicken>(), ModContent.NPCType<GhostfireChicken>() };
 
         #endregion
 
@@ -244,7 +246,7 @@ namespace Redemption.Globals
         #endregion
 
         #region Dragonlike
-        public static List<int> Dragonlike = new() { NPCID.DD2Betsy, NPCID.DD2WyvernT1, NPCID.DD2WyvernT2, NPCID.DD2WyvernT3, NPCID.PigronCorruption, NPCID.PigronCrimson, NPCID.PigronHallow, NPCID.DukeFishron, NPCID.WyvernHead, NPCID.WyvernBody, NPCID.WyvernBody2, NPCID.WyvernBody3, NPCID.WyvernLegs, NPCID.WyvernTail, NPCID.CultistDragonHead, NPCID.CultistDragonBody1, NPCID.CultistDragonBody2, NPCID.CultistDragonBody3, NPCID.CultistDragonBody4, NPCID.CultistDragonTail };
+        public static List<int> Dragonlike = new() { NPCID.DD2Betsy, NPCID.DD2WyvernT1, NPCID.DD2WyvernT2, NPCID.DD2WyvernT3, NPCID.PigronCorruption, NPCID.PigronCrimson, NPCID.PigronHallow, NPCID.DukeFishron, NPCID.WyvernHead, NPCID.WyvernBody, NPCID.WyvernBody2, NPCID.WyvernBody3, NPCID.WyvernLegs, NPCID.WyvernTail, NPCID.CultistDragonHead, NPCID.CultistDragonBody1, NPCID.CultistDragonBody2, NPCID.CultistDragonBody3, NPCID.CultistDragonBody4, NPCID.CultistDragonTail, ModContent.NPCType<Cockatrice>() };
         #endregion
 
         #region Inorganic
@@ -260,7 +262,7 @@ namespace Redemption.Globals
         #endregion
 
         #region Armed
-        public static List<int> Armed = new() { NPCID.RedDevil, NPCID.Paladin, NPCID.GoblinThief, NPCID.DD2GoblinT1, NPCID.DD2GoblinT2, NPCID.DD2GoblinT3, NPCID.MisterStabby, NPCID.PirateCorsair, NPCID.PirateGhost, NPCID.Butcher, NPCID.Psycho, NPCID.Reaper, NPCID.SolarDrakomireRider, NPCID.SolarSolenian, NPCID.SolarSpearman, NPCID.PrimeSaw, NPCID.PrimeVice, NPCID.DD2OgreT2, NPCID.DD2OgreT3, NPCID.Pumpking, NPCID.BlueArmoredBonesMace, NPCID.BlueArmoredBonesSword, NPCID.HellArmoredBonesMace, NPCID.HellArmoredBones, NPCID.HellArmoredBonesSword, NPCID.RustyArmoredBonesAxe, NPCID.RustyArmoredBonesFlail, NPCID.RustyArmoredBonesSword, NPCID.RustyArmoredBonesSwordNoArmor, ModContent.NPCType<SkullDigger>(), ModContent.NPCType<JollyMadman>(), ModContent.NPCType<SkeletonAssassin>(), ModContent.NPCType<SkeletonDuelist>(), ModContent.NPCType<SkeletonNoble>(), ModContent.NPCType<SkeletonWanderer>(), ModContent.NPCType<WraithSlayer_Samurai>(), ModContent.NPCType<SpacePaladin>() };
+        public static List<int> Armed = new() { NPCID.RedDevil, NPCID.Paladin, NPCID.GoblinThief, NPCID.DD2GoblinT1, NPCID.DD2GoblinT2, NPCID.DD2GoblinT3, NPCID.MisterStabby, NPCID.PirateCorsair, NPCID.PirateGhost, NPCID.Butcher, NPCID.Psycho, NPCID.Reaper, NPCID.SolarDrakomireRider, NPCID.SolarSolenian, NPCID.SolarSpearman, NPCID.PrimeSaw, NPCID.PrimeVice, NPCID.DD2OgreT2, NPCID.DD2OgreT3, NPCID.Pumpking, NPCID.BlueArmoredBonesMace, NPCID.BlueArmoredBonesSword, NPCID.HellArmoredBonesMace, NPCID.HellArmoredBones, NPCID.HellArmoredBonesSword, NPCID.RustyArmoredBonesAxe, NPCID.RustyArmoredBonesFlail, NPCID.RustyArmoredBonesSword, NPCID.RustyArmoredBonesSwordNoArmor, ModContent.NPCType<SkullDigger>(), ModContent.NPCType<JollyMadman>(), ModContent.NPCType<SkeletonAssassin>(), ModContent.NPCType<SkeletonDuelist>(), ModContent.NPCType<SkeletonNoble>(), ModContent.NPCType<SkeletonWanderer>(), ModContent.NPCType<WraithSlayer_Samurai>(), ModContent.NPCType<SpacePaladin>(), ModContent.NPCType<Calavia>() };
         #endregion
 
         #region Hallowed

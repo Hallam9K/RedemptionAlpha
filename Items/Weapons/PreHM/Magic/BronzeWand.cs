@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 
 namespace Redemption.Items.Weapons.PreHM.Magic
@@ -71,10 +72,7 @@ namespace Redemption.Items.Weapons.PreHM.Magic
         {
             if (Main.keyState.PressingShift())
             {
-                TooltipLine line = new(Mod, "Lore",
-                    "'A bronze wand with an aquamarine orb, once used by a trickster sorcerer of Kohldur.\n" +
-                    "The sorcerer used the element of water to play harmless pranks on the barons of the capital,\n" +
-                    "until they grew weary of her antics and ordered the duke to exile her.'")
+                TooltipLine line = new(Mod, "HoldShift", Language.GetTextValue("Mods.Redemption.Items.BronzeWand.Lore"))
                 {
                     OverrideColor = Color.LightGray
                 };
@@ -82,7 +80,7 @@ namespace Redemption.Items.Weapons.PreHM.Magic
             }
             else
             {
-                TooltipLine line = new(Mod, "HoldShift", "Hold [Shift] to view lore")
+                TooltipLine line = new(Mod, "HoldShift", Language.GetTextValue("Mods.Redemption.SpecialTooltips.Viewer"))
                 {
                     OverrideColor = Color.Gray,
                 };

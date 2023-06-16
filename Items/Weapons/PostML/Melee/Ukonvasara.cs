@@ -1,5 +1,4 @@
 using Microsoft.Xna.Framework;
-using Redemption.Globals;
 using Redemption.Rarities;
 using System.Collections.Generic;
 using Terraria;
@@ -75,13 +74,13 @@ namespace Redemption.Items.Weapons.PostML.Melee
                 switch (AttackMode)
                 {
                     case 0:
-                        CombatText.NewText(player.getRect(), Color.LightCyan, "Sword Mode", true, false);
+                        CombatText.NewText(player.getRect(), Color.LightCyan, Language.GetTextValue("Mods.Redemption.Items.Ukonvasara.Mode1"), true, false);
                         break;
                     case 1:
-                        CombatText.NewText(player.getRect(), Color.LightCyan, "Hammer Mode", true, false);
+                        CombatText.NewText(player.getRect(), Color.LightCyan, Language.GetTextValue("Mods.Redemption.Items.Ukonvasara.Mode2"), true, false);
                         break;
                     case 2:
-                        CombatText.NewText(player.getRect(), Color.LightCyan, "Axe Mode", true, false);
+                        CombatText.NewText(player.getRect(), Color.LightCyan, Language.GetTextValue("Mods.Redemption.Items.Ukonvasara.Mode3"), true, false);
                         break;
                 }
             }
@@ -109,13 +108,13 @@ namespace Redemption.Items.Weapons.PostML.Melee
             switch (AttackMode)
             {
                 case 0:
-                    shotType = "Sword Mode: Does a three combo slash before being thrown";
+                    shotType = Language.GetTextValue("Mods.Redemption.Items.Ukonvasara.SwordMode");
                     break;
                 case 1:
-                    shotType = "Hammer Mode: Launches the player at cursor point, leaves an electric trail behind and strikes enemies hit by the weapon with lighting";
+                    shotType = Language.GetTextValue("Mods.Redemption.Items.Ukonvasara.HammerMode");
                     break;
                 case 2:
-                    shotType = "Axe Mode: While airborne, the axe will launch the player onto the ground, striking that location with lighting";
+                    shotType = Language.GetTextValue("Mods.Redemption.Items.Ukonvasara.AxeMode");
                     break;
             }
             TooltipLine line = new(Mod, "ShotName", shotType)
@@ -125,9 +124,7 @@ namespace Redemption.Items.Weapons.PostML.Melee
             tooltips.Add(line);
             if (Main.keyState.PressingShift())
             {
-                TooltipLine line2 = new(Mod, "Lore",
-                    "'The hammer of Ukko, crafted by his ancestors and refined by him. Upon his human death,\n" +
-                    "the hammer was laid atop his grave as is custom in local tradition. It is a great conductor of Thunder magic.'")
+                TooltipLine line2 = new(Mod, "Lore", Language.GetTextValue("Mods.Redemption.Items.Ukonvasara.Lore"))
                 {
                     OverrideColor = Color.LightGray
                 };
@@ -135,7 +132,7 @@ namespace Redemption.Items.Weapons.PostML.Melee
             }
             else
             {
-                TooltipLine line2 = new(Mod, "HoldShift", "Hold [Shift] to view lore")
+                TooltipLine line2 = new(Mod, "HoldShift", Language.GetTextValue("Mods.Redemption.SpecialTooltips.Viewer"))
                 {
                     OverrideColor = Color.Gray,
                 };

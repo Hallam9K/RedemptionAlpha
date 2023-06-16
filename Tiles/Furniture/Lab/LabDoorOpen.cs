@@ -26,8 +26,9 @@ namespace Redemption.Tiles.Furniture.Lab
 			TileID.Sets.DisableSmartCursor[Type] = true;
 
 			AddToArray(ref TileID.Sets.RoomNeeds.CountsAsDoor);
+            RegisterItemDrop(ModContent.ItemType<LabDoor>(), 0);
 
-			DustType = ModContent.DustType<LabPlatingDust>();
+            DustType = ModContent.DustType<LabPlatingDust>();
 			AdjTiles = new int[] { TileID.OpenDoor };
 			TileID.Sets.CloseDoorID[Type] = ModContent.TileType<LabDoorClosed>();
 

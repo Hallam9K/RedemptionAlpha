@@ -1,5 +1,6 @@
 using Terraria;
 using Terraria.ID;
+using Terraria.Localization;
 using Microsoft.Xna.Framework;
 using Terraria.ModLoader;
 using Redemption.Globals;
@@ -56,8 +57,10 @@ namespace Redemption.NPCs.Friendly
                 case 0:
                     if (AITimer++ == 0)
                     {
-                        for (int i = 0; i < 40; i++)
-                            Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.Dirt);
+                        for (int i = 0; i < 60; i++)
+                            Dust.NewDust(NPC.position - new Vector2(20, 0), NPC.width + 40, NPC.height, DustID.Dirt, Scale: 2);
+                        for (int i = 0; i < 20; i++)
+                            Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.Dirt, 0, -6, Scale: 1.5f);
 
                         NPC.spriteDirection = 1;
                         if (!Main.dedServ)
@@ -78,7 +81,7 @@ namespace Redemption.NPCs.Friendly
                     if (AITimer++ == 30 && !Main.dedServ)
                     {
                         DialogueChain chain = new();
-                        chain.Add(new(NPC, "What do you think, Jo-", Color.White, Color.Gray, voice1, .05f, .5f, 2f, true, bubble: bubble, endID: 1)); // 187
+                        chain.Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.NewbIntro.1"), Color.White, Color.Gray, voice1, .05f, .5f, 2f, true, bubble: bubble, endID: 1)); // 187
                         chain.OnEndTrigger += Chain_OnEndTrigger;
                         ChatUI.Visible = true;
                         ChatUI.Add(chain);
@@ -95,9 +98,9 @@ namespace Redemption.NPCs.Friendly
                     {
                         EmoteBubble.NewBubble(87, new WorldUIAnchor(NPC), 120);
                         DialogueChain chain = new();
-                        chain.Add(new(NPC, "Who you?!", Color.White, Color.Gray, voice2, .05f, 2f, 0, false, bubble: bubble)) // 166
-                             .Add(new(NPC, "Where am I?", Color.White, Color.Gray, voice2, .05f, 2f, 0, false, bubble: bubble)) // 166
-                             .Add(new(NPC, "Heyo, I'm Newb![1] Want to be friends?", Color.White, Color.Gray, voice2, .05f, 2f, .5f, true, bubble: bubble, endID: 1)); // 196
+                        chain.Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.NewbIntro.2"), Color.White, Color.Gray, voice2, .05f, 2f, 0, false, bubble: bubble)) // 166
+                             .Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.NewbIntro.3"), Color.White, Color.Gray, voice2, .05f, 2f, 0, false, bubble: bubble)) // 166
+                             .Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.NewbIntro.4"), Color.White, Color.Gray, voice2, .05f, 2f, .5f, true, bubble: bubble, endID: 1)); // 196
                         chain.OnEndTrigger += Chain_OnEndTrigger;
                         ChatUI.Visible = true;
                         ChatUI.Add(chain);
@@ -108,19 +111,20 @@ namespace Redemption.NPCs.Friendly
                     if (AITimer >= 2000)
                     {
                         NPC.SetDefaults(ModContent.NPCType<Newb>());
-                        NPC.GivenName = "Newb";
+                        NPC.GivenName = Language.GetTextValue("Mods.Redemption.NPCs.Newb_Intro.DisplayName");
                         NPC.netUpdate = true;
                     }
                     break;
             }
             if (RedeConfigClient.Instance.CameraLockDisable)
                 return;
-            player.RedemptionScreen().ScreenFocusPosition = NPC.Center;
-            player.RedemptionScreen().lockScreen = true;
-            player.RedemptionScreen().cutscene = true;
-            NPC.LockMoveRadius(player);
-            Terraria.Graphics.Effects.Filters.Scene["MoR:FogOverlay"]?.GetShader().UseOpacity(1f).UseIntensity(1f).UseColor(Color.Black).UseImage(ModContent.Request<Texture2D>("Redemption/Effects/Vignette", AssetRequestMode.ImmediateLoad).Value);
-            player.ManageSpecialBiomeVisuals("MoR:FogOverlay", true);
+            if (NPC.DistanceSQ(player.Center) <= 600 * 600)
+            {
+                player.RedemptionScreen().ScreenFocusPosition = Vector2.Lerp(NPC.Center, player.Center, player.DistanceSQ(NPC.Center) / (1200 * 1200));
+                player.RedemptionScreen().lockScreen = true;
+                Terraria.Graphics.Effects.Filters.Scene["MoR:FogOverlay"]?.GetShader().UseOpacity(MathHelper.Lerp(1, 0, player.DistanceSQ(NPC.Center) / (600 * 600))).UseIntensity(1f).UseColor(Color.Black).UseImage(ModContent.Request<Texture2D>("Redemption/Effects/Vignette", AssetRequestMode.ImmediateLoad).Value);
+                player.ManageSpecialBiomeVisuals("MoR:FogOverlay", true);
+            }
         }
         private void Chain_OnEndTrigger(Dialogue dialogue, int ID)
         {

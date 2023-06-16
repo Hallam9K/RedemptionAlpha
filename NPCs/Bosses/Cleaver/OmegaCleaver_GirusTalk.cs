@@ -1,6 +1,7 @@
 using Redemption.UI;
 using Terraria;
 using Terraria.ModLoader;
+using Terraria.Localization;
 
 namespace Redemption.NPCs.Bosses.Cleaver
 {
@@ -28,19 +29,19 @@ namespace Redemption.NPCs.Bosses.Cleaver
                     RedeSystem.Instance.DialogueUIElement.DisplayDialogue("...", 100, 1, 0.6f, "???:", 1, RedeColor.GirusTier, null, null, null, 0, sound: true);
 
                 if (Projectile.ai[0] == 640)
-                    RedeSystem.Instance.DialogueUIElement.DisplayDialogue("That was a little disappointing to be honest.", 260, 1, 0.6f, "???:", 1, RedeColor.GirusTier, null, null, null, 0, sound: true);
+                    RedeSystem.Instance.DialogueUIElement.DisplayDialogue(Language.GetTextValue("Mods.Redemption.Cutscene.Girus.Encounter2.1"), 260, 1, 0.6f, "???:", 1, RedeColor.GirusTier, null, null, null, 0, sound: true);
 
                 if (Projectile.ai[0] == 900)
-                    RedeSystem.Instance.DialogueUIElement.DisplayDialogue("I suppose that's what's to be expected from minimal changes to Teochrome's original design.", 400, 1, 0.6f, "???:", 1, RedeColor.GirusTier, null, null, null, 0, sound: true);
+                    RedeSystem.Instance.DialogueUIElement.DisplayDialogue(Language.GetTextValue("Mods.Redemption.Cutscene.Girus.Encounter2.2"), 400, 1, 0.6f, "???:", 1, RedeColor.GirusTier, null, null, null, 0, sound: true);
 
                 if (Projectile.ai[0] == 1300)
-                    RedeSystem.Instance.DialogueUIElement.DisplayDialogue("Oh well! I got some results that'll prove useful later on.", 300, 1, 0.6f, "???:", 1, RedeColor.GirusTier, null, null, null, 0, sound: true);
+                    RedeSystem.Instance.DialogueUIElement.DisplayDialogue(Language.GetTextValue("Mods.Redemption.Cutscene.Girus.Encounter2.3"), 300, 1, 0.6f, "???:", 1, RedeColor.GirusTier, null, null, null, 0, sound: true);
 
                 if (Projectile.ai[0] == 1600)
-                    RedeSystem.Instance.DialogueUIElement.DisplayDialogue("Come again later, and I should have another machine ready to test.", 300, 1, 0.6f, "???:", 1, RedeColor.GirusTier, null, null, null, 0, sound: true);
+                    RedeSystem.Instance.DialogueUIElement.DisplayDialogue(Language.GetTextValue("Mods.Redemption.Cutscene.Girus.Encounter2.4"), 300, 1, 0.6f, "???:", 1, RedeColor.GirusTier, null, null, null, 0, sound: true);
 
                 if (Projectile.ai[0] == 1900)
-                    RedeSystem.Instance.DialogueUIElement.DisplayDialogue("Shouldn't be too long, I'll be reusing some old machine gathering dust in the basement.", 300, 1, 0.6f, "???:", 1, RedeColor.GirusTier, null, null, null, 0, sound: true);
+                    RedeSystem.Instance.DialogueUIElement.DisplayDialogue(Language.GetTextValue("Mods.Redemption.Cutscene.Girus.Encounter2.5"), 300, 1, 0.6f, "???:", 1, RedeColor.GirusTier, null, null, null, 0, sound: true);
             }
             if (Projectile.ai[0] >= 2300)
                 Projectile.Kill();

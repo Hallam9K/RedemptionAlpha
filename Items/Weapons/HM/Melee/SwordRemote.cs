@@ -1,6 +1,7 @@
-﻿using Terraria.ID;
+using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria;
+using Terraria.Localization;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using System;
@@ -48,7 +49,7 @@ namespace Redemption.Items.Weapons.HM.Melee
             Item.noUseGraphic = false;
             Item.shoot = ModContent.ProjectileType<RemoteCleaver>();
             if (!Main.dedServ)
-                Item.RedemptionGlow().glowTexture = ModContent.Request<Texture2D>(Item.ModItem.Texture + "_Glow").Value;
+                Item.RedemptionGlow().glowTexture = ModContent.Request<Texture2D>(Texture + "_Glow").Value;
         }
         public override bool AltFunctionUse(Player player) => true;
         public int AttackMode;
@@ -78,16 +79,16 @@ namespace Redemption.Items.Weapons.HM.Melee
                 switch (AttackMode)
                 {
                     case 0:
-                        CombatText.NewText(player.getRect(), Color.Red, "Swing Mode", true, false);
+                        CombatText.NewText(player.getRect(), Color.Red, Language.GetTextValue("Mods.Redemption.Items.SwordRemote.Mode1"), true, false);
                         break;
                     case 1:
-                        CombatText.NewText(player.getRect(), Color.Red, "Stab Mode", true, false);
+                        CombatText.NewText(player.getRect(), Color.Red, Language.GetTextValue("Mods.Redemption.Items.SwordRemote.Mode2"), true, false);
                         break;
                     case 2:
-                        CombatText.NewText(player.getRect(), Color.Red, "Sword Burst Mode", true, false);
+                        CombatText.NewText(player.getRect(), Color.Red, Language.GetTextValue("Mods.Redemption.Items.SwordRemote.Mode3"), true, false);
                         break;
                     case 3:
-                        CombatText.NewText(player.getRect(), Color.Red, "Red Prism Mode", true, false);
+                        CombatText.NewText(player.getRect(), Color.Red, Language.GetTextValue("Mods.Redemption.Items.SwordRemote.Mode4"), true, false);
                         break;
                 }
             }
@@ -118,16 +119,16 @@ namespace Redemption.Items.Weapons.HM.Melee
             switch (AttackMode)
             {
                 case 0:
-                    shotType = "Swing Mode";
+                    shotType = Language.GetTextValue("Mods.Redemption.Items.SwordRemote.Mode1");
                     break;
                 case 1:
-                    shotType = "Stab Mode";
+                    shotType = Language.GetTextValue("Mods.Redemption.Items.SwordRemote.Mode2");
                     break;
                 case 2:
-                    shotType = "Sword Burst Mode";
+                    shotType = Language.GetTextValue("Mods.Redemption.Items.SwordRemote.Mode3");
                     break;
                 case 3:
-                    shotType = "Red Prism Mode";
+                    shotType = Language.GetTextValue("Mods.Redemption.Items.SwordRemote.Mode4");
                     break;
             }
             TooltipLine line = new(Mod, "ShotName", shotType)
@@ -165,10 +166,6 @@ namespace Redemption.Items.Weapons.HM.Melee
         NPC target;
         public override void AI()
         {
-            for (int k = Projectile.oldPos.Length - 1; k > 0; k--)
-                oldrot[k] = oldrot[k - 1];
-
-            oldrot[0] = Projectile.rotation;
             Player player = Main.player[Projectile.owner];
             switch (Projectile.ai[0])
             {
@@ -392,6 +389,9 @@ namespace Redemption.Items.Weapons.HM.Melee
                     }
                     break;
             }
+            for (int k = Projectile.oldPos.Length - 1; k > 0; k--)
+                oldrot[k] = oldrot[k - 1];
+            oldrot[0] = Projectile.rotation;
         }
         public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox)
         {

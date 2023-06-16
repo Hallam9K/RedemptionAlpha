@@ -7,6 +7,10 @@ namespace Redemption.Items.Placeable.Tiles
 {
     public class BlackHardenedSludge : ModItem
     {
+        public override void SetStaticDefaults()
+        {
+            ItemID.Sets.DisableAutomaticPlaceableDrop[Type] = true;
+        }
         public override void SetDefaults()
         {
             Item.DefaultToPlaceableTile(ModContent.TileType<BlackHardenedSludgeTile>(), 0);

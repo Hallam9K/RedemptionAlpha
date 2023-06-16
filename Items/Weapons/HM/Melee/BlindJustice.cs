@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 
 namespace Redemption.Items.Weapons.HM.Melee
@@ -74,10 +75,7 @@ namespace Redemption.Items.Weapons.HM.Melee
         {
             if (Main.keyState.PressingShift())
             {
-                TooltipLine line = new(Mod, "Lore",
-                    "'Elegant and holy, this weapon was owned by Eymen - a well-renowned member of the High Templars.\n" +
-                    "He imbued the blade with part of his permanent soul to keep it holy far past his own death.\n" +
-                    "Eymen treated his weapon like his own flesh, and used it to smite numerous demons of high calibre.'")
+                TooltipLine line = new(Mod, "Lore", Language.GetTextValue("Mods.Redemption.Items.BlindJustice.Lore"))
                 {
                     OverrideColor = Color.LightGray
                 };
@@ -85,7 +83,7 @@ namespace Redemption.Items.Weapons.HM.Melee
             }
             else
             {
-                TooltipLine line = new(Mod, "HoldShift", "Hold [Shift] to view lore")
+                TooltipLine line = new(Mod, "HoldShift", Language.GetTextValue("Mods.Redemption.SpecialTooltips.Viewer"))
                 {
                     OverrideColor = Color.Gray,
                 };

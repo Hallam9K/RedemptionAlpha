@@ -1,4 +1,5 @@
 using Microsoft.Xna.Framework;
+using Redemption.Globals;
 using Redemption.Items.Placeable.Tiles;
 using Terraria;
 using Terraria.ID;
@@ -9,10 +10,11 @@ namespace Redemption.Walls
 	public class MossyLabWallTile : ModWall
 	{
 		public override void SetStaticDefaults()
-		{
-			Main.wallHouse[Type] = false;
+        {
+            RedeTileHelper.CannotTeleportInFront[Type] = true;
+            Main.wallHouse[Type] = false;
 			AddMapEntry(new Color(8, 64, 39));
-            ItemDrop = ModContent.ItemType<LabPlatingWall>();
+            RegisterItemDrop(ModContent.ItemType<LabPlating>());
             HitSound = SoundID.Grass;
         }
         public override bool CanExplode(int i, int j) => false;

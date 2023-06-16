@@ -5,7 +5,6 @@ using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 using Terraria.DataStructures;
-using Redemption.Items.Placeable.Furniture.Lab;
 using Redemption.Dusts.Tiles;
 
 namespace Redemption.Tiles.Furniture.Lab
@@ -33,7 +32,6 @@ namespace Redemption.Tiles.Furniture.Lab
             TileObjectData.newTile.StyleHorizontal = true;
             TileObjectData.addTile(Type);
 
-            ItemDrop = ModContent.ItemType<LabTable>();
             AddToArray(ref TileID.Sets.RoomNeeds.CountsAsTable);
 
             // Etc

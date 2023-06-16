@@ -17,7 +17,8 @@ namespace Redemption.Items.Weapons.HM.Ammo
             // DisplayName.SetDefault("Energy Pack");
             /* Tooltip.SetDefault("While in inventory, allows the user to use energy-based weaponry\n" +
                 "Energy-based weaponry can pierce through Guard Points\n" +
-                "Can be stacked up to 3 times, each giving +100 energy"); */
+                "Can be stacked up to 3 times, each giving +100 energy\n" +
+                "Having more than 3 in your inventory will not increase energy further"); */
             Item.ResearchUnlockCount = 1;
             Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(5, 4));
             ItemID.Sets.AnimatesAsSoul[Item.type] = true;
@@ -41,7 +42,7 @@ namespace Redemption.Items.Weapons.HM.Ammo
         public override bool PreDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
         {
             Texture2D texture = TextureAssets.Item[Item.type].Value;
-            Texture2D glow = ModContent.Request<Texture2D>(Item.ModItem.Texture + "_Glow").Value;
+            Texture2D glow = ModContent.Request<Texture2D>(Texture + "_Glow").Value;
 
             spriteBatch.Draw(texture, position, frame, drawColor, 0, origin, scale, 0, 0f);
             spriteBatch.Draw(glow, position, frame, RedeColor.EnergyPulse, 0, origin, scale, 0, 0f);
@@ -50,7 +51,7 @@ namespace Redemption.Items.Weapons.HM.Ammo
         public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI)
         {
             Texture2D texture = TextureAssets.Item[Item.type].Value;
-            Texture2D glow = ModContent.Request<Texture2D>(Item.ModItem.Texture + "_Glow").Value;
+            Texture2D glow = ModContent.Request<Texture2D>(Texture + "_Glow").Value;
             Rectangle frame;
             if (Main.itemAnimations[Item.type] != null)
                 frame = Main.itemAnimations[Item.type].GetFrame(texture, Main.itemFrameCounter[whoAmI]);

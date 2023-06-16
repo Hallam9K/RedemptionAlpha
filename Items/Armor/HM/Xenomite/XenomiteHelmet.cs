@@ -1,6 +1,7 @@
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.ID;
+using Terraria.Localization;
 using Redemption.BaseExtension;
 using Redemption.Globals.Player;
 
@@ -25,7 +26,7 @@ namespace Redemption.Items.Armor.HM.Xenomite
             Item.height = 26;
             Item.sellPrice(silver: 50);
             Item.rare = ItemRarityID.Pink;
-            Item.defense = 10;
+            Item.defense = 12;
         }
 
         public override void UpdateEquip(Player player)
@@ -60,14 +61,11 @@ namespace Redemption.Items.Armor.HM.Xenomite
 
         public override void UpdateArmorSet(Player player)
         {
-            player.setBonus = "6% increased damage\n" +
-                "Increased Energy regeneration if an Energy Pack is in your inventory\n" +
-                "Select a keybind for [Special Ability Key] in Controls";
+            player.setBonus = Language.GetTextValue("Mods.Redemption.GenericTooltips.ArmorSetBonus.Xenomite.Keybind");
             foreach (string key in Redemption.RedeSpecialAbility.GetAssignedKeys())
             {
-                player.setBonus = "6% increased damage\n" + 
-                    "Increased Energy regeneration if an Energy Pack is in your inventory" +
-                    "\nPress " + key + " to unleash toxic gas in a radius around the player, inflicting Burning Acid";
+                player.setBonus = Language.GetTextValue("Mods.Redemption.GenericTooltips.ArmorSetBonus.Xenomite.Bonus1") +
+                    Language.GetTextValue("Mods.Redemption.GenericTooltips.ArmorSetBonus.Xenomite.Press") + key + Language.GetTextValue("Mods.Redemption.GenericTooltips.ArmorSetBonus.Xenomite.Bonus2");
             }
             player.GetDamage<GenericDamageClass>() += .06f;
             player.GetModPlayer<EnergyPlayer>().energyRegen += 10;

@@ -5,10 +5,10 @@ using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Redemption.BaseExtension;
 using Redemption.Items.Materials.HM;
-using Redemption.Items.Weapons.HM.Ammo;
 using Redemption.Globals.Player;
 using Redemption.Globals;
 
@@ -44,7 +44,7 @@ namespace Redemption.Items.Weapons.HM.Ranged
             Item.shootSpeed = 8;
             Item.useAmmo = AmmoID.Bullet;
             if (!Main.dedServ)
-                Item.RedemptionGlow().glowTexture = ModContent.Request<Texture2D>(Item.ModItem.Texture + "_Glow").Value;
+                Item.RedemptionGlow().glowTexture = ModContent.Request<Texture2D>(Texture + "_Glow").Value;
             Item.ExtraItemShoot(ModContent.ProjectileType<KS3_EnergyBolt>());
         }
 
@@ -94,13 +94,13 @@ namespace Redemption.Items.Weapons.HM.Ranged
                 switch (AttackMode)
                 {
                     case 0:
-                        CombatText.NewText(player.getRect(), Color.LightCyan, "Barrage Shot", true, false);
+                        CombatText.NewText(player.getRect(), Color.LightCyan, Language.GetTextValue("Mods.Redemption.Items.SlayerGun.Mode1"), true, false);
                         break;
                     case 1:
-                        CombatText.NewText(player.getRect(), Color.LightCyan, "Spread Shot", true, false);
+                        CombatText.NewText(player.getRect(), Color.LightCyan, Language.GetTextValue("Mods.Redemption.Items.SlayerGun.Mode2"), true, false);
                         break;
                     case 2:
-                        CombatText.NewText(player.getRect(), Color.LightCyan, "Rebound Shot", true, false);
+                        CombatText.NewText(player.getRect(), Color.LightCyan, Language.GetTextValue("Mods.Redemption.Items.SlayerGun.Mode3"), true, false);
                         break;
                 }
             }
@@ -188,13 +188,13 @@ namespace Redemption.Items.Weapons.HM.Ranged
             switch (AttackMode)
             {
                 case 0:
-                    shotType = "Barrage Shot";
+                    shotType = Language.GetTextValue("Mods.Redemption.Items.SlayerGun.Mode1");
                     break;
                 case 1:
-                    shotType = "Spread Shot";
+                    shotType = Language.GetTextValue("Mods.Redemption.Items.SlayerGun.Mode2");
                     break;
                 case 2:
-                    shotType = "Rebound Shot";
+                    shotType = Language.GetTextValue("Mods.Redemption.Items.SlayerGun.Mode3");
                     break;
             }
             TooltipLine line = new(Mod, "ShotName", shotType)

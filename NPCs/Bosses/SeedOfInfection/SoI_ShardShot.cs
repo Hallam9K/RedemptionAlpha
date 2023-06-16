@@ -55,4 +55,24 @@ namespace Redemption.NPCs.Bosses.SeedOfInfection
             Main.dust[dustIndex].velocity *= 2f;
         }
     }
+    public class SoI_ShardShot_Friendly : SoI_ShardShot
+    {
+        public override string Texture => "Redemption/NPCs/Bosses/SeedOfInfection/SoI_ShardShot";
+        public override void SetStaticDefaults()
+        {
+            //DisplayName.SetDefault("Shard Shot");
+            Main.projFrames[Projectile.type] = 3;
+            ElementID.ProjPoison[Type] = true;
+        }
+        public override void SetDefaults()
+        {
+            base.SetDefaults();
+            Projectile.friendly = true;
+            Projectile.hostile = false;
+            Projectile.penetrate = 1;
+            Projectile.tileCollide = true;
+            Projectile.timeLeft = 10;
+        }
+        public override bool? CanHitNPC(NPC target) => null;
+    }
 }

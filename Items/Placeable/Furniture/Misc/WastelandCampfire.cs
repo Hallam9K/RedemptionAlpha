@@ -11,7 +11,6 @@ namespace Redemption.Items.Placeable.Furniture.Misc
 		{
             /* Tooltip.SetDefault("Life regen is increased when near a campfire\n" +
 				"'Now that's a hot wheel'"); */
-            ItemID.Sets.ShimmerTransformToItem[Type] = ItemID.ShimmerCampfire;
             Item.ResearchUnlockCount = 1;
 		}
 
