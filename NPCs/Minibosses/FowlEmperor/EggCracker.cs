@@ -70,6 +70,7 @@ namespace Redemption.NPCs.Minibosses.FowlEmperor
         }
         public override bool PreDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
         {
+            glowRot += 0.03f;
             Texture2D glow = ModContent.Request<Texture2D>("Redemption/Textures/WhiteFlare").Value;
             Vector2 origin2 = new(glow.Width / 2, glow.Height / 2);
 
