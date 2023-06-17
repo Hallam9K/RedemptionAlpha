@@ -29,8 +29,6 @@ using ReLogic.Content;
 using Redemption.UI.ChatUI;
 using Redemption.Projectiles.Minions;
 using Redemption.Items.Weapons.PreHM.Summon;
-using Terraria.Localization;
-using Redemption.Dusts;
 
 namespace Redemption.NPCs.Bosses.Erhan
 {

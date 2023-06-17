@@ -297,7 +297,8 @@ namespace Redemption.Items.Weapons.HM.Melee
             if (Projectile.ai[0] == 5)
             {
                 modifiers.FinalDamage *= 1.5f;
-                modifiers.Knockback.Flat += 4;
+                if (target.knockBackResist > 0)
+                    modifiers.Knockback.Flat += 4;
             }
 
         }

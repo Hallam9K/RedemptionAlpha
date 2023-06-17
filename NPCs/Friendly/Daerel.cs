@@ -49,8 +49,8 @@ namespace Redemption.NPCs.Friendly
                 .SetBiomeAffection<JungleBiome>(AffectionLevel.Hate)
                 .SetNPCAffection<Zephos>(AffectionLevel.Love)
                 .SetNPCAffection(NPCID.Stylist, AffectionLevel.Like)
-                .SetNPCAffection(NPCID.TaxCollector, AffectionLevel.Dislike)
-                .SetNPCAffection(NPCID.Merchant, AffectionLevel.Hate);
+                .SetNPCAffection(NPCID.TaxCollector, AffectionLevel.Hate)
+                .SetNPCAffection(NPCID.Merchant, AffectionLevel.Dislike);
 
             NPCID.Sets.NPCBestiaryDrawModifiers drawModifiers = new(0)
             {

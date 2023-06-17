@@ -141,20 +141,20 @@ namespace Redemption.NPCs.HM
                     DialogueChain chain = new();
                     if (Variant == 11)
                     {
-                        chain.Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.KS3Leaving.Attacked1"), Color.LightBlue, Color.DarkCyan, voice, .03f, 2f, 0, false, bubble: bubble))
-                             .Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.KS3Leaving.Attacked2"), Color.LightBlue, Color.DarkCyan, voice, .03f, 2f, 0, false, bubble: bubble))
-                             .Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.KS3Leaving.Message"), Color.LightBlue, Color.DarkCyan, CustomSounds.Voice6 with { Pitch = 0.2f }, .03f, 3f, .5f, true, bubble: bubble, endID: 1));
+                        chain.Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.KS3Message.Attacked1"), Color.LightBlue, Color.DarkCyan, voice, .03f, 2f, 0, false, bubble: bubble))
+                             .Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.KS3Message.Attacked2"), Color.LightBlue, Color.DarkCyan, voice, .03f, 2f, 0, false, bubble: bubble))
+                             .Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.KS3Message.Message"), Color.LightBlue, Color.DarkCyan, CustomSounds.Voice6 with { Pitch = 0.2f }, .03f, 3f, .5f, true, bubble: bubble, endID: 1));
                     }
                     else if (Variant == 12)
                     {
                         NPC.dontTakeDamage = true;
-                        chain.Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.KS3Leaving.Variant"), Color.LightBlue, Color.DarkCyan, voice, .03f, 2f, 0, false, bubble: bubble));
+                        chain.Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.KS3Message.Variant"), Color.LightBlue, Color.DarkCyan, voice, .03f, 2f, 0, false, bubble: bubble));
                     }
                     else
                     {
-                        chain.Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.KS3Leaving.1"), Color.LightBlue, Color.DarkCyan, voice, .03f, 2f, 0, false, bubble: bubble))
-                             .Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.KS3Leaving.2"), Color.LightBlue, Color.DarkCyan, voice, .03f, 2f, 0, false, bubble: bubble))
-                             .Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.KS3Leaving.Message"), Color.LightBlue, Color.DarkCyan, CustomSounds.Voice6 with { Pitch = 0.2f }, .03f, 3f, .5f, true, bubble: bubble, endID: 1));
+                        chain.Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.KS3Message.1"), Color.LightBlue, Color.DarkCyan, voice, .03f, 2f, 0, false, bubble: bubble))
+                             .Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.KS3Message.2"), Color.LightBlue, Color.DarkCyan, voice, .03f, 2f, 0, false, bubble: bubble))
+                             .Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.KS3Message.Message"), Color.LightBlue, Color.DarkCyan, CustomSounds.Voice6 with { Pitch = 0.2f }, .03f, 3f, .5f, true, bubble: bubble, endID: 1));
                     }
                     chain.OnEndTrigger += Chain_OnEndTrigger;
                     ChatUI.Visible = true;
@@ -280,12 +280,12 @@ namespace Redemption.NPCs.HM
                     {
                         if (TimerRand == 1)
                         {
-                            string s = Language.GetTextValue("Mods.Redemption.Cutscene.AndriodScan.Human");
+                            string s = Language.GetTextValue("Mods.Redemption.Cutscene.AndroidScan.Human");
                             if (player.IsFullTBot())
-                                s = Language.GetTextValue("Mods.Redemption.Cutscene.AndriodScan.Robot");
+                                s = Language.GetTextValue("Mods.Redemption.Cutscene.AndroidScan.Robot");
                             else if (player.RedemptionPlayerBuff().ChickenForm)
-                                s = Language.GetTextValue("Mods.Redemption.Cutscene.AndriodScan.Chicken");
-                            Dialogue d1 = new(NPC, s + Language.GetTextValue("Mods.Redemption.Cutscene.AndriodScan.Scan"), Color.LightBlue, Color.DarkCyan, voice, .01f, .5f, .5f, true, bubble: bubble); // 65
+                                s = Language.GetTextValue("Mods.Redemption.Cutscene.AndroidScan.Chicken");
+                            Dialogue d1 = new(NPC, s + (Language.GetTextValue("Mods.Redemption.Cutscene.AndroidScan.Scan")), Color.LightBlue, Color.DarkCyan, voice, .01f, .5f, .5f, true, bubble: bubble); // 65
                             ChatUI.Visible = true;
                             ChatUI.Add(d1);
                         }
@@ -293,8 +293,8 @@ namespace Redemption.NPCs.HM
                         {
                             string s = closeNPC.TypeName;
                             if (closeNPC.TypeName == "")
-                                s = Language.GetTextValue("Mods.Redemption.Cutscene.AndriodScan.Unknown");
-                            Dialogue d1 = new(NPC, s + Language.GetTextValue("Mods.Redemption.Cutscene.AndriodScan.Scan"), Color.LightBlue, Color.DarkCyan, voice, .01f, .5f, .5f, true, bubble: bubble); // 65
+                                s = Language.GetTextValue("Mods.Redemption.Cutscene.AndroidScan.Unknown");
+                            Dialogue d1 = new(NPC, s + (Language.GetTextValue("Mods.Redemption.Cutscene.AndroidScan.Scan")), Color.LightBlue, Color.DarkCyan, voice, .01f, .5f, .5f, true, bubble: bubble); // 65
                             ChatUI.Visible = true;
                             ChatUI.Add(d1);
                         }

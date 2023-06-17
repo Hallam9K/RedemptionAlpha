@@ -20,6 +20,7 @@ namespace Redemption.NPCs.Lab.Behemoth
         {
             Projectile.width = 144;
             Projectile.height = 144;
+            Projectile.tileCollide = false;
         }
         public override void AI()
         {

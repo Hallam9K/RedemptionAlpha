@@ -217,11 +217,11 @@ namespace Redemption.NPCs.Friendly
         {
             button = Language.GetTextValue("LegacyInterface.28");
 
-            button2 = Language.GetTextValue("Mods.Redemption.Dialogue.TBot.FloppyDisk");
+            button2 = Language.GetTextValue("Mods.Redemption.DialogueBox.TBot.FloppyDisc");
             if (NextPage)
-                button2 = Language.GetTextValue("Mods.Redemption.Dialogue.TBot.NextPage");
+                button2 = Language.GetTextValue("Mods.Redemption.DialogueBox.TBot.NextPage");
             if (FDisk >= 20)
-                button2 += Language.GetTextValue("Mods.Redemption.Dialogue.TBot.Next");
+                button2 += Language.GetTextValue("Mods.Redemption.DialogueBox.TBot.Next");
         }
 
         public static int FDisk;

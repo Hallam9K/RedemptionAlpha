@@ -141,6 +141,8 @@ namespace Redemption.NPCs.Friendly
         public override ITownNPCProfile TownNPCProfile() => new NewbProfile();
         public override string GetChat()
         {
+            if (RedeBossDowned.downedNebuleus)
+                Main.LocalPlayer.currentShoppingSettings.HappinessReport = "";
             Player player = Main.player[Main.myPlayer];
             WeightedRandom<string> chat = new(Main.rand);
             if (RedeBossDowned.downedNebuleus)

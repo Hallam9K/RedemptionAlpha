@@ -125,7 +125,8 @@ namespace Redemption.Projectiles.Minions
         }
         public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
         {
-            modifiers.Knockback.Flat += Math.Abs(Projectile.velocity.X);
+            if (target.knockBackResist > 0)
+                modifiers.Knockback.Flat += Math.Abs(Projectile.velocity.X);
         }
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {

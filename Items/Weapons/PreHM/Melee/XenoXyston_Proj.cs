@@ -72,7 +72,8 @@ namespace Redemption.Items.Weapons.PreHM.Melee
         {
             float increase = rotSpeed * 10;
             increase = MathHelper.Clamp(increase, 0, 10);
-            modifiers.Knockback.Flat += increase;
+            if (target.knockBackResist > 0)
+                modifiers.Knockback.Flat += increase;
 
             Player player = Main.player[Projectile.owner];
             modifiers.HitDirectionOverride = target.RightOfDir(player);

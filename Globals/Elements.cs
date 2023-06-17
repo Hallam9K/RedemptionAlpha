@@ -634,7 +634,8 @@ namespace Redemption.Globals
             if (item.HasElement(ElementID.Wind) && (npc.noGravity || !npc.collideY))
             {
                 knockback.Knockback *= 1.25f;
-                knockback.Knockback.Flat += 2;
+                if (npc.knockBackResist > 0)
+                    knockback.Knockback.Flat += 2;
             }
 
             multiplier = (int)Math.Round(multiplier * 100);
@@ -655,7 +656,8 @@ namespace Redemption.Globals
             if (proj.HasElement(ElementID.Wind) && (npc.noGravity || !npc.collideY))
             {
                 knockback.Knockback *= 1.25f;
-                knockback.Knockback.Flat += 2;
+                if (npc.knockBackResist > 0)
+                    knockback.Knockback.Flat += 2;
             }
 
             multiplier = (int)Math.Round(multiplier * 100);

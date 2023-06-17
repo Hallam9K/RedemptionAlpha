@@ -16,6 +16,7 @@ namespace Redemption.NPCs.Bosses.Cleaver
         {
             Projectile.width = 144;
             Projectile.height = 144;
+            Projectile.tileCollide = false;
         }
         public override void AI()
         {

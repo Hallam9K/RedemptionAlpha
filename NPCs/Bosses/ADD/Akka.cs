@@ -148,7 +148,7 @@ namespace Redemption.NPCs.Bosses.ADD
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Surface,
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Visuals.Rain,
 
-                new FlavorTextBestiaryInfoElement(Language.GetTextValue("Mods.Redemption.FlaverTextBestiary.Akka"))
+                new FlavorTextBestiaryInfoElement(Language.GetTextValue("Mods.Redemption.FlavorTextBestiary.Akka"))
             });
         }
         public override void ModifyNPCLoot(NPCLoot npcLoot)

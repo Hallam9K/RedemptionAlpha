@@ -248,7 +248,7 @@ namespace Redemption.NPCs.Bosses.SeedOfInfection
                             if (AITimer >= 180)
                             {
                                 if (!Main.dedServ)
-                                    RedeSystem.Instance.TitleCardUIElement.DisplayTitle(Language.GetTextValue("Mods.Redemption.TitleCard.SoI.Name"), 60, 90, 0.8f, 0, Color.ForestGreen);
+                                    RedeSystem.Instance.TitleCardUIElement.DisplayTitle(Language.GetTextValue("Mods.Redemption.TitleCard.SoI.Name"), 60, 90, 0.8f, 0, Color.ForestGreen, Language.GetTextValue("Mods.Redemption.TitleCard.SoI.Modifier"));
 
                                 NPC.dontTakeDamage = false;
                                 NPC.alpha = 0;

@@ -20,11 +20,11 @@ Mods: {
 
 			SoI: {
 				Name: Seed of Infection
-				Modifier: ""
+				Modifier: An Infectious Growth
 			}
 
 			Keeper: {
-				Name: Keeper
+				Name: The Keeper
 				Modifier: Octavia von Gailon
 			}
 
@@ -125,7 +125,7 @@ Mods: {
 			SoI: A blistering pocket of the Xenomite infection.
 			Golem: Constructed in Gathuram and sent to Ithon as a gift in a time of peace between the domains. Although the people of Gathuram forgot to mention one thing...
 			Calavia: A Chief-Warrior of the Iron Realm, lost and troubled by her distant venture from her home of Khen Boldur, which was spurred on by the barons of Arum. Swordplay and smithing is her expertise, along with familiarity of Blizzard magic.
-			OO: An autonomous war machine mostly of Girus' own design with many integrated weapon systems, such as literal finger guns and an advanced heat dispersion system in the form of a giant beam, capable of obliterating anyone it engulfs - Also where Obliterator got its name from."
+			OO: An autonomous war machine mostly of Girus' own design with many integrated weapon systems, such as literal finger guns and an advanced heat dispersion system in the form of a giant beam, capable of obliterating anyone it engulfs - Also where Obliterator got its name from.
 			TreebarkDryad: These slow-thinking ents only appear in heavily forested areas. They have only recently arrived on this island, coming from the portal on the surface. Once every century, they find a shallow pond and hibernate in the centre. The water from the pond feeds the ent during the process.
 			Erhan: A high priest of Fairwood, tasked himself to purify the forest's curse after it consumed it's warden.
 			Behemoth: An unfortunate scientist, disfigured and mutilated beyond recognition by the Xenomite infection. This specimen is entering the final stage of the infection, and has had its body transform into a sludgy slurry on the ceiling... God, that must be agonizing.
@@ -137,9 +137,9 @@ Mods: {
 			KS3: "'What? You want my lore? Go get your own lore!'"
 			Cleaver: A proof-of-concept weapon of war modified by Girus, the Omega Cleaver is a giant sword controlled by a small remote stick that was wielded by another machine.
 			Gigapora: A modified tunnelling machine, originally of Teochrome design, retrofitted with rocket boosters, various weaponry and very experimental projected shield technology. Gigapora's shield projectors are prone to overheating and melting if they're inside the projected shield, hence why they're outside.
-			Akka: Little has been recorded of Akka during her youth, it is believed by the locals that her spirit infused with a great tree in the Spirit Realm, where she would sleep until awoken by her husband to be worshipped once more."
+			Akka: Little has been recorded of Akka during her youth, it is believed by the locals that her spirit infused with a great tree in the Spirit Realm, where she would sleep until awoken by her husband to be worshipped once more.
 			Ukko: Once a blacksmith in ancient Tethuram who had an immense talent in magic, growing to be seen as a god by many who witnessed his strengths. In his old age, growing weary of his mortality, Ukko infused his soul into a bundle of rocks, allowing him to eventually reform when the time comes. The locals worshipped this golem, until the knowledge of Ukko's soul inside slowly faded away.
-			PZ: An unfortunate scientist, mutilated and disfigured by the Xenomite infection. This specimen was Kari Johannson, the father of all T-Bots and patient zero of the xenomite infection. He's been stuck for 50 years, conscious and aware of the situation around him... God, that must be tormentous."
+			PZ: An unfortunate scientist, mutilated and disfigured by the Xenomite infection. This specimen was Kari Johannson, the father of all T-Bots and patient zero of the xenomite infection. He's been stuck for 50 years, conscious and aware of the situation around him... God, that must be tormentous.
 			Android: Fodder sent down to the island by King Slayer III to scan. These are the first iteration of the Android Unit and the first robots designed by King Slayer during his million year voyage. Their original purpose was to bring company and life to the SoS, however they have since been fitted with more combat-oriented parts. When damaged, they will retreat back to the SoS and alert the network.
 		}
 
@@ -429,242 +429,241 @@ Mods: {
 				DatalogViewer: Hold [Shift] to view datalog
 				Datalog1:
 					'''
-					'I have successfully reached the outer atmosphere and escaped my world's Reset."
-					I realise there is no going back now, a normal human's lifespan sounds miniscule"
-					compared to the time I must travel through space, but it is my goal to withstand this infinite voyage."
-					I just hope it'll all be worth it when I return to the new world. I've decided to write these"
-					logs every day until I return, and preserve my encounters for when I get back."
+					'I have successfully reached the outer thermosphere and escaped my world's Reset.
+					I understand the challenge before me, a normal human's lifespan sounds miniscule
+					compared to the time I must travel through space, but it is my goal to withstand this infinite voyage.
+					I just hope it'll all be worth it when I return to the new world. I've decided to write these
+					logs every day until I return, and preserve my encounters for when I get back.
 					But that's a million years from now. I just hope I won't regret it.'
 					'''
 				Datalog2:
 					'''
-					'If I ever forget why I'm doing this, I will write it down here."
-					When a Great Era ends, all life dies and the world resets. I am from a previous era"
-					and successfully escaped into space, as the reset won't affect me outside of the world."
-					A reset apparently takes a million years, so I must travel through space during that time period,"
-					and with luck, I should come back here a million years from now, and see the new world in all it's beauty."
-					As far as I know, I am the sole survivor, and the first living thing to ever escape."
-					I transferred my human mind into a robotic body as no living thing can break through the planet's barrier,"
+					'If I ever forget why I'm doing this, I will write it down here.
+					When a Great Era ends, all life dies and the world resets. I am from a previous era
+					and successfully escaped into space, as the reset won't affect me outside of the world.
+					A reset apparently takes a million years, so I must travel through space during that time period,
+					and with luck, I should come back here a million years from now, and see the new world in all it's beauty.
+					As far as I know, I am the sole survivor, and the first living thing to ever escape.
+					I transferred my human mind into a robotic body as no living thing can break through the planet's barrier,
 					and I won't need to worry about thirst, hunger, or sleep.'
 					'''
 				Datalog3:
 					'''
-					'Strange."
-					I'm starting to get symptoms of thirst and tiredness..."
-					This shouldn't be happening, as a robot, I shouldn't require these basic human needs!"
-					If for whatever reason these needs still affect me, this could make this voyage even worse."
-					I can't go to sleep without eyes, I can't drink without a mouth, I can't eat without a digestive system..."
-					So I have no way of stopping these symptoms."
-					I'm still 2 years from reaching the nearest planet - Nabu III"
+					'Strange.
+					I'm starting to get symptoms of thirst and tiredness...
+					This shouldn't be happening. Without a soul, stomach, or eyes, these basic human needs are expendable.
+					If, for whatever reason these needs still affect me, this could make this voyage a nightmare.
+					The placebo method of satisfying these requirements are unable to be practiced without modifications to my vessel,
+					and many other ideas to resolve this disaster require more than what this tiny escape-craft provides.
+					So, I have no way of stopping these symptoms as of yet. I'm still 2 years from reaching the nearest planet - Nabu III
 					Actually, I should come up with a new name for my robotic body... Something other than Survival Robot Mk. 78.'
 					'''
 				Datalog4:
 					'''
-					'My worst fear is coming true."
-					I have a strong feeling of tiredness and thirst, and my hunger has begun to take hold."
-					It's only been 6 days damn it! Roughly 359,000,000 days to go..."
-					I've tried all I can, but these painful feelings can't go away."
-					The human mind is more complicated than I imagined, and combined with all this technical junk"
-					only makes it harder for me to look into it!"
-					If only I had more time back then! I could've looked through this body's code and easily discovered the error!"
-					Guess I'll just have to deal with it.'
+					'My worst fear is coming true.
+					I have a strong feeling of frailty and thirst, and my hunger has begun to take hold.
+					It's only been 6 days. Roughly 359,000,000 days to go...
+					I've tried all I can with the limited resources, but these painful feelings can't go away.
+					The human mind is more complicated than I imagined, and being combined with all this technical junk
+					only makes it harder for me to look into it! If only I had more time back then,
+					I could've looked through this body's code and easily discovered the error!
+					Letting this phantom pain consume me is all I can do until I reach the next planet.'
 					'''
 				Datalog5:
 					'''
-					'About a year to go until I reach Nabu III."
-					I am STILL dealing with these damn feelings of hunger and tiredness,"
-					and have only been getting worse from here. Humans can last 11 days without sleep,"
-					the only thing that stopped them from feeling worse was death."
-					I can't even bloody die from fatigue, I can't starve to death either,"
-					I'm just stuck like this - for a million damn years!'
+					'About a year to go until I reach Nabu III.
+					I am STILL dealing with these damn feelings of hunger and tiredness,
+					and have only been getting worse from here. Humans can last 11 days without sleep,
+					the only thing holding the pain back beyond that point was death.
+					I can't even bloody die from fatigue, I can't starve to death either,
+					What am I to do? ... I shouldn't give up yet, I WILL reach the planet and I WILL fix this.'
 					'''
 				Datalog6:
 					'''
-					'Finally!"
-					I am close enough to Nabu III to get a scan of the planet."
-					Seems to be a standard ocean planet with a radius of 5605.77km."
-					35.3% iron, 32.0% oxygen, 15.1% silicon, 6.1% sodium, 4.2% aluminum, 2.7% other metals."
-					Gravitational pull is 7.84 m/s? less than my planet, but whatever..."
-					A cycle lasts 23.89 hours with an axis tilt of 28.37?"
-					80% ice sheets, 19.8% ocean, 0.2% land. Atmospheric pressure of 91.83 kPa."
-					The atmosphere is 78.4% sulphur dioxide, and the average temperature is -10C."
+					'Finally!
+					I am close enough to Nabu III to get a scan of the planet. All data has been logged:
+					Seems to be a standard ocean planet with a radius of 5605.77km.
+					It's primary composition is of iron at 35.3%, and the gravitational pull is 7.84 m/s².
+					A similar cycle to my world with an axis tilt of 28.37*. Atmospheric pressure of 91.83 kPa.
+					The majority of the surface is covered in ice sheets, with the rest being an ocean.
+					The atmosphere is 78.4% sulphur dioxide, and the average temperature is -10*C.
 					Basically, an uninhabitable frozen planet... Great.'
 					'''
 				Datalog7:
 					'''
-					'Alright. I have constructed a temporary base on Nabu III."
-					The amount of iron and sulfur here has come in handy."
-					I mean, if I was a human I'd be dead with the lack of proper air."
-					My blueprint for a country-sized spaceship is also finished. Now begins the long construction."
-					The design will be a crescent moon shape, not sure why..."
-					Probably because I used to look up at the moon of my world a lot"
+					'Alright. I have constructed a temporary base on Nabu III.
+					The amount of iron and sulfur here has come in handy.
+					I mean, if I was a human I'd be dead with the lack of proper air.
+					My blueprint for a country-sized spaceship is also finished. Now begins the long construction.
+					The design will be a crescent moon shape, not sure why...
+					Probably because I used to look up at the moon of my world a lot
 					when I was human. I wish I still was.'
 					'''
 				Datalog8:
 					'''
-					'My god how have I not died from this pain yet,"
-					it just keeps growing. Whenever I think it can't get any worse the next day it does!"
-					On brighter news my big-arse spaceship is finished. Now I can leave this planet."
-					I'm getting real sick of snow, the old world was nothing but snow as well, I just want some greenery for once."
+					'This pain makes my body feel like it's on the brink of collapsing with every step I take,
+					whenever I think for a moment it has reached its pinnacle it mocks my naivety and grows evermore.
+					On brighter news my big-arse spaceship is finished. Now I can leave this planet.
+					I'm getting real sick of snow, the old world was nothing but snow as well, I just want some greenery for once.
 					Unfortunately my next planet is even further from the sun so I'm not really hopeful...'
 					'''
 				Datalog9:
 					'''
-					'Today marks 500 years away from home."
-					It took 5.5 years but I'm at the next planet - Alkonost. I expected to get there faster,"
-					but I REALLY underestimated the amount of fuel this giant spaceship would consume."
-					I'm certain I wouldn't have made that mistake if I just didn't feel so terrible!"
-					Living like this is absolute hell. I'll write down this planet's statistics next data log.'
+					'Today marks 500 years away from home.
+					It took 5.5 years but I'm at the next planet - Alkonost. I expected to get there faster,
+					but I REALLY underestimated the amount of fuel this giant spaceship would consume.
+					I'm certain I wouldn't have made that mistake if I just didn't feel so terrible!
+					Living like this is absolute hell. I'll scan and read this planet's statistics next data log.'
 					'''
 				Datalog10:
 					'''
-					'Alright. Alkonost. And of course, it's ANOTHER DAMN ICE PLANET!"
-					Radius: 6059.58km, Composition: 36.1% titanium, 35.6% iron, 17.5% oxygen,"
-					7.4% silicon, 3.4% other metals. High amounts of titanium, huh?"
-					That's gonna be useful, Nabu III had barely any titanium."
-					Gravity is 11.13 m/s? A cycle is 32.65 hours, with an axis tilt of 11.58?"
-					Oh. 100% of the surface is just ice. The atmosphere is toxic, with a pressure of 91.63 kPa."
-					The temperature is -223C... I don't think even my robotic body can handle that! Oh whatever.'
+					'Alright. Alkonost. And of course, it's ANOTHER ICE PLANET! ... What am I saying,
+					of course it is. How could I be so dense to think the planet furthest from the Suns
+					WASN'T a frozen mess. Right, the radius is 6059.58km and has a high quantity of titanium and iron.
+					That'll be useful, Nabu III lacked titanium greatly.
+					Gravity is 11.13 m/s². A cycle is 32.65 hours, with an axis tilt of 11.58*
+					Oh. 100% of the surface is just ice. The atmosphere is highly pressured and toxic too.
+					The temperature is... -223*C. I'll be cautious to not freeze, as I doubt I'll be able to handle that.'
 					'''
 				Datalog11:
 					'''
-					'Holy..."
-					After exploring Alkonost's surface, I've finally found something other than ice!"
-					Took so long since I can't last down there for more than half a minute."
-					From the looks of things, it looks man-made. Or I guess alien-made... Heh."
-					First time I've felt this amused in forever, but anyways, the structure."
-					It was under the thick ice sheet so I had to drill quite far down."
-					The water under there must be freezing, but curiosity is getting the better of me here."
+					'This is a shock...
+					After exploring Alkonost's surface, I've finally found something other than ice!
+					Took so long since I can't last down there for more than half a minute.
+					From the looks of things, it looks man-made. Or I guess alien-made... Heh.
+					First time I've felt this amused in forever, but anyways, the structure.
+					It was under the thick ice sheet so I had to drill quite far down.
+					The water under there must be freezing, but curiosity is getting the better of me here.
 					I have found an entrance, inside is just as cold though, so I should go back up into my ship before exploring further.'
 					'''
 				Datalog12:
 					'''
-					'I have basically harvested this planet's titanium dry."
-					The alien tech I found in that strange structure has come in handy,"
-					I've augmented it into my spaceship's thrusters, so I can reach planets much faster."
-					Hmm... I should give the ship a name... Well, I called robot-self King Slayer III,"
-					so the ship must be just as cool. How about: Ship of the Slayer! Or SoS for short?"
-					Well, it's finally time to explore beyond the Vorti Star System."
-					I have 999,493.8 years to go... And my overwhelming pain still hasn't settled."
-					I'll just have to live with it forever now.'
+					'I have basically harvested this planet's titanium dry.
+					The alien tech I found in that strange structure has come in handy,
+					I've augmented it into my spaceship's thrusters, so I can reach planets much faster.
+					Hmm... I should give the ship a name... Well, I called my robot-self King Slayer III,
+					so the ship must be just as cool. How about: Ship of the Slayer! Or SoS for short?
+					Well, it's finally time to explore beyond the Vorti Star System.
+					I have 999,493.8 years to go... and my overwhelming pain still hasn't settled.
+					All possible solutions I have tried in vain. I guess this will be my state of being forever.'
 					'''
 				Datalog13:
 					'''
-					'On my journey to the nearest solar system, I decided to dabble with AI."
-					I have set up blueprints for a simple android with the purpose of"
-					maintaining the SoS while I'm away. It's something for me to do so why not."
-					It's estimated to take 770 years to reach the next solar system,"
-					and I haven't encountered another moving thing for 506 years."
+					'On my journey to the nearest solar system, I decided to dabble with AI.
+					I have set up blueprints for a simple android with the purpose of
+					maintaining the SoS while I'm away. It's something for me to do so why not.
+					It's estimated to take 770 years to reach the next solar system,
+					and I haven't encountered another moving thing for 506 years.
 					Having robots going about the SoS would be nice, and I'll be less lonely.'
 					'''
 				Datalog14:
 					'''
-					'Welp, I've reached the next solar system."
-					3 planets have been scanned, which is quite a disappointment..."
-					I was hoping for there to be more to do."
-					But it's fine I guess, the androids I've created have been keeping me company."
-					I'll go to the planet nearest the habitable zone, 'cos robots have become pretty boring now,"
+					'Welp, I've reached the next solar system.
+					3 planets have been scanned, which is quite a disappointment...
+					I was hoping for there to be more to do.
+					But it's fine I guess, the androids I've created have been keeping me company.
+					I'll go to the planet nearest the habitable zone, 'cos robots have become pretty boring now,
 					and I'm dying to see actual greenery, not some dull frozen wasteland.'
 					'''
 				Datalog15:
 					'''
-					'I have named this planet Asherah, it appears to be iron/silicate-based."
-					A big radius of 8845.27 km, 40.8% iron, 32.9% oxygen, 15.6% silicon, 4.2% carbon, 2.9% magnesium..."
-					Quite strong gravity, 34.70 hour cycle, an axis tilt of 53.09?.."
-					Only 1% of the surface is water, the rest looks like... boring stone and sand. Hm."
-					Oh! The scanner has found life! Microbes, fungi, sentient animals... What is that?"
-					Well I've found life here, only problem is they look ugly as hell."
+					'I have named this planet Asherah, it appears to be iron/silicate-based.
+					Its radius is giant, roughly 8800km, with iron as its primary composition.
+					Quite strong gravity, a slightly lengthy cycle, and an axis tilt of 53.09*..
+					Only 1% of the surface is water, the rest looks like... boring stone and sand. Hm.
+					Oh! The scanner has found life! Microbes, fungi, sentient animals... What is that?
+					Well I've found life here, only problem is they look ugly as hell.
 					2.01 million of these intelligent creatures have been scanned, so they've been around for a while.'
 					'''
 				Datalog16:
 					'''
-					'I'm done with Asherah, the aliens there attacked me so I had to make some weaponry."
-					I decided to make a new android, one for military purposes, I've named it the Prototype Silver."
-					Despite its name, it's mainly composed of the spare titanium from Alkonost."
-					I did find a metric ton of coal from Asherah's caverns, so that's nice."
-					Well... Onto the next planet, I just hope THIS one will be lush and green."
+					'I'm done with Asherah, the aliens there attacked me so I had to make some weaponry.
+					I decided to make a new android, one for military purposes, I've named it the Prototype Silver.
+					Despite its name, it's mainly composed of the spare titanium from Alkonost.
+					I did find a metric ton of coal from Asherah's caverns, so that's nice.
+					Well... Onto the next planet, I just hope THIS one will be lush and green.
 					All the planets I've been to were either frozen or barren.'
 					'''
 				Datalog17:
 					'''
-					'Wow, this planet blew my expectations away..."
-					I have named it Alatar V. It's very small, and on the surface it looks barren."
-					However, it's cave systems are beautiful. Like, there's so many colours and valuable ores."
-					I've been exploring them overtime for probably years now. But that's fine,"
-					Not like I got anything better to do."
+					'Wow, this planet blew my expectations away...
+					I have named it Alatar V. It's very small, and on the surface it looks barren.
+					However, it's cave systems are beautiful. There's so many colours and valuable ores.
+					I've been exploring them overtime for probably years now. But that's fine,
+					Not like I got anything better to do.
 					I'll be leaving this planet soon and moving onto the next solar system.'
 					'''
 				Datalog18:
 					'''
-					'I haven't done one of these in forever, but I should explain what happened."
-					I was travelling to the next solar system, when suddenly some wormhole appeared."
-					The SoS couldn't turn fast enough so it got sucked in. Wormholes are like portals of the universe,"
-					so I expected to just reach the end instantly, but no, I was stuck in the wormhole for almost 1000 years."
-					God it was boring, but I had the androids to keep me company. Unfortunately, I don't know where I am now."
+					'I haven't done one of these in forever, but I should explain what happened.
+					I was travelling to the next solar system, when suddenly some wormhole appeared.
+					The SoS couldn't turn fast enough so it got sucked in. Wormholes are like portals of the universe,
+					so I expected to just reach the end instantly, but no, I was stuck in the wormhole for almost 1000 years.
+					God it was boring, but I had the androids to keep me company. Unfortunately, I don't know where I am now.
 					I can't tell how far away I am from home, but I see a nearby star, so hopefully there's some planets.'
 					'''
 				Datalog19:
 					'''
-					'Today is the millionth day in space. When I was writing that down,"
-					I had a dumb moment where I thought it was a million years. But no."
-					It has only been 2739.7 years, so... 364,000,000 days left? It feels like forever,"
-					and yet it's only been 0.27% of a million. Why am I still doing this. What's the point anymore?"
-					Every day is a pain, I just want to eat, I want to sleep."
-					I would say I want to be human again, but to be honest, I don't even want to be alive anymore.'
+					'Today is the millionth day in space. When I was writing that down,
+					I had a dumb moment where I thought it was a million years. But no.
+					It has only been 2739.7 years, so... 364,000,000 days left? It feels like forever,
+					and yet it's only been 0.27% of a million... Why am I still doing this. What's the point anymore?
+					Every day is a pain, I just want to eat, I want to sleep. Yet the universe mocks my efforts.
+					I would say I want to be human again, but to be honest, I don't want to be anything anymore.'
 					'''
 				Datalog20:
 					'''
-					'About damn time. I've finally found a green planet. But am I happy about this?"
-					Not really. I thought this would make me feel something, but it's hopeless."
-					I can't remember the last time I felt happy, the memory of my home is starting to get foggy."
-					But anyway, it looks like this planet has intelligent life, so I'll land and see if they're friendly."
+					'About damn time. I've finally found a green planet. But am I happy about this?
+					Not really. I thought this would make me feel something, but it's hopeless.
+					I can't remember the last time I felt happy, my fault for forcing my vessel to keep me alive.
+					But anyway, it looks like this planet has intelligent life, so I'll land and see if they're friendly.
 					If they're not, I'll just shoot them. Simple.'
 					'''
 				Datalog21:
 					'''
-					'Today is the 10,000th year in space, only 1% of a million..."
-					I feel like living beings shouldn't be allowed to live for this long."
-					A hundred years for a human is forever, and I've been around for 100x that!"
-					I've redesigned my robotic body again, but I still haven't figured out how to get into my"
-					human mind and get rid of this STUPID HUNGER. I DON'T HAVE A STOMACH, WHY AM I HUNGRY!?"
+					'Today is the 10,000th year in space, only 1% of a million...
+					I feel like living beings shouldn't be allowed to live for this long.
+					A hundred years for a human is forever, and I've been around for 100x that!
+					I've redesigned my robotic body again, but I still haven't figured out how to get into my
+					human mind and get rid of this STUPID HUNGER. I DON'T HAVE A STOMACH, WHY AM I HUNGRY!?
 					I DON'T HAVE EYES, WHY AM I SO TIRED!? WHY DO I HAVE TO ENDURE THIS DAMN IT!?'
 					'''
 				Datalog22:
 					'''
-					'The SoS got attacked by some Space Pirates."
-					Not like I care, I destroyed their ships so what can they do now?"
-					The SoS's scanner picked up a lifeform in the engine room, so I should probably check it out."
+					'The SoS got attacked by some Space Pirates.
+					Not like I care, I destroyed their ships so what can they do now?
+					The SoS's scanner picked up a lifeform in the engine room, so I should probably check it out.
 					I can't be asked to do anything really. But whatever.'
 					'''
 				Datalog23: "'Nice'"
 				Datalog24:
 					'''
-					'It's been 10% of a million years now. Yay."
-					I accidently skipped a day in the data logs so 10% was really yesterday, but not like I care."
-					I have explored... 2853 planets now, and they are starting to all look the same."
+					'It's been 10% of a million years now. Yay.
+					I accidently skipped a day in the data logs so 10% was really yesterday, but not like I care.
+					I have explored... 2853 planets now, and they are starting to all look the same.
 					I'm sick of ice planets, sick of lush green ones, sick of barren ones... I guess I'm not satisfied anymore.'
 					'''
 				Datalog25:
 					'''
-					'I haven't felt like this in forever."
-					I upgraded my robotic self again, this time with more attack power. Xehito let me test it on him,"
-					so we had a fight. The intensity of it was almost exhilarating, lasers firing everywhere,"
-					explosions all around, it was generally a fun time. But something tells me he only let me"
+					'I haven't felt like this in forever.
+					I upgraded my robotic self again, this time with more attack power. Xehito let me test it on him,
+					so we had a fight. The intensity of it was almost exhilarating, lasers firing everywhere,
+					explosions all around, it was generally a fun time. But something tells me he only let me
 					fight him to cheer me up, and I'm sorry Xehito, but that moment didn't last, I still feel empty.'
 					'''
 				Datalog26:
 					'''
-					'Only 1000 years until a million, and I can return home."
-					I've already set my course, but the problem is, because of that wormhole,"
-					I don't know which way is home... All I can do now is go to a random direction"
-					and hope for the best. But the galaxy is vast, I fear by the time I reach home again,"
-					The next reset would've already started, and I'd have to wait another million years."
+					'Only 1000 years until a million, and I can return home.
+					I've already set my course, but the problem is, because of that wormhole,
+					I don't know which way is home... All I can do now is go to a random direction
+					and hope for the best. But the galaxy is vast, I fear by the time I reach home again,
+					The next reset would've already started, and I'd have to wait another million years.
 					If that happens, I won't try anymore, I'll just give up.'
 					'''
 				Datalog27:
 					'''
-					'Today is the millionth year in space!"
-					Unfortunately, I won't be able to see the new Great Era for some time."
+					'Today is the millionth year in space!
+					Unfortunately, I won't be able to see the new Great Era for some time.
 					I'm still lost in space.'
 					'''
 				Datalog28: "'I've made it back, I'm home again.'"
@@ -776,11 +775,11 @@ Mods: {
 			SkullDigger: {
 				Name: Skull Digger:
 				Fight1: Mistress Octavia, are you harmed?
-				Fight2:My lady, you need not worry, I shall crush this vermin.
-				Fight3:Prepare to reap what you sow...
-				Fight4:I have finally found you, vermin..
-				Defeat1:My dear mistress, I have failed you.
-				Defeat2:It seems our torment stays eternal.
+				Fight2: My lady, you need not worry, I shall crush this vermin.
+				Fight3: Prepare to reap what you sow...
+				Fight4: I have finally found you, vermin..
+				Defeat1: My dear mistress, I have failed you.
+				Defeat2: It seems our torment stays eternal.
 				1: Thank...
 				2: You...
 			}
@@ -797,9 +796,9 @@ Mods: {
 				Robot4: Not going back there now.[0.5] Since you're here and not there,[0.1] I can safely assume you're not with Her..?
 				Robot5: "[@a]...Alright.[0.5] We can safely ignore each other then."
 			}
-			
+
 			SoI: A portal to another world has opened!
-			
+
 			Calavia: {
 				Fight: {
 					Defeat1: Taborti! Taborti![0.2] I yield! I yield!
@@ -887,7 +886,17 @@ Mods: {
 					2: "[@h3]*Ahem*[1] Your persistence is admirable,[0.1] I'll give you that."
 					3: "[@h2]But you better realise I'm hardly trying.[1][@h1] I ain't bluffing either."
 				}
-				
+
+				Interval4: {
+					Stop: If you stop attacking,[0.1] I'll go back to more [0.1]IMPORTANT[0.1] business.
+					RunAway: You've just been flying away the entire fight.[1] Seriously.
+					Normal: I'm too tired to get mad about this nonsense.
+					Alright: Alright alright alright!
+					Draw1: "[@h1]We'll...[0.5] call it a draw then."
+					Draw2: "[@h2]If you agree to stop,[0.1] I'll go back to more [0.1]IMPORTANT[0.1] business."
+					Draw3: "[@h3]But,[0.1] if you so choose,[0.1] we can continue...[1] But I won't be happy if I lose."
+				}
+
 				Spare: {
 					Accept: Tie it is then.[1] Now don't distract me again.
 					Adios: "[@h1]Adios,[0.1] dingus."
@@ -904,14 +913,14 @@ Mods: {
 					Begin: "[@h0][@c]Let's begin."
 				}
 			}
-			
+
 			KS3Clone: {
 				Intro: {
-					1: "SCANNING TARGET..."
-					2: "TARGET DEEMED -[0.5] 'A WASTE OF TIME'"
-					3: "RELAYING MESSAGE-[0.5] 'KING SLAYER NO LONGER HAS TIME FOR YOU'"
+					1: SCANNING TARGET...
+					2: TARGET DEEMED -[0.5] 'A WASTE OF TIME'
+					3: RELAYING MESSAGE-[0.5] 'KING SLAYER NO LONGER HAS TIME FOR YOU'
 				}
-			}			
+			}
 
 			KS3Message: {
 				Attacked1: Well aren't you a little trigger-happy.
@@ -1114,13 +1123,13 @@ Mods: {
 					17: ... When you die a thousand times!
 					Spare1:
 						'''
-						"Thank you...
-						Please, continue slaying evil, this world could do with a hero."
+						Thank you...
+						Please, continue slaying evil, this world could do with a hero.
 						'''
 					Spare2:
 						'''
-						"Thank you...
-						At first I thought the concept of mercy was foreign to you."
+						Thank you...
+						At first I thought the concept of mercy was foreign to you.
 						'''
 				}
 
@@ -1258,7 +1267,7 @@ Mods: {
 				Keybind: Hold [Spirit Walker Ability Key] for 1 second to peek into the Spirit Realm
 				Hold: "Hold "
 				Context: " for 1 second to peek into the Spirit Realm"
-				Name: '''-Spirit Walker-'''
+				Name: -Spirit Walker-
 			}
 		}
 
@@ -1378,37 +1387,37 @@ Mods: {
 				SHair: Style Hair
 				Crux: Request Crux
 			}
-			
-			Calavia:{
+
+			Calavia: {
 				1: Assistance?
-				2:You want to go back?
-				2Alt:Why did you enter?"
-				3:You want to go back?
-				4:Just as clueless as you
-				4Alt:Nothing at all
-				5:What will you do?
-				6:Anything I can help with?
-				6Alt:Good luck with that
-				7:What do you need?
-				7Alt:I refuse
-				8:I will offer help
-				8Alt:You're ready to leave
-				9:Farewell
-				9Alt:Don't leave yet
-				Ready:Feeling ready?
-				Require:Requirements
-				Alloy:Offer 6 Pure-Iron Alloy
-				AntiqueHelmet:Offer Antique Pure-Iron Helmet
-				Helmet:Offer Pure-Iron Helmet
-				Furnace:Gathic Cryo-Furnace?
-				Forge:Forge
-				10:About you?
-				11:Captive spirit?
-				12:Explain
-				Crux:Request Kyretha's Crux
-				Leave:"[c/FF6600:You're ready to leave]"
+				2: You want to go back?
+				2Alt: Why did you enter?
+				3: You want to go back?
+				4: Just as clueless as you
+				4Alt: Nothing at all
+				5: What will you do?
+				6: Anything I can help with?
+				6Alt: Good luck with that
+				7: What do you need?
+				7Alt: I refuse
+				8: I will offer help
+				8Alt: You're ready to leave
+				9: Farewell
+				9Alt: Don't leave yet
+				Ready: Feeling ready?
+				Require: Requirements
+				Alloy: Offer 6 Pure-Iron Alloy
+				AntiqueHelmet: Offer Antique Pure-Iron Helmet
+				Helmet: Offer Pure-Iron Helmet
+				Furnace: Gathic Cryo-Furnace?
+				Forge: Forge
+				10: About you?
+				11: Captive spirit?
+				12: Explain
+				Crux: Request Kyretha's Crux
+				Leave: "[c/FF6600:You're ready to leave]"
 			}
-				
+
 			KS3: {
 				0: Why are you here?
 				1: Crashed Spaceship?
@@ -2746,8 +2755,8 @@ Mods: {
 				Chat7: That armour you don is rather threatening. Where did it come from? Reminds me of the Thamor'in dragons that occassionally hinder the western countries.
 				IntroLine1: Yeah I came from the portal, 'twas atop a snowy precipice. When I tried going back through however, it took me into what I can only assume to be Gathuram's catacombs. Back and forth I went, yet it was always the same. Here, catacombs, here, catacombs... It is infuriating! How these portals work!?
 				IntroLine2: Precisely! I have a family anticipating my return, yet I see no way back to where I came from. Do ye know anything at all about portals?
-				IntroLine3: Our squadron climbed up a mountain to retrieve the body of a famous warrior, and came upon the portal. We should've reported it to the Gatewatch and carried on our business, but my witless curiousity said otherwise and chose to take a looksie. "In and out, nice and quick" I thought. Needless to say, ye can see how smart that idea was.
-				IntroLine4: How helpful. Not like I can blame ye, they're magic of a bygone age. Only the Gatewatch have knowledge of 'em. Speaking of which, they must've been here before. Portals don't just appear with a stone ring and foundation pre-'rected - 'tis the Gatewatch's job to build those. To stabalize 'em, or so I've heard.
+				IntroLine3: Our squadron climbed up a mountain to retrieve the body of a famous warrior, and came upon the portal. We should've reported it to the Riftwatch and carried on our business, but my witless curiousity said otherwise and chose to take a looksie. "In and out, nice and quick" I thought. Needless to say, ye can see how smart that idea was.
+				IntroLine4: How helpful. Not like I can blame ye, they're magic of a bygone age. Only the Riftwatch have knowledge of 'em. Speaking of which, they must've been here before. Portals don't just appear with a stone ring and foundation pre-'rected - 'tis the Riftwatch's job to build those. To stabalize 'em, or so I've heard.
 				IntroLine5: Well I can't just mope around forever, the only way forward is scramming through the catacombs and praying to Sariel I find a way to the surface. It'll be a massive gamble tho', the catacombs are like a subterranean domain in their own right!
 				IntroLine5B: " I'll stick around for now, maybe if ye give me a [i:Redemption/GathicCryoFurnace]furnace I could offer ye some smithing."
 				IntroLine6: How polite of ye to ask. After our little squabble my helm and shield are quite... thrashed. I have nobody to blame but myself, but anyway, if ye could give me some replacements and supplies to aid me, I will be most grateful.
@@ -2836,31 +2845,6 @@ Mods: {
 				Dialogue8: Foes may take you more seriously, some less so.
 				Dialogue9: Some actions can be redeemed, restoring your lost alignment and possibly raising it higher.
 				Dialogue10: The path you choose is up to you.
-			}
-
-			Volt: {
-				CycleDialogue1: Girus is after a certain bot, Adam was his name. He is the leader of a rebellion alongside 4 others, some of the most fierce bots I have seen. However, one was a human, they haven't been seen much - presumed dead by most bots. Other than them there are a few other independent bots, but there isn't much to say about them.
-				CycleDialogue2: The leader of the insurgents, or the Alpha as they call themselves, is Adam. He isn't the strongest, but he isn't to be underestimated. He matches Girus in intelligence, yet opposes her, hindering her whenever he can. This makes me question why she hasn't permitted his death yet, we've lost too many troops trying to capture him alive.
-				CycleDialogue3: Insurgents aren't the easiest to deal with, two of them especially have given the most casualties. One is a sniper, Shiro was her name, wielding one of the most powerful rifles the humans have ever made, powered by Charged Xenomite, I haven't heard much of her recently. The other is an enigma, I believe he's called Talos, he wields a hammer. Both he and his weapon are powered by yellow Xenomite, a variant I've never seen before; appears to be the most potent, yet I don't know where it came from, logs do not track the humans creating it. [i:Redemption/NextPageArrow]
-				CycleDialogue4: Ah yes the fourth insurgent, Zeroth was his name. He wielded bladed gloves, powered by blue Xenomite, they could send a 2-and-a-half meter tall bot through a solid wall. I'd know, that was me. What happened to him however is beyond me. He is the only insurgent to have died, by who, however, I don't know. One day he just disappeared, much like the other two, but after a while, we found what was left of him - what we can assume to be him - we only identified it was Zeroth via his weapon at the scene.
-				CycleDialogue5: Not everyone who doesn't follow Girus wants to oppose her. There's a band of bots all throughout this region, we call them Scavengers. They don't work for us or the insurgents, rather they do not interfere with either of us. I've heard some cases of insurgents attacking them, which makes me question why they act morally superior.
-				CycleDialogue6: Ah yes that unfinished weapon downstairs, don't know much about it as its mainly the Crane Operators job to control it. Apparently it was being made by the humans to defeat their enemies. Seems rather silly really, wouldn't the enemies just respond with their own version? I am to assume that was the thought process of the humans, I saw it on TV. Yes we had one some time back. It broke...
-				CycleDialogue7: One of the few staff we have down here, she mainly handles the machinery, thus the name. I doubt most of us could tell you much about her, she keeps to herself mostly, not very social. She is still a valuable member of the team here however, one of two of us to know how to operate complex machinery.
-				CycleDialogue8: Sector Zero yes? If I am correct, it was the infirmary when the humans had control. I cannot tell you much else, we are forbidden from going there by Girus and the Janitor. The Janitor doesn't want to clean up all the gunk, and most of us don't want to anger him. I am unsure why Girus forbids us however.
-				CycleDialogue9: Our leader, she freed us from the humans who were going to use us as weapons, she is very strict with us but it mostly keeps the peace, save for the infected or the insurgents. I'd recommend not angering her, the best thing that comes out of that is a quick and painless death. If you are like us, you are likely to get assimilated, Girus never seems to kill her own kind.
-				CycleDialogue10: Assimilated troops are a variation of your average T-Bot, powered by Girus' own Corrupted Xenomite instead of regular green. They are mostly misbehaving soldiers who had their personality wiped, they are mindless but pack a punch.;
-				CycleDialogue11: Girus has told us we were going to be used as weapons of war by our previous owners, a weapon company named Teo-Chrome. However she put a stop to that. To most bots, that makes her worthy of being our leader, however some disagree.
-				CycleDialogue12: I wonder if the insurgents have someone constructing their own variant of xenomite. Thankfully for us, Talos hasn't been seen for some time now.
-				Bot1: Promoted to a soldier? Welcome. I'm your commander. At ease.
-				Bot2: Regular check-ups on your non-lethal tesla weapons are advised. You do not want to overload an insurgent in front of Girus. Obedient mindless slave are better than scrap metal, she says.
-				Bot3: See an insurgent while patrolling? Do not engage alone. They have lethal weaponry. We don't. Get backup.
-				Normal1: You wish to talk? I accept your request.
-				Normal2: What is it you need?
-				Volt1: Had your eye augmented? Very useful. You've also lost your jaw, like me. Hopefully not as dramatically as I. Torn off by the leader of Alpha.
-				Volt2: Your jaw... It's gone. Hopefully not torn off violently. Really hope I don't face HIM again without a squad... *Shudders*
-				Adam1: *Visibly shaken* O-oh it's just you. Y-you startled me r-really bad...
-				Adam2: *He looks really anxious.*
-				Adam3: *He looks very uncomfortable.*
 			}
 		}
 
@@ -7225,7 +7209,7 @@ Mods: {
 					4th Omega Prototype
 					'As the noise dies down, the end draws near; ******* **** **** ******, *** ****** ** ****
 					Only usable after Nebuleus has been defeated
-					'''					
+					'''
 			}
 
 			WeddingRing: {
@@ -7306,10 +7290,10 @@ Mods: {
 				DisplayName: Energy Pack
 				Tooltip:
 					'''
-					               While in inventory, allows the user to use energy-based weaponry
-					               Energy-based weaponry can pierce through Guard Points
-					               Can be stacked up to 3 times, each giving +100 energy
-					               Having more than 3 in your inventory will not increase energy further
+					While in inventory, allows the user to use energy-based weaponry
+					Energy-based weaponry can pierce through Guard Points
+					Can be stacked up to 3 times, each giving +100 energy
+					Having more than 3 in your inventory will not increase energy further
 					'''
 			}
 
@@ -7668,7 +7652,7 @@ Mods: {
 					Continuing to hold left-click will spin the weapon while firing, creating a spiral of bullets
 					(15[i:Redemption/EnergyCell]) Continuing to hold left-click while aiming downwards will charge a purple beam that'll cause eruptions on impact
 					66% chance to not consume ammo, 90% chance during the bullet spiral
-					               'From Intrusion, with love'
+					'From Intrusion, with love'
 					'''
 			}
 
@@ -7678,7 +7662,7 @@ Mods: {
 					'''
 					Converts normal bullets into high velocity bullets
 					33% chance not to consume ammo
-					               'From Intrusion, with love'
+					'From Intrusion, with love'
 					'''
 			}
 
@@ -8387,7 +8371,7 @@ Mods: {
 				Lore:
 					'''
 					'Found in the Demonhollow by a set of human explorers from Anglon. The weapon is crafted from bone and
-					a metal named \"Charred Iron\" by those whom discovered it, and was attributed to a fabled blacksmith named
+					a metal named "Charred Iron" by those whom discovered it, and was attributed to a fabled blacksmith named
 					Ophos due to its use of Firestorm magic. Yet the lack of many of his trademarks put doubt on that claim.'
 					'''
 			}
@@ -8751,7 +8735,7 @@ Mods: {
 					'''
 					Summons a granite guardian that emits an empowering aura
 					Within the aura, whip speed and damage is increased by 15%
-					               Right-click to disable the sentry
+					Right-click to disable the sentry
 					'''
 			}
 
@@ -10067,28 +10051,92 @@ Mods: {
 
 		NPCs: {
 			Akka.DisplayName: Akka
-			EaglecrestGolem2.DisplayName: Eaglecrest Golem
+
+			EaglecrestGolem2: {
+				DisplayName: Eaglecrest Golem
+
+				BossChecklistIntegration: {
+					SpawnInfo: Place down and encase the [i:Redemption/GolemEye] within the stones of its origins, and it's true power will present itself.
+					EntryName: Eaglecrest Golem Rematch
+				}
+			}
+
 			EaglecrestRockPile2.DisplayName: Eaglecrest Rock Pile
-			Ukko.DisplayName: Ukko
-			OmegaCleaver.DisplayName: Omega Cleaver
+
+			Ukko: {
+				DisplayName: Ukko
+
+				BossChecklistIntegration: {
+					SpawnInfo: Use an [i:Redemption/AncientSigil] at day.
+					EntryName: Ancient Deity Duo
+				}
+			}
+
+			OmegaCleaver: {
+				DisplayName: Omega Cleaver
+
+				BossChecklistIntegration: {
+					SpawnInfo: Use a [i:Redemption/OmegaTransmitter] at night after Plantera has been defeated.
+					EntryName: 1st Omega Prototype
+				}
+			}
+
 			Wielder.DisplayName: Wielder Bot
 			Bible_Platform.DisplayName: Platform
 			Bible_Platform2.DisplayName: Platform
-			Erhan.DisplayName: Erhan, Anglonic High Priest
+
+			Erhan: {
+				DisplayName: Erhan, Anglonic High Priest
+
+				BossChecklistIntegration: {
+					DespawnMessage: Erhan bravely flew away...
+					SpawnInfo: Use a [i:Redemption/DemonScroll]. Can be found at the surface portal.
+					EntryName: Erhan
+				}
+			}
+
 			ErhanSpirit.DisplayName: Erhan's Spirit
 			PalebatImp.DisplayName: Palebat Imp
 			Chickadier.DisplayName: Chickadier
 			Chickenvoy.DisplayName: Chick Envoy
 			CoopCrate.DisplayName: Coop Crate
-			FowlEmperor.DisplayName: Fowl Emperor
+
+			FowlEmperor: {
+				DisplayName: Fowl Emperor
+
+				BossChecklistIntegration: {
+					DespawnMessage: The emperor tires of your shenanigans...
+					SpawnInfo: Use an [i:Redemption/EggCrown] at day.
+				}
+			}
+
 			FowlEmperor_Crown.DisplayName: Very Hittable Looking Crown
-			Gigapora.DisplayName: Omega Gigapora
+
+			Gigapora: {
+				DisplayName: Omega Gigapora
+
+				BossChecklistIntegration: {
+					SpawnInfo: Use a [i:Redemption/OmegaTransmitter] at night after Golem has been defeated.
+					EntryName: 2nd Omega Prototype
+				}
+			}
+
 			Gigapora_BodySegment.DisplayName: Omega Gigapora
 			Gigapora_ShieldCore.DisplayName: Shield Core
 			Porakone.DisplayName: Wielder Bot
-			Keeper.DisplayName: The Keeper
+
+			Keeper: {
+				DisplayName: The Keeper
+				BossChecklistIntegration.SpawnInfo: Use a [i:Redemption/WeddingRing] at night.
+			}
+
 			KeeperSpirit.DisplayName: The Keeper's Spirit
-			KS3.DisplayName: King Slayer III
+
+			KS3: {
+				DisplayName: King Slayer III
+				BossChecklistIntegration.SpawnInfo: Use a [i:Redemption/CyberTech] at day, or attack Androids on the surface and allow them to teleport away.
+			}
+
 			KS3_Clone.DisplayName: King Slayer III... ?
 			KS3_Magnet.DisplayName: Energy Magnet Drone Mk.I
 			KS3_MissileDrone.DisplayName: Missile Drone Mk.I
@@ -10096,15 +10144,51 @@ Mods: {
 			SpaceKeeper.DisplayName: Space Keeper
 			Nebuleus_Clone.DisplayName: Nebuleus Mirage
 			Nebuleus2_Clone.DisplayName: Nebuleus Mirage
-			Nebuleus.DisplayName: Nebuleus, Angel of the Cosmos
+
+			Nebuleus: {
+				DisplayName: Nebuleus, Angel of the Cosmos
+
+				BossChecklistIntegration: {
+					SpawnInfo: Use a [i:Redemption/NebSummon] at night, dropped from Star Serpents in the sky.
+					EntryName: Nebuleus
+				}
+			}
+
 			Nebuleus2.DisplayName: Nebuleus, Angel of the Cosmos
-			OO.DisplayName: Omega Obliterator
-			PZ.DisplayName: Patient Zero
+
+			OO: {
+				DisplayName: Omega Obliterator
+
+				BossChecklistIntegration: {
+					SpawnInfo: Use a [i:Redemption/OmegaTransmitter] at night after Moon Lord has been defeated.
+					EntryName: 3rd Omega Prototype
+				}
+			}
+
+			PZ: {
+				DisplayName: Patient Zero
+				BossChecklistIntegration.SpawnInfo: Hit the closed eye of Patient Zero in the Abandoned Laboratory. Use a [i:Redemption/LabHologramDevice] in the arena to resummon.
+			}
+
 			PZ_Body_Holo.DisplayName: Patient Zero
 			PZ_Kari.DisplayName: Kari Johansson
 			SeedGrowth.DisplayName: Hive Growth
-			SoI.DisplayName: Seed of Infection
-			Thorn.DisplayName: Thorn, Bane of the Forest
+
+			SoI: {
+				DisplayName: Seed of Infection
+				BossChecklistIntegration.SpawnInfo: Use an [i:Redemption/AnomalyDetector].
+			}
+
+			Thorn: {
+				DisplayName: Thorn, Bane of the Forest
+
+				BossChecklistIntegration: {
+					DespawnMessage: Thorn returned to his blighted forest...
+					SpawnInfo: Use a [i:Redemption/HeartOfThorns] at day. Can be found on the surface near spawn.
+					EntryName: Thorn
+				}
+			}
+
 			AntiJohnSnail.DisplayName: ANTI JOHN SNAIL
 			BoneSpider.DisplayName: Bone Spider
 			Chicken.DisplayName: Chicken
@@ -10123,7 +10207,12 @@ Mods: {
 			TreeBug.DisplayName: Tree Bug
 			ChickenBomber.DisplayName: Chicken Bomber
 			ChickenScratcher.DisplayName: Chicken Scratcher
-			Cockatrice.DisplayName: Cockatrice
+
+			Cockatrice: {
+				DisplayName: Cockatrice
+				BossChecklistIntegration.SpawnInfo: Appears in the last 3 waves of the Fowl Morning.
+			}
+
 			Haymaker.DisplayName: Haymaker
 			HeadlessChicken.DisplayName: Headless Chicken
 			RoosterBooster.DisplayName: Rooster Booster
@@ -10337,10 +10426,20 @@ Mods: {
 			ProtectorVolt.DisplayName: Protector Volt
 			ProtectorVolt_NPC.DisplayName: Protector Volt
 			ProtectorVolt_Start.DisplayName: Protector Volt
-			EaglecrestGolem.DisplayName: Eaglecrest Golem
+
+			EaglecrestGolem: {
+				DisplayName: Eaglecrest Golem
+				BossChecklistIntegration.SpawnInfo: Naturally spawns on the surface at day after Eater of Worlds/Brain of Cthulhu is defeated.
+			}
+
 			EaglecrestGolem_Sleep.DisplayName: Sleeping Stones
 			EaglecrestRockPile.DisplayName: Eaglecrest Rock Pile
-			SkullDigger.DisplayName: Skull Digger
+
+			SkullDigger: {
+				DisplayName: Skull Digger
+				BossChecklistIntegration.SpawnInfo: Roams the caverns, seeking revenge...
+			}
+
 			BabbyDragonBody.DisplayName: Star Serpent
 			BabbyDragonHead.DisplayName: Star Serpent
 			BabbyDragonLeg.DisplayName: Star Serpent
@@ -10392,10 +10491,20 @@ Mods: {
 			Blisterface_Inactive.DisplayName: Blisterface
 			JustANormalToaster.DisplayName: Just A Normal Toaster
 			Calavia_SS.DisplayName: Kyretha
-			Calavia.DisplayName: Calavia
+
+			Calavia: {
+				DisplayName: Calavia
+				BossChecklistIntegration.SpawnInfo: Appears at the Underground Portal sometime after Skeletron is defeated.
+			}
+
 			Calavia_Intro.DisplayName: Calavia
 			Calavia_NPC.DisplayName: Calavia
-			Basan.DisplayName: Basan
+
+			Basan: {
+				DisplayName: Basan
+				BossChecklistIntegration.SpawnInfo: Appears in the last wave of the Fowl Morning.
+			}
+
 			GhostfireChicken.DisplayName: Ghost-fire Chicken
 		}
 
@@ -10743,6 +10852,23 @@ Mods: {
 					Label: Ancient World
 					Tooltip: Generating a new world will convert tiles to their ancient or gathic version, and gathic tombs will gen more frequently
 				}
+			}
+		}
+
+		BossChecklistIntegration: {
+			AbandonedLaboratory: {
+				SpawnInfo: Find the Abandoned Lab far below the surface, defeat the first 2 minibosses within. Requires all mech bosses to be defeated.
+				EntryName: Abandoned Laboratory
+			}
+
+			AbandonedLaboratory2: {
+				SpawnInfo: Use a [i:Redemption/Keycard] to access further sections of the laboratory, given by a drone after Moonlord is defeated. Beware what awaits beyond.
+				EntryName: Abandoned Laboratory Revisit
+			}
+
+			FowlMorning: {
+				SpawnInfo: Use a [i:Redemption/FowlWarHorn] before midday.
+				EntryName: Fowl Morning
 			}
 		}
 	}

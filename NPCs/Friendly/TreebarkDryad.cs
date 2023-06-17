@@ -79,6 +79,7 @@ namespace Redemption.NPCs.Friendly
             NPC.lifeRegen = 1;
             NPC.HitSound = SoundID.Dig;
             NPC.DeathSound = SoundID.NPCDeath27;
+            NPC.chaseable = false;
         }
         public override void OnKill()
         {

@@ -40,6 +40,10 @@ using Redemption.NPCs.Minibosses.FowlEmperor;
 using Redemption.NPCs.FowlMorning;
 using Redemption.Items;
 using Redemption.NPCs.Minibosses.Calavia;
+using Terraria.Localization;
+using Redemption.NPCs.Lab.Blisterface;
+using Redemption.NPCs.Lab.Volt;
+using Redemption.NPCs.Lab.MACE;
 
 namespace Redemption.CrossMod
 {
@@ -57,27 +61,30 @@ namespace Redemption.CrossMod
             if (ModLoader.TryGetMod("BossChecklist", out Mod bossChecklist))
             {
                 #region Fowl Emperor
-                bossChecklist.Call("AddMiniBoss", mod, "Fowl Emperor", ModContent.NPCType<FowlEmperor>(), 0.1f, () => RedeBossDowned.downedFowlEmperor, () => RedeBossDowned.downedFowlEmperor,
-                    new List<int>
+                bossChecklist.Call("LogMiniBoss", mod, nameof(FowlEmperor), 0.1f, () => RedeBossDowned.downedFowlEmperor, ModContent.NPCType<FowlEmperor>(),
+                    new Dictionary<string, object>()
                     {
-                        ModContent.ItemType<FowlEmperorRelic>(),
-                        ModContent.ItemType<EggPet>(),
-                        ModContent.ItemType<FowlEmperorTrophy>(),
-                        ModContent.ItemType<FowlCrown>(),
-                        ModContent.ItemType<ForestBossBox>()
-                    },
-                    ModContent.ItemType<EggCrown>(), "Use an [i:Redemption/EggCrown] at day.",
-                    "The emperor tires of your shenanigans...",
-                    (SpriteBatch sb, Rectangle rect, Color color) =>
-                    {
-                        Texture2D texture = ModContent.Request<Texture2D>("Redemption/CrossMod/BossChecklist/FowlEmperor").Value;
-                        Vector2 centered = new(rect.X + (rect.Width / 2) - (texture.Width / 2), rect.Y + (rect.Height / 2) - (texture.Height / 2));
-                        sb.Draw(texture, centered, color);
-                    }, null);
+                        ["spawnItems"] = ModContent.ItemType<EggCrown>(),
+                        ["collectibles"] = new List<int>
+                        {
+                            ModContent.ItemType<FowlEmperorRelic>(),
+                            ModContent.ItemType<EggPet>(),
+                            ModContent.ItemType<FowlEmperorTrophy>(),
+                            ModContent.ItemType<FowlCrown>(),
+                            ModContent.ItemType<ForestBossBox>()
+                        },
+                        ["availability"] = () => RedeBossDowned.downedFowlEmperor,
+                        ["customPortrait"] = (SpriteBatch sb, Rectangle rect, Color color) =>
+                        {
+                            Texture2D texture = ModContent.Request<Texture2D>("Redemption/CrossMod/BossChecklist/FowlEmperor").Value;
+                            Vector2 centered = new(rect.X + (rect.Width / 2) - (texture.Width / 2), rect.Y + (rect.Height / 2) - (texture.Height / 2));
+                            sb.Draw(texture, centered, color);
+                        }
+                    });
                 #endregion
 
                 #region Fowl Morning
-                bossChecklist.Call("AddEvent", mod, "Fowl Morning", new List<int>()
+                bossChecklist.Call("LogEvent", mod, "FowlMorning", 0.11f, () => RedeBossDowned.downedFowlMorning, new List<int>()
                     {
                         ModContent.NPCType<ChickenScratcher>(),
                         ModContent.NPCType<ChickenBomber>(),
@@ -86,202 +93,223 @@ namespace Redemption.CrossMod
                         ModContent.NPCType<HeadlessChicken>(),
                         ModContent.NPCType<Cockatrice>(),
                         ModContent.NPCType<Basan>()
-                    }, 0.11f, () => RedeBossDowned.downedFowlMorning, () => RedeBossDowned.downedFowlEmperor,
-                    new List<int>
+                    }, new Dictionary<string, object>()
                     {
-                        ModContent.ItemType<CockatriceRelic>(),
-                        ModContent.ItemType<FowlFeather>(),
-                        ModContent.ItemType<CockatriceTrophy>(),
-                        ModContent.ItemType<BasanRelic>(),
-                        ModContent.ItemType<SpicyDrumstick>(),
-                        ModContent.ItemType<BasanTrophy>(),
-                        ModContent.ItemType<FowlMorningBox>()
-                    },
-                    ModContent.ItemType<FowlWarHorn>(), "Use a [i:Redemption/FowlWarHorn] before midday.",
-                    (SpriteBatch sb, Rectangle rect, Color color) =>
-                    {
-                        Texture2D texture = ModContent.Request<Texture2D>("Redemption/CrossMod/BossChecklist/FowlMorning").Value;
-                        Vector2 centered = new(rect.X + (rect.Width / 2) - (texture.Width / 2), rect.Y + (rect.Height / 2) - (texture.Height / 2));
-                        sb.Draw(texture, centered, color);
-                    }, "Redemption/Gores/Boss/FowlEmperor_Crown");
+                        ["spawnItems"] = ModContent.ItemType<FowlWarHorn>(),
+                        ["collectibles"] = new List<int>
+                        {
+                            ModContent.ItemType<CockatriceRelic>(),
+                            ModContent.ItemType<FowlFeather>(),
+                            ModContent.ItemType<CockatriceTrophy>(),
+                            ModContent.ItemType<BasanRelic>(),
+                            ModContent.ItemType<SpicyDrumstick>(),
+                            ModContent.ItemType<BasanTrophy>(),
+                            ModContent.ItemType<FowlMorningBox>()
+                        },
+                        ["availability"] = () => RedeBossDowned.downedFowlEmperor,
+                        ["customPortrait"] = (SpriteBatch sb, Rectangle rect, Color color) =>
+                        {
+                            Texture2D texture = ModContent.Request<Texture2D>("Redemption/CrossMod/BossChecklist/FowlMorning").Value;
+                            Vector2 centered = new(rect.X + (rect.Width / 2) - (texture.Width / 2), rect.Y + (rect.Height / 2) - (texture.Height / 2));
+                            sb.Draw(texture, centered, color);
+                        },
+                        ["overrideHeadTextures"] = "Redemption/Gores/Boss/FowlEmperor_Crown"
+                    });
                 #endregion
 
                 #region Cockatrice
-                bossChecklist.Call("AddMiniBoss", mod, "Cockatrice", ModContent.NPCType<Cockatrice>(), 0.111f, () => RedeBossDowned.downedFowlMorning, () => RedeBossDowned.downedFowlEmperor,
-                    new List<int>
-                    {
-                        ModContent.ItemType<CockatriceRelic>(),
-                        ModContent.ItemType<FowlFeather>(),
-                        ModContent.ItemType<CockatriceTrophy>(),
-                        ModContent.ItemType<FowlMorningBox>()
-                    },
-                    null, "Appears in the last 3 waves of the Fowl Morning.",
-                    null,
-                    (SpriteBatch sb, Rectangle rect, Color color) =>
+                bossChecklist.Call("LogMiniBoss", mod, nameof(Cockatrice), 0.111f, () => RedeBossDowned.downedFowlMorning, ModContent.NPCType<Cockatrice>(), new Dictionary<string, object>()
+                {
+                    ["spawnItems"] = ModContent.ItemType<FowlWarHorn>(),
+                    ["collectibles"] = new List<int>
+                        {
+                            ModContent.ItemType<CockatriceRelic>(),
+                            ModContent.ItemType<FowlFeather>(),
+                            ModContent.ItemType<CockatriceTrophy>(),
+                            ModContent.ItemType<FowlMorningBox>()
+                        },
+                    ["availability"] = () => RedeBossDowned.downedFowlEmperor,
+                    ["customPortrait"] = (SpriteBatch sb, Rectangle rect, Color color) =>
                     {
                         Texture2D texture = ModContent.Request<Texture2D>("Redemption/CrossMod/BossChecklist/Cockatrice").Value;
                         Vector2 centered = new(rect.X + (rect.Width / 2) - (texture.Width / 2), rect.Y + (rect.Height / 2) - (texture.Height / 2));
                         sb.Draw(texture, centered, color);
-                    }, null);
+                    }
+                });
                 #endregion
 
                 #region Basan
-                bossChecklist.Call("AddMiniBoss", mod, "Basan", ModContent.NPCType<Basan>(), 0.112f, () => RedeBossDowned.downedFowlMorning, () => RedeBossDowned.downedFowlEmperor,
-                    new List<int>
-                    {
-                        ModContent.ItemType<BasanRelic>(),
-                        ModContent.ItemType<SpicyDrumstick>(),
-                        ModContent.ItemType<BasanTrophy>(),
-                        ModContent.ItemType<FowlMorningBox>()
-                    },
-                    null, "Appears in the last wave of the Fowl Morning.",
-                    null,
-                    (SpriteBatch sb, Rectangle rect, Color color) =>
+                bossChecklist.Call("LogMiniBoss", mod, nameof(Basan), 0.112f, () => RedeBossDowned.downedFowlMorning, ModContent.NPCType<Basan>(), new Dictionary<string, object>()
+                {
+                    ["spawnItems"] = ModContent.ItemType<FowlWarHorn>(),
+                    ["collectibles"] = new List<int>
+                        {
+                            ModContent.ItemType<BasanRelic>(),
+                            ModContent.ItemType<SpicyDrumstick>(),
+                            ModContent.ItemType<BasanTrophy>(),
+                            ModContent.ItemType<FowlMorningBox>()
+                        },
+                    ["availability"] = () => RedeBossDowned.downedFowlEmperor,
+                    ["customPortrait"] = (SpriteBatch sb, Rectangle rect, Color color) =>
                     {
                         Texture2D texture = ModContent.Request<Texture2D>("Redemption/CrossMod/BossChecklist/Basan").Value;
                         Vector2 centered = new(rect.X + (rect.Width / 2) - (texture.Width / 2), rect.Y + (rect.Height / 2) - (texture.Height / 2));
                         sb.Draw(texture, centered, color);
-                    }, null);
+                    }
+                });
                 #endregion
 
                 #region Thorn
-                bossChecklist.Call("AddBoss", mod, "Thorn", ModContent.NPCType<Thorn>(), 1.5f, () => RedeBossDowned.downedThorn, () => true,
-                    new List<int>
-                    {
-                        ModContent.ItemType<ThornRelic>(),
-                        ModContent.ItemType<BouquetOfThorns>(),
-                        ModContent.ItemType<ThornTrophy>(),
-                        ModContent.ItemType<ThornMask>(),
-                        ModContent.ItemType<ForestBossBox>()
-                    },
-                    ModContent.ItemType<HeartOfThorns>(), "Use a [i:Redemption/HeartOfThorns] at day. Can be found on the surface near spawn.",
-                    "Thorn returned to his blighted forest...",
-                    (SpriteBatch sb, Rectangle rect, Color color) =>
+                bossChecklist.Call("LogBoss", mod, nameof(Thorn), 1.5f, () => RedeBossDowned.downedThorn, ModContent.NPCType<Thorn>(), new Dictionary<string, object>()
+                {
+                    ["spawnItems"] = ModContent.ItemType<HeartOfThorns>(),
+                    ["collectibles"] = new List<int>
+                        {
+                            ModContent.ItemType<ThornRelic>(),
+                            ModContent.ItemType<BouquetOfThorns>(),
+                            ModContent.ItemType<ThornTrophy>(),
+                            ModContent.ItemType<ThornMask>(),
+                            ModContent.ItemType<ForestBossBox>()
+                        },
+                    ["customPortrait"] = (SpriteBatch sb, Rectangle rect, Color color) =>
                     {
                         Texture2D texture = ModContent.Request<Texture2D>("Redemption/CrossMod/BossChecklist/Thorn").Value;
                         Vector2 centered = new(rect.X + (rect.Width / 2) - (texture.Width / 2), rect.Y + (rect.Height / 2) - (texture.Height / 2));
                         sb.Draw(texture, centered, color);
-                    }, null);
+                    }
+                });
                 #endregion
 
                 #region Erhan
-                bossChecklist.Call("AddBoss", mod, "Palebat Imp", ModContent.NPCType<Erhan>(), 1.9f, () => RedeBossDowned.downedErhan, () => RedeBossDowned.erhanDeath == 0, null, ModContent.ItemType<DemonScroll>(), "Use a [i:Redemption/DemonScroll]. Can be found at the surface portal.", null,
-                    (SpriteBatch sb, Rectangle rect, Color color) =>
+                bossChecklist.Call("LogBoss", mod, nameof(PalebatImp), 1.9f, () => RedeBossDowned.downedErhan, ModContent.NPCType<Erhan>(), new Dictionary<string, object>()
+                {
+                    ["spawnItems"] = ModContent.ItemType<DemonScroll>(),
+                    ["availability"] = () => RedeBossDowned.erhanDeath == 0,
+                    ["customPortrait"] = (SpriteBatch sb, Rectangle rect, Color color) =>
                     {
                         Texture2D texture = ModContent.Request<Texture2D>("Redemption/CrossMod/BossChecklist/PalebatImp").Value;
                         Vector2 centered = new(rect.X + (rect.Width / 2) - (texture.Width / 2), rect.Y + (rect.Height / 2) - (texture.Height / 2));
                         sb.Draw(texture, centered, color);
-                    }, "Redemption/Items/HintIcon");
-
-                bossChecklist.Call("AddBoss", mod, "Erhan", ModContent.NPCType<Erhan>(), 1.9f, () => RedeBossDowned.downedErhan, () => RedeBossDowned.erhanDeath > 0,
-                    new List<int>
-                    {
-                        ModContent.ItemType<ErhanRelic>(),
-                        ModContent.ItemType<DevilsAdvocate>(),
-                        ModContent.ItemType<ErhanTrophy>(),
-                        ModContent.ItemType<ErhanHelmet>(),
                     },
-                    ModContent.ItemType<DemonScroll>(), "Use a [i:Redemption/DemonScroll]. Can be found at the surface portal.",
-                    "Erhan bravely flew away...",
-                    (SpriteBatch sb, Rectangle rect, Color color) =>
+                    ["overrideHeadTextures"] = "Redemption/Items/HintIcon",
+                    ["displayName"] = Language.GetText("Mods.Redemption.NPCs.PalebatImp.DisplayName")
+                });
+
+                bossChecklist.Call("LogBoss", mod, nameof(Erhan), 1.9f, () => RedeBossDowned.downedErhan, ModContent.NPCType<Erhan>(), new Dictionary<string, object>()
+                {
+                    ["spawnItems"] = ModContent.ItemType<DemonScroll>(),
+                    ["collectibles"] = new List<int>
+                        {
+                            ModContent.ItemType<ErhanRelic>(),
+                            ModContent.ItemType<DevilsAdvocate>(),
+                            ModContent.ItemType<ErhanTrophy>(),
+                            ModContent.ItemType<ErhanHelmet>(),
+                        },
+                    ["availability"] = () => RedeBossDowned.erhanDeath > 0,
+                    ["customPortrait"] = (SpriteBatch sb, Rectangle rect, Color color) =>
                     {
                         Texture2D texture = ModContent.Request<Texture2D>("Redemption/CrossMod/BossChecklist/Erhan").Value;
                         Vector2 centered = new(rect.X + (rect.Width / 2) - (texture.Width / 2), rect.Y + (rect.Height / 2) - (texture.Height / 2));
                         sb.Draw(texture, centered, color);
-                    }, null);
+                    }
+                });
                 #endregion
 
                 #region The Keeper
-                bossChecklist.Call("AddBoss", mod, "The Keeper", ModContent.NPCType<Keeper>(), 2.4f, () => RedeBossDowned.downedKeeper, () => true,
-                    new List<int>
-                    {
-                        ModContent.ItemType<KeeperRelic>(),
-                        ModContent.ItemType<OcciesCollar>(),
-                        ModContent.ItemType<KeeperTrophy>(),
-                        ModContent.ItemType<KeepersVeil>(),
-                        ModContent.ItemType<KeeperBox>(),
-                        ModContent.ItemType<KeepersCirclet>()
-                    },
-                    ModContent.ItemType<WeddingRing>(), "Use a [i:Redemption/WeddingRing] at night.",
-                    null,
-                    (SpriteBatch sb, Rectangle rect, Color color) =>
+                bossChecklist.Call("LogBoss", mod, nameof(Keeper), 2.4f, () => RedeBossDowned.downedKeeper, ModContent.NPCType<Keeper>(), new Dictionary<string, object>()
+                {
+                    ["spawnItems"] = ModContent.ItemType<WeddingRing>(),
+                    ["collectibles"] = new List<int>
+                        {
+                            ModContent.ItemType<KeeperRelic>(),
+                            ModContent.ItemType<OcciesCollar>(),
+                            ModContent.ItemType<KeeperTrophy>(),
+                            ModContent.ItemType<KeepersVeil>(),
+                            ModContent.ItemType<KeeperBox>(),
+                            ModContent.ItemType<KeepersCirclet>()
+                        },
+                    ["customPortrait"] = (SpriteBatch sb, Rectangle rect, Color color) =>
                     {
                         Texture2D texture = ModContent.Request<Texture2D>("Redemption/CrossMod/BossChecklist/Keeper").Value;
                         Vector2 centered = new(rect.X + (rect.Width / 2) - (texture.Width / 2), rect.Y + (rect.Height / 2) - (texture.Height / 2));
                         sb.Draw(texture, centered, color);
-                    }, null);
+                    }
+                });
                 #endregion
 
                 #region Skull Digger
-                bossChecklist.Call("AddMiniBoss", mod, "Skull Digger", ModContent.NPCType<SkullDigger>(), 2.41f, () => RedeBossDowned.downedSkullDigger, () => RedeBossDowned.downedKeeper,
-                    new List<int>
-                    {
-                        ModContent.ItemType<SkullDiggerMask>(),
-                        ModContent.ItemType<AbandonedTeddy>()
-                    },
-                    ModContent.ItemType<SorrowfulEssence>(), "Roams the caverns, seeking revenge...",
-                    null,
-                    (SpriteBatch sb, Rectangle rect, Color color) =>
+                bossChecklist.Call("LogMiniBoss", mod, nameof(SkullDigger), 2.41f, () => RedeBossDowned.downedSkullDigger, ModContent.NPCType<SkullDigger>(), new Dictionary<string, object>()
+                {
+                    ["spawnItems"] = ModContent.ItemType<SorrowfulEssence>(),
+                    ["collectibles"] = new List<int>
+                        {
+                            ModContent.ItemType<SkullDiggerMask>(),
+                            ModContent.ItemType<AbandonedTeddy>()
+                        },
+                    ["availability"] = () => RedeBossDowned.downedKeeper,
+                    ["customPortrait"] = (SpriteBatch sb, Rectangle rect, Color color) =>
                     {
                         Texture2D texture = ModContent.Request<Texture2D>("Redemption/CrossMod/BossChecklist/SkullDigger").Value;
                         Vector2 centered = new(rect.X + (rect.Width / 2) - (texture.Width / 2), rect.Y + (rect.Height / 2) - (texture.Height / 2));
                         sb.Draw(texture, centered, color);
-                    }, null);
-                #endregion
-
-                #region Seed of Infection
-                bossChecklist.Call("AddBoss", mod, "Seed of Infection", ModContent.NPCType<SoI>(), 3.48f, () => RedeBossDowned.downedSeed, () => true,
-                    new List<int>
-                    {
-                        ModContent.ItemType<SoIRelic>(),
-                        ModContent.ItemType<CuddlyTeratoma>(),
-                        ModContent.ItemType<SoITrophy>(),
-                        ModContent.ItemType<InfectedMask>(),
-                        ModContent.ItemType<SoIBox>()
-                    },
-                    ModContent.ItemType<AnomalyDetector>(), "Use an [i:Redemption/AnomalyDetector]. Begins the Xenomite Infection.",
-                    null,
-                    (SpriteBatch sb, Rectangle rect, Color color) =>
-                    {
-                        Texture2D texture = ModContent.Request<Texture2D>("Redemption/CrossMod/BossChecklist/SeedOfInfection").Value;
-                        Vector2 centered = new(rect.X + (rect.Width / 2) - (texture.Width / 2), rect.Y + (rect.Height / 2) - (texture.Height / 2));
-                        sb.Draw(texture, centered, color);
-                    }, null);
+                    }
+                });
                 #endregion
 
                 #region Eaglecrest Golem
-                bossChecklist.Call("AddMiniBoss", mod, "Eaglecrest Golem", ModContent.NPCType<EaglecrestGolem>(), 3.6f, () => RedeBossDowned.downedEaglecrestGolem, () => true,
-                    new List<int>
-                    {
-                        ModContent.ItemType<StonePuppet>(),
-                        ModContent.ItemType<ForestBossBox>(),
-                    },
-                    ModContent.ItemType<EaglecrestSpelltome>(), "Naturally spawns on the surface at day after Eater of Worlds/Brain of Cthulhu is defeated.",
-                    null,
-                    (SpriteBatch sb, Rectangle rect, Color color) =>
+                bossChecklist.Call("LogMiniBoss", mod, nameof(EaglecrestGolem), 3.48f, () => RedeBossDowned.downedEaglecrestGolem, ModContent.NPCType<EaglecrestGolem>(), new Dictionary<string, object>()
+                {
+                    ["spawnItems"] = ModContent.ItemType<EaglecrestSpelltome>(),
+                    ["collectibles"] = new List<int>
+                        {
+                            ModContent.ItemType<StonePuppet>(),
+                            ModContent.ItemType<ForestBossBox>(),
+                        },
+                    ["customPortrait"] = (SpriteBatch sb, Rectangle rect, Color color) =>
                     {
                         Texture2D texture = ModContent.Request<Texture2D>("Redemption/CrossMod/BossChecklist/EaglecrestGolem").Value;
                         Vector2 centered = new(rect.X + (rect.Width / 2) - (texture.Width / 2), rect.Y + (rect.Height / 2) - (texture.Height / 2));
                         sb.Draw(texture, centered, color);
-                    }, null);
+                    }
+                });
+                #endregion
+
+                #region Seed of Infection
+                bossChecklist.Call("LogBoss", mod, nameof(SoI), 3.6f, () => RedeBossDowned.downedSeed, ModContent.NPCType<SoI>(), new Dictionary<string, object>()
+                {
+                    ["spawnItems"] = ModContent.ItemType<AnomalyDetector>(),
+                    ["collectibles"] = new List<int>
+                        {
+                            ModContent.ItemType<SoIRelic>(),
+                            ModContent.ItemType<CuddlyTeratoma>(),
+                            ModContent.ItemType<SoITrophy>(),
+                            ModContent.ItemType<InfectedMask>(),
+                            ModContent.ItemType<SoIBox>()
+                        },
+                    ["customPortrait"] = (SpriteBatch sb, Rectangle rect, Color color) =>
+                    {
+                        Texture2D texture = ModContent.Request<Texture2D>("Redemption/CrossMod/BossChecklist/SeedOfInfection").Value;
+                        Vector2 centered = new(rect.X + (rect.Width / 2) - (texture.Width / 2), rect.Y + (rect.Height / 2) - (texture.Height / 2));
+                        sb.Draw(texture, centered, color);
+                    }
+                });
                 #endregion
 
                 #region Calavia
-                bossChecklist.Call("AddMiniBoss", mod, "Calavia", ModContent.NPCType<Calavia>(), 5.2f, () => RedeBossDowned.downedCalavia, () => NPC.downedBoss3,
-                    null,
-                    null, "Appears at the Underground Portal sometime after Skeletron is defeated.",
-                    null,
-                    (SpriteBatch sb, Rectangle rect, Color color) =>
+                bossChecklist.Call("LogMiniBoss", mod, nameof(Calavia), 5.2f, () => RedeBossDowned.downedCalavia, ModContent.NPCType<Calavia>(), new Dictionary<string, object>()
+                {
+                    ["availability"] = () => NPC.downedBoss3,
+                    ["customPortrait"] = (SpriteBatch sb, Rectangle rect, Color color) =>
                     {
                         Texture2D texture = ModContent.Request<Texture2D>("Redemption/CrossMod/BossChecklist/Calavia").Value;
                         Vector2 centered = new(rect.X + (rect.Width / 2) - (texture.Width / 2), rect.Y + (rect.Height / 2) - (texture.Height / 2));
                         sb.Draw(texture, centered, color);
-                    }, null);
+                    }
+                });
                 #endregion
 
                 #region The Abandoned Lab
-                bossChecklist.Call("AddEvent", mod, "The Abandoned Laboratory",
-                    new List<int>()
+                bossChecklist.Call("LogEvent", mod, "AbandonedLaboratory", 11.1f, () => RedeBossDowned.downedBehemoth, new List<int>()
                     {
                         ModContent.NPCType<OozeBlob>(),
                         ModContent.NPCType<BlisteredScientist>(),
@@ -289,194 +317,213 @@ namespace Redemption.CrossMod
                         ModContent.NPCType<BloatedScientist>(),
                         ModContent.NPCType<JanitorBot>(),
                         ModContent.NPCType<IrradiatedBehemoth>()
-                    },
-                    11.1f, () => RedeBossDowned.downedBehemoth, () => true,
-                    new List<int>
+                    }, new Dictionary<string, object>()
                     {
-                        ModContent.ItemType<HazmatSuit2>(),
-                        ModContent.ItemType<FloppyDisk1>(),
-                        ModContent.ItemType<FloppyDisk2>(),
-                        ModContent.ItemType<FloppyDisk2_1>(),
-                        ModContent.ItemType<FloppyDisk3>(),
-                        ModContent.ItemType<FloppyDisk3_1>(),
-                        ModContent.ItemType<LabMusicBox>(),
-                        ModContent.ItemType<LabBossMusicBox>()
-                    },
-                    ModContent.ItemType<IOLocator>(), "Find the Abandoned Lab far below the surface, defeat the first 2 minibosses within. Requires all mech bosses to be defeated.",
-                    (SpriteBatch sb, Rectangle rect, Color color) =>
-                    {
-                        Texture2D texture = ModContent.Request<Texture2D>("Redemption/CrossMod/BossChecklist/Lab").Value;
-                        Vector2 centered = new(rect.X + (rect.Width / 2) - (texture.Width / 2) - 1, rect.Y + (rect.Height / 2) - (texture.Height / 2));
-                        sb.Draw(texture, centered, color);
-                    }, "Redemption/Textures/Bestiary/TeochromeIcon");
+                        ["spawnItems"] = ModContent.ItemType<IOLocator>(),
+                        ["collectibles"] = new List<int>
+                        {
+                            ModContent.ItemType<HazmatSuit2>(),
+                            ModContent.ItemType<FloppyDisk1>(),
+                            ModContent.ItemType<FloppyDisk2>(),
+                            ModContent.ItemType<FloppyDisk2_1>(),
+                            ModContent.ItemType<FloppyDisk3>(),
+                            ModContent.ItemType<FloppyDisk3_1>(),
+                            ModContent.ItemType<LabMusicBox>(),
+                            ModContent.ItemType<LabBossMusicBox>()
+                        },
+                        ["customPortrait"] = (SpriteBatch sb, Rectangle rect, Color color) =>
+                        {
+                            Texture2D texture = ModContent.Request<Texture2D>("Redemption/CrossMod/BossChecklist/Lab").Value;
+                            Vector2 centered = new(rect.X + (rect.Width / 2) - (texture.Width / 2), rect.Y + (rect.Height / 2) - (texture.Height / 2));
+                            sb.Draw(texture, centered, color);
+                        },
+                        ["overrideHeadTextures"] = "Redemption/Textures/Bestiary/TeochromeIcon"
+                    });
                 #endregion
 
                 #region King Slayer III
-                bossChecklist.Call("AddBoss", mod, "King Slayer III", ModContent.NPCType<KS3>(), 11.999f, () => RedeBossDowned.downedSlayer, () => true,
-                    new List<int>
-                    {
-                        ModContent.ItemType<KS3Relic>(),
-                        ModContent.ItemType<SlayerProjector>(),
-                        ModContent.ItemType<KS3Trophy>(),
-                        ModContent.ItemType<KingSlayerMask>(),
-                        ModContent.ItemType<KSBox>(),
-                        ModContent.ItemType<SlayerMedal>()
-                    },
-                    ModContent.ItemType<CyberTech>(), "Use a [i:Redemption/CyberTech] at day, or attack Androids on the surface and allow them to teleport away.", null,
-                    (SpriteBatch sb, Rectangle rect, Color color) =>
+                bossChecklist.Call("LogBoss", mod, nameof(KS3), 11.999f, () => RedeBossDowned.downedSlayer, ModContent.NPCType<KS3>(), new Dictionary<string, object>()
+                {
+                    ["spawnItems"] = ModContent.ItemType<CyberTech>(),
+                    ["collectibles"] = new List<int>
+                        {
+                            ModContent.ItemType<KS3Relic>(),
+                            ModContent.ItemType<SlayerProjector>(),
+                            ModContent.ItemType<KS3Trophy>(),
+                            ModContent.ItemType<KingSlayerMask>(),
+                            ModContent.ItemType<KSBox>(),
+                            ModContent.ItemType<SlayerMedal>()
+                        },
+                    ["customPortrait"] = (SpriteBatch sb, Rectangle rect, Color color) =>
                     {
                         Texture2D texture = ModContent.Request<Texture2D>("Redemption/CrossMod/BossChecklist/KingSlayer").Value;
                         Vector2 centered = new(rect.X + (rect.Width / 2) - (texture.Width / 2), rect.Y + (rect.Height / 2) - (texture.Height / 2));
                         sb.Draw(texture, centered, color);
-                    }, null);
+                    }
+                });
                 #endregion
 
                 #region Omega Cleaver
-                bossChecklist.Call("AddBoss", mod, "1st Omega Prototype", ModContent.NPCType<OmegaCleaver>(), 12.5f, () => RedeBossDowned.downedOmega1, () => true,
-                    new List<int>
-                    {
-                        ModContent.ItemType<CleaverRelic>(),
-                        ModContent.ItemType<OmegaCleaverTrophy>(),
-                        ModContent.ItemType<OmegaBox>(),
-                        ModContent.ItemType<SwordRemote>()
-                    },
-                    ModContent.ItemType<OmegaTransmitter>(), "Use a [i:Redemption/OmegaTransmitter] at night after Plantera has been defeated.", null,
-                    (SpriteBatch sb, Rectangle rect, Color color) =>
+                bossChecklist.Call("LogBoss", mod, nameof(OmegaCleaver), 12.5f, () => RedeBossDowned.downedOmega1, ModContent.NPCType<OmegaCleaver>(), new Dictionary<string, object>()
+                {
+                    ["spawnItems"] = ModContent.ItemType<OmegaTransmitter>(),
+                    ["collectibles"] = new List<int>
+                        {
+                            ModContent.ItemType<CleaverRelic>(),
+                            ModContent.ItemType<OmegaCleaverTrophy>(),
+                            ModContent.ItemType<OmegaBox>(),
+                            ModContent.ItemType<SwordRemote>()
+                        },
+                    ["customPortrait"] = (SpriteBatch sb, Rectangle rect, Color color) =>
                     {
                         Texture2D texture = ModContent.Request<Texture2D>("Redemption/CrossMod/BossChecklist/OmegaCleaver").Value;
                         Vector2 centered = new(rect.X + (rect.Width / 2) - (texture.Width / 2), rect.Y + (rect.Height / 2) - (texture.Height / 2));
                         sb.Draw(texture, centered, color);
-                    }, null);
+                    }
+                });
                 #endregion
 
                 #region Omega Gigapora
-                bossChecklist.Call("AddBoss", mod, "2nd Omega Prototype", ModContent.NPCType<Gigapora>(), 14f, () => RedeBossDowned.downedOmega2, () => true,
-                    new List<int>
-                    {
-                        ModContent.ItemType<GigaporaRelic>(),
-                        ModContent.ItemType<PowerDrill>(),
-                        ModContent.ItemType<OmegaGigaporaTrophy>(),
-                        ModContent.ItemType<OmegaBox>()
-                    },
-                    ModContent.ItemType<OmegaTransmitter>(), "Use a [i:Redemption/OmegaTransmitter] at night after Golem has been defeated.", null,
-                    (SpriteBatch sb, Rectangle rect, Color color) =>
+                bossChecklist.Call("LogBoss", mod, nameof(Gigapora), 14f, () => RedeBossDowned.downedOmega2, ModContent.NPCType<Gigapora>(), new Dictionary<string, object>()
+                {
+                    ["spawnItems"] = ModContent.ItemType<OmegaTransmitter>(),
+                    ["collectibles"] = new List<int>
+                        {
+                            ModContent.ItemType<GigaporaRelic>(),
+                            ModContent.ItemType<PowerDrill>(),
+                            ModContent.ItemType<OmegaGigaporaTrophy>(),
+                            ModContent.ItemType<OmegaBox>()
+                        },
+                    ["customPortrait"] = (SpriteBatch sb, Rectangle rect, Color color) =>
                     {
                         Texture2D texture = ModContent.Request<Texture2D>("Redemption/CrossMod/BossChecklist/OmegaGigapora").Value;
                         Vector2 centered = new(rect.X + (rect.Width / 2) - (texture.Width / 2), rect.Y + (rect.Height / 2) - (texture.Height / 2));
                         sb.Draw(texture, centered, color);
-                    }, null);
+                    }
+                });
                 #endregion
 
                 #region Omega Obliterator
-                bossChecklist.Call("AddBoss", mod, "3rd Omega Prototype", ModContent.NPCType<OO>(), 18.05f, () => RedeBossDowned.downedOmega3, () => true,
-                    new List<int>
-                    {
-                        ModContent.ItemType<ToasterPet>(),
-                        ModContent.ItemType<OORelic>(),
-                        ModContent.ItemType<OmegaObliteratorTrophy>(),
-                        ModContent.ItemType<OmegaBox2>()
-                    },
-                    ModContent.ItemType<OmegaTransmitter>(), "Use a [i:Redemption/OmegaTransmitter] at night after Moon Lord has been defeated.", null,
-                    (SpriteBatch sb, Rectangle rect, Color color) =>
+                bossChecklist.Call("LogBoss", mod, nameof(OO), 18.05f, () => RedeBossDowned.downedOmega3, ModContent.NPCType<OO>(), new Dictionary<string, object>()
+                {
+                    ["spawnItems"] = ModContent.ItemType<OmegaTransmitter>(),
+                    ["collectibles"] = new List<int>
+                        {
+                            ModContent.ItemType<ToasterPet>(),
+                            ModContent.ItemType<OORelic>(),
+                            ModContent.ItemType<OmegaObliteratorTrophy>(),
+                            ModContent.ItemType<OmegaBox2>()
+                        },
+                    ["customPortrait"] = (SpriteBatch sb, Rectangle rect, Color color) =>
                     {
                         Texture2D texture = ModContent.Request<Texture2D>("Redemption/CrossMod/BossChecklist/OmegaObliterator").Value;
                         Vector2 centered = new(rect.X + (rect.Width / 2) - (texture.Width / 2), rect.Y + (rect.Height / 2) - (texture.Height / 2));
                         sb.Draw(texture, centered, color);
-                    }, null);
+                    }
+                });
                 #endregion
 
                 #region Patient Zero
-                bossChecklist.Call("AddBoss", mod, "???", ModContent.NPCType<PZ>(), 19f, () => RedeBossDowned.downedPZ, () => !RedeBossDowned.downedPZ,
-                    new List<int>
+                bossChecklist.Call("LogEvent", mod, "AbandonedLaboratory2", 19f, () => RedeBossDowned.downedPZ, new List<int>()
+                {
+                    ModContent.NPCType<Blisterface>(),
+                    ModContent.NPCType<ProtectorVolt>(),
+                    ModContent.NPCType<MACEProject>()
+                }, new Dictionary<string, object>()
+                {
+                    ["spawnItems"] = ModContent.ItemType<Keycard>(),
+                    ["collectibles"] = new List<int>
+                        {
+                            ModContent.ItemType<Keycard2>(),
+                            ModContent.ItemType<NanoPickaxe>(),
+                            ModContent.ItemType<Electronade>(),
+                            ModContent.ItemType<FloppyDisk6>(),
+                            ModContent.ItemType<FloppyDisk6_1>(),
+                        },
+                    ["customPortrait"] = (SpriteBatch sb, Rectangle rect, Color color) =>
                     {
-                        ModContent.ItemType<PZRelic>(),
-                        ModContent.ItemType<Keycard2>(),
-                        ModContent.ItemType<NanoPickaxe>(),
-                        ModContent.ItemType<Electronade>(),
-                        ModContent.ItemType<PZTrophy>(),
-                        ModContent.ItemType<PZMask>(),
-                        ModContent.ItemType<FloppyDisk6>(),
-                        ModContent.ItemType<FloppyDisk6_1>(),
-                        ModContent.ItemType<FloppyDisk7>(),
-                        ModContent.ItemType<FloppyDisk7_1>(),
-                        ModContent.ItemType<PZMusicBox>()
+                        Texture2D texture = ModContent.Request<Texture2D>("Redemption/CrossMod/BossChecklist/Lab2").Value;
+                        Vector2 centered = new(rect.X + (rect.Width / 2) - (texture.Width / 2), rect.Y + (rect.Height / 2) - (texture.Height / 2));
+                        sb.Draw(texture, centered, color);
                     },
-                    ModContent.ItemType<Keycard>(), "Use a [i:Redemption/Keycard] to access further sections of the laboratory. Beware what awaits beyond.", null,
-                    (SpriteBatch sb, Rectangle rect, Color color) =>
+                    ["overrideHeadTextures"] = "Redemption/Textures/Bestiary/TeochromeIcon"
+                });
+
+                bossChecklist.Call("LogBoss", mod, nameof(PZ), 19.1f, () => RedeBossDowned.downedPZ, ModContent.NPCType<PZ>(), new Dictionary<string, object>()
+                {
+                    ["spawnItems"] = ModContent.ItemType<Keycard>(),
+                    ["collectibles"] = new List<int>
+                        {
+                            ModContent.ItemType<PZRelic>(),
+                            ModContent.ItemType<PZTrophy>(),
+                            ModContent.ItemType<PZMask>(),
+                            ModContent.ItemType<FloppyDisk7>(),
+                            ModContent.ItemType<FloppyDisk7_1>(),
+                            ModContent.ItemType<PZMusicBox>()
+                        },
+                    ["availability"] = () => RedeBossDowned.downedPZ,
+                    ["customPortrait"] = (SpriteBatch sb, Rectangle rect, Color color) =>
                     {
                         Texture2D texture = ModContent.Request<Texture2D>("Redemption/CrossMod/BossChecklist/PatientZero").Value;
                         Vector2 centered = new(rect.X + (rect.Width / 2) - (texture.Width / 2), rect.Y + (rect.Height / 2) - (texture.Height / 2));
                         sb.Draw(texture, centered, color);
-                    }, null);
-                bossChecklist.Call("AddBoss", mod, "Patient Zero", ModContent.NPCType<PZ>(), 19f, () => RedeBossDowned.downedPZ, () => RedeBossDowned.downedPZ,
-                    new List<int>
-                    {
-                        ModContent.ItemType<PZRelic>(),
-                        ModContent.ItemType<Keycard2>(),
-                        ModContent.ItemType<NanoPickaxe>(),
-                        ModContent.ItemType<Electronade>(),
-                        ModContent.ItemType<PZTrophy>(),
-                        ModContent.ItemType<PZMask>(),
-                        ModContent.ItemType<FloppyDisk6>(),
-                        ModContent.ItemType<FloppyDisk6_1>(),
-                        ModContent.ItemType<FloppyDisk7>(),
-                        ModContent.ItemType<FloppyDisk7_1>(),
-                        ModContent.ItemType<PZMusicBox>()
-                    },
-                    ModContent.ItemType<Keycard>(), "Use a [i:Redemption/Keycard] to access further sections of the laboratory. Beware what awaits beyond.", null,
-                    (SpriteBatch sb, Rectangle rect, Color color) =>
-                    {
-                        Texture2D texture = ModContent.Request<Texture2D>("Redemption/CrossMod/BossChecklist/PatientZero").Value;
-                        Vector2 centered = new(rect.X + (rect.Width / 2) - (texture.Width / 2), rect.Y + (rect.Height / 2) - (texture.Height / 2));
-                        sb.Draw(texture, centered, color);
-                    }, null);
+                    }
+                });
                 #endregion
 
                 #region Ancient Deity Duo
-                bossChecklist.Call("AddBoss", mod, "Eaglecrest Golem Rematch", ModContent.NPCType<EaglecrestGolem2>(), 20f, () => RedeBossDowned.downedADD, () => RedeBossDowned.downedEaglecrestGolem && RedeBossDowned.ADDDeath == 0, null, ModContent.ItemType<GolemEye>(), "Place down and encase the [i:Redemption/GolemEye] within the stones of its origins, and it's true power will present itself.", null,
-                (SpriteBatch sb, Rectangle rect, Color color) =>
+                bossChecklist.Call("LogBoss", mod, nameof(EaglecrestGolem2), 20f, () => RedeBossDowned.downedADD, ModContent.NPCType<EaglecrestGolem2>(), new Dictionary<string, object>()
                 {
-                    Texture2D texture = ModContent.Request<Texture2D>("Redemption/CrossMod/BossChecklist/EaglecrestGolem").Value;
-                    Vector2 centered = new(rect.X + (rect.Width / 2) - (texture.Width / 2), rect.Y + (rect.Height / 2) - (texture.Height / 2));
-                    sb.Draw(texture, centered, color);
-                }, "Redemption/NPCs/Minibosses/EaglecrestGolem/EaglecrestGolem_Head_Boss");
-
-                bossChecklist.Call("AddBoss", mod, "Ancient Deity Duo",
-                    new List<int>
+                    ["spawnItems"] = ModContent.ItemType<GolemEye>(),
+                    ["availability"] = () => RedeBossDowned.downedEaglecrestGolem && RedeBossDowned.ADDDeath == 0,
+                    ["customPortrait"] = (SpriteBatch sb, Rectangle rect, Color color) =>
+                    {
+                        Texture2D texture = ModContent.Request<Texture2D>("Redemption/CrossMod/BossChecklist/EaglecrestGolem").Value;
+                        Vector2 centered = new(rect.X + (rect.Width / 2) - (texture.Width / 2), rect.Y + (rect.Height / 2) - (texture.Height / 2));
+                        sb.Draw(texture, centered, color);
+                    },
+                    ["overrideHeadTextures"] = "Redemption/NPCs/Minibosses/EaglecrestGolem/EaglecrestGolem_Head_Boss"
+                });
+                bossChecklist.Call("LogBoss", mod, "AncientDeityDuo", 20.001f, () => RedeBossDowned.downedADD, new List<int>
                     {
                         ModContent.NPCType<Ukko>(),
                         ModContent.NPCType<Akka>()
-                    }, 20.001f, () => RedeBossDowned.downedADD, () => RedeBossDowned.ADDDeath > 0,
-                    new List<int>
+                    }, new Dictionary<string, object>()
                     {
-                        ModContent.ItemType<UkkoRelic>(),
-                        ModContent.ItemType<AkkaRelic>(),
-                        //ModContent.ItemType<DevilsAdvocate>(),
-                        ModContent.ItemType<UkonKirvesTrophy>(),
-                        ModContent.ItemType<AkanKirvesTrophy>(),
-                        ModContent.ItemType<UkkoMask>(),
-                        ModContent.ItemType<AkkaMask>(),
-                    },
-                    ModContent.ItemType<AncientSigil>(), "Use an [i:Redemption/AncientSigil] at day.", null,
-                    (SpriteBatch sb, Rectangle rect, Color color) =>
-                    {
-                        Texture2D texture = ModContent.Request<Texture2D>("Redemption/CrossMod/BossChecklist/UkkoAkka").Value;
-                        Vector2 centered = new(rect.X + (rect.Width / 2) - (texture.Width / 2), rect.Y + (rect.Height / 2) - (texture.Height / 2));
-                        sb.Draw(texture, centered, color);
-                    }, null);
+                        ["spawnItems"] = ModContent.ItemType<AncientSigil>(),
+                        ["collectibles"] = new List<int>
+                        {
+                            ModContent.ItemType<UkkoRelic>(),
+                            ModContent.ItemType<AkkaRelic>(),
+                            ModContent.ItemType<JyrinaMount>(),
+                            ModContent.ItemType<UkonKirvesTrophy>(),
+                            ModContent.ItemType<AkanKirvesTrophy>(),
+                            ModContent.ItemType<UkkoMask>(),
+                            ModContent.ItemType<AkkaMask>(),
+                        },
+                        ["availability"] = () => RedeBossDowned.ADDDeath > 0,
+                        ["customPortrait"] = (SpriteBatch sb, Rectangle rect, Color color) =>
+                        {
+                            Texture2D texture = ModContent.Request<Texture2D>("Redemption/CrossMod/BossChecklist/UkkoAkka").Value;
+                            Vector2 centered = new(rect.X + (rect.Width / 2) - (texture.Width / 2), rect.Y + (rect.Height / 2) - (texture.Height / 2));
+                            sb.Draw(texture, centered, color);
+                        },
+                    });
                 #endregion
 
                 #region Nebuleus
-                bossChecklist.Call("AddBoss", mod, "Nebuleus", ModContent.NPCType<Nebuleus>(), 21f, () => RedeBossDowned.downedNebuleus, () => true,
-                    new List<int>
-                    {
+                bossChecklist.Call("LogBoss", mod, nameof(Nebuleus), 21f, () => RedeBossDowned.downedNebuleus, ModContent.NPCType<Nebuleus>(), new Dictionary<string, object>()
+                {
+                    ["spawnItems"] = ModContent.ItemType<NebSummon>(),
+                    ["collectibles"] = new List<int>
+                        {
                         ModContent.ItemType<NebRelic>(),
+                        ModContent.ItemType<GildedBonnet>(),
                         ModContent.ItemType<NebuleusTrophy>(),
                         ModContent.ItemType<NebuleusMask>(),
                         ModContent.ItemType<NebBox>()
-                    },
-                    ModContent.ItemType<NebSummon>(), "Use a [i:Redemption/NebSummon] at night, dropped from Star Serpents in the sky.", null,
-                    (SpriteBatch sb, Rectangle rect, Color color) =>
+                        },
+                    ["customPortrait"] = (SpriteBatch sb, Rectangle rect, Color color) =>
                     {
                         int shader = GameShaders.Armor.GetShaderIdFromItemId(ItemID.LivingRainbowDye);
                         Texture2D texture = ModContent.Request<Texture2D>("Redemption/CrossMod/BossChecklist/Neb").Value;
@@ -489,7 +536,8 @@ namespace Redemption.CrossMod
                         sb.Draw(wingTex, centered, color);
                         sb.End();
                         sb.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.LinearClamp, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.UIScaleMatrix);
-                    }, null);
+                    }
+                });
                 #endregion
 
                 /*KingSlime = 1f;
@@ -540,7 +588,7 @@ namespace Redemption.CrossMod
                 fargos.Call("AddSummon", 20f, "Redemption", "AncientSigil", () => RedeBossDowned.downedADD, Item.buyPrice(4));
                 fargos.Call("AddSummon", 21f, "Redemption", "NebSummon", () => RedeBossDowned.downedNebuleus, Item.buyPrice(10));
 
-                fargos.Call("AddEventSummon", 1f, "Redemption", "FowlWarHorn", () => RedeBossDowned.downedFowlMorning, Item.buyPrice(0, 4, 50));
+                fargos.Call("LogEventSummon", 1f, "Redemption", "FowlWarHorn", () => RedeBossDowned.downedFowlMorning, Item.buyPrice(0, 4, 50));
             }
         }
     }
