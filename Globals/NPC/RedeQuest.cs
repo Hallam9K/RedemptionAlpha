@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using Redemption.Dusts;
 using Redemption.NPCs.Friendly;
 using Redemption.WorldGeneration;
+using SubworldLibrary;
 using System.Collections.Generic;
 using System.IO;
 using Terraria;
@@ -22,6 +23,9 @@ namespace Redemption.Globals
         public static int calaviaVar;
         public override void PostUpdateWorld()
         {
+            if (SubworldSystem.Current != null)
+                return;
+
             #region Wayfarer Event
             if (wayfarerVars[0] == 0 && Main.dayTime && RedeWorld.DayNightCount >= 1 && !RedeHelper.WayfarerActive())
             {

@@ -43,6 +43,7 @@ using Redemption.NPCs.PreHM;
 using Terraria.Audio;
 using Redemption.Tiles.Furniture.Lab;
 using Redemption.NPCs.Minibosses.Calavia;
+using SubworldLibrary;
 
 namespace Redemption.WorldGeneration
 {
@@ -365,6 +366,9 @@ namespace Redemption.WorldGeneration
         }
         public override void PostUpdateWorld()
         {
+            if (SubworldSystem.Current != null)
+                return;
+
             if (NPC.downedBoss3 && !dragonLeadSpawn && !cryoCrystalSpawn)
             {
                 if (RedeWorld.alignment >= 0)
