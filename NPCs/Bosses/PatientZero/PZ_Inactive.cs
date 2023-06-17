@@ -63,7 +63,7 @@ namespace Redemption.NPCs.Bosses.PatientZero
         }
         public override bool CheckDead()
         {
-            NPC.SetDefaults(ModContent.NPCType<PZ>());
+            NPC.Transform(ModContent.NPCType<PZ>());
             NPC.frame.Y = 164;
             NPC.netUpdate = true;
             return false;

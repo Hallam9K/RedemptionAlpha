@@ -480,7 +480,7 @@ namespace Redemption.NPCs.Bosses.ADD
                                     SoundEngine.PlaySound(SoundID.Thunder, NPC.position);
 
                                     NPC.netUpdate = true;
-                                    NPC.SetDefaults(ModContent.NPCType<Ukko>());
+                                    NPC.Transform(ModContent.NPCType<Ukko>());
                                 }
                             }
                             else

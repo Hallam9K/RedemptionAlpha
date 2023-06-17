@@ -4523,10 +4523,10 @@ Mods: {
 			Uranium: {
 				DisplayName: Uranium
 				Tooltip:
-				'''
-				Right-click to recharge +15 Energy if an Energy Pack is in your inventory
-				Requires a Picksaw to mine
-				'''
+					'''
+					Right-click to recharge +15 Energy if an Energy Pack is in your inventory
+					Requires a Picksaw to mine
+					'''
 			}
 
 			Xenomite: {

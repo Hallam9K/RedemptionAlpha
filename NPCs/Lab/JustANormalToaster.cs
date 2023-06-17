@@ -38,6 +38,7 @@ namespace Redemption.NPCs.Lab
             NPC.noTileCollide = false;
             NPC.dontTakeDamage = true;
             NPC.hide = true;
+            NPC.ShowNameOnHover = false;
         }
 
         public override void DrawBehind(int index)

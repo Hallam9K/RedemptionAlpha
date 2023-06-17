@@ -58,7 +58,7 @@ namespace Redemption.NPCs.Minibosses.EaglecrestGolem
         }
         public override bool CheckDead()
         {
-            NPC.SetDefaults(ModContent.NPCType<EaglecrestGolem>());
+            NPC.Transform(ModContent.NPCType<EaglecrestGolem>());
             return false;
         }
         public override float SpawnChance(NPCSpawnInfo spawnInfo)

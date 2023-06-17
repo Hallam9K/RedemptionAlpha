@@ -216,8 +216,10 @@ namespace Redemption.NPCs.PreHM
 
             if (Main.rand.NextBool(2) && !RedeWorld.blobbleSwarm && RedeWorld.blobbleSwarmCooldown <= 0)
             {
-                Main.NewText("A blobble swarm approaches!", Color.PaleGreen);
+                Main.NewText("A blobble swarm has arrived!", Color.PaleGreen);
                 RedeWorld.blobbleSwarm = true;
+                if (Main.netMode == NetmodeID.Server)
+                    NetMessage.SendData(MessageID.WorldData);
             }
         }
 
