@@ -2232,61 +2232,6 @@ Mods: {
 				DisplayName: Rooster Boost
 				Description: You feel bucked up... and annoyed
 			}
-
-			VesselPickBuff: {
-				Description: 당신의 채광 속도가 크게 증가한다
-				DisplayName: 셰이드서지
-			}
-
-			ShadevisionPotionBuff: {
-				Description: 영혼없는 자들의 동굴에서 더 명확하게 볼 수 있다
-				DisplayName: 셰이드비전
-			}
-
-			OathkeeperDaggerBuff: {
-				Description: 최대 체력을 담보로 당신의 데미지가 증가한다
-				DisplayName: 찔린 상처
-			}
-
-			SmashedDebuff: {
-				Description: ""
-				DisplayName: Smashed!
-			}
-
-			InsulatiumPotionBuff: {
-				Description: 당신은 감전에 면역이다
-				DisplayName: 절연됨
-			}
-
-			DreamsongBuff: {
-				Description: 영혼없는 자들의 동굴에서 당신의 시야를 개선한다
-				DisplayName: 드림 송
-			}
-
-			DreambinderBuff: {
-				Description: 무적시간 증가
-				DisplayName: 드림바운드
-			}
-
-			StalkerDebuff: {
-				Description: ""
-				DisplayName: ""
-			}
-
-			LaceratedDebuff: {
-				Description: A deep cut
-				DisplayName: Lacerated Debuff
-			}
-
-			SoulScrollCooldown: {
-				Description: 영혼 주술서를 사용할 수 없다
-				DisplayName: 영혼 주술서 쿨다운
-			}
-
-			AnglerPotionBuff: {
-				Description: 잠수할 시 데미지가 증가하고 빛을 발산한다
-				DisplayName: 낚시꾼 비전
-			}
 		}
 
 		Biomes: {
@@ -2358,11 +2303,7 @@ Mods: {
 			SpaceBiome.DisplayName: 심우주
 		}
 
-		Subworlds: {
-			SoullessSub.DisplayName: Soulless Dimension
-			CSub.DisplayName: Purgatory
-			SpaceSub.DisplayName: 심우주
-		}
+		Subworlds.SoullessSub.DisplayName: Soulless Dimension
 
 		Dialogue: {
 			TBot: {
