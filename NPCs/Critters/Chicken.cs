@@ -16,6 +16,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Redemption.BaseExtension;
 using Terraria.DataStructures;
+using Terraria.Localization;
 
 namespace Redemption.NPCs.Critters
 {
@@ -396,8 +397,7 @@ namespace Redemption.NPCs.Critters
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Surface,
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Times.DayTime,
 
-                new FlavorTextBestiaryInfoElement(
-                    "These chickens somehow found their way through the portal from the mainland. Being true to their name, they will flee at the sight of danger. They are most comfortable on hay, and will even lay eggs while sitting on it!")
+                new FlavorTextBestiaryInfoElement(Language.GetTextValue("Mods.Redemption.FlavorTextBestiary.Chicken"))
             });
         }
 
