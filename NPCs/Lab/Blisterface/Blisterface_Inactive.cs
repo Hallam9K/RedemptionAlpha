@@ -42,6 +42,7 @@ namespace Redemption.NPCs.Lab.Blisterface
             NPC.noTileCollide = false;
             NPC.dontTakeDamage = true;
             AnimationType = NPCID.Piranha;
+            NPC.ShowNameOnHover = false;
         }
         public override bool CheckActive()
         {

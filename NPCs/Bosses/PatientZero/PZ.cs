@@ -139,26 +139,28 @@ namespace Redemption.NPCs.Bosses.PatientZero
                 if (Main.netMode == NetmodeID.Server)
                     return;
 
-                for (int i = 0; i < 40; i++)
+                for (int i = 0; i < 200; i++)
                 {
-                    int dustIndex = Dust.NewDust(NPC.position + NPC.velocity, NPC.width, NPC.height, DustID.GreenBlood, NPC.velocity.X * 0.5f, NPC.velocity.Y * 0.5f, Scale: 2f);
-                    Main.dust[dustIndex].velocity *= 2f;
+                    int dustIndex = Dust.NewDust(NPC.position + NPC.velocity, NPC.width, NPC.height, DustID.GreenBlood, NPC.velocity.X * 0.5f, NPC.velocity.Y * 0.5f, Scale: Main.rand.NextFloat(3, 8));
+                    Main.dust[dustIndex].velocity *= Main.rand.NextFloat(5, 10);
+                    dustIndex = Dust.NewDust(NPC.position + NPC.velocity, NPC.width, NPC.height, ModContent.DustType<SludgeDust>(), NPC.velocity.X * 0.5f, NPC.velocity.Y * 0.5f, Scale: 2f);
+                    Main.dust[dustIndex].velocity *= 7f;
                 }
 
-                for (int i = 0; i < 8; i++)
+                for (int i = 0; i < 20; i++)
                 {
                     for (int k = 0; k < 3; k++)
-                        Gore.NewGore(NPC.GetSource_FromThis(), new Vector2(NPC.Center.X - 90 + Main.rand.Next(0, 180), NPC.Center.Y - 90 + Main.rand.Next(0, 180)), NPC.velocity, ModContent.Find<ModGore>("Redemption/PZGoreFlesh" + (k + 1)).Type);
+                        Gore.NewGore(NPC.GetSource_FromThis(), new Vector2(NPC.Center.X - 90 + Main.rand.Next(0, 180), NPC.Center.Y - 90 + Main.rand.Next(0, 180)), RedeHelper.Spread(14), ModContent.Find<ModGore>("Redemption/PZGoreFlesh" + (k + 1)).Type);
                 }
-                for (int i = 0; i < 6; i++)
+                for (int i = 0; i < 14; i++)
                 {
                     for (int k = 0; k < 3; k++)
-                        Gore.NewGore(NPC.GetSource_FromThis(), new Vector2(NPC.Center.X - 90 + Main.rand.Next(0, 180), NPC.Center.Y - 90 + Main.rand.Next(0, 180)), NPC.velocity, ModContent.Find<ModGore>("Redemption/PZGoreShard" + (k + 1)).Type);
+                        Gore.NewGore(NPC.GetSource_FromThis(), new Vector2(NPC.Center.X - 90 + Main.rand.Next(0, 180), NPC.Center.Y - 90 + Main.rand.Next(0, 180)), RedeHelper.Spread(14), ModContent.Find<ModGore>("Redemption/PZGoreShard" + (k + 1)).Type);
                 }
-                for (int i = 0; i < 3; i++)
-                    Gore.NewGore(NPC.GetSource_FromThis(), new Vector2(NPC.Center.X - 90 + Main.rand.Next(0, 180), NPC.Center.Y - 90 + Main.rand.Next(0, 180)), NPC.velocity, ModContent.Find<ModGore>("Redemption/PZGoreGoo1").Type);
                 for (int i = 0; i < 8; i++)
-                    Gore.NewGore(NPC.GetSource_FromThis(), new Vector2(NPC.Center.X - 90 + Main.rand.Next(0, 180), NPC.Center.Y - 90 + Main.rand.Next(0, 180)), NPC.velocity, ModContent.Find<ModGore>("Redemption/PZGoreGoop").Type);
+                    Gore.NewGore(NPC.GetSource_FromThis(), new Vector2(NPC.Center.X - 90 + Main.rand.Next(0, 180), NPC.Center.Y - 90 + Main.rand.Next(0, 180)), RedeHelper.Spread(14), ModContent.Find<ModGore>("Redemption/PZGoreGoo1").Type);
+                for (int i = 0; i < 18; i++)
+                    Gore.NewGore(NPC.GetSource_FromThis(), new Vector2(NPC.Center.X - 90 + Main.rand.Next(0, 180), NPC.Center.Y - 90 + Main.rand.Next(0, 180)), RedeHelper.Spread(14), ModContent.Find<ModGore>("Redemption/PZGoreGoop").Type);
                 Gore.NewGore(NPC.GetSource_FromThis(), new Vector2(NPC.position.X, NPC.Center.Y + 26), NPC.velocity, ModContent.Find<ModGore>("Redemption/PZGoreKari").Type);
                 Gore.NewGore(NPC.GetSource_FromThis(), NPC.position, NPC.velocity, ModContent.Find<ModGore>("Redemption/PZGoreEye").Type);
                 Gore.NewGore(NPC.GetSource_FromThis(), NPC.position, NPC.velocity, ModContent.Find<ModGore>("Redemption/PZGoreGooEye").Type);
@@ -788,6 +790,11 @@ namespace Redemption.NPCs.Bosses.PatientZero
                                 MoonlordDeathDrama.RequestLight(1f, NPC.Center);
                             if (AITimer >= 240)
                             {
+                                SoundEngine.PlaySound(SoundID.NPCDeath10 with { Pitch = -.5f, Volume = 1.5f }, NPC.position);
+                                SoundEngine.PlaySound(SoundID.NPCDeath10 with { Pitch = -.1f }, NPC.position);
+                                SoundEngine.PlaySound(SoundID.NPCDeath10 with { Pitch = -1, Volume = 3f }, NPC.position);
+                                player.RedemptionScreen().ScreenShakeIntensity += 200;
+                                player.RedemptionScreen().Rumble(130, 10);
                                 NPC.dontTakeDamage = false;
                                 player.ApplyDamageToNPC(NPC, 99999, 0, 0, false);
                                 if (Main.netMode == NetmodeID.Server && NPC.whoAmI < Main.maxNPCs)

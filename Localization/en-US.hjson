@@ -4712,242 +4712,242 @@ Mods: {
 
 			AncientGladestoneGolemBanner: {
 				DisplayName: Ancient Gladestone Golem Banner
-				Tooltip: ""
+				Tooltip: "{$CommonItemTooltip.BannerBonus}{$Mods.Redemption.NPCs.AncientGladestoneGolem.DisplayName}"
 			}
 
 			AndroidBanner: {
 				DisplayName: Android Banner
-				Tooltip: ""
+				Tooltip: "{$CommonItemTooltip.BannerBonus}{$Mods.Redemption.NPCs.Android.DisplayName}"
 			}
 
 			BlisteredScientistBanner: {
 				DisplayName: Blistered Scientist Banner
-				Tooltip: ""
+				Tooltip: "{$CommonItemTooltip.BannerBonus}{$Mods.Redemption.NPCs.BlisteredScientist.DisplayName}"
 			}
 
 			BloatedGhoulBanner: {
 				DisplayName: Bloated Ghoul Banner
-				Tooltip: ""
+				Tooltip: "{$CommonItemTooltip.BannerBonus}{$Mods.Redemption.NPCs.BloatedGhoul.DisplayName}"
 			}
 
 			BloatedGoldfishBanner: {
 				DisplayName: Bloated Goldfish Banner
-				Tooltip: ""
+				Tooltip: "{$CommonItemTooltip.BannerBonus}{$Mods.Redemption.NPCs.BloatedGoldfish.DisplayName}"
 			}
 
 			BloatedScientistBanner: {
 				DisplayName: Bloated Scientist Banner
-				Tooltip: ""
+				Tooltip: "{$CommonItemTooltip.BannerBonus}{$Mods.Redemption.NPCs.BloatedScientist.DisplayName}"
 			}
 
 			BloatedSwarmerBanner: {
 				DisplayName: Bloated Swarmer Banner
-				Tooltip: ""
+				Tooltip: "{$CommonItemTooltip.BannerBonus}{$Mods.Redemption.NPCs.BloatedSwarmer.DisplayName}"
 			}
 
 			BlobbleBanner: {
 				DisplayName: Blobble Banner
-				Tooltip: ""
+				Tooltip: "{$CommonItemTooltip.BannerBonus}{$Mods.Redemption.NPCs.Blobble.DisplayName}"
 			}
 
 			BobTheBlobBanner: {
-				DisplayName: Bob The Blob Banner
-				Tooltip: ""
+				DisplayName: Bob the Blob Banner
+				Tooltip: "{$CommonItemTooltip.BannerBonus}{$Mods.Redemption.NPCs.BobTheBlob.DisplayName}"
 			}
 
 			BoneSpiderBanner: {
 				DisplayName: Bone Spider Banner
-				Tooltip: ""
+				Tooltip: "{$CommonItemTooltip.BannerBonus}{$Mods.Redemption.NPCs.BoneSpider.DisplayName}"
 			}
 
 			ChickenBanner: {
 				DisplayName: Chicken Banner
-				Tooltip: ""
+				Tooltip: "{$CommonItemTooltip.BannerBonus}{$Mods.Redemption.NPCs.Chicken.DisplayName}"
 			}
 
 			ChickenBomberBanner: {
 				DisplayName: Chicken Bomber Banner
-				Tooltip: ""
+				Tooltip: "{$CommonItemTooltip.BannerBonus}{$Mods.Redemption.NPCs.ChickenBomber.DisplayName}"
 			}
 
 			ChickenScratcherBanner: {
 				DisplayName: Chicken Scratcher Banner
-				Tooltip: ""
+				Tooltip: "{$CommonItemTooltip.BannerBonus}{$Mods.Redemption.NPCs.ChickenScratcher.DisplayName}"
 			}
 
 			CoastScarabBanner: {
 				DisplayName: Coast Scarab Banner
-				Tooltip: ""
+				Tooltip: "{$CommonItemTooltip.BannerBonus}{$Mods.Redemption.NPCs.CoastScarab.DisplayName}"
 			}
 
 			CorpseWalkerPriestBanner: {
 				DisplayName: Corpse-Walker Priest Banner
-				Tooltip: ""
+				Tooltip: "{$CommonItemTooltip.BannerBonus}{$Mods.Redemption.NPCs.CorpseWalkerPriest.DisplayName}"
 			}
 
 			DevilsTongueBanner: {
 				DisplayName: Devil's Tongue Banner
-				Tooltip: ""
+				Tooltip: "{$CommonItemTooltip.BannerBonus}{$Mods.Redemption.NPCs.DevilsTongue.DisplayName}"
 			}
 
 			EpidotrianSkeletonBanner: {
 				DisplayName: Epidotrian Skeleton Banner
-				Tooltip: ""
+				Tooltip: "{$CommonItemTooltip.BannerBonus}{$Mods.Redemption.NPCs.EpidotrianSkeleton.DisplayName}"
 			}
 
 			ForestNymphBanner: {
 				DisplayName: Forest Nymph Banner
-				Tooltip: ""
+				Tooltip: "{$CommonItemTooltip.BannerBonus}{$Mods.Redemption.NPCs.ForestNymph.DisplayName}"
 			}
 
 			GrandLarvaBanner: {
 				DisplayName: Grand Larva Banner
-				Tooltip: ""
+				Tooltip: "{$CommonItemTooltip.BannerBonus}{$Mods.Redemption.NPCs.GrandLarva.DisplayName}"
 			}
 
 			HazmatZombieBanner: {
 				DisplayName: Hazmat Zombie Banner
-				Tooltip: ""
+				Tooltip: "{$CommonItemTooltip.BannerBonus}{$Mods.Redemption.NPCs.HazmatZombie.DisplayName}"
 			}
 
 			HeadlessChickenBanner: {
 				DisplayName: Headless Chicken Banner
-				Tooltip: ""
+				Tooltip: "{$CommonItemTooltip.BannerBonus}{$Mods.Redemption.NPCs.HeadlessChicken.DisplayName}"
 			}
 
 			JollyMadmanBanner: {
 				DisplayName: Jolly Madman Banner
-				Tooltip: ""
+				Tooltip: "{$CommonItemTooltip.BannerBonus}{$Mods.Redemption.NPCs.JollyMadman.DisplayName}"
 			}
 
 			KabucraBanner: {
 				DisplayName: Kabucra Banner
-				Tooltip: ""
+				Tooltip: "{$CommonItemTooltip.BannerBonus}{$Mods.Redemption.NPCs.Kabucra.DisplayName}"
 			}
 
 			LivingBloomBanner: {
 				DisplayName: Living Bloom Banner
-				Tooltip: ""
+				Tooltip: "{$CommonItemTooltip.BannerBonus}{$Mods.Redemption.NPCs.LivingBloom.DisplayName}"
 			}
 
 			MoonflareBatBanner: {
 				DisplayName: Moonflare Bat Banner
-				Tooltip: ""
+				Tooltip: "{$CommonItemTooltip.BannerBonus}{$Mods.Redemption.NPCs.MoonflareBat.DisplayName}"
 			}
 
 			MutatedLivingBloomBanner: {
 				DisplayName: Mutated Living Bloom Banner
-				Tooltip: ""
+				Tooltip: "{$CommonItemTooltip.BannerBonus}{$Mods.Redemption.NPCs.MutatedLivingBloom.DisplayName}"
 			}
 
 			NuclearShadowBanner: {
 				DisplayName: Nuclear Shadow Banner
-				Tooltip: ""
+				Tooltip: "{$CommonItemTooltip.BannerBonus}{$Mods.Redemption.NPCs.NuclearShadow.DisplayName}"
 			}
 
 			NuclearSlimeBanner: {
 				DisplayName: Nuclear Slime Banner
-				Tooltip: ""
+				Tooltip: "{$CommonItemTooltip.BannerBonus}{$Mods.Redemption.NPCs.NuclearSlime.DisplayName}"
 			}
 
 			OozeBlobBanner: {
 				DisplayName: Ooze Blob Banner
-				Tooltip: ""
+				Tooltip: "{$CommonItemTooltip.BannerBonus}{$Mods.Redemption.NPCs.OozeBlob.DisplayName}"
 			}
 
 			OozingScientistBanner: {
 				DisplayName: Oozing Scientist Banner
-				Tooltip: ""
+				Tooltip: "{$CommonItemTooltip.BannerBonus}{$Mods.Redemption.NPCs.OozingScientist.DisplayName}"
 			}
 
 			PrototypeSilverBanner: {
 				DisplayName: Prototype Silver Banner
-				Tooltip: ""
+				Tooltip: "{$CommonItemTooltip.BannerBonus}{$Mods.Redemption.NPCs.PrototypeSilver.DisplayName}"
 			}
 
 			RadioactiveJellyBanner: {
 				DisplayName: Radioactive Physalia Banner
-				Tooltip: ""
+				Tooltip: "{$CommonItemTooltip.BannerBonus}{$Mods.Redemption.NPCs.RadioactiveJelly.DisplayName}"
 			}
 
 			RadioactiveSlimeBanner: {
 				DisplayName: Radioactive Slime Banner
-				Tooltip: ""
+				Tooltip: "{$CommonItemTooltip.BannerBonus}{$Mods.Redemption.NPCs.RadioactiveSlime.DisplayName}"
 			}
 
 			SandskinSpiderBanner: {
 				DisplayName: Sandskin Spider Banner
-				Tooltip: ""
+				Tooltip: "{$CommonItemTooltip.BannerBonus}{$Mods.Redemption.NPCs.SandskinSpider.DisplayName}"
 			}
 
 			SickenedBunnyBanner: {
 				DisplayName: Sickened Bunny Banner
-				Tooltip: ""
+				Tooltip: "{$CommonItemTooltip.BannerBonus}{$Mods.Redemption.NPCs.SickenedBunny.DisplayName}"
 			}
 
 			SickenedDemonEyeBanner: {
 				DisplayName: Sickened Demon Eye Banner
-				Tooltip: ""
+				Tooltip: "{$CommonItemTooltip.BannerBonus}{$Mods.Redemption.NPCs.SickenedDemonEye.DisplayName}"
 			}
 
 			SicklyPenguinBanner: {
 				DisplayName: Sickly Penguin Banner
-				Tooltip: ""
+				Tooltip: "{$CommonItemTooltip.BannerBonus}{$Mods.Redemption.NPCs.SicklyPenguin.DisplayName}"
 			}
 
 			SicklyWolfBanner: {
 				DisplayName: Sickly Wolf Banner
-				Tooltip: ""
+				Tooltip: "{$CommonItemTooltip.BannerBonus}{$Mods.Redemption.NPCs.SicklyWolf.DisplayName}"
 			}
 
 			SkeletonAssassinBanner: {
 				DisplayName: Skeleton Assassin Banner
-				Tooltip: ""
+				Tooltip: "{$CommonItemTooltip.BannerBonus}{$Mods.Redemption.NPCs.SkeletonAssassin.DisplayName}"
 			}
 
 			SkeletonDuelistBanner: {
 				DisplayName: Skeleton Duelist Banner
-				Tooltip: ""
+				Tooltip: "{$CommonItemTooltip.BannerBonus}{$Mods.Redemption.NPCs.SkeletonDuelist.DisplayName}"
 			}
 
 			SkeletonFlagbearerBanner: {
 				DisplayName: Skeleton Flagbearer Banner
-				Tooltip: ""
+				Tooltip: "{$CommonItemTooltip.BannerBonus}{$Mods.Redemption.NPCs.SkeletonFlagbearer.DisplayName}"
 			}
 
 			SkeletonNobleBanner: {
 				DisplayName: Skeleton Noble Banner
-				Tooltip: ""
+				Tooltip: "{$CommonItemTooltip.BannerBonus}{$Mods.Redemption.NPCs.SkeletonNoble.DisplayName}"
 			}
 
 			SkeletonWandererBanner: {
 				DisplayName: Skeleton Wanderer Banner
-				Tooltip: ""
+				Tooltip: "{$CommonItemTooltip.BannerBonus}{$Mods.Redemption.NPCs.SkeletonWanderer.DisplayName}"
 			}
 
 			SkeletonWardenBanner: {
 				DisplayName: Skeleton Warden Banner
-				Tooltip: ""
+				Tooltip: "{$CommonItemTooltip.BannerBonus}{$Mods.Redemption.NPCs.SkeletonWarden.DisplayName}"
 			}
 
 			SneezyFlinxBanner: {
 				DisplayName: Sneezy Snow Flinx Banner
-				Tooltip: ""
+				Tooltip: "{$CommonItemTooltip.BannerBonus}{$Mods.Redemption.NPCs.SneezyFlinx.DisplayName}"
 			}
 
 			SpacePaladinBanner: {
 				DisplayName: Space Paladin Banner
-				Tooltip: ""
+				Tooltip: "{$CommonItemTooltip.BannerBonus}{$Mods.Redemption.NPCs.SpacePaladin.DisplayName}"
 			}
 
 			TreeBugBanner: {
 				DisplayName: Tree Bug Banner
-				Tooltip: ""
+				Tooltip: "{$CommonItemTooltip.BannerBonus}{$Mods.Redemption.NPCs.TreeBug.DisplayName}"
 			}
 
 			VagrantSpiritBanner: {
 				DisplayName: Vagrant Spirit Banner
-				Tooltip: ""
+				Tooltip: "{$CommonItemTooltip.BannerBonus}{$Mods.Redemption.NPCs.VagrantSpirit.DisplayName}"
 			}
 
 			ElderWoodChest: {
@@ -9340,12 +9340,12 @@ Mods: {
 
 			HaymakerBanner: {
 				DisplayName: Haymaker Banner
-				Tooltip: ""
+				Tooltip: "{$CommonItemTooltip.BannerBonus}{$Mods.Redemption.NPCs.Haymaker.DisplayName}"
 			}
 
 			RoosterBoosterBanner: {
 				DisplayName: Rooster Booster Banner
-				Tooltip: ""
+				Tooltip: "{$CommonItemTooltip.BannerBonus}{$Mods.Redemption.NPCs.RoosterBooster.DisplayName}"
 			}
 
 			BasanRelic: {

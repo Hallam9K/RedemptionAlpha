@@ -133,12 +133,18 @@ namespace Redemption.NPCs.Lab.Volt
                 NPC.TargetClosest();
 
             SoundStyle voice = CustomSounds.Voice6 with { Pitch = -0.1f };
+
+            if (!player.active || player.dead)
+                return;
+
+            bool flip = false;
             if (NPC.spriteDirection == 1)
             {
                 if (faceLeft)
                 {
                     gunRot -= MathHelper.Pi;
                     faceLeft = false;
+                    flip = true;
                 }
             }
             else
@@ -147,12 +153,9 @@ namespace Redemption.NPCs.Lab.Volt
                 {
                     gunRot += MathHelper.Pi;
                     faceLeft = true;
+                    flip = true;
                 }
             }
-
-            if (!player.active || player.dead)
-                return;
-
             Vector2 GunOrigin = NPC.Center + RedeHelper.PolarVector(60, gunRot) + RedeHelper.PolarVector(-4 * NPC.spriteDirection, gunRot - (float)Math.PI / 2);
 
             switch (AIState)
@@ -182,7 +185,7 @@ namespace Redemption.NPCs.Lab.Volt
                         return;
                     }
                     NPC.LookAtEntity(player);
-                    gunRot.SlowRotation(NPC.spriteDirection == 1 ? 0f : (float)Math.PI, (float)Math.PI / 60f);
+                    gunRot.SlowRotation(NPC.spriteDirection == 1 ? 0f : (float)Math.PI, flip ? (float)Math.PI : (float)Math.PI / 60f);
                     NPC.noGravity = true;
                     NPC.noTileCollide = true;
                     switch (TimerRand)
@@ -238,7 +241,7 @@ namespace Redemption.NPCs.Lab.Volt
                     break;
                 case ActionState.Bolts:
                     NPC.LookAtEntity(player);
-                    gunRot.SlowRotation(NPC.DirectionTo(player.Center).ToRotation(), (float)Math.PI / 60f);
+                    gunRot.SlowRotation(NPC.DirectionTo(player.Center).ToRotation(), flip ? (float)Math.PI : (float)Math.PI / 60f);
                     if (AITimer++ == 0)
                     {
                         for (int k = 0; k < 20; k++)
@@ -272,9 +275,9 @@ namespace Redemption.NPCs.Lab.Volt
                 case ActionState.Orbs:
                     NPC.LookAtEntity(player);
                     if (NPC.spriteDirection == 1)
-                        gunRot.SlowRotation(5.76f, (float)Math.PI / 30f);
+                        gunRot.SlowRotation(5.76f, flip ? (float)Math.PI : (float)Math.PI / 30f);
                     else
-                        gunRot.SlowRotation(3.66f, (float)Math.PI / 30f);
+                        gunRot.SlowRotation(3.66f, flip ? (float)Math.PI : (float)Math.PI / 30f);
 
                     if (AITimer++ == 60)
                     {
@@ -302,7 +305,7 @@ namespace Redemption.NPCs.Lab.Volt
                             dust2.noGravity = true;
                             dust2.velocity = dust2.position.DirectionTo(GunOrigin) * 4f;
                         }
-                        gunRot.SlowRotation(NPC.DirectionTo(player.Center).ToRotation() - 0.4f, (float)Math.PI / 40f);
+                        gunRot.SlowRotation(NPC.DirectionTo(player.Center).ToRotation() - 0.4f, flip ? (float)Math.PI : (float)Math.PI / 40f);
                     }
                     if (AITimer == 60)
                     {
@@ -343,7 +346,7 @@ namespace Redemption.NPCs.Lab.Volt
                                 dust2.noGravity = true;
                             }
                         }
-                        gunRot.SlowRotation(NPC.DirectionTo(player.Center).ToRotation(), (float)Math.PI / 40f);
+                        gunRot.SlowRotation(NPC.DirectionTo(player.Center).ToRotation(), flip ? (float)Math.PI : (float)Math.PI / 40f);
                     }
                     if (AITimer == 60)
                     {
@@ -373,9 +376,9 @@ namespace Redemption.NPCs.Lab.Volt
                         }
 
                         if (NPC.Center.Y > (RedeGen.LabVector.Y + 112) * 16)
-                            gunRot.SlowRotation(-MathHelper.PiOver2, (float)Math.PI / 30f);
+                            gunRot.SlowRotation(-MathHelper.PiOver2, flip ? (float)Math.PI : (float)Math.PI / 30f);
                         else
-                            gunRot.SlowRotation(MathHelper.PiOver2, (float)Math.PI / 30f);
+                            gunRot.SlowRotation(MathHelper.PiOver2, flip ? (float)Math.PI : (float)Math.PI / 30f);
                     }
                     if (AITimer == 40)
                     {
@@ -418,6 +421,7 @@ namespace Redemption.NPCs.Lab.Volt
                     }
                     break;
                 case ActionState.Defeat:
+                    gunRot.SlowRotation(NPC.spriteDirection == 1 ? 0f : (float)Math.PI, flip ? (float)Math.PI : (float)Math.PI / 60f);
                     switch (TimerRand)
                     {
                         case 0:
@@ -499,7 +503,7 @@ namespace Redemption.NPCs.Lab.Volt
                             if (Main.netMode == NetmodeID.Server)
                                 NetMessage.SendData(MessageID.WorldData);
 
-                            NPC.position.Y -= 30;
+                            NPC.position.Y -= 10;
                             NPC.SetDefaults(ModContent.NPCType<ProtectorVolt_NPC>());
                             break;
                     }

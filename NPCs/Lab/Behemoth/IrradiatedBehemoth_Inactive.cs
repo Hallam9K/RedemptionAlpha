@@ -36,6 +36,7 @@ namespace Redemption.NPCs.Lab.Behemoth
             NPC.npcSlots = 0;
             NPC.behindTiles = true;
             NPC.netAlways = true;
+            NPC.ShowNameOnHover = false;
         }
         public override void AI()
         {

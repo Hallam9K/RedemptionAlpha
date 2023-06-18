@@ -404,7 +404,7 @@ namespace Redemption.CrossMod
                 #endregion
 
                 #region Omega Obliterator
-                bossChecklist.Call("LogBoss", mod, nameof(OO), 18.05f, () => RedeBossDowned.downedOmega3, ModContent.NPCType<OO>(), new Dictionary<string, object>()
+                bossChecklist.Call("LogBoss", mod, nameof(OO), 18.1f, () => RedeBossDowned.downedOmega3, ModContent.NPCType<OO>(), new Dictionary<string, object>()
                 {
                     ["spawnItems"] = ModContent.ItemType<OmegaTransmitter>(),
                     ["collectibles"] = new List<int>
@@ -424,7 +424,7 @@ namespace Redemption.CrossMod
                 #endregion
 
                 #region Patient Zero
-                bossChecklist.Call("LogEvent", mod, "AbandonedLaboratory2", 19f, () => RedeBossDowned.downedPZ, new List<int>()
+                bossChecklist.Call("LogEvent", mod, "AbandonedLaboratory2", 18.05f, () => RedeBossDowned.downedMACE, new List<int>()
                 {
                     ModContent.NPCType<Blisterface>(),
                     ModContent.NPCType<ProtectorVolt>(),
@@ -465,7 +465,7 @@ namespace Redemption.CrossMod
                             ModContent.ItemType<FloppyDisk7_1>(),
                             ModContent.ItemType<PZMusicBox>()
                         },
-                    ["availability"] = () => RedeBossDowned.downedPZ,
+                    ["availability"] = () => RedeBossDowned.downedMACE,
                     ["customPortrait"] = (SpriteBatch sb, Rectangle rect, Color color) =>
                     {
                         Texture2D texture = ModContent.Request<Texture2D>("Redemption/CrossMod/BossChecklist/PatientZero").Value;
@@ -592,7 +592,7 @@ namespace Redemption.CrossMod
                 fargos.Call("AddSummon", 20f, "Redemption", "AncientSigil", () => RedeBossDowned.downedADD, Item.buyPrice(4));
                 fargos.Call("AddSummon", 21f, "Redemption", "NebSummon", () => RedeBossDowned.downedNebuleus, Item.buyPrice(10));
 
-                fargos.Call("LogEventSummon", 1f, "Redemption", "FowlWarHorn", () => RedeBossDowned.downedFowlMorning, Item.buyPrice(0, 4, 50));
+                fargos.Call("AddEventSummon", 1f, "Redemption", "FowlWarHorn", () => RedeBossDowned.downedFowlMorning, Item.buyPrice(0, 4, 50));
             }
         }
     }
