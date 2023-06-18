@@ -134,7 +134,7 @@ namespace Redemption.NPCs.Bosses.ADD
         public override void ModifyIncomingHit(ref NPC.HitModifiers modifiers)
         {
             if (RedeBossDowned.downedGGBossFirst == 1 && RedeBossDowned.downedGGBossFirst == 2)
-                modifiers.FinalDamage *= .85f;
+                modifiers.FinalDamage *= .75f;
 
             if (NPC.RedemptionGuard().GuardPoints >= 0 && !NPC.RedemptionGuard().GuardBroken)
             {

@@ -189,7 +189,7 @@ namespace Redemption.NPCs.Bosses.PatientZero
         public override void ModifyIncomingHit(ref NPC.HitModifiers modifiers)
         {
             if (RedeBossDowned.downedGGBossFirst > 1)
-                modifiers.FinalDamage *= .85f;
+                modifiers.FinalDamage *= .75f;
         }
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
