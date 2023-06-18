@@ -19,6 +19,7 @@ using Terraria.ModLoader;
 using Terraria.ModLoader.Utilities;
 using Redemption.BaseExtension;
 using System.IO;
+using Terraria.Localization;
 
 namespace Redemption.NPCs.PreHM
 {
@@ -361,8 +362,7 @@ namespace Redemption.NPCs.PreHM
             {
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Caverns,
 
-                new FlavorTextBestiaryInfoElement(
-                    "An ancient relic of the far past. These golems were once infused with a human's soul to come to life, now they roam aimlessly within ruined structures.")
+                new FlavorTextBestiaryInfoElement(Language.GetTextValue("Mods.Redemption.FlavorTextBestiary.AncientGladestoneGolem"))
             });
         }
     }
