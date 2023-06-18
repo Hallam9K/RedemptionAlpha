@@ -12,6 +12,8 @@ using Redemption.WorldGeneration;
 using Redemption.Biomes;
 using Redemption.BaseExtension;
 using ReLogic.Content;
+using Terraria.Localization;
+
 
 namespace Redemption.NPCs.Lab
 {
@@ -85,7 +87,7 @@ namespace Redemption.NPCs.Lab
             bestiaryEntry.UIInfoProvider = new CommonEnemyUICollectionInfoProvider(ContentSamples.NpcBestiaryCreditIdsByNpcNetIds[associatedNPCType], quickUnlock: true);
 
             bestiaryEntry.Info.AddRange(new List<IBestiaryInfoElement> {
-                new FlavorTextBestiaryInfoElement("A timid android with ambitious goals. She does small, odd jobs around the Laboratory. Usually ones that required an operator.")
+                new FlavorTextBestiaryInfoElement(Language.GetTextValue("Mods.Redemption.FlavorTextBestiary.CraneOperator"))
             });
         }
         private Vector2 moveTo;
