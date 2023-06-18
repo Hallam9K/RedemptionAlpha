@@ -12,6 +12,7 @@ using Terraria.ModLoader;
 using Terraria.ModLoader.Utilities;
 using Redemption.BaseExtension;
 using Terraria.DataStructures;
+using Terraria.Localization;
 
 namespace Redemption.NPCs.Critters
 {
@@ -241,8 +242,7 @@ namespace Redemption.NPCs.Critters
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Surface,
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Times.DayTime,
 
-                new FlavorTextBestiaryInfoElement(
-                    "A beetle commonly found inhabiting trees. It feeds on leaves and uses its leaf-like shell for camouflage against predators. Its shell makes a good source of green dye.")
+                new FlavorTextBestiaryInfoElement(Language.GetTextValue("Mods.Redemption.FlavorTextBestiary.TreeBug"))
             });
         }
 
