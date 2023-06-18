@@ -19,6 +19,7 @@ using Redemption.Items.Weapons.PreHM.Summon;
 using Redemption.Biomes;
 using Redemption.Items.Accessories.PreHM;
 using Redemption.Items.Placeable.Banners;
+using Terraria.Localization;
 
 namespace Redemption.NPCs.FowlMorning
 {
@@ -253,8 +254,7 @@ namespace Redemption.NPCs.FowlMorning
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Surface,
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Times.DayTime,
 
-                new FlavorTextBestiaryInfoElement(
-                    "Bwark!")
+                new FlavorTextBestiaryInfoElement(Language.GetTextValue("Mods.Redemption.FlavorTextBestiary.Haymaker"))
             });
         }
     }
