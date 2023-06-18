@@ -12,6 +12,7 @@ using Redemption.Items.Placeable.Banners;
 using Redemption.Items.Usable.Potions;
 using Redemption.NPCs.Lab.MACE;
 using Terraria;
+using Terraria.Localization;
 using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameContent;
@@ -89,8 +90,7 @@ namespace Redemption.NPCs.Wasteland
         {
             bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[]
             {
-                new FlavorTextBestiaryInfoElement(
-                    "F is for the Fire that burns down the whole town, U is for Uranium bombs! N is for No Survivors-")
+                new FlavorTextBestiaryInfoElement(Language.GetTextValue("Mods.Redemption.FlavorTextBestiary.NuclearSlime"))
             });
         }
         public override void FindFrame(int frameHeight)
