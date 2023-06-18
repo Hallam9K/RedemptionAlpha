@@ -16,6 +16,7 @@ using Terraria.GameContent.Bestiary;
 using Redemption.Items.Usable.Potions;
 using Redemption.BaseExtension;
 using Redemption.Globals.NPC;
+using Terraria.Localization;
 
 namespace Redemption.NPCs.PreHM
 {
@@ -202,8 +203,7 @@ namespace Redemption.NPCs.PreHM
             {
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Caverns,
 
-                new FlavorTextBestiaryInfoElement(
-                    "Souls without a compatible vessel to infuse with, trapped within the spirit realm for so long they seeped out and are now slightly visible to the naked eye. They shall roam the caverns for eternity.")
+                new FlavorTextBestiaryInfoElement(Language.GetTextValue("Mods.Redemption.FlavorTextBestiary.VagrantSpirit"))
             });
         }
 
