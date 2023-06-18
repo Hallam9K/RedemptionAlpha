@@ -19,6 +19,7 @@ using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Utilities;
+using Terraria.Localization;
 using Redemption.BaseExtension;
 using Terraria.DataStructures;
 
@@ -614,8 +615,7 @@ namespace Redemption.NPCs.PreHM
             {
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Caverns,
 
-                new FlavorTextBestiaryInfoElement(
-                    "Skeletons with skillful swordplay. Be careful in close-quarter combat with these bone heads, or else you might find your head on the floor.")
+                new FlavorTextBestiaryInfoElement(Language.GetTextValue("Mods.Redemption.FlavorTextBestiary.SkeletonDuelist"))
             });
         }
     }
