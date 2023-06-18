@@ -15,6 +15,7 @@ using Redemption.Items.Usable.Potions;
 using Redemption.Biomes;
 using Redemption.Items.Placeable.Banners;
 using Redemption.Items.Accessories.PreHM;
+using Terraria.Localization;
 
 namespace Redemption.NPCs.FowlMorning
 {
@@ -183,8 +184,7 @@ namespace Redemption.NPCs.FowlMorning
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Surface,
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Times.DayTime,
 
-                new FlavorTextBestiaryInfoElement(
-                    "Chicken scratch, chicken scratch a lot. They can never never never stop. Chicken scratch, chicken can scratch all day.")
+                new FlavorTextBestiaryInfoElement(Language.GetTextValue("Mods.Redemption.FlavorTextBestiary.ChickenScratcher"))
             });
         }
     }
