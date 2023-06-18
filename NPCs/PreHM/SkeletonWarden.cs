@@ -21,6 +21,7 @@ using Terraria.Utilities;
 using Redemption.BaseExtension;
 using Terraria.DataStructures;
 using System.Collections.Generic;
+using Terraria.Localization;
 
 namespace Redemption.NPCs.PreHM
 {
@@ -666,8 +667,7 @@ namespace Redemption.NPCs.PreHM
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Surface,
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Times.NightTime,
 
-                new FlavorTextBestiaryInfoElement(
-                    "A blindfolded skeleton from Anglon. It defends other undead with its tower shield and slams any attackers that get too close.")
+                new FlavorTextBestiaryInfoElement(Language.GetTextValue("Mods.Redemption.FlavorTextBestiary.SkeletonWarden"))
             });
         }
     }
