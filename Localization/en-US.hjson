@@ -116,7 +116,19 @@ Mods: {
 			Fallen: Fallen are a category of undead with a soul strong enough to form pale brown flesh. Most being aggressive towards humans, this one is a rare case who can sell ritualist equipment and repair fragments of ancient weapons.
 			TBot1: Quiet, mildly melancholic but happy to help you, Adam is an android and the leader of a small group called the Alpha. They are your go-to guide for all-things Liden.
 			TBot2: '''"I may be the only one of my kind to honor all Three Laws... I can't assure the others will take you in with open arms like I did. Stay safe out there."'''
+			TreebarkDryad: These slow-thinking ents only appear in heavily forested areas. They have only recently arrived on this island, coming from the portal on the surface. Once every century, they find a shallow pond and hibernate in the centre. The water from the pond feeds the ent during the process.
 			LostSoul: Lost Souls search around the world to look for corpses to infuse with. They roam catacombs and graveyards, sometimes taking many days to find a compatible vessel.
+			BoneSpider: A skeletal spider ready to spook you at any moment! Don't worry, it's not technically a spider; spiders don't have bones.
+			Chicken: These chickens somehow found their way through the portal from the mainland. Being true to their name, they will flee at the sight of danger. They are most comfortable on hay, and will even lay eggs while sitting on it!
+			ChickenGold: A chicken with golden feathers. Best not to kill it, for it can lay golden eggs!
+			CoastScarab: A species of scarab commonly found scuttering around the beach. They're rather cute and harmless creatures, but can be used to create dyes if you're a greedy monster.
+			Fly: A pesky annoyance that only exists to ruin your day. They're attracted to rotting undead.
+			GrandLarva: Gross insects holding many flies within. Can be used as good bait.
+			Kabucra: Kabucra, or Shell Crabs, find and use sturdy seashells as armour against predators. Due to their tiny size, they can escape by burying into the ground in case their shells aren't enough protection.
+			MoonflareBat: These bats have thin wings, causing moonlight to pass through, creating the illusion that they glow. They store the light of the moon within them and convert it to weak energy.
+			SandskinSpider: A spider that commonly burrows in the desert sands. They don't normally come out, due to the intense heat of the sun.
+			Spiderswarmer: Lives in dark caverns or basements. These on their own are harmless, but if you see a swarm of them, prepare for a thousand bite marks.
+			TreeBug: A beetle commonly found inhabiting trees. It feeds on leaves and uses its leaf-like shell for camouflage against predators. Its shell makes a good source of green dye.
 			FowlEmperor1: An Anglonic forest rooster with quite the personality. Was this intelligent animal the handiwork of a human's soul, or perhaps he was some mythological creature? We may never know.
 			FowlEmperor2: It may have just been a chicken, but it was a reminder of the hideous truth that, regardless of species, monarchy perpetuates archaic views of class and degrades others based on arbitrary standards.
 			Thorn: An unfortunate warden of a cursed forest, doomed to be consumed by blighted thorns.
@@ -126,7 +138,6 @@ Mods: {
 			Golem: Constructed in Gathuram and sent to Ithon as a gift in a time of peace between the domains. Although the people of Gathuram forgot to mention one thing...
 			Calavia: A Chief-Warrior of the Iron Realm, lost and troubled by her distant venture from her home of Khen Boldur, which was spurred on by the barons of Arum. Swordplay and smithing is her expertise, along with familiarity of Blizzard magic.
 			OO: An autonomous war machine mostly of Girus' own design with many integrated weapon systems, such as literal finger guns and an advanced heat dispersion system in the form of a giant beam, capable of obliterating anyone it engulfs - Also where Obliterator got its name from.
-			TreebarkDryad: These slow-thinking ents only appear in heavily forested areas. They have only recently arrived on this island, coming from the portal on the surface. Once every century, they find a shallow pond and hibernate in the centre. The water from the pond feeds the ent during the process.
 			Erhan: A high priest of Fairwood, tasked himself to purify the forest's curse after it consumed it's warden.
 			Behemoth: An unfortunate scientist, disfigured and mutilated beyond recognition by the Xenomite infection. This specimen is entering the final stage of the infection, and has had its body transform into a sludgy slurry on the ceiling... God, that must be agonizing.
 			Blisterface1: An unfortunate fish, disfigured and mutilated beyond recognition by the Xenomite infection. This strain seems to be similar to that of the Blistered Scientists...
@@ -141,6 +152,52 @@ Mods: {
 			Ukko: Once a blacksmith in ancient Tethuram who had an immense talent in magic, growing to be seen as a god by many who witnessed his strengths. In his old age, growing weary of his mortality, Ukko infused his soul into a bundle of rocks, allowing him to eventually reform when the time comes. The locals worshipped this golem, until the knowledge of Ukko's soul inside slowly faded away.
 			PZ: An unfortunate scientist, mutilated and disfigured by the Xenomite infection. This specimen was Kari Johannson, the father of all T-Bots and patient zero of the xenomite infection. He's been stuck for 50 years, conscious and aware of the situation around him... God, that must be tormentous.
 			Android: Fodder sent down to the island by King Slayer III to scan. These are the first iteration of the Android Unit and the first robots designed by King Slayer during his million year voyage. Their original purpose was to bring company and life to the SoS, however they have since been fitted with more combat-oriented parts. When damaged, they will retreat back to the SoS and alert the network.
+			BloatedGoldfish: A goldfish bloated with radioactive pus.
+			BloatedGhoul: Ghouls irradiated by radioactive particles that have been disfigured by rapid, volatile cell growth.
+			BloatedGrub: Full of protein!
+			BloatedSwarmer: Giant insects irradiated by radioactive particles that have been disfigured by rapid, volatile cell growth.
+			BobTheBlob: A mess of radioactive sludge coating some poor skeleton. They don't look happy about their situation.
+			HazmatBunny: A bunny suited up in a Type 1 Hazmat Suit. Ain't no hazardous materials harming this little fuzzball!
+			HazmatZombie: Even the undead dislike the radiation left from a nuclear blast. Although the suits they wear don't help much, seeing as they're quite torn.
+			MutatedLivingBloom: Despite its peculiar circumstances, this Bloom seems to be doing fine. Two heads always were better than one, or so they say.
+			NuclearShadow: A Human Shadow Etched in Stone, all that remains of someone who was vaporized by a nuclear blast. Also known as a Human Shadow of Death.
+			NuclearSlime: F is for the Fire that burns down the whole town, U is for Uranium bombs! N is for No Survivors-
+			RadioactiveJelly: The jellyfish seems to be unaware of its condition, of course that is to be expected when they don't have a brain.
+			RadioactiveSlime: An irradiated gelatinous creature whose membrane has been highly contaminated by radioactive materials from the fallout.
+			SickenedBunny: This poor bunny has developed painful tumors from the radioactivity in the area, and seems very angry.
+			SickenedDemonEye: Is it crying? No, that's just foul smelling pus leaking out.
+			SicklyPenguin: Penguins can fend off deadly cold, but they can't fend off the insidious killer that is irradiation. Here, the symptoms have shown up as blistering tumors.
+			SicklyWolf: Living in a snowy wasteland isn't easy, as this starving, rabid lupine shows us. Most of its prey has been killed by the radioactivity in the area, and the carcasses aren't safe to eat anymore.
+			SneezyFlinx: Looks like its big nose has caught a cold! Seems like it wasn't prepared for weather as cold as one made by a nuclear winter.
+			AncientGladestoneGolem: An ancient relic of the far past. These golems were once infused with a human's soul to come to life, now they roam aimlessly within ruined structures.
+			Blobble: An exceptionally rare slime native to Ithon. It may look harmless, but the acid it is composed of can dissolve iron in less than a minute.
+			CorpseWalkerPriest: Dried up skeletons that take the role of a cleric, they shoot golden sparks that can heal other undead... And damage humans.
+			DevilsTongue: A carnivorous cactus that grows in deserts. Produces painful clouds of pollen to attract flies to their doom.
+			EpidotrianSkeleton: These skeletons are from Epidotra's mainland, they are slightly taller and smarter than the island's ones. Their strength is dependent on their soul, which is also known as Willpower.
+			SkeletonWanderer: A skeleton from Epidotra's mainland. It wears rusty pauldrons and wields a rusty spear.
+			SkeletonNoble: A strong skeleton wearing the equipment of Anglon's Common Guard. These are tough brutes that won't be taken down easily.
+			SkeletonFlagbearer: Every squad needs a guy holding a big flag. This stubby skeleton's dance can rally any undead who lay witness! Non-undead just look at the silly dance with embarrassment...
+			SkeletonDuelist: Skeletons with skillful swordplay. Be careful in close-quarter combat with these bone heads, or else you might find your head on the floor.
+			SkeletonWarden: A blindfolded skeleton from Anglon. It defends other undead with its tower shield and slams any attackers that get too close.
+			SkeletonAssassin: A sneaky skeleton wielding a worn dagger. Keep an eye out when exploring the caverns, for they can hide themselves and stab you from behind.
+			RaveyardSkeleton: Created when a corpse is bound by a soul, and the soul can still remember the last piece of music it heard. It will attempt to mimic the exact sounds it remembers. If it can't do that, then it will just dance uncontrollably. Some tunes are more deadly than others.
+			LivingBloom: A common creature native to Anglon, living in lush forests. They are made out of plant fibre and roots.
+			JollyMadman: The body of a noble knight of Gathuram, the soul of a criminal. Now dead and stuck under the earth in the dark labyrinthine caves, they have lost their split minds and gone insane.
+			ForestNymph: Rare humanoid creatures found in forests, far from civilization. They live in giant hollowed-out trees, usually near an enchanted pond. They are solitary and territorial beings, seldom enjoying the company of others. It is unknown how these creatures came to be, legends suggest they are the handiwork of Epidotra itself - grown from the earth same as all flora, but to blossom into the form of a human.
+			VagrantSpirit: Souls without a compatible vessel to infuse with, trapped within the spirit realm for so long they seeped out and are now slightly visible to the naked eye. They shall roam the caverns for eternity.
+			BlisteredScientist: An unfortunate scientist, disfigured and mutilated beyond recognition by the Xenomite infection. This strain is somewhat aggressive and their skin is covered in blisters... God, do they look repulsive.
+			BloatedScientist: An unfortunate scientist, mutilated and disfigured by the Xenomite infection. This strain is mildly aggressive, and has bloated their gastric track to monstrous sizes... God, that must feel vile...
+			CraneOperator: A timid android with ambitious goals. She does small, odd jobs around the Laboratory. Usually ones that required an operator.
+			OozeBlob: An amorphous blob of foul-smelling ooze. Below its icky slime is something organic, excreting its fluid almost endlessly... God, what a mess.
+			OozingScientist: An unfortunate scientist, disfigured and mutilated beyond recognition by the Xenomite infection. This strain is very aggressive and leaks a strange liquidy substance... God, does it smell awful.
+			SpacePaladin: The 4th Slayer Unit constructed, after Space Keeper. This unit uses newer shield technology compared to King Slayer's Prototype Multium vessel, and is capable of absorbing far greater impacts; in addition to the thick durable plating and cyber blade, this robot was built for war.,
+			PrototypeSilver: Prototype Silvers were the 2nd Slayer Unit constructed, with a built-in shield generator and durable plating. Made for military purposes during an alien war in Asherah. The war was a swift one. Despite its name, it's mainly composed of the spare titanium from Alkonost.,
+			Basan: A legendary bird of Ithonic mythos said to live in the Fractured Highlands. It is said the spicy goodness is unheard of among the chicken connoisseurs, putting all other chicken to shame with its tender chicken wings and juicy drumsticks. Only at Arbys will you find a better source of spicy chicken goodness. Arbys. We have the meats.
+			ChickenBomber: Buck.
+			ChickenScratcher: Chicken scratch, chicken scratch a lot. They can never never never stop. Chicken scratch, chicken can scratch all day.
+			Cockatrice: 50% chicken, 50% dragon, yet somehow still tastes 100% like chicken.
+			Haymaker: Bwark!
+			RoosterBooster: Cockadoodle-doo!
 		}
 
 		Bestiary.Android: Apidroids were an experiment with a highly durable metal from a distant star system. The metal - dubbed 'Rose Titanium' by King Slayer III - is one of the strongest materials discovered in the galaxy. However, King Slayer III hated its pink tinge, and so stubbornly refused to use it after making a few Androids out of it.
@@ -1157,6 +1214,8 @@ Mods: {
 					8: I don't expect sympathy from you, but I'll be gone for good now. Goodbye.
 				}
 			}
+
+			LabDrone: INTRUDER DETECTED...
 		}
 
 		GenericTerms: {
@@ -2173,6 +2232,61 @@ Mods: {
 				DisplayName: Rooster Boost
 				Description: You feel bucked up... and annoyed
 			}
+
+			VesselPickBuff: {
+				Description: 당신의 채광 속도가 크게 증가한다
+				DisplayName: 셰이드서지
+			}
+
+			ShadevisionPotionBuff: {
+				Description: 영혼없는 자들의 동굴에서 더 명확하게 볼 수 있다
+				DisplayName: 셰이드비전
+			}
+
+			OathkeeperDaggerBuff: {
+				Description: 최대 체력을 담보로 당신의 데미지가 증가한다
+				DisplayName: 찔린 상처
+			}
+
+			SmashedDebuff: {
+				Description: ""
+				DisplayName: Smashed!
+			}
+
+			InsulatiumPotionBuff: {
+				Description: 당신은 감전에 면역이다
+				DisplayName: 절연됨
+			}
+
+			DreamsongBuff: {
+				Description: 영혼없는 자들의 동굴에서 당신의 시야를 개선한다
+				DisplayName: 드림 송
+			}
+
+			DreambinderBuff: {
+				Description: 무적시간 증가
+				DisplayName: 드림바운드
+			}
+
+			StalkerDebuff: {
+				Description: ""
+				DisplayName: ""
+			}
+
+			LaceratedDebuff: {
+				Description: A deep cut
+				DisplayName: Lacerated Debuff
+			}
+
+			SoulScrollCooldown: {
+				Description: 영혼 주술서를 사용할 수 없다
+				DisplayName: 영혼 주술서 쿨다운
+			}
+
+			AnglerPotionBuff: {
+				Description: 잠수할 시 데미지가 증가하고 빛을 발산한다
+				DisplayName: 낚시꾼 비전
+			}
 		}
 
 		Biomes: {
@@ -2240,9 +2354,15 @@ Mods: {
 				DisplayName: Soulless Caverns
 				TownNPCDialogueName: the Soulless Caverns
 			}
+
+			SpaceBiome.DisplayName: 심우주
 		}
 
-		Subworlds.SoullessSub.DisplayName: Soulless Dimension
+		Subworlds: {
+			SoullessSub.DisplayName: Soulless Dimension
+			CSub.DisplayName: Purgatory
+			SpaceSub.DisplayName: 심우주
+		}
 
 		Dialogue: {
 			TBot: {
@@ -2845,6 +2965,11 @@ Mods: {
 				Dialogue8: Foes may take you more seriously, some less so.
 				Dialogue9: Some actions can be redeemed, restoring your lost alignment and possibly raising it higher.
 				Dialogue10: The path you choose is up to you.
+			}
+
+			Toaster: {
+				2: Oh hey, how are you holding up? BECAUSE I AM A TOASTER.
+				1: Just a normal toaster.
 			}
 		}
 
