@@ -2299,8 +2299,6 @@ Mods: {
 				DisplayName: Soulless Caverns
 				TownNPCDialogueName: the Soulless Caverns
 			}
-
-			SpaceBiome.DisplayName: 심우주
 		}
 
 		Subworlds.SoullessSub.DisplayName: Soulless Dimension
