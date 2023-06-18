@@ -17,6 +17,8 @@ using Redemption.Items.Donator.Sneaklone;
 using Redemption.Items.Usable.Potions;
 using Redemption.Items.Usable;
 using System.IO;
+using Terraria.Localization;
+
 
 namespace Redemption.NPCs.Lab
 {
@@ -309,8 +311,7 @@ namespace Redemption.NPCs.Lab
         {
             bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[]
             {
-                new FlavorTextBestiaryInfoElement(
-                    "An unfortunate scientist, disfigured and mutilated beyond recognition by the Xenomite infection. This strain is somewhat aggressive and their skin is covered in blisters... God, do they look repulsive.")
+                new FlavorTextBestiaryInfoElement(Language.GetTextValue("Mods.Redemption.FlavorTextBestiary.BlisteredScientist"))
             });
         }
     }
