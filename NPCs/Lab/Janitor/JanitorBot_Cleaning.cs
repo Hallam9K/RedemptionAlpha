@@ -62,9 +62,9 @@ namespace Redemption.NPCs.Lab.Janitor
                     if (AITimer == 30 && !Main.dedServ)
                     {
                         DialogueChain chain = new();
-                        chain.Add(new(NPC, "...Why did you have to barge in through the ventilation shaft?", Colors.RarityYellow, new Color(100, 86, 0), voice, .03f, 2f, 0, false)) // 224
-                             .Add(new(NPC, "Lost your access card huh?[0.5] Have mine and get out of my sight.", Colors.RarityYellow, new Color(100, 86, 0), voice, .03f, 2f, 0, false)) // 252
-                             .Add(new(NPC, "[@a]*Grumbles* Those darn careless bots losing their cards...", Colors.RarityYellow, new Color(100, 86, 0), voice, .03f, 2f, .5f, true)); // 244
+                        chain.Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.Janitor.Start.R1"), Colors.RarityYellow, new Color(100, 86, 0), voice, .03f, 2f, 0, false)) // 224
+                             .Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.Janitor.Start.R2"), Colors.RarityYellow, new Color(100, 86, 0), voice, .03f, 2f, 0, false)) // 252
+                             .Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.Janitor.Start.R3"), Colors.RarityYellow, new Color(100, 86, 0), voice, .03f, 2f, .5f, true)); // 244
                         chain.OnSymbolTrigger += Chain_OnSymbolTrigger;
                         ChatUI.Visible = true;
                         ChatUI.Add(chain);
@@ -90,9 +90,9 @@ namespace Redemption.NPCs.Lab.Janitor
                     if (AITimer == 30 && !Main.dedServ)
                     {
                         DialogueChain chain = new();
-                        chain.Add(new(NPC, "Oi![0.1] Don't go there,[0.1] the floor's wet.", Colors.RarityYellow, new Color(100, 86, 0), voice, .03f, 2f, 0, false)) // 172
-                             .Add(new(NPC, ".[0.1].[0.1].[0.1]", Colors.RarityYellow, new Color(100, 86, 0), voice, .03f, 2f, 0, false)) // 136
-                             .Add(new(NPC, "[@b]Wait...[0.5] You're a trespasser!", Colors.RarityYellow, new Color(100, 86, 0), voice, .03f, 2f, .5f, true, endID: 1)); // 216
+                        chain.Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.Janitor.Start.1"), Colors.RarityYellow, new Color(100, 86, 0), voice, .03f, 2f, 0, false))
+                             .Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.Janitor.Start.2"), Colors.RarityYellow, new Color(100, 86, 0), voice, .03f, 2f, 0, false))
+                             .Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.Janitor.Start.3"), Colors.RarityYellow, new Color(100, 86, 0), voice, .03f, 2f, .5f, true, endID: 1));
                         chain.OnSymbolTrigger += Chain_OnSymbolTrigger;
                         chain.OnEndTrigger += Chain_OnEndTrigger;
                         ChatUI.Visible = true;
