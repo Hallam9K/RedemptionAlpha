@@ -22,6 +22,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Utilities;
 using Redemption.BaseExtension;
+using Terraria.Localization;
 using Terraria.DataStructures;
 
 namespace Redemption.NPCs.PreHM
@@ -666,8 +667,7 @@ namespace Redemption.NPCs.PreHM
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Surface,
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Times.NightTime,
 
-                new FlavorTextBestiaryInfoElement(
-                    "A strong skeleton wearing the equipment of Anglon's Common Guard. These are tough brutes that won't be taken down easily.")
+                new FlavorTextBestiaryInfoElement(Language.GetTextValue("Mods.Redemption.FlavorTextBestiary.SkeletonNoble"))
             });
         }
     }

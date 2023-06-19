@@ -11,6 +11,7 @@ using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.Localization;
 
 namespace Redemption.NPCs.Wasteland
 {
@@ -60,8 +61,7 @@ namespace Redemption.NPCs.Wasteland
         {
             bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[]
             {
-                new FlavorTextBestiaryInfoElement(
-                    "Is it crying? No, that's just foul smelling pus leaking out.")
+                new FlavorTextBestiaryInfoElement(Language.GetTextValue("Mods.Redemption.FlavorTextBestiary.SickenedDemonEye"))
             });
         }
         public override void ModifyHitPlayer(Player target, ref Player.HurtModifiers modifiers)

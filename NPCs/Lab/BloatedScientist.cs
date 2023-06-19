@@ -18,6 +18,8 @@ using Redemption.Items.Donator.Sneaklone;
 using Redemption.Items.Usable.Potions;
 using Redemption.Items.Usable;
 using System.IO;
+using Terraria.Localization;
+
 
 namespace Redemption.NPCs.Lab
 {
@@ -367,8 +369,7 @@ namespace Redemption.NPCs.Lab
         {
             bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[]
             {
-                new FlavorTextBestiaryInfoElement(
-                    "An unfortunate scientist, mutilated and disfigured by the Xenomite infection. This strain is mildly aggressive, and has bloated their gastric track to monstrous sizes... God, that must feel vile...")
+                new FlavorTextBestiaryInfoElement(Language.GetTextValue("Mods.Redemption.FlavorTextBestiary.BloatedScientist"))
             });
         }
     }

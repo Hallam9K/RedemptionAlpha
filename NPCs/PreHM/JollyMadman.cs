@@ -25,6 +25,7 @@ using Terraria.ModLoader.Utilities;
 using Terraria.Utilities;
 using Redemption.BaseExtension;
 using System.IO;
+using Terraria.Localization;
 
 namespace Redemption.NPCs.PreHM
 {
@@ -549,8 +550,7 @@ namespace Redemption.NPCs.PreHM
             {
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Caverns,
 
-                new FlavorTextBestiaryInfoElement(
-                    "The body of a noble knight of Gathuram, the soul of a criminal. Now dead and stuck under the earth in the dark labyrinthine caves, they have lost their split minds and gone insane.")
+                new FlavorTextBestiaryInfoElement(Language.GetTextValue("Mods.Redemption.FlavorTextBestiary.JollyMadman"))
             });
         }
     }

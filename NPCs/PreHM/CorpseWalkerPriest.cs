@@ -19,6 +19,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ModLoader.Utilities;
 using Terraria.Utilities;
+using Terraria.Localization;
 using Redemption.BaseExtension;
 using Redemption.Base;
 using Terraria.DataStructures;
@@ -463,8 +464,7 @@ namespace Redemption.NPCs.PreHM
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Desert,
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.UndergroundDesert,
 
-                new FlavorTextBestiaryInfoElement(
-                    "Dried up skeletons that take the role of a cleric, they shoot golden sparks that can heal other undead... And damage humans.")
+                new FlavorTextBestiaryInfoElement(Language.GetTextValue("Mods.Redemption.FlavorTextBestiary.CorpseWalkerPriest"))
             });
         }
     }

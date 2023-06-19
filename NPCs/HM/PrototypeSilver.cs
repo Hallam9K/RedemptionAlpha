@@ -7,6 +7,7 @@ using Redemption.Items.Placeable.Banners;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
+using Terraria.Localization;
 using Terraria.GameContent;
 using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
@@ -521,8 +522,7 @@ namespace Redemption.NPCs.HM
             {
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Sky,
 
-                new FlavorTextBestiaryInfoElement(
-                    "Prototype Silvers were the 2nd Slayer Unit constructed, with a built-in shield generator and durable plating. Made for military purposes during an alien war in Asherah. The war was a swift one. Despite its name, it's mainly composed of the spare titanium from Alkonost."),
+                new FlavorTextBestiaryInfoElement(Language.GetTextValue("Mods.Redemption.FlavorTextBestiary.PrototypeSilver")),
             });
         }
     }

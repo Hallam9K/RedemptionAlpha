@@ -16,6 +16,7 @@ using Terraria.GameContent;
 using Redemption.Biomes;
 using Redemption.Items.Placeable.Banners;
 using Redemption.Items.Accessories.PreHM;
+using Terraria.Localization;
 
 namespace Redemption.NPCs.FowlMorning
 {
@@ -173,8 +174,7 @@ namespace Redemption.NPCs.FowlMorning
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Surface,
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Times.DayTime,
 
-                new FlavorTextBestiaryInfoElement(
-                    "Buck.")
+                new FlavorTextBestiaryInfoElement(Language.GetTextValue("Mods.Redemption.FlavorTextBestiary.ChickenBomber"))
             });
         }
     }

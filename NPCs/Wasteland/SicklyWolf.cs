@@ -12,6 +12,8 @@ using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.Localization;
+
 
 namespace Redemption.NPCs.Wasteland
 {
@@ -61,8 +63,7 @@ namespace Redemption.NPCs.Wasteland
         {
             bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[]
             {
-                new FlavorTextBestiaryInfoElement(
-                    "Living in a snowy wasteland isn't easy, as this starving, rabid lupine shows us. Most of its prey has been killed by the radioactivity in the area, and the carcasses aren't safe to eat anymore.")
+                new FlavorTextBestiaryInfoElement(Language.GetTextValue("Mods.Redemption.FlavorTextBestiary.SicklyWolf"))
             });
         }
         public override void ModifyHitPlayer(Player target, ref Player.HurtModifiers modifiers)

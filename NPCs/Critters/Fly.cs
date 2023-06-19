@@ -13,6 +13,7 @@ using Terraria.ModLoader;
 using Redemption.BaseExtension;
 using ReLogic.Utilities;
 using Terraria.Audio;
+using Terraria.Localization;
 
 namespace Redemption.NPCs.Critters
 {
@@ -273,7 +274,7 @@ namespace Redemption.NPCs.Critters
             {
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Caverns,
 
-                new FlavorTextBestiaryInfoElement("A pesky annoyance that only exists to ruin your day. They're attracted to rotting undead.")
+                new FlavorTextBestiaryInfoElement(Language.GetTextValue("Mods.Redemption.FlavorTextBestiary.Fly"))
             });
         }
 

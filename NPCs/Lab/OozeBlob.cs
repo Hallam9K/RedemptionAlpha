@@ -6,6 +6,7 @@ using Redemption.Biomes;
 using Redemption.Buffs.Debuffs;
 using Redemption.Dusts;
 using Redemption.Globals;
+using Terraria.Localization;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent;
@@ -80,7 +81,7 @@ namespace Redemption.NPCs.Lab
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
         {
             bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
-                new FlavorTextBestiaryInfoElement("An amorphous blob of foul-smelling ooze. Below its icky slime is something organic, excreting its fluid almost endlessly... God, what a mess.")
+                new FlavorTextBestiaryInfoElement(Language.GetTextValue("Mods.Redemption.FlavorTextBestiary.OozeBlob"))
             });
         }
         public override void SendExtraAI(BinaryWriter writer)

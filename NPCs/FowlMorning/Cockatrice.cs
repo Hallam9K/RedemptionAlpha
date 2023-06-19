@@ -24,6 +24,7 @@ using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.Localization;
 
 namespace Redemption.NPCs.FowlMorning
 {
@@ -85,7 +86,7 @@ namespace Redemption.NPCs.FowlMorning
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Surface,
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Times.DayTime,
 
-                new FlavorTextBestiaryInfoElement("50% chicken, 50% dragon, yet somehow still tastes 100% like chicken.")
+                new FlavorTextBestiaryInfoElement(Language.GetTextValue("Mods.Redemption.FlavorTextBestiary.Cockatrice"))
             });
         }
         public override void BossLoot(ref string name, ref int potionType)

@@ -14,6 +14,7 @@ using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.Localization;
 
 namespace Redemption.NPCs.Wasteland
 {
@@ -93,8 +94,7 @@ namespace Redemption.NPCs.Wasteland
         {
             bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[]
             {
-                new FlavorTextBestiaryInfoElement(
-                    "An irradiated gelatinous creature whose membrane has been highly contaminated by radioactive materials from the fallout.")
+                new FlavorTextBestiaryInfoElement(Language.GetTextValue("Mods.Redemption.FlavorTextBestiary.RadioactiveSlime"))
             });
         }
         public override void ModifyNPCLoot(NPCLoot npcLoot)

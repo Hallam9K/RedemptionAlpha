@@ -12,6 +12,7 @@ using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.Localization;
 
 namespace Redemption.NPCs.Critters
 {
@@ -264,8 +265,7 @@ namespace Redemption.NPCs.Critters
             bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[]
             {
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Ocean,
-                new FlavorTextBestiaryInfoElement(
-                    "Kabucra, or Shell Crabs, find and use sturdy seashells as armour against predators. Due to their tiny size, they can escape by burying into the ground in case their shells aren't enough protection.")
+                new FlavorTextBestiaryInfoElement(Language.GetTextValue("Mods.Redemption.FlavorTextBestiary.Kabucra"))
             });
         }
 

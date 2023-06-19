@@ -9,6 +9,7 @@ using Redemption.Items.Placeable.Banners;
 using Redemption.Items.Placeable.Plants;
 using Redemption.Projectiles.Hostile;
 using Terraria;
+using Terraria.Localization;
 using Terraria.DataStructures;
 using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
@@ -322,8 +323,7 @@ namespace Redemption.NPCs.Wasteland
         {
             bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[]
             {
-                new FlavorTextBestiaryInfoElement(
-                    "Despite its peculiar circumstances, this Bloom seems to be doing fine. Two heads always were better than one, or so they say.")
+                new FlavorTextBestiaryInfoElement(Language.GetTextValue("Mods.Redemption.FlavorTextBestiary.MutatedLivingBloom"))
             });
         }
 

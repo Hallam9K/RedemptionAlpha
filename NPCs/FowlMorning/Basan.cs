@@ -26,6 +26,7 @@ using Terraria.GameContent;
 using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Redemption.Buffs.NPCBuffs;
 
@@ -130,7 +131,7 @@ namespace Redemption.NPCs.FowlMorning
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Surface,
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Times.DayTime,
 
-                new FlavorTextBestiaryInfoElement("A legendary bird of Ithonic mythos said to live in the Fractured Highlands. It is said the spicy goodness is unheard of among the chicken connoisseurs, putting all other chicken to shame with its tender chicken wings and juicy drumsticks. Only at Arbys will you find a better source of spicy chicken goodness. Arbys. We have the meats.")
+                new FlavorTextBestiaryInfoElement(Language.GetTextValue("Mods.Redemption.FlavorTextBestiary.Basan"))
             });
         }
         public override void BossLoot(ref string name, ref int potionType)

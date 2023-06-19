@@ -22,6 +22,7 @@ using ReLogic.Content;
 using Terraria.Utilities;
 using Redemption.Tiles.Tiles;
 using Terraria.GameContent;
+using Terraria.Localization;
 
 namespace Redemption.NPCs.PreHM
 {
@@ -494,8 +495,7 @@ namespace Redemption.NPCs.PreHM
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Surface,
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Times.DayTime,
 
-                new FlavorTextBestiaryInfoElement(
-                    "A common creature native to Anglon, living in lush forests. They are made out of plant fibre and roots.")
+                new FlavorTextBestiaryInfoElement(Language.GetTextValue("Mods.Redemption.FlavorTextBestiary.LivingBloom"))
             });
         }
 

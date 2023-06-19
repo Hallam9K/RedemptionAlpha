@@ -16,6 +16,7 @@ using Redemption.Buffs.NPCBuffs;
 using Redemption.Biomes;
 using Redemption.Items.Accessories.PreHM;
 using Redemption.Items.Placeable.Banners;
+using Terraria.Localization;
 
 namespace Redemption.NPCs.FowlMorning
 {
@@ -234,8 +235,7 @@ namespace Redemption.NPCs.FowlMorning
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Surface,
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Times.DayTime,
 
-                new FlavorTextBestiaryInfoElement(
-                    "Cockadoodle-doo!")
+                new FlavorTextBestiaryInfoElement(Language.GetTextValue("Mods.Redemption.FlavorTextBestiary.RoosterBooster"))
             });
         }
     }
