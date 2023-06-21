@@ -13,10 +13,10 @@ using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.GameContent.Bestiary;
 using Terraria.ID;
-using Terraria.Localization;
 using Terraria.ModLoader;
 using Redemption.BaseExtension;
 using ReLogic.Content;
+using Terraria.Localization;
 
 namespace Redemption.NPCs.Lab.Janitor
 {

@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Terraria.ID;
 using Redemption.Globals;
 using Terraria.GameContent;
+using Terraria.Localization;
 
 namespace Redemption.NPCs.Lab
 {
@@ -38,7 +39,7 @@ namespace Redemption.NPCs.Lab
             NPC.noTileCollide = false;
             NPC.dontTakeDamage = true;
             NPC.hide = true;
-            NPC.ShowNameOnHover = false;
+            NPC.ShowNameOnHover = true;
         }
 
         public override void DrawBehind(int index)
@@ -69,7 +70,7 @@ namespace Redemption.NPCs.Lab
         public override bool CanChat() => true;
         public override string GetChat()
         {
-            return RedeBossDowned.downedOmega3 ? "Oh hey, how are you holding up? BECAUSE I AM A TOASTER." : "Just a normal toaster.";
+            return RedeBossDowned.downedOmega3 ? Language.GetTextValue("Mods.Redemption.Dialogue.Toaster.2") : Language.GetTextValue("Mods.Redemption.Dialogue.Toaster.1");
         }
         public override void FindFrame(int frameHeight)
         {

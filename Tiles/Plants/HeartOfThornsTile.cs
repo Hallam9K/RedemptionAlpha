@@ -6,6 +6,7 @@ using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 using Terraria.GameContent.Metadata;
+using Redemption.Items.Usable.Summons;
 
 namespace Redemption.Tiles.Plants
 {
@@ -29,6 +30,7 @@ namespace Redemption.Tiles.Plants
             AddMapEntry(new Color(144, 244, 144), name);
             DustType = DustID.GrassBlades;
             HitSound = SoundID.Grass;
+            RegisterItemDrop(ModContent.ItemType<HeartOfThorns>());
             TileMaterials.SetForTileId(Type, TileMaterials._materialsByName["Plant"]);
         }
         public override bool IsTileDangerous(int i, int j, Player player) => true;

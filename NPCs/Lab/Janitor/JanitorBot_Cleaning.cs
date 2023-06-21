@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Redemption.Globals;
 using Redemption.Items.Usable;
+using Redemption.NPCs.Lab.Volt;
 using Redemption.UI.ChatUI;
 using Terraria;
 using Terraria.Audio;
@@ -77,9 +78,15 @@ namespace Redemption.NPCs.Lab.Janitor
                         if (!LabArea.labAccess[0])
                             Item.NewItem(NPC.GetSource_Loot(), (int)NPC.position.X, (int)NPC.position.Y, NPC.width, NPC.height, ModContent.ItemType<ZoneAccessPanel1>());
 
-                        NPC.SetEventFlagCleared(ref RedeBossDowned.downedJanitor, -1);
-                        if (Main.netMode == NetmodeID.Server)
-                            NetMessage.SendData(MessageID.WorldData);
+                        NPC nPC = new();
+                        nPC.SetDefaults(ModContent.NPCType<JanitorBot>());
+                        Main.BestiaryTracker.Kills.RegisterKill(nPC);
+                        if (Main.netMode != NetmodeID.MultiplayerClient)
+                        {
+                            RedeBossDowned.downedJanitor = true;
+                            if (Main.netMode == NetmodeID.Server)
+                                NetMessage.SendData(MessageID.WorldData);
+                        }
 
                         NPC.SetDefaults(ModContent.NPCType<JanitorBot_Defeated>());
                         NPC.ai[0] = 1;
@@ -90,10 +97,10 @@ namespace Redemption.NPCs.Lab.Janitor
                     AITimer++;
                     if (AITimer == 30 && !Main.dedServ)
                     {
-                        DialogueChain chain = new();
+                        DialogueChain chain = new(); 
                         chain.Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.Janitor.Start.1"), Colors.RarityYellow, new Color(100, 86, 0), voice, .03f, 2f, 0, false))
-                             .Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.Janitor.Start.2"), Colors.RarityYellow, new Color(100, 86, 0), voice, .03f, 2f, 0, false))
-                             .Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.Janitor.Start.3"), Colors.RarityYellow, new Color(100, 86, 0), voice, .03f, 2f, .5f, true, endID: 1));
+                             .Add(new(NPC, ".[0.1].[0.1].[0.1]", Colors.RarityYellow, new Color(100, 86, 0), voice, .03f, 2f, 0, false))
+                             .Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.Janitor.Start.2"), Colors.RarityYellow, new Color(100, 86, 0), voice, .03f, 2f, .5f, true, endID: 1));
                         chain.OnSymbolTrigger += Chain_OnSymbolTrigger;
                         chain.OnEndTrigger += Chain_OnEndTrigger;
                         ChatUI.Visible = true;
@@ -132,7 +139,7 @@ namespace Redemption.NPCs.Lab.Janitor
             }
             if (State == 2)
             {
-                if ((AITimer >= 30 && AITimer < 202) || AITimer >= 338)
+                if ((AITimer >= 30 && AITimer < 226) || AITimer >= 380)
                 {
                     NPC.frame.Y = 4 * frameHeight;
                     return;

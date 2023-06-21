@@ -8,6 +8,7 @@ using Redemption.Base;
 using Terraria.GameContent.ItemDropRules;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria.GameContent;
+using Terraria.Localization;
 
 namespace Redemption.NPCs.Minibosses.FowlEmperor
 {
@@ -143,8 +144,7 @@ namespace Redemption.NPCs.Minibosses.FowlEmperor
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Surface,
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Times.DayTime,
 
-                new FlavorTextBestiaryInfoElement(
-                    "A loot box for people who specifically want an explosive egg. The chickens have not realised they need the randomness aspect for it to actually be exciting.")
+                new FlavorTextBestiaryInfoElement(Language.GetTextValue("Mods.Redemption.FlavorTextBestiary.CoopCrate"))
             });
         }
     }
