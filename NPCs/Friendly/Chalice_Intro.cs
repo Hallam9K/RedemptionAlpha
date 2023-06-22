@@ -71,7 +71,7 @@ namespace Redemption.NPCs.Friendly
                     {
                         RedeSystem.Instance.ChaliceUIElement.DisplayDialogue(Language.GetTextValue("Mods.Redemption.Dialogue.Chalice.Dialogue2"), 800, 30, 0, Color.DarkGoldenrod);
                         if (!Main.dedServ)
-                            RedeSystem.Instance.YesNoUIElement.DisplayYesNoButtons();
+                            RedeSystem.Instance.YesNoUIElement.DisplayYesNoButtons(Language.GetTextValue("Mods.Redemption.GenericTerms.Choice.Yes"), Language.GetTextValue("Mods.Redemption.GenericTerms.Choice.No"), new Vector2(0, 28), new Vector2(0, 28), .6f, .6f);
                         AITimer = 0;
                         TimerRand = 1;
                         NPC.netUpdate = true;
