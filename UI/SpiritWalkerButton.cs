@@ -5,6 +5,7 @@ using Terraria;
 using Terraria.GameContent.UI.Elements;
 using Terraria.ModLoader;
 using Terraria.UI;
+using Terraria.Localization;
 
 namespace Redemption.UI
 {
@@ -33,13 +34,12 @@ namespace Redemption.UI
         }
         public override void MouseOver(UIMouseEvent evt)
         {
-            string s = "Hold [Spirit Walker Ability Key] for 1 second to peek into the Spirit Realm.";
+            string s = Language.GetTextValue("Mods.Redemption.UI.SpiritWalker.Keybind");
             foreach (string key in Redemption.RedeSpiritwalkerAbility.GetAssignedKeys())
             {
-                s = "Hold " + key + " for 1 second to peek into the Spirit Realm.";
+                s = Language.GetTextValue("Mods.Redemption.UI.SpiritWalker.Hold") + key + Language.GetTextValue("Mods.Redemption.UI.SpiritWalker.Context");
             }
-            IconHighlight.Text = "[c/60D0D7:Spirit Walker]\n" + s + "\nGrants unrestricted interactions with Spirits and allows you to hit Spirit Realm enemies using any weapon.\n" +
-                "While in the Spirit Realm, Spirit Currents can spawn, giving you a way to transport near soulful remains to [i:Redemption/DeadRinger]Dead Ring.";
+            IconHighlight.Text = Language.GetTextValue("Mods.Redemption.UI.SpiritWalker.ColoredName") + s + Language.GetTextValue("Mods.Redemption.UI.SpiritWalker.Description");
         }
         public override void Draw(SpriteBatch spriteBatch)
         {
