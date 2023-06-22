@@ -1,10 +1,11 @@
-﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Graphics;
 using Terraria;
 using Terraria.GameContent;
 using Terraria.ModLoader;
 using Terraria.UI;
+using Terraria.Localization;
 
 namespace Redemption.UI
 {
@@ -33,7 +34,7 @@ namespace Redemption.UI
             if (!Main.dedServ)
             {
                 Text = text;
-                Title = "Chalice of Alignment:";
+                Title = Language.GetTextValue("Mods.Redemption.UI.Chalice.Name");
                 FadeTimer = 0;
                 DisplayTimer = 0;
                 MaxDisplayTime = displayTime;
