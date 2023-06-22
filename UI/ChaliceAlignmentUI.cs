@@ -33,7 +33,7 @@ namespace Redemption.UI
             if (!Main.dedServ)
             {
                 Text = text;
-                Title = "Chalice of Alignment:";
+                Title = Language.GetTextValue("Mods.Redemption.UI.Chalice.Name");
                 FadeTimer = 0;
                 DisplayTimer = 0;
                 MaxDisplayTime = displayTime;
