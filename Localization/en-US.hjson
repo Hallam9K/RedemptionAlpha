@@ -1249,6 +1249,8 @@ Mods: {
 			}
 
 			Choice: {
+				Yes: Yes
+				No: No
 				CallDraw: Call Draw
 				Continue: Continue
 				Spare: Spare
@@ -1258,6 +1260,7 @@ Mods: {
 
 		UI: {
 			Chalice: {
+				Name: Chalice of Alignment
 				Alignment: Alignment
 				ItemInterested: "[c/ffea9b:There is something to say about the item you hold]"
 				HeartOfThorns:
@@ -1347,10 +1350,21 @@ Mods: {
 			}
 
 			SpiritWalker: {
+				Name: -Spirit Walker-
 				Keybind: Hold [Spirit Walker Ability Key] for 1 second to peek into the Spirit Realm
 				Hold: "Hold "
 				Context: " for 1 second to peek into the Spirit Realm"
-				Name: -Spirit Walker-
+				ColoredName:
+					'''
+					[c/60D0D7:Spirit Walker]
+
+					'''
+				Description:
+					'''
+
+					Grants unrestricted interactions with Spirits and allows you to hit Spirit Realm enemies using any weapon.
+					While in the Spirit Realm, Spirit Currents can spawn, giving you a way to transport near soulful remains to [i:Redemption/DeadRinger]Dead Ring.
+					'''
 			}
 		}
 
