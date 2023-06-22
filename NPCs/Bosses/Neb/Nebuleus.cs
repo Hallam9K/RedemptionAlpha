@@ -1452,7 +1452,7 @@ namespace Redemption.NPCs.Bosses.Neb
                     if (!Main.dedServ)
                         Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/silence");
                     if (!Main.dedServ && !YesNoUI.Visible)
-                        RedeSystem.Instance.YesNoUIElement.DisplayYesNoButtons(Language.GetTextValue("Mods.Redemption.GenericTerms.Choice.Spare", Language.GetTextValue("Mods.Redemption.GenericTerms.Choice.Fight"), new Vector2(0, 15), new Vector2(0, 15), .75f, .75f));
+                        RedeSystem.Instance.YesNoUIElement.DisplayYesNoButtons(Language.GetTextValue("Mods.Redemption.GenericTerms.Choice.Spare"), Language.GetTextValue("Mods.Redemption.GenericTerms.Choice.Fight"), new Vector2(0, 15), new Vector2(0, 15), .75f, .75f);
 
                     if (player.Redemption().yesChoice)
                     {
