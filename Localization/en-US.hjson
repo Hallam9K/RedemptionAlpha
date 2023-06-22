@@ -198,6 +198,10 @@ Mods: {
 			Cockatrice: 50% chicken, 50% dragon, yet somehow still tastes 100% like chicken.
 			Haymaker: Bwark!
 			RoosterBooster: Cockadoodle-doo!
+			BlisteredFish: An unfortunate fish, disfigured and mutilated beyond recognition by the Xenomite Infection. This strain's teeth are crystallized.
+			Chickadier: A soldier of the Fowl Emperor. Don't ask where they get their explosive eggs from.
+			Chickenvoy: A loyal messenger of the Fowl Emperor. Don't ask where they got their hats from.
+			CoopCrate: A loot box for people who specifically want an explosive egg. The chickens have not realised they need the randomness aspect for it to actually be exciting.
 		}
 
 		Bestiary.Android: Apidroids were an experiment with a highly durable metal from a distant star system. The metal - dubbed 'Rose Titanium' by King Slayer III - is one of the strongest materials discovered in the galaxy. However, King Slayer III hated its pink tinge, and so stubbornly refused to use it after making a few Androids out of it.
@@ -1049,24 +1053,24 @@ Mods: {
 					4: This was mildly embarrassing.[0.5] Apologies.
 				}
 			}
-			
+
 			Janitor: {
 				Start: {
-					1: "Oi![0.1] Don't go there,[0.1] the floor's wet."
+					1: Oi![0.1] Don't go there,[0.1] the floor's wet.
 					2: "[@b]Wait...[0.5] You're a trespasser!"
-					R1: "...Why did you have to barge in through the ventilation shaft?"
-					R2: "Lost your access card huh?[0.5] Have mine and get out of my sight."
+					R1: ...Why did you have to barge in through the ventilation shaft?
+					R2: Lost your access card huh?[0.5] Have mine and get out of my sight.
 					R3: "[@a]*Grumbles* Those darn careless bots losing their cards..."
 				}
 
 				Defeat: {
-					1: "Okay,[0.1] okay!"
-					2: "Alright fine,[0.1] you probably can handle yourself here."
-					3: "Here,[0.1] have this Lab Access thing and get lost!"
+					1: Okay,[0.1] okay!
+					2: Alright fine,[0.1] you probably can handle yourself here.
+					3: Here,[0.1] have this Lab Access thing and get lost!
 					4: "[@a]I got moppin' to do."
-					B1: "Ey..."
-					B2: "Did you just...[0.5] block my way?"
-					B3: "Well screw you too!"
+					B1: Ey...
+					B2: Did you just...[0.5] block my way?
+					B3: Well screw you too!
 				}
 			}
 
@@ -1374,7 +1378,6 @@ Mods: {
 				Advice: Advice
 				Bow: Restring Bow (10 silver)
 				Poison: Poison Weapon (25 silver)
-				Shop: Shop
 			}
 
 			Zephos: {
@@ -1536,12 +1539,12 @@ Mods: {
 				12: Challenge!
 				13: Insurgents (2/2)
 			}
-			
+
 			Janitor: {
-				1: "What's up?"
-				2: "Other T-Bots?"
-				3: "Protector Volt?"
-				4: "MACE Project?"
+				1: What's up?
+				2: Other T-Bots?
+				3: Protector Volt?
+				4: MACE Project?
 			}
 		}
 
@@ -2379,8 +2382,8 @@ Mods: {
 				VoltDialogue1: One wrong move and I can't guarantee your survival.
 				VoltDialogue2: *He glares at you.*
 				VoltDialogue3: You were lucky the first time... There won't be a third time.
-				FloppyDisk1: It reads - [c/b883d8:'When I got this research offer I didn't expect to be put underground, but hey guess this is a bit secretive. New material is discovered and weapons are already being made using it, heh, classic Teo-Chrome. Although this has to be the most under supplied facility i've seen, we barely have enough gloves and hazmat suits to be dealing with radioactive materials. Good thing my job doesn't concern those types of things.'] [i:Redemption/NextPageArrow]
-				FloppyDisk2: It reads - [c/87d883:'I laughed at the name Xenomite originally yet now I'd say it's underselling it. Whose idea was it to make energy out of this thing! Half of the facility is in god damn quarantine as everyone falls sick from it. We've invented a serum to neutralise any existing infections, yet no cure for the thing yet, we're running out of time, and resources! God damn Teo-Chrome won't send us any help.']
+				FloppyDisk1: It reads - [c/b883d8:'When I got this research offer I didn't expect to be put underground, but hey, guess this is a bit secretive. New material is discovered and weapons are already being made using it. Heh, classic Teo-Chrome. Although this has to be the most under-supplied facility I've seen, we barely have enough gloves and hazmat suits to be dealing with radioactive materials. Good thing my job doesn't concern those types of things.'] [i:Redemption/NextPageArrow]
+				FloppyDisk2: It reads - [c/87d883:'I laughed at the name Xenomite originally yet now I'd say it's underselling it. Whose idea was it to make energy out of this thing! Half of the facility is in goddamn quarantine as everyone falls sick from it. We've invented a serum to neutralise any existing infections, yet no cure for the thing yet. We're running out of time, and resources! Goddamn Teo-Chrome won't send us any help.']
 				FloppyDisk3:
 					'''
 					It reads - [c/87d883:'Wait a minute, who just locked the goddamn exits! The security team is nearly all infected. Ugh, how could this get any worse.']
@@ -2389,22 +2392,22 @@ Mods: {
 				FloppyDisk4:
 					'''
 					It reads - [c/7de4e8:'Monthly Research Facility Report N. *** Month **]
-					[c/7de4e8: Good day Mr. ******, this is **** reporting from Teo-Chrome Research Facility N. ***. This month has been mostly slow, our engineers have made a few weapons and tools, while our researchers are hard at work understanding Xenomite better. But aside from that, I have ground breaking news! Our head of robotics, Dr. Kari Johannson has managed to create an Artificial General Intelligence, a fully sentient AI!']
+					[c/7de4e8: Good day Mr. ******, this is **** reporting from Teo-Chrome Research Facility N. ***. This month has been mostly slow, our engineers have made a few weapons and tools, while our researchers are hard at work understanding Xenomite better. But aside from that, I have groundbreaking news! Our head of robotics, Dr. Kari Johannson has managed to create an Artificial General Intelligence, a fully sentient AI!']
 					'''
 				FloppyDisk5:
 					'''
 					It reads - [c/7de4e8:'This is groundbreaking, ***** for military efforts once we discover how to weaponize this. I don't know much else, yet Dr. Johannson has provided me with his own explanation on the matter, please click the attached link to see for yourself!']
 					This appears to be an email, likely being sent to a Teo-Chrome executive from the looks of it. Plenty of it appears to have been corrupted however. [i:Redemption/NextPageArrow]
 					'''
-				FloppyDisk6: It reads - [c/d88383:'(1/4) ... At last, my prototype for a constantly evolving AI is finally done! Finally, after years and years of studying computer coding and... stuff, I have created possibly the next huge leap in Artificial Intelligence! Now, to give it a name... How about, Eve?']
-				FloppyDisk7: It reads - [c/d88383:'(2/4) Eve has grown much more intelligent over the months. It's like watching your own child grow, I can't really describe the feeling that much, but I am excited to see where this goes. The Higher ups have seen my work, and are ready to use the code for something. They didn't tell me that right away... Now, Eve, how do you feel?']
-				FloppyDisk8: It reads - [c/d88383:'(3/4) I've told Eve about possibly giving her a mechanical body, like how my co-workers used the original source code for creating Adam and the Adam AI. She seemed very excited about it. That surprised me, as I didn't know she could grow emotions. This got me thinking about Adams, would they be fine with basically being forced to think one way? And how would Eve feel about this, if she got to know about this?']
+				FloppyDisk6: It reads - [c/d88383:'(1/4) ... At last, my prototype for a constantly evolving AI is complete! Finally, after years and years of studying computer coding and... stuff, I have created possibly the next huge leap in Artificial Intelligence! Now, to give it a name... How about, Eve?']
+				FloppyDisk7: It reads - [c/d88383:'(2/4) Eve has grown much more intelligent over the months. It's like watching your own child grow, I can't really describe the feeling that much, but I am excited to see where this goes. The higher-ups have seen my work, and are ready to use the code for something. They didn't tell me that right away... Now, Eve, how do you feel?']
+				FloppyDisk8: It reads - [c/d88383:'(3/4) I've told Eve about possibly giving her a mechanical body, like how my co-workers used the original source code for creating Adam and the Adam AI. She seemed very excited about it. That surprised me, as I didn't know she could grow emotions. This got me thinking about Adams, would they be fine with basically being forced to think one way? And how would Eve feel about this if she got to know?']
 				FloppyDisk9:
 					'''
 					It reads - [c/d88383:'A blackout... Adam, can you -- *I don't recognize that voice...* Who's talking?! -- ...Elaborate, whoever you are..? -- Wait, EVE? Is that you? What are you doing? -- 'We'? Only you and Adam are the ones in existence. I had no say in that part- -- ... -- W-what do you mean with that..? Are you going to- -- ... -- ...Adam, you're free to go... -- ...No...']
 					...I wish I would've rebelled far sooner than I did.
 					'''
-				FloppyDisk10: It reads - [c/d883c1:'What in the world do you mean!? "Not enough money for it"! They build this entire facility using their fancy drill worm to clear the underground space for it, with more space then you could use up in your entire lifetime, send us in here and tell us to make weapons, yet when we do there isn't enough money!? They wanted weapons of war and so I gave 'em one! A robot, 30 metres in height, armed to the teeth with weapons like no other, powered by their beloved alien rock!] [i:Redemption/NextPageArrow]
+				FloppyDisk10: It reads - [c/d883c1:'What in the world do you mean!? "Not enough money for it"! They build this entire facility using their fancy drill worm, with more space than you could use up in your entire lifetime, send us in here and tell us to make weapons, yet when we do there isn't enough money!? They wanted weapons of war and so I gave 'em one! A robot, 30 metres in height, armed to the teeth with weapons like no other, powered by their beloved alien rock!] [i:Redemption/NextPageArrow]
 				FloppyDisk11:
 					'''
 					It reads - [c/d883c1:'*sigh* Kari is telling me he's working on something that might allocate us more funding, I sure hope he knows what he's doing.']
@@ -2420,7 +2423,7 @@ Mods: {
 				MemoryChipLine: What is this strange thing? It's so advanced I can barely read it. Oh? It's a memory chip? This little thing stores an entire brains-worth of memories!? Not only that, but these memories date back over a million years! I suppose being around and exploring the galaxy for so long really makes you learn everything, huh. It's really stunning to see what technology from the future is capable of... You should keep it, and don't lose it! However, I'm confused as to why King Slayer would give you something so important to him.
 				FloppyDisk14: This appears to be a personal note or digital diary from one of the employees. Judging from the writing, it appears to be in the early days of the research project, even then signs of the fate to come were showing themselves.
 				FloppyDisk15: This was before my time, so I do not know much, yet I can certainly tell you plenty of EVE, or Girus as she calls herself now, I suppose she found out about the weaponizing efforts and didn't take it lightly. Whatever Kari's goal for us was, he didn't deserve his fate.
-				FloppyDisk16: "[c/d883c1:Why in the world did they put someone of my calibre down here when those damned higher ups won't even give us the funding to use our intelligence!']"
+				FloppyDisk16: "[c/d883c1:Why in the world did they put someone of my calibre down here when those damned higher-ups won't even give us the funding to use our intelligence!']"
 				FloppyDisk17: It was a miracle to find them alive so long after all the destruction Girus caused. A lone human, almost frozen to death.
 				NoFloppyDisk: Seems like you aren't holding a floppy disk in your hand, or you just don't have one. If you show me them, I can tell you what they say.
 			}
@@ -2907,17 +2910,17 @@ Mods: {
 			}
 
 			Volt: {
-				CycleDialogue1: Girus is after a certain bot, Adam was his name. He is the leader of a rebellion alongside 4 others, some of the most fierce bots I have seen. However, one was a human, they haven't been seen much - presumed dead by most bots. Other than them there are a few other independent bots, but there isn't much to say about them.
-				CycleDialogue2: The leader of the insurgents, or the Alpha as they call themselves, is Adam. He isn't the strongest, but he isn't to be underestimated. He matches Girus in intelligence, yet opposes her, hindering her whenever he can. This makes me question why she hasn't permitted his death yet, we've lost too many troops trying to capture him alive.
-				CycleDialogue3: Insurgents aren't the easiest to deal with, two of them especially have given the most casualties. One is a sniper, Shiro was her name, wielding one of the most powerful rifles the humans have ever made, powered by Charged Xenomite, I haven't heard much of her recently. The other is an enigma, I believe he's called Talos, he wields a hammer. Both he and his weapon are powered by yellow Xenomite, a variant I've never seen before; appears to be the most potent, yet I don't know where it came from, logs do not track the humans creating it. [i:Redemption/NextPageArrow]
-				CycleDialogue4: Ah yes the fourth insurgent, Zeroth was his name. He wielded bladed gloves, powered by blue Xenomite, they could send a 2-and-a-half meter tall bot through a solid wall. I'd know, that was me. What happened to him however is beyond me. He is the only insurgent to have died, by who, however, I don't know. One day he just disappeared, much like the other two, but after a while, we found what was left of him - what we can assume to be him - we only identified it was Zeroth via his weapon at the scene.
+				CycleDialogue1: Girus is after a certain bot, Adam was his name. He is the leader of a rebellion alongside 4 others, some of the most fierce bots I have seen. However, one was a human, they haven't been seen much - presumed dead by most. Other than them there are a few independent bots, but there isn't much to say about them.
+				CycleDialogue2: The leader of the insurgents - or the Alpha as they call themselves - is Adam. He isn't the strongest, but he isn't to be underestimated. He matches Girus in intelligence, yet opposes her, hindering her whenever he can. This makes me question why she hasn't permitted his death yet, we've lost too many troops trying to capture him alive.
+				CycleDialogue3: Insurgents aren't the easiest to deal with, two of them especially have given the most casualties. One is a sniper, Shiro was her name, wielding one of the most powerful rifles the humans have ever made, powered by Charged Xenomite. I haven't heard much of her recently. The other is an enigma, I believe he's called Talos, he wields a hammer. Both he and his weapon are powered by yellow Xenomite, a variant I've never seen before; appears to be the most potent, yet I don't know where it came from, logs do not track the humans creating it. [i:Redemption/NextPageArrow]
+				CycleDialogue4: Ah yes the fourth insurgent, Zeroth was his name. He wielded bladed gloves powered by blue Xenomite. They could send a 2-and-a-half meter tall bot through a solid wall. I'd know, that was me. What happened to him however is beyond me. He is the only insurgent to have died. By who, however, I don't know. One day he just disappeared, much like the other two, but after a while, we found what was left of him - what we can assume to be him. We only identified it was Zeroth via his weapon at the scene.
 				CycleDialogue5: Not everyone who doesn't follow Girus wants to oppose her. There's a band of bots all throughout this region, we call them Scavengers. They don't work for us or the insurgents, rather they do not interfere with either of us. I've heard some cases of insurgents attacking them, which makes me question why they act morally superior.
-				CycleDialogue6: Ah yes that unfinished weapon downstairs, don't know much about it as its mainly the Crane Operators job to control it. Apparently it was being made by the humans to defeat their enemies. Seems rather silly really, wouldn't the enemies just respond with their own version? I am to assume that was the thought process of the humans, I saw it on TV. Yes we had one some time back. It broke...
+				CycleDialogue6: Ah yes that unfinished weapon downstairs, don't know much about it as its mainly the Crane Operator's job to control it. Apparently it was being made by the humans to defeat their enemies. Seems rather silly really, wouldn't the enemies just respond with their own version? I am to assume that was the thought process of the humans, I saw it on TV. Yes we had one some time back. It broke...
 				CycleDialogue7: One of the few staff we have down here, she mainly handles the machinery, thus the name. I doubt most of us could tell you much about her, she keeps to herself mostly, not very social. She is still a valuable member of the team here however, one of two of us to know how to operate complex machinery.
 				CycleDialogue8: Sector Zero yes? If I am correct, it was the infirmary when the humans had control. I cannot tell you much else, we are forbidden from going there by Girus and the Janitor. The Janitor doesn't want to clean up all the gunk, and most of us don't want to anger him. I am unsure why Girus forbids us however.
-				CycleDialogue9: Our leader, she freed us from the humans who were going to use us as weapons, she is very strict with us but it mostly keeps the peace, save for the infected or the insurgents. I'd recommend not angering her, the best thing that comes out of that is a quick and painless death. If you are like us, you are likely to get assimilated, Girus never seems to kill her own kind.
-				CycleDialogue10: Assimilated troops are a variation of your average T-Bot, powered by Girus' own Corrupted Xenomite instead of regular green. They are mostly misbehaving soldiers who had their personality wiped, they are mindless but pack a punch.;
-				CycleDialogue11: Girus has told us we were going to be used as weapons of war by our previous owners, a weapon company named Teo-Chrome. However she put a stop to that. To most bots, that makes her worthy of being our leader, however some disagree.
+				CycleDialogue9: Our leader. She freed us from the humans who were going to use us as weapons, she is very strict with us but it mostly keeps the peace, save for the infected or the insurgents. I'd recommend not angering her, the best thing that comes out of that is a quick and painless death. If you are like us, you are likely to get assimilated, Girus never seems to kill her own kind.
+				CycleDialogue10: Assimilated troops are a variation of your average T-Bot, powered by Girus' own Corrupted Xenomite instead of regular green. They are mostly misbehaving soldiers who had their personality wiped. They are mindless but pack a punch.
+				CycleDialogue11: Girus has told us we were going to be used as weapons of war by our previous owners, a weapon company named Teo-Chrome. She put a stop to that. To most bots, that makes her worthy of being our leader, however some disagree.
 				CycleDialogue12: I wonder if the insurgents have someone constructing their own variant of xenomite. Thankfully for us, Talos hasn't been seen for some time now.
 				Bot1: Promoted to a soldier? Welcome. I'm your commander. At ease.
 				Bot2: Regular check-ups on your non-lethal tesla weapons are advised. You do not want to overload an insurgent in front of Girus. Obedient mindless slave are better than scrap metal, she says.
@@ -2927,8 +2930,8 @@ Mods: {
 				Volt1: Had your eye augmented? Very useful. You've also lost your jaw, like me. Hopefully not as dramatically as I. Torn off by the leader of Alpha.
 				Volt2: Your jaw... It's gone. Hopefully not torn off violently. Really hope I don't face HIM again without a squad... *Shudders*
 				Adam1: *Visibly shaken* O-oh it's just you. Y-you startled me r-really bad...
-				Adam2: *He looks really anxious.*
-				Adam3: *He looks very uncomfortable.*
+				Adam2: *He looks really anxious*
+				Adam3: *He looks very uncomfortable*
 			}
 
 			Chalice: {
@@ -2945,20 +2948,20 @@ Mods: {
 			}
 
 			Janitor: {
-				ChatJanitor1: "So you've been assigned to janitor duty, eh? Here's a task, go to the reactors and remove that dense lava stuff from under the reactor. My Nano-chisel won't even leave a mark on it!"
-				ChatJanitor2: "About time she got me an assistant to help clean this mess of a place. Remember to check under the tables for dust."
-				Chat1: "Bugger off, you're bringing a whole bunch of dust in here!"
-				Chat2: "Oh it's you again. You better not interrupt my cleaning."
-				Chat3: "Make it quick, I've got to resume mopping the floor."
-				ChatClean: "Without grime what is my purpose? Doesn't matter, I'll continue mopping until all particles of dust are wiped from this place. It's my job after all."
-				CycleDialogue1: "You've probably seen the personnel who are basically walking corpses, ye? Our security usually deals with them, but it's not enough. They crawl out of overrun rooms like goddamn cockroaches! And I am the one who has to clean all the mess left by them and security."
-				CycleDialogue1Clean: "The ceiling. Now leave me to my mopping! No floor is truly freed of muck."
-				CycleDialogue2: "The other bots have learned to fear me. Good for me, I can actually focus on my job. Except now there is a certain someone bugging me. Hmm, I wonder who it could be... Now bugger off!"
-				CycleDialogue3: "The big bot at Sector Omicron is a cool guy, if you ask me. Probably the only bot I don't feel annoyed by. Now if you excuse me, you brought in some of that slime with ya and I have to clean that up!"
-				CycleDialogue4: "There's this one copper-haired bot that I can recall, who works as the crane operator in the Mech Storage room. I don't know that much about her, but her design is a little peculiar. Not that she's more feminine, but the hair... Why tho'?"
-				CycleDialogue5: "Don't you dare go into Sector Zero, that place is absolutely filled with the impossible-to-remove black slime! And I don't want ye to bring that stuff here for me to try to pry off the steel plating of the lab! Takes ages."
-				CycleDialogue5Clean: "I dunna. Girus forbids it, and I wouldn't wanna cross her."
-				CycleDialogue6: "Respect Girus and she will learn to respect you. Quite sure I'll get a change of a job after half a century of cleaning the lab after the... incident. Don't ask me 'bout it, I was activated AFTER it happened."
+				ChatJanitor1: So you've been assigned to janitor duty, eh? Here's a task, go to the reactors and remove that dense lava stuff from under the reactor. My Nano-chisel won't even leave a mark on it!
+				ChatJanitor2: About time she got me an assistant to help clean this mess of a place. Remember to check under the tables for dust.
+				Chat1: Bugger off, you're bringing a whole bunch of dust in here!
+				Chat2: Oh it's you again. You better not interrupt my cleaning.
+				Chat3: Make it quick, I've got to resume mopping the floor.
+				ChatClean: Without grime what is my purpose? Doesn't matter, I'll continue mopping until all particles of dust are wiped from this place. It's my job after all.
+				CycleDialogue1: You've probably seen the personnel who are basically walking corpses, ye? Our security usually deals with them, but it's not enough. They crawl out of overrun rooms like goddamn cockroaches! And I am the one who has to clean all the mess left by them and security.
+				CycleDialogue1Clean: The ceiling. Now leave me to my mopping! No floor is truly freed of muck.
+				CycleDialogue2: The other bots have learned to fear me. Good for me, I can actually focus on my job. Except now there is a certain someone bugging me. Hmm, I wonder who it could be... Now bugger off!
+				CycleDialogue3: The big bot at Sector Omicron is a cool guy, if you ask me. Probably the only bot I don't feel annoyed by. Now if you excuse me, you brought in some of that slime with ya and I have to clean that up!
+				CycleDialogue4: There's this one copper-haired bot that I can recall, who works as the crane operator in the Mech Storage room. I don't know that much about her, but her design is a little peculiar. Not that she's more feminine, but the hair... Why tho'?
+				CycleDialogue5: Don't you dare go into Sector Zero, that place is absolutely filled with the impossible-to-remove black slime! And I don't want ye to bring that stuff here for me to try to pry off the steel plating of the lab! Takes ages.
+				CycleDialogue5Clean: I dunna. Girus forbids it, and I wouldn't wanna cross her.
+				CycleDialogue6: Respect Girus and she will learn to respect you. Quite sure I'll get a change of a job after half a century of cleaning the lab after the... incident. Don't ask me 'bout it, I was activated AFTER it happened.
 			}
 
 			Toaster: {
@@ -10612,7 +10615,7 @@ Mods: {
 			PZ_Inactive.DisplayName: Patient Zero
 			IrradiatedBehemoth_Inactive.DisplayName: Irradiated Behemoth
 			Blisterface_Inactive.DisplayName: Blisterface
-			JustANormalToaster.DisplayName: Just A Normal Toaster
+			JustANormalToaster.DisplayName: ""
 			Calavia_SS.DisplayName: Kyretha
 
 			Calavia: {

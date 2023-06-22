@@ -227,7 +227,7 @@ namespace Redemption.NPCs.Friendly
                 switch (ChatNumber)
                 {
                     case 0:
-                        button = "Shop";
+                        button = Language.GetTextValue("LegacyInterface.28");
                         break;
                     case 1:
                         button = Language.GetTextValue("Mods.Redemption.DialogueBox.Daerel.Advice");

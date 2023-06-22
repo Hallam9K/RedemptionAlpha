@@ -8,6 +8,7 @@ using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent.Bestiary;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 
 namespace Redemption.NPCs.Lab.Blisterface
@@ -75,7 +76,7 @@ namespace Redemption.NPCs.Lab.Blisterface
             bestiaryEntry.UIInfoProvider = new CommonEnemyUICollectionInfoProvider(ContentSamples.NpcBestiaryCreditIdsByNpcNetIds[associatedNPCType], quickUnlock: true);
 
             bestiaryEntry.Info.AddRange(new List<IBestiaryInfoElement> {
-                new FlavorTextBestiaryInfoElement("An unfortunate fish, disfigured and mutilated beyond recognition by the Xenomite Infection. This strain's teeth are crystallized.")
+                new FlavorTextBestiaryInfoElement(Language.GetTextValue("Mods.Redemption.FlavorTextBestiary.BlisteredFish"))
             });
         }
         public override void FindFrame(int frameHeight)

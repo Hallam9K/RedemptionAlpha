@@ -10,6 +10,7 @@ using Redemption.Dusts;
 using Redemption.Base;
 using Redemption.Items.Usable.Potions;
 using Terraria.GameContent.ItemDropRules;
+using Terraria.Localization;
 
 namespace Redemption.NPCs.Minibosses.FowlEmperor
 {
@@ -182,8 +183,7 @@ namespace Redemption.NPCs.Minibosses.FowlEmperor
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Surface,
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Times.DayTime,
 
-                new FlavorTextBestiaryInfoElement(
-                    "A loyal messenger of the Fowl Emperor. Don't ask where they got their hats from.")
+                new FlavorTextBestiaryInfoElement(Language.GetTextValue("Mods.Redemption.FlavorTextBestiary.Chickenvoy"))
             });
         }
     }
