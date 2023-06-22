@@ -10,6 +10,7 @@ using Redemption.BaseExtension;
 using ReLogic.Content;
 using Terraria.GameContent;
 using ReLogic.Graphics;
+using Terraria.Localization;
 
 namespace Redemption.UI
 {
@@ -51,7 +52,7 @@ namespace Redemption.UI
             YesIcon.Top.Set(258, 0f);
             Append(YesIcon);
 
-            YesIconHighlight = new UIHoverTextImageButton(Button_MouseOverTexture, "Yes");
+            YesIconHighlight = new UIHoverTextImageButton(Button_MouseOverTexture, Language.GetTextValue("Mods.Redemption.GenericTerms.Choice.Yes"));
             YesIconHighlight.Left.Set(-2, 0f);
             YesIconHighlight.Top.Set(-2, 0f);
             YesIconHighlight.SetVisibility(1f, 0f);
@@ -63,7 +64,7 @@ namespace Redemption.UI
             NoIcon.Top.Set(258, 0f);
             Append(NoIcon);
 
-            NoIconHighlight = new UIHoverTextImageButton(Button_MouseOverTexture, "No");
+            NoIconHighlight = new UIHoverTextImageButton(Button_MouseOverTexture, Language.GetTextValue("Mods.Redemption.GenericTerms.Choice.No"));
             NoIconHighlight.Left.Set(-2, 0f);
             NoIconHighlight.Top.Set(-2, 0f);
             NoIconHighlight.SetVisibility(1f, 0f);
