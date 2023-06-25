@@ -4,6 +4,7 @@ using System;
 using Terraria.GameContent.Bestiary;
 using Terraria.UI;
 using Terraria;
+using Terraria.Localization;
 
 namespace Redemption.Globals.NPC
 {
@@ -46,7 +47,7 @@ namespace Redemption.Globals.NPC
     {
         public override void SetBestiary(Terraria.NPC npc, BestiaryDatabase database, BestiaryEntry bestiaryEntry)
         {
-            string entry = "Elemental Multipliers";
+            string entry = Language.GetTextValue("Mods.Redemption.FlavorTextBestiary.Multiplier");
             float[] elementDmg = npc.GetGlobalNPC<ElementalNPC>().elementDmg;
             for (int i = 0; i < elementDmg.Length - 1; i++)
             {
@@ -80,7 +81,7 @@ namespace Redemption.Globals.NPC
                 };
                 entry += "\n" + s + ((int)(elementDmg[i] * 100)).ToString() + "%";
             }
-            if (entry != "Elemental Multipliers")
+            if (entry != Language.GetTextValue("Mods.Redemption.FlavorTextBestiary.Multiplier"))
                 bestiaryEntry.Info.Add(new ElementBestiaryText(entry));
         }
     }
