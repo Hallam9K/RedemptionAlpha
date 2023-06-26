@@ -732,6 +732,11 @@ Mods: {
 			}
 
 			ThankYouLetter: {
+				Missed: 
+					'''
+					
+					Things you didn't do this playthrough, but can do for the next:
+					'''
 				HoldShift: Hold [Shift] to view what you've missed
 				SpiritWalker: -Gaining a spiritual ability
 				Chalice: -Gaining an important object of judgement
