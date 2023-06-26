@@ -10341,6 +10341,7 @@ Mods: {
 
 			Thorn: {
 				DisplayName: Thorn, Bane of the Forest
+				XmasName: "Everthorn, Bane of the Holidays"
 
 				BossChecklistIntegration: {
 					DespawnMessage: Thorn returned to his blighted forest...

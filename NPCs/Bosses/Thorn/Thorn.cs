@@ -211,7 +211,7 @@ namespace Redemption.NPCs.Bosses.Thorn
         public override void ModifyTypeName(ref string typeName)
         {
             if (Main.xMas)
-                typeName = "Everthorn, Bane of the Holidays";
+                typeName = Language.GetTextValue("Mods.Redemption.NPCs.Thorn.XmasName");
         }
         private bool barrierSpawn;
         private Vector2 origin;
