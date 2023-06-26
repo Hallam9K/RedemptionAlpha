@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using Redemption.Globals;
 using Redemption.BaseExtension;
 using Microsoft.Xna.Framework;
+using Terraria.Localization;
 
 namespace Redemption.Items
 {
@@ -34,54 +35,54 @@ namespace Redemption.Items
             {
                 if (Main.keyState.PressingShift())
                 {
-                    TooltipLine missLine = new(Mod, "LetterMissedLine", "\nThings you didn't do this playthrough, but can do for the next:") { OverrideColor = Colors.RarityPink };
+                    TooltipLine missLine = new(Mod, "LetterMissedLine", Language.GetTextValue("Mods.Redemption.SpecialTooltips.ThankYouLetter.Missed")) { OverrideColor = Colors.RarityPink };
                     tooltips.Insert(tooltipLocation + 1, missLine);
                     if (!Main.LocalPlayer.RedemptionAbility().Spiritwalker)
-                        tooltips.Insert(tooltipLocation + 2, new(Mod, "LetterLine", "-Gaining a spiritual ability"));
+                        tooltips.Insert(tooltipLocation + 2, new(Mod, "LetterLine", Language.GetTextValue("Mods.Redemption.SpecialTooltips.ThankYouLetter.SpiritWalker")));
                     if (!RedeWorld.alignmentGiven)
-                        tooltips.Insert(tooltipLocation + 2, new(Mod, "LetterLine", "-Gaining an important object of judgement"));
+                        tooltips.Insert(tooltipLocation + 2, new(Mod, "LetterLine", Language.GetTextValue("Mods.Redemption.SpecialTooltips.ThankYouLetter.Chalice")));
                     if (!RedeBossDowned.foundNewb)
-                        tooltips.Insert(tooltipLocation + 2, new(Mod, "LetterLine", "-Finding a suspicious entity beneath a portal"));
+                        tooltips.Insert(tooltipLocation + 2, new(Mod, "LetterLine", Language.GetTextValue("Mods.Redemption.SpecialTooltips.ThankYouLetter.Newb")));
                     if (!RedeBossDowned.downedFowlEmperor)
-                        tooltips.Insert(tooltipLocation + 2, new(Mod, "LetterLine", "-Fighting a mighty rooster"));
+                        tooltips.Insert(tooltipLocation + 2, new(Mod, "LetterLine", Language.GetTextValue("Mods.Redemption.SpecialTooltips.ThankYouLetter.FowlEmperor")));
                     if (!RedeBossDowned.downedThorn)
-                        tooltips.Insert(tooltipLocation + 2, new(Mod, "LetterLine", "-Fighting a blighted bane of the forest [c/bbf160:(Good Route)]"));
+                        tooltips.Insert(tooltipLocation + 2, new(Mod, "LetterLine", Language.GetTextValue("Mods.Redemption.SpecialTooltips.ThankYouLetter.Thorn")));
                     if (!RedeBossDowned.downedErhan)
-                        tooltips.Insert(tooltipLocation + 2, new(Mod, "LetterLine", "-Fighting a high priest [c/ff5533:(Bad Route)]"));
+                        tooltips.Insert(tooltipLocation + 2, new(Mod, "LetterLine", Language.GetTextValue("Mods.Redemption.SpecialTooltips.ThankYouLetter.Erhan")));
                     if (!RedeBossDowned.downedKeeper)
-                        tooltips.Insert(tooltipLocation + 2, new(Mod, "LetterLine", "-Fighting a sorrowful undead"));
+                        tooltips.Insert(tooltipLocation + 2, new(Mod, "LetterLine", Language.GetTextValue("Mods.Redemption.SpecialTooltips.ThankYouLetter.Keeper")));
                     if (RedeQuest.forestNymphVar <= 0)
-                        tooltips.Insert(tooltipLocation + 2, new(Mod, "LetterLine", "-Befriending a being of nature and giving it a tree-home [c/bbf160:(Good Route)]"));
+                        tooltips.Insert(tooltipLocation + 2, new(Mod, "LetterLine", Language.GetTextValue("Mods.Redemption.SpecialTooltips.ThankYouLetter.ForestNymph")));
                     if (!RedeBossDowned.downedSkullDigger)
-                        tooltips.Insert(tooltipLocation + 2, new(Mod, "LetterLine", "-Fighting an undead protector underground [c/ff5533:(Bad Route)]"));
+                        tooltips.Insert(tooltipLocation + 2, new(Mod, "LetterLine", Language.GetTextValue("Mods.Redemption.SpecialTooltips.ThankYouLetter.SkullDigger")));
                     if (!RedeBossDowned.keeperSaved)
-                        tooltips.Insert(tooltipLocation + 2, new(Mod, "LetterLine", "-Bringing peace to an undead mistress [c/bbf160:(Good Route)]"));
+                        tooltips.Insert(tooltipLocation + 2, new(Mod, "LetterLine", Language.GetTextValue("Mods.Redemption.SpecialTooltips.ThankYouLetter.KeeperSaved")));
                     if (!RedeBossDowned.skullDiggerSaved)
-                        tooltips.Insert(tooltipLocation + 2, new(Mod, "LetterLine", "-Bringing peace to an undead protector [c/bbf160:(Good Route)]"));
+                        tooltips.Insert(tooltipLocation + 2, new(Mod, "LetterLine", Language.GetTextValue("Mods.Redemption.SpecialTooltips.ThankYouLetter.SkullDiggerSaved")));
                     if (!RedeBossDowned.downedEaglecrestGolem)
-                        tooltips.Insert(tooltipLocation + 2, new(Mod, "LetterLine", "-Fighting a strange boulder in the overworld"));
+                        tooltips.Insert(tooltipLocation + 2, new(Mod, "LetterLine", Language.GetTextValue("Mods.Redemption.SpecialTooltips.ThankYouLetter.Golem")));
                     if (!RedeBossDowned.downedSeed)
-                        tooltips.Insert(tooltipLocation + 2, new(Mod, "LetterLine", "-Fighting an infectious anomaly"));
+                        tooltips.Insert(tooltipLocation + 2, new(Mod, "LetterLine", Language.GetTextValue("Mods.Redemption.SpecialTooltips.ThankYouLetter.SoI")));
                     if (!RedeBossDowned.nukeDropped)
-                        tooltips.Insert(tooltipLocation + 2, new(Mod, "LetterLine", "-Detonating a nuclear warhead"));
+                        tooltips.Insert(tooltipLocation + 2, new(Mod, "LetterLine", Language.GetTextValue("Mods.Redemption.SpecialTooltips.ThankYouLetter.Nuke")));
                     if (!RedeBossDowned.downedJanitor)
-                        tooltips.Insert(tooltipLocation + 2, new(Mod, "LetterLine", "-Discovering an underground laboratory"));
+                        tooltips.Insert(tooltipLocation + 2, new(Mod, "LetterLine", Language.GetTextValue("Mods.Redemption.SpecialTooltips.ThankYouLetter.Lab")));
                     if (!RedeBossDowned.downedSlayer)
-                        tooltips.Insert(tooltipLocation + 2, new(Mod, "LetterLine", "-Fighting a depressed robot"));
+                        tooltips.Insert(tooltipLocation + 2, new(Mod, "LetterLine", Language.GetTextValue("Mods.Redemption.SpecialTooltips.ThankYouLetter.KS3")));
                     if (RedeWorld.slayerRep < 4)
-                        tooltips.Insert(tooltipLocation + 2, new(Mod, "LetterLine", "-Helping a depressed robot preform ship repairs [c/bbf160:(Good Route)]"));
+                        tooltips.Insert(tooltipLocation + 2, new(Mod, "LetterLine", Language.GetTextValue("Mods.Redemption.SpecialTooltips.ThankYouLetter.KS3Quest")));
                     if (!RedeBossDowned.downedOmega1 && !RedeBossDowned.downedOmega2 && !RedeBossDowned.downedOmega3)
-                        tooltips.Insert(tooltipLocation + 2, new(Mod, "LetterLine", "-Fighting a trio of deadly machines"));
+                        tooltips.Insert(tooltipLocation + 2, new(Mod, "LetterLine", Language.GetTextValue("Mods.Redemption.SpecialTooltips.ThankYouLetter.Omega")));
                     if (!RedeBossDowned.downedPZ)
-                        tooltips.Insert(tooltipLocation + 2, new(Mod, "LetterLine", "-Fighting the laboratory's final challenge"));
+                        tooltips.Insert(tooltipLocation + 2, new(Mod, "LetterLine", Language.GetTextValue("Mods.Redemption.SpecialTooltips.ThankYouLetter.PatientZero")));
                     if (!RedeBossDowned.downedADD && RedeBossDowned.downedEaglecrestGolem)
-                        tooltips.Insert(tooltipLocation + 2, new(Mod, "LetterLine", "-Figuring out the Eaglecrest Golem's secret"));
+                        tooltips.Insert(tooltipLocation + 2, new(Mod, "LetterLine", Language.GetTextValue("Mods.Redemption.SpecialTooltips.ThankYouLetter.ADD")));
                     if (RedeBossDowned.nebDeath < 7)
-                        tooltips.Insert(tooltipLocation + 2, new(Mod, "LetterLine", "-Fighting the Angel of the Cosmos' last stand [c/ff5533:(Bad Route)]"));
+                        tooltips.Insert(tooltipLocation + 2, new(Mod, "LetterLine", Language.GetTextValue("Mods.Redemption.SpecialTooltips.ThankYouLetter.UltimateNeb")));
                 }
                 else
                 {
-                    TooltipLine line = new(Mod, "HoldShift", "Hold [Shift] to view what you've missed")
+                    TooltipLine line = new(Mod, "HoldShift", Language.GetTextValue("Mods.Redemption.SpecialTooltips.ThankYouLetter.HoldShift"))
                     {
                         OverrideColor = Color.Gray,
                     };

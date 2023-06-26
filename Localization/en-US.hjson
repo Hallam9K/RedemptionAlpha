@@ -730,6 +730,36 @@ Mods: {
 					'''
 				Datalog28: "'I've made it back, I'm home again.'"
 			}
+
+			ThankYouLetter: {
+				Missed: 
+					'''
+					
+					Things you didn't do this playthrough, but can do for the next:
+					'''
+				HoldShift: Hold [Shift] to view what you've missed
+				SpiritWalker: -Gaining a spiritual ability
+				Chalice: -Gaining an important object of judgement
+				Newb: -Finding a suspicious entity beneath a portal
+				FowlEmperor: -Fighting a mighty rooster
+				Thorn: -Fighting a blighted bane of the forest [c/bbf160:(Good Route)]
+				Erhan: -Fighting a high priest [c/ff5533:(Bad Route)]
+				Keeper: -Fighting a sorrowful undead
+				ForestNymph: -Befriending a being of nature and giving it a tree-home [c/bbf160:(Good Route)]
+				SkullDigger: -Fighting an undead protector underground [c/ff5533:(Bad Route)]
+				KeeperSaved: -Bringing peace to an undead mistress [c/bbf160:(Good Route)]
+				SkullDiggerSaved: -Bringing peace to an undead protector [c/bbf160:(Good Route)]
+				Golem: -Fighting a strange boulder in the overworld
+				SoI: -Fighting an infectious anomaly
+				Nuke: -Detonating a nuclear warhead
+				Lab: -Discovering an underground laboratory
+				KS3: -Fighting a depressed robot
+				KS3Quest: -Helping a depressed robot preform ship repairs [c/bbf160:(Good Route)]
+				Omega: -Fighting a trio of deadly machines
+				PatientZero: -Fighting the laboratory's final challenge
+				ADD: -Figuring out the Eaglecrest Golem's secret
+				UltimateNeb: -Fighting the Angel of the Cosmos' last stand [c/ff5533:(Bad Route)]
+			}
 		}
 
 		Cutscene: {

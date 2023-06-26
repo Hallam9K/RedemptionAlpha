@@ -140,7 +140,7 @@ namespace Redemption.NPCs.Bosses.Thorn
         {
             if (!RedeBossDowned.downedThorn)
             {
-                string status = Language.GetTextValue("Mods.Redemption.StatusMessage.ThornDowned");
+                string status = Language.GetTextValue("Mods.Redemption.StatusMessage.Progression.ThornDowned");
                 if (Main.netMode == NetmodeID.Server)
                     ChatHelper.BroadcastChatMessage(NetworkText.FromLiteral(status), Color.LawnGreen);
                 else if (Main.netMode == NetmodeID.SinglePlayer)
