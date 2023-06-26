@@ -35,7 +35,7 @@ namespace Redemption.Items
             {
                 if (Main.keyState.PressingShift())
                 {
-                    TooltipLine missLine = new(Mod, "LetterMissedLine", "\nThings you didn't do this playthrough, but can do for the next:") { OverrideColor = Colors.RarityPink };
+                    TooltipLine missLine = new(Mod, "LetterMissedLine", Language.GetTextValue("Mods.Redemption.SpecialTooltips.ThankYouLetter.Missed")) { OverrideColor = Colors.RarityPink };
                     tooltips.Insert(tooltipLocation + 1, missLine);
                     if (!Main.LocalPlayer.RedemptionAbility().Spiritwalker)
                         tooltips.Insert(tooltipLocation + 2, new(Mod, "LetterLine", Language.GetTextValue("Mods.Redemption.SpecialTooltips.ThankYouLetter.SpiritWalker")));
