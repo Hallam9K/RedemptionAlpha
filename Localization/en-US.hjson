@@ -732,9 +732,9 @@ Mods: {
 			}
 
 			ThankYouLetter: {
-				Missed: 
+				Missed:
 					'''
-					
+
 					Things you didn't do this playthrough, but can do for the next:
 					'''
 				HoldShift: Hold [Shift] to view what you've missed
@@ -10341,7 +10341,7 @@ Mods: {
 
 			Thorn: {
 				DisplayName: Thorn, Bane of the Forest
-				XmasName: "Everthorn, Bane of the Holidays"
+				XmasName: Everthorn, Bane of the Holidays
 
 				BossChecklistIntegration: {
 					DespawnMessage: Thorn returned to his blighted forest...
