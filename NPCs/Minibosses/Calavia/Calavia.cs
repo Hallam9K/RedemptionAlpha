@@ -175,7 +175,7 @@ namespace Redemption.NPCs.Minibosses.Calavia
                         continue;
 
                     if (!Main.dedServ)
-                        RedeSystem.Instance.ChaliceUIElement.DisplayDialogue(Language.GetTextValue("Mods.Redemption.UI.Chalice.Calaviakilled"), 180, 30, 0, Color.DarkGoldenrod);
+                        RedeSystem.Instance.ChaliceUIElement.DisplayDialogue(Language.GetTextValue("Mods.Redemption.UI.Chalice.CalaviaKilled"), 180, 30, 0, Color.DarkGoldenrod);
 
                 }
             }
