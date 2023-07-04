@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Base;
+using Redemption.Items.Materials.PreHM;
 using Redemption.WorldGeneration;
 using Terraria;
 using Terraria.DataStructures;
@@ -17,6 +18,7 @@ namespace Redemption.Items.Usable
             // Tooltip.SetDefault("Holding this in your hand will point to an ancient structure");
             Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(4, 5));
             ItemID.Sets.AnimatesAsSoul[Item.type] = true;
+            ItemID.Sets.ShimmerTransformToItem[Type] = ModContent.ItemType<CursedGem>();
 
             Item.ResearchUnlockCount = 1;
         }

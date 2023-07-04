@@ -568,12 +568,12 @@ namespace Redemption.CrossMod
         {
             if (ModLoader.TryGetMod("Census", out Mod censusMod))
             {
-                censusMod.Call("TownNPCCondition", ModContent.NPCType<Zephos>(), "Have a suitable house in a Corruption world, after meeting him at the surface portal after the first night");
-                censusMod.Call("TownNPCCondition", ModContent.NPCType<Daerel>(), "Have a suitable house in a Crimson world, after meeting him at the surface portal after the first night");
-                censusMod.Call("TownNPCCondition", ModContent.NPCType<Fallen>(), "Defeat the Keeper and have a suitable house");
-                censusMod.Call("TownNPCCondition", ModContent.NPCType<Newb>(), "Dig up the dirt mound beneath the surface portal");
-                censusMod.Call("TownNPCCondition", ModContent.NPCType<TBot>(), "Defeat the Seed of Infection and have a suitable house");
-                censusMod.Call("TownNPCCondition", ModContent.NPCType<ForestNymph_Friendly>(), "Use the [i:Redemption/KingsOakStaff] to gain a Forest Nymph's trust, requires positive alignment.\nRequires +3 alignment if a Treebark Dryad was slain.");
+                censusMod.Call("TownNPCCondition", ModContent.NPCType<Zephos>());
+                censusMod.Call("TownNPCCondition", ModContent.NPCType<Daerel>());
+                censusMod.Call("TownNPCCondition", ModContent.NPCType<Fallen>());
+                censusMod.Call("TownNPCCondition", ModContent.NPCType<Newb>());
+                censusMod.Call("TownNPCCondition", ModContent.NPCType<TBot>());
+                censusMod.Call("TownNPCCondition", ModContent.NPCType<ForestNymph_Friendly>());
             }
         }
         private static void PerformFargosSupport()

@@ -381,7 +381,7 @@ namespace Redemption.NPCs.Minibosses.Calavia
                             button = Language.GetTextValue("Mods.Redemption.DialogueBox.Calavia.Crux");
                         break;
                     case 4:
-                        button = Language.GetTextValue("Mods.Redemption.DialogueBox.Calavia.Leave");
+                        button = "[c/FF6600:" + Language.GetTextValue("Mods.Redemption.DialogueBox.Calavia.Leave") + "]";
                         break;
                 }
             }
@@ -433,13 +433,15 @@ namespace Redemption.NPCs.Minibosses.Calavia
                     case 7:
                         Main.npcChatText = Language.GetTextValue("Mods.Redemption.Dialogue.Calavia.IntroLine5");
                         if (RedeGen.cryoCrystalSpawn)
-                            RedeQuest.calaviaVar = 8;
-                        else
-                        {
                             Main.npcChatText += Language.GetTextValue("Mods.Redemption.Dialogue.Calavia.IntroLine5B");
-                            RedeQuest.calaviaVar = 11;
+                        if (Main.netMode != NetmodeID.MultiplayerClient)
+                        {
+                            if (RedeGen.cryoCrystalSpawn)
+                                RedeQuest.calaviaVar = 8;
+                            else
+                                RedeQuest.calaviaVar = 11;
                         }
-                        if (Main.netMode == NetmodeID.Server)
+                        if (Main.netMode != NetmodeID.MultiplayerClient && Main.netMode == NetmodeID.Server)
                             NetMessage.SendData(MessageID.WorldData);
                         break;
                     case 8:

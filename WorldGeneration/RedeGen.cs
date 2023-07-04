@@ -374,7 +374,7 @@ namespace Redemption.WorldGeneration
                 if (RedeWorld.alignment >= 0)
                 {
                     cryoCrystalSpawn = true;
-                    string status = "Crystals form in the icy caverns...";
+                    string status = Language.GetTextValue("Mods.Redemption.StatusMessage.Progression.GoodSkeletron");
                     if (Main.netMode == NetmodeID.Server)
                         ChatHelper.BroadcastChatMessage(NetworkText.FromLiteral(status), Color.LightBlue);
                     else if (Main.netMode == NetmodeID.SinglePlayer)
@@ -409,7 +409,7 @@ namespace Redemption.WorldGeneration
                 else
                 {
                     dragonLeadSpawn = true;
-                    string status = "The caverns are heated with dragon bone...";
+                    string status = Language.GetTextValue("Mods.Redemption.StatusMessage.Progression.BadSkeletron");
                     if (Main.netMode == NetmodeID.Server)
                         ChatHelper.BroadcastChatMessage(NetworkText.FromLiteral(status), Color.Orange);
                     else if (Main.netMode == NetmodeID.SinglePlayer)

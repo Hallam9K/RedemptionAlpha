@@ -1,3 +1,4 @@
+using Redemption.Globals;
 using Redemption.Tiles.Tiles;
 using Terraria;
 using Terraria.ID;
@@ -28,6 +29,7 @@ namespace Redemption.Items.Materials.HM
             CreateRecipe(2)
                 .AddIngredient(ModContent.ItemType<CyberPlating>())
                 .AddCondition(Condition.NearLava)
+                .AddDecraftCondition(RedeConditions.DownedSlayer)
                 .Register();
         }
     }

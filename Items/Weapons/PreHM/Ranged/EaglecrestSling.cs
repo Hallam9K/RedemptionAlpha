@@ -1,3 +1,5 @@
+using Redemption.Globals;
+using Redemption.Projectiles.Ranged;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -40,6 +42,7 @@ namespace Redemption.Items.Weapons.PreHM.Ranged
             // Projectile Properties
             Item.shootSpeed = 5f;
             Item.shoot = ModContent.ProjectileType<EaglecrestSling_Throw>();
+            Item.ExtraItemShoot(ModContent.ProjectileType<EaglecrestSling_Proj>());
         }
     }
 }

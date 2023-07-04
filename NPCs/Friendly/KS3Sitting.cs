@@ -424,7 +424,8 @@ namespace Redemption.NPCs.Friendly
                 .Add<Datalog24>()
                 .Add<Datalog25>()
                 .Add<Datalog26>()
-                .Add<Datalog27>();
+                .Add<Datalog27>()
+                .Add<Datalog28>();
 
             npcShop.Register();
         }

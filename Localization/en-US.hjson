@@ -227,6 +227,8 @@ Mods: {
 				LabAccessPanelUsed6: Laser security already deactivated
 				OmegaCall: A new Omega Prototype can be called using the Omega Transmitter
 				FoolLeft: The Fool has left...
+				PortalRumble: "A portal rumbles... (Check the Map for location)"
+				WayfarerReturn: " the Wayfarer has returned!"
 			}
 
 			Death: {
@@ -299,7 +301,7 @@ Mods: {
 						20% increased 
 						'''
 					Resistance: " elemental resistance"
-					Damage: " elemental Damage"
+					Damage: " elemental damage"
 				}
 
 				LivingWood: Immune to poison, increases your max number of minions
@@ -1542,7 +1544,7 @@ Mods: {
 				11: Captive spirit?
 				12: Explain
 				Crux: Request Kyretha's Crux
-				Leave: "[c/FF6600:You're ready to leave]"
+				Leave: "You're ready to leave"
 			}
 
 			KS3: {
@@ -2792,7 +2794,7 @@ Mods: {
 
 			SpiritAssassin: {
 				NoRealmCruxDialogue: You must be at least partly within the Spirit Realm for me to give you what you ask.
-				CruxDialogue: Hm, yes I can give you it. Within me lies the spirits of assassins, take it and may it give you a chance in this harsh world.
+				CruxDialogue: Hm, yes I can give you it. Within me lies the spirit of assassins, take it and may it give you a chance in this harsh world.
 				NoCruxDialogue: I'll need something to imbue, if you please.
 				OfferCruxDialogue: I shall, if only you give unto my remains three flowers of the night. One for each of my band to fall to that vile demon.
 				Dialogue1: Anything I can assist you with? I may not be able to interact with you, but I can make for some conversation.
@@ -2813,7 +2815,7 @@ Mods: {
 				Chat1: Behold, for I am Kleo! Common Guard of Ricusa City! I'm sure if ye were a resident of Anglon you'd be jumping in shock to face such a legendary figure! Oh who am I kidding, my name barely made it past my own district. But no matter! I did my job well and that is all that matters!
 				Chat2: By Grace! To think anyone who walks this earth be unaware of the greatest domain in Epidotra! The Hallowed Dominion is where I'm from, and Ricusa City is where I resided. 'Tis a peaceful and prosperous land, home to great cities and castles and all the protection thou canst get! Well, sort of.
 				Chat3: Ah, Ricusa... It was such a grand capital - also one of the largest in the domain. Did you know it started as a humble village? Eventually the old capital was laid to ruin, and due to the village's steady growth it was promoted to the new capital. All seemed well for ages to come... That was until the demons came.
-				Chat4: A great demon terror invaded the capital with his underlings, never before had I seen such power and brute strength come from a single creature. The walls were broken down and the two legendary brothers - Archon and Vargo - fought against the them. They were great heroes, said they would trounce the demon forces back to Demonhollow. Yet for all their talk they were quickly killed by the leader with very little resistance, and so Ricusa City fell to the scourge. Like much else before it.
+				Chat4: A great demon terror invaded the capital with his underlings, never before had I seen such power and brute strength come from a single creature. The walls were broken down and the two legendary brothers - Archon and Vargo - fought against them. They were great heroes, said they would trounce the demon forces back to Demonhollow. Yet for all their talk they were quickly killed by the leader with very little resistance, and so Ricusa City fell to the scourge. Like much else before it.
 			}
 
 			SpiritDruid: {
@@ -2890,7 +2892,7 @@ Mods: {
 				IntroLine1: Yeah I came from the portal, 'twas atop a snowy precipice. When I tried going back through however, it took me into what I can only assume to be Gathuram's catacombs. Back and forth I went, yet it was always the same. Here, catacombs, here, catacombs... It is infuriating! How these portals work!?
 				IntroLine2: Precisely! I have a family anticipating my return, yet I see no way back to where I came from. Do ye know anything at all about portals?
 				IntroLine3: Our squadron climbed up a mountain to retrieve the body of a famous warrior, and came upon the portal. We should've reported it to the Riftwatch and carried on our business, but my witless curiousity said otherwise and chose to take a looksie. "In and out, nice and quick" I thought. Needless to say, ye can see how smart that idea was.
-				IntroLine4: How helpful. Not like I can blame ye, they're magic of a bygone age. Only the Riftwatch have knowledge of 'em. Speaking of which, they must've been here before. Portals don't just appear with a stone ring and foundation pre-'rected - 'tis the Riftwatch's job to build those. To stabalize 'em, or so I've heard.
+				IntroLine4: How helpful. Not like I can blame ye, they're magic of a bygone age. Only the Riftwatch have knowledge of 'em. Speaking of which, they must've been here before. Portals don't just appear with a stone ring and foundation pre-'rected - 'tis the Riftwatch's job to build those. To stabilize 'em, or so I've heard.
 				IntroLine5: Well I can't just mope around forever, the only way forward is scramming through the catacombs and praying to Sariel I find a way to the surface. It'll be a massive gamble tho', the catacombs are like a subterranean domain in their own right!
 				IntroLine5B: " I'll stick around for now, maybe if ye give me a [i:Redemption/GathicCryoFurnace]furnace I could offer ye some smithing."
 				IntroLine6: How polite of ye to ask. After our little squabble my helm and shield are quite... thrashed. I have nobody to blame but myself, but anyway, if ye could give me some replacements and supplies to aid me, I will be most grateful.
@@ -8310,7 +8312,7 @@ Mods: {
 				DisplayName: Calcite Wand
 				Tooltip:
 					'''
-					Drops stalagmites at cursor point
+					Drops stalactites at cursor point
 					Increased damage the higher they fall
 					'''
 			}

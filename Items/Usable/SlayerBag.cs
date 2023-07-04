@@ -46,7 +46,7 @@ namespace Redemption.Items.Usable
             itemLoot.Add(ItemDropRule.OneFromOptions(1, ModContent.ItemType<SlayerGun>(), ModContent.ItemType<Nanoswarmer>(), ModContent.ItemType<SlayerFist>()));
             itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<SlayerController>(), 10));
             itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<Holokey>()));
-            itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<CyberPlating>(), 1, 14, 18));
+            itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<CyberPlating>(), 1, 30, 38));
             itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<PocketShieldGenerator>()));
         }
         public override Color? GetAlpha(Color lightColor)

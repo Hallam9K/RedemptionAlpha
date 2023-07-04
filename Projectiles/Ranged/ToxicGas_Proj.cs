@@ -14,6 +14,8 @@ namespace Redemption.Projectiles.Misc
         public override void SetStaticDefaults()
         {
             // DisplayName.SetDefault("Toxic Gas");
+            ElementID.ProjPoison[Type] = true;
+            ElementID.ProjWind[Type] = true;
         }
         public override void SetDefaults()
         {

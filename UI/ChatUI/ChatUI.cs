@@ -51,6 +51,8 @@ namespace Redemption.UI.ChatUI
             for (int i = 0; i < Dialogue.Count; i++)
             {
                 Dialogue dialogue = Dialogue[i].Get();
+                if (dialogue.displayingText.Length == 0)
+                    return;
 
                 string[] drawnText = FormatText(dialogue.displayingText, dialogue.font, out int width, out int height);
                 Vector2 pos = (dialogue.chain == null ? Vector2.Zero : dialogue.chain.modifier) + dialogue.modifier + (dialogue.entity != null ? dialogue.entity.Center - Main.screenPosition - new Vector2((width + 68f) / 2f, -dialogue.entity.height) : dialogue.chain.anchor != null ? dialogue.chain.anchor.VisualPosition : new Vector2(Main.screenWidth / 2f - width / 2f, Main.screenHeight * 0.8f - height / 2f));
@@ -61,7 +63,7 @@ namespace Redemption.UI.ChatUI
                 float alpha = 1f;
                 if (dialogue.boxFade)
                 {
-                    float quotient = !dialogue.textFinished ? 0f : MathHelper.Lerp(1f, 0f, (float)dialogue.fadeTime / dialogue.fadeTimeMax);
+                    float quotient = !dialogue.textFinished ? 0f : MathHelper.Lerp(1f, 0f, dialogue.fadeTime / dialogue.fadeTimeMax);
                     alpha = MathHelper.Lerp(1f, 0f, quotient);
                 }
 

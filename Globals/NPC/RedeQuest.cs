@@ -33,7 +33,7 @@ namespace Redemption.Globals
                 if (Main.netMode == NetmodeID.Server)
                     NetMessage.SendData(MessageID.WorldData);
 
-                string status = "A portal rumbles... (Check Minimap for the location)";
+                string status = Language.GetTextValue("Mods.Redemption.StatusMessage.Progression.PortalRumble");
                 if (Main.netMode == NetmodeID.Server)
                     ChatHelper.BroadcastChatMessage(NetworkText.FromLiteral(status), Color.LightGreen);
                 else if (Main.netMode == NetmodeID.SinglePlayer)
@@ -43,10 +43,10 @@ namespace Redemption.Globals
             {
                 if (Main.time == 1)
                 {
-                    string w = "Zephos";
+                    string w = Language.GetTextValue("Mods.Redemption.NPCs.Zephos_Intro.DisplayName");
                     if (WorldGen.crimson)
-                        w = "Daerel";
-                    string status = w + " the Wayfarer has returned!";
+                        w = Language.GetTextValue("Mods.Redemption.NPCs.Daerel_Intro.DisplayName");
+                    string status = w + Language.GetTextValue("Mods.Redemption.StatusMessage.Progression.WayfarerReturn");
                     if (Main.netMode == NetmodeID.Server)
                         ChatHelper.BroadcastChatMessage(NetworkText.FromLiteral(status), new Color(48, 121, 248));
                     else if (Main.netMode == NetmodeID.SinglePlayer)
@@ -80,7 +80,7 @@ namespace Redemption.Globals
                 if (Main.netMode == NetmodeID.Server)
                     NetMessage.SendData(MessageID.WorldData);
 
-                string status = "A portal rumbles... (Check Minimap for the location)";
+                string status = Language.GetTextValue("Mods.Redemption.StatusMessage.Progression.PortalRumble");
                 if (Main.netMode == NetmodeID.Server)
                     ChatHelper.BroadcastChatMessage(NetworkText.FromLiteral(status), Color.LightBlue);
                 else if (Main.netMode == NetmodeID.SinglePlayer)

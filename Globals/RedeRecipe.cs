@@ -162,6 +162,12 @@ namespace Redemption.Globals
                 .AddTile(TileID.MythrilAnvil)
                 .Register();
 
+            Recipe.Create(ItemID.HerbBag)
+                .AddIngredient(ItemID.Leather, 4)
+                .AddIngredient<PlantMatter>(20)
+                .AddTile(TileID.WorkBenches)
+                .Register();
+
             // Living Furniture
             Recipe.Create(ItemID.LivingLoom)
                 .AddIngredient(ModContent.ItemType<LivingTwig>(), 10)
