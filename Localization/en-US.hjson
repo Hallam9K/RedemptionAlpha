@@ -227,7 +227,7 @@ Mods: {
 				LabAccessPanelUsed6: Laser security already deactivated
 				OmegaCall: A new Omega Prototype can be called using the Omega Transmitter
 				FoolLeft: The Fool has left...
-				PortalRumble: "A portal rumbles... (Check the Map for location)"
+				PortalRumble: A portal rumbles... (Check the Map for location)
 				WayfarerReturn: " the Wayfarer has returned!"
 			}
 
@@ -1544,7 +1544,7 @@ Mods: {
 				11: Captive spirit?
 				12: Explain
 				Crux: Request Kyretha's Crux
-				Leave: "You're ready to leave"
+				Leave: You're ready to leave
 			}
 
 			KS3: {
