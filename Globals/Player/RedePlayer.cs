@@ -21,6 +21,9 @@ using Redemption.WorldGeneration.Misc;
 using Redemption.Items.Weapons.HM.Magic;
 using Terraria.Audio;
 using Terraria.Localization;
+using Redemption.Tiles.Furniture.Lab;
+using Redemption.Tiles.Furniture.Misc;
+using Redemption.Tiles.Furniture.SlayerShip;
 
 namespace Redemption.Globals.Player
 {
@@ -122,14 +125,111 @@ namespace Redemption.Globals.Player
         {
             if (SubworldSystem.Current != null)
                 return;
-            if (RedeGen.GoldenGatewayVector.X == -1 || RedeGen.BastionVector.X == -1 || RedeGen.gathicPortalVector.X == -1 || RedeGen.HallOfHeroesVector.X == -1 || RedeGen.slayerShipVector.X == -1)
+            if (RedeGen.GoldenGatewayVector.X == -1 || RedeGen.BastionVector.X == -1)
                 Main.NewText(Language.GetTextValue("Mods.Redemption.StatusMessage.Other.Warning1"), Colors.RarityRed);
-            if (RedeGen.LabVector.X == -1 || RedeGen.newbCaveVector.X == -1)
+            if (!LabSearch() || !AnglonPortalSearch() || !GathPortalSearch() || !HallOfHeroesSearch() || !ShipSearch())
                 Main.NewText(Language.GetTextValue("Mods.Redemption.StatusMessage.Other.Warning2"), Colors.RarityRed);
 
             if (RedeConfigClient.Instance.FunniAllWasteland || RedeConfigClient.Instance.FunniJanitor || RedeConfigClient.Instance.FunniSpiders || RedeConfigClient.Instance.FunniWasteland)
                 Main.NewText(Language.GetTextValue("Mods.Redemption.StatusMessage.Other.Caution"), Colors.RarityOrange);
         }
+        #region Structure Search
+        public static bool LabSearch()
+        {
+            if (RedeGen.LabVector.X == -1)
+            {
+                for (int x = 20; x < Main.maxTilesX - 20; x++)
+                {
+                    for (int y = 20; y < Main.maxTilesY - 20; y++)
+                    {
+                        Tile tile = Framing.GetTileSafely(x, y);
+                        if (!tile.HasTile || tile.TileType != ModContent.TileType<KariBedTile>())
+                            continue;
+                        RedeGen.LabVector = new Vector2(x - 142, y - 209);
+                        return true;
+                    }
+                }
+                return false;
+            }
+            return true;
+        }
+        public static bool GathPortalSearch()
+        {
+            if (RedeGen.gathicPortalVector.X == -1)
+            {
+                for (int x = 20; x < Main.maxTilesX - 20; x++)
+                {
+                    for (int y = 20; y < Main.maxTilesY - 20; y++)
+                    {
+                        Tile tile = Framing.GetTileSafely(x, y);
+                        if (!tile.HasTile || tile.TileType != ModContent.TileType<GathuramPortalTile>())
+                            continue;
+                        RedeGen.gathicPortalVector = new Vector2(x - 45, y - 11);
+                        return true;
+                    }
+                }
+                return false;
+            }
+            return true;
+        }
+        public static bool HallOfHeroesSearch()
+        {
+            if (RedeGen.HallOfHeroesVector.X == -1)
+            {
+                for (int x = 20; x < Main.maxTilesX - 20; x++)
+                {
+                    for (int y = 20; y < Main.maxTilesY - 20; y++)
+                    {
+                        Tile tile = Framing.GetTileSafely(x, y);
+                        if (!tile.HasTile || tile.TileType != ModContent.TileType<AncientAltarTile>())
+                            continue;
+                        RedeGen.HallOfHeroesVector = new Vector2(x - 39, y - 25);
+                        return true;
+                    }
+                }
+                return false;
+            }
+            return true;
+        }
+        public static bool AnglonPortalSearch()
+        {
+            if (RedeGen.newbCaveVector.X == -1)
+            {
+                for (int x = 20; x < Main.maxTilesX - 20; x++)
+                {
+                    for (int y = 20; y < Main.maxTilesY - 20; y++)
+                    {
+                        Tile tile = Framing.GetTileSafely(x, y);
+                        if (!tile.HasTile || tile.TileType != ModContent.TileType<AnglonPortalTile>())
+                            continue;
+                        RedeGen.newbCaveVector = new Vector2(x - 29, y);
+                        return true;
+                    }
+                }
+                return false;
+            }
+            return true;
+        }
+        public static bool ShipSearch()
+        {
+            if (RedeGen.slayerShipVector.X == -1)
+            {
+                for (int x = 20; x < Main.maxTilesX - 20; x++)
+                {
+                    for (int y = 20; y < Main.maxTilesY - 20; y++)
+                    {
+                        Tile tile = Framing.GetTileSafely(x, y);
+                        if (!tile.HasTile || tile.TileType != ModContent.TileType<SlayerChairTile>())
+                            continue;
+                        RedeGen.slayerShipVector = new Vector2(x - 90, y - 23);
+                        return true;
+                    }
+                }
+                return false;
+            }
+            return true;
+        }
+        #endregion
         public override void ModifyMaxStats(out StatModifier health, out StatModifier mana)
         {
             health = StatModifier.Default;
