@@ -32,7 +32,7 @@ namespace Redemption.Globals
         public static Condition DownedVolt = new("Mods.Redemption.Conditions.DownedVolt", () => RedeBossDowned.downedVolt);
         public static Condition DownedSlayer = new("Mods.Redemption.Conditions.DownedSlayer", () => RedeBossDowned.downedSlayer);
         public static Condition BroughtCat = new("Mods.Redemption.Conditions.BroughtCat", () => Terraria.NPC.boughtCat);
-        public static Condition IsTBotHead = new("Mods.Redemption.Conditions.IsTBotHead", Main.LocalPlayer.IsTBotHead);
+        public static Condition IsTBotHead = new("Mods.Redemption.Conditions.IsTBotHead", () => Main.LocalPlayer.IsTBotHead());
         public static Condition IsJanitor = new("Mods.Redemption.Conditions.IsJanitor", () => BasePlayer.HasChestplate(Main.LocalPlayer, ModContent.ItemType<JanitorOutfit>(), true) && BasePlayer.HasLeggings(Main.LocalPlayer, ModContent.ItemType<JanitorPants>(), true));
         public static Condition KeycardGiven = new("Mods.Redemption.Conditions.KeycardGiven", () => RedeWorld.keycardGiven);
         public static Condition NukeDropped = new("Mods.Redemption.Conditions.NukeDropped", () => RedeBossDowned.nukeDropped);

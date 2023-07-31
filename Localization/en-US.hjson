@@ -150,7 +150,7 @@ Mods: {
 			Cleaver: A proof-of-concept weapon of war modified by Girus, the Omega Cleaver is a giant sword controlled by a small remote stick that was wielded by another machine.
 			Gigapora: A modified tunnelling machine, originally of Teochrome design, retrofitted with rocket boosters, various weaponry and very experimental projected shield technology. Gigapora's shield projectors are prone to overheating and melting if they're inside the projected shield, hence why they're outside.
 			Akka: Little has been recorded of Akka during her youth, it is believed by the locals that her spirit infused with a great tree in the Spirit Realm, where she would sleep until awoken by her husband to be worshipped once more.
-			Ukko: Once a blacksmith in ancient Tethuram who had an immense talent in magic, growing to be seen as a god by many who witnessed his strengths. In his old age, growing weary of his mortality, Ukko infused his soul into a bundle of rocks, allowing him to eventually reform when the time comes. The locals worshipped this golem, until the knowledge of Ukko's soul inside slowly faded away.
+			Ukko: Once a blacksmith in ancient Tethuram who had an immense talent in magic, so immense that he was seen as a God to many. In his old age, growing weary of his mortality, Ukko infused his soul into a bundle of rocks, allowing him to eventually reform when the time comes.
 			PZ: An unfortunate scientist, mutilated and disfigured by the Xenomite infection. This specimen was Kari Johannson, the father of all T-Bots and patient zero of the xenomite infection. He's been stuck for 50 years, conscious and aware of the situation around him... God, that must be tormentous.
 			Android: Fodder sent down to the island by King Slayer III to scan. These are the first iteration of the Android Unit and the first robots designed by King Slayer during his million year voyage. Their original purpose was to bring company and life to the SoS, however they have since been fitted with more combat-oriented parts. When damaged, they will retreat back to the SoS and alert the network.
 			BloatedGoldfish: A goldfish bloated with radioactive pus.
@@ -292,6 +292,8 @@ Mods: {
 				WaterBonus: "[i:Redemption/Water] Increased damage to demons and can electrify robotic targets"
 				WindBonus: "[i:Redemption/Wind] Deals extra knockback to airborne targets"
 			}
+
+			RodOfHarmonyLine: "Causes the chaos state while a Redemption boss is active"
 
 			ArmorSetBonus: {
 				VanillaArmor: {

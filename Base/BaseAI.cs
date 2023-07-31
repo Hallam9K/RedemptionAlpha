@@ -5368,7 +5368,7 @@ namespace Redemption.Base
                 if (damager is NPC)
                 {
                     NPCLoader.ModifyHitNPC(damager as NPC, npc, ref stat);
-                    NPCLoader.OnHitNPC(damager as NPC, npc, npc.CalculateHitInfo(dmgAmt, hitDirection, crit, knockback, null, dmgVariation));
+                    NPCLoader.OnHitNPC(damager as NPC, npc, default);
                     npc.Redemption().attacker = damager;
                 }
 
@@ -5381,11 +5381,11 @@ namespace Redemption.Base
                 if (p.owner == Main.myPlayer && NPCLoader.CanBeHitByProjectile(npc, p) != false)
                 {
                     NPCLoader.ModifyHitByProjectile(npc, p, ref stat);
-                    NPCLoader.OnHitByProjectile(npc, p, npc.CalculateHitInfo(dmgAmt, hitDirection, crit, knockback, null, dmgVariation), dmgAmt);
+                    NPCLoader.OnHitByProjectile(npc, p, default, dmgAmt);
                     PlayerLoader.ModifyHitNPCWithProj(Main.player[p.owner], p, npc, ref stat);
-                    PlayerLoader.OnHitNPCWithProj(Main.player[p.owner], p, npc, npc.CalculateHitInfo(dmgAmt, hitDirection, crit, knockback, null, dmgVariation), dmgAmt);
+                    PlayerLoader.OnHitNPCWithProj(Main.player[p.owner], p, npc, default, dmgAmt);
                     ProjectileLoader.ModifyHitNPC(p, npc, ref stat);
-                    ProjectileLoader.OnHitNPC(p, npc, npc.CalculateHitInfo(dmgAmt, hitDirection, crit, knockback, null, dmgVariation), dmgAmt);
+                    ProjectileLoader.OnHitNPC(p, npc, default, dmgAmt);
                     if (p.HasElement(ElementID.Psychic))
                         npc.RedemptionGuard().IgnoreArmour = true;
 
@@ -5417,9 +5417,9 @@ namespace Redemption.Base
                 if (player.whoAmI == Main.myPlayer && NPCLoader.CanBeHitByItem(npc, player, item) != false)
                 {
                     NPCLoader.ModifyHitByItem(npc, player, item, ref stat);
-                    NPCLoader.OnHitByItem(npc, player, item, npc.CalculateHitInfo(dmgAmt, hitDirection, crit, knockback, null, dmgVariation), dmgAmt);
+                    NPCLoader.OnHitByItem(npc, player, item, default, dmgAmt);
                     PlayerLoader.ModifyHitNPC(player, npc, ref stat);
-                    PlayerLoader.OnHitNPC(player, npc, npc.CalculateHitInfo(dmgAmt, hitDirection, crit, knockback, null, dmgVariation), dmgAmt);
+                    PlayerLoader.OnHitNPC(player, npc, default, dmgAmt);
 
                     npc.SimpleStrikeNPC(dmgAmt, hitDirection, crit, knockback, null, dmgVariation);
                     if (player.accDreamCatcher)

@@ -8,6 +8,7 @@ using Redemption.Items.Placeable.Tiles;
 using Redemption.Items.Tools.PostML;
 using Redemption.Items.Usable;
 using Redemption.Items.Usable.Summons;
+using Redemption.Tiles.Furniture.Lab;
 using Redemption.Tiles.Tiles;
 using Terraria;
 using Terraria.ID;
@@ -117,29 +118,19 @@ namespace Redemption.NPCs.Lab.Janitor
                 .Add<LabHologramDevice>()
                 .Add<OmegaTransmitter>(RedeConditions.DownedBehemoth)
                 .Add<LabPlating>()
-                .Add<LabPlatingWall>()
                 .Add<HalogenLamp>()
-                .Add<LabPlatform>()
                 .Add<LabRail_L>()
                 .Add<LabRail_Mid>()
                 .Add<LabRail_R>()
                 .Add<XeniumRefinery>(RedeConditions.DownedVolt)
                 .Add<XeniumSmelter>(RedeConditions.DownedVolt)
-                .Add<LargeVent>()
-                .Add<Vent>()
-                .Add<SmallVent>()
                 .Add<ElectricitySign>()
                 .Add<SkullSign>()
                 .Add<BiohazardSign>()
                 .Add<RadioactiveSign>()
-                .Add<LabWorkbench>()
                 .Add<TestTubes>()
-                .Add<LabTable>()
                 .Add<LabWallFan>()
-                .Add<LabDoor>()
                 .Add<LabBackDoor2>()
-                .Add<LabChest>()
-                .Add<LabChair>()
                 .Add<ServerCabinet>()
                 .Add<HospitalBed>()
                 .Add<LabIntercom>()

@@ -282,8 +282,16 @@ namespace Redemption.Globals
         };
         public override bool? UseItem(Item item, Terraria.Player player)
         {
-            if (item.type is ItemID.RodOfHarmony && RedeHelper.BossActive())
+            if (item.type is ItemID.RodOfHarmony && RedeHelper.BossActive(true))
+            {
+                if (player.HasBuff(BuffID.ChaosState))
+                {
+                    player.statLife -= player.statLifeMax2 / 6;
+                    if (player.statLife <= 0)
+                        player.KillMe(PlayerDeathReason.ByCustomReason(Language.GetTextValue("DeathText.Teleport_1", player.name)), 1, 1);
+                }
                 player.AddBuff(BuffID.ChaosState, 360);
+            }
             return base.UseItem(item, player);
         }
         public override bool CanUseItem(Item item, Terraria.Player player)
@@ -344,6 +352,13 @@ namespace Redemption.Globals
         }
         public override void ModifyTooltips(Item item, List<TooltipLine> tooltips)
         {
+            if (item.type is ItemID.RodOfHarmony)
+            {
+                TooltipLine tooltip1Line = new(Mod, "Tooltip1", Language.GetTextValue("Mods.Redemption.GenericTooltips.RodOfHarmonyLine"));
+                int tooltipLocation = tooltips.FindIndex(TooltipLine => TooltipLine.Name.Equals("Tooltip0"));
+                if (tooltipLocation != -1)
+                    tooltips.Insert(tooltipLocation + 1, tooltip1Line);
+            }
             if (ChaliceInterest(item.type) && RedeWorld.alignmentGiven)
             {
                 TooltipLine chaliceLine = new(Mod, "ChaliceLine", Language.GetTextValue("Mods.Redemption.GenericTooltips.Bonuses.ChaliceLine")) { OverrideColor = new Color(203, 189, 99) };

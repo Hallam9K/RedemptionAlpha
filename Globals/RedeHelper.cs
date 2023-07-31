@@ -400,7 +400,7 @@ namespace Redemption.Globals
 
         public static Vector2 GetArcVel(this Entity ent, Vector2 targetPos, float gravity, float? minArcHeight = null, float? maxArcHeight = null, float? maxXvel = null, float? heightabovetarget = null, float downwardsYVelMult = 1f) => GetArcVel(ent.Center, targetPos, gravity, minArcHeight, maxArcHeight, maxXvel, heightabovetarget, downwardsYVelMult);
 
-        public static bool BossActive()
+        public static bool BossActive(bool fromThisMod = false)
         {
             for (int i = 0; i < Main.maxNPCs; i++)
             {
@@ -408,6 +408,8 @@ namespace Redemption.Globals
                 if (!npc.active || !npc.boss)
                     continue;
 
+                if (fromThisMod)
+                    return npc.ModNPC?.Mod is Redemption;
                 return true;
             }
             return false;

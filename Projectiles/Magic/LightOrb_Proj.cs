@@ -54,7 +54,7 @@ namespace Redemption.Projectiles.Magic
             NPC target = null;
             if (RedeHelper.ClosestNPC(ref target, 500, Projectile.Center))
             {
-                if (Projectile.localAI[0]++ >= 20 && Main.myPlayer == Projectile.owner)
+                if (Projectile.localAI[0]++ >= 20 + Main.player[Projectile.owner].ownedProjectileCounts[Type] && Main.myPlayer == Projectile.owner)
                 {
                     SoundEngine.PlaySound(SoundID.Item115 with { Volume = .5f }, Projectile.position);
                     for (int i = 0; i < Main.rand.Next(2, 4); i++)

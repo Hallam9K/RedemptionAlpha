@@ -341,9 +341,6 @@ namespace Redemption.NPCs.Bosses.KSIII
             switch (AIState)
             {
                 case ActionState.Begin:
-                    if (!Main.dedServ)
-                        RedeSystem.Instance.TitleCardUIElement.DisplayTitle(Language.GetTextValue("Mods.Redemption.TitleCard.KS3.Name"), 60, 90, 0.8f, 0, Color.Cyan, Language.GetTextValue("Mods.Redemption.TitleCard.KS3.Modifier"));
-
                     NPC.LookAtEntity(player);
                     BodyState = (int)BodyAnim.Crossed;
                     player.RedemptionScreen().Rumble(5, 5);
