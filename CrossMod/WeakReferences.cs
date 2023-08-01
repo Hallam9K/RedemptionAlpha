@@ -52,7 +52,6 @@ namespace Redemption.CrossMod
         public static void PerformModSupport()
         {
             PerformBossChecklistSupport();
-            PerformCencusSupport();
             PerformFargosSupport();
         }
         private static void PerformBossChecklistSupport()
@@ -562,18 +561,6 @@ namespace Redemption.CrossMod
                 DukeFishron = 16f;
                 LunaticCultist = 17f;
                 Moonlord = 18f;*/
-            }
-        }
-        private static void PerformCencusSupport()
-        {
-            if (ModLoader.TryGetMod("Census", out Mod censusMod))
-            {
-                censusMod.Call("TownNPCCondition", ModContent.NPCType<Zephos>());
-                censusMod.Call("TownNPCCondition", ModContent.NPCType<Daerel>());
-                censusMod.Call("TownNPCCondition", ModContent.NPCType<Fallen>());
-                censusMod.Call("TownNPCCondition", ModContent.NPCType<Newb>());
-                censusMod.Call("TownNPCCondition", ModContent.NPCType<TBot>());
-                censusMod.Call("TownNPCCondition", ModContent.NPCType<ForestNymph_Friendly>());
             }
         }
         private static void PerformFargosSupport()

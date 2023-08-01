@@ -293,7 +293,7 @@ Mods: {
 				WindBonus: "[i:Redemption/Wind] Deals extra knockback to airborne targets"
 			}
 
-			RodOfHarmonyLine: "Causes the chaos state while a Redemption boss is active"
+			RodOfHarmonyLine: Causes the chaos state while a Redemption boss is active
 
 			ArmorSetBonus: {
 				VanillaArmor: {
