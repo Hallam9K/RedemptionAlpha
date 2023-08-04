@@ -1681,8 +1681,8 @@ namespace Redemption.WorldGeneration
 
                         BlazingBastion biome = new();
                         BastionClear delete = new();
-                        delete.Place(origin.ToPoint(), WorldGen.structures);
-                        biome.Place(origin.ToPoint(), WorldGen.structures);
+                        delete.Place(origin.ToPoint(), GenVars.structures);
+                        biome.Place(origin.ToPoint(), GenVars.structures);
                         WorldUtils.Gen(origin.ToPoint(), new Shapes.Rectangle(332, 68), Actions.Chain(new GenAction[]
                         {
                             new Actions.SetLiquid(0, 0)
