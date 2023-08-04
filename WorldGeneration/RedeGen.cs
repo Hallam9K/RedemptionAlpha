@@ -1667,25 +1667,28 @@ namespace Redemption.WorldGeneration
                     GenVars.structures.AddProtectedStructure(new Rectangle(originPoint.X, originPoint.Y, dims.X, dims.Y));
                     #endregion
                 }));
-                tasks.Add(new PassLegacy("Blazing Bastion", delegate (GenerationProgress progress, GameConfiguration configuration)
+                if (!ModLoader.TryGetMod("InfernumMode", out Mod infernum))
                 {
-                    progress.Message = "Building Blazing Bastions";
-                    Point16 origin = new(Main.maxTilesX - 332, Main.maxTilesY - 192);
-                    WorldUtils.Gen(new Point(origin.X, origin.Y - 60), new Shapes.Rectangle(332, 215), Actions.Chain(new GenAction[]
+                    tasks.Add(new PassLegacy("Blazing Bastion", delegate (GenerationProgress progress, GameConfiguration configuration)
                     {
-                        new Actions.SetLiquid(0, 0)
-                    }));
-                    BastionVector = origin.ToVector2();
+                        progress.Message = "Building Blazing Bastions";
+                        Point16 origin = new(Main.maxTilesX - 332, Main.maxTilesY - 192);
+                        WorldUtils.Gen(new Point(origin.X, origin.Y - 60), new Shapes.Rectangle(332, 215), Actions.Chain(new GenAction[]
+                        {
+                            new Actions.SetLiquid(0, 0)
+                        }));
+                        BastionVector = origin.ToVector2();
 
-                    BlazingBastion biome = new();
-                    BastionClear delete = new();
-                    delete.Place(origin.ToPoint(), GenVars.structures);
-                    biome.Place(origin.ToPoint(), GenVars.structures);
-                    WorldUtils.Gen(origin.ToPoint(), new Shapes.Rectangle(332, 68), Actions.Chain(new GenAction[]
-                    {
-                        new Actions.SetLiquid(0, 0)
+                        BlazingBastion biome = new();
+                        BastionClear delete = new();
+                        delete.Place(origin.ToPoint(), WorldGen.structures);
+                        biome.Place(origin.ToPoint(), WorldGen.structures);
+                        WorldUtils.Gen(origin.ToPoint(), new Shapes.Rectangle(332, 68), Actions.Chain(new GenAction[]
+                        {
+                            new Actions.SetLiquid(0, 0)
+                        }));
                     }));
-                }));
+                }
                 tasks.Add(new PassLegacy("Golden Gateway", delegate (GenerationProgress progress, GameConfiguration configuration)
                 {
                     progress.Message = "Thinking harder with portals";
