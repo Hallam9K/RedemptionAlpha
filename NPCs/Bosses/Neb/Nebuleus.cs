@@ -1548,7 +1548,7 @@ namespace Redemption.NPCs.Bosses.Neb
                             if (NPC.ai[2] == 30)
                                 RedeSystem.Instance.DialogueUIElement.DisplayDialogue("...", 120, 1, 0.6f, Language.GetTextValue("Mods.Redemption.Cutscene.Nebuleus.Name"), 1, RedeColor.NebColour, null, null, NPC.Center, 0, 0, true);
                             if (NPC.ai[2] == 150)
-                                RedeSystem.Instance.DialogueUIElement.DisplayDialogue(RedeWorld.alignment >= 0 ? Language.GetTextValue("Mods.Redemption.Cutscene.Nebuleus.Spare.1") : Language.GetTextValue("Mods.Redemption.Cutscene.Nebuleus.Spare.2"), 200, 1, 0.6f, Language.GetTextValue("Mods.Redemption.Cutscene.Nebuleus.Name"), 1, RedeColor.NebColour, null, null, NPC.Center, 0, 0, true);
+                                RedeSystem.Instance.DialogueUIElement.DisplayDialogue(RedeWorld.alignment >= 0 ? Language.GetTextValue("Mods.Redemption.Cutscene.Nebuleus.Transition.Spare1") : Language.GetTextValue("Mods.Redemption.Cutscene.Nebuleus.Transition.Spare2"), 200, 1, 0.6f, Language.GetTextValue("Mods.Redemption.Cutscene.Nebuleus.Name"), 1, RedeColor.NebColour, null, null, NPC.Center, 0, 0, true);
                         }
                         if (NPC.ai[2] > 380)
                         {
