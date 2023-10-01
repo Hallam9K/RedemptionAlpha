@@ -134,7 +134,7 @@ namespace Redemption.NPCs.Friendly
                 setName = name;
             }
             else
-                typeName = setName + Language.GetTextValue("Mods.Redemption.NPCs.TreebarkDryad.Title");
+                typeName = setName + " the Treebark Dryad";
         }
         public override void AI()
         {

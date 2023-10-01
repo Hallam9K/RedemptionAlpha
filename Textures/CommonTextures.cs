@@ -14,7 +14,6 @@ namespace Redemption.Textures
         public static Asset<Texture2D> TextBubble_Neb;
         public static Asset<Texture2D> TextBubble_Omega;
         public static Asset<Texture2D> TextBubble_Slayer;
-        public static Asset<Texture2D> TextBubble_Black;
         public override void Load()
         {
             if (Main.dedServ)
@@ -26,7 +25,6 @@ namespace Redemption.Textures
             TextBubble_Neb = ModContent.Request<Texture2D>("Redemption/UI/TextBubble_Neb");
             TextBubble_Omega = ModContent.Request<Texture2D>("Redemption/UI/TextBubble_Omega");
             TextBubble_Slayer = ModContent.Request<Texture2D>("Redemption/UI/TextBubble_Slayer");
-            TextBubble_Black = ModContent.Request<Texture2D>("Redemption/UI/TextBubble_Black");
         }
         public override void Unload()
         {
@@ -37,7 +35,6 @@ namespace Redemption.Textures
             TextBubble_Neb = null;
             TextBubble_Omega = null;
             TextBubble_Slayer = null;
-            TextBubble_Black = null;
         }
     }
 }

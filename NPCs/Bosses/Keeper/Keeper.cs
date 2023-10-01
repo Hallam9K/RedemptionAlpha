@@ -290,9 +290,7 @@ namespace Redemption.NPCs.Bosses.Keeper
                     {
                         if (!Main.dedServ)
                         {
-                            if (NPC.type == ModContent.NPCType<KeeperSpirit>())
-                                RedeSystem.Instance.TitleCardUIElement.DisplayTitle(Language.GetTextValue("Mods.Redemption.TitleCard.KeeperSpirit.Name"), 60, 90, 0.8f, 0, Color.LightCyan, Language.GetTextValue("Mods.Redemption.TitleCard.KeeperSpirit.Modifier"));
-                            else
+                            if (NPC.type != ModContent.NPCType<KeeperSpirit>())
                                 RedeSystem.Instance.TitleCardUIElement.DisplayTitle(Language.GetTextValue("Mods.Redemption.TitleCard.Keeper.Name"), 60, 90, 0.8f, 0, Color.MediumPurple, Language.GetTextValue("Mods.Redemption.TitleCard.Keeper.Modifier"));
                         }
 

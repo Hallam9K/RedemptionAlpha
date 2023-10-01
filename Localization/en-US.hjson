@@ -10211,6 +10211,9 @@ Mods: {
 			SoI_ShardShot_Friendly.DisplayName: Shard Shot
 			InfectiousGlaive_Shard.DisplayName: Splitting Shard
 			EnergySphereSpell_Blast.DisplayName: Energy Sphere
+			EaglecrestGolem_ShockwaveSpawner.DisplayName: Eaglecrest Golem_ Shockwave Spawner
+			Golem_GroundShock.DisplayName: Ground Shock
+			BloatedClinger_Gas.DisplayName: Bile Gas
 		}
 
 		NPCs: {
