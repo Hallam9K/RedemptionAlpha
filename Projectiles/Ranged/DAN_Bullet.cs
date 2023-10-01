@@ -48,7 +48,7 @@ namespace Redemption.Projectiles.Ranged
             Collision.HitTiles(Projectile.position, oldVelocity, Projectile.width, Projectile.height);
             return true;
         }
-        public override void Kill(int timeLeft)
+        public override void OnKill(int timeLeft)
         {
             for (int i = 0; i < 6; i++)
             {

@@ -46,7 +46,8 @@ namespace Redemption.NPCs.Bosses.Gigapora
                 {
                     if (Projectile.localAI[0] == 20)
                     {
-                        SoundEngine.PlaySound(CustomSounds.ShieldActivate, Projectile.position);
+                        if (!Main.dedServ)
+                            SoundEngine.PlaySound(CustomSounds.ShieldActivate, Projectile.position);
                         for (int i = 0; i < 4; i++)
                         {
                             Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, Vector2.Zero, ModContent.ProjectileType<Gigapora_CrossBombTele>(), 0, 0, Main.myPlayer, Projectile.whoAmI, i);
@@ -56,7 +57,8 @@ namespace Redemption.NPCs.Bosses.Gigapora
                     {
                         Main.LocalPlayer.RedemptionScreen().ScreenShakeOrigin = Projectile.Center;
                         Main.LocalPlayer.RedemptionScreen().ScreenShakeIntensity += 3;
-                        SoundEngine.PlaySound(CustomSounds.PlasmaShot, Projectile.position);
+                        if (!Main.dedServ)
+                            SoundEngine.PlaySound(CustomSounds.PlasmaShot, Projectile.position);
                         for (int i = 0; i < 4; i++)
                         {
                             Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, RedeHelper.PolarVector(2, Projectile.rotation + (MathHelper.PiOver2 * i)), ModContent.ProjectileType<CrossBomb_Beam>(), Projectile.damage, Projectile.knockBack, Main.myPlayer);
@@ -76,7 +78,7 @@ namespace Redemption.NPCs.Bosses.Gigapora
         public override bool PreDraw(ref Color lightColor)
         {
             Texture2D texture = TextureAssets.Projectile[Projectile.type].Value;
-            Texture2D glow = ModContent.Request<Texture2D>(Projectile.ModProjectile.Texture + "_Glow").Value;
+            Texture2D glow = ModContent.Request<Texture2D>(Texture + "_Glow").Value;
             int height = texture.Height / 2;
             int y = height * Projectile.frame;
             Rectangle rect = new(0, y, texture.Width, height);
@@ -134,13 +136,13 @@ namespace Redemption.NPCs.Bosses.Gigapora
         {
             Projectile proj = Main.projectile[(int)Projectile.ai[0]];
             Main.spriteBatch.End();
-            Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+            Main.spriteBatch.BeginAdditive();
 
             Main.EntitySpriteDraw(ModContent.Request<Texture2D>("Redemption/Textures/FadeTelegraph").Value, Projectile.Center - Main.screenPosition, new Rectangle(0, 0, 64, 128), Color.DarkRed * Projectile.Opacity, Projectile.rotation, new Vector2(0, 64), new Vector2(Projectile.localAI[0] / 60f, Projectile.width / 128f), SpriteEffects.None, 0);
             Main.EntitySpriteDraw(ModContent.Request<Texture2D>("Redemption/Textures/FadeTelegraphCap").Value, Projectile.Center - Main.screenPosition, new Rectangle(0, 0, 64, 128), Color.DarkRed * Projectile.Opacity, -Projectile.rotation, new Vector2(0, 64), new Vector2(Projectile.width / 128f, Projectile.width / 128f), SpriteEffects.None, 0);
 
             Main.spriteBatch.End();
-            Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+            Main.spriteBatch.BeginDefault();
             return false;
         }
     }

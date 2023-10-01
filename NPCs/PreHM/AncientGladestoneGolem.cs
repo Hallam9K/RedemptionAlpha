@@ -1,8 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Base;
-using Redemption.Buffs.Debuffs;
-using Redemption.Buffs.NPCBuffs;
 using Redemption.Globals;
 using Redemption.Globals.NPC;
 using Redemption.Items.Placeable.Banners;
@@ -48,18 +46,9 @@ namespace Redemption.NPCs.PreHM
         {
             Main.npcFrameCount[NPC.type] = 12;
 
-            NPCID.Sets.DebuffImmunitySets.Add(Type, new NPCDebuffImmunityData
-            {
-                SpecificallyImmuneTo = new int[] {
-                    BuffID.Poisoned,
-                    ModContent.BuffType<InfestedDebuff>(),
-                    ModContent.BuffType<NecroticGougeDebuff>(),
-                    ModContent.BuffType<ViralityDebuff>(),
-                    ModContent.BuffType<DirtyWoundDebuff>()
-                }
-            });
+            BuffNPC.NPCTypeImmunity(Type, BuffNPC.NPCDebuffImmuneType.Inorganic);
 
-            NPCID.Sets.NPCBestiaryDrawModifiers value = new(0)
+            NPCID.Sets.NPCBestiaryDrawModifiers value = new()
             {
                 Velocity = 1f
             };
@@ -95,7 +84,7 @@ namespace Redemption.NPCs.PreHM
                 for (int i = 0; i < 10; i++)
                     Dust.NewDust(NPC.position + NPC.velocity, NPC.width, NPC.height, DustID.Stone, NPC.velocity.X * 0.5f, NPC.velocity.Y * 0.5f);
                 for (int i = 0; i < 8; i++)
-                    Gore.NewGore(NPC.GetSource_FromThis(), NPC.position, NPC.velocity, ModContent.Find<ModGore>("Redemption/AncientGladestoneGolemGore" + (i + 1)).Type, 1);
+                    Gore.NewGore(NPC.GetSource_OnHit(NPC), NPC.position, NPC.velocity, ModContent.Find<ModGore>("Redemption/AncientGladestoneGolemGore" + (i + 1)).Type, 1);
             }
             Dust.NewDust(NPC.position + NPC.velocity, NPC.width, NPC.height, DustID.Stone, NPC.velocity.X * 0.5f, NPC.velocity.Y * 0.5f);
             if (AIState is ActionState.Idle or ActionState.Wander)
@@ -118,15 +107,11 @@ namespace Redemption.NPCs.PreHM
         }
         public override void SendExtraAI(BinaryWriter writer)
         {
-            base.SendExtraAI(writer);
-            if (Main.netMode == NetmodeID.Server || Main.dedServ)
-                writer.WriteVector2(moveTo);
+            writer.WriteVector2(moveTo);
         }
         public override void ReceiveExtraAI(BinaryReader reader)
         {
-            base.ReceiveExtraAI(reader);
-            if (Main.netMode == NetmodeID.MultiplayerClient)
-                moveTo = reader.ReadVector2();
+            moveTo = reader.ReadVector2();
         }
         public override bool? CanFallThroughPlatforms() => NPC.Redemption().fallDownPlatform;
         public NPC npcTarget;
@@ -139,6 +124,8 @@ namespace Redemption.NPCs.PreHM
         }
         public override void AI()
         {
+            CustomFrames(88);
+
             Player player = Main.player[NPC.target];
             RedeNPC globalNPC = NPC.Redemption();
             NPC.TargetClosest();
@@ -246,91 +233,94 @@ namespace Redemption.NPCs.PreHM
                     break;
             }
         }
+        private void CustomFrames(int frameHeight)
+        {
+            RedeNPC globalNPC = NPC.Redemption();
+            switch (AIState)
+            {
+                case ActionState.PillarAttack:
+                    NPC.rotation = NPC.velocity.X * 0.05f;
+                    NPC.frame.X = NPC.frame.Width;
+                    NPC.frameCounter++;
+                    if (NPC.frameCounter > 5)
+                    {
+                        NPC.frame.Y += frameHeight;
+                        NPC.frameCounter = 0;
+                        if (NPC.frame.Y == frameHeight)
+                        {
+                            SoundEngine.PlaySound(SoundID.Zombie64, NPC.position);
+                            int tilePosY = BaseWorldGen.GetFirstTileFloor((int)globalNPC.attacker.Center.X / 16, (int)globalNPC.attacker.Center.Y / 16);
+                            NPC.Shoot(new Vector2(globalNPC.attacker.Center.X, (tilePosY * 16) + 55), ModContent.ProjectileType<AncientGladestonePillar>(), NPC.damage, Vector2.Zero);
+                        }
+                        if (NPC.frame.Y == 7 * frameHeight)
+                        {
+                            SoundEngine.PlaySound(SoundID.Item14, NPC.position);
+                            Main.LocalPlayer.RedemptionScreen().ScreenShakeOrigin = NPC.Center;
+                            Main.LocalPlayer.RedemptionScreen().ScreenShakeIntensity += 6;
+                        }
+                        if (NPC.frame.Y > 9 * frameHeight)
+                            AIState = ActionState.Threatened;
+                    }
+                    return;
+                case ActionState.PillarJump:
+                    NPC.rotation = NPC.velocity.X * 0.05f;
+                    NPC.frame.X = NPC.frame.Width;
+                    if (NPC.frame.Y < 6 * frameHeight) { NPC.velocity.X = 0; }
+                    NPC.frameCounter++;
+                    if (NPC.frameCounter > 5)
+                    {
+                        NPC.frame.Y += frameHeight;
+                        NPC.frameCounter = 0;
+                        if (NPC.frame.Y == frameHeight)
+                        {
+                            SoundEngine.PlaySound(SoundID.Zombie64, NPC.position);
+                            int tilePosY = BaseWorldGen.GetFirstTileFloor((int)NPC.Center.X / 16, (int)NPC.Center.Y / 16);
+                            NPC.Shoot(new Vector2(NPC.Center.X, (tilePosY * 16) + 55), ModContent.ProjectileType<AncientGladestonePillar>(), NPC.damage, Vector2.Zero);
+                        }
+                        if (NPC.frame.Y == 6 * frameHeight)
+                            NPC.velocity.X += NPC.spriteDirection == 1 ? Main.rand.Next(2, 7) : Main.rand.Next(-7, -2);
+                        if (NPC.frame.Y == 7 * frameHeight)
+                        {
+                            Main.LocalPlayer.RedemptionScreen().ScreenShakeOrigin = NPC.Center;
+                            Main.LocalPlayer.RedemptionScreen().ScreenShakeIntensity += 6;
+                        }
+                        if (NPC.frame.Y > 9 * frameHeight)
+                            AIState = ActionState.Threatened;
+                    }
+                    return;
+            }
+        }
         public override void FindFrame(int frameHeight)
         {
             if (Main.netMode != NetmodeID.Server)
-            {
-                RedeNPC globalNPC = NPC.Redemption();
                 NPC.frame.Width = TextureAssets.Npc[NPC.type].Width() / 2;
-                switch (AIState)
-                {
-                    case ActionState.PillarAttack:
-                        NPC.rotation = NPC.velocity.X * 0.05f;
-                        NPC.frame.X = NPC.frame.Width;
-                        NPC.frameCounter++;
-                        if (NPC.frameCounter > 5)
-                        {
-                            NPC.frame.Y += frameHeight;
-                            NPC.frameCounter = 0;
-                            if (NPC.frame.Y == frameHeight)
-                            {
-                                SoundEngine.PlaySound(SoundID.Zombie64, NPC.position);
-                                int tilePosY = BaseWorldGen.GetFirstTileFloor((int)globalNPC.attacker.Center.X / 16, (int)globalNPC.attacker.Center.Y / 16);
-                                NPC.Shoot(new Vector2(globalNPC.attacker.Center.X, (tilePosY * 16) + 55), ModContent.ProjectileType<AncientGladestonePillar>(), NPC.damage, Vector2.Zero, false, SoundID.Item1);
-                            }
-                            if (NPC.frame.Y == 7 * frameHeight)
-                            {
-                                SoundEngine.PlaySound(SoundID.Item14, NPC.position);
-                                Main.LocalPlayer.RedemptionScreen().ScreenShakeOrigin = NPC.Center;
-                                Main.LocalPlayer.RedemptionScreen().ScreenShakeIntensity += 6;
-                            }
-                            if (NPC.frame.Y > 9 * frameHeight)
-                                AIState = ActionState.Threatened;
-                        }
-                        return;
-                    case ActionState.PillarJump:
-                        NPC.rotation = NPC.velocity.X * 0.05f;
-                        NPC.frame.X = NPC.frame.Width;
-                        if (NPC.frame.Y < 6 * frameHeight) { NPC.velocity.X = 0; }
-                        NPC.frameCounter++;
-                        if (NPC.frameCounter > 5)
-                        {
-                            NPC.frame.Y += frameHeight;
-                            NPC.frameCounter = 0;
-                            if (NPC.frame.Y == frameHeight)
-                            {
-                                SoundEngine.PlaySound(SoundID.Zombie64, NPC.position);
-                                int tilePosY = BaseWorldGen.GetFirstTileFloor((int)NPC.Center.X / 16, (int)NPC.Center.Y / 16);
-                                NPC.Shoot(new Vector2(NPC.Center.X, (tilePosY * 16) + 55), ModContent.ProjectileType<AncientGladestonePillar>(), NPC.damage, Vector2.Zero, false, SoundID.Item1);
-                            }
-                            if (NPC.frame.Y == 6 * frameHeight)
-                                NPC.velocity.X += NPC.spriteDirection == 1 ? Main.rand.Next(2, 7) : Main.rand.Next(-7, -2);
-                            if (NPC.frame.Y == 7 * frameHeight)
-                            {
-                                Main.LocalPlayer.RedemptionScreen().ScreenShakeOrigin = NPC.Center;
-                                Main.LocalPlayer.RedemptionScreen().ScreenShakeIntensity += 6;
-                            }
-                            if (NPC.frame.Y > 9 * frameHeight)
-                                AIState = ActionState.Threatened;
-                        }
-                        return;
-                }
-                NPC.frame.X = 0;
-                if (NPC.collideY || NPC.velocity.Y == 0)
-                {
-                    NPC.rotation = 0;
-                    if (NPC.velocity.X == 0)
-                        NPC.frame.Y = 0;
-                    else
-                    {
-                        NPC.frameCounter += NPC.velocity.X * 0.5f;
-                        if (NPC.frameCounter is >= 3 or <= -3)
-                        {
-                            NPC.frameCounter = 0;
-                            NPC.frame.Y += frameHeight;
-                            if (NPC.frame.Y > 11 * frameHeight)
-                                NPC.frame.Y = 0;
-                        }
-                    }
-                }
+            if (AIState is ActionState.PillarAttack or ActionState.PillarJump)
+                return;
+            NPC.frame.X = 0;
+            if (NPC.collideY || NPC.velocity.Y == 0)
+            {
+                NPC.rotation = 0;
+                if (NPC.velocity.X == 0)
+                    NPC.frame.Y = 0;
                 else
                 {
-                    NPC.rotation = NPC.velocity.X * 0.05f;
-                    if (NPC.velocity.Y < 0)
-                        NPC.frame.Y = 3 * frameHeight;
-                    else
-                        NPC.frame.Y = 10 * frameHeight;
+                    NPC.frameCounter += NPC.velocity.X * 0.5f;
+                    if (NPC.frameCounter is >= 3 or <= -3)
+                    {
+                        NPC.frameCounter = 0;
+                        NPC.frame.Y += frameHeight;
+                        if (NPC.frame.Y > 11 * frameHeight)
+                            NPC.frame.Y = 0;
+                    }
                 }
+            }
+            else
+            {
+                NPC.rotation = NPC.velocity.X * 0.05f;
+                if (NPC.velocity.Y < 0)
+                    NPC.frame.Y = 3 * frameHeight;
+                else
+                    NPC.frame.Y = 10 * frameHeight;
             }
         }
 

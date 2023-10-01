@@ -11,8 +11,8 @@ using Terraria.DataStructures;
 using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
-using Terraria.ModLoader;
 using Terraria.Localization;
+using Terraria.ModLoader;
 
 namespace Redemption.NPCs.Critters
 {
@@ -40,7 +40,7 @@ namespace Redemption.NPCs.Critters
             NPCID.Sets.CountsAsCritter[Type] = true;
             NPCID.Sets.DontDoHardmodeScaling[Type] = true;
             NPCID.Sets.TakesDamageFromHostilesWithoutBeingFriendly[Type] = true;
-            NPCID.Sets.NPCBestiaryDrawModifiers value = new(0) { Velocity = 1f };
+            NPCID.Sets.NPCBestiaryDrawModifiers value = new() { Velocity = 1f };
             NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, value);
         }
 
@@ -155,6 +155,11 @@ namespace Redemption.NPCs.Critters
                     }
                     break;
             }
+            if (NPC.frame.Y >= 4 * 22)
+            {
+                NPC.defense = 90;
+                NPC.knockBackResist = 0.1f;
+            }
         }
         public bool HideCheck()
         {
@@ -246,11 +251,6 @@ namespace Redemption.NPCs.Critters
                     if (NPC.frame.Y > 5 * frameHeight)
                         NPC.frame.Y = 5 * frameHeight;
                 }
-            }
-            if (NPC.frame.Y >= 4 * frameHeight)
-            {
-                NPC.defense = 90;
-                NPC.knockBackResist = 0.1f;
             }
         }
 

@@ -84,7 +84,7 @@ namespace Redemption.Projectiles.Misc
             Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
             return false;
         }
-        public override void Kill(int timeLeft)
+        public override void OnKill(int timeLeft)
         {
             int dustIndex = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.SilverCoin, Scale: 2f);
             Main.dust[dustIndex].velocity *= 0f;

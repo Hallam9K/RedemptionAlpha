@@ -28,7 +28,7 @@ namespace Redemption.NPCs.Lab.Volt
             // DisplayName.SetDefault("Protector Volt");
             Main.npcFrameCount[NPC.type] = 5;
             NPCID.Sets.DontDoHardmodeScaling[Type] = true;
-            NPCID.Sets.NPCBestiaryDrawModifiers value = new(0) { Hide = true };
+            NPCID.Sets.NPCBestiaryDrawModifiers value = new() { Hide = true };
             NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, value);
         }
         public override void SetDefaults()
@@ -46,6 +46,7 @@ namespace Redemption.NPCs.Lab.Volt
             NPC.netAlways = true;
             NPC.aiStyle = -1;
         }
+        private static readonly SoundStyle voice = CustomSounds.Voice6 with { Pitch = -0.1f };
         public override bool CheckActive()
         {
             return !Main.LocalPlayer.InModBiome<LabBiome>();
@@ -60,8 +61,6 @@ namespace Redemption.NPCs.Lab.Volt
 
             if (NPC.target < 0 || NPC.target == 255 || player.dead || !player.active)
                 NPC.TargetClosest();
-
-            SoundStyle voice = CustomSounds.Voice6 with { Pitch = -0.1f };
 
             if (RedeBossDowned.downedVolt)
                 NPC.Transform(ModContent.NPCType<ProtectorVolt_NPC>());
@@ -142,10 +141,10 @@ namespace Redemption.NPCs.Lab.Volt
                         if (AITimer == 40 && !Main.dedServ)
                         {
                             DialogueChain chain = new();
-                            chain.Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.Volt.Start.R1"), Colors.RarityYellow, new Color(100, 86, 0), voice, .03f, 2f, 0, false, modifier: modifier)) // 178
-                                 .Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.Volt.Start.R2"), Colors.RarityYellow, new Color(100, 86, 0), voice, .03f, 2f, 0, false, modifier: modifier)) // 126
+                            chain.Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.Volt.Start.R1"), Colors.RarityYellow, new Color(100, 86, 0), voice, .03f, 2f, 0, false, modifier: modifier))
+                                 .Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.Volt.Start.R2"), Colors.RarityYellow, new Color(100, 86, 0), voice, .03f, 2f, 0, false, modifier: modifier))
                                  .Add(new(NPC, ".[0.3].[0.3].[0.3]", Colors.RarityYellow, new Color(100, 86, 0), voice, .03f, 2f, 0, false, modifier: modifier)) // 166
-                                 .Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.Volt.Start.R3"), Colors.RarityYellow, new Color(100, 86, 0), voice, .03f, 2f, .5f, true, modifier: modifier, endID: 1)); // 248
+                                 .Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.Volt.Start.R3"), Colors.RarityYellow, new Color(100, 86, 0), voice, .03f, 2f, .5f, true, modifier: modifier, endID: 1));
                             chain.OnEndTrigger += Chain_OnEndTrigger;
                             ChatUI.Visible = true;
                             ChatUI.Add(chain);
@@ -158,10 +157,12 @@ namespace Redemption.NPCs.Lab.Volt
                             NPC nPC = new();
                             nPC.SetDefaults(ModContent.NPCType<ProtectorVolt>());
                             Main.BestiaryTracker.Kills.RegisterKill(nPC);
-
-                            RedeBossDowned.downedVolt = true;
-                            if (Main.netMode == NetmodeID.Server)
-                                NetMessage.SendData(MessageID.WorldData);
+                            if (Main.netMode != NetmodeID.MultiplayerClient)
+                            {
+                                RedeBossDowned.downedVolt = true;
+                                if (Main.netMode == NetmodeID.Server)
+                                    NetMessage.SendData(MessageID.WorldData);
+                            }
 
                             NPC.Transform(ModContent.NPCType<ProtectorVolt_NPC>());
                             NPC.netUpdate = true;
@@ -171,9 +172,12 @@ namespace Redemption.NPCs.Lab.Volt
                         AITimer++;
                         if (AITimer >= 60)
                         {
-                            RedeBossDowned.voltBegin = true;
-                            if (Main.netMode == NetmodeID.Server)
-                                NetMessage.SendData(MessageID.WorldData);
+                            if (Main.netMode != NetmodeID.MultiplayerClient)
+                            {
+                                RedeBossDowned.voltBegin = true;
+                                if (Main.netMode == NetmodeID.Server)
+                                    NetMessage.SendData(MessageID.WorldData);
+                            }
 
                             NPC.Transform(ModContent.NPCType<ProtectorVolt>());
                             NPC.netUpdate = true;

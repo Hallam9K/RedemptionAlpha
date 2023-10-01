@@ -1,6 +1,5 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Redemption.Buffs.Debuffs;
 using Redemption.Globals;
 using Redemption.Globals.NPC;
 using Redemption.Items.Placeable.Banners;
@@ -8,7 +7,6 @@ using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameContent;
-using Terraria.Localization;
 using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
@@ -16,7 +14,6 @@ using Terraria.ModLoader;
 using Redemption.BaseExtension;
 using Redemption.Items.Materials.HM;
 using Redemption.Items.Usable.Potions;
-using Redemption.Buffs.NPCBuffs;
 using Redemption.Base;
 using Redemption.Projectiles.Hostile;
 using Terraria.ModLoader.Utilities;
@@ -27,6 +24,7 @@ using System;
 using System.Collections.Generic;
 using Redemption.Items.Usable;
 using ReLogic.Content;
+using Terraria.Localization;
 
 namespace Redemption.NPCs.HM
 {
@@ -41,6 +39,8 @@ namespace Redemption.NPCs.HM
         private static Asset<Texture2D> shieldFront;
         public override void Load()
         {
+            if (Main.dedServ)
+                return;
             glow = ModContent.Request<Texture2D>(Texture + "_Glow");
             upper = ModContent.Request<Texture2D>(Texture + "_Upper_Calm");
             upperGlow = ModContent.Request<Texture2D>(Texture + "_Upper_Calm_Glow");
@@ -85,20 +85,11 @@ namespace Redemption.NPCs.HM
             Main.npcFrameCount[NPC.type] = 12;
             NPCID.Sets.CantTakeLunchMoney[Type] = true;
 
-            NPCID.Sets.DebuffImmunitySets.Add(Type, new NPCDebuffImmunityData
-            {
-                SpecificallyImmuneTo = new int[] {
-                    BuffID.Confused,
-                    BuffID.Poisoned,
-                    BuffID.Venom,
-                    ModContent.BuffType<InfestedDebuff>(),
-                    ModContent.BuffType<NecroticGougeDebuff>(),
-                    ModContent.BuffType<ViralityDebuff>(),
-                    ModContent.BuffType<DirtyWoundDebuff>()
-                }
-            });
+            BuffNPC.NPCTypeImmunity(Type, BuffNPC.NPCDebuffImmuneType.Inorganic);
+            NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.Confused] = true;
 
-            NPCID.Sets.NPCBestiaryDrawModifiers value = new(0) { Velocity = 1f };
+
+            NPCID.Sets.NPCBestiaryDrawModifiers value = new() { Velocity = 1f };
             NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, value);
         }
         public override void SetDefaults()
@@ -283,7 +274,7 @@ namespace Redemption.NPCs.HM
                         p = globalNPC.attacker.Center;
                     if (AITimer == 60 || AITimer == 65 || AITimer == 70 || AITimer == 75)
                     {
-                        NPC.Shoot(originPos + new Vector2(-2 * NPC.spriteDirection, 4), ModContent.ProjectileType<PrototypeSilver_Beam>(), NPC.damage, RedeHelper.PolarVector(2, (p - originPos).ToRotation()), true, CustomSounds.Zap2 with { Pitch = 0.2f, Volume = 0.6f }, NPC.whoAmI);
+                        NPC.Shoot(originPos + new Vector2(-2 * NPC.spriteDirection, 4), ModContent.ProjectileType<PrototypeSilver_Beam>(), NPC.damage, RedeHelper.PolarVector(2, (p - originPos).ToRotation()), CustomSounds.Zap2 with { Pitch = 0.2f, Volume = 0.6f }, NPC.whoAmI);
                         NPC.velocity.X -= 1 * NPC.spriteDirection;
                     }
                     if (AITimer >= 90)
@@ -416,7 +407,7 @@ namespace Redemption.NPCs.HM
                         DustHelper.DrawDustImage(NPC.Center, DustID.Frost, 0.2f, "Redemption/Effects/DustImages/WarpShape", 2, true, 0);
                         for (int i = 0; i < 25; i++)
                         {
-                            ParticleManager.NewParticle(NPC.RandAreaInEntity(), RedeHelper.SpreadUp(1), new LightningParticle(), Color.White, 4);
+                            ParticleManager.NewParticle(NPC.RandAreaInEntity(), RedeHelper.SpreadUp(1), new LightningParticle(), Color.White, 4, 0, 2);
                             int dust = Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.Frost, Scale: 3f);
                             Main.dust[dust].velocity *= 6f;
                             Main.dust[dust].noGravity = true;
@@ -438,34 +429,31 @@ namespace Redemption.NPCs.HM
         public override bool? CanFallThroughPlatforms() => NPC.Redemption().fallDownPlatform;
         public override void FindFrame(int frameHeight)
         {
-            if (Main.netMode != NetmodeID.Server)
+            if (NPC.collideY || NPC.velocity.Y == 0)
             {
-                if (NPC.collideY || NPC.velocity.Y == 0)
-                {
-                    NPC.rotation = 0;
-                    if (NPC.velocity.X == 0)
-                        NPC.frame.Y = 0;
-                    else
-                    {
-                        if (NPC.frame.Y < 1 * frameHeight)
-                            NPC.frame.Y = 1 * frameHeight;
-
-                        NPC.frameCounter += NPC.velocity.X * 0.5f;
-                        if (NPC.frameCounter is >= 3 or <= -3)
-                        {
-                            NPC.frameCounter = 0;
-                            NPC.frame.Y += frameHeight;
-                            if (NPC.frame.Y > 11 * frameHeight)
-                                NPC.frame.Y = 2 * frameHeight;
-                        }
-                    }
-                }
+                NPC.rotation = 0;
+                if (NPC.velocity.X == 0)
+                    NPC.frame.Y = 0;
                 else
                 {
-                    if (AIState is not ActionState.Stomp && TimerRand <= 1)
-                        NPC.rotation = NPC.velocity.X * 0.05f;
-                    NPC.frame.Y = 10 * frameHeight;
+                    if (NPC.frame.Y < 1 * frameHeight)
+                        NPC.frame.Y = 1 * frameHeight;
+
+                    NPC.frameCounter += NPC.velocity.X * 0.5f;
+                    if (NPC.frameCounter is >= 3 or <= -3)
+                    {
+                        NPC.frameCounter = 0;
+                        NPC.frame.Y += frameHeight;
+                        if (NPC.frame.Y > 11 * frameHeight)
+                            NPC.frame.Y = 2 * frameHeight;
+                    }
                 }
+            }
+            else
+            {
+                if (AIState is not ActionState.Stomp && TimerRand <= 1)
+                    NPC.rotation = NPC.velocity.X * 0.05f;
+                NPC.frame.Y = 10 * frameHeight;
             }
         }
         public void SightCheck()
@@ -528,7 +516,7 @@ namespace Redemption.NPCs.HM
                     if (numtries >= 20)
                         break;
 
-                    NPC.Shoot(origin - new Vector2(0, 8), ModContent.ProjectileType<SpacePaladin_GroundShock>(), NPC.damage, Vector2.Zero, false, SoundID.DD2_MonkStaffGroundImpact with { Volume = 0.2f });
+                    NPC.Shoot(origin - new Vector2(0, 8), ModContent.ProjectileType<SpacePaladin_GroundShock>(), NPC.damage, Vector2.Zero, SoundID.DD2_MonkStaffGroundImpact with { Volume = 0.2f });
                 }
             }
             if (slamTimer >= 60)
@@ -617,13 +605,13 @@ namespace Redemption.NPCs.HM
                 ShieldEffect.Parameters["spriteRatio"].SetValue(new Vector2(shieldFront.Value.Width / 2f / HexagonTexture.Width, shieldFront.Value.Height / 2f / HexagonTexture.Height));
                 ShieldEffect.Parameters["conversion"].SetValue(new Vector2(1f / (shieldFront.Value.Width / 2), 1f / (shieldFront.Value.Height / 2)));
                 ShieldEffect.Parameters["frameAmount"].SetValue(1f);
-                spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+                spriteBatch.BeginDefault(true);
                 ShieldEffect.CurrentTechnique.Passes[0].Apply();
 
                 spriteBatch.Draw(shieldFront.Value, pos - screenPos, null, NPC.GetAlpha(drawColor) * 0.5f, NPC.rotation, NPC.frame.Size() / 2 + new Vector2(NPC.spriteDirection == -1 ? 30 : -24, 10), NPC.scale, effects, 0);
 
                 spriteBatch.End();
-                spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+                spriteBatch.BeginDefault();
             }
             return false;
         }
@@ -674,7 +662,7 @@ namespace Redemption.NPCs.HM
             {
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Sky,
 
-                new FlavorTextBestiaryInfoElement(Language.GetTextValue("Mods.Redemption.FlavorTextBestiary.SpacePaladin")),
+                new FlavorTextBestiaryInfoElement(Language.GetTextValue("Mods.Redemption.FlavorTextBestiary.SpacePaladin"))
             });
         }
     }

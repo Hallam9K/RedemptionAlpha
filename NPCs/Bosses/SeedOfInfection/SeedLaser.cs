@@ -105,7 +105,7 @@ namespace Redemption.NPCs.Bosses.SeedOfInfection
                 return false;
 
             Main.spriteBatch.End();
-            Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+            Main.spriteBatch.BeginAdditive();
 
             Texture2D texture2D19 = TextureAssets.Projectile[Projectile.type].Value;
             Texture2D texture2D20 = ModContent.Request<Texture2D>("Redemption/NPCs/Bosses/SeedOfInfection/SeedLaser_Beam").Value;
@@ -146,7 +146,7 @@ namespace Redemption.NPCs.Bosses.SeedOfInfection
             arg_B1FF_0.Draw(arg_B1FF_1, arg_B1FF_2, sourceRectangle2, color44, Projectile.rotation, texture2D21.Frame(1, 1, 0, 0).Top(), new Vector2(Math.Min(Projectile.ai[1], charge) / charge, 1f), SpriteEffects.None, 0f);
 
             Main.spriteBatch.End();
-            Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+            Main.spriteBatch.BeginDefault();
             return false;
         }
     }

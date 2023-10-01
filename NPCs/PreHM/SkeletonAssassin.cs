@@ -17,11 +17,12 @@ using Terraria.GameContent;
 using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
-using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.Utilities;
 using Redemption.BaseExtension;
 using Terraria.DataStructures;
+using Terraria.Localization;
+using Redemption.Items.Weapons.PreHM.Ritualist;
 
 namespace Redemption.NPCs.PreHM
 {
@@ -47,7 +48,7 @@ namespace Redemption.NPCs.PreHM
         {
             Main.npcFrameCount[NPC.type] = 16;
 
-            NPCID.Sets.NPCBestiaryDrawModifiers value = new(0);
+            NPCID.Sets.NPCBestiaryDrawModifiers value = new();
 
             NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, value);
         }
@@ -139,6 +140,8 @@ namespace Redemption.NPCs.PreHM
         }
         public override void AI()
         {
+            CustomFrames(56);
+
             Player player = Main.player[NPC.target];
             RedeNPC globalNPC = NPC.Redemption();
             NPC.TargetClosest();
@@ -351,68 +354,71 @@ namespace Redemption.NPCs.PreHM
             Main.dust[sparkle].velocity *= 0;
             Main.dust[sparkle].noGravity = true;
         }
+        private void CustomFrames(int frameHeight)
+        {
+            if (AIState is ActionState.Stab)
+            {
+                NPC.frameCounter++;
+                if (NPC.frameCounter < 10)
+                    NPC.frame.Y = 13 * frameHeight;
+                else if (NPC.frameCounter < 20)
+                    NPC.frame.Y = 14 * frameHeight;
+                else if (NPC.frameCounter < 30)
+                    NPC.frame.Y = 15 * frameHeight;
+                else
+                {
+                    AIState = ActionState.Alert;
+                    NPC.frameCounter = 0;
+                }
+                return;
+            }
+        }
         public override bool? CanFallThroughPlatforms() => NPC.Redemption().fallDownPlatform;
         public override void FindFrame(int frameHeight)
         {
             if (Main.netMode != NetmodeID.Server)
-            {
                 NPC.frame.Width = TextureAssets.Npc[NPC.type].Width() / 3;
-                NPC.frame.X = Personality switch
-                {
-                    PersonalityState.Soulful => NPC.frame.Width,
-                    PersonalityState.Greedy => NPC.frame.Width * 2,
-                    _ => 0,
-                };
+            NPC.frame.X = Personality switch
+            {
+                PersonalityState.Soulful => NPC.frame.Width,
+                PersonalityState.Greedy => NPC.frame.Width * 2,
+                _ => 0,
+            };
 
-                if (AIState is ActionState.Stab)
+            if (AIState is ActionState.Stab)
+                return;
+            if (NPC.collideY || NPC.velocity.Y == 0)
+            {
+                NPC.rotation = 0;
+                if (NPC.velocity.X == 0)
                 {
-                    NPC.frameCounter++;
-                    if (NPC.frameCounter < 10)
-                        NPC.frame.Y = 13 * frameHeight;
-                    else if (NPC.frameCounter < 20)
-                        NPC.frame.Y = 14 * frameHeight;
-                    else if (NPC.frameCounter < 30)
-                        NPC.frame.Y = 15 * frameHeight;
-                    else
+                    if (++NPC.frameCounter >= 10)
                     {
-                        AIState = ActionState.Alert;
                         NPC.frameCounter = 0;
-                    }
-                    return;
-                }
-                if (NPC.collideY || NPC.velocity.Y == 0)
-                {
-                    NPC.rotation = 0;
-                    if (NPC.velocity.X == 0)
-                    {
-                        if (++NPC.frameCounter >= 10)
-                        {
-                            NPC.frameCounter = 0;
-                            NPC.frame.Y += frameHeight;
-                            if (NPC.frame.Y > 3 * frameHeight)
-                                NPC.frame.Y = 0 * frameHeight;
-                        }
-                    }
-                    else
-                    {
-                        if (NPC.frame.Y < 5 * frameHeight)
-                            NPC.frame.Y = 5 * frameHeight;
-
-                        NPC.frameCounter += NPC.velocity.X * 0.5f;
-                        if (NPC.frameCounter is >= 3 or <= -3)
-                        {
-                            NPC.frameCounter = 0;
-                            NPC.frame.Y += frameHeight;
-                            if (NPC.frame.Y > 12 * frameHeight)
-                                NPC.frame.Y = 5 * frameHeight;
-                        }
+                        NPC.frame.Y += frameHeight;
+                        if (NPC.frame.Y > 3 * frameHeight)
+                            NPC.frame.Y = 0 * frameHeight;
                     }
                 }
                 else
                 {
-                    NPC.rotation = NPC.velocity.X * 0.05f;
-                    NPC.frame.Y = 4 * frameHeight;
+                    if (NPC.frame.Y < 5 * frameHeight)
+                        NPC.frame.Y = 5 * frameHeight;
+
+                    NPC.frameCounter += NPC.velocity.X * 0.5f;
+                    if (NPC.frameCounter is >= 3 or <= -3)
+                    {
+                        NPC.frameCounter = 0;
+                        NPC.frame.Y += frameHeight;
+                        if (NPC.frame.Y > 12 * frameHeight)
+                            NPC.frame.Y = 5 * frameHeight;
+                    }
                 }
+            }
+            else
+            {
+                NPC.rotation = NPC.velocity.X * 0.05f;
+                NPC.frame.Y = 4 * frameHeight;
             }
         }
         public int GetNearestNPC(int[] WhitelistNPC = default, bool friendly = false)
@@ -540,7 +546,6 @@ namespace Redemption.NPCs.PreHM
         }
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
-            //npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<WornDagger>(), 20));
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<AncientGoldCoin>(), 3, 1, 5));
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<GraveSteelShards>(), 3, 3, 9));
             npcLoot.Add(ItemDropRule.Common(ItemID.Hook, 25));

@@ -21,7 +21,7 @@ namespace Redemption.NPCs.Bosses.Gigapora
             Projectile.hostile = true;
             Projectile.timeLeft = 500;
         }
-        public override void Kill(int timeLeft)
+        public override void OnKill(int timeLeft)
         {
         }
     }

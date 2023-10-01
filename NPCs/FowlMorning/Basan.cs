@@ -26,9 +26,8 @@ using Terraria.GameContent;
 using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
-using Terraria.Localization;
 using Terraria.ModLoader;
-using Redemption.Buffs.NPCBuffs;
+using Terraria.Localization;
 
 namespace Redemption.NPCs.FowlMorning
 {
@@ -39,6 +38,8 @@ namespace Redemption.NPCs.FowlMorning
         private static Asset<Texture2D> fireBreath;
         public override void Load()
         {
+            if (Main.dedServ)
+                return;
             glowMask = ModContent.Request<Texture2D>(Texture + "_Glow");
             fireBreath = ModContent.Request<Texture2D>(Texture + "_FirebreathOV");
         }
@@ -66,17 +67,10 @@ namespace Redemption.NPCs.FowlMorning
         public override void SetStaticDefaults()
         {
             Main.npcFrameCount[NPC.type] = 17;
-            NPCID.Sets.DebuffImmunitySets.Add(Type, new NPCDebuffImmunityData
-            {
-                SpecificallyImmuneTo = new int[] {
-                    BuffID.Confused,
-                    BuffID.OnFire,
-                    BuffID.OnFire3,
-                    ModContent.BuffType<DragonblazeDebuff>()
-                }
-            });
+            BuffNPC.NPCTypeImmunity(Type, BuffNPC.NPCDebuffImmuneType.Hot);
+            NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.Confused] = true;
             NPCID.Sets.BossBestiaryPriority.Add(Type);
-            NPCID.Sets.NPCBestiaryDrawModifiers value = new(0)
+            NPCID.Sets.NPCBestiaryDrawModifiers value = new()
             {
                 CustomTexturePath = "Redemption/CrossMod/BossChecklist/Basan",
                 Position = new Vector2(0, 10),
@@ -174,7 +168,8 @@ namespace Redemption.NPCs.FowlMorning
             if (NPC.target < 0 || NPC.target == 255 || player.dead || !player.active)
                 NPC.TargetClosest();
 
-            DespawnHandler();
+            if (NPC.DespawnHandler(3))
+                return;
 
             if (Main.rand.NextBool(3))
             {
@@ -240,7 +235,7 @@ namespace Redemption.NPCs.FowlMorning
                             {
                                 SoundEngine.PlaySound(SoundID.DD2_BetsyWindAttack, NPC.Center);
                                 for (int i = 0; i < 2; i++)
-                                    NPC.Shoot(NPC.Center, ModContent.ProjectileType<Basan_HeatWave>(), NPC.damage, new Vector2((4 + i + TimerRand2) * NPC.spriteDirection, 0), true, SoundID.DD2_PhantomPhoenixShot with { Volume = 0.5f + (TimerRand2 / 12) }, i);
+                                    NPC.Shoot(NPC.Center, ModContent.ProjectileType<Basan_HeatWave>(), NPC.damage, new Vector2((4 + i + TimerRand2) * NPC.spriteDirection, 0), SoundID.DD2_PhantomPhoenixShot with { Volume = 0.5f + (TimerRand2 / 12) }, i);
                             }
                             if (AniType is (int)AnimType.None)
                             {
@@ -269,10 +264,8 @@ namespace Redemption.NPCs.FowlMorning
                             TimerRand++;
                             break;
                         case 1:
-                            if (AITimer++ == 0)
-                            {
+                            if (AITimer++ == 0 && !Main.dedServ)
                                 SoundEngine.PlaySound(new SoundStyle("Redemption/Sounds/Custom/ChickenCluck2") { Pitch = -.3f, Volume = 1.6f }, NPC.position);
-                            }
                             int amount = NPC.life <= NPC.lifeMax / 2 ? 5 : 3;
                             if (AITimer >= 35 && AITimer % 3 == 0 && TimerRand2 < amount && NPC.CountNPCS(ModContent.NPCType<GhostfireChicken>()) < 8)
                             {
@@ -356,8 +349,7 @@ namespace Redemption.NPCs.FowlMorning
                             }
                             if (AITimer++ >= 35 && AITimer % 2 == 0)
                             {
-                                NPC.Shoot(NPC.Center + new Vector2(28 * NPC.spriteDirection, -18), ModContent.ProjectileType<Basan_Firebreath>(), NPC.damage, RedeHelper.PolarVector(5, (playerOld - NPC.Center).ToRotation()
-                                        + TimerRand2 - MathHelper.ToRadians(45)), false, SoundID.Item1);
+                                NPC.Shoot(NPC.Center + new Vector2(28 * NPC.spriteDirection, -18), ModContent.ProjectileType<Basan_Firebreath>(), NPC.damage, RedeHelper.PolarVector(5, (playerOld - NPC.Center).ToRotation() + TimerRand2 - MathHelper.ToRadians(45)));
                                 TimerRand2 += MathHelper.ToRadians(2);
                             }
                             if (AITimer >= 120)
@@ -380,14 +372,7 @@ namespace Redemption.NPCs.FowlMorning
                     }
                     break;
             }
-        }
-        private int attackSpeed = 7;
-        public override bool? CanFallThroughPlatforms() => NPC.Redemption().fallDownPlatform;
-        public override void FindFrame(int frameHeight)
-        {
-            if (Main.netMode == NetmodeID.Server)
-                return;
-            NPC.frame.Width = TextureAssets.Npc[NPC.type].Width() / 2;
+            #region Animations
             switch ((AnimType)AniType)
             {
                 case AnimType.None:
@@ -518,6 +503,31 @@ namespace Redemption.NPCs.FowlMorning
                     }
                     break;
             }
+            #endregion
+        }
+        private readonly int frameHeight = 116;
+        private int attackSpeed = 7;
+        public override bool? CanFallThroughPlatforms() => NPC.Redemption().fallDownPlatform;
+        public override void FindFrame(int frameHeight)
+        {
+            if (Main.netMode != NetmodeID.Server)
+                NPC.frame.Width = TextureAssets.Npc[NPC.type].Width() / 2;
+
+            if (NPC.IsABestiaryIconDummy)
+            {
+                NPC.frame.X = 0;
+                NPC.rotation = 0;
+                if (NPC.velocity.X == 0)
+                {
+                    if (NPC.frameCounter++ >= 10)
+                    {
+                        NPC.frameCounter = 0;
+                        NPC.frame.Y += frameHeight;
+                        if (NPC.frame.Y > 3 * frameHeight)
+                            NPC.frame.Y = 0;
+                    }
+                }
+            }
         }
         private int FireFrameY;
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
@@ -537,27 +547,9 @@ namespace Redemption.NPCs.FowlMorning
             }
             return false;
         }
-        private void DespawnHandler()
-        {
-            Player player = Main.player[NPC.target];
-            if (!player.active || player.dead || !FowlMorningWorld.FowlMorningActive)
-            {
-                NPC.TargetClosest(false);
-                player = Main.player[NPC.target];
-                if (!player.active || player.dead || !FowlMorningWorld.FowlMorningActive)
-                {
-                    NPC.alpha += 2;
-                    if (NPC.alpha >= 255)
-                        NPC.active = false;
-                    if (NPC.timeLeft > 10)
-                        NPC.timeLeft = 10;
-                    return;
-                }
-            }
-        }
         public override bool PreKill()
         {
-            if (FowlMorningWorld.FowlMorningActive)
+            if (FowlMorningWorld.FowlMorningActive && Main.netMode != NetmodeID.MultiplayerClient)
             {
                 FowlMorningWorld.ChickPoints += 500;
                 if (Main.netMode == NetmodeID.Server)
@@ -571,7 +563,7 @@ namespace Redemption.NPCs.FowlMorning
             npcLoot.Add(ItemDropRule.MasterModeDropOnAllPlayers(ModContent.ItemType<SpicyDrumstick>(), 4));
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<BasanTrophy>(), 10));
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<CuckooCloak>()));
-            npcLoot.Add(ItemDropRule.OneFromOptions(1, ModContent.ItemType<EggShield>(), ModContent.ItemType<GreneggLauncher>(), ModContent.ItemType<Halbirdhouse>(), ModContent.ItemType<NestWand>(), ModContent.ItemType<ChickendWand>()));
+            npcLoot.Add(ItemDropRule.OneFromOptions(1, ModContent.ItemType<EggShield>(), ModContent.ItemType<GreneggLauncher>(), ModContent.ItemType<Halbirdhouse>(), ModContent.ItemType<NestWand>(), ModContent.ItemType<ChickendWand>(), ModContent.ItemType<DawnHerald>()));
             npcLoot.Add(ItemDropRule.ByCondition(new OnFireCondition(), ModContent.ItemType<FriedChicken>(), 1, 6, 8));
         }
         public override void OnHitByItem(Player player, Item item, NPC.HitInfo hit, int damageDone)

@@ -24,7 +24,7 @@ namespace Redemption.Projectiles.Ranged
             Projectile.penetrate = 1;
             Projectile.timeLeft = 600;
         }
-        public override void Kill(int timeLeft)
+        public override void OnKill(int timeLeft)
         {
             Player player = Main.player[Projectile.owner];
             if (Main.myPlayer == player.whoAmI)

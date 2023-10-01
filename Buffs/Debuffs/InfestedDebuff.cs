@@ -13,6 +13,9 @@ namespace Redemption.Buffs.Debuffs
             Main.pvpBuff[Type] = true;
             Main.buffNoSave[Type] = true;
             BuffID.Sets.LongerExpertDebuff[Type] = true;
+            BuffID.Sets.GrantImmunityWith[Type].Add(BuffID.Bleeding);
+            BuffID.Sets.GrantImmunityWith[Type].Add(BuffID.BloodButcherer);
+
         }
         public override bool ReApply(Player player, int time, int buffIndex)
         {

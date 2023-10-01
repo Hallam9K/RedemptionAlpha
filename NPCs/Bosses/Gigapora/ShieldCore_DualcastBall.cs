@@ -92,7 +92,7 @@ namespace Redemption.NPCs.Bosses.Gigapora
         {
             return new Color(1f, 1f, 1f, 0f) * Projectile.Opacity;
         }
-        public override void Kill(int timeLeft)
+        public override void OnKill(int timeLeft)
         {
             SoundEngine.PlaySound(SoundID.DD2_ExplosiveTrapExplode, Projectile.position);
             for (int i = 0; i < 10; i++)

@@ -24,7 +24,7 @@ namespace Redemption.NPCs.FowlMorning
         public override void SetStaticDefaults()
         {
             Main.npcFrameCount[NPC.type] = 9;
-            NPCID.Sets.NPCBestiaryDrawModifiers value = new(0) { Velocity = 1f };
+            NPCID.Sets.NPCBestiaryDrawModifiers value = new() { Velocity = 1f };
             NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, value);
         }
         public override void SetDefaults()
@@ -53,14 +53,15 @@ namespace Redemption.NPCs.FowlMorning
         {
             if (!spawnFire)
             {
-                NPC.Shoot(NPC.Center + new Vector2(5 * NPC.spriteDirection, -20), ModContent.ProjectileType<HeadlessChicken_Fire>(), NPC.damage, Vector2.Zero, false, SoundID.Item1, NPC.whoAmI);
+                NPC.Shoot(NPC.Center + new Vector2(5 * NPC.spriteDirection, -20), ModContent.ProjectileType<HeadlessChicken_Fire>(), NPC.damage, Vector2.Zero, NPC.whoAmI);
                 spawnFire = true;
             }
 
             Player player = Main.player[NPC.target];
             NPC.TargetClosest();
             NPC.LookByVelocity();
-            DespawnHandler();
+            if (NPC.DespawnHandler(3))
+                return;
 
             NPC.PlatformFallCheck(ref NPC.Redemption().fallDownPlatform);
             if (NPC.ai[0]++ == 0)
@@ -113,28 +114,6 @@ namespace Redemption.NPCs.FowlMorning
                 NPC.ai[2] = 0;
                 NPC.ai[1] = Main.rand.Next(180, 221);
             }
-        }
-        private void DespawnHandler()
-        {
-            Player player = Main.player[NPC.target];
-            if (!player.active || player.dead || !FowlMorningWorld.FowlMorningActive)
-            {
-                NPC.TargetClosest(false);
-                player = Main.player[NPC.target];
-                if (!player.active || player.dead || !FowlMorningWorld.FowlMorningActive)
-                {
-                    NPC.alpha += 2;
-                    if (NPC.alpha >= 255)
-                        NPC.active = false;
-                    if (NPC.timeLeft > 10)
-                        NPC.timeLeft = 10;
-                    return;
-                }
-            }
-        }
-        public override bool? CanFallThroughPlatforms() => NPC.Redemption().fallDownPlatform;
-        public override void FindFrame(int frameHeight)
-        {
             if (Flare)
             {
                 FlareTimer++;
@@ -144,7 +123,10 @@ namespace Redemption.NPCs.FowlMorning
                     FlareTimer = 0;
                 }
             }
-
+        }
+        public override bool? CanFallThroughPlatforms() => NPC.Redemption().fallDownPlatform;
+        public override void FindFrame(int frameHeight)
+        {
             if (NPC.velocity.Y == 0)
             {
                 NPC.rotation = 0;
@@ -183,7 +165,7 @@ namespace Redemption.NPCs.FowlMorning
         }
         public override bool PreKill()
         {
-            if (FowlMorningWorld.FowlMorningActive)
+            if (FowlMorningWorld.FowlMorningActive && Main.netMode != NetmodeID.MultiplayerClient)
             {
                 FowlMorningWorld.ChickPoints += Main.expertMode ? 10 : 5;
                 if (Main.netMode == NetmodeID.Server)

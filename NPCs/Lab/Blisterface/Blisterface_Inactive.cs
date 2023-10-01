@@ -19,7 +19,7 @@ namespace Redemption.NPCs.Lab.Blisterface
             Main.npcFrameCount[NPC.type] = 8;
             NPCID.Sets.DontDoHardmodeScaling[Type] = true;
 
-            NPCID.Sets.NPCBestiaryDrawModifiers value = new(0)
+            NPCID.Sets.NPCBestiaryDrawModifiers value = new()
             {
                 Hide = true
             };
@@ -55,7 +55,7 @@ namespace Redemption.NPCs.Lab.Blisterface
             if (NPC.Center.Y > (RedeGen.LabVector.Y + 191) * 16)
                 NPC.velocity.Y -= 0.1f;
 
-            Player player = Main.player[Main.myPlayer];
+            Player player = Main.LocalPlayer;
             Rectangle activeZone = new((int)(RedeGen.LabVector.X + 204) * 16, (int)(RedeGen.LabVector.Y + 168) * 16, 7 * 16, 20 * 16);
             if (player.Hitbox.Intersects(activeZone) && !player.dead && player.active)
             {

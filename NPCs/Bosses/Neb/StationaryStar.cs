@@ -39,7 +39,7 @@ namespace Redemption.NPCs.Bosses.Neb
         {
             return Color.White * Projectile.Opacity;
         }
-        public override void Kill(int timeLeft)
+        public override void OnKill(int timeLeft)
 		{
             for (int m = 0; m < 8; m++)
             {

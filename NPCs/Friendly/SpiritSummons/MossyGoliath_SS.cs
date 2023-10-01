@@ -48,14 +48,9 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
             Main.npcFrameCount[NPC.type] = 6;
             NPCID.Sets.TrailCacheLength[NPC.type] = 3;
             NPCID.Sets.TrailingMode[NPC.type] = 1;
-            NPCID.Sets.DebuffImmunitySets.Add(Type, new NPCDebuffImmunityData
-            {
-                SpecificallyImmuneTo = new int[] {
-                    BuffID.Poisoned,
-                    BuffID.Venom,
-                    ModContent.BuffType<DirtyWoundDebuff>()
-                }
-            });
+            NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.Poisoned] = true;
+            NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.Venom] = true;
+            NPCID.Sets.SpecificDebuffImmunity[Type][ModContent.BuffType<DirtyWoundDebuff>()] = true;
         }
         public override void SetSafeDefaults()
         {
@@ -73,19 +68,15 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
         public override void ModifyTypeName(ref string typeName)
         {
             if (NPC.ai[3] != -1)
-                typeName = Main.player[(int)NPC.ai[3]].name + "'s Mossy Goliath";
+                typeName = Main.player[(int)NPC.ai[3]].name + "'s " + Lang.GetNPCNameValue(Type);
         }
         public override void SendExtraAI(BinaryWriter writer)
         {
-            base.SendExtraAI(writer);
-            if (Main.netMode == NetmodeID.Server || Main.dedServ)
-                writer.WriteVector2(moveTo);
+            writer.WriteVector2(moveTo);
         }
         public override void ReceiveExtraAI(BinaryReader reader)
         {
-            base.ReceiveExtraAI(reader);
-            if (Main.netMode == NetmodeID.MultiplayerClient)
-                moveTo = reader.ReadVector2();
+            moveTo = reader.ReadVector2();
         }
         private Vector2 moveTo;
         private int runCooldown;
@@ -117,7 +108,7 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
             {
                 case ActionState.Start:
                     AniType = 1;
-                    if (AITimer++ == 25)
+                    if (AITimer++ == 25 && !Main.dedServ)
                         SoundEngine.PlaySound(CustomSounds.Roar1, NPC.position);
 
                     if (AITimer == 30)
@@ -262,7 +253,7 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
                                 NPC.velocity.X = 0;
 
                             AniType = 1;
-                            if (AITimer++ == 25)
+                            if (AITimer++ == 25 && !Main.dedServ)
                                 SoundEngine.PlaySound(CustomSounds.Roar1, NPC.position);
 
                             if (AITimer == 30)
@@ -271,7 +262,7 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
                                 Main.LocalPlayer.RedemptionScreen().ScreenShakeIntensity += 10;
                             }
                             if (AITimer > 25 && AITimer % 10 == 0)
-                                NPC.Shoot(new Vector2(NPC.Center.X + (64 * NPC.spriteDirection), NPC.Center.Y - 8), ModContent.ProjectileType<MossyGoliath_SS_Screech>(), 0, new Vector2(3 * NPC.spriteDirection, 0), false, SoundID.Item1);
+                                NPC.Shoot(new Vector2(NPC.Center.X + (64 * NPC.spriteDirection), NPC.Center.Y - 8), ModContent.ProjectileType<MossyGoliath_SS_Screech>(), 0, new Vector2(3 * NPC.spriteDirection, 0));
                             if (AITimer >= 80)
                             {
                                 AniType = 0;
@@ -437,11 +428,11 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
                         case 3:
                             AniType = 1;
                             AITimer++;
-                            if (AITimer == 25)
+                            if (AITimer == 25 && !Main.dedServ)
                                 SoundEngine.PlaySound(CustomSounds.Roar1 with { Pitch = -.5f }, NPC.position);
 
                             if (AITimer > 25 && AITimer % 4 == 0)
-                                NPC.Shoot(new Vector2(NPC.Center.X + (64 * NPC.spriteDirection), NPC.Center.Y - 8), ModContent.ProjectileType<MossyGoliath_SS_ToxicBreath>(), NPC.damage / 3, new Vector2(7 * NPC.spriteDirection, Main.rand.NextFloat(-1f, 1f)), false, SoundID.Item1);
+                                NPC.Shoot(new Vector2(NPC.Center.X + (64 * NPC.spriteDirection), NPC.Center.Y - 8), ModContent.ProjectileType<MossyGoliath_SS_ToxicBreath>(), NPC.damage, new Vector2(7 * NPC.spriteDirection, Main.rand.NextFloat(-1f, 1f)));
 
                             if (AITimer >= 80)
                             {
@@ -628,8 +619,8 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
             var effects = NPC.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
             int shader = GameShaders.Armor.GetShaderIdFromItemId(ItemID.WispDye);
             spriteBatch.End();
-            spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
-            GameShaders.Armor.ApplySecondary(shader, Main.player[Main.myPlayer], null);
+            spriteBatch.BeginAdditive(true);
+            GameShaders.Armor.ApplySecondary(shader, Main.LocalPlayer, null);
 
             if (AniType == 0 && NPC.velocity.Y == 0)
             {
@@ -660,7 +651,7 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
                 spriteBatch.Draw(roarAni, drawCenter - screenPos, new Rectangle?(new Rectangle(0, y, roarAni.Width, height)), NPC.GetAlpha(Color.White), NPC.rotation, new Vector2(roarAni.Width / 2f, height / 2f), NPC.scale, effects, 0f);
             }
             spriteBatch.End();
-            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+            spriteBatch.BeginDefault();
             return false;
         }
 

@@ -7,7 +7,6 @@ using Redemption.Items.Materials.PreHM;
 using Redemption.Items.Usable;
 using Redemption.NPCs.Friendly;
 using Terraria.ModLoader.Utilities;
-using Terraria.DataStructures;
 using Terraria.GameContent.Bestiary;
 using System.Collections.Generic;
 using Redemption.Globals;
@@ -22,6 +21,10 @@ using Redemption.Items.Weapons.PreHM.Melee;
 using Redemption.BaseExtension;
 using Redemption.UI;
 using Terraria.Localization;
+using Redemption.Dusts;
+using System;
+using Redemption.UI.ChatUI;
+using Redemption.Textures;
 
 namespace Redemption.NPCs.Minibosses.SkullDigger
 {
@@ -56,12 +59,9 @@ namespace Redemption.NPCs.Minibosses.SkullDigger
             NPCID.Sets.MPAllowedEnemies[Type] = true;
             NPCID.Sets.BossBestiaryPriority.Add(Type);
 
-            NPCID.Sets.DebuffImmunitySets.Add(Type, new NPCDebuffImmunityData
-            {
-                ImmuneToAllBuffsThatAreNotWhips = true
-            });
+            NPCID.Sets.ImmuneToRegularBuffs[Type] = true;
 
-            NPCID.Sets.NPCBestiaryDrawModifiers value = new(0)
+            NPCID.Sets.NPCBestiaryDrawModifiers value = new()
             {
                 Position = new Vector2(0, 30),
                 PortraitPositionYOverride = 8
@@ -93,6 +93,8 @@ namespace Redemption.NPCs.Minibosses.SkullDigger
             if (!Main.dedServ)
                 Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/SilentCaverns");
         }
+        private static Texture2D Bubble => CommonTextures.TextBubble_Cave.Value;
+        private static readonly SoundStyle voice = CustomSounds.Voice8 with { Volume = .5f, Pitch = -1f };
 
         public override bool CanHitPlayer(Player target, ref int cooldownSlot) => false;
         public override bool CanHitNPC(NPC target) => false;
@@ -149,20 +151,12 @@ namespace Redemption.NPCs.Minibosses.SkullDigger
 
         public override void SendExtraAI(BinaryWriter writer)
         {
-            base.SendExtraAI(writer);
-            if (Main.netMode == NetmodeID.Server || Main.dedServ)
-            {
-                writer.Write(ID);
-            }
+            writer.Write(ID);
         }
 
         public override void ReceiveExtraAI(BinaryReader reader)
         {
-            base.ReceiveExtraAI(reader);
-            if (Main.netMode == NetmodeID.MultiplayerClient)
-            {
-                ID = reader.ReadInt32();
-            }
+            ID = reader.ReadInt32();
         }
 
         void AttackChoice()
@@ -180,7 +174,6 @@ namespace Redemption.NPCs.Minibosses.SkullDigger
             }
         }
 
-        private bool floatTimer;
         private Vector2 origin;
         public bool KeeperSpawn;
 
@@ -188,6 +181,7 @@ namespace Redemption.NPCs.Minibosses.SkullDigger
         public List<int> CopyList = null;
 
         public int ID;
+        public readonly Vector2 modifier = new(0, -240);
 
         public override void AI()
         {
@@ -200,25 +194,15 @@ namespace Redemption.NPCs.Minibosses.SkullDigger
             Player player = Main.player[NPC.target];
 
             if (!RedeHelper.AnyProjectiles(ModContent.ProjectileType<SkullDigger_FlailBlade>()))
-                NPC.Shoot(NPC.Center, ModContent.ProjectileType<SkullDigger_FlailBlade>(), NPC.damage, Vector2.Zero, false, SoundID.Item1, NPC.whoAmI);
+                NPC.Shoot(NPC.Center, ModContent.ProjectileType<SkullDigger_FlailBlade>(), NPC.damage, Vector2.Zero, NPC.whoAmI);
 
-            DespawnHandler();
+            if (NPC.DespawnHandler(1))
+                return;
 
             if (AIState != ActionState.Death && AIState != ActionState.Attacks)
                 NPC.LookAtEntity(player);
 
-            if (!floatTimer)
-            {
-                NPC.velocity.Y += 0.03f;
-                if (NPC.velocity.Y > .5f)
-                    floatTimer = true;
-            }
-            else if (floatTimer)
-            {
-                NPC.velocity.Y -= 0.03f;
-                if (NPC.velocity.Y < -.5f)
-                    floatTimer = false;
-            }
+            NPC.position.Y += (float)Math.Sin(NPC.localAI[0]++ / 15) / 3;
 
             switch (AIState)
             {
@@ -267,16 +251,20 @@ namespace Redemption.NPCs.Minibosses.SkullDigger
                             if (NPC.AnyNPCs(ModContent.NPCType<Keeper>()))
                             {
                                 KeeperSpawn = true;
-                                if (!Main.dedServ)
+                                if (!Main.dedServ && AITimer == 40)
                                 {
-                                    if (AITimer == 40)
-                                        RedeSystem.Instance.DialogueUIElement.DisplayDialogue(Language.GetTextValue("Mods.Redemption.Cutscene.SkullDigger.Fight1"), 120, 30, 0.6f, Language.GetTextValue("Mods.Redemption.Cutscene.SkullDigger.Name"), 0.3f, Color.LightCyan, null, text, NPC.Center, 0);
-                                    if (AITimer == 220)
-                                        RedeSystem.Instance.DialogueUIElement.DisplayDialogue(Language.GetTextValue("Mods.Redemption.Cutscene.SkullDigger.Fight2"), 120, 30, 0.6f, Language.GetTextValue("Mods.Redemption.Cutscene.SkullDigger.Name"), 0.6f, Color.LightCyan, null, text, NPC.Center, 0);
-                                    if (AITimer == 400)
-                                        RedeSystem.Instance.DialogueUIElement.DisplayDialogue(Language.GetTextValue("Mods.Redemption.Cutscene.SkullDigger.Fight3"), 120, 30, 0.6f, Language.GetTextValue("Mods.Redemption.Cutscene.SkullDigger.Name"), 0.6f, Color.LightCyan, null, text, NPC.Center, 0);
+                                    string s1 = Language.GetTextValue("Mods.Redemption.Cutscene.SkullDigger.Fight1");
+                                    string s2 = Language.GetTextValue("Mods.Redemption.Cutscene.SkullDigger.Fight2");
+                                    string s3 = Language.GetTextValue("Mods.Redemption.Cutscene.SkullDigger.Fight3");
+                                    DialogueChain chain = new();
+                                    chain.Add(new(NPC, s1, Color.LightCyan, Color.Gray, voice, .06f, 2f, 0, false, bubble: Bubble, modifier: modifier))
+                                         .Add(new(NPC, s2, Color.LightCyan, Color.Gray, voice, .06f, 2f, 0, false, bubble: Bubble, modifier: modifier))
+                                         .Add(new(NPC, s3, Color.LightCyan, Color.Gray, voice, .06f, 2f, .5f, true, bubble: Bubble, modifier: modifier, endID: 1));
+                                    chain.OnEndTrigger += Chain_OnEndTrigger;
+                                    ChatUI.Visible = true;
+                                    ChatUI.Add(chain);
                                 }
-                                if (AITimer >= 580)
+                                if (AITimer >= 2000)
                                 {
                                     NPC.dontTakeDamage = false;
                                     AITimer = 0;
@@ -289,14 +277,18 @@ namespace Redemption.NPCs.Minibosses.SkullDigger
                             }
                             else
                             {
-                                if (!Main.dedServ)
+                                if (!Main.dedServ && AITimer == 40)
                                 {
-                                    if (AITimer == 40)
-                                        RedeSystem.Instance.DialogueUIElement.DisplayDialogue(Language.GetTextValue("Mods.Redemption.Cutscene.SkullDigger.Fight4"), 120, 30, 0.6f, Language.GetTextValue("Mods.Redemption.Cutscene.SkullDigger.Name"), 0.3f, Color.LightCyan, null, text, NPC.Center, 0);
-                                    if (AITimer == 220)
-                                        RedeSystem.Instance.DialogueUIElement.DisplayDialogue(Language.GetTextValue("Mods.Redemption.Cutscene.SkullDigger.Fight3"), 120, 30, 0.6f, Language.GetTextValue("Mods.Redemption.Cutscene.SkullDigger.Name"), 0.3f, Color.LightCyan, null, text, NPC.Center, 0);
+                                    string s1 = Language.GetTextValue("Mods.Redemption.Cutscene.SkullDigger.Fight4");
+                                    string s2 = Language.GetTextValue("Mods.Redemption.Cutscene.SkullDigger.Fight3");
+                                    DialogueChain chain = new();
+                                    chain.Add(new(NPC, s1, Color.LightCyan, Color.Gray, voice, .06f, 2f, 0, false, bubble: Bubble, modifier: modifier))
+                                         .Add(new(NPC, s2, Color.LightCyan, Color.Gray, voice, .06f, 2f, .5f, true, bubble: Bubble, modifier: modifier, endID: 1));
+                                    chain.OnEndTrigger += Chain_OnEndTrigger;
+                                    ChatUI.Visible = true;
+                                    ChatUI.Add(chain);
                                 }
-                                if (AITimer >= 400)
+                                if (AITimer >= 1000)
                                 {
                                     NPC.dontTakeDamage = false;
                                     AITimer = 0;
@@ -368,6 +360,13 @@ namespace Redemption.NPCs.Minibosses.SkullDigger
                                     dust2.velocity = -NPC.DirectionTo(dust2.position);
                                     dust2.noGravity = true;
                                 }
+                                Vector2 vector;
+                                double angle = Main.rand.NextDouble() * 2d * Math.PI;
+                                vector.X = (float)(Math.Sin(angle) * 150);
+                                vector.Y = (float)(Math.Cos(angle) * 150);
+                                Dust dust = Main.dust[Dust.NewDust(NPC.Center + vector, 2, 2, DustID.DungeonSpirit, newColor: new Color(255, 255, 255, 0), Scale: 1f)];
+                                dust.noGravity = true;
+                                dust.velocity = dust.position.DirectionTo(NPC.Center) * 3f;
                                 origin = player.Center;
                             }
                             if (AITimer >= 100 && AITimer < 120)
@@ -379,7 +378,7 @@ namespace Redemption.NPCs.Minibosses.SkullDigger
 
                                 if (AITimer % 2 == 0)
                                 {
-                                    NPC.Shoot(NPC.Center, ModContent.ProjectileType<KeeperSoulCharge>(), (int)(NPC.damage * 1.4f), RedeHelper.PolarVector(Main.rand.NextFloat(10, 12), (origin - NPC.Center).ToRotation()), true, SoundID.NPCDeath52 with { Volume = .5f });
+                                    NPC.Shoot(NPC.Center, ModContent.ProjectileType<KeeperSoulCharge>(), (int)(NPC.damage * 1.4f), RedeHelper.PolarVector(Main.rand.NextFloat(10, 12), (origin - NPC.Center).ToRotation()), SoundID.NPCDeath52 with { Volume = .5f });
                                 }
                             }
                             if (AITimer >= 120)
@@ -428,19 +427,22 @@ namespace Redemption.NPCs.Minibosses.SkullDigger
                     }
                     else
                     {
-                        player.RedemptionScreen().ScreenFocusPosition = NPC.Center;
-                        player.RedemptionScreen().lockScreen = true;
+                        ScreenPlayer.CutsceneLock(player, NPC, ScreenPlayer.CutscenePriority.Low, 1200, 2400, 1200);
                         AITimer++;
 
-                        if (!Main.dedServ)
+                        if (!Main.dedServ && AITimer == 40)
                         {
-                            if (AITimer == 40)
-                                RedeSystem.Instance.DialogueUIElement.DisplayDialogue(Language.GetTextValue("Mods.Redemption.Cutscene.SkullDigger.Defeat1"), 120, 30, 0.6f, Language.GetTextValue("Mods.Redemption.Cutscene.SkullDigger.Name"), 0.3f, Color.LightCyan, null, text, NPC.Center, 0);
-                            if (AITimer == 220)
-                                RedeSystem.Instance.DialogueUIElement.DisplayDialogue(Language.GetTextValue("Mods.Redemption.Cutscene.SkullDigger.Defeat2"), 120, 30, 0.6f, Language.GetTextValue("Mods.Redemption.Cutscene.SkullDigger.Name"), 0.6f, Color.LightCyan, null, text, NPC.Center, 0);
+                            string s1 = Language.GetTextValue("Mods.Redemption.Cutscene.SkullDigger.Defeat1");
+                            string s2 = Language.GetTextValue("Mods.Redemption.Cutscene.SkullDigger.Defeat2");
+                            DialogueChain chain = new();
+                            chain.Add(new(NPC, s1, Color.LightCyan, Color.Gray, voice, .06f, 2f, 0, false, bubble: Bubble, modifier: modifier))
+                                 .Add(new(NPC, s2, Color.LightCyan, Color.Gray, voice, .06f, 2f, .5f, true, bubble: Bubble, modifier: modifier, endID: 1));
+                            chain.OnEndTrigger += Chain_OnEndTrigger;
+                            ChatUI.Visible = true;
+                            ChatUI.Add(chain);
                         }
 
-                        if (AITimer >= 220)
+                        if (AITimer >= 500)
                         {
                             NPC.alpha++;
 
@@ -475,6 +477,13 @@ namespace Redemption.NPCs.Minibosses.SkullDigger
                     }
                     break;
             }
+            for (int k = NPC.oldPos.Length - 1; k > 0; k--)
+                oldrot[k] = oldrot[k - 1];
+            oldrot[0] = NPC.rotation;
+        }
+        private void Chain_OnEndTrigger(Dialogue dialogue, int ID)
+        {
+            AITimer = 2000;
         }
 
         public override bool CheckActive()
@@ -507,10 +516,6 @@ namespace Redemption.NPCs.Minibosses.SkullDigger
 
         public override void FindFrame(int frameHeight)
         {
-            for (int k = NPC.oldPos.Length - 1; k > 0; k--)
-                oldrot[k] = oldrot[k - 1];
-            oldrot[0] = NPC.rotation;
-
             NPC.rotation = NPC.velocity.X * 0.05f;
             if (++NPC.frameCounter >= 10)
             {
@@ -530,8 +535,8 @@ namespace Redemption.NPCs.Minibosses.SkullDigger
             if (!NPC.IsABestiaryIconDummy)
             {
                 spriteBatch.End();
-                spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
-                GameShaders.Armor.ApplySecondary(shader, Main.player[Main.myPlayer], null);
+                spriteBatch.BeginAdditive(true);
+                GameShaders.Armor.ApplySecondary(shader, Main.LocalPlayer, null);
 
                 for (int i = 0; i < NPCID.Sets.TrailCacheLength[NPC.type]; i++)
                 {
@@ -540,7 +545,7 @@ namespace Redemption.NPCs.Minibosses.SkullDigger
                 }
 
                 spriteBatch.End();
-                spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+                spriteBatch.BeginDefault();
             }
 
             spriteBatch.Draw(TextureAssets.Npc[NPC.type].Value, NPC.Center - screenPos, NPC.frame, NPC.GetAlpha(drawColor), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
@@ -552,11 +557,12 @@ namespace Redemption.NPCs.Minibosses.SkullDigger
 
         public override float SpawnChance(NPCSpawnInfo spawnInfo)
         {
+            if (spawnInfo.Player.HasItem(ModContent.ItemType<AbandonedTeddy>()) || RedeBossDowned.keeperSaved)
+                return 0;
             float baseChance = SpawnCondition.Cavern.Chance * (!NPC.AnyNPCs(NPC.type) && RedeBossDowned.downedKeeper ? 1 : 0);
             float multiplier = spawnInfo.Player.HasItem(ModContent.ItemType<SorrowfulEssence>()) ? 0.1f : (RedeBossDowned.downedSkullDigger ? 0 : 0.002f);
-            float teddy = spawnInfo.Player.HasItem(ModContent.ItemType<AbandonedTeddy>()) || RedeBossDowned.keeperSaved ? 0 : 1;
 
-            return baseChance * multiplier * teddy;
+            return baseChance * multiplier;
         }
 
         public override Color? GetAlpha(Color drawColor)
@@ -565,26 +571,6 @@ namespace Redemption.NPCs.Minibosses.SkullDigger
                 return NPC.GetBestiaryEntryColor();
             return null;
         }
-
-        private void DespawnHandler()
-        {
-            Player player = Main.player[NPC.target];
-            if (!player.active || player.dead)
-            {
-                NPC.TargetClosest(false);
-                player = Main.player[NPC.target];
-                if (!player.active || player.dead)
-                {
-                    NPC.alpha += 2;
-                    if (NPC.alpha >= 255)
-                        NPC.active = false;
-                    if (NPC.timeLeft > 10)
-                        NPC.timeLeft = 10;
-                    return;
-                }
-            }
-        }
-
         public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)
         {
             NPC.lifeMax = (int)(NPC.lifeMax * 0.6f * balance * bossAdjustment);

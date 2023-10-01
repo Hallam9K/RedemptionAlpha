@@ -70,7 +70,7 @@ namespace Redemption.Projectiles.Magic
             flareOpacity = MathHelper.Clamp(flareOpacity, 0.6f, 1.1f);
             return false;
         }
-        public override void Kill(int timeLeft)
+        public override void OnKill(int timeLeft)
         {
             for (int i = 0; i < 3; i++)
             {

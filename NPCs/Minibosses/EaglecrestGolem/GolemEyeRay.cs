@@ -7,6 +7,8 @@ using Terraria.GameContent;
 using Terraria.ID;
 using Redemption.NPCs.Bosses.ADD;
 using Redemption.BaseExtension;
+using Redemption.Globals;
+using Redemption.Dusts;
 
 namespace Redemption.NPCs.Minibosses.EaglecrestGolem
 {
@@ -40,6 +42,7 @@ namespace Redemption.NPCs.Minibosses.EaglecrestGolem
         {
             // DisplayName.SetDefault("Eye Ray");
             ProjectileID.Sets.DrawScreenCheckFluff[Type] = 2400;
+            ElementID.ProjFire[Type] = true;
         }
 
         public override void SetDefaults()
@@ -64,6 +67,19 @@ namespace Redemption.NPCs.Minibosses.EaglecrestGolem
             if (host.ai[0] == 3)
                 origin = host.Center;
 
+            if (Projectile.timeLeft > 10)
+            {
+                for (int i = 0; i < 2; i++)
+                {
+                    int num5 = Dust.NewDust(Projectile.Center + Vector2.UnitX.RotatedBy(Projectile.rotation) * (LaserLength + 10) - new Vector2(3, 3), 6, 6, ModContent.DustType<GlowDust>(), 0, 0, Scale: .6f);
+                    Color dustColor = new(253, 216, 178) { A = 0 };
+                    if (Main.rand.NextBool())
+                        dustColor = new(243, 155, 86) { A = 0 };
+                    Main.dust[num5].velocity *= .01f;
+                    Main.dust[num5].color = dustColor * Projectile.Opacity;
+                    Main.dust[num5].noGravity = true;
+                }
+            }
             #region Beginning And End Effects
             if (AITimer == 0)
             {
@@ -171,12 +187,12 @@ namespace Redemption.NPCs.Minibosses.EaglecrestGolem
         public override bool PreDraw(ref Color lightColor)
         {
             Main.spriteBatch.End();
-            Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+            Main.spriteBatch.BeginAdditive();
 
             DrawLaser(TextureAssets.Projectile[Projectile.type].Value, Projectile.Center + (new Vector2(Projectile.width, 0).RotatedBy(Projectile.rotation) * LaserScale), new Vector2(1f, 0).RotatedBy(Projectile.rotation) * LaserScale, -1.57f, LaserScale, LaserLength, Color.White, (int)FirstSegmentDrawDist);
 
             Main.spriteBatch.End();
-            Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+            Main.spriteBatch.BeginDefault();
             return false;
         }
         #endregion

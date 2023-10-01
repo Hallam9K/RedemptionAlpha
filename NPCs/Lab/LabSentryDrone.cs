@@ -17,7 +17,7 @@ namespace Redemption.NPCs.Lab
         {
             // DisplayName.SetDefault("Laboratory Drone");
             Main.npcFrameCount[NPC.type] = 4;
-            NPCID.Sets.NPCBestiaryDrawModifiers value = new(0) { Hide = true };
+            NPCID.Sets.NPCBestiaryDrawModifiers value = new() { Hide = true };
             NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, value);
         }
         public override void SetDefaults()
@@ -58,8 +58,7 @@ namespace Redemption.NPCs.Lab
                 }
             }
             Player player = Main.player[NPC.target];
-            DespawnHandler();
-            if (!player.active || player.dead || !player.InModBiome<LabBiome>() || RedeWorld.labSafe)
+            if (DespawnHandler())
                 return;
 
             NPC.Move(new Vector2(movX, movY), 15, 30, true);
@@ -123,16 +122,19 @@ namespace Redemption.NPCs.Lab
             spriteBatch.Draw(texture, NPC.Center - screenPos, NPC.frame, drawColor, NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0f);
             return false;
         }
-        private void DespawnHandler()
+        private bool DespawnHandler()
         {
             Player player = Main.player[NPC.target];
             if (!player.active || player.dead || !player.InModBiome<LabBiome>() || RedeWorld.labSafe)
             {
                 NPC.TargetClosest(false);
-                NPC.velocity = new Vector2(0f, -10f);
+                NPC.velocity.X *= .96f;
+                NPC.velocity.Y -= 3;
                 if (NPC.timeLeft > 10)
                     NPC.timeLeft = 10;
+                return true;
             }
+            return false;
         }
     }
 }

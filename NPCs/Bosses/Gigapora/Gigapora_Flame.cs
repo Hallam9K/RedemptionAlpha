@@ -93,13 +93,13 @@ namespace Redemption.NPCs.Bosses.Gigapora
                 Vector2 drawOrigin = new(texture.Width / 2, height / 2);
 
                 Main.spriteBatch.End();
-                Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+                Main.spriteBatch.BeginAdditive();
 
                 Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition, new Rectangle?(rect), Color.White * Projectile.Opacity, npc.rotation + (Projectile.ai[1] == 1 ? MathHelper.Pi : 0) + MathHelper.PiOver2, drawOrigin - new Vector2(0, 90), new Vector2(Projectile.scale, Projectile.scale * 1.5f), SpriteEffects.FlipVertically, 0);
                 Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition, new Rectangle?(rect), Color.White * 0.5f * Projectile.Opacity, npc.rotation + (Projectile.ai[1] == 1 ? MathHelper.Pi : 0) + MathHelper.PiOver2, drawOrigin - new Vector2(0, 90), new Vector2(Projectile.scale + 0.2f, Projectile.scale * 1.5f + 0.2f), SpriteEffects.FlipVertically, 0);
 
                 Main.spriteBatch.End();
-                Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+                Main.spriteBatch.BeginDefault();
             }
             return false;
         }

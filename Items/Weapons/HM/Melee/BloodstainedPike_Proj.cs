@@ -130,7 +130,7 @@ namespace Redemption.Items.Weapons.HM.Melee
                     skewered.Add(target.whoAmI);
             }
         }
-        public override void Kill(int timeLeft)
+        public override void OnKill(int timeLeft)
         {
             skewered.Clear();
         }
@@ -212,7 +212,7 @@ namespace Redemption.Items.Weapons.HM.Melee
             else
                 Projectile.rotation = Projectile.velocity.ToRotation() - MathHelper.Pi - MathHelper.PiOver4;
         }
-        public override void Kill(int timeLeft)
+        public override void OnKill(int timeLeft)
         {
             RedeDraw.SpawnRing(Projectile.Center, Color.Red, 0.2f, 0.9f, 4);
         }

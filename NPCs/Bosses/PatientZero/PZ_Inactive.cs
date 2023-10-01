@@ -4,7 +4,6 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria.ID;
 using Terraria.GameContent;
-using Terraria.DataStructures;
 using Redemption.Biomes;
 using ReLogic.Content;
 
@@ -17,6 +16,8 @@ namespace Redemption.NPCs.Bosses.PatientZero
         private static Asset<Texture2D> SlimeAni;
         public override void Load()
         {
+            if (Main.dedServ)
+                return;
             BodyAni = ModContent.Request<Texture2D>("Redemption/NPCs/Bosses/PatientZero/PZ_Body");
             KariAni = ModContent.Request<Texture2D>("Redemption/NPCs/Bosses/PatientZero/PZ_Kari");
             SlimeAni = ModContent.Request<Texture2D>("Redemption/NPCs/Bosses/PatientZero/PZ_Slime");
@@ -32,11 +33,8 @@ namespace Redemption.NPCs.Bosses.PatientZero
         {
             // DisplayName.SetDefault("");
             NPCID.Sets.DontDoHardmodeScaling[Type] = true;
-            NPCID.Sets.DebuffImmunitySets.Add(Type, new NPCDebuffImmunityData
-            {
-                ImmuneToAllBuffsThatAreNotWhips = true
-            });
-            NPCID.Sets.NPCBestiaryDrawModifiers value = new(0)
+            NPCID.Sets.ImmuneToRegularBuffs[Type] = true;
+            NPCID.Sets.NPCBestiaryDrawModifiers value = new()
             {
                 Hide = true
             };
@@ -55,7 +53,7 @@ namespace Redemption.NPCs.Bosses.PatientZero
         }
         public override void AI()
         {
-            Player player = Main.player[Main.myPlayer];
+            Player player = Main.LocalPlayer;
             if (player.DistanceSQ(NPC.Center) < 400 * 400 && Collision.CanHit(player.position, player.width, player.height, NPC.position, NPC.width, NPC.height))
                 NPC.dontTakeDamage = false;
             else

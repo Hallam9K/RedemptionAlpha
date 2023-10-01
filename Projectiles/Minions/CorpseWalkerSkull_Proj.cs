@@ -115,7 +115,7 @@ namespace Redemption.Projectiles.Minions
                 vector *= 9f / magnitude;
             }
         }
-        public override void Kill(int timeLeft)
+        public override void OnKill(int timeLeft)
         {
             DustHelper.DrawCircle(Projectile.Center, DustID.GoldFlame, 1, 4, 4, nogravity: true);
         }

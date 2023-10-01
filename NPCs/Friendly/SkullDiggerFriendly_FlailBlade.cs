@@ -57,8 +57,8 @@ namespace Redemption.NPCs.Friendly
             {
                 int shader = GameShaders.Armor.GetShaderIdFromItemId(ItemID.WispDye);
                 Main.spriteBatch.End();
-                Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
-                GameShaders.Armor.ApplySecondary(shader, Main.player[Main.myPlayer], null);
+                Main.spriteBatch.BeginAdditive(true);
+                GameShaders.Armor.ApplySecondary(shader, Main.LocalPlayer, null);
             }
             NPC host = Main.npc[(int)Projectile.ai[0]];
             Texture2D ballTexture = ModContent.Request<Texture2D>("Redemption/NPCs/Minibosses/SkullDigger/SkullDigger_FlailBlade").Value;
@@ -104,7 +104,7 @@ namespace Redemption.NPCs.Friendly
             if (Projectile.ai[1] == 1)
             {
                 Main.spriteBatch.End();
-                Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+                Main.spriteBatch.BeginDefault();
             }
             return false;
         }

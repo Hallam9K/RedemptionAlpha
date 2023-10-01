@@ -41,9 +41,7 @@ namespace Redemption.NPCs.Bosses.Obliterator
             Projectile.rotation = Projectile.velocity.ToRotation();
             #region Beginning And End Effects
             if (AITimer == 0)
-            {
                 LaserScale = 0.1f;
-            }
 
             NPC npc = Main.npc[(int)Projectile.ai[0]];
             Vector2 LaserPos = new(npc.position.X + (npc.spriteDirection == -1 ? (46 - offset) : (16 + offset)), npc.position.Y + 70);
@@ -54,20 +52,26 @@ namespace Redemption.NPCs.Bosses.Obliterator
                 Main.player[npc.target].GetModPlayer<ScreenPlayer>().ScreenShakeIntensity = MathHelper.Max(Main.LocalPlayer.RedemptionScreen().ScreenShakeIntensity, 40);
             if (AITimer > 48 && AITimer <= 60)
             {
-                offset -= 4;
+                offset -= Main.getGoodWorld ? 12 : 4;
                 Projectile.hostile = true;
-                LaserScale += 0.09f;
+                if (Main.getGoodWorld)
+                    LaserScale += 0.27f;
+                else
+                    LaserScale += 0.09f;
             }
             else if (Projectile.timeLeft < 10 || !npc.active)
             {
                 if (Projectile.timeLeft > 10)
                     Projectile.timeLeft = 10;
                 Projectile.hostile = false;
-                offset += 5;
-                LaserScale -= 0.1f;
+                offset += Main.getGoodWorld ? 15 : 5;
+                if (Main.getGoodWorld)
+                    LaserScale -= 0.3f;
+                else
+                    LaserScale -= 0.1f;
             }
 
-            LaserScale = MathHelper.Clamp(LaserScale, 0.1f, 1);
+            LaserScale = MathHelper.Clamp(LaserScale, 0.1f, Main.getGoodWorld ? 3 : 1);
             Projectile.rotation = Projectile.velocity.ToRotation();
             Projectile.velocity = Vector2.Normalize(Projectile.velocity);
 
@@ -122,16 +126,20 @@ namespace Redemption.NPCs.Bosses.Obliterator
             int shader = GameShaders.Armor.GetShaderIdFromItemId(ItemID.SolarDye);
 
             Main.spriteBatch.End();
-            Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
-            GameShaders.Armor.ApplySecondary(shader, Main.player[Main.myPlayer], null);
+            Main.spriteBatch.BeginAdditive(true);
+            GameShaders.Armor.ApplySecondary(shader, Main.LocalPlayer, null);
 
             DrawLaser(TextureAssets.Projectile[Projectile.type].Value, Projectile.Center + (new Vector2(Projectile.width, 0).RotatedBy(Projectile.rotation) * LaserScale), new Vector2(1f, 0).RotatedBy(Projectile.rotation) * LaserScale, -1.57f, LaserScale, LaserLength, Projectile.GetAlpha(Color.White), (int)FirstSegmentDrawDist);
 
             Main.spriteBatch.End();
-            Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+            Main.spriteBatch.BeginDefault();
             return false;
         }
         #endregion
+        public override void ModifyHitPlayer(Player target, ref Player.HurtModifiers modifiers)
+        {
+            modifiers.Knockback.Base += 14;
+        }
         public override void OnHitPlayer(Player target, Player.HurtInfo info)
         {
             info.Dodgeable = false;

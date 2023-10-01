@@ -32,7 +32,7 @@ namespace Redemption.NPCs.Bosses.Neb
             Projectile.extraUpdates = 1;
         }
 
-        public override void Kill(int timeLeft)
+        public override void OnKill(int timeLeft)
         {
             SoundEngine.PlaySound(SoundID.Item27, Projectile.position);
             if (Main.myPlayer == Projectile.owner)

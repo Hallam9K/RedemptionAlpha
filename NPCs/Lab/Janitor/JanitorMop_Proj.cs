@@ -73,7 +73,7 @@ namespace Redemption.NPCs.Lab.Janitor
                 target.RedemptionGuard().GuardBreakCheck(target, DustID.Electric, CustomSounds.GuardBreak, 10, 1, 1000);
             }
         }
-        public override void Kill(int timeleft)
+        public override void OnKill(int timeLeft)
         {
             SoundEngine.PlaySound(SoundID.Dig, Projectile.position);
             for (int i = 0; i < 8; i++)

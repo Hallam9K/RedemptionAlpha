@@ -53,15 +53,7 @@ namespace Redemption.NPCs.PreHM
         {
             Main.npcFrameCount[NPC.type] = 9;
 
-            NPCID.Sets.DebuffImmunitySets.Add(Type, new NPCDebuffImmunityData
-            {
-                SpecificallyImmuneTo = new int[] {
-                    BuffID.Bleeding,
-                    BuffID.Poisoned
-                }
-            });
-
-            NPCID.Sets.NPCBestiaryDrawModifiers value = new(0)
+            NPCID.Sets.NPCBestiaryDrawModifiers value = new()
             {
                 Velocity = 1f
             };
@@ -168,15 +160,11 @@ namespace Redemption.NPCs.PreHM
         }
         public override void SendExtraAI(BinaryWriter writer)
         {
-            base.SendExtraAI(writer);
-            if (Main.netMode == NetmodeID.Server || Main.dedServ)
-                writer.WriteVector2(moveTo);
+            writer.WriteVector2(moveTo);
         }
         public override void ReceiveExtraAI(BinaryReader reader)
         {
-            base.ReceiveExtraAI(reader);
-            if (Main.netMode == NetmodeID.MultiplayerClient)
-                moveTo = reader.ReadVector2();
+            moveTo = reader.ReadVector2();
         }
         private Vector2 moveTo;
         private int runCooldown;
@@ -208,7 +196,6 @@ namespace Redemption.NPCs.PreHM
             NPC.TargetClosest();
             if (AIState != ActionState.Slash)
                 NPC.LookByVelocity();
-
             Rectangle SlashHitbox = new((int)(NPC.spriteDirection == -1 ? NPC.Center.X - 45 : NPC.Center.X + 7), (int)(NPC.Center.Y - 34), 38, 60);
             dodgeCooldown--;
             dodgeCooldown = (int)MathHelper.Max(0, dodgeCooldown);
@@ -264,7 +251,7 @@ namespace Redemption.NPCs.PreHM
                         for (int i = 0; i < Main.maxProjectiles; i++)
                         {
                             Projectile proj = Main.projectile[i];
-                            if (!proj.active || !proj.friendly || proj.damage <= 0 || proj.velocity.Length() == 0)
+                            if (!proj.active || !proj.friendly || proj.damage <= 0 || proj.sentry || proj.minion || proj.velocity.Length() == 0)
                                 continue;
 
                             if (!NPC.Sight(proj, 80 + (proj.velocity.Length() * 3), true, true))
@@ -276,8 +263,12 @@ namespace Redemption.NPCs.PreHM
                                 Main.dust[dust].velocity *= 0.2f;
                                 Main.dust[dust].noGravity = true;
                             }
-                            NPC.Dodge(proj);
+                            if (Main.rand.NextBool())
+                                NPC.velocity.X *= -1;
+                            NPC.velocity.X *= 2f;
+                            NPC.velocity.Y -= Main.rand.NextFloat(1, 3);
                             dodgeCooldown = 90;
+                            break;
                         }
                     }
                     BaseAI.AttemptOpenDoor(NPC, ref doorVars[0], ref doorVars[1], ref doorVars[2], 80, 4, 30, interactDoorStyle: 2);
@@ -320,8 +311,6 @@ namespace Redemption.NPCs.PreHM
                             attackerNPC.immune[NPC.whoAmI] = 10;
                             int hitDirection = attackerNPC.RightOfDir(NPC);
                             BaseAI.DamageNPC(attackerNPC, damage, 5, hitDirection, NPC);
-                            attackerNPC.AddBuff(BuffID.Bleeding, 1000);
-                            attackerNPC.AddBuff(ModContent.BuffType<DirtyWoundDebuff>(), 1400);
                             if (attackerNPC.life <= 0)
                             {
                                 for (int i = 0; i < 30; i++)
@@ -342,20 +331,16 @@ namespace Redemption.NPCs.PreHM
                         {
                             int hitDirection = attackerPlayer.RightOfDir(NPC);
                             BaseAI.DamagePlayer(attackerPlayer, damage, 5, hitDirection, NPC);
-                            if (globalNPC.attacker is Player && (Main.rand.NextBool(2) || Main.expertMode))
-                            {
-                                attackerPlayer.AddBuff(BuffID.Bleeding, 1000);
-                                attackerPlayer.AddBuff(ModContent.BuffType<DirtyWoundDebuff>(), 1400);
-                            }
                         }
                     }
                     break;
             }
         }
-        public override bool? CanFallThroughPlatforms() => NPC.Redemption().fallDownPlatform;
-        private bool Flare;
-        private float FlareTimer;
-        public override void FindFrame(int frameHeight)
+        public override void PostAI()
+        {
+            CustomFrames(62);
+        }
+        private void CustomFrames(int frameHeight)
         {
             if (AIState is ActionState.Alert or ActionState.Slash)
             {
@@ -398,6 +383,14 @@ namespace Redemption.NPCs.PreHM
                 }
                 return;
             }
+        }
+        public override bool? CanFallThroughPlatforms() => NPC.Redemption().fallDownPlatform;
+        private bool Flare;
+        private float FlareTimer;
+        public override void FindFrame(int frameHeight)
+        {
+            if (AIState is ActionState.Slash)
+                return;
             if (NPC.collideY || NPC.velocity.Y == 0)
             {
                 NPC.rotation = 0;
@@ -490,7 +483,19 @@ namespace Redemption.NPCs.PreHM
                 NPC.netUpdate = true;
             }
         }
-
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit)
+        {
+            target.AddBuff(BuffID.Bleeding, 1000);
+            target.AddBuff(ModContent.BuffType<DirtyWoundDebuff>(), 1400);
+        }
+        public override void OnHitPlayer(Player target, Player.HurtInfo hurtInfo)
+        {
+            if (Main.rand.NextBool(2) || Main.expertMode)
+            {
+                target.AddBuff(BuffID.Bleeding, 1000);
+                target.AddBuff(ModContent.BuffType<DirtyWoundDebuff>(), 1400);
+            }
+        }
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
             var effects = NPC.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
@@ -498,14 +503,14 @@ namespace Redemption.NPCs.PreHM
             if (!NPC.IsABestiaryIconDummy && !NPC.RedemptionGuard().GuardBroken)
             {
                 spriteBatch.End();
-                spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.NonPremultiplied, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
-                GameShaders.Armor.ApplySecondary(shader, Main.player[Main.myPlayer], null);
+                spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.NonPremultiplied, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullNone, null, Main.GameViewMatrix.TransformationMatrix);
+                GameShaders.Armor.ApplySecondary(shader, Main.LocalPlayer, null);
             }
 
             spriteBatch.Draw(TextureAssets.Npc[NPC.type].Value, NPC.Center - new Vector2(0, 4) - screenPos, NPC.frame, drawColor, NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
 
             spriteBatch.End();
-            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+            spriteBatch.BeginDefault();
             return false;
         }
         public override void PostDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
@@ -519,6 +524,8 @@ namespace Redemption.NPCs.PreHM
 
         public override bool CanHitNPC(NPC target) => false;
         public override bool CanHitPlayer(Player target, ref int cooldownSlot) => false;
+        public override bool? CanBeHitByItem(Player player, Item item) => dodgeCooldown <= 80 ? null : false;
+        public override bool? CanBeHitByProjectile(Projectile projectile) => dodgeCooldown <= 80 ? null : false;
 
         public override void OnKill()
         {

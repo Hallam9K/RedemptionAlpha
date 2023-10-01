@@ -125,7 +125,7 @@ namespace Redemption.Items.Weapons.PostML.Ranged
             Projectile.Kill();
         }
         Projectile clearCheck;
-        public override void Kill(int timeLeft)
+        public override void OnKill(int timeLeft)
         {
             Projectile projAim = Main.projectile[(int)Projectile.ai[0]];
 

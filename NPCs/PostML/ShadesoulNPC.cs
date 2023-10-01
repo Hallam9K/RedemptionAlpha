@@ -1,4 +1,5 @@
 using Microsoft.Xna.Framework;
+using Redemption.BaseExtension;
 using Redemption.Buffs.Debuffs;
 using Redemption.Dusts;
 using Redemption.Globals;
@@ -7,6 +8,7 @@ using Terraria;
 using Terraria.Audio;
 using Terraria.GameContent.Bestiary;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 
 namespace Redemption.NPCs.PostML
@@ -14,9 +16,7 @@ namespace Redemption.NPCs.PostML
     public class ShadesoulNPC : ModNPC
     {
         public ref float Scale => ref NPC.ai[0];
-
         public ref float AITimer => ref NPC.ai[1];
-
         public ref float ThrowTimer => ref NPC.ai[2];
 
         public override void SetStaticDefaults()
@@ -25,7 +25,7 @@ namespace Redemption.NPCs.PostML
             Main.npcFrameCount[Type] = 8;
             NPCID.Sets.CountsAsCritter[NPC.type] = true;
 
-            NPCID.Sets.NPCBestiaryDrawModifiers value = new (0)
+            NPCID.Sets.NPCBestiaryDrawModifiers value = new ()
             {
                 Velocity = 1f
             };
@@ -49,6 +49,12 @@ namespace Redemption.NPCs.PostML
             NPC.dontTakeDamage = true;
             NPC.catchItem = (short)ModContent.ItemType<Shadesoul>();
         }
+        public override bool? CanBeCaughtBy(Item item, Player player)
+        {
+            if (player.RedemptionAbility().SpiritwalkerActive)
+                return null;
+            return false;
+        }
         public override void HitEffect(NPC.HitInfo hit)
         {
             if (NPC.life <= 0)
@@ -65,7 +71,8 @@ namespace Redemption.NPCs.PostML
         public override void AI()
         {
             int dust = Dust.NewDust(NPC.position + NPC.velocity, NPC.width, NPC.height, ModContent.DustType<VoidFlame>(),
-                NPC.velocity.X * 0.5f, NPC.velocity.Y * 0.5f, Scale: 2 + Scale);
+                0, 0, Scale: 2 + Scale);
+            Main.dust[dust].velocity *= 0;
             Main.dust[dust].noGravity = true;
 
             NPC.scale = 1 + Scale;
@@ -107,6 +114,8 @@ namespace Redemption.NPCs.PostML
         {
             target.AddBuff(ModContent.BuffType<BlackenedHeartDebuff>(), 15);
         }
+        public override bool? CanBeHitByItem(Player player, Item item) => RedeHelper.CanHitSpiritCheck(player, item);
+        public override bool? CanBeHitByProjectile(Projectile projectile) => RedeHelper.CanHitSpiritCheck(projectile);
         public override void OnKill()
         {
             int dropAmount = (int)(Scale / 2 * 10);

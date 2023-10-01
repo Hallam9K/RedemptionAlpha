@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Base;
 using Redemption.Globals;
+using Redemption.Textures;
 using Redemption.UI.ChatUI;
 using Terraria;
 using Terraria.Audio;
@@ -25,11 +26,9 @@ namespace Redemption.NPCs.Bosses.KSIII
             Projectile.friendly = false;
             Projectile.hostile = false;
             Projectile.alpha = 255;
-            voice = CustomSounds.Voice6 with { Pitch = 0.1f };
-            bubble = ModContent.Request<Texture2D>("Redemption/UI/TextBubble_Slayer").Value;
         }
-        private SoundStyle voice;
-        private Texture2D bubble;
+        private static Texture2D Bubble => CommonTextures.TextBubble_Slayer.Value;
+        private static readonly SoundStyle voice = CustomSounds.Voice6 with { Pitch = 0.1f };
         public int faceType;
         public override void AI()
         {
@@ -56,10 +55,10 @@ namespace Redemption.NPCs.Bosses.KSIII
                         _ => "So stop bothering me and leave me to my 4D chess.",
                     };
                     DialogueChain chain = new();
-                    chain.Add(new(Projectile, "Hey,[0.1] get lost.", new Color(170, 255, 255), Color.Black, voice, .03f, 2f, 0, false, null, bubble, null))
-                         .Add(new(Projectile, "[@f1]You really aren't worth my time,[0.1] ya know.", new Color(170, 255, 255), Color.Black, voice, .03f, 2f, 0, false, null, bubble, null))
-                         .Add(new(Projectile, "[@f3]" + line1, new Color(170, 255, 255), Color.Black, voice, .03f, 2f, 0, false, null, bubble, null))
-                         .Add(new(Projectile, "[@f0]I'll beat you up if you annoy me again.", new Color(170, 255, 255), Color.Black, voice, .03f, 2f, .5f, true, null, bubble, null, endID: 1));
+                    chain.Add(new(Projectile, "Hey,[0.1] get lost.", new Color(170, 255, 255), Color.Black, voice, .03f, 2f, 0, false, null, Bubble, null))
+                         .Add(new(Projectile, "[@f1]You really aren't worth my time,[0.1] ya know.", new Color(170, 255, 255), Color.Black, voice, .03f, 2f, 0, false, null, Bubble, null))
+                         .Add(new(Projectile, "[@f3]" + line1, new Color(170, 255, 255), Color.Black, voice, .03f, 2f, 0, false, null, Bubble, null))
+                         .Add(new(Projectile, "[@f0]I'll beat you up if you annoy me again.", new Color(170, 255, 255), Color.Black, voice, .03f, 2f, .5f, true, null, Bubble, null, endID: 1));
                     chain.OnSymbolTrigger += Chain_OnSymbolTrigger;
                     chain.OnEndTrigger += Chain_OnEndTrigger;
                     ChatUI.Visible = true;
@@ -68,7 +67,7 @@ namespace Redemption.NPCs.Bosses.KSIII
             }
             if (Projectile.localAI[0] > 5000)
             {
-                if (RedeBossDowned.slayerDeath < 1)
+                if (RedeBossDowned.slayerDeath < 1 && Main.netMode != NetmodeID.MultiplayerClient)
                 {
                     RedeBossDowned.slayerDeath = 1;
                     if (Main.netMode == NetmodeID.Server)

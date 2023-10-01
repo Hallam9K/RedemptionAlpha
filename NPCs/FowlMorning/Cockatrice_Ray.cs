@@ -43,7 +43,7 @@ namespace Redemption.NPCs.FowlMorning
             Color dustColor = new(255, 255, 255) { A = 0 };
             Main.dust[dust].color = dustColor;
         }
-        public override void Kill(int timeLeft)
+        public override void OnKill(int timeLeft)
         {
             RedeDraw.SpawnRing(Projectile.Center, Color.White);
         }

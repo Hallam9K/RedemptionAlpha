@@ -64,7 +64,7 @@ namespace Redemption.Projectiles.Minions
             if (fakeTimer >= 30)
                 Projectile.Kill();
         }
-        public override void Kill(int timeLeft)
+        public override void OnKill(int timeLeft)
         {
             if (fakeTimer > 0)
                 return;

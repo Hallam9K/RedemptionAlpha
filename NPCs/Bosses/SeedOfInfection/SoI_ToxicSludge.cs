@@ -40,7 +40,7 @@ namespace Redemption.NPCs.Bosses.SeedOfInfection
             Projectile.rotation = Projectile.velocity.ToRotation() + 1.57f;
             Projectile.velocity.Y += 0.2f;
         }
-        public override void Kill(int timeLeft)
+        public override void OnKill(int timeLeft)
         {
             SoundEngine.PlaySound(SoundID.NPCDeath1, Projectile.position);
             for (int i = 0; i < 30; i++)

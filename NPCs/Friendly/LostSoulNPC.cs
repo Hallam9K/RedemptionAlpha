@@ -6,7 +6,6 @@ using Redemption.Items.Materials.PreHM;
 using Redemption.Globals;
 using Terraria.Audio;
 using Terraria.GameContent.Bestiary;
-using Terraria.DataStructures;
 using Redemption.BaseExtension;
 using ParticleLibrary;
 using Redemption.Particles;
@@ -26,11 +25,8 @@ namespace Redemption.NPCs.Friendly
         {
             // DisplayName.SetDefault("Lost Soul");
             NPCID.Sets.CountsAsCritter[NPC.type] = true;
-            NPCID.Sets.DebuffImmunitySets.Add(Type, new NPCDebuffImmunityData
-            {
-                ImmuneToAllBuffsThatAreNotWhips = true
-            });
-            NPCID.Sets.NPCBestiaryDrawModifiers value = new(0)
+            NPCID.Sets.ImmuneToRegularBuffs[Type] = true;
+            NPCID.Sets.NPCBestiaryDrawModifiers value = new()
             {
                 Velocity = 1f
             };
@@ -53,6 +49,12 @@ namespace Redemption.NPCs.Friendly
             NPC.noGravity = true;
             NPC.noTileCollide = true;
             NPC.catchItem = (short)ModContent.ItemType<LostSoul>();
+        }
+        public override bool? CanBeCaughtBy(Item item, Player player)
+        {
+            if (player.RedemptionAbility().SpiritwalkerActive)
+                return null;
+            return false;
         }
         public override void HitEffect(NPC.HitInfo hit)
         {

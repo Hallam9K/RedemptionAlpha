@@ -48,7 +48,7 @@ namespace Redemption.NPCs.Bosses.Neb
             else
                 Projectile.velocity = Projectile.velocity.RotatedBy(Math.PI / -180) * Projectile.ai[0];
         }
-        public override void Kill(int timeLeft)
+        public override void OnKill(int timeLeft)
         {
             ParticleManager.NewParticle(Projectile.Center, Vector2.Zero, new RainbowParticle(), Color.White, 1);
         }

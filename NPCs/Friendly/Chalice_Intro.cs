@@ -22,7 +22,7 @@ namespace Redemption.NPCs.Friendly
         {
             // DisplayName.SetDefault("Chalice of Alignment");
             Main.npcFrameCount[Type] = 4;
-            NPCID.Sets.NPCBestiaryDrawModifiers value = new(0) { Hide = true };
+            NPCID.Sets.NPCBestiaryDrawModifiers value = new() { Hide = true };
             NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, value);
         }
 
@@ -60,7 +60,8 @@ namespace Redemption.NPCs.Friendly
                 case 0:
                     if (AITimer++ == 0)
                     {
-                        SoundEngine.PlaySound(CustomSounds.Choir with { Pitch = -.9f }, NPC.position);
+                        if (!Main.dedServ)
+                            SoundEngine.PlaySound(CustomSounds.Choir with { Pitch = -.9f }, NPC.position);
                         player.Redemption().yesChoice = false;
                         player.Redemption().noChoice = false;
                         RedeSystem.Instance.ChaliceUIElement.DisplayDialogue(Language.GetTextValue("Mods.Redemption.Dialogue.Chalice.Dialogue1"), 260, 30, 0, Color.DarkGoldenrod);
@@ -141,9 +142,12 @@ namespace Redemption.NPCs.Friendly
                         SoundEngine.PlaySound(SoundID.Item68, NPC.position);
                         RedeDraw.SpawnExplosion(NPC.Center, Color.White, scale: 1, noDust: true, tex: ModContent.Request<Texture2D>("Redemption/Textures/HolyGlow2").Value);
 
-                        RedeWorld.alignmentGiven = true;
-                        if (Main.netMode == NetmodeID.Server)
-                            NetMessage.SendData(MessageID.WorldData);
+                        if (Main.netMode != NetmodeID.MultiplayerClient)
+                        {
+                            RedeWorld.alignmentGiven = true;
+                            if (Main.netMode == NetmodeID.Server)
+                                NetMessage.SendData(MessageID.WorldData);
+                        }
 
                         NPC.active = false;
                     }
@@ -156,9 +160,12 @@ namespace Redemption.NPCs.Friendly
                         SoundEngine.PlaySound(SoundID.Item68, NPC.position);
                         RedeDraw.SpawnExplosion(NPC.Center, Color.White, scale: 1, noDust: true, tex: ModContent.Request<Texture2D>("Redemption/Textures/HolyGlow2").Value);
 
-                        RedeWorld.alignmentGiven = true;
-                        if (Main.netMode == NetmodeID.Server)
-                            NetMessage.SendData(MessageID.WorldData);
+                        if (Main.netMode != NetmodeID.MultiplayerClient)
+                        {
+                            RedeWorld.alignmentGiven = true;
+                            if (Main.netMode == NetmodeID.Server)
+                                NetMessage.SendData(MessageID.WorldData);
+                        }
 
                         NPC.active = false;
                     }
@@ -166,10 +173,7 @@ namespace Redemption.NPCs.Friendly
             }
             if (RedeConfigClient.Instance.CameraLockDisable)
                 return;
-            player.RedemptionScreen().ScreenFocusPosition = NPC.Center;
-            player.RedemptionScreen().lockScreen = true;
-            player.RedemptionScreen().cutscene = true;
-            NPC.LockMoveRadius(player);
+            ScreenPlayer.CutsceneLock(player, NPC, ScreenPlayer.CutscenePriority.Max, 0, 0, 0);
             Terraria.Graphics.Effects.Filters.Scene["MoR:FogOverlay"]?.GetShader().UseOpacity(2f).UseIntensity(1f).UseColor(Color.Black).UseImage(ModContent.Request<Texture2D>("Redemption/Effects/Vignette", AssetRequestMode.ImmediateLoad).Value);
             player.ManageSpecialBiomeVisuals("MoR:FogOverlay", true);
         }
@@ -193,7 +197,7 @@ namespace Redemption.NPCs.Friendly
             Main.spriteBatch.Draw(texture, NPC.Center - screenPos, NPC.frame, NPC.GetAlpha(Color.White), NPC.rotation, origin, NPC.scale, 0, 0);
 
             Main.spriteBatch.End();
-            Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+            Main.spriteBatch.BeginAdditive();
             Texture2D flare = ModContent.Request<Texture2D>("Redemption/Textures/WhiteEyeFlare").Value;
             Rectangle rect = new(0, 0, flare.Width, flare.Height);
             Vector2 flareOrigin = new(flare.Width / 2, flare.Height / 2);
@@ -218,7 +222,7 @@ namespace Redemption.NPCs.Friendly
                 Main.EntitySpriteDraw(flare, extraPos[i] - screenPos, new Rectangle?(rect), colour * (i == 3 ? extraAlpha2 : extraAlpha) * Main.rand.NextFloat(0.7f, 0.8f) * 0.4f, NPC.rotation, flareOrigin, 1.5f * Main.rand.NextFloat(0.95f, 1f), SpriteEffects.None, 0);
             }
             Main.spriteBatch.End();
-            Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+            Main.spriteBatch.BeginDefault();
 
             for (int i = 0; i < 4; i++)
             {

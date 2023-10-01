@@ -91,8 +91,8 @@ namespace Redemption.NPCs.HM
             NPC host = Main.npc[(int)Projectile.ai[0]];
             Texture2D ballTexture = TextureAssets.Projectile[Projectile.type].Value;
             Vector2 anchorPos = Projectile.Center;
-            Texture2D chainTexture = ModContent.Request<Texture2D>(Projectile.ModProjectile.Texture + "_Chain").Value;
-            Texture2D endTexture = ModContent.Request<Texture2D>(Projectile.ModProjectile.Texture + "_End").Value;
+            Texture2D chainTexture = ModContent.Request<Texture2D>(Texture + "_Chain").Value;
+            Texture2D endTexture = ModContent.Request<Texture2D>(Texture + "_End").Value;
             Vector2 HeadPos = host.Center + new Vector2(-11 * host.spriteDirection, -9);
             Vector2 HeadPosStatic = host.Center + new Vector2(-11 * host.spriteDirection, -9);
             Rectangle sourceRectangle = new(0, 0, chainTexture.Width, chainTexture.Height);

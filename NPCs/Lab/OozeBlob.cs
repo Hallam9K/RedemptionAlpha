@@ -6,7 +6,6 @@ using Redemption.Biomes;
 using Redemption.Buffs.Debuffs;
 using Redemption.Dusts;
 using Redemption.Globals;
-using Terraria.Localization;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent;
@@ -14,8 +13,9 @@ using Terraria.GameContent.Bestiary;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Redemption.Items.Placeable.Banners;
-using Redemption.Buffs.NPCBuffs;
 using System.IO;
+using Terraria.Localization;
+using Redemption.Globals.NPC;
 
 namespace Redemption.NPCs.Lab
 {
@@ -41,21 +41,9 @@ namespace Redemption.NPCs.Lab
         {
             Main.npcFrameCount[NPC.type] = 5;
             NPCID.Sets.ShimmerTransformToNPC[NPC.type] = NPCID.ShimmerSlime;
-            NPCID.Sets.DebuffImmunitySets.Add(Type, new NPCDebuffImmunityData
-            {
-                SpecificallyImmuneTo = new int[] {
-                    BuffID.Bleeding,
-                    ModContent.BuffType<BileDebuff>(),
-                    ModContent.BuffType<GreenRashesDebuff>(),
-                    ModContent.BuffType<GlowingPustulesDebuff>(),
-                    ModContent.BuffType<FleshCrystalsDebuff>(),
-                    ModContent.BuffType<InfestedDebuff>(),
-                    ModContent.BuffType<NecroticGougeDebuff>(),
-                    ModContent.BuffType<DirtyWoundDebuff>()
-                }
-            });
+            BuffNPC.NPCTypeImmunity(Type, BuffNPC.NPCDebuffImmuneType.Infected);
 
-            NPCID.Sets.NPCBestiaryDrawModifiers value = new(0);
+            NPCID.Sets.NPCBestiaryDrawModifiers value = new();
             NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, value);
             ElementID.NPCWater[Type] = true;
             ElementID.NPCPoison[Type] = true;
@@ -86,15 +74,11 @@ namespace Redemption.NPCs.Lab
         }
         public override void SendExtraAI(BinaryWriter writer)
         {
-            base.SendExtraAI(writer);
-            if (Main.netMode == NetmodeID.Server || Main.dedServ)
-                writer.Write(Xvel);
+            writer.Write(Xvel);
         }
         public override void ReceiveExtraAI(BinaryReader reader)
         {
-            base.ReceiveExtraAI(reader);
-            if (Main.netMode == NetmodeID.MultiplayerClient)
-                Xvel = reader.ReadInt32();
+            Xvel = reader.ReadInt32();
         }
         public int Xvel;
         public int consumed;

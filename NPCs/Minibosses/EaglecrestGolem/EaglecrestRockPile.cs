@@ -1,11 +1,11 @@
+using Microsoft.Xna.Framework;
+using Redemption.Base;
 using Redemption.BaseExtension;
-using Redemption.Buffs.Debuffs;
-using Redemption.Buffs.NPCBuffs;
 using Redemption.Globals;
+using Redemption.Globals.NPC;
 using System;
 using System.Collections.Generic;
 using Terraria;
-using Terraria.DataStructures;
 using Terraria.GameContent.Bestiary;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -28,18 +28,9 @@ namespace Redemption.NPCs.Minibosses.EaglecrestGolem
             NPCID.Sets.CantTakeLunchMoney[Type] = true;
             NPCID.Sets.BossBestiaryPriority.Add(Type);
 
-            NPCID.Sets.DebuffImmunitySets.Add(Type, new NPCDebuffImmunityData
-            {
-                SpecificallyImmuneTo = new int[] {
-                    BuffID.Poisoned,
-                    ModContent.BuffType<InfestedDebuff>(),
-                    ModContent.BuffType<NecroticGougeDebuff>(),
-                    ModContent.BuffType<ViralityDebuff>(),
-                    ModContent.BuffType<DirtyWoundDebuff>()
-                }
-            });
+            BuffNPC.NPCTypeImmunity(Type, BuffNPC.NPCDebuffImmuneType.Inorganic);
 
-            NPCID.Sets.NPCBestiaryDrawModifiers value = new(0)
+            NPCID.Sets.NPCBestiaryDrawModifiers value = new()
             {
                 Velocity = 1
             };
@@ -69,12 +60,53 @@ namespace Redemption.NPCs.Minibosses.EaglecrestGolem
                 NPC.TargetClosest();
 
             Player player = Main.player[NPC.target];
-            NPC.LookAtEntity(player);
+            if (TimerRand < 4)
+                NPC.LookAtEntity(player);
 
-            if (AITimer == 0)
+            if (AITimer++ == 0)
             {
+                NPC.ai[0] = Main.rand.Next(300, 1200);
                 TimerRand = Main.rand.NextFloat(-0.4f, 0.4f);
-                AITimer = 1;
+                NPC.netUpdate = true;
+            }
+
+            if (TimerRand >= 1)
+            {
+                switch (TimerRand)
+                {
+                    default:
+                        if (NPC.ai[0] == 60)
+                            NPC.velocity = new Vector2(Main.rand.NextFloat(1, 3) * NPC.spriteDirection, -Main.rand.NextFloat(3, 6));
+                        if (NPC.ai[0]++ <= 60)
+                            NPC.velocity.X *= .96f;
+                        else
+                        {
+                            if (BaseAI.HitTileOnSide(NPC, 3))
+                            {
+                                NPC.velocity = new Vector2(Main.rand.NextFloat(2, 4) * -NPC.spriteDirection, -Main.rand.NextFloat(5, 7));
+                                TimerRand = 2;
+                            }
+                        }
+                        break;
+                    case 2:
+                        if (BaseAI.HitTileOnSide(NPC, 3))
+                            TimerRand = 3;
+                        break;
+                    case 3:
+                        NPC.velocity = RedeHelper.GetArcVel(NPC, player.Center, 0.3f, 50, 500, maxXvel: 20);
+                        TimerRand = 4;
+                        break;
+                    case 4:
+                        if (NPC.velocity.X == 0 || NPC.velocity.Y == 0)
+                            BaseAI.DamageNPC(NPC, 999, 7, NPC.spriteDirection, NPC, false, true);
+                        break;
+                }
+                return;
+            }
+            if (AITimer >= NPC.ai[0] && BaseAI.HitTileOnSide(NPC, 3))
+            {
+                NPC.ai[0] = 0;
+                TimerRand = 1;
             }
 
             NPC.PlatformFallCheck(ref NPC.Redemption().fallDownPlatform, 20);

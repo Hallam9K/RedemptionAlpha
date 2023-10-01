@@ -20,7 +20,6 @@ using Redemption.Items.Usable;
 using System.IO;
 using Terraria.Localization;
 
-
 namespace Redemption.NPCs.Lab
 {
     public class BloatedScientist : ModNPC
@@ -47,18 +46,9 @@ namespace Redemption.NPCs.Lab
         {
             Main.npcFrameCount[NPC.type] = 22;
 
-            NPCID.Sets.DebuffImmunitySets.Add(Type, new NPCDebuffImmunityData
-            {
-                SpecificallyImmuneTo = new int[] {
-                    BuffID.Poisoned,
-                    ModContent.BuffType<BileDebuff>(),
-                    ModContent.BuffType<GreenRashesDebuff>(),
-                    ModContent.BuffType<GlowingPustulesDebuff>(),
-                    ModContent.BuffType<FleshCrystalsDebuff>()
-                }
-            });
+            BuffNPC.NPCTypeImmunity(Type, BuffNPC.NPCDebuffImmuneType.Infected);
 
-            NPCID.Sets.NPCBestiaryDrawModifiers value = new(0);
+            NPCID.Sets.NPCBestiaryDrawModifiers value = new();
             NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, value);
             ElementID.NPCPoison[Type] = true;
         }
@@ -81,15 +71,11 @@ namespace Redemption.NPCs.Lab
         }
         public override void SendExtraAI(BinaryWriter writer)
         {
-            base.SendExtraAI(writer);
-            if (Main.netMode == NetmodeID.Server || Main.dedServ)
-                writer.WriteVector2(moveTo);
+            writer.WriteVector2(moveTo);
         }
         public override void ReceiveExtraAI(BinaryReader reader)
         {
-            base.ReceiveExtraAI(reader);
-            if (Main.netMode == NetmodeID.MultiplayerClient)
-                moveTo = reader.ReadVector2();
+            moveTo = reader.ReadVector2();
         }
         private Vector2 moveTo;
         private int runCooldown;
@@ -100,6 +86,8 @@ namespace Redemption.NPCs.Lab
         }
         public override void AI()
         {
+            CustomFrames(58);
+
             Player player = Main.player[NPC.target];
             if (player.InModBiome<LabBiome>())
                 NPC.DiscourageDespawn(60);
@@ -108,7 +96,7 @@ namespace Redemption.NPCs.Lab
             if (AIState is not ActionState.Puke)
                 NPC.LookByVelocity();
 
-            if (Main.rand.NextBool(2000))
+            if (Main.rand.NextBool(2000) && !Main.dedServ)
                 SoundEngine.PlaySound(new("Terraria/Sounds/Zombie_" + (Main.rand.NextBool() ? 1 : 3)), NPC.position);
 
             switch (AIState)
@@ -192,9 +180,7 @@ namespace Redemption.NPCs.Lab
                     break;
             }
         }
-        public override bool? CanFallThroughPlatforms() => NPC.Redemption().fallDownPlatform;
-        float angle;
-        public override void FindFrame(int frameHeight)
+        private void CustomFrames(int frameHeight)
         {
             if (AIState is ActionState.Puke)
             {
@@ -218,11 +204,18 @@ namespace Redemption.NPCs.Lab
                 }
                 if (NPC.frame.Y >= 16 * frameHeight && NPC.frame.Y <= 19 * frameHeight && NPC.frameCounter % 3 == 0)
                 {
-                    NPC.Shoot(NPC.Center + RedeHelper.PolarVector(10, -MathHelper.PiOver2 + (angle * NPC.spriteDirection)), ModContent.ProjectileType<OozeBall_Proj>(), NPC.damage, RedeHelper.PolarVector(11, -MathHelper.PiOver2 + (angle * NPC.spriteDirection)), false, SoundID.Item1, NPC.whoAmI);
+                    NPC.Shoot(NPC.Center + RedeHelper.PolarVector(10, -MathHelper.PiOver2 + (angle * NPC.spriteDirection)), ModContent.ProjectileType<OozeBall_Proj>(), NPC.damage, RedeHelper.PolarVector(11, -MathHelper.PiOver2 + (angle * NPC.spriteDirection)), NPC.whoAmI);
                     angle += 0.12f;
                 }
                 return;
             }
+        }
+        public override bool? CanFallThroughPlatforms() => NPC.Redemption().fallDownPlatform;
+        float angle;
+        public override void FindFrame(int frameHeight)
+        {
+            if (AIState is ActionState.Puke)
+                return;
             if (NPC.collideY || NPC.velocity.Y == 0)
             {
                 NPC.rotation = 0;

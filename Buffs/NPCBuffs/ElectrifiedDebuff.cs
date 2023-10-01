@@ -1,6 +1,7 @@
 using Terraria;
 using Terraria.ModLoader;
 using Redemption.BaseExtension;
+using Terraria.ID;
 
 namespace Redemption.Buffs.NPCBuffs
 {
@@ -12,7 +13,8 @@ namespace Redemption.Buffs.NPCBuffs
 		{
 			// DisplayName.SetDefault("Electrified");
 			Main.debuff[Type] = true;
-		}
+            BuffID.Sets.GrantImmunityWith[Type].Add(BuffID.Electrified);
+        }
 
 		public override void Update(NPC npc, ref int buffIndex)
 		{

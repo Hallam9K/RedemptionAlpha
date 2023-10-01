@@ -11,13 +11,13 @@ using Terraria.DataStructures;
 using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
-using Terraria.Localization;
 using Terraria.ModLoader;
 using Redemption.BaseExtension;
 using Redemption.Items.Donator.Sneaklone;
 using Redemption.Items.Usable.Potions;
 using Redemption.Items.Usable;
 using System.IO;
+using Terraria.Localization;
 
 namespace Redemption.NPCs.Lab
 {
@@ -44,18 +44,9 @@ namespace Redemption.NPCs.Lab
         {
             Main.npcFrameCount[NPC.type] = 10;
 
-            NPCID.Sets.DebuffImmunitySets.Add(Type, new NPCDebuffImmunityData
-            {
-                SpecificallyImmuneTo = new int[] {
-                    BuffID.Poisoned,
-                    ModContent.BuffType<BileDebuff>(),
-                    ModContent.BuffType<GreenRashesDebuff>(),
-                    ModContent.BuffType<GlowingPustulesDebuff>(),
-                    ModContent.BuffType<FleshCrystalsDebuff>()
-                }
-            });
+            BuffNPC.NPCTypeImmunity(Type, BuffNPC.NPCDebuffImmuneType.Infected);
 
-            NPCID.Sets.NPCBestiaryDrawModifiers value = new(0);
+            NPCID.Sets.NPCBestiaryDrawModifiers value = new();
             NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, value);
             ElementID.NPCWater[Type] = true;
             ElementID.NPCPoison[Type] = true;
@@ -79,15 +70,11 @@ namespace Redemption.NPCs.Lab
         }
         public override void SendExtraAI(BinaryWriter writer)
         {
-            base.SendExtraAI(writer);
-            if (Main.netMode == NetmodeID.Server || Main.dedServ)
-                writer.WriteVector2(moveTo);
+            writer.WriteVector2(moveTo);
         }
         public override void ReceiveExtraAI(BinaryReader reader)
         {
-            base.ReceiveExtraAI(reader);
-            if (Main.netMode == NetmodeID.MultiplayerClient)
-                moveTo = reader.ReadVector2();
+            moveTo = reader.ReadVector2();
         }
         private Vector2 moveTo;
         private int runCooldown;
@@ -105,7 +92,7 @@ namespace Redemption.NPCs.Lab
             NPC.TargetClosest();
             NPC.LookByVelocity();
 
-            if (Main.rand.NextBool(1800))
+            if (Main.rand.NextBool(1800) && !Main.dedServ)
                 SoundEngine.PlaySound(new("Terraria/Sounds/Zombie_" + (Main.rand.NextBool() ? 21 : 23)), NPC.position);
 
             switch (AIState)

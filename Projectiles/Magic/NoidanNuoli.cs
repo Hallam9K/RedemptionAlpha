@@ -39,7 +39,7 @@ namespace Redemption.Projectiles.Magic
                 dust.noGravity = true;
             }
         }
-        public override void Kill(int timeLeft)
+        public override void OnKill(int timeLeft)
         {
             int dustType = ModContent.DustType<NoidanSauvaDust>();
             int pieCut = 16;

@@ -26,7 +26,7 @@ namespace Redemption.NPCs.Lab.Janitor
             Main.npcFrameCount[NPC.type] = 19;
             NPCID.Sets.DontDoHardmodeScaling[Type] = true;
 
-            NPCID.Sets.NPCBestiaryDrawModifiers value = new(0)
+            NPCID.Sets.NPCBestiaryDrawModifiers value = new()
             {
                 Hide = true
             };
@@ -46,7 +46,7 @@ namespace Redemption.NPCs.Lab.Janitor
             NPC.dontTakeDamage = true;
             NPC.npcSlots = 0;
         }
-
+        private static readonly SoundStyle voice = CustomSounds.Voice6 with { Pitch = 0.2f };
         private Vector2 moveTo;
         public override void AI()
         {
@@ -54,7 +54,6 @@ namespace Redemption.NPCs.Lab.Janitor
             if (NPC.target < 0 || NPC.target == 255 || player.dead || !player.active)
                 NPC.TargetClosest();
             NPC.LookByVelocity();
-            SoundStyle voice = CustomSounds.Voice6 with { Pitch = 0.2f };
 
             moveTo = new((RedeGen.LabVector.X + 190) * 16, (RedeGen.LabVector.Y + 21) * 16);
             switch (State)

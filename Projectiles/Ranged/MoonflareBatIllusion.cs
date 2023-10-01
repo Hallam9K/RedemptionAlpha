@@ -84,7 +84,7 @@ namespace Redemption.Projectiles.Ranged
 
             return false;
         }
-        public override void Kill(int timeLeft)
+        public override void OnKill(int timeLeft)
         {
             SoundEngine.PlaySound(SoundID.NPCDeath4, Projectile.position);
             for (int i = 0; i < 8; i++)

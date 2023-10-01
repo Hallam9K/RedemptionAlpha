@@ -2,7 +2,6 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Biomes;
 using Redemption.Buffs.Debuffs;
-using Redemption.Buffs.NPCBuffs;
 using Redemption.Globals;
 using Redemption.Globals.NPC;
 using Redemption.Items.Materials.PreHM;
@@ -14,12 +13,12 @@ using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.Localization;
 using Redemption.BaseExtension;
 using Redemption.Items.Materials.HM;
 using Redemption.Items.Usable.Potions;
 using Redemption.Items.Armor.Vanity.Intruder;
 using System.IO;
+using Terraria.Localization;
 
 namespace Redemption.NPCs.Wasteland
 {
@@ -46,19 +45,9 @@ namespace Redemption.NPCs.Wasteland
         {
             Main.npcFrameCount[NPC.type] = 3;
             NPCID.Sets.ShimmerTransformToNPC[NPC.type] = NPCID.Penguin;
-            NPCID.Sets.DebuffImmunitySets.Add(Type, new NPCDebuffImmunityData
-            {
-                SpecificallyImmuneTo = new int[] {
-                    BuffID.Poisoned,
-                    ModContent.BuffType<PureChillDebuff>(),
-                    ModContent.BuffType<IceFrozen>(),
-                    ModContent.BuffType<BileDebuff>(),
-                    ModContent.BuffType<GreenRashesDebuff>(),
-                    ModContent.BuffType<GlowingPustulesDebuff>(),
-                    ModContent.BuffType<FleshCrystalsDebuff>()
-                }
-            });
-            NPCID.Sets.NPCBestiaryDrawModifiers value = new(0)
+            BuffNPC.NPCTypeImmunity(Type, BuffNPC.NPCDebuffImmuneType.Infected);
+            BuffNPC.NPCTypeImmunity(Type, BuffNPC.NPCDebuffImmuneType.Cold);
+            NPCID.Sets.NPCBestiaryDrawModifiers value = new()
             {
                 Velocity = 1f
             };
@@ -84,15 +73,11 @@ namespace Redemption.NPCs.Wasteland
         }
         public override void SendExtraAI(BinaryWriter writer)
         {
-            base.SendExtraAI(writer);
-            if (Main.netMode == NetmodeID.Server || Main.dedServ)
-                writer.WriteVector2(moveTo);
+            writer.WriteVector2(moveTo);
         }
         public override void ReceiveExtraAI(BinaryReader reader)
         {
-            base.ReceiveExtraAI(reader);
-            if (Main.netMode == NetmodeID.MultiplayerClient)
-                moveTo = reader.ReadVector2();
+            moveTo = reader.ReadVector2();
         }
         private Vector2 moveTo;
         private int runCooldown;
@@ -167,32 +152,30 @@ namespace Redemption.NPCs.Wasteland
         public override void FindFrame(int frameHeight)
         {
             if (Main.netMode != NetmodeID.Server)
-            {
                 NPC.frame.Width = TextureAssets.Npc[NPC.type].Width() / 3;
-                NPC.frame.X = (int)(NPC.frame.Width * Variant);
+            NPC.frame.X = (int)(NPC.frame.Width * Variant);
 
-                if (NPC.collideY || NPC.velocity.Y == 0)
-                {
-                    NPC.rotation = NPC.velocity.X * 0.02f;
-                    if (NPC.velocity.X == 0)
-                        NPC.frame.Y = 0;
-                    else
-                    {
-                        NPC.frameCounter += NPC.velocity.X * 0.5f;
-                        if (NPC.frameCounter is >= 3 or <= -3)
-                        {
-                            NPC.frameCounter = 0;
-                            NPC.frame.Y += frameHeight;
-                            if (NPC.frame.Y > 2 * frameHeight)
-                                NPC.frame.Y = 0;
-                        }
-                    }
-                }
+            if (NPC.collideY || NPC.velocity.Y == 0)
+            {
+                NPC.rotation = NPC.velocity.X * 0.02f;
+                if (NPC.velocity.X == 0)
+                    NPC.frame.Y = 0;
                 else
                 {
-                    NPC.rotation = NPC.velocity.X * 0.05f;
-                    NPC.frame.Y = 1 * frameHeight;
+                    NPC.frameCounter += NPC.velocity.X * 0.5f;
+                    if (NPC.frameCounter is >= 3 or <= -3)
+                    {
+                        NPC.frameCounter = 0;
+                        NPC.frame.Y += frameHeight;
+                        if (NPC.frame.Y > 2 * frameHeight)
+                            NPC.frame.Y = 0;
+                    }
                 }
+            }
+            else
+            {
+                NPC.rotation = NPC.velocity.X * 0.05f;
+                NPC.frame.Y = 1 * frameHeight;
             }
         }
 

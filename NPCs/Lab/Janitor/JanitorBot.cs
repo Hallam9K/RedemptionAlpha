@@ -2,14 +2,11 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Base;
 using Redemption.Biomes;
-using Redemption.Buffs.Debuffs;
-using Redemption.Buffs.NPCBuffs;
 using Redemption.Dusts.Tiles;
 using Redemption.Globals;
 using Redemption.Items.Usable;
 using System.Collections.Generic;
 using Terraria;
-using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.GameContent.Bestiary;
 using Terraria.ID;
@@ -17,6 +14,7 @@ using Terraria.ModLoader;
 using Redemption.BaseExtension;
 using ReLogic.Content;
 using Terraria.Localization;
+using Redemption.Globals.NPC;
 
 namespace Redemption.NPCs.Lab.Janitor
 {
@@ -27,6 +25,8 @@ namespace Redemption.NPCs.Lab.Janitor
         private static Asset<Texture2D> YeetAni;
         public override void Load()
         {
+            if (Main.dedServ)
+                return;
             SlipAni = ModContent.Request<Texture2D>(Texture + "_Slip");
             YeetAni = ModContent.Request<Texture2D>(Texture + "_Yeet");
         }
@@ -62,20 +62,10 @@ namespace Redemption.NPCs.Lab.Janitor
             NPCID.Sets.MPAllowedEnemies[Type] = true;
             NPCID.Sets.BossBestiaryPriority.Add(Type);
 
-            NPCID.Sets.DebuffImmunitySets.Add(Type, new NPCDebuffImmunityData
-            {
-                SpecificallyImmuneTo = new int[] {
-                    BuffID.Confused,
-                    BuffID.Poisoned,
-                    BuffID.Venom,
-                    ModContent.BuffType<InfestedDebuff>(),
-                    ModContent.BuffType<NecroticGougeDebuff>(),
-                    ModContent.BuffType<ViralityDebuff>(),
-                    ModContent.BuffType<DirtyWoundDebuff>()
-                }
-            });
+            BuffNPC.NPCTypeImmunity(Type, BuffNPC.NPCDebuffImmuneType.Inorganic);
+            NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.Confused] = true;
 
-            NPCID.Sets.NPCBestiaryDrawModifiers value = new(0);
+            NPCID.Sets.NPCBestiaryDrawModifiers value = new();
             NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, value);
         }
         public override void SetDefaults()
@@ -148,8 +138,11 @@ namespace Redemption.NPCs.Lab.Janitor
         }
         public override void AI()
         {
+            CustomFrames(46);
+
             Player player = Main.player[NPC.target];
-            DespawnHandler();
+            if (NPC.DespawnHandler(1, 5))
+                return;
             NPC.LookAtEntity(player);
 
             if (!player.active || player.dead)
@@ -297,8 +290,7 @@ namespace Redemption.NPCs.Lab.Janitor
                     break;
             }
         }
-        private int AniFrameY;
-        public override void FindFrame(int frameHeight)
+        private void CustomFrames(int frameHeight)
         {
             Player player = Main.player[NPC.target];
             if (AIState is ActionState.Yeet && AITimer >= 30 && AITimer <= 60)
@@ -312,9 +304,9 @@ namespace Redemption.NPCs.Lab.Janitor
                     if (AniFrameY == 4)
                     {
                         if (!Main.rand.NextBool(2))
-                            NPC.Shoot(NPC.Center, ModContent.ProjectileType<JanitorMop_Proj>(), NPC.damage, RedeHelper.PolarVector(12, (player.Center - NPC.Center).ToRotation()), true, SoundID.Item19);
+                            NPC.Shoot(NPC.Center, ModContent.ProjectileType<JanitorMop_Proj>(), NPC.damage, RedeHelper.PolarVector(12, (player.Center - NPC.Center).ToRotation()), SoundID.Item19);
                         else
-                            NPC.Shoot(NPC.Center, ModContent.ProjectileType<JanitorMop_Proj>(), NPC.damage, RedeHelper.PolarVector(8, (player.Center - NPC.Center).ToRotation()), true, SoundID.Item19, 1);
+                            NPC.Shoot(NPC.Center, ModContent.ProjectileType<JanitorMop_Proj>(), NPC.damage, RedeHelper.PolarVector(8, (player.Center - NPC.Center).ToRotation()), SoundID.Item19, 1);
                     }
                     if (AniFrameY > 5)
                         AniFrameY = 5;
@@ -333,13 +325,21 @@ namespace Redemption.NPCs.Lab.Janitor
                     NPC.frameCounter = 0;
                     NPC.frame.Y += frameHeight;
                     if (NPC.frame.Y == 8 * frameHeight)
-                        NPC.Shoot(NPC.Center, ModContent.ProjectileType<JanitorBucket_Proj>(), NPC.damage, RedeHelper.PolarVector(12, (player.Center - NPC.Center).ToRotation()), true, SoundID.Item19);
+                        NPC.Shoot(NPC.Center, ModContent.ProjectileType<JanitorBucket_Proj>(), NPC.damage, RedeHelper.PolarVector(12, (player.Center - NPC.Center).ToRotation()), SoundID.Item19);
 
                     if (NPC.frame.Y > 10 * frameHeight)
                         NPC.frame.Y = 10 * frameHeight;
                 }
                 return;
             }
+        }
+        private int AniFrameY;
+        public override void FindFrame(int frameHeight)
+        {
+            if (AIState is ActionState.Yeet && AITimer >= 30 && AITimer <= 60)
+                return;
+            if (AIState is ActionState.Toss && AITimer >= 40 && AITimer <= 70)
+                return;
             if (AIState is ActionState.Stunned)
             {
                 if (NPC.frame.Y < 11 * frameHeight)
@@ -427,21 +427,6 @@ namespace Redemption.NPCs.Lab.Janitor
             else
                 spriteBatch.Draw(texture, NPC.Center - screenPos, NPC.frame, NPC.GetAlpha(drawColor), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0f);
             return false;
-        }
-        private void DespawnHandler()
-        {
-            Player player = Main.player[NPC.target];
-            if (!player.active || player.dead)
-            {
-                NPC.TargetClosest(false);
-                player = Main.player[NPC.target];
-                if (!player.active || player.dead)
-                {
-                    NPC.alpha += 5;
-                    if (NPC.alpha >= 255)
-                        NPC.active = false;
-                }
-            }
         }
         public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)
         {

@@ -1,8 +1,8 @@
 using System.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Redemption.Base;
 using Redemption.Globals;
+using Redemption.Helpers;
 using Redemption.Particles;
 using Terraria;
 using Terraria.Audio;
@@ -76,26 +76,16 @@ namespace Redemption.NPCs.Bosses.ADD
                     target.AddBuff(BuffID.Wet, 600);
             }
         }
-        public override void Kill(int timeLeft)
+        public override void OnKill(int timeLeft)
         {
             if (!ZAPPED)
                 return;
 
             Projectile.hostile = true;
             SoundEngine.PlaySound(SoundID.Item54, Projectile.position);
-            SoundEngine.PlaySound(CustomSounds.Zap2, Projectile.position);
-            for (int i = 0; i < Main.maxPlayers; i++)
-            {
-                Player target = Main.player[i];
-                if (!target.active || target.dead)
-                    continue;
-
-                if (Projectile.DistanceSQ(target.Center) > 200 * 200)
-                    continue;
-
-                int hitDirection = target.RightOfDir(Projectile);
-                BaseAI.DamagePlayer(target, Projectile.damage * 4, Projectile.knockBack, hitDirection, Projectile);
-            }
+            if (!Main.dedServ)
+                SoundEngine.PlaySound(CustomSounds.Zap2, Projectile.position);
+            RedeHelper.PlayerRadiusDamage(200, Projectile, NPCHelper.HostileProjDamageInc(Projectile.damage), Projectile.knockBack);
             for (int i = 0; i < 10; i++)
             {
                 int dustIndex = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.Water, Scale: 2);
@@ -109,12 +99,12 @@ namespace Redemption.NPCs.Bosses.ADD
             Vector2 position = Projectile.Center - Main.screenPosition;
             Vector2 origin = new(telegraph.Width / 2f, telegraph.Height / 2f);
             Main.spriteBatch.End();
-            Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+            Main.spriteBatch.BeginAdditive();
 
             Main.EntitySpriteDraw(telegraph, position, null, Color.LightBlue * teleAlpha, Projectile.rotation, origin, Projectile.scale, 0, 0);
 
             Main.spriteBatch.End();
-            Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+            Main.spriteBatch.BeginDefault();
             return true;
         }
         public override void ModifyHitPlayer(Player target, ref Player.HurtModifiers modifiers)

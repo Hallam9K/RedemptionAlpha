@@ -16,7 +16,7 @@ namespace Redemption.NPCs.Minibosses.FowlEmperor
     {
         public override void SetStaticDefaults()
         {
-            NPCID.Sets.NPCBestiaryDrawModifiers value = new(0)
+            NPCID.Sets.NPCBestiaryDrawModifiers value = new()
             {
                 Position = new Vector2(0, 0),
                 PortraitPositionYOverride = 28
@@ -50,6 +50,7 @@ namespace Redemption.NPCs.Minibosses.FowlEmperor
             NPC.LookByVelocity();
 
             NPC.rotation += NPC.velocity.X * 0.07f;
+            glowRot += 0.03f;
 
             switch (NPC.ai[0])
             {
@@ -124,9 +125,26 @@ namespace Redemption.NPCs.Minibosses.FowlEmperor
             if (Main.rand.NextBool(2))
                 Dust.NewDust(NPC.position + NPC.velocity, NPC.width, NPC.height, DustID.WoodFurniture, NPC.velocity.X * 0.5f, NPC.velocity.Y * 0.5f);
         }
+        private float glowRot = 0;
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
             var effects = NPC.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
+
+            Texture2D glow = ModContent.Request<Texture2D>("Redemption/Textures/WhiteFlare").Value;
+            Vector2 origin = new(glow.Width / 2, glow.Height / 2);
+
+            if (!NPC.IsABestiaryIconDummy)
+            {
+                spriteBatch.End();
+                spriteBatch.BeginAdditive();
+
+                spriteBatch.Draw(glow, NPC.Center - screenPos, new Rectangle(0, 0, glow.Width, glow.Height), Color.IndianRed, glowRot, origin, NPC.scale, 0, 0f);
+                spriteBatch.Draw(glow, NPC.Center - screenPos, new Rectangle(0, 0, glow.Width, glow.Height), Color.IndianRed, -glowRot, origin, NPC.scale, 0, 0f);
+
+                spriteBatch.End();
+                spriteBatch.BeginDefault();
+            }
+
             spriteBatch.Draw(TextureAssets.Npc[NPC.type].Value, NPC.Center - screenPos, NPC.frame, drawColor, NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
             return false;
         }

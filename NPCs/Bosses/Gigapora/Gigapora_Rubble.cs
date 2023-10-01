@@ -43,9 +43,9 @@ namespace Redemption.NPCs.Bosses.Gigapora
             if (Projectile.velocity.Y > 0)
                 Projectile.tileCollide = true;
         }
-        public override void Kill(int timeLeft)
+        public override void OnKill(int timeLeft)
         {
-            Player player = Main.player[Main.myPlayer];
+            Player player = Main.LocalPlayer;
             player.RedemptionScreen().ScreenShakeOrigin = Projectile.Center;
             player.RedemptionScreen().ScreenShakeIntensity += 3;
 

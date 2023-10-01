@@ -11,6 +11,7 @@ using ReLogic.Content;
 using Terraria.GameContent.UI;
 using Terraria.GameContent;
 using Redemption.UI.ChatUI;
+using Redemption.Textures;
 
 namespace Redemption.NPCs.Friendly
 {
@@ -24,7 +25,7 @@ namespace Redemption.NPCs.Friendly
         {
             // DisplayName.SetDefault("Newb");
             Main.npcFrameCount[Type] = 25;
-            NPCID.Sets.NPCBestiaryDrawModifiers value = new(0) { Hide = true };
+            NPCID.Sets.NPCBestiaryDrawModifiers value = new() { Hide = true };
             NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, value);
         }
 
@@ -38,13 +39,10 @@ namespace Redemption.NPCs.Friendly
             NPC.aiStyle = -1;
             NPC.noGravity = false;
             NPC.dontTakeDamage = true;
-            bubble = ModContent.Request<Texture2D>("Redemption/UI/TextBubble_Epidotra").Value;
-            voice1 = CustomSounds.Voice3 with { Pitch = -0.8f };
-            voice2 = CustomSounds.Voice3 with { Pitch = -0.1f };
         }
-        private Texture2D bubble;
-        private SoundStyle voice1;
-        private SoundStyle voice2;
+        private static Texture2D Bubble => CommonTextures.TextBubble_Epidotra.Value;
+        private static readonly SoundStyle voice1 = CustomSounds.Voice3 with { Pitch = -0.8f };
+        private static readonly SoundStyle voice2 = CustomSounds.Voice3 with { Pitch = -0.1f };
         public override void AI()
         {
             if (NPC.target < 0 || NPC.target == 255 || Main.player[NPC.target].dead || !Main.player[NPC.target].active)
@@ -65,7 +63,7 @@ namespace Redemption.NPCs.Friendly
                         NPC.spriteDirection = 1;
                         if (!Main.dedServ)
                         {
-                            Dialogue d1 = new(NPC, "...", Color.White, Color.Gray, voice1, .01f, .5f, 1, true, bubble: bubble);
+                            Dialogue d1 = new(NPC, "...", Color.White, Color.Gray, voice1, .01f, .5f, 1, true, bubble: Bubble);
 
                             ChatUI.Visible = true;
                             ChatUI.Add(d1);
@@ -81,7 +79,7 @@ namespace Redemption.NPCs.Friendly
                     if (AITimer++ == 30 && !Main.dedServ)
                     {
                         DialogueChain chain = new();
-                        chain.Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.NewbIntro.1"), Color.White, Color.Gray, voice1, .05f, .5f, 2f, true, bubble: bubble, endID: 1)); // 187
+                        chain.Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.NewbIntro.1"), Color.White, Color.Gray, voice1, .05f, .5f, 2f, true, bubble: Bubble, endID: 1)); // 187
                         chain.OnEndTrigger += Chain_OnEndTrigger;
                         ChatUI.Visible = true;
                         ChatUI.Add(chain);
@@ -98,9 +96,9 @@ namespace Redemption.NPCs.Friendly
                     {
                         EmoteBubble.NewBubble(87, new WorldUIAnchor(NPC), 120);
                         DialogueChain chain = new();
-                        chain.Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.NewbIntro.2"), Color.White, Color.Gray, voice2, .05f, 2f, 0, false, bubble: bubble)) // 166
-                             .Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.NewbIntro.3"), Color.White, Color.Gray, voice2, .05f, 2f, 0, false, bubble: bubble)) // 166
-                             .Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.NewbIntro.4"), Color.White, Color.Gray, voice2, .05f, 2f, .5f, true, bubble: bubble, endID: 1)); // 196
+                        chain.Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.NewbIntro.2"), Color.White, Color.Gray, voice2, .05f, 2f, 0, false, bubble: Bubble)) // 166
+                             .Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.NewbIntro.3"), Color.White, Color.Gray, voice2, .05f, 2f, 0, false, bubble: Bubble)) // 166
+                             .Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.NewbIntro.4"), Color.White, Color.Gray, voice2, .05f, 2f, .5f, true, bubble: Bubble, endID: 1)); // 196
                         chain.OnEndTrigger += Chain_OnEndTrigger;
                         ChatUI.Visible = true;
                         ChatUI.Add(chain);

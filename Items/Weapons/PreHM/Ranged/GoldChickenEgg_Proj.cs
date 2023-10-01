@@ -38,7 +38,7 @@ namespace Redemption.Items.Weapons.PreHM.Ranged
             Main.dust[sparkle].noGravity = true;
         }
 
-        public override void Kill(int timeLeft)
+        public override void OnKill(int timeLeft)
         {
             SoundEngine.PlaySound(SoundID.NPCDeath11 with { Volume = .5f }, Projectile.position);
             for (int i = 0; i < 6; i++)

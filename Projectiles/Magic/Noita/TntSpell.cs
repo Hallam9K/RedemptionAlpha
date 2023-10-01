@@ -102,7 +102,7 @@ namespace Redemption.Projectiles.Magic.Noita
             return;
         }
 
-        public override void Kill(int timeLeft)
+        public override void OnKill(int timeLeft)
         {
             SoundEngine.PlaySound(SoundID.Item14 with { Pitch = .1f }, Projectile.position);
             if (Projectile.owner == Main.myPlayer)

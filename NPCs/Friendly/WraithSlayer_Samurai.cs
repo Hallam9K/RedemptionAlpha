@@ -7,7 +7,6 @@ using ReLogic.Content;
 using System;
 using Terraria;
 using Terraria.Audio;
-using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -43,13 +42,9 @@ namespace Redemption.NPCs.Friendly
             NPCID.Sets.TrailingMode[NPC.type] = 1;
             NPCID.Sets.CantTakeLunchMoney[NPC.type] = true;
             NPCID.Sets.DontDoHardmodeScaling[NPC.type] = true;
+            NPCID.Sets.ImmuneToRegularBuffs[Type] = true;
 
-            NPCID.Sets.DebuffImmunitySets.Add(Type, new NPCDebuffImmunityData
-            {
-                ImmuneToAllBuffsThatAreNotWhips = true
-            });
-
-            NPCID.Sets.NPCBestiaryDrawModifiers value = new(0) { Hide = true };
+            NPCID.Sets.NPCBestiaryDrawModifiers value = new() { Hide = true };
             NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, value);
         }
         public override void SetDefaults()
@@ -106,6 +101,8 @@ namespace Redemption.NPCs.Friendly
         private int runCooldown;
         public override void AI()
         {
+            CustomFrames(86);
+
             Player player = Main.player[(int)NPC.ai[3]];
             RedeNPC globalNPC = NPC.Redemption();
             NPC.TargetClosest();
@@ -181,10 +178,7 @@ namespace Redemption.NPCs.Friendly
                     break;
             }
         }
-        private bool Flare;
-        private float FlareTimer;
-        private Vector2 floatOffset;
-        public override void FindFrame(int frameHeight)
+        private void CustomFrames(int frameHeight)
         {
             for (int k = NPC.oldPos.Length - 1; k > 0; k--)
                 oldrot[k] = oldrot[k - 1];
@@ -224,7 +218,7 @@ namespace Redemption.NPCs.Friendly
                         Main.LocalPlayer.RedemptionScreen().ScreenShakeOrigin = NPC.Center;
                         Main.LocalPlayer.RedemptionScreen().ScreenShakeIntensity += 5;
 
-                        NPC.Shoot(new Vector2(NPC.Center.X, NPC.Center.Y + 15), ModContent.ProjectileType<WraithSlayer_Slash>(), 0, new Vector2(20 * NPC.spriteDirection, 0), true, SoundID.Item71);
+                        NPC.Shoot(new Vector2(NPC.Center.X, NPC.Center.Y + 15), ModContent.ProjectileType<WraithSlayer_Slash>(), 0, new Vector2(20 * NPC.spriteDirection, 0), SoundID.Item71);
                         Rectangle SlashHitbox = new((int)(NPC.spriteDirection == -1 ? NPC.Center.X - 280 : NPC.Center.X - 18), (int)NPC.Center.Y, 280, 60);
                         for (int i = 0; i < Main.maxNPCs; i++)
                         {
@@ -254,6 +248,14 @@ namespace Redemption.NPCs.Friendly
                 floatOffset.Y += 0.05f;
             else
                 floatOffset.Y -= 0.05f;
+        }
+        private bool Flare;
+        private float FlareTimer;
+        private Vector2 floatOffset;
+        public override void FindFrame(int frameHeight)
+        {
+            if (AIState is ActionState.Slash)
+                return;
 
             NPC.rotation = NPC.velocity.X * 0.05f;
             if (NPC.frameCounter++ >= 5)
@@ -280,7 +282,7 @@ namespace Redemption.NPCs.Friendly
         {
             var effects = NPC.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
             spriteBatch.End();
-            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+            spriteBatch.BeginAdditive();
 
             for (int i = 0; i < NPCID.Sets.TrailCacheLength[NPC.type]; i++)
             {
@@ -289,7 +291,7 @@ namespace Redemption.NPCs.Friendly
             }
 
             spriteBatch.End();
-            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullNone, null, Main.GameViewMatrix.TransformationMatrix);
 
             spriteBatch.Draw(TextureAssets.Npc[NPC.type].Value, NPC.Center + new Vector2(21 * NPC.spriteDirection, 0) + floatOffset - screenPos, NPC.frame, NPC.GetAlpha(drawColor), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
             return false;

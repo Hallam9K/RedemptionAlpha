@@ -1,10 +1,13 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using Redemption.BaseExtension;
 using Redemption.Globals;
 using Redemption.NPCs.Bosses.ADD;
 using Redemption.NPCs.Bosses.Neb;
 using Redemption.NPCs.Bosses.Neb.Clone;
 using Redemption.NPCs.Bosses.Neb.Phase2;
 using Redemption.WorldGeneration.Misc;
+using ReLogic.Content;
 using SubworldLibrary;
 using System;
 using Terraria;
@@ -167,6 +170,48 @@ namespace Redemption
                         timedZoom = Vector2.Zero;
                     }
                 }
+            }
+        }
+        public enum CutscenePriority : byte
+        {
+            None,
+            Low,
+            Medium,
+            High,
+            Max
+        }
+        public static CutscenePriority CurrentCutscenePriority;
+        public static void CutsceneLock(Player player, Entity focus, CutscenePriority priority, int cutsceneRange = 600, int focusRange = 1200, int vignetteRange = 600)
+        {
+            CutsceneLock(player, focus.Center, priority, cutsceneRange, focusRange, vignetteRange);
+        }
+        public static void CutsceneLock(Player player, Vector2 focus, CutscenePriority priority, int cutsceneRange = 600, int focusRange = 1200, int vignetteRange = 600, bool reverse = false, bool noLockMoveRadius = false)
+        {
+            if (RedeConfigClient.Instance.CameraLockDisable)
+                return;
+            CurrentCutscenePriority = priority;
+            if (cutsceneRange == 0 || focus.DistanceSQ(player.Center) <= cutsceneRange * cutsceneRange)
+            {
+                if (priority >= CutscenePriority.High)
+                {
+                    player.RedemptionScreen().ScreenFocusPosition = focus;
+                    if (!noLockMoveRadius)
+                        NPCHelper.LockMoveRadius(focus, player);
+                }
+                else
+                {
+                    if (reverse)
+                        player.RedemptionScreen().ScreenFocusPosition = Vector2.Lerp(player.Center, focus, player.DistanceSQ(focus) / (focusRange * focusRange));
+                    else
+                        player.RedemptionScreen().ScreenFocusPosition = Vector2.Lerp(focus, player.Center, player.DistanceSQ(focus) / (focusRange * focusRange));
+                }
+                player.RedemptionScreen().lockScreen = true;
+                if (priority >= CutscenePriority.Low)
+                    player.RedemptionScreen().cutscene = true;
+                if (vignetteRange is 0 || player.RedemptionAbility().SpiritwalkerActive)
+                    return;
+                Terraria.Graphics.Effects.Filters.Scene["MoR:FogOverlay"]?.GetShader().UseOpacity(MathHelper.Lerp(1, 0, player.DistanceSQ(focus) / (vignetteRange * vignetteRange))).UseIntensity(1f).UseColor(Color.Black).UseImage(ModContent.Request<Texture2D>("Redemption/Effects/Vignette", AssetRequestMode.ImmediateLoad).Value);
+                player.ManageSpecialBiomeVisuals("MoR:FogOverlay", true);
             }
         }
         public override void ModifyScreenPosition()

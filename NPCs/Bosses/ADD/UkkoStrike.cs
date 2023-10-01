@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Redemption.BaseExtension;
 using Redemption.Globals;
 using ReLogic.Content;
 using Terraria;
@@ -15,6 +16,8 @@ namespace Redemption.NPCs.Bosses.ADD
         private static Asset<Texture2D> warning;
         public override void Load()
         {
+            if (Main.dedServ)
+                return;
             warning = ModContent.Request<Texture2D>("Redemption/NPCs/Bosses/ADD/LightningWarning");
         }
         public override void Unload()
@@ -38,6 +41,7 @@ namespace Redemption.NPCs.Bosses.ADD
             Projectile.ignoreWater = true;
             Projectile.scale *= 2;
             Projectile.alpha = 255;
+            Projectile.Redemption().ParryBlacklist = true;
         }
         public int warningFrames;
         public int frameCounters;
@@ -74,7 +78,8 @@ namespace Redemption.NPCs.Bosses.ADD
                 Player player = Main.player[Projectile.owner];
                 Main.NewLightning();
                 player.GetModPlayer<ScreenPlayer>().Rumble(10, 10);
-                SoundEngine.PlaySound(CustomSounds.Thunderstrike, Projectile.position);
+                if (!Main.dedServ)
+                    SoundEngine.PlaySound(CustomSounds.Thunderstrike, Projectile.position);
                 Projectile.NewProjectile(Projectile.GetSource_FromAI(), new Vector2(Projectile.Center.X, Projectile.Bottom.Y), Projectile.velocity, ModContent.ProjectileType<UkkoStrikeZap>(), (int)(Projectile.damage * 1.2f), Projectile.knockBack, Projectile.owner);
             }
         }
@@ -89,7 +94,7 @@ namespace Redemption.NPCs.Bosses.ADD
             Vector2 origin = new(texture.Width / 2f, height / 2f);
 
             Main.spriteBatch.End();
-            Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+            Main.spriteBatch.BeginAdditive();
 
             RedeDraw.DrawTreasureBagEffect(Main.spriteBatch, texture, ref drawTimer, position, new Rectangle?(rect), Projectile.GetAlpha(Color.LightGoldenrodYellow), Projectile.rotation + MathHelper.PiOver2, origin, Projectile.scale, 0);
 
@@ -104,7 +109,7 @@ namespace Redemption.NPCs.Bosses.ADD
                 Main.EntitySpriteDraw(warning.Value, position, new Rectangle?(rect2), Projectile.GetAlpha(Color.White) * 0.8f, Projectile.rotation + MathHelper.PiOver2, origin2, Projectile.scale, 0, 0);
 
             Main.spriteBatch.End();
-            Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+            Main.spriteBatch.BeginDefault();
             return false;
         }
         public override void ModifyHitPlayer(Player target, ref Player.HurtModifiers modifiers)
@@ -132,6 +137,7 @@ namespace Redemption.NPCs.Bosses.ADD
             Projectile.tileCollide = false;
             Projectile.ignoreWater = true;
             Projectile.timeLeft = 10;
+            Projectile.Redemption().ParryBlacklist = true;
         }
         public override void AI()
         {

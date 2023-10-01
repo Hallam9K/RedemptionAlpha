@@ -41,7 +41,7 @@ namespace Redemption.Projectiles.Pets
                 }
             }
         }
-        public override void Kill(int timeLeft)
+        public override void OnKill(int timeLeft)
         {
             int dustType = 58;
             for (int m = 0; m < 8; m++)

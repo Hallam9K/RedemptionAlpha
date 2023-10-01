@@ -162,7 +162,7 @@ namespace Redemption.Projectiles.Magic
             }
             return false;
         }
-        public override void Kill(int timeLeft)
+        public override void OnKill(int timeLeft)
         {
             if (fakeTimer > 0)
                 return;

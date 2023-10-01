@@ -44,16 +44,7 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
         {
             // DisplayName.SetDefault("Ancient Gladestone Golem");
             Main.npcFrameCount[NPC.type] = 12;
-            NPCID.Sets.DebuffImmunitySets.Add(Type, new NPCDebuffImmunityData
-            {
-                SpecificallyImmuneTo = new int[] {
-                    BuffID.Poisoned,
-                    ModContent.BuffType<InfestedDebuff>(),
-                    ModContent.BuffType<NecroticGougeDebuff>(),
-                    ModContent.BuffType<ViralityDebuff>(),
-                    ModContent.BuffType<DirtyWoundDebuff>()
-                }
-            });
+            BuffNPC.NPCTypeImmunity(Type, BuffNPC.NPCDebuffImmuneType.Inorganic);
         }
         public override void SetSafeDefaults()
         {
@@ -288,7 +279,7 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
                                 NPC.LookAtEntity(globalNPC.attacker);
                                 SoundEngine.PlaySound(SoundID.Zombie64, NPC.position);
                                 int tilePosY = BaseWorldGen.GetFirstTileFloor((int)globalNPC.attacker.Center.X / 16, (int)globalNPC.attacker.Center.Y / 16);
-                                NPC.Shoot(new Vector2(globalNPC.attacker.Center.X, (tilePosY * 16) + 55), ModContent.ProjectileType<AncientGladestonePillar_SS>(), NPC.damage, Vector2.Zero, false, SoundID.Item1);
+                                NPC.Shoot(new Vector2(globalNPC.attacker.Center.X, (tilePosY * 16) + 55), ModContent.ProjectileType<AncientGladestonePillar_SS>(), NPC.damage, Vector2.Zero);
                             }
                             if (NPC.frame.Y == 7 * frameHeight)
                             {
@@ -313,7 +304,7 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
                             {
                                 SoundEngine.PlaySound(SoundID.Zombie64, NPC.position);
                                 int tilePosY = BaseWorldGen.GetFirstTileFloor((int)NPC.Center.X / 16, (int)NPC.Center.Y / 16);
-                                NPC.Shoot(new Vector2(NPC.Center.X, (tilePosY * 16) + 55), ModContent.ProjectileType<AncientGladestonePillar_SS>(), NPC.damage, Vector2.Zero, false, SoundID.Item1);
+                                NPC.Shoot(new Vector2(NPC.Center.X, (tilePosY * 16) + 55), ModContent.ProjectileType<AncientGladestonePillar_SS>(), NPC.damage, Vector2.Zero);
                             }
                             if (NPC.frame.Y == 6 * frameHeight)
                                 NPC.velocity.X += NPC.spriteDirection == 1 ? Main.rand.Next(2, 7) : Main.rand.Next(-7, -2);

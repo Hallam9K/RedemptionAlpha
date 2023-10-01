@@ -152,7 +152,7 @@ namespace Redemption.Items.Weapons.PostML.Magic
             player.itemTime = 2;
             player.itemAnimation = 2;
         }
-        public override void Kill(int timeLeft)
+        public override void OnKill(int timeLeft)
         {
             if (sound != null)
             {

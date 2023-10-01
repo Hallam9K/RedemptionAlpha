@@ -104,7 +104,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
                 oldrot[k] = oldrot[k - 1];
             oldrot[0] = Projectile.rotation;
         }
-        public override void Kill(int timeLeft)
+        public override void OnKill(int timeLeft)
         {
             if (Projectile.ai[0] >= 1)
                 StrikeLightning();

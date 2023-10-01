@@ -42,7 +42,7 @@ namespace Redemption.NPCs.Bosses.Neb.Phase2
             fallThrough = false;
             return true;
         }
-        public override void Kill(int timeLeft)
+        public override void OnKill(int timeLeft)
         {
             if (Projectile.owner == Main.myPlayer)
                 Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center.X, Projectile.Center.Y, 0, 0, ModContent.ProjectileType<NebDefeat>(), 0, 3, Main.myPlayer);

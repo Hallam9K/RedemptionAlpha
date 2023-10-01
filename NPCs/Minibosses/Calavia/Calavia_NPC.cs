@@ -23,6 +23,7 @@ using Redemption.NPCs.Friendly;
 using Redemption.UI.ChatUI;
 using Redemption.Items.Weapons.PreHM.Summon;
 using Terraria.Localization;
+using Redemption.Textures;
 
 namespace Redemption.NPCs.Minibosses.Calavia
 {
@@ -37,7 +38,7 @@ namespace Redemption.NPCs.Minibosses.Calavia
             // DisplayName.SetDefault("Calavia");
             NPCID.Sets.NoTownNPCHappiness[Type] = true;
             Main.npcFrameCount[Type] = 20;
-            NPCID.Sets.NPCBestiaryDrawModifiers value = new(0) { Hide = true };
+            NPCID.Sets.NPCBestiaryDrawModifiers value = new() { Hide = true };
             NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, value);
         }
 
@@ -55,12 +56,9 @@ namespace Redemption.NPCs.Minibosses.Calavia
             NPC.townNPC = true;
             TownNPCStayingHomeless = true;
             NPC.dontTakeDamage = true;
-            bubble = ModContent.Request<Texture2D>("Redemption/UI/TextBubble_Epidotra").Value;
-            voice = CustomSounds.Voice1 with { Pitch = 0.6f };
         }
-        private Texture2D bubble;
-        private SoundStyle voice;
-
+        private static Texture2D Bubble => CommonTextures.TextBubble_Epidotra.Value;
+        private static readonly SoundStyle voice = CustomSounds.Voice1 with { Pitch = 0.6f };
         private bool HasShield;
         private int HasHelmet;
         public override void LoadData(TagCompound tag)
@@ -125,17 +123,17 @@ namespace Redemption.NPCs.Minibosses.Calavia
                         string s10 = Language.GetTextValue("Mods.Redemption.Cutscene.Calavia.Talk.10");
                         string s11 = Language.GetTextValue("Mods.Redemption.Cutscene.Calavia.Talk.11");
 
-                        chain.Add(new(spirit, s1, Color.LightBlue, Color.DarkBlue, spiritVoice, .05f, 2f, 0, false, bubble: bubble))
-                             .Add(new(spirit, s2, Color.LightBlue, Color.DarkBlue, spiritVoice, .05f, 2f, 0, false, bubble: bubble))
-                             .Add(new(NPC, s3, Color.White, Color.Gray, voice, .05f, 2f, 0, false, bubble: bubble))
-                             .Add(new(spirit, s4, Color.LightBlue, Color.DarkBlue, spiritVoice, .05f, 2f, 0, false, bubble: bubble))
-                             .Add(new(NPC, s5, Color.White, Color.Gray, voice, .05f, 2f, 0, false, bubble: bubble))
-                             .Add(new(spirit, s6, Color.LightBlue, Color.DarkBlue, spiritVoice, .05f, 2f, 0, false, bubble: bubble))
-                             .Add(new(spirit, s7, Color.LightBlue, Color.DarkBlue, spiritVoice, .05f, 2f, 0, false, bubble: bubble))
-                             .Add(new(NPC, s8, Color.White, Color.Gray, voice, .05f, 2f, 0, false, bubble: bubble))
-                             .Add(new(spirit, s9, Color.LightBlue, Color.DarkBlue, spiritVoice, .05f, 2f, 0, false, bubble: bubble))
-                             .Add(new(NPC, s10, Color.White, Color.Gray, voice, .05f, 2f, 0, false, bubble: bubble))
-                             .Add(new(spirit, s11, Color.LightBlue, Color.DarkBlue, spiritVoice, .05f, 2f, 0, false, bubble: bubble, endID: 1));
+                        chain.Add(new(spirit, s1, Color.LightBlue, Color.DarkBlue, spiritVoice, .05f, 2f, 0, false, bubble: Bubble))
+                             .Add(new(spirit, s2, Color.LightBlue, Color.DarkBlue, spiritVoice, .05f, 2f, 0, false, bubble: Bubble))
+                             .Add(new(NPC, s3, Color.White, Color.Gray, voice, .05f, 2f, 0, false, bubble: Bubble))
+                             .Add(new(spirit, s4, Color.LightBlue, Color.DarkBlue, spiritVoice, .05f, 2f, 0, false, bubble: Bubble))
+                             .Add(new(NPC, s5, Color.White, Color.Gray, voice, .05f, 2f, 0, false, bubble: Bubble))
+                             .Add(new(spirit, s6, Color.LightBlue, Color.DarkBlue, spiritVoice, .05f, 2f, 0, false, bubble: Bubble))
+                             .Add(new(spirit, s7, Color.LightBlue, Color.DarkBlue, spiritVoice, .05f, 2f, 0, false, bubble: Bubble))
+                             .Add(new(NPC, s8, Color.White, Color.Gray, voice, .05f, 2f, 0, false, bubble: Bubble))
+                             .Add(new(spirit, s9, Color.LightBlue, Color.DarkBlue, spiritVoice, .05f, 2f, 0, false, bubble: Bubble))
+                             .Add(new(NPC, s10, Color.White, Color.Gray, voice, .05f, 2f, 0, false, bubble: Bubble))
+                             .Add(new(spirit, s11, Color.LightBlue, Color.DarkBlue, spiritVoice, .05f, 2f, 0, false, bubble: Bubble, endID: 1));
                         chain.OnSymbolTrigger += Chain_OnSymbolTrigger;
                         chain.OnEndTrigger += Chain_OnEndTrigger;
                         ChatUI.Visible = true;

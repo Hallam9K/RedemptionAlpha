@@ -1,11 +1,8 @@
 ﻿using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.DataStructures;
 using Redemption.Globals.NPC;
 using Redemption.Globals;
-using Redemption.Buffs.Debuffs;
-using Redemption.Buffs.NPCBuffs;
 using Redemption.BaseExtension;
 using Terraria.GameContent.UI;
 using Terraria.Utilities;
@@ -26,6 +23,8 @@ namespace Redemption.NPCs.PreHM
         public static Asset<Texture2D> NobleSlashGlow;
         public override void Load()
         {
+            if (Main.dedServ)
+                return;
             head = ModContent.Request<Texture2D>("Redemption/NPCs/PreHM/Skeleton_Heads");
             SlashAni = ModContent.Request<Texture2D>("Redemption/NPCs/PreHM/SkeletonDuelist_Slashes");
             SlashGlow = ModContent.Request<Texture2D>("Redemption/NPCs/PreHM/SkeletonDuelist_Slashes_Glow");
@@ -57,23 +56,15 @@ namespace Redemption.NPCs.PreHM
 
         public override void SendExtraAI(BinaryWriter writer)
         {
-            base.SendExtraAI(writer);
-            if (Main.netMode == NetmodeID.Server || Main.dedServ)
-            {
-                writer.Write(HasEyes);
-                writer.Write(HeadType);
-                writer.WriteVector2(moveTo);
-            }
+            writer.Write(HasEyes);
+            writer.Write(HeadType);
+            writer.WriteVector2(moveTo);
         }
         public override void ReceiveExtraAI(BinaryReader reader)
         {
-            base.ReceiveExtraAI(reader);
-            if (Main.netMode == NetmodeID.MultiplayerClient)
-            {
-                HasEyes = reader.ReadBoolean();
-                HeadType = reader.ReadInt32();
-                moveTo = reader.ReadVector2();
-            }
+            HasEyes = reader.ReadBoolean();
+            HeadType = reader.ReadInt32();
+            moveTo = reader.ReadVector2();
         }
 
         public ref float AITimer => ref NPC.ai[1];
@@ -95,15 +86,6 @@ namespace Redemption.NPCs.PreHM
         public override void SetStaticDefaults()
         {
             SetSafeStaticDefaults();
-            NPCID.Sets.DebuffImmunitySets.Add(Type, new NPCDebuffImmunityData
-            {
-                SpecificallyImmuneTo = new int[] {
-                    BuffID.Bleeding,
-                    BuffID.Poisoned,
-                    ModContent.BuffType<DirtyWoundDebuff>(),
-                    ModContent.BuffType<NecroticGougeDebuff>()
-                }
-            });
         }
 
         public bool AttackerIsUndead()

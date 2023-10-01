@@ -9,8 +9,6 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.GameContent;
-using Redemption.Buffs.Debuffs;
-using Terraria.DataStructures;
 using System.Collections.Generic;
 using Terraria.GameContent.Bestiary;
 using Redemption.Base;
@@ -27,6 +25,7 @@ using Redemption.Items.Accessories.PostML;
 using System.IO;
 using ReLogic.Content;
 using Terraria.Localization;
+using Redemption.Globals.NPC;
 
 namespace Redemption.NPCs.Bosses.ADD
 {
@@ -45,6 +44,8 @@ namespace Redemption.NPCs.Bosses.ADD
         private static Asset<Texture2D> jyrinaGlow;
         public override void Load()
         {
+            if (Main.dedServ)
+                return;
             glowMask = ModContent.Request<Texture2D>(Texture + "_Glow");
             wandAni = ModContent.Request<Texture2D>(Texture + "_WandRaise");
             wandGlow = ModContent.Request<Texture2D>(Texture + "_WandRaise_Glow");
@@ -101,20 +102,11 @@ namespace Redemption.NPCs.Bosses.ADD
             NPCID.Sets.MPAllowedEnemies[Type] = true;
             NPCID.Sets.BossBestiaryPriority.Add(Type);
 
-            NPCDebuffImmunityData debuffData = new()
-            {
-                SpecificallyImmuneTo = new int[] {
-                    BuffID.Poisoned,
-                    BuffID.Confused,
-                    ModContent.BuffType<InfestedDebuff>(),
-                    ModContent.BuffType<NecroticGougeDebuff>(),
-                    ModContent.BuffType<ViralityDebuff>(),
-                    ModContent.BuffType<DirtyWoundDebuff>()
-                }
-            };
-            NPCID.Sets.DebuffImmunitySets.Add(Type, debuffData);
+            BuffNPC.NPCTypeImmunity(Type, BuffNPC.NPCDebuffImmuneType.Inorganic);
+            NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.Confused] = true;
+            NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.Electrified] = true;
 
-            NPCID.Sets.NPCBestiaryDrawModifiers value = new(0)
+            NPCID.Sets.NPCBestiaryDrawModifiers value = new()
             {
                 Position = new Vector2(0, 40),
                 PortraitPositionYOverride = 0
@@ -146,7 +138,7 @@ namespace Redemption.NPCs.Bosses.ADD
             NPC.RedemptionGuard().GuardBroken = true;
             NPC.BossBar = ModContent.GetInstance<UkkoHealthBar>();
             if (!Main.dedServ)
-                Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/BossForest2");
+                Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/BossUkko");
 
             NPC.GetGlobalNPC<ElementalNPC>().OverrideMultiplier[ElementID.Blood] *= .75f;
             NPC.GetGlobalNPC<ElementalNPC>().OverrideMultiplier[ElementID.Earth] *= .75f;
@@ -232,20 +224,12 @@ namespace Redemption.NPCs.Bosses.ADD
         }
         public override void SendExtraAI(BinaryWriter writer)
         {
-            base.SendExtraAI(writer);
-            if (Main.netMode == NetmodeID.Server || Main.dedServ)
-            {
-                writer.Write(akkaArrive);
-            }
+            writer.Write(akkaArrive);
         }
 
         public override void ReceiveExtraAI(BinaryReader reader)
         {
-            base.ReceiveExtraAI(reader);
-            if (Main.netMode == NetmodeID.MultiplayerClient)
-            {
-                akkaArrive = reader.ReadBoolean();
-            }
+            akkaArrive = reader.ReadBoolean();
         }
 
         public Vector2 MoveVector2;
@@ -267,8 +251,8 @@ namespace Redemption.NPCs.Bosses.ADD
 
             Target();
 
-            DespawnHandler();
-
+            if (NPC.DespawnHandler(0, 20))
+                return;
             Player player = Main.player[NPC.target];
             if (player.active && !player.dead)
                 NPC.DiscourageDespawn(60);
@@ -309,16 +293,18 @@ namespace Redemption.NPCs.Bosses.ADD
                     if (!Main.dedServ)
                         RedeSystem.Instance.TitleCardUIElement.DisplayTitle(Language.GetTextValue("Mods.Redemption.TitleCard.Ukko.Name"), 60, 90, 0.8f, 0, Color.LightGoldenrodYellow, Language.GetTextValue("Mods.Redemption.TitleCard.Ukko.Modifier"));
 
-                    NPC.Shoot(new Vector2(NPC.Center.X - (118 * 16) - 10, NPC.Center.Y + 8), ModContent.ProjectileType<UkkoBarrier>(), 0, Vector2.Zero, false, SoundID.Item1, 0, 1);
-                    NPC.Shoot(new Vector2(NPC.Center.X + (118 * 16) + 26, NPC.Center.Y + 8), ModContent.ProjectileType<UkkoBarrier>(), 0, Vector2.Zero, false, SoundID.Item1, 0, -1);
-                    NPC.Shoot(new Vector2(NPC.Center.X + 8, NPC.Center.Y - (118 * 16) - 10), ModContent.ProjectileType<UkkoBarrierH>(), 0, Vector2.Zero, false, SoundID.Item1, 0, 1);
-                    NPC.Shoot(new Vector2(NPC.Center.X + 8, NPC.Center.Y + (118 * 16) + 26), ModContent.ProjectileType<UkkoBarrierH>(), 0, Vector2.Zero, false, SoundID.Item1, 0, -1);
+                    NPC.Shoot(new Vector2(NPC.Center.X - (118 * 16) - 10, NPC.Center.Y + 8), ModContent.ProjectileType<UkkoBarrier>(), 0, Vector2.Zero, 0, 1);
+                    NPC.Shoot(new Vector2(NPC.Center.X + (118 * 16) + 26, NPC.Center.Y + 8), ModContent.ProjectileType<UkkoBarrier>(), 0, Vector2.Zero, 0, -1);
+                    NPC.Shoot(new Vector2(NPC.Center.X + 8, NPC.Center.Y - (118 * 16) - 10), ModContent.ProjectileType<UkkoBarrierH>(), 0, Vector2.Zero, 0, 1);
+                    NPC.Shoot(new Vector2(NPC.Center.X + 8, NPC.Center.Y + (118 * 16) + 26), ModContent.ProjectileType<UkkoBarrierH>(), 0, Vector2.Zero, 0, -1);
 
                     ArenaWorld.arenaBoss = "ADD";
                     ArenaWorld.arenaTopLeft = new Vector2(NPC.Center.X - (120 * 16) + 8, NPC.Center.Y - (120 * 16) + 8);
                     ArenaWorld.arenaSize = new Vector2(240 * 16, 240 * 16);
                     ArenaWorld.arenaMiddle = NPC.Center;
                     ArenaWorld.arenaActive = true;
+                    if (Main.netMode == NetmodeID.Server)
+                        NetMessage.SendData(MessageID.WorldData);
 
                     NPC.ai[0]++;
                     NPC.netUpdate = true;
@@ -363,7 +349,7 @@ namespace Redemption.NPCs.Bosses.ADD
                             AITimer++;
                             if (AITimer == 8)
                             {
-                                NPC.Shoot(player.Center, ModContent.ProjectileType<UkkoStrike>(), (int)(NPC.damage * 0.92f), Vector2.Zero, false, SoundID.Item1);
+                                NPC.Shoot(player.Center, ModContent.ProjectileType<UkkoStrike>(), (int)(NPC.damage * 0.92f), Vector2.Zero);
                             }
                             if (AITimer == 20)
                                 NPC.ai[3] = 3;
@@ -389,7 +375,7 @@ namespace Redemption.NPCs.Bosses.ADD
                                 NPC.ai[3] = 1;
                                 for (int i = 0; i < 2; i++)
                                 {
-                                    NPC.Shoot(NPC.Center, ModContent.ProjectileType<UkkoGust>(), 0, RedeHelper.Spread(8), false, SoundID.Item1);
+                                    NPC.Shoot(NPC.Center, ModContent.ProjectileType<UkkoGust>(), 0, RedeHelper.Spread(8));
                                 }
                             }
                             if (AITimer >= 50)
@@ -425,7 +411,7 @@ namespace Redemption.NPCs.Bosses.ADD
 
                                 if (!akkaActive ? AITimer % 3 == 0 && AITimer < 30 : AITimer % 4 == 0 && AITimer < 30)
                                 {
-                                    NPC.Shoot(NPC.Center, ModContent.ProjectileType<UkkoThunderwave>(), (int)(NPC.damage * 0.8f), RedeHelper.PolarVector(18, (player.Center - NPC.Center).ToRotation()), true, CustomSounds.Zap2);
+                                    NPC.Shoot(NPC.Center, ModContent.ProjectileType<UkkoThunderwave>(), (int)(NPC.damage * 0.8f), RedeHelper.PolarVector(18, (player.Center - NPC.Center).ToRotation()), CustomSounds.Zap2);
                                 }
                                 if (!akkaActive ? AITimer >= 35 : AITimer >= 25)
                                 {
@@ -463,7 +449,7 @@ namespace Redemption.NPCs.Bosses.ADD
                                     NPC.ai[3] = 3;
                                     frameCounters = 0;
                                     swipeFrame = 0;
-                                    NPC.Shoot(player.Center + new Vector2(Main.rand.Next(-300, 301)), ModContent.ProjectileType<UkkoStrike>(), (int)(NPC.damage * 0.92f), Vector2.Zero, false, SoundID.Item1);
+                                    NPC.Shoot(player.Center + new Vector2(Main.rand.Next(-300, 301)), ModContent.ProjectileType<UkkoStrike>(), (int)(NPC.damage * 0.92f), Vector2.Zero);
                                 }
                                 if (AITimer >= 180)
                                 {
@@ -605,7 +591,7 @@ namespace Redemption.NPCs.Bosses.ADD
                                     }
                                     if (Main.rand.NextBool(3))
                                     {
-                                        NPC.Shoot(player.Center + RedeHelper.PolarVector(Main.rand.Next(300, 601), RedeHelper.RandomRotation()), ModContent.ProjectileType<UkkoDancingLights>(), 0, RedeHelper.Spread(1), false, SoundID.Item1);
+                                        NPC.Shoot(player.Center + RedeHelper.PolarVector(Main.rand.Next(300, 601), RedeHelper.RandomRotation()), ModContent.ProjectileType<UkkoDancingLights>(), 0, RedeHelper.Spread(1));
                                     }
                                 }
                                 if (AITimer >= 200)
@@ -667,7 +653,7 @@ namespace Redemption.NPCs.Bosses.ADD
                                     }
                                     if (AITimer >= 20 && dashCounter >= 2)
                                     {
-                                        NPC.Shoot(NPC.Center, ModContent.ProjectileType<Jyrina>(), NPC.damage, NPC.velocity, false, SoundID.Item1, NPC.spriteDirection == 1 ? 0 : 2);
+                                        NPC.Shoot(NPC.Center, ModContent.ProjectileType<Jyrina>(), NPC.damage, NPC.velocity, NPC.spriteDirection == 1 ? 0 : 2);
                                         chariotCooldown = 5;
                                         dashCounter = 0;
                                         NPC.ai[3] = 0;
@@ -701,7 +687,7 @@ namespace Redemption.NPCs.Bosses.ADD
                                     NPC.ai[3] = 1;
                                     for (int i = 0; i < 5; i++)
                                     {
-                                        NPC.Shoot(NPC.Center, ModContent.ProjectileType<UkkoGust>(), NPC.damage, RedeHelper.Spread(10), false, SoundID.Item1);
+                                        NPC.Shoot(NPC.Center, ModContent.ProjectileType<UkkoGust>(), NPC.damage, RedeHelper.Spread(10));
                                     }
                                 }
                                 if (AITimer == 70)
@@ -753,7 +739,7 @@ namespace Redemption.NPCs.Bosses.ADD
                                 if (AITimer == 8)
                                 {
                                     NPC.ai[3] = 1;
-                                    NPC.Shoot(player.Center, ModContent.ProjectileType<StormSummonerPro>(), (int)(NPC.damage * 0.92f), Vector2.Zero, false, SoundID.Item1, Main.rand.Next(4));
+                                    NPC.Shoot(player.Center, ModContent.ProjectileType<StormSummonerPro>(), (int)(NPC.damage * 0.92f), Vector2.Zero, Main.rand.Next(4));
                                 }
                                 if (AITimer == 20)
                                     NPC.ai[3] = 3;
@@ -787,8 +773,8 @@ namespace Redemption.NPCs.Bosses.ADD
                                     NPC.ai[3] = 3;
                                 if (AITimer == 60)
                                 {
-                                    NPC.Shoot(NPC.Center, ModContent.ProjectileType<DualcastBall>(), (int)(NPC.damage * 0.92f), RedeHelper.PolarVector(8, (player.Center - NPC.Center).ToRotation()), true, CustomSounds.Zap2);
-                                    NPC.Shoot(NPC.Center, ModContent.ProjectileType<DualcastBall>(), (int)(NPC.damage * 0.92f), RedeHelper.PolarVector(8, (player.Center - NPC.Center).ToRotation()), true, CustomSounds.Zap2, 1);
+                                    NPC.Shoot(NPC.Center, ModContent.ProjectileType<DualcastBall>(), (int)(NPC.damage * 0.92f), RedeHelper.PolarVector(8, (player.Center - NPC.Center).ToRotation()), CustomSounds.Zap2);
+                                    NPC.Shoot(NPC.Center, ModContent.ProjectileType<DualcastBall>(), (int)(NPC.damage * 0.92f), RedeHelper.PolarVector(8, (player.Center - NPC.Center).ToRotation()), CustomSounds.Zap2, 1);
                                 }
                                 if (NPC.life < (int)(NPC.lifeMax * 0.3f))
                                 {
@@ -799,8 +785,8 @@ namespace Redemption.NPCs.Bosses.ADD
                                     }
                                     if (AITimer == 90)
                                     {
-                                        NPC.Shoot(NPC.Center, ModContent.ProjectileType<DualcastBall>(), (int)(NPC.damage * 0.92f), RedeHelper.PolarVector(6, (player.Center - NPC.Center).ToRotation()), true, CustomSounds.Zap2);
-                                        NPC.Shoot(NPC.Center, ModContent.ProjectileType<DualcastBall>(), (int)(NPC.damage * 0.92f), RedeHelper.PolarVector(6, (player.Center - NPC.Center).ToRotation()), true, CustomSounds.Zap2, 1);
+                                        NPC.Shoot(NPC.Center, ModContent.ProjectileType<DualcastBall>(), (int)(NPC.damage * 0.92f), RedeHelper.PolarVector(6, (player.Center - NPC.Center).ToRotation()), CustomSounds.Zap2);
+                                        NPC.Shoot(NPC.Center, ModContent.ProjectileType<DualcastBall>(), (int)(NPC.damage * 0.92f), RedeHelper.PolarVector(6, (player.Center - NPC.Center).ToRotation()), CustomSounds.Zap2, 1);
                                     }
                                     if (AITimer >= 120)
                                     {
@@ -846,7 +832,7 @@ namespace Redemption.NPCs.Bosses.ADD
                                         int A = Main.rand.Next(-200, 200) * 6;
                                         int B = Main.rand.Next(-200, 200) - 1000;
 
-                                        NPC.Shoot(player.Center + new Vector2(A, B), ModContent.ProjectileType<UkkoBlizzard>(), (int)(NPC.damage * 0.75f), new Vector2(2, 4), false, SoundID.Item1);
+                                        NPC.Shoot(player.Center + new Vector2(A, B), ModContent.ProjectileType<UkkoBlizzard>(), (int)(NPC.damage * 0.75f), new Vector2(2, 4));
                                     }
                                 }
                                 if (AITimer >= 190)
@@ -871,7 +857,7 @@ namespace Redemption.NPCs.Bosses.ADD
                             if (AITimer == 8)
                             {
                                 NPC.ai[3] = 1;
-                                NPC.Shoot(player.Center - new Vector2(0, 200), ModContent.ProjectileType<UkkoRainCloud>(), 0, Vector2.Zero, false, SoundID.Item1);
+                                NPC.Shoot(player.Center - new Vector2(0, 200), ModContent.ProjectileType<UkkoRainCloud>(), 0, Vector2.Zero);
                             }
                             if (AITimer == 40)
                                 NPC.ai[3] = 0;
@@ -916,7 +902,7 @@ namespace Redemption.NPCs.Bosses.ADD
                                     Main.LocalPlayer.RedemptionScreen().ScreenShakeIntensity += 10;
                                     for (int i = -16; i <= 16; i++)
                                     {
-                                        NPC.Shoot(HammerPos, ModContent.ProjectileType<UkkoThunderwave>(), (int)(NPC.damage * 0.8f), 10 * Vector2.UnitX.RotatedBy(Math.PI / 16 * i), false, SoundID.Item1);
+                                        NPC.Shoot(HammerPos, ModContent.ProjectileType<UkkoThunderwave>(), (int)(NPC.damage * 0.8f), 10 * Vector2.UnitX.RotatedBy(Math.PI / 16 * i));
                                     }
                                 }
                                 if (AITimer == 58)
@@ -927,7 +913,7 @@ namespace Redemption.NPCs.Bosses.ADD
                                     Main.LocalPlayer.RedemptionScreen().ScreenShakeIntensity += 20;
                                     for (int i = -8; i <= 8; i++)
                                     {
-                                        NPC.Shoot(HammerPos, ModContent.ProjectileType<UkkoThunderwave>(), (int)(NPC.damage * 0.8f), 8 * Vector2.UnitX.RotatedBy(Math.PI / 8 * i), false, SoundID.Item1);
+                                        NPC.Shoot(HammerPos, ModContent.ProjectileType<UkkoThunderwave>(), (int)(NPC.damage * 0.8f), 8 * Vector2.UnitX.RotatedBy(Math.PI / 8 * i));
                                     }
                                 }
                                 if (AITimer == 70)
@@ -976,7 +962,7 @@ namespace Redemption.NPCs.Bosses.ADD
 
                                     Main.LocalPlayer.RedemptionScreen().ScreenShakeOrigin = NPC.Center;
                                     Main.LocalPlayer.RedemptionScreen().ScreenShakeIntensity += 30;
-                                    NPC.Shoot(NPC.Center, ModContent.ProjectileType<UkkoElectricBlast>(), 0, Vector2.Zero, true, CustomSounds.Thunderstrike, NPC.whoAmI);
+                                    NPC.Shoot(NPC.Center, ModContent.ProjectileType<UkkoElectricBlast>(), 0, Vector2.Zero, CustomSounds.Thunderstrike, NPC.whoAmI);
                                 }
                                 if (AITimer >= 180)
                                 {
@@ -1003,15 +989,15 @@ namespace Redemption.NPCs.Bosses.ADD
                                 if (AITimer++ == 6)
                                 {
                                     if (player.ZoneHallow)
-                                        NPC.Shoot(NPC.Center, ModContent.ProjectileType<EarthBarrier>(), 0, Vector2.Zero, false, SoundID.Item1);
+                                        NPC.Shoot(NPC.Center, ModContent.ProjectileType<EarthBarrier>(), 0, Vector2.Zero);
                                     else if (player.ZoneCorrupt)
-                                        NPC.Shoot(NPC.Center, ModContent.ProjectileType<EarthBarrier>(), 0, Vector2.Zero, false, SoundID.Item1, 1);
+                                        NPC.Shoot(NPC.Center, ModContent.ProjectileType<EarthBarrier>(), 0, Vector2.Zero, 1);
                                     else if (player.ZoneCrimson)
-                                        NPC.Shoot(NPC.Center, ModContent.ProjectileType<EarthBarrier>(), 0, Vector2.Zero, false, SoundID.Item1, 3);
+                                        NPC.Shoot(NPC.Center, ModContent.ProjectileType<EarthBarrier>(), 0, Vector2.Zero, 3);
                                     else if (player.ZoneDesert)
-                                        NPC.Shoot(NPC.Center, ModContent.ProjectileType<EarthBarrier>(), 0, Vector2.Zero, false, SoundID.Item1, 4);
+                                        NPC.Shoot(NPC.Center, ModContent.ProjectileType<EarthBarrier>(), 0, Vector2.Zero, 4);
                                     else
-                                        NPC.Shoot(NPC.Center, ModContent.ProjectileType<EarthBarrier>(), 0, Vector2.Zero, false, SoundID.Item1, 2);
+                                        NPC.Shoot(NPC.Center, ModContent.ProjectileType<EarthBarrier>(), 0, Vector2.Zero, 2);
                                 }
                                 if (AITimer < 120)
                                 {
@@ -1021,8 +1007,8 @@ namespace Redemption.NPCs.Bosses.ADD
                                 if (AITimer > 120 && AITimer % 20 == 0)
                                 {
                                     int speed = Main.rand.Next(4, 8);
-                                    NPC.Shoot(NPC.Center, ModContent.ProjectileType<DualcastBall>(), (int)(NPC.damage * 0.92f), RedeHelper.PolarVector(speed, (player.Center - NPC.Center).ToRotation()), true, CustomSounds.Zap2);
-                                    NPC.Shoot(NPC.Center, ModContent.ProjectileType<DualcastBall>(), (int)(NPC.damage * 0.92f), RedeHelper.PolarVector(speed, (player.Center - NPC.Center).ToRotation()), true, CustomSounds.Zap2, 1);
+                                    NPC.Shoot(NPC.Center, ModContent.ProjectileType<DualcastBall>(), (int)(NPC.damage * 0.92f), RedeHelper.PolarVector(speed, (player.Center - NPC.Center).ToRotation()), CustomSounds.Zap2);
+                                    NPC.Shoot(NPC.Center, ModContent.ProjectileType<DualcastBall>(), (int)(NPC.damage * 0.92f), RedeHelper.PolarVector(speed, (player.Center - NPC.Center).ToRotation()), CustomSounds.Zap2, 1);
                                 }
                                 if (AITimer == 295)
                                 {
@@ -1050,6 +1036,9 @@ namespace Redemption.NPCs.Bosses.ADD
                 case ActionState.AkkaSummon:
                     if (RedeBossDowned.ADDDeath == 2)
                     {
+                        if (!Main.dedServ)
+                            Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/BossUkkoAkka");
+
                         RedeHelper.SpawnNPC(NPC.GetSource_FromAI(), (int)NPC.Center.X + 80, (int)ArenaWorld.arenaTopLeft.Y - 100, ModContent.NPCType<Akka>(), 0, 0, 0, NPC.whoAmI);
                         akkaArrive = true;
                         AITimer = 0;
@@ -1085,10 +1074,7 @@ namespace Redemption.NPCs.Bosses.ADD
                             }
                             if (AITimer >= 60)
                             {
-                                player.RedemptionScreen().ScreenFocusPosition = NPC.Center;
-                                player.RedemptionScreen().lockScreen = true;
-                                player.RedemptionScreen().cutscene = true;
-                                NPC.LockMoveRadius(player);
+                                ScreenPlayer.CutsceneLock(player, NPC, ScreenPlayer.CutscenePriority.Max, 0, 0, 0);
                             }
                             if (AITimer >= 120)
                             {
@@ -1099,10 +1085,7 @@ namespace Redemption.NPCs.Bosses.ADD
                             }
                             break;
                         case 1:
-                            player.RedemptionScreen().ScreenFocusPosition = MoveVector3;
-                            player.RedemptionScreen().lockScreen = true;
-                            player.RedemptionScreen().cutscene = true;
-
+                            ScreenPlayer.CutsceneLock(player, MoveVector3, ScreenPlayer.CutscenePriority.High, 0, 0, 0);
                             if (AITimer++ <= 30)
                                 NPC.velocity.Y += 0.4f;
                             else
@@ -1112,11 +1095,15 @@ namespace Redemption.NPCs.Bosses.ADD
                             if (AITimer == 70)
                             {
                                 Main.LocalPlayer.RedemptionScreen().ScreenShakeIntensity += 5;
-                                SoundEngine.PlaySound(CustomSounds.ElectricSlash2, NPC.position);
+                                if (!Main.dedServ)
+                                    SoundEngine.PlaySound(CustomSounds.ElectricSlash2, NPC.position);
                             }
 
                             if (NPC.Center.Y <= ArenaWorld.arenaTopLeft.Y - 100)
                             {
+                                if (!Main.dedServ)
+                                    Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/BossUkkoAkka");
+
                                 NPC.velocity *= 0;
                                 NPC.alpha = 255;
                                 AITimer = 0;
@@ -1126,18 +1113,15 @@ namespace Redemption.NPCs.Bosses.ADD
                             break;
                         case 2:
                             if (AITimer == 120)
+                            {
                                 SoundEngine.PlaySound(SoundID.Item165 with { Pitch = -0.1f });
+                            }
                             if (AITimer++ >= 240)
                             {
-                                player.RedemptionScreen().ScreenFocusPosition = MoveVector3;
-                                player.RedemptionScreen().lockScreen = true;
-                                player.RedemptionScreen().cutscene = true;
+                                ScreenPlayer.CutsceneLock(player, MoveVector3, ScreenPlayer.CutscenePriority.High, 0, 0, 0);
                                 NPC.alpha = 0;
                                 if (NPC.DistanceSQ(MoveVector3) < 20 * 20)
                                 {
-                                    if (!Main.dedServ)
-                                        Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/BossForest2");
-
                                     RedeHelper.SpawnNPC(NPC.GetSource_FromAI(), (int)NPC.Center.X + 80, (int)ArenaWorld.arenaTopLeft.Y - 100, ModContent.NPCType<Akka>(), 0, 0, 0, NPC.whoAmI);
                                     NPC.spriteDirection = 1;
                                     AITimer = 0;
@@ -1149,14 +1133,12 @@ namespace Redemption.NPCs.Bosses.ADD
                             }
                             break;
                         case 3:
-                            player.RedemptionScreen().ScreenFocusPosition = MoveVector3;
-                            player.RedemptionScreen().lockScreen = true;
-                            player.RedemptionScreen().cutscene = true;
+                            ScreenPlayer.CutsceneLock(player, MoveVector3, ScreenPlayer.CutscenePriority.High, 0, 0, 0);
                             NPC.velocity *= 0.9f;
                             if (AITimer == 180)
                                 EmoteBubble.NewBubble(0, new WorldUIAnchor(NPC), 50);
 
-                            if (AITimer++ >= 250)
+                            if (AITimer++ >= 300)
                             {
                                 NPC.dontTakeDamage = false;
                                 if (Main.netMode == NetmodeID.Server && NPC.whoAmI < Main.maxNPCs)
@@ -1175,26 +1157,12 @@ namespace Redemption.NPCs.Bosses.ADD
                     break;
             }
         }
-        public override void FindFrame(int frameHeight)
+        public override void PostAI()
         {
-            if ((NPC.velocity.X < -3 && NPC.spriteDirection == -1) || (NPC.velocity.X > 3 && NPC.spriteDirection == 1))
-                NPC.frame.Y = frameHeight * 3;
-            else if ((NPC.velocity.X < -3 && NPC.spriteDirection == 1) || (NPC.velocity.X > 3 && NPC.spriteDirection == -1))
-                NPC.frame.Y = frameHeight * 4;
-            else
-            {
-                NPC.frameCounter++;
-                if (NPC.frameCounter >= 6)
-                {
-                    NPC.frameCounter = 0;
-                    NPC.frame.Y += frameHeight;
-                    if (NPC.frame.Y > frameHeight * 2)
-                    {
-                        NPC.frameCounter = 0;
-                        NPC.frame.Y = 0;
-                    }
-                }
-            }
+            CustomFrames();
+        }
+        private void CustomFrames()
+        {
             FlareTimer++;
             switch (NPC.ai[3])
             {
@@ -1226,10 +1194,32 @@ namespace Redemption.NPCs.Bosses.ADD
                     if (swipeFrame >= 6)
                     {
                         frameCounters = 0;
-                        NPC.ai[3] = 0;
                         swipeFrame = 0;
+                        NPC.ai[3] = 0;
+                        NPC.netUpdate = true;
                     }
                     break;
+            }
+        }
+        public override void FindFrame(int frameHeight)
+        {
+            if ((NPC.velocity.X < -3 && NPC.spriteDirection == -1) || (NPC.velocity.X > 3 && NPC.spriteDirection == 1))
+                NPC.frame.Y = frameHeight * 3;
+            else if ((NPC.velocity.X < -3 && NPC.spriteDirection == 1) || (NPC.velocity.X > 3 && NPC.spriteDirection == -1))
+                NPC.frame.Y = frameHeight * 4;
+            else
+            {
+                NPC.frameCounter++;
+                if (NPC.frameCounter >= 6)
+                {
+                    NPC.frameCounter = 0;
+                    NPC.frame.Y += frameHeight;
+                    if (NPC.frame.Y > frameHeight * 2)
+                    {
+                        NPC.frameCounter = 0;
+                        NPC.frame.Y = 0;
+                    }
+                }
             }
         }
         public override bool CanHitPlayer(Player target, ref int cooldownSlot)
@@ -1250,21 +1240,6 @@ namespace Redemption.NPCs.Bosses.ADD
         {
             player = Main.player[NPC.target];
         }
-        private void DespawnHandler()
-        {
-            if (!player.active || player.dead)
-            {
-                NPC.TargetClosest(false);
-                player = Main.player[NPC.target];
-                if (!player.active || player.dead)
-                {
-                    NPC.velocity = new Vector2(0f, -20f);
-                    if (NPC.timeLeft > 10)
-                        NPC.timeLeft = 10;
-                    return;
-                }
-            }
-        }
         private void Rain()
         {
             int akkaID = NPC.FindFirstNPC(ModContent.NPCType<Akka>());
@@ -1272,17 +1247,25 @@ namespace Redemption.NPCs.Bosses.ADD
             {
                 if (StopRain == 0)
                 {
-                    Main.StopRain();
-                    Main.SyncRain();
+                    if (Main.netMode != NetmodeID.MultiplayerClient)
+                    {
+                        Main.StopRain();
+                        Main.SyncRain();
+                        if (Main.netMode != NetmodeID.SinglePlayer)
+                            NetMessage.SendData(MessageID.WorldData);
+                    }
                     StopRain = 1;
                 }
             }
             if (RunOnce == 0)
             {
-                Main.StopRain();
-                Main.SyncRain();
-                if (Main.netMode != NetmodeID.SinglePlayer)
-                    NetMessage.SendData(MessageID.WorldData);
+                if (Main.netMode != NetmodeID.MultiplayerClient)
+                {
+                    Main.StopRain();
+                    Main.SyncRain();
+                    if (Main.netMode != NetmodeID.SinglePlayer)
+                        NetMessage.SendData(MessageID.WorldData);
+                }
             }
             if ((AIState is ActionState.AkkaSummon && AttackID >= 1) || (akkaID > -1 && Main.npc[akkaID].active))
             {
@@ -1315,15 +1298,15 @@ namespace Redemption.NPCs.Bosses.ADD
                     if (!NPC.IsABestiaryIconDummy)
                     {
                         spriteBatch.End();
-                        spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
-                        GameShaders.Armor.ApplySecondary(shader, Main.player[Main.myPlayer], null);
+                        spriteBatch.BeginAdditive(true);
+                        GameShaders.Armor.ApplySecondary(shader, Main.LocalPlayer, null);
                         for (int i = 0; i < NPCID.Sets.TrailCacheLength[NPC.type]; i++)
                         {
                             Vector2 oldPos = NPC.oldPos[i];
                             spriteBatch.Draw(texture, oldPos - n + NPC.Size / 2f - screenPos + new Vector2(0, NPC.gfxOffY), NPC.frame, NPC.GetAlpha(shaderColor) * ((NPC.oldPos.Length - i) / (float)NPC.oldPos.Length), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
                         }
                         spriteBatch.End();
-                        spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+                        spriteBatch.BeginDefault();
                     }
                     if (NPC.RedemptionGuard().GuardPoints > 0)
                         RedeDraw.DrawTreasureBagEffect(Main.spriteBatch, texture, ref drawTimer, NPC.Center - n - screenPos, NPC.frame, Color.LightYellow * NPC.Opacity, NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects);
@@ -1334,15 +1317,15 @@ namespace Redemption.NPCs.Bosses.ADD
                 case 1:
                     Vector2 wandDrawCenter = new(13 * NPC.spriteDirection, -28);
                     spriteBatch.End();
-                    spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
-                    GameShaders.Armor.ApplySecondary(shader, Main.player[Main.myPlayer], null);
+                    spriteBatch.BeginAdditive(true);
+                    GameShaders.Armor.ApplySecondary(shader, Main.LocalPlayer, null);
                     for (int i = 0; i < NPCID.Sets.TrailCacheLength[NPC.type]; i++)
                     {
                         Vector2 oldPos = NPC.oldPos[i];
                         spriteBatch.Draw(wandAni.Value, oldPos + new Vector2(13 * NPC.spriteDirection, -28) - n + NPC.Size / 2f - screenPos + new Vector2(0, NPC.gfxOffY), null, NPC.GetAlpha(shaderColor) * ((NPC.oldPos.Length - i) / (float)NPC.oldPos.Length), NPC.rotation, new Vector2(wandAni.Value.Width / 2f, wandAni.Value.Height / 2f), NPC.scale, effects, 0);
                     }
                     spriteBatch.End();
-                    spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+                    spriteBatch.BeginDefault();
 
                     if (NPC.RedemptionGuard().GuardPoints > 0)
                         RedeDraw.DrawTreasureBagEffect(Main.spriteBatch, wandAni.Value, ref drawTimer, NPC.Center - n + wandDrawCenter - screenPos, null, Color.LightYellow * NPC.Opacity, NPC.rotation, new Vector2(wandAni.Value.Width / 2f, wandAni.Value.Height / 2f), NPC.scale, effects);
@@ -1357,8 +1340,8 @@ namespace Redemption.NPCs.Bosses.ADD
                     int jyrinaHeight = jyrina.Value.Height / 9;
                     int jyrinaY = jyrinaHeight * jyrinaFrame;
                     spriteBatch.End();
-                    spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
-                    GameShaders.Armor.ApplySecondary(shader, Main.player[Main.myPlayer], null);
+                    spriteBatch.BeginAdditive(true);
+                    GameShaders.Armor.ApplySecondary(shader, Main.LocalPlayer, null);
                     for (int i = 0; i < NPCID.Sets.TrailCacheLength[NPC.type]; i++)
                     {
                         Vector2 oldPos = NPC.oldPos[i];
@@ -1366,7 +1349,7 @@ namespace Redemption.NPCs.Bosses.ADD
                         spriteBatch.Draw(jyrina.Value, oldPos - n + NPC.Size / 2f - screenPos + new Vector2(0, NPC.gfxOffY), new Rectangle?(new Rectangle(0, jyrinaY, jyrina.Value.Width, jyrinaHeight)), NPC.GetAlpha(shaderColor) * ((NPC.oldPos.Length - i) / (float)NPC.oldPos.Length), NPC.rotation, new Vector2(jyrina.Value.Width / 2f, jyrinaHeight / 2f), NPC.scale, NPC.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0);
                     }
                     spriteBatch.End();
-                    spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+                    spriteBatch.BeginDefault();
 
                     if (NPC.RedemptionGuard().GuardPoints > 0)
                         RedeDraw.DrawTreasureBagEffect(Main.spriteBatch, chariotAni.Value, ref drawTimer, NPC.Center - n - screenPos, new Rectangle?(new Rectangle(0, chariotY, chariotAni.Value.Width, chariotHeight)), Color.LightYellow * NPC.Opacity, NPC.rotation, new Vector2(chariotAni.Value.Width / 2f, chariotHeight / 2f), NPC.scale, effects);
@@ -1386,15 +1369,15 @@ namespace Redemption.NPCs.Bosses.ADD
                     int swipeSY = swipeSHeight * swipeFrame;
                     Vector2 swipeSDrawCenter = new(41 * NPC.spriteDirection, -41);
                     spriteBatch.End();
-                    spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
-                    GameShaders.Armor.ApplySecondary(shader, Main.player[Main.myPlayer], null);
+                    spriteBatch.BeginAdditive(true);
+                    GameShaders.Armor.ApplySecondary(shader, Main.LocalPlayer, null);
                     for (int i = 0; i < NPCID.Sets.TrailCacheLength[NPC.type]; i++)
                     {
                         Vector2 oldPos = NPC.oldPos[i];
                         spriteBatch.Draw(swipeAni.Value, oldPos + new Vector2(14 * NPC.spriteDirection, -9) - n + NPC.Size / 2f - screenPos + new Vector2(0, NPC.gfxOffY), new Rectangle?(new Rectangle(0, swipeY, swipeAni.Value.Width, swipeHeight)), NPC.GetAlpha(shaderColor) * ((NPC.oldPos.Length - i) / (float)NPC.oldPos.Length), NPC.rotation, new Vector2(swipeAni.Value.Width / 2f, swipeHeight / 2f), NPC.scale, effects, 0);
                     }
                     spriteBatch.End();
-                    spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+                    spriteBatch.BeginDefault();
 
                     if (NPC.RedemptionGuard().GuardPoints > 0)
                         RedeDraw.DrawTreasureBagEffect(Main.spriteBatch, swipeAni.Value, ref drawTimer, NPC.Center - n + swipeDrawCenter - screenPos, new Rectangle?(new Rectangle(0, swipeY, swipeAni.Value.Width, swipeHeight)), Color.LightYellow * NPC.Opacity, NPC.rotation, new Vector2(swipeAni.Value.Width / 2f, swipeHeight / 2f), NPC.scale, effects);

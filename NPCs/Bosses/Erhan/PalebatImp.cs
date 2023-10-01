@@ -19,7 +19,7 @@ namespace Redemption.NPCs.Bosses.Erhan
             Main.npcFrameCount[Type] = 17;
             NPCID.Sets.MPAllowedEnemies[Type] = true;
             NPCID.Sets.BossBestiaryPriority.Add(Type);
-            NPCID.Sets.NPCBestiaryDrawModifiers value = new(0)
+            NPCID.Sets.NPCBestiaryDrawModifiers value = new()
             {
                 Hide = true
             };
@@ -75,9 +75,7 @@ namespace Redemption.NPCs.Bosses.Erhan
 
             if (RedeBossDowned.erhanDeath == 0)
             {
-                player.RedemptionScreen().ScreenFocusPosition = NPC.Center;
-                player.RedemptionScreen().lockScreen = true;
-                player.RedemptionScreen().cutscene = true;
+                ScreenPlayer.CutsceneLock(player, NPC, ScreenPlayer.CutscenePriority.High, 0, 0, 0);
             }
             switch (TimerRand)
             {
@@ -118,6 +116,13 @@ namespace Redemption.NPCs.Bosses.Erhan
                         Main.LocalPlayer.RedemptionScreen().ScreenShakeIntensity += 18;
                         DustHelper.DrawDustImage(NPC.Center, DustID.Torch, 0.5f, "Redemption/Effects/DustImages/DemonShape", 3, true, 0);
                     }
+                    if (AITimer > 360)
+                    {
+                        NPC.frame.Y = 12 * 44;
+                        AITimer = 0;
+                        TimerRand = 2;
+                        NPC.netUpdate = true;
+                    }
                     break;
                 case 2:
                     shakeTimer -= 0.2f;
@@ -154,7 +159,7 @@ namespace Redemption.NPCs.Bosses.Erhan
                 case 3:
                     if (AITimer++ == 0)
                     {
-                        NPC.Shoot(NPC.Center + new Vector2(0, -800), ModContent.ProjectileType<ScorchingRay>(), 0, new Vector2(0, 10), true, SoundID.Item162);
+                        NPC.Shoot(NPC.Center + new Vector2(0, -800), ModContent.ProjectileType<ScorchingRay>(), 0, new Vector2(0, 10), SoundID.Item162);
                     }
                     if (AITimer >= 90)
                     {
@@ -178,13 +183,6 @@ namespace Redemption.NPCs.Bosses.Erhan
                     if (NPC.frame.Y > 11 * frameHeight)
                     {
                         NPC.frame.Y = 11 * frameHeight;
-                        if (AITimer >= 360)
-                        {
-                            NPC.frame.Y = 12 * frameHeight;
-                            AITimer = 0;
-                            TimerRand = 2;
-                            NPC.netUpdate = true;
-                        }
                     }
                 }
             }

@@ -4,9 +4,6 @@ using System;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.DataStructures;
-using Redemption.Buffs.NPCBuffs;
-using Redemption.Buffs.Debuffs;
 using Terraria.GameContent;
 using Redemption.Globals;
 using Redemption.BaseExtension;
@@ -14,6 +11,7 @@ using Terraria.Audio;
 using Redemption.Dusts;
 using System.IO;
 using ReLogic.Content;
+using Redemption.Globals.NPC;
 
 namespace Redemption.NPCs.Bosses.Gigapora
 {
@@ -26,6 +24,8 @@ namespace Redemption.NPCs.Bosses.Gigapora
         private static Asset<Texture2D> thrusterOrange;
         public override void Load()
         {
+            if (Main.dedServ)
+                return;
             core = ModContent.Request<Texture2D>(Texture + "_Core");
             coreGlow = ModContent.Request<Texture2D>(Texture + "_Core_Glow");
             tail = ModContent.Request<Texture2D>(Texture + "_Tail");
@@ -52,21 +52,10 @@ namespace Redemption.NPCs.Bosses.Gigapora
             NPCID.Sets.BossBestiaryPriority.Add(Type);
             NPCID.Sets.ShouldBeCountedAsBoss[Type] = true;
 
-            NPCDebuffImmunityData debuffData = new()
-            {
-                SpecificallyImmuneTo = new int[] {
-                    BuffID.Confused,
-                    BuffID.Poisoned,
-                    BuffID.Venom,
-                    ModContent.BuffType<InfestedDebuff>(),
-                    ModContent.BuffType<NecroticGougeDebuff>(),
-                    ModContent.BuffType<ViralityDebuff>(),
-                    ModContent.BuffType<DirtyWoundDebuff>()
-                }
-            };
-            NPCID.Sets.DebuffImmunitySets.Add(Type, debuffData);
+            BuffNPC.NPCTypeImmunity(Type, BuffNPC.NPCDebuffImmuneType.Inorganic);
+            NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.Confused] = true;
 
-            NPCID.Sets.NPCBestiaryDrawModifiers value = new(0) { Hide = true };
+            NPCID.Sets.NPCBestiaryDrawModifiers value = new() { Hide = true };
             NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, value);
         }
         public override void SetDefaults()
@@ -105,24 +94,16 @@ namespace Redemption.NPCs.Bosses.Gigapora
         public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)
         {
             NPC.lifeMax = (int)(NPC.lifeMax * 0.6f * balance * bossAdjustment);
-            NPC.damage = (int)(NPC.damage * 0.75f);
+            NPC.damage = (int)(NPC.damage * 0.6f);
         }
         public override void SendExtraAI(BinaryWriter writer)
         {
-            base.SendExtraAI(writer);
-            if (Main.netMode == NetmodeID.Server || Main.dedServ)
-            {
-                writer.Write(ShootTimer);
-            }
+            writer.Write(ShootTimer);
         }
 
         public override void ReceiveExtraAI(BinaryReader reader)
         {
-            base.ReceiveExtraAI(reader);
-            if (Main.netMode == NetmodeID.MultiplayerClient)
-            {
-                ShootTimer = reader.ReadInt32();
-            }
+            ShootTimer = reader.ReadInt32();
         }
         public ref float Host => ref NPC.ai[3];
         public ref float FrameState => ref NPC.ai[0];
@@ -194,7 +175,7 @@ namespace Redemption.NPCs.Bosses.Gigapora
                 {
                     if (Main.rand.NextBool(2) && !Framing.GetTileSafely(ground.X, ground.Y).HasTile)
                     {
-                        NPC.Shoot(NPC.Center, ModContent.ProjectileType<Gigapora_Rubble>(), NPC.damage, RedeHelper.PolarVector(Main.rand.Next(7, 31), NPC.rotation + MathHelper.PiOver2 + Main.rand.NextFloat(-1, 1)), false, SoundID.Item1);
+                        NPC.Shoot(NPC.Center, ModContent.ProjectileType<Gigapora_Rubble>(), NPC.damage, RedeHelper.PolarVector(Main.rand.Next(7, 31), NPC.rotation + MathHelper.PiOver2 + Main.rand.NextFloat(-1, 1)));
                     }
                     Vector2 gunPos = NPC.Center + RedeHelper.PolarVector(-52 * NPC.spriteDirection, NPC.rotation) + RedeHelper.PolarVector(36, NPC.rotation + MathHelper.PiOver2);
                     for (int i = 0; i < 3; i++)
@@ -257,9 +238,9 @@ namespace Redemption.NPCs.Bosses.Gigapora
                                 Main.LocalPlayer.RedemptionScreen().ScreenShakeOrigin = NPC.Center;
                                 Main.LocalPlayer.RedemptionScreen().ScreenShakeIntensity += 2;
                                 if (Main.rand.NextBool(2))
-                                    NPC.Shoot(gunPos1, ModContent.ProjectileType<Gigapora_CrossBomb>(), NPC.damage, RedeHelper.PolarVector(Main.rand.Next(8, 29), NPC.rotation), true, SoundID.Item61);
+                                    NPC.Shoot(gunPos1, ModContent.ProjectileType<Gigapora_CrossBomb>(), NPC.damage, RedeHelper.PolarVector(Main.rand.Next(8, 29), NPC.rotation), SoundID.Item61);
                                 else
-                                    NPC.Shoot(gunPos2, ModContent.ProjectileType<Gigapora_CrossBomb>(), NPC.damage, RedeHelper.PolarVector(-Main.rand.Next(8, 29), NPC.rotation), true, SoundID.Item61);
+                                    NPC.Shoot(gunPos2, ModContent.ProjectileType<Gigapora_CrossBomb>(), NPC.damage, RedeHelper.PolarVector(-Main.rand.Next(8, 29), NPC.rotation), SoundID.Item61);
                                 for (int i = 0; i < 10; i++)
                                 {
                                     int d = Dust.NewDust(gunPos1, 8, 20, DustID.Smoke, 0, 0, Scale: 2);
@@ -291,16 +272,17 @@ namespace Redemption.NPCs.Bosses.Gigapora
                     {
                         if (ShootTimer++ == 1)
                         {
-                            NPC.Shoot(NPC.Center, ModContent.ProjectileType<Gigapora_FlameTele>(), 0, Vector2.Zero, true, CustomSounds.ShieldActivate with { Pitch = -0.2f }, NPC.whoAmI, 1);
-                            NPC.Shoot(NPC.Center, ModContent.ProjectileType<Gigapora_FlameTele>(), 0, Vector2.Zero, true, CustomSounds.ShieldActivate with { Pitch = -0.2f }, NPC.whoAmI, -1);
+                            NPC.Shoot(NPC.Center, ModContent.ProjectileType<Gigapora_FlameTele>(), 0, Vector2.Zero, CustomSounds.ShieldActivate with { Pitch = -0.2f }, NPC.whoAmI, 1);
+                            NPC.Shoot(NPC.Center, ModContent.ProjectileType<Gigapora_FlameTele>(), 0, Vector2.Zero, CustomSounds.ShieldActivate with { Pitch = -0.2f }, NPC.whoAmI, -1);
                         }
                         if (ShootTimer == 120)
                         {
-                            SoundEngine.PlaySound(CustomSounds.GigaFlame with { Volume = 1.5f }, host.position);
+                            if (!Main.dedServ)
+                                SoundEngine.PlaySound(CustomSounds.GigaFlame with { Volume = 1.5f }, host.position);
                             Main.LocalPlayer.RedemptionScreen().ScreenShakeOrigin = NPC.Center;
                             Main.LocalPlayer.RedemptionScreen().ScreenShakeIntensity += 4;
-                            NPC.Shoot(gunPos1, ModContent.ProjectileType<Gigapora_Flame>(), NPC.damage, Vector2.Zero, false, SoundID.Item1, NPC.whoAmI, 1);
-                            NPC.Shoot(gunPos2, ModContent.ProjectileType<Gigapora_Flame>(), NPC.damage, Vector2.Zero, false, SoundID.Item1, NPC.whoAmI, -1);
+                            NPC.Shoot(gunPos1, ModContent.ProjectileType<Gigapora_Flame>(), NPC.damage, Vector2.Zero, NPC.whoAmI, 1);
+                            NPC.Shoot(gunPos2, ModContent.ProjectileType<Gigapora_Flame>(), NPC.damage, Vector2.Zero, NPC.whoAmI, -1);
                             for (int i = 0; i < 10; i++)
                             {
                                 int d = Dust.NewDust(gunPos1, 8, 20, DustID.Smoke, 0, 0, Scale: 3);
@@ -330,7 +312,7 @@ namespace Redemption.NPCs.Bosses.Gigapora
                             Main.LocalPlayer.RedemptionScreen().ScreenShakeIntensity += 3;
                             if (Main.rand.NextBool(2))
                             {
-                                NPC.Shoot(gunPos1, ModContent.ProjectileType<Gigapora_Fireball>(), NPC.damage, RedeHelper.PolarVector(Main.rand.NextFloat(24, 30), NPC.rotation), true, SoundID.DD2_BetsyFireballShot, NPC.whoAmI);
+                                NPC.Shoot(gunPos1, ModContent.ProjectileType<Gigapora_Fireball>(), NPC.damage, RedeHelper.PolarVector(Main.rand.NextFloat(24, 30), NPC.rotation), SoundID.DD2_BetsyFireballShot, NPC.whoAmI);
                                 for (int i = 0; i < 10; i++)
                                 {
                                     int d = Dust.NewDust(gunPos1, 8, 20, DustID.Wraith, 0, 0, Scale: 3);
@@ -341,7 +323,7 @@ namespace Redemption.NPCs.Bosses.Gigapora
                             }
                             else
                             {
-                                NPC.Shoot(gunPos2, ModContent.ProjectileType<Gigapora_Fireball>(), NPC.damage, RedeHelper.PolarVector(Main.rand.NextFloat(24, 30), NPC.rotation + MathHelper.Pi), true, SoundID.DD2_BetsyFireballShot, NPC.whoAmI);
+                                NPC.Shoot(gunPos2, ModContent.ProjectileType<Gigapora_Fireball>(), NPC.damage, RedeHelper.PolarVector(Main.rand.NextFloat(24, 30), NPC.rotation + MathHelper.Pi), SoundID.DD2_BetsyFireballShot, NPC.whoAmI);
                                 for (int i = 0; i < 10; i++)
                                 {
                                     int d = Dust.NewDust(gunPos2, 8, 20, DustID.Wraith, 0, 0, Scale: 3);
@@ -368,15 +350,15 @@ namespace Redemption.NPCs.Bosses.Gigapora
                         }
                         if (ShootTimer++ == 1)
                         {
-                            NPC.Shoot(NPC.Center, ModContent.ProjectileType<Gigapora_BoltTele>(), 0, Vector2.Zero, true, CustomSounds.ShieldActivate, NPC.whoAmI, 1);
-                            NPC.Shoot(NPC.Center, ModContent.ProjectileType<Gigapora_BoltTele>(), 0, Vector2.Zero, true, CustomSounds.ShieldActivate, NPC.whoAmI, -1);
+                            NPC.Shoot(NPC.Center, ModContent.ProjectileType<Gigapora_BoltTele>(), 0, Vector2.Zero, CustomSounds.ShieldActivate, NPC.whoAmI, 1);
+                            NPC.Shoot(NPC.Center, ModContent.ProjectileType<Gigapora_BoltTele>(), 0, Vector2.Zero, CustomSounds.ShieldActivate, NPC.whoAmI, -1);
                         }
                         if (ShootTimer == 60)
                         {
                             Main.LocalPlayer.RedemptionScreen().ScreenShakeOrigin = NPC.Center;
                             Main.LocalPlayer.RedemptionScreen().ScreenShakeIntensity += 2;
-                            NPC.Shoot(gunPos1, ModContent.ProjectileType<ShieldCore_Bolt>(), NPC.damage, RedeHelper.PolarVector(20, NPC.rotation), true, SoundID.Item62);
-                            NPC.Shoot(gunPos2, ModContent.ProjectileType<ShieldCore_Bolt>(), NPC.damage, RedeHelper.PolarVector(-20, NPC.rotation), true, SoundID.Item62);
+                            NPC.Shoot(gunPos1, ModContent.ProjectileType<ShieldCore_Bolt>(), NPC.damage, RedeHelper.PolarVector(20, NPC.rotation), SoundID.Item62);
+                            NPC.Shoot(gunPos2, ModContent.ProjectileType<ShieldCore_Bolt>(), NPC.damage, RedeHelper.PolarVector(-20, NPC.rotation), SoundID.Item62);
                             for (int i = 0; i < 10; i++)
                             {
                                 int d = Dust.NewDust(gunPos1, 8, 20, DustID.Smoke, 0, 0, Scale: 3);
@@ -451,9 +433,7 @@ namespace Redemption.NPCs.Bosses.Gigapora
                 return;
             }
             if (SegmentType <= 0 && FrameState == 2)
-            {
                 NPC.frame.Y = 15 * frameHeight;
-            }
             else
             {
                 if (FrameState == 1)
@@ -542,7 +522,7 @@ namespace Redemption.NPCs.Bosses.Gigapora
                     ShieldEffect.Parameters["spriteRatio"].SetValue(new Vector2(texture.Width / 2f / (HexagonTexture.Width), texture.Height / 16 / (HexagonTexture.Height)));
                     ShieldEffect.Parameters["conversion"].SetValue(new Vector2(1f / (texture.Width / 2), 1f / (texture.Height / 2)));
                     ShieldEffect.Parameters["frameAmount"].SetValue(16f);
-                    spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+                    spriteBatch.BeginDefault(true);
                     ShieldEffect.CurrentTechnique.Passes[0].Apply();
                     spriteBatch.Draw(texture, pos - screenPos, NPC.frame, drawColor, NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
                     break;
@@ -552,7 +532,7 @@ namespace Redemption.NPCs.Bosses.Gigapora
                     Vector2 coreOrigin = new(core.Value.Width / 2f, height / 2f);
 
                     spriteBatch.End();
-                    spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+                    spriteBatch.BeginAdditive();
 
                     Vector2 thrusterOrigin = new(thrusterBlue.Value.Width / 2f, thrusterBlue.Value.Height / 2f - 20);
                     for (int i = 0; i < NPCID.Sets.TrailCacheLength[NPC.type]; i++)
@@ -569,12 +549,12 @@ namespace Redemption.NPCs.Bosses.Gigapora
                     ShieldEffect.Parameters["spriteRatio"].SetValue(new Vector2(core.Value.Width / 2f / (HexagonTexture.Width), height / 2f / HexagonTexture.Height));
                     ShieldEffect.Parameters["conversion"].SetValue(new Vector2(1f / (core.Value.Width / 2), 1f / (core.Value.Height / 2)));
                     ShieldEffect.Parameters["frameAmount"].SetValue(3f);
-                    spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+                    spriteBatch.BeginDefault(true);
                     ShieldEffect.CurrentTechnique.Passes[0].Apply();
                     spriteBatch.Draw(core.Value, pos - screenPos, new Rectangle?(new Rectangle(0, y, core.Value.Width, height)), drawColor, NPC.rotation, coreOrigin, NPC.scale, effects, 0);
 
                     spriteBatch.End();
-                    spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+                    spriteBatch.BeginDefault();
                     spriteBatch.Draw(coreGlow.Value, pos - screenPos, new Rectangle?(new Rectangle(0, y, core.Value.Width, height)), Color.White, NPC.rotation, coreOrigin, NPC.scale, effects, 0);
                     break;
                 case 7:
@@ -586,7 +566,7 @@ namespace Redemption.NPCs.Bosses.Gigapora
                     ShieldEffect.Parameters["spriteRatio"].SetValue(new Vector2(tail.Value.Width / 2f / (HexagonTexture.Width), height2 / HexagonTexture.Height));
                     ShieldEffect.Parameters["conversion"].SetValue(new Vector2(1f / (tail.Value.Width / 2), 1f / (tail.Value.Height / 2)));
                     ShieldEffect.Parameters["frameAmount"].SetValue(3f);
-                    spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+                    spriteBatch.BeginDefault(true);
                     ShieldEffect.CurrentTechnique.Passes[0].Apply();
                     spriteBatch.Draw(tail.Value, pos - screenPos, new Rectangle?(new Rectangle(0, y2, tail.Value.Width, height2)), drawColor, NPC.rotation, tailOrigin, NPC.scale, effects, 0);
                     break;

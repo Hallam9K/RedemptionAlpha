@@ -19,10 +19,10 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ModLoader.Utilities;
 using Terraria.Utilities;
-using Terraria.Localization;
 using Redemption.BaseExtension;
 using Redemption.Base;
 using Terraria.DataStructures;
+using Terraria.Localization;
 
 namespace Redemption.NPCs.PreHM
 {
@@ -48,7 +48,7 @@ namespace Redemption.NPCs.PreHM
             // DisplayName.SetDefault("Corpse-Walker Priest");
             Main.npcFrameCount[NPC.type] = 15;
 
-            NPCID.Sets.NPCBestiaryDrawModifiers value = new(0);
+            NPCID.Sets.NPCBestiaryDrawModifiers value = new();
             NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, value);
             ElementID.NPCHoly[Type] = true;
         }
@@ -220,8 +220,7 @@ namespace Redemption.NPCs.PreHM
                     {
                         Flare = true;
                         FlareTimer = 0;
-                        NPC.Shoot(new Vector2(NPC.Center.X + (22 * NPC.spriteDirection), NPC.Center.Y), ModContent.ProjectileType<CorpseWalkerBolt>(), NPC.damage,
-                            RedeHelper.PolarVector(8, (globalNPC.attacker.Center - NPC.Center).ToRotation() + Main.rand.NextFloat(-0.1f, 0.1f)), true, SoundID.Item125, NPC.whoAmI, globalNPC.attacker is NPC ? globalNPC.attacker.whoAmI : -1);
+                        NPC.Shoot(new Vector2(NPC.Center.X + (22 * NPC.spriteDirection), NPC.Center.Y), ModContent.ProjectileType<CorpseWalkerBolt>(), NPC.damage, RedeHelper.PolarVector(8, (globalNPC.attacker.Center - NPC.Center).ToRotation() + Main.rand.NextFloat(-0.1f, 0.1f)), SoundID.Item125, NPC.whoAmI, globalNPC.attacker is NPC ? globalNPC.attacker.whoAmI : -1);
                     }
                     if (AITimer >= 76)
                     {
@@ -229,12 +228,6 @@ namespace Redemption.NPCs.PreHM
                     }
                     break;
             }
-        }
-        public override bool? CanFallThroughPlatforms() => NPC.Redemption().fallDownPlatform;
-        private bool Flare;
-        private float FlareTimer;
-        public override void FindFrame(int frameHeight)
-        {
             if (Flare)
             {
                 FlareTimer += 2;
@@ -244,6 +237,12 @@ namespace Redemption.NPCs.PreHM
                     FlareTimer = 0;
                 }
             }
+        }
+        public override bool? CanFallThroughPlatforms() => NPC.Redemption().fallDownPlatform;
+        private bool Flare;
+        private float FlareTimer;
+        public override void FindFrame(int frameHeight)
+        {
             if (AIState is ActionState.Cast)
             {
                 NPC.frameCounter++;

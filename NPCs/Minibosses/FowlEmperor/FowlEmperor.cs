@@ -56,14 +56,9 @@ namespace Redemption.NPCs.Minibosses.FowlEmperor
             NPCID.Sets.MPAllowedEnemies[Type] = true;
             NPCID.Sets.BossBestiaryPriority.Add(Type);
 
-            NPCID.Sets.DebuffImmunitySets.Add(Type, new NPCDebuffImmunityData
-            {
-                SpecificallyImmuneTo = new int[] {
-                    BuffID.Confused
-                }
-            });
+            NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.Confused] = true;
 
-            NPCID.Sets.NPCBestiaryDrawModifiers value = new(0)
+            NPCID.Sets.NPCBestiaryDrawModifiers value = new()
             {
                 Velocity = 1,
             };
@@ -173,15 +168,17 @@ namespace Redemption.NPCs.Minibosses.FowlEmperor
         public int crownLife = 40;
         public Vector2 moveTo;
         private bool eggCracked;
+        private bool empowered;
         private Projectile crownProj;
         public override void AI()
         {
+            CustomFrames(76);
+
             Player player = Main.player[NPC.target];
             if (NPC.target < 0 || NPC.target == 255 || player.dead || !player.active)
                 NPC.TargetClosest();
 
-            DespawnHandler();
-            if (!player.active || player.dead)
+            if (DespawnHandler())
                 return;
 
             NPC.LookByVelocity();
@@ -233,7 +230,7 @@ namespace Redemption.NPCs.Minibosses.FowlEmperor
                             {
                                 NPC.LookAtEntity(player);
                                 EmoteBubble.NewBubble(15, new WorldUIAnchor(NPC), 90);
-                                NPC.Shoot(NPC.Center + new Vector2(10 * NPC.spriteDirection, -16), ModContent.ProjectileType<FowlEmperor_Crown_Proj>(), 0, NPC.velocity / 4, false, SoundID.Item1, NPC.whoAmI);
+                                NPC.Shoot(NPC.Center + new Vector2(10 * NPC.spriteDirection, -16), ModContent.ProjectileType<FowlEmperor_Crown_Proj>(), 0, NPC.velocity / 4, NPC.whoAmI);
                                 NPC.velocity.X = 0;
                                 hideCrown = true;
                                 TimerRand++;
@@ -294,10 +291,10 @@ namespace Redemption.NPCs.Minibosses.FowlEmperor
                     break;
                 case ActionState.Idle:
                     float moveSpeed = 1.4f;
-                    if (player.Center.DistanceSQ(NPC.Center) > 800 * 800)
+                    if (player.Center.DistanceSQ(NPC.Center) > 800 * 800 || empowered)
                         moveSpeed = 3f;
                     NPC.PlatformFallCheck(ref NPC.Redemption().fallDownPlatform, 20);
-                    NPCHelper.HorizontallyMove(NPC, player.Center, 0.08f, moveSpeed, 18, 18, NPC.Center.Y > player.Center.Y, player);
+                    NPCHelper.HorizontallyMove(NPC, player.Center, 0.08f, moveSpeed, 18, 24, NPC.Center.Y > player.Center.Y, player);
 
                     if (NPC.velocity.Y == 0 && AniType != (int)AnimType.Throw && NPC.Hitbox.Intersects(player.Hitbox) && Main.rand.NextBool(4))
                     {
@@ -348,16 +345,16 @@ namespace Redemption.NPCs.Minibosses.FowlEmperor
                         case 1:
                             if (AITimer++ == 12)
                             {
-                                int spread = Main.expertMode ? 8 : 16;
+                                int spread = Main.expertMode || empowered ? 8 : 16;
                                 float speed = MathHelper.Distance(player.Center.X, NPC.Center.X) / 50;
                                 speed = MathHelper.Clamp(speed, 4, 20);
-                                for (int i = 0; i < (Main.expertMode ? 5 : 3); i++)
+                                for (int i = 0; i < (Main.expertMode || empowered ? 5 : 3); i++)
                                 {
                                     int rot = spread * i;
-                                    NPC.Shoot(NPC.Center, ModContent.ProjectileType<FowlFeather_Proj>(), NPC.damage, new Vector2(speed * NPC.spriteDirection, -Main.rand.Next(9, 12)).RotatedBy(MathHelper.ToRadians(rot - (Main.expertMode ? 20 : 16))), true, SoundID.Item1);
+                                    NPC.Shoot(NPC.Center, ModContent.ProjectileType<FowlFeather_Proj>(), NPC.damage, new Vector2(speed * NPC.spriteDirection, -Main.rand.Next(9, 12)).RotatedBy(MathHelper.ToRadians(rot - (Main.expertMode || empowered ? 20 : 16))), SoundID.Item1);
                                 }
                             }
-                            if (AITimer == 24 && TimerRand <= (NPC.life <= NPC.lifeMax / 2 ? 1 : 0) && (player.velocity.X >= 2 || player.velocity.X <= -2))
+                            if (AITimer == 24 && TimerRand <= (NPC.life <= NPC.lifeMax / 2 || empowered ? (empowered ? 2 : 1) : 0) && (player.velocity.X >= 2 || player.velocity.X <= -2))
                             {
                                 NPC.LookAtEntity(player);
                                 NPC.frame.Y = 0;
@@ -403,10 +400,10 @@ namespace Redemption.NPCs.Minibosses.FowlEmperor
                             else
                             {
                                 NPC.Move(player.Center + new Vector2(400 * TimerRand, -Main.rand.Next(200, 251)), 10, 40);
-                                if (AITimer % (NPC.life <= NPC.lifeMax / 2 ? 4 : 6) == 0 && Main.rand.NextBool())
+                                if (AITimer % (NPC.life <= NPC.lifeMax / 2 || empowered ? 4 : 6) == 0 && Main.rand.NextBool())
                                 {
                                     SoundEngine.PlaySound(SoundID.Item16, NPC.position);
-                                    NPC.Shoot(NPC.Center, ModContent.ProjectileType<Rooster_EggBomb>(), NPC.damage * 2, new Vector2(0, -4) + RedeHelper.SpreadUp(4), false, SoundID.Item1);
+                                    NPC.Shoot(NPC.Center, ModContent.ProjectileType<Rooster_EggBomb>(), NPC.damage * 2, new Vector2(0, -4) + RedeHelper.SpreadUp(4));
 
                                 }
                             }
@@ -460,6 +457,15 @@ namespace Redemption.NPCs.Minibosses.FowlEmperor
                                 AniType = (int)AnimType.Recrown;
                             if (AITimer >= 240)
                             {
+                                for (int i = 0; i < 20; i++)
+                                {
+                                    int dust = Dust.NewDust(NPC.position + new Vector2(0, 40), NPC.width, NPC.height, ModContent.DustType<DustSpark2>(), newColor: Color.IndianRed, Scale: 2f);
+                                    Main.dust[dust].velocity.Y = -2;
+                                    Main.dust[dust].velocity.X = 0;
+                                    Main.dust[dust].noGravity = true;
+                                }
+                                SoundEngine.PlaySound(SoundID.DD2_DarkMageHealImpact, NPC.position);
+                                empowered = true;
                                 AttackType = 0;
                                 TimerRand = Main.rand.Next(140, 201);
                                 AniType = (int)AnimType.None;
@@ -473,9 +479,11 @@ namespace Redemption.NPCs.Minibosses.FowlEmperor
                             AniType = (int)AnimType.Stun;
                             if (AITimer++ >= 120)
                             {
+                                empowered = false;
                                 moveTo = NPC.FindGroundPlayer(30);
                                 AniType = (int)AnimType.Mad;
-                                SoundEngine.PlaySound(CustomSounds.RoosterRoar, NPC.position);
+                                if (!Main.dedServ)
+                                    SoundEngine.PlaySound(CustomSounds.RoosterRoar, NPC.position);
                                 AITimer = 0;
                                 TimerRand2++;
                                 NPC.netUpdate = true;
@@ -543,15 +551,16 @@ namespace Redemption.NPCs.Minibosses.FowlEmperor
                     }
                     break;
             }
+            if (empowered && Main.rand.NextBool(10))
+            {
+                int dust = Dust.NewDust(NPC.position + new Vector2(0, 40), NPC.width, NPC.height, ModContent.DustType<DustSpark2>(), newColor: Color.IndianRed, Scale: 2f);
+                Main.dust[dust].velocity.Y = -2;
+                Main.dust[dust].velocity.X = 0;
+                Main.dust[dust].noGravity = true;
+            }
         }
-        public override bool? CanFallThroughPlatforms() => NPC.Redemption().fallDownPlatform;
-        private int StunFrame;
-        public override void FindFrame(int frameHeight)
+        private void CustomFrames(int frameHeight)
         {
-            if (Main.netMode == NetmodeID.Server)
-                return;
-
-            NPC.frame.Width = TextureAssets.Npc[NPC.type].Width() / 2;
             switch ((AnimType)AniType)
             {
                 case AnimType.None:
@@ -700,8 +709,39 @@ namespace Redemption.NPCs.Minibosses.FowlEmperor
                     break;
             }
         }
+        public override bool? CanFallThroughPlatforms() => NPC.Redemption().fallDownPlatform;
+        private int StunFrame;
+        public override void FindFrame(int frameHeight)
+        {
+            if (Main.netMode != NetmodeID.Server)
+                NPC.frame.Width = TextureAssets.Npc[NPC.type].Width() / 2;
+
+            if (NPC.IsABestiaryIconDummy)
+            {
+                NPC.frame.X = 0;
+                NPC.rotation = 0;
+                if (NPC.velocity.X == 0)
+                    NPC.frame.Y = 0;
+                else
+                {
+                    if (NPC.frame.Y < frameHeight)
+                        NPC.frame.Y = frameHeight;
+
+                    NPC.frameCounter += NPC.velocity.X * 0.5f;
+                    if (NPC.frameCounter is >= 3 or <= -3)
+                    {
+                        NPC.frameCounter = 0;
+                        NPC.frame.Y += frameHeight;
+                        if (NPC.frame.Y > 8 * frameHeight)
+                            NPC.frame.Y = frameHeight;
+                    }
+                }
+            }
+        }
         public override void ModifyIncomingHit(ref NPC.HitModifiers modifiers)
         {
+            if (empowered)
+                modifiers.Defense.Base += 10;
             if (eggCracked && AniType is (int)AnimType.Stun)
                 modifiers.FinalDamage *= 2;
             if (AniType is (int)AnimType.Mad)
@@ -714,6 +754,10 @@ namespace Redemption.NPCs.Minibosses.FowlEmperor
                 eggCracked = true;
                 modifiers.FinalDamage *= 10;
             }
+        }
+        public override void ModifyHitPlayer(Player target, ref Player.HurtModifiers modifiers)
+        {
+            modifiers.FinalDamage *= 1.5f;
         }
         private bool hideCrown;
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
@@ -748,7 +792,7 @@ namespace Redemption.NPCs.Minibosses.FowlEmperor
             return false;
         }
 
-        private void DespawnHandler()
+        private bool DespawnHandler()
         {
             Player player = Main.player[NPC.target];
             if (!player.active || player.dead)
@@ -763,9 +807,10 @@ namespace Redemption.NPCs.Minibosses.FowlEmperor
                         NPC.active = false;
                     if (NPC.timeLeft > 10)
                         NPC.timeLeft = 10;
-                    return;
+                    return true;
                 }
             }
+            return false;
         }
         public override void HitEffect(NPC.HitInfo hit)
         {
@@ -798,11 +843,8 @@ namespace Redemption.NPCs.Minibosses.FowlEmperor
         {
             // DisplayName.SetDefault("Very Hittable Looking Crown");
             NPCID.Sets.CantTakeLunchMoney[Type] = true;
-            NPCID.Sets.DebuffImmunitySets.Add(Type, new NPCDebuffImmunityData
-            {
-                ImmuneToAllBuffsThatAreNotWhips = true
-            });
-            NPCID.Sets.NPCBestiaryDrawModifiers value = new(0) { Hide = true };
+            NPCID.Sets.ImmuneToRegularBuffs[Type] = true;
+            NPCID.Sets.NPCBestiaryDrawModifiers value = new() { Hide = true };
             NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, value);
         }
         public override void SetDefaults()

@@ -52,7 +52,7 @@ namespace Redemption.NPCs.Bosses.KSIII
             if (!player.active || player.dead)
                 Projectile.Kill();
 
-            Projectile.Center = player.Center;
+            Projectile.Center = player.MountedCenter;
 
             switch (Projectile.ai[1])
             {

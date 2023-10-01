@@ -56,16 +56,16 @@ namespace Redemption.NPCs.Friendly
             switch (Projectile.ai[0])
             {
                 case 1:
-                    texture = ModContent.Request<Texture2D>(Projectile.ModProjectile.Texture + "_Lab").Value;
+                    texture = ModContent.Request<Texture2D>(Texture + "_Lab").Value;
                     break;
                 case 2:
-                    texture = ModContent.Request<Texture2D>(Projectile.ModProjectile.Texture + "_Planet").Value;
+                    texture = ModContent.Request<Texture2D>(Texture + "_Planet").Value;
                     break;
                 case 3:
                     if (RedeWorld.slayerRep >= 3)
-                        texture = ModContent.Request<Texture2D>(Projectile.ModProjectile.Texture + "_Ship2").Value;
+                        texture = ModContent.Request<Texture2D>(Texture + "_Ship2").Value;
                     else
-                        texture = ModContent.Request<Texture2D>(Projectile.ModProjectile.Texture + "_Ship").Value;
+                        texture = ModContent.Request<Texture2D>(Texture + "_Ship").Value;
                     break;
             }
             int height = texture.Height / 7;

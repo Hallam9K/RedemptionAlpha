@@ -14,7 +14,7 @@ namespace Redemption.NPCs.Bosses.Erhan
         public override void SetStaticDefaults()
         {
             // DisplayName.SetDefault("Platform");
-            NPCID.Sets.NPCBestiaryDrawModifiers value = new(0) { Hide = true };
+            NPCID.Sets.NPCBestiaryDrawModifiers value = new() { Hide = true };
             NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, value);
         }
         public CollisionSurface[] colliders = null;
@@ -55,6 +55,7 @@ namespace Redemption.NPCs.Bosses.Erhan
         }
         public override void AI()
         {
+
             if (colliders != null && colliders.Length == 1 && NPC.alpha < 100)
             {
                 colliders[0].Update();
@@ -96,13 +97,13 @@ namespace Redemption.NPCs.Bosses.Erhan
             float scale = BaseUtility.MultiLerp(Main.LocalPlayer.miscCounter % 100 / 100f, 0f, 0.15f, 0f);
 
             Main.spriteBatch.End();
-            Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+            Main.spriteBatch.BeginAdditive();
 
             Main.EntitySpriteDraw(texture, NPC.Center - new Vector2(0, -2 + (NPC.velocity.Y * 2)) - screenPos, null, NPC.GetAlpha(Color.White), NPC.rotation, drawOrigin, NPC.scale, SpriteEffects.None, 0);
             Main.EntitySpriteDraw(texture, NPC.Center - new Vector2(0, -2 + (NPC.velocity.Y * 2)) - screenPos, null, NPC.GetAlpha(Color.White) * 0.5f, NPC.rotation, drawOrigin, NPC.scale + scale, SpriteEffects.None, 0);
 
             Main.spriteBatch.End();
-            Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+            Main.spriteBatch.BeginDefault();
             return false;
         }
     }
@@ -111,7 +112,7 @@ namespace Redemption.NPCs.Bosses.Erhan
         public override void SetStaticDefaults()
         {
             // DisplayName.SetDefault("Platform");
-            NPCID.Sets.NPCBestiaryDrawModifiers value = new(0) { Hide = true };
+            NPCID.Sets.NPCBestiaryDrawModifiers value = new() { Hide = true };
             NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, value);
         }
         public CollisionSurface[] colliders = null;
@@ -178,13 +179,13 @@ namespace Redemption.NPCs.Bosses.Erhan
             float scale = BaseUtility.MultiLerp(Main.LocalPlayer.miscCounter % 100 / 100f, 0f, 0.15f, 0f);
 
             Main.spriteBatch.End();
-            Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+            Main.spriteBatch.BeginAdditive();
 
             Main.EntitySpriteDraw(texture, NPC.Center - new Vector2(0, -2 + (NPC.velocity.Y * 2)) - screenPos, null, NPC.GetAlpha(Color.White), NPC.rotation, drawOrigin, NPC.scale, SpriteEffects.None, 0);
             Main.EntitySpriteDraw(texture, NPC.Center - new Vector2(0, -2 + (NPC.velocity.Y * 2)) - screenPos, null, NPC.GetAlpha(Color.White) * 0.5f, NPC.rotation, drawOrigin, NPC.scale + scale, SpriteEffects.None, 0);
 
             Main.spriteBatch.End();
-            Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+            Main.spriteBatch.BeginDefault();
             return false;
         }
     }

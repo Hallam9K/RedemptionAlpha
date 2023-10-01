@@ -68,7 +68,7 @@ namespace Redemption.NPCs.Bosses.ADD
         public override bool PreDraw(ref Color lightColor)
         {
             Texture2D texture = TextureAssets.Projectile[Projectile.type].Value;
-            Texture2D fog = ModContent.Request<Texture2D>(Projectile.ModProjectile.Texture + "_Fog").Value;
+            Texture2D fog = ModContent.Request<Texture2D>(Texture + "_Fog").Value;
             int projHeight = texture.Height;
             var effects = Projectile.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
 
@@ -144,7 +144,7 @@ namespace Redemption.NPCs.Bosses.ADD
         public override bool PreDraw(ref Color lightColor)
         {
             Texture2D texture = TextureAssets.Projectile[Projectile.type].Value;
-            Texture2D fog = ModContent.Request<Texture2D>(Projectile.ModProjectile.Texture + "_Fog").Value;
+            Texture2D fog = ModContent.Request<Texture2D>(Texture + "_Fog").Value;
             int projHeight = texture.Height;
             var effects = Projectile.ai[1] >= 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
 

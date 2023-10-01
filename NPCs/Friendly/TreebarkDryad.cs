@@ -53,13 +53,10 @@ namespace Redemption.NPCs.Friendly
             Main.npcFrameCount[NPC.type] = 9;
             NPCID.Sets.ActsLikeTownNPC[Type] = true;
             NPCID.Sets.NoTownNPCHappiness[Type] = true;
+            NPCID.Sets.CantTakeLunchMoney[Type] = true;
             NPCID.Sets.TownNPCBestiaryPriority.Add(Type);
-
-            NPCID.Sets.DebuffImmunitySets.Add(Type, new NPCDebuffImmunityData
-            {
-                ImmuneToAllBuffsThatAreNotWhips = true
-            });
-            NPCID.Sets.NPCBestiaryDrawModifiers value = new(0)
+            NPCID.Sets.ImmuneToRegularBuffs[Type] = true;
+            NPCID.Sets.NPCBestiaryDrawModifiers value = new()
             {
                 Position = new Vector2(0, 20),
                 PortraitPositionYOverride = 0
@@ -73,6 +70,7 @@ namespace Redemption.NPCs.Friendly
             NPC.height = 92;
             NPC.lifeMax = Main.hardMode ? 2000 : 500;
             NPC.defense = 6;
+            NPC.lifeRegen = 10;
             NPC.knockBackResist = 0f;
             NPC.aiStyle = -1;
             NPC.rarity = 1;
@@ -85,7 +83,6 @@ namespace Redemption.NPCs.Friendly
         {
             if (!RedeBossDowned.downedTreebark)
             {
-                RedeWorld.alignment--;
                 for (int p = 0; p < Main.maxPlayers; p++)
                 {
                     Player player = Main.player[p];
@@ -100,17 +97,21 @@ namespace Redemption.NPCs.Friendly
                     if (!Main.dedServ)
                         RedeSystem.Instance.ChaliceUIElement.DisplayDialogue(Language.GetTextValue("Mods.Redemption.UI.Chalice.TreebarkFelled"), 300, 30, 0, Color.DarkGoldenrod);
                 }
+                if (Main.netMode != NetmodeID.MultiplayerClient)
+                {
+                    RedeWorld.alignment--;
+                    RedeBossDowned.downedTreebark = true;
+                    if (Main.netMode != NetmodeID.SinglePlayer)
+                        NetMessage.SendData(MessageID.WorldData);
+                }
             }
-            RedeBossDowned.downedTreebark = true;
-            if (Main.netMode != NetmodeID.SinglePlayer)
-                NetMessage.SendData(MessageID.WorldData);
         }
         public override bool CanHitPlayer(Player target, ref int cooldownSlot) => false;
         public override bool CanHitNPC(NPC target) => false;
         public override bool? CanBeHitByItem(Player player, Item item) => item.axe > 0 ? null : false;
         public override bool? CanBeHitByProjectile(Projectile projectile) => projectile.Redemption().IsAxe ? null : false;
         public override bool CanBeHitByNPC(NPC attacker) => false;
-        private string setName;
+        public string setName;
         public override void ModifyTypeName(ref string typeName)
         {
             if (setName == null)
@@ -130,10 +131,10 @@ namespace Redemption.NPCs.Friendly
                     name.Add("Cherrysplinter", 3);
                     name.Add("Blossomwood", 3);
                 }
-                setName = name + " the Treebark Dryad";
+                setName = name;
             }
             else
-                typeName = setName;
+                typeName = setName + Language.GetTextValue("Mods.Redemption.NPCs.TreebarkDryad.Title");
         }
         public override void AI()
         {
@@ -202,6 +203,20 @@ namespace Redemption.NPCs.Friendly
                     }
                 }
             }
+            if (Main.LocalPlayer.talkNPC <= -1 || Main.npc[Main.LocalPlayer.talkNPC].whoAmI != NPC.whoAmI)
+                return;
+            int goreType = GoreID.TreeLeaf_Normal;
+            switch (WoodType)
+            {
+                case 1:
+                    goreType = GoreID.TreeLeaf_VanityTreeYellowWillow;
+                    break;
+                case 2:
+                    goreType = GoreID.TreeLeaf_VanityTreeSakura;
+                    break;
+            }
+            if (Main.rand.NextBool(60) && Main.netMode != NetmodeID.Server)
+                Gore.NewGore(NPC.GetSource_FromThis(), new Vector2(NPC.Center.X + Main.rand.Next(-12, 4), NPC.Center.Y + Main.rand.Next(6)), NPC.velocity, goreType);
         }
         private void Chain_OnEndTrigger(Dialogue dialogue, int ID)
         {
@@ -333,52 +348,37 @@ namespace Redemption.NPCs.Friendly
         public override void FindFrame(int frameHeight)
         {
             if (Main.netMode != NetmodeID.Server)
-            {
                 NPC.frame.Width = TextureAssets.Npc[NPC.type].Width() / 3;
-                NPC.frame.X = NPC.frame.Width * (int)WoodType;
-                EyeFrameX = (int)WoodType;
+            NPC.frame.X = NPC.frame.Width * (int)WoodType;
+            EyeFrameX = (int)WoodType;
 
-                if (Main.LocalPlayer.talkNPC > -1 && Main.npc[Main.LocalPlayer.talkNPC].whoAmI == NPC.whoAmI)
+            if (Main.LocalPlayer.talkNPC > -1 && Main.npc[Main.LocalPlayer.talkNPC].whoAmI == NPC.whoAmI)
+            {
+                if (NPC.frame.Y < 4 * frameHeight)
+                    NPC.frame.Y = 4 * frameHeight;
+
+                if (++NPC.frameCounter >= 15)
                 {
-                    int goreType = GoreID.TreeLeaf_Normal;
-                    switch (WoodType)
-                    {
-                        case 1:
-                            goreType = GoreID.TreeLeaf_VanityTreeYellowWillow;
-                            break;
-                        case 2:
-                            goreType = GoreID.TreeLeaf_VanityTreeSakura;
-                            break;
-                    }
-                    if (Main.rand.NextBool(60))
-                        Gore.NewGore(NPC.GetSource_FromThis(), new Vector2(NPC.Center.X + Main.rand.Next(-12, 4), NPC.Center.Y + Main.rand.Next(6)), NPC.velocity, goreType);
+                    EyeFrameY = 1;
 
-                    if (NPC.frame.Y < 4 * frameHeight)
+                    NPC.frameCounter = 0;
+                    NPC.frame.Y += frameHeight;
+                    if (NPC.frame.Y > 8 * frameHeight)
                         NPC.frame.Y = 4 * frameHeight;
-
-                    if (++NPC.frameCounter >= 15)
-                    {
+                }
+            }
+            else
+            {
+                if (++NPC.frameCounter >= 15)
+                {
+                    EyeFrameY = 0;
+                    if (Main.rand.NextBool(8))
                         EyeFrameY = 1;
 
-                        NPC.frameCounter = 0;
-                        NPC.frame.Y += frameHeight;
-                        if (NPC.frame.Y > 8 * frameHeight)
-                            NPC.frame.Y = 4 * frameHeight;
-                    }
-                }
-                else
-                {
-                    if (++NPC.frameCounter >= 15)
-                    {
-                        EyeFrameY = 0;
-                        if (Main.rand.NextBool(8))
-                            EyeFrameY = 1;
-
-                        NPC.frameCounter = 0;
-                        NPC.frame.Y += frameHeight;
-                        if (NPC.frame.Y > 3 * frameHeight)
-                            NPC.frame.Y = 0 * frameHeight;
-                    }
+                    NPC.frameCounter = 0;
+                    NPC.frame.Y += frameHeight;
+                    if (NPC.frame.Y > 3 * frameHeight)
+                        NPC.frame.Y = 0 * frameHeight;
                 }
             }
         }

@@ -155,7 +155,7 @@ namespace Redemption.NPCs.Bosses.ADD
             return false;
         }
 
-        public override void Kill(int timeLeft)
+        public override void OnKill(int timeLeft)
         {
             float num2 = (float)(Projectile.rotation + MathHelper.PiOver2 + (Main.rand.NextBool(2) ? -1.0 : 1.0) * MathHelper.PiOver2);
             float num3 = (float)(Main.rand.NextDouble() * 2.0 + 2.0);

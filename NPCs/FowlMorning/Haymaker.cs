@@ -28,7 +28,7 @@ namespace Redemption.NPCs.FowlMorning
         public override void SetStaticDefaults()
         {
             Main.npcFrameCount[NPC.type] = 15;
-            NPCID.Sets.NPCBestiaryDrawModifiers value = new(0) { Velocity = 1f };
+            NPCID.Sets.NPCBestiaryDrawModifiers value = new() { Velocity = 1f };
             NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, value);
         }
         public override void SetDefaults()
@@ -60,9 +60,10 @@ namespace Redemption.NPCs.FowlMorning
             Player player = Main.player[NPC.target];
             NPC.TargetClosest();
             NPC.LookByVelocity();
-            DespawnHandler();
+            if (NPC.DespawnHandler(3))
+                return;
 
-            if (Main.rand.NextBool(3000))
+            if (Main.rand.NextBool(3000) && !Main.dedServ)
                 SoundEngine.PlaySound(CustomSounds.ChickenCluck with { Pitch = -.1f }, NPC.position);
 
             if (!laid && NPC.ai[1]++ >= NPC.localAI[0] && BaseAI.HitTileOnSide(NPC, 3))
@@ -100,7 +101,7 @@ namespace Redemption.NPCs.FowlMorning
             {
                 float speed = MathHelper.Distance(player.Center.X, nestPos.X) / 100;
                 speed = MathHelper.Clamp(speed, 1, 7);
-                NPC.Shoot(nestPos, ModContent.ProjectileType<Rooster_EggBomb>(), (int)(NPC.damage * 1.1f), new Vector2(speed * player.Center.RightOfDir(nestPos), -Main.rand.Next(9, 10)).RotatedBy(Main.rand.NextFloat(-.2f, .2f)), true, SoundID.Item1);
+                NPC.Shoot(nestPos, ModContent.ProjectileType<Rooster_EggBomb>(), (int)(NPC.damage * 1.1f), new Vector2(speed * player.Center.RightOfDir(nestPos), -Main.rand.Next(9, 10)).RotatedBy(Main.rand.NextFloat(-.2f, .2f)), SoundID.Item1);
                 NPC.localAI[0] = Main.rand.Next(60, 301);
                 NPC.ai[3] = 0;
             }
@@ -189,7 +190,7 @@ namespace Redemption.NPCs.FowlMorning
         }
         public override bool PreKill()
         {
-            if (FowlMorningWorld.FowlMorningActive)
+            if (FowlMorningWorld.FowlMorningActive && Main.netMode != NetmodeID.MultiplayerClient)
             {
                 FowlMorningWorld.ChickPoints += Main.expertMode ? 8 : 4;
                 if (Main.netMode == NetmodeID.Server)

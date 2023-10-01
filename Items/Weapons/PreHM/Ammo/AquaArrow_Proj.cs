@@ -49,7 +49,7 @@ namespace Redemption.Items.Weapons.PreHM.Ammo
             SoundEngine.PlaySound(SoundID.Dig, Projectile.position);
             return true;
         }
-        public override void Kill(int timeLeft)
+        public override void OnKill(int timeLeft)
         {
             for (int i = 0; i < 18; i++)
                 Dust.NewDust(Projectile.position + Projectile.velocity, Projectile.width, Projectile.height, DustID.Water, Projectile.velocity.X * 0.5f, Projectile.velocity.Y * 0.5f);

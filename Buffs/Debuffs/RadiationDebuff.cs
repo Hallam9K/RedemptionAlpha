@@ -17,8 +17,9 @@ namespace Redemption.Buffs.Debuffs
         {
             if (player.lifeRegen > 0)
                 player.lifeRegen = 0;
-
-            player.lifeRegen = -50;
+            if (player.lifeRegenCount > 0)
+                player.lifeRegenCount = 0;
+            player.lifeRegen = -200;
             player.bleed = true;
             player.blackout = true;
             player.blind = true;

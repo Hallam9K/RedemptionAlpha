@@ -29,7 +29,6 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
             Projectile.DamageType = DamageClass.Summon;
         }
         public override bool? CanHitNPC(NPC target) => Projectile.frame is 5 ? null : false;
-        private bool parried;
         public override bool PreAI()
         {
             NPC npc = Main.npc[(int)Projectile.ai[0]];
@@ -80,14 +79,13 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
                                 if (target.ai[0] is 0 && (target.type == ModContent.ProjectileType<Icefall_Proj>() || target.type == ModContent.ProjectileType<Calavia_Icefall>()) && Projectile.Redemption().swordHitbox.Intersects(target.Hitbox))
                                 {
                                     DustHelper.DrawCircle(target.Center, DustID.IceTorch, 1, 2, 2, dustSize: 2, nogravity: true);
-                                    SoundEngine.PlaySound(CustomSounds.CrystalHit, Projectile.position);
+                                    if (!Main.dedServ)
+                                        SoundEngine.PlaySound(CustomSounds.CrystalHit, Projectile.position);
                                     target.velocity.Y = Main.rand.NextFloat(-2, 0);
                                     target.velocity.X = npc.spriteDirection * 18f;
                                     target.ai[0] = 1;
                                     continue;
                                 }
-                                if (RedeProjectile.SwordClashFriendly(Projectile, target, npc, ref parried))
-                                    continue;
 
                                 if (target.whoAmI == Projectile.whoAmI || !target.hostile || target.damage > 100)
                                     continue;
@@ -111,6 +109,7 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
                     }
                 }
             }
+
             Projectile.spriteDirection = npc.spriteDirection;
             Projectile.Center = npc.Center;
             return false;
@@ -141,8 +140,8 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
         {
             int shader = GameShaders.Armor.GetShaderIdFromItemId(ItemID.WispDye);
             Main.spriteBatch.End();
-            Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
-            GameShaders.Armor.ApplySecondary(shader, Main.player[Main.myPlayer], null);
+            Main.spriteBatch.BeginAdditive(true);
+            GameShaders.Armor.ApplySecondary(shader, Main.LocalPlayer, null);
 
             NPC npc = Main.npc[(int)Projectile.ai[0]];
 
@@ -165,7 +164,7 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
             if (Projectile.frame >= 5 && Projectile.frame <= 9)
                 Main.EntitySpriteDraw(slash, Projectile.Center - Main.screenPosition - new Vector2(0 * npc.spriteDirection, -331 - offset) + Vector2.UnitY * Projectile.gfxOffY, new Rectangle?(rect2), Projectile.GetAlpha(Color.White), Projectile.rotation, drawOrigin2, Projectile.scale, effects, 0);
             Main.spriteBatch.End();
-            Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+            Main.spriteBatch.BeginDefault();
             return false;
         }
     }
@@ -250,7 +249,8 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
                                 Main.LocalPlayer.RedemptionScreen().ScreenShakeIntensity += 5;
 
                                 SoundEngine.PlaySound(SoundID.DD2_MonkStaffGroundImpact, Projectile.position);
-                                SoundEngine.PlaySound(CustomSounds.EarthBoom with { Pitch = .1f, Volume = .5f }, Projectile.position);
+                                if (!Main.dedServ)
+                                    SoundEngine.PlaySound(CustomSounds.EarthBoom with { Pitch = .1f, Volume = .5f }, Projectile.position);
                                 Collision.HitTiles(Projectile.Center - new Vector2(6, 6), vector / 3, 12, 12);
                                 Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, vector / 2, ModContent.ProjectileType<Calavia_SS_BladeStab>(), Projectile.damage, Projectile.knockBack, Main.myPlayer);
                             }
@@ -359,8 +359,8 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
         {
             int shader = GameShaders.Armor.GetShaderIdFromItemId(ItemID.WispDye);
             Main.spriteBatch.End();
-            Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
-            GameShaders.Armor.ApplySecondary(shader, Main.player[Main.myPlayer], null);
+            Main.spriteBatch.BeginAdditive(true);
+            GameShaders.Armor.ApplySecondary(shader, Main.LocalPlayer, null);
 
             NPC npc = Main.npc[(int)Projectile.ai[0]];
             SpriteEffects spriteEffects = Projectile.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
@@ -389,7 +389,7 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
             }
             Main.EntitySpriteDraw(texture, Projectile.Center - v - Main.screenPosition + Vector2.UnitY * Projectile.gfxOffY, null, Projectile.GetAlpha(Color.White), Projectile.rotation, origin, Projectile.scale, spriteEffects, 0);
             Main.spriteBatch.End();
-            Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+            Main.spriteBatch.BeginDefault();
             return false;
         }
     }

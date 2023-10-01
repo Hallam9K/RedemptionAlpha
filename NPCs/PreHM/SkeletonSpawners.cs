@@ -17,7 +17,7 @@ namespace Redemption.NPCs.PreHM
         public override string Texture => Redemption.EMPTY_TEXTURE;
         public override void SetStaticDefaults()
         {
-            NPCID.Sets.NPCBestiaryDrawModifiers value = new(0)
+            NPCID.Sets.NPCBestiaryDrawModifiers value = new()
             {
                 Hide = true
             };
@@ -41,15 +41,11 @@ namespace Redemption.NPCs.PreHM
         private Vector2 Pos;
         public override void SendExtraAI(BinaryWriter writer)
         {
-            base.SendExtraAI(writer);
-            if (Main.netMode == NetmodeID.Server || Main.dedServ)
-                writer.WriteVector2(Pos);
+            writer.WriteVector2(Pos);
         }
         public override void ReceiveExtraAI(BinaryReader reader)
         {
-            base.ReceiveExtraAI(reader);
-            if (Main.netMode == NetmodeID.MultiplayerClient)
-                Pos = reader.ReadVector2();
+            Pos = reader.ReadVector2();
         }
         public override bool PreAI()
         {
@@ -140,7 +136,7 @@ namespace Redemption.NPCs.PreHM
         }
         public override float SpawnChance(NPCSpawnInfo spawnInfo)
         {
-            float baseChance = SpawnCondition.OverworldNightMonster.Chance * 0.07f;
+            float baseChance = SpawnCondition.OverworldNightMonster.Chance * (!Main.hardMode ? 0.07f : 0.05f);
 
             return baseChance;
         }
@@ -150,7 +146,7 @@ namespace Redemption.NPCs.PreHM
         public override string Texture => Redemption.EMPTY_TEXTURE;
         public override void SetStaticDefaults()
         {
-            NPCID.Sets.NPCBestiaryDrawModifiers value = new(0)
+            NPCID.Sets.NPCBestiaryDrawModifiers value = new()
             {
                 Hide = true
             };
@@ -174,15 +170,11 @@ namespace Redemption.NPCs.PreHM
         private Vector2 Pos;
         public override void SendExtraAI(BinaryWriter writer)
         {
-            base.SendExtraAI(writer);
-            if (Main.netMode == NetmodeID.Server || Main.dedServ)
-                writer.WriteVector2(Pos);
+            writer.WriteVector2(Pos);
         }
         public override void ReceiveExtraAI(BinaryReader reader)
         {
-            base.ReceiveExtraAI(reader);
-            if (Main.netMode == NetmodeID.MultiplayerClient)
-                Pos = reader.ReadVector2();
+            Pos = reader.ReadVector2();
         }
         public override bool PreAI()
         {
@@ -278,7 +270,7 @@ namespace Redemption.NPCs.PreHM
         public override float SpawnChance(NPCSpawnInfo spawnInfo)
         {
             float baseChance = SpawnCondition.Cavern.Chance;
-            float multiplier = TileLists.AncientTileArray.Contains(Main.tile[spawnInfo.SpawnTileX, spawnInfo.SpawnTileY].TileType) ? 0.3f : 0.1f;
+            float multiplier = TileLists.AncientTileArray.Contains(Main.tile[spawnInfo.SpawnTileX, spawnInfo.SpawnTileY].TileType) ? 0.3f : (!Main.hardMode ? 0.1f : 0.07f);
 
             return baseChance * multiplier;
         }
@@ -288,7 +280,7 @@ namespace Redemption.NPCs.PreHM
         public override string Texture => Redemption.EMPTY_TEXTURE;
         public override void SetStaticDefaults()
         {
-            NPCID.Sets.NPCBestiaryDrawModifiers value = new(0)
+            NPCID.Sets.NPCBestiaryDrawModifiers value = new()
             {
                 Hide = true
             };
@@ -312,15 +304,11 @@ namespace Redemption.NPCs.PreHM
         private Vector2 Pos;
         public override void SendExtraAI(BinaryWriter writer)
         {
-            base.SendExtraAI(writer);
-            if (Main.netMode == NetmodeID.Server || Main.dedServ)
-                writer.WriteVector2(Pos);
+            writer.WriteVector2(Pos);
         }
         public override void ReceiveExtraAI(BinaryReader reader)
         {
-            base.ReceiveExtraAI(reader);
-            if (Main.netMode == NetmodeID.MultiplayerClient)
-                Pos = reader.ReadVector2();
+            Pos = reader.ReadVector2();
         }
         public override bool PreAI()
         {
@@ -380,7 +368,7 @@ namespace Redemption.NPCs.PreHM
         public override string Texture => Redemption.EMPTY_TEXTURE;
         public override void SetStaticDefaults()
         {
-            NPCID.Sets.NPCBestiaryDrawModifiers value = new(0) { Hide = true };
+            NPCID.Sets.NPCBestiaryDrawModifiers value = new() { Hide = true };
             NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, value);
         }
         public override void SetDefaults()
@@ -398,15 +386,11 @@ namespace Redemption.NPCs.PreHM
         private Vector2 Pos;
         public override void SendExtraAI(BinaryWriter writer)
         {
-            base.SendExtraAI(writer);
-            if (Main.netMode == NetmodeID.Server || Main.dedServ)
-                writer.WriteVector2(Pos);
+            writer.WriteVector2(Pos);
         }
         public override void ReceiveExtraAI(BinaryReader reader)
         {
-            base.ReceiveExtraAI(reader);
-            if (Main.netMode == NetmodeID.MultiplayerClient)
-                Pos = reader.ReadVector2();
+            Pos = reader.ReadVector2();
         }
         private bool spawned;
         public override bool PreAI()

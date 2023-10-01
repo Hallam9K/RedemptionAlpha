@@ -1,9 +1,8 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.BaseExtension;
-using Redemption.Buffs.Debuffs;
-using Redemption.Buffs.NPCBuffs;
 using Redemption.Globals;
+using Redemption.Globals.NPC;
 using Redemption.Items.Accessories.PreHM;
 using Redemption.Items.Materials.PreHM;
 using Redemption.Items.Placeable.Tiles;
@@ -15,7 +14,6 @@ using ReLogic.Content;
 using System;
 using Terraria;
 using Terraria.Audio;
-using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.Graphics.Shaders;
@@ -63,18 +61,11 @@ namespace Redemption.NPCs.Bosses.ADD
             NPCID.Sets.MPAllowedEnemies[Type] = true;
             NPCID.Sets.BossBestiaryPriority.Add(Type);
 
-            NPCID.Sets.DebuffImmunitySets.Add(Type, new NPCDebuffImmunityData
-            {
-                SpecificallyImmuneTo = new int[] {
-                    BuffID.Poisoned,
-                    ModContent.BuffType<InfestedDebuff>(),
-                    ModContent.BuffType<NecroticGougeDebuff>(),
-                    ModContent.BuffType<ViralityDebuff>(),
-                    ModContent.BuffType<DirtyWoundDebuff>()
-                }
-            });
+            BuffNPC.NPCTypeImmunity(Type, BuffNPC.NPCDebuffImmuneType.Inorganic);
+            NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.Confused] = true;
+            NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.Electrified] = true;
 
-            NPCID.Sets.NPCBestiaryDrawModifiers value = new(0) { Hide = true };
+            NPCID.Sets.NPCBestiaryDrawModifiers value = new() { Hide = true };
             NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, value);
         }
 
@@ -143,8 +134,8 @@ namespace Redemption.NPCs.Bosses.ADD
             if (NPC.target < 0 || NPC.target == 255 || player.dead || !player.active)
                 NPC.TargetClosest();
 
-            DespawnHandler();
-
+            if (NPC.DespawnHandler(1))
+                return;
             if (AIState != ActionState.Slash && AIState != ActionState.Laser)
                 NPC.LookAtEntity(player);
 
@@ -207,7 +198,7 @@ namespace Redemption.NPCs.Bosses.ADD
                     {
                         for (int i = 0; i < 4; i++)
                         {
-                            NPC.Shoot(NPC.Center, ModContent.ProjectileType<RockPileSummon>(), 0, RedeHelper.SpreadUp(20), false, SoundID.Item1, NPC.whoAmI);
+                            NPC.Shoot(NPC.Center, ModContent.ProjectileType<RockPileSummon>(), 0, RedeHelper.SpreadUp(20), NPC.whoAmI);
                         }
                         summonTimer = 600;
                         NPC.netUpdate = true;
@@ -245,7 +236,7 @@ namespace Redemption.NPCs.Bosses.ADD
                             playerOrg = player.Center;
                         if (TimerRand2 == 30)
                         {
-                            NPC.Shoot(origin2, ModContent.ProjectileType<GolemEyeRay>(), NPC.damage, RedeHelper.PolarVector(10, (playerOrg - NPC.Center).ToRotation()), true, SoundID.Item109, NPC.whoAmI);
+                            NPC.Shoot(origin2, ModContent.ProjectileType<GolemEyeRay>(), NPC.damage, RedeHelper.PolarVector(10, (playerOrg - NPC.Center).ToRotation()), SoundID.Item109, NPC.whoAmI);
                         }
                         FlareTimer += 2;
                         if (TimerRand2 >= 30)
@@ -294,8 +285,7 @@ namespace Redemption.NPCs.Bosses.ADD
                     }
                     if (TimerRand2 == 30)
                     {
-                        NPC.Shoot(origin, ModContent.ProjectileType<GolemEyeRay>(), NPC.damage, RedeHelper.PolarVector(10, (player.Center - NPC.Center).ToRotation()
-                            + MathHelper.ToRadians(90 * NPC.spriteDirection)), true, SoundID.Item109, NPC.whoAmI);
+                        NPC.Shoot(origin, ModContent.ProjectileType<GolemEyeRay>(), NPC.damage, RedeHelper.PolarVector(10, (player.Center - NPC.Center).ToRotation() + MathHelper.ToRadians(90 * NPC.spriteDirection)), SoundID.Item109, NPC.whoAmI);
                     }
                     if (TimerRand2 >= 30)
                     {
@@ -327,10 +317,7 @@ namespace Redemption.NPCs.Bosses.ADD
                         Main.dust[dustIndex2].velocity *= 0f;
                         Main.dust[dustIndex2].noGravity = true;
                     }
-                    player.RedemptionScreen().ScreenFocusPosition = NPC.Center;
-                    player.RedemptionScreen().lockScreen = true;
-                    player.RedemptionScreen().cutscene = true;
-                    NPC.LockMoveRadius(player);
+                    ScreenPlayer.CutsceneLock(player, NPC, ScreenPlayer.CutscenePriority.Max, 0, 0, 0);
                     switch (TimerRand)
                     {
                         case 0:
@@ -353,12 +340,15 @@ namespace Redemption.NPCs.Bosses.ADD
                                     Main.dust[dustIndex2].velocity *= 3f;
                                 }
                                 Main.LocalPlayer.RedemptionScreen().ScreenShakeIntensity += 14;
-                                SoundEngine.PlaySound(CustomSounds.Quake, NPC.position);
-                                SoundEngine.PlaySound(CustomSounds.EarthBoom, NPC.position);
+                                if (!Main.dedServ)
+                                {
+                                    SoundEngine.PlaySound(CustomSounds.Quake, NPC.position);
+                                    SoundEngine.PlaySound(CustomSounds.EarthBoom, NPC.position);
+                                }
                                 SoundEngine.PlaySound(SoundID.NPCDeath43, NPC.position);
                                 flashOpacity = 1;
                             }
-                            if (AITimer == 90)
+                            if (AITimer == 90 && !Main.dedServ)
                                 SoundEngine.PlaySound(CustomSounds.Spark1, NPC.position);
                             if (AITimer >= 90 && AITimer < 130 && !Main.rand.NextBool(3))
                             {
@@ -373,12 +363,15 @@ namespace Redemption.NPCs.Bosses.ADD
                                     Main.dust[dustIndex2].velocity *= 3f;
                                 }
                                 Main.LocalPlayer.RedemptionScreen().ScreenShakeIntensity += 24;
-                                SoundEngine.PlaySound(CustomSounds.Quake with { Pitch = 0.1f }, NPC.position);
-                                SoundEngine.PlaySound(CustomSounds.EarthBoom with { Pitch = 0.1f }, NPC.position);
+                                if (!Main.dedServ)
+                                {
+                                    SoundEngine.PlaySound(CustomSounds.Quake with { Pitch = 0.1f }, NPC.position);
+                                    SoundEngine.PlaySound(CustomSounds.EarthBoom with { Pitch = 0.1f }, NPC.position);
+                                }
                                 SoundEngine.PlaySound(SoundID.NPCDeath43 with { Pitch = 0.1f }, NPC.position);
                                 flashOpacity = 1.5f;
                             }
-                            if (AITimer == 210)
+                            if (AITimer == 210 && !Main.dedServ)
                                 SoundEngine.PlaySound(CustomSounds.Spark1 with { Pitch = 0.1f }, NPC.position);
                             if (AITimer >= 210 && AITimer < 250 && Main.rand.NextBool(2))
                             {
@@ -396,8 +389,11 @@ namespace Redemption.NPCs.Bosses.ADD
                                     int dustIndex2 = Dust.NewDust(NPC.position + NPC.velocity, NPC.width, NPC.height, DustID.Stone, Scale: 2);
                                     Main.dust[dustIndex2].velocity *= 3f;
                                 }
-                                SoundEngine.PlaySound(CustomSounds.Spark1 with { Pitch = 0.2f }, NPC.position);
-                                SoundEngine.PlaySound(CustomSounds.EnergyCharge with { Pitch = 0.1f }, NPC.position);
+                                if (!Main.dedServ)
+                                {
+                                    SoundEngine.PlaySound(CustomSounds.Spark1 with { Pitch = 0.2f }, NPC.position);
+                                    SoundEngine.PlaySound(CustomSounds.EnergyCharge with { Pitch = 0.1f }, NPC.position);
+                                }
                                 SoundEngine.PlaySound(SoundID.Thunder with { Pitch = -.2f }, NPC.position);
                             }
                             if (AITimer >= 290)
@@ -430,13 +426,16 @@ namespace Redemption.NPCs.Bosses.ADD
                             Main.windSpeedTarget = 1;
                             if (AITimer++ == 10)
                             {
-                                Main.StopRain();
-                                Main.SyncRain();
-                                if (Main.netMode != NetmodeID.SinglePlayer)
-                                    NetMessage.SendData(MessageID.WorldData);
+                                if (Main.netMode != NetmodeID.MultiplayerClient)
+                                {
+                                    Main.StopRain();
+                                    Main.SyncRain();
+                                    if (Main.netMode != NetmodeID.SinglePlayer)
+                                        NetMessage.SendData(MessageID.WorldData);
+                                }
 
                                 if (!Main.dedServ)
-                                    Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/BossForest2");
+                                    Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/BossUkko");
                             }
                             if (AITimer == 50)
                                 Main.BlackFadeIn = 255;
@@ -470,11 +469,13 @@ namespace Redemption.NPCs.Bosses.ADD
                                 }
                                 if (AITimer == 520)
                                 {
-                                    if (RedeBossDowned.ADDDeath < 1)
-                                        RedeBossDowned.ADDDeath = 1;
-                                    if (Main.netMode != NetmodeID.SinglePlayer)
-                                        NetMessage.SendData(MessageID.WorldData);
-
+                                    if (Main.netMode != NetmodeID.MultiplayerClient)
+                                    {
+                                        if (RedeBossDowned.ADDDeath < 1)
+                                            RedeBossDowned.ADDDeath = 1;
+                                        if (Main.netMode != NetmodeID.SinglePlayer)
+                                            NetMessage.SendData(MessageID.WorldData);
+                                    }
                                     RedeDraw.SpawnExplosion(NPC.Center, Color.White * 0.6f, shakeAmount: 30, scale: 10, noDust: true);
                                     Main.NewLightning();
                                     SoundEngine.PlaySound(SoundID.Thunder, NPC.position);
@@ -493,13 +494,12 @@ namespace Redemption.NPCs.Bosses.ADD
                     break;
             }
         }
-        public override bool? CanFallThroughPlatforms() => NPC.Redemption().fallDownPlatform;
-        public override void FindFrame(int frameHeight)
+        public override void PostAI()
         {
-            for (int k = NPC.oldPos.Length - 1; k > 0; k--)
-                oldrot[k] = oldrot[k - 1];
-            oldrot[0] = NPC.rotation;
-
+            CustomFrames();
+        }
+        private void CustomFrames()
+        {
             if (Flare)
             {
                 FlareTimer++;
@@ -509,7 +509,6 @@ namespace Redemption.NPCs.Bosses.ADD
                     FlareTimer = 0;
                 }
             }
-
             if (AIState is ActionState.Slash)
             {
                 NPC.velocity.X = 0;
@@ -520,8 +519,7 @@ namespace Redemption.NPCs.Bosses.ADD
                     if (AniFrameY is 6)
                     {
                         Player player = Main.player[NPC.target];
-                        NPC.Shoot(NPC.Center, ModContent.ProjectileType<RockSlash_Proj>(), NPC.damage, RedeHelper.PolarVector(11,
-                            (player.Center - NPC.Center).ToRotation()), true, SoundID.Item71);
+                        NPC.Shoot(NPC.Center, ModContent.ProjectileType<RockSlash_Proj>(), NPC.damage, RedeHelper.PolarVector(20, (player.Center - NPC.Center).ToRotation()), SoundID.Item71, NPC.whoAmI);
                     }
                     if (AniFrameY > 8)
                     {
@@ -540,7 +538,7 @@ namespace Redemption.NPCs.Bosses.ADD
                 NPC.width = 54;
                 NPC.height = 54;
                 NPC.rotation += NPC.velocity.X * 0.05f;
-                NPC.frame.Y = 12 * frameHeight;
+                NPC.frame.Y = 12 * 84;
                 return;
             }
             else
@@ -548,6 +546,20 @@ namespace Redemption.NPCs.Bosses.ADD
                 NPC.width = 80;
                 NPC.height = 80;
             }
+        }
+        public override bool? CanFallThroughPlatforms() => NPC.Redemption().fallDownPlatform;
+        public override void FindFrame(int frameHeight)
+        {
+            for (int k = NPC.oldPos.Length - 1; k > 0; k--)
+                oldrot[k] = oldrot[k - 1];
+            oldrot[0] = NPC.rotation;
+
+            if (AIState is ActionState.Slash)
+                return;
+            AniFrameY = 0;
+
+            if (AIState is ActionState.Roll)
+                return;
             if (NPC.collideY || NPC.velocity.Y == 0)
             {
                 NPC.rotation = 0;
@@ -613,13 +625,13 @@ namespace Redemption.NPCs.Bosses.ADD
 
             int shader = ContentSamples.CommonlyUsedContentSamples.ColorOnlyShaderIndex;
             spriteBatch.End();
-            spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
-            GameShaders.Armor.ApplySecondary(shader, Main.player[Main.myPlayer], null);
+            spriteBatch.BeginAdditive(true);
+            GameShaders.Armor.ApplySecondary(shader, Main.LocalPlayer, null);
 
             spriteBatch.Draw(texture, NPC.Center - screenPos, NPC.frame, Color.LightGoldenrodYellow * flashOpacity, NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0f);
 
             spriteBatch.End();
-            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+            spriteBatch.BeginDefault();
             return false;
         }
         public override void PostDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
@@ -632,26 +644,6 @@ namespace Redemption.NPCs.Bosses.ADD
                 RedeDraw.DrawEyeFlare(spriteBatch, ref FlareTimer, position, Color.Orange, NPC.rotation);
             }
         }
-
-        private void DespawnHandler()
-        {
-            Player player = Main.player[NPC.target];
-            if (!player.active || player.dead)
-            {
-                NPC.TargetClosest(false);
-                player = Main.player[NPC.target];
-                if (!player.active || player.dead)
-                {
-                    NPC.alpha += 2;
-                    if (NPC.alpha >= 255)
-                        NPC.active = false;
-                    if (NPC.timeLeft > 10)
-                        NPC.timeLeft = 10;
-                    return;
-                }
-            }
-        }
-
         public override void HitEffect(NPC.HitInfo hit)
         {
             if (NPC.life <= 0)

@@ -33,7 +33,7 @@ namespace Redemption.Items.Weapons.HM.Melee
         }
 
         public override bool? CanHitNPC(NPC target) => !target.friendly && Projectile.ai[0] == 1 ? null : false;
-        public override void Kill(int timeLeft)
+        public override void OnKill(int timeLeft)
         {
             Player player = Main.player[Projectile.owner];
             player.fullRotation = 0f;

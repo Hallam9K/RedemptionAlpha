@@ -1,6 +1,7 @@
 using Terraria;
 using Terraria.ModLoader;
 using Redemption.BaseExtension;
+using Terraria.ID;
 
 namespace Redemption.Buffs.NPCBuffs
 {
@@ -11,6 +12,7 @@ namespace Redemption.Buffs.NPCBuffs
         {
             Main.debuff[Type] = true;
             Main.buffNoSave[Type] = true;
+            BuffID.Sets.GrantImmunityWith[Type].Add(BuffID.BrokenArmor);
         }
         public override void Update(NPC npc, ref int buffIndex)
         {

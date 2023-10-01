@@ -51,10 +51,7 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
 
             NPCID.Sets.MPAllowedEnemies[Type] = true;
 
-            NPCID.Sets.DebuffImmunitySets.Add(Type, new NPCDebuffImmunityData
-            {
-                ImmuneToAllBuffsThatAreNotWhips = true
-            });
+            NPCID.Sets.ImmuneToRegularBuffs[Type] = true;
         }
         public override void SetSafeDefaults()
         {
@@ -98,20 +95,12 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
         }
         public override void SendExtraAI(BinaryWriter writer)
         {
-            base.SendExtraAI(writer);
-            if (Main.netMode == NetmodeID.Server || Main.dedServ)
-            {
-                writer.Write(ID);
-            }
+            writer.Write(ID);
         }
 
         public override void ReceiveExtraAI(BinaryReader reader)
         {
-            base.ReceiveExtraAI(reader);
-            if (Main.netMode == NetmodeID.MultiplayerClient)
-            {
-                ID = reader.ReadInt32();
-            }
+            ID = reader.ReadInt32();
         }
 
         void AttackChoice()
@@ -129,7 +118,6 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
             }
         }
 
-        private bool floatTimer;
         private Vector2 origin;
         private int runCooldown;
 
@@ -152,27 +140,17 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
             NPC.LookByVelocity();
 
             if (!RedeHelper.AnyProjectiles(ModContent.ProjectileType<SkullDigger_SS_FlailBlade>()))
-                NPC.Shoot(NPC.Center, ModContent.ProjectileType<SkullDigger_SS_FlailBlade>(), NPC.damage, Vector2.Zero, false, SoundID.Item1, NPC.whoAmI);
+                NPC.Shoot(NPC.Center, ModContent.ProjectileType<SkullDigger_SS_FlailBlade>(), NPC.damage, Vector2.Zero, NPC.whoAmI);
 
-            if (!floatTimer)
-            {
-                NPC.velocity.Y += 0.03f;
-                if (NPC.velocity.Y > .5f)
-                    floatTimer = true;
-            }
-            else if (floatTimer)
-            {
-                NPC.velocity.Y -= 0.03f;
-                if (NPC.velocity.Y < -.5f)
-                    floatTimer = false;
-            }
+            NPC.position.Y += (float)Math.Sin(NPC.localAI[0]++ / 15) / 3;
             bool fading = false;
             switch (AIState)
             {
                 case ActionState.Begin:
                     if (AITimer++ == 0)
                     {
-                        SoundEngine.PlaySound(CustomSounds.SpookyNoise, NPC.position);
+                        if (!Main.dedServ)
+                            SoundEngine.PlaySound(CustomSounds.SpookyNoise, NPC.position);
                         NPC.velocity.Y = -6;
                     }
                     if (AITimer > 2)
@@ -397,13 +375,12 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
                     NPC.alpha = (int)MathHelper.Clamp(NPC.alpha, 0, 30);
                 }
             }
-        }
-        public override void FindFrame(int frameHeight)
-        {
             for (int k = NPC.oldPos.Length - 1; k > 0; k--)
                 oldrot[k] = oldrot[k - 1];
             oldrot[0] = NPC.rotation;
-
+        }
+        public override void FindFrame(int frameHeight)
+        {
             NPC.rotation = NPC.velocity.X * 0.05f;
             if (++NPC.frameCounter >= 10)
             {
@@ -421,7 +398,7 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
             for (int i = 0; i < Main.maxNPCs; i++)
             {
                 NPC target = Main.npc[i];
-                if (!target.active || target.whoAmI == NPC.whoAmI || target.dontTakeDamage || target.type == NPCID.OldMan || target.type == NPCID.TargetDummy)
+                if (!target.active || target.whoAmI == NPC.whoAmI || target.dontTakeDamage || target.type == NPCID.OldMan || target.type == ModContent.NPCType<KeeperSpirit>() || target.type == ModContent.NPCType<Keeper>() || target.type == NPCID.TargetDummy)
                     continue;
 
                 if (target.friendly || target.lifeMax <= 5 || NPCID.Sets.TakesDamageFromHostilesWithoutBeingFriendly[target.type])
@@ -459,8 +436,8 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
             var effects = NPC.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
             int shader = GameShaders.Armor.GetShaderIdFromItemId(ItemID.WispDye);
             spriteBatch.End();
-            spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
-            GameShaders.Armor.ApplySecondary(shader, Main.player[Main.myPlayer], null);
+            spriteBatch.BeginAdditive(true);
+            GameShaders.Armor.ApplySecondary(shader, Main.LocalPlayer, null);
 
             for (int i = 0; i < NPCID.Sets.TrailCacheLength[NPC.type]; i++)
             {
@@ -473,7 +450,7 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
             Rectangle rect = new(0, 0, HandsTex.Width, HandsTex.Height);
             spriteBatch.Draw(HandsTex, NPC.Center - screenPos - new Vector2(14, -32), new Rectangle?(rect), NPC.GetAlpha(Color.White), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
             spriteBatch.End();
-            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+            spriteBatch.BeginDefault();
             return false;
         }
     }
@@ -528,7 +505,7 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
                                 break;
                             case 1:
                                 Projectile.localAI[0]++;
-                                if (Projectile.localAI[0] >= 40 && Projectile.localAI[0] % 20 == 0)
+                                if (Projectile.localAI[0] >= 40 && Projectile.localAI[0] % 20 == 0 && !Main.dedServ)
                                     SoundEngine.PlaySound(CustomSounds.ChainSwing with { PitchVariance = .1f }, Projectile.position);
 
                                 rot += speed * host.spriteDirection;
@@ -537,7 +514,8 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
                                 Projectile.Center = originPos + new Vector2(0, 1).RotatedBy(rot) * length;
                                 if (Projectile.localAI[0] >= 120)
                                 {
-                                    SoundEngine.PlaySound(CustomSounds.ChainSwing with { PitchVariance = .1f }, Projectile.position);
+                                    if (!Main.dedServ)
+                                        SoundEngine.PlaySound(CustomSounds.ChainSwing with { PitchVariance = .1f }, Projectile.position);
 
                                     Projectile.velocity = RedeHelper.PolarVector(14 + (Projectile.Distance(globalNPC.attacker.Center) / 30), (globalNPC.attacker.Center - Projectile.Center).ToRotation());
                                     host.velocity = RedeHelper.PolarVector(14, (globalNPC.attacker.Center - host.Center).ToRotation());
@@ -582,7 +560,7 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
                                 break;
                             case 1:
                                 Projectile.localAI[0]++;
-                                if (Projectile.localAI[0] % 50 == 0)
+                                if (Projectile.localAI[0] % 50 == 0 && !Main.dedServ)
                                     SoundEngine.PlaySound(CustomSounds.ChainSwing with { PitchVariance = .1f }, Projectile.position);
 
                                 length++;
@@ -636,8 +614,8 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
         {
             int shader = GameShaders.Armor.GetShaderIdFromItemId(ItemID.WispDye);
             Main.spriteBatch.End();
-            Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
-            GameShaders.Armor.ApplySecondary(shader, Main.player[Main.myPlayer], null);
+            Main.spriteBatch.BeginAdditive(true);
+            GameShaders.Armor.ApplySecondary(shader, Main.LocalPlayer, null);
 
             NPC host = Main.npc[(int)Projectile.ai[0]];
             Texture2D ballTexture = TextureAssets.Projectile[Projectile.type].Value;
@@ -681,7 +659,7 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
 
             Main.EntitySpriteDraw(ballTexture, position, new Rectangle?(rect), Projectile.GetAlpha(lightColor), Projectile.rotation, origin2, Projectile.scale, effects, 0);
             Main.spriteBatch.End();
-            Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+            Main.spriteBatch.BeginDefault();
             return false;
         }
     }

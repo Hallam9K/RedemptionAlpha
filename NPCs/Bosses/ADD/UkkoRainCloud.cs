@@ -65,7 +65,8 @@ namespace Redemption.NPCs.Bosses.ADD
                         }
                         else if (proj.type == ModContent.ProjectileType<DualcastBall>() || proj.type == ModContent.ProjectileType<UkkoLightning>() || proj.type == ModContent.ProjectileType<UkkoThunderwave>() || proj.type == ModContent.ProjectileType<UkkoStrike>())
                         {
-                            SoundEngine.PlaySound(CustomSounds.Zap1 with { Volume = .3f }, Projectile.position);
+                            if (!Main.dedServ)
+                                SoundEngine.PlaySound(CustomSounds.Zap1 with { Volume = .3f }, Projectile.position);
                             for (int i = 0; i < 20; i++)
                             {
                                 Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.Electric, Scale: 1.5f);
@@ -115,7 +116,8 @@ namespace Redemption.NPCs.Bosses.ADD
                     case 2:
                         if (Main.rand.NextBool(3))
                         {
-                            SoundEngine.PlaySound(CustomSounds.Zap2 with { Volume = .2f, PitchVariance = .1f }, Projectile.position);
+                            if (!Main.dedServ)
+                                SoundEngine.PlaySound(CustomSounds.Zap2 with { Volume = .2f, PitchVariance = .1f }, Projectile.position);
                             Projectile.NewProjectile(Projectile.GetSource_FromAI(), new Vector2(Projectile.Center.X + Main.rand.Next(-150, 151), Projectile.Center.Y + Main.rand.Next(50, 55)), new Vector2(0f, 2f), ModContent.ProjectileType<UkkoCloud_Thunder>(), NPCHelper.HostileProjDamage(85), 0, Projectile.owner, 0, 0);
                         }
                         if (++Projectile.localAI[1] >= 50)
@@ -159,12 +161,12 @@ namespace Redemption.NPCs.Bosses.ADD
             Vector2 origin = new(texture.Width / 2f, height / 2f);
 
             Main.spriteBatch.End();
-            Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+            Main.spriteBatch.BeginAdditive();
 
             RedeDraw.DrawTreasureBagEffect(Main.spriteBatch, texture, ref drawTimer, Projectile.Center - Main.screenPosition, new Rectangle?(rect), lightColor * Projectile.Opacity, Projectile.rotation, origin, Projectile.scale, 0);
 
             Main.spriteBatch.End();
-            Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+            Main.spriteBatch.BeginDefault();
 
             Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition, new Rectangle?(rect), Projectile.GetAlpha(lightColor), Projectile.rotation, origin, Projectile.scale, 0, 0);
             return false;

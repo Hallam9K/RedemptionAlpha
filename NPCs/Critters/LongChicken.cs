@@ -44,7 +44,7 @@ namespace Redemption.NPCs.Critters
             NPCID.Sets.DontDoHardmodeScaling[Type] = true;
             NPCID.Sets.TakesDamageFromHostilesWithoutBeingFriendly[Type] = true;
 
-            NPCID.Sets.NPCBestiaryDrawModifiers value = new(0)
+            NPCID.Sets.NPCBestiaryDrawModifiers value = new()
             {
                 Hide = true
             };
@@ -152,6 +152,13 @@ namespace Redemption.NPCs.Critters
                     if (NPC.velocity.Y == 0)
                         NPC.velocity.X = 0;
 
+                    if (NPC.frame.Y > 20 * 28)
+                    {
+                        NPC.frame.Y = 0;
+                        AIState = ActionState.Idle;
+                        NPC.netUpdate = true;
+                    }
+
                     SightCheck();
                     break;
 
@@ -240,10 +247,7 @@ namespace Redemption.NPCs.Critters
                     NPC.frameCounter = 0;
                     NPC.frame.Y += frameHeight;
                     if (NPC.frame.Y > 20 * frameHeight)
-                    {
-                        NPC.frame.Y = 0;
-                        AIState = ActionState.Idle;
-                    }
+                        NPC.frame.Y = 20 * frameHeight;
                 }
                 return;
             }
@@ -260,9 +264,7 @@ namespace Redemption.NPCs.Critters
                     NPC.frameCounter = 0;
                     NPC.frame.Y += frameHeight;
                     if (NPC.frame.Y > 13 * frameHeight)
-                    {
                         NPC.frame.Y = 13 * frameHeight;
-                    }
                 }
                 return;
             }

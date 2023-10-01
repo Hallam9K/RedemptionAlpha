@@ -78,7 +78,7 @@ namespace Redemption.Projectiles.Ranged
             }
             target.immune[Projectile.owner] = 5;
         }
-        public override void Kill(int timeLeft)
+        public override void OnKill(int timeLeft)
         {
         }
     }

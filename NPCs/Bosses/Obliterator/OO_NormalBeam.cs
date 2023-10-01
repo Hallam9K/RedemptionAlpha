@@ -86,7 +86,8 @@ namespace Redemption.NPCs.Bosses.Obliterator
             int start = Projectile.ai[1] > 2 || Projectile.ai[1] == -1 ? 50 : 30;
             if (AITimer == start)
             {
-                SoundEngine.PlaySound(CustomSounds.BallFire, Projectile.position);
+                if (!Main.dedServ)
+                    SoundEngine.PlaySound(CustomSounds.BallFire, Projectile.position);
                 if (Projectile.ai[1] == 1)
                     Projectile.velocity = new Vector2(1 * npc.spriteDirection, 0.01f);
                 else if (Projectile.ai[1] == 2)
@@ -147,12 +148,12 @@ namespace Redemption.NPCs.Bosses.Obliterator
         public override bool PreDraw(ref Color lightColor)
         {
             Main.spriteBatch.End();
-            Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+            Main.spriteBatch.BeginAdditive();
 
             DrawLaser(TextureAssets.Projectile[Projectile.type].Value, Projectile.Center + (new Vector2(Projectile.width, 0).RotatedBy(Projectile.rotation) * LaserScale), new Vector2(1f, 0).RotatedBy(Projectile.rotation) * LaserScale, -1.57f, LaserScale, LaserLength, Projectile.GetAlpha(RedeColor.RedPulse), (int)FirstSegmentDrawDist);
 
             Main.spriteBatch.End();
-            Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+            Main.spriteBatch.BeginDefault();
             return false;
         }
         #endregion

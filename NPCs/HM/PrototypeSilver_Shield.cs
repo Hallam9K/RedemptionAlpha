@@ -78,7 +78,7 @@ namespace Redemption.NPCs.HM
                 Projectile.Kill();
             }
         }
-        public override void Kill(int timeLeft)
+        public override void OnKill(int timeLeft)
         {
             NPC npc = Main.npc[(int)Projectile.ai[0]];
             npc.ai[3] = 0;
@@ -86,9 +86,11 @@ namespace Redemption.NPCs.HM
         public override bool PreDraw(ref Color lightColor)
         {
             Texture2D texture = TextureAssets.Projectile[Projectile.type].Value;
+            Texture2D overlay = ModContent.Request<Texture2D>("Redemption/Textures/BubbleShield_Overlay").Value;
             Vector2 drawOrigin = new(texture.Width / 2, Projectile.height / 2);
             var effects = Projectile.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
 
+            Main.EntitySpriteDraw(overlay, Projectile.Center - Main.screenPosition, null, Projectile.GetAlpha(RedeColor.FadeColour1 with { A = 0 }), Projectile.rotation, drawOrigin, Projectile.scale * 0.75f, effects, 0);
             Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition, null, Projectile.GetAlpha(Color.White), Projectile.rotation, drawOrigin, Projectile.scale * 0.75f, effects, 0);
             return false;
         }

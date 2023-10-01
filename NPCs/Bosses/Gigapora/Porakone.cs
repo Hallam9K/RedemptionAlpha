@@ -5,12 +5,10 @@ using Terraria.ModLoader;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Globals;
 using Terraria.GameContent;
-using Terraria.DataStructures;
-using Redemption.Buffs.Debuffs;
-using Redemption.Buffs.NPCBuffs;
 using Redemption.BaseExtension;
 using Terraria.Audio;
 using ReLogic.Content;
+using Redemption.Globals.NPC;
 
 namespace Redemption.NPCs.Bosses.Gigapora
 {
@@ -23,6 +21,8 @@ namespace Redemption.NPCs.Bosses.Gigapora
         private static Asset<Texture2D> poraGlow;
         public override void Load()
         {
+            if (Main.dedServ)
+                return;
             glowMask = ModContent.Request<Texture2D>(Texture + "_Glow");
             boosterAni = ModContent.Request<Texture2D>(Texture + "_Booster");
             boosterGlow = ModContent.Request<Texture2D>(Texture + "_Booster_Glow");
@@ -59,21 +59,10 @@ namespace Redemption.NPCs.Bosses.Gigapora
             NPCID.Sets.MPAllowedEnemies[Type] = true;
             NPCID.Sets.BossBestiaryPriority.Add(Type);
 
-            NPCDebuffImmunityData debuffData = new()
-            {
-                SpecificallyImmuneTo = new int[] {
-                    BuffID.Confused,
-                    BuffID.Poisoned,
-                    BuffID.Venom,
-                    ModContent.BuffType<InfestedDebuff>(),
-                    ModContent.BuffType<NecroticGougeDebuff>(),
-                    ModContent.BuffType<ViralityDebuff>(),
-                    ModContent.BuffType<DirtyWoundDebuff>()
-                }
-            };
-            NPCID.Sets.DebuffImmunitySets.Add(Type, debuffData);
+            BuffNPC.NPCTypeImmunity(Type, BuffNPC.NPCDebuffImmuneType.Inorganic);
+            NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.Confused] = true;
 
-            NPCID.Sets.NPCBestiaryDrawModifiers value = new(0)
+            NPCID.Sets.NPCBestiaryDrawModifiers value = new()
             {
                 Hide = true
             };
@@ -109,7 +98,8 @@ namespace Redemption.NPCs.Bosses.Gigapora
         public int boosterFrame;
         public override void AI()
         {
-            DespawnHandler();
+            if (NPC.DespawnHandler())
+                return;
             Player player = Main.player[NPC.target];
 
             if (NPC.target < 0 || NPC.target == 255 || player.dead || !player.active)
@@ -118,12 +108,11 @@ namespace Redemption.NPCs.Bosses.Gigapora
             if (!player.active || player.dead)
                 return;
 
-            player.RedemptionScreen().ScreenFocusPosition = NPC.Center;
             switch (AIState)
             {
                 case ActionState.Begin:
                     {
-                        player.RedemptionScreen().lockScreen = true;
+                        ScreenPlayer.CutsceneLock(player, NPC, ScreenPlayer.CutscenePriority.Medium, 1200, 2400, 0);
                         if (AITimer++ == 0)
                         {
                             aniType = 1;
@@ -151,7 +140,7 @@ namespace Redemption.NPCs.Bosses.Gigapora
                     }
                     break;
                 case ActionState.Intro:
-                    player.RedemptionScreen().lockScreen = true;
+                    ScreenPlayer.CutsceneLock(player, NPC, ScreenPlayer.CutscenePriority.Medium, 1200, 2400, 0);
                     if (AITimer++ == 60)
                     {
                         if (!Main.dedServ)
@@ -198,6 +187,14 @@ namespace Redemption.NPCs.Bosses.Gigapora
                     }
                     break;
             }
+            if (NPC.ai[1] != 2)
+            {
+                int dustIndex = Dust.NewDust(new Vector2(NPC.position.X + 3, NPC.position.Y + 16), 10, 2, DustID.LifeDrain, 0, 0, 0, default, 1f);
+                Main.dust[dustIndex].noGravity = true;
+                Dust dust = Main.dust[dustIndex];
+                dust.velocity.Y = 3;
+                dust.velocity.X = 0;
+            }
         }
 
         public override void FindFrame(int frameHeight)
@@ -231,28 +228,6 @@ namespace Redemption.NPCs.Bosses.Gigapora
             }
             if (boosterFrame >= 4)
                 boosterFrame = 0;
-
-            if (NPC.ai[1] != 2)
-            {
-                int dustIndex = Dust.NewDust(new Vector2(NPC.position.X + 3, NPC.position.Y + 16), 10, 2, DustID.LifeDrain, 0, 0, 0, default, 1f);
-                Main.dust[dustIndex].noGravity = true;
-                Dust dust = Main.dust[dustIndex];
-                dust.velocity.Y = 3;
-                dust.velocity.X = 0;
-            }
-        }
-
-        private void DespawnHandler()
-        {
-            Player player = Main.player[NPC.target];
-            if (!player.active || player.dead)
-            {
-                NPC.velocity *= 0.96f;
-                NPC.velocity.Y -= 1;
-                if (NPC.timeLeft > 10)
-                    NPC.timeLeft = 10;
-                return;
-            }
         }
 
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)

@@ -37,7 +37,7 @@ namespace Redemption.Projectiles.Magic
             Collision.HitTiles(Projectile.position, oldVelocity, Projectile.width, Projectile.height);
             return true;
         }
-        public override void Kill(int timeLeft)
+        public override void OnKill(int timeLeft)
         {
             SoundEngine.PlaySound(SoundID.Shatter, Projectile.position);
             for (int i = 0; i < 10; i++)

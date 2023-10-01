@@ -1,4 +1,5 @@
 using Terraria;
+using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Redemption.Buffs
@@ -10,7 +11,8 @@ namespace Redemption.Buffs
 			// DisplayName.SetDefault("Weapon Imbue: Nitroglycerine");
 			// Description.SetDefault("Melee attacks gain the Explosive bonus");
 			Main.persistentBuff[Type] = true;
-			Main.meleeBuff[Type] = true;
+            BuffID.Sets.IsAFlaskBuff[Type] = true;
+            Main.meleeBuff[Type] = true;
         }
 
         public override void Update(Player player, ref int buffIndex)

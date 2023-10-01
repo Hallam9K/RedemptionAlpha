@@ -14,7 +14,6 @@ using Redemption.BaseExtension;
 using ReLogic.Content;
 using Terraria.Localization;
 
-
 namespace Redemption.NPCs.Lab
 {
     public class CraneOperator : ModNPC
@@ -24,6 +23,8 @@ namespace Redemption.NPCs.Lab
         private static Asset<Texture2D> WalkAni;
         public override void Load()
         {
+            if (Main.dedServ)
+                return;
             Anims = ModContent.Request<Texture2D>(Texture + "_Anims");
             StepAni = ModContent.Request<Texture2D>(Texture + "_Step");
             WalkAni = ModContent.Request<Texture2D>(Texture + "_Walk");
@@ -63,7 +64,7 @@ namespace Redemption.NPCs.Lab
             NPCID.Sets.DontDoHardmodeScaling[Type] = true;
             NPCID.Sets.BossBestiaryPriority.Add(Type);
 
-            NPCID.Sets.NPCBestiaryDrawModifiers value = new(0);
+            NPCID.Sets.NPCBestiaryDrawModifiers value = new();
             NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, value);
         }
         public override void SetDefaults()
@@ -93,6 +94,8 @@ namespace Redemption.NPCs.Lab
         private Vector2 moveTo;
         public override void AI()
         {
+            CustomFrames(58);
+
             if (!NPC.AnyNPCs(BodyType()))
             {
                 AITimer = 0;
@@ -179,10 +182,7 @@ namespace Redemption.NPCs.Lab
                     break;
             }
         }
-        public override bool? CanFallThroughPlatforms() => NPC.Redemption().fallDownPlatform;
-        private int AniFrameY;
-        private int AniFrameX;
-        public override void FindFrame(int frameHeight)
+        private void CustomFrames(int frameHeight)
         {
             switch (AIState)
             {
@@ -296,6 +296,30 @@ namespace Redemption.NPCs.Lab
                             AniFrameY = 0;
                     }
                     break;
+            }
+        }
+        public override bool? CanFallThroughPlatforms() => NPC.Redemption().fallDownPlatform;
+        private int AniFrameY;
+        private int AniFrameX;
+        public override void FindFrame(int frameHeight)
+        {
+            if (NPC.IsABestiaryIconDummy)
+            {
+                if (++NPC.frameCounter >= 6)
+                {
+                    NPC.frameCounter = 0;
+                    if (TimerRand == 1)
+                    {
+                        NPC.frame.Y += frameHeight;
+                        if (NPC.frame.Y > 3 * frameHeight)
+                        {
+                            TimerRand = 0;
+                            NPC.frame.Y = 0 * frameHeight;
+                        }
+                    }
+                    else if (Main.rand.NextBool(20))
+                        TimerRand = 1;
+                }
             }
         }
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)

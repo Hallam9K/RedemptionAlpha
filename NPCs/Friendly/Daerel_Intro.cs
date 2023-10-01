@@ -8,12 +8,12 @@ using Terraria.Audio;
 using Redemption.BaseExtension;
 using Redemption.Base;
 using Microsoft.Xna.Framework.Graphics;
-using ReLogic.Content;
 using Redemption.Dusts;
 using Terraria.GameContent.UI;
 using Terraria.GameContent;
 using Redemption.Items.Usable;
 using Redemption.UI.ChatUI;
+using Redemption.Textures;
 
 namespace Redemption.NPCs.Friendly
 {
@@ -26,7 +26,7 @@ namespace Redemption.NPCs.Friendly
         {
             // DisplayName.SetDefault("Daerel");
             Main.npcFrameCount[Type] = 26;
-            NPCID.Sets.NPCBestiaryDrawModifiers value = new(0) { Hide = true };
+            NPCID.Sets.NPCBestiaryDrawModifiers value = new() { Hide = true };
             NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, value);
         }
 
@@ -41,12 +41,10 @@ namespace Redemption.NPCs.Friendly
             NPC.noGravity = false;
             NPC.dontTakeDamage = true;
             NPC.alpha = 255;
-            bubble = ModContent.Request<Texture2D>("Redemption/UI/TextBubble_Epidotra").Value;
-            voice = CustomSounds.Voice4 with { Pitch = 0.6f };
         }
         private int Look;
-        private Texture2D bubble;
-        private SoundStyle voice;
+        private static Texture2D Bubble => CommonTextures.TextBubble_Epidotra.Value;
+        private static readonly SoundStyle voice = CustomSounds.Voice4 with { Pitch = 0.6f };
         public override void AI()
         {
             NPC.DiscourageDespawn(60);
@@ -76,7 +74,7 @@ namespace Redemption.NPCs.Friendly
                         }
                         if (!Main.dedServ)
                         {
-                            Dialogue d1 = new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.DaerelIntro.1"), Color.White, Color.Gray, voice, 0.01f, .5f, .5f, true, bubble: bubble); // 65
+                            Dialogue d1 = new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.DaerelIntro.1"), Color.White, Color.Gray, voice, 0.01f, .5f, .5f, true, bubble: Bubble); // 65
 
                             ChatUI.Visible = true;
                             ChatUI.Add(d1);
@@ -111,7 +109,7 @@ namespace Redemption.NPCs.Friendly
                     {
                         EmoteBubble.NewBubble(1, new WorldUIAnchor(NPC), 187);
                         DialogueChain chain = new();
-                        chain.Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.DaerelIntro.2"), Color.White, Color.Gray, voice, .05f, 2, .5f, true, bubble: bubble, endID: 1)); // 187
+                        chain.Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.DaerelIntro.2"), Color.White, Color.Gray, voice, .05f, 2, .5f, true, bubble: Bubble, endID: 1)); // 187
                         chain.OnEndTrigger += Chain_OnEndTrigger;
                         ChatUI.Visible = true;
                         ChatUI.Add(chain);
@@ -129,12 +127,12 @@ namespace Redemption.NPCs.Friendly
                     if (AITimer++ == 5 && !Main.dedServ)
                     {
                         DialogueChain chain = new();
-                        chain.Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.DaerelIntro.3"), Color.White, Color.Gray, voice, .05f, 2f, 0, false, bubble: bubble)) // 221
-                             .Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.DaerelIntro.4"), Color.White, Color.Gray, voice, .05f, 2f, 0, false, bubble: bubble)) // 166
-                             .Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.DaerelIntro.5"), Color.White, Color.Gray, voice, .05f, 2f, 0, false, bubble: bubble)) // 206
-                             .Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.DaerelIntro.6"), Color.White, Color.Gray, voice, .05f, 2f, 0, false, bubble: bubble)) // 257
-                             .Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.DaerelIntro.7"), Color.White, Color.Gray, voice, .05f, 2f, 0, false, bubble: bubble)) // 320
-                             .Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.DaerelIntro.8"), Color.White, Color.Gray, voice, .05f, 2, .5f, true, bubble: bubble, endID: 1)); // 382
+                        chain.Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.DaerelIntro.3"), Color.White, Color.Gray, voice, .05f, 2f, 0, false, bubble: Bubble)) // 221
+                             .Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.DaerelIntro.4"), Color.White, Color.Gray, voice, .05f, 2f, 0, false, bubble: Bubble)) // 166
+                             .Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.DaerelIntro.5"), Color.White, Color.Gray, voice, .05f, 2f, 0, false, bubble: Bubble)) // 206
+                             .Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.DaerelIntro.6"), Color.White, Color.Gray, voice, .05f, 2f, 0, false, bubble: Bubble)) // 257
+                             .Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.DaerelIntro.7"), Color.White, Color.Gray, voice, .05f, 2f, 0, false, bubble: Bubble)) // 320
+                             .Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.DaerelIntro.8"), Color.White, Color.Gray, voice, .05f, 2, .5f, true, bubble: Bubble, endID: 1)); // 382
                         chain.OnSymbolTrigger += Chain_OnSymbolTrigger;
                         chain.OnEndTrigger += Chain_OnEndTrigger;
                         ChatUI.Visible = true;
@@ -173,22 +171,19 @@ namespace Redemption.NPCs.Friendly
                                 Main.dust[dust].color = dustColor;
                                 Main.dust[dust].velocity *= 3f;
                             }
-                            RedeQuest.wayfarerVars[0] = 2;
                             Item.NewItem(NPC.GetSource_Loot(), NPC.getRect(), ModContent.ItemType<ChaliceFragments>());
                             NPC.active = false;
-                            if (Main.netMode == NetmodeID.Server)
-                                NetMessage.SendData(MessageID.WorldData);
+                            if (Main.netMode != NetmodeID.MultiplayerClient)
+                            {
+                                RedeQuest.wayfarerVars[0] = 2;
+                                if (Main.netMode == NetmodeID.Server)
+                                    NetMessage.SendData(MessageID.WorldData);
+                            }
                         }
                     }
                     break;
             }
-
-            player.RedemptionScreen().ScreenFocusPosition = NPC.Center;
-            player.RedemptionScreen().lockScreen = true;
-            player.RedemptionScreen().cutscene = true;
-            NPC.LockMoveRadius(player);
-            Terraria.Graphics.Effects.Filters.Scene["MoR:FogOverlay"]?.GetShader().UseOpacity(1f).UseIntensity(1f).UseColor(Color.Black).UseImage(ModContent.Request<Texture2D>("Redemption/Effects/Vignette", AssetRequestMode.ImmediateLoad).Value);
-            player.ManageSpecialBiomeVisuals("MoR:FogOverlay", true);
+            ScreenPlayer.CutsceneLock(player, NPC, ScreenPlayer.CutscenePriority.Medium);
         }
         private void Chain_OnSymbolTrigger(Dialogue dialogue, string signature)
         {
@@ -214,51 +209,49 @@ namespace Redemption.NPCs.Friendly
         public override void FindFrame(int frameHeight)
         {
             if (Main.netMode != NetmodeID.Server)
-            {
                 NPC.frame.Width = TextureAssets.Npc[NPC.type].Width() / 3;
-                NPC.frame.X = 0;
+            NPC.frame.X = 0;
 
-                switch (TimerRand)
-                {
-                    case 0:
-                        NPC.frame.Y = frameHeight;
-                        break;
-                    case 1:
-                        ExtraTexs = 2;
-                        if (NPC.frameCounter++ >= 6)
+            switch (TimerRand)
+            {
+                case 0:
+                    NPC.frame.Y = frameHeight;
+                    break;
+                case 1:
+                    ExtraTexs = 2;
+                    if (NPC.frameCounter++ >= 6)
+                    {
+                        NPC.frameCounter = 0;
+                        if (++ExtraFrames > 3)
+                            ExtraFrames = 0;
+                    }
+                    break;
+                case 2:
+                    if (NPC.collideY || NPC.velocity.Y == 0)
+                    {
+                        ExtraTexs = 1;
+                        if (NPC.frameCounter++ >= 10)
                         {
                             NPC.frameCounter = 0;
-                            if (++ExtraFrames > 3)
+                            if (++ExtraFrames > 1)
                                 ExtraFrames = 0;
                         }
-                        break;
-                    case 2:
-                        if (NPC.collideY || NPC.velocity.Y == 0)
-                        {
-                            ExtraTexs = 1;
-                            if (NPC.frameCounter++ >= 10)
-                            {
-                                NPC.frameCounter = 0;
-                                if (++ExtraFrames > 1)
-                                    ExtraFrames = 0;
-                            }
-                        }
-                        else
-                        {
-                            ExtraTexs = 0;
-                            ExtraFrames = 0;
-                            NPC.frame.Y = frameHeight;
-                        }
-                        break;
-                    case 3:
-                        if (NPC.collideY || NPC.velocity.Y == 0)
-                        {
-                            NPC.frame.Y = 0;
-                        }
-                        else
-                            NPC.frame.Y = frameHeight;
-                        break;
-                }
+                    }
+                    else
+                    {
+                        ExtraTexs = 0;
+                        ExtraFrames = 0;
+                        NPC.frame.Y = frameHeight;
+                    }
+                    break;
+                case 3:
+                    if (NPC.collideY || NPC.velocity.Y == 0)
+                    {
+                        NPC.frame.Y = 0;
+                    }
+                    else
+                        NPC.frame.Y = frameHeight;
+                    break;
             }
         }
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)

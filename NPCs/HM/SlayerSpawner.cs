@@ -23,7 +23,7 @@ namespace Redemption.NPCs.HM
         public override string Texture => Redemption.EMPTY_TEXTURE;
         public override void SetStaticDefaults()
         {
-            NPCID.Sets.NPCBestiaryDrawModifiers value = new(0) { Hide = true };
+            NPCID.Sets.NPCBestiaryDrawModifiers value = new() { Hide = true };
             NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, value);
         }
         public override void SetDefaults()
@@ -39,15 +39,11 @@ namespace Redemption.NPCs.HM
         }
         public override void SendExtraAI(BinaryWriter writer)
         {
-            base.SendExtraAI(writer);
-            if (Main.netMode == NetmodeID.Server || Main.dedServ)
-                writer.WriteVector2(Pos);
+            writer.WriteVector2(Pos);
         }
         public override void ReceiveExtraAI(BinaryReader reader)
         {
-            base.ReceiveExtraAI(reader);
-            if (Main.netMode == NetmodeID.MultiplayerClient)
-                Pos = reader.ReadVector2();
+            Pos = reader.ReadVector2();
         }
         private Vector2 Pos;
         public override bool PreAI()
@@ -81,9 +77,12 @@ namespace Redemption.NPCs.HM
                 else if (NPC.ai[0] == 3)
                 {
                     player.Redemption().slayerStarRating = 1;
-                    RedeWorld.slayerMessageGiven = true;
-                    if (Main.netMode == NetmodeID.Server)
-                        NetMessage.SendData(MessageID.WorldData);
+                    if (Main.netMode != NetmodeID.MultiplayerClient)
+                    {
+                        RedeWorld.slayerMessageGiven = true;
+                        if (Main.netMode == NetmodeID.Server)
+                            NetMessage.SendData(MessageID.WorldData);
+                    }
 
                     for (int i = 0; i < 6; i++)
                         SpawnSpacePaladin(ref Pos);
@@ -148,7 +147,7 @@ namespace Redemption.NPCs.HM
                 default:
                     if (NPC.ai[1]++ == 300)
                     {
-                        if (RedeBossDowned.slayerDeath < 2)
+                        if (RedeBossDowned.slayerDeath < 2 && Main.netMode != NetmodeID.MultiplayerClient)
                         {
                             RedeBossDowned.slayerDeath = 2;
                             if (Main.netMode == NetmodeID.Server)

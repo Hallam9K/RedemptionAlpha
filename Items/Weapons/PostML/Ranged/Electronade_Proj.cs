@@ -46,7 +46,7 @@ namespace Redemption.Items.Weapons.PostML.Ranged
             Projectile.rotation += Projectile.velocity.X / 20;
             Projectile.velocity.Y += 0.2f;
         }
-        public override void Kill(int timeLeft)
+        public override void OnKill(int timeLeft)
         {
             if (!Main.dedServ)
                 SoundEngine.PlaySound(CustomSounds.ElectricNoise, Projectile.position);

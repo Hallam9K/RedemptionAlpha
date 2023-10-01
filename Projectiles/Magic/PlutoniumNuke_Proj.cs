@@ -57,7 +57,7 @@ namespace Redemption.Projectiles.Magic
             dust20.fadeIn = 0.5f;
             dust20.noGravity = true;
         }
-        public override void Kill(int timeLeft)
+        public override void OnKill(int timeLeft)
         {
             SoundEngine.PlaySound(CustomSounds.MissileExplosion, Projectile.position);
             if (Projectile.owner == Main.myPlayer)

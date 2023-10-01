@@ -37,7 +37,7 @@ namespace Redemption.NPCs.Bosses.Obliterator
         {
             return new Color(1f, 1f, 1f, 0f) * Projectile.Opacity;
         }
-        public override void Kill(int timeLeft)
+        public override void OnKill(int timeLeft)
         {
             for (int i = 0; i < 5; i++)
             {

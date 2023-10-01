@@ -11,7 +11,6 @@ using Redemption.Items.Armor.Vanity;
 using Redemption.Items.Placeable.Trophies;
 using Redemption.Items.Usable;
 using Terraria.GameContent;
-using Terraria.DataStructures;
 using Terraria.GameContent.Bestiary;
 using System.Collections.Generic;
 using Terraria.GameContent.ItemDropRules;
@@ -22,8 +21,8 @@ using Terraria.Chat;
 using Redemption.Buffs.Debuffs;
 using Redemption.Items.Weapons.PreHM.Summon;
 using Redemption.Items.Accessories.PreHM;
-using Redemption.Buffs.NPCBuffs;
-using Redemption.BaseExtension;
+using Redemption.Items.Weapons.PreHM.Ritualist;
+using Redemption.Globals.NPC;
 
 namespace Redemption.NPCs.Bosses.Thorn
 {
@@ -59,19 +58,11 @@ namespace Redemption.NPCs.Bosses.Thorn
             NPCID.Sets.MPAllowedEnemies[Type] = true;
             NPCID.Sets.BossBestiaryPriority.Add(Type);
 
-            NPCDebuffImmunityData debuffData = new()
-            {
-                SpecificallyImmuneTo = new int[] {
-                    BuffID.Poisoned,
-                    BuffID.Confused,
-                    ModContent.BuffType<NecroticGougeDebuff>(),
-                    ModContent.BuffType<DirtyWoundDebuff>(),
-                    ModContent.BuffType<InfestedDebuff>()
-                }
-            };
-            NPCID.Sets.DebuffImmunitySets.Add(Type, debuffData);
+            BuffNPC.NPCTypeImmunity(Type, BuffNPC.NPCDebuffImmuneType.Inorganic);
+            NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.Bleeding] = false;
+            NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.BloodButcherer] = false;
 
-            NPCID.Sets.NPCBestiaryDrawModifiers value = new(0)
+            NPCID.Sets.NPCBestiaryDrawModifiers value = new()
             {
                 Position = new Vector2(0, 40),
                 PortraitPositionYOverride = 0
@@ -131,7 +122,6 @@ namespace Redemption.NPCs.Bosses.Thorn
             notExpertRule.OnSuccess(ItemDropRule.NotScalingWithLuck(ModContent.ItemType<ThornMask>(), 7));
 
             notExpertRule.OnSuccess(ItemDropRule.OneFromOptions(1, ModContent.ItemType<CursedGrassBlade>(), ModContent.ItemType<RootTendril>(), ModContent.ItemType<CursedThornBow>()));
-            //notExpertRule.OnSuccess(ItemDropRule.OneFromOptions(1, ModContent.ItemType<CursedGrassBlade>(), ModContent.ItemType<RootTendril>(), ModContent.ItemType<CursedThornBow>(), ModContent.ItemType<BlightedBoline>()));
 
             npcLoot.Add(notExpertRule);
         }
@@ -142,9 +132,9 @@ namespace Redemption.NPCs.Bosses.Thorn
             {
                 string status = Language.GetTextValue("Mods.Redemption.StatusMessage.Progression.ThornDowned");
                 if (Main.netMode == NetmodeID.Server)
-                    ChatHelper.BroadcastChatMessage(NetworkText.FromLiteral(status), Color.LawnGreen);
+                    ChatHelper.BroadcastChatMessage(NetworkText.FromLiteral(status), new Color(50, 255, 130));
                 else if (Main.netMode == NetmodeID.SinglePlayer)
-                    Main.NewText(Language.GetTextValue(status), Color.LawnGreen);
+                    Main.NewText(Language.GetTextValue(status), new Color(50, 255, 130));
 
                 RedeWorld.alignment += 2;
                 for (int p = 0; p < Main.maxPlayers; p++)
@@ -173,22 +163,14 @@ namespace Redemption.NPCs.Bosses.Thorn
 
         public override void SendExtraAI(BinaryWriter writer)
         {
-            base.SendExtraAI(writer);
-            if (Main.netMode == NetmodeID.Server || Main.dedServ)
-            {
-                writer.Write(ID);
-                writer.Write(barrierSpawn);
-            }
+            writer.Write(ID);
+            writer.Write(barrierSpawn);
         }
 
         public override void ReceiveExtraAI(BinaryReader reader)
         {
-            base.ReceiveExtraAI(reader);
-            if (Main.netMode == NetmodeID.MultiplayerClient)
-            {
-                ID = reader.ReadInt32();
-                barrierSpawn = reader.ReadBoolean();
-            }
+            ID = reader.ReadInt32();
+            barrierSpawn = reader.ReadBoolean();
         }
 
         public List<int> AttackList = new() { 0, 1, 2, 3, 4 };
@@ -222,7 +204,8 @@ namespace Redemption.NPCs.Bosses.Thorn
 
             Player player = Main.player[NPC.target];
 
-            DespawnHandler();
+            if (DespawnHandler())
+                return;
 
             if (AIState != ActionState.TeleportStart && AIState != ActionState.TeleportEnd && AIState != ActionState.Death)
                 NPC.LookAtEntity(player);
@@ -246,7 +229,6 @@ namespace Redemption.NPCs.Bosses.Thorn
                 case ActionState.Begin:
                     if (!Main.dedServ)
                         RedeSystem.Instance.TitleCardUIElement.DisplayTitle(Language.GetTextValue("Mods.Redemption.TitleCard.Thorn.Name"), 60, 90, 0.8f, 0, Color.LawnGreen, Language.GetTextValue("Mods.Redemption.TitleCard.Thorn.Modifier"));
-
                     AIState = ActionState.TeleportStart;
                     NPC.netUpdate = true;
                     break;
@@ -276,10 +258,10 @@ namespace Redemption.NPCs.Bosses.Thorn
                             if (AITimer >= 60 && AITimer % (NPC.life < NPC.lifeMax / 2 ? 15 : 25) == 0 && TimerRand >= 0)
                             {
                                 NPC.Shoot(new Vector2(player.Center.X + TimerRand, player.Center.Y - 200), ModContent.ProjectileType<ThornSeed>(),
-                                    NPC.damage, Vector2.Zero, false, SoundID.Item1);
+                                    NPC.damage, Vector2.Zero);
                                 if (TimerRand != 0)
                                     NPC.Shoot(new Vector2(player.Center.X + -TimerRand, player.Center.Y - 200), ModContent.ProjectileType<ThornSeed>(),
-                                    NPC.damage, Vector2.Zero, false, SoundID.Item1);
+                                    NPC.damage, Vector2.Zero);
 
                                 TimerRand -= 100;
                                 NPC.netUpdate = true;
@@ -307,7 +289,7 @@ namespace Redemption.NPCs.Bosses.Thorn
                                 {
                                     NPC.Shoot(NPC.Center, ModContent.ProjectileType<CursedThornVile>(), NPC.damage,
                                         RedeHelper.PolarVector(NPC.life < NPC.lifeMax / 2 ? 18 : 12, (origin - NPC.Center).ToRotation()
-                                        + TimerRand - MathHelper.ToRadians(45)), true, SoundID.Item17);
+                                        + TimerRand - MathHelper.ToRadians(45)), SoundID.Item17);
 
                                     TimerRand += MathHelper.ToRadians(15);
                                     NPC.netUpdate = true;
@@ -350,17 +332,17 @@ namespace Redemption.NPCs.Bosses.Thorn
                             if (NPC.life < NPC.lifeMax / 2 ? (AITimer == 80 || AITimer == 140) : (AITimer == 80 || AITimer == 160))
                             {
                                 for (int i = 0; i < 4; i++)
-                                    NPC.Shoot(NPC.Center, ProjectileID.QueenBeeStinger, NPC.damage, RedeHelper.PolarVector(10, MathHelper.ToRadians(90) * i), true, SoundID.Item17);
+                                    NPC.Shoot(NPC.Center, ProjectileID.QueenBeeStinger, NPC.damage, RedeHelper.PolarVector(10, MathHelper.ToRadians(90) * i), SoundID.Item17);
                             }
                             if (NPC.life < NPC.lifeMax / 2 ? AITimer == 110 : AITimer == 120)
                             {
                                 for (int i = 0; i < 8; i++)
-                                    NPC.Shoot(NPC.Center, ProjectileID.QueenBeeStinger, NPC.damage, RedeHelper.PolarVector(10, MathHelper.ToRadians(45) * i), true, SoundID.Item17);
+                                    NPC.Shoot(NPC.Center, ProjectileID.QueenBeeStinger, NPC.damage, RedeHelper.PolarVector(10, MathHelper.ToRadians(45) * i), SoundID.Item17);
                             }
                             if (NPC.life < NPC.lifeMax / 2 && AITimer == 170)
                             {
                                 for (int i = 0; i < 18; i++)
-                                    NPC.Shoot(NPC.Center, ProjectileID.QueenBeeStinger, NPC.damage, RedeHelper.PolarVector(10, MathHelper.ToRadians(20) * i), true, SoundID.Item17);
+                                    NPC.Shoot(NPC.Center, ProjectileID.QueenBeeStinger, NPC.damage, RedeHelper.PolarVector(10, MathHelper.ToRadians(20) * i), SoundID.Item17);
                             }
 
                             if (AITimer >= 180)
@@ -395,7 +377,7 @@ namespace Redemption.NPCs.Bosses.Thorn
                                 {
                                     if (Main.rand.NextBool(2))
                                         NPC.Shoot(HeartOrigin, ModContent.ProjectileType<LeechingThornSeed>(), NPC.damage,
-                                            RedeHelper.PolarVector(11, (player.Center - NPC.Center).ToRotation() + Main.rand.NextFloat(-0.06f, 0.06f)), true, SoundID.Item17, NPC.whoAmI);
+                                            RedeHelper.PolarVector(11, (player.Center - NPC.Center).ToRotation() + Main.rand.NextFloat(-0.06f, 0.06f)), SoundID.Item17, NPC.whoAmI);
                                 }
 
                                 if (NPC.life < NPC.lifeMax / 2 ? AITimer >= 240 : AITimer >= 180)
@@ -447,7 +429,7 @@ namespace Redemption.NPCs.Bosses.Thorn
                                     dust2.noGravity = true;
                                     dust2.velocity = -player.DirectionTo(dust2.position) * 10;
                                 }
-                                NPC.Shoot(player.Center, ModContent.ProjectileType<SlashFlashPro>(), NPC.damage, Vector2.Zero, false, SoundID.Item1);
+                                NPC.Shoot(player.Center, ModContent.ProjectileType<SlashFlashPro>(), NPC.damage, Vector2.Zero);
                             }
 
                             if (NPC.life < NPC.lifeMax / 2 ? AITimer >= 230 : AITimer >= 250)
@@ -468,9 +450,7 @@ namespace Redemption.NPCs.Bosses.Thorn
                         if (Main.netMode == NetmodeID.Server && NPC.whoAmI < Main.maxNPCs)
                             NetMessage.SendData(MessageID.SyncNPC, number: NPC.whoAmI);
                     }
-                    player.RedemptionScreen().ScreenFocusPosition = NPC.Center;
-                    player.RedemptionScreen().lockScreen = true;
-                    NPC.LockMoveRadius(player);
+                    ScreenPlayer.CutsceneLock(player, NPC, ScreenPlayer.CutscenePriority.None, 1200, 2400, 1200);
 
                     if (AITimer >= 60)
                     {
@@ -498,7 +478,7 @@ namespace Redemption.NPCs.Bosses.Thorn
                         if (AITimer == 180)
                         {
                             DustHelper.DrawCircle(HeartOrigin, DustID.MagicMirror, 5, 5, 5, 1, 2, nogravity: true);
-                            NPC.Shoot(NPC.Center, ModContent.ProjectileType<ManaBarrier>(), 0, Vector2.Zero, true, SoundID.Item29, NPC.whoAmI);
+                            NPC.Shoot(NPC.Center, ModContent.ProjectileType<ManaBarrier>(), 0, Vector2.Zero, SoundID.Item29, NPC.whoAmI);
                         }
                     }
                     if (AITimer >= 220)
@@ -531,26 +511,11 @@ namespace Redemption.NPCs.Bosses.Thorn
                     break;
             }
         }
-
-        public override bool CheckDead()
+        public override void PostAI()
         {
-            if (AIState is ActionState.Death)
-                return true;
-            else
-            {
-                for (int i = 0; i < 40; i++)
-                    Dust.NewDust(NPC.position + NPC.velocity, NPC.width, NPC.height, DustID.Grass, NPC.velocity.X * 0.5f, NPC.velocity.Y * 0.5f);
-
-                SoundEngine.PlaySound(SoundID.NPCDeath1, NPC.position);
-                NPC.life = 1;
-                AITimer = 0;
-                TimerRand = 0;
-                AIState = ActionState.Death;
-                return false;
-            }
+            CustomFrames(96);
         }
-
-        public override void FindFrame(int frameHeight)
+        private void CustomFrames(int frameHeight)
         {
             switch (AIState)
             {
@@ -564,9 +529,7 @@ namespace Redemption.NPCs.Bosses.Thorn
                         NPC.frameCounter = 0;
                         NPC.frame.Y += frameHeight;
                         if (NPC.frame.Y >= 9 * frameHeight)
-                        {
                             NPC.alpha += 25;
-                        }
                         if (NPC.frame.Y > 9 * frameHeight)
                         {
                             NPC.frame.Y = 9 * frameHeight;
@@ -612,6 +575,29 @@ namespace Redemption.NPCs.Bosses.Thorn
                     }
                     return;
             }
+        }
+        public override bool CheckDead()
+        {
+            if (AIState is ActionState.Death)
+                return true;
+            else
+            {
+                for (int i = 0; i < 40; i++)
+                    Dust.NewDust(NPC.position + NPC.velocity, NPC.width, NPC.height, DustID.Grass, NPC.velocity.X * 0.5f, NPC.velocity.Y * 0.5f);
+
+                SoundEngine.PlaySound(SoundID.NPCDeath1, NPC.position);
+                NPC.life = 1;
+                AITimer = 0;
+                TimerRand = 0;
+                AIState = ActionState.Death;
+                return false;
+            }
+        }
+
+        public override void FindFrame(int frameHeight)
+        {
+            if (AIState is ActionState.TeleportStart or ActionState.TeleportEnd or ActionState.Death)
+                return;
             if (++NPC.frameCounter >= 10)
             {
                 NPC.frameCounter = 0;
@@ -631,7 +617,7 @@ namespace Redemption.NPCs.Bosses.Thorn
             return false;
         }
 
-        private void DespawnHandler()
+        private bool DespawnHandler()
         {
             Player player = Main.player[NPC.target];
             if (!player.active || player.dead)
@@ -648,10 +634,13 @@ namespace Redemption.NPCs.Bosses.Thorn
                         NPC.active = false;
                     if (NPC.timeLeft > 10)
                         NPC.timeLeft = 10;
-                    return;
+                    NPC.dontTakeDamage = true;
+                    if (Main.netMode == NetmodeID.Server && NPC.whoAmI < Main.maxNPCs)
+                        NetMessage.SendData(MessageID.SyncNPC, number: NPC.whoAmI);
+                    return true;
                 }
             }
+            return false;
         }
-
     }
 }

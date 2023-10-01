@@ -281,7 +281,7 @@ namespace Redemption.Items.Weapons.HM.Magic
         {
             modifiers.FinalDamage *= (Projectile.velocity.Length() / 10) + .4f;
         }
-        public override void Kill(int timeLeft)
+        public override void OnKill(int timeLeft)
         {
             if (sound != null)
             {

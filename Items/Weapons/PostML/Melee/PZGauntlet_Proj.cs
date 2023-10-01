@@ -117,7 +117,7 @@ namespace Redemption.Items.Weapons.PostML.Melee
                 }
             }
         }
-        public override void Kill(int timeLeft)
+        public override void OnKill(int timeLeft)
         {
             Player player = Main.player[Projectile.owner];
             player.fullRotation = 0f;

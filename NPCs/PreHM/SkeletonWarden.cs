@@ -47,7 +47,7 @@ namespace Redemption.NPCs.PreHM
         {
             Main.npcFrameCount[NPC.type] = 17;
 
-            NPCID.Sets.NPCBestiaryDrawModifiers value = new(0);
+            NPCID.Sets.NPCBestiaryDrawModifiers value = new();
 
             NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, value);
         }
@@ -350,8 +350,6 @@ namespace Redemption.NPCs.PreHM
                             else if (globalNPC.attacker is Player attackerPlayer2)
                             {
                                 int hitDirection = attackerPlayer2.RightOfDir(NPC);
-                                if (!attackerPlayer2.noKnockback)
-                                    attackerPlayer2.velocity.X += NPC.velocity.X / 2;
                                 BaseAI.DamagePlayer(attackerPlayer2, NPC.damage, 11, hitDirection, NPC);
                             }
                         }
@@ -420,8 +418,6 @@ namespace Redemption.NPCs.PreHM
                             else if (globalNPC.attacker is Player attackerPlayer3)
                             {
                                 int hitDirection = attackerPlayer3.RightOfDir(NPC);
-                                if (!attackerPlayer3.noKnockback)
-                                    attackerPlayer3.velocity.X += NPC.velocity.X / 2;
                                 BaseAI.DamagePlayer(attackerPlayer3, NPC.damage, 11, hitDirection, NPC);
                             }
                         }
@@ -478,72 +474,69 @@ namespace Redemption.NPCs.PreHM
         public override void FindFrame(int frameHeight)
         {
             if (Main.netMode != NetmodeID.Server)
-            {
-                RedeNPC globalNPC = NPC.Redemption();
-
                 NPC.frame.Width = TextureAssets.Npc[NPC.type].Width() / 3;
-                NPC.frame.X = Personality switch
-                {
-                    PersonalityState.Soulful => NPC.frame.Width * 1,
-                    PersonalityState.Greedy => NPC.frame.Width * 2,
-                    _ => 0,
-                };
-                if (AIState is ActionState.Block && NPC.velocity.Length() == 0 && !NPC.RedemptionGuard().GuardBroken && globalNPC.attacker.Center.Y < NPC.Center.Y - NPC.height + 40 && globalNPC.attacker.Center.X > NPC.Center.X - 100 && globalNPC.attacker.Center.X < NPC.Center.X + 100)
-                {
-                    NPC.rotation = 0;
+            RedeNPC globalNPC = NPC.Redemption();
 
-                    if (NPC.frame.Y < 13 * frameHeight)
+            NPC.frame.X = Personality switch
+            {
+                PersonalityState.Soulful => NPC.frame.Width * 1,
+                PersonalityState.Greedy => NPC.frame.Width * 2,
+                _ => 0,
+            };
+            if (AIState is ActionState.Block && NPC.velocity.Length() == 0 && !NPC.RedemptionGuard().GuardBroken && globalNPC.attacker.Center.Y < NPC.Center.Y - NPC.height + 40 && globalNPC.attacker.Center.X > NPC.Center.X - 100 && globalNPC.attacker.Center.X < NPC.Center.X + 100)
+            {
+                NPC.rotation = 0;
+
+                if (NPC.frame.Y < 13 * frameHeight)
+                    NPC.frame.Y = 13 * frameHeight;
+                if (++NPC.frameCounter >= 10)
+                {
+                    NPC.frameCounter = 0;
+                    NPC.frame.Y += frameHeight;
+                    if (NPC.frame.Y > 16 * frameHeight)
                         NPC.frame.Y = 13 * frameHeight;
+                }
+                return;
+            }
+
+            if (NPC.collideY || NPC.velocity.Y == 0)
+            {
+                NPC.rotation = 0;
+                if (NPC.velocity.X == 0)
+                {
                     if (++NPC.frameCounter >= 10)
                     {
                         NPC.frameCounter = 0;
                         NPC.frame.Y += frameHeight;
-                        if (NPC.frame.Y > 16 * frameHeight)
-                            NPC.frame.Y = 13 * frameHeight;
-                    }
-                    return;
-                }
-
-                if (NPC.collideY || NPC.velocity.Y == 0)
-                {
-                    NPC.rotation = 0;
-                    if (NPC.velocity.X == 0)
-                    {
-                        if (++NPC.frameCounter >= 10)
-                        {
-                            NPC.frameCounter = 0;
-                            NPC.frame.Y += frameHeight;
-                            if (NPC.frame.Y > 3 * frameHeight)
-                                NPC.frame.Y = 0 * frameHeight;
-                        }
-                    }
-                    else
-                    {
-                        if (NPC.frame.Y < 5 * frameHeight)
-                            NPC.frame.Y = 5 * frameHeight;
-
-                        NPC.frameCounter += NPC.velocity.X * 0.5f;
-                        if (NPC.frameCounter is >= 3 or <= -3)
-                        {
-                            NPC.frameCounter = 0;
-                            NPC.frame.Y += frameHeight;
-                            if (NPC.frame.Y > 12 * frameHeight)
-                                NPC.frame.Y = 5 * frameHeight;
-                        }
+                        if (NPC.frame.Y > 3 * frameHeight)
+                            NPC.frame.Y = 0 * frameHeight;
                     }
                 }
                 else
                 {
-                    NPC.rotation = NPC.velocity.X * 0.05f;
-                    NPC.frame.Y = 4 * frameHeight;
+                    if (NPC.frame.Y < 5 * frameHeight)
+                        NPC.frame.Y = 5 * frameHeight;
+
+                    NPC.frameCounter += NPC.velocity.X * 0.5f;
+                    if (NPC.frameCounter is >= 3 or <= -3)
+                    {
+                        NPC.frameCounter = 0;
+                        NPC.frame.Y += frameHeight;
+                        if (NPC.frame.Y > 12 * frameHeight)
+                            NPC.frame.Y = 5 * frameHeight;
+                    }
                 }
+            }
+            else
+            {
+                NPC.rotation = NPC.velocity.X * 0.05f;
+                NPC.frame.Y = 4 * frameHeight;
             }
             ShieldOffset = SetEyeOffset(ref frameHeight);
         }
         public int GetNearestNPC(int[] WhitelistNPC = default, bool nearestUndead = false)
         {
-            if (WhitelistNPC == null)
-                WhitelistNPC = new int[] { NPCID.Guide };
+            WhitelistNPC ??= new int[] { NPCID.Guide };
 
             float nearestNPCDist = -1;
             int nearestNPC = -1;
@@ -635,6 +628,10 @@ namespace Redemption.NPCs.PreHM
         }
         public override bool CanHitNPC(NPC target) => false;
         public override bool CanHitPlayer(Player target, ref int cooldownSlot) => false;
+        public override void ModifyHitPlayer(Player target, ref Player.HurtModifiers modifiers)
+        {
+            modifiers.Knockback.Base += 6;
+        }
         public override void OnKill()
         {
             if (HasEyes)

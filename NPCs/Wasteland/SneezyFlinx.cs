@@ -2,21 +2,20 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Biomes;
 using Redemption.Buffs.Debuffs;
-using Redemption.Buffs.NPCBuffs;
 using Redemption.Globals;
+using Redemption.Globals.NPC;
 using Redemption.Items.Armor.Vanity.Intruder;
 using Redemption.Items.Materials.HM;
 using Redemption.Items.Placeable.Banners;
 using Redemption.Items.Usable.Potions;
 using Terraria;
 using Terraria.Audio;
-using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
-using Terraria.ModLoader;
 using Terraria.Localization;
+using Terraria.ModLoader;
 
 namespace Redemption.NPCs.Wasteland
 {
@@ -38,19 +37,11 @@ namespace Redemption.NPCs.Wasteland
             // DisplayName.SetDefault("Sneezy Snow Flinx");
             Main.npcFrameCount[NPC.type] = 16;
             NPCID.Sets.ShimmerTransformToNPC[NPC.type] = NPCID.SnowFlinx;
-            NPCID.Sets.DebuffImmunitySets.Add(Type, new NPCDebuffImmunityData
-            {
-                SpecificallyImmuneTo = new int[] {
-                    BuffID.Poisoned,
-                    ModContent.BuffType<PureChillDebuff>(),
-                    ModContent.BuffType<IceFrozen>(),
-                    ModContent.BuffType<BileDebuff>(),
-                    ModContent.BuffType<GreenRashesDebuff>(),
-                    ModContent.BuffType<GlowingPustulesDebuff>(),
-                    ModContent.BuffType<FleshCrystalsDebuff>()
-                }
-            });
-            NPCID.Sets.NPCBestiaryDrawModifiers value = new(0)
+
+            BuffNPC.NPCTypeImmunity(Type, BuffNPC.NPCDebuffImmuneType.Infected);
+            BuffNPC.NPCTypeImmunity(Type, BuffNPC.NPCDebuffImmuneType.Cold);
+
+            NPCID.Sets.NPCBestiaryDrawModifiers value = new()
             {
                 Velocity = 1f
             };
@@ -103,6 +94,8 @@ namespace Redemption.NPCs.Wasteland
         }
         public override bool PreAI()
         {
+            CustomFrames(48);
+
             Player player = Main.player[NPC.target];
             NPC.LookByVelocity();
             if (NPC.localAI[0] == 0 && NPC.velocity.Y == 0 && Main.rand.NextBool(500) && NPC.DistanceSQ(player.Center) < 600 * 600)
@@ -116,7 +109,7 @@ namespace Redemption.NPCs.Wasteland
                 return false;
             return true;
         }
-        public override void FindFrame(int frameHeight)
+        private void CustomFrames(int frameHeight)
         {
             if (NPC.localAI[0] != 0)
             {
@@ -172,6 +165,11 @@ namespace Redemption.NPCs.Wasteland
                 }
                 return;
             }
+        }
+        public override void FindFrame(int frameHeight)
+        {
+            if (NPC.localAI[0] != 0)
+                return;
             if (NPC.collideY || NPC.velocity.Y == 0)
             {
                 NPC.rotation = 0;

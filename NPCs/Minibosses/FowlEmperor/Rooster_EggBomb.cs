@@ -1,6 +1,5 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Redemption.Base;
 using Redemption.Globals;
 using System.Collections.Generic;
 using Terraria;
@@ -56,7 +55,7 @@ namespace Redemption.NPCs.Minibosses.FowlEmperor
         {
             Projectile.timeLeft = 2;
         }
-        public override void Kill(int timeLeft)
+        public override void OnKill(int timeLeft)
         {
             SoundEngine.PlaySound(SoundID.Item14, Projectile.position);
             SoundEngine.PlaySound(SoundID.NPCDeath11 with { Volume = .5f }, Projectile.position);
@@ -86,18 +85,7 @@ namespace Redemption.NPCs.Minibosses.FowlEmperor
                 }
             }
             int radius = Main.expertMode ? 60 : 50;
-            for (int i = 0; i < Main.maxPlayers; i++)
-            {
-                Player target = Main.player[i];
-                if (!target.active || target.dead)
-                    continue;
-
-                if (Projectile.DistanceSQ(target.Center) > radius * radius)
-                    continue;
-
-                int hitDirection = target.RightOfDir(Projectile);
-                BaseAI.DamagePlayer(target, Projectile.damage * 4, Projectile.knockBack, hitDirection, Projectile);
-            }
+            RedeHelper.PlayerRadiusDamage(radius, Projectile, NPCHelper.HostileProjDamageInc(Projectile.damage), Projectile.knockBack);
         }
         public override bool PreDraw(ref Color lightColor)
         {

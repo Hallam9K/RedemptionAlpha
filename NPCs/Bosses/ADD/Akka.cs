@@ -23,6 +23,8 @@ using Redemption.Items.Weapons.PostML.Magic;
 using Redemption.Items.Weapons.PostML.Summon;
 using ReLogic.Content;
 using Terraria.Localization;
+using Redemption.Globals.NPC;
+using Redemption.Helpers;
 
 namespace Redemption.NPCs.Bosses.ADD
 {
@@ -33,6 +35,8 @@ namespace Redemption.NPCs.Bosses.ADD
         private static Asset<Texture2D> magicGlow;
         public override void Load()
         {
+            if (Main.dedServ)
+                return;
             magicAni = ModContent.Request<Texture2D>(Texture + "_Spell");
             magicGlow = ModContent.Request<Texture2D>(Texture + "_Spell_Glow");
         }
@@ -68,20 +72,10 @@ namespace Redemption.NPCs.Bosses.ADD
             NPCID.Sets.MPAllowedEnemies[Type] = true;
             NPCID.Sets.BossBestiaryPriority.Add(Type);
 
-            NPCDebuffImmunityData debuffData = new()
-            {
-                SpecificallyImmuneTo = new int[] {
-                    BuffID.Poisoned,
-                    BuffID.Confused,
-                    ModContent.BuffType<InfestedDebuff>(),
-                    ModContent.BuffType<NecroticGougeDebuff>(),
-                    ModContent.BuffType<ViralityDebuff>(),
-                    ModContent.BuffType<DirtyWoundDebuff>()
-                }
-            };
-            NPCID.Sets.DebuffImmunitySets.Add(Type, debuffData);
+            BuffNPC.NPCTypeImmunity(Type, BuffNPC.NPCDebuffImmuneType.Inorganic);
+            NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.Confused] = true;
 
-            NPCID.Sets.NPCBestiaryDrawModifiers value = new(0)
+            NPCID.Sets.NPCBestiaryDrawModifiers value = new()
             {
                 Position = new Vector2(0, 40),
                 PortraitPositionYOverride = 0
@@ -113,7 +107,7 @@ namespace Redemption.NPCs.Bosses.ADD
             NPC.RedemptionGuard().GuardBroken = true;
             NPC.BossBar = ModContent.GetInstance<AkkaHealthBar>();
             if (!Main.dedServ)
-                Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/BossForest2");
+                Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/BossUkkoAkka");
 
             NPC.GetGlobalNPC<ElementalNPC>().OverrideMultiplier[ElementID.Blood] *= .75f;
             NPC.GetGlobalNPC<ElementalNPC>().OverrideMultiplier[ElementID.Earth] *= .75f;
@@ -209,8 +203,8 @@ namespace Redemption.NPCs.Bosses.ADD
         {
             Target();
 
-            DespawnHandler();
-
+            if (NPC.DespawnHandler(0, 20))
+                return;
             Player player = Main.player[NPC.target];
             NPC.rotation = 0f;
             NPC.LookAtEntity(player);
@@ -255,7 +249,7 @@ namespace Redemption.NPCs.Bosses.ADD
                                     EmoteBubble.NewBubble(0, new WorldUIAnchor(NPC), 50);
                                 }
 
-                                if (AITimer++ >= 120)
+                                if (AITimer++ >= 170)
                                 {
                                     AIState = ActionState.ResetVars; ;
                                     AITimer = 0;
@@ -517,7 +511,7 @@ namespace Redemption.NPCs.Bosses.ADD
                                     if (AITimer++ % 2 == 0 && AITimer < 70)
                                     {
                                         for (int i = 0; i < 2; i++)
-                                            NPC.Shoot(NPC.Center, ModContent.ProjectileType<AkkaBubble>(), NPC.damage, RedeHelper.Spread(16), false, SoundID.Item1);
+                                            NPC.Shoot(NPC.Center, ModContent.ProjectileType<AkkaBubble>(), NPC.damage, RedeHelper.Spread(16));
                                     }
                                     if (AITimer >= 120)
                                     {
@@ -612,22 +606,6 @@ namespace Redemption.NPCs.Bosses.ADD
         {
             player = Main.player[NPC.target];
         }
-
-        private void DespawnHandler()
-        {
-            if (!player.active || player.dead)
-            {
-                NPC.TargetClosest(false);
-                player = Main.player[NPC.target];
-                if (!player.active || player.dead)
-                {
-                    NPC.velocity = new Vector2(0f, -20f);
-                    if (NPC.timeLeft > 10)
-                        NPC.timeLeft = 10;
-                    return;
-                }
-            }
-        }
         private float drawTimer;
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
@@ -642,15 +620,15 @@ namespace Redemption.NPCs.Bosses.ADD
                     if (!NPC.IsABestiaryIconDummy)
                     {
                         spriteBatch.End();
-                        spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
-                        GameShaders.Armor.ApplySecondary(shader, Main.player[Main.myPlayer], null);
+                        spriteBatch.BeginAdditive(true);
+                        GameShaders.Armor.ApplySecondary(shader, Main.LocalPlayer, null);
                         for (int i = 0; i < NPCID.Sets.TrailCacheLength[NPC.type]; i++)
                         {
                             Vector2 oldPos = NPC.oldPos[i];
                             spriteBatch.Draw(texture, oldPos + NPC.Size / 2f - screenPos + new Vector2(0, NPC.gfxOffY), NPC.frame, NPC.GetAlpha(shaderColor) * ((NPC.oldPos.Length - i) / (float)NPC.oldPos.Length), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
                         }
                         spriteBatch.End();
-                        spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+                        spriteBatch.BeginDefault();
                     }
                     if (NPC.RedemptionGuard().GuardPoints > 0)
                         RedeDraw.DrawTreasureBagEffect(Main.spriteBatch, texture, ref drawTimer, NPC.Center - screenPos, NPC.frame, Color.LightGreen * NPC.Opacity, NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects);
@@ -665,15 +643,15 @@ namespace Redemption.NPCs.Bosses.ADD
                     Vector2 glowCenter = NPC.Center + new Vector2(15 * NPC.spriteDirection, -24);
 
                     spriteBatch.End();
-                    spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
-                    GameShaders.Armor.ApplySecondary(shader, Main.player[Main.myPlayer], null);
+                    spriteBatch.BeginAdditive(true);
+                    GameShaders.Armor.ApplySecondary(shader, Main.LocalPlayer, null);
                     for (int i = 0; i < NPCID.Sets.TrailCacheLength[NPC.type]; i++)
                     {
                         Vector2 oldPos = NPC.oldPos[i];
                         spriteBatch.Draw(magicAni.Value, oldPos + NPC.Size / 2f - screenPos + new Vector2(0, NPC.gfxOffY), new Rectangle?(new Rectangle(0, magicY, magicAni.Value.Width, magicHeight)), NPC.GetAlpha(shaderColor) * ((NPC.oldPos.Length - i) / (float)NPC.oldPos.Length), NPC.rotation, new Vector2(magicAni.Value.Width / 2f, magicHeight / 2f), NPC.scale, effects, 0);
                     }
                     spriteBatch.End();
-                    spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+                    spriteBatch.BeginDefault();
 
                     if (NPC.RedemptionGuard().GuardPoints > 0)
                         RedeDraw.DrawTreasureBagEffect(Main.spriteBatch, magicAni.Value, ref drawTimer, NPC.Center - screenPos, new Rectangle?(new Rectangle(0, magicY, magicAni.Value.Width, magicHeight)), Color.LightGreen * NPC.Opacity, NPC.rotation, new Vector2(magicAni.Value.Width / 2f, magicHeight / 2f), NPC.scale, effects);

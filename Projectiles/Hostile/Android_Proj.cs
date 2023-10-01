@@ -108,7 +108,7 @@ namespace Redemption.Projectiles.Hostile
             }
         }
         public override void OnHitPlayer(Player target, Player.HurtInfo info) => Projectile.Kill();
-        public override void Kill(int timeLeft)
+        public override void OnKill(int timeLeft)
         {
             SoundEngine.PlaySound(SoundID.Item14, Projectile.position);
             for (int i = 0; i < 10; i++)

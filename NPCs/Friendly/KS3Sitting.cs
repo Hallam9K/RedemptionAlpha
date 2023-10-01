@@ -35,7 +35,7 @@ namespace Redemption.NPCs.Friendly
             Main.npcFrameCount[NPC.type] = 7;
             NPCID.Sets.ActsLikeTownNPC[Type] = true;
             NPCID.Sets.NoTownNPCHappiness[Type] = true;
-            NPCID.Sets.NPCBestiaryDrawModifiers value = new(0)
+            NPCID.Sets.NPCBestiaryDrawModifiers value = new()
             {
                 Hide = true
             };
@@ -134,7 +134,7 @@ namespace Redemption.NPCs.Friendly
                     AITimer = 0;
                 }
                 if (AITimer == 330)
-                    NPC.Shoot(new Vector2(NPC.Center.X - 80, NPC.Center.Y - 50), ModContent.ProjectileType<KS3Sitting_Hologram>(), 0, Vector2.Zero, false, SoundID.Item1, Main.rand.Next(4));
+                    NPC.Shoot(new Vector2(NPC.Center.X - 80, NPC.Center.Y - 50), ModContent.ProjectileType<KS3Sitting_Hologram>(), 0, Vector2.Zero, Main.rand.Next(4));
             }
         }
 

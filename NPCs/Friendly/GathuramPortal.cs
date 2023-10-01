@@ -8,6 +8,8 @@ using System;
 using Terraria.Audio;
 using ParticleLibrary;
 using Redemption.Particles;
+using Redemption.Dusts;
+using Redemption.Globals;
 
 namespace Redemption.NPCs.Friendly
 {
@@ -17,7 +19,7 @@ namespace Redemption.NPCs.Friendly
         public override void SetStaticDefaults()
         {
             // DisplayName.SetDefault("Mysterious Gateway");
-            NPCID.Sets.NPCBestiaryDrawModifiers value = new(0)
+            NPCID.Sets.NPCBestiaryDrawModifiers value = new()
             {
                 Hide = true
             };
@@ -55,7 +57,7 @@ namespace Redemption.NPCs.Friendly
         {
             NPC.dontTakeDamage = true;
             NPC.rotation += .02f;
-
+            NPC.velocity *= 0f;
             if (Vector2.Distance(Main.screenPosition + new Vector2(Main.screenWidth / 2, Main.screenHeight / 2), NPC.Center) <= Main.screenWidth / 2 + 100)
             {
                 if (NPC.ai[0]++ % 20 == 0)
@@ -82,12 +84,12 @@ namespace Redemption.NPCs.Friendly
         {
             Texture2D texture = TextureAssets.Npc[NPC.type].Value;
             spriteBatch.End();
-            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+            spriteBatch.BeginAdditive();
 
             spriteBatch.Draw(texture, NPC.Center - Main.screenPosition, NPC.frame, NPC.GetAlpha(Color.CornflowerBlue), -NPC.rotation, NPC.frame.Size() / 2, NPC.scale * 1.8f, SpriteEffects.None, 0f);
 
             spriteBatch.End();
-            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+            spriteBatch.BeginDefault();
 
             spriteBatch.Draw(texture, NPC.Center - Main.screenPosition, NPC.frame, NPC.GetAlpha(Color.CornflowerBlue), NPC.rotation, NPC.frame.Size() / 2, NPC.scale * 1.1f, SpriteEffects.None, 0f);
 
@@ -98,7 +100,7 @@ namespace Redemption.NPCs.Friendly
             spriteBatch.Draw(extra, NPC.Center - screenPos, null, Color.LightBlue * NPC.Opacity * .1f, -NPC.rotation * 2.5f, new Vector2(extra.Width / 2, extra.Height / 2), NPC.scale * .5f, 0, 0f);
 
             spriteBatch.End();
-            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+            spriteBatch.BeginDefault();
             return false;
         }
     }

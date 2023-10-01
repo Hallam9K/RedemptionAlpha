@@ -47,7 +47,7 @@ namespace Redemption.NPCs.Lab.MACE
         }
 
         public override Color? GetAlpha(Color lightColor) => Color.White;
-        public override void Kill(int timeLeft)
+        public override void OnKill(int timeLeft)
         {
             if (!Main.dedServ)
                 SoundEngine.PlaySound(CustomSounds.Zap1, Projectile.position);

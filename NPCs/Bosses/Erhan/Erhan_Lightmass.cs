@@ -13,7 +13,7 @@ namespace Redemption.NPCs.Bosses.Erhan
 {
     public class Erhan_Lightmass : ModProjectile
     {
-        public override string Texture => "Redemption/" + Redemption.WhiteFlare.Name;
+        public override string Texture => "Redemption/Textures/WhiteFlare";
         public override void SetStaticDefaults()
         {
             // DisplayName.SetDefault("Lightmass");
@@ -42,35 +42,44 @@ namespace Redemption.NPCs.Bosses.Erhan
         private DanTrail trail2;
         private float thickness = 1f;
 
+        private Vector2 origin;
         public override void AI()
         {
             thickness = Projectile.scale;
             if (Projectile.timeLeft >= 150)
+            {
                 Projectile.velocity *= 0.98f;
+                origin = Projectile.Center;
+            }
             else if (Projectile.timeLeft >= 100 && Projectile.timeLeft < 150)
             {
-                Vector2 move = Vector2.Zero;
-                float distance = 4000f;
-                bool targetted = false;
-                for (int p = 0; p < Main.maxPlayers; p++)
-                {
-                    Player target = Main.player[p];
-                    if (!target.active || target.dead || target.invis || !Collision.CanHit(Projectile.Center, 0, 0, target.Center, 0, 0))
-                        continue;
-
-                    Vector2 newMove = target.Center - Projectile.Center;
-                    float distanceTo = (float)Math.Sqrt(newMove.X * newMove.X + newMove.Y * newMove.Y);
-                    if (distanceTo < distance)
-                    {
-                        move = target.Center;
-                        distance = distanceTo;
-                        targetted = true;
-                    }
-                }
-                if (targetted)
-                    Projectile.Move(move, 30, 50);
+                if (Projectile.ai[0] is 1)
+                    Projectile.Move(origin + new Vector2(0, 300), 30, 50);
                 else
-                    Projectile.velocity *= 0.98f;
+                {
+                    Vector2 move = Vector2.Zero;
+                    float distance = 4000f;
+                    bool targetted = false;
+                    for (int p = 0; p < Main.maxPlayers; p++)
+                    {
+                        Player target = Main.player[p];
+                        if (!target.active || target.dead || target.invis || !Collision.CanHit(Projectile.Center, 0, 0, target.Center, 0, 0))
+                            continue;
+
+                        Vector2 newMove = target.Center - Projectile.Center;
+                        float distanceTo = (float)Math.Sqrt(newMove.X * newMove.X + newMove.Y * newMove.Y);
+                        if (distanceTo < distance)
+                        {
+                            move = target.Center;
+                            distance = distanceTo;
+                            targetted = true;
+                        }
+                    }
+                    if (targetted)
+                        Projectile.Move(move, 30, 50);
+                    else
+                        Projectile.velocity *= 0.98f;
+                }
             }
             if (Main.netMode != NetmodeID.Server)
             {
@@ -104,15 +113,15 @@ namespace Redemption.NPCs.Bosses.Erhan
             Vector2 drawOrigin = new(texture.Width / 2, texture.Height / 2);
 
             Main.spriteBatch.End();
-            Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+            Main.spriteBatch.BeginAdditive();
 
             Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition, null, new Color(255, 255, 120), Projectile.rotation, drawOrigin, Projectile.scale * 0.8f, SpriteEffects.None, 0);
 
             Main.spriteBatch.End();
-            Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+            Main.spriteBatch.BeginDefault();
             return false;
         }
-        public override void Kill(int timeLeft)
+        public override void OnKill(int timeLeft)
         {
             for (int i = 0; i < 8; i++)
             {

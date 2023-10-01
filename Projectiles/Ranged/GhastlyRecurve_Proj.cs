@@ -98,7 +98,7 @@ namespace Redemption.Projectiles.Ranged
         {
             return new Color(255, 255, 255, 0) * Projectile.Opacity;
         }
-        public override void Kill(int timeLeft)
+        public override void OnKill(int timeLeft)
         {
             for (int i = 0; i < 10; i++)
             {

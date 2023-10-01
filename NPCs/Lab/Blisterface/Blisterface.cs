@@ -6,7 +6,6 @@ using System.IO;
 using Redemption.Items.Usable;
 using Redemption.Buffs.Debuffs;
 using Redemption.Globals;
-using Terraria.DataStructures;
 using Redemption.Biomes;
 using Terraria.GameContent.Bestiary;
 using System.Collections.Generic;
@@ -14,6 +13,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Redemption.WorldGeneration;
 using Redemption.Base;
 using Terraria.Localization;
+using Redemption.Globals.NPC;
 
 namespace Redemption.NPCs.Lab.Blisterface
 {
@@ -26,20 +26,10 @@ namespace Redemption.NPCs.Lab.Blisterface
             NPCID.Sets.MPAllowedEnemies[Type] = true;
             NPCID.Sets.BossBestiaryPriority.Add(Type);
 
-            NPCID.Sets.DebuffImmunitySets.Add(Type, new NPCDebuffImmunityData
-            {
-                SpecificallyImmuneTo = new int[] {
-                    BuffID.Confused,
-                    BuffID.Poisoned,
-                    BuffID.Venom,
-                    ModContent.BuffType<BileDebuff>(),
-                    ModContent.BuffType<GreenRashesDebuff>(),
-                    ModContent.BuffType<GlowingPustulesDebuff>(),
-                    ModContent.BuffType<FleshCrystalsDebuff>()
-                }
-            });
+            BuffNPC.NPCTypeImmunity(Type, BuffNPC.NPCDebuffImmuneType.Infected);
+            NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.Confused] = true;
 
-            NPCID.Sets.NPCBestiaryDrawModifiers value = new(0)
+            NPCID.Sets.NPCBestiaryDrawModifiers value = new()
             {
                 Velocity = 1
             };
@@ -112,22 +102,14 @@ namespace Redemption.NPCs.Lab.Blisterface
         }
         public override void SendExtraAI(BinaryWriter writer)
         {
-            base.SendExtraAI(writer);
-            if (Main.netMode == NetmodeID.Server || Main.dedServ)
-            {
-                writer.Write(AITimer[0]);
-                writer.Write(AITimer[1]);
-            }
+            writer.Write(AITimer[0]);
+            writer.Write(AITimer[1]);
         }
 
         public override void ReceiveExtraAI(BinaryReader reader)
         {
-            base.ReceiveExtraAI(reader);
-            if (Main.netMode == NetmodeID.MultiplayerClient)
-            {
-                AITimer[0] = reader.ReadInt32();
-                AITimer[1] = reader.ReadInt32();
-            }
+            AITimer[0] = reader.ReadInt32();
+            AITimer[1] = reader.ReadInt32();
         }
 
         private readonly int[] AITimer = new int[2];
@@ -156,7 +138,8 @@ namespace Redemption.NPCs.Lab.Blisterface
             switch (AITimer[0])
             {
                 case 0:
-                    DespawnHandler();
+                    if (NPC.DespawnHandler(1, 5))
+                        return;
 
                     AITimer[1]++;
                     int jump = NPC.life > NPC.lifeMax / 2 ? 320 : 170;
@@ -171,7 +154,7 @@ namespace Redemption.NPCs.Lab.Blisterface
                     NPC.noTileCollide = false;
                     if (Main.rand.NextBool(20))
                     {
-                        NPC.Shoot(new Vector2(NPC.position.X + Main.rand.Next(0, NPC.width), NPC.position.Y + Main.rand.Next(0, NPC.height)), ModContent.ProjectileType<Blisterface_Bubble>(), 80, Vector2.Zero, true, SoundID.Item111);
+                        NPC.Shoot(new Vector2(NPC.position.X + Main.rand.Next(0, NPC.width), NPC.position.Y + Main.rand.Next(0, NPC.height)), ModContent.ProjectileType<Blisterface_Bubble>(), 80, Vector2.Zero, SoundID.Item111);
                     }
                     if (NPC.CountNPCS(ModContent.NPCType<BlisteredFish2>()) <= 5)
                     {
@@ -191,7 +174,7 @@ namespace Redemption.NPCs.Lab.Blisterface
                     {
                         if (AITimer[1] % 2 == 0)
                         {
-                            NPC.Shoot(new Vector2(NPC.Center.X + 12f * NPC.spriteDirection, NPC.Center.Y), ModContent.ProjectileType<Blisterface_Bubble>(), 80, new Vector2(Main.rand.Next(6, 13) * NPC.spriteDirection, Main.rand.Next(-2, 3)), true, SoundID.NPCDeath13, 0, 1);
+                            NPC.Shoot(new Vector2(NPC.Center.X + 12f * NPC.spriteDirection, NPC.Center.Y), ModContent.ProjectileType<Blisterface_Bubble>(), 80, new Vector2(Main.rand.Next(6, 13) * NPC.spriteDirection, Main.rand.Next(-2, 3)), SoundID.NPCDeath13, 0, 1);
                         }
                     }
                     if (AITimer[1] >= 68)
@@ -208,11 +191,6 @@ namespace Redemption.NPCs.Lab.Blisterface
                     break;
             }
             BaseAI.AIFish(NPC, ref NPC.ai, true);
-        }
-        private bool GlowActive;
-        private int GlowTimer;
-        public override void FindFrame(int frameHeight)
-        {
             if (GlowActive)
             {
                 if (GlowTimer++ > 60)
@@ -221,6 +199,11 @@ namespace Redemption.NPCs.Lab.Blisterface
                     GlowTimer = 0;
                 }
             }
+        }
+        private bool GlowActive;
+        private int GlowTimer;
+        public override void FindFrame(int frameHeight)
+        {
             NPC.frameCounter++;
             if (NPC.frameCounter >= 10)
             {
@@ -237,21 +220,6 @@ namespace Redemption.NPCs.Lab.Blisterface
             Color colour = Color.Lerp(Color.White, Color.White, 1f / GlowTimer * 10f) * (1f / GlowTimer * 10f);
             if (GlowActive)
                 spriteBatch.Draw(glow, NPC.Center - screenPos, NPC.frame, colour, NPC.rotation, NPC.frame.Size() / 2, 1f, effects, 0);
-        }
-        private void DespawnHandler()
-        {
-            Player player = Main.player[NPC.target];
-            if (!player.active || player.dead)
-            {
-                NPC.TargetClosest(false);
-                player = Main.player[NPC.target];
-                if (!player.active || player.dead)
-                {
-                    NPC.alpha += 5;
-                    if (NPC.alpha >= 255)
-                        NPC.active = false;
-                }
-            }
         }
         public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)
         {

@@ -3,8 +3,6 @@ using Microsoft.Xna.Framework.Graphics;
 using ParticleLibrary;
 using Redemption.Base;
 using Redemption.BaseExtension;
-using Redemption.Buffs.Debuffs;
-using Redemption.Buffs.NPCBuffs;
 using Redemption.Dusts;
 using Redemption.Globals;
 using Redemption.Globals.NPC;
@@ -59,16 +57,7 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
             Main.npcFrameCount[NPC.type] = 10;
             NPCID.Sets.AllowDoorInteraction[Type] = true;
 
-            NPCID.Sets.DebuffImmunitySets.Add(Type, new NPCDebuffImmunityData
-            {
-                SpecificallyImmuneTo = new int[] {
-                    ModContent.BuffType<InfestedDebuff>(),
-                    BuffID.Bleeding,
-                    BuffID.Poisoned,
-                    ModContent.BuffType<DirtyWoundDebuff>(),
-                    ModContent.BuffType<NecroticGougeDebuff>()
-                }
-            });
+            BuffNPC.NPCTypeImmunity(Type, BuffNPC.NPCDebuffImmuneType.Inorganic);
         }
         public override void SetSafeDefaults()
         {
@@ -124,7 +113,7 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
         public override void ModifyTypeName(ref string typeName)
         {
             if (NPC.ai[3] != -1)
-                typeName = Main.player[(int)NPC.ai[3]].name + "'s Forest Nymph";
+                typeName = Main.player[(int)NPC.ai[3]].name + "'s " + Lang.GetNPCNameValue(Type);
         }
         public override void OnSpawn(IEntitySource source)
         {
@@ -139,32 +128,26 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
         }
         public override void SendExtraAI(BinaryWriter writer)
         {
-            base.SendExtraAI(writer);
-            if (Main.netMode == NetmodeID.Server || Main.dedServ)
-            {
-                writer.Write(HairExtType);
-                writer.Write(HasHat);
-                writer.Write(EyeType);
-                writer.Write(HairType);
-                writer.Write(FlowerType);
-                writer.WriteVector2(moveTo);
-            }
+            writer.Write(HairExtType);
+            writer.Write(HasHat);
+            writer.Write(EyeType);
+            writer.Write(HairType);
+            writer.Write(FlowerType);
+            writer.WriteVector2(moveTo);
         }
         public override void ReceiveExtraAI(BinaryReader reader)
         {
-            base.ReceiveExtraAI(reader);
-            if (Main.netMode == NetmodeID.MultiplayerClient)
-            {
-                HairExtType = reader.ReadInt32();
-                HasHat = reader.ReadBoolean();
-                EyeType = reader.ReadInt32();
-                HairType = reader.ReadInt32();
-                FlowerType = reader.ReadInt32();
-                moveTo = reader.ReadVector2();
-            }
+            HairExtType = reader.ReadInt32();
+            HasHat = reader.ReadBoolean();
+            EyeType = reader.ReadInt32();
+            HairType = reader.ReadInt32();
+            FlowerType = reader.ReadInt32();
+            moveTo = reader.ReadVector2();
         }
         public override void AI()
         {
+            CustomFrames(94);
+
             Player player = Main.player[(int)NPC.ai[3]];
             RedeNPC globalNPC = NPC.Redemption();
             if (AIState is not ActionState.Alert)
@@ -360,7 +343,7 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
                     if (AITimer == 5)
                     {
                         int tilePosY = BaseWorldGen.GetFirstTileFloor((int)(globalNPC.attacker.Center.X + (globalNPC.attacker.velocity.X * 30)) / 16, (int)(globalNPC.attacker.Bottom.Y / 16) - 2);
-                        NPC.Shoot(new Vector2(globalNPC.attacker.Center.X + (globalNPC.attacker.velocity.X * 30), (tilePosY * 16) + 30), ModContent.ProjectileType<LivingBloomRoot_SS>(), NPC.damage, Vector2.Zero, false, SoundID.Item1);
+                        NPC.Shoot(new Vector2(globalNPC.attacker.Center.X + (globalNPC.attacker.velocity.X * 30), (tilePosY * 16) + 30), ModContent.ProjectileType<LivingBloomRoot_SS>(), NPC.damage, Vector2.Zero);
                         for (int i = 0; i < Main.maxNPCs; i++)
                         {
                             NPC target = Main.npc[i];
@@ -374,7 +357,7 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
                                 continue;
 
                             int tilePosY2 = BaseWorldGen.GetFirstTileFloor((int)(target.Center.X + (target.velocity.X * 30)) / 16, (int)(target.Bottom.Y / 16) - 2);
-                            NPC.Shoot(new Vector2(target.Center.X + (target.velocity.X * 30), (tilePosY2 * 16) + 30), ModContent.ProjectileType<LivingBloomRoot_SS>(), NPC.damage, Vector2.Zero, false, SoundID.Item1);
+                            NPC.Shoot(new Vector2(target.Center.X + (target.velocity.X * 30), (tilePosY2 * 16) + 30), ModContent.ProjectileType<LivingBloomRoot_SS>(), NPC.damage, Vector2.Zero);
                         }
                         for (int p = 0; p < Main.maxPlayers; p++)
                         {
@@ -389,7 +372,7 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
                                 continue;
 
                             int tilePosY2 = BaseWorldGen.GetFirstTileFloor((int)(target.Center.X + (target.velocity.X * 30)) / 16, (int)(target.Bottom.Y / 16) - 2);
-                            NPC.Shoot(new Vector2(target.Center.X + (target.velocity.X * 30), (tilePosY2 * 16) + 30), ModContent.ProjectileType<LivingBloomRoot_SS>(), NPC.damage, Vector2.Zero, false, SoundID.Item1);
+                            NPC.Shoot(new Vector2(target.Center.X + (target.velocity.X * 30), (tilePosY2 * 16) + 30), ModContent.ProjectileType<LivingBloomRoot_SS>(), NPC.damage, Vector2.Zero);
                         }
                     }
                     else if (AITimer >= 40)
@@ -444,96 +427,98 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
                 NPC.alpha = (int)MathHelper.Clamp(NPC.alpha, 0, 30);
             }
         }
+        private void CustomFrames(int frameHeight)
+        {
+            if (AIState is ActionState.Slash)
+            {
+                NPC.rotation = 0;
+
+                if (NPC.frame.Y < 4 * frameHeight)
+                    NPC.frame.Y = 4 * frameHeight;
+
+                NPC.frameCounter++;
+                if (NPC.frameCounter >= 5)
+                {
+                    NPC.frameCounter = 0;
+                    NPC.frame.Y += frameHeight;
+                    if (NPC.frame.Y == 7 * frameHeight)
+                    {
+                        SoundEngine.PlaySound(SoundID.Item71 with { Volume = .7f }, NPC.position);
+                        NPC.velocity.X += 4 * NPC.spriteDirection;
+                    }
+                    if (NPC.frame.Y > 8 * frameHeight)
+                    {
+                        NPC.frame.Y = 0;
+                        NPC.frameCounter = 0;
+                        AIState = ActionState.Attacking;
+                    }
+                }
+                EyeOffset = SetEyeOffset(ref frameHeight);
+                return;
+            }
+        }
         public override bool? CanFallThroughPlatforms() => NPC.Redemption().fallDownPlatform;
         private int EyeFrame;
         private int EyeFrameCounter;
         private int EyeState;
         public override void FindFrame(int frameHeight)
         {
-            if (Main.netMode != NetmodeID.Server)
+            switch (EyeState)
             {
-                switch (EyeState)
+                case 0:
+                    if (EyeFrameCounter++ % 10 == 0)
+                    {
+                        if (EyeFrame >= 2)
+                            EyeFrame = 0;
+                        if (EyeFrame == 1)
+                            EyeFrame++;
+                        if (EyeFrame == 0 && Main.rand.NextBool(20))
+                            EyeFrame = 1;
+                    }
+                    break;
+                case 1:
+                    if (EyeFrameCounter++ % 10 == 0)
+                    {
+                        if (EyeFrame >= 2)
+                            EyeFrame = 2;
+                        if (EyeFrame == 1)
+                            EyeFrame++;
+                        if (EyeFrame == 0)
+                            EyeFrame = 1;
+                    }
+                    break;
+                case 2:
+                    EyeFrame = 1;
+                    break;
+            }
+            if (AIState is ActionState.Slash)
+                return;
+            if (NPC.collideY || NPC.velocity.Y == 0)
+            {
+                NPC.rotation = 0;
+                if (NPC.velocity.X == 0)
+                    NPC.frame.Y = frameHeight;
+                else
                 {
-                    case 0:
-                        if (EyeFrameCounter++ % 10 == 0)
-                        {
-                            if (EyeFrame >= 2)
-                                EyeFrame = 0;
-                            if (EyeFrame == 1)
-                                EyeFrame++;
-                            if (EyeFrame == 0 && Main.rand.NextBool(20))
-                                EyeFrame = 1;
-                        }
-                        break;
-                    case 1:
-                        if (EyeFrameCounter++ % 10 == 0)
-                        {
-                            if (EyeFrame >= 2)
-                                EyeFrame = 2;
-                            if (EyeFrame == 1)
-                                EyeFrame++;
-                            if (EyeFrame == 0)
-                                EyeFrame = 1;
-                        }
-                        break;
-                    case 2:
-                        EyeFrame = 1;
-                        break;
-                }
-                if (AIState is ActionState.Slash)
-                {
-                    NPC.rotation = 0;
+                    if (NPC.frame.Y < frameHeight)
+                        NPC.frame.Y = frameHeight;
 
-                    if (NPC.frame.Y < 4 * frameHeight)
-                        NPC.frame.Y = 4 * frameHeight;
-
-                    NPC.frameCounter++;
-                    if (NPC.frameCounter >= 5)
+                    NPC.frameCounter += NPC.velocity.X * 0.5f;
+                    if (NPC.frameCounter is >= 3 or <= -3)
                     {
                         NPC.frameCounter = 0;
                         NPC.frame.Y += frameHeight;
-                        if (NPC.frame.Y == 7 * frameHeight)
-                        {
-                            SoundEngine.PlaySound(SoundID.Item71 with { Volume = .7f }, NPC.position);
-                            NPC.velocity.X += 4 * NPC.spriteDirection;
-                        }
-                        if (NPC.frame.Y > 8 * frameHeight)
-                        {
-                            NPC.frame.Y = 0;
-                            NPC.frameCounter = 0;
-                            AIState = ActionState.Attacking;
-                        }
-                    }
-                    EyeOffset = SetEyeOffset(ref frameHeight);
-                    return;
-                }
-                if (NPC.collideY || NPC.velocity.Y == 0)
-                {
-                    NPC.rotation = 0;
-                    if (NPC.velocity.X == 0)
-                        NPC.frame.Y = frameHeight;
-                    else
-                    {
-                        if (NPC.frame.Y < frameHeight)
+                        if (NPC.frame.Y > 4 * frameHeight)
                             NPC.frame.Y = frameHeight;
-
-                        NPC.frameCounter += NPC.velocity.X * 0.5f;
-                        if (NPC.frameCounter is >= 3 or <= -3)
-                        {
-                            NPC.frameCounter = 0;
-                            NPC.frame.Y += frameHeight;
-                            if (NPC.frame.Y > 4 * frameHeight)
-                                NPC.frame.Y = frameHeight;
-                        }
                     }
                 }
-                else
-                {
-                    NPC.rotation = NPC.velocity.X * 0.05f;
-                    NPC.frame.Y = 0;
-                }
-                EyeOffset = SetEyeOffset(ref frameHeight);
             }
+            else
+            {
+                NPC.rotation = NPC.velocity.X * 0.05f;
+                NPC.frame.Y = 0;
+            }
+            EyeOffset = SetEyeOffset(ref frameHeight);
         }
         public int GetNearestNPC()
         {
@@ -630,8 +615,8 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
 
             int shader = GameShaders.Armor.GetShaderIdFromItemId(ItemID.WispDye);
             spriteBatch.End();
-            spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
-            GameShaders.Armor.ApplySecondary(shader, Main.player[Main.myPlayer], null);
+            spriteBatch.BeginAdditive(true);
+            GameShaders.Armor.ApplySecondary(shader, Main.LocalPlayer, null);
 
             spriteBatch.Draw(TextureAssets.Npc[NPC.type].Value, pos - screenPos, NPC.frame, NPC.GetAlpha(Color.White), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
 
@@ -680,7 +665,7 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
                 spriteBatch.Draw(tophat.Value, pos - screenPos, null, NPC.GetAlpha(Color.White), NPC.rotation, NPC.frame.Size() / 2 + new Vector2(NPC.spriteDirection == -1 ? -44 : -24, -10) - new Vector2(EyeOffset.X * -NPC.spriteDirection, EyeOffset.Y), NPC.scale, effects, 0);
 
             spriteBatch.End();
-            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+            spriteBatch.BeginDefault();
             return false;
         }
         public override bool CanHitNPC(NPC target) => false;
@@ -712,14 +697,14 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
         {
             int shader = GameShaders.Armor.GetShaderIdFromItemId(ItemID.WispDye);
             Main.spriteBatch.End();
-            Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
-            GameShaders.Armor.ApplySecondary(shader, Main.player[Main.myPlayer], null);
+            Main.spriteBatch.BeginAdditive(true);
+            GameShaders.Armor.ApplySecondary(shader, Main.LocalPlayer, null);
 
             Vector2 drawOrigin = new(Projectile.width / 2, Projectile.height / 2);
             Main.EntitySpriteDraw(TextureAssets.Projectile[Projectile.type].Value, Projectile.Center - Main.screenPosition, null, Projectile.GetAlpha(Color.White), Projectile.rotation, drawOrigin, Projectile.scale, 0, 0);
 
             Main.spriteBatch.End();
-            Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+            Main.spriteBatch.BeginDefault();
             return false;
         }
     }

@@ -28,7 +28,7 @@ namespace Redemption.NPCs.Lab.Janitor
             Main.npcFrameCount[NPC.type] = 5;
             NPCID.Sets.ActsLikeTownNPC[Type] = true;
             NPCID.Sets.NoTownNPCHappiness[Type] = true;
-            NPCID.Sets.NPCBestiaryDrawModifiers value = new(0)
+            NPCID.Sets.NPCBestiaryDrawModifiers value = new()
             {
                 Hide = true
             };

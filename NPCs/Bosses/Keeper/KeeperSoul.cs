@@ -45,7 +45,7 @@ namespace Redemption.NPCs.Bosses.Keeper
                     Projectile.ai[0] = 8;
             }
 
-            if (!Main.player[Main.myPlayer].RedemptionAbility().SpiritwalkerActive)
+            if (!Main.LocalPlayer.RedemptionAbility().SpiritwalkerActive)
             {
                 spiritOpacity -= .1f;
                 RedeSystem.Silence = true;
@@ -61,7 +61,7 @@ namespace Redemption.NPCs.Bosses.Keeper
                 Projectile.rotation += .02f;
                 Projectile.scale = MathHelper.Min(Projectile.scale, 1);
                 Projectile.alpha = (int)MathHelper.Max(Projectile.alpha, 0);
-                if (!Main.player[Main.myPlayer].RedemptionAbility().SpiritwalkerActive)
+                if (!Main.LocalPlayer.RedemptionAbility().SpiritwalkerActive)
                 {
                     for (int k = 0; k < 6; k++)
                     {
@@ -97,24 +97,24 @@ namespace Redemption.NPCs.Bosses.Keeper
         private float spiritOpacity;
         public override bool PreDraw(ref Color lightColor)
         {
-            if (!Main.player[Main.myPlayer].RedemptionAbility().SpiritwalkerActive && spiritOpacity <= 0)
+            if (!Main.LocalPlayer.RedemptionAbility().SpiritwalkerActive && spiritOpacity <= 0)
                 return false;
 
             Texture2D texture = ModContent.Request<Texture2D>("Redemption/NPCs/Friendly/SoullessPortal").Value;
             Texture2D flare = ModContent.Request<Texture2D>("Redemption/Textures/WhiteFlare").Value;
             Texture2D keeper = ModContent.Request<Texture2D>("Redemption/NPCs/Bosses/Keeper/Keeper_Closure").Value;
             Main.spriteBatch.End();
-            Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+            Main.spriteBatch.BeginAdditive();
 
             Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition, null, lightColor * Projectile.Opacity * spiritOpacity, -Projectile.rotation, new Vector2(texture.Width / 2, texture.Height / 2), Projectile.scale * 1.2f, 0, 0);
 
             Main.spriteBatch.End();
-            Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+            Main.spriteBatch.BeginDefault();
 
             Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition, null, lightColor * Projectile.Opacity * spiritOpacity, Projectile.rotation, new Vector2(texture.Width / 2, texture.Height / 2), Projectile.scale, 0, 0);
 
             Main.spriteBatch.End();
-            Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+            Main.spriteBatch.BeginAdditive();
 
             Main.EntitySpriteDraw(flare, Projectile.Center - new Vector2(10, 20) - Main.screenPosition, null, Color.White * Projectile.Opacity * spiritOpacity, 0, new Vector2(flare.Width / 2, flare.Height / 2), Projectile.scale * .5f, 0, 0);
             Main.EntitySpriteDraw(flare, Projectile.Center - new Vector2(-10, 20) - Main.screenPosition, null, Color.White * Projectile.Opacity * spiritOpacity, 0, new Vector2(flare.Width / 2, flare.Height / 2), Projectile.scale * .5f, 0, 0);
@@ -126,10 +126,10 @@ namespace Redemption.NPCs.Bosses.Keeper
             Main.EntitySpriteDraw(keeper, Projectile.Center - Main.screenPosition, new Rectangle?(rect), Color.White * Projectile.Opacity * spiritOpacity, 0, origin, 2, 0, 0);
 
             Main.spriteBatch.End();
-            Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+            Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullNone, null, Main.GameViewMatrix.TransformationMatrix);
             return false;
         }
-        public override void Kill(int timeleft)
+        public override void OnKill(int timeLeft)
         {
             int dustType = DustID.AncientLight;
             int pieCut = 40;
@@ -140,8 +140,6 @@ namespace Redemption.NPCs.Bosses.Keeper
                 Main.dust[dustID].noLight = false;
                 Main.dust[dustID].noGravity = true;
             }
-            if (Main.netMode != NetmodeID.SinglePlayer)
-                NetMessage.SendData(MessageID.WorldData);
         }
     }
 }

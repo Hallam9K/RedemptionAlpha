@@ -24,7 +24,7 @@ namespace Redemption.NPCs.FowlMorning
         public override void SetStaticDefaults()
         {
             Main.npcFrameCount[NPC.type] = 10;
-            NPCID.Sets.NPCBestiaryDrawModifiers value = new(0) { Velocity = 1f };
+            NPCID.Sets.NPCBestiaryDrawModifiers value = new() { Velocity = 1f };
             NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, value);
         }
         public override void SetDefaults()
@@ -49,9 +49,10 @@ namespace Redemption.NPCs.FowlMorning
             Player player = Main.player[NPC.target];
             NPC.TargetClosest();
             NPC.LookByVelocity();
-            DespawnHandler();
+            if (NPC.DespawnHandler(3))
+                return;
 
-            if (Main.rand.NextBool(3000))
+            if (Main.rand.NextBool(3000) && !Main.dedServ)
                 SoundEngine.PlaySound(CustomSounds.ChickenCluck, NPC.position);
 
             NPC.PlatformFallCheck(ref NPC.Redemption().fallDownPlatform);
@@ -124,7 +125,7 @@ namespace Redemption.NPCs.FowlMorning
         }
         public override bool PreKill()
         {
-            if (FowlMorningWorld.FowlMorningActive)
+            if (FowlMorningWorld.FowlMorningActive && Main.netMode != NetmodeID.MultiplayerClient)
             {
                 FowlMorningWorld.ChickPoints += Main.expertMode ? 2 : 1;
                 if (Main.netMode == NetmodeID.Server)

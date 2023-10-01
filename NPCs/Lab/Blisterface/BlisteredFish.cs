@@ -3,9 +3,9 @@ using Microsoft.Xna.Framework.Graphics;
 using Redemption.Biomes;
 using Redemption.Buffs.Debuffs;
 using Redemption.Globals;
+using Redemption.Globals.NPC;
 using System.Collections.Generic;
 using Terraria;
-using Terraria.DataStructures;
 using Terraria.GameContent.Bestiary;
 using Terraria.ID;
 using Terraria.Localization;
@@ -21,20 +21,11 @@ namespace Redemption.NPCs.Lab.Blisterface
             Main.npcFrameCount[NPC.type] = 6;
             NPCID.Sets.DontDoHardmodeScaling[Type] = true;
             NPCID.Sets.CantTakeLunchMoney[Type] = true;
-            NPCID.Sets.DebuffImmunitySets.Add(Type, new NPCDebuffImmunityData
-            {
-                SpecificallyImmuneTo = new int[] {
-                    BuffID.Poisoned,
-                    ModContent.BuffType<BileDebuff>(),
-                    ModContent.BuffType<GreenRashesDebuff>(),
-                    ModContent.BuffType<GlowingPustulesDebuff>(),
-                    ModContent.BuffType<FleshCrystalsDebuff>()
-                }
-            });
+            BuffNPC.NPCTypeImmunity(Type, BuffNPC.NPCDebuffImmuneType.Infected);
             if (NPC.type == ModContent.NPCType<BlisteredFish>())
             {
                 NPCID.Sets.BossBestiaryPriority.Add(Type);
-                NPCID.Sets.NPCBestiaryDrawModifiers value = new(0)
+                NPCID.Sets.NPCBestiaryDrawModifiers value = new()
                 {
                     Velocity = 1
                 };
@@ -103,7 +94,7 @@ namespace Redemption.NPCs.Lab.Blisterface
         {
             base.SetStaticDefaults();
             // DisplayName.SetDefault("Blistered Fish");
-            NPCID.Sets.NPCBestiaryDrawModifiers value = new(0) { Hide = true };
+            NPCID.Sets.NPCBestiaryDrawModifiers value = new() { Hide = true };
             NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, value);
         }
         private int Timer;

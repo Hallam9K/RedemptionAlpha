@@ -4,6 +4,7 @@ using Redemption.BaseExtension;
 using Redemption.Buffs.Debuffs;
 using Redemption.Buffs.NPCBuffs;
 using Redemption.Globals;
+using Redemption.Globals.NPC;
 using Redemption.Items.Accessories.PreHM;
 using Redemption.Items.Armor.Vanity;
 using Redemption.Items.Materials.PreHM;
@@ -34,17 +35,8 @@ namespace Redemption.NPCs.Friendly
             Main.npcFrameCount[NPC.type] = 10;
             NPCID.Sets.AllowDoorInteraction[Type] = true;
             NPCID.Sets.NoTownNPCHappiness[Type] = true;
-            NPCID.Sets.DebuffImmunitySets.Add(Type, new NPCDebuffImmunityData
-            {
-                SpecificallyImmuneTo = new int[] {
-                    ModContent.BuffType<InfestedDebuff>(),
-                    BuffID.Bleeding,
-                    BuffID.Poisoned,
-                    ModContent.BuffType<DirtyWoundDebuff>(),
-                    ModContent.BuffType<NecroticGougeDebuff>()
-                }
-            });
-            NPCID.Sets.NPCBestiaryDrawModifiers value = new(0) { Hide = true };
+            BuffNPC.NPCTypeImmunity(Type, BuffNPC.NPCDebuffImmuneType.Inorganic);
+            NPCID.Sets.NPCBestiaryDrawModifiers value = new() { Hide = true };
             NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, value);
         }
         public override void SetDefaults()
@@ -58,6 +50,13 @@ namespace Redemption.NPCs.Friendly
         public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)
         {
             NPC.lifeMax *= 2;
+            NPC.damage *= 2;
+            NPC.defense *= 2;
+        }
+        public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
+        {
+            if (Main.hardMode)
+                modifiers.FinalDamage *= 2;
         }
         public override bool UsesPartyHat() => false;
         public override bool CanChat() => AIState <= ActionState.Wander;
@@ -87,6 +86,8 @@ namespace Redemption.NPCs.Friendly
                 {
                     NPC.lifeMax *= Main.masterMode ? 3 : 2;
                     NPC.life = NPC.lifeMax;
+                    NPC.damage *= Main.masterMode ? 3 : 2;
+                    NPC.defense *= Main.masterMode ? 3 : 2;
                 }
                 SetStats();
                 if (RedeQuest.forestNymphVar > 1)
@@ -569,11 +570,11 @@ namespace Redemption.NPCs.Friendly
         public override void LoadData(TagCompound tag)
         {
             Personality = (PersonalityState)tag.GetInt("Personality");
-            EyeType = tag.GetInt("EyeType");
-            HairExtType = tag.GetInt("HairExtType");
-            HairType = tag.GetInt("HairType");
+            EyeType = tag.GetByte("EyeType");
+            HairExtType = tag.GetByte("HairExtType");
+            HairType = tag.GetByte("HairType");
             HasHat = tag.GetBool("HasHat");
-            FlowerType = tag.GetInt("FlowerType");
+            FlowerType = tag.GetByte("FlowerType");
         }
 
         public override void SaveData(TagCompound tag)

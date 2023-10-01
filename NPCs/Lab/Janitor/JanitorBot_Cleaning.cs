@@ -1,7 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Redemption.Globals;
 using Redemption.Items.Usable;
-using Redemption.NPCs.Lab.Volt;
+using Redemption.Textures;
 using Redemption.UI.ChatUI;
 using Terraria;
 using Terraria.Audio;
@@ -22,7 +23,7 @@ namespace Redemption.NPCs.Lab.Janitor
             // DisplayName.SetDefault("The Janitor");
             Main.npcFrameCount[NPC.type] = 5;
             NPCID.Sets.DontDoHardmodeScaling[Type] = true;
-            NPCID.Sets.NPCBestiaryDrawModifiers value = new(0) { Hide = true };
+            NPCID.Sets.NPCBestiaryDrawModifiers value = new() { Hide = true };
             NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, value);
         }
 
@@ -40,13 +41,12 @@ namespace Redemption.NPCs.Lab.Janitor
             NPC.npcSlots = 0;
             NPC.netAlways = true;
         }
-        SoundStyle voice;
+        private static readonly SoundStyle voice = CustomSounds.Voice6 with { Pitch = 0.2f };
         public override void AI()
         {
             Player player = Main.player[RedeHelper.GetNearestAlivePlayer(NPC)];
             if (NPC.target < 0 || NPC.target == 255 || player.dead || !player.active)
                 NPC.TargetClosest();
-            voice = CustomSounds.Voice6 with { Pitch = 0.2f };
             switch (State)
             {
                 case 0:
@@ -97,7 +97,7 @@ namespace Redemption.NPCs.Lab.Janitor
                     AITimer++;
                     if (AITimer == 30 && !Main.dedServ)
                     {
-                        DialogueChain chain = new(); 
+                        DialogueChain chain = new();
                         chain.Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.Janitor.Start.1"), Colors.RarityYellow, new Color(100, 86, 0), voice, .03f, 2f, 0, false))
                              .Add(new(NPC, ".[0.1].[0.1].[0.1]", Colors.RarityYellow, new Color(100, 86, 0), voice, .03f, 2f, 0, false))
                              .Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.Janitor.Start.2"), Colors.RarityYellow, new Color(100, 86, 0), voice, .03f, 2f, .5f, true, endID: 1));

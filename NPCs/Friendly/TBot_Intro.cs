@@ -7,8 +7,6 @@ using Redemption.Globals;
 using Terraria.Audio;
 using Redemption.BaseExtension;
 using Redemption.Base;
-using Microsoft.Xna.Framework.Graphics;
-using ReLogic.Content;
 using Redemption.Dusts;
 using Terraria.GameContent.UI;
 using Redemption.UI.ChatUI;
@@ -23,7 +21,7 @@ namespace Redemption.NPCs.Friendly
         {
             // DisplayName.SetDefault("Adam");
             Main.npcFrameCount[Type] = 15;
-            NPCID.Sets.NPCBestiaryDrawModifiers value = new(0) { Hide = true };
+            NPCID.Sets.NPCBestiaryDrawModifiers value = new() { Hide = true };
             NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, value);
         }
 
@@ -195,14 +193,7 @@ namespace Redemption.NPCs.Friendly
 
             if (!playerTBot && AITimer >= 3000 && TimerRand == 4)
                 return;
-            if (RedeConfigClient.Instance.CameraLockDisable)
-                return;
-            player.RedemptionScreen().ScreenFocusPosition = NPC.Center;
-            player.RedemptionScreen().lockScreen = true;
-            player.RedemptionScreen().cutscene = true;
-            NPC.LockMoveRadius(player);
-            Terraria.Graphics.Effects.Filters.Scene["MoR:FogOverlay"]?.GetShader().UseOpacity(1f).UseIntensity(1f).UseColor(Color.Black).UseImage(ModContent.Request<Texture2D>("Redemption/Effects/Vignette", AssetRequestMode.ImmediateLoad).Value);
-            player.ManageSpecialBiomeVisuals("MoR:FogOverlay", true);
+            ScreenPlayer.CutsceneLock(player, NPC, ScreenPlayer.CutscenePriority.Medium, 1200, 2400, 1200);
         }
         private void Chain_OnSymbolTrigger(Dialogue dialogue, string signature)
         {

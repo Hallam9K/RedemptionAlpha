@@ -7,7 +7,6 @@ using Redemption.Globals.NPC;
 using Redemption.Items.Accessories.HM;
 using Redemption.Items.Placeable.Banners;
 using Terraria;
-using Terraria.Localization;
 using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameContent;
@@ -22,6 +21,7 @@ using Redemption.Items.Weapons.HM.Ranged;
 using Redemption.Items.Armor.Vanity.Intruder;
 using Redemption.Projectiles.Hostile;
 using System.IO;
+using Terraria.Localization;
 
 namespace Redemption.NPCs.Wasteland
 {
@@ -48,17 +48,9 @@ namespace Redemption.NPCs.Wasteland
         {
             Main.npcFrameCount[NPC.type] = 10;
             NPCID.Sets.ShimmerTransformToNPC[NPC.type] = NPCID.DesertGhoul;
-            NPCID.Sets.DebuffImmunitySets.Add(Type, new NPCDebuffImmunityData
-            {
-                SpecificallyImmuneTo = new int[] {
-                    BuffID.Poisoned,
-                    ModContent.BuffType<BileDebuff>(),
-                    ModContent.BuffType<GreenRashesDebuff>(),
-                    ModContent.BuffType<GlowingPustulesDebuff>(),
-                    ModContent.BuffType<FleshCrystalsDebuff>()
-                }
-            });
-            NPCID.Sets.NPCBestiaryDrawModifiers value = new(0)
+            BuffNPC.NPCTypeImmunity(Type, BuffNPC.NPCDebuffImmuneType.Infected);
+
+            NPCID.Sets.NPCBestiaryDrawModifiers value = new()
             {
                 Velocity = 1f
             };
@@ -84,15 +76,11 @@ namespace Redemption.NPCs.Wasteland
         }
         public override void SendExtraAI(BinaryWriter writer)
         {
-            base.SendExtraAI(writer);
-            if (Main.netMode == NetmodeID.Server || Main.dedServ)
-                writer.WriteVector2(moveTo);
+            writer.WriteVector2(moveTo);
         }
         public override void ReceiveExtraAI(BinaryReader reader)
         {
-            base.ReceiveExtraAI(reader);
-            if (Main.netMode == NetmodeID.MultiplayerClient)
-                moveTo = reader.ReadVector2();
+            moveTo = reader.ReadVector2();
         }
         private Vector2 moveTo;
         private int runCooldown;
@@ -108,7 +96,7 @@ namespace Redemption.NPCs.Wasteland
             NPC.TargetClosest();
             NPC.LookByVelocity();
 
-            if (Main.rand.NextBool(1000))
+            if (Main.rand.NextBool(1000) && !Main.dedServ)
                 SoundEngine.PlaySound(new("Terraria/Sounds/Zombie_" + Main.rand.Next(55, 57)), NPC.position);
 
             switch (AIState)
@@ -193,7 +181,7 @@ namespace Redemption.NPCs.Wasteland
                             Main.dust[dustIndex].velocity *= 10f;
                         }
                         for (int i = 0; i < 16; i++)
-                            NPC.Shoot(NPC.Center, ModContent.ProjectileType<OozeBall_Proj>(), NPC.damage, RedeHelper.SpreadUp(12), false, SoundID.Item, NPC.whoAmI);
+                            NPC.Shoot(NPC.Center, ModContent.ProjectileType<OozeBall_Proj>(), NPC.damage, RedeHelper.SpreadUp(12), NPC.whoAmI);
                         player.ApplyDamageToNPC(NPC, 9999, 0, 0, false);
                     }
                     break;

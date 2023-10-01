@@ -20,7 +20,7 @@ namespace Redemption.NPCs.Minibosses.FowlEmperor
         {
             Main.npcFrameCount[NPC.type] = 13;
 
-            NPCID.Sets.NPCBestiaryDrawModifiers value = new(0)
+            NPCID.Sets.NPCBestiaryDrawModifiers value = new()
             {
                 Velocity = 1f,
                 Position = new Vector2(0, 0),
@@ -73,12 +73,14 @@ namespace Redemption.NPCs.Minibosses.FowlEmperor
         public override bool? CanBeHitByProjectile(Projectile projectile) => NPC.scale <= 1.1f ? null : false;
         public override void AI()
         {
+            CustomFrames(40);
+
             NPC fowl = Main.npc[(int)NPC.ai[3]];
             Player player = Main.player[fowl.target];
             NPC.TargetClosest();
             NPC.LookByVelocity();
 
-            if (Main.rand.NextBool(1000))
+            if (Main.rand.NextBool(1000) && !Main.dedServ)
                 SoundEngine.PlaySound(CustomSounds.ChickenCluck, NPC.position);
 
             switch (NPC.ai[0])
@@ -143,13 +145,12 @@ namespace Redemption.NPCs.Minibosses.FowlEmperor
                         NPC.velocity.X *= 0.9f;
 
                     if (NPC.ai[2] == 55)
-                        NPC.Shoot(NPC.Center, ModContent.ProjectileType<Chickadier_Bomb>(), NPC.damage, NPC.DirectionTo(player.Center) * Main.rand.Next(8, 13) - new Vector2(0, 4), true, SoundID.Item1);
+                        NPC.Shoot(NPC.Center, ModContent.ProjectileType<Chickadier_Bomb>(), NPC.damage, NPC.DirectionTo(player.Center) * Main.rand.Next(8, 13) - new Vector2(0, 4), SoundID.Item1);
                     break;
             }
             NPC.scale = MathHelper.Max(1, NPC.scale);
         }
-        public override bool? CanFallThroughPlatforms() => NPC.Redemption().fallDownPlatform;
-        public override void FindFrame(int frameHeight)
+        private void CustomFrames(int frameHeight)
         {
             if (NPC.ai[0] is 2)
             {
@@ -171,6 +172,12 @@ namespace Redemption.NPCs.Minibosses.FowlEmperor
                 }
                 return;
             }
+        }
+        public override bool? CanFallThroughPlatforms() => NPC.Redemption().fallDownPlatform;
+        public override void FindFrame(int frameHeight)
+        {
+            if (NPC.ai[0] is 2)
+                return;
             if (NPC.velocity.Y == 0)
             {
                 NPC.rotation = 0;

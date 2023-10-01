@@ -111,7 +111,7 @@ namespace Redemption.Projectiles.Magic
                 Main.projectile[proj].netUpdate = true;
             }
         }
-        public override void Kill(int timeLeft)
+        public override void OnKill(int timeLeft)
         {
             SoundEngine.PlaySound(SoundID.NPCDeath43, Projectile.position);
             if (!Main.dedServ)

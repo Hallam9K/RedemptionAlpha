@@ -64,7 +64,7 @@ namespace Redemption.Projectiles.Ranged
             if (fakeTimer >= 60)
                 Projectile.Kill();
         }
-        public override void Kill(int timeLeft)
+        public override void OnKill(int timeLeft)
         {
             if (fakeTimer > 0)
                 return;

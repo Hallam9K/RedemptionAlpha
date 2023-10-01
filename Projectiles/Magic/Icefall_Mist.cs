@@ -141,7 +141,7 @@ namespace Redemption.Projectiles.Magic
             if (Projectile.scale >= 1)
                 Projectile.velocity.Y += 0.2f;
         }
-        public override void Kill(int timeLeft)
+        public override void OnKill(int timeLeft)
         {
             SoundEngine.PlaySound(SoundID.Item27, Projectile.position);
             for (int i = 0; i < 14; i++)

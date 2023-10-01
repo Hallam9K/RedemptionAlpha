@@ -53,7 +53,7 @@ namespace Redemption.NPCs.Bosses.Gigapora
             Color dustColor2 = new(204, 15, 20) { A = 0 };
             Main.dust[dust2].color = dustColor2;
         }
-        public override void Kill(int timeLeft)
+        public override void OnKill(int timeLeft)
         {
             for (int i = 0; i < 3; i++)
                 ParticleManager.NewParticle(Projectile.Center, RedeHelper.SpreadUp(1), new EmberParticle(), Color.White, 3);

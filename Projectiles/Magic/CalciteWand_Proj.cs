@@ -40,7 +40,7 @@ namespace Redemption.Projectiles.Magic
                 Projectile.velocity.Y += 0.3f;
             }
         }
-        public override void Kill(int timeLeft)
+        public override void OnKill(int timeLeft)
         {
             SoundEngine.PlaySound(SoundID.Tink, Projectile.position);
             for (int i = 0; i < 6; i++)

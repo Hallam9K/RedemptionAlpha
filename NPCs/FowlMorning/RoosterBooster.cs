@@ -16,6 +16,7 @@ using Redemption.Buffs.NPCBuffs;
 using Redemption.Biomes;
 using Redemption.Items.Accessories.PreHM;
 using Redemption.Items.Placeable.Banners;
+using Redemption.Items.Weapons.PreHM.Summon;
 using Terraria.Localization;
 
 namespace Redemption.NPCs.FowlMorning
@@ -25,7 +26,7 @@ namespace Redemption.NPCs.FowlMorning
         public override void SetStaticDefaults()
         {
             Main.npcFrameCount[NPC.type] = 12;
-            NPCID.Sets.NPCBestiaryDrawModifiers value = new(0) { Velocity = 1f };
+            NPCID.Sets.NPCBestiaryDrawModifiers value = new() { Velocity = 1f };
             NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, value);
         }
         public override void SetDefaults()
@@ -56,16 +57,18 @@ namespace Redemption.NPCs.FowlMorning
             Player player = Main.player[NPC.target];
             NPC.TargetClosest();
             NPC.LookByVelocity();
-            DespawnHandler();
+            if (NPC.DespawnHandler(3))
+                return;
 
-            if (Main.rand.NextBool(3000))
+            if (Main.rand.NextBool(3000) && !Main.dedServ)
                 SoundEngine.PlaySound(CustomSounds.ChickenCluck with { Pitch = -.1f }, NPC.position);
 
             if (NPC.ai[1]++ >= NPC.localAI[0] && BaseAI.HitTileOnSide(NPC, 3))
             {
                 if (!rawr)
                 {
-                    SoundEngine.PlaySound(CustomSounds.RoosterRoar with { Volume = .3f }, NPC.position);
+                    if (!Main.dedServ)
+                        SoundEngine.PlaySound(CustomSounds.RoosterRoar with { Volume = .3f }, NPC.position);
                     rawr = true;
                 }
                 NPC.velocity.X *= .8f;
@@ -175,7 +178,7 @@ namespace Redemption.NPCs.FowlMorning
         }
         public override bool PreKill()
         {
-            if (FowlMorningWorld.FowlMorningActive)
+            if (FowlMorningWorld.FowlMorningActive && Main.netMode != NetmodeID.MultiplayerClient)
             {
                 FowlMorningWorld.ChickPoints += Main.expertMode ? 6 : 3;
                 if (Main.netMode == NetmodeID.Server)
@@ -185,7 +188,7 @@ namespace Redemption.NPCs.FowlMorning
         }
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
-            //npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Halbirdhouse>(), 60));
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<DawnHerald>(), 60));
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Grain>(), 200));
             npcLoot.Add(ItemDropRule.ByCondition(new OnFireCondition(), ModContent.ItemType<FriedChicken>(), 4));
         }

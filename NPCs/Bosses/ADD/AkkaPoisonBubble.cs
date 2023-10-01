@@ -1,6 +1,5 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Redemption.Base;
 using Redemption.Globals;
 using Terraria;
 using Terraria.Audio;
@@ -36,22 +35,12 @@ namespace Redemption.NPCs.Bosses.ADD
             if (Projectile.timeLeft < 60)
                 teleAlpha += 0.016f;
         }
-        public override void Kill(int timeLeft)
+        public override void OnKill(int timeLeft)
         {
             Projectile.hostile = true;
             SoundEngine.PlaySound(SoundID.Item54, Projectile.position);
-            for (int i = 0; i < Main.maxPlayers; i++)
-            {
-                Player target = Main.player[i];
-                if (!target.active || target.dead)
-                    continue;
+            RedeHelper.PlayerRadiusDamage(120, Projectile, NPCHelper.HostileProjDamageInc(Projectile.damage), Projectile.knockBack);
 
-                if (Projectile.DistanceSQ(target.Center) > 120 * 120)
-                    continue;
-
-                int hitDirection = target.RightOfDir(Projectile);
-                BaseAI.DamagePlayer(target, Projectile.damage * 4, Projectile.knockBack, hitDirection, Projectile);
-            }
             for (int i = 0; i < 20; i++)
             {
                 int dustIndex = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.PurpleCrystalShard, Scale: 2);
@@ -65,12 +54,12 @@ namespace Redemption.NPCs.Bosses.ADD
             Vector2 position = Projectile.Center - Main.screenPosition;
             Vector2 origin = new(telegraph.Width / 2f, telegraph.Height / 2f);
             Main.spriteBatch.End();
-            Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+            Main.spriteBatch.BeginAdditive();
 
             Main.EntitySpriteDraw(telegraph, position, null, Color.MediumPurple * teleAlpha, Projectile.rotation, origin, Projectile.scale * 0.6f, 0, 0);
 
             Main.spriteBatch.End();
-            Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+            Main.spriteBatch.BeginDefault();
             return true;
         }
     }

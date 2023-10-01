@@ -21,7 +21,7 @@ namespace Redemption.Buffs.Pets
 
 			if (player.whoAmI == Main.myPlayer && player.ownedProjectileCounts[projType] <= 0)
 			{
-				Projectile.NewProjectile(player.GetSource_Buff(buffIndex), player.Center, Vector2.Zero, projType, 0, 0f, player.whoAmI);
+				Projectile.NewProjectile(player.GetSource_Buff(buffIndex), player.Center, new Vector2(4, -30), projType, 0, 0f, player.whoAmI);
 			}
 		}
 	}

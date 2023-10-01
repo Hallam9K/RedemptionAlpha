@@ -40,12 +40,7 @@ namespace Redemption.Buffs.Debuffs
                 player.velocity.Y = player.maxFallSpeed;
 
             player.sandStorm = false;
-            player.canJumpAgain_Cloud = false;
-            player.canJumpAgain_Sandstorm = false;
-            player.canJumpAgain_Blizzard = false;
-            player.canJumpAgain_Fart = false;
-            player.canJumpAgain_Sail = false;
-            player.canJumpAgain_Unicorn = false;
+            player.blockExtraJumps = true;
             if (player.mount.Active)
                 player.mount.Dismount(player);
 

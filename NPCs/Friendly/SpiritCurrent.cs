@@ -20,7 +20,7 @@ namespace Redemption.NPCs.Friendly
         public override string Texture => "Redemption/NPCs/Friendly/SoullessPortal";
         public override void SetStaticDefaults()
         {
-            NPCID.Sets.NPCBestiaryDrawModifiers value = new(0) { Hide = true };
+            NPCID.Sets.NPCBestiaryDrawModifiers value = new() { Hide = true };
             NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, value);
         }
         public override void SetDefaults()
@@ -44,7 +44,7 @@ namespace Redemption.NPCs.Friendly
         private Player zoomer;
         public override void AI()
         {
-            if (!Main.player[Main.myPlayer].RedemptionAbility().SpiritwalkerActive)
+            if (!Main.LocalPlayer.RedemptionAbility().SpiritwalkerActive)
             {
                 NPC.alpha += 10;
                 if (NPC.alpha >= 255)
@@ -146,7 +146,8 @@ namespace Redemption.NPCs.Friendly
                             Main.dust[dust].color = dustColor;
                         }
                         zoomer = player;
-                        SoundEngine.PlaySound(CustomSounds.PortalWub with { Volume = 1 });
+                        if (!Main.dedServ)
+                            SoundEngine.PlaySound(CustomSounds.PortalWub with { Volume = 1 });
                         NPC.ai[0] = 3;
                     }
                     break;
@@ -208,20 +209,20 @@ namespace Redemption.NPCs.Friendly
             var effects = NPC.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
             int shader = GameShaders.Armor.GetShaderIdFromItemId(ItemID.WispDye);
             spriteBatch.End();
-            spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
-            GameShaders.Armor.ApplySecondary(shader, Main.player[Main.myPlayer], null);
+            spriteBatch.BeginAdditive(true);
+            GameShaders.Armor.ApplySecondary(shader, Main.LocalPlayer, null);
 
             spriteBatch.Draw(texture, NPC.Center - screenPos, NPC.frame, drawColor * NPC.Opacity, -NPC.rotation, NPC.frame.Size() / 2, NPC.scale * 1.2f, effects, 0f);
             spriteBatch.Draw(texture, NPC.Center - screenPos, NPC.frame, drawColor * NPC.Opacity, NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0f);
 
             spriteBatch.End();
-            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+            spriteBatch.BeginDefault();
 
             spriteBatch.Draw(extra, NPC.Center - screenPos, null, Color.White * NPC.Opacity, -NPC.rotation, new Vector2(extra.Width / 2, extra.Height / 2), NPC.scale, effects, 0f);
             spriteBatch.Draw(extra, NPC.Center - screenPos, null, Color.White * NPC.Opacity * .4f, NPC.rotation, new Vector2(extra.Width / 2, extra.Height / 2), NPC.scale * 2, effects, 0f);
             spriteBatch.Draw(extra, NPC.Center - screenPos, null, Color.White * NPC.Opacity * .2f, -NPC.rotation, new Vector2(extra.Width / 2, extra.Height / 2), NPC.scale * 4, effects, 0f);
             spriteBatch.End();
-            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+            spriteBatch.BeginDefault();
             return false;
         }
     }

@@ -20,7 +20,7 @@ namespace Redemption.Buffs.Debuffs
             player.wingsLogic = 0;
             player.noFallDmg = true;
             player.noBuilding = true;
-
+            player.RemoveAllGrapplingHooks();
             player.controlJump = false;
             player.controlDown = false;
             player.controlLeft = false;
@@ -32,17 +32,8 @@ namespace Redemption.Buffs.Debuffs
             player.gravDir = 1f;
 
             player.velocity.Y += player.gravity;
-            if (player.velocity.Y > player.maxFallSpeed)
-            {
-                player.velocity.Y = player.maxFallSpeed;
-            }
             player.sandStorm = false;
-            player.canJumpAgain_Cloud = false;
-            player.canJumpAgain_Sandstorm = false;
-            player.canJumpAgain_Blizzard = false;
-            player.canJumpAgain_Fart = false;
-            player.canJumpAgain_Sail = false;
-            player.canJumpAgain_Unicorn = false;
+            player.blockExtraJumps = true;
             if (player.mount.Active)
                 player.mount.Dismount(player);
         }

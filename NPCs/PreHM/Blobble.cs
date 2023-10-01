@@ -11,8 +11,6 @@ using Microsoft.Xna.Framework.Graphics;
 using Terraria.GameContent;
 using Terraria.Utilities;
 using Redemption.Items.Placeable.Banners;
-using Redemption.Buffs.Debuffs;
-using Redemption.Buffs.NPCBuffs;
 using Redemption.Globals.NPC;
 using System.IO;
 using Terraria.Localization;
@@ -53,17 +51,9 @@ namespace Redemption.NPCs.PreHM
             // DisplayName.SetDefault("Blobble");
             Main.npcFrameCount[Type] = 3;
             NPCID.Sets.ShimmerTransformToNPC[NPC.type] = NPCID.ShimmerSlime;
-            NPCID.Sets.DebuffImmunitySets.Add(Type, new NPCDebuffImmunityData
-            {
-                SpecificallyImmuneTo = new int[] {
-                    BuffID.Bleeding,
-                    ModContent.BuffType<InfestedDebuff>(),
-                    ModContent.BuffType<NecroticGougeDebuff>(),
-                    ModContent.BuffType<DirtyWoundDebuff>()
-                }
-            });
+            BuffNPC.NPCTypeImmunity(Type, BuffNPC.NPCDebuffImmuneType.NoBlood);
 
-            NPCID.Sets.NPCBestiaryDrawModifiers value = new(0);
+            NPCID.Sets.NPCBestiaryDrawModifiers value = new();
             NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, value);
             ElementID.NPCWater[Type] = true;
         }
@@ -102,15 +92,11 @@ namespace Redemption.NPCs.PreHM
         }
         public override void SendExtraAI(BinaryWriter writer)
         {
-            base.SendExtraAI(writer);
-            if (Main.netMode == NetmodeID.Server || Main.dedServ)
-                writer.Write(Xvel);
+            writer.Write(Xvel);
         }
         public override void ReceiveExtraAI(BinaryReader reader)
         {
-            base.ReceiveExtraAI(reader);
-            if (Main.netMode == NetmodeID.MultiplayerClient)
-                Xvel = reader.ReadInt32();
+            Xvel = reader.ReadInt32();
         }
         public int Xvel;
         public override void OnSpawn(IEntitySource source)
@@ -160,26 +146,24 @@ namespace Redemption.NPCs.PreHM
         public override void FindFrame(int frameHeight)
         {
             if (Main.netMode != NetmodeID.Server)
-            {
                 NPC.frame.Width = TextureAssets.Npc[NPC.type].Width() / 7;
-                NPC.frame.X = NPC.frame.Width * (int)HatType;
-                if (NPC.collideY || NPC.velocity.Y == 0)
+            NPC.frame.X = NPC.frame.Width * (int)HatType;
+            if (NPC.collideY || NPC.velocity.Y == 0)
+            {
+                NPC.rotation = 0;
+                NPC.frameCounter++;
+                if (NPC.frameCounter >= 10)
                 {
-                    NPC.rotation = 0;
-                    NPC.frameCounter++;
-                    if (NPC.frameCounter >= 10)
-                    {
-                        NPC.frameCounter = 0;
-                        NPC.frame.Y += frameHeight;
-                        if (NPC.frame.Y > 2 * frameHeight)
-                            NPC.frame.Y = 0;
-                    }
+                    NPC.frameCounter = 0;
+                    NPC.frame.Y += frameHeight;
+                    if (NPC.frame.Y > 2 * frameHeight)
+                        NPC.frame.Y = 0;
                 }
-                else
-                {
-                    NPC.rotation = NPC.velocity.X * 0.03f;
-                    NPC.frame.Y = 2 * frameHeight;
-                }
+            }
+            else
+            {
+                NPC.rotation = NPC.velocity.X * 0.03f;
+                NPC.frame.Y = 2 * frameHeight;
             }
         }
 
@@ -215,7 +199,7 @@ namespace Redemption.NPCs.PreHM
             if (HatType is HatState.Serb)
                 Item.NewItem(NPC.GetSource_Loot(), NPC.getRect(), ItemID.Marshmallow);
 
-            if (Main.rand.NextBool(2) && !RedeWorld.blobbleSwarm && RedeWorld.blobbleSwarmCooldown <= 0)
+            if (Main.rand.NextBool(2) && !RedeWorld.blobbleSwarm && RedeWorld.blobbleSwarmCooldown <= 0 && Main.netMode != NetmodeID.MultiplayerClient)
             {
                 Main.NewText("A blobble swarm has arrived!", Color.PaleGreen);
                 RedeWorld.blobbleSwarm = true;

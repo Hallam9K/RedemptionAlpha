@@ -14,8 +14,8 @@ using Terraria.GameContent;
 using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
-using Terraria.ModLoader;
 using Terraria.Localization;
+using Terraria.ModLoader;
 
 namespace Redemption.NPCs.PreHM
 {
@@ -39,7 +39,7 @@ namespace Redemption.NPCs.PreHM
             // DisplayName.SetDefault("Dancing Skeleton");
             Main.npcFrameCount[NPC.type] = 36;
 
-            NPCID.Sets.NPCBestiaryDrawModifiers value = new(0);
+            NPCID.Sets.NPCBestiaryDrawModifiers value = new();
 
             NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, value);
         }
@@ -92,21 +92,13 @@ namespace Redemption.NPCs.PreHM
         }
         public override void SendExtraAI(BinaryWriter writer)
         {
-            base.SendExtraAI(writer);
-            if (Main.netMode == NetmodeID.Server || Main.dedServ)
-            {
-                writer.Write(DanceType);
-                writer.Write(DanceSpeed);
-            }
+            writer.Write(DanceType);
+            writer.Write(DanceSpeed);
         }
         public override void ReceiveExtraAI(BinaryReader reader)
         {
-            base.ReceiveExtraAI(reader);
-            if (Main.netMode == NetmodeID.MultiplayerClient)
-            {
-                DanceType = reader.ReadInt32();
-                DanceSpeed = reader.ReadInt32();
-            }
+            DanceType = reader.ReadInt32();
+            DanceSpeed = reader.ReadInt32();
         }
         public override void OnSpawn(IEntitySource source)
         {
@@ -158,61 +150,58 @@ namespace Redemption.NPCs.PreHM
         private int DanceSpeed = 10;
         public override void FindFrame(int frameHeight)
         {
-            if (Main.netMode != NetmodeID.Server)
+            if (NPC.collideY || NPC.velocity.Y == 0)
+                NPC.rotation = 0;
+            else
+                NPC.rotation = NPC.velocity.X * 0.05f;
+
+            if (AIState is ActionState.Trumpet)
             {
-                if (NPC.collideY || NPC.velocity.Y == 0)
-                    NPC.rotation = 0;
-                else
-                    NPC.rotation = NPC.velocity.X * 0.05f;
-
-                if (AIState is ActionState.Trumpet)
-                {
-                    if (++NPC.frameCounter >= 10)
-                    {
-                        NPC.frameCounter = 0;
-                        NPC.frame.Y += frameHeight;
-                        if (NPC.frame.Y > 1 * frameHeight)
-                            NPC.frame.Y = 0 * frameHeight;
-                    }
-                    return;
-                }
-                switch (DanceType)
-                {
-                    case 0:
-                        StartFrame = 2;
-                        EndFrame = 5;
-                        break;
-                    case 1:
-                        StartFrame = 6;
-                        EndFrame = 9;
-                        break;
-                    case 2:
-                        StartFrame = 10;
-                        EndFrame = 15;
-                        break;
-                    case 3:
-                        StartFrame = 16;
-                        EndFrame = 21;
-                        break;
-                    case 4:
-                        StartFrame = 22;
-                        EndFrame = 27;
-                        break;
-                    case 5:
-                        StartFrame = 28;
-                        EndFrame = 35;
-                        break;
-                }
-
-                if (NPC.frame.Y < StartFrame * frameHeight)
-                    NPC.frame.Y = StartFrame * frameHeight;
-                if (++NPC.frameCounter >= DanceSpeed)
+                if (++NPC.frameCounter >= 10)
                 {
                     NPC.frameCounter = 0;
                     NPC.frame.Y += frameHeight;
-                    if (NPC.frame.Y > EndFrame * frameHeight)
-                        NPC.frame.Y = StartFrame * frameHeight;
+                    if (NPC.frame.Y > 1 * frameHeight)
+                        NPC.frame.Y = 0 * frameHeight;
                 }
+                return;
+            }
+            switch (DanceType)
+            {
+                case 0:
+                    StartFrame = 2;
+                    EndFrame = 5;
+                    break;
+                case 1:
+                    StartFrame = 6;
+                    EndFrame = 9;
+                    break;
+                case 2:
+                    StartFrame = 10;
+                    EndFrame = 15;
+                    break;
+                case 3:
+                    StartFrame = 16;
+                    EndFrame = 21;
+                    break;
+                case 4:
+                    StartFrame = 22;
+                    EndFrame = 27;
+                    break;
+                case 5:
+                    StartFrame = 28;
+                    EndFrame = 35;
+                    break;
+            }
+
+            if (NPC.frame.Y < StartFrame * frameHeight)
+                NPC.frame.Y = StartFrame * frameHeight;
+            if (++NPC.frameCounter >= DanceSpeed)
+            {
+                NPC.frameCounter = 0;
+                NPC.frame.Y += frameHeight;
+                if (NPC.frame.Y > EndFrame * frameHeight)
+                    NPC.frame.Y = StartFrame * frameHeight;
             }
         }
         public int GetNearestNPC()

@@ -43,7 +43,7 @@ namespace Redemption.Projectiles.Magic
             Projectile.velocity *= .98f;
             Projectile.rotation += 0.02f;
         }
-        public override void Kill(int timeLeft)
+        public override void OnKill(int timeLeft)
         {
             SoundEngine.PlaySound(SoundID.NPCDeath1 with { Volume = .4f }, Projectile.position);
             for (int i = 0; i < 6; i++)

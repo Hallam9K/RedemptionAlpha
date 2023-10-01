@@ -17,6 +17,7 @@ using Redemption.Items.Usable.Potions;
 using Redemption.BaseExtension;
 using Redemption.Globals.NPC;
 using Terraria.Localization;
+using System;
 
 namespace Redemption.NPCs.PreHM
 {
@@ -45,12 +46,9 @@ namespace Redemption.NPCs.PreHM
             NPCID.Sets.TrailCacheLength[NPC.type] = 10;
             NPCID.Sets.TrailingMode[NPC.type] = 1;
 
-            NPCID.Sets.DebuffImmunitySets.Add(Type, new NPCDebuffImmunityData
-            {
-                ImmuneToAllBuffsThatAreNotWhips = true
-            });
+            NPCID.Sets.ImmuneToRegularBuffs[Type] = true;
 
-            NPCID.Sets.NPCBestiaryDrawModifiers value = new(0)
+            NPCID.Sets.NPCBestiaryDrawModifiers value = new()
             {
                 Velocity = 1f,
             };
@@ -113,18 +111,7 @@ namespace Redemption.NPCs.PreHM
             NPC.TargetClosest();
             NPC.LookByVelocity();
 
-            if (NPC.ai[3] == 0)
-            {
-                NPC.velocity.Y += 0.03f;
-                if (NPC.velocity.Y > .7f)
-                    NPC.ai[3] = 1;
-            }
-            else if (NPC.ai[3] == 1)
-            {
-                NPC.velocity.Y -= 0.03f;
-                if (NPC.velocity.Y < -.7f)
-                    NPC.ai[3] = 0;
-            }
+            NPC.position.Y += (float)Math.Sin(NPC.localAI[0]++ / 40);
 
             switch (AIState)
             {
@@ -216,7 +203,7 @@ namespace Redemption.NPCs.PreHM
             if (!NPC.IsABestiaryIconDummy)
             {
                 spriteBatch.End();
-                spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+                spriteBatch.BeginAdditive();
 
                 for (int i = 0; i < NPCID.Sets.TrailCacheLength[NPC.type]; i++)
                 {
@@ -225,7 +212,7 @@ namespace Redemption.NPCs.PreHM
                 }
 
                 spriteBatch.End();
-                spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+                spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullNone, null, Main.GameViewMatrix.TransformationMatrix);
             }
 
             spriteBatch.Draw(TextureAssets.Npc[NPC.type].Value, NPC.Center - screenPos, NPC.frame, NPC.GetAlpha(drawColor), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
@@ -245,13 +232,13 @@ namespace Redemption.NPCs.PreHM
                 Vector2 drawOrigin = new(LightGlow.Width / 2, LightGlow.Height / 2);
 
                 Main.spriteBatch.End();
-                Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+                Main.spriteBatch.BeginAdditive();
 
                 spriteBatch.Draw(LightGlow, position1, new Rectangle?(rect), NPC.GetAlpha(color) * 1.5f, MathHelper.PiOver2, drawOrigin, scale, SpriteEffects.None, 0);
                 spriteBatch.Draw(LightGlow, position2, new Rectangle?(rect), NPC.GetAlpha(color) * 1.5f, MathHelper.PiOver2, drawOrigin, scale, SpriteEffects.None, 0);
 
                 Main.spriteBatch.End();
-                Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+                Main.spriteBatch.BeginDefault();
             }
         }
         public override float SpawnChance(NPCSpawnInfo spawnInfo)

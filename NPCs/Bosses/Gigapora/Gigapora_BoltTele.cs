@@ -49,13 +49,13 @@ namespace Redemption.NPCs.Bosses.Gigapora
             if (Projectile.ai[0] > -1)
             {
                 Main.spriteBatch.End();
-                Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+                Main.spriteBatch.BeginAdditive();
 
                 Main.EntitySpriteDraw(ModContent.Request<Texture2D>("Redemption/Textures/FadeTelegraph").Value, Projectile.Center - Main.screenPosition, new Rectangle(0, 0, 64, 128), Color.DarkRed * Projectile.Opacity, npc.rotation + (Projectile.ai[1] == -1 ? MathHelper.Pi : 0), new Vector2(0, 64), new Vector2(Projectile.localAI[0] / 60f, Projectile.width / 128f), SpriteEffects.None, 0);
                 Main.EntitySpriteDraw(ModContent.Request<Texture2D>("Redemption/Textures/FadeTelegraphCap").Value, Projectile.Center - Main.screenPosition, new Rectangle(0, 0, 64, 128), Color.DarkRed * Projectile.Opacity, npc.rotation + (Projectile.ai[1] == -1 ? MathHelper.Pi : 0), new Vector2(0, 64), new Vector2(Projectile.width / 128f, Projectile.width / 128f), SpriteEffects.None, 0);
 
                 Main.spriteBatch.End();
-                Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+                Main.spriteBatch.BeginDefault();
             }
             return false;
         }

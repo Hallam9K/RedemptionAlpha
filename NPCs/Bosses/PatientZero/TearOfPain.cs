@@ -44,7 +44,7 @@ namespace Redemption.NPCs.Bosses.PatientZero
             Lighting.AddLight(Projectile.Center, 0, Projectile.Opacity * 0.8f, 0);
             Projectile.rotation = Projectile.velocity.ToRotation() + 1.57f;
         }
-        public override void Kill(int timeLeft)
+        public override void OnKill(int timeLeft)
         {
             SoundEngine.PlaySound(SoundID.NPCDeath1 with { Volume = .3f }, Projectile.position);
             for (int i = 0; i < 10; i++)

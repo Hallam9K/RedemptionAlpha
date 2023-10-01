@@ -43,14 +43,11 @@ namespace Redemption.NPCs.Critters
             NPCID.Sets.ShimmerTransformToNPC[NPC.type] = NPCID.Shimmerfly;
             NPCID.Sets.CountsAsCritter[Type] = true;
             NPCID.Sets.DontDoHardmodeScaling[Type] = true;
-            NPCID.Sets.DebuffImmunitySets.Add(Type, new NPCDebuffImmunityData
-            {
-                SpecificallyImmuneTo = new int[] {
-                    ModContent.BuffType<DevilScentedDebuff>(),
-                    BuffID.Confused
-                }
-            });
-            NPCID.Sets.NPCBestiaryDrawModifiers value = new(0)
+
+            NPCID.Sets.SpecificDebuffImmunity[Type][ModContent.BuffType<DevilScentedDebuff>()] = true;
+            NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.Confused] = true;
+
+            NPCID.Sets.NPCBestiaryDrawModifiers value = new()
             {
                 Velocity = 1f
             };

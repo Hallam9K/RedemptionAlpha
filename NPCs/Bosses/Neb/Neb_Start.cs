@@ -21,7 +21,7 @@ namespace Redemption.NPCs.Bosses.Neb
         {
             // DisplayName.SetDefault("");
 
-            NPCID.Sets.NPCBestiaryDrawModifiers value = new(0)
+            NPCID.Sets.NPCBestiaryDrawModifiers value = new()
             {
                 Hide = true
             };
@@ -120,9 +120,9 @@ namespace Redemption.NPCs.Bosses.Neb
                 case 4:
                     if (NPC.ai[2]++ == 5)
                     {
-                        NPC.Shoot(NPC.Center, ModContent.ProjectileType<Neb_Start_Visual>(), 0, new Vector2(0, 90), true, SoundID.Item163, NPC.whoAmI);
-                        NPC.Shoot(NPC.Center, ModContent.ProjectileType<Neb_Start_Visual2>(), 0, new Vector2(0, 90), false, SoundID.Item1, NPC.whoAmI);
-                        NPC.Shoot(NPC.Center, ModContent.ProjectileType<Neb_Start_Visual3>(), 0, new Vector2(0, 90), false, SoundID.Item1, NPC.whoAmI);
+                        NPC.Shoot(NPC.Center, ModContent.ProjectileType<Neb_Start_Visual>(), 0, new Vector2(0, 90), SoundID.Item163, NPC.whoAmI);
+                        NPC.Shoot(NPC.Center, ModContent.ProjectileType<Neb_Start_Visual2>(), 0, new Vector2(0, 90), NPC.whoAmI);
+                        NPC.Shoot(NPC.Center, ModContent.ProjectileType<Neb_Start_Visual3>(), 0, new Vector2(0, 90), NPC.whoAmI);
                     }
                     if (NPC.ai[2] >= 5)
                         player.RedemptionScreen().ScreenShakeIntensity = MathHelper.Max(Main.LocalPlayer.RedemptionScreen().ScreenShakeIntensity, 10);

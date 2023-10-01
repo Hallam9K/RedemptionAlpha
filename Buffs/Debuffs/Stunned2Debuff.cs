@@ -33,12 +33,7 @@ namespace Redemption.Buffs.Debuffs
             player.velocity *= 0;
             player.position = player.oldPosition;
             player.sandStorm = false;
-            player.canJumpAgain_Cloud = false;
-            player.canJumpAgain_Sandstorm = false;
-            player.canJumpAgain_Blizzard = false;
-            player.canJumpAgain_Fart = false;
-            player.canJumpAgain_Sail = false;
-            player.canJumpAgain_Unicorn = false;
+            player.blockExtraJumps = true;
             if (player.mount.Active)
                 player.mount.Dismount(player);
         }

@@ -67,7 +67,7 @@ namespace Redemption.NPCs.Lab.MACE
             Projectile.velocity *= 0.95f;
             return false;
         }
-        public override void Kill(int timeLeft)
+        public override void OnKill(int timeLeft)
         {
             SoundEngine.PlaySound(SoundID.Item14, Projectile.position);
             for (int i = 0; i < 20; i++)

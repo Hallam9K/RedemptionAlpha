@@ -22,6 +22,8 @@ namespace Redemption.NPCs.PreHM
         private static Asset<Texture2D> soulless;
         public override void Load()
         {
+            if (Main.dedServ)
+                return;
             soulless = ModContent.Request<Texture2D>("Redemption/Textures/Misc/TheSoulless");
         }
         public override void Unload()
@@ -47,7 +49,7 @@ namespace Redemption.NPCs.PreHM
             // DisplayName.SetDefault("Dancing Skeleton");
             Main.npcFrameCount[NPC.type] = 36;
 
-            NPCID.Sets.NPCBestiaryDrawModifiers value = new(0) { Hide = true };
+            NPCID.Sets.NPCBestiaryDrawModifiers value = new() { Hide = true };
             NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, value);
         }
         public override void SetDefaults()
@@ -88,15 +90,11 @@ namespace Redemption.NPCs.PreHM
         }
         public override void SendExtraAI(BinaryWriter writer)
         {
-            base.SendExtraAI(writer);
-            if (Main.netMode == NetmodeID.Server || Main.dedServ)
-                writer.Write(DanceType);
+            writer.Write(DanceType);
         }
         public override void ReceiveExtraAI(BinaryReader reader)
         {
-            base.ReceiveExtraAI(reader);
-            if (Main.netMode == NetmodeID.MultiplayerClient)
-                DanceType = reader.ReadInt32();
+            DanceType = reader.ReadInt32();
         }
         public override void AI()
         {
@@ -152,50 +150,47 @@ namespace Redemption.NPCs.PreHM
         private int AniCounter;
         public override void FindFrame(int frameHeight)
         {
-            if (Main.netMode != NetmodeID.Server)
+            if (NPC.collideY || NPC.velocity.Y == 0)
+                NPC.rotation = 0;
+            else
+                NPC.rotation = NPC.velocity.X * 0.05f;
+
+            switch (DanceType)
             {
-                if (NPC.collideY || NPC.velocity.Y == 0)
-                    NPC.rotation = 0;
-                else
-                    NPC.rotation = NPC.velocity.X * 0.05f;
+                case 0:
+                    StartFrame = 2;
+                    EndFrame = 5;
+                    break;
+                case 1:
+                    StartFrame = 6;
+                    EndFrame = 9;
+                    break;
+                case 2:
+                    StartFrame = 10;
+                    EndFrame = 15;
+                    break;
+                case 3:
+                    StartFrame = 16;
+                    EndFrame = 21;
+                    break;
+                case 4:
+                    StartFrame = 22;
+                    EndFrame = 27;
+                    break;
+                case 5:
+                    StartFrame = 28;
+                    EndFrame = 35;
+                    break;
+            }
 
-                switch (DanceType)
-                {
-                    case 0:
-                        StartFrame = 2;
-                        EndFrame = 5;
-                        break;
-                    case 1:
-                        StartFrame = 6;
-                        EndFrame = 9;
-                        break;
-                    case 2:
-                        StartFrame = 10;
-                        EndFrame = 15;
-                        break;
-                    case 3:
-                        StartFrame = 16;
-                        EndFrame = 21;
-                        break;
-                    case 4:
-                        StartFrame = 22;
-                        EndFrame = 27;
-                        break;
-                    case 5:
-                        StartFrame = 28;
-                        EndFrame = 35;
-                        break;
-                }
-
-                if (NPC.frame.Y < StartFrame * frameHeight)
+            if (NPC.frame.Y < StartFrame * frameHeight)
+                NPC.frame.Y = StartFrame * frameHeight;
+            if (++NPC.frameCounter >= 10)
+            {
+                NPC.frameCounter = 0;
+                NPC.frame.Y += frameHeight;
+                if (NPC.frame.Y > EndFrame * frameHeight)
                     NPC.frame.Y = StartFrame * frameHeight;
-                if (++NPC.frameCounter >= 10)
-                {
-                    NPC.frameCounter = 0;
-                    NPC.frame.Y += frameHeight;
-                    if (NPC.frame.Y > EndFrame * frameHeight)
-                        NPC.frame.Y = StartFrame * frameHeight;
-                }
             }
             if (AniCounter++ >= 2)
             {
@@ -213,15 +208,15 @@ namespace Redemption.NPCs.PreHM
             if (NPC.life < NPC.lifeMax)
             {
                 spriteBatch.End();
-                spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.NonPremultiplied, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
-                GameShaders.Armor.ApplySecondary(shader, Main.player[Main.myPlayer], null);
+                spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.NonPremultiplied, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullNone, null, Main.GameViewMatrix.TransformationMatrix);
+                GameShaders.Armor.ApplySecondary(shader, Main.LocalPlayer, null);
             }
 
             spriteBatch.Draw(TextureAssets.Npc[NPC.type].Value, NPC.Center - screenPos, NPC.frame, drawColor, NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
             if (NPC.life < NPC.lifeMax)
             {
                 spriteBatch.End();
-                spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+                spriteBatch.BeginDefault();
             }
 
             spriteBatch.Draw(glow, NPC.Center - screenPos, NPC.frame, NPC.life < NPC.lifeMax ? Color.Red : Color.White, NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);

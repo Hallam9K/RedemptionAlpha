@@ -106,69 +106,98 @@ namespace Redemption.Globals.NPC
         }
 
         #region Debuff Immunities
-        public static void AddDebuffImmunity(int npcType, int[] array)
+        public enum NPCDebuffImmuneType : byte
         {
-            if (!NPCID.Sets.DebuffImmunitySets.TryGetValue(npcType, out var entry) || entry?.SpecificallyImmuneTo is null)
-                return;
-
-            int[] array2 = NPCID.Sets.DebuffImmunitySets[npcType].SpecificallyImmuneTo;
-            NPCID.Sets.DebuffImmunitySets[npcType] = new NPCDebuffImmunityData
-            {
-                SpecificallyImmuneTo = array2.Concat(array).ToArray()
-            };
+            Demon,
+            Cold,
+            Inorganic,
+            Infected,
+            NoBlood,
+            Hot
         }
-
+        public static void NPCTypeImmunity(int Type, NPCDebuffImmuneType npcImmuneType)
+        {
+            switch (npcImmuneType)
+            {
+                case NPCDebuffImmuneType.Demon:
+                    NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.OnFire] = true;
+                    NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.Poisoned] = true;
+                    NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.ShadowFlame] = true;
+                    NPCID.Sets.SpecificDebuffImmunity[Type][ModContent.BuffType<InfestedDebuff>()] = true;
+                    NPCID.Sets.SpecificDebuffImmunity[Type][ModContent.BuffType<DragonblazeDebuff>()] = true;
+                    NPCID.Sets.SpecificDebuffImmunity[Type][ModContent.BuffType<MoonflareDebuff>()] = true;
+                    break;
+                case NPCDebuffImmuneType.Cold:
+                    NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.Chilled] = true;
+                    NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.Frostburn] = true;
+                    NPCID.Sets.SpecificDebuffImmunity[Type][ModContent.BuffType<PureChillDebuff>()] = true;
+                    NPCID.Sets.SpecificDebuffImmunity[Type][ModContent.BuffType<IceFrozen>()] = true;
+                    break;
+                case NPCDebuffImmuneType.Hot:
+                    NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.OnFire] = true;
+                    NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.CursedInferno] = true;
+                    NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.Frostburn] = true;
+                    NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.ShadowFlame] = true;
+                    NPCID.Sets.SpecificDebuffImmunity[Type][ModContent.BuffType<DragonblazeDebuff>()] = true;
+                    break;
+                case NPCDebuffImmuneType.Inorganic:
+                    NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.Bleeding] = true;
+                    NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.BloodButcherer] = true;
+                    NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.Poisoned] = true;
+                    break;
+                case NPCDebuffImmuneType.Infected:
+                    NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.Poisoned] = true;
+                    NPCID.Sets.SpecificDebuffImmunity[Type][ModContent.BuffType<BileDebuff>()] = true;
+                    NPCID.Sets.SpecificDebuffImmunity[Type][ModContent.BuffType<GreenRashesDebuff>()] = true;
+                    NPCID.Sets.SpecificDebuffImmunity[Type][ModContent.BuffType<GlowingPustulesDebuff>()] = true;
+                    NPCID.Sets.SpecificDebuffImmunity[Type][ModContent.BuffType<FleshCrystalsDebuff>()] = true;
+                    break;
+                case NPCDebuffImmuneType.NoBlood:
+                    NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.Bleeding] = true;
+                    NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.BloodButcherer] = true;
+                    break;
+            }
+        }
         public override void SetStaticDefaults()
         {
             for (int i = 0; i < NPCLoader.NPCCount; i++)
             {
                 if (NPCLists.Demon.Contains(i))
                 {
-                    AddDebuffImmunity(i, new int[] {
-                    ModContent.BuffType<InfestedDebuff>(),
-                    ModContent.BuffType<DragonblazeDebuff>(),
-                    ModContent.BuffType<MoonflareDebuff>() });
+                    NPCID.Sets.SpecificDebuffImmunity[i][ModContent.BuffType<InfestedDebuff>()] = true;
+                    NPCID.Sets.SpecificDebuffImmunity[i][ModContent.BuffType<DragonblazeDebuff>()] = true;
+                    NPCID.Sets.SpecificDebuffImmunity[i][ModContent.BuffType<MoonflareDebuff>()] = true;
                 }
                 if (NPCLists.Cold.Contains(i))
                 {
-                    AddDebuffImmunity(i, new int[] {
-                    ModContent.BuffType<PureChillDebuff>(),
-                    ModContent.BuffType<IceFrozen>() });
+                    NPCID.Sets.SpecificDebuffImmunity[i][ModContent.BuffType<PureChillDebuff>()] = true;
+                    NPCID.Sets.SpecificDebuffImmunity[i][ModContent.BuffType<IceFrozen>()] = true;
                 }
                 if (NPCLists.Plantlike.Contains(i))
                 {
-                    AddDebuffImmunity(i, new int[] {
-                    ModContent.BuffType<NecroticGougeDebuff>(),
-                    ModContent.BuffType<DirtyWoundDebuff>(),
-                    ModContent.BuffType<InfestedDebuff>() });
+                    NPCID.Sets.SpecificDebuffImmunity[i][BuffID.Bleeding] = true;
+                    NPCID.Sets.SpecificDebuffImmunity[i][BuffID.BloodButcherer] = true;
                 }
                 if (NPCLists.Dragonlike.Contains(i))
                 {
-                    AddDebuffImmunity(i, new int[] {
-                    ModContent.BuffType<DragonblazeDebuff>() });
+                    NPCID.Sets.SpecificDebuffImmunity[i][ModContent.BuffType<DragonblazeDebuff>()] = true;
                 }
                 if (NPCLists.Inorganic.Contains(i))
                 {
-                    AddDebuffImmunity(i, new int[] {
-                    ModContent.BuffType<InfestedDebuff>(),
-                    ModContent.BuffType<NecroticGougeDebuff>(),
-                    ModContent.BuffType<ViralityDebuff>(),
-                    ModContent.BuffType<DirtyWoundDebuff>() });
+                    NPCID.Sets.SpecificDebuffImmunity[i][BuffID.Bleeding] = true;
+                    NPCID.Sets.SpecificDebuffImmunity[i][BuffID.BloodButcherer] = true;
                 }
                 if (NPCLists.Infected.Contains(i))
                 {
-                    AddDebuffImmunity(i, new int[] {
-                    ModContent.BuffType<BileDebuff>(),
-                    ModContent.BuffType<GreenRashesDebuff>(),
-                    ModContent.BuffType<GlowingPustulesDebuff>(),
-                    ModContent.BuffType<FleshCrystalsDebuff>() });
+                    NPCID.Sets.SpecificDebuffImmunity[i][ModContent.BuffType<BileDebuff>()] = true;
+                    NPCID.Sets.SpecificDebuffImmunity[i][ModContent.BuffType<GreenRashesDebuff>()] = true;
+                    NPCID.Sets.SpecificDebuffImmunity[i][ModContent.BuffType<GlowingPustulesDebuff>()] = true;
+                    NPCID.Sets.SpecificDebuffImmunity[i][ModContent.BuffType<FleshCrystalsDebuff>()] = true;
                 }
                 if (NPCLists.IsSlime.Contains(i))
                 {
-                    AddDebuffImmunity(i, new int[] {
-                    ModContent.BuffType<InfestedDebuff>(),
-                    ModContent.BuffType<NecroticGougeDebuff>(),
-                    ModContent.BuffType<DirtyWoundDebuff>() });
+                    NPCID.Sets.SpecificDebuffImmunity[i][BuffID.Bleeding] = true;
+                    NPCID.Sets.SpecificDebuffImmunity[i][BuffID.BloodButcherer] = true;
                 }
             }
         }

@@ -15,7 +15,7 @@ namespace Redemption.NPCs.Lab.MACE
             // DisplayName.SetDefault("MACE Project");
             NPCID.Sets.DontDoHardmodeScaling[Type] = true;
 
-            NPCID.Sets.NPCBestiaryDrawModifiers value = new(0)
+            NPCID.Sets.NPCBestiaryDrawModifiers value = new()
             {
                 Hide = true
             };
@@ -36,7 +36,7 @@ namespace Redemption.NPCs.Lab.MACE
         }
         public override void AI()
         {
-            Player player = Main.player[Main.myPlayer];
+            Player player = Main.LocalPlayer;
             Rectangle activeZone = new((int)(RedeGen.LabVector.X + 65) * 16, (int)(RedeGen.LabVector.Y + 167) * 16, 15 * 16, 18 * 16);
             if (player.Hitbox.Intersects(activeZone) && !player.dead && player.active)
             {

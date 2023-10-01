@@ -1,6 +1,7 @@
 using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Redemption.BaseExtension;
 using Redemption.Globals;
 using Terraria;
 using Terraria.GameContent;
@@ -29,7 +30,6 @@ namespace Redemption.NPCs.Minibosses.EaglecrestGolem
             Projectile.ignoreWater = false;
             Projectile.extraUpdates = 1;
         }
-
         public override void AI()
         {
             Projectile.rotation = Projectile.velocity.ToRotation() + 1.57f;
@@ -37,13 +37,16 @@ namespace Redemption.NPCs.Minibosses.EaglecrestGolem
             if (Math.Abs(Projectile.velocity.X) > 0.2)
                 Projectile.spriteDirection = -Projectile.direction;
 
+            Projectile.velocity *= .96f;
             if (Projectile.alpha >= 255)
                 Projectile.Kill();
-
         }
 
         public override bool? CanHitNPC(NPC target) => target.friendly && Projectile.alpha <= 200 ? null : false;
-        public override bool CanHitPlayer(Player target) => Projectile.alpha <= 200;
+        public override bool CanHitPlayer(Player target)
+        {
+            return Projectile.alpha <= 200;
+        }
 
         public override bool PreDraw(ref Color lightColor)
         {

@@ -18,6 +18,7 @@ using Redemption.BaseExtension;
 using Redemption.NPCs.HM;
 using Redemption.Buffs.Debuffs;
 using Redemption.Buffs.NPCBuffs;
+using Redemption.Globals.World;
 
 namespace Redemption.Globals
 {
@@ -734,6 +735,70 @@ namespace Redemption.Globals
                 Main.npc[index].netUpdate = true;
             }
         }
+        public static void NPCRadiusDamage(int radius, Entity hitter, int damage, float knockBack, int immuneTime = 20)
+        {
+            for (int i = 0; i < Main.maxNPCs; i++)
+            {
+                Terraria.NPC target = Main.npc[i];
+                if (!target.active || (!target.CanBeChasedBy() && target.type != NPCID.TargetDummy))
+                    continue;
+
+                if ((hitter is Projectile proj && target.immune[proj.whoAmI] > 0) || hitter.Distance(target.Center) > radius)
+                    continue;
+
+                if (hitter is Projectile proj2)
+                    target.immune[proj2.whoAmI] = immuneTime;
+                int hitDirection = target.RightOfDir(hitter);
+                BaseAI.DamageNPC(target, damage, knockBack, hitDirection, hitter, crit: hitter is Projectile proj3 && proj3.HeldItemCrit());
+            }
+        }
+        public static void NPCRadiusDamage(Rectangle radius, Entity hitter, int damage, float knockBack)
+        {
+            for (int i = 0; i < Main.maxNPCs; i++)
+            {
+                Terraria.NPC target = Main.npc[i];
+                if (!target.active || (!target.CanBeChasedBy() && target.type != NPCID.TargetDummy))
+                    continue;
+
+                if ((hitter is Projectile proj && target.immune[proj.whoAmI] > 0) || !target.Hitbox.Intersects(radius))
+                    continue;
+
+                if (hitter is Projectile proj2)
+                    target.immune[proj2.whoAmI] = 20;
+                int hitDirection = target.RightOfDir(hitter);
+                BaseAI.DamageNPC(target, damage, knockBack, hitDirection, hitter, crit: hitter is Projectile proj3 && proj3.HeldItemCrit());
+            }
+        }
+        public static void PlayerRadiusDamage(int radius, Entity hitter, int damage, float knockBack)
+        {
+            for (int p = 0; p < Main.maxPlayers; p++)
+            {
+                Terraria.Player target = Main.player[p];
+                if (!target.active || target.dead)
+                    continue;
+
+                if (hitter.Distance(target.Center) > radius)
+                    continue;
+
+                int hitDirection = target.RightOfDir(hitter);
+                BaseAI.DamagePlayer(target, damage, knockBack, hitDirection, hitter);
+            }
+        }
+        public static void PlayerRadiusDamage(Rectangle radius, Entity hitter, int damage, float knockBack)
+        {
+            for (int p = 0; p < Main.maxPlayers; p++)
+            {
+                Terraria.Player target = Main.player[p];
+                if (!target.active || target.dead)
+                    continue;
+
+                if (!target.Hitbox.Intersects(radius))
+                    continue;
+
+                int hitDirection = target.RightOfDir(hitter);
+                BaseAI.DamagePlayer(target, damage, knockBack, hitDirection, hitter);
+            }
+        }
     }
     public static class NPCHelper
     {
@@ -745,15 +810,23 @@ namespace Redemption.Globals
                 damage /= Main.masterMode ? 3 : 2;
             return damage;
         }
+        public static int HostileProjDamageInc(int damage)
+        {
+            if (Main.expertMode)
+                damage *= Main.masterMode ? 3 : 2;
+            return damage;
+        }
         /// <summary>
         /// For methods that have 'this NPC npc', instead of doing RedeHelper.Shoot(), you can do NPC.Shoot() instead.
         /// </summary>
-        public static void Shoot(this Terraria.NPC npc, Vector2 position, int projType, int damage, Vector2 velocity,
-            bool playSound, SoundStyle sound, float ai0 = 0, float ai1 = 0, int knockback = 0)
+        public static void Shoot(this Terraria.NPC npc, Vector2 position, int projType, int damage, Vector2 velocity, SoundStyle sound, float ai0 = 0, float ai1 = 0, int knockback = 0)
         {
-            if (playSound)
+            if (!Main.dedServ)
                 SoundEngine.PlaySound(sound, npc.position);
-
+            Shoot(npc, position, projType, damage, velocity, ai0, ai1, knockback);
+        }
+        public static void Shoot(this Terraria.NPC npc, Vector2 position, int projType, int damage, Vector2 velocity, float ai0 = 0, float ai1 = 0, int knockback = 0)
+        {
             damage /= 2;
             if (Main.expertMode)
                 damage /= Main.masterMode ? 3 : 2;
@@ -1345,7 +1418,7 @@ namespace Redemption.Globals
                 BaseAI.DamageNPC(target, npc.damage + (int)dmgModify, knockback, hitDirection, npc);
             }
         }
-        public static void LockMoveRadius(this Terraria.NPC npc, Terraria.Player player, int radius = 1000)
+        public static void LockMoveRadius(this Entity npc, Terraria.Player player, int radius = 1000)
         {
             bool lockedScreen = player.RedemptionScreen().lockScreen;
             if (!RedeConfigClient.Instance.CameraLockDisable && npc.Distance(player.Center) > radius)
@@ -1360,20 +1433,68 @@ namespace Redemption.Globals
                 }
             }
         }
-        public static bool DespawnHandler(this Terraria.NPC npc)
+        public static void LockMoveRadius(Vector2 npc, Terraria.Player player, int radius = 1000)
+        {
+            bool lockedScreen = player.RedemptionScreen().lockScreen;
+            if (!RedeConfigClient.Instance.CameraLockDisable && npc.Distance(player.Center) > radius)
+            {
+                if (!lockedScreen || npc.Distance(player.Center) < radius + 200)
+                {
+                    Vector2 movement = npc - player.Center;
+                    float difference = movement.Length() - radius;
+                    movement.Normalize();
+                    movement *= difference < 17f ? difference : 17f;
+                    player.position += movement;
+                }
+            }
+        }
+        public static bool DespawnHandler(this Terraria.NPC npc, int type = 0, int vel = 2)
         {
             Terraria.Player player = Main.player[npc.target];
-            if (!player.active || player.dead)
+            switch (type)
             {
-                npc.TargetClosest(false);
-                player = Main.player[npc.target];
-                if (!player.active || player.dead)
-                {
-                    npc.velocity.Y -= 1;
-                    if (npc.timeLeft > 10)
-                        npc.timeLeft = 10;
-                    return true;
-                }
+                default:
+                    if (!player.active || player.dead)
+                    {
+                        npc.TargetClosest(false);
+                        player = Main.player[npc.target];
+                        if (!player.active || player.dead)
+                        {
+                            if (type is 1)
+                            {
+                                npc.alpha += vel;
+                                if (npc.alpha >= 255)
+                                    npc.active = false;
+                            }
+                            else if (type is 2)
+                                npc.active = false;
+                            else
+                            {
+                                npc.velocity *= 0.96f;
+                                npc.velocity.Y -= vel;
+                            }
+                            if (npc.timeLeft > 10)
+                                npc.timeLeft = 10;
+                            return true;
+                        }
+                    }
+                    break;
+                case 3:
+                    if (!player.active || player.dead || !FowlMorningWorld.FowlMorningActive)
+                    {
+                        npc.TargetClosest(false);
+                        player = Main.player[npc.target];
+                        if (!player.active || player.dead || !FowlMorningWorld.FowlMorningActive)
+                        {
+                            npc.alpha += 2;
+                            if (npc.alpha >= 255)
+                                npc.active = false;
+                            if (npc.timeLeft > 10)
+                                npc.timeLeft = 10;
+                            return true;
+                        }
+                    }
+                    break;
             }
             return false;
         }

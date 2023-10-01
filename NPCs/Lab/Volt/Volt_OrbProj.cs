@@ -55,7 +55,7 @@ namespace Redemption.NPCs.Lab.Volt
         {
             target.AddBuff(ModContent.BuffType<StaticStunDebuff>(), 30);
         }
-        public override void Kill(int timeLeft)
+        public override void OnKill(int timeLeft)
         {
             for (int i = 0; i < 5; i++)
             {

@@ -25,7 +25,7 @@ namespace Redemption.NPCs.FowlMorning
         public override void SetStaticDefaults()
         {
             Main.npcFrameCount[NPC.type] = 4;
-            NPCID.Sets.NPCBestiaryDrawModifiers value = new(0) { Velocity = 1f };
+            NPCID.Sets.NPCBestiaryDrawModifiers value = new() { Velocity = 1f };
             NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, value);
         }
         public override void SetDefaults()
@@ -76,7 +76,7 @@ namespace Redemption.NPCs.FowlMorning
         {
             Player player = Main.player[NPC.target];
             NPC.LookByVelocity();
-            if (NPC.DespawnHandler())
+            if (NPC.DespawnHandler(3))
                 return;
             if (NPC.ai[0]++ % 120 == 0)
             {
@@ -120,7 +120,7 @@ namespace Redemption.NPCs.FowlMorning
         }
         public override bool PreKill()
         {
-            if (FowlMorningWorld.FowlMorningActive)
+            if (FowlMorningWorld.FowlMorningActive && Main.netMode != NetmodeID.MultiplayerClient)
             {
                 FowlMorningWorld.ChickPoints += Main.expertMode ? 4 : 2;
                 if (Main.netMode == NetmodeID.Server)

@@ -24,11 +24,8 @@ namespace Redemption.NPCs.Friendly
         public override void SetStaticDefaults()
         {
             // DisplayName.SetDefault("Lost Soul");
-            NPCID.Sets.DebuffImmunitySets.Add(Type, new NPCDebuffImmunityData
-            {
-                ImmuneToAllBuffsThatAreNotWhips = true
-            });
-            NPCID.Sets.NPCBestiaryDrawModifiers value = new(0)
+            NPCID.Sets.ImmuneToRegularBuffs[Type] = true;
+            NPCID.Sets.NPCBestiaryDrawModifiers value = new()
             {
                 Hide = true
             };
@@ -124,7 +121,7 @@ namespace Redemption.NPCs.Friendly
                         player.RedemptionAbility().Spiritwalker = true;
                         player.RedemptionAbility().SpiritwalkerActive = false;
 
-                        NPC.Shoot(player.Center, ModContent.ProjectileType<SpiritwalkerIconFade>(), 0, Vector2.Zero, false, SoundID.Item1, player.whoAmI);
+                        NPC.Shoot(player.Center, ModContent.ProjectileType<SpiritwalkerIconFade>(), 0, Vector2.Zero, player.whoAmI);
                         for (int i = 0; i < 20; i++)
                         {
                             ParticleManager.NewParticle(player.Center, RedeHelper.Spread(10), new SpiritParticle(), Color.White, 2);

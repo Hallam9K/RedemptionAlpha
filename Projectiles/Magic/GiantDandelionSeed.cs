@@ -68,7 +68,7 @@ namespace Redemption.Projectiles.Magic
             Projectile.alpha -= 5;
             Projectile.alpha = (int)MathHelper.Max(Projectile.alpha, 0);
         }
-        public override void Kill(int timeLeft)
+        public override void OnKill(int timeLeft)
         {
             for (int i = 0; i < 8; i++)
                 Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.Cloud, Scale: 1.5f);

@@ -56,13 +56,16 @@ namespace Redemption.Base
          * startY : The y to begin iteration at.
          * solid : True if the tile must be solid.
          */
-        public static int GetFirstTileFloor(int x, int startY, bool solid = true)
+        public static int GetFirstTileFloor(int x, int startY, bool solid = true, bool checkWater = false)
         {
             if (!WorldGen.InWorld(x, startY)) return startY;
             for (int y = startY; y < Main.maxTilesY - 10; y++)
             {
                 Tile tile = Framing.GetTileSafely(x, y);
-                if (tile is {HasTile: true} && (!solid || Main.tileSolid[tile.TileType])) { return y; }
+                if (checkWater && tile.LiquidAmount >= 255)
+                    return y;
+                if (tile is { HasTile: true } && (!solid || Main.tileSolid[tile.TileType]))
+                    return y;
             }
             return Main.maxTilesY - 10;
         }

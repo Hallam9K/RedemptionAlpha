@@ -127,7 +127,7 @@ namespace Redemption.NPCs.Bosses.Neb.Phase2
             Main.spriteBatch.Draw(glowMask, Projectile.Center - Main.screenPosition, new Microsoft.Xna.Framework.Rectangle?(new Rectangle(0, y7, texture.Width, num215)), RedeColor.NebColour * ((255 - fadeAlpha) / 255f), Projectile.rotation, new Vector2(texture.Width / 2f, num215 / 2f), Projectile.scale, effects, 0f);
             return false;
         }
-        public override void Kill(int timeLeft)
+        public override void OnKill(int timeLeft)
         {
             for (int i = 0; i < 50; i++)
             {

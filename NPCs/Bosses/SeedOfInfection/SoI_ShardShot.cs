@@ -49,7 +49,7 @@ namespace Redemption.NPCs.Bosses.SeedOfInfection
                 Projectile.velocity.Y += 0.2f;
         }
 
-        public override void Kill(int timeLeft)
+        public override void OnKill(int timeLeft)
         {
             int dustIndex = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.GreenFairy, Scale: 1.5f);
             Main.dust[dustIndex].velocity *= 2f;

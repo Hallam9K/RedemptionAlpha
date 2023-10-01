@@ -43,7 +43,7 @@ namespace Redemption.NPCs.PreHM
         {
             Main.npcFrameCount[NPC.type] = 16;
 
-            NPCID.Sets.NPCBestiaryDrawModifiers value = new(0);
+            NPCID.Sets.NPCBestiaryDrawModifiers value = new();
 
             NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, value);
         }
@@ -129,6 +129,8 @@ namespace Redemption.NPCs.PreHM
         }
         public override void AI()
         {
+            CustomFrames(60);
+
             Player player = Main.player[NPC.target];
             RedeNPC globalNPC = NPC.Redemption();
             NPC.TargetClosest();
@@ -231,7 +233,7 @@ namespace Redemption.NPCs.PreHM
                     {
                         int damage = NPC.RedemptionNPCBuff().disarmed ? NPC.damage / 3 : NPC.damage;
                         NPC.Shoot(NPC.Center, ModContent.ProjectileType<SkeletonWanderer_SpearProj>(), damage,
-                            RedeHelper.PolarVector(8, (globalNPC.attacker.Center - NPC.Center).ToRotation()), true, SoundID.Item1, NPC.whoAmI,
+                            RedeHelper.PolarVector(8, (globalNPC.attacker.Center - NPC.Center).ToRotation()), SoundID.Item1, NPC.whoAmI,
                             Personality == PersonalityState.Greedy ? 1 : 0);
                         AITimer = 1;
                     }
@@ -245,79 +247,82 @@ namespace Redemption.NPCs.PreHM
             Main.dust[sparkle].velocity *= 0;
             Main.dust[sparkle].noGravity = true;
         }
+        private void CustomFrames(int frameHeight)
+        {
+            if (AIState is ActionState.Stab)
+            {
+                NPC.frameCounter++;
+                if (NPC.frameCounter < 10)
+                    NPC.frame.Y = 13 * frameHeight;
+                else if (NPC.frameCounter < 20)
+                    NPC.frame.Y = 14 * frameHeight;
+                else if (NPC.frameCounter < 40)
+                    NPC.frame.Y = 15 * frameHeight;
+                else
+                {
+                    NPC.frame.Y = 0;
+                    NPC.frameCounter = 0;
+                    AIState = ActionState.Alert;
+                }
+                HeadOffset = SetHeadOffset(ref frameHeight);
+                HeadOffsetX = SetHeadOffsetX(ref frameHeight);
+                return;
+            }
+        }
         public override bool? CanFallThroughPlatforms() => NPC.Redemption().fallDownPlatform;
         private int HeadOffsetX;
         public override void FindFrame(int frameHeight)
         {
             if (Main.netMode != NetmodeID.Server)
-            {
                 NPC.frame.Width = TextureAssets.Npc[NPC.type].Width() / 3;
-                NPC.frame.X = Personality switch
+            NPC.frame.X = Personality switch
+            {
+                PersonalityState.Soulful => NPC.frame.Width,
+                PersonalityState.Greedy => NPC.frame.Width * 2,
+                _ => 0,
+            };
+            HeadX = Personality switch
+            {
+                PersonalityState.Greedy => 1,
+                _ => 0,
+            };
+            if (AIState is ActionState.Stab)
+                return;
+            if (NPC.collideY || NPC.velocity.Y == 0)
+            {
+                NPC.rotation = 0;
+                if (NPC.velocity.X == 0)
                 {
-                    PersonalityState.Soulful => NPC.frame.Width,
-                    PersonalityState.Greedy => NPC.frame.Width * 2,
-                    _ => 0,
-                };
-                HeadX = Personality switch
-                {
-                    PersonalityState.Greedy => 1,
-                    _ => 0,
-                };
-                if (AIState is ActionState.Stab)
-                {
-                    NPC.frameCounter++;
-                    if (NPC.frameCounter < 10)
-                        NPC.frame.Y = 13 * frameHeight;
-                    else if (NPC.frameCounter < 20)
-                        NPC.frame.Y = 14 * frameHeight;
-                    else if (NPC.frameCounter < 40)
-                        NPC.frame.Y = 15 * frameHeight;
-                    else
+                    if (++NPC.frameCounter >= 10)
                     {
-                        NPC.frame.Y = 0;
                         NPC.frameCounter = 0;
-                        AIState = ActionState.Alert;
-                    }
-                    HeadOffset = SetHeadOffset(ref frameHeight);
-                    HeadOffsetX = SetHeadOffsetX(ref frameHeight);
-                    return;
-                }
-                if (NPC.collideY || NPC.velocity.Y == 0)
-                {
-                    NPC.rotation = 0;
-                    if (NPC.velocity.X == 0)
-                    {
-                        if (++NPC.frameCounter >= 10)
-                        {
-                            NPC.frameCounter = 0;
-                            NPC.frame.Y += frameHeight;
-                            if (NPC.frame.Y > 3 * frameHeight)
-                                NPC.frame.Y = 0 * frameHeight;
-                        }
-                    }
-                    else
-                    {
-                        if (NPC.frame.Y < 5 * frameHeight)
-                            NPC.frame.Y = 5 * frameHeight;
-
-                        NPC.frameCounter += NPC.velocity.X * 0.5f;
-                        if (NPC.frameCounter is >= 3 or <= -3)
-                        {
-                            NPC.frameCounter = 0;
-                            NPC.frame.Y += frameHeight;
-                            if (NPC.frame.Y > 12 * frameHeight)
-                                NPC.frame.Y = 5 * frameHeight;
-                        }
+                        NPC.frame.Y += frameHeight;
+                        if (NPC.frame.Y > 3 * frameHeight)
+                            NPC.frame.Y = 0 * frameHeight;
                     }
                 }
                 else
                 {
-                    NPC.rotation = NPC.velocity.X * 0.05f;
-                    NPC.frame.Y = 4 * frameHeight;
+                    if (NPC.frame.Y < 5 * frameHeight)
+                        NPC.frame.Y = 5 * frameHeight;
+
+                    NPC.frameCounter += NPC.velocity.X * 0.5f;
+                    if (NPC.frameCounter is >= 3 or <= -3)
+                    {
+                        NPC.frameCounter = 0;
+                        NPC.frame.Y += frameHeight;
+                        if (NPC.frame.Y > 12 * frameHeight)
+                            NPC.frame.Y = 5 * frameHeight;
+                    }
                 }
-                HeadOffset = SetHeadOffset(ref frameHeight);
-                HeadOffsetX = SetHeadOffsetX(ref frameHeight);
             }
+            else
+            {
+                NPC.rotation = NPC.velocity.X * 0.05f;
+                NPC.frame.Y = 4 * frameHeight;
+            }
+            HeadOffset = SetHeadOffset(ref frameHeight);
+            HeadOffsetX = SetHeadOffsetX(ref frameHeight);
         }
         public int SetHeadOffsetX(ref int frameHeight)
         {

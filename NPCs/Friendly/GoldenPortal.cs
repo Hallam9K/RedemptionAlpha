@@ -18,7 +18,7 @@ namespace Redemption.NPCs.Friendly
         public override void SetStaticDefaults()
         {
             // DisplayName.SetDefault("Golden Gateway");
-            NPCID.Sets.NPCBestiaryDrawModifiers value = new(0)
+            NPCID.Sets.NPCBestiaryDrawModifiers value = new()
             {
                 Hide = true
             };
@@ -117,8 +117,8 @@ namespace Redemption.NPCs.Friendly
             Color color = BaseUtility.MultiLerpColor(Main.LocalPlayer.miscCounter % 100 / 100f, new Color(255, 195, 0), new Color(255, 195, 0) * 0.5f, new Color(255, 195, 0));
 
             spriteBatch.End();
-            spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
-            GameShaders.Armor.ApplySecondary(shader, Main.player[Main.myPlayer], null);
+            spriteBatch.BeginAdditive(true);
+            GameShaders.Armor.ApplySecondary(shader, Main.LocalPlayer, null);
 
             spriteBatch.Draw(texture, NPC.Center - Main.screenPosition + new Vector2(0f, offset * 4f), NPC.frame, NPC.GetAlpha(new Color(255, 195, 0)) * 0.4f, -NPC.rotation, NPC.frame.Size() / 2, NPC.scale * 2.6f, SpriteEffects.None, 0f);
             spriteBatch.Draw(texture, NPC.Center - Main.screenPosition + new Vector2(0f, offset * 4f), NPC.frame, NPC.GetAlpha(new Color(255, 195, 0)) * 0.4f, NPC.rotation, NPC.frame.Size() / 2, NPC.scale * 2.9f, SpriteEffects.None, 0f);
@@ -126,7 +126,7 @@ namespace Redemption.NPCs.Friendly
             spriteBatch.Draw(texture, NPC.Center - Main.screenPosition + new Vector2(0f, offset * 4f), NPC.frame, NPC.GetAlpha(color), NPC.rotation, NPC.frame.Size() / 2, NPC.scale * 1.8f, SpriteEffects.None, 0f);
 
             spriteBatch.End();
-            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+            spriteBatch.BeginDefault();
             return false;
         }
     }

@@ -92,7 +92,7 @@ namespace Redemption.Projectiles.Magic
             if (!player.channel)
                 shoot = true;
         }
-        public override void Kill(int timeLeft)
+        public override void OnKill(int timeLeft)
         {
             Main.LocalPlayer.RedemptionScreen().ScreenShakeOrigin = Projectile.Center;
             Main.LocalPlayer.RedemptionScreen().ScreenShakeIntensity += 4;
@@ -164,7 +164,7 @@ namespace Redemption.Projectiles.Magic
             Projectile.rotation += Projectile.velocity.X / 40 * Projectile.direction;
             Projectile.velocity.Y += 0.35f;
         }
-        public override void Kill(int timeLeft)
+        public override void OnKill(int timeLeft)
         {
             for (int i = 0; i < 3; i++)
                 Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.Stone);

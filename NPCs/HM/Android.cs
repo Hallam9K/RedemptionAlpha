@@ -1,6 +1,5 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Redemption.Buffs.Debuffs;
 using Redemption.Globals;
 using Redemption.Globals.NPC;
 using Redemption.Items.Placeable.Banners;
@@ -16,7 +15,6 @@ using Terraria.ModLoader;
 using Redemption.BaseExtension;
 using Redemption.Items.Materials.HM;
 using Redemption.Items.Usable.Potions;
-using Redemption.Buffs.NPCBuffs;
 using Terraria.Utilities;
 using Terraria.UI;
 using Redemption.Base;
@@ -29,6 +27,7 @@ using Terraria.GameContent.UI;
 using Redemption.Items.Usable;
 using System.IO;
 using Redemption.UI.ChatUI;
+using Redemption.Textures;
 
 namespace Redemption.NPCs.HM
 {
@@ -57,29 +56,19 @@ namespace Redemption.NPCs.HM
         public override void SetStaticDefaults()
         {
             // DisplayName.SetDefault("Android Mk.I");
-            Main.npcFrameCount[NPC.type] = 23;
+            Main.npcFrameCount[NPC.type] = 19;
             NPCID.Sets.CantTakeLunchMoney[Type] = true;
 
-            NPCID.Sets.DebuffImmunitySets.Add(Type, new NPCDebuffImmunityData
-            {
-                SpecificallyImmuneTo = new int[] {
-                    BuffID.Confused,
-                    BuffID.Poisoned,
-                    BuffID.Venom,
-                    ModContent.BuffType<InfestedDebuff>(),
-                    ModContent.BuffType<NecroticGougeDebuff>(),
-                    ModContent.BuffType<ViralityDebuff>(),
-                    ModContent.BuffType<DirtyWoundDebuff>()
-                }
-            });
+            BuffNPC.NPCTypeImmunity(Type, BuffNPC.NPCDebuffImmuneType.Inorganic);
+            NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.Confused] = true;
 
-            NPCID.Sets.NPCBestiaryDrawModifiers value = new(0) { Velocity = 1f };
+            NPCID.Sets.NPCBestiaryDrawModifiers value = new() { Velocity = 1f };
             NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, value);
         }
         public override void SetDefaults()
         {
-            NPC.width = 24;
-            NPC.height = 44;
+            NPC.width = 30;
+            NPC.height = 46;
             NPC.friendly = false;
             NPC.damage = 40;
             NPC.defense = 40;
@@ -95,15 +84,11 @@ namespace Redemption.NPCs.HM
         }
         public override void SendExtraAI(BinaryWriter writer)
         {
-            base.SendExtraAI(writer);
-            if (Main.netMode == NetmodeID.Server || Main.dedServ)
-                writer.WriteVector2(moveTo);
+            writer.WriteVector2(moveTo);
         }
         public override void ReceiveExtraAI(BinaryReader reader)
         {
-            base.ReceiveExtraAI(reader);
-            if (Main.netMode == NetmodeID.MultiplayerClient)
-                moveTo = reader.ReadVector2();
+            moveTo = reader.ReadVector2();
         }
         private Vector2 moveTo;
         private int runCooldown;
@@ -122,14 +107,14 @@ namespace Redemption.NPCs.HM
             NPC.netUpdate = true;
         }
         private NPC closeNPC;
-        private Texture2D bubble;
-        private SoundStyle voice;
+        private static Texture2D Bubble => CommonTextures.TextBubble_Slayer.Value;
+        private static readonly SoundStyle voice = CustomSounds.Voice6 with { Pitch = 0.8f };
         public override void AI()
         {
+            CustomFrames(52);
+
             Player player = Main.player[NPC.target];
             RedeNPC globalNPC = NPC.Redemption();
-            bubble = ModContent.Request<Texture2D>("Redemption/UI/TextBubble_Slayer").Value;
-            voice = CustomSounds.Voice6 with { Pitch = 0.8f };
             NPC.TargetClosest();
 
             if (Variant >= 10)
@@ -141,20 +126,20 @@ namespace Redemption.NPCs.HM
                     DialogueChain chain = new();
                     if (Variant == 11)
                     {
-                        chain.Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.KS3Message.Attacked1"), Color.LightBlue, Color.DarkCyan, voice, .03f, 2f, 0, false, bubble: bubble))
-                             .Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.KS3Message.Attacked2"), Color.LightBlue, Color.DarkCyan, voice, .03f, 2f, 0, false, bubble: bubble))
-                             .Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.KS3Message.Message"), Color.LightBlue, Color.DarkCyan, CustomSounds.Voice6 with { Pitch = 0.2f }, .03f, 3f, .5f, true, bubble: bubble, endID: 1));
+                        chain.Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.KS3Message.Attacked1"), Color.LightBlue, Color.DarkCyan, voice, .03f, 2f, 0, false, bubble: Bubble))
+                             .Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.KS3Message.Attacked2"), Color.LightBlue, Color.DarkCyan, voice, .03f, 2f, 0, false, bubble: Bubble))
+                             .Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.KS3Message.Message"), Color.LightBlue, Color.DarkCyan, CustomSounds.Voice6 with { Pitch = 0.2f }, .03f, 3f, .5f, true, bubble: Bubble, endID: 1));
                     }
                     else if (Variant == 12)
                     {
                         NPC.dontTakeDamage = true;
-                        chain.Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.KS3Message.Variant"), Color.LightBlue, Color.DarkCyan, voice, .03f, 2f, 0, false, bubble: bubble));
+                        chain.Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.KS3Message.Variant"), Color.LightBlue, Color.DarkCyan, voice, .03f, 2f, 0, false, bubble: Bubble));
                     }
                     else
                     {
-                        chain.Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.KS3Message.1"), Color.LightBlue, Color.DarkCyan, voice, .03f, 2f, 0, false, bubble: bubble))
-                             .Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.KS3Message.2"), Color.LightBlue, Color.DarkCyan, voice, .03f, 2f, 0, false, bubble: bubble))
-                             .Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.KS3Message.Message"), Color.LightBlue, Color.DarkCyan, CustomSounds.Voice6 with { Pitch = 0.2f }, .03f, 3f, .5f, true, bubble: bubble, endID: 1));
+                        chain.Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.KS3Message.1"), Color.LightBlue, Color.DarkCyan, voice, .03f, 2f, 0, false, bubble: Bubble))
+                             .Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.KS3Message.2"), Color.LightBlue, Color.DarkCyan, voice, .03f, 2f, 0, false, bubble: Bubble))
+                             .Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.KS3Message.Message"), Color.LightBlue, Color.DarkCyan, CustomSounds.Voice6 with { Pitch = 0.2f }, .03f, 3f, .5f, true, bubble: Bubble, endID: 1));
                     }
                     chain.OnEndTrigger += Chain_OnEndTrigger;
                     ChatUI.Visible = true;
@@ -178,7 +163,7 @@ namespace Redemption.NPCs.HM
                     }
                     NPC.active = false;
 
-                    if (Variant != 12)
+                    if (Variant != 12 && Main.netMode != NetmodeID.MultiplayerClient)
                     {
                         RedeWorld.slayerMessageGiven = true;
                         if (Main.netMode == NetmodeID.Server)
@@ -274,7 +259,7 @@ namespace Redemption.NPCs.HM
                         NPC.netUpdate = true;
                     }
                     if (AITimer == 10)
-                        NPC.Shoot(NPC.Center + new Vector2(19 * NPC.spriteDirection, -4), ModContent.ProjectileType<Scan_Proj>(), 0, Vector2.Zero, true, CustomSounds.BallFire, NPC.whoAmI);
+                        NPC.Shoot(NPC.Center + new Vector2(19 * NPC.spriteDirection, -8), ModContent.ProjectileType<Scan_Proj>(), 0, Vector2.Zero, CustomSounds.BallFire, NPC.whoAmI);
 
                     if (AITimer == 180 && !Main.dedServ)
                     {
@@ -285,7 +270,7 @@ namespace Redemption.NPCs.HM
                                 s = Language.GetTextValue("Mods.Redemption.Cutscene.AndroidScan.Robot");
                             else if (player.RedemptionPlayerBuff().ChickenForm)
                                 s = Language.GetTextValue("Mods.Redemption.Cutscene.AndroidScan.Chicken");
-                            Dialogue d1 = new(NPC, s + (Language.GetTextValue("Mods.Redemption.Cutscene.AndroidScan.Scan")), Color.LightBlue, Color.DarkCyan, voice, .01f, .5f, .5f, true, bubble: bubble); // 65
+                            Dialogue d1 = new(NPC, s + (Language.GetTextValue("Mods.Redemption.Cutscene.AndroidScan.Scan")), Color.LightBlue, Color.DarkCyan, voice, .01f, .5f, .5f, true, bubble: Bubble); // 65
                             ChatUI.Visible = true;
                             ChatUI.Add(d1);
                         }
@@ -294,7 +279,7 @@ namespace Redemption.NPCs.HM
                             string s = closeNPC.TypeName;
                             if (closeNPC.TypeName == "")
                                 s = Language.GetTextValue("Mods.Redemption.Cutscene.AndroidScan.Unknown");
-                            Dialogue d1 = new(NPC, s + (Language.GetTextValue("Mods.Redemption.Cutscene.AndroidScan.Scan")), Color.LightBlue, Color.DarkCyan, voice, .01f, .5f, .5f, true, bubble: bubble); // 65
+                            Dialogue d1 = new(NPC, s + (Language.GetTextValue("Mods.Redemption.Cutscene.AndroidScan.Scan")), Color.LightBlue, Color.DarkCyan, voice, .01f, .5f, .5f, true, bubble: Bubble); // 65
                             ChatUI.Visible = true;
                             ChatUI.Add(d1);
                         }
@@ -424,6 +409,43 @@ namespace Redemption.NPCs.HM
                     break;
             }
         }
+        private void CustomFrames(int frameHeight)
+        {
+            if (AIState is ActionState.RocketFist)
+            {
+                NPC.rotation = 0;
+                if (NPC.frame.Y < 13 * frameHeight)
+                    NPC.frame.Y = 13 * frameHeight;
+
+                NPC.frameCounter++;
+                if (NPC.frameCounter >= 5)
+                {
+                    NPC.frameCounter = 0;
+                    NPC.frame.Y += frameHeight;
+                    if (NPC.frame.Y == 16 * frameHeight)
+                    {
+                        int var = (int)Variant;
+                        if (var >= 3)
+                            var = 0;
+
+                        if (!Main.dedServ)
+                            SoundEngine.PlaySound(CustomSounds.MissileFire1 with { Volume = 0.5f }, NPC.position);
+                        NPC.Shoot(NPC.Center + new Vector2(19 * NPC.spriteDirection, -1), ModContent.ProjectileType<Android_Proj>(), NPC.damage, new Vector2(14 * NPC.spriteDirection, 0), NPC.whoAmI, var);
+                        NPC.velocity.X -= 3 * NPC.spriteDirection;
+                        Main.LocalPlayer.RedemptionScreen().ScreenShakeOrigin = NPC.Center;
+                        Main.LocalPlayer.RedemptionScreen().ScreenShakeIntensity += 3;
+                    }
+                    if (NPC.frame.Y > 18 * frameHeight)
+                    {
+                        AITimer = 0;
+                        NPC.frameCounter = 0;
+                        NPC.frame.Y = frameHeight;
+                        AIState = ActionState.Alert;
+                    }
+                }
+                return;
+            }
+        }
         private void Chain_OnEndTrigger(Dialogue dialogue, int ID)
         {
             AITimer = 2000;
@@ -432,74 +454,45 @@ namespace Redemption.NPCs.HM
         public override void FindFrame(int frameHeight)
         {
             if (Main.netMode != NetmodeID.Server)
-            {
                 NPC.frame.Width = TextureAssets.Npc[NPC.type].Width() / 3;
-                int var = (int)Variant;
-                if (var >= 3)
-                    var = 0;
-                NPC.frame.X = NPC.frame.Width * var;
+            int var = (int)Variant;
+            if (var >= 3)
+                var = 0;
+            NPC.frame.X = NPC.frame.Width * var;
 
-                if (AIState is ActionState.Scan)
-                {
-                    NPC.rotation = 0;
-                    NPC.frame.Y = 16 * frameHeight;
-                    return;
-                }
-                if (AIState is ActionState.RocketFist)
-                {
-                    NPC.rotation = 0;
-                    if (NPC.frame.Y < 17 * frameHeight)
-                        NPC.frame.Y = 17 * frameHeight;
+            if (AIState is ActionState.Scan)
+            {
+                NPC.rotation = 0;
+                NPC.frame.Y = 12 * frameHeight;
+                return;
+            }
+            if (AIState is ActionState.RocketFist)
+                return;
 
-                    NPC.frameCounter++;
-                    if (NPC.frameCounter >= 5)
+            if (NPC.collideY || NPC.velocity.Y == 0)
+            {
+                NPC.rotation = 0;
+                if (NPC.velocity.X == 0)
+                    NPC.frame.Y = frameHeight;
+                else
+                {
+                    if (NPC.frame.Y < 2 * frameHeight)
+                        NPC.frame.Y = 2 * frameHeight;
+
+                    NPC.frameCounter += NPC.velocity.X * 0.5f;
+                    if (NPC.frameCounter is >= 2 or <= -2)
                     {
                         NPC.frameCounter = 0;
                         NPC.frame.Y += frameHeight;
-                        if (NPC.frame.Y == 20 * frameHeight)
-                        {
-                            SoundEngine.PlaySound(CustomSounds.MissileFire1 with { Volume = 0.5f }, NPC.position);
-                            NPC.Shoot(NPC.Center + new Vector2(19 * NPC.spriteDirection, -1), ModContent.ProjectileType<Android_Proj>(), NPC.damage, new Vector2(14 * NPC.spriteDirection, 0), false, SoundID.Item1, NPC.whoAmI, var);
-                            NPC.velocity.X -= 3 * NPC.spriteDirection;
-                            Main.LocalPlayer.RedemptionScreen().ScreenShakeOrigin = NPC.Center;
-                            Main.LocalPlayer.RedemptionScreen().ScreenShakeIntensity += 3;
-                        }
-                        if (NPC.frame.Y > 22 * frameHeight)
-                        {
-                            AITimer = 0;
-                            NPC.frameCounter = 0;
-                            NPC.frame.Y = frameHeight;
-                            AIState = ActionState.Alert;
-                        }
-                    }
-                    return;
-                }
-
-                if (NPC.collideY || NPC.velocity.Y == 0)
-                {
-                    NPC.rotation = 0;
-                    if (NPC.velocity.X == 0)
-                        NPC.frame.Y = frameHeight;
-                    else
-                    {
-                        if (NPC.frame.Y < 2 * frameHeight)
+                        if (NPC.frame.Y > 11 * frameHeight)
                             NPC.frame.Y = 2 * frameHeight;
-
-                        NPC.frameCounter += NPC.velocity.X * 0.5f;
-                        if (NPC.frameCounter is >= 2 or <= -2)
-                        {
-                            NPC.frameCounter = 0;
-                            NPC.frame.Y += frameHeight;
-                            if (NPC.frame.Y > 15 * frameHeight)
-                                NPC.frame.Y = 2 * frameHeight;
-                        }
                     }
                 }
-                else
-                {
-                    NPC.rotation = NPC.velocity.X * 0.05f;
-                    NPC.frame.Y = 0;
-                }
+            }
+            else
+            {
+                NPC.rotation = NPC.velocity.X * 0.05f;
+                NPC.frame.Y = 0;
             }
         }
         public void PickType()
@@ -550,8 +543,8 @@ namespace Redemption.NPCs.HM
         {
             Texture2D glow = ModContent.Request<Texture2D>(Texture + "_Glow").Value;
             var effects = NPC.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
-            spriteBatch.Draw(TextureAssets.Npc[NPC.type].Value, NPC.Center + new Vector2(0, 3) - screenPos, NPC.frame, NPC.GetAlpha(drawColor), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
-            spriteBatch.Draw(glow, NPC.Center + new Vector2(0, 3) - screenPos, NPC.frame, NPC.GetAlpha(Color.White), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
+            spriteBatch.Draw(TextureAssets.Npc[NPC.type].Value, NPC.Center + new Vector2(0, 1) - screenPos, NPC.frame, NPC.GetAlpha(drawColor), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
+            spriteBatch.Draw(glow, NPC.Center + new Vector2(0, 1) - screenPos, NPC.frame, NPC.GetAlpha(Color.White), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
             return false;
         }
 
@@ -564,7 +557,7 @@ namespace Redemption.NPCs.HM
                 RedeHelper.SpawnNPC(NPC.GetSource_FromAI(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<SlayerSpawner>(), 1);
             else if (Variant == 11 && RedeWorld.slayerRep > 2)
                 RedeHelper.SpawnNPC(NPC.GetSource_FromAI(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<SlayerSpawner>(), 2);
-            if (Variant == 2)
+            if (Variant == 2 && Main.netMode != NetmodeID.MultiplayerClient)
             {
                 RedeWorld.apidroidKilled = true;
                 if (Main.netMode == NetmodeID.Server)
@@ -598,8 +591,10 @@ namespace Redemption.NPCs.HM
 
                 Gore.NewGore(NPC.GetSource_FromThis(), NPC.position, NPC.velocity, ModContent.Find<ModGore>("Redemption/AndroidGore1" + (var + 1)).Type, 1);
                 Gore.NewGore(NPC.GetSource_FromThis(), NPC.position, NPC.velocity, ModContent.Find<ModGore>("Redemption/AndroidGore2" + (var + 1)).Type, 1);
-                for (int i = 0; i < 3; i++)
+                for (int i = 0; i < 2; i++)
                     Gore.NewGore(NPC.GetSource_FromThis(), NPC.position, NPC.velocity, ModContent.Find<ModGore>("Redemption/AndroidGore3" + (var + 1)).Type, 1);
+                for (int i = 0; i < 2; i++)
+                    Gore.NewGore(NPC.GetSource_FromThis(), NPC.position, NPC.velocity, ModContent.Find<ModGore>("Redemption/AndroidGore4" + (var + 1)).Type, 1);
             }
             Dust.NewDust(NPC.position + NPC.velocity, NPC.width, NPC.height, DustID.Electric, NPC.velocity.X * 0.5f, NPC.velocity.Y * 0.5f);
 

@@ -44,7 +44,7 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
             NPCID.Sets.MPAllowedEnemies[Type] = true;
             NPCID.Sets.TrailCacheLength[NPC.type] = 4;
             NPCID.Sets.TrailingMode[NPC.type] = 1;
-            NPCID.Sets.NPCBestiaryDrawModifiers value = new(0) { Hide = true };
+            NPCID.Sets.NPCBestiaryDrawModifiers value = new() { Hide = true };
             NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, value);
         }
         public override void SetDefaults()
@@ -89,7 +89,7 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
         public override void ModifyTypeName(ref string typeName)
         {
             if (NPC.ai[3] != -1)
-                typeName = Main.player[(int)NPC.ai[3]].name + "'s Skeleton Duelist";
+                typeName = Main.player[(int)NPC.ai[3]].name + "'s " + Lang.GetNPCNameValue(Type);
         }
         private int dodgeCooldown;
 
@@ -107,6 +107,8 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
         }
         public override void AI()
         {
+            CustomFrames(58);
+
             Player player = Main.player[(int)NPC.ai[3]];
             RedeNPC globalNPC = NPC.Redemption();
             if (!player.active || player.dead || !SSBase.CheckActive(player))
@@ -192,7 +194,7 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
                         for (int i = 0; i < Main.maxProjectiles; i++)
                         {
                             Projectile proj = Main.projectile[i];
-                            if (!proj.active || proj.friendly || proj.damage <= 0 || proj.velocity.Length() == 0)
+                            if (!proj.active || !proj.hostile || proj.damage <= 0 || proj.velocity.Length() == 0)
                                 continue;
 
                             if (!NPC.Sight(proj, 80 + (proj.velocity.Length() * 4), true, true))
@@ -307,86 +309,89 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
                 return;
             ParticleManager.NewParticle(NPC.RandAreaInEntity(), RedeHelper.Spread(2), new SpiritParticle(), Color.White, 1);
         }
-        public override bool? CanFallThroughPlatforms() => NPC.Redemption().fallDownPlatform;
-        private int HeadOffsetX;
-        public override void FindFrame(int frameHeight)
+        private void CustomFrames(int frameHeight)
         {
-            if (Main.netMode != NetmodeID.Server)
+            if (AIState is ActionState.Attack)
             {
-                NPC.frame.Width = TextureAssets.Npc[NPC.type].Width() / 6;
-                NPC.frame.X = AIState is ActionState.Alert or ActionState.IdleAlert ? 0 : NPC.frame.Width;
-                if (AIState is ActionState.Attack)
+                if (++NPC.frameCounter >= 5)
                 {
-                    if (++NPC.frameCounter >= 5)
+                    NPC.frameCounter = 0;
+                    AniFrameY++;
+                    if (AniFrameY is 3 or 6)
                     {
-                        NPC.frameCounter = 0;
-                        AniFrameY++;
-                        if (AniFrameY is 3 or 6)
-                        {
-                            SoundEngine.PlaySound(SoundID.Item19, NPC.position);
-                            NPC.velocity.X = 2 * NPC.spriteDirection;
-                        }
-                        if (AniFrameY > 10)
-                        {
-                            AniFrameY = 0;
-                            NPC.frame.Y = 0;
-                            HeadOffset = 0;
-
-                            RedeNPC globalNPC = NPC.Redemption();
-                            if (NPC.velocity.Y == 0 && NPC.DistanceSQ(globalNPC.attacker.Center) < 100 * 100)
-                                NPC.LookAtEntity(globalNPC.attacker);
-                            else
-                                AIState = ActionState.Alert;
-                        }
+                        SoundEngine.PlaySound(SoundID.Item19, NPC.position);
+                        NPC.velocity.X = 2 * NPC.spriteDirection;
                     }
-                    if (AIState is ActionState.Attack)
-                        HeadOffset = SetHeadOffsetY();
-                    else
-                        HeadOffset = SetHeadOffset(ref frameHeight);
-                    HeadOffsetX = SetHeadOffsetX();
-                    return;
-                }
-                AniFrameY = 0;
-
-                if (NPC.collideY || NPC.velocity.Y == 0)
-                {
-                    NPC.rotation = 0;
-                    if (NPC.velocity.X == 0)
+                    if (AniFrameY > 10)
                     {
-                        if (++NPC.frameCounter >= 10)
-                        {
-                            NPC.frameCounter = 0;
-                            NPC.frame.Y += frameHeight;
-                            if (NPC.frame.Y > 3 * frameHeight)
-                                NPC.frame.Y = 0 * frameHeight;
-                        }
-                    }
-                    else
-                    {
-                        if (NPC.frame.Y < 5 * frameHeight)
-                            NPC.frame.Y = 5 * frameHeight;
+                        AniFrameY = 0;
+                        NPC.frame.Y = 0;
+                        HeadOffset = 0;
 
-                        NPC.frameCounter += NPC.velocity.X * 0.5f;
-                        if (NPC.frameCounter is >= 3 or <= -3)
-                        {
-                            NPC.frameCounter = 0;
-                            NPC.frame.Y += frameHeight;
-                            if (NPC.frame.Y > 12 * frameHeight)
-                                NPC.frame.Y = 5 * frameHeight;
-                        }
+                        RedeNPC globalNPC = NPC.Redemption();
+                        if (NPC.velocity.Y == 0 && NPC.DistanceSQ(globalNPC.attacker.Center) < 100 * 100)
+                            NPC.LookAtEntity(globalNPC.attacker);
+                        else
+                            AIState = ActionState.Alert;
                     }
-                }
-                else
-                {
-                    NPC.rotation = NPC.velocity.X * 0.05f;
-                    NPC.frame.Y = 4 * frameHeight;
                 }
                 if (AIState is ActionState.Attack)
                     HeadOffset = SetHeadOffsetY();
                 else
                     HeadOffset = SetHeadOffset(ref frameHeight);
                 HeadOffsetX = SetHeadOffsetX();
+                return;
             }
+        }
+        public override bool? CanFallThroughPlatforms() => NPC.Redemption().fallDownPlatform;
+        private int HeadOffsetX;
+        public override void FindFrame(int frameHeight)
+        {
+            if (Main.netMode != NetmodeID.Server)
+                NPC.frame.Width = TextureAssets.Npc[NPC.type].Width() / 6;
+            NPC.frame.X = AIState is ActionState.Alert or ActionState.IdleAlert ? 0 : NPC.frame.Width;
+            if (AIState is ActionState.Attack)
+                return;
+            AniFrameY = 0;
+
+            if (NPC.collideY || NPC.velocity.Y == 0)
+            {
+                NPC.rotation = 0;
+                if (NPC.velocity.X == 0)
+                {
+                    if (++NPC.frameCounter >= 10)
+                    {
+                        NPC.frameCounter = 0;
+                        NPC.frame.Y += frameHeight;
+                        if (NPC.frame.Y > 3 * frameHeight)
+                            NPC.frame.Y = 0 * frameHeight;
+                    }
+                }
+                else
+                {
+                    if (NPC.frame.Y < 5 * frameHeight)
+                        NPC.frame.Y = 5 * frameHeight;
+
+                    NPC.frameCounter += NPC.velocity.X * 0.5f;
+                    if (NPC.frameCounter is >= 3 or <= -3)
+                    {
+                        NPC.frameCounter = 0;
+                        NPC.frame.Y += frameHeight;
+                        if (NPC.frame.Y > 12 * frameHeight)
+                            NPC.frame.Y = 5 * frameHeight;
+                    }
+                }
+            }
+            else
+            {
+                NPC.rotation = NPC.velocity.X * 0.05f;
+                NPC.frame.Y = 4 * frameHeight;
+            }
+            if (AIState is ActionState.Attack)
+                HeadOffset = SetHeadOffsetY();
+            else
+                HeadOffset = SetHeadOffset(ref frameHeight);
+            HeadOffsetX = SetHeadOffsetX();
         }
         public int SetHeadOffsetY()
         {
@@ -479,8 +484,8 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
 
             int shader = GameShaders.Armor.GetShaderIdFromItemId(ItemID.WispDye);
             spriteBatch.End();
-            spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
-            GameShaders.Armor.ApplySecondary(shader, Main.player[Main.myPlayer], null);
+            spriteBatch.BeginAdditive(true);
+            GameShaders.Armor.ApplySecondary(shader, Main.LocalPlayer, null);
 
             int HeightH = head2.Value.Height / 12;
             int WidthH = head2.Value.Width / 2;
@@ -521,7 +526,7 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
                     spriteBatch.Draw(Glow, NPC.Center - screenPos, NPC.frame, NPC.GetAlpha(Color.White), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
             }
             spriteBatch.End();
-            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+            spriteBatch.BeginDefault();
             return false;
         }
         public override bool CanHitNPC(NPC target) => false;

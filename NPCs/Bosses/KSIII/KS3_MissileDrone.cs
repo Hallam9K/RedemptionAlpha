@@ -10,9 +10,7 @@ using Redemption.Base;
 using Terraria.GameContent;
 using Terraria.GameContent.Bestiary;
 using System.Collections.Generic;
-using Terraria.DataStructures;
-using Redemption.Buffs.NPCBuffs;
-using Redemption.Buffs.Debuffs;
+using Redemption.Globals.NPC;
 
 namespace Redemption.NPCs.Bosses.KSIII
 {
@@ -24,19 +22,8 @@ namespace Redemption.NPCs.Bosses.KSIII
         {
             // DisplayName.SetDefault("Missile Drone Mk.I");
             Main.npcFrameCount[NPC.type] = 4;
-            NPCDebuffImmunityData debuffData = new()
-            {
-                SpecificallyImmuneTo = new int[] {
-                    BuffID.Confused,
-                    BuffID.Poisoned,
-                    BuffID.Venom,
-                    ModContent.BuffType<InfestedDebuff>(),
-                    ModContent.BuffType<NecroticGougeDebuff>(),
-                    ModContent.BuffType<ViralityDebuff>(),
-                    ModContent.BuffType<DirtyWoundDebuff>()
-                }
-            };
-            NPCID.Sets.DebuffImmunitySets.Add(Type, debuffData);
+            BuffNPC.NPCTypeImmunity(Type, BuffNPC.NPCDebuffImmuneType.Inorganic);
+            NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.Confused] = true;
 
             NPCID.Sets.DontDoHardmodeScaling[Type] = true;
             NPCID.Sets.CantTakeLunchMoney[Type] = true;
@@ -129,7 +116,7 @@ namespace Redemption.NPCs.Bosses.KSIII
             {
                 if (NPC.ai[2] % 30 == 0)
                 {
-                    NPC.Shoot(NPC.Center, ModContent.ProjectileType<SlayerMissile>(), 96, RedeHelper.PolarVector(10, (player.Center - NPC.Center).ToRotation() + Main.rand.NextFloat(0.2f, 0.2f)), true, SoundID.Item74);
+                    NPC.Shoot(NPC.Center, ModContent.ProjectileType<SlayerMissile>(), 96, RedeHelper.PolarVector(10, (player.Center - NPC.Center).ToRotation() + Main.rand.NextFloat(0.2f, 0.2f)), SoundID.Item74);
                     shotCount++;
                 }
             }
@@ -249,7 +236,7 @@ namespace Redemption.NPCs.Bosses.KSIII
         public override bool PreDraw(ref Color lightColor)
         {
             Texture2D texture = TextureAssets.Projectile[Projectile.type].Value;
-            Texture2D glow = ModContent.Request<Texture2D>(Projectile.ModProjectile.Texture + "_Glow").Value;
+            Texture2D glow = ModContent.Request<Texture2D>(Texture + "_Glow").Value;
             var effects = Projectile.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
             int height = texture.Height / 2;
             int y = height * Projectile.frame;
@@ -259,7 +246,7 @@ namespace Redemption.NPCs.Bosses.KSIII
             return false;
         }
 
-        public override void Kill(int timeLeft)
+        public override void OnKill(int timeLeft)
         {
             SoundEngine.PlaySound(SoundID.Item14, Projectile.position);
             for (int i = 0; i < 25; i++)

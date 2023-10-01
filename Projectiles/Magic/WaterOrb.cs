@@ -117,7 +117,7 @@ namespace Redemption.Projectiles.Magic
         }
         public override Color? GetAlpha(Color lightColor) => new Color(255, 255, 255, 0);
 
-        public override void Kill(int timeLeft)
+        public override void OnKill(int timeLeft)
         {
             if (fakeTimer > 0)
                 return;

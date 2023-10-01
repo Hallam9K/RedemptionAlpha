@@ -14,6 +14,8 @@ namespace Redemption.NPCs.Bosses.Thorn
         private static Asset<Texture2D> endTex;
         public override void Load()
         {
+            if (Main.dedServ)
+                return;
             endTex = ModContent.Request<Texture2D>("Redemption/NPCs/Bosses/Thorn/CursedThornVile_End");
         }
 

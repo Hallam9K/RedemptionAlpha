@@ -43,7 +43,7 @@ namespace Redemption.Projectiles.Misc
             if (Main.rand.NextBool(3))
                 target.AddBuff(BuffID.Poisoned, 300);
         }
-        public override void Kill(int timeLeft)
+        public override void OnKill(int timeLeft)
         {
             int dustIndex = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.Grass, Scale: 1.2f);
             Main.dust[dustIndex].velocity *= 0.4f;

@@ -13,8 +13,8 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ModLoader.Utilities;
 using Redemption.BaseExtension;
-using Terraria.Localization;
 using Terraria.DataStructures;
+using Terraria.Localization;
 
 namespace Redemption.NPCs.Critters
 {
@@ -50,7 +50,7 @@ namespace Redemption.NPCs.Critters
             NPCID.Sets.NormalGoldCritterBestiaryPriority.Add(Type);
             NPCID.Sets.GoldCrittersCollection.Add(Type);
 
-            NPCID.Sets.NPCBestiaryDrawModifiers value = new(0)
+            NPCID.Sets.NPCBestiaryDrawModifiers value = new()
             {
                 Velocity = 1f
             };
@@ -165,6 +165,13 @@ namespace Redemption.NPCs.Critters
                     if (NPC.velocity.Y == 0)
                         NPC.velocity.X = 0;
 
+                    if (NPC.frame.Y > 20 * 28)
+                    {
+                        NPC.frame.Y = 0;
+                        AIState = ActionState.Idle;
+                        NPC.netUpdate = true;
+                    }
+
                     SightCheck();
                     break;
 
@@ -261,10 +268,7 @@ namespace Redemption.NPCs.Critters
                     NPC.frameCounter = 0;
                     NPC.frame.Y += frameHeight;
                     if (NPC.frame.Y > 20 * frameHeight)
-                    {
-                        NPC.frame.Y = 0;
-                        AIState = ActionState.Idle;
-                    }
+                        NPC.frame.Y = 20 * frameHeight;
                 }
                 return;
             }
@@ -281,9 +285,7 @@ namespace Redemption.NPCs.Critters
                     NPC.frameCounter = 0;
                     NPC.frame.Y += frameHeight;
                     if (NPC.frame.Y > 13 * frameHeight)
-                    {
                         NPC.frame.Y = 13 * frameHeight;
-                    }
                 }
                 return;
             }

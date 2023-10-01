@@ -43,7 +43,7 @@ namespace Redemption.Projectiles.Magic
         {
             target.AddBuff(ModContent.BuffType<StomachAcidDebuff>(), 800);
         }
-        public override void Kill(int timeLeft)
+        public override void OnKill(int timeLeft)
         {
             SoundEngine.PlaySound(SoundID.NPCDeath1, Projectile.position);
             if (Projectile.owner == Main.myPlayer)

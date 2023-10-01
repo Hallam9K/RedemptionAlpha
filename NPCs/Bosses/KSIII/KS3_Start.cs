@@ -14,7 +14,7 @@ namespace Redemption.NPCs.Bosses.KSIII
         {
             // DisplayName.SetDefault("");
 
-            NPCID.Sets.NPCBestiaryDrawModifiers value = new(0)
+            NPCID.Sets.NPCBestiaryDrawModifiers value = new()
             {
                 Hide = true
             };
@@ -35,6 +35,7 @@ namespace Redemption.NPCs.Bosses.KSIII
             NPC.value = 0f;
             NPC.knockBackResist = 0f;
             NPC.aiStyle = -1;
+            NPC.ShowNameOnHover = false;
         }
 
         public override void AI()
@@ -70,7 +71,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                     {
                         if (NPC.ai[1] >= 2)
                         {
-                            NPC.Shoot(NPC.Center, ModContent.ProjectileType<KS3_DroneKillCheck>(), 0, Vector2.Zero, false, SoundID.Item1);
+                            NPC.Shoot(NPC.Center, ModContent.ProjectileType<KS3_DroneKillCheck>(), 0, Vector2.Zero);
                             NPC.ai[0] = 4;
                             NPC.ai[1] = 0;
                             NPC.ai[2] = 0;
@@ -78,7 +79,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                         }
                         else
                         {
-                            if (RedeBossDowned.slayerDeath < 1)
+                            if (RedeBossDowned.slayerDeath < 1 && Main.netMode != NetmodeID.MultiplayerClient)
                             {
                                 RedeBossDowned.slayerDeath = 1;
                                 NPC.ai[0] = 3;
@@ -96,12 +97,11 @@ namespace Redemption.NPCs.Bosses.KSIII
                     break;
                 case 2:
                     if (NPC.ai[2]++ == 30)
-                        NPC.Shoot(new Vector2(player.Center.X + 90, player.Center.Y - 50), ModContent.ProjectileType<KS3_HeadHologram>(), 0, Vector2.Zero, false,
-                            SoundID.Item1);
+                        NPC.Shoot(new Vector2(player.Center.X + 90, player.Center.Y - 50), ModContent.ProjectileType<KS3_HeadHologram>(), 0, Vector2.Zero);
 
                     if (NPC.ai[2] > 760)
                     {
-                        if (RedeBossDowned.slayerDeath < 2)
+                        if (RedeBossDowned.slayerDeath < 2 && Main.netMode != NetmodeID.MultiplayerClient)
                         {
                             RedeBossDowned.slayerDeath = 2;
                             if (Main.netMode == NetmodeID.Server)
@@ -119,7 +119,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                     NPC.velocity.Y += 10;
                     break;
                 case 4:
-                    if (RedeBossDowned.slayerDeath < 2)
+                    if (RedeBossDowned.slayerDeath < 2 && Main.netMode != NetmodeID.MultiplayerClient)
                     {
                         RedeBossDowned.slayerDeath = 2;
                         if (Main.netMode == NetmodeID.Server)

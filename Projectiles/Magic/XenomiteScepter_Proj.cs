@@ -72,7 +72,7 @@ namespace Redemption.Projectiles.Magic
             else if (Main.rand.NextBool(6))
                 target.AddBuff(ModContent.BuffType<GlowingPustulesDebuff>(), 150);
         }
-        public override void Kill(int timeLeft)
+        public override void OnKill(int timeLeft)
         {
             int pieCut = 20;
             for (int m = 0; m < pieCut; m++)

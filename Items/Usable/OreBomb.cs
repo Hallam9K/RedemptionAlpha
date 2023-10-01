@@ -70,7 +70,7 @@ namespace Redemption.Items.Usable
                 Projectile.velocity.X = 0f;
         }
 
-        public override void Kill(int timeLeft)
+        public override void OnKill(int timeLeft)
         {
             SoundEngine.PlaySound(SoundID.Item14, Projectile.position);
             Projectile.width = 10;

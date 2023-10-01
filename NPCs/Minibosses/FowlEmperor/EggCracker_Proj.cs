@@ -1,6 +1,5 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Redemption.Base;
 using Redemption.Globals;
 using Terraria;
 using Terraria.Audio;
@@ -34,7 +33,7 @@ namespace Redemption.NPCs.Minibosses.FowlEmperor
             Projectile.rotation += Projectile.velocity.X / 20;
             Projectile.velocity.Y += 0.2f;
         }
-        public override void Kill(int timeLeft)
+        public override void OnKill(int timeLeft)
         {
             SoundEngine.PlaySound(SoundID.DD2_KoboldExplosion, Projectile.position);
             SoundEngine.PlaySound(SoundID.NPCDeath11 with { Volume = .5f }, Projectile.position);
@@ -67,19 +66,7 @@ namespace Redemption.NPCs.Minibosses.FowlEmperor
                 }
             }
             Rectangle boom = new((int)Projectile.Center.X - 40, (int)Projectile.Center.Y - 40, 80, 80);
-            for (int i = 0; i < Main.maxNPCs; i++)
-            {
-                NPC target = Main.npc[i];
-                if (!target.active || !target.CanBeChasedBy())
-                    continue;
-
-                if (target.immune[Projectile.whoAmI] > 0 || !target.Hitbox.Intersects(boom))
-                    continue;
-
-                target.immune[Projectile.whoAmI] = 20;
-                int hitDirection = target.RightOfDir(Projectile);
-                BaseAI.DamageNPC(target, Projectile.damage, Projectile.knockBack, hitDirection, Projectile, crit: Projectile.HeldItemCrit());
-            }
+            RedeHelper.NPCRadiusDamage(boom, Projectile, Projectile.damage, Projectile.knockBack);
         }
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {

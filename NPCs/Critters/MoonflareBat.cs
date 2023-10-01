@@ -12,9 +12,9 @@ using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.Events;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ModLoader.Utilities;
-using Terraria.Localization;
 
 namespace Redemption.NPCs.Critters
 {
@@ -35,7 +35,7 @@ namespace Redemption.NPCs.Critters
             NPCID.Sets.TrailCacheLength[NPC.type] = 4;
             NPCID.Sets.TrailingMode[NPC.type] = 1;
 
-            NPCID.Sets.NPCBestiaryDrawModifiers value = new(0);
+            NPCID.Sets.NPCBestiaryDrawModifiers value = new();
 
             NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, value);
         }
@@ -107,7 +107,7 @@ namespace Redemption.NPCs.Critters
             if (NPC.velocity.X == 0)
                 NPC.velocity.X = 3 * Main.rand.NextFloatDirection();
 
-            int tilePosY = BaseWorldGen.GetFirstTileFloor((int)(NPC.Center.X / 16), (int)(NPC.Center.Y / 16));
+            int tilePosY = BaseWorldGen.GetFirstTileFloor((int)(NPC.Center.X / 16), (int)(NPC.Center.Y / 16), true, true);
             int dist = (tilePosY * 16) - (int)NPC.Center.Y;
 
             NPC.velocity.X *= 1.04f;
@@ -168,7 +168,7 @@ namespace Redemption.NPCs.Critters
             if (!Main.dayTime && Main.moonPhase != 4 && !NPC.IsABestiaryIconDummy)
             {
                 spriteBatch.End();
-                spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+                spriteBatch.BeginAdditive();
 
                 for (int i = 0; i < NPCID.Sets.TrailCacheLength[NPC.type]; i++)
                 {
@@ -177,7 +177,7 @@ namespace Redemption.NPCs.Critters
                 }
 
                 spriteBatch.End();
-                spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+                spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullNone, null, Main.GameViewMatrix.TransformationMatrix);
             }
 
             spriteBatch.Draw(TextureAssets.Npc[NPC.type].Value, NPC.Center - screenPos, NPC.frame, drawColor, NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);

@@ -10,9 +10,7 @@ using Redemption.Base;
 using Terraria.GameContent;
 using Terraria.GameContent.Bestiary;
 using System.Collections.Generic;
-using Terraria.DataStructures;
-using Redemption.Buffs.NPCBuffs;
-using Redemption.Buffs.Debuffs;
+using Redemption.Globals.NPC;
 
 namespace Redemption.NPCs.Bosses.KSIII
 {
@@ -24,20 +22,8 @@ namespace Redemption.NPCs.Bosses.KSIII
         {
             // DisplayName.SetDefault("Energy Magnet Drone Mk.I");
             Main.npcFrameCount[NPC.type] = 12;
-            NPCDebuffImmunityData debuffData = new()
-            {
-                SpecificallyImmuneTo = new int[] {
-                    BuffID.Confused,
-                    BuffID.Poisoned,
-                    BuffID.Venom,
-                    ModContent.BuffType<InfestedDebuff>(),
-                    ModContent.BuffType<NecroticGougeDebuff>(),
-                    ModContent.BuffType<ViralityDebuff>(),
-                    ModContent.BuffType<DirtyWoundDebuff>()
-                }
-            };
-            NPCID.Sets.DebuffImmunitySets.Add(Type, debuffData);
-
+            BuffNPC.NPCTypeImmunity(Type, BuffNPC.NPCDebuffImmuneType.Inorganic);
+            NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.Confused] = true;
             NPCID.Sets.DontDoHardmodeScaling[Type] = true;
             NPCID.Sets.CantTakeLunchMoney[Type] = true;
             NPCID.Sets.BossBestiaryPriority.Add(Type);
@@ -146,7 +132,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                     if (!target.active || target.width >= 40 || target.height >= 40 || NPC.DistanceSQ(target.Center) >= 200 * 200 || !target.friendly || target.damage <= 0 || target.ProjBlockBlacklist())
                         continue;
 
-                    NPC.Shoot(target.Center, ModContent.ProjectileType<KS3_MagnetPulse>(), 0, Vector2.Zero, false, SoundID.Item1, NPC.whoAmI);
+                    NPC.Shoot(target.Center, ModContent.ProjectileType<KS3_MagnetPulse>(), 0, Vector2.Zero, NPC.whoAmI);
                     NPC.ai[3] += target.damage;
                     target.Kill();
                 }
@@ -169,7 +155,7 @@ namespace Redemption.NPCs.Bosses.KSIII
             if (NPC.ai[2] == 240 && NPC.ai[3] > 10)
             {
                 NPC.Shoot(NPC.Center, ModContent.ProjectileType<KS3_MagnetBeam>(), (int)NPC.ai[3] / 4,
-                    RedeHelper.PolarVector(10, (playerOrigin - NPC.Center).ToRotation()), true, CustomSounds.BallFire, NPC.whoAmI);
+                    RedeHelper.PolarVector(10, (playerOrigin - NPC.Center).ToRotation()), CustomSounds.BallFire, NPC.whoAmI);
             }
             if (NPC.ai[2] >= 400)
             {
