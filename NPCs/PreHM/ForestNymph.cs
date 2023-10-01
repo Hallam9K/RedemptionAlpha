@@ -93,11 +93,11 @@ namespace Redemption.NPCs.PreHM
             set => NPC.ai[3] = (int)value;
         }
 
-        public byte HairExtType;
+        public int HairExtType;
         public bool HasHat;
-        public byte EyeType;
-        public byte HairType;
-        public byte FlowerType;
+        public int EyeType;
+        public int HairType;
+        public int FlowerType;
         public Vector2 EyeOffset;
         public int VisionRange;
         public int VisionIncrease;

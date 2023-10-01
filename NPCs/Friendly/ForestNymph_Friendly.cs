@@ -570,11 +570,11 @@ namespace Redemption.NPCs.Friendly
         public override void LoadData(TagCompound tag)
         {
             Personality = (PersonalityState)tag.GetInt("Personality");
-            EyeType = tag.GetByte("EyeType");
-            HairExtType = tag.GetByte("HairExtType");
-            HairType = tag.GetByte("HairType");
+            EyeType = tag.GetInt("EyeType");
+            HairExtType = tag.GetInt("HairExtType");
+            HairType = tag.GetInt("HairType");
             HasHat = tag.GetBool("HasHat");
-            FlowerType = tag.GetByte("FlowerType");
+            FlowerType = tag.GetInt("FlowerType");
         }
 
         public override void SaveData(TagCompound tag)
