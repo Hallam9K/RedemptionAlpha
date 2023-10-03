@@ -714,7 +714,7 @@ namespace Redemption.NPCs.Bosses.ADD
                             if (AITimer % 10 == 0 && AITimer < 50)
                             {
                                 for (int i = 0; i < 3; i++)
-                                    DustHelper.DrawParticleElectricity(HammerPos, HammerPos + RedeHelper.PolarVector(90, RedeHelper.RandomRotation()), new LightningParticle(), 1, 20, 0.1f);
+                                    DustHelper.DrawParticleElectricity<LightningParticle>(HammerPos, HammerPos + RedeHelper.PolarVector(90, RedeHelper.RandomRotation()), 1, 20, 0.1f);
 
                                 NPC.ai[3] = 1;
                                 Vector2 ai = RedeHelper.PolarVector(15, RedeHelper.RandomRotation());
@@ -958,7 +958,7 @@ namespace Redemption.NPCs.Bosses.ADD
                                 if (AITimer == 152)
                                 {
                                     for (int i = 0; i < Main.rand.Next(9, 14); i++)
-                                        DustHelper.DrawParticleElectricity(NPC.Center, NPC.Center + RedeHelper.PolarVector(Main.rand.Next(160, 210), RedeHelper.RandomRotation()), new LightningParticle(), 3, 40, 0.1f, 1);
+                                        DustHelper.DrawParticleElectricity<LightningParticle>(NPC.Center, NPC.Center + RedeHelper.PolarVector(Main.rand.Next(160, 210), RedeHelper.RandomRotation()), 3, 40, 0.1f, 1);
 
                                     Main.LocalPlayer.RedemptionScreen().ScreenShakeOrigin = NPC.Center;
                                     Main.LocalPlayer.RedemptionScreen().ScreenShakeIntensity += 30;

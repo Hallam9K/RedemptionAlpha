@@ -29,8 +29,8 @@ namespace Redemption.Projectiles.Melee
         }
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
-            DustHelper.DrawParticleElectricity(new Vector2(target.position.X, target.position.Y + Main.rand.Next(0, target.height)), new Vector2(target.TopRight.X, target.TopRight.Y + Main.rand.Next(0, target.height)), new LightningParticle(), .5f, 10, 0.2f, 5);
-            DustHelper.DrawParticleElectricity(new Vector2(target.TopRight.X, target.TopRight.Y + Main.rand.Next(0, target.height)), new Vector2(target.position.X, target.position.Y + Main.rand.Next(0, target.height)), new LightningParticle(), .5f, 10, 0.2f, 5);
+            DustHelper.DrawParticleElectricity<LightningParticle>(new Vector2(target.position.X, target.position.Y + Main.rand.Next(0, target.height)), new Vector2(target.TopRight.X, target.TopRight.Y + Main.rand.Next(0, target.height)), .5f, 10, 0.2f, 5);
+            DustHelper.DrawParticleElectricity<LightningParticle>(new Vector2(target.TopRight.X, target.TopRight.Y + Main.rand.Next(0, target.height)), new Vector2(target.position.X, target.position.Y + Main.rand.Next(0, target.height)), .5f, 10, 0.2f, 5);
 
             Projectile.localNPCImmunity[target.whoAmI] = 7;
             target.immune[Projectile.owner] = 0;
@@ -43,7 +43,7 @@ namespace Redemption.Projectiles.Melee
             {
                 for (int i = 0; i < 2; i++)
                 {
-                    DustHelper.DrawParticleElectricity(Projectile.Center, Projectile.Center + RedeHelper.PolarVector(Main.rand.Next(30, 61), RedeHelper.RandomRotation()), new LightningParticle(), .5f, 10, 0.2f, 5);
+                    DustHelper.DrawParticleElectricity<LightningParticle>(Projectile.Center, Projectile.Center + RedeHelper.PolarVector(Main.rand.Next(30, 61), RedeHelper.RandomRotation()), .5f, 10, 0.2f, 5);
                 }
             }
         }

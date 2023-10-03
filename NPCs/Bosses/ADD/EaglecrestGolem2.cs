@@ -352,8 +352,8 @@ namespace Redemption.NPCs.Bosses.ADD
                                 SoundEngine.PlaySound(CustomSounds.Spark1, NPC.position);
                             if (AITimer >= 90 && AITimer < 130 && !Main.rand.NextBool(3))
                             {
-                                DustHelper.DrawParticleElectricity(eyePos, eyePos + RedeHelper.PolarVector(180, RedeHelper.RandomRotation()), new LightningParticle(), 1f, 20, 0.1f, 1);
-                                DustHelper.DrawParticleElectricity(eyePos, eyePos + RedeHelper.PolarVector(180, RedeHelper.RandomRotation()), new LightningParticle(), 1f, 20, 0.1f, 1);
+                                DustHelper.DrawParticleElectricity<LightningParticle>(eyePos, eyePos + RedeHelper.PolarVector(180, RedeHelper.RandomRotation()), 1f, 20, 0.1f, 1);
+                                DustHelper.DrawParticleElectricity<LightningParticle>(eyePos, eyePos + RedeHelper.PolarVector(180, RedeHelper.RandomRotation()), 1f, 20, 0.1f, 1);
                             }
                             if (AITimer == 180)
                             {
@@ -375,8 +375,8 @@ namespace Redemption.NPCs.Bosses.ADD
                                 SoundEngine.PlaySound(CustomSounds.Spark1 with { Pitch = 0.1f }, NPC.position);
                             if (AITimer >= 210 && AITimer < 250 && Main.rand.NextBool(2))
                             {
-                                DustHelper.DrawParticleElectricity(eyePos, NPC.Center + RedeHelper.PolarVector(180, RedeHelper.RandomRotation()), new LightningParticle(), 1f, 20, 0.1f, 1);
-                                DustHelper.DrawParticleElectricity(eyePos, NPC.Center + RedeHelper.PolarVector(180, RedeHelper.RandomRotation()), new LightningParticle(), 1f, 20, 0.1f, 1);
+                                DustHelper.DrawParticleElectricity<LightningParticle>(eyePos, NPC.Center + RedeHelper.PolarVector(180, RedeHelper.RandomRotation()), 1f, 20, 0.1f, 1);
+                                DustHelper.DrawParticleElectricity<LightningParticle>(eyePos, NPC.Center + RedeHelper.PolarVector(180, RedeHelper.RandomRotation()), 1f, 20, 0.1f, 1);
                             }
                             if ((AITimer >= 60 && AITimer < 90) || (AITimer >= 180 && AITimer < 210))
                             {
@@ -402,8 +402,8 @@ namespace Redemption.NPCs.Bosses.ADD
                                 TimerRand2 += 0.01f;
                                 if (Main.rand.NextBool(10) || (Main.rand.NextBool(5) && AITimer >= 340))
                                 {
-                                    DustHelper.DrawParticleElectricity(eyePos, NPC.Center + RedeHelper.PolarVector(180, RedeHelper.RandomRotation()), new LightningParticle(), 1f, 20, 0.1f, 1);
-                                    DustHelper.DrawParticleElectricity(eyePos, NPC.Center + RedeHelper.PolarVector(180, RedeHelper.RandomRotation()), new LightningParticle(), 1f, 20, 0.1f, 1);
+                                    DustHelper.DrawParticleElectricity<LightningParticle>(eyePos, NPC.Center + RedeHelper.PolarVector(180, RedeHelper.RandomRotation()), 1f, 20, 0.1f, 1);
+                                    DustHelper.DrawParticleElectricity<LightningParticle>(eyePos, NPC.Center + RedeHelper.PolarVector(180, RedeHelper.RandomRotation()), 1f, 20, 0.1f, 1);
                                 }
                             }
                             if (TimerRand2 >= 2f)
@@ -452,8 +452,8 @@ namespace Redemption.NPCs.Bosses.ADD
 
                                 if (Main.rand.NextBool(5))
                                 {
-                                    DustHelper.DrawParticleElectricity(NPC.Center, NPC.Center + RedeHelper.PolarVector(50 + AITimer, RedeHelper.RandomRotation()), new LightningParticle(), 2f, 20, 0.1f, 1);
-                                    DustHelper.DrawParticleElectricity(NPC.Center, NPC.Center + RedeHelper.PolarVector(50 + AITimer, RedeHelper.RandomRotation()), new LightningParticle(), 2f, 20, 0.1f, 1);
+                                    DustHelper.DrawParticleElectricity<LightningParticle>(NPC.Center, NPC.Center + RedeHelper.PolarVector(50 + AITimer, RedeHelper.RandomRotation()), 2f, 20, 0.1f, 1);
+                                    DustHelper.DrawParticleElectricity<LightningParticle>(NPC.Center, NPC.Center + RedeHelper.PolarVector(50 + AITimer, RedeHelper.RandomRotation()), 2f, 20, 0.1f, 1);
                                 }
 
                                 if (!Main.dedServ)

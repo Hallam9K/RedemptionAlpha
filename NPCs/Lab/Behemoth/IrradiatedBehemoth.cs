@@ -61,7 +61,7 @@ namespace Redemption.NPCs.Lab.Behemoth
             NPC.friendly = false;
             NPC.damage = 500;
             NPC.defense = 0;
-            NPC.lifeMax = 26000;
+            NPC.lifeMax = 26600;
             NPC.HitSound = SoundID.NPCHit13;
             NPC.DeathSound = SoundID.NPCDeath19;
             NPC.SpawnWithHigherTime(30);
@@ -212,7 +212,7 @@ namespace Redemption.NPCs.Lab.Behemoth
                     if (AITimer == 60)
                     {
                         if (!Main.dedServ)
-                            SoundEngine.PlaySound(CustomSounds.VomitAttack, NPC.position);
+                            SoundEngine.PlaySound(CustomSounds.VomitAttack with { Pitch = -.4f }, NPC.position);
                         TimerRand = Main.rand.NextBool() ? 0 : MathHelper.Pi;
                         if (TimerRand == 0)
                             TimerRand2 = 1;

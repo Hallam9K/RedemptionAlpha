@@ -137,7 +137,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
                 Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.Stone,
                     -Projectile.velocity.X * 0.01f, -Projectile.velocity.Y * 0.6f, Scale: 2);
             for (int i = 0; i < 3; i++)
-                DustHelper.DrawParticleElectricity(Projectile.Center - new Vector2(0, 400), Projectile.Center, new LightningParticle(), 2f, 30, 0.1f, 1);
+                DustHelper.DrawParticleElectricity<LightningParticle>(Projectile.Center - new Vector2(0, 400), Projectile.Center, 2f, 30, 0.1f, 1);
             DustHelper.DrawCircle(Projectile.Center - new Vector2(0, 400), DustID.Sandnado, 1, 4, 4, 1, 3, nogravity: true);
 
             if (!Main.dedServ)

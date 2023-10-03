@@ -34,7 +34,7 @@ namespace Redemption.NPCs.Bosses.ADD
                 int floor = BaseWorldGen.GetFirstTileFloor((int)Projectile.Center.X / 16, (int)Projectile.Center.Y / 16) * 16;
                 int dist = floor - (int)Projectile.Center.Y;
                 dist = (int)MathHelper.Clamp(dist, 0, 800);
-                DustHelper.DrawParticleElectricity(Projectile.Center, Projectile.Center + new Vector2(0, dist), new LightningParticle(), 1f, 30, 0.1f, 1);
+                DustHelper.DrawParticleElectricity<LightningParticle>(Projectile.Center, Projectile.Center + new Vector2(0, dist), 1f, 30, 0.1f, 1);
 
                 Projectile.localAI[0] = 1;
             }

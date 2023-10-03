@@ -7,6 +7,8 @@ using Redemption.Globals;
 using System.IO;
 using Redemption.Projectiles.Magic;
 using Redemption.Globals.NPC;
+using System;
+using Terraria.Audio;
 
 namespace Redemption.NPCs.Bosses.PatientZero
 {
@@ -134,7 +136,20 @@ namespace Redemption.NPCs.Bosses.PatientZero
                 switch (TimerRand2)
                 {
                     case 0:
-                        AITimer++;
+                        if (++AITimer is 60)
+                        {
+                            SoundEngine.PlaySound(SoundID.NPCDeath13, NPC.position);
+                            for (int k = 0; k < 20; k++)
+                            {
+                                Vector2 vector;
+                                double angle = Main.rand.NextDouble() * 2d * Math.PI;
+                                vector.X = (float)(Math.Sin(angle) * 100);
+                                vector.Y = (float)(Math.Cos(angle) * 100);
+                                Dust dust2 = Main.dust[Dust.NewDust(NPC.Center + vector, 2, 2, DustID.GreenFairy, 0f, 0f, 100, default, 2f)];
+                                dust2.noGravity = true;
+                                dust2.velocity = -NPC.DirectionTo(dust2.position) * 10;
+                            }
+                        }
                         if (AITimer % 5 == 0 && AITimer >= 120)
                         {
                             switch (hostPhase)
@@ -214,7 +229,18 @@ namespace Redemption.NPCs.Bosses.PatientZero
                         }
                         else
                         {
-                            AITimer++;
+                            if (++AITimer is 60)
+                                SoundEngine.PlaySound(SoundID.NPCDeath13 with { Pitch = -.4f }, NPC.position);
+                            if (AITimer >= 60 && AITimer < 120)
+                            {
+                                Vector2 vector;
+                                double angle = Main.rand.NextDouble() * 2d * Math.PI;
+                                vector.X = (float)(Math.Sin(angle) * 100);
+                                vector.Y = (float)(Math.Cos(angle) * 100);
+                                Dust dust = Main.dust[Dust.NewDust(NPC.Center + vector + new Vector2(0, 50), 2, 2, ModContent.DustType<DustSpark2>(), newColor: new Color(100, 255, 100, 0), Scale: 1f)];
+                                dust.noGravity = true;
+                                dust.velocity = dust.position.DirectionTo(NPC.Center + new Vector2(0, 50)) * 3f;
+                            }
                             if (AITimer % (hostPhase >= 3 ? 30 : 60) == 0 && AITimer >= 120)
                             {
                                 NPC.Shoot(NPC.Center, ModContent.ProjectileType<PZ_Kari_Laser>(), NPC.damage, RedeHelper.PolarVector(10, (player.Center - NPC.Center).ToRotation() + Main.rand.NextFloat(-0.06f, 0.06f)), SoundID.Item103, NPC.whoAmI);

@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using ParticleLibrary;
+using Terraria.Graphics.Renderers;
 
 namespace Redemption.Globals
 {
@@ -131,7 +132,7 @@ namespace Redemption.Globals
                 }
             }
         }
-        public static void DrawParticleElectricity(Vector2 point1, Vector2 point2, Particle particle, float scale = 1, int armLength = 30, float density = 0.05f, float ai0 = 0)
+        public static void DrawParticleElectricity<T>(Vector2 point1, Vector2 point2, float scale = 1, int armLength = 30, float density = 0.05f, float ai0 = 0) where T : Particle
         {
             int nodeCount = (int)Vector2.Distance(point1, point2) / armLength;
             Vector2[] nodes = new Vector2[nodeCount + 1];
@@ -149,11 +150,11 @@ namespace Redemption.Globals
                 for (float i = 0; i < 1; i += density)
                 {
                     float size = MathHelper.Lerp(scale, 0f, (float)k / nodes.Length);
-                    ParticleManager.NewParticle(Vector2.Lerp(prevPos, nodes[k], i), Vector2.Zero, particle, Color.White, size, ai0);
+                    ParticleManager.NewParticle<T>(Vector2.Lerp(prevPos, nodes[k], i), Vector2.Zero, Color.White, size, ai0);
                 }
             }
         }
-        public static void DrawParticleStar(Vector2 position, Particle particle, Color color, float pointAmount = 5, float mainSize = 1, float dustDensity = 1, float dustSize = 1f, float pointDepthMult = 1f, float pointDepthMultOffset = 0.5f, float randomAmount = 0, float rotationAmount = -1, float ai0 = 0.45f, int ai1 = 0)
+        public static void DrawParticleStar<T>(Vector2 position, Color color, float pointAmount = 5, float mainSize = 1, float dustDensity = 1, float dustSize = 1f, float pointDepthMult = 1f, float pointDepthMultOffset = 0.5f, float randomAmount = 0, float rotationAmount = -1, float ai0 = 0.45f, int ai1 = 0) where T : Particle
         {
             float rot;
             if (rotationAmount < 0) { rot = Main.rand.NextFloat(0, (float)Math.PI * 2); } else { rot = rotationAmount; }
@@ -168,7 +169,7 @@ namespace Redemption.Globals
                 float x = (float)Math.Cos(k + rand);
                 float y = (float)Math.Sin(k + rand);
                 float mult = (Math.Abs((k * (pointAmount / 2) % (float)Math.PI) - (float)Math.PI / 2) * pointDepthMult) + pointDepthMultOffset;//triangle wave function
-                ParticleManager.NewParticle(position, new Vector2(x, y).RotatedBy(rot) * mult * mainSize, particle, color, dustSize, ai0, ai1);
+                ParticleManager.NewParticle<T>(position, new Vector2(x, y).RotatedBy(rot) * mult * mainSize, color, dustSize, ai0, ai1);
             }
         }
     }

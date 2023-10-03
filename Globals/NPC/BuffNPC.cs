@@ -536,8 +536,8 @@ namespace Redemption.Globals.NPC
             {
                 if (Main.rand.NextBool(10) && !Main.gamePaused)
                 {
-                    DustHelper.DrawParticleElectricity(new Vector2(npc.position.X, npc.position.Y + Main.rand.Next(0, npc.height)), new Vector2(npc.TopRight.X, npc.TopRight.Y + Main.rand.Next(0, npc.height)), new LightningParticle(), .5f, 10, 0.2f);
-                    DustHelper.DrawParticleElectricity(new Vector2(npc.TopRight.X, npc.TopRight.Y + Main.rand.Next(0, npc.height)), new Vector2(npc.position.X, npc.position.Y + Main.rand.Next(0, npc.height)), new LightningParticle(), .5f, 10, 0.2f);
+                    DustHelper.DrawParticleElectricity<LightningParticle>(new Vector2(npc.position.X, npc.position.Y + Main.rand.Next(0, npc.height)), new Vector2(npc.TopRight.X, npc.TopRight.Y + Main.rand.Next(0, npc.height)), .5f, 10, 0.2f);
+                    DustHelper.DrawParticleElectricity<LightningParticle>(new Vector2(npc.TopRight.X, npc.TopRight.Y + Main.rand.Next(0, npc.height)), new Vector2(npc.position.X, npc.position.Y + Main.rand.Next(0, npc.height)), .5f, 10, 0.2f);
                 }
             }
             if (stomachAcid)

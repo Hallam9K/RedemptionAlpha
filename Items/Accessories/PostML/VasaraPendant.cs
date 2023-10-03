@@ -68,8 +68,8 @@ namespace Redemption.Items.Accessories.PostML
 
             if (Projectile.timeLeft > 30 && Main.rand.NextBool(10))
             {
-                DustHelper.DrawParticleElectricity(Projectile.Center, Projectile.Center + RedeHelper.PolarVector(400, RedeHelper.RandomRotation()), new LightningParticle(), 1, 20, 0.1f);
-                DustHelper.DrawParticleElectricity(Projectile.Center, Projectile.Center + RedeHelper.PolarVector(400, RedeHelper.RandomRotation()), new LightningParticle(), 1, 20, 0.1f);
+                DustHelper.DrawParticleElectricity<LightningParticle>(Projectile.Center, Projectile.Center + RedeHelper.PolarVector(400, RedeHelper.RandomRotation()), 1, 20, 0.1f);
+                DustHelper.DrawParticleElectricity<LightningParticle>(Projectile.Center, Projectile.Center + RedeHelper.PolarVector(400, RedeHelper.RandomRotation()), 1, 20, 0.1f);
             }
             else if (Projectile.timeLeft <= 30)
                 Projectile.alpha += 2;
@@ -99,7 +99,7 @@ namespace Redemption.Items.Accessories.PostML
                     targetPos = Main.npc[target].Center;
                     SoundEngine.PlaySound(CustomSounds.Zap2 with { Volume = 0.2f }, targetPos);
 
-                    DustHelper.DrawParticleElectricity(player.Center, targetPos, new LightningParticle(), 1f, 20, 0.2f);
+                    DustHelper.DrawParticleElectricity<LightningParticle>(player.Center, targetPos, 1f, 20, 0.2f);
                     for (int i = 0; i < Main.maxNPCs; i++)
                     {
                         NPC npc = Main.npc[i];

@@ -2869,15 +2869,15 @@ Mods: {
 				NoCruxDialogue: Ya don't have anythin' I can imbue. If you want help findin' somethin', I'll say to look for those gathic tombs scattered aroun' the caverns. Ya might find somethin' in there.
 				NoCruxAsherDialogue: There's somethin' in that hat I can use to imbue into something, however, ya don't have anythin' for me to imbue.
 				OfferCruxDialogue: Only if you may, bring me six gemstones of the purest shine, and lay them around my remains. Six are the hands of an angel. Their arms hold us so...
-				Dialogue1: Great! You figured out how ta' call me! I hope ya take fancy to ma' gift. I'm err, let's just say a spiritual enthusiast. I don't remember my actual name. Ask me anythin'!
+				Dialogue1: Great! You figured out how ta' call me! I hope ya take fancy to ma' gift. I'm err, let's just say a spiritual enthusiast. Ask me anythin'!
 				Dialogue2: "Ey, that old tophat ya got has something spiritual 'bout it, "
 				Dialogue2Cont: peak into the Spirit Realm for a bit so I can get a closer look.
 				Dialogue2Mid: "Take it off an' "
-				Chat1: The ability given to ya gives you a peak into the Spirit Realm - A realm parallel to our own. Normally, neither realm can see each other, nor interact. You'll be able to kill foes connected to the realm while peakin', or find corpses to use that bell thing-a-ma-jig on. Such as mine! Another thing, we spirits can gift to you our "crux" if ya have somethin' to imbue it in - as long as you're submerged enough in our realm.
-				Chat2: A nifty artifact of Gathuram, that is. Usin' it on corpses will force their spirit back to their location while tuggin' them outta the Spirit Realm a tad, which is why you can see me now even if you stopped Spirit Walkin', despite me being a full-fledged spirit - not one of those Vagrants or Lost Souls.
-				Chat3: When folk die, their soul leaves their body to find anotha'. During this pilgrimage, they're still connected to the physical world, meanin' some with the arcane eye may see 'em, or even do... worse things with 'em. If a lost soul wanders too long, they can seep outta the spirit realm and become Vagrant Spirits - poor things forever lost.
+				Chat1: The ability given to ya gives you a peak into the Spirit Realm - A realm parallel to our own. Normally, neither realm can see nor interact with each other. You'll be able to hurt spirits with any method or find corpses to use that bell thing-a-ma-jig on while peakin'. Such as mine! Another thing, we spirits can gift to you our "crux" if ya have somethin' to imbue it in - just request it while spirit walkin'.
+				Chat2: A nifty artifact of Gathuram, that is. Usin' it on corpses will force their spirit back to their location while tuggin' them outta the Spirit Realm a tad, which is why you can see me now even if you stopped spirit walkin' despite me being a full-fledged spirit - not one of those Vagrants or Lost Souls.
+				Chat3: When folk die, their soul leaves their body to find anotha'. During this pilgrimage, they're still connected to the physical world, meanin' some with the arcane eye may see 'em. If a lost soul wanders too long, they can seep outta the spirit realm and become Vagrant Spirits - poor things forever lost.
 				Chat4: I couldn't tell ya where to find corpses to use it on, but I can recommend findin' spirit currents. They're only visible in my realm, and can take ya closer to a soulful corpse if ya travel through one. You'll only find 'em in caverns, as that'll be where our energy is most contained. If ya do find what you're lookin' for, be wary. Tombs of the mighty are seldom left unguarded.
-				Chat4B: I once met anotha' spirit in a mind-bogglin' location! It felt outta this world, which says a lot considerin' I'm not in your realm. The walls were white, pipes with green fluids hung from ceilings, strange blue lights emitted from metal boxes an' tubes... And the spirit I saw was most intriguing! He just kept repeatin' about alarms, and wore a strange white an' blue suit. Very odd.
+				Chat4B: I once met anotha' spirit in a mind-bogglin' location! It felt outta this world. The walls were white, pipes with green fluids hung from ceilings, strange blue lights emitted from metal boxes an' tubes... And the spirit I saw was most intriguing! He just kept repeatin' about alarms, and wore a strange white an' blue suit. Very odd.
 				Chat5: Like I said, I've been a spirit so long that I forgot my own name, yet I still remember most other things 'bout me. Strange that. I'm from Gathuram, the portal behind me leads to the Catacombs of Gathuram, and is how the undead and skeleton folk came here. Doesn't seem like you can enter it though.
 				CalaviaDialogue1: "'Ey, ya see that lass over yonder? There be somethin' soulful she carries, I can sense it. Would you, out of the goodness of yer heart, confront her about it for me? Don't want to assume nothin', but she might be keepin' a spirit captive."
 				CalaviaDialogue2: I can sense gratitude within Kyretha's spirit for confrontin' the lass and ultimately leading 'er to a path of freedom. I have a feelin' she'd be willin' to offer you something in return?
@@ -4751,8 +4751,12 @@ Mods: {
 
 			Archcloth: {
 				DisplayName: Archcloth
-				Tooltip: "'Expensive, purple cloth only used by the Nobles of Anglon'"
-			}
+				Tooltip:
+					'''
+					Used to craft cosmetic items
+					'Expensive, purple cloth only used by the Nobles of Anglon'
+					'''
+				}
 
 			BlackenedHeart: {
 				DisplayName: Blackened Heart

@@ -25,7 +25,7 @@ namespace Redemption.NPCs.Bosses.PatientZero
             Projectile.friendly = false;
             Projectile.ignoreWater = true;
             Projectile.tileCollide = false;
-            Projectile.timeLeft = 20;
+            Projectile.timeLeft = 25;
             Projectile.scale = 0.1f;
         }
         public override bool ShouldUpdatePosition() => false;
@@ -79,7 +79,7 @@ namespace Redemption.NPCs.Bosses.PatientZero
             if (npc.ai[0] != 1)
                 Projectile.Kill();
             Projectile.rotation = Projectile.velocity.ToRotation();
-            if (Projectile.localAI[1]++ <= 20 && Projectile.localAI[1] % 8 == 0 && Main.myPlayer == Projectile.owner)
+            if (Projectile.localAI[1]++ <= (Main.getGoodWorld ? 20 : 40) && Projectile.localAI[1] % 8 == 0 && Main.myPlayer == Projectile.owner)
             {
                 Projectile.NewProjectile(Projectile.GetSource_FromAI(), npc.Center, Projectile.velocity, ModContent.ProjectileType<EyeRadius_Tele>(), 0, 0, Main.myPlayer);
             }

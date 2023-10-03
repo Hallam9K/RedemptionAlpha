@@ -367,8 +367,8 @@ namespace Redemption.NPCs.Minibosses.EaglecrestGolem
                             if (AITimer >= .25f && AITimer < .5f && Main.rand.NextBool(6))
                             {
                                 origin = NPC.Center - new Vector2(-2 * NPC.spriteDirection, 18);
-                                DustHelper.DrawParticleElectricity(origin, NPC.Center + RedeHelper.PolarVector(180, RedeHelper.RandomRotation()), new LightningParticle(), 1f, 20, 0.1f, 1);
-                                DustHelper.DrawParticleElectricity(origin, NPC.Center + RedeHelper.PolarVector(180, RedeHelper.RandomRotation()), new LightningParticle(), 1f, 20, 0.1f, 1);
+                                DustHelper.DrawParticleElectricity<LightningParticle>(origin, NPC.Center + RedeHelper.PolarVector(180, RedeHelper.RandomRotation()), 1f, 20, 0.1f, 1);
+                                DustHelper.DrawParticleElectricity<LightningParticle>(origin, NPC.Center + RedeHelper.PolarVector(180, RedeHelper.RandomRotation()), 1f, 20, 0.1f, 1);
                             }
                             if (glowOpacity >= 0.9f)
                             {
@@ -478,7 +478,7 @@ namespace Redemption.NPCs.Minibosses.EaglecrestGolem
                                     glowOpacity = 1;
                                     RedeDraw.SpawnExplosion(NPC.Center, new Color(255, 255, 174), shakeAmount: 0, scale: 1, noDust: true);
                                     for (int i = 0; i < 3; i++)
-                                        DustHelper.DrawParticleElectricity(NPC.Center - new Vector2(0, 400), NPC.Center, new LightningParticle(), 2f, 30, 0.1f, 1);
+                                        DustHelper.DrawParticleElectricity<LightningParticle>(NPC.Center - new Vector2(0, 400), NPC.Center, 2f, 30, 0.1f, 1);
                                     DustHelper.DrawCircle(NPC.Center - new Vector2(0, 400), DustID.Sandnado, 1, 4, 4, 1, 3, nogravity: true);
 
                                     if (!Main.dedServ)
