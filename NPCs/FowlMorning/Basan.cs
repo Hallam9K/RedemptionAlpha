@@ -70,7 +70,7 @@ namespace Redemption.NPCs.FowlMorning
             BuffNPC.NPCTypeImmunity(Type, BuffNPC.NPCDebuffImmuneType.Hot);
             NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.Confused] = true;
             NPCID.Sets.BossBestiaryPriority.Add(Type);
-            NPCID.Sets.NPCBestiaryDrawModifiers value = new()
+            NPCID.Sets.NPCBestiaryDrawModifiers value = new(0)
             {
                 CustomTexturePath = "Redemption/CrossMod/BossChecklist/Basan",
                 Position = new Vector2(0, 10),

@@ -39,7 +39,7 @@ namespace Redemption.NPCs.PreHM
             // DisplayName.SetDefault("Dancing Skeleton");
             Main.npcFrameCount[NPC.type] = 36;
 
-            NPCID.Sets.NPCBestiaryDrawModifiers value = new();
+            NPCID.Sets.NPCBestiaryDrawModifiers value = new(0);
 
             NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, value);
         }

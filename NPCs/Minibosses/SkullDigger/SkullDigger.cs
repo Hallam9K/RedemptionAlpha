@@ -61,7 +61,7 @@ namespace Redemption.NPCs.Minibosses.SkullDigger
 
             NPCID.Sets.ImmuneToRegularBuffs[Type] = true;
 
-            NPCID.Sets.NPCBestiaryDrawModifiers value = new()
+            NPCID.Sets.NPCBestiaryDrawModifiers value = new(0)
             {
                 Position = new Vector2(0, 30),
                 PortraitPositionYOverride = 8

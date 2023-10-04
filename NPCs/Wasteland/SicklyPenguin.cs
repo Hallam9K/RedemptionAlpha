@@ -47,7 +47,7 @@ namespace Redemption.NPCs.Wasteland
             NPCID.Sets.ShimmerTransformToNPC[NPC.type] = NPCID.Penguin;
             BuffNPC.NPCTypeImmunity(Type, BuffNPC.NPCDebuffImmuneType.Infected);
             BuffNPC.NPCTypeImmunity(Type, BuffNPC.NPCDebuffImmuneType.Cold);
-            NPCID.Sets.NPCBestiaryDrawModifiers value = new()
+            NPCID.Sets.NPCBestiaryDrawModifiers value = new(0)
             {
                 Velocity = 1f
             };

@@ -106,7 +106,7 @@ namespace Redemption.NPCs.Bosses.ADD
             NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.Confused] = true;
             NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.Electrified] = true;
 
-            NPCID.Sets.NPCBestiaryDrawModifiers value = new()
+            NPCID.Sets.NPCBestiaryDrawModifiers value = new(0)
             {
                 Position = new Vector2(0, 40),
                 PortraitPositionYOverride = 0

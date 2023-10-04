@@ -92,7 +92,7 @@ namespace Redemption.NPCs.Bosses.Gigapora
             BuffNPC.NPCTypeImmunity(Type, BuffNPC.NPCDebuffImmuneType.Inorganic);
             NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.Confused] = true;
 
-            NPCID.Sets.NPCBestiaryDrawModifiers value = new()
+            NPCID.Sets.NPCBestiaryDrawModifiers value = new(0)
             {
                 CustomTexturePath = "Redemption/Textures/Bestiary/OmegaGigapora_Bestiary"
             };

@@ -89,7 +89,7 @@ namespace Redemption.NPCs.Bosses.PatientZero
             NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.Confused] = true;
 
 
-            NPCID.Sets.NPCBestiaryDrawModifiers value = new();
+            NPCID.Sets.NPCBestiaryDrawModifiers value = new(0);
             NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, value);
             ElementID.NPCPoison[Type] = true;
         }

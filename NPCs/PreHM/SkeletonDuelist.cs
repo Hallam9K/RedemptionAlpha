@@ -48,7 +48,7 @@ namespace Redemption.NPCs.PreHM
             NPCID.Sets.TrailCacheLength[NPC.type] = 4;
             NPCID.Sets.TrailingMode[NPC.type] = 1;
 
-            NPCID.Sets.NPCBestiaryDrawModifiers value = new();
+            NPCID.Sets.NPCBestiaryDrawModifiers value = new(0);
 
             NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, value);
         }

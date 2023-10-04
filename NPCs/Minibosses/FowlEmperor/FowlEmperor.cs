@@ -58,7 +58,7 @@ namespace Redemption.NPCs.Minibosses.FowlEmperor
 
             NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.Confused] = true;
 
-            NPCID.Sets.NPCBestiaryDrawModifiers value = new()
+            NPCID.Sets.NPCBestiaryDrawModifiers value = new(0)
             {
                 Velocity = 1,
             };
@@ -844,7 +844,7 @@ namespace Redemption.NPCs.Minibosses.FowlEmperor
             // DisplayName.SetDefault("Very Hittable Looking Crown");
             NPCID.Sets.CantTakeLunchMoney[Type] = true;
             NPCID.Sets.ImmuneToRegularBuffs[Type] = true;
-            NPCID.Sets.NPCBestiaryDrawModifiers value = new() { Hide = true };
+            NPCID.Sets.NPCBestiaryDrawModifiers value = new(0) { Hide = true };
             NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, value);
         }
         public override void SetDefaults()

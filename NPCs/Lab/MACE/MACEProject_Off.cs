@@ -15,7 +15,7 @@ namespace Redemption.NPCs.Lab.MACE
             // DisplayName.SetDefault("MACE Project");
             NPCID.Sets.DontDoHardmodeScaling[Type] = true;
 
-            NPCID.Sets.NPCBestiaryDrawModifiers value = new()
+            NPCID.Sets.NPCBestiaryDrawModifiers value = new(0)
             {
                 Hide = true
             };

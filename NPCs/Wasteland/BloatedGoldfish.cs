@@ -24,7 +24,7 @@ namespace Redemption.NPCs.Wasteland
             NPCID.Sets.ShimmerTransformToNPC[NPC.type] = NPCID.Goldfish;
             BuffNPC.NPCTypeImmunity(Type, BuffNPC.NPCDebuffImmuneType.Infected);
 
-            NPCID.Sets.NPCBestiaryDrawModifiers value = new()
+            NPCID.Sets.NPCBestiaryDrawModifiers value = new(0)
             {
                 Velocity = 1f
             };

@@ -21,7 +21,7 @@ namespace Redemption.NPCs.Bosses.Neb
         {
             // DisplayName.SetDefault("");
 
-            NPCID.Sets.NPCBestiaryDrawModifiers value = new()
+            NPCID.Sets.NPCBestiaryDrawModifiers value = new(0)
             {
                 Hide = true
             };

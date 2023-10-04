@@ -17,7 +17,7 @@ namespace Redemption.NPCs.Wasteland
             Main.npcFrameCount[NPC.type] = 2;
             BuffNPC.NPCTypeImmunity(Type, BuffNPC.NPCDebuffImmuneType.Infected);
 
-            NPCID.Sets.NPCBestiaryDrawModifiers value = new()
+            NPCID.Sets.NPCBestiaryDrawModifiers value = new(0)
             {
                 Velocity = 1f
             };

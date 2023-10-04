@@ -48,7 +48,7 @@ namespace Redemption.NPCs.PreHM
 
             NPCID.Sets.ImmuneToRegularBuffs[Type] = true;
 
-            NPCID.Sets.NPCBestiaryDrawModifiers value = new()
+            NPCID.Sets.NPCBestiaryDrawModifiers value = new(0)
             {
                 Velocity = 1f,
             };

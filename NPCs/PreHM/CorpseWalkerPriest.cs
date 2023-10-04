@@ -48,7 +48,7 @@ namespace Redemption.NPCs.PreHM
             // DisplayName.SetDefault("Corpse-Walker Priest");
             Main.npcFrameCount[NPC.type] = 15;
 
-            NPCID.Sets.NPCBestiaryDrawModifiers value = new();
+            NPCID.Sets.NPCBestiaryDrawModifiers value = new(0);
             NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, value);
             ElementID.NPCHoly[Type] = true;
         }

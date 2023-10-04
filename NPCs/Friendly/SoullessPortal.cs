@@ -18,7 +18,7 @@ namespace Redemption.NPCs.Friendly
         {
             // DisplayName.SetDefault("Shadesoul Gateway");
             NPCID.Sets.NoTownNPCHappiness[Type] = true;
-            NPCID.Sets.NPCBestiaryDrawModifiers drawModifiers = new() { Hide = true };
+            NPCID.Sets.NPCBestiaryDrawModifiers drawModifiers = new(0) { Hide = true };
             NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, drawModifiers);
         }
         public override void SetDefaults()

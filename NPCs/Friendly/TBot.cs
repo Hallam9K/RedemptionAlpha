@@ -49,7 +49,7 @@ namespace Redemption.NPCs.Friendly
             NPC.Happiness.SetNPCAffection(NPCID.Truffle, AffectionLevel.Dislike);
             NPC.Happiness.SetNPCAffection(NPCID.Cyborg, AffectionLevel.Hate);
 
-            NPCID.Sets.NPCBestiaryDrawModifiers drawModifiers = new()
+            NPCID.Sets.NPCBestiaryDrawModifiers drawModifiers = new(0)
             {
                 Velocity = 1f
             };

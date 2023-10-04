@@ -93,7 +93,7 @@ namespace Redemption.NPCs.Minibosses.Calavia
             BuffNPC.NPCTypeImmunity(Type, BuffNPC.NPCDebuffImmuneType.Hot);
             BuffNPC.NPCTypeImmunity(Type, BuffNPC.NPCDebuffImmuneType.Cold);
 
-            NPCID.Sets.NPCBestiaryDrawModifiers value = new() { Velocity = 1 };
+            NPCID.Sets.NPCBestiaryDrawModifiers value = new(0) { Velocity = 1 };
             NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, value);
         }
         public override void SetDefaults()

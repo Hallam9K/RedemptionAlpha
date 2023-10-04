@@ -19,7 +19,7 @@ namespace Redemption.NPCs.Lab.Blisterface
             Main.npcFrameCount[NPC.type] = 8;
             NPCID.Sets.DontDoHardmodeScaling[Type] = true;
 
-            NPCID.Sets.NPCBestiaryDrawModifiers value = new()
+            NPCID.Sets.NPCBestiaryDrawModifiers value = new(0)
             {
                 Hide = true
             };

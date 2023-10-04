@@ -75,7 +75,7 @@ namespace Redemption.NPCs.Bosses.Neb.Clone
             // DisplayName.SetDefault("Nebuleus Mirage");
             Main.npcFrameCount[NPC.type] = 9;
             NPCID.Sets.ImmuneToRegularBuffs[Type] = true;
-            NPCID.Sets.NPCBestiaryDrawModifiers value = new()
+            NPCID.Sets.NPCBestiaryDrawModifiers value = new(0)
             {
                 Hide = true
             };

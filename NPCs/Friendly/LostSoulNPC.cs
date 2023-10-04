@@ -26,7 +26,7 @@ namespace Redemption.NPCs.Friendly
             // DisplayName.SetDefault("Lost Soul");
             NPCID.Sets.CountsAsCritter[NPC.type] = true;
             NPCID.Sets.ImmuneToRegularBuffs[Type] = true;
-            NPCID.Sets.NPCBestiaryDrawModifiers value = new()
+            NPCID.Sets.NPCBestiaryDrawModifiers value = new(0)
             {
                 Velocity = 1f
             };

@@ -21,7 +21,7 @@ namespace Redemption.NPCs.Friendly
         {
             // DisplayName.SetDefault("Adam");
             Main.npcFrameCount[Type] = 15;
-            NPCID.Sets.NPCBestiaryDrawModifiers value = new() { Hide = true };
+            NPCID.Sets.NPCBestiaryDrawModifiers value = new(0) { Hide = true };
             NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, value);
         }
 

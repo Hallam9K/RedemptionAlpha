@@ -45,7 +45,7 @@ namespace Redemption.NPCs.PreHM
         {
             Main.npcFrameCount[NPC.type] = 13;
 
-            NPCID.Sets.NPCBestiaryDrawModifiers value = new();
+            NPCID.Sets.NPCBestiaryDrawModifiers value = new(0);
 
             NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, value);
         }

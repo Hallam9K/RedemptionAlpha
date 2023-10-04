@@ -52,7 +52,7 @@ namespace Redemption.NPCs.Friendly
                 .SetNPCAffection(NPCID.TaxCollector, AffectionLevel.Hate)
                 .SetNPCAffection(NPCID.Merchant, AffectionLevel.Dislike);
 
-            NPCID.Sets.NPCBestiaryDrawModifiers drawModifiers = new()
+            NPCID.Sets.NPCBestiaryDrawModifiers drawModifiers = new(0)
             {
                 Velocity = 1f
             };

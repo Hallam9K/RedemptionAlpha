@@ -25,7 +25,7 @@ namespace Redemption.NPCs.Lab.Blisterface
             if (NPC.type == ModContent.NPCType<BlisteredFish>())
             {
                 NPCID.Sets.BossBestiaryPriority.Add(Type);
-                NPCID.Sets.NPCBestiaryDrawModifiers value = new()
+                NPCID.Sets.NPCBestiaryDrawModifiers value = new(0)
                 {
                     Velocity = 1
                 };
@@ -94,7 +94,7 @@ namespace Redemption.NPCs.Lab.Blisterface
         {
             base.SetStaticDefaults();
             // DisplayName.SetDefault("Blistered Fish");
-            NPCID.Sets.NPCBestiaryDrawModifiers value = new() { Hide = true };
+            NPCID.Sets.NPCBestiaryDrawModifiers value = new(0) { Hide = true };
             NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, value);
         }
         private int Timer;

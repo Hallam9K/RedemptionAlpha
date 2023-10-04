@@ -62,7 +62,7 @@ namespace Redemption.NPCs.Bosses.Thorn
             NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.Bleeding] = false;
             NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.BloodButcherer] = false;
 
-            NPCID.Sets.NPCBestiaryDrawModifiers value = new()
+            NPCID.Sets.NPCBestiaryDrawModifiers value = new(0)
             {
                 Position = new Vector2(0, 40),
                 PortraitPositionYOverride = 0

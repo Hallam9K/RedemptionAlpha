@@ -21,7 +21,7 @@ namespace Redemption.NPCs.Minibosses.FowlEmperor
             // DisplayName.SetDefault("Chick Envoy");
             Main.npcFrameCount[NPC.type] = 9;
 
-            NPCID.Sets.NPCBestiaryDrawModifiers value = new()
+            NPCID.Sets.NPCBestiaryDrawModifiers value = new(0)
             {
                 Velocity = 1f,
                 Position = new Vector2(0, 0),

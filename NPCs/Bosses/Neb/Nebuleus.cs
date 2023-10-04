@@ -85,7 +85,7 @@ namespace Redemption.NPCs.Bosses.Neb
             // DisplayName.SetDefault("Nebuleus, Angel of the Cosmos");
             Main.npcFrameCount[NPC.type] = 5;
             NPCID.Sets.ImmuneToRegularBuffs[Type] = true;
-            NPCID.Sets.NPCBestiaryDrawModifiers value = new()
+            NPCID.Sets.NPCBestiaryDrawModifiers value = new(0)
             {
                 CustomTexturePath = "Redemption/Textures/Bestiary/Nebuleus_Bestiary"
             };

@@ -16,7 +16,7 @@ namespace Redemption.NPCs.Minibosses.FowlEmperor
     {
         public override void SetStaticDefaults()
         {
-            NPCID.Sets.NPCBestiaryDrawModifiers value = new()
+            NPCID.Sets.NPCBestiaryDrawModifiers value = new(0)
             {
                 Position = new Vector2(0, 0),
                 PortraitPositionYOverride = 28

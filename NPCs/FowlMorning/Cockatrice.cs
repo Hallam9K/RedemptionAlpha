@@ -48,7 +48,7 @@ namespace Redemption.NPCs.FowlMorning
         {
             Main.npcFrameCount[NPC.type] = 16;
             NPCID.Sets.BossBestiaryPriority.Add(Type);
-            NPCID.Sets.NPCBestiaryDrawModifiers value = new()
+            NPCID.Sets.NPCBestiaryDrawModifiers value = new(0)
             {
                 CustomTexturePath = "Redemption/CrossMod/BossChecklist/Cockatrice",
                 Position = new Vector2(0, 10),

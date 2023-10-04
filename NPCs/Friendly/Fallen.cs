@@ -54,7 +54,7 @@ namespace Redemption.NPCs.Friendly
             NPC.Happiness.SetNPCAffection(NPCID.Nurse, AffectionLevel.Hate);
             NPC.Happiness.SetNPCAffection(NPCID.Dryad, AffectionLevel.Dislike);
 
-            NPCID.Sets.NPCBestiaryDrawModifiers drawModifiers = new()
+            NPCID.Sets.NPCBestiaryDrawModifiers drawModifiers = new(0)
             {
                 Velocity = 1f
             };

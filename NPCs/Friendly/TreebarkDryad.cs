@@ -56,7 +56,7 @@ namespace Redemption.NPCs.Friendly
             NPCID.Sets.CantTakeLunchMoney[Type] = true;
             NPCID.Sets.TownNPCBestiaryPriority.Add(Type);
             NPCID.Sets.ImmuneToRegularBuffs[Type] = true;
-            NPCID.Sets.NPCBestiaryDrawModifiers value = new()
+            NPCID.Sets.NPCBestiaryDrawModifiers value = new(0)
             {
                 Position = new Vector2(0, 20),
                 PortraitPositionYOverride = 0

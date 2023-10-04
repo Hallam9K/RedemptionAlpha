@@ -26,7 +26,7 @@ namespace Redemption.NPCs.Friendly
         {
             // DisplayName.SetDefault("Daerel");
             Main.npcFrameCount[Type] = 26;
-            NPCID.Sets.NPCBestiaryDrawModifiers value = new() { Hide = true };
+            NPCID.Sets.NPCBestiaryDrawModifiers value = new(0) { Hide = true };
             NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, value);
         }
 
