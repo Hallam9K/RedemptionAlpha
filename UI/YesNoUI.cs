@@ -1,16 +1,17 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Terraria;
-using Terraria.ID;
-using Terraria.ModLoader;
-using Terraria.UI;
-using Terraria.GameContent.UI.Elements;
-using Terraria.Audio;
 using Redemption.BaseExtension;
 using ReLogic.Content;
-using Terraria.GameContent;
 using ReLogic.Graphics;
+using Terraria;
+using Terraria.Audio;
+using Terraria.GameContent;
+using Terraria.GameContent.UI.Elements;
+using Terraria.ID;
 using Terraria.Localization;
+using Terraria.ModLoader;
+using Terraria.UI;
+using Terraria.UI.Chat;
 
 namespace Redemption.UI
 {
@@ -113,8 +114,8 @@ namespace Redemption.UI
             if (NoTextOffset == null)
                 NoTextOffset = Vector2.Zero;
 
-            spriteBatch.DrawString(font, YesText, new Vector2(115 + 65 - (textLength / 2), 258 - 35 + (int)(textHeight * .6f)) + (Vector2)YesTextOffset, Color.White, 0, new Vector2(0, 0), YesTextScale, SpriteEffects.None, 0);
-            spriteBatch.DrawString(font, NoText, new Vector2(267 + 65 - (textLength2 / 2), 258 - 35 + (int)(textHeight2 * .6f)) + (Vector2)NoTextOffset, Color.White, 0, new Vector2(0, 0), NoTextScale, SpriteEffects.None, 0);
+            ChatManager.DrawColorCodedStringWithShadow(spriteBatch, font, YesText, new Vector2(115 + 65 - (textLength / 2), 258 - 35 + (int)(textHeight * .6f)) + (Vector2)YesTextOffset, Color.White, 0, Vector2.Zero, new Vector2(YesTextScale));
+            ChatManager.DrawColorCodedStringWithShadow(spriteBatch, font, NoText, new Vector2(267 + 65 - (textLength2 / 2), 258 - 35 + (int)(textHeight2 * .6f)) + (Vector2)NoTextOffset, Color.White, 0, Vector2.Zero, new Vector2(NoTextScale));
         }
     }
 }

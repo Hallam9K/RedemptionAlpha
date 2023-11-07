@@ -1,17 +1,17 @@
 using Microsoft.Xna.Framework;
 using Terraria;
+using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
-using Terraria.ID;
 
 namespace Redemption.Tiles.Ores
 {
     public class DragonLeadOreTile : ModTile
-	{
-		public override void SetStaticDefaults()
-		{
+    {
+        public override void SetStaticDefaults()
+        {
             Main.tileSolid[Type] = true;
-			Main.tileMergeDirt[Type] = true;
+            Main.tileMergeDirt[Type] = true;
             Main.tileSpelunker[Type] = true;
             Main.tileBlockLight[Type] = true;
             Main.tileLighted[Type] = true;
@@ -20,7 +20,7 @@ namespace Redemption.Tiles.Ores
             Main.tileOreFinderPriority[Type] = 320;
             TileID.Sets.Ore[Type] = true;
             DustType = DustID.Torch;
-            MinPick = 100;
+            MinPick = 65;
             MineResist = 1.4f;
             HitSound = CustomSounds.DragonLeadHit;
             LocalizedText name = CreateMapEntryName();
@@ -64,9 +64,9 @@ namespace Redemption.Tiles.Ores
             }
         }
         public override void NumDust(int i, int j, bool fail, ref int num)
-		{
-			num = fail ? 1 : 3;
-		}
+        {
+            num = fail ? 1 : 3;
+        }
         public override bool CanExplode(int i, int j) => false;
     }
 }

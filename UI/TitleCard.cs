@@ -6,7 +6,7 @@ using Terraria;
 using Terraria.GameContent;
 using Terraria.ModLoader;
 using Terraria.UI;
-
+using Terraria.UI.Chat;
 
 namespace Redemption.UI
 {
@@ -84,7 +84,6 @@ namespace Redemption.UI
             Color drawColor = new(255, 255, 255);
             Color shadowColor = new(25, 25, 25);
             int totalLength = textLength;
-            int totalHeight = textHeight;
 
             int subtitleDrawX = centerX;
             int subtitleDrawY = centerY - (int)(textHeight * 0.6f);
@@ -108,8 +107,6 @@ namespace Redemption.UI
                 subtitleHeight = (int)(font.MeasureString(SubtitleText).Y * (FontScale * 0.5f));
 
                 totalLength = subtitleLength > textLength ? subtitleLength : textLength;
-
-                totalHeight = (int)(centerY + (textHeight * 0.5f)) - (int)(subtitleDrawY + (subtitleHeight * 0.5f));
             }
 
             spriteBatch.End();
@@ -132,14 +129,14 @@ namespace Redemption.UI
             spriteBatch.Begin(default, BlendState.AlphaBlend);
             Vector2 textpos = new(centerX - (textLength / 2f), centerY - (textHeight / 2f));
             spriteBatch.DrawString(font, Text, textpos + new Vector2(2, 2), shadowColor * opacity, 0, new Vector2(0, 0), FontScale, SpriteEffects.None, 0);
-            spriteBatch.DrawString(font, Text, textpos, textColor * opacity, 0, new Vector2(0, 0), FontScale, SpriteEffects.None, 0);
+            ChatManager.DrawColorCodedStringWithShadow(spriteBatch, font, Text, textpos, textColor * opacity, 0, Vector2.Zero, new Vector2(FontScale));
 
             if (SubtitleText != null)
             {
                 Vector2 subtitlepos = new(subtitleDrawX - (subtitleLength / 2f), subtitleDrawY - (subtitleHeight / 2f));
 
                 spriteBatch.DrawString(font, SubtitleText, subtitlepos + new Vector2(1, 1), shadowColor * opacity, 0, new Vector2(0, 0), FontScale * 0.5f, SpriteEffects.None, 0);
-                spriteBatch.DrawString(font, SubtitleText, subtitlepos, textColor * opacity, 0, new Vector2(0, 0), FontScale * 0.5f, SpriteEffects.None, 0);
+                ChatManager.DrawColorCodedStringWithShadow(spriteBatch, font, SubtitleText, subtitlepos, textColor * opacity, 0, Vector2.Zero, new Vector2(FontScale) * 0.5f);
 
             }
             //font, SubtitleText, new Vector2(subtitleDrawX - ((float)subtitleLength / 2f), subtitleDrawY - ((float)subtitleHeight / 2f)), textColor * opacity

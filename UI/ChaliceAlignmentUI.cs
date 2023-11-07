@@ -2,10 +2,12 @@
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Graphics;
 using Terraria;
+using Terraria.Enums;
 using Terraria.GameContent;
 using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.UI;
+using Terraria.UI.Chat;
 
 namespace Redemption.UI
 {
@@ -15,9 +17,9 @@ namespace Redemption.UI
         //This dialogue system is adapted from my title system and as such works very similarly - Seraph
         private string Text;
         private string Title = null;
-        private int FadeTimer = 0;
+        private float FadeTimer = 0;
         private int MaxFadeTime = 0;
-        private int DisplayTimer = 0;
+        private float DisplayTimer = 0;
         private int MaxDisplayTime = 0;
         private float FontScale = 1;
 
@@ -48,31 +50,27 @@ namespace Redemption.UI
                 Visible = true;
             }
         }
-        public void HandleTimer()
+        public override void Update(GameTime gameTime)
         {
+            float passedTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
+            if (Main.FrameSkipMode == FrameSkipMode.Subtle)
+                passedTime = 1f / 60f;
+
             if (Visible)
             {
                 if (DisplayTimer < MaxDisplayTime)
                 {
                     if (FadeTimer < MaxFadeTime)
-                    {
-                        ++FadeTimer;
-                    }
+                        FadeTimer += passedTime * 60;
                     else
-                    {
-                        ++DisplayTimer;
-                    }
+                        DisplayTimer += passedTime * 60;
                 }
                 else
                 {
                     if (FadeTimer > 0)
-                    {
-                        --FadeTimer;
-                    }
+                        FadeTimer -= passedTime * 60;
                     else
-                    {
                         Visible = false;
-                    }
                 }
             }
         }
@@ -179,17 +177,16 @@ namespace Redemption.UI
             }
             Vector2 textpos = new Vector2(centerX - (textLength / 2f), centerY - (textHeight / 2f)) + new Vector2(Main.rand.NextFloat(0, Shake)).RotatedByRandom(MathHelper.TwoPi);
             spriteBatch.DrawString(font, Text, textpos + new Vector2(2, 2), textShadowColor * opacity, 0, new Vector2(0, 0), FontScale, SpriteEffects.None, 0);
-            spriteBatch.DrawString(font, Text, textpos, textColor * opacity, 0, new Vector2(0, 0), FontScale, SpriteEffects.None, 0);
+            ChatManager.DrawColorCodedStringWithShadow(spriteBatch, font, Text, textpos, textColor * opacity, 0, Vector2.Zero, new Vector2(FontScale));
             if (Title != null)
             {
                 Vector2 titlepos = new(titleDrawX - (titleLength / 2f), titleDrawY - ((float)titleHeight));
 
                 spriteBatch.DrawString(font, Title, titlepos + new Vector2(1, 1), textShadowColor * opacity, 0, new Vector2(0, 0), FontScale * 0.7f, SpriteEffects.None, 0);
-                spriteBatch.DrawString(font, Title, titlepos, textColor * opacity, 0, new Vector2(0, 0), FontScale * 0.7f, SpriteEffects.None, 0);
+                ChatManager.DrawColorCodedStringWithShadow(spriteBatch, font, Title, titlepos, textColor * opacity, 0, Vector2.Zero, new Vector2(FontScale) * 0.7f);
 
             }
             //font, SubtitleText, new Vector2(subtitleDrawX - ((float)subtitleLength / 2f), subtitleDrawY - ((float)subtitleHeight / 2f)), textColor * opacity
-            HandleTimer();
         }
     }
 }
