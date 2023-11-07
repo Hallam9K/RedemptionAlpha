@@ -1,49 +1,52 @@
-using Terraria.ModLoader;
-using Terraria;
-using Terraria.WorldBuilding;
-using System.Collections.Generic;
-using Terraria.GameContent.Generation;
-using Terraria.IO;
-using Terraria.ID;
-using Terraria.DataStructures;
-using Redemption.Globals;
-using Redemption.Items.Placeable.Tiles;
-using Redemption.Tiles.Containers;
-using Redemption.Tiles.Tiles;
-using Redemption.Tiles.Plants;
 using Microsoft.Xna.Framework;
-using Redemption.Tiles.Ores;
-using Redemption.Base;
 using Microsoft.Xna.Framework.Graphics;
-using ReLogic.Content;
-using Terraria.Chat;
-using Terraria.Localization;
-using Redemption.Tiles.Furniture.Misc;
-using Redemption.Tiles.Natural;
-using Terraria.ModLoader.IO;
-using System.IO;
-using Redemption.NPCs.Friendly;
-using Redemption.Tiles.Furniture.ElderWood;
-using Redemption.Walls;
-using Redemption.Tiles.Bars;
+using Redemption.Base;
+using Redemption.Globals;
 using Redemption.Items.Accessories.PreHM;
-using Redemption.Items.Tools.PreHM;
-using Redemption.Items.Usable.Summons;
-using Redemption.Items.Materials.PreHM;
-using Redemption.Items.Usable;
 using Redemption.Items.Armor.Single;
+using Redemption.Items.Materials.PreHM;
+using Redemption.Items.Placeable.Tiles;
+using Redemption.Items.Tools.PreHM;
+using Redemption.Items.Usable;
 using Redemption.Items.Usable.Potions;
-using Redemption.Tiles.MusicBoxes;
-using Redemption.Tiles.Furniture.Archcloth;
-using Redemption.NPCs.Bosses.KSIII;
-using System;
-using System.Threading;
+using Redemption.Items.Usable.Summons;
 using Redemption.Items.Weapons.PreHM.Magic;
-using Redemption.NPCs.PreHM;
-using Terraria.Audio;
-using Redemption.Tiles.Furniture.Lab;
+using Redemption.Items.Weapons.PreHM.Ritualist;
+using Redemption.NPCs.Bosses.KSIII;
+using Redemption.NPCs.Bosses.Neb;
+using Redemption.NPCs.Bosses.Neb.Phase2;
+using Redemption.NPCs.Friendly;
 using Redemption.NPCs.Minibosses.Calavia;
+using Redemption.NPCs.PreHM;
+using Redemption.Tiles.Bars;
+using Redemption.Tiles.Containers;
+using Redemption.Tiles.Furniture.Archcloth;
+using Redemption.Tiles.Furniture.ElderWood;
+using Redemption.Tiles.Furniture.Lab;
+using Redemption.Tiles.Furniture.Misc;
+using Redemption.Tiles.MusicBoxes;
+using Redemption.Tiles.Natural;
+using Redemption.Tiles.Ores;
+using Redemption.Tiles.Plants;
+using Redemption.Tiles.Tiles;
+using Redemption.Walls;
+using ReLogic.Content;
 using SubworldLibrary;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Threading;
+using Terraria;
+using Terraria.Audio;
+using Terraria.Chat;
+using Terraria.DataStructures;
+using Terraria.GameContent.Generation;
+using Terraria.ID;
+using Terraria.IO;
+using Terraria.Localization;
+using Terraria.ModLoader;
+using Terraria.ModLoader.IO;
+using Terraria.WorldBuilding;
 
 namespace Redemption.WorldGeneration
 {
@@ -89,18 +92,21 @@ namespace Redemption.WorldGeneration
         }
         public override void PostWorldGen()
         {
-            /*for (int chestIndex = 0; chestIndex < 1000; chestIndex++)
+            /*
+            bool buddingBolinePlaced = false;
+            for (int chestIndex = 0; chestIndex < 1000; chestIndex++)
             {
                 Chest chest = Main.chest[chestIndex];
                 if (chest != null && Main.tile[chest.x, chest.y].TileType == TileID.Containers && Main.tile[chest.x, chest.y].TileFrameX == 10 * 36)
                 {
-                    if (Main.rand.NextBool(3))
+                    if (!buddingBolinePlaced || Main.rand.NextBool(3))
                     {
                         for (int inventoryIndex = 0; inventoryIndex < 40; inventoryIndex++)
                         {
                             if (chest.item[inventoryIndex].type == ItemID.None)
                             {
                                 chest.item[inventoryIndex].SetDefaults(ModContent.ItemType<BuddingBoline>());
+                                buddingBolinePlaced = true;
                                 break;
                             }
                         }
@@ -113,7 +119,7 @@ namespace Redemption.WorldGeneration
                 Chest chest = Main.chest[chestIndex];
                 if (chest != null && Main.tile[chest.x, chest.y].TileType == TileID.Containers && Main.tile[chest.x, chest.y].TileFrameX == 17 * 36)
                 {
-                    if (!seaEmblemPlaced || WorldGen.genRand.NextBool(4))
+                    if (!seaEmblemPlaced || WorldGen.genRand.NextBool(5))
                     {
                         chest.item[0].SetDefaults(ModContent.ItemType<GildedSeaEmblem>());
                         seaEmblemPlaced = true;
@@ -181,12 +187,16 @@ namespace Redemption.WorldGeneration
                         continue;
 
                     ConversionHandler.ConvertWasteland(origin * 16, 287);
-                    SoundEngine.PlaySound(CustomSounds.NukeExplosion);
+                    if (!Main.dedServ)
+                        SoundEngine.PlaySound(CustomSounds.NukeExplosion);
                     placed = true;
                 }
-                RedeBossDowned.nukeDropped = true;
-                if (Main.netMode == NetmodeID.Server)
-                    NetMessage.SendData(MessageID.WorldData);
+                if (Main.netMode != NetmodeID.MultiplayerClient)
+                {
+                    RedeBossDowned.nukeDropped = true;
+                    if (Main.netMode == NetmodeID.Server)
+                        NetMessage.SendData(MessageID.WorldData);
+                }
             }
             if (RedeConfigClient.Instance.FunniAllWasteland)
             {
@@ -236,10 +246,12 @@ namespace Redemption.WorldGeneration
                 Main.npc[num].homeTileY = Main.spawnTileY;
                 Main.npc[num].direction = 1;
                 Main.npc[num].homeless = true;
-
-                RedeBossDowned.nukeDropped = true;
-                if (Main.netMode == NetmodeID.Server)
-                    NetMessage.SendData(MessageID.WorldData);
+                if (Main.netMode != NetmodeID.MultiplayerClient)
+                {
+                    RedeBossDowned.nukeDropped = true;
+                    if (Main.netMode == NetmodeID.Server)
+                        NetMessage.SendData(MessageID.WorldData);
+                }
             }
             else if (RedeConfigClient.Instance.FunniAncient)
             {
@@ -368,12 +380,12 @@ namespace Redemption.WorldGeneration
         {
             if (SubworldSystem.Current != null)
                 return;
-
             if (NPC.downedBoss3 && !dragonLeadSpawn && !cryoCrystalSpawn)
             {
                 if (RedeWorld.alignment >= 0)
                 {
-                    cryoCrystalSpawn = true;
+                    if (Main.netMode != NetmodeID.MultiplayerClient)
+                        cryoCrystalSpawn = true;
                     string status = Language.GetTextValue("Mods.Redemption.StatusMessage.Progression.GoodSkeletron");
                     if (Main.netMode == NetmodeID.Server)
                         ChatHelper.BroadcastChatMessage(NetworkText.FromLiteral(status), Color.LightBlue);
@@ -408,7 +420,8 @@ namespace Redemption.WorldGeneration
                 }
                 else
                 {
-                    dragonLeadSpawn = true;
+                    if (Main.netMode != NetmodeID.MultiplayerClient)
+                        dragonLeadSpawn = true;
                     string status = Language.GetTextValue("Mods.Redemption.StatusMessage.Progression.BadSkeletron");
                     if (Main.netMode == NetmodeID.Server)
                         ChatHelper.BroadcastChatMessage(NetworkText.FromLiteral(status), Color.Orange);
@@ -425,8 +438,11 @@ namespace Redemption.WorldGeneration
                         }
                     }
                 }
-                if (Main.netMode == NetmodeID.Server)
-                    NetMessage.SendData(MessageID.WorldData);
+                if (Main.netMode != NetmodeID.MultiplayerClient)
+                {
+                    if (Main.netMode == NetmodeID.Server)
+                        NetMessage.SendData(MessageID.WorldData);
+                }
             }
         }
 
@@ -491,7 +507,10 @@ namespace Redemption.WorldGeneration
                 if (placeY > Main.worldSurface)
                     continue;
                 Tile tile = Framing.GetTileSafely(placeX, placeY);
-                if (tile.TileType != TileID.Grass)
+                bool onTile = tile.TileType != TileID.Grass;
+                if (Main.remixWorld || Main.zenithWorld)
+                    onTile = tile.TileType != TileID.CorruptGrass && tile.TileType != TileID.CrimsonGrass && tile.TileType != TileID.CrimsonJungleGrass && tile.TileType != TileID.CorruptJungleGrass;
+                if (onTile)
                     continue;
                 if (!CheckFlat(placeX, placeY, 2, 0))
                     continue;
@@ -515,17 +534,20 @@ namespace Redemption.WorldGeneration
                 if (placeY > Main.worldSurface)
                     continue;
                 Tile tile = Framing.GetTileSafely(placeX3, placeY);
-                if (tile.TileType != TileID.Grass)
+                bool onTile = tile.TileType != TileID.Grass;
+                if (Main.remixWorld || Main.zenithWorld)
+                    onTile = tile.TileType != TileID.CorruptGrass && tile.TileType != TileID.CrimsonGrass && tile.TileType != TileID.CrimsonJungleGrass && tile.TileType != TileID.CorruptJungleGrass;
+                if (onTile)
                     continue;
                 switch (WorldGen.genRand.Next(2))
                 {
                     case 0:
-                        WorldGen.PlaceObject(placeX3, placeY - 1, ModContent.TileType<ThornsTile>(), true, WorldGen.genRand.Next(2));
-                        NetMessage.SendObjectPlacement(-1, placeX3, placeY - 1, (ushort)ModContent.TileType<ThornsTile>(), WorldGen.genRand.Next(2), 0, -1, -1);
+                        int rand = WorldGen.genRand.Next(2);
+                        WorldGen.PlaceObject(placeX3, placeY - 1, ModContent.TileType<ThornsTile>(), true, rand);
                         break;
                     case 1:
-                        WorldGen.PlaceObject(placeX3, placeY - 1, ModContent.TileType<ThornsTile2>(), true, WorldGen.genRand.Next(2));
-                        NetMessage.SendObjectPlacement(-1, placeX3, placeY - 1, (ushort)ModContent.TileType<ThornsTile>(), WorldGen.genRand.Next(2), 0, -1, -1);
+                        rand = WorldGen.genRand.Next(2);
+                        WorldGen.PlaceObject(placeX3, placeY - 1, ModContent.TileType<ThornsTile2>(), true, rand);
                         break;
                 }
                 placed2++;
@@ -610,7 +632,7 @@ namespace Redemption.WorldGeneration
                                     }
                                     if (Framing.GetTileSafely(tilesX + x, tilesY + y).HasTile && (type == TileID.Stone || type == TileID.Dirt))
                                         stoneScore++;
-                                    else
+                                    else if (!TileID.Sets.Ore[type])
                                         emptyScore++;
                                 }
                             }
@@ -668,7 +690,7 @@ namespace Redemption.WorldGeneration
                                     }
                                     if (Framing.GetTileSafely(tilesX + x, tilesY + y).HasTile && (type == TileID.Stone || type == TileID.Dirt))
                                         stoneScore++;
-                                    else
+                                    else if (!TileID.Sets.Ore[type])
                                         emptyScore++;
                                 }
                             }
@@ -768,7 +790,7 @@ namespace Redemption.WorldGeneration
                                     }
                                     if (Framing.GetTileSafely(tilesX + x, tilesY + y).HasTile && (type == TileID.IceBlock || type == TileID.SnowBlock))
                                         iceScore++;
-                                    else
+                                    else if (!TileID.Sets.Ore[type])
                                         emptyScore++;
                                 }
                             }
@@ -889,13 +911,13 @@ namespace Redemption.WorldGeneration
                 tasks.Add(new PassLegacy("Generating Ancient Decal", delegate (GenerationProgress progress, GameConfiguration configuration)
                 {
                     #region Ancient Decal Special
-                    progress.Message = "Putting spirits to rest";
+                    progress.Message = "Putting spirits to rest..Assassin's Tomb";
                     bool placed = false;
                     int attempts = 0;
                     while (!placed && attempts++ < 10000)
                     {
                         int tilesX = WorldGen.genRand.Next((int)(Main.maxTilesX * .3f), (int)(Main.maxTilesX * .7f));
-                        int tilesY = WorldGen.genRand.Next((int)(Main.maxTilesY * .4f), (int)(Main.maxTilesY * .8f));
+                        int tilesY = WorldGen.genRand.Next((int)(Main.maxTilesY * .4f), (int)(Main.maxTilesY * .7f));
                         if (!WorldGen.InWorld(tilesX, tilesY))
                             continue;
 
@@ -907,21 +929,28 @@ namespace Redemption.WorldGeneration
                         {
                             for (int y = 0; y < 39; y++)
                             {
+                                bool a = !GenVars.structures.CanPlace(new Rectangle(tilesX, tilesY, x, y));
+                                if (Main.remixWorld || Main.zenithWorld)
+                                    a = false;
+
                                 int type = Framing.GetTileSafely(tilesX + x, tilesY + y).TileType;
-                                if (!WorldGen.InWorld(tilesX + x, tilesY + y) || TileLists.BlacklistTiles.Contains(type) || TileID.Sets.Conversion.Sandstone[type] || !GenVars.structures.CanPlace(new Rectangle(tilesX, tilesY, x, y)))
+                                if (!WorldGen.InWorld(tilesX + x, tilesY + y) || TileLists.BlacklistTiles.Contains(type) || TileID.Sets.Conversion.Sandstone[type] || a)
                                 {
                                     blacklist = true;
                                     break;
                                 }
-                                if (Framing.GetTileSafely(tilesX + x, tilesY + y).HasTile && (type == TileID.Stone || type == TileID.Dirt))
+                                bool onTile = type is TileID.Stone or TileID.Dirt;
+                                if (Main.remixWorld || Main.zenithWorld)
+                                    onTile = type is TileID.Stone or TileID.Dirt or TileID.Ebonstone or TileID.Crimstone;
+                                if (Framing.GetTileSafely(tilesX + x, tilesY + y).HasTile && onTile)
                                     stoneScore++;
-                                else
+                                else if (!TileID.Sets.Ore[type])
                                     emptyScore++;
                             }
                         }
                         if (blacklist)
                             continue;
-                        if (stoneScore < (emptyScore * 1.5f))
+                        if (stoneScore < (emptyScore * 1.5f) && attempts < 5000)
                             continue;
 
                         Vector2 origin = new(tilesX, tilesY);
@@ -981,12 +1010,14 @@ namespace Redemption.WorldGeneration
                         }
                         placed = true;
                     }
+                    progress.Message = "Putting spirits to rest..Old Man's Tomb";
+
                     bool placed3 = false;
                     int attempts3 = 0;
                     while (!placed3 && attempts3++ < 10000)
                     {
                         int tilesX = WorldGen.genRand.Next((int)(Main.maxTilesX * .3f), (int)(Main.maxTilesX * .7f));
-                        int tilesY = WorldGen.genRand.Next((int)(Main.maxTilesY * .4f), (int)(Main.maxTilesY * .8f));
+                        int tilesY = WorldGen.genRand.Next((int)(Main.maxTilesY * .4f), (int)(Main.maxTilesY * .7f));
                         if (!WorldGen.InWorld(tilesX, tilesY))
                             continue;
 
@@ -998,21 +1029,28 @@ namespace Redemption.WorldGeneration
                         {
                             for (int y = 0; y < 44; y++)
                             {
+                                bool a = !GenVars.structures.CanPlace(new Rectangle(tilesX, tilesY, x, y));
+                                if (Main.remixWorld || Main.zenithWorld)
+                                    a = false;
+
                                 int type = Framing.GetTileSafely(tilesX + x, tilesY + y).TileType;
-                                if (!WorldGen.InWorld(tilesX + x, tilesY + y) || TileLists.BlacklistTiles.Contains(type) || TileID.Sets.Conversion.Sandstone[type] || !GenVars.structures.CanPlace(new Rectangle(tilesX, tilesY, x, y)))
+                                if (!WorldGen.InWorld(tilesX + x, tilesY + y) || TileLists.BlacklistTiles.Contains(type) || TileID.Sets.Conversion.Sandstone[type] || a)
                                 {
                                     blacklist = true;
                                     break;
                                 }
-                                if (Framing.GetTileSafely(tilesX + x, tilesY + y).HasTile && (type == TileID.Stone || type == TileID.Dirt))
+                                bool onTile = type is TileID.Stone or TileID.Dirt;
+                                if (Main.remixWorld || Main.zenithWorld)
+                                    onTile = type is TileID.Stone or TileID.Dirt or TileID.Ebonstone or TileID.Crimstone;
+                                if (Framing.GetTileSafely(tilesX + x, tilesY + y).HasTile && onTile)
                                     stoneScore++;
-                                else
+                                else if (!TileID.Sets.Ore[type])
                                     emptyScore++;
                             }
                         }
                         if (blacklist)
                             continue;
-                        if (stoneScore < (emptyScore * 1.5f))
+                        if (stoneScore < (emptyScore * 1.5f) && attempts3 < 5000)
                             continue;
 
                         Vector2 origin = new(tilesX, tilesY);
@@ -1071,6 +1109,8 @@ namespace Redemption.WorldGeneration
                         }
                         placed3 = true;
                     }
+                    progress.Message = "Putting spirits to rest..Frozen Tomb";
+
                     bool placed4 = false;
                     int attempts4 = 0;
                     while (!placed4 && attempts4++ < 10000)
@@ -1089,21 +1129,25 @@ namespace Redemption.WorldGeneration
                         {
                             for (int y = 0; y < 50; y++)
                             {
+                                bool a = !GenVars.structures.CanPlace(new Rectangle(tilesX, tilesY, x, y));
+                                if (Main.remixWorld || Main.zenithWorld)
+                                    a = false;
+
                                 int type = Framing.GetTileSafely(tilesX + x, tilesY + y).TileType;
-                                if (!WorldGen.InWorld(tilesX + x, tilesY + y) || TileLists.BlacklistTiles.Contains(type) || !GenVars.structures.CanPlace(new Rectangle(tilesX, tilesY, x, y)))
+                                if (!WorldGen.InWorld(tilesX + x, tilesY + y) || TileLists.BlacklistTiles.Contains(type) || a)
                                 {
                                     blacklist = true;
                                     break;
                                 }
                                 if (type == TileID.IceBlock || type == TileID.SnowBlock)
                                     stoneScore++;
-                                else
+                                else if (!TileID.Sets.Ore[type])
                                     emptyScore++;
                             }
                         }
                         if (blacklist)
                             continue;
-                        if (stoneScore < (emptyScore * 1.5f))
+                        if (stoneScore < (emptyScore * 1.5f) && attempts4 < 5000)
                             continue;
 
                         Vector2 origin = new(tilesX, tilesY);
@@ -1201,6 +1245,8 @@ namespace Redemption.WorldGeneration
                         }
                         placed4 = true;
                     }
+                    progress.Message = "Putting spirits to rest..Knight's Tomb";
+
                     bool placed2 = false;
                     int attempts2 = 0;
                     while (!placed2 && attempts2++ < 10000)
@@ -1217,21 +1263,28 @@ namespace Redemption.WorldGeneration
                         {
                             for (int y = 0; y < 33; y++)
                             {
+                                bool a = !GenVars.structures.CanPlace(new Rectangle(tilesX, tilesY, x, y));
+                                if (Main.remixWorld || Main.zenithWorld)
+                                    a = false;
+
                                 int type = Framing.GetTileSafely(tilesX + x, tilesY + y).TileType;
-                                if (!WorldGen.InWorld(tilesX + x, tilesY + y) || TileLists.BlacklistTiles.Contains(type) || !GenVars.structures.CanPlace(new Rectangle(tilesX, tilesY, x, y)))
+                                if (!WorldGen.InWorld(tilesX + x, tilesY + y) || TileLists.BlacklistTiles.Contains(type) || a)
                                 {
                                     blacklist = true;
                                     break;
                                 }
-                                if (Framing.GetTileSafely(tilesX + x, tilesY + y).HasTile && (type == TileID.Stone || type == TileID.Dirt))
+                                bool onTile = type is TileID.Stone or TileID.Dirt;
+                                if (Main.remixWorld || Main.zenithWorld)
+                                    onTile = type is TileID.Stone or TileID.Dirt or TileID.Ebonstone or TileID.Crimstone;
+                                if (Framing.GetTileSafely(tilesX + x, tilesY + y).HasTile && onTile)
                                     stoneScore++;
-                                else
+                                else if (!TileID.Sets.Ore[type])
                                     emptyScore++;
                             }
                         }
                         if (blacklist)
                             continue;
-                        if (stoneScore < (int)(emptyScore * 1.5))
+                        if (stoneScore < (int)(emptyScore * 1.5) && attempts2 < 5000)
                             continue;
 
                         Vector2 origin = new(tilesX, tilesY);
@@ -1281,12 +1334,14 @@ namespace Redemption.WorldGeneration
                         }
                         placed2 = true;
                     }
+                    progress.Message = "Putting spirits to rest..Jungle Tomb";
+
                     bool placed5 = false;
                     int attempts5 = 0;
                     while (!placed5 && attempts5++ < 10000)
                     {
                         int tilesX = WorldGen.genRand.Next((int)(Main.maxTilesX * .1f), (int)(Main.maxTilesX * .9f));
-                        int tilesY = WorldGen.genRand.Next((int)(Main.maxTilesY * .5f), (int)(Main.maxTilesY * .8f));
+                        int tilesY = WorldGen.genRand.Next((int)(Main.maxTilesY * .5f), (int)(Main.maxTilesY * .7f));
                         if (!WorldGen.InWorld(tilesX, tilesY))
                             continue;
 
@@ -1308,13 +1363,13 @@ namespace Redemption.WorldGeneration
                                 }
                                 if (Framing.GetTileSafely(tilesX + x, tilesY + y).HasTile && (type == TileID.Mud || type == TileID.JungleGrass))
                                     stoneScore++;
-                                else
+                                else if (!TileID.Sets.Ore[type])
                                     emptyScore++;
                             }
                         }
                         if (blacklist)
                             continue;
-                        if (stoneScore < (int)(emptyScore * 1.5))
+                        if (stoneScore < (int)(emptyScore * 1.5) && attempts5 < 5000)
                             continue;
 
                         Vector2 origin = new(tilesX, tilesY);
@@ -1418,13 +1473,22 @@ namespace Redemption.WorldGeneration
 
                     bool placed = false;
                     int liquidAttempts = 0;
+                    int attempts2 = 0;
                     while (!placed)
                     {
+                        attempts2++;
                         int placeX = WorldGen.genRand.Next(0, Main.maxTilesX);
 
                         int placeY = (int)Main.worldSurface - 160;
+                        if (Main.remixWorld || Main.zenithWorld)
+                            placeY = WorldGen.genRand.Next((int)Main.worldSurface - 160, (int)(Main.maxTilesY * .9f));
 
-                        if (!WorldGen.InWorld(placeX, placeY) || (placeX > Main.spawnTileX - 200 && placeX < Main.spawnTileX + 200))
+                        int spawnNear = 200;
+                        if (attempts2 > 5000)
+                            spawnNear = 100;
+                        if (attempts2 > 10000)
+                            spawnNear = 50;
+                        if (!WorldGen.InWorld(placeX, placeY) || (placeX > Main.spawnTileX - spawnNear && placeX < Main.spawnTileX + spawnNear))
                             continue;
                         // We go down until we hit a solid tile or go under the world's surface
                         while (!WorldGen.SolidTile(placeX, placeY) && placeY <= Main.worldSurface)
@@ -1435,7 +1499,10 @@ namespace Redemption.WorldGeneration
                         if (placeY > Main.worldSurface)
                             continue;
                         Tile tile = Framing.GetTileSafely(placeX, placeY);
-                        if (tile.TileType != TileID.Grass)
+                        bool onTile = tile.TileType != TileID.Grass;
+                        if (Main.remixWorld || Main.zenithWorld)
+                            onTile = tile.TileType != TileID.CorruptGrass && tile.TileType != TileID.CrimsonGrass && tile.TileType != TileID.CrimsonJungleGrass && tile.TileType != TileID.CorruptJungleGrass;
+                        if (onTile)
                             continue;
                         if (!CheckFlat(placeX, placeY, 10, 2))
                             continue;
@@ -1447,7 +1514,7 @@ namespace Redemption.WorldGeneration
                         Vector2 origin = new(placeX - 34, placeY - 11);
                         int oldX = (int)origin.X;
                         int attempts = 0;
-                        while (attempts < 50000 && !GenVars.structures.CanPlace(new Rectangle((int)origin.X, (int)origin.Y, 60, 82)))
+                        while (attempts++ < 50000 && !GenVars.structures.CanPlace(new Rectangle((int)origin.X, (int)origin.Y, 60, 82)))
                         {
                             origin.X = WorldGen.genRand.Next(100, Main.maxTilesX - 100);
                         }
@@ -1461,7 +1528,7 @@ namespace Redemption.WorldGeneration
                             if (placeY > Main.worldSurface)
                                 continue;
                             tile = Framing.GetTileSafely(placeX, placeY);
-                            if (tile.TileType != TileID.Grass)
+                            if (onTile)
                                 continue;
                             if (!CheckFlat(placeX, placeY, 10, 2))
                                 continue;
@@ -1552,10 +1619,10 @@ namespace Redemption.WorldGeneration
                             if (Framing.GetTileSafely(i, j).TileType == TileID.Dirt && !Framing.GetTileSafely(i, j - 1).HasTile &&
                                 Framing.GetTileSafely(i, j).HasTile)
                             {
-                                if (WorldGen.genRand.NextBool(3))
+                                if (WorldGen.genRand.NextBool(2))
                                 {
-                                    WorldGen.PlaceObject(i, j - 1, TileID.LargePiles2, true, WorldGen.genRand.Next(47, 50));
-                                    NetMessage.SendObjectPlacement(-1, i, j - 1, TileID.LargePiles2, WorldGen.genRand.Next(47, 50), 0, -1, -1);
+                                    int rand = WorldGen.genRand.Next(47, 49);
+                                    WorldGen.PlaceObject(i, j - 1, TileID.LargePiles2, true, rand);
                                 }
                             }
                             if (WorldGen.genRand.NextBool(2))
@@ -1576,6 +1643,8 @@ namespace Redemption.WorldGeneration
                         int placeX = WorldGen.genRand.Next(0, Main.maxTilesX);
 
                         int placeY = (int)Main.worldSurface - 160;
+                        if (Main.remixWorld || Main.zenithWorld)
+                            placeY = WorldGen.genRand.Next((int)Main.worldSurface - 160, (int)(Main.maxTilesY * .9f));
 
                         if (!WorldGen.InWorld(placeX, placeY) || (placeX > Main.spawnTileX - 100 && placeX < Main.spawnTileX + 100))
                             continue;
@@ -1588,7 +1657,10 @@ namespace Redemption.WorldGeneration
                         if (placeY > Main.worldSurface)
                             continue;
                         Tile tile = Framing.GetTileSafely(placeX, placeY);
-                        if (tile.TileType != TileID.Grass)
+                        bool onTile = tile.TileType != TileID.Grass;
+                        if (Main.remixWorld || Main.zenithWorld)
+                            onTile = tile.TileType != TileID.CorruptGrass && tile.TileType != TileID.CrimsonGrass && tile.TileType != TileID.CrimsonJungleGrass && tile.TileType != TileID.CorruptJungleGrass;
+                        if (onTile)
                             continue;
                         if (!CheckFlat(placeX + 4, placeY, 10, 2))
                             continue;
@@ -1596,7 +1668,7 @@ namespace Redemption.WorldGeneration
                         Vector2 origin = new(placeX - (dims.X / 2), placeY - 13);
                         int oldX = (int)origin.X;
                         int attempts = 0;
-                        while (attempts < 50000 && !GenVars.structures.CanPlace(new Rectangle((int)origin.X, (int)origin.Y, dims.X, dims.Y)))
+                        while (attempts++ < 50000 && !GenVars.structures.CanPlace(new Rectangle((int)origin.X, (int)origin.Y, dims.X, dims.Y)))
                         {
                             origin.X = WorldGen.genRand.Next(100, Main.maxTilesX - 100);
                         }
@@ -1610,7 +1682,7 @@ namespace Redemption.WorldGeneration
                             if (placeY > Main.worldSurface)
                                 continue;
                             tile = Framing.GetTileSafely(placeX, placeY);
-                            if (tile.TileType != TileID.Grass)
+                            if (onTile)
                                 continue;
                             if (!CheckFlat(placeX + 4, placeY, 10, 2))
                                 continue;
@@ -1622,8 +1694,11 @@ namespace Redemption.WorldGeneration
                         {
                             for (int j = 0; j <= dims.Y; j++)
                             {
+                                bool a = !GenVars.structures.CanPlace(new Rectangle((int)origin.X - 10, (int)origin.Y - 10, dims.X + 10, dims.Y + 10));
+                                if (Main.remixWorld || Main.zenithWorld)
+                                    a = false;
                                 int type = Framing.GetTileSafely((int)origin.X + i, (int)origin.Y + j).TileType;
-                                if (!WorldGen.InWorld((int)origin.X + i, (int)origin.Y + j) || TileLists.BlacklistTiles.Contains(type) || type == TileID.SnowBlock || type == TileID.Sand || type == ModContent.TileType<HeartOfThornsTile>() || !GenVars.structures.CanPlace(new Rectangle((int)origin.X - 10, (int)origin.Y - 10, dims.X + 10, dims.Y + 10)))
+                                if (!WorldGen.InWorld((int)origin.X + i, (int)origin.Y + j) || TileLists.BlacklistTiles.Contains(type) || type == TileID.SnowBlock || type == TileID.Sand || type == ModContent.TileType<HeartOfThornsTile>() || a)
                                 {
                                     whitelist = true;
                                     break;
@@ -1636,6 +1711,46 @@ namespace Redemption.WorldGeneration
                             }
                         }
                         if (whitelist)
+                            continue;
+
+                        int attempts2 = 0;
+                        bool placed2 = false;
+                        while (!placed2 && attempts2++ < 200)
+                        {
+                            int placeX2 = (int)origin.X - 55;
+                            int placeY2 = WorldGen.genRand.Next(50, 80);
+                            if (!WorldGen.InWorld(placeX2, placeY2))
+                                continue;
+
+                            bool whitelist2 = false;
+                            for (int i = 0; i <= 144; i++)
+                            {
+                                for (int j = 0; j <= 80; j++)
+                                {
+                                    Tile whitelistTile = Framing.GetTileSafely(placeX2 + i, placeY2 + j);
+                                    if (whitelistTile.HasTile && whitelistTile.TileType != TileID.Cloud && whitelistTile.TileType != TileID.RainCloud)
+                                    {
+                                        whitelist2 = true;
+                                        break;
+                                    }
+                                }
+                            }
+                            if (whitelist2)
+                                continue;
+
+                            if (attempts2 >= 200)
+                                break;
+                            Point16 origin2 = new(placeX2, placeY2);
+
+                            GatewayIsland biome = new();
+                            GatewayIslandClear delete = new();
+                            delete.Place(origin2.ToPoint(), GenVars.structures);
+                            biome.Place(origin2.ToPoint(), GenVars.structures);
+
+                            GoldenGatewayVector = origin2.ToVector2();
+                            placed2 = true;
+                        }
+                        if (!placed2)
                             continue;
 
                         StructureHelper.Generator.GenerateStructure("WorldGeneration/JShrine", origin.ToPoint16(), Mod);
@@ -1689,43 +1804,6 @@ namespace Redemption.WorldGeneration
                         }));
                     }));
                 }
-                tasks.Add(new PassLegacy("Golden Gateway", delegate (GenerationProgress progress, GameConfiguration configuration)
-                {
-                    progress.Message = "Thinking harder with portals";
-                    bool placed = false;
-                    while (!placed)
-                    {
-                        int placeX = WorldGen.genRand.Next(300, Main.maxTilesX - 300);
-                        int placeY = WorldGen.genRand.Next(50, 80);
-                        if (!WorldGen.InWorld(placeX, placeY))
-                            continue;
-
-                        bool whitelist = false;
-                        for (int i = 0; i <= 144; i++)
-                        {
-                            for (int j = 0; j <= 80; j++)
-                            {
-                                if (Main.tile[placeX + i, placeY + j].HasTile)
-                                {
-                                    whitelist = true;
-                                    break;
-                                }
-                            }
-                        }
-                        if (whitelist)
-                            continue;
-
-                        Point16 origin = new(placeX, placeY);
-
-                        GatewayIsland biome = new();
-                        GatewayIslandClear delete = new();
-                        delete.Place(origin.ToPoint(), GenVars.structures);
-                        biome.Place(origin.ToPoint(), GenVars.structures);
-
-                        GoldenGatewayVector = origin.ToVector2();
-                        placed = true;
-                    }
-                }));
                 tasks.Add(new PassLegacy("Portals 2", delegate (GenerationProgress progress, GameConfiguration configuration)
                 {
                     #region Underground Portal
@@ -1835,7 +1913,6 @@ namespace Redemption.WorldGeneration
                                 case TileID.AmberGemspark:
                                     Framing.GetTileSafely(i, j).ClearTile();
                                     WorldGen.PlaceObject(i, j, (ushort)ModContent.TileType<GraveSteelAlloyTile>(), true);
-                                    NetMessage.SendObjectPlacement(-1, i, j, (ushort)ModContent.TileType<GraveSteelAlloyTile>(), 0, 0, -1, -1);
                                     break;
                             }
                             if (WorldGen.genRand.NextBool(3))
@@ -1949,7 +2026,6 @@ namespace Redemption.WorldGeneration
                                 case TileID.AmberGemspark:
                                     Framing.GetTileSafely(i, j).ClearTile();
                                     WorldGen.PlaceObject(i, j, (ushort)ModContent.TileType<GraveSteelAlloyTile>(), true);
-                                    NetMessage.SendObjectPlacement(-1, i, j, (ushort)ModContent.TileType<GraveSteelAlloyTile>(), 0, 0, -1, -1);
                                     break;
                                 case TileID.DiamondGemspark:
                                     Framing.GetTileSafely(i, j).ClearTile();
@@ -2487,13 +2563,13 @@ namespace Redemption.WorldGeneration
                 tome = ModContent.ItemType<Mistfall>();
 
             int[] ChestLoot = new int[] {
-                ModContent.ItemType<RopeHook>(), ModContent.ItemType<BeardedHatchet>(), ModContent.ItemType<WeddingRing>(), ModContent.ItemType<TrappedSoulBauble>(), ModContent.ItemType<EmptyCruxCard>(), tome };
+                ModContent.ItemType<RopeHook>(), ModContent.ItemType<BeardedHatchet>(), ModContent.ItemType<WeddingRing>(), ModContent.ItemType<TrappedSoulBauble>(), tome };
             int[] ChestLoot2 = new int[] {
                 ModContent.ItemType<ZweihanderFragment1>(), ModContent.ItemType<ZweihanderFragment2>() };
             int[] ChestLoot3 = new int[] {
                 ItemID.MiningPotion, ItemID.BattlePotion, ItemID.BuilderPotion, ItemID.InvisibilityPotion };
             int[] ChestLoot4 = new int[] {
-                ItemID.SpelunkerPotion, ItemID.StrangeBrew, ItemID.RecallPotion, ModContent.ItemType<VendettaPotion>(), };
+                ItemID.SpelunkerPotion, ItemID.StrangeBrew, ItemID.RecallPotion, ModContent.ItemType<VendettaPotion>() };
 
             if (PlacementSuccess >= 0)
             {
@@ -2508,7 +2584,7 @@ namespace Redemption.WorldGeneration
                     chest.item[slot].SetDefaults(Utils.Next(WorldGen.genRand, ChestLoot));
                 chest.item[slot++].stack = 1;
 
-                if (ID == 2)
+                if (ID == 2 || RedeHelper.GenChance(.25f))
                 {
                     chest.item[slot].SetDefaults(ModContent.ItemType<EmptyCruxCard>());
                     chest.item[slot++].stack = 1;
@@ -2536,9 +2612,9 @@ namespace Redemption.WorldGeneration
                 if (RedeHelper.GenChance(.2f))
                 {
                     chest.item[slot].SetDefaults(ModContent.ItemType<Archcloth>());
-                    chest.item[slot++].stack = WorldGen.genRand.Next(1, 2);
+                    chest.item[slot++].stack = WorldGen.genRand.Next(1, 3);
                 }
-                if (RedeHelper.GenChance(.1f))
+                if (RedeHelper.GenChance(.2f))
                 {
                     chest.item[slot].SetDefaults(Utils.Next(WorldGen.genRand, ChestLoot2));
                     chest.item[slot++].stack = 1;
@@ -2551,12 +2627,12 @@ namespace Redemption.WorldGeneration
                 if (RedeHelper.GenChance(.66f))
                 {
                     chest.item[slot].SetDefaults(Utils.Next(WorldGen.genRand, ChestLoot3));
-                    chest.item[slot++].stack = WorldGen.genRand.Next(1, 2);
+                    chest.item[slot++].stack = WorldGen.genRand.Next(1, 3);
                 }
                 if (RedeHelper.GenChance(.33f))
                 {
                     chest.item[slot].SetDefaults(Utils.Next(WorldGen.genRand, ChestLoot4));
-                    chest.item[slot++].stack = WorldGen.genRand.Next(1, 2);
+                    chest.item[slot++].stack = WorldGen.genRand.Next(1, 3);
                 }
                 chest.item[slot].SetDefaults(ItemID.SilverCoin);
                 chest.item[slot++].stack = WorldGen.genRand.Next(5, 10);
@@ -2565,6 +2641,8 @@ namespace Redemption.WorldGeneration
 
         public override void PreUpdateWorld()
         {
+            if (SubworldSystem.Current != null)
+                return;
             if (newbCaveVector.X != -1 && !NPC.AnyNPCs(ModContent.NPCType<AnglonPortal>()))
             {
                 Vector2 anglonPortalPos = new(((newbCaveVector.X + 35) * 16) - 8, ((newbCaveVector.Y + 12) * 16) - 4);
@@ -2824,12 +2902,10 @@ namespace Redemption.WorldGeneration
         public static void ObjectPlace(Point Origin, int x, int y, int TileType, int style = 0, int direction = -1)
         {
             WorldGen.PlaceObject(Origin.X + x, Origin.Y + y, TileType, true, style, 0, -1, direction);
-            //NetMessage.SendObjectPlacment(-1, Origin.X + x, Origin.Y + y, TileType, style, 0, -1, direction);
         }
         public static void ObjectPlace(int x, int y, int TileType, int style = 0, int direction = -1)
         {
             WorldGen.PlaceObject(x, y, TileType, true, style, 0, -1, direction);
-            //NetMessage.SendObjectPlacment(-1, x, y, TileType, style, 0, -1, direction);
         }
         public static void InvokeOnMainThread(Action action)
         {

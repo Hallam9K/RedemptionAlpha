@@ -1,14 +1,39 @@
-﻿using Terraria;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System.Collections.Generic;
-using Terraria.UI;
-using Terraria.ModLoader;
 using ReLogic.Graphics;
+using System.Collections.Generic;
+using Terraria;
+using Terraria.ModLoader;
+using Terraria.UI;
 using Terraria.UI.Chat;
+using Terraria.WorldBuilding;
+using Terraria.ID;
+using System.Globalization;
+using System;
 
 namespace Redemption.UI.ChatUI
 {
+    public class ChatUISystem : ModSystem
+    {
+        public override void Load()
+        {
+            if (Main.dedServ)
+                ChatUI.Dialogue = new();
+        }
+
+        public override void PreUpdateEntities()
+        {
+            if (Main.dedServ && ChatUI.Visible && ChatUI.Dialogue.Count > 0)
+            {
+                for (int i = 0; i < ChatUI.Dialogue.Count; i++)
+                {
+                    IDialogue dialogue = ChatUI.Dialogue[i];
+                    dialogue.Update(Main.gameTimeCache);
+                }
+            }
+        }
+    }
+
     public class ChatUI : UIState
     {
         public static List<IDialogue> Dialogue;
@@ -76,7 +101,7 @@ namespace Redemption.UI.ChatUI
                     if (text == null)
                         continue;
 
-                    DrawStringEightWay(spriteBatch, text, 1, textPos, Color.Multiply(dialogue.textColor, alpha), Color.Multiply(dialogue.shadowColor, alpha));
+                    DrawStringEightWay(spriteBatch, text, textPos, Color.Multiply(dialogue.textColor, alpha), Color.Multiply(dialogue.shadowColor, alpha));
 
                     textPos.Y += dialogue.font.MeasureString(text).Y - 6;
                 }
@@ -161,7 +186,7 @@ namespace Redemption.UI.ChatUI
 
             return displayingText;
         }
-        
+
         public static void InterpretSymbols(Dialogue dialogue)
         {
             if (dialogue.displayingText.Length == 0)
@@ -184,13 +209,12 @@ namespace Redemption.UI.ChatUI
                     dialogue.displayingText = dialogue.displayingText[0..^1];
                     return;
                 }
-
-                bool parsed = float.TryParse(numbers, out float result);
+                bool parsed = float.TryParse(numbers, NumberStyles.Any, CultureInfo.InvariantCulture, out float result);
                 if (!parsed) return;
 
                 dialogue.pauseTime = result;
-				dialogue.text = dialogue.text.Remove(dialogue.displayingText.Length - 1, index + 2 - dialogue.displayingText.Length);
-				dialogue.displayingText = dialogue.displayingText[0..^1];
+                dialogue.text = dialogue.text.Remove(dialogue.displayingText.Length - 1, index + 2 - dialogue.displayingText.Length);
+                dialogue.displayingText = dialogue.displayingText[0..^1];
                 return;
             }
 
@@ -200,34 +224,35 @@ namespace Redemption.UI.ChatUI
                 int length = dialogue.displayingText.Length - 1;
                 string text = dialogue.text[length..(index + 1)];
                 string numbers = text[1..^1];
-                float.TryParse(numbers, out float result);
+                bool parsed = float.TryParse(numbers, NumberStyles.Any, CultureInfo.InvariantCulture, out float result);
+                if (!parsed) return;
 
                 dialogue.charTime = result;
-				dialogue.text = dialogue.text.Remove(dialogue.displayingText.Length - 1, index + 2 - dialogue.displayingText.Length);
-				dialogue.displayingText = dialogue.displayingText[0..^1];
+                dialogue.text = dialogue.text.Remove(dialogue.displayingText.Length - 1, index + 2 - dialogue.displayingText.Length);
+                dialogue.displayingText = dialogue.displayingText[0..^1];
                 return;
             }
         }
 
-        public static void DrawStringEightWay(SpriteBatch spriteBatch, string text, int thickness, Vector2 position, Color textColor, Color shadowColor)
+        public static void DrawStringEightWay(SpriteBatch spriteBatch, string text, Vector2 position, Color textColor, Color shadowColor)
         {
             ChatManager.DrawColorCodedStringShadow(spriteBatch, Terraria.GameContent.FontAssets.MouseText.Value, text, position, shadowColor * .5f, 0, Vector2.Zero, Vector2.One);
             ChatManager.DrawColorCodedString(spriteBatch, Terraria.GameContent.FontAssets.MouseText.Value, text, position, textColor, 0, Vector2.Zero, Vector2.One);
         }
 
-		public static void Add(IDialogue dialogue)
-		{
-			Dialogue.Add(dialogue);
-		}
+        public static void Add(IDialogue dialogue)
+        {
+            Dialogue.Add(dialogue);
+        }
 
-		public static void Remove(IDialogue dialogue)
-		{
-			Dialogue.Remove(dialogue);
-		}
+        public static void Remove(IDialogue dialogue)
+        {
+            Dialogue.Remove(dialogue);
+        }
 
-		public static void Clear()
-		{
-			Dialogue.Clear();
-		}
-	}
+        public static void Clear()
+        {
+            Dialogue.Clear();
+        }
+    }
 }

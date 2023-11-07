@@ -1,26 +1,26 @@
-using Terraria;
-using Terraria.ID;
 using Microsoft.Xna.Framework;
-using Terraria.ModLoader;
 using Microsoft.Xna.Framework.Graphics;
-using Terraria.ModLoader.Utilities;
-using Terraria.DataStructures;
-using Redemption.Globals;
-using Terraria.GameContent;
-using Terraria.Utilities;
 using Redemption.Base;
-using Terraria.Localization;
-using Terraria.GameContent.Bestiary;
-using System.Collections.Generic;
+using Redemption.BaseExtension;
+using Redemption.Globals;
+using Redemption.Items.Accessories.PreHM;
 using Redemption.Items.Armor.Vanity;
 using Redemption.Items.Materials.PreHM;
-using Redemption.Items.Accessories.PreHM;
-using Redemption.BaseExtension;
-using Terraria.Audio;
-using Terraria.GameContent.ItemDropRules;
 using Redemption.UI.ChatUI;
-using Terraria.ModLoader.IO;
+using System.Collections.Generic;
 using System.Linq;
+using Terraria;
+using Terraria.Audio;
+using Terraria.DataStructures;
+using Terraria.GameContent;
+using Terraria.GameContent.Bestiary;
+using Terraria.GameContent.ItemDropRules;
+using Terraria.ID;
+using Terraria.Localization;
+using Terraria.ModLoader;
+using Terraria.ModLoader.IO;
+using Terraria.ModLoader.Utilities;
+using Terraria.Utilities;
 
 namespace Redemption.NPCs.Friendly
 {
@@ -106,6 +106,16 @@ namespace Redemption.NPCs.Friendly
                 }
             }
         }
+        public override void ModifyIncomingHit(ref NPC.HitModifiers modifiers)
+        {
+            if (modifiers.DamageType != DamageClass.Melee)
+            {
+                modifiers.SetMaxDamage(1);
+                modifiers.DisableCrit();
+                modifiers.HideCombatText();
+                NPC.life++;
+            }
+        }
         public override bool CanHitPlayer(Player target, ref int cooldownSlot) => false;
         public override bool CanHitNPC(NPC target) => false;
         public override bool? CanBeHitByItem(Player player, Item item) => item.axe > 0 ? null : false;
@@ -138,9 +148,14 @@ namespace Redemption.NPCs.Friendly
         }
         public override void AI()
         {
-            Player player = Main.player[RedeHelper.GetNearestAlivePlayer(NPC)];
-            if (NPC.target < 0 || NPC.target == 255 || player.dead || !player.active)
-                NPC.TargetClosest();
+            Player player = Main.LocalPlayer;
+            int nearest = RedeHelper.GetNearestAlivePlayer(NPC);
+            if (nearest >= 0 && nearest < Main.maxPlayers)
+            {
+                player = Main.player[RedeHelper.GetNearestAlivePlayer(NPC)];
+                if (NPC.target < 0 || NPC.target == 255 || player.dead || !player.active)
+                    NPC.TargetClosest();
+            }
 
             if (TimerRand == 0)
             {
@@ -223,15 +238,15 @@ namespace Redemption.NPCs.Friendly
             TimerRand = 3;
         }
         public override bool CanChat() => true;
-        public override void SetChatButtons(ref string button, ref string button2)
-        {
-            if (!RedeBossDowned.downedTreebark)
-                button = Language.GetTextValue("LegacyInterface.28");
-        }
         public override void OnChatButtonClicked(bool firstButton, ref string shopName)
         {
             if (firstButton)
                 shopName = Shop.Name;
+        }
+        public override void SetChatButtons(ref string button, ref string button2)
+        {
+            if (!RedeBossDowned.downedTreebark)
+                button = Language.GetTextValue("LegacyInterface.28");
         }
         public override void OnSpawn(IEntitySource source)
         {
