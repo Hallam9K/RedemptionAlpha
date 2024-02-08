@@ -946,6 +946,21 @@ Mods: {
 					KeeperDowned3: "[@h0]Great,[0.1] now I have even more reason to pummel you to ash!"
 				}
 
+				ScannerDrone: {
+					1: A drone used to collect data and store it within the SoS.
+					2: TARGET UNIMPORTANT...
+				}
+
+				Summon: {
+					1: So stop bothering me,[0.1] I have a certain android I need to 'lecture'.
+					2: So stop bothering me,[0.1] I don't care about you.
+					3: So stop bothering me and we can all go about our day.
+					4: So stop bothering me and leave me to my 4D chess.
+					Projectile1: Hey,[0.1] get lost.
+					Projectile2: "[@f1]You really aren't worth my time,[0.1] ya know."
+					Projectile4: "[@f0]I'll beat you up if you annoy me again."
+				}
+
 				Resummon: {
 					Downed1: "[@h1]Why must you summon me again?"
 					Downed2: "[@h2]Could you maybe possibly probably potentially LEAVE ME ALONE?"
@@ -1182,6 +1197,12 @@ Mods: {
 					v2: Alright, I'll say this. It's a collaborative project between me and one of the few to best you.
 					v3: Alright, I'll say this. It's a collaborative project between me and another.
 				}
+			}
+
+			EaglecrestGolem2: {
+					1: A storm is brewing...
+					2: ... And nature trembles
+					3: The Gods' wrath is upon you
 			}
 
 			Nebuleus: {

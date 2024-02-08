@@ -5,6 +5,7 @@ using Redemption.Globals;
 using Redemption.Textures;
 using Redemption.UI.ChatUI;
 using Terraria;
+using Terraria.Localization;
 using Terraria.Audio;
 using Terraria.GameContent;
 using Terraria.ID;
@@ -49,16 +50,16 @@ namespace Redemption.NPCs.Bosses.KSIII
                 {
                     string line1 = Main.rand.Next(4) switch
                     {
-                        1 => "So stop bothering me,[0.1] I have a certain android I need to 'lecture'.",
-                        2 => "So stop bothering me,[0.1] I don't care about you.",
-                        3 => "So stop bothering me and we can all go about our day.",
-                        _ => "So stop bothering me and leave me to my 4D chess.",
+                        1 => Language.GetTextValue("Mods.Redemption.Cutscene.KS3.Summon.1"),
+                        2 => Language.GetTextValue("Mods.Redemption.Cutscene.KS3.Summon.2"),
+                        3 => Language.GetTextValue("Mods.Redemption.Cutscene.KS3.Summon.3"),
+                        _ => Language.GetTextValue("Mods.Redemption.Cutscene.KS3.Summon.4"),
                     };
                     DialogueChain chain = new();
-                    chain.Add(new(Projectile, "Hey,[0.1] get lost.", new Color(170, 255, 255), Color.Black, voice, .03f, 2f, 0, false, null, Bubble, null))
-                         .Add(new(Projectile, "[@f1]You really aren't worth my time,[0.1] ya know.", new Color(170, 255, 255), Color.Black, voice, .03f, 2f, 0, false, null, Bubble, null))
+                    chain.Add(new(Projectile, Language.GetTextValue("Mods.Redemption.Cutscene.KS3.Summon.Projectile1"), new Color(170, 255, 255), Color.Black, voice, .03f, 2f, 0, false, null, Bubble, null))
+                         .Add(new(Projectile, Language.GetTextValue("Mods.Redemption.Cutscene.KS3.Summon.Projectile2"), new Color(170, 255, 255), Color.Black, voice, .03f, 2f, 0, false, null, Bubble, null))
                          .Add(new(Projectile, "[@f3]" + line1, new Color(170, 255, 255), Color.Black, voice, .03f, 2f, 0, false, null, Bubble, null))
-                         .Add(new(Projectile, "[@f0]I'll beat you up if you annoy me again.", new Color(170, 255, 255), Color.Black, voice, .03f, 2f, .5f, true, null, Bubble, null, endID: 1));
+                         .Add(new(Projectile, Language.GetTextValue("Mods.Redemption.Cutscene.KS3.Summon.Projectile4"), new Color(170, 255, 255), Color.Black, voice, .03f, 2f, .5f, true, null, Bubble, null, endID: 1));
                     chain.OnSymbolTrigger += Chain_OnSymbolTrigger;
                     chain.OnEndTrigger += Chain_OnEndTrigger;
                     ChatUI.Visible = true;
