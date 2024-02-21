@@ -892,6 +892,26 @@ namespace Redemption.Globals
             }
         }
 
+        public static void LookAtEntityOnlyDir(this Terraria.NPC npc, Entity target, bool opposite = false)
+        {
+            int dir = 1;
+            if (opposite)
+                dir = -1;
+            if (target.RightOf(npc))
+                npc.direction = dir;
+            else
+                npc.direction = -dir;
+        }
+        public static void LookAtEntityOnlyDirY(this Terraria.NPC npc, Entity target, bool opposite = false)
+        {
+            int dir = 1;
+            if (opposite)
+                dir = -1;
+            if (target.Below(npc))
+                npc.directionY = dir;
+            else
+                npc.directionY = -dir;
+        }
         public static void LookAtEntity(this Projectile projectile, Entity target, bool opposite = false)
         {
             int dir = 1;

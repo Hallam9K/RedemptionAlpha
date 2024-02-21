@@ -3180,7 +3180,7 @@ Mods: {
 
 			SlayerController: {
 				DisplayName: Slayer's Gamer Controller
-				Tooltip: Changes your cursor to a cyan crosshair
+				Tooltip: Changes your cursor to a cyan crosshair while inventory is closed
 			}
 
 			SlayerProjector: {

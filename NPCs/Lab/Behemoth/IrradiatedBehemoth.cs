@@ -311,14 +311,14 @@ namespace Redemption.NPCs.Lab.Behemoth
             Texture2D HandAni = ModContent.Request<Texture2D>(Texture + "_Hand").Value;
             var effects = NPC.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
 
-            spriteBatch.Draw(texture, NPC.Center - screenPos, NPC.frame, NPC.ColorTintedAndOpacity(new Color(100, 100, 100, 255)), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0f);
+            spriteBatch.Draw(texture, NPC.Center - screenPos, NPC.frame, NPC.GetAlpha(new Color(100, 100, 100, 255)), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0f);
 
             int Height = HeadAni.Height / 6;
             int y = Height * AniFrameY;
             Rectangle rect = new(0, y, HeadAni.Width, Height);
             Vector2 origin = new(HeadAni.Width / 2f, Height / 2f);
-            spriteBatch.Draw(HeadAni, NPC.Center - screenPos + new Vector2(0, 32), new Rectangle?(rect), NPC.ColorTintedAndOpacity(new Color(100, 100, 100, 255)), NPC.rotation, origin, NPC.scale, effects, 0);
-            spriteBatch.Draw(HandAni, NPC.Center - screenPos + HandVector + new Vector2(0, 32), new Rectangle?(rect), NPC.ColorTintedAndOpacity(new Color(100, 100, 100, 255)), NPC.rotation, origin, NPC.scale, effects, 0);
+            spriteBatch.Draw(HeadAni, NPC.Center - screenPos + new Vector2(0, 32), new Rectangle?(rect), NPC.GetAlpha(new Color(100, 100, 100, 255)), NPC.rotation, origin, NPC.scale, effects, 0);
+            spriteBatch.Draw(HandAni, NPC.Center - screenPos + HandVector + new Vector2(0, 32), new Rectangle?(rect), NPC.GetAlpha(new Color(100, 100, 100, 255)), NPC.rotation, origin, NPC.scale, effects, 0);
             return false;
         }
         public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)

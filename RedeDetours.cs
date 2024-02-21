@@ -1,15 +1,9 @@
 ﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using Redemption.Effects.PrimitiveTrails;
-using Redemption.Globals;
 using Redemption.Walls;
-using Redemption.WorldGeneration.Soulless;
-using Redemption.WorldGeneration.Space;
-using SubworldLibrary;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
-using Terraria.GameContent.Skies;
 using Terraria.ID;
 using Terraria.ModLoader;
 using static Redemption.Globals.RedeNet;

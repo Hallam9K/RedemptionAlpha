@@ -1245,9 +1245,7 @@ namespace Redemption.NPCs.Bosses.Erhan
             }
             if (!blindJusted && AIState is ActionState.Attacks && (projectile.type == ModContent.ProjectileType<BlindJustice_Proj>()))
             {
-                string s = Language.GetTextValue("Mods.Redemption.Cutscene.Erhan.Interaction.BJustice1");
-                if (Main.rand.NextBool())
-                    s = Language.GetTextValue("Mods.Redemption.Cutscene.Erhan.Interaction.BJustice2");
+                string s = Language.GetTextValue("Mods.Redemption.Cutscene.Erhan.Interaction.BJustice");
                 Dialogue d = new(NPC, s, Color.LightGoldenrodYellow, new Color(100, 86, 0), voice, .03f, 2f, .5f, true, null, Bubble, null, modifier);
                 ChatUI.Visible = true;
                 ChatUI.Add(d);
