@@ -127,7 +127,7 @@ namespace Redemption.Globals
                 return fossilSet;
             if (head.type == ItemID.JungleHat && body.type == ItemID.JungleShirt && legs.type == ItemID.JunglePants)
                 return jungleSet;
-            if ((head.type == ItemID.ShadowHelmet && body.type == ItemID.ShadowScalemail && legs.type == ItemID.ShadowGreaves) &&
+            if ((head.type == ItemID.ShadowHelmet && body.type == ItemID.ShadowScalemail && legs.type == ItemID.ShadowGreaves) ||
                 (head.type == ItemID.AncientShadowHelmet && body.type == ItemID.AncientShadowScalemail && legs.type == ItemID.AncientShadowGreaves))
                 return shadowSet;
             if (head.type == ItemID.CrimsonHelmet && body.type == ItemID.CrimsonScalemail && legs.type == ItemID.CrimsonGreaves)
@@ -158,7 +158,6 @@ namespace Redemption.Globals
                 return beetleSet;
             if ((head.type == ItemID.SpectreHood || head.type == ItemID.SpectreMask) && body.type == ItemID.SpectreRobe && legs.type == ItemID.SpectrePants)
                 return spectreSet;
-
             return base.IsArmorSet(head, body, legs);
         }
         public override void UpdateArmorSet(Terraria.Player player, string set)
@@ -191,37 +190,37 @@ namespace Redemption.Globals
             if (set == fossilSet || set == adamantiteSet || set == forbiddenSet || set == turtleSet || set == beetleSet || set == ironSet || set == leadSet)
             {
                 player.setBonus += Language.GetTextValue("Mods.Redemption.GenericTooltips.ArmorSetBonus.VanillaArmor.20Increased") + ElementID.EarthS + Language.GetTextValue("Mods.Redemption.GenericTooltips.ArmorSetBonus.VanillaArmor.Resistance");
-                player.RedemptionPlayerBuff().ElementalDamage[ElementID.Earth] += 0.2f;
+                player.RedemptionPlayerBuff().ElementalResistance[ElementID.Earth] += 0.2f;
             }
             if (set == shadowSet)
             {
                 player.setBonus += Language.GetTextValue("Mods.Redemption.GenericTooltips.ArmorSetBonus.VanillaArmor.20Increased") + ElementID.ShadowS + Language.GetTextValue("Mods.Redemption.GenericTooltips.ArmorSetBonus.VanillaArmor.Resistance");
-                player.RedemptionPlayerBuff().ElementalDamage[ElementID.Shadow] += 0.2f;
+                player.RedemptionPlayerBuff().ElementalResistance[ElementID.Shadow] += 0.2f;
             }
             if (set == crimsonSet)
             {
                 player.setBonus += Language.GetTextValue("Mods.Redemption.GenericTooltips.ArmorSetBonus.VanillaArmor.20Increased") + ElementID.BloodS + Language.GetTextValue("Mods.Redemption.GenericTooltips.ArmorSetBonus.VanillaArmor.Resistance");
-                player.RedemptionPlayerBuff().ElementalDamage[ElementID.Blood] += 0.2f;
+                player.RedemptionPlayerBuff().ElementalResistance[ElementID.Blood] += 0.2f;
             }
             if (set == moltenSet)
             {
                 player.setBonus += Language.GetTextValue("Mods.Redemption.GenericTooltips.ArmorSetBonus.VanillaArmor.20Increased") + ElementID.FireS + Language.GetTextValue("Mods.Redemption.GenericTooltips.ArmorSetBonus.VanillaArmor.Resistance");
-                player.RedemptionPlayerBuff().ElementalDamage[ElementID.Fire] += 0.2f;
+                player.RedemptionPlayerBuff().ElementalResistance[ElementID.Fire] += 0.2f;
             }
             if (set == cobaltSet)
             {
                 player.setBonus += Language.GetTextValue("Mods.Redemption.GenericTooltips.ArmorSetBonus.VanillaArmor.20Increased") + ElementID.WaterS + Language.GetTextValue("Mods.Redemption.GenericTooltips.ArmorSetBonus.VanillaArmor.Resistance");
-                player.RedemptionPlayerBuff().ElementalDamage[ElementID.Water] += 0.2f;
+                player.RedemptionPlayerBuff().ElementalResistance[ElementID.Water] += 0.2f;
             }
             if (set == palladiumSet || set == hallowedSet)
             {
                 player.setBonus += Language.GetTextValue("Mods.Redemption.GenericTooltips.ArmorSetBonus.VanillaArmor.20Increased") + ElementID.HolyS + Language.GetTextValue("Mods.Redemption.GenericTooltips.ArmorSetBonus.VanillaArmor.Resistance");
-                player.RedemptionPlayerBuff().ElementalDamage[ElementID.Holy] += 0.2f;
+                player.RedemptionPlayerBuff().ElementalResistance[ElementID.Holy] += 0.2f;
             }
             if (set == frostSet)
             {
                 player.setBonus += Language.GetTextValue("Mods.Redemption.GenericTooltips.ArmorSetBonus.VanillaArmor.20Increased") + ElementID.IceS + Language.GetTextValue("Mods.Redemption.GenericTooltips.ArmorSetBonus.VanillaArmor.Resistance");
-                player.RedemptionPlayerBuff().ElementalDamage[ElementID.Ice] += 0.2f;
+                player.RedemptionPlayerBuff().ElementalResistance[ElementID.Ice] += 0.2f;
             }
         }
         #endregion

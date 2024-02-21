@@ -1,10 +1,17 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Redemption.Effects.PrimitiveTrails;
 using Redemption.Globals;
+using Redemption.Walls;
+using Redemption.WorldGeneration.Soulless;
+using Redemption.WorldGeneration.Space;
+using SubworldLibrary;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
+using Terraria.GameContent.Skies;
 using Terraria.ID;
+using Terraria.ModLoader;
 using static Redemption.Globals.RedeNet;
 
 namespace Redemption
@@ -19,6 +26,15 @@ namespace Redemption
             On_Main.DrawDust += AdditiveCalls;
             On_Player.CheckForGoodTeleportationSpot += DontTeleport;
         }
+        public static void Uninitialize()
+        {
+            On_Main.DrawProjectiles -= Main_DrawProjectiles;
+            On_Main.DrawCachedProjs -= Main_DrawCachedProjs;
+            On_Projectile.NewProjectile_IEntitySource_float_float_float_float_int_int_float_int_float_float_float -= TrailCheck;
+            On_Main.DrawDust -= AdditiveCalls;
+            On_Player.CheckForGoodTeleportationSpot -= DontTeleport;
+        }
+
         private static void AdditiveCalls(On_Main.orig_DrawDust orig, Main self)
         {
             AdditiveCallManager.DrawAdditiveCalls(Main.spriteBatch);
@@ -28,16 +44,31 @@ namespace Redemption
         {
             On_Main.DrawProjectiles -= Main_DrawProjectiles;
         }
+        public static bool IsProtected(int x, int y)
+        {
+            if (!Main.gameMenu || Main.dedServ)
+            {
+                Tile tile = Framing.GetTileSafely(x, y);
+
+                if (tile.WallType == ModContent.WallType<BlackHardenedSludgeWallTile>() || tile.WallType == ModContent.WallType<DangerTapeWallTile>() ||
+                tile.WallType == ModContent.WallType<HardenedSludgeWallTile>() || tile.WallType == ModContent.WallType<JunkMetalWall>() || tile.WallType == ModContent.WallType<LabPlatingWallTileUnsafe>() || tile.WallType == ModContent.WallType<MossyLabPlatingWallTile>() || tile.WallType == ModContent.WallType<MossyLabWallTile>() || tile.WallType == ModContent.WallType<SlayerShipPanelWallTile>() || tile.WallType == ModContent.WallType<VentWallTile>())
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
         private static Vector2 DontTeleport(On_Player.orig_CheckForGoodTeleportationSpot orig, Player self, ref bool canSpawn, int teleportStartX, int teleportRangeX, int teleportStartY, int teleportRangeY, Player.RandomTeleportationAttemptSettings settings)
         {
             Vector2 result = orig(self, ref canSpawn, teleportStartX, teleportRangeX, teleportStartY, teleportRangeY, settings);
 
-            // If invalid spot, recurse untill a valid one is found
-            if (RedeTileHelper.CannotTeleportInFront[Framing.GetTileSafely((int)result.X, (int)result.Y).WallType])
+            if (IsProtected((int)result.X, (int)result.Y))
             {
                 settings.attemptsBeforeGivingUp--;
                 result = self.CheckForGoodTeleportationSpot(ref canSpawn, teleportStartX, teleportRangeX, teleportStartY, teleportRangeY, settings);
             }
+
             return result;
         }
         private static void Main_DrawCachedProjs(On_Main.orig_DrawCachedProjs orig, Main self, List<int> projCache, bool startSpriteBatch)

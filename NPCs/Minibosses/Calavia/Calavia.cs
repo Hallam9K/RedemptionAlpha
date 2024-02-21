@@ -198,7 +198,7 @@ namespace Redemption.NPCs.Minibosses.Calavia
             if (blocked && NPC.RedemptionGuard().GuardPoints >= 0)
             {
                 modifiers.DisableCrit();
-                modifiers.ModifyHitInfo += (ref NPC.HitInfo n) => NPC.RedemptionGuard().GuardHit(ref n, NPC, SoundID.Tink, 0.1f, true, DustID.Iron, default, 10, 1, 200);
+                modifiers.ModifyHitInfo += (ref NPC.HitInfo n) => NPC.RedemptionGuard().GuardHit(ref n, NPC, SoundID.Tink, 0.25f, true, DustID.Iron, default, 10, 1, 200);
             }
             blocked = false;
         }
@@ -218,7 +218,7 @@ namespace Redemption.NPCs.Minibosses.Calavia
                 if (NPC.RedemptionGuard().GuardPoints >= 0)
                 {
                     modifiers.DisableCrit();
-                    modifiers.ModifyHitInfo += (ref NPC.HitInfo n) => NPC.RedemptionGuard().GuardHit(ref n, NPC, SoundID.Tink, 0.1f, true, DustID.Iron, default, 10, 1, 200);
+                    modifiers.ModifyHitInfo += (ref NPC.HitInfo n) => NPC.RedemptionGuard().GuardHit(ref n, NPC, SoundID.Tink, 0.25f, true, DustID.Iron, default, 10, 1, 200);
                     blocked = false;
                 }
             }
@@ -247,7 +247,7 @@ namespace Redemption.NPCs.Minibosses.Calavia
                 if (NPC.RedemptionGuard().GuardPoints >= 0)
                 {
                     modifiers.DisableCrit();
-                    modifiers.ModifyHitInfo += (ref NPC.HitInfo n) => NPC.RedemptionGuard().GuardHit(ref n, NPC, SoundID.Tink, 0.1f, true, DustID.Iron, default, 10, 1, 200);
+                    modifiers.ModifyHitInfo += (ref NPC.HitInfo n) => NPC.RedemptionGuard().GuardHit(ref n, NPC, SoundID.Tink, 0.25f, true, DustID.Iron, default, 10, 1, 200);
                     blocked = false;
                 }
             }

@@ -1,21 +1,24 @@
-using Terraria;
-using Terraria.ID;
 using Microsoft.Xna.Framework;
-using Terraria.ModLoader;
-using Redemption.Buffs.Debuffs;
-using Redemption.Biomes;
-using Terraria.GameContent.Bestiary;
-using System.Collections.Generic;
-using Redemption.Globals;
-using Redemption.Items.Usable;
 using Microsoft.Xna.Framework.Graphics;
-using Terraria.GameContent;
-using Terraria.Audio;
-using Redemption.WorldGeneration;
-using Terraria.GameContent.ItemDropRules;
-using Redemption.Items.Lore;
-using Terraria.Localization;
+using Redemption.BaseExtension;
+using Redemption.Biomes;
+using Redemption.Buffs.Debuffs;
+using Redemption.Globals;
 using Redemption.Globals.NPC;
+using Redemption.Items.Lore;
+using Redemption.Items.Usable;
+using Redemption.UI;
+using Redemption.WorldGeneration;
+using System.Collections.Generic;
+using System.Runtime.CompilerServices;
+using Terraria;
+using Terraria.Audio;
+using Terraria.GameContent;
+using Terraria.GameContent.Bestiary;
+using Terraria.GameContent.ItemDropRules;
+using Terraria.ID;
+using Terraria.Localization;
+using Terraria.ModLoader;
 
 namespace Redemption.NPCs.Lab.Behemoth
 {
@@ -27,7 +30,8 @@ namespace Redemption.NPCs.Lab.Behemoth
             Begin,
             Crawl,
             Gas,
-            Sludge
+            Sludge,
+            Rage
         }
 
         public ActionState AIState
@@ -61,7 +65,7 @@ namespace Redemption.NPCs.Lab.Behemoth
             NPC.friendly = false;
             NPC.damage = 500;
             NPC.defense = 0;
-            NPC.lifeMax = 26600;
+            NPC.lifeMax = 27000;
             NPC.HitSound = SoundID.NPCHit13;
             NPC.DeathSound = SoundID.NPCDeath19;
             NPC.SpawnWithHigherTime(30);
@@ -129,6 +133,8 @@ namespace Redemption.NPCs.Lab.Behemoth
         {
             potionType = ItemID.Heart;
         }
+        private int rageTimer;
+        private bool raged;
         public override void AI()
         {
             Player player = Main.player[NPC.target];
@@ -187,7 +193,7 @@ namespace Redemption.NPCs.Lab.Behemoth
                         for (int i = 0; i < 3; i++)
                         {
                             int rot = 25 * i;
-                            NPC.Shoot(NPC.Center + new Vector2(0, 40), ModContent.ProjectileType<GreenGas_Proj>(), 75, RedeHelper.PolarVector(5, MathHelper.PiOver2 + MathHelper.ToRadians(rot - 25)), SoundID.NPCDeath13);
+                            NPC.Shoot(NPC.Center + new Vector2(0, 40), ModContent.ProjectileType<GreenGas_Proj>(), NPC.damage / 6, RedeHelper.PolarVector(5, MathHelper.PiOver2 + MathHelper.ToRadians(rot - 25)), SoundID.NPCDeath13);
                         }
                     }
                     if (AITimer == 100)
@@ -195,7 +201,7 @@ namespace Redemption.NPCs.Lab.Behemoth
                         for (int i = 0; i < 5; i++)
                         {
                             int rot = 20 * i;
-                            NPC.Shoot(NPC.Center + new Vector2(0, 40), ModContent.ProjectileType<GreenGas_Proj>(), 75, RedeHelper.PolarVector(5, MathHelper.PiOver2 + MathHelper.ToRadians(rot - 40)), SoundID.NPCDeath13);
+                            NPC.Shoot(NPC.Center + new Vector2(0, 40), ModContent.ProjectileType<GreenGas_Proj>(), NPC.damage / 6, RedeHelper.PolarVector(5, MathHelper.PiOver2 + MathHelper.ToRadians(rot - 40)), SoundID.NPCDeath13);
                         }
                     }
                     if (AITimer++ >= 180)
@@ -220,7 +226,7 @@ namespace Redemption.NPCs.Lab.Behemoth
 
                     if (AITimer >= 60 && AITimer <= 100 && NPC.frameCounter % 3 == 0)
                     {
-                        NPC.Shoot(NPC.Center + new Vector2(0, 40), ModContent.ProjectileType<GreenGloop_Proj>(), 90, RedeHelper.PolarVector(12, TimerRand), NPC.whoAmI);
+                        NPC.Shoot(NPC.Center + new Vector2(0, 40), ModContent.ProjectileType<GreenGloop_Proj>(), NPC.damage / 6, RedeHelper.PolarVector(12, TimerRand), NPC.whoAmI);
                         TimerRand += TimerRand2 == 1 ? 0.2f : -0.2f;
                     }
                     if (AITimer >= 180)
@@ -232,9 +238,33 @@ namespace Redemption.NPCs.Lab.Behemoth
                         NPC.netUpdate = true;
                     }
                     break;
+                case ActionState.Rage:
+                    NPC.velocity.Y *= 0.97f;
+                    Main.LocalPlayer.RedemptionScreen().ScreenShakeIntensity = MathHelper.Max(Main.LocalPlayer.RedemptionScreen().ScreenShakeIntensity, 8);
+                    if (NPC.velocity.Y < 1)
+                    {
+                        AIState = ActionState.Crawl;
+                        NPC.netUpdate = true;
+                    }
+                    break;
             }
             if (Main.LocalPlayer.Center.Y < NPC.Center.Y && Main.rand.NextBool(5))
-                NPC.Shoot(new Vector2(NPC.position.X + Main.rand.Next(0, NPC.width), NPC.Center.Y), ModContent.ProjectileType<GreenGas_Proj>(), 200, new Vector2(0, Main.rand.Next(-20, -10)));
+                NPC.Shoot(new Vector2(NPC.position.X + Main.rand.Next(0, NPC.width), NPC.Center.Y), ModContent.ProjectileType<GreenGas_Proj>(), NPC.damage / 2, new Vector2(0, Main.rand.Next(-20, -10)));
+
+            if (!raged && NPC.life < NPC.lifeMax)
+            {
+                if (rageTimer++ < 600 && NPC.life < (int)(NPC.lifeMax * .75f))
+                {
+                    SoundEngine.PlaySound(SoundID.NPCDeath10 with { Pitch = -.4f }, NPC.position);
+                    NPC.velocity.Y = 8;
+                    AITimer = 0;
+                    TimerRand = 0;
+                    TimerRand2 = 0;
+                    AIState = ActionState.Rage;
+                    raged = true;
+                    NPC.netUpdate = true;
+                }
+            }
 
             if (NPC.Center.Y > (RedeGen.LabVector.Y + 119) * 16)
             {
@@ -281,14 +311,14 @@ namespace Redemption.NPCs.Lab.Behemoth
             Texture2D HandAni = ModContent.Request<Texture2D>(Texture + "_Hand").Value;
             var effects = NPC.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
 
-            spriteBatch.Draw(texture, NPC.Center - screenPos, NPC.frame, NPC.GetAlpha(new Color(100, 100, 100, 255)), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0f);
+            spriteBatch.Draw(texture, NPC.Center - screenPos, NPC.frame, NPC.ColorTintedAndOpacity(new Color(100, 100, 100, 255)), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0f);
 
             int Height = HeadAni.Height / 6;
             int y = Height * AniFrameY;
             Rectangle rect = new(0, y, HeadAni.Width, Height);
             Vector2 origin = new(HeadAni.Width / 2f, Height / 2f);
-            spriteBatch.Draw(HeadAni, NPC.Center - screenPos + new Vector2(0, 32), new Rectangle?(rect), NPC.GetAlpha(new Color(100, 100, 100, 255)), NPC.rotation, origin, NPC.scale, effects, 0);
-            spriteBatch.Draw(HandAni, NPC.Center - screenPos + HandVector + new Vector2(0, 32), new Rectangle?(rect), NPC.GetAlpha(new Color(100, 100, 100, 255)), NPC.rotation, origin, NPC.scale, effects, 0);
+            spriteBatch.Draw(HeadAni, NPC.Center - screenPos + new Vector2(0, 32), new Rectangle?(rect), NPC.ColorTintedAndOpacity(new Color(100, 100, 100, 255)), NPC.rotation, origin, NPC.scale, effects, 0);
+            spriteBatch.Draw(HandAni, NPC.Center - screenPos + HandVector + new Vector2(0, 32), new Rectangle?(rect), NPC.ColorTintedAndOpacity(new Color(100, 100, 100, 255)), NPC.rotation, origin, NPC.scale, effects, 0);
             return false;
         }
         public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)

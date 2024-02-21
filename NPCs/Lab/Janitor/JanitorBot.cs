@@ -73,7 +73,7 @@ namespace Redemption.NPCs.Lab.Janitor
             NPC.width = 46;
             NPC.height = 40;
             NPC.friendly = false;
-            NPC.damage = 55;
+            NPC.damage = 58;
             NPC.defense = 20;
             NPC.lifeMax = 10500;
             NPC.HitSound = SoundID.NPCHit4;
@@ -430,8 +430,8 @@ namespace Redemption.NPCs.Lab.Janitor
         }
         public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)
         {
-            NPC.lifeMax = (int)(NPC.lifeMax * 0.6f * balance * bossAdjustment);
-            NPC.damage = (int)(NPC.damage * 0.6f);
+            NPC.lifeMax = (int)(NPC.lifeMax * 0.75f * balance * bossAdjustment);
+            NPC.damage = (int)(NPC.damage * 0.75f);
         }
     }
 }

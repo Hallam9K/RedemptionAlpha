@@ -39,6 +39,15 @@ namespace Redemption.NPCs.Minibosses.FowlEmperor
             Projectile.rotation += Projectile.velocity.X / 20;
             Projectile.velocity.Y += 0.2f;
         }
+        public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough, ref Vector2 hitboxCenterFrac)
+        {
+            NPC npc = Main.npc[(int)Projectile.ai[0]];
+            if (Projectile.Center.Y > npc.Bottom.Y)
+                fallThrough = true;
+            else
+                fallThrough = false;
+            return true;
+        }
         public override bool PreDraw(ref Color lightColor)
         {
             Texture2D texture = TextureAssets.Projectile[Projectile.type].Value;

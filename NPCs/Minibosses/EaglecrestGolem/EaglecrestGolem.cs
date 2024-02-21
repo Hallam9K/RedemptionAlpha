@@ -460,14 +460,14 @@ namespace Redemption.NPCs.Minibosses.EaglecrestGolem
 
                             if (glowOpacity > 0 && NPC.life <= NPC.lifeMax / 4)
                                 glowOpacity -= .1f;
-                            if (AITimer-- <= 0 && BaseAI.HitTileOnSide(NPC, 3, false) && !Collision.SolidCollision(NPC.Center - Vector2.One, 2, 2) && glowOpacity < 1)
+                            if (AITimer-- <= 0 && BaseAI.HitTileOnSide(NPC, 3, false, NPC.Center.Y + 28 > player.Center.Y) && !Collision.SolidCollision(NPC.Center - Vector2.One, 2, 2) && glowOpacity < 1)
                             {
                                 AITimer = 4;
                                 Vector2 pos = new(player.Center.X, BaseWorldGen.GetFirstTileFloor((int)player.Center.X / 16, (int)player.Center.Y / 16) * 16);
                                 Vector2 landingPos = NPCHelper.FindGroundVector(NPC, pos, 30);
 
-                                player.RedemptionScreen().ScreenShakeIntensity += 15;
-                                player.RedemptionScreen().ScreenShakeOrigin = NPC.Center;
+                                Main.LocalPlayer.RedemptionScreen().ScreenShakeIntensity += 15;
+                                Main.LocalPlayer.RedemptionScreen().ScreenShakeOrigin = NPC.Center;
 
                                 SoundEngine.PlaySound(SoundID.DD2_MonkStaffGroundImpact, NPC.position);
                                 for (int i = 0; i < 10; i++)
@@ -507,6 +507,7 @@ namespace Redemption.NPCs.Minibosses.EaglecrestGolem
                                 if (TimerRand2++ > amt)
                                     TimerRand++;
                             }
+                            NPC.PlatformFallCheck(ref NPC.Redemption().fallDownPlatform, 28);
                             break;
                         case 2:
                             NPC.velocity.Y += .3f;

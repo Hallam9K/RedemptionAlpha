@@ -2351,6 +2351,8 @@ namespace Redemption.NPCs.Bosses.KSIII
                     }
                     if (AITimer > 5001)
                     {
+                        NPC.HitSound = null;
+
                         NPC.dontTakeDamage = false;
                         if (RedeBossDowned.slayerDeath < 7 && Main.netMode != NetmodeID.MultiplayerClient)
                         {

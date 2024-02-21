@@ -5,6 +5,7 @@ using Redemption.Globals;
 using Redemption.Particles;
 using Terraria;
 using Terraria.ModLoader;
+using Terraria.ID;
 
 namespace Redemption.NPCs.Bosses.ADD
 {
@@ -31,7 +32,7 @@ namespace Redemption.NPCs.Bosses.ADD
         {
             if (Projectile.localAI[0] == 0)
             {
-                int floor = BaseWorldGen.GetFirstTileFloor((int)Projectile.Center.X / 16, (int)Projectile.Center.Y / 16) * 16;
+                int floor = BaseWorldGen.GetFirstTileFloor((int)Projectile.Center.X / 16, (int)Projectile.Center.Y / 16, noSolidTop: true) * 16;
                 int dist = floor - (int)Projectile.Center.Y;
                 dist = (int)MathHelper.Clamp(dist, 0, 800);
                 DustHelper.DrawParticleElectricity<LightningParticle>(Projectile.Center, Projectile.Center + new Vector2(0, dist), 1f, 30, 0.1f, 1);
@@ -41,7 +42,7 @@ namespace Redemption.NPCs.Bosses.ADD
         }
         public override void OnHitPlayer(Player target, Player.HurtInfo info)
         {
-            target.AddBuff(ModContent.BuffType<ElectrifiedDebuff>(), 120);
+            target.AddBuff(BuffID.Electrified, target.HasBuff(BuffID.Wet) ? 240 : 120);
         }
     }
 }

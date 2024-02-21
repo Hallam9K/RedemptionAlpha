@@ -937,6 +937,7 @@ namespace Redemption.NPCs.Bosses.Erhan
                         }
                         if (AITimer >= 5)
                         {
+                            NPC.DeathSound = null;
                             Spared = true;
                             NPC.dontTakeDamage = false;
                             player.ApplyDamageToNPC(NPC, 9999, 0, 0, false);
@@ -1110,6 +1111,8 @@ namespace Redemption.NPCs.Bosses.Erhan
                                 }
                                 if (AITimer >= 2389)
                                 {
+                                    NPC.DeathSound = null;
+
                                     Spared = true;
                                     NPC.dontTakeDamage = false;
                                     player.ApplyDamageToNPC(NPC, 9999, 0, 0, false);

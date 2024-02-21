@@ -30,7 +30,8 @@ namespace Redemption.Items.Usable
         public override bool CanRightClick() => Main.LocalPlayer.GetModPlayer<EnergyPlayer>().energyMax > 0 && Main.LocalPlayer.GetModPlayer<EnergyPlayer>().statEnergy < Main.LocalPlayer.GetModPlayer<EnergyPlayer>().energyMax;
         public override void RightClick(Player player)
         {
-            SoundEngine.PlaySound(CustomSounds.Spark1 with { Pitch = 0.5f }, player.position);
+            if (!Main.dedServ)
+                SoundEngine.PlaySound(CustomSounds.Spark1 with { Pitch = 0.5f }, player.position);
             player.GetModPlayer<EnergyPlayer>().statEnergy += 100;
         }
         public override void AddRecipes()
@@ -38,6 +39,7 @@ namespace Redemption.Items.Usable
             CreateRecipe(3)
                 .AddIngredient(ModContent.ItemType<OmegaPowerCell>())
                 .AddTile(ModContent.TileType<EnergyStationTile>())
+                .DisableDecraft()
                 .Register();
         }
         public override bool PreDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)

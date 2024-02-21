@@ -51,6 +51,15 @@ namespace Redemption.Projectiles.Magic
         public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough, ref Vector2 hitboxCenterFrac)
         {
             width = height = 42;
+            fallThrough = false;
+            if (Projectile.ai[1] is 1)
+            {
+                Player player = Main.player[Projectile.owner];
+                if (Projectile.Center.Y < player.Center.Y - 10)
+                    fallThrough = true;
+                else
+                    fallThrough = false;
+            }
             return true;
         }
         public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
@@ -107,7 +116,16 @@ namespace Redemption.Projectiles.Magic
             if (Projectile.owner == Main.myPlayer)
             {
                 int proj = Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center - new Vector2(0, 400), new Vector2(0, 5), ModContent.ProjectileType<EaglecrestJavelin_Thunder>(), (int)(Projectile.damage * .75f), 8, Projectile.owner);
-                Main.projectile[proj].DamageType = DamageClass.Magic;
+                if (Projectile.ai[1] is 1)
+                {
+                    Main.projectile[proj].DamageType = DamageClass.Default;
+                    Main.projectile[proj].hostile = true;
+                    Main.projectile[proj].friendly = false;
+                }
+                else
+                {
+                    Main.projectile[proj].DamageType = DamageClass.Magic;
+                }
                 Main.projectile[proj].netUpdate = true;
             }
         }
@@ -141,8 +159,8 @@ namespace Redemption.Projectiles.Magic
             {
                 int shader = ContentSamples.CommonlyUsedContentSamples.ColorOnlyShaderIndex;
                 Main.spriteBatch.End();
-                Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
-                GameShaders.Armor.ApplySecondary(shader, Main.player[Main.myPlayer], null);
+                Main.spriteBatch.BeginAdditive(true);
+                GameShaders.Armor.ApplySecondary(shader, Main.LocalPlayer, null);
 
                 for (int k = 0; k < Projectile.oldPos.Length; k++)
                 {
@@ -153,7 +171,7 @@ namespace Redemption.Projectiles.Magic
                 Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition, null, Projectile.GetAlpha(new Color(255, 255, 174)) * glowOpacity, Projectile.rotation, drawOrigin, Projectile.scale, effects, 0);
 
                 Main.spriteBatch.End();
-                Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+                Main.spriteBatch.BeginDefault();
             }
             return false;
         }

@@ -1,15 +1,17 @@
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using Redemption.Items;
+using Redemption.UI;
 using Terraria;
+using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.Enums;
+using Terraria.GameContent.Drawing;
+using Terraria.GameContent.ObjectInteractions;
+using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
-using Redemption.UI;
-using Redemption.Items;
-using Microsoft.Xna.Framework.Graphics;
-using Terraria.ID;
-using Terraria.GameContent.ObjectInteractions;
 
 namespace Redemption.Tiles.Furniture.Lab
 {
@@ -46,24 +48,27 @@ namespace Redemption.Tiles.Furniture.Lab
         public override void PostDraw(int i, int j, SpriteBatch spriteBatch)
         {
             Tile tile = Framing.GetTileSafely(i, j);
+            if (!TileDrawing.IsVisible(tile))
+                return;
             Vector2 zero = new(Main.offScreenRange, Main.offScreenRange);
             if (Main.drawToScreen)
                 zero = Vector2.Zero;
 
             int height = tile.TileFrameY == 36 ? 18 : 16;
             spriteBatch.End();
-            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null);
+            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullNone, null);
             Main.spriteBatch.Draw(ModContent.Request<Texture2D>("Redemption/Textures/TileGlow1").Value, new Vector2((i * 16) - (int)Main.screenPosition.X, (j * 16) - (int)Main.screenPosition.Y) + zero, new Rectangle(tile.TileFrameX, tile.TileFrameY, 16, height), Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
             spriteBatch.End();
-            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null);
+            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullNone, null);
         }
         public override bool CreateDust(int i, int j, ref int type) => false;
         public override bool KillSound(int i, int j, bool fail) => false;
-        public override void KillTile(int i, int j, ref bool fail, ref bool effectOnly, ref bool noItem) => fail = true;
+        public override bool CanKillTile(int i, int j, ref bool blockDamaged) => false;
         public override bool CanExplode(int i, int j) => false;
 
         public override bool RightClick(int i, int j)
         {
+            SoundEngine.PlaySound(SoundID.MenuTick);
             if (!Main.dedServ)
                 AMemoryUIState.Visible = true;
             return true;
@@ -72,12 +77,6 @@ namespace Redemption.Tiles.Furniture.Lab
     public class LabPhoto : PlaceholderTile
     {
         public override string Texture => Redemption.PLACEHOLDER_TEXTURE;
-        public override void SetSafeStaticDefaults()
-        {
-            // DisplayName.SetDefault("Laboratory Photo");
-            // Tooltip.SetDefault("[c/ff0000:Unbreakable]");
-        }
-
         public override void SetDefaults()
         {
             base.SetDefaults();

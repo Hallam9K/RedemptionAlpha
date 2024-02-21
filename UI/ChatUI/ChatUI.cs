@@ -6,34 +6,10 @@ using Terraria;
 using Terraria.ModLoader;
 using Terraria.UI;
 using Terraria.UI.Chat;
-using Terraria.WorldBuilding;
-using Terraria.ID;
 using System.Globalization;
-using System;
 
 namespace Redemption.UI.ChatUI
 {
-    public class ChatUISystem : ModSystem
-    {
-        public override void Load()
-        {
-            if (Main.dedServ)
-                ChatUI.Dialogue = new();
-        }
-
-        public override void PreUpdateEntities()
-        {
-            if (Main.dedServ && ChatUI.Visible && ChatUI.Dialogue.Count > 0)
-            {
-                for (int i = 0; i < ChatUI.Dialogue.Count; i++)
-                {
-                    IDialogue dialogue = ChatUI.Dialogue[i];
-                    dialogue.Update(Main.gameTimeCache);
-                }
-            }
-        }
-    }
-
     public class ChatUI : UIState
     {
         public static List<IDialogue> Dialogue;
@@ -73,6 +49,9 @@ namespace Redemption.UI.ChatUI
             if (!Visible || Dialogue.Count == 0)
                 return;
 
+            spriteBatch.End();
+            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied, SamplerState.PointClamp, DepthStencilState.Default, RasterizerState.CullNone, null, Main.GameViewMatrix.TransformationMatrix);
+
             for (int i = 0; i < Dialogue.Count; i++)
             {
                 Dialogue dialogue = Dialogue[i].Get();
@@ -82,8 +61,6 @@ namespace Redemption.UI.ChatUI
                 string[] drawnText = FormatText(dialogue.displayingText, dialogue.font, out int width, out int height);
                 Vector2 pos = (dialogue.chain == null ? Vector2.Zero : dialogue.chain.modifier) + dialogue.modifier + (dialogue.entity != null ? dialogue.entity.Center - Main.screenPosition - new Vector2((width + 68f) / 2f, -dialogue.entity.height) : dialogue.chain.anchor != null ? dialogue.chain.anchor.VisualPosition : new Vector2(Main.screenWidth / 2f - width / 2f, Main.screenHeight * 0.8f - height / 2f));
 
-                spriteBatch.End();
-                spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.NonPremultiplied, SamplerState.PointClamp, DepthStencilState.Default, RasterizerState.CullNone);
 
                 float alpha = 1f;
                 if (dialogue.boxFade)
@@ -93,6 +70,9 @@ namespace Redemption.UI.ChatUI
                 }
 
                 DrawPanel(spriteBatch, dialogue.bubble, pos, Color.Multiply(Color.White, alpha), width, height);
+
+                spriteBatch.End();
+                spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied, SamplerState.LinearClamp, DepthStencilState.Default, RasterizerState.CullNone, null, Main.GameViewMatrix.TransformationMatrix);
 
                 Vector2 textPos = pos + new Vector2(17f, 17f);
                 for (int k = 0; k < drawnText.Length; k++)
@@ -106,6 +86,8 @@ namespace Redemption.UI.ChatUI
                     textPos.Y += dialogue.font.MeasureString(text).Y - 6;
                 }
             }
+            spriteBatch.End();
+            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied, SamplerState.PointClamp, DepthStencilState.Default, RasterizerState.CullNone);
         }
 
         public static void DrawPanel(SpriteBatch spriteBatch, Texture2D texture, Vector2 position, Color color, int width, int height)
