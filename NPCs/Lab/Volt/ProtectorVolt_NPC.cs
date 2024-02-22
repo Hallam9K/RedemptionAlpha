@@ -57,7 +57,6 @@ namespace Redemption.NPCs.Lab.Volt
         }
         private readonly float gunRot = 4.9742f;
         public static int ChatNumber = 0;
-        public static bool NextPage;
         public override void SetChatButtons(ref string button, ref string button2)
         {
             button2 = Language.GetTextValue("Mods.Redemption.DialogueBox.CycleD");
@@ -85,26 +84,15 @@ namespace Redemption.NPCs.Lab.Volt
                     button = Language.GetTextValue("Mods.Redemption.DialogueBox.Volt.7");
                     break;
                 case 7:
-                    button = Language.GetTextValue("Mods.Redemption.DialogueBox.Volt.8");
+                    button = Language.GetTextValue("Mods.Redemption.DialogueBox.Volt.9");
                     break;
                 case 8:
-                    button = Language.GetTextValue("Mods.Redemption.DialogueBox.Volt.9");
+                    button = Language.GetTextValue("Mods.Redemption.DialogueBox.Volt.8");
                     break;
                 case 9:
                     button = Language.GetTextValue("Mods.Redemption.DialogueBox.Volt.10");
                     break;
-                case 10:
-                    button = Language.GetTextValue("Mods.Redemption.DialogueBox.Volt.11");
-                    break;
-                case 11:
-                    button = Language.GetTextValue("Mods.Redemption.DialogueBox.Volt.12");
-                    break;
-                case 22:
-                    button = Language.GetTextValue("Mods.Redemption.DialogueBox.Volt.13");
-                    break;
             }
-            if (NextPage)
-                button = Language.GetTextValue("Mods.Redemption.DialogueBox.TBot.NextPage");
         }
 
         public override void OnChatButtonClicked(bool firstButton, ref string shopName)
@@ -116,64 +104,33 @@ namespace Redemption.NPCs.Lab.Volt
                     case 0:
                         RedeQuest.voltVars[0] = true;
                         break;
-                    case 2:
-                        if (NextPage)
-                        {
-                            ChatNumber = 22;
-                            NextPage = false;
-                        }
-                        else
-                        {
-                            NextPage = true;
-                        }
-                        RedeQuest.voltVars[1] = true;
-                        break;
-                    case 5:
-                        RedeQuest.voltVars[2] = true;
-                        break;
-                    case 8:
+                    case 6:
                         RedeQuest.voltVars[3] = true;
                         break;
-                    case 22:
-                        if (NextPage)
-                            NextPage = false;
-                        else
-                        {
-                            ChatNumber = 2;
-                            NextPage = true;
-                        }
+                    case 7:
                         RedeQuest.voltVars[1] = true;
                         break;
                 }
-                if (ChatNumber != 2 && ChatNumber != 22)
-                    NextPage = false;
-
-                if (ChatNumber == 11)
+                if (ChatNumber == 9)
                     NPC.Transform(ModContent.NPCType<ProtectorVolt>());
                 else
                     Main.npcChatText = ChitChat();
             }
             else
             {
-                NextPage = false;
                 bool skip = true;
-                if (ChatNumber == 22)
-                    ChatNumber = 2;
-
                 while (skip)
                 {
                     ChatNumber++;
-                    if (ChatNumber > 11)
+                    if (ChatNumber > 9)
                         ChatNumber = 0;
-                    if (!RedeQuest.voltVars[0] && (ChatNumber == 1 || ChatNumber == 2 || ChatNumber == 4))
+                    if (!RedeQuest.voltVars[0] && (ChatNumber == 1 || ChatNumber == 2 || ChatNumber == 3))
                         skip = true;
-                    else if (!RedeQuest.voltVars[1] && ChatNumber == 3)
+                    else if (!RedeQuest.voltVars[1] && ChatNumber == 8)
                         skip = true;
-                    else if (!RedeQuest.voltVars[2] && ChatNumber == 6)
+                    else if (!RedeQuest.voltVars[3] && ChatNumber == 7)
                         skip = true;
-                    else if (!RedeQuest.voltVars[3] && (ChatNumber == 9 || ChatNumber == 10))
-                        skip = true;
-                    else if (!RedeBossDowned.downedMACE && ChatNumber == 5)
+                    else if (!RedeBossDowned.downedMACE && ChatNumber == 4)
                         skip = true;
                     else
                         skip = false;
@@ -208,26 +165,16 @@ namespace Redemption.NPCs.Lab.Volt
                     chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Volt.CycleDialogue7"));
                     break;
                 case 7:
-                    chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Volt.CycleDialogue8"));
-                    break;
-                case 8:
                     chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Volt.CycleDialogue9"));
                     break;
-                case 9:
-                    chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Volt.CycleDialogue10"));
-                    break;
-                case 10:
-                    chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Volt.CycleDialogue11"));
-                    break;
-                case 22:
-                    chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Volt.CycleDialogue12"));
+                case 8:
+                    chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Volt.CycleDialogue8"));
                     break;
             }
             return chat;
         }
         public override string GetChat()
         {
-            NextPage = false;
             Player player = Main.player[Main.myPlayer];
             WeightedRandom<string> chat = new(Main.rand);
 

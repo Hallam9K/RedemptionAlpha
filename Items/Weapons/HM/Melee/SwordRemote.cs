@@ -1,19 +1,21 @@
-using Terraria.ID;
-using Terraria.ModLoader;
-using Terraria;
-using Terraria.Localization;
-using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
-using System;
-using Redemption.NPCs.Bosses.Cleaver;
-using Redemption.Buffs.Cooldowns;
-using Redemption.BaseExtension;
-using Terraria.DataStructures;
-using System.Collections.Generic;
-using Redemption.Globals;
-using Terraria.Audio;
+using Microsoft.Xna.Framework.Graphics;
+using ParticleLibrary;
 using Redemption.Base;
+using Redemption.BaseExtension;
+using Redemption.Buffs.Cooldowns;
+using Redemption.Globals;
+using Redemption.NPCs.Bosses.Cleaver;
+using Redemption.Particles;
+using System;
+using System.Collections.Generic;
+using Terraria;
+using Terraria.Audio;
+using Terraria.DataStructures;
 using Terraria.GameContent;
+using Terraria.ID;
+using Terraria.Localization;
+using Terraria.ModLoader;
 
 namespace Redemption.Items.Weapons.HM.Melee
 {
@@ -145,13 +147,12 @@ namespace Redemption.Items.Weapons.HM.Melee
         public override void SetStaticDefaults()
         {
             // DisplayName.SetDefault("Omega Cleaver");
-            Main.projFrames[Projectile.type] = 5;
             ProjectileID.Sets.TrailCacheLength[Projectile.type] = 6;
             ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
         }
         public override void SetDefaults()
         {
-            Projectile.width = 98;
+            Projectile.width = 70;
             Projectile.height = 280;
             Projectile.penetrate = -1;
             Projectile.DamageType = DamageClass.Default;
@@ -164,6 +165,8 @@ namespace Redemption.Items.Weapons.HM.Melee
         public float rot;
         public int repeat;
         NPC target;
+        Vector2 thrustPos1;
+        Vector2 thrustPos2;
         public override void AI()
         {
             Player player = Main.player[Projectile.owner];
@@ -389,6 +392,15 @@ namespace Redemption.Items.Weapons.HM.Melee
                     }
                     break;
             }
+            bigFlareOpacity += Main.rand.NextFloat(-.1f, .1f);
+            bigFlareOpacity = MathHelper.Clamp(bigFlareOpacity, .9f, 1.1f);
+            thrustPos1 = Projectile.Center + RedeHelper.PolarVector(26, Projectile.rotation) + RedeHelper.PolarVector(-74, Projectile.rotation - (float)Math.PI / 2) + Projectile.velocity;
+            thrustPos2 = Projectile.Center + RedeHelper.PolarVector(-26, Projectile.rotation) + RedeHelper.PolarVector(-74, Projectile.rotation - (float)Math.PI / 2) + Projectile.velocity;
+            for (int i = 0; i < 4; i++)
+                ParticleManager.NewParticle(thrustPos1, RedeHelper.PolarVector(Main.rand.Next(6, 15), Projectile.rotation + (float)Math.PI / 2 + Main.rand.NextFloat(-.01f, .01f)) - (Projectile.velocity / 4), new RedThrusterParticle(), Color.White, 1f * Projectile.Opacity, Layer: Particle.Layer.BeforeNPCs);
+            for (int i = 0; i < 4; i++)
+                ParticleManager.NewParticle(thrustPos2, RedeHelper.PolarVector(Main.rand.Next(6, 15), Projectile.rotation + (float)Math.PI / 2 + Main.rand.NextFloat(-.01f, .01f)) - (Projectile.velocity / 4), new RedThrusterParticle(), Color.White, 1f * Projectile.Opacity, Layer: Particle.Layer.BeforeNPCs);
+
             for (int k = Projectile.oldPos.Length - 1; k > 0; k--)
                 oldrot[k] = oldrot[k - 1];
             oldrot[0] = Projectile.rotation;
@@ -398,39 +410,44 @@ namespace Redemption.Items.Weapons.HM.Melee
             Vector2 unit = new Vector2(1.5f, 0).RotatedBy(Projectile.rotation + -MathHelper.PiOver2);
             float point = 0f;
             if (Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(), Projectile.Center - unit * 72,
-                Projectile.Center + unit * 72, 58, ref point))
+                Projectile.Center + unit * 72, 66, ref point))
                 return true;
             return false;
         }
         public override Color? GetAlpha(Color lightColor)
         {
-            return BaseUtility.MultiLerpColor(Main.LocalPlayer.miscCounter % 100 / 100f, lightColor, Color.LightGreen, lightColor);
+            return lightColor * Projectile.Opacity;
         }
+        public float bigFlareOpacity;
         public override bool PreDraw(ref Color lightColor)
         {
             Texture2D texture = TextureAssets.Projectile[Projectile.type].Value;
             Texture2D glowMask = ModContent.Request<Texture2D>("Redemption/NPCs/Bosses/Cleaver/OmegaCleaver_Glow").Value;
             Texture2D trail = ModContent.Request<Texture2D>("Redemption/NPCs/Bosses/Cleaver/OmegaCleaver_Trail").Value;
             var effects = Projectile.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
-            int height = texture.Height / 5;
-            int y = height * Projectile.frame;
             Main.spriteBatch.End();
-            Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+            Main.spriteBatch.BeginAdditive();
 
             for (int i = 0; i < ProjectileID.Sets.TrailCacheLength[Projectile.type]; i++)
             {
                 Vector2 value4 = Projectile.oldPos[i];
-                Main.EntitySpriteDraw(trail, value4 + Projectile.Size / 2f - Main.screenPosition, new Microsoft.Xna.Framework.Rectangle?(new Rectangle(0, y, texture.Width, height)), RedeColor.VlitchGlowColour * 0.5f * ((255 - Projectile.alpha) / 255f), oldrot[i], new Vector2(texture.Width / 2f, height / 2f), Projectile.scale, effects, 0);
+                Main.EntitySpriteDraw(trail, value4 + Projectile.Size / 2f - Main.screenPosition, null, Projectile.GetAlpha(RedeColor.VlitchGlowColour) * 0.5f, oldrot[i], texture.Size() / 2, Projectile.scale, effects, 0);
             }
 
             Main.spriteBatch.End();
-            Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+            Main.spriteBatch.BeginDefault();
 
-            Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition, new Microsoft.Xna.Framework.Rectangle?(new Rectangle(0, y, texture.Width, height)), lightColor * ((255 - Projectile.alpha) / 255f), Projectile.rotation, new Vector2(texture.Width / 2f, height / 2f), Projectile.scale, effects, 0);
-            Main.EntitySpriteDraw(glowMask, Projectile.Center - Main.screenPosition, new Microsoft.Xna.Framework.Rectangle?(new Rectangle(0, y, texture.Width, height)), RedeColor.RedPulse * ((255 - Projectile.alpha) / 255f), Projectile.rotation, new Vector2(texture.Width / 2f, height / 2f), Projectile.scale, effects, 0);
+            Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition, null, Projectile.GetAlpha(lightColor), Projectile.rotation, texture.Size() / 2, Projectile.scale, effects, 0);
+            Main.EntitySpriteDraw(glowMask, Projectile.Center - Main.screenPosition, null, Projectile.GetAlpha(RedeColor.RedPulse), Projectile.rotation, texture.Size() / 2, Projectile.scale, effects, 0);
 
-            Main.spriteBatch.End();
-            Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+            Texture2D bigFlareAni = ModContent.Request<Texture2D>("Redemption/Textures/BigFlare").Value;
+            Vector2 origin2 = new(bigFlareAni.Width / 2f, bigFlareAni.Height / 2f);
+            Vector2 flarePos1 = thrustPos1 + RedeHelper.PolarVector(-6, Projectile.rotation - (float)Math.PI / 2);
+            Vector2 flarePos2 = thrustPos2 + RedeHelper.PolarVector(-6, Projectile.rotation - (float)Math.PI / 2);
+            Main.EntitySpriteDraw(bigFlareAni, flarePos1 - Main.screenPosition, null, Projectile.GetAlpha(Color.IndianRed with { A = 0 }) * bigFlareOpacity, 0, origin2, Projectile.scale * bigFlareOpacity * .4f, effects, 0);
+            Main.EntitySpriteDraw(bigFlareAni, flarePos2 - Main.screenPosition, null, Projectile.GetAlpha(Color.IndianRed with { A = 0 }) * bigFlareOpacity, 0, origin2, Projectile.scale * bigFlareOpacity * .4f, effects, 0);
+            Main.EntitySpriteDraw(bigFlareAni, flarePos1 - Main.screenPosition, null, Projectile.GetAlpha(Color.White with { A = 0 }) * bigFlareOpacity, 0, origin2, Projectile.scale * bigFlareOpacity * .2f, effects, 0);
+            Main.EntitySpriteDraw(bigFlareAni, flarePos2 - Main.screenPosition, null, Projectile.GetAlpha(Color.White with { A = 0 }) * bigFlareOpacity, 0, origin2, Projectile.scale * bigFlareOpacity * .2f, effects, 0);
             return false;
         }
     }

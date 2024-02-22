@@ -1,12 +1,13 @@
-using System;
-using Terraria;
-using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Buffs.Debuffs;
 using Redemption.Globals;
+using System;
+using Terraria;
+using Terraria.Audio;
 using Terraria.GameContent;
 using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace Redemption.NPCs.Bosses.Cleaver
 {
@@ -20,7 +21,7 @@ namespace Redemption.NPCs.Bosses.Cleaver
         }
         public override void SetDefaults()
         {
-            Projectile.width = 98;
+            Projectile.width = 70;
             Projectile.height = 280;
             Projectile.penetrate = -1;
             Projectile.hostile = false;
@@ -53,6 +54,7 @@ namespace Redemption.NPCs.Bosses.Cleaver
                     rot.SlowRotation(Projectile.velocity.ToRotation() + 1.57f, (float)Math.PI / 30f);
                     if (Projectile.localAI[1] == 0)
                     {
+                        SoundEngine.PlaySound(SoundID.Item74, Projectile.position);
                         Projectile.velocity = Projectile.DirectionTo(player.Center) * 30;
                         Projectile.localAI[1] = 1;
                     }
@@ -71,7 +73,7 @@ namespace Redemption.NPCs.Bosses.Cleaver
             Vector2 unit = new Vector2(1.5f, 0).RotatedBy(Projectile.rotation + -MathHelper.PiOver2);
             float point = 0f;
             if (Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(), Projectile.Center - unit * 72,
-                Projectile.Center + unit * 72, 58, ref point))
+                Projectile.Center + unit * 72, 66, ref point))
                 return true;
             return false;
         }
@@ -100,7 +102,7 @@ namespace Redemption.NPCs.Bosses.Cleaver
         }
         public override void SetDefaults()
         {
-            Projectile.width = 98;
+            Projectile.width = 70;
             Projectile.height = 280;
             Projectile.penetrate = -1;
             Projectile.hostile = false;
@@ -133,6 +135,7 @@ namespace Redemption.NPCs.Bosses.Cleaver
                     rot.SlowRotation(Projectile.velocity.ToRotation() + 1.57f, (float)Math.PI / 30f);
                     if (Projectile.localAI[1] == 0)
                     {
+                        SoundEngine.PlaySound(SoundID.Item74, Projectile.position);
                         Projectile.velocity = Projectile.DirectionTo(Main.MouseWorld) * 30;
                         Projectile.localAI[1] = 1;
                     }
@@ -147,7 +150,7 @@ namespace Redemption.NPCs.Bosses.Cleaver
             Vector2 unit = new Vector2(1.5f, 0).RotatedBy(Projectile.rotation + -MathHelper.PiOver2);
             float point = 0f;
             if (Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(), Projectile.Center - unit * 72,
-                Projectile.Center + unit * 72, 58, ref point))
+                Projectile.Center + unit * 72, 66, ref point))
                 return true;
             return false;
         }
@@ -206,7 +209,7 @@ namespace Redemption.NPCs.Bosses.Cleaver
         }
         public override void SetDefaults()
         {
-            Projectile.width = 98;
+            Projectile.width = 70;
             Projectile.height = 280;
             Projectile.penetrate = -1;
             Projectile.hostile = false;
@@ -235,6 +238,7 @@ namespace Redemption.NPCs.Bosses.Cleaver
                     Projectile.hostile = true;
                     if (Projectile.localAI[1] == 0)
                     {
+                        SoundEngine.PlaySound(SoundID.Item74, Projectile.position);
                         Projectile.velocity.Y = 20;
                         Projectile.localAI[1] = 1;
                     }
@@ -253,7 +257,7 @@ namespace Redemption.NPCs.Bosses.Cleaver
             Vector2 unit = new Vector2(1.5f, 0).RotatedBy(Projectile.rotation + -MathHelper.PiOver2);
             float point = 0f;
             if (Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(), Projectile.Center - unit * 72,
-                Projectile.Center + unit * 72, 58, ref point))
+                Projectile.Center + unit * 72, 66, ref point))
                 return true;
             return false;
         }

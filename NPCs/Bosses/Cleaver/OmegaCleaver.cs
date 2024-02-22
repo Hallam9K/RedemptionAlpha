@@ -1,12 +1,22 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using ParticleLibrary;
+using Redemption.BaseExtension;
 using Redemption.Biomes;
 using Redemption.Buffs.Debuffs;
 using Redemption.Globals;
+using Redemption.Globals.NPC;
+using Redemption.Items.Accessories.HM;
+using Redemption.Items.Armor.Vanity;
 using Redemption.Items.Donator.Gonk;
 using Redemption.Items.Donator.Uncon;
+using Redemption.Items.Materials.HM;
 using Redemption.Items.Placeable.Trophies;
 using Redemption.Items.Usable;
+using Redemption.NPCs.Bosses.Obliterator;
+using Redemption.Particles;
+using Redemption.UI;
+using ReLogic.Content;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -16,15 +26,8 @@ using Terraria.GameContent;
 using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
-using Terraria.ModLoader;
-using Redemption.BaseExtension;
-using Redemption.NPCs.Bosses.Obliterator;
-using Redemption.Items.Armor.Vanity;
-using Redemption.Items.Materials.HM;
-using Redemption.Items.Accessories.HM;
-using ReLogic.Content;
 using Terraria.Localization;
-using Redemption.Globals.NPC;
+using Terraria.ModLoader;
 
 namespace Redemption.NPCs.Bosses.Cleaver
 {
@@ -66,7 +69,6 @@ namespace Redemption.NPCs.Bosses.Cleaver
 
         public override void SetStaticDefaults()
         {
-            Main.npcFrameCount[NPC.type] = 5;
             NPCID.Sets.TrailCacheLength[NPC.type] = 6;
             NPCID.Sets.TrailingMode[NPC.type] = 1;
 
@@ -85,7 +87,7 @@ namespace Redemption.NPCs.Bosses.Cleaver
 
         public override void SetDefaults()
         {
-            NPC.width = 98;
+            NPC.width = 70;
             NPC.height = 280;
             NPC.friendly = false;
             NPC.damage = 110;
@@ -197,6 +199,9 @@ namespace Redemption.NPCs.Bosses.Cleaver
             NPC.damage = (int)(NPC.damage * 0.75f);
         }
 
+        Vector2 thrustPos1;
+        Vector2 thrustPos2;
+        int afterimageTimer;
         public override void AI()
         {
             if (AIState >= ActionState.Idle && AIState != ActionState.Death)
@@ -252,6 +257,7 @@ namespace Redemption.NPCs.Bosses.Cleaver
 
                     case ActionState.Begin:
                         AITimer++;
+
                         if (!Main.dedServ)
                             RedeSystem.Instance.TitleCardUIElement.DisplayTitle(Language.GetTextValue("Mods.Redemption.TitleCard.Cleaver.Name"), 60, 90, 0.8f, 0, Color.Red, Language.GetTextValue("Mods.Redemption.TitleCard.Cleaver.Modifier"));
                         player.RedemptionScreen().Rumble(20, 7);
@@ -539,7 +545,10 @@ namespace Redemption.NPCs.Bosses.Cleaver
                                         }
 
                                         if (AITimer == 50)
+                                        {
+                                            SoundEngine.PlaySound(SoundID.Item74, NPC.position);
                                             NPC.velocity.Y = 20;
+                                        }
 
                                         if (NPC.Center.Y > player.Center.Y + 1000)
                                         {
@@ -811,41 +820,31 @@ namespace Redemption.NPCs.Bosses.Cleaver
                         if (AITimer >= 120)
                         {
                             NPC.dontTakeDamage = false;
-                            player.ApplyDamageToNPC(NPC, 9999, 0, 0, false);
-                            NPC.netUpdate = true;
+                            if (Main.netMode != NetmodeID.MultiplayerClient)
+                                NPC.StrikeInstantKill();
                         }
                     }
                 }
             }
-            for (int k = NPC.oldPos.Length - 1; k > 0; k--)
-                oldrot[k] = oldrot[k - 1];
-            oldrot[0] = NPC.rotation;
-        }
 
-        public override void FindFrame(int frameHeight)
-        {
-            NPC host = Main.npc[(int)NPC.ai[3]];
-            if (host.ai[3] == 5 || host.ai[3] == 9 || host.ai[3] == 10 || (host.ai[3] == 11 && (NPC.ai[1] == 4 || NPC.ai[1] == 8)))
-            {
-                NPC.frameCounter++;
-                if (NPC.frameCounter >= 10)
-                {
-                    NPC.frameCounter = 0;
-                    NPC.frame.Y += frameHeight;
-                    if (NPC.frame.Y >= 5 * frameHeight)
-                        NPC.frame.Y = frameHeight;
-                }
-            }
-            else
-                NPC.frame.Y = 0;
-        }
+            bigFlareOpacity += Main.rand.NextFloat(-.1f, .1f);
+            bigFlareOpacity = MathHelper.Clamp(bigFlareOpacity, .9f, 1.1f);
+            thrustPos1 = NPC.Center + RedeHelper.PolarVector(26, NPC.rotation) + RedeHelper.PolarVector(-74, NPC.rotation - (float)Math.PI / 2) + NPC.velocity;
+            thrustPos2 = NPC.Center + RedeHelper.PolarVector(-26, NPC.rotation) + RedeHelper.PolarVector(-74, NPC.rotation - (float)Math.PI / 2) + NPC.velocity;
+            for (int i = 0; i < 4; i++)
+                ParticleManager.NewParticle(thrustPos1, RedeHelper.PolarVector(Main.rand.Next(6, 15), NPC.rotation + (float)Math.PI / 2 + Main.rand.NextFloat(-.01f, .01f)) - (NPC.velocity / 4), new RedThrusterParticle(), Color.White, 1f, Layer: Particle.Layer.BeforeNPCs);
+            for (int i = 0; i < 4; i++)
+                ParticleManager.NewParticle(thrustPos2, RedeHelper.PolarVector(Main.rand.Next(6, 15), NPC.rotation + (float)Math.PI / 2 + Main.rand.NextFloat(-.01f, .01f)) - (NPC.velocity / 4), new RedThrusterParticle(), Color.White, 1f, Layer: Particle.Layer.BeforeNPCs);
 
+                for (int k = NPC.oldPos.Length - 1; k > 0; k--)
+                    oldrot[k] = oldrot[k - 1];
+                oldrot[0] = NPC.rotation;
+        }
+        public float bigFlareOpacity;
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
             Texture2D texture = TextureAssets.Npc[NPC.type].Value;
             var effects = NPC.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
-            Rectangle rectangle = NPC.frame;
-            Vector2 origin2 = rectangle.Size() / 2f;
             if (!NPC.IsABestiaryIconDummy)
             {
                 spriteBatch.End();
@@ -854,18 +853,25 @@ namespace Redemption.NPCs.Bosses.Cleaver
                 for (int i = 0; i < NPCID.Sets.TrailCacheLength[NPC.type]; i++)
                 {
                     Vector2 value4 = NPC.oldPos[i];
-                    spriteBatch.Draw(trail.Value, value4 + NPC.Size / 2f - screenPos + new Vector2(0, NPC.gfxOffY), new Rectangle?(rectangle), RedeColor.VlitchGlowColour * 0.5f, oldrot[i], origin2, NPC.scale, effects, 0);
+                    spriteBatch.Draw(trail.Value, value4 + NPC.Size / 2f - screenPos + new Vector2(0, NPC.gfxOffY), NPC.frame, RedeColor.VlitchGlowColour * 0.5f, oldrot[i], NPC.frame.Size() / 2, NPC.scale, effects, 0);
                 }
 
                 spriteBatch.End();
-                spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullNone, null, Main.GameViewMatrix.TransformationMatrix);
+                spriteBatch.BeginDefault();
             }
 
-            spriteBatch.Draw(texture, NPC.Center - screenPos, NPC.frame, drawColor, NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0f);
-            spriteBatch.Draw(glowMask.Value, NPC.Center - screenPos, NPC.frame, RedeColor.RedPulse, NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
+            spriteBatch.Draw(texture, NPC.Center - screenPos, NPC.frame, NPC.GetAlpha(drawColor), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0f);
+            spriteBatch.Draw(glowMask.Value, NPC.Center - screenPos, NPC.frame, NPC.GetAlpha(RedeColor.RedPulse), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
 
-            spriteBatch.End();
-            spriteBatch.BeginDefault();
+            Texture2D bigFlareAni = ModContent.Request<Texture2D>("Redemption/Textures/BigFlare").Value;
+            Vector2 origin2 = new(bigFlareAni.Width / 2f, bigFlareAni.Height / 2f);
+            Vector2 flarePos1 = thrustPos1 + RedeHelper.PolarVector(-6, NPC.rotation - (float)Math.PI / 2);
+            Vector2 flarePos2 = thrustPos2 + RedeHelper.PolarVector(-6, NPC.rotation - (float)Math.PI / 2);
+            spriteBatch.Draw(bigFlareAni, flarePos1 - screenPos, null, NPC.GetAlpha(Color.IndianRed with { A = 0 }) * bigFlareOpacity, 0, origin2, NPC.scale * bigFlareOpacity * .4f, effects, 0);
+            spriteBatch.Draw(bigFlareAni, flarePos2 - screenPos, null, NPC.GetAlpha(Color.IndianRed with { A = 0 }) * bigFlareOpacity, 0, origin2, NPC.scale * bigFlareOpacity * .4f, effects, 0);
+            spriteBatch.Draw(bigFlareAni, flarePos1 - screenPos, null, NPC.GetAlpha(Color.White with { A = 0 }) * bigFlareOpacity, 0, origin2, NPC.scale * bigFlareOpacity * .2f, effects, 0);
+            spriteBatch.Draw(bigFlareAni, flarePos2 - screenPos, null, NPC.GetAlpha(Color.White with { A = 0 }) * bigFlareOpacity, 0, origin2, NPC.scale * bigFlareOpacity * .2f, effects, 0);
+
             return false;
         }
         public override void BossHeadRotation(ref float rotation)
@@ -913,7 +919,7 @@ namespace Redemption.NPCs.Bosses.Cleaver
             Vector2 unit = new Vector2(1.5f, 0).RotatedBy(Projectile.rotation + -MathHelper.PiOver2);
             float point = 0f;
             if (Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(), Projectile.Center - unit * 72,
-                Projectile.Center + unit * 72, 58, ref point))
+                Projectile.Center + unit * 72, 66, ref point))
                 return true;
             return false;
         }

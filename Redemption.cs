@@ -180,6 +180,8 @@ namespace Redemption
                     PremultiplyTexture(ref TornadoTex);
                     Texture2D SpiritPortalTex = ModContent.Request<Texture2D>("Redemption/Textures/SpiritPortalTex", immLoad).Value;
                     PremultiplyTexture(ref SpiritPortalTex);
+                    Texture2D BigFlare = ModContent.Request<Texture2D>("Redemption/Textures/BigFlare", immLoad).Value;
+                    PremultiplyTexture(ref BigFlare);
 
                     Texture2D purityWastelandBG3Tex = ModContent.Request<Texture2D>("Redemption/Backgrounds/PurityWastelandBG3", immLoad).Value;
                     PremultiplyTexture(ref purityWastelandBG3Tex);

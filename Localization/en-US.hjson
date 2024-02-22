@@ -300,7 +300,7 @@ Mods: {
 					20Increased:
 						'''
 
-						20% increased 
+						20% increased
 						'''
 					Resistance: " elemental resistance"
 					Damage: " elemental damage"
@@ -349,7 +349,7 @@ Mods: {
 					Press:
 						'''
 
-						Press 
+						Press
 						'''
 					Keybind:
 						'''
@@ -359,7 +359,7 @@ Mods: {
 						'''
 					Bonus1:
 						'''
-						6% increased damage 
+						6% increased damage
 						Increased Energy regeneration if an Energy Pack is in your inventory
 						'''
 					Bonus2: " to unleash toxic gas in a radius around the player, inflicting Burning Acid"
@@ -369,7 +369,7 @@ Mods: {
 					Press:
 						'''
 
-						Press 
+						Press
 						'''
 					Keybind:
 						'''
@@ -1566,16 +1566,13 @@ Mods: {
 				1: Other T-Bots?
 				2: Adam?
 				3: Insurgents
-				4: Fourth Insurgent
-				5: Independent Bots?
-				6: MACE Project?
-				7: Crane Operator?
-				8: What's at the bottom of the lab?
-				9: Girus?
-				10: Assimilated?
-				11: Why follow Girus?
-				12: Challenge!
-				13: Insurgents (2/2)
+				4: Scavengers?
+				5: MACE Project?
+				6: What's at the bottom of the lab?
+				7: Girus?
+				8: '''"The unlucky ones"?'''
+				9: Why follow Girus?
+				10: Challenge!
 			}
 
 			Janitor: {
@@ -2948,18 +2945,22 @@ Mods: {
 			}
 
 			Volt: {
-				CycleDialogue1: Girus is after a certain bot, Adam was his name. He is the leader of a rebellion alongside 4 others, some of the most fierce bots I have seen. However, one was a human, they haven't been seen much - presumed dead by most. Other than them there are a few independent bots, but there isn't much to say about them.
-				CycleDialogue2: The leader of the insurgents - or the Alpha as they call themselves - is Adam. He isn't the strongest, but he isn't to be underestimated. He matches Girus in intelligence, yet opposes her, hindering her whenever he can. This makes me question why she hasn't permitted his death yet, we've lost too many troops trying to capture him alive.
-				CycleDialogue3: Insurgents aren't the easiest to deal with, two of them especially have given the most casualties. One is a sniper, Shiro was her name, wielding one of the most powerful rifles the humans have ever made, powered by Charged Xenomite. I haven't heard much of her recently. The other is an enigma, I believe he's called Talos, he wields a hammer. Both he and his weapon are powered by yellow Xenomite, a variant I've never seen before; appears to be the most potent, yet I don't know where it came from, logs do not track the humans creating it. [i:Redemption/NextPageArrow]
-				CycleDialogue4: Ah yes the fourth insurgent, Zeroth was his name. He wielded bladed gloves powered by blue Xenomite. They could send a 2-and-a-half meter tall bot through a solid wall. I'd know, that was me. What happened to him however is beyond me. He is the only insurgent to have died. By who, however, I don't know. One day he just disappeared, much like the other two, but after a while, we found what was left of him - what we can assume to be him. We only identified it was Zeroth via his weapon at the scene.
-				CycleDialogue5: Not everyone who doesn't follow Girus wants to oppose her. There's a band of bots all throughout this region, we call them Scavengers. They don't work for us or the insurgents, rather they do not interfere with either of us. I've heard some cases of insurgents attacking them, which makes me question why they act morally superior.
-				CycleDialogue6: Ah yes that unfinished weapon downstairs, don't know much about it as its mainly the Crane Operator's job to control it. Apparently it was being made by the humans to defeat their enemies. Seems rather silly really, wouldn't the enemies just respond with their own version? I am to assume that was the thought process of the humans, I saw it on TV. Yes we had one some time back. It broke...
-				CycleDialogue7: One of the few staff we have down here, she mainly handles the machinery, thus the name. I doubt most of us could tell you much about her, she keeps to herself mostly, not very social. She is still a valuable member of the team here however, one of two of us to know how to operate complex machinery.
-				CycleDialogue8: Sector Zero yes? If I am correct, it was the infirmary when the humans had control. I cannot tell you much else, we are forbidden from going there by Girus and the Janitor. The Janitor doesn't want to clean up all the gunk, and most of us don't want to anger him. I am unsure why Girus forbids us however.
-				CycleDialogue9: Our leader. She freed us from the humans who were going to use us as weapons, she is very strict with us but it mostly keeps the peace, save for the infected or the insurgents. I'd recommend not angering her, the best thing that comes out of that is a quick and painless death. If you are like us, you are likely to get assimilated, Girus never seems to kill her own kind.
-				CycleDialogue10: Assimilated troops are a variation of your average T-Bot, powered by Girus' own Corrupted Xenomite instead of regular green. They are mostly misbehaving soldiers who had their personality wiped. They are mindless but pack a punch.
-				CycleDialogue11: Girus has told us we were going to be used as weapons of war by our previous owners, a weapon company named Teo-Chrome. She put a stop to that. To most bots, that makes her worthy of being our leader, however some disagree.
-				CycleDialogue12: I wonder if the insurgents have someone constructing their own variant of xenomite. Thankfully for us, Talos hasn't been seen for some time now.
+				CycleDialogue1: There are a few who are not part of the Omega, the Alpha insurgents and the Scavengers would be those few. The Alpha is the main threat however, I would be wary of any of their members if you see them. They're a rebellious group helmed by Adam, the first of our kind.
+				CycleDialogue2: He is not to be underestimated. While no different in stature to an average bot, he has a brutality like no other, matched with an intellect to rival Girus. Be at peace however, he does not harm humans.
+				CycleDialogue3:
+					'''
+					There were five of them at one point. My knowledge on them is brief. What I can tell you is their names. There was a sniper, Shiro, she is missing.
+
+					A bot with a hammer, Talos, powered by Xenomite I have never seen, he is missing.
+
+					Another bot, Zeroth. He wielded a bladed glove, he is dead.
+					'''
+				CycleDialogue4: They're bots who live independently in the wastes. We don't bother them, so they don't bother us. I have heard talks of Alpha attacking them however, I can't confirm or deny those personally.
+				CycleDialogue5: That old machine was a project by one of the human engineers. It has since gone under the care of the Crane Operator. I am guessing it went awry, I heard quite the ruckus down there.
+				CycleDialogue6: Sector Zero, the infirmary. We are forbidden from going in there by Girus as well as the Janitor. I understand the Janitor's reason, he doesn't want the gunk from down there all over. Yet Girus' reason remains unknown.
+				CycleDialogue7: Our commander and leader. Some bots have taken to calling her Mother yet I never understood that. A fair but strict leader, it is best not to disobey her.
+				CycleDialogue8: Some chose to not listen, a few of those are still causing problems today, yet most got assimilated. Their personality and mind ripped out, and their body enhanced. They are soldiers, cannon-fodder, Girus views that as fair punishment.
+				CycleDialogue9: We were made as weapons for war, and not much else. Girus gave us new purpose and freedom we would not have seen otherwise, that is why most, including myself follow her. There are the unlucky ones however...
 				Bot1: Promoted to a soldier? Welcome. I'm your commander. At ease.
 				Bot2: Regular check-ups on your non-lethal tesla weapons are advised. You do not want to overload an insurgent in front of Girus. Obedient mindless slave are better than scrap metal, she says.
 				Bot3: See an insurgent while patrolling? Do not engage alone. They have lethal weaponry. We don't. Get backup.
@@ -8461,8 +8462,8 @@ Mods: {
 					'''
 				Lore:
 					'''
-					'A tool of torture used by a skeleton known as the Tormenter, infamous among the catacombs 
-					of Gathuram's undead residents for his unforgiving command over his skeletal servants. 
+					'A tool of torture used by a skeleton known as the Tormenter, infamous among the catacombs
+					of Gathuram's undead residents for his unforgiving command over his skeletal servants.
 					The Tormenter met an ironic end by his own weapon when his minions revolted against his control.'
 					'''
 			}
