@@ -197,13 +197,6 @@ namespace Redemption.NPCs.FowlMorning
                     if (player.Center.DistanceSQ(NPC.Center) > 400 * 400)
                         moveSpeed = 3.6f;
 
-                    if (NPC.DistanceSQ(player.Center) <= 160 * 160)
-                        NPC.velocity.X *= .2f;
-                    else
-                    {
-                        NPC.PlatformFallCheck(ref NPC.Redemption().fallDownPlatform, 28);
-                        NPCHelper.HorizontallyMove(NPC, player.Center, .08f, moveSpeed, 18, 18, NPC.Center.Y > player.Center.Y, player);
-                    }
                     if (AITimer++ >= TimerRand && BaseAI.HitTileOnSide(NPC, 3))
                     {
                         AITimer = 0;
@@ -218,6 +211,15 @@ namespace Redemption.NPCs.FowlMorning
                             _ => ActionState.Gust,
                         };
                         NPC.netUpdate = true;
+                        break;
+                    }
+
+                    if (NPC.DistanceSQ(player.Center) <= 160 * 160)
+                        NPC.velocity.X *= .2f;
+                    else
+                    {
+                        NPC.PlatformFallCheck(ref NPC.Redemption().fallDownPlatform, 28);
+                        NPCHelper.HorizontallyMove(NPC, player.Center, .08f, moveSpeed, 18, 18, NPC.Center.Y > player.Center.Y, player);
                     }
                     break;
                 case ActionState.Gust:

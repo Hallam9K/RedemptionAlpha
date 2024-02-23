@@ -133,6 +133,7 @@ namespace Redemption.NPCs.FowlMorning
                         AITimer = 0;
                         TimerRand = 0;
                         AIState = ActionState.Stare;
+                        break;
                     }
                     if (NPC.DistanceSQ(player.Center) <= 100 * 100)
                         NPC.velocity.X *= .2f;

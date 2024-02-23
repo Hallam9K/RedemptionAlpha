@@ -10218,6 +10218,7 @@ Mods: {
 			EaglecrestGolem_ShockwaveSpawner.DisplayName: Eaglecrest Golem_ Shockwave Spawner
 			Golem_GroundShock.DisplayName: Ground Shock
 			BloatedClinger_Gas.DisplayName: Bile Gas
+			GuidingStranger_Proj.DisplayName: Guiding Stranger_ Proj
 		}
 
 		NPCs: {

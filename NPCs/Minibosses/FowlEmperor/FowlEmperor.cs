@@ -293,19 +293,6 @@ namespace Redemption.NPCs.Minibosses.FowlEmperor
                     float moveSpeed = 1.4f;
                     if (player.Center.DistanceSQ(NPC.Center) > 800 * 800 || empowered)
                         moveSpeed = 3f;
-                    NPC.PlatformFallCheck(ref NPC.Redemption().fallDownPlatform, 20);
-                    NPCHelper.HorizontallyMove(NPC, player.Center, 0.08f, moveSpeed, 18, 24, NPC.Center.Y > player.Center.Y, player);
-
-                    if (NPC.velocity.Y == 0 && AniType != (int)AnimType.Throw && NPC.Hitbox.Intersects(player.Hitbox) && Main.rand.NextBool(4))
-                    {
-                        SoundEngine.PlaySound(SoundID.Item1, NPC.position);
-                        NPC.LookAtEntity(player);
-                        AniType = (int)AnimType.Throw;
-                    }
-                    if (AniType == (int)AnimType.Throw)
-                        NPC.frameCounter++;
-                    else
-                        AniType = (int)AnimType.None;
 
                     if (AITimer++ >= TimerRand && NPC.velocity.Y == 0)
                     {
@@ -326,7 +313,21 @@ namespace Redemption.NPCs.Minibosses.FowlEmperor
                                 AIState = ActionState.Admire;
                                 break;
                         }
+                        break;
                     }
+                    if (NPC.velocity.Y == 0 && AniType != (int)AnimType.Throw && NPC.Hitbox.Intersects(player.Hitbox) && Main.rand.NextBool(4))
+                    {
+                        SoundEngine.PlaySound(SoundID.Item1, NPC.position);
+                        NPC.LookAtEntity(player);
+                        AniType = (int)AnimType.Throw;
+                    }
+                    NPC.PlatformFallCheck(ref NPC.Redemption().fallDownPlatform, 20);
+                    NPCHelper.HorizontallyMove(NPC, player.Center, 0.08f, moveSpeed, 18, 24, NPC.Center.Y > player.Center.Y, player);
+
+                    if (AniType == (int)AnimType.Throw)
+                        NPC.frameCounter++;
+                    else
+                        AniType = (int)AnimType.None;
                     break;
                 case ActionState.FeatherThrow:
                     switch (TimerRand2)

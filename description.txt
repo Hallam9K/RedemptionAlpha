@@ -2,8 +2,10 @@ MULTIPLAYER DOESN'T WORK
 
 Discord:
 https://discord.gg/VNneR3U
+Official Wiki (NOT Fandom's):
+https://modofredemption.wiki.gg/wiki/Mod_of_Redemption_Wiki
 
-This mod requires IQ above room temperature, if you want a mod you can mindlessly go through without much thought this isn't for you.
+This mod focuses on the discovery and exploration aspect of Terraria more than combat and bosses, it is best played at a chill pace and not intended for a speedy playthrough. So take your time, have fun.
 
 THIS IS A BETA, THE FOLLOWING CONTENT IS **NOT** IN THIS VERSION, BUT IS PLANNED FOR FULL 0.8:
 - Multiplayer Compatibility (Multiplayer is broken)
@@ -14,17 +16,17 @@ THIS IS A BETA, THE FOLLOWING CONTENT IS **NOT** IN THIS VERSION, BUT IS PLANNED
 - Ruined Kingdom
 - Post-ML Biome Expansions
 
-This beta does however have:
+This beta does however have (In comparison to 1.3's version of the mod):
 - Erhan, a new pre-hardmode boss
-- Reworking of basically every weapon
-- Overhaul to the Abandoned Lab
-- Many boss reworks or tweaks
+- Reworking of basically every weapon from 1.3's version
+- Overhaul to the Abandoned Lab from 1.3's version
+- Many boss reworks or tweaks from 1.3's version
 - Alignment, a semi-work-in-progress mechanic where actions can alter alignment, so far it only changes if Dragon-Lead or Gathic Cryo-Crystals will gen and if Nebuleus will let you fight a new phase, but more will be planned.
 - Removal of druid class, as the quality no longer matches the rest of the mod, however be patient for the upcoming Ritualist Class!
 - Elemental system where weapons and projectiles can have elements set to them that certain enemies can be resistant or weak to
-- Guard Points, a new value that blocks damage for a certain amount of hits until its broken, enemies with guard points wont take knockback. Hammers and explosives deal triple damage to guard points and Psychic elemental weapons will ignore guard points completely.
-- Removal of bloat content
-- Reworks of various enemy AIs
+- Guard Points, a new value that blocks damage for a certain amount of hits until its broken, enemies with guard points wont take knockback. Hammers and explosives deal increased damage to guard points and Psychic elemental weapons will ignore guard points completely.
+- Removal of bloat content from 1.3's version
+- Reworks of various enemy AIs from 1.3's version
 - Fowl Morning Event (Chicken Invasion Rework)
 
 Mod of Redemption is a lore-based mod (very scary) that adds a wide range of content.
