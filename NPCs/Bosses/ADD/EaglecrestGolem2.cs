@@ -459,13 +459,13 @@ namespace Redemption.NPCs.Bosses.ADD
                                 if (!Main.dedServ)
                                 {
                                     if (AITimer == 100)
-                                        RedeSystem.Instance.DialogueUIElement.DisplayDialogue("A storm is brewing...", 60, 20, 1f, "", 1, Color.LightGoldenrodYellow, Color.Black * 0f, new Vector2(NPC.Center.X - 60, NPC.Center.Y - 400) - Main.screenPosition, null, 0);
+                                        RedeSystem.Instance.DialogueUIElement.DisplayDialogue(Language.GetTextValue("Mods.Redemption.Cutscene.EaglecrestGolem2.1"), 60, 20, 1f, "", 1, Color.LightGoldenrodYellow, Color.Black * 0f, new Vector2(NPC.Center.X - 60, NPC.Center.Y - 400) - Main.screenPosition, null, 0);
 
                                     if (AITimer == 200)
-                                        RedeSystem.Instance.DialogueUIElement.DisplayDialogue("... And nature trembles", 60, 20, 1f, "", 1, Color.LightGreen, Color.Black * 0f, new Vector2(NPC.Center.X + 60, NPC.Center.Y - 300) - Main.screenPosition, null, 0);
+                                        RedeSystem.Instance.DialogueUIElement.DisplayDialogue(Language.GetTextValue("Mods.Redemption.Cutscene.EaglecrestGolem2.2"), 60, 20, 1f, "", 1, Color.LightGreen, Color.Black * 0f, new Vector2(NPC.Center.X + 60, NPC.Center.Y - 300) - Main.screenPosition, null, 0);
 
                                     if (AITimer == 300)
-                                        RedeSystem.Instance.DialogueUIElement.DisplayDialogue("The Gods' wrath is upon you", 60, 20, 1f, "", 1, Color.IndianRed, Color.Black * 0f, new Vector2(NPC.Center.X, NPC.Center.Y - 200) - Main.screenPosition, null, 0);
+                                        RedeSystem.Instance.DialogueUIElement.DisplayDialogue(Language.GetTextValue("Mods.Redemption.Cutscene.EaglecrestGolem2.3"), 60, 20, 1f, "", 1, Color.IndianRed, Color.Black * 0f, new Vector2(NPC.Center.X, NPC.Center.Y - 200) - Main.screenPosition, null, 0);
                                 }
                                 if (AITimer == 520)
                                 {

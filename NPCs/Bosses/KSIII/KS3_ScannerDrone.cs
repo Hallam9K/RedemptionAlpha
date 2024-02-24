@@ -9,6 +9,7 @@ using Terraria.GameContent;
 using Terraria.GameContent.Bestiary;
 using System.Collections.Generic;
 using Redemption.Globals.NPC;
+using Terraria.Localization;
 
 namespace Redemption.NPCs.Bosses.KSIII
 {
@@ -50,7 +51,7 @@ namespace Redemption.NPCs.Bosses.KSIII
             bestiaryEntry.Info.AddRange(new List<IBestiaryInfoElement> {
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Sky,
 
-                new FlavorTextBestiaryInfoElement("A drone used to collect data and store it within the SoS.")
+                new FlavorTextBestiaryInfoElement(Language.GetTextValue("Mods.Redemption.Cutscene.KS3.ScannerDrone.1"))
             });
         }
 
@@ -114,7 +115,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                         frameType = 1;
                         NPC.ai[0] = 2;
                         if (RedeBossDowned.slayerDeath == 0 && RedeWorld.alignment > 0)
-                            CombatText.NewText(NPC.getRect(), Colors.RarityCyan, "TARGET UNIMPORTANT...", true, true);
+                            CombatText.NewText(NPC.getRect(), Colors.RarityCyan, Language.GetTextValue("Mods.Redemption.Cutscene.KS3.ScannerDrone.2"), true, true);
                     }
                     break;
                 case 2: // Yeet out
