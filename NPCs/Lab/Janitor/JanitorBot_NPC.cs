@@ -81,10 +81,10 @@ namespace Redemption.NPCs.Lab.Janitor
                     button = Language.GetTextValue("Mods.Redemption.DialogueBox.Janitor.4");
                     break;
                 case 4:
-                    button = Language.GetTextValue("Mods.Redemption.DialogueBox.Volt.8");
+                    button = Language.GetTextValue("Mods.Redemption.DialogueBox.Volt.6");
                     break;
                 case 5:
-                    button = Language.GetTextValue("Mods.Redemption.DialogueBox.Volt.9");
+                    button = Language.GetTextValue("Mods.Redemption.DialogueBox.Volt.7");
                     break;
                 case 6:
                     button = Language.GetTextValue("LegacyInterface.28");
