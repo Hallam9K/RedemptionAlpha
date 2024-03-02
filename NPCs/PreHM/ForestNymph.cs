@@ -11,6 +11,7 @@ using Redemption.Items.Placeable.Banners;
 using Redemption.Items.Placeable.Plants;
 using Redemption.Items.Placeable.Tiles;
 using Redemption.NPCs.Friendly;
+using Redemption.NPCs.Friendly.TownNPCs;
 using Redemption.Particles;
 using Redemption.Projectiles.Hostile;
 using Redemption.Projectiles.Minions;
@@ -268,7 +269,13 @@ namespace Redemption.NPCs.PreHM
                     AITimer++;
                     if (AITimer >= TimerRand)
                     {
-                        moveTo = NPC.FindGround(20);
+                        if (NPC.ModNPC is ForestNymph_Friendly && NPC.homeTileX != -1 && !NPC.homeless)
+                        {
+                            moveTo = NPCHelper.FindGroundVector(new Vector2(NPC.homeTileX, NPC.homeTileY - 2) * 16, 20);
+                            moveTo /= 16;
+                        }
+                        else
+                            moveTo = NPC.FindGround(20);
                         AITimer = 0;
                         TimerRand = Main.rand.Next(120, 260);
                         AIState = ActionState.Wander;
@@ -861,6 +868,17 @@ namespace Redemption.NPCs.PreHM
                     int heal = NPC.type == ModContent.NPCType<ForestNymph_Friendly>() ? 10 : 2;
                     NPC.life += heal;
                     NPC.HealEffect(heal);
+                    if (NPC.life > NPC.lifeMax)
+                        NPC.life = NPC.lifeMax;
+                }
+            }
+            else if (NPC.townNPC)
+            {
+                regenTimer++;
+                if (regenTimer % regenCooldown == 0 && NPC.life < NPC.lifeMax)
+                {
+                    int heal = 5;
+                    NPC.life += heal;
                     if (NPC.life > NPC.lifeMax)
                         NPC.life = NPC.lifeMax;
                 }

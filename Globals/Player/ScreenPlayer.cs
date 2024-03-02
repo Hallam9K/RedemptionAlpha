@@ -2,7 +2,6 @@
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.BaseExtension;
 using Redemption.Globals;
-using Redemption.NPCs.Bosses.ADD;
 using Redemption.NPCs.Bosses.Neb;
 using Redemption.NPCs.Bosses.Neb.Clone;
 using Redemption.NPCs.Bosses.Neb.Phase2;
@@ -37,6 +36,7 @@ namespace Redemption
         public float yeet2;
         public override void PostUpdate()
         {
+            CurrentCutscenePriority = CutscenePriority.None;
             if (RedeConfigClient.Instance.CameraLockDisable)
                 cutscene = false;
             if (cutscene)
@@ -95,7 +95,7 @@ namespace Redemption
         }
         public override bool CanUseItem(Item item)
         {
-            if (cutscene && item.damage > 0 && !RedeConfigClient.Instance.CameraLockDisable)
+            if (cutscene && item.damage > 0 && !RedeConfigClient.Instance.CameraLockDisable && RedeHelper.BossActive())
                 return false;
             return base.CanUseItem(item);
         }
@@ -210,13 +210,16 @@ namespace Redemption
                     player.RedemptionScreen().cutscene = true;
                 if (vignetteRange is 0 || player.RedemptionAbility().SpiritwalkerActive)
                     return;
-                Terraria.Graphics.Effects.Filters.Scene["MoR:FogOverlay"]?.GetShader().UseOpacity(MathHelper.Lerp(1, 0, player.DistanceSQ(focus) / (vignetteRange * vignetteRange))).UseIntensity(1f).UseColor(Color.Black).UseImage(ModContent.Request<Texture2D>("Redemption/Effects/Vignette", AssetRequestMode.ImmediateLoad).Value);
-                player.ManageSpecialBiomeVisuals("MoR:FogOverlay", true);
+
+                if (!Main.dedServ)
+                {
+                    Terraria.Graphics.Effects.Filters.Scene["MoR:FogOverlay"]?.GetShader().UseOpacity(MathHelper.Lerp(1, 0, player.DistanceSQ(focus) / (vignetteRange * vignetteRange))).UseIntensity(1f).UseColor(Color.Black).UseImage(ModContent.Request<Texture2D>("Redemption/Effects/Vignette", AssetRequestMode.ImmediateLoad).Value);
+                    player.ManageSpecialBiomeVisuals("MoR:FogOverlay", true);
+                }
             }
         }
         public override void ModifyScreenPosition()
         {
-            ADDScreenLock();
             if (ScreenFocusInterpolant > 0f && !RedeConfigClient.Instance.CameraLockDisable)
             {
                 Vector2 idealScreenPosition = ScreenFocusPosition - new Vector2(Main.screenWidth, Main.screenHeight) * 0.5f;
@@ -227,8 +230,8 @@ namespace Redemption
             if (rumbleDuration > 0)
             {
                 int r = rumbleStrength;
-                Main.screenPosition.X += Main.rand.Next(-r, r + 1);
-                Main.screenPosition.Y += Main.rand.Next(-r, r + 1);
+                Main.screenPosition.X += Main.rand.Next(-r, r + 1) * RedeConfigClient.Instance.ShakeIntensity;
+                Main.screenPosition.Y += Main.rand.Next(-r, r + 1) * RedeConfigClient.Instance.ShakeIntensity;
             }
             if (ScreenShakeIntensity > 0.1f)
             {
@@ -239,7 +242,7 @@ namespace Redemption
                     ScreenShakeIntensity /= dist;
                 }
                 Main.screenPosition += new Vector2(Main.rand.NextFloat(ScreenShakeIntensity),
-                    Main.rand.NextFloat(ScreenShakeIntensity));
+                    Main.rand.NextFloat(ScreenShakeIntensity)) * RedeConfigClient.Instance.ShakeIntensity;
 
                 ScreenShakeIntensity *= 0.9f;
                 ScreenShakeOrigin = Vector2.Zero;
@@ -273,35 +276,8 @@ namespace Redemption
                 {
                     yeet2 -= yeet2 / 20f;
                     Main.screenPosition.Y -= yeet2;
-                    if (Math.Abs(yeet2) > 20)
-                    {
-                        Main.screenPosition.X += Main.rand.Next(-10, 11);
-                        Main.screenPosition.Y += Main.rand.Next(-10, 11);
-                    }
                 }
                 NebCutsceneflag = false;
-            }
-        }
-        public void ADDScreenLock()
-        {
-            Rectangle ADDscreen = NPC.AnyNPCs(ModContent.NPCType<Ukko>()) || NPC.AnyNPCs(ModContent.NPCType<Akka>()) ? new Rectangle((int)ArenaWorld.arenaTopLeft.X - 1000, (int)ArenaWorld.arenaTopLeft.Y - 1000, (int)ArenaWorld.arenaSize.X + 2000, (int)ArenaWorld.arenaSize.Y + 2000) : Rectangle.Empty;
-            if (!ADDscreen.IsEmpty)
-            {
-                Vector2 pos = new(ADDscreen.Center.X, ADDscreen.Center.Y);
-                float x = Player.Center.X;
-                float y = Player.Center.Y;
-                if (ADDscreen.Width > Main.screenWidth)
-                    pos.X = MathHelper.Clamp(x, ADDscreen.X + Main.screenWidth / 2, ADDscreen.Right - Main.screenWidth / 2);
-                if (ADDscreen.Height > Main.screenHeight)
-                    pos.Y = MathHelper.Clamp(y, ADDscreen.Y + Main.screenHeight / 2, ADDscreen.Bottom - Main.screenHeight / 2);
-                pos -= new Vector2(Main.screenWidth, Main.screenHeight) / 2;
-
-                if (Redemption.Instance.currentScreen != ADDscreen)
-                {
-                    Redemption.Instance.cameraOffset = Main.screenPosition - pos;
-                    Redemption.Instance.currentScreen = ADDscreen;
-                }
-                Main.screenPosition = pos;
             }
         }
     }

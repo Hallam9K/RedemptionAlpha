@@ -1,13 +1,14 @@
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using Redemption.Items.Materials.PreHM;
+using Redemption.Tiles.Tiles;
 using Terraria;
+using Terraria.DataStructures;
+using Terraria.Enums;
+using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
-using Terraria.ID;
-using Redemption.Items.Materials.PreHM;
-using Terraria.DataStructures;
-using Terraria.Enums;
-using Redemption.Tiles.Tiles;
 
 namespace Redemption.Tiles.Natural
 {
@@ -21,6 +22,8 @@ namespace Redemption.Tiles.Natural
             Main.tileFrameImportant[Type] = true;
             Main.tileLavaDeath[Type] = false;
             Main.tileSpelunker[Type] = true;
+            Main.tileShine2[Type] = true;
+            Main.tileShine[Type] = 180;
 
             // Attaches to the ground
             TileObjectData.newTile.CopyFrom(TileObjectData.Style1x1);
@@ -59,7 +62,10 @@ namespace Redemption.Tiles.Natural
             // name.SetDefault("Gathic Cryo-Crystal");
             AddMapEntry(new Color(159, 188, 215), name);
         }
-
+        public override void DrawEffects(int i, int j, SpriteBatch spriteBatch, ref TileDrawInfo drawData)
+        {
+            drawData.finalColor *= .7f;
+        }
         public override void NumDust(int i, int j, bool fail, ref int num)
         {
             num = fail ? 1 : 3;
@@ -73,8 +79,8 @@ namespace Redemption.Tiles.Natural
         public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)
         {
             r = .1f;
-            g = .4f;
-            b = .4f;
+            g = .2f;
+            b = .2f;
         }
     }
 }

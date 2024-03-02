@@ -123,6 +123,8 @@ namespace Redemption.NPCs.Critters
             {
                 if (Main.rand.NextBool(2000))
                     NPC.SetDefaults(ModContent.NPCType<LongChicken>());
+                else if (Main.rand.NextBool(400))
+                    NPC.SetDefaults(ModContent.NPCType<ChickenGold>());
                 else
                     ChickType = (ChickenType)Main.rand.Next(4);
             }

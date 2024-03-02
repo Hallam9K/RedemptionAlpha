@@ -1,7 +1,7 @@
 using Microsoft.Xna.Framework;
+using Redemption.BaseExtension;
 using Terraria;
 using Terraria.ModLoader;
-using Redemption.BaseExtension;
 
 namespace Redemption.Buffs.Debuffs
 {
@@ -34,6 +34,8 @@ namespace Redemption.Buffs.Debuffs
             player.controlUseTile = false;
             player.controlThrow = false;
             player.gravDir = 1f;
+            for (int i = 0; i < 4; i++)
+                player.doubleTapCardinalTimer[i] = 0;
 
             player.velocity.Y += player.gravity;
             if (player.velocity.Y > player.maxFallSpeed)

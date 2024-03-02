@@ -16,8 +16,8 @@ namespace Redemption.Items.Usable.Potions
 
         public override void SetDefaults()
         {
-            Item.width = 20;
-            Item.height = 22;
+            Item.width = 30;
+            Item.height = 42;
             Item.useTurn = true;
             Item.maxStack = Item.CommonMaxStack;
             Item.healLife = 175;

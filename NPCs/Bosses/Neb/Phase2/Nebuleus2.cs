@@ -25,6 +25,8 @@ using Redemption.BaseExtension;
 using Redemption.Items.Materials.PostML;
 using Terraria.DataStructures;
 using ReLogic.Content;
+using Redemption.Globals.NPC;
+using Redemption.NPCs.Friendly.TownNPCs;
 
 namespace Redemption.NPCs.Bosses.Neb.Phase2
 {
@@ -136,6 +138,13 @@ namespace Redemption.NPCs.Bosses.Neb.Phase2
             }
             if (RedeBossDowned.nebDeath < 7)
             {
+                int daerel = NPC.FindFirstNPC(ModContent.NPCType<Daerel>());
+                if (daerel >= 0)
+                    Main.npc[daerel].GetGlobalNPC<ExclaimMarkNPC>().exclaimationMark[5] = false;
+                int zephos = NPC.FindFirstNPC(ModContent.NPCType<Zephos>());
+                if (zephos >= 0)
+                    Main.npc[zephos].GetGlobalNPC<ExclaimMarkNPC>().exclaimationMark[5] = false;
+
                 RedeWorld.alignment -= 6;
                 for (int p = 0; p < Main.maxPlayers; p++)
                 {

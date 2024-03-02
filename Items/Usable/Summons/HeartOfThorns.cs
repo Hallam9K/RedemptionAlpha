@@ -24,8 +24,8 @@ namespace Redemption.Items.Usable.Summons
 
 		public override void SetDefaults()
 		{
-			Item.width = 26;
-			Item.height = 40;
+			Item.width = 42;
+			Item.height = 36;
 			Item.maxStack = 1;
 			Item.value = Item.sellPrice(0, 1, 50, 0);
 			Item.rare = ItemRarityID.Blue;

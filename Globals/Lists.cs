@@ -1,162 +1,55 @@
-﻿using System.Collections.Generic;
-using Redemption.NPCs.Critters;
-using Terraria.ID;
-using Terraria.ModLoader;
-using Redemption.NPCs.PreHM;
-using Redemption.NPCs.Friendly;
-using Redemption.NPCs.Bosses.Thorn;
-using Redemption.Projectiles.Misc;
-using Redemption.NPCs.Bosses.Keeper;
-using Redemption.NPCs.Minibosses.SkullDigger;
-using Redemption.NPCs.Minibosses.EaglecrestGolem;
-using Redemption.NPCs.Bosses.Erhan;
-using Redemption.NPCs.Bosses.KSIII;
-using Redemption.NPCs.Bosses.SeedOfInfection;
-using Redemption.Tiles.Tiles;
-using Redemption.NPCs.Lab;
+﻿using Redemption.Items.Placeable.Plants;
+using Redemption.Items.Quest.KingSlayer;
+using Redemption.Items.Usable;
+using Redemption.Items.Usable.Summons;
+using Redemption.Items.Weapons.PostML.Melee;
+using Redemption.Items.Weapons.PreHM.Summon;
+using Redemption.NPCs.Bosses.ADD;
 using Redemption.NPCs.Bosses.Cleaver;
-using Redemption.NPCs.Wasteland;
-using Redemption.NPCs.Lab.Janitor;
+using Redemption.NPCs.Bosses.Erhan;
+using Redemption.NPCs.Bosses.Gigapora;
+using Redemption.NPCs.Bosses.Keeper;
+using Redemption.NPCs.Bosses.KSIII;
+using Redemption.NPCs.Bosses.Neb;
+using Redemption.NPCs.Bosses.Obliterator;
+using Redemption.NPCs.Bosses.PatientZero;
+using Redemption.NPCs.Bosses.SeedOfInfection;
+using Redemption.NPCs.Bosses.Thorn;
+using Redemption.NPCs.Critters;
+using Redemption.NPCs.FowlMorning;
+using Redemption.NPCs.Friendly;
+using Redemption.NPCs.Friendly.SpiritSummons;
+using Redemption.NPCs.Friendly.TownNPCs;
+using Redemption.NPCs.HM;
+using Redemption.NPCs.Lab;
 using Redemption.NPCs.Lab.Behemoth;
 using Redemption.NPCs.Lab.Blisterface;
-using Redemption.NPCs.Lab.Volt;
+using Redemption.NPCs.Lab.Janitor;
 using Redemption.NPCs.Lab.MACE;
-using Redemption.NPCs.Bosses.PatientZero;
-using Redemption.Items.Usable;
-using Redemption.NPCs.Bosses.Gigapora;
-using Redemption.Tiles.Furniture.ElderWood;
-using Redemption.Tiles.Furniture.PetrifiedWood;
-using Redemption.Tiles.Furniture.Lab;
-using Redemption.NPCs.Bosses.Obliterator;
-using Redemption.NPCs.HM;
-using Redemption.NPCs.Bosses.ADD;
-using Redemption.NPCs.Friendly.SpiritSummons;
-using Redemption.NPCs.FowlMorning;
-using Redemption.Items.Usable.Summons;
-using Redemption.Items.Quest.KingSlayer;
-using Redemption.Items.Placeable.Plants;
-using Redemption.Items.Weapons.PreHM.Summon;
+using Redemption.NPCs.Lab.Volt;
 using Redemption.NPCs.Minibosses.Calavia;
+using Redemption.NPCs.Minibosses.EaglecrestGolem;
+using Redemption.NPCs.Minibosses.SkullDigger;
+using Redemption.NPCs.PostML;
+using Redemption.NPCs.PreHM;
+using Redemption.NPCs.Wasteland;
+using Redemption.Projectiles.Misc;
+using Redemption.Tiles.Furniture.ElderWood;
+using Redemption.Tiles.Furniture.Lab;
 using Redemption.Tiles.Furniture.Misc;
+using Redemption.Tiles.Furniture.PetrifiedWood;
+using Redemption.Tiles.Furniture.Shade;
+using Redemption.Tiles.Tiles;
+using Redemption.Walls;
+using System.Collections.Generic;
+using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace Redemption.Globals
 {
     public static class TileLists
     {
         #region Tile Lists
-
-        public static List<int> CorruptTiles = new()
-        {
-            23,
-            25,
-            112,
-            163,
-            398,
-            400
-        };
-
-        public static List<int> CrimsonTiles = new()
-        {
-            199,
-            203,
-            234,
-            200,
-            399,
-            401,
-            205
-        };
-
-        public static List<int> EvilTiles = new()
-        {
-            23,
-            25,
-            112,
-            163,
-            398,
-            400,
-            199,
-            203,
-            234,
-            200,
-            399,
-            401,
-            205
-        };
-
-        public static List<int> HallowTiles = new()
-        {
-            109,
-            117,
-            116,
-            164,
-            402,
-            403,
-            115
-        };
-
-        public static List<int> CloudTiles = new()
-        {
-            189,
-            196,
-            460
-        };
-
-        public static List<int> HellTiles = new()
-        {
-            57,
-            198,
-            58,
-            76,
-            75
-        };
-
-        public static List<int> SnowTiles = new()
-        {
-            161,
-            206,
-            164,
-            200,
-            163,
-            162,
-            147,
-            148
-        };
-
-        public static List<int> DesertTiles = new()
-        {
-            53,
-            396,
-            397,
-            403,
-            402,
-            401,
-            399,
-            400,
-            398
-        };
-
-        public static List<int> JungleTiles = new()
-        {
-            59,
-            120,
-            60,
-        };
-
-        public static List<int> DirtTiles = new()
-        {
-            TileID.Dirt,
-            59,
-            40
-        };
-
-        public static List<int> NatureTiles = new()
-        {
-            2,
-            59,
-            120,
-            60
-        };
-
         public static List<int> BlacklistTiles = new()
         {
             TileID.BlueDungeonBrick,
@@ -181,7 +74,8 @@ namespace Redemption.Globals
         {
             ModContent.TileType<ElderWoodDoorClosed>(),
             ModContent.TileType<LabDoorClosed>(),
-            ModContent.TileType<PetrifiedWoodDoorClosed>()
+            ModContent.TileType<PetrifiedWoodDoorClosed>(),
+            ModContent.TileType<ShadestoneDoorClosed>(),
         };
 
         public static List<int> AncientTileArray = new()
@@ -191,6 +85,14 @@ namespace Redemption.Globals
         public static List<int> WoodLeaf = new()
         {
             TileID.WoodBlock, TileID.BorealWood, TileID.DynastyWood, TileID.LivingWood, TileID.PalmWood, TileID.SpookyWood, TileID.Ebonwood, TileID.Pearlwood, TileID.Shadewood, TileID.LivingMahogany, TileID.RichMahogany, TileID.LeafBlock, TileID.LivingMahoganyLeaves
+        };
+        public static List<int> LivingWoodLeaf = new()
+        {
+            TileID.LivingWood, TileID.LivingMahoganyLeaves, TileID.LivingMahogany, TileID.LeafBlock
+        };
+        public static List<int> LivingWoodLeafWall = new()
+        {
+            WallID.LivingWood, WallID.LivingLeaf
         };
         #endregion
     }
@@ -203,23 +105,23 @@ namespace Redemption.Globals
         public static List<int> HasLostSoul = new() { ModContent.NPCType<LostSoulNPC>(), ModContent.NPCType<EpidotrianSkeleton>(), ModContent.NPCType<CorpseWalkerPriest>(), ModContent.NPCType<SkeletonAssassin>(), ModContent.NPCType<SkeletonDuelist>(), ModContent.NPCType<SkeletonFlagbearer>(), ModContent.NPCType<SkeletonNoble>(), ModContent.NPCType<SkeletonWanderer>(), ModContent.NPCType<SkeletonWarden>(), ModContent.NPCType<VagrantSpirit>(), ModContent.NPCType<JollyMadman>(), ModContent.NPCType<RaveyardSkeleton>(), 77, 449, 450, 451, 452, 481, 201, 202, 203, 21, 324, 110, 323, 293, 291, 322, 292, 197, 167, 44, 635 };
 
         #region Skeleton
-        public static List<int> Skeleton = new() { 77, 449, 450, 451, 452, 481, 201, 202, 203, 21, 324, 110, 323, 293, 291, 322, 292, 197, 167, 44, 635, NPCID.DD2SkeletonT1, NPCID.DD2SkeletonT3, NPCID.AngryBones, NPCID.AngryBonesBig, NPCID.AngryBonesBigHelmet, NPCID.AngryBonesBigMuscle, NPCID.BoneSerpentHead, NPCID.BoneSerpentBody, NPCID.BoneSerpentTail, NPCID.DarkCaster, NPCID.CursedSkull, NPCID.BlueArmoredBones, NPCID.BlueArmoredBonesMace, NPCID.BlueArmoredBonesNoPants, NPCID.BlueArmoredBonesSword, NPCID.BoneLee, NPCID.DiabolistRed, NPCID.DiabolistWhite, NPCID.GiantCursedSkull, NPCID.HellArmoredBones, NPCID.HellArmoredBonesMace, NPCID.HellArmoredBonesSpikeShield, NPCID.HellArmoredBonesSword, NPCID.Necromancer, NPCID.NecromancerArmored, NPCID.RaggedCaster, NPCID.RaggedCasterOpenCoat, NPCID.RuneWizard, NPCID.RustyArmoredBonesAxe, NPCID.RustyArmoredBonesFlail, NPCID.RustyArmoredBonesSword, NPCID.RustyArmoredBonesSwordNoArmor, NPCID.DungeonGuardian, NPCID.SkeletronHead, NPCID.SkeletronHand, NPCID.PirateGhost, ModContent.NPCType<BoneSpider>(), ModContent.NPCType<EpidotrianSkeleton>(), ModContent.NPCType<CorpseWalkerPriest>(), ModContent.NPCType<SkeletonAssassin>(), ModContent.NPCType<SkeletonDuelist>(), ModContent.NPCType<SkeletonFlagbearer>(), ModContent.NPCType<SkeletonNoble>(), ModContent.NPCType<SkeletonWanderer>(), ModContent.NPCType<SkeletonWarden>(), ModContent.NPCType<RaveyardSkeleton>(), ModContent.NPCType<BobTheBlob>(), ModContent.NPCType<EpidotrianSkeleton_SS>(), ModContent.NPCType<SkeletonAssassin_SS>(), ModContent.NPCType<SkeletonFlagbearer_SS>(), ModContent.NPCType<SkeletonNoble_SS>(), ModContent.NPCType<SkeletonWarden_SS>(), ModContent.NPCType<SkeletonDuelist_SS>(), ModContent.NPCType<SkeletonWanderer_SS>(), ModContent.NPCType<Asher_SS>() };
+        public static List<int> Skeleton = new() { 77, 449, 450, 451, 452, 481, 201, 202, 203, 21, 324, 110, 323, 293, 291, 322, 292, 197, 167, 44, 635, NPCID.DD2SkeletonT1, NPCID.DD2SkeletonT3, NPCID.AngryBones, NPCID.AngryBonesBig, NPCID.AngryBonesBigHelmet, NPCID.AngryBonesBigMuscle, NPCID.BoneSerpentHead, NPCID.BoneSerpentBody, NPCID.BoneSerpentTail, NPCID.DarkCaster, NPCID.CursedSkull, NPCID.BlueArmoredBones, NPCID.BlueArmoredBonesMace, NPCID.BlueArmoredBonesNoPants, NPCID.BlueArmoredBonesSword, NPCID.BoneLee, NPCID.DiabolistRed, NPCID.DiabolistWhite, NPCID.GiantCursedSkull, NPCID.HellArmoredBones, NPCID.HellArmoredBonesMace, NPCID.HellArmoredBonesSpikeShield, NPCID.HellArmoredBonesSword, NPCID.Necromancer, NPCID.NecromancerArmored, NPCID.RaggedCaster, NPCID.RaggedCasterOpenCoat, NPCID.RuneWizard, NPCID.RustyArmoredBonesAxe, NPCID.RustyArmoredBonesFlail, NPCID.RustyArmoredBonesSword, NPCID.RustyArmoredBonesSwordNoArmor, NPCID.DungeonGuardian, NPCID.SkeletronHead, NPCID.SkeletronHand, NPCID.PirateGhost, NPCID.Tim, ModContent.NPCType<BoneSpider>(), ModContent.NPCType<EpidotrianSkeleton>(), ModContent.NPCType<CorpseWalkerPriest>(), ModContent.NPCType<SkeletonAssassin>(), ModContent.NPCType<SkeletonDuelist>(), ModContent.NPCType<SkeletonFlagbearer>(), ModContent.NPCType<SkeletonNoble>(), ModContent.NPCType<SkeletonWanderer>(), ModContent.NPCType<SkeletonWarden>(), ModContent.NPCType<RaveyardSkeleton>(), ModContent.NPCType<BobTheBlob>(), ModContent.NPCType<EpidotrianSkeleton_SS>(), ModContent.NPCType<SkeletonAssassin_SS>(), ModContent.NPCType<SkeletonFlagbearer_SS>(), ModContent.NPCType<SkeletonNoble_SS>(), ModContent.NPCType<SkeletonWarden_SS>(), ModContent.NPCType<SkeletonDuelist_SS>(), ModContent.NPCType<SkeletonWanderer_SS>(), ModContent.NPCType<Asher_SS>() };
 
 
-        public static List<int> SkeletonHumanoid = new() { 77, 449, 450, 451, 452, 481, 201, 202, 203, 21, 324, 110, 323, 293, 291, 322, 292, 197, 167, 44, 635, NPCID.DD2SkeletonT1, NPCID.DD2SkeletonT3, NPCID.AngryBones, NPCID.AngryBonesBig, NPCID.AngryBonesBigHelmet, NPCID.AngryBonesBigMuscle, NPCID.DarkCaster, NPCID.BlueArmoredBones, NPCID.BlueArmoredBonesMace, NPCID.BlueArmoredBonesNoPants, NPCID.BlueArmoredBonesSword, NPCID.BoneLee, NPCID.DiabolistRed, NPCID.DiabolistWhite, NPCID.HellArmoredBones, NPCID.HellArmoredBonesMace, NPCID.HellArmoredBonesSpikeShield, NPCID.HellArmoredBonesSword, NPCID.Necromancer, NPCID.NecromancerArmored, NPCID.RaggedCaster, NPCID.RaggedCasterOpenCoat, NPCID.RuneWizard, NPCID.RustyArmoredBonesAxe, NPCID.RustyArmoredBonesFlail, NPCID.RustyArmoredBonesSword, NPCID.RustyArmoredBonesSwordNoArmor, NPCID.PirateGhost, ModContent.NPCType<EpidotrianSkeleton>(), ModContent.NPCType<CorpseWalkerPriest>(), ModContent.NPCType<SkeletonAssassin>(), ModContent.NPCType<SkeletonDuelist>(), ModContent.NPCType<SkeletonFlagbearer>(), ModContent.NPCType<SkeletonNoble>(), ModContent.NPCType<SkeletonWanderer>(), ModContent.NPCType<SkeletonWarden>(), ModContent.NPCType<RaveyardSkeleton>(), ModContent.NPCType<BobTheBlob>(), ModContent.NPCType<EpidotrianSkeleton_SS>(), ModContent.NPCType<SkeletonAssassin_SS>(), ModContent.NPCType<SkeletonFlagbearer_SS>(), ModContent.NPCType<SkeletonNoble_SS>(), ModContent.NPCType<SkeletonWarden_SS>(), ModContent.NPCType<SkeletonDuelist_SS>(), ModContent.NPCType<SkeletonWanderer_SS>(), ModContent.NPCType<Asher_SS>() };
+        public static List<int> SkeletonHumanoid = new() { 77, 449, 450, 451, 452, 481, 201, 202, 203, 21, 324, 110, 323, 293, 291, 322, 292, 197, 167, 44, 635, NPCID.DD2SkeletonT1, NPCID.DD2SkeletonT3, NPCID.AngryBones, NPCID.AngryBonesBig, NPCID.AngryBonesBigHelmet, NPCID.AngryBonesBigMuscle, NPCID.DarkCaster, NPCID.BlueArmoredBones, NPCID.BlueArmoredBonesMace, NPCID.BlueArmoredBonesNoPants, NPCID.BlueArmoredBonesSword, NPCID.BoneLee, NPCID.DiabolistRed, NPCID.DiabolistWhite, NPCID.HellArmoredBones, NPCID.HellArmoredBonesMace, NPCID.HellArmoredBonesSpikeShield, NPCID.HellArmoredBonesSword, NPCID.Necromancer, NPCID.NecromancerArmored, NPCID.RaggedCaster, NPCID.RaggedCasterOpenCoat, NPCID.RuneWizard, NPCID.RustyArmoredBonesAxe, NPCID.RustyArmoredBonesFlail, NPCID.RustyArmoredBonesSword, NPCID.RustyArmoredBonesSwordNoArmor, NPCID.PirateGhost, NPCID.Tim, ModContent.NPCType<EpidotrianSkeleton>(), ModContent.NPCType<CorpseWalkerPriest>(), ModContent.NPCType<SkeletonAssassin>(), ModContent.NPCType<SkeletonDuelist>(), ModContent.NPCType<SkeletonFlagbearer>(), ModContent.NPCType<SkeletonNoble>(), ModContent.NPCType<SkeletonWanderer>(), ModContent.NPCType<SkeletonWarden>(), ModContent.NPCType<RaveyardSkeleton>(), ModContent.NPCType<BobTheBlob>(), ModContent.NPCType<EpidotrianSkeleton_SS>(), ModContent.NPCType<SkeletonAssassin_SS>(), ModContent.NPCType<SkeletonFlagbearer_SS>(), ModContent.NPCType<SkeletonNoble_SS>(), ModContent.NPCType<SkeletonWarden_SS>(), ModContent.NPCType<SkeletonDuelist_SS>(), ModContent.NPCType<SkeletonWanderer_SS>(), ModContent.NPCType<Asher_SS>() };
         #endregion
 
         public static List<int> Humanoid = new() { NPCID.Demon, NPCID.VoodooDemon, NPCID.DoctorBones, NPCID.FaceMonster, NPCID.ArmedZombieEskimo, NPCID.ZombieEskimo, NPCID.FireImp, NPCID.Gnome, NPCID.GoblinArcher, NPCID.GoblinPeon, NPCID.GoblinScout, NPCID.GoblinSorcerer, NPCID.GoblinSummoner, NPCID.GoblinThief, NPCID.GoblinWarrior, NPCID.GraniteGolem, NPCID.Harpy, NPCID.MaggotZombie, NPCID.Nymph, NPCID.Salamander, NPCID.Salamander2, NPCID.Salamander3, NPCID.Salamander4, NPCID.Salamander5, NPCID.Salamander6, NPCID.Salamander7, NPCID.Salamander8, NPCID.Salamander9, NPCID.ZombieMushroom, NPCID.ZombieMushroomHat, NPCID.Zombie, NPCID.ZombieDoctor, NPCID.ZombieElf, NPCID.ZombieElfBeard, NPCID.ZombieElfGirl, NPCID.ZombieMerman, NPCID.ZombiePixie, NPCID.ZombieRaincoat, NPCID.ZombieSuperman, NPCID.ZombieSweater, NPCID.ZombieXmas, NPCID.ArmedTorchZombie, NPCID.ArmedZombie, NPCID.ArmedZombieCenx, NPCID.ArmedZombiePincussion, NPCID.ArmedZombieSlimed, NPCID.ArmedZombieSwamp, NPCID.ArmedZombieTwiggy, NPCID.BaldZombie, NPCID.BloodZombie, NPCID.FemaleZombie, NPCID.PincushionZombie, NPCID.SlimedZombie, NPCID.SwampZombie, NPCID.TorchZombie, NPCID.TwiggyZombie, NPCID.CultistArcherBlue, NPCID.BloodMummy, NPCID.ChaosElemental, NPCID.DarkMummy, NPCID.DesertGhoul, NPCID.DesertGhoulCorruption, NPCID.DesertGhoulCrimson, NPCID.DesertGhoulHallow, NPCID.DesertDjinn, NPCID.FloatyGross, NPCID.IcyMerman, NPCID.DesertLamiaDark, NPCID.DesertLamiaLight, NPCID.Medusa, NPCID.Mummy, NPCID.RedDevil, NPCID.PossessedArmor, NPCID.Paladin, NPCID.RockGolem, NPCID.DemonTaxCollector, NPCID.Werewolf, NPCID.Clown, NPCID.CorruptPenguin, NPCID.CrimsonPenguin, NPCID.GoblinShark, NPCID.TheGroom, NPCID.TheBride, NPCID.IceGolem, NPCID.SandElemental, NPCID.DD2DarkMageT1, NPCID.DD2DarkMageT3, NPCID.DD2GoblinBomberT1, NPCID.DD2GoblinBomberT2, NPCID.DD2GoblinBomberT3, NPCID.DD2GoblinT1, NPCID.DD2GoblinT2, NPCID.DD2GoblinT3, NPCID.DD2JavelinstT1, NPCID.DD2JavelinstT2, NPCID.DD2JavelinstT3, NPCID.DD2KoboldWalkerT2, NPCID.DD2KoboldWalkerT3, NPCID.SnowmanGangsta, NPCID.SnowBalla, NPCID.MisterStabby, NPCID.PirateCaptain, NPCID.PirateCorsair, NPCID.PirateCrossbower, NPCID.PirateDeadeye, NPCID.PirateDeckhand, NPCID.Butcher, NPCID.CreatureFromTheDeep, NPCID.DrManFly, NPCID.Eyezor, NPCID.Frankenstein, NPCID.Fritz, NPCID.Nailhead, NPCID.Psycho, NPCID.SwampThing, NPCID.ThePossessed, NPCID.Vampire, NPCID.BrainScrambler, NPCID.GigaZapper, NPCID.GrayGrunt, NPCID.MartianEngineer, NPCID.MartianOfficer, NPCID.RayGunner, NPCID.Scarecrow1, NPCID.Scarecrow2, NPCID.Scarecrow3, NPCID.Scarecrow4, NPCID.Scarecrow5, NPCID.Scarecrow6, NPCID.Scarecrow7, NPCID.Scarecrow8, NPCID.Scarecrow9, NPCID.Scarecrow10, NPCID.Splinterling, NPCID.GingerbreadMan, NPCID.Krampus, NPCID.Nutcracker, NPCID.NutcrackerSpinning, NPCID.Yeti, NPCID.NebulaSoldier, NPCID.SolarSpearman, NPCID.SolarSolenian, NPCID.StardustSoldier, NPCID.VortexRifleman, NPCID.VortexSoldier, NPCID.CultistBoss, NPCID.DD2OgreT2, NPCID.DD2OgreT3, NPCID.Lihzahrd, NPCID.LihzahrdCrawler, ModContent.NPCType<BlisteredScientist>(), ModContent.NPCType<BloatedScientist>(), ModContent.NPCType<OozingScientist>(), ModContent.NPCType<ForestNymph>(), ModContent.NPCType<JollyMadman>(), ModContent.NPCType<LivingBloom>(), ModContent.NPCType<BloatedGhoul>(), ModContent.NPCType<HazmatZombie>(), ModContent.NPCType<MutatedLivingBloom>(), ModContent.NPCType<SicklyPenguin>() };
 
         #region Undead
 
-        public static List<int> Undead = new() { 3, 132, 186, 187, 188, 189, 200, 223, 161, 254, 255, 52, 53, 536, 319, 320, 321, 332, 436, 431, 432, 433, 434, 435, 331, 430, 590, NPCID.TorchZombie, NPCID.ArmedTorchZombie, NPCID.MaggotZombie, NPCID.Mummy, NPCID.BloodMummy, NPCID.DarkMummy, NPCID.DesertGhoul, NPCID.DesertGhoulCorruption, NPCID.DesertGhoulCrimson, NPCID.DesertGhoulHallow, NPCID.BloodZombie, NPCID.ZombieMerman, NPCID.SandsharkCorrupt, NPCID.SandsharkCrimson, NPCID.Eyezor, NPCID.Frankenstein, NPCID.Vampire, NPCID.VampireBat, NPCID.HeadlessHorseman, NPCID.ZombieElf, NPCID.HeadlessHorseman, NPCID.HeadlessHorseman, NPCID.HeadlessHorseman, ModContent.NPCType<JollyMadman>(), ModContent.NPCType<Keeper>(), ModContent.NPCType<SkullDigger>(), ModContent.NPCType<Fallen>(), ModContent.NPCType<BlisteredScientist>(), ModContent.NPCType<OozingScientist>(), ModContent.NPCType<BloatedScientist>(), ModContent.NPCType<HazmatZombie>(), ModContent.NPCType<BloatedGhoul>(), ModContent.NPCType<IrradiatedBehemoth>(), ModContent.NPCType<HazmatZombie_SS>() };
+        public static List<int> Undead = new() { 3, 132, 186, 187, 188, 189, 200, 223, 161, 254, 255, 52, 53, 536, 319, 320, 321, 332, 436, 431, 432, 433, 434, 435, 331, 430, 590, NPCID.TorchZombie, NPCID.ArmedTorchZombie, NPCID.MaggotZombie, NPCID.Mummy, NPCID.BloodMummy, NPCID.DarkMummy, NPCID.DesertGhoul, NPCID.DesertGhoulCorruption, NPCID.DesertGhoulCrimson, NPCID.DesertGhoulHallow, NPCID.BloodZombie, NPCID.ZombieMerman, NPCID.SandsharkCorrupt, NPCID.SandsharkCrimson, NPCID.Eyezor, NPCID.Frankenstein, NPCID.Vampire, NPCID.VampireBat, NPCID.HeadlessHorseman, NPCID.ZombieElf, NPCID.HeadlessHorseman, NPCID.HeadlessHorseman, NPCID.HeadlessHorseman, ModContent.NPCType<JollyMadman>(), ModContent.NPCType<Keeper>(), ModContent.NPCType<SkullDigger>(), ModContent.NPCType<Fallen>(), ModContent.NPCType<BlisteredScientist>(), ModContent.NPCType<OozingScientist>(), ModContent.NPCType<BloatedScientist>(), ModContent.NPCType<HazmatZombie>(), ModContent.NPCType<BloatedGhoul>(), ModContent.NPCType<IrradiatedBehemoth>() };
 
         #endregion
 
         #region Spirit
 
-        public static List<int> Spirit = new() { NPCID.EnchantedSword, NPCID.CrimsonAxe, NPCID.CursedHammer, NPCID.DesertDjinn, NPCID.DungeonSpirit, NPCID.FloatyGross, NPCID.Ghost, NPCID.PossessedArmor, NPCID.Wraith, NPCID.Reaper, NPCID.Poltergeist, NPCID.PirateGhost, ModContent.NPCType<SkullDigger>(), ModContent.NPCType<VagrantSpirit>(), ModContent.NPCType<KeeperSpirit>(), ModContent.NPCType<ErhanSpirit>(), ModContent.NPCType<LostSoulNPC>(), ModContent.NPCType<NuclearShadow>(), ModContent.NPCType<WraithSlayer_Samurai>(), ModContent.NPCType<EpidotrianSkeleton_SS>(), ModContent.NPCType<ForestNymph_SS>(), ModContent.NPCType<SkeletonAssassin_SS>(), ModContent.NPCType<SkeletonFlagbearer_SS>(), ModContent.NPCType<SkeletonNoble_SS>(), ModContent.NPCType<SkeletonWarden_SS>(), ModContent.NPCType<HazmatZombie_SS>(), ModContent.NPCType<SkeletonDuelist_SS>(), ModContent.NPCType<SkeletonWanderer_SS>(), ModContent.NPCType<Asher_SS>(), ModContent.NPCType<AncientGladestoneGolem_SS>(), ModContent.NPCType<MossyGoliath_SS>(), ModContent.NPCType<HeadlessChicken>(), ModContent.NPCType<GhostfireChicken>() };
+        public static List<int> Spirit = new() { NPCID.EnchantedSword, NPCID.CrimsonAxe, NPCID.CursedHammer, NPCID.DesertDjinn, NPCID.DungeonSpirit, NPCID.FloatyGross, NPCID.Ghost, NPCID.PossessedArmor, NPCID.Wraith, NPCID.Reaper, NPCID.Poltergeist, NPCID.PirateGhost, ModContent.NPCType<SkullDigger>(), ModContent.NPCType<VagrantSpirit>(), ModContent.NPCType<KeeperSpirit>(), ModContent.NPCType<ErhanSpirit>(), ModContent.NPCType<LostSoulNPC>(), ModContent.NPCType<NuclearShadow>(), ModContent.NPCType<WraithSlayer_Samurai>(), ModContent.NPCType<EpidotrianSkeleton_SS>(), ModContent.NPCType<ForestNymph_SS>(), ModContent.NPCType<SkeletonAssassin_SS>(), ModContent.NPCType<SkeletonFlagbearer_SS>(), ModContent.NPCType<SkeletonNoble_SS>(), ModContent.NPCType<SkeletonWarden_SS>(), ModContent.NPCType<SkeletonDuelist_SS>(), ModContent.NPCType<SkeletonWanderer_SS>(), ModContent.NPCType<Asher_SS>(), ModContent.NPCType<AncientGladestoneGolem_SS>(), ModContent.NPCType<MossyGoliath_SS>(), ModContent.NPCType<HeadlessChicken>(), ModContent.NPCType<GhostfireChicken>() };
 
         #endregion
 
@@ -295,23 +197,25 @@ namespace Redemption.Globals
     {
         #region Projectile Lists
 
-        public static List<int> IsTechnicallyMelee = new() { ProjectileID.EnchantedBoomerang, ProjectileID.Flamarang, ProjectileID.BallOHurt, ProjectileID.BlueMoon, ProjectileID.ThornChakram, ProjectileID.Sunfury, ProjectileID.DarkLance, ProjectileID.Trident, ProjectileID.Spear, ProjectileID.WoodenBoomerang, ProjectileID.TheDaoofPow, ProjectileID.CobaltChainsaw, ProjectileID.CobaltDrill, ProjectileID.MythrilChainsaw, ProjectileID.MythrilDrill, ProjectileID.AdamantiteChainsaw, ProjectileID.AdamantiteDrill, ProjectileID.MythrilHalberd, ProjectileID.AdamantiteGlaive, ProjectileID.CobaltNaginata, ProjectileID.Gungnir, ProjectileID.LightDisc, ProjectileID.Hamdrax, ProjectileID.IceBoomerang, ProjectileID.MushroomSpear, ProjectileID.TheRottedFork, ProjectileID.TheMeatball, ProjectileID.PossessedHatchet, ProjectileID.PalladiumPike, ProjectileID.PalladiumDrill, ProjectileID.PalladiumChainsaw, ProjectileID.OrichalcumHalberd, ProjectileID.OrichalcumDrill, ProjectileID.OrichalcumChainsaw, ProjectileID.TitaniumTrident, ProjectileID.TitaniumDrill, ProjectileID.TitaniumChainsaw, ProjectileID.ChlorophytePartisan, ProjectileID.ChlorophyteDrill, ProjectileID.ChlorophyteChainsaw, ProjectileID.FlowerPow, ProjectileID.ChlorophyteJackhammer, ProjectileID.GolemFist, ProjectileID.PaladinsHammerFriendly, ProjectileID.BloodyMachete, ProjectileID.FruitcakeChakram, ProjectileID.NorthPoleWeapon, ProjectileID.ObsidianSwordfish, ProjectileID.Swordfish, ProjectileID.SawtoothShark, ProjectileID.Anchor, ProjectileID.Flairon, ProjectileID.ChainKnife, ProjectileID.ChainGuillotine, ProjectileID.ButchersChainsaw, ProjectileID.Code1, ProjectileID.WoodYoyo, ProjectileID.CorruptYoyo, ProjectileID.CrimsonYoyo, ProjectileID.JungleYoyo, ProjectileID.Cascade, ProjectileID.Chik, ProjectileID.Code2, ProjectileID.Rally, ProjectileID.Yelets, ProjectileID.RedsYoyo, ProjectileID.ValkyrieYoyo, ProjectileID.Amarok, ProjectileID.HelFire, ProjectileID.Kraken, ProjectileID.TheEyeOfCthulhu, ProjectileID.BlackCounterweight, ProjectileID.BlueCounterweight, ProjectileID.GreenCounterweight, ProjectileID.PurpleCounterweight, ProjectileID.RedCounterweight, ProjectileID.YellowCounterweight, ProjectileID.FormatC, ProjectileID.Gradient, ProjectileID.Valor, ProjectileID.MechanicWrench, ProjectileID.Arkhalis, ProjectileID.Terrarian, ProjectileID.SolarWhipSword, ProjectileID.MonkStaffT1, ProjectileID.MonkStaffT2, ProjectileID.MonkStaffT3, ProjectileID.MonkStaffT3_Alt, ProjectileID.ThunderSpear, ProjectileID.Terragrim, ProjectileID.DripplerFlail, ProjectileID.GladiusStab, ProjectileID.BlandWhip, ProjectileID.RulerStab, ProjectileID.SwordWhip, ProjectileID.MaceWhip, ProjectileID.ScytheWhip, ProjectileID.RulerStab, ProjectileID.BouncingShield, ProjectileID.Shroomerang, ProjectileID.JoustingLance, ProjectileID.ShadowJoustingLance, ProjectileID.HallowJoustingLance, ProjectileID.CombatWrench, ProjectileID.CoolWhip, ProjectileID.FireWhip, ProjectileID.ThornWhip, ProjectileID.RainbowWhip, ProjectileID.FinalFractal, ProjectileID.CopperShortswordStab, ProjectileID.TinShortswordStab, ProjectileID.IronShortswordStab, ProjectileID.LeadShortswordStab, ProjectileID.SilverShortswordStab, ProjectileID.TungstenShortswordStab, ProjectileID.GoldShortswordStab, ProjectileID.PlatinumShortswordStab, ProjectileID.Mace, ProjectileID.FlamingMace, ProjectileID.BoneWhip };
+        public static List<int> IsTechnicallyMelee = new() { ProjectileID.EnchantedBoomerang, ProjectileID.Flamarang, ProjectileID.BallOHurt, ProjectileID.BlueMoon, ProjectileID.ThornChakram, ProjectileID.Sunfury, ProjectileID.DarkLance, ProjectileID.Trident, ProjectileID.Spear, ProjectileID.WoodenBoomerang, ProjectileID.TheDaoofPow, ProjectileID.CobaltChainsaw, ProjectileID.CobaltDrill, ProjectileID.MythrilChainsaw, ProjectileID.MythrilDrill, ProjectileID.AdamantiteChainsaw, ProjectileID.AdamantiteDrill, ProjectileID.MythrilHalberd, ProjectileID.AdamantiteGlaive, ProjectileID.CobaltNaginata, ProjectileID.Gungnir, ProjectileID.LightDisc, ProjectileID.Hamdrax, ProjectileID.IceBoomerang, ProjectileID.MushroomSpear, ProjectileID.TheRottedFork, ProjectileID.TheMeatball, ProjectileID.PossessedHatchet, ProjectileID.PalladiumPike, ProjectileID.PalladiumDrill, ProjectileID.PalladiumChainsaw, ProjectileID.OrichalcumHalberd, ProjectileID.OrichalcumDrill, ProjectileID.OrichalcumChainsaw, ProjectileID.TitaniumTrident, ProjectileID.TitaniumDrill, ProjectileID.TitaniumChainsaw, ProjectileID.ChlorophytePartisan, ProjectileID.ChlorophyteDrill, ProjectileID.ChlorophyteChainsaw, ProjectileID.FlowerPow, ProjectileID.ChlorophyteJackhammer, ProjectileID.GolemFist, ProjectileID.PaladinsHammerFriendly, ProjectileID.BloodyMachete, ProjectileID.FruitcakeChakram, ProjectileID.NorthPoleWeapon, ProjectileID.ObsidianSwordfish, ProjectileID.Swordfish, ProjectileID.SawtoothShark, ProjectileID.Anchor, ProjectileID.Flairon, ProjectileID.ChainKnife, ProjectileID.ChainGuillotine, ProjectileID.ButchersChainsaw, ProjectileID.Code1, ProjectileID.WoodYoyo, ProjectileID.CorruptYoyo, ProjectileID.CrimsonYoyo, ProjectileID.JungleYoyo, ProjectileID.Cascade, ProjectileID.Chik, ProjectileID.Code2, ProjectileID.Rally, ProjectileID.Yelets, ProjectileID.RedsYoyo, ProjectileID.ValkyrieYoyo, ProjectileID.Amarok, ProjectileID.HelFire, ProjectileID.Kraken, ProjectileID.TheEyeOfCthulhu, ProjectileID.BlackCounterweight, ProjectileID.BlueCounterweight, ProjectileID.GreenCounterweight, ProjectileID.PurpleCounterweight, ProjectileID.RedCounterweight, ProjectileID.YellowCounterweight, ProjectileID.FormatC, ProjectileID.Gradient, ProjectileID.Valor, ProjectileID.MechanicWrench, ProjectileID.Arkhalis, ProjectileID.Terrarian, ProjectileID.SolarWhipSword, ProjectileID.MonkStaffT1, ProjectileID.MonkStaffT2, ProjectileID.MonkStaffT3, ProjectileID.MonkStaffT3_Alt, ProjectileID.ThunderSpear, ProjectileID.Terragrim, ProjectileID.DripplerFlail, ProjectileID.GladiusStab, ProjectileID.BlandWhip, ProjectileID.RulerStab, ProjectileID.SwordWhip, ProjectileID.MaceWhip, ProjectileID.ScytheWhip, ProjectileID.RulerStab, ProjectileID.BouncingShield, ProjectileID.Shroomerang, ProjectileID.JoustingLance, ProjectileID.ShadowJoustingLance, ProjectileID.HallowJoustingLance, ProjectileID.CombatWrench, ProjectileID.CoolWhip, ProjectileID.FireWhip, ProjectileID.ThornWhip, ProjectileID.RainbowWhip, ProjectileID.FinalFractal, ProjectileID.CopperShortswordStab, ProjectileID.TinShortswordStab, ProjectileID.IronShortswordStab, ProjectileID.LeadShortswordStab, ProjectileID.SilverShortswordStab, ProjectileID.TungstenShortswordStab, ProjectileID.GoldShortswordStab, ProjectileID.PlatinumShortswordStab, ProjectileID.Mace, ProjectileID.FlamingMace, ProjectileID.BoneWhip, ProjectileID.NightsEdge, ProjectileID.TrueNightsEdge, ProjectileID.LightsBane, ProjectileID.BloodButcherer, ProjectileID.Muramasa, ProjectileID.Excalibur, ProjectileID.TrueExcalibur, ProjectileID.TerraBlade2, ProjectileID.TheHorsemansBlade, ProjectileID.HiveFive, ProjectileID.Trimarang };
 
-        public static List<int> NoElement = new() { ProjectileID.CorruptSpray, ProjectileID.CrimsonSpray, ProjectileID.HallowSpray, ProjectileID.MushroomSpray, ProjectileID.PureSpray, ProjectileID.RocketI, ProjectileID.RocketII, ProjectileID.RocketIII, ProjectileID.RocketIV, ModContent.ProjectileType<BleachedSolution_Proj>() };
+        public static List<int> NoElement = new() { ProjectileID.CorruptSpray, ProjectileID.CrimsonSpray, ProjectileID.HallowSpray, ProjectileID.MushroomSpray, ProjectileID.PureSpray, ProjectileID.RocketI, ProjectileID.RocketII, ProjectileID.RocketIII, ProjectileID.RocketIV, ProjectileID.DirtSpray, ModContent.ProjectileType<BleachedSolution_Proj>() };
         #endregion
     }
     public static class ItemLists
     {
+        public static readonly bool[] HasPhysChain = ItemID.Sets.Factory.CreateBoolSet();
+
         #region Item Lists
 
         public static List<int> BluntSwing = new()
-        { ItemID.BreathingReed, ItemID.ZombieArm, ItemID.PurpleClubberfish, ItemID.TaxCollectorsStickOfDoom, ItemID.SlapHand, ItemID.Keybrand, ItemID.HamBat, ItemID.BatBat, ItemID.StaffofRegrowth };
+        { ItemID.BreathingReed, ItemID.ZombieArm, ItemID.PurpleClubberfish, ItemID.TaxCollectorsStickOfDoom, ItemID.SlapHand, ItemID.Keybrand, ItemID.HamBat, ItemID.BatBat, ItemID.StaffofRegrowth, ItemID.WaffleIron };
 
         public static List<int> NoElement = new()
         { ItemID.BlueSolution, ItemID.DarkBlueSolution, ItemID.GreenSolution, ItemID.PurpleSolution, ItemID.RedSolution, ItemID.RocketI, ItemID.RocketII, ItemID.RocketIII, ItemID.RocketIV, ModContent.ItemType<BleachedSolution>() };
 
         public static List<int> AlignmentInterest = new()
-        { ModContent.ItemType<HeartOfThorns>(), ModContent.ItemType<DemonScroll>(), ModContent.ItemType<WeddingRing>(), ModContent.ItemType<SorrowfulEssence>(), ModContent.ItemType<AbandonedTeddy>(), ModContent.ItemType<CyberTech>(), ModContent.ItemType<SlayerShipEngine>(), ModContent.ItemType<MemoryChip>(), ModContent.ItemType<AnglonicMysticBlossom>(), ModContent.ItemType<KingsOakStaff>(), ModContent.ItemType<NebSummon>() };
+        { ModContent.ItemType<HeartOfThorns>(), ModContent.ItemType<DemonScroll>(), ModContent.ItemType<WeddingRing>(), ModContent.ItemType<SorrowfulEssence>(), ModContent.ItemType<AbandonedTeddy>(), ModContent.ItemType<CyberTech>(), ModContent.ItemType<SlayerShipEngine>(), ModContent.ItemType<MemoryChip>(), ModContent.ItemType<AnglonicMysticBlossom>(), ModContent.ItemType<KingsOakStaff>() };
 
         #endregion
     }

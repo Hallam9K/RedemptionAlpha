@@ -19,13 +19,14 @@ namespace Redemption.Items.Accessories.PreHM
                 "\n15% increased " + ElementID.WaterS + " elemental damage and resistance" +
                 "\n10% decreased " + ElementID.FireS + " elemental damage and resistance");*/
             ElementID.ItemWater[Type] = true;
+            ElementID.ItemFire[Type] = true;
             Item.ResearchUnlockCount = 1;
         }
 
         public override void SetDefaults()
         {
-            Item.width = 32;
-            Item.height = 32;
+            Item.width = 42;
+            Item.height = 38;
             Item.value = Item.buyPrice(0, 3, 0, 0);
             Item.rare = ItemRarityID.Blue;
             Item.accessory = true;

@@ -13,6 +13,8 @@ using Redemption.Dusts;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria.GameContent;
 using Terraria.Localization;
+using Redemption.Globals.NPC;
+using Redemption.NPCs.Friendly.TownNPCs;
 
 namespace Redemption.NPCs.Friendly
 {
@@ -110,6 +112,13 @@ namespace Redemption.NPCs.Friendly
                     }
                     if (AITimer >= 260)
                     {
+                        int daerel = NPC.FindFirstNPC(ModContent.NPCType<Daerel>());
+                        if (daerel >= 0)
+                            Main.npc[daerel].GetGlobalNPC<ExclaimMarkNPC>().exclaimationMark[1] = false;
+                        int zephos = NPC.FindFirstNPC(ModContent.NPCType<Zephos>());
+                        if (zephos >= 0)
+                            Main.npc[zephos].GetGlobalNPC<ExclaimMarkNPC>().exclaimationMark[1] = false;
+
                         string s = Language.GetTextValue("Mods.Redemption.UI.SpiritWalker.Keybind");
                         foreach (string key in Redemption.RedeSpiritwalkerAbility.GetAssignedKeys())
                         {

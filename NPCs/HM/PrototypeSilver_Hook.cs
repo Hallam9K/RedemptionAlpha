@@ -1,11 +1,11 @@
-using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Redemption.BaseExtension;
 using Redemption.Globals;
+using System;
 using Terraria;
 using Terraria.GameContent;
 using Terraria.ModLoader;
-using Redemption.BaseExtension;
 
 namespace Redemption.NPCs.HM
 {
@@ -30,6 +30,8 @@ namespace Redemption.NPCs.HM
         }
         public override bool? CanHitNPC(NPC target)
         {
+            if (target.Redemption().spiritSummon)
+                return null;
             NPC host = Main.npc[(int)Projectile.ai[0]];
             return target == host.Redemption().attacker ? null : false;
         }

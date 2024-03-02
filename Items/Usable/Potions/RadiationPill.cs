@@ -1,9 +1,9 @@
-﻿using Terraria;
-using Terraria.ID;
-using Terraria.ModLoader;
+﻿using Redemption.BaseExtension;
 using Redemption.Buffs.Debuffs;
 using Redemption.Globals.Player;
-using Redemption.BaseExtension;
+using Terraria;
+using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace Redemption.Items.Usable.Potions
 {
@@ -31,8 +31,8 @@ namespace Redemption.Items.Usable.Potions
             Item.useAnimation = 17;
             Item.useTime = 17;
             Item.consumable = true;
-            Item.width = 20;
-            Item.height = 26;
+            Item.width = 42;
+            Item.height = 34;
             Item.maxStack = Item.CommonMaxStack;
             Item.value = Item.buyPrice(0, 15, 0, 0);
             Item.rare = ItemRarityID.Yellow;
@@ -44,7 +44,7 @@ namespace Redemption.Items.Usable.Potions
         public override bool? UseItem(Player player)
         {
             Radiation modPlayer = player.RedemptionRad();
-            if (modPlayer.irradiatedEffect == 1 || modPlayer.irradiatedEffect == 2)
+            if (modPlayer.irradiatedEffect is 1 or 2)
             {
                 modPlayer.irradiatedEffect = 0;
                 modPlayer.irradiatedLevel = 0;

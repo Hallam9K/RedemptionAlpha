@@ -16,7 +16,7 @@ namespace Redemption.Tiles.Furniture.ElderWood
         public override void SetStaticDefaults()
         {
             // Properties
-			Main.tileFrameImportant[Type] = true;
+            Main.tileFrameImportant[Type] = true;
             Main.tileBlockLight[Type] = true;
             Main.tileSolid[Type] = true;
             Main.tileNoAttach[Type] = true;

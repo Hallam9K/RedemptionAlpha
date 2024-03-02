@@ -16,8 +16,8 @@ namespace Redemption.Items.Armor.Vanity
 
         public override void SetDefaults()
         {
-            Item.width = 24;
-            Item.height = 18;
+            Item.width = 26;
+            Item.height = 24;
             Item.rare = ItemRarityID.Green;
             Item.vanity = true;
         }

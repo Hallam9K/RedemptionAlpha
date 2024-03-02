@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Redemption.Globals;
 using Redemption.NPCs.Friendly;
+using Redemption.NPCs.Friendly.TownNPCs;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.Enums;

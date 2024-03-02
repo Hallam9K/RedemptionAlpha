@@ -26,7 +26,7 @@ namespace Redemption.Items.Usable.Potions
             Item.useTime = 15;
             Item.consumable = true;
             Item.width = 22;
-            Item.height = 24;
+            Item.height = 30;
             Item.maxStack = Item.CommonMaxStack;
             Item.value = Item.sellPrice(0, 0, 5, 0);
             Item.rare = ItemRarityID.LightRed;

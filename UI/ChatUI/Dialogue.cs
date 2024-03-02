@@ -28,6 +28,7 @@ namespace Redemption.UI.ChatUI
 
         public bool boxFade;
         public bool textFinished;
+        public bool skipping;
 
         public string text;
         public string displayingText;
@@ -73,12 +74,23 @@ namespace Redemption.UI.ChatUI
             if (Main.gamePaused)
                 return;
 
+            if (Redemption.RedeSkipDialogue.Current)
+                skipping = true;
+            if (skipping)
+            {
+                charTime = 0.001f;
+                pauseTime = 0;
+            }
             // Measure our progress via a modulo between our char time and
             // our timer, allowing us to decide how many chars to display
             if (pauseTime <= 0 && displayingText.Length != text.Length && timer >= charTime)
             {
-                if (!Main.dedServ)
-                    SoundEngine.PlaySound((SoundStyle)sound, entity.position);
+                if (displayingText.Length != 0)
+                {
+                    char trigger = displayingText[^1];
+                    if (!Main.dedServ && (trigger is not '.' and not ',' and not '!' and not '?'))
+                        SoundEngine.PlaySound((SoundStyle)sound, entity.position);
+                }
 
                 displayingText += text[displayingText.Length];
                 timer = 0;
@@ -89,18 +101,18 @@ namespace Redemption.UI.ChatUI
             if (displayingText.Length == text.Length)
                 textFinished = true;
 
-            if (textFinished && preFadeTime <= 0 && fadeTime <= 0 || !entity.active)
+            if ((textFinished && ((preFadeTime <= 0 && fadeTime <= 0) || Redemption.RedeSkipDialogue.Current)) || !entity.active)
             {
                 if (endID > 0)
                 {
                     TriggerEnd(endID);
-                    if (chain != null)
-                        chain.TriggerEnd(endID);
+                    chain?.TriggerEnd(endID);
                 }
                 if (chain != null)
                     chain.Dialogue.Remove(this);
                 else
                     ChatUI.Dialogue.Remove(this);
+                skipping = false;
             }
 
             float passedTime = (float)gameTime.ElapsedGameTime.TotalSeconds;

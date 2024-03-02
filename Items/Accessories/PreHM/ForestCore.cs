@@ -17,14 +17,13 @@ namespace Redemption.Items.Accessories.PreHM
             /* Tooltip.SetDefault("Increased chance of Nature Boons to drop from the " + ElementID.NatureS + " elemental bonus\n" +
                 "Nature Boons additionally increase critical strike chance for " + ElementID.NatureS + " weapons by 10%\n" +
                 "Increased duration of Nature Boons' effect"); */
-            ElementID.ItemNature[Type] = true;
             Item.ResearchUnlockCount = 1;
         }
 
         public override void SetDefaults()
         {
-            Item.width = 30;
-            Item.height = 36;
+            Item.width = 38;
+            Item.height = 32;
             Item.value = Item.buyPrice(0, 6, 0, 0);
             Item.hasVanityEffects = true;
             Item.rare = ItemRarityID.Green;

@@ -19,6 +19,7 @@ using Redemption.NPCs.HM;
 using Redemption.Buffs.Debuffs;
 using Redemption.Buffs.NPCBuffs;
 using Redemption.Globals.World;
+using Redemption.NPCs.Friendly.TownNPCs;
 
 namespace Redemption.Globals
 {

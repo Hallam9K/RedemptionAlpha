@@ -58,6 +58,7 @@ namespace Redemption
         public static int grooveTimer;
         public static ModKeybind RedeSpecialAbility;
         public static ModKeybind RedeSpiritwalkerAbility;
+        public static ModKeybind RedeSkipDialogue;
         public static bool AprilFools => DateTime.Now is DateTime { Month: 4, Day: 1 };
         public static bool FinlandDay => DateTime.Now is DateTime { Month: 12, Day: 6 };
 
@@ -235,6 +236,7 @@ namespace Redemption
 
             RedeSpecialAbility = KeybindLoader.RegisterKeybind(this, "Special Ability Key", Keys.F);
             RedeSpiritwalkerAbility = KeybindLoader.RegisterKeybind(this, "Spirit Walker Key", Keys.K);
+            RedeSkipDialogue = KeybindLoader.RegisterKeybind(this, "Skip Dialogue Key", Keys.Back);
             AntiqueDorulCurrencyId = CustomCurrencyManager.RegisterCurrency(new AntiqueDorulCurrency(ModContent.ItemType<AncientGoldCoin>(), 999L, "Antique Doruls"));
         }
         public override void Unload()

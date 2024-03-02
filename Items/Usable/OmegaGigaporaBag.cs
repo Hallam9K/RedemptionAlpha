@@ -1,30 +1,30 @@
-using Microsoft.Xna.Framework.Graphics;
-using Terraria;
-using Terraria.ModLoader;
-using Terraria.ID;
-using Redemption.BaseExtension;
 using Microsoft.Xna.Framework;
-using Terraria.GameContent;
-using Redemption.Items.Materials.HM;
-using Terraria.GameContent.ItemDropRules;
+using Microsoft.Xna.Framework.Graphics;
+using Redemption.BaseExtension;
 using Redemption.Items.Accessories.HM;
 using Redemption.Items.Armor.Vanity;
 using Redemption.Items.Armor.Vanity.Dev;
+using Redemption.Items.Materials.HM;
+using Terraria;
+using Terraria.GameContent;
+using Terraria.GameContent.ItemDropRules;
+using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace Redemption.Items.Usable
 {
     public class OmegaGigaporaBag : ModItem
-	{
+    {
         public override void SetStaticDefaults()
         {
             // DisplayName.SetDefault("Treasure Box (Omega Gigapora)");
-			// Tooltip.SetDefault("{$CommonItemTooltip.RightClickToOpen}");
+            // Tooltip.SetDefault("{$CommonItemTooltip.RightClickToOpen}");
             ItemID.Sets.BossBag[Type] = true;
             Item.ResearchUnlockCount = 3;
         }
 
         public override void SetDefaults()
-		{
+        {
             Item.maxStack = Item.CommonMaxStack;
             Item.consumable = true;
             Item.width = 24;

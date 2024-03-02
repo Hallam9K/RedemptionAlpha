@@ -94,6 +94,7 @@ namespace Redemption
         public static readonly SoundStyle Slice1 = new("Redemption/Sounds/Custom/Slice1") { PitchVariance = .1f };
         public static readonly SoundStyle Slice2 = new("Redemption/Sounds/Custom/Slice2");
         public static readonly SoundStyle Slice3 = new("Redemption/Sounds/Custom/Slice3") { PitchVariance = .1f };
+        public static readonly SoundStyle Slice4 = new("Redemption/Sounds/Custom/Slice4") { PitchVariance = .1f };
         public static readonly SoundStyle Spark1 = new("Redemption/Sounds/Custom/Spark1") { PitchVariance = .1f };
         public static readonly SoundStyle SpookyNoise = new("Redemption/Sounds/Custom/SpookyNoise");
         public static readonly SoundStyle Swing1 = new("Redemption/Sounds/Custom/Swing1") { Volume = .4f, PitchVariance = .1f };

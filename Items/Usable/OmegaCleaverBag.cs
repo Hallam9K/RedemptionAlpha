@@ -1,40 +1,40 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Redemption.Items.Materials.HM;
-using Terraria;
-using Terraria.GameContent;
-using Terraria.ID;
-using Terraria.ModLoader;
 using Redemption.BaseExtension;
 using Redemption.Items.Accessories.HM;
 using Redemption.Items.Armor.Vanity;
-using Terraria.GameContent.ItemDropRules;
-using Redemption.Items.Donator.Gonk;
 using Redemption.Items.Armor.Vanity.Dev;
+using Redemption.Items.Donator.Gonk;
+using Redemption.Items.Materials.HM;
+using Terraria;
+using Terraria.GameContent;
+using Terraria.GameContent.ItemDropRules;
+using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace Redemption.Items.Usable
 {
     public class OmegaCleaverBag : ModItem
-	{
-		public override void SetStaticDefaults()
-		{
-			// DisplayName.SetDefault("Treasure Box (Omega Cleaver)");
-			// Tooltip.SetDefault("{$CommonItemTooltip.RightClickToOpen}");
+    {
+        public override void SetStaticDefaults()
+        {
+            // DisplayName.SetDefault("Treasure Box (Omega Cleaver)");
+            // Tooltip.SetDefault("{$CommonItemTooltip.RightClickToOpen}");
             ItemID.Sets.BossBag[Type] = true;
             Item.ResearchUnlockCount = 3;
         }
-		public override void SetDefaults()
-		{
-			Item.maxStack = Item.CommonMaxStack;
-			Item.consumable = true;
-			Item.width = 24;
-			Item.height = 24;
-			Item.rare = ItemRarityID.Expert;
-			Item.expert = true;
+        public override void SetDefaults()
+        {
+            Item.maxStack = Item.CommonMaxStack;
+            Item.consumable = true;
+            Item.width = 24;
+            Item.height = 24;
+            Item.rare = ItemRarityID.Expert;
+            Item.expert = true;
             if (!Main.dedServ)
                 Item.RedemptionGlow().glowTexture = ModContent.Request<Texture2D>(Texture + "_Glow").Value;
         }
-		public override bool CanRightClick() => true;
+        public override bool CanRightClick() => true;
         public override void RightClick(Player player)
         {
             if (Main.rand.NextBool(20))
@@ -49,7 +49,7 @@ namespace Redemption.Items.Usable
             itemLoot.Add(ItemDropRule.NotScalingWithLuck(ModContent.ItemType<SwordHeadband>(), 7));
             itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<GonkPet>(), 10));
             itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<CorruptedXenomite>(), 1, 4, 8));
-            itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<BrokenBlade>()));
+            itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<MechanicalSheath>()));
         }
         public override void PostUpdate()
         {

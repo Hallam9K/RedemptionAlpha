@@ -1,18 +1,17 @@
 using Microsoft.Xna.Framework;
 using Terraria;
+using Terraria.Enums;
+using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
-using Terraria.ID;
-using Terraria.Enums;
 using Terraria.ObjectData;
-using Redemption.Items.Placeable.Furniture.PetrifiedWood;
 
 namespace Redemption.Tiles.Furniture.PetrifiedWood
 {
     public class PetrifiedWoodLanternTile : ModTile
-	{
-		public override void SetStaticDefaults()
-		{
+    {
+        public override void SetStaticDefaults()
+        {
             Main.tileLighted[Type] = true;
             Main.tileFrameImportant[Type] = true;
             Main.tileLavaDeath[Type] = true;
@@ -25,7 +24,6 @@ namespace Redemption.Tiles.Furniture.PetrifiedWood
             TileObjectData.addTile(Type);
             AddMapEntry(new Color(100, 100, 100), Language.GetText("MapObject.Lantern"));
             AdjTiles = new int[] { TileID.HangingLanterns };
-            RegisterItemDrop(ModContent.ItemType<PetrifiedWoodLantern>());
             AddToArray(ref TileID.Sets.RoomNeeds.CountsAsTorch);
             DustType = DustID.Ash;
         }

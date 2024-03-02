@@ -357,7 +357,7 @@ namespace Redemption.NPCs.Friendly
         {
             if (AITimer == 1 && RedeWorld.DayNightCount < 4)
                 return false;
-            return true;
+            return !Main.dayTime;
         }
 
         public override void FindFrame(int frameHeight)
@@ -438,8 +438,9 @@ namespace Redemption.NPCs.Friendly
             float baseChance = SpawnCondition.OverworldDay.Chance;
             float multiplier = Framing.GetTileSafely(spawnInfo.SpawnTileX, spawnInfo.SpawnTileY).TileType == TileID.Grass ? (Main.raining ? 0.025f : 0.008f) : 0f;
             float trees = score >= 60 ? 1 : 0;
+            float nymphIncrease = RedeQuest.forestNymphVar > 0 ? 2 : 1;
 
-            return baseChance * multiplier * trees;
+            return baseChance * multiplier * trees * nymphIncrease;
         }
         public override void HitEffect(NPC.HitInfo hit)
         {

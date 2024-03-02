@@ -1,17 +1,17 @@
 using Microsoft.Xna.Framework;
 using Redemption.Buffs.Debuffs;
+using Redemption.Items.Usable.Summons;
 using Terraria;
+using Terraria.GameContent.Metadata;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
-using Terraria.GameContent.Metadata;
-using Redemption.Items.Usable.Summons;
 
 namespace Redemption.Tiles.Plants
 {
     public class HeartOfThornsTile : ModTile
-	{
+    {
         public override void SetStaticDefaults()
         {
             Main.tileFrameImportant[Type] = true;

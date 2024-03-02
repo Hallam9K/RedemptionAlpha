@@ -10,9 +10,9 @@ using Terraria.ModLoader;
 namespace Redemption.Items.Weapons.HM.Ranged
 {
     public class CorruptedDAN : ModItem
-	{
-		public override void SetStaticDefaults()
-		{
+    {
+        public override void SetStaticDefaults()
+        {
             // DisplayName.SetDefault("Corrupted D.A.N");
             /* Tooltip.SetDefault("Fires two blasts of rockets per use\n" +
                 "Continuing to hold left-click will spin the weapon while firing, creating a spiral of homing rockets\n" +
@@ -26,8 +26,8 @@ namespace Redemption.Items.Weapons.HM.Ranged
         {
             Item.damage = 40;
             Item.DamageType = DamageClass.Ranged;
-            Item.width = 104;
-            Item.height = 40;
+            Item.width = 132;
+            Item.height = 52;
             Item.useTime = 50;
             Item.useAnimation = 50;
             Item.useStyle = ItemUseStyleID.Shoot;

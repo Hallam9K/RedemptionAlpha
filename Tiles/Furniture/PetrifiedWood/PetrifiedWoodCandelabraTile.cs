@@ -1,20 +1,19 @@
 using Microsoft.Xna.Framework;
 using Terraria;
+using Terraria.Enums;
+using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
-using Terraria.ID;
 using Terraria.ObjectData;
-using Terraria.Enums;
-using Redemption.Items.Placeable.Furniture.PetrifiedWood;
 
 namespace Redemption.Tiles.Furniture.PetrifiedWood
 {
     public class PetrifiedWoodCandelabraTile : ModTile
-	{
-		public override void SetStaticDefaults()
-		{
-			Main.tileFrameImportant[Type] = true;
-			Main.tileNoAttach[Type] = true;
+    {
+        public override void SetStaticDefaults()
+        {
+            Main.tileFrameImportant[Type] = true;
+            Main.tileNoAttach[Type] = true;
             Main.tileLighted[Type] = true;
             Main.tileLavaDeath[Type] = true;
             TileObjectData.newTile.CopyFrom(TileObjectData.Style2x2);
@@ -24,12 +23,9 @@ namespace Redemption.Tiles.Furniture.PetrifiedWood
             TileObjectData.newTile.DrawYOffset = 2;
             TileObjectData.newTile.StyleLineSkip = 2;
             TileObjectData.addTile(Type);
-			LocalizedText name = CreateMapEntryName();
-			// name.SetDefault("Petrified Wood Candelabra");
-            AddMapEntry(new Color(100, 100, 100), name);
-            RegisterItemDrop(ModContent.ItemType<PetrifiedWoodCandelabra>());
+            AddMapEntry(new Color(100, 100, 100), Language.GetText("ItemName.Candelabra"));
             AddToArray(ref TileID.Sets.RoomNeeds.CountsAsTorch);
-            AdjTiles = new int[]{ TileID.Candelabras };
+            AdjTiles = new int[] { TileID.Candelabras };
             DustType = DustID.Ash;
         }
         public override void HitWire(int i, int j)

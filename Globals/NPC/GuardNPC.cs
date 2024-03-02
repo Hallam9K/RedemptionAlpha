@@ -1,16 +1,16 @@
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Redemption.Base;
-using Terraria;
-using Terraria.Audio;
-using Terraria.ID;
-using Terraria.ModLoader;
 using Redemption.BaseExtension;
-using Redemption.NPCs.PreHM;
 using Redemption.NPCs.Friendly.SpiritSummons;
 using Redemption.NPCs.Minibosses.Calavia;
+using Redemption.NPCs.PreHM;
 using Redemption.UI.ChatUI;
+using Terraria;
+using Terraria.Audio;
 using Terraria.GameContent.UI;
-using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework;
+using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace Redemption.Globals.NPC
 {
@@ -96,10 +96,10 @@ namespace Redemption.Globals.NPC
                     Gore.NewGore(npc.GetSource_FromThis(), npc.position, npc.velocity, ModContent.Find<ModGore>("Redemption/CalaviaShieldGore2").Type, 1);
                 }
                 EmoteBubble.NewBubble(1, new WorldUIAnchor(npc), 120);
-                Texture2D bubble = ModContent.Request<Texture2D>("Redemption/UI/TextBubble_Epidotra").Value;
-                SoundStyle voice = CustomSounds.Voice1 with { Pitch = 0.6f };
                 if (!Main.dedServ)
                 {
+                    Texture2D bubble = !Main.dedServ ? ModContent.Request<Texture2D>("Redemption/UI/TextBubble_Epidotra").Value : null;
+                    SoundStyle voice = CustomSounds.Voice1 with { Pitch = 0.6f };
                     Dialogue d1 = new(npc, "Oru'takh!", Color.White, Color.Gray, voice, 0.01f, 1f, .5f, true, bubble: bubble);
                     ChatUI.Visible = true;
                     ChatUI.Add(d1);
@@ -115,8 +115,10 @@ namespace Redemption.Globals.NPC
                 GuardPierce = true;
             if (item.HasElement(ElementID.Psychic))
                 IgnoreArmour = true;
+            if (player.RedemptionPlayerBuff().wardbreaker && (item.HasElement(ElementID.Arcane) || item.DamageType == DamageClass.Magic))
+                GuardDamage += 1;
             if (item.hammer > 0 || item.Redemption().TechnicallyHammer)
-                GuardDamage *= 4;
+                GuardDamage += 3;
         }
         public override void ModifyHitByProjectile(Terraria.NPC npc, Projectile projectile, ref Terraria.NPC.HitModifiers modifiers)
         {
@@ -126,11 +128,13 @@ namespace Redemption.Globals.NPC
             if (projectile.HasElement(ElementID.Psychic))
                 IgnoreArmour = true;
             if (projectile.Redemption().IsHammer || projectile.type == ProjectileID.PaladinsHammerFriendly)
-                GuardDamage *= 4;
+                GuardDamage += 3;
             if (npc.RedemptionNPCBuff().brokenArmor || npc.RedemptionNPCBuff().stunned || projectile.Redemption().EnergyBased)
                 GuardPierce = true;
+            if (Main.player[projectile.owner].RedemptionPlayerBuff().wardbreaker && (projectile.HasElement(ElementID.Arcane) || projectile.DamageType == DamageClass.Magic))
+                GuardDamage += 1;
             if (projectile.HasElement(ElementID.Explosive))
-                GuardDamage *= 2;
+                GuardDamage += 1;
         }
         public override void SetDefaults(Terraria.NPC npc)
         {

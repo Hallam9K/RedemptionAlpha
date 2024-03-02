@@ -1,20 +1,20 @@
 using Microsoft.Xna.Framework;
+using Redemption.Items.Placeable.Furniture.ElderWood;
 using Terraria;
+using Terraria.Audio;
+using Terraria.DataStructures;
+using Terraria.GameContent.ObjectInteractions;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
-using Terraria.DataStructures;
-using Redemption.Items.Placeable.Furniture.ElderWood;
-using Terraria.Audio;
-using Terraria.GameContent.ObjectInteractions;
 
 namespace Redemption.Tiles.Furniture.ElderWood
 {
     public class ElderWoodDresserTile : ModTile
-	{
-		public override void SetStaticDefaults()
-		{
+    {
+        public override void SetStaticDefaults()
+        {
             Main.tileSolidTop[Type] = true;
             Main.tileFrameImportant[Type] = true;
             Main.tileNoAttach[Type] = true;
@@ -40,16 +40,16 @@ namespace Redemption.Tiles.Furniture.ElderWood
             };
             TileObjectData.newTile.LavaDeath = false;
             TileObjectData.addTile(Type);
-			AddToArray(ref TileID.Sets.RoomNeeds.CountsAsTable);
-			LocalizedText name = CreateMapEntryName();
-			// name.SetDefault("Elder Wood Dresser");
-			AddMapEntry(new Color(109, 87, 78), name);
-			//ContainerName/* tModPorter Note: Removed. Override DefaultContainerName instead */.SetDefault("Elder Wood Dresser");
-			AdjTiles = new int[] { TileID.Dressers };
-			DustType = DustID.t_BorealWood;
-		}
+            AddToArray(ref TileID.Sets.RoomNeeds.CountsAsTable);
+            LocalizedText name = CreateMapEntryName();
+            // name.SetDefault("Elder Wood Dresser");
+            AddMapEntry(new Color(109, 87, 78), name);
+            //ContainerName/* tModPorter Note: Removed. Override DefaultContainerName instead */.SetDefault("Elder Wood Dresser");
+            AdjTiles = new int[] { TileID.Dressers };
+            DustType = DustID.t_BorealWood;
+        }
 
-		public override bool HasSmartInteract(int i, int j, SmartInteractScanSettings settings) => true;
+        public override bool HasSmartInteract(int i, int j, SmartInteractScanSettings settings) => true;
         public override LocalizedText DefaultContainerName(int frameX, int frameY) => CreateMapEntryName();
         public override void ModifySmartInteractCoords(ref int width, ref int height, ref int frameWidth, ref int frameHeight, ref int extraY)
         {

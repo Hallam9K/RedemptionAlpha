@@ -77,14 +77,6 @@ namespace Redemption.Globals
                         WorldGen.PlaceTile(i, j - 1, ModContent.TileType<AnglonicMysticBlossomTile>(), true);
                 }
             }
-            if (type == ModContent.TileType<IrradiatedCorruptGrassTile>() || type == ModContent.TileType<IrradiatedCrimsonGrassTile>() || type == ModContent.TileType<IrradiatedGrassTile>())
-            {
-                if (!Framing.GetTileSafely(i, j - 1).HasTile && Main.tile[i, j].HasTile && Main.tile[i, j - 1].LiquidAmount == 0)
-                {
-                    if (Main.rand.NextBool(300))
-                        WorldGen.PlaceTile(i, j - 1, ModContent.TileType<RadRootTile>(), true);
-                }
-            }
             if (RedeGen.cryoCrystalSpawn && TileID.Sets.Conversion.Ice[type])
             {
                 bool tileUp = !Framing.GetTileSafely(i, j - 1).HasTile;

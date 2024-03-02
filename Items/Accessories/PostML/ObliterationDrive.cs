@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Redemption.Base;
+using Redemption.BaseExtension;
 using Redemption.Buffs;
 using Redemption.Buffs.Debuffs;
 using Redemption.NPCs.Bosses.Cleaver;
@@ -110,7 +111,7 @@ namespace Redemption.Items.Accessories.PostML
             if (DashDelay > 0)
                 DashDelay--;
 
-            if (DashDelay == 1)
+            if (DashDelay == 1 && !Main.dedServ)
                 SoundEngine.PlaySound(CustomSounds.OODashReady with { Volume = 0.6f, Pitch = 0.3f }, Player.position);
 
             if (DashTimer > 0)

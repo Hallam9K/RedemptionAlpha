@@ -1,16 +1,16 @@
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using Redemption.Items.Placeable.Trophies;
+using ReLogic.Content;
+using System;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
+using Terraria.Enums;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
-using Microsoft.Xna.Framework.Graphics;
-using Terraria.Enums;
-using System;
-using ReLogic.Content;
-using Terraria.Localization;
-using Redemption.Items.Placeable.Trophies;
-using System.Collections.Generic;
 
 namespace Redemption.Tiles.Trophies
 {
@@ -19,7 +19,7 @@ namespace Redemption.Tiles.Trophies
         public const int FrameWidth = 18 * 3;
         public const int FrameHeight = 18 * 4;
         public const int HorizontalFrames = 1;
-        public const int VerticalFrames = 15;
+        public const int VerticalFrames = 21;
 
         public Asset<Texture2D> RelicTexture;
 
@@ -114,6 +114,12 @@ namespace Redemption.Tiles.Trophies
                     break;
                 case 14:
                     itemType = ModContent.ItemType<BasanRelic>();
+                    break;
+                case 18:
+                    itemType = ModContent.ItemType<SkullDiggerRelic>();
+                    break;
+                case 19:
+                    itemType = ModContent.ItemType<EaglecrestGolemRelic>();
                     break;
             }
 

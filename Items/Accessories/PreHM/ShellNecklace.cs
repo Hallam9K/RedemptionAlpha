@@ -25,8 +25,8 @@ namespace Redemption.Items.Accessories.PreHM
 
         public override void SetDefaults()
         {
-            Item.width = 26;
-            Item.height = 26;
+            Item.width = 32;
+            Item.height = 38;
             Item.defense = 1;
             Item.value = Item.buyPrice(0, 1, 0, 0);
             Item.hasVanityEffects = true;

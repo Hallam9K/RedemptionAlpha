@@ -1,20 +1,20 @@
 using Microsoft.Xna.Framework;
+using Redemption.Items.Placeable.Furniture.PetrifiedWood;
 using Terraria;
+using Terraria.Audio;
+using Terraria.DataStructures;
+using Terraria.GameContent.ObjectInteractions;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
-using Terraria.DataStructures;
-using Redemption.Items.Placeable.Furniture.PetrifiedWood;
-using Terraria.Audio;
-using Terraria.GameContent.ObjectInteractions;
 
 namespace Redemption.Tiles.Furniture.PetrifiedWood
 {
     public class PetrifiedWoodDresserTile : ModTile
-	{
-		public override void SetStaticDefaults()
-		{
+    {
+        public override void SetStaticDefaults()
+        {
             Main.tileSolidTop[Type] = true;
             Main.tileFrameImportant[Type] = true;
             Main.tileNoAttach[Type] = true;
@@ -41,12 +41,12 @@ namespace Redemption.Tiles.Furniture.PetrifiedWood
             TileObjectData.newTile.LavaDeath = false;
             TileObjectData.addTile(Type);
             AddToArray(ref TileID.Sets.RoomNeeds.CountsAsTable);
-			LocalizedText name = CreateMapEntryName();
-			// name.SetDefault("Petrified Wood Dresser");
-			AddMapEntry(new Color(100, 100, 100), name);
-			AdjTiles = new int[] { TileID.Dressers };
-			DustType = DustID.Ash;
-		}
+            LocalizedText name = CreateMapEntryName();
+            // name.SetDefault("Petrified Wood Dresser");
+            AddMapEntry(new Color(100, 100, 100), name);
+            AdjTiles = new int[] { TileID.Dressers };
+            DustType = DustID.Ash;
+        }
 
         public override bool HasSmartInteract(int i, int j, SmartInteractScanSettings settings) => true;
         public override LocalizedText DefaultContainerName(int frameX, int frameY) => CreateMapEntryName();

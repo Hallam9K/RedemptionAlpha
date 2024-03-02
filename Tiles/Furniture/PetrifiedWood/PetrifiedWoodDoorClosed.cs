@@ -12,7 +12,7 @@ using Terraria.ObjectData;
 namespace Redemption.Tiles.Furniture.PetrifiedWood
 {
     public class PetrifiedWoodDoorClosed : ModTile
-	{
+    {
         public override void SetStaticDefaults()
         {
             // Properties

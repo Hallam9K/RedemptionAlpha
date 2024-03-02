@@ -24,6 +24,11 @@ using Terraria.Localization;
 using Redemption.Tiles.Furniture.Lab;
 using Redemption.Tiles.Furniture.Misc;
 using Redemption.Tiles.Furniture.SlayerShip;
+using Redemption.Items.Accessories.HM;
+using Redemption.Items.Materials.HM;
+using Redemption.Items.Quest;
+using Redemption.Items.Usable;
+using Terraria.Utilities;
 
 namespace Redemption.Globals.Player
 {
@@ -287,7 +292,44 @@ namespace Redemption.Globals.Player
                         itemDrop = ModContent.ItemType<LabCrate>();
                 }
                 if (Player.InModBiome<WastelandPurityBiome>())
-                    itemDrop = ModContent.ItemType<PetrifiedCrate>();
+                {
+                    int blinky = ModContent.ItemType<Blinky>();
+                    if (attempt.questFish == blinky && attempt.uncommon)
+                    {
+                        itemDrop = blinky;
+                        return;
+                    }
+                    if (attempt.crate && !attempt.veryrare && !attempt.legendary && attempt.rare)
+                    {
+                        itemDrop = ModContent.ItemType<PetrifiedCrate>();
+                        return;
+                    }
+                    else
+                    {
+                        WeightedRandom<int> choice = new(Main.rand);
+                        if (attempt.common)
+                        {
+                            choice.Add(ItemID.TinCan, 1);
+                            choice.Add(ItemID.FishingSeaweed, 1);
+                            choice.Add(ItemID.OldShoe, 1);
+                            choice.Add(ItemID.Bone, .5);
+                            choice.Add(ModContent.ItemType<BloatedTrout>(), 2);
+                        }
+                        else if (attempt.uncommon)
+                            choice.Add(ModContent.ItemType<ToxicGlooper>(), 1);
+                        else if (attempt.rare)
+                            choice.Add(ModContent.ItemType<ScrapMetal>(), 1);
+                        else if (attempt.veryrare)
+                        {
+                            choice.Add(ItemID.AdhesiveBandage, 1);
+                            choice.Add(ModContent.ItemType<GasMask>(), 1);
+                        }
+                        else if (attempt.legendary)
+                            choice.Add(ItemID.FartinaJar, 1);
+                        itemDrop = choice;
+                        return;
+                    }
+                }
             }
         }
         public override IEnumerable<Item> AddStartingItems(bool mediumCoreDeath)

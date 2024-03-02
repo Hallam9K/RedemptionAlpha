@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Redemption.Base;
+using Redemption.BaseExtension;
 using Redemption.Buffs.Debuffs;
 using Redemption.Items.Accessories.PostML;
 using Terraria;
@@ -27,14 +28,16 @@ namespace Redemption.Items.Accessories.HM
             Item.damage = 20;
             Item.knockBack = 8;
             Item.DamageType = DamageClass.Melee;
-            Item.width = 22;
-            Item.height = 26;
+            Item.width = 30;
+            Item.height = 32;
             Item.value = Item.sellPrice(0, 5, 0, 0);
             Item.hasVanityEffects = true;
             Item.rare = ItemRarityID.Pink;
             Item.accessory = true;
             Item.defense = 2;
         }
+        public override bool WeaponPrefix() => false;
+        public override bool MeleePrefix() => false;
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
             player.GetModPlayer<HoloshieldDashPlayer>().DashAccessoryEquipped = true;
@@ -128,7 +131,7 @@ namespace Redemption.Items.Accessories.HM
                         if (Player.kbBuff)
                             knockback *= 1.5f;
 
-                        if (Main.rand.Next(100) < Player.GetCritChance(DamageClass.Melee))
+                        if (Main.rand.Next(100) < Player.GetTotalCritChance(DamageClass.Melee))
                             crit = true;
 
                         int hitDirection = Player.velocity.X < 0f ? -1 : 1;
@@ -148,6 +151,7 @@ namespace Redemption.Items.Accessories.HM
                         Player.velocity.Y = -4f;
                         ShieldHit = 1;
                         DashTimer = 0;
+                        Player.eocDash = DashTimer - 1;
                     }
                     for (int i = 0; i < Main.maxProjectiles; i++)
                     {
@@ -172,6 +176,7 @@ namespace Redemption.Items.Accessories.HM
                         Player.velocity.Y = -4f;
                         ShieldHit = 1;
                         DashTimer = 0;
+                        Player.eocDash = DashTimer - 1;
                     }
                 }
                 DashTimer--;

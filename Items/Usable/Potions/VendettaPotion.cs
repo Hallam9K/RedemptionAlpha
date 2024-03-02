@@ -13,7 +13,7 @@ namespace Redemption.Items.Usable.Potions
     {
         public override LocalizedText Tooltip => base.Tooltip.WithFormatArgs(ElementID.PoisonS);
         public override void SetStaticDefaults()
-		{
+        {
             /* Tooltip.SetDefault("Attackers also take damage, and get inflicted by poison\n" +
                 "10% increased " + ElementID.PoisonS + " elemental damage"); */
             ItemID.Sets.DrinkParticleColors[Type] = new Color[3] {
@@ -25,15 +25,15 @@ namespace Redemption.Items.Usable.Potions
         }
 
         public override void SetDefaults()
-		{
+        {
             Item.UseSound = SoundID.Item3;
             Item.useStyle = ItemUseStyleID.DrinkLiquid;
             Item.useTurn = true;
             Item.useAnimation = 17;
             Item.useTime = 17;
             Item.consumable = true;
-            Item.width = 24;
-            Item.height = 32;
+            Item.width = 28;
+            Item.height = 34;
             Item.maxStack = Item.CommonMaxStack;
             Item.value = Item.sellPrice(0, 0, 3, 0);
             Item.rare = ItemRarityID.Blue;
@@ -58,5 +58,5 @@ namespace Redemption.Items.Usable.Potions
                 .DisableDecraft()
                 .Register();
         }
-	}
+    }
 }

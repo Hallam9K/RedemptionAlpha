@@ -40,6 +40,13 @@ namespace Redemption
         //[Tooltip("Disables elemental resistances and damage")]
         public bool ElementDisable;
 
+        [Range(0f, 1f)]
+        [DefaultValue(1f)]
+        [Slider]
+        //[Label("Screen Shake Intensity")]
+        //[Tooltip("Reduce to decrease the intensity of screen shaking effects, 0 will disable it entirely")]
+        public float ShakeIntensity;
+
         //[Label("No Patient Zero Build-Up")]
         //[Tooltip("Makes the boss begin the fight instantly, mainly for no-hitters. (This will cause the boss's pulse effect to not sync well with the music)")]
         public bool NoPZBuildUp;

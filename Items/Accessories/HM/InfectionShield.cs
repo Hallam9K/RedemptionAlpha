@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Redemption.Base;
+using Redemption.BaseExtension;
 using Redemption.Buffs.Debuffs;
 using Redemption.Globals;
 using Redemption.Items.Accessories.PostML;
@@ -41,18 +42,13 @@ namespace Redemption.Items.Accessories.HM
             Item.knockBack = 10;
             Item.expert = true;
         }
+        public override bool WeaponPrefix() => false;
+        public override bool MeleePrefix() => false;
         public override void AddRecipes()
         {
             CreateRecipe()
                 .AddIngredient(ItemID.EoCShield)
                 .AddIngredient(ModContent.ItemType<Xenomite>(), 10)
-                .AddIngredient(ItemID.TitaniumBar, 5)
-                .AddTile(TileID.MythrilAnvil)
-                .Register();
-            CreateRecipe()
-                .AddIngredient(ItemID.EoCShield)
-                .AddIngredient(ModContent.ItemType<Xenomite>(), 10)
-                .AddIngredient(ItemID.AdamantiteBar, 5)
                 .AddTile(TileID.MythrilAnvil)
                 .Register();
         }
@@ -165,7 +161,7 @@ namespace Redemption.Items.Accessories.HM
                         if (Player.kbBuff)
                             knockback *= 1.5f;
 
-                        if (Main.rand.Next(100) < Player.GetCritChance(DamageClass.Melee))
+                        if (Main.rand.Next(100) < Player.GetTotalCritChance(DamageClass.Melee))
                             crit = true;
 
                         int hitDirection = Player.velocity.X < 0f ? -1 : 1;
@@ -189,6 +185,7 @@ namespace Redemption.Items.Accessories.HM
                         Player.velocity.Y = -4f;
                         ShieldHit = i;
                         DashTimer = 0;
+                        Player.eocDash = DashTimer - 1;
                     }
                 }
                 DashTimer--;

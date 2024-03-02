@@ -1,17 +1,17 @@
-﻿using System;
-using Terraria;
-using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
-using Terraria.ID;
 using Microsoft.Xna.Framework.Graphics;
-using Redemption.Globals;
-using Terraria.GameContent;
-using Terraria.Audio;
-using Redemption.Projectiles.Ranged;
+using ParticleLibrary.Core;
 using Redemption.BaseExtension;
-using ParticleLibrary;
-using Redemption.Particles;
+using Redemption.Globals;
 using Redemption.Globals.Player;
+using Redemption.Particles;
+using Redemption.Projectiles.Ranged;
+using System;
+using Terraria;
+using Terraria.Audio;
+using Terraria.GameContent;
+using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace Redemption.Items.Weapons.HM.Ranged
 {
@@ -24,8 +24,8 @@ namespace Redemption.Items.Weapons.HM.Ranged
         }
         public override void SetSafeDefaults()
         {
-            Projectile.width = 104;
-            Projectile.height = 40;
+            Projectile.width = 132;
+            Projectile.height = 52;
             Projectile.friendly = false;
             Projectile.hostile = false;
             Projectile.penetrate = -1;
@@ -90,7 +90,7 @@ namespace Redemption.Items.Weapons.HM.Ranged
                 int weaponDamage = Projectile.damage;
                 float weaponKnockback = Projectile.knockBack;
                 float shootSpeed = player.inventory[player.selectedItem].shootSpeed;
-                if (Projectile.localAI[0]++ == 2 || Projectile.localAI[0] == 30)
+                if (Projectile.localAI[0]++ == 2 || Projectile.localAI[0] == (int)(30 / player.GetAttackSpeed(DamageClass.Ranged)))
                 {
                     if (Projectile.UseAmmo(AmmoID.Rocket, ref rocket, ref shootSpeed, ref weaponDamage, ref weaponKnockback, !Main.rand.NextBool(3)))
                     {
@@ -103,7 +103,8 @@ namespace Redemption.Items.Weapons.HM.Ranged
                         offset = 30;
                         rotOffset = -0.5f;
                         SoundEngine.PlaySound(SoundID.Item61, Projectile.position);
-                        SoundEngine.PlaySound(CustomSounds.ShotgunBlast1 with { Pitch = -0.1f }, Projectile.position);
+                        if (!Main.dedServ)
+                            SoundEngine.PlaySound(CustomSounds.ShotgunBlast1 with { Pitch = -0.1f }, Projectile.position);
                         for (int i = 0; i < shotNum; i++)
                             Projectile.NewProjectile(Projectile.GetSource_FromAI(), gunPos, RedeHelper.PolarVector(player.inventory[player.selectedItem].shootSpeed + Main.rand.Next(-4, 5), (Main.MouseWorld - gunPos).ToRotation() + Main.rand.NextFloat(-0.2f, 0.2f)), ModContent.ProjectileType<DAN_Rocket>(), (int)(Projectile.damage * .75f), Projectile.knockBack, player.whoAmI);
 
@@ -126,18 +127,19 @@ namespace Redemption.Items.Weapons.HM.Ranged
                         player.velocity -= RedeHelper.PolarVector(3, (Main.MouseWorld - player.Center).ToRotation());
                     }
                 }
-                if (Projectile.localAI[0] == 80)
+                if (Projectile.localAI[0] == (int)(80 / player.GetAttackSpeed(DamageClass.Ranged)))
                 {
                     if (player.channel && player.GetModPlayer<EnergyPlayer>().statEnergy >= 15 && (Projectile.rotation < MathHelper.Pi - 0.8f + (Projectile.spriteDirection == -1 ? MathHelper.Pi : 0) && Projectile.rotation > 0.8f + (Projectile.spriteDirection == -1 ? MathHelper.Pi : 0)))
                     {
                         Projectile.localAI[1] = 1;
-                        SoundEngine.PlaySound(CustomSounds.ShieldActivate, Projectile.position);
+                        if (!Main.dedServ)
+                            SoundEngine.PlaySound(CustomSounds.ShieldActivate, Projectile.position);
                     }
                     spinRot = Projectile.rotation + (Projectile.spriteDirection == -1 ? MathHelper.Pi : 0);
                 }
-                if (Projectile.localAI[0] >= 80)
+                if (Projectile.localAI[0] >= 80 / player.GetAttackSpeed(DamageClass.Ranged))
                 {
-                    if (!player.channel && (Projectile.localAI[1] == 0 || Projectile.localAI[0] < 120))
+                    if (!player.channel && (Projectile.localAI[1] == 0 || Projectile.localAI[0] < 120 / player.GetAttackSpeed(DamageClass.Ranged)))
                     {
                         Projectile.Kill();
                         return;
@@ -148,19 +150,20 @@ namespace Redemption.Items.Weapons.HM.Ranged
                         spinSpeed *= 1.03f;
 
                         int speed = 8;
-                        if (Projectile.localAI[0] >= 140)
+                        if (Projectile.localAI[0] >= 140 / player.GetAttackSpeed(DamageClass.Ranged))
                             speed = 6;
-                        if (Projectile.localAI[0] >= 160)
+                        if (Projectile.localAI[0] >= 160 / player.GetAttackSpeed(DamageClass.Ranged))
                             speed = 4;
-                        if (Projectile.localAI[0] >= 180)
+                        if (Projectile.localAI[0] >= 180 / player.GetAttackSpeed(DamageClass.Ranged))
                             speed = 2;
-                        if (Projectile.localAI[0] >= 100 && Projectile.localAI[0] % speed == 0)
+                        if (Projectile.localAI[0] >= 100 / player.GetAttackSpeed(DamageClass.Ranged) && Projectile.localAI[0] % speed == 0)
                         {
                             if (Projectile.UseAmmo(AmmoID.Rocket, ref rocket, ref shootSpeed, ref weaponDamage, ref weaponKnockback, !Main.rand.NextBool(10)))
                             {
                                 offset = 12;
                                 SoundEngine.PlaySound(SoundID.Item61 with { Pitch = 0.2f }, Projectile.position);
-                                SoundEngine.PlaySound(CustomSounds.ShotgunBlast1 with { Volume = 0.5f, Pitch = 0.2f }, Projectile.position);
+                                if (!Main.dedServ)
+                                    SoundEngine.PlaySound(CustomSounds.ShotgunBlast1 with { Volume = 0.5f, Pitch = 0.2f }, Projectile.position);
 
                                 Projectile.NewProjectile(Projectile.GetSource_FromAI(), gunPos, RedeHelper.PolarVector(player.inventory[player.selectedItem].shootSpeed, Projectile.velocity.ToRotation()), ModContent.ProjectileType<DAN_Rocket>(), (int)(Projectile.damage * .5f), Projectile.knockBack, player.whoAmI, 1);
                                 for (int i = 0; i < 5; i++)
@@ -183,7 +186,7 @@ namespace Redemption.Items.Weapons.HM.Ranged
                     }
                     else
                     {
-                        if (Projectile.localAI[0] < 120)
+                        if (Projectile.localAI[0] < (int)(120 / player.GetAttackSpeed(DamageClass.Ranged)))
                         {
                             for (int k = 0; k < 3; k++)
                             {
@@ -192,19 +195,22 @@ namespace Redemption.Items.Weapons.HM.Ranged
                                 double angle = Main.rand.NextDouble() * 2d * Math.PI;
                                 dVector.X = (float)(Math.Sin(angle) * 40);
                                 dVector.Y = (float)(Math.Cos(angle) * 40);
-                                ParticleManager.NewParticle(dustPos + dVector, (dustPos + dVector).DirectionTo(dustPos) * 10f, new LightningParticle(), Color.White, 3, 2);
+                                ParticleSystem.NewParticle(dustPos + dVector, (dustPos + dVector).DirectionTo(dustPos) * 10f, new LightningParticle(2, 2), Color.White, 3);
                             }
                             shake += 0.3f;
                             Projectile.position += new Vector2(Main.rand.NextFloat(-shake, shake), Main.rand.NextFloat(-shake, shake));
                         }
-                        if (Projectile.localAI[0] == 120)
+                        if (Projectile.localAI[0] == (int)(120 / player.GetAttackSpeed(DamageClass.Ranged)))
                         {
                             offset = 30;
                             spinRot = Projectile.rotation + (Projectile.spriteDirection == -1 ? MathHelper.Pi : 0);
                             player.RedemptionScreen().ScreenShakeIntensity += 20;
                             player.GetModPlayer<EnergyPlayer>().statEnergy -= 15;
-                            SoundEngine.PlaySound(CustomSounds.MACEProjectLaunch, Projectile.position);
-                            SoundEngine.PlaySound(CustomSounds.MissileExplosion, Projectile.position);
+                            if (!Main.dedServ)
+                            {
+                                SoundEngine.PlaySound(CustomSounds.MACEProjectLaunch, Projectile.position);
+                                SoundEngine.PlaySound(CustomSounds.MissileExplosion, Projectile.position);
+                            }
                             player.velocity -= RedeHelper.PolarVector(6, (Main.MouseWorld - player.Center).ToRotation());
 
                             Projectile.NewProjectile(Projectile.GetSource_FromAI(), gunPos, RedeHelper.PolarVector(3, Projectile.velocity.ToRotation()), ModContent.ProjectileType<DAN_Laser>(), Projectile.damage * 6, Projectile.knockBack, player.whoAmI, Projectile.whoAmI, 1);
@@ -223,7 +229,7 @@ namespace Redemption.Items.Weapons.HM.Ranged
                                 Main.dust[num5].noGravity = true;
                             }
                         }
-                        if (Projectile.localAI[0] >= 160)
+                        if (Projectile.localAI[0] >= 160 / player.GetAttackSpeed(DamageClass.Ranged))
                             Projectile.Kill();
                     }
                 }
@@ -240,7 +246,7 @@ namespace Redemption.Items.Weapons.HM.Ranged
         {
             SpriteEffects spriteEffects = Projectile.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
             Texture2D texture = TextureAssets.Projectile[Projectile.type].Value;
-            Texture2D glow = ModContent.Request<Texture2D>(Projectile.ModProjectile.Texture + "_Glow").Value;
+            Texture2D glow = ModContent.Request<Texture2D>(Texture + "_Glow").Value;
             Vector2 drawOrigin = new(texture.Width / 2, Projectile.height / 2);
             Vector2 v = RedeHelper.PolarVector(-16 + offset, Projectile.velocity.ToRotation());
 

@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Redemption.Buffs;
+using Redemption.Items.Materials.PostML;
 using Redemption.Items.Placeable.Plants;
 using Terraria;
 using Terraria.ID;
@@ -8,9 +9,9 @@ using Terraria.ModLoader;
 namespace Redemption.Items.Usable.Potions
 {
     public class CharismaPotion : ModItem
-	{
-		public override void SetStaticDefaults()
-		{
+    {
+        public override void SetStaticDefaults()
+        {
             /* Tooltip.SetDefault("Shops have lower prices"
                 + "\nEnemies drop more gold"); */
             ItemID.Sets.DrinkParticleColors[Type] = new Color[3] {
@@ -21,8 +22,8 @@ namespace Redemption.Items.Usable.Potions
             Item.ResearchUnlockCount = 20;
         }
 
-		public override void SetDefaults()
-		{
+        public override void SetDefaults()
+        {
             Item.UseSound = SoundID.Item3;
             Item.useStyle = ItemUseStyleID.DrinkLiquid;
             Item.useTurn = true;
@@ -30,7 +31,7 @@ namespace Redemption.Items.Usable.Potions
             Item.useTime = 17;
             Item.consumable = true;
             Item.width = 32;
-            Item.height = 30;
+            Item.height = 34;
             Item.maxStack = Item.CommonMaxStack;
             Item.value = Item.sellPrice(0, 8, 0, 0);
             Item.rare = ItemRarityID.Orange;

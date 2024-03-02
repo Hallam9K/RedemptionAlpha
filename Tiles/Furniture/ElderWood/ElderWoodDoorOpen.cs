@@ -12,23 +12,23 @@ using Terraria.ObjectData;
 namespace Redemption.Tiles.Furniture.ElderWood
 {
     public class ElderWoodDoorOpen : ModTile
-	{
-		public override void SetStaticDefaults()
-		{
-			// Properties
-			Main.tileFrameImportant[Type] = true;
-			Main.tileSolid[Type] = false;
-			Main.tileLavaDeath[Type] = true;
-			Main.tileNoSunLight[Type] = true;
-			TileID.Sets.HousingWalls[Type] = true;
-			TileID.Sets.HasOutlines[Type] = true;
-			TileID.Sets.DisableSmartCursor[Type] = true;
+    {
+        public override void SetStaticDefaults()
+        {
+            // Properties
+            Main.tileFrameImportant[Type] = true;
+            Main.tileSolid[Type] = false;
+            Main.tileLavaDeath[Type] = true;
+            Main.tileNoSunLight[Type] = true;
+            TileID.Sets.HousingWalls[Type] = true;
+            TileID.Sets.HasOutlines[Type] = true;
+            TileID.Sets.DisableSmartCursor[Type] = true;
 
-			AddToArray(ref TileID.Sets.RoomNeeds.CountsAsDoor);
+            AddToArray(ref TileID.Sets.RoomNeeds.CountsAsDoor);
 
-			DustType = DustID.Ash;
-			AdjTiles = new int[] { TileID.OpenDoor };
-			TileID.Sets.CloseDoorID[Type] = ModContent.TileType<ElderWoodDoorClosed>();
+            DustType = DustID.Ash;
+            AdjTiles = new int[] { TileID.OpenDoor };
+            TileID.Sets.CloseDoorID[Type] = ModContent.TileType<ElderWoodDoorClosed>();
             RegisterItemDrop(ModContent.ItemType<ElderWoodDoor>(), 0);
 
             AddMapEntry(new Color(109, 87, 78), Language.GetText("MapObject.Door"));
@@ -77,14 +77,14 @@ namespace Redemption.Tiles.Furniture.ElderWood
         public override bool Slope(int i, int j) => false;
         public override bool HasSmartInteract(int i, int j, SmartInteractScanSettings settings) => true;
 
-		public override void NumDust(int i, int j, bool fail, ref int num) => num = 1;
+        public override void NumDust(int i, int j, bool fail, ref int num) => num = 1;
 
-		public override void MouseOver(int i, int j)
-		{
-			Player player = Main.LocalPlayer;
-			player.noThrow = 2;
-			player.cursorItemIconEnabled = true;
-			player.cursorItemIconID = ModContent.ItemType<ElderWoodDoor>();
-		}
-	}
+        public override void MouseOver(int i, int j)
+        {
+            Player player = Main.LocalPlayer;
+            player.noThrow = 2;
+            player.cursorItemIconEnabled = true;
+            player.cursorItemIconID = ModContent.ItemType<ElderWoodDoor>();
+        }
+    }
 }

@@ -26,6 +26,8 @@ using Redemption.Items.Materials.PostML;
 using Terraria.DataStructures;
 using ReLogic.Content;
 using Terraria.Localization;
+using Redemption.Globals.NPC;
+using Redemption.NPCs.Friendly.TownNPCs;
 
 namespace Redemption.NPCs.Bosses.Neb
 {
@@ -151,6 +153,13 @@ namespace Redemption.NPCs.Bosses.Neb
             }
             if (!RedeBossDowned.downedNebuleus)
             {
+                int daerel = NPC.FindFirstNPC(ModContent.NPCType<Daerel>());
+                if (daerel >= 0)
+                    Main.npc[daerel].GetGlobalNPC<ExclaimMarkNPC>().exclaimationMark[5] = false;
+                int zephos = NPC.FindFirstNPC(ModContent.NPCType<Zephos>());
+                if (zephos >= 0)
+                    Main.npc[zephos].GetGlobalNPC<ExclaimMarkNPC>().exclaimationMark[5] = false;
+
                 for (int p = 0; p < Main.maxPlayers; p++)
                 {
                     Player player = Main.player[p];

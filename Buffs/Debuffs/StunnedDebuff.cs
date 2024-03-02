@@ -1,19 +1,19 @@
+using Redemption.BaseExtension;
 using Terraria;
 using Terraria.ModLoader;
-using Redemption.BaseExtension;
 
 namespace Redemption.Buffs.Debuffs
 {
     public class StunnedDebuff : ModBuff
-	{
-		public override void SetStaticDefaults()
-		{
-			Main.buffNoTimeDisplay[Type] = true;
+    {
+        public override void SetStaticDefaults()
+        {
+            Main.buffNoTimeDisplay[Type] = true;
             Main.debuff[Type] = true;
         }
 
         public override void Update(Player player, ref int buffIndex)
-		{
+        {
             player.wingTimeMax = 0;
             player.wingTime = 0;
             player.wings = 0;
@@ -30,6 +30,8 @@ namespace Redemption.Buffs.Debuffs
             player.controlUseTile = false;
             player.controlThrow = false;
             player.gravDir = 1f;
+            for (int i = 0; i < 4; i++)
+                player.doubleTapCardinalTimer[i] = 0;
 
             player.velocity.Y += player.gravity;
             player.sandStorm = false;

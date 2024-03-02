@@ -1,12 +1,14 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Redemption.Items.Placeable.Furniture.ElderWood;
 using Terraria;
+using Terraria.Audio;
+using Terraria.Enums;
+using Terraria.GameContent.Drawing;
+using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
-using Terraria.ID;
 using Terraria.ObjectData;
-using Redemption.Items.Placeable.Furniture.ElderWood;
-using Terraria.Enums;
 
 namespace Redemption.Tiles.Furniture.ElderWood
 {
@@ -20,16 +22,12 @@ namespace Redemption.Tiles.Furniture.ElderWood
             TileID.Sets.DisableSmartCursor[Type] = true;
             TileObjectData.newTile.CopyFrom(TileObjectData.StyleOnTable1x1);
             TileObjectData.newTile.CoordinateHeights = new int[] { 18 };
-            TileObjectData.newTile.StyleHorizontal = true;
             TileObjectData.newTile.WaterDeath = true;
             TileObjectData.newTile.WaterPlacement = LiquidPlacement.NotAllowed;
             TileObjectData.newTile.LavaPlacement = LiquidPlacement.NotAllowed;
             TileObjectData.newTile.StyleLineSkip = 2;
             TileObjectData.addTile(Type);
-            LocalizedText name = CreateMapEntryName();
-            // name.SetDefault("Elder Wood Candle");
-            AddMapEntry(new Color(109, 87, 78), name);
-            RegisterItemDrop(ModContent.ItemType<ElderWoodCandle>());
+            AddMapEntry(new Color(109, 87, 78), Language.GetText("MapObject.Candle"));
             AdjTiles = new int[] { TileID.Candles };
             AddToArray(ref TileID.Sets.RoomNeeds.CountsAsTorch);
             DustType = DustID.t_BorealWood;
@@ -43,6 +41,7 @@ namespace Redemption.Tiles.Furniture.ElderWood
         }
         public override bool RightClick(int i, int j)
         {
+            SoundEngine.PlaySound(SoundID.Mech, new Vector2(i * 16, j * 16));
             if (Main.tile[i, j].TileFrameX >= 18)
                 Main.tile[i, j].TileFrameX -= 18;
             else
@@ -72,6 +71,8 @@ namespace Redemption.Tiles.Furniture.ElderWood
         public override void PostDraw(int i, int j, SpriteBatch spriteBatch)
         {
             Tile tile = Framing.GetTileSafely(i, j);
+            if (!TileDrawing.IsVisible(tile))
+                return;
             Vector2 zero = new(Main.offScreenRange, Main.offScreenRange);
             if (Main.drawToScreen)
             {

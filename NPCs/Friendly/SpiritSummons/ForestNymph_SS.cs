@@ -600,7 +600,7 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
                 regenTimer++;
                 if (regenTimer % regenCooldown == 0 && NPC.life < NPC.lifeMax)
                 {
-                    int heal = NPC.type == ModContent.NPCType<ForestNymph_Friendly>() ? 10 : 2;
+                    int heal = 10;
                     NPC.life += heal;
                     NPC.HealEffect(heal);
                     if (NPC.life > NPC.lifeMax)

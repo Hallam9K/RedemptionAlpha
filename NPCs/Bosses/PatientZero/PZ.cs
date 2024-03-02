@@ -29,6 +29,7 @@ using Redemption.Projectiles.Magic;
 using Redemption.Items.Usable.Summons;
 using Terraria.Localization;
 using Redemption.Globals.NPC;
+using Redemption.NPCs.Friendly.TownNPCs;
 
 namespace Redemption.NPCs.Bosses.PatientZero
 {
@@ -162,7 +163,16 @@ namespace Redemption.NPCs.Bosses.PatientZero
         public override void OnKill()
         {
             if (!RedeBossDowned.downedPZ)
+            {
+                int daerel = NPC.FindFirstNPC(ModContent.NPCType<Daerel>());
+                if (daerel >= 0)
+                    Main.npc[daerel].GetGlobalNPC<ExclaimMarkNPC>().exclaimationMark[5] = true;
+                int zephos = NPC.FindFirstNPC(ModContent.NPCType<Zephos>());
+                if (zephos >= 0)
+                    Main.npc[zephos].GetGlobalNPC<ExclaimMarkNPC>().exclaimationMark[5] = true;
+
                 Item.NewItem(NPC.GetSource_Loot(), (int)NPC.position.X, (int)NPC.position.Y, NPC.width, NPC.height, ModContent.ItemType<LabHologramDevice>());
+            }
 
             if (!LabArea.labAccess[5])
                 Item.NewItem(NPC.GetSource_Loot(), (int)NPC.position.X, (int)NPC.position.Y, NPC.width, NPC.height, ModContent.ItemType<ZoneAccessPanel6>());
@@ -295,7 +305,7 @@ namespace Redemption.NPCs.Bosses.PatientZero
             if (!player.active || player.dead)
                 return;
 
-            if (AIState is ActionState.MiscAttacks && !NPC.Sight(player, -1, false, true))
+            if (AIState is ActionState.MiscAttacks && !NPC.Sight(player, -1, false, true, true))
             {
                 NPC.dontTakeDamage = true;
                 OpenEye = false;

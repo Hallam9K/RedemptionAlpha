@@ -8,9 +8,9 @@ using Terraria.ObjectData;
 namespace Redemption.Tiles.Furniture.ElderWood
 {
     public class ElderWoodBookcaseTile : ModTile
-	{
-		public override void SetStaticDefaults()
-		{
+    {
+        public override void SetStaticDefaults()
+        {
             Main.tileSolidTop[Type] = true;
             Main.tileFrameImportant[Type] = true;
             Main.tileNoAttach[Type] = true;
@@ -19,9 +19,7 @@ namespace Redemption.Tiles.Furniture.ElderWood
             TileObjectData.newTile.CoordinateHeights = new[] { 16, 16, 16, 16 };
             TileObjectData.addTile(Type);
             AddToArray(ref TileID.Sets.RoomNeeds.CountsAsTable);
-            LocalizedText name = CreateMapEntryName();
-            // name.SetDefault("Elder Wood Bookcase");
-            AddMapEntry(new Color(109, 87, 78), name);
+            AddMapEntry(new Color(109, 87, 78), Language.GetText("ItemName.Bookcase"));
             DustType = DustID.t_BorealWood;
             AdjTiles = new int[] { TileID.Bookcases };
         }

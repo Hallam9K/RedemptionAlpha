@@ -100,15 +100,6 @@ namespace Redemption.NPCs.Critters
                     Item.NewItem(NPC.GetSource_Loot(), NPC.getRect(), ModContent.ItemType<FriedChicken>());
             }
         }
-
-        public override float SpawnChance(NPCSpawnInfo spawnInfo)
-        {
-            float baseChance = SpawnCondition.OverworldDay.Chance;
-            float multiplier = Main.tile[spawnInfo.SpawnTileX, spawnInfo.SpawnTileY].TileType == TileID.Grass ? 0.001f : 0f;
-
-            return baseChance * multiplier;
-        }
-
         public Vector2 moveTo;
         private int runCooldown;
         private int waterCooldown;

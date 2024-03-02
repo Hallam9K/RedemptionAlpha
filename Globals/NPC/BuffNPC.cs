@@ -1,23 +1,22 @@
 using Microsoft.Xna.Framework;
+using ParticleLibrary;
 using Redemption.Base;
+using Redemption.BaseExtension;
 using Redemption.Buffs.Debuffs;
 using Redemption.Buffs.NPCBuffs;
 using Redemption.Dusts;
+using Redemption.Globals.Player;
+using Redemption.Items.Usable;
 using Redemption.NPCs.Critters;
+using Redemption.Particles;
 using Redemption.Projectiles.Hostile;
+using Redemption.Projectiles.Magic;
 using Redemption.Projectiles.Misc;
 using Redemption.Projectiles.Ranged;
-using System.Linq;
 using Terraria;
 using Terraria.Audio;
-using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Redemption.BaseExtension;
-using Redemption.Particles;
-using ParticleLibrary;
-using Redemption.Globals.Player;
-using Redemption.Projectiles.Magic;
 
 namespace Redemption.Globals.NPC
 {
@@ -46,7 +45,7 @@ namespace Redemption.Globals.NPC
         public bool stunned;
         public bool infected;
         public int infectedTime;
-        public bool stomachAcid;
+        public bool hydraAcid;
         public bool incisored;
         public bool stoneskin;
         public bool brokenArmor;
@@ -75,7 +74,7 @@ namespace Redemption.Globals.NPC
             bileDebuff = false;
             electrified = false;
             stunned = false;
-            stomachAcid = false;
+            hydraAcid = false;
             incisored = false;
             stoneskin = false;
             brokenArmor = false;
@@ -301,10 +300,10 @@ namespace Redemption.Globals.NPC
                     npc.lifeRegen = 0;
 
                 npc.lifeRegen -= 400;
-                if (damage < 20)
-                    damage = 20;
+                if (damage < 40)
+                    damage = 40;
             }
-            if (bileDebuff || stomachAcid)
+            if (bileDebuff || hydraAcid)
             {
                 if (npc.lifeRegen > 0)
                     npc.lifeRegen = 0;
@@ -402,7 +401,7 @@ namespace Redemption.Globals.NPC
         {
             if (roosterBoost && Main.expertMode)
                 modifiers.Knockback *= .8f;
-            if (stomachAcid)
+            if (hydraAcid)
                 modifiers.Defense.Flat -= 8;
             if (bileDebuff)
                 modifiers.Defense.Flat -= 15;
@@ -435,7 +434,12 @@ namespace Redemption.Globals.NPC
             if (dragonblaze)
                 modifiers.IncomingDamageMultiplier *= .85f;
             if (disarmed)
-                modifiers.IncomingDamageMultiplier /= 3;
+            {
+                if (npc.boss)
+                    modifiers.IncomingDamageMultiplier *= .75f;
+                else
+                    modifiers.IncomingDamageMultiplier /= 3;
+            }
         }
         public override void ModifyHitNPC(Terraria.NPC npc, Terraria.NPC target, ref Terraria.NPC.HitModifiers modifiers)
         {
@@ -444,7 +448,12 @@ namespace Redemption.Globals.NPC
             if (dragonblaze)
                 modifiers.FinalDamage *= .85f;
             if (disarmed)
-                modifiers.FinalDamage /= 3;
+            {
+                if (npc.boss)
+                    modifiers.FinalDamage *= .75f;
+                else
+                    modifiers.FinalDamage /= 3;
+            }
         }
         public override void DrawEffects(Terraria.NPC npc, ref Color drawColor)
         {
@@ -495,9 +504,7 @@ namespace Redemption.Globals.NPC
             {
                 drawColor = Color.Lerp(drawColor, new Color(220, 150, 150), 0.5f);
                 if (Main.rand.NextBool(5) && !Main.gamePaused)
-                {
                     ParticleManager.NewParticle(npc.RandAreaInEntity(), RedeHelper.SpreadUp(1), new EmberParticle(), Color.OrangeRed, 1);
-                }
             }
             if (iceFrozen)
             {
@@ -513,7 +520,8 @@ namespace Redemption.Globals.NPC
             {
                 if (Main.rand.NextBool(3) && npc.alpha < 200)
                 {
-                    int dust = Dust.NewDust(npc.position, npc.width, npc.height, ModContent.DustType<VoidFlame>(), npc.velocity.X * 0.4f, npc.velocity.Y * 0.4f);
+                    int dust = Dust.NewDust(npc.position, npc.width, npc.height, ModContent.DustType<VoidFlame>(), 0, 0, Scale: 2f);
+                    Main.dust[dust].velocity *= 0.1f;
                     Main.dust[dust].noGravity = true;
                 }
             }
@@ -540,11 +548,11 @@ namespace Redemption.Globals.NPC
                     DustHelper.DrawParticleElectricity<LightningParticle>(new Vector2(npc.TopRight.X, npc.TopRight.Y + Main.rand.Next(0, npc.height)), new Vector2(npc.position.X, npc.position.Y + Main.rand.Next(0, npc.height)), .5f, 10, 0.2f);
                 }
             }
-            if (stomachAcid)
+            if (hydraAcid)
             {
-                drawColor = new Color(52, 178, 108);
+                drawColor = Color.Lerp(drawColor, new Color(77, 255, 247), 0.7f);
                 if (Main.rand.NextBool(4))
-                    Dust.NewDust(npc.position - new Vector2(2f, 2f), npc.width + 4, npc.height + 4, DustID.ToxicBubble, npc.velocity.X * 0.4f, npc.velocity.Y * 0.4f, Alpha: 100);
+                    Dust.NewDust(npc.position - new Vector2(2f, 2f), npc.width + 4, npc.height + 4, ModContent.DustType<HydraAcidDust>(), npc.velocity.X * 0.4f, npc.velocity.Y * 0.4f, Alpha: 100);
             }
             if (holyFire)
             {
@@ -600,7 +608,6 @@ namespace Redemption.Globals.NPC
             }
             return true;
         }
-
         public override bool CanHitPlayer(Terraria.NPC npc, Terraria.Player target, ref int cooldownSlot)
         {
             if (iceFrozen)

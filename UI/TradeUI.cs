@@ -6,6 +6,7 @@ using Redemption.Items.Placeable.Plants;
 using Redemption.Items.Weapons.PreHM.Magic;
 using Redemption.Items.Weapons.PreHM.Melee;
 using Redemption.NPCs.Friendly;
+using Redemption.NPCs.Friendly.TownNPCs;
 using Redemption.NPCs.Minibosses.Calavia;
 using Terraria;
 using Terraria.GameContent.UI.Elements;

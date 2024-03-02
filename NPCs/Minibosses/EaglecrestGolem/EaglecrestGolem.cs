@@ -8,9 +8,11 @@ using Redemption.Items.Accessories.PreHM;
 using Redemption.Items.Armor.Vanity;
 using Redemption.Items.Materials.PreHM;
 using Redemption.Items.Placeable.Tiles;
+using Redemption.Items.Placeable.Trophies;
 using Redemption.Items.Weapons.PreHM.Magic;
 using Redemption.Items.Weapons.PreHM.Melee;
 using Redemption.Items.Weapons.PreHM.Ranged;
+using Redemption.NPCs.Friendly.TownNPCs;
 using Redemption.Particles;
 using Redemption.Projectiles.Magic;
 using System;
@@ -121,6 +123,13 @@ namespace Redemption.NPCs.Minibosses.EaglecrestGolem
         {
             if (!RedeBossDowned.downedEaglecrestGolem)
             {
+                int daerel = NPC.FindFirstNPC(ModContent.NPCType<Daerel>());
+                if (daerel >= 0)
+                    Main.npc[daerel].GetGlobalNPC<ExclaimMarkNPC>().exclaimationMark[0] = false;
+                int zephos = NPC.FindFirstNPC(ModContent.NPCType<Zephos>());
+                if (zephos >= 0)
+                    Main.npc[zephos].GetGlobalNPC<ExclaimMarkNPC>().exclaimationMark[0] = false;
+
                 for (int p = 0; p < Main.maxPlayers; p++)
                 {
                     Player player = Main.player[p];
@@ -146,7 +155,10 @@ namespace Redemption.NPCs.Minibosses.EaglecrestGolem
 
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
-            npcLoot.Add(ItemDropRule.MasterModeDropOnAllPlayers(ModContent.ItemType<StonePuppet>()));
+            npcLoot.Add(ItemDropRule.MasterModeCommonDrop(ModContent.ItemType<EaglecrestGolemRelic>()));
+            npcLoot.Add(ItemDropRule.MasterModeDropOnAllPlayers(ModContent.ItemType<StonePuppet>(), 4));
+
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<EaglecrestGolemTrophy>(), 10));
 
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<GolemEye>()));
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<EaglecrestHead>()));

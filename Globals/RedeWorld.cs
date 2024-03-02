@@ -4,6 +4,7 @@ using Redemption.Globals.Player;
 using Redemption.NPCs.Bosses.Erhan;
 using Redemption.NPCs.Bosses.Keeper;
 using Redemption.NPCs.Friendly;
+using Redemption.NPCs.Friendly.TownNPCs;
 using Redemption.Projectiles.Misc;
 using Redemption.UI.ChatUI;
 using Redemption.WorldGeneration.Soulless;
@@ -74,6 +75,7 @@ namespace Redemption.Globals
         public static bool keycardGiven;
         public static bool alignmentGiven;
         public static bool[] spawnCleared = new bool[5];
+        public static bool wastelandMessage;
 
         #region Nuke Shenanigans
         public static int nukeTimerInternal = 1800;
@@ -220,6 +222,19 @@ namespace Redemption.Globals
                 }
             }
             #endregion
+
+            if (!wastelandMessage && RedeBossDowned.nukeDropped && Terraria.NPC.downedMechBossAny)
+            {
+                wastelandMessage = true;
+                if (Main.netMode == NetmodeID.Server)
+                    NetMessage.SendData(MessageID.WorldData);
+
+                string status = Language.GetTextValue("Mods.Redemption.StatusMessage.Progression.WastelandGrow");
+                if (Main.netMode == NetmodeID.Server)
+                    ChatHelper.BroadcastChatMessage(NetworkText.FromLiteral(status), new Color(50, 255, 130));
+                else if (Main.netMode == NetmodeID.SinglePlayer)
+                    Main.NewText(Language.GetTextValue(status), new Color(50, 255, 130));
+            }
 
             if (Terraria.NPC.downedMechBoss1 && Terraria.NPC.downedMechBoss2 && Terraria.NPC.downedMechBoss3 && !labSafe)
             {
@@ -468,6 +483,7 @@ namespace Redemption.Globals
             alignmentGiven = false;
             for (int i = 0; i < spawnCleared.Length; i++)
                 spawnCleared[i] = false;
+            wastelandMessage = false;
         }
 
         public override void SaveWorldData(TagCompound tag)
@@ -490,6 +506,8 @@ namespace Redemption.Globals
                 lists.Add("keycardGiven");
             if (alignmentGiven)
                 lists.Add("alignmentGiven");
+            if (wastelandMessage)
+                lists.Add("wastelandMessage");
 
             tag["lists"] = lists;
             tag["alignment"] = alignment;
@@ -518,6 +536,7 @@ namespace Redemption.Globals
             slayerMessageGiven = lists.Contains("slayerMessageGiven");
             keycardGiven = lists.Contains("keycardGiven");
             alignmentGiven = lists.Contains("alignmentGiven");
+            wastelandMessage = lists.Contains("wastelandMessage");
         }
 
         public override void NetSend(BinaryWriter writer)
@@ -532,6 +551,9 @@ namespace Redemption.Globals
             flags[6] = keycardGiven;
             flags[7] = alignmentGiven;
             writer.Write(flags);
+            var flags2 = new BitsByte();
+            flags2[0] = wastelandMessage;
+            writer.Write(flags2);
 
             writer.Write(alignment);
             writer.Write(DayNightCount);
@@ -552,6 +574,8 @@ namespace Redemption.Globals
             slayerMessageGiven = flags[5];
             keycardGiven = flags[6];
             alignmentGiven = flags[7];
+            BitsByte flags2 = reader.ReadByte();
+            wastelandMessage = flags2[0];
 
             alignment = reader.ReadInt32();
             DayNightCount = reader.ReadInt32();

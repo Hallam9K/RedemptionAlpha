@@ -47,6 +47,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
             Item.shootSpeed = 5f;
             Item.shoot = ModContent.ProjectileType<SwordSlicer_Slash>();
         }
+        public override bool MeleePrefix() => true;
         public override void ModifyTooltips(List<TooltipLine> tooltips)
         {
             if (Main.keyState.PressingShift())

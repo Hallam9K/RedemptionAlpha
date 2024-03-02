@@ -1,20 +1,23 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Base;
+using Redemption.BaseExtension;
 using Redemption.Biomes;
 using Redemption.Dusts.Tiles;
 using Redemption.Globals;
+using Redemption.Globals.NPC;
 using Redemption.Items.Usable;
+using Redemption.UI;
+using Redemption.UI.ChatUI;
+using ReLogic.Content;
 using System.Collections.Generic;
 using Terraria;
+using Terraria.Audio;
 using Terraria.GameContent;
 using Terraria.GameContent.Bestiary;
 using Terraria.ID;
-using Terraria.ModLoader;
-using Redemption.BaseExtension;
-using ReLogic.Content;
 using Terraria.Localization;
-using Redemption.Globals.NPC;
+using Terraria.ModLoader;
 
 namespace Redemption.NPCs.Lab.Janitor
 {
@@ -91,6 +94,7 @@ namespace Redemption.NPCs.Lab.Janitor
                 Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/LabBossMusic");
             SpawnModBiomes = new int[2] { ModContent.GetInstance<LidenBiomeOmega>().Type, ModContent.GetInstance<LabBiome>().Type };
         }
+        private static readonly SoundStyle voice = CustomSounds.Voice6 with { Pitch = 0.2f };
         public override bool CanHitPlayer(Player target, ref int cooldownSlot) => false;
         public override bool CanHitNPC(NPC target) => false;
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
@@ -136,6 +140,7 @@ namespace Redemption.NPCs.Lab.Janitor
         {
             potionType = ItemID.Heart;
         }
+        bool darnMops;
         public override void AI()
         {
             CustomFrames(46);
@@ -244,7 +249,12 @@ namespace Redemption.NPCs.Lab.Janitor
                                 ouch = "Damn it!";
                                 break;
                         }
-                        CombatText.NewText(NPC.getRect(), Colors.RarityYellow, ouch, false, false);
+                        if (!darnMops)
+                            ouch += "[0.3] Darn mops hittin' my noggin!";
+                        Dialogue d = new(NPC, ouch, Colors.RarityYellow, new Color(100, 86, 0), voice, .01f, 1f, 1f, true);
+                        ChatUI.Visible = true;
+                        ChatUI.Add(d);
+                        darnMops = true;
                     }
                     if (AITimer >= 260)
                     {
@@ -278,7 +288,9 @@ namespace Redemption.NPCs.Lab.Janitor
                                 ouch = "Damn it!";
                                 break;
                         }
-                        CombatText.NewText(NPC.getRect(), Colors.RarityYellow, ouch, false, false);
+                        Dialogue d = new(NPC, ouch, Colors.RarityYellow, new Color(100, 86, 0), voice, .01f, 1f, 1f, true);
+                        ChatUI.Visible = true;
+                        ChatUI.Add(d);
                     }
                     if (AITimer >= 160)
                     {

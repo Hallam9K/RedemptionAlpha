@@ -32,6 +32,7 @@ using Redemption.Globals.NPC;
 using Redemption.Items.Weapons.HM.Summon;
 using Redemption.Textures;
 using Redemption.DamageClasses;
+using Redemption.NPCs.Friendly.TownNPCs;
 
 namespace Redemption.NPCs.Bosses.KSIII
 {
@@ -200,6 +201,13 @@ namespace Redemption.NPCs.Bosses.KSIII
 
             if (!RedeBossDowned.downedSlayer)
             {
+                int daerel = NPC.FindFirstNPC(ModContent.NPCType<Daerel>());
+                if (daerel >= 0)
+                    Main.npc[daerel].GetGlobalNPC<ExclaimMarkNPC>().exclaimationMark[3] = false;
+                int zephos = NPC.FindFirstNPC(ModContent.NPCType<Zephos>());
+                if (zephos >= 0)
+                    Main.npc[zephos].GetGlobalNPC<ExclaimMarkNPC>().exclaimationMark[3] = false;
+
                 RedeWorld.alignment -= NPC.ai[0] == 11 ? 0 : 2;
                 for (int p = 0; p < Main.maxPlayers; p++)
                 {

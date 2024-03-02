@@ -25,6 +25,7 @@ using ReLogic.Content;
 using Terraria.Localization;
 using Redemption.Globals.NPC;
 using Redemption.Helpers;
+using Redemption.NPCs.Friendly.TownNPCs;
 
 namespace Redemption.NPCs.Bosses.ADD
 {
@@ -167,6 +168,16 @@ namespace Redemption.NPCs.Bosses.ADD
             potionType = ItemID.SuperHealingPotion;
             if (!RedeBossDowned.downedADD && !NPC.AnyNPCs(ModContent.NPCType<Ukko>()))
             {
+                int daerel = NPC.FindFirstNPC(ModContent.NPCType<Daerel>());
+                if (daerel >= 0)
+                    Main.npc[daerel].GetGlobalNPC<ExclaimMarkNPC>().exclaimationMark[4] = false;
+                int zephos = NPC.FindFirstNPC(ModContent.NPCType<Zephos>());
+                if (zephos >= 0)
+                    Main.npc[zephos].GetGlobalNPC<ExclaimMarkNPC>().exclaimationMark[4] = false;
+                int fallen = NPC.FindFirstNPC(ModContent.NPCType<Fallen>());
+                if (fallen >= 0)
+                    Main.npc[fallen].GetGlobalNPC<ExclaimMarkNPC>().exclaimationMark[4] = false;
+
                 for (int p = 0; p < Main.maxPlayers; p++)
                 {
                     Player player = Main.player[p];

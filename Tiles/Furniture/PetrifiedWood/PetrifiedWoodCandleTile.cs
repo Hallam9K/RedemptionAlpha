@@ -1,20 +1,21 @@
 using Microsoft.Xna.Framework;
+using Redemption.Items.Placeable.Furniture.PetrifiedWood;
 using Terraria;
+using Terraria.Audio;
+using Terraria.Enums;
+using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
-using Terraria.ID;
 using Terraria.ObjectData;
-using Terraria.Enums;
-using Redemption.Items.Placeable.Furniture.PetrifiedWood;
 
 namespace Redemption.Tiles.Furniture.PetrifiedWood
 {
     public class PetrifiedWoodCandleTile : ModTile
-	{
-		public override void SetStaticDefaults()
-		{
-			Main.tileFrameImportant[Type] = true;
-			Main.tileLavaDeath[Type] = true;
+    {
+        public override void SetStaticDefaults()
+        {
+            Main.tileFrameImportant[Type] = true;
+            Main.tileLavaDeath[Type] = true;
             Main.tileLighted[Type] = true;
             TileID.Sets.DisableSmartCursor[Type] = true;
             TileObjectData.newTile.CopyFrom(TileObjectData.StyleOnTable1x1);
@@ -24,11 +25,8 @@ namespace Redemption.Tiles.Furniture.PetrifiedWood
             TileObjectData.newTile.CoordinateHeights = new int[] { 20 };
             TileObjectData.newTile.StyleLineSkip = 2;
             TileObjectData.addTile(Type);
-			LocalizedText name = CreateMapEntryName();
-			// name.SetDefault("Petrified Wood Candle");
-            AddMapEntry(new Color(100, 100, 100), name);
-            RegisterItemDrop(ModContent.ItemType<PetrifiedWoodCandle>());
-            AdjTiles = new int[]{ TileID.Candles };
+            AddMapEntry(new Color(100, 100, 100), Language.GetText("MapObject.Candle"));
+            AdjTiles = new int[] { TileID.Candles };
             AddToArray(ref TileID.Sets.RoomNeeds.CountsAsTorch);
             DustType = DustID.Ash;
         }
@@ -41,6 +39,7 @@ namespace Redemption.Tiles.Furniture.PetrifiedWood
         }
         public override bool RightClick(int i, int j)
         {
+            SoundEngine.PlaySound(SoundID.Mech, new Vector2(i * 16, j * 16));
             if (Main.tile[i, j].TileFrameX >= 18)
                 Main.tile[i, j].TileFrameX -= 18;
             else

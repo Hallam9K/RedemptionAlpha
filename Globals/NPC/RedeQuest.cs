@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Redemption.Dusts;
 using Redemption.NPCs.Friendly;
+using Redemption.NPCs.Friendly.TownNPCs;
 using Redemption.WorldGeneration;
 using SubworldLibrary;
 using System.Collections.Generic;

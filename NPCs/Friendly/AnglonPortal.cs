@@ -9,6 +9,7 @@ using System;
 using Terraria.Audio;
 using ParticleLibrary;
 using Redemption.Particles;
+using Redemption.NPCs.Friendly.TownNPCs;
 
 namespace Redemption.NPCs.Friendly
 {

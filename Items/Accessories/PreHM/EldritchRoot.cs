@@ -17,15 +17,13 @@ namespace Redemption.Items.Accessories.PreHM
                 "Your " + ElementID.ShadowS + " weapons are more effective against Dark enemies" +
                 "\n12% increased " + ElementID.ShadowS + " elemental resistance\n" +
                 "'Nature can reap, too.'");*/
-            ElementID.ItemNature[Type] = true;
             ElementID.ItemShadow[Type] = true;
-            Item.ResearchUnlockCount = 1;
         }
 
         public override void SetDefaults()
         {
-            Item.width = 22;
-            Item.height = 26;
+            Item.width = 28;
+            Item.height = 42;
             Item.value = Item.buyPrice(0, 1, 0, 0);
             Item.rare = ItemRarityID.Blue;
             Item.accessory = true;

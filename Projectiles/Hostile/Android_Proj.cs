@@ -1,13 +1,13 @@
 ﻿using Microsoft.Xna.Framework;
-using Terraria;
-using Terraria.ID;
-using Terraria.ModLoader;
-using System;
-using Terraria.Audio;
 using Microsoft.Xna.Framework.Graphics;
-using Terraria.GameContent;
 using Redemption.BaseExtension;
 using Redemption.Globals;
+using System;
+using Terraria;
+using Terraria.Audio;
+using Terraria.GameContent;
+using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace Redemption.Projectiles.Hostile
 {
@@ -16,14 +16,14 @@ namespace Redemption.Projectiles.Hostile
         public override void SetStaticDefaults()
         {
             // DisplayName.SetDefault("Fist Rocket");
-            Main.projFrames[Projectile.type] = 2;
+            Main.projFrames[Projectile.type] = 4;
             ElementID.ProjExplosive[Type] = true;
         }
 
         public override void SetDefaults()
         {
-            Projectile.width = 10;
-            Projectile.height = 10;
+            Projectile.width = 14;
+            Projectile.height = 14;
             Projectile.friendly = true;
             Projectile.hostile = true;
             Projectile.penetrate = 1;
@@ -33,6 +33,8 @@ namespace Redemption.Projectiles.Hostile
         }
         public override bool? CanHitNPC(NPC target)
         {
+            if (target.Redemption().spiritSummon)
+                return null;
             NPC host = Main.npc[(int)Projectile.ai[0]];
             return target == host.Redemption().attacker ? null : false;
         }
@@ -41,10 +43,10 @@ namespace Redemption.Projectiles.Hostile
         {
             NPC host = Main.npc[(int)Projectile.ai[0]];
             Entity attacker = host.Redemption().attacker;
-            if (++Projectile.frameCounter >= 5)
+            if (++Projectile.frameCounter >= 3)
             {
                 Projectile.frameCounter = 0;
-                if (++Projectile.frame >= 2)
+                if (++Projectile.frame >= 4)
                     Projectile.frame = 0;
             }
             Projectile.rotation = Projectile.velocity.ToRotation() + 1.57f;
@@ -125,8 +127,8 @@ namespace Redemption.Projectiles.Hostile
         public override bool PreDraw(ref Color lightColor)
         {
             Texture2D texture = TextureAssets.Projectile[Projectile.type].Value;
-            Texture2D glow = ModContent.Request<Texture2D>(Projectile.ModProjectile.Texture + "_Glow").Value;
-            int height = texture.Height / 2;
+            Texture2D glow = ModContent.Request<Texture2D>(Texture + "_Glow").Value;
+            int height = texture.Height / 4;
             int width = texture.Width / 3;
             int y = height * Projectile.frame;
             int x = width * (int)Projectile.ai[1];

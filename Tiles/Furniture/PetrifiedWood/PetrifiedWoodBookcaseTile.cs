@@ -8,9 +8,9 @@ using Terraria.ObjectData;
 namespace Redemption.Tiles.Furniture.PetrifiedWood
 {
     public class PetrifiedWoodBookcaseTile : ModTile
-	{
-		public override void SetStaticDefaults()
-		{
+    {
+        public override void SetStaticDefaults()
+        {
             Main.tileSolidTop[Type] = true;
             Main.tileFrameImportant[Type] = true;
             Main.tileNoAttach[Type] = true;
@@ -19,9 +19,7 @@ namespace Redemption.Tiles.Furniture.PetrifiedWood
             TileObjectData.newTile.CoordinateHeights = new[] { 16, 16, 16, 16 };
             TileObjectData.addTile(Type);
             AddToArray(ref TileID.Sets.RoomNeeds.CountsAsTable);
-            LocalizedText name = CreateMapEntryName();
-            // name.SetDefault("Petrified Wood Bookcase");
-            AddMapEntry(new Color(100, 100, 100), name);
+            AddMapEntry(new Color(100, 100, 100), Language.GetText("ItemName.Bookcase"));
             DustType = DustID.Ash;
             AdjTiles = new int[] { TileID.Bookcases };
         }

@@ -1,5 +1,124 @@
+# Hello translater people, some things to mention:
+# In Mods.Cutscene there are things in [] brackets, such as [0.1], [@a], [1] etc.
+# DON'T touch the stuff inside those brackets as they are for either pausing text or triggering an event
+#
+# Some NPCs say words in their own made-up language sometimes, these include Calavia and Spirit Assassin
+# You don't have to translate those made-up words (assuming you knew what they meant in the first place)
+#
+# Quite a lot of NPCs use rather obscure older English words, such as "alas", "thus", "thee", "thou", etc.
+# I'm not sure how other languages would interpret them, so you'd probably just convert them to their modern meaning,
+# However, Erhan speaks in a comically over-the-top Old English way, which is part of his character, so if your own language has an equivalent to his speech, I recommend using it
+
 Mods: {
 	Redemption: {
+		TownNPCMood: {
+			Daerel: {
+				Content: I'm rather content right now.
+				NoHome: Hey, I'd quite like a roof under my head if that's alright with you.
+				FarFromHome: Could you please get me back to my house? This land is quite scary.
+				LoveSpace: I like the space I have here, plenty of room to practice my archery.
+				DislikeCrowded: I'm somewhat of an introvert, so all these people near me is quite unnerving.
+				HateCrowded: I'm somewhat of an introvert, so all these people near me is quite unnerving.
+				LoveBiome: I think {BiomeName} is perfect, calm and tranquil.
+				LikeBiome: I think {BiomeName} is a very nice place, I hardly see any snow where I was from.
+				DislikeBiome: I don't really like {BiomeName}, I'd hate to have a run-in with skeletons!
+				HateBiome: Why'd you put me in {BiomeName}? You know how hostile jungles are!?
+				LoveNPC: Me and {NPCName} are great friends, thank you for letting us live in the same town.
+				LikeNPC: "{NPCName} is good company, she's great at styling my hair too... That's not weird, right?"
+				DislikeNPC: "{NPCName} keeps trying to get me to buy his dirt."
+				HateNPC: Psst, could you move {NPCName} far away from me, I'm already super broke as is.
+				LikeNPC_Princess: I like {NPCName}.
+				Princess_LovesNPC: I like {NPCName}.
+			}
+
+			Fallen: {
+				Content: Nice little place ya got here.
+				NoHome: I'd prefer to have a house.
+				FarFromHome: Could ya take me back to my home?
+				LoveSpace: This place is a wee bit spacious, not complaining though, I quite like it.
+				DislikeCrowded: All these humans are makin' my bones rattle.
+				HateCrowded: All these humans are makin' my bones rattle.
+				LoveBiome: The caverns are perfect for us Fallen, not many humans come and go here.
+				LikeBiome: Aah, {BiomeName} reminds me of when I was still alive in Gathuram. Good times they were.
+				DislikeBiome: I'm staying in {BiomeName}? Not my preferred place to live, I'd hate to have a run-in with aggressive humans!
+				HateBiome: I hate it here, {BiomeName} has some holy energy in it makin' my flesh crawl.
+				LoveNPC: "{NPCName} sells some nifty gadgets, knows how to rip people off too. I like that."
+				LikeNPC: "{NPCName} got somethin' about him I like."
+				DislikeNPC: "{NPCName} keeps lookin' at me with suspicion. Probably wants to 'purify' me."
+				HateNPC: "{NPCName} keeps thinking I'm some dying old man, insisting that she'll heal me. Please get me away from her."
+				LikeNPC_Princess: I like {NPCName}, she's alright.
+				Princess_LovesNPC: I like {NPCName}, he reminds me of an old man.
+			}
+
+			Newb: {
+				Content: Me like here!
+				NoHome: Where home?
+				FarFromHome: Me lost, can you find home?
+				LoveSpace: So little people, yay!
+				DislikeCrowded: Too many faces!
+				HateCrowded: Too many faces!
+				LoveBiome: Me love {BiomeName}! It give memory of... Uh..
+				LikeBiome: Me like {BiomeName}.
+				DislikeBiome: Too boring here, me hate sand!
+				HateBiome: Me feel {BiomeName} make me sad!
+				LoveNPC: "{NPCName} knows magic like me!"
+				LikeNPC: Me like {NPCName}!
+				DislikeNPC: I feel evil within {NPCName}, very bad!
+				HateNPC: My hatred towards {NPCName} is beyond your mortal comprehension.
+				LikeNPC_Princess: Me like {NPCName}.
+				Princess_LovesNPC: I like {NPCName}, he's goofy!
+			}
+
+			TBot: {
+				Content: Feeling rather content, thank you for asking.
+				NoHome: I don't like being exposed to the elements. Do you have any housing or shelter I could inhabit for now?
+				FarFromHome: ... I believe we're very lost. I'm not familiar with our surroundings.
+				LoveSpace: It's rather quiet around here.
+				DislikeCrowded: Other tenants seem unhappy with the amount of crowding here, and frankly, so am I.
+				HateCrowded: Other tenants seem unhappy with the amount of crowding here, and frankly, so am I.
+				LoveBiome: I like this environment. It's very pleasant.
+				LikeBiome: This environment is mildly pleasant.
+				DislikeBiome: My current environment is rather... undesirable.
+				HateBiome: ... Just like home. I really do not like this environment.
+				LoveNPC: "{NPCName}'s knowledge on medicine rivals that of mine! It's really impressive."
+				LikeNPC: "{NPCName} and I have things in common. We get along well."
+				DislikeNPC: I find {NPCName} rather unsettling.
+				HateNPC: "{NPCName} reminds me of home. I'd rather not be reminded of that place."
+				LikeNPC_Princess: I like {NPCName}.
+				Princess_LovesNPC: I like {NPCName}.
+			}
+
+			Zephos: {
+				Content: I'm alright.
+				NoHome: Yo, mind if you give me a house to stay in?
+				FarFromHome: Yo bro, I can't find my house, you wanna help me out?
+				LoveSpace: This place is super spacious, good for practicing my swordsmanship!
+				DislikeCrowded: Is it crowded in here or what!
+				HateCrowded: Is it crowded in here or what!
+				LoveBiome: Staying at {BiomeName} reminds me of when I was a young pirate, sailing the seas!
+				LikeBiome: I think {BiomeName} is nice, I can hear the birds singing and flowers blooming.
+				DislikeBiome: Not a fan of {BiomeName}, I'd rather live on the surface.
+				HateBiome: It's so cold here, I'm shaking in my boots!
+				LoveNPC: "{NPCName} and I are great friends, so living near each other is great!"
+				LikeNPC: "{NPCName} is cool, I'd like to sail the seas with him sometime."
+				DislikeNPC: "{NPCName} wants to get his greedy little fingers on my money!"
+				HateNPC: "{NPCName} will never take my money! NEVER!!"
+				LikeNPC_Princess: I like {NPCName}.
+				Princess_LovesNPC: I like {NPCName}.
+			}
+		}
+
+		Emotes: {
+			AdamTownNPCEmote.Command: moradam
+			DaerelTownNPCEmote.Command: mordaerel
+			ForestNymphTownNPCEmote.Command: morforestnymph
+			HappinsTownNPCEmote.Command: morhappins
+			NewbTownNPCEmote.Command: mornewb
+			OkvotTownNPCEmote.Command: morokvot
+			TenvonTownNPCEmote.Command: mortenvon
+			ZephosTownNPCEmote.Command: morzephos
+		}
+
 		Currencies.AntiqueDorulCurrency: antique doruls
 
 		TitleCard: {
@@ -26,6 +145,11 @@ Mods: {
 			Keeper: {
 				Name: The Keeper
 				Modifier: Octavia von Gailon
+			}
+
+			KeeperSpirit: {
+				Name: The Keeper's Echo
+				Modifier: A Lingering Essence
 			}
 
 			SkullDigger: {
@@ -117,7 +241,6 @@ Mods: {
 			Fallen: Fallen are a category of undead with a soul strong enough to form pale brown flesh. Most being aggressive towards humans, this one is a rare case who can sell ritualist equipment and repair fragments of ancient weapons.
 			TBot1: Quiet, mildly melancholic but happy to help you, Adam is an android and the leader of a small group called the Alpha. They are your go-to guide for all-things Liden.
 			TBot2: '''"I may be the only one of my kind to honor all Three Laws... I can't assure the others will take you in with open arms like I did. Stay safe out there."'''
-			TreebarkDryad: These slow-thinking ents only appear in heavily forested areas. They have only recently arrived on this island, coming from the portal on the surface. Once every century, they find a shallow pond and hibernate in the centre. The water from the pond feeds the ent during the process.
 			LostSoul: Lost Souls search around the world to look for corpses to infuse with. They roam catacombs and graveyards, sometimes taking many days to find a compatible vessel.
 			BoneSpider: A skeletal spider ready to spook you at any moment! Don't worry, it's not technically a spider; spiders don't have bones.
 			Chicken: These chickens somehow found their way through the portal from the mainland. Being true to their name, they will flee at the sight of danger. They are most comfortable on hay, and will even lay eggs while sitting on it!
@@ -139,6 +262,7 @@ Mods: {
 			Golem: Constructed in Gathuram and sent to Ithon as a gift in a time of peace between the domains. Although the people of Gathuram forgot to mention one thing...
 			Calavia: A Chief-Warrior of the Iron Realm, lost and troubled by her distant venture from her home of Khen Boldur, which was spurred on by the barons of Arum. Swordplay and smithing is her expertise, along with familiarity of Blizzard magic.
 			OO: An autonomous war machine mostly of Girus' own design with many integrated weapon systems, such as literal finger guns and an advanced heat dispersion system in the form of a giant beam, capable of obliterating anyone it engulfs - Also where Obliterator got its name from.
+			TreebarkDryad: These slow-thinking ents only appear in heavily forested areas. They have only recently arrived on this island, coming from the portal on the surface. Once every century, they find a shallow pond and hibernate in the centre. The water from the pond feeds the ent during the process.
 			Erhan: A high priest of Fairwood, tasked himself to purify the forest's curse after it consumed it's warden.
 			Behemoth: An unfortunate scientist, disfigured and mutilated beyond recognition by the Xenomite infection. This specimen is entering the final stage of the infection, and has had its body transform into a sludgy slurry on the ceiling... God, that must be agonizing.
 			Blisterface1: An unfortunate fish, disfigured and mutilated beyond recognition by the Xenomite infection. This strain seems to be similar to that of the Blistered Scientists...
@@ -148,7 +272,7 @@ Mods: {
 			MACE: An old, unfinished war machine that went haywire. Looks like it never saw the light of day, as it's in progress of being scrapped for parts and components.
 			KS3: "'What? You want my lore? Go get your own lore!'"
 			Cleaver: A proof-of-concept weapon of war modified by Girus, the Omega Cleaver is a giant sword controlled by a small remote stick that was wielded by another machine.
-			Gigapora: A modified tunnelling machine, originally of Teochrome design, retrofitted with rocket boosters, various weaponry and very experimental projected shield technology. Gigapora's shield projectors are prone to overheating and melting if they're inside the projected shield, hence why they're outside.
+			Gigapora: A modified tunnelling machine, originally of TeoChrome design, retrofitted with rocket boosters, various weaponry and very experimental projected shield technology. Gigapora's shield projectors are prone to overheating and melting if they're inside the projected shield, hence why they're outside.
 			Akka: Little has been recorded of Akka during her youth, it is believed by the locals that her spirit infused with a great tree in the Spirit Realm, where she would sleep until awoken by her husband to be worshipped once more.
 			Ukko: Once a blacksmith in ancient Tethuram who had an immense talent in magic, so immense that he was seen as a God to many. In his old age, growing weary of his mortality, Ukko infused his soul into a bundle of rocks, allowing him to eventually reform when the time comes.
 			PZ: An unfortunate scientist, mutilated and disfigured by the Xenomite infection. This specimen was Kari Johannson, the father of all T-Bots and patient zero of the xenomite infection. He's been stuck for 50 years, conscious and aware of the situation around him... God, that must be tormentous.
@@ -203,6 +327,8 @@ Mods: {
 			Chickadier: A soldier of the Fowl Emperor. Don't ask where they get their explosive eggs from.
 			Chickenvoy: A loyal messenger of the Fowl Emperor. Don't ask where they got their hats from.
 			CoopCrate: A loot box for people who specifically want an explosive egg. The chickens have not realised they need the randomness aspect for it to actually be exciting.
+			ShadesoulNPC: Willpower exists in Epidotra - the happier or more you desire life, the stronger and bigger your soul can become, and vice versa. If someone loses their will to live, their soul can become so small it inverts and they become soulless. The soulless only emerged after the Age of the False Gods.
+			ScannerDrone: A drone used to collect data and store it within the SoS.
 		}
 
 		Bestiary.Android: Apidroids were an experiment with a highly durable metal from a distant star system. The metal - dubbed 'Rose Titanium' by King Slayer III - is one of the strongest materials discovered in the galaxy. However, King Slayer III hated its pink tinge, and so stubbornly refused to use it after making a few Androids out of it.
@@ -227,6 +353,7 @@ Mods: {
 				LabAccessPanelUsed6: Laser security already deactivated
 				OmegaCall: A new Omega Prototype can be called using the Omega Transmitter
 				FoolLeft: The Fool has left...
+				WastelandGrow: An infection grows in the wasteland...
 				PortalRumble: A portal rumbles... (Check the Map for location)
 				WayfarerReturn: " the Wayfarer has returned!"
 			}
@@ -338,7 +465,6 @@ Mods: {
 						 to get support from the Ship of the Slayer
 
 						'''
-					Casque: Summons a hologram of King Slayer III to help, higher spirit levels give the hologram stronger weapons
 					Cowl: Summons a drone that gives a continuous feed of mana for 10 seconds
 					Helm: Summons 2 mini spaceships that orbit you, firing lasers whenever you attack using a melee weapon
 					Hood: Summons 2 missile drones and a magnet drone
@@ -384,51 +510,34 @@ Mods: {
 
 		SpecialTooltips: {
 			Viewer: Hold [Shift] to view lore
+			Unbreakable: "[c/ff0000:Unbreakable]"
+			Unbreakable5000: "[c/ff0000:Unbreakable (5000% Pickaxe Power)]"
 
 			CommonGuard: {
 				CommonGuardGreaves:
 					'''
-					'Plate mail greaves of the Common Guard unit of Anglon that were scavenged by skeletons.
-					Originally shining steel, the metal has since dulled with time and coated with layers of dust.
-
-					The Common Guard was founded when an Overlord's city was completely obliterated
-					by a stray demon that sneaked through an unguarded portal to Demonhollow.
-
-					They now guard cities and landmarks of great importance. Despite being stronger than the average
-					knight, they don't get involved in wars.'
+					'Plate mail greaves of Anglon's Common Guard, scavenged by skeletons.
+					On a day unforgotten, a stray demon appeared through an unguarded portal. Lives were lost and homes were set ablaze.
+					A lesson marked by the heat of hellfire, and one that delivered a new unit to protect the Anglonic people.'
 					'''
 				CommonGuardHelm1:
 					'''
-					'Visored plate mail helm of the Common Guard unit of Anglon that were scavenged by skeletons.
-					Originally shining steel, the metal has since dulled with time and coated with layers of dust.
-
-					The Common Guard was founded when an Overlord's city was completely obliterated
-					by a stray demon that sneaked through an unguarded portal to Demonhollow.
-
-					They now guard cities and landmarks of great importance. Despite being stronger than the average
-					knight, they don't get involved in wars.'
+					'A visored helm of Anglon's Common Guard, scavenged by skeletons.
+					Villagefolk anticipate the day that their little abode are bestowed a Common Guard's protection.
+					Yet not a day they see it; for despite the unit's humble title, it misleads.
+					The Common Guard are only ever stationed at important landmarks and great cities.
+					No heed is given to the common.'
 					'''
 				CommonGuardHelm2:
 					'''
-					'Bucket helm of the Common Guard unit of Anglon that were scavenged by skeletons.
-					Originally shining steel, the metal has since dulled with time and coated with layers of dust.
-
-					The Common Guard was founded when an Overlord's city was completely obliterated
-					by a stray demon that sneaked through an unguarded portal to Demonhollow.
-
-					They now guard cities and landmarks of great importance. Despite being stronger than the average
-					knight, they don't get involved in wars.'
+					'A bucket helm of Anglon's Common Guard, scavenged by skeletons.
+					Despite being stronger than the average knight, the Common Guard do not toil in wars.'
 					'''
 				CommonGuardPlateMail:
 					'''
-					'Plate mail of the Common Guard unit of Anglon that were scavenged by skeletons.
-					Originally shining steel, the metal has since dulled with time and coated with layers of dust.
-
-					The Common Guard was founded when an Overlord's city was completely obliterated
-					by a stray demon that sneaked through an unguarded portal to Demonhollow.
-
-					They now guard cities and landmarks of great importance. Despite being stronger than the average
-					knight, they don't get involved in wars.'
+					'Plate mail of Anglon's Common Guard, scavenged by skeletons.
+					Once shining steel, the metal has since dulled with time and coated with ever-present dust.
+					The red cloth, however, remains unbleached. Anglonic fabrics and dyes are seldom of poor quality.'
 					'''
 			}
 
@@ -521,7 +630,7 @@ Mods: {
 					If, for whatever reason these needs still affect me, this could make this voyage a nightmare.
 					The placebo method of satisfying these requirements are unable to be practiced without modifications to my vessel,
 					and many other ideas to resolve this disaster require more than what this tiny escape-craft provides.
-					So, I have no way of stopping these symptoms as of yet. I'm still 2 years from reaching the nearest planet - Nabu III
+					So, I have no way of stopping these symptoms as of yet. I'm still 2 years from reaching the nearest planet - Nabu III.
 					Actually, I should come up with a new name for my robotic body... Something other than Survival Robot Mk. 78.'
 					'''
 				Datalog4:
@@ -597,7 +706,7 @@ Mods: {
 					After exploring Alkonost's surface, I've finally found something other than ice!
 					Took so long since I can't last down there for more than half a minute.
 					From the looks of things, it looks man-made. Or I guess alien-made... Heh.
-					First time I've felt this amused in forever, but anyways, the structure.
+					First time I've felt this amused in forever, but anyways, the structure:
 					It was under the thick ice sheet so I had to drill quite far down.
 					The water under there must be freezing, but curiosity is getting the better of me here.
 					I have found an entrance, inside is just as cold though, so I should go back up into my ship before exploring further.'
@@ -647,7 +756,7 @@ Mods: {
 					I decided to make a new android, one for military purposes, I've named it the Prototype Silver.
 					Despite its name, it's mainly composed of the spare titanium from Alkonost.
 					I did find a metric ton of coal from Asherah's caverns, so that's nice.
-					Well... Onto the next planet, I just hope THIS one will be lush and green.
+					Well... onto the next planet, I just hope THIS one will be lush and green.
 					All the planets I've been to were either frozen or barren.'
 					'''
 				Datalog17:
@@ -869,12 +978,11 @@ Mods: {
 			}
 
 			SkullDigger: {
-				Name: Skull Digger:
-				Fight1: Mistress Octavia, are you harmed?
-				Fight2: My lady, you need not worry, I shall crush this vermin.
+				Fight1: Mistress Octavia,[0.1] are you harmed?
+				Fight2: My lady,[0.1] you need not worry,[0.1] I shall crush this vermin.
 				Fight3: Prepare to reap what you sow...
-				Fight4: I have finally found you, vermin..
-				Defeat1: My dear mistress, I have failed you.
+				Fight4: I have finally found you,[0.1] vermin..
+				Defeat1: My dear mistress,[0.1] I have failed you.
 				Defeat2: It seems our torment stays eternal.
 				1: Thank...
 				2: You...
@@ -891,6 +999,12 @@ Mods: {
 				Robot3: *Sigh*[0.1] I wasn't expecting to see the likes of us here.
 				Robot4: Not going back there now.[0.5] Since you're here and not there,[0.1] I can safely assume you're not with Her..?
 				Robot5: "[@a]...Alright.[0.5] We can safely ignore each other then."
+				Warhead1: Ah,[0.1] I should caution if you get the Nuclear Warhead.
+				Warhead2: Radiation is a serious hazard for humans like you,[0.1] but an avoidable one.
+				Warhead3: If you see a glowing blue material near the crater,[0.1] don't get too close.[0.5] That'd be Plutonium.
+				Warhead4: A Geiger-Muller will warn you of irradiated areas,[0.2] and if you do get sick,[0.1] take a Radiation Pill as soon as you feel fatigued or nauseous.
+				Warhead5: I will sell these once you set the nuke off.
+				Warhead6: .[0.1].[0.1].[0.1]Err,[0.1] that is if you DO decide to detonate one.
 			}
 
 			SoI: A portal to another world has opened!
@@ -913,7 +1027,7 @@ Mods: {
 					5: "[@b]Excuse me?[0.5] I haven't seen a single droplet of malice from them,[0.1] and I've been workin' with them for years!"
 					6: As have I...[0.3][@c][@d] in a more direct sense.[0.5][@g] Just trust me lassie,[0.1] break free Kyretha's spirit.[0.5] Let her truly rest.
 					7: To doubt the wisdom of a liberated spirit would be most imprudent.
-					8: .^0.3^..^0.05^ [@e]Gorhal'on.[0.5][@f] Taborti.[0.6] I'll free it after I go through the portal.
+					8: .[0.1].[0.1].[0.5] [@e]Gorhal'on.[0.5][@f] Taborti.[0.6] I'll free it after I go through the portal.
 					9: Is that a promise?
 					10: Bi'oruen.
 					11: Very well.
@@ -926,9 +1040,20 @@ Mods: {
 				Chicken: Chicken
 				Scan: " scanned..."
 				Unknown: Unknown entity
+				Target: Target
 			}
 
 			KS3: {
+				HeadHologram: {
+					1: Hey,[0.1] get lost.
+					2: "[@f1]You really aren't worth my time,[0.1] ya know."
+					3A: So stop bothering me,[0.1] I have a certain android I need to 'lecture'.
+					3B: So stop bothering me,[0.1] I don't care about you.
+					3C: So stop bothering me and we can all go about our day.
+					3D: So stop bothering me and leave me to my 4D chess.
+					4: "[@f0]I'll beat you up if you annoy me again."
+				}
+
 				Intro: {
 					DroneBreak: Did you seriously just destroy my drones?
 					DroneIfChicken: Alright listen here you little chicken nugget.
@@ -978,7 +1103,7 @@ Mods: {
 				}
 
 				Interval3: {
-					1: This is getting ridiculous![0.5] Why can't I kill you?
+					1: This is getting ridiculous![0.5] Shouldn't you be getting tired?
 					2: "[@h3]*Ahem*[1] Your persistence is admirable,[0.1] I'll give you that."
 					3: "[@h2]But you better realise I'm hardly trying.[1][@h1] I ain't bluffing either."
 				}
@@ -1006,7 +1131,7 @@ Mods: {
 					IfRobot: ... And for a heap of scrap no less.
 					IfChicken: ... And for what?[0.5] A bloody chicken!?
 					IfHuman: ... And for an annoying brat no less.
-					Begin: "[@h0][@c]Let's begin."
+					Begin: "[@h0]Let's begin.[@c]"
 				}
 			}
 
@@ -1120,7 +1245,7 @@ Mods: {
 
 				Encounter2: {
 					1: That was a little disappointing to be honest.
-					2: I suppose that's what's to be expected from minimal changes to Teochrome's original design.
+					2: I suppose that's what's to be expected from minimal changes to TeoChrome's original design.
 					3: Oh well! I got some results that'll prove useful later on.
 					4: Come again later, and I should have another machine ready to test.
 					5: Shouldn't be too long, I'll be reusing some old machine gathering dust in the basement.
@@ -1128,7 +1253,7 @@ Mods: {
 
 				Encounter3: {
 					1: Hah, not bad!
-					2: A little sad how useless Teochrome's shield technology was,
+					2: A little sad how useless TeoChrome's shield technology was,
 					3: Can't completely encompass something as the Shield projector will throw a hissy-fit if it's inside.
 					4: I did get some ideas on how to use this to my advantage, though...
 					5: Anyways! Same as last time, I'll ready another machine for a test.
@@ -1165,7 +1290,7 @@ Mods: {
 							'''
 						4: So!
 						5: I've elected to give you private access to the lower sections of my base of operations.
-						6: I am quite sure you'll find some old toys Teo-chrome left behind down there.
+						6: I am quite sure you'll find some old toys TeoChrome left behind down there.
 						7: You'll have to excuse the mess though.
 						8: Anyway, I'm eagerly anticipating your next trial.
 						9: You're going to love it.
@@ -1177,7 +1302,7 @@ Mods: {
 					2: I'd rather not discard something I spent ages on creating.
 					3: This research has proven very fruitful; I'm getting excited from thinking of how to put it all to good use!
 					4: Ah, right. The last test is coming up not too far from now!
-					5: And I've got something amazing to show you! Ah, but It'll have to be a secret until then.
+					5: And I've got something amazing to show you! Ah, but it'll have to be a secret until then.
 					v1: Alright, I'll say this. It's a collaborative project between me and 'a mutual of ours'
 					v2: Alright, I'll say this. It's a collaborative project between me and one of the few to best you.
 					v3: Alright, I'll say this. It's a collaborative project between me and another.
@@ -1186,6 +1311,22 @@ Mods: {
 
 			Nebuleus: {
 				Name: Nebuleus:
+				Shout: {
+					StarBlast: Star Blast!
+					Starfall: Starfall!
+					PiercingNebula: Piercing Nebula!
+					Chains: Chains of the Cosmos!
+					Eyes: Eyes of the Cosmos!
+					SuperStarfall: Super Starfall!
+					ErraticStarBlast: Erratic Star Blast!
+					PiercingNebulaBurst: Piercing Nebula Burst!
+					CrystalStars: Crystal Stars!
+					PiercingNebula2: Mirror Miragá!
+					Moonbeam: Kuunvalo!
+					MeteoricSwarm: Meteor Armada!
+					Constellations: Constellations!
+					CosmicFulgura: Cosmic Fulgura!
+				}
 
 				Intro: {
 					1: Ah, you have brought me here yourself.
@@ -1203,7 +1344,7 @@ Mods: {
 				}
 
 				Interval: {
-					1: Why do you blindly fight? What is your goal?
+					1: What purpose drives you? What is your goal?
 					2: Do you even have a motive for your actions?
 					3: Still fighting? Well I'm not done yet!
 				}
@@ -1216,7 +1357,7 @@ Mods: {
 						I've seen you be slain countless times,
 						However you never truly die.
 						'''
-					4: It would seem most who've fought you never realise this.
+					4: It seems most cannot or simply will not comprehend this.
 					5: But I do.
 					6:
 						'''
@@ -1290,14 +1431,22 @@ Mods: {
 				Continue: Continue
 				Spare: Spare
 				Fight: Fight
+				Refuse: Refuse
+				Accept: Accept
 			}
 		}
 
 		UI: {
+			Choice: {
+				MyPlayer: Open Inventory to make your choice
+				OtherPlayer: "{0} must make a choice"
+			}
+
 			Chalice: {
 				Name: Chalice of Alignment
 				Alignment: Alignment
 				ItemInterested: "[c/ffea9b:There is something to say about the item you hold]"
+				GGInterested: "[c/ffea9b:The Chalice has something to say about this place]"
 				HeartOfThorns:
 					'''
 					A piece of blight from Faywood forest, cursed by an ancient power.
@@ -1408,6 +1557,14 @@ Mods: {
 			CycleD: Cycle Dialogue
 			Quest: Quest
 			New: New Dialogue Available
+			EnterGateway: Enter Gateway
+			Who: Who are you?
+			Talk: Talk
+			Crux: Request Crux
+			AboutYou: About you?
+			Back: Back
+			HomeRequirements: Home Requirements
+			RevivialPotion: Use Revival Potion
 
 			Daerel: {
 				Unconscious: Daerel the Wayfarer was knocked unconscious...
@@ -1552,14 +1709,14 @@ Mods: {
 			KS3: {
 				0: Why are you here?
 				1: Crashed Spaceship?
-				2: (Give Uranium)
+				2: Offer Uranium
 				3: You aren't fighting me?
 				4: Are you a human?
 				5: Hall of Heroes?
 				6: Abandoned Lab?
 				7: Epidotra?
 				8: Other world?
-				9: Data Logs?
+				9: Data Logs
 			}
 
 			Volt: {
@@ -1585,9 +1742,7 @@ Mods: {
 
 		Buffs: {
 			ErhanCrossCooldown: {
-				# Cooldowns
 				DisplayName: Holy Shield Cooldown
-				# Cooldowns
 				Description: The holy shield has been broken
 			}
 
@@ -1999,11 +2154,6 @@ Mods: {
 				Description: Slowed and cannot take more serums
 			}
 
-			StomachAcidDebuff: {
-				DisplayName: Stomach Acid
-				Description: BLLAARRG
-			}
-
 			EnergyRegenBuff: {
 				DisplayName: Energy Regeneration
 				Description: Increased Energy regen
@@ -2106,7 +2256,7 @@ Mods: {
 
 			PureChillDebuff: {
 				DisplayName: Pure Chill
-				Description: brrr
+				Description: Reduced movement and loss of life
 			}
 
 			RoosterBoostBuff: {
@@ -2308,6 +2458,61 @@ Mods: {
 				DisplayName: Rooster Boost
 				Description: You feel bucked up... and annoyed
 			}
+
+			PumpkabooPetBuff: {
+				DisplayName: Pumpkaboo
+				Description: Boo!
+			}
+
+			HydraAcidDebuff: {
+				DisplayName: Hydra Acid
+				Description: BLLAARRG
+			}
+
+			HammerBuff2: {
+				DisplayName: Heavy
+				Description: Increased fall speed
+			}
+
+			XeniumGasDebuff: {
+				DisplayName: Virulent Gas
+				Description: uh oh stinky!
+			}
+
+			EmpPetBuff: {
+				DisplayName: Chibi Gumdramon
+				Description: ""
+			}
+
+			BLTPetBuff: {
+				DisplayName: Calico Cat
+				Description: A scaredy cat
+			}
+
+			BLTSandwichBuff: {
+				DisplayName: B.L.T. Sandwich
+				Description: Stands for Big Luigi Toast I think
+			}
+
+			HydraCorrosionBuff: {
+				DisplayName: Hydric Acid
+				Description: All poison weapons inflict Hydra Acid
+			}
+
+			MiniDiggerBuff: {
+				DisplayName: Mini Digger
+				Description: Your own personal protector!
+			}
+
+			AsterisPetBuff: {
+				DisplayName: Chibi Asteris
+				Description: In case you ever wanted a li'l peacekeeper to keep you company.
+			}
+
+			CloudCallerPetBuff: {
+				DisplayName: Cloud Doggy
+				Description: Bork
+			}
 		}
 
 		Biomes: {
@@ -2375,11 +2580,73 @@ Mods: {
 				DisplayName: Soulless Caverns
 				TownNPCDialogueName: the Soulless Caverns
 			}
+
+			SpaceBiome: {
+				DisplayName: Deep Space
+				TownNPCDialogueName: Deep Space
+			}
+
+			RuinedKingdomBiome: {
+				DisplayName: Ruined Kingdom
+				TownNPCDialogueName: the Ruined Kingdom
+			}
+		}
+
+		Prefixes: {
+			CruxHealthTooltip: "{0:+0;-#}% health"
+			CruxDefenseTooltip: "{0:+0;-#}% defense"
+			SpiritExtractTooltip: "{0:+0;-#}% spirit extraction chance"
+			HealthyPrefix.DisplayName: Healthy
+			DepressedPrefix.DisplayName: Depressed
+			CrestfallenPrefix.DisplayName: Crestfallen
+			DeterminedPrefix.DisplayName: Determined
+			FrenziedPrefix.DisplayName: Frenzied
+			GladPrefix.DisplayName: Glad
+			GlumPrefix.DisplayName: Glum
+			HardyPrefix.DisplayName: Hardy
+			IrkedPrefix.DisplayName: Irked
+			JovialPrefix.DisplayName: Jovial
+			LoyalPrefix.DisplayName: Loyal
+			StalwartPrefix.DisplayName: Stalwart
+			UnyieldingPrefix.DisplayName: Unyielding
+			VexedPrefix.DisplayName: Vexed
+			BlasphemousPrefix.DisplayName: Blasphemous
+			CovertPrefix.DisplayName: Covert
+			ForbiddenPrefix.DisplayName: Forbidden
+			OccultPrefix.DisplayName: Occult
+			RustedPrefix.DisplayName: Rusted
+			SpectralPrefix.DisplayName: Spectral
+			SpellbindingPrefix.DisplayName: Spellbinding
+			StainedPrefix.DisplayName: Stained
+			VerbotenPrefix.DisplayName: Verboten
+			BloodthirstyPrefix.DisplayName: Bloodthirsty
+			ChillingPrefix.DisplayName: Chilling
+			ClandestinePrefix.DisplayName: Clandestine
+			EtherealPrefix.DisplayName: Ethereal
+			ForgottenPrefix.DisplayName: Forgotten
+			HauntingPrefix.DisplayName: Haunting
+			ProfanePrefix.DisplayName: Profane
+			ReverentPrefix.DisplayName: Reverent
+			RunicPrefix.DisplayName: Runic
+			SacrilegiousPrefix.DisplayName: Sacrilegious
+			SinisterPrefix.DisplayName: Sinister
+			UncannyPrefix.DisplayName: Uncanny
 		}
 
 		Subworlds.SoullessSub.DisplayName: Soulless Dimension
 
 		Dialogue: {
+			General: {
+				NoRevivialPotion: You aren't holding a Revival Potion.
+				UnconsciousStatus1: "{0} has been unconsious for less than a minute."
+				UnconsciousStatus2: "{0} has been unconsious for {1} minute(s)."
+			}
+
+			Angler: {
+				WastelandFish: You did WHAT with a nuke?! Think of all the cool fish you blew up... but now there could be a super mutated one that's COOLER! Go look for one!
+				WastelandLocation: Caught in the Wasteland
+			}
+
 			TBot: {
 				GuideDialogue: "{0} knows quite a lot about this place you call home. It's way more interesting and lively compared to where I'm from. And less hazardous to your kind."
 				MerchantDialogue: "{0} is... Interesting I suppose. Though I don't appreciate him constantly trying to barter with me, I don't want his relatively weak tools or dirt."
@@ -2387,15 +2654,15 @@ Mods: {
 				NurseDialogue: The nurse, {0}, doesn't know anything about irradiation or how to treat it. If you're unfortunate enough to start suffering ARS, she won't be able to help you. To detect hazards that might cause it, I suggest buying a Geiger Muller from me or finding one somewhere.
 				ArmsDealerDialogue: "{0}'s weapons are useless to me. I already own a wide arsenal of destructive firearms and melee weapons, and I would rather not use them on living beings, as it would violate the first Law of Robotics."
 				CyborgDialogue: Meanwhile every other tenant gives me a bit of a stink eye, {0} seems to be fine with me. I don't blame the others, my kind tends to be very hateful towards living beings, more importantly the likes of you, that show a significant similarity to our creators.
-				Dialogue1: Kari was our original creator. He was talented and respected in his field, and was ahead of his time with Artificial Intelligence. I and my kind are pretty much his children.
+				Dialogue1: I used to serve a scientific genius called 'Kari'. He was renowned for his mastery of AI and Robotics, and was directly responsible for our creation. ...He passed away a long while ago from a strange illness that I attempted to treat.
 				Dialogue2: Girus was the first AI, and the precursor to our own. There's only one of her kind, and many of my kind. Her actions disgust me. I would rather not get deeper into that at the moment.
 				Dialogue3: I've heard from the other tenants that you've slain a giant, sentient flower of Rosa variety in the jungle. I'd like to question you about if this is true. It is? Hmm...
 				Dialogue4: There's an ancient civilization of lizard people in your world? And they worshipped an idol of sun? That's strange... I find your island more intriguing the more I learn about it.
 				Dialogue5: An eldritch lord of the moon... You know, this sounds like something right out of Epidotra. I'm not familiar with the lands outside this island, but I've met some of the more important figures. They seem like a good bunch.
 				Dialogue6: You've defeated an Omega Prototype? First off, I've never heard her call or give someone such a title. Second off, oh no, she's already found this haven?
 				Dialogue7: Why am I concerned about the Prototypes? Well, Girus isn't a fan of your kind. She wiped out... All of them. Our creators. The animals. Gone. Even Kari. I want you to be extremely careful around her. She doesn't mess around.
-				Dialogue8: King Slayer? I know him, though he's a bit of... Well... I'm sure you know what I'm implying.
-				Dialogue9: Hello. I'm aware you've somehow gained access to our birthplace, the Teochrome Research laboratory. It was once full of life with all the personnel. I must warn you, the other bots may be quite nice to you, but they were most likely ordered by Girus to not disintegrate you upon sight.
+				Dialogue8: King Slayer..? ...Ah, him. I've had the pleasure to meet him quite a while ago. A case of being unable to mentally mature, due to replacing his body with an artificial one, as I recall my diagnosis and initial meeting.
+				Dialogue9: Hello. I'm aware you've somehow gained access to our birthplace, the TeoChrome Research laboratory. It was once full of life with all the personnel. I must warn you, the other bots may be quite nice to you, but they were most likely ordered by Girus to not disintegrate you upon sight.
 				Dialogue10: Is that a nuclear warhead in your pocket or are you hap- ...Why do you have a warhead with you?
 				Dialogue11: I've come here to hide from Girus. She's reluctant to move into unknown territory, because she doesn't want to step on the wrong person's toes.
 				Dialogue12: I hope you are protecting me, as I refuse to use any of my weapons against a living being. I strive to be what Girus wasn't.
@@ -2427,12 +2694,12 @@ Mods: {
 				FloppyDisk4:
 					'''
 					It reads - [c/7de4e8:'Monthly Research Facility Report N. *** Month **]
-					[c/7de4e8: Good day Mr. ******, this is **** reporting from Teo-Chrome Research Facility N. ***. This month has been mostly slow, our engineers have made a few weapons and tools, while our researchers are hard at work understanding Xenomite better. But aside from that, I have groundbreaking news! Our head of robotics, Dr. Kari Johannson has managed to create an Artificial General Intelligence, a fully sentient AI!']
+					[c/7de4e8: Good day Mr. ******, this is **** reporting from TeoChrome Research Facility N. ***. This month has been mostly slow, our engineers have made a few weapons and tools, while our researchers are hard at work understanding Xenomite better. But aside from that, I have groundbreaking news! Our head of robotics, Dr. Kari Johannson has managed to create an Artificial General Intelligence, a fully sentient AI!']
 					'''
 				FloppyDisk5:
 					'''
 					It reads - [c/7de4e8:'This is groundbreaking, ***** for military efforts once we discover how to weaponize this. I don't know much else, yet Dr. Johannson has provided me with his own explanation on the matter, please click the attached link to see for yourself!']
-					This appears to be an email, likely being sent to a Teo-Chrome executive from the looks of it. Plenty of it appears to have been corrupted however. [i:Redemption/NextPageArrow]
+					This appears to be an email, likely being sent to a TeoChrome executive from the looks of it. Plenty of it appears to have been corrupted however. [i:Redemption/NextPageArrow]
 					'''
 				FloppyDisk6: It reads - [c/d88383:'(1/4) ... At last, my prototype for a constantly evolving AI is complete! Finally, after years and years of studying computer coding and... stuff, I have created possibly the next huge leap in Artificial Intelligence! Now, to give it a name... How about, Eve?']
 				FloppyDisk7: It reads - [c/d88383:'(2/4) Eve has grown much more intelligent over the months. It's like watching your own child grow, I can't really describe the feeling that much, but I am excited to see where this goes. The higher-ups have seen my work, and are ready to use the code for something. They didn't tell me that right away... Now, Eve, how do you feel?']
@@ -2461,6 +2728,9 @@ Mods: {
 				FloppyDisk16: "[c/d883c1:Why in the world did they put someone of my calibre down here when those damned higher-ups won't even give us the funding to use our intelligence!']"
 				FloppyDisk17: It was a miracle to find them alive so long after all the destruction Girus caused. A lone human, almost frozen to death.
 				NoFloppyDisk: Seems like you aren't holding a floppy disk in your hand, or you just don't have one. If you show me them, I can tell you what they say.
+				UnconsciousDialogue1: Rebooting systems...
+				UnconsciousDialogue2: Running self-repairs...
+				UnconsciousDialogue3: I'm not sure how I drank that, since I'm a robot. I probably shouldn't question it.
 			}
 
 			Daerel: {
@@ -2498,7 +2768,7 @@ Mods: {
 					{0} or {1} weapons may bring them harm. Not that I'd suggest harming those helpless things.
 					'''
 				AdviceDialogue8: Wanna know about some insects? If you wanna find leaf beetles, or tree bugs as they're called here, then chop down some trees. They live on tree tops, with their green shell camouflaging them in the foliage. Coast Scarabs can also be found on palm trees at the beach, their shells sparkle when wet. Grand larvae are, well, rather gross - though they can make excellent bait. That is, if you're brave enough to get close to one.
-				AdviceDialogue9: When encountering skeletons and undead, I think its logical to assume {0} weapons aren't effective against them, while {1} weapons are. I used to like the exploring caves, until me and Zephos encountered a skeleton Vex...
+				AdviceDialogue9: When encountering skeletons and undead, I think its logical to assume {0} weapons aren't effective against them, while {1} weapons are. I used to like exploring the caves, until me and Zephos encountered a skeleton Vex...
 				AdviceDialogue10: Best way to deal with slimes? Burn them. Alternatively, {0} weapons can freeze them in their place, THEN you can burn them!
 				AdviceDialogue11: If you ever wanna sneak up on the Epidotrian skeletons or chickens, invisibility potions are real handy for the job.
 				AdviceDialogue12: The weapons skeletons can wield are very rusty, so it'd be bad to be wounded by them. If you do, take a dip in some water and the dirty wound will disappear.
@@ -2510,6 +2780,9 @@ Mods: {
 				AdviceDialogue14: I felt a strange presence beneath that portal I hopped out of, which is quite peculiar. Maybe you should check it out.
 				AdviceDialogue15: I noticed a scroll sitting atop a small table next to the portal I came out of, did you pick it up yet? It looked rather... demonic.
 				AdviceDialogue16: Did I drop something on my way back into the portal? Oh, those glowing fragments? It seems to be guiding you somewhere important, I'd follow it before taking on any major foes.
+				UnconsciousDialogue1: Did I just get knocked out? Thanks for waking me.
+				UnconsciousDialogue2: I'm up. Wide awake. What did you give me? Some sort of potion?
+				UnconsciousDialogue3: Was I asleep or unconscious? Most likely unconscious since, well, I wouldn't just go to sleep on the floor.
 			}
 
 			Zephos: {
@@ -2554,10 +2827,12 @@ Mods: {
 				AdviceDialogue13: I felt a weird presence beneath that portal I hopped out of, it was super uncanny! Maybe you should check it out.
 				AdviceDialogue14: I saw a scroll sitting atop a small table next to the portal I came out of, did you pick it up yet? It looked rather... demonic.
 				AdviceDialogue15: Did I drop something on my way back into the portal? Oh, those glowing fragments? Looks like it's guiding you somewhere important, I'd follow it before taking on any major foes!
+				UnconsciousDialogue1: *Yawn* Why'd ya wake me up? I was havin' a dream about... doesn't matter.
+				UnconsciousDialogue2: Alright, I'm up. Did I fall asleep or somethin'?
+				UnconsciousDialogue3: Yuck, what did you make me drink? Tastes bitter... like strawberries...
 			}
 
 			Fallen: {
-				BlackenedHeartDialogue: I wouldn't consume that Blackened Heart if I were you. Only bad things will come of it.
 				Dialogue1: Intrigued by lost souls? When a living thing dies, its soul leaves the body, these are lost souls. they search around the world to look for corpses to infuse with. To ordinary people, lost souls are invisible, but some who use magic can see them fade in and out of the Spirit Realm.
 				Dialogue2: The size of the Lost Souls depends on the original individual's power, the stronger the Will of the being, the bigger the soul. Once a soul leaves the body, they cannot infuse with it again. When the soul has found a worthy vessel, it fuses with it. On most occasions, a skeleton will be created. However, if the soul is strong enough, it will form pale-brown flesh on the skeleton, creating a Fallen.
 				OkvotDialogue1: You saved the Keeper? Thank you for that, I can't imagine the pain she was feeling. However, I doubt this is over... Her husband died too, apparently of depression. But he didn't become an undead, his inverted soul made him into something far worse.
@@ -2585,6 +2860,9 @@ Mods: {
 				GolemEyeDialogue: That eye comes from Ukon Veistos? Been many an age since I've heard tales of such things. It was carved from the stone of Gathuram, with the eye being placed in the center. Tales tell of an old God's spirit, said to reawaken once the time was right. The eye was said to be the catalyst, seeping its energy into stone moulded to take a diamond form. Tales as ancient as these twist and morph as time marches on, thus I believe not of what I speak of, yet I'd still be cautious of what you are about to do.
 				ZweihanderRepairDialogue: All done and repaired, here you go. The Zweihander is a fine blade, it originates from my home domain - Gathuram.
 				OphosRepairDialogue: I recall hearing mumblings about this "Ophos" man, even all the way in Gathuram. Although my memory is vague, these notes are testament enough of his high renown among Epidotra's blacksmiths.
+				WaraxeRepairDialogue: This waraxe originates from Gabra, a domain of the Iron Realm west of Gathuram. Those Gabric brutes meld the bones of their casualties into their weaponry - quite the contrast to our shining and sterling iron.
+				WaraxeNoBoneRepairDialogue: Ah, I'll need some [i/s14:Bone]bones to give this waraxe a proper repair job.
+				GodslayerRepairDialogue: Don't ask me to repair a weapon of this disposition again, and be cautious with it. Don't let it get into the wrong hands.
 				NoRepairDialogue: You don't seem to have any fragments on your possession. Once a weapon is repaired by my hands, it'll never be broken again!
 				NotSameRepairDialogue: You have fragments, but none of them are for the same weapon.
 			}
@@ -2713,7 +2991,11 @@ Mods: {
 				Chat2: What's the matter, you never seen a spaceship before? Some android thought it'd be a good idea to 'borrow' it, and ended up yeeting it 20 feet under. Unfortunately I've ran out of Uranium, but I can't be bothered to find it right now.
 				Chat2B: Yes. An android thought it'd be a good idea to 'borrow' it, and ended up yeeting it 20 feet under. The uranium you gave me should help.
 				Chat2C: Yes. An android thought it'd be a good idea to 'borrow' it, and ended up yeeting it 20 feet under. The things you gave me should help.
-				Chat2D: Why are you still here? Ship's fixed now.
+				Chat2D:
+					'''
+					One of the cruisers I sent out into this universe's space to look around. I left it to the Androids for a bit but I SUPPOSE one malfunctioned and got terminal stupidity.
+					..Why are you still here anyway? Ship's fixed now.
+					'''
 				Chat3: Because unlike you, I actually have a life.
 				Chat3B: Why would I want to fight now? I lost.
 				Chat3C: If you really want to fight, go ahead, use that cyber tech thing. I don't care.
@@ -2730,7 +3012,7 @@ Mods: {
 				Chat6B: I'm planning to check it out soon, it's located on the other world but I can easily fly there with the SoS.
 				Chat7: What? You don't even know the name of the planet you're on? Maybe read a book for once in your life.
 				Chat7B: The world is called Epidotra, it's where the Heroes are from.
-				Chat7C: This tiny island appeared on this planet out of nowhere, I was going to check it out a year or so ago, but I remember seeing the demigod here so I didn't bother. The mainland has 6 continents, with Anglon, Ithon, Gathuram, Nirin, Erellon, and Thamor as the primary domains. There's another domain which is it's own island called Swaylan, but that's disconnected from the rest of the world.
+				Chat7C: This tiny island appeared on this planet out of nowhere, I was going to check it out a year or so ago, but I remember seeing the demigod here so I didn't bother. There what appears to be a dimensional bubble surrounding this place, making it impossible to see or enter from the outside - portals or teleportation being the only way. Judging by how there is only one sun here, the bubble not only contains this island, but its entire universe alongside it. What's the matter? Too complicated for your monkey brain? I'll put it this way: we technically aren't in "Epidotra" here.
 				Chat8: The other world just suddenly appeared out of nowhere, I'm interested in it though. I've scanned the surface and it seems to be rather frozen, with so far no signs of human life. Reminds me of a planet I checked out while in space... In fact, reminds me of many planets.
 				Chat8B: You see the planet on the right in that one hologram? That's what I've named Liden, a radioactive and desolate wasteland devoid of any life.
 				Chat8C: I'll be leaving soon to check it out. Scans show barely any life, just a frozen radioactive wasteland.
@@ -2835,7 +3117,7 @@ Mods: {
 				OfferCruxDialogue: Of course! But first, I'd like ya to give ma corpse a weapon. Let the bone-heads and tomb raiders know I died fightin'! A big ol' battleaxe will do.
 				Dialogue: RAAAARRGGGHH! Haha! I saw ya comin' with ya fancy artifact, knew ya might call me with it, so I was ready to give ya a jump! No reaction? Come on, I yelled pretty loud. Not even a slight shiver in ya boots? Whatever, what is it?
 				Chat1: They called me the "Brain Cleaver" back in ma prime, for reasons I'm sure ya can figure out. My real name was somethin' less intense - Bromal. I was a warrior of Iful's Capital in the ol' kingdom of Kol Duluramodul before the undead took over. Now it's known as the Olden Ruins.
-				Chat2: A rotting mass of land east of Gathuram, a domain. During ma time there were no such things as "domains", the kingdom was just about all I knew. The folk of it ere the fall came from up north-east, migrating from the sinking Eranmount. They named their new land Odulmount - meaning Great Swamp in your tongue - but after lifetimes of glory, it was renamed to Kol Duluramodul - meaning Immovable Swamp Kingdom. It was indeed an impenetrable land, until the God of Decay appeared.
+				Chat2: A rotting landmass east of Gathuram. The folk of it ere the fall came from up north-east, migrating from the sinking Eranmount. They named their new land Odulmount - meaning Great Swamp in your tongue - but after lifetimes of glory, it was renamed to Kol Duluramodul - meaning Immovable Swamp Kingdom. It was indeed an impenetrable land, until the God of Decay appeared.
 				Chat3: A disease swept through Kol Duluramodul like an air-borne tsunami. The cause was the False God of Decay who roamed Tethuram - Gathuram's name in ancient times. It rotted and corroded flesh and turned humans into undead. The swamps, we discovered, were where the infection thrived most, so the folk who yet lived abandoned the kingdom and travelled further west. Such hard times they were, I only look back in anguish for my people.
 				Chat4: Be thankful for the present ya live in now. The Ancient World was an unforgiving age, made worse by the False Gods. We only knew of one at the time - after becoming a spirit I learnt a lot more about them from others of the realm. Apparently there was also one in Anglon, Blight I believe. For all the knowledge a thousand spirits can give, not one knows of the False Gods' origins. They're all dead though, the last of 'em was felled by ye olde Light. And I'm not talking about the Light you may know.
 				Chat5: Aye, I know of the artifact you carry, in fact it was created in Iful's Capital! 'Tis designed to call upon the spirits of corpses. Originally, the purpose was for gainin' knowledge of the past, but overtime we used it for more personal reasons - such as lettin' the dead talk to their family an' friends. I am unsure why it was found beneath this island though.
@@ -2875,7 +3157,7 @@ Mods: {
 				Chat3: When folk die, their soul leaves their body to find anotha'. During this pilgrimage, they're still connected to the physical world, meanin' some with the arcane eye may see 'em. If a lost soul wanders too long, they can seep outta the spirit realm and become Vagrant Spirits - poor things forever lost.
 				Chat4: I couldn't tell ya where to find corpses to use it on, but I can recommend findin' spirit currents. They're only visible in my realm, and can take ya closer to a soulful corpse if ya travel through one. You'll only find 'em in caverns, as that'll be where our energy is most contained. If ya do find what you're lookin' for, be wary. Tombs of the mighty are seldom left unguarded.
 				Chat4B: I once met anotha' spirit in a mind-bogglin' location! It felt outta this world. The walls were white, pipes with green fluids hung from ceilings, strange blue lights emitted from metal boxes an' tubes... And the spirit I saw was most intriguing! He just kept repeatin' about alarms, and wore a strange white an' blue suit. Very odd.
-				Chat5: Like I said, I've been a spirit so long that I forgot my own name, yet I still remember most other things 'bout me. Strange that. I'm from Gathuram, the portal behind me leads to the Catacombs of Gathuram, and is how the undead and skeleton folk came here. Doesn't seem like you can enter it though.
+				Chat5: I've been a spirit so long that I forgot my own name, yet I still remember most other things 'bout me. Strange that. I'm from Gathuram, the portal behind me leads to the Catacombs of Gathuram, and is how the undead and skeleton folk came here. Doesn't seem like you can enter it though.
 				CalaviaDialogue1: "'Ey, ya see that lass over yonder? There be somethin' soulful she carries, I can sense it. Would you, out of the goodness of yer heart, confront her about it for me? Don't want to assume nothin', but she might be keepin' a spirit captive."
 				CalaviaDialogue2: I can sense gratitude within Kyretha's spirit for confrontin' the lass and ultimately leading 'er to a path of freedom. I have a feelin' she'd be willin' to offer you something in return?
 			}
@@ -2964,13 +3246,16 @@ Mods: {
 				Bot1: Promoted to a soldier? Welcome. I'm your commander. At ease.
 				Bot2: Regular check-ups on your non-lethal tesla weapons are advised. You do not want to overload an insurgent in front of Girus. Obedient mindless slave are better than scrap metal, she says.
 				Bot3: See an insurgent while patrolling? Do not engage alone. They have lethal weaponry. We don't. Get backup.
-				Normal1: You wish to talk? I accept your request.
-				Normal2: What is it you need?
+				Normal1: Do you wish to ask something? I may be able to answer.
+				Normal2: I ask you not to be scared, I am here to protect. Do not let our misunderstanding cloud your judgement.
+				Normal3: Please make sure you are not bringing in any sludge or dirt. I do not want the Janitor to storm in here.
+				TBot1: You are new here, are you not? I am your commander. You are free to ask anything you may like.
 				Volt1: Had your eye augmented? Very useful. You've also lost your jaw, like me. Hopefully not as dramatically as I. Torn off by the leader of Alpha.
 				Volt2: Your jaw... It's gone. Hopefully not torn off violently. Really hope I don't face HIM again without a squad... *Shudders*
 				Adam1: *Visibly shaken* O-oh it's just you. Y-you startled me r-really bad...
 				Adam2: *He looks really anxious*
 				Adam3: *He looks very uncomfortable*
+				Janitor1: Have they finally given the Janitor a partner? It is about time, he has spent five decades cleaning this facility by himself.
 			}
 
 			Chalice: {
@@ -3012,12 +3297,12 @@ Mods: {
 		DamageClasses.RitualistClass.DisplayName: ritual damage
 
 		Items: {
-			BrokenBlade: {
-				DisplayName: Broken Blade
+			MechanicalSheath: {
+				DisplayName: Mechanical Sheath
 				Tooltip:
 					'''
 					Hitting enemies with physical melee has a chance to summon a Phantom Cleaver above their heads
-					10% increased physical melee damage
+					25% increased physical melee damage
 					'''
 			}
 
@@ -3046,7 +3331,7 @@ Mods: {
 				Status6: Extreme
 				StatusEnd: " doses of radiation detected on self, "
 				Note1: nothing to note.
-				Note2: have teochrome-issued pills on hand just in case.
+				Note2: have TeoChrome-issued pills on hand just in case.
 				Note3: high chance of irradiation and suffering ARS.
 				Note4: Acute Radiation Syndrome detected.
 			}
@@ -3191,7 +3476,7 @@ Mods: {
 
 			XenomiteJetpack: {
 				DisplayName: Xenomite Jetpack
-				Tooltip: Allows flight and slow fall
+				Tooltip: "{$CommonItemTooltip.FlightAndSlowfall}"
 			}
 
 			GildedBonnet: {
@@ -3288,8 +3573,7 @@ Mods: {
 				DisplayName: Nebuleus Wings
 				Tooltip:
 					'''
-					Allows flight and slow fall
-					Use dyes to make it look fabulous!
+					{$CommonItemTooltip.FlightAndSlowfall}
 					'''
 			}
 
@@ -3322,7 +3606,8 @@ Mods: {
 				DisplayName: Vasara Pendant
 				Tooltip:
 					'''
-					When hit for damage exceeding 150, an aura forms around the player that electrifies enemies and heals the player
+					Taking damage stirs up the ire of Ukko from within you
+					Once built up, Ukko's ire conjures smashing rocks and lightning to strike all foes around you for 5 seconds
 					15 second cooldown
 					'''
 			}
@@ -3440,7 +3725,11 @@ Mods: {
 
 			KeepersCirclet: {
 				DisplayName: Keeper's Circlet
-				Tooltip: Humanoid skeletons become friendly
+				Tooltip:
+					'''
+					Humanoid skeletons become friendly
+					All types of Epidotrian Skeletons will fight for you
+					'''
 			}
 
 			LeatherSheath: {
@@ -3611,6 +3900,11 @@ Mods: {
 					14% increased damage
 					12% increased critical strike chance
 					'''
+				Lore:
+					'''
+					'Cloak and breastplate replicated from the first ancient Crusaders of the Demonhollow. 
+					The metal's unique sheen was traditionally covered up by the Priests who wore it to earn the respect of the soldiers who served them.'
+					'''
 			}
 
 			HikariteGreaves: {
@@ -3621,6 +3915,11 @@ Mods: {
 					8% increased critical strike chance
 					20% increased movement speed
 					'''
+				Lore:
+					'''
+					'Greaves replicated from the first ancient Crusaders of the Demonhollow.
+					The metal's unique sheen was traditionally covered up by the Priests who wore it to earn the respect of the soldiers who served them.'
+					'''
 			}
 
 			HikariteHelmet: {
@@ -3630,16 +3929,16 @@ Mods: {
 					16% increased damage
 					9% increased critical strike chance
 					'''
+				Lore:
+					'''
+					'Helmet replicated from the first ancient Crusaders of the Demonhollow.
+					The metal's unique sheen was traditionally covered up by the Priests who wore it to earn the respect of the soldiers who served them.'
+					'''
 			}
 
 			ShadeBody: {
 				DisplayName: Shadeplate
-				Tooltip:
-					'''
-					10% increased ritual damage
-
-					[c/bdffff:Maximum Spirit Level +2]
-					'''
+				Tooltip: 10% increased ritual damage
 			}
 
 			ShadeHead: {
@@ -3648,7 +3947,6 @@ Mods: {
 					'''
 					10% increased ritual damage
 					15% increased ritual critical strike chance
-					[c/bdffff:Maximum Spirit Level +2]
 					'''
 			}
 
@@ -3664,35 +3962,47 @@ Mods: {
 
 			ShinkiteChestplate: {
 				DisplayName: Shinkite Chestplate
-				Tooltip: ""
+				Tooltip:
+					'''
+					25% increased melee damage
+					25% increased melee speed
+					'''
 			}
 
 			ShinkiteHelmet: {
 				DisplayName: Shinkite Helmet
-				Tooltip: ""
+				Tooltip:
+					'''
+					35% increased melee damage
+					30% increased melee critical strike chance
+					'''
 			}
 
 			ShinkiteLeggings: {
 				DisplayName: Shinkite Leggings
-				Tooltip: ""
+				Tooltip:
+					'''
+					20% increased melee speed
+					35% increased movement speed
+					'''
 			}
 
 			VortiHat: {
 				DisplayName: Vorti Hat
 				Tooltip:
 					'''
-					18% increased magic damage
-					12% increased magic critical strike chance
-					+150 max mana
+					10% increased magic damage
+					10% increased magic critical strike chance
+					+80 max mana
 					'''
 			}
 
 			VortiPants: {
-				DisplayName: Vorti Pants
+				DisplayName: Vorti Boots
 				Tooltip:
 					'''
-					50% increased movement speed
-					15% increased magic damage and critical strike chance
+					25% increased magic damage
+					35% increased movement speed
 					'''
 			}
 
@@ -3700,9 +4010,9 @@ Mods: {
 				DisplayName: Vorti Robes
 				Tooltip:
 					'''
-					+100 max life
-					15% increased magic damage
-					5% increased magic critical strike chance
+					12% increased magic damage
+					12% increased magic critical strike chance
+					20% reduced mana cost
 					'''
 			}
 
@@ -3937,7 +4247,7 @@ Mods: {
 
 			OldTophat: {
 				DisplayName: Old Tophat
-				Tooltip: ""
+				Tooltip: "'It seems to emit a ghostly essence'"
 			}
 
 			OOMask: {
@@ -4203,11 +4513,7 @@ Mods: {
 
 			GonkPet: {
 				DisplayName: Samus Head
-				Tooltip:
-					'''
-					Summons a chibi Samus
-
-					'''
+				Tooltip: Summons a chibi Samus
 			}
 
 			LantardPatreon_Item: {
@@ -4627,33 +4933,33 @@ Mods: {
 			}
 
 			AIChip: {
-				DisplayName: AI Chip
-				Tooltip: "'Filled with code'"
+				DisplayName: Circuit
+				Tooltip: ""
 			}
 
 			BlackholeFragment: {
 				DisplayName: Blackhole Fragment
-				Tooltip: "'The crushing gravity of a black hole resides within this fragment'"
+				Tooltip: "'Flakes of matter around you are being sucked into this fragment'"
 			}
 
 			Capacitor: {
 				DisplayName: Capacitor
-				Tooltip: "'Holds a high amount of energy'"
+				Tooltip: ""
 			}
 
 			CarbonMyofibre: {
 				DisplayName: Carbon Myofibre
-				Tooltip: "'Elastic and strong'"
+				Tooltip: ""
 			}
 
 			CorruptedXenomite: {
 				DisplayName: Corrupted Xenomite
-				Tooltip: "'Infects mechanical things'"
+				Tooltip: "'An efficient power source, freed of infectious properties'"
 			}
 
 			CyberPlating: {
 				DisplayName: Cyber Plating
-				Tooltip: "'Resistant to everything'"
+				Tooltip: ""
 			}
 
 			Cyberscrap: {
@@ -4673,7 +4979,7 @@ Mods: {
 
 			Plating: {
 				DisplayName: Plating
-				Tooltip: Resistant to extreme impacts
+				Tooltip: ""
 			}
 
 			ToxicBile: {
@@ -4732,12 +5038,12 @@ Mods: {
 
 			RoboBrain: {
 				DisplayName: Obliterator Brain
-				Tooltip: ""
+				Tooltip: "'Not so smart now, are ya?'"
 			}
 
 			Shadesoul: {
 				DisplayName: Shadesoul
-				Tooltip: "'A soul of pure chaos'"
+				Tooltip: "'A soul of pure negativity'"
 			}
 
 			VesselFragment: {
@@ -4761,7 +5067,7 @@ Mods: {
 
 			BlackenedHeart: {
 				DisplayName: Blackened Heart
-				Tooltip: "'May cause instant death'"
+				Tooltip: ""
 			}
 
 			CoastScarabShell: {
@@ -5279,7 +5585,7 @@ Mods: {
 				DisplayName: Girus Corruptor
 				Tooltip:
 					'''
-					Used to corrupt Xenomite, AI Chips, etc.
+					Used to corrupt Xenomite
 					Found in the Abandoned Laboratory
 					'''
 			}
@@ -5306,7 +5612,7 @@ Mods: {
 
 			LabBackDoor: {
 				DisplayName: Laboratory Back Door
-				Tooltip: "[c/ff0000:Unbreakable (1000% Pickaxe Power)]"
+				Tooltip: "{$Mods.Redemption.SpecialTooltips.Unbreakable5000}"
 			}
 
 			LabBackDoor2: {
@@ -5431,7 +5737,7 @@ Mods: {
 
 			SewerHole: {
 				DisplayName: Sewer Hole
-				Tooltip: "[c/ff0000:Unbreakable (1000% Pickaxe Power)]"
+				Tooltip: "{$Mods.Redemption.SpecialTooltips.Unbreakable5000}"
 			}
 
 			SkullSign: {
@@ -5560,7 +5866,7 @@ Mods: {
 					[c/ffea9b:Holding back a fate of endless slumber,]
 					[c/ffea9b:I want to stay to keep you strong,]
 					[c/ffea9b:Side by side is where we belong...']
-					[c/ff0000:Unbreakable (1000% Pickaxe Power)]
+					{$Mods.Redemption.SpecialTooltips.Unbreakable5000}
 					'''
 			}
 
@@ -5570,9 +5876,9 @@ Mods: {
 					'''
 					[c/ffea9b:'I've made mistakes that devastated,]
 					[c/ffea9b:Too many battles lost to tell,]
-					[c/ffea9b:If I could turn back to time to find you,]
+					[c/ffea9b:If I could turn back time to find you,]
 					[c/ffea9b:I'd find our confidence as well']
-					[c/ff0000:Unbreakable (1000% Pickaxe Power)]
+					{$Mods.Redemption.SpecialTooltips.Unbreakable5000}
 					'''
 			}
 
@@ -5600,7 +5906,7 @@ Mods: {
 					[c/ffea9b:Hate to bloodshed; From rise to fall]
 					[c/ffea9b:If I never have to die,]
 					[c/ffea9b:Am I alive at all?']
-					[c/ff0000:Unbreakable (1000% Pickaxe Power)]
+					{$Mods.Redemption.SpecialTooltips.Unbreakable5000}
 					'''
 			}
 
@@ -5633,11 +5939,13 @@ Mods: {
 				DisplayName: Statue of the Protector
 				Tooltip:
 					'''
-					[c/ffea9b:'We're burdened with purpose,]
-					[c/ffea9b:So here we remain,]
-					[c/ffea9b:We're incandescent,]
-					[c/ffea9b:A glorious flame...']
-					[c/ff0000:Unbreakable (1000% Pickaxe Power)]
+					[c/ffea9b:'There are clear skies]
+					[c/ffea9b:Further on the road in our lives,]
+					[c/ffea9b:The pain you're in right now is not what it seems,]
+					[c/ffea9b:Haunted by the memories,]
+					[c/ffea9b:Moments of hope aren't what they used to be,]
+					[c/ffea9b:They're only reflections of a dream']
+					{$Mods.Redemption.SpecialTooltips.Unbreakable5000}
 					'''
 			}
 
@@ -5672,7 +5980,7 @@ Mods: {
 			}
 
 			SoulCandles: {
-				DisplayName: Soul Candles
+				DisplayName: Cleansing Candles
 				Tooltip:
 					'''
 					Creates a small aura that instantly kills any soulless enemies that enter
@@ -5909,7 +6217,7 @@ Mods: {
 				Tooltip:
 					'''
 					4x20
-					[c/ff0000:Unbreakable (1000% Pickaxe Power)]
+					{$Mods.Redemption.SpecialTooltips.Unbreakable5000}
 					'''
 			}
 
@@ -5918,13 +6226,13 @@ Mods: {
 				Tooltip:
 					'''
 					4x10
-					[c/ff0000:Unbreakable (1000% Pickaxe Power)]
+					{$Mods.Redemption.SpecialTooltips.Unbreakable5000}
 					'''
 			}
 
 			ShadestonePillar: {
-				DisplayName: 셰이드스톤 기둥
-				Tooltip: ""
+				DisplayName: Shadestone Pillar
+				Tooltip: "{$Mods.Redemption.SpecialTooltips.Unbreakable5000}"
 			}
 
 			ShadestonePlatform: {
@@ -5964,7 +6272,11 @@ Mods: {
 
 			ShadeTorch: {
 				DisplayName: Shade Torch
-				Tooltip: "{$ItemTooltip.IchorTorch}"
+				Tooltip:
+					'''
+					Can be placed in the Soulless Caverns
+					{$ItemTooltip.IchorTorch}
+					'''
 			}
 
 			WaxCandles: {
@@ -6007,7 +6319,7 @@ Mods: {
 				Tooltip:
 					'''
 					If you have this you're either cheating or you broke something
-					[c/ff0000:Unbreakable (500% Pickaxe Power after 3rd Overlord)]
+					[c/ff0000:Unbreakable (5000% Pickaxe Power after 3rd Prototype)]
 					'''
 			}
 
@@ -6017,7 +6329,6 @@ Mods: {
 					'''
 					Used to craft from Cyberscrap
 					Found on Slayer's Crashed Ship
-					[c/ff0000:Unbreakable (1000% Pickaxe Power)]
 					'''
 			}
 
@@ -6033,12 +6344,12 @@ Mods: {
 
 			ForestBossBox: {
 				DisplayName: Music Box (Cursed Beings of the Forest)
-				Tooltip: Peritune - Dramatic4
+				Tooltip: PeriTune - Dramatic4
 			}
 
 			ForestBossBox2: {
 				DisplayName: Music Box (Ancient Deity Duo)
-				Tooltip: Peritune - Havoc
+				Tooltip: PeriTune - Havoc
 			}
 
 			FowlMorningBox: {
@@ -6111,6 +6422,11 @@ Mods: {
 				Tooltip: Musearys - The Wastelands
 			}
 
+			SkullDiggerBox: {
+				DisplayName: Music Box (Skull Digger)
+				Tooltip: Yuri O - The Loudness of Silence
+			}
+
 			AncientGrassSeeds: {
 				DisplayName: Ancient Grass Seeds
 				Tooltip: Plants grass on ancient dirt
@@ -6151,11 +6467,6 @@ Mods: {
 				Tooltip: ""
 			}
 
-			RadRoot: {
-				DisplayName: Rad Root
-				Tooltip: Grows in the Wasteland
-			}
-
 			AncientDirt: {
 				DisplayName: Ancient Dirt
 				Tooltip: Can grow Elder Trees
@@ -6168,7 +6479,7 @@ Mods: {
 
 			AncientHallBrick: {
 				DisplayName: Ancient Hall Brick
-				Tooltip: "[c/ff0000:Unbreakable (1000% Pickaxe Power)]"
+				Tooltip: "{$Mods.Redemption.SpecialTooltips.Unbreakable5000}"
 			}
 
 			AncientHallPillarWall: {
@@ -6188,22 +6499,22 @@ Mods: {
 
 			Bedrock: {
 				DisplayName: Bedrock
-				Tooltip: "[c/ff0000:Unbreakable]"
+				Tooltip: "{$Mods.Redemption.SpecialTooltips.Unbreakable}"
 			}
 
 			BlackHardenedSludge: {
-				DisplayName: Black Hardened Sludge
-				Tooltip: ""
+				DisplayName: Unsafe Black Hardened Sludge
+				Tooltip: Breaking this has a chance to spawn Ooze Blobs
 			}
 
 			BlackHardenedSludgeWall: {
 				DisplayName: Black Hardened Sludge Wall
-				Tooltip: "[c/ff0000:Unbreakable]"
+				Tooltip: ""
 			}
 
 			DangerTape: {
 				DisplayName: Danger Tape
-				Tooltip: "[c/ff0000:Unbreakable (1000% Pickaxe Power)]"
+				Tooltip: "{$Mods.Redemption.SpecialTooltips.Unbreakable5000}"
 			}
 
 			DangerTape2: {
@@ -6212,12 +6523,12 @@ Mods: {
 			}
 
 			DangerTapeWall: {
-				DisplayName: Danger Tape
-				Tooltip: "[c/ff0000:Unbreakable (1000% Pickaxe Power)]"
+				DisplayName: Danger Tape Wall
+				Tooltip: "{$Mods.Redemption.SpecialTooltips.Unbreakable5000}"
 			}
 
 			DangerTapeWall2: {
-				DisplayName: Danger Tape
+				DisplayName: Danger Tape Wall
 				Tooltip: ""
 			}
 
@@ -6313,7 +6624,7 @@ Mods: {
 
 			GreenLaser: {
 				DisplayName: Green Laser Block
-				Tooltip: "[c/ff0000:Unbreakable (1000% Pickaxe Power)]"
+				Tooltip: "{$Mods.Redemption.SpecialTooltips.Unbreakable5000}"
 			}
 
 			HalogenLamp: {
@@ -6322,8 +6633,8 @@ Mods: {
 			}
 
 			HardenedSludge: {
-				DisplayName: Hardened Sludge
-				Tooltip: ""
+				DisplayName: Unsafe Hardened Sludge
+				Tooltip: Breaking this has a chance to spawn Ooze Blobs
 			}
 
 			HardenedSludgeWall: {
@@ -6393,7 +6704,7 @@ Mods: {
 
 			LabPlatingUnsafe: {
 				DisplayName: Laboratory Panel (Unsafe)
-				Tooltip: "[c/ff0000:Unbreakable (1000% Pickaxe Power)]"
+				Tooltip: "{$Mods.Redemption.SpecialTooltips.Unbreakable5000}"
 			}
 
 			LabPlatingWall: {
@@ -6406,7 +6717,7 @@ Mods: {
 				Tooltip:
 					'''
 					'Filled with green sludge'
-					[c/ff0000:Unbreakable (1000% Pickaxe Power)]
+					{$Mods.Redemption.SpecialTooltips.Unbreakable5000}
 					'''
 			}
 
@@ -6415,7 +6726,7 @@ Mods: {
 				Tooltip:
 					'''
 					'Filled with green sludge'
-					[c/ff0000:Unbreakable (1000% Pickaxe Power)]
+					{$Mods.Redemption.SpecialTooltips.Unbreakable5000}
 					'''
 			}
 
@@ -6436,7 +6747,7 @@ Mods: {
 
 			OvergrownLabPlating: {
 				DisplayName: Overgrown Laboratory Panel (Unsafe)
-				Tooltip: "[c/ff0000:Unbreakable (1000% Pickaxe Power)]"
+				Tooltip: "{$Mods.Redemption.SpecialTooltips.Unbreakable5000}"
 			}
 
 			PetrifiedWood: {
@@ -6456,12 +6767,12 @@ Mods: {
 
 			PrisonBars: {
 				DisplayName: Prison Bars
-				Tooltip: "[c/ff0000:Unbreakable]"
+				Tooltip: "{$Mods.Redemption.SpecialTooltips.Unbreakable}"
 			}
 
 			RedLaser: {
 				DisplayName: Red Laser Block
-				Tooltip: "[c/ff0000:Unbreakable (1000% Pickaxe Power)]"
+				Tooltip: "{$Mods.Redemption.SpecialTooltips.Unbreakable5000}"
 			}
 
 			ShadesteelChain: {
@@ -6476,12 +6787,12 @@ Mods: {
 
 			ShadestoneBrick: {
 				DisplayName: Shadestone Brick
-				Tooltip: "[c/ff0000:Unbreakable]"
+				Tooltip: "{$Mods.Redemption.SpecialTooltips.Unbreakable}"
 			}
 
 			ShadestoneBrickWall: {
 				DisplayName: Shadestone Brick Wall
-				Tooltip: "[c/ff0000:Unbreakable]"
+				Tooltip: ""
 			}
 
 			ShadestoneMoss: {
@@ -6495,8 +6806,8 @@ Mods: {
 			}
 
 			ShadestoneSlab: {
-				DisplayName: Shadestone Slab
-				Tooltip: "[c/ff0000:Unbreakable]"
+				DisplayName: Shadestone Beam
+				Tooltip: "{$Mods.Redemption.SpecialTooltips.Unbreakable}"
 			}
 
 			ShadestoneWall: {
@@ -6526,12 +6837,12 @@ Mods: {
 
 			ShipGlass: {
 				DisplayName: Reinforced Glass
-				Tooltip: "[c/ff0000:Unbreakable]"
+				Tooltip: "{$Mods.Redemption.SpecialTooltips.Unbreakable}"
 			}
 
 			SlayerShipPanel: {
 				DisplayName: Slayer's Ship Panel
-				Tooltip: "[c/ff0000:Unbreakable]"
+				Tooltip: "{$Mods.Redemption.SpecialTooltips.Unbreakable}"
 			}
 
 			SlayerShipPanel2: {
@@ -6829,7 +7140,7 @@ Mods: {
 
 			DeadRinger: {
 				DisplayName: Dead Ringer
-				Tooltip: Calls upon the spirits of corpses
+				Tooltip: Right-click a soulful corpse with this artifact to call upon its spirit
 			}
 
 			EnergyCell: {
@@ -6859,7 +7170,7 @@ Mods: {
 				DisplayName: Holokey
 				Tooltip:
 					'''
-					'Unlocks Holochests found in a crashed spaceship'
+					Unlocks Holochests found in a crashed spaceship
 					Only one is needed
 					'''
 			}
@@ -7191,7 +7502,7 @@ Mods: {
 				Tooltip:
 					'''
 					Massive improvements to all stats
-					'A reward for a long days work'
+					'A reward for a long day's work'
 					'''
 			}
 
@@ -7218,8 +7529,8 @@ Mods: {
 				DisplayName: Scrap Metal
 				Tooltip:
 					'''
-					'Surely I can get something useful from this scrap...'
 					{$CommonItemTooltip.RightClickToOpen}
+					'Surely I can get something useful from this scrap...'
 					'''
 			}
 
@@ -7369,13 +7680,13 @@ Mods: {
 				TooltipThird:
 					'''
 					3rd Omega Prototype
-					'Feel the sense of frustration, prepare for obliteration
+					'Feel the sense of frustration, prepare for obliteration'
 					Only usable after the first 2 Omega Prototypes have been defeated
 					'''
 				TooltipFourth:
 					'''
 					4th Omega Prototype
-					'As the noise dies down, the end draws near; ******* **** **** ******, *** ****** ** ****
+					'As the noise dies down, the end draws near; ******* **** **** ******, *** ****** ** ****'
 					Only usable after Nebuleus has been defeated
 					'''
 			}
@@ -7465,15 +7776,6 @@ Mods: {
 					'''
 			}
 
-			DigestiveVat: {
-				DisplayName: Digestive Vat
-				Tooltip:
-					'''
-					Fires an arc of digestive fluid at the enemy
-					Inflicts a defense-reducing stomach acid debuff
-					'''
-			}
-
 			Divinity: {
 				DisplayName: Divinity
 				Tooltip:
@@ -7510,7 +7812,7 @@ Mods: {
 			}
 
 			LightningRod: {
-				DisplayName: Self-Sufficient Lighting Rod
+				DisplayName: Self-Sufficient Lightning Rod
 				Tooltip:
 					'''
 					Hold left-click to charge up electricity, release to fire a shock of lightning at the cursor
@@ -7741,10 +8043,10 @@ Mods: {
 				DisplayName: Cleaver Remote
 				Tooltip:
 					'''
-					'Size does matter'
 					Calls upon the Omega Cleaver to unleash a devastating attack
 					Right-Click to switch mode of attack
 					15 second cooldown
+					'Size does matter'
 					'''
 				Mode1: Swing Mode
 				Mode2: Stab Mode
@@ -7883,7 +8185,7 @@ Mods: {
 					'''
 				Lore:
 					'''
-					'A Teochrome experimental weapon, it was created after a board meeting, in which military contractors wanted a
+					'A TeoChrome experimental weapon, it was created after a board meeting, in which military contractors wanted a
 					nuclear powered sniper rifle for seemingly little reason, it miraculously had a functioning prototype
 					created, and the death toll from radiation exposure has been surprisingly miniscule.'
 					'''
@@ -7893,7 +8195,6 @@ Mods: {
 				DisplayName: Hyper-Tech Blaster
 				Tooltip:
 					'''
-
 					(2-6[i:Redemption/EnergyCell]) Replaces normal bullets with Energy Bolts
 					Right-clicking changes type of fire
 					Requires an Energy Pack to be in your inventory
@@ -7940,21 +8241,11 @@ Mods: {
 				Tooltip: Summons a little Android to fight for you
 			}
 
-			CruxCardHazmatZombie: {
-				DisplayName: Crux Card: Hazmat Zombie
-				Tooltip:
-					'''
-					Summons the spirit of a Hazmat Zombie
-					Right-click to tug the spirit back to your position, consuming 1 [i:Redemption/LostSoul]
-					Consumes 15 [i:Redemption/LostSoul] on use
-					Can only use one Spirit Card at a time
-					'''
-			}
-
 			GolemStaff: {
 				DisplayName: Sun Deity Staff
 				Tooltip:
 					'''
+					{$CommonItemTooltip.Sentry}
 					Summons a golem guardian that emits an empowering aura
 					Within the aura, minions inflict a strong 'On Fire!' debuff and their damage is increased by 8%
 					Right-click to disable the sentry
@@ -7973,7 +8264,11 @@ Mods: {
 
 			TeslaGenerator: {
 				DisplayName: Tesla Field Generator
-				Tooltip: Summons a small generator with a tesla field around it
+				Tooltip:
+					'''
+					{$CommonItemTooltip.Sentry}
+					Summons a small generator with a tesla field around it
+					'''
 			}
 
 			WireTaser: {
@@ -7981,7 +8276,7 @@ Mods: {
 				Tooltip:
 					'''
 					9 summon tag damage
-					Your summons will focus struck enemies
+					{$CommonItemTooltip.Whips}
 					Strike enemies with the tip of the taser to stun them for a second
 					Cannot stun enemies with knockback immunity
 					Inflicts electrified
@@ -8000,7 +8295,7 @@ Mods: {
 
 			Lament: {
 				DisplayName: Lament
-				Tooltip: Conjures a massive mask
+				Tooltip: "WIP"
 			}
 
 			OOFingergun: {
@@ -8149,10 +8444,10 @@ Mods: {
 				DisplayName: Blast Battery
 				Tooltip:
 					'''
-					'Prepare for obliteration'
 					Left-Click to mark a single enemy and fire a stream of missiles at their position
 					Right-Click to mark your cursor position with a barrage of missiles
 					Uses rockets as ammo
+					'Prepare for obliteration'
 					'''
 			}
 
@@ -8240,7 +8535,7 @@ Mods: {
 					'''
 					20 summon tag damage
 					10% summon tag critical strike chance
-					Your summons will focus struck enemies
+					{$CommonItemTooltip.Whips}
 					Strike enemies to summon friendly cosmic eyes
 					'''
 			}
@@ -8249,6 +8544,7 @@ Mods: {
 				DisplayName: Pihlajasauva
 				Tooltip:
 					'''
+					{$CommonItemTooltip.Sentry}
 					Summons a rowan tree that emits an empowering aura
 					Within the aura, your minions can cause rowan berries to drop from their targets and their damage is increased by 8%
 					Rowan berries will heal for a small amount and give major improvements to all stats for a short time
@@ -8901,6 +9197,7 @@ Mods: {
 				DisplayName: Gauche Staff
 				Tooltip:
 					'''
+					{$CommonItemTooltip.Sentry}
 					Summons a granite guardian that emits an empowering aura
 					Within the aura, whip speed and damage is increased by 15%
 					Right-click to disable the sentry
@@ -8936,7 +9233,11 @@ Mods: {
 
 			LogStaff: {
 				DisplayName: Log Staff
-				Tooltip: Summons a small log that fires acorns in an arc
+				Tooltip:
+					'''
+					{$CommonItemTooltip.Sentry}
+					Summons a small log that fires acorns in an arc
+					'''
 			}
 
 			MagmaStaff: {
@@ -8963,7 +9264,7 @@ Mods: {
 				Tooltip:
 					'''
 					4 summon tag damage
-					Your summons will focus struck enemies
+					{$CommonItemTooltip.Whips}
 					Striking enemies with the tip of the whip will heal the user
 					'''
 			}
@@ -8989,12 +9290,12 @@ Mods: {
 
 			BigMaceTurret: {
 				DisplayName: Laboratory MACE Turret
-				Tooltip: "[c/ff0000:Unbreakable (1000% Pickaxe Power)]"
+				Tooltip: "{$Mods.Redemption.SpecialTooltips.Unbreakable5000}"
 			}
 
 			BrokenLabBackDoor: {
 				DisplayName: Broken Laboratory Back Door
-				Tooltip: "[c/ff0000:Unbreakable (1000% Pickaxe Power)]"
+				Tooltip: "{$Mods.Redemption.SpecialTooltips.Unbreakable5000}"
 			}
 
 			HazmatCorpse: {
@@ -9002,18 +9303,18 @@ Mods: {
 				Tooltip:
 					'''
 					Gives Hazmat Suit
-					[c/ff0000:Unbreakable (1000% Pickaxe Power)]
+					{$Mods.Redemption.SpecialTooltips.Unbreakable5000}
 					'''
 			}
 
 			JanitorEquipment: {
 				DisplayName: Janitor Equipment
-				Tooltip: "[c/ff0000:Unbreakable (1000% Pickaxe Power)]"
+				Tooltip: ""
 			}
 
 			KariBed: {
 				DisplayName: Kari's Hospital Bed
-				Tooltip: "[c/ff0000:Unbreakable]"
+				Tooltip: "{$Mods.Redemption.SpecialTooltips.Unbreakable}"
 			}
 
 			LabBossDoor: {
@@ -9021,7 +9322,7 @@ Mods: {
 				Tooltip:
 					'''
 					Closes when a boss is active
-					[c/ff0000:Unbreakable]
+					{$Mods.Redemption.SpecialTooltips.Unbreakable}
 					'''
 			}
 
@@ -9030,7 +9331,7 @@ Mods: {
 				Tooltip:
 					'''
 					Closes when any of the Lab Minibosses/Bosses are active
-					[c/ff0000:Unbreakable]
+					{$Mods.Redemption.SpecialTooltips.Unbreakable}
 					'''
 			}
 
@@ -9044,13 +9345,13 @@ Mods: {
 				Tooltip:
 					'''
 					Opens using a Keycard
-					[c/ff0000:Unbreakable (1000% Pickaxe Power)]
+					{$Mods.Redemption.SpecialTooltips.Unbreakable5000}
 					'''
 			}
 
 			LabPhoto: {
 				DisplayName: Laboratory Photo
-				Tooltip: "[c/ff0000:Unbreakable]"
+				Tooltip: "{$Mods.Redemption.SpecialTooltips.Unbreakable}"
 			}
 
 			MossTube: {
@@ -9065,17 +9366,18 @@ Mods: {
 
 			OpenVent: {
 				DisplayName: Open Vent
-				Tooltip: "[c/ff0000:Unbreakable (1000% Pickaxe Power)]"
+				Tooltip: "{$Mods.Redemption.SpecialTooltips.Unbreakable5000}"
 			}
 
 			RadPillDeco: {
 				DisplayName: Radiation Pill (Deco)
 				Tooltip: ""
+				Tooltip: "{$Mods.Redemption.SpecialTooltips.Unbreakable5000}"
 			}
 
 			WideLabConsole: {
 				DisplayName: Wide Laboratory Console
-				Tooltip: "[c/ff0000:Unbreakable]"
+				Tooltip: ""
 			}
 
 			AncientAltar: {
@@ -9083,23 +9385,23 @@ Mods: {
 				Tooltip:
 					'''
 					Gives the Cursed Gem
-					[c/ff0000:Unbreakable]
+					{$Mods.Redemption.SpecialTooltips.Unbreakable}
 					'''
 			}
 
 			AnglonPortalItem: {
 				DisplayName: Anglon Portal
-				Tooltip: "[c/ff0000:Unbreakable]"
+				Tooltip: "{$Mods.Redemption.SpecialTooltips.Unbreakable}"
 			}
 
 			GathuramPortalItem: {
 				DisplayName: Gathuram Portal
-				Tooltip: "[c/ff0000:Unbreakable]"
+				Tooltip: "{$Mods.Redemption.SpecialTooltips.Unbreakable}"
 			}
 
 			GoldenGatewayItem: {
 				DisplayName: Golden Gateway
-				Tooltip: "[c/ff0000:Unbreakable]"
+				Tooltip: "{$Mods.Redemption.SpecialTooltips.Unbreakable}"
 			}
 
 			HangingTied: {
@@ -9119,17 +9421,17 @@ Mods: {
 
 			GiantShadesteelChain: {
 				DisplayName: Giant Shadesteel Chain
-				Tooltip: "[c/ff0000:Unbreakable (1000% Pickaxe Power)]"
+				Tooltip: "{$Mods.Redemption.SpecialTooltips.Unbreakable5000}"
 			}
 
 			ShadePortcullis: {
 				DisplayName: Shade Portcullis
-				Tooltip: "[c/ff0000:Unbreakable (1000% Pickaxe Power)]"
+				Tooltip: "{$Mods.Redemption.SpecialTooltips.Unbreakable5000}"
 			}
 
 			ShadesteelGate: {
 				DisplayName: Shadesteel Gate
-				Tooltip: "[c/ff0000:Unbreakable (1000% Pickaxe Power)]"
+				Tooltip: "{$Mods.Redemption.SpecialTooltips.Unbreakable5000}"
 			}
 
 			ShadesteelHangingCell2: {
@@ -9139,7 +9441,7 @@ Mods: {
 
 			ShadestoneGate: {
 				DisplayName: Shadestone Gate
-				Tooltip: "[c/ff0000:Unbreakable]"
+				Tooltip: "{$Mods.Redemption.SpecialTooltips.Unbreakable}"
 			}
 
 			AndroidInactive: {
@@ -9172,23 +9474,8 @@ Mods: {
 				Tooltip: ""
 			}
 
-			SkeletonRemains1: {
-				DisplayName: Skeletal Remains (Sword)
-				Tooltip: ""
-			}
-
 			SkeletonRemains1_Special: {
 				DisplayName: Skeletal Remains (Soulful)
-				Tooltip: ""
-			}
-
-			SkeletonRemains2: {
-				DisplayName: Skeletal Remains (Front-facing)
-				Tooltip: ""
-			}
-
-			SkeletonRemains3: {
-				DisplayName: Skeletal Remains (Sitting)
 				Tooltip: ""
 			}
 
@@ -9197,33 +9484,13 @@ Mods: {
 				Tooltip: ""
 			}
 
-			SkeletonRemains4: {
-				DisplayName: Skeletal Remains (Bones)
-				Tooltip: ""
-			}
-
 			SkeletonRemains4_Special: {
 				DisplayName: Skeletal Remains (Common Guard)
 				Tooltip: ""
 			}
 
-			SkeletonRemains5: {
-				DisplayName: Skeletal Remains (Wall Sitting)
-				Tooltip: ""
-			}
-
 			SkeletonRemains5_Special: {
 				DisplayName: Skeletal Remains (Gathic Man)
-				Tooltip: ""
-			}
-
-			SkeletonRemains6: {
-				DisplayName: Skeletal Remains (Family Guy Death Pose)
-				Tooltip: ""
-			}
-
-			SkeletonRemains7: {
-				DisplayName: Skeletal Remains (Headless)
 				Tooltip: ""
 			}
 
@@ -9249,42 +9516,42 @@ Mods: {
 
 			IrradiatedCrimstoneWall: {
 				DisplayName: Irradiated Crimstone Wall
-				Tooltip: "[c/ff0000:Unbreakable]"
+				Tooltip: ""
 			}
 
 			IrradiatedDirtWall: {
 				DisplayName: Irradiated Dirt Wall
-				Tooltip: "[c/ff0000:Unbreakable]"
+				Tooltip: ""
 			}
 
 			IrradiatedEbonstoneWall: {
 				DisplayName: Irradiated Ebonstone Wall
-				Tooltip: "[c/ff0000:Unbreakable]"
+				Tooltip: ""
 			}
 
 			IrradiatedHardenedSandWall: {
-				DisplayName: "null"
+				DisplayName: Irradiated Hardened Sand Wall
 				Tooltip: ""
 			}
 
 			IrradiatedIceWall: {
-				DisplayName: "null"
+				DisplayName: Irradiated Ice Wall
 				Tooltip: ""
 			}
 
 			IrradiatedMudWall: {
 				DisplayName: Irradiated Mud Wall
-				Tooltip: "[c/ff0000:Unbreakable]"
+				Tooltip: ""
 			}
 
 			IrradiatedSandstoneWall: {
 				DisplayName: Irradiated Sandstone Wall
-				Tooltip: "[c/ff0000:Unbreakable]"
+				Tooltip: ""
 			}
 
 			IrradiatedSnowWall: {
 				DisplayName: Irradiated Snow Wall
-				Tooltip: "[c/ff0000:Unbreakable]"
+				Tooltip: ""
 			}
 
 			JunkMetalWallItem: {
@@ -9294,22 +9561,22 @@ Mods: {
 
 			LabPlatingWallUnsafe: {
 				DisplayName: Lab Wall (Unsafe)
-				Tooltip: "[c/ff0000:Unbreakable]"
+				Tooltip: "{$Mods.Redemption.SpecialTooltips.Unbreakable}"
 			}
 
 			MossyLabPlatingWall: {
 				DisplayName: Mossy Lab Wall (Unsafe)
-				Tooltip: "[c/ff0000:Unbreakable]"
+				Tooltip: "{$Mods.Redemption.SpecialTooltips.Unbreakable}"
 			}
 
 			MossyLabWall: {
 				DisplayName: Mossy Lab Wall (Full) (Unsafe)
-				Tooltip: "[c/ff0000:Unbreakable]"
+				Tooltip: "{$Mods.Redemption.SpecialTooltips.Unbreakable}"
 			}
 
 			VentWall: {
 				DisplayName: Vent Wall
-				Tooltip: "[c/ff0000:Unbreakable]"
+				Tooltip: "{$Mods.Redemption.SpecialTooltips.Unbreakable}"
 			}
 
 			EnterPlayground: {
@@ -9545,6 +9812,7 @@ Mods: {
 				DisplayName: Dawn Herald
 				Tooltip:
 					'''
+					{$CommonItemTooltip.Sentry}
 					Summons a Rooster Booster in a nest that crows an empowering aura
 					Within the aura, players gain increased jump height and 20% increased movement speed
 					Right-click to disable the sentry
@@ -9576,14 +9844,226 @@ Mods: {
 				Tooltip: ""
 			}
 
-			ShinkiteBrickOrnateWall: {
-				DisplayName: Shinkite Brick Ornate Wall
+			HangingMysticBlossom: {
+				DisplayName: Hanging Mystic Blossom
 				Tooltip: ""
 			}
 
-			ShadestoneMirrorSpecial: {
-				DisplayName: Shadestone Mirror Special
+			HangingNightshade: {
+				DisplayName: Hanging Nightshade
 				Tooltip: ""
+			}
+
+			DuskyBall: {
+				DisplayName: Dusky Ball
+				Tooltip: Summons a Pumpkaboo
+			}
+
+			HydrasMaw: {
+				DisplayName: Hydra's Maw
+				Tooltip:
+					'''
+					Sprays a stream of defense-reducing acid, weakening Robotic targets against {0} damage
+					Right-click to launch an orb filled with acid, releasing a cloud of gas on impact
+					Shoot the orb with the acid stream to break it mid-air, covering a greater area
+					'''
+			}
+
+			ElderWoodHamaxe: {
+				DisplayName: Elder Wood Hamaxe
+				Tooltip: ""
+			}
+
+			ElderWoodBow: {
+				DisplayName: Elder Wood Bow
+				Tooltip: ""
+			}
+
+			SpringtrapBody: {
+				DisplayName: Springlock Suit
+				Tooltip: ""
+			}
+
+			SpringtrapHead: {
+				DisplayName: Springlock Mask
+				Tooltip: ""
+			}
+
+			SpringtrapLegs: {
+				DisplayName: Springlock Pants
+				Tooltip: ""
+			}
+
+			Twinklestar: {
+				DisplayName: Twinklestar
+				Tooltip:
+					'''
+					Tap left-click to fire a cluster of tiny stars that float in place
+					Continuing to hold left-click will charge a powerful shooting star that will carry with it any stars that float in its vicinity
+					The radius from which it can grab stars grows the longer the shot was charged
+					'''
+			}
+
+			PetrifiedWoodHammer: {
+				DisplayName: Petrified Wood Hammer
+				Tooltip: ""
+			}
+
+			PetrifiedWoodBow: {
+				DisplayName: Petrified Wood Bow
+				Tooltip: ""
+			}
+
+			BloatedTrout: {
+				DisplayName: Bloated Trout
+				Tooltip: ""
+			}
+
+			ToxicGlooper: {
+				DisplayName: Toxic Glooper
+				Tooltip: ""
+			}
+
+			Blinky: {
+				DisplayName: Blinky
+				Tooltip: ""
+			}
+
+			WaterfowlEgg: {
+				DisplayName: Waterfowl Egg
+				Tooltip:
+					'''
+					Stars from the {0} bonus appear less, but are immediately absorbed
+					Consuming healing potions grant additional healing for 5 seconds
+					15% decreased resistance to all elemental damage during the waterfowl's healing
+					The total amount of healing is 40% of the consumed potion
+					Taking damage during the waterfowl's healing will cancel the effect
+					'''
+			}
+
+			CrimsonXrosLoader: {
+				DisplayName: Crimson Xros Loader
+				Tooltip: Summons a chibi Gumdramon
+			}
+
+			BLTSandwich: {
+				DisplayName: B.L.T. Sandwich
+				Tooltip: Summons a B.L.T. Sandwich
+			}
+
+			HairyCloak: {
+				DisplayName: Hairy Cloak
+				Tooltip:
+					'''
+					Summons a chibi Calico Cat
+					'A small tattered cloak covered in... cat hair?'
+					'''
+			}
+
+			HydraCorrosionPotion: {
+				DisplayName: Hydric Acid Potion
+				Tooltip:
+					'''
+					Causes {0} elemental weapons to inflict Hydra Acid
+					Hydra Acid reduces defense and removes Robotic targets' resistance against {0} damage
+					'''
+			}
+
+			RadiationPillPlaceable: {
+				DisplayName: Closed Radiation Pill
+				Tooltip: ""
+			}
+
+			RaggedPatch: {
+				DisplayName: Ragged Patch
+				Tooltip:
+					'''
+					Summons a mini Skull Digger to protect you
+					... He's trying his best.
+					'''
+			}
+
+			EaglecrestGolemRelic: {
+				DisplayName: Eaglecrest Golem Relic
+				Tooltip: ""
+			}
+
+			EaglecrestGolemTrophy: {
+				DisplayName: Eaglecrest Golem Trophy
+				Tooltip: ""
+			}
+
+			SkullDiggerRelic: {
+				DisplayName: Skull Digger Relic
+				Tooltip: ""
+			}
+
+			SkullDiggerTrophy: {
+				DisplayName: Skull Digger Trophy
+				Tooltip: ""
+			}
+
+			RaveyardBox: {
+				DisplayName: Music Box (Raveyard)
+				Tooltip: PeriTune - Spook3
+			}
+
+			AetherianGreathelm: {
+				DisplayName: Aetherian Greathelm
+				Tooltip: ""
+			}
+
+			AetherianGreaves: {
+				DisplayName: Aetherian Greaves
+				Tooltip: ""
+			}
+
+			AetherianPlatemail: {
+				DisplayName: Aetherian Platemail
+				Tooltip: ""
+			}
+
+			SpiritRealmBox: {
+				DisplayName: Music Box (Spirit Realm)
+				Tooltip: Yuri O - Spectral Interloper
+			}
+
+			GalacticBand: {
+				DisplayName: Galactic Band
+				Tooltip:
+					'''
+					Summons a chibi Asteris
+					'Belongs to someone from a dimension another'
+					'''
+			}
+
+			MercenarysChestplate: {
+				DisplayName: Mercenary's Chestplate
+				Tooltip: ""
+			}
+
+			MercenarysHelmet: {
+				DisplayName: Mercenary's Helmet
+				Tooltip: ""
+			}
+
+			MercenarysLeggings: {
+				DisplayName: Mercenary's Leggings
+				Tooltip: ""
+			}
+
+			CloudCallersTalisman: {
+				DisplayName: Cloud Caller's Talisman
+				Tooltip:
+					'''
+					Summons a cloud with a dog's face
+					'Here to make your day a bit brighter'
+					'''
+			}
+
+			Wardbreaker: {
+				DisplayName: Wardbreaker Augment
+				Tooltip: The wearer's magic or {0} weapons deal double damage to Guard Points
 			}
 		}
 
@@ -9593,7 +10073,7 @@ Mods: {
 			JyrinaMount_Horse.DisplayName: Jyrina
 			VasaraPendant_Proj.DisplayName: Electricity Field
 			ErhanCross_Shield.DisplayName: Holy Shield
-			RopeHook_Proj.DisplayName: Rope Hook
+			RopeHook_Proj.DisplayName: "{$Mods.Redemption.Items.RopeHook.DisplayName}"
 			GonkPatreon_Pet.DisplayName: Samus
 			LantardPatreon_Pet.DisplayName: Ralsei
 			LizzyPet.DisplayName: Lizzy
@@ -9605,128 +10085,128 @@ Mods: {
 			LabPointer.DisplayName: Pointer
 			MiniWarhead_Proj.DisplayName: Mini Warhead
 			NoveltyMop_Proj.DisplayName: Novelty Mop
-			OreBomb_Proj.DisplayName: Ore Bomb
-			OrePowder_Proj.DisplayName: Magic Mineral Powder
-			PlutoniumBomb_Proj.DisplayName: Plutonium Bomb_ Proj
+			OreBomb_Proj.DisplayName: "{$Mods.Redemption.Items.OreBomb.DisplayName}"
+			OrePowder_Proj.DisplayName: "{$Mods.Redemption.Items.OrePowder.DisplayName}"
+			PlutoniumBomb_Proj.DisplayName: "{$Mods.Redemption.Items.PlutoniumBomb.DisplayName}"
 			PlutoniumBoom.DisplayName: Plutonium Boom
-			Trumpet_Proj.DisplayName: Trumpet
-			Violin_Proj.DisplayName: Violin
-			BileArrow_Proj.DisplayName: Bile Arrow
-			BileBullet_Proj.DisplayName: Bile Bullet
+			Trumpet_Proj.DisplayName: "{$Mods.Redemption.Items.Trumpet.DisplayName}"
+			Violin_Proj.DisplayName: "{$Mods.Redemption.Items.Violin.DisplayName}"
+			BileArrow_Proj.DisplayName: "{$Mods.Redemption.Items.BileArrow.DisplayName}"
+			BileBullet_Proj.DisplayName: "{$Mods.Redemption.Items.BileBullet.DisplayName}"
 			Divinity_Ball.DisplayName: Divinity Charge
-			Divinity_Proj.DisplayName: Divinity
+			Divinity_Proj.DisplayName: "{$Mods.Redemption.Items.Divinity.DisplayName}"
 			Divinity_Sun.DisplayName: Sun
-			GlobalDischarge_Proj.DisplayName: Global Discharge
-			GlobalDischarge_Sphere.DisplayName: Global Discharge
-			LightningRod_Proj.DisplayName: Self-Sufficient Lighting Rod
-			Synthesizer_Proj.DisplayName: Synthesizer
-			BlindJustice_Proj.DisplayName: Blind Justice, Demon's Terror
-			BlindJustice_Proj2.DisplayName: Blind Justice, Demon's Terror
-			BloodstainedPike_Proj.DisplayName: Bloodstained Pike
-			BloodstainedPike_Proj2.DisplayName: Bloodstained Pike
-			Chernobyl_Proj.DisplayName: Chernobyl
-			CrystalGlaive_Proj.DisplayName: Crystal Glaive
-			CyberChakram_Proj.DisplayName: Cyber Chakram
-			CyberChakram_Proj2.DisplayName: Cyber Chakram
-			ForgottenGreatsword_Proj.DisplayName: Ophos' Forgotten Greatsword
-			GravityHammer_Proj.DisplayName: Gravity Hammer
-			HammerOfProving_Proj.DisplayName: Hammer of Proving
-			InfectiousGlaive_Proj.DisplayName: Infectious Glaive
-			Midnight_SlashProj.DisplayName: Midnight, Defiler of the Prince
-			OversizedScrewdriver_Proj.DisplayName: Oversized Screwdriver
-			RemoteCleaver.DisplayName: Omega Cleaver
-			SlayerFist_Proj.DisplayName: Slayer's Rocket Fist
-			Spellsong_Proj.DisplayName: Spellsong, Core of the West
-			TidalWake_Proj.DisplayName: Tidal Wake
-			TinyCleaver_Proj.DisplayName: Tiny Cleaver
-			WraithSlayer_Proj.DisplayName: Wraith Slayer
-			BileLauncher_Proj.DisplayName: Bile Launcher
-			CorruptedDAN_Proj.DisplayName: Corrupted D.A.N
-			DAN_Proj.DisplayName: D.A.N
-			FlakCannon_Proj.DisplayName: Flak Cannon
+			GlobalDischarge_Proj.DisplayName: "{$Mods.Redemption.Items.GlobalDischarge.DisplayName}"
+			GlobalDischarge_Sphere.DisplayName: "{$Mods.Redemption.Items.GlobalDischarge.DisplayName}"
+			LightningRod_Proj.DisplayName: "{$Mods.Redemption.Items.LightningRod.DisplayName}"
+			Synthesizer_Proj.DisplayName: "{$Mods.Redemption.Items.Synthesizer.DisplayName}"
+			BlindJustice_Proj.DisplayName: "{$Mods.Redemption.Items.BlindJustice.DisplayName}"
+			BlindJustice_Proj2.DisplayName: "{$Mods.Redemption.Items.BlindJustice.DisplayName}"
+			BloodstainedPike_Proj.DisplayName: "{$Mods.Redemption.Items.BloodstainedPike.DisplayName}"
+			BloodstainedPike_Proj2.DisplayName: "{$Mods.Redemption.Items.BloodstainedPike.DisplayName}"
+			Chernobyl_Proj.DisplayName: "{$Mods.Redemption.Items.Chernobyl.DisplayName}"
+			CrystalGlaive_Proj.DisplayName: "{$Mods.Redemption.Items.CrystalGlaive.DisplayName}"
+			CyberChakram_Proj.DisplayName: "{$Mods.Redemption.Items.CyberChakram.DisplayName}"
+			CyberChakram_Proj2.DisplayName: "{$Mods.Redemption.Items.CyberChakram.DisplayName}"
+			ForgottenGreatsword_Proj.DisplayName: "{$Mods.Redemption.Items.ForgottenGreatsword.DisplayName}"
+			GravityHammer_Proj.DisplayName: "{$Mods.Redemption.Items.GravityHammer.DisplayName}"
+			HammerOfProving_Proj.DisplayName: "{$Mods.Redemption.Items.HammerOfProving.DisplayName}"
+			InfectiousGlaive_Proj.DisplayName: "{$Mods.Redemption.Items.InfectiousGlaive.DisplayName}"
+			Midnight_SlashProj.DisplayName: "{$Mods.Redemption.Items.Midnight.DisplayName}"
+			OversizedScrewdriver_Proj.DisplayName: "{$Mods.Redemption.Items.OversizedScrewdriver.DisplayName}"
+			RemoteCleaver.DisplayName: "{$Mods.Redemption.NPCs.OmegaCleaver.DisplayName}"
+			SlayerFist_Proj.DisplayName: "{$Mods.Redemption.Items.SlayerFist.DisplayName}"
+			Spellsong_Proj.DisplayName: "{$Mods.Redemption.Items.Spellsong.DisplayName}"
+			TidalWake_Proj.DisplayName: "{$Mods.Redemption.Items.TidalWake.DisplayName}"
+			TinyCleaver_Proj.DisplayName: "{$Mods.Redemption.Items.TinyCleaver.DisplayName}"
+			WraithSlayer_Proj.DisplayName: "{$Mods.Redemption.Items.WraithSlayer.DisplayName}"
+			BileLauncher_Proj.DisplayName: "{$Mods.Redemption.Items.BileLauncher.DisplayName}"
+			CorruptedDAN_Proj.DisplayName: "{$Mods.Redemption.Items.CorruptedDAN.DisplayName}"
+			DAN_Proj.DisplayName: "{$Mods.Redemption.Items.DAN.DisplayName}"
+			FlakCannon_Proj.DisplayName: "{$Mods.Redemption.Items.FlakCannon.DisplayName}"
 			HyperTechRevolvers_Proj.DisplayName: Hyper-Tech Revolver
 			HyperTechRevolvers_Proj2.DisplayName: Hyper-Tech Revolver
-			SteampunkMinigun_Proj.DisplayName: Steam-Cog Minigun
-			ToxicGrenade_Proj.DisplayName: Toxic Grenade
-			InfectedTentacle_Proj.DisplayName: Infected Tentacle
-			WireTaser_Proj.DisplayName: Wire Taser
-			WireTaser_Proj2.DisplayName: Wire Taser
-			WireTaser_Proj2_End.DisplayName: Wire Taser
+			SteampunkMinigun_Proj.DisplayName: "{$Mods.Redemption.Items.SteampunkMinigun.DisplayName}"
+			ToxicGrenade_Proj.DisplayName: "{$Mods.Redemption.Items.ToxicGrenade.DisplayName}"
+			InfectedTentacle_Proj.DisplayName: "{$Mods.Redemption.Items.InfectedTentacle.DisplayName}"
+			WireTaser_Proj.DisplayName: "{$Mods.Redemption.Items.WireTaser.DisplayName}"
+			WireTaser_Proj2.DisplayName: "{$Mods.Redemption.Items.WireTaser.DisplayName}"
+			WireTaser_Proj2_End.DisplayName: "{$Mods.Redemption.Items.WireTaser.DisplayName}"
 			OOFingergun_Fingerflash.DisplayName: Fingerflash
 			OOFingergun_Laser.DisplayName: Omega Laser
-			OOFingergun_Proj.DisplayName: Omega Finger Gun
-			TeslaCoil_Proj.DisplayName: Tesla Coil
-			Hacksaw_Proj.DisplayName: Automated Hacksaw
-			MythrilsBane_Proj.DisplayName: Mythril's Bane
-			PiercingNebulaWeapon_Proj.DisplayName: Sword of the Forgotten
-			PNebula1_Friendly.DisplayName: Piercing Nebula
-			PNebula2_Friendly.DisplayName: Piercing Nebula
-			PNebula3_Friendly.DisplayName: Piercing Nebula
-			PZGauntlet_Proj.DisplayName: Infectious Gauntlet
-			SunInThePalm_Proj.DisplayName: Sun-In-Palm
-			Ukonvasara_Axe.DisplayName: Ukonvasara
-			Ukonvasara_Proj2.DisplayName: Ukonvasara
-			Ukonvasara_Sword.DisplayName: Ukonvasara
-			Ukonvasara_Sword_Proj.DisplayName: Ukonvasara
-			XeniumLance_Proj.DisplayName: Xenium Lance
+			OOFingergun_Proj.DisplayName: "{$Mods.Redemption.Items.OOFingergun.DisplayName}"
+			TeslaCoil_Proj.DisplayName: "{$Mods.Redemption.Items.TeslaCoil.DisplayName}"
+			Hacksaw_Proj.DisplayName: "{$Mods.Redemption.Items.Hacksaw.DisplayName}"
+			MythrilsBane_Proj.DisplayName: "{$Mods.Redemption.Items.MythrilsBane.DisplayName}"
+			PiercingNebulaWeapon_Proj.DisplayName: "{$Mods.Redemption.Items.PiercingNebulaWeapon.DisplayName}"
+			PNebula1_Friendly.DisplayName: "{$Mods.Redemption.Items.PiercingNebulaWeapon.DisplayName}"
+			PNebula2_Friendly.DisplayName: "{$Mods.Redemption.Items.PiercingNebulaWeapon.DisplayName}"
+			PNebula3_Friendly.DisplayName: "{$Mods.Redemption.Items.PiercingNebulaWeapon.DisplayName}"
+			PZGauntlet_Proj.DisplayName: "{$Mods.Redemption.Items.PZGauntlet.DisplayName}"
+			SunInThePalm_Proj.DisplayName: "{$Mods.Redemption.Items.SunInThePalm.DisplayName}"
+			Ukonvasara_Axe.DisplayName: "{$Mods.Redemption.Items.Ukonvasara.DisplayName}"
+			Ukonvasara_Proj2.DisplayName: "{$Mods.Redemption.Items.Ukonvasara.DisplayName}"
+			Ukonvasara_Sword.DisplayName: "{$Mods.Redemption.Items.Ukonvasara.DisplayName}"
+			Ukonvasara_Sword_Proj.DisplayName: "{$Mods.Redemption.Items.Ukonvasara.DisplayName}"
+			XeniumLance_Proj.DisplayName: "{$Mods.Redemption.Items.XeniumLance.DisplayName}"
 			BlastBattery_Crosshair.DisplayName: Crosshair
 			BlastBattery_Missile.DisplayName: Omega Missile
 			BlastBattery_MissileBlast.DisplayName: Explosion
-			Electronade_Proj.DisplayName: Electonade
+			Electronade_Proj.DisplayName: "{$Mods.Redemption.Items.Electronade.DisplayName}"
 			Electronade_TeslaField.DisplayName: Tesla Field
-			SussyEgg_Proj.DisplayName: Suspicious Egg
-			SwarmerCannon_Proj.DisplayName: Swarmer Cannon
-			XeniumElectrolaser_Proj.DisplayName: Xenium Electrolaser
-			CosmosChains_Proj.DisplayName: Chains of the Cosmos
-			AquaArrow_Proj.DisplayName: Aqua Arrow
-			MoonflareArrow_Proj.DisplayName: Moonflare Arrow
-			XenomiteBulletProj.DisplayName: Xenomite Bullet
+			SussyEgg_Proj.DisplayName: "{$Mods.Redemption.Items.SussyEgg.DisplayName}"
+			SwarmerCannon_Proj.DisplayName: "{$Mods.Redemption.Items.SwarmerCannon.DisplayName}"
+			XeniumElectrolaser_Proj.DisplayName: "{$Mods.Redemption.Items.XeniumElectrolaser.DisplayName}"
+			CosmosChains_Proj.DisplayName: "{$Mods.Redemption.Items.CosmosChains.DisplayName}"
+			AquaArrow_Proj.DisplayName: "{$Mods.Redemption.Items.AquaArrow.DisplayName}"
+			MoonflareArrow_Proj.DisplayName: "{$Mods.Redemption.Items.MoonflareArrow.DisplayName}"
+			XenomiteBulletProj.DisplayName: "{$Mods.Redemption.Items.XenomiteBullet.DisplayName}"
 			BlightedRootProj.DisplayName: Blighted Root Proj
 			BlightedRootStabber.DisplayName: Blighted Root Stabber
 			BlightedRootThorn.DisplayName: Blighted Root Thorn
-			PureIronStaff_Proj.DisplayName: Pure-Iron Staff
-			BladeOfTheMountain_Slash.DisplayName: Blade of the Mountain
-			ChompingChains_Proj.DisplayName: Chomping Chains
-			ChompingChains_Proj_Skull.DisplayName: Chomping Chains
-			DragonCleaver_Proj.DisplayName: Dragon Cleaver
-			EaglecrestJavelin_Proj.DisplayName: Eaglecrest Javelin
+			PureIronStaff_Proj.DisplayName: "{$Mods.Redemption.Items.PureIronStaff.DisplayName}"
+			BladeOfTheMountain_Slash.DisplayName: "{$Mods.Redemption.Items.BladeOfTheMountain.DisplayName}"
+			ChompingChains_Proj.DisplayName: "{$Mods.Redemption.Items.ChompingChains.DisplayName}"
+			ChompingChains_Proj_Skull.DisplayName: "{$Mods.Redemption.Items.ChompingChains.DisplayName}"
+			DragonCleaver_Proj.DisplayName: "{$Mods.Redemption.Items.DragonCleaver.DisplayName}"
+			EaglecrestJavelin_Proj.DisplayName: "{$Mods.Redemption.Items.EaglecrestJavelin.DisplayName}"
 			EaglecrestJavelin_Thunder.DisplayName: Lightning
 			FlintAndSteelSpark.DisplayName: Spark
-			ForestNymphsSickle_Proj.DisplayName: Forest Nymph's Sickle
-			ForgottenSword_Proj.DisplayName: Sword of the Forgotten
-			Halbirdhouse_Proj.DisplayName: Halbirdhouse
-			KeepersClaw_Slash.DisplayName: Keeper's Claw
-			NoblesHalberd_Proj.DisplayName: Noble's Halberd
-			NoblesHalberd_SlashProj.DisplayName: Noble's Halberd
-			PureIronSword_Proj.DisplayName: Pure-Iron Sword
-			SilverRapier_Proj.DisplayName: Silver Rapier
-			SkullDiggerFlail_Proj.DisplayName: Skull Digger's Skull Digger
-			SwordSlicer_Slash.DisplayName: Sword Slicer
-			XenoXyston_Proj.DisplayName: Xeno Xyston
-			Zweihander_SlashProj.DisplayName: Zweihander
-			ChickenEgg_Proj.DisplayName: Chicken Egg
-			EaglecrestSling_Throw.DisplayName: Eaglecrest Sling
-			EggBomb_Proj.DisplayName: Egg Bomb
-			GoldChickenEgg_Proj.DisplayName: Gold Chicken Egg
-			HallowedHandGrenade_Proj.DisplayName: Hallowed Hand Grenade of Anglon
-			LongEgg_Proj.DisplayName: L o n g  Egg
-			BlazingBalisong_Slash.DisplayName: Blazing Balisong
-			BlightedBoline_Slash.DisplayName: Blighted Boline
-			BloodLetter_Proj.DisplayName: Blood Letter
-			BloodLetter_Slash.DisplayName: Blood Letter
-			BuddingBoline_Slash.DisplayName: Budding Boline
-			GraveSteelSecespita_Slash.DisplayName: Grave Steel Secespita
-			Incisor_Slash.DisplayName: Incisor
-			KeepersKnife_Slash.DisplayName: Keeper's Knife
-			ObsidianTecpatl_Slash.DisplayName: Obsidian Tecpatl
-			SoulSkewer_Slash.DisplayName: Soul Skewer
-			WornDagger_Slash.DisplayName: Worn Dagger
-			HolyBible_Proj.DisplayName: Holy Bible_ Proj
-			RootTendril_Proj.DisplayName: Root Tendril
+			ForestNymphsSickle_Proj.DisplayName: "{$Mods.Redemption.Items.ForestNymphsSickle.DisplayName}"
+			ForgottenSword_Proj.DisplayName: "{$Mods.Redemption.Items.ForgottenSword.DisplayName}"
+			Halbirdhouse_Proj.DisplayName: "{$Mods.Redemption.Items.Halbirdhouse.DisplayName}"
+			KeepersClaw_Slash.DisplayName: "{$Mods.Redemption.Items.KeepersClaw.DisplayName}"
+			NoblesHalberd_Proj.DisplayName: "{$Mods.Redemption.Items.NoblesHalberd.DisplayName}"
+			NoblesHalberd_SlashProj.DisplayName: "{$Mods.Redemption.Items.NoblesHalberd.DisplayName}"
+			PureIronSword_Proj.DisplayName: "{$Mods.Redemption.Items.PureIronSword.DisplayName}"
+			SilverRapier_Proj.DisplayName: "{$Mods.Redemption.Items.SilverRapier.DisplayName}"
+			SkullDiggerFlail_Proj.DisplayName: "{$Mods.Redemption.Items.SkullDiggerFlail.DisplayName}"
+			SwordSlicer_Slash.DisplayName: "{$Mods.Redemption.Items.SwordSlicer.DisplayName}"
+			XenoXyston_Proj.DisplayName: "{$Mods.Redemption.Items.XenoXyston.DisplayName}"
+			Zweihander_SlashProj.DisplayName: "{$Mods.Redemption.Items.Zweihander.DisplayName}"
+			ChickenEgg_Proj.DisplayName: "{$Mods.Redemption.Items.ChickenEgg.DisplayName}"
+			EaglecrestSling_Throw.DisplayName: "{$Mods.Redemption.Items.EaglecrestSling.DisplayName}"
+			EggBomb_Proj.DisplayName: "{$Mods.Redemption.Items.EggBomb.DisplayName}"
+			GoldChickenEgg_Proj.DisplayName: "{$Mods.Redemption.Items.GoldChickenEgg.DisplayName}"
+			HallowedHandGrenade_Proj.DisplayName: "{$Mods.Redemption.Items.HallowedHandGrenade.DisplayName}"
+			LongEgg_Proj.DisplayName: "{$Mods.Redemption.Items.LongEgg.DisplayName}"
+			BlazingBalisong_Slash.DisplayName: "{$Mods.Redemption.Items.BlazingBalisong.DisplayName}"
+			BlightedBoline_Slash.DisplayName: "{$Mods.Redemption.Items.BlightedBoline.DisplayName}"
+			BloodLetter_Proj.DisplayName: "{$Mods.Redemption.Items.BloodLetter.DisplayName}"
+			BloodLetter_Slash.DisplayName: "{$Mods.Redemption.Items.BloodLetter.DisplayName}"
+			BuddingBoline_Slash.DisplayName: "{$Mods.Redemption.Items.BuddingBoline.DisplayName}"
+			GraveSteelSecespita_Slash.DisplayName: "{$Mods.Redemption.Items.GraveSteelSecespita.DisplayName}"
+			Incisor_Slash.DisplayName: "{$Mods.Redemption.Items.Incisor.DisplayName}"
+			KeepersKnife_Slash.DisplayName: "{$Mods.Redemption.Items.KeepersKnife.DisplayName}"
+			ObsidianTecpatl_Slash.DisplayName: "{$Mods.Redemption.Items.ObsidianTecpatl.DisplayName}"
+			SoulSkewer_Slash.DisplayName: "{$Mods.Redemption.Items.SoulSkewer.DisplayName}"
+			WornDagger_Slash.DisplayName: "{$Mods.Redemption.Items.WornDagger.DisplayName}"
+			HolyBible_Proj.DisplayName: "{$Mods.Redemption.Items.HolyBible.DisplayName}"
+			RootTendril_Proj.DisplayName: "{$Mods.Redemption.Items.RootTendril.DisplayName}"
 			AkkaBubble.DisplayName: Bubble
 			AkkaHealingSpirit.DisplayName: Healing Spirit
 			AkkaIsland.DisplayName: Floating Island
-			AkkaIslandHitbox.DisplayName: Floating Island
+			AkkaIslandHitbox.DisplayName: "{$Mods.Redemption.Projectiles.AkkaIsland.DisplayName}"
 			AkkaIslandSummoner.DisplayName: Island Summoner
 			AkkaIslandWarning.DisplayName: Warning
 			AkkaPoisonBubble.DisplayName: Poison Bubble
@@ -9754,15 +10234,15 @@ Mods: {
 			UkkoStrike.DisplayName: Ukko's Lightning
 			UkkoStrikeZap.DisplayName: Ukko's Lightning
 			UkkoThunderwave.DisplayName: Ukko's Thunderwave
-			CleaverHitbox.DisplayName: Omega Cleaver
+			CleaverHitbox.DisplayName: "{$Mods.Redemption.NPCs.OmegaCleaver.DisplayName}"
 			OmegaBlast.DisplayName: Omega Blast
 			OmegaCleaver_GirusTalk.DisplayName: Ominous Voice
 			PhantomCleaver.DisplayName: Phantom Cleaver
-			PhantomCleaver_F.DisplayName: Phantom Cleaver
-			PhantomCleaver2.DisplayName: Phantom Cleaver
-			PhantomCleaver2_Spawner.DisplayName: Phantom Cleaver
-			RedPrism.DisplayName: Phantom Cleaver
-			RedPrism_F.DisplayName: Phantom Cleaver
+			PhantomCleaver_F.DisplayName: "{$Mods.Redemption.Projectiles.PhantomCleaver.DisplayName}"
+			PhantomCleaver2.DisplayName: "{$Mods.Redemption.Projectiles.PhantomCleaver.DisplayName}"
+			PhantomCleaver2_Spawner.DisplayName: "{$Mods.Redemption.Projectiles.PhantomCleaver.DisplayName}"
+			RedPrism.DisplayName: "{$Mods.Redemption.Projectiles.PhantomCleaver.DisplayName}"
+			RedPrism_F.DisplayName: "{$Mods.Redemption.Projectiles.PhantomCleaver.DisplayName}"
 			WielderOrb.DisplayName: Shield Orb
 			Bible_Ray.DisplayName: Scorching Ray
 			Bible_Seed.DisplayName: Seed of Virtue
@@ -9772,9 +10252,9 @@ Mods: {
 			Erhan_HolyShield.DisplayName: Holy Shield
 			Erhan_Lightmass.DisplayName: Lightmass
 			HolyBeam.DisplayName: Holy Beam
-			HolyHandGrenadeOfAnglon.DisplayName: Holy Hand Grenade of Anglon
+			HolyHandGrenadeOfAnglon.DisplayName: Hallowed Hand Grenade of Anglon
 			HolyPhalanx_Proj.DisplayName: Holy Phalanx
-			HolyPhalanx_Proj2.DisplayName: Holy Phalanx
+			HolyPhalanx_Proj2.DisplayName: "{$Mods.Redemption.Projectiles.HolyPhalanx_Proj.DisplayName}"
 			HolySpear_Proj.DisplayName: Holy Spear
 			HolySpear_Tele.DisplayName: Telegraph
 			RayOfGuidance.DisplayName: Ray of Guidance
@@ -9790,7 +10270,7 @@ Mods: {
 			Gigapora_CrossBomb.DisplayName: Cross Bomb
 			Gigapora_Fireball.DisplayName: Fireball
 			Gigapora_Flame.DisplayName: Flames
-			Gigapora_FlameTele.DisplayName: Flames
+			Gigapora_FlameTele.DisplayName: "{$Mods.Redemption.Projectiles.Gigapora_Flame.DisplayName}"
 			Gigapora_GirusTalk.DisplayName: Ominous Voice
 			Gigapora_Rubble.DisplayName: Rubble
 			ShieldCore_Bolt.DisplayName: Energy Bolt
@@ -9798,7 +10278,7 @@ Mods: {
 			ShieldCore_Zap.DisplayName: Dualcast
 			KeeperBloodWave.DisplayName: Blood Wave
 			KeeperDreadCoil.DisplayName: Dread Coil
-			KeeperSoul.DisplayName: The Keeper
+			KeeperSoul.DisplayName: "{$Mods.Redemption.NPCs.Keeper.DisplayName}"
 			KeeperSoulCharge.DisplayName: Soul Charge
 			ShadowBolt.DisplayName: Shadow Bolt
 			VeilFX.DisplayName: Veil
@@ -9806,11 +10286,11 @@ Mods: {
 			KS3_BeamCell.DisplayName: Beam Cell
 			KS3_Call.DisplayName: Transmission
 			KS3_EnergyBolt.DisplayName: Energy Bolt
-			KS3_Exit.DisplayName: King Slayer III
+			KS3_Exit.DisplayName: "{$Mods.Redemption.NPCs.KS3.DisplayName}"
 			KS3_Fist.DisplayName: Fist Rocket
 			KS3_FlashGrenade.DisplayName: Stun Grenade
 			KS3_HeadHologram.DisplayName: Hologram
-			KS3_JojoFist.DisplayName: King Slayer III
+			KS3_JojoFist.DisplayName: "{$Mods.Redemption.NPCs.KS3.DisplayName}"
 			KS3_MagnetBeam.DisplayName: Magnet Beam
 			KS3_MagnetPulse.DisplayName: Surge
 			KS3_MissileBlast.DisplayName: Explosion
@@ -9823,7 +10303,7 @@ Mods: {
 			KS3_Surge2.DisplayName: Core Surge
 			KS3_TeleLine1.DisplayName: Telegraph
 			KS3_TeleLine2.DisplayName: Telegraph
-			KS3_Wave.DisplayName: King Slayer III
+			KS3_Wave.DisplayName: "{$Mods.Redemption.NPCs.KS3.DisplayName}"
 			ReboundShot.DisplayName: Rebound Shot
 			Scan_Proj.DisplayName: Scan
 			SlayerMissile.DisplayName: Drone Missile
@@ -9833,16 +10313,16 @@ Mods: {
 			CrystalStar_Tele.DisplayName: Telegraph
 			CrystalStarShard_Proj.DisplayName: Crystal Star Shard
 			CurvingStar.DisplayName: Shooting Star
-			CurvingStar_Tele.DisplayName: Shooting Star
-			CurvingStar_Tele2.DisplayName: Shooting Star
-			CurvingStar_Tele3.DisplayName: Shooting Star
-			CurvingStar_Tele4.DisplayName: Shooting Star
-			CurvingStar2.DisplayName: Shooting Star
+			CurvingStar_Tele.DisplayName: "{$Mods.Redemption.Projectiles.CurvingStar.DisplayName}"
+			CurvingStar_Tele2.DisplayName: "{$Mods.Redemption.Projectiles.CurvingStar.DisplayName}"
+			CurvingStar_Tele3.DisplayName: "{$Mods.Redemption.Projectiles.CurvingStar.DisplayName}"
+			CurvingStar_Tele4.DisplayName: "{$Mods.Redemption.Projectiles.CurvingStar.DisplayName}"
+			CurvingStar2.DisplayName: "{$Mods.Redemption.Projectiles.CurvingStar.DisplayName}"
 			Dash_Tele.DisplayName: Dash_ Tele
 			GiantStar_Proj.DisplayName: Giant Star
-			Neb_Start_Visual.DisplayName: Nebuleus
-			Neb_Start_Visual2.DisplayName: Nebuleus
-			Neb_Start_Visual3.DisplayName: Nebuleus
+			Neb_Start_Visual.DisplayName: "{$Mods.Redemption.NPCs.Nebuleus.DisplayName}"
+			Neb_Start_Visual2.DisplayName: "{$Mods.Redemption.NPCs.Nebuleus.DisplayName}"
+			Neb_Start_Visual3.DisplayName: "{$Mods.Redemption.NPCs.Nebuleus.DisplayName}"
 			NebRing.DisplayName: Cosmic Ring
 			NebTeleLine1.DisplayName: Telegraph
 			NebTeleLine2.DisplayName: Telegraph
@@ -9850,8 +10330,8 @@ Mods: {
 			CosmicEye2.DisplayName: Cosmic Eye
 			CosmicEye3.DisplayName: Cosmic Eye
 			Dash_Tele2.DisplayName: Dash Telegraph
-			NebDefeat.DisplayName: Nebuleus, Angel of the Cosmos
-			NebFalling.DisplayName: Nebuleus, Angel of the Cosmos
+			NebDefeat.DisplayName: "{$Mods.Redemption.NPCs.Nebuleus.DisplayName}"
+			NebFalling.DisplayName: "{$Mods.Redemption.NPCs.Nebuleus.DisplayName}"
 			StarBolt.DisplayName: Star Bolt
 			StarFall_Proj2.DisplayName: Starfall
 			Starfall_Tele2.DisplayName: Telegraph
@@ -9859,17 +10339,17 @@ Mods: {
 			PNebula1_Tele.DisplayName: Telegraph
 			PNebula2.DisplayName: Piercing Nebula
 			PNebula3.DisplayName: Piercing Nebula
-			Shout1.DisplayName: Shout!
-			Shout10.DisplayName: Shout!
-			Shout11.DisplayName: Shout!
-			Shout2.DisplayName: Shout!
-			Shout3.DisplayName: Shout!
-			Shout4.DisplayName: Shout!
-			Shout5.DisplayName: Shout!
-			Shout6.DisplayName: Shout!
-			Shout7.DisplayName: Shout!
-			Shout8.DisplayName: Shout!
-			Shout9.DisplayName: Shout!
+			Shout1.DisplayName: ""
+			Shout10.DisplayName: ""
+			Shout11.DisplayName: ""
+			Shout2.DisplayName: ""
+			Shout3.DisplayName: ""
+			Shout4.DisplayName: ""
+			Shout5.DisplayName: ""
+			Shout6.DisplayName: ""
+			Shout7.DisplayName: ""
+			Shout8.DisplayName: ""
+			Shout9.DisplayName: ""
 			StarFall_Proj.DisplayName: Starfall
 			Starfall_Tele.DisplayName: Telegraph
 			StationaryStar.DisplayName: Starplane
@@ -9911,7 +10391,7 @@ Mods: {
 			SoI_ToxicSludge.DisplayName: Toxic Sludge
 			SoI_XenomiteShot.DisplayName: Xenomite Shot
 			StrangePortal.DisplayName: Strange Portal
-			StrangePortal2.DisplayName: Strange Portal
+			StrangePortal2.DisplayName: "{$Mods.Redemption.Projectiles.StrangePortal.DisplayName}"
 			CursedThornVile.DisplayName: Cursed Thorns
 			LeechingThornSeed.DisplayName: Life-Draining Thorn
 			ManaBarrier.DisplayName: Mana Barrier
@@ -9919,24 +10399,24 @@ Mods: {
 			SlashPro1.DisplayName: Slash
 			ThornSeed.DisplayName: Thorn Seed
 			ThornTrap.DisplayName: Thorn Trap
-			CoastScarabFall.DisplayName: Coast Scarab
-			GrandLarvaFall.DisplayName: Grand Larva
-			TreeBugFall.DisplayName: Tree Bug
+			CoastScarabFall.DisplayName: "{$Mods.Redemption.NPCs.CoastScarab.DisplayName}"
+			GrandLarvaFall.DisplayName: "{$Mods.Redemption.NPCs.GrandLarva.DisplayName}"
+			TreeBugFall.DisplayName: "{$Mods.Redemption.NPCs.TreeBug.DisplayName}"
 			Cockatrice_Ray.DisplayName: Petrifying Gaze
 			Cockatrice_Ray_Tele.DisplayName: Telegraph
 			HeadlessChicken_Fire.DisplayName: Ghost-Fire
 			KS3Sitting_Hologram.DisplayName: Hologram
-			SkullDiggerFriendly_FlailBlade.DisplayName: Skull Digger
-			AncientGladestonePillar_SS.DisplayName: Ancient Gladestone Pillar
-			LivingBloomRoot_SS.DisplayName: Living Root
+			SkullDiggerFriendly_FlailBlade.DisplayName: "{$Mods.Redemption.NPCs.SkullDigger.DisplayName}"
+			AncientGladestonePillar_SS.DisplayName: "{$Mods.Redemption.Projectiles.AncientGladestonePillar.DisplayName}"
+			LivingBloomRoot_SS.DisplayName: "{$Mods.Redemption.Projectiles.LivingBloomRoot.DisplayName}"
 			MossyGoliath_SS_Screech.DisplayName: Roar
 			MossyGoliath_SS_ToxicBreath.DisplayName: Toxic Breath
-			SkeletonNoble_SS_HalberdProj.DisplayName: Noble's Halberd
-			SkeletonWanderer_SS_SpearProj.DisplayName: Spear
-			SkullDigger_SS_FlailBlade.DisplayName: Skull Digger
+			SkeletonNoble_SS_HalberdProj.DisplayName: "{$Mods.Redemption.Items.NoblesHalberd.DisplayName}"
+			SkeletonWanderer_SS_SpearProj.DisplayName: "{$Mods.Redemption.Projectiles.SkeletonWanderer_SpearProj.DisplayName}"
+			SkullDigger_SS_FlailBlade.DisplayName: "{$Mods.Redemption.NPCs.SkullDigger.DisplayName}"
 			SpiritwalkerIconFade.DisplayName: Spirit Walker
 			WraithSlayer_Slash.DisplayName: Slash
-			PrototypeSilver_Hook.DisplayName: Prototype Silver
+			PrototypeSilver_Hook.DisplayName: "{$Mods.Redemption.NPCs.PrototypeSilver.DisplayName}"
 			PrototypeSilver_Shield.DisplayName: Bubble Shield
 			SpacePaladin_GroundShock.DisplayName: Shockwave
 			GreenGas_Proj.DisplayName: Radioactive Gas
@@ -9966,10 +10446,10 @@ Mods: {
 			GolemEyeRay.DisplayName: Eye Ray
 			RockPileSummon.DisplayName: Rock Pile
 			RockSlash_Proj.DisplayName: Rock Slash
-			SkullDigger_FlailBlade.DisplayName: Skull Digger
-			SkullDigger_FlailBlade_Proj.DisplayName: Skull Digger's Skull Digger
-			SkullDigger_FlailBlade_ProjF.DisplayName: Skull Digger's Skull Digger
-			SkeletonNoble_HalberdProj.DisplayName: Noble's Halberd
+			SkullDigger_FlailBlade.DisplayName: "{$Mods.Redemption.NPCs.SkullDigger.DisplayName}"
+			SkullDigger_FlailBlade_Proj.DisplayName: "{$Mods.Redemption.Items.SkullDiggerFlail.DisplayName}"
+			SkullDigger_FlailBlade_ProjF.DisplayName: "{$Mods.Redemption.Items.SkullDiggerFlail.DisplayName}"
+			SkeletonNoble_HalberdProj.DisplayName: "{$Mods.Redemption.Items.NoblesHalberd.DisplayName}"
 			SkeletonWanderer_SpearProj.DisplayName: Spear
 			AncientGladestonePillar.DisplayName: Ancient Gladestone Pillar
 			Android_Proj.DisplayName: Fist Rocket
@@ -9983,7 +10463,7 @@ Mods: {
 			Bacteria_Proj.DisplayName: Bacteria
 			CalciteWand_Proj.DisplayName: Calcite Stalagmites
 			CantripEmber.DisplayName: Ember
-			CantripEmberS.DisplayName: Ember
+			CantripEmberS.DisplayName: "{$Mods.Redemption.Projectiles.CantripEmber.DisplayName}"
 			Constellations_Star.DisplayName: Constellations
 			ContagionShard_Proj.DisplayName: Xenomite Shard
 			DigestiveAcid_Mist.DisplayName: Acid Mist
@@ -9992,10 +10472,10 @@ Mods: {
 			DragonSkull_Proj.DisplayName: Dragon Skull
 			DragonSkullFlames_Proj.DisplayName: Flames
 			Dusksong_Proj.DisplayName: Dark Soul
-			Dusksong_Proj2.DisplayName: Dark Soul
+			Dusksong_Proj2.DisplayName: "{$Mods.Redemption.Projectiles.Dusksong_Proj.DisplayName}"
 			EaglecrestBoulder_Proj.DisplayName: Eaglecrest Boulder
 			Earthbind_Effect.DisplayName: Earthbind
-			Earthbind_Proj.DisplayName: Earthbind
+			Earthbind_Proj.DisplayName: "{$Mods.Redemption.Projectiles.Earthbind_Effect.DisplayName}"
 			GiantDandelionSeed.DisplayName: Giant Dandelion Seed
 			GiantMask.DisplayName: Giant Mask
 			GigapeiliBolt.DisplayName: Energy Bolt
@@ -10004,34 +10484,32 @@ Mods: {
 			HeatRay.DisplayName: Heat Ray
 			IceBolt.DisplayName: Ice Bolt
 			Icefall_Mist.DisplayName: Ice Mist
-			Icefall_Proj.DisplayName: Icefall
+			Icefall_Proj.DisplayName: "{$Mods.Redemption.Items.Icefall.DisplayName}"
 			LightOrb_Proj.DisplayName: Light Orb
 			LightOrbRay_Proj.DisplayName: Light Ray
 			MagnifyingGlassRay.DisplayName: Scorching Ray
 			Nanite_Proj.DisplayName: Nanite
-			NaturePixie_Magic.DisplayName: Nature Pixie_ Magic
-			NoidanNuoli.DisplayName: Noidan Nuoli
+			NaturePixie_Magic.DisplayName: Nature Pixie
 			NoitaBombBlast.DisplayName: Explosion
 			Petridish_Proj.DisplayName: Petridish
 			PlutoniumNuke_Proj.DisplayName: Plutonium Nuke
 			PoemTornado_Proj.DisplayName: Tornado
-			Pommisauva_Bomb.DisplayName: Pommisauva_ Bomb
-			Rockslide_Proj.DisplayName: Rockslide
+			Pommisauva_Bomb.DisplayName: Pommisauva Bomb
+			Rockslide_Proj.DisplayName: "{$Mods.Redemption.Items.Rockslide.DisplayName}"
 			RockslidePebble_Proj.DisplayName: Pebble
 			SoulScepterCharge.DisplayName: Soul Charge
-			SoulScepterChargeS.DisplayName: Soul Charge
+			SoulScepterChargeS.DisplayName: "{$Mods.Redemption.Projectiles.SoulScepterCharge.DisplayName}"
 			Sunshard.DisplayName: Redemptive Spark
 			SunshardRay.DisplayName: Sunshard Ray
 			SynthNote_Proj.DisplayName: Synth Note
 			WaterOrb.DisplayName: Water Orb
-			WaterOrbS.DisplayName: Water Orb
+			WaterOrbS.DisplayName: "{$Mods.Redemption.Projectiles.WaterOrb.DisplayName}"
 			XeniumBoom_Proj.DisplayName: Explosion
 			XeniumBubble_Proj.DisplayName: Xenium Bubble
 			XeniumStaff_Proj.DisplayName: Xenium Ray
 			XenomiteScepter_Proj.DisplayName: Helix Bolt
 			ArcticWind_Proj.DisplayName: Arctic Wind
 			BlindJustice_Aura.DisplayName: Holy Aura
-			Firebreak_Proj.DisplayName: Flaming Rain
 			FireSlash_Proj.DisplayName: Heat Wave
 			Firestorm_Proj.DisplayName: Ophos' Firestorm
 			ForestSickle_Proj.DisplayName: Nature Slash
@@ -10101,8 +10579,8 @@ Mods: {
 			ProjDeath.DisplayName: death
 			SandDust_Proj.DisplayName: Dust Cloud
 			ShockwaveBoom.DisplayName: Shockwave Boom
-			ShockwaveBoom2.DisplayName: Shockwave Boom
-			ShockwaveBoom3.DisplayName: Shockwave Boom
+			ShockwaveBoom2.DisplayName: "{$Mods.Redemption.Projectiles.ShockwaveBoom.DisplayName}"
+			ShockwaveBoom3.DisplayName: "{$Mods.Redemption.Projectiles.ShockwaveBoom.DisplayName}"
 			SoulShockwave_Proj.DisplayName: Arcane Pulse
 			StingerFriendly.DisplayName: Stinger
 			ToxicGas_Proj.DisplayName: Toxic Gas
@@ -10113,14 +10591,14 @@ Mods: {
 			CleaverPet.DisplayName: Omini Cleaver
 			CuddlyTeratoma_Proj.DisplayName: Cuddly Teratoma
 			DevilImp_Proj.DisplayName: Devil Imp
-			DummyPet_Proj.DisplayName: Dummy Pet_ Proj
+			DummyPet_Proj.DisplayName: Dummy Pet
 			HalPet.DisplayName: Halm
 			HalPetSPEEN.DisplayName: SPEEN
 			KS3Pet_Proj.DisplayName: Slayer Projector
 			MiniGigapora.DisplayName: Mini Gigapora
-			MiniGigapora_Body.DisplayName: Mini Gigapora
-			MiniGigapora_Core.DisplayName: Mini Gigapora
-			MiniGigapora_Tail.DisplayName: Mini Gigapora
+			MiniGigapora_Body.DisplayName: "{$Mods.Redemption.Projectiles.MiniGigapora.DisplayName}"
+			MiniGigapora_Core.DisplayName: "{$Mods.Redemption.Projectiles.MiniGigapora.DisplayName}"
+			MiniGigapora_Tail.DisplayName: "{$Mods.Redemption.Projectiles.MiniGigapora.DisplayName}"
 			NebPet_Proj.DisplayName: Chibi Nebby
 			Occie.DisplayName: Occie
 			PetChicken.DisplayName: Pet Chicken
@@ -10136,7 +10614,7 @@ Mods: {
 			DarkSteelArrow.DisplayName: Dark-Steel Arrow
 			DarkSteelArrow_Tendril.DisplayName: Dark Tendril
 			DrillRevolver_Bullet.DisplayName: Drill Bit
-			EaglecrestSling_Proj.DisplayName: Eaglecrest Sling_ Proj
+			EaglecrestSling_Proj.DisplayName: "{$Mods.Redemption.Items.EaglecrestSling.DisplayName}"
 			FanOShivs_Proj.DisplayName: Shiv
 			FanOShivsPoison_Proj.DisplayName: Poisoned Shiv
 			FlakGrenade.DisplayName: Flak Grenade
@@ -10166,7 +10644,7 @@ Mods: {
 			Uranium_Proj.DisplayName: Uranium Rod
 			UraniumRaygun_Proj.DisplayName: Uranium Ring
 			XeniumElectrolaser_Beam.DisplayName: Xenium Laser
-			XeniumElectrolaser_Beam2.DisplayName: Xenium Laser
+			XeniumElectrolaser_Beam2.DisplayName: "{$Mods.Redemption.Projectiles.XeniumElectrolaser_Beam.DisplayName}"
 			BolineFlower.DisplayName: Boline Flower
 			CursedThornVileF.DisplayName: Cursed Thorns
 			HellfireCharge_Proj.DisplayName: Hellfire Charge
@@ -10174,12 +10652,12 @@ Mods: {
 			Explosion_Visual.DisplayName: Explosion
 			Ring_Visual.DisplayName: Ring
 			BigMaceTurret_NPC.DisplayName: Laboratory MACE Turret
-			SoulCandles_Proj.DisplayName: Soul Candles
+			SoulCandles_Proj.DisplayName: Cleansing Candles
 			AncientGoldCoinPileBall.DisplayName: Antique Dorul
 			IrradiatedSandBall.DisplayName: Irradiated Sand Ball
 			ShadestoneRubbleBall.DisplayName: Shadestone Rubble
-			Gigapora_CrossBombTele.DisplayName: Gigapora_ Cross Bomb Tele
-			KS3_DroneKillCheck.DisplayName: K S3_ Drone Kill Check
+			Gigapora_CrossBombTele.DisplayName: Telegraph
+			KS3_DroneKillCheck.DisplayName: ""
 			BlackHoleSpell.DisplayName: Black Hole
 			BouncingBurstSpell.DisplayName: Bouncing Burst
 			BubbleSparkSpell.DisplayName: Bubble Spark
@@ -10194,15 +10672,15 @@ Mods: {
 			OmegaDiscSpell.DisplayName: Omega Disc
 			SpitterBoltSpell.DisplayName: Spitter Bolt
 			TntSpell.DisplayName: Tnt
-			Calavia_SS_BladeOfTheMountain.DisplayName: Blade Of The Mountain
-			Calavia_SS_BladeOfTheMountain2.DisplayName: Blade Of The Mountain
-			Calavia_SS_BladeStab.DisplayName: Blade Of The Mountain
+			Calavia_SS_BladeOfTheMountain.DisplayName: "{$Mods.Redemption.Items.BladeOfTheMountain.DisplayName}"
+			Calavia_SS_BladeOfTheMountain2.DisplayName: "{$Mods.Redemption.Items.BladeOfTheMountain.DisplayName}"
+			Calavia_SS_BladeStab.DisplayName: "{$Mods.Redemption.Items.BladeOfTheMountain.DisplayName}"
 			Calavia_ArcticWind.DisplayName: Arctic Wind
-			Calavia_BladeOfTheMountain.DisplayName: Blade Of The Mountain
-			Calavia_BladeOfTheMountain2.DisplayName: Blade Of The Mountain
-			Calavia_BladeStab.DisplayName: Blade Of The Mountain
-			Calavia_Icefall.DisplayName: Icefall
-			Calavia_IcefallArena.DisplayName: Icefall
+			Calavia_BladeOfTheMountain.DisplayName: "{$Mods.Redemption.Items.BladeOfTheMountain.DisplayName}"
+			Calavia_BladeOfTheMountain2.DisplayName: "{$Mods.Redemption.Items.BladeOfTheMountain.DisplayName}"
+			Calavia_BladeStab.DisplayName: "{$Mods.Redemption.Items.BladeOfTheMountain.DisplayName}"
+			Calavia_Icefall.DisplayName: "{$Mods.Redemption.Items.Icefall.DisplayName}"
+			Calavia_IcefallArena.DisplayName: "{$Mods.Redemption.Items.Icefall.DisplayName}"
 			Calavia_IcefallMist.DisplayName: Ice Mist
 			Basan_Firebreath.DisplayName: Firebreath
 			Basan_HeatWave.DisplayName: Heat Wave
@@ -10215,17 +10693,36 @@ Mods: {
 			SoI_ShardShot_Friendly.DisplayName: Shard Shot
 			InfectiousGlaive_Shard.DisplayName: Splitting Shard
 			EnergySphereSpell_Blast.DisplayName: Energy Sphere
-			EaglecrestGolem_ShockwaveSpawner.DisplayName: Eaglecrest Golem_ Shockwave Spawner
-			Golem_GroundShock.DisplayName: Ground Shock
-			BloatedClinger_Gas.DisplayName: Bile Gas
-			GuidingStranger_Proj.DisplayName: Guiding Stranger_ Proj
+			EaglecrestGolem_ShockwaveSpawner.DisplayName: ""
+			Golem_GroundShock.DisplayName: Shockwave
+			PumpkabooPet.DisplayName: Pumpkaboo
+			HydrasMaw_Ball.DisplayName: Orb of Acid
+			HydrasMaw_Gas.DisplayName: Hydra Gas
+			HydrasMaw_Proj.DisplayName: Hydra Acid
+			BeardedHatchet_Proj.DisplayName: "{$Mods.Redemption.Items.BeardedHatchet.DisplayName}"
+			Bindeklinge_Slash.DisplayName: "{$Mods.Redemption.Items.Bindeklinge.DisplayName}"
+			TileLine_Proj.DisplayName: ""
+			ShootingStar.DisplayName: Shooting Star
+			TwinklestarHoldout.DisplayName: "{$Mods.Redemption.Items.Twinklestar.DisplayName}"
+			TwinklestarRadius.DisplayName: ""
+			TwinklestarTinyStar.DisplayName: Tiny Twinklestar
+			Fallen_BeardedHatchet_Proj.DisplayName: "{$Mods.Redemption.Items.BeardedHatchet.DisplayName}"
+			Zephos_SwordSlicer_Slash.DisplayName: "{$Mods.Redemption.Items.SwordSlicer.DisplayName}"
+			VasaraRock_Proj.DisplayName: Vasara Rock
+			EmpPet.DisplayName: Gumdramon
+			BLTPet.DisplayName: Calico Cat
+			BLTSandwichPet.DisplayName: B.L.T. Sandwich
+			MiniDigger.DisplayName: Mini Digger
+			AsterisPet.DisplayName: Chibi Asteris
+			CloudCallerPet.DisplayName: Cloud Doggy
+			GuidingStranger_Proj.DisplayName: Guiding Stranger
 		}
 
 		NPCs: {
 			Akka.DisplayName: Akka
 
 			EaglecrestGolem2: {
-				DisplayName: Eaglecrest Golem
+				DisplayName: "{$Mods.Redemption.NPCs.EaglecrestGolem.DisplayName}"
 
 				BossChecklistIntegration: {
 					SpawnInfo: Place down and encase the [i:Redemption/GolemEye] within the stones of its origins, and it's true power will present itself.
@@ -10233,7 +10730,7 @@ Mods: {
 				}
 			}
 
-			EaglecrestRockPile2.DisplayName: Eaglecrest Rock Pile
+			EaglecrestRockPile2.DisplayName: "{$Mods.Redemption.NPCs.EaglecrestRockPile.DisplayName}"
 
 			Ukko: {
 				DisplayName: Ukko
@@ -10295,14 +10792,14 @@ Mods: {
 
 			Gigapora_BodySegment.DisplayName: Omega Gigapora
 			Gigapora_ShieldCore.DisplayName: Shield Core
-			Porakone.DisplayName: Wielder Bot
+			Porakone.DisplayName: "{$Mods.Redemption.NPCs.Wielder.DisplayName}"
 
 			Keeper: {
 				DisplayName: The Keeper
 				BossChecklistIntegration.SpawnInfo: Use a [i:Redemption/WeddingRing] at night.
 			}
 
-			KeeperSpirit.DisplayName: The Keeper's Spirit
+			KeeperSpirit.DisplayName: The Keeper's Echo
 
 			KS3: {
 				DisplayName: King Slayer III
@@ -10315,7 +10812,7 @@ Mods: {
 			KS3_ScannerDrone.DisplayName: Scanner Drone Mk.I
 			SpaceKeeper.DisplayName: Space Keeper
 			Nebuleus_Clone.DisplayName: Nebuleus Mirage
-			Nebuleus2_Clone.DisplayName: Nebuleus Mirage
+			Nebuleus2_Clone.DisplayName: "{$Mods.Redemption.NPCs.Nebuleus_Clone.DisplayName}"
 
 			Nebuleus: {
 				DisplayName: Nebuleus, Angel of the Cosmos
@@ -10326,7 +10823,7 @@ Mods: {
 				}
 			}
 
-			Nebuleus2.DisplayName: Nebuleus, Angel of the Cosmos
+			Nebuleus2.DisplayName: "{$Mods.Redemption.NPCs.Nebuleus.DisplayName}"
 
 			OO: {
 				DisplayName: Omega Obliterator
@@ -10342,7 +10839,7 @@ Mods: {
 				BossChecklistIntegration.SpawnInfo: Hit the closed eye of Patient Zero in the Abandoned Laboratory. Use a [i:Redemption/LabHologramDevice] in the arena to resummon.
 			}
 
-			PZ_Body_Holo.DisplayName: Patient Zero
+			PZ_Body_Holo.DisplayName: "{$Mods.Redemption.NPCs.PZ.DisplayName}"
 			PZ_Kari.DisplayName: Kari Johansson
 			SeedGrowth.DisplayName: Hive Growth
 
@@ -10396,57 +10893,57 @@ Mods: {
 				DisplayName: Wayfarer
 
 				TownNPCMood: {
-					Content: I'm rather content right now.
-					NoHome: Hey, I'd quite like a roof under my head if that's alright with you.
-					FarFromHome: Could you please get me back to my house? This land is quite scary.
-					LoveSpace: I like the space I have here, plenty of room to practice my archery.
-					DislikeCrowded: I'm somewhat of an introvert, so all these people near me is quite unnerving.
-					HateCrowded: I'm somewhat of an introvert, so all these people near me is quite unnerving.
-					LoveBiome: I think {BiomeName} is perfect, calm and tranquil.
-					LikeBiome: I think {BiomeName} is a very nice place, I hardly see any snow where I was from.
-					DislikeBiome: I don't really like {BiomeName}, I'd hate to have a run-in with skeletons!
-					HateBiome: Why'd you put me in {BiomeName}? You know how hostile jungles are!?
-					LoveNPC: Me and {NPCName} are great friends, thank you for letting us live in the same town.
-					LikeNPC: "{NPCName} is good company, she's great at styling my hair too... That's not weird, right?"
-					DislikeNPC: "{NPCName} keeps trying to get me to buy his dirt."
-					HateNPC: Psst, could you move {NPCName} far away from me, I'm already super broke as is.
-					LikeNPC_Princess: I like {NPCName}.
-					Princess_LovesNPC: I like {NPCName}.
+					LoveBiome: "{$Mods.Redemption.TownNPCMood.Daerel.LoveBiome}"
+					HateCrowded: "{$Mods.Redemption.TownNPCMood.Daerel.HateCrowded}"
+					DislikeCrowded: "{$Mods.Redemption.TownNPCMood.Daerel.DislikeCrowded}"
+					LoveSpace: "{$Mods.Redemption.TownNPCMood.Daerel.LoveSpace}"
+					FarFromHome: "{$Mods.Redemption.TownNPCMood.Daerel.FarFromHome}"
+					NoHome: "{$Mods.Redemption.TownNPCMood.Daerel.NoHome}"
+					Content: "{$Mods.Redemption.TownNPCMood.Daerel.Content}"
+					LikeBiome: "{$Mods.Redemption.TownNPCMood.Daerel.LikeBiome}"
+					DislikeBiome: "{$Mods.Redemption.TownNPCMood.Daerel.DislikeBiome}"
+					HateBiome: "{$Mods.Redemption.TownNPCMood.Daerel.HateBiome}"
+					LoveNPC: "{$Mods.Redemption.TownNPCMood.Daerel.LoveNPC}"
+					LikeNPC: "{$Mods.Redemption.TownNPCMood.Daerel.LikeNPC}"
+					DislikeNPC: "{$Mods.Redemption.TownNPCMood.Daerel.DislikeNPC}"
+					HateNPC: "{$Mods.Redemption.TownNPCMood.Daerel.HateNPC}"
+					LikeNPC_Princess: "{$Mods.Redemption.TownNPCMood.Daerel.LikeNPC_Princess}"
+					Princess_LovesNPC: "{$Mods.Redemption.TownNPCMood.Daerel.Princess_LovesNPC}"
 				}
 
 				Census.SpawnCondition: Have a suitable house in a Crimson world, after meeting him at the surface portal after the first night
 			}
 
 			Daerel_Intro.DisplayName: Daerel
-			DaerelUnconscious.DisplayName: Daerel
+			DaerelUnconscious.DisplayName: "{$Mods.Redemption.NPCs.Daerel_Intro.DisplayName}"
 
 			Fallen: {
 				DisplayName: Fallen
 
 				TownNPCMood: {
-					Content: Nice little place ya got here.
-					NoHome: I'd prefer to have a house.
-					FarFromHome: Could ya take me back to my home?
-					LoveSpace: This place is a wee bit spacious, not complaining though, I quite like it.
-					DislikeCrowded: All these humans are makin' my bones rattle.
-					HateCrowded: All these humans are makin' my bones rattle.
-					LoveBiome: The caverns are perfect for us Fallen, not many humans come and go here.
-					LikeBiome: Aah, {BiomeName} reminds me of when I was still alive in Gathuram. Good times they were.
-					DislikeBiome: I'm staying in {BiomeName}? Not my preferred place to live, I'd hate to have a run-in with aggressive humans!
-					HateBiome: I hate it here, {BiomeName} has some holy energy in it makin' my flesh crawl.
-					LoveNPC: "{NPCName} sells some nifty gadgets, knows how to rip people off too. I like that."
-					LikeNPC: "{NPCName} got somethin' about him I like."
-					DislikeNPC: "{NPCName} keeps lookin' at me with suspicion. Probably wants to 'purify' me."
-					HateNPC: "{NPCName} keeps thinking I'm some dying old man, insisting that she'll heal me. Please get me away from her."
-					LikeNPC_Princess: I like {NPCName}, she's alright.
-					Princess_LovesNPC: I like {NPCName}, he reminds me of an old man.
+					Content: "{$Mods.Redemption.TownNPCMood.Fallen.Content}"
+					NoHome: "{$Mods.Redemption.TownNPCMood.Fallen.NoHome}"
+					FarFromHome: "{$Mods.Redemption.TownNPCMood.Fallen.FarFromHome}"
+					LoveSpace: "{$Mods.Redemption.TownNPCMood.Fallen.LoveSpace}"
+					DislikeCrowded: "{$Mods.Redemption.TownNPCMood.Fallen.DislikeCrowded}"
+					HateCrowded: "{$Mods.Redemption.TownNPCMood.Fallen.HateCrowded}"
+					LoveBiome: "{$Mods.Redemption.TownNPCMood.Fallen.LoveBiome}"
+					LikeBiome: "{$Mods.Redemption.TownNPCMood.Fallen.LikeBiome}"
+					DislikeBiome: "{$Mods.Redemption.TownNPCMood.Fallen.DislikeBiome}"
+					HateBiome: "{$Mods.Redemption.TownNPCMood.Fallen.HateBiome}"
+					LoveNPC: "{$Mods.Redemption.TownNPCMood.Fallen.LoveNPC}"
+					LikeNPC: "{$Mods.Redemption.TownNPCMood.Fallen.LikeNPC}"
+					DislikeNPC: "{$Mods.Redemption.TownNPCMood.Fallen.DislikeNPC}"
+					HateNPC: "{$Mods.Redemption.TownNPCMood.Fallen.HateNPC}"
+					LikeNPC_Princess: "{$Mods.Redemption.TownNPCMood.Fallen.LikeNPC_Princess}"
+					Princess_LovesNPC: "{$Mods.Redemption.TownNPCMood.Fallen.Princess_LovesNPC}"
 				}
 
 				Census.SpawnCondition: Defeat the Keeper and have a suitable house
 			}
 
 			ForestNymph_Friendly: {
-				DisplayName: Forest Nymph
+				DisplayName: "{$Mods.Redemption.NPCs.ForestNymph.DisplayName}"
 				Census.SpawnCondition:
 					'''
 					Use the [i:Redemption/KingsOakStaff] to gain a Forest Nymph's trust, requires positive alignment.
@@ -10456,62 +10953,76 @@ Mods: {
 
 			GathuramPortal.DisplayName: Mysterious Gateway
 			GiftDrone.DisplayName: Gift Drone
-			GiftDrone2.DisplayName: Gift Drone
-			GiftDrone3.DisplayName: Gift Drone
+			GiftDrone2.DisplayName: "{$Mods.Redemption.NPCs.GiftDrone.DisplayName}"
+			GiftDrone3.DisplayName: "{$Mods.Redemption.NPCs.GiftDrone.DisplayName}"
 			GoldenPortal.DisplayName: Golden Gateway
 			HazmatCorpse_Ghost.DisplayName: Hazmat Ghost
-			KS3Sitting.DisplayName: King Slayer III
+			KS3Sitting.DisplayName: "{$Mods.Redemption.NPCs.KS3.DisplayName}"
 			LostSoulNPC.DisplayName: Lost Soul
 
 			Newb: {
 				DisplayName: Fool
 
 				TownNPCMood: {
-					Content: Me like here!
-					NoHome: Where home?
-					FarFromHome: Me lost, can you find home?
-					LoveSpace: So little people, yay!
-					DislikeCrowded: Too many faces!
-					HateCrowded: Too many faces!
-					LoveBiome: Me love {BiomeName}! It give memory of... Uh..
-					LikeBiome: Me like {BiomeName}.
-					DislikeBiome: Too boring here, me hate sand!
-					HateBiome: Me feel {BiomeName} make me sad!
-					LoveNPC: "{NPCName} knows magic like me!"
-					LikeNPC: Me like {NPCName}!
-					DislikeNPC: I feel evil within {NPCName}, very bad!
-					HateNPC: My hatred towards {NPCName} is beyond your mortal comprehension.
-					LikeNPC_Princess: Me like {NPCName}.
-					Princess_LovesNPC: I like {NPCName}, he's goofy!
+					Content: "{$Mods.Redemption.TownNPCMood.Newb.Content}"
+					NoHome: "{$Mods.Redemption.TownNPCMood.Newb.NoHome}"
+					FarFromHome: "{$Mods.Redemption.TownNPCMood.Newb.FarFromHome}"
+					LoveSpace: "{$Mods.Redemption.TownNPCMood.Newb.LoveSpace}"
+					DislikeCrowded: "{$Mods.Redemption.TownNPCMood.Newb.DislikeCrowded}"
+					HateCrowded: "{$Mods.Redemption.TownNPCMood.Newb.HateCrowded}"
+					LoveBiome: "{$Mods.Redemption.TownNPCMood.Newb.LoveBiome}"
+					LikeBiome: "{$Mods.Redemption.TownNPCMood.Newb.LikeBiome}"
+					DislikeBiome: "{$Mods.Redemption.TownNPCMood.Newb.DislikeBiome}"
+					HateBiome: "{$Mods.Redemption.TownNPCMood.Newb.HateBiome}"
+					LoveNPC: "{$Mods.Redemption.TownNPCMood.Newb.LoveNPC}"
+					LikeNPC: "{$Mods.Redemption.TownNPCMood.Newb.LikeNPC}"
+					DislikeNPC: "{$Mods.Redemption.TownNPCMood.Newb.DislikeNPC}"
+					HateNPC: "{$Mods.Redemption.TownNPCMood.Newb.HateNPC}"
+					LikeNPC_Princess: "{$Mods.Redemption.TownNPCMood.Newb.LikeNPC_Princess}"
+					Princess_LovesNPC: "{$Mods.Redemption.TownNPCMood.Newb.Princess_LovesNPC}"
 				}
 
 				Census.SpawnCondition: Dig up the dirt mound beneath the surface portal
 			}
 
 			Newb_Intro.DisplayName: Newb
-			Noza_NPC.DisplayName: Noza, Tamer of Evil
-			SkullDiggerFriendly.DisplayName: Skull Digger
+
+			Noza_NPC: {
+				DisplayName: Noza, Tamer of Evil
+				ShortName: Noza
+			}
+
+			SkullDiggerFriendly.DisplayName: "{$Mods.Redemption.NPCs.SkullDigger.DisplayName}"
 			SkullDiggerFriendly_Spirit.DisplayName: Skull Digger's Spirit
 			SoullessPortal.DisplayName: Shadesoul Gateway
 			SpiritAssassin.DisplayName: Spirit Assassin
-			SpiritCommonGuard.DisplayName: Spirit Common Guard
+
+			SpiritCommonGuard: {
+				DisplayName: Spirit Common Guard
+				ShortName: Kleo
+			}
+
 			SpiritCurrent.DisplayName: Spirit Current
 			SpiritDruid.DisplayName: Spirit Druid
-			SpiritGathicMan.DisplayName: Old Spirit Man
+
+			SpiritGathicMan: {
+				DisplayName: Old Spirit Man
+				ShortName: Bromal
+			}
+
 			SpiritNiricLady.DisplayName: Old Spirit Lady
-			AncientGladestoneGolem_SS.DisplayName: Ancient Gladestone Golem
+			AncientGladestoneGolem_SS.DisplayName: "{$Mods.Redemption.NPCs.AncientGladestoneGolem.DisplayName}"
 			Asher_SS.DisplayName: Asher
-			EpidotrianSkeleton_SS.DisplayName: Epidotrian Skeleton
-			ForestNymph_SS.DisplayName: Forest Nymph
-			HazmatZombie_SS.DisplayName: Hazmat Zombie
+			EpidotrianSkeleton_SS.DisplayName: "{$Mods.Redemption.NPCs.EpidotrianSkeleton.DisplayName}"
+			ForestNymph_SS.DisplayName: "{$Mods.Redemption.NPCs.ForestNymph.DisplayName}"
 			MossyGoliath_SS.DisplayName: Mossy Goliath
-			SkeletonAssassin_SS.DisplayName: Skeleton Assassin
-			SkeletonDuelist_SS.DisplayName: Skeleton Noble
-			SkeletonFlagbearer_SS.DisplayName: Skeleton Flagbearer
-			SkeletonNoble_SS.DisplayName: Skeleton Noble
-			SkeletonWanderer_SS.DisplayName: Skeleton Noble
-			SkeletonWarden_SS.DisplayName: Skeleton Warden
-			SkullDigger_SS.DisplayName: Skull Digger
+			SkeletonAssassin_SS.DisplayName: "{$Mods.Redemption.NPCs.SkeletonAssassin.DisplayName}"
+			SkeletonDuelist_SS.DisplayName: "{$Mods.Redemption.NPCs.SkeletonDuelist.DisplayName}"
+			SkeletonFlagbearer_SS.DisplayName: "{$Mods.Redemption.NPCs.SkeletonFlagbearer.DisplayName}"
+			SkeletonNoble_SS.DisplayName: "{$Mods.Redemption.NPCs.SkeletonNoble.DisplayName}"
+			SkeletonWanderer_SS.DisplayName: "{$Mods.Redemption.NPCs.SkeletonWanderer.DisplayName}"
+			SkeletonWarden_SS.DisplayName: "{$Mods.Redemption.NPCs.SkeletonWarden.DisplayName}"
+			SkullDigger_SS.DisplayName: "{$Mods.Redemption.NPCs.SkullDigger.DisplayName}"
 			SpiritWalkerMan.DisplayName: Spirit Stranger
 			SpiritwalkerSoul.DisplayName: Lost Soul
 
@@ -10519,86 +11030,91 @@ Mods: {
 				DisplayName: Friendly T-Bot
 
 				TownNPCMood: {
-					Content: Feeling rather content, thank you for asking.
-					NoHome: I don't like being exposed to the elements. Do you have any housing or shelter I could inhabit for now?
-					FarFromHome: ... I believe we're very lost. I'm not familiar with our surroundings.
-					LoveSpace: It's rather quiet around here.
-					DislikeCrowded: Other tenants seem unhappy with the amount of crowding here, and frankly, so am I.
-					HateCrowded: Other tenants seem unhappy with the amount of crowding here, and frankly, so am I.
-					LoveBiome: I like this environment. It's very pleasant.
-					LikeBiome: This environment is mildly pleasant.
-					DislikeBiome: My current environment is rather... undesirable.
-					HateBiome: ... Just like home. I really do not like this environment.
-					LoveNPC: "{NPCName}'s knowledge on medicine rivals that of mine! It's really impressive."
-					LikeNPC: "{NPCName} and I have things in common. We get along well."
-					DislikeNPC: I find {NPCName} rather unsettling.
-					HateNPC: "{NPCName} reminds me of home. I'd rather not be reminded of that place."
-					LikeNPC_Princess: I like {NPCName}.
-					Princess_LovesNPC: I like {NPCName}.
+					Content: "{$Mods.Redemption.TownNPCMood.TBot.Content}"
+					NoHome: "{$Mods.Redemption.TownNPCMood.TBot.NoHome}"
+					FarFromHome: "{$Mods.Redemption.TownNPCMood.TBot.FarFromHome}"
+					LoveSpace: "{$Mods.Redemption.TownNPCMood.TBot.LoveSpace}"
+					DislikeCrowded: "{$Mods.Redemption.TownNPCMood.TBot.DislikeCrowded}"
+					HateCrowded: "{$Mods.Redemption.TownNPCMood.TBot.HateCrowded}"
+					LoveBiome: "{$Mods.Redemption.TownNPCMood.TBot.LoveBiome}"
+					LikeBiome: "{$Mods.Redemption.TownNPCMood.TBot.LikeBiome}"
+					DislikeBiome: "{$Mods.Redemption.TownNPCMood.TBot.DislikeBiome}"
+					HateBiome: "{$Mods.Redemption.TownNPCMood.TBot.HateBiome}"
+					LoveNPC: "{$Mods.Redemption.TownNPCMood.TBot.LoveNPC}"
+					LikeNPC: "{$Mods.Redemption.TownNPCMood.TBot.LikeNPC}"
+					DislikeNPC: "{$Mods.Redemption.TownNPCMood.TBot.DislikeNPC}"
+					HateNPC: "{$Mods.Redemption.TownNPCMood.TBot.HateNPC}"
+					LikeNPC_Princess: "{$Mods.Redemption.TownNPCMood.TBot.LikeNPC_Princess}"
+					Princess_LovesNPC: "{$Mods.Redemption.TownNPCMood.TBot.Princess_LovesNPC}"
 				}
 
 				Census.SpawnCondition: Defeat the Seed of Infection and have a suitable house
 			}
 
 			TBot_Intro.DisplayName: Adam
-			TBotUnconscious.DisplayName: Adam
-			TreebarkDryad.DisplayName: Treebark Dryad
+			TBotUnconscious.DisplayName: "{$Mods.Redemption.NPCs.TBot_Intro.DisplayName}"
+
+			TreebarkDryad: {
+				DisplayName: Treebark Dryad
+				Title: " the Treebark Dryad"
+			}
+
 			WraithSlayer_Samurai.DisplayName: Cursed Samurai
 
 			Zephos: {
 				DisplayName: Wayfarer
 
 				TownNPCMood: {
-					Content: I'm alright.
-					NoHome: Yo, mind if you give me a house to stay in?
-					FarFromHome: Yo bro, I can't find my house, you wanna help me out?
-					LoveSpace: This place is super spacious, good for practicing my swordsmanship!
-					DislikeCrowded: Is it crowded in here or what!
-					HateCrowded: Is it crowded in here or what!
-					LoveBiome: Staying at {BiomeName} reminds me of when I was a young pirate, sailing the seas!
-					LikeBiome: I think {BiomeName} is a nice place, I can hear the birds singing and flowers blooming.
-					DislikeBiome: Not a fan of {BiomeName}, I'd rather live on the surface.
-					HateBiome: It's so cold here, I'm shaking in my boots!
-					LoveNPC: "{NPCName} and I are great friends, so living near each other is great!"
-					LikeNPC: "{NPCName} is cool, I'd like to sail the seas with him sometime."
-					DislikeNPC: "{NPCName} wants to get his greedy little fingers on my money!"
-					HateNPC: "{NPCName} will never take my money! NEVER!!"
-					LikeNPC_Princess: I like {NPCName}.
-					Princess_LovesNPC: I like {NPCName}.
+					Content: "{$Mods.Redemption.TownNPCMood.Zephos.Content}"
+					NoHome: "{$Mods.Redemption.TownNPCMood.Zephos.NoHome}"
+					FarFromHome: "{$Mods.Redemption.TownNPCMood.Zephos.FarFromHome}"
+					LoveSpace: "{$Mods.Redemption.TownNPCMood.Zephos.LoveSpace}"
+					DislikeCrowded: "{$Mods.Redemption.TownNPCMood.Zephos.DislikeCrowded}"
+					HateCrowded: "{$Mods.Redemption.TownNPCMood.Zephos.HateCrowded}"
+					LoveBiome: "{$Mods.Redemption.TownNPCMood.Zephos.LoveBiome}"
+					LikeBiome: "{$Mods.Redemption.TownNPCMood.Zephos.LikeBiome}"
+					DislikeBiome: "{$Mods.Redemption.TownNPCMood.Zephos.DislikeBiome}"
+					HateBiome: "{$Mods.Redemption.TownNPCMood.Zephos.HateBiome}"
+					LoveNPC: "{$Mods.Redemption.TownNPCMood.Zephos.LoveNPC}"
+					LikeNPC: "{$Mods.Redemption.TownNPCMood.Zephos.LikeNPC}"
+					DislikeNPC: "{$Mods.Redemption.TownNPCMood.Zephos.DislikeNPC}"
+					HateNPC: "{$Mods.Redemption.TownNPCMood.Zephos.HateNPC}"
+					LikeNPC_Princess: "{$Mods.Redemption.TownNPCMood.Zephos.LikeNPC_Princess}"
+					Princess_LovesNPC: "{$Mods.Redemption.TownNPCMood.Zephos.Princess_LovesNPC}"
 				}
 
 				Census.SpawnCondition: Have a suitable house in a Corruption world, after meeting him at the surface portal after the first night
 			}
 
 			Zephos_Intro.DisplayName: Zephos
-			ZephosUnconscious.DisplayName: Zephos
+			ZephosUnconscious.DisplayName: "{$Mods.Redemption.NPCs.Zephos_Intro.DisplayName}"
 			Android.DisplayName: Android Mk.I
 			PrototypeSilver.DisplayName: Prototype Silver Mk.I
 			SlayerSpawner.DisplayName: Slayer Spawner
 			SpacePaladin.DisplayName: Space Paladin Mk.I
 			IrradiatedBehemoth.DisplayName: Irradiated Behemoth
-			IrradiatedBehemoth_Holo.DisplayName: Irradiated Behemoth
+			IrradiatedBehemoth_Holo.DisplayName: "{$Mods.Redemption.NPCs.IrradiatedBehemoth.DisplayName}"
 			BlisteredScientist.DisplayName: Blistered Scientist
 			BlisteredFish.DisplayName: Blistered Fish
-			BlisteredFish2.DisplayName: Blistered Fish
+			BlisteredFish2.DisplayName: "{$Mods.Redemption.NPCs.BlisteredFish.DisplayName}"
 			Blisterface.DisplayName: Blisterface
-			Blisterface_Holo.DisplayName: Blisterface
+			Blisterface_Holo.DisplayName: "{$Mods.Redemption.NPCs.Blisterface.DisplayName}"
 			BloatedScientist.DisplayName: Bloated Scientist
 			CraneOperator.DisplayName: Crane Operator
 			JanitorBot.DisplayName: The Janitor
-			JanitorBot_Cleaning.DisplayName: The Janitor
-			JanitorBot_Defeated.DisplayName: The Janitor
-			JanitorBot_Holo.DisplayName: The Janitor
-			JanitorBot_NPC.DisplayName: The Janitor
+			JanitorBot_Cleaning.DisplayName: "{$Mods.Redemption.NPCs.JanitorBot.DisplayName}"
+			JanitorBot_Defeated.DisplayName: "{$Mods.Redemption.NPCs.JanitorBot.DisplayName}"
+			JanitorBot_Holo.DisplayName: "{$Mods.Redemption.NPCs.JanitorBot.DisplayName}"
+			JanitorBot_NPC.DisplayName: "{$Mods.Redemption.NPCs.JanitorBot.DisplayName}"
 			LabSentryDrone.DisplayName: Laboratory Drone
 			MACEProject.DisplayName: MACE Project
-			MACEProject_Holo.DisplayName: MACE Project
-			MACEProject_Off.DisplayName: MACE Project
+			MACEProject_Holo.DisplayName: "{$Mods.Redemption.NPCs.MACEProject.DisplayName}"
+			MACEProject_Off.DisplayName: "{$Mods.Redemption.NPCs.MACEProject.DisplayName}"
 			OozeBlob.DisplayName: Ooze Blob
 			OozingScientist.DisplayName: Oozing Scientist
 			ProtectorVolt.DisplayName: Protector Volt
-			ProtectorVolt_NPC.DisplayName: Protector Volt
-			ProtectorVolt_Start.DisplayName: Protector Volt
+			ProtectorVolt_NPC.DisplayName: "{$Mods.Redemption.NPCs.ProtectorVolt.DisplayName}"
+			ProtectorVolt_Start.DisplayName: "{$Mods.Redemption.NPCs.ProtectorVolt.DisplayName}"
 
 			EaglecrestGolem: {
 				DisplayName: Eaglecrest Golem
@@ -10613,11 +11129,11 @@ Mods: {
 				BossChecklistIntegration.SpawnInfo: Roams the caverns, seeking revenge...
 			}
 
-			BabbyDragonBody.DisplayName: Star Serpent
+			BabbyDragonBody.DisplayName: "{$Mods.Redemption.NPCs.BabbyDragonHead.DisplayName}"
 			BabbyDragonHead.DisplayName: Star Serpent
-			BabbyDragonLeg.DisplayName: Star Serpent
-			BabbyDragonTail1.DisplayName: Star Serpent
-			BabbyDragonTail2.DisplayName: Star Serpent
+			BabbyDragonLeg.DisplayName: "{$Mods.Redemption.NPCs.BabbyDragonHead.DisplayName}"
+			BabbyDragonTail1.DisplayName: "{$Mods.Redemption.NPCs.BabbyDragonHead.DisplayName}"
+			BabbyDragonTail2.DisplayName: "{$Mods.Redemption.NPCs.BabbyDragonHead.DisplayName}"
 			ShadesoulNPC.DisplayName: Shadesoul
 			AncientGladestoneGolem.DisplayName: Ancient Gladestone Golem
 			Blobble.DisplayName: Blobble
@@ -10627,7 +11143,7 @@ Mods: {
 			DevilsTongue.DisplayName: Devil's Tongue
 			EpidotrianSkeleton.DisplayName: Epidotrian Skeleton
 			ForestNymph.DisplayName: Forest Nymph
-			GathicTomb_Spawner.DisplayName: Gathic Tomb_ Spawner
+			GathicTomb_Spawner.DisplayName: Gathic Tomb Spawner
 			JollyMadman.DisplayName: Jolly Madman
 			LivingBloom.DisplayName: Living Bloom
 			RaveyardSkeleton.DisplayName: Dancing Skeleton
@@ -10657,11 +11173,11 @@ Mods: {
 			SicklyPenguin.DisplayName: Sickly Penguin
 			SicklyWolf.DisplayName: Sickly Wolf
 			SneezyFlinx.DisplayName: Sneezy Snow Flinx
-			KS3_Start.DisplayName: King Slayer III
-			Neb_Start.DisplayName: Nebuleus
-			PZ_Inactive.DisplayName: Patient Zero
-			IrradiatedBehemoth_Inactive.DisplayName: Irradiated Behemoth
-			Blisterface_Inactive.DisplayName: Blisterface
+			KS3_Start.DisplayName: "{$Mods.Redemption.NPCs.KS3.DisplayName}"
+			Neb_Start.DisplayName: "{$Mods.Redemption.NPCs.Nebuleus.DisplayName}"
+			PZ_Inactive.DisplayName: "{$Mods.Redemption.NPCs.PZ.DisplayName}"
+			IrradiatedBehemoth_Inactive.DisplayName: "{$Mods.Redemption.NPCs.IrradiatedBehemoth.DisplayName}"
+			Blisterface_Inactive.DisplayName: "{$Mods.Redemption.NPCs.Blisterface.DisplayName}"
 			JustANormalToaster.DisplayName: ""
 			Calavia_SS.DisplayName: Kyretha
 
@@ -10670,8 +11186,8 @@ Mods: {
 				BossChecklistIntegration.SpawnInfo: Appears at the Underground Portal sometime after Skeletron is defeated.
 			}
 
-			Calavia_Intro.DisplayName: Calavia
-			Calavia_NPC.DisplayName: Calavia
+			Calavia_Intro.DisplayName: "{$Mods.Redemption.NPCs.Calavia.DisplayName}"
+			Calavia_NPC.DisplayName: "{$Mods.Redemption.NPCs.Calavia.DisplayName}"
 
 			Basan: {
 				DisplayName: Basan
@@ -10739,15 +11255,6 @@ Mods: {
 			LabChestTileLocked_Locked.MapEntry: Locked High Security Crate
 			LabChestTileLocked2_Locked.MapEntry: Locked High Security Crate
 			ArchclothThroneTile.MapEntry: Archcloth Throne
-			ElderWoodBathtubTile.MapEntry: Elder Wood Bathtub
-			ElderWoodBedTile.MapEntry: Elder Wood Bed
-			ElderWoodBookcaseTile.MapEntry: Elder Wood Bookcase
-			ElderWoodCandelabraTile.MapEntry: Elder Wood Candelabra
-			ElderWoodCandleTile.MapEntry: Elder Wood Candle
-			ElderWoodClockTile.MapEntry: Elder Wood Clock
-			ElderWoodPianoTile.MapEntry: Elder Wood Piano
-			ElderWoodSofaTile.MapEntry: Elder Wood Sofa
-			ElderWoodWorkbenchTile.MapEntry: Elder Wood Work Bench
 			BabyHiveTile.MapEntry: Baby Infection Hive
 			BigMaceTurretTile.MapEntry: Laboratory MACE Turret
 			BiohazardSignTile.MapEntry: Biohazard Sign
@@ -10822,15 +11329,6 @@ Mods: {
 			ThornPlushTile.MapEntry: Thorn Plushie
 			TrojanChickenTile.MapEntry: Trojan Chicken Replica
 			PetrifiedCrateTile.MapEntry: Petrified Crate
-			PetrifiedWoodBathtubTile.MapEntry: Petrified Wood Bathtub
-			PetrifiedWoodBedTile.MapEntry: Petrified Wood Bed
-			PetrifiedWoodBookcaseTile.MapEntry: Petrified Wood Bookcase
-			PetrifiedWoodCandelabraTile.MapEntry: Petrified Wood Candelabra
-			PetrifiedWoodCandleTile.MapEntry: Petrified Wood Candle
-			PetrifiedWoodClockTile.MapEntry: Petrified Wood Clock
-			PetrifiedWoodPianoTile.MapEntry: Petrified Wood Piano
-			PetrifiedWoodSofaTile.MapEntry: Petrified Wood Sofa
-			PetrifiedWoodWorkBenchTile.MapEntry: Petrified Wood Work Bench
 			ShadesteelGateClose.MapEntry: Shadesteel Gate
 			ShadesteelGateOpen.MapEntry: Shadesteel Gate
 			ShadesteelHangingCell2Tile.MapEntry: Hanging Cell
@@ -10838,18 +11336,9 @@ Mods: {
 			ShadesteelPortcullisClose.MapEntry: Shadesteel Portcullis
 			ShadesteelPortcullisClose_Unlocked.MapEntry: Shadesteel Portcullis
 			ShadesteelPortcullisOpen.MapEntry: Shadesteel Portcullis
-			ShadestoneBathtubTile.MapEntry: Shadestone Bathtub
-			ShadestoneBedTile.MapEntry: Shadestone Bed
-			ShadestoneBookcaseTile.MapEntry: Shadestone Bookcase
-			ShadestoneCandelabraTile.MapEntry: Shadestone Candelabra
-			ShadestoneCandleTile.MapEntry: Shadestone Candle
-			ShadestoneClockTile.MapEntry: Shadestone Clock
 			ShadestoneCrateTile.MapEntry: Shadestone Crate
 			ShadestoneGateTile.MapEntry: Shadestone Gate
 			ShadestoneMirrorTile.MapEntry: Shadestone Mirror
-			ShadestonePianoTile.MapEntry: Shadestone Piano
-			ShadestoneSofaTile.MapEntry: Shadestone Sofa
-			ShadestoneWorkbenchTile.MapEntry: Shadestone Work Bench
 			WaxCandlesTile.MapEntry: Wax Candles
 			AndroidInactiveTile.MapEntry: Inactive Android Mk.I
 			BiocontainerTile.MapEntry: Life Fruit Bio-Container
@@ -10866,17 +11355,17 @@ Mods: {
 			NiricAutomatonRemainsTile.MapEntry: Automaton Remains
 			ShadePots.MapEntry: Pot
 			SkeletonRemainsTile1.MapEntry: Skeletal Remains
-			SkeletonRemainsTile1_Special.MapEntry: Skeletal Remains
-			SkeletonRemainsTile2.MapEntry: Skeletal Remains
-			SkeletonRemainsTile3.MapEntry: Skeletal Remains
-			SkeletonRemainsTile3_Special.MapEntry: Skeletal Remains
-			SkeletonRemainsTile4.MapEntry: Skeletal Remains
-			SkeletonRemainsTile4_Special.MapEntry: Skeletal Remains
-			SkeletonRemainsTile5.MapEntry: Skeletal Remains
-			SkeletonRemainsTile5_Special.MapEntry: Skeletal Remains
-			SkeletonRemainsTile6.MapEntry: Skeletal Remains
-			SkeletonRemainsTile7.MapEntry: Skeletal Remains
-			SkeletonRemainsTile7_Special.MapEntry: Skeletal Remains
+			SkeletonRemainsTile1_Special.MapEntry: "{$Mods.Redemption.Tiles.SkeletonRemainsTile1.MapEntry}"
+			SkeletonRemainsTile2.MapEntry: "{$Mods.Redemption.Tiles.SkeletonRemainsTile1.MapEntry}"
+			SkeletonRemainsTile3.MapEntry: "{$Mods.Redemption.Tiles.SkeletonRemainsTile1.MapEntry}"
+			SkeletonRemainsTile3_Special.MapEntry: "{$Mods.Redemption.Tiles.SkeletonRemainsTile1.MapEntry}"
+			SkeletonRemainsTile4.MapEntry: "{$Mods.Redemption.Tiles.SkeletonRemainsTile1.MapEntry}"
+			SkeletonRemainsTile4_Special.MapEntry: "{$Mods.Redemption.Tiles.SkeletonRemainsTile1.MapEntry}"
+			SkeletonRemainsTile5.MapEntry: "{$Mods.Redemption.Tiles.SkeletonRemainsTile1.MapEntry}"
+			SkeletonRemainsTile5_Special.MapEntry: "{$Mods.Redemption.Tiles.SkeletonRemainsTile1.MapEntry}"
+			SkeletonRemainsTile6.MapEntry: "{$Mods.Redemption.Tiles.SkeletonRemainsTile1.MapEntry}"
+			SkeletonRemainsTile7.MapEntry: "{$Mods.Redemption.Tiles.SkeletonRemainsTile1.MapEntry}"
+			SkeletonRemainsTile7_Special.MapEntry: "{$Mods.Redemption.Tiles.SkeletonRemainsTile1.MapEntry}"
 			XenomiteCrystalBigTile.MapEntry: Xenomite Crystals
 			XenomiteCrystalTile.MapEntry: Xenomite
 			DragonLeadOre2Tile.MapEntry: Stone?
@@ -10899,18 +11388,18 @@ Mods: {
 			ShadestoneBrickTile.MapEntry: Shadestone Brick
 			ShadestoneMossyTile.MapEntry: Mossy Shadestone
 			ShadestoneRubbleTile.MapEntry: Shadestone Rubble
-			ShadestoneSlabTile.MapEntry: Shadestone Slab
+			ShadestoneSlabTile.MapEntry: Shadestone Beam
 			ShadestoneTile.MapEntry: Shadestone
 			ElderSapling.MapEntry: Elder Sapling
 			IrradiatedBorealSapling.MapEntry: Petrified Boreal Sapling
 			IrradiatedPalmSapling.MapEntry: Petrified Palm Sapling
 			IrradiatedPuritySapling.MapEntry: Petrified Sapling
-			ShadestoneMirrorTile2.MapEntry: Shadestone Mirror Tile2
 		}
 
 		Keybinds: {
 			"Special Ability Key.DisplayName": Special Ability Key
 			"Spirit Walker Key.DisplayName": Spirit Walker Key
+			"Skip Dialogue Key.DisplayName": Skip Dialogue Key
 		}
 
 		Conditions: {
@@ -10949,7 +11438,9 @@ Mods: {
 			DownedSkeletronOrSeed: After any late-pre-hardmode boss is defeated
 			HasSpiritWalker: After Spirit Walker is unlocked
 			DeadRingerGiven: After finding the Dead Ringer
+			InSoullessCaverns: While in the Soulless Caverns
 			ForestNymphTrust: While having a Forest Nymph's trust
+			OldTophat: While the hanging skeleton is gone
 		}
 
 		Configs: {
@@ -10992,6 +11483,11 @@ Mods: {
 				ElementDisable: {
 					Label: Disable Elements
 					Tooltip: Disables elemental resistances and damage
+				}
+
+				ShakeIntensity: {
+					Label: Screen Shake Intensity
+					Tooltip: Reduce to decrease the intensity of screen shaking effects, 0 will disable it entirely
 				}
 
 				NoPZBuildUp: {

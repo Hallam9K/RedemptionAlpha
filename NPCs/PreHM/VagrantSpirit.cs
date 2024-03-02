@@ -1,28 +1,50 @@
-using Terraria;
-using Terraria.ID;
-using Terraria.ModLoader;
-using Redemption.Items.Placeable.Banners;
-using Redemption.NPCs.Friendly;
-using Terraria.ModLoader.Utilities;
-using Redemption.Globals;
-using Terraria.DataStructures;
-using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
-using Terraria.GameContent;
+using Microsoft.Xna.Framework.Graphics;
 using Redemption.Base;
-using Redemption.Items.Materials.PreHM;
-using Terraria.GameContent.ItemDropRules;
-using Terraria.GameContent.Bestiary;
-using Redemption.Items.Usable.Potions;
 using Redemption.BaseExtension;
+using Redemption.Globals;
 using Redemption.Globals.NPC;
-using Terraria.Localization;
+using Redemption.Items.Materials.PreHM;
+using Redemption.Items.Placeable.Banners;
+using Redemption.Items.Usable.Potions;
+using Redemption.NPCs.Friendly;
+using ReLogic.Content;
 using System;
+using Terraria;
+using Terraria.DataStructures;
+using Terraria.GameContent;
+using Terraria.GameContent.Bestiary;
+using Terraria.GameContent.ItemDropRules;
+using Terraria.ID;
+using Terraria.Localization;
+using Terraria.ModLoader;
+using Terraria.ModLoader.Utilities;
 
 namespace Redemption.NPCs.PreHM
 {
     public class VagrantSpirit : ModNPC
     {
+        public static Asset<Texture2D> back;
+        public static Asset<Texture2D> lantern;
+        public static Asset<Texture2D> mask;
+        public static Asset<Texture2D> trail;
+        public override void Load()
+        {
+            if (Main.dedServ)
+                return;
+            back = ModContent.Request<Texture2D>(Texture + "_Back");
+            lantern = ModContent.Request<Texture2D>(Texture + "_Lantern");
+            mask = ModContent.Request<Texture2D>(Texture + "_Mask");
+            trail = ModContent.Request<Texture2D>(Texture + "_Trail");
+        }
+        public override void Unload()
+        {
+            back = null;
+            lantern = null;
+            mask = null;
+            trail = null;
+        }
+
         public enum ActionState
         {
             Wander,
@@ -58,8 +80,8 @@ namespace Redemption.NPCs.PreHM
         }
         public override void SetDefaults()
         {
-            NPC.width = 62;
-            NPC.height = 60;
+            NPC.width = 76;
+            NPC.height = 44;
             NPC.friendly = false;
             NPC.damage = 22;
             NPC.defense = 0;
@@ -94,8 +116,13 @@ namespace Redemption.NPCs.PreHM
         }
 
         private int vanishCounter;
+        private bool HasMask;
+        private bool HasCloth;
         public override void OnSpawn(IEntitySource source)
         {
+            HasMask = Main.rand.NextBool();
+            HasCloth = Main.rand.NextBool();
+
             TimerRand = Main.rand.Next(180, 420);
             NPC.netUpdate = true;
         }
@@ -122,7 +149,7 @@ namespace Redemption.NPCs.PreHM
                         NPC.velocity.X = 1 * NPC.spriteDirection;
                     }
                     NPC.alpha -= 2;
-                    NPC.alpha = (int)MathHelper.Clamp(NPC.alpha, 100, 255);
+                    NPC.alpha = (int)MathHelper.Clamp(NPC.alpha, 10, 255);
 
                     NPC.velocity.X *= 1.02f;
                     NPC.velocity.X = MathHelper.Clamp(NPC.velocity.X, -1.4f, 1.4f);
@@ -157,6 +184,28 @@ namespace Redemption.NPCs.PreHM
         public override bool CanHitPlayer(Player target, ref int cooldownSlot) => NPC.alpha < 150;
         public override void ModifyHitPlayer(Player target, ref Player.HurtModifiers modifiers) => target.noKnockback = true;
 
+        Vector2 SetLantern2Offset(ref int frameHeight)
+        {
+            return (NPC.frame.Y / frameHeight) switch
+            {
+                1 => new Vector2(-2 * NPC.spriteDirection, 0),
+                2 => new Vector2(-2 * NPC.spriteDirection, -2),
+                3 => new Vector2(-2 * NPC.spriteDirection, -4),
+                _ => new Vector2(0, 0),
+            };
+        }
+        Vector2 SetLantern1Offset(ref int frameHeight)
+        {
+            return (NPC.frame.Y / frameHeight) switch
+            {
+                1 => new Vector2(-2 * NPC.spriteDirection, 0),
+                2 => new Vector2(-4 * NPC.spriteDirection, -4),
+                3 => new Vector2(-2 * NPC.spriteDirection, -4),
+                _ => new Vector2(0, 0),
+            };
+        }
+        Vector2 Lantern2Offset;
+        Vector2 Lantern1Offset;
         public override void FindFrame(int frameHeight)
         {
             NPC.rotation = NPC.velocity.X * 0.05f;
@@ -169,6 +218,8 @@ namespace Redemption.NPCs.PreHM
                 if (NPC.frame.Y > 3 * frameHeight)
                     NPC.frame.Y = 0;
             }
+            Lantern1Offset = SetLantern1Offset(ref frameHeight);
+            Lantern2Offset = SetLantern2Offset(ref frameHeight);
         }
 
         public override bool? CanBeHitByItem(Player player, Item item) => RedeHelper.CanHitSpiritCheck(player, item);
@@ -194,29 +245,29 @@ namespace Redemption.NPCs.PreHM
             });
         }
 
+        private Vector2 LanternPos1() => NPC.Center + new Vector2(11 * NPC.spriteDirection, 28) + Lantern1Offset;
+        private Vector2 LanternPos2() => NPC.Center + new Vector2(23 * NPC.spriteDirection, 20) + Lantern2Offset;
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
-            Texture2D Glow = ModContent.Request<Texture2D>(Texture + "_Glow").Value;
-            Texture2D Trail = ModContent.Request<Texture2D>(Texture + "_Trail").Value;
             var effects = NPC.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
 
             if (!NPC.IsABestiaryIconDummy)
             {
-                spriteBatch.End();
-                spriteBatch.BeginAdditive();
-
                 for (int i = 0; i < NPCID.Sets.TrailCacheLength[NPC.type]; i++)
                 {
                     Vector2 oldPos = NPC.oldPos[i];
-                    Main.spriteBatch.Draw(Trail, oldPos + NPC.Size / 2f - screenPos + new Vector2(0, NPC.gfxOffY), NPC.frame, NPC.GetAlpha(Color.White) * 0.4f, oldrot[i], NPC.frame.Size() / 2, NPC.scale, effects, 0);
+                    spriteBatch.Draw(trail.Value, oldPos + NPC.Size / 2f - screenPos + new Vector2(0, NPC.gfxOffY), NPC.frame, NPC.GetAlpha(Color.White with { A = 0 }) * 0.1f, oldrot[i], NPC.frame.Size() / 2, NPC.scale, effects, 0);
                 }
-
-                spriteBatch.End();
-                spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullNone, null, Main.GameViewMatrix.TransformationMatrix);
             }
 
-            spriteBatch.Draw(TextureAssets.Npc[NPC.type].Value, NPC.Center - screenPos, NPC.frame, NPC.GetAlpha(drawColor), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
-            spriteBatch.Draw(Glow, NPC.Center - screenPos, NPC.frame, NPC.GetAlpha(Color.White), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
+            spriteBatch.Draw(lantern.Value, LanternPos1() - screenPos, lantern.Frame(2, 1, 1), NPC.GetAlpha(drawColor), NPC.rotation + (.2f * NPC.spriteDirection) + (float)(Math.Sin(NPC.localAI[0] / 30) / 5), new Vector2(lantern.Width() / 4 - 1, 0), NPC.scale, effects, 0);
+            spriteBatch.Draw(lantern.Value, LanternPos2() - screenPos, lantern.Frame(2, 1), NPC.GetAlpha(drawColor), NPC.rotation + (.2f * NPC.spriteDirection) + (float)(Math.Sin((NPC.localAI[0] - 15) / 30) / 4), new Vector2(lantern.Width() / 4 - 1, 0), NPC.scale, effects, 0);
+
+            spriteBatch.Draw(TextureAssets.Npc[NPC.type].Value, NPC.Center - screenPos, NPC.frame, NPC.GetAlpha(drawColor with { A = 200 }), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
+            if (HasCloth)
+                spriteBatch.Draw(back.Value, NPC.Center - screenPos, NPC.frame, NPC.GetAlpha(drawColor with { A = 100 }), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
+            if (HasMask)
+                spriteBatch.Draw(mask.Value, NPC.Center - screenPos, NPC.frame, NPC.GetAlpha(drawColor with { A = 100 }), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
             return false;
         }
         public override void PostDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
@@ -224,18 +275,14 @@ namespace Redemption.NPCs.PreHM
             if (!NPC.IsABestiaryIconDummy)
             {
                 Texture2D LightGlow = ModContent.Request<Texture2D>("Redemption/Textures/WhiteFlare").Value;
-                float scale = BaseUtility.MultiLerp(Main.LocalPlayer.miscCounter % 100 / 100f, 1.2f, 0.8f, 1.2f);
+                float scale = BaseUtility.MultiLerp(Main.LocalPlayer.miscCounter % 100 / 100f, .9f, .7f, .9f);
                 Color color = BaseUtility.MultiLerpColor(Main.LocalPlayer.miscCounter % 100 / 100f, new Color(255, 246, 182), new Color(234, 133, 66), new Color(255, 246, 182));
-                Rectangle rect = new(0, 0, LightGlow.Width, LightGlow.Height);
-                Vector2 position1 = NPC.Center - screenPos + new Vector2(26 * NPC.spriteDirection, 14);
-                Vector2 position2 = NPC.Center - screenPos + new Vector2(12 * NPC.spriteDirection, 30);
-                Vector2 drawOrigin = new(LightGlow.Width / 2, LightGlow.Height / 2);
 
                 Main.spriteBatch.End();
                 Main.spriteBatch.BeginAdditive();
 
-                spriteBatch.Draw(LightGlow, position1, new Rectangle?(rect), NPC.GetAlpha(color) * 1.5f, MathHelper.PiOver2, drawOrigin, scale, SpriteEffects.None, 0);
-                spriteBatch.Draw(LightGlow, position2, new Rectangle?(rect), NPC.GetAlpha(color) * 1.5f, MathHelper.PiOver2, drawOrigin, scale, SpriteEffects.None, 0);
+                spriteBatch.Draw(LightGlow, LanternPos1() + new Vector2(-4 * NPC.spriteDirection - (float)(Math.Sin(NPC.localAI[0] / 30) * 4), 19) - screenPos, null, NPC.GetAlpha(color) * 1.5f, MathHelper.PiOver2, LightGlow.Size() / 2, scale, SpriteEffects.None, 0);
+                spriteBatch.Draw(LightGlow, LanternPos2() + new Vector2(-4 * NPC.spriteDirection - (float)(Math.Sin((NPC.localAI[0] - 15) / 30) * 4), 19) - screenPos, null, NPC.GetAlpha(color) * 1.5f, MathHelper.PiOver2, LightGlow.Size() / 2, scale, SpriteEffects.None, 0);
 
                 Main.spriteBatch.End();
                 Main.spriteBatch.BeginDefault();
@@ -246,7 +293,7 @@ namespace Redemption.NPCs.PreHM
             if (spawnInfo.Player.RedemptionAbility().SpiritwalkerActive && !spawnInfo.Player.ZoneTowerNebula && !spawnInfo.Player.ZoneTowerSolar && !spawnInfo.Player.ZoneTowerStardust && !spawnInfo.Player.ZoneTowerVortex)
                 return 0.6f;
 
-            return SpawnCondition.Cavern.Chance * 0.007f;
+            return SpawnCondition.Cavern.Chance * 0.006f;
         }
     }
 }

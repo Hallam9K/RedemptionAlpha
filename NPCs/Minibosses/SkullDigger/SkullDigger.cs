@@ -25,6 +25,8 @@ using Redemption.Dusts;
 using System;
 using Redemption.UI.ChatUI;
 using Redemption.Textures;
+using Redemption.Items.Accessories.PreHM;
+using Redemption.Items.Placeable.Trophies;
 
 namespace Redemption.NPCs.Minibosses.SkullDigger
 {
@@ -142,6 +144,11 @@ namespace Redemption.NPCs.Minibosses.SkullDigger
 
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
+            npcLoot.Add(ItemDropRule.MasterModeCommonDrop(ModContent.ItemType<SkullDiggerRelic>()));
+            npcLoot.Add(ItemDropRule.MasterModeDropOnAllPlayers(ModContent.ItemType<RaggedPatch>()));
+
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<SkullDiggerTrophy>(), 10));
+
             npcLoot.Add(ItemDropRule.ByCondition(new TeddyCondition(), ModContent.ItemType<AbandonedTeddy>()));
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<SkullDiggerFlail>()));
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<SkullDiggerMask>()));
@@ -488,6 +495,9 @@ namespace Redemption.NPCs.Minibosses.SkullDigger
 
         public override bool CheckActive()
         {
+            Player player = Main.player[NPC.target];
+            if (Main.dayTime && (player.ZoneOverworldHeight || player.ZoneSkyHeight))
+                return true;
             return AIState != ActionState.Death && AIState != ActionState.Begin;
         }
 

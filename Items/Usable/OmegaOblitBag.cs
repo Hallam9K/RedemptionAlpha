@@ -1,34 +1,34 @@
-using Microsoft.Xna.Framework.Graphics;
-using Terraria;
-using Terraria.ModLoader;
-using Terraria.ID;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Redemption.BaseExtension;
-using Terraria.GameContent;
-using Redemption.Items.Materials.HM;
-using Terraria.GameContent.ItemDropRules;
-using Redemption.Items.Weapons.PostML.Magic;
-using Redemption.Items.Weapons.PostML.Ranged;
 using Redemption.Items.Accessories.PostML;
 using Redemption.Items.Armor.Vanity;
 using Redemption.Items.Armor.Vanity.Dev;
+using Redemption.Items.Materials.HM;
 using Redemption.Items.Materials.PostML;
+using Redemption.Items.Weapons.PostML.Magic;
 using Redemption.Items.Weapons.PostML.Melee;
+using Redemption.Items.Weapons.PostML.Ranged;
+using Terraria;
+using Terraria.GameContent;
+using Terraria.GameContent.ItemDropRules;
+using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace Redemption.Items.Usable
 {
     public class OmegaOblitBag : ModItem
-	{
+    {
         public override void SetStaticDefaults()
         {
             // DisplayName.SetDefault("Treasure Box (Omega Obliterator)");
-			// Tooltip.SetDefault("{$CommonItemTooltip.RightClickToOpen}");
+            // Tooltip.SetDefault("{$CommonItemTooltip.RightClickToOpen}");
             ItemID.Sets.BossBag[Type] = true;
             Item.ResearchUnlockCount = 3;
         }
 
         public override void SetDefaults()
-		{
+        {
             Item.maxStack = Item.CommonMaxStack;
             Item.consumable = true;
             Item.width = 24;
