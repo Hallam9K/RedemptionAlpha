@@ -1,13 +1,13 @@
-﻿using Terraria.ModLoader;
-using Terraria.ID;
+﻿using Redemption.Rarities;
 using Terraria;
-using Redemption.Rarities;
+using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace Redemption.Items.Donator.Lizzy
 {
     [AutoloadEquip(EquipType.Body)]
-	class LizzyBody : ModItem
-	{
+    class LizzyBody : ModItem
+    {
         public override void SetStaticDefaults()
         {
             // DisplayName.SetDefault("Beezard Outfit");
@@ -16,8 +16,8 @@ namespace Redemption.Items.Donator.Lizzy
             ArmorIDs.Body.Sets.HidesArms[EquipLoader.GetEquipSlot(Mod, Name, EquipType.Body)] = true;
         }
         public override void SetDefaults()
-		{
-			Item.width = 30;
+        {
+            Item.width = 30;
             Item.height = 22;
             Item.value = Item.buyPrice(0, 0, 5, 0);
             Item.vanity = true;

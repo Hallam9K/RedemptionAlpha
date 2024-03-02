@@ -81,9 +81,9 @@ namespace Redemption.Items.Donator.Gonk
         public override bool PreDraw(ref Color lightColor)
         {
             Texture2D texture = TextureAssets.Projectile[Projectile.type].Value;
-            Texture2D gravityOverlay = ModContent.Request<Texture2D>(Projectile.ModProjectile.Texture + "_GravityOverlay").Value;
-            Texture2D lightOverlay = ModContent.Request<Texture2D>(Projectile.ModProjectile.Texture + "_LightOverlay").Value;
-            Texture2D phazonOverlay = ModContent.Request<Texture2D>(Projectile.ModProjectile.Texture + "_PhazonOverlay").Value;
+            Texture2D gravityOverlay = ModContent.Request<Texture2D>(Texture + "_GravityOverlay").Value;
+            Texture2D lightOverlay = ModContent.Request<Texture2D>(Texture + "_LightOverlay").Value;
+            Texture2D phazonOverlay = ModContent.Request<Texture2D>(Texture + "_PhazonOverlay").Value;
             int height = texture.Height / 12;
             int y = height * frameY;
             Rectangle rect = new(0, y, texture.Width, height);

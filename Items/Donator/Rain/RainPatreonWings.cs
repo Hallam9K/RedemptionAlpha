@@ -1,8 +1,8 @@
-using Terraria;
-using Terraria.ModLoader;
-using Terraria.ID;
 using Redemption.Items.Materials.HM;
 using Redemption.Rarities;
+using Terraria;
+using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace Redemption.Items.Donator.Rain
 {

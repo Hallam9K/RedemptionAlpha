@@ -1,14 +1,14 @@
-﻿using Terraria.ModLoader;
-using Terraria.ID;
-using Terraria;
-using Redemption.Items.Materials.PreHM;
+﻿using Redemption.Items.Materials.PreHM;
 using Redemption.Rarities;
+using Terraria;
+using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace Redemption.Items.Donator.Uncon
 {
     [AutoloadEquip(EquipType.Body)]
-	public class UnconBody : ModItem
-	{
+    public class UnconBody : ModItem
+    {
         public override void SetStaticDefaults()
         {
             // DisplayName.SetDefault("Dominator Suit");
@@ -17,7 +17,7 @@ namespace Redemption.Items.Donator.Uncon
             ArmorIDs.Body.Sets.HidesArms[EquipLoader.GetEquipSlot(Mod, Name, EquipType.Body)] = true;
         }
         public override void SetDefaults()
-		{
+        {
             Item.width = 26;
             Item.height = 20;
             Item.value = Item.buyPrice(0, 0, 5, 0);

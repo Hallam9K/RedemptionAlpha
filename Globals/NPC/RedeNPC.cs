@@ -43,6 +43,8 @@ using Redemption.Items.Accessories.PreHM;
 using Redemption.Base;
 using Redemption.Items.Materials.PreHM;
 using Redemption.NPCs.Friendly.TownNPCs;
+using Redemption.Items.Donator.BLT;
+using Redemption.Items.Donator.Spoopy;
 
 namespace Redemption.Globals.NPC
 {
@@ -76,6 +78,14 @@ namespace Redemption.Globals.NPC
                 shop.Add<HallamHoodie>(Condition.InExpertMode, RedeConditions.BroughtCat);
                 shop.Add<HallamLeggings>(Condition.InExpertMode, RedeConditions.BroughtCat);
             }
+            if (shop.NpcType == NPCID.Mechanic)
+            {
+                shop.Add<SpringtrapHead>();
+                shop.Add<SpringtrapBody>();
+                shop.Add<SpringtrapLegs>();
+            }
+            if (shop.NpcType == NPCID.BestiaryGirl)
+                shop.Add<HairyCloak>();
         }
         private static bool TalkedDryad;
         public override void GetChat(Terraria.NPC npc, ref string chat)
@@ -386,6 +396,8 @@ namespace Redemption.Globals.NPC
                 npcLoot.Add(ItemDropRule.ByCondition(new Conditions.NotExpert(), ModContent.ItemType<GolemStaff>(), 7));
             if (npc.type is NPCID.IceGolem or NPCID.RockGolem)
                 npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<LegoBrick>(), 50));
+            if (npc.type is NPCID.Pumpking or NPCID.HoppinJack or NPCID.HeadlessHorseman)
+                npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<DuskyBall>(), 50));
             if (NPCLists.Dark.Contains(npc.type) && !npc.boss)
                 npcLoot.Add(ItemDropRule.Food(ModContent.ItemType<EldritchRoot>(), 400));
         }

@@ -4,6 +4,7 @@ using Redemption.Base;
 using Redemption.Globals;
 using Redemption.Items.Accessories.PreHM;
 using Redemption.Items.Armor.Single;
+using Redemption.Items.Donator.gtoktas;
 using Redemption.Items.Materials.PreHM;
 using Redemption.Items.Placeable.Tiles;
 using Redemption.Items.Tools.PreHM;
@@ -16,6 +17,7 @@ using Redemption.NPCs.Bosses.KSIII;
 using Redemption.NPCs.Bosses.Neb;
 using Redemption.NPCs.Bosses.Neb.Phase2;
 using Redemption.NPCs.Friendly;
+using Redemption.NPCs.Friendly.TownNPCs;
 using Redemption.NPCs.Minibosses.Calavia;
 using Redemption.NPCs.PreHM;
 using Redemption.Tiles.Bars;
@@ -123,6 +125,26 @@ namespace Redemption.WorldGeneration
                     {
                         chest.item[0].SetDefaults(ModContent.ItemType<GildedSeaEmblem>());
                         seaEmblemPlaced = true;
+                    }
+                }
+            }
+            bool cloudCallerPlaced = false;
+            for (int chestIndex = 0; chestIndex < 1000; chestIndex++)
+            {
+                Chest chest = Main.chest[chestIndex];
+                if (chest != null && Main.tile[chest.x, chest.y].TileType == TileID.Containers && Main.tile[chest.x, chest.y].TileFrameX == 13 * 36)
+                {
+                    if (!cloudCallerPlaced || WorldGen.genRand.NextBool(7))
+                    {
+                        for (int inventoryIndex = 0; inventoryIndex < 40; inventoryIndex++)
+                        {
+                            if (chest.item[inventoryIndex].type == ItemID.None)
+                            {
+                                chest.item[inventoryIndex].SetDefaults(ModContent.ItemType<CloudCallersTalisman>());
+                                cloudCallerPlaced = true;
+                                break;
+                            }
+                        }
                     }
                 }
             }

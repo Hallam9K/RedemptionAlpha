@@ -103,7 +103,7 @@ namespace Redemption.Items.Donator.Megaswave
         public override bool PreDraw(ref Color lightColor)
         {
             Texture2D texture = TextureAssets.Projectile[Projectile.type].Value;
-            Texture2D cloak = ModContent.Request<Texture2D>(Projectile.ModProjectile.Texture + "_Cloak").Value;
+            Texture2D cloak = ModContent.Request<Texture2D>(Texture + "_Cloak").Value;
             int height = texture.Height / 15;
             int y = height * frameY;
             Rectangle rect = new(0, y, texture.Width, height);
@@ -114,8 +114,8 @@ namespace Redemption.Items.Donator.Megaswave
 
             int shader = GameShaders.Armor.GetShaderIdFromItemId(ItemID.FlameAndBlackDye);
             Main.spriteBatch.End();
-            Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.NonPremultiplied, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
-            GameShaders.Armor.ApplySecondary(shader, Main.player[Main.myPlayer], null);
+            Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.NonPremultiplied, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullNone, null, Main.GameViewMatrix.TransformationMatrix);
+            GameShaders.Armor.ApplySecondary(shader, Main.LocalPlayer, null);
 
             int heightC = cloak.Height / 15;
             int yC = heightC * frameY;
@@ -123,7 +123,7 @@ namespace Redemption.Items.Donator.Megaswave
             Main.EntitySpriteDraw(cloak, Projectile.Center - Main.screenPosition, new Rectangle?(rectC), Projectile.GetAlpha(lightColor), Projectile.rotation, drawOrigin - new Vector2(36, 0), Projectile.scale, effects, 0);
 
             Main.spriteBatch.End();
-            Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+            Main.spriteBatch.BeginDefault();
             return false;
         }
 

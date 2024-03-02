@@ -134,9 +134,9 @@ namespace Redemption.Items.Donator.Lizzy
         public override bool PreDraw(ref Color lightColor)
         {
             Texture2D texture = TextureAssets.Projectile[Projectile.type].Value;
-            Texture2D maskOverlay = ModContent.Request<Texture2D>(Projectile.ModProjectile.Texture + "_MaskOverlay").Value;
-            Texture2D swordOverlay = ModContent.Request<Texture2D>(Projectile.ModProjectile.Texture + "_SwordOverlay").Value;
-            Texture2D xmasOverlay = ModContent.Request<Texture2D>(Projectile.ModProjectile.Texture + "_XmasOverlay").Value;
+            Texture2D maskOverlay = ModContent.Request<Texture2D>(Texture + "_MaskOverlay").Value;
+            Texture2D swordOverlay = ModContent.Request<Texture2D>(Texture + "_SwordOverlay").Value;
+            Texture2D xmasOverlay = ModContent.Request<Texture2D>(Texture + "_XmasOverlay").Value;
             int height = texture.Height / 11;
             int y = height * frameY;
             Rectangle rect = new(0, y, texture.Width, height);

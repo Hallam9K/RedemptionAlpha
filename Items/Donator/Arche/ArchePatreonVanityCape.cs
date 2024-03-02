@@ -8,14 +8,14 @@ namespace Redemption.Items.Donator.Arche
 {
     [AutoloadEquip(EquipType.Back)]
     public class ArchePatreonVanityCape : ModItem
-	{
-		public override void SetStaticDefaults()
-		{
+    {
+        public override void SetStaticDefaults()
+        {
             // DisplayName.SetDefault("Iridescent Cape");
             Item.ResearchUnlockCount = 1;
         }
         public override void SetDefaults()
-		{
+        {
             Item.width = 34;
             Item.height = 22;
             Item.value = Item.sellPrice(0, 0, 5, 0);

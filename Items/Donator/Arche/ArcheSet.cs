@@ -1,21 +1,21 @@
-﻿using Terraria.ModLoader;
-using Terraria.ID;
-using Terraria;
-using Redemption.Items.Materials.PreHM;
+﻿using Redemption.Items.Materials.PreHM;
 using Redemption.Rarities;
+using Terraria;
+using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace Redemption.Items.Donator.Arche
 {
     [AutoloadEquip(EquipType.Body)]
-	public class ArchePatreonVanityBody : ModItem
-	{
+    public class ArchePatreonVanityBody : ModItem
+    {
         public override void SetStaticDefaults()
         {
             // DisplayName.SetDefault("Iridescent Outfit");
             Item.ResearchUnlockCount = 1;
         }
         public override void SetDefaults()
-		{
+        {
             Item.width = 30;
             Item.height = 22;
             Item.value = Item.buyPrice(0, 0, 5, 0);
@@ -38,6 +38,7 @@ namespace Redemption.Items.Donator.Arche
         {
             // DisplayName.SetDefault("Iridescent Hat");
             Item.ResearchUnlockCount = 1;
+            ArmorIDs.Head.Sets.DrawFullHair[EquipLoader.GetEquipSlot(Mod, Name, EquipType.Head)] = false;
             ArmorIDs.Head.Sets.DrawHatHair[EquipLoader.GetEquipSlot(Mod, Name, EquipType.Head)] = true;
         }
 

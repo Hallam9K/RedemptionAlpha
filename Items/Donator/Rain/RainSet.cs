@@ -1,14 +1,14 @@
-﻿using Terraria.ModLoader;
-using Terraria.ID;
-using Terraria;
-using Redemption.Items.Materials.HM;
+﻿using Redemption.Items.Materials.HM;
 using Redemption.Rarities;
+using Terraria;
+using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace Redemption.Items.Donator.Rain
 {
     [AutoloadEquip(EquipType.Body)]
-	class RainPatreonVanityBody : ModItem
-	{
+    class RainPatreonVanityBody : ModItem
+    {
         public override void SetStaticDefaults()
         {
             // DisplayName.SetDefault("Form of a Living Weapon");
@@ -16,8 +16,8 @@ namespace Redemption.Items.Donator.Rain
             Item.ResearchUnlockCount = 1;
         }
         public override void SetDefaults()
-		{
-			Item.width = 30;
+        {
+            Item.width = 30;
             Item.height = 24;
             Item.value = Item.buyPrice(0, 0, 5, 0);
             Item.vanity = true;

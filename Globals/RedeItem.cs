@@ -26,6 +26,8 @@ using Redemption.Items.Usable.Summons;
 using Redemption.Items.Weapons.PreHM.Summon;
 using Terraria.Localization;
 using SubworldLibrary;
+using Redemption.Items.Armor.Vanity;
+using Redemption.Items.Donator.Emp;
 
 namespace Redemption.Globals
 {
@@ -35,6 +37,11 @@ namespace Redemption.Globals
         public override GlobalItem Clone(Item item, Item itemClone)
         {
             return base.Clone(item, itemClone);
+        }
+        public override void SetStaticDefaults()
+        {
+            ItemID.Sets.ShimmerTransformToItem[ItemID.WizardHat] = ModContent.ItemType<DruidHat>();
+            ItemID.Sets.ShimmerTransformToItem[ItemID.StarHairpin] = ModContent.ItemType<CrimsonXrosLoader>();
         }
         public bool TechnicallyHammer;
         public bool TechnicallyAxe;

@@ -1,7 +1,7 @@
-﻿using Terraria.ModLoader;
-using Terraria.ID;
+﻿using Redemption.Rarities;
 using Terraria;
-using Redemption.Rarities;
+using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace Redemption.Items.Donator.Lordfunnyman
 {
