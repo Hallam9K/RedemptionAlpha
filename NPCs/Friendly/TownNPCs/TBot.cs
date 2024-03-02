@@ -242,7 +242,7 @@ namespace Redemption.NPCs.Friendly.TownNPCs
             Player player = Main.player[Main.myPlayer];
             if (firstButton)
             {
-                if (Main.hardMode && !warheadKnown)
+                if (Main.hardMode && !warheadKnown && !RedeBossDowned.nukeDropped)
                 {
                     warheadKnown = true;
                     DialogueChain chain = new();

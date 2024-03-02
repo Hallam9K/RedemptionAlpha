@@ -39,10 +39,6 @@ namespace Redemption.Projectiles.Magic
             if (Main.rand.NextBool(4))
                 Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.ToxicBubble, Alpha: 100);
         }
-        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
-        {
-            target.AddBuff(ModContent.BuffType<StomachAcidDebuff>(), 800);
-        }
         public override void OnKill(int timeLeft)
         {
             SoundEngine.PlaySound(SoundID.NPCDeath1, Projectile.position);
@@ -100,18 +96,6 @@ namespace Redemption.Projectiles.Magic
             {
                 if (Projectile.alpha > 0)
                     Projectile.alpha -= 5;
-
-                for (int i = 0; i < Main.maxNPCs; i++)
-                {
-                    NPC target = Main.npc[i];
-                    if (!target.active || !target.CanBeChasedBy())
-                        continue;
-
-                    if (!Projectile.Hitbox.Intersects(target.Hitbox))
-                        continue;
-
-                    target.AddBuff(ModContent.BuffType<StomachAcidDebuff>(), 800);
-                }
             }
         }
 

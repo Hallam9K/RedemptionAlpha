@@ -1311,6 +1311,7 @@ Mods: {
 
 			Nebuleus: {
 				Name: Nebuleus:
+
 				Shout: {
 					StarBlast: Star Blast!
 					Starfall: Starfall!
@@ -2833,8 +2834,6 @@ Mods: {
 			}
 
 			Fallen: {
-				Dialogue1: Intrigued by lost souls? When a living thing dies, its soul leaves the body, these are lost souls. they search around the world to look for corpses to infuse with. To ordinary people, lost souls are invisible, but some who use magic can see them fade in and out of the Spirit Realm.
-				Dialogue2: The size of the Lost Souls depends on the original individual's power, the stronger the Will of the being, the bigger the soul. Once a soul leaves the body, they cannot infuse with it again. When the soul has found a worthy vessel, it fuses with it. On most occasions, a skeleton will be created. However, if the soul is strong enough, it will form pale-brown flesh on the skeleton, creating a Fallen.
 				OkvotDialogue1: You saved the Keeper? Thank you for that, I can't imagine the pain she was feeling. However, I doubt this is over... Her husband died too, apparently of depression. But he didn't become an undead, his inverted soul made him into something far worse.
 				OkvotDialogue2: I may be undead, but I hope for a world where no tears are shed, and no pain is spread. A world of peace. That is who I was before dying, and despite the undead tendency to be more aggressive, I feel the same as I always have.
 				OkvotDialogue3: Do not worry, human. I bring no hatred where I go, despite my undead look, I won't harm you. And I hope you won't harm me either.
@@ -3571,10 +3570,7 @@ Mods: {
 
 			NebWings: {
 				DisplayName: Nebuleus Wings
-				Tooltip:
-					'''
-					{$CommonItemTooltip.FlightAndSlowfall}
-					'''
+				Tooltip: "{$CommonItemTooltip.FlightAndSlowfall}"
 			}
 
 			ObliterationDrive: {
@@ -8295,7 +8291,7 @@ Mods: {
 
 			Lament: {
 				DisplayName: Lament
-				Tooltip: "WIP"
+				Tooltip: WIP
 			}
 
 			OOFingergun: {
@@ -9371,7 +9367,6 @@ Mods: {
 
 			RadPillDeco: {
 				DisplayName: Radiation Pill (Deco)
-				Tooltip: ""
 				Tooltip: "{$Mods.Redemption.SpecialTooltips.Unbreakable5000}"
 			}
 
@@ -9479,8 +9474,18 @@ Mods: {
 				Tooltip: ""
 			}
 
+			SkeletonRemains1: {
+				DisplayName: Skeleton Remains1
+				Tooltip: ""
+			}
+
 			SkeletonRemains3_Special: {
 				DisplayName: Skeletal Remains (Assassin)
+				Tooltip: ""
+			}
+
+			SkeletonRemains3: {
+				DisplayName: Skeleton Remains3
 				Tooltip: ""
 			}
 
@@ -9489,13 +9494,28 @@ Mods: {
 				Tooltip: ""
 			}
 
+			SkeletonRemains4: {
+				DisplayName: Skeleton Remains4
+				Tooltip: ""
+			}
+
 			SkeletonRemains5_Special: {
 				DisplayName: Skeletal Remains (Gathic Man)
 				Tooltip: ""
 			}
 
+			SkeletonRemains5: {
+				DisplayName: Skeleton Remains5
+				Tooltip: ""
+			}
+
 			SkeletonRemains7_Special: {
 				DisplayName: Skeletal Remains (Druid)
+				Tooltip: ""
+			}
+
+			SkeletonRemains7: {
+				DisplayName: Skeleton Remains7
 				Tooltip: ""
 			}
 
@@ -10064,6 +10084,31 @@ Mods: {
 			Wardbreaker: {
 				DisplayName: Wardbreaker Augment
 				Tooltip: The wearer's magic or {0} weapons deal double damage to Guard Points
+			}
+
+			ShinkiteBrickOrnateWall: {
+				DisplayName: Shinkite Brick Ornate Wall
+				Tooltip: ""
+			}
+
+			CruxCardHazmatZombie: {
+				DisplayName: Crux Card Hazmat Zombie
+				Tooltip: ""
+			}
+
+			ShadestoneMirrorSpecial: {
+				DisplayName: Shadestone Mirror Special
+				Tooltip: ""
+			}
+
+			SkeletonRemains2: {
+				DisplayName: Skeleton Remains2
+				Tooltip: ""
+			}
+
+			SkeletonRemains6: {
+				DisplayName: Skeleton Remains6
+				Tooltip: ""
 			}
 		}
 
@@ -10716,6 +10761,9 @@ Mods: {
 			AsterisPet.DisplayName: Chibi Asteris
 			CloudCallerPet.DisplayName: Cloud Doggy
 			GuidingStranger_Proj.DisplayName: Guiding Stranger
+			BloatedClinger_Gas.DisplayName: Bloated Clinger_ Gas
+			NoidanNuoli.DisplayName: Noidan Nuoli
+			Firebreak_Proj.DisplayName: Firebreak_ Proj
 		}
 
 		NPCs: {
@@ -11195,6 +11243,7 @@ Mods: {
 			}
 
 			GhostfireChicken.DisplayName: Ghost-fire Chicken
+			HazmatZombie_SS.DisplayName: Hazmat Zombie_ S S
 		}
 
 		Tiles: {
@@ -11394,6 +11443,13 @@ Mods: {
 			IrradiatedBorealSapling.MapEntry: Petrified Boreal Sapling
 			IrradiatedPalmSapling.MapEntry: Petrified Palm Sapling
 			IrradiatedPuritySapling.MapEntry: Petrified Sapling
+			ShadestoneBathtubTile.MapEntry: Shadestone Bathtub Tile
+			ShadestoneBookcaseTile.MapEntry: Shadestone Bookcase Tile
+			ShadestoneCandelabraTile.MapEntry: Shadestone Candelabra Tile
+			ShadestoneCandleTile.MapEntry: Shadestone Candle Tile
+			ShadestoneMirrorTile2.MapEntry: Shadestone Mirror Tile2
+			ShadestonePianoTile.MapEntry: Shadestone Piano Tile
+			ShadestoneSofaTile.MapEntry: Shadestone Sofa Tile
 		}
 
 		Keybinds: {

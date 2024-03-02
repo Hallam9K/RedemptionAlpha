@@ -29,6 +29,7 @@ using Redemption.Items.Materials.HM;
 using Redemption.Items.Quest;
 using Redemption.Items.Usable;
 using Terraria.Utilities;
+using Redemption.Base;
 
 namespace Redemption.Globals.Player
 {
@@ -122,8 +123,10 @@ namespace Redemption.Globals.Player
         }
         public override bool PreKill(double damage, int hitDirection, bool pvp, ref bool playSound, ref bool genGore, ref PlayerDeathReason damageSource)
         {
-            if (Player.HasItem(ModContent.ItemType<Taikasauva>()))
+            if (Player.HasItem(ModContent.ItemType<Taikasauva>()) && !Main.dedServ)
                 SoundEngine.PlaySound(CustomSounds.NoitaDeath);
+            if (BasePlayer.HasArmorSet(Player, "Springlock", true) && !Main.dedServ)
+                SoundEngine.PlaySound(CustomSounds.AftonScream);
             return base.PreKill(damage, hitDirection, pvp, ref playSound, ref genGore, ref damageSource);
         }
         public override void OnEnterWorld()
@@ -291,44 +294,44 @@ namespace Redemption.Globals.Player
                     else
                         itemDrop = ModContent.ItemType<LabCrate>();
                 }
-                if (Player.InModBiome<WastelandPurityBiome>())
+            }
+            if (Player.InModBiome<WastelandPurityBiome>())
+            {
+                int blinky = ModContent.ItemType<Blinky>();
+                if (attempt.questFish == blinky && attempt.uncommon)
                 {
-                    int blinky = ModContent.ItemType<Blinky>();
-                    if (attempt.questFish == blinky && attempt.uncommon)
+                    itemDrop = blinky;
+                    return;
+                }
+                if (attempt.crate && !attempt.veryrare && !attempt.legendary && attempt.rare)
+                {
+                    itemDrop = ModContent.ItemType<PetrifiedCrate>();
+                    return;
+                }
+                else
+                {
+                    WeightedRandom<int> choice = new(Main.rand);
+                    if (attempt.common)
                     {
-                        itemDrop = blinky;
-                        return;
+                        choice.Add(ItemID.TinCan, 1);
+                        choice.Add(ItemID.FishingSeaweed, 1);
+                        choice.Add(ItemID.OldShoe, 1);
+                        choice.Add(ItemID.Bone, .5);
+                        choice.Add(ModContent.ItemType<BloatedTrout>(), 2);
                     }
-                    if (attempt.crate && !attempt.veryrare && !attempt.legendary && attempt.rare)
+                    else if (attempt.uncommon)
+                        choice.Add(ModContent.ItemType<ToxicGlooper>(), 1);
+                    else if (attempt.rare)
+                        choice.Add(ModContent.ItemType<ScrapMetal>(), 1);
+                    else if (attempt.veryrare)
                     {
-                        itemDrop = ModContent.ItemType<PetrifiedCrate>();
-                        return;
+                        choice.Add(ItemID.AdhesiveBandage, 1);
+                        choice.Add(ModContent.ItemType<GasMask>(), 1);
                     }
-                    else
-                    {
-                        WeightedRandom<int> choice = new(Main.rand);
-                        if (attempt.common)
-                        {
-                            choice.Add(ItemID.TinCan, 1);
-                            choice.Add(ItemID.FishingSeaweed, 1);
-                            choice.Add(ItemID.OldShoe, 1);
-                            choice.Add(ItemID.Bone, .5);
-                            choice.Add(ModContent.ItemType<BloatedTrout>(), 2);
-                        }
-                        else if (attempt.uncommon)
-                            choice.Add(ModContent.ItemType<ToxicGlooper>(), 1);
-                        else if (attempt.rare)
-                            choice.Add(ModContent.ItemType<ScrapMetal>(), 1);
-                        else if (attempt.veryrare)
-                        {
-                            choice.Add(ItemID.AdhesiveBandage, 1);
-                            choice.Add(ModContent.ItemType<GasMask>(), 1);
-                        }
-                        else if (attempt.legendary)
-                            choice.Add(ItemID.FartinaJar, 1);
-                        itemDrop = choice;
-                        return;
-                    }
+                    else if (attempt.legendary)
+                        choice.Add(ItemID.FartinaJar, 1);
+                    itemDrop = choice;
+                    return;
                 }
             }
         }

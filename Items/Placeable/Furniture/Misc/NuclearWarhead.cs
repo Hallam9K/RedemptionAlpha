@@ -22,7 +22,7 @@ namespace Redemption.Items.Placeable.Furniture.Misc
 			Item.height = 34;
 			Item.maxStack = 1;
 			Item.rare = ItemRarityID.Lime;
-			Item.value = Item.sellPrice(0, 15, 0, 0);
+            Item.value = Item.buyPrice(0, 40, 0, 0);
         }
     }
 }

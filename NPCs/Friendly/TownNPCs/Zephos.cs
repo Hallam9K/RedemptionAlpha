@@ -27,6 +27,7 @@ using Terraria.Localization;
 using Redemption.Textures.Emotes;
 using Redemption.NPCs.Friendly.TownNPCs;
 using Terraria.GameContent.UI;
+using Redemption.Globals.NPC;
 
 namespace Redemption.NPCs.Friendly.TownNPCs
 {
@@ -251,6 +252,9 @@ namespace Redemption.NPCs.Friendly.TownNPCs
                             shopName = "Shop";
                             break;
                         case 1:
+                            for (int k = 0; k < 6; k++)
+                                NPC.GetGlobalNPC<ExclaimMarkNPC>().exclaimationMark[k] = false;
+
                             Main.npcChatText = ChitChat();
                             adviceNum++;
                             break;

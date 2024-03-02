@@ -1,6 +1,6 @@
+using Terraria.Audio;
 using Microsoft.Xna.Framework;
 using ReLogic.Utilities;
-using Terraria.Audio;
 
 namespace Redemption
 {
@@ -140,6 +140,7 @@ namespace Redemption
         public static readonly SoundStyle Roar1 = new("Redemption/Sounds/Custom/Roar1") { PitchVariance = .1f };
         public static readonly SoundStyle NoitaDeath = new("Redemption/Sounds/Custom/NoitaDeath");
         public static readonly SoundStyle SwordClash = new("Redemption/Sounds/Custom/SwordClash") { PitchVariance = .1f };
+        public static readonly SoundStyle AftonScream = new("Redemption/Sounds/Custom/AftonScream") { PitchVariance = .1f };
 
         public static readonly SoundStyle BoneHit = new("Redemption/Sounds/Tiles/BoneHit", 3);
         public static readonly SoundStyle BrickHit = new("Redemption/Sounds/Tiles/BrickHit", 3);

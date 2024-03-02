@@ -1,6 +1,7 @@
 using Redemption.Items.Accessories.HM;
 using Redemption.Items.Armor.Vanity;
 using Redemption.Items.Critters;
+using Redemption.Items.Materials.HM;
 using Redemption.Items.Materials.PostML;
 using Redemption.Items.Materials.PreHM;
 using Redemption.Items.Placeable.Plants;
@@ -89,7 +90,7 @@ namespace Redemption.Globals
                 .AddIngredient<CoastScarabShell>()
                 .AddTile(TileID.DyeVat)
                 .Register();
-            
+
             Recipe.Create(ItemID.Escargot)
                 .AddIngredient<JohnSnailItem>()
                 .AddTile(TileID.CookingPots)
@@ -160,6 +161,11 @@ namespace Redemption.Globals
                 .AddIngredient(ItemID.Bone, 20)
                 .AddIngredient<GraveSteelAlloy>(10)
                 .AddTile(TileID.MythrilAnvil)
+                .Register();
+
+            Recipe.Create(ItemID.CookedFish)
+                .AddIngredient<BloatedTrout>()
+                .AddTile(TileID.CookingPots)
                 .Register();
 
             Recipe.Create(ItemID.HerbBag)

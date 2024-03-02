@@ -142,21 +142,6 @@ namespace Redemption.NPCs.Friendly.TownNPCs
             }
             WeightedRandom<string> chat = new(Main.rand);
 
-            for (int k = 0; k < Main.maxPlayers; k++)
-            {
-                Player player = Main.player[k];
-                if (!player.active)
-                    continue;
-
-                if (!player.HasItem(ModContent.ItemType<BlackenedHeart>()))
-                    continue;
-
-                chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Fallen.BlackenedHeartDialogue"));
-            }
-
-            chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Fallen.Dialogue1"));
-            chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Fallen.Dialogue2"));
-
             var fallenType = NPC.GivenName switch
             {
                 "Tenvon" => 1,

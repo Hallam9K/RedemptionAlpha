@@ -1,6 +1,5 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using ParticleLibrary.Core;
 using Redemption.BaseExtension;
 using Redemption.Globals;
 using Redemption.Globals.Player;
@@ -12,6 +11,7 @@ using Terraria.Audio;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
+using ParticleLibrary;
 
 namespace Redemption.Items.Weapons.HM.Ranged
 {
@@ -195,7 +195,7 @@ namespace Redemption.Items.Weapons.HM.Ranged
                                 double angle = Main.rand.NextDouble() * 2d * Math.PI;
                                 dVector.X = (float)(Math.Sin(angle) * 40);
                                 dVector.Y = (float)(Math.Cos(angle) * 40);
-                                ParticleSystem.NewParticle(dustPos + dVector, (dustPos + dVector).DirectionTo(dustPos) * 10f, new LightningParticle(2, 2), Color.White, 3);
+                                ParticleManager.NewParticle(dustPos + dVector, (dustPos + dVector).DirectionTo(dustPos) * 10f, new LightningParticle(), Color.White, 3, 2);
                             }
                             shake += 0.3f;
                             Projectile.position += new Vector2(Main.rand.NextFloat(-shake, shake), Main.rand.NextFloat(-shake, shake));
