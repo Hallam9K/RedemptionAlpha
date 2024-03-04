@@ -427,20 +427,25 @@ namespace Redemption.Globals.NPC
                 maxSpawns = 20;
                 return;
             }
-            if (RedeWorld.SkeletonInvasion)
+            if (RedeWorld.SkeletonInvasion && player.ZoneOverworldHeight && !player.ZoneTowerNebula && !player.ZoneTowerSolar && !player.ZoneTowerStardust && !player.ZoneTowerVortex)
             {
                 spawnRate = 19;
                 maxSpawns = 12;
             }
             if (player.InModBiome<LabBiome>())
             {
-                spawnRate = 20;
-                maxSpawns = 12;
+                spawnRate /= 20;
+                maxSpawns = (int)(maxSpawns * 1.5f);
             }
             if (player.InModBiome<WastelandPurityBiome>())
             {
-                spawnRate = 35;
-                maxSpawns = 10;
+                spawnRate /= 15;
+                maxSpawns = (int)(maxSpawns * 1.3f);
+            }
+            if (player.RedemptionPlayerBuff().skirmish)
+            {
+                spawnRate = (int)(spawnRate * .25f);
+                maxSpawns = (int)(maxSpawns * 3f);
             }
         }
         public override void EditSpawnPool(IDictionary<int, float> pool, NPCSpawnInfo spawnInfo)
