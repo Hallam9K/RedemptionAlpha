@@ -97,6 +97,7 @@ namespace Redemption.Globals.Player
         public bool seaEmblem;
         public bool pureChill;
         public bool hydraCorrosion;
+        public bool skirmish;
         public bool wardbreaker;
 
         public bool pureIronBonus;
@@ -176,6 +177,7 @@ namespace Redemption.Globals.Player
             pureChill = false;
             seaEmblem = false;
             hydraCorrosion = false;
+            skirmish = false;
             wardbreaker = false;
 
             for (int k = 0; k < ElementalResistance.Length; k++)
@@ -217,6 +219,7 @@ namespace Redemption.Globals.Player
             infectionHeart = false;
             infectionHeartTimer = 0;
             hydraCorrosion = false;
+            skirmish = false;
         }
         public override void ProcessTriggers(TriggersSet triggersSet)
         {

@@ -10110,6 +10110,11 @@ Mods: {
 				DisplayName: Skeleton Remains6
 				Tooltip: ""
 			}
+			
+			SkirmishPotion: {
+				DisplayName: Skirmish Potion
+				Tooltip: Greatly increases enemy spawn rate
+			}
 		}
 
 		Projectiles: {
