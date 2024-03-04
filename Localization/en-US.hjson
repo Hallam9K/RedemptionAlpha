@@ -2514,6 +2514,11 @@ Mods: {
 				DisplayName: Cloud Doggy
 				Description: Bork
 			}
+
+			SkirmishBuff: {
+				DisplayName: Skirmish
+				Description: Greatly increased enemy spawn rate
+			}
 		}
 
 		Biomes: {
@@ -10110,7 +10115,7 @@ Mods: {
 				DisplayName: Skeleton Remains6
 				Tooltip: ""
 			}
-			
+
 			SkirmishPotion: {
 				DisplayName: Skirmish Potion
 				Tooltip: Greatly increases enemy spawn rate
