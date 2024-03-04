@@ -45,6 +45,7 @@ using Redemption.Items.Materials.PreHM;
 using Redemption.NPCs.Friendly.TownNPCs;
 using Redemption.Items.Donator.BLT;
 using Redemption.Items.Donator.Spoopy;
+using Redemption.Items.Accessories.PostML;
 
 namespace Redemption.Globals.NPC
 {
@@ -260,7 +261,10 @@ namespace Redemption.Globals.NPC
                 }
                 if (item.HasElement(ElementID.Celestial))
                 {
-                    if (Main.netMode != NetmodeID.MultiplayerClient && Main.rand.NextBool(6) && npc.CanBeChasedBy())
+                    int c = 6;
+                    if (player.GetModPlayer<WaterfowlEgg_Player>().equipped)
+                        c = 12;
+                    if (Main.netMode != NetmodeID.MultiplayerClient && Main.rand.NextBool(c) && npc.CanBeChasedBy())
                         Projectile.NewProjectile(npc.GetSource_OnHurt(player), npc.Center + RedeHelper.Spread(400), Vector2.Zero, ModContent.ProjectileType<CelestialStar>(), 0, 0, player.whoAmI, npc.whoAmI);
                 }
                 #endregion
@@ -324,8 +328,11 @@ namespace Redemption.Globals.NPC
                 }
                 if (projectile.HasElement(ElementID.Celestial))
                 {
-                    if (Main.netMode != NetmodeID.MultiplayerClient && Main.rand.NextBool(6) && npc.CanBeChasedBy())
-                        Projectile.NewProjectile(npc.GetSource_OnHurt(Main.player[projectile.owner]), npc.Center + RedeHelper.Spread(400), Vector2.Zero, ModContent.ProjectileType<CelestialStar>(), 0, 0, projectile.owner, npc.whoAmI);
+                    int c = 6;
+                    if (Main.player[projectile.owner].GetModPlayer<WaterfowlEgg_Player>().equipped)
+                        c = 12;
+                    if (Main.netMode != NetmodeID.MultiplayerClient && Main.rand.NextBool(c) && npc.CanBeChasedBy())
+                        Projectile.NewProjectile(npc.GetSource_OnHurt(Main.player[projectile.owner]), npc.Center + RedeHelper.Spread(400), Vector2.Zero, ModContent.ProjectileType<CelestialStar>(), 0, 0, Main.player[projectile.owner].whoAmI, npc.whoAmI);
                 }
                 #endregion
             }

@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Base;
 using Redemption.Globals;
+using Redemption.Items.Accessories.PostML;
 using Terraria;
 using Terraria.Audio;
 using Terraria.GameContent;
@@ -43,7 +44,7 @@ namespace Redemption.Projectiles.Misc
             }
             Projectile.scale += 0.1f;
             Projectile.scale = MathHelper.Min(Projectile.scale, 1);
-            if (Projectile.localAI[0] == 1)
+            if (Projectile.localAI[0] == 1 || player.GetModPlayer<WaterfowlEgg_Player>().equipped)
             {
                 Projectile.Move(player.Center, Projectile.timeLeft > 100 ? 30 : 60, 10);
                 Projectile.rotation = Projectile.velocity.ToRotation() + 1.57f;
