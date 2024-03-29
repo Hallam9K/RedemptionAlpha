@@ -1,16 +1,28 @@
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using Redemption.Dusts;
 using Terraria;
+using Terraria.Audio;
+using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.Audio;
-using Microsoft.Xna.Framework.Graphics;
-using Terraria.GameContent;
-using Redemption.Dusts;
 
 namespace Redemption.NPCs.Bosses.Erhan
 {
     public class Bible_Seed : ModProjectile
     {
+        public int TargetPlayer
+        {
+            get => (int)Projectile.ai[0];
+            set => Projectile.ai[0] = value;
+        }
+
+        public bool Explode
+        {
+            get => Projectile.ai[1] != 0;
+            set => Projectile.ai[1] = value ? 1 : 0;
+        }
+
         public override void SetStaticDefaults()
         {
             // DisplayName.SetDefault("Seed of Virtue");
@@ -31,7 +43,7 @@ namespace Redemption.NPCs.Bosses.Erhan
         }
         public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough, ref Vector2 hitboxCenterFrac)
         {
-            Player player = Main.player[Projectile.owner];
+            Player player = Main.player[TargetPlayer];
             if (Projectile.Center.Y < player.Center.Y)
                 fallThrough = true;
             else
@@ -43,6 +55,30 @@ namespace Redemption.NPCs.Bosses.Erhan
             Projectile.rotation += Projectile.velocity.X / 30 * Projectile.direction;
             Projectile.velocity.Y += 0.25f;
             Projectile.velocity.X = 0;
+
+            if (Explode)
+            {
+                for (int i = 0; i < 30; i++)
+                {
+                    int num5 = Dust.NewDust(Projectile.position - new Vector2(90, 14), Projectile.width + 180, Projectile.height + 14, ModContent.DustType<GlowDust>(), Projectile.velocity.X * 0.5f, Projectile.velocity.Y * 0.5f);
+                    Color dustColor = new(255, 255, 209) { A = 0 };
+                    Main.dust[num5].fadeIn = 0.05f;
+                    Main.dust[num5].noGravity = true;
+                    Main.dust[num5].velocity.Y = -7;
+                    Main.dust[num5].color = dustColor * Projectile.Opacity;
+
+                    int dust = Dust.NewDust(Projectile.position - new Vector2(90, 14), Projectile.width + 180, Projectile.height + 14, DustID.GoldFlame, Projectile.velocity.X * 0.5f, Projectile.velocity.Y * 0.5f, Scale: 3);
+                    Main.dust[dust].noGravity = true;
+                    Main.dust[dust].velocity.Y = -7;
+                }
+
+                if (Main.netMode != NetmodeID.MultiplayerClient)
+                {
+                    Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, Vector2.Zero, ModContent.ProjectileType<Bible_SpearSpawner>(), Projectile.damage, 3, Projectile.owner);
+                }
+
+                Projectile.Kill();
+            }
         }
         public override bool PreDraw(ref Color lightColor)
         {
@@ -66,25 +102,13 @@ namespace Redemption.NPCs.Bosses.Erhan
         }
         public override bool OnTileCollide(Vector2 oldVelocity)
         {
-            Player player = Main.player[Projectile.owner];
-            for (int i = 0; i < 30; i++)
+            if (Projectile.owner == Main.myPlayer)
             {
-                int num5 = Dust.NewDust(Projectile.position - new Vector2(90, 14), Projectile.width + 180, Projectile.height + 14, ModContent.DustType<GlowDust>(), Projectile.velocity.X * 0.5f, Projectile.velocity.Y * 0.5f);
-                Color dustColor = new(255, 255, 209) { A = 0 };
-                Main.dust[num5].fadeIn = 0.05f;
-                Main.dust[num5].noGravity = true;
-                Main.dust[num5].velocity.Y = -7;
-                Main.dust[num5].color = dustColor * Projectile.Opacity;
+                Explode = true;
+                Projectile.netUpdate = true;
+            }
 
-                int dust = Dust.NewDust(Projectile.position - new Vector2(90, 14), Projectile.width + 180, Projectile.height + 14, DustID.GoldFlame, Projectile.velocity.X * 0.5f, Projectile.velocity.Y * 0.5f, Scale: 3);
-                Main.dust[dust].noGravity = true;
-                Main.dust[dust].velocity.Y = -7;
-            }
-            if (Main.myPlayer == player.whoAmI)
-            {
-                Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, Vector2.Zero, ModContent.ProjectileType<Bible_SpearSpawner>(), Projectile.damage, 3, Projectile.owner);
-            }
-            return true;
+            return false;
         }
     }
     public class Bible_SpearSpawner : ModProjectile
@@ -132,8 +156,9 @@ namespace Redemption.NPCs.Bosses.Erhan
                         break;
 
                     SoundEngine.PlaySound(SoundID.Item101, Projectile.Center);
-                    if (Main.netMode != NetmodeID.Server && Projectile.owner == Main.myPlayer)
-                        Projectile.NewProjectile(Projectile.GetSource_FromAI(), origin, Vector2.Zero, ModContent.ProjectileType<Bible_SeedSpear>(), Projectile.damage, Projectile.knockBack, Main.myPlayer, Main.rand.NextFloat(0.5f, 1.5f));
+
+                    if (Main.netMode != NetmodeID.MultiplayerClient)
+                        Projectile.NewProjectile(Projectile.GetSource_FromAI(), origin, Vector2.Zero, ModContent.ProjectileType<Bible_SeedSpear>(), Projectile.damage, Projectile.knockBack, Projectile.owner, Main.rand.NextFloat(0.5f, 1.5f));
                 }
             }
         }

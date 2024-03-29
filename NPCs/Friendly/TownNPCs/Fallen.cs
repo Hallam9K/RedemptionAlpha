@@ -31,6 +31,7 @@ using Redemption.NPCs.Friendly.TownNPCs;
 using Terraria.GameContent.UI;
 using Redemption.BaseExtension;
 using Redemption.Globals.NPC;
+using Redemption.Items.Weapons.PreHM.Ranged;
 
 namespace Redemption.NPCs.Friendly.TownNPCs
 {
@@ -274,6 +275,7 @@ namespace Redemption.NPCs.Friendly.TownNPCs
             var npcShop = new NPCShop(Type)
                 .Add(new Item(ModContent.ItemType<BronzeWand>()) { shopCustomPrice = 30, shopSpecialCurrency = Redemption.AntiqueDorulCurrencyId })
                 .Add(new Item(ModContent.ItemType<Earthbind>()) { shopCustomPrice = 15, shopSpecialCurrency = Redemption.AntiqueDorulCurrencyId }, Condition.InBelowSurface)
+                .Add(new Item(ModContent.ItemType<ElderWoodCrossbow>()) { shopCustomPrice = 20, shopSpecialCurrency = Redemption.AntiqueDorulCurrencyId }, Condition.InBelowSurface)
                 .Add(new Item(ModContent.ItemType<Mistfall>()) { shopCustomPrice = 15, shopSpecialCurrency = Redemption.AntiqueDorulCurrencyId }, Condition.InSnow)
                 .Add(new Item(ModContent.ItemType<AncientDirt>()) { shopCustomPrice = 1, shopSpecialCurrency = Redemption.AntiqueDorulCurrencyId })
                 .Add(new Item(ModContent.ItemType<ElderWood>()) { shopCustomPrice = 1, shopSpecialCurrency = Redemption.AntiqueDorulCurrencyId })

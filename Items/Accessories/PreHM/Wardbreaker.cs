@@ -15,7 +15,7 @@ namespace Redemption.Items.Accessories.PreHM
         public override void SetDefaults()
         {
             Item.width = 26;
-            Item.height = 32;
+            Item.height = 26;
             Item.value = Item.buyPrice(0, 4, 0, 0);
             Item.rare = ItemRarityID.Orange;
             Item.accessory = true;

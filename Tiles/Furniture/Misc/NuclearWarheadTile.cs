@@ -1,15 +1,16 @@
 using Microsoft.Xna.Framework;
+using Redemption.Globals;
+using Redemption.Items;
+using Redemption.UI;
 using Terraria;
+using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.Enums;
+using Terraria.GameContent.ObjectInteractions;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
-using Redemption.UI;
-using Redemption.Items;
-using Redemption.Globals;
-using Redemption.Items.Placeable.Furniture.Misc;
 
 namespace Redemption.Tiles.Furniture.Misc
 {
@@ -21,11 +22,14 @@ namespace Redemption.Tiles.Furniture.Misc
             Main.tileLavaDeath[Type] = false;
             Main.tileNoAttach[Type] = true;
             TileID.Sets.DisableSmartCursor[Type] = true;
+            TileID.Sets.HasOutlines[Type] = true;
             TileObjectData.newTile.Width = 3;
             TileObjectData.newTile.Height = 4;
-            
+
             TileObjectData.newTile.CoordinateHeights = new int[] { 16, 16, 16, 16 };
             TileObjectData.newTile.UsesCustomCanPlace = true;
+            TileObjectData.newTile.StyleWrapLimit = 2;
+            TileObjectData.newTile.StyleMultiplier = 2;
             TileObjectData.newTile.StyleHorizontal = true;
             TileObjectData.newTile.Direction = TileObjectDirection.PlaceLeft;
             TileObjectData.newTile.CoordinateWidth = 16;
@@ -40,12 +44,12 @@ namespace Redemption.Tiles.Furniture.Misc
             MinPick = 10;
             MineResist = 7f;
 
-            RegisterItemDrop(ModContent.ItemType<NuclearWarhead>());
             HitSound = SoundID.Tink;
             LocalizedText name = CreateMapEntryName();
             // name.SetDefault("Nuclear Warhead");
             AddMapEntry(new Color(62, 88, 90), name);
         }
+        public override bool HasSmartInteract(int i, int j, SmartInteractScanSettings settings) => true;
         public override void MouseOver(int i, int j)
         {
             Player player = Main.LocalPlayer;
@@ -59,7 +63,7 @@ namespace Redemption.Tiles.Furniture.Misc
         }
         public override void KillMultiTile(int i, int j, int frameX, int frameY)
         {
-            if (RedeWorld.nukeCountdownActive)
+            if (RedeWorld.nukeCountdownActive && Main.netMode != NetmodeID.MultiplayerClient)
             {
                 RedeWorld.nukeTimerInternal = 2;
                 if (Main.netMode == NetmodeID.Server)
@@ -74,6 +78,7 @@ namespace Redemption.Tiles.Furniture.Misc
         {
             if (!RedeWorld.nukeCountdownActive)
             {
+                SoundEngine.PlaySound(SoundID.MenuOpen);
                 if (!Main.dedServ)
                     NukeDetonationUI.Visible = true;
 
@@ -82,7 +87,7 @@ namespace Redemption.Tiles.Furniture.Misc
                     NetMessage.SendData(MessageID.WorldData);
             }
             return true;
-            
+
         }
     }
 }

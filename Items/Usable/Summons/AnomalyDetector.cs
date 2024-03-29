@@ -1,12 +1,12 @@
-using Terraria;
-using Terraria.Audio;
-using Terraria.ID;
-using Terraria.ModLoader;
-using Redemption.NPCs.Bosses.SeedOfInfection;
-using Terraria.DataStructures;
 using Redemption.Globals;
+using Redemption.NPCs.Bosses.SeedOfInfection;
 using Redemption.WorldGeneration.Soulless;
 using SubworldLibrary;
+using Terraria;
+using Terraria.Audio;
+using Terraria.DataStructures;
+using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace Redemption.Items.Usable.Summons
 {
@@ -28,7 +28,7 @@ namespace Redemption.Items.Usable.Summons
             Item.width = 34;
             Item.height = 38;
             Item.maxStack = 1;
-            Item.value = Item.sellPrice(0, 5, 0, 0);
+            Item.value = Item.buyPrice(0, 1, 0, 0);
             Item.rare = ItemRarityID.Green;
             Item.useAnimation = 45;
             Item.useTime = 45;

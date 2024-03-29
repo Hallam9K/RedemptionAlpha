@@ -51,22 +51,22 @@ Mods: {
 			}
 
 			Newb: {
-				Content: Me like here!
-				NoHome: Where home?
-				FarFromHome: Me lost, can you find home?
+				Content: I like it here!
+				NoHome: Where's home?
+				FarFromHome: I am so lost...can you lead me back?
 				LoveSpace: So little people, yay!
 				DislikeCrowded: Too many faces!
 				HateCrowded: Too many faces!
-				LoveBiome: Me love {BiomeName}! It give memory of... Uh..
-				LikeBiome: Me like {BiomeName}.
-				DislikeBiome: Too boring here, me hate sand!
-				HateBiome: Me feel {BiomeName} make me sad!
+				LoveBiome: I love {BiomeName}! It gives me nice memories of...uhhh...
+				LikeBiome: I like {BiomeName}. Green is nice.
+				DislikeBiome: Too boring here, I hate sand!
+				HateBiome: ...{BiomeName} makes me feel sad, for some reason.
 				LoveNPC: "{NPCName} knows magic like me!"
-				LikeNPC: Me like {NPCName}!
+				LikeNPC: I like {NPCName}!
 				DislikeNPC: I feel evil within {NPCName}, very bad!
 				HateNPC: My hatred towards {NPCName} is beyond your mortal comprehension.
-				LikeNPC_Princess: Me like {NPCName}.
-				Princess_LovesNPC: I like {NPCName}, he's goofy!
+				LikeNPC_Princess: "{NPCName} reminds me of...me, somehow! I like her."
+				Princess_LovesNPC: "{NPCName} is goofy, I like him!"
 			}
 
 			TBot: {
@@ -317,7 +317,7 @@ Mods: {
 			OozingScientist: An unfortunate scientist, disfigured and mutilated beyond recognition by the Xenomite infection. This strain is very aggressive and leaks a strange liquidy substance... God, does it smell awful.
 			SpacePaladin: The 4th Slayer Unit constructed, after Space Keeper. This unit uses newer shield technology compared to King Slayer's Prototype Multium vessel, and is capable of absorbing far greater impacts; in addition to the thick durable plating and cyber blade, this robot was built for war.
 			PrototypeSilver: Prototype Silvers were the 2nd Slayer Unit constructed, with a built-in shield generator and durable plating. Made for military purposes during an alien war in Asherah. The war was a swift one. Despite its name, it's mainly composed of the spare titanium from Alkonost.
-			Basan: A legendary bird of Ithonic mythos said to live in the Fractured Highlands. It is said the spicy goodness is unheard of among the chicken connoisseurs, putting all other chicken to shame with its tender chicken wings and juicy drumsticks. Only at Arbys will you find a better source of spicy chicken goodness. Arbys. We have the meats.
+			Basan: A legendary bird of Ithonic mythos said to live in the Fractured Highlands. It really took the term "hot wing" to heart.
 			ChickenBomber: Buck.
 			ChickenScratcher: Chicken scratch, chicken scratch a lot. They can never never never stop. Chicken scratch, chicken can scratch all day.
 			Cockatrice: 50% chicken, 50% dragon, yet somehow still tastes 100% like chicken.
@@ -329,6 +329,13 @@ Mods: {
 			CoopCrate: A loot box for people who specifically want an explosive egg. The chickens have not realised they need the randomness aspect for it to actually be exciting.
 			ShadesoulNPC: Willpower exists in Epidotra - the happier or more you desire life, the stronger and bigger your soul can become, and vice versa. If someone loses their will to live, their soul can become so small it inverts and they become soulless. The soulless only emerged after the Age of the False Gods.
 			ScannerDrone: A drone used to collect data and store it within the SoS.
+			CorruptChicken: How could a being so pure become so tainted? Such is the way of life.
+			ViciousChicken: "{$Mods.Redemption.FlavorTextBestiary.CorruptChicken}"
+			HeadlessChicken: *Ghastly bwark*
+			GhostfireChicken: *Ghostly bwark*
+			Gigapora_ShieldCore: These bulky, lightweight drones hold experimental shield projectors in their lower half. If damaged, the projector may malfunction and violently release its energy right back into the segments it was protecting.
+			SeedGrowth: A gross growth grown from a grotesque goliath.
+			EaglecrestRockPile: It dances, for it does not know the world's impurities.
 		}
 
 		Bestiary.Android: Apidroids were an experiment with a highly durable metal from a distant star system. The metal - dubbed 'Rose Titanium' by King Slayer III - is one of the strongest materials discovered in the galaxy. However, King Slayer III hated its pink tinge, and so stubbornly refused to use it after making a few Androids out of it.
@@ -878,7 +885,7 @@ Mods: {
 		Cutscene: {
 			NewbIntro: {
 				1: What do you think, Jo-
-				2: Who you?!
+				2: Who are you?!
 				3: Where am I?
 				4: Heyo, I'm Newb![1] Want to be friends?
 			}
@@ -1002,7 +1009,7 @@ Mods: {
 				Warhead1: Ah,[0.1] I should caution if you get the Nuclear Warhead.
 				Warhead2: Radiation is a serious hazard for humans like you,[0.1] but an avoidable one.
 				Warhead3: If you see a glowing blue material near the crater,[0.1] don't get too close.[0.5] That'd be Plutonium.
-				Warhead4: A Geiger-Muller will warn you of irradiated areas,[0.2] and if you do get sick,[0.1] take a Radiation Pill as soon as you feel fatigued or nauseous.
+				Warhead4: A Geiger-Muller will warn you of irradiated areas,[0.2] and if you do get sick,[0.1] take a Radiation Pill as soon as possible.
 				Warhead5: I will sell these once you set the nuke off.
 				Warhead6: .[0.1].[0.1].[0.1]Err,[0.1] that is if you DO decide to detonate one.
 			}
@@ -2185,6 +2192,11 @@ Mods: {
 				Description: Increased fall speed
 			}
 
+			HammerBuff2: {
+				DisplayName: Heavy
+				Description: Increased fall speed
+			}
+
 			HeartInsigniaBuff: {
 				DisplayName: Heart Rush
 				Description: Life regen greatly increased
@@ -2470,11 +2482,6 @@ Mods: {
 				Description: BLLAARRG
 			}
 
-			HammerBuff2: {
-				DisplayName: Heavy
-				Description: Increased fall speed
-			}
-
 			XeniumGasDebuff: {
 				DisplayName: Virulent Gas
 				Description: uh oh stinky!
@@ -2518,6 +2525,11 @@ Mods: {
 			SkirmishBuff: {
 				DisplayName: Skirmish
 				Description: Greatly increased enemy spawn rate
+			}
+
+			UkkonenBuff: {
+				DisplayName: Ukkonen
+				Description: A thundering Ukkonen to fight for you!
 			}
 		}
 
@@ -2679,7 +2691,6 @@ Mods: {
 				Dialogue17: You've probably seen these necrotized husks of former living beings, that glow green with their crystals. The personnel from our birthplace never knew about their infectious properties before they were too late. Kari was the first to fall to the infection.
 				Dialogue18: A Geiger Muller is a handy tool if you don't possess any gear to protect from ionizing radiation. It'll cause a ticking noise when near hazardous material, and it'll intensify the more ionizing the material is. A quiet, slow ticking isn't anything to worry about, but a quick and intense ticking you'll want to stay away from. Ear-piercing screeching noise is something you'll want to stay away as far as possible.
 				Dialogue19: You'll want to avoid any hazardous environments if you don't possess the gear to nullify the hazards. A gas mask is almost necessary if you're going near any place that has radioactive fallout. Rain in these areas are also acidic, and may cause ARS, so avoid rain unless you've got a Hazmat suit. You may also want to grab some Anti-Crystallazion needles, as the infected tend to roam around radioactive areas for an unknown reason.
-				Dialogue20: The deadly thing with radiation is, at first, you won't even know you've got it. The first symptoms usually start minutes after, beginning with a headache most likely, then dizziness, fatigue, bleeding, skin burns, a fever, hair loss, and death.
 				Dialogue21: Please, don't be afraid of me. I'm unlike the others of my kind, where I absolutely do not want to cause any harm to your kind.
 				AdamHeadDialogue1: Am I looking at a mirror? Oh wait, it's just you. Hey.
 				AdamHeadDialogue2: You look exactly like the first T-Bot.
@@ -3030,24 +3041,17 @@ Mods: {
 				WokeDialogue2: It is all coming back to me... I saw what you did... I can comprehend more than just the dirt below my feet now. I have something to say to you, but I am still not ready.
 				WokeDialogue3: My death, my sleep within the earth, had undone myself. But as my time awake grows longer, my lost self returns.
 				WokeDialogue4: I can feel my memories arise from their deep slumber. There is something I must do, I know that much, yet I am uncertain as to what it is.
-				KingSlayerMaskDialogue: Heheh! Hewwo mister slayer! Wait... who's that?
+				KingSlayerMaskDialogue: Heheh, hi mister Slayer! Wait...who's that?
 				ChickenDialogue: IT'S A CHICKEN! Come on mister chicken, time for your walk!
-				Dialogue1: Chickens very funny! I fed chicken grain but I threw a crown on floor instead, but chicken pecked it anyway! ... And then it exploded!!
+				Dialogue1: Chickens are funny! I wanted to feed one but I dropped a crown instead, but it pecked at it anyway! ...And then it exploded!!
 				Dialogue2: My shoes aren't muddy! Where is all the mud!?
-				Dialogue3: Trees here are funny colours! Where are yellow leaves! They all green! ... Green is good colour too.
-				Dialogue4: What's your name? Is it Garry? I bet it's Garry! Garry the Gentle is your name now!
-				Dialogue5: This island is not MY island! Where are my people!?
-				Dialogue6: They're coming, the red is coming! Don't stay! ... Oh hewwo!
-				Dialogue7: Me like emeralds, they green! Rubies me hate! Too red!
-				Dialogue8: What is beyond portal? Let's find out Johnny! ... Wait that isn't right name...
-				Dialogue9: Me sowwy! Me go with shiny knight!
-				HuhDialogue: Your ambitions are futile and will decayed, dare not proceed down the path of sin lest you face the very earth you walk upon. The death which lingers on your soul will consume you from within until you are but a husk unworthy of swift retribution.
-				Dialogue10: Who you? You human?
-				Dialogue11: Me find shiny stones!
-				Dialogue12: You look stupid! Haha!
-				Dialogue13: My dirt is 10% off!
-				Dialogue14: Heheheh!
-				Dialogue15: Hewwo! I am Newb!
+				Dialogue3: Trees here are funny colours! Where are the yellow leaves? They're all green! ...Green's good too.
+				Dialogue4: What's your name? Is it Garry? I bet it's Garry, the Gentle! That is your name now.
+				Dialogue5: This island is not MY island! Where are my people!? That yellow knight took me somewhere weird...
+				Dialogue6: They're coming, the red is coming! Don't stay! ...Oh, heyo!
+				Dialogue7: I like emeralds, they are nice and green! But rubies I hate, red is scary...
+				Dialogue8: '''"What is beyond the portal? Let's find out, Johnny!" Or was it uhhh...'''
+				Dialogue9: Look Garry! I made a bubble! A time bubble!! ...Garry?
 			}
 
 			Noza: {
@@ -5164,7 +5168,7 @@ Mods: {
 
 			XenomiteShard: {
 				DisplayName: Xenomite Shard
-				Tooltip: Holding this may infect you
+				Tooltip: ""
 			}
 
 			ZweihanderFragment1: {
@@ -7177,7 +7181,7 @@ Mods: {
 			}
 
 			IOLocator: {
-				DisplayName: IO-Locator
+				DisplayName: Outbreak Locator
 				Tooltip: Holding this in your hand will point to the Abandoned Laboratory
 			}
 
@@ -7431,11 +7435,11 @@ Mods: {
 					'''
 					Cures radiation poisoning
 					READ INSTRUCTIONS:
-					'Radiation normally cannot be cured, but with this new medicine, we are slowly progressing.
 					- Make sure you know for a fact you have radiation poisoning, this will do more harm than good!
-					- This medicine only works when the user is in the stage of poisoning containing the following symptoms:
-					Fatigue and Nausea
-					- After successful use, you will feel weak and fragile, this will go away in a few minutes.'
+					- This medicine works at a slow pace, and cannot cure extreme doses. If your vision is a green haze,
+					  we recommend using a shovel to dig a hole for your coffin, as you will be needing one shortly.
+					- After successful use, you will feel weak and fragile, this will go away in a few minutes.
+					'Radiation normally cannot be cured, but with this new medicine, we are slowly progressing.'
 					'''
 			}
 
@@ -8421,9 +8425,21 @@ Mods: {
 				Mode1: Sword Mode
 				Mode2: Hammer Mode
 				Mode3: Axe Mode
-				SwordMode: Swing Mode : Does a three combo slash before being thrown
-				HammerMode: Hammer Mode : Launches the player at cursor point, leaves an electric trail behind and strikes enemies hit by the weapon with lighting
-				AxeMode: Axe Mode : While airborne, the axe will launch the player onto the ground, striking that location with lighting
+				SwordMode:
+					'''
+					Swing Mode : Hold left-click to throw the sword like a boomerang
+					Release left-click to instantly warp to the blade in a flash of lightning, swinging the blade for massive damage
+					'''
+				HammerMode:
+					'''
+					Hammer Mode : Swings the hammer, warping between all nearby enemies in a chain of lightning upon hitting an enemy
+					After hitting the last enemy, the hammer will slam into any nearby targets for massive damage before returning
+					'''
+				AxeMode:
+					'''
+					Axe Mode : Hold left-click to spin the axe around you, release to launch the player at cursor point, leaving lingering lightning
+					Press DOWN while being launched to slam onto the ground in a storm of lightning
+					'''
 				Lore:
 					'''
 					'The hammer of Ukko, crafted by his ancestors and refined by him. Upon his human death,
@@ -10087,7 +10103,7 @@ Mods: {
 			}
 
 			Wardbreaker: {
-				DisplayName: Wardbreaker Augment
+				DisplayName: Wardbreaker Ring
 				Tooltip: The wearer's magic or {0} weapons deal double damage to Guard Points
 			}
 
@@ -10119,6 +10135,46 @@ Mods: {
 			SkirmishPotion: {
 				DisplayName: Skirmish Potion
 				Tooltip: Greatly increases enemy spawn rate
+			}
+
+			FowlEmperorBox: {
+				DisplayName: Music Box (Fowl Emperor)
+				Tooltip: Sc0p3r - Fowl Play
+			}
+
+			UkonRuno: {
+				DisplayName: Ukon Runo
+				Tooltip:
+					'''
+					Summons an Ukkonen to pour rain down on enemies
+					Whipping enemies will cause Ukkonen to strike them with lightning
+					'An ancient poem for Ukko to cause rain and bless crops'
+					'''
+			}
+
+			ElderWoodCrossbow: {
+				DisplayName: Elder Wood Crossbow
+				Tooltip: Fires bolts that split into shards upon hitting an enemy
+			}
+
+			PureIronBow: {
+				DisplayName: Pure-Iron Bow
+				Tooltip: Fired arrows leave lingering mist to chill enemies
+			}
+
+			ElderWoodToilet: {
+				DisplayName: Elder Wood Toilet
+				Tooltip: ""
+			}
+
+			WoodenBallista: {
+				DisplayName: Wooden Ballista
+				Tooltip: ""
+			}
+
+			PetrifiedWoodToilet: {
+				DisplayName: Petrified Wood Toilet
+				Tooltip: ""
 			}
 		}
 
@@ -10774,6 +10830,10 @@ Mods: {
 			BloatedClinger_Gas.DisplayName: Bloated Clinger_ Gas
 			NoidanNuoli.DisplayName: Noidan Nuoli
 			Firebreak_Proj.DisplayName: Firebreak_ Proj
+			Ukonvasara_Hammer.DisplayName: Ukonvasara_ Hammer
+			Ukkonen.DisplayName: Ukkonen
+			ElderWoodBolt.DisplayName: Elder Wood Bolt
+			ElderWoodBolt_Shard.DisplayName: Elder Wood Bolt_ Shard
 		}
 
 		NPCs: {
@@ -11254,6 +11314,8 @@ Mods: {
 
 			GhostfireChicken.DisplayName: Ghost-fire Chicken
 			HazmatZombie_SS.DisplayName: Hazmat Zombie_ S S
+			CorruptChicken.DisplayName: Corrupt Chicken
+			ViciousChicken.DisplayName: Vicious Chicken
 		}
 
 		Tiles: {
@@ -11460,6 +11522,7 @@ Mods: {
 			ShadestoneMirrorTile2.MapEntry: Shadestone Mirror Tile2
 			ShadestonePianoTile.MapEntry: Shadestone Piano Tile
 			ShadestoneSofaTile.MapEntry: Shadestone Sofa Tile
+			WoodenBallistaTile.MapEntry: Wooden Ballista Tile
 		}
 
 		Keybinds: {

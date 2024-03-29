@@ -1,4 +1,5 @@
 using Microsoft.Xna.Framework;
+using Redemption.Items.Weapons.PostML.Ranged;
 using Redemption.Rarities;
 using System.Collections.Generic;
 using Terraria;
@@ -33,7 +34,7 @@ namespace Redemption.Items.Weapons.PostML.Melee
             Item.autoReuse = true;
 
             // Weapon Properties
-            Item.damage = 420;
+            Item.damage = 500;
             Item.knockBack = 6;
             Item.noUseGraphic = true;
             Item.DamageType = DamageClass.Melee;
@@ -42,17 +43,13 @@ namespace Redemption.Items.Weapons.PostML.Melee
 
             // Projectile Properties
             Item.shootSpeed = 5f;
-            Item.shoot = ModContent.ProjectileType<Ukonvasara_Sword>();
+            Item.shoot = ModContent.ProjectileType<Ukonvasara_Sword_Proj>();
         }
 
         public int AttackMode;
         public override bool AltFunctionUse(Player player) => true;
         public override bool CanUseItem(Player player)
         {
-            Point tileBelow = player.Bottom.ToTileCoordinates();
-            Tile tile = Framing.GetTileSafely(tileBelow.X, tileBelow.Y);
-            if (player.altFunctionUse != 2 && AttackMode == 2 && tile.HasUnactuatedTile && Main.tileSolid[tile.TileType] && !Main.tileCut[tile.TileType])
-                return false;
             if (player.altFunctionUse == 2)
                 Item.UseSound = SoundID.Item37;
             else
@@ -61,6 +58,8 @@ namespace Redemption.Items.Weapons.PostML.Melee
         }
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
+            float adjustedItemScale2 = player.GetAdjustedItemScale(Item);
+
             if (player.altFunctionUse == 2)
             {
                 player.itemAnimationMax = 5;
@@ -89,13 +88,13 @@ namespace Redemption.Items.Weapons.PostML.Melee
                 switch (AttackMode)
                 {
                     case 0:
-                        Projectile.NewProjectile(source, position, velocity, type, damage, knockback, player.whoAmI);
+                        Projectile.NewProjectile(source, position, velocity, type, damage, knockback, player.whoAmI, 0, 0, adjustedItemScale2);
                         break;
                     case 1:
-                        Projectile.NewProjectile(source, position, velocity, ModContent.ProjectileType<Ukonvasara_Proj2>(), (int)(damage * 1.3f), knockback, player.whoAmI);
+                        Projectile.NewProjectile(source, position, velocity, ModContent.ProjectileType<Ukonvasara_Hammer>(), damage, knockback, player.whoAmI, 0, 0, adjustedItemScale2);
                         break;
                     case 2:
-                        Projectile.NewProjectile(source, position, velocity, ModContent.ProjectileType<Ukonvasara_Axe>(), damage, knockback, player.whoAmI);
+                        Projectile.NewProjectile(source, position, velocity, ModContent.ProjectileType<Ukonvasara_Axe>(), damage, knockback, player.whoAmI, 0, 0, adjustedItemScale2);
                         break;
 
                 }

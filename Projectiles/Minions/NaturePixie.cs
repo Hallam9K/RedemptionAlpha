@@ -1,4 +1,4 @@
-﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Buffs.Minions;
 using Redemption.Globals;
@@ -88,14 +88,16 @@ namespace Redemption.Projectiles.Minions
 
                         if (Projectile.localAI[0]++ == 30)
                         {
-                            SoundEngine.PlaySound(CustomSounds.Pixie1, Projectile.position);
+                            if (!Main.dedServ)
+                                SoundEngine.PlaySound(CustomSounds.Pixie1, Projectile.position);
                             CombatText.NewText(Projectile.getRect(), Color.LightGreen, "Hello!", false, true);
                             nymph.LookAtEntity(Projectile);
                         }
                         if (Projectile.localAI[0] == 180)
                         {
                             Projectile.velocity = Projectile.Center.DirectionTo(owner.Center) * 6;
-                            SoundEngine.PlaySound(CustomSounds.Pixie3, Projectile.position);
+                            if (!Main.dedServ)
+                                SoundEngine.PlaySound(CustomSounds.Pixie3, Projectile.position);
                             CombatText.NewText(Projectile.getRect(), Color.LightGreen, "Listen!", false, true);
                             EmoteBubble.NewBubble(0, new WorldUIAnchor(Projectile), 120);
                         }
@@ -135,24 +137,27 @@ namespace Redemption.Projectiles.Minions
                         Projectile.velocity *= .9f;
                     if (Projectile.localAI[0]++ == 40)
                     {
-                        switch (Main.rand.Next(3))
+                        if (!Main.dedServ)
                         {
-                            case 0:
-                                SoundEngine.PlaySound(CustomSounds.Pixie1, Projectile.position);
-                                CombatText.NewText(Projectile.getRect(), Color.LightGreen, "Hello!", false, true);
-                                break;
-                            case 1:
-                                SoundEngine.PlaySound(CustomSounds.Pixie2, Projectile.position);
-                                CombatText.NewText(Projectile.getRect(), Color.LightGreen, "Hey!", false, true);
-                                break;
-                            case 2:
-                                SoundEngine.PlaySound(CustomSounds.Pixie3, Projectile.position);
-                                CombatText.NewText(Projectile.getRect(), Color.LightGreen, "Listen!", false, true);
-                                break;
+                            switch (Main.rand.Next(3))
+                            {
+                                case 0:
+                                    SoundEngine.PlaySound(CustomSounds.Pixie1, Projectile.position);
+                                    CombatText.NewText(Projectile.getRect(), Color.LightGreen, "Hello!", false, true);
+                                    break;
+                                case 1:
+                                    SoundEngine.PlaySound(CustomSounds.Pixie2, Projectile.position);
+                                    CombatText.NewText(Projectile.getRect(), Color.LightGreen, "Hey!", false, true);
+                                    break;
+                                case 2:
+                                    SoundEngine.PlaySound(CustomSounds.Pixie3, Projectile.position);
+                                    CombatText.NewText(Projectile.getRect(), Color.LightGreen, "Listen!", false, true);
+                                    break;
+                            }
                         }
                         if (Projectile.owner == Main.myPlayer)
                         {
-                            Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, Vector2.Zero, ModContent.ProjectileType<NaturePixie_Yell>(), Projectile.damage, 0, owner.whoAmI);
+                            Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, Vector2.Zero, ModContent.ProjectileType<NaturePixie_Yell>(), Projectile.damage * 2, 0, owner.whoAmI);
                         }
                     }
                     if (Projectile.localAI[0] >= 80)
@@ -231,14 +236,14 @@ namespace Redemption.Projectiles.Minions
         public override bool PreDraw(ref Color lightColor)
         {
             Texture2D texture = TextureAssets.Projectile[Projectile.type].Value;
-            Texture2D glow = ModContent.Request<Texture2D>(Projectile.ModProjectile.Texture + "_Glow").Value;
+            Texture2D glow = ModContent.Request<Texture2D>(Texture + "_Glow").Value;
             int height = texture.Height / 6;
             int y = height * Projectile.frame;
             Rectangle rect = new(0, y, texture.Width, height);
             Vector2 drawOrigin = new(texture.Width / 2, Projectile.height / 2);
             var effects = Projectile.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
             Main.spriteBatch.End();
-            Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+            Main.spriteBatch.BeginAdditive();
 
             for (int k = 0; k < Projectile.oldPos.Length; k++)
             {
@@ -247,7 +252,7 @@ namespace Redemption.Projectiles.Minions
                 Main.EntitySpriteDraw(glow, drawPos, new Rectangle?(rect), color, Projectile.rotation, drawOrigin, Projectile.scale, effects, 0);
             }
             Main.spriteBatch.End();
-            Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+            Main.spriteBatch.BeginDefault();
 
             Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition, new Rectangle?(rect), Color.White * Projectile.Opacity, Projectile.rotation, drawOrigin, Projectile.scale, effects, 0);
             return false;
@@ -263,7 +268,7 @@ namespace Redemption.Projectiles.Minions
         public override string Texture => Redemption.EMPTY_TEXTURE;
         public override void SetStaticDefaults()
         {
-            // DisplayName.SetDefault("Yell");
+            ProjectileID.Sets.MinionShot[Projectile.type] = true;
             ElementID.ProjPsychic[Type] = true;
         }
         public override void SetDefaults()

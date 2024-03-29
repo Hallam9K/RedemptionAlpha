@@ -127,6 +127,30 @@ namespace Redemption.Globals
 
             return foundTarget;
         }
+        public static object FindClosestNPC(ref Terraria.NPC target, float maxDistance, Vector2 position, bool ignoreTiles = false, int overrideTarget = -1, SpecialCondition specialCondition = null)
+        {
+            //very advance users can use a delegate to insert special condition into the function like only targeting enemies not currently having local iFrames, but if a special condition isn't added then just return it true
+            specialCondition ??= delegate { return true; };
+            //If you want to priorities a certain target this is where it's processed, mostly used by minions that have a target priority
+            if (overrideTarget != -1 && (Main.npc[overrideTarget].Center - position).Length() < maxDistance)
+            {
+                target = Main.npc[overrideTarget];
+                return target;
+            }
+
+            //this is the meat of the targetting logic, it loops through every NPC to check if it is valid the miniomum distance and target selected are updated so that the closest valid NPC is selected
+            for (int i = 0; i < Main.maxNPCs; i++)
+            {
+                Terraria.NPC npc = Main.npc[i];
+                float distance = (npc.Center - position).Length();
+                if (!(distance < maxDistance) || !npc.active || (!npc.chaseable && npc.type != NPCID.CultistBoss) || npc.dontTakeDamage || npc.friendly || npc.lifeMax <= 5 || npc.Redemption().invisible || npc.immortal || !Collision.CanHit(position, 0, 0, npc.Center, 0, 0) && !ignoreTiles || !specialCondition(npc))
+                    continue;
+
+                target = npc;
+                maxDistance = (target.Center - position).Length();
+            }
+            return target;
+        }
 
         public static bool ClosestNPCToNPC(this Terraria.NPC npc, ref Terraria.NPC target, float maxDistance,
             Vector2 position, bool ignoreTiles = false)
@@ -1062,7 +1086,25 @@ namespace Redemption.Globals
 
             projectile.velocity = move;
         }
+        public static void Move(this Terraria.Player player, Vector2 vector, float speed, float turnResistance = 10f)
+        {
+            Vector2 moveTo = vector;
+            Vector2 move = moveTo - player.Center;
+            float magnitude = Magnitude(move);
+            if (magnitude > speed)
+            {
+                move *= speed / magnitude;
+            }
 
+            move = (player.velocity * turnResistance + move) / (turnResistance + 1f);
+            magnitude = Magnitude(move);
+            if (magnitude > speed)
+            {
+                move *= speed / magnitude;
+            }
+
+            player.velocity = move;
+        }
         public static void MoveToNPC(this Terraria.NPC npc, Terraria.NPC target, Vector2 vector, float speed,
             float turnResistance = 10f)
         {

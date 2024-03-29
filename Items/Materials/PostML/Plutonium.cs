@@ -27,7 +27,8 @@ namespace Redemption.Items.Materials.PostML
         public override bool CanRightClick() => Main.LocalPlayer.GetModPlayer<EnergyPlayer>().energyMax > 0 && Main.LocalPlayer.GetModPlayer<EnergyPlayer>().statEnergy < Main.LocalPlayer.GetModPlayer<EnergyPlayer>().energyMax;
         public override void RightClick(Player player)
         {
-            SoundEngine.PlaySound(CustomSounds.Spark1 with { Pitch = 0.2f }, player.position);
+            if (!Main.dedServ)
+                SoundEngine.PlaySound(CustomSounds.Spark1 with { Pitch = 0.2f }, player.position);
             player.GetModPlayer<EnergyPlayer>().statEnergy += 30;
         }
     }

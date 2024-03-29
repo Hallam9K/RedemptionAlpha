@@ -1,8 +1,8 @@
 using Redemption.Tiles.Tiles;
 using Terraria;
+using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.GameContent;
 
 namespace Redemption.Items.Placeable.Tiles
 {
@@ -20,7 +20,7 @@ namespace Redemption.Items.Placeable.Tiles
             Item.width = 16;
             Item.height = 16;
             Item.maxStack = Item.CommonMaxStack;
-            Item.value = Item.buyPrice(0, 0, 1, 0);
+            Item.value = Item.buyPrice(0, 0, 0, 25);
         }
         public override void AddRecipes()
         {

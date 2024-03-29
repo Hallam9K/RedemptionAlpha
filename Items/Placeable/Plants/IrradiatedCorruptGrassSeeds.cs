@@ -21,8 +21,7 @@ namespace Redemption.Items.Placeable.Plants
             Item.height = 18;
             Item.maxStack = Item.CommonMaxStack;
             Item.rare = ItemRarityID.Green;
-            Item.value = 10;
-
+            Item.value = Item.buyPrice(0, 0, 5, 0);
             Item.useStyle = ItemUseStyleID.Swing;
             Item.useAnimation = 15;
             Item.useTime = 15;

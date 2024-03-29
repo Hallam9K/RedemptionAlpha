@@ -1,10 +1,16 @@
-using Terraria;
-using Terraria.ID;
 using Microsoft.Xna.Framework;
-using Terraria.ModLoader;
-using Redemption.Globals;
-using Terraria.Audio;
+using Microsoft.Xna.Framework.Graphics;
 using Redemption.BaseExtension;
+using Redemption.Globals;
+using ReLogic.Content;
+using System.Collections.Generic;
+using System.Security.Cryptography.X509Certificates;
+using Terraria;
+using Terraria.Audio;
+using Terraria.GameContent.Bestiary;
+using Terraria.ID;
+using Terraria.Localization;
+using Terraria.ModLoader;
 
 namespace Redemption.NPCs.Bosses.Erhan
 {
@@ -19,10 +25,7 @@ namespace Redemption.NPCs.Bosses.Erhan
             Main.npcFrameCount[Type] = 17;
             NPCID.Sets.MPAllowedEnemies[Type] = true;
             NPCID.Sets.BossBestiaryPriority.Add(Type);
-            NPCID.Sets.NPCBestiaryDrawModifiers value = new(0)
-            {
-                Hide = true
-            };
+            NPCID.Sets.NPCBestiaryDrawModifiers value = new() { Hide = true };
             NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, value);
         }
 
@@ -37,10 +40,14 @@ namespace Redemption.NPCs.Bosses.Erhan
             NPC.DeathSound = SoundID.DD2_KoboldDeath;
             NPC.knockBackResist = 0.5f;
             NPC.aiStyle = -1;
-            NPC.noGravity = true;
+            if (!NPC.IsABestiaryIconDummy)
+                NPC.noGravity = true;
             NPC.dontTakeDamage = true;
             NPC.alpha = 255;
             NPC.boss = true;
+
+            if (!Main.dedServ)
+                Music = RedeBossDowned.erhanDeath < 1 ? MusicLoader.GetMusicSlot(Mod, "Sounds/Music/ImpOfDoom") : MusicLoader.GetMusicSlot(Mod, "Sounds/Music/silence");
         }
 
         public override void HitEffect(NPC.HitInfo hit)
@@ -75,7 +82,7 @@ namespace Redemption.NPCs.Bosses.Erhan
 
             if (RedeBossDowned.erhanDeath == 0)
             {
-                ScreenPlayer.CutsceneLock(player, NPC, ScreenPlayer.CutscenePriority.High, 0, 0, 0);
+                ScreenPlayer.CutsceneLock(Main.LocalPlayer, NPC, ScreenPlayer.CutscenePriority.High, 0, 0, 0);
             }
             switch (TimerRand)
             {
@@ -88,12 +95,13 @@ namespace Redemption.NPCs.Bosses.Erhan
                     }
                     else
                     {
-                        NPC.position = new Vector2(Main.rand.NextBool(2) ? player.Center.X - 180 : player.Center.X + 180, player.Center.Y - 60);
-                        if (!Main.dedServ)
-                            Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/ImpOfDoom");
+                        if (Main.netMode != NetmodeID.MultiplayerClient)
+                        {
+                            NPC.position = new Vector2(Main.rand.NextBool(2) ? player.Center.X - 180 : player.Center.X + 180, player.Center.Y - 60);
+                            NPC.netUpdate = true;
+                        }
 
                         TimerRand = 1;
-                        NPC.netUpdate = true;
                     }
                     break;
                 case 1:
@@ -105,7 +113,7 @@ namespace Redemption.NPCs.Bosses.Erhan
                     shakeTimer += 0.004f;
                     shakeTimer = MathHelper.Clamp(shakeTimer, 0, 1.2f);
 
-                    Main.LocalPlayer.RedemptionScreen().ScreenShakeIntensity = MathHelper.Max(shakeTimer * 10, player.RedemptionScreen().ScreenShakeIntensity);
+                    Main.LocalPlayer.RedemptionScreen().ScreenShakeIntensity = MathHelper.Max(shakeTimer * 10, Main.LocalPlayer.RedemptionScreen().ScreenShakeIntensity);
 
                     if (AITimer == 80)
                         NPC.alpha = 0;
@@ -116,6 +124,7 @@ namespace Redemption.NPCs.Bosses.Erhan
                         Main.LocalPlayer.RedemptionScreen().ScreenShakeIntensity += 18;
                         DustHelper.DrawDustImage(NPC.Center, DustID.Torch, 0.5f, "Redemption/Effects/DustImages/DemonShape", 3, true, 0);
                     }
+
                     if (AITimer > 360)
                     {
                         NPC.frame.Y = 12 * 44;
@@ -126,11 +135,6 @@ namespace Redemption.NPCs.Bosses.Erhan
                     break;
                 case 2:
                     shakeTimer -= 0.2f;
-                    if (shakeTimer <= 0)
-                    {
-                        if (Terraria.Graphics.Effects.Filters.Scene["MoonLordShake"].IsActive())
-                            Terraria.Graphics.Effects.Filters.Scene.Deactivate("MoonLordShake");
-                    }
                     if (AITimer++ == 80)
                     {
                         if (!Main.dedServ)
@@ -161,14 +165,20 @@ namespace Redemption.NPCs.Bosses.Erhan
                     {
                         NPC.Shoot(NPC.Center + new Vector2(0, -800), ModContent.ProjectileType<ScorchingRay>(), 0, new Vector2(0, 10), SoundID.Item162);
                     }
-                    if (AITimer >= 90)
+                    if (AITimer == 90)
                     {
-                        RedeHelper.SpawnNPC(NPC.GetSource_FromAI(), (int)NPC.Center.X + 180, (int)NPC.Center.Y - 80, ModContent.NPCType<Erhan>());
                         NPC.dontTakeDamage = false;
-                        player.ApplyDamageToNPC(NPC, NPC.life, 0, 0, true);
+
+                        if (Main.netMode != NetmodeID.MultiplayerClient)
+                            NPC.StrikeInstantKill();
                     }
                     break;
             }
+        }
+
+        public override void OnKill()
+        {
+            RedeHelper.SpawnNPC(NPC.GetSource_FromAI(), (int)NPC.Center.X + 180, (int)NPC.Center.Y - 80, ModContent.NPCType<Erhan>());
         }
 
         public override void FindFrame(int frameHeight)
@@ -203,6 +213,18 @@ namespace Redemption.NPCs.Bosses.Erhan
                     }
                 }
             }
+        }
+        Asset<Texture2D> Idle;
+        public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
+        {
+            if (NPC.IsABestiaryIconDummy)
+            {
+                Idle = ModContent.Request<Texture2D>(Texture + "_Idle");
+                Rectangle rect = Idle.Frame(1, 4, 0, NPC.frame.Y);
+                spriteBatch.Draw(Idle.Value, NPC.Center - screenPos, Idle.Frame(1, 4, 0, NPC.frame.Y), drawColor, 0, rect.Size() / 2, 1, 0, 0);
+                return false;
+            }
+            return base.PreDraw(spriteBatch, screenPos, drawColor);
         }
     }
 }

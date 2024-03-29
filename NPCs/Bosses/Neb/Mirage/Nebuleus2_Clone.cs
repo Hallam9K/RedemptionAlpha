@@ -112,7 +112,7 @@ namespace Redemption.NPCs.Bosses.Neb.Clone
         public override bool CanHitPlayer(Player target, ref int cooldownSlot) => NPC.ai[3] == 6;
         public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)
         {
-            NPC.lifeMax = (int)(NPC.lifeMax * 0.6f * balance * bossAdjustment);
+            NPC.lifeMax = (int)(NPC.lifeMax * 0.6f * balance);
             NPC.damage = (int)(NPC.damage * 0.6f);
         }
         public override void HitEffect(NPC.HitInfo hit)

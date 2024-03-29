@@ -179,6 +179,7 @@ namespace Redemption.Globals.Player
             hydraCorrosion = false;
             skirmish = false;
             wardbreaker = false;
+            Player.RedemptionRad().protectionLevel = 0;
 
             for (int k = 0; k < ElementalResistance.Length; k++)
                 ElementalResistance[k] = 0;

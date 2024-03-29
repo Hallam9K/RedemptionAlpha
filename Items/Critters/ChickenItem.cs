@@ -1,8 +1,8 @@
-using Terraria.ID;
-using Terraria;
-using Terraria.ModLoader;
 using Redemption.NPCs.Critters;
+using Terraria;
 using Terraria.DataStructures;
+using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace Redemption.Items.Critters
 {

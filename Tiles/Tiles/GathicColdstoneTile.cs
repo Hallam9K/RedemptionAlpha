@@ -52,7 +52,7 @@ namespace Redemption.Tiles.Tiles
             DustType = DustID.Ice;
             HitSound = CustomSounds.StoneHit;
             MinPick = 0;
-            MineResist = 1.5f;
+            MineResist = 1f;
             AddMapEntry(new Color(125, 135, 186));
         }
         public override void RandomUpdate(int i, int j)

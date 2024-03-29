@@ -64,6 +64,9 @@ namespace Redemption.NPCs.Bosses.Erhan
                 Projectile.alpha = 0;
                 Projectile.localAI[0] = 1;
             }
+            for (int k = Projectile.oldPos.Length - 1; k > 0; k--)
+                oldPos[k] = oldPos[k - 1];
+            oldPos[0] = Projectile.Center;
         }
         public override bool OnTileCollide(Vector2 oldVelocity)
         {
@@ -93,19 +96,20 @@ namespace Redemption.NPCs.Bosses.Erhan
             Projectile.velocity *= 0;
             return false;
         }
+        public Vector2[] oldPos = new Vector2[3];
         public override bool PreDraw(ref Color lightColor)
         {
             Texture2D texture = TextureAssets.Projectile[Projectile.type].Value;
-            Vector2 drawOrigin = new(texture.Width / 2, Projectile.height / 2);
+            Vector2 drawOrigin = new(texture.Width / 2, texture.Height / 2);
 
             for (int k = 0; k < Projectile.oldPos.Length; k++)
             {
-                Vector2 drawPos = Projectile.oldPos[k] - Main.screenPosition + drawOrigin;
+                Vector2 drawPos = oldPos[k] - Main.screenPosition;
                 Color color = new Color(255, 255, 120, 0) * 0.5f * ((Projectile.oldPos.Length - k) / (float)Projectile.oldPos.Length);
-                Main.EntitySpriteDraw(texture, drawPos, null, Projectile.GetAlpha(color), Projectile.rotation, drawOrigin, Projectile.scale + 0.2f, SpriteEffects.None, 0);
+                Main.EntitySpriteDraw(texture, drawPos, null, Projectile.GetAlpha(color), Projectile.rotation, drawOrigin, Projectile.scale, SpriteEffects.None, 0);
             }
 
-            Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition, null, Projectile.GetAlpha(new Color(255, 255, 255, 50)), Projectile.rotation, drawOrigin, Projectile.scale, SpriteEffects.None, 0);
+            Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition, null, Projectile.GetAlpha(new Color(255, 255, 255, 100)), Projectile.rotation, drawOrigin, Projectile.scale, SpriteEffects.None, 0);
 
             return false;
         }

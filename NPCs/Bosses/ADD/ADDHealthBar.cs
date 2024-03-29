@@ -1,11 +1,11 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Redemption.BaseExtension;
 using ReLogic.Content;
 using Terraria;
 using Terraria.GameContent;
-using Terraria.ModLoader;
 using Terraria.GameContent.UI.BigProgressBar;
-using Redemption.BaseExtension;
+using Terraria.ModLoader;
 
 namespace Redemption.NPCs.Bosses.ADD
 {

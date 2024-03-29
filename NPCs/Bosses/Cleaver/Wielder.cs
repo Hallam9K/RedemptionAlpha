@@ -116,7 +116,7 @@ namespace Redemption.NPCs.Bosses.Cleaver
         }
         public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)
         {
-            NPC.lifeMax = (int)(NPC.lifeMax * 0.6f * balance * bossAdjustment);
+            NPC.lifeMax = (int)(NPC.lifeMax * 0.6f * balance);
         }
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {

@@ -1,16 +1,16 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Terraria;
-using Terraria.GameContent;
 using Redemption.Base;
-using Terraria.ID;
-using Redemption.Globals;
-using Terraria.Audio;
 using Redemption.BaseExtension;
-using Redemption.Effects;
-using Terraria.ModLoader;
-using ReLogic.Content;
 using Redemption.Dusts;
+using Redemption.Effects;
+using Redemption.Globals;
+using ReLogic.Content;
+using Terraria;
+using Terraria.Audio;
+using Terraria.GameContent;
+using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace Redemption.NPCs.Bosses.Erhan
 {

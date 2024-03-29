@@ -147,7 +147,7 @@ namespace Redemption.Items.Weapons.HM.Summon
         public override bool PreDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
         {
             Texture2D texture = TextureAssets.Item[Item.type].Value;
-            RedeDraw.DrawTreasureBagEffect(spriteBatch, texture, ref drawTimer, position, new Rectangle(0, 0, texture.Width, texture.Height), Color.LightBlue, 0, origin, scale);
+            RedeDraw.DrawTreasureBagEffect(spriteBatch, texture, ref drawTimer, position, new Rectangle(0, 0, texture.Width, texture.Height), Color.LightBlue, 0, origin, scale, 0);
             spriteBatch.Draw(texture, position, new Rectangle(0, 0, texture.Width, texture.Height), drawColor, 0, origin, scale, 0, 0f);
             return false;
         }
@@ -161,7 +161,7 @@ namespace Redemption.Items.Weapons.HM.Summon
                 frame = texture.Frame();
             Vector2 origin = frame.Size() / 2f;
 
-            RedeDraw.DrawTreasureBagEffect(spriteBatch, texture, ref drawTimer, Item.Center - Main.screenPosition, frame, Color.LightBlue, rotation, origin, scale);
+            RedeDraw.DrawTreasureBagEffect(spriteBatch, texture, ref drawTimer, Item.Center - Main.screenPosition, frame, Color.LightBlue, rotation, origin, scale, 0);
             spriteBatch.Draw(texture, Item.Center - Main.screenPosition, frame, lightColor, rotation, origin, scale, SpriteEffects.None, 0f);
             return false;
         }

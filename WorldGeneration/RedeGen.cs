@@ -12,6 +12,7 @@ using Redemption.Items.Usable;
 using Redemption.Items.Usable.Potions;
 using Redemption.Items.Usable.Summons;
 using Redemption.Items.Weapons.PreHM.Magic;
+using Redemption.Items.Weapons.PreHM.Ranged;
 using Redemption.Items.Weapons.PreHM.Ritualist;
 using Redemption.NPCs.Bosses.KSIII;
 using Redemption.NPCs.Bosses.Neb;
@@ -2585,7 +2586,7 @@ namespace Redemption.WorldGeneration
                 tome = ModContent.ItemType<Mistfall>();
 
             int[] ChestLoot = new int[] {
-                ModContent.ItemType<RopeHook>(), ModContent.ItemType<BeardedHatchet>(), ModContent.ItemType<WeddingRing>(), ModContent.ItemType<TrappedSoulBauble>(), tome };
+                ModContent.ItemType<ElderWoodCrossbow>(), ModContent.ItemType<RopeHook>(), ModContent.ItemType<BeardedHatchet>(), ModContent.ItemType<WeddingRing>(), ModContent.ItemType<TrappedSoulBauble>(), tome };
             int[] ChestLoot2 = new int[] {
                 ModContent.ItemType<ZweihanderFragment1>(), ModContent.ItemType<ZweihanderFragment2>() };
             int[] ChestLoot3 = new int[] {

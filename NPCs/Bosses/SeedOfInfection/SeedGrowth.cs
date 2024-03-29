@@ -15,6 +15,7 @@ using Redemption.Base;
 using Terraria.Audio;
 using Redemption.Projectiles.Hostile;
 using Redemption.Globals.NPC;
+using Terraria.Localization;
 
 namespace Redemption.NPCs.Bosses.SeedOfInfection
 {
@@ -210,7 +211,7 @@ namespace Redemption.NPCs.Bosses.SeedOfInfection
             bestiaryEntry.Info.AddRange(new List<IBestiaryInfoElement> {
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Times.DayTime,
 
-                new FlavorTextBestiaryInfoElement("Absolute BEBE")
+                new FlavorTextBestiaryInfoElement(Language.GetTextValue("Mods.Redemption.FlavorTextBestiary.SeedGrowth"))
             });
         }
     }

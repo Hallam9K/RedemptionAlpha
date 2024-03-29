@@ -74,7 +74,7 @@ namespace Redemption.Projectiles.Minions
             Texture2D texture = TextureAssets.Projectile[Projectile.type].Value;
             Vector2 drawOrigin = new(texture.Width / 2, Projectile.height / 2);
 
-            RedeDraw.DrawTreasureBagEffect(Main.spriteBatch, texture, ref drawTimer, Projectile.Center - Main.screenPosition, null, Color.Lime * Projectile.Opacity, Projectile.rotation, drawOrigin, Projectile.scale);
+            RedeDraw.DrawTreasureBagEffect(Main.spriteBatch, texture, ref drawTimer, Projectile.Center - Main.screenPosition, null, Color.Lime * Projectile.Opacity, Projectile.rotation, drawOrigin, Projectile.scale, 0);
             Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition, null, lightColor * Projectile.Opacity, Projectile.rotation, drawOrigin, Projectile.scale, 0, 0);
             return false;
         }

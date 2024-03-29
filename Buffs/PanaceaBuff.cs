@@ -1,7 +1,7 @@
+using Redemption.BaseExtension;
 using Redemption.Buffs.Debuffs;
 using Terraria;
 using Terraria.ModLoader;
-using Redemption.BaseExtension;
 
 namespace Redemption.Buffs
 {
@@ -15,9 +15,7 @@ namespace Redemption.Buffs
         }
         public override void Update(Player player, ref int buffIndex)
         {
-            player.RedemptionRad().irradiatedEffect = 0;
-            player.RedemptionRad().irradiatedLevel = 0;
-            player.RedemptionRad().irradiatedTimer = 0;
+            player.RedemptionRad().radiationLevel = 0;
             player.ClearBuff(ModContent.BuffType<HeadacheDebuff>());
             player.ClearBuff(ModContent.BuffType<NauseaDebuff>());
             player.ClearBuff(ModContent.BuffType<FatigueDebuff>());

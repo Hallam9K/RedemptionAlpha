@@ -6,11 +6,11 @@ using Terraria.ModLoader;
 namespace Redemption.Tiles.Tiles
 {
     public class AncientDirtTile : ModTile
-	{
-		public override void SetStaticDefaults()
-		{
-			Main.tileSolid[Type] = true;
-			Main.tileMergeDirt[Type] = true;
+    {
+        public override void SetStaticDefaults()
+        {
+            Main.tileSolid[Type] = true;
+            Main.tileMergeDirt[Type] = true;
             Main.tileBlendAll[Type] = true;
             Main.tileBrick[Type] = true;
             Main.tileMerge[Type][ModContent.TileType<GathicGladestoneTile>()] = true;
@@ -22,8 +22,9 @@ namespace Redemption.Tiles.Tiles
             Main.tileMerge[TileID.Mud][Type] = true;
             Main.tileMerge[Type][TileID.Mudstone] = true;
             Main.tileMerge[TileID.Mudstone][Type] = true;
+            TileID.Sets.CanBeDugByShovel[Type] = true;
             Main.tileBlockLight[Type] = true;
-			AddMapEntry(new Color(115, 88, 69));
+            AddMapEntry(new Color(115, 88, 69));
         }
         public override void FloorVisuals(Player player)
         {
@@ -35,8 +36,8 @@ namespace Redemption.Tiles.Tiles
             }
         }
         public override void NumDust(int i, int j, bool fail, ref int num)
-		{
-			num = fail ? 1 : 3;
-		}
+        {
+            num = fail ? 1 : 3;
+        }
     }
 }

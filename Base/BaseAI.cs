@@ -5293,7 +5293,7 @@ namespace Redemption.Base
                 stat.ScalingArmorPenetration += 1f;
             Player.HurtInfo hurtInfo = stat.ToHurtInfo(parsedDamage, player.statDefense, player.DefenseEffectiveness.Value, knockback, player.noKnockback);
             if (damager == null)
-                player.Hurt(PlayerDeathReason.ByOther(-1), parsedDamage, hitDirection);
+                player.Hurt(PlayerDeathReason.ByOther(-1), parsedDamage, hitDirection, knockback: knockback);
             else if (damager is Projectile p && CombinedHooks.CanBeHitByProjectile(player, p))
             {
                 if (p.friendly && !p.hostile)
@@ -5301,19 +5301,19 @@ namespace Redemption.Base
                     p.playerImmune[player.whoAmI] = 40;
 
                     CombinedHooks.ModifyHitByProjectile(player, p, ref stat);
-                    player.Hurt(PlayerDeathReason.ByProjectile(p.owner, p.whoAmI), parsedDamage, hitDirection);
+                    player.Hurt(PlayerDeathReason.ByProjectile(p.owner, p.whoAmI), parsedDamage, hitDirection, knockback: knockback);
                     CombinedHooks.OnHitByProjectile(player, p, hurtInfo);
                 }
                 else if (p.hostile)
                 {
                     CombinedHooks.ModifyHitByProjectile(player, p, ref stat);
-                    player.Hurt(PlayerDeathReason.ByProjectile(-1, p.whoAmI), parsedDamage, hitDirection);
+                    player.Hurt(PlayerDeathReason.ByProjectile(-1, p.whoAmI), parsedDamage, hitDirection, knockback: knockback);
                     CombinedHooks.OnHitByProjectile(player, p, hurtInfo);
                 }
                 else
                 {
                     CombinedHooks.ModifyHitByProjectile(player, p, ref stat);
-                    player.Hurt(PlayerDeathReason.ByProjectile(-1, p.whoAmI), parsedDamage, hitDirection);
+                    player.Hurt(PlayerDeathReason.ByProjectile(-1, p.whoAmI), parsedDamage, hitDirection, knockback: knockback);
                     CombinedHooks.OnHitByProjectile(player, p, hurtInfo);
                 }
             }
@@ -5323,7 +5323,7 @@ namespace Redemption.Base
                 if (!PlayerLoader.ImmuneTo(player, death, -1, true))
                 {
                     CombinedHooks.ModifyHitByNPC(player, npc, ref stat);
-                    player.Hurt(death, parsedDamage, hitDirection);
+                    player.Hurt(death, parsedDamage, hitDirection, knockback: knockback);
                     CombinedHooks.OnHitByNPC(player, npc, hurtInfo);
                 }
             }
@@ -5354,7 +5354,13 @@ namespace Redemption.Base
             if (npc.dontTakeDamage || (npc.immortal && npc.type != NPCID.TargetDummy))
                 return;
 
-            NPC.HitModifiers stat = new();
+            DamageClass damageClass = DamageClass.Default;
+            if (damager is Projectile proj)
+                damageClass = proj.DamageType;
+            else if (damager is Player player)
+                damageClass = player.HeldItem.DamageType;
+            NPC.HitModifiers stat = npc.GetIncomingStrikeModifiers(damageClass, hitDirection);
+            NPC.HitInfo strike;
             if (hitThroughDefense)
                 stat.ScalingArmorPenetration += 1f;
             if (damager == null || damager is NPC)
@@ -5365,9 +5371,13 @@ namespace Redemption.Base
                     npc.Redemption().attacker = damager;
                 }
 
-                npc.SimpleStrikeNPC(dmgAmt, hitDirection, crit, knockback, null, dmgVariation);
+                strike = stat.ToHitInfo(dmgAmt, crit, knockback, dmgVariation);
+                npc.StrikeNPC(strike, false, true);
+                if (Main.netMode != NetmodeID.SinglePlayer)
+                    NetMessage.SendStrikeNPC(npc, in strike);
+
                 if (damager is NPC)
-                    NPCLoader.OnHitNPC(damager as NPC, npc, default);
+                    NPCLoader.OnHitNPC(damager as NPC, npc, in strike);
             }
             else if (damager is Projectile p)
             {
@@ -5379,7 +5389,12 @@ namespace Redemption.Base
 
                     if (p.TryGetOwner(out var player) && !p.Redemption().friendlyHostile)
                     {
-                        int dmg = npc.SimpleStrikeNPC(dmgAmt, hitDirection, crit, knockback, player.HeldItem.DamageType, dmgVariation, player.luck, false);
+                        strike = stat.ToHitInfo(dmgAmt, crit, knockback, dmgVariation, player.luck);
+
+                        int dmg = npc.StrikeNPC(strike, false);
+                        if (Main.netMode != NetmodeID.SinglePlayer)
+                            NetMessage.SendStrikeNPC(npc, in strike);
+
                         if (player.accDreamCatcher)
                             player.addDPS(dmg);
                         if (!npc.immortal && npc.canGhostHeal && p.DamageType == DamageClass.Magic && player.setNebula && player.nebulaCD == 0 && Main.rand.NextBool(3))
@@ -5396,7 +5411,12 @@ namespace Redemption.Base
                         }
                     }
                     else
-                        npc.SimpleStrikeNPC(dmgAmt, hitDirection, crit, knockback, null, dmgVariation, 0, true);
+                    {
+                        strike = stat.ToHitInfo(dmgAmt, crit, knockback, dmgVariation, player.luck);
+                        npc.StrikeNPC(strike, false, true);
+                        if (Main.netMode != NetmodeID.SinglePlayer)
+                            NetMessage.SendStrikeNPC(npc, in strike);
+                    }
                     CombinedHooks.OnHitNPCWithProj(p, npc, default, dmgAmt);
 
                     if (p.penetrate != 1) { npc.immune[p.owner] = 10; }

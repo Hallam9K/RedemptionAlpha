@@ -1,20 +1,24 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Base;
+using Redemption.BaseExtension;
 using Redemption.Buffs.Debuffs;
 using Redemption.Globals;
 using Redemption.Items.Accessories.HM;
+using Redemption.Items.Placeable.Furniture.Misc;
 using ReLogic.Content;
+using System.Net.Security;
 using Terraria;
 using Terraria.Audio;
-using Terraria.ModLoader;
-using Redemption.BaseExtension;
 using Terraria.Graphics.Effects;
+using Terraria.ModLoader;
 
 namespace Redemption.Biomes
 {
     public class WastelandPurityBiome : ModBiome
     {
+        public override int BiomeTorchItemType => ModContent.ItemType<WastelandTorch>();
+        public override int BiomeCampfireItemType => ModContent.ItemType<WastelandCampfire>();
         public override ModWaterStyle WaterStyle => ModContent.Find<ModWaterStyle>("Redemption/WastelandWaterStyle");
 
         public override ModUndergroundBackgroundStyle UndergroundBackgroundStyle => ModContent.Find<ModUndergroundBackgroundStyle>("Redemption/WastelandUndergroundBackgroundStyle");
@@ -29,35 +33,29 @@ namespace Redemption.Biomes
         public override void SpecialVisuals(Player player, bool isActive)
         {
             bool fogSafe = BasePlayer.HasAccessory(player, ModContent.ItemType<GasMask>(), true, false) ||
-                player.RedemptionPlayerBuff().HEVSuit;
+                player.RedemptionRad().protectionLevel >= 2;
             if (isActive)
             {
                 if (!player.InModBiome<WastelandCorruptionBiome>() && !player.InModBiome<WastelandCrimsonBiome>())
                     SkyManager.Instance.Activate("MoR:WastelandSky");
                 Filters.Scene["MoR:FogOverlay"]?.GetShader().UseOpacity(fogSafe ? 0.25f : 0.3f).UseIntensity(fogSafe ? 0.6f : 1f)
                 .UseColor(Color.DarkOliveGreen).UseImage(ModContent.Request<Texture2D>("Redemption/Effects/Perlin", AssetRequestMode.ImmediateLoad).Value);
+                player.ManageSpecialBiomeVisuals("MoR:FogOverlay", isActive);
             }
             else
                 SkyManager.Instance.Deactivate("MoR:WastelandSky");
-            player.ManageSpecialBiomeVisuals("MoR:FogOverlay", isActive);
             player.ManageSpecialBiomeVisuals("MoR:WastelandSky", isActive, player.Center);
         }
         public override void OnInBiome(Player player)
         {
             if (Main.raining)
             {
-                SoundStyle muller = CustomSounds.Muller1;
-
-                if (player.GetModPlayer<MullerEffect>().effect && Main.rand.NextBool(500) && !Main.dedServ)
-                    SoundEngine.PlaySound(muller, player.position);
-
-                if (player.ZoneOverworldHeight || player.ZoneSkyHeight)
+                if ((player.ZoneOverworldHeight || player.ZoneSkyHeight) && player.RedemptionRad().protectionLevel is 0)
                     player.AddBuff(ModContent.BuffType<HeavyRadiationDebuff>(), 30);
                 else
                     player.AddBuff(ModContent.BuffType<RadioactiveFalloutDebuff>(), 30);
 
-                if (Main.rand.NextBool(80000) && player.RedemptionRad().irradiatedLevel == 0 && !player.RedemptionPlayerBuff().HEVSuit && !player.RedemptionPlayerBuff().hazmatSuit)
-                    player.RedemptionRad().irradiatedLevel++;
+                player.RedemptionRad().Irradiate(.001f, 0, 1, 1, 500);
             }
             else
                 player.AddBuff(ModContent.BuffType<RadioactiveFalloutDebuff>(), 30);

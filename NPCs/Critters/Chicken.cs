@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Redemption.BaseExtension;
 using Redemption.Dusts;
 using Redemption.Globals;
 using Redemption.Globals.NPC;
@@ -9,19 +10,22 @@ using Redemption.Items.Usable.Potions;
 using Redemption.Items.Weapons.PreHM.Ranged;
 using Terraria;
 using Terraria.Audio;
+using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
-using Terraria.ModLoader;
-using Redemption.BaseExtension;
-using Terraria.DataStructures;
 using Terraria.Localization;
+using Terraria.ModLoader;
 
 namespace Redemption.NPCs.Critters
 {
-    public class Chicken : ModNPC
+    public abstract class BaseChicken : ModNPC
     {
+        protected abstract int FeatherType { get; }
+        protected abstract bool Evil { get; }
+        protected abstract bool Normal { get; }
+
         public enum ActionState
         {
             Idle,
@@ -46,7 +50,6 @@ namespace Redemption.NPCs.Critters
         }
 
         public ref float AITimer => ref NPC.ai[1];
-
         public ref float TimerRand => ref NPC.ai[2];
 
         public ChickenType ChickType
@@ -78,7 +81,6 @@ namespace Redemption.NPCs.Critters
             NPC.HitSound = SoundID.NPCHit1;
             NPC.DeathSound = SoundID.NPCDeath1;
             NPC.value = 0;
-            NPC.knockBackResist = 0.5f;
             NPC.aiStyle = -1;
             NPC.alpha = 255;
             NPC.catchItem = (short)ModContent.ItemType<ChickenItem>();
@@ -113,13 +115,13 @@ namespace Redemption.NPCs.Critters
                     Item.NewItem(NPC.GetSource_Loot(), NPC.getRect(), ModContent.ItemType<FriedChicken>());
             }
         }
-        public Vector2 moveTo;
+        private Vector2 moveTo;
         private int hopCooldown;
         private int runCooldown;
         private int waterCooldown;
         public override void OnSpawn(IEntitySource source)
         {
-            if (AITimer == 0)
+            if (AITimer == 0 && Normal)
             {
                 if (Main.rand.NextBool(2000))
                     NPC.SetDefaults(ModContent.NPCType<LongChicken>());
@@ -171,7 +173,7 @@ namespace Redemption.NPCs.Critters
                     Point tileBelow = NPC.Bottom.ToTileCoordinates();
                     Tile tile = Framing.GetTileSafely(tileBelow.X, tileBelow.Y);
 
-                    if ((NPC.collideY || NPC.velocity.Y == 0) && Main.rand.NextBool(100) && tile.TileType == TileID.HayBlock &&
+                    if (!Evil && (NPC.collideY || NPC.velocity.Y == 0) && Main.rand.NextBool(100) && tile.TileType == TileID.HayBlock &&
                         tile is { HasUnactuatedTile: true } && Main.tileSolid[tile.TileType])
                     {
                         AITimer = 0;
@@ -186,7 +188,10 @@ namespace Redemption.NPCs.Critters
                     if (NPC.velocity.Y == 0)
                         NPC.velocity.X = 0;
 
-                    if (NPC.frame.Y > 20 * 28)
+                    bool pecked = NPC.frame.Y > 20 * 28;
+                    if (Evil)
+                        pecked = NPC.frame.Y > 11 * 28;
+                    if (pecked)
                     {
                         NPC.frame.Y = 0;
                         AIState = ActionState.Idle;
@@ -205,7 +210,10 @@ namespace Redemption.NPCs.Critters
                     if (AITimer == TimerRand - 60)
                     {
                         SoundEngine.PlaySound(SoundID.Item16, NPC.position);
-                        Item.NewItem(NPC.GetSource_Loot(), NPC.getRect(), ModContent.ItemType<ChickenEgg>());
+                        int egg = NPC.type == ModContent.NPCType<ChickenGold>() ? ModContent.ItemType<GoldChickenEgg>() : ModContent.ItemType<ChickenEgg>();
+                        if (NPC.type == ModContent.NPCType<LongChicken>())
+                            egg = ModContent.ItemType<LongEgg>();
+                        Item.NewItem(NPC.GetSource_Loot(), NPC.getRect(), egg);
                     }
                     if (AITimer >= TimerRand)
                     {
@@ -253,53 +261,70 @@ namespace Redemption.NPCs.Critters
                         AIState = ActionState.Wander;
                     }
 
-                    if (!NPC.Sight(globalNPC.attacker, 200, false, true))
+                    if (Evil)
+                        NPC.DamageHostileAttackers(0, 1);
+
+                    if (!NPC.Sight(globalNPC.attacker, 140 + 100, false, true))
                         runCooldown++;
                     else if (runCooldown > 0)
                         runCooldown--;
 
-                    int FeatherType;
-                    FeatherType = ChickType switch
+                    int feather;
+                    if (Normal)
                     {
-                        ChickenType.Leghorn => ModContent.DustType<ChickenFeatherDust3>(),
-                        ChickenType.Red => ModContent.DustType<ChickenFeatherDust2>(),
-                        ChickenType.Black => ModContent.DustType<ChickenFeatherDust4>(),
-                        _ => ModContent.DustType<ChickenFeatherDust1>(),
-                    };
-
+                        feather = ChickType switch
+                        {
+                            ChickenType.Leghorn => ModContent.DustType<ChickenFeatherDust3>(),
+                            ChickenType.Red => ModContent.DustType<ChickenFeatherDust2>(),
+                            ChickenType.Black => ModContent.DustType<ChickenFeatherDust4>(),
+                            _ => ModContent.DustType<ChickenFeatherDust1>(),
+                        };
+                    }
+                    else
+                        feather = FeatherType;
                     if (Main.rand.NextBool(20) && NPC.velocity.Length() >= 2)
-                        Dust.NewDust(NPC.position, NPC.width, NPC.height, FeatherType);
+                        Dust.NewDust(NPC.position, NPC.width, NPC.height, feather);
 
-                    NPCHelper.HorizontallyMove(NPC, new Vector2(NPC.Center.X + (100 * NPC.RightOfDir(globalNPC.attacker)), NPC.Center.Y), 0.2f, 2.5f, 8, 8, NPC.Center.Y > globalNPC.attacker.Center.Y, globalNPC.attacker);
+                    NPCHelper.HorizontallyMove(NPC, Evil ? globalNPC.attacker.Center : new Vector2(NPC.Center.X + (100 * NPC.RightOfDir(globalNPC.attacker)), NPC.Center.Y), 0.2f, 2.5f, 8, 8, NPC.Center.Y > globalNPC.attacker.Center.Y, globalNPC.attacker);
                     break;
             }
             NPC.alpha = 0;
-            switch (ChickType)
+            if (Normal)
             {
-                case ChickenType.Red:
-                    NPC.catchItem = (short)ModContent.ItemType<RedChickenItem>();
-                    break;
-                case ChickenType.Leghorn:
-                    NPC.catchItem = (short)ModContent.ItemType<LeghornChickenItem>();
-                    break;
-                case ChickenType.Black:
-                    NPC.catchItem = (short)ModContent.ItemType<BlackChickenItem>();
-                    break;
+                switch (ChickType)
+                {
+                    case ChickenType.Red:
+                        NPC.catchItem = (short)ModContent.ItemType<RedChickenItem>();
+                        break;
+                    case ChickenType.Leghorn:
+                        NPC.catchItem = (short)ModContent.ItemType<LeghornChickenItem>();
+                        break;
+                    case ChickenType.Black:
+                        NPC.catchItem = (short)ModContent.ItemType<BlackChickenItem>();
+                        break;
+                }
+            }
+            if (Main.bloodMoon && Normal)
+            {
+                int type = WorldGen.crimson ? ModContent.NPCType<ViciousChicken>() : ModContent.NPCType<CorruptChicken>();
+                NPC.Transform(type);
             }
         }
 
         public override void FindFrame(int frameHeight)
         {
-            if (Main.netMode != NetmodeID.Server)
-                NPC.frame.Width = TextureAssets.Npc[NPC.type].Width() / 4;
-            NPC.frame.X = ChickType switch
+            if (Normal)
             {
-                ChickenType.Red => NPC.frame.Width,
-                ChickenType.Leghorn => NPC.frame.Width * 2,
-                ChickenType.Black => NPC.frame.Width * 3,
-                _ => 0,
-            };
-
+                if (Main.netMode != NetmodeID.Server)
+                    NPC.frame.Width = TextureAssets.Npc[NPC.type].Width() / 4;
+                NPC.frame.X = ChickType switch
+                {
+                    ChickenType.Red => NPC.frame.Width,
+                    ChickenType.Leghorn => NPC.frame.Width * 2,
+                    ChickenType.Black => NPC.frame.Width * 3,
+                    _ => 0,
+                };
+            }
             if (AIState is ActionState.Peck)
             {
                 NPC.rotation = 0;
@@ -376,7 +401,7 @@ namespace Redemption.NPCs.Critters
                 if (AIState != ActionState.Alert)
                     AIState = ActionState.Alert;
             }
-            if (gotNPC != -1 && NPC.Sight(Main.npc[gotNPC], 140, true, true))
+            if (!Evil && gotNPC != -1 && NPC.Sight(Main.npc[gotNPC], 140, true, true))
             {
                 globalNPC.attacker = Main.npc[gotNPC];
                 AITimer = 0;
@@ -392,6 +417,52 @@ namespace Redemption.NPCs.Critters
             return false;
         }
 
+        public override void HitEffect(NPC.HitInfo hit)
+        {
+            if (AIState is not ActionState.Alert)
+            {
+                AITimer = 0;
+                AIState = ActionState.Alert;
+            }
+
+            int feather;
+            if (Normal)
+            {
+                feather = ChickType switch
+                {
+                    ChickenType.Leghorn => ModContent.DustType<ChickenFeatherDust3>(),
+                    ChickenType.Red => ModContent.DustType<ChickenFeatherDust2>(),
+                    ChickenType.Black => ModContent.DustType<ChickenFeatherDust4>(),
+                    _ => ModContent.DustType<ChickenFeatherDust1>(),
+                };
+            }
+            else
+                feather = FeatherType;
+
+            if (NPC.life <= 0)
+            {
+                for (int i = 0; i < 4; i++)
+                    Dust.NewDust(NPC.position + NPC.velocity, NPC.width, NPC.height, DustID.Smoke,
+                        NPC.velocity.X * 0.5f, NPC.velocity.Y * 0.5f);
+
+                int count = NPC.type == ModContent.NPCType<LongChicken>() ? 50 : 30;
+                for (int i = 0; i < count; i++)
+                {
+                    int dust = Dust.NewDust(NPC.position + NPC.velocity, NPC.width, NPC.height, feather,
+                        NPC.velocity.X * 0.5f, NPC.velocity.Y * 0.5f);
+                    Main.dust[dust].velocity *= 3f;
+                }
+            }
+            if (Main.rand.NextBool(2))
+                Dust.NewDust(NPC.position + NPC.velocity, NPC.width, NPC.height, feather, NPC.velocity.X * 0.5f, NPC.velocity.Y * 0.5f);
+        }
+    }
+    public class Chicken : BaseChicken
+    {
+        protected override int FeatherType => ModContent.DustType<ChickenFeatherDust1>();
+        protected override bool Evil => false;
+        protected override bool Normal => true;
+
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
         {
             bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[]
@@ -401,40 +472,6 @@ namespace Redemption.NPCs.Critters
 
                 new FlavorTextBestiaryInfoElement(Language.GetTextValue("Mods.Redemption.FlavorTextBestiary.Chicken"))
             });
-        }
-
-        public override void HitEffect(NPC.HitInfo hit)
-        {
-            if (AIState is not ActionState.Alert)
-            {
-                AITimer = 0;
-                AIState = ActionState.Alert;
-            }
-
-            int FeatherType;
-            FeatherType = ChickType switch
-            {
-                ChickenType.Leghorn => ModContent.DustType<ChickenFeatherDust3>(),
-                ChickenType.Red => ModContent.DustType<ChickenFeatherDust2>(),
-                ChickenType.Black => ModContent.DustType<ChickenFeatherDust4>(),
-                _ => ModContent.DustType<ChickenFeatherDust1>(),
-            };
-
-            if (NPC.life <= 0)
-            {
-                for (int i = 0; i < 4; i++)
-                    Dust.NewDust(NPC.position + NPC.velocity, NPC.width, NPC.height, DustID.Smoke,
-                        NPC.velocity.X * 0.5f, NPC.velocity.Y * 0.5f);
-
-                for (int i = 0; i < 30; i++)
-                {
-                    int dust = Dust.NewDust(NPC.position + NPC.velocity, NPC.width, NPC.height, FeatherType,
-                        NPC.velocity.X * 0.5f, NPC.velocity.Y * 0.5f);
-                    Main.dust[dust].velocity *= 3f;
-                }
-            }
-            if (Main.rand.NextBool(2))
-                Dust.NewDust(NPC.position + NPC.velocity, NPC.width, NPC.height, FeatherType, NPC.velocity.X * 0.5f, NPC.velocity.Y * 0.5f);
         }
     }
 }

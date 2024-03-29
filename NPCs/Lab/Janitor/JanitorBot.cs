@@ -90,6 +90,7 @@ namespace Redemption.NPCs.Lab.Janitor
             NPC.lavaImmune = true;
             NPC.netAlways = true;
             NPC.RedemptionGuard().GuardPoints = NPC.lifeMax;
+            NPC.BossBar = ModContent.GetInstance<NoHeadHealthBar>();
             if (!Main.dedServ)
                 Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/LabBossMusic");
             SpawnModBiomes = new int[2] { ModContent.GetInstance<LidenBiomeOmega>().Type, ModContent.GetInstance<LabBiome>().Type };
@@ -442,7 +443,7 @@ namespace Redemption.NPCs.Lab.Janitor
         }
         public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)
         {
-            NPC.lifeMax = (int)(NPC.lifeMax * 0.75f * balance * bossAdjustment);
+            NPC.lifeMax = (int)(NPC.lifeMax * 0.75f * balance);
             NPC.damage = (int)(NPC.damage * 0.75f);
         }
     }

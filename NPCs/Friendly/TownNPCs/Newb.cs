@@ -143,15 +143,8 @@ namespace Redemption.NPCs.Friendly.TownNPCs
                 chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Fool.Dialogue6"), 0.2); // 1.9%
                 chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Fool.Dialogue7"), 0.2);
                 chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Fool.Dialogue8"), 0.2);
-                chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Fool.Dialogue9"), 0.2);
                 if (RedeWorld.alignment < 0)
                     chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Fool.HuhDialogue"), 0.05); // 0.48%
-                chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Fool.Dialogue10"));
-                chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Fool.Dialogue11"));
-                chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Fool.Dialogue12"));
-                chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Fool.Dialogue13"));
-                chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Fool.Dialogue14"));
-                chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Fool.Dialogue15"));
             }
             return chat;
         }

@@ -13,6 +13,7 @@ using Redemption.NPCs.Minibosses.Calavia;
 using Terraria.Audio;
 using Redemption.Items.Weapons.PreHM.Melee;
 using Redemption.NPCs.Friendly.SpiritSummons;
+using Redemption.NPCs.Critters;
 
 namespace Redemption.Globals
 {
@@ -171,6 +172,20 @@ namespace Redemption.Globals
         #region Wasteland Conversion
         public override void PostAI(Projectile projectile)
         {
+            if (projectile.type is ProjectileID.VilePowder or ProjectileID.ViciousPowder)
+            {
+                for (int i = 0; i < Main.maxNPCs; i++)
+                {
+                    Terraria.NPC npc = Main.npc[i];
+                    if (!npc.active || npc.ModNPC == null || npc.ModNPC is not Chicken || !projectile.Hitbox.Intersects(npc.Hitbox))
+                        continue;
+
+                    if (projectile.type is ProjectileID.VilePowder)
+                        npc.Transform(ModContent.NPCType<CorruptChicken>());
+                    else
+                        npc.Transform(ModContent.NPCType<ViciousChicken>());
+                }
+            }
             if ((projectile.type != 10 && projectile.type != 145 && projectile.type != 147 && projectile.type != 149 && projectile.type != 146) || projectile.owner != Main.myPlayer)
                 return;
             int x = (int)(projectile.Center.X / 16f);

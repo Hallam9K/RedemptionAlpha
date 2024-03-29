@@ -20,8 +20,6 @@ namespace Redemption.NPCs.Bosses.Gigapora
         private static Asset<Texture2D> core;
         private static Asset<Texture2D> coreGlow;
         private static Asset<Texture2D> tail;
-        private static Asset<Texture2D> thrusterBlue;
-        private static Asset<Texture2D> thrusterOrange;
         public override void Load()
         {
             if (Main.dedServ)
@@ -29,16 +27,12 @@ namespace Redemption.NPCs.Bosses.Gigapora
             core = ModContent.Request<Texture2D>(Texture + "_Core");
             coreGlow = ModContent.Request<Texture2D>(Texture + "_Core_Glow");
             tail = ModContent.Request<Texture2D>(Texture + "_Tail");
-            thrusterBlue = ModContent.Request<Texture2D>("Redemption/NPCs/Bosses/Gigapora/Gigapora_ThrusterBlue");
-            thrusterOrange = ModContent.Request<Texture2D>("Redemption/NPCs/Bosses/Gigapora/Gigapora_ThrusterOrange");
         }
         public override void Unload()
         {
             core = null;
             coreGlow = null;
             tail = null;
-            thrusterBlue = null;
-            thrusterOrange = null;
         }
         public new float[] oldrot = new float[6];
         public ref float SegmentType => ref NPC.ai[2];
@@ -93,7 +87,7 @@ namespace Redemption.NPCs.Bosses.Gigapora
         }
         public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)
         {
-            NPC.lifeMax = (int)(NPC.lifeMax * 0.6f * balance * bossAdjustment);
+            NPC.lifeMax = (int)(NPC.lifeMax * 0.6f * balance);
             NPC.damage = (int)(NPC.damage * 0.6f);
         }
         public override void SendExtraAI(BinaryWriter writer)

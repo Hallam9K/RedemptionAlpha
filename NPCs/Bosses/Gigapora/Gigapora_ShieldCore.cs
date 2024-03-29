@@ -13,6 +13,7 @@ using System;
 using Terraria.Audio;
 using Redemption.Dusts;
 using Redemption.Globals.NPC;
+using Terraria.Localization;
 
 namespace Redemption.NPCs.Bosses.Gigapora
 {
@@ -70,7 +71,7 @@ namespace Redemption.NPCs.Bosses.Gigapora
         }
         public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)
         {
-            NPC.lifeMax = (int)(NPC.lifeMax * 0.6f * balance * bossAdjustment);
+            NPC.lifeMax = (int)(NPC.lifeMax * 0.6f * balance);
             NPC.damage = (int)(NPC.damage * 0.75f);
         }
         public override bool CheckDead()
@@ -296,7 +297,7 @@ namespace Redemption.NPCs.Bosses.Gigapora
             bestiaryEntry.UIInfoProvider = new CommonEnemyUICollectionInfoProvider(ContentSamples.NpcBestiaryCreditIdsByNpcNetIds[associatedNPCType], quickUnlock: true);
 
             bestiaryEntry.Info.AddRange(new List<IBestiaryInfoElement> {
-                new FlavorTextBestiaryInfoElement("Absolute BEBE")
+                new FlavorTextBestiaryInfoElement(Language.GetTextValue("Mods.Redemption.FlavorTextBestiary.Gigapora_ShieldCore"))
             });
         }
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)

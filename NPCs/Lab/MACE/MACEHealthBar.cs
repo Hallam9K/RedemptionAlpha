@@ -1,24 +1,18 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Redemption.BaseExtension;
 using ReLogic.Content;
 using Terraria;
-using Terraria.GameContent;
-using Terraria.ModLoader;
 using Terraria.GameContent.UI.BigProgressBar;
-using Redemption.BaseExtension;
+using Terraria.ModLoader;
 
 namespace Redemption.NPCs.Lab.MACE
 {
     public class MACEHealthBar : ModBossBar
     {
-        private int bossHeadIndex = -1;
-
         public override Asset<Texture2D> GetIconTexture(ref Rectangle? iconFrame)
         {
-            if (bossHeadIndex != -1)
-            {
-                return TextureAssets.NpcHeadBoss[bossHeadIndex];
-            }
+            iconFrame = Rectangle.Empty;
             return null;
         }
         public override bool? ModifyInfo(ref BigProgressBarInfo info, ref float life, ref float lifeMax, ref float shield, ref float shieldMax)
@@ -26,8 +20,6 @@ namespace Redemption.NPCs.Lab.MACE
             NPC npc = Main.npc[info.npcIndexToAimAt];
             if (!npc.active || npc.type != ModContent.NPCType<MACEProject>())
                 return false;
-
-            bossHeadIndex = npc.GetBossHeadTextureIndex();
 
             lifeMax = npc.lifeMax;
             life = Utils.Clamp(npc.life, 0, lifeMax);

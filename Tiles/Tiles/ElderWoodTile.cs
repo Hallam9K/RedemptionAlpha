@@ -14,7 +14,7 @@ namespace Redemption.Tiles.Tiles
             Main.tileBlockLight[Type] = true;
             Main.tileBrick[Type] = true;
             MinPick = 0;
-            MineResist = 2.5f;
+            MineResist = 1f;
             AddMapEntry(new Color(109, 87, 78));
         }
     }

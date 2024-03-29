@@ -33,8 +33,8 @@ namespace Redemption.NPCs.Bosses.Gigapora
         private static Asset<Texture2D> glowMask;
         private static Asset<Texture2D> drill;
         private static Asset<Texture2D> drillShoot;
-        private static Asset<Texture2D> thrusterBlue;
-        private static Asset<Texture2D> thrusterOrange;
+        public static Asset<Texture2D> thrusterBlue;
+        public static Asset<Texture2D> thrusterOrange;
         public override void Load()
         {
             if (Main.dedServ)
@@ -192,7 +192,7 @@ namespace Redemption.NPCs.Bosses.Gigapora
         }
         public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)
         {
-            NPC.lifeMax = (int)(NPC.lifeMax * 0.6f * balance * bossAdjustment);
+            NPC.lifeMax = (int)(NPC.lifeMax * 0.6f * balance);
             NPC.damage = (int)(NPC.damage * 0.75f);
         }
         public override void SendExtraAI(BinaryWriter writer)

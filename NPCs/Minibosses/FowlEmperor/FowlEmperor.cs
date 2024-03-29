@@ -156,7 +156,7 @@ namespace Redemption.NPCs.Minibosses.FowlEmperor
         public override bool? CanBeHitByProjectile(Projectile projectile) => AIState > ActionState.Start ? null : false;
         public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)
         {
-            NPC.lifeMax = (int)(NPC.lifeMax * 0.7f * balance * bossAdjustment);
+            NPC.lifeMax = (int)(NPC.lifeMax * 0.7f * balance);
             NPC.damage = (int)(NPC.damage * 0.7f);
         }
 

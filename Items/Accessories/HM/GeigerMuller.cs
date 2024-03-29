@@ -1,11 +1,17 @@
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using Redemption.Base;
+using Redemption.BaseExtension;
+using Redemption.Buffs.Debuffs;
 using Redemption.Globals.Player;
+using Redemption.Items.Weapons.HM.Melee;
 using System.Collections.Generic;
 using Terraria;
+using Terraria.GameContent;
 using Terraria.ID;
-using Terraria.ModLoader;
-using Redemption.BaseExtension;
 using Terraria.Localization;
+using Terraria.ModLoader;
+using Terraria.UI.Chat;
 
 namespace Redemption.Items.Accessories.HM
 {
@@ -19,7 +25,7 @@ namespace Redemption.Items.Accessories.HM
         }
         public override void SetDefaults()
         {
-            Item.value = Item.buyPrice(0, 20, 50, 0);
+            Item.value = 0;
             Item.rare = ItemRarityID.LightRed;
             Item.width = 34;
             Item.height = 28;
@@ -33,45 +39,54 @@ namespace Redemption.Items.Accessories.HM
         {
             player.GetModPlayer<MullerEffect>().effect = true;
         }
+        public override void PostDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
+        {
+            if (Main.LocalPlayer.RedemptionRad().radiationLevel is 0)
+                return;
+            Color c = BaseUtility.MultiLerpColor((float)(Main.LocalPlayer.RedemptionRad().radiationLevel / 3), Color.White, Color.Yellow, Color.Orange, Color.Red);
+            string radPercentage = ((int)(Main.LocalPlayer.RedemptionRad().radiationLevel * 100)).ToString() + "%";
+            ChatManager.DrawColorCodedStringShadow(spriteBatch, FontAssets.MouseText.Value, radPercentage, position, Color.Black * .6f, 0, Vector2.Zero - new Vector2(-24, 4), new Vector2(scale - .1f, scale - .1f));
+            ChatManager.DrawColorCodedString(spriteBatch, FontAssets.MouseText.Value, radPercentage, position, c, 0, Vector2.Zero - new Vector2(-24, 4), new Vector2(scale - .1f, scale - .1f));
+        }
         public override void ModifyTooltips(List<TooltipLine> tooltips)
         {
-            Player player = Main.player[Main.myPlayer];
+            Player player = Main.LocalPlayer;
             Radiation modPlayer = player.RedemptionRad();
             string rad = Language.GetTextValue("Mods.Redemption.Items.GeigerMuller.Status1");
             string rad2 = Language.GetTextValue("Mods.Redemption.Items.GeigerMuller.Note1");
-            switch (modPlayer.irradiatedLevel)
+            if (modPlayer.radiationLevel is >= .5f and < 1f)
             {
-                case 0:
-                    rad = Language.GetTextValue("Mods.Redemption.Items.GeigerMuller.Status1");
-                    rad2 = Language.GetTextValue("Mods.Redemption.Items.GeigerMuller.Note1");
-                    break;
-                case 1:
-                    rad = Language.GetTextValue("Mods.Redemption.Items.GeigerMuller.Status2");
-                    rad2 = Language.GetTextValue("Mods.Redemption.Items.GeigerMuller.Note1");
-                    break;
-                case 2:
-                    rad = Language.GetTextValue("Mods.Redemption.Items.GeigerMuller.Status3");
-                    rad2 = Language.GetTextValue("Mods.Redemption.Items.GeigerMuller.Note2");
-                    break;
-                case 3:
-                    rad = Language.GetTextValue("Mods.Redemption.Items.GeigerMuller.Status4");
-                    rad2 = Language.GetTextValue("Mods.Redemption.Items.GeigerMuller.Note2");
-                    break;
-                case 4:
-                    rad = Language.GetTextValue("Mods.Redemption.Items.GeigerMuller.Status5");
-                    rad2 = Language.GetTextValue("Mods.Redemption.Items.GeigerMuller.Note3");
-                    break;
-                case 5:
-                    rad = Language.GetTextValue("Mods.Redemption.Items.GeigerMuller.Status6");
-                    rad2 = Language.GetTextValue("Mods.Redemption.Items.GeigerMuller.Note4");
-                    break;
+                rad = Language.GetTextValue("Mods.Redemption.Items.GeigerMuller.Status2");
+                rad2 = Language.GetTextValue("Mods.Redemption.Items.GeigerMuller.Note1");
             }
-            string text1 = rad + Language.GetTextValue("Mods.Redemption.Items.GeigerMuller.StatusEnd") + rad2;
-            TooltipLine line = new(Mod, "text1", text1)
+            else if (modPlayer.radiationLevel is >= 1f and < 1.5f)
             {
-                OverrideColor = Color.LimeGreen
-            };
+                rad = Language.GetTextValue("Mods.Redemption.Items.GeigerMuller.Status3");
+                rad2 = Language.GetTextValue("Mods.Redemption.Items.GeigerMuller.Note2");
+            }
+            else if (modPlayer.radiationLevel is >= 1.5f and < 2f)
+            {
+                rad = Language.GetTextValue("Mods.Redemption.Items.GeigerMuller.Status4");
+                rad2 = Language.GetTextValue("Mods.Redemption.Items.GeigerMuller.Note2");
+            }
+            else if (modPlayer.radiationLevel is >= 2f and < 2.5f)
+            {
+                rad = Language.GetTextValue("Mods.Redemption.Items.GeigerMuller.Status5");
+                rad2 = Language.GetTextValue("Mods.Redemption.Items.GeigerMuller.Note3");
+            }
+            else if (modPlayer.radiationLevel is >= 2.5f)
+            {
+                rad = Language.GetTextValue("Mods.Redemption.Items.GeigerMuller.Status6");
+                rad2 = Language.GetTextValue("Mods.Redemption.Items.GeigerMuller.Note4");
+            }
+
+            Color c = BaseUtility.MultiLerpColor((float)(modPlayer.radiationLevel / 3), Color.LightGreen, Color.Yellow, Color.Orange, Color.Red);
+
+            string text1 = rad + Language.GetTextValue("Mods.Redemption.Items.GeigerMuller.StatusEnd") + rad2;
+            TooltipLine line = new(Mod, "Geiger1", text1) { OverrideColor = Color.LightGreen };
+            TooltipLine line2 = new(Mod, "Geiger2", ((int)(modPlayer.radiationLevel * 100)).ToString() + "% Irradiated") { OverrideColor = c };
             tooltips.Insert(2, line);
+            tooltips.Insert(3, line2);
         }
     }
 

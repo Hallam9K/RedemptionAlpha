@@ -97,6 +97,10 @@ namespace Redemption.Globals.Player
 
             List<DrawData> dataSet = new();
 
+            // Don't draw if there's nothing to draw.
+            if (chainOffsets.Length == 0)
+                return dataSet;
+
             // Run physics on each segment node
             int segmentLength = RunSegmentPhysics(player, physChain, ref chainOffsets, anchor, player.direction, player.gravDir, 1f,
                 Main.gameMenu);

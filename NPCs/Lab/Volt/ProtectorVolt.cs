@@ -84,6 +84,7 @@ namespace Redemption.NPCs.Lab.Volt
             NPC.aiStyle = -1;
             NPC.boss = true;
             NPC.netAlways = true;
+            NPC.BossBar = ModContent.GetInstance<NoHeadHealthBar>();
             if (!Main.dedServ)
                 Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/LabBossMusic");
             SpawnModBiomes = new int[2] { ModContent.GetInstance<LidenBiomeOmega>().Type, ModContent.GetInstance<LabBiome>().Type };
@@ -596,7 +597,7 @@ namespace Redemption.NPCs.Lab.Volt
         }
         public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)
         {
-            NPC.lifeMax = (int)(NPC.lifeMax * 0.6f * balance * bossAdjustment);
+            NPC.lifeMax = (int)(NPC.lifeMax * 0.6f * balance);
             NPC.damage = (int)(NPC.damage * 0.6f);
         }
     }

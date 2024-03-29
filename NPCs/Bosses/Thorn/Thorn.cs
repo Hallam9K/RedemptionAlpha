@@ -88,13 +88,14 @@ namespace Redemption.NPCs.Bosses.Thorn
             NPC.value = Item.buyPrice(0, 1, 0, 0);
             NPC.SpawnWithHigherTime(30);
             NPC.npcSlots = 10f;
+            NPC.BossBar = ModContent.GetInstance<NoHeadHealthBar>();
             if (!Main.dedServ)
                 Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/BossForest1");
         }
 
         public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)
         {
-            NPC.lifeMax = (int)(NPC.lifeMax * 0.75f * balance * bossAdjustment);
+            NPC.lifeMax = (int)(NPC.lifeMax * 0.75f * balance);
             NPC.damage = (int)(NPC.damage * 0.75f);
         }
 

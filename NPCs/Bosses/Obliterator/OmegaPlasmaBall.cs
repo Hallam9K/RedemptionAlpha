@@ -121,7 +121,7 @@ namespace Redemption.NPCs.Bosses.Obliterator
             Rectangle rect = new(0, y, texture.Width, height);
             Vector2 origin = new(texture.Width / 2f, height / 2f);
 
-            RedeDraw.DrawTreasureBagEffect(Main.spriteBatch, texture, ref drawTimer, position, new Rectangle?(rect), RedeColor.RedPulse * 0.3f, Projectile.rotation, origin, Projectile.scale);
+            RedeDraw.DrawTreasureBagEffect(Main.spriteBatch, texture, ref drawTimer, position, new Rectangle?(rect), RedeColor.RedPulse * 0.3f, Projectile.rotation, origin, Projectile.scale, 0);
             Main.EntitySpriteDraw(texture, position, new Rectangle?(rect), Projectile.GetAlpha(Color.White), Projectile.rotation, origin, Projectile.scale, SpriteEffects.None, 0);
 
             return false;

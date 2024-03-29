@@ -84,6 +84,7 @@ namespace Redemption.NPCs.Bosses.SeedOfInfection
             NPC.SpawnWithHigherTime(30);
             NPC.npcSlots = 10f;
             NPC.netAlways = true;
+            NPC.BossBar = ModContent.GetInstance<NoHeadHealthBar>();
             SpawnModBiomes = new int[1] { ModContent.GetInstance<WastelandPurityBiome>().Type };
             if (!Main.dedServ)
                 Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/BossXeno1");
@@ -99,7 +100,7 @@ namespace Redemption.NPCs.Bosses.SeedOfInfection
 
         public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)
         {
-            NPC.lifeMax = (int)(NPC.lifeMax * 0.6f * balance * bossAdjustment);
+            NPC.lifeMax = (int)(NPC.lifeMax * 0.6f * balance);
             NPC.damage = (int)(NPC.damage * 0.75f);
         }
 

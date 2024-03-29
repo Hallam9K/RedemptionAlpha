@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Redemption.Buffs.Minions;
+using Redemption.Items.Weapons.PostML.Magic;
 using Redemption.Projectiles.Minions;
 using Redemption.Rarities;
 using Terraria;
@@ -10,9 +11,9 @@ using Terraria.ModLoader;
 namespace Redemption.Items.Weapons.PostML.Summon
 {
     public class PortableHoloProjector : ModItem
-	{
-		public override void SetStaticDefaults()
-		{
+    {
+        public override void SetStaticDefaults()
+        {
             // DisplayName.SetDefault("Portable Hologram Projector");
             /* Tooltip.SetDefault("Summon a hologram-projected minion to fight for you\n" +
                 "Has multiple attack modes it automatically swaps to"); */
@@ -25,7 +26,7 @@ namespace Redemption.Items.Weapons.PostML.Summon
 
         public override void SetDefaults()
         {
-            Item.damage = 160;
+            Item.damage = 90;
             Item.DamageType = DamageClass.Summon;
             Item.width = 38;
             Item.height = 22;

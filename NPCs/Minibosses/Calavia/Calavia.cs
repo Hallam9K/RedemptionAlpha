@@ -21,6 +21,7 @@ using Redemption.Items.Weapons.PreHM.Melee;
 using Terraria.Localization;
 using Redemption.Globals.NPC;
 using Redemption.Textures;
+using Redemption.Items.Weapons.PreHM.Ranged;
 
 namespace Redemption.NPCs.Minibosses.Calavia
 {
@@ -182,6 +183,7 @@ namespace Redemption.NPCs.Minibosses.Calavia
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<BladeOfTheMountain>()));
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<PureIronCrossbow>()));
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Icefall>()));
         }
         public override void BossLoot(ref string name, ref int potionType)
@@ -1010,7 +1012,7 @@ namespace Redemption.NPCs.Minibosses.Calavia
         }
         public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)
         {
-            NPC.lifeMax = (int)(NPC.lifeMax * 0.75f * balance * bossAdjustment);
+            NPC.lifeMax = (int)(NPC.lifeMax * 0.75f * balance);
             NPC.damage = (int)(NPC.damage * 0.6f);
         }
         public override bool? CanBeHitByItem(Player player, Item item) => dodgeCooldown <= 20 ? null : false;

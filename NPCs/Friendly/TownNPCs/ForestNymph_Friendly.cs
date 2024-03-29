@@ -48,6 +48,7 @@ namespace Redemption.NPCs.Friendly.TownNPCs
             base.SetDefaults();
             NPC.townNPC = true;
             NPC.friendly = true;
+            NPC.rarity = 0;
             if (RedeQuest.forestNymphVar < 4)
                 TownNPCStayingHomeless = true;
         }

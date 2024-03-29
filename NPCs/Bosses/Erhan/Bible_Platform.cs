@@ -14,7 +14,7 @@ namespace Redemption.NPCs.Bosses.Erhan
         public override void SetStaticDefaults()
         {
             // DisplayName.SetDefault("Platform");
-            NPCID.Sets.NPCBestiaryDrawModifiers value = new(0) { Hide = true };
+            NPCID.Sets.NPCBestiaryDrawModifiers value = new() { Hide = true };
             NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, value);
         }
         public CollisionSurface[] colliders = null;
@@ -56,7 +56,7 @@ namespace Redemption.NPCs.Bosses.Erhan
         public override void AI()
         {
 
-            if (colliders != null && colliders.Length == 1 && NPC.alpha < 100)
+            if (Helpers.Helper.OnScreen(NPC.Center - Main.screenPosition) && colliders != null && colliders.Length == 1 && NPC.alpha < 100)
             {
                 colliders[0].Update();
                 colliders[0].endPoints[0] = NPC.Center + (NPC.TopLeft - NPC.Center).RotatedBy(NPC.rotation);
@@ -112,7 +112,7 @@ namespace Redemption.NPCs.Bosses.Erhan
         public override void SetStaticDefaults()
         {
             // DisplayName.SetDefault("Platform");
-            NPCID.Sets.NPCBestiaryDrawModifiers value = new(0) { Hide = true };
+            NPCID.Sets.NPCBestiaryDrawModifiers value = new() { Hide = true };
             NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, value);
         }
         public CollisionSurface[] colliders = null;
@@ -141,7 +141,7 @@ namespace Redemption.NPCs.Bosses.Erhan
         }
         public override void AI()
         {
-            if (colliders != null && colliders.Length == 1 && NPC.alpha < 100)
+            if (Helpers.Helper.OnScreen(NPC.Center - Main.screenPosition) && colliders != null && colliders.Length == 1 && NPC.alpha < 100)
             {
                 colliders[0].Update();
                 colliders[0].endPoints[0] = NPC.Center + (NPC.TopLeft - NPC.Center).RotatedBy(NPC.rotation);

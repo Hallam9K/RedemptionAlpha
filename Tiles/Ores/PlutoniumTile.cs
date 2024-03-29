@@ -1,12 +1,12 @@
 using Microsoft.Xna.Framework;
-using Terraria;
-using Terraria.Localization;
-using Terraria.ModLoader;
-using Terraria.ID;
+using Redemption.BaseExtension;
 using Redemption.Globals.Player;
 using Redemption.Items.Accessories.HM;
+using Terraria;
 using Terraria.Audio;
-using Redemption.BaseExtension;
+using Terraria.ID;
+using Terraria.Localization;
+using Terraria.ModLoader;
 
 namespace Redemption.Tiles.Ores
 {
@@ -39,41 +39,15 @@ namespace Redemption.Tiles.Ores
         public override void NearbyEffects(int i, int j, bool closer)
         {
             Player player = Main.LocalPlayer;
-            Radiation modPlayer = player.RedemptionRad();
-            BuffPlayer suit = player.RedemptionPlayerBuff();
             var dist = (int)Vector2.Distance(player.Center / 16, new Vector2(i, j));
-            if (dist <= 30 && dist > 18 && !suit.hazmatSuit && !suit.HEVSuit)
-            {
-                if (player.GetModPlayer<MullerEffect>().effect && Main.rand.NextBool(100) && !Main.dedServ)
-                    SoundEngine.PlaySound(CustomSounds.Muller1, player.position);
-
-                if (Main.rand.NextBool(80000) && modPlayer.irradiatedLevel < 2)
-                    modPlayer.irradiatedLevel++;
-            }
-            else if (dist <= 18 && dist > 10 && !suit.hazmatSuit && !suit.HEVSuit)
-            {
-                if (player.GetModPlayer<MullerEffect>().effect && Main.rand.NextBool(100) && !Main.dedServ)
-                    SoundEngine.PlaySound(CustomSounds.Muller2, player.position);
-
-                if (Main.rand.NextBool(40000) && modPlayer.irradiatedLevel < 3)
-                    modPlayer.irradiatedLevel++;
-            }
-            else if (dist <= 10 && dist > 4 && !suit.HEVSuit)
-            {
-                if (player.GetModPlayer<MullerEffect>().effect && Main.rand.NextBool(100) && !Main.dedServ)
-                    SoundEngine.PlaySound(CustomSounds.Muller3, player.position);
-
-                if (Main.rand.NextBool(8000) && modPlayer.irradiatedLevel < 3)
-                    modPlayer.irradiatedLevel++;
-            }
+            if (dist <= 30 && dist > 18)
+                player.RedemptionRad().Irradiate(.001f, 0, 1.5f, 1);
+            else if (dist <= 18 && dist > 10)
+                player.RedemptionRad().Irradiate(.002f, 1, 2, 1);
+            else if (dist <= 10 && dist > 4)
+                player.RedemptionRad().Irradiate(.01f, 2, 2, 3);
             else if (dist <= 4)
-            {
-                if (player.GetModPlayer<MullerEffect>().effect && Main.rand.NextBool(100) && !Main.dedServ)
-                    SoundEngine.PlaySound(CustomSounds.Muller4, player.position);
-
-                if (Main.rand.NextBool(1000) && modPlayer.irradiatedLevel < 3)
-                    modPlayer.irradiatedLevel++;
-            }
+                player.RedemptionRad().Irradiate(.05f, 2, 2.5f, 4);
         }
         public override void NumDust(int i, int j, bool fail, ref int num)
         {

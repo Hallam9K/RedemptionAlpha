@@ -1,18 +1,19 @@
+using Redemption.BaseExtension;
 using Terraria;
 using Terraria.ModLoader;
 
 namespace Redemption.Buffs.Debuffs
 {
-	public class HeavyRadiationDebuff : ModBuff
-	{
-		public override void SetStaticDefaults()
-		{
-			Main.buffNoTimeDisplay[Type] = true;
+    public class HeavyRadiationDebuff : ModBuff
+    {
+        public override void SetStaticDefaults()
+        {
+            Main.buffNoTimeDisplay[Type] = true;
             Main.debuff[Type] = true;
         }
 
         public override void Update(Player player, ref int buffIndex)
-		{
+        {
             if (player.lifeRegen > 0)
                 player.lifeRegen = 0;
 
@@ -21,5 +22,5 @@ namespace Redemption.Buffs.Debuffs
             player.statDefense -= 18;
             player.moveSpeed *= 0.5f;
         }
-	}
+    }
 }

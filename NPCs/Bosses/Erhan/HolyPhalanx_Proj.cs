@@ -1,12 +1,13 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Redemption.Dusts;
 using Redemption.Globals;
 using Terraria;
+using Terraria.Audio;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Redemption.Dusts;
-using Terraria.Audio;
+using System.IO;
 
 namespace Redemption.NPCs.Bosses.Erhan
 {
@@ -29,6 +30,33 @@ namespace Redemption.NPCs.Bosses.Erhan
             Projectile.penetrate = -1;
             Projectile.timeLeft = 600;
         }
+
+        public int Host
+        {
+            get => (int)Projectile.ai[0];
+            set => Projectile.ai[0] = value;
+        }
+
+        public ref float AIRotation => ref Projectile.ai[1];
+
+        public int AITimer
+        {
+            get => (int)Projectile.ai[2];
+            set => Projectile.ai[2] = value;
+        }
+
+        public int AIState;
+
+        public override void SendExtraAI(BinaryWriter writer)
+        {
+            writer.Write((byte)AIState);
+        }
+
+        public override void ReceiveExtraAI(BinaryReader reader)
+        {
+            AIState = reader.ReadByte();
+        }
+
         public float rot;
         public float speed = 1;
         public float dist;
@@ -36,43 +64,42 @@ namespace Redemption.NPCs.Bosses.Erhan
         public bool s;
         public override void AI()
         {
-            NPC host = Main.npc[(int)Projectile.ai[0]];
+            NPC host = Main.npc[Host];
             if (!host.active || (host.type != ModContent.NPCType<Erhan>() && host.type != ModContent.NPCType<ErhanSpirit>()))
                 Projectile.Kill();
-            switch (Projectile.localAI[1])
+            switch (AIState)
             {
                 case 0:
                     Projectile.rotation = -MathHelper.PiOver4;
-                    Projectile.Center = host.Center + Vector2.One.RotatedBy(MathHelper.ToRadians(Projectile.ai[1])) * 80;
+                    Projectile.Center = host.Center + Vector2.One.RotatedBy(MathHelper.ToRadians(AIRotation)) * 80;
                     if (!s)
                     {
                         RedeDraw.SpawnRing(Projectile.Center, new Color(255, 255, 120));
                         RedeDraw.SpawnRing(Projectile.Center, new Color(255, 255, 120), 0.13f, 0.83f, 0);
                         s = true;
                     }
-                    if (Projectile.localAI[0]++ >= 50)
+                    if (AITimer++ >= 50)
                     {
                         if (!Main.dedServ)
                             SoundEngine.PlaySound(CustomSounds.Slice2, Projectile.position);
                         rot = host.Center.ToRotation();
-                        Projectile.localAI[0] = 0;
-                        Projectile.localAI[1] = 1;
-                        Projectile.netUpdate = true;
+                        AITimer = 0;
+                        AIState = 1;
                     }
                     break;
                 case 1:
-                    Projectile.Center = host.Center + Vector2.One.RotatedBy(MathHelper.ToRadians(Projectile.ai[1] + rot)) * (80 + dist);
-                    if (Projectile.localAI[0]++ >= 40)
+                    Projectile.Center = host.Center + Vector2.One.RotatedBy(MathHelper.ToRadians(AIRotation + rot)) * (80 + dist);
+                    if (AITimer++ >= 40)
                     {
                         Projectile.rotation = Projectile.DirectionTo(host.Center).ToRotation() - MathHelper.PiOver4;
                         rot += speed;
                         dist += dist2;
-                        if (Projectile.localAI[0] >= 160)
+                        if (AITimer >= 160)
                             speed *= 0.99f;
                         else
                             speed *= 1.01f;
                         speed = MathHelper.Min(speed, 3);
-                        if (Projectile.localAI[0] >= 160)
+                        if (AITimer >= 160)
                             dist2 *= 0.98f;
                         else
                             dist2 *= 1.03f;
@@ -80,19 +107,19 @@ namespace Redemption.NPCs.Bosses.Erhan
                     }
                     else
                         Projectile.rotation.SlowRotation(Projectile.DirectionTo(host.Center).ToRotation() - MathHelper.PiOver4, MathHelper.Pi / 10);
-                    if (Projectile.localAI[0] >= 240)
+
+                    if (AITimer >= 240)
                     {
                         Projectile.velocity *= 0;
-                        Projectile.localAI[0] = 0;
-                        Projectile.localAI[1] = 2;
-                        Projectile.netUpdate = true;
+                        AITimer = 0;
+                        AIState = 2;
                     }
                     break;
                 case 2:
                     Projectile.rotation.SlowRotation(Projectile.DirectionTo(host.Center).ToRotation() + MathHelper.PiOver4, MathHelper.Pi / 10);
-                    if (Projectile.localAI[0]++ == 40 && !Main.dedServ)
+                    if (AITimer++ == 40 && !Main.dedServ)
                         SoundEngine.PlaySound(CustomSounds.Slice1, host.Center);
-                    if (Projectile.localAI[0] >= 40)
+                    if (AITimer >= 40)
                         Projectile.velocity = Projectile.DirectionTo(host.Center) * 20;
                     if (Projectile.DistanceSQ(host.Center) <= 60 * 60)
                         Projectile.Kill();
@@ -140,43 +167,42 @@ namespace Redemption.NPCs.Bosses.Erhan
         public override void SetDefaults() => base.SetDefaults();
         public override bool PreAI()
         {
-            Projectile host = Main.projectile[(int)Projectile.ai[0]];
+            Projectile host = Main.projectile[Host];
             if (!host.active || host.type != ModContent.ProjectileType<Erhan_Bible>())
                 Projectile.Kill();
-            switch (Projectile.localAI[1])
+            switch (AIState)
             {
                 case 0:
                     Projectile.rotation = -MathHelper.PiOver4;
-                    Projectile.Center = host.Center + Vector2.One.RotatedBy(MathHelper.ToRadians(Projectile.ai[1])) * 80;
+                    Projectile.Center = host.Center + Vector2.One.RotatedBy(MathHelper.ToRadians(AIRotation)) * 80;
                     if (!s)
                     {
                         RedeDraw.SpawnRing(Projectile.Center, new Color(255, 255, 120));
                         RedeDraw.SpawnRing(Projectile.Center, new Color(255, 255, 120), 0.13f, 0.83f, 0);
                         s = true;
                     }
-                    if (Projectile.localAI[0]++ >= 50)
+                    if (AITimer++ >= 50)
                     {
                         if (!Main.dedServ)
                             SoundEngine.PlaySound(CustomSounds.Slice2, Projectile.position);
                         rot = host.Center.ToRotation();
-                        Projectile.localAI[0] = 0;
-                        Projectile.localAI[1] = 1;
-                        Projectile.netUpdate = true;
+                        AITimer = 0;
+                        AIState = 1;
                     }
                     break;
                 case 1:
-                    Projectile.Center = host.Center + Vector2.One.RotatedBy(MathHelper.ToRadians(Projectile.ai[1] + rot)) * (80 + dist);
-                    if (Projectile.localAI[0]++ >= 40)
+                    Projectile.Center = host.Center + Vector2.One.RotatedBy(MathHelper.ToRadians(AIRotation + rot)) * (80 + dist);
+                    if (AITimer++ >= 40)
                     {
                         Projectile.rotation = Projectile.DirectionTo(host.Center).ToRotation() - MathHelper.PiOver4;
                         rot += speed;
                         dist += dist2;
-                        if (Projectile.localAI[0] >= 160)
+                        if (AITimer >= 160)
                             speed *= 0.99f;
                         else
                             speed *= 1.01f;
                         speed = MathHelper.Min(speed, 3);
-                        if (Projectile.localAI[0] >= 160)
+                        if (AITimer >= 160)
                             dist2 *= 0.98f;
                         else
                             dist2 *= 1.03f;
@@ -184,19 +210,18 @@ namespace Redemption.NPCs.Bosses.Erhan
                     }
                     else
                         Projectile.rotation.SlowRotation(Projectile.DirectionTo(host.Center).ToRotation() - MathHelper.PiOver4, MathHelper.Pi / 10);
-                    if (Projectile.localAI[0] >= 240)
+                    if (AITimer >= 240)
                     {
                         Projectile.velocity *= 0;
-                        Projectile.localAI[0] = 0;
-                        Projectile.localAI[1] = 2;
-                        Projectile.netUpdate = true;
+                        AITimer = 0;
+                        AIState = 2;
                     }
                     break;
                 case 2:
                     Projectile.rotation.SlowRotation(Projectile.DirectionTo(host.Center).ToRotation() + MathHelper.PiOver4, MathHelper.Pi / 10);
-                    if (Projectile.localAI[0]++ == 40 && !Main.dedServ)
+                    if (AITimer++ == 40 && !Main.dedServ)
                         SoundEngine.PlaySound(CustomSounds.Slice1, host.Center);
-                    if (Projectile.localAI[0] >= 40)
+                    if (AITimer >= 40)
                         Projectile.velocity = Projectile.DirectionTo(host.Center) * 20;
                     if (Projectile.DistanceSQ(host.Center) <= 60 * 60)
                         Projectile.Kill();

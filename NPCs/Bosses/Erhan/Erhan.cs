@@ -1,65 +1,49 @@
+using Microsoft.CodeAnalysis;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System;
-using Terraria;
-using Terraria.ID;
-using Terraria.ModLoader;
-using System.IO;
-using Redemption.Items.Usable;
+using Redemption.Base;
+using Redemption.BaseExtension;
+using Redemption.Dusts;
 using Redemption.Globals;
+using Redemption.Items.Accessories.PreHM;
+using Redemption.Items.Armor.Vanity;
+using Redemption.Items.Placeable.Trophies;
+using Redemption.Items.Usable;
+using Redemption.Items.Weapons.HM.Melee;
+using Redemption.Items.Weapons.PreHM.Magic;
+using Redemption.Items.Weapons.PreHM.Melee;
+using Redemption.Items.Weapons.PreHM.Ranged;
+using Redemption.Items.Weapons.PreHM.Summon;
+using Redemption.Projectiles.Minions;
+using Redemption.Projectiles.Misc;
+using Redemption.Textures;
+using Redemption.UI;
+using Redemption.UI.ChatUI;
+using ReLogic.Content;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using Terraria;
+using Terraria.Audio;
 using Terraria.GameContent;
 using Terraria.GameContent.Bestiary;
-using System.Collections.Generic;
-using Terraria.Audio;
-using Redemption.Base;
-using Terraria.Graphics.Shaders;
 using Terraria.GameContent.ItemDropRules;
-using Redemption.Items.Weapons.PreHM.Melee;
-using Redemption.Items.Weapons.PreHM.Magic;
-using Redemption.Items.Placeable.Trophies;
-using Redemption.Items.Weapons.PreHM.Ranged;
-using Redemption.Items.Armor.Vanity;
-using Redemption.Items.Accessories.PreHM;
-using Redemption.BaseExtension;
 using Terraria.GameContent.UI;
-using Redemption.Projectiles.Misc;
-using Redemption.Items.Weapons.HM.Melee;
-using ReLogic.Content;
-using Redemption.UI.ChatUI;
-using Redemption.Projectiles.Minions;
-using Redemption.Items.Weapons.PreHM.Summon;
+using Terraria.Graphics.Shaders;
+using Terraria.ID;
 using Terraria.Localization;
-using Redemption.Dusts;
-using Redemption.Textures;
+using Terraria.ModLoader;
 
 namespace Redemption.NPCs.Bosses.Erhan
 {
     [AutoloadBossHead]
     public class Erhan : ModNPC
     {
-        private static Asset<Texture2D> ArmsTex;
-        private static Asset<Texture2D> HeadTex;
-        private static Asset<Texture2D> FallTex;
-        private static Asset<Texture2D> GroundedTex;
-        private static Asset<Texture2D> BoomedTex;
-        public override void Load()
-        {
-            if (Main.dedServ)
-                return;
-            ArmsTex = ModContent.Request<Texture2D>(Texture + "_Arms");
-            HeadTex = ModContent.Request<Texture2D>(Texture + "_Head");
-            FallTex = ModContent.Request<Texture2D>(Texture + "_Fall");
-            GroundedTex = ModContent.Request<Texture2D>(Texture + "_Grounded");
-            BoomedTex = ModContent.Request<Texture2D>(Texture + "_Boomed");
-        }
-        public override void Unload()
-        {
-            ArmsTex = null;
-            HeadTex = null;
-            FallTex = null;
-            GroundedTex = null;
-            BoomedTex = null;
-        }
+        private Asset<Texture2D> ArmsTex;
+        private Asset<Texture2D> HeadTex;
+        private Asset<Texture2D> FallTex;
+        private Asset<Texture2D> GroundedTex;
+        private Asset<Texture2D> BoomedTex;
         public enum ActionState
         {
             Begin,
@@ -126,7 +110,7 @@ namespace Redemption.NPCs.Bosses.Erhan
 
             NPC.GetGlobalNPC<ElementalNPC>().OverrideMultiplier[ElementID.Psychic] *= .9f;
         }
-        public static Texture2D Bubble => CommonTextures.TextBubble_Epidotra.Value;
+        public static Texture2D Bubble => !Main.dedServ ? CommonTextures.TextBubble_Epidotra.Value : null;
         public static readonly SoundStyle voice = CustomSounds.Voice4 with { Pitch = -0.2f };
 
         public override bool CanHitPlayer(Player target, ref int cooldownSlot) => false;
@@ -158,7 +142,7 @@ namespace Redemption.NPCs.Bosses.Erhan
 
         public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)
         {
-            NPC.lifeMax = (int)(NPC.lifeMax * 0.75f * balance * bossAdjustment);
+            NPC.lifeMax = (int)(NPC.lifeMax * 0.75f * balance);
             NPC.damage = (int)(NPC.damage * 0.8f);
         }
 
@@ -223,25 +207,11 @@ namespace Redemption.NPCs.Bosses.Erhan
             }
             NPC.SetEventFlagCleared(ref RedeBossDowned.downedErhan, -1);
         }
-
-        public override void SendExtraAI(BinaryWriter writer)
-        {
-            writer.Write(BibleID);
-            writer.Write(AttackNumber);
-            writer.Write(TimerRand2);
-            writer.Write(Spared);
-        }
-
-        public override void ReceiveExtraAI(BinaryReader reader)
-        {
-            BibleID = reader.ReadInt32();
-            AttackNumber = reader.ReadInt32();
-            TimerRand2 = reader.ReadInt32();
-            Spared = reader.ReadBoolean();
-        }
-
         private void AttackChoice()
         {
+            if (Main.netMode == NetmodeID.MultiplayerClient)
+                return;
+
             int attempts = 0;
             while (attempts == 0)
             {
@@ -260,16 +230,20 @@ namespace Redemption.NPCs.Bosses.Erhan
         }
         private void BibleAttackChoice()
         {
+            if (Main.netMode == NetmodeID.MultiplayerClient)
+                return;
+
             if (BibleCopyList == null || BibleCopyList.Count == 0)
                 BibleCopyList = new List<int>(BibleAttackList);
+
             BibleID = BibleCopyList[Main.rand.Next(0, BibleCopyList.Count)];
             BibleCopyList.Remove(BibleID);
             NPC.netUpdate = true;
         }
 
-        private List<int> AttackList = new() { 0, 1, 2, 3, 4 };
+        private readonly List<int> AttackList = new() { 0, 1, 2, 3, 4 };
         private List<int> CopyList = null;
-        private List<int> BibleAttackList = new() { 3, 4, 5, 6 };
+        private readonly List<int> BibleAttackList = new() { 3, 4, 5, 6 };
         private List<int> BibleCopyList = null;
 
         private float move;
@@ -277,14 +251,52 @@ namespace Redemption.NPCs.Bosses.Erhan
         private int AttackNumber;
         private float TimerRand2;
         private bool Spared;
+        private float FloatTimer;
         private Vector2 playerOrigin;
         public readonly Vector2 modifier = new(0, -200);
 
+        protected bool spawned = false;
         private int ID { get => (int)NPC.ai[3]; set => NPC.ai[3] = value; }
         public int BibleID;
 
+        public override void SendExtraAI(BinaryWriter writer)
+        {
+            writer.Write(BibleID);
+            writer.Write(AttackNumber);
+            writer.Write(TimerRand2);
+            writer.Write(Spared);
+            writer.Write(FloatTimer);
+
+            writer.Write(NPC.dontTakeDamage);
+        }
+
+        public override void ReceiveExtraAI(BinaryReader reader)
+        {
+            BibleID = reader.ReadInt32();
+            AttackNumber = reader.ReadInt32();
+            TimerRand2 = reader.ReadInt32();
+            Spared = reader.ReadBoolean();
+            FloatTimer = reader.ReadSingle();
+
+            NPC.dontTakeDamage = reader.ReadBoolean();
+        }
+
+
         public override void AI()
         {
+            if (!spawned)
+            {
+                if (!Main.dedServ)
+                    Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/silence");
+
+                SoundEngine.PlaySound(SoundID.Item68, NPC.position);
+                Main.LocalPlayer.RedemptionScreen().ScreenShakeOrigin = NPC.Center;
+                Main.LocalPlayer.RedemptionScreen().ScreenShakeIntensity += 14;
+                HolyFlare = true;
+                TeleGlow = true;
+                spawned = true;
+            }
+
             if (NPC.target < 0 || NPC.target == 255 || Main.player[NPC.target].dead || !Main.player[NPC.target].active)
                 NPC.TargetClosest();
 
@@ -296,7 +308,7 @@ namespace Redemption.NPCs.Bosses.Erhan
             if (AIState is not ActionState.Fallen && AIState is not ActionState.Death && AIState is not ActionState.Bible)
             {
                 NPC.LookAtEntity(player);
-                NPC.position.Y += (float)Math.Sin(NPC.localAI[0]++ / 15) / 3;
+                NPC.position.Y += (float)Math.Sin(FloatTimer++ / 15) / 3;
             }
 
             switch (AIState)
@@ -305,16 +317,7 @@ namespace Redemption.NPCs.Bosses.Erhan
                     switch (TimerRand)
                     {
                         case 0:
-                            if (!Main.dedServ)
-                                Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/silence");
-
-                            SoundEngine.PlaySound(SoundID.Item68, NPC.position);
-                            Main.LocalPlayer.RedemptionScreen().ScreenShakeOrigin = NPC.Center;
-                            Main.LocalPlayer.RedemptionScreen().ScreenShakeIntensity += 14;
-                            HolyFlare = true;
-                            TeleGlow = true;
                             TimerRand = 1;
-                            NPC.netUpdate = true;
                             break;
                         case 1:
                             if (RedeBossDowned.erhanDeath <= 0)
@@ -322,37 +325,34 @@ namespace Redemption.NPCs.Bosses.Erhan
                                 if (AITimer == 0)
                                 {
                                     ArmType = 2;
-                                    if (!Main.dedServ)
-                                    {
-                                        DialogueChain chain = new();
-                                        chain.Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.Erhan.Intro.1"), Color.LightGoldenrodYellow, new Color(100, 86, 0), voice, .03f, 2f, 0, false, null, Bubble, null, modifier, 1));
-                                        chain.OnSymbolTrigger += Chain_OnSymbolTrigger;
-                                        chain.OnEndTrigger += Chain_OnEndTrigger;
-                                        ChatUI.Visible = true;
-                                        ChatUI.Add(chain);
-                                    }
+
+                                    DialogueChain chain = new();
+                                    chain.Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.Erhan.Intro.1"), Color.LightGoldenrodYellow, new Color(100, 86, 0), voice, .03f, 2f, 0, false, null, Bubble, null, modifier, 1));
+                                    chain.OnSymbolTrigger += Chain_OnSymbolTrigger;
+                                    chain.OnEndTrigger += Chain_OnEndTrigger;
+                                    ChatUI.Visible = true;
+                                    ChatUI.Add(chain);
+
                                     AITimer = 1;
                                 }
                                 if (AITimer >= 129)
                                 {
                                     AITimer++;
-                                    ScreenPlayer.CutsceneLock(player, NPC, ScreenPlayer.CutscenePriority.Medium, 1200, 2400, 1200);
+                                    ScreenPlayer.CutsceneLock(Main.LocalPlayer, NPC, ScreenPlayer.CutscenePriority.Medium, 1200, 2400, 1200);
                                 }
                                 if (AITimer == 130)
                                 {
                                     ArmType = 0;
-                                    if (!Main.dedServ)
-                                    {
-                                        DialogueChain chain = new();
-                                        chain.Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.Erhan.Intro.2"), Color.LightGoldenrodYellow, new Color(100, 86, 0), voice, .03f, 2f, 0, false, null, Bubble, null, modifier)) // 174
-                                             .Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.Erhan.Intro.3"), Color.LightGoldenrodYellow, new Color(100, 86, 0), voice, .03f, 2f, 0, false, null, Bubble, null, modifier)) // 248
-                                             .Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.Erhan.Intro.4"), Color.LightGoldenrodYellow, new Color(100, 86, 0), voice, .03f, 2f, 0, false, null, Bubble, null, modifier)) // 186
-                                             .Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.Erhan.Intro.5"), Color.LightGoldenrodYellow, new Color(100, 86, 0), voice, .03f, 2f, .5f, true, null, Bubble, null, modifier, 2)); // 248
-                                        chain.OnSymbolTrigger += Chain_OnSymbolTrigger;
-                                        chain.OnEndTrigger += Chain_OnEndTrigger;
-                                        ChatUI.Visible = true;
-                                        ChatUI.Add(chain);
-                                    }
+
+                                    DialogueChain chain = new();
+                                    chain.Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.Erhan.Intro.2"), Color.LightGoldenrodYellow, new Color(100, 86, 0), voice, .03f, 2f, 0, false, null, Bubble, null, modifier)) // 174
+                                            .Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.Erhan.Intro.3"), Color.LightGoldenrodYellow, new Color(100, 86, 0), voice, .03f, 2f, 0, false, null, Bubble, null, modifier)) // 248
+                                            .Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.Erhan.Intro.4"), Color.LightGoldenrodYellow, new Color(100, 86, 0), voice, .03f, 2f, 0, false, null, Bubble, null, modifier)) // 186
+                                            .Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.Erhan.Intro.5"), Color.LightGoldenrodYellow, new Color(100, 86, 0), voice, .03f, 2f, .5f, true, null, Bubble, null, modifier, 2)); // 248
+                                    chain.OnSymbolTrigger += Chain_OnSymbolTrigger;
+                                    chain.OnEndTrigger += Chain_OnEndTrigger;
+                                    ChatUI.Visible = true;
+                                    ChatUI.Add(chain);
                                 }
                                 if (AITimer >= 2000)
                                 {
@@ -373,13 +373,11 @@ namespace Redemption.NPCs.Bosses.Erhan
                                     NPC.dontTakeDamage = false;
                                     AIState = ActionState.Idle;
                                     NPC.netUpdate = true;
-                                    if (Main.netMode == NetmodeID.Server && NPC.whoAmI < Main.maxNPCs)
-                                        NetMessage.SendData(MessageID.SyncNPC, number: NPC.whoAmI);
                                 }
                             }
                             else
                             {
-                                if (AITimer++ == 0 && !Main.dedServ)
+                                if (AITimer++ == 0)
                                 {
                                     DialogueChain chain = new();
                                     if (player.ZoneUnderworldHeight)
@@ -402,17 +400,18 @@ namespace Redemption.NPCs.Bosses.Erhan
                                     if (!Main.dedServ)
                                     {
                                         RedeSystem.Instance.TitleCardUIElement.DisplayTitle(Language.GetTextValue("Mods.Redemption.TitleCard.Erhan.Name"), 60, 90, 0.8f, 0, Color.Goldenrod, Language.GetTextValue("Mods.Redemption.TitleCard.Erhan.Modifier"));
+
                                         Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/BossErhan");
                                     }
+
                                     TimerRand = 0;
                                     AITimer = 0;
                                     NPC.dontTakeDamage = false;
                                     AIState = ActionState.Idle;
                                     NPC.netUpdate = true;
-                                    if (Main.netMode == NetmodeID.Server && NPC.whoAmI < Main.maxNPCs)
-                                        NetMessage.SendData(MessageID.SyncNPC, number: NPC.whoAmI);
                                 }
                             }
+
                             break;
                     }
                     break;
@@ -447,7 +446,6 @@ namespace Redemption.NPCs.Bosses.Erhan
                             AIState = ActionState.Attacks;
                         }
                         AITimer = 0;
-                        NPC.netUpdate = true;
                     }
                     break;
                 case ActionState.Attacks:
@@ -465,29 +463,28 @@ namespace Redemption.NPCs.Bosses.Erhan
                                 ArmType = 1;
                             if (AttackNumber > 5)
                             {
-                                if (AITimer >= 100 && AITimer % (AttackNumber > 10 ? 8 : 12) == 0 && AITimer <= 130)
+                                if (Main.netMode != NetmodeID.MultiplayerClient && AITimer >= 100 && AITimer % (AttackNumber > 10 ? 8 : 12) == 0 && AITimer <= 130)
                                 {
                                     TeleGlow = true;
                                     TeleGlowTimer = 0;
                                     for (int i = 0; i < Main.rand.Next(4, 7); i++)
                                         NPC.Shoot(NPC.Center, ModContent.ProjectileType<Erhan_Lightmass>(), NPC.damage,
                                             new Vector2(Main.rand.NextFloat(-3, 3), Main.rand.NextFloat(-9, -5)), SoundID.Item101);
-                                    NPC.netUpdate = true;
                                 }
                             }
                             else
                             {
-                                if (AITimer == 100 || (Main.rand.NextBool(2) ? AITimer == 120 : AITimer == -1))
+                                if (Main.netMode != NetmodeID.MultiplayerClient && (AITimer == 100 || (Main.rand.NextBool(2) ? AITimer == 120 : AITimer == -1)))
                                 {
                                     TeleGlow = true;
                                     TeleGlowTimer = 0;
+
                                     for (int i = 0; i < Main.rand.Next(4, 7); i++)
                                         NPC.Shoot(NPC.Center, ModContent.ProjectileType<Erhan_Lightmass>(), NPC.damage,
                                             new Vector2(Main.rand.NextFloat(-3, 3), Main.rand.NextFloat(-9, -5)), SoundID.Item101);
-                                    NPC.netUpdate = true;
                                 }
-                                NPC.netUpdate = true;
                             }
+
                             if (AITimer == 140)
                                 ArmType = 0;
 
@@ -495,7 +492,6 @@ namespace Redemption.NPCs.Bosses.Erhan
                             {
                                 AITimer = 0;
                                 AIState = ActionState.Idle;
-                                NPC.netUpdate = true;
                             }
                             break;
                         #endregion
@@ -538,7 +534,6 @@ namespace Redemption.NPCs.Bosses.Erhan
                                 for (int i = 0; i < Main.rand.Next(4, 7); i++)
                                     NPC.Shoot(NPC.Center, ModContent.ProjectileType<Erhan_Lightmass>(), NPC.damage,
                                         new Vector2(Main.rand.NextFloat(-3, 3), Main.rand.NextFloat(-9, -5)), SoundID.Item101);
-                                NPC.netUpdate = true;
                             }
                             if (AITimer == 340)
                             {
@@ -550,7 +545,6 @@ namespace Redemption.NPCs.Bosses.Erhan
                             {
                                 AITimer = 0;
                                 AIState = ActionState.Idle;
-                                NPC.netUpdate = true;
                             }
                             break;
                         #endregion
@@ -613,7 +607,6 @@ namespace Redemption.NPCs.Bosses.Erhan
                                 for (int i = 0; i < Main.rand.Next(6, 8); i++)
                                     NPC.Shoot(NPC.Center, ModContent.ProjectileType<Erhan_Lightmass>(), NPC.damage,
                                         new Vector2(Main.rand.NextFloat(-3, 3), Main.rand.NextFloat(-9, -5)), SoundID.Item101, 1);
-                                NPC.netUpdate = true;
                             }
                             if (AttackNumber > 5 ? AITimer == 180 : AITimer == 150)
                                 ArmType = 0;
@@ -623,7 +616,6 @@ namespace Redemption.NPCs.Bosses.Erhan
                                 TimerRand = 0;
                                 AITimer = 0;
                                 AIState = ActionState.Idle;
-                                NPC.netUpdate = true;
                             }
                             break;
                         #endregion
@@ -643,13 +635,13 @@ namespace Redemption.NPCs.Bosses.Erhan
                                 for (int i = 0; i < 2; i++)
                                     NPC.Shoot(new Vector2(player.Center.X + 600 * (i == 0 ? -1 : 1), player.Center.Y - 600), ModContent.ProjectileType<ScorchingRay>(), (int)(NPC.damage * 1.5f), new Vector2(Main.rand.NextFloat(-1, 1), 10), SoundID.Item162);
                             }
-                            if (AITimer >= 90 && AITimer % 7 == 0 && AITimer <= 130 && Main.netMode != NetmodeID.MultiplayerClient)
+                            if (AITimer >= 90 && AITimer % 7 == 0 && AITimer <= 130)
                             {
                                 if (!Main.dedServ)
                                     SoundEngine.PlaySound(CustomSounds.Slice3, NPC.position);
                                 SoundEngine.PlaySound(SoundID.Item125, NPC.Center);
-                                int p = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<HolyPhalanx_Proj>(), NPCHelper.HostileProjDamage(NPC.damage), 3, Main.myPlayer, NPC.whoAmI, TimerRand * 60);
-                                Main.projectile[p].localAI[0] += TimerRand * 7;
+                                if (Main.netMode != NetmodeID.MultiplayerClient)
+                                    Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<HolyPhalanx_Proj>(), NPCHelper.HostileProjDamage(NPC.damage), 3, Main.myPlayer, NPC.whoAmI, TimerRand * 60, TimerRand * 7);
                                 TimerRand++;
                             }
                             if (AttackNumber >= 5 ? AITimer == 130 : AITimer == 200)
@@ -660,7 +652,6 @@ namespace Redemption.NPCs.Bosses.Erhan
                                 TimerRand = 0;
                                 AITimer = 0;
                                 AIState = ActionState.Idle;
-                                NPC.netUpdate = true;
                             }
                             break;
                         #endregion
@@ -689,7 +680,7 @@ namespace Redemption.NPCs.Bosses.Erhan
                                 NPC.Shoot(new Vector2(player.Center.X + (Main.rand.NextBool(2) ? 300 : -300), player.Center.Y - 800),
                                     ModContent.ProjectileType<RayOfGuidance>(), (int)(NPC.damage * 2f),
                                     Vector2.Zero, SoundID.Item162);
-                                NPC.netUpdate = true;
+
                             }
                             if (AttackNumber > 7)
                             {
@@ -698,7 +689,7 @@ namespace Redemption.NPCs.Bosses.Erhan
                                     NPC.Shoot(new Vector2(player.Center.X + (Main.rand.Next(600, 900) *
                                         (Main.rand.NextBool() ? -1 : 1)), player.Center.Y - 600), ModContent.ProjectileType<ScorchingRay>(),
                                         (int)(NPC.damage * 1.5f), new Vector2(Main.rand.NextFloat(-1, 1), 10), SoundID.Item162);
-                                    NPC.netUpdate = true;
+
                                 }
                             }
                             if (AITimer >= 80 && AITimer % 80 == 0 && AITimer <= 360)
@@ -708,7 +699,7 @@ namespace Redemption.NPCs.Bosses.Erhan
                                 for (int i = 0; i < Main.rand.Next(4, 7); i++)
                                     NPC.Shoot(NPC.Center, ModContent.ProjectileType<Erhan_Lightmass>(), NPC.damage,
                                         new Vector2(Main.rand.NextFloat(-3, 3), Main.rand.NextFloat(-9, -5)), SoundID.Item101);
-                                NPC.netUpdate = true;
+
                             }
                             if (AITimer == 420)
                             {
@@ -720,7 +711,7 @@ namespace Redemption.NPCs.Bosses.Erhan
                             {
                                 AITimer = 0;
                                 AIState = ActionState.Idle;
-                                NPC.netUpdate = true;
+
                             }
                             break;
                             #endregion
@@ -779,7 +770,6 @@ namespace Redemption.NPCs.Bosses.Erhan
                                 TimerRand = 0;
                                 AITimer = 0;
                                 AIState = ActionState.Fallen;
-                                NPC.netUpdate = true;
                             }
                             break;
                         case 2:
@@ -807,8 +797,9 @@ namespace Redemption.NPCs.Bosses.Erhan
                                 if (!Main.dedServ)
                                     SoundEngine.PlaySound(CustomSounds.Slice3, NPC.position);
                                 SoundEngine.PlaySound(SoundID.Item125, NPC.Center);
-                                int p = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<HolyPhalanx_Proj>(), NPCHelper.HostileProjDamage(NPC.damage), 3, Main.myPlayer, NPC.whoAmI, TimerRand2 * 60);
-                                Main.projectile[p].localAI[0] += TimerRand2 * 7;
+
+                                if (Main.netMode != NetmodeID.MultiplayerClient)
+                                    Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<HolyPhalanx_Proj>(), NPCHelper.HostileProjDamage(NPC.damage), 3, Main.myPlayer, NPC.whoAmI, TimerRand2 * 60, TimerRand2 * 7);
                                 TimerRand2++;
                             }
                             if (AITimer >= 220)
@@ -823,7 +814,6 @@ namespace Redemption.NPCs.Bosses.Erhan
                                 TimerRand2 = 0;
                                 AITimer = 0;
                                 AIState = ActionState.Fallen;
-                                NPC.netUpdate = true;
                             }
                             break;
                     }
@@ -837,7 +827,6 @@ namespace Redemption.NPCs.Bosses.Erhan
                             {
                                 NPC.velocity.X = 0;
                                 TimerRand = 1;
-                                NPC.netUpdate = true;
                             }
                             break;
                         case 1:
@@ -848,8 +837,6 @@ namespace Redemption.NPCs.Bosses.Erhan
                             {
                                 AITimer = 0;
                                 TimerRand = 2;
-                                NPC.netUpdate = true;
-
                             }
                             break;
                         case 2:
@@ -865,6 +852,13 @@ namespace Redemption.NPCs.Bosses.Erhan
                                     Dust dust2 = Main.dust[Dust.NewDust(NPC.Center + vector, 2, 2, DustID.GoldFlame, Scale: 2)];
                                     dust2.noGravity = true;
                                     dust2.velocity = dust2.position.DirectionTo(NPC.Center) * 15f;
+                                    Vector2 vector2;
+                                    double angle2 = Main.rand.NextDouble() * 2d * Math.PI;
+                                    vector2.X = (float)(Math.Sin(angle2) * 200);
+                                    vector2.Y = (float)(Math.Cos(angle2) * 200);
+                                    Dust dust = Main.dust[Dust.NewDust(NPC.Center + vector2 + new Vector2(0, 50), 2, 2, ModContent.DustType<DustSpark2>(), newColor: new Color(255, 255, 140, 0), Scale: 1f)];
+                                    dust.noGravity = true;
+                                    dust.velocity = dust.position.DirectionTo(NPC.Center + new Vector2(0, 50)) * 10f;
                                 }
                             }
 
@@ -872,7 +866,6 @@ namespace Redemption.NPCs.Bosses.Erhan
                             {
                                 SoundEngine.PlaySound(SoundID.Item28 with { Pitch = TimerRand2 }, NPC.position);
                                 TimerRand2 += 0.1f;
-                                NPC.netUpdate = true;
                             }
 
                             if (AITimer == 60)
@@ -882,7 +875,7 @@ namespace Redemption.NPCs.Bosses.Erhan
                                     NPC.Shoot(NPC.Center, ModContent.ProjectileType<Erhan_HolyShield>(), 0, Vector2.Zero, SoundID.Item29, NPC.whoAmI, i);
                             }
 
-                            if (RedeBossDowned.erhanDeath < 2 && !Main.dedServ)
+                            if (RedeBossDowned.erhanDeath < 2)
                             {
                                 if (AITimer == 60)
                                 {
@@ -921,6 +914,7 @@ namespace Redemption.NPCs.Bosses.Erhan
                     }
                     break;
                 case ActionState.Death:
+
                     if (!Main.dedServ)
                         Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/silence");
 
@@ -940,9 +934,10 @@ namespace Redemption.NPCs.Bosses.Erhan
                             NPC.DeathSound = null;
                             Spared = true;
                             NPC.dontTakeDamage = false;
-                            player.ApplyDamageToNPC(NPC, 9999, 0, 0, false);
-                            if (Main.netMode == NetmodeID.Server && NPC.whoAmI < Main.maxNPCs)
-                                NetMessage.SendData(MessageID.SyncNPC, number: NPC.whoAmI);
+                            NPC.netUpdate = true;
+
+                            if (Main.netMode != NetmodeID.MultiplayerClient)
+                                NPC.StrikeInstantKill();
                         }
                     }
                     else
@@ -956,10 +951,10 @@ namespace Redemption.NPCs.Bosses.Erhan
                                 if (AITimer++ == 0)
                                 {
                                     NPC.dontTakeDamage = true;
-                                    if (Main.netMode == NetmodeID.Server && NPC.whoAmI < Main.maxNPCs)
-                                        NetMessage.SendData(MessageID.SyncNPC, number: NPC.whoAmI);
+                                    NPC.netUpdate = true;
                                 }
                                 if (AITimer < 120)
+
                                     NPC.Move(new Vector2(player.Center.X - 250 * NPC.spriteDirection, player.Center.Y - 250), 7, 30);
                                 else
                                     NPC.velocity *= 0.9f;
@@ -970,54 +965,51 @@ namespace Redemption.NPCs.Bosses.Erhan
                                     NPC.velocity *= 0;
                                     TimerRand = 1;
                                     AITimer = 0;
-                                    NPC.netUpdate = true;
                                 }
                                 break;
                             case 1:
-                                ScreenPlayer.CutsceneLock(player, NPC, ScreenPlayer.CutscenePriority.High, 0, 0, 0);
+                                ScreenPlayer.CutsceneLock(Main.LocalPlayer, NPC, ScreenPlayer.CutscenePriority.High, 0, 0, 0);
                                 NPC.velocity *= 0.9f;
-                                if (!Main.dedServ)
+
+                                if (AITimer++ == 10)
                                 {
-                                    if (AITimer++ == 10)
-                                    {
-                                        ID = 0;
-                                        DialogueChain chain = new();
-                                        chain.Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.Erhan.Defeat.1"), Color.LightGoldenrodYellow, new Color(100, 86, 0), voice, .03f, 2f, 0, false, null, Bubble, null, modifier)) // 176
-                                             .Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.Erhan.Defeat.2"), Color.LightGoldenrodYellow, new Color(100, 86, 0), voice, .03f, 2f, 0, false, null, Bubble, null, modifier)) // 114
-                                             .Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.Erhan.Defeat.3"), Color.LightGoldenrodYellow, new Color(100, 86, 0), voice, .03f, 1.6f, .3f, true, null, Bubble, null, modifier, 3)); // 166
-                                        chain.OnSymbolTrigger += Chain_OnSymbolTrigger;
-                                        chain.OnEndTrigger += Chain_OnEndTrigger;
-                                        ChatUI.Visible = true;
-                                        ChatUI.Add(chain);
-                                    }
-                                    if (AITimer == 1516)
-                                    {
-                                        ArmType = 1;
-                                        NPC.Shoot(NPC.Center + new Vector2(40 * NPC.spriteDirection, -80),
-                                            ModContent.ProjectileType<HolyHandGrenadeOfAnglon>(), 0, Vector2.Zero, SoundID.Item30, NPC.whoAmI);
-                                    }
-                                    if (AITimer == 1536)
-                                    {
-                                        DialogueChain chain = new();
-                                        chain.Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.Erhan.Defeat.4"), Color.LightGoldenrodYellow, new Color(100, 86, 0), voice, .03f, 2f, 0, false, null, Bubble, null, modifier)) // 116
-                                             .Add(new(NPC, "[@f]...", Color.LightGoldenrodYellow, new Color(100, 86, 0), voice, .03f, 2.16f, 0, false, null, Bubble, null, modifier)) // 136
-                                             .Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.Erhan.Defeat.5"), Color.LightGoldenrodYellow, new Color(100, 86, 0), voice, .03f, .16f, 0, false, null, Bubble, null, modifier)); // 66
-                                        chain.OnSymbolTrigger += Chain_OnSymbolTrigger;
-                                        ChatUI.Visible = true;
-                                        ChatUI.Add(chain);
-                                    }
+                                    ID = 0;
+                                    DialogueChain chain = new();
+                                    chain.Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.Erhan.Defeat.1"), Color.LightGoldenrodYellow, new Color(100, 86, 0), voice, .03f, 2f, 0, false, null, Bubble, null, modifier)) // 176
+                                            .Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.Erhan.Defeat.2"), Color.LightGoldenrodYellow, new Color(100, 86, 0), voice, .03f, 2f, 0, false, null, Bubble, null, modifier)) // 114
+                                            .Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.Erhan.Defeat.3"), Color.LightGoldenrodYellow, new Color(100, 86, 0), voice, .03f, 1.6f, .3f, true, null, Bubble, null, modifier, 3)); // 166
+                                    chain.OnSymbolTrigger += Chain_OnSymbolTrigger;
+                                    chain.OnEndTrigger += Chain_OnEndTrigger;
+                                    ChatUI.Visible = true;
+                                    ChatUI.Add(chain);
                                 }
+                                if (AITimer == 1516)
+                                {
+                                    ArmType = 1;
+                                    NPC.Shoot(NPC.Center + new Vector2(40 * NPC.spriteDirection, -80),
+                                        ModContent.ProjectileType<HolyHandGrenadeOfAnglon>(), 0, Vector2.Zero, SoundID.Item30, NPC.whoAmI);
+                                }
+                                if (AITimer == 1536)
+                                {
+                                    DialogueChain chain = new();
+                                    chain.Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.Erhan.Defeat.4"), Color.LightGoldenrodYellow, new Color(100, 86, 0), voice, .03f, 2f, 0, false, null, Bubble, null, modifier)) // 116
+                                            .Add(new(NPC, "[@f]...", Color.LightGoldenrodYellow, new Color(100, 86, 0), voice, .03f, 2.16f, 0, false, null, Bubble, null, modifier)) // 136
+                                            .Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.Erhan.Defeat.5"), Color.LightGoldenrodYellow, new Color(100, 86, 0), voice, .03f, .16f, 0, false, null, Bubble, null, modifier)); // 66
+                                    chain.OnSymbolTrigger += Chain_OnSymbolTrigger;
+                                    ChatUI.Visible = true;
+                                    ChatUI.Add(chain);
+                                }
+
                                 if (AITimer >= 3000)
                                 {
                                     HeadFrameY = 0;
                                     ArmType = 0;
                                     AITimer = 0;
                                     TimerRand = 2;
-                                    NPC.netUpdate = true;
                                 }
                                 break;
                             case 2:
-                                ScreenPlayer.CutsceneLock(player, NPC, ScreenPlayer.CutscenePriority.High, 0, 0, 0);
+                                ScreenPlayer.CutsceneLock(Main.LocalPlayer, NPC, ScreenPlayer.CutscenePriority.High, 0, 0, 0);
 
                                 int dustIndex1 = Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.Smoke, 0f, 0f, 100, default, 3f);
                                 Main.dust[dustIndex1].noGravity = true;
@@ -1028,7 +1020,7 @@ namespace Redemption.NPCs.Bosses.Erhan
                                 {
                                     NPC.noGravity = false;
                                     NPC.noTileCollide = false;
-                                    if ((AITimer > 85 && NPC.velocity.Y == 0) || AITimer > 300)
+                                    if ((AITimer > 85 && (NPC.velocity.Y == 0 || BaseAI.HitTileOnSide(NPC, 3, false))) || AITimer > 300)
                                     {
                                         if (Main.netMode != NetmodeID.MultiplayerClient)
                                         {
@@ -1050,55 +1042,49 @@ namespace Redemption.NPCs.Bosses.Erhan
                                         }
                                         AITimer = 0;
                                         TimerRand = 3;
-                                        NPC.netUpdate = true;
                                     }
                                 }
                                 break;
                             case 3:
+                                NPC.noGravity = false;
+                                NPC.noTileCollide = false;
+
                                 if (AITimer++ == 30)
                                 {
                                     NPC.life = 10;
                                     NPC.dontTakeDamage = false;
                                     NPC.chaseable = false;
+                                    NPC.netUpdate = true;
                                     NPC.Shoot(NPC.Center, ModContent.ProjectileType<ProjDeath>(), 0, Vector2.Zero);
-                                    if (Main.netMode == NetmodeID.Server && NPC.whoAmI < Main.maxNPCs)
-                                        NetMessage.SendData(MessageID.SyncNPC, number: NPC.whoAmI);
                                 }
-                                if (!Main.dedServ)
+                                if (AITimer == 60)
                                 {
-                                    if (AITimer == 60)
-                                    {
-                                        Dialogue d1 = new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.Erhan.Choice.1"), Color.LightGoldenrodYellow, new Color(100, 86, 0), voice, .03f, 2f, .5f, true, null, Bubble, null, modifier); // 216
-                                        ChatUI.Visible = true;
-                                        ChatUI.Add(d1);
-                                    }
-                                    if (AITimer == 300)
-                                    {
-                                        Dialogue d2 = new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.Erhan.Choice.2"), Color.LightGoldenrodYellow, new Color(100, 86, 0), voice, .03f, 2f, .5f, true, null, Bubble, null, modifier); // 238
-                                        ChatUI.Visible = true;
-                                        ChatUI.Add(d2);
-                                    }
-                                    if (AITimer == 600)
-                                    {
-                                        Dialogue d3 = new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.Erhan.Choice.3"), Color.LightGoldenrodYellow, new Color(100, 86, 0), voice, .03f, 2f, .5f, true, null, Bubble, null, modifier); // 228
-                                        ChatUI.Visible = true;
-                                        ChatUI.Add(d3);
-                                    }
+                                    Dialogue d1 = new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.Erhan.Choice.1"), Color.LightGoldenrodYellow, new Color(100, 86, 0), voice, .03f, 2f, .5f, true, null, Bubble, null, modifier); // 216
+                                    ChatUI.Visible = true;
+                                    ChatUI.Add(d1);
+                                }
+                                if (AITimer == 300)
+                                {
+                                    Dialogue d2 = new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.Erhan.Choice.2"), Color.LightGoldenrodYellow, new Color(100, 86, 0), voice, .03f, 2f, .5f, true, null, Bubble, null, modifier); // 238
+                                    ChatUI.Visible = true;
+                                    ChatUI.Add(d2);
+                                }
+                                if (AITimer == 600)
+                                {
+                                    Dialogue d3 = new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.Erhan.Choice.3"), Color.LightGoldenrodYellow, new Color(100, 86, 0), voice, .03f, 2f, .5f, true, null, Bubble, null, modifier); // 228
+                                    ChatUI.Visible = true;
+                                    ChatUI.Add(d3);
                                 }
                                 if (AITimer == 1200)
                                 {
-                                    if (!Main.dedServ)
-                                    {
-                                        DialogueChain chain = new();
-                                        chain.Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.Erhan.Choice.4"), Color.LightGoldenrodYellow, new Color(100, 86, 0), voice, .03f, 2f, 0, false, null, Bubble, null, modifier, 5)); // 184
-                                        chain.OnEndTrigger += Chain_OnEndTrigger;
-                                        ChatUI.Visible = true;
-                                        ChatUI.Add(chain);
-                                    }
-
+                                    DialogueChain chain = new();
+                                    chain.Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.Erhan.Choice.4"), Color.LightGoldenrodYellow, new Color(100, 86, 0), voice, .03f, 2f, 0, false, null, Bubble, null, modifier, 5)); // 184
+                                    chain.OnEndTrigger += Chain_OnEndTrigger;
+                                    ChatUI.Visible = true;
+                                    ChatUI.Add(chain);
+                                    Spared = true;
                                     NPC.dontTakeDamage = true;
-                                    if (Main.netMode == NetmodeID.Server && NPC.whoAmI < Main.maxNPCs)
-                                        NetMessage.SendData(MessageID.SyncNPC, number: NPC.whoAmI);
+                                    NPC.netUpdate = true;
                                 }
                                 if (AITimer == 2384)
                                 {
@@ -1112,18 +1098,21 @@ namespace Redemption.NPCs.Bosses.Erhan
                                 if (AITimer >= 2389)
                                 {
                                     NPC.DeathSound = null;
-
-                                    Spared = true;
                                     NPC.dontTakeDamage = false;
-                                    player.ApplyDamageToNPC(NPC, 9999, 0, 0, false);
-                                    if (Main.netMode == NetmodeID.Server && NPC.whoAmI < Main.maxNPCs)
-                                        NetMessage.SendData(MessageID.SyncNPC, number: NPC.whoAmI);
+                                    NPC.netUpdate = true;
+
+                                    NPC.StrikeInstantKill();
                                 }
                                 break;
                         }
                     }
                     break;
             }
+            if (((AIState is ActionState.Fallen && TimerRand != 0) ||
+                (AIState is ActionState.Death && TimerRand == 3)) && TimerRand > 1)
+                NPC.behindTiles = true;
+            else
+                NPC.behindTiles = false;
         }
         public override void PostAI()
         {
@@ -1210,6 +1199,14 @@ namespace Redemption.NPCs.Bosses.Erhan
                     break;
             }
         }
+
+        public override bool? CanBeHitByProjectile(Projectile projectile)
+        {
+            if (AIState is ActionState.Death && projectile.type == ProjectileID.FallingStar)
+                return false;
+            return base.CanBeHitByProjectile(projectile);
+        }
+
         private bool egged;
         private bool grenaded;
         private bool bibled;
@@ -1245,7 +1242,7 @@ namespace Redemption.NPCs.Bosses.Erhan
             }
             if (!blindJusted && AIState is ActionState.Attacks && (projectile.type == ModContent.ProjectileType<BlindJustice_Proj>()))
             {
-                string s = Language.GetTextValue("Mods.Redemption.Cutscene.Erhan.Interaction.BJustice");
+                string s = Language.GetTextValue("Mods.Redemption.Cutscene.Erhan.Interaction.BJustice1");
                 Dialogue d = new(NPC, s, Color.LightGoldenrodYellow, new Color(100, 86, 0), voice, .03f, 2f, .5f, true, null, Bubble, null, modifier);
                 ChatUI.Visible = true;
                 ChatUI.Add(d);
@@ -1263,11 +1260,8 @@ namespace Redemption.NPCs.Bosses.Erhan
                 }
                 if (!Spared)
                 {
-                    if (!Main.dedServ)
-                    {
-                        ChatUI.Visible = false;
-                        ChatUI.Clear();
-                    }
+                    ChatUI.Visible = false;
+                    ChatUI.Clear();
                 }
                 return true;
             }
@@ -1285,8 +1279,7 @@ namespace Redemption.NPCs.Bosses.Erhan
                 AITimer = 0;
                 TimerRand = 0;
                 AIState = ActionState.Death;
-                if (Main.netMode == NetmodeID.Server && NPC.whoAmI < Main.maxNPCs)
-                    NetMessage.SendData(MessageID.SyncNPC, number: NPC.whoAmI);
+                NPC.netUpdate = true;
                 return false;
             }
         }
@@ -1294,9 +1287,11 @@ namespace Redemption.NPCs.Bosses.Erhan
         private int ArmFrameY;
         private int ArmType;
         private int HeadFrameY;
-        private bool HolyFlare;
+
+        protected bool HolyFlare;
         private int HolyFlareTimer;
-        private bool TeleGlow;
+
+        protected bool TeleGlow;
         private int TeleGlowTimer;
 
         public override void FindFrame(int frameHeight)
@@ -1355,15 +1350,20 @@ namespace Redemption.NPCs.Bosses.Erhan
 
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
+            ArmsTex ??= ModContent.Request<Texture2D>(Texture + "_Arms");
+            HeadTex ??= ModContent.Request<Texture2D>(Texture + "_Head");
+            FallTex ??= ModContent.Request<Texture2D>(Texture + "_Fall");
+            GroundedTex ??= ModContent.Request<Texture2D>(Texture + "_Grounded");
+            BoomedTex ??= ModContent.Request<Texture2D>(Texture + "_Boomed");
+
             var effects = NPC.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
             int shader = ContentSamples.CommonlyUsedContentSamples.ColorOnlyShaderIndex;
             Color shaderColor = BaseUtility.MultiLerpColor(Main.LocalPlayer.miscCounter % 100 / 100f, Color.Yellow, Color.Goldenrod * 0.7f, Color.Yellow);
 
             if (AIState is ActionState.Death && TimerRand == 2)
             {
-                Rectangle rectBoomed = new(0, 0, BoomedTex.Value.Width, BoomedTex.Value.Height);
-                Vector2 originBoomed = new(BoomedTex.Value.Width / 2f, BoomedTex.Value.Height / 2f);
-                spriteBatch.Draw(BoomedTex.Value, NPC.Center - screenPos, new Rectangle?(rectBoomed), NPC.GetAlpha(drawColor), NPC.rotation, originBoomed, NPC.scale, effects, 0);
+                Vector2 originBoomed = BoomedTex.Size() / 2f - new Vector2(5 * NPC.spriteDirection, -25);
+                spriteBatch.Draw(BoomedTex.Value, NPC.Center - screenPos, null, NPC.GetAlpha(drawColor), NPC.rotation, originBoomed, NPC.scale, effects, 0);
                 return false;
             }
             if ((AIState is ActionState.Fallen && TimerRand != 0) ||
@@ -1371,26 +1371,23 @@ namespace Redemption.NPCs.Bosses.Erhan
             {
                 if (TimerRand <= 1)
                 {
-                    Rectangle rectFall = new(0, 0, FallTex.Value.Width, FallTex.Value.Height);
-                    Vector2 originFall = new(FallTex.Value.Width / 2f, FallTex.Value.Height / 2f);
-                    spriteBatch.Draw(FallTex.Value, NPC.Center - screenPos, new Rectangle?(rectFall), NPC.GetAlpha(drawColor), NPC.rotation, originFall, NPC.scale, effects, 0);
+                    Vector2 originFall = FallTex.Size() / 2f - new Vector2(3 * NPC.spriteDirection, 7);
+                    spriteBatch.Draw(FallTex.Value, NPC.Center - screenPos, null, NPC.GetAlpha(drawColor), NPC.rotation, originFall, NPC.scale, effects, 0);
                 }
                 else
                 {
-                    int heightGrounded = GroundedTex.Value.Height / 4;
-                    int yGrounded = heightGrounded * ArmFrameY;
-                    Rectangle rectGrounded = new(0, yGrounded, GroundedTex.Value.Width, heightGrounded);
-                    Vector2 originGrounded = new(GroundedTex.Value.Width / 2f, heightGrounded / 2f);
-                    spriteBatch.Draw(GroundedTex.Value, NPC.Center - screenPos + new Vector2(0, 10), new Rectangle?(rectGrounded), NPC.GetAlpha(drawColor), NPC.rotation, originGrounded, NPC.scale, effects, 0);
+                    Rectangle rectGrounded = GroundedTex.Frame(1, 4, 0, ArmFrameY);
+                    Vector2 originGrounded = rectGrounded.Size() / 2 - new Vector2(6 * NPC.spriteDirection, 10);
+                    spriteBatch.Draw(GroundedTex.Value, NPC.Center - screenPos, rectGrounded, NPC.GetAlpha(drawColor), NPC.rotation, originGrounded, NPC.scale, effects, 0);
                 }
-
-
                 return false;
             }
-            int heightHead = HeadTex.Value.Height / 3;
-            int yHead = heightHead * HeadFrameY;
-            Rectangle rectHead = new(0, yHead, HeadTex.Value.Width, heightHead);
-            Vector2 originHead = new(HeadTex.Value.Width / 2f, heightHead / 2f);
+            Rectangle rectHead = HeadTex.Frame(1, 3, 0, HeadFrameY);
+            Vector2 originHead = rectHead.Size() / 2 - new Vector2(6 * NPC.spriteDirection, -32);
+
+            Rectangle rectArms = ArmsTex.Frame(1, 24, 0, ArmFrameY);
+            Vector2 originArms = rectArms.Size() / 2 + new Vector2(3 * NPC.spriteDirection, 12);
+
             if (!NPC.IsABestiaryIconDummy)
             {
                 spriteBatch.End();
@@ -1400,12 +1397,9 @@ namespace Redemption.NPCs.Bosses.Erhan
                 for (int i = 0; i < NPCID.Sets.TrailCacheLength[NPC.type]; i++)
                 {
                     Vector2 oldPos = NPC.oldPos[i];
-                    spriteBatch.Draw(HeadTex.Value, oldPos + NPC.Size / 2f - screenPos - new Vector2(-2 * NPC.spriteDirection, 33), new Rectangle?(rectHead), NPC.GetAlpha(shaderColor) * 0.5f, oldrot[i], originHead, NPC.scale + 0.1f, effects, 0);
-                }
-                for (int i = 0; i < NPCID.Sets.TrailCacheLength[NPC.type]; i++)
-                {
-                    Vector2 oldPos = NPC.oldPos[i];
-                    spriteBatch.Draw(TextureAssets.Npc[NPC.type].Value, oldPos + NPC.Size / 2f - screenPos + new Vector2(0, NPC.gfxOffY), NPC.frame, NPC.GetAlpha(shaderColor) * 0.5f, oldrot[i], NPC.frame.Size() / 2, NPC.scale + 0.1f, effects, 0);
+                    spriteBatch.Draw(HeadTex.Value, oldPos + NPC.Size / 2f - screenPos, rectHead, NPC.GetAlpha(shaderColor) * 0.5f, oldrot[i], originHead, NPC.scale + 0.1f, effects, 0);
+                    spriteBatch.Draw(TextureAssets.Npc[NPC.type].Value, oldPos + NPC.Size / 2f - screenPos, NPC.frame, NPC.GetAlpha(shaderColor) * 0.5f, oldrot[i], NPC.frame.Size() / 2, NPC.scale + 0.1f, effects, 0);
+                    spriteBatch.Draw(ArmsTex.Value, oldPos + NPC.Size / 2f - screenPos, rectArms, NPC.GetAlpha(shaderColor) * 0.5f, oldrot[i], originArms, NPC.scale + 0.1f, effects, 0);
                 }
 
                 spriteBatch.End();
@@ -1414,14 +1408,8 @@ namespace Redemption.NPCs.Bosses.Erhan
 
             spriteBatch.Draw(TextureAssets.Npc[NPC.type].Value, NPC.Center - screenPos, NPC.frame, NPC.GetAlpha(drawColor), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
 
-            spriteBatch.Draw(HeadTex.Value, NPC.Center - screenPos - new Vector2(-2 * NPC.spriteDirection, 33), new Rectangle?(rectHead), NPC.GetAlpha(drawColor), NPC.rotation, originHead, NPC.scale, effects, 0);
-
-            int heightArms = ArmsTex.Value.Height / 24;
-            int yArms = heightArms * ArmFrameY;
-            Rectangle rectArms = new(0, yArms, ArmsTex.Value.Width, heightArms);
-            Vector2 originArms = new(ArmsTex.Value.Width / 2f, heightArms / 2f);
-            spriteBatch.Draw(ArmsTex.Value, NPC.Center - screenPos + new Vector2(-2 * NPC.spriteDirection, -10), new Rectangle?(rectArms), NPC.GetAlpha(drawColor), NPC.rotation, originArms, NPC.scale, effects, 0);
-
+            spriteBatch.Draw(HeadTex.Value, NPC.Center - screenPos, rectHead, NPC.GetAlpha(drawColor), NPC.rotation, originHead, NPC.scale, effects, 0);
+            spriteBatch.Draw(ArmsTex.Value, NPC.Center - screenPos, rectArms, NPC.GetAlpha(drawColor), NPC.rotation, originArms, NPC.scale, effects, 0);
             return false;
         }
 

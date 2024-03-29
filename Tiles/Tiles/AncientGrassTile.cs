@@ -1,4 +1,5 @@
 using Microsoft.Xna.Framework;
+using Redemption.Base;
 using Redemption.Items.Placeable.Tiles;
 using Redemption.Tiles.Plants;
 using Terraria;
@@ -39,6 +40,11 @@ namespace Redemption.Tiles.Tiles
                 dust.fadeIn = 1f;
             }
         }
+        public override bool CanExplode(int i, int j)
+        {
+            WorldGen.KillTile(i, j, false, false, true);
+            return true;
+        }
         public override void KillTile(int i, int j, ref bool fail, ref bool effectOnly, ref bool noItem)
         {
             if (!effectOnly)
@@ -63,29 +69,43 @@ namespace Redemption.Tiles.Tiles
                 {
                     tileBelow.TileType = (ushort)ModContent.TileType<AncientGrassVines>();
                     tileBelow.HasTile = true;
+                    tileBelow.TileColor = tile.TileColor;
                     WorldGen.SquareTileFrame(i, j + 1, true);
                     if (Main.netMode == NetmodeID.Server)
                         NetMessage.SendTileSquare(-1, i, j + 1, 3, TileChangeType.None);
                 }
             }
 
-            if (!tileAbove.HasTile && Main.tile[i, j].HasTile && Main.rand.NextBool(15) && Main.tile[i, j - 1].LiquidAmount == 0)
+            if (Main.rand.NextBool(15) && !tileAbove.HasTile && tileAbove.LiquidAmount == 0)
             {
-                WorldGen.PlaceObject(i, j - 1, ModContent.TileType<AncientShrub>(), true, Main.rand.Next(11));
-                NetMessage.SendObjectPlacement(-1, i, j - 1, ModContent.TileType<AncientShrub>(), Main.rand.Next(11), 0, -1, -1);
+                int rand = Main.rand.Next(11);
+                WorldGen.PlaceObject(i, j - 1, ModContent.TileType<AncientShrub>(), true, rand);
+                NetMessage.SendObjectPlacement(-1, i, j - 1, ModContent.TileType<AncientShrub>(), rand, 0, -1, -1);
+                tileAbove.TileColor = tile.TileColor;
             }
-            if (!tileAbove.HasTile && Main.tile[i, j].HasTile && Main.rand.NextBool(15) && Main.tile[i, j - 1].LiquidAmount == 0)
+            if (Main.rand.NextBool(15) && !tileAbove.HasTile && !Framing.GetTileSafely(i, j - 2).HasTile && tileAbove.LiquidAmount == 0)
             {
-                WorldGen.PlaceObject(i, j - 1, ModContent.TileType<AncientShrub2>(), true, Main.rand.Next(10));
-                NetMessage.SendObjectPlacement(-1, i, j - 1, ModContent.TileType<AncientShrub2>(), Main.rand.Next(10), 0, -1, -1);
+                int rand = Main.rand.Next(10);
+                WorldGen.PlaceObject(i, j - 1, ModContent.TileType<AncientShrub2>(), true, rand);
+                NetMessage.SendObjectPlacement(-1, i, j - 1, ModContent.TileType<AncientShrub2>(), rand, 0, -1, -1);
+                tileAbove.TileColor = tile.TileColor;
+                Framing.GetTileSafely(i, j - 2).TileColor = tile.TileColor;
             }
-            if (!tileAbove.HasTile && !tileAbove2.HasTile && Main.tile[i, j].HasTile && Main.rand.NextBool(30) && Main.tile[i, j - 1].LiquidAmount == 0)
+            if (Main.rand.NextBool(30) && Framing.GetTileSafely(i + 1, j).TileType == Type && !tileAbove.HasTile && !tileAbove2.HasTile && !Framing.GetTileSafely(i, j - 2).HasTile && !Framing.GetTileSafely(i + 1, j - 2).HasTile && tileAbove.LiquidAmount == 0)
             {
-                WorldGen.PlaceObject(i, j - 1, ModContent.TileType<AncientShrub3>(), true, Main.rand.Next(6));
-                NetMessage.SendObjectPlacement(-1, i, j - 1, ModContent.TileType<AncientShrub3>(), Main.rand.Next(6), 0, -1, -1);
+                int rand = Main.rand.Next(6);
+                WorldGen.PlaceObject(i, j - 1, ModContent.TileType<AncientShrub3>(), true, rand);
+                NetMessage.SendObjectPlacement(-1, i, j - 1, ModContent.TileType<AncientShrub3>(), rand, 0, -1, -1);
+                if (BaseTile.IsType(i, j - 2, 2, 2, ModContent.TileType<AncientShrub3>()))
+                {
+                    tileAbove.TileColor = tile.TileColor;
+                    Framing.GetTileSafely(i, j - 2).TileColor = tile.TileColor;
+                    tileAbove2.TileColor = tile.TileColor;
+                    Framing.GetTileSafely(i + 1, j - 2).TileColor = tile.TileColor;
+                }
             }
             if (Main.rand.NextBool(4))
-                WorldGen.SpreadGrass(i + Main.rand.Next(-1, 1), j + Main.rand.Next(-1, 1), ModContent.TileType<AncientDirtTile>(), Type, false);
+                WorldGen.SpreadGrass(i + Main.rand.Next(-1, 1), j + Main.rand.Next(-1, 1), ModContent.TileType<AncientDirtTile>(), Type, false, tile.BlockColorAndCoating());
         }
     }
 }

@@ -19,6 +19,7 @@ namespace Redemption.Items.Usable
             ItemID.Sets.AnimatesAsSoul[Item.type] = true;
             ItemID.Sets.ItemNoGravity[Item.type] = true;
             ItemID.Sets.IsAPickup[Type] = true;
+            ItemID.Sets.IgnoresEncumberingStone[Type] = true;
         }
 
         public override void SetDefaults()
@@ -27,6 +28,10 @@ namespace Redemption.Items.Usable
             Item.height = 22;
             Item.maxStack = 1;
             Item.rare = ItemRarityID.White;
+        }
+        public override void GrabRange(Player player, ref int grabRange)
+        {
+            grabRange = 100;
         }
         public override bool OnPickup(Player player)
         {

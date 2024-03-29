@@ -27,6 +27,7 @@ using ReLogic.Content;
 using Terraria.Localization;
 using Redemption.Globals.NPC;
 using Redemption.NPCs.Friendly.TownNPCs;
+using Redemption.Items.Weapons.PostML.Summon;
 
 namespace Redemption.NPCs.Bosses.ADD
 {
@@ -170,7 +171,7 @@ namespace Redemption.NPCs.Bosses.ADD
         }
         public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)
         {
-            NPC.lifeMax = (int)(NPC.lifeMax * 0.75f * balance * bossAdjustment);
+            NPC.lifeMax = (int)(NPC.lifeMax * 0.75f * balance);
             NPC.damage = (int)(NPC.damage * 0.75f);
         }
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
@@ -194,7 +195,7 @@ namespace Redemption.NPCs.Bosses.ADD
 
             notExpertRule.OnSuccess(ItemDropRule.NotScalingWithLuck(ModContent.ItemType<UkkoMask>(), 7));
 
-            notExpertRule.OnSuccess(ItemDropRule.OneFromOptions(1, ModContent.ItemType<Salamanisku>(), ModContent.ItemType<Ukonvasara>()));
+            notExpertRule.OnSuccess(ItemDropRule.OneFromOptions(1, ModContent.ItemType<Salamanisku>(), ModContent.ItemType<Ukonvasara>(), ModContent.ItemType<UkonRuno>()));
 
             npcLoot.Add(notExpertRule);
         }

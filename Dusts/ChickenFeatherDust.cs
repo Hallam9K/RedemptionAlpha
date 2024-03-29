@@ -23,32 +23,10 @@ namespace Redemption.Dusts
             return false;
         }
     }
-    public class ChickenFeatherDust2 : ChickenFeatherDust1
-    {
-        public override void OnSpawn(Dust dust)
-        {
-            dust.frame = new Rectangle(0, Main.rand.Next(3) * 14, 12, 14);
-        }
-    }
-    public class ChickenFeatherDust3 : ChickenFeatherDust1
-    {
-        public override void OnSpawn(Dust dust)
-        {
-            dust.frame = new Rectangle(0, Main.rand.Next(3) * 14, 12, 14);
-        }
-    }
-    public class ChickenFeatherDust4 : ChickenFeatherDust1
-    {
-        public override void OnSpawn(Dust dust)
-        {
-            dust.frame = new Rectangle(0, Main.rand.Next(3) * 14, 12, 14);
-        }
-    }
-    public class ChickenFeatherDust5 : ChickenFeatherDust1
-    {
-        public override void OnSpawn(Dust dust)
-        {
-            dust.frame = new Rectangle(0, Main.rand.Next(3) * 14, 12, 14);
-        }
-    }
+    public class ChickenFeatherDust2 : ChickenFeatherDust1 { }
+    public class ChickenFeatherDust3 : ChickenFeatherDust1 { }
+    public class ChickenFeatherDust4 : ChickenFeatherDust1 { }
+    public class ChickenFeatherDust5 : ChickenFeatherDust1 { }
+    public class ChickenFeatherDust6 : ChickenFeatherDust1 { }
+    public class ChickenFeatherDust7 : ChickenFeatherDust1 { }
 }

@@ -1,4 +1,5 @@
 using Redemption.Globals;
+using Redemption.Items.Placeable.Tiles;
 using Redemption.Tiles.Tiles;
 using Terraria;
 using Terraria.ID;
@@ -21,7 +22,7 @@ namespace Redemption.Items.Materials.HM
             Item.width = 48;
             Item.height = 34;
             Item.maxStack = Item.CommonMaxStack;
-            Item.value = Item.buyPrice(0, 10, 0, 0);
+            Item.value = Item.sellPrice(0, 0, 5, 0);
             Item.rare = ItemRarityID.LightPurple;
         }
         public override void AddRecipes()

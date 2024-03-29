@@ -1,3 +1,4 @@
+using Redemption.BaseExtension;
 using Redemption.Buffs.Debuffs;
 using Redemption.Globals;
 using Redemption.Items.Accessories.HM;
@@ -6,7 +7,6 @@ using Redemption.Items.Usable.Potions;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Redemption.BaseExtension;
 
 namespace Redemption.Items.Accessories.PostML
 {
@@ -56,7 +56,12 @@ namespace Redemption.Items.Accessories.PostML
             Item.accessory = true;
             Item.hasVanityEffects = true;
         }
-
+        public override bool CanAccessoryBeEquippedWith(Item equippedItem, Item incomingItem, Player player)
+        {
+            if (equippedItem.type == ModContent.ItemType<HazmatSuit>() || equippedItem.type == ModContent.ItemType<HazmatSuit2>() || equippedItem.type == ModContent.ItemType<HazmatSuit3>() || equippedItem.type == ModContent.ItemType<HazmatSuit4>())
+                return false;
+            return true;
+        }
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
             var p = player.GetModPlayer<HEVSuitPlayer>();
@@ -64,13 +69,11 @@ namespace Redemption.Items.Accessories.PostML
             p.VanityOn = true;
 
             player.buffImmune[ModContent.BuffType<BileDebuff>()] = true;
-            player.buffImmune[ModContent.BuffType<HeavyRadiationDebuff>()] = true;
-            player.buffImmune[ModContent.BuffType<RadioactiveFalloutDebuff>()] = true;
             player.buffImmune[ModContent.BuffType<GreenRashesDebuff>()] = true;
             player.buffImmune[ModContent.BuffType<GlowingPustulesDebuff>()] = true;
             player.buffImmune[ModContent.BuffType<FleshCrystalsDebuff>()] = true;
             player.buffImmune[ModContent.BuffType<ShockDebuff>()] = true;
-            player.RedemptionPlayerBuff().HEVSuit = true;
+            player.RedemptionRad().protectionLevel += 3;
             player.RedemptionPlayerBuff().WastelandWaterImmune = true;
             player.accDivingHelm = true;
         }

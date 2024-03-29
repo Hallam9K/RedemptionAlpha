@@ -218,7 +218,6 @@ namespace Redemption.NPCs.Friendly.TownNPCs
             {
                 chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.TBot.Dialogue18"), 1.5);
                 chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.TBot.Dialogue19"), 1.5);
-                chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.TBot.Dialogue20"), 1.5);
             }
             chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.TBot.Dialogue21"));
             return chat;

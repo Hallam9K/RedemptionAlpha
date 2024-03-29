@@ -5,7 +5,7 @@ using Redemption.Items.Materials.PreHM;
 using Redemption.Items.Placeable.Plants;
 using Redemption.Items.Weapons.PreHM.Magic;
 using Redemption.Items.Weapons.PreHM.Melee;
-using Redemption.NPCs.Friendly;
+using Redemption.Items.Weapons.PreHM.Ranged;
 using Redemption.NPCs.Friendly.TownNPCs;
 using Redemption.NPCs.Minibosses.Calavia;
 using Terraria;
@@ -76,6 +76,8 @@ namespace Redemption.UI
                 BgSprite.RemoveAllChildren();
                 int pad = 36;
                 BgSprite.Append(new TradePanelUI(new Item(ModContent.ItemType<Zweihander>()), new Item(ModContent.ItemType<BladeOfTheMountain>())) { Top = new StyleDimension(pad, 0) });
+                pad += 36;
+                BgSprite.Append(new TradePanelUI(new Item(ModContent.ItemType<ElderWoodCrossbow>()), new Item(ModContent.ItemType<PureIronCrossbow>())) { Top = new StyleDimension(pad, 0) });
                 pad += 36;
                 BgSprite.Append(new TradePanelUI(new Item(ModContent.ItemType<Mistfall>()), new Item(ModContent.ItemType<Icefall>())) { Top = new StyleDimension(pad, 0) });
                 Append(BgSprite);

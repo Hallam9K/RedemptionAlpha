@@ -1,10 +1,10 @@
+using Redemption.BaseExtension;
 using Redemption.Items.Accessories.HM;
 using Redemption.Tiles.Ores;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Redemption.BaseExtension;
 
 namespace Redemption.Items.Materials.PostML
 {
@@ -27,12 +27,7 @@ namespace Redemption.Items.Materials.PostML
         }
         public override void HoldItem(Player player)
         {
-            SoundStyle muller = CustomSounds.Muller5;
-            if (player.GetModPlayer<MullerEffect>().effect && Main.rand.NextBool(100) && !Main.dedServ)
-                SoundEngine.PlaySound(muller, player.position);
-
-            if (Main.rand.NextBool(50) && player.RedemptionRad().irradiatedLevel < 5)
-                player.RedemptionRad().irradiatedLevel += 2;
+            player.RedemptionRad().Irradiate(1f, 4, 5, 6);
         }
     }
 }

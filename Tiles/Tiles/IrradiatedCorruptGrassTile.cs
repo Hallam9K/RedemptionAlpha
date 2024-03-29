@@ -32,6 +32,11 @@ namespace Redemption.Tiles.Tiles
             DustType = DustID.Ash;
             RegisterItemDrop(ModContent.ItemType<IrradiatedDirt>(), 0);
         }
+        public override bool CanExplode(int i, int j)
+        {
+            WorldGen.KillTile(i, j, false, false, true);
+            return true;
+        }
         public override void FloorVisuals(Player player)
         {
             if (player.velocity.X != 0f && Main.rand.NextBool(20))
@@ -69,16 +74,18 @@ namespace Redemption.Tiles.Tiles
 
             if (!tileAbove.HasTile && Main.tile[i, j].HasTile && Main.rand.NextBool(15) && Main.tile[i, j - 1].LiquidAmount == 0)
             {
-                WorldGen.PlaceObject(i, j - 1, ModContent.TileType<CorruptionWastelandFoliage>(), true, Main.rand.Next(22));
-                NetMessage.SendObjectPlacement(-1, i, j - 1, ModContent.TileType<CorruptionWastelandFoliage>(), Main.rand.Next(22), 0, -1, -1);
+                int rand = Main.rand.Next(22);
+                WorldGen.PlaceObject(i, j - 1, ModContent.TileType<CorruptionWastelandFoliage>(), true, rand);
+                NetMessage.SendObjectPlacement(-1, i, j - 1, ModContent.TileType<CorruptionWastelandFoliage>(), rand, 0, -1, -1);
             }
             if (Main.rand.NextBool(4))
-                WorldGen.SpreadGrass(i + Main.rand.Next(-1, 1), j + Main.rand.Next(-1, 1), ModContent.TileType<IrradiatedDirtTile>(), Type, false);
+                WorldGen.SpreadGrass(i + Main.rand.Next(-1, 1), j + Main.rand.Next(-1, 1), ModContent.TileType<IrradiatedDirtTile>(), Type, false, tile.BlockColorAndCoating());
 
             if (NPC.downedMechBossAny && !tileAbove.HasTile && Main.tile[i, j].HasTile && Main.rand.NextBool(100))
             {
-                WorldGen.PlaceObject(i, j - 1, ModContent.TileType<XenomiteCrystalTile>(), true);
-                NetMessage.SendObjectPlacement(-1, i, j - 1, ModContent.TileType<XenomiteCrystalTile>(), 0, 0, -1, -1);
+                int rand = Main.rand.Next(4);
+                WorldGen.PlaceObject(i, j - 1, ModContent.TileType<XenomiteCrystalTile>(), true, rand);
+                NetMessage.SendObjectPlacement(-1, i, j - 1, ModContent.TileType<XenomiteCrystalTile>(), rand, 0, -1, -1);
             }
             if (NPC.downedMechBossAny && !tileAbove.HasTile && Main.tile[i, j].HasTile && Main.rand.NextBool(600))
             {

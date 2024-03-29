@@ -1,6 +1,6 @@
+using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria;
 
 namespace Redemption.Items.Materials.HM
 {
@@ -15,10 +15,10 @@ namespace Redemption.Items.Materials.HM
 
         public override void SetDefaults()
         {
-            Item.width = 22;
+            Item.width = 26;
             Item.height = 26;
             Item.maxStack = Item.CommonMaxStack;
-            Item.value = 5000;
+            Item.value = Item.buyPrice(0, 0, 10, 0);
             Item.rare = ItemRarityID.Pink;
         }
     }

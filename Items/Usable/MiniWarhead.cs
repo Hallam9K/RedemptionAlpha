@@ -1,5 +1,4 @@
 using Microsoft.Xna.Framework;
-using Redemption.Base;
 using Redemption.Globals;
 using System;
 using Terraria;
@@ -33,7 +32,7 @@ namespace Redemption.Items.Usable
             Item.UseSound = SoundID.Item1;
             Item.useAnimation = 40;
             Item.useTime = 40;
-            Item.value = Item.buyPrice(0, 10, 0, 0);
+            Item.value = Item.buyPrice(0, 1, 0, 0);
             Item.noUseGraphic = true;
             Item.noMelee = true;
             Item.shoot = ModContent.ProjectileType<MiniWarhead_Proj>();
@@ -92,19 +91,8 @@ namespace Redemption.Items.Usable
                 Projectile.damage = 500;
                 RedeDraw.SpawnExplosion(Projectile.Center, Color.OrangeRed, DustID.Torch, 30, 0);
                 Rectangle boom = new((int)Projectile.Center.X - 250, (int)Projectile.Center.Y - 250, 500, 500);
-                for (int i = 0; i < Main.maxNPCs; i++)
-                {
-                    NPC target = Main.npc[i];
-                    if (!target.active || !target.CanBeChasedBy())
-                        continue;
-
-                    if (target.immune[Projectile.whoAmI] > 0 || !target.Hitbox.Intersects(boom))
-                        continue;
-
-                    target.immune[Projectile.whoAmI] = 20;
-                    int hitDirection = target.RightOfDir(Projectile);
-                    BaseAI.DamageNPC(target, Projectile.damage, Projectile.knockBack, hitDirection, Projectile);
-                }
+                RedeHelper.NPCRadiusDamage(boom, Projectile, Projectile.damage, Projectile.knockBack);
+                RedeHelper.PlayerRadiusDamage(boom, Projectile, Projectile.damage, Projectile.knockBack);
                 Projectile.knockBack = 10f;
             }
             if (Projectile.velocity.X > -0.01 && Projectile.velocity.X < 0.01)

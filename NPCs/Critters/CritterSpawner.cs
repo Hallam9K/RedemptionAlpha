@@ -1,13 +1,13 @@
-﻿using Terraria;
+﻿using Microsoft.Xna.Framework;
+using Redemption.Globals;
+using System;
+using Terraria;
+using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Redemption.Globals;
 using Terraria.ModLoader.Utilities;
 using Terraria.Utilities;
-using Microsoft.Xna.Framework;
-using Terraria.DataStructures;
-using static Redemption.NPCs.Critters.Chicken;
-using System;
+using static Redemption.NPCs.Critters.BaseChicken;
 
 namespace Redemption.NPCs.Critters
 {
@@ -16,7 +16,7 @@ namespace Redemption.NPCs.Critters
         public override string Texture => Redemption.EMPTY_TEXTURE;
         public override void SetStaticDefaults()
         {
-            NPCID.Sets.NPCBestiaryDrawModifiers value = new(0) { Hide = true };
+            NPCID.Sets.NPCBestiaryDrawModifiers value = new() { Hide = true };
             NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, value);
         }
         public override void SetDefaults()
@@ -83,7 +83,7 @@ namespace Redemption.NPCs.Critters
         public override string Texture => Redemption.EMPTY_TEXTURE;
         public override void SetStaticDefaults()
         {
-            NPCID.Sets.NPCBestiaryDrawModifiers value = new(0) { Hide = true };
+            NPCID.Sets.NPCBestiaryDrawModifiers value = new() { Hide = true };
             NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, value);
         }
         public override void SetDefaults()

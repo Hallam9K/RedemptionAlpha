@@ -1,9 +1,9 @@
-using Terraria.ID;
-using Terraria;
-using Terraria.ModLoader;
 using Redemption.NPCs.Critters;
-using static Redemption.NPCs.Critters.Chicken;
+using Terraria;
 using Terraria.DataStructures;
+using Terraria.ID;
+using Terraria.ModLoader;
+using static Redemption.NPCs.Critters.BaseChicken;
 
 namespace Redemption.Items.Critters
 {

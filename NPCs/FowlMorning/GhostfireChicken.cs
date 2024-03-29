@@ -10,6 +10,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Redemption.Biomes;
 using Terraria.Audio;
 using System;
+using Terraria.Localization;
 
 namespace Redemption.NPCs.FowlMorning
 {
@@ -160,8 +161,7 @@ namespace Redemption.NPCs.FowlMorning
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Surface,
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Times.DayTime,
 
-                new FlavorTextBestiaryInfoElement(
-                    "...")
+                new FlavorTextBestiaryInfoElement(Language.GetTextValue("Mods.Redemption.FlavorTextBestiary.GhostfireChicken"))
             });
         }
     }

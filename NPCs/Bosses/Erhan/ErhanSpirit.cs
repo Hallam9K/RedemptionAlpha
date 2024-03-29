@@ -1,11 +1,13 @@
 using Microsoft.Xna.Framework;
-using Terraria;
-using Terraria.ID;
-using Terraria.ModLoader;
+using Redemption.BaseExtension;
 using Redemption.Globals;
 using Redemption.UI.ChatUI;
-using Terraria.Localization;
 using System;
+using Terraria;
+using Terraria.Audio;
+using Terraria.ID;
+using Terraria.Localization;
+using Terraria.ModLoader;
 
 namespace Redemption.NPCs.Bosses.Erhan
 {
@@ -25,7 +27,7 @@ namespace Redemption.NPCs.Bosses.Erhan
 
             NPCID.Sets.ImmuneToRegularBuffs[Type] = true;
 
-            NPCID.Sets.NPCBestiaryDrawModifiers value = new(0)
+            NPCID.Sets.NPCBestiaryDrawModifiers value = new()
             {
                 Hide = true
             };
@@ -51,9 +53,24 @@ namespace Redemption.NPCs.Bosses.Erhan
         {
             NPC.SetEventFlagCleared(ref RedeBossDowned.downedErhan, -1);
         }
+
         private bool Funny;
+
         public override bool PreAI()
         {
+            if (!spawned)
+            {
+                if (!Main.dedServ)
+                    Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/silence");
+
+                SoundEngine.PlaySound(SoundID.Item68, NPC.position);
+                Main.LocalPlayer.RedemptionScreen().ScreenShakeOrigin = NPC.Center;
+                Main.LocalPlayer.RedemptionScreen().ScreenShakeIntensity += 14;
+                HolyFlare = true;
+                TeleGlow = true;
+                spawned = true;
+            }
+
             switch (AIState)
             {
                 case ActionState.Begin:
@@ -75,7 +92,7 @@ namespace Redemption.NPCs.Bosses.Erhan
                             }
                             if (RedeBossDowned.erhanDeath < 4)
                             {
-                                if (AITimer++ == 0 && Main.rand.NextBool(10))
+                                if (AITimer++ == 0 && Main.netMode != NetmodeID.MultiplayerClient && Main.rand.NextBool(10))
                                 {
                                     Funny = true;
                                     NPC.netUpdate = true;
@@ -83,7 +100,7 @@ namespace Redemption.NPCs.Bosses.Erhan
 
                                 if (Funny)
                                 {
-                                    if (AITimer == 1 && !Main.dedServ)
+                                    if (AITimer == 1)
                                     {
                                         Dialogue d1 = new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.ErhanS.Funny"), Color.LightGoldenrodYellow, new Color(100, 86, 0), voice, .03f, 2f, .5f, true, null, Bubble, null, modifier);
                                         ChatUI.Visible = true;
@@ -105,14 +122,11 @@ namespace Redemption.NPCs.Bosses.Erhan
                                         AITimer = 0;
                                         NPC.dontTakeDamage = false;
                                         AIState = ActionState.Idle;
-                                        NPC.netUpdate = true;
-                                        if (Main.netMode == NetmodeID.Server && NPC.whoAmI < Main.maxNPCs)
-                                            NetMessage.SendData(MessageID.SyncNPC, number: NPC.whoAmI);
                                     }
                                 }
                                 else
                                 {
-                                    if (AITimer == 1 && !Main.dedServ)
+                                    if (AITimer == 1)
                                     {
                                         DialogueChain chain = new();
                                         chain.Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.ErhanS.1"), Color.LightGoldenrodYellow, new Color(100, 86, 0), voice, .03f, 2f, 0, false, null, Bubble, null, modifier))
@@ -137,15 +151,12 @@ namespace Redemption.NPCs.Bosses.Erhan
                                         AITimer = 0;
                                         NPC.dontTakeDamage = false;
                                         AIState = ActionState.Idle;
-                                        NPC.netUpdate = true;
-                                        if (Main.netMode == NetmodeID.Server && NPC.whoAmI < Main.maxNPCs)
-                                            NetMessage.SendData(MessageID.SyncNPC, number: NPC.whoAmI);
                                     }
                                 }
                             }
                             else
                             {
-                                if (AITimer++ == 0 && !Main.dedServ)
+                                if (AITimer++ == 0)
                                 {
                                     Dialogue d1 = new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.ErhanS.3"), Color.LightGoldenrodYellow, new Color(100, 86, 0), voice, .03f, 2f, .5f, true, null, Bubble, null, modifier);
                                     ChatUI.Visible = true;
@@ -160,9 +171,6 @@ namespace Redemption.NPCs.Bosses.Erhan
                                     AITimer = 0;
                                     NPC.dontTakeDamage = false;
                                     AIState = ActionState.Idle;
-                                    NPC.netUpdate = true;
-                                    if (Main.netMode == NetmodeID.Server && NPC.whoAmI < Main.maxNPCs)
-                                        NetMessage.SendData(MessageID.SyncNPC, number: NPC.whoAmI);
                                 }
                             }
                             return false;

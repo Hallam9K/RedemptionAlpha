@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using Terraria;
 using Terraria.GameContent.Bestiary;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 
 namespace Redemption.NPCs.Minibosses.EaglecrestGolem
@@ -144,7 +145,7 @@ namespace Redemption.NPCs.Minibosses.EaglecrestGolem
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Surface,
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Times.DayTime,
 
-                new FlavorTextBestiaryInfoElement("Absolute BEBE")
+                new FlavorTextBestiaryInfoElement(Language.GetTextValue("Mods.Redemption.FlavorTextBestiary.EaglecrestRockPile"))
             });
         }
         public override void HitEffect(NPC.HitInfo hit)

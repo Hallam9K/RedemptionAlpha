@@ -80,6 +80,7 @@ namespace Redemption.NPCs.Lab.Behemoth
             NPC.boss = true;
             NPC.behindTiles = true;
             NPC.dontTakeDamage = true;
+            NPC.BossBar = ModContent.GetInstance<NoHeadHealthBar>();
             if (!Main.dedServ)
                 Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/LabBossMusicIB");
             SpawnModBiomes = new int[1] { ModContent.GetInstance<LabBiome>().Type };
@@ -323,7 +324,7 @@ namespace Redemption.NPCs.Lab.Behemoth
         }
         public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)
         {
-            NPC.lifeMax = (int)(NPC.lifeMax * 0.6f * balance * bossAdjustment);
+            NPC.lifeMax = (int)(NPC.lifeMax * 0.6f * balance);
             NPC.damage = (int)(NPC.damage * 0.6f);
         }
         public override void ModifyHitPlayer(Player target, ref Player.HurtModifiers modifiers)

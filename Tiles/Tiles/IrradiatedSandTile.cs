@@ -1,14 +1,14 @@
 using Microsoft.Xna.Framework;
-using Terraria;
-using Terraria.ID;
-using Terraria.ModLoader;
-using System;
-using Redemption.Items.Placeable.Tiles;
-using Terraria.DataStructures;
+using Redemption.BaseExtension;
 using Redemption.Globals.Player;
 using Redemption.Items.Accessories.HM;
+using Redemption.Items.Placeable.Tiles;
+using System;
+using Terraria;
 using Terraria.Audio;
-using Redemption.BaseExtension;
+using Terraria.DataStructures;
+using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace Redemption.Tiles.Tiles
 {
@@ -27,6 +27,7 @@ namespace Redemption.Tiles.Tiles
             Main.tileMerge[ModContent.TileType<IrradiatedHardenedSandTile>()][Type] = true;
             Main.tileBlendAll[Type] = true;
             Main.tileSand[Type] = true;
+            TileID.Sets.CanBeDugByShovel[Type] = true;
             TileID.Sets.Suffocate[Type] = true;
             TileID.Sets.isDesertBiomeSand[Type] = true;
             TileID.Sets.Conversion.Sand[Type] = true;
@@ -49,17 +50,9 @@ namespace Redemption.Tiles.Tiles
         public override void KillTile(int i, int j, ref bool fail, ref bool effectOnly, ref bool noItem)
         {
             Player player = Main.LocalPlayer;
-            Radiation modPlayer = player.RedemptionRad();
-            BuffPlayer suit = player.RedemptionPlayerBuff();
             float dist = Vector2.Distance(player.Center / 16f, new Vector2(i + 0.5f, j + 0.5f));
-            if (!fail && dist <= 4 && !suit.hazmatSuit && !suit.HEVSuit)
-            {
-                if (player.GetModPlayer<MullerEffect>().effect && Main.rand.NextBool(6) && !Main.dedServ)
-                    SoundEngine.PlaySound(CustomSounds.Muller1, player.position);
-
-                if (Main.rand.NextBool(100) && modPlayer.irradiatedLevel < 2)
-                    modPlayer.irradiatedLevel++;
-            }
+            if (!fail && dist <= 4)
+                player.RedemptionRad().Irradiate(.05f, 0, 2, 1, 6);
         }
         public override void NumDust(int i, int j, bool fail, ref int num)
         {

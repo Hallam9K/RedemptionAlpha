@@ -2,22 +2,16 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using Terraria;
-using Terraria.GameContent;
-using Terraria.ModLoader;
 using Terraria.GameContent.UI.BigProgressBar;
+using Terraria.ModLoader;
 
 namespace Redemption.NPCs.Bosses.PatientZero
 {
     public class PZHealthBar : ModBossBar
     {
-        private int bossHeadIndex = -1;
-
         public override Asset<Texture2D> GetIconTexture(ref Rectangle? iconFrame)
         {
-            if (bossHeadIndex != -1)
-            {
-                return TextureAssets.NpcHeadBoss[bossHeadIndex];
-            }
+            iconFrame = Rectangle.Empty;
             return null;
         }
         public override string Texture => "Redemption/Textures/BossBars/InfectionBossBar";
@@ -27,7 +21,6 @@ namespace Redemption.NPCs.Bosses.PatientZero
             if (!npc.active || npc.type != ModContent.NPCType<PZ>())
                 return false;
 
-            bossHeadIndex = npc.GetBossHeadTextureIndex();
             if (npc.ModNPC is PZ)
             {
                 int k = NPC.FindFirstNPC(ModContent.NPCType<PZ_Kari>());

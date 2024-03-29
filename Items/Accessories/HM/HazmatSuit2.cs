@@ -1,8 +1,9 @@
+using Redemption.BaseExtension;
 using Redemption.Buffs.Debuffs;
+using Redemption.Items.Accessories.PostML;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Redemption.BaseExtension;
 
 namespace Redemption.Items.Accessories.HM
 {
@@ -48,10 +49,16 @@ namespace Redemption.Items.Accessories.HM
         {
             Item.width = 26;
             Item.height = 38;
-            Item.value = Item.buyPrice(1, 0, 0, 0);
+            Item.value = Item.buyPrice(0, 20);
             Item.rare = ItemRarityID.Pink;
             Item.accessory = true;
             Item.hasVanityEffects = true;
+        }
+        public override bool CanAccessoryBeEquippedWith(Item equippedItem, Item incomingItem, Player player)
+        {
+            if (equippedItem.type == ModContent.ItemType<HazmatSuit>() || equippedItem.type == ModContent.ItemType<HazmatSuit4>() || equippedItem.type == ModContent.ItemType<HazmatSuit3>() || equippedItem.type == ModContent.ItemType<HEVSuit>())
+                return false;
+            return true;
         }
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
@@ -59,9 +66,8 @@ namespace Redemption.Items.Accessories.HM
             p.HideVanity = hideVisual;
             p.VanityOn = true;
 
-            player.buffImmune[ModContent.BuffType<HeavyRadiationDebuff>()] = true;
             player.accDivingHelm = true;
-            player.RedemptionPlayerBuff().hazmatSuit = true;
+            player.RedemptionRad().protectionLevel += 1;
             player.RedemptionPlayerBuff().WastelandWaterImmune = true;
         }
     }

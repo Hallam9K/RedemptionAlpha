@@ -1,9 +1,8 @@
+using Microsoft.Xna.Framework;
+using Redemption.Projectiles.Ranged;
 using Terraria;
 using Terraria.ID;
-using Microsoft.Xna.Framework;
 using Terraria.ModLoader;
-using Redemption.Items.Materials.PreHM;
-using Redemption.Projectiles.Ranged;
 
 namespace Redemption.Items.Weapons.PreHM.Ranged
 {
@@ -43,13 +42,6 @@ namespace Redemption.Items.Weapons.PreHM.Ranged
             Item.shootSpeed = 14f;
             Item.shoot = ModContent.ProjectileType<FrigidBolt>();
             Item.useAmmo = AmmoID.Arrow;
-        }
-        public override void AddRecipes()
-        {
-            CreateRecipe()
-                .AddIngredient(ModContent.ItemType<PureIronAlloy>(), 10)
-                .AddTile(TileID.Anvils)
-                .Register();
         }
         public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback)
         {

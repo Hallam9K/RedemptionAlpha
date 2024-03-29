@@ -20,7 +20,7 @@ namespace Redemption.Globals
         public override SceneEffectPriority Priority => SceneEffectPriority.BossHigh;
         public override bool IsSceneEffectActive(Terraria.Player player)
         {
-            return RedeSystem.Silence || player.RedemptionRad().irradiatedEffect == 2;
+            return RedeSystem.Silence;
         }
     }
     public class SkeletonInvasionMusic : ModSceneEffect
@@ -56,7 +56,7 @@ namespace Redemption.Globals
         public override SceneEffectPriority Priority => SceneEffectPriority.BossHigh;
         public override bool IsSceneEffectActive(Terraria.Player player)
         {
-            return player.RedemptionRad().irradiatedEffect == 3;
+            return player.RedemptionRad().radiationLevel is >= 2f and < 3f;
         }
     }
     public class Rad2Music : ModSceneEffect
@@ -65,7 +65,7 @@ namespace Redemption.Globals
         public override SceneEffectPriority Priority => SceneEffectPriority.BossHigh;
         public override bool IsSceneEffectActive(Terraria.Player player)
         {
-            return player.RedemptionRad().irradiatedEffect >= 4;
+            return player.RedemptionRad().radiationLevel >= 3f;
         }
     }
     public class DancingSkeletonEffect : ModSceneEffect

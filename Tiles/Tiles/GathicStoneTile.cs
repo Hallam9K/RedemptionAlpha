@@ -27,7 +27,7 @@ namespace Redemption.Tiles.Tiles
             DustType = ModContent.DustType<SlateDust>();
             HitSound = CustomSounds.StoneHit;
             MinPick = 0;
-            MineResist = 1.5f;
+            MineResist = 1f;
             AddMapEntry(new Color(81, 72, 65));
         }
     }
