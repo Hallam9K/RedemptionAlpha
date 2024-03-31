@@ -14,6 +14,8 @@ using Terraria.Audio;
 using Redemption.Items.Weapons.PreHM.Melee;
 using Redemption.NPCs.Friendly.SpiritSummons;
 using Redemption.NPCs.Critters;
+using Redemption.Helpers;
+using System.Net;
 
 namespace Redemption.Globals
 {
@@ -313,6 +315,9 @@ namespace Redemption.Globals
         public int LaserWidth = 20;
         public int LaserEndSegmentLength = 22;
 
+        public Vector2 endPoint;
+        public bool NewCollision;
+
         public const float FirstSegmentDrawDist = 7;
 
         public int MaxLaserLength = 2000;
@@ -361,14 +366,28 @@ namespace Redemption.Globals
             DelegateMethods.v3_1 = color;
             Utils.PlotTileLine(Projectile.Center, Projectile.Center + new Vector2(1f, 0).RotatedBy(Projectile.rotation) * LaserLength, 26, DelegateMethods.CastLight);
         }
+        public float LengthSetting(Projectile projectile, Vector2 endpoint)
+        {
+            float hitscanBeamLength = (endpoint - projectile.Center).Length();
+            LaserLength = MathHelper.Lerp(LaserLength, hitscanBeamLength, 1f);
+            return LaserLength;
+        }
         public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox)
         {
-            Vector2 unit = new Vector2(1.5f, 0).RotatedBy(Projectile.rotation);
-            float point = 0f;
-            // Run an AABB versus Line check to look for collisions
-            if (Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(), Projectile.Center,
-                Projectile.Center + unit * LaserLength, Projectile.width * LaserScale, ref point))
-                return true;
+            if (NewCollision)
+            {
+                if (Helper.CheckLinearCollision(Projectile.Center, endPoint, targetHitbox, out Vector2 collisionPoint))
+                    return true;
+            }
+            else
+            {
+                Vector2 unit = new Vector2(1.5f, 0).RotatedBy(Projectile.rotation);
+                float point = 0f;
+                // Run an AABB versus Line check to look for collisions
+                if (Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(), Projectile.Center,
+                    Projectile.Center + unit * LaserLength, Projectile.width * LaserScale, ref point))
+                    return true;
+            }
             return false;
         }
     }

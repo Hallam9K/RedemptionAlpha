@@ -57,6 +57,7 @@ namespace Redemption.Globals.NPC
         public bool roosterBoost;
         public bool contagionShard;
         public bool soaked;
+        public bool xeniumGas;
 
         public override void ResetEffects(Terraria.NPC npc)
         {
@@ -86,6 +87,7 @@ namespace Redemption.Globals.NPC
             roosterBoost = false;
             contagionShard = false;
             soaked = false;
+            xeniumGas = false;
 
             if (!npc.HasBuff(ModContent.BuffType<InfestedDebuff>()))
             {
@@ -389,6 +391,8 @@ namespace Redemption.Globals.NPC
                 modifiers.ArmorPenetration += (player.GetModPlayer<RitualistPlayer>().SpiritLevel + 1) * 5;
             if (soaked && item.HasElement(ElementID.Ice))
                 modifiers.FinalDamage *= 1.15f;
+            if (xeniumGas)
+                modifiers.FinalDamage *= 1.2f;
         }
         public override void ModifyHitByProjectile(Terraria.NPC npc, Projectile projectile, ref Terraria.NPC.HitModifiers modifiers)
         {
@@ -396,6 +400,8 @@ namespace Redemption.Globals.NPC
                 modifiers.ArmorPenetration += (Main.player[projectile.owner].GetModPlayer<RitualistPlayer>().SpiritLevel + 1) * 5;
             if (soaked && projectile.HasElement(ElementID.Ice))
                 modifiers.FinalDamage *= 1.15f;
+            if (xeniumGas)
+                modifiers.FinalDamage *= 1.2f;
         }
         public override void ModifyIncomingHit(Terraria.NPC npc, ref Terraria.NPC.HitModifiers modifiers)
         {

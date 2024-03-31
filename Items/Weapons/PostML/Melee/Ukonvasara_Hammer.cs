@@ -40,6 +40,7 @@ namespace Redemption.Items.Weapons.PostML.Melee
             Projectile.penetrate = -1;
             Projectile.extraUpdates = 100;
             Projectile.alpha = 255;
+            Projectile.scale = 2;
             Projectile.usesLocalNPCImmunity = true;
             Projectile.Redemption().IsHammer = true;
             Projectile.noEnchantmentVisuals = true;
@@ -103,10 +104,10 @@ namespace Redemption.Items.Weapons.PostML.Melee
             if (Timer++ == 0)
             {
                 Projectile.scale *= Projectile.ai[2];
-                Length = 35 * Projectile.ai[2];
+                Length = 55 * Projectile.ai[2];
                 startVector = RedeHelper.PolarVector(1, Projectile.spriteDirection * MathHelper.PiOver2 + MathHelper.PiOver2) * Length;
             }
-            if (Timer == (int)(30 * 8 * SwingSpeed))
+            if (Timer == (int)(30 * 100 * SwingSpeed))
             {
                 if (!Main.dedServ)
                     SoundEngine.PlaySound(CustomSounds.Swoosh1 with { Pitch = -.6f }, Player.position);
@@ -259,7 +260,7 @@ namespace Redemption.Items.Weapons.PostML.Melee
             }
 
             float opacity2 = MathHelper.Clamp(LaunchTimer / 3000, 0, 1);
-            Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition + Vector2.UnitY * Projectile.gfxOffY, null, Color.White with { A = 0 } * 0.6f * opacity2, Projectile.rotation, origin, Projectile.scale * 3, spriteEffects, 0);
+            Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition + Vector2.UnitY * Projectile.gfxOffY, null, Color.White with { A = 0 } * 0.6f * opacity2, Projectile.rotation, origin, Projectile.scale * 1.5f, spriteEffects, 0);
             return false;
         }
     }

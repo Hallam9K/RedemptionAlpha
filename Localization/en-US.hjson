@@ -498,20 +498,13 @@ Mods: {
 					Bonus2: " to unleash toxic gas in a radius around the player, inflicting Burning Acid"
 				}
 
-				Xenium: {
-					Press:
-						'''
-
-						Press
-						'''
-					Keybind:
-						'''
-						Increased Energy regeneration if an Energy Pack is in your inventory
-						Select a keybind for [Special Ability Key] in Controls
-						'''
-					Bonus1: Increased Energy regeneration if an Energy Pack is in your inventory
-					Bonus2: " to fire a virulent grenade from your shoulder launcher"
-				}
+				Xenium.Bonus:
+					'''
+					Increased Energy regeneration if an Energy Pack is in your inventory
+					Double tap Down to enter [c/BCF160:Cannon Mode]:
+					While in Cannon Mode, all weapons are disabled and attacking fires aimable grenades
+					The grenade gives all enemies caught in the blast damage vulnerability
+					'''
 			}
 		}
 

@@ -850,7 +850,7 @@ namespace Redemption.NPCs.PreHM
                     SpeedMultiplier = 1.8f;
                     break;
             }
-            if (EyeType == 5)
+            if (EyeType == 4)
                 VisionRange = 100;
             else
                 VisionRange = 600 + VisionIncrease;
