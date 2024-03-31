@@ -141,6 +141,7 @@ namespace Redemption
         public static readonly SoundStyle NoitaDeath = new("Redemption/Sounds/Custom/NoitaDeath");
         public static readonly SoundStyle SwordClash = new("Redemption/Sounds/Custom/SwordClash") { PitchVariance = .1f };
         public static readonly SoundStyle AftonScream = new("Redemption/Sounds/Custom/AftonScream") { PitchVariance = .1f };
+        public static readonly SoundStyle Shatter = new("Redemption/Sounds/Custom/Shatter");
 
         public static readonly SoundStyle BoneHit = new("Redemption/Sounds/Tiles/BoneHit", 3);
         public static readonly SoundStyle BrickHit = new("Redemption/Sounds/Tiles/BrickHit", 3);

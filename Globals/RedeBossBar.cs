@@ -11,6 +11,7 @@ using Redemption.NPCs.Bosses.Neb.Phase2;
 using Redemption.NPCs.Bosses.Obliterator;
 using Redemption.NPCs.Bosses.SeedOfInfection;
 using Redemption.NPCs.Bosses.Thorn;
+using Redemption.NPCs.Lab;
 using Redemption.NPCs.Lab.Behemoth;
 using Redemption.NPCs.Lab.Blisterface;
 using Redemption.NPCs.Lab.Janitor;
@@ -47,7 +48,7 @@ namespace Redemption.Globals
                 drawParams.BarTexture = ModContent.Request<Texture2D>("Redemption/Textures/BossBars/InfectionBossBar").Value;
             else if (npc.ModNPC is KS3 or KS3_Clone)
                 drawParams.BarTexture = ModContent.Request<Texture2D>("Redemption/Textures/BossBars/KS3BossBar").Value;
-            else if (npc.ModNPC is JanitorBot or IrradiatedBehemoth or Blisterface or ProtectorVolt or MACEProject)
+            else if (npc.ModNPC is JanitorBot or IrradiatedBehemoth or Blisterface or ProtectorVolt or MACEProject or Stage3Scientist)
             {
                 drawParams.BarTexture = ModContent.Request<Texture2D>("Redemption/Textures/BossBars/LabBossBar").Value;
                 labBarTex ??= ModContent.Request<Texture2D>("Redemption/Textures/BossBars/LabBossBar_Bar");

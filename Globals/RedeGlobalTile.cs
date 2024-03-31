@@ -1,12 +1,16 @@
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using Redemption.BaseExtension;
 using Redemption.Biomes;
 using Redemption.Dusts;
 using Redemption.Items.Materials.PreHM;
 using Redemption.NPCs.Critters;
+using Redemption.Textures;
 using Redemption.Tiles.Natural;
 using Redemption.Tiles.Plants;
 using Redemption.Tiles.Tiles;
 using Redemption.WorldGeneration;
+using ReLogic.Content;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
@@ -141,5 +145,25 @@ namespace Redemption.Globals
         public static bool[] CannotMineTileBelow = TileID.Sets.Factory.CreateBoolSet();
         public static bool[] CannotMineTileAbove = TileID.Sets.Factory.CreateBoolSet();
         public static bool[] CannotTeleportInFront = WallID.Sets.Factory.CreateBoolSet();
+        public static void DrawSpiritFlare(SpriteBatch spriteBatch, int i, int j, int frameX = 0, float xOffset = 0, float yOffset = 0, float scale = 1.5f)
+        {
+            if (!Main.LocalPlayer.RedemptionAbility().SpiritwalkerActive)
+                return;
+
+            Asset<Texture2D> flare = ModContent.Request<Texture2D>("Redemption/Textures/WhiteFlare");
+            Vector2 zero = new(Main.offScreenRange, Main.offScreenRange);
+            if (Main.drawToScreen)
+                zero = Vector2.Zero;
+            Vector2 origin = flare.Size() / 2;
+
+            bool frameCheck = Main.tile[i, j].TileFrameX == 0;
+            if (frameX != 0)
+                frameCheck = Main.tile[i, j].TileFrameX % frameX == 0;
+            if (frameCheck && Main.tile[i, j].TileFrameY == 0)
+            {
+                spriteBatch.Draw(flare.Value, new Vector2(((i + xOffset) * 16) - (int)Main.screenPosition.X, ((j + yOffset) * 16) - (int)Main.screenPosition.Y) + zero, null, RedeColor.COLOR_GLOWPULSE with { A = 0 }, Main.GlobalTimeWrappedHourly, origin, scale, 0, 1f);
+                spriteBatch.Draw(flare.Value, new Vector2(((i + xOffset) * 16) - (int)Main.screenPosition.X, ((j + yOffset) * 16) - (int)Main.screenPosition.Y) + zero, null, RedeColor.COLOR_GLOWPULSE with { A = 0 }, -Main.GlobalTimeWrappedHourly, origin, scale, 0, 1f);
+            }
+        }
     }
 }

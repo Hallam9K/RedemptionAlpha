@@ -91,6 +91,145 @@ namespace Redemption.Effects
             trail2.Positions = cache2.ToArray();
             trail2.NextPosition = pos;
         }
+        public static void ManageSwordTrailPosition(Projectile Projectile, Player Player, float[] oldrot, ref List<float> RotationCache, ref List<float> RotationCache2, ref List<float> RotationCacheLate, ref List<Vector2> positionCache, ref List<Vector2> positionCacheLate, float drawPos = 15f, int dirType = 0)
+        {
+            //storing rotation info
+            float dir = 0;
+            switch (dirType)
+            {
+                case 0:
+                    dir = Player.direction == 1 ? MathHelper.PiOver4 : 3 * MathHelper.PiOver4;
+                    break;
+                case 1:
+                    dir = Player.direction == -1 ? MathHelper.PiOver4 : 3 * MathHelper.PiOver4;
+                    break;
+            }
+
+            for (int i = Projectile.oldPos.Length - 1; i >= 0; i--)
+            {
+                RotationCache.Add(oldrot[i] + dir);
+            }
+            while (RotationCache.Count > Projectile.oldPos.Length)
+            {
+                RotationCache.RemoveAt(0);
+            }
+
+            for (int i = 0; i < Projectile.oldPos.Length; i++)
+            {
+                RotationCache2.Add(i == 0 ? RotationCache[i] : MathHelper.Lerp(RotationCache[i - 1], RotationCache[i], i / Projectile.oldPos.Length));
+            }
+            while (RotationCache2.Count > Projectile.oldPos.Length)
+            {
+                RotationCache2.RemoveAt(0);
+            }
+
+            for (int i = 0; i < Projectile.oldPos.Length; i++)
+            {
+                RotationCacheLate.Add(i == 0 || i == 1 ? RotationCache[i] : MathHelper.Lerp(RotationCache[i - 2], RotationCache[i - 1], i / Projectile.oldPos.Length));
+            }
+            while (RotationCacheLate.Count > Projectile.oldPos.Length)
+            {
+                RotationCacheLate.RemoveAt(0);
+            }
+
+            //storing drawing position info
+            for (int i = 0; i < Projectile.oldPos.Length; i++)
+            {
+                positionCache.Add(Player.Center - RotationCache2[i].ToRotationVector2() * drawPos);
+            }
+            while (positionCache.Count > Projectile.oldPos.Length)
+            {
+                positionCache.RemoveAt(0);
+            }
+
+            for (int i = 0; i < Projectile.oldPos.Length; i++)
+            {
+                positionCacheLate.Add(Player.Center - RotationCacheLate[i].ToRotationVector2() * drawPos);
+            }
+            while (positionCacheLate.Count > Projectile.oldPos.Length)
+            {
+                positionCacheLate.RemoveAt(0);
+            }
+        }
+        public static void ManageSwordTrailPosition(Projectile Projectile, Vector2 SpawnPoint, float[] oldrot, ref List<float> RotationCache, ref List<float> RotationCache2, ref List<float> RotationCacheLate, ref List<Vector2> positionCache, ref List<Vector2> positionCacheLate, float drawPos = 15f, int dirType = 0)
+        {
+            //storing rotation info
+            float dir = 0;
+            switch (dirType)
+            {
+                case 0:
+                    dir = 0;
+                    break;
+                case 1:
+                    dir = MathHelper.Pi;
+                    break;
+            }
+
+            for (int i = Projectile.oldPos.Length - 1; i >= 0; i--)
+            {
+                RotationCache.Add(oldrot[i] + dir);
+            }
+            while (RotationCache.Count > Projectile.oldPos.Length)
+            {
+                RotationCache.RemoveAt(0);
+            }
+
+            for (int i = 0; i < Projectile.oldPos.Length; i++)
+            {
+                RotationCache2.Add(i == 0 ? RotationCache[i] : MathHelper.Lerp(RotationCache[i - 1], RotationCache[i], i / Projectile.oldPos.Length));
+            }
+            while (RotationCache2.Count > Projectile.oldPos.Length)
+            {
+                RotationCache2.RemoveAt(0);
+            }
+
+            for (int i = 0; i < Projectile.oldPos.Length; i++)
+            {
+                RotationCacheLate.Add(i == 0 || i == 1 ? RotationCache[i] : MathHelper.Lerp(RotationCache[i - 2], RotationCache[i - 1], i / Projectile.oldPos.Length));
+            }
+            while (RotationCacheLate.Count > Projectile.oldPos.Length)
+            {
+                RotationCacheLate.RemoveAt(0);
+            }
+
+            //storing drawing position info
+            for (int i = 0; i < Projectile.oldPos.Length; i++)
+            {
+                positionCache.Add(SpawnPoint - RotationCache2[i].ToRotationVector2() * drawPos);
+            }
+            while (positionCache.Count > Projectile.oldPos.Length)
+            {
+                positionCache.RemoveAt(0);
+            }
+
+            for (int i = 0; i < Projectile.oldPos.Length; i++)
+            {
+                positionCacheLate.Add(SpawnPoint - RotationCacheLate[i].ToRotationVector2() * drawPos);
+            }
+            while (positionCacheLate.Count > Projectile.oldPos.Length)
+            {
+                positionCacheLate.RemoveAt(0);
+            }
+        }
+        public static void ManageSwordTrailPosition(int TrailLength, Vector2 drawCenter, Vector2[] oldDirectionVector, ref List<Vector2> directionVectorCache, ref List<Vector2> positionCache, float extension = 1)
+        {
+            for (int i = TrailLength - 1; i >= 0; i--)
+            {
+                directionVectorCache.Add(oldDirectionVector[i] * extension);
+            }
+            while (directionVectorCache.Count > TrailLength)
+            {
+                directionVectorCache.RemoveAt(0);
+            }
+
+            for (int i = 0; i < TrailLength; i++)
+            {
+                positionCache.Add(drawCenter + directionVectorCache[i]);
+            }
+            while (positionCache.Count > TrailLength)
+            {
+                positionCache.RemoveAt(0);
+            }
+        }
     }
 }
-

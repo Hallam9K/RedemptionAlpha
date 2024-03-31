@@ -232,6 +232,11 @@ Mods: {
 				Modifier: Angel of the Cosmos
 				Ultimate: Ultimate Form
 			}
+
+			Stage3Scientist: {
+				Name: Stage 3 Infected Scientist
+				Modifier: Crystal Horror
+			}
 		}
 
 		FlavorTextBestiary: {
@@ -11309,6 +11314,7 @@ Mods: {
 			HazmatZombie_SS.DisplayName: Hazmat Zombie_ S S
 			CorruptChicken.DisplayName: Corrupt Chicken
 			ViciousChicken.DisplayName: Vicious Chicken
+			Stage3Scientist.DisplayName: Stage 3 Infected Scientist
 		}
 
 		Tiles: {

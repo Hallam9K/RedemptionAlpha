@@ -6,6 +6,7 @@ using Redemption.Dusts;
 using Redemption.Effects;
 using Redemption.Globals;
 using Redemption.Helpers;
+using Redemption.Particles;
 using Redemption.Projectiles.Ranged;
 using ReLogic.Content;
 using System;
@@ -377,7 +378,7 @@ namespace Redemption.Items.Weapons.PostML.Melee
                 if (Main.rand.NextBool(5) && !teleport)
                 {
                     for (int i = 0; i < 2; i++)
-                        DustHelper.DrawParticleElectricity(Projectile.Center - new Vector2(20 * Projectile.direction, 0), Projectile.Center - new Vector2(20 * Projectile.direction, 0) + RedeHelper.PolarVector(Main.rand.Next(70, 121), RedeHelper.RandomRotation()), .8f, 10, 0.2f);
+                        DustHelper.DrawParticleElectricity<LightningParticle>(Projectile.Center - new Vector2(20 * Projectile.direction, 0), Projectile.Center - new Vector2(20 * Projectile.direction, 0) + RedeHelper.PolarVector(Main.rand.Next(70, 121), RedeHelper.RandomRotation()), .8f, 10, 0.2f);
                 }
 
                 Owner.ChangeDir(Projectile.Center.X < Owner.Center.X ? -1 : 1);
@@ -593,7 +594,7 @@ namespace Redemption.Items.Weapons.PostML.Melee
         }
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
-            ProjHelper.Decapitation(target, ref damageDone, ref hit.Crit);
+            RedeProjectile.Decapitation(target, ref damageDone, ref hit.Crit);
             target.AddBuff(ModContent.BuffType<ElectrifiedDebuff>(), 180);
             Projectile.localNPCImmunity[target.whoAmI] = 8;
             target.immune[Projectile.owner] = 0;
