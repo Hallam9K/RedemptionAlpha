@@ -10174,6 +10174,11 @@ Mods: {
 				DisplayName: Petrified Wood Toilet
 				Tooltip: ""
 			}
+
+			XeniumGrenadeCannon: {
+				DisplayName: Xenium Grenade Cannon
+				Tooltip: ""
+			}
 		}
 
 		Projectiles: {
@@ -10832,6 +10837,10 @@ Mods: {
 			Ukkonen.DisplayName: Ukkonen
 			ElderWoodBolt.DisplayName: Elder Wood Bolt
 			ElderWoodBolt_Shard.DisplayName: Elder Wood Bolt_ Shard
+			Xenium_Gas.DisplayName: Xenium_ Gas
+			Xenium_GasExplosion.DisplayName: Xenium_ Gas Explosion
+			XeniumGrenade.DisplayName: Xenium Grenade
+			XeniumTrajectory.DisplayName: Xenium Trajectory
 		}
 
 		NPCs: {
