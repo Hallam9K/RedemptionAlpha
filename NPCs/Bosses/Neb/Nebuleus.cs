@@ -28,6 +28,8 @@ using ReLogic.Content;
 using Terraria.Localization;
 using Redemption.Globals.NPC;
 using Redemption.NPCs.Friendly.TownNPCs;
+using Redemption.Buffs.NPCBuffs;
+using Redemption.Buffs.Debuffs;
 
 namespace Redemption.NPCs.Bosses.Neb
 {
@@ -86,7 +88,20 @@ namespace Redemption.NPCs.Bosses.Neb
         {
             // DisplayName.SetDefault("Nebuleus, Angel of the Cosmos");
             Main.npcFrameCount[NPC.type] = 5;
-            NPCID.Sets.ImmuneToRegularBuffs[Type] = true;
+            NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.Poisoned] = true;
+            NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.OnFire] = true;
+            NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.OnFire3] = true;
+            NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.Frostburn] = true;
+            NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.Frostburn2] = true;
+            NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.CursedInferno] = true;
+            NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.ShadowFlame] = true;
+            NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.Venom] = true;
+            NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.DryadsWardDebuff] = true;
+            NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.Electrified] = true;
+            NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.Bleeding] = true;
+            NPCID.Sets.SpecificDebuffImmunity[Type][ModContent.BuffType<PureChillDebuff>()] = true;
+            NPCID.Sets.SpecificDebuffImmunity[Type][ModContent.BuffType<DragonblazeDebuff>()] = true;
+            NPCID.Sets.SpecificDebuffImmunity[Type][ModContent.BuffType<MoonflareDebuff>()] = true;
             NPCID.Sets.NPCBestiaryDrawModifiers value = new(0)
             {
                 CustomTexturePath = "Redemption/Textures/Bestiary/Nebuleus_Bestiary"

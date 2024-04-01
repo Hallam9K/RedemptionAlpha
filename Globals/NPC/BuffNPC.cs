@@ -392,7 +392,7 @@ namespace Redemption.Globals.NPC
             if (soaked && item.HasElement(ElementID.Ice))
                 modifiers.FinalDamage *= 1.15f;
             if (xeniumGas)
-                modifiers.FinalDamage *= 1.2f;
+                modifiers.FinalDamage *= 1.3f;
         }
         public override void ModifyHitByProjectile(Terraria.NPC npc, Projectile projectile, ref Terraria.NPC.HitModifiers modifiers)
         {
@@ -401,7 +401,7 @@ namespace Redemption.Globals.NPC
             if (soaked && projectile.HasElement(ElementID.Ice))
                 modifiers.FinalDamage *= 1.15f;
             if (xeniumGas)
-                modifiers.FinalDamage *= 1.2f;
+                modifiers.FinalDamage *= 1.3f;
         }
         public override void ModifyIncomingHit(Terraria.NPC npc, ref Terraria.NPC.HitModifiers modifiers)
         {

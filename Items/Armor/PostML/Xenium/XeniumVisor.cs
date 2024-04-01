@@ -115,6 +115,8 @@ namespace Redemption.Items.Armor.PostML.Xenium
                 }
                 else
                 {
+                    player.releaseUseItem = false;
+                    player.controlUseItem = false;
                     if (!Main.dedServ)
                     {
                         SoundEngine.PlaySound(CustomSounds.ShootChange with { Pitch = -.2f }, player.position);
