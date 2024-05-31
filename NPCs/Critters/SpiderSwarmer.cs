@@ -67,7 +67,7 @@ namespace Redemption.NPCs.Critters
             NPC.catchItem = (short)ModContent.ItemType<SpiderSwarmerItem>();
         }
 
-        public override bool CanHitPlayer(Player target, ref int cooldownSlot) => AIState is ActionState.Aggressive && !target.dontHurtCritters;
+        public override bool CanHitPlayer(Player target, ref int cooldownSlot) => AIState is ActionState.Aggressive && !target.RedemptionPlayerBuff().spiderFriendly && !target.dontHurtCritters;
         public override bool CanHitNPC(NPC target) => false;
         public override void ModifyHitPlayer(Player target, ref Player.HurtModifiers modifiers) => target.noKnockback = true;
         public override void OnHitPlayer(Player target, Player.HurtInfo hurtInfo)
@@ -215,7 +215,7 @@ namespace Redemption.NPCs.Critters
             int gotNPC = GetNearestNPC();
             if (CountCheck() > 5)
             {
-                if (NPC.Sight(player, 100, false, true) && !player.dontHurtCritters)
+                if (NPC.Sight(player, 100, false, true) && !player.RedemptionPlayerBuff().spiderFriendly && !player.dontHurtCritters)
                 {
                     globalNPC.attacker = player;
                     AITimer = 0;

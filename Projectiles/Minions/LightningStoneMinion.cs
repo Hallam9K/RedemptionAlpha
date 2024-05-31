@@ -193,8 +193,8 @@ namespace Redemption.Projectiles.Minions
                             stoneMinion.glowOpacity = 1;
                             if (!Main.dedServ)
                                 SoundEngine.PlaySound(CustomSounds.Zap2 with { Volume = .5f }, proj.position);
-                            DustHelper.DrawParticleElectricity(RedeHelper.RandAreaInEntity(proj), target.Center, .51f, 20, 0.05f, 1);
-                            DustHelper.DrawParticleElectricity(RedeHelper.RandAreaInEntity(proj), target.Center, .5f, 20, 0.05f, 1);
+                            DustHelper.DrawParticleElectricity<LightningParticle>(RedeHelper.RandAreaInEntity(proj), target.Center, .51f, 20, 0.05f, 1);
+                            DustHelper.DrawParticleElectricity<LightningParticle>(RedeHelper.RandAreaInEntity(proj), target.Center, .5f, 20, 0.05f, 1);
                             int hitDirection = target.RightOfDir(proj);
                             BaseAI.DamageNPC(target, proj.damage / 4, proj.knockBack * 2, hitDirection, proj);
                         }

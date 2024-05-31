@@ -59,6 +59,7 @@ namespace Redemption.Globals.Player
         public bool yesChoice;
         public bool noChoice;
         public bool onHit;
+        public int fallSpeedIncrease;
 
         public override void ResetEffects()
         {
@@ -71,6 +72,11 @@ namespace Redemption.Globals.Player
             contactImmune = false;
             parried = false;
             onHit = false;
+        }
+        public override void UpdateEquips()
+        {
+            Player.maxFallSpeed += fallSpeedIncrease;
+            fallSpeedIncrease = 0;
         }
         public override void Initialize()
         {

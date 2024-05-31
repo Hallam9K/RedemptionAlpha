@@ -65,7 +65,7 @@ namespace Redemption.NPCs.Friendly.TownNPCs
                         NPC.velocity.X = 3;
                     }
                     NPC.velocity.X *= 0.99f;
-                    if (BaseAI.HitTileOnSide(NPC, 3))
+                    if (AITimer > 0 && (BaseAI.HitTileOnSide(NPC, 3) || NPC.velocity.Y == 0))
                     {
                         if (player.IsFullTBot())
                             playerTBot = true;

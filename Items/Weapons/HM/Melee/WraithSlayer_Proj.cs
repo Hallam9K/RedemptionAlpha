@@ -159,7 +159,7 @@ namespace Redemption.Items.Weapons.HM.Melee
         {
             if (!strike)
                 target.immune[Player.heldProj] = 0;
-            return !target.friendly && progress >= 0.2f && progress <= 0.8 && target.immune[Player.heldProj] == 0;
+            return !target.friendly && progress >= 0.2f && progress <= 0.8 && target.immune[Player.heldProj] == 0 ? null : false;
         }
 
         public bool strike;

@@ -116,7 +116,7 @@ namespace Redemption.Items.Weapons.HM.Melee
             }
             else
             {
-                if(timer++ == 0)
+                if (timer++ == 0)
                 {
                     SoundEngine.PlaySound(SoundID.Item74, Projectile.position);
                 }
@@ -175,7 +175,7 @@ namespace Redemption.Items.Weapons.HM.Melee
         {
             Player.fullRotation = 0f;
         }
-        public override bool? CanHitNPC(NPC target) => launch? null : false;
+        public override bool? CanHitNPC(NPC target) => launch ? null : false;
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             for (int i = 0; i < 15; i++)
@@ -193,7 +193,8 @@ namespace Redemption.Items.Weapons.HM.Melee
             SoundEngine.PlaySound(SoundID.Item14, Projectile.position);
             Main.LocalPlayer.RedemptionScreen().ScreenShakeOrigin = Projectile.Center;
             Main.LocalPlayer.RedemptionScreen().ScreenShakeIntensity += 3;
-            target.AddBuff(ModContent.BuffType<StunnedDebuff>(), 10);
+            if (target.knockBackResist > 0)
+                target.AddBuff(ModContent.BuffType<StunnedDebuff>(), 10);
 
             Projectile.friendly = false;
             if (fullCharge)

@@ -680,7 +680,7 @@ namespace Redemption.NPCs.Minibosses.Calavia
                         NPC.velocity *= 0;
                         if (TimerRand is 0)
                             NPC.SetDefaults(ModContent.NPCType<Calavia_Intro>());
-                        else if (TimerRand is 2)
+                        else if (TimerRand is 2 && Defeat)
                         {
                             if (Main.netMode != NetmodeID.MultiplayerClient)
                             {

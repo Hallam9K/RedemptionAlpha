@@ -1,4 +1,5 @@
 using Microsoft.Xna.Framework;
+using ParticleLibrary;
 using ParticleLibrary.Core;
 using Redemption.Globals;
 using Redemption.Particles;
@@ -46,7 +47,7 @@ namespace Redemption.Projectiles.Magic
                 if (Projectile.timeLeft % 10 == 0)
                     ParticleSystem.NewParticle<EmberParticleRemain>(Projectile.Bottom, RedeHelper.PolarVector(0, 0), Projectile.GetAlpha(Color.White), 1);
                 if (Projectile.timeLeft % 30 == 0)
-                    ParticleSystem.NewParticle<EmberParticle>(Projectile.Center, RedeHelper.PolarVector(0, 0), Color.White, .6f);
+                    ParticleManager.NewParticle(Projectile.Center, RedeHelper.PolarVector(0, 0), new EmberParticle(), Color.White, .6f);
             }
             else
             {

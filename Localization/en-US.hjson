@@ -2539,7 +2539,6 @@ Mods: {
 				DisplayName: Moonflare Candle
 				Description: Wards off the effects of a Graveyard
 			}
-
 		}
 
 		Biomes: {
@@ -10235,6 +10234,15 @@ Mods: {
 				DisplayName: Cockatrice's Glare
 				Tooltip: "'A. Tied'"
 			}
+
+			LightningStone: {
+				DisplayName: Lightning Stone
+				Tooltip:
+					'''
+					Summons a super-charged pebble
+					Whipping enemies will cause the pebble to strike them with lightning
+					'''
+			}
 		}
 
 		Projectiles: {
@@ -10898,6 +10906,8 @@ Mods: {
 			XeniumGrenade.DisplayName: Xenium Grenade
 			XeniumTrajectory.DisplayName: Xenium Trajectory
 			LightningStoneMinion.DisplayName: Lightning Stone
+			PZGauntlet_Explosion.DisplayName: Explosion
+			MagnifyingGlassRayRemain.DisplayName: Lingering Ember
 		}
 
 		NPCs: {

@@ -120,7 +120,7 @@ namespace Redemption.Items.Weapons.PostML.Melee
 
             if (onHit && aimmed.active)
             {
-                if(timer < 25)
+                if (timer < 25)
                     Player.Redemption().contactImmune = true;
 
                 Vector2 spawnPos = aimmed.Center + Main.rand.NextVector2CircularEdge(200, 200);
@@ -169,7 +169,8 @@ namespace Redemption.Items.Weapons.PostML.Melee
 
             Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, Vector2.Zero, ModContent.ProjectileType<PZGauntlet_Explosion>(), 0, 0, Player.whoAmI);
             SoundEngine.PlaySound(SoundID.Item14 with { Volume = 2f }, Projectile.position);
-            target.AddBuff(ModContent.BuffType<StunnedDebuff>(), 15);
+            if (target.knockBackResist > 0)
+                target.AddBuff(ModContent.BuffType<StunnedDebuff>(), 15);
 
             Vector2 drawPos = Vector2.Lerp(Projectile.Center, target.Center, 0.5f);
             ParticleSystem.NewParticle(drawPos, dirVec, new LaserParticle(4), Color.LightGreen, 4f);
