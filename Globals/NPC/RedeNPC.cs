@@ -87,6 +87,8 @@ namespace Redemption.Globals.NPC
             }
             if (shop.NpcType == NPCID.BestiaryGirl)
                 shop.Add<HairyCloak>();
+            if (shop.NpcType == NPCID.WitchDoctor)
+                shop.Add<ErleasFlower>();
         }
         private static bool TalkedDryad;
         public override void GetChat(Terraria.NPC npc, ref string chat)
@@ -171,6 +173,9 @@ namespace Redemption.Globals.NPC
                 if (NPCLists.SkeletonHumanoid.Contains(npc.type))
                     return false;
             }
+            if (npc.type is NPCID.Bee or NPCID.BeeSmall)
+                return !target.RedemptionPlayerBuff().erleasFlower;
+
             return true;
         }
 
@@ -366,7 +371,7 @@ namespace Redemption.Globals.NPC
                 else if (npc.type == ModContent.NPCType<EpidotrianSkeleton>() || npc.type == ModContent.NPCType<SkeletonAssassin>() ||
                     npc.type == ModContent.NPCType<SkeletonDuelist>() || npc.type == ModContent.NPCType<SkeletonFlagbearer>() ||
                     npc.type == ModContent.NPCType<SkeletonNoble>() || npc.type == ModContent.NPCType<SkeletonWanderer>() ||
-                    npc.type == ModContent.NPCType<SkeletonWarden>())
+                    npc.type == ModContent.NPCType<SkeletonWarden>() || npc.type == ModContent.NPCType<RaveyardSkeleton>())
                     itemType = ModContent.ItemType<EpidotrianSkull>();
                 else if (npc.type is NPCID.RockGolem)
                     itemType = ItemID.RockGolemHead;
@@ -407,6 +412,8 @@ namespace Redemption.Globals.NPC
                 npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<DuskyBall>(), 50));
             if (NPCLists.Dark.Contains(npc.type) && !npc.boss)
                 npcLoot.Add(ItemDropRule.Food(ModContent.ItemType<EldritchRoot>(), 400));
+            if (npc.type is NPCID.WallCreeper or NPCID.WallCreeperWall or NPCID.BlackRecluse or NPCID.BlackRecluseWall)
+                npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<SpiderSerum>(), 40));
         }
         public override void ModifyGlobalLoot(GlobalLoot globalLoot)
         {

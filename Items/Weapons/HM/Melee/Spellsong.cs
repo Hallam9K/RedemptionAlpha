@@ -2,8 +2,10 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.BaseExtension;
 using Redemption.Globals;
+using Redemption.Globals.Player;
 using System.Collections.Generic;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
@@ -20,14 +22,12 @@ namespace Redemption.Items.Weapons.HM.Melee
                 "\nHolding left-click will do a 3-swing combo, ending with Spellsong shooting a beam that conjures mirages of itself"); */
 
             ItemID.Sets.SkipsInitialUseSound[Item.type] = true;
-            Item.ResearchUnlockCount = 1;
         }
-
         public override void SetDefaults()
         {
             // Common Properties
-            Item.width = 76;
-            Item.height = 76;
+            Item.width = 72;
+            Item.height = 72;
             Item.rare = ItemRarityID.Lime;
             Item.value = Item.sellPrice(gold: 12);
 
@@ -51,6 +51,13 @@ namespace Redemption.Items.Weapons.HM.Melee
             Item.shoot = ModContent.ProjectileType<Spellsong_Proj>();
             if (!Main.dedServ)
                 Item.RedemptionGlow().glowTexture = ModContent.Request<Texture2D>(Texture + "_Glow").Value;
+        }
+        public override bool MeleePrefix() => true;
+        public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
+        {
+            float adjustedItemScale2 = player.GetAdjustedItemScale(Item);
+            Projectile.NewProjectile(source, position, velocity, ModContent.ProjectileType<Spellsong_Proj>(), damage, knockback, player.whoAmI, 0, 0, adjustedItemScale2);
+            return false;
         }
 
         public override void AddRecipes()

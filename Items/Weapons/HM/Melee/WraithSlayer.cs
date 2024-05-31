@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using Redemption.Items.Materials.PreHM;
 using System.Collections.Generic;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
@@ -23,8 +24,8 @@ namespace Redemption.Items.Weapons.HM.Melee
         public override void SetDefaults()
         {
             // Common Properties
-            Item.width = 78;
-            Item.height = 90;
+            Item.width = 94;
+            Item.height = 94;
             Item.rare = ItemRarityID.LightPurple;
             Item.value = Item.sellPrice(gold: 7);
 
@@ -45,6 +46,13 @@ namespace Redemption.Items.Weapons.HM.Melee
             // Projectile Properties
             Item.shootSpeed = 5f;
             Item.shoot = ModContent.ProjectileType<WraithSlayer_Proj>();
+        }
+        public override bool MeleePrefix() => true;
+        public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
+        {
+            float adjustedItemScale2 = player.GetAdjustedItemScale(Item);
+            Projectile.NewProjectile(source, position, velocity, ModContent.ProjectileType<WraithSlayer_Proj>(), damage, knockback, player.whoAmI, 0, 0, adjustedItemScale2);
+            return false;
         }
 
         public override void AddRecipes()

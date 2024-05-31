@@ -321,7 +321,7 @@ namespace Redemption.NPCs.Friendly.TownNPCs
             if (!RedeBossDowned.downedEaglecrestGolem && NPC.downedBoss2)
                 chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Zephos.AdviceDialogue6"));
             if (!RedeWorld.alignmentGiven)
-                chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Daerel.AdviceDialogue15"));
+                chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Zephos.AdviceDialogue15"));
             if (!Main.LocalPlayer.RedemptionAbility().Spiritwalker)
                 chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Zephos.AdviceDialogue7", ElementID.ArcaneS, ElementID.HolyS));
             chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Zephos.AdviceDialogue8", ElementID.HolyS, ElementID.ShadowS));

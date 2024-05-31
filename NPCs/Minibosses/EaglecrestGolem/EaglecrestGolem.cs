@@ -12,6 +12,7 @@ using Redemption.Items.Placeable.Trophies;
 using Redemption.Items.Weapons.PreHM.Magic;
 using Redemption.Items.Weapons.PreHM.Melee;
 using Redemption.Items.Weapons.PreHM.Ranged;
+using Redemption.Items.Weapons.PreHM.Summon;
 using Redemption.NPCs.Friendly.TownNPCs;
 using Redemption.Particles;
 using Redemption.Projectiles.Magic;
@@ -166,6 +167,7 @@ namespace Redemption.NPCs.Minibosses.EaglecrestGolem
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<EaglecrestJavelin>()));
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<EaglecrestSling>()));
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<EaglecrestGlove>()));
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<LightningStone>()));
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<GathicStone>(), 1, 14, 34));
         }
 

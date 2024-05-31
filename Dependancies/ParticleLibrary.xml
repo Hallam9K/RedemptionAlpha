@@ -1,0 +1,1972 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>ParticleLibrary</name>
+    </assembly>
+    <members>
+        <member name="T:ParticleLibrary.Core.DrawHooks">
+            <summary>
+            This class can be used by any mod to draw at any position in the draw order.
+            Some events have special requirements to draw correctly such as <see cref="E:ParticleLibrary.Core.DrawHooks.OnDraw_BeforeBackground"/> and <see cref="E:ParticleLibrary.Core.DrawHooks.OnDraw_BeforeWater"/>.
+            
+            <para>
+            For <see cref="E:ParticleLibrary.Core.DrawHooks.OnDraw_BeforeBackground"/>, initialize your SpriteBatch with this Matrix.
+            <code>
+            Matrix matrix = Main.BackgroundViewMatrix.TransformationMatrix;
+            matrix.Translation -= Main.BackgroundViewMatrix.ZoomMatrix.Translation* new Vector3(1f, Main.BackgroundViewMatrix.Effects.HasFlag(SpriteEffects.FlipVertically)? (-1f) : 1f, 1f);
+            </code>
+            Your drawing will not manually parallax. You will need to do this yourself for now.
+            </para>
+            
+            <para>
+            For <see cref="E:ParticleLibrary.Core.DrawHooks.OnDraw_BeforeWater"/>, ADD <see cref="F:Terraria.Main.offScreenRange"/> to your draw position.
+            </para>
+            
+            SpriteBatch ends BEFORE the Draw events are invoked.
+            This means that you MUST begin SpriteBatch before you can use it. SpriteBatch is Main.spriteBatch.
+            </summary>
+        </member>
+        <member name="E:ParticleLibrary.Core.DrawHooks.OnDraw_BeforeBackground">
+            <summary>
+            Before background.
+            </summary>
+        </member>
+        <member name="E:ParticleLibrary.Core.DrawHooks.OnDraw_BeforeWalls">
+            <summary>
+            After backgroumd
+            </summary>
+        </member>
+        <member name="E:ParticleLibrary.Core.DrawHooks.OnDraw_BeforeNonSolidTiles">
+            <summary>
+            After walls
+            </summary>
+        </member>
+        <member name="E:ParticleLibrary.Core.DrawHooks.OnDraw_BeforeNPCsBehindTiles">
+            <summary>
+            After non-solid tiles
+            </summary>
+        </member>
+        <member name="E:ParticleLibrary.Core.DrawHooks.OnDraw_BeforeSolidTiles">
+            <summary>
+            After NPCs behind tiles, like worms
+            </summary>
+        </member>
+        <member name="E:ParticleLibrary.Core.DrawHooks.OnDraw_BeforePlayersBehindNPCs">
+            <summary>
+            After solid tiles
+            </summary>
+        </member>
+        <member name="E:ParticleLibrary.Core.DrawHooks.OnDraw_BeforeNPCs">
+            <summary>
+            After player details drawn behind NPCs
+            </summary>
+        </member>
+        <member name="E:ParticleLibrary.Core.DrawHooks.OnDraw_BeforeProjectiles">
+            <summary>
+            After NPCs
+            </summary>
+        </member>
+        <member name="E:ParticleLibrary.Core.DrawHooks.OnDraw_BeforePlayers">
+            <summary>
+            After projectiles
+            </summary>
+        </member>
+        <member name="E:ParticleLibrary.Core.DrawHooks.OnDraw_BeforeItems">
+            <summary>
+            After players
+            </summary>
+        </member>
+        <member name="E:ParticleLibrary.Core.DrawHooks.OnDraw_BeforeRain">
+            <summary>
+            After items in the world
+            </summary>
+        </member>
+        <member name="E:ParticleLibrary.Core.DrawHooks.OnDraw_BeforeGore">
+            <summary>
+            After rain
+            </summary>
+        </member>
+        <member name="E:ParticleLibrary.Core.DrawHooks.OnDraw_BeforeDust">
+            <summary>
+            After gore
+            </summary>
+        </member>
+        <member name="E:ParticleLibrary.Core.DrawHooks.OnDraw_BeforeWater">
+            <summary>
+            After dust
+            </summary>
+        </member>
+        <member name="E:ParticleLibrary.Core.DrawHooks.OnDraw_BeforeInterface">
+            <summary>
+            After water
+            </summary>
+        </member>
+        <member name="T:ParticleLibrary.Core.Emitter">
+            <summary>
+            Base class for all emitters. Inherit this class to create your own emitter.
+            </summary>
+        </member>
+        <member name="P:ParticleLibrary.Core.Emitter.Assembly">
+            <summary>
+            Originating mod.
+            </summary>
+        </member>
+        <member name="P:ParticleLibrary.Core.Emitter.Type">
+            <summary>
+            Originating type.
+            </summary>
+        </member>
+        <member name="M:ParticleLibrary.Core.Emitter.#ctor(ParticleLibrary.Core.EmitterSettings,ParticleLibrary.Core.EmitterParticleSettings,ParticleLibrary.Core.EmitterColorSettings)">
+            <summary>
+            Creates a new emitter. You must call <see cref="M:ParticleLibrary.Core.EmitterSystem.NewEmitter(ParticleLibrary.Core.Emitter)"/> or <see cref="M:ParticleLibrary.Core.EmitterSystem.NewEmitter``1(ParticleLibrary.Core.EmitterSettings,ParticleLibrary.Core.EmitterParticleSettings,ParticleLibrary.Core.EmitterColorSettings)"/> to add it to the system.
+            </summary>
+            <param name="emitterSettings"></param>
+            <param name="particleSettings"></param>
+            <param name="colorSettings"></param>
+        </member>
+        <member name="M:ParticleLibrary.Core.Emitter.Initialize">
+            <summary>
+            Runs on instantiation.
+            </summary>
+        </member>
+        <member name="M:ParticleLibrary.Core.Emitter.Update">
+            <summary>
+            Runs on PreUpdateWorld.
+            </summary>
+        </member>
+        <member name="M:ParticleLibrary.Core.Emitter.SpawnParticle(Microsoft.Xna.Framework.Vector2,ParticleLibrary.Core.Data.SpatialParameters@,ParticleLibrary.Core.Data.VisualParameters@)">
+            <summary>
+            Spawns a particle with the provided parameters.
+            </summary>
+        </member>
+        <member name="M:ParticleLibrary.Core.Emitter.Draw(Microsoft.Xna.Framework.Graphics.SpriteBatch,Microsoft.Xna.Framework.Vector2)">
+            <summary>
+            Runs on DrawDust.
+            </summary>
+            <param name="spriteBatch">SpriteBatch to use.</param>
+            <param name="location">Visual location of the emitter, taking into account Main.ScreenPosition.</param>
+        </member>
+        <member name="M:ParticleLibrary.Core.Emitter.Kill">
+            <summary>
+            Kills this emitter.
+            </summary>
+        </member>
+        <member name="M:ParticleLibrary.Core.Emitter.SaveData(Terraria.ModLoader.IO.TagCompound)">
+            <summary>
+            Allows saving custom emitter data. In most cases you won't need this.
+            </summary>
+            <param name="tag"></param>
+        </member>
+        <member name="M:ParticleLibrary.Core.Emitter.LoadData(Terraria.ModLoader.IO.TagCompound)">
+            <summary>
+            Allows reading custom emitter data. In most casts you won't need this.
+            </summary>
+            <param name="tag"></param>
+        </member>
+        <member name="P:ParticleLibrary.Core.EmitterColorSettings.MinimumStartColor">
+            <summary>
+            The minimum starting color to create a particle with.
+            </summary>
+        </member>
+        <member name="P:ParticleLibrary.Core.EmitterColorSettings.MaximumStartColor">
+            <summary>
+            The maximum starting color to create a particle with. 
+            </summary>
+        </member>
+        <member name="P:ParticleLibrary.Core.EmitterColorSettings.MinimumEndColor">
+            <summary>
+            The minimum ending color to create a particle with.
+            </summary>
+        </member>
+        <member name="P:ParticleLibrary.Core.EmitterColorSettings.MaximumEndColor">
+            <summary>
+            The maximum ending color to create a particle with.
+            </summary>
+        </member>
+        <member name="P:ParticleLibrary.Core.EmitterColorSettings.MinimumStartHSLA">
+            <summary>
+            The minimum starting HSLA to create a particle with. Only used with <see cref="P:ParticleLibrary.Core.EmitterColorSettings.UseHSLA"/>.
+            </summary>
+        </member>
+        <member name="P:ParticleLibrary.Core.EmitterColorSettings.MaximumStartHSLA">
+            <summary>
+            The maximum starting HSLA to create a particle with. Only used with <see cref="P:ParticleLibrary.Core.EmitterColorSettings.UseHSLA"/>.
+            </summary>
+        </member>
+        <member name="P:ParticleLibrary.Core.EmitterColorSettings.MinimumEndHSLA">
+            <summary>
+            The minimum ending HSLA to create a particle with. Only used with <see cref="P:ParticleLibrary.Core.EmitterColorSettings.UseHSLA"/>.
+            </summary>
+        </member>
+        <member name="P:ParticleLibrary.Core.EmitterColorSettings.MaximumEndHSLA">
+            <summary>
+            The maximum ending HSLA to create a particle with. Only used with <see cref="P:ParticleLibrary.Core.EmitterColorSettings.UseHSLA"/>.
+            </summary>
+        </member>
+        <member name="P:ParticleLibrary.Core.EmitterParticleSettings.UseScalarVelocity">
+            <summary>
+            Whether to use scalar velocity, or to use directional velocity.
+            </summary>
+        </member>
+        <member name="P:ParticleLibrary.Core.EmitterParticleSettings.MinimumScalarVelocity">
+            <summary>
+            The minimum velocity to spawn a particle with.
+            </summary>
+        </member>
+        <member name="P:ParticleLibrary.Core.EmitterParticleSettings.MaximumScalarVelocity">
+            <summary>
+            The maximum velocity to spawn a particle with.
+            </summary>
+        </member>
+        <member name="P:ParticleLibrary.Core.EmitterParticleSettings.MinimumScalarVelocityDeviation">
+            <summary>
+            The minimum velocity deviation to spawn a particle with.
+            </summary>
+        </member>
+        <member name="P:ParticleLibrary.Core.EmitterParticleSettings.MaximumScalarVelocityDeviation">
+            <summary>
+            The maximum velocity deviation to spawn a particle with.
+            </summary>
+        </member>
+        <member name="P:ParticleLibrary.Core.EmitterParticleSettings.MinimumScalarVelocityAcceleration">
+            <summary>
+            The minimum velocity acceleration to spawn a particle with.
+            </summary>
+        </member>
+        <member name="P:ParticleLibrary.Core.EmitterParticleSettings.MaximumScalarVelocityAcceleration">
+            <summary>
+            The maximum velocity acceleration to spawn a particle with.
+            </summary>
+        </member>
+        <member name="P:ParticleLibrary.Core.EmitterParticleSettings.MinimumRadians">
+            <summary>
+            The minimum radians to rotate a particle's velocity by.
+            </summary>
+        </member>
+        <member name="P:ParticleLibrary.Core.EmitterParticleSettings.MaximumRadians">
+            <summary>
+            The maximum radians to rotate a particle's velocity by.
+            </summary>
+        </member>
+        <member name="P:ParticleLibrary.Core.EmitterParticleSettings.MinimumDirectionalVelocity">
+            <summary>
+            The minimum velocity to spawn a particle with.
+            </summary>
+        </member>
+        <member name="P:ParticleLibrary.Core.EmitterParticleSettings.MaximumDirectionalVelocity">
+            <summary>
+            The maximum velocity to spawn a particle with.
+            </summary>
+        </member>
+        <member name="P:ParticleLibrary.Core.EmitterParticleSettings.MinimumDirectionalVelocityDeviation">
+            <summary>
+            The minimum velocity acceleration to spawn a particle with.
+            </summary>
+        </member>
+        <member name="P:ParticleLibrary.Core.EmitterParticleSettings.MaximumDirectionalVelocityDeviation">
+            <summary>
+            The maximum velocity acceleration to spawn a particle with.
+            </summary>
+        </member>
+        <member name="P:ParticleLibrary.Core.EmitterParticleSettings.MinimumDirectionalVelocityAcceleration">
+            <summary>
+            The minimum velocity acceleration to spawn a particle with.
+            </summary>
+        </member>
+        <member name="P:ParticleLibrary.Core.EmitterParticleSettings.MaximumDirectionalVelocityAcceleration">
+            <summary>
+            The maximum velocity acceleration to spawn a particle with.
+            </summary>
+        </member>
+        <member name="P:ParticleLibrary.Core.EmitterParticleSettings.MinimumScale">
+            <summary>
+            The minimum scale acceleration to spawn a particle with.
+            </summary>
+        </member>
+        <member name="P:ParticleLibrary.Core.EmitterParticleSettings.MaximumScale">
+            <summary>
+            The maximum scale acceleration to spawn a particle with.
+            </summary>
+        </member>
+        <member name="P:ParticleLibrary.Core.EmitterParticleSettings.MinimumScaleVelocity">
+            <summary>
+            The minimum scale velocity to spawn a particle with.
+            </summary>
+        </member>
+        <member name="P:ParticleLibrary.Core.EmitterParticleSettings.MaximumScaleVelocity">
+            <summary>
+            The maximum scale velocity to spawn a particle with.
+            </summary>
+        </member>
+        <member name="P:ParticleLibrary.Core.EmitterParticleSettings.MinimumScaleAcceleration">
+            <summary>
+            The minimum scale velocity to spawn a particle with.
+            </summary>
+        </member>
+        <member name="P:ParticleLibrary.Core.EmitterParticleSettings.MaximumScaleAcceleration">
+            <summary>
+            The maximum scale velocity to spawn a particle with.
+            </summary>
+        </member>
+        <member name="P:ParticleLibrary.Core.EmitterParticleSettings.MinimumRotation">
+            <summary>
+            The minimum rotation to spawn a particle with. Defaults to zero, as that is more performant.
+            </summary>
+        </member>
+        <member name="P:ParticleLibrary.Core.EmitterParticleSettings.MaximumRotation">
+            <summary>
+            The maximum rotation to spawn a particle with. Defaults to zero, as that is more performant.
+            </summary>
+        </member>
+        <member name="P:ParticleLibrary.Core.EmitterParticleSettings.MinimumRotationVelocity">
+            <summary>
+            The minimum rotation speed to spawn a particle with. Defaults to zero, as that is more performant.
+            </summary>
+        </member>
+        <member name="P:ParticleLibrary.Core.EmitterParticleSettings.MaximumRotationVelocity">
+            <summary>
+            The maximum rotation speed to spawn a particle with. Defaults to zero, as that is more performant.
+            </summary>
+        </member>
+        <member name="P:ParticleLibrary.Core.EmitterParticleSettings.MinimumRotationAcceleration">
+            <summary>
+            The minimum rotation speed to spawn a particle with. Defaults to zero, as that is more performant.
+            </summary>
+        </member>
+        <member name="P:ParticleLibrary.Core.EmitterParticleSettings.MaximumRotationAcceleration">
+            <summary>
+            The maximum rotation speed to spawn a particle with. Defaults to zero, as that is more performant.
+            </summary>
+        </member>
+        <member name="P:ParticleLibrary.Core.EmitterParticleSettings.MinimumDepth">
+            <summary>
+            The minimum depth to spawn a particle with.
+            </summary>
+        </member>
+        <member name="P:ParticleLibrary.Core.EmitterParticleSettings.MaximumDepth">
+            <summary>
+            The maximum depth to spawn a particle with.
+            </summary>
+        </member>
+        <member name="P:ParticleLibrary.Core.EmitterParticleSettings.MinimumDepthVelocity">
+            <summary>
+            The minimum depth velocity to spawn a particle with.
+            </summary>
+        </member>
+        <member name="P:ParticleLibrary.Core.EmitterParticleSettings.MaximumDepthVelocity">
+            <summary>
+            The maximum depth velocity to spawn a particle with.
+            </summary>
+        </member>
+        <member name="P:ParticleLibrary.Core.EmitterSettings.Shape">
+            <summary>
+            The shape of the emitter.
+            </summary>
+        </member>
+        <member name="P:ParticleLibrary.Core.EmitterSettings.Origin">
+            <summary>
+            How the emitter distributes particles.
+            </summary>
+        </member>
+        <member name="P:ParticleLibrary.Core.EmitterSettings.Position">
+            <summary>
+            The position of the emitter, originating from the center.
+            </summary>
+        </member>
+        <member name="P:ParticleLibrary.Core.EmitterSettings.Width">
+            <summary>
+            The width of the <see cref="P:ParticleLibrary.Core.EmitterSettings.Shape"/>. 
+            No effect when used with <see cref="T:ParticleLibrary.Core.Shapes.EmitterPoint"/>. 
+            Used as diameter for <see cref="T:ParticleLibrary.Core.Shapes.EmitterCircle"/>
+            Used as side length for <see cref="T:ParticleLibrary.Core.Shapes.EmitterRectangle"/>
+            </summary>
+        </member>
+        <member name="P:ParticleLibrary.Core.EmitterSettings.Height">
+            <summary>
+            The height of the <see cref="P:ParticleLibrary.Core.EmitterSettings.Shape"/>. 
+            No effect when used with <see cref="T:ParticleLibrary.Core.Shapes.EmitterPoint"/>. 
+            Used as diameter for <see cref="T:ParticleLibrary.Core.Shapes.EmitterCircle"/>
+            Used as side length for <see cref="T:ParticleLibrary.Core.Shapes.EmitterRectangle"/>
+            </summary>
+        </member>
+        <member name="P:ParticleLibrary.Core.EmitterSettings.Padding">
+            <summary>
+            How far offscreen the emitter's bounds can be before its update method is no longer called.
+            </summary>
+        </member>
+        <member name="P:ParticleLibrary.Core.EmitterSettings.Bounds">
+            <summary>
+            The bounds of the emitter. Used for culling.
+            </summary>
+        </member>
+        <member name="P:ParticleLibrary.Core.EmitterSettings.MinimumInterval">
+            <summary>
+            The minimum interval between particle spawns.
+            </summary>
+        </member>
+        <member name="P:ParticleLibrary.Core.EmitterSettings.MaximumInterval">
+            <summary>
+            The maximum interval between particle spawns.
+            </summary>
+        </member>
+        <member name="P:ParticleLibrary.Core.EmitterSettings.MinimumSpawns">
+            <summary>
+            The minimum amount of particles to spawn at once.
+            </summary>
+        </member>
+        <member name="P:ParticleLibrary.Core.EmitterSettings.MaximumSpawns">
+            <summary>
+            The maximum amount of particles to spawn at once.
+            </summary>
+        </member>
+        <member name="P:ParticleLibrary.Core.EmitterSettings.Data">
+            <summary>
+            Custom string Data for this emitter.
+            </summary>
+        </member>
+        <member name="P:ParticleLibrary.Core.EmitterSettings.Save">
+            <summary>
+            Whether this emitter should save when the world is exited.
+            </summary>
+        </member>
+        <member name="T:ParticleLibrary.Core.EmitterSystem">
+            <summary>
+            Manages the emitters in the world
+            </summary>
+        </member>
+        <member name="P:ParticleLibrary.Core.EmitterSystem.Emitters">
+            <summary>
+            List of emitters.
+            </summary>
+        </member>
+        <member name="P:ParticleLibrary.Core.EmitterSystem.ScreenLocation">
+            <summary>
+            Shorthand for screen location as rectangle
+            </summary>
+        </member>
+        <member name="M:ParticleLibrary.Core.EmitterSystem.NewEmitter``1(ParticleLibrary.Core.EmitterSettings,ParticleLibrary.Core.EmitterParticleSettings,ParticleLibrary.Core.EmitterColorSettings)">
+            <summary>
+            Spawns a new emitter at the desired position.
+            </summary>
+            <typeparam name="T">The emitter.</typeparam>
+            <param name="settings">Emitter settings.</param>
+            <param name="particle">Particle spawn settings.</param>
+            <param name="color">Particle color settings.</param>
+            <returns>The resulting emitter.</returns>
+        </member>
+        <member name="M:ParticleLibrary.Core.EmitterSystem.NewEmitter(ParticleLibrary.Core.Emitter)">
+            <summary>
+            Spawns a new emitter at the desired position.
+            </summary>
+            <param name="emitter">Premade emitter.</param>
+            <returns>The resulting emitter.</returns>
+        </member>
+        <member name="M:ParticleLibrary.Core.EmitterSystem.Remove(ParticleLibrary.Core.Emitter)">
+            <summary>
+            Kills a specified emitter.
+            </summary>
+            <param name="emitter"></param>
+        </member>
+        <member name="M:ParticleLibrary.Core.EmitterSystem.Remove(System.Predicate{ParticleLibrary.Core.Emitter})">
+            <summary>
+            Kills all emitters that fulfill the conditions.
+            </summary>
+            <param name="predicate"></param>
+        </member>
+        <member name="P:ParticleLibrary.Core.Shapes.EmitterShape.Assembly">
+            <summary>
+            Originating mod.
+            </summary>
+        </member>
+        <member name="P:ParticleLibrary.Core.Shapes.EmitterShape.Type">
+            <summary>
+            Originating type.
+            </summary>
+        </member>
+        <member name="M:ParticleLibrary.Core.Shapes.EmitterShape.Solve(Microsoft.Xna.Framework.Vector2,ParticleLibrary.Core.EmitterOrigin,System.Single,System.Single)">
+            <summary>
+            Solve the position with the provided parameters
+            </summary>
+            <param name="center">The emitter's center, accounting for width and height</param>
+            <param name="origin">The emitter's origin, determining how to distrubute particles</param>
+            <param name="width">The width</param>
+            <param name="height">The height</param>
+            <returns></returns>
+        </member>
+        <member name="T:ParticleLibrary.Core.SpatialHash.IntIntDictionary">
+            <summary>
+            Hashes an [int, int] coordinate into a UInt32, and wraps it with an Emitter to create fast lookup times.
+            Sourced from Nez <see href="https://github.com/prime31/Nez/blob/master/Nez.Portable/Utils/Collections/FastList.cs"/>
+            </summary>
+        </member>
+        <member name="F:ParticleLibrary.Core.SpatialHash.SpatialHash.CellDict">
+            <summary>
+            the Dictionary that holds all of the data
+            </summary>
+        </member>
+        <member name="P:ParticleLibrary.Core.GPUParticleManager.Config">
+            <summary>
+            Access to the particle config
+            </summary>
+        </member>
+        <member name="P:ParticleLibrary.Core.GPUParticleManager.QuadSystems">
+            <summary>
+            All registered <see cref="T:ParticleLibrary.Core.QuadParticleSystem"/>
+            </summary>
+        </member>
+        <member name="P:ParticleLibrary.Core.GPUParticleManager.PointSystems">
+            <summary>
+            All registered <see cref="T:ParticleLibrary.Core.QuadParticleSystem"/>
+            </summary>
+        </member>
+        <member name="P:ParticleLibrary.Core.GPUParticleManager.MaximumQuadParticleBudget">
+            <summary>
+            The maximum amount of Quad particles allowed
+            </summary>
+        </member>
+        <member name="P:ParticleLibrary.Core.GPUParticleManager.FreeQuadParticleBudget">
+            <summary>
+            The current Quad particle budget, taking into account the requirements of all registered systems
+            </summary>
+        </member>
+        <member name="P:ParticleLibrary.Core.GPUParticleManager.MaximumPointParticleBudget">
+            <summary>
+            The maximum amount of Point particles allowed
+            </summary>
+        </member>
+        <member name="P:ParticleLibrary.Core.GPUParticleManager.FreePointParticleBudget">
+            <summary>
+            The current Point particle budget, taking into account the requirements of all registered systems
+            </summary>
+        </member>
+        <member name="P:ParticleLibrary.Core.GPUParticleSystem`3.Texture">
+            <summary>
+            The texture of the particles
+            </summary>
+        </member>
+        <member name="P:ParticleLibrary.Core.GPUParticleSystem`3.MaxParticles">
+            <summary>
+            The maximum amount of particles. Cannot be changed after creation
+            </summary>
+        </member>
+        <member name="P:ParticleLibrary.Core.GPUParticleSystem`3.Lifespan">
+            <summary>
+            The lifespan of the particles
+            </summary>
+        </member>
+        <member name="P:ParticleLibrary.Core.GPUParticleSystem`3.BufferSize">
+            <summary>
+            The size of the batching buffer. Unused for now
+            </summary>
+        </member>
+        <member name="P:ParticleLibrary.Core.GPUParticleSystem`3.Layer">
+            <summary>
+            The layer the particles will draw on
+            </summary>
+        </member>
+        <member name="P:ParticleLibrary.Core.GPUParticleSystem`3.BlendState">
+            <summary>
+            The BlendState used for the particles
+            </summary>
+        </member>
+        <member name="P:ParticleLibrary.Core.GPUParticleSystem`3.Fade">
+            <summary>
+            Whether the particles should fade over their lifespan
+            </summary>
+        </member>
+        <member name="M:ParticleLibrary.Core.GPUParticleSystem`3.SetTexture(Microsoft.Xna.Framework.Graphics.Texture2D)">
+            <summary>
+            Sets the texture to use for the particles.
+            </summary>
+            <param name="value"></param>
+            <exception cref="T:System.ArgumentNullException"></exception>
+        </member>
+        <member name="M:ParticleLibrary.Core.GPUParticleSystem`3.SetLifespan(System.Int32)">
+            <summary>
+            Sets the lifespan of the particles.
+            </summary>
+            <param name="value"></param>
+            <exception cref="T:System.ArgumentOutOfRangeException"></exception>
+        </member>
+        <member name="M:ParticleLibrary.Core.GPUParticleSystem`3.SetLayer(ParticleLibrary.Core.Layer)">
+            <summary>
+            Sets the position in the draw order to draw the particles on.
+            </summary>
+            <param name="value"></param>
+        </member>
+        <member name="M:ParticleLibrary.Core.GPUParticleSystem`3.SetBlendState(Microsoft.Xna.Framework.Graphics.BlendState)">
+            <summary>
+            Sets the BlendState to use when drawing particles.
+            </summary>
+            <param name="value"></param>
+            <exception cref="T:System.ArgumentNullException"></exception>
+        </member>
+        <member name="M:ParticleLibrary.Core.GPUParticleSystem`3.SetFade(System.Boolean)">
+            <summary>
+            Sets whether the particles should fade over their lifespan
+            </summary>
+            <param name="value"></param>
+        </member>
+        <member name="P:ParticleLibrary.Core.GPUParticleSystemSettings.Texture">
+            <summary>
+            The texture of the particles
+            </summary>
+        </member>
+        <member name="P:ParticleLibrary.Core.GPUParticleSystemSettings.MaxParticles">
+            <summary>
+            The maximum amount of particles
+            </summary>
+        </member>
+        <member name="P:ParticleLibrary.Core.GPUParticleSystemSettings.Lifespan">
+            <summary>
+            The lifespan of the particles
+            </summary>
+        </member>
+        <member name="P:ParticleLibrary.Core.GPUParticleSystemSettings.BufferSize">
+            <summary>
+            The size of the batching buffer. Currently unimplemented for now
+            </summary>
+        </member>
+        <member name="P:ParticleLibrary.Core.GPUParticleSystemSettings.Layer">
+            <summary>
+            The layer the particles are drawn on
+            </summary>
+        </member>
+        <member name="P:ParticleLibrary.Core.GPUParticleSystemSettings.BlendState">
+            <summary>
+            The BlendState the particles are drawn with
+            </summary>
+        </member>
+        <member name="P:ParticleLibrary.Core.GPUParticleSystemSettings.Fade">
+            <summary>
+            Whether the particles should fade over their lifespan
+            </summary>
+        </member>
+        <member name="M:ParticleLibrary.Core.IGPUParticleSystem`1.SetTexture(Microsoft.Xna.Framework.Graphics.Texture2D)">
+            <summary>
+            Sets the texture to use for the particles.
+            </summary>
+            <param name="value"></param>
+            <exception cref="T:System.ArgumentNullException"></exception>
+        </member>
+        <member name="M:ParticleLibrary.Core.IGPUParticleSystem`1.SetLifespan(System.Int32)">
+            <summary>
+            Sets the lifespan of the particles.
+            </summary>
+            <param name="value"></param>
+            <exception cref="T:System.ArgumentOutOfRangeException"></exception>
+        </member>
+        <member name="M:ParticleLibrary.Core.IGPUParticleSystem`1.SetLayer(ParticleLibrary.Core.Layer)">
+            <summary>
+            Sets the position in the draw order to draw the particles on.
+            </summary>
+            <param name="value"></param>
+        </member>
+        <member name="M:ParticleLibrary.Core.IGPUParticleSystem`1.SetBlendState(Microsoft.Xna.Framework.Graphics.BlendState)">
+            <summary>
+            Sets the BlendState to use when drawing particles.
+            </summary>
+            <param name="value"></param>
+            <exception cref="T:System.ArgumentNullException"></exception>
+        </member>
+        <member name="M:ParticleLibrary.Core.IGPUParticleSystem`1.SetFade(System.Boolean)">
+            <summary>
+            Sets whether the particles should fade over their lifespan
+            </summary>
+            <param name="value"></param>
+        </member>
+        <member name="F:ParticleLibrary.Core.Layer.None">
+            <summary>
+            Will not draw.
+            </summary>
+        </member>
+        <member name="F:ParticleLibrary.Core.Layer.BeforeBackground">
+            <summary>
+            Background.
+            </summary>
+        </member>
+        <member name="F:ParticleLibrary.Core.Layer.BeforeWalls">
+            <summary>
+            Walls. <b>After Background.</b>
+            </summary>
+        </member>
+        <member name="F:ParticleLibrary.Core.Layer.BeforeNonSolidTiles">
+            <summary>
+            Trees, flowers, rocks, etc. <b>After Walls.</b>
+            </summary>
+        </member>
+        <member name="F:ParticleLibrary.Core.Layer.BeforeNPCsBehindTiles">
+            <summary>
+            Worm enemies. <b>After mon-solid Tiles.</b>
+            </summary>
+        </member>
+        <member name="F:ParticleLibrary.Core.Layer.BeforeSolidTiles">
+            <summary>
+            Tiles. <b>After NPCs drawn behind Tiles.</b>
+            </summary>
+        </member>
+        <member name="F:ParticleLibrary.Core.Layer.BeforePlayersBehindNPCs">
+            <summary>
+            Player details drawn behind NPCs. <b>After Solid Tiles.</b>
+            </summary>
+        </member>
+        <member name="F:ParticleLibrary.Core.Layer.BeforeNPCs">
+            <summary>
+            NPCs. <b>After Player details drawn behind NPCs.</b>
+            </summary>
+        </member>
+        <member name="F:ParticleLibrary.Core.Layer.BeforeProjectiles">
+            <summary>
+            Projectiles. <b>After NPCs.</b>
+            </summary>
+        </member>
+        <member name="F:ParticleLibrary.Core.Layer.BeforePlayers">
+            <summary>
+            Players. <b>After Projectiles.</b>
+            </summary>
+        </member>
+        <member name="F:ParticleLibrary.Core.Layer.BeforeItems">
+            <summary>
+            Items dropped in world. <b>After Players.</b>
+            </summary>
+        </member>
+        <member name="F:ParticleLibrary.Core.Layer.BeforeRain">
+            <summary>
+            Rain. <b>After Items.</b>
+            </summary>
+        </member>
+        <member name="F:ParticleLibrary.Core.Layer.BeforeGore">
+            <summary>
+            Gore. <b>After Rain.</b>
+            </summary>
+        </member>
+        <member name="F:ParticleLibrary.Core.Layer.BeforeDust">
+            <summary>
+            Dust. <b>After Gore.</b>
+            </summary>
+        </member>
+        <member name="F:ParticleLibrary.Core.Layer.BeforeWater">
+            <summary>
+            Water <b>After Dust.</b>  Adjust draw position by new Vector2(Main.offScreenRange, Main.offScreenRange).
+            </summary>
+        </member>
+        <member name="F:ParticleLibrary.Core.Layer.BeforeInterface">
+            <summary>
+            Before UI.
+            </summary>
+        </member>
+        <member name="F:ParticleLibrary.Core.Layer.AfterInterface">
+            <summary>
+            After UI.
+            </summary>
+        </member>
+        <member name="F:ParticleLibrary.Core.Layer.BeforeMainMenu">
+            <summary>
+            Before Main Menu.
+            </summary>
+        </member>
+        <member name="F:ParticleLibrary.Core.Layer.AfterMainMenu">
+            <summary>
+            After Main Menu.
+            </summary>
+        </member>
+        <member name="T:ParticleLibrary.Core.Particle">
+            <summary>
+            Base class for all particles. Inherit this class to create your own particle.
+            </summary>
+        </member>
+        <member name="M:ParticleLibrary.Core.Particle.#ctor">
+            <summary>
+            Runs before <see cref="M:ParticleLibrary.Core.Particle.Spawn"/>.
+            </summary>
+        </member>
+        <member name="P:ParticleLibrary.Core.Particle.Sprite">
+            <summary>
+            Texture property for a particle. Override this to directly specify a texture.
+            </summary>
+        </member>
+        <member name="P:ParticleLibrary.Core.Particle.Texture">
+            <summary>
+            Texture path for a particle. Override this to specify a custom path.
+            </summary>
+        </member>
+        <member name="P:ParticleLibrary.Core.Particle.Bounds">
+            <summary>
+            The expected visual bounds for this particle. Used for visual culling.
+            X and Y are used for position offset. Width and Height are the size of the bounds.
+            Defaults to null. The particle will never be culled.
+            </summary>
+        </member>
+        <member name="P:ParticleLibrary.Core.Particle.VisualPosition">
+            <summary>
+            The visual position taking into account Main.screenPosition;
+            </summary>
+        </member>
+        <member name="F:ParticleLibrary.Core.Particle.Position">
+            <summary>
+            The location of the particle.
+            </summary>
+        </member>
+        <member name="F:ParticleLibrary.Core.Particle.Velocity">
+            <summary>
+            How fast <see cref="F:ParticleLibrary.Core.Particle.Position"/> moves in world coordinates per frame.
+            </summary>
+        </member>
+        <member name="F:ParticleLibrary.Core.Particle.VelocityDeviation">
+            <summary>
+            How fast <see cref="F:ParticleLibrary.Core.Particle.Velocity"/> changes each frame.
+            </summary>
+        </member>
+        <member name="F:ParticleLibrary.Core.Particle.VelocityAcceleration">
+            <summary>
+            How much <see cref="F:ParticleLibrary.Core.Particle.Velocity"/> is multiplied each frame. Defaults to (1, 1).
+            </summary>
+        </member>
+        <member name="F:ParticleLibrary.Core.Particle.AnchorPosition">
+            <summary>
+            The reference position used for this particle when calculating its position. Defaults to (0, 0).
+            </summary>
+        </member>
+        <member name="P:ParticleLibrary.Core.Particle.Scale">
+            <summary>
+            Float representation of scale.
+            </summary>
+        </member>
+        <member name="F:ParticleLibrary.Core.Particle.Scale2D">
+            <summary>
+            The scale of this particle.
+            </summary>
+        </member>
+        <member name="F:ParticleLibrary.Core.Particle.ScaleVelocity">
+            <summary>
+            How much <see cref="F:ParticleLibrary.Core.Particle.Scale2D"/> increases each frame.
+            </summary>
+        </member>
+        <member name="F:ParticleLibrary.Core.Particle.ScaleAcceleration">
+            <summary>
+            How much <see cref="F:ParticleLibrary.Core.Particle.ScaleVelocity"/> increases each frame.
+            </summary>
+        </member>
+        <member name="F:ParticleLibrary.Core.Particle.Rotation">
+            <summary>
+            The rotation of this particle.
+            </summary>
+        </member>
+        <member name="F:ParticleLibrary.Core.Particle.RotationVelocity">
+            <summary>
+            How much <see cref="F:ParticleLibrary.Core.Particle.Rotation"/> changes each frame.
+            </summary>
+        </member>
+        <member name="F:ParticleLibrary.Core.Particle.RotationAcceleration">
+            <summary>
+            How much <see cref="F:ParticleLibrary.Core.Particle.RotationVelocity"/> changes each frame.
+            </summary>
+        </member>
+        <member name="F:ParticleLibrary.Core.Particle.Layer">
+            <summary>
+            Where the particle should be drawn.
+            </summary>
+        </member>
+        <member name="F:ParticleLibrary.Core.Particle.Color">
+            <summary>
+            The color of this particle.
+            </summary>
+        </member>
+        <member name="F:ParticleLibrary.Core.Particle.Opacity">
+            <summary>
+            The opacity of this particle.
+            </summary>
+        </member>
+        <member name="F:ParticleLibrary.Core.Particle.Frame">
+            <summary>
+            The frame of this particle.
+            </summary>
+        </member>
+        <member name="F:ParticleLibrary.Core.Particle.TileCollide">
+            <summary>
+            Whether this particle should collide with tiles.
+            </summary>
+        </member>
+        <member name="F:ParticleLibrary.Core.Particle.TimeLeft">
+            <summary>
+            The amount of frames this particle has left in its lifetime.
+            </summary>
+        </member>
+        <member name="M:ParticleLibrary.Core.Particle.Spawn">
+            <summary>
+            Runs when the particle spawns, AFTER constructors and AFTER <see cref="F:ParticleLibrary.Core.Particle.Position"/>, <see cref="F:ParticleLibrary.Core.Particle.Velocity"/>, <see cref="F:ParticleLibrary.Core.Particle.Color"/>, <see cref="P:ParticleLibrary.Core.Particle.Scale"/>, and <see cref="F:ParticleLibrary.Core.Particle.Layer"/> are set.
+            </summary>
+        </member>
+        <member name="M:ParticleLibrary.Core.Particle.Update">
+            <summary>
+            Runs when the particle is updated.
+            </summary>
+        </member>
+        <member name="M:ParticleLibrary.Core.Particle.Draw(Microsoft.Xna.Framework.Graphics.SpriteBatch,Microsoft.Xna.Framework.Vector2)">
+            <summary>
+            Renders the particle.
+            </summary>
+            <param name="spriteBatch">Provided SpriteBatch.</param>
+            <param name="location">Draw position of the particle. This factors in Main.screenPosition.</param>
+            <returns>bool</returns>
+        </member>
+        <member name="M:ParticleLibrary.Core.Particle.Death">
+            <summary>
+            Runs when the particle dies.
+            </summary>
+        </member>
+        <member name="M:ParticleLibrary.Core.Particle.TileCollision(Microsoft.Xna.Framework.Vector2)">
+            <summary>
+            Runs when the particle collides with a tile.
+            </summary>
+            <param name="oldVelocity">The old velocity of the particle.</param>
+        </member>
+        <member name="M:ParticleLibrary.Core.Particle.Kill">
+            <summary>
+            Kills a particle.
+            </summary>
+        </member>
+        <member name="T:ParticleLibrary.Core.ParticleSystem">
+            <summary>
+            This class manages the CPU particle system.
+            </summary>
+        </member>
+        <member name="P:ParticleLibrary.Core.ParticleSystem.Particles">
+            <summary>
+            A list that contains all active particles.
+            </summary>
+        </member>
+        <member name="P:ParticleLibrary.Core.ParticleSystem.ParticleCount">
+            <summary>
+            The amount of particles currently maintained by the system.
+            </summary>
+        </member>
+        <member name="P:ParticleLibrary.Core.ParticleSystem.ScreenLocation">
+            <summary>
+            Shorthand for screen location rectangle.
+            </summary>
+        </member>
+        <member name="M:ParticleLibrary.Core.ParticleSystem.NewParticle``1(Microsoft.Xna.Framework.Vector2,Microsoft.Xna.Framework.Vector2,Microsoft.Xna.Framework.Color,System.Single,ParticleLibrary.Core.Layer)">
+            <summary>
+            Spawns a new particle at the desired position.
+            </summary>
+            <param name="position">The particle's position.</param>
+            <param name="velocity">The particle's velocity.</param>
+            <param name="color">The particle's color.</param>
+            <param name="scale">The particle's size.</param>
+            <param name="layer">When the particle is drawn.</param>
+            <exception cref="T:System.NullReferenceException"></exception>
+        </member>
+        <member name="M:ParticleLibrary.Core.ParticleSystem.NewParticle``1(Microsoft.Xna.Framework.Vector2,Microsoft.Xna.Framework.Vector2,Microsoft.Xna.Framework.Color,Microsoft.Xna.Framework.Vector2,ParticleLibrary.Core.Layer)">
+            <summary>
+            Spawns a new particle at the desired position.
+            </summary>
+            <param name="position">The particle's position.</param>
+            <param name="velocity">The particle's velocity.</param>
+            <param name="color">The particle's color.</param>
+            <param name="scale">The particle's size.</param>
+            <param name="layer">When the particle is drawn.</param>
+            <exception cref="T:System.NullReferenceException"></exception>
+        </member>
+        <member name="M:ParticleLibrary.Core.ParticleSystem.NewParticle(Microsoft.Xna.Framework.Vector2,Microsoft.Xna.Framework.Vector2,ParticleLibrary.Core.Particle,Microsoft.Xna.Framework.Color,System.Single,ParticleLibrary.Core.Layer)">
+            <summary>
+            Spawns a new particle at the desired position.
+            </summary>
+            <param name="position">The particle's position.</param>
+            <param name="velocity">The particle's velocity.</param>
+            <param name="particle">The particle type.</param>
+            <param name="color">The particle's color.</param>
+            <param name="scale">The particle's size.</param>
+            <param name="layer">When the particle is drawn.</param>
+            <exception cref="T:System.NullReferenceException"></exception>
+        </member>
+        <member name="M:ParticleLibrary.Core.ParticleSystem.NewParticle(Microsoft.Xna.Framework.Vector2,Microsoft.Xna.Framework.Vector2,ParticleLibrary.Core.Particle,Microsoft.Xna.Framework.Color,Microsoft.Xna.Framework.Vector2,ParticleLibrary.Core.Layer)">
+            <summary>
+            Spawns a new particle at the desired position.
+            </summary>
+            <param name="position">The particle's position.</param>
+            <param name="velocity">The particle's velocity.</param>
+            <param name="particle">The particle type.</param>
+            <param name="color">The particle's color.</param>
+            <param name="scale">The particle's size.</param>
+            <param name="layer">When the particle is drawn.</param>
+            <exception cref="T:System.NullReferenceException"></exception>
+        </member>
+        <member name="T:ParticleLibrary.Core.PointParticle">
+            <summary>
+            The base for a PointParticle
+            </summary>
+        </member>
+        <member name="P:ParticleLibrary.Core.PointParticle.StartColor">
+            <summary>
+            The start color
+            </summary>
+        </member>
+        <member name="P:ParticleLibrary.Core.PointParticle.EndColor">
+            <summary>
+            The end color
+            </summary>
+        </member>
+        <member name="P:ParticleLibrary.Core.PointParticle.VelocityDeviation">
+            <summary>
+            How much velocity changes over time.
+            </summary>
+        </member>
+        <member name="P:ParticleLibrary.Core.PointParticle.VelocityAcceleration">
+            <summary>
+            How much velocity should accelerate over time. (multiplicative)
+            </summary>
+        </member>
+        <member name="P:ParticleLibrary.Core.PointParticle.Depth">
+            <summary>
+            The depth of the particle. Default is 1f. Changes the strength of the parallax effect, making the particle seem closest at higher values (2f) or farthest at lower values (0f)
+            </summary>
+        </member>
+        <member name="P:ParticleLibrary.Core.PointParticle.DepthVelocity">
+            <summary>
+            How much the depth changes over time. Can result in the particle completely disappearing (clipping beyond the visual field of the "camera")
+            </summary>
+        </member>
+        <member name="T:ParticleLibrary.Core.PointParticleSystem">
+            <summary>
+            Represents a point particle system. Do not forget to call <see cref="M:ParticleLibrary.Core.PointParticleSystem.Dispose(System.Boolean)"/> when no longer using it
+            </summary>
+        </member>
+        <member name="T:ParticleLibrary.Core.PointParticleSystemSettings">
+            <summary>
+            Represents the settings for a <see cref="T:ParticleLibrary.Core.PointParticleSystem"/>
+            </summary>
+        </member>
+        <member name="P:ParticleLibrary.Core.PointParticleSystemSettings.MaxParticles">
+            <summary>
+            The maximum amount of particles
+            </summary>
+        </member>
+        <member name="P:ParticleLibrary.Core.PointParticleSystemSettings.Lifespan">
+            <summary>
+            The lifespan of the particles
+            </summary>
+        </member>
+        <member name="P:ParticleLibrary.Core.PointParticleSystemSettings.BufferSize">
+            <summary>
+            The size of the batching buffer. Currently unimplemented for now
+            </summary>
+        </member>
+        <member name="P:ParticleLibrary.Core.PointParticleSystemSettings.Layer">
+            <summary>
+            The layer the particles are drawn on
+            </summary>
+        </member>
+        <member name="P:ParticleLibrary.Core.PointParticleSystemSettings.BlendState">
+            <summary>
+            The BlendState the particles are drawn with
+            </summary>
+        </member>
+        <member name="P:ParticleLibrary.Core.PointParticleSystemSettings.Fade">
+            <summary>
+            Whether the particles should fade over their lifespan
+            </summary>
+        </member>
+        <member name="M:ParticleLibrary.Core.PointParticleSystemSettings.#ctor(System.Int32,System.Int32,ParticleLibrary.Core.Layer,Microsoft.Xna.Framework.Graphics.BlendState,System.Boolean)">
+            <summary>
+            Creates a new settings present for a <see cref="T:ParticleLibrary.Core.PointParticleSystem"/>
+            </summary>
+            <param name="maxParticles">The maximum amount of particles</param>
+            <param name="lifespan">The lifespan of the particles</param>
+            <param name="layer">The layer the particles are drawn on</param>
+            <param name="blendState">The BlendState the particles are drawn with</param>
+            <param name="fade">Whether the particles should fade over their lifespan</param>
+            <exception cref="T:System.ArgumentNullException">Ensure that texture is not null</exception>
+            <exception cref="T:System.ArgumentOutOfRangeException">Ensure that max particles is greater than 0</exception>
+        </member>
+        <member name="F:ParticleLibrary.Core.PointParticleVertex.Position">
+            <summary>
+            Position of particle
+            </summary>
+        </member>
+        <member name="F:ParticleLibrary.Core.PointParticleVertex.StartColor">
+            <summary>
+            Starting color
+            </summary>
+        </member>
+        <member name="F:ParticleLibrary.Core.PointParticleVertex.EndColor">
+            <summary>
+            Ending color
+            </summary>
+        </member>
+        <member name="F:ParticleLibrary.Core.PointParticleVertex.Velocity">
+            <summary>
+            Packed Velocity (XY), and Velocity Acceleration (ZW)
+            </summary>
+        </member>
+        <member name="F:ParticleLibrary.Core.PointParticleVertex.Acceleration">
+            <summary>
+            Acceleration
+            </summary>
+        </member>
+        <member name="F:ParticleLibrary.Core.PointParticleVertex.DepthTime">
+            <summary>
+            Depth (X), Depth Velocity (Y), and Time (Z)
+            </summary>
+        </member>
+        <member name="T:ParticleLibrary.Core.QuadParticle">
+            <summary>
+            The base for a GParticle.
+            </summary>
+        </member>
+        <member name="P:ParticleLibrary.Core.QuadParticle.StartQuad">
+            <summary>
+            Sets the starting color for each corner of the particle.
+            </summary>
+        </member>
+        <member name="P:ParticleLibrary.Core.QuadParticle.EndQuad">
+            <summary>
+            Sets the ending color for each corner of the particle.
+            </summary>
+        </member>
+        <member name="P:ParticleLibrary.Core.QuadParticle.StartColor">
+            <summary>
+            The start color
+            </summary>
+        </member>
+        <member name="P:ParticleLibrary.Core.QuadParticle.EndColor">
+            <summary>
+            The end color
+            </summary>
+        </member>
+        <member name="P:ParticleLibrary.Core.QuadParticle.VelocityDeviation">
+            <summary>
+            How much velocity changes over time.
+            </summary>
+        </member>
+        <member name="P:ParticleLibrary.Core.QuadParticle.VelocityAcceleration">
+            <summary>
+            How much velocity should accelerate over time. (multiplicative)
+            </summary>
+        </member>
+        <member name="P:ParticleLibrary.Core.QuadParticle.Scale">
+            <summary>
+            The scale of the particle.
+            </summary>
+        </member>
+        <member name="P:ParticleLibrary.Core.QuadParticle.ScaleVelocity">
+            <summary>
+            How much scale changes over time
+            </summary>
+        </member>
+        <member name="P:ParticleLibrary.Core.QuadParticle.Rotation">
+            <summary>
+            The rotation of the particle
+            </summary>
+        </member>
+        <member name="P:ParticleLibrary.Core.QuadParticle.RotationVelocity">
+            <summary>
+            How much rotation changes over time
+            </summary>
+        </member>
+        <member name="P:ParticleLibrary.Core.QuadParticle.Depth">
+            <summary>
+            The depth of the particle. Default is 1f. Changes the strength of the parallax effect, making the particle seem closest at higher values (2f) or farthest at lower values (0f)
+            </summary>
+        </member>
+        <member name="P:ParticleLibrary.Core.QuadParticle.DepthVelocity">
+            <summary>
+            How much the depth changes over time. Can result in the particle completely disappearing (clipping beyond the visual field of the "camera")
+            </summary>
+        </member>
+        <member name="T:ParticleLibrary.Core.QuadParticleSystem">
+            <summary>
+            Represents a Quad particle system. Do not forget to call <see cref="M:ParticleLibrary.Core.QuadParticleSystem.Dispose(System.Boolean)"/> when no longer using it
+            </summary>
+        </member>
+        <member name="M:ParticleLibrary.Core.QuadParticleSystem.NewParticle(Microsoft.Xna.Framework.Vector2,Microsoft.Xna.Framework.Vector2,ParticleLibrary.Core.QuadParticle,System.Nullable{System.Int32})">
+            <summary>
+            Creates a particle at the given position with the given velocity and base settings
+            </summary>
+            <param name="position"></param>
+            <param name="velocity"></param>
+            <param name="particle"></param>
+            <param name="lifespan"></param>
+        </member>
+        <member name="T:ParticleLibrary.Core.QuadParticleSystemSettings">
+            <summary>
+            Represents the settings for a <see cref="T:ParticleLibrary.Core.QuadParticleSystem"/>
+            </summary>
+        </member>
+        <member name="P:ParticleLibrary.Core.QuadParticleSystemSettings.Texture">
+            <summary>
+            The texture of the particles
+            </summary>
+        </member>
+        <member name="P:ParticleLibrary.Core.QuadParticleSystemSettings.MaxParticles">
+            <summary>
+            The maximum amount of particles
+            </summary>
+        </member>
+        <member name="P:ParticleLibrary.Core.QuadParticleSystemSettings.Lifespan">
+            <summary>
+            The lifespan of the particles
+            </summary>
+        </member>
+        <member name="P:ParticleLibrary.Core.QuadParticleSystemSettings.BufferSize">
+            <summary>
+            The size of the batching buffer. Currently unimplemented for now
+            </summary>
+        </member>
+        <member name="P:ParticleLibrary.Core.QuadParticleSystemSettings.Layer">
+            <summary>
+            The layer the particles are drawn on
+            </summary>
+        </member>
+        <member name="P:ParticleLibrary.Core.QuadParticleSystemSettings.BlendState">
+            <summary>
+            The BlendState the particles are drawn with
+            </summary>
+        </member>
+        <member name="P:ParticleLibrary.Core.QuadParticleSystemSettings.Fade">
+            <summary>
+            Whether the particles should fade over their lifespan
+            </summary>
+        </member>
+        <member name="M:ParticleLibrary.Core.QuadParticleSystemSettings.#ctor(Microsoft.Xna.Framework.Graphics.Texture2D,System.Int32,System.Int32,ParticleLibrary.Core.Layer,Microsoft.Xna.Framework.Graphics.BlendState,System.Boolean)">
+            <summary>
+            Creates a new settings preset for a <see cref="T:ParticleLibrary.Core.QuadParticleSystem"/>
+            </summary>
+            <param name="texture">The texture of the particles</param>
+            <param name="maxParticles">The maximum amount of particles</param>
+            <param name="lifespan">The lifespan of the particles</param>
+            <param name="layer">The layer the particles are drawn on</param>
+            <param name="blendState">The BlendState the particles are drawn with</param>
+            <param name="fade">Whether the particles should fade over their lifespan</param>
+            <exception cref="T:System.InvalidOperationException">Ensure that this <b>IS NOT called on a server</b></exception>
+            <exception cref="T:System.ArgumentNullException">Ensure that texture is not null</exception>
+            <exception cref="T:System.ArgumentOutOfRangeException">Ensure that max particles is greater than 0</exception>
+        </member>
+        <member name="F:ParticleLibrary.Core.QuadParticleVertex.Position">
+            <summary>
+            Position of particle
+            </summary>
+        </member>
+        <member name="F:ParticleLibrary.Core.QuadParticleVertex.TexCoord">
+            <summary>
+            Texture coordinate of this vertex
+            </summary>
+        </member>
+        <member name="F:ParticleLibrary.Core.QuadParticleVertex.StartColor">
+            <summary>
+            Starting color
+            </summary>
+        </member>
+        <member name="F:ParticleLibrary.Core.QuadParticleVertex.EndColor">
+            <summary>
+            Ending color
+            </summary>
+        </member>
+        <member name="F:ParticleLibrary.Core.QuadParticleVertex.Velocity">
+            <summary>
+            Packed Velocity (XY), and Velocity Deviation (ZW)
+            </summary>
+        </member>
+        <member name="F:ParticleLibrary.Core.QuadParticleVertex.Acceleration">
+            <summary>
+            Acceleration
+            </summary>
+        </member>
+        <member name="F:ParticleLibrary.Core.QuadParticleVertex.Size">
+            <summary>
+            Texture width and height
+            </summary>
+        </member>
+        <member name="F:ParticleLibrary.Core.QuadParticleVertex.Scale">
+            <summary>
+            Scale (XY), and Scale Velocity (ZW)
+            </summary>
+        </member>
+        <member name="F:ParticleLibrary.Core.QuadParticleVertex.Rotation">
+            <summary>
+            Corner (XY), Rotation (Z), and Rotation Velocity (W)
+            </summary>
+        </member>
+        <member name="F:ParticleLibrary.Core.QuadParticleVertex.DepthTime">
+            <summary>
+            Depth (X), Depth Velocity (Y), and Time (Z)
+            </summary>
+        </member>
+        <member name="T:ParticleLibrary.EmitterSystem.Emitter">
+            <summary>
+            Base class for all emitters. Inherit this class to create your own emitter.
+            </summary>
+        </member>
+        <member name="F:ParticleLibrary.EmitterSystem.Emitter.Assembly">
+            <summary>
+            Originating mod.
+            </summary>
+        </member>
+        <member name="F:ParticleLibrary.EmitterSystem.Emitter.Type">
+            <summary>
+            Originating type.
+            </summary>
+        </member>
+        <member name="F:ParticleLibrary.EmitterSystem.Emitter.Data">
+            <summary>
+            Custom string Data for this emitter.
+            </summary>
+        </member>
+        <member name="F:ParticleLibrary.EmitterSystem.Emitter.Save">
+            <summary>
+            Whether this emitter should save when the world is exited.
+            </summary>
+        </member>
+        <member name="F:ParticleLibrary.EmitterSystem.Emitter.CullDistance">
+            <summary>
+            Minumum distance before AI is run. Measured by distance from Main.localPlayer to Emitter.
+            </summary>
+        </member>
+        <member name="M:ParticleLibrary.EmitterSystem.Emitter.#ctor">
+            <summary>
+            </summary>
+        </member>
+        <member name="M:ParticleLibrary.EmitterSystem.Emitter.SetDefaults">
+            <summary>
+            Runs on instantiation.
+            </summary>
+        </member>
+        <member name="M:ParticleLibrary.EmitterSystem.Emitter.AI">
+            <summary>
+            Runs on PreUpdateWorld.
+            </summary>
+        </member>
+        <member name="M:ParticleLibrary.EmitterSystem.Emitter.Draw(Microsoft.Xna.Framework.Graphics.SpriteBatch,Microsoft.Xna.Framework.Vector2,Microsoft.Xna.Framework.Color)">
+            <summary>
+            Runs on DrawDust.
+            </summary>
+        </member>
+        <member name="M:ParticleLibrary.EmitterSystem.Emitter.Kill">
+            <summary>
+            Kills this emitter.
+            </summary>
+        </member>
+        <member name="F:ParticleLibrary.EmitterManager.emitters">
+            <summary>
+            List of emitters.
+            </summary>
+        </member>
+        <member name="M:ParticleLibrary.EmitterManager.NewInstance``1">
+            <summary>
+            Creates a new instance of an emitter Type.
+            </summary>
+            <typeparam name="T">The emitter.</typeparam>
+            <returns>A new instance of this emitter</returns>
+        </member>
+        <member name="M:ParticleLibrary.EmitterManager.NewEmitter``1(Microsoft.Xna.Framework.Vector2,System.String,System.Single)">
+            <summary>
+            Spawns a new emitter at the desired position.
+            </summary>
+            <typeparam name="T">The emitter.</typeparam>
+            <param name="Position">The emitter's position.</param>
+            <param name="Data">Custom string data.</param>
+            <param name="CullDistance">The maximum distance before the emitter no longer runs.</param>
+        </member>
+        <member name="M:ParticleLibrary.EmitterManager.NewEmitter(Microsoft.Xna.Framework.Vector2,ParticleLibrary.EmitterSystem.Emitter,System.String,System.Single)">
+            <summary>
+            Spawns a new emitter at the desired position.
+            </summary>
+            <param name="Position">The emitter's position.</param>
+            <param name="Emitter">The emitter type.</param>
+            <param name="Data">Defaults to "ModName: EmitterName". If the mod can't be found by the Assembly name, then defaults to "AssemblyName: EmitterName".</param>
+            <param name="CullDistance">Defaults to the largest screen dimension.</param>
+        </member>
+        <member name="M:ParticleLibrary.EmitterManager.Remove(ParticleLibrary.EmitterSystem.Emitter)">
+            <summary>
+            Kills a specified emitter.
+            </summary>
+            <param name="emitter"></param>
+        </member>
+        <member name="M:ParticleLibrary.EmitterManager.Remove(System.String)">
+            <summary>
+            Kills all emitters with matching data.
+            </summary>
+            <param name="Data"></param>
+        </member>
+        <member name="M:ParticleLibrary.EmitterManager.Remove(System.Predicate{ParticleLibrary.EmitterSystem.Emitter})">
+            <summary>
+            Kills all emitters that fulfill the conditions.
+            </summary>
+            <param name="predicate"></param>
+        </member>
+        <member name="M:ParticleLibrary.EmitterManager.Find(System.String)">
+            <summary>
+            Returns an emitter with matching data.
+            </summary>
+            <param name="Data"></param>
+        </member>
+        <member name="M:ParticleLibrary.EmitterManager.Find(System.Predicate{ParticleLibrary.EmitterSystem.Emitter})">
+            <summary>
+            Returns all emitters that fulfill the conditions.
+            </summary>
+            <param name="predicate"></param>
+        </member>
+        <member name="T:ParticleLibrary.Examples.ExampleEmitter">
+            <summary>
+            This class demonstrates how to create an emitter.
+            It's required that you create a custom emitter class, since <see cref="!:Emitter.SpawnParticle(Vector2, SpatialParameters, VisualParameters)"/> won't spawn particles for you.
+            Emitters provide the calculation functionality, expecting it to be used to create any kind of particle.
+            </summary>
+        </member>
+        <member name="M:ParticleLibrary.Examples.ExampleEmitter.Initialize">
+            <summary>
+            This method runs after instantiation (constructor finishes). You can do whatever you want in here.
+            </summary>
+        </member>
+        <member name="M:ParticleLibrary.Examples.ExampleEmitter.Update">
+            <summary>
+            You can completely customize how this Emitter updates if you want to.
+            If you want to avoid calculation overhead (if you're really worried about it), just don't call base.Update();
+            </summary>
+        </member>
+        <member name="M:ParticleLibrary.Examples.ExampleEmitter.SpawnParticle(Microsoft.Xna.Framework.Vector2,ParticleLibrary.Core.Data.SpatialParameters@,ParticleLibrary.Core.Data.VisualParameters@)">
+            <summary>
+            You must override this method for the emitter to work.
+            The method provides information on what settings to spawn the particle with.
+            These parameters are generated by <see cref="P:ParticleLibrary.Core.Emitter.EmitterSettings"/>, <see cref="P:ParticleLibrary.Core.Emitter.ParticleSettings"/>, and <see cref="P:ParticleLibrary.Core.Emitter.ColorSettings"/>
+            You aren't required to use these parameters, so I'll showcase both.
+            We'll be using the particle systems we set up in our <see cref="T:ParticleLibrary.Examples.ExampleParticleSystemManager"/>.
+            </summary>
+            <param name="position">The position to spawn at.</param>
+            <param name="spatial">The spatial parameters.</param>
+            <param name="visual">The visual parameters.</param>
+        </member>
+        <member name="M:ParticleLibrary.Examples.ExampleEmitter.Draw(Microsoft.Xna.Framework.Graphics.SpriteBatch,Microsoft.Xna.Framework.Vector2)">
+            <summary>
+            You can use this method to draw things around the Emitter. You can get pretty creative with this, but you don't have to use it.
+            This method draws behind dust. Currently there is no way to change the layer like with particles, but if it's something that people ask for enough, it can be added.
+            SpriteBatch has already begun, there is no need to call Begin() or End().
+            </summary>
+            <param name="spriteBatch"></param>
+            <param name="location"></param>
+        </member>
+        <member name="M:ParticleLibrary.Examples.ExampleEmitter.SaveData(Terraria.ModLoader.IO.TagCompound)">
+            <summary>
+            You can use this method to save custom data for custom Emitters, if you have it. Just make sure to load the data correctly.
+            </summary>
+            <param name="tag"></param>
+        </member>
+        <member name="M:ParticleLibrary.Examples.ExampleEmitter.LoadData(Terraria.ModLoader.IO.TagCompound)">
+            <summary>
+            You can use this method to load custom data for custom Emitters, if you have it. Just make sure you've saved the data correctly.
+            </summary>
+            <param name="tag"></param>
+        </member>
+        <member name="T:ParticleLibrary.Examples.ExampleParticle">
+            <summary>
+            This class demonstrates creating a custom <see cref="T:ParticleLibrary.Core.Particle"/>
+            In the 2.0 API, <see cref="T:ParticleLibrary.Core.Particle"/>s recieved a major rewrite and became much more efficient.
+            This means that a lot of familiar things have changed.
+            <see cref="M:ParticleLibrary.Core.Particle.Spawn"/> used to be Initialize and SpawnAction, but it's now condensed into one lifecycle method
+            <see cref="M:ParticleLibrary.Core.Particle.Update"/> used to be AI, but has since been renamed
+            <see cref="M:ParticleLibrary.Core.Particle.Draw(Microsoft.Xna.Framework.Graphics.SpriteBatch,Microsoft.Xna.Framework.Vector2)"/> used to be PreDraw, Draw, and PostDraw, but has since been condensed and had its parameters simplified to only the necessities
+            <see cref="M:ParticleLibrary.Core.Particle.Death"/> used to be DeathAction, but is now overridable instead of being a field
+            </summary>
+        </member>
+        <member name="P:ParticleLibrary.Examples.ExampleParticle.Texture">
+            <summary>
+            You can override the default texture fetching just like with items.
+            The <see cref="T:ParticleLibrary.Resources"/> class is created by Resources.tt, which is a tool I borrowed from Nez, a Monogame library
+            I customized it and made it more suited for Terraria modding. It autogenerates string paths to resources in your project.
+            The tool recreates the paths at compile time, meaning you will never have an incorrect path on accident.
+            See: <see href="https://github.com/prime31/Nez/blob/master/FAQs/ContentManagement.md#auto-generating-content-paths"/>
+            </summary>
+        </member>
+        <member name="P:ParticleLibrary.Examples.ExampleParticle.Bounds">
+            <summary>
+            You can override the bounds to skip draw calls for this particle if it wouldn't be visible.
+            Currently, the library already calculates whether these bounds would intersect the player's vision,
+            This means you only need to specify where the particle is and how much space it's using.
+            Alternatively, you can leave this as null to prevent culling altogether.
+            You can also set it to something like Rectangle.Empty to prevent the particle from being drawn.
+            </summary>
+        </member>
+        <member name="M:ParticleLibrary.Examples.ExampleParticle.#ctor(System.Int32,System.Single)">
+            <summary>
+            With the removal of the AI array, you can no longer pass data into a particle via <see cref="M:ParticleLibrary.Core.ParticleSystem.NewParticle(Microsoft.Xna.Framework.Vector2,Microsoft.Xna.Framework.Vector2,ParticleLibrary.Core.Particle,Microsoft.Xna.Framework.Color,Microsoft.Xna.Framework.Vector2,ParticleLibrary.Core.Layer)"/>
+            Instead, with recent fixes, you can instantiate the particle's constructor and pass it in that way. This way, code is much more readable.
+            <para>
+            NOTE: If you plan on allowing your particle to be automatically instantiated with the NewParticle(T) methods, you MUST have a parameterless constructor
+            </para>
+            </summary>
+            <param name="timeLeft"></param>
+            <param name="velocityMult"></param>
+        </member>
+        <member name="M:ParticleLibrary.Examples.ExampleParticle.#ctor">
+            <summary>
+            This parameterless constructor allows us to use our particle in the NewParticle(T) methods without errors
+            It's a good idea to provide default values for your parameter constructor unless it's not necessary
+            </summary>
+        </member>
+        <member name="M:ParticleLibrary.Examples.ExampleParticle.Spawn">
+            <summary>
+            Runs when the particle is created
+            </summary>
+        </member>
+        <member name="M:ParticleLibrary.Examples.ExampleParticle.Update">
+            <summary>
+            Runs every full frame (tick)
+            </summary>
+        </member>
+        <member name="M:ParticleLibrary.Examples.ExampleParticle.Draw(Microsoft.Xna.Framework.Graphics.SpriteBatch,Microsoft.Xna.Framework.Vector2)">
+            <summary>
+            Runs every draw frame (interval depends on <see cref="F:Terraria.Main.FrameSkipMode"/>)
+            </summary>
+            <param name="spriteBatch">The SpriteBatch to use.</param>
+            <param name="location">The visual location, already taking into account <see cref="F:Terraria.Main.screenPosition"/></param>
+        </member>
+        <member name="M:ParticleLibrary.Examples.ExampleParticle.Death">
+            <summary>
+            Runs when <see cref="F:ParticleLibrary.Core.Particle.TimeLeft"/> reaches 0 or when <see cref="M:ParticleLibrary.Core.Particle.Kill"/> is called.
+            </summary>
+        </member>
+        <member name="T:ParticleLibrary.Examples.ExampleParticleSystemManager">
+            <summary>
+            This class demonstrates a good way to manage your GPU particle systems.
+            It's a good idea to centralize your GPU particle systems, as you'll want to reuse them as much as possible.
+            </summary>
+        </member>
+        <member name="T:ParticleLibrary.Examples.ExampleParticleSystemWrapper`1">
+            <summary>
+            This class serves as a wrapper for any GPU particle system, allowing custom functionality to be implemented.
+            An example of such functionality would be to embed the system into a <see cref="T:Microsoft.Xna.Framework.Graphics.RenderTarget2D"/>, which requires manually calling <see cref="M:ParticleLibrary.Core.IGPUParticleSystem`1.Draw(ParticleLibrary.Core.Layer)"/>
+            </summary>
+            <typeparam name="T"><see cref="T:ParticleLibrary.Core.QuadParticle"/> and <see cref="T:ParticleLibrary.Core.PointParticle"/> both inherit from <see cref="T:ParticleLibrary.Core.GPUParticle"/></typeparam>
+        </member>
+        <member name="M:ParticleLibrary.Examples.ExampleParticleSystemWrapper`1.AddParticle(Microsoft.Xna.Framework.Vector2,Microsoft.Xna.Framework.Vector2,`0)">
+            <summary>
+            A shorthand for accessing the <see cref="M:ParticleLibrary.Core.IGPUParticleSystem`1.NewParticle(Microsoft.Xna.Framework.Vector2,Microsoft.Xna.Framework.Vector2,`0,System.Nullable{System.Int32})"/> method.
+            </summary>
+            <param name="position">The location of the particle.</param>
+            <param name="velocity">The velocity of the particle.</param>
+            <param name="particle">The particle settings.</param>
+        </member>
+        <member name="T:ParticleLibrary.Examples.ExampleTrailingParticleBase">
+            <summary>
+            This class demonstrates how you can centralize certain functionalities instead of copy-pasting the same code everywhere.
+            In the previous major version of this library, there were arrays to handle things like old positions, but they have since been removed.
+            This shows how you can reimplement that feature in a way that is maintainable.
+            </summary>
+        </member>
+        <member name="M:ParticleLibrary.Examples.ExampleTrailingParticleBase.#ctor(System.Int32)">
+            <summary>
+            See <see cref="T:ParticleLibrary.Examples.ExampleParticle"/> for the reason why two constructors is necessary.
+            </summary>
+            <param name="length"></param>
+            <exception cref="T:System.ArgumentOutOfRangeException"></exception>
+        </member>
+        <member name="P:ParticleLibrary.ParticleLibrary.EmptyPixel">
+            <summary>
+            Empty 1x1 texture
+            </summary>
+        </member>
+        <member name="P:ParticleLibrary.ParticleLibrary.WhitePixel">
+            <summary>
+            White 1x1 texture
+            </summary>
+        </member>
+        <member name="T:ParticleLibrary.Particle">
+            <summary>
+            Base class for all particles. Inherit this class to create your own particle.
+            </summary>
+        </member>
+        <member name="P:ParticleLibrary.Particle.Texture">
+            <summary>
+            Texture path for a particle. Override this to specify a custom path.
+            </summary>
+        </member>
+        <member name="P:ParticleLibrary.Particle.VisualPosition">
+            <summary>
+            The visual position taking into account Main.screenPosition;
+            </summary>
+        </member>
+        <member name="F:ParticleLibrary.Particle.Layer.BeforeSurfaceBackground">
+            <summary>
+            ** (Broken) ** The surface background. You will have to do parallaxing yourself for now.
+            </summary>
+        </member>
+        <member name="F:ParticleLibrary.Particle.Layer.BeforeWalls">
+            <summary>
+            Walls.
+            </summary>
+        </member>
+        <member name="F:ParticleLibrary.Particle.Layer.BeforeNonSolidTiles">
+            <summary>
+            Trees, flowers, rocks, etc.
+            </summary>
+        </member>
+        <member name="F:ParticleLibrary.Particle.Layer.BeforeNPCsBehindTiles">
+            <summary>
+            Worm enemies.
+            </summary>
+        </member>
+        <member name="F:ParticleLibrary.Particle.Layer.BeforeTiles">
+            <summary>
+            Tiles.
+            </summary>
+        </member>
+        <member name="F:ParticleLibrary.Particle.Layer.BeforePlayersBehindNPCs">
+            <summary>
+            Player details drawn behind NPCs.
+            </summary>
+        </member>
+        <member name="F:ParticleLibrary.Particle.Layer.BeforeNPCs">
+            <summary>
+            NPCs.
+            </summary>
+        </member>
+        <member name="F:ParticleLibrary.Particle.Layer.BeforeProjectiles">
+            <summary>
+            Projectiles.
+            </summary>
+        </member>
+        <member name="F:ParticleLibrary.Particle.Layer.BeforePlayers">
+            <summary>
+            Players.
+            </summary>
+        </member>
+        <member name="F:ParticleLibrary.Particle.Layer.BeforeItems">
+            <summary>
+            Items dropped in world.
+            </summary>
+        </member>
+        <member name="F:ParticleLibrary.Particle.Layer.BeforeRain">
+            <summary>
+            Rain.
+            </summary>
+        </member>
+        <member name="F:ParticleLibrary.Particle.Layer.BeforeGore">
+            <summary>
+            Gore.
+            </summary>
+        </member>
+        <member name="F:ParticleLibrary.Particle.Layer.BeforeDust">
+            <summary>
+            Dust.
+            </summary>
+        </member>
+        <member name="F:ParticleLibrary.Particle.Layer.BeforeWater">
+            <summary>
+            Water. Adjust draw position by new Vector2(Main.offScreenRange, Main.offScreenRange).
+            </summary>
+        </member>
+        <member name="F:ParticleLibrary.Particle.Layer.BeforeUI">
+            <summary>
+            Before UI.
+            </summary>
+        </member>
+        <member name="F:ParticleLibrary.Particle.Layer.AfterUI">
+            <summary>
+            After UI.
+            </summary>
+        </member>
+        <member name="F:ParticleLibrary.Particle.Layer.BeforeMainMenu">
+            <summary>
+            Before Main Menu.
+            </summary>
+        </member>
+        <member name="F:ParticleLibrary.Particle.Layer.AfterMainMenu">
+            <summary>
+            After Main Menu.
+            </summary>
+        </member>
+        <member name="F:ParticleLibrary.Particle.layer">
+            <summary>
+            Where the particle should be drawn.
+            </summary>
+        </member>
+        <member name="F:ParticleLibrary.Particle.AnchorPosition">
+            <summary>
+            The reference position used for this particle when calculating its position. Defaults to (0, 0).
+            </summary>
+        </member>
+        <member name="F:ParticleLibrary.Particle.color">
+            <summary>
+            The color of this particle.
+            </summary>
+        </member>
+        <member name="F:ParticleLibrary.Particle.frame">
+            <summary>
+            The frame of this particle.
+            </summary>
+        </member>
+        <member name="F:ParticleLibrary.Particle.texture">
+            <summary>
+            The texture for this particle.
+            </summary>
+        </member>
+        <member name="F:ParticleLibrary.Particle.SpawnAction">
+            <summary>
+            Method to run when this particle is spawned.
+            </summary>
+        </member>
+        <member name="F:ParticleLibrary.Particle.DeathAction">
+            <summary>
+            Method to run when this particle is despawned.
+            </summary>
+        </member>
+        <member name="F:ParticleLibrary.Particle.important">
+            <summary>
+            Whether this particle should be exempt from the particle limit. Use only when necesssary.
+            </summary>
+        </member>
+        <member name="F:ParticleLibrary.Particle.tileCollide">
+            <summary>
+            Whether this particle should collide with tiles.
+            </summary>
+        </member>
+        <member name="P:ParticleLibrary.Particle.Scale">
+            <summary>
+            The scale of this particle.
+            </summary>
+        </member>
+        <member name="F:ParticleLibrary.Particle.scaleVelocity">
+            <summary>
+            How much the scale increases each frame.
+            </summary>
+        </member>
+        <member name="F:ParticleLibrary.Particle.scaleAcceleration">
+            <summary>
+            How much the scale velocity increases each frame.
+            </summary>
+        </member>
+        <member name="F:ParticleLibrary.Particle.rotation">
+            <summary>
+            The rotation of this particle.
+            </summary>
+        </member>
+        <member name="F:ParticleLibrary.Particle.rotationVelocity">
+            <summary>
+            How much the rotation changes each frame.
+            </summary>
+        </member>
+        <member name="F:ParticleLibrary.Particle.rotationAcceleration">
+            <summary>
+            How much the rotation velocity changes each frame.
+            </summary>
+        </member>
+        <member name="F:ParticleLibrary.Particle.velocityAcceleration">
+            <summary>
+            How much the velocity changes each frame.
+            </summary>
+        </member>
+        <member name="F:ParticleLibrary.Particle.opacity">
+            <summary>
+            The opacity of this particle.
+            </summary>
+        </member>
+        <member name="F:ParticleLibrary.Particle.gravity">
+            <summary>
+            The gravity to apply to this particle's movement.
+            </summary>
+        </member>
+        <member name="F:ParticleLibrary.Particle.timeLeft">
+            <summary>
+            The amount of ticks (frames) this particle has left in its lifetime.
+            </summary>
+        </member>
+        <member name="F:ParticleLibrary.Particle.ai">
+            <summary>
+            An array of floats used to pass data to the particle on spawn.
+            </summary>
+        </member>
+        <member name="F:ParticleLibrary.Particle.oldPos">
+            <summary>
+            An array of old positions for this particle. Only used when instantiated.
+            </summary>
+        </member>
+        <member name="F:ParticleLibrary.Particle.oldRot">
+            <summary>
+            An array of old rotations for this particle. Only used when instantiated.
+            </summary>
+        </member>
+        <member name="F:ParticleLibrary.Particle.oldCen">
+            <summary>
+            An array of old centers, taking into account the width and height of this particle. Only used when instantiated.
+            </summary>
+        </member>
+        <member name="F:ParticleLibrary.Particle.oldVel">
+            <summary>
+            An array of old velocities for this particle. Only used when instantiated.
+            </summary>
+        </member>
+        <member name="M:ParticleLibrary.Particle.PreAI">
+            <summary>
+            This method runs before the particle is updated.
+            </summary>
+        </member>
+        <member name="M:ParticleLibrary.Particle.AI">
+            <summary>
+            This method runs as the particle is updated.
+            </summary>
+        </member>
+        <member name="M:ParticleLibrary.Particle.PostAI">
+            <summary>
+            This method runs after the particle is updated.
+            </summary>
+        </member>
+        <member name="M:ParticleLibrary.Particle.PreDraw(Microsoft.Xna.Framework.Graphics.SpriteBatch,Microsoft.Xna.Framework.Vector2,Microsoft.Xna.Framework.Color)">
+            <summary>
+            This method runs before Draw. Return false to keep the Particle Manager from drawing your particle.
+            </summary>
+            <param name="spriteBatch">Provided SpriteBatch.</param>
+            <param name="drawPos">Draw position of the particle. This factors in Main.screenPosition.</param>
+            <param name="lightColor">The light color of the tile beneath this particle.</param>
+            <returns>bool</returns>
+        </member>
+        <member name="M:ParticleLibrary.Particle.Draw(Microsoft.Xna.Framework.Graphics.SpriteBatch,Microsoft.Xna.Framework.Vector2,Microsoft.Xna.Framework.Color)">
+            <summary>
+            This method runs if PreDraw returns true.
+            </summary>
+        </member>
+        <member name="M:ParticleLibrary.Particle.PostDraw(Microsoft.Xna.Framework.Graphics.SpriteBatch,Microsoft.Xna.Framework.Vector2,Microsoft.Xna.Framework.Color)">
+            <summary>
+            This method runs after Draw is called.
+            <param name="spriteBatch">Provided SpriteBatch.</param>
+            <param name="drawPos">Draw position of the particle. This factors in Main.screenPosition.</param>
+            <param name="lightColor">The light color of the tile beneath this particle.</param>
+            </summary>
+        </member>
+        <member name="M:ParticleLibrary.Particle.TileCollision(Microsoft.Xna.Framework.Vector2)">
+            <summary>
+            Runs when the particle collides with a tile.
+            </summary>
+            <param name="oldVelocity">The old velocity of the particle.</param>
+        </member>
+        <member name="M:ParticleLibrary.Particle.Kill(System.Boolean)">
+            <summary>
+            Kills a particle.
+            </summary>
+        </member>
+        <member name="T:ParticleLibrary.ParticleManager">
+            <summary>
+            This class manages the particle system. New instances of this class can be created.
+            </summary>
+        </member>
+        <member name="F:ParticleLibrary.ParticleManager.particles">
+            <summary>
+            A list that contains all active particles.
+            </summary>
+        </member>
+        <member name="F:ParticleLibrary.ParticleManager.importantParticles">
+            <summary>
+            A list that contains all active important particles.
+            Important particles are exempt fron the client-side particle limitation.
+            Use only when absolutely necessary.
+            </summary>
+        </member>
+        <member name="M:ParticleLibrary.ParticleManager.Dispose">
+            <summary>
+            Disposes the current list of particles.
+            </summary>
+        </member>
+        <member name="M:ParticleLibrary.ParticleManager.NewInstance``1">
+            <summary>
+            Creates a new instance of a particle Type.
+            </summary>
+            <typeparam name="T">The particle.</typeparam>
+            <returns>A new instance of this particle</returns>
+        </member>
+        <member name="M:ParticleLibrary.ParticleManager.NewParticle``1(Microsoft.Xna.Framework.Vector2,Microsoft.Xna.Framework.Vector2,Microsoft.Xna.Framework.Color,System.Single,System.Single,System.Single,System.Single,System.Single,System.Single,System.Single,System.Single,System.Single,ParticleLibrary.Particle.Layer,System.Boolean)">
+            <summary>
+            Spawns a new particle at the desired position.
+            </summary>
+            <param name="Position">The particle's position.</param>
+            <param name="Velocity">The particle's velocity.</param>
+            <param name="Color">The particle's color.</param>
+            <param name="Scale">The particle's size.</param>
+            <param name="AI0">Value to pass to the particle's AI array.</param>
+            <param name="AI1"></param>
+            <param name="AI2"></param>
+            <param name="AI3"></param>
+            <param name="AI4"></param>
+            <param name="AI5"></param>
+            <param name="AI6"></param>
+            <param name="AI7"></param>
+            <param name="Layer">When the particle is drawn.</param>
+            <param name="Important">Whether the particle should ignore the particle limit.</param>
+            <exception cref="T:System.NullReferenceException"></exception>
+        </member>
+        <member name="M:ParticleLibrary.ParticleManager.NewParticle``1(Microsoft.Xna.Framework.Vector2,Microsoft.Xna.Framework.Vector2,Microsoft.Xna.Framework.Color,Microsoft.Xna.Framework.Vector2,System.Single,System.Single,System.Single,System.Single,System.Single,System.Single,System.Single,System.Single,ParticleLibrary.Particle.Layer,System.Boolean)">
+            <summary>
+            Spawns a new particle at the desired position.
+            </summary>
+            <param name="Position">The particle's position.</param>
+            <param name="Velocity">The particle's velocity.</param>
+            <param name="Color">The particle's color.</param>
+            <param name="Scale">The particle's size.</param>
+            <param name="AI0">Value to pass to the particle's AI array.</param>
+            <param name="AI1"></param>
+            <param name="AI2"></param>
+            <param name="AI3"></param>
+            <param name="AI4"></param>
+            <param name="AI5"></param>
+            <param name="AI6"></param>
+            <param name="AI7"></param>
+            <param name="Layer">When the particle is drawn.</param>
+            <param name="Important">Whether the particle should ignore the particle limit.</param>
+            <exception cref="T:System.NullReferenceException"></exception>
+        </member>
+        <member name="M:ParticleLibrary.ParticleManager.NewParticle(Microsoft.Xna.Framework.Vector2,Microsoft.Xna.Framework.Vector2,ParticleLibrary.Particle,Microsoft.Xna.Framework.Color,System.Single,System.Single,System.Single,System.Single,System.Single,System.Single,System.Single,System.Single,System.Single,ParticleLibrary.Particle.Layer,System.Boolean)">
+            <summary>
+            Spawns a new particle at the desired position.
+            </summary>
+            <param name="Position">The particle's position.</param>
+            <param name="Velocity">The particle's velocity.</param>
+            <param name="Particle">The particle type.</param>
+            <param name="Color">The particle's color.</param>
+            <param name="Scale">The particle's size.</param>
+            <param name="AI0">Value to pass to the particle's AI array.</param>
+            <param name="AI1"></param>
+            <param name="AI2"></param>
+            <param name="AI3"></param>
+            <param name="AI4"></param>
+            <param name="AI5"></param>
+            <param name="AI6"></param>
+            <param name="AI7"></param>
+            <param name="Layer">When the particle is drawn.</param>
+            <param name="Important">Whether the particle should ignore the particle limit.</param>
+            <exception cref="T:System.NullReferenceException"></exception>
+        </member>
+        <member name="M:ParticleLibrary.ParticleManager.NewParticle(Microsoft.Xna.Framework.Vector2,Microsoft.Xna.Framework.Vector2,ParticleLibrary.Particle,Microsoft.Xna.Framework.Color,Microsoft.Xna.Framework.Vector2,System.Single,System.Single,System.Single,System.Single,System.Single,System.Single,System.Single,System.Single,ParticleLibrary.Particle.Layer,System.Boolean)">
+            <summary>
+            Spawns a new particle at the desired position.
+            </summary>
+            <param name="Position">The particle's position.</param>
+            <param name="Velocity">The particle's velocity.</param>
+            <param name="Particle">The particle type.</param>
+            <param name="Color">The particle's color.</param>
+            <param name="Scale">The particle's size.</param>
+            <param name="AI0">Value to pass to the particle's AI array.</param>
+            <param name="AI1"></param>
+            <param name="AI2"></param>
+            <param name="AI3"></param>
+            <param name="AI4"></param>
+            <param name="AI5"></param>
+            <param name="AI6"></param>
+            <param name="AI7"></param>
+            <param name="Layer">When the particle is drawn.</param>
+            <param name="Important">Whether the particle should ignore the particle limit.</param>
+            <exception cref="T:System.NullReferenceException"></exception>
+        </member>
+        <member name="T:ParticleLibrary.Resources">
+            <remarks>
+            This file originates from Nez, a Monogame library, which includes a T4 template that will auto-generate the content of this file.
+            Modified by SnowyStarfall to be more thorough.
+            To use, right click the Resources.tt file in Visual Studio and click "Run Custom Tool". It will generate Resources.cs nested below itself.
+            See: <see href="https://github.com/prime31/Nez/blob/master/FAQs/ContentManagement.md#auto-generating-content-paths"/>
+            </remarks>
+        </member>
+        <member name="T:ParticleLibrary.Utilities.FastList`1">
+            <summary>
+            Sourced from Nez <see href="https://github.com/prime31/Nez/blob/master/Nez.Portable/Utils/Collections/FastList.cs"/>
+            </summary>
+            <typeparam name="T"></typeparam>
+        </member>
+    </members>
+</doc>

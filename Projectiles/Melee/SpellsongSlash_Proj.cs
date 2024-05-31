@@ -25,10 +25,11 @@ namespace Redemption.Projectiles.Melee
             Projectile.friendly = true;
             Projectile.hostile = false;
             Projectile.tileCollide = false;
-            Projectile.penetrate = -1;
+            Projectile.penetrate = 6;
             Projectile.DamageType = DamageClass.Melee;
             Projectile.timeLeft = 180;
             Projectile.usesLocalNPCImmunity = true;
+            Projectile.stopsDealingDamageAfterPenetrateHits = true;
         }
         private float squish;
         public override void AI()
@@ -64,7 +65,7 @@ namespace Redemption.Projectiles.Melee
             Vector2 scale = new(Projectile.scale + squish, Projectile.scale - squish);
 
             Main.spriteBatch.End();
-            Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+            Main.spriteBatch.BeginAdditive();
 
             for (int k = 0; k < Projectile.oldPos.Length; k++)
             {
@@ -77,7 +78,7 @@ namespace Redemption.Projectiles.Melee
             Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition, null, Projectile.GetAlpha(Color.White) * 0.5f, Projectile.rotation, drawOrigin, new Vector2(scale.X + 0.2f, scale.Y + 0.2f), effects, 0);
 
             Main.spriteBatch.End();
-            Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+            Main.spriteBatch.BeginDefault();
             return false;
         }
     }

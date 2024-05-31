@@ -1,8 +1,9 @@
-﻿using Microsoft.Xna.Framework;
-using ParticleLibrary;
+using Microsoft.Xna.Framework;
+using ParticleLibrary.Core;
 using Redemption.BaseExtension;
 using Redemption.Globals;
 using Redemption.Particles;
+using System;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ModLoader;
@@ -23,8 +24,9 @@ namespace Redemption.Projectiles.Ranged
             Projectile.height = 4;
             Projectile.friendly = true;
             Projectile.hostile = false;
-            Projectile.extraUpdates = 100;
+            Projectile.extraUpdates = 50;
             Projectile.timeLeft = 700;
+            timeLeftMax = Projectile.timeLeft;
             Projectile.penetrate = 8;
             Projectile.tileCollide = true;
             Projectile.DamageType = DamageClass.Ranged;
@@ -32,15 +34,35 @@ namespace Redemption.Projectiles.Ranged
             Projectile.idStaticNPCHitCooldown = 10;
             Projectile.Redemption().EnergyBased = true;
         }
+        private int timeLeftMax;
+        public ref float Distance => ref Projectile.ai[1];
         public override void AI()
         {
-            if (Projectile.localAI[0]++ > 30 && !Main.rand.NextBool(6))
+            if (Projectile.localAI[0] % 2 == 0)
             {
-                for (int i = 0; i < 1; i++)
+                Vector2 v = Projectile.position;
+                Color bright = Color.Multiply(new(255, 146, 135, 0), 1);
+                Color mid = Color.Multiply(new(255, 62, 55, 0), 1);
+                Color dark = Color.Multiply(new(150, 20, 54, 0), 1);
+
+                Color emberColor = Color.Multiply(Color.Lerp(bright, dark, (float)(timeLeftMax - Projectile.timeLeft) / timeLeftMax), 1);
+                Color glowColor = Color.Multiply(Color.Lerp(mid, dark, (float)(timeLeftMax - Projectile.timeLeft) / timeLeftMax), 1f);
+                RedeParticleSystemManager.RedeQuadSystem.NewParticle(v, Vector2.Zero, new QuadParticle()
                 {
-                    Vector2 v = Projectile.position;
-                    v -= Projectile.velocity * (i * 0.25f);
-                    ParticleManager.NewParticle(v, Vector2.Zero, new LightningParticle(), Color.White, 1, 2);
+                    StartColor = emberColor,
+                    EndColor = glowColor,
+                    Scale = new Vector2(.5f * ((float)Projectile.timeLeft / timeLeftMax))
+                }, 10);
+            }
+            if (Projectile.ai[0] == 1)
+            {
+                Projectile.extraUpdates = 25;
+                Distance = MathF.Max(Distance, 1f);
+                float progress = 1 - Projectile.timeLeft / 700;
+                float r = 0.992f;
+                if (progress > 0.1)
+                {
+                    Projectile.velocity *= r;
                 }
             }
         }
@@ -50,6 +72,8 @@ namespace Redemption.Projectiles.Ranged
             RedeDraw.SpawnRing(Projectile.Center, Color.IndianRed, glowScale: 3);
             if (!Main.dedServ)
                 SoundEngine.PlaySound(CustomSounds.PlasmaBlast with { Volume = 0.5f }, Projectile.position);
+            if (Projectile.owner == Main.myPlayer)
+                Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center + Projectile.velocity / 3, Vector2.Zero, ModContent.ProjectileType<PlasmaRound_Blast>(), Projectile.damage, Projectile.knockBack, Main.myPlayer);
             player.RedemptionScreen().ScreenShakeIntensity += 3;
         }
     }

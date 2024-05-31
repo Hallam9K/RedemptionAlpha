@@ -5412,7 +5412,7 @@ namespace Redemption.Base
                     }
                     else
                     {
-                        strike = stat.ToHitInfo(dmgAmt, crit, knockback, dmgVariation, player.luck);
+                        strike = stat.ToHitInfo(dmgAmt, crit, knockback, dmgVariation, 0);
                         npc.StrikeNPC(strike, false, true);
                         if (Main.netMode != NetmodeID.SinglePlayer)
                             NetMessage.SendStrikeNPC(npc, in strike);

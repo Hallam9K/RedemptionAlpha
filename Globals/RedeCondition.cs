@@ -84,8 +84,20 @@ namespace Redemption.Globals
 		}
 		public bool CanShowItemDropInUI() => true;
 		public string GetConditionDescription() => "Dropped when spawned naturally in the caverns";
-	}
-	public class YoyosTidalWake : IItemDropRuleCondition
+    }
+    public class RoosterPaintingCondition : IItemDropRuleCondition
+    {
+        public bool CanDrop(DropAttemptInfo info)
+        {
+            if (!info.IsInSimulation && info.npc.ModNPC is FowlEmperor fowl && fowl.empowered)
+                return true;
+
+            return false;
+        }
+        public bool CanShowItemDropInUI() => true;
+        public string GetConditionDescription() => "Dropped while the boss is empowered";
+    }
+    public class YoyosTidalWake : IItemDropRuleCondition
 	{
 		public bool CanDrop(DropAttemptInfo info)
 		{

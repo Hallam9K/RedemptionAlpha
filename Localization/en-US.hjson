@@ -2529,6 +2529,17 @@ Mods: {
 				DisplayName: Ukkonen
 				Description: A thundering Ukkonen to fight for you!
 			}
+
+			LightningStoneBuff: {
+				DisplayName: Lightning Stone
+				Description: Rock on, brother!
+			}
+
+			MoonflareCandleBuff: {
+				DisplayName: Moonflare Candle
+				Description: Wards off the effects of a Graveyard
+			}
+
 		}
 
 		Biomes: {
@@ -3025,7 +3036,7 @@ Mods: {
 				Chat6B: I'm planning to check it out soon, it's located on the other world but I can easily fly there with the SoS.
 				Chat7: What? You don't even know the name of the planet you're on? Maybe read a book for once in your life.
 				Chat7B: The world is called Epidotra, it's where the Heroes are from.
-				Chat7C: This tiny island appeared on this planet out of nowhere, I was going to check it out a year or so ago, but I remember seeing the demigod here so I didn't bother. There what appears to be a dimensional bubble surrounding this place, making it impossible to see or enter from the outside - portals or teleportation being the only way. Judging by how there is only one sun here, the bubble not only contains this island, but its entire universe alongside it. What's the matter? Too complicated for your monkey brain? I'll put it this way: we technically aren't in "Epidotra" here.
+				Chat7C: This tiny island appeared on this planet out of nowhere, I was going to check it out a year or so ago, but I remember seeing the demigod here so I didn't bother. There what appears to be a dimensional bubble surrounding this place, making it impossible to see or enter from the outside - portals or teleportation being the only way. Judging by how there is only one sun here, the bubble not only contains this island, but its entire universe alongside it. What's the matter? Too complicated for your monkey brain?
 				Chat8: The other world just suddenly appeared out of nowhere, I'm interested in it though. I've scanned the surface and it seems to be rather frozen, with so far no signs of human life. Reminds me of a planet I checked out while in space... In fact, reminds me of many planets.
 				Chat8B: You see the planet on the right in that one hologram? That's what I've named Liden, a radioactive and desolate wasteland devoid of any life.
 				Chat8C: I'll be leaving soon to check it out. Scans show barely any life, just a frozen radioactive wasteland.
@@ -8023,8 +8034,8 @@ Mods: {
 				DisplayName: Slayer's Rocket Fist
 				Tooltip:
 					'''
-					Punches enemies up-close
-					Holding down left-click and hitting an enemy will fire an {0} rocket fist if you are airborne
+					Fires a homing rocket fist
+					Holding left-click will charge you forward, hitting enemies up-close
 					'''
 			}
 
@@ -8393,7 +8404,7 @@ Mods: {
 				Tooltip:
 					'''
 					Punches enemies up-close
-					Holding down left-click and hitting an enemy will fire a flurry of fists if you are airborne
+					Holding left-click and hitting an enemy will fire a flurry of fists
 					'''
 			}
 
@@ -10179,6 +10190,51 @@ Mods: {
 				DisplayName: Xenium Grenade Cannon
 				Tooltip: ""
 			}
+
+			BeelzebubConcoction: {
+				DisplayName: Beelzebub Concoction
+				Tooltip:
+					'''
+					Critters are attracted to you
+					Shy critters won't fear you
+					{$Mods.Redemption.Items.ErleasFlower.Tooltip}
+					{$Mods.Redemption.Items.SpiderSerum.Tooltip}
+					'''
+			}
+
+			ErleasFlower: {
+				DisplayName: Erlea's Flower
+				Tooltip: Bees become passive
+				Lore:
+					'''
+					A rare flower only found within lushy caverns. Cave delvers would search for these to sell for good fortune on the market.
+					The flower used to be widely used in perfumery. Its aroma is often described as "funny".
+					'''
+			}
+
+			SpiderSerum: {
+				DisplayName: Spider Serum
+				Tooltip:
+					'''
+					Spider Swarmers become passive
+					Grants immunity to Webbed
+					'''
+			}
+
+			RoosterWinPainting: {
+				DisplayName: The Honored Cluck
+				Tooltip: "'Dawn D. Ables'"
+			}
+
+			MoonflareCandle: {
+				DisplayName: Moonflare Candle
+				Tooltip: Holding this wards off the effects of a Graveyard
+			}
+
+			ChickenMeshiPainting: {
+				DisplayName: Cockatrice's Glare
+				Tooltip: "'A. Tied'"
+			}
 		}
 
 		Projectiles: {
@@ -10841,6 +10897,7 @@ Mods: {
 			Xenium_GasExplosion.DisplayName: Xenium_ Gas Explosion
 			XeniumGrenade.DisplayName: Xenium Grenade
 			XeniumTrajectory.DisplayName: Xenium Trajectory
+			LightningStoneMinion.DisplayName: Lightning Stone
 		}
 
 		NPCs: {
@@ -11530,7 +11587,8 @@ Mods: {
 			ShadestoneMirrorTile2.MapEntry: Shadestone Mirror Tile2
 			ShadestonePianoTile.MapEntry: Shadestone Piano Tile
 			ShadestoneSofaTile.MapEntry: Shadestone Sofa Tile
-			WoodenBallistaTile.MapEntry: Wooden Ballista Tile
+			WoodenBallistaTile.MapEntry: Wooden Ballista
+			MoonflareCandleTile.MapEntry: Moonflare Candle
 		}
 
 		Keybinds: {

@@ -36,7 +36,7 @@ namespace Redemption.Items.Usable.Potions
             Item.value = Item.sellPrice(0, 8, 0, 0);
             Item.rare = ItemRarityID.Orange;
             Item.buffType = ModContent.BuffType<CharismaPotionBuff>();
-            Item.buffTime = 36000;
+            Item.buffTime = 360000;
         }
         public override void AddRecipes()
         {

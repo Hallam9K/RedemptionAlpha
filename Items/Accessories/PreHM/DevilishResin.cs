@@ -6,9 +6,9 @@ using Terraria.ModLoader;
 namespace Redemption.Items.Accessories.PreHM
 {
     public class DevilishResin : ModItem
-	{
-		public override void SetStaticDefaults()
-		{
+    {
+        public override void SetStaticDefaults()
+        {
             /* Tooltip.SetDefault("Critters are attracted to you" +
                 "\nShy critters won't fear you"
                 + "\n'YOU STINK!'"); */
@@ -17,15 +17,15 @@ namespace Redemption.Items.Accessories.PreHM
 
         public override void SetDefaults()
         {
-            Item.width = 20;
-            Item.height = 20;
+            Item.width = 24;
+            Item.height = 34;
             Item.value = Item.sellPrice(0, 0, 35, 0);
-            Item.rare = ItemRarityID.Green;
+            Item.rare = ItemRarityID.Blue;
             Item.accessory = true;
         }
         public override void UpdateAccessory(Player player, bool hideVisual)
-		{
+        {
             player.AddBuff(ModContent.BuffType<DevilScentedDebuff>(), 30);
-		}
-	}
+        }
+    }
 }

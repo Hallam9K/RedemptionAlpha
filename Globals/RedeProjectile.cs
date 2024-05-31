@@ -354,6 +354,19 @@ namespace Redemption.Globals
                 }
             }
         }
+        public void CheckHits()
+        {
+            Terraria.Player player = Main.player[Projectile.owner];
+            // done manually for clients that aren't the Projectile owner since onhit methods are clientside
+            foreach (Terraria.NPC NPC in Main.npc.Where(n => n.active &&
+                 !n.dontTakeDamage &&
+                 !n.townNPC &&
+                 n.immune[player.whoAmI] <= 0 &&
+                 Colliding(new Rectangle(), n.Hitbox) == true))
+            {
+                OnHitNPC(NPC, new Terraria.NPC.HitInfo() { Damage = 0 }, 0);
+            }
+        }
         public override void CutTiles()
         {
             DelegateMethods.tilecut_0 = TileCuttingContext.AttackProjectile;

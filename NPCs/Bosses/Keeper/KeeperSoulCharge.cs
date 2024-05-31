@@ -1,11 +1,11 @@
 using Microsoft.Xna.Framework;
-using Terraria;
-using Terraria.ModLoader;
-using Terraria.ID;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Effects;
-using System.Collections.Generic;
 using Redemption.Globals;
+using System.Collections.Generic;
+using Terraria;
+using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace Redemption.NPCs.Bosses.Keeper
 {
@@ -50,7 +50,10 @@ namespace Redemption.NPCs.Bosses.Keeper
             Lighting.AddLight(Projectile.Center, Projectile.Opacity, Projectile.Opacity, Projectile.Opacity);
 
             Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.Pi;
-            Projectile.velocity = Projectile.velocity.RotatedBy(Main.rand.NextFloat(-0.1f, 0.1f));
+            float velChange = .1f;
+            if (Projectile.ai[0] == 2)
+                velChange = .05f;
+            Projectile.velocity = Projectile.velocity.RotatedBy(Main.rand.NextFloat(-velChange, velChange));
             if (Main.netMode != NetmodeID.Server)
             {
                 TrailHelper.ManageBasicCaches(ref cache, ref cache2, NUMPOINTS, Projectile.Center + Projectile.velocity);

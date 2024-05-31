@@ -1,11 +1,13 @@
-using Terraria.ModLoader;
-using Redemption.Globals;
-using Terraria;
-using Terraria.ID;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Terraria.GameContent;
+using ParticleLibrary.Core;
+using Redemption.Globals;
+using Redemption.Particles;
 using System;
+using Terraria;
+using Terraria.GameContent;
+using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace Redemption.Projectiles.Melee
 {
@@ -20,8 +22,8 @@ namespace Redemption.Projectiles.Melee
         }
         public override void SetDefaults()
         {
-            Projectile.width = 76;
-            Projectile.height = 76;
+            Projectile.width = 72;
+            Projectile.height = 72;
             Projectile.penetrate = -1;
             Projectile.hostile = false;
             Projectile.friendly = true;
@@ -84,6 +86,11 @@ namespace Redemption.Projectiles.Melee
             Projectile.localAI[0] = 2;
             Projectile.localNPCImmunity[target.whoAmI] = 10;
             target.immune[Projectile.owner] = 0;
+
+            Vector2 dir = Projectile.Center.DirectionFrom(target.Center);
+            Vector2 drawPos = Vector2.Lerp(Projectile.Center, target.Center, 0.9f);
+            ParticleSystem.NewParticle(drawPos, dir.RotateRandom(.5f) * 100, new SlashParticleAlt(), Color.BlueViolet, 1);
+            ParticleSystem.NewParticle(drawPos, Vector2.Zero, new DevilsPactParticle(DustID.PurpleCrystalShard), Color.BlueViolet with { A = 0 }, .75f);
         }
         public override bool? CanHitNPC(NPC target)
         {
@@ -95,7 +102,7 @@ namespace Redemption.Projectiles.Melee
             Vector2 drawOrigin = new(texture.Width / 2, texture.Height / 2);
 
             Main.spriteBatch.End();
-            Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+            Main.spriteBatch.BeginAdditive();
 
             for (int k = 0; k < Projectile.oldPos.Length; k++)
             {
@@ -106,7 +113,7 @@ namespace Redemption.Projectiles.Melee
             Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition, null, Projectile.GetAlpha(Color.White), Projectile.rotation, drawOrigin, Projectile.scale, SpriteEffects.None, 0);
 
             Main.spriteBatch.End();
-            Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+            Main.spriteBatch.BeginDefault();
             return false;
         }
     }

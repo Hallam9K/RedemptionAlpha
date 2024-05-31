@@ -6,6 +6,7 @@ using Redemption.Dusts;
 using Redemption.Globals;
 using Redemption.Items.Accessories.PreHM;
 using Redemption.Items.Armor.Vanity;
+using Redemption.Items.Placeable.Furniture.Misc;
 using Redemption.Items.Placeable.Trophies;
 using Redemption.Items.Usable.Potions;
 using Redemption.Items.Usable.Summons;
@@ -130,6 +131,7 @@ namespace Redemption.NPCs.Minibosses.FowlEmperor
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<FowlEmperorTrophy>(), 10));
             npcLoot.Add(ItemDropRule.NotScalingWithLuck(ModContent.ItemType<FowlCrown>(), 7));
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<FowlWarHorn>()));
+            npcLoot.Add(ItemDropRule.ByCondition(new RoosterPaintingCondition(), ModContent.ItemType<RoosterWinPainting>()));
             npcLoot.Add(ItemDropRule.ByCondition(new OnFireCondition(), ModContent.ItemType<FriedChicken>(), 1, 5, 5));
         }
         public override void OnHitByItem(Player player, Item item, NPC.HitInfo hit, int damageDone)
@@ -168,7 +170,7 @@ namespace Redemption.NPCs.Minibosses.FowlEmperor
         public int crownLife = 40;
         public Vector2 moveTo;
         private bool eggCracked;
-        private bool empowered;
+        public bool empowered;
         private Projectile crownProj;
         public override void AI()
         {

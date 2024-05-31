@@ -99,6 +99,8 @@ namespace Redemption.Globals.Player
         public bool hydraCorrosion;
         public bool skirmish;
         public bool wardbreaker;
+        public bool erleasFlower;
+        public bool spiderFriendly;
 
         public bool pureIronBonus;
         public bool dragonLeadBonus;
@@ -179,6 +181,8 @@ namespace Redemption.Globals.Player
             hydraCorrosion = false;
             skirmish = false;
             wardbreaker = false;
+            erleasFlower = false;
+            spiderFriendly = false;
             Player.RedemptionRad().protectionLevel = 0;
 
             for (int k = 0; k < ElementalResistance.Length; k++)

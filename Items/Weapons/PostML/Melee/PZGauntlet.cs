@@ -1,7 +1,8 @@
+using Redemption.Items.Weapons.PostML.Ranged;
+using Redemption.Rarities;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Redemption.Rarities;
 
 namespace Redemption.Items.Weapons.PostML.Melee
 {
@@ -30,7 +31,7 @@ namespace Redemption.Items.Weapons.PostML.Melee
             Item.knockBack = 9;
             Item.value = Item.sellPrice(0, 20, 0, 0);
             Item.rare = ModContent.RarityType<TurquoiseRarity>();
-            Item.UseSound = SoundID.Item74;
+            Item.UseSound = SoundID.Item1;
             Item.autoReuse = true;
             Item.shoot = ModContent.ProjectileType<PZGauntlet_Proj>();
             Item.shootSpeed = 5f;

@@ -111,11 +111,8 @@ namespace Redemption.NPCs.Lab.Janitor
                 modifiers.DisableCrit();
                 modifiers.ModifyHitInfo += (ref NPC.HitInfo n) => NPC.RedemptionGuard().GuardHit(ref n, NPC, SoundID.NPCHit4, .25f, false, DustID.Electric, default, 10, 1, 1000);
             }
-            else
+            if (AIState is ActionState.Stunned)
                 modifiers.FinalDamage *= 2;
-
-            if (AIState is ActionState.Slip)
-                modifiers.FinalDamage /= 2;
         }
         public override void HitEffect(NPC.HitInfo hit)
         {
