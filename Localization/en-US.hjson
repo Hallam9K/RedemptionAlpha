@@ -11694,13 +11694,13 @@ Mods: {
 			HangingTiedTileFake.MapEntry: "{$Mods.Redemption.Tiles.HangingTiedTile.MapEntry}"
 			SquirrelStatueTile.MapEntry: Squirrel Sculpture
 			GrubNestTileFake.MapEntry: Grub Nest
-			SkeletonRemainsTile1Fake.MapEntry: Skeleton Remains Tile1 Fake
-			SkeletonRemainsTile2Fake.MapEntry: Skeleton Remains Tile2 Fake
-			SkeletonRemainsTile3Fake.MapEntry: Skeleton Remains Tile3 Fake
-			SkeletonRemainsTile4Fake.MapEntry: Skeleton Remains Tile4 Fake
-			SkeletonRemainsTile5Fake.MapEntry: Skeleton Remains Tile5 Fake
-			SkeletonRemainsTile6Fake.MapEntry: Skeleton Remains Tile6 Fake
-			SkeletonRemainsTile7Fake.MapEntry: Skeleton Remains Tile7 Fake
+			SkeletonRemainsTile1Fake.MapEntry: "{$Mods.Redemption.Tiles.SkeletonRemainsTile1.MapEntry}"
+			SkeletonRemainsTile2Fake.MapEntry: "{$Mods.Redemption.Tiles.SkeletonRemainsTile1.MapEntry}"
+			SkeletonRemainsTile3Fake.MapEntry: "{$Mods.Redemption.Tiles.SkeletonRemainsTile1.MapEntry}"
+			SkeletonRemainsTile4Fake.MapEntry: "{$Mods.Redemption.Tiles.SkeletonRemainsTile1.MapEntry}"
+			SkeletonRemainsTile5Fake.MapEntry: "{$Mods.Redemption.Tiles.SkeletonRemainsTile1.MapEntry}"
+			SkeletonRemainsTile6Fake.MapEntry: "{$Mods.Redemption.Tiles.SkeletonRemainsTile1.MapEntry}"
+			SkeletonRemainsTile7Fake.MapEntry: "{$Mods.Redemption.Tiles.SkeletonRemainsTile1.MapEntry}"
 			XenomiteCrystalBigTileFake.MapEntry: Xenomite Crystal
 			XenomiteCrystalTileFake.MapEntry: Xenomite Crystal
 			BlackHardenedSludgeTileSafe.MapEntry: Black Hardened Sludge
