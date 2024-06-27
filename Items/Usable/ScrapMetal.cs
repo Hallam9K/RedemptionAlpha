@@ -39,7 +39,7 @@ namespace Redemption.Items.Usable
             itemLoot.Add(ItemDropRule.Common(ItemID.Handgun, 75));
             itemLoot.Add(ItemDropRule.Common(ItemID.ClockworkAssaultRifle, 75));
             itemLoot.Add(ItemDropRule.Common(ItemID.FlareGun, 75));
-            itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<FoldedShotgun>(), 25));
+            itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<FoldedShotgun>(), 7));
             itemLoot.Add(ItemDropRule.ByCondition(new Conditions.DownedPlantera(), ItemID.ProximityMineLauncher, 75));
             itemLoot.Add(ItemDropRule.ByCondition(new Conditions.BeatAnyMechBoss(), ItemID.Cog, 1, 4, 18));
         }

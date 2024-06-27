@@ -6,26 +6,22 @@ using Terraria.ModLoader;
 namespace Redemption.Walls
 {
     public class IrradiatedSnowWallTile : ModWall
-	{
-		public override void SetStaticDefaults()
-		{
-			Main.wallHouse[Type] = false;
-			DustType = DustID.Ash;
-			AddMapEntry(new Color(100, 109, 100));
-		}
-    }
-    public class IrradiatedSnowWall : PlaceholderTile
     {
-        public override string Texture => Redemption.PLACEHOLDER_TEXTURE;
-        public override void SetSafeStaticDefaults()
+        public override void SetStaticDefaults()
         {
-            // Tooltip.SetDefault("[c/ff0000:Unbreakable]");
+            Main.wallHouse[Type] = false;
+            DustType = DustID.Ash;
+            AddMapEntry(new Color(100, 109, 100));
         }
-
-        public override void SetDefaults()
+    }
+    public class IrradiatedSnowWallTileSafe : ModWall
+    {
+        public override string Texture => "Redemption/Walls/IrradiatedSnowWallTile";
+        public override void SetStaticDefaults()
         {
-            base.SetDefaults();
-            Item.createWall = ModContent.WallType<IrradiatedSnowWallTile>();
+            Main.wallHouse[Type] = true;
+            DustType = DustID.Ash;
+            AddMapEntry(new Color(100, 109, 100));
         }
     }
 }

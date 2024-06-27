@@ -69,7 +69,7 @@ namespace Redemption.Tiles.Furniture.Misc
                 Main.StartRain();
                 Main.SyncRain();
                 Main.NewLightning();
-                RedeDraw.SpawnExplosion(new Vector2(i * 16 + 8, j * 16 + 8), Color.White, noDust: true, tex: "Redemption/Textures/HolyGlow3");
+                RedeDraw.SpawnExplosion(new Vector2(i * 16 + 8, j * 16 + 8), Color.White, noDust: true, tex: ModContent.Request<Texture2D>("Redemption/Textures/HolyGlow3").Value);
 
                 SoundEngine.PlaySound(SoundID.Item68, new Vector2(i * 16, j * 16));
                 if (!Main.dedServ)

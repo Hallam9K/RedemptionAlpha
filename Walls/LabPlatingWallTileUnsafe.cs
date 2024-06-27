@@ -1,5 +1,4 @@
 using Microsoft.Xna.Framework;
-using Redemption.Globals;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -9,7 +8,6 @@ namespace Redemption.Walls
     {
         public override void SetStaticDefaults()
         {
-            RedeTileHelper.CannotTeleportInFront[Type] = true;
             Main.wallHouse[Type] = false;
             AddMapEntry(new Color(53, 54, 60));
         }
@@ -28,13 +26,7 @@ namespace Redemption.Walls
     }
     public class LabPlatingWallUnsafe : PlaceholderTile
     {
-        public override string Texture => Redemption.PLACEHOLDER_TEXTURE;
-        public override void SetSafeStaticDefaults()
-        {
-            // DisplayName.SetDefault("Lab Wall (Unsafe)");
-            // Tooltip.SetDefault("[c/ff0000:Unbreakable]");
-        }
-
+        public override string Texture => "Redemption/Items/Placeable/Tiles/LabPlatingWallUnsafe2";
         public override void SetDefaults()
         {
             base.SetDefaults();

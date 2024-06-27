@@ -1,35 +1,33 @@
 using Microsoft.Xna.Framework;
-using Redemption.Globals;
 using Redemption.Items.Materials.HM;
-using Redemption.Items.Placeable.Tiles;
 using Terraria;
+using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Redemption.Walls
 {
     public class JunkMetalWall : ModWall
-	{
-		public override void SetStaticDefaults()
+    {
+        public override void SetStaticDefaults()
         {
-            RedeTileHelper.CannotTeleportInFront[Type] = true;
             Main.wallHouse[Type] = false;
+            DustType = DustID.Electric;
+            HitSound = CustomSounds.MetalHit;
             RegisterItemDrop(ModContent.ItemType<Cyberscrap>());
             AddMapEntry(new Color(113, 115, 120));
-		}
+        }
         public override bool CanExplode(int i, int j) => false;
     }
-    public class JunkMetalWallItem : PlaceholderTile
+    public class JunkMetalWallSafe : ModWall
     {
-        public override string Texture => Redemption.PLACEHOLDER_TEXTURE;
-        public override void SetSafeStaticDefaults()
+        public override string Texture => "Redemption/Walls/JunkMetalWall";
+        public override void SetStaticDefaults()
         {
-            // DisplayName.SetDefault("Cyberscrap Wall");
+            DustType = DustID.Electric;
+            HitSound = CustomSounds.MetalHit;
+            Main.wallHouse[Type] = true;
+            AddMapEntry(new Color(113, 115, 120));
         }
-
-        public override void SetDefaults()
-        {
-            base.SetDefaults();
-            Item.createWall = ModContent.WallType<JunkMetalWall>();
-        }
+        public override bool CanExplode(int i, int j) => false;
     }
 }

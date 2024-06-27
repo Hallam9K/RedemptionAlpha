@@ -564,15 +564,6 @@ namespace Redemption.Tiles.Natural
             Item.createTile = ModContent.TileType<SkeletonRemainsTile5_Special>();
         }
     }
-    public class SkeletonRemains6_Special : PlaceholderTile
-    {
-        public override string Texture => "Redemption/Tiles/Placeholder/SkeletonRemains";
-        public override void SetDefaults()
-        {
-            base.SetDefaults();
-            Item.createTile = ModContent.TileType<SkeletonRemainsTile6_Special>();
-        }
-    }
     public class SkeletonRemains7_Special : PlaceholderTile
     {
         public override string Texture => "Redemption/Tiles/Placeholder/SkeletonRemains";

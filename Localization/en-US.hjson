@@ -3579,7 +3579,7 @@ Mods: {
 				Tooltip:
 					'''
 					15% increased summon damage
-					10% increased summon critical strike chance
+					10% increased whip range
 					'''
 			}
 
@@ -7803,7 +7803,11 @@ Mods: {
 
 			Dusksong: {
 				DisplayName: Dusksong, Bond of Twilight
-				Tooltip: Casts a large dusksong that splits upon hitting enemies
+				Tooltip:
+					'''
+					Casts a large dusksong that splits upon hitting enemies
+					Can move through tiles
+					'''
 			}
 
 			GigapeiliContactor: {
@@ -10246,7 +10250,7 @@ Mods: {
 					Whipping enemies will cause the pebble to strike them with lightning
 					'''
 			}
-			
+
 			BloatedClingerBanner: {
 				DisplayName: Bloated Clinger Banner
 				Tooltip: "{$CommonItemTooltip.BannerBonus}{$Mods.Redemption.NPCs.BloatedClinger.DisplayName}"
@@ -10260,6 +10264,65 @@ Mods: {
 			BloatedFaceMonsterBanner: {
 				DisplayName: Bloated Face Monster Banner
 				Tooltip: "{$CommonItemTooltip.BannerBonus}{$Mods.Redemption.NPCs.BloatedFaceMonster.DisplayName}"
+			}
+
+			SquirrelStatue: {
+				DisplayName: Squirrel Sculpture
+				Tooltip: ""
+			}
+
+			AncientHallBrickSafe: {
+				DisplayName: Ancient Hall Brick
+				Tooltip: ""
+			}
+
+			BlackHardenedSludgeSafe: {
+				DisplayName: Black Hardened Sludge
+				Tooltip: ""
+			}
+
+			CyberscrapWall: {
+				DisplayName: Cyberscrap Wall
+				Tooltip: ""
+			}
+
+			GreenLaserSafe: {
+				DisplayName: Green Laser Block
+				Tooltip: ""
+			}
+
+			HardenedSludgeSafe: {
+				DisplayName: Hardened Sludge
+				Tooltip: ""
+			}
+
+			MossyLabPlatingWallUnsafe: {
+				DisplayName: Unsafe Mossy Laboratory Panel Wall
+				Tooltip: ""
+			}
+
+			RedLaserSafe: {
+				DisplayName: Red Laser Block
+				Tooltip: "Disintegrates players in seconds"
+			}
+
+			VentWallSafe: {
+				DisplayName: Laboratory Vent Wall
+				Tooltip: ""
+			}
+
+			Dusksong2: {
+				DisplayName: Dusksong
+				Tooltip: "Casts a large dusksong that splits upon hitting enemies"
+			}
+
+			FoldedShotgun: {
+				DisplayName: Folded Shotgun
+				Tooltip:
+					'''
+					Fires a spread of bullets
+					Deals extra damage at point-blank range
+					'''
 			}
 		}
 
@@ -10926,6 +10989,9 @@ Mods: {
 			LightningStoneMinion.DisplayName: Lightning Stone
 			PZGauntlet_Explosion.DisplayName: Explosion
 			MagnifyingGlassRayRemain.DisplayName: Lingering Ember
+			FoldedShotgun_Proj.DisplayName: "{$Mods.Redemption.Items.FoldedShotgun.DisplayName}"
+			BloatedFaceMonster_Screech.DisplayName: Screech
+			DusksongWeak_Proj.DisplayName: Dusksong
 		}
 
 		NPCs: {
@@ -11622,6 +11688,23 @@ Mods: {
 			ShadestoneSofaTile.MapEntry: Shadestone Sofa Tile
 			WoodenBallistaTile.MapEntry: Wooden Ballista
 			MoonflareCandleTile.MapEntry: Moonflare Candle
+			InfectedCorpse1Fake.MapEntry: "{$Mods.Redemption.Tiles.InfectedCorpse1Tile.MapEntry}"
+			InfectedCorpse2Fake.MapEntry: "{$Mods.Redemption.Tiles.InfectedCorpse1Tile.MapEntry}"
+			InfectedCorpse3Fake.MapEntry: "{$Mods.Redemption.Tiles.InfectedCorpse1Tile.MapEntry}"
+			HangingTiedTileFake.MapEntry: "{$Mods.Redemption.Tiles.HangingTiedTile.MapEntry}"
+			SquirrelStatueTile.MapEntry: Squirrel Sculpture
+			GrubNestTileFake.MapEntry: Grub Nest
+			SkeletonRemainsTile1Fake.MapEntry: Skeleton Remains Tile1 Fake
+			SkeletonRemainsTile2Fake.MapEntry: Skeleton Remains Tile2 Fake
+			SkeletonRemainsTile3Fake.MapEntry: Skeleton Remains Tile3 Fake
+			SkeletonRemainsTile4Fake.MapEntry: Skeleton Remains Tile4 Fake
+			SkeletonRemainsTile5Fake.MapEntry: Skeleton Remains Tile5 Fake
+			SkeletonRemainsTile6Fake.MapEntry: Skeleton Remains Tile6 Fake
+			SkeletonRemainsTile7Fake.MapEntry: Skeleton Remains Tile7 Fake
+			XenomiteCrystalBigTileFake.MapEntry: Xenomite Crystal
+			XenomiteCrystalTileFake.MapEntry: Xenomite Crystal
+			BlackHardenedSludgeTileSafe.MapEntry: Black Hardened Sludge
+			HardenedSludgeTileSafe.MapEntry: Hardened Sludge
 		}
 
 		Keybinds: {

@@ -6,22 +6,22 @@ using Terraria.ModLoader;
 namespace Redemption.Walls
 {
     public class IrradiatedHardenedSandWallTile : ModWall
-	{
-		public override void SetStaticDefaults()
-		{
-			Main.wallHouse[Type] = false;
+    {
+        public override void SetStaticDefaults()
+        {
+            Main.wallHouse[Type] = false;
             DustType = DustID.Ash;
             AddMapEntry(new Color(86, 62, 54));
-		}
+        }
     }
-    public class IrradiatedHardenedSandWall : PlaceholderTile
+    public class IrradiatedHardenedSandWallTileSafe : ModWall
     {
-        public override string Texture => Redemption.PLACEHOLDER_TEXTURE;
-
-        public override void SetDefaults()
+        public override string Texture => "Redemption/Walls/IrradiatedHardenedSandWallTile";
+        public override void SetStaticDefaults()
         {
-            base.SetDefaults();
-            Item.createWall = ModContent.WallType<IrradiatedHardenedSandWallTile>();
+            Main.wallHouse[Type] = true;
+            DustType = DustID.Ash;
+            AddMapEntry(new Color(86, 62, 54));
         }
     }
 }

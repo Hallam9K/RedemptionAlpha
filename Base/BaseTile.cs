@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Microsoft.Xna.Framework;
 using Terraria;
+using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
@@ -45,51 +47,105 @@ namespace Redemption.Base
 			}
 		}
 
-		/*
+        /*
          * Returns all tiles of the given type nearby using the given distance.
 		 * 
 		 * distance: how far from the x, y coordinates in tiles to check.
 		 * addTile : action that can be used to have custom check parameters.
          */
-		public static Vector2 GetClosestTile(int x, int y, int type, int distance = 25, Func<Tile, bool> addTile = null)
-		{
-			Vector2 originalPos = new(x, y);
-			int leftX = Math.Max(10, x - distance);
-			int leftY = Math.Max(10, y - distance);
-			int rightX = Math.Min(Main.maxTilesX - 10, x + distance);
-			int rightY = Math.Min(Main.maxTilesY - 10, y + distance);
-			Vector2 pos = default;
-			float dist = -1;
-			for (int x1 = leftX; x1 < rightX; x1++)
-			{
-				for (int y1 = leftY; y1 < rightY; y1++)
-				{
-					Tile tile = Framing.GetTileSafely(x1, y1);
-					if (tile is {HasTile: true} && tile.TileType == type && (addTile == null || addTile(tile)) && (dist == -1 || Vector2.Distance(originalPos, new Vector2(x1, y1)) < dist))
-					{
-						dist = Vector2.Distance(originalPos, new Vector2(x1, y1));
-                        if (type == 21 || TileObjectData.GetTileData(tile.TileType, 0) != null && (TileObjectData.GetTileData(tile.TileType, 0).Width > 1 || TileObjectData.GetTileData(tile.TileType, 0).Height > 1))
-						{
-							int x2 = x1; int y2 = y1;
-							if (type == 21)
-							{
-								x2 -= tile.TileFrameX / 18 % 2;
-								y2 -= tile.TileFrameY / 18 % 2;
-							}else
-							{
-								Vector2 top = FindTopLeft(x2, y2);
+        public static Vector2 GetClosestTileType(int x, int y, int[] types, int distance = 25, bool noSloped = false, Func<Tile, bool> addTile = null)
+        {
+            Vector2 originalPos = new(x, y);
+            int leftX = Math.Max(10, x - distance);
+            int leftY = Math.Max(10, y - distance);
+            int rightX = Math.Min(Main.maxTilesX - 10, x + distance);
+            int rightY = Math.Min(Main.maxTilesY - 10, y + distance);
+            Vector2 pos = default;
+            float dist = -1;
+            for (int x1 = leftX; x1 < rightX; x1++)
+            {
+                for (int y1 = leftY; y1 < rightY; y1++)
+                {
+                    Tile tile = Framing.GetTileSafely(x1, y1);
+                    if (tile is { HasTile: true } && types.Contains(tile.TileType) && (!noSloped || tile.Slope == SlopeType.Solid) && (addTile == null || addTile(tile)) && (dist == -1 || Vector2.Distance(originalPos, new Vector2(x1, y1)) < dist))
+                    {
+                        dist = Vector2.Distance(originalPos, new Vector2(x1, y1));
+                        if (tile.TileType == 21 || TileObjectData.GetTileData(tile.TileType, 0) != null && (TileObjectData.GetTileData(tile.TileType, 0).Width > 1 || TileObjectData.GetTileData(tile.TileType, 0).Height > 1))
+                        {
+                            int x2 = x1; int y2 = y1;
+                            if (tile.TileType == 21)
+                            {
+                                x2 -= tile.TileFrameX / 18 % 2;
+                                y2 -= tile.TileFrameY / 18 % 2;
+                            }
+                            else
+                            {
+                                Vector2 top = FindTopLeft(x2, y2);
                                 x2 = (int)top.X; y2 = (int)top.Y;
-							}
-							pos = new Vector2(x2, y2);
-						}else
-						{
-							pos = new Vector2(x1, y1);
-						}
-					}
-				}
-			}
-			return pos;
-		}
+                            }
+                            pos = new Vector2(x2, y2);
+                        }
+                        else
+                        {
+                            pos = new Vector2(x1, y1);
+                        }
+                    }
+                }
+            }
+            return pos;
+        }
+        public static Vector2 GetClosestTileType(int x, int y, int type, int distance = 25, bool noSloped = false, Func<Tile, bool> addTile = null)
+        {
+            int[] types = new int[1] { type };
+            return GetClosestTileType(x, y, types, distance, noSloped, addTile);
+        }
+        /*
+         * Returns all tiles of the given type nearby using the given distance.
+		 * 
+		 * distance: how far from the x, y coordinates in tiles to check.
+		 * addTile : action that can be used to have custom check parameters.
+         */
+        public static Vector2 GetClosestTile(int x, int y, int distance = 25, bool noSloped = false, Func<Tile, bool> addTile = null)
+        {
+            Vector2 originalPos = new(x, y);
+            int leftX = Math.Max(10, x - distance);
+            int leftY = Math.Max(10, y - distance);
+            int rightX = Math.Min(Main.maxTilesX - 10, x + distance);
+            int rightY = Math.Min(Main.maxTilesY - 10, y + distance);
+            Vector2 pos = default;
+            float dist = -1;
+            for (int x1 = leftX; x1 < rightX; x1++)
+            {
+                for (int y1 = leftY; y1 < rightY; y1++)
+                {
+                    Tile tile = Framing.GetTileSafely(x1, y1);
+                    if (tile is { HasTile: true } && Main.tileSolid[tile.TileType] && (!noSloped || tile.Slope == SlopeType.Solid) && (addTile == null || addTile(tile)) && (dist == -1 || Vector2.Distance(originalPos, new Vector2(x1, y1)) < dist))
+                    {
+                        dist = Vector2.Distance(originalPos, new Vector2(x1, y1));
+                        if (tile.TileType == 21 || TileObjectData.GetTileData(tile.TileType, 0) != null && (TileObjectData.GetTileData(tile.TileType, 0).Width > 1 || TileObjectData.GetTileData(tile.TileType, 0).Height > 1))
+                        {
+                            int x2 = x1; int y2 = y1;
+                            if (tile.TileType == 21)
+                            {
+                                x2 -= tile.TileFrameX / 18 % 2;
+                                y2 -= tile.TileFrameY / 18 % 2;
+                            }
+                            else
+                            {
+                                Vector2 top = FindTopLeft(x2, y2);
+                                x2 = (int)top.X; y2 = (int)top.Y;
+                            }
+                            pos = new Vector2(x2, y2);
+                        }
+                        else
+                        {
+                            pos = new Vector2(x1, y1);
+                        }
+                    }
+                }
+            }
+            return pos;
+        }
 
         public static Point FindTopLeftPoint(int x, int y)
         {
