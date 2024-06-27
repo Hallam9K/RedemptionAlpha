@@ -542,6 +542,7 @@ namespace Redemption.Globals.NPC
                 pool.Add(ModContent.NPCType<SickenedBunny>(), Main.dayTime ? 0.6f : 0);
                 pool.Add(ModContent.NPCType<SickenedDemonEye>(), !Main.dayTime ? 0.6f : 0);
                 pool.Add(ModContent.NPCType<NuclearShadow>(), 0.2f);
+                pool.Add(ModContent.NPCType<BloatedDiggerHead>(), 0.14f);
                 pool.Add(ModContent.NPCType<MutatedLivingBloom>(), tileCheck ? (Main.raining ? 0.4f : 0.2f) : 0f);
                 if (spawnInfo.Player.InModBiome<WastelandSnowBiome>())
                 {
@@ -554,6 +555,10 @@ namespace Redemption.Globals.NPC
                     pool.Add(ModContent.NPCType<BloatedGhoul>(), 1f);
                     pool.Add(ModContent.NPCType<BloatedSwarmer>(), 0.3f);
                 }
+                if (spawnInfo.Player.InModBiome<WastelandCorruptionBiome>())
+                    pool.Add(ModContent.NPCType<BloatedClinger>(), .4f);
+                if (spawnInfo.Player.InModBiome<WastelandCrimsonBiome>())
+                    pool.Add(ModContent.NPCType<BloatedFaceMonster>(), 1f);
             }
             if (spawnInfo.Player.InModBiome<BlazingBastionBiome>())
             {

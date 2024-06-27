@@ -44,7 +44,7 @@ namespace Redemption.Items.Usable.Summons
         }
         public override bool CanUseItem(Player player)
         {
-            return !SubworldSystem.IsActive<SoullessSub>() && Main.dayTime && !NPC.AnyNPCs(ModContent.NPCType<EaglecrestGolem2>()) && !NPC.AnyNPCs(ModContent.NPCType<EaglecrestGolem>());
+            return !SubworldSystem.IsActive<SoullessSub>() && Main.dayTime && !NPC.AnyNPCs(ModContent.NPCType<EaglecrestGolem2>()) && !NPC.AnyNPCs(ModContent.NPCType<EaglecrestGolem>()) && !NPC.AnyNPCs(ModContent.NPCType<Ukko>()) && !NPC.AnyNPCs(ModContent.NPCType<Akka>());
         }
         public override bool? UseItem(Player player)
         {

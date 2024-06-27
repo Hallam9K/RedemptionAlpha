@@ -1,5 +1,9 @@
+using Redemption.Items.Accessories.HM;
+using Redemption.Items.Armor.Vanity;
 using Redemption.Items.Materials.HM;
+using Redemption.Items.Weapons.HM.Ranged;
 using Terraria;
+using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -25,43 +29,23 @@ namespace Redemption.Items.Usable
             Item.rare = -1;
         }
 
-        public override bool CanRightClick()
+        public override bool CanRightClick() => true;
+        public override void ModifyItemLoot(ItemLoot itemLoot)
         {
-            return true;
+            itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<Plating>(), 2, 1, 2));
+            itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<Capacitor>(), 2, 1, 2));
+            itemLoot.Add(ItemDropRule.Common(ItemID.EmptyBucket, 75));
+            itemLoot.Add(ItemDropRule.Common(ItemID.IllegalGunParts, 75));
+            itemLoot.Add(ItemDropRule.Common(ItemID.Handgun, 75));
+            itemLoot.Add(ItemDropRule.Common(ItemID.ClockworkAssaultRifle, 75));
+            itemLoot.Add(ItemDropRule.Common(ItemID.FlareGun, 75));
+            itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<FoldedShotgun>(), 25));
+            itemLoot.Add(ItemDropRule.ByCondition(new Conditions.DownedPlantera(), ItemID.ProximityMineLauncher, 75));
+            itemLoot.Add(ItemDropRule.ByCondition(new Conditions.BeatAnyMechBoss(), ItemID.Cog, 1, 4, 18));
         }
 
         public override void RightClick(Player player)
         {
-            if (Main.rand.NextBool(2))
-                player.QuickSpawnItem(player.GetSource_OpenItem(Type), ModContent.ItemType<Plating>(), Main.rand.Next(1, 2));
-
-            if (Main.rand.NextBool(2))
-                player.QuickSpawnItem(player.GetSource_OpenItem(Type), ModContent.ItemType<Capacitor>(), Main.rand.Next(1, 2));
-
-            if (Main.rand.NextBool(75))
-                player.QuickSpawnItem(player.GetSource_OpenItem(Type), ItemID.EmptyBucket);
-
-            if (Main.rand.NextBool(75))
-                player.QuickSpawnItem(player.GetSource_OpenItem(Type), ItemID.IllegalGunParts);
-
-            if (Main.rand.NextBool(75))
-                player.QuickSpawnItem(player.GetSource_OpenItem(Type), ItemID.Handgun);
-
-            if (Main.rand.NextBool(75))
-                player.QuickSpawnItem(player.GetSource_OpenItem(Type), ItemID.ClockworkAssaultRifle);
-
-            if (Main.rand.NextBool(75))
-                player.QuickSpawnItem(player.GetSource_OpenItem(Type), ItemID.BreakerBlade);
-
-            if (Main.rand.NextBool(75))
-                player.QuickSpawnItem(player.GetSource_OpenItem(Type), ItemID.ChainGuillotines);
-
-            if (Main.rand.NextBool(100))
-                player.QuickSpawnItem(player.GetSource_OpenItem(Type), ItemID.FlareGun);
-
-            if (NPC.downedPlantBoss && Main.rand.NextBool(75))
-                player.QuickSpawnItem(player.GetSource_OpenItem(Type), ItemID.ProximityMineLauncher);
-
             if (NPC.downedMechBossAny)
             {
                 player.QuickSpawnItem(player.GetSource_OpenItem(Type), ItemID.Cog, Main.rand.Next(4, 19));

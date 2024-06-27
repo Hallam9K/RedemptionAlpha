@@ -82,7 +82,6 @@ namespace Redemption.Items.Weapons.PostML.Melee
         public ref float Rot => ref Projectile.localAI[1];
         public ref float Timer => ref Projectile.localAI[2];
         private float SwingSpeed;
-        private bool parried;
         public int pauseTimer;
         public float progress;
         public ref float SwingAngle => ref Projectile.ai[0];
@@ -104,7 +103,6 @@ namespace Redemption.Items.Weapons.PostML.Melee
             Projectile.spriteDirection = Player.direction;
             Projectile.rotation = (Projectile.Center - armCenter).ToRotation() + MathHelper.PiOver2;
 
-            bool parryActive = false;
             Player.SetCompositeArmFront(true, Player.CompositeArmStretchAmount.Full, (armCenter - Projectile.Center).ToRotation() + MathHelper.PiOver2);
             if (Main.myPlayer == Projectile.owner && --pauseTimer <= 0)
             {
@@ -112,7 +110,7 @@ namespace Redemption.Items.Weapons.PostML.Melee
                 if (Timer++ == 0)
                 {
                     Projectile.scale *= Projectile.ai[2];
-                    Length = 100 * Projectile.ai[2];
+                    Length = 80 * Projectile.ai[2];
                     startVector = RedeHelper.PolarVector(1, Projectile.velocity.ToRotation() - (MathHelper.PiOver2 * Projectile.spriteDirection));
                 }
                 if (Timer == (int)(30 * SwingSpeed * 5))
@@ -251,13 +249,13 @@ namespace Redemption.Items.Weapons.PostML.Melee
             for (int k = 0; k < Projectile.oldPos.Length; k++)
             {
                 Vector2 v2 = RedeHelper.PolarVector(1, (oldPos[k] - Player.MountedCenter).ToRotation());
-                Vector2 drawPos = oldPos[k] - v2 - Main.screenPosition + new Vector2(0f, Projectile.gfxOffY);
+                Vector2 drawPos = oldPos[k] - v2 - Main.screenPosition;
                 Color color = Color.LightCyan with { A = 0 } * ((Projectile.oldPos.Length - k) / (float)Projectile.oldPos.Length);
                 Main.EntitySpriteDraw(texture, drawPos, null, color * 3, oldrot[k], origin, Projectile.scale, spriteEffects, 0);
             }
 
-            RedeDraw.DrawTreasureBagEffect(Main.spriteBatch, texture, ref drawTimer, v - Main.screenPosition + Vector2.UnitY * Projectile.gfxOffY, new Rectangle?(rect), Projectile.GetAlpha(Color.LightYellow), Projectile.rotation, origin, Projectile.scale, spriteEffects);
-            Main.EntitySpriteDraw(texture, v - Main.screenPosition + Vector2.UnitY * Projectile.gfxOffY, new Rectangle?(rect), Projectile.GetAlpha(lightColor), Projectile.rotation, origin, Projectile.scale, spriteEffects, 0);
+            RedeDraw.DrawTreasureBagEffect(Main.spriteBatch, texture, ref drawTimer, v - Main.screenPosition, new Rectangle?(rect), Projectile.GetAlpha(Color.LightYellow), Projectile.rotation, origin, Projectile.scale, spriteEffects);
+            Main.EntitySpriteDraw(texture, v - Main.screenPosition, new Rectangle?(rect), Projectile.GetAlpha(lightColor), Projectile.rotation, origin, Projectile.scale, spriteEffects, 0);
             return false;
         }
     }
@@ -612,9 +610,9 @@ namespace Redemption.Items.Weapons.PostML.Melee
             float num = !thrown && Player.direction == -1 ? MathHelper.Pi : 0;
             if (!teleport)
             {
-                RedeDraw.DrawTreasureBagEffect(Main.spriteBatch, texture, ref drawTimer, Projectile.Center - v - Main.screenPosition + Vector2.UnitY * Projectile.gfxOffY,
+                RedeDraw.DrawTreasureBagEffect(Main.spriteBatch, texture, ref drawTimer, Projectile.Center - v - Main.screenPosition,
                     new Rectangle?(rect), Projectile.GetAlpha(Color.LightYellow), Projectile.rotation + num, origin, Projectile.scale, spriteEffects);
-                Main.EntitySpriteDraw(texture, Projectile.Center - v - Main.screenPosition + Vector2.UnitY * Projectile.gfxOffY,
+                Main.EntitySpriteDraw(texture, Projectile.Center - v - Main.screenPosition,
                     new Rectangle?(rect), Projectile.GetAlpha(lightColor), Projectile.rotation + num, origin, Projectile.scale, spriteEffects, 0);
             }
 

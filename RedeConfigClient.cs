@@ -40,6 +40,10 @@ namespace Redemption
         //[Tooltip("Disables elemental resistances and damage")]
         public bool ElementDisable;
 
+        //[Label("Disable Guard Points on Vanilla Enemies")]
+        //[Tooltip("Disables Guard Points on certain vanilla enemies")]
+        public bool VanillaGuardPointsDisable;
+
         [Range(0f, 1f)]
         [DefaultValue(1f)]
         [Slider]

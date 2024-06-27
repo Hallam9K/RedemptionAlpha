@@ -1,14 +1,16 @@
-using Terraria.ModLoader;
-using Terraria.ID;
-using Terraria;
 using Microsoft.Xna.Framework;
-using Terraria.Audio;
 using Microsoft.Xna.Framework.Graphics;
-using Terraria.GameContent;
-using Redemption.Globals;
-using Redemption.Buffs.NPCBuffs;
-using Redemption.Projectiles.Melee;
+using ParticleLibrary.Core;
 using Redemption.BaseExtension;
+using Redemption.Buffs.NPCBuffs;
+using Redemption.Globals;
+using Redemption.Particles;
+using Redemption.Projectiles.Melee;
+using Terraria;
+using Terraria.Audio;
+using Terraria.GameContent;
+using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace Redemption.Items.Weapons.PreHM.Melee
 {
@@ -37,7 +39,6 @@ namespace Redemption.Items.Weapons.PreHM.Melee
         int directionLock = 0;
         private float glow;
         Vector2 mousePoint;
-        private bool parried;
         public override void AI()
         {
             Player player = Main.player[Projectile.owner];
@@ -55,7 +56,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
                     player.itemRotation = MathHelper.ToRadians(-90f * player.direction);
                     player.bodyFrame.Y = 5 * player.bodyFrame.Height;
                     directionLock = player.direction;
-                    glow += 0.02f;
+                    glow += 0.02f * 20f / SwingSpeed;
                     glow = MathHelper.Clamp(glow, 0, 0.8f);
                     if (glow >= 0.8 && Projectile.localAI[0] == 0)
                     {
@@ -86,14 +87,6 @@ namespace Redemption.Items.Weapons.PreHM.Melee
                         Projectile.frame++;
                         if (Projectile.frame is 2)
                         {
-                            for (int i = 0; i < Main.maxProjectiles; i++)
-                            {
-                                Projectile target = Main.projectile[i];
-                                if (!target.active || target.whoAmI == Projectile.whoAmI || !target.hostile)
-                                    continue;
-
-                                RedeProjectile.SwordClashFriendly(Projectile, target, player, ref parried);
-                            }
                             if (Projectile.localAI[0] == 1)
                             {
                                 player.statLife -= 15;
@@ -103,7 +96,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
                                 SoundEngine.PlaySound(SoundID.NPCDeath19, Projectile.position);
                                 for (int i = 0; i < 4; i++)
                                 {
-                                    Projectile.NewProjectile(Projectile.GetSource_FromAI(), player.Center, RedeHelper.PolarVector(Main.rand.NextFloat(5, 8), (mousePoint - player.Center).ToRotation() + Main.rand.NextFloat(-0.2f, 0.2f)), ModContent.ProjectileType<KeepersClaw_BloodWave>(), Projectile.damage / 4, 2, player.whoAmI);
+                                    Projectile.NewProjectile(Projectile.GetSource_FromAI(), player.Center, RedeHelper.PolarVector(Main.rand.NextFloat(5, 8), (mousePoint - player.Center).ToRotation() + Main.rand.NextFloat(-0.2f, 0.2f)), ModContent.ProjectileType<KeepersClaw_BloodWave>(), Projectile.damage / 3, 2, player.whoAmI);
                                 }
                                 for (int i = 0; i < 20; i++)
                                 {
@@ -124,7 +117,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
 
             Projectile.spriteDirection = player.direction;
 
-            Projectile.Center = player.Center;
+            Projectile.Center = player.RotatedRelativePoint(player.MountedCenter, true);
             player.itemTime = 2;
             player.itemAnimation = 2;
         }
@@ -139,10 +132,24 @@ namespace Redemption.Items.Weapons.PreHM.Melee
         }
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
+            Player player = Main.player[Projectile.owner];
+
             RedeProjectile.Decapitation(target, ref damageDone, ref hit.Crit);
 
             Projectile.localNPCImmunity[target.whoAmI] = 30;
             target.immune[Projectile.owner] = 0;
+
+            Vector2 dir = target.DirectionTo(player.Center);
+            Vector2 drawPos = Vector2.Lerp(Projectile.Center, target.Center, 0.9f);
+            ParticleSystem.NewParticle(drawPos, dir.RotatedBy(Main.rand.NextFloat(-0.4f, 0.4f) + player.direction * MathHelper.PiOver4) * 30, new SlashParticleAlt(16, 1), Color.PaleVioletRed, .5f, layer: Layer.BeforePlayers);
+            for (int i = 0; i < 4; i++)
+            {
+                float randomRotation = Main.rand.NextFloat(-0.5f, 0.5f);
+                float randomVel = Main.rand.NextFloat(2f, 4f);
+                Vector2 direction = target.DirectionFrom(player.Center);
+                Vector2 position = target.Center - direction * 10;
+                ParticleSystem.NewParticle(position, direction.RotatedBy(randomRotation) * randomVel * 8, new SpeedParticle(), Color.DarkRed, 0.8f);
+            }
 
             target.AddBuff(ModContent.BuffType<NecroticGougeDebuff>(), 600);
         }
@@ -159,12 +166,12 @@ namespace Redemption.Items.Weapons.PreHM.Melee
             var effects = Projectile.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
             int offset = Projectile.frame > 1 ? 14 : 0;
 
-            Vector2 pos = Projectile.Center - Main.screenPosition - new Vector2(-1 * player.direction, 6 - offset) + Vector2.UnitY * Projectile.gfxOffY;
+            Vector2 pos = Projectile.Center - Main.screenPosition - new Vector2(-1 * player.direction, 6 - offset);
             Main.spriteBatch.End();
-            Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+            Main.spriteBatch.BeginAdditive();
             RedeDraw.DrawTreasureBagEffect(Main.spriteBatch, texture, ref drawTimer, pos, new Rectangle?(rect), Color.Red * Projectile.Opacity * glow, Projectile.rotation, drawOrigin, Projectile.scale, effects);
             Main.spriteBatch.End();
-            Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+            Main.spriteBatch.BeginDefault(true);
 
             Main.EntitySpriteDraw(texture, pos, new Rectangle?(rect), Projectile.GetAlpha(lightColor), Projectile.rotation, drawOrigin, Projectile.scale, effects, 0);
 
@@ -175,7 +182,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
             Vector2 drawOrigin2 = new(slash.Width / 2, slash.Height / 2);
 
             if (Projectile.frame >= 2)
-                Main.EntitySpriteDraw(slash, Projectile.Center - Main.screenPosition - new Vector2(-31 * player.direction, -99 - offset) + Vector2.UnitY * Projectile.gfxOffY, new Rectangle?(rect2), Projectile.GetAlpha(Color.White), Projectile.rotation, drawOrigin2, Projectile.scale, effects, 0);
+                Main.EntitySpriteDraw(slash, Projectile.Center - Main.screenPosition - new Vector2(-31 * player.direction, -99 - offset), new Rectangle?(rect2), Projectile.GetAlpha(Color.White), Projectile.rotation, drawOrigin2, Projectile.scale, effects, 0);
             return false;
         }
     }

@@ -1,17 +1,13 @@
-using Terraria;
-using Terraria.ModLoader;
-using Terraria.ID;
 using Redemption.Tiles.Banners;
+using Terraria;
+using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace Redemption.Items.Placeable.Banners
 {
     public abstract class BaseBannerItem : ModItem
     {
         protected abstract int Tile { get; }
-        public override void SetStaticDefaults()
-        {
-            Item.ResearchUnlockCount = 1;
-        }
         public sealed override void SetDefaults()
         {
             Item.DefaultToPlaceableTile(Tile, 0);
@@ -25,11 +21,7 @@ namespace Redemption.Items.Placeable.Banners
     public class AncientGladestoneGolemBanner : BaseBannerItem
     {
         protected override int Tile => ModContent.TileType<AncientGladestoneGolemBannerTile>();
-        public override void SetStaticDefaults()
-        {
-            Item.ResearchUnlockCount = 1;
-            ItemID.Sets.KillsToBanner[Type] = 25;
-        }
+        public override void SetStaticDefaults() => ItemID.Sets.KillsToBanner[Type] = 25;
     }
     public class AndroidBanner : BaseBannerItem
     {
@@ -58,20 +50,12 @@ namespace Redemption.Items.Placeable.Banners
     public class BlobbleBanner : BaseBannerItem
     {
         protected override int Tile => ModContent.TileType<BlobbleBannerTile>();
-        public override void SetStaticDefaults()
-        {
-            Item.ResearchUnlockCount = 1;
-            ItemID.Sets.KillsToBanner[Type] = 25;
-        }
+        public override void SetStaticDefaults() => ItemID.Sets.KillsToBanner[Type] = 25;
     }
     public class BobTheBlobBanner : BaseBannerItem
     {
         protected override int Tile => ModContent.TileType<BobTheBlobBannerTile>();
-        public override void SetStaticDefaults()
-        {
-            Item.ResearchUnlockCount = 1;
-            ItemID.Sets.KillsToBanner[Type] = 10;
-        }
+        public override void SetStaticDefaults() => ItemID.Sets.KillsToBanner[Type] = 10;
     }
     public class BoneSpiderBanner : BaseBannerItem
     {
@@ -108,11 +92,7 @@ namespace Redemption.Items.Placeable.Banners
     public class ForestNymphBanner : BaseBannerItem
     {
         protected override int Tile => ModContent.TileType<ForestNymphBannerTile>();
-        public override void SetStaticDefaults()
-        {
-            Item.ResearchUnlockCount = 1;
-            ItemID.Sets.KillsToBanner[Type] = 10;
-        }
+        public override void SetStaticDefaults() => ItemID.Sets.KillsToBanner[Type] = 10;
     }
     public class GrandLarvaBanner : BaseBannerItem
     {
@@ -133,11 +113,7 @@ namespace Redemption.Items.Placeable.Banners
     public class JollyMadmanBanner : BaseBannerItem
     {
         protected override int Tile => ModContent.TileType<JollyMadmanBannerTile>();
-        public override void SetStaticDefaults()
-        {
-            Item.ResearchUnlockCount = 1;
-            ItemID.Sets.KillsToBanner[Type] = 10;
-        }
+        public override void SetStaticDefaults() => ItemID.Sets.KillsToBanner[Type] = 10;
     }
     public class KabucraBanner : BaseBannerItem
     {
@@ -158,11 +134,7 @@ namespace Redemption.Items.Placeable.Banners
     public class NuclearShadowBanner : BaseBannerItem
     {
         protected override int Tile => ModContent.TileType<NuclearShadowBannerTile>();
-        public override void SetStaticDefaults()
-        {
-            Item.ResearchUnlockCount = 1;
-            ItemID.Sets.KillsToBanner[Type] = 25;
-        }
+        public override void SetStaticDefaults() => ItemID.Sets.KillsToBanner[Type] = 25;
     }
     public class NuclearSlimeBanner : BaseBannerItem
     {
@@ -171,11 +143,7 @@ namespace Redemption.Items.Placeable.Banners
     public class OozeBlobBanner : BaseBannerItem
     {
         protected override int Tile => ModContent.TileType<OozeBlobBannerTile>();
-        public override void SetStaticDefaults()
-        {
-            Item.ResearchUnlockCount = 1;
-            ItemID.Sets.KillsToBanner[Type] = 250;
-        }
+        public override void SetStaticDefaults() => ItemID.Sets.KillsToBanner[Type] = 250;
     }
     public class OozingScientistBanner : BaseBannerItem
     {
@@ -184,11 +152,7 @@ namespace Redemption.Items.Placeable.Banners
     public class PrototypeSilverBanner : BaseBannerItem
     {
         protected override int Tile => ModContent.TileType<PrototypeSilverBannerTile>();
-        public override void SetStaticDefaults()
-        {
-            Item.ResearchUnlockCount = 1;
-            ItemID.Sets.KillsToBanner[Type] = 25;
-        }
+        public override void SetStaticDefaults() => ItemID.Sets.KillsToBanner[Type] = 25;
     }
     public class RadioactiveJellyBanner : BaseBannerItem
     {
@@ -253,11 +217,7 @@ namespace Redemption.Items.Placeable.Banners
     public class SpacePaladinBanner : BaseBannerItem
     {
         protected override int Tile => ModContent.TileType<SpacePaladinBannerTile>();
-        public override void SetStaticDefaults()
-        {
-            Item.ResearchUnlockCount = 1;
-            ItemID.Sets.KillsToBanner[Type] = 10;
-        }
+        public override void SetStaticDefaults() => ItemID.Sets.KillsToBanner[Type] = 10;
     }
     public class TreeBugBanner : BaseBannerItem
     {
@@ -266,5 +226,17 @@ namespace Redemption.Items.Placeable.Banners
     public class VagrantSpiritBanner : BaseBannerItem
     {
         protected override int Tile => ModContent.TileType<VagrantSpiritBannerTile>();
+    }
+    public class BloatedClingerBanner : BaseBannerItem
+    {
+        protected override int Tile => ModContent.TileType<BloatedClingerBannerTile>();
+    }
+    public class BloatedDiggerBanner : BaseBannerItem
+    {
+        protected override int Tile => ModContent.TileType<BloatedDiggerBannerTile>();
+    }
+    public class BloatedFaceMonsterBanner : BaseBannerItem
+    {
+        protected override int Tile => ModContent.TileType<BloatedFaceMonsterBannerTile>();
     }
 }

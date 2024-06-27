@@ -14,6 +14,11 @@ namespace Redemption.Textures
         public static Asset<Texture2D> TextBubble_Neb;
         public static Asset<Texture2D> TextBubble_Omega;
         public static Asset<Texture2D> TextBubble_Slayer;
+
+        public static Asset<Texture2D> BigFlare;
+        public static Asset<Texture2D> WhiteFlare;
+        public static Asset<Texture2D> WhiteGlow;
+        public static Asset<Texture2D> GunFlash;
         public override void Load()
         {
             if (Main.dedServ)
@@ -25,16 +30,11 @@ namespace Redemption.Textures
             TextBubble_Neb = ModContent.Request<Texture2D>("Redemption/UI/TextBubble_Neb");
             TextBubble_Omega = ModContent.Request<Texture2D>("Redemption/UI/TextBubble_Omega");
             TextBubble_Slayer = ModContent.Request<Texture2D>("Redemption/UI/TextBubble_Slayer");
-        }
-        public override void Unload()
-        {
-            TextBubble_Cave = null;
-            TextBubble_Epidotra = null;
-            TextBubble_Kingdom = null;
-            TextBubble_Liden = null;
-            TextBubble_Neb = null;
-            TextBubble_Omega = null;
-            TextBubble_Slayer = null;
+
+            BigFlare = ModContent.Request<Texture2D>("Redemption/Textures/BigFlare");
+            WhiteFlare = ModContent.Request<Texture2D>("Redemption/Textures/WhiteFlare");
+            WhiteGlow = ModContent.Request<Texture2D>("Redemption/Textures/WhiteGlow");
+            GunFlash = ModContent.Request<Texture2D>("Redemption/Textures/GunFlash");
         }
     }
 }

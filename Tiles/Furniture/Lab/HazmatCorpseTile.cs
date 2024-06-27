@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.BaseExtension;
+using Redemption.Globals;
 using Redemption.Items;
 using Redemption.Items.Accessories.HM;
 using Redemption.Items.Usable;
@@ -9,6 +10,7 @@ using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.Enums;
+using Terraria.GameContent.ObjectInteractions;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
@@ -21,6 +23,7 @@ namespace Redemption.Tiles.Furniture.Lab
     {
         public override void SetStaticDefaults()
         {
+            TileID.Sets.HasOutlines[Type] = true;
             Main.tileFrameImportant[Type] = true;
             Main.tileLavaDeath[Type] = false;
             Main.tileNoAttach[Type] = true;
@@ -34,7 +37,7 @@ namespace Redemption.Tiles.Furniture.Lab
             TileObjectData.newTile.AnchorBottom = new AnchorData(AnchorType.SolidTile | AnchorType.SolidWithTop | AnchorType.SolidSide, TileObjectData.newTile.Width, 0);
             TileObjectData.addTile(Type);
             DustType = DustID.GreenBlood;
-            MinPick = 1000;
+            MinPick = 5000;
             MineResist = 8f;
             HitSound = SoundID.NPCHit13;
             LocalizedText name = CreateMapEntryName();
@@ -50,6 +53,12 @@ namespace Redemption.Tiles.Furniture.Lab
                 player.cursorItemIconID = ModContent.ItemType<DeadRinger>();
             else
                 player.cursorItemIconID = ModContent.ItemType<HintIcon>();
+        }
+        public override bool HasSmartInteract(int i, int j, SmartInteractScanSettings settings)
+        {
+            int left = i - Main.tile[i, j].TileFrameX / 18 % 3;
+            int top = j - Main.tile[i, j].TileFrameY / 18 % 2;
+            return Main.tile[left, top].TileFrameX == 0 || Main.LocalPlayer.HeldItem.type == ModContent.ItemType<DeadRinger>();
         }
         public override bool RightClick(int i, int j)
         {
@@ -108,40 +117,14 @@ namespace Redemption.Tiles.Furniture.Lab
         }
         public override bool PreDraw(int i, int j, SpriteBatch spriteBatch)
         {
-            if (!Main.LocalPlayer.RedemptionAbility().SpiritwalkerActive)
-                return true;
-
-            Texture2D flare = Redemption.WhiteFlare.Value;
-            Rectangle rect = new(0, 0, flare.Width, flare.Height);
-            Vector2 zero = new(Main.offScreenRange, Main.offScreenRange);
-            if (Main.drawToScreen)
-                zero = Vector2.Zero;
-            Vector2 origin = new(flare.Width / 2f, flare.Height / 2f);
-            if ((Main.tile[i, j].TileFrameX == 0 || Main.tile[i, j].TileFrameX == 54) && Main.tile[i, j].TileFrameY == 0)
-            {
-                spriteBatch.End();
-                spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null);
-
-                spriteBatch.Draw(flare, new Vector2(((i + 1.45f) * 16) - (int)Main.screenPosition.X, ((j + 0.7f) * 16) - (int)Main.screenPosition.Y) + zero, new Rectangle?(rect), RedeColor.COLOR_GLOWPULSE, Main.GlobalTimeWrappedHourly, origin, 1.5f, 0, 1f);
-                spriteBatch.Draw(flare, new Vector2(((i + 1.45f) * 16) - (int)Main.screenPosition.X, ((j + 0.7f) * 16) - (int)Main.screenPosition.Y) + zero, new Rectangle?(rect), RedeColor.COLOR_GLOWPULSE, -Main.GlobalTimeWrappedHourly, origin, 1.5f, 0, 1f);
-
-                spriteBatch.End();
-                spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null);
-            }
+            RedeTileHelper.DrawSpiritFlare(spriteBatch, i, j, 54, 1.45f, 0.7f);
             return true;
         }
         public override bool CanExplode(int i, int j) => false;
     }
     public class HazmatCorpse : PlaceholderTile
     {
-        public override string Texture => Redemption.PLACEHOLDER_TEXTURE;
-        public override void SetSafeStaticDefaults()
-        {
-            // DisplayName.SetDefault("Hazmat Corpse");
-            /* Tooltip.SetDefault("Gives Hazmat Suit" +
-                "\n[c/ff0000:Unbreakable (500% Pickaxe Power)]"); */
-        }
-
+        public override string Texture => "Redemption/Items/Placeable/Furniture/Lab/InfectedCorpse";
         public override void SetDefaults()
         {
             base.SetDefaults();

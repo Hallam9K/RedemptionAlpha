@@ -1,40 +1,60 @@
 using Microsoft.Xna.Framework;
-using Redemption.Dusts.Tiles;
 using Terraria;
 using Terraria.DataStructures;
-using Terraria.Enums;
+using Terraria.GameContent.ObjectInteractions;
+using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
+using Redemption.Items.Placeable.Furniture.Lab;
 
 namespace Redemption.Tiles.Furniture.Lab
 {
     public class LabReceptionCouchTile : ModTile
-	{
+    {
         public override void SetStaticDefaults()
-		{
-			Main.tileFrameImportant[Type] = true;
-			Main.tileLavaDeath[Type] = true;
+        {
+            Main.tileFrameImportant[Type] = true;
             Main.tileNoAttach[Type] = true;
-            TileObjectData.newTile.Width = 3;
+            Main.tileLavaDeath[Type] = true;
+            TileObjectData.newTile.CopyFrom(TileObjectData.Style3x2);
             TileObjectData.newTile.Height = 2;
             TileObjectData.newTile.CoordinateHeights = new int[] { 16, 16 };
-            TileObjectData.newTile.UsesCustomCanPlace = true;
-            TileObjectData.newTile.CoordinateWidth = 16;
-            TileObjectData.newTile.CoordinatePadding = 2;
-            TileObjectData.newTile.Origin = new Point16(1, 1);
-            TileObjectData.newTile.AnchorBottom = new AnchorData(AnchorType.SolidTile | AnchorType.SolidWithTop | AnchorType.SolidSide, TileObjectData.newTile.Width, 0);
             TileObjectData.addTile(Type);
+            TileID.Sets.CanBeSatOnForNPCs[Type] = true;
+            TileID.Sets.CanBeSatOnForPlayers[Type] = true;
+            TileID.Sets.DisableSmartCursor[Type] = true;
+            TileID.Sets.HasOutlines[Type] = true;
+
+            LocalizedText name = CreateMapEntryName();
             AddToArray(ref TileID.Sets.RoomNeeds.CountsAsChair);
-            DustType = ModContent.DustType<LabPlatingDust>();
-            MinPick = 200;
-            MineResist = 7f;
-			LocalizedText name = CreateMapEntryName();
-            // name.SetDefault("Laboratory Reception Couch");
             AddMapEntry(new Color(72, 70, 79), name);
-            AdjTiles = new int[] { TileID.Chairs };
+            DustType = -1;
         }
-        public override bool CanExplode(int i, int j) => false;
+
+        public override bool HasSmartInteract(int i, int j, SmartInteractScanSettings settings)
+            => settings.player.IsWithinSnappngRangeToTile(i, j, PlayerSittingHelper.ChairSittingMaxDistance);
+
+        public override bool RightClick(int i, int j)
+        {
+            Player player = Main.LocalPlayer;
+
+            if (player.IsWithinSnappngRangeToTile(i, j, PlayerSittingHelper.ChairSittingMaxDistance))
+            {
+                player.GamepadEnableGrappleCooldown();
+                player.sitting.SitDown(player, i, j);
+            }
+            return true;
+        }
+
+        public override void MouseOver(int i, int j)
+        {
+            Player player = Main.LocalPlayer;
+            player.cursorItemIconID = ModContent.ItemType<LabReceptionCouch>();
+            player.noThrow = 2;
+            player.cursorItemIconEnabled = true;
+        }
+        public override void ModifySittingTargetInfo(int i, int j, ref TileRestingInfo info) => info.VisualOffset.Y += 2;
     }
 }

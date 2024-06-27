@@ -30,8 +30,26 @@ namespace Redemption.Tiles.Natural
             Main.tileLighted[Type] = true;
         }
         public override void NumDust(int i, int j, bool fail, ref int num)
+            b = 0.1f;
+        }
+    }
+    public class XenomiteCrystalBigTileFake : XenomiteCrystalBigTileBase
+    {
+        public override void SetStaticDefaults()
         {
-            num = fail ? 1 : 3;
+            base.SetStaticDefaults();
+
+            FlexibleTileWand.RubblePlacementLarge.AddVariations(ModContent.ItemType<XenomiteShard>(), Type, 0);
+
+            RegisterItemDrop(ModContent.ItemType<XenomiteShard>());
+        }
+    }
+    public class XenomiteCrystalBigTile : XenomiteCrystalBigTileBase
+    {
+        public override void SetStaticDefaults()
+        {
+            base.SetStaticDefaults();
+            TileObjectData.GetTileData(Type, 0).LavaDeath = false;
         }
         public override void KillMultiTile(int i, int j, int frameX, int frameY)
         {
@@ -39,13 +57,6 @@ namespace Redemption.Tiles.Natural
                 Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 48, 48, ModContent.ItemType<Xenomite>(), Main.rand.Next(3, 6));
             else
                 Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 48, 48, ModContent.ItemType<XenomiteShard>(), Main.rand.Next(12, 24));
-        }
-
-        public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)
-        {
-            r = 0.0f;
-            g = 0.4f;
-            b = 0.1f;
         }
     }
 }

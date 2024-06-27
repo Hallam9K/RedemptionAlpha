@@ -1,8 +1,8 @@
 using Redemption.Tiles.Tiles;
-using Terraria.ModLoader;
 using Terraria;
-using Terraria.ID;
 using Terraria.GameContent;
+using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace Redemption.Items.Placeable.Tiles
 {
@@ -21,6 +21,18 @@ namespace Redemption.Items.Placeable.Tiles
             Item.width = 16;
             Item.height = 16;
             Item.maxStack = Item.CommonMaxStack;
+        }
+        public override void AddRecipes()
+        {
+            CreateRecipe()
+                .AddIngredient(ModContent.ItemType<IrradiatedSand>())
+                .AddIngredient(ModContent.ItemType<IrradiatedStone>())
+                .AddTile(TileID.Solidifier)
+                .Register();
+            CreateRecipe()
+                .AddIngredient(ModContent.ItemType<IrradiatedSandstoneWall>(), 4)
+                .AddTile(TileID.WorkBenches)
+                .Register();
         }
     }
 }

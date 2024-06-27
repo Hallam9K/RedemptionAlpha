@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Redemption.Base;
+using Redemption.BaseExtension;
 using Redemption.Buffs.Debuffs;
 using Redemption.Globals;
 using Redemption.Items.Critters;
@@ -36,11 +37,11 @@ namespace Redemption.NPCs.Critters
 
         public override void SetStaticDefaults()
         {
-            Main.npcFrameCount[Type] = 6;
+            Main.npcFrameCount[Type] = 7;
             NPCID.Sets.ShimmerTransformToNPC[NPC.type] = NPCID.Shimmerfly;
             NPCID.Sets.DontDoHardmodeScaling[Type] = true;
 
-            NPCID.Sets.NPCBestiaryDrawModifiers value = new(0)
+            NPCID.Sets.NPCBestiaryDrawModifiers value = new()
             {
                 Velocity = 1f
             };
@@ -50,8 +51,8 @@ namespace Redemption.NPCs.Critters
 
         public override void SetDefaults()
         {
-            NPC.width = 40;
-            NPC.height = 16;
+            NPC.width = 48;
+            NPC.height = 20;
             NPC.defense = 0;
             NPC.damage = 2;
             NPC.lifeMax = 35;
@@ -181,7 +182,10 @@ namespace Redemption.NPCs.Critters
             if (AIState is ActionState.Hop)
             {
                 NPC.rotation = NPC.velocity.X * 0.05f;
-                NPC.frame.Y = 5 * frameHeight;
+                if (NPC.velocity.Y < 0)
+                    NPC.frame.Y = 6 * frameHeight;
+                else
+                    NPC.frame.Y = 5 * frameHeight;
                 return;
             }
             if (NPC.collideY || NPC.velocity.Y == 0)
@@ -196,7 +200,7 @@ namespace Redemption.NPCs.Critters
                     {
                         NPC.frameCounter = 0;
                         NPC.frame.Y += frameHeight;
-                        if (NPC.frame.Y > 3 * frameHeight)
+                        if (NPC.frame.Y > 4 * frameHeight)
                             NPC.frame.Y = 0;
                     }
                 }
@@ -204,7 +208,10 @@ namespace Redemption.NPCs.Critters
             else
             {
                 NPC.rotation = NPC.velocity.X * 0.05f;
-                NPC.frame.Y = 4 * frameHeight;
+                if (NPC.velocity.Y < 0)
+                    NPC.frame.Y = 6 * frameHeight;
+                else
+                    NPC.frame.Y = 5 * frameHeight;
             }
         }
         public override float SpawnChance(NPCSpawnInfo spawnInfo)
@@ -259,6 +266,12 @@ namespace Redemption.NPCs.Critters
                 for (int i = 0; i < 12; i++)
                     Dust.NewDust(NPC.position + NPC.velocity, NPC.width, NPC.height, DustID.GreenBlood,
                         NPC.velocity.X * 0.5f, NPC.velocity.Y * 0.5f, Scale: 2);
+
+                if (Main.netMode != NetmodeID.Server)
+                {
+                    Gore.NewGore(NPC.GetSource_FromThis(), NPC.position, NPC.velocity, ModContent.Find<ModGore>("Redemption/GrandLarvaGore1").Type);
+                    Gore.NewGore(NPC.GetSource_FromThis(), NPC.position, NPC.velocity, ModContent.Find<ModGore>("Redemption/GrandLarvaGore2").Type);
+                }
             }
 
             Dust.NewDust(NPC.position + NPC.velocity, NPC.width, NPC.height, DustID.GreenBlood, NPC.velocity.X * 0.5f,

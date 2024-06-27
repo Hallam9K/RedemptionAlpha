@@ -33,9 +33,6 @@ namespace Redemption.Tiles.Furniture.SlayerShip
             AddMapEntry(new Color(143, 215, 29), name);
         }
         public override bool HasSmartInteract(int i, int j, SmartInteractScanSettings settings) => true;
-        public override void SetSpriteEffects(int i, int j, ref SpriteEffects spriteEffects)
-        {
-        }
         public override void MouseOver(int i, int j)
         {
             int left = i - Main.tile[i, j].TileFrameX / 18 % 3;
@@ -91,7 +88,7 @@ namespace Redemption.Tiles.Furniture.SlayerShip
         }
         public override void RandomUpdate(int i, int j)
         {
-            if (Main.rand.NextBool(15))
+            if (Main.rand.NextBool(30))
             {
                 int left = i - Main.tile[i, j].TileFrameX / 18 % 3;
                 int top = j - Main.tile[i, j].TileFrameY / 18 % 3;

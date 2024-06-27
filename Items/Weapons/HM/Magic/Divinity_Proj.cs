@@ -1,19 +1,20 @@
-﻿using System;
-using Terraria;
-using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
-using Terraria.ID;
 using Microsoft.Xna.Framework.Graphics;
-using Redemption.Globals;
-using Terraria.Audio;
-using Redemption.BaseExtension;
-using Redemption.Base;
-using Terraria.GameContent;
-using Redemption.Particles;
 using ParticleLibrary;
-using Redemption.Projectiles.Magic;
+using ParticleLibrary.Core;
+using Redemption.Base;
+using Redemption.BaseExtension;
 using Redemption.Effects;
+using Redemption.Globals;
+using Redemption.Particles;
+using Redemption.Projectiles.Magic;
+using System;
 using System.Collections.Generic;
+using Terraria;
+using Terraria.Audio;
+using Terraria.GameContent;
+using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace Redemption.Items.Weapons.HM.Magic
 {
@@ -176,7 +177,8 @@ namespace Redemption.Items.Weapons.HM.Magic
                             if (charged == 0)
                             {
                                 RedeDraw.SpawnExplosion(Projectile.Center, Color.White, shakeAmount: 0, scale: 2, noDust: true, tex: ModContent.Request<Texture2D>("Redemption/Textures/HolyGlow2").Value);
-                                SoundEngine.PlaySound(CustomSounds.NebSound2 with { Pitch = .2f, Volume = .5f }, Projectile.position);
+                                if (!Main.dedServ)
+                                    SoundEngine.PlaySound(CustomSounds.NebSound2 with { Pitch = .2f, Volume = .5f }, Projectile.position);
                                 charged = 1;
                             }
                             Projectile.NewProjectile(Projectile.GetSource_FromAI(), Main.MouseWorld, Vector2.Zero, ModContent.ProjectileType<Divinity_Crosshair>(), 0, 0, player.whoAmI, Projectile.whoAmI);
@@ -184,7 +186,8 @@ namespace Redemption.Items.Weapons.HM.Magic
                         if (Projectile.scale >= 3 && charged < 2)
                         {
                             RedeDraw.SpawnExplosion(Projectile.Center, Color.White, shakeAmount: 0, scale: 5, noDust: true, tex: ModContent.Request<Texture2D>("Redemption/Textures/HolyGlow2").Value);
-                            SoundEngine.PlaySound(CustomSounds.NebSound2 with { Volume = .5f }, Projectile.position);
+                            if (!Main.dedServ)
+                                SoundEngine.PlaySound(CustomSounds.NebSound2 with { Volume = .5f }, Projectile.position);
                             charged = 2;
                         }
                         if (!player.channel)
@@ -228,24 +231,13 @@ namespace Redemption.Items.Weapons.HM.Magic
             for (int i = 0; i < 20; i++)
                 ParticleManager.NewParticle(Projectile.Center, RedeHelper.Spread(10 * Projectile.scale), new EmberParticle(), Color.White, 1, 0);
             SoundEngine.PlaySound(SoundID.Item100 with { Volume = 1 * Projectile.scale, SoundLimitBehavior = SoundLimitBehavior.ReplaceOldest }, Projectile.position);
+            if (!Main.dedServ)
+                SoundEngine.PlaySound(CustomSounds.FlameRise with { Pitch = -.3f }, Projectile.position);
+
 
             int boomOrigin = (int)(120 * Projectile.scale);
             Rectangle boom = new((int)Projectile.Center.X - boomOrigin, (int)Projectile.Center.Y - boomOrigin, boomOrigin * 2, boomOrigin * 2);
-            for (int i = 0; i < Main.maxNPCs; i++)
-            {
-                NPC target = Main.npc[i];
-                if (!target.active || !target.CanBeChasedBy())
-                    continue;
-
-                if (target.immune[Projectile.whoAmI] > 0 || !target.Hitbox.Intersects(boom))
-                    continue;
-
-                target.immune[Projectile.whoAmI] = 20;
-                int hitDirection = target.RightOfDir(Projectile);
-                BaseAI.DamageNPC(target, (int)(Projectile.damage * (Projectile.scale * 1.5f)), 7, hitDirection, Projectile, crit: Projectile.HeldItemCrit());
-                BaseAI.DamageNPC(target, (int)(Projectile.damage * (Projectile.scale * 1.25f)), 4, hitDirection, Projectile, crit: Projectile.HeldItemCrit());
-                target.AddBuff(BuffID.OnFire3, 600);
-            }
+            RedeHelper.NPCRadiusDamage(boom, Projectile, (int)(Projectile.damage * MathF.Pow(Projectile.scale, 2.5f)), Projectile.knockBack);
             for (int i = 0; i < 20; i++)
             {
                 int dust = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.OrangeTorch, Scale: 2);
@@ -256,13 +248,14 @@ namespace Redemption.Items.Weapons.HM.Magic
             {
                 for (int i = 0; i < Main.rand.Next(8, 14) * Projectile.scale; i++)
                 {
-                    Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, RedeHelper.SpreadUp(12), ProjectileID.MolotovFire3, Projectile.damage / 2, 1, Main.myPlayer);
+                    int d = Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, RedeHelper.SpreadUp(12), ProjectileID.MolotovFire3, Projectile.damage / 2, 1, Main.myPlayer);
+                    Main.projectile[d].usesLocalNPCImmunity = true;
                 }
             }
         }
         public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
         {
-            modifiers.FinalDamage *= Projectile.scale;
+            modifiers.FinalDamage *= MathF.Pow(Projectile.scale, 2.5f);
             if (Projectile.ai[1] != 2)
                 modifiers.FinalDamage /= 4;
         }
@@ -293,7 +286,7 @@ namespace Redemption.Items.Weapons.HM.Magic
             }
 
             Main.spriteBatch.End();
-            Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+            Main.spriteBatch.BeginAdditive();
 
             Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition, null, Projectile.GetAlpha(Color.White), Projectile.rotation, drawOrigin, Projectile.scale * scale, effects, 0);
             Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition, null, Projectile.GetAlpha(Color.White), -Projectile.rotation, drawOrigin, Projectile.scale * scale2, effects, 0);
@@ -301,7 +294,7 @@ namespace Redemption.Items.Weapons.HM.Magic
             Main.EntitySpriteDraw(aura, Projectile.Center - Main.screenPosition, null, Projectile.GetAlpha(Color.White) * colourScale, Projectile.rotation, drawOrigin2, Projectile.scale * scale, effects, 0);
 
             Main.spriteBatch.End();
-            Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+            Main.spriteBatch.BeginDefault();
 
             return false;
         }
@@ -384,12 +377,12 @@ namespace Redemption.Items.Weapons.HM.Magic
             Vector2 drawOrigin = new(texture.Width / 2, texture.Height / 2);
 
             Main.spriteBatch.End();
-            Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+            Main.spriteBatch.BeginAdditive();
 
             Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition, null, new Color(252, 243, 201), Projectile.rotation, drawOrigin, Projectile.scale, SpriteEffects.None, 0);
 
             Main.spriteBatch.End();
-            Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+            Main.spriteBatch.BeginDefault();
             return false;
         }
         public override void OnKill(int timeLeft)

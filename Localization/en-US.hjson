@@ -267,7 +267,7 @@ Mods: {
 			Golem: Constructed in Gathuram and sent to Ithon as a gift in a time of peace between the domains. Although the people of Gathuram forgot to mention one thing...
 			Calavia: A Chief-Warrior of the Iron Realm, lost and troubled by her distant venture from her home of Khen Boldur, which was spurred on by the barons of Arum. Swordplay and smithing is her expertise, along with familiarity of Blizzard magic.
 			OO: An autonomous war machine mostly of Girus' own design with many integrated weapon systems, such as literal finger guns and an advanced heat dispersion system in the form of a giant beam, capable of obliterating anyone it engulfs - Also where Obliterator got its name from.
-			TreebarkDryad: These slow-thinking ents only appear in heavily forested areas. They have only recently arrived on this island, coming from the portal on the surface. Once every century, they find a shallow pond and hibernate in the centre. The water from the pond feeds the ent during the process.
+			TreebarkDryad: A slow-thinking ent from Fairwood. Some say it is wise, some say it is mystical, but everyone can agree that it is, indeed, a tree.
 			Erhan: A high priest of Fairwood, tasked himself to purify the forest's curse after it consumed it's warden.
 			Behemoth: An unfortunate scientist, disfigured and mutilated beyond recognition by the Xenomite infection. This specimen is entering the final stage of the infection, and has had its body transform into a sludgy slurry on the ceiling... God, that must be agonizing.
 			Blisterface1: An unfortunate fish, disfigured and mutilated beyond recognition by the Xenomite infection. This strain seems to be similar to that of the Blistered Scientists...
@@ -341,6 +341,9 @@ Mods: {
 			Gigapora_ShieldCore: These bulky, lightweight drones hold experimental shield projectors in their lower half. If damaged, the projector may malfunction and violently release its energy right back into the segments it was protecting.
 			SeedGrowth: A gross growth grown from a grotesque goliath.
 			EaglecrestRockPile: It dances, for it does not know the world's impurities.
+			BloatedDigger: Diggers irradiated by radioactive particles that have been disfigured by rapid, volatile cell growth.
+			BloatedFaceMonster: Face Monsters irradiated by radioactive particles that have been disfigured by rapid, volatile cell growth.
+			BloatedClinger: Clingers irradiated by radioactive particles that have been disfigured by rapid, volatile cell growth.
 		}
 
 		Bestiary.Android: Apidroids were an experiment with a highly durable metal from a distant star system. The metal - dubbed 'Rose Titanium' by King Slayer III - is one of the strongest materials discovered in the galaxy. However, King Slayer III hated its pink tinge, and so stubbornly refused to use it after making a few Androids out of it.
@@ -3096,23 +3099,23 @@ Mods: {
 				OfferCruxDialogue: I shall, if only you give unto my remains three flowers of the night. One for each of my band to fall to that vile demon.
 				Dialogue1: Anything I can assist you with? I may not be able to interact with you, but I can make for some conversation.
 				Dialogue2: Gorhal'on! Mur ye bagaiha ta? Mudarok abo.
-				WhatDialogue: Hm? Ah, you must not know our language. Should've figured, this island has had nothing but Anglic speakers from what I've witnessed. You're lucky us spirits know all tongues, for we roam to hear and learn for eternity. What do you want?
-				Chat1: Ta? I was once a resident of Gothrione - Gathuram's capital. I'm assuming you may know it better as the "Iron Realm"? I worked as an assassin there with a tight-knit group. We were some of the best; at least, that's what I told myself. In this realm of recollection I can only look back in light humour for how foolish my living-self was.
-				Chat2: I would have it guessed you've been on this island and only this island, hm? Gathuram is one of the six primary domains of the mainland - possibly the largest, too. In terms of landmass, anyway. I've seldom been beyond the outer fields of Gothrione in my time of living, neither have I in my time of unliving, so I cannot speak to you of it in detail.
-				Chat3: Gothione is the capital of the domain. It was quite the bustling city, however I cannot speak well of its ruler. Stubborn and snarky he was, in fact it was our mission to assassinate him. That was the last mission of our lives... As timing would have it, an invasion began on the day - it was horrific. In our last moments, we were gawking with heads bend up into the sky at a great demon terror.
+				WhatDialogue: Hm? Ah, you must not know our language. Should've figured, this island has had nothing but Anglic speakers from what I've seen. You're lucky us spirits know all tongues, for we roam to hear and learn for eternity. What do you want?
+				Chat1: Ta? I was once a resident of Gothrione - Gathuram's capital. I worked as an assassin there with a tight-knit group. We were some of the best; at least, that's what I told myself. In this realm of recollection I can only see the halfwit my living-self was.
+				Chat2: You aren't from the mainland, are you? Gathuram is one of the six founding domains. I've seldom been beyond the outer fields of Gothrione in my time of living, nor my time of unliving, so I cannot speak to you of it in detail.
+				Chat3: Gothione is the capital of the domain. It was quite the bustling city, however I cannot speak well of its ruler. Stubborn and snarky he was, in fact it was our mission to assassinate him. As timing would have it, an invasion began on the day of our mission - it was horrific. Our last moments were left gawking with heads bend up into the sky at a great demon terror.
 				Chat4: Hm, a subject I have no desire to sink into. It's name I shall not utter, just know it was the vastest being of trepidation we had ever seen. It was the reason I never returned there as a spirit - I dreaded the sight of it or the aftermath of its destruction. Now let us speak of it no more.
 			}
 
 			SpiritCommonGuard: {
 				NoRealmCruxDialogue: Thou must be at least partly within the Spirit Realm for me to give thee what you ask.
-				CruxDialogue: Aye, take it, within me lies the Common Guard's spirit! May it protect and defend thee against the greatest of foes.
+				CruxDialogue: Aye, take it, within me lies the Common Guard's spirit! May it ward and beshield thee against the greatest of foes.
 				NoCruxDialogue: I'll need something to imbue first.
-				OfferCruxDialogue: Gladly, however I request something in return. My remains lay empty-handed, if thou'st may offer upon them a weapon of my unit, then I shall be complacent. A lone corpse tells a bare tale.
+				OfferCruxDialogue: Gladly, however I request something in return. My remains lay empty-handed, if thou'st may bid upon them a weapon of my unit, then I shall be complacent. A lone corpse tells a bare tale.
 				Dialogue: What manner of sorcery is this? And here I thought us immune to the physical world's presence...
 				Chat1: Behold, for I am Kleo! Common Guard of Ricusa City! I'm sure if ye were a resident of Anglon you'd be jumping in shock to face such a legendary figure! Oh who am I kidding, my name barely made it past my own district. But no matter! I did my job well and that is all that matters!
-				Chat2: By Grace! To think anyone who walks this earth be unaware of the greatest domain in Epidotra! The Hallowed Dominion is where I'm from, and Ricusa City is where I resided. 'Tis a peaceful and prosperous land, home to great cities and castles and all the protection thou canst get! Well, sort of.
-				Chat3: Ah, Ricusa... It was such a grand capital - also one of the largest in the domain. Did you know it started as a humble village? Eventually the old capital was laid to ruin, and due to the village's steady growth it was promoted to the new capital. All seemed well for ages to come... That was until the demons came.
-				Chat4: A great demon terror invaded the capital with his underlings, never before had I seen such power and brute strength come from a single creature. The walls were broken down and the two legendary brothers - Archon and Vargo - fought against them. They were great heroes, said they would trounce the demon forces back to Demonhollow. Yet for all their talk they were quickly killed by the leader with very little resistance, and so Ricusa City fell to the scourge. Like much else before it.
+				Chat2: By Grace! To think anyone who walks this earth be unaware of the greatest domain in Epidotra! Lo Anglon is where I'm from, and Ricusa City is where I resided. 'Tis a peaceful and prosperous land, home to great cities and castles and all the protection thou canst get!
+				Chat3: Ah, Ricusa... It was such a grand capital - also one of the largest in the domain. It had humble origins and filled with promise. All seemed well for ages to come... That was until the demons came.
+				Chat4: Indeed! A great demon terror invaded the capital with his underlings, never before had I seen such power and brute strength come from a single creature. The walls were broken down and the two legendary brothers - Archon and Vargo - fought against them. They were great heroes said to trounce the demon forces back to Demonhollow. Yet for all their talk they were quickly killed by the leader with very little resistance, and so Ricusa City fell to the scourge. Like much else before it.
 			}
 
 			SpiritDruid: {
@@ -3121,9 +3124,9 @@ Mods: {
 				NoCruxDialogue: I'll need something to imbue first.
 				OfferCruxDialogue: You'll be lucky. I do not give to Anglonic fol'hakks freely. Assuming you are from that haughty place? It matters not, if you offer a blessing to me, I shall do the same to you. I request an enchanted flower to grow atop my grave - a blue one, preferably. Find one that looks pretty.
 				Dialogue: Tokk'gralvr! Dorvr'kok ok kolbv? Ah, groa'g Anglic fofolg. It's always Anglic speakers, never any of my own... Whatever. I don't know how you took me back to my place of defeat, do you want something from me?
-				Chat1: Sent me back to look upon my remains and now you ask for a friendly chat. Gralvr! What a strange thing. Speaking to spirits has become a bore, so I might as well. I come from the Kul'don rainforests in what most call Thamor. We lived as a commune of druids, far from others. To us, the world was a small thing, we kept to ourselves and never stepped foot beyond our territory.
-				Chat2: It is what the other spirits I've met call the region I lived in. During my time of being alive, I had never thought of what the world was like beyond the rainforests, as we had never travelled beyond them. To us, the rainforests were our entire world, at least until we were forced out.
-				Chat3: A reasonable question. Of course, the portals here lead to Anglon and Gathuram, none are even close to Thamor, let alone the wilds of Kul'don. We were driven out by force, a posse of Anglonic soldiers came by in search of our goliaths - ones we had tamed and have been a part of our commune for generations. We retaliated of course, and drove them out. A short-lived victory, for they reappeared with their leader. They not only captured our goliaths, but us as well. To Anglon we were sent, and it is there I had escaped.
+				Chat1: Sent me back to look upon my remains and now you ask for a friendly chat... Gralvr! What a strange thing. Speaking to spirits has become a bore, so I might as well. I come from the Kul'don rainforests in what most call Thamor. We lived as a commune of druids, far from others. We kept to ourselves and never stepped foot beyond our territory.
+				Chat2: It is what the outsiders call the region I lived in. I had never once cared for the world beyond the rainforests, as we had never travelled beyond them. To us, the rainforests were our entire world, at least until we were forced out.
+				Chat3: A reasonable question. Of course, the portals here lead to Anglon and Gathuram, none are even close to Thamor, let alone the wilds of Kul'don. We were driven out by force, a posse of Anglonic soldiers came by in search of our goliaths. We retaliated of course, and drove them out. A short-lived victory, for they reappeared with their leader. They not only captured our goliaths, but us as well. To Anglon we were sent, and it is there I had escaped.
 			}
 
 			SpiritGathicMan: {
@@ -3133,10 +3136,10 @@ Mods: {
 				OfferCruxDialogue: Of course! But first, I'd like ya to give ma corpse a weapon. Let the bone-heads and tomb raiders know I died fightin'! A big ol' battleaxe will do.
 				Dialogue: RAAAARRGGGHH! Haha! I saw ya comin' with ya fancy artifact, knew ya might call me with it, so I was ready to give ya a jump! No reaction? Come on, I yelled pretty loud. Not even a slight shiver in ya boots? Whatever, what is it?
 				Chat1: They called me the "Brain Cleaver" back in ma prime, for reasons I'm sure ya can figure out. My real name was somethin' less intense - Bromal. I was a warrior of Iful's Capital in the ol' kingdom of Kol Duluramodul before the undead took over. Now it's known as the Olden Ruins.
-				Chat2: A rotting landmass east of Gathuram. The folk of it ere the fall came from up north-east, migrating from the sinking Eranmount. They named their new land Odulmount - meaning Great Swamp in your tongue - but after lifetimes of glory, it was renamed to Kol Duluramodul - meaning Immovable Swamp Kingdom. It was indeed an impenetrable land, until the God of Decay appeared.
-				Chat3: A disease swept through Kol Duluramodul like an air-borne tsunami. The cause was the False God of Decay who roamed Tethuram - Gathuram's name in ancient times. It rotted and corroded flesh and turned humans into undead. The swamps, we discovered, were where the infection thrived most, so the folk who yet lived abandoned the kingdom and travelled further west. Such hard times they were, I only look back in anguish for my people.
-				Chat4: Be thankful for the present ya live in now. The Ancient World was an unforgiving age, made worse by the False Gods. We only knew of one at the time - after becoming a spirit I learnt a lot more about them from others of the realm. Apparently there was also one in Anglon, Blight I believe. For all the knowledge a thousand spirits can give, not one knows of the False Gods' origins. They're all dead though, the last of 'em was felled by ye olde Light. And I'm not talking about the Light you may know.
-				Chat5: Aye, I know of the artifact you carry, in fact it was created in Iful's Capital! 'Tis designed to call upon the spirits of corpses. Originally, the purpose was for gainin' knowledge of the past, but overtime we used it for more personal reasons - such as lettin' the dead talk to their family an' friends. I am unsure why it was found beneath this island though.
+				Chat2: A rotting mass of land east of Gathuram. The folk of it ere the fall came from up north-east, migrating from the sinking Eranmount. They named their new land Odulmount, but after lifetimes of glory it was renamed to Kol Duluramodul - meaning Immovable Swamp Kingdom. It was indeed an impenetrable land, until the God of Decay appeared.
+				Chat3: A bringer of disease. A false god who roamed our lands. It rotted and corroded flesh and turned humans into undead. The swamps, we discovered, were where the infection thrived most, so the folk who yet lived abandoned the kingdom and travelled further west. Such hard times they were, I only look back in anguish for my people.
+				Chat4: Be thankful for the present ya live in now. The Ancient World was an unforgiving age, made worse by the False Gods. We only knew of one at the time - the other spirits told of more. Apparently there was also one in Anglon, Blight I believe. For all the knowledge a thousand spirits can give, not one knows of the False Gods' origins. They're all dead though, the last of 'em was felled by ye olde Light. And I'm not talking about the Light you may know.
+				Chat5: Aye, I know of the artifact you carry, in fact it was created in Iful's Capital! Originally, its purpose was for gainin' knowledge of the past, but overtime we used it for more personal reasons - such as lettin' the dead talk to their family an' friends. I am unsure why it was found beneath this island though.
 			}
 
 			SpiritNiricLady: {
@@ -3147,7 +3150,7 @@ Mods: {
 				Dialogue: Oooh...
 				Chat1: Me? Unsure. I was from a place. My recollection fails me... It was cold, too cold for my liking. I split myself, and dug. Dug for our new kingdom.
 				Chat2: A new kingdom in snowy mountains, the old perished. We left, found ourselves here. The natives called it Nirin. They helped us, we helped them. Together we recreated our technology, we taught them our wisdom. All was well.
-				Chat3: Mine? Yes, and no. I am part of a piece, infused within the inanimate to become animate. Automatons we are. Powered by the permanent soul. My true spirit lies elsewhere, I alone am too frail. I wish to become whole again.
+				Chat3: Mine? Yes, and no. I am part of a piece, infused within the inanimate to become animate. Automatons we are. Powered by the inner soul. My true spirit lies elsewhere, I alone am too frail. I wish to become whole again.
 				Chat4:
 					'''
 					Arctic Realm, it is known by. Frigid and open, a harsh change from our old home. It was warm and enclosed, as snug as sitting by a fireplace on a cold night. How I wish we stayed. How I wish the disaster never happened...
@@ -3166,13 +3169,13 @@ Mods: {
 				OfferCruxDialogue: Only if you may, bring me six gemstones of the purest shine, and lay them around my remains. Six are the hands of an angel. Their arms hold us so...
 				Dialogue1: Great! You figured out how ta' call me! I hope ya take fancy to ma' gift. I'm err, let's just say a spiritual enthusiast. Ask me anythin'!
 				Dialogue2: "Ey, that old tophat ya got has something spiritual 'bout it, "
-				Dialogue2Cont: peak into the Spirit Realm for a bit so I can get a closer look.
+				Dialogue2Cont: peek into the Spirit Realm for a bit so I can get a closer look.
 				Dialogue2Mid: "Take it off an' "
-				Chat1: The ability given to ya gives you a peak into the Spirit Realm - A realm parallel to our own. Normally, neither realm can see nor interact with each other. You'll be able to hurt spirits with any method or find corpses to use that bell thing-a-ma-jig on while peakin'. Such as mine! Another thing, we spirits can gift to you our "crux" if ya have somethin' to imbue it in - just request it while spirit walkin'.
-				Chat2: A nifty artifact of Gathuram, that is. Usin' it on corpses will force their spirit back to their location while tuggin' them outta the Spirit Realm a tad, which is why you can see me now even if you stopped spirit walkin' despite me being a full-fledged spirit - not one of those Vagrants or Lost Souls.
+				Chat1: The ability given to ya gives you a peek into the Spirit Realm - A realm parallel to our own. You'll be able to hurt spirits with any method or find corpses to use that bell thing-a-ma-jig on while peekin'. Such as mine! Another thing, we spirits can gift to you our "crux" if ya have somethin' to imbue it in - just request it while spirit walkin'.
+				Chat2: A nifty artifact of Gathuram, that is. Usin' it on corpses will force their spirit back to their location while stretchin' them outta the Spirit Realm a tad, which is why you can see me now even without walkin' despite me being a full-fledged spirit - not one of those Vagrants or Lost Souls.
 				Chat3: When folk die, their soul leaves their body to find anotha'. During this pilgrimage, they're still connected to the physical world, meanin' some with the arcane eye may see 'em. If a lost soul wanders too long, they can seep outta the spirit realm and become Vagrant Spirits - poor things forever lost.
 				Chat4: I couldn't tell ya where to find corpses to use it on, but I can recommend findin' spirit currents. They're only visible in my realm, and can take ya closer to a soulful corpse if ya travel through one. You'll only find 'em in caverns, as that'll be where our energy is most contained. If ya do find what you're lookin' for, be wary. Tombs of the mighty are seldom left unguarded.
-				Chat4B: I once met anotha' spirit in a mind-bogglin' location! It felt outta this world. The walls were white, pipes with green fluids hung from ceilings, strange blue lights emitted from metal boxes an' tubes... And the spirit I saw was most intriguing! He just kept repeatin' about alarms, and wore a strange white an' blue suit. Very odd.
+				Chat4B: I once met anotha' spirit in a mind-bogglin' location! It felt outta this world. The walls were white, pipes with green fluids hung from ceilings, strange blue lights emitted from metal boxes an' tubes... and the spirit I saw was most intriguing! He just kept repeatin' about alarms, and wore a strange white an' blue suit. Very odd.
 				Chat5: I've been a spirit so long that I forgot my own name, yet I still remember most other things 'bout me. Strange that. I'm from Gathuram, the portal behind me leads to the Catacombs of Gathuram, and is how the undead and skeleton folk came here. Doesn't seem like you can enter it though.
 				CalaviaDialogue1: "'Ey, ya see that lass over yonder? There be somethin' soulful she carries, I can sense it. Would you, out of the goodness of yer heart, confront her about it for me? Don't want to assume nothin', but she might be keepin' a spirit captive."
 				CalaviaDialogue2: I can sense gratitude within Kyretha's spirit for confrontin' the lass and ultimately leading 'er to a path of freedom. I have a feelin' she'd be willin' to offer you something in return?
@@ -3186,7 +3189,7 @@ Mods: {
 				Chat5: Are you perhaps another warrior of the Iron Realm to stumble upon this place? Or did you rob that armour you wear?
 				Chat6: I am to assume you're an Anglic knight, based on your attire. Should've figured you wouldn't understand Gathic... Oh well.
 				Chat7: That armour you don is rather threatening. Where did it come from? Reminds me of the Thamor'in dragons that occassionally hinder the western countries.
-				IntroLine1: Yeah I came from the portal, 'twas atop a snowy precipice. When I tried going back through however, it took me into what I can only assume to be Gathuram's catacombs. Back and forth I went, yet it was always the same. Here, catacombs, here, catacombs... It is infuriating! How these portals work!?
+				IntroLine1: Yeah I came from the portal, 'twas atop a snowy precipice. When I tried going back through however, it took me into what I can only assume to be Gathuram's catacombs. Back and forth I went, yet it was always the same. Here, catacombs, here, catacombs... It is infuriating! How do these portals work!?
 				IntroLine2: Precisely! I have a family anticipating my return, yet I see no way back to where I came from. Do ye know anything at all about portals?
 				IntroLine3: Our squadron climbed up a mountain to retrieve the body of a famous warrior, and came upon the portal. We should've reported it to the Riftwatch and carried on our business, but my witless curiousity said otherwise and chose to take a looksie. "In and out, nice and quick" I thought. Needless to say, ye can see how smart that idea was.
 				IntroLine4: How helpful. Not like I can blame ye, they're magic of a bygone age. Only the Riftwatch have knowledge of 'em. Speaking of which, they must've been here before. Portals don't just appear with a stone ring and foundation pre-'rected - 'tis the Riftwatch's job to build those. To stabilize 'em, or so I've heard.
@@ -3219,7 +3222,7 @@ Mods: {
 				FurnaceLine: Yes, place down a [i:Redemption/GathicCryoFurnace]Gathic Cryo-Furnace near me and I will offer to forge some equipment for ye.
 				AboutMeLine: Ta? I am a chief-warrior and blacksmith of the Iron Realm. Back in Khen Boldur I have a husband and two kids. I seldom have the time to see 'em, but staying far apart only makes the moments we're together all-the-more special, or am I just bein' too optimistic? It's regrettable, but my job leaves no room for indulgences. I lead a squadron of Arum that primarily scouts out unmarked lands. My men have probably given up on me by now. Typical.
 				CruxDialogue: Kyretha's spirit feels lighter - less shrouded in negative emotion. Alas, that means what the spirit spoke of is true, the barons hide a darkness I have turned a blind eye to. Ya know what? If I ever get back to Arum, I'll look into it, all stealth-like. But anywho, I do believe she'll be willing to give ye her crux, she offers it freely.
-				NoCruxDialogue: Kyretha's spirit feels different now. I never realised the aura I felt was not of her power but of a strong negative emotion, it was foolish to assume the feeling was the norm for spirits of her splendour. I can comphrehend her emotions more clearer, and I do believe she's willing to give ye her crux, if ye have something to imbue.
+				NoCruxDialogue: Kyretha's spirit feels different now. I never realised the aura I felt was not of her power but of a strong negative emotion, it was foolish to assume the feeling was the norm for spirits of her splendour. I can comphrehend her emotions more clear, and I do believe she's willing to give ye her crux, if ye have something to imbue.
 				ConfrontLine1: Hm? Oh, so ye noticed. Yeah, I carry a bauble containing a spirit. I didn't elaborate on my job because it's none of ya business. Alas, clarification is in order so ye don't get any wrong ideas.
 				ConfrontLine2: The spirit I carry is of the original wielder of the Blade of the Mountain, Kyretha, who was slain in an isolated range. She was part of a "unique" group who's souls were bound to another, and due to this I was tasked with retrieving her body and soul to send back to the Bastion of Arum - The barons deemed this of utmost priority. I recognise the taboo nature of ensnaring a spirit in glass, but I hope ye understand now.
 				LeaveLine: Thank you for the help, and sorry for the trouble. What lies ahead makes me uneasy, but I'll make it through to reunite with my squadron and finally return to my family, there is no better motivation than that. Farewell, stranger.
@@ -6356,13 +6359,13 @@ Mods: {
 			}
 
 			ForestBossBox: {
-				DisplayName: Music Box (Cursed Beings of the Forest)
+				DisplayName: Music Box (Epidotrian Opponent)
 				Tooltip: PeriTune - Dramatic4
 			}
 
 			ForestBossBox2: {
 				DisplayName: Music Box (Ancient Deity Duo)
-				Tooltip: PeriTune - Havoc
+				Tooltip: Yuri O - Nature's Wrath
 			}
 
 			FowlMorningBox: {
@@ -10243,6 +10246,21 @@ Mods: {
 					Whipping enemies will cause the pebble to strike them with lightning
 					'''
 			}
+			
+			BloatedClingerBanner: {
+				DisplayName: Bloated Clinger Banner
+				Tooltip: "{$CommonItemTooltip.BannerBonus}{$Mods.Redemption.NPCs.BloatedClinger.DisplayName}"
+			}
+
+			BloatedDiggerBanner: {
+				DisplayName: Bloated Digger Banner
+				Tooltip: "{$CommonItemTooltip.BannerBonus}{$Mods.Redemption.NPCs.BloatedDiggerHead.DisplayName}"
+			}
+
+			BloatedFaceMonsterBanner: {
+				DisplayName: Bloated Face Monster Banner
+				Tooltip: "{$CommonItemTooltip.BannerBonus}{$Mods.Redemption.NPCs.BloatedFaceMonster.DisplayName}"
+			}
 		}
 
 		Projectiles: {
@@ -10894,7 +10912,7 @@ Mods: {
 			AsterisPet.DisplayName: Chibi Asteris
 			CloudCallerPet.DisplayName: Cloud Doggy
 			GuidingStranger_Proj.DisplayName: Guiding Stranger
-			BloatedClinger_Gas.DisplayName: Bloated Clinger_ Gas
+			BloatedClinger_Gas.DisplayName: Bile Gas
 			NoidanNuoli.DisplayName: Noidan Nuoli
 			Firebreak_Proj.DisplayName: Firebreak_ Proj
 			Ukonvasara_Hammer.DisplayName: Ukonvasara_ Hammer
@@ -11391,6 +11409,11 @@ Mods: {
 			CorruptChicken.DisplayName: Corrupt Chicken
 			ViciousChicken.DisplayName: Vicious Chicken
 			Stage3Scientist.DisplayName: Stage 3 Infected Scientist
+			BloatedClinger.DisplayName: Bloated Clinger
+			BloatedDiggerBody.DisplayName: "{$Mods.Redemption.NPCs.BloatedDiggerHead.DisplayName}"
+			BloatedDiggerHead.DisplayName: Bloated Digger
+			BloatedDiggerTail.DisplayName: "{$Mods.Redemption.NPCs.BloatedDiggerHead.DisplayName}"
+			BloatedFaceMonster.DisplayName: Bloated Face Monster
 		}
 
 		Tiles: {
@@ -11688,6 +11711,11 @@ Mods: {
 				ElementDisable: {
 					Label: Disable Elements
 					Tooltip: Disables elemental resistances and damage
+				}
+
+				VanillaGuardPointsDisable: {
+					Label: Disable Guard Points on Vanilla Enemies
+					Tooltip: Disables vanilla enemies from having Guard Points
 				}
 
 				ShakeIntensity: {

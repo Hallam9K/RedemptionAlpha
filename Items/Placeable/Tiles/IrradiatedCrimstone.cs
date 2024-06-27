@@ -21,5 +21,12 @@ namespace Redemption.Items.Placeable.Tiles
             Item.maxStack = Item.CommonMaxStack;
             Item.value = Item.buyPrice(0, 0, 0, 25);
         }
+        public override void AddRecipes()
+        {
+            CreateRecipe()
+                .AddIngredient(ModContent.ItemType<IrradiatedCrimstoneWall>(), 4)
+                .AddTile(TileID.WorkBenches)
+                .Register();
+        }
     }
 }

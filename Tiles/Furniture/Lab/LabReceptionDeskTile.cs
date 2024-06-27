@@ -11,11 +11,11 @@ using Terraria.ObjectData;
 namespace Redemption.Tiles.Furniture.Lab
 {
     public class LabReceptionDeskTile : ModTile
-	{
+    {
         public override void SetStaticDefaults()
-		{
-			Main.tileFrameImportant[Type] = true;
-			Main.tileLavaDeath[Type] = true;
+        {
+            Main.tileFrameImportant[Type] = true;
+            Main.tileLavaDeath[Type] = true;
             Main.tileNoAttach[Type] = true;
             TileObjectData.newTile.Width = 4;
             TileObjectData.newTile.Height = 3;
@@ -30,7 +30,7 @@ namespace Redemption.Tiles.Furniture.Lab
             DustType = ModContent.DustType<LabPlatingDust>();
             MinPick = 200;
             MineResist = 7f;
-			LocalizedText name = CreateMapEntryName();
+            LocalizedText name = CreateMapEntryName();
             // name.SetDefault("Laboratory Reception Desk");
             AddMapEntry(new Color(189, 191, 200), name);
             AdjTiles = new int[] { TileID.Tables };

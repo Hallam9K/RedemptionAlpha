@@ -21,7 +21,7 @@ namespace Redemption.Items.Weapons.HM.Magic
 
         public override void SetDefaults()
         {
-            Item.damage = 80;
+            Item.damage = 120;
             Item.DamageType = DamageClass.Magic;
             Item.mana = 10;
             Item.width = 32;

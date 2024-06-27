@@ -1,26 +1,19 @@
-using Terraria;
-using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
-using Terraria.ID;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.BaseExtension;
+using Redemption.Globals.Player;
 using Redemption.Items.Weapons.PreHM.Summon;
+using Terraria;
+using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace Redemption.Items.Weapons.HM.Magic
 {
     public class Divinity : ModItem
     {
-        public override void SetStaticDefaults()
-        {
-            /* Tooltip.SetDefault("Hold left-click to conjure a tiny sun and charge it up, draining mana\n" +
-                "Release once charged enough to launch at cursor position"); */
-
-            Item.ResearchUnlockCount = 1;
-        }
-
         public override void SetDefaults()
         {
-            Item.damage = 120;
+            Item.damage = 160;
             Item.height = 30;
             Item.width = 36;
             Item.useTime = 40;
@@ -50,11 +43,12 @@ namespace Redemption.Items.Weapons.HM.Magic
         {
             CreateRecipe()
                 .AddIngredient(ModContent.ItemType<HolyBible>())
-                .AddIngredient(ItemID.BeetleHusk, 4)
-                .AddIngredient(ItemID.LunarTabletFragment, 10)
-                .AddIngredient(ItemID.SoulofLight, 15)
-                .AddIngredient(ItemID.SoulofSight, 15)
+                .AddIngredient(ItemID.BeetleHusk, 2)
+                .AddIngredient(ItemID.LunarTabletFragment, 5)
+                .AddIngredient(ItemID.SoulofLight, 5)
+                .AddIngredient(ItemID.SoulofSight, 5)
                 .AddTile(TileID.Bookcases)
+                .DisableDecraft()
                 .Register();
             CreateRecipe()
                 .AddIngredient(ItemID.SpellTome)
@@ -63,6 +57,7 @@ namespace Redemption.Items.Weapons.HM.Magic
                 .AddIngredient(ItemID.SoulofLight, 15)
                 .AddIngredient(ItemID.SoulofSight, 15)
                 .AddTile(TileID.Bookcases)
+                .DisableDecraft()
                 .Register();
         }
         public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback)

@@ -1,24 +1,24 @@
 using Microsoft.Xna.Framework;
 using Redemption.Base;
+using Redemption.BaseExtension;
 using Redemption.Biomes;
 using Redemption.Globals;
 using Redemption.Globals.NPC;
+using Redemption.Items.Armor.Vanity.Intruder;
+using Redemption.Items.Materials.HM;
 using Redemption.Items.Placeable.Banners;
 using Redemption.Items.Placeable.Plants;
+using Redemption.Items.Usable.Potions;
+using Redemption.NPCs.PreHM;
 using Redemption.Projectiles.Hostile;
+using System.IO;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
-using Terraria.ModLoader;
-using Redemption.BaseExtension;
-using Redemption.Items.Materials.HM;
-using Redemption.Items.Usable.Potions;
-using Redemption.Items.Armor.Vanity.Intruder;
-using System.IO;
-using Redemption.NPCs.PreHM;
 using Terraria.Localization;
+using Terraria.ModLoader;
 
 namespace Redemption.NPCs.Wasteland
 {
@@ -48,7 +48,7 @@ namespace Redemption.NPCs.Wasteland
             BuffNPC.NPCTypeImmunity(Type, BuffNPC.NPCDebuffImmuneType.Infected);
             BuffNPC.NPCTypeImmunity(Type, BuffNPC.NPCDebuffImmuneType.Inorganic);
 
-            NPCID.Sets.NPCBestiaryDrawModifiers value = new(0)
+            NPCID.Sets.NPCBestiaryDrawModifiers value = new()
             {
                 Velocity = 1f
             };
@@ -59,8 +59,8 @@ namespace Redemption.NPCs.Wasteland
 
         public override void SetDefaults()
         {
-            NPC.width = 38;
-            NPC.height = 56;
+            NPC.width = 30;
+            NPC.height = 50;
             NPC.defense = 13;
             NPC.damage = 60;
             NPC.lifeMax = 400;

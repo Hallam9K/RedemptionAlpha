@@ -1,12 +1,13 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Redemption.Effects;
+using Redemption.Globals;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.Audio;
+using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Redemption.Effects;
-using System.Collections.Generic;
-using Redemption.Globals;
 
 namespace Redemption.Projectiles.Magic
 {
@@ -48,21 +49,26 @@ namespace Redemption.Projectiles.Magic
         float rot = 0.02f;
         public override void AI()
         {
-            Projectile.ai[1] += rot;
-            if (Projectile.ai[1] > (Projectile.localAI[0] == 0 ? 0.10666f : 0.16f))
+            if (fakeTimer == 0)
             {
-                Projectile.localAI[0] = 1;
-                rot = -0.02f;
+                Projectile.ai[1] += rot;
+                if (Projectile.ai[1] > (Projectile.localAI[0] == 0 ? 0.10666f : 0.16f))
+                {
+                    Projectile.localAI[0] = 1;
+                    rot = -0.02f;
+                }
+                else if (Projectile.ai[1] < -0.16f)
+                {
+                    rot = 0.02f;
+                }
+                Projectile.velocity = Projectile.velocity.RotatedBy(Projectile.ai[0] == 0 ? Projectile.ai[1] : -Projectile.ai[1]);
+                Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.Pi;
             }
-            else if (Projectile.ai[1] < -0.16f)
-            {
-                rot = 0.02f;
-            }
-            Projectile.velocity = Projectile.velocity.RotatedBy(Projectile.ai[0] == 0 ? Projectile.ai[1] : -Projectile.ai[1]);
-            Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.Pi;
+            else
+                Projectile.velocity = Vector2.Zero;
 
             if (Collision.SolidCollision(Projectile.position, Projectile.width, Projectile.height))
-                Projectile.timeLeft -= 4;
+                Projectile.timeLeft -= 8;
 
             if (Main.netMode != NetmodeID.Server)
             {
@@ -88,7 +94,7 @@ namespace Redemption.Projectiles.Magic
             Projectile.alpha = 255;
             Projectile.friendly = false;
             Projectile.hostile = false;
-            Projectile.velocity *= 0;
+            Projectile.velocity = Vector2.Zero;
             Projectile.timeLeft = 2;
             Projectile.tileCollide = false;
             if (fakeTimer >= 60)
@@ -111,9 +117,15 @@ namespace Redemption.Projectiles.Magic
             trail?.Render(effect);
             trail2?.Render(effect);
 
-            Main.spriteBatch.Begin(default, default, default, default, default, default, Main.GameViewMatrix.ZoomMatrix);
+            Main.spriteBatch.BeginDefault();
 
-            return true;
+            Texture2D texture = TextureAssets.Projectile[Projectile.type].Value;
+            Rectangle rect = new(0, 0, texture.Width, texture.Height);
+            Vector2 drawOrigin = new(texture.Width / 2, texture.Height / 2);
+            SpriteEffects spriteEffects = Projectile.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
+            if (fakeTimer == 0)
+                Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition + Vector2.UnitY * Projectile.gfxOffY, null, Projectile.GetAlpha(lightColor), Projectile.rotation + MathHelper.PiOver2, drawOrigin, Projectile.scale, spriteEffects, 0);
+            return false;
         }
         public override Color? GetAlpha(Color lightColor) => new Color(255, 255, 255, 0);
 
@@ -128,6 +140,6 @@ namespace Redemption.Projectiles.Magic
                 Main.dust[dust].velocity *= 2f;
                 Main.dust[dust].noGravity = true;
             }
-        }           
+        }
     }
 }

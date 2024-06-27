@@ -1,13 +1,13 @@
 using Microsoft.Xna.Framework;
-using Terraria;
-using Terraria.ModLoader;
-using Terraria.ID;
-using Redemption.Globals;
-using Terraria.Audio;
+using Microsoft.Xna.Framework.Graphics;
 using Redemption.Base;
 using Redemption.Effects;
-using Microsoft.Xna.Framework.Graphics;
+using Redemption.Globals;
 using System.Collections.Generic;
+using Terraria;
+using Terraria.Audio;
+using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace Redemption.Projectiles.Magic
 {
@@ -79,11 +79,15 @@ namespace Redemption.Projectiles.Magic
                 else if (Projectile.localAI[0] == 0)
                     FakeKill();
             }
+            if (Collision.SolidCollision(Projectile.position, Projectile.width, Projectile.height))
+                Projectile.velocity *= .8f;
+
             if (Main.netMode != NetmodeID.Server)
             {
                 TrailHelper.ManageBasicCaches(ref cache, ref cache2, NUMPOINTS, Projectile.Center + Projectile.velocity);
                 TrailHelper.ManageBasicTrail(ref cache, ref cache2, ref trail, ref trail2, NUMPOINTS, Projectile.Center + Projectile.velocity, baseColor, baseColor, baseColor, thickness);
             }
+
             if (fakeTimer > 0)
                 FakeKill();
         }

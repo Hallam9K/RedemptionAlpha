@@ -1,11 +1,12 @@
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using Redemption.Dusts.Tiles;
+using Redemption.Items.Placeable.Furniture.Misc;
 using Terraria;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
-using Microsoft.Xna.Framework.Graphics;
-using Redemption.Dusts.Tiles;
 
 namespace Redemption.Tiles.Furniture.Misc
 {
@@ -65,24 +66,6 @@ namespace Redemption.Tiles.Furniture.Misc
         }
         public override bool CanExplode(int i, int j) => false;
     }
-    public class NirinCogMedium : ModItem
-    {
-        public override string Texture => "Redemption/Tiles/Furniture/Misc/NirinCog";
-        public override void SetStaticDefaults()
-        {
-            // DisplayName.SetDefault("Niric Cog");
-            Item.ResearchUnlockCount = 1;
-        }
-        public override void SetDefaults()
-        {
-            Item.DefaultToPlaceableTile(ModContent.TileType<NirinCogMediumTile>(), 0);
-            Item.width = 32;
-            Item.height = 32;
-            Item.maxStack = Item.CommonMaxStack;
-            Item.value = Item.value = Item.sellPrice(0, 2, 0, 0);
-            Item.rare = ItemRarityID.Blue;
-        }
-    }
     public class NirinCogBigTile : ModTile
     {
         public override string Texture => "Redemption/Tiles/Furniture/Misc/CogTile";
@@ -136,23 +119,5 @@ namespace Redemption.Tiles.Furniture.Misc
             return true;
         }
         public override bool CanExplode(int i, int j) => false;
-    }
-    public class NirinCogBig : ModItem
-    {
-        public override string Texture => "Redemption/Tiles/Furniture/Misc/NirinCog";
-        public override void SetStaticDefaults()
-        {
-            // DisplayName.SetDefault("Big Niric Cog");
-            Item.ResearchUnlockCount = 1;
-        }
-        public override void SetDefaults()
-        {
-            Item.DefaultToPlaceableTile(ModContent.TileType<NirinCogBigTile>(), 0);
-            Item.width = 32;
-            Item.height = 32;
-            Item.maxStack = Item.CommonMaxStack;
-            Item.value = Item.value = Item.sellPrice(0, 3, 0, 0);
-            Item.rare = ItemRarityID.Blue;
-        }
     }
 }

@@ -72,6 +72,10 @@ namespace Redemption.Globals
         public static Vector2 PolarVector(float radius, float theta) =>
             new Vector2((float)Math.Cos(theta), (float)Math.Sin(theta)) * radius;
 
+        public static Vector2 OffsetWithRotation(float rotation, int x, int y) => PolarVector(x, rotation) + PolarVector(y, rotation + MathHelper.PiOver2);
+        public static Vector2 OffsetWithRotation(Terraria.NPC npc, int x, int y) => PolarVector(x * npc.spriteDirection, npc.rotation) + PolarVector(y, npc.rotation + MathHelper.PiOver2);
+        public static Vector2 OffsetWithRotation(Projectile proj, int x, int y) => PolarVector(x * proj.spriteDirection, proj.rotation) + PolarVector(y, proj.rotation + MathHelper.PiOver2);
+
         public static object GetFieldValue(this Type type, string fieldName, object obj = null, BindingFlags? flags = null)
         {
             if (flags == null)
@@ -769,6 +773,23 @@ namespace Redemption.Globals
                     continue;
 
                 if ((hitter is Projectile proj && target.immune[proj.whoAmI] > 0) || hitter.Distance(target.Center) > radius)
+                    continue;
+
+                if (hitter is Projectile proj2)
+                    target.immune[proj2.whoAmI] = immuneTime;
+                int hitDirection = target.RightOfDir(hitter);
+                BaseAI.DamageNPC(target, damage, knockBack, hitDirection, hitter, crit: hitter is Projectile proj3 && proj3.HeldItemCrit());
+            }
+        }
+        public static void NPCRadiusDamage(Vector2 origin, int radius, Entity hitter, int damage, float knockBack, int immuneTime = 20)
+        {
+            for (int i = 0; i < Main.maxNPCs; i++)
+            {
+                Terraria.NPC target = Main.npc[i];
+                if (!target.active || (!target.CanBeChasedBy() && target.type != NPCID.TargetDummy))
+                    continue;
+
+                if ((hitter is Projectile proj && target.immune[proj.whoAmI] > 0) || origin.Distance(target.Center) > radius)
                     continue;
 
                 if (hitter is Projectile proj2)

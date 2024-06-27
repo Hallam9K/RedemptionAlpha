@@ -8,6 +8,8 @@ using Redemption.NPCs.Friendly;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
+using Terraria.GameContent.Drawing;
+using Terraria.GameContent.ObjectInteractions;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
@@ -21,9 +23,11 @@ namespace Redemption.Tiles.Natural
         public override void SetStaticDefaults()
         {
             base.SetStaticDefaults();
+            RedeTileHelper.CannotMineTileBelow[Type] = true;
+            TileID.Sets.HasOutlines[Type] = true;
             Main.tileLighted[Type] = true;
             DustType = DustID.DungeonSpirit;
-            MinPick = 1000;
+            MinPick = 5000;
             MineResist = 50;
             LocalizedText name = CreateMapEntryName();
             // name.SetDefault("Skeletal Remains");
@@ -49,13 +53,7 @@ namespace Redemption.Tiles.Natural
         }
         public override void PostDraw(int i, int j, SpriteBatch spriteBatch)
         {
-            Tile tile = Framing.GetTileSafely(i, j);
-            Vector2 zero = new(Main.offScreenRange, Main.offScreenRange);
-            if (Main.drawToScreen)
-                zero = Vector2.Zero;
-
-            int height = tile.TileFrameY == 36 ? 18 : 16;
-            Main.spriteBatch.Draw(ModContent.Request<Texture2D>(Texture + "_Glow").Value, new Vector2((i * 16) - (int)Main.screenPosition.X, (j * 16) - (int)Main.screenPosition.Y) + zero, new Rectangle(tile.TileFrameX, tile.TileFrameY, 16, height), Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
+            RedeTileHelper.SimpleGlowmask(i, j, Color.White, Texture);
         }
         public override bool CanExplode(int i, int j) => false;
         public override void MouseOver(int i, int j)
@@ -65,6 +63,7 @@ namespace Redemption.Tiles.Natural
             player.cursorItemIconEnabled = true;
             player.cursorItemIconID = ModContent.ItemType<DeadRinger>();
         }
+        public override bool HasSmartInteract(int i, int j, SmartInteractScanSettings settings) => Main.LocalPlayer.HeldItem.type == ModContent.ItemType<DeadRinger>();
         public override bool RightClick(int i, int j)
         {
             Player player = Main.LocalPlayer;
@@ -115,26 +114,7 @@ namespace Redemption.Tiles.Natural
         }
         public override bool PreDraw(int i, int j, SpriteBatch spriteBatch)
         {
-            if (!Main.LocalPlayer.RedemptionAbility().SpiritwalkerActive)
-                return true;
-
-            Texture2D flare = Redemption.WhiteFlare.Value;
-            Rectangle rect = new(0, 0, flare.Width, flare.Height);
-            Vector2 zero = new(Main.offScreenRange, Main.offScreenRange);
-            if (Main.drawToScreen)
-                zero = Vector2.Zero;
-            Vector2 origin = new(flare.Width / 2f, flare.Height / 2f);
-            if (Main.tile[i, j].TileFrameX == 0 && Main.tile[i, j].TileFrameY == 0)
-            {
-                spriteBatch.End();
-                spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null);
-
-                spriteBatch.Draw(flare, new Vector2(((i + 2.45f) * 16) - (int)Main.screenPosition.X, ((j + 1.7f) * 16) - (int)Main.screenPosition.Y) + zero, new Rectangle?(rect), RedeColor.COLOR_GLOWPULSE, Main.GlobalTimeWrappedHourly, origin, 1.5f, 0, 1f);
-                spriteBatch.Draw(flare, new Vector2(((i + 2.45f) * 16) - (int)Main.screenPosition.X, ((j + 1.7f) * 16) - (int)Main.screenPosition.Y) + zero, new Rectangle?(rect), RedeColor.COLOR_GLOWPULSE, -Main.GlobalTimeWrappedHourly, origin, 1.5f, 0, 1f);
-
-                spriteBatch.End();
-                spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null);
-            }
+            RedeTileHelper.DrawSpiritFlare(spriteBatch, i, j, 0, 2.45f, 1.7f);
             return true;
         }
         public override void KillMultiTile(int i, int j, int frameX, int frameY)
@@ -152,9 +132,11 @@ namespace Redemption.Tiles.Natural
         public override void SetStaticDefaults()
         {
             base.SetStaticDefaults();
+            RedeTileHelper.CannotMineTileBelow[Type] = true;
+            TileID.Sets.HasOutlines[Type] = true;
             Main.tileLighted[Type] = true;
             DustType = DustID.DungeonSpirit;
-            MinPick = 1000;
+            MinPick = 5000;
             MineResist = 50;
             LocalizedText name = CreateMapEntryName();
             // name.SetDefault("Skeletal Remains");
@@ -181,6 +163,8 @@ namespace Redemption.Tiles.Natural
         public override void PostDraw(int i, int j, SpriteBatch spriteBatch)
         {
             Tile tile = Framing.GetTileSafely(i, j);
+            if (!TileDrawing.IsVisible(tile))
+                return;
             Vector2 zero = new(Main.offScreenRange, Main.offScreenRange);
             if (Main.drawToScreen)
                 zero = Vector2.Zero;
@@ -202,6 +186,7 @@ namespace Redemption.Tiles.Natural
                 player.cursorItemIconID = 0;
             }
         }
+        public override bool HasSmartInteract(int i, int j, SmartInteractScanSettings settings) => Main.LocalPlayer.HeldItem.type == ModContent.ItemType<DeadRinger>();
         public override bool RightClick(int i, int j)
         {
             Player player = Main.LocalPlayer;
@@ -219,7 +204,7 @@ namespace Redemption.Tiles.Natural
                     {
                         int index1 = NPC.NewNPC(new EntitySource_TileInteraction(player, i, j), (i + offset) * 16, (j + 1) * 16, ModContent.NPCType<SpiritAssassin>());
                         SoundEngine.PlaySound(SoundID.Item74, Main.npc[index1].position);
-                        Main.npc[index1].velocity.Y -= 4;
+                        Main.npc[index1].velocity.Y -= 3;
                         Main.npc[index1].netUpdate = true;
                     }
                     else
@@ -236,26 +221,7 @@ namespace Redemption.Tiles.Natural
         }
         public override bool PreDraw(int i, int j, SpriteBatch spriteBatch)
         {
-            if (!Main.LocalPlayer.RedemptionAbility().SpiritwalkerActive)
-                return true;
-
-            Texture2D flare = Redemption.WhiteFlare.Value;
-            Rectangle rect = new(0, 0, flare.Width, flare.Height);
-            Vector2 zero = new(Main.offScreenRange, Main.offScreenRange);
-            if (Main.drawToScreen)
-                zero = Vector2.Zero;
-            Vector2 origin = new(flare.Width / 2f, flare.Height / 2f);
-            if (Main.tile[i, j].TileFrameX == 0 && Main.tile[i, j].TileFrameY == 0)
-            {
-                spriteBatch.End();
-                spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null);
-
-                spriteBatch.Draw(flare, new Vector2(((i + 1.4f) * 16) - (int)Main.screenPosition.X, ((j + 0.7f) * 16) - (int)Main.screenPosition.Y) + zero, new Rectangle?(rect), RedeColor.COLOR_GLOWPULSE, Main.GlobalTimeWrappedHourly, origin, 1.5f, 0, 1f);
-                spriteBatch.Draw(flare, new Vector2(((i + 1.4f) * 16) - (int)Main.screenPosition.X, ((j + 0.7f) * 16) - (int)Main.screenPosition.Y) + zero, new Rectangle?(rect), RedeColor.COLOR_GLOWPULSE, -Main.GlobalTimeWrappedHourly, origin, 1.5f, 0, 1f);
-
-                spriteBatch.End();
-                spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null);
-            }
+            RedeTileHelper.DrawSpiritFlare(spriteBatch, i, j, 0, 1.4f, 0.7f);
             return true;
         }
         public override void KillMultiTile(int i, int j, int frameX, int frameY) => Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 64, 32, ModContent.ItemType<GraveSteelShards>(), Main.rand.Next(5, 9));
@@ -267,9 +233,11 @@ namespace Redemption.Tiles.Natural
         public override void SetStaticDefaults()
         {
             base.SetStaticDefaults();
+            RedeTileHelper.CannotMineTileBelow[Type] = true;
+            TileID.Sets.HasOutlines[Type] = true;
             Main.tileLighted[Type] = true;
             DustType = DustID.DungeonSpirit;
-            MinPick = 1000;
+            MinPick = 5000;
             MineResist = 50;
             LocalizedText name = CreateMapEntryName();
             // name.SetDefault("Skeletal Remains");
@@ -296,6 +264,8 @@ namespace Redemption.Tiles.Natural
         public override void PostDraw(int i, int j, SpriteBatch spriteBatch)
         {
             Tile tile = Framing.GetTileSafely(i, j);
+            if (!TileDrawing.IsVisible(tile))
+                return;
             Vector2 zero = new(Main.offScreenRange, Main.offScreenRange);
             if (Main.drawToScreen)
                 zero = Vector2.Zero;
@@ -317,6 +287,7 @@ namespace Redemption.Tiles.Natural
                 player.cursorItemIconID = 0;
             }
         }
+        public override bool HasSmartInteract(int i, int j, SmartInteractScanSettings settings) => Main.LocalPlayer.HeldItem.type == ModContent.ItemType<DeadRinger>();
         public override bool RightClick(int i, int j)
         {
             Player player = Main.LocalPlayer;
@@ -351,26 +322,7 @@ namespace Redemption.Tiles.Natural
         }
         public override bool PreDraw(int i, int j, SpriteBatch spriteBatch)
         {
-            if (!Main.LocalPlayer.RedemptionAbility().SpiritwalkerActive)
-                return true;
-
-            Texture2D flare = Redemption.WhiteFlare.Value;
-            Rectangle rect = new(0, 0, flare.Width, flare.Height);
-            Vector2 zero = new(Main.offScreenRange, Main.offScreenRange);
-            if (Main.drawToScreen)
-                zero = Vector2.Zero;
-            Vector2 origin = new(flare.Width / 2f, flare.Height / 2f);
-            if (Main.tile[i, j].TileFrameX == 54 && Main.tile[i, j].TileFrameY == 0)
-            {
-                spriteBatch.End();
-                spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null);
-
-                spriteBatch.Draw(flare, new Vector2(((i + 1.4f) * 16) - (int)Main.screenPosition.X, ((j + 0.7f) * 16) - (int)Main.screenPosition.Y) + zero, new Rectangle?(rect), RedeColor.COLOR_GLOWPULSE, Main.GlobalTimeWrappedHourly, origin, 1.5f, 0, 1f);
-                spriteBatch.Draw(flare, new Vector2(((i + 1.4f) * 16) - (int)Main.screenPosition.X, ((j + 0.7f) * 16) - (int)Main.screenPosition.Y) + zero, new Rectangle?(rect), RedeColor.COLOR_GLOWPULSE, -Main.GlobalTimeWrappedHourly, origin, 1.5f, 0, 1f);
-
-                spriteBatch.End();
-                spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null);
-            }
+            RedeTileHelper.DrawSpiritFlare(spriteBatch, i, j, 54, 1.4f, 0.7f);
             return true;
         }
         public override void KillMultiTile(int i, int j, int frameX, int frameY) => Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 64, 32, ModContent.ItemType<GraveSteelShards>(), Main.rand.Next(5, 9));
@@ -382,9 +334,11 @@ namespace Redemption.Tiles.Natural
         public override void SetStaticDefaults()
         {
             base.SetStaticDefaults();
+            RedeTileHelper.CannotMineTileBelow[Type] = true;
+            TileID.Sets.HasOutlines[Type] = true;
             Main.tileLighted[Type] = true;
             DustType = DustID.DungeonSpirit;
-            MinPick = 1000;
+            MinPick = 5000;
             MineResist = 50;
             LocalizedText name = CreateMapEntryName();
             // name.SetDefault("Skeletal Remains");
@@ -411,6 +365,8 @@ namespace Redemption.Tiles.Natural
         public override void PostDraw(int i, int j, SpriteBatch spriteBatch)
         {
             Tile tile = Framing.GetTileSafely(i, j);
+            if (!TileDrawing.IsVisible(tile))
+                return;
             Vector2 zero = new(Main.offScreenRange, Main.offScreenRange);
             if (Main.drawToScreen)
                 zero = Vector2.Zero;
@@ -432,6 +388,7 @@ namespace Redemption.Tiles.Natural
                 player.cursorItemIconID = 0;
             }
         }
+        public override bool HasSmartInteract(int i, int j, SmartInteractScanSettings settings) => Main.LocalPlayer.HeldItem.type == ModContent.ItemType<DeadRinger>();
         public override bool RightClick(int i, int j)
         {
             Player player = Main.LocalPlayer;
@@ -466,26 +423,7 @@ namespace Redemption.Tiles.Natural
         }
         public override bool PreDraw(int i, int j, SpriteBatch spriteBatch)
         {
-            if (!Main.LocalPlayer.RedemptionAbility().SpiritwalkerActive)
-                return true;
-
-            Texture2D flare = Redemption.WhiteFlare.Value;
-            Rectangle rect = new(0, 0, flare.Width, flare.Height);
-            Vector2 zero = new(Main.offScreenRange, Main.offScreenRange);
-            if (Main.drawToScreen)
-                zero = Vector2.Zero;
-            Vector2 origin = new(flare.Width / 2f, flare.Height / 2f);
-            if (Main.tile[i, j].TileFrameX == 54 && Main.tile[i, j].TileFrameY == 0)
-            {
-                spriteBatch.End();
-                spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null);
-
-                spriteBatch.Draw(flare, new Vector2(((i + 1.3f) * 16) - (int)Main.screenPosition.X, ((j + 0.9f) * 16) - (int)Main.screenPosition.Y) + zero, new Rectangle?(rect), RedeColor.COLOR_GLOWPULSE, Main.GlobalTimeWrappedHourly, origin, 1.5f, 0, 1f);
-                spriteBatch.Draw(flare, new Vector2(((i + 1.3f) * 16) - (int)Main.screenPosition.X, ((j + 0.9f) * 16) - (int)Main.screenPosition.Y) + zero, new Rectangle?(rect), RedeColor.COLOR_GLOWPULSE, -Main.GlobalTimeWrappedHourly, origin, 1.5f, 0, 1f);
-
-                spriteBatch.End();
-                spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null);
-            }
+            RedeTileHelper.DrawSpiritFlare(spriteBatch, i, j, 54, 1.3f, 0.9f);
             return true;
         }
         public override void NumDust(int i, int j, bool fail, ref int num) => num = fail ? 1 : 3;
@@ -496,9 +434,11 @@ namespace Redemption.Tiles.Natural
         public override void SetStaticDefaults()
         {
             base.SetStaticDefaults();
+            RedeTileHelper.CannotMineTileBelow[Type] = true;
+            TileID.Sets.HasOutlines[Type] = true;
             Main.tileLighted[Type] = true;
             DustType = DustID.DungeonSpirit;
-            MinPick = 1000;
+            MinPick = 5000;
             MineResist = 50;
             LocalizedText name = CreateMapEntryName();
             // name.SetDefault("Skeletal Remains");
@@ -525,6 +465,8 @@ namespace Redemption.Tiles.Natural
         public override void PostDraw(int i, int j, SpriteBatch spriteBatch)
         {
             Tile tile = Framing.GetTileSafely(i, j);
+            if (!TileDrawing.IsVisible(tile))
+                return;
             Vector2 zero = new(Main.offScreenRange, Main.offScreenRange);
             if (Main.drawToScreen)
                 zero = Vector2.Zero;
@@ -546,6 +488,7 @@ namespace Redemption.Tiles.Natural
                 player.cursorItemIconID = 0;
             }
         }
+        public override bool HasSmartInteract(int i, int j, SmartInteractScanSettings settings) => Main.LocalPlayer.HeldItem.type == ModContent.ItemType<DeadRinger>();
         public override bool RightClick(int i, int j)
         {
             Player player = Main.LocalPlayer;
@@ -580,37 +523,14 @@ namespace Redemption.Tiles.Natural
         }
         public override bool PreDraw(int i, int j, SpriteBatch spriteBatch)
         {
-            if (!Main.LocalPlayer.RedemptionAbility().SpiritwalkerActive)
-                return true;
-
-            Texture2D flare = Redemption.WhiteFlare.Value;
-            Rectangle rect = new(0, 0, flare.Width, flare.Height);
-            Vector2 zero = new(Main.offScreenRange, Main.offScreenRange);
-            if (Main.drawToScreen)
-                zero = Vector2.Zero;
-            Vector2 origin = new(flare.Width / 2f, flare.Height / 2f);
-            if (Main.tile[i, j].TileFrameX == 54 && Main.tile[i, j].TileFrameY == 0)
-            {
-                spriteBatch.End();
-                spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null);
-
-                spriteBatch.Draw(flare, new Vector2(((i + 1.5f) * 16) - (int)Main.screenPosition.X, ((j + 1.4f) * 16) - (int)Main.screenPosition.Y) + zero, new Rectangle?(rect), RedeColor.COLOR_GLOWPULSE, Main.GlobalTimeWrappedHourly, origin, 1.5f, 0, 1f);
-                spriteBatch.Draw(flare, new Vector2(((i + 1.5f) * 16) - (int)Main.screenPosition.X, ((j + 1.4f) * 16) - (int)Main.screenPosition.Y) + zero, new Rectangle?(rect), RedeColor.COLOR_GLOWPULSE, -Main.GlobalTimeWrappedHourly, origin, 1.5f, 0, 1f);
-
-                spriteBatch.End();
-                spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null);
-            }
+            RedeTileHelper.DrawSpiritFlare(spriteBatch, i, j, 54, 1.5f, 1.4f);
             return true;
         }
         public override void NumDust(int i, int j, bool fail, ref int num) => num = fail ? 1 : 3;
     }
     public class SkeletonRemains1_Special : PlaceholderTile
     {
-        public override string Texture => Redemption.PLACEHOLDER_TEXTURE;
-        public override void SetSafeStaticDefaults()
-        {
-            // DisplayName.SetDefault("Skeletal Remains (Soulful)");
-        }
+        public override string Texture => "Redemption/Tiles/Placeholder/SkeletonRemains";
         public override void SetDefaults()
         {
             base.SetDefaults();
@@ -619,11 +539,7 @@ namespace Redemption.Tiles.Natural
     }
     public class SkeletonRemains3_Special : PlaceholderTile
     {
-        public override string Texture => Redemption.PLACEHOLDER_TEXTURE;
-        public override void SetSafeStaticDefaults()
-        {
-            // DisplayName.SetDefault("Skeletal Remains (Assassin)");
-        }
+        public override string Texture => "Redemption/Tiles/Placeholder/SkeletonRemains";
         public override void SetDefaults()
         {
             base.SetDefaults();
@@ -632,11 +548,7 @@ namespace Redemption.Tiles.Natural
     }
     public class SkeletonRemains4_Special : PlaceholderTile
     {
-        public override string Texture => Redemption.PLACEHOLDER_TEXTURE;
-        public override void SetSafeStaticDefaults()
-        {
-            // DisplayName.SetDefault("Skeletal Remains (Common Guard)");
-        }
+        public override string Texture => "Redemption/Tiles/Placeholder/SkeletonRemains";
         public override void SetDefaults()
         {
             base.SetDefaults();
@@ -645,24 +557,25 @@ namespace Redemption.Tiles.Natural
     }
     public class SkeletonRemains5_Special : PlaceholderTile
     {
-        public override string Texture => Redemption.PLACEHOLDER_TEXTURE;
-        public override void SetSafeStaticDefaults()
-        {
-            // DisplayName.SetDefault("Skeletal Remains (Gathic Man)");
-        }
+        public override string Texture => "Redemption/Tiles/Placeholder/SkeletonRemains";
         public override void SetDefaults()
         {
             base.SetDefaults();
             Item.createTile = ModContent.TileType<SkeletonRemainsTile5_Special>();
         }
     }
+    public class SkeletonRemains6_Special : PlaceholderTile
+    {
+        public override string Texture => "Redemption/Tiles/Placeholder/SkeletonRemains";
+        public override void SetDefaults()
+        {
+            base.SetDefaults();
+            Item.createTile = ModContent.TileType<SkeletonRemainsTile6_Special>();
+        }
+    }
     public class SkeletonRemains7_Special : PlaceholderTile
     {
-        public override string Texture => Redemption.PLACEHOLDER_TEXTURE;
-        public override void SetSafeStaticDefaults()
-        {
-            // DisplayName.SetDefault("Skeletal Remains (Druid)");
-        }
+        public override string Texture => "Redemption/Tiles/Placeholder/SkeletonRemains";
         public override void SetDefaults()
         {
             base.SetDefaults();

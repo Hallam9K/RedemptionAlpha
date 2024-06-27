@@ -34,20 +34,8 @@ namespace Redemption.NPCs.Bosses.Cleaver
     [AutoloadBossHead]
     public class OmegaCleaver : ModNPC
     {
-        private static Asset<Texture2D> glowMask;
-        private static Asset<Texture2D> trail;
-        public override void Load()
-        {
-            if (Main.dedServ)
-                return;
-            glowMask = ModContent.Request<Texture2D>(Texture + "_Glow");
-            trail = ModContent.Request<Texture2D>(Texture + "_Trail");
-        }
-        public override void Unload()
-        {
-            glowMask = null;
-            trail = null;
-        }
+        private Asset<Texture2D> glowMask;
+        private Asset<Texture2D> trail;
         public float[] oldrot = new float[6];
 
         public enum ActionState
@@ -78,7 +66,7 @@ namespace Redemption.NPCs.Bosses.Cleaver
             BuffNPC.NPCTypeImmunity(Type, BuffNPC.NPCDebuffImmuneType.Inorganic);
             NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.Confused] = true;
 
-            NPCID.Sets.NPCBestiaryDrawModifiers value = new(0)
+            NPCID.Sets.NPCBestiaryDrawModifiers value = new()
             {
                 CustomTexturePath = "Redemption/Textures/Bestiary/OmegaCleaver_Bestiary"
             };
@@ -164,7 +152,8 @@ namespace Redemption.NPCs.Bosses.Cleaver
 
             LeadingConditionRule notExpertRule = new(new Conditions.NotExpert());
 
-            notExpertRule.OnSuccess(ItemDropRule.NotScalingWithLuck(ModContent.ItemType<SwordHeadband>(), 7));
+            notExpertRule.OnSuccess(ItemDropRule.NotScalingWithLuck(ModContent.ItemType<CleaverMask>(), 7));
+            notExpertRule.OnSuccess(ItemDropRule.NotScalingWithLuck(ModContent.ItemType<SwordHeadband>(), 5));
             notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<GonkPet>(), 10));
             notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<CorruptedXenomite>(), 1, 4, 8));
 
@@ -201,7 +190,6 @@ namespace Redemption.NPCs.Bosses.Cleaver
 
         Vector2 thrustPos1;
         Vector2 thrustPos2;
-        int afterimageTimer;
         public override void AI()
         {
             if (AIState >= ActionState.Idle && AIState != ActionState.Death)
@@ -836,14 +824,17 @@ namespace Redemption.NPCs.Bosses.Cleaver
             for (int i = 0; i < 4; i++)
                 ParticleManager.NewParticle(thrustPos2, RedeHelper.PolarVector(Main.rand.Next(6, 15), NPC.rotation + (float)Math.PI / 2 + Main.rand.NextFloat(-.01f, .01f)) - (NPC.velocity / 4), new RedThrusterParticle(), Color.White, 1f, Layer: Particle.Layer.BeforeNPCs);
 
-                for (int k = NPC.oldPos.Length - 1; k > 0; k--)
-                    oldrot[k] = oldrot[k - 1];
-                oldrot[0] = NPC.rotation;
+            for (int k = NPC.oldPos.Length - 1; k > 0; k--)
+                oldrot[k] = oldrot[k - 1];
+            oldrot[0] = NPC.rotation;
         }
         public float bigFlareOpacity;
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
-            Texture2D texture = TextureAssets.Npc[NPC.type].Value;
+            Asset<Texture2D> texture = TextureAssets.Npc[NPC.type];
+            glowMask ??= ModContent.Request<Texture2D>(Texture + "_Glow");
+            trail ??= ModContent.Request<Texture2D>(Texture + "_Trail");
+
             var effects = NPC.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
             if (!NPC.IsABestiaryIconDummy)
             {
@@ -860,7 +851,7 @@ namespace Redemption.NPCs.Bosses.Cleaver
                 spriteBatch.BeginDefault();
             }
 
-            spriteBatch.Draw(texture, NPC.Center - screenPos, NPC.frame, NPC.GetAlpha(drawColor), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0f);
+            spriteBatch.Draw(texture.Value, NPC.Center - screenPos, NPC.frame, NPC.GetAlpha(drawColor), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0f);
             spriteBatch.Draw(glowMask.Value, NPC.Center - screenPos, NPC.frame, NPC.GetAlpha(RedeColor.RedPulse), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
 
             Texture2D bigFlareAni = ModContent.Request<Texture2D>("Redemption/Textures/BigFlare").Value;

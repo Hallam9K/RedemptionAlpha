@@ -1,9 +1,9 @@
 using Microsoft.Xna.Framework;
+using Redemption.BaseExtension;
+using Redemption.Globals;
 using System;
 using Terraria;
 using Terraria.ID;
-using Redemption.BaseExtension;
-using Redemption.Globals;
 
 namespace Redemption.Projectiles.Magic
 {

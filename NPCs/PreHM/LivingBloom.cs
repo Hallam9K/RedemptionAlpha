@@ -1,29 +1,29 @@
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Redemption.Base;
+using Redemption.BaseExtension;
 using Redemption.Globals;
 using Redemption.Globals.NPC;
+using Redemption.Items.Accessories.PreHM;
 using Redemption.Items.Placeable.Banners;
 using Redemption.Items.Placeable.Plants;
+using Redemption.Items.Placeable.Tiles;
 using Redemption.Projectiles.Hostile;
+using Redemption.Tiles.Tiles;
+using ReLogic.Content;
+using System;
+using System.IO;
 using Terraria;
 using Terraria.DataStructures;
+using Terraria.GameContent;
 using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
+using Terraria.GameContent.UI;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ModLoader.Utilities;
-using Redemption.BaseExtension;
-using Redemption.Items.Accessories.PreHM;
-using System.IO;
-using Microsoft.Xna.Framework.Graphics;
-using ReLogic.Content;
 using Terraria.Utilities;
-using Redemption.Tiles.Tiles;
-using Terraria.GameContent;
-using Terraria.Localization;
-using System;
-using Terraria.GameContent.UI;
-using Redemption.Items.Placeable.Tiles;
 
 namespace Redemption.NPCs.PreHM
 {
@@ -35,10 +35,6 @@ namespace Redemption.NPCs.PreHM
             if (Main.dedServ)
                 return;
             flowerTex = ModContent.Request<Texture2D>(Texture + "_Flower");
-        }
-        public override void Unload()
-        {
-            flowerTex = null;
         }
         public enum ActionState
         {
@@ -66,7 +62,7 @@ namespace Redemption.NPCs.PreHM
 
             BuffNPC.NPCTypeImmunity(Type, BuffNPC.NPCDebuffImmuneType.Inorganic);
 
-            NPCID.Sets.NPCBestiaryDrawModifiers value = new(0)
+            NPCID.Sets.NPCBestiaryDrawModifiers value = new()
             {
                 Velocity = 1f
             };
@@ -532,7 +528,7 @@ namespace Redemption.NPCs.PreHM
             int y = Height * (NPC.frame.Y / 60);
             int x = Width * FlowerType;
             Rectangle rect = new(x, y, Width, Height);
-            spriteBatch.Draw(flowerTex.Value, NPC.Center - screenPos, new Rectangle?(rect), drawColor, NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
+            spriteBatch.Draw(flowerTex.Value, NPC.Center - screenPos, new Rectangle?(rect), NPC.GetAlpha(drawColor), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
 
             return false;
         }

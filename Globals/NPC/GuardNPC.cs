@@ -139,6 +139,8 @@ namespace Redemption.Globals.NPC
         public override void SetDefaults(Terraria.NPC npc)
         {
             base.SetDefaults(npc);
+            if (RedeConfigClient.Instance.VanillaGuardPointsDisable)
+                return;
             if (npc.type is NPCID.GreekSkeleton or NPCID.AngryBonesBig or NPCID.AngryBonesBigHelmet or NPCID.AngryBonesBigMuscle or NPCID.GoblinWarrior)
                 GuardPoints = 25;
             if (npc.type is NPCID.ArmoredSkeleton or NPCID.ArmoredViking or NPCID.PossessedArmor)
@@ -150,6 +152,8 @@ namespace Redemption.Globals.NPC
         }
         public override void ModifyIncomingHit(Terraria.NPC npc, ref Terraria.NPC.HitModifiers modifiers)
         {
+            if (RedeConfigClient.Instance.VanillaGuardPointsDisable)
+                return;
             if (npc.type is NPCID.GreekSkeleton)
             {
                 if (GuardPoints >= 0)

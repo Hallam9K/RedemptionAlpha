@@ -1,3 +1,4 @@
+using Microsoft.Build.Execution;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ParticleLibrary;
@@ -17,6 +18,9 @@ using Terraria.ModLoader;
 
 namespace Redemption.Projectiles.Magic
 {
+    public class DusksongWeak_Proj : Dusksong_Proj
+    {
+    }
     public class Dusksong_Proj : ModProjectile
     {
         public override string Texture => "Redemption/Textures/DarkSoulTex";
@@ -53,17 +57,25 @@ namespace Redemption.Projectiles.Magic
         private List<Vector2> cache2;
         private DanTrail trail;
         private DanTrail trail2;
-        private float thickness = 20f;
+        private readonly float thickness = 20f;
+        public override bool? CanCutTiles() => false;
 
         private int CD;
         public override void AI()
         {
+            bool weak = Projectile.ModProjectile is DusksongWeak_Proj;
+
+            if (!weak)
+            {
+                baseColor = new(83, 88, 230);
+                edgeColor = new(245, 214, 249);
+            }
             CD--;
             if (Projectile.alpha > 40)
                 Projectile.alpha -= 10;
             Projectile.rotation += 0.14f;
 
-            if (Projectile.scale <= .1f)
+            if (Projectile.scale <= .1f || (weak && Collision.SolidCollision(Projectile.Center - new Vector2(16), 32, 32)))
                 FakeKill();
 
             if (Projectile.scale > Projectile.localAI[0])
@@ -87,10 +99,9 @@ namespace Redemption.Projectiles.Magic
             if (fakeTimer++ == 0)
             {
                 for (int i = 0; i < 20; i++)
-                    ParticleManager.NewParticle(Projectile.Center, RedeHelper.Spread(10 * Projectile.scale), new GlowParticle2(), new Color(117, 10, 47), 3 * Projectile.scale, .45f, Main.rand.Next(50, 60));
+                    ParticleManager.NewParticle(Projectile.Center, RedeHelper.Spread(10 * Projectile.scale), new GlowParticle2(), edgeColor, 3 * Projectile.scale, .45f, Main.rand.Next(50, 60));
                 for (int i = 0; i < 20; i++)
-                    ParticleManager.NewParticle(Projectile.Center, RedeHelper.Spread(10 * Projectile.scale), new GlowParticle2(), new Color(94, 53, 104), 3 * Projectile.scale, .45f, Main.rand.Next(50, 60));
-                SoundEngine.PlaySound(SoundID.NPCDeath51 with { Pitch = -.5f }, Projectile.position);
+                    ParticleManager.NewParticle(Projectile.Center, RedeHelper.Spread(10 * Projectile.scale), new GlowParticle2(), baseColor, 3 * Projectile.scale, .45f, Main.rand.Next(50, 60));
                 for (int i = 0; i < 20; i++)
                 {
                     int dust = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, ModContent.DustType<VoidFlame>(), Scale: 2);
@@ -111,23 +122,26 @@ namespace Redemption.Projectiles.Magic
         {
             if (CD > 0)
                 return;
+
+            bool weak = Projectile.ModProjectile is DusksongWeak_Proj;
+
             for (int k = 0; k < 40; k++)
             {
                 Vector2 vector;
                 double angle = Main.rand.NextDouble() * 2d * Math.PI;
                 vector.X = (float)(Math.Sin(angle) * 61 * Projectile.scale);
                 vector.Y = (float)(Math.Cos(angle) * 61 * Projectile.scale);
-                ParticleManager.NewParticle(Projectile.Center + vector, (Projectile.Center + vector).DirectionTo(Projectile.Center) * 5f, new GlowParticle2(), new Color(117, 10, 47), 2 * Projectile.scale, .45f, Main.rand.Next(10, 20));
-                ParticleManager.NewParticle(Projectile.Center + vector, (Projectile.Center + vector).DirectionTo(Projectile.Center) * 5f, new GlowParticle2(), new Color(94, 53, 104), 2 * Projectile.scale, .45f, Main.rand.Next(10, 20));
+                ParticleManager.NewParticle(Projectile.Center + vector, (Projectile.Center + vector).DirectionTo(Projectile.Center) * 5f, new GlowParticle2(), edgeColor, 2 * Projectile.scale, .45f, Main.rand.Next(10, 20));
+                ParticleManager.NewParticle(Projectile.Center + vector, (Projectile.Center + vector).DirectionTo(Projectile.Center) * 5f, new GlowParticle2(), baseColor, 2 * Projectile.scale, .45f, Main.rand.Next(10, 20));
             }
             Projectile.localAI[0] -= 0.2f;
             SoundEngine.PlaySound(SoundID.Item103, Projectile.position);
             if (Projectile.owner == Main.myPlayer)
             {
                 for (int i = 0; i < Main.rand.Next(1, 3); i++)
-                    Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, Projectile.velocity.RotatedByRandom(.4f) * Main.rand.NextFloat(.9f, 1.1f), ModContent.ProjectileType<Dusksong_Proj2>(), Projectile.damage / 2, Projectile.knockBack, Projectile.owner);
+                    Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, Projectile.velocity.RotatedByRandom(.4f) * Main.rand.NextFloat(.9f, 1.1f), ModContent.ProjectileType<Dusksong_Proj2>(), Projectile.damage / 2, Projectile.knockBack, Projectile.owner, weak ? 0 : 1);
             }
-            CD = 5;
+            CD = weak ? 7 : 5;
         }
         private float flareScale;
         private float flareOpacity;
@@ -153,8 +167,8 @@ namespace Redemption.Projectiles.Magic
             int shader = GameShaders.Armor.GetShaderIdFromItemId(ItemID.ShadowDye);
 
             Main.spriteBatch.End();
-            Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
-            GameShaders.Armor.ApplySecondary(shader, Main.player[Main.myPlayer], null);
+            Main.spriteBatch.BeginDefault(true);
+            GameShaders.Armor.ApplySecondary(shader, Main.LocalPlayer, null);
 
             Texture2D texture = TextureAssets.Projectile[Projectile.type].Value;
             Rectangle rect = new(0, 0, texture.Width, texture.Height);
@@ -170,18 +184,19 @@ namespace Redemption.Projectiles.Magic
             Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition, new Rectangle?(rect), Projectile.GetAlpha(Color.White) * 0.4f, -Projectile.rotation, origin, Projectile.scale * 1.4f, SpriteEffects.None, 0);
 
             Main.spriteBatch.End();
-            Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+            Main.spriteBatch.BeginAdditive();
 
             Texture2D flare = ModContent.Request<Texture2D>("Redemption/Textures/PurpleEyeFlare").Value;
             Rectangle rect2 = new(0, 0, flare.Width, flare.Height);
             Vector2 origin2 = new(flare.Width / 2, flare.Height / 2);
+            Color flareColor = Projectile.ModProjectile is DusksongWeak_Proj ? Color.White : baseColor;
 
-            Main.EntitySpriteDraw(flare, Projectile.Center - Main.screenPosition, new Rectangle?(rect2), Projectile.GetAlpha(Color.White) * flareOpacity, 0, origin2, Projectile.scale + flareScale, SpriteEffects.None, 0);
-            Main.EntitySpriteDraw(flare, Projectile.Center - Main.screenPosition, new Rectangle?(rect2), Projectile.GetAlpha(Color.White) * flareOpacity * 0.75f, 0, origin2, (Projectile.scale + flareScale) * 1.5f, SpriteEffects.None, 0);
-            Main.EntitySpriteDraw(flare, Projectile.Center - Main.screenPosition, new Rectangle?(rect2), Projectile.GetAlpha(Color.White) * flareOpacity * 0.5f, 0, origin2, (Projectile.scale + flareScale) * 2f, SpriteEffects.None, 0);
+            Main.EntitySpriteDraw(flare, Projectile.Center - Main.screenPosition, new Rectangle?(rect2), Projectile.GetAlpha(flareColor) * flareOpacity, 0, origin2, Projectile.scale + flareScale, SpriteEffects.None, 0);
+            Main.EntitySpriteDraw(flare, Projectile.Center - Main.screenPosition, new Rectangle?(rect2), Projectile.GetAlpha(flareColor) * flareOpacity * 0.75f, 0, origin2, (Projectile.scale + flareScale) * 1.5f, SpriteEffects.None, 0);
+            Main.EntitySpriteDraw(flare, Projectile.Center - Main.screenPosition, new Rectangle?(rect2), Projectile.GetAlpha(flareColor) * flareOpacity * 0.5f, 0, origin2, (Projectile.scale + flareScale) * 2f, SpriteEffects.None, 0);
 
             Main.spriteBatch.End();
-            Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+            Main.spriteBatch.BeginDefault();
             return false;
         }
         public override void OnKill(int timeLeft)
@@ -189,9 +204,9 @@ namespace Redemption.Projectiles.Magic
             if (fakeTimer > 0)
                 return;
             for (int i = 0; i < 20; i++)
-                ParticleManager.NewParticle(Projectile.Center, RedeHelper.Spread(10 * Projectile.scale), new GlowParticle2(), new Color(117, 10, 47), 3 * Projectile.scale, .45f, Main.rand.Next(50, 60));
+                ParticleManager.NewParticle(Projectile.Center, RedeHelper.Spread(10 * Projectile.scale), new GlowParticle2(), edgeColor, 3 * Projectile.scale, .45f, Main.rand.Next(50, 60));
             for (int i = 0; i < 20; i++)
-                ParticleManager.NewParticle(Projectile.Center, RedeHelper.Spread(10 * Projectile.scale), new GlowParticle2(), new Color(94, 53, 104), 3 * Projectile.scale, .45f, Main.rand.Next(50, 60));
+                ParticleManager.NewParticle(Projectile.Center, RedeHelper.Spread(10 * Projectile.scale), new GlowParticle2(), baseColor, 3 * Projectile.scale, .45f, Main.rand.Next(50, 60));
             SoundEngine.PlaySound(SoundID.NPCDeath51 with { Pitch = -.5f }, Projectile.position);
             for (int i = 0; i < 20; i++)
             {
@@ -238,9 +253,17 @@ namespace Redemption.Projectiles.Magic
 
         public override void AI()
         {
-            baseColor = new Color(94, 53, 104) * Projectile.Opacity;
-            endColor = Color.Black;
-            edgeColor = new Color(117, 10, 47) * Projectile.Opacity;
+            if (Projectile.ai[0] is 1)
+            {
+                baseColor = new(20, 24, 129);
+                edgeColor = new(83, 88, 230);
+            }
+            else
+            {
+                if (Collision.SolidCollision(Projectile.Center - new Vector2(5), 10, 10))
+                    FakeKill();
+            }
+
 
             if (Projectile.localAI[1]++ == 0)
             {
@@ -271,10 +294,8 @@ namespace Redemption.Projectiles.Magic
                 AdjustMagnitude(ref Projectile.velocity);
             }
             if (Main.rand.NextBool(2))
-                ParticleManager.NewParticle(Projectile.Center, Vector2.Zero, new GlowParticle2(), new Color(94, 53, 104), 1f, .45f, Main.rand.Next(10, 20));
-            if (Main.rand.NextBool(2))
-                ParticleManager.NewParticle(Projectile.Center, Vector2.Zero, new GlowParticle2(), new Color(117, 10, 47), 1f, .45f, Main.rand.Next(10, 20));
-
+                ParticleManager.NewParticle(Projectile.Center, Vector2.Zero, new GlowParticle2(), baseColor, 1f, .45f, Main.rand.Next(10, 20)); if (Main.rand.NextBool(2))
+                ParticleManager.NewParticle(Projectile.Center, Vector2.Zero, new GlowParticle2(), edgeColor, 1f, .45f, Main.rand.Next(10, 20));
             flareScale += Main.rand.NextFloat(-.02f, .02f);
             flareScale = MathHelper.Clamp(flareScale, .1f, .3f);
             flareOpacity += Main.rand.NextFloat(-.1f, .1f);
@@ -299,7 +320,7 @@ namespace Redemption.Projectiles.Magic
         }
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
-            if (Projectile.penetrate <= 1)
+            if (Projectile.penetrate <= (Projectile.ai[0] is 1 ? 1 : 3))
                 FakeKill();
         }
         private float flareScale;
@@ -324,18 +345,19 @@ namespace Redemption.Projectiles.Magic
             Main.spriteBatch.Begin(default, default, default, default, default, default, Main.GameViewMatrix.ZoomMatrix);
 
             Main.spriteBatch.End();
-            Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+            Main.spriteBatch.BeginAdditive();
 
             Texture2D flare = ModContent.Request<Texture2D>("Redemption/Textures/PurpleEyeFlare").Value;
             Rectangle rect2 = new(0, 0, flare.Width, flare.Height);
             Vector2 origin2 = new(flare.Width / 2, flare.Height / 2);
+            Color flareColor = Projectile.ai[0] != 1 ? Color.White : baseColor;
 
-            Main.EntitySpriteDraw(flare, Projectile.Center - Main.screenPosition, new Rectangle?(rect2), Projectile.GetAlpha(Color.White) * flareOpacity, 0, origin2, Projectile.scale + flareScale, SpriteEffects.None, 0);
-            Main.EntitySpriteDraw(flare, Projectile.Center - Main.screenPosition, new Rectangle?(rect2), Projectile.GetAlpha(Color.White) * flareOpacity * 0.75f, 0, origin2, (Projectile.scale + flareScale) * 1.1f, SpriteEffects.None, 0);
-            Main.EntitySpriteDraw(flare, Projectile.Center - Main.screenPosition, new Rectangle?(rect2), Projectile.GetAlpha(Color.White) * flareOpacity * 0.5f, 0, origin2, (Projectile.scale + flareScale) * 1.2f, SpriteEffects.None, 0);
+            Main.EntitySpriteDraw(flare, Projectile.Center - Main.screenPosition, new Rectangle?(rect2), Projectile.GetAlpha(flareColor) * flareOpacity, 0, origin2, Projectile.scale + flareScale, SpriteEffects.None, 0);
+            Main.EntitySpriteDraw(flare, Projectile.Center - Main.screenPosition, new Rectangle?(rect2), Projectile.GetAlpha(flareColor) * flareOpacity * 0.75f, 0, origin2, (Projectile.scale + flareScale) * 1.1f, SpriteEffects.None, 0);
+            Main.EntitySpriteDraw(flare, Projectile.Center - Main.screenPosition, new Rectangle?(rect2), Projectile.GetAlpha(flareColor) * flareOpacity * 0.5f, 0, origin2, (Projectile.scale + flareScale) * 1.2f, SpriteEffects.None, 0);
 
             Main.spriteBatch.End();
-            Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+            Main.spriteBatch.BeginDefault();
             return false;
         }
         private static void AdjustMagnitude(ref Vector2 vector)

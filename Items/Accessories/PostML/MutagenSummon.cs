@@ -7,13 +7,6 @@ namespace Redemption.Items.Accessories.PostML
 {
     public class MutagenSummon : ModItem
     {
-        public override void SetStaticDefaults()
-        {
-            // DisplayName.SetDefault("Summoner's Mutagen");
-            /* Tooltip.SetDefault("15% increased summon damage"
-                + "\n10% increased summon critical strike chance"); */
-            Item.ResearchUnlockCount = 1;
-        }
         public override void SetDefaults()
         {
             Item.width = 28;
@@ -25,7 +18,7 @@ namespace Redemption.Items.Accessories.PostML
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
             player.GetDamage(DamageClass.Summon) *= 1.15f;
-            player.GetCritChance(DamageClass.Summon) += 10;
+            player.whipRangeMultiplier *= 1.1f;
         }
         public override void AddRecipes()
         {

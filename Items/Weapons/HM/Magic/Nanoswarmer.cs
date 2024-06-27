@@ -43,7 +43,7 @@ namespace Redemption.Items.Weapons.HM.Magic
         }
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
-            for (int i = 0; i < Main.rand.Next(3, 6); i++)
+            for (int i = 0; i < Main.rand.Next(2, 5); i++)
             {
                 Vector2 perturbedSpeed = velocity.RotatedByRandom(MathHelper.ToRadians(10));
                 float scale = 1f - (Main.rand.NextFloat() * 0.4f);

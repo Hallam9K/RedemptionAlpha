@@ -1,10 +1,10 @@
 using Microsoft.Xna.Framework;
-using Terraria;
-using Terraria.ModLoader;
-using Terraria.ID;
-using Redemption.Tiles.Plants;
 using Redemption.Dusts.Tiles;
 using Redemption.Tiles.Furniture.Lab;
+using Redemption.Tiles.Plants;
+using Terraria;
+using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace Redemption.Tiles.Tiles
 {
@@ -15,6 +15,7 @@ namespace Redemption.Tiles.Tiles
             Main.tileSolid[Type] = true;
             Main.tileMergeDirt[Type] = true;
             Main.tileBlockLight[Type] = true;
+            Main.tileBrick[Type] = true;
             TileID.Sets.DisableSmartCursor[Type] = true;
             Main.tileMerge[Type][ModContent.TileType<LabPlatingTileUnsafe>()] = true;
             Main.tileMerge[ModContent.TileType<LabPlatingTileUnsafe>()][Type] = true;
@@ -25,11 +26,12 @@ namespace Redemption.Tiles.Tiles
             Main.tileMerge[Type][ModContent.TileType<OvergrownLabPlatingTile2>()] = true;
             Main.tileMerge[ModContent.TileType<OvergrownLabPlatingTile2>()][Type] = true;
             DustType = ModContent.DustType<LabPlatingDust>();
-            MinPick = 1000;
+            MinPick = 5000;
             MineResist = 3f;
             HitSound = CustomSounds.MetalHit;
             AddMapEntry(new Color(202, 210, 210));
         }
+        public override bool Slope(int i, int j) => false;
         public override void FloorVisuals(Player player)
         {
             if (player.velocity.X != 0f && Main.rand.NextBool(20))
@@ -44,8 +46,9 @@ namespace Redemption.Tiles.Tiles
             Tile tileAbove = Framing.GetTileSafely(i, j - 1);
             if (!tileAbove.HasTile && Main.rand.NextBool(15) && tileAbove.LiquidAmount == 0)
             {
-                WorldGen.PlaceObject(i, j - 1, ModContent.TileType<LabShrub>(), true, Main.rand.Next(7));
-                NetMessage.SendObjectPlacement(-1, i, j - 1, ModContent.TileType<LabShrub>(), Main.rand.Next(7), 0, -1, -1);
+                int rand = Main.rand.Next(7);
+                WorldGen.PlaceObject(i, j - 1, ModContent.TileType<LabShrub>(), true, rand);
+                NetMessage.SendObjectPlacement(-1, i, j - 1, ModContent.TileType<LabShrub>(), rand, 0, -1, -1);
             }
             if (!tileAbove.HasTile && Main.tile[i, j].HasTile && Main.rand.NextBool(600))
             {
@@ -53,12 +56,12 @@ namespace Redemption.Tiles.Tiles
                 NetMessage.SendObjectPlacement(-1, i, j - 1, ModContent.TileType<BabyHiveTile>(), 0, 0, -1, -1);
             }
             if (Main.rand.NextBool(200))
-                WorldGen.SpreadGrass(i + Main.rand.Next(-1, 1), j + Main.rand.Next(-1, 1), ModContent.TileType<LabPlatingTileUnsafe>(), Type, false);
+                WorldGen.SpreadGrass(i + Main.rand.Next(-1, 1), j + Main.rand.Next(-1, 1), ModContent.TileType<LabPlatingTileUnsafe>(), Type, false, Framing.GetTileSafely(i, j).BlockColorAndCoating());
         }
         public override void NumDust(int i, int j, bool fail, ref int num) => num = fail ? 1 : 3;
         public override bool CanExplode(int i, int j) => false;
     }
-    public class OvergrownLabPlatingTile2 : ModTile
+    public class OvergrownLabPlatingTile2 : OvergrownLabPlatingTile
     {
         public override string Texture => "Redemption/Tiles/Tiles/OvergrownLabPlatingTile";
         public override void SetStaticDefaults()
@@ -84,7 +87,7 @@ namespace Redemption.Tiles.Tiles
                 NetMessage.SendObjectPlacement(-1, i, j - 1, ModContent.TileType<BabyHiveTile>(), 0, 0, -1, -1);
             }
             if (Main.rand.NextBool(200))
-                WorldGen.SpreadGrass(i + Main.rand.Next(-1, 1), j + Main.rand.Next(-1, 1), ModContent.TileType<LabPlatingTileUnsafe2>(), Type, false);
+                WorldGen.SpreadGrass(i + Main.rand.Next(-1, 1), j + Main.rand.Next(-1, 1), ModContent.TileType<LabPlatingTileUnsafe2>(), Type, false, Framing.GetTileSafely(i, j).BlockColorAndCoating());
         }
         public override void NumDust(int i, int j, bool fail, ref int num) => num = fail ? 1 : 3;
         public override bool CanExplode(int i, int j) => false;

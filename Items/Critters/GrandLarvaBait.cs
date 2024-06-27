@@ -1,6 +1,5 @@
 using Redemption.NPCs.Critters;
 using Terraria;
-using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -17,8 +16,8 @@ namespace Redemption.Items.Critters
 
         public override void SetDefaults()
         {
-            Item.width = 36;
-            Item.height = 30;
+            Item.width = 44;
+            Item.height = 22;
             Item.maxStack = Item.CommonMaxStack;
             Item.value = Item.buyPrice(0, 0, 2);
             Item.rare = ItemRarityID.Blue;

@@ -1,17 +1,20 @@
 using Microsoft.Xna.Framework;
-using Terraria;
-using Terraria.ModLoader;
 using Redemption.Dusts.Tiles;
+using Terraria;
+using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace Redemption.Tiles.Tiles
 {
     public class LabPlatingTile : ModTile
-	{
-		public override void SetStaticDefaults()
-		{
+    {
+        public override void SetStaticDefaults()
+        {
             Main.tileSolid[Type] = true;
-            Main.tileMergeDirt[Type] = true;
+            Main.tileMergeDirt[Type] = false;
             Main.tileBlockLight[Type] = true;
+            Main.tileBrick[Type] = true;
+            TileID.Sets.GemsparkFramingTypes[Type] = Type;
             Main.tileMerge[Type][ModContent.TileType<LabPlatingTileUnsafe>()] = true;
             Main.tileMerge[ModContent.TileType<LabPlatingTileUnsafe>()][Type] = true;
             Main.tileMerge[Type][ModContent.TileType<OvergrownLabPlatingTile>()] = true;
@@ -26,6 +29,11 @@ namespace Redemption.Tiles.Tiles
             HitSound = CustomSounds.MetalHit;
             AddMapEntry(new Color(202, 210, 210));
         }
+        public override bool TileFrame(int i, int j, ref bool resetFrame, ref bool noBreak)
+        {
+            Framing.SelfFrame8Way(i, j, Main.tile[i, j], resetFrame);
+            return false;
+        }
         public override void NumDust(int i, int j, bool fail, ref int num) => num = fail ? 1 : 3;
-	}
+    }
 }

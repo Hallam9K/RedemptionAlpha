@@ -1,30 +1,30 @@
-using Terraria;
-using Terraria.ID;
 using Microsoft.Xna.Framework;
-using Terraria.ModLoader;
 using Microsoft.Xna.Framework.Graphics;
-using System.Collections.Generic;
-using Redemption.Globals;
-using Terraria.GameContent;
-using System.IO;
 using Redemption.BaseExtension;
-using Terraria.GameContent.ItemDropRules;
-using Redemption.Items.Weapons.HM.Melee;
-using Terraria.Audio;
-using ReLogic.Content;
-using Redemption.UI.ChatUI;
-using Terraria.Localization;
+using Redemption.Globals;
 using Redemption.Globals.NPC;
+using Redemption.Items.Weapons.HM.Melee;
 using Redemption.Textures;
+using Redemption.UI.ChatUI;
+using ReLogic.Content;
+using System.Collections.Generic;
+using System.IO;
+using Terraria;
+using Terraria.Audio;
+using Terraria.GameContent;
+using Terraria.GameContent.ItemDropRules;
+using Terraria.ID;
+using Terraria.Localization;
+using Terraria.ModLoader;
 
 namespace Redemption.NPCs.Bosses.Cleaver
 {
     [AutoloadBossHead]
     public class Wielder : ModNPC
     {
-        private static Asset<Texture2D> glowMask;
-        private static Asset<Texture2D> boosterAni;
-        private static Asset<Texture2D> boosterGlow;
+        public static Asset<Texture2D> glowMask;
+        public static Asset<Texture2D> boosterAni;
+        public static Asset<Texture2D> boosterGlow;
         public override void Load()
         {
             if (Main.dedServ)
@@ -33,12 +33,7 @@ namespace Redemption.NPCs.Bosses.Cleaver
             boosterAni = ModContent.Request<Texture2D>(Texture + "_Booster");
             boosterGlow = ModContent.Request<Texture2D>(Texture + "_Booster_Glow");
         }
-        public override void Unload()
-        {
-            glowMask = null;
-            boosterAni = null;
-            boosterGlow = null;
-        }
+
         public enum ActionState
         {
             Begin,
@@ -73,7 +68,7 @@ namespace Redemption.NPCs.Bosses.Cleaver
             BuffNPC.NPCTypeImmunity(Type, BuffNPC.NPCDebuffImmuneType.Inorganic);
             NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.Confused] = true;
 
-            NPCID.Sets.NPCBestiaryDrawModifiers value = new(0)
+            NPCID.Sets.NPCBestiaryDrawModifiers value = new()
             {
                 Hide = true
             };
@@ -98,7 +93,7 @@ namespace Redemption.NPCs.Bosses.Cleaver
             NPC.noTileCollide = true;
             NPC.chaseable = false;
         }
-        private static Texture2D Bubble => CommonTextures.TextBubble_Omega.Value;
+        private static Texture2D Bubble => !Main.dedServ ? CommonTextures.TextBubble_Omega.Value : null;
         private static readonly SoundStyle voice = CustomSounds.Voice6 with { Pitch = 0.4f };
         public override void ModifyHitByItem(Player player, Item item, ref NPC.HitModifiers modifiers)
         {
@@ -130,7 +125,7 @@ namespace Redemption.NPCs.Bosses.Cleaver
         public override bool CheckActive()
         {
             Player player = Main.player[NPC.target];
-            return !NPC.AnyNPCs(ModContent.NPCType<OmegaCleaver>()) && (!player.active || player.dead || Main.dayTime || (AIState == ActionState.Death2 && NPC.ai[2] >= 340));
+            return !NPC.AnyNPCs(ModContent.NPCType<OmegaCleaver>()) || !player.active || player.dead || Main.dayTime || (AIState == ActionState.Death2 && NPC.ai[2] >= 340);
         }
 
         public override void SendExtraAI(BinaryWriter writer)
@@ -757,17 +752,19 @@ namespace Redemption.NPCs.Bosses.Cleaver
             if (boosterFrame >= 4)
                 boosterFrame = 0;
         }
+
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
-            Texture2D texture = TextureAssets.Npc[NPC.type].Value;
+            Asset<Texture2D> texture = TextureAssets.Npc[Type];
+
             var effects = NPC.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
             int num214 = boosterAni.Value.Height / 4;
             int y6 = num214 * boosterFrame;
-            spriteBatch.Draw(boosterAni.Value, NPC.Center - screenPos, new Rectangle?(new Rectangle(0, y6, boosterAni.Value.Width, num214)), drawColor, NPC.rotation, new Vector2(boosterAni.Value.Width / 2f, num214 / 2f), NPC.scale, effects, 0);
-            spriteBatch.Draw(boosterGlow.Value, NPC.Center - screenPos, new Rectangle?(new Rectangle(0, y6, boosterAni.Value.Width, num214)), RedeColor.RedPulse, NPC.rotation, new Vector2(boosterAni.Value.Width / 2f, num214 / 2f), NPC.scale, effects, 0);
+            spriteBatch.Draw(boosterAni.Value, NPC.Center - screenPos, new Rectangle?(new Rectangle(0, y6, boosterAni.Value.Width, num214)), NPC.GetAlpha(drawColor), NPC.rotation, new Vector2(boosterAni.Value.Width / 2f, num214 / 2f), NPC.scale, effects, 0);
+            spriteBatch.Draw(boosterGlow.Value, NPC.Center - screenPos, new Rectangle?(new Rectangle(0, y6, boosterAni.Value.Width, num214)), NPC.GetAlpha(RedeColor.RedPulse), NPC.rotation, new Vector2(boosterAni.Value.Width / 2f, num214 / 2f), NPC.scale, effects, 0);
 
-            spriteBatch.Draw(texture, NPC.Center - screenPos, NPC.frame, drawColor, NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
-            spriteBatch.Draw(glowMask.Value, NPC.Center - screenPos, NPC.frame, RedeColor.RedPulse, NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
+            spriteBatch.Draw(texture.Value, NPC.Center - screenPos, NPC.frame, NPC.GetAlpha(drawColor), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
+            spriteBatch.Draw(glowMask.Value, NPC.Center - screenPos, NPC.frame, NPC.GetAlpha(RedeColor.RedPulse), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
             return false;
         }
         public override void PostDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)

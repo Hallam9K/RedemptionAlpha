@@ -372,11 +372,14 @@ namespace Redemption
                 case ModMessageType.SpawnNPCFromClient:
                     if (Main.netMode == NetmodeID.Server)
                     {
-                        int npcIndex = bb.ReadInt32();
-                        int npcCenterX = bb.ReadInt32();
-                        int npcCenterY = bb.ReadInt32();
+                        int npcIndex = reader.ReadInt32();
+                        int npcCenterX = reader.ReadInt32();
+                        int npcCenterY = reader.ReadInt32();
+                        float ai0 = reader.ReadSingle();
+                        float ai1 = reader.ReadSingle();
+                        float ai2 = reader.ReadSingle();
 
-                        int npcID = NPC.NewNPC(Entity.GetSource_NaturalSpawn(), npcCenterX, npcCenterY, npcIndex);
+                        int npcID = NPC.NewNPC(Entity.GetSource_NaturalSpawn(), npcCenterX, npcCenterY, npcIndex, 0, ai0, ai1, ai2);
                         Main.npc[npcID].netUpdate2 = true;
                     }
                     break;

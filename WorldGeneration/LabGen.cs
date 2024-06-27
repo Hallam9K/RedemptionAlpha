@@ -165,7 +165,7 @@ namespace Redemption.WorldGeneration
             GenUtils.ObjectPlace(origin.X + 129, origin.Y + 14, (ushort)ModContent.TileType<LabReceptionMonitorsTile>());
             GenUtils.ObjectPlace(origin.X + 139, origin.Y + 36, (ushort)ModContent.TileType<InfectedCorpse1Tile>());
             GenUtils.ObjectPlace(origin.X + 148, origin.Y + 86, (ushort)ModContent.TileType<LabBackDoorTile>());
-            GenUtils.ObjectPlace(origin.X + 148, origin.Y + 74, (ushort)ModContent.TileType<BrokenLabBackDoorTile>());
+            GenUtils.ObjectPlace(origin.X + 148, origin.Y + 74, (ushort)ModContent.TileType<BrokenLabBackDoorTile>(), Main.rand.Next(4));
             // Miniboss Room 1
             GenUtils.ObjectPlace(origin.X + 188, origin.Y + 21, (ushort)ModContent.TileType<LabBackDoorTile>());
             GenUtils.ObjectPlace(origin.X + 151, origin.Y + 9, (ushort)ModContent.TileType<LabCeilingMonitorTile>(), 0, 1);
@@ -189,14 +189,14 @@ namespace Redemption.WorldGeneration
             GenUtils.ObjectPlace(origin.X + 163, origin.Y + 37, (ushort)ModContent.TileType<LabTableTile>());
             GenUtils.ObjectPlace(origin.X + 163, origin.Y + 35, (ushort)ModContent.TileType<LabComputerTile>());
             GenUtils.ObjectPlace(origin.X + 166, origin.Y + 25, (ushort)ModContent.TileType<LabCeilingMonitorTile>());
-            GenUtils.ObjectPlace(origin.X + 188, origin.Y + 31, (ushort)ModContent.TileType<BrokenLabBackDoorTile>());
+            GenUtils.ObjectPlace(origin.X + 188, origin.Y + 31, (ushort)ModContent.TileType<BrokenLabBackDoorTile>(), Main.rand.Next(4));
 
             GenUtils.ObjectPlace(origin.X + 166, origin.Y + 37, (ushort)ModContent.TileType<LabPhotoTile>());
             // Large Room 1
             GenUtils.ObjectPlace(origin.X + 114, origin.Y + 33, (ushort)ModContent.TileType<LabCabinetTile>());
             GenUtils.ObjectPlace(origin.X + 131, origin.Y + 32, (ushort)ModContent.TileType<LabWallFanTile>());
             GenUtils.ObjectPlace(origin.X + 102, origin.Y + 32, (ushort)ModContent.TileType<LabWallFanTile>());
-            GenUtils.ObjectPlace(origin.X + 124, origin.Y + 37, (ushort)ModContent.TileType<BrokenLabBackDoorTile>());
+            GenUtils.ObjectPlace(origin.X + 124, origin.Y + 37, (ushort)ModContent.TileType<BrokenLabBackDoorTile>(), Main.rand.Next(4));
             GenUtils.ObjectPlace(origin.X + 119, origin.Y + 37, (ushort)ModContent.TileType<LabReceptionCouchTile>());
             GenUtils.ObjectPlace(origin.X + 114, origin.Y + 37, (ushort)ModContent.TileType<LabReceptionCouchTile>());
             GenUtils.ObjectPlace(origin.X + 96, origin.Y + 44, (ushort)ModContent.TileType<LabWorkbenchTile>());
@@ -218,7 +218,7 @@ namespace Redemption.WorldGeneration
             GenUtils.ObjectPlace(origin.X + 73, origin.Y + 44, (ushort)ModContent.TileType<LabChairTile>(), 0, 1);
             GenUtils.ObjectPlace(origin.X + 75, origin.Y + 44, (ushort)ModContent.TileType<LabTableTile>());
             GenUtils.ObjectPlace(origin.X + 77, origin.Y + 44, (ushort)ModContent.TileType<LabChairTile>());
-            GenUtils.ObjectPlace(origin.X + 53, origin.Y + 44, (ushort)ModContent.TileType<BrokenLabBackDoorTile>());
+            GenUtils.ObjectPlace(origin.X + 53, origin.Y + 44, (ushort)ModContent.TileType<BrokenLabBackDoorTile>(), Main.rand.Next(4));
             GenUtils.ObjectPlace(origin.X + 50, origin.Y + 34, (ushort)ModContent.TileType<LabIntercomTile>(), 0, 1);
             GenUtils.ObjectPlace(origin.X + 82, origin.Y + 42, (ushort)ModContent.TileType<RadiationPillTile>());
             // Server Room
@@ -237,7 +237,7 @@ namespace Redemption.WorldGeneration
             GenUtils.ObjectPlace(origin.X + 77, origin.Y + 53, (ushort)ModContent.TileType<LabCeilingMonitorTile>());
             GenUtils.ObjectPlace(origin.X + 84, origin.Y + 53, (ushort)ModContent.TileType<LabCeilingMonitorTile>(), 0, 1);
             GenUtils.ObjectPlace(origin.X + 80, origin.Y + 54, (ushort)ModContent.TileType<LabReceptionMonitorsTile>());
-            GenUtils.ObjectPlace(origin.X + 80, origin.Y + 67, (ushort)ModContent.TileType<BrokenLabBackDoorTile>());
+            GenUtils.ObjectPlace(origin.X + 80, origin.Y + 67, (ushort)ModContent.TileType<BrokenLabBackDoorTile>(), Main.rand.Next(4));
             GenUtils.ObjectPlace(origin.X + 103, origin.Y + 64, (ushort)ModContent.TileType<LabCeilingMonitorTile>(), 0, 1);
             // Stage 3 Infected Scientist Arena/Side Room
             GenUtils.ObjectPlace(origin.X + 37, origin.Y + 82, (ushort)ModContent.TileType<Stage3CorpseTile>());
@@ -251,7 +251,6 @@ namespace Redemption.WorldGeneration
             // Overgrown Rooms
             GenUtils.ObjectPlace(origin.X + 243, origin.Y + 55, (ushort)ModContent.TileType<LabCabinetTile>());
             GenUtils.ObjectPlace(origin.X + 236, origin.Y + 101, (ushort)ModContent.TileType<InfectedCorpse3Tile>());
-            //GenUtils.ObjectPlace(origin.X + 244, origin.Y + 87, (ushort)ModContent.TileType<BotanistStationTile>());
             GenUtils.ObjectPlace(origin.X + 247, origin.Y + 82, (ushort)ModContent.TileType<OpenVentTile>());
             GenUtils.ObjectPlace(origin.X + 249, origin.Y + 58, (ushort)ModContent.TileType<MossyLabTableTile>());
             GenUtils.ObjectPlace(origin.X + 251, origin.Y + 58, (ushort)ModContent.TileType<LabChairTile>());
@@ -261,7 +260,7 @@ namespace Redemption.WorldGeneration
             // Uranium Rooms
             GenUtils.ObjectPlace(origin.X + 188, origin.Y + 70, (ushort)ModContent.TileType<HazmatCorpseTile>());
             GenUtils.ObjectPlace(origin.X + 154, origin.Y + 100, (ushort)ModContent.TileType<XeniumSmelterTile>());
-            GenUtils.ObjectPlace(origin.X + 183, origin.Y + 117, (ushort)ModContent.TileType<BrokenLabBackDoorTile>());
+            GenUtils.ObjectPlace(origin.X + 183, origin.Y + 117, (ushort)ModContent.TileType<BrokenLabBackDoorTile>(), Main.rand.Next(4));
             GenUtils.ObjectPlace(origin.X + 183, origin.Y + 126, (ushort)ModContent.TileType<LabBackDoorTile>());
             GenUtils.ObjectPlace(origin.X + 188, origin.Y + 114, (ushort)ModContent.TileType<LabCabinetTile>());
             GenUtils.ObjectPlace(origin.X + 179, origin.Y + 117, (ushort)ModContent.TileType<GirusCorruptorTile>());
@@ -286,7 +285,7 @@ namespace Redemption.WorldGeneration
             GenUtils.ObjectPlace(origin.X + 19, origin.Y + 74, (ushort)ModContent.TileType<InfectedCorpse2Tile>());
             GenUtils.ObjectPlace(origin.X + 4, origin.Y + 84, (ushort)ModContent.TileType<InfectedCorpse1Tile>(), 0, 1);
             GenUtils.ObjectPlace(origin.X + 25, origin.Y + 86, (ushort)ModContent.TileType<LabReceptionCouchTile>());
-            GenUtils.ObjectPlace(origin.X + 6, origin.Y + 105, (ushort)ModContent.TileType<BrokenLabBackDoorTile>());
+            GenUtils.ObjectPlace(origin.X + 6, origin.Y + 105, (ushort)ModContent.TileType<BrokenLabBackDoorTile>(), Main.rand.Next(4));
             GenUtils.ObjectPlace(origin.X + 21, origin.Y + 99, (ushort)ModContent.TileType<LabIntercomTile>(), 0, 1);
             GenUtils.ObjectPlace(origin.X + 23, origin.Y + 105, (ushort)ModContent.TileType<InfectedCorpse3Tile>(), 0, 1);
             GenUtils.ObjectPlace(origin.X + 27, origin.Y + 102, (ushort)ModContent.TileType<LabCabinetTile>());
@@ -295,7 +294,7 @@ namespace Redemption.WorldGeneration
             GenUtils.ObjectPlace(origin.X + 40, origin.Y + 105, (ushort)ModContent.TileType<LabWorkbenchTile>());
             GenUtils.ObjectPlace(origin.X + 41, origin.Y + 104, (ushort)ModContent.TileType<RadiationPillTile>());
             GenUtils.ObjectPlace(origin.X + 6, origin.Y + 121, (ushort)ModContent.TileType<LabBackDoorTile>());
-            GenUtils.ObjectPlace(origin.X + 6, origin.Y + 140, (ushort)ModContent.TileType<BrokenLabBackDoorTile>());
+            GenUtils.ObjectPlace(origin.X + 6, origin.Y + 140, (ushort)ModContent.TileType<BrokenLabBackDoorTile>(), Main.rand.Next(4));
             GenUtils.ObjectPlace(origin.X + 16, origin.Y + 150, (ushort)ModContent.TileType<InfectedCorpse1Tile>(), 0, 1);
             GenUtils.ObjectPlace(origin.X + 20, origin.Y + 151, (ushort)ModContent.TileType<InfectedCorpse3Tile>(), 0, 1);
             GenUtils.ObjectPlace(origin.X + 24, origin.Y + 137, (ushort)ModContent.TileType<LabCabinetTile>());
@@ -305,9 +304,9 @@ namespace Redemption.WorldGeneration
             GenUtils.ObjectPlace(origin.X + 89, origin.Y + 140, (ushort)ModContent.TileType<ServerCabinetTile>());
             GenUtils.ObjectPlace(origin.X + 105, origin.Y + 140, (ushort)ModContent.TileType<InfectedCorpse3Tile>());
             GenUtils.ObjectPlace(origin.X + 126, origin.Y + 135, (ushort)ModContent.TileType<LabBackDoorTile>());
-            GenUtils.ObjectPlace(origin.X + 122, origin.Y + 149, (ushort)ModContent.TileType<BrokenLabBackDoorTile>());
-            GenUtils.ObjectPlace(origin.X + 139, origin.Y + 159, (ushort)ModContent.TileType<BrokenLabBackDoorTile>());
-            GenUtils.ObjectPlace(origin.X + 122, origin.Y + 167, (ushort)ModContent.TileType<BrokenLabBackDoorTile>());
+            GenUtils.ObjectPlace(origin.X + 122, origin.Y + 149, (ushort)ModContent.TileType<BrokenLabBackDoorTile>(), Main.rand.Next(4));
+            GenUtils.ObjectPlace(origin.X + 139, origin.Y + 159, (ushort)ModContent.TileType<BrokenLabBackDoorTile>(), Main.rand.Next(4));
+            GenUtils.ObjectPlace(origin.X + 122, origin.Y + 167, (ushort)ModContent.TileType<BrokenLabBackDoorTile>(), Main.rand.Next(4));
             GenUtils.ObjectPlace(origin.X + 27, origin.Y + 117, (ushort)ModContent.TileType<OpenVentTile>());
             // Volt Arena
             GenUtils.ObjectPlace(origin.X + 52, origin.Y + 92, (ushort)ModContent.TileType<EmptyBotHangerTile>());

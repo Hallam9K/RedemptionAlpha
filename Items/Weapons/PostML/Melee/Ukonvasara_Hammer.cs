@@ -239,7 +239,10 @@ namespace Redemption.Items.Weapons.PostML.Melee
             SpriteEffects spriteEffects = Projectile.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
             Texture2D texture = TextureAssets.Projectile[Projectile.type].Value;
             Vector2 origin = new(texture.Width / 2f, texture.Height / 2f);
-            Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition + Vector2.UnitY * Projectile.gfxOffY, null, Projectile.GetAlpha(lightColor), Projectile.rotation, origin, Projectile.scale, spriteEffects, 0);
+            Vector2 dirOffeset = vector.SafeNormalize(Vector2.One) * Projectile.scale;
+            Vector2 drawPos = Projectile.Center + dirOffeset * -0 + dirOffeset.RotatedBy(MathHelper.PiOver2 * Player.direction) * 1;
+
+            Main.EntitySpriteDraw(texture, drawPos - Main.screenPosition, null, Projectile.GetAlpha(lightColor), Projectile.rotation, origin, Projectile.scale, spriteEffects, 0);
 
             //Chain lightning
 
@@ -260,7 +263,7 @@ namespace Redemption.Items.Weapons.PostML.Melee
             }
 
             float opacity2 = MathHelper.Clamp(LaunchTimer / 3000, 0, 1);
-            Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition + Vector2.UnitY * Projectile.gfxOffY, null, Color.White with { A = 0 } * 0.6f * opacity2, Projectile.rotation, origin, Projectile.scale * 1.5f, spriteEffects, 0);
+            Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition, null, Color.White with { A = 0 } * 0.6f * opacity2, Projectile.rotation, origin, Projectile.scale * 1.5f, spriteEffects, 0);
             return false;
         }
     }

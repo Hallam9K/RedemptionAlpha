@@ -9,8 +9,7 @@ namespace Redemption.Items.Placeable.Tiles
     {
         public override void SetStaticDefaults()
         {
-            // DisplayName.SetDefault("Overgrown Laboratory Panel (Unsafe)");
-            // Tooltip.SetDefault("[c/ff0000:Unbreakable (500% Pickaxe Power)]");
+            ItemID.Sets.DrawUnsafeIndicator[Type] = true;
         }
 
         public override void SetDefaults()
@@ -41,6 +40,10 @@ namespace Redemption.Items.Placeable.Tiles
             CreateRecipe(10)
                 .AddIngredient<LabPlatingUnsafe2>(10)
                 .AddIngredient(ItemID.GrassSeeds)
+                .Register();
+            CreateRecipe()
+                .AddIngredient<MossyLabPlatingWallUnsafe>(4)
+                .AddTile(TileID.WorkBenches)
                 .Register();
         }
     }
