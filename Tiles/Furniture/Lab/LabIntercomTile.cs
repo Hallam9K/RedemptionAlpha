@@ -11,11 +11,11 @@ using Terraria.ObjectData;
 namespace Redemption.Tiles.Furniture.Lab
 {
     public class LabIntercomTile : ModTile
-	{
-		public override void SetStaticDefaults()
-		{
-			Main.tileFrameImportant[Type] = true;
-			Main.tileLavaDeath[Type] = false;
+    {
+        public override void SetStaticDefaults()
+        {
+            Main.tileFrameImportant[Type] = true;
+            Main.tileLavaDeath[Type] = false;
             Main.tileNoAttach[Type] = true;
             TileObjectData.newTile.Width = 2;
             TileObjectData.newTile.Height = 2;
@@ -38,9 +38,9 @@ namespace Redemption.Tiles.Furniture.Lab
             MineResist = 4f;
             RegisterItemDrop(ModContent.ItemType<LabIntercom>());
             LocalizedText name = CreateMapEntryName();
-			// name.SetDefault("Laboratory Intercom");
-			AddMapEntry(new Color(145, 153, 159), name);
-		}
+            // name.SetDefault("Laboratory Intercom");
+            AddMapEntry(new Color(145, 153, 159), name);
+        }
         public override bool CanExplode(int i, int j) => false;
     }
 }

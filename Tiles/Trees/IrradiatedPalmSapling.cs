@@ -52,8 +52,7 @@ namespace Redemption.Tiles.Trees
             if (!WorldGen.genRand.NextBool(20))
                 return;
 
-            bool growSucess;
-            growSucess = WorldGen.GrowPalmTree(i, j);
+            bool growSucess = WorldGen.GrowPalmTree(i, j);
             bool isPlayerNear = WorldGen.PlayerLOS(i, j);
             if (growSucess && isPlayerNear)
                 WorldGen.TreeGrowFXCheck(i, j);

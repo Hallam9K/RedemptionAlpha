@@ -1,33 +1,33 @@
 using Microsoft.Xna.Framework;
-using Terraria;
-using Terraria.ModLoader;
-using Terraria.ID;
-using System;
-using Redemption.Items.Usable;
-using Terraria.DataStructures;
 using Redemption.Globals;
+using Redemption.Items.Usable;
+using System;
+using Terraria;
+using Terraria.DataStructures;
+using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace Redemption.Tiles.Tiles
 {
     public class AncientGoldCoinPileTile : ModTile
-	{
-		public override void SetStaticDefaults()
-		{
-			Main.tileSolid[Type] = false;
-			Main.tileMergeDirt[Type] = false;
+    {
+        public override void SetStaticDefaults()
+        {
+            Main.tileSolid[Type] = false;
+            Main.tileMergeDirt[Type] = false;
             Main.tileLighted[Type] = false;
             Main.tileBlockLight[Type] = false;
             Main.tileShine[Type] = 1100;
-            TileID.Sets.IsBeam[Type] = true;
+            TileID.Sets.CanPlaceNextToNonSolidTile[Type] = true;
             TileID.Sets.Falling[Type] = true;
             DustType = DustID.GoldCoin;
             HitSound = SoundID.Coins;
             AddMapEntry(new Color(208, 200, 48));
         }
         public override void NumDust(int i, int j, bool fail, ref int num)
-		{
-			num = fail ? 1 : 3;
-		}
+        {
+            num = fail ? 1 : 3;
+        }
         public override bool TileFrame(int i, int j, ref bool resetFrame, ref bool noBreak)
         {
             if (WorldGen.noTileActions)

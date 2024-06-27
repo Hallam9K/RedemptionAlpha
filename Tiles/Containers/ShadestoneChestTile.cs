@@ -14,7 +14,7 @@ using Terraria.ObjectData;
 namespace Redemption.Tiles.Containers
 {
     public class ShadestoneChestTile : ModTile
-	{
+    {
         public override void SetStaticDefaults()
         {
             // Properties

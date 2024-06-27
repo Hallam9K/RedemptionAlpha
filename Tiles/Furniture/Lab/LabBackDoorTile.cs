@@ -10,11 +10,11 @@ using Terraria.ObjectData;
 namespace Redemption.Tiles.Furniture.Lab
 {
     public class LabBackDoorTile : ModTile
-	{
+    {
         public override void SetStaticDefaults()
-		{
-			Main.tileFrameImportant[Type] = true;
-			Main.tileLavaDeath[Type] = false;
+        {
+            Main.tileFrameImportant[Type] = true;
+            Main.tileLavaDeath[Type] = false;
             Main.tileNoAttach[Type] = true;
             TileID.Sets.FramesOnKillWall[Type] = true;
             TileObjectData.newTile.Width = 4;
@@ -27,7 +27,7 @@ namespace Redemption.Tiles.Furniture.Lab
             TileObjectData.newTile.AnchorWall = true;
             TileObjectData.addTile(Type);
             DustType = ModContent.DustType<LabPlatingDust>();
-            MinPick = 1000;
+            MinPick = 5000;
             MineResist = 13f;
             LocalizedText name = CreateMapEntryName();
             // name.SetDefault("Laboratory Door");

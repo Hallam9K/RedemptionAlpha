@@ -1,10 +1,10 @@
 using Microsoft.Xna.Framework;
-using Terraria;
-using Terraria.ModLoader;
 using Redemption.Dusts.Tiles;
-using Redemption.Items.Tools.PostML;
 using Redemption.Globals;
+using Redemption.Items.Tools.PostML;
+using Terraria;
 using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace Redemption.Tiles.Tiles
 {
@@ -17,7 +17,7 @@ namespace Redemption.Tiles.Tiles
             Main.tileBlockLight[Type] = true;
             DustType = ModContent.DustType<LabPlatingDust>();
             TileID.Sets.DisableSmartCursor[Type] = true;
-            MinPick = 1000;
+            MinPick = 5000;
             MineResist = 7f;
             HitSound = CustomSounds.MetalHit;
             AddMapEntry(new Color(72, 70, 79));

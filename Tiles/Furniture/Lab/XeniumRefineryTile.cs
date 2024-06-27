@@ -10,11 +10,11 @@ using Terraria.ObjectData;
 namespace Redemption.Tiles.Furniture.Lab
 {
     public class XeniumRefineryTile : ModTile
-	{
-		public override void SetStaticDefaults()
-		{
-			Main.tileFrameImportant[Type] = true;
-			Main.tileLavaDeath[Type] = false;
+    {
+        public override void SetStaticDefaults()
+        {
+            Main.tileFrameImportant[Type] = true;
+            Main.tileLavaDeath[Type] = false;
             Main.tileNoAttach[Type] = true;
             Main.tileLighted[Type] = true;
             TileObjectData.newTile.Width = 4;
@@ -29,10 +29,10 @@ namespace Redemption.Tiles.Furniture.Lab
             DustType = DustID.Electric;
             MinPick = 200;
             MineResist = 6f;
-			LocalizedText name = CreateMapEntryName();
-			// name.SetDefault("Xenium Refinery");
-			AddMapEntry(new Color(54, 193, 59), name);
-		}
+            LocalizedText name = CreateMapEntryName();
+            // name.SetDefault("Xenium Refinery");
+            AddMapEntry(new Color(56, 122, 210), name);
+        }
         public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)
         {
             r = 0.0f;

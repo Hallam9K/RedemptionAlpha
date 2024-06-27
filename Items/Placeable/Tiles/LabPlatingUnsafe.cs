@@ -9,7 +9,7 @@ namespace Redemption.Items.Placeable.Tiles
     {
         public override void SetStaticDefaults()
         {
-            // DisplayName.SetDefault("Laboratory Panel (Unsafe)");
+            ItemID.Sets.DrawUnsafeIndicator[Type] = true;
         }
         public override void SetDefaults()
         {

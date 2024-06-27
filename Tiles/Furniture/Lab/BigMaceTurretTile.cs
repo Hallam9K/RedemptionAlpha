@@ -11,11 +11,11 @@ using Terraria.ObjectData;
 namespace Redemption.Tiles.Furniture.Lab
 {
     public class BigMaceTurretTile : ModTile
-	{
-		public override void SetStaticDefaults()
-		{
-			Main.tileFrameImportant[Type] = true;
-			Main.tileLavaDeath[Type] = false;
+    {
+        public override void SetStaticDefaults()
+        {
+            Main.tileFrameImportant[Type] = true;
+            Main.tileLavaDeath[Type] = false;
             Main.tileNoAttach[Type] = true;
             TileObjectData.newTile.Width = 1;
             TileObjectData.newTile.Height = 4;
@@ -35,12 +35,12 @@ namespace Redemption.Tiles.Furniture.Lab
             TileObjectData.addAlternate(1);
             TileObjectData.addTile(Type);
             DustType = DustID.Electric;
-            MinPick = 1000;
+            MinPick = 5000;
             MineResist = 20f;
             LocalizedText name = CreateMapEntryName();
-			// name.SetDefault("Laboratory MACE Turret");
-			AddMapEntry(new Color(110, 106, 120), name);
-		}
+            // name.SetDefault("Laboratory MACE Turret");
+            AddMapEntry(new Color(110, 106, 120), name);
+        }
         public override bool CanExplode(int i, int j) => false;
         public override void NearbyEffects(int i, int j, bool closer)
         {
@@ -71,13 +71,7 @@ namespace Redemption.Tiles.Furniture.Lab
     }
     public class BigMaceTurret : PlaceholderTile
     {
-        public override string Texture => Redemption.PLACEHOLDER_TEXTURE;
-        public override void SetSafeStaticDefaults()
-        {
-            // DisplayName.SetDefault("Laboratory MACE Turret");
-            // Tooltip.SetDefault("[c/ff0000:Unbreakable (500% Pickaxe Power)]");
-        }
-
+        public override string Texture => "Redemption/Tiles/Placeholder/BigMaceTurret";
         public override void SetDefaults()
         {
             base.SetDefaults();

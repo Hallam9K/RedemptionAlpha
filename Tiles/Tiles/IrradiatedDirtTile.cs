@@ -31,6 +31,7 @@ namespace Redemption.Tiles.Tiles
             Main.tileMerge[TileID.CrimsonGrass][Type] = true;
             Main.tileMerge[Type][TileID.HallowedGrass] = true;
             Main.tileMerge[TileID.HallowedGrass][Type] = true;
+            TileID.Sets.Conversion.Dirt[Type] = true;
             TileID.Sets.ChecksForMerge[Type] = true;
             TileID.Sets.CanBeClearedDuringOreRunner[Type] = true;
             TileID.Sets.CanBeDugByShovel[Type] = true;

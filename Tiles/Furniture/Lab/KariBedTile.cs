@@ -27,7 +27,7 @@ namespace Redemption.Tiles.Furniture.Lab
             TileObjectData.newTile.AnchorBottom = new AnchorData(AnchorType.SolidTile | AnchorType.SolidWithTop | AnchorType.SolidSide, TileObjectData.newTile.Width, 0);
             TileObjectData.addTile(Type);
             DustType = DustID.GreenBlood;
-            MinPick = 1000;
+            MinPick = 5000;
             MineResist = 3f;
             LocalizedText name = CreateMapEntryName();
             // name.SetDefault("Kari's Hospital Bed");
@@ -43,13 +43,7 @@ namespace Redemption.Tiles.Furniture.Lab
     }
     public class KariBed : PlaceholderTile
     {
-        public override string Texture => Redemption.PLACEHOLDER_TEXTURE;
-        public override void SetSafeStaticDefaults()
-        {
-            // DisplayName.SetDefault("Kari's Hospital Bed");
-            // Tooltip.SetDefault("[c/ff0000:Unbreakable]");
-        }
-
+        public override string Texture => "Redemption/Tiles/Placeholder/KariBed";
         public override void SetDefaults()
         {
             base.SetDefaults();

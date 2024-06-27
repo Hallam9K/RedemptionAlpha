@@ -1,19 +1,21 @@
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using Redemption.Globals;
+using Redemption.Items.Placeable.Furniture.Lab;
 using Terraria;
-using Terraria.ID;
+using Terraria.DataStructures;
 using Terraria.Enums;
+using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
-using Terraria.DataStructures;
-using Redemption.Items.Placeable.Furniture.Lab;
 
 namespace Redemption.Tiles.Furniture.Lab
 {
     public class LabCeilingLampTile : ModTile
-	{
-		public override void SetStaticDefaults()
-		{
+    {
+        public override void SetStaticDefaults()
+        {
             Main.tileLighted[Type] = true;
             Main.tileFrameImportant[Type] = true;
             Main.tileLavaDeath[Type] = true;
@@ -26,8 +28,8 @@ namespace Redemption.Tiles.Furniture.Lab
             TileObjectData.newTile.StyleHorizontal = false;
             TileObjectData.newTile.StyleLineSkip = 2;
             TileObjectData.addTile(Type);
-			LocalizedText name = CreateMapEntryName();
-			// name.SetDefault("Laboratory Ceiling Lamp");
+            LocalizedText name = CreateMapEntryName();
+            // name.SetDefault("Laboratory Ceiling Lamp");
             AddMapEntry(new Color(189, 191, 200), name);
             DustType = DustID.Electric;
             AdjTiles = new int[] { TileID.Chandeliers };
@@ -40,7 +42,7 @@ namespace Redemption.Tiles.Furniture.Lab
             int top = j - Main.tile[i, j].TileFrameY / 18 % 2;
             for (int x = left; x < left + 3; x++)
             {
-                for (int y = top; y < top + 3; y++)
+                for (int y = top; y < top + 2; y++)
                 {
                     if (Main.tile[x, y].TileFrameX >= 54)
                         Main.tile[x, y].TileFrameX -= 54;
@@ -69,6 +71,10 @@ namespace Redemption.Tiles.Furniture.Lab
                 g = 0.6f;
                 b = 0.8f;
             }
+        }
+        public override void PostDraw(int i, int j, SpriteBatch spriteBatch)
+        {
+            RedeTileHelper.SimpleGlowmask(i, j, Color.White * Main.rand.NextFloat(.8f, 1f), Texture);
         }
     }
 }

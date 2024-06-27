@@ -9,11 +9,11 @@ using Terraria.ObjectData;
 namespace Redemption.Tiles.Furniture.Lab
 {
     public class LargeVentTile : ModTile
-	{
-		public override void SetStaticDefaults()
-		{
-			Main.tileFrameImportant[Type] = true;
-			Main.tileLavaDeath[Type] = false;
+    {
+        public override void SetStaticDefaults()
+        {
+            Main.tileFrameImportant[Type] = true;
+            Main.tileLavaDeath[Type] = false;
             Main.tileNoAttach[Type] = true;
             TileID.Sets.FramesOnKillWall[Type] = true;
             TileObjectData.newTile.Width = 3;
@@ -28,8 +28,8 @@ namespace Redemption.Tiles.Furniture.Lab
             DustType = ModContent.DustType<LabPlatingDust>();
             MinPick = 200;
             MineResist = 5f;
-			AddMapEntry(new Color(99, 105, 117));
-		}
+            AddMapEntry(new Color(99, 105, 117));
+        }
         public override bool CanExplode(int i, int j) => false;
     }
 }

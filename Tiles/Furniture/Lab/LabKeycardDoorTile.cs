@@ -1,14 +1,14 @@
-using Terraria.DataStructures;
 using Microsoft.Xna.Framework;
+using Redemption.Globals;
+using Redemption.Items.Usable;
 using Terraria;
+using Terraria.Audio;
+using Terraria.DataStructures;
+using Terraria.Enums;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
-using Terraria.Enums;
-using Redemption.Items.Usable;
-using Terraria.Audio;
-using Redemption.Globals;
 
 namespace Redemption.Tiles.Furniture.Lab
 {
@@ -46,7 +46,7 @@ namespace Redemption.Tiles.Furniture.Lab
             LocalizedText name = CreateMapEntryName();
             // name.SetDefault("Keycard Door");
             AddMapEntry(new Color(189, 191, 200), name);
-            MinPick = 1000;
+            MinPick = 5000;
             MineResist = 20f;
             DustType = DustID.Electric;
             AdjTiles = new int[] { TileID.ClosedDoor };
@@ -131,7 +131,7 @@ namespace Redemption.Tiles.Furniture.Lab
             LocalizedText name = CreateMapEntryName();
             // name.SetDefault("Keycard Door");
             AddMapEntry(new Color(189, 191, 200), name);
-            MinPick = 1000;
+            MinPick = 5000;
             MineResist = 20f;
             DustType = DustID.Electric;
             AdjTiles = new int[] { TileID.OpenDoor };
@@ -153,13 +153,7 @@ namespace Redemption.Tiles.Furniture.Lab
     }
     public class LabKeycardDoor : PlaceholderTile
     {
-        public override string Texture => Redemption.PLACEHOLDER_TEXTURE;
-        public override void SetSafeStaticDefaults()
-        {
-            // DisplayName.SetDefault("Keycard Door");
-            /* Tooltip.SetDefault("Opens using a Keycard" +
-                "\n[c/ff0000:Unbreakable (500% Pickaxe Power)]"); */
-        }
+        public override string Texture => "Redemption/Tiles/Placeholder/LabKeycardDoor";
         public override void SetDefaults()
         {
             base.SetDefaults();

@@ -1,7 +1,7 @@
 using Redemption.Items.Placeable.Furniture.PetrifiedWood;
 using Redemption.Tiles.Tiles;
-using Terraria.ID;
 using Terraria;
+using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Redemption.Items.Placeable.Tiles

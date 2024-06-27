@@ -13,7 +13,7 @@ using Terraria.ObjectData;
 namespace Redemption.Tiles.Furniture.Lab
 {
     public class LabDoorClosed : ModTile
-	{
+    {
         public override void SetStaticDefaults()
         {
             // Properties

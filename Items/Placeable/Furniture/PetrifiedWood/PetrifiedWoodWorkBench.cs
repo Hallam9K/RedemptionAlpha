@@ -1,6 +1,6 @@
 using Redemption.Tiles.Furniture.PetrifiedWood;
-using Terraria.ModLoader;
 using Terraria;
+using Terraria.ModLoader;
 
 namespace Redemption.Items.Placeable.Furniture.PetrifiedWood
 {

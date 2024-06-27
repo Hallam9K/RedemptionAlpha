@@ -21,9 +21,10 @@ namespace Redemption.Tiles.Bars
             TileObjectData.newTile.LavaDeath = false;
             TileObjectData.addTile(Type);
 
-            AddMapEntry(new Color(48, 63, 73), Language.GetText("MapObject.MetalBar"));
+            AddMapEntry(new Color(48, 63, 73), Language.GetText("ItemName.Bar"));
             DustType = DustID.Electric;
             HitSound = SoundID.Tink;
         }
+        public override void NumDust(int i, int j, bool fail, ref int num) => num = fail ? 3 : 10;
     }
 }

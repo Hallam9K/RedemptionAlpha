@@ -32,7 +32,7 @@ namespace Redemption.Tiles.Furniture.Lab
             LocalizedText name = CreateMapEntryName();
             // name.SetDefault("Reinforced Door");
             AddMapEntry(new Color(110, 106, 120), name);
-            MinPick = 1000;
+            MinPick = 5000;
             MineResist = 10f;
             DustType = ModContent.DustType<LabPlatingDust>();
             AnimationFrameHeight = 54;
@@ -64,13 +64,7 @@ namespace Redemption.Tiles.Furniture.Lab
     }
     public class LabBossDoor : PlaceholderTile
     {
-        public override string Texture => Redemption.PLACEHOLDER_TEXTURE;
-        public override void SetSafeStaticDefaults()
-        {
-            // DisplayName.SetDefault("Vertical Reinforced Lab Door");
-            /* Tooltip.SetDefault("Closes when a boss is active" +
-                "\n[c/ff0000:Unbreakable]"); */
-        }
+        public override string Texture => "Redemption/Tiles/Placeholder/LabBossDoor";
         public override void SetDefaults()
         {
             base.SetDefaults();
@@ -99,7 +93,7 @@ namespace Redemption.Tiles.Furniture.Lab
             LocalizedText name = CreateMapEntryName();
             // name.SetDefault("Reinforced Door");
             AddMapEntry(new Color(110, 106, 120), name);
-            MinPick = 1000;
+            MinPick = 5000;
             MineResist = 10f;
             DustType = ModContent.DustType<LabPlatingDust>();
             AnimationFrameHeight = 18;
@@ -131,13 +125,7 @@ namespace Redemption.Tiles.Furniture.Lab
     }
     public class LabBossDoorH : PlaceholderTile
     {
-        public override string Texture => Redemption.PLACEHOLDER_TEXTURE;
-        public override void SetSafeStaticDefaults()
-        {
-            // DisplayName.SetDefault("Horizontal Reinforced Lab Door");
-            /* Tooltip.SetDefault("Closes when any of the Lab Minibosses/Bosses are active" +
-                "\n[c/ff0000:Unbreakable]"); */
-        }
+        public override string Texture => "Redemption/Tiles/Placeholder/LabBossDoor";
         public override void SetDefaults()
         {
             base.SetDefaults();

@@ -150,7 +150,7 @@ namespace Redemption.Globals
             if (!Main.LocalPlayer.RedemptionAbility().SpiritwalkerActive)
                 return;
 
-            Asset<Texture2D> flare = ModContent.Request<Texture2D>("Redemption/Textures/WhiteFlare");
+            Asset<Texture2D> flare = CommonTextures.WhiteFlare;
             Vector2 zero = new(Main.offScreenRange, Main.offScreenRange);
             if (Main.drawToScreen)
                 zero = Vector2.Zero;
@@ -164,6 +164,34 @@ namespace Redemption.Globals
                 spriteBatch.Draw(flare.Value, new Vector2(((i + xOffset) * 16) - (int)Main.screenPosition.X, ((j + yOffset) * 16) - (int)Main.screenPosition.Y) + zero, null, RedeColor.COLOR_GLOWPULSE with { A = 0 }, Main.GlobalTimeWrappedHourly, origin, scale, 0, 1f);
                 spriteBatch.Draw(flare.Value, new Vector2(((i + xOffset) * 16) - (int)Main.screenPosition.X, ((j + yOffset) * 16) - (int)Main.screenPosition.Y) + zero, null, RedeColor.COLOR_GLOWPULSE with { A = 0 }, -Main.GlobalTimeWrappedHourly, origin, scale, 0, 1f);
             }
+        }
+        public static void SimpleGlowmask(int i, int j, Color color, string texture)
+        {
+            Tile tile = Framing.GetTileSafely(i, j);
+            if (!TileDrawing.IsVisible(tile))
+                return;
+            Vector2 zero = new(Main.offScreenRange, Main.offScreenRange);
+            if (Main.drawToScreen)
+                zero = Vector2.Zero;
+
+            int height = tile.TileFrameY == 36 ? 18 : 16;
+            Main.spriteBatch.Draw(ModContent.Request<Texture2D>(texture + "_Glow").Value, new Vector2((i * 16) - (int)Main.screenPosition.X, (j * 16) - (int)Main.screenPosition.Y) + zero, new Rectangle(tile.TileFrameX, tile.TileFrameY, 16, height), color, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
+        }
+        public static void SimpleGlowmask(int i, int j, Color color, string tex, int animFrameHeight, int type, int offset = 0)
+        {
+            Tile tile = Framing.GetTileSafely(i, j);
+            if (!TileDrawing.IsVisible(tile))
+                return;
+            Vector2 zero = new(Main.offScreenRange, Main.offScreenRange);
+            if (Main.drawToScreen)
+                zero = Vector2.Zero;
+
+            int height = tile.TileFrameY % animFrameHeight >= 16 ? 18 : 16;
+            int animate = Main.tileFrame[type] * animFrameHeight;
+
+            Texture2D texture = ModContent.Request<Texture2D>(tex + "_Glow").Value;
+            Rectangle frame = new(tile.TileFrameX, tile.TileFrameY + animate, 16, height);
+            Main.spriteBatch.Draw(texture, new Vector2((i * 16) - (int)Main.screenPosition.X, (j * 16) - offset - (int)Main.screenPosition.Y) + zero, frame, color, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
         }
     }
 }

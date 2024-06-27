@@ -1,7 +1,7 @@
 using Microsoft.Xna.Framework;
 using Terraria;
-using Terraria.ModLoader;
 using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace Redemption.Tiles.Tiles
 {
@@ -24,7 +24,7 @@ namespace Redemption.Tiles.Tiles
             Main.tileMerge[Type][ModContent.TileType<OvergrownLabPlatingTile2>()] = true;
             Main.tileMerge[ModContent.TileType<OvergrownLabPlatingTile2>()][Type] = true;
             DustType = DustID.Electric;
-            MinPick = 1000;
+            MinPick = 5000;
             MineResist = 3f;
             HitSound = SoundID.Tink;
             AddMapEntry(new Color(49, 49, 52));

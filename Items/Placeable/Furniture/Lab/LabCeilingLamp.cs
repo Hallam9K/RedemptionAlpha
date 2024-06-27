@@ -1,14 +1,14 @@
 using Redemption.Items.Materials.HM;
 using Redemption.Items.Placeable.Tiles;
 using Redemption.Tiles.Furniture.Lab;
-using Terraria.ID;
 using Terraria;
+using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Redemption.Items.Placeable.Furniture.Lab
 {
     public class LabCeilingLamp : ModItem
-	{
+    {
         public override void SetStaticDefaults()
         {
             // DisplayName.SetDefault("Laboratory Ceiling Lamp");
@@ -22,7 +22,7 @@ namespace Redemption.Items.Placeable.Furniture.Lab
             Item.maxStack = Item.CommonMaxStack;
             Item.value = 9000;
             Item.rare = ItemRarityID.LightPurple;
-		}
+        }
         public override void AddRecipes()
         {
             CreateRecipe()

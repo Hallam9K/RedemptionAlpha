@@ -1,12 +1,12 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Redemption.Base;
+using Redemption.Globals;
 using System;
 using Terraria;
-using Terraria.GameContent;
-using Redemption.Base;
 using Terraria.Audio;
+using Terraria.GameContent;
 using Terraria.ID;
-using Redemption.Globals;
 
 namespace Redemption.NPCs.Bosses.Cleaver
 {
@@ -63,7 +63,7 @@ namespace Redemption.NPCs.Bosses.Cleaver
             }
 
             Projectile.rotation = Projectile.velocity.ToRotation();
-            Projectile.velocity = Vector2.Normalize(Projectile.velocity);        
+            Projectile.velocity = Vector2.Normalize(Projectile.velocity);
 
             #endregion
 

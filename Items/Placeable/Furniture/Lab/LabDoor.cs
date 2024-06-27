@@ -1,7 +1,7 @@
 using Redemption.Items.Placeable.Tiles;
 using Redemption.Tiles.Furniture.Lab;
-using Terraria.ID;
 using Terraria;
+using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Redemption.Items.Placeable.Furniture.Lab

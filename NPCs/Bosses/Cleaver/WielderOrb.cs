@@ -1,9 +1,9 @@
 using Microsoft.Xna.Framework;
+using Redemption.Globals;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Redemption.Globals;
 
 namespace Redemption.NPCs.Bosses.Cleaver
 {

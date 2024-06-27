@@ -6,19 +6,19 @@ using Terraria.ModLoader;
 namespace Redemption.Items.Placeable.Furniture.Lab
 {
     public class ElectricitySign : ModItem
-	{
+    {
         public override void SetStaticDefaults()
         {
             Item.ResearchUnlockCount = 1;
         }
         public override void SetDefaults()
-		{
+        {
             Item.DefaultToPlaceableTile(ModContent.TileType<ElectricitySignTile>(), 0);
             Item.width = 28;
             Item.height = 28;
             Item.value = 100;
             Item.rare = ItemRarityID.LightPurple;
-		}
+        }
         public override void AddRecipes()
         {
             CreateRecipe(2)

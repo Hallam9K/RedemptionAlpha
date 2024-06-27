@@ -1,8 +1,8 @@
+using System;
 using Terraria;
+using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
-using System;
-using Terraria.Audio;
 
 namespace Redemption.NPCs.Bosses.Cleaver
 {

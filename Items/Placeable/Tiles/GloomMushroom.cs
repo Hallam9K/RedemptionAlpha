@@ -1,8 +1,8 @@
-using Terraria.ID;
-using Terraria;
-using Terraria.ModLoader;
-using Redemption.Tiles.Tiles;
 using Redemption.Items.Materials.PreHM;
+using Redemption.Tiles.Tiles;
+using Terraria;
+using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace Redemption.Items.Placeable.Tiles
 {

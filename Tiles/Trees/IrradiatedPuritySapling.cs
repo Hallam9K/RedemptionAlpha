@@ -13,9 +13,9 @@ using Terraria.ObjectData;
 namespace Redemption.Tiles.Trees
 {
     public class IrradiatedPuritySapling : ModTile
-	{
-		public override void SetStaticDefaults()
-		{
+    {
+        public override void SetStaticDefaults()
+        {
             Main.tileFrameImportant[Type] = true;
             Main.tileNoAttach[Type] = true;
             Main.tileLavaDeath[Type] = true;
@@ -45,24 +45,23 @@ namespace Redemption.Tiles.Trees
             TileMaterials.SetForTileId(Type, TileMaterials._materialsByName["Plant"]);
             DustType = DustID.Ash;
             AdjTiles = new int[] { TileID.Saplings };
-		}
-		public override void NumDust(int i, int j, bool fail, ref int num) => num = fail ? 1 : 3;
-		public override void RandomUpdate(int i, int j)
-		{
-			if (!WorldGen.genRand.NextBool(20))
-				return;
+        }
+        public override void NumDust(int i, int j, bool fail, ref int num) => num = fail ? 1 : 3;
+        public override void RandomUpdate(int i, int j)
+        {
+            if (!WorldGen.genRand.NextBool(20))
+                return;
 
-			bool growSucess;
-			growSucess = WorldGen.GrowTree(i, j);
-			bool isPlayerNear = WorldGen.PlayerLOS(i, j);
-			if (growSucess && isPlayerNear)
-				WorldGen.TreeGrowFXCheck(i, j);
-		}
+            bool growSucess = WorldGen.GrowTree(i, j);
+            bool isPlayerNear = WorldGen.PlayerLOS(i, j);
+            if (growSucess && isPlayerNear)
+                WorldGen.TreeGrowFXCheck(i, j);
+        }
 
-		public override void SetSpriteEffects(int i, int j, ref SpriteEffects effects)
-		{
-			if (i % 2 == 1)
-				effects = SpriteEffects.FlipHorizontally;
-		}
-	}
+        public override void SetSpriteEffects(int i, int j, ref SpriteEffects effects)
+        {
+            if (i % 2 == 1)
+                effects = SpriteEffects.FlipHorizontally;
+        }
+    }
 }

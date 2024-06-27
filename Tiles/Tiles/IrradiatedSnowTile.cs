@@ -19,6 +19,7 @@ namespace Redemption.Tiles.Tiles
             Main.tileBlendAll[Type] = true;
             Main.tileBlockLight[Type] = true;
             Main.tileBrick[Type] = true;
+            TileID.Sets.Conversion.Snow[Type] = true;
             TileID.Sets.IcesSnow[Type] = true;
             TileID.Sets.ChecksForMerge[Type] = true;
             TileID.Sets.CanBeDugByShovel[Type] = true;

@@ -6,11 +6,11 @@ using Terraria.ObjectData;
 namespace Redemption.Tiles.Furniture.SlayerShip
 {
     public class SlayerHullPlatingTile : ModTile
-	{
+    {
         public override void SetStaticDefaults()
-		{
-			Main.tileFrameImportant[Type] = true;
-			Main.tileLavaDeath[Type] = false;
+        {
+            Main.tileFrameImportant[Type] = true;
+            Main.tileLavaDeath[Type] = false;
             Main.tileNoAttach[Type] = true;
             TileObjectData.newTile.Width = 4;
             TileObjectData.newTile.Height = 3;
@@ -23,7 +23,7 @@ namespace Redemption.Tiles.Furniture.SlayerShip
             DustType = 7;
             MinPick = 200;
             MineResist = 7f;
-			AddMapEntry(new Color(189, 191, 200));
+            AddMapEntry(new Color(189, 191, 200));
         }
     }
 }

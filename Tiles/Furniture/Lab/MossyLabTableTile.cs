@@ -1,11 +1,11 @@
 using Microsoft.Xna.Framework;
+using Redemption.Dusts.Tiles;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
-using Terraria.DataStructures;
-using Redemption.Dusts.Tiles;
 
 namespace Redemption.Tiles.Furniture.Lab
 {
@@ -39,19 +39,5 @@ namespace Redemption.Tiles.Furniture.Lab
         }
 
         public override void NumDust(int i, int j, bool fail, ref int num) => num = fail ? 1 : 3;
-    }
-    public class MossyLabTable : PlaceholderTile
-    {
-        public override string Texture => Redemption.PLACEHOLDER_TEXTURE;
-        public override void SetSafeStaticDefaults()
-        {
-            // DisplayName.SetDefault("Mossy Laboratory Table");
-        }
-
-        public override void SetDefaults()
-        {
-            base.SetDefaults();
-            Item.createTile = ModContent.TileType<MossyLabTableTile>();
-        }
     }
 }

@@ -1,12 +1,12 @@
 using Microsoft.Xna.Framework;
+using Redemption.Items.Placeable.Furniture.Lab;
 using Terraria;
-using Terraria.ID;
+using Terraria.DataStructures;
 using Terraria.Enums;
+using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
-using Terraria.DataStructures;
-using Redemption.Items.Placeable.Furniture.Lab;
 
 namespace Redemption.Tiles.Furniture.Lab
 {

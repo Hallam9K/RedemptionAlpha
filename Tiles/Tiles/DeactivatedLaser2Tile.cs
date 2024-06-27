@@ -1,19 +1,20 @@
 using Terraria;
-using Terraria.ModLoader;
 using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace Redemption.Tiles.Tiles
 {
     public class DeactivatedLaser2Tile : ModTile
-	{
+    {
         public override void SetStaticDefaults()
         {
             Main.tileSolid[Type] = false;
             Main.tileMergeDirt[Type] = false;
             Main.tileLighted[Type] = false;
+            TileID.Sets.CanPlaceNextToNonSolidTile[Type] = true;
             TileID.Sets.DisableSmartCursor[Type] = true;
             DustType = DustID.Electric;
-            MinPick = 1000;
+            MinPick = 5000;
             MineResist = 3f;
             HitSound = SoundID.Tink;
         }

@@ -1,5 +1,7 @@
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Redemption.Dusts.Tiles;
+using Redemption.Globals;
 using Redemption.Items.Placeable.Furniture.Lab;
 using Terraria;
 using Terraria.DataStructures;
@@ -50,6 +52,10 @@ namespace Redemption.Tiles.Furniture.Lab
                 if (frame > 1)
                     frame = 0;
             }
+        }
+        public override void PostDraw(int i, int j, SpriteBatch spriteBatch)
+        {
+            RedeTileHelper.SimpleGlowmask(i, j, Color.White * Main.rand.NextFloat(.8f, 1f), Texture, AnimationFrameHeight, Type);
         }
         public override bool CanExplode(int i, int j) => false;
     }

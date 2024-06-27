@@ -1,6 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
 using Redemption.Globals;
-using Redemption.NPCs.Friendly;
 using Redemption.NPCs.Friendly.TownNPCs;
 using Terraria;
 using Terraria.DataStructures;
@@ -38,10 +37,12 @@ namespace Redemption.Tiles.Natural
             if (!WorldGen.gen && Main.netMode != NetmodeID.MultiplayerClient)
                 NPC.NewNPC(new EntitySource_TileBreak(i, j), (i * 16) + 32, (j * 16) + 32, ModContent.NPCType<Newb_Intro>());
 
-            RedeBossDowned.foundNewb = true;
-
-            if (Main.netMode == NetmodeID.Server)
-                NetMessage.SendData(MessageID.WorldData);
+            if (Main.netMode != NetmodeID.MultiplayerClient)
+            {
+                RedeBossDowned.foundNewb = true;
+                if (Main.netMode == NetmodeID.Server)
+                    NetMessage.SendData(MessageID.WorldData);
+            }
         }
         public override void NumDust(int i, int j, bool fail, ref int num)
         {
@@ -50,12 +51,7 @@ namespace Redemption.Tiles.Natural
     }
     public class NewbMoundItem : PlaceholderTile
     {
-        public override string Texture => Redemption.PLACEHOLDER_TEXTURE;
-        public override void SetSafeStaticDefaults()
-        {
-            // DisplayName.SetDefault("Newb Mound");
-        }
-
+        public override string Texture => "Redemption/Tiles/Placeholder/NewbMoundItem";
         public override void SetDefaults()
         {
             base.SetDefaults();

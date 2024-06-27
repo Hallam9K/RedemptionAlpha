@@ -6,6 +6,7 @@ using Redemption.Items.Placeable.Tiles;
 using ReLogic.Content;
 using Terraria;
 using Terraria.DataStructures;
+using Terraria.GameContent.Drawing;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -48,6 +49,8 @@ namespace Redemption.Tiles.Tiles
         public override void PostDraw(int i, int j, SpriteBatch spriteBatch)
         {
             Tile tile = Framing.GetTileSafely(i, j);
+            if (!TileDrawing.IsVisible(tile))
+                return;
             Vector2 zero = new(Main.offScreenRange, Main.offScreenRange);
             if (Main.drawToScreen)
                 zero = Vector2.Zero;
@@ -60,6 +63,11 @@ namespace Redemption.Tiles.Tiles
         }
         public override void DrawEffects(int i, int j, SpriteBatch spriteBatch, ref TileDrawInfo drawData)
         {
+            if (Main.gamePaused || !Main.instance.IsActive)
+                return;
+            Tile tile = Main.tile[i, j];
+            if (!TileDrawing.IsVisible(tile))
+                return;
             if (Main.rand.NextBool(50))
                 Dust.NewDust(new Vector2(i * 16, j * 16), 16, 16, DustID.Sandnado);
         }

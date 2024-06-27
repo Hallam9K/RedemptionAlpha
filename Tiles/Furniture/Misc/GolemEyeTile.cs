@@ -9,6 +9,7 @@ using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.Enums;
+using Terraria.GameContent.Drawing;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
@@ -68,9 +69,11 @@ namespace Redemption.Tiles.Furniture.Misc
                 Main.StartRain();
                 Main.SyncRain();
                 Main.NewLightning();
-                RedeDraw.SpawnExplosion(new Vector2(i * 16 + 8, j * 16 + 8), Color.White, noDust: true, tex: Redemption.HolyGlow3.Value);
+                RedeDraw.SpawnExplosion(new Vector2(i * 16 + 8, j * 16 + 8), Color.White, noDust: true, tex: "Redemption/Textures/HolyGlow3");
+
                 SoundEngine.PlaySound(SoundID.Item68, new Vector2(i * 16, j * 16));
-                SoundEngine.PlaySound(CustomSounds.Thunderstrike, new Vector2(i * 16, j * 16));
+                if (!Main.dedServ)
+                    SoundEngine.PlaySound(CustomSounds.Thunderstrike, new Vector2(i * 16, j * 16));
                 Main.LocalPlayer.RedemptionScreen().ScreenShakeOrigin = new Vector2(i * 16, j * 16);
                 Main.LocalPlayer.RedemptionScreen().ScreenShakeIntensity += 20;
                 Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 16, 16, ModContent.ItemType<AncientSigil>());
@@ -90,29 +93,31 @@ namespace Redemption.Tiles.Furniture.Misc
             if (!NPC.downedMoonlord)
                 return true;
 
-            Texture2D flare = Redemption.WhiteFlare.Value;
+            Texture2D flare = ModContent.Request<Texture2D>("Redemption/Textures/WhiteFlare").Value;
             Rectangle rect = new(0, 0, flare.Width, flare.Height);
             Vector2 zero = new(Main.offScreenRange, Main.offScreenRange);
             if (Main.drawToScreen)
                 zero = Vector2.Zero;
-            Vector2 origin = new(flare.Width / 2f, flare.Height / 2f);
+            Vector2 origin = flare.Size() / 2;
             Color color = BaseUtility.MultiLerpColor(Main.LocalPlayer.miscCounter % 100 / 100f, new Color(241, 215, 108), new Color(255, 255, 255), new Color(241, 215, 108));
 
             spriteBatch.End();
-            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null);
+            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullNone, null);
 
             spriteBatch.Draw(flare, new Vector2(i * 16 + 8 - (int)Main.screenPosition.X, j * 16 + 8 - (int)Main.screenPosition.Y) + zero, new Rectangle?(rect), color, Main.GlobalTimeWrappedHourly, origin, 1, 0, 1f);
             spriteBatch.Draw(flare, new Vector2(i * 16 + 8 - (int)Main.screenPosition.X, j * 16 + 8 - (int)Main.screenPosition.Y) + zero, new Rectangle?(rect), color, -Main.GlobalTimeWrappedHourly, origin, 1, 0, 1f);
 
             spriteBatch.End();
-            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null);
+            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullNone, null);
             return true;
         }
         public override void PostDraw(int i, int j, SpriteBatch spriteBatch)
         {
             if (!NPC.downedMoonlord)
                 return;
-
+            Tile tile = Main.tile[i, j];
+            if (!TileDrawing.IsVisible(tile))
+                return;
             Texture2D hint = ModContent.Request<Texture2D>("Redemption/Textures/GolemEyeHint").Value;
             Rectangle rect2 = new(0, 0, hint.Width, hint.Height);
             Vector2 zero = new(Main.offScreenRange, Main.offScreenRange);
@@ -123,12 +128,12 @@ namespace Redemption.Tiles.Furniture.Misc
             float scale = BaseUtility.MultiLerp(Main.LocalPlayer.miscCounter % 100 / 100f, 0.7f, 0.1f, 0.7f);
 
             spriteBatch.End();
-            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null);
+            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullNone, null);
 
             spriteBatch.Draw(hint, new Vector2(i * 16 + 8 - (int)Main.screenPosition.X, j * 16 + 8 - (int)Main.screenPosition.Y) + zero, new Rectangle?(rect2), color * scale, 0, origin2, 1, 0, 1f);
 
             spriteBatch.End();
-            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null);
+            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullNone, null);
         }
         public override void RandomUpdate(int i, int j)
         {

@@ -1,12 +1,13 @@
-using Terraria;
-using Terraria.ModLoader;
-using Terraria.ID;
+using Redemption.Items.Materials.HM;
 using Redemption.Tiles.Furniture.SlayerShip;
+using Terraria;
+using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace Redemption.Items.Placeable.Furniture.SlayerShip
 {
     public class Biocontainer : ModItem
-	{
+    {
         public override void SetStaticDefaults()
         {
             // DisplayName.SetDefault("Bio-Container");
@@ -16,13 +17,23 @@ namespace Redemption.Items.Placeable.Furniture.SlayerShip
             Item.ResearchUnlockCount = 1;
         }
         public override void SetDefaults()
-		{
-			Item.DefaultToPlaceableTile(ModContent.TileType<BiocontainerTile>(), 0);
-			Item.width = 32;
-			Item.height = 30;
-			Item.maxStack = Item.CommonMaxStack;
-			Item.value = Item.value = Item.sellPrice(0, 1, 0, 0);
-			Item.rare = ItemRarityID.Cyan;
-		}
-	}
+        {
+            Item.DefaultToPlaceableTile(ModContent.TileType<BiocontainerTile>(), 0);
+            Item.width = 32;
+            Item.height = 30;
+            Item.maxStack = Item.CommonMaxStack;
+            Item.value = Item.value = Item.sellPrice(0, 1, 0, 0);
+            Item.rare = ItemRarityID.Cyan;
+        }
+        public override void AddRecipes()
+        {
+            CreateRecipe()
+                .AddIngredient(ItemID.LifeFruit)
+                .AddIngredient<Cyberscrap>(3)
+                .AddIngredient(ItemID.LunarBar, 3)
+                .AddTile(TileID.LunarCraftingStation)
+                .DisableDecraft()
+                .Register();
+        }
+    }
 }

@@ -1,7 +1,7 @@
 using Microsoft.Xna.Framework;
 using Terraria;
-using Terraria.ModLoader;
 using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace Redemption.Tiles.Tiles
 {
@@ -14,11 +14,12 @@ namespace Redemption.Tiles.Tiles
             Main.tileLighted[Type] = true;
             TileID.Sets.DisableSmartCursor[Type] = true;
             DustType = DustID.Glass;
-            MinPick = 1000;
+            MinPick = 5000;
             MineResist = 3f;
             HitSound = SoundID.Tink;
             AddMapEntry(new Color(54, 193, 59));
         }
+        public override bool Slope(int i, int j) => false;
         public override void NumDust(int i, int j, bool fail, ref int num) => num = fail ? 1 : 3;
         public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)
         {

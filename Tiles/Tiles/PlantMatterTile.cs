@@ -1,17 +1,17 @@
 using Microsoft.Xna.Framework;
 using Terraria;
+using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
-using Terraria.ID;
 
 namespace Redemption.Tiles.Tiles
 {
     public class PlantMatterTile : ModTile
-	{
-		public override void SetStaticDefaults()
-		{
-			Main.tileSolid[Type] = true;
-			Main.tileMergeDirt[Type] = true;
+    {
+        public override void SetStaticDefaults()
+        {
+            Main.tileSolid[Type] = true;
+            Main.tileMergeDirt[Type] = true;
             Main.tileBrick[Type] = true;
             Main.tileMerge[Type][TileID.Mud] = true;
             Main.tileMerge[TileID.Mud][Type] = true;
@@ -33,6 +33,7 @@ namespace Redemption.Tiles.Tiles
             Main.tileMerge[TileID.MushroomGrass][Type] = true;
             Main.tileSpelunker[Type] = true;
             Main.tileBlockLight[Type] = true;
+            TileID.Sets.CanBeDugByShovel[Type] = true;
             DustType = DustID.GrassBlades;
             MinPick = 0;
             MineResist = 1f;
@@ -40,7 +41,7 @@ namespace Redemption.Tiles.Tiles
             LocalizedText name = CreateMapEntryName();
             // name.SetDefault("Plant Matter");
             AddMapEntry(new Color(109, 155, 67), name);
-		}
+        }
         public override void FloorVisuals(Player player)
         {
             if (player.velocity.X != 0f && Main.rand.NextBool(20))
@@ -51,8 +52,8 @@ namespace Redemption.Tiles.Tiles
             }
         }
         public override void NumDust(int i, int j, bool fail, ref int num)
-		{
-			num = fail ? 1 : 3;
-		}
-	}
+        {
+            num = fail ? 1 : 3;
+        }
+    }
 }

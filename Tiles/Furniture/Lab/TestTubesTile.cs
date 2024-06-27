@@ -10,11 +10,11 @@ using Terraria.ObjectData;
 namespace Redemption.Tiles.Furniture.Lab
 {
     public class TestTubesTile : ModTile
-	{
-		public override void SetStaticDefaults()
-		{
-			Main.tileFrameImportant[Type] = true;
-			Main.tileLavaDeath[Type] = false;
+    {
+        public override void SetStaticDefaults()
+        {
+            Main.tileFrameImportant[Type] = true;
+            Main.tileLavaDeath[Type] = false;
             Main.tileNoAttach[Type] = true;
             TileObjectData.newTile.Width = 1;
             TileObjectData.newTile.Height = 1;
@@ -27,9 +27,9 @@ namespace Redemption.Tiles.Furniture.Lab
             DustType = DustID.Glass;
             MinPick = 10;
             MineResist = 1f;
-			LocalizedText name = CreateMapEntryName();
-			// name.SetDefault("Test Tubes");
-			AddMapEntry(new Color(200, 246, 254), name);
+            LocalizedText name = CreateMapEntryName();
+            // name.SetDefault("Test Tubes");
+            AddMapEntry(new Color(200, 246, 254), name);
             AdjTiles = new int[] { TileID.Bottles };
         }
         public override bool CanExplode(int i, int j) => false;

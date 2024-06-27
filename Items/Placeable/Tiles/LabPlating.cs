@@ -30,7 +30,7 @@ namespace Redemption.Items.Placeable.Tiles
                 .AddIngredient(ItemID.MartianConduitPlating, 66)
                 .AddIngredient(ItemID.LunarOre)
                 .AddTile(TileID.WorkBenches)
-                .Register(); 
+                .Register();
             CreateRecipe()
                 .AddIngredient(ModContent.ItemType<LabPlatingWall>(), 4)
                 .AddTile(TileID.WorkBenches)

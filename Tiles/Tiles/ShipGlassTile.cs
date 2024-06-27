@@ -1,9 +1,9 @@
 using Microsoft.Xna.Framework;
-using Terraria;
-using Terraria.ModLoader;
-using Terraria.ID;
 using Redemption.Globals;
 using Redemption.Items.Tools.PostML;
+using Terraria;
+using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace Redemption.Tiles.Tiles
 {
@@ -16,7 +16,7 @@ namespace Redemption.Tiles.Tiles
             Main.tileBlockLight[Type] = true;
             TileID.Sets.DisableSmartCursor[Type] = true;
             DustType = DustID.Glass;
-            MinPick = 1000;
+            MinPick = 5000;
             MineResist = 7f;
             HitSound = SoundID.Tink;
             AddMapEntry(new Color(193, 255, 219));

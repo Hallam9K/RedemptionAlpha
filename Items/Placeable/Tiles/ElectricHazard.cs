@@ -12,10 +12,8 @@ namespace Redemption.Items.Placeable.Tiles
         {
             // DisplayName.SetDefault("Electric Hazard");
             Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(4, 3));
-
             Item.ResearchUnlockCount = 50;
         }
-
         public override void SetDefaults()
         {
             Item.DefaultToPlaceableTile(ModContent.TileType<ElectricHazardTile>(), 0);

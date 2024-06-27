@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Base;
+using Redemption.Globals;
 using Redemption.Items.Materials.PreHM;
 using Terraria;
 using Terraria.DataStructures;
@@ -18,6 +19,7 @@ namespace Redemption.Tiles.Furniture.Misc
         {
             Main.tileFrameImportant[Type] = true;
             Main.tileNoAttach[Type] = true;
+            RedeTileHelper.CannotMineTileBelow[Type] = true;
             TileID.Sets.HasOutlines[Type] = true;
             TileObjectData.newTile.CopyFrom(TileObjectData.Style2xX);
             TileObjectData.newTile.Height = 3;
@@ -31,7 +33,7 @@ namespace Redemption.Tiles.Furniture.Misc
             TileObjectData.newTile.Origin = new Point16(0, 2);
             TileObjectData.addTile(Type);
             DustType = 7;
-            MinPick = 1000;
+            MinPick = 5000;
             MineResist = 3f;
             HitSound = CustomSounds.StoneHit;
             LocalizedText name = CreateMapEntryName();
@@ -86,37 +88,30 @@ namespace Redemption.Tiles.Furniture.Misc
         }
         public override bool PreDraw(int i, int j, SpriteBatch spriteBatch)
         {
-            Texture2D flare = Redemption.WhiteFlare.Value;
+            Texture2D flare = ModContent.Request<Texture2D>("Redemption/Textures/WhiteFlare").Value;
             Rectangle rect = new(0, 0, flare.Width, flare.Height);
             Color color = BaseUtility.MultiLerpColor(Main.LocalPlayer.miscCounter % 100 / 100f, new Color(211, 232, 169), new Color(247, 247, 169), new Color(211, 232, 169));
             Vector2 zero = new(Main.offScreenRange, Main.offScreenRange);
             if (Main.drawToScreen)
                 zero = Vector2.Zero;
-            Vector2 origin = new(flare.Width / 2f, flare.Height / 2f);
+            Vector2 origin = flare.Size() / 2;
             if (Main.tile[i, j].TileFrameX == 0 && Main.tile[i, j].TileFrameY == 0)
             {
                 spriteBatch.End();
-                spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null);
+                spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullNone, null);
 
                 spriteBatch.Draw(flare, new Vector2(((i + 1f) * 16) - (int)Main.screenPosition.X, ((j + 1f) * 16) - (int)Main.screenPosition.Y) + zero, new Rectangle?(rect), color, Main.GlobalTimeWrappedHourly, origin, 1, 0, 1f);
                 spriteBatch.Draw(flare, new Vector2(((i + 1f) * 16) - (int)Main.screenPosition.X, ((j + 1f) * 16) - (int)Main.screenPosition.Y) + zero, new Rectangle?(rect), color, -Main.GlobalTimeWrappedHourly, origin, 1, 0, 1f);
 
                 spriteBatch.End();
-                spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null);
+                spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullNone, null);
             }
             return true;
         }
     }
     public class AncientAltar : PlaceholderTile
     {
-        public override string Texture => Redemption.PLACEHOLDER_TEXTURE;
-        public override void SetSafeStaticDefaults()
-        {
-            // DisplayName.SetDefault("Ancient Altar");
-            /* Tooltip.SetDefault("Gives the Cursed Gem" +
-                "\n[c/ff0000:Unbreakable]"); */
-        }
-
+        public override string Texture => "Redemption/Tiles/Placeholder/AncientAltar";
         public override void SetDefaults()
         {
             base.SetDefaults();

@@ -10,11 +10,11 @@ using Terraria.ObjectData;
 namespace Redemption.Tiles.Furniture.Lab
 {
     public class EmptyBotHangerTile : ModTile
-	{
-		public override void SetStaticDefaults()
-		{
-			Main.tileFrameImportant[Type] = true;
-			Main.tileLavaDeath[Type] = false;
+    {
+        public override void SetStaticDefaults()
+        {
+            Main.tileFrameImportant[Type] = true;
+            Main.tileLavaDeath[Type] = false;
             Main.tileNoAttach[Type] = true;
             TileObjectData.newTile.Width = 2;
             TileObjectData.newTile.Height = 3;
@@ -28,8 +28,8 @@ namespace Redemption.Tiles.Furniture.Lab
             DustType = ModContent.DustType<LabPlatingDust>();
             MinPick = 200;
             MineResist = 5f;
-			LocalizedText name = CreateMapEntryName();
-			// name.SetDefault("Empty Bot Hanger");
+            LocalizedText name = CreateMapEntryName();
+            // name.SetDefault("Empty Bot Hanger");
             AddMapEntry(new Color(189, 191, 200), name);
         }
         public override bool CanExplode(int i, int j) => false;

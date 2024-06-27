@@ -30,7 +30,7 @@ namespace Redemption.Tiles.Trees
         public override bool Shake(int x, int y, ref bool createLeaves) => false;
         public override int SaplingGrowthType(ref int style)
         {
-            style = 1;
+            style = 0;
             return ModContent.TileType<IrradiatedPalmSapling>();
         }
         public override Asset<Texture2D> GetOasisTopTextures()
@@ -49,5 +49,6 @@ namespace Redemption.Tiles.Trees
         {
             return DustID.Ash;
         }
+        public override int TreeLeaf() => ModContent.Find<ModGore>("Redemption/DeadTreeFX").Type;
     }
 }

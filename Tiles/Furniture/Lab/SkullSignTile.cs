@@ -1,10 +1,10 @@
 using Microsoft.Xna.Framework;
 using Redemption.Dusts.Tiles;
 using Terraria;
+using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
-using Terraria.ID;
 
 namespace Redemption.Tiles.Furniture.Lab
 {

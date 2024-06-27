@@ -19,7 +19,7 @@ namespace Redemption.Tiles.Natural
             TileObjectData.newTile.CopyFrom(TileObjectData.Style1x2Top);
             TileObjectData.newTile.DrawYOffset = -4;
             TileObjectData.newTile.AnchorValidTiles = new int[] { ModContent.TileType<IrradiatedIceTile>() };
-            TileObjectData.addTile(Type); 
+            TileObjectData.addTile(Type);
             DustType = DustID.Ice;
         }
 

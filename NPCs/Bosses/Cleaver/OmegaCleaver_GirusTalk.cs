@@ -1,7 +1,7 @@
 using Redemption.UI;
 using Terraria;
-using Terraria.ModLoader;
 using Terraria.Localization;
+using Terraria.ModLoader;
 
 namespace Redemption.NPCs.Bosses.Cleaver
 {

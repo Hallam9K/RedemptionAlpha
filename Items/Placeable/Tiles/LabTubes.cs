@@ -10,9 +10,7 @@ namespace Redemption.Items.Placeable.Tiles
     {
         public override void SetStaticDefaults()
         {
-            // DisplayName.SetDefault("Laboratory Tubes");
-            /* Tooltip.SetDefault("'Filled with green sludge'" +
-                "\n[c/ff0000:Unbreakable (500% Pickaxe Power)]"); */
+            ItemID.Sets.DrawUnsafeIndicator[Type] = true;
         }
 
         public override void SetDefaults()

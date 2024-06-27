@@ -84,13 +84,7 @@ namespace Redemption.Tiles.Furniture.Lab
     }
     public class LabCabinet : PlaceholderTile
     {
-        public override string Texture => Redemption.PLACEHOLDER_TEXTURE;
-        public override void SetSafeStaticDefaults()
-        {
-            // DisplayName.SetDefault("Laboratory Cabinet");
-            // Tooltip.SetDefault("Gives Radiation Pills");
-        }
-
+        public override string Texture => "Redemption/Tiles/Placeholder/LabCabinet";
         public override void SetDefaults()
         {
             base.SetDefaults();

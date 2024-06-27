@@ -4,6 +4,7 @@ using ReLogic.Content;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
+using Terraria.GameContent.Drawing;
 using Terraria.GameContent.ObjectInteractions;
 using Terraria.ID;
 using Terraria.Localization;
@@ -46,7 +47,8 @@ namespace Redemption.Tiles.Furniture.Misc
 
         public override void NearbyEffects(int i, int j, bool closer)
         {
-            Main.SceneMetrics.HasCampfire = true;
+            if (Main.tile[i, j].TileFrameY < 36)
+                Main.SceneMetrics.HasCampfire = true;
         }
         public override void MouseOver(int i, int j)
         {
@@ -115,6 +117,8 @@ namespace Redemption.Tiles.Furniture.Misc
             if (!Lighting.UpdateEveryFrame || new FastRandom(Main.TileFrameSeed).WithModifier(i, j).Next(4) == 0)
             {
                 Tile tile = Main.tile[i, j];
+                if (!TileDrawing.IsVisible(tile))
+                    return;
                 if (tile.TileFrameY == 0 && Main.rand.NextBool(3) && ((Main.drawToScreen && Main.rand.NextBool(4)) || !Main.drawToScreen))
                 {
                     Dust dust = Dust.NewDustDirect(new Vector2(i * 16 + 2, j * 16 - 4), 4, 8, DustID.Smoke, 0f, 0f, 100);
@@ -147,6 +151,9 @@ namespace Redemption.Tiles.Furniture.Misc
         public override void PostDraw(int i, int j, SpriteBatch spriteBatch)
         {
             var tile = Main.tile[i, j];
+            if (!TileDrawing.IsVisible(tile))
+                return;
+
             if (tile.TileFrameY < 36)
             {
                 Color color = new(255, 255, 255, 0);
@@ -167,7 +174,7 @@ namespace Redemption.Tiles.Furniture.Misc
 
                 Rectangle drawRectangle = new(tile.TileFrameX, tile.TileFrameY + addFrY, 16, 16);
 
-                Main.spriteBatch.Draw(flameTexture.Value, new Vector2(i * 16 - (int)Main.screenPosition.X, j * 16 - (int)Main.screenPosition.Y + offsetY) + zero, drawRectangle, color, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
+                spriteBatch.Draw(flameTexture.Value, new Vector2(i * 16 - (int)Main.screenPosition.X, j * 16 - (int)Main.screenPosition.Y + offsetY) + zero, drawRectangle, color, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
             }
         }
     }

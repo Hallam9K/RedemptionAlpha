@@ -1,12 +1,12 @@
 using Microsoft.Xna.Framework;
+using Redemption.Items.Usable.Potions;
 using Terraria;
-using Terraria.Localization;
-using Terraria.ModLoader;
-using Terraria.ID;
-using Terraria.ObjectData;
 using Terraria.DataStructures;
 using Terraria.Enums;
-using Redemption.Items.Usable.Potions;
+using Terraria.ID;
+using Terraria.Localization;
+using Terraria.ModLoader;
+using Terraria.ObjectData;
 
 namespace Redemption.Tiles.Furniture.Lab
 {
@@ -44,23 +44,9 @@ namespace Redemption.Tiles.Furniture.Lab
         }
         public override bool RightClick(int i, int j)
         {
-            Main.player[Main.myPlayer].PickTile(i, j, 100);
+            Main.LocalPlayer.PickTile(i, j, 100);
             return true;
         }
         public override bool CanExplode(int i, int j) => false;
-    }
-    public class RadPillDeco : PlaceholderTile
-    {
-        public override string Texture => Redemption.PLACEHOLDER_TEXTURE;
-        public override void SetSafeStaticDefaults()
-        {
-            // DisplayName.SetDefault("Radiation Pill (Deco)");
-        }
-
-        public override void SetDefaults()
-        {
-            base.SetDefaults();
-            Item.createTile = ModContent.TileType<RadiationPillTile>();
-        }
     }
 }

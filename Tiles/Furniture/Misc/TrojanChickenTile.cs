@@ -1,5 +1,4 @@
 using Microsoft.Xna.Framework;
-using Redemption.Items.Placeable.Furniture.Misc;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.Enums;
@@ -22,6 +21,8 @@ namespace Redemption.Tiles.Furniture.Misc
             TileObjectData.newTile.CoordinateHeights = new int[] { 16, 16, 16, 16, 16, 16, 16 };
             TileObjectData.newTile.Origin = new Point16(4, 6);
             TileObjectData.newTile.UsesCustomCanPlace = true;
+            TileObjectData.newTile.StyleWrapLimit = 2;
+            TileObjectData.newTile.StyleMultiplier = 2;
             TileObjectData.newTile.StyleHorizontal = true;
             TileObjectData.newTile.Direction = TileObjectDirection.PlaceLeft;
             TileObjectData.newTile.CoordinateWidth = 16;
@@ -35,7 +36,6 @@ namespace Redemption.Tiles.Furniture.Misc
             DustType = DustID.WoodFurniture;
             MinPick = 10;
             MineResist = 2f;
-            RegisterItemDrop(ModContent.ItemType<TrojanChicken>());
             LocalizedText name = CreateMapEntryName();
             // name.SetDefault("Trojan Chicken Replica");
             AddMapEntry(new Color(151, 107, 75), name);

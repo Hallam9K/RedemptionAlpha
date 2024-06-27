@@ -42,7 +42,7 @@ namespace Redemption.Items.Placeable.Tiles
                 .AddIngredient(ItemID.DirtBlock)
                 .AddIngredient(ItemID.AshBlock, 5)
                 .AddTile(TileID.Solidifier)
-                .Register(); 
+                .Register();
             CreateRecipe()
                 .AddIngredient(ModContent.ItemType<AncientDirtWall>(), 4)
                 .AddTile(TileID.WorkBenches)

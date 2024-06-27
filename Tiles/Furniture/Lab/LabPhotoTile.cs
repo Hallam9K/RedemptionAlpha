@@ -76,7 +76,7 @@ namespace Redemption.Tiles.Furniture.Lab
     }
     public class LabPhoto : PlaceholderTile
     {
-        public override string Texture => Redemption.PLACEHOLDER_TEXTURE;
+        public override string Texture => "Redemption/Tiles/Placeholder/LabPhoto";
         public override void SetDefaults()
         {
             base.SetDefaults();

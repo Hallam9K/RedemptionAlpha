@@ -1,21 +1,22 @@
 using Microsoft.Xna.Framework;
-using Terraria;
-using Terraria.ModLoader;
-using Terraria.ID;
 using Microsoft.Xna.Framework.Graphics;
+using Terraria;
+using Terraria.GameContent.Drawing;
+using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace Redemption.Tiles.Tiles
 {
     public class ElectricHazardTile : ModTile
-	{
-		public override void SetStaticDefaults()
-		{
-			Main.tileSolid[Type] = false;
-			Main.tileMergeDirt[Type] = false;
+    {
+        public override void SetStaticDefaults()
+        {
+            Main.tileSolid[Type] = false;
+            Main.tileMergeDirt[Type] = false;
             Main.tileLighted[Type] = true;
-            TileID.Sets.IsBeam[Type] = true;
+            TileID.Sets.CanPlaceNextToNonSolidTile[Type] = true;
             DustType = DustID.Electric;
-            MinPick = 310;
+            MinPick = 200;
             MineResist = 7f;
             HitSound = SoundID.Tink;
             AddMapEntry(new Color(200, 255, 255));
@@ -34,21 +35,21 @@ namespace Redemption.Tiles.Tiles
             }
         }
         public override void NumDust(int i, int j, bool fail, ref int num)
-		{
-			num = fail ? 1 : 3;
-		}
+        {
+            num = fail ? 1 : 3;
+        }
         public override void NearbyEffects(int i, int j, bool closer)
         {
             Player player = Main.LocalPlayer;
             float dist = Vector2.Distance(player.Center / 16f, new Vector2(i + 0.5f, j + 0.5f));
             if (dist <= 1)
-            {
                 player.AddBuff(BuffID.Electrified, 120);
-            }
         }
         public override void PostDraw(int i, int j, SpriteBatch spriteBatch)
         {
             Tile tile = Framing.GetTileSafely(i, j);
+            if (!TileDrawing.IsVisible(tile))
+                return;
             Texture2D texture = ModContent.Request<Texture2D>(Texture).Value;
             Vector2 zero = new(Main.offScreenRange, Main.offScreenRange);
             if (Main.drawToScreen)

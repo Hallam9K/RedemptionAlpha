@@ -1,13 +1,13 @@
 using Redemption.Items.Placeable.Tiles;
 using Redemption.Tiles.Furniture.Lab;
-using Terraria.ID;
 using Terraria;
+using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Redemption.Items.Placeable.Furniture.Lab
 {
     public class LabChair : ModItem
-	{
+    {
         public override void SetStaticDefaults()
         {
             // DisplayName.SetDefault("Laboratory Chair");
@@ -21,7 +21,7 @@ namespace Redemption.Items.Placeable.Furniture.Lab
             Item.maxStack = Item.CommonMaxStack;
             Item.value = 400;
             Item.rare = ItemRarityID.LightPurple;
-		}
+        }
         public override void AddRecipes()
         {
             CreateRecipe()

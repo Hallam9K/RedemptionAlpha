@@ -1,8 +1,8 @@
+using Redemption.Globals;
+using Redemption.Tiles.Furniture.Misc;
+using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria;
-using Redemption.Tiles.Furniture.Misc;
-using Redemption.Globals;
 
 namespace Redemption.Items.Placeable.Furniture.Misc
 {

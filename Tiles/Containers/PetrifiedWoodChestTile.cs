@@ -13,7 +13,7 @@ using Terraria.ObjectData;
 namespace Redemption.Tiles.Containers
 {
     public class PetrifiedWoodChestTile : ModTile
-	{
+    {
         public override void SetStaticDefaults()
         {
             // Properties

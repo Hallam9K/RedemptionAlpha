@@ -31,7 +31,7 @@ namespace Redemption.Tiles.Furniture.Lab
             MineResist = 5f;
             LocalizedText name = CreateMapEntryName();
             // name.SetDefault("Xenium Smelter");
-            AddMapEntry(new Color(54, 193, 59), name);
+            AddMapEntry(new Color(56, 122, 210), name);
             AnimationFrameHeight = 72;
             AdjTiles = new int[] { TileID.AdamantiteForge };
         }

@@ -1,7 +1,7 @@
 using Redemption.Items.Placeable.Tiles;
 using Redemption.Tiles.Furniture.Lab;
-using Terraria.ID;
 using Terraria;
+using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Redemption.Items.Placeable.Furniture.Lab
@@ -10,8 +10,7 @@ namespace Redemption.Items.Placeable.Furniture.Lab
     {
         public override void SetStaticDefaults()
         {
-            // DisplayName.SetDefault("Laboratory Back Door");
-            // Tooltip.SetDefault("[c/ff0000:Unbreakable (500% Pickaxe Power)]");
+            ItemID.Sets.DrawUnsafeIndicator[Type] = true;
             ItemID.Sets.DisableAutomaticPlaceableDrop[Type] = true;
         }
         public override void SetDefaults()

@@ -13,11 +13,11 @@ using Terraria.ObjectData;
 namespace Redemption.Tiles.Furniture.Misc
 {
     public class ChickenCoopTile : ModTile
-	{
+    {
         public override void SetStaticDefaults()
-		{
-			Main.tileFrameImportant[Type] = true;
-			Main.tileLavaDeath[Type] = true;
+        {
+            Main.tileFrameImportant[Type] = true;
+            Main.tileLavaDeath[Type] = true;
             Main.tileNoAttach[Type] = true;
             TileObjectData.newTile.Width = 4;
             TileObjectData.newTile.Height = 3;
@@ -32,10 +32,10 @@ namespace Redemption.Tiles.Furniture.Misc
             DustType = DustID.WoodFurniture;
             MinPick = 0;
             MineResist = 1.2f;
-			LocalizedText name = CreateMapEntryName();
+            LocalizedText name = CreateMapEntryName();
             // name.SetDefault("Chicken Coop");
             AddMapEntry(new Color(151, 107, 75), name);
-		}
+        }
         public override void RandomUpdate(int i, int j)
         {
             if (Main.rand.NextBool(8))
