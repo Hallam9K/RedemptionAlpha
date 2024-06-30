@@ -1,14 +1,14 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Terraria;
-using Terraria.GameContent;
 using Redemption.Base;
-using Terraria.ID;
+using Redemption.Buffs.Debuffs;
+using Redemption.Dusts;
 using Redemption.Globals;
 using Redemption.WorldGeneration;
-using Redemption.Buffs.Debuffs;
+using Terraria;
+using Terraria.GameContent;
+using Terraria.ID;
 using Terraria.ModLoader;
-using Redemption.Dusts;
 
 namespace Redemption.NPCs.Bosses.PatientZero
 {

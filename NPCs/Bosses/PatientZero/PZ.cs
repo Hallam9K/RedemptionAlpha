@@ -1,46 +1,47 @@
-using Terraria;
-using Terraria.ID;
-using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
-using System;
 using Microsoft.Xna.Framework.Graphics;
-using System.IO;
-using Redemption.Dusts;
-using Terraria.GameContent;
-using Redemption.Biomes;
-using Terraria.GameContent.Bestiary;
-using System.Collections.Generic;
-using Redemption.Globals;
-using Redemption.Items.Usable;
-using Terraria.GameContent.ItemDropRules;
-using Redemption.Items.Lore;
-using Terraria.Audio;
-using Terraria.GameContent.Events;
-using ReLogic.Content;
-using Redemption.Items.Placeable.Trophies;
-using Redemption.Items.Armor.Vanity;
 using Redemption.BaseExtension;
+using Redemption.Biomes;
+using Redemption.Dusts;
+using Redemption.Globals;
+using Redemption.Globals.NPC;
+using Redemption.Items.Accessories.PostML;
+using Redemption.Items.Armor.Vanity;
+using Redemption.Items.Lore;
+using Redemption.Items.Placeable.Trophies;
+using Redemption.Items.Usable;
+using Redemption.Items.Usable.Summons;
+using Redemption.Items.Weapons.PostML.Magic;
 using Redemption.Items.Weapons.PostML.Melee;
 using Redemption.Items.Weapons.PostML.Ranged;
-using Redemption.Items.Weapons.PostML.Magic;
 using Redemption.Items.Weapons.PostML.Summon;
-using Redemption.Items.Accessories.PostML;
-using Redemption.Projectiles.Magic;
-using Redemption.Items.Usable.Summons;
-using Terraria.Localization;
-using Redemption.Globals.NPC;
 using Redemption.NPCs.Friendly.TownNPCs;
+using Redemption.Projectiles.Magic;
+using Redemption.UI;
+using ReLogic.Content;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using Terraria;
+using Terraria.Audio;
+using Terraria.GameContent;
+using Terraria.GameContent.Bestiary;
+using Terraria.GameContent.Events;
+using Terraria.GameContent.ItemDropRules;
+using Terraria.ID;
+using Terraria.Localization;
+using Terraria.ModLoader;
 
 namespace Redemption.NPCs.Bosses.PatientZero
 {
     [AutoloadBossHead]
     public class PZ : ModNPC
     {
-        private static Asset<Texture2D> BodyAni;
-        private static Asset<Texture2D> BodyGlowAni;
-        private static Asset<Texture2D> EyeAni;
-        private static Asset<Texture2D> KariAni;
-        private static Asset<Texture2D> SlimeAni;
+        public static Asset<Texture2D> BodyAni;
+        public static Asset<Texture2D> BodyGlowAni;
+        public static Asset<Texture2D> EyeAni;
+        public static Asset<Texture2D> KariAni;
+        public static Asset<Texture2D> SlimeAni;
         public override void Load()
         {
             if (Main.dedServ)
@@ -50,14 +51,6 @@ namespace Redemption.NPCs.Bosses.PatientZero
             EyeAni = ModContent.Request<Texture2D>("Redemption/NPCs/Bosses/PatientZero/PZ_Pupil");
             KariAni = ModContent.Request<Texture2D>("Redemption/NPCs/Bosses/PatientZero/PZ_Kari");
             SlimeAni = ModContent.Request<Texture2D>("Redemption/NPCs/Bosses/PatientZero/PZ_Slime");
-        }
-        public override void Unload()
-        {
-            BodyAni = null;
-            BodyGlowAni = null;
-            EyeAni = null;
-            KariAni = null;
-            SlimeAni = null;
         }
         public override string Texture => "Redemption/NPCs/Bosses/PatientZero/PZ_Eyelid";
         public enum ActionState
@@ -90,7 +83,7 @@ namespace Redemption.NPCs.Bosses.PatientZero
             NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.Confused] = true;
 
 
-            NPCID.Sets.NPCBestiaryDrawModifiers value = new(0);
+            NPCID.Sets.NPCBestiaryDrawModifiers value = new();
             NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, value);
             ElementID.NPCPoison[Type] = true;
         }
@@ -223,6 +216,7 @@ namespace Redemption.NPCs.Bosses.PatientZero
         {
             writer.Write(OpenEye);
             writer.Write(Randomize);
+            writer.Write(Phase);
             writer.Write(ID);
         }
 
@@ -298,6 +292,7 @@ namespace Redemption.NPCs.Bosses.PatientZero
         }
         public override void AI()
         {
+            NPC.position = NPC.oldPosition;
             Player player = Main.player[NPC.target];
             if (NPC.DespawnHandler(2))
                 return;
@@ -311,7 +306,8 @@ namespace Redemption.NPCs.Bosses.PatientZero
                 OpenEye = false;
                 return;
             }
-
+            if (OpenEye)
+                Lighting.AddLight(NPC.Center, NPC.Opacity * .1f, NPC.Opacity * .1f, NPC.Opacity * .1f);
             if (AIState != ActionState.Death && !NPC.AnyNPCs(ModContent.NPCType<PZ_Kari>()))
                 RedeHelper.SpawnNPC(NPC.GetSource_FromAI(), (int)NPC.Center.X + 3, (int)NPC.Center.Y + 149, ModContent.NPCType<PZ_Kari>(), NPC.whoAmI);
 
@@ -777,7 +773,7 @@ namespace Redemption.NPCs.Bosses.PatientZero
                             break;
                         case 1:
                             ScreenPlayer.CutsceneLock(player, NPC, ScreenPlayer.CutscenePriority.None, 2000, 6000, 0);
-                            player.RedemptionScreen().ScreenShakeIntensity = MathHelper.Max(Main.LocalPlayer.RedemptionScreen().ScreenShakeIntensity, 5);
+                            player.RedemptionScreen().ScreenShakeIntensity = MathHelper.Max(player.RedemptionScreen().ScreenShakeIntensity, 5);
                             player.RedemptionScreen().TimedZoom(new Vector2(1.4f, 1.4f), 100, 100);
                             Terraria.Graphics.Effects.Filters.Scene["MoR:FogOverlay"]?.GetShader().UseOpacity(1f).UseIntensity(1f).UseColor(Color.Black).UseImage(ModContent.Request<Texture2D>("Redemption/Effects/Vignette", AssetRequestMode.ImmediateLoad).Value);
                             player.ManageSpecialBiomeVisuals("MoR:FogOverlay", true);
@@ -788,6 +784,7 @@ namespace Redemption.NPCs.Bosses.PatientZero
                             if (AITimer++ >= 180)
                             {
                                 MoonlordDeathDrama.RequestLight(1f, NPC.Center);
+                                godrayFade += 0.03f;
                             }
                             if (AITimer >= 240)
                             {
@@ -797,9 +794,8 @@ namespace Redemption.NPCs.Bosses.PatientZero
                                 player.RedemptionScreen().ScreenShakeIntensity += 200;
                                 player.RedemptionScreen().Rumble(130, 10);
                                 NPC.dontTakeDamage = false;
-                                player.ApplyDamageToNPC(NPC, 99999, 0, 0, false);
-                                if (Main.netMode == NetmodeID.Server && NPC.whoAmI < Main.maxNPCs)
-                                    NetMessage.SendData(MessageID.SyncNPC, number: NPC.whoAmI);
+                                if (Main.netMode != NetmodeID.MultiplayerClient)
+                                    NPC.StrikeInstantKill();
                             }
                             break;
                     }
@@ -911,9 +907,10 @@ namespace Redemption.NPCs.Bosses.PatientZero
             return false;
         }
         public override bool CanHitPlayer(Player target, ref int cooldownSlot) => false;
+        private float godrayFade;
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
-            Texture2D texture = TextureAssets.Npc[NPC.type].Value;
+            Asset<Texture2D> texture = TextureAssets.Npc[Type];
 
             Vector2 drawCenterC = new(NPC.Center.X + 5, NPC.Center.Y + 7);
             spriteBatch.Draw(SlimeAni.Value, drawCenterC - screenPos, new Rectangle?(new Rectangle(0, 0, SlimeAni.Value.Width, SlimeAni.Value.Height)), drawColor, 0, new Vector2(SlimeAni.Value.Width / 2f, SlimeAni.Value.Height / 2f), 1, SpriteEffects.None, 0f);
@@ -922,19 +919,27 @@ namespace Redemption.NPCs.Bosses.PatientZero
             int widthB = BodyAni.Value.Height / 8;
             int yB = widthB * BodyFrame;
             spriteBatch.Draw(BodyAni.Value, drawCenterB - screenPos, new Rectangle?(new Rectangle(0, yB, BodyAni.Value.Width, widthB)), drawColor, 0, new Vector2(BodyAni.Value.Width / 2f, widthB / 2f), NPC.scale * 2, SpriteEffects.None, 0f);
-            spriteBatch.Draw(BodyGlowAni.Value, drawCenterB - screenPos, new Rectangle?(new Rectangle(0, yB, BodyAni.Value.Width, widthB)), new Color(255, 255, 255, NPC.Opacity), 0, new Vector2(BodyAni.Value.Width / 2f, widthB / 2f), NPC.scale * 2, SpriteEffects.None, 0f);
+            spriteBatch.Draw(BodyGlowAni.Value, drawCenterB - screenPos, new Rectangle?(new Rectangle(0, yB, BodyAni.Value.Width, widthB)), Color.White, 0, new Vector2(BodyAni.Value.Width / 2f, widthB / 2f), NPC.scale * 2, SpriteEffects.None, 0f);
 
             if (AIState != ActionState.PhaseChange)
             {
-                Vector2 drawCenterD = new(NPC.Center.X + 1, NPC.Center.Y + 123);
+                Vector2 drawCenterD = new(NPC.Center.X + 1, NPC.Center.Y);
                 int widthD = KariAni.Value.Height / 4;
                 int yD = widthD * KariFrame;
-                spriteBatch.Draw(KariAni.Value, drawCenterD - screenPos, new Rectangle?(new Rectangle(0, yD, KariAni.Value.Width, widthD)), drawColor, 0, new Vector2(KariAni.Value.Width / 2f, widthD / 2f), NPC.scale, SpriteEffects.None, 0f);
+                spriteBatch.Draw(KariAni.Value, drawCenterD - screenPos, new Rectangle?(new Rectangle(0, yD, KariAni.Value.Width, widthD)), drawColor, 0, new Vector2(KariAni.Value.Width / 2f, (widthD / 2f) - 123), NPC.scale, SpriteEffects.None, 0f);
             }
 
-            Main.spriteBatch.Draw(EyeAni.Value, NPC.Center - screenPos, new Rectangle?(new Rectangle(0, 0, EyeAni.Value.Width, EyeAni.Value.Height)), NPC.GetAlpha(Color.White), NPC.rotation, new Vector2(EyeAni.Value.Width / 2f, EyeAni.Value.Height / 2f), NPC.scale, 0, 0f);
+            spriteBatch.Draw(EyeAni.Value, NPC.Center - screenPos, new Rectangle?(new Rectangle(0, 0, EyeAni.Value.Width, EyeAni.Value.Height)), NPC.GetAlpha(Color.White), NPC.rotation, new Vector2(EyeAni.Value.Width / 2f, EyeAni.Value.Height / 2f), NPC.scale, 0, 0f);
 
-            spriteBatch.Draw(texture, NPC.Center - screenPos, NPC.frame, drawColor, 0, NPC.frame.Size() / 2, NPC.scale, SpriteEffects.None, 0f);
+            spriteBatch.Draw(texture.Value, NPC.Center - screenPos, NPC.frame, NPC.GetAlpha(drawColor), 0, NPC.frame.Size() / 2, NPC.scale, SpriteEffects.None, 0f);
+
+            if (godrayFade > 0)
+            {
+                float fluctuate = (float)Math.Abs(Math.Sin(Main.GlobalTimeWrappedHourly * 4.5f)) * 0.1f;
+                float modifiedScale = NPC.scale * (1 + fluctuate);
+
+                RedeDraw.DrawBossrays(spriteBatch, NPC.Center - Main.screenPosition, Color.LightGreen with { A = 0 } * godrayFade, 160 * modifiedScale * godrayFade, 27 * modifiedScale * godrayFade, 17);
+            }
             return false;
         }
     }

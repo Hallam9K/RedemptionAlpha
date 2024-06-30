@@ -1,11 +1,12 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Globals;
+using Redemption.WorldGeneration;
+using ReLogic.Content;
 using Terraria;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Redemption.WorldGeneration;
 
 namespace Redemption.NPCs.Bosses.PatientZero
 {
@@ -17,7 +18,7 @@ namespace Redemption.NPCs.Bosses.PatientZero
             Main.npcFrameCount[NPC.type] = 2;
 
             NPCID.Sets.MPAllowedEnemies[Type] = true;
-            NPCID.Sets.NPCBestiaryDrawModifiers value = new(0) { Hide = true };
+            NPCID.Sets.NPCBestiaryDrawModifiers value = new() { Hide = true };
             NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, value);
         }
         public override void SetDefaults()
@@ -75,19 +76,20 @@ namespace Redemption.NPCs.Bosses.PatientZero
                 }
             }
         }
+        private Asset<Texture2D> SlimeAni;
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
-            Texture2D texture = TextureAssets.Npc[NPC.type].Value;
-            Texture2D SlimeAni = ModContent.Request<Texture2D>("Redemption/NPCs/Bosses/PatientZero/PZ_Slime_Holo").Value;
+            Asset<Texture2D> texture = TextureAssets.Npc[NPC.type];
+            SlimeAni ??= ModContent.Request<Texture2D>("Redemption/NPCs/Bosses/PatientZero/PZ_Slime_Holo");
             Vector2 drawCenter = new(NPC.Center.X - 2, NPC.Center.Y - 26);
 
-            int Height = SlimeAni.Height / 2;
+            int Height = SlimeAni.Height() / 2;
             int y = Height * AniFrameY;
-            Rectangle rect = new(0, y, SlimeAni.Width, Height);
+            Rectangle rect = new(0, y, SlimeAni.Width(), Height);
             Vector2 drawCenterC = new(NPC.Center.X + 5, NPC.Center.Y - 32);
-            spriteBatch.Draw(SlimeAni, drawCenterC - screenPos, new Rectangle?(rect), NPC.GetAlpha(new Color(255, 255, 255, 0)), 0, new Vector2(SlimeAni.Width / 2f, Height / 2f), 1, 0, 0f);
+            spriteBatch.Draw(SlimeAni.Value, drawCenterC - screenPos, new Rectangle?(rect), NPC.GetAlpha(new Color(255, 255, 255, 0)), 0, new Vector2(SlimeAni.Width() / 2f, Height / 2f), 1, 0, 0f);
 
-            spriteBatch.Draw(texture, drawCenter - screenPos, NPC.frame, NPC.GetAlpha(new Color(255, 255, 255, 0)), NPC.rotation, NPC.frame.Size() / 2, NPC.scale * 2, 0, 0f);
+            spriteBatch.Draw(texture.Value, drawCenter - screenPos, NPC.frame, NPC.GetAlpha(new Color(255, 255, 255, 0)), NPC.rotation, NPC.frame.Size() / 2, NPC.scale * 2, 0, 0f);
             return false;
         }
     }

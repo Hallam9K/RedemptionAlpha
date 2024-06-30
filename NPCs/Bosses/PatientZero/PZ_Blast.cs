@@ -1,12 +1,12 @@
 ﻿using Microsoft.Xna.Framework;
-using Terraria;
-using Terraria.ID;
-using Terraria.ModLoader;
-using Redemption.Globals;
-using Terraria.Audio;
-using Terraria.GameContent;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Buffs.Debuffs;
+using Redemption.Globals;
+using Terraria;
+using Terraria.Audio;
+using Terraria.GameContent;
+using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace Redemption.NPCs.Bosses.PatientZero
 {

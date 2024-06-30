@@ -25,6 +25,21 @@ namespace Redemption.Globals
                     new Vector2(ray.Width / 2, 0), rayscale, 0, 0);
             }
         }
+        public static void DrawBossrays(SpriteBatch spriteBatch, Vector2 position, Color rayColor, float baseLength, float width, int numRays)
+        {
+            for (int i = 0; i < numRays; i++)
+            {
+                Texture2D ray = ModContent.Request<Texture2D>("Redemption/Textures/Ray2").Value;
+                float rotation = i * (MathHelper.TwoPi / numRays) + (Main.GlobalTimeWrappedHourly * (((i % 5) + 1f) / 5));
+                rotation -= MathHelper.Pi;
+
+                float length = baseLength * (float)(Math.Sin((Main.GlobalTimeWrappedHourly + i) * 5) / 5 + 1);
+                float width2 = width * (float)(Math.Sin((Main.GlobalTimeWrappedHourly + i) * 2) / 5 + 1);
+                Vector2 rayscale = new(width2 / ray.Width, length / ray.Height);
+                spriteBatch.Draw(ray, position, null, rayColor * Main.rand.NextFloat(.8f, 1f), rotation,
+                    new Vector2(ray.Width / 2, 0), rayscale, 0, 0);
+            }
+        }
         public static void DrawTreasureBagEffect(SpriteBatch spriteBatch, Texture2D tex, ref float drawTimer, Vector2 position, Rectangle? rect, Color color, float rot, Vector2 origin, float scale, SpriteEffects effects = 0, float opacity = 1)
         {
             float time = Main.GlobalTimeWrappedHourly;

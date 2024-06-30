@@ -1,22 +1,22 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Terraria;
-using Terraria.ModLoader;
-using Terraria.GameContent;
 using Redemption.Base;
-using Terraria.ID;
-using Redemption.Globals;
-using Redemption.WorldGeneration;
 using Redemption.BaseExtension;
 using Redemption.Buffs.Debuffs;
 using Redemption.Dusts;
+using Redemption.Globals;
+using Redemption.WorldGeneration;
+using Terraria;
+using Terraria.GameContent;
+using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace Redemption.NPCs.Bosses.PatientZero
 {
     public class PZ_Laser : LaserProjectile
     {
         private new readonly float FirstSegmentDrawDist = 23;
-        public override void SetSafeStaticDefaults() 
+        public override void SetSafeStaticDefaults()
         {
             // DisplayName.SetDefault("Xenium Laser");
         }

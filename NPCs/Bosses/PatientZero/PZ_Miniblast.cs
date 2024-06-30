@@ -1,17 +1,17 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using Redemption.Buffs.Debuffs;
+using Redemption.Globals;
 using Terraria;
+using Terraria.Audio;
+using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.Audio;
-using Redemption.Globals;
-using Microsoft.Xna.Framework.Graphics;
-using Terraria.GameContent;
-using Redemption.Buffs.Debuffs;
 
 namespace Redemption.NPCs.Bosses.PatientZero
 {
     public class PZ_Miniblast : ModProjectile
-	{
+    {
         public override void SetStaticDefaults()
         {
             // DisplayName.SetDefault("Xenium Blast");
@@ -20,7 +20,7 @@ namespace Redemption.NPCs.Bosses.PatientZero
             ElementID.ProjPoison[Type] = true;
         }
         public override void SetDefaults()
-		{
+        {
             Projectile.width = 34;
             Projectile.height = 34;
             Projectile.aiStyle = -1;
