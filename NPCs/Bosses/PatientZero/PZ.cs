@@ -292,7 +292,8 @@ namespace Redemption.NPCs.Bosses.PatientZero
         }
         public override void AI()
         {
-            NPC.position = NPC.oldPosition;
+            if (AIState is not ActionState.Begin)
+                NPC.position = NPC.oldPosition;
             Player player = Main.player[NPC.target];
             if (NPC.DespawnHandler(2))
                 return;

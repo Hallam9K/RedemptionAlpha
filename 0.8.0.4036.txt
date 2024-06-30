@@ -1,3 +1,4 @@
+=== 0.8 Beta .4036 === (June Patch)
 - Resprited Android, Living Bloom, and Mutated Living Bloom Banners
 - Resprited the rest of Petrified Wood tile set
 - Fixed Overgrown Laboratory Panel
@@ -20,6 +21,7 @@
 1654. This mod's banners can hang on platforms now
 1673. All special corpses have smart cursor interaction
 1714. Added music boxes for Skull Digger, Raveyard, Spirit Realm
+1722. Resprited Patient Zero
 1758. The following tiles are now craftable: Mossy Laboratory Tube, Mossy Laboratory Table, Wide Laboratory Console, Ancient Fallen Statue, Statue of the Knight, Niric Cog, Big Niric Cog, Ancient Hall Brick, Black Hardened Sludge & Wall, Hardened Sludge & Wall, Cyberscrap Wall, Unsafe Mossy Laboratory Panel Wall, Laboratory Vent Wall, Cyber Fabricator, Green Laser Block, and Red Laser Block
 1760. Infected Corpses, Skeletal Remains, Xenomite Shards, and Hanging Tied can be placed with Rubblemaker
 1796. Broken Laboratory Doors can be flipped and has a new variant where one of the doors is gone, which can spawn infected scientists like in 1.3
@@ -44,3 +46,4 @@
 1954. Halved damage of Synthesizer to worm segments besides the head
 1955. Bronze Wand's water orbs are destroyed twice as fast while in tiles
 1956. Helix Scepter's projectiles can collide with tiles, and changed their visuals
+===============
