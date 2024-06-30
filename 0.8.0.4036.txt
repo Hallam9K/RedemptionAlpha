@@ -1,11 +1,14 @@
 - Resprited Android, Living Bloom, and Mutated Living Bloom Banners
-- Resprited the rest of Petrified Wood set
+- Resprited the rest of Petrified Wood tile set
 - Fixed Overgrown Laboratory Panel
 - Minor very unnoticable tweaks to Omega Cleaver that probably do nothing
 - Resprited Baby Infection Hive
 - Reduced Nanoswarmer nanobots per shot from 3-5 -> 2-4
-- Nerfed Infectious Gauntlet's damage from 500 -> 300
+- Nerfed Infectious Gauntlet's damage from 500 -> 410
 - Slayer's Ship Panel Walls research count is 400 like the rest of the walls
+- Added recipe to Bio-Container post-moonlord
+- Most unobtainable tiles have item sprites now
+- Changed Treebark Dryad's bestiary entry
 1498. Janitor Equipment deco is now obtainable
 1502. Holochest can be crafted with Cyberscrap and Plating
 1504. Ported Bloated Face Monster and Infected Digger (now Bloated Digger), Face Monster will sprint fast and screech, blinding and confusing whatever is in front of it, the Digger is pretty unchanged besides charging towards you occassionally
@@ -40,4 +43,4 @@
 1953. Soul Scepter's projectiles move slower in tiles
 1954. Halved damage of Synthesizer to worm segments besides the head
 1955. Bronze Wand's water orbs are destroyed twice as fast while in tiles
-1956. Helix Scepter's projectiles can collide with tiles
+1956. Helix Scepter's projectiles can collide with tiles, and changed their visuals
