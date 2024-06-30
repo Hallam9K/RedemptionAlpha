@@ -10303,7 +10303,7 @@ Mods: {
 
 			RedLaserSafe: {
 				DisplayName: Red Laser Block
-				Tooltip: "Disintegrates players in seconds"
+				Tooltip: Disintegrates players in seconds
 			}
 
 			VentWallSafe: {
@@ -10313,7 +10313,7 @@ Mods: {
 
 			Dusksong2: {
 				DisplayName: Dusksong
-				Tooltip: "Casts a large dusksong that splits upon hitting enemies"
+				Tooltip: Casts a large dusksong that splits upon hitting enemies
 			}
 
 			FoldedShotgun: {
