@@ -49,7 +49,7 @@ namespace Redemption.Items.Placeable.Tiles
                 .AddCondition(Condition.InGraveyard)
                 .Register();
             CreateRecipe()
-                .AddIngredient<HardenedSludgeWall>(4)
+                .AddIngredient<BlackHardenedSludgeWall>(4)
                 .AddTile(TileID.WorkBenches)
                 .Register();
         }

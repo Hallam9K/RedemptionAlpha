@@ -20,5 +20,12 @@ namespace Redemption.Items.Placeable.Tiles
             Item.value = Item.buyPrice(0, 0, 1, 0);
             Item.rare = ItemRarityID.LightPurple;
         }
+        public override void AddRecipes()
+        {
+            CreateRecipe(4)
+                .AddIngredient<BlackHardenedSludgeSafe>()
+                .AddTile(TileID.WorkBenches)
+                .Register();
+        }
     }
 }

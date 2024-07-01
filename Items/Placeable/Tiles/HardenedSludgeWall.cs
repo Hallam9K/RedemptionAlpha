@@ -1,3 +1,5 @@
+using Redemption.Items.Materials.HM;
+using Redemption.Tiles.Furniture.Lab;
 using Redemption.Walls;
 using Terraria;
 using Terraria.ID;
@@ -19,6 +21,13 @@ namespace Redemption.Items.Placeable.Tiles
             Item.maxStack = Item.CommonMaxStack;
             Item.value = Item.buyPrice(0, 0, 1, 0);
             Item.rare = ItemRarityID.LightPurple;
+        }
+        public override void AddRecipes()
+        {
+            CreateRecipe(4)
+                .AddIngredient<HardenedSludgeSafe>()
+                .AddTile(TileID.WorkBenches)
+                .Register();
         }
     }
 }

@@ -8967,7 +8967,11 @@ Mods: {
 
 			DragonSlayersBow: {
 				DisplayName: Dragon Slayer's Greatbow
-				Tooltip: Replaces Wooden Arrows with Hellfire Arrows
+				Tooltip:
+					'''
+					Replaces arrows with Bone Arrows
+					Next shot will breath fire if all arrows hit a target
+					'''
 			}
 
 			EaglecrestSling: {

@@ -1,0 +1,8 @@
+=== 0.8 Beta .4037 === (Tile Recipe Patch)
+- Fixed Black Hardened Sludge being crafted from normal Hardened Sludge Walls
+- Added recipes for the Hardened Sludge walls
+- Removed recipe for Ancient Hall Pillar Walls to craft Gathic Stone Brick
+- Added the missing Petrified Wood Wall resprite
+1617. Reworked Dragon Slayer's Greatbow, fires a spread of 4 arrows, replaces wooden arrows with bone arrows, and hitting with every arrow of the shot will make the bow breath fire on the next shot
+1958. Grand Larva no longer spawn in Ice biome
+===============
