@@ -10996,6 +10996,9 @@ Mods: {
 			FoldedShotgun_Proj.DisplayName: "{$Mods.Redemption.Items.FoldedShotgun.DisplayName}"
 			BloatedFaceMonster_Screech.DisplayName: Screech
 			DusksongWeak_Proj.DisplayName: Dusksong
+			DragonSlayersBowHitcheck.DisplayName: ""
+			DragonBreath.DisplayName: Dragon Breath
+			DragonBreathStart.DisplayName: Dragon Breath
 		}
 
 		NPCs: {
