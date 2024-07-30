@@ -28,6 +28,7 @@ using Redemption.Textures.Emotes;
 using Redemption.NPCs.Friendly.TownNPCs;
 using Terraria.GameContent.UI;
 using Redemption.Globals.NPC;
+using System;
 
 namespace Redemption.NPCs.Friendly.TownNPCs
 {
@@ -53,7 +54,7 @@ namespace Redemption.NPCs.Friendly.TownNPCs
             NPCID.Sets.AttackType[Type] = 3;
             NPCID.Sets.AttackTime[Type] = 26;
             NPCID.Sets.AttackAverageChance[Type] = 20;
-            NPCID.Sets.HatOffsetY[Type] = 8;
+            NPCID.Sets.HatOffsetY[Type] = 6;
             NPCID.Sets.FaceEmote[Type] = ModContent.EmoteBubbleType<ZephosTownNPCEmote>();
 
             NPC.Happiness.

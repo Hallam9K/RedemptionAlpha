@@ -19,43 +19,48 @@ namespace Redemption.Items.Weapons.HM.Ranged
         public override LocalizedText Tooltip => base.Tooltip.WithFormatArgs(ElementID.ThunderS);
         public override void SetStaticDefaults()
         {
-            /* Tooltip.SetDefault("Converts normal bullets into high velocity bullets\n" +
-                "(3[i:" + ModContent.ItemType<EnergyPack>() + "]) Every 3rd shot fires a small laser beam if an Energy Pack is in your inventory, dealing " + ElementID.ThunderS + " damage\n" +
-                "33% chance not to consume ammo"); */
-            Item.ResearchUnlockCount = 1;
+            ItemID.Sets.SkipsInitialUseSound[Item.type] = true;
         }
 
         public override void SetDefaults()
         {
-            Item.damage = 58;
+            Item.damage = 100;
             Item.DamageType = DamageClass.Ranged;
-            Item.width = 66;
-            Item.height = 34;
+            Item.width = 76;
+            Item.height = 32;
             Item.useTime = 17;
             Item.useAnimation = 17;
             Item.useStyle = ItemUseStyleID.Shoot;
             Item.noMelee = true;
+            Item.noUseGraphic = true;
+            Item.channel = true;
             Item.knockBack = 4;
             Item.value = Item.sellPrice(0, 10, 0, 0);
             Item.rare = ItemRarityID.Yellow;
             Item.UseSound = SoundID.Item36;
             Item.autoReuse = true;
-            Item.shoot = ProjectileID.PurificationPowder;
             Item.shootSpeed = 90;
+            Item.shoot = ItemID.PurificationPowder;
             Item.useAmmo = AmmoID.Bullet;
             Item.ExtraItemShoot(ModContent.ProjectileType<CorruptedDoubleRifle_Beam>());
             if (!Main.dedServ)
                 Item.RedemptionGlow().glowTexture = ModContent.Request<Texture2D>(Texture + "_Glow").Value;
         }
-        public override bool CanConsumeAmmo(Item ammo, Player player)
+        public int Count;
+        public bool Charged;
+        public bool Ready;
+        public override void HoldItem(Player player)
         {
-            return Main.rand.NextFloat() >= .33f;
+            Count = (int)MathHelper.Clamp(Count, 0, 40);
+            if (Count >= 40 && !Ready)
+            {
+                if (!Main.dedServ)
+                    SoundEngine.PlaySound(SoundID.Item117, player.position);
+                Charged = true;
+                Ready = true;
+            }
         }
-        public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback)
-        {
-            if (type == ProjectileID.Bullet)
-                type = ProjectileID.BulletHighVelocity;
-        }
+        public override bool CanConsumeAmmo(Item ammo, Player player) => false;
         public override void AddRecipes()
         {
             CreateRecipe()
@@ -66,23 +71,55 @@ namespace Redemption.Items.Weapons.HM.Ranged
                 .AddTile(TileID.MythrilAnvil)
                 .Register();
         }
-        private int shotCount;
+        public override bool AltFunctionUse(Player player)
+        {
+            if (Charged && player.GetModPlayer<EnergyPlayer>().statEnergy >= 6)
+                return true;
+            return false;
+        }
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
-            if (shotCount++ >= 2 && player.GetModPlayer<EnergyPlayer>().statEnergy >= 3)
+            int laser = 0;
+            if (player.altFunctionUse == 2 && Charged)
             {
-                player.GetModPlayer<EnergyPlayer>().statEnergy -= 3;
-                SoundEngine.PlaySound(CustomSounds.PlasmaShot, player.position);
-                Projectile.NewProjectile(source, position + RedeHelper.PolarVector(2, (player.Center - Main.MouseWorld).ToRotation() + MathHelper.PiOver2), velocity / 60, ModContent.ProjectileType<CorruptedDoubleRifle_Beam>(), damage, knockback, player.whoAmI);
-                shotCount = 0;
+                laser = 1;
             }
-            Projectile.NewProjectile(source, position + RedeHelper.PolarVector(8, (player.Center - Main.MouseWorld).ToRotation() + MathHelper.PiOver2), velocity, type, damage, knockback, player.whoAmI);
-            Projectile.NewProjectile(source, position + RedeHelper.PolarVector(2, (player.Center - Main.MouseWorld).ToRotation() - MathHelper.PiOver2), velocity, type, damage, knockback, player.whoAmI);
+            Projectile.NewProjectile(source, position, velocity, ModContent.ProjectileType<CorruptedDoubleRifle_Proj>(), damage, knockback, player.whoAmI, laser);
             return false;
         }
         public override Vector2? HoldoutOffset()
         {
             return new Vector2(-4, 0);
+        }
+    }
+    public class CorruptedDoubleRifleGlobal : GlobalProjectile //base code from slr, modified
+    {
+        public override bool InstancePerEntity => true;
+        private Item itemSource;
+        private bool isHit;
+        public bool ShotFrom = false;
+        public override void OnSpawn(Projectile projectile, IEntitySource source)
+        {
+            if (source is EntitySource_Parent proj)
+            {
+                if (proj.Entity is Projectile proj2 && proj2.ModProjectile is CorruptedDoubleRifle_Proj && proj2.owner == Main.myPlayer)
+                    itemSource = Main.player[proj2.owner].HeldItem;
+            }
+        }
+        public override void OnHitNPC(Projectile projectile, NPC target, NPC.HitInfo hit, int damageDone)
+        {
+            if (!ShotFrom)
+                return;
+            if (itemSource != null && itemSource.ModItem is CorruptedDoubleRifle rifle)
+                rifle.Count++;
+            isHit = true;
+        }
+        public override void OnKill(Projectile projectile, int timeLeft)
+        {
+            if (!ShotFrom)
+                return;
+            if (!isHit && itemSource != null && itemSource.ModItem is CorruptedDoubleRifle rifle)
+                rifle.Count--;
         }
     }
 }

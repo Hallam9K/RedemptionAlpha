@@ -48,7 +48,7 @@ namespace Redemption.Tiles.Furniture.Lab
             Player player = Main.LocalPlayer;
             player.noThrow = 2;
             player.cursorItemIconEnabled = true;
-            if (player.HeldItem.type == ModContent.ItemType<DeadRinger>())
+            if (RedeTileHelper.CanDeadRing(player))
                 player.cursorItemIconID = ModContent.ItemType<DeadRinger>();
             else
             {
@@ -56,16 +56,19 @@ namespace Redemption.Tiles.Furniture.Lab
                 player.cursorItemIconID = 0;
             }
         }
-        public override bool HasSmartInteract(int i, int j, SmartInteractScanSettings settings) => Main.LocalPlayer.HeldItem.type == ModContent.ItemType<DeadRinger>();
+        public override bool HasSmartInteract(int i, int j, SmartInteractScanSettings settings) => RedeTileHelper.CanDeadRing(Main.LocalPlayer);
         public override bool RightClick(int i, int j)
         {
             Player player = Main.LocalPlayer;
             int left = i - Main.tile[i, j].TileFrameX / 18 % 3;
             int top = j - Main.tile[i, j].TileFrameY / 18 % 3;
-            if (player.HeldItem.type == ModContent.ItemType<DeadRinger>())
+            if (RedeTileHelper.CanDeadRing(player))
             {
                 if (!NPC.AnyNPCs(ModContent.NPCType<Stage3Scientist>()))
                 {
+                    if (!Main.dedServ)
+                        SoundEngine.PlaySound(CustomSounds.Bell, new Vector2(i, j) * 16);
+
                     if (Main.netMode != NetmodeID.MultiplayerClient)
                     {
                         NPC.NewNPC(new EntitySource_TileInteraction(player, i, j), left * 16 + 24, top * 16 + 82, ModContent.NPCType<Stage3Scientist>());

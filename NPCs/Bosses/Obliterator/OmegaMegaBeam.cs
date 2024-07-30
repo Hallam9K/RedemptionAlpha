@@ -1,19 +1,20 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Terraria;
-using Terraria.GameContent;
 using Redemption.Base;
-using Terraria.Audio;
-using Terraria.ID;
 using Redemption.BaseExtension;
 using Redemption.Globals;
+using Terraria;
+using Terraria.Audio;
+using Terraria.GameContent;
 using Terraria.Graphics.Shaders;
+using Terraria.ID;
 
 namespace Redemption.NPCs.Bosses.Obliterator
 {
     public class OmegaMegaBeam : LaserProjectile
     {
         private new float FirstSegmentDrawDist = 40;
+        public override bool ShouldUpdatePosition() => false;
         public override void SetSafeStaticDefaults()
         {
             // DisplayName.SetDefault("Obliterator Beam");
@@ -36,19 +37,35 @@ namespace Redemption.NPCs.Bosses.Obliterator
             StopsOnTiles = false;
         }
         private float offset;
+        private Vector2 origin;
         public override void AI()
         {
             Projectile.rotation = Projectile.velocity.ToRotation();
             #region Beginning And End Effects
             if (AITimer == 0)
+            {
+                origin = Projectile.Center;
                 LaserScale = 0.1f;
+            }
 
-            NPC npc = Main.npc[(int)Projectile.ai[0]];
-            Vector2 LaserPos = new(npc.position.X + (npc.spriteDirection == -1 ? (46 - offset) : (16 + offset)), npc.position.Y + 70);
-            Projectile.Center = LaserPos;
+            NPC npc = null;
+            if (Projectile.ai[0] != -1)
+            {
+                npc = Main.npc[(int)Projectile.ai[0]];
+
+                Vector2 LaserPos = new(npc.position.X + (npc.spriteDirection == -1 ? (46 - offset) : (16 + offset)), npc.position.Y + 70);
+                Projectile.Center = LaserPos;
+            }
+            else
+            {
+                Vector2 LaserPos = new(origin.X, origin.Y - offset);
+                Projectile.Center = LaserPos;
+            }
+
+
             if (AITimer == 48)
                 SoundEngine.PlaySound(SoundID.Zombie104, Projectile.position);
-            if (AITimer >= 48 && AITimer < 160)
+            if (AITimer >= 48 && AITimer < 160 && Projectile.ai[0] != -1 && npc != null)
                 Main.player[npc.target].GetModPlayer<ScreenPlayer>().ScreenShakeIntensity = MathHelper.Max(Main.LocalPlayer.RedemptionScreen().ScreenShakeIntensity, 40);
             if (AITimer > 48 && AITimer <= 60)
             {
@@ -59,7 +76,7 @@ namespace Redemption.NPCs.Bosses.Obliterator
                 else
                     LaserScale += 0.09f;
             }
-            else if (Projectile.timeLeft < 10 || !npc.active)
+            else if (Projectile.timeLeft < 10 || (Projectile.ai[0] != -1 && npc != null && !npc.active))
             {
                 if (Projectile.timeLeft > 10)
                     Projectile.timeLeft = 10;

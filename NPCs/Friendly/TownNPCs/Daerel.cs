@@ -28,6 +28,7 @@ using Redemption.Textures.Emotes;
 using Terraria.GameContent.UI;
 using Redemption.Projectiles.Ranged;
 using Redemption.Globals.NPC;
+using System;
 
 namespace Redemption.NPCs.Friendly.TownNPCs
 {
@@ -52,7 +53,7 @@ namespace Redemption.NPCs.Friendly.TownNPCs
             NPCID.Sets.AttackType[Type] = 1;
             NPCID.Sets.AttackTime[Type] = 30;
             NPCID.Sets.AttackAverageChance[Type] = 30;
-            NPCID.Sets.HatOffsetY[Type] = 8;
+            NPCID.Sets.HatOffsetY[Type] = 6;
             NPCID.Sets.FaceEmote[Type] = ModContent.EmoteBubbleType<DaerelTownNPCEmote>();
 
             NPC.Happiness

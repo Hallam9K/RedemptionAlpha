@@ -7,6 +7,7 @@ using Redemption.BaseExtension;
 using ParticleLibrary;
 using Redemption.Particles;
 using Redemption.Buffs;
+using Redemption.NPCs.Bosses.Keeper;
 
 namespace Redemption.NPCs.Friendly.SpiritSummons
 {
@@ -51,6 +52,39 @@ namespace Redemption.NPCs.Friendly.SpiritSummons
             if (!owner.HasBuff(ModContent.BuffType<CruxCardBuff>()))
                 return false;
             return true;
+        }
+        public static int GetNearestNPC(NPC npc, int ID = 0)
+        {
+            float nearestNPCDist = -1;
+            int nearestNPC = -1;
+
+            for (int i = 0; i < Main.maxNPCs; i++)
+            {
+                NPC target = Main.npc[i];
+                if (!target.active || target.whoAmI == npc.whoAmI || target.dontTakeDamage || !target.chaseable || target.type == NPCID.OldMan || target.type == NPCID.TargetDummy)
+                    continue;
+
+                bool friendlyCheck = target.friendly || target.lifeMax <= 5 || NPCID.Sets.TakesDamageFromHostilesWithoutBeingFriendly[target.type];
+                switch (ID)
+                {
+                    case 1:
+                        friendlyCheck |= NPCLists.Plantlike.Contains(target.type);
+                        break;
+                    case 2:
+                        friendlyCheck |= target.type == ModContent.NPCType<KeeperSpirit>() || target.type == ModContent.NPCType<Keeper>();
+                        break;
+                }
+                if (friendlyCheck)
+                    continue;
+
+                if (nearestNPCDist != -1 && !(target.Distance(npc.Center) < nearestNPCDist))
+                    continue;
+
+                nearestNPCDist = target.Distance(npc.Center);
+                nearestNPC = target.whoAmI;
+            }
+
+            return nearestNPC;
         }
     }
 }

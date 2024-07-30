@@ -1,7 +1,7 @@
-using System;
 using Redemption.Dusts;
 using Redemption.Tiles.Tiles;
 using Redemption.Walls;
+using System;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -111,31 +111,29 @@ namespace Redemption.Projectiles.Misc
                         else if (type == TileID.LivingWood)
                             ConversionHandler.ConvertTile(k, l, (ushort)ModContent.TileType<IrradiatedLivingWoodTile>());
                         else if (type == TileID.WoodBlock)
-                            ConversionHandler.ConvertTile(k, l, (ushort)ModContent.TileType<PetrifiedWoodTile>());         
+                            ConversionHandler.ConvertTile(k, l, (ushort)ModContent.TileType<PetrifiedWoodTile>());
 
-                        if (WallID.Sets.Conversion.Stone[wall] && wall != WallID.EbonstoneUnsafe && wall != WallID.CrimstoneUnsafe &&
-                            wall != ModContent.WallType<IrradiatedEbonstoneWallTile>() && wall != ModContent.WallType<IrradiatedCrimstoneWallTile>())
+                        if (WallID.Sets.Conversion.Stone[wall] && wall != WallID.EbonstoneUnsafe && wall != WallID.CrimstoneUnsafe && wall != WallID.EbonstoneEcho && wall != WallID.CrimstoneEcho && wall != ModContent.WallType<IrradiatedEbonstoneWallTile>() && wall != ModContent.WallType<IrradiatedCrimstoneWallTile>())
                             ConversionHandler.ConvertWall(k, l, (ushort)ModContent.WallType<IrradiatedStoneWallTile>());
-                        else if (wall == WallID.EbonstoneUnsafe)
+                        else if (wall is WallID.EbonstoneUnsafe or WallID.EbonstoneEcho)
                             ConversionHandler.ConvertWall(k, l, (ushort)ModContent.WallType<IrradiatedEbonstoneWallTile>());
-                        else if (wall == WallID.CrimstoneUnsafe)
+                        else if (wall is WallID.CrimstoneUnsafe or WallID.CrimstoneEcho)
                             ConversionHandler.ConvertWall(k, l, (ushort)ModContent.WallType<IrradiatedCrimstoneWallTile>());
                         else if (WallID.Sets.Conversion.HardenedSand[wall])
                             ConversionHandler.ConvertWall(k, l, (ushort)ModContent.WallType<IrradiatedHardenedSandWallTile>());
                         else if (WallID.Sets.Conversion.Sandstone[wall])
                             ConversionHandler.ConvertWall(k, l, (ushort)ModContent.WallType<IrradiatedSandstoneWallTile>());
-                        else if (wall == WallID.IceUnsafe)
+                        else if (wall is WallID.IceUnsafe or WallID.IceEcho)
                             ConversionHandler.ConvertWall(k, l, (ushort)ModContent.WallType<IrradiatedIceWallTile>());
-                        else if (wall == WallID.SnowWallUnsafe)
+                        else if (wall is WallID.SnowWallUnsafe or WallID.SnowWallEcho)
                             ConversionHandler.ConvertWall(k, l, (ushort)ModContent.WallType<IrradiatedSnowWallTile>());
-                        else if (wall == WallID.LivingWood)
+                        else if (wall is WallID.LivingWood or WallID.LivingWoodUnsafe)
                             ConversionHandler.ConvertWall(k, l, (ushort)ModContent.WallType<IrradiatedLivingWoodWallTile>());
-                        else if (wall == WallID.DirtUnsafe || wall == WallID.DirtUnsafe1 || wall == WallID.GrassUnsafe || wall == WallID.FlowerUnsafe ||
-                            wall == WallID.CorruptGrassUnsafe || wall == WallID.CrimsonGrassUnsafe)
+                        else if (wall is WallID.DirtUnsafe or WallID.DirtUnsafe1 or WallID.GrassUnsafe or WallID.FlowerUnsafe or WallID.CorruptGrassUnsafe or WallID.CrimsonGrassUnsafe)
                             ConversionHandler.ConvertWall(k, l, (ushort)ModContent.WallType<IrradiatedDirtWallTile>());
-                        else if (wall == WallID.MudUnsafe)
+                        else if (wall is WallID.MudUnsafe)
                             ConversionHandler.ConvertWall(k, l, (ushort)ModContent.WallType<IrradiatedMudWallTile>());
-                        else if (wall == WallID.Wood)
+                        else if (wall is WallID.Wood)
                             ConversionHandler.ConvertWall(k, l, (ushort)ModContent.WallType<PetrifiedWoodWallTile>());
                         #endregion
                     }

@@ -61,6 +61,8 @@ namespace Redemption.Globals.Player
         public bool onHit;
         public int fallSpeedIncrease;
 
+        public int poopenBeamTimer = 0;
+
         public override void ResetEffects()
         {
             if (contactImmune)
@@ -72,6 +74,11 @@ namespace Redemption.Globals.Player
             contactImmune = false;
             parried = false;
             onHit = false;
+
+            if (!Player.sitting.isSitting)
+            {
+                poopenBeamTimer = 0;
+            }
         }
         public override void UpdateEquips()
         {

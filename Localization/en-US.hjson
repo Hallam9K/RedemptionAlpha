@@ -1338,78 +1338,56 @@ Mods: {
 				}
 
 				Intro: {
-					1: Ah, you have brought me here yourself.
-					2: My eyes have loomed upon thee long enough, it is time to take action.
-					2Alt: Forgive my prying eyes, for I have been observing thee from afar.
+					1: Ah,[0.1] you have brought me here yourself.
+					2: My eyes have loomed upon thee long enough,[0.1] it is time to take action.
+					2Alt: Forgive my prying eyes,[0.1] for I have been observing thee from afar.
 					3: The daring hunt of all that threaten you brings a chill through my body.
-					4: Thy presence is all-consuming within my thoughts, but I shan't run from this opportunity gifted to me.
-					5: The chatter ends here. Prove to me your resolve, and I will show my own.
-					6: If you lose to me, you may be spared from watchers far greater than I.
+					4: Thy presence is all-consuming within my thoughts,[0.1] but I shan't run from this opportunity gifted to me.
+					5: The chatter ends here.[0.5] Prove to me your resolve,[0.1] and I will show my own.
+					6: If you lose to me,[0.1] you may be spared from watchers far greater than I.
 				}
 
 				Resummon: {
-					1: You... are still alive?
+					1: You...[0.5] are still alive?
 					2: You still want to fight?
 				}
 
 				Interval: {
-					1: What purpose drives you? What is your goal?
+					1: What purpose drives you?[0.1] What is your goal?
 					2: Do you even have a motive for your actions?
-					3: Still fighting? Well I'm not done yet!
+					3: Still fighting?[0.1] Well I'm not done yet!
 				}
 
 				Transition: {
 					1: I would appear to be fighting a hopeless battle...
-					2: Ever since this island suddenly appeared, I have been watching.
-					3:
-						'''
-						I've seen you be slain countless times,
-						However you never truly die.
-						'''
+					2: Ever since this island suddenly appeared,[0.1] I have been watching.
+					3: I've seen you be slain countless times,[0.1] however you never truly die.
 					4: It seems most cannot or simply will not comprehend this.
 					5: But I do.
-					6:
-						'''
-						Whether it be intelligence, power, or something else,
-						I still remember...
-						'''
-					7: Time in the confines of this island seems to be dictated by powers unknown.
-					8: ... Say, if you killed someone unaffected by such powers...
-					9: ... Would they die for good?
-					10: Whatever the case may be, I no longer wish to fight you...
-					11: You hath proven thy resolve.
-					11Alt: Not like I could do anything to stop you.
-					12: And I... hath failed once more.
-					12Alt: I hope you find it in thine heart to stop thy rampage.
-					13: I will be leaving forthwith, but we can always spar again. Farewell.
-					13Alt: If you don't wish to fight me now, I'll leave you be.
-					14: You still want to fight?
-					15: Of course it wouldn't be that easy...
-					16: You've had thy chance at redemption, so don't blame me...
-					17: ... When you die a thousand times!
-					Spare1:
-						'''
-						Thank you...
-						Please, continue slaying evil, this world could do with a hero.
-						'''
-					Spare2:
-						'''
-						Thank you...
-						At first I thought the concept of mercy was foreign to you.
-						'''
+					6: Time in the confines of this island seems to be dictated by powers unknown.
+					7: And they are in thy favour.
+					8: Alas,[0.1] whatever the case may be,[0.1] I no longer wish to fight you...
+					9: You hath proven thy resolve.
+					9Alt: Not like I could do anything to stop you.
+					10: And I.[0.1].[0.1].[0.5] hath failed once more.
+					10Alt: I hope you find it in thine heart to stop thy rampage.
+					11: I will be leaving forthwith,[0.1] but we can always spar again.[1] Farewell.
+					11Alt: If you don't wish to fight me now,[0.1] I'll leave you be.
+					12: You still want to fight?
+					13: Of course it wouldn't be that easy...
+					14: You've had thy chance at redemption,[0.1] so don't blame me...
+					15: ... When you die a thousand times!
+					Spare1: Thank you...[1] Please,[0.1] continue slaying evil,[0.1] this world could do with a hero.
+					Spare2: Thank you...[1] At first I thought the concept of mercy was foreign to you.
 				}
 
 				P2: {
-					1:
-						'''
-						I still have this hope in my mind that you're mortal,
-						so even if I can't figure out how to be rid of you...
-						'''
+					1: I still have this hope in my mind that you're mortal,[0.4] so even if I can't figure out how to be rid of you...
 					2: ... There are still many foes greater than I!
 					3: ... Epidotra's Protector...
 					4: ... The Royal Knight...
 					5: ... and the Demigod of Light...
-					6: But enough talk, I'm your opponent!
+					6: But enough talk,[0.1] I'm your opponent!
 				}
 
 				Defeat: {
@@ -1417,10 +1395,11 @@ Mods: {
 					2: And yet I still lost...
 					3: Fighting you and that traitor have confirmed my suspicions.
 					4: I'm weak.
-					5: I don't deserve being part of their group. I was only a burden.
-					6: If the Demigod ever comes for you, don't let him know I'm still alive.
-					7: I fear what he might think of me, and I don't want to face him.
-					8: I don't expect sympathy from you, but I'll be gone for good now. Goodbye.
+					5: I don't deserve being part of their group.[0.5] I was only a burden.
+					6: If the Demigod ever comes for you,[0.1] don't let him know I'm still alive.
+					7: I fear what he might think of me,[0.1] and I don't want to face him.
+					8: To think I'd die again so soon...
+					9: I really am pathetic.
 				}
 			}
 
@@ -2541,6 +2520,11 @@ Mods: {
 			MoonflareCandleBuff: {
 				DisplayName: Moonflare Candle
 				Description: Wards off the effects of a Graveyard
+			}
+
+			CursedSamuraiBuff: {
+				DisplayName: Cursed Samurai
+				Description: Right-click buff to clear your samurai
 			}
 		}
 
@@ -5785,7 +5769,7 @@ Mods: {
 				DisplayName: Xenium Refinery
 				Tooltip:
 					'''
-					Used to craft Xenium
+					Used to craft Xenium and Xenomite
 					Found in the Abandoned Laboratory
 					'''
 			}
@@ -7086,7 +7070,7 @@ Mods: {
 
 			PureIronHammer: {
 				DisplayName: Pure-Iron Hammer
-				Tooltip: ""
+				Tooltip: Slamming the ground will form shards of ice
 			}
 
 			PureIronPickaxe: {
@@ -8129,7 +8113,9 @@ Mods: {
 				Tooltip:
 					'''
 					Converts normal bullets into high velocity bullets
-					(3[i:Redemption/EnergyCell]) Every 3rd shot fires a small laser beam if an Energy Pack is in your inventory, dealing {0} damage
+					Builds heat through consecutive hits, loses heat by missing shots
+					Heat increases damage dealt by up to 40%
+					(6[i:Redemption/EnergyCell]) Right-click at max heat to fire two searing beams, resetting the gun's damage and dealing {0} damage
 					33% chance not to consume ammo
 					'''
 			}
@@ -10328,6 +10314,37 @@ Mods: {
 					Deals extra damage at point-blank range
 					'''
 			}
+
+			OmegaToilet: {
+				DisplayName: Omega Poopenfarter
+				Tooltip: "'A toilet... or torture device?'"
+			}
+
+			OmegaPickaxe: {
+				DisplayName: Omega Pickaxe
+				Tooltip: Can mine Uranium
+			}
+
+			PulseBlade: {
+				DisplayName: Pulse Blade
+				Tooltip:
+					'''
+					Hold left-click to charge a harmless kinetic slash, increasing the size the longer the charge
+					Right-click to fire Plasma Mines, can only have 8 out at a time
+					Hitting the Plasma Mines with a kinetic slash will launch them in the direction it was hit in
+					Speed and damage scales with the velocity of the mine
+					'''
+			}
+
+			DeathMetal: {
+				DisplayName: Death Metal
+				Tooltip:
+					'''
+					Shred the guitar to launch a Death Coil
+					Shred again before the coil returns to bounce it back out, increasing its power and velocity
+					Successful bounces restore mana
+					'''
+			}
 		}
 
 		Projectiles: {
@@ -10999,6 +11016,19 @@ Mods: {
 			DragonSlayersBowHitcheck.DisplayName: ""
 			DragonBreath.DisplayName: Dragon Breath
 			DragonBreathStart.DisplayName: Dragon Breath
+			PureIronHammer_IceSpike.DisplayName: Ice Spike
+			PureIronHammer_Proj.DisplayName: "{$Mods.Redemption.Items.PureIronHammer.DisplayName}"
+			PulseBlade_Proj.DisplayName: "{$Mods.Redemption.Items.PulseBlade.DisplayName}"
+			KineticMine.DisplayName: Kinetic Plasma Mine
+			KineticMine_Explosion.DisplayName: Kinetic Explosion
+			KineticSlash.DisplayName: Kinetic Slash
+			CorruptedDoubleRifleHitcheck.DisplayName: ""
+			CorruptedDoubleRifleNotHitcheck.DisplayName: ""
+			CorruptedDoubleRifle_Proj.DisplayName: "{$Mods.Redemption.Items.CorruptedDoubleRifle.DisplayName}"
+			DeathMetal_Pulse.DisplayName: "{$Mods.Redemption.Items.DeathMetal.DisplayName}"
+			DeathCoil_Proj.DisplayName: Death Coil
+			IceSpikeShard.DisplayName: Ice Spike Shard
+			IceSpike_Mist.DisplayName: Ice Mist
 		}
 
 		NPCs: {

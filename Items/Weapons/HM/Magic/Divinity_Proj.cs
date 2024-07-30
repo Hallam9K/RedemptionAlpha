@@ -162,7 +162,10 @@ namespace Redemption.Items.Weapons.HM.Magic
                             Projectile.netUpdate = true;
                         }
                         if (Projectile.DistanceSQ(player.Center) > 300 * 300)
-                            Projectile.Move(player.Center - new Vector2(0, 100), 2, 20);
+                        {
+                            float speed = MathHelper.Lerp(2, 16, Projectile.DistanceSQ(player.Center) / 1800 / 1800);
+                            Projectile.Move(player.Center - new Vector2(0, 100), speed, 20);
+                        }
                         if (Projectile.localAI[0]++ % 14 == 0 && Projectile.scale < 3)
                         {
                             int mana = player.inventory[player.selectedItem].mana;
@@ -237,7 +240,7 @@ namespace Redemption.Items.Weapons.HM.Magic
 
             int boomOrigin = (int)(120 * Projectile.scale);
             Rectangle boom = new((int)Projectile.Center.X - boomOrigin, (int)Projectile.Center.Y - boomOrigin, boomOrigin * 2, boomOrigin * 2);
-            RedeHelper.NPCRadiusDamage(boom, Projectile, (int)(Projectile.damage * MathF.Pow(Projectile.scale, 2.5f)), Projectile.knockBack);
+            RedeHelper.NPCRadiusDamage(boom, Projectile, Projectile.damage * 2, Projectile.knockBack);
             for (int i = 0; i < 20; i++)
             {
                 int dust = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.OrangeTorch, Scale: 2);
@@ -255,7 +258,7 @@ namespace Redemption.Items.Weapons.HM.Magic
         }
         public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
         {
-            modifiers.FinalDamage *= MathF.Pow(Projectile.scale, 2.5f);
+            modifiers.FinalDamage *= MathF.Pow(Projectile.scale, 3f);
             if (Projectile.ai[1] != 2)
                 modifiers.FinalDamage /= 4;
         }

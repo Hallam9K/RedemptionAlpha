@@ -2,6 +2,8 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ParticleLibrary.Core;
 using Redemption.BaseExtension;
+using Redemption.Buffs;
+using Redemption.Buffs.Minions;
 using Redemption.Dusts;
 using Redemption.Effects;
 using Redemption.Globals;
@@ -45,7 +47,6 @@ namespace Redemption.Items.Weapons.HM.Melee
             Projectile.usesLocalNPCImmunity = true;
         }
         private float startRotation;
-        private Vector2 startVector;
         private Vector2 vector;
         public ref float Length => ref Projectile.localAI[0];
         public ref float Rot => ref Projectile.localAI[1];
@@ -158,8 +159,8 @@ namespace Redemption.Items.Weapons.HM.Melee
         public override bool? CanHitNPC(NPC target)
         {
             if (!strike)
-                target.immune[Player.heldProj] = 0;
-            return !target.friendly && progress >= 0.2f && progress <= 0.8 && target.immune[Player.heldProj] == 0 ? null : false;
+                target.immune[Projectile.owner] = 0;
+            return !target.friendly && progress >= 0.2f && progress <= 0.8 && target.immune[Projectile.owner] == 0 ? null : false;
         }
 
         public bool strike;
@@ -172,7 +173,7 @@ namespace Redemption.Items.Weapons.HM.Melee
                 strike = true;
                 pauseTimer = 1;
             }
-            target.immune[Player.heldProj] = 30;
+            target.immune[Projectile.owner] = 30;
 
             float Rot = Projectile.ai[0] == 0 ? 1 : -1;
             Vector2 dir = Projectile.Center.DirectionFrom(target.Center);
@@ -187,11 +188,14 @@ namespace Redemption.Items.Weapons.HM.Melee
                 ParticleSystem.NewParticle(position, direction.RotatedBy(randomRotation) * randomVel * 12, new SpeedParticle(), Color.MediumPurple, .8f);
             }
 
+            RedeProjectile.Decapitation(target, ref damageDone, ref hit.Crit);
+
             if (target.life <= 0 && target.lifeMax >= 50 && (Main.rand.NextBool(6) || NPCLists.Spirit.Contains(target.type)) && NPC.CountNPCS(ModContent.NPCType<WraithSlayer_Samurai>()) < 4)
             {
                 for (int i = 0; i < 20; i++)
                     Dust.NewDust(target.position, target.width, target.height, DustID.Wraith);
 
+                Player.AddBuff(ModContent.BuffType<CursedSamuraiBuff>(), 2);
                 RedeHelper.SpawnNPC(Projectile.GetSource_FromThis(), (int)target.Center.X, (int)target.Center.Y, ModContent.NPCType<WraithSlayer_Samurai>(), ai3: Player.whoAmI);
             }
         }

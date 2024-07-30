@@ -49,7 +49,7 @@ namespace Redemption.Tiles.Furniture.Lab
             Player player = Main.LocalPlayer;
             player.noThrow = 2;
             player.cursorItemIconEnabled = true;
-            if (player.HeldItem.type == ModContent.ItemType<DeadRinger>())
+            if (RedeTileHelper.CanDeadRing(player))
                 player.cursorItemIconID = ModContent.ItemType<DeadRinger>();
             else
                 player.cursorItemIconID = ModContent.ItemType<HintIcon>();
@@ -58,17 +58,20 @@ namespace Redemption.Tiles.Furniture.Lab
         {
             int left = i - Main.tile[i, j].TileFrameX / 18 % 3;
             int top = j - Main.tile[i, j].TileFrameY / 18 % 2;
-            return Main.tile[left, top].TileFrameX == 0 || Main.LocalPlayer.HeldItem.type == ModContent.ItemType<DeadRinger>();
+            return Main.tile[left, top].TileFrameX == 0 || RedeTileHelper.CanDeadRing(Main.LocalPlayer);
         }
         public override bool RightClick(int i, int j)
         {
             Player player = Main.LocalPlayer;
             int left = i - Main.tile[i, j].TileFrameX / 18 % 3;
             int top = j - Main.tile[i, j].TileFrameY / 18 % 2;
-            if (player.HeldItem.type == ModContent.ItemType<DeadRinger>())
+            if (RedeTileHelper.CanDeadRing(player))
             {
                 if (!NPC.AnyNPCs(ModContent.NPCType<HazmatCorpse_Ghost>()))
                 {
+                    if (!Main.dedServ)
+                        SoundEngine.PlaySound(CustomSounds.Bell, new Vector2(i, j) * 16);
+
                     if (Main.netMode != NetmodeID.MultiplayerClient)
                     {
                         int index1 = NPC.NewNPC(new EntitySource_TileInteraction(player, i, j), i * 16, (j + 1) * 16, ModContent.NPCType<HazmatCorpse_Ghost>());

@@ -1,10 +1,11 @@
+using Microsoft.Xna.Framework;
+using Redemption.Items.Weapons.PostML.Melee;
+using System.Collections.Generic;
 using Terraria;
-using Terraria.ModLoader;
+using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.Localization;
-using Microsoft.Xna.Framework;
-using Terraria.DataStructures;
-using System.Collections.Generic;
+using Terraria.ModLoader;
 
 namespace Redemption.Items.Weapons.PostML.Magic
 {
@@ -38,13 +39,12 @@ namespace Redemption.Items.Weapons.PostML.Magic
         }
         public bool AttackMode;
         public override bool AltFunctionUse(Player player) => true;
-        public override bool CanUseItem(Player player)
+        public override void ModifyManaCost(Player player, ref float reduce, ref float mult)
         {
             if (player.altFunctionUse == 2)
-                Item.mana = 0;
+                reduce -= 20;
             else
-                Item.mana = 20;
-            return true;
+                reduce -= 0;
         }
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {

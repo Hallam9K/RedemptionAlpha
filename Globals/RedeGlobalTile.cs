@@ -4,6 +4,7 @@ using Redemption.BaseExtension;
 using Redemption.Biomes;
 using Redemption.Dusts;
 using Redemption.Items.Materials.PreHM;
+using Redemption.Items.Usable;
 using Redemption.NPCs.Critters;
 using Redemption.Textures;
 using Redemption.Tiles.Natural;
@@ -146,6 +147,10 @@ namespace Redemption.Globals
         public static bool[] CannotMineTileBelow = TileID.Sets.Factory.CreateBoolSet();
         public static bool[] CannotMineTileAbove = TileID.Sets.Factory.CreateBoolSet();
         public static bool[] CannotTeleportInFront = WallID.Sets.Factory.CreateBoolSet();
+        public static bool CanDeadRing(Terraria.Player player)
+        {
+            return player.HeldItem.type == ModContent.ItemType<DeadRinger>() || (player.RedemptionAbility().SpiritwalkerActive && player.HasItemInAnyInventory(ModContent.ItemType<DeadRinger>()));
+        }
         public static void DrawSpiritFlare(SpriteBatch spriteBatch, int i, int j, int frameX = 0, float xOffset = 0, float yOffset = 0, float scale = 1.5f)
         {
             if (!Main.LocalPlayer.RedemptionAbility().SpiritwalkerActive)

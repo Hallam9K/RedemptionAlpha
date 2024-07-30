@@ -380,7 +380,7 @@ namespace Redemption.NPCs.Minibosses.Calavia
                                 NPC.velocity.X *= -1;
                             NPC.velocity.X *= 2f;
                             NPC.velocity.Y -= Main.rand.NextFloat(1, 3);
-                            dodgeCooldown = 30;
+                            dodgeCooldown = 90;
                             break;
                         }
                     }
@@ -1015,8 +1015,8 @@ namespace Redemption.NPCs.Minibosses.Calavia
             NPC.lifeMax = (int)(NPC.lifeMax * 0.75f * balance);
             NPC.damage = (int)(NPC.damage * 0.6f);
         }
-        public override bool? CanBeHitByItem(Player player, Item item) => dodgeCooldown <= 20 ? null : false;
-        public override bool? CanBeHitByProjectile(Projectile projectile) => dodgeCooldown <= 20 ? null : false;
+        public override bool? CanBeHitByItem(Player player, Item item) => dodgeCooldown <= 80 ? null : false;
+        public override bool? CanBeHitByProjectile(Projectile projectile) => dodgeCooldown <= 80 ? null : false;
         private int HoldPotionType;
         private int HoldPotionPos = 14;
         private int HoldPotionOriginX = 10;

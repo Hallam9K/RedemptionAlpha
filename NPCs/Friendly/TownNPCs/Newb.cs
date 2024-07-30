@@ -18,6 +18,7 @@ using Redemption.Items.Usable;
 using ReLogic.Content;
 using Redemption.Textures.Emotes;
 using Terraria.GameContent.UI;
+using System;
 
 namespace Redemption.NPCs.Friendly.TownNPCs
 {

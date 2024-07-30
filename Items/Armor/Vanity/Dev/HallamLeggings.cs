@@ -1,6 +1,6 @@
+using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria;
 
 namespace Redemption.Items.Armor.Vanity.Dev
 {
@@ -19,7 +19,7 @@ namespace Redemption.Items.Armor.Vanity.Dev
             Item.width = 18;
             Item.height = 14;
             Item.rare = ItemRarityID.Expert;
-            Item.value = Item.sellPrice(1, 0, 0, 0);
+            Item.value = Item.buyPrice(1, 0, 0, 0);
             Item.expert = true;
             Item.vanity = true;
         }

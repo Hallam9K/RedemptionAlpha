@@ -1,0 +1,25 @@
+- Fixed Divinity's explosion damage, buffed base damage from 160 -> 200, sun will follow you faster the further away it is
+1466. Changed Nebuleus' Chains of the Cosmos damage from 200 -> 110% base damage
+1526. Shortened and tweaked Nebuleus' end dialogue, now uses the dialogue box style
+1530. Added Pulse Blade, a post-Omega Cleaver mage weapon that shoots plasma mines on right-click and charges a harmless slash on left-click, hitting a mine with the slash will launch it in the direction of the slash, damage and speed based on the slash's velocity
+1546. Reworked Corrupted Double Rifle, builds heat through consecutive hits, loses heat by missing shots, Heat increases damage dealt by up to 40%, Right-click at max heat to fire two searing beams, resetting the gun's damage, increased base damage from 58 -> 100
+1571. Reduced weakness of melee weapons on Nebuleus from 2x to 1.5x
+1626. Changed Nebuleus' wing dye from Living Rainbow to Prismatic
+1639. Changed Eaglecrest Sling to have an indicator of when in the rotation the pebble will launch at the cursor, improved velocity of pebble
+1712. Increased Final Form Nebuleus' damage from 180 -> 210
+1757. Added Death Metal, post-Skeletron mage guitar weapon that fires a Death Coil, the coil returns to the player like a boomerang but you can play the guitar when its close enough to bounce it back more powerful
+1866. Added Omega Poopenfarter
+1887. Reworked Pure-Iron Hammer, has a custom swing animation, slamming the ground forms tall ice shards at either side of impact
+1961. Removed Purification Powder converting Irradiated Dirt and Snow
+1968. Increased Calavia's dodge cooldown from 30 frames -> 90 frames
+1981. Treebark Dryad will sell Lava Moss after an earlygame boss is defeated and a random glowing moss after Skeletron is defeated
+1983. Fixed Halm's Jeans buy price
+1984. Bleached Solution now works on safe versions of Ebonstone, Crimstone, Ice, Snow, and Living Wood walls
+1985. Fixed Wraith Slayer's Cursed Samurai targeting and now has a buff to right-click and despawn them
+1988. Xenium Refinery says it can craft Xenomite too in its tooltip
+1989. Fixed party hat positions on town NPCs
+1994. Treebark Dryad now has a head icon on the map
+1995. Ported Corrupted Xenomite Pickaxe (renamed to Omega Pickaxe), an easier way to mine uranium
+1997. Added bell ring sound effect for Dead Ringer, and while Spirit Walking it can be used from any inventory
+2002. Galaxy Star now floats
+2005. Changed Tesla Coil's defense penetration from adding half the target's defense to its damage to having 50% armour penetration

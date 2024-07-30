@@ -32,6 +32,7 @@ using Terraria.GameContent.UI;
 using Redemption.BaseExtension;
 using Redemption.Globals.NPC;
 using Redemption.Items.Weapons.PreHM.Ranged;
+using System;
 
 namespace Redemption.NPCs.Friendly.TownNPCs
 {
@@ -55,7 +56,7 @@ namespace Redemption.NPCs.Friendly.TownNPCs
             NPCID.Sets.AttackType[Type] = 3;
             NPCID.Sets.AttackTime[Type] = 40;
             NPCID.Sets.AttackAverageChance[Type] = 20;
-            NPCID.Sets.HatOffsetY[Type] = 14;
+            NPCID.Sets.HatOffsetY[Type] = 4;
             NPCID.Sets.FaceEmote[Type] = ModContent.EmoteBubbleType<OkvotTownNPCEmote>();
 
             NPC.Happiness.SetBiomeAffection<UndergroundBiome>(AffectionLevel.Love);

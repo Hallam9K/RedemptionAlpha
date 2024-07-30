@@ -528,7 +528,7 @@ namespace Redemption.CrossMod
                         },
                     ["customPortrait"] = (SpriteBatch sb, Rectangle rect, Color color) =>
                     {
-                        int shader = GameShaders.Armor.GetShaderIdFromItemId(ItemID.LivingRainbowDye);
+                        int shader = GameShaders.Armor.GetShaderIdFromItemId(ItemID.HallowBossDye);
                         Texture2D texture = ModContent.Request<Texture2D>("Redemption/CrossMod/BossChecklist/Neb").Value;
                         Texture2D wingTex = ModContent.Request<Texture2D>("Redemption/CrossMod/BossChecklist/Neb_Wings").Value;
                         Vector2 centered = new(rect.X + (rect.Width / 2) - (texture.Width / 2), rect.Y + (rect.Height / 2) - (texture.Height / 2));

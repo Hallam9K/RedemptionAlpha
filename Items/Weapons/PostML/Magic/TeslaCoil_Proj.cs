@@ -1,16 +1,16 @@
-﻿using Terraria;
-using Terraria.ModLoader;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Redemption.Base;
+using Redemption.BaseExtension;
+using Redemption.Buffs.NPCBuffs;
 using Redemption.Globals;
+using Redemption.Particles;
+using ReLogic.Utilities;
+using System.Collections.Generic;
+using Terraria;
 using Terraria.Audio;
 using Terraria.GameContent;
-using Redemption.Base;
-using Redemption.Particles;
-using Redemption.Buffs.NPCBuffs;
-using System.Collections.Generic;
-using ReLogic.Utilities;
-using Redemption.BaseExtension;
+using Terraria.ModLoader;
 
 namespace Redemption.Items.Weapons.PostML.Magic
 {
@@ -58,7 +58,7 @@ namespace Redemption.Items.Weapons.PostML.Magic
                         {
                             if (BasePlayer.ReduceMana(player, 3))
                             {
-                                if (sound == null)
+                                if (sound == null && !Main.dedServ)
                                     loop = SoundEngine.PlaySound(CustomSounds.ElectricLoop, Projectile.position);
                                 for (int k = 0; k < Main.rand.Next(2, 4); k++)
                                 {
@@ -122,7 +122,7 @@ namespace Redemption.Items.Weapons.PostML.Magic
                                             continue;
 
                                         int hitDirection = npc.RightOfDir(Projectile);
-                                        BaseAI.DamageNPC(npc, Projectile.damage + (npc.defense / 2), Projectile.knockBack, hitDirection, Projectile, crit: Projectile.HeldItemCrit());
+                                        BaseAI.DamageNPC(npc, Projectile.damage, Projectile.knockBack, hitDirection, Projectile, crit: Projectile.HeldItemCrit());
                                     }
                                 }
                                 glow += Main.rand.Next(-5, 6);
@@ -164,20 +164,24 @@ namespace Redemption.Items.Weapons.PostML.Magic
         {
             target.AddBuff(ModContent.BuffType<ElectrifiedDebuff>(), 180);
         }
+        public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
+        {
+            modifiers.ScalingArmorPenetration += .5f;
+        }
         public override bool PreDraw(ref Color lightColor)
         {
             SpriteEffects spriteEffects = Projectile.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
             Texture2D texture = TextureAssets.Projectile[Projectile.type].Value;
             Vector2 origin = new(texture.Width / 2f, texture.Height / 2f);
 
-            Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition + Vector2.UnitY * Projectile.gfxOffY, null, Projectile.GetAlpha(lightColor), Projectile.rotation, origin, Projectile.scale, spriteEffects, 0);
+            Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition, null, Projectile.GetAlpha(lightColor), Projectile.rotation, origin, Projectile.scale, spriteEffects, 0);
 
             return false;
         }
         public override void PostDraw(Color lightColor)
         {
             Main.spriteBatch.End();
-            Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+            Main.spriteBatch.BeginAdditive();
 
             Texture2D flare = ModContent.Request<Texture2D>("Redemption/Textures/Star").Value;
             Rectangle rect = new(0, 0, flare.Width, flare.Height);
@@ -189,7 +193,7 @@ namespace Redemption.Items.Weapons.PostML.Magic
             Main.EntitySpriteDraw(flare, position, new Rectangle?(rect), colour * 0.5f, Projectile.rotation, origin, 2f, SpriteEffects.None, 0);
 
             Main.spriteBatch.End();
-            Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+            Main.spriteBatch.BeginDefault();
         }
     }
 }

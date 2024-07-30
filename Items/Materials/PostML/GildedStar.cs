@@ -1,5 +1,6 @@
 using Redemption.Rarities;
 using Terraria;
+using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Redemption.Items.Materials.PostML
@@ -9,6 +10,7 @@ namespace Redemption.Items.Materials.PostML
         public override void SetStaticDefaults()
         {
             // DisplayName.SetDefault("Galaxy Star");
+            ItemID.Sets.ItemNoGravity[Item.type] = true;
             Item.ResearchUnlockCount = 25;
         }
 

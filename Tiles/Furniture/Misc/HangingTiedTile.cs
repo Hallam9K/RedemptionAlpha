@@ -57,7 +57,7 @@ namespace Redemption.Tiles.Furniture.Misc
             Player player = Main.LocalPlayer;
             player.noThrow = 2;
             player.cursorItemIconEnabled = true;
-            if (player.HeldItem.type == ModContent.ItemType<DeadRinger>())
+            if (RedeTileHelper.CanDeadRing(player))
                 player.cursorItemIconID = ModContent.ItemType<DeadRinger>();
             else
             {
@@ -68,8 +68,11 @@ namespace Redemption.Tiles.Furniture.Misc
         public override bool RightClick(int i, int j)
         {
             Player player = Main.LocalPlayer;
-            if (player.HeldItem.type == ModContent.ItemType<DeadRinger>())
+            if (RedeTileHelper.CanDeadRing(player))
             {
+                if (!Main.dedServ)
+                    SoundEngine.PlaySound(CustomSounds.Bell, new Vector2(i, j) * 16);
+
                 for (int n = 0; n < 25; n++)
                 {
                     int dustIndex = Dust.NewDust(new Vector2(i * 16, j * 16), 2, 2, DustID.DungeonSpirit, 0f, 0f, 100, default, 2);

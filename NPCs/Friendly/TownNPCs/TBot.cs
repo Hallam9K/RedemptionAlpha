@@ -40,7 +40,7 @@ namespace Redemption.NPCs.Friendly.TownNPCs
         {
             // DisplayName.SetDefault("Friendly T-Bot");
             Main.npcFrameCount[NPC.type] = 21;
-            NPCID.Sets.HatOffsetY[NPC.type] = -4;
+            NPCID.Sets.HatOffsetY[NPC.type] = -6;
             NPCID.Sets.ExtraFramesCount[Type] = 5;
             NPCID.Sets.FaceEmote[Type] = ModContent.EmoteBubbleType<AdamTownNPCEmote>();
 

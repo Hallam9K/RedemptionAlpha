@@ -188,7 +188,7 @@ namespace Redemption.Globals
                         npc.Transform(ModContent.NPCType<ViciousChicken>());
                 }
             }
-            if ((projectile.type != 10 && projectile.type != 145 && projectile.type != 147 && projectile.type != 149 && projectile.type != 146) || projectile.owner != Main.myPlayer)
+            if ((projectile.type != 145 && projectile.type != 147 && projectile.type != 149 && projectile.type != 146) || projectile.owner != Main.myPlayer)
                 return;
             int x = (int)(projectile.Center.X / 16f);
             int y = (int)(projectile.Center.Y / 16f);

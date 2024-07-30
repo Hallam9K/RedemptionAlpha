@@ -59,7 +59,7 @@ namespace Redemption.Tiles.Natural
             Player player = Main.LocalPlayer;
             player.noThrow = 2;
             player.cursorItemIconEnabled = true;
-            if (player.HeldItem.type == ModContent.ItemType<DeadRinger>())
+            if (RedeTileHelper.CanDeadRing(player))
                 player.cursorItemIconID = ModContent.ItemType<DeadRinger>();
             else
             {
@@ -67,16 +67,19 @@ namespace Redemption.Tiles.Natural
                 player.cursorItemIconID = 0;
             }
         }
-        public override bool HasSmartInteract(int i, int j, SmartInteractScanSettings settings) => Main.LocalPlayer.HeldItem.type == ModContent.ItemType<DeadRinger>();
+        public override bool HasSmartInteract(int i, int j, SmartInteractScanSettings settings) => RedeTileHelper.CanDeadRing(Main.LocalPlayer);
         public override bool RightClick(int i, int j)
         {
             Player player = Main.LocalPlayer;
-            if (player.HeldItem.type == ModContent.ItemType<DeadRinger>())
+            if (RedeTileHelper.CanDeadRing(player))
             {
                 int spirit = ModContent.NPCType<SpiritNiricLady>();
 
                 if (!NPC.AnyNPCs(spirit))
                 {
+                    if (!Main.dedServ)
+                        SoundEngine.PlaySound(CustomSounds.Bell, new Vector2(i, j) * 16);
+
                     int offset = Main.tile[i, j].TileFrameX / 18;
 
                     if (Main.netMode != NetmodeID.MultiplayerClient)

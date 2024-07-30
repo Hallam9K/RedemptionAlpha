@@ -1,6 +1,8 @@
+using Microsoft.Xna.Framework;
 using Redemption.Globals;
 using Redemption.Projectiles.Ranged;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -44,5 +46,14 @@ namespace Redemption.Items.Weapons.PreHM.Ranged
             Item.shoot = ModContent.ProjectileType<EaglecrestSling_Throw>();
             Item.ExtraItemShoot(ModContent.ProjectileType<EaglecrestSling_Proj>());
         }
+
+        public int shot;
+        public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
+        {
+            shot = (int)MathHelper.Clamp(shot, 0, 5);
+            Projectile.NewProjectile(source, position, velocity, ModContent.ProjectileType<EaglecrestSling_Throw>(), damage, knockback, player.whoAmI, 0, 0, shot);
+            return false;
+        }
+
     }
 }

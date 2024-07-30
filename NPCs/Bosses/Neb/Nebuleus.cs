@@ -1,85 +1,66 @@
-using System;
-using Terraria;
-using Terraria.ModLoader;
-using Terraria.ID;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Redemption.NPCs.Bosses.Neb.Phase2;
-using Terraria.Graphics.Shaders;
-using Redemption.Items.Usable;
-using Redemption.Projectiles.Misc;
-using System.IO;
-using System.Collections.Generic;
-using Redemption.Globals;
-using Redemption.Particles;
-using Terraria.Audio;
+using ParticleLibrary;
 using Redemption.Base;
+using Redemption.BaseExtension;
+using Redemption.Buffs.Debuffs;
+using Redemption.Buffs.NPCBuffs;
+using Redemption.Globals;
+using Redemption.Globals.NPC;
+using Redemption.Items.Accessories.PostML;
+using Redemption.Items.Armor.Vanity;
+using Redemption.Items.Materials.PostML;
+using Redemption.Items.Placeable.Trophies;
+using Redemption.Items.Usable;
+using Redemption.NPCs.Bosses.Neb.Clone;
+using Redemption.NPCs.Bosses.Neb.Phase2;
+using Redemption.NPCs.Friendly.TownNPCs;
+using Redemption.Particles;
+using Redemption.Projectiles.Misc;
+using Redemption.Textures;
 using Redemption.UI;
+using Redemption.UI.ChatUI;
+using ReLogic.Content;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using Terraria;
+using Terraria.Audio;
 using Terraria.GameContent;
 using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
-using Redemption.Items.Placeable.Trophies;
-using Redemption.Items.Accessories.PostML;
-using Redemption.Items.Armor.Vanity;
-using Redemption.BaseExtension;
-using Redemption.Items.Materials.PostML;
-using Terraria.DataStructures;
-using ReLogic.Content;
+using Terraria.Graphics.Shaders;
+using Terraria.ID;
 using Terraria.Localization;
-using Redemption.Globals.NPC;
-using Redemption.NPCs.Friendly.TownNPCs;
-using Redemption.Buffs.NPCBuffs;
-using Redemption.Buffs.Debuffs;
+using Terraria.ModLoader;
 
 namespace Redemption.NPCs.Bosses.Neb
 {
     [AutoloadBossHead]
     public class Nebuleus : ModNPC
     {
-        private static Asset<Texture2D> chain;
-        private static Asset<Texture2D> wings;
-        private static Asset<Texture2D> armsAni;
-        private static Asset<Texture2D> armsPrayAni;
-        private static Asset<Texture2D> armsPrayGlow;
-        private static Asset<Texture2D> armsStarfallAni;
-        private static Asset<Texture2D> armsStarfallGlow;
-        private static Asset<Texture2D> armsPiercingAni;
-        private static Asset<Texture2D> armsPiercingGlow;
-        private static Asset<Texture2D> armsChainAni;
-        private static Asset<Texture2D> armsChainGlow;
-        private static Asset<Texture2D> armsEyesAni;
-        private static Asset<Texture2D> armsEyesGlow;
+        public static Asset<Texture2D> chain;
+        public static Asset<Texture2D> wings;
+        private Asset<Texture2D> armsAni;
+        private Asset<Texture2D> armsPrayAni;
+        private Asset<Texture2D> armsPrayGlow;
+        private Asset<Texture2D> armsStarfallAni;
+        private Asset<Texture2D> armsStarfallGlow;
+        public static Asset<Texture2D> armsPiercingAni;
+        public static Asset<Texture2D> armsPiercingGlow;
+        private Asset<Texture2D> armsChainAni;
+        private Asset<Texture2D> armsChainGlow;
+        private Asset<Texture2D> armsEyesAni;
+        private Asset<Texture2D> armsEyesGlow;
+        private Asset<Texture2D> armsBookAni;
         public override void Load()
         {
+            if (Main.dedServ)
+                return;
             chain = ModContent.Request<Texture2D>("Redemption/NPCs/Bosses/Neb/CosmosChain1");
             wings = ModContent.Request<Texture2D>(Texture + "_Wings");
-            armsAni = ModContent.Request<Texture2D>(Texture + "_Arms_Idle");
-            armsPrayAni = ModContent.Request<Texture2D>(Texture + "_Arms_Pray");
-            armsPrayGlow = ModContent.Request<Texture2D>(Texture + "_Arms_Pray_Glow");
-            armsStarfallAni = ModContent.Request<Texture2D>(Texture + "_Arms_Starfall");
-            armsStarfallGlow = ModContent.Request<Texture2D>(Texture + "_Arms_Starfall_Glow");
             armsPiercingAni = ModContent.Request<Texture2D>(Texture + "_Arms_PiercingNebula");
             armsPiercingGlow = ModContent.Request<Texture2D>(Texture + "_Arms_PiercingNebula_Glow");
-            armsChainAni = ModContent.Request<Texture2D>(Texture + "_Arms_CosmicChain");
-            armsChainGlow = ModContent.Request<Texture2D>(Texture + "_Arms_CosmicChain_Glow");
-            armsEyesAni = ModContent.Request<Texture2D>(Texture + "_Arms_LongCharge");
-            armsEyesGlow = ModContent.Request<Texture2D>(Texture + "_Arms_LongCharge_Glow");
-        }
-        public override void Unload()
-        {
-            chain = null;
-            wings = null;
-            armsAni = null;
-            armsPrayAni = null;
-            armsPrayGlow = null;
-            armsStarfallAni = null;
-            armsStarfallGlow = null;
-            armsPiercingAni = null;
-            armsPiercingGlow = null;
-            armsChainAni = null;
-            armsChainGlow = null;
-            armsEyesAni = null;
-            armsEyesGlow = null;
         }
         public Vector2[] oldPos = new Vector2[5];
         public float[] oldrot = new float[5];
@@ -102,10 +83,7 @@ namespace Redemption.NPCs.Bosses.Neb
             NPCID.Sets.SpecificDebuffImmunity[Type][ModContent.BuffType<PureChillDebuff>()] = true;
             NPCID.Sets.SpecificDebuffImmunity[Type][ModContent.BuffType<DragonblazeDebuff>()] = true;
             NPCID.Sets.SpecificDebuffImmunity[Type][ModContent.BuffType<MoonflareDebuff>()] = true;
-            NPCID.Sets.NPCBestiaryDrawModifiers value = new(0)
-            {
-                CustomTexturePath = "Redemption/Textures/Bestiary/Nebuleus_Bestiary"
-            };
+            NPCID.Sets.NPCBestiaryDrawModifiers value = new();
             NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, value);
             ElementID.NPCCelestial[Type] = true;
         }
@@ -146,6 +124,12 @@ namespace Redemption.NPCs.Bosses.Neb
             NPC.GetGlobalNPC<ElementalNPC>().OverrideMultiplier[ElementID.Psychic] *= 1.25f;
             NPC.GetGlobalNPC<ElementalNPC>().OverrideMultiplier[ElementID.Shadow] *= 1.1f;
         }
+        private static Texture2D Bubble => !Main.dedServ ? CommonTextures.TextBubble_Neb.Value : null;
+        private static readonly SoundStyle voice = CustomSounds.Voice3 with { Volume = 2f, Pitch = -.4f };
+        private readonly Color nebColor = new(255, 100, 174);
+        private readonly Color nebColor2 = new(4, 0, 108);
+        public readonly Vector2 modifier = new(0, -220);
+
         public override bool CanHitPlayer(Player target, ref int cooldownSlot) => NPC.ai[3] == 6;
         public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)
         {
@@ -188,15 +172,17 @@ namespace Redemption.NPCs.Bosses.Neb
 
                     if (!Main.dedServ)
                         RedeSystem.Instance.ChaliceUIElement.DisplayDialogue("...", 120, 30, 0, Color.DarkGoldenrod);
-
                 }
             }
             NPC.SetEventFlagCleared(ref RedeBossDowned.downedNebuleus, -1);
+            if (Main.netMode != NetmodeID.MultiplayerClient)
+                return;
             if (RedeBossDowned.nebDeath < 5)
+            {
                 RedeBossDowned.nebDeath = 5;
-
-            if (Main.netMode != NetmodeID.SinglePlayer)
-                NetMessage.SendData(MessageID.WorldData);
+                if (Main.netMode != NetmodeID.SinglePlayer)
+                    NetMessage.SendData(MessageID.WorldData);
+            }
         }
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
@@ -223,46 +209,35 @@ namespace Redemption.NPCs.Bosses.Neb
         }
         public override void SendExtraAI(BinaryWriter writer)
         {
-            base.SendExtraAI(writer);
-            if (Main.netMode == NetmodeID.Server || Main.dedServ)
-            {
-                writer.Write(repeat);
-                writer.Write(phase);
-                writer.Write(ID);
-            }
+            writer.Write(repeat);
+            writer.Write(phase);
+            writer.Write(ID);
         }
 
         public override void ReceiveExtraAI(BinaryReader reader)
         {
-            base.ReceiveExtraAI(reader);
-            if (Main.netMode == NetmodeID.MultiplayerClient)
-            {
-                repeat = reader.ReadInt32();
-                phase = reader.ReadInt32();
-                ID = reader.ReadInt32();
-            }
+            repeat = reader.ReadInt32();
+            phase = reader.ReadInt32();
+            ID = reader.ReadInt32();
         }
-        public Vector2 MoveVector2;
 
-        Vector2 vector;
-        public int frameCounters;
-        public int repeat;
-        public int floatTimer;
-        public int floatTimer2;
-        public int[] armFrames = new int[6];
+        private Vector2 vector;
+        private int frameCounters;
+        private int repeat;
+        private int armFrame;
+        private Vector2[] DashPos = new Vector2[4];
         private readonly Vector2[] ChainPos = new Vector2[4];
         private readonly Vector2[] getGrad = new Vector2[4];
-        public Vector2[] temp = new Vector2[4];
+        private readonly Vector2[] temp = new Vector2[4];
         private readonly Rectangle[] ChainHitBoxArea = new Rectangle[4];
         private Rectangle PlayerSafeHitBox;
         bool title = false;
-        public int phase;
-        public int circleTimer;
-        public int circleRadius;
+        private int phase;
+        private int circleRadius;
         public List<int> AttackList = new() { 0, 1, 2, 3, 4, 5, 6, 8, 9, 10, 11, 12 };
-        public List<int> CopyList = null;
-        public int ID { get => (int)NPC.ai[1]; set => NPC.ai[1] = value; }
-        void AttackChoice()
+        private List<int> CopyList = null;
+        private int ID { get => (int)NPC.ai[1]; set => NPC.ai[1] = value; }
+        private void AttackChoice()
         {
             int attempts = 0;
             while (attempts == 0)
@@ -288,6 +263,7 @@ namespace Redemption.NPCs.Bosses.Neb
         {
             Main.time = 16200;
             Main.dayTime = false;
+            Lighting.AddLight(NPC.Center, .8f, .6f, 1);
             if (!title)
             {
                 for (int i = 0; i < ChainPos.Length; i++)
@@ -307,179 +283,6 @@ namespace Redemption.NPCs.Bosses.Neb
             {
                 NPC.TargetClosest(true);
             }
-            #region Frames & Animations
-            if (NPC.ai[3] != 6)
-            {
-                if (floatTimer == 0)
-                {
-                    NPC.velocity.Y += 0.005f;
-                    if (NPC.velocity.Y > .3f)
-                    {
-                        floatTimer = 1;
-                        NPC.netUpdate = true;
-                    }
-                }
-                else if (floatTimer == 1)
-                {
-                    NPC.velocity.Y -= 0.005f;
-                    if (NPC.velocity.Y < -.3f)
-                    {
-                        floatTimer = 0;
-                        NPC.netUpdate = true;
-                    }
-                }
-                if (floatTimer2 == 0)
-                {
-                    NPC.velocity.X += 0.01f;
-                    if (NPC.velocity.X > .4f)
-                    {
-                        floatTimer2 = 1;
-                        NPC.netUpdate = true;
-                    }
-                }
-                else if (floatTimer2 == 1)
-                {
-                    NPC.velocity.X -= 0.01f;
-                    if (NPC.velocity.X < -.4f)
-                    {
-                        floatTimer2 = 0;
-                        NPC.netUpdate = true;
-                    }
-                }
-            }
-            if (NPC.ai[3] != 6)
-            {
-                NPC.frameCounter++;
-                if (NPC.frameCounter >= 5)
-                {
-                    NPC.frameCounter = 0;
-                    NPC.frame.Y += 98;
-                    if (NPC.frame.Y > 294)
-                    {
-                        NPC.frameCounter = 0;
-                        NPC.frame.Y = 0;
-                    }
-                }
-            }
-            switch (NPC.ai[3])
-            {
-                case 0: // Idle
-                    frameCounters++;
-                    if (frameCounters >= 5)
-                    {
-                        armFrames[0]++;
-                        frameCounters = 0;
-                    }
-                    if (armFrames[0] >= 4)
-                    {
-                        armFrames[0] = 0;
-                    }
-                    break;
-                case 1: // Pray Idle
-                    frameCounters++;
-                    if (frameCounters >= 5)
-                    {
-                        armFrames[1]++;
-                        frameCounters = 0;
-                    }
-                    if (armFrames[1] >= 6)
-                    {
-                        armFrames[1] = 5;
-                    }
-                    break;
-                case 2: // Pray End
-                    frameCounters++;
-                    if (frameCounters >= 5)
-                    {
-                        armFrames[1]++;
-                        frameCounters = 0;
-                    }
-                    if (armFrames[1] >= 8)
-                    {
-                        NPC.ai[3] = 0;
-                        armFrames[1] = 0;
-                    }
-                    break;
-                case 3: // Starfall Idle
-                    frameCounters++;
-                    if (frameCounters >= 5)
-                    {
-                        armFrames[2]++;
-                        frameCounters = 0;
-                    }
-                    if (armFrames[2] >= 4)
-                    {
-                        armFrames[2] = 2;
-                    }
-                    break;
-                case 4: // Starfall End
-                    frameCounters++;
-                    if (frameCounters >= 5)
-                    {
-                        armFrames[2]++;
-                        frameCounters = 0;
-                    }
-                    if (armFrames[2] >= 8)
-                    {
-                        NPC.ai[3] = 0;
-                        armFrames[2] = 0;
-                    }
-                    break;
-                case 5: // Piercing Nebula Throw
-                    frameCounters++;
-                    if (frameCounters >= 5)
-                    {
-                        armFrames[3]++;
-                        frameCounters = 0;
-                    }
-                    if (armFrames[3] >= 9)
-                    {
-                        NPC.ai[3] = 0;
-                        armFrames[3] = 0;
-                    }
-                    break;
-                case 6: // Charge
-                    NPC.frameCounter = 0;
-                    NPC.frame.Y = 392;
-
-                    NPC.rotation = NPC.velocity.ToRotation() + 1.57f;
-                    if (NPC.velocity.X < 0)
-                    {
-                        NPC.spriteDirection = -1;
-                    }
-                    else
-                    {
-                        NPC.spriteDirection = 1;
-                    }
-                    break;
-                case 7: // Chain Throw
-                    frameCounters++;
-                    if (frameCounters >= 5)
-                    {
-                        armFrames[4]++;
-                        frameCounters = 0;
-                    }
-                    if (armFrames[4] >= 6)
-                    {
-                        NPC.ai[3] = 0;
-                        armFrames[4] = 4;
-                    }
-                    break;
-                case 8: // Long Charge-Up
-                    frameCounters++;
-                    if (frameCounters >= 5)
-                    {
-                        armFrames[5]++;
-                        frameCounters = 0;
-                    }
-                    if (armFrames[5] >= 19)
-                    {
-                        NPC.ai[3] = 0;
-                        armFrames[5] = 0;
-                    }
-                    break;
-            }
-            #endregion
 
             if (DespawnHandler())
                 return;
@@ -506,7 +309,7 @@ namespace Redemption.NPCs.Bosses.Neb
                 NPC.ai[0] = 6;
                 NPC.netUpdate = true;
             }
-            if (NPC.life < (int)(NPC.lifeMax * 0.01f) && phase < 4)
+            if (NPC.life < (int)(NPC.lifeMax * 0.01f) && phase < 4 && NPC.type == ModContent.NPCType<Nebuleus>())
             {
                 NPC.ai[0] = 6;
                 NPC.netUpdate = true;
@@ -516,11 +319,22 @@ namespace Redemption.NPCs.Bosses.Neb
                 case 0:
                     #region Dramatic Entrance
                     NPC.LookAtEntity(player);
-                    player.RedemptionScreen().ScreenFocusPosition = NPC.Center;
-                    player.RedemptionScreen().lockScreen = true;
-                    player.RedemptionScreen().cutscene = true;
-                    NPC.LockMoveRadius(player);
                     NPC.ai[2]++;
+                    if (RedeBossDowned.nebDeath == 0 && NPC.type == ModContent.NPCType<Nebuleus>())
+                        ScreenPlayer.CutsceneLock(player, NPC, ScreenPlayer.CutscenePriority.Medium, 1200, 2400, 1200);
+                    else
+                    {
+                        if (NPC.ai[2] == 2)
+                        {
+                            DustHelper.DrawStar(NPC.Center, 58, 5, 4, 1, 3, 2, 0, noGravity: true);
+                            DustHelper.DrawStar(NPC.Center, 59, 5, 5, 1, 3, 2, 0, noGravity: true);
+                            DustHelper.DrawStar(NPC.Center, 60, 5, 6, 1, 3, 2, 0, noGravity: true);
+                            DustHelper.DrawStar(NPC.Center, 62, 5, 7, 1, 3, 2, 0, noGravity: true);
+                            for (int d = 0; d < 16; d++)
+                                ParticleManager.NewParticle(NPC.Center, RedeHelper.Spread(6), new RainbowParticle(), Color.White, 1);
+                            NPC.netUpdate = true;
+                        }
+                    }
                     if (NPC.ai[2] >= 60)
                     {
                         NPC.ai[0] = 1;
@@ -536,58 +350,60 @@ namespace Redemption.NPCs.Bosses.Neb
                     if (RedeBossDowned.nebDeath == 0)
                     {
                         if (NPC.ai[2] < 1760)
+                            ScreenPlayer.CutsceneLock(player, NPC, ScreenPlayer.CutscenePriority.Medium, 1200, 2400, 1200);
+                        if (!Main.dedServ && NPC.ai[2] == 60)
                         {
-                            player.RedemptionScreen().ScreenFocusPosition = NPC.Center;
-                            player.RedemptionScreen().lockScreen = true;
-                            player.RedemptionScreen().cutscene = true;
-                            NPC.LockMoveRadius(player);
+                            string s1 = Language.GetTextValue("Mods.Redemption.Cutscene.Nebuleus.Intro.1");
+                            string s2 = Language.GetTextValue("Mods.Redemption.Cutscene.Nebuleus.Intro.2");
+                            if (RedeWorld.alignment >= 0)
+                                s2 = Language.GetTextValue("Mods.Redemption.Cutscene.Nebuleus.Intro.2Alt");
+                            string s3 = Language.GetTextValue("Mods.Redemption.Cutscene.Nebuleus.Intro.3");
+                            string s4 = Language.GetTextValue("Mods.Redemption.Cutscene.Nebuleus.Intro.4");
+                            string s5 = Language.GetTextValue("Mods.Redemption.Cutscene.Nebuleus.Intro.5");
+                            string s6 = Language.GetTextValue("Mods.Redemption.Cutscene.Nebuleus.Intro.6");
+                            DialogueChain chain = new();
+                            chain.Add(new(NPC, s1, nebColor, nebColor2, voice, .03f, 2f, 0, false, bubble: Bubble, modifier: modifier))
+                                 .Add(new(NPC, s2, nebColor, nebColor2, voice, .03f, 2f, 0, false, bubble: Bubble, modifier: modifier))
+                                 .Add(new(NPC, s3, nebColor, nebColor2, voice, .03f, 2f, 0, false, bubble: Bubble, modifier: modifier))
+                                 .Add(new(NPC, s4, nebColor, nebColor2, voice, .03f, 2f, 0, false, bubble: Bubble, modifier: modifier))
+                                 .Add(new(NPC, s5, nebColor, nebColor2, voice, .03f, 2f, 0, false, bubble: Bubble, modifier: modifier))
+                                 .Add(new(NPC, s6, nebColor, nebColor2, voice, .03f, 2f, .5f, true, bubble: Bubble, modifier: modifier, endID: 1));
+                            chain.OnEndTrigger += Chain_OnEndTrigger;
+                            ChatUI.Visible = true;
+                            ChatUI.Add(chain);
                         }
-                        if (!Main.dedServ)
+                        if (NPC.ai[2] >= 5000)
                         {
-                            if (NPC.ai[2] == 60)
-                                RedeSystem.Instance.DialogueUIElement.DisplayDialogue(Language.GetTextValue("Mods.Redemption.Cutscene.Nebuleus.Intro.1"), 300, 1, 0.6f, Language.GetTextValue("Mods.Redemption.Cutscene.Nebuleus.Name"), 1, RedeColor.NebColour, null, null, NPC.Center, 0, 0, true);
-                            if (NPC.ai[2] == 360)
+                            if (Main.netMode != NetmodeID.MultiplayerClient)
                             {
-                                if (RedeWorld.alignment < 0)
-                                    RedeSystem.Instance.DialogueUIElement.DisplayDialogue(Language.GetTextValue("Mods.Redemption.Cutscene.Nebuleus.Intro.2"), 300, 1, 0.6f, Language.GetTextValue("Mods.Redemption.Cutscene.Nebuleus.Name"), 1, RedeColor.NebColour, null, null, NPC.Center, 0, 0, true);
-                                else
-                                    RedeSystem.Instance.DialogueUIElement.DisplayDialogue(Language.GetTextValue("Mods.Redemption.Cutscene.Nebuleus.Intro.2Alt"), 300, 1, 0.6f, Language.GetTextValue("Mods.Redemption.Cutscene.Nebuleus.Name"), 1, RedeColor.NebColour, null, null, NPC.Center, 0, 0, true);
+                                RedeBossDowned.nebDeath = 1;
+                                if (Main.netMode == NetmodeID.Server)
+                                    NetMessage.SendData(MessageID.WorldData);
                             }
-                            if (NPC.ai[2] == 660)
-                                RedeSystem.Instance.DialogueUIElement.DisplayDialogue(Language.GetTextValue("Mods.Redemption.Cutscene.Nebuleus.Intro.3"), 300, 1, 0.6f, Language.GetTextValue("Mods.Redemption.Cutscene.Nebuleus.Name"), 1, RedeColor.NebColour, null, null, NPC.Center, 0, 0, true);
-                            if (NPC.ai[2] == 960)
-                                RedeSystem.Instance.DialogueUIElement.DisplayDialogue(Language.GetTextValue("Mods.Redemption.Cutscene.Nebuleus.Intro.4"), 300, 1, 0.6f, Language.GetTextValue("Mods.Redemption.Cutscene.Nebuleus.Name"), 1, RedeColor.NebColour, null, null, NPC.Center, 0, 0, true);
-                            if (NPC.ai[2] == 1260)
-                                RedeSystem.Instance.DialogueUIElement.DisplayDialogue(Language.GetTextValue("Mods.Redemption.Cutscene.Nebuleus.Intro.5"), 300, 1, 0.6f, Language.GetTextValue("Mods.Redemption.Cutscene.Nebuleus.Name"), 1, RedeColor.NebColour, null, null, NPC.Center, 0, 0, true);
-                            if (NPC.ai[2] == 1560)
-                                RedeSystem.Instance.DialogueUIElement.DisplayDialogue(Language.GetTextValue("Mods.Redemption.Cutscene.Nebuleus.Intro.6"), 300, 1, 0.6f, Language.GetTextValue("Mods.Redemption.Cutscene.Nebuleus.Name"), 1, RedeColor.NebColour, null, null, NPC.Center, 0, 0, true);
-                        }
-                        if (NPC.ai[2] >= 1860)
-                        {
-                            RedeBossDowned.nebDeath = 1;
-                            NPC.ai[3] = 0;
+                            ArmAnimation(0, true);
                             NPC.ai[2] = 0;
                             NPC.ai[0] = 3;
                             if (!Main.dedServ)
                                 RedeSystem.Instance.TitleCardUIElement.DisplayTitle(Language.GetTextValue("Mods.Redemption.TitleCard.Neb.Name"), 60, 90, 0.8f, 0, Color.HotPink, Language.GetTextValue("Mods.Redemption.TitleCard.Neb.Modifier"));
                             NPC.netUpdate = true;
-                            if (Main.netMode == NetmodeID.Server)
-                                NetMessage.SendData(MessageID.WorldData);
                         }
                     }
                     else
                     {
-                        if (NPC.ai[2] == 30)
+                        if (NPC.ai[2] == 30 && !Main.dedServ)
                         {
-                            if (!Main.dedServ)
-                                RedeSystem.Instance.DialogueUIElement.DisplayDialogue(RedeBossDowned.nebDeath < 5 ? Language.GetTextValue("Mods.Redemption.Cutscene.Nebuleus.Resummon.1") : Language.GetTextValue("Mods.Redemption.Cutscene.Nebuleus.Resummon.2"), 120, 1, 0.6f, Language.GetTextValue("Mods.Redemption.Cutscene.Nebuleus.Name"), 1, RedeColor.NebColour, null, null, NPC.Center, 0, 0, true);
-                            NPC.netUpdate = true;
+                            string s1 = RedeBossDowned.nebDeath < 5 ? Language.GetTextValue("Mods.Redemption.Cutscene.Nebuleus.Resummon.1") : Language.GetTextValue("Mods.Redemption.Cutscene.Nebuleus.Resummon.2");
+                            DialogueChain chain = new();
+                            chain.Add(new(NPC, s1, nebColor, nebColor2, voice, .03f, 2f, .5f, true, bubble: Bubble, modifier: modifier, endID: 1));
+                            chain.OnEndTrigger += Chain_OnEndTrigger;
+                            ChatUI.Visible = true;
+                            ChatUI.Add(chain);
                         }
-                        if (NPC.ai[2] >= 150)
+                        if (NPC.ai[2] >= 500)
                         {
                             if (!Main.dedServ)
                                 RedeSystem.Instance.TitleCardUIElement.DisplayTitle(Language.GetTextValue("Mods.Redemption.TitleCard.Neb.Name"), 60, 90, 0.8f, 0, Color.HotPink, Language.GetTextValue("Mods.Redemption.TitleCard.Neb.Modifier"));
-                            NPC.ai[3] = 0;
+                            ArmAnimation(0, true);
                             NPC.ai[2] = 0;
                             NPC.ai[0] = 3;
                             NPC.netUpdate = true;
@@ -606,24 +422,13 @@ namespace Redemption.NPCs.Bosses.Neb
                     }
                     break;
                 case 4:
-                    repeat = 0;
-                    NPC.LookAtEntity(player);
-                    Teleport(false, Vector2.Zero);
-                    frameCounters = 0;
-                    NPC.rotation = 0f;
-                    NPC.velocity = Vector2.Zero;
-                    NPC.ai[3] = 0;
-                    NPC.ai[0] = 5;
-                    NPC.ai[2] = 0;
+                    ResetVars(player);
                     AttackChoice();
-                    circleTimer = 0;
-                    circleRadius = 800;
                     NPC.netUpdate = true;
                     break;
                 case 5:
                     switch (ID)
                     {
-                        // Star Blast
                         #region Star Blast
                         case 0:
                             NPC.LookAtEntity(player);
@@ -659,7 +464,7 @@ namespace Redemption.NPCs.Bosses.Neb
                                     }
                                 }
                             }
-                            if (phase <= 0 ? NPC.ai[2] == 120 : NPC.ai[2] == 100) { NPC.ai[3] = 2; }
+                            if (phase <= 0 ? NPC.ai[2] == 120 : NPC.ai[2] == 100) ArmAnimation(2);
                             if (phase <= 0 ? NPC.ai[2] >= 160 : NPC.ai[2] >= 140)
                             {
                                 NPC.ai[3] = 0;
@@ -670,7 +475,6 @@ namespace Redemption.NPCs.Bosses.Neb
                             break;
                         #endregion
 
-                        // Starfall
                         #region Starfall
                         case 1:
                             NPC.LookAtEntity(player);
@@ -709,7 +513,6 @@ namespace Redemption.NPCs.Bosses.Neb
                             break;
                         #endregion
 
-                        // Piercing Nebula
                         #region Piercing Nebula
                         case 2:
                             NPC.LookAtEntity(player);
@@ -720,7 +523,8 @@ namespace Redemption.NPCs.Bosses.Neb
                             }
                             if (phase < 1)
                             {
-                                if (NPC.ai[2] == 20 || NPC.ai[2] == 50) { NPC.ai[3] = 5; armFrames[3] = 0; }
+                                if (NPC.ai[2] == 20 || NPC.ai[2] == 50)
+                                    ArmAnimation(5, true);
                                 if (NPC.ai[2] == 30 || NPC.ai[2] == 60)
                                 {
                                     NPC.Shoot(new Vector2(NPC.Center.X, NPC.Center.Y), ModContent.ProjectileType<PNebula1_Tele>(), (int)(NPC.damage * .67f), RedeHelper.PolarVector(18, (player.Center - NPC.Center).ToRotation()), NPC.whoAmI);
@@ -728,7 +532,8 @@ namespace Redemption.NPCs.Bosses.Neb
                             }
                             else if (phase == 1)
                             {
-                                if (NPC.ai[2] == 20 || NPC.ai[2] == 40 || NPC.ai[2] == 60) { NPC.ai[3] = 5; armFrames[3] = 0; }
+                                if (NPC.ai[2] == 20 || NPC.ai[2] == 40 || NPC.ai[2] == 60)
+                                    ArmAnimation(5, true);
                                 if (NPC.ai[2] == 30 || NPC.ai[2] == 50 || NPC.ai[2] == 70)
                                 {
                                     NPC.Shoot(new Vector2(NPC.Center.X, NPC.Center.Y), ModContent.ProjectileType<PNebula1_Tele>(), (int)(NPC.damage * .67f), RedeHelper.PolarVector(18, (player.Center - NPC.Center).ToRotation()), NPC.whoAmI);
@@ -736,7 +541,8 @@ namespace Redemption.NPCs.Bosses.Neb
                             }
                             else if (phase == 2)
                             {
-                                if (NPC.ai[2] == 20 || NPC.ai[2] == 50) { NPC.ai[3] = 5; armFrames[3] = 0; }
+                                if (NPC.ai[2] == 20 || NPC.ai[2] == 50)
+                                    ArmAnimation(5, true);
                                 if (NPC.ai[2] == 30)
                                 {
                                     NPC.Shoot(new Vector2(NPC.Center.X, NPC.Center.Y), ModContent.ProjectileType<PNebula1_Tele>(), (int)(NPC.damage * .67f), RedeHelper.PolarVector(18, (player.Center - NPC.Center).ToRotation() + 0.5f), NPC.whoAmI);
@@ -751,7 +557,8 @@ namespace Redemption.NPCs.Bosses.Neb
                             }
                             else
                             {
-                                if (NPC.ai[2] == 20 || NPC.ai[2] == 40 || NPC.ai[2] == 60) { NPC.ai[3] = 5; armFrames[3] = 0; }
+                                if (NPC.ai[2] == 20 || NPC.ai[2] == 40 || NPC.ai[2] == 60)
+                                    ArmAnimation(5, true);
                                 if (NPC.ai[2] == 30 || NPC.ai[2] == 70)
                                 {
                                     NPC.Shoot(new Vector2(NPC.Center.X, NPC.Center.Y), ModContent.ProjectileType<PNebula1_Tele>(), (int)(NPC.damage * .67f), RedeHelper.PolarVector(18, (player.Center - NPC.Center).ToRotation()), NPC.whoAmI);
@@ -777,7 +584,6 @@ namespace Redemption.NPCs.Bosses.Neb
                             break;
                         #endregion
 
-                        // Star Dash
                         #region Star Dash
                         case 3:
                             if (NPC.ai[3] != 6) { NPC.LookAtEntity(player); NPC.netUpdate = true; }
@@ -827,7 +633,6 @@ namespace Redemption.NPCs.Bosses.Neb
                             break;
                         #endregion
 
-                        // Nebula Dash
                         #region Nebula Dash
                         case 4:
                             if (NPC.ai[3] != 6) { NPC.LookAtEntity(player); NPC.netUpdate = true; }
@@ -897,7 +702,6 @@ namespace Redemption.NPCs.Bosses.Neb
                             break;
                         #endregion
 
-                        // Chain of the Cosmos
                         #region Chain of the Cosmos
                         case 5:
                             NPC.LookAtEntity(player);
@@ -992,7 +796,7 @@ namespace Redemption.NPCs.Bosses.Neb
                                                 Main.dust[dustID].noGravity = true;
                                             }
                                             temp[i] = new Vector2(player.Center.X, player.Center.Y - 1000);
-                                            NPC.Shoot(new Vector2(player.Center.X, player.Center.Y - 1000), ModContent.ProjectileType<StationaryStar>(), 200, Vector2.Zero, SoundID.Item117);
+                                            NPC.Shoot(new Vector2(player.Center.X, player.Center.Y - 1000), ModContent.ProjectileType<StationaryStar>(), (int)(NPC.damage * 1.1f), Vector2.Zero, SoundID.Item117);
                                         }
                                         else if (temp[i].Y > player.Center.Y && ScreenPlayer.NebCutscene)
                                         {
@@ -1050,7 +854,6 @@ namespace Redemption.NPCs.Bosses.Neb
                             break;
                         #endregion
 
-                        // Eyes of the Cosmos
                         #region Eyes of the Cosmos
                         case 6:
                             NPC.LookAtEntity(player);
@@ -1081,7 +884,8 @@ namespace Redemption.NPCs.Bosses.Neb
                                 if (phase < 3) { NPC.Shoot(new Vector2(NPC.Center.X, NPC.Center.Y - 100), ModContent.ProjectileType<Shout10>(), 0, Vector2.Zero, NPC.whoAmI); }
                                 NPC.Shoot(new Vector2(NPC.Center.X, NPC.Center.Y), ModContent.ProjectileType<NebRing>(), 0, Vector2.Zero, NPC.whoAmI);
                             }
-                            if (NPC.ai[2] == 20) { NPC.ai[3] = 8; }
+                            if (NPC.ai[2] == 20)
+                                ArmAnimation(8, true);
                             if (NPC.ai[2] == 30)
                             {
                                 NPC.Shoot(new Vector2(NPC.Center.X, NPC.Center.Y + 132), ModContent.ProjectileType<CosmicEye>(), (int)(NPC.damage * .7f), Vector2.Zero, CustomSounds.NebSound1, NPC.whoAmI);
@@ -1095,13 +899,13 @@ namespace Redemption.NPCs.Bosses.Neb
                                 NPC.Shoot(new Vector2(NPC.Center.X - 132, NPC.Center.Y), ModContent.ProjectileType<CosmicEye>(), (int)(NPC.damage * .7f), Vector2.Zero, CustomSounds.NebSound1, NPC.whoAmI);
                                 NPC.Shoot(new Vector2(NPC.Center.X + 132, NPC.Center.Y), ModContent.ProjectileType<CosmicEye>(), (int)(NPC.damage * .7f), Vector2.Zero, CustomSounds.NebSound1, NPC.whoAmI);
                                 NPC.Shoot(new Vector2(NPC.Center.X - 115, NPC.Center.Y - 67), ModContent.ProjectileType<CosmicEye>(), (int)(NPC.damage * .7f), Vector2.Zero, CustomSounds.NebSound1, NPC.whoAmI);
-                                NPC.Shoot(new Vector2(NPC.Center.X + 115, NPC.Center.Y - 67), ModContent.ProjectileType<CosmicEye>(), (int)(NPC.damage * .7f), Vector2.Zero, NPC.whoAmI);
+                                NPC.Shoot(new Vector2(NPC.Center.X + 115, NPC.Center.Y - 67), ModContent.ProjectileType<CosmicEye>(), (int)(NPC.damage * .7f), Vector2.Zero, CustomSounds.NebSound1, NPC.whoAmI);
                             }
                             if (NPC.ai[2] == 90)
                             {
-                                NPC.Shoot(new Vector2(NPC.Center.X, NPC.Center.Y - 132), ModContent.ProjectileType<CosmicEye>(), (int)(NPC.damage * .7f), Vector2.Zero, NPC.whoAmI);
-                                NPC.Shoot(new Vector2(NPC.Center.X - 67, NPC.Center.Y - 115), ModContent.ProjectileType<CosmicEye>(), (int)(NPC.damage * .7f), Vector2.Zero, NPC.whoAmI);
-                                NPC.Shoot(new Vector2(NPC.Center.X + 67, NPC.Center.Y - 115), ModContent.ProjectileType<CosmicEye>(), (int)(NPC.damage * .7f), Vector2.Zero, NPC.whoAmI);
+                                NPC.Shoot(new Vector2(NPC.Center.X, NPC.Center.Y - 132), ModContent.ProjectileType<CosmicEye>(), (int)(NPC.damage * .7f), Vector2.Zero, CustomSounds.NebSound1, NPC.whoAmI);
+                                NPC.Shoot(new Vector2(NPC.Center.X - 67, NPC.Center.Y - 115), ModContent.ProjectileType<CosmicEye>(), (int)(NPC.damage * .7f), Vector2.Zero, CustomSounds.NebSound1, NPC.whoAmI);
+                                NPC.Shoot(new Vector2(NPC.Center.X + 67, NPC.Center.Y - 115), ModContent.ProjectileType<CosmicEye>(), (int)(NPC.damage * .7f), Vector2.Zero, CustomSounds.NebSound1, NPC.whoAmI);
                             }
                             if (phase >= 3)
                             {
@@ -1136,7 +940,8 @@ namespace Redemption.NPCs.Bosses.Neb
                                         }
                                     }
                                 }
-                                if (NPC.ai[2] == 220) { NPC.ai[3] = 2; }
+                                if (NPC.ai[2] == 220)
+                                    ArmAnimation(2);
                             }
                             if (NPC.ai[2] >= 250)
                             {
@@ -1148,7 +953,6 @@ namespace Redemption.NPCs.Bosses.Neb
                             break;
                         #endregion
 
-                        // Super Starfall
                         #region Super Starfall
                         case 8:
                             NPC.LookAtEntity(player);
@@ -1168,7 +972,8 @@ namespace Redemption.NPCs.Bosses.Neb
                                     NPC.Shoot(new Vector2(player.Center.X + A, player.Center.Y + B), ModContent.ProjectileType<Starfall_Tele>(), (int)(NPC.damage * .67f), new Vector2(NPC.spriteDirection != 1 ? -2f : 2f, 6f), SoundID.Item9 with { Volume = .5f });
                                 }
                             }
-                            if (NPC.ai[2] == 50) { NPC.ai[3] = 4; }
+                            if (NPC.ai[2] == 50)
+                                ArmAnimation(4);
                             if (NPC.ai[2] >= 120)
                             {
                                 NPC.ai[3] = 0;
@@ -1179,7 +984,6 @@ namespace Redemption.NPCs.Bosses.Neb
                             break;
                         #endregion
 
-                        // Erratic Star Blast
                         #region Erratic Star Blast
                         case 9:
                             NPC.LookAtEntity(player);
@@ -1193,7 +997,8 @@ namespace Redemption.NPCs.Bosses.Neb
                             {
                                 NPC.Shoot(new Vector2(NPC.Center.X, NPC.Center.Y), ModContent.ProjectileType<CurvingStar_Tele2>(), (int)(NPC.damage * .7f), new Vector2(Main.rand.Next(-7, 7), Main.rand.Next(-7, 7)), 1.01f);
                             }
-                            if (NPC.ai[2] == 60) { NPC.ai[3] = 2; }
+                            if (NPC.ai[2] == 60)
+                                ArmAnimation(2);
                             if (NPC.ai[2] >= 100)
                             {
                                 NPC.ai[3] = 0;
@@ -1204,7 +1009,6 @@ namespace Redemption.NPCs.Bosses.Neb
                             break;
                         #endregion
 
-                        // Piercing Nebula Burst
                         #region Piercing Nebula Burst
                         case 10:
                             NPC.LookAtEntity(player);
@@ -1213,7 +1017,8 @@ namespace Redemption.NPCs.Bosses.Neb
                             {
                                 NPC.Shoot(new Vector2(NPC.Center.X, NPC.Center.Y - 100), ModContent.ProjectileType<Shout6>(), 0, Vector2.Zero, NPC.whoAmI);
                             }
-                            if (NPC.ai[2] == 20) { NPC.ai[3] = 5; armFrames[3] = 0; }
+                            if (NPC.ai[2] == 20)
+                                ArmAnimation(5, true);
                             if (NPC.ai[2] == 30)
                             {
                                 NPC.Shoot(new Vector2(NPC.Center.X, NPC.Center.Y), ModContent.ProjectileType<PNebula1_Tele>(), (int)(NPC.damage * .7f), RedeHelper.PolarVector(18, (player.Center - NPC.Center).ToRotation()), NPC.whoAmI);
@@ -1222,8 +1027,7 @@ namespace Redemption.NPCs.Bosses.Neb
                             {
                                 Teleport(false, Vector2.Zero);
                                 NPC.ai[2] = 20;
-                                NPC.ai[3] = 5;
-                                armFrames[3] = 0;
+                                ArmAnimation(5, true);
                                 repeat++;
                                 NPC.netUpdate = true;
                             }
@@ -1238,7 +1042,6 @@ namespace Redemption.NPCs.Bosses.Neb
                             break;
                         #endregion
 
-                        // Crystal Stars
                         #region Crystal Stars
                         case 11:
                             NPC.LookAtEntity(player);
@@ -1258,7 +1061,8 @@ namespace Redemption.NPCs.Bosses.Neb
                                     NPC.Shoot(new Vector2(player.Center.X + A, player.Center.Y + B), ModContent.ProjectileType<CrystalStar_Tele>(), (int)(NPC.damage * .7f), new Vector2(NPC.spriteDirection != 1 ? -2f : 2f, 6f), SoundID.Item9 with { Volume = .5f });
                                 }
                             }
-                            if (NPC.ai[2] == 50) { NPC.ai[3] = 4; }
+                            if (NPC.ai[2] == 50)
+                                ArmAnimation(4);
                             if (NPC.ai[2] >= 120)
                             {
                                 NPC.ai[3] = 0;
@@ -1269,12 +1073,12 @@ namespace Redemption.NPCs.Bosses.Neb
                             break;
                         #endregion
 
-                        // Super Star Blast
                         #region Super Star Blast
                         case 12:
                             NPC.LookAtEntity(player);
                             NPC.ai[2]++;
-                            if (NPC.ai[2] == 10) { NPC.ai[3] = 1; }
+                            if (NPC.ai[2] == 10)
+                                ArmAnimation(1, true);
                             if (NPC.ai[2] == 30 || NPC.ai[2] == 50)
                             {
                                 int pieCut = 8;
@@ -1301,7 +1105,8 @@ namespace Redemption.NPCs.Bosses.Neb
                                     }
                                 }
                             }
-                            if (NPC.ai[2] == 100) { NPC.ai[3] = 2; }
+                            if (NPC.ai[2] == 100)
+                                ArmAnimation(2);
                             if (NPC.ai[2] >= 140)
                             {
                                 NPC.ai[3] = 0;
@@ -1322,11 +1127,11 @@ namespace Redemption.NPCs.Bosses.Neb
                     frameCounters = 0;
                     NPC.rotation = 0f;
                     NPC.velocity = Vector2.Zero;
-                    NPC.ai[3] = 0;
+                    ArmAnimation(0, true);
                     NPC.ai[1] = 0;
                     if (RedeBossDowned.nebDeath < 5 || NPC.life >= (int)(NPC.lifeMax * 0.01f)) { NPC.ai[2] = 0; }
-                    else { NPC.ai[2] = 2500; }
-                    if (NPC.life < (int)(NPC.lifeMax * 0.01f))
+                    else { NPC.ai[2] = 4880; }
+                    if (NPC.life < (int)(NPC.lifeMax * 0.01f) && NPC.type == ModContent.NPCType<Nebuleus>())
                     {
                         NPC.ai[0] = 8;
                         phase = 4;
@@ -1348,22 +1153,37 @@ namespace Redemption.NPCs.Bosses.Neb
                     {
                         SoundEngine.PlaySound(SoundID.NPCDeath59 with { Pitch = 1.2f }, NPC.position);
                         RazzleDazzle();
-                        if (!Main.dedServ)
+                        if (!Main.dedServ && NPC.type == ModContent.NPCType<Nebuleus>())
                         {
                             if (phase <= 1)
                             {
                                 if (RedeBossDowned.nebDeath < 2)
-                                    RedeSystem.Instance.DialogueUIElement.DisplayDialogue(Language.GetTextValue("Mods.Redemption.Cutscene.Nebuleus.Interval.1"), 200, 1, 0.6f, Language.GetTextValue("Mods.Redemption.Cutscene.Nebuleus.Name"), 2, RedeColor.NebColour, null, null, NPC.Center, 0, 0, true);
+                                {
+                                    DialogueChain chain = new();
+                                    chain.Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.Nebuleus.Interval.1"), nebColor, nebColor2, voice, .02f, 2f, .5f, true, bubble: Bubble, modifier: modifier));
+                                    ChatUI.Visible = true;
+                                    ChatUI.Add(chain);
+                                }
                             }
                             else if (phase == 2)
                             {
                                 if (RedeBossDowned.nebDeath < 3)
-                                    RedeSystem.Instance.DialogueUIElement.DisplayDialogue(Language.GetTextValue("Mods.Redemption.Cutscene.Nebuleus.Interval.2"), 200, 1, 0.6f, Language.GetTextValue("Mods.Redemption.Cutscene.Nebuleus.Name"), 2, RedeColor.NebColour, null, null, NPC.Center, 0, 0, true);
+                                {
+                                    DialogueChain chain = new();
+                                    chain.Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.Nebuleus.Interval.2"), nebColor, nebColor2, voice, .02f, 2f, .5f, true, bubble: Bubble, modifier: modifier));
+                                    ChatUI.Visible = true;
+                                    ChatUI.Add(chain);
+                                }
                             }
                             else if (phase == 3)
                             {
                                 if (RedeBossDowned.nebDeath < 4)
-                                    RedeSystem.Instance.DialogueUIElement.DisplayDialogue(Language.GetTextValue("Mods.Redemption.Cutscene.Nebuleus.Interval.3"), 200, 1, 0.6f, Language.GetTextValue("Mods.Redemption.Cutscene.Nebuleus.Name"), 2, RedeColor.NebColour, null, null, NPC.Center, 0, 0, true);
+                                {
+                                    DialogueChain chain = new();
+                                    chain.Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.Nebuleus.Interval.3"), nebColor, nebColor2, voice, .02f, 2f, .5f, true, bubble: Bubble, modifier: modifier));
+                                    ChatUI.Visible = true;
+                                    ChatUI.Add(chain);
+                                }
                             }
                         }
                         NPC.netUpdate = true;
@@ -1376,23 +1196,35 @@ namespace Redemption.NPCs.Bosses.Neb
                     }
                     if (NPC.ai[2] > 250)
                     {
-                        if (phase <= 1 && RedeBossDowned.nebDeath < 2)
-                            RedeBossDowned.nebDeath = 2;
-                        if (phase == 2 && RedeBossDowned.nebDeath < 3)
-                            RedeBossDowned.nebDeath = 3;
-                        if (phase == 3 && RedeBossDowned.nebDeath < 4)
-                            RedeBossDowned.nebDeath = 4;
+                        if (Main.netMode != NetmodeID.MultiplayerClient)
+                        {
+                            if (phase <= 1 && RedeBossDowned.nebDeath < 2)
+                                RedeBossDowned.nebDeath = 2;
+                            if (phase == 2 && RedeBossDowned.nebDeath < 3)
+                                RedeBossDowned.nebDeath = 3;
+                            if (phase == 3 && RedeBossDowned.nebDeath < 4)
+                                RedeBossDowned.nebDeath = 4;
+                            if (Main.netMode == NetmodeID.Server)
+                                NetMessage.SendData(MessageID.WorldData);
+                        }
                         NPC.ai[2] = 0;
-                        NPC.ai[0] = 4;
+                        if (phase is 3)
+                        {
+                            ResetVars(player);
+                        }
+                        else if (phase is 2)
+                        {
+                            ResetVars(player);
+                        }
+                        else
+                            NPC.ai[0] = 4;
                         NPC.netUpdate = true;
-                        if (Main.netMode == NetmodeID.Server)
-                            NetMessage.SendData(MessageID.WorldData);
                     }
                     break;
                 case 8:
                     NPC.LookAtEntity(player);
                     NPC.ai[2]++;
-                    if ((RedeBossDowned.nebDeath < 5 && NPC.life < (int)(NPC.lifeMax * 0.01f)) ? NPC.ai[2] == 30 : NPC.ai[2] == 2530)
+                    if ((RedeBossDowned.nebDeath < 5 && NPC.life < (int)(NPC.lifeMax * 0.01f)) ? NPC.ai[2] == 30 : NPC.ai[2] == 4910)
                     {
                         SoundEngine.PlaySound(SoundID.NPCDeath59 with { Pitch = 1.2f }, NPC.position);
                         RazzleDazzle();
@@ -1401,44 +1233,44 @@ namespace Redemption.NPCs.Bosses.Neb
                         Main.windSpeedTarget = 1;
                     if (!Main.dedServ)
                         Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/silence");
-                    player.RedemptionScreen().ScreenFocusPosition = NPC.Center;
-                    player.RedemptionScreen().lockScreen = true;
-                    player.RedemptionScreen().cutscene = true;
-                    NPC.LockMoveRadius(player);
-                    if (!Main.dedServ)
+                    ScreenPlayer.CutsceneLock(player, NPC, ScreenPlayer.CutscenePriority.Medium, 1200, 2400, 1200);
+                    if (!Main.dedServ && NPC.ai[2] == 100)
                     {
-                        if (NPC.ai[2] == 100)
-                            RedeSystem.Instance.DialogueUIElement.DisplayDialogue(Language.GetTextValue("Mods.Redemption.Cutscene.Nebuleus.Transition.1"), 180, 1, 0.6f, Language.GetTextValue("Mods.Redemption.Cutscene.Nebuleus.Name"), 1, RedeColor.NebColour, null, null, NPC.Center, 0, 0, true);
-                        if (NPC.ai[2] == 280)
-                            RedeSystem.Instance.DialogueUIElement.DisplayDialogue(Language.GetTextValue("Mods.Redemption.Cutscene.Nebuleus.Transition.2"), 180, 1, 0.6f, Language.GetTextValue("Mods.Redemption.Cutscene.Nebuleus.Name"), 1, RedeColor.NebColour, null, null, NPC.Center, 0, 0, true);
-                        if (NPC.ai[2] == 460)
-                            RedeSystem.Instance.DialogueUIElement.DisplayDialogue(Language.GetTextValue("Mods.Redemption.Cutscene.Nebuleus.Transition.3"), 240, 1, 0.6f, Language.GetTextValue("Mods.Redemption.Cutscene.Nebuleus.Name"), 1, RedeColor.NebColour, null, null, NPC.Center, 0, 0, true);
-                        if (NPC.ai[2] == 700)
-                            RedeSystem.Instance.DialogueUIElement.DisplayDialogue(Language.GetTextValue("Mods.Redemption.Cutscene.Nebuleus.Transition.4"), 180, 1, 0.6f, Language.GetTextValue("Mods.Redemption.Cutscene.Nebuleus.Name"), 1, RedeColor.NebColour, null, null, NPC.Center, 0, 0, true);
-                        if (NPC.ai[2] == 880)
-                            RedeSystem.Instance.DialogueUIElement.DisplayDialogue(Language.GetTextValue("Mods.Redemption.Cutscene.Nebuleus.Transition.5"), 100, 1, 0.6f, Language.GetTextValue("Mods.Redemption.Cutscene.Nebuleus.Name"), 1, RedeColor.NebColour, null, null, NPC.Center, 0, 0, true);
-                        if (NPC.ai[2] == 980)
-                            RedeSystem.Instance.DialogueUIElement.DisplayDialogue(Language.GetTextValue("Mods.Redemption.Cutscene.Nebuleus.Transition.6"), 240, 1, 0.6f, Language.GetTextValue("Mods.Redemption.Cutscene.Nebuleus.Name"), 1, RedeColor.NebColour, null, null, NPC.Center, 0, 0, true);
-                        if (NPC.ai[2] == 1220)
-                            RedeSystem.Instance.DialogueUIElement.DisplayDialogue(Language.GetTextValue("Mods.Redemption.Cutscene.Nebuleus.Transition.7"), 240, 1, 0.6f, Language.GetTextValue("Mods.Redemption.Cutscene.Nebuleus.Name"), 1, RedeColor.NebColour, null, null, NPC.Center, 0, 0, true);
-                        if (NPC.ai[2] == 1460)
-                            RedeSystem.Instance.DialogueUIElement.DisplayDialogue("...", 80, 1, 0.6f, Language.GetTextValue("Mods.Redemption.Cutscene.Nebuleus.Name"), 1, RedeColor.NebColour, null, null, NPC.Center, 0, 0, true);
-                        if (NPC.ai[2] == 1540)
-                            RedeSystem.Instance.DialogueUIElement.DisplayDialogue(Language.GetTextValue("Mods.Redemption.Cutscene.Nebuleus.Transition.8"), 180, 1, 0.6f, Language.GetTextValue("Mods.Redemption.Cutscene.Nebuleus.Name"), 1, RedeColor.NebColour, null, null, NPC.Center, 0, 0, true);
-                        if (NPC.ai[2] == 1720)
-                            RedeSystem.Instance.DialogueUIElement.DisplayDialogue(Language.GetTextValue("Mods.Redemption.Cutscene.Nebuleus.Transition.9"), 180, 1, 0.6f, Language.GetTextValue("Mods.Redemption.Cutscene.Nebuleus.Name"), 1, RedeColor.NebColour, null, null, NPC.Center, 0, 0, true);
-                        if (NPC.ai[2] == 1900)
-                            RedeSystem.Instance.DialogueUIElement.DisplayDialogue(Language.GetTextValue("Mods.Redemption.Cutscene.Nebuleus.Transition.10"), 220, 1, 0.6f, Language.GetTextValue("Mods.Redemption.Cutscene.Nebuleus.Name"), 1, RedeColor.NebColour, null, null, NPC.Center, 0, 0, true);
-                        if (NPC.ai[2] == 2120)
-                            RedeSystem.Instance.DialogueUIElement.DisplayDialogue(RedeWorld.alignment >= 0 ? Language.GetTextValue("Mods.Redemption.Cutscene.Nebuleus.Transition.11") : Language.GetTextValue("Mods.Redemption.Cutscene.Nebuleus.Transition.11Alt"), 180, 1, 0.6f, Language.GetTextValue("Mods.Redemption.Cutscene.Nebuleus.Name"), 1, RedeColor.NebColour, null, null, NPC.Center, 0, 0, true);
-                        if (NPC.ai[2] == 2300)
-                            RedeSystem.Instance.DialogueUIElement.DisplayDialogue(RedeWorld.alignment >= 0 ? Language.GetTextValue("Mods.Redemption.Cutscene.Nebuleus.Transition.12") : Language.GetTextValue("Mods.Redemption.Cutscene.Nebuleus.Transition.12Alt"), 180, 1, 0.6f, Language.GetTextValue("Mods.Redemption.Cutscene.Nebuleus.Name"), 1, RedeColor.NebColour, null, null, NPC.Center, 0, 0, true);
+                        string s1 = Language.GetTextValue("Mods.Redemption.Cutscene.Nebuleus.Transition.1");
+                        string s2 = Language.GetTextValue("Mods.Redemption.Cutscene.Nebuleus.Transition.2");
+                        string s3 = Language.GetTextValue("Mods.Redemption.Cutscene.Nebuleus.Transition.3");
+                        string s4 = Language.GetTextValue("Mods.Redemption.Cutscene.Nebuleus.Transition.4");
+                        string s5 = Language.GetTextValue("Mods.Redemption.Cutscene.Nebuleus.Transition.5");
+                        string s6 = Language.GetTextValue("Mods.Redemption.Cutscene.Nebuleus.Transition.6");
+                        string s7 = Language.GetTextValue("Mods.Redemption.Cutscene.Nebuleus.Transition.7");
+                        string s8 = Language.GetTextValue("Mods.Redemption.Cutscene.Nebuleus.Transition.8");
+                        string s9 = RedeWorld.alignment >= 0 ? Language.GetTextValue("Mods.Redemption.Cutscene.Nebuleus.Transition.9") : Language.GetTextValue("Mods.Redemption.Cutscene.Nebuleus.Transition.9Alt");
+                        string s10 = RedeWorld.alignment >= 0 ? Language.GetTextValue("Mods.Redemption.Cutscene.Nebuleus.Transition.10") : Language.GetTextValue("Mods.Redemption.Cutscene.Nebuleus.Transition.10Alt");
+                        string s11 = Language.GetTextValue("Mods.Redemption.Cutscene.Nebuleus.Transition.11");
+                        string s12 = Language.GetTextValue("Mods.Redemption.Cutscene.Nebuleus.Transition.11Alt");
+                        bool endEarly = RedeWorld.alignment >= 0 && RedeBossDowned.nebDeath >= 5;
+                        DialogueChain chain = new();
+                        chain.Add(new(NPC, s1, nebColor, nebColor2, voice, .03f, 2f, 0, false, bubble: Bubble, modifier: modifier))
+                             .Add(new(NPC, s2, nebColor, nebColor2, voice, .03f, 2f, 0, false, bubble: Bubble, modifier: modifier))
+                             .Add(new(NPC, s3, nebColor, nebColor2, voice, .03f, 2f, 0, false, bubble: Bubble, modifier: modifier))
+                             .Add(new(NPC, s4, nebColor, nebColor2, voice, .03f, 2f, 0, false, bubble: Bubble, modifier: modifier))
+                             .Add(new(NPC, s5, nebColor, nebColor2, voice, .03f, 2f, 0, false, bubble: Bubble, modifier: modifier))
+                             .Add(new(NPC, s6, nebColor, nebColor2, voice, .03f, 2f, 0, false, bubble: Bubble, modifier: modifier))
+                             .Add(new(NPC, s7, nebColor, nebColor2, voice, .03f, 2f, 0, false, bubble: Bubble, modifier: modifier))
+                             .Add(new(NPC, s8, nebColor, nebColor2, voice, .03f, 2f, 0, false, bubble: Bubble, modifier: modifier))
+                             .Add(new(NPC, s9, nebColor, nebColor2, voice, .03f, 2f, 0, false, bubble: Bubble, modifier: modifier))
+                             .Add(new(NPC, s10, nebColor, nebColor2, voice, .03f, 2f, endEarly ? .5f : 0, endEarly, bubble: Bubble, modifier: modifier, endID: endEarly ? 1 : 0));
+                        if (RedeWorld.alignment >= 0 && RedeBossDowned.nebDeath < 5)
+                            chain.Add(new(NPC, s11, nebColor, nebColor2, voice, .03f, 2f, .5f, true, bubble: Bubble, modifier: modifier, endID: 1));
+                        if (RedeWorld.alignment < 0)
+                            chain.Add(new(NPC, s12, nebColor, nebColor2, voice, .03f, 2f, .5f, true, bubble: Bubble, modifier: modifier, endID: 1));
+                        chain.OnEndTrigger += Chain_OnEndTrigger;
+                        ChatUI.Visible = true;
+                        ChatUI.Add(chain);
                     }
                     if (RedeWorld.alignment >= 0)
                     {
-                        if (NPC.ai[2] == 2480 && RedeBossDowned.nebDeath < 5 && !Main.dedServ)
-                            RedeSystem.Instance.DialogueUIElement.DisplayDialogue(Language.GetTextValue("Mods.Redemption.Cutscene.Nebuleus.Transition.13"), 180, 1, 0.6f, Language.GetTextValue("Mods.Redemption.Cutscene.Nebuleus.Name"), 1, RedeColor.NebColour, null, null, NPC.Center, 0, 0, true);
-                        if (NPC.ai[2] >= 2660)
+                        if (NPC.ai[2] >= 5000)
                         {
                             NPC.life = 1;
                             NPC.ai[2] = 0;
@@ -1448,9 +1280,7 @@ namespace Redemption.NPCs.Bosses.Neb
                     }
                     else
                     {
-                        if (NPC.ai[2] == 2480 && !Main.dedServ)
-                            RedeSystem.Instance.DialogueUIElement.DisplayDialogue(Language.GetTextValue("Mods.Redemption.Cutscene.Nebuleus.Transition.13Alt"), 180, 1, 0.6f, Language.GetTextValue("Mods.Redemption.Cutscene.Nebuleus.Name"), 1, RedeColor.NebColour, null, null, NPC.Center, 0, 0, true);
-                        if (NPC.ai[2] >= 2660)
+                        if (NPC.ai[2] >= 5000)
                         {
                             if (RedeWorld.alignmentGiven && !Main.dedServ && !RedeBossDowned.downedSlayer)
                                 RedeSystem.Instance.ChaliceUIElement.DisplayDialogue(Language.GetTextValue("Mods.Redemption.UI.Chalice.NebChoice"), 180, 30, 0, Color.DarkGoldenrod);
@@ -1467,28 +1297,25 @@ namespace Redemption.NPCs.Bosses.Neb
                     break;
                 case 9:
                     NPC.LookAtEntity(player);
-                    player.RedemptionScreen().ScreenFocusPosition = NPC.Center;
-                    player.RedemptionScreen().lockScreen = true;
-                    NPC.LockMoveRadius(player);
+                    ScreenPlayer.CutsceneLock(player, NPC, ScreenPlayer.CutscenePriority.Medium, 1200, 2400, 1200);
                     if (!Main.dedServ)
                         Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/silence");
                     if (!Main.dedServ && !YesNoUI.Visible)
                         RedeSystem.Instance.YesNoUIElement.DisplayYesNoButtons(Language.GetTextValue("Mods.Redemption.GenericTerms.Choice.Spare"), Language.GetTextValue("Mods.Redemption.GenericTerms.Choice.Fight"), new Vector2(0, 15), new Vector2(0, 15), .75f, .75f);
-
                     if (player.Redemption().yesChoice)
                     {
+                        YesNoUI.Visible = false;
                         if (ChaliceAlignmentUI.Visible)
                             ChaliceAlignmentUI.Visible = false;
-                        YesNoUI.Visible = false;
                         NPC.ai[2] = 0;
                         NPC.ai[0] = 11;
                         NPC.netUpdate = true;
                     }
                     else if (player.Redemption().noChoice)
                     {
+                        YesNoUI.Visible = false;
                         if (!Main.dedServ)
                             ChaliceAlignmentUI.Visible = false;
-                        YesNoUI.Visible = false;
                         NPC.ai[2] = 0;
                         NPC.ai[0] = 10;
                         NPC.netUpdate = true;
@@ -1496,33 +1323,38 @@ namespace Redemption.NPCs.Bosses.Neb
                     break;
                 case 10: // Phase 2
                     NPC.LookAtEntity(player);
-                    player.RedemptionScreen().ScreenFocusPosition = NPC.Center;
-                    player.RedemptionScreen().lockScreen = true;
-                    player.RedemptionScreen().cutscene = true;
-                    NPC.LockMoveRadius(player);
-                    if (!Main.dedServ)
+                    ScreenPlayer.CutsceneLock(player, NPC, ScreenPlayer.CutscenePriority.Max, 0, 0, 0);
+                    if (transitionMusicStart && !Main.dedServ)
                         Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/BossStarGod2");
                     NPC.ai[2]++;
-                    if (!Main.dedServ)
+                    if (!Main.dedServ && NPC.ai[2] == 30)
                     {
-                        if (NPC.ai[2] == 30)
-                            RedeSystem.Instance.DialogueUIElement.DisplayDialogue(Language.GetTextValue("Mods.Redemption.Cutscene.Nebuleus.Transition.14"), 150, 1, 0.6f, Language.GetTextValue("Mods.Redemption.Cutscene.Nebuleus.Name"), 1, RedeColor.NebColour, null, null, NPC.Center, 0, 0, true);
-                        if (NPC.ai[2] == 170)
-                            RedeSystem.Instance.DialogueUIElement.DisplayDialogue(Language.GetTextValue("Mods.Redemption.Cutscene.Nebuleus.Transition.15"), 180, 1, 0.6f, Language.GetTextValue("Mods.Redemption.Cutscene.Nebuleus.Name"), 1, RedeColor.NebColour, null, null, NPC.Center, 0, 0, true);
-                        if (NPC.ai[2] == 350)
-                            RedeSystem.Instance.DialogueUIElement.DisplayDialogue(Language.GetTextValue("Mods.Redemption.Cutscene.Nebuleus.Transition.16"), 180, 1, 0.6f, Language.GetTextValue("Mods.Redemption.Cutscene.Nebuleus.Name"), 1, RedeColor.NebColour, null, null, NPC.Center, 0, 0, true);
-                        if (NPC.ai[2] == 530)
-                            RedeSystem.Instance.DialogueUIElement.DisplayDialogue(Language.GetTextValue("Mods.Redemption.Cutscene.Nebuleus.Transition.17"), 180, 1, 0.6f, Language.GetTextValue("Mods.Redemption.Cutscene.Nebuleus.Name"), 1.5f, RedeColor.NebColour, null, null, NPC.Center, 0, 0, true);
-                        if (NPC.ai[2] == 420)
-                            SoundEngine.PlaySound(CustomSounds.Transformation, NPC.position);
+                        float dialogueWait = (2f + RedeConfigClient.Instance.DialogueWaitTime) * 60;
+                        transitionMusicTimer += 24 + 37 + 57 + 34;
+                        transitionMusicPauseTimer += 6 + (dialogueWait * 4);
+                        float dialogueSpeed = .03f - RedeConfigClient.Instance.DialogueSpeed;
+                        dialogueSpeed = MathHelper.Max(dialogueSpeed, 0.01f);
+                        transitionMusicTimer *= dialogueSpeed * 60;
+                        transitionMusicTimer += transitionMusicPauseTimer + 30;
+
+                        string s1 = Language.GetTextValue("Mods.Redemption.Cutscene.Nebuleus.Transition.12");
+                        string s2 = Language.GetTextValue("Mods.Redemption.Cutscene.Nebuleus.Transition.13");
+                        string s3 = Language.GetTextValue("Mods.Redemption.Cutscene.Nebuleus.Transition.14");
+                        string s4 = Language.GetTextValue("Mods.Redemption.Cutscene.Nebuleus.Transition.15");
+                        DialogueChain chain = new();
+                        chain.Add(new(NPC, s1, nebColor, nebColor2, voice, .03f, 2f, 0, false, bubble: Bubble, modifier: modifier))
+                             .Add(new(NPC, s2, nebColor, nebColor2, voice, .03f, 2f, 0, false, bubble: Bubble, modifier: modifier))
+                             .Add(new(NPC, s3, nebColor, nebColor2, voice, .03f, 2f, 0, false, bubble: Bubble, modifier: modifier))
+                             .Add(new(NPC, s4, nebColor, nebColor2, voice, .03f, 2f, .5f, true, bubble: Bubble, modifier: modifier, endID: 1));
+                        chain.OnEndTrigger += Chain_OnEndTrigger;
+                        ChatUI.Visible = true;
+                        ChatUI.Add(chain);
                     }
-                    if (NPC.ai[2] == 533)
-                        NPC.Shoot(NPC.Center, ModContent.ProjectileType<Transition>(), 0, Vector2.Zero);
-                    if (NPC.ai[2] == 620)
-                        NPC.Shoot(NPC.Center, ModContent.ProjectileType<ShockwaveBoom2>(), 0, Vector2.Zero);
-                    if (NPC.ai[2] > 660)
+                    if (NPC.ai[2] >= 30)
+                        TransitionMusic();
+                    if (NPC.ai[2] >= 5000)
                     {
-                        if (RedeBossDowned.nebDeath < 5)
+                        if (RedeBossDowned.nebDeath < 5 && Main.netMode != NetmodeID.MultiplayerClient)
                         {
                             RedeBossDowned.nebDeath = 5;
                             if (Main.netMode == NetmodeID.Server)
@@ -1535,71 +1367,64 @@ namespace Redemption.NPCs.Bosses.Neb
                             Main.player[p].statLife += Main.player[p].statLifeMax2;
                             Main.player[p].HealEffect(Main.player[p].statLifeMax2);
                         }
+
                         NPC.SetDefaults(ModContent.NPCType<Nebuleus2>());
                         NPC.netUpdate = true;
                     }
                     break;
                 case 11: // Spared
                     NPC.LookAtEntity(player);
-                    player.RedemptionScreen().ScreenFocusPosition = NPC.Center;
-                    player.RedemptionScreen().lockScreen = true;
-                    player.RedemptionScreen().cutscene = true;
-                    NPC.LockMoveRadius(player);
+                    ScreenPlayer.CutsceneLock(player, NPC, ScreenPlayer.CutscenePriority.Medium, 1200, 2400, 1200);
                     NPC.ai[2]++;
                     if (!Main.dedServ)
                         Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/silence");
                     if (RedeWorld.alignment >= 0)
                     {
                         NPC.dontTakeDamage = false;
+                        NPC.netUpdate = true;
                         if (!Main.dedServ)
                             SoundEngine.PlaySound(CustomSounds.Teleport1 with { Volume = 1 }, NPC.position);
-                        if (RedeBossDowned.nebDeath < 5)
+                        if (RedeBossDowned.nebDeath < 5 && Main.netMode != NetmodeID.MultiplayerClient)
                         {
                             RedeBossDowned.nebDeath = 5;
                             if (Main.netMode == NetmodeID.Server)
                                 NetMessage.SendData(MessageID.WorldData);
                         }
-                        player.ApplyDamageToNPC(NPC, 9999, 0, 0, false);
-                        NPC.netUpdate = true;
+                        if (Main.netMode != NetmodeID.MultiplayerClient)
+                            NPC.StrikeInstantKill();
                     }
                     else
                     {
                         if (!Main.dedServ)
                         {
                             if (NPC.ai[2] == 30)
-                                RedeSystem.Instance.DialogueUIElement.DisplayDialogue("...", 120, 1, 0.6f, Language.GetTextValue("Mods.Redemption.Cutscene.Nebuleus.Name"), 1, RedeColor.NebColour, null, null, NPC.Center, 0, 0, true);
-                            if (NPC.ai[2] == 150)
-                                RedeSystem.Instance.DialogueUIElement.DisplayDialogue(RedeWorld.alignment >= 0 ? Language.GetTextValue("Mods.Redemption.Cutscene.Nebuleus.Transition.Spare1") : Language.GetTextValue("Mods.Redemption.Cutscene.Nebuleus.Transition.Spare2"), 200, 1, 0.6f, Language.GetTextValue("Mods.Redemption.Cutscene.Nebuleus.Name"), 1, RedeColor.NebColour, null, null, NPC.Center, 0, 0, true);
+                            {
+                                string s1 = RedeWorld.alignment >= 0 ? Language.GetTextValue("Mods.Redemption.Cutscene.Nebuleus.Transition.Spare1") : Language.GetTextValue("Mods.Redemption.Cutscene.Nebuleus.Transition.Spare2");
+                                DialogueChain chain = new();
+                                chain.Add(new(NPC, "...", nebColor, nebColor2, voice, .03f, 2f, 0, false, bubble: Bubble, modifier: modifier))
+                                     .Add(new(NPC, s1, nebColor, nebColor2, voice, .03f, 2f, .5f, true, bubble: Bubble, modifier: modifier, endID: 1));
+                                chain.OnEndTrigger += Chain_OnEndTrigger;
+                                ChatUI.Visible = true;
+                                ChatUI.Add(chain);
+                            }
                         }
-                        if (NPC.ai[2] > 380)
+                        if (NPC.ai[2] > 2000)
                         {
                             NPC.dontTakeDamage = false;
+                            NPC.netUpdate = true;
                             if (!Main.dedServ)
                                 SoundEngine.PlaySound(CustomSounds.Teleport1 with { Volume = 1 }, NPC.position);
-                            if (RedeBossDowned.nebDeath < 5)
+                            if (RedeBossDowned.nebDeath < 5 && Main.netMode != NetmodeID.MultiplayerClient)
                             {
                                 RedeBossDowned.nebDeath = 5;
                                 if (Main.netMode == NetmodeID.Server)
                                     NetMessage.SendData(MessageID.WorldData);
                             }
-                            player.ApplyDamageToNPC(NPC, 9999, 0, 0, false);
-                            NPC.netUpdate = true;
+                            if (Main.netMode != NetmodeID.MultiplayerClient)
+                                NPC.StrikeInstantKill();
                         }
                     }
                     break;
-            }
-            if (MoRDialogueUI.Visible)
-            {
-                if (RedeSystem.Instance.DialogueUIElement.ID == 0)
-                {
-                    RedeSystem.Instance.DialogueUIElement.PointPos = NPC.Center;
-                    RedeSystem.Instance.DialogueUIElement.TextColor = RedeColor.NebColour;
-                }
-                else
-                {
-                    RedeSystem.Instance.DialogueUIElement.PointPos = null;
-                    RedeSystem.Instance.DialogueUIElement.TextColor = null;
-                }
             }
             #region Teleporting
             if (Vector2.Distance(NPC.Center, player.Center) >= 950 && NPC.ai[0] > 0 && NPC.ai[1] != 4 && NPC.ai[1] != 5 && NPC.ai[1] != 6 && NPC.ai[1] != 3 && !player.GetModPlayer<ScreenPlayer>().lockScreen)
@@ -1608,6 +1433,141 @@ namespace Redemption.NPCs.Bosses.Neb
                 NPC.netUpdate = true;
             }
             #endregion
+        }
+        public override void PostAI()
+        {
+            #region Frames & Animations
+            if (NPC.ai[3] != 6)
+            {
+                NPC.position.Y += (float)Math.Sin(NPC.localAI[0]++ / 70) / 2;
+                NPC.position.X += (float)Math.Sin(NPC.localAI[0]++ / 60) / 4;
+            }
+            if (NPC.ai[3] != 6)
+            {
+                NPC.frameCounter++;
+                if (NPC.frameCounter >= 5)
+                {
+                    NPC.frameCounter = 0;
+                    NPC.frame.Y += 98;
+                    if (NPC.frame.Y > 294)
+                    {
+                        NPC.frameCounter = 0;
+                        NPC.frame.Y = 0;
+                    }
+                }
+            }
+            switch (NPC.ai[3])
+            {
+                case 0: // Idle
+                    if (++frameCounters >= 5)
+                    {
+                        frameCounters = 0;
+                        if (++armFrame >= 4)
+                            armFrame = 0;
+                    }
+                    break;
+                case 1: // Pray Idle
+                    if (++frameCounters >= 5)
+                    {
+                        frameCounters = 0;
+                        if (++armFrame >= 6)
+                            armFrame = 5;
+                    }
+                    break;
+                case 2: // Pray End
+                    if (++frameCounters >= 5)
+                    {
+                        frameCounters = 0;
+                        if (++armFrame >= 8)
+                            ArmAnimation(0, true);
+                    }
+                    break;
+                case 3: // Starfall Idle
+                    if (++frameCounters >= 5)
+                    {
+                        frameCounters = 0;
+                        if (++armFrame >= 4)
+                            armFrame = 2;
+                    }
+                    break;
+                case 4: // Starfall End
+                    if (++frameCounters >= 5)
+                    {
+                        frameCounters = 0;
+                        if (++armFrame >= 8)
+                            ArmAnimation(0, true);
+                    }
+                    break;
+                case 5: // Piercing Nebula Throw
+                    if (++frameCounters >= 5)
+                    {
+                        frameCounters = 0;
+                        if (++armFrame >= 9)
+                            ArmAnimation(0, true);
+                    }
+                    break;
+                case 6: // Charge
+                    NPC.frameCounter = 0;
+                    NPC.frame.Y = 392;
+
+                    NPC.rotation = NPC.velocity.ToRotation() + 1.57f;
+                    if (NPC.velocity.X < 0)
+                        NPC.spriteDirection = -1;
+                    else
+                        NPC.spriteDirection = 1;
+                    break;
+                case 7: // Chain Throw
+                    if (++frameCounters >= 5)
+                    {
+                        frameCounters = 0;
+                        if (++armFrame >= 6)
+                            armFrame = 4;
+                    }
+                    break;
+                case 8: // Long Charge-Up
+                    if (++frameCounters >= 5)
+                    {
+                        frameCounters = 0;
+                        if (++armFrame >= 19)
+                            ArmAnimation(0, true);
+                    }
+                    break;
+                case 9: // Book Open
+                    if (++frameCounters >= 5)
+                    {
+                        frameCounters = 0;
+                        if (++armFrame >= 7)
+                            armFrame = 5;
+                    }
+                    break;
+                case 10: // Book Close
+                    if (++frameCounters >= 5)
+                    {
+                        frameCounters = 0;
+                        if (++armFrame >= 11)
+                            ArmAnimation(0, true);
+                    }
+                    break;
+            }
+            #endregion
+        }
+        private void Chain_OnEndTrigger(Dialogue dialogue, int ID)
+        {
+            NPC.ai[2] = 5000;
+        }
+        private bool transitionMusicStart;
+        private float transitionMusicTimer;
+        private float transitionMusicPauseTimer;
+        private void TransitionMusic()
+        {
+            if (((int)transitionMusicTimer) == 190 && !Main.dedServ)
+                SoundEngine.PlaySound(CustomSounds.Transformation, NPC.position);
+            if (((int)transitionMusicTimer) == 87)
+                NPC.Shoot(NPC.Center, ModContent.ProjectileType<Transition>(), 0, Vector2.Zero);
+            if (((int)transitionMusicTimer) == 0)
+                NPC.Shoot(NPC.Center, ModContent.ProjectileType<ShockwaveBoom2>(), 0, Vector2.Zero);
+            if (--transitionMusicTimer <= 580)
+                transitionMusicStart = true;
         }
         public override bool CheckDead()
         {
@@ -1620,7 +1580,20 @@ namespace Redemption.NPCs.Bosses.Neb
         }
 
         #region Methods
-        public void Dash(int speed, bool directional, Vector2 target)
+        private void ResetVars(Player player)
+        {
+            repeat = 0;
+            NPC.LookAtEntity(player);
+            Teleport(false, Vector2.Zero);
+            frameCounters = 0;
+            NPC.rotation = 0f;
+            NPC.velocity = Vector2.Zero;
+            ArmAnimation(0, true);
+            NPC.ai[0] = 5;
+            NPC.ai[2] = 0;
+            circleRadius = 800;
+        }
+        private void Dash(int speed, bool directional, Vector2 target)
         {
             Player player = Main.player[NPC.target];
             RazzleDazzle();
@@ -1635,7 +1608,7 @@ namespace Redemption.NPCs.Bosses.Neb
                 NPC.velocity.X = target.X > NPC.Center.X ? speed : -speed;
             }
         }
-        public void Teleport(bool specialPos, Vector2 teleportPos)
+        private void Teleport(bool specialPos, Vector2 teleportPos)
         {
             DustHelper.DrawParticleStar<GlowParticle2>(NPC.Center, Color.Blue * 0.4f, 5, 0.75f, 1, 0.7f, 2, 0, ai1: Main.rand.Next(50, 60));
             DustHelper.DrawParticleStar<GlowParticle2>(NPC.Center, Color.Purple * 0.4f, 5, 1.5f, 1, 0.7f, 2, 0, ai1: Main.rand.Next(50, 60));
@@ -1698,8 +1671,36 @@ namespace Redemption.NPCs.Bosses.Neb
                 DustHelper.DrawParticleStar<GlowParticle2>(NPC.Center, Color.Blue, 5, 3f, 2, 0.7f, 2, 0, ai1: Main.rand.Next(50, 60));
             }
         }
+        private void ArmAnimation(int ID, bool resetFrame = false)
+        {
+            NPC.ai[3] = ID;
+            if (resetFrame)
+                armFrame = 0;
+        }
         #endregion
-
+        public override void FindFrame(int frameHeight)
+        {
+            if (NPC.IsABestiaryIconDummy)
+            {
+                NPC.frameCounter++;
+                if (NPC.frameCounter >= 5)
+                {
+                    NPC.frameCounter = 0;
+                    NPC.frame.Y += 98;
+                    if (NPC.frame.Y > 294)
+                    {
+                        NPC.frameCounter = 0;
+                        NPC.frame.Y = 0;
+                    }
+                }
+                if (++frameCounters >= 5)
+                {
+                    frameCounters = 0;
+                    if (++armFrame >= 4)
+                        armFrame = 0;
+                }
+            }
+        }
         public override bool? DrawHealthBar(byte hbPosition, ref float scale, ref Vector2 position)
         {
             scale = 1.5f;
@@ -1708,25 +1709,47 @@ namespace Redemption.NPCs.Bosses.Neb
         public override void ModifyHitByItem(Player player, Item item, ref NPC.HitModifiers modifiers)
         {
             if (item.DamageType == DamageClass.Melee)
-                modifiers.FinalDamage *= 2;
+                modifiers.FinalDamage *= 1.5f;
         }
         public override void ModifyHitByProjectile(Projectile projectile, ref NPC.HitModifiers modifiers)
         {
             if (projectile.Redemption().TechnicallyMelee)
-                modifiers.FinalDamage *= 2;
+                modifiers.FinalDamage *= 1.5f;
+        }
+        public override Color? GetAlpha(Color drawColor)
+        {
+            if (NPC.type == ModContent.NPCType<Nebuleus_Clone>())
+                return RedeColor.NebColour * NPC.Opacity;
+            return base.GetAlpha(drawColor);
         }
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
-            Texture2D texture = TextureAssets.Npc[NPC.type].Value;
+            Asset<Texture2D> texture = TextureAssets.Npc[NPC.type];
+            armsAni ??= ModContent.Request<Texture2D>(Texture + "_Arms_Idle");
+            armsPrayAni ??= ModContent.Request<Texture2D>(Texture + "_Arms_Pray");
+            armsPrayGlow ??= ModContent.Request<Texture2D>(Texture + "_Arms_Pray_Glow");
+            armsStarfallAni ??= ModContent.Request<Texture2D>(Texture + "_Arms_Starfall");
+            armsStarfallGlow ??= ModContent.Request<Texture2D>(Texture + "_Arms_Starfall_Glow");
+            armsChainAni ??= ModContent.Request<Texture2D>(Texture + "_Arms_CosmicChain");
+            armsChainGlow ??= ModContent.Request<Texture2D>(Texture + "_Arms_CosmicChain_Glow");
+            armsEyesAni ??= ModContent.Request<Texture2D>(Texture + "_Arms_LongCharge");
+            armsEyesGlow ??= ModContent.Request<Texture2D>(Texture + "_Arms_LongCharge_Glow");
+            armsBookAni ??= ModContent.Request<Texture2D>(Texture + "_Arms_Constellations");
+
             var effects = NPC.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
-            int shader = GameShaders.Armor.GetShaderIdFromItemId(ItemID.LivingRainbowDye);
+            int shader = GameShaders.Armor.GetShaderIdFromItemId(ItemID.HallowBossDye);
             Vector2 drawCenter = new(NPC.Center.X, NPC.Center.Y);
+            if (NPC.type == ModContent.NPCType<Nebuleus_Clone>())
+            {
+                spriteBatch.End();
+                spriteBatch.BeginAdditive();
+            }
             if (!NPC.IsABestiaryIconDummy)
             {
                 for (int k = oldPos.Length - 1; k >= 0; k -= 1)
                 {
                     float alpha = 1f - (k + 1) / (float)(oldPos.Length + 2);
-                    spriteBatch.Draw(texture, oldPos[k] - screenPos, NPC.frame, Main.DiscoColor * (0.5f * alpha), oldrot[k], NPC.frame.Size() / 2, NPC.scale, effects, 0f);
+                    spriteBatch.Draw(texture.Value, oldPos[k] - screenPos, NPC.frame, Main.DiscoColor * (0.5f * alpha), oldrot[k], NPC.frame.Size() / 2, NPC.scale, effects, 0f);
                 }
             }
             if (NPC.ai[1] == 5 && NPC.ai[2] > 50 && NPC.ai[0] < 6)
@@ -1736,62 +1759,69 @@ namespace Redemption.NPCs.Bosses.Neb
                     RedeHelper.DrawBezier(spriteBatch, chain.Value, "", Main.DiscoColor, NPC.Center, ChainPos[i], (NPC.Center + ChainPos[i]) / 2 + new Vector2(0, 130 + (int)(Math.Sin(NPC.ai[2] / 12) * (150 - NPC.ai[2] / 3))), (NPC.Center + ChainPos[i]) / 2 + new Vector2(0, 130 + (int)(Math.Sin(NPC.ai[2] / 12) * (150 - NPC.ai[2] / 3))), 0.04f, 0);
                 }
             }
-            spriteBatch.Draw(texture, NPC.Center - screenPos, NPC.frame, drawColor * NPC.Opacity, NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0f);
+            spriteBatch.Draw(texture.Value, NPC.Center - screenPos, NPC.frame, NPC.GetAlpha(drawColor), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0f);
 
             if (!NPC.IsABestiaryIconDummy)
             {
                 spriteBatch.End();
-                spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
-                GameShaders.Armor.ApplySecondary(shader, Main.player[Main.myPlayer], null);
+                spriteBatch.BeginAdditive(true);
+                GameShaders.Armor.ApplySecondary(shader, Main.LocalPlayer, null);
 
                 spriteBatch.Draw(wings.Value, NPC.Center - screenPos, NPC.frame, NPC.GetAlpha(Color.White), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0f);
 
                 spriteBatch.End();
-                spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+                spriteBatch.Begin(SpriteSortMode.Deferred, NPC.type == ModContent.NPCType<Nebuleus_Clone>() ? BlendState.Additive : BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullNone, null, Main.GameViewMatrix.TransformationMatrix);
             }
             if (NPC.ai[3] != 6)
             {
-                if (NPC.ai[3] == 0)
+                switch (NPC.ai[3])
                 {
-                    int num214 = armsAni.Value.Height / 4;
-                    int y6 = num214 * armFrames[0];
-                    Main.spriteBatch.Draw(armsAni.Value, drawCenter - screenPos, new Rectangle?(new Rectangle(0, y6, armsAni.Value.Width, num214)), drawColor * NPC.Opacity, NPC.rotation, new Vector2(armsAni.Value.Width / 2f, num214 / 2f), NPC.scale, effects, 0f);
+                    case 0:
+                        int height = armsAni.Value.Height / 4;
+                        int y = height * armFrame;
+                        spriteBatch.Draw(armsAni.Value, drawCenter - screenPos, new Rectangle?(new Rectangle(0, y, armsAni.Value.Width, height)), NPC.GetAlpha(drawColor), NPC.rotation, new Vector2(armsAni.Value.Width / 2f, height / 2f), NPC.scale, effects, 0f);
+                        break;
+                    case 1 or 2:
+                        height = armsPrayAni.Value.Height / 8;
+                        y = height * armFrame;
+                        spriteBatch.Draw(armsPrayAni.Value, drawCenter - screenPos, new Rectangle?(new Rectangle(0, y, armsPrayAni.Value.Width, height)), NPC.GetAlpha(drawColor), NPC.rotation, new Vector2(armsPrayAni.Value.Width / 2f, height / 2f), NPC.scale, effects, 0f);
+                        spriteBatch.Draw(armsPrayGlow.Value, drawCenter - screenPos, new Rectangle?(new Rectangle(0, y, armsPrayAni.Value.Width, height)), NPC.GetAlpha(Color.White), NPC.rotation, new Vector2(armsPrayAni.Value.Width / 2f, height / 2f), NPC.scale, effects, 0f);
+                        break;
+                    case 3 or 4:
+                        height = armsStarfallAni.Value.Height / 8;
+                        y = height * armFrame;
+                        spriteBatch.Draw(armsStarfallAni.Value, drawCenter - screenPos, new Rectangle?(new Rectangle(0, y, armsStarfallAni.Value.Width, height)), NPC.GetAlpha(drawColor), NPC.rotation, new Vector2(armsStarfallAni.Value.Width / 2f, height / 2f), NPC.scale, effects, 0f);
+                        spriteBatch.Draw(armsStarfallGlow.Value, drawCenter - screenPos, new Rectangle?(new Rectangle(0, y, armsStarfallAni.Value.Width, height)), NPC.GetAlpha(Color.White), NPC.rotation, new Vector2(armsStarfallAni.Value.Width / 2f, height / 2f), NPC.scale, effects, 0f);
+                        break;
+                    case 5:
+                        height = armsPiercingAni.Value.Height / 9;
+                        y = height * armFrame;
+                        spriteBatch.Draw(armsPiercingAni.Value, drawCenter - screenPos, new Rectangle?(new Rectangle(0, y, armsPiercingAni.Value.Width, height)), NPC.GetAlpha(drawColor), NPC.rotation, new Vector2(armsPiercingAni.Value.Width / 2f, height / 2f), NPC.scale, effects, 0f);
+                        spriteBatch.Draw(armsPiercingGlow.Value, drawCenter - screenPos, new Rectangle?(new Rectangle(0, y, armsPiercingAni.Value.Width, height)), NPC.GetAlpha(Color.White), NPC.rotation, new Vector2(armsPiercingAni.Value.Width / 2f, height / 2f), NPC.scale, effects, 0f);
+                        break;
+                    case 7:
+                        height = armsChainAni.Value.Height / 7;
+                        y = height * armFrame;
+                        spriteBatch.Draw(armsChainAni.Value, drawCenter - screenPos, new Rectangle?(new Rectangle(0, y, armsChainAni.Value.Width, height)), NPC.GetAlpha(drawColor), NPC.rotation, new Vector2(armsChainAni.Value.Width / 2f, height / 2f), NPC.scale, effects, 0f);
+                        spriteBatch.Draw(armsChainGlow.Value, drawCenter - screenPos, new Rectangle?(new Rectangle(0, y, armsChainAni.Value.Width, height)), NPC.GetAlpha(Color.White), NPC.rotation, new Vector2(armsChainAni.Value.Width / 2f, height / 2f), NPC.scale, effects, 0f);
+                        break;
+                    case 8:
+                        height = armsEyesAni.Value.Height / 19;
+                        y = height * armFrame;
+                        spriteBatch.Draw(armsEyesAni.Value, drawCenter - screenPos, new Rectangle?(new Rectangle(0, y, armsEyesAni.Value.Width, height)), NPC.GetAlpha(drawColor), NPC.rotation, new Vector2(armsEyesAni.Value.Width / 2f, height / 2f), NPC.scale, effects, 0f);
+                        spriteBatch.Draw(armsEyesGlow.Value, drawCenter - screenPos, new Rectangle?(new Rectangle(0, y, armsEyesAni.Value.Width, height)), NPC.GetAlpha(Color.White), NPC.rotation, new Vector2(armsEyesAni.Value.Width / 2f, height / 2f), NPC.scale, effects, 0f);
+                        break;
+                    case 9 or 10:
+                        height = armsBookAni.Value.Height / 11;
+                        y = height * armFrame;
+                        spriteBatch.Draw(armsBookAni.Value, drawCenter - screenPos, new Rectangle?(new Rectangle(0, y, armsBookAni.Value.Width, height)), NPC.GetAlpha(drawColor), NPC.rotation, new Vector2(armsBookAni.Value.Width / 2f, height / 2f), NPC.scale, effects, 0f);
+                        break;
                 }
-                if (NPC.ai[3] == 1 || NPC.ai[3] == 2)
-                {
-                    int num214 = armsPrayAni.Value.Height / 8;
-                    int y6 = num214 * armFrames[1];
-                    Main.spriteBatch.Draw(armsPrayAni.Value, drawCenter - screenPos, new Rectangle?(new Rectangle(0, y6, armsPrayAni.Value.Width, num214)), drawColor * NPC.Opacity, NPC.rotation, new Vector2(armsPrayAni.Value.Width / 2f, num214 / 2f), NPC.scale, effects, 0f);
-                    Main.spriteBatch.Draw(armsPrayGlow.Value, drawCenter - screenPos, new Rectangle?(new Rectangle(0, y6, armsPrayAni.Value.Width, num214)), NPC.GetAlpha(Color.White), NPC.rotation, new Vector2(armsPrayAni.Value.Width / 2f, num214 / 2f), NPC.scale, effects, 0f);
-                }
-                if (NPC.ai[3] == 3 || NPC.ai[3] == 4)
-                {
-                    int num214 = armsStarfallAni.Value.Height / 8;
-                    int y6 = num214 * armFrames[2];
-                    Main.spriteBatch.Draw(armsStarfallAni.Value, drawCenter - screenPos, new Rectangle?(new Rectangle(0, y6, armsStarfallAni.Value.Width, num214)), drawColor * NPC.Opacity, NPC.rotation, new Vector2(armsStarfallAni.Value.Width / 2f, num214 / 2f), NPC.scale, effects, 0f);
-                    Main.spriteBatch.Draw(armsStarfallGlow.Value, drawCenter - screenPos, new Rectangle?(new Rectangle(0, y6, armsStarfallAni.Value.Width, num214)), NPC.GetAlpha(Color.White), NPC.rotation, new Vector2(armsStarfallAni.Value.Width / 2f, num214 / 2f), NPC.scale, effects, 0f);
-                }
-                if (NPC.ai[3] == 5)
-                {
-                    int num214 = armsPiercingAni.Value.Height / 9;
-                    int y6 = num214 * armFrames[3];
-                    Main.spriteBatch.Draw(armsPiercingAni.Value, drawCenter - screenPos, new Rectangle?(new Rectangle(0, y6, armsPiercingAni.Value.Width, num214)), drawColor * NPC.Opacity, NPC.rotation, new Vector2(armsPiercingAni.Value.Width / 2f, num214 / 2f), NPC.scale, effects, 0f);
-                    Main.spriteBatch.Draw(armsPiercingGlow.Value, drawCenter - screenPos, new Rectangle?(new Rectangle(0, y6, armsPiercingAni.Value.Width, num214)), NPC.GetAlpha(Color.White), NPC.rotation, new Vector2(armsPiercingAni.Value.Width / 2f, num214 / 2f), NPC.scale, effects, 0f);
-                }
-                if (NPC.ai[3] == 7)
-                {
-                    int num214 = armsChainAni.Value.Height / 7;
-                    int y6 = num214 * armFrames[4];
-                    Main.spriteBatch.Draw(armsChainAni.Value, drawCenter - screenPos, new Rectangle?(new Rectangle(0, y6, armsChainAni.Value.Width, num214)), drawColor * NPC.Opacity, NPC.rotation, new Vector2(armsChainAni.Value.Width / 2f, num214 / 2f), NPC.scale, effects, 0f);
-                    Main.spriteBatch.Draw(armsChainGlow.Value, drawCenter - screenPos, new Rectangle?(new Rectangle(0, y6, armsChainAni.Value.Width, num214)), NPC.GetAlpha(Color.White), NPC.rotation, new Vector2(armsChainAni.Value.Width / 2f, num214 / 2f), NPC.scale, effects, 0f);
-                }
-                if (NPC.ai[3] == 8)
-                {
-                    int num214 = armsEyesAni.Value.Height / 19;
-                    int y6 = num214 * armFrames[5];
-                    Main.spriteBatch.Draw(armsEyesAni.Value, drawCenter - screenPos, new Rectangle?(new Rectangle(0, y6, armsEyesAni.Value.Width, num214)), drawColor * NPC.Opacity, NPC.rotation, new Vector2(armsEyesAni.Value.Width / 2f, num214 / 2f), NPC.scale, effects, 0f);
-                    Main.spriteBatch.Draw(armsEyesGlow.Value, drawCenter - screenPos, new Rectangle?(new Rectangle(0, y6, armsEyesAni.Value.Width, num214)), NPC.GetAlpha(Color.White), NPC.rotation, new Vector2(armsEyesAni.Value.Width / 2f, num214 / 2f), NPC.scale, effects, 0f);
-                }
+            }
+            if (NPC.type == ModContent.NPCType<Nebuleus_Clone>())
+            {
+                spriteBatch.End();
+                spriteBatch.BeginDefault();
             }
             return false;
         }

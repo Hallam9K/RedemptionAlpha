@@ -6,7 +6,9 @@ using Redemption.Globals;
 using Redemption.Items.Accessories.PreHM;
 using Redemption.Items.Armor.Vanity;
 using Redemption.Items.Materials.PreHM;
+using Redemption.UI;
 using Redemption.UI.ChatUI;
+using ReLogic.Content;
 using System.Collections.Generic;
 using System.Linq;
 using Terraria;
@@ -17,15 +19,30 @@ using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.Localization;
+using Terraria.Map;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 using Terraria.ModLoader.Utilities;
+using Terraria.UI;
 using Terraria.Utilities;
 
 namespace Redemption.NPCs.Friendly
 {
     public class TreebarkDryad : ModNPC
     {
+        private static Asset<Texture2D> HeadIcon1;
+        private static Asset<Texture2D> HeadIcon2;
+        private static Asset<Texture2D> HeadIcon3;
+
+        public override void Load()
+        {
+            if (Main.dedServ)
+                return;
+            HeadIcon1 = ModContent.Request<Texture2D>(Texture + "_Head");
+            HeadIcon2 = ModContent.Request<Texture2D>(Texture + "_Head2");
+            HeadIcon3 = ModContent.Request<Texture2D>(Texture + "_Head3");
+        }
+
         public enum ActionState
         {
             Idle
@@ -56,7 +73,7 @@ namespace Redemption.NPCs.Friendly
             NPCID.Sets.CantTakeLunchMoney[Type] = true;
             NPCID.Sets.TownNPCBestiaryPriority.Add(Type);
             NPCID.Sets.ImmuneToRegularBuffs[Type] = true;
-            NPCID.Sets.NPCBestiaryDrawModifiers value = new(0)
+            NPCID.Sets.NPCBestiaryDrawModifiers value = new()
             {
                 Position = new Vector2(0, 20),
                 PortraitPositionYOverride = 0
@@ -144,7 +161,7 @@ namespace Redemption.NPCs.Friendly
                 setName = name;
             }
             else
-                typeName = setName + " the Treebark Dryad";
+                typeName = setName + Language.GetTextValue("Mods.Redemption.NPCs.TreebarkDryad.Title");
         }
         public override void AI()
         {
@@ -191,7 +208,7 @@ namespace Redemption.NPCs.Friendly
                 {
                     if (NPC.life < NPC.lifeMax - 10 && !Main.dedServ)
                     {
-                        Texture2D bubble = ModContent.Request<Texture2D>("Redemption/UI/TextBubble_Epidotra").Value;
+                        Texture2D bubble = !Main.dedServ ? ModContent.Request<Texture2D>("Redemption/UI/TextBubble_Epidotra").Value : null;
                         SoundStyle voice = CustomSounds.Voice2 with { Pitch = -1f };
 
                         DialogueChain chain = new();
@@ -206,7 +223,7 @@ namespace Redemption.NPCs.Friendly
                 {
                     if (NPC.life < NPC.lifeMax / 2 && !Main.dedServ)
                     {
-                        Texture2D bubble = ModContent.Request<Texture2D>("Redemption/UI/TextBubble_Epidotra").Value;
+                        Texture2D bubble = !Main.dedServ ? ModContent.Request<Texture2D>("Redemption/UI/TextBubble_Epidotra").Value : null;
                         SoundStyle voice = CustomSounds.Voice2 with { Pitch = -1f };
 
                         string gender = player.Male ? Language.GetTextValue("Mods.Redemption.Cutscene.TreebarkDryad.3") : Language.GetTextValue("Mods.Redemption.Cutscene.TreebarkDryad.4");
@@ -274,7 +291,15 @@ namespace Redemption.NPCs.Friendly
                 .Add(new Item(ItemID.BrownMoss) { shopCustomPrice = 20 })
                 .Add(new Item(ItemID.GreenMoss) { shopCustomPrice = 20 })
                 .Add(new Item(ItemID.PurpleMoss) { shopCustomPrice = 20 })
-                .Add(new Item(ItemID.RedMoss) { shopCustomPrice = 20 });
+                .Add(new Item(ItemID.RedMoss) { shopCustomPrice = 20 })
+                .Add(new Item(ItemID.LavaMoss) { shopCustomPrice = 20 }, Condition.DownedEarlygameBoss);
+
+            Shop.AddPool("GlowMoss", 1)
+                .Add(new Item(ItemID.ArgonMoss) { shopCustomPrice = 40 }, Condition.DownedSkeletron)
+                .Add(new Item(ItemID.KryptonMoss) { shopCustomPrice = 40 }, Condition.DownedSkeletron)
+                .Add(new Item(ItemID.XenonMoss) { shopCustomPrice = 40 }, Condition.DownedSkeletron)
+                .Add(new Item(ItemID.VioletMoss) { shopCustomPrice = 40 }, Condition.DownedSkeletron)
+                .Add(new Item(ItemID.RainbowMoss) { shopCustomPrice = 40 }, Condition.DownedSkeletron);
 
             Shop.AddPool("Fruit", 1)
                 .Add(ItemID.Apple)
@@ -318,7 +343,7 @@ namespace Redemption.NPCs.Friendly
                 {
                     Point tileToNPC = NPC.Center.ToTileCoordinates();
                     int type = Main.tile[tileToNPC.X + x, tileToNPC.Y + y].TileType;
-                    if (type == TileID.Trees || type == TileID.PalmTree)
+                    if (type == TileID.Trees || type == TileID.PalmTree || type == TileID.VanityTreeSakura || type == TileID.VanityTreeYellowWillow)
                         score++;
                 }
             }
@@ -475,6 +500,30 @@ namespace Redemption.NPCs.Friendly
 
                 new FlavorTextBestiaryInfoElement(Language.GetTextValue("Mods.Redemption.FlavorTextBestiary.TreebarkDryad"))
             });
+        }
+
+        public sealed class TreebarkMapIconLayer : ModMapLayer
+        {
+            public override void Draw(ref MapOverlayDrawContext context, ref string text)
+            {
+                const float scale = 1f;
+
+                foreach (NPC npc in Main.ActiveNPCs)
+                {
+                    if (npc.ModNPC is not TreebarkDryad treebarkNPC)
+                        continue;
+
+                    Asset<Texture2D> asset = npc.ai[3] switch
+                    {
+                        1 => HeadIcon2,
+                        2 => HeadIcon3,
+                        _ => HeadIcon1,
+                    };
+                    Vector2 position = treebarkNPC.NPC.Center.ToTileCoordinates().ToVector2();
+                    if (context.Draw(asset.Value, position, Color.White, new SpriteFrame(1, 1, 0, 0), scale, scale, Alignment.Center).IsMouseOver)
+                        text = npc.TypeName;
+                }
+            }
         }
     }
     public class TreebarkShop : AbstractNPCShop
