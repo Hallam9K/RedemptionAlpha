@@ -1,4 +1,6 @@
 using Microsoft.Xna.Framework;
+using Redemption.BaseExtension;
+using Redemption.Buffs.NPCBuffs;
 using Redemption.Globals;
 using Redemption.Items.Materials.PreHM;
 using Redemption.Projectiles.Ranged;
@@ -28,13 +30,13 @@ namespace Redemption.Items.Weapons.PreHM.Ranged
 
             // Use Properties
             Item.useStyle = ItemUseStyleID.Shoot;
-            Item.useTime = 33;
-            Item.useAnimation = 33;
+            Item.useTime = 42;
+            Item.useAnimation = 42;
             Item.UseSound = SoundID.Item5;
             Item.autoReuse = false;
 
             // Weapon Properties
-            Item.damage = 42;
+            Item.damage = 26;
             Item.knockBack = 4;
             Item.DamageType = DamageClass.Ranged;
             Item.noMelee = true;
@@ -60,24 +62,16 @@ namespace Redemption.Items.Weapons.PreHM.Ranged
         {
             type = ProjectileID.BoneArrow;
         }
-        public override void ModifyHitNPC(Player player, NPC target, ref NPC.HitModifiers modifiers)
-        {
-            if (NPCLists.Dragonlike.Contains(target.type))
-                modifiers.FinalDamage *= 10;
-        }
-
 
         float flag = 0;
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
             flag++;
-            if (flag >= 10)
+            if (flag >= 15)
             {
                 flag = 0;
-                for (int i = 0; i < 10; i++)
-                    count[i] = 0;
+                count = new int[15];
             }
-
             float numberProjectiles = 4;
             float rotation = MathHelper.ToRadians(10);
             for (int i = 0; i < numberProjectiles; i++)
@@ -100,14 +94,17 @@ namespace Redemption.Items.Weapons.PreHM.Ranged
         }
         public bool breath = false;
         public bool ready = false;
-        public int[] count = new int[10];
+        public int[] count = new int[15];
         public override void HoldItem(Player player)
         {
-            for (int k = 0; k < 10; k++)
+            for (int k = 0; k < 15; k++)
             {
                 count[k] = Main.projectile.Count(n => n.type == ModContent.ProjectileType<DragonSlayersBowHitcheck>() && n.owner == player.whoAmI && (int)n.ai[0] == k);
                 if (count[k] >= 4)
+                {
                     breath = true;
+                    count = new int[15];
+                }
             }
 
             if (breath && !ready)
@@ -124,13 +121,29 @@ namespace Redemption.Items.Weapons.PreHM.Ranged
         public bool ShotFrom = false;
         public float Flag;
         public bool isHit;
+        public override void ModifyHitNPC(Projectile projectile, NPC target, ref NPC.HitModifiers modifiers)
+        {
+            if (!ShotFrom)
+                return;
+            if (NPCLists.Dragonlike.Contains(target.type))
+                modifiers.FinalDamage *= 4;
+        }
+
         public override void OnHitNPC(Projectile projectile, NPC target, NPC.HitInfo hit, int damageDone)
         {
+            if (!ShotFrom)
+                return;
+            if (Main.player[projectile.owner].RedemptionPlayerBuff().dragonLeadBonus)
+                target.AddBuff(ModContent.BuffType<DragonblazeDebuff>(), 300);
+
             isHit = true;
         }
         public override void OnKill(Projectile projectile, int timeLeft)
         {
-            if (ShotFrom && isHit)
+            if (!ShotFrom)
+                return;
+
+            if (isHit)
             {
                 Projectile.NewProjectile(projectile.GetSource_FromAI(), projectile.Center, Vector2.Zero, ModContent.ProjectileType<DragonSlayersBowHitcheck>(), projectile.damage, projectile.knockBack, projectile.owner, Flag);
             }
@@ -150,14 +163,14 @@ namespace Redemption.Items.Weapons.PreHM.Ranged
             Projectile.DamageType = DamageClass.Default;
             Projectile.timeLeft = 120;
         }
-        public int[] count = new int[10];
+        public int[] count = new int[15];
         public override void AI()
         {
             Player player = Main.player[Projectile.owner];
             if (player.noItems || player.dead || !player.active)
                 Projectile.Kill();
 
-            for (int k = 0; k < 10; k++)
+            for (int k = 0; k < 15; k++)
             {
                 IEnumerable<Projectile> list = Main.projectile.Where(n => n.type == ModContent.ProjectileType<DragonSlayersBowHitcheck>() && n.owner == player.whoAmI && (int)n.ai[0] == k);
                 count[k] = Main.projectile.Count(n => n.type == ModContent.ProjectileType<DragonSlayersBowHitcheck>() && n.owner == player.whoAmI && (int)n.ai[0] == k);

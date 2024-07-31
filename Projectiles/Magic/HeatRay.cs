@@ -32,6 +32,11 @@ namespace Redemption.Projectiles.Magic
             Projectile.idStaticNPCHitCooldown = 10;
         }
 
+        public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
+        {
+            if (NPCLists.Dragonlike.Contains(target.type))
+                modifiers.FinalDamage *= 4;
+        }
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             Player player = Main.player[Projectile.owner];

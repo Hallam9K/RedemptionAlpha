@@ -1,5 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using ParticleLibrary;
+using Redemption.BaseExtension;
+using Redemption.Buffs.NPCBuffs;
 using Redemption.Globals;
 using Redemption.Particles;
 using Terraria;
@@ -63,9 +65,17 @@ namespace Redemption.Projectiles.Magic
         {
             target.AddBuff(BuffID.OnFire, 200);
         }
+        public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
+        {
+            if (Projectile.ModProjectile is DragonSkullFlames_Proj && NPCLists.Dragonlike.Contains(target.type))
+                modifiers.FinalDamage *= 4;
+        }
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             target.AddBuff(BuffID.OnFire, 200);
+
+            if (Projectile.ModProjectile is DragonSkullFlames_Proj && Main.player[Projectile.owner].RedemptionPlayerBuff().dragonLeadBonus)
+                target.AddBuff(ModContent.BuffType<DragonblazeDebuff>(), 300);
         }
     }
 }
