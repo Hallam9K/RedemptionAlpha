@@ -1,4 +1,6 @@
 - Fixed Divinity's explosion damage, buffed base damage from 160 -> 200, sun will follow you faster the further away it is
+- All Dragon Slayer weapons should deal x4 damage to Dragonlike enemies, and fixed staff's flames and bow from not inflicting dragonblaze
+- Nerfed use time of Dragon Slayer's Greatbow from 33 -> 42 and damage from 42 -> 26
 1466. Changed Nebuleus' Chains of the Cosmos damage from 200 -> 110% base damage
 1526. Shortened and tweaked Nebuleus' end dialogue, now uses the dialogue box style
 1530. Added Pulse Blade, a post-Omega Cleaver mage weapon that shoots plasma mines on right-click and charges a harmless slash on left-click, hitting a mine with the slash will launch it in the direction of the slash, damage and speed based on the slash's velocity
