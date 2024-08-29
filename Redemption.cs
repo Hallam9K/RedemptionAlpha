@@ -236,6 +236,7 @@ namespace Redemption
             SkyManager.Instance["MoR:RuinedKingdomSky"] = new RuinedKingdomSky();
             Filters.Scene["MoR:SoullessSky"] = new Filter(new ScreenShaderData("FilterMiniTower").UseColor(0f, 0f, 0f).UseOpacity(0.55f), EffectPriority.High);
             Filters.Scene["MoR:FowlMorningSky"] = new Filter(new ScreenShaderData("FilterMiniTower").UseColor(0.7f, 0.3f, 0.02f).UseOpacity(0.3f), EffectPriority.High);
+            Filters.Scene["MoR:ThornSky"] = new Filter(new ScreenShaderData("FilterMiniTower").UseColor(0.2f, 0.25f, 0.15f).UseOpacity(0.7f), EffectPriority.High);
 
             RedeSpecialAbility = KeybindLoader.RegisterKeybind(this, "Special Ability Key", Keys.F);
             RedeSpiritwalkerAbility = KeybindLoader.RegisterKeybind(this, "Spirit Walker Key", Keys.K);

@@ -21,8 +21,8 @@ namespace Redemption.Items.Accessories.PreHM
 		public override void SetDefaults()
 		{
 			Item.DefaultToVanitypet(ModContent.ProjectileType<PetChicken>(), ModContent.BuffType<PetChickenBuff>());
-			Item.width = 30;
-			Item.height = 14;
+			Item.width = 24;
+			Item.height = 24;
 			Item.rare = ItemRarityID.Blue;
 			Item.value = Item.sellPrice(0, 0, 1);
 		}

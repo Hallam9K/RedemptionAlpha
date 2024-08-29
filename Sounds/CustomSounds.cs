@@ -95,6 +95,9 @@ namespace Redemption
         public static readonly SoundStyle Slice2 = new("Redemption/Sounds/Custom/Slice2");
         public static readonly SoundStyle Slice3 = new("Redemption/Sounds/Custom/Slice3") { PitchVariance = .1f };
         public static readonly SoundStyle Slice4 = new("Redemption/Sounds/Custom/Slice4") { PitchVariance = .1f };
+        public static readonly SoundStyle Slice5 = new("Redemption/Sounds/Custom/Slice5") { PitchVariance = .1f };
+        public static readonly SoundStyle Slash1 = new("Redemption/Sounds/Custom/Slash1") { PitchVariance = .1f };
+        public static readonly SoundStyle Slash2 = new("Redemption/Sounds/Custom/Slash2") { PitchVariance = .1f };
         public static readonly SoundStyle Spark1 = new("Redemption/Sounds/Custom/Spark1") { PitchVariance = .1f };
         public static readonly SoundStyle SpookyNoise = new("Redemption/Sounds/Custom/SpookyNoise");
         public static readonly SoundStyle Swing1 = new("Redemption/Sounds/Custom/Swing1") { Volume = .4f, PitchVariance = .1f };
@@ -144,6 +147,11 @@ namespace Redemption
         public static readonly SoundStyle Shatter = new("Redemption/Sounds/Custom/Shatter");
         public static readonly SoundStyle HLShotgun1 = new("Redemption/Sounds/Custom/HLShotgun1") { PitchVariance = .1f };
         public static readonly SoundStyle Bell = new("Redemption/Sounds/Custom/Bell") { PitchVariance = .1f, Pitch = -.5f, Volume = .5f };
+
+        public static readonly SoundStyle Magic1 = new("Redemption/Sounds/Custom/Magic1") { PitchVariance = .1f };
+        public static readonly SoundStyle Magic5 = new("Redemption/Sounds/Custom/Magic5") { PitchVariance = .1f };
+        public static readonly SoundStyle Saint3 = new("Redemption/Sounds/Custom/Saint3") { PitchVariance = .1f };
+        public static readonly SoundStyle Saint9 = new("Redemption/Sounds/Custom/Saint9") { PitchVariance = .1f };
 
         public static readonly SoundStyle BoneHit = new("Redemption/Sounds/Tiles/BoneHit", 3);
         public static readonly SoundStyle BrickHit = new("Redemption/Sounds/Tiles/BrickHit", 3);

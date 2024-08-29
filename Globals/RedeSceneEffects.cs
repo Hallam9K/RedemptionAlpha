@@ -11,6 +11,8 @@ using Redemption.NPCs.Bosses.Neb.Clone;
 using Redemption.NPCs.Bosses.ADD;
 using Redemption.NPCs.Friendly;
 using Redemption.NPCs.Bosses.Obliterator;
+using Redemption.NPCs.Bosses.Thorn;
+using Terraria;
 
 namespace Redemption.Globals
 {
@@ -158,6 +160,21 @@ namespace Redemption.Globals
         public override bool IsSceneEffectActive(Terraria.Player player)
         {
             return Terraria.NPC.AnyNPCs(ModContent.NPCType<Ukko>());
+        }
+    }
+    public class ThornScene : ModSceneEffect
+    {
+        public override SceneEffectPriority Priority => SceneEffectPriority.BossHigh;
+        public override void SpecialVisuals(Terraria.Player player, bool isActive)
+        {
+            player.ManageSpecialBiomeVisuals("MoR:ThornSky", isActive);
+            if (isActive)
+                Main.GraveyardVisualIntensity = .5f;
+        }
+        public override bool IsSceneEffectActive(Terraria.Player player)
+        {
+            int thorn = Terraria.NPC.FindFirstNPC(ModContent.NPCType<Thorn>());
+            return thorn > -1 && Main.npc[thorn].ModNPC is Thorn thornNPC && thornNPC.PhaseTwo;
         }
     }
 }

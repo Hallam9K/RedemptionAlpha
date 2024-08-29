@@ -1383,10 +1383,13 @@ namespace Redemption.NPCs.Bosses.Erhan
                 return false;
             }
             Rectangle rectHead = HeadTex.Frame(1, 3, 0, HeadFrameY);
-            Vector2 originHead = rectHead.Size() / 2 - new Vector2(6 * NPC.spriteDirection, -32);
+            int originHeadOffsetY = -31;
+            if (HeadFrameY != 0)
+                originHeadOffsetY = -33;
+            Vector2 originHead = rectHead.Size() / 2 - new Vector2(6 * NPC.spriteDirection, originHeadOffsetY);
 
             Rectangle rectArms = ArmsTex.Frame(1, 24, 0, ArmFrameY);
-            Vector2 originArms = rectArms.Size() / 2 + new Vector2(3 * NPC.spriteDirection, 12);
+            Vector2 originArms = rectArms.Size() / 2 + new Vector2(3 * NPC.spriteDirection, 13);
 
             if (!NPC.IsABestiaryIconDummy)
             {

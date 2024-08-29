@@ -28,6 +28,7 @@ namespace Redemption.NPCs.HM
             Projectile.Redemption().ParryBlacklist = true;
             Projectile.Redemption().friendlyHostile = true;
         }
+        public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers) => modifiers.FinalDamage *= 4;
         public override bool? CanHitNPC(NPC target)
         {
             if (target.Redemption().spiritSummon)
@@ -35,7 +36,6 @@ namespace Redemption.NPCs.HM
             NPC host = Main.npc[(int)Projectile.ai[0]];
             return target == host.Redemption().attacker ? null : false;
         }
-        public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers) => modifiers.FinalDamage *= 4;
         public override void AI()
         {
             NPC host = Main.npc[(int)Projectile.ai[0]];
@@ -54,7 +54,7 @@ namespace Redemption.NPCs.HM
                     break;
                 case 1:
                     if (host.Redemption().attacker is Player attackerPlayer && Projectile.Hitbox.Intersects(attackerPlayer.Hitbox))
-                        attackerPlayer.position = Projectile.position;
+                        attackerPlayer.position = Projectile.Center + Projectile.velocity - (attackerPlayer.Size / 2);
                     Projectile.velocity *= 0.96f;
                     if (Projectile.velocity.Length() < 5)
                     {
@@ -65,7 +65,7 @@ namespace Redemption.NPCs.HM
                 case 2:
                     Projectile.tileCollide = false;
                     if (host.Redemption().attacker is Player attackerPlayer2 && Projectile.Hitbox.Intersects(attackerPlayer2.Hitbox))
-                        attackerPlayer2.position = Projectile.position;
+                        attackerPlayer2.position = Projectile.Center + Projectile.velocity - (attackerPlayer2.Size / 2);
                     Projectile.Move(originPos, 20, 20);
                     if (Projectile.DistanceSQ(originPos) < 20 * 20)
                     {

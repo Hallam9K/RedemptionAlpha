@@ -91,4 +91,5 @@ namespace Redemption.Tiles.MusicBoxes
     public class WastelandBoxTile : BaseMusicBoxTile { protected override int Item => ModContent.ItemType<WastelandBox>(); }
     public class SpiritRealmBoxTile : BaseMusicBoxTile { protected override int Item => ModContent.ItemType<SpiritRealmBox>(); }
     public class FowlEmperorBoxTile : BaseMusicBoxTile { protected override int Item => ModContent.ItemType<FowlEmperorBox>(); }
+    public class ThornBoxTile : BaseMusicBoxTile { protected override int Item => ModContent.ItemType<ThornBox>(); }
 }

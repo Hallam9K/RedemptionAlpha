@@ -1,8 +1,10 @@
 using Microsoft.Xna.Framework;
-using Terraria;
-using Terraria.ModLoader;
-using Terraria.ID;
+using Redemption.BaseExtension;
 using Redemption.Globals;
+using Redemption.Projectiles;
+using Terraria;
+using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace Redemption.NPCs.Bosses.Thorn
 {
@@ -42,7 +44,7 @@ namespace Redemption.NPCs.Bosses.Thorn
         }
         public override void OnHitPlayer(Player target, Player.HurtInfo info)
         {
-            NPC host = Main.npc[(int)Projectile.ai[0]];
+            NPC host = Main.npc[(int)Projectile.ai[2]];
             if (host.life < host.lifeMax - 20)
             {
                 int steps = (int)host.Distance(target.Center) / 8;
@@ -57,6 +59,26 @@ namespace Redemption.NPCs.Bosses.Thorn
                 }
                 host.life += 20;
                 host.HealEffect(20);
+            }
+            Projectile.Kill();
+        }
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
+        {
+            NPC host = Main.npc[(int)Projectile.ai[2]];
+            if (host.life < host.lifeMax - 10 && target.whoAmI != host.whoAmI)
+            {
+                int steps = (int)host.Distance(target.Center) / 8;
+                for (int i = 0; i < steps; i++)
+                {
+                    if (Main.rand.NextBool(3))
+                    {
+                        Dust dust = Dust.NewDustDirect(Vector2.Lerp(host.Center, target.Center, (float)i / steps), 2, 2, DustID.LifeDrain);
+                        dust.velocity = target.DirectionTo(dust.position) * 2;
+                        dust.noGravity = true;
+                    }
+                }
+                host.life += 10;
+                host.HealEffect(10);
             }
             Projectile.Kill();
         }

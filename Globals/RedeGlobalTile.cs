@@ -141,6 +141,24 @@ namespace Redemption.Globals
                 return false;
             return base.Slope(i, j, type);
         }
+        public override void DrawEffects(int i, int j, int type, SpriteBatch spriteBatch, ref TileDrawInfo drawData)
+        {
+            Tile tile = Main.tile[i, j];
+            if (Main.netMode != NetmodeID.Server && ModContent.GetInstance<ThornScene>().IsSceneEffectActive(Main.LocalPlayer) && !Main.tile[i, j - 1].HasTile && Main.tileSolid[tile.TileType] && !Main.tileSolidTop[tile.TileType] && Main.rand.NextBool(24) && ((Main.drawToScreen && Main.rand.NextBool(18)) || !Main.drawToScreen))
+            {
+                Vector2 val = Utils.ToWorldCoordinates(new Point(i, j), 8f, 8f);
+                int goreType = Main.rand.Next(1202, 1205);
+                float s = 1f;
+                if (goreType is 1202)
+                    s = 2f;
+                float scale = s + Main.rand.NextFloat() * 1.6f;
+                Vector2 position5 = val + new Vector2(0f, -18f);
+                Vector2 velocity = Main.rand.NextVector2Circular(0.7f, 0.25f) * 0.4f + Main.rand.NextVector2CircularEdge(1f, 0.4f) * 0.1f;
+                velocity *= 4f;
+                velocity.Y = 0;
+                Gore.NewGorePerfect(new EntitySource_TileUpdate(i, j), position5, velocity, goreType, scale);
+            }
+        }
     }
     public static class RedeTileHelper
     {

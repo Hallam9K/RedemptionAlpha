@@ -6,12 +6,12 @@ using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 
-namespace Redemption.Items.Weapons.HM.Ranged
+namespace Redemption.Items.Weapons.PostML.Ranged
 {
     public class SteampunkMinigun : ModItem
-	{
-		public override void SetStaticDefaults()
-		{
+    {
+        public override void SetStaticDefaults()
+        {
             // DisplayName.SetDefault("Steam-Cog Minigun");
             /* Tooltip.SetDefault("Holding left-click will charge the weapon up, releasing will cause it to shoot rapidly for a short duration\n" +
                 "Shooting duration scales with the amount of time charged up, capping at 5 seconds\n" +
@@ -22,12 +22,12 @@ namespace Redemption.Items.Weapons.HM.Ranged
 
         public override void SetDefaults()
         {
-            Item.damage = 34;
+            Item.damage = 66;
             Item.DamageType = DamageClass.Ranged;
             Item.width = 78;
             Item.height = 28;
-            Item.useTime = 6;
-            Item.useAnimation = 6;
+            Item.useTime = 2;
+            Item.useAnimation = 2;
             Item.useStyle = ItemUseStyleID.Shoot;
             Item.noMelee = true;
             Item.noUseGraphic = true;
@@ -38,7 +38,7 @@ namespace Redemption.Items.Weapons.HM.Ranged
             Item.UseSound = CustomSounds.WindUp;
             Item.autoReuse = true;
             Item.shoot = ProjectileID.PurificationPowder;
-            Item.shootSpeed = 90;
+            Item.shootSpeed = 10;
             Item.useAmmo = AmmoID.Bullet;
         }
         public override bool CanConsumeAmmo(Item ammo, Player player) => false;
@@ -68,10 +68,10 @@ namespace Redemption.Items.Weapons.HM.Ranged
         public override void AddRecipes()
         {
             CreateRecipe()
-                .AddIngredient(ItemID.ChainGun)
+                .AddIngredient(ItemID.IllegalGunParts)
                 .AddIngredient(ItemID.Cog, 25)
-                .AddIngredient<NiricPipe>(15)
-                .AddTile(TileID.MythrilAnvil)
+                .AddIngredient(ItemID.LunarBar, 10)
+                .AddTile(TileID.LunarCraftingStation)
                 .Register();
         }
     }

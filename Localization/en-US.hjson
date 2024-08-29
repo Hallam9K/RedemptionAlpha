@@ -6409,7 +6409,7 @@ Mods: {
 
 			SlayerShipBox: {
 				DisplayName: Music Box (Slayer's Crashed Ship)
-				Tooltip: PeriTune - Suspense3
+				Tooltip: Kweequ - Waiting for Slayer to Respond
 			}
 
 			SoIBox: {
@@ -7630,7 +7630,6 @@ Mods: {
 				Tooltip:
 					'''
 					Summons an unfortunate curse-bearer
-					Only usable at day
 					Not consumable
 					'''
 			}
@@ -8214,8 +8213,9 @@ Mods: {
 				DisplayName: Steam-Cog Minigun
 				Tooltip:
 					'''
-					Holding left-click will charge the weapon up, releasing will cause it to shoot rapidly for a short duration
-					Shooting duration scales with the amount of time charged up, capping at 5 seconds
+					Holding left-click will crank the weapon three times, causing it to shoot rapidly for a short duration
+					Shooting duration scales with the amount of time cranked
+					Holding left-click while firing will continue to crank, but reduces movement
 					Replaces normal bullets with high velocity bullets
 					66% chance to not consume ammo
 					'''
@@ -8792,8 +8792,8 @@ Mods: {
 				Tooltip:
 					'''
 					Swings can block {0} projectiles
-					Hold left-click to charge a Heat Wave, dealing {1} damage
-					Continue holding left-click to go into a fiery flurry
+					Slashing enemies or blocking projectiles charge a Dragon Skull ability
+					Right-clicking once fully charged will launch a Dragon Skull out to bite enemies
 					Deals more damage to dragon-like enemies
 					'''
 				Lore:
@@ -10345,6 +10345,16 @@ Mods: {
 					Successful bounces restore mana
 					'''
 			}
+
+			ThornBox: {
+				DisplayName: Music Box (Thorn)
+				Tooltip: musicman - Every Rose...
+			}
+
+			AldersStaff: {
+				DisplayName: Alder's Staff
+				Tooltip: Casts 4 random arcane bolts into the air
+			}
 		}
 
 		Projectiles: {
@@ -11029,6 +11039,14 @@ Mods: {
 			DeathCoil_Proj.DisplayName: Death Coil
 			IceSpikeShard.DisplayName: Ice Spike Shard
 			IceSpike_Mist.DisplayName: Ice Mist
+			AldersStaff_Proj.DisplayName: "{$Mods.Redemption.Items.AldersStaff.DisplayName}"
+			ArcaneBolt.DisplayName: "{$Mods.Redemption.Projectiles.Thorn_ArcaneBolt.DisplayName}"
+			Thorn_ArcaneBolt.DisplayName: Arcane Bolt
+			Thorn_ClawSlash.DisplayName: Claw Slash
+			Thorn_SlashFlash.DisplayName: Flash
+			Thorn_Splinter.DisplayName: Splinter
+			Thorn_SplinterBall.DisplayName: Splinter Ball
+			DragonCleaverSkull_Proj.DisplayName: Dragon Skull
 		}
 
 		NPCs: {
@@ -11167,7 +11185,7 @@ Mods: {
 
 				BossChecklistIntegration: {
 					DespawnMessage: Thorn returned to his blighted forest...
-					SpawnInfo: Use a [i:Redemption/HeartOfThorns] at day. Can be found on the surface near spawn.
+					SpawnInfo: Use a [i:Redemption/HeartOfThorns]. Can be found on the surface near spawn.
 					EntryName: Thorn
 				}
 			}
@@ -11517,6 +11535,7 @@ Mods: {
 			BloatedDiggerHead.DisplayName: Bloated Digger
 			BloatedDiggerTail.DisplayName: "{$Mods.Redemption.NPCs.BloatedDiggerHead.DisplayName}"
 			BloatedFaceMonster.DisplayName: Bloated Face Monster
+			BrambleTrap.DisplayName: Bramble Trap
 		}
 
 		Tiles: {

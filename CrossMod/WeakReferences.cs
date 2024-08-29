@@ -1,58 +1,79 @@
-﻿using System.Collections.Generic;
-using Terraria.ModLoader;
-using Terraria.ID;
-using Redemption.NPCs.Bosses.Thorn;
-using Redemption.NPCs.Bosses.SeedOfInfection;
-using Redemption.NPCs.Bosses.KSIII;
-using Redemption.Items.Usable;
-using Redemption.Items.Materials.PreHM;
-using Redemption.Items.Armor.Vanity;
-using Redemption.NPCs.Minibosses.SkullDigger;
-using Redemption.Items.Usable.Summons;
-using Redemption.Items.Placeable.Trophies;
-using Redemption.Items.Accessories.PreHM;
-using Redemption.Items.Lore;
-using Redemption.Items.Placeable.MusicBoxes;
-using Redemption.Items.Accessories.HM;
-using Redemption.NPCs.Lab;
-using Redemption.Items.Weapons.PostML.Ranged;
-using Redemption.Items.Weapons.HM.Melee;
-using Redemption.Globals;
-using Redemption.NPCs.Bosses.Keeper;
-using Redemption.NPCs.Minibosses.EaglecrestGolem;
-using Redemption.NPCs.Lab.Janitor;
-using Redemption.NPCs.Lab.Behemoth;
-using Redemption.NPCs.Bosses.Cleaver;
-using Redemption.NPCs.Bosses.Gigapora;
-using Redemption.NPCs.Bosses.PatientZero;
-using Redemption.Items.Tools.PostML;
-using Redemption.NPCs.Bosses.Erhan;
-using Redemption.NPCs.Bosses.Obliterator;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework;
-using Redemption.NPCs.Bosses.Neb;
-using Terraria.Graphics.Shaders;
-using Terraria;
-using Redemption.NPCs.Bosses.ADD;
-using Redemption.Items.Accessories.PostML;
-using Redemption.NPCs.Friendly;
-using Redemption.NPCs.Minibosses.FowlEmperor;
-using Redemption.NPCs.FowlMorning;
+using Redemption.Globals;
 using Redemption.Items;
-using Redemption.NPCs.Minibosses.Calavia;
-using Terraria.Localization;
+using Redemption.Items.Accessories.HM;
+using Redemption.Items.Accessories.PostML;
+using Redemption.Items.Accessories.PreHM;
+using Redemption.Items.Armor.Vanity;
+using Redemption.Items.Lore;
+using Redemption.Items.Materials.PreHM;
+using Redemption.Items.Placeable.MusicBoxes;
+using Redemption.Items.Placeable.Trophies;
+using Redemption.Items.Tools.PostML;
+using Redemption.Items.Usable;
+using Redemption.Items.Usable.Summons;
+using Redemption.Items.Weapons.HM.Melee;
+using Redemption.Items.Weapons.PostML.Melee;
+using Redemption.Items.Weapons.PostML.Ranged;
+using Redemption.NPCs.Bosses.ADD;
+using Redemption.NPCs.Bosses.Cleaver;
+using Redemption.NPCs.Bosses.Erhan;
+using Redemption.NPCs.Bosses.Gigapora;
+using Redemption.NPCs.Bosses.Keeper;
+using Redemption.NPCs.Bosses.KSIII;
+using Redemption.NPCs.Bosses.Neb;
+using Redemption.NPCs.Bosses.Obliterator;
+using Redemption.NPCs.Bosses.PatientZero;
+using Redemption.NPCs.Bosses.SeedOfInfection;
+using Redemption.NPCs.Bosses.Thorn;
+using Redemption.NPCs.FowlMorning;
+using Redemption.NPCs.HM;
+using Redemption.NPCs.Lab;
+using Redemption.NPCs.Lab.Behemoth;
 using Redemption.NPCs.Lab.Blisterface;
-using Redemption.NPCs.Lab.Volt;
+using Redemption.NPCs.Lab.Janitor;
 using Redemption.NPCs.Lab.MACE;
+using Redemption.NPCs.Lab.Volt;
+using Redemption.NPCs.Minibosses.Calavia;
+using Redemption.NPCs.Minibosses.EaglecrestGolem;
+using Redemption.NPCs.Minibosses.FowlEmperor;
+using Redemption.NPCs.Minibosses.SkullDigger;
+using System.Collections.Generic;
+using Terraria;
+using Terraria.Graphics.Shaders;
+using Terraria.ID;
+using Terraria.Localization;
+using Terraria.ModLoader;
 
 namespace Redemption.CrossMod
 {
     internal class WeakReferences
     {
+        public static List<int> FargosInstas = new();
         public static void PerformModSupport()
         {
+            Redemption mod = Redemption.Instance;
+            ModLoader.TryGetMod("Wikithis", out Mod wikithis);
+            if (wikithis != null && !Main.dedServ)
+                wikithis.Call("AddModURL", mod, "https://modofredemption.wiki.gg/wiki/{}");
+
             PerformBossChecklistSupport();
             PerformFargosSupport();
+            PerformMusicDisplaySupport();
+
+            if (ModLoader.TryGetMod("Fargowiltas", out var fargo))
+            {
+                if (fargo.TryFind("AutoHouse", out ModItem AutoHouse)) FargosInstas.Add(AutoHouse.Type);
+                if (fargo.TryFind("CityBuster", out ModItem CityBuster)) FargosInstas.Add(CityBuster.Type);
+                if (fargo.TryFind("DoubleObsidianInstabridge", out ModItem DoubleObsidianInstabridge)) FargosInstas.Add(DoubleObsidianInstabridge.Type);
+                if (fargo.TryFind("HalfInstavator", out ModItem HalfInstavator)) FargosInstas.Add(HalfInstavator.Type);
+                if (fargo.TryFind("InstaBridge", out ModItem InstaBridge)) FargosInstas.Add(InstaBridge.Type);
+                if (fargo.TryFind("InstaPond", out ModItem InstaPond)) FargosInstas.Add(InstaPond.Type);
+                if (fargo.TryFind("InstaTrack", out ModItem InstaTrack)) FargosInstas.Add(InstaTrack.Type);
+                if (fargo.TryFind("Instavator", out ModItem Instavator)) FargosInstas.Add(Instavator.Type);
+                if (fargo.TryFind("ObsidianInstaBridge", out ModItem ObsidianInstaBridge)) FargosInstas.Add(ObsidianInstaBridge.Type);
+            }
         }
         private static void PerformBossChecklistSupport()
         {
@@ -70,7 +91,7 @@ namespace Redemption.CrossMod
                             ModContent.ItemType<EggPet>(),
                             ModContent.ItemType<FowlEmperorTrophy>(),
                             ModContent.ItemType<FowlCrown>(),
-                            ModContent.ItemType<ForestBossBox>()
+                            ModContent.ItemType<FowlEmperorBox>()
                         },
                         ["availability"] = () => RedeBossDowned.downedFowlEmperor,
                         ["customPortrait"] = (SpriteBatch sb, Rectangle rect, Color color) =>
@@ -168,7 +189,7 @@ namespace Redemption.CrossMod
                             ModContent.ItemType<BouquetOfThorns>(),
                             ModContent.ItemType<ThornTrophy>(),
                             ModContent.ItemType<ThornMask>(),
-                            ModContent.ItemType<ForestBossBox>()
+                            ModContent.ItemType<ThornBox>()
                         },
                     ["customPortrait"] = (SpriteBatch sb, Rectangle rect, Color color) =>
                     {
@@ -203,6 +224,7 @@ namespace Redemption.CrossMod
                             ModContent.ItemType<DevilsAdvocate>(),
                             ModContent.ItemType<ErhanTrophy>(),
                             ModContent.ItemType<ErhanHelmet>(),
+                            ModContent.ItemType<ErhanBox>(),
                         },
                     ["availability"] = () => RedeBossDowned.erhanDeath > 0,
                     ["customPortrait"] = (SpriteBatch sb, Rectangle rect, Color color) =>
@@ -243,7 +265,8 @@ namespace Redemption.CrossMod
                     ["collectibles"] = new List<int>
                         {
                             ModContent.ItemType<SkullDiggerMask>(),
-                            ModContent.ItemType<AbandonedTeddy>()
+                            ModContent.ItemType<AbandonedTeddy>(),
+                            ModContent.ItemType<SkullDiggerBox>()
                         },
                     ["availability"] = () => RedeBossDowned.downedKeeper,
                     ["customPortrait"] = (SpriteBatch sb, Rectangle rect, Color color) =>
@@ -295,7 +318,7 @@ namespace Redemption.CrossMod
                 #endregion
 
                 #region Calavia
-                bossChecklist.Call("LogMiniBoss", mod, nameof(Calavia), 5.2f, () => RedeBossDowned.downedCalavia, ModContent.NPCType<Calavia>(), new Dictionary<string, object>()
+                bossChecklist.Call("LogMiniBoss", mod, nameof(Calavia), 5.2f, () => RedeBossDowned.downedCalavia || RedeQuest.calaviaVar >= 3, ModContent.NPCType<Calavia>(), new Dictionary<string, object>()
                 {
                     ["availability"] = () => NPC.downedBoss3,
                     ["customPortrait"] = (SpriteBatch sb, Rectangle rect, Color color) =>
@@ -458,6 +481,7 @@ namespace Redemption.CrossMod
                     ["collectibles"] = new List<int>
                         {
                             ModContent.ItemType<PZRelic>(),
+                            ModContent.ItemType<Xenoemia>(),
                             ModContent.ItemType<PZTrophy>(),
                             ModContent.ItemType<PZMask>(),
                             ModContent.ItemType<FloppyDisk7>(),
@@ -503,6 +527,7 @@ namespace Redemption.CrossMod
                             ModContent.ItemType<AkanKirvesTrophy>(),
                             ModContent.ItemType<UkkoMask>(),
                             ModContent.ItemType<AkkaMask>(),
+                            ModContent.ItemType<ForestBossBox2>(),
                         },
                         ["availability"] = () => RedeBossDowned.ADDDeath > 0,
                         ["customPortrait"] = (SpriteBatch sb, Rectangle rect, Color color) =>
@@ -515,7 +540,7 @@ namespace Redemption.CrossMod
                 #endregion
 
                 #region Nebuleus
-                bossChecklist.Call("LogBoss", mod, nameof(Nebuleus), 21f, () => RedeBossDowned.downedNebuleus, ModContent.NPCType<Nebuleus>(), new Dictionary<string, object>()
+                bossChecklist.Call("LogBoss", mod, nameof(Nebuleus), 23f, () => RedeBossDowned.downedNebuleus, ModContent.NPCType<Nebuleus>(), new Dictionary<string, object>()
                 {
                     ["spawnItems"] = ModContent.ItemType<NebSummon>(),
                     ["collectibles"] = new List<int>
@@ -535,7 +560,7 @@ namespace Redemption.CrossMod
                         sb.Draw(texture, centered, color);
                         sb.End();
                         sb.Begin(SpriteSortMode.Immediate, BlendState.Additive, SamplerState.LinearClamp, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.UIScaleMatrix);
-                        GameShaders.Armor.ApplySecondary(shader, Main.player[Main.myPlayer], null);
+                        GameShaders.Armor.ApplySecondary(shader, Main.LocalPlayer, null);
                         sb.Draw(wingTex, centered, color);
                         sb.End();
                         sb.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.LinearClamp, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.UIScaleMatrix);
@@ -581,6 +606,45 @@ namespace Redemption.CrossMod
 
                 fargos.Call("AddEventSummon", 1f, "Redemption", "FowlWarHorn", () => RedeBossDowned.downedFowlMorning, Item.buyPrice(0, 4, 50));
             }
+        }
+        private static void PerformMusicDisplaySupport()
+        {
+            Redemption mod = Redemption.Instance;
+            if (!ModLoader.TryGetMod("MusicDisplay", out Mod display))
+                return;
+
+            void AddMusic(string path, string name, string author = "musicman") => display.Call("AddMusic", (short)MusicLoader.GetMusicSlot(mod, path), name, "by " + author, "Mod of Redemption");
+
+            AddMusic("Sounds/Music/BossErhan", "Holy Inquisition (Erhan Theme)", "Sc0p3r");
+            AddMusic("Sounds/Music/BossForest1", "Dramatic4 (Epidotrian Opponent Theme)", "Peritune");
+            AddMusic("Sounds/Music/BossUkko", "Nature's Wrath (Ancient Deity Duo Theme)", "Yuri O");
+            AddMusic("Sounds/Music/FowlMorning", "Dawn of the Coop (Fowl Morning Theme)", "Sc0p3r");
+            AddMusic("Sounds/Music/HallofHeroes", "??? (Hall of Heroes Theme)", "???");
+            AddMusic("Sounds/Music/BossKeeper", "Haunting Loneliness (The Keeper Theme)", "SpectralAves");
+            AddMusic("Sounds/Music/BossSlayer", "Betrayal of Fear (King Slayer III Theme)", "William 'GoukisanNG' Prevett");
+            AddMusic("Sounds/Music/LabBossMusic", "Safety Violation (Abandoned Lab Minibosses Theme)", "inSignia");
+            AddMusic("Sounds/Music/LabBossMusicIB", "Safety Violation (Abandoned Lab Minibosses Theme)", "inSignia");
+            AddMusic("Sounds/Music/LabBossMusicMP", "Safety Violation (Abandoned Lab Minibosses Theme)", "inSignia");
+            AddMusic("Sounds/Music/LabMusic", "Facility of Contagion (Abandoned Lab Theme)", "inSignia");
+            AddMusic("Sounds/Music/BossStarGod1", "Interstellar Isolation (Nebuleus Theme)", "musicman");
+            AddMusic("Sounds/Music/BossStarGod2", "Hypernova (Nebuleus' Final Form Theme)", "musicman");
+            AddMusic("Sounds/Music/BossOmega1", "Armageddon Interface (Omega Prototypes Theme)", "musicman");
+            AddMusic("Sounds/Music/BossOmega2", "Hailfire (Omega Obliterator Theme)", "Universe");
+            AddMusic("Sounds/Music/LabBossMusic2", "Xenostate (Patient Zero Theme)", "Universe");
+            AddMusic("Sounds/Music/SlayerShipMusic", "Waiting for Slayer to Respond (Slayer's Crashed Ship Theme)", "Kweequ");
+            AddMusic("Sounds/Music/BossXeno1", "Virogenesis (Seed of Infection Theme)", "musicman");
+            AddMusic("Sounds/Music/Wasteland", "The Wastelands (Wasteland Theme)", "Musearys");
+            AddMusic("Sounds/Music/BossFowl", "King's Gambit (Fowl Emperor Theme)", "Sc0p3r");
+            AddMusic("Sounds/Music/BossSlayer2", "Betrayal of Fear (TeslaX VIP Remix)", "Talurre");
+            AddMusic("Sounds/Music/Epidotra", "Epidotra (Epidotra Menu Theme)", "musicman");
+            AddMusic("Sounds/Music/ImpOfDoom", "Imp of Doom (Palebat Imp Theme)", "musicman");
+            AddMusic("Sounds/Music/Island", "████ (The Island Theme)", "████");
+            AddMusic("Sounds/Music/OmegaOverheat", "Meltdown (Obliterator Overheat Theme)", "Universe");
+            AddMusic("Sounds/Music/SilentCaverns", "The Loudness of Silence (Skull Digger Theme)", "Yuri O");
+            AddMusic("Sounds/Music/SpiritRealm", "Spectral Interloper (Spirit Realm Theme)", "Yuri O");
+            AddMusic("Sounds/Music/Spooky", "Spook3 (Raveyard Theme)", "PeriTune");
+            AddMusic("Sounds/Music/Warhead", "Detonation Sequence (Nuclear Countdown Theme)", "musicman");
+            AddMusic("Sounds/Music/BossThorn", "Every Rose... (Thorn Theme)", "musicman");
         }
     }
 }

@@ -109,7 +109,7 @@ namespace Redemption.Items.Placeable.Trophies
     public class ThornRelic : BaseRelicItem
     {
         protected override int Style => 3;
-        protected override Point Size => new(30, 50);
+        protected override Point Size => new(42, 48);
     }
     public class UkkoRelic : BaseRelicItem
     {

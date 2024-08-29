@@ -33,7 +33,7 @@ namespace Redemption.Tiles.Furniture.Misc
             AddMapEntry(new Color(117, 117, 126), name);
             DustType = ModContent.DustType<NiricBrassDust>();
             HitSound = SoundID.Tink;
-            MinPick = 210;
+            MinPick = 10;
             MineResist = 10f;
         }
         public override void PlaceInWorld(int i, int j, Item item)
@@ -87,7 +87,7 @@ namespace Redemption.Tiles.Furniture.Misc
             AddMapEntry(new Color(117, 117, 126), name);
             DustType = DustID.Lead;
             HitSound = SoundID.Tink;
-            MinPick = 210;
+            MinPick = 10;
             MineResist = 15f;
         }
         public override void PlaceInWorld(int i, int j, Item item)

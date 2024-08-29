@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Redemption.Base;
 using Redemption.BaseExtension;
 using Redemption.Globals;
+using Redemption.Globals.Player;
 using Redemption.NPCs.Bosses.Cleaver;
 using Redemption.NPCs.Bosses.Gigapora;
 using Redemption.NPCs.Bosses.Obliterator;
@@ -13,8 +14,8 @@ using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.ID;
-using Terraria.ModLoader;
 using Terraria.Localization;
+using Terraria.ModLoader;
 
 
 namespace Redemption.Items.Usable.Summons
@@ -32,11 +33,10 @@ namespace Redemption.Items.Usable.Summons
             ItemID.Sets.SortingPriorityBossSpawns[Item.type] = 13;
             Item.ResearchUnlockCount = 1;
         }
-
         public override void SetDefaults()
         {
-            Item.width = 18;
-            Item.height = 40;
+            Item.width = 24;
+            Item.height = 44;
             Item.maxStack = 1;
             Item.rare = ItemRarityID.Red;
             Item.value = Item.sellPrice(0, 25, 0, 0);
@@ -217,12 +217,12 @@ namespace Redemption.Items.Usable.Summons
                 Vector2 origin = new(glow.Width / 2, glow.Height / 2);
 
                 spriteBatch.End();
-                spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+                spriteBatch.BeginAdditive();
 
                 spriteBatch.Draw(glow, Item.Center - Main.screenPosition, new Rectangle(0, 0, glow.Width, glow.Height), color * 0.7f, rotation, origin, scale * 0.8f, SpriteEffects.None, 0f);
 
                 spriteBatch.End();
-                spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+                spriteBatch.BeginDefault();
             }
             return true;
         }

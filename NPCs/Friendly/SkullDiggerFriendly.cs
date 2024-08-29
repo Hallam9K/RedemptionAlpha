@@ -16,12 +16,24 @@ using Redemption.Items.Materials.PreHM;
 using Terraria.Audio;
 using Terraria.Localization;
 using Redemption.Items.Usable;
+using Terraria.Map;
+using Terraria.UI;
+using ReLogic.Content;
 
 namespace Redemption.NPCs.Friendly
 {
     public class SkullDiggerFriendly : ModNPC
     {
         public override string Texture => "Redemption/NPCs/Minibosses/SkullDigger/SkullDigger";
+
+        private static Asset<Texture2D> HeadIcon;
+        public override void Load()
+        {
+            if (Main.dedServ)
+                return;
+            HeadIcon = ModContent.Request<Texture2D>(Texture + "_Head_Boss");
+        }
+
         public enum ActionState
         {
             Idle,
@@ -65,6 +77,7 @@ namespace Redemption.NPCs.Friendly
             NPC.DeathSound = SoundID.NPCDeath51;
             NPC.knockBackResist = 0f;
             NPC.aiStyle = -1;
+            NPC.rarity = 1;
             NPC.noGravity = true;
             NPC.noTileCollide = true;
             NPC.dontTakeDamage = true;
@@ -239,6 +252,24 @@ namespace Redemption.NPCs.Friendly
         {
             NPC.lifeMax = (int)(NPC.lifeMax * 0.6f * balance);
             NPC.damage = (int)(NPC.damage * 0.6f);
+        }
+
+        public sealed class SkullDiggerMapIconLayer : ModMapLayer
+        {
+            public override void Draw(ref MapOverlayDrawContext context, ref string text)
+            {
+                const float scale = 1f;
+
+                foreach (NPC npc in Main.ActiveNPCs)
+                {
+                    if (npc.ModNPC is not SkullDiggerFriendly skullDiggerNPC)
+                        continue;
+
+                    Vector2 position = skullDiggerNPC.NPC.Center.ToTileCoordinates().ToVector2();
+                    if (context.Draw(HeadIcon.Value, position, Color.White, new SpriteFrame(1, 1, 0, 0), scale, scale, Alignment.Center).IsMouseOver)
+                        text = npc.TypeName;
+                }
+            }
         }
     }
     public class SkullDiggerFriendly_Spirit : SkullDiggerFriendly

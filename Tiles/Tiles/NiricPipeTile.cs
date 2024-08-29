@@ -13,7 +13,7 @@ namespace Redemption.Tiles.Tiles
             Main.tileSolid[Type] = true;
             Main.tileMergeDirt[Type] = false;
             DustType = ModContent.DustType<NiricBrassDust>();
-            MinPick = 210;
+            MinPick = 10;
             MineResist = 5f;
             HitSound = SoundID.Tink;
             AddMapEntry(new Color(149, 106, 54));

@@ -1,0 +1,20 @@
+=== 0.8 Beta .404 === (A Thorny Patch)
+- Nerfed Corrupted Double-Rifle damage back from 100 -> 58
+- Resprited Cursed Thorn Bow, Thorn Relic, Omega Transmitter, Erhan's Helmet, Pile o' Grain, and Grave-Steel Shards
+- Thorn-related sprites use new thorn palette
+- Added Music Box for Thorn
+- Fixed extremely tiny incorrect placements of Erhan's head and arms that nobody would ever notice
+- Thorn drops 2 weapons at a time instead of 1
+1450. Added compatibility with GabeHasWon's Music Display mod
+1560. Reworked Steam-Cog Minigun, now only cranks 3 times before firing, keep holding left-click to keep cranking, which will keep the weapon firing while reducing player mobility
+1596. Reworked Dragon Cleaver, slashing enemies charge a Dragon Skull ability, Right-clicking once fully charged will launch a Dragon Skull out to bite enemies, buffed crit chance from 4 -> 10
+1750. Important structures and the spirit corpses will no longer be destroyed by Fargo's instabridges or instavators
+1799. Added WikiThis support
+1920. Reworked Thorn, increased health from 2100 -> 3120, reduced difficulty health scaling from .75 -> .6 and increased difficulty damage scaling from .75 -> .9, Heart of Thorns can be used at any time of day/night
+1957. Added Alder's Staff, Thorn's mage drop
+2011. Added new tracks for Thorn and Crashed Ship
+2013. Friendly Skull Digger now has a head icon on the map
+2015. Fixed Prototype Silver's hook not keeping the player centered while grappled
+2016. Re-tiered Steam-Cog Minigun to post-moonlord, changed its recipe and buffed damage from 34 -> 66
+2017. Niric Brass Pipes and Cogs can be mined with any pickaxe
+===============

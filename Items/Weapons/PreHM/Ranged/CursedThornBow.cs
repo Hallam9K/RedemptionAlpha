@@ -1,10 +1,10 @@
-using Terraria.ID;
-using Terraria.ModLoader;
-using Terraria;
 using Microsoft.Xna.Framework;
-using Redemption.Projectiles.Ranged;
 using Redemption.Globals;
+using Redemption.Projectiles.Ranged;
+using Terraria;
+using Terraria.ID;
 using Terraria.Localization;
+using Terraria.ModLoader;
 
 namespace Redemption.Items.Weapons.PreHM.Ranged
 {
@@ -22,8 +22,8 @@ namespace Redemption.Items.Weapons.PreHM.Ranged
         {
             Item.damage = 12;
             Item.DamageType = DamageClass.Ranged;
-            Item.width = 24;
-            Item.height = 54;
+            Item.width = 42;
+            Item.height = 52;
             Item.useTime = 24;
             Item.useAnimation = 24;
             Item.useStyle = ItemUseStyleID.Shoot;
@@ -39,7 +39,7 @@ namespace Redemption.Items.Weapons.PreHM.Ranged
         }
         public override Vector2? HoldoutOffset()
         {
-            return new Vector2(-2, 0);
+            return new Vector2(-6, 0);
         }
         public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback)
         {

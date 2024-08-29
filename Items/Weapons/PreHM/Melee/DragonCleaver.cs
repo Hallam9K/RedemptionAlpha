@@ -1,9 +1,9 @@
 using Microsoft.Xna.Framework;
 using Redemption.Globals;
 using Redemption.Items.Materials.PreHM;
-using Redemption.Projectiles.Melee;
 using System.Collections.Generic;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
@@ -12,7 +12,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
 {
     public class DragonCleaver : ModItem
     {
-        public override LocalizedText Tooltip => base.Tooltip.WithFormatArgs(ElementID.FireS, ElementID.WindS);
+        public override LocalizedText Tooltip => base.Tooltip.WithFormatArgs(ElementID.FireS);
         public override void SetStaticDefaults()
         {
             /* Tooltip.SetDefault("Swings can block fire projectiles\n" +
@@ -42,6 +42,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
             // Weapon Properties
             Item.damage = 50;
             Item.knockBack = 6;
+            Item.crit = 6;
             Item.noUseGraphic = true;
             Item.DamageType = DamageClass.Melee;
             Item.noMelee = true;
@@ -50,7 +51,23 @@ namespace Redemption.Items.Weapons.PreHM.Melee
             // Projectile Properties
             Item.shootSpeed = 5f;
             Item.shoot = ModContent.ProjectileType<DragonCleaver_Proj>();
-            Item.ExtraItemShoot(ModContent.ProjectileType<FireSlash_Proj>());
+        }
+        public override bool MeleePrefix() => true;
+        public override bool AltFunctionUse(Player player) => Count > 5;
+
+        public int Count;
+        public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
+        {
+            float adjustedItemScale2 = player.GetAdjustedItemScale(Item);
+
+            if (player.altFunctionUse == 2)
+            {
+                Count = 0;
+                Projectile.NewProjectile(source, position, velocity, type, damage, knockback, player.whoAmI, 1, 0, adjustedItemScale2);
+            }
+            else
+                Projectile.NewProjectile(source, position, velocity, type, damage, knockback, player.whoAmI, 0, 0, adjustedItemScale2);
+            return false;
         }
 
         public override void AddRecipes()

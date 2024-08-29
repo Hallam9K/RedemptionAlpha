@@ -865,13 +865,13 @@ namespace Redemption.Globals
         /// <summary>
         /// For methods that have 'this NPC npc', instead of doing RedeHelper.Shoot(), you can do NPC.Shoot() instead.
         /// </summary>
-        public static void Shoot(this Terraria.NPC npc, Vector2 position, int projType, int damage, Vector2 velocity, SoundStyle sound, float ai0 = 0, float ai1 = 0, int knockback = 0)
+        public static void Shoot(this Terraria.NPC npc, Vector2 position, int projType, int damage, Vector2 velocity, SoundStyle sound, float ai0 = 0, float ai1 = 0, int knockback = 0, float ai2 = 0)
         {
             if (!Main.dedServ)
                 SoundEngine.PlaySound(sound, npc.position);
-            Shoot(npc, position, projType, damage, velocity, ai0, ai1, knockback);
+            Shoot(npc, position, projType, damage, velocity, ai0, ai1, knockback, ai2);
         }
-        public static void Shoot(this Terraria.NPC npc, Vector2 position, int projType, int damage, Vector2 velocity, float ai0 = 0, float ai1 = 0, int knockback = 0)
+        public static void Shoot(this Terraria.NPC npc, Vector2 position, int projType, int damage, Vector2 velocity, float ai0 = 0, float ai1 = 0, int knockback = 0, float ai2 = 0)
         {
             damage /= 2;
             if (Main.expertMode)
@@ -879,7 +879,7 @@ namespace Redemption.Globals
             if (Main.netMode != NetmodeID.MultiplayerClient)
             {
                 Projectile.NewProjectile(npc.GetSource_FromAI(), position, velocity, projType, damage, knockback,
-                    Main.myPlayer, ai0, ai1);
+                    Main.myPlayer, ai0, ai1, ai2);
             }
         }
         public static void Shoot(this Projectile proj, Vector2 position, int projType, int damage, Vector2 velocity,

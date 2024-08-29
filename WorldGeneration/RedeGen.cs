@@ -34,6 +34,7 @@ using Redemption.Tiles.Plants;
 using Redemption.Tiles.Tiles;
 using Redemption.Walls;
 using ReLogic.Content;
+using StructureHelper;
 using SubworldLibrary;
 using System;
 using System.Collections.Generic;
@@ -2836,6 +2837,28 @@ namespace Redemption.WorldGeneration
             Vector2 pos = new(SpiritDruidPoint.X * 16, SpiritDruidPoint.Y * 16);
             LabArea.SpawnNPCInWorld(pos, ModContent.NPCType<GathicTomb_Spawner>(), 4);
         }
+        private void FargosIndestructibleCalls()
+        {
+            if (!ModLoader.TryGetMod("Fargowiltas", out var fargo))
+                return;
+            fargo.Call("AddIndestructibleRectangle", new Rectangle((int)BastionVector.X * 16, (int)BastionVector.Y * 16, 295 * 16, 155 * 16));
+            Point16 dims = Point16.Zero;
+            fargo.Call("AddIndestructibleRectangle", new Rectangle((int)gathicPortalVector.X * 16, (int)gathicPortalVector.Y * 16, 110 * 16, 47 * 16));
+            fargo.Call("AddIndestructibleRectangle", new Rectangle((int)GoldenGatewayVector.X * 16, (int)GoldenGatewayVector.Y * 16, 144 * 16, 67 * 16));
+            fargo.Call("AddIndestructibleRectangle", new Rectangle((int)HallOfHeroesVector.X * 16, (int)HallOfHeroesVector.Y * 16, 84 * 16, 43 * 16));
+            fargo.Call("AddIndestructibleRectangle", new Rectangle((int)LabVector.X * 16, (int)LabVector.Y * 16, 289 * 16, 217 * 16));
+            fargo.Call("AddIndestructibleRectangle", new Rectangle((int)newbCaveVector.X * 16, (int)newbCaveVector.Y * 16, 60 * 16, 82 * 16));
+            fargo.Call("AddIndestructibleRectangle", new Rectangle((int)slayerShipVector.X * 16, (int)slayerShipVector.Y * 16, 133 * 16, 58 * 16));
+            Generator.GetDimensions("WorldGeneration/JShrine", Mod, ref dims);
+            fargo.Call("AddIndestructibleRectangle", new Rectangle(JoShrinePoint.X * 16, JoShrinePoint.Y * 16, dims.X * 16, dims.Y * 16));
+            fargo.Call("AddIndestructibleTileType", ModContent.TileType<AncientHallBrickTile>());
+            fargo.Call("AddIndestructibleTileType", ModContent.TileType<NiricAutomatonRemainsTile>());
+            fargo.Call("AddIndestructibleTileType", ModContent.TileType<SkeletonRemainsTile1_Special>());
+            fargo.Call("AddIndestructibleTileType", ModContent.TileType<SkeletonRemainsTile3_Special>());
+            fargo.Call("AddIndestructibleTileType", ModContent.TileType<SkeletonRemainsTile4_Special>());
+            fargo.Call("AddIndestructibleTileType", ModContent.TileType<SkeletonRemainsTile5_Special>());
+            fargo.Call("AddIndestructibleTileType", ModContent.TileType<SkeletonRemainsTile7_Special>());
+        }
         public override void SaveWorldData(TagCompound tag)
         {
             var lists = new List<string>();
@@ -2885,6 +2908,8 @@ namespace Redemption.WorldGeneration
             GoldenGatewayVector.X = tag.GetFloat("GoldenGatewayVectorX");
             GoldenGatewayVector.Y = tag.GetFloat("GoldenGatewayVectorY");
             JoShrinePoint = new Point16(tag.Get<ushort>("JShrineX"), tag.Get<ushort>("JShrineY"));
+
+            FargosIndestructibleCalls();
         }
 
         public override void NetSend(BinaryWriter writer)

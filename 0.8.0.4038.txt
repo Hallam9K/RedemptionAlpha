@@ -1,3 +1,4 @@
+=== 0.8 Beta .4038 === (July Patch)
 - Fixed Divinity's explosion damage, buffed base damage from 160 -> 200, sun will follow you faster the further away it is
 - All Dragon Slayer weapons should deal x4 damage to Dragonlike enemies, and fixed staff's flames and bow from not inflicting dragonblaze
 - Nerfed use time of Dragon Slayer's Greatbow from 33 -> 42 and damage from 42 -> 26
@@ -25,3 +26,4 @@
 1997. Added bell ring sound effect for Dead Ringer, and while Spirit Walking it can be used from any inventory
 2002. Galaxy Star now floats
 2005. Changed Tesla Coil's defense penetration from adding half the target's defense to its damage to having 50% armour penetration
+===============
