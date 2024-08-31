@@ -4,6 +4,7 @@ using Redemption.BaseExtension;
 using Redemption.Biomes;
 using Redemption.Buffs.Debuffs;
 using Redemption.Dusts;
+using Redemption.Effects;
 using Redemption.Globals;
 using Redemption.Globals.NPC;
 using Redemption.Items.Accessories.PostML;
@@ -32,6 +33,7 @@ using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
+using static Terraria.ModLoader.ModContent;
 
 namespace Redemption.NPCs.Bosses.Obliterator
 {
@@ -85,7 +87,7 @@ namespace Redemption.NPCs.Bosses.Obliterator
             BuffNPC.NPCTypeImmunity(Type, BuffNPC.NPCDebuffImmuneType.Inorganic);
             NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.Confused] = true;
 
-            NPCID.Sets.NPCBestiaryDrawModifiers value = new(0)
+            NPCID.Sets.NPCBestiaryDrawModifiers value = new()
             {
                 CustomTexturePath = "Redemption/Textures/Bestiary/OmegaObliterator_Bestiary"
             };
@@ -115,7 +117,7 @@ namespace Redemption.NPCs.Bosses.Obliterator
             NPC.DeathSound = SoundID.NPCDeath14;
             if (!Main.dedServ)
                 Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/BossOmega2");
-            SpawnModBiomes = new int[2] { ModContent.GetInstance<LidenBiomeOmega>().Type, ModContent.GetInstance<LidenBiome>().Type };
+            SpawnModBiomes = new int[2] { GetInstance<LidenBiomeOmega>().Type, GetInstance<LidenBiome>().Type };
             NPC.GetGlobalNPC<ElementalNPC>().OverrideMultiplier[ElementID.Fire] *= 1.15f;
         }
         private static Texture2D Bubble => !Main.dedServ ? CommonTextures.TextBubble_Omega.Value : null;
@@ -154,34 +156,34 @@ namespace Redemption.NPCs.Bosses.Obliterator
                     return;
 
                 for (int i = 0; i < 15; i++)
-                    Gore.NewGore(NPC.GetSource_FromThis(), NPC.position, NPC.velocity, ModContent.Find<ModGore>("Redemption/OOGore" + (i + 1)).Type);
+                    Gore.NewGore(NPC.GetSource_FromThis(), NPC.position, NPC.velocity, Find<ModGore>("Redemption/OOGore" + (i + 1)).Type);
             }
             Dust.NewDust(NPC.position + NPC.velocity, NPC.width, NPC.height, DustID.Electric, NPC.velocity.X * 0.5f, NPC.velocity.Y * 0.5f);
         }
         public override void OnKill()
         {
             if (!RedeBossDowned.downedOmega3)
-                Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<OO_GirusTalk>(), 0, 0, Main.myPlayer);
+                Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, Vector2.Zero, ProjectileType<OO_GirusTalk>(), 0, 0, Main.myPlayer);
 
             NPC.SetEventFlagCleared(ref RedeBossDowned.downedOmega3, -1);
         }
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
-            npcLoot.Add(ItemDropRule.BossBag(ModContent.ItemType<OmegaOblitBag>()));
-            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<OmegaObliteratorTrophy>(), 10));
+            npcLoot.Add(ItemDropRule.BossBag(ItemType<OmegaOblitBag>()));
+            npcLoot.Add(ItemDropRule.Common(ItemType<OmegaObliteratorTrophy>(), 10));
 
-            npcLoot.Add(ItemDropRule.MasterModeCommonDrop(ModContent.ItemType<OORelic>()));
+            npcLoot.Add(ItemDropRule.MasterModeCommonDrop(ItemType<OORelic>()));
 
-            npcLoot.Add(ItemDropRule.MasterModeDropOnAllPlayers(ModContent.ItemType<ToasterPet>(), 4));
+            npcLoot.Add(ItemDropRule.MasterModeDropOnAllPlayers(ItemType<ToasterPet>(), 4));
 
             LeadingConditionRule notExpertRule = new(new Conditions.NotExpert());
 
-            notExpertRule.OnSuccess(ItemDropRule.NotScalingWithLuck(ModContent.ItemType<OOMask>(), 7));
+            notExpertRule.OnSuccess(ItemDropRule.NotScalingWithLuck(ItemType<OOMask>(), 7));
 
-            notExpertRule.OnSuccess(ItemDropRule.OneFromOptions(1, ModContent.ItemType<BlastBattery>(), ModContent.ItemType<OOFingergun>(), ModContent.ItemType<SunInThePalm>()));
-            notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<CorruptedXenomite>(), 1, 16, 28));
-            notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<OmegaPowerCell>(), 1, 4, 8));
-            notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<RoboBrain>(), 1, 1, 2));
+            notExpertRule.OnSuccess(ItemDropRule.OneFromOptions(1, ItemType<BlastBattery>(), ItemType<OOFingergun>(), ItemType<SunInThePalm>()));
+            notExpertRule.OnSuccess(ItemDropRule.Common(ItemType<CorruptedXenomite>(), 1, 16, 28));
+            notExpertRule.OnSuccess(ItemDropRule.Common(ItemType<OmegaPowerCell>(), 1, 4, 8));
+            notExpertRule.OnSuccess(ItemDropRule.Common(ItemType<RoboBrain>(), 1, 1, 2));
             npcLoot.Add(notExpertRule);
         }
         public override void ModifyIncomingHit(ref NPC.HitModifiers modifiers)
@@ -190,13 +192,13 @@ namespace Redemption.NPCs.Bosses.Obliterator
         }
         public override void BossLoot(ref string name, ref int potionType)
         {
-            potionType = ItemID.GreaterHealingPotion;
+            potionType = ItemID.SuperHealingPotion;
         }
         public override bool CanHitPlayer(Player target, ref int cooldownSlot) => NPC.velocity.Length() > 12;
         public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)
         {
             NPC.lifeMax = (int)(NPC.lifeMax * 0.6f * balance);
-            NPC.damage = (int)(NPC.damage * 0.75f);
+            NPC.damage = (int)(NPC.damage * 0.6f);
         }
 
         public override void SendExtraAI(BinaryWriter writer)
@@ -340,7 +342,7 @@ namespace Redemption.NPCs.Bosses.Obliterator
                                     double angle = Main.rand.NextDouble() * 2d * Math.PI;
                                     vector.X = (float)(Math.Sin(angle) * 100);
                                     vector.Y = (float)(Math.Cos(angle) * 100);
-                                    Dust dust2 = Main.dust[Dust.NewDust(LaserPos + vector, 2, 2, ModContent.DustType<GlowDust>())];
+                                    Dust dust2 = Main.dust[Dust.NewDust(LaserPos + vector, 2, 2, DustType<GlowDust>())];
                                     dust2.noGravity = true;
                                     Color dustColor = new(Color.Red.R, Color.Red.G, Color.Red.B) { A = 0 };
                                     dust2.color = dustColor;
@@ -349,7 +351,10 @@ namespace Redemption.NPCs.Bosses.Obliterator
                             }
                             if (AITimer == 190 && player.active && !player.dead)
                             {
-                                NPC.Shoot(LaserPos, ModContent.ProjectileType<OmegaMegaBeam>(), 1000, new Vector2(10 * NPC.spriteDirection, 0), CustomSounds.MegaLaser, NPC.whoAmI);
+                                int funnyDamage = 1000;
+                                if (Main.expertMode)
+                                    funnyDamage *= Main.masterMode ? 10 * 10 : 10;
+                                NPC.Shoot(LaserPos, ProjectileType<OmegaMegaBeam>(), funnyDamage, new Vector2(10 * NPC.spriteDirection, 0), CustomSounds.MegaLaser, NPC.whoAmI);
                             }
                             if (AITimer == 350)
                             {
@@ -412,10 +417,10 @@ namespace Redemption.NPCs.Bosses.Obliterator
                         NPC.velocity *= 0.96f;
                     if (AITimer == 60)
                     {
-                        NPC.Shoot(new Vector2(NPC.Center.X - (120 * 16) - 10, NPC.Center.Y + 8), ModContent.ProjectileType<OOBarrier>(), 0, Vector2.Zero, 0, 1);
-                        NPC.Shoot(new Vector2(NPC.Center.X + (120 * 16) + 26, NPC.Center.Y + 8), ModContent.ProjectileType<OOBarrier>(), 0, Vector2.Zero, 0, -1);
-                        NPC.Shoot(new Vector2(NPC.Center.X + 8, NPC.Center.Y - (120 * 16) - 10), ModContent.ProjectileType<OOBarrierH>(), 0, Vector2.Zero, 0, 1);
-                        NPC.Shoot(new Vector2(NPC.Center.X + 8, NPC.Center.Y + (120 * 16) + 26), ModContent.ProjectileType<OOBarrierH>(), 0, Vector2.Zero, 0, -1);
+                        NPC.Shoot(new Vector2(NPC.Center.X - (120 * 16) - 10, NPC.Center.Y + 8), ProjectileType<OOBarrier>(), 0, Vector2.Zero, 0, 1);
+                        NPC.Shoot(new Vector2(NPC.Center.X + (120 * 16) + 26, NPC.Center.Y + 8), ProjectileType<OOBarrier>(), 0, Vector2.Zero, 0, -1);
+                        NPC.Shoot(new Vector2(NPC.Center.X + 8, NPC.Center.Y - (120 * 16) - 10), ProjectileType<OOBarrierH>(), 0, Vector2.Zero, 0, 1);
+                        NPC.Shoot(new Vector2(NPC.Center.X + 8, NPC.Center.Y + (120 * 16) + 26), ProjectileType<OOBarrierH>(), 0, Vector2.Zero, 0, -1);
 
                         ArenaWorld.arenaBoss = "OO";
                         ArenaWorld.arenaTopLeft = new Vector2(NPC.Center.X - (120 * 16) + 8, NPC.Center.Y - (120 * 16) + 8);
@@ -570,8 +575,8 @@ namespace Redemption.NPCs.Bosses.Obliterator
 
                                 if (AITimer > 235 && AITimer % 3 == 0 && NPC.velocity.Length() > 12)
                                 {
-                                    NPC.Shoot(NPC.Center, ModContent.ProjectileType<OmegaBlast>(), 140, new Vector2(-4f * NPC.spriteDirection, 12f), SoundID.Item91);
-                                    NPC.Shoot(NPC.Center, ModContent.ProjectileType<OmegaBlast>(), 140, new Vector2(-4f * NPC.spriteDirection, -12f), SoundID.Item91);
+                                    NPC.Shoot(NPC.Center, ProjectileType<OmegaBlast>(), (int)(NPC.damage * .7f), new Vector2(-4f * NPC.spriteDirection, 12f), SoundID.Item91);
+                                    NPC.Shoot(NPC.Center, ProjectileType<OmegaBlast>(), (int)(NPC.damage * .7f), new Vector2(-4f * NPC.spriteDirection, -12f), SoundID.Item91);
                                 }
                                 if (AITimer > 310)
                                 {
@@ -613,11 +618,11 @@ namespace Redemption.NPCs.Bosses.Obliterator
                                         for (int i = 0; i < 3; i++)
                                         {
                                             int rot = 25 * i;
-                                            NPC.Shoot(LaserPos, ModContent.ProjectileType<OmegaPlasmaBall>(), 130, RedeHelper.PolarVector((i == 1 ? 25 : 20) + SpeedBoost, (NPC.spriteDirection == -1 ? MathHelper.Pi : 0) + MathHelper.ToRadians(rot - 25)), CustomSounds.BallCreate);
+                                            NPC.Shoot(LaserPos, ProjectileType<OmegaPlasmaBall>(), (int)(NPC.damage * .65f), RedeHelper.PolarVector((i == 1 ? 25 : 20) + SpeedBoost, (NPC.spriteDirection == -1 ? MathHelper.Pi : 0) + MathHelper.ToRadians(rot - 25)), CustomSounds.BallCreate);
                                         }
                                     }
                                     else
-                                        NPC.Shoot(LaserPos, ModContent.ProjectileType<OmegaPlasmaBall>(), 130, new Vector2((16 + SpeedBoost) * NPC.spriteDirection, 0), CustomSounds.BallCreate);
+                                        NPC.Shoot(LaserPos, ProjectileType<OmegaPlasmaBall>(), (int)(NPC.damage * .65f), new Vector2((16 + SpeedBoost) * NPC.spriteDirection, 0), CustomSounds.BallCreate);
                                 }
 
                                 if (AITimer > 230)
@@ -670,7 +675,7 @@ namespace Redemption.NPCs.Bosses.Obliterator
                                 NPC.velocity.Y *= 0.98f;
                                 NPC.velocity.X *= 0.8f;
                                 if (AITimer > 200 && AITimer % 7 == 0)
-                                    NPC.Shoot(LaserPos, ModContent.ProjectileType<OmegaPlasmaBall>(), 130, new Vector2((12 + SpeedBoost) * NPC.spriteDirection, 0), CustomSounds.BallCreate);
+                                    NPC.Shoot(LaserPos, ProjectileType<OmegaPlasmaBall>(), (int)(NPC.damage * .65f), new Vector2((12 + SpeedBoost) * NPC.spriteDirection, 0), CustomSounds.BallCreate);
 
                                 if (AITimer > 270)
                                 {
@@ -718,12 +723,12 @@ namespace Redemption.NPCs.Bosses.Obliterator
                                 if (NPC.life < (int)(NPC.lifeMax * 0.4f))
                                 {
                                     if (AITimer > 200 && AITimer % (NPC.DistanceSQ(player.Center) >= 900 * 900 ? 2 : 4) == 0 && AITimer < 320)
-                                        NPC.Shoot(new Vector2(player.Center.X + Main.rand.Next(-600, 600), player.Center.Y + Main.rand.Next(-600, 600)) + (player.velocity * 20), ModContent.ProjectileType<OO_Crosshair>(), 160, Vector2.Zero, CustomSounds.Alarm2, NPC.whoAmI);
+                                        NPC.Shoot(new Vector2(player.Center.X + Main.rand.Next(-600, 600), player.Center.Y + Main.rand.Next(-600, 600)) + (player.velocity * 20), ProjectileType<OO_Crosshair>(), (int)(NPC.damage * .8f), Vector2.Zero, CustomSounds.Alarm2, NPC.whoAmI);
                                 }
                                 else
                                 {
                                     if (AITimer > 200 && AITimer % (NPC.DistanceSQ(player.Center) >= 900 * 900 ? 4 : 6) == 0 && AITimer < 320)
-                                        NPC.Shoot(new Vector2(player.Center.X + Main.rand.Next(-600, 600), player.Center.Y + Main.rand.Next(-600, 600)) + (player.velocity * 20), ModContent.ProjectileType<OO_Crosshair>(), 160, Vector2.Zero, CustomSounds.Alarm2, NPC.whoAmI);
+                                        NPC.Shoot(new Vector2(player.Center.X + Main.rand.Next(-600, 600), player.Center.Y + Main.rand.Next(-600, 600)) + (player.velocity * 20), ProjectileType<OO_Crosshair>(), (int)(NPC.damage * .8f), Vector2.Zero, CustomSounds.Alarm2, NPC.whoAmI);
                                 }
                                 if (AITimer > 380)
                                 {
@@ -751,12 +756,12 @@ namespace Redemption.NPCs.Bosses.Obliterator
                             if (NPC.life < (int)(NPC.lifeMax * 0.4f))
                             {
                                 if ((NPC.life < (int)(NPC.lifeMax * 0.2f) ? AITimer % 8 == 0 : AITimer % 10 == 0) && AITimer < 300)
-                                    NPC.Shoot(HandPos, ModContent.ProjectileType<OO_Fingerflash>(), 150, Vector2.Zero, NPC.whoAmI);
+                                    NPC.Shoot(HandPos, ProjectileType<OO_Fingerflash>(), (int)(NPC.damage * .75f), Vector2.Zero, NPC.whoAmI);
                             }
                             else
                             {
                                 if (AITimer % 15 == 0 && AITimer < 300)
-                                    NPC.Shoot(HandPos, ModContent.ProjectileType<OO_Fingerflash>(), 150, Vector2.Zero, NPC.whoAmI);
+                                    NPC.Shoot(HandPos, ProjectileType<OO_Fingerflash>(), (int)(NPC.damage * .75f), Vector2.Zero, NPC.whoAmI);
                             }
                             if (AITimer < 200)
                             {
@@ -802,7 +807,7 @@ namespace Redemption.NPCs.Bosses.Obliterator
                                     }
 
                                     for (int i = 0; i < 3; i++)
-                                        NPC.Shoot(EyePos, ModContent.ProjectileType<OO_NormalBeam>(), 180, new Vector2(1 * NPC.spriteDirection, 0), CustomSounds.Laser1, NPC.whoAmI, i);
+                                        NPC.Shoot(EyePos, ProjectileType<OO_NormalBeam>(), (int)(NPC.damage * .9f), new Vector2(1 * NPC.spriteDirection, 0), CustomSounds.Laser1, NPC.whoAmI, i);
                                 }
                                 if (AITimer > 420)
                                 {
@@ -836,7 +841,7 @@ namespace Redemption.NPCs.Bosses.Obliterator
                             {
                                 if (AITimer >= 80)
                                 {
-                                    NPC.Shoot(EyePos, ModContent.ProjectileType<OO_StunBeam>(), 100, new Vector2(10 * NPC.spriteDirection, 0), CustomSounds.BallFire, NPC.whoAmI);
+                                    NPC.Shoot(EyePos, ProjectileType<OO_StunBeam>(), (int)(NPC.damage * .5f), new Vector2(10 * NPC.spriteDirection, 0), CustomSounds.BallFire, NPC.whoAmI);
                                     NPC.velocity *= 0f;
                                     AITimer = 200;
                                     NPC.netUpdate = true;
@@ -852,8 +857,8 @@ namespace Redemption.NPCs.Bosses.Obliterator
                                 if (AITimer < 205)
                                     NPC.velocity.Y -= 2f;
 
-                                if (AITimer > 200 && AITimer % 6 == 0 && AITimer < 360 && player.active && !player.dead && player.HasBuff(ModContent.BuffType<StaticStunDebuff>()))
-                                    NPC.Shoot(new Vector2(player.Center.X + Main.rand.Next(-80, 80), player.Center.Y + Main.rand.Next(-80, 80)), ModContent.ProjectileType<OO_Crosshair>(), 160, Vector2.Zero, CustomSounds.Alarm2, NPC.whoAmI);
+                                if (AITimer > 200 && AITimer % 6 == 0 && AITimer < 360 && player.active && !player.dead && player.HasBuff(BuffType<StaticStunDebuff>()))
+                                    NPC.Shoot(new Vector2(player.Center.X + Main.rand.Next(-80, 80), player.Center.Y + Main.rand.Next(-80, 80)), ProjectileType<OO_Crosshair>(), (int)(NPC.damage * .8f), Vector2.Zero, CustomSounds.Alarm2, NPC.whoAmI);
 
                                 if (AITimer > 300)
                                     NPC.velocity *= 0.98f;
@@ -877,7 +882,7 @@ namespace Redemption.NPCs.Bosses.Obliterator
                                 if (NPC.DistanceSQ(ChargePos) < 200 * 200 || AITimer >= 80)
                                 {
                                     for (int i = 0; i < 2; i++)
-                                        NPC.Shoot(LaserPos, ModContent.ProjectileType<OO_NormalBeam>(), 180, new Vector2(10 * NPC.spriteDirection, 0), CustomSounds.Laser1, NPC.whoAmI, i + 3);
+                                        NPC.Shoot(LaserPos, ProjectileType<OO_NormalBeam>(), (int)(NPC.damage * .9f), new Vector2(10 * NPC.spriteDirection, 0), CustomSounds.Laser1, NPC.whoAmI, i + 3);
 
                                     NPC.velocity *= 0f;
                                     AITimer = 200;
@@ -935,7 +940,8 @@ namespace Redemption.NPCs.Bosses.Obliterator
                     if ((TimerRand == 1 && OverheatOverlay) || TimerRand > 1)
                     {
                         player.RedemptionScreen().ScreenShakeIntensity = MathHelper.Max(3, player.RedemptionScreen().ScreenShakeIntensity);
-                        Terraria.Graphics.Effects.Filters.Scene["MoR:FogOverlay"]?.GetShader().UseOpacity(0.5f).UseIntensity(0.6f).UseColor(Color.DarkRed).UseImage(ModContent.Request<Texture2D>("Redemption/Effects/Vignette", AssetRequestMode.ImmediateLoad).Value);
+
+                        Terraria.Graphics.Effects.Filters.Scene["MoR:FogOverlay"]?.GetShader().UseOpacity(0.5f).UseIntensity(0.6f).UseColor(Color.DarkRed).UseImage(Request<Texture2D>("Redemption/Effects/Vignette", AssetRequestMode.ImmediateLoad).Value);
                         player.ManageSpecialBiomeVisuals("MoR:FogOverlay", true);
                     }
                     if (TimerRand > 1 || (TimerRand == 7 && AITimer < 3000))
@@ -1070,8 +1076,8 @@ namespace Redemption.NPCs.Bosses.Obliterator
 
                                 if (AITimer > 225 && AITimer % 3 == 0 && NPC.velocity.Length() > 12)
                                 {
-                                    NPC.Shoot(NPC.Center, ModContent.ProjectileType<OmegaBlast>(), 140, new Vector2(-4f * NPC.spriteDirection, 12f), SoundID.Item91);
-                                    NPC.Shoot(NPC.Center, ModContent.ProjectileType<OmegaBlast>(), 140, new Vector2(-4f * NPC.spriteDirection, -12f), SoundID.Item91);
+                                    NPC.Shoot(NPC.Center, ProjectileType<OmegaBlast>(), (int)(NPC.damage * .7f), new Vector2(-4f * NPC.spriteDirection, 12f), SoundID.Item91);
+                                    NPC.Shoot(NPC.Center, ProjectileType<OmegaBlast>(), (int)(NPC.damage * .7f), new Vector2(-4f * NPC.spriteDirection, -12f), SoundID.Item91);
                                 }
                                 if (AITimer > 260)
                                 {
@@ -1110,14 +1116,14 @@ namespace Redemption.NPCs.Bosses.Obliterator
 
                             AITimer++;
                             if (AITimer % 5 == 0 && AITimer < 300)
-                                NPC.Shoot(HandPos, ModContent.ProjectileType<OO_Fingerflash>(), 150, Vector2.Zero, NPC.whoAmI);
+                                NPC.Shoot(HandPos, ProjectileType<OO_Fingerflash>(), (int)(NPC.damage * .75f), Vector2.Zero, NPC.whoAmI);
 
                             if (AITimer < 200)
                             {
                                 if (NPC.Distance(MoveVector2) < 100 || AITimer >= 20)
                                 {
                                     SoundEngine.PlaySound(SoundID.Item14, NPC.position);
-                                    RedeDraw.SpawnExplosion(NPC.Center, Color.IndianRed, DustID.LifeDrain, tex: ModContent.Request<Texture2D>("Redemption/Empty").Value);
+                                    RedeDraw.SpawnExplosion(NPC.Center, Color.IndianRed, DustID.LifeDrain, tex: Request<Texture2D>("Redemption/Empty").Value);
                                     AITimer = 200;
                                     NPC.netUpdate = true;
                                 }
@@ -1155,7 +1161,7 @@ namespace Redemption.NPCs.Bosses.Obliterator
                                     ChatUI.Add(d1);
                                 }
                                 if (AITimer >= 305 && AITimer % 4 == 0 && AITimer <= 355)
-                                    NPC.Shoot(EyePos, ModContent.ProjectileType<OO_NormalBeam>(), 180, new Vector2(1 * NPC.spriteDirection, Main.rand.NextFloat(-0.25f, 0.25f)), CustomSounds.Laser1, NPC.whoAmI, -1);
+                                    NPC.Shoot(EyePos, ProjectileType<OO_NormalBeam>(), (int)(NPC.damage * .9f), new Vector2(1 * NPC.spriteDirection, Main.rand.NextFloat(-0.25f, 0.25f)), CustomSounds.Laser1, NPC.whoAmI, -1);
 
                                 if (AITimer > 420)
                                 {
@@ -1198,7 +1204,7 @@ namespace Redemption.NPCs.Bosses.Obliterator
                             {
                                 NPC.velocity *= 0.96f;
                                 if (AITimer > 200 && AITimer % 2 == 0 && AITimer < 320)
-                                    NPC.Shoot(new Vector2(player.Center.X + Main.rand.Next(-900, 900), player.Center.Y + Main.rand.Next(-900, 900)), ModContent.ProjectileType<OO_Crosshair>(), 160, Vector2.Zero, CustomSounds.Alarm2, NPC.whoAmI);
+                                    NPC.Shoot(new Vector2(player.Center.X + Main.rand.Next(-900, 900), player.Center.Y + Main.rand.Next(-900, 900)), ProjectileType<OO_Crosshair>(), (int)(NPC.damage * .8f), Vector2.Zero, CustomSounds.Alarm2, NPC.whoAmI);
 
                                 if (AITimer > 380)
                                 {
@@ -1241,7 +1247,7 @@ namespace Redemption.NPCs.Bosses.Obliterator
                                 NPC.velocity.Y *= 0.98f;
                                 NPC.velocity.X *= 0.5f;
                                 if (AITimer > 200 && AITimer % 5 == 0)
-                                    NPC.Shoot(LaserPos, ModContent.ProjectileType<OmegaPlasmaBall>(), 130, new Vector2((12 + SpeedBoost) * NPC.spriteDirection, 0), CustomSounds.BallCreate);
+                                    NPC.Shoot(LaserPos, ProjectileType<OmegaPlasmaBall>(), (int)(NPC.damage * .65f), new Vector2((12 + SpeedBoost) * NPC.spriteDirection, 0), CustomSounds.BallCreate);
 
                                 if (AITimer > 240)
                                 {
@@ -1277,7 +1283,7 @@ namespace Redemption.NPCs.Bosses.Obliterator
                             if (AITimer == 0)
                             {
                                 SoundEngine.PlaySound(SoundID.Item14, NPC.position);
-                                RedeDraw.SpawnExplosion(NPC.Center, Color.IndianRed, DustID.LifeDrain, tex: ModContent.Request<Texture2D>("Redemption/Empty").Value);
+                                RedeDraw.SpawnExplosion(NPC.Center, Color.IndianRed, DustID.LifeDrain, tex: Request<Texture2D>("Redemption/Empty").Value);
                                 NPC.velocity *= 0f;
                                 AITimer = 1;
                                 NPC.netUpdate = true;
@@ -1351,7 +1357,7 @@ namespace Redemption.NPCs.Bosses.Obliterator
                                         double angle = Main.rand.NextDouble() * 2d * Math.PI;
                                         vector.X = (float)(Math.Sin(angle) * 100);
                                         vector.Y = (float)(Math.Cos(angle) * 100);
-                                        Dust dust2 = Main.dust[Dust.NewDust(LaserPos + vector, 2, 2, ModContent.DustType<GlowDust>())];
+                                        Dust dust2 = Main.dust[Dust.NewDust(LaserPos + vector, 2, 2, DustType<GlowDust>())];
                                         dust2.noGravity = true;
                                         Color dustColor = new(Color.Red.R, Color.Red.G, Color.Red.B) { A = 0 };
                                         dust2.color = dustColor;
@@ -1360,7 +1366,10 @@ namespace Redemption.NPCs.Bosses.Obliterator
                                 }
                                 if (AITimer == 210 && player.active && !player.dead)
                                 {
-                                    NPC.Shoot(LaserPos, ModContent.ProjectileType<OmegaMegaBeam>(), 1000, new Vector2(10 * NPC.spriteDirection, 0), CustomSounds.MegaLaser, NPC.whoAmI);
+                                    int funnyDamage = 1000;
+                                    if (Main.expertMode)
+                                        funnyDamage *= Main.masterMode ? 10 * 10 : 10;
+                                    NPC.Shoot(LaserPos, ProjectileType<OmegaMegaBeam>(), funnyDamage, new Vector2(10 * NPC.spriteDirection, 0), CustomSounds.MegaLaser, NPC.whoAmI);
                                 }
                                 if (AITimer == 370)
                                     BeamAnimation = false;
@@ -1372,7 +1381,7 @@ namespace Redemption.NPCs.Bosses.Obliterator
                                 if (AITimer == 450)
                                 {
                                     SoundEngine.PlaySound(SoundID.Item14, NPC.position);
-                                    RedeDraw.SpawnExplosion(NPC.Center, Color.IndianRed, DustID.LifeDrain, tex: ModContent.Request<Texture2D>("Redemption/Empty").Value);
+                                    RedeDraw.SpawnExplosion(NPC.Center, Color.IndianRed, DustID.LifeDrain, tex: Request<Texture2D>("Redemption/Empty").Value);
                                     if (!Main.dedServ)
                                     {
                                         if (!RedeBossDowned.downedOmega3)
@@ -1434,7 +1443,7 @@ namespace Redemption.NPCs.Bosses.Obliterator
                     break;
                 case "d":
                     SoundEngine.PlaySound(SoundID.Item14, NPC.position);
-                    RedeDraw.SpawnExplosion(NPC.Center, Color.IndianRed, DustID.LifeDrain, tex: ModContent.Request<Texture2D>("Redemption/Empty").Value);
+                    RedeDraw.SpawnExplosion(NPC.Center, Color.IndianRed, DustID.LifeDrain, tex: Request<Texture2D>("Redemption/Empty").Value);
                     break;
                 case "e":
                     OverheatOverlay = true;
@@ -1542,7 +1551,7 @@ namespace Redemption.NPCs.Bosses.Obliterator
                         ChatUI.Visible = true;
                         ChatUI.Add(chain);
                     }
-                    if (!RedeHelper.AnyProjectiles(ModContent.ProjectileType<OmegaMegaBeam>()))
+                    if (!RedeHelper.AnyProjectiles(ProjectileType<OmegaMegaBeam>()))
                         BeamAnimation = false;
                     if (AITimer > 284)
                     {
@@ -1595,19 +1604,19 @@ namespace Redemption.NPCs.Bosses.Obliterator
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
             Asset<Texture2D> texture = TextureAssets.Npc[NPC.type];
-            glow ??= ModContent.Request<Texture2D>(Texture + "_Glow");
-            armB ??= ModContent.Request<Texture2D>(Texture + "_Arm_Back");
-            armF ??= ModContent.Request<Texture2D>(Texture + "_Arm_Front");
-            armR ??= ModContent.Request<Texture2D>(Texture + "_Arm_Rockets");
-            hands ??= ModContent.Request<Texture2D>(Texture + "_Hands");
-            head ??= ModContent.Request<Texture2D>(Texture + "_Head");
-            headGlow ??= ModContent.Request<Texture2D>(Texture + "_Head_Glow");
-            legs ??= ModContent.Request<Texture2D>(Texture + "_Legs");
-            armB_Overheat ??= ModContent.Request<Texture2D>(Texture + "_Arm_Back_Overheat");
-            armF_Overheat ??= ModContent.Request<Texture2D>(Texture + "_Arm_Front_Overheat");
-            head_Overheat ??= ModContent.Request<Texture2D>(Texture + "_Head_Overheat");
-            legs_Overheat ??= ModContent.Request<Texture2D>(Texture + "_Legs_Overheat");
-            overheat ??= ModContent.Request<Texture2D>(Texture + "_Overheat");
+            glow ??= Request<Texture2D>(Texture + "_Glow");
+            armB ??= Request<Texture2D>(Texture + "_Arm_Back");
+            armF ??= Request<Texture2D>(Texture + "_Arm_Front");
+            armR ??= Request<Texture2D>(Texture + "_Arm_Rockets");
+            hands ??= Request<Texture2D>(Texture + "_Hands");
+            head ??= Request<Texture2D>(Texture + "_Head");
+            headGlow ??= Request<Texture2D>(Texture + "_Head_Glow");
+            legs ??= Request<Texture2D>(Texture + "_Legs");
+            armB_Overheat ??= Request<Texture2D>(Texture + "_Arm_Back_Overheat");
+            armF_Overheat ??= Request<Texture2D>(Texture + "_Arm_Front_Overheat");
+            head_Overheat ??= Request<Texture2D>(Texture + "_Head_Overheat");
+            legs_Overheat ??= Request<Texture2D>(Texture + "_Legs_Overheat");
+            overheat ??= Request<Texture2D>(Texture + "_Overheat");
 
             Asset<Texture2D> armBack;
             Asset<Texture2D> armFront;

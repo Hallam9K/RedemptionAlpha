@@ -1,7 +1,8 @@
 using Microsoft.Xna.Framework;
-using Terraria;
-using Terraria.ModLoader;
 using Redemption.Globals;
+using Terraria;
+using Terraria.Audio;
+using Terraria.ModLoader;
 
 namespace Redemption.NPCs.Bosses.Obliterator
 {
@@ -26,7 +27,10 @@ namespace Redemption.NPCs.Bosses.Obliterator
         {
             NPC npc = Main.npc[(int)Projectile.ai[0]];
             if (!npc.active || npc.type != ModContent.NPCType<OO>())
+            {
                 Projectile.Kill();
+                return;
+            }
 
             if (++Projectile.frameCounter >= 2)
             {
@@ -35,7 +39,10 @@ namespace Redemption.NPCs.Bosses.Obliterator
                 {
                     (Main.npc[npc.whoAmI].ModNPC as OO).ArmRot[0] = MathHelper.PiOver2 + (0.7f * -npc.spriteDirection) + (npc.spriteDirection == -1 ? 0 : MathHelper.Pi);
 
-                    Projectile.Shoot(Projectile.Center, ModContent.ProjectileType<OO_Laser>(), 150, RedeHelper.PolarVector(npc.DistanceSQ(Main.player[npc.target].Center) >= 900 * 900 ? 30 : 12, (Main.player[npc.target].Center - npc.Center).ToRotation()), true, CustomSounds.Laser1);
+                    if (!Main.dedServ)
+                        SoundEngine.PlaySound(CustomSounds.Laser1, Projectile.position);
+                    if (Projectile.owner == Main.myPlayer)
+                        Projectile.NewProjectile(Projectile.InheritSource(npc), Projectile.Center, RedeHelper.PolarVector(npc.DistanceSQ(Main.player[npc.target].Center) >= 900 * 900 ? 30 : 12, (Main.player[npc.target].Center - npc.Center).ToRotation()), ModContent.ProjectileType<OO_Laser>(), Projectile.damage, 3, Main.myPlayer);
                 }
                 if (++Projectile.frame >= 9)
                     Projectile.Kill();

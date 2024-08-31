@@ -1,14 +1,14 @@
 ﻿using Microsoft.Xna.Framework;
-using Terraria;
-using Terraria.ModLoader;
-using System;
-using Terraria.ID;
-using Redemption.Globals;
-using Terraria.Audio;
-using Redemption.NPCs.Bosses.Cleaver;
-using Terraria.GameContent;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Dusts;
+using Redemption.Globals;
+using Redemption.NPCs.Bosses.Cleaver;
+using System;
+using Terraria;
+using Terraria.Audio;
+using Terraria.GameContent;
+using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace Redemption.NPCs.Bosses.Obliterator
 {
@@ -52,10 +52,9 @@ namespace Redemption.NPCs.Bosses.Obliterator
             Projectile.velocity *= 0.98f;
             if (Projectile.scale >= 1)
             {
-                for (int i = 0; i < Main.maxProjectiles; i++)
+                foreach (Projectile proj in Main.ActiveProjectiles)
                 {
-                    Projectile proj = Main.projectile[i];
-                    if (!proj.active || proj.type == Type || proj.hostile || !proj.friendly || proj.damage < 5)
+                    if (proj.type == Type || proj.hostile || !proj.friendly || proj.damage < 5)
                         continue;
 
                     if (!Projectile.Hitbox.Intersects(proj.Hitbox) || proj.ProjBlockBlacklist())
@@ -64,8 +63,14 @@ namespace Redemption.NPCs.Bosses.Obliterator
                     if (!Main.dedServ)
                         SoundEngine.PlaySound(CustomSounds.BallFire, Projectile.position);
                     DustHelper.DrawCircle(proj.Center, DustID.LifeDrain, 1, 4, 4, nogravity: true);
-                    for (int j = 0; j < 4; j++)
-                        Projectile.Shoot(Projectile.Center, ModContent.ProjectileType<OmegaBlast>(), 110, RedeHelper.PolarVector(Main.rand.NextFloat(9, 19), (Main.player[RedeHelper.GetNearestAlivePlayer(Projectile)].Center - Projectile.Center).ToRotation() + Main.rand.NextFloat(-0.06f, 0.06f)), false, SoundID.Item1);
+                    RedeDraw.SpawnExplosion(proj.Center, Color.IndianRed, shakeAmount: 0, scale: .5f, noDust: true, rot: RedeHelper.RandomRotation(), tex: ModContent.Request<Texture2D>("Redemption/Textures/SwordClash").Value);
+
+                    int nearestPlayer = RedeHelper.GetNearestAlivePlayer(Projectile);
+                    if (nearestPlayer >= 0 && Projectile.owner == Main.myPlayer)
+                    {
+                        for (int j = 0; j < 4; j++)
+                            Projectile.NewProjectile(Projectile.InheritSource(Projectile), Projectile.Center, RedeHelper.PolarVector(Main.rand.NextFloat(9, 19), (Main.player[nearestPlayer].Center - Projectile.Center).ToRotation() + Main.rand.NextFloat(-0.06f, 0.06f)), ModContent.ProjectileType<OmegaBlast>(), (int)(Projectile.damage * 1.077f), 3, Main.myPlayer);
+                    }
                     proj.Kill();
                     Projectile.Kill();
                 }
