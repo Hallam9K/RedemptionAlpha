@@ -26,8 +26,8 @@ namespace Redemption.Items.Weapons.PreHM.Summon
 		{
 			Item.damage = 28;
 			Item.DamageType = DamageClass.Summon;
-			Item.width = 56;
-			Item.height = 60;
+            Item.width = 54;
+            Item.height = 64; 
 			Item.useTime = 36;
 			Item.useAnimation = 36;
 			Item.useStyle = ItemUseStyleID.Swing;

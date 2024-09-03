@@ -1,4 +1,5 @@
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Redemption.BaseExtension;
 using Redemption.Buffs.NPCBuffs;
 using Redemption.Globals;
@@ -24,7 +25,7 @@ namespace Redemption.Items.Weapons.PreHM.Ranged
         {
             // Common Properties
             Item.width = 26;
-            Item.height = 58;
+            Item.height = 66;
             Item.rare = ItemRarityID.Orange;
             Item.value = Item.sellPrice(gold: 1);
 
@@ -45,6 +46,8 @@ namespace Redemption.Items.Weapons.PreHM.Ranged
             Item.shootSpeed = 20f;
             Item.shoot = ProjectileID.WoodenArrowFriendly;
             Item.useAmmo = AmmoID.Arrow;
+            if (!Main.dedServ)
+                Item.RedemptionGlow().glowTexture = ModContent.Request<Texture2D>(Texture + "_Glow").Value;
         }
         public override void AddRecipes()
         {

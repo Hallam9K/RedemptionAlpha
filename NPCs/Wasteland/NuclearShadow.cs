@@ -121,14 +121,17 @@ namespace Redemption.NPCs.Wasteland
         public override bool? CanFallThroughPlatforms() => NPC.Redemption().fallDownPlatform;
         public override void FindFrame(int frameHeight)
         {
-            Point point = NPC.Center.ToTileCoordinates();
-            if (Main.tile[point.X, point.Y].WallType == 0)
+            if (!NPC.IsABestiaryIconDummy)
             {
-                if (NPC.collideY || NPC.velocity.Y == 0)
-                    NPC.frame.Y = 0;
-                else
-                    NPC.frame.Y = 17 * frameHeight;
-                return;
+                Point point = NPC.Center.ToTileCoordinates();
+                if (Framing.GetTileSafely(point.X, point.Y).WallType == 0)
+                {
+                    if (NPC.collideY || NPC.velocity.Y == 0)
+                        NPC.frame.Y = 0;
+                    else
+                        NPC.frame.Y = 17 * frameHeight;
+                    return;
+                }
             }
             if (NPC.collideY || NPC.velocity.Y == 0)
             {

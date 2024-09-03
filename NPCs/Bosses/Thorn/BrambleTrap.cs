@@ -4,6 +4,7 @@ using Redemption.Buffs.Debuffs;
 using Redemption.Globals;
 using Redemption.Globals.NPC;
 using Redemption.Helpers;
+using System;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -15,6 +16,7 @@ namespace Redemption.NPCs.Bosses.Thorn
         public override void SetStaticDefaults()
         {
             Main.npcFrameCount[NPC.type] = 9;
+            NPCID.Sets.DontDoHardmodeScaling[Type] = true;
 
             BuffNPC.NPCTypeImmunity(Type, BuffNPC.NPCDebuffImmuneType.Inorganic);
             NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.Bleeding] = false;
@@ -80,7 +82,7 @@ namespace Redemption.NPCs.Bosses.Thorn
         {
             if (NPC.ai[0]++ % 10 == 0)
             {
-                if (NPC.CountNPCS(Type) > 30)
+                if (NPC.CountNPCS(Type) > 20)
                 {
                     int firstTrap = NPC.FindFirstNPC(Type);
                     if (firstTrap >= 0 && Main.npc[firstTrap].active)

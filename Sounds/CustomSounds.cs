@@ -147,6 +147,8 @@ namespace Redemption
         public static readonly SoundStyle Shatter = new("Redemption/Sounds/Custom/Shatter");
         public static readonly SoundStyle HLShotgun1 = new("Redemption/Sounds/Custom/HLShotgun1") { PitchVariance = .1f };
         public static readonly SoundStyle Bell = new("Redemption/Sounds/Custom/Bell") { PitchVariance = .1f, Pitch = -.5f, Volume = .5f };
+        public static readonly SoundStyle Kantele1 = new("Redemption/Sounds/Custom/Kantele1");
+        public static readonly SoundStyle Kantele2 = new("Redemption/Sounds/Custom/Kantele2");
 
         public static readonly SoundStyle Magic1 = new("Redemption/Sounds/Custom/Magic1") { PitchVariance = .1f };
         public static readonly SoundStyle Magic5 = new("Redemption/Sounds/Custom/Magic5") { PitchVariance = .1f };

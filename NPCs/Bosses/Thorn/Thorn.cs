@@ -227,7 +227,7 @@ namespace Redemption.NPCs.Bosses.Thorn
                 CopyList.Remove(ID);
                 NPC.netUpdate = true;
 
-                if (ID is 0 && NPC.CountNPCS(ModContent.NPCType<BrambleTrap>()) > 30)
+                if (ID is 0 && NPC.CountNPCS(ModContent.NPCType<BrambleTrap>()) > 20)
                     continue;
                 if (ID is 3 && NPC.life >= (int)(NPC.lifeMax * 0.9f))
                     continue;
@@ -243,6 +243,8 @@ namespace Redemption.NPCs.Bosses.Thorn
                 typeName = Language.GetTextValue("Mods.Redemption.NPCs.Thorn.XmasName");
         }
         public bool PhaseTwo;
+        public Vector2 lastVector;
+        public bool finalSubphaseSlam;
         public override void AI()
         {
             if (NPC.target < 0 || NPC.target == 255 || Main.player[NPC.target].dead || !Main.player[NPC.target].active)
@@ -316,19 +318,26 @@ namespace Redemption.NPCs.Bosses.Thorn
                     return;
                 case ActionState.Begin:
                     if (!Main.dedServ)
-                        RedeSystem.Instance.TitleCardUIElement.DisplayTitle(Language.GetTextValue("Mods.Redemption.TitleCard.Thorn.Name"), 60, 90, 0.8f, 0, Color.LawnGreen, Language.GetTextValue("Mods.Redemption.TitleCard.Thorn.Modifier")); AIState = ActionState.TeleportStart;
+                        RedeSystem.Instance.TitleCardUIElement.DisplayTitle(Language.GetTextValue("Mods.Redemption.TitleCard.Thorn.Name"), 60, 90, 0.8f, 0, Color.LawnGreen, Language.GetTextValue("Mods.Redemption.TitleCard.Thorn.Modifier"));
+                    AIState = ActionState.TeleportStart;
                     NPC.netUpdate = true;
                     break;
                 case ActionState.Idle:
                     if (NPC.life < NPC.lifeMax / 4)
                     {
+                        if (AITimer == 0 && !finalSubphaseSlam)
+                        {
+                            SwapAnimation(BOTH_SLAM);
+                            finalSubphaseSlam = true;
+                        }
+
                         redEyeOpacity -= .01f;
                         redEyeOpacity = MathHelper.Max(redEyeOpacity, -1);
                     }
                     if (++AITimer > 60)
                     {
                         AITimer = 0;
-                        if (!PhaseTwo && (Main.expertMode ? phase2Health : NPC.life < (int)(NPC.lifeMax * 0.35f)))
+                        if (!PhaseTwo && phase2Health)
                         {
                             TimerRand = 0;
                             AIState = ActionState.PhaseTransition;
@@ -463,14 +472,19 @@ namespace Redemption.NPCs.Bosses.Thorn
                                 }
                             }
 
+                            if (AITimer is 60 or 120 or 180)
+                                lastVector = player.Center;
                             if (AITimer >= 60)
                             {
                                 if (PhaseTwo)
                                 {
-                                    if (AITimer <= 80 || (AITimer >= 120 && AITimer < 140))
+                                    bool otherBursts = AITimer >= 120 && AITimer < 140;
+                                    if (NPC.life < NPC.lifeMax / 4)
+                                        otherBursts |= AITimer >= 180 && AITimer < 200;
+                                    if (AITimer <= 80 || otherBursts)
                                     {
                                         if (Main.rand.NextBool(2))
-                                            NPC.Shoot(HeartOrigin, ModContent.ProjectileType<LeechingThornSeed>(), NPC.damage, RedeHelper.PolarVector(11, (player.Center - NPC.Center).ToRotation() + Main.rand.NextFloat(-0.06f, 0.06f)), SoundID.Item17, ai2: NPC.whoAmI);
+                                            NPC.Shoot(HeartOrigin, ModContent.ProjectileType<LeechingThornSeed>(), NPC.damage, RedeHelper.PolarVector(11, (lastVector - NPC.Center).ToRotation() + Main.rand.NextFloat(-0.06f, 0.06f)), SoundID.Item17, ai2: NPC.whoAmI);
                                     }
                                 }
                                 else
@@ -478,7 +492,7 @@ namespace Redemption.NPCs.Bosses.Thorn
                                     if (AITimer <= 90)
                                     {
                                         if (Main.rand.NextBool(3))
-                                            NPC.Shoot(HeartOrigin, ModContent.ProjectileType<LeechingThornSeed>(), NPC.damage, RedeHelper.PolarVector(11, (player.Center - NPC.Center).ToRotation() + Main.rand.NextFloat(-0.06f, 0.06f)), SoundID.Item17, ai2: NPC.whoAmI);
+                                            NPC.Shoot(HeartOrigin, ModContent.ProjectileType<LeechingThornSeed>(), NPC.damage, RedeHelper.PolarVector(11, (lastVector - NPC.Center).ToRotation() + Main.rand.NextFloat(-0.06f, 0.06f)), SoundID.Item17, ai2: NPC.whoAmI);
                                     }
                                 }
                             }
@@ -545,7 +559,7 @@ namespace Redemption.NPCs.Bosses.Thorn
                                     dust2.velocity = -player.DirectionTo(dust2.position) * 10;
                                 }
                                 if (!Main.dedServ)
-                                    SoundEngine.PlaySound(CustomSounds.Saint3 with { Volume = .6f }, NPC.position);
+                                    SoundEngine.PlaySound(CustomSounds.Saint3 with { Volume = .6f }, player.position);
                                 NPC.Shoot(player.Center, ModContent.ProjectileType<Thorn_SlashFlash>(), NPC.damage, RedeHelper.PolarVector(PhaseTwo ? 28 : 22, RedeHelper.RandomRotation()), ai2: NPC.whoAmI);
                             }
 
@@ -617,7 +631,7 @@ namespace Redemption.NPCs.Bosses.Thorn
                                             dust2.velocity = -player.DirectionTo(dust2.position) * 10;
                                         }
                                         if (!Main.dedServ)
-                                            SoundEngine.PlaySound(CustomSounds.Saint3 with { Volume = .6f }, NPC.position);
+                                            SoundEngine.PlaySound(CustomSounds.Saint3 with { Volume = .6f }, player.position);
                                         float randRot = RedeHelper.RandomRotation();
                                         amount = 6;
                                         if (NPC.life < NPC.lifeMax / 4)
@@ -654,7 +668,7 @@ namespace Redemption.NPCs.Bosses.Thorn
                                             dust2.velocity = -player.DirectionTo(dust2.position) * 10;
                                         }
                                         if (!Main.dedServ)
-                                            SoundEngine.PlaySound(CustomSounds.Saint3 with { Volume = .6f }, NPC.position);
+                                            SoundEngine.PlaySound(CustomSounds.Saint3 with { Volume = .6f }, player.position);
                                         if (NPC.life < NPC.lifeMax / 4)
                                         {
                                             NPC.Shoot(player.Center, ModContent.ProjectileType<Thorn_SlashFlash>(), NPC.damage, new Vector2(Main.rand.NextFloat(-12, 13), Main.rand.NextFloat(22, 32) * (AITimer % 20 == 0 ? 1 : -1)), 0, Main.rand.NextBool() ? 1 : -1, ai2: NPC.whoAmI);
@@ -1030,7 +1044,7 @@ namespace Redemption.NPCs.Bosses.Thorn
             switch (aniType)
             {
                 default:
-                    if (++NPC.frameCounter >= 10)
+                    if (++NPC.frameCounter >= (NPC.life < NPC.lifeMax / 4 ? 5 : 10))
                     {
                         NPC.frameCounter = 0;
                         NPC.frame.Y++;
@@ -1114,6 +1128,20 @@ namespace Redemption.NPCs.Bosses.Thorn
                             SoundEngine.PlaySound(SoundID.Dig, NPC.position);
                             SoundEngine.PlaySound(SoundID.DD2_MonkStaffGroundImpact with { Pitch = .2f }, NPC.position);
 
+                            if (NPC.life < NPC.lifeMax / 4)
+                            {
+                                if (!Main.dedServ)
+                                    SoundEngine.PlaySound(CustomSounds.WorldTree with { Volume = .5f, Pitch = .2f }, NPC.position);
+
+                                for (int i = 0; i < 20; i++)
+                                {
+                                    ParticleOrchestrator.RequestParticleSpawn(clientOnly: true, ParticleOrchestraType.StardustPunch, new ParticleOrchestraSettings
+                                    {
+                                        PositionInWorld = RedeHelper.RandAreaInEntity(NPC),
+                                        MovementVector = new Vector2(0, -Main.rand.Next(4, 15))
+                                    });
+                                }
+                            }
                             for (int i = 0; i < 9; i++)
                             {
                                 ParticleOrchestrator.RequestParticleSpawn(clientOnly: true, ParticleOrchestraType.StardustPunch, new ParticleOrchestraSettings

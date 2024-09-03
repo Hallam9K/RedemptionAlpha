@@ -8799,7 +8799,7 @@ Mods: {
 				Lore:
 					'''
 					'A cleaver cast in melted dragon bone and metal, said to be used by the ancient warlords of Dragonrest.
-					This weapon is a great catalyst for fire magic, shooting out a wave of burning heat by channelling a swing.'
+					This weapon is a great catalyst for fire magic, channeling the fury of a dragon.'
 					'''
 			}
 
@@ -10354,6 +10354,11 @@ Mods: {
 			AldersStaff: {
 				DisplayName: Alder's Staff
 				Tooltip: Casts 4 random arcane bolts into the air
+			}
+
+			ViisaanKantele: {
+				DisplayName: Viisaan Kantele
+				Tooltip: Playable Instrument
 			}
 		}
 

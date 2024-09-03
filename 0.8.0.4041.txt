@@ -1,0 +1,15 @@
+=== 0.8 Beta .4041 === (Thorny Fixes Patch)
+- Fixed Thorn going into phase 2 in Normal Mode at 35% health instead of 66%
+- Resprited Thorn Mask, Thorn Trophy, Thorn's Treasure Bag, Dragon-Lead weapons, and Pure-Iron Alloy
+- Thorn's Bramble Traps no longer have hardmode scaling
+- Max amount of Bramble Traps reduced from 30 -> 20, Thorn won't use the attack if there are more than 20 active
+- Added minor indicator for Thorn's final subphase
+- Thorn's Life-Draining Seed attack locks to the player's position when firing a burst, in final subphase there will be 3 bursts
+- Sound of Thorn's slash indicator appearing is tied to player instead of boss
+- Thorn's idle animation is faster in final subphase
+- Thorn's Splinters have an afterimage
+- Fixed Nuclear Shadow causing issues
+- Corrected Steam-Cog Minigun's rarity from Yellow -> Purple
+- Tweaked Dragon Cleaver's lore tooltip to not include its old ability
+2019. Ported Viisaan Kantele as a playable instrument
+===============

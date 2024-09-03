@@ -37,6 +37,7 @@ namespace Redemption.Items.Usable
         {
             itemLoot.Add(ItemDropRule.NotScalingWithLuck(ModContent.ItemType<AkkaMask>(), 7));
             itemLoot.Add(ItemDropRule.OneFromOptions(1, ModContent.ItemType<PoemOfIlmatar>(), ModContent.ItemType<Pihlajasauva>()));
+            itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<ViisaanKantele>(), 10));
             itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<WaterfowlEgg>()));
         }
         public override void PostUpdate()

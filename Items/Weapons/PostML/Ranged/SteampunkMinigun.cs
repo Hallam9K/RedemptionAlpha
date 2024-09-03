@@ -34,7 +34,7 @@ namespace Redemption.Items.Weapons.PostML.Ranged
             Item.channel = true;
             Item.knockBack = 2;
             Item.value = Item.sellPrice(0, 20, 0, 0);
-            Item.rare = ItemRarityID.Yellow;
+            Item.rare = ItemRarityID.Purple;
             Item.UseSound = CustomSounds.WindUp;
             Item.autoReuse = true;
             Item.shoot = ProjectileID.PurificationPowder;

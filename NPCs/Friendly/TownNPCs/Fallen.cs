@@ -284,6 +284,7 @@ namespace Redemption.NPCs.Friendly.TownNPCs
                 .Add(new Item(ModContent.ItemType<WeddingRing>()) { shopCustomPrice = 15, shopSpecialCurrency = Redemption.AntiqueDorulCurrencyId })
                 .Add(new Item(ModContent.ItemType<LostSoul>()) { shopCustomPrice = 4, shopSpecialCurrency = Redemption.AntiqueDorulCurrencyId })
                 .Add(new Item(ModContent.ItemType<Violin>()) { shopCustomPrice = 20, shopSpecialCurrency = Redemption.AntiqueDorulCurrencyId })
+                .Add(new Item(ModContent.ItemType<ViisaanKantele>()) { shopCustomPrice = 24, shopSpecialCurrency = Redemption.AntiqueDorulCurrencyId }, RedeConditions.DownedADD)
                 .Add(new Item(ModContent.ItemType<OldTophat>()) { shopCustomPrice = 20, shopSpecialCurrency = Redemption.AntiqueDorulCurrencyId }, Condition.PlayerCarriesItem(ModContent.ItemType<CruxCardTied>()))
                 .Add(new Item(ModContent.ItemType<ScrunklePainting>()) { shopCustomPrice = 12, shopSpecialCurrency = Redemption.AntiqueDorulCurrencyId })
                 .Add(new Item(ModContent.ItemType<SkullDiggerPainting>()) { shopCustomPrice = 12, shopSpecialCurrency = Redemption.AntiqueDorulCurrencyId }, RedeConditions.DownedSkullDigger)
