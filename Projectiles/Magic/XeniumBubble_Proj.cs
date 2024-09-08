@@ -4,6 +4,7 @@ using Redemption.Base;
 using Redemption.BaseExtension;
 using Redemption.Buffs.Debuffs;
 using Redemption.Globals;
+using System;
 using Terraria;
 using Terraria.Audio;
 using Terraria.GameContent;
@@ -39,7 +40,12 @@ namespace Redemption.Projectiles.Magic
         {
             Projectile.velocity.X *= 0.95f;
             Projectile.velocity.Y *= 0.97f;
+            if (Projectile.ai[0] == 1)
+                delay--;
+            if (delay <= 0)
+                Projectile.Kill();
         }
+        public float delay = 2;
         public override void OnKill(int timeLeft)
         {
             SoundEngine.PlaySound(SoundID.Item54, Projectile.position);
@@ -49,20 +55,7 @@ namespace Redemption.Projectiles.Magic
                 Main.LocalPlayer.RedemptionScreen().ScreenShakeOrigin = Projectile.Center;
                 Main.LocalPlayer.RedemptionScreen().ScreenShakeIntensity += 6;
                 RedeDraw.SpawnExplosion(Projectile.Center, new Color(76, 240, 107), DustID.Smoke, 0, 10, 1, 2);
-                Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, Vector2.Zero, ModContent.ProjectileType<XeniumBoom_Proj>(), 0, 0, Main.myPlayer);
-
-                for (int i = 0; i < Main.maxNPCs; i++)
-                {
-                    NPC target = Main.npc[i];
-                    if (!target.active || (!target.CanBeChasedBy() && target.type != NPCID.TargetDummy))
-                        continue;
-
-                    if (Projectile.DistanceSQ(target.Center) > 160 * 160)
-                        continue;
-
-                    int hitDirection = target.RightOfDir(Projectile);
-                    BaseAI.DamageNPC(target, Projectile.damage * 2, Projectile.knockBack, hitDirection, Projectile);
-                }
+                Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, Vector2.Zero, ModContent.ProjectileType<XeniumBoom_Proj>(), Projectile.damage * 2, Projectile.knockBack, Main.myPlayer);
             }
             for (int i = 0; i < 20; i++)
             {
@@ -79,13 +72,6 @@ namespace Redemption.Projectiles.Magic
                 Projectile.velocity.Y = -oldVelocity.Y;
             Projectile.velocity *= 0.95f;
             return false;
-        }
-        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
-        {
-            if (Main.rand.NextBool(3))
-                target.AddBuff(ModContent.BuffType<GreenRashesDebuff>(), 300);
-            else if (Main.rand.NextBool(6))
-                target.AddBuff(ModContent.BuffType<GlowingPustulesDebuff>(), 150);
         }
         public override bool PreDraw(ref Color lightColor)
         {
@@ -110,15 +96,17 @@ namespace Redemption.Projectiles.Magic
 
         public override void SetDefaults()
         {
-            Projectile.width = 66;
-            Projectile.height = 96;
-            Projectile.friendly = false;
+            Projectile.width = 240;
+            Projectile.height = 240;
+            Projectile.friendly = true;
             Projectile.hostile = false;
             Projectile.ignoreWater = true;
             Projectile.tileCollide = false;
             Projectile.DamageType = DamageClass.Magic;
             Projectile.rotation = RedeHelper.RandomRotation();
             Projectile.spriteDirection = Main.rand.NextBool() ? 1 : -1;
+            Projectile.usesLocalNPCImmunity = true;
+            Projectile.localNPCHitCooldown = 60;
         }
         public override void AI()
         {
@@ -129,6 +117,25 @@ namespace Redemption.Projectiles.Magic
                     Projectile.Kill();
             }
             Projectile.scale += 0.06f;
+
+            for (int i = 0; i < Main.maxProjectiles; i++)
+            {
+                Projectile p = Main.projectile[i];
+                if (!p.active || p.type != ModContent.ProjectileType<XeniumBubble_Proj>())
+                    continue;
+
+                if (Projectile.getRect().Intersects(p.getRect()))
+                {
+                    p.ai[0] = 1;
+                }
+            }
+        }
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
+        {
+            if (Main.rand.NextBool(3))
+                target.AddBuff(ModContent.BuffType<GreenRashesDebuff>(), 300);
+            else if (Main.rand.NextBool(6))
+                target.AddBuff(ModContent.BuffType<GlowingPustulesDebuff>(), 150);
         }
         public override bool PreDraw(ref Color lightColor)
         {
@@ -139,12 +146,12 @@ namespace Redemption.Projectiles.Magic
             Rectangle rect = new(0, y, texture.Width, height);
             Vector2 origin = new(texture.Width / 2f, height / 2f);
             Main.spriteBatch.End();
-            Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+            Main.spriteBatch.BeginAdditive();
 
             Main.EntitySpriteDraw(texture, position, new Rectangle?(rect), Projectile.GetAlpha(Color.White), Projectile.rotation, origin, Projectile.scale, SpriteEffects.None, 0);
 
             Main.spriteBatch.End();
-            Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+            Main.spriteBatch.BeginDefault();
             return false;
         }
     }

@@ -1,3 +1,4 @@
+using Redemption.Items.Weapons.PreHM.Melee;
 using Redemption.Projectiles.Magic;
 using Terraria;
 using Terraria.ID;
@@ -12,6 +13,7 @@ namespace Redemption.Items.Weapons.PreHM.Magic
             // DisplayName.SetDefault("Holy Magnifying Glass");
             /* Tooltip.SetDefault("Hold left-click to charge a scorching ray" +
                 "\n'Super effective on insects'"); */
+            ItemID.Sets.ShimmerTransformToItem[Type] = ModContent.ItemType<Bindeklinge>();
 
             Item.ResearchUnlockCount = 1;
         }

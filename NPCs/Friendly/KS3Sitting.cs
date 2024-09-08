@@ -65,6 +65,10 @@ namespace Redemption.NPCs.Friendly
         }
         public override void PostDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
+            Texture2D glow = ModContent.Request<Texture2D>(Texture + "_Glow").Value;
+            var effects = NPC.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
+            spriteBatch.Draw(glow, NPC.Center - screenPos, NPC.frame, NPC.GetAlpha(Color.White), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
+
             if (Terraria.GameContent.Events.BirthdayParty.PartyIsUp)
             {
                 Asset<Texture2D> hat = ModContent.Request<Texture2D>("Terraria/Images/Item_" + ItemID.PartyHat);
@@ -74,9 +78,8 @@ namespace Redemption.NPCs.Friendly
                     4 => 2,
                     _ => 0,
                 };
-                var hatEffects = NPC.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
                 Vector2 origin = new(hat.Value.Width / 2f, hat.Value.Height / 2f);
-                spriteBatch.Draw(hat.Value, NPC.Center - new Vector2(1 - offset * NPC.spriteDirection, 48) - screenPos, null, NPC.GetAlpha(drawColor), NPC.rotation, origin, NPC.scale, hatEffects, 0);
+                spriteBatch.Draw(hat.Value, NPC.Center - new Vector2(1 - offset * NPC.spriteDirection, 48) - screenPos, null, NPC.GetAlpha(drawColor), NPC.rotation, origin, NPC.scale, effects, 0);
             }
         }
         public override void AI()

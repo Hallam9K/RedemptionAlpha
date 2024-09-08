@@ -1,6 +1,7 @@
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.ID;
+using Redemption.Items.Weapons.HM.Melee;
 
 namespace Redemption.Items.Weapons.HM.Magic
 {
@@ -12,6 +13,8 @@ namespace Redemption.Items.Weapons.HM.Magic
             /* Tooltip.SetDefault("Hold left-click to charge up electricity, release to fire a shock of lightning at the cursor\n" +
                 "Lightning arcs to more enemies and does more damage as it is charged\n" +
                 "Overcharging causes it to do less damage but have a wider radius"); */
+            ItemID.Sets.ShimmerTransformToItem[Type] = ModContent.ItemType<GravityHammer>();
+
             Item.staff[Item.type] = true;
             ItemID.Sets.SkipsInitialUseSound[Item.type] = true;
             Item.ResearchUnlockCount = 1;

@@ -1,22 +1,22 @@
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using Redemption.BaseExtension;
+using Redemption.Biomes;
+using Redemption.Dusts;
 using Redemption.Globals;
+using Redemption.Globals.World;
+using Redemption.Items.Accessories.PreHM;
+using Redemption.Items.Placeable.Banners;
+using Redemption.Items.Usable.Potions;
+using Redemption.Items.Weapons.PreHM.Magic;
 using Terraria;
 using Terraria.Audio;
-using Terraria.GameContent.Bestiary;
-using Terraria.ID;
-using Terraria.ModLoader;
-using Redemption.BaseExtension;
-using Redemption.Dusts;
-using Microsoft.Xna.Framework;
-using Terraria.GameContent.ItemDropRules;
-using Redemption.Globals.World;
-using Redemption.Items.Usable.Potions;
 using Terraria.DataStructures;
-using Microsoft.Xna.Framework.Graphics;
-using Redemption.Biomes;
-using Redemption.Items.Placeable.Banners;
-using Redemption.Items.Accessories.PreHM;
-using Redemption.Items.Weapons.PreHM.Magic;
+using Terraria.GameContent.Bestiary;
+using Terraria.GameContent.ItemDropRules;
+using Terraria.ID;
 using Terraria.Localization;
+using Terraria.ModLoader;
 
 namespace Redemption.NPCs.FowlMorning
 {
@@ -25,7 +25,7 @@ namespace Redemption.NPCs.FowlMorning
         public override void SetStaticDefaults()
         {
             Main.npcFrameCount[NPC.type] = 9;
-            NPCID.Sets.NPCBestiaryDrawModifiers value = new(0) { Velocity = 1f };
+            NPCID.Sets.NPCBestiaryDrawModifiers value = new() { Velocity = 1f };
             NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, value);
         }
         public override void SetDefaults()
@@ -33,9 +33,9 @@ namespace Redemption.NPCs.FowlMorning
             NPC.width = 28;
             NPC.height = 24;
             NPC.friendly = false;
-            NPC.damage = 18;
+            NPC.damage = 16;
             NPC.defense = 0;
-            NPC.lifeMax = 10;
+            NPC.lifeMax = 6;
             NPC.value = 20;
             NPC.HitSound = SoundID.NPCHit1;
             NPC.DeathSound = SoundID.NPCDeath1;
@@ -80,7 +80,20 @@ namespace Redemption.NPCs.FowlMorning
                     Color dustColor = new(251, 151, 146) { A = 0 };
                     Main.dust[dust].color = dustColor;
                 }
-                NPC.Center = NPC.FindGroundPlayer(40) - new Vector2(0, 14);
+                bool landed = false;
+                int attempts = 0;
+                Vector2 telePos = NPC.Center;
+                while (!landed && attempts < 500)
+                {
+                    attempts++;
+                    telePos = NPC.FindGroundPlayer(40) - new Vector2(0, 14);
+                    if (telePos.DistanceSQ(player.Center) < 200 * 200)
+                        continue;
+
+                    landed = true;
+                }
+
+                NPC.Center = telePos;
                 for (int i = 0; i < 20; i++)
                 {
                     int dust2 = Dust.NewDust(NPC.position, NPC.width, NPC.height, ModContent.DustType<GlowDust>(), 0, 0, 0, default, 1f);
@@ -113,7 +126,7 @@ namespace Redemption.NPCs.FowlMorning
             {
                 NPC.ai[0] = 0;
                 NPC.ai[2] = 0;
-                NPC.ai[1] = Main.rand.Next(180, 221);
+                NPC.ai[1] = Main.rand.Next(240, 300);
             }
             if (Flare)
             {

@@ -13,9 +13,7 @@ namespace Redemption.Items.Weapons.PostML.Magic
     {
         public override void SetStaticDefaults()
         {
-            /* Tooltip.SetDefault("Arcs lightning from coil, targeting multiple enemies at the same time\n" +
-                "Right-click to change firing modes between multi-target and single target"); */
-            Item.ResearchUnlockCount = 1;
+            ItemID.Sets.ShimmerTransformToItem[Type] = ModContent.ItemType<Hacksaw>();
         }
         public override void SetDefaults()
         {

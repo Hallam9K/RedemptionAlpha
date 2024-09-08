@@ -91,7 +91,7 @@ namespace Redemption.NPCs.FowlMorning
             NPC.width = 44;
             NPC.height = 84;
             NPC.SpawnWithHigherTime(30);
-            NPC.npcSlots = 4f;
+            NPC.npcSlots = 6f;
             NPC.HitSound = SoundID.NPCHit1;
             NPC.DeathSound = SoundID.NPCDeath1;
             NPC.boss = true;

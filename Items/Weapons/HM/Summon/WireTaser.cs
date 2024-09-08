@@ -4,6 +4,7 @@ using Redemption.BaseExtension;
 using Redemption.Buffs.Debuffs;
 using Redemption.Buffs.NPCBuffs;
 using Redemption.Globals;
+using Redemption.Items.Weapons.HM.Magic;
 using ReLogic.Content;
 using System;
 using System.Collections.Generic;
@@ -24,6 +25,8 @@ namespace Redemption.Items.Weapons.HM.Summon
                 "Strike enemies with the tip of the taser to stun them for a second\n" +
                 "Cannot stun enemies with knockback immunity\n" +
                 "Inflicts electrified"); */
+            ItemID.Sets.ShimmerTransformToItem[Type] = ModContent.ItemType<GlobalDischarge>();
+
             Item.ResearchUnlockCount = 1;
         }
         public override void SetDefaults()

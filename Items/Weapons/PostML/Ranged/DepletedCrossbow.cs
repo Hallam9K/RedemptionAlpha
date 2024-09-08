@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Redemption.Items.Materials.HM;
+using Redemption.Items.Weapons.PostML.Magic;
 using Redemption.Projectiles.Ranged;
 using System.Collections.Generic;
 using Terraria;
@@ -13,11 +14,7 @@ namespace Redemption.Items.Weapons.PostML.Ranged
     {
         public override void SetStaticDefaults()
         {
-            // DisplayName.SetDefault("Depleted Crossbow");
-            /* Tooltip.SetDefault("Fires depleted uranium rods that explode upon impact\n" +
-                "Consumes uranium as ammo\n" +
-                "No ammo cost if the user has at least 10 uranium"); */
-            Item.ResearchUnlockCount = 1;
+            ItemID.Sets.ShimmerTransformToItem[Type] = ModContent.ItemType<TeslaCoil>();
         }
 
         public override void SetDefaults()

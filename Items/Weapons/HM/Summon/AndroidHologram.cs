@@ -14,6 +14,8 @@ namespace Redemption.Items.Weapons.HM.Summon
 		public override void SetStaticDefaults()
 		{
             // Tooltip.SetDefault("Summons a little Android to fight for you");
+            ItemID.Sets.ShimmerTransformToItem[Type] = ModContent.ItemType<WireTaser>();
+
             Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(5, 20));
             Item.ResearchUnlockCount = 1;
 

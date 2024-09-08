@@ -1,6 +1,8 @@
 using Microsoft.Xna.Framework;
 using Redemption.Buffs.Minions;
 using Redemption.Items.Materials.PreHM;
+using Redemption.Items.Weapons.PreHM.Magic;
+using Redemption.Items.Weapons.PreHM.Melee;
 using Redemption.Projectiles.Minions;
 using Terraria;
 using Terraria.DataStructures;
@@ -13,9 +15,10 @@ namespace Redemption.Items.Weapons.PreHM.Summon
 	{
 		public override void SetStaticDefaults()
 		{
-			// DisplayName.SetDefault("Diseased Meatball");
+            // DisplayName.SetDefault("Diseased Meatball");
             // Tooltip.SetDefault("Summons a Cystling to fight for you");
-			Item.ResearchUnlockCount = 1;
+            ItemID.Sets.ShimmerTransformToItem[Type] = ModContent.ItemType<ContagionSpreader>();
+            Item.ResearchUnlockCount = 1;
 
 			ItemID.Sets.GamepadWholeScreenUseRange[Item.type] = true;
 			ItemID.Sets.LockOnIgnoresCollision[Item.type] = true;

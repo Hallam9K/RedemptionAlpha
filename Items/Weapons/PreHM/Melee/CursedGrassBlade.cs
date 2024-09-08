@@ -1,9 +1,10 @@
+using Microsoft.Xna.Framework;
+using Redemption.Globals;
+using Redemption.Items.Weapons.PreHM.Ranged;
+using Redemption.Projectiles.Ranged;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Microsoft.Xna.Framework;
-using Redemption.Projectiles.Ranged;
-using Redemption.Globals;
 
 namespace Redemption.Items.Weapons.PreHM.Melee
 {
@@ -12,6 +13,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
         public override void SetStaticDefaults()
         {
             // Tooltip.SetDefault("Slain enemies burst into seeds that sprout brambles of thorns");
+            ItemID.Sets.ShimmerTransformToItem[Type] = ModContent.ItemType<CursedThornBow>();
             Item.ResearchUnlockCount = 1;
             ElementID.ItemNature[Type] = true;
             ElementID.ItemPoison[Type] = true;
@@ -19,7 +21,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
 
         public override void SetDefaults()
         {
-            Item.damage = 15;
+            Item.damage = 18;
             Item.DamageType = DamageClass.Melee;
             Item.width = 56;
             Item.height = 56;

@@ -1,4 +1,6 @@
 using Microsoft.Xna.Framework;
+using Redemption.Items.Weapons.PostML.Melee;
+using Redemption.Items.Weapons.PreHM.Melee;
 using Redemption.Projectiles.Magic;
 using Redemption.Rarities;
 using Terraria;
@@ -11,9 +13,7 @@ namespace Redemption.Items.Weapons.PostML.Magic
     {
         public override void SetStaticDefaults()
         {
-            // DisplayName.SetDefault("Poem of Ilmatar");
-            // Tooltip.SetDefault("Hold left-click to create a tornado that picks up enemies and juggles them");
-            Item.ResearchUnlockCount = 1;
+            ItemID.Sets.ShimmerTransformToItem[Type] = ModContent.ItemType<Ukonvasara>();
         }
 
         public override void SetDefaults()

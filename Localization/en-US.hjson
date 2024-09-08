@@ -451,26 +451,20 @@ Mods: {
 				LivingWood: Immune to poison, increases your max number of minions
 				CommonGuardHelm1: 12% increased melee speed
 				CommonGuardHelm2: Reduces damage taken by 6%
-
-				PureIron: {
-					20Increased: "20% increased "
-					Bonus:
-						'''
-
-						33% chance for weapons to inflict Pure Chill
-						100% chance for all Pure-Iron weapons to inflict Pure Chill
-						'''
-				}
-
-				DragonLead: {
-					20Increased: "20% increased "
-					Bonus:
-						'''
-
-						33% chance for weapons to inflict Dragonblaze
-						100% chance for all Dragon-Lead weapons to inflict Dragonblaze
-						'''
-				}
+				PureIron.Bonus:
+					'''
+					20% increased {0} elemental resistance
+					10% increased {1} elemental damage
+					33% chance for weapons to inflict Pure Chill
+					100% chance for all Pure-Iron weapons to inflict Pure Chill
+					'''
+				DragonLead.Bonus:
+					'''
+					20% increased {0} elemental resistance
+					10% increased {1} elemental damage
+					33% chance for weapons to inflict Dragonblaze
+					100% chance for all Dragon-Lead weapons to inflict Dragonblaze
+					'''
 
 				Hardlight: {
 					Keybind: Select a keybind for [Special Ability Key] in Controls
@@ -6369,7 +6363,7 @@ Mods: {
 
 			KSBox: {
 				DisplayName: Music Box (King Slayer III)
-				Tooltip: William 'GoukisanNG' Prevett - Betrayal of Fear
+				Tooltip: Sc0p3r - Titanium Will
 			}
 
 			LabBossMusicBox: {
@@ -7583,7 +7577,6 @@ Mods: {
 				Tooltip:
 					'''
 					Transmits a signal towards a colossal spaceship
-					Only usable at day
 					Not consumable
 					'''
 			}
@@ -7968,9 +7961,9 @@ Mods: {
 				DisplayName: Hammer of Proving
 				Tooltip:
 					'''
-					Hold left-click while in the air to keep the hammer out
+					Hold left-click while airborne to launch downwards
+					Slamming the ground will cause Holy Hammers to appear based on how many times you've bounced off an enemy
 					Increases the user's fall speed while held
-					Increased damage based on how fast the player is falling
 					Stuns enemies if falling above a certain speed
 					'''
 			}
@@ -8346,6 +8339,7 @@ Mods: {
 					'''
 					Casts two harmless bubble mines
 					Right-click to fire a small {0} beam that detonates any mine it hits
+					Bubble explosions can cause chain reactions
 					'''
 			}
 
@@ -11052,6 +11046,7 @@ Mods: {
 			Thorn_Splinter.DisplayName: Splinter
 			Thorn_SplinterBall.DisplayName: Splinter Ball
 			DragonCleaverSkull_Proj.DisplayName: Dragon Skull
+			HolyHammer.DisplayName: Holy Hammer
 		}
 
 		NPCs: {

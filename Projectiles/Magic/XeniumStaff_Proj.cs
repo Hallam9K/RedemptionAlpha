@@ -1,9 +1,11 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Terraria;
-using Terraria.ModLoader;
-using Terraria.GameContent;
+using Redemption.Dusts;
 using Redemption.Globals;
+using Redemption.Helpers;
+using Terraria;
+using Terraria.GameContent;
+using Terraria.ModLoader;
 
 namespace Redemption.Projectiles.Magic
 {
@@ -20,26 +22,43 @@ namespace Redemption.Projectiles.Magic
             Projectile.penetrate = -1;
             Projectile.tileCollide = false;
             Projectile.DamageType = DamageClass.Magic;
-            Projectile.timeLeft = 30;
+            Projectile.timeLeft = 60;
             Projectile.usesIDStaticNPCImmunity = true;
             Projectile.idStaticNPCHitCooldown = 8;
+            NewCollision = true;
         }
 
         public override void AI()
         {
             Player player = Main.player[Projectile.owner];
+            player.itemAnimation = 2;
+            player.itemTime = 2;
+            Vector2 playerCenter = player.RotatedRelativePoint(player.MountedCenter, true);
             Projectile.rotation = Projectile.velocity.ToRotation();
+            Projectile.velocity = RedeHelper.PolarVector(1f, Projectile.rotation);
+
+            for (int i = 0; i < 2; i++)
+            {
+                int num5 = Dust.NewDust(Projectile.Center + Vector2.UnitX.RotatedBy(Projectile.rotation) * LaserLength - new Vector2(4, 4), 8, 8, ModContent.DustType<GlowDust>(), Scale: .7f);
+                Color dustColor = new(151, 255, 182) { A = 0 };
+                if (Main.rand.NextBool())
+                    dustColor = new(3, 249, 51) { A = 0 };
+                Main.dust[num5].velocity = -Projectile.velocity * Main.rand.NextFloat(.1f, .3f);
+                Main.dust[num5].color = dustColor * Projectile.Opacity;
+                Main.dust[num5].noGravity = true;
+            }
+
             #region Beginning And End Effects
             if (AITimer == 0)
                 LaserScale = 0.1f;
             else
-                Projectile.Center = player.Center + Vector2.Normalize(Projectile.velocity) * 48f;
+                Projectile.Center = playerCenter + Vector2.Normalize(Projectile.velocity) * 48f;
 
             if (AITimer <= 10)
             {
                 LaserScale += 0.09f;
             }
-            else if (!player.channel || Projectile.timeLeft < 10 || !player.active)
+            else if (Projectile.timeLeft < 10 || !player.active)
             {
                 if (Projectile.timeLeft > 10)
                 {
@@ -49,15 +68,20 @@ namespace Redemption.Projectiles.Magic
             }
             #endregion
 
-            #region Length Setting
-            if (StopsOnTiles)
+            #region length
+            // code from slr
+            for (int k = 0; k < MaxLaserLength; k++)
             {
-                EndpointTileCollision();
+                Vector2 posCheck = Projectile.Center + Vector2.UnitX.RotatedBy(Projectile.rotation) * k * 8;
+
+                if (Helper.PointInTile(posCheck) || k == MaxLaserLength - 1)
+                {
+                    endPoint = posCheck;
+                    break;
+                }
             }
-            else
-            {
-                LaserLength = MaxLaserLength;
-            }
+
+            LaserLength = LengthSetting(Projectile, endPoint);
             #endregion
 
             ++AITimer;
@@ -76,6 +100,8 @@ namespace Redemption.Projectiles.Magic
                     p.Kill();
                 }
             }
+            if (Main.myPlayer != player.whoAmI)
+                CheckHits();
         }
         #region Drawcode
         // The core function of drawing a Laser, you shouldn't need to touch this
@@ -86,29 +112,27 @@ namespace Redemption.Projectiles.Magic
             for (float i = transDist; i <= (maxDist * (1 / LaserScale)); i += LaserSegmentLength)
             {
                 //Color c = Color.White;
-
-
                 var origin = start + i * unit;
-                Main.EntitySpriteDraw(texture, origin - Main.screenPosition + new Vector2(0, Projectile.gfxOffY),
+                Main.EntitySpriteDraw(texture, origin - Main.screenPosition,
                     new Rectangle((int)(LaserWidth * Frame), LaserEndSegmentLength, LaserWidth, LaserSegmentLength), color, r,
                     new Vector2(LaserWidth / 2, LaserSegmentLength / 2), scale, 0, 0);
             }
             // Draws the Laser 'base'
-            Main.EntitySpriteDraw(texture, start + unit * (transDist - LaserEndSegmentLength) - Main.screenPosition + new Vector2(0, Projectile.gfxOffY),
+            Main.EntitySpriteDraw(texture, start + unit * (transDist - LaserEndSegmentLength) - Main.screenPosition,
                 new Rectangle((int)(LaserWidth * Frame), 0, LaserWidth, LaserEndSegmentLength), color, r, new Vector2(LaserWidth / 2, LaserSegmentLength / 2), scale, 0, 0);
             // Draws the Laser 'end'
-            Main.EntitySpriteDraw(texture, start + maxDist * (1 / scale) * unit - Main.screenPosition + new Vector2(0, Projectile.gfxOffY),
+            Main.EntitySpriteDraw(texture, start + maxDist * (1 / scale) * unit - Main.screenPosition,
                 new Rectangle((int)(LaserWidth * Frame), LaserSegmentLength + LaserEndSegmentLength, LaserWidth, LaserEndSegmentLength), color, r, new Vector2(LaserWidth / 2, LaserSegmentLength / 2), scale, 0, 0);
         }
         public override bool PreDraw(ref Color lightColor)
         {
             Main.spriteBatch.End();
-            Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+            Main.spriteBatch.BeginAdditive();
 
-            DrawLaser(TextureAssets.Projectile[Projectile.type].Value, Projectile.Center + (new Vector2(Projectile.width, 0).RotatedBy(Projectile.rotation) * LaserScale), new Vector2(1f, 0).RotatedBy(Projectile.rotation) * LaserScale, -1.57f, LaserScale, LaserLength, Color.White, (int)FirstSegmentDrawDist);
+            DrawLaser(TextureAssets.Projectile[Projectile.type].Value, Projectile.Center + (new Vector2(Projectile.width, 0).RotatedBy(Projectile.rotation) * LaserScale), new Vector2(1f, 0).RotatedBy(Projectile.rotation) * LaserScale, -1.57f, LaserScale, LaserLength - LaserSegmentLength, Color.White, (int)FirstSegmentDrawDist);
 
             Main.spriteBatch.End();
-            Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+            Main.spriteBatch.BeginDefault();
             return false;
         }
         #endregion

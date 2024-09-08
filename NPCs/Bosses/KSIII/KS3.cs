@@ -144,7 +144,7 @@ namespace Redemption.NPCs.Bosses.KSIII
             NPC.dontTakeDamage = true;
             NPC.rarity = 1;
             if (!Main.dedServ)
-                Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/BossSlayer");
+                Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/TitaniumWill");
             NPC.GetGlobalNPC<ElementalNPC>().OverrideMultiplier[ElementID.Psychic] *= 1.25f;
         }
         public override bool CanHitPlayer(Player target, ref int cooldownSlot)

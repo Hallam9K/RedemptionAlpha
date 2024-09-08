@@ -1,4 +1,5 @@
 using Redemption.Items.Materials.PreHM;
+using Redemption.Items.Weapons.PreHM.Ranged;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.ID;
@@ -16,6 +17,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
                 "Physical slashes deal double damage to undead and skeletons\n" +
                 "Hold left-click to charge a Blood Wave, taking away some of your life to fire life-stealing projectiles" +
                 "\n'The hand of my beloved, cold and dead...'"); */
+            ItemID.Sets.ShimmerTransformToItem[Type] = ModContent.ItemType<FanOShivs>();
 
             ItemID.Sets.SkipsInitialUseSound[Item.type] = true;
             Item.ResearchUnlockCount = 1;

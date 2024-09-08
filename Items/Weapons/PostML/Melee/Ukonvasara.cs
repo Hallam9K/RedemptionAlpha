@@ -14,8 +14,7 @@ namespace Redemption.Items.Weapons.PostML.Melee
     {
         public override void SetStaticDefaults()
         {
-            // Tooltip.SetDefault("Right-click to change attack modes");
-            Item.ResearchUnlockCount = 1;
+            ItemID.Sets.ShimmerTransformToItem[Type] = ModContent.ItemType<Salamanisku>();
         }
 
         public override void SetDefaults()

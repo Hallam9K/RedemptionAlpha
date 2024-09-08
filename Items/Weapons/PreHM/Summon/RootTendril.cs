@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.BaseExtension;
 using Redemption.Globals;
+using Redemption.Items.Weapons.PreHM.Magic;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.GameContent;
@@ -17,16 +18,18 @@ namespace Redemption.Items.Weapons.PreHM.Summon
             /* Tooltip.SetDefault("4 summon tag damage\n" +
                 "Your summons will focus struck enemies\n" +
                 "Striking enemies with the tip of the whip will heal the user"); */
+            ItemID.Sets.ShimmerTransformToItem[Type] = ModContent.ItemType<AldersStaff>();
             Item.ResearchUnlockCount = 1;
         }
 
         public override void SetDefaults()
         {
-            Item.width = 28;
-            Item.height = 24;
+            Item.width = 30;
+            Item.height = 30;
             Item.DefaultToWhip(ModContent.ProjectileType<RootTendril_Proj>(), 16, 1, 6);
             Item.shootSpeed = 6;
             Item.rare = ItemRarityID.Green;
+            Item.autoReuse = true;
             Item.channel = true;
             Item.value = Item.buyPrice(0, 3, 45, 0);
         }
@@ -44,14 +47,14 @@ namespace Redemption.Items.Weapons.PreHM.Summon
         {
             Projectile.DefaultToWhip();
 
-            Projectile.WhipSettings.Segments = 11;
-            Projectile.WhipSettings.RangeMultiplier = 0.5f;
+            Projectile.WhipSettings.Segments = 19;
+            Projectile.WhipSettings.RangeMultiplier = 0.9f;
             Projectile.Redemption().TechnicallyMelee = true;
         }
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             Player player = Main.player[Projectile.owner];
-            if (target.DistanceSQ(player.Center) > 130 * 130)
+            if (target.DistanceSQ(player.Center) > 230 * 230)
             {
                 int steps = (int)player.Distance(target.Center) / 8;
                 for (int i = 0; i < steps; i++)
@@ -76,13 +79,13 @@ namespace Redemption.Items.Weapons.PreHM.Summon
             Vector2 origin = new(frame.Width / 2, 2);
 
             Vector2 pos = list[0];
-            for (int i = 0; i < list.Count - 1; i++)
+            for (int i = 0; i < list.Count - 2; i++)
             {
                 Vector2 element = list[i];
                 Vector2 diff = list[i + 1] - element;
 
                 float rotation = diff.ToRotation() - MathHelper.PiOver2;
-                Color color = Lighting.GetColor(element.ToTileCoordinates(), Color.White);
+                Color color = Lighting.GetColor(element.ToTileCoordinates(), new Color(214, 223, 133));
                 Vector2 scale = new(1, (diff.Length() + 2) / frame.Height);
 
                 Main.EntitySpriteDraw(texture, pos - Main.screenPosition, frame, color, rotation, origin, scale, SpriteEffects.None, 0);
@@ -95,7 +98,7 @@ namespace Redemption.Items.Weapons.PreHM.Summon
             List<Vector2> list = new();
             Projectile.FillWhipControlPoints(Projectile, list);
 
-            //DrawLine(list);
+            DrawLine(list);
 
             SpriteEffects flip = Projectile.spriteDirection < 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
 

@@ -1,6 +1,7 @@
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria;
+using Redemption.Items.Weapons.PreHM.Summon;
 
 namespace Redemption.Items.Weapons.PreHM.Ranged
 {
@@ -9,7 +10,7 @@ namespace Redemption.Items.Weapons.PreHM.Ranged
         public override void SetStaticDefaults()
         {
             // DisplayName.SetDefault("Hallowed Hand Grenade of Anglon");
-
+            ItemID.Sets.ShimmerTransformToItem[Type] = ModContent.ItemType<HolyBible>();
             Item.ResearchUnlockCount = 1;
         }
 

@@ -1,0 +1,27 @@
+=== 0.8 Beta .4042 === (September Balance Patch)
+- Buffed Alder's Staff damage from 19 -> 23, the projectiles won't be destroyed on tile collision during initial appearance
+- Buffed Chickend Wand damage from 13 -> 17
+- Buffed Death Metal damage from 24 -> 36
+- Buffed Bindeklinge damage from 13 -> 16
+- Buffed Cursed Grass Blade damage from 15 -> 18
+- Buffed Halbirdhouse damage from 8 -> 12
+- Buffed Cursed Thorn Bow damage from 12 -> 18
+- Buffed Nest Wand damage from 14 -> 18
+- Chicken Bombers are slower and fly closer to the ground during bomb cooldown, doubled cooldown
+- Reduced Chicken Scratcher's pounce velocity boost from 2.4x -> 1.7x, and reduced range they pounce from 120 -> 80 pixels
+- Reduced Headless Chicken damage from 18 -> 16, health from 10 -> 6, increased cooldown between firing to 4-5 seconds, and they cannot teleport within a 200 pixel radius of the player
+- Gave Coop Crate an arrow indicator above them
+- Increased npc slots Basan takes up from 4 -> 6
+- Resprited Basan Trophy
+- Resprited Swarmer Cannon
+- Fixed Wedding Ring not shimmering to Sorrowful Essence post-Keeper
+1484. Added to Pure-Iron set bonus 10% increased Ice damage, and added to Dragon-Lead set bonus 10% increased Fire damage
+1523. Uncraftable weapon drops can be cycled through with Shimmer, including Thorn, Erhan, The Keeper, Lab Chest, Holochest, Patient Zero, Ukko and Akka, and Seed of Infection weapon loot
+1576. Added new theme for King Slayer III
+1599. Reworked Hammer of Proving, pogo on enemies then slam the ground to release holy hammers that home in on enemies, amount of hammers are based on how many times you pogo on an enemy, nerfed damage from 200 -> 98
+1633. Cyber Radio can now be used at any time, day or night
+1638. Changed Xenium Staff's bubble explosions to have chain reactions
+1792. Gave sitting King Slayer a glowmask
+1812. Capped amount of Xenium Staff's bubbles that can be out to 30
+2021. Resprited Root Tendril, gave it autofire, increased its range by 40%
+===============

@@ -621,7 +621,7 @@ namespace Redemption.CrossMod
             AddMusic("Sounds/Music/FowlMorning", "Dawn of the Coop (Fowl Morning Theme)", "Sc0p3r");
             AddMusic("Sounds/Music/HallofHeroes", "??? (Hall of Heroes Theme)", "???");
             AddMusic("Sounds/Music/BossKeeper", "Haunting Loneliness (The Keeper Theme)", "SpectralAves");
-            AddMusic("Sounds/Music/BossSlayer", "Betrayal of Fear (King Slayer III Theme)", "William 'GoukisanNG' Prevett");
+            AddMusic("Sounds/Music/BossSlayer", "Titanium Will (King Slayer III Theme)", "Sc0p3r");
             AddMusic("Sounds/Music/LabBossMusic", "Safety Violation (Abandoned Lab Minibosses Theme)", "inSignia");
             AddMusic("Sounds/Music/LabBossMusicIB", "Safety Violation (Abandoned Lab Minibosses Theme)", "inSignia");
             AddMusic("Sounds/Music/LabBossMusicMP", "Safety Violation (Abandoned Lab Minibosses Theme)", "inSignia");

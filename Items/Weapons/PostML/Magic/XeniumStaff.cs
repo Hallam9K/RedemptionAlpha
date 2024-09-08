@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using Redemption.Globals;
 using Redemption.Items.Materials.HM;
 using Redemption.Items.Materials.PostML;
+using Redemption.Items.Weapons.PostML.Summon;
 using Redemption.Projectiles.Magic;
 using Redemption.Tiles.Furniture.Lab;
 using Terraria;
@@ -64,6 +65,28 @@ namespace Redemption.Items.Weapons.PostML.Magic
                 velocity *= Main.rand.NextFloat(0.7f, 1.5f);
                 Vector2 perturbedSpeed = velocity.RotatedByRandom(MathHelper.ToRadians(15));
                 Projectile.NewProjectile(source, position, perturbedSpeed, type, damage, knockback, player.whoAmI);
+            }
+
+            if (player.ownedProjectileCounts[type] >= 30)
+            {
+                for (int i = 0; i < 2; i++)
+                {
+                    int num = 9999999;
+                    int oldestBubble = -1;
+                    foreach (Projectile proj in Main.ActiveProjectiles)
+                    {
+                        if (proj.type != type)
+                            continue;
+
+                        if (proj.timeLeft < num)
+                        {
+                            oldestBubble = proj.whoAmI;
+                            num = proj.timeLeft;
+                        }
+                    }
+                    if (oldestBubble > -1)
+                        Main.projectile[oldestBubble].Kill();
+                }
             }
             return false;
         }

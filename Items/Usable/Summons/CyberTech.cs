@@ -13,8 +13,6 @@ namespace Redemption.Items.Usable.Summons
     {
         public override void SetStaticDefaults()
         {
-            // DisplayName.SetDefault("Cyber Radio");
-            // Tooltip.SetDefault("Transmits a signal towards a colossal spaceship\nOnly usable at day\nNot consumable");
             Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(4, 4));
             Item.ResearchUnlockCount = 1;
             ItemID.Sets.SortingPriorityBossSpawns[Type] = 13;
@@ -37,7 +35,7 @@ namespace Redemption.Items.Usable.Summons
 
         public override bool CanUseItem(Player player)
         {
-            return !SubworldSystem.IsActive<SoullessSub>() && Main.dayTime && !NPC.AnyNPCs(ModContent.NPCType<KS3>()) && !NPC.AnyNPCs(ModContent.NPCType<KS3_Clone>()) && !NPC.AnyNPCs(ModContent.NPCType<KS3_ScannerDrone>()) && !NPC.AnyNPCs(ModContent.NPCType<KS3_Start>());
+            return !SubworldSystem.IsActive<SoullessSub>() && !NPC.AnyNPCs(ModContent.NPCType<KS3>()) && !NPC.AnyNPCs(ModContent.NPCType<KS3_Clone>()) && !NPC.AnyNPCs(ModContent.NPCType<KS3_ScannerDrone>()) && !NPC.AnyNPCs(ModContent.NPCType<KS3_Start>());
         }
 
         public override bool? UseItem(Player player)

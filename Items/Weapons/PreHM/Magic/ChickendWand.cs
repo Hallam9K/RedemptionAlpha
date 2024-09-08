@@ -19,7 +19,7 @@ namespace Redemption.Items.Weapons.PreHM.Magic
 
         public override void SetDefaults()
         {
-            Item.damage = 13;
+            Item.damage = 17;
             Item.DamageType = DamageClass.Magic;
             Item.mana = 8;
             Item.width = 46;

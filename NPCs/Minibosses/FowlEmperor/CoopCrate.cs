@@ -1,14 +1,17 @@
 using Microsoft.Xna.Framework;
-using Redemption.Globals;
-using Terraria;
-using Terraria.GameContent.Bestiary;
-using Terraria.ID;
-using Terraria.ModLoader;
-using Redemption.Base;
-using Terraria.GameContent.ItemDropRules;
 using Microsoft.Xna.Framework.Graphics;
+using Redemption.Base;
+using Redemption.Globals;
+using Redemption.Textures;
+using ReLogic.Content;
+using System;
+using Terraria;
 using Terraria.GameContent;
+using Terraria.GameContent.Bestiary;
+using Terraria.GameContent.ItemDropRules;
+using Terraria.ID;
 using Terraria.Localization;
+using Terraria.ModLoader;
 
 namespace Redemption.NPCs.Minibosses.FowlEmperor
 {
@@ -16,7 +19,7 @@ namespace Redemption.NPCs.Minibosses.FowlEmperor
     {
         public override void SetStaticDefaults()
         {
-            NPCID.Sets.NPCBestiaryDrawModifiers value = new(0)
+            NPCID.Sets.NPCBestiaryDrawModifiers value = new()
             {
                 Position = new Vector2(0, 0),
                 PortraitPositionYOverride = 28
@@ -130,22 +133,21 @@ namespace Redemption.NPCs.Minibosses.FowlEmperor
         {
             var effects = NPC.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
 
-            Texture2D glow = ModContent.Request<Texture2D>("Redemption/Textures/WhiteFlare").Value;
-            Vector2 origin = new(glow.Width / 2, glow.Height / 2);
+            Asset<Texture2D> glow = CommonTextures.WhiteFlare;
+            Vector2 origin = glow.Size() / 2;
 
             if (!NPC.IsABestiaryIconDummy)
             {
-                spriteBatch.End();
-                spriteBatch.BeginAdditive();
+                spriteBatch.Draw(glow.Value, NPC.Center - screenPos, null, Color.IndianRed with { A = 0 }, glowRot, origin, NPC.scale, 0, 0f);
+                spriteBatch.Draw(glow.Value, NPC.Center - screenPos, null, Color.IndianRed with { A = 0 }, -glowRot, origin, NPC.scale, 0, 0f);
 
-                spriteBatch.Draw(glow, NPC.Center - screenPos, new Rectangle(0, 0, glow.Width, glow.Height), Color.IndianRed, glowRot, origin, NPC.scale, 0, 0f);
-                spriteBatch.Draw(glow, NPC.Center - screenPos, new Rectangle(0, 0, glow.Width, glow.Height), Color.IndianRed, -glowRot, origin, NPC.scale, 0, 0f);
-
-                spriteBatch.End();
-                spriteBatch.BeginDefault();
+                Asset<Texture2D> arrow = TextureAssets.GolfBallArrow;
+                Rectangle arrowRect = arrow.Frame(2);
+                float hover = (float)Math.Sin(Main.GlobalTimeWrappedHourly * MathHelper.TwoPi * 2f) * 10f;
+                spriteBatch.Draw(arrow.Value, NPC.Center - new Vector2(0, 50 + hover) - screenPos, arrowRect, NPC.GetAlpha(Color.IndianRed), 0, arrowRect.Size() / 2, 1, 0, 0);
             }
 
-            spriteBatch.Draw(TextureAssets.Npc[NPC.type].Value, NPC.Center - screenPos, NPC.frame, drawColor, NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
+            spriteBatch.Draw(TextureAssets.Npc[NPC.type].Value, NPC.Center - screenPos, NPC.frame, NPC.GetAlpha(drawColor), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
             return false;
         }
         public override void ModifyNPCLoot(NPCLoot npcLoot)

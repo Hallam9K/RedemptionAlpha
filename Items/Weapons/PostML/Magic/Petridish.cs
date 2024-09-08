@@ -2,6 +2,7 @@
 using Terraria.ModLoader;
 using Terraria;
 using Redemption.Projectiles.Magic;
+using Redemption.Items.Weapons.PostML.Melee;
 
 namespace Redemption.Items.Weapons.PostML.Magic
 {
@@ -9,8 +10,7 @@ namespace Redemption.Items.Weapons.PostML.Magic
 	{
         public override void SetStaticDefaults()
         {
-            // DisplayName.SetDefault("Mitosis");
-            // Tooltip.SetDefault("Throw a Petridish filled with bacteria");
+            ItemID.Sets.ShimmerTransformToItem[Type] = ModContent.ItemType<PZGauntlet>();
         }
 
         public override void SetDefaults()

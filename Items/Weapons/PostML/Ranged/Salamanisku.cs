@@ -4,6 +4,7 @@ using Terraria;
 using Microsoft.Xna.Framework;
 using Redemption.Projectiles.Ranged;
 using Redemption.Rarities;
+using Redemption.Items.Weapons.PostML.Summon;
 
 namespace Redemption.Items.Weapons.PostML.Ranged
 {
@@ -11,11 +12,7 @@ namespace Redemption.Items.Weapons.PostML.Ranged
 	{
         public override void SetStaticDefaults()
         {
-            /* Tooltip.SetDefault("20% chance not to consume ammo"
-                + "\nReplaces arrows with Ukonvasara-tipped arrows\n" +
-                "Ukonvasara-tipped arrows impale into enemies and eventually cause thunder to strike them\n" +
-                "Two strikes will occur during a thunderstorm"); */
-            Item.ResearchUnlockCount = 1;
+            ItemID.Sets.ShimmerTransformToItem[Type] = ModContent.ItemType<Pihlajasauva>();
         }
 
         public override void SetDefaults()

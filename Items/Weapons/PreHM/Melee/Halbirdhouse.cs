@@ -1,6 +1,6 @@
-using Terraria.ModLoader;
-using Terraria.ID;
 using Terraria;
+using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace Redemption.Items.Weapons.PreHM.Melee
 {
@@ -31,7 +31,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
             Item.channel = true;
 
             // Weapon Properties
-            Item.damage = 10;
+            Item.damage = 12;
             Item.knockBack = 6;
             Item.noUseGraphic = true;
             Item.DamageType = DamageClass.Melee;

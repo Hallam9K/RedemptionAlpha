@@ -1,22 +1,22 @@
-using Terraria;
-using Terraria.ID;
 using Microsoft.Xna.Framework;
-using Terraria.ModLoader;
-using Redemption.Items.Usable.Potions;
+using Microsoft.Xna.Framework.Graphics;
+using Redemption.Biomes;
 using Redemption.Dusts;
-using Redemption.Globals.World;
 using Redemption.Globals;
+using Redemption.Globals.World;
+using Redemption.Items.Accessories.PreHM;
+using Redemption.Items.Placeable.Banners;
+using Redemption.Items.Usable.Potions;
+using Redemption.Items.Weapons.PreHM.Ranged;
+using Redemption.NPCs.Minibosses.FowlEmperor;
+using Terraria;
+using Terraria.DataStructures;
+using Terraria.GameContent;
 using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
-using Redemption.Items.Weapons.PreHM.Ranged;
-using Terraria.DataStructures;
-using Redemption.NPCs.Minibosses.FowlEmperor;
-using Microsoft.Xna.Framework.Graphics;
-using Terraria.GameContent;
-using Redemption.Biomes;
-using Redemption.Items.Placeable.Banners;
-using Redemption.Items.Accessories.PreHM;
+using Terraria.ID;
 using Terraria.Localization;
+using Terraria.ModLoader;
 
 namespace Redemption.NPCs.FowlMorning
 {
@@ -25,7 +25,7 @@ namespace Redemption.NPCs.FowlMorning
         public override void SetStaticDefaults()
         {
             Main.npcFrameCount[NPC.type] = 4;
-            NPCID.Sets.NPCBestiaryDrawModifiers value = new(0) { Velocity = 1f };
+            NPCID.Sets.NPCBestiaryDrawModifiers value = new() { Velocity = 1f };
             NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, value);
         }
         public override void SetDefaults()
@@ -86,11 +86,15 @@ namespace Redemption.NPCs.FowlMorning
                     NPC.ai[1] = -1;
             }
 
-            NPC.Move(player.Center + new Vector2(100 * NPC.ai[1], -NPC.ai[2]), 7, 30);
+            if (NPC.ai[3] == 1 && bombOpacity < .5f)
+                NPC.Move(player.Center + new Vector2(100 * NPC.ai[1], -50), 15, 30);
+            else
+                NPC.Move(player.Center + new Vector2(100 * NPC.ai[1], -NPC.ai[2]), 7, 30);
 
             if (NPC.ai[3] == 1)
             {
-                bombOpacity += 0.01f;
+                NPC.velocity *= .8f;
+                bombOpacity += 0.005f;
                 if (bombOpacity >= 1)
                 {
                     bombOpacity = 1;
@@ -98,6 +102,7 @@ namespace Redemption.NPCs.FowlMorning
                 }
                 return;
             }
+
             if (NPC.ai[0] % 80 == 0 && Main.rand.NextBool() && Main.netMode != NetmodeID.MultiplayerClient)
             {
                 int p = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center + new Vector2(0, 11), Vector2.Zero, ModContent.ProjectileType<Rooster_EggBomb>(), NPCHelper.HostileProjDamage(NPC.damage), 3);

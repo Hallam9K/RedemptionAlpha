@@ -43,9 +43,9 @@ namespace Redemption.Items.Armor.PreHM.DragonLead
 
         public override void UpdateArmorSet(Player player)
         {
-            player.setBonus = Language.GetTextValue("Mods.Redemption.GenericTooltips.ArmorSetBonus.DragonLead.20Increased") + ElementID.IceS + Language.GetTextValue("Mods.Redemption.GenericTooltips.ArmorSetBonus.VanillaArmor.Resistance") +
-                Language.GetTextValue("Mods.Redemption.GenericTooltips.ArmorSetBonus.DragonLead.Bonus");
+            player.setBonus = Language.GetTextValue("Mods.Redemption.GenericTooltips.ArmorSetBonus.DragonLead.Bonus", ElementID.IceS, ElementID.FireS);
             player.RedemptionPlayerBuff().ElementalResistance[ElementID.Ice] += 0.2f;
+            player.RedemptionPlayerBuff().ElementalDamage[ElementID.Fire] += 0.1f;
             player.RedemptionPlayerBuff().dragonLeadBonus = true;
             player.RedemptionPlayerBuff().MetalSet = true;
         }

@@ -2,6 +2,7 @@ using Terraria.ModLoader;
 using Terraria.ID;
 using Terraria;
 using Redemption.BaseExtension;
+using Redemption.Items.Weapons.HM.Ranged;
 
 namespace Redemption.Items.Weapons.HM.Melee
 {
@@ -9,8 +10,7 @@ namespace Redemption.Items.Weapons.HM.Melee
     {
         public override void SetStaticDefaults()
         {
-            // Tooltip.SetDefault("Slamming the ground creates a shockwave");
-            Item.ResearchUnlockCount = 1;
+            ItemID.Sets.ShimmerTransformToItem[Type] = ModContent.ItemType<PrototypeAtomRifle>();
         }
 
         public override void SetDefaults()

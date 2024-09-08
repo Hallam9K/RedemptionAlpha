@@ -1,4 +1,5 @@
 using Microsoft.Xna.Framework;
+using Redemption.Items.Weapons.PreHM.Magic;
 using Redemption.Projectiles.Ranged;
 using Terraria;
 using Terraria.DataStructures;
@@ -15,6 +16,7 @@ namespace Redemption.Items.Weapons.PreHM.Ranged
             /* Tooltip.SetDefault("Not consumable" +
                 "\nConsumes throwing knives if any are in your inventory, increasing damage" +
                 "\n'I'm sorry, Edwin...'"); */
+            ItemID.Sets.ShimmerTransformToItem[Type] = ModContent.ItemType<SoulScepter>();
 
             Item.ResearchUnlockCount = 1;
         }

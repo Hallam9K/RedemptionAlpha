@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Base;
+using Redemption.Items.Weapons.PreHM.Melee;
 using Redemption.Projectiles.Magic;
 using Terraria;
 using Terraria.ID;
@@ -15,6 +16,7 @@ namespace Redemption.Items.Weapons.PreHM.Magic
             /* Tooltip.SetDefault("Casts controllable soul-charges that orbit the cursor" +
                 "\nMore soul-charges are cast the longer you hold" +
                 "\n'Her soul was not my target...'"); */
+            ItemID.Sets.ShimmerTransformToItem[Type] = ModContent.ItemType<KeepersClaw>();
             Item.staff[Item.type] = true;
 
             Item.ResearchUnlockCount = 1;

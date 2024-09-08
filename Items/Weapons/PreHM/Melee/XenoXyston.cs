@@ -5,6 +5,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Redemption.BaseExtension;
 using Microsoft.Xna.Framework;
+using Redemption.Items.Weapons.PreHM.Summon;
 
 namespace Redemption.Items.Weapons.PreHM.Melee
 {
@@ -13,6 +14,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
         public override void SetStaticDefaults()
         {
             // Tooltip.SetDefault("Hold left-click to increase acceleration of the spin");
+            ItemID.Sets.ShimmerTransformToItem[Type] = ModContent.ItemType<CystlingSummon>();
             Item.ResearchUnlockCount = 1;
         }
 

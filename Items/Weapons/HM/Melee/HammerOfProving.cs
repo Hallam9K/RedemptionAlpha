@@ -1,24 +1,15 @@
-using Redemption.Buffs;
+using Microsoft.Xna.Framework;
+using Redemption.BaseExtension;
 using Redemption.Globals;
+using Redemption.Projectiles.Melee;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Redemption.BaseExtension;
 
 namespace Redemption.Items.Weapons.HM.Melee
 {
     public class HammerOfProving : ModItem
     {
-        public override void SetStaticDefaults()
-        {
-            // DisplayName.SetDefault("Hammer of Proving");
-            /* Tooltip.SetDefault("Hold left-click while in the air to keep the hammer out\n" +
-                "Increases the user's fall speed while held\n" +
-                "Increased damage based on how fast the player is falling\n" +
-                "Stuns enemies if falling above a certain speed"); */
-            Item.ResearchUnlockCount = 1;
-        }
-
         public override void SetDefaults()
         {
             // Common Properties
@@ -35,7 +26,7 @@ namespace Redemption.Items.Weapons.HM.Melee
             Item.autoReuse = false;
 
             // Weapon Properties
-            Item.damage = 200;
+            Item.damage = 98;
             Item.knockBack = 9;
             Item.noUseGraphic = true;
             Item.DamageType = DamageClass.Melee;
@@ -45,11 +36,19 @@ namespace Redemption.Items.Weapons.HM.Melee
             // Projectile Properties
             Item.shootSpeed = 5f;
             Item.shoot = ModContent.ProjectileType<HammerOfProving_Proj>();
+            Item.ExtraItemShoot(ModContent.ProjectileType<HolyHammer>());
             Item.Redemption().TechnicallyHammer = true;
         }
+        public override bool MeleePrefix() => true;
+        public override bool CanUseItem(Player player) => player.velocity.Y != 0;
+        public int pogo;
+        public bool onUse;
         public override void HoldItem(Player player)
         {
-            player.AddBuff(ModContent.BuffType<HammerBuff>(), 2);
+            Point tileBelow = player.Bottom.ToTileCoordinates();
+            Tile tile = Framing.GetTileSafely(tileBelow.X, tileBelow.Y);
+            if (tile.HasUnactuatedTile && Main.tileSolid[tile.TileType] && !Main.tileCut[tile.TileType] && !onUse)
+                pogo = 0;
         }
         public override void AddRecipes()
         {

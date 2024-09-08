@@ -229,5 +229,9 @@ namespace Redemption.NPCs.Bosses.Thorn
             Projectile.DamageType = DamageClass.Magic;
             Projectile.Redemption().friendlyHostile = false;
         }
+        public override bool OnTileCollide(Vector2 oldVelocity)
+        {
+            return Projectile.ai[1] > 60;
+        }
     }
 }

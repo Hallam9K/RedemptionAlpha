@@ -56,9 +56,9 @@ namespace Redemption.NPCs.FowlMorning
                 SoundEngine.PlaySound(CustomSounds.ChickenCluck, NPC.position);
 
             NPC.PlatformFallCheck(ref NPC.Redemption().fallDownPlatform);
-            if (NPC.Sight(player, 120, true, true) && NPC.ai[0] <= 0 && BaseAI.HitTileOnSide(NPC, 3))
+            if (NPC.Sight(player, 80, true, true) && NPC.ai[0] <= 0 && BaseAI.HitTileOnSide(NPC, 3))
             {
-                NPC.velocity.X *= 2.4f;
+                NPC.velocity.X *= 1.7f;
                 NPC.velocity.Y = -Main.rand.NextFloat(2f, 5f);
                 NPC.ai[0] = Main.rand.Next(120, 181);
                 NPC.netUpdate = true;

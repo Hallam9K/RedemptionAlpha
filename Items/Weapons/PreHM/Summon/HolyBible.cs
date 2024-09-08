@@ -1,4 +1,5 @@
 using Redemption.Globals;
+using Redemption.Items.Weapons.PreHM.Magic;
 using Redemption.Projectiles.Minions;
 using Terraria;
 using Terraria.ID;
@@ -13,7 +14,7 @@ namespace Redemption.Items.Weapons.PreHM.Summon
             /* Tooltip.SetDefault("Tosses the book, stopping at cursor point\n" +
                 "Shoots 4 short-ranged rays of light\n" +
                 "'You dare question the words of the mighty Jimmy!?'"); */
-
+            ItemID.Sets.ShimmerTransformToItem[Type] = ModContent.ItemType<ErhanMagnifyingGlass>();
             Item.ResearchUnlockCount = 1;
         }
 

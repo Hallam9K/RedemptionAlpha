@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Redemption.Globals;
+using Redemption.Items.Weapons.PostML.Ranged;
 using Redemption.Projectiles.Melee;
 using System.Collections.Generic;
 using Terraria;
@@ -14,9 +15,7 @@ namespace Redemption.Items.Weapons.PostML.Melee
     {
         public override void SetStaticDefaults()
         {
-            // DisplayName.SetDefault("Automated Hacksaw");
-            // Tooltip.SetDefault("Right-click to change attack modes");
-            Item.ResearchUnlockCount = 1;
+            ItemID.Sets.ShimmerTransformToItem[Type] = ModContent.ItemType<DepletedCrossbow>();
         }
 
         public override void SetDefaults()

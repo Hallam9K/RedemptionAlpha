@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.BaseExtension;
+using Redemption.Items.Weapons.HM.Ranged;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -10,6 +11,8 @@ namespace Redemption.Items.Weapons.HM.Melee
 	{
         public override void SetStaticDefaults()
         {
+            ItemID.Sets.ShimmerTransformToItem[Type] = ModContent.ItemType<HyperTechRevolvers>();
+
             Item.ResearchUnlockCount = 1;
         }
         public override void SetDefaults()

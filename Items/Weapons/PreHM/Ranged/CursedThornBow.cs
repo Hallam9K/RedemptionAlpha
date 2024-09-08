@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Redemption.Globals;
+using Redemption.Items.Weapons.PreHM.Summon;
 using Redemption.Projectiles.Ranged;
 using Terraria;
 using Terraria.ID;
@@ -14,13 +15,14 @@ namespace Redemption.Items.Weapons.PreHM.Ranged
         public override void SetStaticDefaults()
         {
             // Tooltip.SetDefault("Replaces wooden arrows with seed-laden arrows that sprout small thorn traps, dealing Nature damage");
+            ItemID.Sets.ShimmerTransformToItem[Type] = ModContent.ItemType<RootTendril>();
             Item.ResearchUnlockCount = 1;
             ElementID.ItemNature[Type] = true;
         }
 
         public override void SetDefaults()
         {
-            Item.damage = 12;
+            Item.damage = 18;
             Item.DamageType = DamageClass.Ranged;
             Item.width = 42;
             Item.height = 52;

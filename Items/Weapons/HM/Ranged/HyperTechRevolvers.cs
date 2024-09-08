@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.BaseExtension;
 using Redemption.Buffs.Debuffs;
+using Redemption.Items.Weapons.HM.Summon;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
@@ -18,6 +19,7 @@ namespace Redemption.Items.Weapons.HM.Ranged
             /* Tooltip.SetDefault("Right-click to toss one in the air, catching it gives a stackable fire rate boost\n" +
                 "Missing the catch will cause you to only shoot one gun for 5 seconds\n" +
                 "Replaces normal bullets with nano bullets"); */
+            ItemID.Sets.ShimmerTransformToItem[Type] = ModContent.ItemType<AndroidHologram>();
             ItemID.Sets.SkipsInitialUseSound[Item.type] = true;
             Item.ResearchUnlockCount = 1;
         }

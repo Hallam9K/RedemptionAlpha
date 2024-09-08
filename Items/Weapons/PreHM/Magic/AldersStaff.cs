@@ -1,13 +1,10 @@
-using Microsoft.CodeAnalysis.MSBuild;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Base;
 using Redemption.BaseExtension;
 using Redemption.Globals;
-using Redemption.Items.Weapons.HM.Ranged;
 using Redemption.Items.Weapons.PreHM.Melee;
 using Redemption.NPCs.Bosses.Thorn;
-using Redemption.Projectiles.Magic;
 using ReLogic.Content;
 using System;
 using Terraria;
@@ -33,7 +30,7 @@ namespace Redemption.Items.Weapons.PreHM.Magic
             Item.noUseGraphic = true;
             Item.channel = true;
 
-            Item.damage = 19;
+            Item.damage = 23;
             Item.DamageType = DamageClass.Magic;
             Item.mana = 3;
             Item.width = 46;
@@ -49,9 +46,6 @@ namespace Redemption.Items.Weapons.PreHM.Magic
             Item.autoReuse = true;
             Item.shoot = ModContent.ProjectileType<ArcaneBolt>();
             Item.shootSpeed = 0f;
-        }
-        public override void ModifyManaCost(Player player, ref float reduce, ref float mult)
-        {
         }
         public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback)
         {

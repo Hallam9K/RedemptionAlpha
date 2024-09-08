@@ -14,9 +14,8 @@ namespace Redemption.Items.Weapons.PostML.Summon
     {
         public override void SetStaticDefaults()
         {
-            // DisplayName.SetDefault("Portable Hologram Projector");
-            /* Tooltip.SetDefault("Summon a hologram-projected minion to fight for you\n" +
-                "Has multiple attack modes it automatically swaps to"); */
+            ItemID.Sets.ShimmerTransformToItem[Type] = ModContent.ItemType<Petridish>();
+
             Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(6, 4));
             ItemID.Sets.AnimatesAsSoul[Item.type] = true;
             Item.ResearchUnlockCount = 1;

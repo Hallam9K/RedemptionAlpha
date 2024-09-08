@@ -22,7 +22,7 @@ namespace Redemption.Items.Weapons.PreHM.Summon
 
         public override void SetDefaults()
         {
-            Item.damage = 14;
+            Item.damage = 18;
             Item.DamageType = DamageClass.Summon;
             Item.sentry = true;
             Item.width = 32;

@@ -68,10 +68,6 @@ namespace Redemption.Items.Usable.Summons
             CreateRecipe()
                 .AddCustomShimmerResult(ModContent.ItemType<SorrowfulEssence>())
                 .AddDecraftCondition(RedeConditions.DownedKeeper)
-                .Register()
-                .DisableRecipe();
-
-            CreateRecipe()
                 .AddIngredient(ModContent.ItemType<GraveSteelAlloy>(), 6)
                 .AddIngredient(ItemID.Ruby)
                 .AddTile(TileID.Anvils)

@@ -8,6 +8,10 @@ namespace Redemption.Items.Weapons.PostML.Melee
 {
     public class PZGauntlet : ModItem
     {
+        public override void SetStaticDefaults()
+        {
+            ItemID.Sets.ShimmerTransformToItem[Type] = ModContent.ItemType<SwarmerCannon>();
+        }
         public override void SetDefaults()
         {
             Item.damage = 410;

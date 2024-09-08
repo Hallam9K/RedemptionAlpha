@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Redemption.Items.Materials.PreHM;
+using Redemption.Items.Weapons.PreHM.Melee;
 using Redemption.Projectiles.Magic;
 using Terraria;
 using Terraria.DataStructures;
@@ -14,6 +15,7 @@ namespace Redemption.Items.Weapons.PreHM.Magic
         {
             /* Tooltip.SetDefault("Casts a contagious shard that sticks into enemies" +
                 "\nRight-click to break all shards stuck to enemies, causing an outward burst of projectiles"); */
+            ItemID.Sets.ShimmerTransformToItem[Type] = ModContent.ItemType<XenoXyston>();
             Item.staff[Item.type] = true;
             Item.ResearchUnlockCount = 1;
         }

@@ -14,7 +14,9 @@ namespace Redemption.Items.Weapons.PostML.Summon
     public class UkonRuno : ModItem
 	{
 		public override void SetStaticDefaults()
-		{
+        {
+            ItemID.Sets.ShimmerTransformToItem[Type] = ModContent.ItemType<PoemOfIlmatar>();
+
             ItemID.Sets.GamepadWholeScreenUseRange[Item.type] = true;
             ItemID.Sets.LockOnIgnoresCollision[Item.type] = true;
         }

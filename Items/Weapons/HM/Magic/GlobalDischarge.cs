@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework;
 using Terraria.ID;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.BaseExtension;
+using Redemption.Items.Weapons.HM.Melee;
 
 namespace Redemption.Items.Weapons.HM.Magic
 {
@@ -15,6 +16,8 @@ namespace Redemption.Items.Weapons.HM.Magic
                 "Tap left-click to cast and immediately break the stream, causing an unstable discharge" +
                 "\nHold down left-click to cast and keep the sphere stable, using momentum to swing it" +
                 "\nDeals more damage the faster it moves"); */
+            ItemID.Sets.ShimmerTransformToItem[Type] = ModContent.ItemType<CyberChakram>();
+
             Item.staff[Item.type] = true;
             Item.ResearchUnlockCount = 1;
         }

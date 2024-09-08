@@ -113,7 +113,7 @@ namespace Redemption.NPCs.Bosses.KSIII
             NPC.noTileCollide = true;
             NPC.dontTakeDamage = true;
             if (!Main.dedServ)
-                Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/BossSlayer");
+                Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/TitaniumWill");
         }
         public override bool CanHitPlayer(Player target, ref int cooldownSlot)
         {
