@@ -22,6 +22,7 @@
 1599. Reworked Hammer of Proving, pogo on enemies then slam the ground to release holy hammers that home in on enemies, amount of hammers are based on how many times you pogo on an enemy, nerfed damage from 200 -> 98
 1633. Cyber Radio can now be used at any time, day or night
 1638. Changed Xenium Staff's bubble explosions to have chain reactions
+1665. Giving Calavia equipment and letting her leave now gives +1 alignment
 1792. Gave sitting King Slayer a glowmask
 1812. Capped amount of Xenium Staff's bubbles that can be out to 30
 2021. Resprited Root Tendril, gave it autofire, increased its range by 40%

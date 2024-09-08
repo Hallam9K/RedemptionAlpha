@@ -215,6 +215,19 @@ namespace Redemption.NPCs.Minibosses.Calavia
                             Main.dust[dust].color = dustColor;
                             Main.dust[dust].velocity *= 3f;
                         }
+
+                        if (HasHelmet > 0 && HasShield)
+                        {
+                            RedeWorld.alignment++;
+                            for (int p = 0; p < Main.maxPlayers; p++)
+                            {
+                                Player player2 = Main.player[p];
+                                if (!player2.active)
+                                    continue;
+
+                                CombatText.NewText(player.getRect(), Color.Gold, "+1", true, false);
+                            }
+                        }
                         NPC.active = false;
                     }
                 }
