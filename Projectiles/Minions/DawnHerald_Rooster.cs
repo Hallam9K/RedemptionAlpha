@@ -62,13 +62,21 @@ namespace Redemption.Projectiles.Minions
                     if (++Projectile.frame > 2)
                         Projectile.frame = 1;
                 }
+                for (int i = 0; i < Main.maxProjectiles; i++)
+                {
+                    Projectile chicken = Main.projectile[i];
+                    if (!chicken.active || chicken.type != ModContent.ProjectileType<NestWand_Proj>() || Projectile.DistanceSQ(chicken.Center) > 460 * 460)
+                        continue;
+
+                    chicken.ai[1] = 10;
+                }
                 for (int i = 0; i < Main.maxPlayers; i++)
                 {
                     Player player = Main.player[i];
                     if (!player.active || player.dead || Projectile.DistanceSQ(player.Center) > 460 * 460)
                         continue;
 
-                    player.AddBuff(ModContent.BuffType<RoosterAuraBuff>(), 4);
+                    player.AddBuff(ModContent.BuffType<RoosterAuraBuff>(), 180);
                 }
                 if (Projectile.ai[0] % 20 == 0)
                     RedeDraw.SpawnCirclePulse(Projectile.Center, Color.IndianRed, 1.3f, Projectile);

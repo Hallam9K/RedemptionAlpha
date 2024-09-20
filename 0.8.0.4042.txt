@@ -16,7 +16,6 @@
 - Resprited Swarmer Cannon
 - Fixed Wedding Ring not shimmering to Sorrowful Essence post-Keeper
 - Reshaded Cockatrice Trophy and map icon
-- Fixed Calavia's ice mist applying the debuff for a single frame upon Calavia becoming a friendly NPC
 1484. Added to Pure-Iron set bonus 10% increased Ice damage, and added to Dragon-Lead set bonus 10% increased Fire damage
 1523. Uncraftable weapon drops can be cycled through with Shimmer, including Thorn, Erhan, The Keeper, Lab Chest, Holochest, Patient Zero, Ukko and Akka, and Seed of Infection weapon loot
 1576. Added new theme for King Slayer III

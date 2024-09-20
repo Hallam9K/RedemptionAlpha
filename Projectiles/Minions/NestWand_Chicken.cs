@@ -44,6 +44,7 @@ namespace Redemption.Projectiles.Minions
         public override void OnSpawn(IEntitySource source)
         {
             Projectile.localAI[1] = Main.rand.Next(4);
+            Projectile.ai[1] = 30;
             Projectile.netUpdate = true;
         }
         public override bool? CanDamage() => false;
@@ -54,10 +55,10 @@ namespace Redemption.Projectiles.Minions
             if (!CheckActive(owner))
                 return;
 
-            if (RedeHelper.ClosestNPC(ref target, 900, Projectile.Center, false, owner.MinionAttackTargetNPC))
+            if (RedeHelper.ClosestNPC(ref target, 900, Projectile.Center - new Vector2(0, 10), false, owner.MinionAttackTargetNPC))
             {
                 Projectile.LookAtEntity(target);
-                if (Projectile.localAI[0]++ <= 30 && Projectile.frame == 1)
+                if (Projectile.localAI[0]++ <= Projectile.ai[1] && Projectile.frame == 1)
                     Projectile.frameCounter = 0;
 
                 if (++Projectile.frameCounter >= 5)
@@ -68,9 +69,7 @@ namespace Redemption.Projectiles.Minions
                         int height = 4;
                         if (Projectile.DistanceSQ(target.Center) < 200 * 200)
                             height = 1;
-                        int p = Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center - new Vector2(0, 16), Projectile.DirectionTo(target.Center) * Main.rand.Next(8, 13) - new Vector2(0, height), ModContent.ProjectileType<ChickenEgg_Proj>(), Projectile.damage, Projectile.knockBack, owner.whoAmI, 1);
-                        Main.projectile[p].DamageType = DamageClass.Summon;
-                        Main.projectile[p].netUpdate = true;
+                        Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center - new Vector2(0, 16), Projectile.DirectionTo(target.Center) * Main.rand.Next(8, 13) - new Vector2(0, height), ModContent.ProjectileType<Egg_Proj>(), Projectile.damage, Projectile.knockBack, owner.whoAmI);
                     }
                     if (++Projectile.frame > 4)
                     {
@@ -79,6 +78,7 @@ namespace Redemption.Projectiles.Minions
                         Projectile.localAI[0] = 0;
                     }
                 }
+                Projectile.ai[1] = 30;
             }
             else
             {
@@ -133,5 +133,9 @@ namespace Redemption.Projectiles.Minions
 
             return true;
         }
+    }
+    public class Egg_Proj : ChickenEgg_Proj
+    {
+        public override void SetStaticDefaults() => ProjectileID.Sets.MinionShot[Projectile.type] = true;
     }
 }

@@ -29,7 +29,10 @@ namespace Redemption.NPCs.Minibosses.Calavia
         {
             NPC npc = Main.npc[(int)Projectile.ai[0]];
             if (!npc.active || npc.ai[0] == 4 || (npc.type != ModContent.NPCType<Calavia_Intro>() && npc.type != ModContent.NPCType<Calavia>()))
+            {
                 Projectile.Kill();
+                return;
+            }
             else
                 Projectile.timeLeft = 10;
 

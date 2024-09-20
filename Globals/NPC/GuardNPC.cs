@@ -21,6 +21,7 @@ namespace Redemption.Globals.NPC
         public bool IgnoreArmour;
         public bool GuardBroken;
         public bool GuardPierce;
+        public bool GuardHammer;
         public double GuardDamage = 1;
         public void GuardHit(ref Terraria.NPC.HitInfo info, Terraria.NPC npc, SoundStyle sound, float dmgReduction = .25f, bool noNPCHitSound = false, int dustType = 0, SoundStyle breakSound = default, int dustAmount = 10, float dustScale = 1, int damage = 0)
         {
@@ -51,7 +52,10 @@ namespace Redemption.Globals.NPC
             if (!noNPCHitSound && npc.HitSound.HasValue)
                 SoundEngine.PlaySound(npc.HitSound.Value, npc.position);
             info.Damage = 0;
-            info.Knockback = 0;
+            if (!GuardHammer)
+                info.Knockback = 0;
+            else
+                GuardHammer = false;
             npc.life++;
 
             GuardBreakCheck(npc, dustType, breakSound, dustAmount, dustScale, damage);
@@ -117,8 +121,13 @@ namespace Redemption.Globals.NPC
                 IgnoreArmour = true;
             if (player.RedemptionPlayerBuff().wardbreaker && (item.HasElement(ElementID.Arcane) || item.DamageType == DamageClass.Magic))
                 GuardDamage += 1;
+            if (item.HasElement(ElementID.Explosive))
+                GuardDamage += 1;
             if (item.hammer > 0 || item.Redemption().TechnicallyHammer)
+            {
+                GuardHammer = true;
                 GuardDamage += 3;
+            }
         }
         public override void ModifyHitByProjectile(Terraria.NPC npc, Projectile projectile, ref Terraria.NPC.HitModifiers modifiers)
         {
@@ -128,11 +137,17 @@ namespace Redemption.Globals.NPC
             if (projectile.HasElement(ElementID.Psychic))
                 IgnoreArmour = true;
             if (projectile.Redemption().IsHammer || projectile.type == ProjectileID.PaladinsHammerFriendly)
+            {
+                GuardHammer = true;
                 GuardDamage += 3;
+            }
+
             if (npc.RedemptionNPCBuff().brokenArmor || npc.RedemptionNPCBuff().stunned || projectile.Redemption().EnergyBased)
                 GuardPierce = true;
+
             if (Main.player[projectile.owner].RedemptionPlayerBuff().wardbreaker && (projectile.HasElement(ElementID.Arcane) || projectile.DamageType == DamageClass.Magic))
                 GuardDamage += 1;
+
             if (projectile.HasElement(ElementID.Explosive))
                 GuardDamage += 1;
         }
@@ -167,7 +182,7 @@ namespace Redemption.Globals.NPC
                 if (GuardPoints >= 0)
                 {
                     modifiers.DisableCrit();
-                    modifiers.ModifyHitInfo += (ref Terraria.NPC.HitInfo n) => GuardHit(ref n, npc, SoundID.NPCHit4, .25f, false, DustID.Bone, damage: npc.lifeMax / 4);
+                    modifiers.ModifyHitInfo += (ref Terraria.NPC.HitInfo n) => GuardHit(ref n, npc, SoundID.NPCHit4, .35f, false, DustID.Bone, damage: npc.lifeMax / 4);
                 }
             }
             if (npc.type is NPCID.HellArmoredBones or NPCID.HellArmoredBonesMace or NPCID.HellArmoredBonesSpikeShield or NPCID.HellArmoredBonesSword)
@@ -175,7 +190,7 @@ namespace Redemption.Globals.NPC
                 if (GuardPoints >= 0)
                 {
                     modifiers.DisableCrit();
-                    modifiers.ModifyHitInfo += (ref Terraria.NPC.HitInfo n) => GuardHit(ref n, npc, SoundID.NPCHit4, .25f, false, DustID.Torch, damage: npc.lifeMax / 4);
+                    modifiers.ModifyHitInfo += (ref Terraria.NPC.HitInfo n) => GuardHit(ref n, npc, SoundID.NPCHit4, .35f, false, DustID.Torch, damage: npc.lifeMax / 4);
                 }
             }
             if (npc.type is NPCID.PossessedArmor)

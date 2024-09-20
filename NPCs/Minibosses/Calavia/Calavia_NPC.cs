@@ -148,8 +148,7 @@ namespace Redemption.NPCs.Minibosses.Calavia
                     }
                     if (AITimer >= 60 && NPC.DistanceSQ(player.Center) <= 800 * 800)
                     {
-                        Vector2 focus = RedeHelper.CenterPoint(NPC.Center, spirit.Center);
-                        player.RedemptionScreen().ScreenFocusPosition = Vector2.Lerp(focus, player.Center, player.DistanceSQ(focus) / (1200 * 1200));
+                        player.RedemptionScreen().ScreenFocusPosition = Vector2.Lerp(NPC.Center, player.Center, player.DistanceSQ(NPC.Center) / (1200 * 1200));
                         player.RedemptionScreen().lockScreen = true;
                     }
                 }

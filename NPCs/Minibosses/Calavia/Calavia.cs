@@ -200,7 +200,7 @@ namespace Redemption.NPCs.Minibosses.Calavia
             if (blocked && NPC.RedemptionGuard().GuardPoints >= 0)
             {
                 modifiers.DisableCrit();
-                modifiers.ModifyHitInfo += (ref NPC.HitInfo n) => NPC.RedemptionGuard().GuardHit(ref n, NPC, SoundID.Tink, 0.25f, true, DustID.Iron, default, 10, 1, 200);
+                modifiers.ModifyHitInfo += (ref NPC.HitInfo n) => NPC.RedemptionGuard().GuardHit(ref n, NPC, SoundID.Tink, 0.25f, true, DustID.Iron, default, 10, 1, 500);
             }
             blocked = false;
         }
@@ -804,7 +804,7 @@ namespace Redemption.NPCs.Minibosses.Calavia
                                 ChatUI.Visible = true;
                                 ChatUI.Add(chain);
                             }
-                            if (AITimer >= 180)
+                            if (AITimer >= 240)
                             {
                                 if (RedeWorld.alignmentGiven && !Main.dedServ && !RedeBossDowned.downedCalavia)
                                     RedeSystem.Instance.ChaliceUIElement.DisplayDialogue(Language.GetTextValue("Mods.Redemption.UI.Chalice.CalaviaChoice"), 180, 30, 0, Color.DarkGoldenrod);

@@ -1,0 +1,19 @@
+=== 0.8 Beta .4043 === (World Gen Compat Patch)
+- Fixed Calavia's ice mist applying the debuff for a single frame upon Calavia becoming a friendly NPC (fr this time)
+- If a Spirit Tomb is taking >500 attempts to place, it will show the amount of attempts so players don't assume its frozen, after 2000 attempts it will have a failsafe of ignoring the check for stone or dirt tiles
+- Added subtext to "Thinking with portals"
+- Nature Shrine and Surface Portal will clear trees properly, fixing floating pieces of trees
+- Resprited Nanoswarmer, Cantrip Staff, Bronze Staff, and Log Staff
+- Reduced dr of Guard Points for Angry Bones, Armored Skeleton, Armored Viking, Blue Armored Bones, Rusty Armored Bones, and Hell Armored Bones
+- Added missing changes from .0.4002-.0.4006 changelogs that were lost in the 1.4.4 port, these include:
+1339. Increased damage Calavia takes from breaking her shield from 200 -> 500
+1340. Focal point of Calavia and Spirit Stranger's cutscene is Calavia to remove the slight up and down motion
+1342. Increased duration of Dawn Herald's rooster buff to 3 seconds, and Nest Wand chickens have increased throw speed while in the radius of the Dawn Herald's rooster
+1346. Extended time Calavia has damage reduction for sparing from 3 -> 4 seconds
+1347. Minion targetting Calavia is disabled during sparing
+1348. Added line to Mythril's Bane's lore
+-
+1861. Hammer Bonus additionally ignores the knockback immunity from Guard Points
+2022. Improved Surface Portal world gen, consistently takes less than a second, should be compatible with any mod now (unless it completely changes surface grass to something else), also fixes uncommon freezing with Remnants gen
+2023. Both Wayfarers sell Silver Rapier now
+===============

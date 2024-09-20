@@ -37,7 +37,10 @@ namespace Redemption.NPCs.Minibosses.Calavia
         {
             NPC npc = Main.npc[(int)Projectile.ai[0]];
             if (!npc.active || npc.ai[0] is 4 || (npc.type != ModContent.NPCType<Calavia>() && npc.type != ModContent.NPCType<Calavia_SS>()))
+            {
                 Projectile.Kill();
+                return;
+            }
 
             Projectile.rotation += 0.1f * npc.direction;
             Projectile.Center = npc.Center;

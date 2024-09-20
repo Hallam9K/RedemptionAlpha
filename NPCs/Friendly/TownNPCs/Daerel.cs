@@ -360,6 +360,7 @@ namespace Redemption.NPCs.Friendly.TownNPCs
                 .Add<CantripStaff>()
                 .Add<DurableBowString>()
                 .Add<Archcloth>()
+                .Add<SilverRapier>(Condition.DownedEarlygameBoss)
                 .Add<EaglecrestSpelltome>(Condition.DownedEowOrBoc)
                 .Add<SilverwoodBow>(Condition.DownedEowOrBoc)
                 .Add<GolemEye>(RedeConditions.DownedEaglecrestGolem)

@@ -416,7 +416,7 @@ Mods: {
 			Bonuses: {
 				AxeBonus: "[i:Redemption/Axe] 3x critical strike damage, increased chance to decapitate humanoid enemies"
 				SlashBonus: "[i:Redemption/Slash] Small chance to decapitate most humanoid enemies, killing them instantly"
-				HammerBonus: "[i:Redemption/Hammer] Deals quadruple damage to Guard Points"
+				HammerBonus: "[i:Redemption/Hammer] Deals quadruple damage to Guard Points and ignores their knockback resistance"
 				ChaliceLine: "[i:Redemption/RedemptionRoute]The chalice has something to say about this item"
 				ExplodeBonus: "[i:Redemption/Explosive] Deals double damage to Guard Points and penetrates through defense"
 				ArcaneBonus: "[i:Redemption/Arcane] Can hit enemies from the spirit realm"
@@ -8372,7 +8372,8 @@ Mods: {
 				Lore:
 					'''
 					'The mighty blade of Zephos, recieved during his time in Arrgath - Capital of Erellon.
-					Similarly to his previous weapon, this sword has a slit for catching opponent's blades and snapping them.'
+					Similarly to his previous weapon, this sword has a slit for catching opponent's blades and snapping them.
+					The name of the blade was given by Daerel, his friend.'
 					'''
 			}
 
@@ -11047,6 +11048,7 @@ Mods: {
 			Thorn_SplinterBall.DisplayName: Splinter Ball
 			DragonCleaverSkull_Proj.DisplayName: Dragon Skull
 			HolyHammer.DisplayName: Holy Hammer
+			Egg_Proj.DisplayName: Egg_ Proj
 		}
 
 		NPCs: {
