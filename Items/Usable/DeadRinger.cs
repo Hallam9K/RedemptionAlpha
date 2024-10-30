@@ -1,18 +1,15 @@
+using Redemption.BaseExtension;
 using Redemption.Globals;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 
 namespace Redemption.Items.Usable
 {
     public class DeadRinger : ModItem
     {
-        public override void SetStaticDefaults()
-        {
-            // Tooltip.SetDefault("Calls upon the spirits of corpses");
-            Item.ResearchUnlockCount = 1;
-        }
-
         public override void SetDefaults()
         {
             Item.width = 34;
@@ -23,12 +20,20 @@ namespace Redemption.Items.Usable
         }
         public override void UpdateInventory(Player player)
         {
-            if (!RedeWorld.deadRingerGiven)
+            if (!RedeWorld.deadRingerGiven && player.whoAmI == Main.myPlayer)
             {
                 RedeWorld.deadRingerGiven = true;
-                if (Main.netMode == NetmodeID.Server)
-                    NetMessage.SendData(MessageID.WorldData);
+                RedeWorld.SyncData();
             }
+        }
+        public override void ModifyTooltips(List<TooltipLine> tooltips)
+        {
+            Player player = Main.LocalPlayer;
+            if (!player.RedemptionAbility().Spiritwalker)
+                return;
+            string text = Language.GetTextValue("Mods.Redemption.Items.DeadRinger.SpiritWalkerTooltip");
+            TooltipLine line = new(Mod, "DeadRingerLine", text);
+            tooltips.Insert(Item.favorited ? 4 : 2, line);
         }
     }
 }

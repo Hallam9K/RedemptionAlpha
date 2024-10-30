@@ -44,6 +44,7 @@ using Redemption.WorldGeneration.Misc;
 using Redemption.Items.Usable.Summons;
 using Redemption.Helpers;
 using Redemption.Items.Donator.BLT;
+using Terraria.GameContent.Shaders;
 
 namespace Redemption
 {
@@ -238,6 +239,8 @@ namespace Redemption
             Filters.Scene["MoR:FowlMorningSky"] = new Filter(new ScreenShaderData("FilterMiniTower").UseColor(0.7f, 0.3f, 0.02f).UseOpacity(0.3f), EffectPriority.High);
             Filters.Scene["MoR:ThornSky"] = new Filter(new ScreenShaderData("FilterMiniTower").UseColor(0.2f, 0.25f, 0.15f).UseOpacity(0.7f), EffectPriority.High);
 
+            Filters.Scene["MoR:Shake"] = new Filter(new MoonLordScreenShaderData("FilterMoonLordShake", aimAtPlayer: false), EffectPriority.VeryHigh);
+
             RedeSpecialAbility = KeybindLoader.RegisterKeybind(this, "Special Ability Key", Keys.F);
             RedeSpiritwalkerAbility = KeybindLoader.RegisterKeybind(this, "Spirit Walker Key", Keys.K);
             RedeSkipDialogue = KeybindLoader.RegisterKeybind(this, "Skip Dialogue Key", Keys.Back);
@@ -335,23 +338,23 @@ namespace Redemption
             }
             return packet;
         }
-        public override void HandlePacket(BinaryReader bb, int whoAmI)
+        public override void HandlePacket(BinaryReader reader, int whoAmI)
         {
-            ModMessageType msgType = (ModMessageType)bb.ReadByte();
-            //byte player;
+            ModMessageType msgType = (ModMessageType)reader.ReadByte();
             switch (msgType)
             {
                 case ModMessageType.BossSpawnFromClient:
                     if (Main.netMode == NetmodeID.Server)
                     {
-                        int bossType = bb.ReadInt32();
-                        int npcCenterX = bb.ReadInt32();
-                        int npcCenterY = bb.ReadInt32();
+                        int bossType = reader.ReadInt32();
+                        int npcCenterX = reader.ReadInt32();
+                        int npcCenterY = reader.ReadInt32();
 
                         if (NPC.AnyNPCs(bossType))
                             return;
 
                         int npcID = NPC.NewNPC(Entity.GetSource_NaturalSpawn(), npcCenterX, npcCenterY, bossType);
+                        Main.npc[npcID].netUpdate = true;
                         Main.npc[npcID].netUpdate2 = true;
                         ChatHelper.BroadcastChatMessage(NetworkText.FromKey("Announcement.HasAwoken", Main.npc[npcID].GetTypeNetName()), new Color(175, 75, 255));
                     }
@@ -359,9 +362,9 @@ namespace Redemption
                 case ModMessageType.NPCSpawnFromClient:
                     if (Main.netMode == NetmodeID.Server)
                     {
-                        int NPCType = bb.ReadInt32();
-                        int npcCenterX = bb.ReadInt32();
-                        int npcCenterY = bb.ReadInt32();
+                        int NPCType = reader.ReadInt32();
+                        int npcCenterX = reader.ReadInt32();
+                        int npcCenterY = reader.ReadInt32();
 
                         if (NPC.AnyNPCs(NPCType))
                             return;
@@ -373,19 +376,19 @@ namespace Redemption
                 case ModMessageType.SpawnNPCFromClient:
                     if (Main.netMode == NetmodeID.Server)
                     {
-                        int npcIndex = bb.ReadInt32();
-                        int npcCenterX = bb.ReadInt32();
-                        int npcCenterY = bb.ReadInt32();
-                        float ai0 = bb.ReadSingle();
-                        float ai1 = bb.ReadSingle();
-                        float ai2 = bb.ReadSingle();
+                        int npcIndex = reader.ReadInt32();
+                        int npcCenterX = reader.ReadInt32();
+                        int npcCenterY = reader.ReadInt32();
+                        float ai0 = reader.ReadSingle();
+                        float ai1 = reader.ReadSingle();
+                        float ai2 = reader.ReadSingle();
 
                         int npcID = NPC.NewNPC(Entity.GetSource_NaturalSpawn(), npcCenterX, npcCenterY, npcIndex, 0, ai0, ai1, ai2);
                         Main.npc[npcID].netUpdate2 = true;
                     }
                     break;
                 case ModMessageType.SpawnTrail:
-                    int projindex = bb.ReadInt32();
+                    int projindex = reader.ReadInt32();
 
                     if (Main.netMode == NetmodeID.Server)
                     {
@@ -402,10 +405,29 @@ namespace Redemption
                     FowlMorningWorld.ChickArmyStart();
                     break;
                 case ModMessageType.FowlMorningData:
-                    FowlMorningWorld.HandlePacket(bb);
+                    FowlMorningWorld.HandlePacket(reader);
+                    break;
+                case ModMessageType.SyncRedeQuestFromClient:
+                    RedeQuest.ReceiveSyncDataFromClient(reader, whoAmI);
+                    break;
+                case ModMessageType.SyncRedeWorldFromClient:
+                    RedeWorld.ReceiveSyncDataFromClient(reader, whoAmI);
+                    break;
+                case ModMessageType.SyncAlignment:
+                    RedeWorld.ReceiveSyncAlignment(reader, whoAmI);
+                    break;
+                case ModMessageType.SyncChaliceDialogue:
+                    ChaliceAlignmentUI.ReceiveSyncChaliceDialogue(reader, whoAmI);
+                    break;
+                case ModMessageType.TitleCardFromServer:
+                    TitleCard.ReceiveTitleCardFromServer(reader, whoAmI);
+                    break;
+                case ModMessageType.SyncRedePlayer:
+                    RedePlayer.ReceiveSyncPlayer(reader, whoAmI);
                     break;
             }
         }
+
         public static void SpawnBossFromClient(byte whoAmI, int type, int x, int y) => WriteToPacket(Instance.GetPacket(), (byte)ModMessageType.BossSpawnFromClient, whoAmI, type, x, y).Send();
     }
     public class RedeSystem : ModSystem
@@ -623,13 +645,13 @@ namespace Redemption
                     InterfaceScaleType.UI);
                 layers.Insert(index, OmegaTransmitterUI);
             }
-            if (YesNoUI.Visible && !Main.playerInventory)
+            if (YesNoUI.Visible && (!Main.playerInventory || YesNoUIElement.Player.whoAmI != Main.myPlayer))
             {
                 int index = layers.FindIndex(layer => layer.Name.Equals("Vanilla: Ruler"));
                 LegacyGameInterfaceLayer ChoiceTextUI = new("Redemption: Choice Text UI",
                     delegate
                     {
-                        DrawChoiceText(Main.spriteBatch);
+                        YesNoUI.DrawChoiceText(Main.spriteBatch);
                         return true;
                     },
                     InterfaceScaleType.UI);
@@ -838,12 +860,6 @@ namespace Redemption
 
             spriteBatch.End();
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.LinearClamp, DepthStencilState.Default, RasterizerState.CullNone, null, Main.UIScaleMatrix);
-        }
-        public static void DrawChoiceText(SpriteBatch spriteBatch)
-        {
-            string text = "Open Inventory to make your choice";
-            int textLength = (int)(FontAssets.DeathText.Value.MeasureString(text).X * .5f);
-            ChatManager.DrawColorCodedStringWithShadow(spriteBatch, FontAssets.DeathText.Value, text, new Vector2((Main.screenWidth / 2) - (textLength / 2), Main.screenHeight / 4), Color.White, 0, Vector2.Zero, Vector2.One * .5f);
         }
         public static void DrawSlayerCursor(SpriteBatch spriteBatch)
         {

@@ -15,6 +15,7 @@ using Redemption.Items.Weapons.PreHM.Melee;
 using Redemption.Items.Weapons.PreHM.Ranged;
 using Redemption.Items.Weapons.PreHM.Summon;
 using Redemption.Textures;
+using Redemption.UI;
 using ReLogic.Content;
 using System;
 using System.Collections.Generic;
@@ -169,22 +170,8 @@ namespace Redemption.NPCs.Bosses.Thorn
                 else if (Main.netMode == NetmodeID.SinglePlayer)
                     Main.NewText(Language.GetTextValue(status), new Color(50, 255, 130));
 
-                RedeWorld.alignment += 2;
-                for (int p = 0; p < Main.maxPlayers; p++)
-                {
-                    Player player = Main.player[p];
-                    if (!player.active)
-                        continue;
-
-                    CombatText.NewText(player.getRect(), Color.Gold, "+2", true, false);
-
-                    if (!RedeWorld.alignmentGiven)
-                        continue;
-
-                    if (!Main.dedServ)
-                        RedeSystem.Instance.ChaliceUIElement.DisplayDialogue(Language.GetTextValue("Mods.Redemption.UI.Chalice.HeartOfThorns2"), 300, 30, 0, Color.DarkGoldenrod);
-
-                }
+                RedeWorld.Alignment += 2;
+                ChaliceAlignmentUI.BroadcastDialogue(NetworkText.FromKey("Mods.Redemption.UI.Chalice.HeartOfThorns2"), 300, 30, 0, Color.DarkGoldenrod);
             }
             NPC.SetEventFlagCleared(ref RedeBossDowned.downedThorn, -1);
         }
@@ -307,8 +294,8 @@ namespace Redemption.NPCs.Bosses.Thorn
                                 MovementVector = new Vector2(0, -Main.rand.Next(0, 2))
                             });
                         }
-                        RedeDraw.SpawnExplosion(NPC.Center, Color.White, scale: 1, shakeAmount: 0, noDust: true, tex: ModContent.Request<Texture2D>("Redemption/Textures/SpiritPortalTex").Value, rot: RedeHelper.RandomRotation());
-                        RedeDraw.SpawnExplosion(NPC.Center, Color.White * .5f, scale: 1.5f, shakeAmount: 0, noDust: true, tex: ModContent.Request<Texture2D>("Redemption/Textures/SpiritPortalTex").Value, rot: RedeHelper.RandomRotation());
+                        RedeDraw.SpawnExplosion(NPC.Center, Color.White, scale: 1, shakeAmount: 0, noDust: true, tex: "Redemption/Textures/SpiritPortalTex", rot: RedeHelper.RandomRotation());
+                        RedeDraw.SpawnExplosion(NPC.Center, Color.White * .5f, scale: 1.5f, shakeAmount: 0, noDust: true, tex: "Redemption/Textures/SpiritPortalTex", rot: RedeHelper.RandomRotation());
                         NPC.alpha = 255;
                     }
                     magicOpacity -= .05f;
@@ -317,8 +304,7 @@ namespace Redemption.NPCs.Bosses.Thorn
                         NPC.active = false;
                     return;
                 case ActionState.Begin:
-                    if (!Main.dedServ)
-                        RedeSystem.Instance.TitleCardUIElement.DisplayTitle(Language.GetTextValue("Mods.Redemption.TitleCard.Thorn.Name"), 60, 90, 0.8f, 0, Color.LawnGreen, Language.GetTextValue("Mods.Redemption.TitleCard.Thorn.Modifier"));
+                    TitleCard.BroadcastTitle(NetworkText.FromKey("Mods.Redemption.TitleCard.Thorn.Name"), 60, 90, 0.8f, Color.LawnGreen, NetworkText.FromKey("Mods.Redemption.TitleCard.Thorn.Modifier"));
                     AIState = ActionState.TeleportStart;
                     NPC.netUpdate = true;
                     break;
@@ -817,8 +803,8 @@ namespace Redemption.NPCs.Bosses.Thorn
                                     MovementVector = new Vector2(0, -Main.rand.Next(0, 2))
                                 });
                             }
-                            RedeDraw.SpawnExplosion(NPC.Center, Color.SkyBlue, scale: 1, shakeAmount: 10, noDust: true, tex: ModContent.Request<Texture2D>("Redemption/Textures/BigFlare").Value);
-                            RedeDraw.SpawnExplosion(NPC.Center, Color.Orange, scale: 2, shakeAmount: 10, noDust: true, tex: ModContent.Request<Texture2D>("Redemption/Textures/BigFlare").Value);
+                            RedeDraw.SpawnExplosion(NPC.Center, Color.SkyBlue, scale: 1, shakeAmount: 10, noDust: true, tex: "Redemption/Textures/BigFlare");
+                            RedeDraw.SpawnExplosion(NPC.Center, Color.Orange, scale: 2, shakeAmount: 10, noDust: true, tex: "Redemption/Textures/BigFlare");
 
                             PhaseTwo = true;
 
@@ -892,8 +878,8 @@ namespace Redemption.NPCs.Bosses.Thorn
                                 MovementVector = new Vector2(0, -Main.rand.Next(0, 2))
                             });
                         }
-                        RedeDraw.SpawnExplosion(NPC.Center, Color.White, scale: 1, shakeAmount: 0, noDust: true, tex: ModContent.Request<Texture2D>("Redemption/Textures/SpiritPortalTex").Value, rot: RedeHelper.RandomRotation());
-                        RedeDraw.SpawnExplosion(NPC.Center, Color.White * .5f, scale: 1.5f, shakeAmount: 0, noDust: true, tex: ModContent.Request<Texture2D>("Redemption/Textures/SpiritPortalTex").Value, rot: RedeHelper.RandomRotation());
+                        RedeDraw.SpawnExplosion(NPC.Center, Color.White, scale: 1, shakeAmount: 0, noDust: true, tex: "Redemption/Textures/SpiritPortalTex", rot: RedeHelper.RandomRotation());
+                        RedeDraw.SpawnExplosion(NPC.Center, Color.White * .5f, scale: 1.5f, shakeAmount: 0, noDust: true, tex: "Redemption/Textures/SpiritPortalTex", rot: RedeHelper.RandomRotation());
                         int steps = (int)NPC.Distance(newPos) / 16;
                         for (int i = 0; i < steps; i++)
                         {
@@ -924,8 +910,8 @@ namespace Redemption.NPCs.Bosses.Thorn
                                 MovementVector = new Vector2(0, -Main.rand.Next(0, 2))
                             });
                         }
-                        RedeDraw.SpawnExplosion(NPC.Center, Color.White, scale: 1, shakeAmount: 0, noDust: true, tex: ModContent.Request<Texture2D>("Redemption/Textures/SpiritPortalTex").Value, rot: RedeHelper.RandomRotation());
-                        RedeDraw.SpawnExplosion(NPC.Center, Color.White * .5f, scale: 1.5f, shakeAmount: 0, noDust: true, tex: ModContent.Request<Texture2D>("Redemption/Textures/SpiritPortalTex").Value, rot: RedeHelper.RandomRotation());
+                        RedeDraw.SpawnExplosion(NPC.Center, Color.White, scale: 1, shakeAmount: 0, noDust: true, tex: "Redemption/Textures/SpiritPortalTex", rot: RedeHelper.RandomRotation());
+                        RedeDraw.SpawnExplosion(NPC.Center, Color.White * .5f, scale: 1.5f, shakeAmount: 0, noDust: true, tex: "Redemption/Textures/SpiritPortalTex", rot: RedeHelper.RandomRotation());
                         SoundEngine.PlaySound(SoundID.Zombie103, NPC.position);
                     }
                     break;
@@ -972,8 +958,6 @@ namespace Redemption.NPCs.Bosses.Thorn
                             for (int i = 0; i < 30; i++)
                                 Gore.NewGore(NPC.GetSource_FromThis(), NPC.Center + new Vector2(Main.rand.Next(-6, 7) * NPC.spriteDirection, Main.rand.Next(-98, 1)) - new Vector2(5, 6), RedeHelper.SpreadUp(1), ModContent.Find<ModGore>("Redemption/DeadThornFX").Type, Main.rand.NextFloat(1, 1.5f));
                         }
-                        //for (int i = 0; i < 20; i++)
-                        //    Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.BrownMoss, NPC.velocity.X * 0.5f, NPC.velocity.Y * 0.5f, Scale: 2);
                         for (int i = 0; i < 30; i++)
                         {
                             Dust dust = Dust.NewDustDirect(NPC.position, NPC.width, NPC.height, DustID.Smoke, 0f, 0f, 100, Scale: 2);
@@ -982,8 +966,6 @@ namespace Redemption.NPCs.Bosses.Thorn
                             dust.velocity.Y -= 0.5f + Main.rand.Next(10) * 0.1f;
                             dust.fadeIn = 0.5f + Main.rand.Next(10) * 0.1f;
                         }
-                        //for (int i = 0; i < 20; i++)
-                        //    Dust.NewDustPerfect(NPC.Center + new Vector2(Main.rand.Next(-6, 7) * NPC.spriteDirection, Main.rand.Next(-98, 1)), DustID.BrownMoss, Scale: 2);
 
                         NPC.dontTakeDamage = false;
                         NPC.netUpdate = true;

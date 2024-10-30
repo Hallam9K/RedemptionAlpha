@@ -90,8 +90,7 @@ namespace Redemption.NPCs.Minibosses.Calavia
                 if (spiritWhoAmI > -1)
                 {
                     RedeQuest.calaviaVar = 15;
-                    if (Main.netMode == NetmodeID.Server)
-                        NetMessage.SendData(MessageID.WorldData);
+                    RedeQuest.SyncData();
                 }
             }
             else if (RedeQuest.calaviaVar is 15)
@@ -143,8 +142,7 @@ namespace Redemption.NPCs.Minibosses.Calavia
                     {
                         AITimer = 0;
                         RedeQuest.calaviaVar = 16;
-                        if (Main.netMode == NetmodeID.Server)
-                            NetMessage.SendData(MessageID.WorldData);
+                        RedeQuest.SyncData();
                     }
                     if (AITimer >= 60 && NPC.DistanceSQ(player.Center) <= 800 * 800)
                     {
@@ -159,8 +157,7 @@ namespace Redemption.NPCs.Minibosses.Calavia
                     ChatUI.Visible = false;
                     AITimer = 0;
                     RedeQuest.calaviaVar = 13;
-                    if (Main.netMode == NetmodeID.Server)
-                        NetMessage.SendData(MessageID.WorldData);
+                    RedeQuest.SyncData();
                 }
                 if (player.DistanceSQ(NPC.Center) > 2000 * 2000)
                 {
@@ -169,8 +166,7 @@ namespace Redemption.NPCs.Minibosses.Calavia
                     ChatUI.Visible = false;
                     AITimer = 0;
                     RedeQuest.calaviaVar = 13;
-                    if (Main.netMode == NetmodeID.Server)
-                        NetMessage.SendData(MessageID.WorldData);
+                    RedeQuest.SyncData();
                 }
             }
             else if (RedeQuest.calaviaVar == 20 && Main.LocalPlayer.talkNPC == -1)
@@ -179,8 +175,7 @@ namespace Redemption.NPCs.Minibosses.Calavia
                     RedeQuest.calaviaVar = 22;
                 else
                     RedeQuest.calaviaVar = 21;
-                if (Main.netMode == NetmodeID.Server)
-                    NetMessage.SendData(MessageID.WorldData);
+                RedeQuest.SyncData();
             }
             else if (RedeQuest.calaviaVar > 20)
             {
@@ -217,15 +212,8 @@ namespace Redemption.NPCs.Minibosses.Calavia
 
                         if (HasHelmet > 0 && HasShield)
                         {
-                            RedeWorld.alignment++;
-                            for (int p = 0; p < Main.maxPlayers; p++)
-                            {
-                                Player player2 = Main.player[p];
-                                if (!player2.active)
-                                    continue;
-
-                                CombatText.NewText(player.getRect(), Color.Gold, "+1", true, false);
-                            }
+                            if (Main.netMode != NetmodeID.MultiplayerClient)
+                                RedeWorld.Alignment++;
                         }
                         NPC.active = false;
                     }
@@ -407,8 +395,7 @@ namespace Redemption.NPCs.Minibosses.Calavia
                         {
                             Main.npcChatText = Language.GetTextValue("Mods.Redemption.Dialogue.Calavia.IntroLine1");
                             RedeQuest.calaviaVar = 4;
-                            if (Main.netMode == NetmodeID.Server)
-                                NetMessage.SendData(MessageID.WorldData);
+                            RedeQuest.SyncData();
                         }
                         break;
                     case 4:
@@ -416,43 +403,37 @@ namespace Redemption.NPCs.Minibosses.Calavia
                         {
                             Main.npcChatText = Language.GetTextValue("Mods.Redemption.Dialogue.Calavia.IntroLine2");
                             RedeQuest.calaviaVar = 6;
-                            if (Main.netMode == NetmodeID.Server)
-                                NetMessage.SendData(MessageID.WorldData);
+                            RedeQuest.SyncData();
                         }
                         else
                         {
                             Main.npcChatText = Language.GetTextValue("Mods.Redemption.Dialogue.Calavia.IntroLine3");
                             RedeQuest.calaviaVar = 5;
-                            if (Main.netMode == NetmodeID.Server)
-                                NetMessage.SendData(MessageID.WorldData);
+                            RedeQuest.SyncData();
                         }
                         break;
                     case 5:
                         Main.npcChatText = Language.GetTextValue("Mods.Redemption.Dialogue.Calavia.IntroLine2");
                         RedeQuest.calaviaVar = 6;
-                        if (Main.netMode == NetmodeID.Server)
-                            NetMessage.SendData(MessageID.WorldData);
+                        RedeQuest.SyncData();
                         break;
                     case 6:
                         EmoteBubble.NewBubble(1, new WorldUIAnchor(NPC), 120);
                         Main.npcChatText = Language.GetTextValue("Mods.Redemption.Dialogue.Calavia.IntroLine4");
                         RedeQuest.calaviaVar = 7;
-                        if (Main.netMode == NetmodeID.Server)
-                            NetMessage.SendData(MessageID.WorldData);
+                        RedeQuest.SyncData();
                         break;
                     case 7:
                         Main.npcChatText = Language.GetTextValue("Mods.Redemption.Dialogue.Calavia.IntroLine5");
                         if (RedeGen.cryoCrystalSpawn)
                             Main.npcChatText += Language.GetTextValue("Mods.Redemption.Dialogue.Calavia.IntroLine5B");
-                        if (Main.netMode != NetmodeID.MultiplayerClient)
-                        {
-                            if (RedeGen.cryoCrystalSpawn)
-                                RedeQuest.calaviaVar = 8;
-                            else
-                                RedeQuest.calaviaVar = 11;
-                        }
-                        if (Main.netMode != NetmodeID.MultiplayerClient && Main.netMode == NetmodeID.Server)
-                            NetMessage.SendData(MessageID.WorldData);
+
+                        if (RedeGen.cryoCrystalSpawn)
+                            RedeQuest.calaviaVar = 8;
+                        else
+                            RedeQuest.calaviaVar = 11;
+
+                        RedeQuest.SyncData();
                         break;
                     case 8:
                         if (firstButton)
@@ -460,23 +441,20 @@ namespace Redemption.NPCs.Minibosses.Calavia
                         else
                             Main.npcChatText = Language.GetTextValue("Mods.Redemption.Dialogue.Calavia.IntroLine7");
                         RedeQuest.calaviaVar = 9;
-                        if (Main.netMode == NetmodeID.Server)
-                            NetMessage.SendData(MessageID.WorldData);
+                        RedeQuest.SyncData();
                         break;
                     case 9:
                         if (firstButton)
                         {
                             Main.npcChatText = Language.GetTextValue("Mods.Redemption.Dialogue.Calavia.IntroLine8");
                             RedeQuest.calaviaVar = 11;
-                            if (Main.netMode == NetmodeID.Server)
-                                NetMessage.SendData(MessageID.WorldData);
+                            RedeQuest.SyncData();
                         }
                         else
                         {
                             Main.npcChatText = Language.GetTextValue("Mods.Redemption.Dialogue.Calavia.IntroLine9");
                             RedeQuest.calaviaVar = 10;
-                            if (Main.netMode == NetmodeID.Server)
-                                NetMessage.SendData(MessageID.WorldData);
+                            RedeQuest.SyncData();
                         }
                         break;
                     case 10:
@@ -484,15 +462,13 @@ namespace Redemption.NPCs.Minibosses.Calavia
                         {
                             Main.npcChatText = Language.GetTextValue("Mods.Redemption.Dialogue.Calavia.IntroLine10");
                             RedeQuest.calaviaVar = 11;
-                            if (Main.netMode == NetmodeID.Server)
-                                NetMessage.SendData(MessageID.WorldData);
+                            RedeQuest.SyncData();
                         }
                         else
                         {
                             Main.npcChatText = Language.GetTextValue("Mods.Redemption.Dialogue.Calavia.IntroLine11");
                             RedeQuest.calaviaVar = 20;
-                            if (Main.netMode == NetmodeID.Server)
-                                NetMessage.SendData(MessageID.WorldData);
+                            RedeQuest.SyncData();
                         }
                         break;
                     case 20:
@@ -504,15 +480,13 @@ namespace Redemption.NPCs.Minibosses.Calavia
                                 RedeQuest.calaviaVar = 22;
                             else
                                 RedeQuest.calaviaVar = 21;
-                            if (Main.netMode == NetmodeID.Server)
-                                NetMessage.SendData(MessageID.WorldData);
+                            RedeQuest.SyncData();
                         }
                         else
                         {
                             Main.npcChatText = Language.GetTextValue("Mods.Redemption.Dialogue.Calavia.IntroLine12");
                             RedeQuest.calaviaVar = 11;
-                            if (Main.netMode == NetmodeID.Server)
-                                NetMessage.SendData(MessageID.WorldData);
+                            RedeQuest.SyncData();
                         }
                         break;
                 }
@@ -623,8 +597,7 @@ namespace Redemption.NPCs.Minibosses.Calavia
                                 if (RedeQuest.calaviaVar < 14)
                                 {
                                     RedeQuest.calaviaVar = 14;
-                                    if (Main.netMode == NetmodeID.Server)
-                                        NetMessage.SendData(MessageID.WorldData);
+                                    RedeQuest.SyncData();
                                 }
                             }
                             else
@@ -633,8 +606,7 @@ namespace Redemption.NPCs.Minibosses.Calavia
                                 if (RedeQuest.calaviaVar < 13)
                                 {
                                     RedeQuest.calaviaVar = 13;
-                                    if (Main.netMode == NetmodeID.Server)
-                                        NetMessage.SendData(MessageID.WorldData);
+                                    RedeQuest.SyncData();
                                 }
                             }
                             break;
@@ -648,8 +620,7 @@ namespace Redemption.NPCs.Minibosses.Calavia
                                 Main.npcChatText = Language.GetTextValue("Mods.Redemption.Dialogue.Calavia.IntroLine11");
                             }
                             RedeQuest.calaviaVar = 20;
-                            if (Main.netMode == NetmodeID.Server)
-                                NetMessage.SendData(MessageID.WorldData);
+                            RedeQuest.SyncData();
                             break;
                     }
                 }

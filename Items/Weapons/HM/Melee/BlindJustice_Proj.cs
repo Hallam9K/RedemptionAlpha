@@ -257,7 +257,7 @@ namespace Redemption.Items.Weapons.HM.Melee
                         {
                             SoundEngine.PlaySound(CustomSounds.Reflect, player.position);
                             player.RedemptionScreen().ScreenShakeIntensity = 6;
-                            RedeDraw.SpawnExplosion(Projectile.Center, Color.White, shakeAmount: 0, scale: 1, noDust: true, tex: ModContent.Request<Texture2D>("Redemption/Textures/HolyGlow2").Value);
+                            RedeDraw.SpawnExplosion(Projectile.Center, Color.White, shakeAmount: 0, scale: 1, noDust: true, tex: "Redemption/Textures/HolyGlow2");
                         }
                         if (Projectile.ai[1] == 5)
                         {

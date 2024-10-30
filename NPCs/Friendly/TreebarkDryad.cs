@@ -100,27 +100,12 @@ namespace Redemption.NPCs.Friendly
         {
             if (!RedeBossDowned.downedTreebark)
             {
-                for (int p = 0; p < Main.maxPlayers; p++)
-                {
-                    Player player = Main.player[p];
-                    if (!player.active)
-                        continue;
+                RedeWorld.Alignment--;
+                ChaliceAlignmentUI.BroadcastDialogue(NetworkText.FromKey("Mods.Redemption.UI.Chalice.TreebarkFelled"), 300, 30, 0, Color.DarkGoldenrod);
 
-                    CombatText.NewText(player.getRect(), Color.Gold, "-1", true, false);
-
-                    if (!RedeWorld.alignmentGiven)
-                        continue;
-
-                    if (!Main.dedServ)
-                        RedeSystem.Instance.ChaliceUIElement.DisplayDialogue(Language.GetTextValue("Mods.Redemption.UI.Chalice.TreebarkFelled"), 300, 30, 0, Color.DarkGoldenrod);
-                }
-                if (Main.netMode != NetmodeID.MultiplayerClient)
-                {
-                    RedeWorld.alignment--;
-                    RedeBossDowned.downedTreebark = true;
-                    if (Main.netMode != NetmodeID.SinglePlayer)
-                        NetMessage.SendData(MessageID.WorldData);
-                }
+                RedeBossDowned.downedTreebark = true;
+                if (Main.netMode != NetmodeID.SinglePlayer)
+                    NetMessage.SendData(MessageID.WorldData);
             }
         }
         public override void ModifyIncomingHit(ref NPC.HitModifiers modifiers)
@@ -362,7 +347,7 @@ namespace Redemption.NPCs.Friendly
             if (score < 60)
                 chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.TreebarkDryad.NoTreesDialogue2"));
 
-            if (RedeWorld.alignment < 0)
+            if (RedeWorld.Alignment < 0)
                 chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.TreebarkDryad.Dialogue1"));
 
             if (AITimer != 1)

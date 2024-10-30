@@ -11,6 +11,7 @@ using Redemption.Items.Armor.Vanity;
 using Redemption.Items.Materials.HM;
 using Redemption.Items.Placeable.Trophies;
 using Redemption.Items.Usable;
+using Redemption.UI;
 using ReLogic.Content;
 using System;
 using System.Collections.Generic;
@@ -308,8 +309,8 @@ namespace Redemption.NPCs.Bosses.Gigapora
                         NPC.velocity.Y = -20;
                         NPC.velocity.X = -4;
                     }
-                    if (AITimer == 60 && !Main.dedServ)
-                        RedeSystem.Instance.TitleCardUIElement.DisplayTitle(Language.GetTextValue("Mods.Redemption.TitleCard.Gigapora.Name"), 60, 90, 0.8f, 0, Color.Red, Language.GetTextValue("Mods.Redemption.TitleCard.Gigapora.Modifier"));
+                    if (AITimer == 60)
+                        TitleCard.BroadcastTitle(NetworkText.FromKey("Mods.Redemption.TitleCard.Gigapora.Name"), 60, 90, 0.8f, Color.Red, NetworkText.FromKey("Mods.Redemption.TitleCard.Gigapora.Modifier"));
                     if (AITimer >= 80 && AITimer < 140)
                     {
                         NPC.velocity *= 0.96f;
@@ -800,9 +801,8 @@ namespace Redemption.NPCs.Bosses.Gigapora
                             {
                                 NPC.immortal = false;
                                 NPC.dontTakeDamage = false;
-                                player.ApplyDamageToNPC(NPC, 99999, 0, 0, false);
-                                if (Main.netMode == NetmodeID.Server && NPC.whoAmI < Main.maxNPCs)
-                                    NetMessage.SendData(MessageID.SyncNPC, number: NPC.whoAmI);
+                                if (Main.netMode != NetmodeID.MultiplayerClient)
+                                    NPC.StrikeInstantKill();
                             }
                             break;
                     }

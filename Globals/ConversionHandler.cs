@@ -1,13 +1,12 @@
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using Redemption.Base;
 using Redemption.Tiles.Ores;
 using Redemption.Tiles.Tiles;
 using Redemption.Walls;
 using Redemption.WorldGeneration;
-using ReLogic.Content;
 using System.Collections.Generic;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -25,9 +24,12 @@ namespace Redemption
                 Tile tile = Framing.GetTileSafely((int)Center.X / 16, BaseWorldGen.GetFirstTileFloor((int)Center.X / 16, (int)Center.Y / 16));
                 int tileType = tile.TileType;
 
-                Texture2D tex = ModContent.Request<Texture2D>("Redemption/WorldGeneration/Crater", AssetRequestMode.ImmediateLoad).Value;
-                Texture2D texSnow = ModContent.Request<Texture2D>("Redemption/WorldGeneration/CraterSnow", AssetRequestMode.ImmediateLoad).Value;
-                Texture2D texWall = ModContent.Request<Texture2D>("Redemption/WorldGeneration/CraterWalls", AssetRequestMode.ImmediateLoad).Value;
+                TexGenData tex = TexGen.GetTextureForGen("Redemption/WorldGeneration/Crater");
+                TexGenData texSnow = TexGen.GetTextureForGen("Redemption/WorldGeneration/CraterSnow");
+                TexGenData texWall = TexGen.GetTextureForGen("Redemption/WorldGeneration/CraterWalls");
+
+                Point16 pos = new((int)(Center.X / 16) - 50, (int)(Center.Y / 16) - 46);
+                GenUtils.ClearTrees(new Point16(100, 100), pos);
 
                 if (tile.HasTile && (TileID.Sets.Conversion.Ice[tileType] || tileType == TileID.SnowBlock))
                 {
@@ -43,11 +45,9 @@ namespace Redemption
                         [Color.Black] = -1
                     };
 
-                    GenUtils.InvokeOnMainThread(() =>
-                    {
-                        TexGen gen = BaseWorldGenTex.GetTexGenerator(texSnow, colorToTile, texWall, colorToWall);
-                        gen.Generate((int)(Center.X / 16) - 50, (int)(Center.Y / 16) - 46, true, true);
-                    });
+                    TexGen gen = TexGen.GetTexGenerator(texSnow, colorToTile, texWall, colorToWall);
+                    gen.Generate(pos.X, pos.Y, true, true);
+
                 }
                 else if (tile.HasTile && (TileID.Sets.Conversion.Sand[tileType] || TileID.Sets.Conversion.Sandstone[tileType] || TileID.Sets.Conversion.HardenedSand[tileType]))
                 {
@@ -64,11 +64,9 @@ namespace Redemption
                         [new Color(150, 150, 150)] = -2,
                         [Color.Black] = -1
                     };
-                    GenUtils.InvokeOnMainThread(() =>
-                    {
-                        TexGen gen = BaseWorldGenTex.GetTexGenerator(tex, colorToTile, texWall, colorToWall);
-                        gen.Generate((int)(Center.X / 16) - 50, (int)(Center.Y / 16) - 46, true, true);
-                    });
+                    TexGen gen = TexGen.GetTexGenerator(tex, colorToTile, texWall, colorToWall);
+                    gen.Generate(pos.X, pos.Y, true, true);
+
                 }
                 else
                 {
@@ -85,11 +83,9 @@ namespace Redemption
                         [new Color(150, 150, 150)] = -2,
                         [Color.Black] = -1
                     };
-                    GenUtils.InvokeOnMainThread(() =>
-                    {
-                        TexGen gen = BaseWorldGenTex.GetTexGenerator(tex, colorToTile, texWall, colorToWall);
-                        gen.Generate((int)(Center.X / 16) - 50, (int)(Center.Y / 16) - 46, true, true);
-                    });
+                    TexGen gen = TexGen.GetTexGenerator(tex, colorToTile, texWall, colorToWall);
+                    gen.Generate(pos.X, pos.Y, true, true);
+
                 }
             }
 
@@ -129,7 +125,7 @@ namespace Redemption
                     continue;
 
                 Tile tile = Framing.GetTileSafely(x1, RadiusUp);
-                if (dist < radius * 16f && tile != null)
+                if (dist < radius * 16f && (tile.HasTile || tile.WallType > 0) && tile != null)
                     WastelandTileConversion(tile, x1, RadiusUp);
             }
         }

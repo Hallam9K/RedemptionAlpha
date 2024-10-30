@@ -1,20 +1,24 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Redemption.Globals;
 using ReLogic.Graphics;
+using System.IO;
 using Terraria;
 using Terraria.Enums;
 using Terraria.GameContent;
+using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.UI;
 using Terraria.UI.Chat;
+using static Redemption.Globals.RedeNet;
 
 namespace Redemption.UI
 {
-    public class ChaliceAlignmentUI : UIState
+    public class ChaliceAlignmentUI : UIState //This dialogue system is adapted from my title system and as such works very similarly - Seraph
     {
+        public static ChaliceAlignmentUI Instance => RedeSystem.Instance.ChaliceUIElement;
 
-        //This dialogue system is adapted from my title system and as such works very similarly - Seraph
         private string Text;
         private string Title = null;
         private float FadeTimer = 0;
@@ -24,32 +28,94 @@ namespace Redemption.UI
         private float FontScale = 1;
 
         private float Shake = 0;
-        public int ID = 0;
         private readonly int TextFont = 0;
         public Vector2? TextPos = null;
         public Color? TextColor = null;
         public Color? ShadowColor = null;
         public static bool Visible = false;
 
-        public void DisplayDialogue(string text, int displayTime = 30, int fadeTime = 12, float shakestrength = 0, Color? textColor = null, Color? shadowColor = null, Vector2? textPosition = null, int font = 0, int id = 0)
+        /// <summary>
+        /// Displays Chalice dialogue locally
+        /// </summary>
+        public static void DisplayDialogue(string text, int displayTime = 30, int fadeTime = 12, float shakeStrength = 0, Color? textColor = null, Color? shadowColor = null, Vector2? textPosition = null)
         {
+            if(!RedeWorld.alignmentGiven)
+                return;
+
             if (!Main.dedServ)
             {
-                Text = text;
-                Title = Language.GetTextValue("Mods.Redemption.UI.Chalice.Name") + ":";
-                FadeTimer = 0;
-                DisplayTimer = 0;
-                MaxDisplayTime = displayTime;
-                MaxFadeTime = fadeTime;
-                FontScale = 0.6f;
-                TextColor = textColor;
-                ShadowColor = shadowColor;
-                Shake = shakestrength;
-                TextPos = textPosition;
-                ID = id;
-                Visible = true;
+                Instance.Text = text;
+                Instance.Title = Language.GetTextValue("Mods.Redemption.UI.Chalice.Name") + ":";
+                Instance.FadeTimer = 0;
+                Instance.DisplayTimer = 0;
+                Instance.MaxDisplayTime = displayTime;
+                Instance.MaxFadeTime = fadeTime;
+                Instance.FontScale = 0.6f;
+                Instance.TextColor = textColor;
+                Instance.ShadowColor = shadowColor;
+                Instance.Shake = shakeStrength;
+                Instance.TextPos = textPosition;
+                Visible = true;   
             }
         }
+
+        /// <summary>
+        /// Displays Chalice dialogue to all the players. Can be called on clients or servers, you must make sure that only one of them calls it.
+        /// </summary>
+        public static void BroadcastDialogue(NetworkText text, int displayTime = 30, int fadeTime = 12, float shakeStrength = 0, Color? textColor = null, Color? shadowColor = null, Vector2? textPosition = null, int toClient = -1, int ignoreClient = -1)
+        {
+            if (!RedeWorld.alignmentGiven)
+                return;
+
+            if (Main.netMode != NetmodeID.Server)
+            {
+                DisplayDialogue(text.ToString(), displayTime, fadeTime, shakeStrength, textColor, shadowColor, textPosition);
+            }
+
+            if (Main.netMode != NetmodeID.SinglePlayer)
+            {
+                ModPacket packet = Redemption.Instance.GetPacket();
+                packet.Write((byte)ModMessageType.SyncChaliceDialogue);
+                text.Serialize(packet);
+                packet.Write((ushort)displayTime);
+                packet.Write((ushort)fadeTime);
+                packet.Write(shakeStrength);
+
+                packet.Write(textColor.HasValue);
+                if (textColor.HasValue) packet.Write(textColor.Value.PackedValue);
+
+                packet.Write(shadowColor.HasValue);
+                if (shadowColor.HasValue) packet.Write(shadowColor.Value.PackedValue);
+
+                packet.Write(textPosition.HasValue);
+                if (textPosition.HasValue) packet.WriteVector2(textPosition.Value);
+
+                packet.Send(toClient, ignoreClient);
+            }
+        }
+
+        public static void ReceiveSyncChaliceDialogue(BinaryReader reader, int sender)
+        {
+            NetworkText text = NetworkText.Deserialize(reader);
+            int displayTime = reader.ReadUInt16();
+            int fadeTime = reader.ReadUInt16();
+            float shakeStrength = reader.ReadSingle();
+
+            Color? textColor = null;
+            if (reader.ReadBoolean()) textColor = new() { PackedValue = reader.ReadUInt32() };
+
+            Color? shadowColor = null;
+            if (reader.ReadBoolean()) shadowColor = new() { PackedValue = reader.ReadUInt32() };
+
+            Vector2? textPosition = null;
+            if (reader.ReadBoolean()) textPosition = reader.ReadVector2();
+
+            if (Main.netMode == NetmodeID.MultiplayerClient)
+                DisplayDialogue(text.ToString(), displayTime, fadeTime, shakeStrength, textColor, shadowColor, textPosition);
+            else
+                BroadcastDialogue(text, displayTime, fadeTime, shakeStrength, textColor, shadowColor, textPosition, ignoreClient: sender);
+        }
+
         public override void Update(GameTime gameTime)
         {
             float passedTime = (float)gameTime.ElapsedGameTime.TotalSeconds;

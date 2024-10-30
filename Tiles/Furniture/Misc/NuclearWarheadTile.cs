@@ -65,9 +65,8 @@ namespace Redemption.Tiles.Furniture.Misc
         {
             if (RedeWorld.nukeCountdownActive && Main.netMode != NetmodeID.MultiplayerClient)
             {
-                RedeWorld.nukeTimerInternal = 2;
-                if (Main.netMode == NetmodeID.Server)
-                    NetMessage.SendData(MessageID.WorldData);
+                RedeWorld.nukeTimer = 2;
+                RedeWorld.SyncData();
             }
         }
         public override bool CanExplode(int i, int j)
@@ -83,8 +82,7 @@ namespace Redemption.Tiles.Furniture.Misc
                     NukeDetonationUI.Visible = true;
 
                 RedeWorld.nukeGroundZero = new Vector2(i * 16, j * 16);
-                if (Main.netMode == NetmodeID.Server)
-                    NetMessage.SendData(MessageID.WorldData);
+                RedeWorld.SyncData();
             }
             return true;
 

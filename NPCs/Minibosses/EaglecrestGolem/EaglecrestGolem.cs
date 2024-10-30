@@ -16,6 +16,7 @@ using Redemption.Items.Weapons.PreHM.Summon;
 using Redemption.NPCs.Friendly.TownNPCs;
 using Redemption.Particles;
 using Redemption.Projectiles.Magic;
+using Redemption.UI;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -132,21 +133,8 @@ namespace Redemption.NPCs.Minibosses.EaglecrestGolem
                 if (zephos >= 0)
                     Main.npc[zephos].GetGlobalNPC<ExclaimMarkNPC>().exclaimationMark[0] = false;
 
-                for (int p = 0; p < Main.maxPlayers; p++)
-                {
-                    Player player = Main.player[p];
-                    if (!player.active)
-                        continue;
-
-                    CombatText.NewText(player.getRect(), Color.Gray, "+0", true, false);
-
-                    if (!RedeWorld.alignmentGiven)
-                        continue;
-
-                    if (!Main.dedServ)
-                        RedeSystem.Instance.ChaliceUIElement.DisplayDialogue(Language.GetTextValue("Mods.Redemption.UI.Chalice.EaglecrestDefeat"), 180, 30, 0, Color.DarkGoldenrod);
-
-                }
+                RedeWorld.Alignment += 0;
+                ChaliceAlignmentUI.BroadcastDialogue(NetworkText.FromKey("Mods.Redemption.UI.Chalice.EaglecrestDefeat"), 300, 30, 0, Color.DarkGoldenrod);
             }
             NPC.SetEventFlagCleared(ref RedeBossDowned.downedEaglecrestGolem, -1);
         }
@@ -170,6 +158,15 @@ namespace Redemption.NPCs.Minibosses.EaglecrestGolem
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<LightningStone>()));
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<GathicStone>(), 1, 14, 34));
         }
+        public override void ModifyHitByItem(Player player, Item item, ref NPC.HitModifiers modifiers)
+        {
+            if (item.pick > 0)
+            {
+                if (!Main.dedServ)
+                    SoundEngine.PlaySound(CustomSounds.StoneHit, NPC.position);
+                modifiers.FlatBonusDamage += item.pick / 2;
+            }
+        }
 
         public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)
         {
@@ -192,9 +189,10 @@ namespace Redemption.NPCs.Minibosses.EaglecrestGolem
         private bool Flare;
         public override void AI()
         {
-            Player player = Main.player[NPC.target];
-            if (NPC.target < 0 || NPC.target == 255 || player.dead || !player.active)
+            if (NPC.target < 0 || NPC.target == 255 || Main.player[NPC.target].dead || !Main.player[NPC.target].active)
                 NPC.TargetClosest();
+
+            Player player = Main.player[NPC.target];
 
             if (NPC.DespawnHandler(1))
                 return;
@@ -214,9 +212,9 @@ namespace Redemption.NPCs.Minibosses.EaglecrestGolem
             {
                 case ActionState.Start:
                     NPC.target = RedeHelper.GetNearestAlivePlayer(NPC);
-                    if (!Main.dedServ)
-                        RedeSystem.Instance.TitleCardUIElement.DisplayTitle(Language.GetTextValue("Mods.Redemption.TitleCard.Golem.Name"), 60, 90, 0.8f, 0, Color.Gray, Language.GetTextValue("Mods.Redemption.TitleCard.Golem.Modifier"));
-                    TimerRand = Main.rand.Next(300, 700);
+                    TitleCard.BroadcastTitle(NetworkText.FromKey("Mods.Redemption.TitleCard.Golem.Name"), 60, 90, 0.8f, Color.Gray, NetworkText.FromKey("Mods.Redemption.TitleCard.Golem.Modifier"));
+                    if (Main.netMode != NetmodeID.MultiplayerClient)
+                        TimerRand = Main.rand.Next(300, 700);
                     AIState = ActionState.Idle;
                     NPC.netUpdate = true;
                     break;
@@ -224,12 +222,13 @@ namespace Redemption.NPCs.Minibosses.EaglecrestGolem
                     if (++AITimer >= TimerRand)
                     {
                         AITimer = 0;
-                        TimerRand = Main.rand.Next(500, 700);
+                        if (Main.netMode != NetmodeID.MultiplayerClient)
+                            TimerRand = Main.rand.Next(500, 700);
                         AIState = ActionState.Roll;
                         NPC.netUpdate = true;
                     }
 
-                    if (NPC.velocity.Y == 0 && NPC.DistanceSQ(player.Center) <= 400 * 400 && Main.rand.NextBool(150))
+                    if (NPC.velocity.Y == 0 && NPC.DistanceSQ(player.Center) <= 400 * 400 && Main.netMode != NetmodeID.MultiplayerClient && Main.rand.NextBool(150))
                     {
                         TimerRand2 = 0;
                         NPC.velocity.X = 0;
@@ -239,26 +238,29 @@ namespace Redemption.NPCs.Minibosses.EaglecrestGolem
                         AIState = ActionState.Slash;
                         NPC.netUpdate = true;
                     }
-                    if (NPC.velocity.Y == 0 && NPC.DistanceSQ(player.Center) > 150 * 150 && Main.rand.NextBool(400))
+                    if (NPC.velocity.Y == 0 && NPC.DistanceSQ(player.Center) > 150 * 150 && Main.netMode != NetmodeID.MultiplayerClient && Main.rand.NextBool(400))
                     {
                         TimerRand2 = 0;
                         AIState = ActionState.Laser;
                         NPC.netUpdate = true;
                     }
-                    bool chance = Main.rand.NextBool(2);
-                    if (NPC.life <= (int)(NPC.lifeMax * .4f))
-                        chance = true;
-                    if (AITimer == (int)(TimerRand / 2) && chance && NPC.life <= (int)(NPC.lifeMax * .7f))
+                    if (Main.netMode != NetmodeID.MultiplayerClient)
                     {
-                        AITimer = 0;
-                        TimerRand = 0;
-                        TimerRand2 = 0;
-                        AIState = ActionState.Stomp;
-                        NPC.netUpdate = true;
+                        bool chance = Main.rand.NextBool(2);
+                        if (NPC.life <= (int)(NPC.lifeMax * .4f))
+                            chance = true;
+                        if (AITimer == (int)(TimerRand / 2) && chance && NPC.life <= (int)(NPC.lifeMax * .7f))
+                        {
+                            AITimer = 0;
+                            TimerRand = 0;
+                            TimerRand2 = 0;
+                            AIState = ActionState.Stomp;
+                            NPC.netUpdate = true;
+                        }
                     }
 
                     summonTimer--;
-                    if (Main.rand.NextBool(100) && summonTimer <= 0 && NPC.CountNPCS(ModContent.NPCType<EaglecrestRockPile>()) < 1)
+                    if (Main.netMode != NetmodeID.MultiplayerClient && Main.rand.NextBool(100) && summonTimer <= 0 && NPC.CountNPCS(ModContent.NPCType<EaglecrestRockPile>()) < 1)
                     {
                         int amt = 2;
                         if (NPC.life <= (int)(NPC.lifeMax * .65f))
@@ -314,7 +316,7 @@ namespace Redemption.NPCs.Minibosses.EaglecrestGolem
                         NPCHelper.HorizontallyMove(NPC, player.Center, 0.12f, 10, 20, 30, NPC.Center.Y > player.Center.Y, player);
 
                         Rectangle tooHighCheck = new((int)NPC.Center.X - 300, (int)NPC.Center.Y - 900, 600, 800);
-                        if (Main.rand.NextBool(player.Hitbox.Intersects(tooHighCheck) ? 100 : 1000))
+                        if (Main.netMode != NetmodeID.MultiplayerClient && Main.rand.NextBool(player.Hitbox.Intersects(tooHighCheck) ? 100 : 1000))
                         {
                             AITimer = 0;
                             TimerRand = 0;
@@ -444,7 +446,8 @@ namespace Redemption.NPCs.Minibosses.EaglecrestGolem
                                 glowOpacity = 0;
                                 NPC.velocity.Y -= 8;
                                 AITimer = 0;
-                                TimerRand = Main.rand.Next(300, 700);
+                                if (Main.netMode != NetmodeID.MultiplayerClient)
+                                    TimerRand = Main.rand.Next(300, 700);
                                 AIState = ActionState.Idle;
                                 NPC.netUpdate = true;
                             }
@@ -452,6 +455,7 @@ namespace Redemption.NPCs.Minibosses.EaglecrestGolem
                     }
                     break;
                 case ActionState.Stomp:
+                    NPC.netOffset *= 0;
                     if (NPC.velocity.Y < 0 || Collision.SolidCollision(NPC.Center - Vector2.One, 2, 2))
                         NPC.noTileCollide = true;
                     else
@@ -513,7 +517,11 @@ namespace Redemption.NPCs.Minibosses.EaglecrestGolem
 
                                 NPC.Shoot(NPC.Center, ModContent.ProjectileType<EaglecrestGolem_ShockwaveSpawner>(), NPC.damage, Vector2.Zero, NPC.velocity.Y * 5, NPC.velocity.Y);
 
-                                NPC.velocity = RedeHelper.GetArcVel(NPC, landingPos, 0.3f, Main.rand.Next(80, 400), 500, maxXvel: 10);
+                                if (Main.netMode != NetmodeID.MultiplayerClient)
+                                {
+                                    NPC.velocity = RedeHelper.GetArcVel(NPC, landingPos, 0.3f, Main.rand.Next(80, 400), 500, maxXvel: 10);
+                                    NPC.netUpdate = true;
+                                }
                                 int amt = 2;
                                 if (NPC.life <= NPC.lifeMax / 2)
                                     amt = 3;
@@ -536,8 +544,11 @@ namespace Redemption.NPCs.Minibosses.EaglecrestGolem
                                 NPC.noGravity = false;
                                 NPC.noTileCollide = false;
                                 glowOpacity = 0;
-                                TimerRand = Main.rand.Next(300, 700);
-                                AITimer = TimerRand / 2;
+                                if (Main.netMode != NetmodeID.MultiplayerClient)
+                                {
+                                    TimerRand = Main.rand.Next(300, 700);
+                                    AITimer = TimerRand / 2;
+                                }
                                 AIState = ActionState.Idle;
                                 NPC.netUpdate = true;
                             }
@@ -778,8 +789,11 @@ namespace Redemption.NPCs.Minibosses.EaglecrestGolem
                     if (numtries >= 20)
                         break;
 
-                    int proj = Projectile.NewProjectile(Projectile.GetSource_FromThis(), origin + new Vector2(0, 2), Vector2.Zero, ModContent.ProjectileType<Golem_GroundShock>(), Projectile.damage, 3, Main.myPlayer, Projectile.ai[1]);
-                    SoundEngine.PlaySound(SoundID.DD2_MonkStaffGroundImpact with { Volume = 0.2f }, Main.projectile[proj].Center);
+                    if (Main.netMode != NetmodeID.MultiplayerClient)
+                    {
+                        int proj = Projectile.NewProjectile(Terraria.Entity.InheritSource(Main.npc[(int)Projectile.ai[2]]), origin + new Vector2(0, 2), Vector2.Zero, ModContent.ProjectileType<Golem_GroundShock>(), Projectile.damage, 3, Main.myPlayer, Projectile.ai[1]);
+                        SoundEngine.PlaySound(SoundID.DD2_MonkStaffGroundImpact with { Volume = 0.2f }, Main.projectile[proj].Center);
+                    }
                 }
             }
             if (Projectile.localAI[0] >= Projectile.ai[0])

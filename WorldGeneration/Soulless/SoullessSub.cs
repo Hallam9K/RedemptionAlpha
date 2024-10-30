@@ -98,25 +98,12 @@ namespace Redemption.WorldGeneration.Soulless
                 [Color.Black] = -1
             };
 
-            Texture2D tex = ModContent.Request<Texture2D>("Redemption/WorldGeneration/Soulless/SoullessCaverns", AssetRequestMode.ImmediateLoad).Value;
-            Texture2D texWalls = ModContent.Request<Texture2D>("Redemption/WorldGeneration/Soulless/SoullessCavernsWalls", AssetRequestMode.ImmediateLoad).Value;
-            bool genned = false;
-            bool placed = false;
-            while (!genned)
-            {
-                if (placed)
-                    continue;
-
-                Main.QueueMainThreadAction(() =>
-                {
-                    TexGen gen = BaseWorldGenTex.GetTexGenerator(tex, colorToTile, texWalls, colorToWall);
-                    gen.Generate(0, 0, true, true);
-
-                    genned = true;
-                });
-
-                placed = true;
-            }
+            TexGenData tex = TexGen.GetTextureForGen("Redemption/WorldGeneration/Soulless/SoullessCaverns");
+            TexGenData texWalls = TexGen.GetTextureForGen("Redemption/WorldGeneration/Soulless/SoullessCavernsWalls");
+            TexGenData texSlopes = TexGen.GetTextureForGen("Redemption/WorldGeneration/Soulless/SoullessCavernsSlopes");
+            TexGenData texLiquids = TexGen.GetTextureForGen("Redemption/WorldGeneration/Soulless/SoullessCavernsLiquids");
+            TexGen gen = TexGen.GetTexGenerator(tex, colorToTile, texWalls, colorToWall, texLiquids, texSlopes);
+            gen.Generate(0, 0, true, false);
         }
         public SoullessPass1(string name, float loadWeight) : base(name, loadWeight)
         {

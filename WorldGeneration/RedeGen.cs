@@ -406,7 +406,7 @@ namespace Redemption.WorldGeneration
                 return;
             if (NPC.downedBoss3 && !dragonLeadSpawn && !cryoCrystalSpawn)
             {
-                if (RedeWorld.alignment >= 0)
+                if (RedeWorld.Alignment >= 0)
                 {
                     if (Main.netMode != NetmodeID.MultiplayerClient)
                         cryoCrystalSpawn = true;
@@ -1484,20 +1484,16 @@ namespace Redemption.WorldGeneration
 
                         progress.Message = "Thinking with portals...Surface Portal";
 
-                        Texture2D tex = ModContent.Request<Texture2D>("Redemption/WorldGeneration/NewbCave", AssetRequestMode.ImmediateLoad).Value;
-                        Texture2D texWall = ModContent.Request<Texture2D>("Redemption/WorldGeneration/NewbCaveWalls", AssetRequestMode.ImmediateLoad).Value;
-                        Texture2D texClear = ModContent.Request<Texture2D>("Redemption/WorldGeneration/NewbCaveClear", AssetRequestMode.ImmediateLoad).Value;
-
                         GenUtils.ClearTrees(new Point16(60, 82), origin.ToPoint16());
+                        TexGenData tex = TexGen.GetTextureForGen("Redemption/WorldGeneration/NewbCave");
+                        TexGenData texWall = TexGen.GetTextureForGen("Redemption/WorldGeneration/NewbCaveWalls");
+                        TexGenData texClear = TexGen.GetTextureForGen("Redemption/WorldGeneration/NewbCaveClear");
 
-                        GenUtils.InvokeOnMainThread(() =>
-                        {
-                            TexGen genC = BaseWorldGenTex.GetTexGenerator(texClear, colorToTile);
-                            genC.Generate((int)origin.X, (int)origin.Y, true, true);
+                        TexGen genC = TexGen.GetTexGenerator(texClear, colorToTile);
+                        genC.Generate((int)origin.X, (int)origin.Y, true, false);
 
-                            TexGen gen = BaseWorldGenTex.GetTexGenerator(tex, colorToTile, texWall, colorToWall);
-                            gen.Generate((int)origin.X, (int)origin.Y, true, true);
-                        });
+                        TexGen gen = TexGen.GetTexGenerator(tex, colorToTile, texWall, colorToWall);
+                        gen.Generate((int)origin.X, (int)origin.Y, true, false);
 
                         newbCaveVector = origin;
                         placed = true;
@@ -1774,10 +1770,10 @@ namespace Redemption.WorldGeneration
                         if (tile.TileType != TileID.Stone)
                             continue;
 
-                        Texture2D tex = ModContent.Request<Texture2D>("Redemption/WorldGeneration/GathicPortal", AssetRequestMode.ImmediateLoad).Value;
-                        Texture2D texWall = ModContent.Request<Texture2D>("Redemption/WorldGeneration/GathicPortalWalls", AssetRequestMode.ImmediateLoad).Value;
-                        Texture2D texSlope = ModContent.Request<Texture2D>("Redemption/WorldGeneration/GathicPortalSlopes", AssetRequestMode.ImmediateLoad).Value;
-                        Texture2D texClear = ModContent.Request<Texture2D>("Redemption/WorldGeneration/GathicPortalClear", AssetRequestMode.ImmediateLoad).Value;
+                        TexGenData tex = TexGen.GetTextureForGen("Redemption/WorldGeneration/GathicPortal");
+                        TexGenData texWall = TexGen.GetTextureForGen("Redemption/WorldGeneration/GathicPortalWalls");
+                        TexGenData texSlope = TexGen.GetTextureForGen("Redemption/WorldGeneration/GathicPortalSlopes");
+                        TexGenData texClear = TexGen.GetTextureForGen("Redemption/WorldGeneration/GathicPortalClear");
 
                         Vector2 origin = new(placeX - 51, placeY - 23);
 
@@ -1802,14 +1798,11 @@ namespace Redemption.WorldGeneration
                             new Actions.SetLiquid(0, 0)
                         }));
 
-                        GenUtils.InvokeOnMainThread(() =>
-                        {
-                            TexGen genC = BaseWorldGenTex.GetTexGenerator(texClear, colorToTile);
-                            genC.Generate((int)origin.X, (int)origin.Y, true, true);
+                        TexGen genC = TexGen.GetTexGenerator(texClear, colorToTile);
+                        genC.Generate((int)origin.X, (int)origin.Y, true, false);
 
-                            TexGen gen = BaseWorldGenTex.GetTexGenerator(tex, colorToTile, texWall, colorToWall, null, texSlope);
-                            gen.Generate((int)origin.X, (int)origin.Y, true, true);
-                        });
+                        TexGen gen = TexGen.GetTexGenerator(tex, colorToTile, texWall, colorToWall, null, texSlope);
+                        gen.Generate((int)origin.X, (int)origin.Y, true, false);
 
                         gathicPortalVector = origin;
                         placed = true;
@@ -1892,10 +1885,10 @@ namespace Redemption.WorldGeneration
                         if (tile.TileType != TileID.Stone)
                             continue;
 
-                        Texture2D tex = ModContent.Request<Texture2D>("Redemption/WorldGeneration/AncientHutTiles", AssetRequestMode.ImmediateLoad).Value;
-                        Texture2D texWall = ModContent.Request<Texture2D>("Redemption/WorldGeneration/AncientHutWalls", AssetRequestMode.ImmediateLoad).Value;
-                        Texture2D texSlope = ModContent.Request<Texture2D>("Redemption/WorldGeneration/AncientHutSlopes", AssetRequestMode.ImmediateLoad).Value;
-                        Texture2D texClear = ModContent.Request<Texture2D>("Redemption/WorldGeneration/AncientHutClear", AssetRequestMode.ImmediateLoad).Value;
+                        TexGenData tex = TexGen.GetTextureForGen("Redemption/WorldGeneration/AncientHutTiles");
+                        TexGenData texWall = TexGen.GetTextureForGen("Redemption/WorldGeneration/AncientHutWalls");
+                        TexGenData texSlope = TexGen.GetTextureForGen("Redemption/WorldGeneration/AncientHutSlopes");
+                        TexGenData texClear = TexGen.GetTextureForGen("Redemption/WorldGeneration/AncientHutClear");
 
                         origin = new(placeX - 15, placeY - 11);
 
@@ -1920,14 +1913,11 @@ namespace Redemption.WorldGeneration
                             new Actions.SetLiquid(0, 0)
                         }));
 
-                        GenUtils.InvokeOnMainThread(() =>
-                        {
-                            TexGen genC = BaseWorldGenTex.GetTexGenerator(texClear, colorToTile);
-                            genC.Generate(origin.X, origin.Y, true, true);
+                        TexGen genC = TexGen.GetTexGenerator(texClear, colorToTile);
+                        genC.Generate(origin.X, origin.Y, true, false);
 
-                            TexGen gen = BaseWorldGenTex.GetTexGenerator(tex, colorToTile, texWall, colorToWall, null, texSlope);
-                            gen.Generate(origin.X, origin.Y, true, true);
-                        });
+                        TexGen gen = TexGen.GetTexGenerator(tex, colorToTile, texWall, colorToWall, null, texSlope);
+                        gen.Generate(origin.X, origin.Y, true, false);
 
                         placed = true;
                     }
@@ -2024,22 +2014,21 @@ namespace Redemption.WorldGeneration
                         if (blacklist)
                             continue;
 
-                        Texture2D tex = ModContent.Request<Texture2D>("Redemption/WorldGeneration/HallOfHeroesTiles", AssetRequestMode.ImmediateLoad).Value;
-                        Texture2D texWall = ModContent.Request<Texture2D>("Redemption/WorldGeneration/HallOfHeroesWalls", AssetRequestMode.ImmediateLoad).Value;
-                        Texture2D texSlope = ModContent.Request<Texture2D>("Redemption/WorldGeneration/HallOfHeroesSlopes", AssetRequestMode.ImmediateLoad).Value;
-                        Texture2D texClear = ModContent.Request<Texture2D>("Redemption/WorldGeneration/HallOfHeroesClear", AssetRequestMode.ImmediateLoad).Value;
+                        TexGenData tex = TexGen.GetTextureForGen("Redemption/WorldGeneration/HallOfHeroesTiles");
+                        TexGenData texWall = TexGen.GetTextureForGen("Redemption/WorldGeneration/HallOfHeroesWalls");
+                        TexGenData texSlope = TexGen.GetTextureForGen("Redemption/WorldGeneration/HallOfHeroesSlopes");
+                        TexGenData texClear = TexGen.GetTextureForGen("Redemption/WorldGeneration/HallOfHeroesClear");
+
                         WorldUtils.Gen(origin2.ToPoint(), new Shapes.Rectangle(84, 43), Actions.Chain(new GenAction[]
                         {
                             new Actions.SetLiquid(0, 0)
                         }));
-                        GenUtils.InvokeOnMainThread(() =>
-                        {
-                            TexGen genC = BaseWorldGenTex.GetTexGenerator(texClear, colorToTile);
-                            genC.Generate((int)origin2.X, (int)origin2.Y, true, true);
+                        TexGen genC = TexGen.GetTexGenerator(texClear, colorToTile);
+                        genC.Generate((int)origin2.X, (int)origin2.Y, true, false);
 
-                            TexGen gen = BaseWorldGenTex.GetTexGenerator(tex, colorToTile, texWall, colorToWall, null, texSlope);
-                            gen.Generate((int)origin2.X, (int)origin2.Y, true, true);
-                        });
+                        TexGen gen = TexGen.GetTexGenerator(tex, colorToTile, texWall, colorToWall, null, texSlope);
+                        gen.Generate((int)origin2.X, (int)origin2.Y, true, false);
+
                         HallOfHeroesVector = origin2;
                         placed = true;
                     }
@@ -2127,9 +2116,9 @@ namespace Redemption.WorldGeneration
                         if (tile.TileType != TileID.Stone)
                             continue;
 
-                        Texture2D tex = ModContent.Request<Texture2D>("Redemption/WorldGeneration/TiedLairTiles", AssetRequestMode.ImmediateLoad).Value;
-                        Texture2D texWall = ModContent.Request<Texture2D>("Redemption/WorldGeneration/TiedLairWalls", AssetRequestMode.ImmediateLoad).Value;
-                        Texture2D texClear = ModContent.Request<Texture2D>("Redemption/WorldGeneration/TiedLairClear", AssetRequestMode.ImmediateLoad).Value;
+                        TexGenData tex = TexGen.GetTextureForGen("Redemption/WorldGeneration/TiedLairTiles");
+                        TexGenData texWall = TexGen.GetTextureForGen("Redemption/WorldGeneration/TiedLairWalls");
+                        TexGenData texClear = TexGen.GetTextureForGen("Redemption/WorldGeneration/TiedLairClear");
 
                         origin = new(placeX - 10, placeY - 11);
 
@@ -2154,14 +2143,11 @@ namespace Redemption.WorldGeneration
                             new Actions.SetLiquid(0, 0)
                         }));
 
-                        GenUtils.InvokeOnMainThread(() =>
-                        {
-                            TexGen genC = BaseWorldGenTex.GetTexGenerator(texClear, colorToTile);
-                            genC.Generate(origin.X, origin.Y, true, true);
+                        TexGen genC = TexGen.GetTexGenerator(texClear, colorToTile);
+                        genC.Generate(origin.X, origin.Y, true, false);
 
-                            TexGen gen = BaseWorldGenTex.GetTexGenerator(tex, colorToTile, texWall, colorToWall);
-                            gen.Generate(origin.X, origin.Y, true, true);
-                        });
+                        TexGen gen = TexGen.GetTexGenerator(tex, colorToTile, texWall, colorToWall);
+                        gen.Generate(origin.X, origin.Y, true, false);
 
                         placed = true;
                     }
@@ -2848,6 +2834,9 @@ namespace Redemption.WorldGeneration
     }
     public class GenUtils
     {
+        public static Dictionary<Color, int> colorToLiquid;
+        public static Dictionary<Color, int> colorToSlope;
+
         public static void ObjectPlace(Point Origin, int x, int y, int TileType, int style = 0, int direction = -1)
         {
             WorldGen.PlaceObject(Origin.X + x, Origin.Y + y, TileType, true, style, 0, -1, direction);

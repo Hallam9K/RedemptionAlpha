@@ -60,26 +60,6 @@ namespace Redemption.Globals
                 spriteBatch.Draw(tex, position + new Vector2(0f, 4f).RotatedBy(radians) * time, rect, new Color(color.R, color.G, color.B, 77) * opacity, rot, origin, scale, effects, 0);
             }
         }
-        public static void DrawTreasureBagEffect(SpriteBatch spriteBatch, Texture2D tex, ref float drawTimer, Vector2 position, Rectangle? rect, Color color, float rot, Vector2 origin, float scale, SpriteEffects effects = 0)
-        {
-            float time = Main.GlobalTimeWrappedHourly;
-            float timer = drawTimer / 240f + time * 0.04f;
-            time %= 4f;
-            time /= 2f;
-            if (time >= 1f)
-                time = 2f - time;
-            time = time * 0.5f + 0.5f;
-            for (float i = 0f; i < 1f; i += 0.25f)
-            {
-                float radians = (i + timer) * MathHelper.TwoPi;
-                spriteBatch.Draw(tex, position + new Vector2(0f, 8f).RotatedBy(radians) * time, rect, new Color(color.R, color.G, color.B, 50), rot, origin, scale, effects, 0);
-            }
-            for (float i = 0f; i < 1f; i += 0.34f)
-            {
-                float radians = (i + timer) * MathHelper.TwoPi;
-                spriteBatch.Draw(tex, position + new Vector2(0f, 4f).RotatedBy(radians) * time, rect, new Color(color.R, color.G, color.B, 77), rot, origin, scale, effects, 0);
-            }
-        }
         public static void DrawTreasureBagEffect(SpriteBatch spriteBatch, Texture2D tex, ref float drawTimer, Vector2 position, Rectangle? rect, Color color, float rot, Vector2 origin, Vector2 scale, SpriteEffects effects = 0)
         {
             float time = Main.GlobalTimeWrappedHourly;
@@ -110,7 +90,10 @@ namespace Redemption.Globals
             {
                 int p = Projectile.NewProjectile(null, center, Vector2.Zero, ModContent.ProjectileType<Ring_Visual>(), 0, 0,
                     Main.myPlayer, flatScale, multiScale);
-                (Main.projectile[p].ModProjectile as Ring_Visual).color = color;
+                (Main.projectile[p].ModProjectile as Ring_Visual).Color = color;
+
+                if (Main.netMode == NetmodeID.Server)
+                    NetMessage.SendData(MessageID.SyncProjectile, number: p);
             }
         }
         public static void SpawnCirclePulse(Vector2 center, Color color, float scale = 1, Entity target = null)
@@ -119,32 +102,37 @@ namespace Redemption.Globals
             {
                 int p = Projectile.NewProjectile(null, center, Vector2.Zero, ModContent.ProjectileType<CirclePulse_Visual>(), 0, 0,
                     Main.myPlayer, scale);
-                (Main.projectile[p].ModProjectile as CirclePulse_Visual).color = color;
-                (Main.projectile[p].ModProjectile as CirclePulse_Visual).entityTarget = target;
+                (Main.projectile[p].ModProjectile as CirclePulse_Visual).Color = color;
+                (Main.projectile[p].ModProjectile as CirclePulse_Visual).EntityTarget = target;
+
+                if (Main.netMode == NetmodeID.Server)
+                    NetMessage.SendData(MessageID.SyncProjectile, number: p);
             }
         }
-        public static void SpawnExplosion(Vector2 center, Color color, int dustID = DustID.Torch, float shakeAmount = 7, int dustAmount = 30, float dustScale = 2, float scale = 4f, bool noDust = false, Texture2D tex = null, float rot = 0)
+        public static void SpawnExplosion(Vector2 center, Color color, int dustID = DustID.Torch, float shakeAmount = 7, int dustAmount = 30, float dustScale = 2, float scale = 4f, bool noDust = false, string tex = "", float rot = 0)
         {
             if (Main.netMode != NetmodeID.MultiplayerClient)
             {
                 int p = Projectile.NewProjectile(null, center, Vector2.Zero, ModContent.ProjectileType<Explosion_Visual>(), 0, 0,
-                    Main.myPlayer, shakeAmount, dustAmount);
+                    Main.myPlayer, shakeAmount, dustAmount, dustID);
                 Main.projectile[p].rotation = rot;
                 if (Main.projectile[p].ModProjectile is Explosion_Visual explode)
                 {
-                    explode.color = color;
-                    explode.dustID = dustID;
-                    explode.dustScale = dustScale;
-                    explode.scale = scale;
-                    explode.noDust = noDust;
-                    explode.texture = tex;
+                    explode.Color = color;
+                    explode.DustScale = dustScale;
+                    explode.Scale = scale;
+                    explode.NoDust = noDust;
+                    explode.TexturePath = tex;
                 }
+
+                if (Main.netMode == NetmodeID.Server)
+                    NetMessage.SendData(MessageID.SyncProjectile, number: p);
             }
         }
         public static void DrawEyeFlare(SpriteBatch spriteBatch, ref float opacity, Vector2 position, Color color, float rot, float scale = 1f, SpriteEffects effects = 0, Texture2D tex = null, Vector2 origin = default)
         {
             spriteBatch.End();
-            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+            spriteBatch.BeginAdditive();
 
             tex ??= ModContent.Request<Texture2D>("Redemption/Textures/WhiteFlare").Value;
             Rectangle rect = new(0, 0, tex.Width, tex.Height);
@@ -157,7 +145,7 @@ namespace Redemption.Globals
                 spriteBatch.Draw(tex, position, new Rectangle?(rect), colour * 0.4f, rot, origin, scale, effects, 0);
             }
             spriteBatch.End();
-            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+            spriteBatch.BeginDefault();
         }
     }
 }

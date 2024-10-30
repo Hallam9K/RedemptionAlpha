@@ -150,11 +150,9 @@ namespace Redemption.NPCs.Lab.Behemoth
                 case ActionState.Begin:
                     if (AITimer++ == 0)
                     {
+                        TitleCard.BroadcastTitle(NetworkText.FromKey("Mods.Redemption.TitleCard.Behemoth.Name"), 60, 90, 0.8f, Color.Green, NetworkText.FromKey("Mods.Redemption.TitleCard.Behemoth.Modifier"));
                         if (!Main.dedServ)
-                        {
-                            RedeSystem.Instance.TitleCardUIElement.DisplayTitle(Language.GetTextValue("Mods.Redemption.TitleCard.Behemoth.Name"), 60, 90, 0.8f, 0, Color.Green, Language.GetTextValue("Mods.Redemption.TitleCard.Behemoth.Modifier"));
                             SoundEngine.PlaySound(CustomSounds.SpookyNoise, NPC.position);
-                        }
                     }
                     if (AITimer < 180 && NPC.DistanceSQ(Main.LocalPlayer.Center) < 1800 * 1800)
                     {

@@ -68,7 +68,11 @@ namespace Redemption.NPCs.Friendly.TownNPCs
             }
             if (RedeWorld.tbotDownedTimer >= 43200)
             {
-                RedeWorld.tbotDownedTimer = 0;
+                if (Main.netMode != NetmodeID.MultiplayerClient)
+                {
+                    RedeWorld.tbotDownedTimer = 0;
+                    RedeWorld.SyncData();
+                }
 
                 if (Main.netMode == NetmodeID.Server)
                     NetMessage.SendData(MessageID.WorldData);
@@ -95,10 +99,9 @@ namespace Redemption.NPCs.Friendly.TownNPCs
                         player.inventory[potion] = new Item();
 
                     SoundEngine.PlaySound(SoundID.Item3, NPC.position);
-                    RedeWorld.tbotDownedTimer = 43200;
 
-                    if (Main.netMode == NetmodeID.Server)
-                        NetMessage.SendData(MessageID.WorldData);
+                    RedeWorld.tbotDownedTimer = 43200;
+                    RedeWorld.SyncData();
 
                     Main.npcChatText = PotionChat();
                 }

@@ -138,17 +138,8 @@ namespace Redemption.NPCs.Friendly
                             }
                             Main.NewText(Language.GetTextValue("Mods.Redemption.StatusMessage.Other.SkullDigger"), Colors.RarityPurple.R, Colors.RarityPurple.G, Colors.RarityPurple.B);
                             if (!RedeBossDowned.skullDiggerSaved)
-                            {
-                                RedeWorld.alignment++;
-                                for (int p = 0; p < Main.maxPlayers; p++)
-                                {
-                                    Player player2 = Main.player[p];
-                                    if (!player2.active)
-                                        continue;
+                                RedeWorld.Alignment++;
 
-                                    CombatText.NewText(player2.getRect(), Color.Gold, "+1", true, false);
-                                }
-                            }
                             NPC.netUpdate = true;
                             NPC.SetEventFlagCleared(ref RedeBossDowned.skullDiggerSaved, -1);
 
@@ -187,6 +178,7 @@ namespace Redemption.NPCs.Friendly
                 else
                     Main.npcChatText = Language.GetTextValue("Mods.Redemption.Dialogue.SkullDigger.WeddingRingDialogue1");
                 AIState = ActionState.Saved;
+                NetMessage.SendData(MessageID.SyncNPC, number: NPC.whoAmI);
             }
         }
         public static string ChitChat()

@@ -1,23 +1,21 @@
-using System.Collections.Generic;
 using Microsoft.Xna.Framework;
-using Terraria;
-using Terraria.ID;
-using Terraria.ModLoader;
-using Terraria.Localization;
-using Redemption.Tiles.Tiles;
-using Redemption.Globals;
 using Redemption.Base;
-using Terraria.Chat;
-using ReLogic.Content;
-using Microsoft.Xna.Framework.Graphics;
+using Redemption.Globals;
+using Redemption.Tiles.Tiles;
 using Redemption.WorldGeneration;
+using System.Collections.Generic;
+using Terraria;
+using Terraria.Chat;
+using Terraria.ID;
+using Terraria.Localization;
+using Terraria.ModLoader;
 
 namespace Redemption.Items.Usable
 {
     public class ZoneAccessPanel1 : ModItem
     {
         public override void SetStaticDefaults()
-		{
+        {
             // DisplayName.SetDefault("Lab Access Panel - Alpha");
             // Tooltip.SetDefault("Opens up the alpha sector of the lab");
             Item.ResearchUnlockCount = 1;
@@ -35,39 +33,40 @@ namespace Redemption.Items.Usable
             Item.consumable = true;
         }
 
-		public override bool? UseItem(Player player)
+        public override bool? UseItem(Player player)
         {
             if (LabArea.labAccess[0])
             {
                 Main.NewText(Language.GetTextValue("Mods.Redemption.StatusMessage.Progression.LabAccessPanelUsed1"), Color.Cyan);
                 return true;
             }
-            LabArea.labAccess[0] = true;
             string status = Language.GetTextValue("Mods.Redemption.StatusMessage.Progression.LabAccessPanel1");
             if (Main.netMode == NetmodeID.Server)
                 ChatHelper.BroadcastChatMessage(NetworkText.FromLiteral(status), Color.Cyan);
             else if (Main.netMode == NetmodeID.SinglePlayer)
                 Main.NewText(Language.GetTextValue(status), Color.Cyan);
 
-            Dictionary<Color, int> colorToTile = new()
+            if (Main.netMode != NetmodeID.MultiplayerClient)
             {
-                [new Color(220, 255, 255)] = ModContent.TileType<DeactivatedLaserTile>(),
-                [new Color(255, 0, 0)] = ModContent.TileType<DeactivatedLaser2Tile>(),
-                [Color.Black] = -1
-            };
+                Dictionary<Color, int> colorToTile = new()
+                {
+                    [new Color(220, 255, 255)] = ModContent.TileType<DeactivatedLaserTile>(),
+                    [new Color(255, 0, 0)] = ModContent.TileType<DeactivatedLaser2Tile>(),
+                    [Color.Black] = -1
+                };
 
-            Texture2D tex = ModContent.Request<Texture2D>("Redemption/WorldGeneration/ALabAccess1", AssetRequestMode.ImmediateLoad).Value;
-            Point origin = RedeGen.LabVector.ToPoint();
-            GenUtils.InvokeOnMainThread(() =>
-            {
-                TexGen gen = BaseWorldGenTex.GetTexGenerator(tex, colorToTile);
-                gen.Generate(origin.X, origin.Y, true, true);
-            });
-            if (Main.netMode == NetmodeID.Server)
-                NetMessage.SendData(MessageID.WorldData);
+                TexGenData tex = TexGen.GetTextureForGen("Redemption/WorldGeneration/ALabAccess1");
+                Point origin = RedeGen.LabVector.ToPoint();
+                TexGen gen = TexGen.GetTexGenerator(tex, colorToTile);
+                gen.Generate(origin.X, origin.Y, false, true);
+
+                LabArea.labAccess[0] = true;
+                if (Main.netMode == NetmodeID.Server)
+                    NetMessage.SendData(MessageID.WorldData);
+            }
             return true;
-		}
-	}
+        }
+    }
 
     public class ZoneAccessPanel2 : ZoneAccessPanel1
     {
@@ -85,29 +84,30 @@ namespace Redemption.Items.Usable
                 Main.NewText(Language.GetTextValue("Mods.Redemption.StatusMessage.Progression.LabAccessPanelUsed2"), Color.Cyan);
                 return true;
             }
-            LabArea.labAccess[1] = true;
             string status = Language.GetTextValue("Mods.Redemption.StatusMessage.Progression.LabAccessPanel2");
             if (Main.netMode == NetmodeID.Server)
                 ChatHelper.BroadcastChatMessage(NetworkText.FromLiteral(status), Color.Cyan);
             else if (Main.netMode == NetmodeID.SinglePlayer)
                 Main.NewText(Language.GetTextValue(status), Color.Cyan);
 
-            Dictionary<Color, int> colorToTile = new()
+            if (Main.netMode != NetmodeID.MultiplayerClient)
             {
-                [new Color(220, 255, 255)] = ModContent.TileType<DeactivatedLaserTile>(),
-                [new Color(255, 0, 0)] = ModContent.TileType<DeactivatedLaser2Tile>(),
-                [Color.Black] = -1
-            };
+                Dictionary<Color, int> colorToTile = new()
+                {
+                    [new Color(220, 255, 255)] = ModContent.TileType<DeactivatedLaserTile>(),
+                    [new Color(255, 0, 0)] = ModContent.TileType<DeactivatedLaser2Tile>(),
+                    [Color.Black] = -1
+                };
 
-            Texture2D tex = ModContent.Request<Texture2D>("Redemption/WorldGeneration/ALabAccess2", AssetRequestMode.ImmediateLoad).Value;
-            Point origin = RedeGen.LabVector.ToPoint();
-            GenUtils.InvokeOnMainThread(() =>
-            {
-                TexGen gen = BaseWorldGenTex.GetTexGenerator(tex, colorToTile);
-                gen.Generate(origin.X, origin.Y, true, true);
-            });
-            if (Main.netMode == NetmodeID.Server)
-                NetMessage.SendData(MessageID.WorldData);
+                TexGenData tex = TexGen.GetTextureForGen("Redemption/WorldGeneration/ALabAccess2");
+                Point origin = RedeGen.LabVector.ToPoint();
+                TexGen gen = TexGen.GetTexGenerator(tex, colorToTile);
+                gen.Generate(origin.X, origin.Y, false, true);
+
+                LabArea.labAccess[1] = true;
+                if (Main.netMode == NetmodeID.Server)
+                    NetMessage.SendData(MessageID.WorldData);
+            }
             return true;
         }
     }
@@ -128,30 +128,31 @@ namespace Redemption.Items.Usable
                 Main.NewText(Language.GetTextValue("Mods.Redemption.StatusMessage.Progression.LabAccessPanelUsed3"), Color.Cyan);
                 return true;
             }
-            LabArea.labAccess[2] = true;
             string status = Language.GetTextValue("Mods.Redemption.StatusMessage.Progression.LabAccessPanel3");
             if (Main.netMode == NetmodeID.Server)
                 ChatHelper.BroadcastChatMessage(NetworkText.FromLiteral(status), Color.Cyan);
             else if (Main.netMode == NetmodeID.SinglePlayer)
                 Main.NewText(Language.GetTextValue(status), Color.Cyan);
 
-            Dictionary<Color, int> colorToTile = new()
+            if (Main.netMode != NetmodeID.MultiplayerClient)
             {
-                [new Color(220, 255, 255)] = ModContent.TileType<DeactivatedLaserTile>(),
-                [new Color(255, 0, 0)] = ModContent.TileType<DeactivatedLaser2Tile>(),
-                [new Color(150, 150, 150)] = -2,
-                [Color.Black] = -1
-            };
+                Dictionary<Color, int> colorToTile = new()
+                {
+                    [new Color(220, 255, 255)] = ModContent.TileType<DeactivatedLaserTile>(),
+                    [new Color(255, 0, 0)] = ModContent.TileType<DeactivatedLaser2Tile>(),
+                    [new Color(150, 150, 150)] = -2,
+                    [Color.Black] = -1
+                };
 
-            Texture2D tex = ModContent.Request<Texture2D>("Redemption/WorldGeneration/ALabAccess3", AssetRequestMode.ImmediateLoad).Value;
-            Point origin = RedeGen.LabVector.ToPoint();
-            GenUtils.InvokeOnMainThread(() =>
-            {
-                TexGen gen = BaseWorldGenTex.GetTexGenerator(tex, colorToTile);
-                gen.Generate(origin.X, origin.Y, true, true);
-            });
-            if (Main.netMode == NetmodeID.Server)
-                NetMessage.SendData(MessageID.WorldData);
+                TexGenData tex = TexGen.GetTextureForGen("Redemption/WorldGeneration/ALabAccess3");
+                Point origin = RedeGen.LabVector.ToPoint();
+                TexGen gen = TexGen.GetTexGenerator(tex, colorToTile);
+                gen.Generate(origin.X, origin.Y, false, true);
+
+                LabArea.labAccess[2] = true;
+                if (Main.netMode == NetmodeID.Server)
+                    NetMessage.SendData(MessageID.WorldData);
+            }
             return true;
         }
     }
@@ -171,29 +172,30 @@ namespace Redemption.Items.Usable
                 Main.NewText(Language.GetTextValue("Mods.Redemption.StatusMessage.Progression.LabAccessPanelUsed4"), Color.Cyan);
                 return true;
             }
-            LabArea.labAccess[3] = true;
             string status = Language.GetTextValue("Mods.Redemption.StatusMessage.Progression.LabAccessPanel4");
             if (Main.netMode == NetmodeID.Server)
                 ChatHelper.BroadcastChatMessage(NetworkText.FromLiteral(status), Color.Cyan);
             else if (Main.netMode == NetmodeID.SinglePlayer)
                 Main.NewText(Language.GetTextValue(status), Color.Cyan);
 
-            Dictionary<Color, int> colorToTile = new()
+            if (Main.netMode != NetmodeID.MultiplayerClient)
             {
-                [new Color(220, 255, 255)] = ModContent.TileType<DeactivatedLaserTile>(),
-                [new Color(255, 0, 0)] = ModContent.TileType<DeactivatedLaser2Tile>(),
-                [Color.Black] = -1
-            };
+                Dictionary<Color, int> colorToTile = new()
+                {
+                    [new Color(220, 255, 255)] = ModContent.TileType<DeactivatedLaserTile>(),
+                    [new Color(255, 0, 0)] = ModContent.TileType<DeactivatedLaser2Tile>(),
+                    [Color.Black] = -1
+                };
 
-            Texture2D tex = ModContent.Request<Texture2D>("Redemption/WorldGeneration/ALabAccess4", AssetRequestMode.ImmediateLoad).Value;
-            Point origin = RedeGen.LabVector.ToPoint();
-            GenUtils.InvokeOnMainThread(() =>
-            {
-                TexGen gen = BaseWorldGenTex.GetTexGenerator(tex, colorToTile);
-                gen.Generate(origin.X, origin.Y, true, true);
-            });
-            if (Main.netMode == NetmodeID.Server)
-                NetMessage.SendData(MessageID.WorldData);
+                TexGenData tex = TexGen.GetTextureForGen("Redemption/WorldGeneration/ALabAccess4");
+                Point origin = RedeGen.LabVector.ToPoint();
+                TexGen gen = TexGen.GetTexGenerator(tex, colorToTile);
+                gen.Generate(origin.X, origin.Y, false, true);
+
+                LabArea.labAccess[3] = true;
+                if (Main.netMode == NetmodeID.Server)
+                    NetMessage.SendData(MessageID.WorldData);
+            }
             return true;
         }
     }
@@ -215,29 +217,30 @@ namespace Redemption.Items.Usable
                 Main.NewText(Language.GetTextValue("Mods.Redemption.StatusMessage.Progression.LabAccessPanelUsed5"), Color.Cyan);
                 return true;
             }
-            LabArea.labAccess[4] = true;
             string status = Language.GetTextValue("Mods.Redemption.StatusMessage.Progression.LabAccessPanel5");
             if (Main.netMode == NetmodeID.Server)
                 ChatHelper.BroadcastChatMessage(NetworkText.FromLiteral(status), Color.Cyan);
             else if (Main.netMode == NetmodeID.SinglePlayer)
                 Main.NewText(Language.GetTextValue(status), Color.Cyan);
 
-            Dictionary<Color, int> colorToTile = new()
+            if (Main.netMode != NetmodeID.MultiplayerClient)
             {
-                [new Color(220, 255, 255)] = ModContent.TileType<DeactivatedLaserTile>(),
-                [new Color(255, 0, 0)] = ModContent.TileType<DeactivatedLaser2Tile>(),
-                [Color.Black] = -1
-            };
+                Dictionary<Color, int> colorToTile = new()
+                {
+                    [new Color(220, 255, 255)] = ModContent.TileType<DeactivatedLaserTile>(),
+                    [new Color(255, 0, 0)] = ModContent.TileType<DeactivatedLaser2Tile>(),
+                    [Color.Black] = -1
+                };
 
-            Texture2D tex = ModContent.Request<Texture2D>("Redemption/WorldGeneration/ALabAccess5", AssetRequestMode.ImmediateLoad).Value;
-            Point origin = RedeGen.LabVector.ToPoint();
-            GenUtils.InvokeOnMainThread(() =>
-            {
-                TexGen gen = BaseWorldGenTex.GetTexGenerator(tex, colorToTile);
-                gen.Generate(origin.X, origin.Y, true, true);
-            });
-            if (Main.netMode == NetmodeID.Server)
-                NetMessage.SendData(MessageID.WorldData);
+                TexGenData tex = TexGen.GetTextureForGen("Redemption/WorldGeneration/ALabAccess5");
+                Point origin = RedeGen.LabVector.ToPoint();
+                TexGen gen = TexGen.GetTexGenerator(tex, colorToTile);
+                gen.Generate(origin.X, origin.Y, false, true);
+
+                LabArea.labAccess[4] = true;
+                if (Main.netMode == NetmodeID.Server)
+                    NetMessage.SendData(MessageID.WorldData);
+            }
             return true;
         }
     }
@@ -257,31 +260,33 @@ namespace Redemption.Items.Usable
                 Main.NewText(Language.GetTextValue("Mods.Redemption.StatusMessage.Progression.LabAccessPanelUsed6"), Color.Cyan);
                 return true;
             }
-            RedeWorld.labSafe = true;
-            LabArea.labAccess[5] = true;
             string status = Language.GetTextValue("Mods.Redemption.StatusMessage.Progression.LabAccessPanel6");
             if (Main.netMode == NetmodeID.Server)
                 ChatHelper.BroadcastChatMessage(NetworkText.FromLiteral(status), Color.Cyan);
             else if (Main.netMode == NetmodeID.SinglePlayer)
                 Main.NewText(Language.GetTextValue(status), Color.Cyan);
 
-            Dictionary<Color, int> colorToTile = new()
+            if (Main.netMode != NetmodeID.MultiplayerClient)
             {
-                [new Color(220, 255, 255)] = ModContent.TileType<DeactivatedLaserTile>(),
-                [new Color(255, 0, 0)] = ModContent.TileType<DeactivatedLaser2Tile>(),
-                [new Color(0, 0, 255)] = ModContent.TileType<HalogenLampTile>(),
-                [Color.Black] = -1
-            };
+                Dictionary<Color, int> colorToTile = new()
+                {
+                    [new Color(220, 255, 255)] = ModContent.TileType<DeactivatedLaserTile>(),
+                    [new Color(255, 0, 0)] = ModContent.TileType<DeactivatedLaser2Tile>(),
+                    [new Color(0, 0, 255)] = ModContent.TileType<HalogenLampTile>(),
+                    [Color.Black] = -1
+                };
 
-            Texture2D tex = ModContent.Request<Texture2D>("Redemption/WorldGeneration/ALabAccess6", AssetRequestMode.ImmediateLoad).Value;
-            Point origin = RedeGen.LabVector.ToPoint();
-            GenUtils.InvokeOnMainThread(() =>
-            {
-                TexGen gen = BaseWorldGenTex.GetTexGenerator(tex, colorToTile);
-                gen.Generate(origin.X, origin.Y, true, true);
-            });
-            if (Main.netMode == NetmodeID.Server)
-                NetMessage.SendData(MessageID.WorldData); return true;
+                TexGenData tex = TexGen.GetTextureForGen("Redemption/WorldGeneration/ALabAccess6");
+                Point origin = RedeGen.LabVector.ToPoint();
+                TexGen gen = TexGen.GetTexGenerator(tex, colorToTile);
+                gen.Generate(origin.X, origin.Y, false, true);
+
+                RedeWorld.labSafe = true;
+                LabArea.labAccess[5] = true;
+                if (Main.netMode == NetmodeID.Server)
+                    NetMessage.SendData(MessageID.WorldData);
+            }
+            return true;
         }
     }
 }

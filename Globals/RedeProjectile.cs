@@ -115,7 +115,7 @@ namespace Redemption.Globals
                     p.AddBuff(BuffID.ParryDamageBuff, 120);
                 }
                 player.velocity.X += 4 * player.RightOfDir(target);
-                RedeDraw.SpawnExplosion(RedeHelper.CenterPoint(projectile.Center, target.Center), Color.White, shakeAmount: 0, scale: 1f, noDust: true, tex: ModContent.Request<Texture2D>("Redemption/Textures/HolyGlow2").Value);
+                RedeDraw.SpawnExplosion(RedeHelper.CenterPoint(projectile.Center, target.Center), Color.White, shakeAmount: 0, scale: 1f, noDust: true, rot: Main.rand.NextFloat(MathHelper.PiOver4, 3 * MathHelper.PiOver4), tex: "Redemption/Textures/SwordClash");
                 SoundEngine.PlaySound(CustomSounds.SwordClash, projectile.position);
                 DustHelper.DrawCircle(RedeHelper.CenterPoint(projectile.Center, target.Center), DustID.SilverCoin, 1, 4, 4, nogravity: true);
                 parried = true;
@@ -138,7 +138,7 @@ namespace Redemption.Globals
             {
                 npc.velocity.X += 4 * npc.RightOfDir(target);
                 SoundEngine.PlaySound(CustomSounds.SwordClash, projectile.position);
-                RedeDraw.SpawnExplosion(RedeHelper.CenterPoint(projectile.Center, target.Center), Color.White, shakeAmount: 0, scale: 1f, noDust: true, tex: ModContent.Request<Texture2D>("Redemption/Textures/HolyGlow2").Value);
+                RedeDraw.SpawnExplosion(RedeHelper.CenterPoint(projectile.Center, target.Center), Color.White, shakeAmount: 0, scale: 1f, noDust: true, rot: Main.rand.NextFloat(MathHelper.PiOver4, 3 * MathHelper.PiOver4), tex: "Redemption/Textures/SwordClash");
                 DustHelper.DrawCircle(RedeHelper.CenterPoint(projectile.Center, target.Center), DustID.SilverCoin, 1, 4, 4, nogravity: true);
                 parried = true;
                 return true;

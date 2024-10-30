@@ -84,10 +84,11 @@ namespace Redemption.NPCs.Friendly.TownNPCs
             }
             if (RedeWorld.daerelDownedTimer >= 43200)
             {
-                RedeWorld.daerelDownedTimer = 0;
-
-                if (Main.netMode == NetmodeID.Server)
-                    NetMessage.SendData(MessageID.WorldData);
+                if (Main.netMode != NetmodeID.MultiplayerClient)
+                {
+                    RedeWorld.daerelDownedTimer = 0;
+                    RedeWorld.SyncData();
+                }
 
                 NPC.Transform(ModContent.NPCType<Daerel>());
                 NPC.life = NPC.lifeMax;
@@ -121,9 +122,7 @@ namespace Redemption.NPCs.Friendly.TownNPCs
 
                     SoundEngine.PlaySound(SoundID.Item3, NPC.position);
                     RedeWorld.daerelDownedTimer = 43200;
-
-                    if (Main.netMode == NetmodeID.Server)
-                        NetMessage.SendData(MessageID.WorldData);
+                    RedeWorld.SyncData();
 
                     Main.npcChatText = PotionChat();
                 }

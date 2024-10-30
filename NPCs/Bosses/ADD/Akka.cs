@@ -26,6 +26,7 @@ using Terraria.Localization;
 using Redemption.Globals.NPC;
 using Redemption.Helpers;
 using Redemption.NPCs.Friendly.TownNPCs;
+using Redemption.UI;
 
 namespace Redemption.NPCs.Bosses.ADD
 {
@@ -179,21 +180,8 @@ namespace Redemption.NPCs.Bosses.ADD
                 if (fallen >= 0)
                     Main.npc[fallen].GetGlobalNPC<ExclaimMarkNPC>().exclaimationMark[4] = false;
 
-                for (int p = 0; p < Main.maxPlayers; p++)
-                {
-                    Player player = Main.player[p];
-                    if (!player.active)
-                        continue;
-
-                    CombatText.NewText(player.getRect(), Color.Gray, "+0", true, false);
-
-                    if (!RedeWorld.alignmentGiven)
-                        continue;
-
-                    if (!Main.dedServ)
-                        RedeSystem.Instance.ChaliceUIElement.DisplayDialogue(Language.GetTextValue("Mods.Redemption.UI.Chalice.ADDDefeat"), 300, 30, 0, Color.DarkGoldenrod);
-
-                }
+                RedeWorld.Alignment += 0;
+                ChaliceAlignmentUI.BroadcastDialogue(NetworkText.FromKey("Mods.Redemption.UI.Chalice.ADDDefeat"), 300, 30, 0, Color.DarkGoldenrod);
             }
             if (!NPC.AnyNPCs(ModContent.NPCType<Ukko>()) && !RedeBossDowned.downedADD && RedeBossDowned.downedGGBossFirst == 0)
                 RedeBossDowned.downedGGBossFirst = 3;
@@ -255,8 +243,7 @@ namespace Redemption.NPCs.Bosses.ADD
                                 NPC.velocity *= 0.9f;
                                 if (AITimer == 60)
                                 {
-                                    if (!Main.dedServ)
-                                        RedeSystem.Instance.TitleCardUIElement.DisplayTitle(Language.GetTextValue("Mods.Redemption.TitleCard.Akka.Name"), 60, 90, 0.8f, 0, Color.PaleGreen, Language.GetTextValue("Mods.Redemption.TitleCard.Akka.Modifier"));
+                                    TitleCard.BroadcastTitle(NetworkText.FromKey("Mods.Redemption.TitleCard.Akka.Name"), 60, 90, 0.8f, Color.PaleGreen, NetworkText.FromKey("Mods.Redemption.TitleCard.Akka.Modifier"));
 
                                     EmoteBubble.NewBubble(0, new WorldUIAnchor(NPC), 50);
                                 }
@@ -273,8 +260,7 @@ namespace Redemption.NPCs.Bosses.ADD
                     }
                     else
                     {
-                        if (!Main.dedServ)
-                            RedeSystem.Instance.TitleCardUIElement.DisplayTitle(Language.GetTextValue("Mods.Redemption.TitleCard.Akka.Name"), 60, 90, 0.8f, 0, Color.PaleGreen, Language.GetTextValue("Mods.Redemption.TitleCard.Akka.Modifier"));
+                        TitleCard.BroadcastTitle(NetworkText.FromKey("Mods.Redemption.TitleCard.Akka.Name"), 60, 90, 0.8f, Color.PaleGreen, NetworkText.FromKey("Mods.Redemption.TitleCard.Akka.Modifier"));
 
                         AIState = ActionState.ResetVars;
                         AITimer = 0;

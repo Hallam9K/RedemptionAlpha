@@ -33,12 +33,9 @@ namespace Redemption.WorldGeneration
                 [Color.Black] = -1
             };
 
-            Texture2D tex = ModContent.Request<Texture2D>("Redemption/WorldGeneration/SlayerShipClear", AssetRequestMode.ImmediateLoad).Value;
-            GenUtils.InvokeOnMainThread(() =>
-            {
-                TexGen gen = BaseWorldGenTex.GetTexGenerator(tex, colorToTile);
-                gen.Generate(origin.X, origin.Y, true, true);
-            });
+            TexGenData tex = TexGen.GetTextureForGen("Redemption/WorldGeneration/SlayerShipClear");
+            TexGen gen = TexGen.GetTexGenerator(tex, colorToTile);
+            gen.Generate(origin.X, origin.Y, true, false);
             return true;
         }
     }
@@ -69,15 +66,12 @@ namespace Redemption.WorldGeneration
                 [Color.Black] = -1
             };
 
-            Texture2D tex = ModContent.Request<Texture2D>("Redemption/WorldGeneration/SlayerShip", AssetRequestMode.ImmediateLoad).Value;
-            Texture2D texWalls = ModContent.Request<Texture2D>("Redemption/WorldGeneration/SlayerShipWalls", AssetRequestMode.ImmediateLoad).Value;
-            Texture2D texSlopes = ModContent.Request<Texture2D>("Redemption/WorldGeneration/SlayerShipSlopes", AssetRequestMode.ImmediateLoad).Value;
-            GenUtils.InvokeOnMainThread(() =>
-            {
-                TexGen gen = BaseWorldGenTex.GetTexGenerator(tex, colorToTile, texWalls, colorToWall, null, texSlopes);
-                gen.Generate(origin.X, origin.Y, true, true);
-            });
-
+            TexGenData tex = TexGen.GetTextureForGen("Redemption/WorldGeneration/SlayerShip");
+            TexGenData texWalls = TexGen.GetTextureForGen("Redemption/WorldGeneration/SlayerShipWalls");
+            TexGenData texSlopes = TexGen.GetTextureForGen("Redemption/WorldGeneration/SlayerShipSlopes");
+            TexGen gen = TexGen.GetTexGenerator(tex, colorToTile, texWalls, colorToWall, null, texSlopes);
+            gen.Generate(origin.X, origin.Y, true, false);
+            
             WorldGen.PlaceObject(origin.X + 91, origin.Y + 27, (ushort)ModContent.TileType<SlayerChairTile>());
             NetMessage.SendObjectPlacement(-1, origin.X + 91, origin.Y + 27, (ushort)ModContent.TileType<SlayerChairTile>(), 0, 0, -1, -1);
             WorldGen.PlaceObject(origin.X + 84, origin.Y + 36, (ushort)ModContent.TileType<SlayerFabricatorTile>());

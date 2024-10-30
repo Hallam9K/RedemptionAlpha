@@ -1,15 +1,14 @@
-using System.Collections.Generic;
 using Microsoft.Xna.Framework;
-using Terraria;
-using Terraria.ModLoader;
-using Redemption.Walls;
-using Redemption.Tiles.Tiles;
-using Terraria.WorldBuilding;
 using Redemption.Base;
-using ReLogic.Content;
-using Microsoft.Xna.Framework.Graphics;
-using Terraria.ID;
+using Redemption.Globals;
 using Redemption.Tiles.Furniture.Misc;
+using Redemption.Tiles.Tiles;
+using Redemption.Walls;
+using System.Collections.Generic;
+using Terraria;
+using Terraria.ID;
+using Terraria.ModLoader;
+using Terraria.WorldBuilding;
 
 namespace Redemption.WorldGeneration
 {
@@ -17,19 +16,16 @@ namespace Redemption.WorldGeneration
     {
         public override bool Place(Point origin, StructureMap structures)
         {
-            Mod mod = Redemption.Instance;
             Dictionary<Color, int> colorToTile = new()
             {
                 [new Color(150, 150, 150)] = -2,
                 [Color.Black] = -1
             };
 
-            Texture2D tex = ModContent.Request<Texture2D>("Redemption/WorldGeneration/BlazingBastion/BastionBase_Clear", AssetRequestMode.ImmediateLoad).Value;
-            GenUtils.InvokeOnMainThread(() =>
-            {
-                TexGen gen = BaseWorldGenTex.GetTexGenerator(tex, colorToTile);
-                gen.Generate(origin.X, origin.Y, true, true);
-            });
+            TexGenData tex = TexGen.GetTextureForGen("Redemption/WorldGeneration/BlazingBastion/BastionBase_Clear");
+            TexGen gen = TexGen.GetTexGenerator(tex, colorToTile);
+            gen.Generate(origin.X, origin.Y, true, false);
+
             return true;
         }
     }
@@ -65,15 +61,13 @@ namespace Redemption.WorldGeneration
                 [Color.Black] = -1
             };
 
-            Texture2D tex = ModContent.Request<Texture2D>("Redemption/WorldGeneration/BlazingBastion/BastionBase", AssetRequestMode.ImmediateLoad).Value;
-            Texture2D texWalls = ModContent.Request<Texture2D>("Redemption/WorldGeneration/BlazingBastion/BastionBase_Walls", AssetRequestMode.ImmediateLoad).Value;
-            Texture2D texSlopes = ModContent.Request<Texture2D>("Redemption/WorldGeneration/BlazingBastion/BastionBase_Slopes", AssetRequestMode.ImmediateLoad).Value;
-            Texture2D texLiquids = ModContent.Request<Texture2D>("Redemption/WorldGeneration/BlazingBastion/BastionBase_Liquids", AssetRequestMode.ImmediateLoad).Value;
-            GenUtils.InvokeOnMainThread(() =>
-            {
-                TexGen gen = BaseWorldGenTex.GetTexGenerator(tex, colorToTile, texWalls, colorToWall, texLiquids, texSlopes);
-                gen.Generate(origin.X, origin.Y, true, true);
-            });
+            TexGenData tex = TexGen.GetTextureForGen("Redemption/WorldGeneration/BlazingBastion/BastionBase");
+            TexGenData texWalls = TexGen.GetTextureForGen("Redemption/WorldGeneration/BlazingBastion/BastionBase_Walls");
+            TexGenData texSlopes = TexGen.GetTextureForGen("Redemption/WorldGeneration/BlazingBastion/BastionBase_Slopes");
+            TexGenData texLiquids = TexGen.GetTextureForGen("Redemption/WorldGeneration/BlazingBastion/BastionBase_Liquids");
+            TexGen gen = TexGen.GetTexGenerator(tex, colorToTile, texWalls, colorToWall, texLiquids, texSlopes);
+            gen.Generate(origin.X, origin.Y, true, false);
+
             for (int i = origin.X + 25; i < origin.X + 142; i++)
             {
                 for (int j = origin.Y + 46; j < origin.Y + 50; j++)
@@ -314,6 +308,14 @@ namespace Redemption.WorldGeneration
                     }
                 }
             }
+            for (int i = origin.X; i < origin.X + WIDTH; i++)
+            {
+                for (int j = origin.Y; j < origin.Y + HEIGHT; j++)
+                {
+                    if (Framing.GetTileSafely(i, j).TileType == TileID.Platforms && WorldGen.InWorld(i, j))
+                        WorldGen.KillTile(i, j, true);
+                }
+            }
             return true;
         }
         public static void MiniTower(Point origin)
@@ -335,14 +337,12 @@ namespace Redemption.WorldGeneration
                 [Color.Black] = -1
             };
 
-            Texture2D tex = ModContent.Request<Texture2D>("Redemption/WorldGeneration/BlazingBastion/MiniTower1", AssetRequestMode.ImmediateLoad).Value;
-            Texture2D texWalls = ModContent.Request<Texture2D>("Redemption/WorldGeneration/BlazingBastion/MiniTower1_Walls", AssetRequestMode.ImmediateLoad).Value;
-            Texture2D texSlopes = ModContent.Request<Texture2D>("Redemption/WorldGeneration/BlazingBastion/MiniTower1_Slopes", AssetRequestMode.ImmediateLoad).Value;
-            GenUtils.InvokeOnMainThread(() =>
-            {
-                TexGen gen = BaseWorldGenTex.GetTexGenerator(tex, colorToTile, texWalls, colorToWall, null, texSlopes);
-                gen.Generate(origin.X, origin.Y, true, true);
-            });
+            TexGenData tex = TexGen.GetTextureForGen("Redemption/WorldGeneration/BlazingBastion/MiniTower1");
+            TexGenData texWalls = TexGen.GetTextureForGen("Redemption/WorldGeneration/BlazingBastion/MiniTower1_Walls");
+            TexGenData texSlopes = TexGen.GetTextureForGen("Redemption/WorldGeneration/BlazingBastion/MiniTower1_Slopes");
+            TexGen gen = TexGen.GetTexGenerator(tex, colorToTile, texWalls, colorToWall, null, texSlopes);
+            gen.Generate(origin.X, origin.Y, true, false);
+
             for (int i = origin.X; i < origin.X + 12; i++)
             {
                 for (int j = origin.Y; j < origin.Y + 30; j++)
@@ -388,14 +388,12 @@ namespace Redemption.WorldGeneration
                 [Color.Black] = -1
             };
 
-            Texture2D tex = ModContent.Request<Texture2D>("Redemption/WorldGeneration/BlazingBastion/House1", AssetRequestMode.ImmediateLoad).Value;
-            Texture2D texWalls = ModContent.Request<Texture2D>("Redemption/WorldGeneration/BlazingBastion/House1_Walls", AssetRequestMode.ImmediateLoad).Value;
-            Texture2D texSlopes = ModContent.Request<Texture2D>("Redemption/WorldGeneration/BlazingBastion/House1_Slopes", AssetRequestMode.ImmediateLoad).Value;
-            GenUtils.InvokeOnMainThread(() =>
-            {
-                TexGen gen = BaseWorldGenTex.GetTexGenerator(tex, colorToTile, texWalls, colorToWall, null, texSlopes);
-                gen.Generate(origin.X, origin.Y, true, true);
-            });
+            TexGenData tex = TexGen.GetTextureForGen("Redemption/WorldGeneration/BlazingBastion/House1");
+            TexGenData texWalls = TexGen.GetTextureForGen("Redemption/WorldGeneration/BlazingBastion/House1_Walls");
+            TexGenData texSlopes = TexGen.GetTextureForGen("Redemption/WorldGeneration/BlazingBastion/House1_Slopes");
+            TexGen gen = TexGen.GetTexGenerator(tex, colorToTile, texWalls, colorToWall, null, texSlopes);
+            gen.Generate(origin.X, origin.Y, true, false);
+
             for (int i = origin.X; i < origin.X + 24; i++)
             {
                 for (int j = origin.Y; j < origin.Y + 31; j++)
@@ -452,14 +450,12 @@ namespace Redemption.WorldGeneration
                 [Color.Black] = -1
             };
 
-            Texture2D tex = ModContent.Request<Texture2D>("Redemption/WorldGeneration/BlazingBastion/House2", AssetRequestMode.ImmediateLoad).Value;
-            Texture2D texWalls = ModContent.Request<Texture2D>("Redemption/WorldGeneration/BlazingBastion/House2_Walls", AssetRequestMode.ImmediateLoad).Value;
-            Texture2D texSlopes = ModContent.Request<Texture2D>("Redemption/WorldGeneration/BlazingBastion/House2_Slopes", AssetRequestMode.ImmediateLoad).Value;
-            GenUtils.InvokeOnMainThread(() =>
-            {
-                TexGen gen = BaseWorldGenTex.GetTexGenerator(tex, colorToTile, texWalls, colorToWall, null, texSlopes);
-                gen.Generate(origin.X, origin.Y, true, true);
-            });
+            TexGenData tex = TexGen.GetTextureForGen("Redemption/WorldGeneration/BlazingBastion/House2");
+            TexGenData texWalls = TexGen.GetTextureForGen("Redemption/WorldGeneration/BlazingBastion/House2_Walls");
+            TexGenData texSlopes = TexGen.GetTextureForGen("Redemption/WorldGeneration/BlazingBastion/House2_Slopes");
+            TexGen gen = TexGen.GetTexGenerator(tex, colorToTile, texWalls, colorToWall, null, texSlopes);
+            gen.Generate(origin.X, origin.Y, true, false);
+
             for (int i = origin.X; i < origin.X + 19; i++)
             {
                 for (int j = origin.Y; j < origin.Y + 21; j++)

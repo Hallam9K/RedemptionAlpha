@@ -52,7 +52,7 @@ namespace Redemption.NPCs.HM
             if (!player.active || player.dead)
                 NPC.active = false;
 
-            if (RedeWorld.slayerRep > 0 && NPC.downedMoonlord && !RedeWorld.slayerMessageGiven && !RedeBossDowned.downedOmega3 && !RedeBossDowned.downedNebuleus)
+            if (RedeQuest.slayerRep > 0 && NPC.downedMoonlord && !RedeWorld.slayerMessageGiven && !RedeBossDowned.downedOmega3 && !RedeBossDowned.downedNebuleus)
             {
                 int floor = BaseWorldGen.GetFirstTileFloor((int)player.position.X / 16, (int)player.position.Y / 16);
                 NPC.position = new Vector2(player.position.X, floor * 16);
@@ -80,8 +80,7 @@ namespace Redemption.NPCs.HM
                     if (Main.netMode != NetmodeID.MultiplayerClient)
                     {
                         RedeWorld.slayerMessageGiven = true;
-                        if (Main.netMode == NetmodeID.Server)
-                            NetMessage.SendData(MessageID.WorldData);
+                        RedeWorld.SyncData();
                     }
 
                     for (int i = 0; i < 6; i++)
@@ -227,7 +226,7 @@ namespace Redemption.NPCs.HM
         }
         public override float SpawnChance(NPCSpawnInfo spawnInfo)
         {
-            if (RedeWorld.slayerRep < 1 || RedeWorld.slayerRep >= 4 || !NPC.downedMoonlord || RedeWorld.slayerMessageGiven || RedeBossDowned.downedOmega3 || RedeBossDowned.downedNebuleus)
+            if (RedeQuest.slayerRep < 1 || RedeQuest.slayerRep >= 4 || !NPC.downedMoonlord || RedeWorld.slayerMessageGiven || RedeBossDowned.downedOmega3 || RedeBossDowned.downedNebuleus)
                 return 0;
             if (spawnInfo.Player.InModBiome<SlayerShipBiome>() || SubworldSystem.Current != null)
                 return 0;

@@ -21,6 +21,7 @@ using Redemption.BaseExtension;
 using Redemption.Dusts;
 using Terraria.Localization;
 using Redemption.Globals.NPC;
+using Redemption.UI;
 
 namespace Redemption.NPCs.Lab.MACE
 {
@@ -176,11 +177,11 @@ namespace Redemption.NPCs.Lab.MACE
                 case ActionState.Begin:
                     if (AITimer++ == 0)
                     {
+                        TitleCard.BroadcastTitle(NetworkText.FromKey("Mods.Redemption.TitleCard.MACE.Name"), 60, 90, 0.8f, Color.Yellow, NetworkText.FromKey("Mods.Redemption.TitleCard.MACE.Modifier"));
+
                         if (!Main.dedServ)
-                        {
-                            RedeSystem.Instance.TitleCardUIElement.DisplayTitle(Language.GetTextValue("Mods.Redemption.TitleCard.MACE.Name"), 60, 90, 0.8f, 0, Color.Yellow, Language.GetTextValue("Mods.Redemption.TitleCard.MACE.Modifier"));
                             SoundEngine.PlaySound(CustomSounds.SpookyNoise, NPC.position);
-                        }
+
                         GuardPointMax = NPC.RedemptionGuard().GuardPoints;
                         CraneOrigin = NPC.Center;
                         GlowActive = true;

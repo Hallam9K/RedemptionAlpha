@@ -63,7 +63,7 @@ namespace Redemption.NPCs.Bosses.Obliterator
                     if (!Main.dedServ)
                         SoundEngine.PlaySound(CustomSounds.BallFire, Projectile.position);
                     DustHelper.DrawCircle(proj.Center, DustID.LifeDrain, 1, 4, 4, nogravity: true);
-                    RedeDraw.SpawnExplosion(proj.Center, Color.IndianRed, shakeAmount: 0, scale: .5f, noDust: true, rot: RedeHelper.RandomRotation(), tex: ModContent.Request<Texture2D>("Redemption/Textures/SwordClash").Value);
+                    RedeDraw.SpawnExplosion(proj.Center, Color.IndianRed, shakeAmount: 0, scale: .5f, noDust: true, rot: RedeHelper.RandomRotation(), tex: "Redemption/Textures/SwordClash");
 
                     int nearestPlayer = RedeHelper.GetNearestAlivePlayer(Projectile);
                     if (nearestPlayer >= 0 && Projectile.owner == Main.myPlayer)

@@ -22,6 +22,7 @@ using Terraria.Localization;
 using Redemption.Globals.NPC;
 using Redemption.Textures;
 using Redemption.Items.Weapons.PreHM.Ranged;
+using Redemption.UI;
 
 namespace Redemption.NPCs.Minibosses.Calavia
 {
@@ -153,31 +154,14 @@ namespace Redemption.NPCs.Minibosses.Calavia
         {
             if (!RedeBossDowned.downedCalavia)
             {
-                RedeWorld.alignment -= 2;
-                for (int p = 0; p < Main.maxPlayers; p++)
-                {
-                    Player player = Main.player[p];
-                    if (!player.active)
-                        continue;
-
-                    CombatText.NewText(player.getRect(), Color.Gold, "-2", true, false);
-
-                    if (!RedeWorld.alignmentGiven)
-                        continue;
-
-                    if (!Main.dedServ)
-                        RedeSystem.Instance.ChaliceUIElement.DisplayDialogue(Language.GetTextValue("Mods.Redemption.UI.Chalice.CalaviaKilled"), 180, 30, 0, Color.DarkGoldenrod);
-
-                }
+                RedeWorld.Alignment -= 2;
+                ChaliceAlignmentUI.BroadcastDialogue(NetworkText.FromKey("Mods.Redemption.UI.Chalice.CalaviaKilled"), 180, 30, 0, Color.DarkGoldenrod);
             }
             NPC.SetEventFlagCleared(ref RedeBossDowned.downedCalavia, -1);
-            if (Main.netMode == NetmodeID.MultiplayerClient)
-                return;
             if (RedeQuest.calaviaVar < 30)
             {
                 RedeQuest.calaviaVar = 30;
-                if (Main.netMode != NetmodeID.SinglePlayer)
-                    NetMessage.SendData(MessageID.WorldData);
+                RedeQuest.SyncData();
             }
         }
         public override void ModifyNPCLoot(NPCLoot npcLoot)
@@ -323,8 +307,9 @@ namespace Redemption.NPCs.Minibosses.Calavia
                 case ActionState.Begin:
                     origin = NPC.Center;
                     NPC.Shoot(NPC.Center, ModContent.ProjectileType<Calavia_IcefallArena>(), 0, Vector2.Zero, NPC.whoAmI);
-                    if (!Main.dedServ)
-                        RedeSystem.Instance.TitleCardUIElement.DisplayTitle(Language.GetTextValue("Mods.Redemption.TitleCard.Calavia.Name"), 60, 90, 0.8f, 0, Color.LightCyan, Language.GetTextValue("Mods.Redemption.TitleCard.Calavia.Modifier"));
+
+                    TitleCard.BroadcastTitle(NetworkText.FromKey("Mods.Redemption.TitleCard.Calavia.Name"), 60, 90, 0.8f, Color.LightCyan, NetworkText.FromKey("Mods.Redemption.TitleCard.Calavia.Modifier"));
+
                     AIState = ActionState.JumpToOrigin;
                     NPC.netUpdate = true;
                     break;
@@ -685,7 +670,10 @@ namespace Redemption.NPCs.Minibosses.Calavia
                             if (Main.netMode != NetmodeID.MultiplayerClient)
                             {
                                 if (RedeQuest.calaviaVar < 3)
+                                {
                                     RedeQuest.calaviaVar = 3;
+                                    RedeQuest.SyncData();
+                                }
                                 RedeBossDowned.downedCalavia = true;
                                 if (Main.netMode != NetmodeID.SinglePlayer)
                                     NetMessage.SendData(MessageID.WorldData);
@@ -806,8 +794,8 @@ namespace Redemption.NPCs.Minibosses.Calavia
                             }
                             if (AITimer >= 240)
                             {
-                                if (RedeWorld.alignmentGiven && !Main.dedServ && !RedeBossDowned.downedCalavia)
-                                    RedeSystem.Instance.ChaliceUIElement.DisplayDialogue(Language.GetTextValue("Mods.Redemption.UI.Chalice.CalaviaChoice"), 180, 30, 0, Color.DarkGoldenrod);
+                                if (!RedeBossDowned.downedCalavia && Main.netMode != NetmodeID.MultiplayerClient)
+                                    ChaliceAlignmentUI.BroadcastDialogue(NetworkText.FromKey(Language.GetTextValue("Mods.Redemption.UI.Chalice.CalaviaChoice"), 180, 30, 0, Color.DarkGoldenrod));
 
                                 AITimer = 0;
                                 TimerRand = 1;
@@ -873,7 +861,10 @@ namespace Redemption.NPCs.Minibosses.Calavia
                                 if (Main.netMode != NetmodeID.MultiplayerClient)
                                 {
                                     if (RedeQuest.calaviaVar < 3)
+                                    {
                                         RedeQuest.calaviaVar = 3;
+                                        RedeQuest.SyncData();
+                                    }
                                     RedeBossDowned.downedCalavia = true;
                                     if (Main.netMode != NetmodeID.SinglePlayer)
                                         NetMessage.SendData(MessageID.WorldData);

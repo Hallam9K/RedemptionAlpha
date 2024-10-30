@@ -182,7 +182,8 @@ namespace Redemption.NPCs.Wasteland
                         }
                         for (int i = 0; i < 16; i++)
                             NPC.Shoot(NPC.Center, ModContent.ProjectileType<OozeBall_Proj>(), NPC.damage, RedeHelper.SpreadUp(12), NPC.whoAmI);
-                        player.ApplyDamageToNPC(NPC, 9999, 0, 0, false);
+                        if (Main.netMode != NetmodeID.MultiplayerClient)
+                            NPC.StrikeInstantKill();
                     }
                     break;
             }

@@ -16,6 +16,7 @@ using Terraria.Audio;
 using Redemption.UI.ChatUI;
 using Terraria.Localization;
 using Redemption.Globals.NPC;
+using Redemption.UI;
 
 namespace Redemption.NPCs.Lab.Volt
 {
@@ -148,8 +149,8 @@ namespace Redemption.NPCs.Lab.Volt
             switch (AIState)
             {
                 case ActionState.Begin:
-                    if (!Main.dedServ)
-                        RedeSystem.Instance.TitleCardUIElement.DisplayTitle(Language.GetTextValue("Mods.Redemption.TitleCard.Volt.Name"), 60, 90, 0.8f, 0, Color.Yellow, Language.GetTextValue("Mods.Redemption.TitleCard.Volt.Modifier"));
+                    TitleCard.BroadcastTitle(NetworkText.FromKey("Mods.Redemption.TitleCard.Volt.Name"), 60, 90, 0.8f, Color.Yellow, NetworkText.FromKey("Mods.Redemption.TitleCard.Volt.Modifier"));
+
                     AIState = ActionState.Fly;
                     NPC.netUpdate = true;
                     break;

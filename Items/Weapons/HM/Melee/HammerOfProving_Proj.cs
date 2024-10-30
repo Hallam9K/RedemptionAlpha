@@ -203,7 +203,7 @@ namespace Redemption.Items.Weapons.HM.Melee
             if (!Main.dedServ)
                 SoundEngine.PlaySound(CustomSounds.GuardBreak with { Volume = volume, Pitch = -.5f }, Player.position);
 
-            RedeDraw.SpawnExplosion(target.Center * 0.5f + Projectile.Center * 0.5f, Color.LightYellow, scale: 2f, noDust: true, rot: Main.rand.NextFloatDirection(), shakeAmount: 2, tex: ModContent.Request<Texture2D>("Redemption/Textures/HolyGlow2").Value);
+            RedeDraw.SpawnExplosion(target.Center * 0.5f + Projectile.Center * 0.5f, Color.LightYellow, scale: 2f, noDust: true, rot: Main.rand.NextFloatDirection(), shakeAmount: 2, tex: "Redemption/Textures/HolyGlow2");
 
             Vector2 directionTo = target.DirectionTo(Player.Center);
             for (int i = 0; i < 10; i++)

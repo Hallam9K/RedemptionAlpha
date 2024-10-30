@@ -245,7 +245,7 @@ namespace Redemption.NPCs.Friendly.TownNPCs
         public bool following;
         public override void SetChatButtons(ref string button, ref string button2)
         {
-            if ((RedeWorld.alignment < 0 && !RedeBossDowned.downedTreebark) || (RedeWorld.alignment < 2 && RedeBossDowned.downedTreebark))
+            if ((RedeWorld.Alignment < 0 && !RedeBossDowned.downedTreebark) || (RedeWorld.Alignment < 2 && RedeBossDowned.downedTreebark))
                 return;
             button2 = Language.GetTextValue("Mods.Redemption.DialogueBox.Cycle");
             switch (ChatNumber)
@@ -337,8 +337,7 @@ namespace Redemption.NPCs.Friendly.TownNPCs
                                 Main.npcChatText = line;
 
                                 RedeQuest.forestNymphVar++;
-                                if (Main.netMode == NetmodeID.Server)
-                                    NetMessage.SendData(MessageID.WorldData);
+                                RedeWorld.SyncData();
 
                                 player.QuickSpawnItem(NPC.GetSource_Loot(), ModContent.ItemType<ForestCore>());
                                 Main.npcChatCornerItem = ModContent.ItemType<ForestCore>();
@@ -374,8 +373,7 @@ namespace Redemption.NPCs.Friendly.TownNPCs
                                 NPC.lifeMax += 500;
                                 NPC.life += 500;
                                 RedeQuest.forestNymphVar++;
-                                if (Main.netMode == NetmodeID.Server)
-                                    NetMessage.SendData(MessageID.WorldData);
+                                RedeWorld.SyncData();
 
                                 player.QuickSpawnItem(NPC.GetSource_Loot(), ModContent.ItemType<ForestNymphsSickle>());
                                 Main.npcChatCornerItem = ModContent.ItemType<ForestNymphsSickle>();
@@ -393,9 +391,7 @@ namespace Redemption.NPCs.Friendly.TownNPCs
                             SoundEngine.PlaySound(SoundID.Chat);
                             Main.npcChatText = Language.GetTextValue("Mods.Redemption.Dialogue.ForestNymph.HomeDialogue1");
                             RedeQuest.forestNymphVar++;
-                            if (Main.netMode == NetmodeID.Server)
-                                NetMessage.SendData(MessageID.WorldData);
-
+                            RedeWorld.SyncData();
                         }
                         else if (RedeQuest.forestNymphVar >= 3)
                         {
@@ -409,8 +405,7 @@ namespace Redemption.NPCs.Friendly.TownNPCs
                             {
                                 Main.npcChatText = Language.GetTextValue("Mods.Redemption.Dialogue.ForestNymph.HomeDialogue2");
                                 RedeQuest.forestNymphVar++;
-                                if (Main.netMode == NetmodeID.Server)
-                                    NetMessage.SendData(MessageID.WorldData);
+                                RedeWorld.SyncData();
                             }
                             else if (RedeQuest.forestNymphVar == 4)
                             {
@@ -454,26 +449,12 @@ namespace Redemption.NPCs.Friendly.TownNPCs
 
                                         if (RedeQuest.forestNymphVar < 5)
                                         {
-                                            RedeWorld.alignment++;
-                                            for (int p = 0; p < Main.maxPlayers; p++)
-                                            {
-                                                Player player2 = Main.player[p];
-                                                if (!player2.active)
-                                                    continue;
+                                            RedeWorld.Alignment++;
+                                            ChaliceAlignmentUI.BroadcastDialogue(NetworkText.FromKey("Mods.Redemption.UI.Chalice.ForestNymphHoused"), 240, 30, 0, Color.DarkGoldenrod);
 
-                                                CombatText.NewText(player2.getRect(), Color.Gold, "+1", true, false);
-
-                                                if (!RedeWorld.alignmentGiven)
-                                                    continue;
-
-                                                if (!Main.dedServ)
-                                                    RedeSystem.Instance.ChaliceUIElement.DisplayDialogue(Language.GetTextValue("Mods.Redemption.UI.Chalice.ForestNymphHoused"), 240, 30, 0, Color.DarkGoldenrod);
-
-                                            }
                                             RedeQuest.forestNymphVar = 5;
+                                            RedeQuest.SyncData();
                                         }
-                                        if (Main.netMode == NetmodeID.Server)
-                                            NetMessage.SendData(MessageID.WorldData);
                                     }
                                 }
                             }
@@ -492,7 +473,7 @@ namespace Redemption.NPCs.Friendly.TownNPCs
                             Main.dust[dustIndex].noGravity = true;
                         }
                         SoundEngine.PlaySound(SoundID.DD2_DarkMageHealImpact, NPC.position);
-                        Main.LocalPlayer.AddBuff(BuffID.Lucky, 10800 * ((RedeWorld.alignment / 2) + 1));
+                        Main.LocalPlayer.AddBuff(BuffID.Lucky, 10800 * ((RedeWorld.Alignment / 2) + 1));
                         break;
                     case 3:
                         playerFollow = Main.LocalPlayer.whoAmI;
@@ -558,7 +539,7 @@ namespace Redemption.NPCs.Friendly.TownNPCs
                         ChatNumber = 0;
                     if (RedeQuest.forestNymphVar < 1 && (ChatNumber == 4 || ChatNumber == 5))
                         skip = true;
-                    else if (RedeWorld.alignment <= 0 && ChatNumber == 2)
+                    else if (RedeWorld.Alignment <= 0 && ChatNumber == 2)
                         skip = true;
                     else if (RedeQuest.forestNymphVar < 2 && ChatNumber == 3)
                         skip = true;
@@ -584,7 +565,7 @@ namespace Redemption.NPCs.Friendly.TownNPCs
             if (NPC.GivenName == "Nyssa")
                 s = Language.GetTextValue("Mods.Redemption.Dialogue.ForestNymph.Dialogue4Const");
             chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.ForestNymph.Dialogue4") + s);
-            if (RedeWorld.alignment >= 4)
+            if (RedeWorld.Alignment >= 4)
                 chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.ForestNymph.Dialogue5"));
             else
                 chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.ForestNymph.Dialogue6"));
@@ -628,7 +609,7 @@ namespace Redemption.NPCs.Friendly.TownNPCs
         {
             Player player = Main.player[Main.myPlayer];
             WeightedRandom<string> chat = new(Main.rand);
-            if ((RedeWorld.alignment < 0 && !RedeBossDowned.downedTreebark) || (RedeWorld.alignment < 2 && RedeBossDowned.downedTreebark))
+            if ((RedeWorld.Alignment < 0 && !RedeBossDowned.downedTreebark) || (RedeWorld.Alignment < 2 && RedeBossDowned.downedTreebark))
                 return Language.GetTextValue("Mods.Redemption.Dialogue.ForestNymph.DialogueDistrust");
 
             if (Main.LocalPlayer.RedemptionAbility().SpiritwalkerActive)

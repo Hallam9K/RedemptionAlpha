@@ -17,6 +17,7 @@ using Redemption.NPCs.Bosses.Neb.Clone;
 using Redemption.NPCs.Friendly.TownNPCs;
 using Redemption.Particles;
 using Redemption.Textures;
+using Redemption.UI;
 using Redemption.UI.ChatUI;
 using ReLogic.Content;
 using System;
@@ -149,22 +150,8 @@ namespace Redemption.NPCs.Bosses.Neb.Phase2
                 if (zephos >= 0)
                     Main.npc[zephos].GetGlobalNPC<ExclaimMarkNPC>().exclaimationMark[5] = false;
 
-                RedeWorld.alignment -= 6;
-                for (int p = 0; p < Main.maxPlayers; p++)
-                {
-                    Player player = Main.player[p];
-                    if (!player.active)
-                        continue;
-
-                    CombatText.NewText(player.getRect(), Color.Gold, "-6", true, false);
-
-                    if (!RedeWorld.alignmentGiven)
-                        continue;
-
-                    if (!Main.dedServ)
-                        RedeSystem.Instance.ChaliceUIElement.DisplayDialogue("...", 120, 30, 0, Color.DarkGoldenrod);
-
-                }
+                RedeWorld.Alignment -= 6;
+                ChaliceAlignmentUI.BroadcastDialogue(NetworkText.FromLiteral("..."), 120, 30, 0, Color.DarkGoldenrod);
             }
             NPC.SetEventFlagCleared(ref RedeBossDowned.downedNebuleus, -1);
             if (Main.netMode == NetmodeID.MultiplayerClient)
@@ -348,8 +335,7 @@ namespace Redemption.NPCs.Bosses.Neb.Phase2
                             }
                             NPC.ai[3] = 0;
                             NPC.ai[0] = 2;
-                            if (!Main.dedServ)
-                                RedeSystem.Instance.TitleCardUIElement.DisplayTitle(Language.GetTextValue("Mods.Redemption.TitleCard.Neb.Name"), 60, 90, 0.8f, 0, Color.HotPink, Language.GetTextValue("Mods.Redemption.TitleCard.Neb.Ultimate"));
+                            TitleCard.BroadcastTitle(NetworkText.FromKey("Mods.Redemption.TitleCard.Neb.Name"), 60, 90, 0.8f, Color.HotPink, NetworkText.FromKey("Mods.Redemption.TitleCard.Neb.Ultimate"));
                             NPC.netUpdate = true;
                         }
                     }
@@ -357,8 +343,8 @@ namespace Redemption.NPCs.Bosses.Neb.Phase2
                     {
                         if (NPC.ai[2] >= 120)
                         {
-                            if (NPC.type == ModContent.NPCType<Nebuleus2>() && !Main.dedServ)
-                                RedeSystem.Instance.TitleCardUIElement.DisplayTitle(Language.GetTextValue("Mods.Redemption.TitleCard.Neb.Name"), 60, 90, 0.8f, 0, Color.HotPink, Language.GetTextValue("Mods.Redemption.TitleCard.Neb.Ultimate"));
+                            if (NPC.type == ModContent.NPCType<Nebuleus2>())
+                                TitleCard.BroadcastTitle(NetworkText.FromKey("Mods.Redemption.TitleCard.Neb.Name"), 60, 90, 0.8f, Color.HotPink, NetworkText.FromKey("Mods.Redemption.TitleCard.Neb.Ultimate"));
 
                             ArmAnimation(0, true);
                             NPC.ai[2] = 0;

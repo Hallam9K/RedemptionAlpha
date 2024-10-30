@@ -1,35 +1,43 @@
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using Redemption.Base;
+using Redemption.BaseExtension;
 using Redemption.Biomes;
+using Redemption.Items.Accessories.HM;
 using Redemption.Items.Donator.Lizzy;
 using Redemption.Items.Donator.Uncon;
-using Redemption.Projectiles.Ranged;
-using System.Collections.Generic;
-using Terraria;
-using Terraria.ModLoader;
-using Terraria.ModLoader.IO;
-using Redemption.BaseExtension;
-using Terraria.DataStructures;
-using Microsoft.Xna.Framework;
+using Redemption.Items.Materials.HM;
 using Redemption.Items.Placeable.Furniture.Lab;
 using Redemption.Items.Placeable.Furniture.PetrifiedWood;
-using Microsoft.Xna.Framework.Graphics;
-using Terraria.ID;
-using Terraria.GameContent;
-using ReLogic.Content;
-using Redemption.WorldGeneration;
-using SubworldLibrary;
-using Redemption.WorldGeneration.Misc;
+using Redemption.Items.Placeable.Furniture.Shade;
+using Redemption.Items.Quest;
+using Redemption.Items.Usable;
 using Redemption.Items.Weapons.HM.Magic;
-using Terraria.Audio;
-using Terraria.Localization;
+using Redemption.NPCs.Bosses.Erhan;
+using Redemption.Projectiles.Ranged;
 using Redemption.Tiles.Furniture.Lab;
 using Redemption.Tiles.Furniture.Misc;
 using Redemption.Tiles.Furniture.SlayerShip;
-using Redemption.Items.Accessories.HM;
-using Redemption.Items.Materials.HM;
-using Redemption.Items.Quest;
-using Redemption.Items.Usable;
+using Redemption.WorldGeneration;
+using Redemption.WorldGeneration.Misc;
+using Redemption.WorldGeneration.Soulless;
+using ReLogic.Content;
+using SubworldLibrary;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using Terraria;
+using Terraria.Audio;
+using Terraria.DataStructures;
+using Terraria.GameContent;
+using Terraria.GameContent.Events;
+using Terraria.Graphics.Effects;
+using Terraria.ID;
+using Terraria.Localization;
+using Terraria.ModLoader;
+using Terraria.ModLoader.IO;
 using Terraria.Utilities;
-using Redemption.Base;
+using static Redemption.Globals.RedeNet;
 
 namespace Redemption.Globals.Player
 {
@@ -42,10 +50,11 @@ namespace Redemption.Globals.Player
         public bool omegaGiftGiven;
         public int hitTarget = -1;
         public int hitTarget2 = -1;
+
         public bool medKit;
         public bool galaxyHeart;
         public int heartStyle;
-        public bool stalkerSilence;
+
         public float musicVolume;
         public int slayerStarRating;
         public bool contactImmune;
@@ -65,6 +74,8 @@ namespace Redemption.Globals.Player
 
         public override void ResetEffects()
         {
+            hitTarget = -1;
+            hitTarget2 = -1;
             if (contactImmune)
                 contactImmuneTrue = true;
             else
@@ -92,6 +103,7 @@ namespace Redemption.Globals.Player
             omegaGiftGiven = false;
             medKit = false;
             galaxyHeart = false;
+            heartStyle = 0;
         }
         public override void UpdateDead()
         {
@@ -138,7 +150,7 @@ namespace Redemption.Globals.Player
         {
             if (Player.HasItem(ModContent.ItemType<Taikasauva>()) && !Main.dedServ)
                 SoundEngine.PlaySound(CustomSounds.NoitaDeath);
-            if (BasePlayer.HasArmorSet(Player, "Springlock", true) && !Main.dedServ)
+            if (BasePlayer.HasArmorSet(Mod, Player, "Springlock", true) && !Main.dedServ)
                 SoundEngine.PlaySound(CustomSounds.AftonScream);
             return base.PreKill(damage, hitDirection, pvp, ref playSound, ref genGore, ref damageSource);
         }
@@ -153,6 +165,8 @@ namespace Redemption.Globals.Player
 
             if (RedeConfigClient.Instance.FunniAllWasteland || RedeConfigClient.Instance.FunniJanitor || RedeConfigClient.Instance.FunniSpiders || RedeConfigClient.Instance.FunniWasteland)
                 Main.NewText(Language.GetTextValue("Mods.Redemption.StatusMessage.Other.Caution"), Colors.RarityOrange);
+
+            localNukeTimer = RedeWorld.nukeTimer;
         }
         #region Structure Search
         public static bool LabSearch()
@@ -282,7 +296,7 @@ namespace Redemption.Globals.Player
                     TextureAssets.Cursors[12] = cursor12;
                 }
             }
-            if (Player.InModBiome<LabBiome>())
+            if (Player.InModBiome<LabBiome>() || SubworldSystem.AnyActive<Redemption>())
             {
                 Player.buffImmune[BuffID.Shimmer] = true;
             }
@@ -295,10 +309,100 @@ namespace Redemption.Globals.Player
                 Player.RedemptionScreen().ScreenFocusPosition = new Vector2(100, 99) * 16;
                 Player.RedemptionScreen().interpolantTimer = 100;
             }
+            UpdateFilterEffects();
+            UpdateNukeCountdown();
         }
+
+        private void UpdateFilterEffects()
+        {
+            if (Main.dedServ)
+                return;
+
+            if (Player.InModBiome<SoullessBiome>())
+            {
+                if (!Main.dedServ)
+                {
+                    if (!Filters.Scene["MoR:Shake"].IsActive())
+                    {
+                        Filters.Scene.Activate("MoR:Shake", Player.position, Array.Empty<object>());
+                    }
+                    Filters.Scene["MoR:Shake"].GetShader()
+                        .UseIntensity(0.3f);
+                }
+            }
+
+            int PalebatImpID = Terraria.NPC.FindFirstNPC(ModContent.NPCType<PalebatImp>());
+            if (PalebatImpID >= 0)
+            {
+                if ((Main.npc[PalebatImpID].ModNPC as PalebatImp).shakeTimer > 0)
+                {
+                    if (!Filters.Scene["MoR:Shake"].IsActive())
+                    {
+                        Filters.Scene.Activate("MoR:Shake", Main.LocalPlayer.position);
+                    }
+                    Filters.Scene["MoR:Shake"].GetShader().UseIntensity((Main.npc[PalebatImpID].ModNPC as PalebatImp).shakeTimer);
+                }
+                else
+                {
+                    if (Filters.Scene["MoR:Shake"].IsActive())
+                        Filters.Scene.Deactivate("MoR:Shake");
+                }
+            }
+
+            if (Player.GetModPlayer<BuffPlayer>().island)
+            {
+                if (!Filters.Scene["MoR:Shake"].IsActive())
+                    Filters.Scene.Activate("MoR:Shake", Main.LocalPlayer.position);
+
+                Filters.Scene["MoR:Shake"].GetShader().UseIntensity(0.5f);
+            }
+        }
+
+        private int localNukeTimer = 1800;
+        private void UpdateNukeCountdown()
+        {
+            if (Main.dedServ)
+                return;
+
+            if (!RedeWorld.nukeCountdownActive)
+            {
+                localNukeTimer = RedeWorld.nukeTimer;
+            }
+            else
+            {
+                int nukeTimerShown = localNukeTimer / 60;
+                if (localNukeTimer % 60 == 0 && localNukeTimer > 0)
+                {
+                    RedeSystem.Instance.DialogueUIElement.DisplayDialogue(nukeTimerShown.ToString(), 40, 8, 1, null, ((30f - nukeTimerShown) / 30f) * 2, Color.Red, Color.Black);
+                }
+                localNukeTimer--;
+                if (localNukeTimer <= 0)
+                {
+                    MoonlordDeathDrama.RequestLight(1f, RedeWorld.nukeGroundZero);
+
+                    if (Vector2.Distance(Player.Center, RedeWorld.nukeGroundZero) < 287 * 16)
+                        MoonlordDeathDrama.RequestLight(1f, Player.Center);
+                    else if (Vector2.Distance(Player.Center, RedeWorld.nukeGroundZero) < 287 * 2 * 16)
+                        MoonlordDeathDrama.RequestLight(0.5f, Player.Center);
+                    else
+                        MoonlordDeathDrama.RequestLight(0.35f, Player.Center);
+                }
+
+                if (localNukeTimer <= -60)
+                {
+                    SoundEngine.PlaySound(CustomSounds.NukeExplosion, RedeWorld.nukeGroundZero);
+                }
+            }
+        }
+
+
         public override void CatchFish(FishingAttempt attempt, ref int itemDrop, ref int npcSpawn, ref AdvancedPopupRequest sonar, ref Vector2 sonarPosition)
         {
-            if (Main.rand.Next(100) < (10 + (Player.cratePotion ? 10 : 0)))
+            bool inWater = !attempt.inLava && !attempt.inHoney;
+            if (!inWater)
+                return;
+
+            if (attempt.crate && !attempt.veryrare && !attempt.legendary && attempt.rare && Main.rand.NextBool())
             {
                 if (Player.InModBiome<LabBiome>() && Terraria.NPC.downedMechBoss1 && Terraria.NPC.downedMechBoss2 && Terraria.NPC.downedMechBoss3)
                 {
@@ -306,6 +410,7 @@ namespace Redemption.Globals.Player
                         itemDrop = ModContent.ItemType<LabCrate2>();
                     else
                         itemDrop = ModContent.ItemType<LabCrate>();
+                    return;
                 }
             }
             if (Player.InModBiome<WastelandPurityBiome>())
@@ -348,6 +453,7 @@ namespace Redemption.Globals.Player
                 }
             }
         }
+
         public override IEnumerable<Item> AddStartingItems(bool mediumCoreDeath)
         {
             if (!mediumCoreDeath && (Player.name.Contains("Liz") || Player.name.Contains("Lizzy") || Player.name.Contains("Elizabeth")))
@@ -367,6 +473,43 @@ namespace Redemption.Globals.Player
                 };
             }
             return base.AddStartingItems(mediumCoreDeath);
+        }
+
+        public override void CopyClientState(ModPlayer targetCopy)
+        {
+            RedePlayer redePlayer = targetCopy as RedePlayer;
+
+            redePlayer.yesChoice = yesChoice;
+            redePlayer.noChoice = noChoice;
+        }
+
+        public override void SendClientChanges(ModPlayer clientPlayer)
+        {
+            RedePlayer redePlayer = clientPlayer as RedePlayer;
+
+            if (redePlayer.yesChoice != yesChoice || redePlayer.noChoice != noChoice)
+                SyncPlayer(-1, -1, false);
+        }
+
+        public override void SyncPlayer(int toWho, int fromWho, bool newPlayer)
+        {
+            ModPacket packet = Mod.GetPacket();
+            packet.Write((byte)ModMessageType.SyncRedePlayer);
+            packet.Write((byte)Player.whoAmI);
+            BitsByte bb = new(yesChoice, noChoice);
+            packet.Write(bb);
+            packet.Send(toWho, fromWho);
+        }
+
+        public static void ReceiveSyncPlayer(BinaryReader reader, int sender)
+        {
+            int player = reader.ReadByte();
+            RedePlayer redePlayer = Main.player[player].GetModPlayer<RedePlayer>();
+            BitsByte bb = reader.ReadByte();
+            bb.Retrieve(ref redePlayer.yesChoice, ref redePlayer.noChoice);
+
+            if (Main.netMode == NetmodeID.Server)
+                redePlayer.SyncPlayer(-1, sender, false);
         }
 
         public override void SaveData(TagCompound tag)

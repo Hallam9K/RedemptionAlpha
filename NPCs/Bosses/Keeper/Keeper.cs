@@ -191,21 +191,8 @@ namespace Redemption.NPCs.Bosses.Keeper
             {
                 Item.NewItem(NPC.GetSource_Loot(), NPC.getRect(), ModContent.ItemType<SorrowfulEssence>());
 
-                for (int p = 0; p < Main.maxPlayers; p++)
-                {
-                    Player player = Main.player[p];
-                    if (!player.active)
-                        continue;
-
-                    CombatText.NewText(player.getRect(), Color.Gray, "+0", true, false);
-
-                    if (!RedeWorld.alignmentGiven)
-                        continue;
-
-                    if (!Main.dedServ)
-                        RedeSystem.Instance.ChaliceUIElement.DisplayDialogue(Language.GetTextValue("Mods.Redemption.UI.Chalice.WeddingRing"), 240, 30, 0, Color.DarkGoldenrod);
-
-                }
+                ChaliceAlignmentUI.BroadcastDialogue(NetworkText.FromKey("Mods.Redemption.UI.Chalice.WeddingRing"), 240, 30, 0, Color.DarkGoldenrod);
+                RedeWorld.Alignment += 0;
             }
             NPC.SetEventFlagCleared(ref RedeBossDowned.downedKeeper, -1);
         }
@@ -290,13 +277,16 @@ namespace Redemption.NPCs.Bosses.Keeper
                 case ActionState.Begin:
                     if (AITimer++ == 0)
                     {
-                        if (!Main.dedServ)
+                        if (Main.netMode != NetmodeID.MultiplayerClient)
                         {
-                            if (NPC.type != ModContent.NPCType<KeeperSpirit>())
-                                RedeSystem.Instance.TitleCardUIElement.DisplayTitle(Language.GetTextValue("Mods.Redemption.TitleCard.Keeper.Name"), 60, 90, 0.8f, 0, Color.MediumPurple, Language.GetTextValue("Mods.Redemption.TitleCard.Keeper.Modifier"));
+                            if (NPC.type == ModContent.NPCType<KeeperSpirit>())
+                                TitleCard.BroadcastTitle(NetworkText.FromKey("Mods.Redemption.TitleCard.KeeperSpirit.Name"), 60, 90, 0.8f, Color.LightCyan, NetworkText.FromKey("Mods.Redemption.TitleCard.KeeperSpirit.Modifier"));
+                            else
+                                TitleCard.BroadcastTitle(NetworkText.FromKey("Mods.Redemption.TitleCard.Keeper.Name"), 60, 90, 0.8f, Color.MediumPurple, NetworkText.FromKey("Mods.Redemption.TitleCard.Keeper.Modifier"));
+
+                            NPC.position = new Vector2(Main.rand.NextBool(2) ? player.Center.X - 160 : player.Center.X + 160, player.Center.Y - 90);
+                            NPC.netUpdate = true;
                         }
-                        NPC.position = new Vector2(Main.rand.NextBool(2) ? player.Center.X - 160 : player.Center.X + 160, player.Center.Y - 90);
-                        NPC.netUpdate = true;
                     }
                     NPC.alpha -= 2;
                     if (NPC.alpha <= 0)
@@ -634,7 +624,7 @@ namespace Redemption.NPCs.Bosses.Keeper
                                     NPC.velocity.Y = 0;
                                     NPC.velocity.X = -0.1f * NPC.spriteDirection;
                                     Main.LocalPlayer.RedemptionScreen().ScreenShakeOrigin = NPC.Center;
-                                    Main.LocalPlayer.RedemptionScreen().ScreenShakeIntensity = MathHelper.Max(player.RedemptionScreen().ScreenShakeIntensity, 3);
+                                    Main.LocalPlayer.RedemptionScreen().ScreenShakeIntensity = MathHelper.Max(Main.LocalPlayer.RedemptionScreen().ScreenShakeIntensity, 3);
 
                                     if (AITimer % 2 == 0)
                                     {
@@ -817,23 +807,10 @@ namespace Redemption.NPCs.Bosses.Keeper
                         Item.NewItem(NPC.GetSource_Loot(), (int)NPC.position.X, (int)NPC.position.Y, NPC.width, NPC.height, ModContent.ItemType<KeepersCirclet>());
                         Item.NewItem(NPC.GetSource_Loot(), (int)NPC.position.X, (int)NPC.position.Y, NPC.width, NPC.height, ModContent.ItemType<KeeperTrophy>());
                         NPC.Shoot(NPC.Center, ModContent.ProjectileType<KeeperSoul>(), 0, Vector2.Zero);
-                        if (!RedeBossDowned.keeperSaved)
+                        if (!RedeBossDowned.keeperSaved && Main.netMode != NetmodeID.MultiplayerClient)
                         {
-                            RedeWorld.alignment += 3;
-                            for (int p = 0; p < Main.maxPlayers; p++)
-                            {
-                                Player player2 = Main.player[p];
-                                if (!player2.active)
-                                    continue;
-
-                                CombatText.NewText(player2.getRect(), Color.Gold, "+3", true, false);
-
-                                if (!RedeWorld.alignmentGiven)
-                                    continue;
-
-                                if (!Main.dedServ)
-                                    RedeSystem.Instance.ChaliceUIElement.DisplayDialogue(Language.GetTextValue("Mods.Redemption.UI.Chalice.KeeperSave"), 180, 30, 0, Color.DarkGoldenrod);
-                            }
+                            RedeWorld.Alignment += 3;
+                            ChaliceAlignmentUI.BroadcastDialogue(NetworkText.FromKey("Mods.Redemption.UI.Chalice.KeeperSave"), 180, 30, 0, Color.DarkGoldenrod);
                         }
                         NPC.netUpdate = true;
                         NPC.SetEventFlagCleared(ref RedeBossDowned.keeperSaved, -1);

@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System.IO;
 using Terraria;
 using Terraria.GameContent;
 using Terraria.ModLoader;
@@ -22,11 +23,26 @@ namespace Redemption.Textures
             Projectile.timeLeft = 20;
             Projectile.scale = 0.1f;
         }
-        public Color color;
+
+        public ref float FlatScale => ref Projectile.ai[0];
+        public ref float MultiScale => ref Projectile.ai[1];
+
+        public Color Color;
+
+        public override void SendExtraAI(BinaryWriter writer)
+        {
+            writer.Write(Color.PackedValue);
+        }
+
+        public override void ReceiveExtraAI(BinaryReader reader)
+        {
+            Color.PackedValue = reader.ReadUInt32();
+        }
+
         public override void AI()
         {
-            Projectile.scale += Projectile.ai[0]; // 0.13f
-            Projectile.scale *= Projectile.ai[1]; // 0.9f
+            Projectile.scale += FlatScale; // 0.13f
+            Projectile.scale *= MultiScale; // 0.9f
             if (Projectile.timeLeft < 10)
                 Projectile.alpha = (int)MathHelper.Lerp(255f, 0f, Projectile.timeLeft / 10f);
         }
@@ -35,12 +51,12 @@ namespace Redemption.Textures
             Texture2D texture = TextureAssets.Projectile[Projectile.type].Value;
             Vector2 drawOrigin = new(texture.Width / 2, texture.Height / 2);
             Main.spriteBatch.End();
-            Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+            Main.spriteBatch.BeginAdditive();
 
-            Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition, null, Projectile.GetAlpha(color), Projectile.rotation, drawOrigin, Projectile.scale, SpriteEffects.None, 0);
+            Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition, null, Projectile.GetAlpha(Color), Projectile.rotation, drawOrigin, Projectile.scale, SpriteEffects.None, 0);
 
             Main.spriteBatch.End();
-            Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+            Main.spriteBatch.BeginDefault();
             return false;
         }
     }

@@ -159,20 +159,8 @@ namespace Redemption.NPCs.Bosses.Neb
                 if (zephos >= 0)
                     Main.npc[zephos].GetGlobalNPC<ExclaimMarkNPC>().exclaimationMark[5] = false;
 
-                for (int p = 0; p < Main.maxPlayers; p++)
-                {
-                    Player player = Main.player[p];
-                    if (!player.active)
-                        continue;
-
-                    CombatText.NewText(player.getRect(), Color.Gold, "+0", true, false);
-
-                    if (!RedeWorld.alignmentGiven)
-                        continue;
-
-                    if (!Main.dedServ)
-                        RedeSystem.Instance.ChaliceUIElement.DisplayDialogue("...", 120, 30, 0, Color.DarkGoldenrod);
-                }
+                RedeWorld.Alignment += 0;
+                ChaliceAlignmentUI.BroadcastDialogue(NetworkText.FromLiteral("..."), 120, 30, 0, Color.DarkGoldenrod);
             }
             NPC.SetEventFlagCleared(ref RedeBossDowned.downedNebuleus, -1);
             if (Main.netMode != NetmodeID.MultiplayerClient)
@@ -355,7 +343,7 @@ namespace Redemption.NPCs.Bosses.Neb
                         {
                             string s1 = Language.GetTextValue("Mods.Redemption.Cutscene.Nebuleus.Intro.1");
                             string s2 = Language.GetTextValue("Mods.Redemption.Cutscene.Nebuleus.Intro.2");
-                            if (RedeWorld.alignment >= 0)
+                            if (RedeWorld.Alignment >= 0)
                                 s2 = Language.GetTextValue("Mods.Redemption.Cutscene.Nebuleus.Intro.2Alt");
                             string s3 = Language.GetTextValue("Mods.Redemption.Cutscene.Nebuleus.Intro.3");
                             string s4 = Language.GetTextValue("Mods.Redemption.Cutscene.Nebuleus.Intro.4");
@@ -383,8 +371,7 @@ namespace Redemption.NPCs.Bosses.Neb
                             ArmAnimation(0, true);
                             NPC.ai[2] = 0;
                             NPC.ai[0] = 3;
-                            if (!Main.dedServ)
-                                RedeSystem.Instance.TitleCardUIElement.DisplayTitle(Language.GetTextValue("Mods.Redemption.TitleCard.Neb.Name"), 60, 90, 0.8f, 0, Color.HotPink, Language.GetTextValue("Mods.Redemption.TitleCard.Neb.Modifier"));
+                            TitleCard.BroadcastTitle(NetworkText.FromKey("Mods.Redemption.TitleCard.Neb.Name"), 60, 90, 0.8f, Color.HotPink, NetworkText.FromKey("Mods.Redemption.TitleCard.Neb.Modifier"));
                             NPC.netUpdate = true;
                         }
                     }
@@ -401,8 +388,7 @@ namespace Redemption.NPCs.Bosses.Neb
                         }
                         if (NPC.ai[2] >= 500)
                         {
-                            if (!Main.dedServ)
-                                RedeSystem.Instance.TitleCardUIElement.DisplayTitle(Language.GetTextValue("Mods.Redemption.TitleCard.Neb.Name"), 60, 90, 0.8f, 0, Color.HotPink, Language.GetTextValue("Mods.Redemption.TitleCard.Neb.Modifier"));
+                            TitleCard.BroadcastTitle(NetworkText.FromKey("Mods.Redemption.TitleCard.Neb.Name"), 60, 90, 0.8f, Color.HotPink, NetworkText.FromKey("Mods.Redemption.TitleCard.Neb.Modifier"));
                             ArmAnimation(0, true);
                             NPC.ai[2] = 0;
                             NPC.ai[0] = 3;
@@ -1244,11 +1230,11 @@ namespace Redemption.NPCs.Bosses.Neb
                         string s6 = Language.GetTextValue("Mods.Redemption.Cutscene.Nebuleus.Transition.6");
                         string s7 = Language.GetTextValue("Mods.Redemption.Cutscene.Nebuleus.Transition.7");
                         string s8 = Language.GetTextValue("Mods.Redemption.Cutscene.Nebuleus.Transition.8");
-                        string s9 = RedeWorld.alignment >= 0 ? Language.GetTextValue("Mods.Redemption.Cutscene.Nebuleus.Transition.9") : Language.GetTextValue("Mods.Redemption.Cutscene.Nebuleus.Transition.9Alt");
-                        string s10 = RedeWorld.alignment >= 0 ? Language.GetTextValue("Mods.Redemption.Cutscene.Nebuleus.Transition.10") : Language.GetTextValue("Mods.Redemption.Cutscene.Nebuleus.Transition.10Alt");
+                        string s9 = RedeWorld.Alignment >= 0 ? Language.GetTextValue("Mods.Redemption.Cutscene.Nebuleus.Transition.9") : Language.GetTextValue("Mods.Redemption.Cutscene.Nebuleus.Transition.9Alt");
+                        string s10 = RedeWorld.Alignment >= 0 ? Language.GetTextValue("Mods.Redemption.Cutscene.Nebuleus.Transition.10") : Language.GetTextValue("Mods.Redemption.Cutscene.Nebuleus.Transition.10Alt");
                         string s11 = Language.GetTextValue("Mods.Redemption.Cutscene.Nebuleus.Transition.11");
                         string s12 = Language.GetTextValue("Mods.Redemption.Cutscene.Nebuleus.Transition.11Alt");
-                        bool endEarly = RedeWorld.alignment >= 0 && RedeBossDowned.nebDeath >= 5;
+                        bool endEarly = RedeWorld.Alignment >= 0 && RedeBossDowned.nebDeath >= 5;
                         DialogueChain chain = new();
                         chain.Add(new(NPC, s1, nebColor, nebColor2, voice, .03f, 2f, 0, false, bubble: Bubble, modifier: modifier))
                              .Add(new(NPC, s2, nebColor, nebColor2, voice, .03f, 2f, 0, false, bubble: Bubble, modifier: modifier))
@@ -1260,15 +1246,15 @@ namespace Redemption.NPCs.Bosses.Neb
                              .Add(new(NPC, s8, nebColor, nebColor2, voice, .03f, 2f, 0, false, bubble: Bubble, modifier: modifier))
                              .Add(new(NPC, s9, nebColor, nebColor2, voice, .03f, 2f, 0, false, bubble: Bubble, modifier: modifier))
                              .Add(new(NPC, s10, nebColor, nebColor2, voice, .03f, 2f, endEarly ? .5f : 0, endEarly, bubble: Bubble, modifier: modifier, endID: endEarly ? 1 : 0));
-                        if (RedeWorld.alignment >= 0 && RedeBossDowned.nebDeath < 5)
+                        if (RedeWorld.Alignment >= 0 && RedeBossDowned.nebDeath < 5)
                             chain.Add(new(NPC, s11, nebColor, nebColor2, voice, .03f, 2f, .5f, true, bubble: Bubble, modifier: modifier, endID: 1));
-                        if (RedeWorld.alignment < 0)
+                        if (RedeWorld.Alignment < 0)
                             chain.Add(new(NPC, s12, nebColor, nebColor2, voice, .03f, 2f, .5f, true, bubble: Bubble, modifier: modifier, endID: 1));
                         chain.OnEndTrigger += Chain_OnEndTrigger;
                         ChatUI.Visible = true;
                         ChatUI.Add(chain);
                     }
-                    if (RedeWorld.alignment >= 0)
+                    if (RedeWorld.Alignment >= 0)
                     {
                         if (NPC.ai[2] >= 5000)
                         {
@@ -1282,8 +1268,8 @@ namespace Redemption.NPCs.Bosses.Neb
                     {
                         if (NPC.ai[2] >= 5000)
                         {
-                            if (RedeWorld.alignmentGiven && !Main.dedServ && !RedeBossDowned.downedSlayer)
-                                RedeSystem.Instance.ChaliceUIElement.DisplayDialogue(Language.GetTextValue("Mods.Redemption.UI.Chalice.NebChoice"), 180, 30, 0, Color.DarkGoldenrod);
+                            if (!RedeBossDowned.downedSlayer && Main.netMode != NetmodeID.MultiplayerClient)
+                                ChaliceAlignmentUI.BroadcastDialogue(NetworkText.FromKey("Mods.Redemption.UI.Chalice.NebChoice"), 180, 30, 0, Color.DarkGoldenrod);
 
                             player.Redemption().yesChoice = false;
                             player.Redemption().noChoice = false;
@@ -1300,11 +1286,11 @@ namespace Redemption.NPCs.Bosses.Neb
                     ScreenPlayer.CutsceneLock(player, NPC, ScreenPlayer.CutscenePriority.Medium, 1200, 2400, 1200);
                     if (!Main.dedServ)
                         Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/silence");
-                    if (!Main.dedServ && !YesNoUI.Visible)
-                        RedeSystem.Instance.YesNoUIElement.DisplayYesNoButtons(Language.GetTextValue("Mods.Redemption.GenericTerms.Choice.Spare"), Language.GetTextValue("Mods.Redemption.GenericTerms.Choice.Fight"), new Vector2(0, 15), new Vector2(0, 15), .75f, .75f);
+
+                    YesNoUI.DisplayYesNoButtons(player, Language.GetTextValue("Mods.Redemption.GenericTerms.Choice.Spare"), Language.GetTextValue("Mods.Redemption.GenericTerms.Choice.Fight"), new Vector2(0, 15), new Vector2(0, 15), .75f, .75f);
+
                     if (player.Redemption().yesChoice)
                     {
-                        YesNoUI.Visible = false;
                         if (ChaliceAlignmentUI.Visible)
                             ChaliceAlignmentUI.Visible = false;
                         NPC.ai[2] = 0;
@@ -1313,7 +1299,6 @@ namespace Redemption.NPCs.Bosses.Neb
                     }
                     else if (player.Redemption().noChoice)
                     {
-                        YesNoUI.Visible = false;
                         if (!Main.dedServ)
                             ChaliceAlignmentUI.Visible = false;
                         NPC.ai[2] = 0;
@@ -1378,7 +1363,7 @@ namespace Redemption.NPCs.Bosses.Neb
                     NPC.ai[2]++;
                     if (!Main.dedServ)
                         Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/silence");
-                    if (RedeWorld.alignment >= 0)
+                    if (RedeWorld.Alignment >= 0)
                     {
                         NPC.dontTakeDamage = false;
                         NPC.netUpdate = true;
@@ -1399,7 +1384,7 @@ namespace Redemption.NPCs.Bosses.Neb
                         {
                             if (NPC.ai[2] == 30)
                             {
-                                string s1 = RedeWorld.alignment >= 0 ? Language.GetTextValue("Mods.Redemption.Cutscene.Nebuleus.Transition.Spare1") : Language.GetTextValue("Mods.Redemption.Cutscene.Nebuleus.Transition.Spare2");
+                                string s1 = RedeWorld.Alignment >= 0 ? Language.GetTextValue("Mods.Redemption.Cutscene.Nebuleus.Transition.Spare1") : Language.GetTextValue("Mods.Redemption.Cutscene.Nebuleus.Transition.Spare2");
                                 DialogueChain chain = new();
                                 chain.Add(new(NPC, "...", nebColor, nebColor2, voice, .03f, 2f, 0, false, bubble: Bubble, modifier: modifier))
                                      .Add(new(NPC, s1, nebColor, nebColor2, voice, .03f, 2f, .5f, true, bubble: Bubble, modifier: modifier, endID: 1));

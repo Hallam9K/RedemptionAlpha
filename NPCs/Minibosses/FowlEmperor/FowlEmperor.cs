@@ -10,6 +10,7 @@ using Redemption.Items.Placeable.Furniture.Misc;
 using Redemption.Items.Placeable.Trophies;
 using Redemption.Items.Usable.Potions;
 using Redemption.Items.Usable.Summons;
+using Redemption.UI;
 using System;
 using System.Collections.Generic;
 using Terraria;
@@ -105,21 +106,8 @@ namespace Redemption.NPCs.Minibosses.FowlEmperor
         {
             if (!RedeBossDowned.downedFowlEmperor)
             {
-                for (int p = 0; p < Main.maxPlayers; p++)
-                {
-                    Player player = Main.player[p];
-                    if (!player.active)
-                        continue;
-
-                    CombatText.NewText(player.getRect(), Color.Gray, "+0", true, false);
-
-                    if (!RedeWorld.alignmentGiven)
-                        continue;
-
-                    if (!Main.dedServ)
-                        RedeSystem.Instance.ChaliceUIElement.DisplayDialogue(Language.GetTextValue("Mods.Redemption.UI.Chalice.FowlDefeat"), 120, 30, 0, Color.DarkGoldenrod);
-
-                }
+                RedeWorld.Alignment += 0;
+                ChaliceAlignmentUI.BroadcastDialogue(NetworkText.FromKey("Mods.Redemption.UI.Chalice.FowlDefeat"), 300, 30, 0, Color.DarkGoldenrod);
             }
             NPC.SetEventFlagCleared(ref RedeBossDowned.downedFowlEmperor, -1);
         }
@@ -191,8 +179,7 @@ namespace Redemption.NPCs.Minibosses.FowlEmperor
                     switch (TimerRand)
                     {
                         case 0:
-                            if (!Main.dedServ)
-                                RedeSystem.Instance.TitleCardUIElement.DisplayTitle(Language.GetTextValue("Mods.Redemption.TitleCard.FowlEmperor.Name"), 60, 90, 0.8f, 0, Color.PeachPuff, Language.GetTextValue("Mods.Redemption.TitleCard.FowlEmperor.Modifier"));
+                            TitleCard.BroadcastTitle(NetworkText.FromKey("Mods.Redemption.TitleCard.FowlEmperor.Name"), 60, 90, 0.8f, Color.PeachPuff, NetworkText.FromKey("Mods.Redemption.TitleCard.FowlEmperor.Modifier"));
 
                             NPC.noTileCollide = true;
                             NPC.noGravity = true;

@@ -1,14 +1,12 @@
-using System.Collections.Generic;
 using Microsoft.Xna.Framework;
+using Redemption.Base;
+using Redemption.Tiles.Furniture.Misc;
+using System.Collections.Generic;
+using System.Linq;
 using Terraria;
+using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.WorldBuilding;
-using Redemption.Base;
-using ReLogic.Content;
-using Microsoft.Xna.Framework.Graphics;
-using Terraria.ID;
-using Redemption.Tiles.Furniture.Misc;
-using System.Linq;
 
 namespace Redemption.WorldGeneration
 {
@@ -23,12 +21,10 @@ namespace Redemption.WorldGeneration
                 [Color.Black] = -1
             };
 
-            Texture2D tex = ModContent.Request<Texture2D>("Redemption/WorldGeneration/GoldenGateway/GatewayIsland_Clear", AssetRequestMode.ImmediateLoad).Value;
-            GenUtils.InvokeOnMainThread(() =>
-            {
-                TexGen gen = BaseWorldGenTex.GetTexGenerator(tex, colorToTile);
-                gen.Generate(origin.X, origin.Y, true, true);
-            });
+            TexGenData tex = TexGen.GetTextureForGen("Redemption/WorldGeneration/GoldenGateway/GatewayIsland_Clear");
+            TexGen gen = TexGen.GetTexGenerator(tex, colorToTile);
+            gen.Generate(origin.X, origin.Y, true, false);
+
             return true;
         }
     }
@@ -67,15 +63,13 @@ namespace Redemption.WorldGeneration
                 [Color.Black] = -1
             };
 
-            Texture2D tex = ModContent.Request<Texture2D>("Redemption/WorldGeneration/GoldenGateway/GatewayIsland", AssetRequestMode.ImmediateLoad).Value;
-            Texture2D texWalls = ModContent.Request<Texture2D>("Redemption/WorldGeneration/GoldenGateway/GatewayIsland_Walls", AssetRequestMode.ImmediateLoad).Value;
-            Texture2D texSlopes = ModContent.Request<Texture2D>("Redemption/WorldGeneration/GoldenGateway/GatewayIsland_Slopes", AssetRequestMode.ImmediateLoad).Value;
-            Texture2D texLiquids = ModContent.Request<Texture2D>("Redemption/WorldGeneration/GoldenGateway/GatewayIsland_Liquids", AssetRequestMode.ImmediateLoad).Value;
-            GenUtils.InvokeOnMainThread(() =>
-            {
-                TexGen gen = BaseWorldGenTex.GetTexGenerator(tex, colorToTile, texWalls, colorToWall, texLiquids, texSlopes);
-                gen.Generate(origin.X, origin.Y, true, true);
-            });
+            TexGenData tex = TexGen.GetTextureForGen("Redemption/WorldGeneration/GoldenGateway/GatewayIsland");
+            TexGenData texWalls = TexGen.GetTextureForGen("Redemption/WorldGeneration/GoldenGateway/GatewayIsland_Walls");
+            TexGenData texSlopes = TexGen.GetTextureForGen("Redemption/WorldGeneration/GoldenGateway/GatewayIsland_Slopes");
+            TexGenData texLiquids = TexGen.GetTextureForGen("Redemption/WorldGeneration/GoldenGateway/GatewayIsland_Liquids");
+            TexGen gen = TexGen.GetTexGenerator(tex, colorToTile, texWalls, colorToWall, texLiquids, texSlopes);
+            gen.Generate(origin.X, origin.Y, true, false);
+
             GenUtils.ObjectPlace(origin.X + 74, origin.Y + 30, ModContent.TileType<GoldenGatewayTile>());
             GenUtils.ObjectPlace(origin.X + 48, origin.Y + 33, TileID.Lamps, 30);
             GenUtils.ObjectPlace(origin.X + 101, origin.Y + 33, TileID.Lamps, 30);
@@ -171,6 +165,9 @@ namespace Redemption.WorldGeneration
                 {
                     if (TileArray.Contains(Framing.GetTileSafely(i, j).TileType) && WorldGen.InWorld(i, j))
                         BaseWorldGen.SmoothTiles(i, j, i + 1, j + 1);
+
+                    if (Framing.GetTileSafely(i, j).TileType == TileID.Platforms && WorldGen.InWorld(i, j))
+                        WorldGen.KillTile(i, j, true);
                 }
             }
             GenVars.structures.AddProtectedStructure(new Rectangle(origin.X, origin.Y, WIDTH, HEIGHT));

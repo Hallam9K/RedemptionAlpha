@@ -1,33 +1,38 @@
+using Microsoft.CodeAnalysis;
 using Microsoft.Xna.Framework;
-using Redemption.Buffs;
-using Redemption.Items.Usable;
-using Redemption.Rarities;
-using System.Collections.Generic;
-using Terraria;
-using Terraria.DataStructures;
-using Terraria.ID;
-using Terraria.ModLoader;
 using Redemption.BaseExtension;
-using System.Linq;
-using Redemption.NPCs.Critters;
-using Terraria.Audio;
-using Microsoft.Xna.Framework.Graphics;
-using Redemption.Items.Accessories.PreHM;
-using ReLogic.Content;
-using Terraria.GameContent.ItemDropRules;
-using Redemption.Items.Weapons.HM.Summon;
 using Redemption.Biomes;
-using Redemption.NPCs.Friendly;
-using Redemption.Tiles.Furniture.Misc;
-using Redemption.WorldGeneration.Misc;
-using Redemption.Items.Placeable.Plants;
-using Redemption.Items.Quest.KingSlayer;
-using Redemption.Items.Usable.Summons;
-using Redemption.Items.Weapons.PreHM.Summon;
-using Terraria.Localization;
-using SubworldLibrary;
+using Redemption.Buffs;
+using Redemption.CrossMod;
+using Redemption.DamageClasses;
+using Redemption.Items.Accessories.HM;
+using Redemption.Items.Accessories.PreHM;
 using Redemption.Items.Armor.Vanity;
 using Redemption.Items.Donator.Emp;
+using Redemption.Items.Placeable.Furniture.Shade;
+using Redemption.Items.Placeable.Plants;
+using Redemption.Items.Quest.KingSlayer;
+using Redemption.Items.Usable;
+using Redemption.Items.Usable.Summons;
+using Redemption.Items.Weapons.HM.Summon;
+using Redemption.Items.Weapons.PreHM.Ritualist;
+using Redemption.Items.Weapons.PreHM.Summon;
+using Redemption.NPCs.Critters;
+using Redemption.Rarities;
+using Redemption.Tiles.Furniture.Misc;
+using Redemption.WorldGeneration.Misc;
+using Redemption.WorldGeneration.Soulless;
+using SubworldLibrary;
+using System.Collections.Generic;
+using System.Linq;
+using Terraria;
+using Terraria.Audio;
+using Terraria.DataStructures;
+using Terraria.GameContent.ItemDropRules;
+using Terraria.ID;
+using Terraria.Localization;
+using Terraria.ModLoader;
+using Terraria.Utilities;
 
 namespace Redemption.Globals
 {
@@ -53,7 +58,7 @@ namespace Redemption.Globals
         }
         public override bool OnPickup(Item item, Terraria.Player player)
         {
-            if ((item.type == ItemID.Heart || item.type == ItemID.CandyApple || item.type == ItemID.CandyCane) && player.RedemptionPlayerBuff().heartInsignia)
+            if ((item.type is ItemID.Heart or ItemID.CandyApple or ItemID.CandyCane) && player.RedemptionPlayerBuff().heartInsignia)
                 player.AddBuff(ModContent.BuffType<HeartInsigniaBuff>(), 180);
 
             return true;
@@ -75,12 +80,10 @@ namespace Redemption.Globals
         }
         public override void ModifyItemLoot(Item item, ItemLoot itemLoot)
         {
-            /*if (item.type == ItemID.JungleFishingCrate)
-                itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<BuddingBoline>(), 6));
-            if (item.type == ItemID.JungleFishingCrateHard)
-                itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<BuddingBoline>(), 12));*/
-            if (item.type == ItemID.GolemBossBag)
+            if (item.type is ItemID.GolemBossBag)
+            {
                 itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<GolemStaff>(), 7));
+            }
         }
 
         #region Vanilla Set Bonuses
@@ -110,6 +113,7 @@ namespace Redemption.Globals
         public static readonly string turtleSet = "MoR:TurtleSet";
         public static readonly string beetleSet = "MoR:BeetleSet";
         public static readonly string spectreSet = "MoR:SpectreSet";
+        public static readonly string solarSet = "MoR:SolarSet";
         public override string IsArmorSet(Item head, Item body, Item legs)
         {
             if (head.type == ItemID.CopperHelmet && body.type == ItemID.CopperChainmail && legs.type == ItemID.CopperGreaves)
@@ -165,69 +169,76 @@ namespace Redemption.Globals
                 return beetleSet;
             if ((head.type == ItemID.SpectreHood || head.type == ItemID.SpectreMask) && body.type == ItemID.SpectreRobe && legs.type == ItemID.SpectrePants)
                 return spectreSet;
+            if (head.type == ItemID.SolarFlareHelmet && body.type == ItemID.SolarFlareBreastplate && legs.type == ItemID.SolarFlareLeggings)
+                return solarSet;
+
             return base.IsArmorSet(head, body, legs);
         }
         public override void UpdateArmorSet(Terraria.Player player, string set)
         {
             if (set == copperSet || set == tinSet)
             {
-                player.setBonus += Language.GetTextValue("Mods.Redemption.GenericTooltips.ArmorSetBonus.VanillaArmor.20Increased") + ElementID.ThunderS + Language.GetTextValue("Mods.Redemption.GenericTooltips.ArmorSetBonus.VanillaArmor.Resistance");
+                player.setBonus += Language.GetTextValue("Mods.Redemption.GenericTooltips.ArmorSetBonus.VanillaArmor.Resistance", 20, ElementID.ThunderS);
                 player.RedemptionPlayerBuff().ElementalResistance[ElementID.Thunder] += 0.2f;
             }
             if (set == silverSet || set == tungstenSet || set == titaniumSet)
             {
-                player.setBonus += Language.GetTextValue("Mods.Redemption.GenericTooltips.ArmorSetBonus.VanillaArmor.20Increased") + ElementID.ThunderS + Language.GetTextValue("Mods.Redemption.GenericTooltips.ArmorSetBonus.VanillaArmor.Damage");
+                player.setBonus += Language.GetTextValue("Mods.Redemption.GenericTooltips.ArmorSetBonus.VanillaArmor.Damage", 20, ElementID.ThunderS);
                 player.RedemptionPlayerBuff().ElementalDamage[ElementID.Thunder] += 0.2f;
             }
             if (set == cactusSet || set == jungleSet || set == orichalcumSet || set == beetleSet || set == turtleSet)
             {
-                player.setBonus += Language.GetTextValue("Mods.Redemption.GenericTooltips.ArmorSetBonus.VanillaArmor.20Increased") + ElementID.NatureS + Language.GetTextValue("Mods.Redemption.GenericTooltips.ArmorSetBonus.VanillaArmor.Resistance");
+                player.setBonus += Language.GetTextValue("Mods.Redemption.GenericTooltips.ArmorSetBonus.VanillaArmor.Resistance", 20, ElementID.NatureS);
                 player.RedemptionPlayerBuff().ElementalResistance[ElementID.Nature] += 0.2f;
             }
             if (set == goldSet || set == mythrilSet || set == spectreSet)
             {
-                player.setBonus += Language.GetTextValue("Mods.Redemption.GenericTooltips.ArmorSetBonus.VanillaArmor.20Increased") + ElementID.ArcaneS + Language.GetTextValue("Mods.Redemption.GenericTooltips.ArmorSetBonus.VanillaArmor.Resistance");
+                player.setBonus += Language.GetTextValue("Mods.Redemption.GenericTooltips.ArmorSetBonus.VanillaArmor.Resistance", 20, ElementID.ArcaneS);
                 player.RedemptionPlayerBuff().ElementalResistance[ElementID.Arcane] += 0.2f;
             }
             if (set == platinumSet)
             {
-                player.setBonus += Language.GetTextValue("Mods.Redemption.GenericTooltips.ArmorSetBonus.VanillaArmor.20Increased") + ElementID.ArcaneS + Language.GetTextValue("Mods.Redemption.GenericTooltips.ArmorSetBonus.VanillaArmor.Damage");
+                player.setBonus += Language.GetTextValue("Mods.Redemption.GenericTooltips.ArmorSetBonus.VanillaArmor.Damage", 20, ElementID.ArcaneS);
                 player.RedemptionPlayerBuff().ElementalDamage[ElementID.Arcane] += 0.2f;
             }
             if (set == fossilSet || set == adamantiteSet || set == forbiddenSet || set == turtleSet || set == beetleSet || set == ironSet || set == leadSet)
             {
-                player.setBonus += Language.GetTextValue("Mods.Redemption.GenericTooltips.ArmorSetBonus.VanillaArmor.20Increased") + ElementID.EarthS + Language.GetTextValue("Mods.Redemption.GenericTooltips.ArmorSetBonus.VanillaArmor.Resistance");
+                player.setBonus += Language.GetTextValue("Mods.Redemption.GenericTooltips.ArmorSetBonus.VanillaArmor.Resistance", 20, ElementID.EarthS);
                 player.RedemptionPlayerBuff().ElementalResistance[ElementID.Earth] += 0.2f;
             }
             if (set == shadowSet)
             {
-                player.setBonus += Language.GetTextValue("Mods.Redemption.GenericTooltips.ArmorSetBonus.VanillaArmor.20Increased") + ElementID.ShadowS + Language.GetTextValue("Mods.Redemption.GenericTooltips.ArmorSetBonus.VanillaArmor.Resistance");
+                player.setBonus += Language.GetTextValue("Mods.Redemption.GenericTooltips.ArmorSetBonus.VanillaArmor.Resistance", 20, ElementID.ShadowS);
                 player.RedemptionPlayerBuff().ElementalResistance[ElementID.Shadow] += 0.2f;
             }
             if (set == crimsonSet)
             {
-                player.setBonus += Language.GetTextValue("Mods.Redemption.GenericTooltips.ArmorSetBonus.VanillaArmor.20Increased") + ElementID.BloodS + Language.GetTextValue("Mods.Redemption.GenericTooltips.ArmorSetBonus.VanillaArmor.Resistance");
+                player.setBonus += Language.GetTextValue("Mods.Redemption.GenericTooltips.ArmorSetBonus.VanillaArmor.Resistance", 20, ElementID.BloodS);
                 player.RedemptionPlayerBuff().ElementalResistance[ElementID.Blood] += 0.2f;
             }
             if (set == moltenSet)
             {
-                player.setBonus += Language.GetTextValue("Mods.Redemption.GenericTooltips.ArmorSetBonus.VanillaArmor.20Increased") + ElementID.FireS + Language.GetTextValue("Mods.Redemption.GenericTooltips.ArmorSetBonus.VanillaArmor.Resistance");
+                player.setBonus += Language.GetTextValue("Mods.Redemption.GenericTooltips.ArmorSetBonus.VanillaArmor.Resistance", 20, ElementID.FireS);
                 player.RedemptionPlayerBuff().ElementalResistance[ElementID.Fire] += 0.2f;
             }
             if (set == cobaltSet)
             {
-                player.setBonus += Language.GetTextValue("Mods.Redemption.GenericTooltips.ArmorSetBonus.VanillaArmor.20Increased") + ElementID.WaterS + Language.GetTextValue("Mods.Redemption.GenericTooltips.ArmorSetBonus.VanillaArmor.Resistance");
+                player.setBonus += Language.GetTextValue("Mods.Redemption.GenericTooltips.ArmorSetBonus.VanillaArmor.Resistance", 20, ElementID.WaterS);
                 player.RedemptionPlayerBuff().ElementalResistance[ElementID.Water] += 0.2f;
             }
             if (set == palladiumSet || set == hallowedSet)
             {
-                player.setBonus += Language.GetTextValue("Mods.Redemption.GenericTooltips.ArmorSetBonus.VanillaArmor.20Increased") + ElementID.HolyS + Language.GetTextValue("Mods.Redemption.GenericTooltips.ArmorSetBonus.VanillaArmor.Resistance");
+                player.setBonus += Language.GetTextValue("Mods.Redemption.GenericTooltips.ArmorSetBonus.VanillaArmor.Resistance", 20, ElementID.HolyS);
                 player.RedemptionPlayerBuff().ElementalResistance[ElementID.Holy] += 0.2f;
             }
             if (set == frostSet)
             {
-                player.setBonus += Language.GetTextValue("Mods.Redemption.GenericTooltips.ArmorSetBonus.VanillaArmor.20Increased") + ElementID.IceS + Language.GetTextValue("Mods.Redemption.GenericTooltips.ArmorSetBonus.VanillaArmor.Resistance");
+                player.setBonus += Language.GetTextValue("Mods.Redemption.GenericTooltips.ArmorSetBonus.VanillaArmor.Resistance", 20, ElementID.IceS);
                 player.RedemptionPlayerBuff().ElementalResistance[ElementID.Ice] += 0.2f;
+            }
+            if (set == solarSet)
+            {
+                player.setBonus += Language.GetTextValue("Mods.Redemption.GenericTooltips.ArmorSetBonus.VanillaArmor.SolarCelestial", ElementID.CelestialS, ElementID.FireS);
             }
         }
         #endregion
@@ -260,8 +271,9 @@ namespace Redemption.Globals
                         continue;
 
                     SoundEngine.PlaySound(SoundID.Item68, item.position);
-                    SoundEngine.PlaySound(CustomSounds.Choir with { Pitch = 0.1f }, item.position);
-                    RedeDraw.SpawnExplosion(item.Center, Color.White, noDust: true, tex: ModContent.Request<Texture2D>("Redemption/Textures/HolyGlow3", AssetRequestMode.ImmediateLoad).Value);
+                    if (!Main.dedServ)
+                        SoundEngine.PlaySound(CustomSounds.Choir with { Pitch = 0.1f }, item.position);
+                    RedeDraw.SpawnExplosion(item.Center, Color.White, noDust: true, tex: "Redemption/Textures/HolyGlow3");
                     chicken.active = false;
                     if (Main.netMode != NetmodeID.MultiplayerClient)
                     {
@@ -307,6 +319,13 @@ namespace Redemption.Globals
             if (player.InModBiome<LabBiome>() && !RedeBossDowned.downedPZ && (item.type is ItemID.RodofDiscord or ItemID.RodOfHarmony))
                 return false;
 
+            // Disables Fargo's insta-items in any of this mod's subworlds
+            if (SubworldSystem.AnyActive<Redemption>() && ModLoader.TryGetMod("Fargowiltas", out var fargo))
+            {
+                if (WeakReferences.FargosInstas.Count != 0 && WeakReferences.FargosInstas != null && WeakReferences.FargosInstas.Contains(item.type))
+                    return false;
+            }
+
             #region C
             Point coop = player.Center.ToTileCoordinates();
             if (item.type is ItemID.TeleportationPotion && player.RedemptionPlayerBuff().ChickenForm && Framing.GetTileSafely(coop.X, coop.Y).TileType == ModContent.TileType<ChickenCoopTile>())
@@ -320,18 +339,7 @@ namespace Redemption.Globals
             #endregion
             return base.CanUseItem(item, player);
         }
-        public override void OnCreated(Item item, ItemCreationContext context)
-        {
-            if (item.type == ModContent.ItemType<AlignmentTeller>() && !Terraria.NPC.AnyNPCs(ModContent.NPCType<Chalice_Intro>()))
-            {
-                RedeWorld.alignmentGiven = true;
-                if (Main.netMode == NetmodeID.Server)
-                    NetMessage.SendData(MessageID.WorldData);
 
-                RedeHelper.SpawnNPC(item.GetSource_FromAI(), (int)Main.LocalPlayer.Center.X, (int)Main.LocalPlayer.Center.Y, ModContent.NPCType<Chalice_Intro>());
-                item.TurnToAir();
-            }
-        }
         public static bool ChaliceInterest(int type)
         {
             if (ItemLists.AlignmentInterest.Contains(type))
@@ -344,11 +352,11 @@ namespace Redemption.Globals
                     return false;
                 if (type == ModContent.ItemType<CyberTech>() && RedeBossDowned.downedSlayer)
                     return false;
-                if (type == ModContent.ItemType<SlayerShipEngine>() && RedeWorld.slayerRep >= 4)
+                if (type == ModContent.ItemType<SlayerShipEngine>() && RedeQuest.slayerRep >= 4)
                     return false;
-                if (type == ModContent.ItemType<AnglonicMysticBlossom>() && (RedeWorld.alignment <= 0 || RedeQuest.forestNymphVar >= 2))
+                if (type == ModContent.ItemType<AnglonicMysticBlossom>() && (RedeWorld.Alignment <= 0 || RedeQuest.forestNymphVar >= 2))
                     return false;
-                if (type == ModContent.ItemType<KingsOakStaff>() && (RedeWorld.alignment <= 0 || RedeQuest.forestNymphVar > 0))
+                if (type == ModContent.ItemType<KingsOakStaff>() && (RedeWorld.Alignment <= 0 || RedeQuest.forestNymphVar > 0))
                     return false;
                 if (type == ModContent.ItemType<NebSummon>() && RedeBossDowned.downedNebuleus && RedeBossDowned.nebDeath < 7)
                     return false;
@@ -358,6 +366,9 @@ namespace Redemption.Globals
         }
         public override void ModifyTooltips(Item item, List<TooltipLine> tooltips)
         {
+            int tooltipVanity = tooltips.FindIndex(TooltipLine => TooltipLine.Name.Equals("Social"));
+            if (tooltipVanity != -1)
+                return;
             if (item.type is ItemID.RodOfHarmony)
             {
                 TooltipLine tooltip1Line = new(Mod, "Tooltip1", Language.GetTextValue("Mods.Redemption.GenericTooltips.RodOfHarmonyLine"));
@@ -406,6 +417,7 @@ namespace Redemption.Globals
                 if (item.HasElementItem(ElementID.Blood))
                 {
                     TooltipLine line = new(Mod, "Element", Language.GetTextValue("Mods.Redemption.GenericTooltips.Bonuses.BloodBonus")) { OverrideColor = Color.IndianRed };
+
                     tooltips.Add(line);
                 }
                 if (item.HasElementItem(ElementID.Celestial))

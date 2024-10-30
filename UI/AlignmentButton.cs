@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Base;
+using Redemption.BaseExtension;
 using Redemption.Globals;
 using Redemption.Items.Placeable.Plants;
 using Redemption.Items.Quest.KingSlayer;
@@ -46,7 +47,7 @@ namespace Redemption.UI
         }
         public override void MouseOver(UIMouseEvent evt)
         {
-            IconHighlight.Text = Language.GetTextValue("Mods.Redemption.UI.Chalice.Alignment") + ": " + RedeWorld.alignment;
+            IconHighlight.Text = Language.GetTextValue("Mods.Redemption.UI.Chalice.Alignment") + ": " + RedeWorld.Alignment;
             if (ItemLists.AlignmentInterest.Contains(Main.LocalPlayer.HeldItem.type))
                 IconHighlight.Text += "\n" + Language.GetTextValue("Mods.Redemption.UI.Chalice.ItemInterested");
         }
@@ -71,100 +72,101 @@ namespace Redemption.UI
                     if (type == ModContent.ItemType<HeartOfThorns>())
                     {
                         if (!RedeBossDowned.downedThorn)
-                            RedeSystem.Instance.ChaliceUIElement.DisplayDialogue(Language.GetTextValue("Mods.Redemption.UI.Chalice.HeartOfThorns"), 300, 30, 0, Color.DarkGoldenrod);
+                            ChaliceAlignmentUI.DisplayDialogue(Language.GetTextValue("Mods.Redemption.UI.Chalice.HeartOfThorns"), 300, 30, 0, Color.DarkGoldenrod);
                         else
-                            RedeSystem.Instance.ChaliceUIElement.DisplayDialogue(Language.GetTextValue("Mods.Redemption.UI.Chalice.HeartOfThorns2"), 300, 30, 0, Color.DarkGoldenrod);
+                            ChaliceAlignmentUI.DisplayDialogue(Language.GetTextValue("Mods.Redemption.UI.Chalice.HeartOfThorns2"), 300, 30, 0, Color.DarkGoldenrod);
                     }
                     else if (type == ModContent.ItemType<DemonScroll>())
                     {
                         string fight = RedeBossDowned.erhanDeath < 3 ? Language.GetTextValue("Mods.Redemption.GenericTerms.Words.Fighting") : Language.GetTextValue("Mods.Redemption.GenericTerms.Words.Slaying");
                         if (!RedeBossDowned.downedErhan)
-                            RedeSystem.Instance.ChaliceUIElement.DisplayDialogue(Language.GetTextValue("Mods.Redemption.UI.Chalice.DemonScroll"), 300, 30, 0, Color.DarkGoldenrod);
+                            ChaliceAlignmentUI.DisplayDialogue(Language.GetTextValue("Mods.Redemption.UI.Chalice.DemonScroll"), 300, 30, 0, Color.DarkGoldenrod);
                         else
-                            RedeSystem.Instance.ChaliceUIElement.DisplayDialogue(Language.GetTextValue("Mods.Redemption.UI.Chalice.DemonScroll2", fight), 300, 30, 0, Color.DarkGoldenrod);
+                            ChaliceAlignmentUI.DisplayDialogue(Language.GetTextValue("Mods.Redemption.UI.Chalice.DemonScroll2", fight), 300, 30, 0, Color.DarkGoldenrod);
                     }
                     else if (type == ModContent.ItemType<WeddingRing>())
                     {
                         if (RedeBossDowned.downedKeeper && !RedeBossDowned.keeperSaved && !RedeBossDowned.skullDiggerSaved)
-                            RedeSystem.Instance.ChaliceUIElement.DisplayDialogue(Language.GetTextValue("Mods.Redemption.UI.Chalice.WeddingRing"), 300, 30, 0, Color.DarkGoldenrod);
+                            ChaliceAlignmentUI.DisplayDialogue(Language.GetTextValue("Mods.Redemption.UI.Chalice.WeddingRing"), 300, 30, 0, Color.DarkGoldenrod);
                         else if (RedeBossDowned.keeperSaved && !RedeBossDowned.skullDiggerSaved)
-                            RedeSystem.Instance.ChaliceUIElement.DisplayDialogue(Language.GetTextValue("Mods.Redemption.UI.Chalice.WeddingRing2"), 300, 30, 0, Color.DarkGoldenrod);
+                            ChaliceAlignmentUI.DisplayDialogue(Language.GetTextValue("Mods.Redemption.UI.Chalice.WeddingRing2"), 300, 30, 0, Color.DarkGoldenrod);
                     }
                     else if (type == ModContent.ItemType<SorrowfulEssence>())
                     {
-                        if (!RedeBossDowned.downedSkullDigger)
-                            RedeSystem.Instance.ChaliceUIElement.DisplayDialogue(Language.GetTextValue("Mods.Redemption.UI.Chalice.SorrowfulEssence"), 300, 30, 0, Color.DarkGoldenrod);
+                        if (!RedeBossDowned.downedSkullDigger && !RedeBossDowned.keeperSaved)
+                            ChaliceAlignmentUI.DisplayDialogue(Language.GetTextValue("Mods.Redemption.UI.Chalice.SorrowfulEssence"), 300, 30, 0, Color.DarkGoldenrod);
                     }
                     else if (type == ModContent.ItemType<AbandonedTeddy>())
                     {
                         if (!RedeBossDowned.keeperSaved)
-                            RedeSystem.Instance.ChaliceUIElement.DisplayDialogue(Language.GetTextValue("Mods.Redemption.UI.Chalice.AbandonedTeddy"), 300, 30, 0, Color.DarkGoldenrod);
+                            ChaliceAlignmentUI.DisplayDialogue(Language.GetTextValue("Mods.Redemption.UI.Chalice.AbandonedTeddy"), 300, 30, 0, Color.DarkGoldenrod);
                     }
                     else if (type == ModContent.ItemType<CyberTech>())
                     {
                         if (!RedeBossDowned.downedSlayer)
-                            RedeSystem.Instance.ChaliceUIElement.DisplayDialogue(Language.GetTextValue("Mods.Redemption.UI.Chalice.CyberTech"), 300, 30, 0, Color.DarkGoldenrod);
+                            ChaliceAlignmentUI.DisplayDialogue(Language.GetTextValue("Mods.Redemption.UI.Chalice.CyberTech"), 300, 30, 0, Color.DarkGoldenrod);
                     }
                     else if (type == ModContent.ItemType<SlayerShipEngine>())
                     {
-                        if (RedeWorld.slayerRep < 4)
-                            RedeSystem.Instance.ChaliceUIElement.DisplayDialogue(Language.GetTextValue("Mods.Redemption.UI.Chalice.SlayerShipEngine"), 300, 30, 0, Color.DarkGoldenrod);
+                        if (RedeQuest.slayerRep < 4)
+                            ChaliceAlignmentUI.DisplayDialogue(Language.GetTextValue("Mods.Redemption.UI.Chalice.SlayerShipEngine"), 300, 30, 0, Color.DarkGoldenrod);
                     }
                     else if (type == ModContent.ItemType<MemoryChip>())
                     {
-                        RedeSystem.Instance.ChaliceUIElement.DisplayDialogue(Language.GetTextValue("Mods.Redemption.UI.Chalice.MemoryChip"), 300, 30, 0, Color.DarkGoldenrod);
+                        ChaliceAlignmentUI.DisplayDialogue(Language.GetTextValue("Mods.Redemption.UI.Chalice.MemoryChip"), 300, 30, 0, Color.DarkGoldenrod);
                     }
                     else if (type == ModContent.ItemType<AnglonicMysticBlossom>())
                     {
-                        if (RedeWorld.alignment > 0 && RedeQuest.forestNymphVar < 2)
-                            RedeSystem.Instance.ChaliceUIElement.DisplayDialogue(Language.GetTextValue("Mods.Redemption.UI.Chalice.AnglonicMysticBlossom"), 300, 30, 0, Color.DarkGoldenrod);
+                        if (RedeWorld.Alignment > 0 && RedeQuest.forestNymphVar < 2)
+                            ChaliceAlignmentUI.DisplayDialogue(Language.GetTextValue("Mods.Redemption.UI.Chalice.AnglonicMysticBlossom"), 300, 30, 0, Color.DarkGoldenrod);
                     }
                     else if (type == ModContent.ItemType<KingsOakStaff>())
                     {
-                        if (RedeWorld.alignment > 0 && RedeQuest.forestNymphVar == 0)
-                            RedeSystem.Instance.ChaliceUIElement.DisplayDialogue(Language.GetTextValue("Mods.Redemption.UI.Chalice.KingsOakStaff"), 300, 30, 0, Color.DarkGoldenrod);
+                        if (RedeWorld.Alignment > 0 && RedeQuest.forestNymphVar == 0)
+                            ChaliceAlignmentUI.DisplayDialogue(Language.GetTextValue("Mods.Redemption.UI.Chalice.KingsOakStaff"), 300, 30, 0, Color.DarkGoldenrod);
                     }
                     else if (type == ModContent.ItemType<NebSummon>())
                     {
                         string s = "";
-                        if (RedeWorld.alignment < 0)
+                        if (RedeWorld.Alignment < 0)
                             s = Language.GetTextValue("Mods.Redemption.UI.Chalice.NebSummon2");
                         if (!RedeBossDowned.downedNebuleus)
-                            RedeSystem.Instance.ChaliceUIElement.DisplayDialogue(Language.GetTextValue("Mods.Redemption.UI.Chalice.NebSummon") + s, RedeWorld.alignment < 0 ? 500 : 300, 30, 0, Color.DarkGoldenrod);
+                            ChaliceAlignmentUI.DisplayDialogue(Language.GetTextValue("Mods.Redemption.UI.Chalice.NebSummon") + s, RedeWorld.Alignment < 0 ? 500 : 300, 30, 0, Color.DarkGoldenrod);
                         else
                         {
                             if (RedeBossDowned.nebDeath >= 7)
-                                RedeSystem.Instance.ChaliceUIElement.DisplayDialogue(Language.GetTextValue("Mods.Redemption.UI.Chalice.NebSummon3"), 300, 30, 0, Color.DarkGoldenrod);
+                                ChaliceAlignmentUI.DisplayDialogue(Language.GetTextValue("Mods.Redemption.UI.Chalice.NebSummon3"), 300, 30, 0, Color.DarkGoldenrod);
                         }
                     }
                     return;
                 }
-                if (RedeWorld.alignment == 0)
-                    RedeSystem.Instance.ChaliceUIElement.DisplayDialogue(Language.GetTextValue("Mods.Redemption.UI.Chalice.A0"), 120, 30, 0, Color.DarkGoldenrod);
-                else if (RedeWorld.alignment == -1)
-                    RedeSystem.Instance.ChaliceUIElement.DisplayDialogue(Language.GetTextValue("Mods.Redemption.UI.Chalice.A1N"), 120, 30, 0, Color.DarkGoldenrod);
-                else if (RedeWorld.alignment == 1)
-                    RedeSystem.Instance.ChaliceUIElement.DisplayDialogue(Language.GetTextValue("Mods.Redemption.UI.Chalice.A1"), 120, 30, 0, Color.DarkGoldenrod);
-                else if (RedeWorld.alignment >= 2 && RedeWorld.alignment <= 3)
-                    RedeSystem.Instance.ChaliceUIElement.DisplayDialogue(Language.GetTextValue("Mods.Redemption.UI.Chalice.A2"), 120, 30, 0, Color.DarkGoldenrod);
-                else if (RedeWorld.alignment >= -3 && RedeWorld.alignment <= -2)
-                    RedeSystem.Instance.ChaliceUIElement.DisplayDialogue(Language.GetTextValue("Mods.Redemption.UI.Chalice.A2N"), 120, 30, 0, Color.DarkGoldenrod);
-                else if (RedeWorld.alignment >= -5 && RedeWorld.alignment <= -4)
-                    RedeSystem.Instance.ChaliceUIElement.DisplayDialogue(Language.GetTextValue("Mods.Redemption.UI.Chalice.A3N"), 120, 30, 0, Color.DarkGoldenrod);
-                else if (RedeWorld.alignment >= 4 && RedeWorld.alignment <= 5)
-                    RedeSystem.Instance.ChaliceUIElement.DisplayDialogue(Language.GetTextValue("Mods.Redemption.UI.Chalice.A3"), 120, 30, 0, Color.DarkGoldenrod);
-                else if (RedeWorld.alignment >= -7 && RedeWorld.alignment <= -6)
-                    RedeSystem.Instance.ChaliceUIElement.DisplayDialogue(Language.GetTextValue("Mods.Redemption.UI.Chalice.A4N"), 120, 30, 0, Color.DarkGoldenrod);
-                else if (RedeWorld.alignment >= 6 && RedeWorld.alignment <= 7)
-                    RedeSystem.Instance.ChaliceUIElement.DisplayDialogue(Language.GetTextValue("Mods.Redemption.UI.Chalice.A4"), 120, 30, 0, Color.DarkGoldenrod);
-                else if (RedeWorld.alignment >= -9 && RedeWorld.alignment <= -8)
-                    RedeSystem.Instance.ChaliceUIElement.DisplayDialogue(Language.GetTextValue("Mods.Redemption.UI.Chalice.A5N"), 120, 30, 0, Color.DarkGoldenrod);
-                else if (RedeWorld.alignment >= 8 && RedeWorld.alignment <= 9)
-                    RedeSystem.Instance.ChaliceUIElement.DisplayDialogue(Language.GetTextValue("Mods.Redemption.UI.Chalice.A5"), 120, 30, 0, Color.DarkGoldenrod);
-                else if (RedeWorld.alignment <= -10)
-                    RedeSystem.Instance.ChaliceUIElement.DisplayDialogue(Language.GetTextValue("Mods.Redemption.UI.Chalice.A6N"), 120, 30, 0, Color.DarkGoldenrod);
-                else if (RedeWorld.alignment >= 10)
-                    RedeSystem.Instance.ChaliceUIElement.DisplayDialogue(Language.GetTextValue("Mods.Redemption.UI.Chalice.A6"), 120, 30, 0, Color.DarkGoldenrod);
+
+                if (RedeWorld.Alignment == 0)
+                    ChaliceAlignmentUI.DisplayDialogue(Language.GetTextValue("Mods.Redemption.UI.Chalice.A0"), 120, 30, 0, Color.DarkGoldenrod);
+                else if (RedeWorld.Alignment == -1)
+                    ChaliceAlignmentUI.DisplayDialogue(Language.GetTextValue("Mods.Redemption.UI.Chalice.A1N"), 120, 30, 0, Color.DarkGoldenrod);
+                else if (RedeWorld.Alignment == 1)
+                    ChaliceAlignmentUI.DisplayDialogue(Language.GetTextValue("Mods.Redemption.UI.Chalice.A1"), 120, 30, 0, Color.DarkGoldenrod);
+                else if (RedeWorld.Alignment >= 2 && RedeWorld.Alignment <= 3)
+                    ChaliceAlignmentUI.DisplayDialogue(Language.GetTextValue("Mods.Redemption.UI.Chalice.A2"), 120, 30, 0, Color.DarkGoldenrod);
+                else if (RedeWorld.Alignment >= -3 && RedeWorld.Alignment <= -2)
+                    ChaliceAlignmentUI.DisplayDialogue(Language.GetTextValue("Mods.Redemption.UI.Chalice.A2N"), 120, 30, 0, Color.DarkGoldenrod);
+                else if (RedeWorld.Alignment >= -5 && RedeWorld.Alignment <= -4)
+                    ChaliceAlignmentUI.DisplayDialogue(Language.GetTextValue("Mods.Redemption.UI.Chalice.A3N"), 120, 30, 0, Color.DarkGoldenrod);
+                else if (RedeWorld.Alignment >= 4 && RedeWorld.Alignment <= 5)
+                    ChaliceAlignmentUI.DisplayDialogue(Language.GetTextValue("Mods.Redemption.UI.Chalice.A3"), 120, 30, 0, Color.DarkGoldenrod);
+                else if (RedeWorld.Alignment >= -7 && RedeWorld.Alignment <= -6)
+                    ChaliceAlignmentUI.DisplayDialogue(Language.GetTextValue("Mods.Redemption.UI.Chalice.A4N"), 120, 30, 0, Color.DarkGoldenrod);
+                else if (RedeWorld.Alignment >= 6 && RedeWorld.Alignment <= 7)
+                    ChaliceAlignmentUI.DisplayDialogue(Language.GetTextValue("Mods.Redemption.UI.Chalice.A4"), 120, 30, 0, Color.DarkGoldenrod);
+                else if (RedeWorld.Alignment >= -9 && RedeWorld.Alignment <= -8)
+                    ChaliceAlignmentUI.DisplayDialogue(Language.GetTextValue("Mods.Redemption.UI.Chalice.A5N"), 120, 30, 0, Color.DarkGoldenrod);
+                else if (RedeWorld.Alignment >= 8 && RedeWorld.Alignment <= 9)
+                    ChaliceAlignmentUI.DisplayDialogue(Language.GetTextValue("Mods.Redemption.UI.Chalice.A5"), 120, 30, 0, Color.DarkGoldenrod);
+                else if (RedeWorld.Alignment <= -10)
+                    ChaliceAlignmentUI.DisplayDialogue(Language.GetTextValue("Mods.Redemption.UI.Chalice.A6N"), 120, 30, 0, Color.DarkGoldenrod);
+                else if (RedeWorld.Alignment >= 10)
+                    ChaliceAlignmentUI.DisplayDialogue(Language.GetTextValue("Mods.Redemption.UI.Chalice.A6"), 120, 30, 0, Color.DarkGoldenrod);
             }
         }
         private float fade;

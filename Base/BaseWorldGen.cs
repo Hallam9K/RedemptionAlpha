@@ -1,5 +1,5 @@
-using System;
 using Microsoft.Xna.Framework;
+using System;
 using Terraria;
 using Terraria.ID;
 using Terraria.Localization;
@@ -51,6 +51,59 @@ namespace Redemption.Base
             }
         }
 
+        /// <summary>
+        ///     Shifts a point until it reaches level ground.
+        /// </summary>
+        /// <param name="p">The original point.</param>
+        public static Point FindGroundVertical(Point p)
+        {
+            // The tile is solid. Check up to verify that this tile is not inside of solid ground.
+            if (WorldGen.SolidTile(p))
+            {
+                while (WorldGen.SolidTile(p.X, p.Y - 1) && p.Y >= 1)
+                    p.Y--;
+            }
+
+            // The tile is not solid. Check down to verify that this tile is not above ground in the middle of the air.
+            else
+            {
+                while (!WorldGen.SolidTile(p.X, p.Y + 1) && p.Y < Main.maxTilesY)
+                    p.Y++;
+            }
+
+            return p;
+        }
+
+        /// <summary>
+        ///     Shifts a point until it reaches level ground.
+        /// </summary>
+        /// <param name="p">The original point.</param>
+        /// <param name="direction">The direction to search in.</param>
+        public static Point FindGround(Point p, Vector2 direction)
+        {
+            // The tile is solid. Check backward to verify that this tile is not inside of solid ground.
+            Vector2 roundedDirection = new((float)Math.Round(direction.X), (float)Math.Round(direction.Y));
+            if (WorldGen.SolidTile(p))
+            {
+                while (WorldGen.SolidOrSlopedTile(p.X + (int)direction.X, p.Y + (int)direction.Y) && WorldGen.InWorld(p.X, p.Y, 2))
+                {
+                    p.X -= (int)roundedDirection.X;
+                    p.Y -= (int)roundedDirection.Y;
+                }
+            }
+
+            // The tile is not solid. Check forward to verify that this tile is not above ground in the middle of the air.
+            else
+            {
+                while (!WorldGen.SolidOrSlopedTile(p.X + (int)direction.X, p.Y + (int)direction.Y) && WorldGen.InWorld(p.X, p.Y, 2))
+                {
+                    p.X += (int)roundedDirection.X;
+                    p.Y += (int)roundedDirection.Y;
+                }
+            }
+
+            return p;
+        }
         /*
          * Iterates downwards and returns the first Y position that has a tile in it.
          * startY : The y to begin iteration at.
@@ -64,7 +117,7 @@ namespace Redemption.Base
                 Tile tile = Framing.GetTileSafely(x, y);
                 if (checkWater && tile.LiquidAmount >= 255)
                     return y;
-                if (tile is { HasTile: true } && (!solid || Main.tileSolid[tile.TileType]) && (!noSolidTop || !Main.tileSolidTop[tile.TileType]))
+                if (tile is { HasUnactuatedTile: true } && (!solid || Main.tileSolid[tile.TileType]) && (!noSolidTop || !Main.tileSolidTop[tile.TileType]))
                     return y;
             }
             return Main.maxTilesY - 10;
@@ -81,7 +134,7 @@ namespace Redemption.Base
             for (int y = startY; y > 10; y--)
             {
                 Tile tile = Framing.GetTileSafely(x, y);
-                if (tile is {HasTile: true} && (!solid || Main.tileSolid[tile.TileType])) { return y; }
+                if (tile is { HasTile: true } && (!solid || Main.tileSolid[tile.TileType])) { return y; }
             }
             return 10;
         }
@@ -95,7 +148,7 @@ namespace Redemption.Base
                 for (int x = startX; x > 10; x--)
                 {
                     Tile tile = Framing.GetTileSafely(x, y);
-                    if (tile is {HasTile: true} && (!solid || Main.tileSolid[tile.TileType])) { return x; }
+                    if (tile is { HasTile: true } && (!solid || Main.tileSolid[tile.TileType])) { return x; }
                 }
                 return 10;
             }
@@ -103,7 +156,7 @@ namespace Redemption.Base
             for (int x = startX; x < Main.maxTilesX - 10; x++)
             {
                 Tile tile = Framing.GetTileSafely(x, y);
-                if (tile is {HasTile: true} && (!solid || Main.tileSolid[tile.TileType])) { return x; }
+                if (tile is { HasTile: true } && (!solid || Main.tileSolid[tile.TileType])) { return x; }
             }
             return Main.maxTilesX - 10;
         }
@@ -165,7 +218,7 @@ namespace Redemption.Base
                         int index = 0;
                         if (BaseUtility.InArray(tiles, currentType, ref index))
                         {
-                            GenerateTile(x1, y1, replacements[index], -1, 0, true, false, -2, silent, false);
+                            GenerateTile(x1, y1, replacements[index], -1, 0, true, false, -2, silent: silent, sync: false);
                         }
                     }
                 }
@@ -199,7 +252,7 @@ namespace Redemption.Base
                         int index = 0;
                         if (BaseUtility.InArray(walls, currentType, ref index))
                         {
-                            GenerateTile(x1, y1, -1, replacements[index], 0, true, false, -2, silent, false);
+                            GenerateTile(x1, y1, -1, replacements[index], 0, true, false, -2, silent: silent, sync: false);
                         }
                     }
                 }
@@ -245,6 +298,8 @@ namespace Redemption.Base
             if (liquidType == 1) { Mtile.LiquidType = LiquidID.Lava; }
             else
             if (liquidType == 2) { Mtile.LiquidType = LiquidID.Honey; }
+            else
+            if (liquidType == 3) { Mtile.LiquidType = LiquidID.Shimmer; }
             if (updateFlow) { Liquid.AddWater(x, y); }
             if (sync && Main.netMode != NetmodeID.SinglePlayer) { NetMessage.SendTileSquare(-1, x, y, 1); }
         }
@@ -277,14 +332,15 @@ namespace Redemption.Base
          *  active : If false, will make the tile 'air' and show the wall only.
          *  removeLiquid : If true, it will remove liquids in the generating area.
 		 *  slope : if -2, keep the current slope. if -1, make it a halfbrick, otherwise make it the slope given.
+		 *  tileFrame: if true and tile is a 1x1 block, will frame it and its neighbours
 		 *  silent : If true, will not display dust nor sound.
          *  sync : If true, will sync the client and server.
          */
-        public static void GenerateTile(int x, int y, int tile, int wall, int tileStyle = 0, bool active = true, bool removeLiquid = true, int slope = -2, bool silent = false, bool sync = true)
+        public static void GenerateTile(int x, int y, int tile, int wall, int tileStyle = 0, bool active = true, bool removeLiquid = true, int slope = -2, bool tileFrame = true, bool silent = false, bool sync = true)
         {
             try
             {
-                Tile Mtile = Main.tile[x, y];
+                Tile Mtile = Framing.GetTileSafely(x, y);
 
                 if (!WorldGen.InWorld(x, y)) return;
                 TileObjectData data = tile <= -1 ? null : TileObjectData.GetTileData(tile, tileStyle);
@@ -377,7 +433,7 @@ namespace Redemption.Base
                     }
                     else
                     {
-                        Mtile.HasTile = false;
+                        Mtile.ClearTile();
                     }
                 }
                 if (wall != -1)
@@ -417,7 +473,7 @@ namespace Redemption.Base
             {
                 int tileID = gen.GetTile(0), wallID = gen.GetWall(0);
                 if (tileID > -1 && gen.CanPlace != null && !gen.CanPlace(x, y, tileID, wallID) || wallID > -1 && gen.CanPlaceWall != null && !gen.CanPlaceWall(x, y, tileID, wallID)) return;
-                GenerateTile(x, y, tileID, wallID, 0, tileID != -1, true, 0, false, sync);
+                GenerateTile(x, y, tileID, wallID, 0, tileID != -1, true, 0, silent: false, sync: sync);
                 if (gen.slope) SmoothTiles(x, y, x, y);
             }
             else
@@ -441,7 +497,7 @@ namespace Redemption.Base
                         bool wallValid = wallIndex == -1 || gen.CanPlaceWall == null || gen.CanPlaceWall(x2, y2, gen.GetTile(tileIndex), gen.GetWall(wallIndex));
                         if (tileValid && wallValid)
                         {
-                            GenerateTile(x2, y2, gen.GetTile(tileIndex), gen.GetWall(wallIndex), 0, gen.GetTile(tileIndex) != -1, true, 0, false, false);
+                            GenerateTile(x2, y2, gen.GetTile(tileIndex), gen.GetWall(wallIndex), 0, gen.GetTile(tileIndex) != -1, true, 0, silent: false, sync: false);
                         }
                     }
                 }
@@ -486,7 +542,7 @@ namespace Redemption.Base
                         bool wallValid = wallIndex == -1 || gen.CanPlaceWall == null || gen.CanPlaceWall(x2, y2, gen.GetTile(tileIndex), gen.GetWall(wallIndex));
                         if (tileValid && wallValid)
                         {
-                            GenerateTile(x2, y2, gen.GetTile(tileIndex), gen.GetWall(wallIndex), 0, gen.GetTile(tileIndex) != -1, true, 0, false, false);
+                            GenerateTile(x2, y2, gen.GetTile(tileIndex), gen.GetWall(wallIndex), 0, gen.GetTile(tileIndex) != -1, true, 0, silent: false, sync: false);
                             //if (gen.slope) SmoothTiles(x2, y2, x2 + 1, y2 + 1);
                         }
                     }
@@ -593,22 +649,22 @@ namespace Redemption.Base
                     int y2 = y1 + y;
                     if ((wallEnds || tileCeiling != -1) && y1 < ceilingThickness) //ceiling
                     {
-                        GenerateTile(x2, y2, tileCeiling, wallEnds && y1 == 0 ? wall : -1, 0, tileCeiling != -1 || !wallEnds, true, 0, false, false);
+                        GenerateTile(x2, y2, tileCeiling, wallEnds && y1 == 0 ? wall : -1, 0, tileCeiling != -1 || !wallEnds, true, 0, silent: false, sync: false);
                     }
                     else
                     if ((wallEnds || tileFloor != -1) && y1 >= height - floorThickness) //floor
                     {
-                        GenerateTile(x2, y2, tileFloor, wallEnds && y1 >= height - 1 ? wall : -1, 0, tileFloor == -1 ? !wallEnds : true, true, 0, false, false);
+                        GenerateTile(x2, y2, tileFloor, wallEnds && y1 >= height - 1 ? wall : -1, 0, tileFloor == -1 ? !wallEnds : true, true, 0, silent: false, sync: false);
                     }
                     else
                     if ((wallEnds || tileSides != -1) && (x1 < sideThickness || x1 >= width - sideThickness)) //sides
                     {
-                        GenerateTile(x2, y2, tileSides, wallEnds && x1 > 0 && x1 < width - 1 ? wall : -1, 0, tileSides == -1 ? !wallEnds : true, true, 0, false, false);
+                        GenerateTile(x2, y2, tileSides, wallEnds && x1 > 0 && x1 < width - 1 ? wall : -1, 0, tileSides == -1 ? !wallEnds : true, true, 0, silent: false, sync: false);
                     }
                     else
                     if (x1 >= sideThickness && x1 < width - sideThickness && y1 >= ceilingThickness && y1 < height - floorThickness)
                     {
-                        GenerateTile(x2, y2, -1, wall, 0, false, true, 0, false, false);
+                        GenerateTile(x2, y2, -1, wall, 0, false, true, 0, silent: false, sync: false);
                     }
                 }
             }
@@ -781,7 +837,7 @@ namespace Redemption.Base
                                 }
                             }
                         }
-                        else if (!Main.tile[x, y + 1].HasTile && WorldGen.genRand.NextBool(2)&& WorldGen.SolidTile(x, y) && !Main.tile[x - 1, y].IsHalfBlock && !Main.tile[x + 1, y].IsHalfBlock && Main.tile[x - 1, y].Slope == 0 && Main.tile[x + 1, y].Slope == 0 && WorldGen.SolidTile(x, y - 1))
+                        else if (!Main.tile[x, y + 1].HasTile && WorldGen.genRand.NextBool(2) && WorldGen.SolidTile(x, y) && !Main.tile[x - 1, y].IsHalfBlock && !Main.tile[x + 1, y].IsHalfBlock && Main.tile[x - 1, y].Slope == 0 && Main.tile[x + 1, y].Slope == 0 && WorldGen.SolidTile(x, y - 1))
                         {
                             if (WorldGen.SolidTile(x - 1, y) && !WorldGen.SolidTile(x + 1, y) && WorldGen.SolidTile(x - 1, y - 1))
                             {
@@ -799,7 +855,7 @@ namespace Redemption.Base
             {
                 for (int y = topY; y < bottomY; y++)
                 {
-                    if (WorldGen.genRand.NextBool(2)&& !Main.tile[x, y - 1].HasTile && Main.tile[x, y].TileType != 137 && Main.tile[x, y].TileType != 48 && Main.tile[x, y].TileType != 232 && Main.tile[x, y].TileType != 191 && Main.tile[x, y].TileType != 151 && Main.tile[x, y].TileType != 274 && Main.tile[x, y].TileType != 75 && Main.tile[x, y].TileType != 76 && WorldGen.SolidTile(x, y) && Main.tile[x - 1, y].TileType != 137 && Main.tile[x + 1, y].TileType != 137)
+                    if (WorldGen.genRand.NextBool(2) && !Main.tile[x, y - 1].HasTile && Main.tile[x, y].TileType != 137 && Main.tile[x, y].TileType != 48 && Main.tile[x, y].TileType != 232 && Main.tile[x, y].TileType != 191 && Main.tile[x, y].TileType != 151 && Main.tile[x, y].TileType != 274 && Main.tile[x, y].TileType != 75 && Main.tile[x, y].TileType != 76 && WorldGen.SolidTile(x, y) && Main.tile[x - 1, y].TileType != 137 && Main.tile[x + 1, y].TileType != 137)
                     {
                         if (WorldGen.SolidTile(x, y + 1) && WorldGen.SolidTile(x + 1, y) && !Main.tile[x - 1, y].HasTile)
                         {
@@ -901,7 +957,7 @@ namespace Redemption.Base
                 int y = trueOrigin.Y + (startheight - height);
                 if (variance != 0)
                 {
-                    y += Main.rand.NextBool(2)? -Main.rand.Next(variance) : Main.rand.Next(variance);
+                    y += Main.rand.NextBool(2) ? -Main.rand.Next(variance) : Main.rand.Next(variance);
                 }
                 if (randomHeading != 0)
                 {
@@ -969,7 +1025,7 @@ namespace Redemption.Base
                 int y = trueOrigin.Y + (dir ? m : -m);
                 if (variance != 0)
                 {
-                    x += Main.rand.NextBool(2)? -Main.rand.Next(variance) : Main.rand.Next(variance);
+                    x += Main.rand.NextBool(2) ? -Main.rand.Next(variance) : Main.rand.Next(variance);
                 }
                 if (randomHeading != 0)
                 {

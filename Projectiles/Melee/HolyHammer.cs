@@ -88,8 +88,8 @@ namespace Redemption.Projectiles.Melee
         }
         public override void OnKill(int timeLeft)
         {
-            RedeDraw.SpawnExplosion(Projectile.Center * 0.5f + Projectile.Center * 0.5f, Color.LightYellow, scale: 1.25f, noDust: true, rot: Projectile.rotation - MathHelper.PiOver4, shakeAmount: 0, tex: ModContent.Request<Texture2D>("Redemption/Textures/HolyGlow3").Value);
-            RedeDraw.SpawnExplosion(Projectile.Center * 0.5f + Projectile.Center * 0.5f, Color.LightYellow, scale: 1.25f, noDust: true, rot: Projectile.rotation + MathHelper.PiOver4, shakeAmount: 0, tex: ModContent.Request<Texture2D>("Redemption/Textures/HolyGlow3").Value);
+            RedeDraw.SpawnExplosion(Projectile.Center * 0.5f + Projectile.Center * 0.5f, Color.LightYellow, scale: 1.25f, noDust: true, rot: Projectile.rotation - MathHelper.PiOver4, shakeAmount: 0, tex: "Redemption/Textures/HolyGlow3");
+            RedeDraw.SpawnExplosion(Projectile.Center * 0.5f + Projectile.Center * 0.5f, Color.LightYellow, scale: 1.25f, noDust: true, rot: Projectile.rotation + MathHelper.PiOver4, shakeAmount: 0, tex: "Redemption/Textures/HolyGlow3");
 
             for (int i = 0; i < 8; i++)
             {

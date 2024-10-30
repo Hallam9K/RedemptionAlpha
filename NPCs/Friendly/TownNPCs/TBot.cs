@@ -108,7 +108,11 @@ namespace Redemption.NPCs.Friendly.TownNPCs
         }
         public override bool CheckDead()
         {
-            RedeWorld.tbotDownedTimer = 0;
+            if (Main.netMode != NetmodeID.MultiplayerClient)
+            {
+                RedeWorld.tbotDownedTimer = 0;
+                RedeWorld.SyncData();
+            }
             Main.NewText(Language.GetTextValue("Mods.Redemption.DialogueBox.TBot.Unconscious"), Color.Red.R, Color.Red.G, Color.Red.B);
             NPC.SetDefaults(ModContent.NPCType<TBotUnconscious>());
             NPC.life = 1;

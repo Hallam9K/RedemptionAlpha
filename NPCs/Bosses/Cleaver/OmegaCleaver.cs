@@ -245,8 +245,7 @@ namespace Redemption.NPCs.Bosses.Cleaver
                     case ActionState.Begin:
                         AITimer++;
 
-                        if (!Main.dedServ)
-                            RedeSystem.Instance.TitleCardUIElement.DisplayTitle(Language.GetTextValue("Mods.Redemption.TitleCard.Cleaver.Name"), 60, 90, 0.8f, 0, Color.Red, Language.GetTextValue("Mods.Redemption.TitleCard.Cleaver.Modifier"));
+                        TitleCard.BroadcastTitle(NetworkText.FromKey("Mods.Redemption.TitleCard.Cleaver.Name"), 60, 90, 0.8f, Color.Red, NetworkText.FromKey("Mods.Redemption.TitleCard.Cleaver.Modifier"));
                         player.RedemptionScreen().Rumble(20, 7);
                         rot = NPC.rotation;
                         if (AITimer > 20)

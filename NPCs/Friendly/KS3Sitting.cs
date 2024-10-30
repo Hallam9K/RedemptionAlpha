@@ -190,7 +190,7 @@ namespace Redemption.NPCs.Friendly
             Main.npcChatCornerItem = 0;
             if (firstButton)
             {
-                if (ChatNumber == 2 && RedeWorld.slayerRep == 0)
+                if (ChatNumber == 2 && RedeQuest.slayerRep == 0)
                 {
                     SoundEngine.PlaySound(SoundID.MenuTick);
 
@@ -209,9 +209,9 @@ namespace Redemption.NPCs.Friendly
 
                         player.QuickSpawnItem(NPC.GetSource_Loot(), ItemID.SilverCoin, 20);
                         ChatNumber++;
-                        RedeWorld.slayerRep++;
-                        if (Main.netMode == NetmodeID.Server)
-                            NetMessage.SendData(MessageID.WorldData);
+
+                        RedeQuest.slayerRep++;
+                        RedeQuest.SyncData();
 
                         CombatText.NewText(NPC.getRect(), Color.LightCyan, Language.GetTextValue("Mods.Redemption.DialogueBox.New"), true, false);
 
@@ -225,7 +225,7 @@ namespace Redemption.NPCs.Friendly
                         SoundEngine.PlaySound(SoundID.MenuTick);
                     }
                 }
-                else if (ChatNumber == 10 && RedeWorld.slayerRep == 1)
+                else if (ChatNumber == 10 && RedeQuest.slayerRep == 1)
                 {
                     SoundEngine.PlaySound(SoundID.MenuTick);
 
@@ -239,7 +239,9 @@ namespace Redemption.NPCs.Friendly
                         Main.npcChatText = Language.GetTextValue("Mods.Redemption.Dialogue.KingSlayer.Quest1CompleteDialogue");
 
                         player.QuickSpawnItem(NPC.GetSource_Loot(), ItemID.GoldCoin, 4);
-                        RedeWorld.slayerRep++;
+                        RedeQuest.slayerRep++;
+                        RedeQuest.SyncData();
+
                         CombatText.NewText(NPC.getRect(), Color.LightCyan, Language.GetTextValue("Mods.Redemption.DialogueBox.New"), true, false);
 
                         SoundEngine.PlaySound(SoundID.Chat);
@@ -250,17 +252,10 @@ namespace Redemption.NPCs.Friendly
                             [Color.Black] = -1
                         };
 
-                        Texture2D tex = ModContent.Request<Texture2D>("Redemption/WorldGeneration/SlayerShipFix1", AssetRequestMode.ImmediateLoad).Value;
-
+                        TexGenData tex = TexGen.GetTextureForGen("Redemption/WorldGeneration/SlayerShipFix1");
                         Point origin = RedeGen.slayerShipVector.ToPoint();
-
-                        GenUtils.InvokeOnMainThread(() =>
-                        {
-                            TexGen gen = BaseWorldGenTex.GetTexGenerator(tex, colorToTile);
-                            gen.Generate(origin.X, origin.Y, true, true);
-                        });
-                        if (Main.netMode == NetmodeID.Server)
-                            NetMessage.SendData(MessageID.WorldData);
+                        TexGen gen = TexGen.GetTexGenerator(tex, colorToTile);
+                        gen.Generate(origin.X, origin.Y, false, true);
                         return;
                     }
                     else
@@ -270,7 +265,7 @@ namespace Redemption.NPCs.Friendly
                         SoundEngine.PlaySound(SoundID.MenuTick);
                     }
                 }
-                else if (ChatNumber == 10 && RedeWorld.slayerRep == 2)
+                else if (ChatNumber == 10 && RedeQuest.slayerRep == 2)
                 {
                     SoundEngine.PlaySound(SoundID.MenuTick);
 
@@ -284,7 +279,9 @@ namespace Redemption.NPCs.Friendly
                         Main.npcChatText = Language.GetTextValue("Mods.Redemption.Dialogue.KingSlayer.Quest2CompleteDialogue");
 
                         player.QuickSpawnItem(NPC.GetSource_Loot(), ItemID.GoldCoin, 8);
-                        RedeWorld.slayerRep++;
+                        RedeQuest.slayerRep++;
+                        RedeQuest.SyncData();
+
                         CombatText.NewText(NPC.getRect(), Color.LightCyan, Language.GetTextValue("Mods.Redemption.DialogueBox.New"), true, false);
 
                         SoundEngine.PlaySound(SoundID.Chat);
@@ -297,17 +294,10 @@ namespace Redemption.NPCs.Friendly
                             [Color.Black] = -1
                         };
 
-                        Texture2D tex = ModContent.Request<Texture2D>("Redemption/WorldGeneration/SlayerShipFix2", AssetRequestMode.ImmediateLoad).Value;
-
+                        TexGenData tex = TexGen.GetTextureForGen("Redemption/WorldGeneration/SlayerShipFix2");
                         Point origin = RedeGen.slayerShipVector.ToPoint();
-
-                        GenUtils.InvokeOnMainThread(() =>
-                        {
-                            TexGen gen = BaseWorldGenTex.GetTexGenerator(tex, colorToTile);
-                            gen.Generate(origin.X, origin.Y, true, true);
-                        });
-                        if (Main.netMode == NetmodeID.Server)
-                            NetMessage.SendData(MessageID.WorldData);
+                        TexGen gen = TexGen.GetTexGenerator(tex, colorToTile);
+                        gen.Generate(origin.X, origin.Y, false, true);
                         return;
                     }
                     else
@@ -317,7 +307,7 @@ namespace Redemption.NPCs.Friendly
                         SoundEngine.PlaySound(SoundID.MenuTick);
                     }
                 }
-                else if (ChatNumber == 10 && RedeWorld.slayerRep == 3)
+                else if (ChatNumber == 10 && RedeQuest.slayerRep == 3)
                 {
                     SoundEngine.PlaySound(SoundID.MenuTick);
 
@@ -333,11 +323,8 @@ namespace Redemption.NPCs.Friendly
 
                         player.QuickSpawnItem(NPC.GetSource_Loot(), ItemID.GoldCoin, 12);
                         player.QuickSpawnItem(NPC.GetSource_Loot(), ModContent.ItemType<MemoryChip>());
-                        RedeWorld.slayerRep++;
-                        RedeWorld.alignment += 2;
 
                         CombatText.NewText(NPC.getRect(), Color.LightCyan, Language.GetTextValue("Mods.Redemption.DialogueBox.New"), true, false);
-                        CombatText.NewText(player.getRect(), Color.Gold, "+2", true, false);
 
                         SoundEngine.PlaySound(SoundID.Chat);
 
@@ -355,18 +342,16 @@ namespace Redemption.NPCs.Friendly
                             [Color.Black] = -1
                         };
 
-                        Texture2D tex = ModContent.Request<Texture2D>("Redemption/WorldGeneration/SlayerShipFix2", AssetRequestMode.ImmediateLoad).Value;
-                        Texture2D texWalls = ModContent.Request<Texture2D>("Redemption/WorldGeneration/SlayerShipWallsFix", AssetRequestMode.ImmediateLoad).Value;
-
+                        TexGenData tex = TexGen.GetTextureForGen("Redemption/WorldGeneration/SlayerShipFix2");
+                        TexGenData texWalls = TexGen.GetTextureForGen("Redemption/WorldGeneration/SlayerShipWallsFix");
                         Point origin = RedeGen.slayerShipVector.ToPoint();
+                        TexGen gen = TexGen.GetTexGenerator(tex, colorToTile, texWalls, colorToWall);
+                        gen.Generate(origin.X, origin.Y, false, true);
 
-                        GenUtils.InvokeOnMainThread(() =>
-                        {
-                            TexGen gen = BaseWorldGenTex.GetTexGenerator(tex, colorToTile, texWalls, colorToWall);
-                            gen.Generate(origin.X, origin.Y, true, true);
-                        });
-                        if (Main.netMode == NetmodeID.Server)
-                            NetMessage.SendData(MessageID.WorldData);
+                        RedeWorld.Alignment += 2;
+
+                        RedeQuest.slayerRep++;
+                        RedeQuest.SyncData();
                         return;
                     }
                     else
@@ -376,12 +361,12 @@ namespace Redemption.NPCs.Friendly
                         SoundEngine.PlaySound(SoundID.MenuTick);
                     }
                 }
-                else if (ChatNumber == 10 && RedeWorld.slayerRep >= 4)
+                else if (ChatNumber == 10 && RedeQuest.slayerRep >= 4)
                 {
                     Main.npcChatText = QuestChat();
                     SoundEngine.PlaySound(SoundID.MenuTick);
                 }
-                else if (ChatNumber == 9 && RedeWorld.slayerRep >= 4)
+                else if (ChatNumber == 9 && RedeQuest.slayerRep >= 4)
                     shopName = "Shop";
                 else
                     Main.npcChatText = ChitChat();
@@ -391,9 +376,9 @@ namespace Redemption.NPCs.Friendly
                 ChatNumber++;
                 if (ChatNumber > 10)
                     ChatNumber = 0;
-                if (RedeWorld.slayerRep == 0 && ChatNumber > 2)
+                if (RedeQuest.slayerRep == 0 && ChatNumber > 2)
                     ChatNumber = 0;
-                if (RedeWorld.slayerRep >= 1 && ChatNumber == 2)
+                if (RedeQuest.slayerRep >= 1 && ChatNumber == 2)
                     ChatNumber++;
                 if (!Main.LocalPlayer.Redemption().foundHall && ChatNumber == 5)
                     ChatNumber++;
@@ -435,7 +420,7 @@ namespace Redemption.NPCs.Friendly
 
         public static string QuestChat()
         {
-            return RedeWorld.slayerRep switch
+            return RedeQuest.slayerRep switch
             {
                 2 => Language.GetTextValue("Mods.Redemption.Dialogue.KingSlayer.Quest2Dialogue"),
                 3 => Language.GetTextValue("Mods.Redemption.Dialogue.KingSlayer.Quest3Dialogue"),
@@ -448,67 +433,67 @@ namespace Redemption.NPCs.Friendly
             switch (ChatNumber)
             {
                 case 0:
-                    if (RedeWorld.slayerRep >= 1 && RedeWorld.slayerRep < 4)
+                    if (RedeQuest.slayerRep >= 1 && RedeQuest.slayerRep < 4)
                         return Language.GetTextValue("Mods.Redemption.Dialogue.KingSlayer.Chat1B");
-                    else if (RedeWorld.slayerRep >= 4)
+                    else if (RedeQuest.slayerRep >= 4)
                         return Language.GetTextValue("Mods.Redemption.Dialogue.KingSlayer.Chat1C");
                     else
                         return Language.GetTextValue("Mods.Redemption.Dialogue.KingSlayer.Chat1");
                 case 1:
-                    if (RedeWorld.slayerRep == 1)
+                    if (RedeQuest.slayerRep == 1)
                         return Language.GetTextValue("Mods.Redemption.Dialogue.KingSlayer.Chat2B");
-                    else if (RedeWorld.slayerRep >= 2 && RedeWorld.slayerRep < 4)
+                    else if (RedeQuest.slayerRep >= 2 && RedeQuest.slayerRep < 4)
                         return Language.GetTextValue("Mods.Redemption.Dialogue.KingSlayer.Chat2C");
-                    else if (RedeWorld.slayerRep >= 4)
+                    else if (RedeQuest.slayerRep >= 4)
                         return Language.GetTextValue("Mods.Redemption.Dialogue.KingSlayer.Chat2D");
                     else
                         return Language.GetTextValue("Mods.Redemption.Dialogue.KingSlayer.Chat2");
                 case 3:
-                    if (RedeWorld.slayerRep == 3)
+                    if (RedeQuest.slayerRep == 3)
                         return Language.GetTextValue("Mods.Redemption.Dialogue.KingSlayer.Chat3C");
-                    else if (RedeWorld.slayerRep >= 4)
+                    else if (RedeQuest.slayerRep >= 4)
                         return Language.GetTextValue("Mods.Redemption.Dialogue.KingSlayer.Chat3D");
                     else
                         return Main.rand.NextBool(2) ? Language.GetTextValue("Mods.Redemption.Dialogue.KingSlayer.Chat3") : Language.GetTextValue("Mods.Redemption.Dialogue.KingSlayer.Chat3B");
                 case 4:
-                    if (RedeWorld.slayerRep == 2)
+                    if (RedeQuest.slayerRep == 2)
                         return Language.GetTextValue("Mods.Redemption.Dialogue.KingSlayer.Chat4B");
-                    else if (RedeWorld.slayerRep >= 3)
+                    else if (RedeQuest.slayerRep >= 3)
                         return Language.GetTextValue("Mods.Redemption.Dialogue.KingSlayer.Chat4C");
                     else
                         return Language.GetTextValue("Mods.Redemption.Dialogue.KingSlayer.Chat4");
                 case 5:
-                    if (RedeWorld.slayerRep == 2)
+                    if (RedeQuest.slayerRep == 2)
                         return Language.GetTextValue("Mods.Redemption.Dialogue.KingSlayer.Chat5B");
-                    else if (RedeWorld.slayerRep == 3)
+                    else if (RedeQuest.slayerRep == 3)
                         return Language.GetTextValue("Mods.Redemption.Dialogue.KingSlayer.Chat5C");
-                    else if (RedeWorld.slayerRep >= 4)
+                    else if (RedeQuest.slayerRep >= 4)
                         return Main.rand.NextBool(3) ? Language.GetTextValue("Mods.Redemption.Dialogue.KingSlayer.Chat5E") : Language.GetTextValue("Mods.Redemption.Dialogue.KingSlayer.Chat5D");
                     else
                         return Language.GetTextValue("Mods.Redemption.Dialogue.KingSlayer.Chat5");
                 case 6:
-                    if (RedeWorld.slayerRep >= 4)
+                    if (RedeQuest.slayerRep >= 4)
                         return Language.GetTextValue("Mods.Redemption.Dialogue.KingSlayer.Chat6B");
                     else
                         return Language.GetTextValue("Mods.Redemption.Dialogue.KingSlayer.Chat6");
                 case 7:
-                    if (RedeWorld.slayerRep >= 2 && RedeWorld.slayerRep < 4)
+                    if (RedeQuest.slayerRep >= 2 && RedeQuest.slayerRep < 4)
                         return Language.GetTextValue("Mods.Redemption.Dialogue.KingSlayer.Chat7B");
-                    else if (RedeWorld.slayerRep >= 4)
+                    else if (RedeQuest.slayerRep >= 4)
                         return Language.GetTextValue("Mods.Redemption.Dialogue.KingSlayer.Chat7C");
                     else
                         return Language.GetTextValue("Mods.Redemption.Dialogue.KingSlayer.Chat7");
                 case 8:
-                    if (RedeWorld.slayerRep >= 2 && RedeWorld.slayerRep < 4)
+                    if (RedeQuest.slayerRep >= 2 && RedeQuest.slayerRep < 4)
                         return Language.GetTextValue("Mods.Redemption.Dialogue.KingSlayer.Chat8B");
-                    else if (RedeWorld.slayerRep >= 4)
+                    else if (RedeQuest.slayerRep >= 4)
                         return Language.GetTextValue("Mods.Redemption.Dialogue.KingSlayer.Chat8C");
                     else
                         return Language.GetTextValue("Mods.Redemption.Dialogue.KingSlayer.Chat8");
                 case 9:
-                    if (RedeWorld.slayerRep == 2)
+                    if (RedeQuest.slayerRep == 2)
                         return Language.GetTextValue("Mods.Redemption.Dialogue.KingSlayer.Chat9B");
-                    else if (RedeWorld.slayerRep == 3)
+                    else if (RedeQuest.slayerRep == 3)
                         return Language.GetTextValue("Mods.Redemption.Dialogue.KingSlayer.Chat9C");
                     else
                         return Language.GetTextValue("Mods.Redemption.Dialogue.KingSlayer.Chat9");
@@ -524,14 +509,14 @@ namespace Redemption.NPCs.Friendly
                 chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.KingSlayer.NotInShipDialogue"));
             else
             {
-                if (RedeWorld.slayerRep >= 2)
+                if (RedeQuest.slayerRep >= 2)
                 {
                     chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.KingSlayer.Dialogue1"));
                     chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.KingSlayer.Dialogue2"));
                     chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.KingSlayer.Dialogue3"));
                     chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.KingSlayer.Dialogue4"));
                 }
-                else if (RedeWorld.slayerRep >= 4)
+                else if (RedeQuest.slayerRep >= 4)
                 {
                     chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.KingSlayer.Dialogue5"));
                     chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.KingSlayer.Dialogue6"));
@@ -554,7 +539,7 @@ namespace Redemption.NPCs.Friendly
                 if (BasePlayer.HasHelmet(player, ModContent.ItemType<KingSlayerMask>(), true))
                     chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.KingSlayer.Dialogue13"));
 
-                if (player.wellFed && RedeWorld.slayerRep < 2)
+                if (player.wellFed && RedeQuest.slayerRep < 2)
                     chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.KingSlayer.Dialogue14"));
                 if (player.RedemptionPlayerBuff().ChickenForm)
                     chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.KingSlayer.Dialogue15"));

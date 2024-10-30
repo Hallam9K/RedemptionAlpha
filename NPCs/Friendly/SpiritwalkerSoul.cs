@@ -4,7 +4,6 @@ using Microsoft.Xna.Framework;
 using Terraria.ModLoader;
 using Redemption.Globals;
 using Terraria.Audio;
-using Terraria.DataStructures;
 using Redemption.Particles;
 using ParticleLibrary;
 using Redemption.BaseExtension;
@@ -15,6 +14,7 @@ using Terraria.GameContent;
 using Terraria.Localization;
 using Redemption.Globals.NPC;
 using Redemption.NPCs.Friendly.TownNPCs;
+using Redemption.UI;
 
 namespace Redemption.NPCs.Friendly
 {
@@ -124,9 +124,13 @@ namespace Redemption.NPCs.Friendly
                         {
                             s = Language.GetTextValue("Mods.Redemption.UI.SpiritWalker.Hold") + key + Language.GetTextValue("Mods.Redemption.UI.SpiritWalker.Context");
                         }
-                        RedeSystem.Instance.TitleCardUIElement.DisplayTitle(Language.GetTextValue("Mods.Redemption.UI.SpiritWalker.Name"), 300, 90, 1f, 0, Color.White, s);
 
-                        SoundEngine.PlaySound(CustomSounds.NewLocation, player.position);
+                        if (!Main.dedServ)
+                        {
+                            TitleCard.DisplayTitle(Language.GetTextValue("Mods.Redemption.UI.SpiritWalker.Name"), 300, 90, 1f, Color.White, s);
+                            SoundEngine.PlaySound(CustomSounds.NewLocation, player.position);
+                        }
+
                         player.RedemptionAbility().Spiritwalker = true;
                         player.RedemptionAbility().SpiritwalkerActive = false;
 

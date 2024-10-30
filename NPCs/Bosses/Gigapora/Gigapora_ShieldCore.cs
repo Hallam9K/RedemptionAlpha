@@ -241,9 +241,8 @@ namespace Redemption.NPCs.Bosses.Gigapora
                             SoundEngine.PlaySound(CustomSounds.MissileExplosion with { Pitch = .1f }, NPC.position);
                         RedeDraw.SpawnExplosion(NPC.Center, Color.OrangeRed, DustID.RedTorch);
                         NPC.dontTakeDamage = false;
-                        player.ApplyDamageToNPC(NPC, 9999, 0, 0, false);
-                        if (Main.netMode == NetmodeID.Server && NPC.whoAmI < Main.maxNPCs)
-                            NetMessage.SendData(MessageID.SyncNPC, number: NPC.whoAmI);
+                        if (Main.netMode != NetmodeID.MultiplayerClient)
+                            NPC.StrikeInstantKill();
                     }
                     break;
             }

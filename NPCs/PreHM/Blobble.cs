@@ -14,6 +14,7 @@ using Redemption.Items.Placeable.Banners;
 using Redemption.Globals.NPC;
 using System.IO;
 using Terraria.Localization;
+using Terraria.Chat;
 
 namespace Redemption.NPCs.PreHM
 {
@@ -199,12 +200,13 @@ namespace Redemption.NPCs.PreHM
             if (HatType is HatState.Serb)
                 Item.NewItem(NPC.GetSource_Loot(), NPC.getRect(), ItemID.Marshmallow);
 
-            if (Main.rand.NextBool(2) && !RedeWorld.blobbleSwarm && RedeWorld.blobbleSwarmCooldown <= 0 && Main.netMode != NetmodeID.MultiplayerClient)
+            if (Main.rand.NextBool(2) && !RedeWorld.blobbleSwarm && RedeWorld.blobbleSwarmCooldown <= 0)
             {
-                Main.NewText("A blobble swarm has arrived!", Color.PaleGreen);
-                RedeWorld.blobbleSwarm = true;
                 if (Main.netMode == NetmodeID.Server)
-                    NetMessage.SendData(MessageID.WorldData);
+                    ChatHelper.BroadcastChatMessage(NetworkText.FromLiteral("A blobble swarm has arrived!"), Color.PaleGreen);
+                else
+                    Main.NewText("A blobble swarm has arrived!", Color.PaleGreen);
+                RedeWorld.blobbleSwarm = true;
             }
         }
 

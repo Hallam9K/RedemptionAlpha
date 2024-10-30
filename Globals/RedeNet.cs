@@ -9,7 +9,13 @@ namespace Redemption.Globals
             SpawnNPCFromClient,
             SpawnTrail,
             StartFowlMorning,
-            FowlMorningData
+            FowlMorningData,
+            SyncRedeQuestFromClient,
+            SyncRedeWorldFromClient,
+            SyncAlignment,
+            SyncChaliceDialogue,
+            TitleCardFromServer,
+            SyncRedePlayer
         }
     }
 }

@@ -179,7 +179,7 @@ namespace Redemption.Items.Weapons.HM.Magic
                         {
                             if (charged == 0)
                             {
-                                RedeDraw.SpawnExplosion(Projectile.Center, Color.White, shakeAmount: 0, scale: 2, noDust: true, tex: ModContent.Request<Texture2D>("Redemption/Textures/HolyGlow2").Value);
+                                RedeDraw.SpawnExplosion(Projectile.Center, Color.White, shakeAmount: 0, scale: 2, noDust: true, tex: "Redemption/Textures/HolyGlow2");
                                 if (!Main.dedServ)
                                     SoundEngine.PlaySound(CustomSounds.NebSound2 with { Pitch = .2f, Volume = .5f }, Projectile.position);
                                 charged = 1;
@@ -188,7 +188,7 @@ namespace Redemption.Items.Weapons.HM.Magic
                         }
                         if (Projectile.scale >= 3 && charged < 2)
                         {
-                            RedeDraw.SpawnExplosion(Projectile.Center, Color.White, shakeAmount: 0, scale: 5, noDust: true, tex: ModContent.Request<Texture2D>("Redemption/Textures/HolyGlow2").Value);
+                            RedeDraw.SpawnExplosion(Projectile.Center, Color.White, shakeAmount: 0, scale: 5, noDust: true, tex: "Redemption/Textures/HolyGlow2");
                             if (!Main.dedServ)
                                 SoundEngine.PlaySound(CustomSounds.NebSound2 with { Volume = .5f }, Projectile.position);
                             charged = 2;

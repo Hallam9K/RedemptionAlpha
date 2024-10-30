@@ -154,8 +154,7 @@ namespace Redemption.NPCs.Lab.Janitor
             switch (AIState)
             {
                 case ActionState.Begin:
-                    if (!Main.dedServ)
-                        RedeSystem.Instance.TitleCardUIElement.DisplayTitle(Language.GetTextValue("Mods.Redemption.TitleCard.Janitor.Name"), 60, 90, 0.8f, 0, Color.Yellow, Language.GetTextValue("Mods.Redemption.TitleCard.Janitor.Modifier"));
+                    TitleCard.BroadcastTitle(NetworkText.FromKey("Mods.Redemption.TitleCard.Janitor.Name"), 60, 90, 0.8f, Color.Yellow, NetworkText.FromKey("Mods.Redemption.TitleCard.Janitor.Modifier"));
 
                     AIState = ActionState.Jump;
                     NPC.netUpdate = true;

@@ -103,8 +103,8 @@ namespace Redemption.Items.Weapons.PreHM.Ranged
                             {
                                 SoundEngine.PlaySound(SoundID.Item19 with { Volume = 2f, Pitch = -.4f }, player.position);
                                 SoundEngine.PlaySound(SoundID.Item4 with { Pitch = 1.2f, Volume = 0.4f }, player.position);
-                                RedeDraw.SpawnExplosion(player.MountedCenter + vector, Color.Yellow, scale: 1, noDust: true, shakeAmount: 0, tex: ModContent.Request<Texture2D>("Redemption/Textures/WhiteFlare").Value);
-                                RedeDraw.SpawnExplosion(player.MountedCenter + vector, Color.White, scale: .8f, noDust: true, shakeAmount: 0, tex: ModContent.Request<Texture2D>("Redemption/Textures/WhiteFlare").Value);
+                                RedeDraw.SpawnExplosion(player.MountedCenter + vector, Color.Yellow, scale: 1, noDust: true, shakeAmount: 0, tex: "Redemption/Textures/WhiteFlare");
+                                RedeDraw.SpawnExplosion(player.MountedCenter + vector, Color.White, scale: .8f, noDust: true, shakeAmount: 0, tex: "Redemption/Textures/WhiteFlare");
                                 DustHelper.DrawCircle(player.Center, 64, 4, 1, 1, 1, 2, nogravity: true);
                                 rhythm = true;
                             }

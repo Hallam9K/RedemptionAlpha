@@ -47,7 +47,7 @@ namespace Redemption.NPCs.Bosses.KSIII
             switch (NPC.ai[0])
             {
                 case 0:
-                    if (RedeWorld.alignment >= 0)
+                    if (RedeWorld.Alignment >= 0)
                     {
                         if (RedeBossDowned.slayerDeath <= 1)
                             NPC.ai[0] = 1;

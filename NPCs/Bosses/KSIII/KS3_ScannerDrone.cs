@@ -114,7 +114,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                         NPC.ai[2] = 0;
                         frameType = 1;
                         NPC.ai[0] = 2;
-                        if (RedeBossDowned.slayerDeath == 0 && RedeWorld.alignment > 0)
+                        if (RedeBossDowned.slayerDeath == 0 && RedeWorld.Alignment > 0)
                             CombatText.NewText(NPC.getRect(), Colors.RarityCyan, "TARGET UNIMPORTANT...", true, true);
                     }
                     break;

@@ -348,8 +348,7 @@ namespace Redemption.NPCs.Friendly
                         if (Main.netMode != NetmodeID.MultiplayerClient)
                         {
                             RedeWorld.keycardGiven = true;
-                            if (Main.netMode == NetmodeID.Server)
-                                NetMessage.SendData(MessageID.WorldData);
+                            RedeWorld.SyncData();
                         }
                         Item.NewItem(NPC.GetSource_Loot(), (int)NPC.Center.X, (int)NPC.Center.Y + 26, 1, 1, ModContent.ItemType<Keycard>(), 1, false, 0, true, false);
                         NPC.ai[2] = 0;

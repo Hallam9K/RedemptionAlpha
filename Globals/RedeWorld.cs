@@ -1,39 +1,86 @@
 using Microsoft.Xna.Framework;
-using Redemption.Biomes;
-using Redemption.Globals.Player;
-using Redemption.NPCs.Bosses.Erhan;
+using Redemption.Dusts;
 using Redemption.NPCs.Bosses.Keeper;
-using Redemption.NPCs.Friendly;
 using Redemption.NPCs.Friendly.TownNPCs;
+using Redemption.NPCs.Minibosses.Calavia;
 using Redemption.Projectiles.Misc;
 using Redemption.UI.ChatUI;
+using Redemption.WorldGeneration;
+using Redemption.WorldGeneration.Misc;
 using Redemption.WorldGeneration.Soulless;
 using SubworldLibrary;
-using System;
 using System.Collections.Generic;
 using System.IO;
 using Terraria;
 using Terraria.Audio;
 using Terraria.Chat;
 using Terraria.DataStructures;
-using Terraria.GameContent.Events;
+using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 using Terraria.Utilities;
+using static Redemption.Globals.RedeNet;
 
 namespace Redemption.Globals
 {
     public class RedeWorld : ModSystem
     {
-        #region Soulless Subworld
+        public static bool blobbleSwarm;
+        public static int blobbleSwarmTimer;
+        public static int blobbleSwarmCooldown;
+        public static int DayNightCount;
+        public static bool SkeletonInvasion;
+        public static bool spawnSkeletonInvasion;
+        public static bool spawnKeeper;
+        public static int tbotDownedTimer;
+        public static int daerelDownedTimer;
+        public static int zephosDownedTimer;
+        public static float RotTime;
+        public static bool labSafe;
+        public static int labSafeMessageTimer;
+        public static bool[] omegaTransmitReady = new bool[3];
+        public static bool apidroidKilled;
+        public static bool deadRingerGiven;
+        public static bool newbGone;
+        public static bool slayerMessageGiven;
+        public static bool keycardGiven;
+        public static bool[] spawnCleared = new bool[5];
+        public static bool wastelandMessage;
+        public static bool alignmentGiven;
+
+        private static int alignment;
+
+        /// <summary>
+        /// <br> The alignment. </br>
+        /// <br> Setting it syncs automatically, can be set on clients or server. You must make sure that only one of them calls it. </br>
+        /// <br> You can do <c>Alignment += 0</c> just to display the <c>"+0"</c> pop-up text. </br>
+        /// </summary>
+        public static int Alignment
+        {
+            get => alignment;
+            set => SetAlignment(value, sync: true);
+        }
+
+        #region Nuke Shenanigans
+        public static int nukeTimer = 1800;
+        public static bool nukeCountdownActive = false;
+        public static Vector2 nukeGroundZero = Vector2.Zero;
+        private static readonly int nukeFireballRadius = 287;
+        #endregion
+
+        #region Subworld Updates
         public override void PreUpdateWorld()
         {
-            if (SubworldSystem.IsActive<SoullessSub>())
+            if (SubworldSystem.AnyActive<Redemption>() && !SubworldSystem.IsActive<PlaygroundSub>())
             {
                 Wiring.UpdateMech();
                 Liquid.skipCount++;
+                TileEntity.UpdateStart();
+                foreach (TileEntity te in TileEntity.ByID.Values)
+                    te.Update();
+                TileEntity.UpdateEnd();
                 if (Liquid.skipCount > 1)
                 {
                     Liquid.UpdateLiquid();
@@ -45,47 +92,13 @@ namespace Redemption.Globals
                     int j = Main.rand.Next(10, 1800 - 10);
                     ModTile tile = TileLoader.GetTile(Main.tile[i, j].TileType);
 
-                    if (tile != null)
-                        tile.RandomUpdate(i, j);
+                    tile?.RandomUpdate(i, j);
                 }
             }
         }
         #endregion
 
-        public static bool blobbleSwarm;
-        public static int blobbleSwarmTimer;
-        public static int blobbleSwarmCooldown;
-        public static int alignment;
-        public static int DayNightCount;
-        public static bool SkeletonInvasion;
-        public static bool spawnSkeletonInvasion;
-        public static bool spawnKeeper;
-        public static int tbotDownedTimer;
-        public static int daerelDownedTimer;
-        public static int zephosDownedTimer;
-        public static float RotTime;
-        public static int slayerRep;
-        public static bool labSafe;
-        public static int labSafeMessageTimer;
-        public static bool[] omegaTransmitReady = new bool[3];
-        public static bool apidroidKilled;
-        public static bool deadRingerGiven;
-        public static bool newbGone;
-        public static bool slayerMessageGiven;
-        public static bool keycardGiven;
-        public static bool alignmentGiven;
-        public static bool[] spawnCleared = new bool[5];
-        public static bool wastelandMessage;
-
-        #region Nuke Shenanigans
-        public static int nukeTimerInternal = 1800;
-        public static int nukeTimerShown = 30;
-        public static int nukeFireballRadius = 287;
-        public static bool nukeCountdownActive = false;
-        public static Vector2 nukeGroundZero = Vector2.Zero;
-        #endregion
-
-        public override void PostUpdateNPCs()
+        public override void PostUpdateWorld()
         {
             if (Terraria.NPC.AnyNPCs(ModContent.NPCType<TBotUnconscious>()))
                 tbotDownedTimer++;
@@ -93,15 +106,19 @@ namespace Redemption.Globals
                 daerelDownedTimer++;
             if (Terraria.NPC.AnyNPCs(ModContent.NPCType<ZephosUnconscious>()))
                 zephosDownedTimer++;
-        }
-
-        public override void PostUpdateWorld()
-        {
-            if (Main.time == 1)
-                DayNightCount++;
 
             if (SubworldSystem.Current != null)
                 return;
+
+            if (Main.time == 1)
+            {
+                DayNightCount++;
+                if (RedeQuest.calaviaVar >= 3 && RedeQuest.calaviaVar < 20 && RedeBossDowned.downedCalavia && !Terraria.NPC.AnyNPCs(ModContent.NPCType<Calavia_NPC>()))
+                {
+                    Vector2 gathicPortalPos = new((RedeGen.gathicPortalVector.X + 47) * 16, (RedeGen.gathicPortalVector.Y + 20) * 16 + 8);
+                    LabArea.SpawnNPCInWorld(gathicPortalPos, ModContent.NPCType<Calavia_NPC>());
+                }
+            }
 
             #region Skeleton Invasion
             if (DayNightCount >= 10 && !Main.hardMode && !Main.IsFastForwardingTime())
@@ -116,13 +133,13 @@ namespace Redemption.Globals
 
                             string status = Language.GetTextValue("Mods.Redemption.StatusMessage.Event.SkeletonParty1") + (RedeBossDowned.downedSkeletonInvasion ? Language.GetTextValue("Mods.Redemption.StatusMessage.Event.Again") : "");
                             if (Main.netMode == NetmodeID.Server)
-                                ChatHelper.BroadcastChatMessage(NetworkText.FromLiteral(status), Color.LightGray);
+                                ChatHelper.BroadcastChatMessage(NetworkText.FromLiteral(status), new Color(175, 75, 255));
                             else if (Main.netMode == NetmodeID.SinglePlayer)
-                                Main.NewText(Language.GetTextValue(status), Color.LightGray);
+                                Main.NewText(Language.GetTextValue(status), new Color(175, 75, 255));
                         }
                     }
                 }
-                if (!Main.dayTime && spawnSkeletonInvasion && Main.netMode != NetmodeID.MultiplayerClient && Main.time > 1)
+                if (!Main.dayTime && spawnSkeletonInvasion && Main.time > 1)
                 {
                     string status = Language.GetTextValue("Mods.Redemption.StatusMessage.Event.SkeletonParty2");
                     if (WorldGen.spawnEye || Main.bloodMoon || WorldGen.spawnHardBoss > 0)
@@ -130,28 +147,25 @@ namespace Redemption.Globals
                     else
                         SkeletonInvasion = true;
 
-                    spawnSkeletonInvasion = false;
-
                     if (Main.netMode == NetmodeID.Server)
-                        ChatHelper.BroadcastChatMessage(NetworkText.FromLiteral(status), Color.LightGray);
+                        ChatHelper.BroadcastChatMessage(NetworkText.FromLiteral(status), new Color(175, 75, 255));
                     else if (Main.netMode == NetmodeID.SinglePlayer)
-                        Main.NewText(Language.GetTextValue(status), Color.LightGray);
+                        Main.NewText(Language.GetTextValue(status), new Color(175, 75, 255));
 
-                    if (Main.netMode == NetmodeID.Server)
-                        NetMessage.SendData(MessageID.WorldData);
+                    spawnSkeletonInvasion = false;
+                    SyncData();
                 }
             }
             if (SkeletonInvasion && (Main.time >= 16200 || Main.dayTime))
             {
-                SkeletonInvasion = false;
-                RedeBossDowned.downedSkeletonInvasion = true;
-
                 string status = Language.GetTextValue("Mods.Redemption.StatusMessage.Event.SkeletonParty4");
                 if (Main.netMode == NetmodeID.Server)
-                    ChatHelper.BroadcastChatMessage(NetworkText.FromLiteral(status), Color.LightGray);
+                    ChatHelper.BroadcastChatMessage(NetworkText.FromLiteral(status), new Color(175, 75, 255));
                 else if (Main.netMode == NetmodeID.SinglePlayer)
-                    Main.NewText(Language.GetTextValue(status), Color.LightGray);
+                    Main.NewText(Language.GetTextValue(status), new Color(175, 75, 255));
 
+                RedeBossDowned.downedSkeletonInvasion = true;
+                SkeletonInvasion = false;
                 if (Main.netMode == NetmodeID.Server)
                     NetMessage.SendData(MessageID.WorldData);
             }
@@ -162,7 +176,7 @@ namespace Redemption.Globals
             {
                 if (Main.time == 1 && !WorldGen.spawnEye && !spawnSkeletonInvasion)
                 {
-                    if (!RedeBossDowned.downedKeeper && Main.netMode != NetmodeID.MultiplayerClient)
+                    if (!RedeBossDowned.downedKeeper)
                     {
                         bool check = false;
                         for (int n = 0; n < Main.maxPlayers; n++)
@@ -180,13 +194,13 @@ namespace Redemption.Globals
 
                             string status = Language.GetTextValue("Mods.Redemption.StatusMessage.Other.Keeper1");
                             if (Main.netMode == NetmodeID.Server)
-                                ChatHelper.BroadcastChatMessage(NetworkText.FromLiteral(status), Color.MediumPurple);
+                                ChatHelper.BroadcastChatMessage(NetworkText.FromLiteral(status), new Color(50, 255, 130));
                             else if (Main.netMode == NetmodeID.SinglePlayer)
-                                Main.NewText(Language.GetTextValue(status), Color.MediumPurple);
+                                Main.NewText(Language.GetTextValue(status), new Color(50, 255, 130));
                         }
                     }
                 }
-                if (spawnKeeper && Main.netMode != NetmodeID.MultiplayerClient && Main.time > 4860)
+                if (spawnKeeper && Main.time > 4860)
                 {
                     for (int k = 0; k < Main.maxPlayers; k++)
                     {
@@ -196,11 +210,10 @@ namespace Redemption.Globals
 
                         int type = ModContent.NPCType<Keeper>();
 
-                        if (Main.netMode != NetmodeID.MultiplayerClient)
+                        if (!RedeBossDowned.downedKeeper && !Terraria.NPC.AnyNPCs(type))
+                        {
                             Terraria.NPC.SpawnOnPlayer(player.whoAmI, type);
-                        else
-                            NetMessage.SendData(MessageID.SpawnBossUseLicenseStartEvent, number: player.whoAmI, number2: type);
-
+                        }
                         spawnKeeper = false;
                         break;
                     }
@@ -226,8 +239,7 @@ namespace Redemption.Globals
             if (!wastelandMessage && RedeBossDowned.nukeDropped && Terraria.NPC.downedMechBossAny)
             {
                 wastelandMessage = true;
-                if (Main.netMode == NetmodeID.Server)
-                    NetMessage.SendData(MessageID.WorldData);
+                SyncData();
 
                 string status = Language.GetTextValue("Mods.Redemption.StatusMessage.Progression.WastelandGrow");
                 if (Main.netMode == NetmodeID.Server)
@@ -240,8 +252,6 @@ namespace Redemption.Globals
             {
                 if (labSafeMessageTimer++ >= 300)
                 {
-                    labSafe = true;
-
                     string status = Language.GetTextValue("Mods.Redemption.StatusMessage.Progression.LabOpen");
                     if (Main.netMode == NetmodeID.Server)
                         ChatHelper.BroadcastChatMessage(NetworkText.FromLiteral(status), Color.Cyan);
@@ -252,8 +262,8 @@ namespace Redemption.Globals
                     if (!Main.dedServ)
                         SoundEngine.PlaySound(s);
 
-                    if (Main.netMode == NetmodeID.Server)
-                        NetMessage.SendData(MessageID.WorldData);
+                    labSafe = true;
+                    SyncData();
                 }
             }
             if (Terraria.NPC.downedPlantBoss && !omegaTransmitReady[0])
@@ -270,32 +280,6 @@ namespace Redemption.Globals
             {
                 omegaTransmitReady[2] = true;
                 OmegaTransmitterMessage();
-            }
-
-            int PalebatImpID = Terraria.NPC.FindFirstNPC(ModContent.NPCType<PalebatImp>());
-            if (PalebatImpID >= 0 && (Main.npc[PalebatImpID].ModNPC as PalebatImp).shakeTimer > 0)
-            {
-                if (!Terraria.Graphics.Effects.Filters.Scene["MoonLordShake"].IsActive())
-                {
-                    Terraria.Graphics.Effects.Filters.Scene.Activate("MoonLordShake", Main.player[Main.myPlayer].position);
-                }
-                Terraria.Graphics.Effects.Filters.Scene["MoonLordShake"].GetShader().UseIntensity((Main.npc[PalebatImpID].ModNPC as PalebatImp).shakeTimer);
-            }
-            if (Main.player[Main.myPlayer].GetModPlayer<BuffPlayer>().island)
-            {
-                if (!Terraria.Graphics.Effects.Filters.Scene["MoonLordShake"].IsActive())
-                {
-                    Terraria.Graphics.Effects.Filters.Scene.Activate("MoonLordShake", Main.player[Main.myPlayer].position);
-                }
-                Terraria.Graphics.Effects.Filters.Scene["MoonLordShake"].GetShader().UseIntensity(0.5f);
-            }
-            if (Main.player[Main.myPlayer].InModBiome<SoullessBiome>())
-            {
-                if (!Terraria.Graphics.Effects.Filters.Scene["MoonLordShake"].IsActive())
-                {
-                    Terraria.Graphics.Effects.Filters.Scene.Activate("MoonLordShake", Main.player[Main.myPlayer].position, Array.Empty<object>());
-                }
-                Terraria.Graphics.Effects.Filters.Scene["MoonLordShake"].GetShader().UseIntensity(0.3f);
             }
             if (blobbleSwarm)
             {
@@ -320,29 +304,26 @@ namespace Redemption.Globals
                 if (radiusLeft < 15) { radiusLeft = 15; }
                 if (radiusRight > Main.maxTilesX - 15) { radiusRight = Main.maxTilesX - 15; }
                 if (radiusDown > Main.maxTilesY - 15) { radiusDown = Main.maxTilesY - 15; }
-                for (int i = 0; i < 2; i++)
+                for (int i = 0; i < 6; i++)
                     ConversionHandler.GenWasteland(radiusLeft, radiusRight, radiusDown, ConversionHandler.WastelandCenter, ConversionHandler.Radius);
             }
         }
 
         public static void OmegaTransmitterMessage()
         {
-            string status = Language.GetTextValue("Mods.Redemption.StatusMessage.Progression.OmegaCall");
+            LocalizedText status = Language.GetText("Mods.Redemption.StatusMessage.Progression.OmegaCall");
             if (Main.netMode == NetmodeID.Server)
-                ChatHelper.BroadcastChatMessage(NetworkText.FromLiteral(status), Color.IndianRed);
+                ChatHelper.BroadcastChatMessage(status.ToNetworkText(), Color.IndianRed);
             else if (Main.netMode == NetmodeID.SinglePlayer)
-                Main.NewText(Language.GetTextValue(status), Color.IndianRed);
-
-            if (Main.netMode == NetmodeID.Server)
-                NetMessage.SendData(MessageID.WorldData);
+                Main.NewText(status.Value, Color.IndianRed);
         }
 
         #region Warhead Countdown
-        public void UpdateNukeCountdown()
+        public static void UpdateNukeCountdown()
         {
             if (!nukeCountdownActive)
             {
-                nukeTimerInternal = 1800;
+                nukeTimer = 1800;
                 return;
             }
             else if (nukeGroundZero == Vector2.Zero)
@@ -352,38 +333,14 @@ namespace Redemption.Globals
             }
             else
             {
-                nukeTimerShown = nukeTimerInternal / 60;
-                if (nukeTimerInternal % 60 == 0 && nukeTimerInternal > 0)
-                {
-                    if (!Main.dedServ)
-                    {
-                        RedeSystem.Instance.DialogueUIElement.DisplayDialogue(nukeTimerShown.ToString(), 40, 8, 1, null, ((30f - nukeTimerShown) / 30f) * 2, Color.Red, Color.Black);
-                    }
-                }
-                --nukeTimerInternal;
-                if (nukeTimerInternal <= 0)
-                {
-                    MoonlordDeathDrama.RequestLight(1f, nukeGroundZero);
-                    for (int i = 0; i < Main.maxPlayers; ++i)
-                    {
-                        Terraria.Player player = Main.player[i];
-                        if (!player.active || player.dead)
-                            continue;
-
-                        if (Vector2.Distance(player.Center, nukeGroundZero) < 287 * 16)
-                            MoonlordDeathDrama.RequestLight(1f, player.Center);
-                        else if (Vector2.Distance(player.Center, nukeGroundZero) < 287 * 2 * 16)
-                            MoonlordDeathDrama.RequestLight(0.5f, player.Center);
-                        else
-                            MoonlordDeathDrama.RequestLight(0.35f, player.Center);
-                    }
-                }
-                if (nukeTimerInternal <= -60)
+                --nukeTimer;
+                if (nukeTimer <= -60)
                 {
                     RedeHelper.ProjectileExplosion(new EntitySource_TileBreak((int)nukeGroundZero.X, (int)nukeGroundZero.Y), nukeGroundZero, 0, 90, ModContent.ProjectileType<NukeShockwave>(), 1, 80, nukeGroundZero.X, nukeGroundZero.Y);
                     HandleNukeExplosion();
                     WorldGen.KillTile((int)(nukeGroundZero.X / 16), (int)(nukeGroundZero.Y / 16), false, false, true);
-                    ConversionHandler.ConvertWasteland(nukeGroundZero, 287);
+                    ConversionHandler.ConvertWasteland(nukeGroundZero, nukeFireballRadius);
+
                     nukeCountdownActive = false;
                     nukeGroundZero = Vector2.Zero;
                     RedeBossDowned.nukeDropped = true;
@@ -401,26 +358,24 @@ namespace Redemption.Globals
                 if (!player.active || player.dead)
                     continue;
 
-                if (player.Distance(nukeGroundZero) < 287 * 16)
+                if (player.Distance(nukeGroundZero) < nukeFireballRadius * 16)
                 {
                     string nukeDeathReason;
 
                     WeightedRandom<string> nukeDeaths = new(Main.rand);
                     nukeDeaths.Add(player.name + Language.GetTextValue("Mods.Redemption.StatusMessage.Death.Nuclear1"), 5);
-                    nukeDeaths.Add(player.name + Language.GetTextValue("Mods.Redemption.StatusMessage.Death.Nuclear2") + Main.worldName + "", 5);
+                    nukeDeaths.Add(player.name + Language.GetTextValue("Mods.Redemption.StatusMessage.Death.Nuclear2") + Main.worldName, 5);
                     nukeDeaths.Add(player.name + Language.GetTextValue("Mods.Redemption.StatusMessage.Death.Nuclear3"), 5);
                     nukeDeaths.Add(player.name + Language.GetTextValue("Mods.Redemption.StatusMessage.Death.Nuclear4"), 5);
                     nukeDeaths.Add(player.name + Language.GetTextValue("Mods.Redemption.StatusMessage.Death.Nuclear5"), 5);
                     nukeDeaths.Add(player.name + Language.GetTextValue("Mods.Redemption.StatusMessage.Death.Nuclear6"), 1);
 
                     nukeDeathReason = nukeDeaths;
-                    if (!Main.dedServ)
-                        SoundEngine.PlaySound(CustomSounds.NukeExplosion, player.position);
 
                     player.KillMe(PlayerDeathReason.ByCustomReason(nukeDeathReason), 999999, 1);
                 }
-                if (player.Distance(nukeGroundZero) < 287 * 2 * 16 && Collision.CanHit(player.position, player.width, player.height, nukeGroundZero, 1, 1))
-                    player.AddBuff(BuffID.Blackout, 900);
+                if (player.Distance(nukeGroundZero) < nukeFireballRadius * 2 * 16 && Collision.CanHit(player.position, player.width, player.height, nukeGroundZero, 1, 1))
+                    player.AddBuff(BuffID.Blackout, 900, quiet: false);
 
             }
             for (int i = 0; i < Main.maxNPCs; ++i)
@@ -429,9 +384,8 @@ namespace Redemption.Globals
                 if (!npc.active || npc.dontTakeDamage || npc.immortal)
                     continue;
 
-                Terraria.Player player = Main.LocalPlayer;
-                if (npc.Distance(nukeGroundZero) < 287 * 16)
-                    player.ApplyDamageToNPC(npc, 50000, 0, 0, false);
+                if (npc.Distance(nukeGroundZero) < nukeFireballRadius * 16)
+                    npc.StrikeInstantKill();
             }
         }
         #endregion
@@ -473,7 +427,6 @@ namespace Redemption.Globals
             tbotDownedTimer = 0;
             daerelDownedTimer = 0;
             zephosDownedTimer = 0;
-            slayerRep = 0;
             labSafe = false;
             apidroidKilled = false;
             deadRingerGiven = false;
@@ -484,6 +437,9 @@ namespace Redemption.Globals
             for (int i = 0; i < spawnCleared.Length; i++)
                 spawnCleared[i] = false;
             wastelandMessage = false;
+            nukeCountdownActive = false;
+            nukeGroundZero = Vector2.Zero;
+            nukeTimer = 1800;
         }
 
         public override void SaveWorldData(TagCompound tag)
@@ -515,7 +471,6 @@ namespace Redemption.Globals
             tag["tbotDownedTimer"] = tbotDownedTimer;
             tag["daerelDownedTimer"] = daerelDownedTimer;
             tag["zephosDownedTimer"] = zephosDownedTimer;
-            tag["slayerRep"] = slayerRep;
         }
 
         public override void LoadWorldData(TagCompound tag)
@@ -525,10 +480,6 @@ namespace Redemption.Globals
             SkeletonInvasion = lists.Contains("SkeletonInvasion");
             alignment = tag.GetInt("alignment");
             DayNightCount = tag.GetInt("DayNightCount");
-            tbotDownedTimer = tag.GetInt("tbotDownedTimer");
-            daerelDownedTimer = tag.GetInt("daerelDownedTimer");
-            zephosDownedTimer = tag.GetInt("zephosDownedTimer");
-            slayerRep = tag.GetInt("slayerRep");
             labSafe = lists.Contains("labSafe");
             apidroidKilled = lists.Contains("apidroidKilled");
             deadRingerGiven = lists.Contains("deadRingerGiven");
@@ -537,6 +488,37 @@ namespace Redemption.Globals
             keycardGiven = lists.Contains("keycardGiven");
             alignmentGiven = lists.Contains("alignmentGiven");
             wastelandMessage = lists.Contains("wastelandMessage");
+            tbotDownedTimer = tag.GetInt("tbotDownedTimer");
+            daerelDownedTimer = tag.GetInt("daerelDownedTimer");
+            zephosDownedTimer = tag.GetInt("zephosDownedTimer");
+        }
+
+        #region Netcode
+        /// <summary>
+        /// Syncs RedeWorld data. Can be called on clients or server, you must make sure only one of them calls it.
+        /// </summary>
+        public static void SyncData()
+        {
+            if (Main.netMode == NetmodeID.MultiplayerClient)
+            {
+                ModPacket packet = Redemption.Instance.GetPacket();
+                packet.Write((byte)ModMessageType.SyncRedeWorldFromClient);
+                ModContent.GetInstance<RedeWorld>().NetSend(packet);
+                packet.Send();
+            }
+            else if (Main.netMode == NetmodeID.Server)
+            {
+                NetMessage.SendData(MessageID.WorldData);
+            }
+        }
+
+        public static void ReceiveSyncDataFromClient(BinaryReader reader, int sender)
+        {
+            if (Main.netMode != NetmodeID.Server)
+                return;
+
+            ModContent.GetInstance<RedeWorld>().NetReceive(reader);
+            NetMessage.SendData(MessageID.WorldData, ignoreClient: sender);
         }
 
         public override void NetSend(BinaryWriter writer)
@@ -553,14 +535,16 @@ namespace Redemption.Globals
             writer.Write(flags);
             var flags2 = new BitsByte();
             flags2[0] = wastelandMessage;
+            flags2[1] = nukeCountdownActive;
             writer.Write(flags2);
 
-            writer.Write(alignment);
             writer.Write(DayNightCount);
             writer.Write(tbotDownedTimer);
             writer.Write(daerelDownedTimer);
             writer.Write(zephosDownedTimer);
-            writer.Write(slayerRep);
+
+            writer.Write(nukeTimer);
+            writer.WriteVector2(nukeGroundZero);
         }
 
         public override void NetReceive(BinaryReader reader)
@@ -576,13 +560,99 @@ namespace Redemption.Globals
             alignmentGiven = flags[7];
             BitsByte flags2 = reader.ReadByte();
             wastelandMessage = flags2[0];
+            nukeCountdownActive = flags2[2];
 
-            alignment = reader.ReadInt32();
             DayNightCount = reader.ReadInt32();
             tbotDownedTimer = reader.ReadInt32();
             daerelDownedTimer = reader.ReadInt32();
             zephosDownedTimer = reader.ReadInt32();
-            slayerRep = reader.ReadInt32();
+
+            nukeTimer = reader.ReadInt32();
+            nukeGroundZero = reader.ReadVector2();
         }
+        #endregion
+
+        #region Alignment logic
+        /// <summary>
+        /// <br> Sets the world alignment to a new value and syncs it, also displaying the specified popup text color. Normally you want to offset the current value. </br>
+        /// <br> You can offset the property instead, for simplicity: (<c><see cref="Alignment"/> += 2</c>), where the floating text color defaults to <see cref="Color.Gold"/>.</br>
+        /// <br> Can be called on clients or servers, you must make sure that only one of them calls it.</br>
+        /// </summary>
+        /// <param name="newValue"> The new alignment value. </param>
+        /// <param name="floatingTextColor"> The floating text color, defaults to <see cref="Color.Gold"/>. Use <see cref="Color.Transparent"/> if you want to hide it. </param>
+        /// <param name="sync"> Whether to sync this change, leave true except in <c>HandlePacket</c> </param>
+        /// <param name="ignoreClient"> Don't send the alignment sync to a particular client, leave -1 except in <c>HandlePacket</c> </param>
+        public static void SetAlignment(int newValue, Color? floatingTextColor = null, bool sync = true, int ignoreClient = -1)
+        {
+            if (Main.netMode == NetmodeID.Server)
+            {
+                alignment = newValue;
+
+                if (sync)
+                    SyncAlignment(newValue, floatingTextColor, ignoreClient: ignoreClient);
+            }
+            else
+            {
+                int valueChange = newValue - alignment;
+                alignment = newValue;
+
+                string text = valueChange >= 0 ? $"+{valueChange}" : valueChange.ToString();
+                Color color = floatingTextColor ?? Color.Gold;
+
+                if (valueChange == 0)
+                {
+                    text = "+0";
+                    color = floatingTextColor ?? Color.Gray;
+                }
+
+                RedeHelper.FloatingTextAllPlayers(text, color, dramatic: true);
+
+                if (Main.netMode == NetmodeID.MultiplayerClient && sync)
+                    SyncAlignment(newValue, floatingTextColor);
+            }
+        }
+
+        // Sends alignment packet
+        private static void SyncAlignment(int newValue, Color? floatingTextColor = null, int toClient = -1, int ignoreClient = -1)
+        {
+            if (Main.netMode == NetmodeID.SinglePlayer)
+                return;
+
+            ModPacket packet = Redemption.Instance.GetPacket();
+            packet.Write((byte)ModMessageType.SyncAlignment);
+
+            packet.Write(newValue);
+
+            packet.Write(floatingTextColor.HasValue);
+            if (floatingTextColor.HasValue) packet.Write(floatingTextColor.Value.PackedValue);
+
+            packet.Send(toClient, ignoreClient);
+        }
+
+        // Receive alignment packet, forwarded in SetAlignment
+        public static void ReceiveSyncAlignment(BinaryReader reader, int sender)
+        {
+            int newValue = reader.ReadInt32();
+
+            Color? floatingTextColor = null;
+            if (reader.ReadBoolean()) floatingTextColor = new() { PackedValue = reader.ReadUInt32() };
+
+            bool sync = Main.netMode == NetmodeID.Server;
+            SetAlignment(newValue, floatingTextColor, sync, ignoreClient: sender);
+        }
+
+        // Send the alignment to the freshly joined client.
+        // Here, we are NOT hijacking any packet, just sending an extra packet whenever FinishedConnectingToServer is sent
+        public override bool HijackSendData(int whoAmI, int msgType, int remoteClient, int ignoreClient, NetworkText text, int number, float number2, float number3, float number4, int number5, int number6, int number7)
+        {
+            if (Main.netMode == NetmodeID.Server && msgType == MessageID.FinishedConnectingToServer && remoteClient >= 0 && remoteClient < 255)
+            {
+                SyncAlignment(alignment, Color.Transparent, toClient: remoteClient);
+            }
+
+            return false; // If this returns true bad things will happen.
+        }
+
+        #endregion
     }
 }

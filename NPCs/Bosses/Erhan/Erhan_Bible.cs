@@ -89,7 +89,7 @@ namespace Redemption.NPCs.Bosses.Erhan
                     {
                         openBook = true;
                         SoundEngine.PlaySound(SoundID.Item68, Projectile.position);
-                        RedeDraw.SpawnExplosion(Projectile.Center, Color.White, scale: 2, noDust: true, tex: ModContent.Request<Texture2D>("Redemption/Textures/HolyGlow2").Value);
+                        RedeDraw.SpawnExplosion(Projectile.Center, Color.White, scale: 2, noDust: true, tex: "Redemption/Textures/HolyGlow2");
                         Projectile.velocity *= 0;
                         AIAttack++;
                     }
@@ -135,7 +135,9 @@ namespace Redemption.NPCs.Bosses.Erhan
                             if (TimerRand++ % 30 == 0)
                             {
                                 RedeDraw.SpawnRing(Projectile.Center, new Color(255, 255, 120));
-                                Projectile.Shoot(Projectile.Center, ModContent.ProjectileType<Bible_Seed>(), Projectile.damage * 4, RedeHelper.SpreadUp(10), true, SoundID.Item42, player.whoAmI);
+                                SoundEngine.PlaySound(SoundID.Item42, Projectile.position);
+                                if (Main.netMode != NetmodeID.MultiplayerClient)
+                                    Projectile.NewProjectile(Terraria.Entity.InheritSource(host), Projectile.Center, RedeHelper.SpreadUp(10), ModContent.ProjectileType<Bible_Seed>(), Projectile.damage, Projectile.knockBack, Main.myPlayer, player.whoAmI);
                             }
                             if (TimerRand >= 460)
                                 Projectile.Kill();
@@ -170,7 +172,9 @@ namespace Redemption.NPCs.Bosses.Erhan
                                 SoundEngine.PlaySound(SoundID.Item125, Projectile.Center);
 
                                 if (Main.netMode != NetmodeID.MultiplayerClient)
+                                {
                                     Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, Vector2.Zero, ModContent.ProjectileType<HolyPhalanx_Proj2>(), Projectile.damage, 3, Main.myPlayer, Projectile.whoAmI, TimerRand * 60, TimerRand * 7);
+                                }
                                 TimerRand++;
 
                             }
@@ -235,12 +239,17 @@ namespace Redemption.NPCs.Bosses.Erhan
                                 int tilePosY = BaseWorldGen.GetFirstTileFloor((int)(player.Center.X / 16), (int)(player.Center.Y / 16));
                                 PlayerOrigin = new Vector2(player.Center.X, (tilePosY * 16) + 38);
                                 SoundEngine.PlaySound(SoundID.Item68, Projectile.position);
-                                RedeDraw.SpawnExplosion(Projectile.Center, Color.White, scale: 2, noDust: true, tex: ModContent.Request<Texture2D>("Redemption/Textures/HolyGlow2").Value);
+                                RedeDraw.SpawnExplosion(Projectile.Center, Color.White, scale: 2, noDust: true, tex: "Redemption/Textures/HolyGlow2");
                                 Projectile.position = PlayerOrigin + new Vector2(-600, 120);
                                 Projectile.netUpdate = true;
                                 SoundEngine.PlaySound(SoundID.Item68, Projectile.position);
-                                RedeDraw.SpawnExplosion(Projectile.Center, Color.White, scale: 2, noDust: true, tex: ModContent.Request<Texture2D>("Redemption/Textures/HolyGlow2").Value);
-                                Projectile.Shoot(Projectile.Center, ModContent.ProjectileType<Bible_Ray>(), Projectile.damage * 12, new Vector2(2, 0), true, SoundID.Item162, Projectile.whoAmI);
+                                RedeDraw.SpawnExplosion(Projectile.Center, Color.White, scale: 2, noDust: true, tex: "Redemption/Textures/HolyGlow2");
+
+                                SoundEngine.PlaySound(SoundID.Item162, Projectile.position);
+                                if (Main.netMode != NetmodeID.MultiplayerClient)
+                                {
+                                    Projectile.NewProjectile(Terraria.Entity.InheritSource(host), Projectile.Center, new Vector2(2, 0), ModContent.ProjectileType<Bible_Ray>(), Projectile.damage * 4, Projectile.knockBack, Main.myPlayer, Projectile.whoAmI);
+                                }
                             }
                             if (AITimer >= 80)
                                 Projectile.velocity.Y = -1.5f;
@@ -249,7 +258,7 @@ namespace Redemption.NPCs.Bosses.Erhan
                             {
                                 PlayerOrigin.Y -= 96;
                                 PlayerOrigin.X += Main.rand.Next(-220, 220);
-                                RedeHelper.SpawnNPC(Projectile.GetSource_FromAI(), (int)PlayerOrigin.X, (int)PlayerOrigin.Y, ModContent.NPCType<Bible_Platform>());                             
+                                RedeHelper.SpawnNPC(Projectile.GetSource_FromAI(), (int)PlayerOrigin.X, (int)PlayerOrigin.Y, ModContent.NPCType<Bible_Platform>());
                                 if (Main.rand.NextBool(4))
                                 {
                                     RedeHelper.SpawnNPC(Projectile.GetSource_FromAI(), (int)PlayerOrigin.X + 280, (int)PlayerOrigin.Y, ModContent.NPCType<Bible_Platform>());
@@ -304,7 +313,7 @@ namespace Redemption.NPCs.Bosses.Erhan
         public override void OnKill(int timeLeft)
         {
             SoundEngine.PlaySound(SoundID.Item68, Projectile.position);
-            RedeDraw.SpawnExplosion(Projectile.Center, Color.White, scale: 2, noDust: true, tex: ModContent.Request<Texture2D>("Redemption/Textures/HolyGlow2").Value);
+            RedeDraw.SpawnExplosion(Projectile.Center, Color.White, scale: 2, noDust: true, tex: "Redemption/Textures/HolyGlow2");
         }
         private float drawTimer;
         public override bool PreDraw(ref Color lightColor)

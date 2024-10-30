@@ -23,6 +23,7 @@ using Redemption.Items.Weapons.HM.Ranged;
 using Redemption.Items.Weapons.PreHM.Magic;
 using Terraria.Localization;
 using Redemption.Globals.NPC;
+using Redemption.UI;
 
 namespace Redemption.NPCs.Bosses.SeedOfInfection
 {
@@ -100,7 +101,7 @@ namespace Redemption.NPCs.Bosses.SeedOfInfection
 
         public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)
         {
-            NPC.lifeMax = (int)(NPC.lifeMax * 0.6f * balance);
+            NPC.lifeMax = (int)(NPC.lifeMax * 0.75f * balance);
             NPC.damage = (int)(NPC.damage * 0.75f);
         }
 
@@ -149,16 +150,20 @@ namespace Redemption.NPCs.Bosses.SeedOfInfection
 
         public override void SendExtraAI(BinaryWriter writer)
         {
-            writer.Write(ID);
+            writer.Write(NPC.dontTakeDamage);
         }
 
         public override void ReceiveExtraAI(BinaryReader reader)
         {
-            ID = reader.ReadInt32();
+            NPC.dontTakeDamage = reader.ReadBoolean();
         }
 
+        public int ID { get => (int)NPC.ai[3]; set => NPC.ai[3] = value; }
         void AttackChoice()
         {
+            if (Main.netMode == NetmodeID.MultiplayerClient)
+                return;
+
             int attempts = 0;
             while (attempts == 0)
             {
@@ -182,8 +187,6 @@ namespace Redemption.NPCs.Bosses.SeedOfInfection
         private Vector2 target;
         private bool FreakOut;
         private int repeat;
-
-        public int ID { get => (int)NPC.ai[3]; set => NPC.ai[3] = value; }
 
         public override void AI()
         {
@@ -215,7 +218,8 @@ namespace Redemption.NPCs.Bosses.SeedOfInfection
                     switch (TimerRand)
                     {
                         case 0:
-                            NPC.position = new Vector2(Main.rand.NextBool(2) ? player.Center.X - 160 : player.Center.X + 160, player.Center.Y - 90);
+                            if (Main.netMode != NetmodeID.MultiplayerClient)
+                                NPC.position = new Vector2(Main.rand.NextBool(2) ? player.Center.X - 160 : player.Center.X + 160, player.Center.Y - 90);
                             for (int i = 0; i < 10; i++)
                             {
                                 int dustIndex = Dust.NewDust(NPC.position + NPC.velocity, NPC.width, NPC.height, DustID.GreenFairy, 0f, 0f, 100, default, 3.5f);
@@ -231,15 +235,13 @@ namespace Redemption.NPCs.Bosses.SeedOfInfection
                                 NPC.alpha -= 4;
                             if (AITimer >= 180)
                             {
-                                if (!Main.dedServ)
-                                    RedeSystem.Instance.TitleCardUIElement.DisplayTitle(Language.GetTextValue("Mods.Redemption.TitleCard.SoI.Name"), 60, 90, 0.8f, 0, Color.ForestGreen, Language.GetTextValue("Mods.Redemption.TitleCard.SoI.Modifier"));
+                                TitleCard.BroadcastTitle(NetworkText.FromKey("Mods.Redemption.TitleCard.SoI.Name"), 60, 90, 0.8f, Color.ForestGreen, NetworkText.FromKey("Mods.Redemption.TitleCard.SoI.Modifier"));
                                 NPC.dontTakeDamage = false;
                                 NPC.alpha = 0;
                                 TimerRand = 0;
                                 AITimer = 0;
                                 AIState = ActionState.Idle;
-                                if (Main.netMode == NetmodeID.Server && NPC.whoAmI < Main.maxNPCs)
-                                    NetMessage.SendData(MessageID.SyncNPC, number: NPC.whoAmI);
+                                NPC.netUpdate = true;
                             }
                             break;
                     }
@@ -603,25 +605,33 @@ namespace Redemption.NPCs.Bosses.SeedOfInfection
                             {
                                 if (AITimer++ == 0)
                                     TimerRand = player.RightOfDir(NPC);
-                                if (AITimer < 80)
-                                    NPC.Move(player.Center + new Vector2(600 * -TimerRand, -Main.rand.Next(400, 451)), 12, 30);
-                                else
+                                if (Main.netMode != NetmodeID.MultiplayerClient)
                                 {
-                                    NPC.Move(player.Center + new Vector2(600 * TimerRand, -Main.rand.Next(400, 451)), 12, 40);
-                                    if (AITimer % (NPC.life <= NPC.lifeMax / 4 ? 3 : 4) == 0 && Main.rand.NextBool())
+                                    if (AITimer < 80)
                                     {
-                                        NPC.Shoot(NPC.Center, ModContent.ProjectileType<SoI_ShardShot>(), NPC.damage, new Vector2(0, Main.rand.Next(6, 10)), SoundID.Item42);
-
+                                        NPC.Move(player.Center + new Vector2(600 * -TimerRand, -Main.rand.Next(400, 451)), 12, 30);
+                                        NPC.netUpdate = true;
                                     }
+                                    else
+                                    {
+                                        NPC.Move(player.Center + new Vector2(600 * TimerRand, -Main.rand.Next(400, 451)), 12, 40);
+                                        if (AITimer % (NPC.life <= NPC.lifeMax / 4 ? 3 : 4) == 0 && Main.rand.NextBool())
+                                        {
+                                            NPC.Shoot(NPC.Center, ModContent.ProjectileType<SoI_ShardShot>(), NPC.damage, new Vector2(0, Main.rand.Next(6, 10)), SoundID.Item42);
+
+                                        }
+                                    }
+
+                                    NPC.netUpdate = true;
                                 }
-                                if (AITimer >= 300 || (TimerRand == -1 ? NPC.Center.X <= player.Center.X - 600 : NPC.Center.X >= player.Center.X + 600))
+
+                                if ((AITimer >= 300 || (TimerRand == -1 ? NPC.Center.X <= player.Center.X - 600 : NPC.Center.X >= player.Center.X + 600)) && Main.netMode != NetmodeID.MultiplayerClient)
                                 {
                                     if (repeat <= 2 && !Main.rand.NextBool(4))
                                     {
                                         TimerRand *= -1;
                                         AITimer = 60;
                                         repeat++;
-                                        NPC.netUpdate = true;
                                     }
                                     else
                                     {
@@ -629,8 +639,8 @@ namespace Redemption.NPCs.Bosses.SeedOfInfection
                                         TimerRand = 0;
                                         AIState = ActionState.Idle;
                                         repeat = 0;
-                                        NPC.netUpdate = true;
                                     }
+                                    NPC.netUpdate = true;
                                 }
                             }
                             else
@@ -648,8 +658,7 @@ namespace Redemption.NPCs.Bosses.SeedOfInfection
                     if (AITimer++ == 0)
                     {
                         NPC.dontTakeDamage = true;
-                        if (Main.netMode == NetmodeID.Server && NPC.whoAmI < Main.maxNPCs)
-                            NetMessage.SendData(MessageID.SyncNPC, number: NPC.whoAmI);
+                        NPC.netUpdate = true;
                     }
 
                     FreakOut = true;
@@ -678,9 +687,9 @@ namespace Redemption.NPCs.Bosses.SeedOfInfection
                         }
 
                         NPC.dontTakeDamage = false;
-                        player.ApplyDamageToNPC(NPC, 9999, 0, 0, false);
-                        if (Main.netMode == NetmodeID.Server && NPC.whoAmI < Main.maxNPCs)
-                            NetMessage.SendData(MessageID.SyncNPC, number: NPC.whoAmI);
+                        NPC.netUpdate = true;
+                        if (Main.netMode != NetmodeID.MultiplayerClient)
+                            NPC.StrikeInstantKill();
                     }
                     break;
             }
@@ -762,8 +771,7 @@ namespace Redemption.NPCs.Bosses.SeedOfInfection
                 NPC.life = 1;
                 AITimer = 0;
                 AIState = ActionState.Death;
-                if (Main.netMode == NetmodeID.Server && NPC.whoAmI < Main.maxNPCs)
-                    NetMessage.SendData(MessageID.SyncNPC, number: NPC.whoAmI);
+                NPC.netUpdate = true;
                 return false;
             }
         }

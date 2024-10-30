@@ -3,13 +3,9 @@ using Microsoft.Xna.Framework.Graphics;
 using Redemption.BaseExtension;
 using Redemption.Globals;
 using ReLogic.Content;
-using System.Collections.Generic;
-using System.Security.Cryptography.X509Certificates;
 using Terraria;
 using Terraria.Audio;
-using Terraria.GameContent.Bestiary;
 using Terraria.ID;
-using Terraria.Localization;
 using Terraria.ModLoader;
 
 namespace Redemption.NPCs.Bosses.Erhan

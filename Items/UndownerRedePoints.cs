@@ -1,7 +1,7 @@
-using Terraria;
-using Terraria.ModLoader;
-using Terraria.ID;
 using Redemption.Globals;
+using Terraria;
+using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace Redemption.Items
 {
@@ -26,10 +26,8 @@ namespace Redemption.Items
 
         public override bool? UseItem(Player player)
         {
-            RedeWorld.alignment = 0;
-
-            if (Main.netMode == NetmodeID.Server)
-                NetMessage.SendData(MessageID.WorldData);
+            if (player.whoAmI == Main.myPlayer)
+                 RedeWorld.Alignment = 0;
 
             return true;
         }

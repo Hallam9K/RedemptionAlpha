@@ -94,8 +94,7 @@ namespace Redemption.Items.Weapons.PostML.Melee
                 return;
             Main.player[Projectile.owner].RedemptionScreen().ScreenShakeIntensity += 2;
             SoundEngine.PlaySound(SoundID.Item27, Projectile.position);
-            Texture2D tex = ModContent.Request<Texture2D>("Redemption/NPCs/Bosses/Neb/GiantStar_Proj").Value;
-            RedeDraw.SpawnExplosion(Projectile.Center, Main.DiscoColor * 0.6f, 6, 0, 30, 2, 1 * Projectile.Opacity, true, tex, RedeHelper.RandomRotation());
+            RedeDraw.SpawnExplosion(Projectile.Center, Main.DiscoColor * 0.6f, 6, 0, 30, 2, 1 * Projectile.Opacity, true, "Redemption/NPCs/Bosses/Neb/GiantStar_Proj", RedeHelper.RandomRotation());
         }
         public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
         {

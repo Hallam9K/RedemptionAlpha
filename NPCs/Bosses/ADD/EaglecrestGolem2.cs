@@ -10,8 +10,10 @@ using Redemption.Items.Weapons.PreHM.Melee;
 using Redemption.Items.Weapons.PreHM.Ranged;
 using Redemption.NPCs.Minibosses.EaglecrestGolem;
 using Redemption.Particles;
+using Redemption.UI;
 using ReLogic.Content;
 using System;
+using System.IO;
 using Terraria;
 using Terraria.Audio;
 using Terraria.GameContent;
@@ -49,6 +51,17 @@ namespace Redemption.NPCs.Bosses.ADD
 
         public ref float TimerRand2 => ref NPC.ai[3];
 
+        public override void SendExtraAI(BinaryWriter writer)
+        {
+            writer.Write(NPC.dontTakeDamage);
+        }
+
+        public override void ReceiveExtraAI(BinaryReader reader)
+        {
+            NPC.dontTakeDamage = reader.ReadBoolean();
+        }
+
+
         public float[] oldrot = new float[5];
         public override void SetStaticDefaults()
         {
@@ -65,7 +78,7 @@ namespace Redemption.NPCs.Bosses.ADD
             NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.Confused] = true;
             NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.Electrified] = true;
 
-            NPCID.Sets.NPCBestiaryDrawModifiers value = new(0) { Hide = true };
+            NPCID.Sets.NPCBestiaryDrawModifiers value = new() { Hide = true };
             NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, value);
         }
 
@@ -123,6 +136,15 @@ namespace Redemption.NPCs.Bosses.ADD
             NPC.lifeMax = (int)(NPC.lifeMax * 0.6f * balance);
             NPC.damage = (int)(NPC.damage * 0.6f);
         }
+        public override void ModifyHitByItem(Player player, Item item, ref NPC.HitModifiers modifiers)
+        {
+            if (item.pick > 0)
+            {
+                if (!Main.dedServ)
+                    SoundEngine.PlaySound(CustomSounds.StoneHit, NPC.position);
+                modifiers.FlatBonusDamage += item.pick / 2;
+            }
+        }
 
         private int AniFrameY;
         private int summonTimer;
@@ -160,10 +182,9 @@ namespace Redemption.NPCs.Bosses.ADD
             {
                 case ActionState.Start:
                     NPC.target = RedeHelper.GetNearestAlivePlayer(NPC);
-                    if (!Main.dedServ)
-                        RedeSystem.Instance.TitleCardUIElement.DisplayTitle(Language.GetTextValue("Mods.Redemption.TitleCard.Golem.Name"), 60, 90, 0.8f, 0, Color.Gray, Language.GetTextValue("Mods.Redemption.TitleCard.Golem.Modifier"));
-
-                    TimerRand = Main.rand.Next(300, 600);
+                    TitleCard.BroadcastTitle(NetworkText.FromKey("Mods.Redemption.TitleCard.Golem.Name"), 60, 90, 0.8f, Color.Gray, NetworkText.FromKey("Mods.Redemption.TitleCard.Golem.Modifier"));
+                    if (Main.netMode != NetmodeID.MultiplayerClient)
+                        TimerRand = Main.rand.Next(300, 600);
                     AIState = ActionState.Idle;
                     NPC.netUpdate = true;
                     break;
@@ -172,12 +193,13 @@ namespace Redemption.NPCs.Bosses.ADD
                     {
                         AITimer = 0;
                         TimerRand2 = 0;
-                        TimerRand = Main.rand.Next(400, 700);
+                        if (Main.netMode != NetmodeID.MultiplayerClient)
+                            TimerRand = Main.rand.Next(400, 700);
                         AIState = ActionState.Roll;
                         NPC.netUpdate = true;
                     }
 
-                    if (NPC.velocity.Y == 0 && NPC.DistanceSQ(player.Center) <= 800 * 800 && Main.rand.NextBool(150))
+                    if (NPC.velocity.Y == 0 && NPC.DistanceSQ(player.Center) <= 800 * 800 && Main.netMode != NetmodeID.MultiplayerClient && Main.rand.NextBool(150))
                     {
                         NPC.velocity.X = 0;
                         AniFrameY = 0;
@@ -187,7 +209,7 @@ namespace Redemption.NPCs.Bosses.ADD
                         NPC.netUpdate = true;
                     }
 
-                    if (NPC.DistanceSQ(player.Center) > 150 * 150 && Main.rand.NextBool(300))
+                    if (NPC.DistanceSQ(player.Center) > 150 * 150 && Main.netMode != NetmodeID.MultiplayerClient && Main.rand.NextBool(300))
                     {
                         TimerRand2 = 0;
                         AIState = ActionState.Laser;
@@ -195,7 +217,7 @@ namespace Redemption.NPCs.Bosses.ADD
                     }
 
                     summonTimer--;
-                    if (Main.rand.NextBool(100) && summonTimer <= 0 && NPC.CountNPCS(ModContent.NPCType<EaglecrestRockPile2>()) < 1)
+                    if (Main.netMode != NetmodeID.MultiplayerClient && Main.rand.NextBool(100) && summonTimer <= 0 && NPC.CountNPCS(ModContent.NPCType<EaglecrestRockPile2>()) < 1)
                     {
                         for (int i = 0; i < 4; i++)
                         {
@@ -211,7 +233,7 @@ namespace Redemption.NPCs.Bosses.ADD
                 case ActionState.Roll:
                     if (TimerRand2 == 0)
                     {
-                        if (NPC.DistanceSQ(player.Center) > 150 * 150 && Main.rand.NextBool(300))
+                        if (NPC.DistanceSQ(player.Center) > 150 * 150 && Main.netMode != NetmodeID.MultiplayerClient && Main.rand.NextBool(300))
                         {
                             TimerRand2 = 1;
                             NPC.netUpdate = true;
@@ -264,7 +286,8 @@ namespace Redemption.NPCs.Bosses.ADD
                         NPC.velocity.Y -= 6;
                         AITimer = 0;
                         TimerRand2 = 0;
-                        TimerRand = Main.rand.Next(300, 600);
+                        if (Main.netMode != NetmodeID.MultiplayerClient)
+                            TimerRand = Main.rand.Next(300, 600);
                         AIState = ActionState.Idle;
                         NPC.netUpdate = true;
                     }
@@ -308,9 +331,7 @@ namespace Redemption.NPCs.Bosses.ADD
                     NPC.noGravity = true;
                     NPC.noTileCollide = false;
                     NPC.dontTakeDamage = true;
-                    if (Main.netMode == NetmodeID.Server && NPC.whoAmI < Main.maxNPCs)
-                        NetMessage.SendData(MessageID.SyncNPC, number: NPC.whoAmI);
-
+                    NPC.netUpdate = true;
                     NPC.velocity.Y = 2f;
                     for (int i = 0; i < 3; i++)
                     {
@@ -318,14 +339,14 @@ namespace Redemption.NPCs.Bosses.ADD
                         Main.dust[dustIndex2].velocity *= 0f;
                         Main.dust[dustIndex2].noGravity = true;
                     }
-                    ScreenPlayer.CutsceneLock(player, NPC, ScreenPlayer.CutscenePriority.Max, 0, 0, 0);
+                    ScreenPlayer.CutsceneLock(Main.LocalPlayer, NPC, ScreenPlayer.CutscenePriority.Max, 0, 0, 0);
                     switch (TimerRand)
                     {
                         case 0:
                             Terraria.Graphics.Effects.Filters.Scene["MoR:FogOverlay"]?.GetShader().UseOpacity(1).UseIntensity(TimerRand2).UseColor(Color.Black).UseImage(ModContent.Request<Texture2D>("Redemption/Effects/Vignette", AssetRequestMode.ImmediateLoad).Value);
-                            player.ManageSpecialBiomeVisuals("MoR:FogOverlay", true);
-                            player.RedemptionScreen().customZoom = TimerRand2 + 1;
-                            player.RedemptionScreen().Rumble(10, (int)TimerRand2 * 3);
+                            Main.LocalPlayer.ManageSpecialBiomeVisuals("MoR:FogOverlay", true);
+                            Main.LocalPlayer.RedemptionScreen().customZoom = TimerRand2 + 1;
+                            Main.LocalPlayer.RedemptionScreen().Rumble(10, (int)TimerRand2 * 3);
 
                             Vector2 eyePos = NPC.Center - new Vector2(-2 * NPC.spriteDirection, 18);
                             if (AITimer++ == 0)
@@ -417,9 +438,9 @@ namespace Redemption.NPCs.Bosses.ADD
                             break;
                         case 1:
                             Terraria.Graphics.Effects.Filters.Scene["MoR:FogOverlay"]?.GetShader().UseOpacity(1).UseIntensity(TimerRand2).UseColor(Color.Black).UseImage(ModContent.Request<Texture2D>("Redemption/Effects/Vignette", AssetRequestMode.ImmediateLoad).Value);
-                            player.ManageSpecialBiomeVisuals("MoR:FogOverlay", true);
-                            player.RedemptionScreen().customZoom = TimerRand2 + 1;
-                            player.RedemptionScreen().Rumble(10, (int)AITimer / 50);
+                            Main.LocalPlayer.ManageSpecialBiomeVisuals("MoR:FogOverlay", true);
+                            Main.LocalPlayer.RedemptionScreen().customZoom = TimerRand2 + 1;
+                            Main.LocalPlayer.RedemptionScreen().Rumble(10, (int)AITimer / 50);
 
                             Main.rainTime = 3600;
                             Main.raining = true;
@@ -440,10 +461,12 @@ namespace Redemption.NPCs.Bosses.ADD
                             }
                             if (AITimer == 50)
                                 Main.BlackFadeIn = 255;
+                            
                             if (AITimer >= 50)
                             {
                                 if (Main.BlackFadeIn >= 0)
                                     Main.BlackFadeIn += 20;
+
                                 TimerRand2 -= 0.004f;
                                 godrayFade += 0.01f;
                                 if (NPC.life < NPC.lifeMax - 500)

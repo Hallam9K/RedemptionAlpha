@@ -103,14 +103,14 @@ namespace Redemption.NPCs.Friendly.TownNPCs
 
         public override bool CheckDead()
         {
-            RedeWorld.zephosDownedTimer = 0;
+            if (Main.netMode != NetmodeID.MultiplayerClient)
+            {
+                RedeWorld.zephosDownedTimer = 0;
+                RedeWorld.SyncData();
+            }
             Main.NewText(Language.GetTextValue("Mods.Redemption.DialogueBox.Zephos.Unconscious"), Color.Red.R, Color.Red.G, Color.Red.B);
             NPC.SetDefaults(ModContent.NPCType<ZephosUnconscious>());
             NPC.life = 1;
-
-            if (Main.netMode == NetmodeID.Server)
-                NetMessage.SendData(MessageID.WorldData);
-
             return false;
         }
 

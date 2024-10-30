@@ -57,7 +57,7 @@ namespace Redemption.Globals
         }
         public static void DrawDustImage(Vector2 position, int dustType, float size, string imagePath, float dustSize = 1f, bool noGravity = true, float rot = 0.34f)
         {
-            if (Main.netMode != NetmodeID.Server)
+            if (!Main.dedServ)
             {
                 float rotation = Main.rand.NextFloat(0 - rot, rot);
                 Texture2D glyphTexture = ModContent.Request<Texture2D>(imagePath, AssetRequestMode.ImmediateLoad).Value;

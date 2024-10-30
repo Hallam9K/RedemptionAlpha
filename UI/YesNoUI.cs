@@ -17,30 +17,42 @@ namespace Redemption.UI
 {
     public class YesNoUI : UIState
     {
+        public static YesNoUI Instance => RedeSystem.Instance.YesNoUIElement;
+
+        public static bool Visible = false;
+
+        public Player Player;
         private string YesText;
         private string NoText;
         public Vector2? YesTextOffset = null;
         public Vector2? NoTextOffset = null;
         public float YesTextScale = 1;
         public float NoTextScale = 1;
-        public void DisplayYesNoButtons(string yesText = "Yes", string noText = "No", Vector2? textOffset = null, Vector2? textOffset2 = null, float textScale = 1, float textScale2 = 1)
+
+        public static void DisplayYesNoButtons(Player player, string yesText = "Yes", string noText = "No", Vector2? textOffset = null, Vector2? textOffset2 = null, float textScale = 1, float textScale2 = 1)
         {
-            if (!Main.dedServ)
+            if (Main.dedServ)
+                return;
+
+            if (!Visible && !(player.Redemption().yesChoice || player.Redemption().noChoice))
             {
-                YesText = yesText;
-                NoText = noText;
-                YesTextOffset = textOffset;
-                NoTextOffset = textOffset2;
-                YesTextScale = textScale;
-                NoTextScale = textScale2;
+                Instance.Player = player;
+                Instance.YesText = yesText;
+                Instance.NoText = noText;
+                Instance.YesTextOffset = textOffset;
+                Instance.NoTextOffset = textOffset2;
+                Instance.YesTextScale = textScale;
+                Instance.NoTextScale = textScale2;
                 Visible = true;
             }
+
+            if (Instance.Player.whoAmI != player.whoAmI)
+                Instance.Player = player;
         }
 
         private readonly UIImage YesButtonTexture = new(ModContent.Request<Texture2D>("Redemption/UI/YesButton", AssetRequestMode.ImmediateLoad));
         private readonly UIImage NoButtonTexture = new(ModContent.Request<Texture2D>("Redemption/UI/NoButton", AssetRequestMode.ImmediateLoad));
         private readonly Asset<Texture2D> Button_MouseOverTexture = ModContent.Request<Texture2D>("Redemption/UI/YesNoButton_Hover", AssetRequestMode.ImmediateLoad);
-        public static bool Visible = false;
 
         public UIImage YesIcon;
         public UIImage NoIcon;
@@ -81,7 +93,7 @@ namespace Redemption.UI
         }
         private void YesIconHighlight_OnClick(UIMouseEvent evt, UIElement listeningElement)
         {
-            if (!Main.playerInventory)
+            if (!Main.playerInventory || Player.whoAmI != Main.myPlayer)
                 return;
 
             SoundEngine.PlaySound(SoundID.Chat);
@@ -90,7 +102,7 @@ namespace Redemption.UI
         }
         private void NoIconHighlight_OnClick(UIMouseEvent evt, UIElement listeningElement)
         {
-            if (!Main.playerInventory)
+            if (!Main.playerInventory || Player.whoAmI != Main.myPlayer)
                 return;
 
             SoundEngine.PlaySound(SoundID.Chat);
@@ -99,7 +111,7 @@ namespace Redemption.UI
         }
         public override void Draw(SpriteBatch spriteBatch)
         {
-            if (!Visible || !Main.playerInventory)
+            if (!Visible || !Main.playerInventory || Player.whoAmI != Main.myPlayer)
                 return;
             base.Draw(spriteBatch);
 
@@ -116,6 +128,23 @@ namespace Redemption.UI
 
             ChatManager.DrawColorCodedStringWithShadow(spriteBatch, font, YesText, new Vector2(115 + 65 - (textLength / 2), 258 - 35 + (int)(textHeight * .6f)) + (Vector2)YesTextOffset, Color.White, 0, Vector2.Zero, new Vector2(YesTextScale));
             ChatManager.DrawColorCodedStringWithShadow(spriteBatch, font, NoText, new Vector2(267 + 65 - (textLength2 / 2), 258 - 35 + (int)(textHeight2 * .6f)) + (Vector2)NoTextOffset, Color.White, 0, Vector2.Zero, new Vector2(NoTextScale));
+        }
+        public static void DrawChoiceText(SpriteBatch spriteBatch)
+        {
+            Player player = Instance.Player;
+            string text = Language.GetTextValue("Mods.Redemption.UI.Choice.MyPlayer");
+
+            if (player.whoAmI != Main.myPlayer && (player.Redemption().yesChoice || player.Redemption().noChoice))
+            {
+                Visible = false;
+                return;
+            }
+
+            if (player.whoAmI != Main.myPlayer)
+                text = Language.GetTextValue("Mods.Redemption.UI.Choice.OtherPlayer", player.name);
+
+            int textLength = (int)(FontAssets.DeathText.Value.MeasureString(text).X * .5f);
+            ChatManager.DrawColorCodedStringWithShadow(spriteBatch, FontAssets.DeathText.Value, text, new Vector2((Main.screenWidth / 2) - (textLength / 2), Main.screenHeight / 4), Color.White, 0, Vector2.Zero, Vector2.One * .5f);
         }
     }
 }

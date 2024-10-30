@@ -1,6 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Redemption.Tiles.Furniture.Lab;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.GameContent.UI.Elements;
 using Terraria.GameInput;
 using Terraria.ModLoader;
@@ -46,18 +48,15 @@ namespace Redemption.UI
             if (ContainsPoint(Main.MouseScreen) && !PlayerInput.IgnoreMouseInterface)
                 Main.LocalPlayer.mouseInterface = true;
 
-            if (!Main.LocalPlayer.releaseInventory)
+            if (!Main.LocalPlayer.releaseInventory || !Main.LocalPlayer.IsTileTypeInInteractionRange(ModContent.TileType<LabPhotoTile>(), TileReachCheckSettings.Simple))
                 Visible = false;
-        }
-        public override void MouseOver(UIMouseEvent evt)
-        {
         }
         public override void Draw(SpriteBatch spriteBatch)
         {
             if (!Visible)
                 return;
 
-            if(lastScreenSize != new Vector2(Main.screenWidth, Main.screenHeight))
+            if (lastScreenSize != new Vector2(Main.screenWidth, Main.screenHeight))
             {
                 lastScreenSize = new Vector2(Main.screenWidth, Main.screenHeight);
                 BgSprite.Left.Pixels = (Main.screenWidth / 2f) - 426f / 2f;

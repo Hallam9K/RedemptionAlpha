@@ -439,6 +439,22 @@ Mods: {
 
 			ArmorSetBonus: {
 				VanillaArmor: {
+					Resistance:
+						'''
+
+						{0}% increased {1} elemental resistance
+						'''
+					Damage:
+						'''
+
+						{0}% increased {1} elemental damage
+						'''
+					SolarCelestial:
+						'''
+
+						Stars from the {0} bonus burn more intensely, instead exploding in tiny bursts shortly after appearing
+						The bursts deal {1} damage based on the user's defense
+						'''
 					20Increased:
 						'''
 
@@ -7135,6 +7151,7 @@ Mods: {
 			DeadRinger: {
 				DisplayName: Dead Ringer
 				Tooltip: Right-click a soulful corpse with this artifact to call upon its spirit
+				SpiritWalkerTooltip: This item is usable from any inventory while Spirit Walking
 			}
 
 			EnergyCell: {

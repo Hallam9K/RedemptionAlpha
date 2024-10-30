@@ -230,8 +230,7 @@ namespace Redemption.NPCs.Friendly
                 if (RedeQuest.calaviaVar < 12)
                 {
                     RedeQuest.calaviaVar = 12;
-                    if (Main.netMode == NetmodeID.Server)
-                        NetMessage.SendData(MessageID.WorldData);
+                    RedeQuest.SyncData();
                 }
 
                 if (!Main.LocalPlayer.HasItem(ModContent.ItemType<CruxCardCalavia>()))

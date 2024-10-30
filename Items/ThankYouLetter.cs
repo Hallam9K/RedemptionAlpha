@@ -69,7 +69,7 @@ namespace Redemption.Items
                         tooltips.Insert(tooltipLocation + 2, new(Mod, "LetterLine", Language.GetTextValue("Mods.Redemption.SpecialTooltips.ThankYouLetter.Lab")));
                     if (!RedeBossDowned.downedSlayer)
                         tooltips.Insert(tooltipLocation + 2, new(Mod, "LetterLine", Language.GetTextValue("Mods.Redemption.SpecialTooltips.ThankYouLetter.KS3")));
-                    if (RedeWorld.slayerRep < 4)
+                    if (RedeQuest.slayerRep < 4)
                         tooltips.Insert(tooltipLocation + 2, new(Mod, "LetterLine", Language.GetTextValue("Mods.Redemption.SpecialTooltips.ThankYouLetter.KS3Quest")));
                     if (!RedeBossDowned.downedOmega1 && !RedeBossDowned.downedOmega2 && !RedeBossDowned.downedOmega3)
                         tooltips.Insert(tooltipLocation + 2, new(Mod, "LetterLine", Language.GetTextValue("Mods.Redemption.SpecialTooltips.ThankYouLetter.Omega")));

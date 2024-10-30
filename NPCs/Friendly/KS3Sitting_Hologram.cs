@@ -62,7 +62,7 @@ namespace Redemption.NPCs.Friendly
                     texture = ModContent.Request<Texture2D>(Texture + "_Planet").Value;
                     break;
                 case 3:
-                    if (RedeWorld.slayerRep >= 3)
+                    if (RedeQuest.slayerRep >= 3)
                         texture = ModContent.Request<Texture2D>(Texture + "_Ship2").Value;
                     else
                         texture = ModContent.Request<Texture2D>(Texture + "_Ship").Value;

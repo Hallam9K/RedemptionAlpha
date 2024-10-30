@@ -33,7 +33,7 @@ namespace Redemption.NPCs.Bosses.SeedOfInfection
             Player player = Main.player[(int)Projectile.ai[0]];
             Projectile.rotation += .02f;
             if (Projectile.localAI[1] > 0)
-                player.RedemptionScreen().cutscene = true;
+                Main.LocalPlayer.RedemptionScreen().cutscene = true;
             switch (Projectile.localAI[1])
             {
                 case 0:
@@ -56,7 +56,6 @@ namespace Redemption.NPCs.Bosses.SeedOfInfection
                             SoundEngine.PlaySound(SoundID.DD2_EtherianPortalOpen, Projectile.position);
                             Projectile.localAI[0] = 0;
                             Projectile.localAI[1] = 1;
-                            Projectile.netUpdate = true;
                         }
                     }
                     break;
@@ -70,7 +69,6 @@ namespace Redemption.NPCs.Bosses.SeedOfInfection
                         Projectile.scale = 1;
                         Projectile.localAI[0] = 0;
                         Projectile.localAI[1] = 2;
-                        Projectile.netUpdate = true;
                     }
                     break;
                 case 2:
@@ -83,7 +81,6 @@ namespace Redemption.NPCs.Bosses.SeedOfInfection
                     {
                         Projectile.localAI[0] = 0;
                         Projectile.localAI[1] = 3;
-                        Projectile.netUpdate = true;
                     }
                     break;
                 case 3:

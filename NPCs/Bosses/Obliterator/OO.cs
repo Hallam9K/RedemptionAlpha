@@ -409,8 +409,9 @@ namespace Redemption.NPCs.Bosses.Obliterator
 
                     NPC.LookAtEntity(player);
                     ArmRot[0] = MathHelper.PiOver2 + (NPC.spriteDirection == -1 ? 0 : MathHelper.Pi);
-                    if (AITimer++ == 0 && Main.dedServ)
-                        RedeSystem.Instance.TitleCardUIElement.DisplayTitle(Language.GetTextValue("Mods.Redemption.TitleCard.OO.Name"), 60, 90, 0.8f, 0, Color.Red, Language.GetTextValue("Mods.Redemption.TitleCard.OO.Modifier"));
+                    if (AITimer++ == 0)
+                        TitleCard.BroadcastTitle(NetworkText.FromKey("Mods.Redemption.TitleCard.OO.Name"), 60, 90, 0.8f, Color.Red, NetworkText.FromKey("Mods.Redemption.TitleCard.OO.Modifier"));
+
                     if (AITimer < 60)
                         NPC.Move(DefaultPos2, 9, 10);
                     else
@@ -976,7 +977,7 @@ namespace Redemption.NPCs.Bosses.Obliterator
                             if (AITimer == 0)
                             {
                                 SoundEngine.PlaySound(SoundID.Item14, NPC.position);
-                                RedeDraw.SpawnExplosion(NPC.Center, Color.IndianRed, DustID.LifeDrain, tex: ModContent.Request<Texture2D>("Redemption/Empty").Value);
+                                RedeDraw.SpawnExplosion(NPC.Center, Color.IndianRed, DustID.LifeDrain, tex: "Redemption/Empty");
                                 AITimer = 1;
                             }
                             else
@@ -1123,7 +1124,7 @@ namespace Redemption.NPCs.Bosses.Obliterator
                                 if (NPC.Distance(MoveVector2) < 100 || AITimer >= 20)
                                 {
                                     SoundEngine.PlaySound(SoundID.Item14, NPC.position);
-                                    RedeDraw.SpawnExplosion(NPC.Center, Color.IndianRed, DustID.LifeDrain, tex: Request<Texture2D>("Redemption/Empty").Value);
+                                    RedeDraw.SpawnExplosion(NPC.Center, Color.IndianRed, DustID.LifeDrain, tex: "Redemption/Empty");
                                     AITimer = 200;
                                     NPC.netUpdate = true;
                                 }
@@ -1283,7 +1284,7 @@ namespace Redemption.NPCs.Bosses.Obliterator
                             if (AITimer == 0)
                             {
                                 SoundEngine.PlaySound(SoundID.Item14, NPC.position);
-                                RedeDraw.SpawnExplosion(NPC.Center, Color.IndianRed, DustID.LifeDrain, tex: Request<Texture2D>("Redemption/Empty").Value);
+                                RedeDraw.SpawnExplosion(NPC.Center, Color.IndianRed, DustID.LifeDrain, tex: "Redemption/Empty");
                                 NPC.velocity *= 0f;
                                 AITimer = 1;
                                 NPC.netUpdate = true;
@@ -1381,7 +1382,7 @@ namespace Redemption.NPCs.Bosses.Obliterator
                                 if (AITimer == 450)
                                 {
                                     SoundEngine.PlaySound(SoundID.Item14, NPC.position);
-                                    RedeDraw.SpawnExplosion(NPC.Center, Color.IndianRed, DustID.LifeDrain, tex: Request<Texture2D>("Redemption/Empty").Value);
+                                    RedeDraw.SpawnExplosion(NPC.Center, Color.IndianRed, DustID.LifeDrain, tex: "Redemption/Empty");
                                     if (!Main.dedServ)
                                     {
                                         if (!RedeBossDowned.downedOmega3)
@@ -1443,7 +1444,7 @@ namespace Redemption.NPCs.Bosses.Obliterator
                     break;
                 case "d":
                     SoundEngine.PlaySound(SoundID.Item14, NPC.position);
-                    RedeDraw.SpawnExplosion(NPC.Center, Color.IndianRed, DustID.LifeDrain, tex: Request<Texture2D>("Redemption/Empty").Value);
+                    RedeDraw.SpawnExplosion(NPC.Center, Color.IndianRed, DustID.LifeDrain, tex: "Redemption/Empty");
                     break;
                 case "e":
                     OverheatOverlay = true;

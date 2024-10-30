@@ -176,8 +176,7 @@ namespace Redemption.NPCs.Friendly.TownNPCs
                             if (Main.netMode != NetmodeID.MultiplayerClient)
                             {
                                 RedeQuest.wayfarerVars[0] = 2;
-                                if (Main.netMode == NetmodeID.Server)
-                                    NetMessage.SendData(MessageID.WorldData);
+                                RedeQuest.SyncData();
                             }
                         }
                     }

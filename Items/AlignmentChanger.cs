@@ -1,8 +1,8 @@
-using Terraria;
-using Terraria.ModLoader;
-using Terraria.ID;
-using Redemption.Globals;
 using Microsoft.Xna.Framework;
+using Redemption.Globals;
+using Terraria;
+using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace Redemption.Items
 {
@@ -28,15 +28,13 @@ namespace Redemption.Items
         public override bool AltFunctionUse(Player player) => true;
         public override bool? UseItem(Player player)
         {
-            if (player.altFunctionUse == 2)
-                RedeWorld.alignment -= 1;
-            else
-                RedeWorld.alignment += 1;
-
-            CombatText.NewText(player.Hitbox, Color.DarkGoldenrod, RedeWorld.alignment, true, false);
-
-            if (Main.netMode == NetmodeID.Server)
-                NetMessage.SendData(MessageID.WorldData);
+            if (player.whoAmI == Main.myPlayer)
+            {
+                if (player.altFunctionUse == 2)
+                    RedeWorld.SetAlignment(RedeWorld.Alignment - 1, Color.DarkGoldenrod);
+                else
+                    RedeWorld.SetAlignment(RedeWorld.Alignment + 1, Color.DarkGoldenrod);
+            }
             return true;
         }
     }

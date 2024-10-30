@@ -2,16 +2,22 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Globals;
 using ReLogic.Graphics;
+using System.IO;
 using Terraria;
 using Terraria.GameContent;
+using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.UI;
 using Terraria.UI.Chat;
+using static Redemption.Globals.RedeNet;
 
 namespace Redemption.UI
 {
     public class TitleCard : UIState // Code by Seraph
     {
+        public static TitleCard Instance => RedeSystem.Instance.TitleCardUIElement;
+
         private string Text;
         private string SubtitleText = null;
         private int FadeTimer = 0;
@@ -23,20 +29,71 @@ namespace Redemption.UI
         private Color? TextColor = null;
         public static bool Showing = false;
 
-        public void DisplayTitle(string text, int displayTime = 1, int fadeTime = 120, float fontScale = 1, int font = 0, Color? altColor = null, string subtitle = null)
+        /// <summary>
+        /// Displays title card locally
+        /// </summary>
+        public static void DisplayTitle(string text, int displayTime = 1, int fadeTime = 120, float fontScale = 1, Color? altColor = null, string subtitle = null)
         {
             if (!RedeConfigClient.Instance.NoBossIntroText && !Main.dedServ)
-            {
-                Text = text;
-                SubtitleText = subtitle;
-                FadeTimer = 0;
-                DisplayTimer = 0;
-                MaxDisplayTime = displayTime;
-                MaxFadeTime = fadeTime;
-                FontScale = fontScale;
-                TextColor = altColor;
+            {  
+                Instance.Text = text;
+                Instance.SubtitleText = subtitle;
+                Instance.FadeTimer = 0;
+                Instance.DisplayTimer = 0;
+                Instance.MaxDisplayTime = displayTime;
+                Instance.MaxFadeTime = fadeTime;
+                Instance.FontScale = fontScale;
+                Instance.TextColor = altColor;
                 Showing = true;
             }
+        }
+
+        /// <summary>
+        /// Triggers title card display for all the players. Doesn't do anything on MP clients, only use on servers and SP.
+        /// </summary>
+        public static void BroadcastTitle(NetworkText text, int displayTime = 1, int fadeTime = 120, float fontScale = 1, Color? altColor = null, NetworkText subtitle = null)
+        {
+            if(Main.netMode == NetmodeID.Server)
+            {
+                ModPacket packet = Redemption.Instance.GetPacket();
+                packet.Write((byte)ModMessageType.TitleCardFromServer);
+                text.Serialize(packet);
+                packet.Write((ushort)displayTime);
+                packet.Write((ushort)fadeTime);
+                packet.Write(fontScale);
+
+                packet.Write(altColor.HasValue);
+                if (altColor.HasValue) packet.Write(altColor.Value.PackedValue);
+
+                packet.Write(subtitle != null);
+                if (subtitle is not null) subtitle.Serialize(packet);
+
+                packet.Send();
+            }
+            else if(Main.netMode == NetmodeID.SinglePlayer)
+            {
+                DisplayTitle(text.ToString(), displayTime, fadeTime, fontScale, altColor, subtitle?.ToString());
+            }
+        }
+
+        public static void ReceiveTitleCardFromServer(BinaryReader reader, int sender)
+        {
+            if (Main.netMode != NetmodeID.MultiplayerClient)
+                return;
+
+            string text = NetworkText.Deserialize(reader).ToString();
+            int displayTime = reader.ReadUInt16();
+            int fadeTime = reader.ReadUInt16();
+            float fontScale = reader.ReadSingle();
+
+            Color? altColor = null;
+            if (reader.ReadBoolean()) altColor = new() { PackedValue = reader.ReadUInt32() };
+
+            string subtitle = null;
+            if (reader.ReadBoolean()) subtitle = NetworkText.Deserialize(reader).ToString();
+
+            if (Main.netMode == NetmodeID.MultiplayerClient)
+                DisplayTitle(text, displayTime, fadeTime, fontScale, altColor, subtitle);
         }
 
         public void HandleTimer()
@@ -59,6 +116,7 @@ namespace Redemption.UI
                 }
             }
         }
+
         public override void Draw(SpriteBatch spriteBatch)
         {
             if (!Showing)

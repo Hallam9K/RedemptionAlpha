@@ -28,17 +28,15 @@ namespace Redemption.NPCs.Bosses.SeedOfInfection
         private bool rotSwitch;
         public override void AI()
         {
-            Player player = Main.player[Projectile.owner];
-            ScreenPlayer modPlayer = player.RedemptionScreen();
             if (Projectile.localAI[0]++ == 0)
             {
                 if (!Main.dedServ)
                     RedeSystem.Instance.DialogueUIElement.DisplayDialogue(Language.GetTextValue("Mods.Redemption.Cutscene.SoI"), 120, 30, 0.8f, null, 1f, Color.Green);
 
-                modPlayer.Rumble(180, 3);
+                Main.LocalPlayer.RedemptionScreen().Rumble(180, 3);
             }
 
-            if (Projectile.localAI[0] % 10 == 0 && Main.myPlayer == player.whoAmI)
+            if (Projectile.localAI[0] % 10 == 0 && Main.netMode != NetmodeID.MultiplayerClient)
             {
                 Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, Vector2.Zero, ModContent.ProjectileType<StrangePortal2>(), 0, 0, Projectile.owner, rotSwitch ? 0 : 1);
                 rotSwitch = !rotSwitch;

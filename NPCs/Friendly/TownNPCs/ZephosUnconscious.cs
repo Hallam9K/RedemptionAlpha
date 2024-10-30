@@ -82,7 +82,11 @@ namespace Redemption.NPCs.Friendly.TownNPCs
             }
             if (RedeWorld.zephosDownedTimer >= 43200)
             {
-                RedeWorld.zephosDownedTimer = 0;
+                if (Main.netMode != NetmodeID.MultiplayerClient)
+                {
+                    RedeWorld.zephosDownedTimer = 0;
+                    RedeWorld.SyncData();
+                }
 
                 if (Main.netMode == NetmodeID.Server)
                     NetMessage.SendData(MessageID.WorldData);
@@ -119,9 +123,7 @@ namespace Redemption.NPCs.Friendly.TownNPCs
 
                     SoundEngine.PlaySound(SoundID.Item3, NPC.position);
                     RedeWorld.zephosDownedTimer = 43200;
-
-                    if (Main.netMode == NetmodeID.Server)
-                        NetMessage.SendData(MessageID.WorldData);
+                    RedeWorld.SyncData();
 
                     Main.npcChatText = PotionChat();
                 }

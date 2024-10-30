@@ -101,14 +101,14 @@ namespace Redemption.NPCs.Friendly.TownNPCs
 
         public override bool CheckDead()
         {
-            RedeWorld.daerelDownedTimer = 0;
+            if (Main.netMode != NetmodeID.MultiplayerClient)
+            {
+                RedeWorld.daerelDownedTimer = 0;
+                RedeWorld.SyncData();
+            }
             Main.NewText(Language.GetTextValue("Mods.Redemption.DialogueBox.Daerel.Unconscious"), Color.Red.R, Color.Red.G, Color.Red.B);
             NPC.SetDefaults(ModContent.NPCType<DaerelUnconscious>());
             NPC.life = 1;
-
-            if (Main.netMode == NetmodeID.Server)
-                NetMessage.SendData(MessageID.WorldData);
-
             return false;
         }
 
@@ -227,15 +227,13 @@ namespace Redemption.NPCs.Friendly.TownNPCs
                         {
                             Main.npcChatText = Language.GetTextValue("Mods.Redemption.Dialogue.Daerel.IntroDialogue2");
                             RedeQuest.wayfarerVars[0] = 4;
-                            if (Main.netMode == NetmodeID.Server)
-                                NetMessage.SendData(MessageID.WorldData);
+                            RedeWorld.SyncData();
                         }
                         else
                         {
                             Main.npcChatText = Language.GetTextValue("Mods.Redemption.Dialogue.Daerel.IntroDialogue3");
                             RedeQuest.wayfarerVars[0] = 3;
-                            if (Main.netMode == NetmodeID.Server)
-                                NetMessage.SendData(MessageID.WorldData);
+                            RedeWorld.SyncData();
                         }
                         break;
                     case 3:
@@ -243,8 +241,7 @@ namespace Redemption.NPCs.Friendly.TownNPCs
                         {
                             Main.npcChatText = Language.GetTextValue("Mods.Redemption.Dialogue.Daerel.IntroDialogue4");
                             RedeQuest.wayfarerVars[0] = 4;
-                            if (Main.netMode == NetmodeID.Server)
-                                NetMessage.SendData(MessageID.WorldData);
+                            RedeWorld.SyncData();
                         }
                         break;
                 }

@@ -208,26 +208,15 @@ namespace Redemption.NPCs.Bosses.KSIII
                 if (zephos >= 0)
                     Main.npc[zephos].GetGlobalNPC<ExclaimMarkNPC>().exclaimationMark[3] = false;
 
-                RedeWorld.alignment -= NPC.ai[0] == 11 ? 0 : 2;
-                for (int p = 0; p < Main.maxPlayers; p++)
-                {
-                    Player player = Main.player[p];
-                    if (!player.active)
-                        continue;
+                if (NPC.ai[0] == 11)
+                    RedeWorld.Alignment += 0;
+                else
+                    RedeWorld.Alignment -= 2;
 
-                    CombatText.NewText(player.getRect(), Color.Gold, NPC.ai[0] == 11 ? "+0" : "-2", true, false);
-
-                    if (!RedeWorld.alignmentGiven)
-                        continue;
-
-                    if (!Main.dedServ)
-                    {
-                        if (AIState is ActionState.Spared)
-                            RedeSystem.Instance.ChaliceUIElement.DisplayDialogue(Language.GetTextValue("Mods.Redemption.UI.Chalice.KS3Spared"), 240, 30, 0, Color.DarkGoldenrod);
-                        else
-                            RedeSystem.Instance.ChaliceUIElement.DisplayDialogue(Language.GetTextValue("Mods.Redemption.UI.Chalice.KS3Defeat"), 240, 30, 0, Color.DarkGoldenrod);
-                    }
-                }
+                if (AIState is ActionState.Spared)
+                    ChaliceAlignmentUI.BroadcastDialogue(NetworkText.FromKey("Mods.Redemption.UI.Chalice.KS3Spared"), 240, 30, 0, Color.DarkGoldenrod);
+                else
+                    ChaliceAlignmentUI.BroadcastDialogue(NetworkText.FromKey("Mods.Redemption.UI.Chalice.KS3Defeat"), 240, 30, 0, Color.DarkGoldenrod);
             }
             NPC.SetEventFlagCleared(ref RedeBossDowned.downedSlayer, -1);
         }
@@ -362,7 +351,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                                     line1 = Language.GetTextValue("Mods.Redemption.Cutscene.KS3.Intro.DroneBreak");
                                 else
                                 {
-                                    if (RedeWorld.alignment >= 0)
+                                    if (RedeWorld.Alignment >= 0)
                                     {
                                         if (player.IsFullTBot())
                                             line1 = Language.GetTextValue("Mods.Redemption.Cutscene.KS3.Intro.DroneIfRobot");
@@ -386,7 +375,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                                     line2 = Language.GetTextValue("Mods.Redemption.Cutscene.KS3.Intro.Start");
                                 else
                                 {
-                                    if (RedeWorld.alignment >= 0)
+                                    if (RedeWorld.Alignment >= 0)
                                     {
                                         line2 = Language.GetTextValue("Mods.Redemption.Cutscene.KS3.Intro.StartGood");
                                         if (player.Redemption().slayerStarRating >= 6)
@@ -422,8 +411,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                         }
                         if (AITimer >= 5060)
                         {
-                            if (!Main.dedServ)
-                                RedeSystem.Instance.TitleCardUIElement.DisplayTitle(Language.GetTextValue("Mods.Redemption.TitleCard.KS3.Name"), 60, 90, 0.8f, 0, Color.Cyan, Language.GetTextValue("Mods.Redemption.TitleCard.KS3.Modifier"));
+                            TitleCard.BroadcastTitle(NetworkText.FromKey("Mods.Redemption.TitleCard.KS3.Name"), 60, 90, 0.8f, Color.Cyan, NetworkText.FromKey("Mods.Redemption.TitleCard.KS3.Modifier"));
                             ShootPos = new Vector2(Main.rand.Next(300, 400) * NPC.RightOfDir(player), Main.rand.Next(-60, 60));
                             if (RedeBossDowned.slayerDeath < 3 && Main.netMode != NetmodeID.MultiplayerClient)
                             {
@@ -485,8 +473,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                         }
                         if (AITimer >= 5060)
                         {
-                            if (!Main.dedServ)
-                                RedeSystem.Instance.TitleCardUIElement.DisplayTitle(Language.GetTextValue("Mods.Redemption.TitleCard.KS3.Name"), 60, 90, 0.8f, 0, Color.Cyan, Language.GetTextValue("Mods.Redemption.TitleCard.KS3.Modifier"));
+                            TitleCard.BroadcastTitle(NetworkText.FromKey("Mods.Redemption.TitleCard.KS3.Name"), 60, 90, 0.8f, Color.Cyan, NetworkText.FromKey("Mods.Redemption.TitleCard.KS3.Modifier"));
                             NPC.dontTakeDamage = false;
                             ShootPos = new Vector2(Main.rand.Next(300, 400) * NPC.RightOfDir(player), Main.rand.Next(-60, 60));
                             NPC.Shoot(NPC.Center, ModContent.ProjectileType<KS3_Shield>(), 0, Vector2.Zero, NPC.whoAmI);
@@ -2215,11 +2202,8 @@ namespace Redemption.NPCs.Bosses.KSIII
                         }
                         if (AITimer > 5000)
                         {
-                            if (RedeWorld.alignmentGiven && !Main.dedServ && !RedeBossDowned.downedSlayer)
-                                RedeSystem.Instance.ChaliceUIElement.DisplayDialogue(Language.GetTextValue("Mods.Redemption.UI.Chalice.KS3Choice"), 180, 30, 0, Color.DarkGoldenrod);
-
-                            player.Redemption().yesChoice = false;
-                            player.Redemption().noChoice = false;
+                            if (!RedeBossDowned.downedSlayer && Main.netMode != NetmodeID.MultiplayerClient)
+                                ChaliceAlignmentUI.BroadcastDialogue(NetworkText.FromKey("Mods.Redemption.UI.Chalice.KS3Choice"), 180, 30, 0, Color.DarkGoldenrod);
 
                             player.Redemption().yesChoice = false;
                             player.Redemption().noChoice = false;
@@ -2240,10 +2224,8 @@ namespace Redemption.NPCs.Bosses.KSIII
                     if (!Main.dedServ)
                         Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/silence");
 
-                    if (!Main.dedServ && !YesNoUI.Visible)
-                        RedeSystem.Instance.YesNoUIElement.DisplayYesNoButtons(Language.GetTextValue("Mods.Redemption.GenericTerms.Choice.CallDraw"), Language.GetTextValue("Mods.Redemption.GenericTerms.Choice.Continue"), new Vector2(0, 28), new Vector2(0, 28), .6f, .6f);
+                    YesNoUI.DisplayYesNoButtons(player, Language.GetTextValue("Mods.Redemption.GenericTerms.Choice.CallDraw"), Language.GetTextValue("Mods.Redemption.GenericTerms.Choice.Continue"), new Vector2(0, 28), new Vector2(0, 28), .6f, .6f);
                     if (player.Redemption().yesChoice)
-
                     {
                         if (ChaliceAlignmentUI.Visible)
                             ChaliceAlignmentUI.Visible = false;
@@ -2254,7 +2236,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                             if (Main.netMode == NetmodeID.Server)
                                 NetMessage.SendData(MessageID.WorldData);
                         }
-                        YesNoUI.Visible = false;
+
                         NPC.dontTakeDamage = true;
                         AITimer = 0;
                         AIState = ActionState.Spared;
@@ -2266,7 +2248,7 @@ namespace Redemption.NPCs.Bosses.KSIII
                     {
                         if (!Main.dedServ)
                             ChaliceAlignmentUI.Visible = false;
-                        YesNoUI.Visible = false;
+
                         AITimer = 0;
                         AIState = ActionState.Attacked;
                         NPC.netUpdate = true;
@@ -2362,6 +2344,8 @@ namespace Redemption.NPCs.Bosses.KSIII
                         NPC.HitSound = null;
 
                         NPC.dontTakeDamage = false;
+                        NPC.netUpdate = true;
+
                         if (RedeBossDowned.slayerDeath < 7 && Main.netMode != NetmodeID.MultiplayerClient)
                         {
                             RedeBossDowned.slayerDeath = 7;
@@ -2369,10 +2353,8 @@ namespace Redemption.NPCs.Bosses.KSIII
                                 NetMessage.SendData(MessageID.WorldData);
                         }
 
-                        player.ApplyDamageToNPC(NPC, 9999, 0, 0, false);
-                        NPC.netUpdate = true;
-                        if (Main.netMode == NetmodeID.Server && NPC.whoAmI < Main.maxNPCs)
-                            NetMessage.SendData(MessageID.SyncNPC, number: NPC.whoAmI);
+                        if (Main.netMode != NetmodeID.MultiplayerClient)
+                            NPC.StrikeInstantKill();
                     }
                     #endregion
                     break;

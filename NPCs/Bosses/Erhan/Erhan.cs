@@ -178,7 +178,7 @@ namespace Redemption.NPCs.Bosses.Erhan
 
         public override void OnKill()
         {
-            if (!Spared && RedeBossDowned.erhanDeath < 3 && Main.netMode != NetmodeID.MultiplayerClient)
+            if (!Spared && RedeBossDowned.erhanDeath < 3)
             {
                 RedeBossDowned.erhanDeath = 3;
                 if (Main.netMode == NetmodeID.Server)
@@ -188,22 +188,8 @@ namespace Redemption.NPCs.Bosses.Erhan
             if (!RedeBossDowned.downedErhan)
             {
                 string fight = Spared ? Language.GetTextValue("Mods.Redemption.GenericTerms.Words.Fighting") : Language.GetTextValue("Mods.Redemption.GenericTerms.Words.Slaying");
-                RedeWorld.alignment -= Spared ? 1 : 3;
-                for (int p = 0; p < Main.maxPlayers; p++)
-                {
-                    Player player = Main.player[p];
-                    if (!player.active)
-                        continue;
-
-                    CombatText.NewText(player.getRect(), Color.Gold, Spared ? "-1" : "-3", true, false);
-
-                    if (!RedeWorld.alignmentGiven)
-                        continue;
-
-                    if (!Main.dedServ)
-                        RedeSystem.Instance.ChaliceUIElement.DisplayDialogue(Language.GetTextValue("Mods.Redemption.UI.Chalice.DemonScroll2", fight), 240, 30, 0, Color.DarkGoldenrod);
-
-                }
+                RedeWorld.Alignment -= Spared ? 1 : 3;
+                ChaliceAlignmentUI.BroadcastDialogue(NetworkText.FromKey("Mods.Redemption.UI.Chalice.DemonScroll2", fight), 240, 30, 0, Color.DarkGoldenrod);
             }
             NPC.SetEventFlagCleared(ref RedeBossDowned.downedErhan, -1);
         }
@@ -356,11 +342,11 @@ namespace Redemption.NPCs.Bosses.Erhan
                                 }
                                 if (AITimer >= 2000)
                                 {
+                                    TitleCard.BroadcastTitle(NetworkText.FromKey("Mods.Redemption.TitleCard.Erhan.Name"), 60, 90, 0.8f, Color.Goldenrod, NetworkText.FromKey("Mods.Redemption.TitleCard.Erhan.Modifier"));
+
                                     if (!Main.dedServ)
-                                    {
-                                        RedeSystem.Instance.TitleCardUIElement.DisplayTitle(Language.GetTextValue("Mods.Redemption.TitleCard.Erhan.Name"), 60, 90, 0.8f, 0, Color.Goldenrod, Language.GetTextValue("Mods.Redemption.TitleCard.Erhan.Modifier"));
                                         Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/BossErhan");
-                                    }
+
                                     if (RedeBossDowned.erhanDeath == 0 && Main.netMode != NetmodeID.MultiplayerClient)
                                     {
                                         RedeBossDowned.erhanDeath = 1;
@@ -397,12 +383,10 @@ namespace Redemption.NPCs.Bosses.Erhan
 
                                 if (AITimer >= 2000)
                                 {
-                                    if (!Main.dedServ)
-                                    {
-                                        RedeSystem.Instance.TitleCardUIElement.DisplayTitle(Language.GetTextValue("Mods.Redemption.TitleCard.Erhan.Name"), 60, 90, 0.8f, 0, Color.Goldenrod, Language.GetTextValue("Mods.Redemption.TitleCard.Erhan.Modifier"));
+                                    TitleCard.BroadcastTitle(NetworkText.FromKey("Mods.Redemption.TitleCard.Erhan.Name"), 60, 90, 0.8f, Color.Goldenrod, NetworkText.FromKey("Mods.Redemption.TitleCard.Erhan.Modifier"));
 
+                                    if (!Main.dedServ)
                                         Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/BossErhan");
-                                    }
 
                                     TimerRand = 0;
                                     AITimer = 0;
@@ -1190,8 +1174,8 @@ namespace Redemption.NPCs.Bosses.Erhan
                     SoundEngine.PlaySound(SoundID.Item68, NPC.position);
                     Main.LocalPlayer.RedemptionScreen().ScreenShakeOrigin = NPC.Center;
                     Main.LocalPlayer.RedemptionScreen().ScreenShakeIntensity += 14;
-                    RedeDraw.SpawnExplosion(NPC.Center, Color.White, 6, 0, scale: 2, noDust: true, tex: ModContent.Request<Texture2D>("Redemption/Textures/HolyGlow3").Value);
-                    RedeDraw.SpawnExplosion(NPC.Center, Color.White, 6, 0, scale: 3, noDust: true, tex: ModContent.Request<Texture2D>("Redemption/Textures/HolyGlow2").Value);
+                    RedeDraw.SpawnExplosion(NPC.Center, Color.White, 6, 0, scale: 2, noDust: true, tex: "Redemption/Textures/HolyGlow3");
+                    RedeDraw.SpawnExplosion(NPC.Center, Color.White, 6, 0, scale: 3, noDust: true, tex: "Redemption/Textures/HolyGlow2");
                     NPC.active = false;
                     break;
                 case 5:
@@ -1200,6 +1184,12 @@ namespace Redemption.NPCs.Bosses.Erhan
             }
         }
 
+        public override bool CanBeHitByNPC(NPC attacker)
+        {
+            if (AIState is ActionState.Death)
+                return false;
+            return base.CanBeHitByNPC(attacker);
+        }
         public override bool? CanBeHitByProjectile(Projectile projectile)
         {
             if (AIState is ActionState.Death && projectile.type == ProjectileID.FallingStar)

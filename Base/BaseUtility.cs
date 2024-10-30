@@ -1,8 +1,8 @@
+using log4net;
+using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using log4net;
-using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.Audio;
 using Terraria.Chat;
@@ -66,7 +66,7 @@ namespace Redemption.Base
 
         public static void OpenChestUI(int i, int j)
         {
-            Player player = Main.player[Main.myPlayer];
+            Player player = Main.LocalPlayer;
             Tile tile = Framing.GetTileSafely(i, j);
             Main.mouseRightRelease = false;
             int left = i;
@@ -575,8 +575,8 @@ namespace Redemption.Base
             int distance = maxDistance - minDistance;
             if (!circular)
             {
-                float newPosX = pos.X + (Main.rand.NextBool(2)? -(minDistance + rand.Next(distance)) : minDistance + rand.Next(distance));
-                float newPosY = pos.Y + (Main.rand.NextBool(2)? -(minDistance + rand.Next(distance)) : minDistance + rand.Next(distance));
+                float newPosX = pos.X + (Main.rand.NextBool(2) ? -(minDistance + rand.Next(distance)) : minDistance + rand.Next(distance));
+                float newPosY = pos.Y + (Main.rand.NextBool(2) ? -(minDistance + rand.Next(distance)) : minDistance + rand.Next(distance));
                 return new Vector2(newPosX, newPosY);
             }
 

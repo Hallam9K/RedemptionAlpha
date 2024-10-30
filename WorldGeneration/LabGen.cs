@@ -44,12 +44,9 @@ namespace Redemption.WorldGeneration
                 [Color.Black] = -1
             };
 
-            Texture2D tex = ModContent.Request<Texture2D>("Redemption/WorldGeneration/AbandonedLabClear", AssetRequestMode.ImmediateLoad).Value;
-            GenUtils.InvokeOnMainThread(() =>
-            {
-                TexGen gen = BaseWorldGenTex.GetTexGenerator(tex, colorToTile);
-                gen.Generate(origin.X, origin.Y, true, true);
-            });
+            TexGenData tex = TexGen.GetTextureForGen("Redemption/WorldGeneration/AbandonedLabClear");
+            TexGen gen = TexGen.GetTexGenerator(tex, colorToTile);
+            gen.Generate(origin.X, origin.Y, true, false);
             return true;
         }
     }
@@ -105,14 +102,11 @@ namespace Redemption.WorldGeneration
                 [Color.Black] = -1
             };
 
-            Texture2D tex = ModContent.Request<Texture2D>("Redemption/WorldGeneration/AbandonedLab", AssetRequestMode.ImmediateLoad).Value;
-            Texture2D texWalls = ModContent.Request<Texture2D>("Redemption/WorldGeneration/AbandonedLabWalls", AssetRequestMode.ImmediateLoad).Value;
-            Texture2D texLiquids = ModContent.Request<Texture2D>("Redemption/WorldGeneration/AbandonedLabLiquids", AssetRequestMode.ImmediateLoad).Value;
-            GenUtils.InvokeOnMainThread(() =>
-            {
-                TexGen gen = BaseWorldGenTex.GetTexGenerator(tex, colorToTile, texWalls, colorToWall, texLiquids);
-                gen.Generate(origin.X, origin.Y, true, true);
-            });
+            TexGenData tex = TexGen.GetTextureForGen("Redemption/WorldGeneration/AbandonedLab");
+            TexGenData texWalls = TexGen.GetTextureForGen("Redemption/WorldGeneration/AbandonedLabWalls");
+            TexGenData texLiquids = TexGen.GetTextureForGen("Redemption/WorldGeneration/AbandonedLabLiquids");
+            TexGen gen = TexGen.GetTexGenerator(tex, colorToTile, texWalls, colorToWall, texLiquids);
+            gen.Generate(origin.X, origin.Y, true, false);
 
             // Doors
             GenUtils.ObjectPlace(origin.X + 135, origin.Y + 19, (ushort)ModContent.TileType<LabDoorClosed>());

@@ -116,19 +116,19 @@ namespace Redemption.NPCs.Lab.Volt
                                 for (int i = 0; i < 40; i++)
                                     Dust.NewDust(NPC.BottomLeft, Main.rand.Next(NPC.width), 1, DustID.Smoke, 0, 0, 0, default, 2f);
 
-                                Dictionary<Color, int> colorToTile = new()
+                                if (Main.netMode != NetmodeID.MultiplayerClient)
                                 {
-                                    [new Color(150, 150, 150)] = -2,
-                                    [Color.Black] = -1
-                                };
+                                    Dictionary<Color, int> colorToTile = new()
+                                    {
+                                        [new Color(150, 150, 150)] = -2,
+                                        [Color.Black] = -1
+                                    };
 
-                                Texture2D tex = ModContent.Request<Texture2D>("Redemption/WorldGeneration/VoltDestroy", AssetRequestMode.ImmediateLoad).Value;
-                                Point origin = RedeGen.LabVector.ToPoint();
-                                GenUtils.InvokeOnMainThread(() =>
-                                {
-                                    TexGen gen = BaseWorldGenTex.GetTexGenerator(tex, colorToTile);
-                                    gen.Generate(origin.X, origin.Y, true, true);
-                                });
+                                    TexGenData tex = TexGen.GetTextureForGen("Redemption/WorldGeneration/VoltDestroy");
+                                    Point origin = RedeGen.LabVector.ToPoint();
+                                    TexGen gen = TexGen.GetTexGenerator(tex, colorToTile);
+                                    gen.Generate(origin.X, origin.Y, false, true);
+                                }
 
                                 State = 3;
                                 AITimer = 0;

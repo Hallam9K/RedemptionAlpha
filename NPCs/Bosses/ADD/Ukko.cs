@@ -28,6 +28,7 @@ using Terraria.Localization;
 using Redemption.Globals.NPC;
 using Redemption.NPCs.Friendly.TownNPCs;
 using Redemption.Items.Weapons.PostML.Summon;
+using Redemption.UI;
 
 namespace Redemption.NPCs.Bosses.ADD
 {
@@ -214,21 +215,8 @@ namespace Redemption.NPCs.Bosses.ADD
                 if (fallen >= 0)
                     Main.npc[fallen].GetGlobalNPC<ExclaimMarkNPC>().exclaimationMark[4] = false;
 
-                for (int p = 0; p < Main.maxPlayers; p++)
-                {
-                    Player player = Main.player[p];
-                    if (!player.active)
-                        continue;
-
-                    CombatText.NewText(player.getRect(), Color.Gray, "+0", true, false);
-
-                    if (!RedeWorld.alignmentGiven)
-                        continue;
-
-                    if (!Main.dedServ)
-                        RedeSystem.Instance.ChaliceUIElement.DisplayDialogue(Language.GetTextValue("Mods.Redemption.UI.Chalice.ADDDefeat"), 300, 30, 0, Color.DarkGoldenrod);
-
-                }
+                RedeWorld.Alignment += 0;
+                ChaliceAlignmentUI.BroadcastDialogue(NetworkText.FromKey("Mods.Redemption.UI.Chalice.ADDDefeat"), 300, 30, 0, Color.DarkGoldenrod);
             }
             if (!NPC.AnyNPCs(ModContent.NPCType<Akka>()) && !RedeBossDowned.downedADD && RedeBossDowned.downedGGBossFirst == 0)
                 RedeBossDowned.downedGGBossFirst = 3;
@@ -302,8 +290,7 @@ namespace Redemption.NPCs.Bosses.ADD
             switch (AIState)
             {
                 case ActionState.Start:
-                    if (!Main.dedServ)
-                        RedeSystem.Instance.TitleCardUIElement.DisplayTitle(Language.GetTextValue("Mods.Redemption.TitleCard.Ukko.Name"), 60, 90, 0.8f, 0, Color.LightGoldenrodYellow, Language.GetTextValue("Mods.Redemption.TitleCard.Ukko.Modifier"));
+                    TitleCard.BroadcastTitle(NetworkText.FromKey("Mods.Redemption.TitleCard.Ukko.Name"), 60, 90, 0.8f, Color.LightGoldenrodYellow, NetworkText.FromKey("Mods.Redemption.TitleCard.Ukko.Modifier"));
 
                     NPC.Shoot(new Vector2(NPC.Center.X - (118 * 16) - 10, NPC.Center.Y + 8), ModContent.ProjectileType<UkkoBarrier>(), 0, Vector2.Zero, 0, 1);
                     NPC.Shoot(new Vector2(NPC.Center.X + (118 * 16) + 26, NPC.Center.Y + 8), ModContent.ProjectileType<UkkoBarrier>(), 0, Vector2.Zero, 0, -1);

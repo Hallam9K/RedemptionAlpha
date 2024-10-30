@@ -1,21 +1,21 @@
-using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
-using Terraria.GameContent.UI.Elements;
+using Microsoft.Xna.Framework.Graphics;
 using Terraria;
-using Terraria.UI;
-using Terraria.ID;
 using Terraria.Audio;
-using Terraria.GameContent;
 using Terraria.DataStructures;
+using Terraria.GameContent;
+using Terraria.GameContent.UI.Elements;
+using Terraria.ID;
+using Terraria.UI;
 
 namespace Redemption.UI
 {
     public class TradePanelUI : UIPanel
     {
-        private Item inputItem;
-        private Item outputItem;
-        private int inputStack;
-        private int outputStack;
+        private readonly Item inputItem;
+        private readonly Item outputItem;
+        private readonly int inputStack;
+        private readonly int outputStack;
         public TradePanelUI(Item inputItem, Item outputItem, int inputStack = 1, int outputStack = 1)
         {
             this.inputItem = inputItem;

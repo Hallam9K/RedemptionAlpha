@@ -49,8 +49,7 @@ namespace Redemption.NPCs.Lab
                 default:
                     if (NPC.ai[1]++ == 0)
                     {
-                        if (!Main.dedServ)
-                            RedeSystem.Instance.TitleCardUIElement.DisplayTitle(Language.GetTextValue("Mods.Redemption.TitleCard.Stage3Scientist.Name"), 60, 90, 0.8f, 0, Color.Green, Language.GetTextValue("Mods.Redemption.TitleCard.Stage3Scientist.Modifier"));
+                        TitleCard.BroadcastTitle(NetworkText.FromKey("Mods.Redemption.TitleCard.Stage3Scientist.Name"), 60, 90, 0.8f, Color.Green, NetworkText.FromKey("Mods.Redemption.TitleCard.Stage3Scientist.Modifier"));
                         if (!Main.dedServ)
                             SoundEngine.PlaySound(CustomSounds.SpookyNoise, NPC.position);
                     }

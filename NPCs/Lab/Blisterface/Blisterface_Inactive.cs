@@ -7,6 +7,7 @@ using Terraria.Audio;
 using Redemption.Base;
 using Redemption.Biomes;
 using Terraria.Localization;
+using Redemption.UI;
 
 namespace Redemption.NPCs.Lab.Blisterface
 {
@@ -59,11 +60,11 @@ namespace Redemption.NPCs.Lab.Blisterface
             Rectangle activeZone = new((int)(RedeGen.LabVector.X + 204) * 16, (int)(RedeGen.LabVector.Y + 168) * 16, 7 * 16, 20 * 16);
             if (player.Hitbox.Intersects(activeZone) && !player.dead && player.active)
             {
+                TitleCard.BroadcastTitle(NetworkText.FromKey("Mods.Redemption.TitleCard.Blisterface.Name"), 60, 90, 0.8f, Color.Green, NetworkText.FromKey("Mods.Redemption.TitleCard.Blisterface.Modifier"));
+
                 if (!Main.dedServ)
-                {
-                    RedeSystem.Instance.TitleCardUIElement.DisplayTitle(Language.GetTextValue("Mods.Redemption.TitleCard.Blisterface.Name"), 60, 90, 0.8f, 0, Color.Green, Language.GetTextValue("Mods.Redemption.TitleCard.Blisterface.Modifier"));
                     SoundEngine.PlaySound(CustomSounds.SpookyNoise, NPC.position);
-                }
+
                 NPC.SetDefaults(ModContent.NPCType<Blisterface>());
                 NPC.netUpdate = true;
             }

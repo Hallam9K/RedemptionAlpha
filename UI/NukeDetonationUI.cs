@@ -1,15 +1,16 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Redemption.Globals;
+using Redemption.Tiles.Furniture.Misc;
 using Terraria;
+using Terraria.Audio;
+using Terraria.DataStructures;
+using Terraria.GameContent.UI.Elements;
+using Terraria.GameInput;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.UI;
-using Terraria.GameContent.UI.Elements;
-using Terraria.Audio;
-using Redemption.Globals;
-using Terraria.Localization;
-using Terraria.Chat;
-using Terraria.GameInput;
 
 namespace Redemption.UI
 {
@@ -72,7 +73,6 @@ namespace Redemption.UI
             closeButton.Top.Set(8, 0f);
 
             closeButton.OnLeftClick += new MouseEvent(CloseMenu);
-            //closeButton.MouseOver 
             BgSprite.Append(closeButton);
 
             Append(BgSprite);
@@ -106,7 +106,7 @@ namespace Redemption.UI
                         if (Main.tile[tileToWarhead.X + x, tileToWarhead.Y + y] != null && Main.tile[tileToWarhead.X + x, tileToWarhead.Y + y].HasTile)
                         {
                             if (Main.tileDungeon[type] || type == 88 || type == 21 || type == 26 || type == 107 || type == 108 || type == 111 || type == 226 || type == 237 || type == 221 || type == 222 || type == 223 || type == 211)
-                                fail = true; 
+                                fail = true;
                             if (!TileLoader.CanExplode(tileToWarhead.X + x, tileToWarhead.Y + y))
                                 fail = true;
                         }
@@ -115,10 +115,7 @@ namespace Redemption.UI
                 if (fail)
                 {
                     string status = "The bomb is too close to unexplodable tiles";
-                    if (Main.netMode == NetmodeID.Server)
-                        ChatHelper.BroadcastChatMessage(NetworkText.FromLiteral(status), Color.White);
-                    else if (Main.netMode == NetmodeID.SinglePlayer)
-                        Main.NewText(Language.GetTextValue(status), Color.White);
+                    Main.NewText(Language.GetTextValue(status), Color.White);
                     return;
                 }
                 if (ButtonState < 2 && Vector2.Distance(RedeWorld.nukeGroundZero, new Vector2(Main.spawnTileX * 16, Main.spawnTileY * 16)) > (Main.maxTilesX / 8 * 16) && RedeWorld.nukeGroundZero.Y < (Main.worldSurface * 16f))
@@ -128,10 +125,7 @@ namespace Redemption.UI
                 else if (ButtonState < 2)
                 {
                     string status = "The bomb must be activated on the surface and in the far reaches of the world";
-                    if (Main.netMode == NetmodeID.Server)
-                        ChatHelper.BroadcastChatMessage(NetworkText.FromLiteral(status), Color.White);
-                    else if (Main.netMode == NetmodeID.SinglePlayer)
-                        Main.NewText(Language.GetTextValue(status), Color.White);
+                    Main.NewText(Language.GetTextValue(status), Color.White);
                 }
             }
         }
@@ -143,7 +137,6 @@ namespace Redemption.UI
 
                 Visible = false;
             }
-
         }
         public override void Update(GameTime gameTime)
         {
@@ -151,7 +144,7 @@ namespace Redemption.UI
             if (ContainsPoint(Main.MouseScreen) && !PlayerInput.IgnoreMouseInterface)
                 Main.LocalPlayer.mouseInterface = true;
 
-            if (ButtonState != 2 && !Main.LocalPlayer.releaseInventory)
+            if (ButtonState != 2 && (!Main.LocalPlayer.releaseInventory || !Main.LocalPlayer.IsTileTypeInInteractionRange(ModContent.TileType<NuclearWarheadTile>(), TileReachCheckSettings.Simple)))
                 Visible = false;
 
             if (!Visible)
@@ -179,6 +172,7 @@ namespace Redemption.UI
                     ButtonState = 3;
                     Timer = 0;
                     RedeWorld.nukeCountdownActive = true;
+                    RedeWorld.SyncData();
                     Visible = false;
                 }
             }

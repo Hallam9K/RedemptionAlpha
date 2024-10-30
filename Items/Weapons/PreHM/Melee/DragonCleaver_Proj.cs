@@ -160,7 +160,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
                 if (target.velocity.Length() == 0 || !Projectile.Hitbox.Intersects(target.Hitbox) || !target.HasElement(ElementID.Fire) || target.ProjBlockBlacklist(true))
                     continue;
 
-                RedeDraw.SpawnExplosion(target.Center, Color.Orange, shakeAmount: 0, scale: .5f, noDust: true, rot: RedeHelper.RandomRotation(), tex: ModContent.Request<Texture2D>("Redemption/Textures/SwordClash").Value);
+                RedeDraw.SpawnExplosion(target.Center, Color.Orange, shakeAmount: 0, scale: .5f, noDust: true, rot: RedeHelper.RandomRotation(), tex: "Redemption/Textures/SwordClash");
 
                 if (Player.HeldItem.ModItem is DragonCleaver host)
                 {

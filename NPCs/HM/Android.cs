@@ -166,8 +166,7 @@ namespace Redemption.NPCs.HM
                     if (Variant != 12 && Main.netMode != NetmodeID.MultiplayerClient)
                     {
                         RedeWorld.slayerMessageGiven = true;
-                        if (Main.netMode == NetmodeID.Server)
-                            NetMessage.SendData(MessageID.WorldData);
+                        RedeWorld.SyncData();
                     }
                 }
                 return;
@@ -555,13 +554,12 @@ namespace Redemption.NPCs.HM
         {
             if (Variant == 10)
                 RedeHelper.SpawnNPC(NPC.GetSource_FromAI(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<SlayerSpawner>(), 1);
-            else if (Variant == 11 && RedeWorld.slayerRep > 2)
+            else if (Variant == 11 && RedeQuest.slayerRep > 2)
                 RedeHelper.SpawnNPC(NPC.GetSource_FromAI(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<SlayerSpawner>(), 2);
-            if (Variant == 2 && Main.netMode != NetmodeID.MultiplayerClient)
+            if (Variant == 2)
             {
                 RedeWorld.apidroidKilled = true;
-                if (Main.netMode == NetmodeID.Server)
-                    NetMessage.SendData(MessageID.WorldData);
+                RedeWorld.SyncData();
             }
         }
         public override void ModifyNPCLoot(NPCLoot npcLoot)

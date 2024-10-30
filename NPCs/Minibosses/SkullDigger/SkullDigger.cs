@@ -123,22 +123,8 @@ namespace Redemption.NPCs.Minibosses.SkullDigger
 
             if (!RedeBossDowned.downedSkullDigger)
             {
-                RedeWorld.alignment--;
-                for (int p = 0; p < Main.maxPlayers; p++)
-                {
-                    Player player = Main.player[p];
-                    if (!player.active)
-                        continue;
-
-                    CombatText.NewText(player.getRect(), Color.Gold, "-1", true, false);
-
-                    if (!RedeWorld.alignmentGiven)
-                        continue;
-
-                    if (!Main.dedServ)
-                        RedeSystem.Instance.ChaliceUIElement.DisplayDialogue(Language.GetTextValue("Mods.Redemption.UI.Chalice.SkullDiggerDefeat"), 300, 30, 0, Color.DarkGoldenrod);
-
-                }
+                RedeWorld.Alignment--;
+                ChaliceAlignmentUI.BroadcastDialogue(NetworkText.FromKey("Mods.Redemption.UI.Chalice.SkullDiggerDefeat"), 300, 30, 0, Color.DarkGoldenrod);
             }
             NPC.SetEventFlagCleared(ref RedeBossDowned.downedSkullDigger, -1);
         }
@@ -247,12 +233,11 @@ namespace Redemption.NPCs.Minibosses.SkullDigger
                         case 0:
                             if (AITimer++ == 0)
                             {
+                                TitleCard.BroadcastTitle(NetworkText.FromKey("Mods.Redemption.TitleCard.SkullDigger.Name"), 60, 90, 0.8f, Color.LightCyan, NetworkText.FromKey("Mods.Redemption.TitleCard.SkullDigger.Modifier"));
+
                                 if (!Main.dedServ)
-                                {
-                                    RedeSystem.Instance.TitleCardUIElement.DisplayTitle(Language.GetTextValue("Mods.Redemption.TitleCard.SkullDigger.Name"), 60, 90, 0.8f, 0, Color.LightCyan, Language.GetTextValue("Mods.Redemption.TitleCard.SkullDigger.Modifier"));
                                     SoundEngine.PlaySound(CustomSounds.SpookyNoise, NPC.position);
-                                }
-                                if (!NPC.AnyNPCs(ModContent.NPCType<Keeper>()))
+                                if (!NPC.AnyNPCs(ModContent.NPCType<Keeper>()) && Main.netMode != NetmodeID.MultiplayerClient)
                                 {
                                     NPC.position = new Vector2(Main.rand.NextBool(2) ? player.Center.X - 180 : player.Center.X + 180, player.Center.Y);
                                 }

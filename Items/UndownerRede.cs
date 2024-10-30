@@ -27,6 +27,9 @@ namespace Redemption.Items
 
         public override bool? UseItem(Player player)
         {
+            if (Main.netMode == NetmodeID.MultiplayerClient)
+                return false;
+
             RedeBossDowned.downedThorn = false;
             RedeBossDowned.downedKeeper = false;
             RedeBossDowned.downedSkullDigger = false;

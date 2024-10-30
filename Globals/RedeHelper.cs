@@ -20,6 +20,9 @@ using Redemption.Buffs.Debuffs;
 using Redemption.Buffs.NPCBuffs;
 using Redemption.Globals.World;
 using Redemption.NPCs.Friendly.TownNPCs;
+using ReLogic.Content;
+using System.Threading;
+using Terraria.Localization;
 
 namespace Redemption.Globals
 {
@@ -761,7 +764,6 @@ namespace Redemption.Globals
             if (Main.netMode != NetmodeID.MultiplayerClient)
             {
                 int index = Terraria.NPC.NewNPC(source, posX, posY, npcType, 0, ai0, ai1, ai2, ai3);
-                Main.npc[index].netUpdate = true;
             }
         }
         public static void NPCRadiusDamage(int radius, Entity hitter, int damage, float knockBack, int immuneTime = 20)
@@ -843,6 +845,60 @@ namespace Redemption.Globals
 
                 int hitDirection = target.RightOfDir(hitter);
                 BaseAI.DamagePlayer(target, damage, knockBack, hitDirection, hitter);
+            }
+        }
+        public static void InvokeOnMainThread(Action action)
+        {
+            if (!AssetRepository.IsMainThread)
+            {
+                ManualResetEvent evt = new(false);
+
+                Main.QueueMainThreadAction(() =>
+                {
+                    action();
+                    evt.Set();
+                });
+
+                evt.WaitOne();
+            }
+            else
+                action();
+        }
+
+        /// <summary>
+        /// <br> Displays floating text above all players. </br>
+        /// <br> Can be called on clients or servers, you must make sure that only one of them calls it.</br>
+        /// <br> <paramref name="dramatic"/> and <paramref name="dot"/> are NOT synced if called on server. </br>
+        /// </summary>
+        public static void FloatingTextAllPlayers(string text, Color textColor, bool dramatic = true, bool dot = false)
+        {
+            if (Main.netMode == NetmodeID.Server)
+            {
+                for (int i = 0; i < Main.maxPlayers; i++)
+                {
+                    Terraria.Player player = Main.player[i];
+
+                    if (!player.active || player.dead)
+                        continue;
+
+                    NetMessage.SendData(MessageID.CombatTextString, text: NetworkText.FromLiteral(text), number: (int)textColor.PackedValue, number2: player.position.X, number3: player.position.Y);
+                }
+            }
+            else if (Main.netMode == NetmodeID.MultiplayerClient)
+            {
+                for (int i = 0; i < Main.maxPlayers; i++)
+                {
+                    Terraria.Player player = Main.player[i];
+
+                    if (!player.active || player.dead)
+                        continue;
+
+                    CombatText.NewText(player.getRect(), textColor, text, dramatic, dot);
+                }
+            }
+            else if (Main.netMode == NetmodeID.SinglePlayer)
+            {
+                CombatText.NewText(Main.LocalPlayer.getRect(), textColor, text, dramatic, dot);
             }
         }
     }

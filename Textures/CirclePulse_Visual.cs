@@ -1,8 +1,9 @@
-using Terraria;
-using Terraria.ModLoader;
-using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using System.IO;
+using Terraria;
 using Terraria.GameContent;
+using Terraria.ModLoader;
 
 namespace Redemption.Textures
 {
@@ -13,6 +14,22 @@ namespace Redemption.Textures
         {
             // DisplayName.SetDefault("Pulse");
         }
+
+        public Entity EntityTarget;
+
+        public ref float Scale => ref Projectile.ai[0];
+        public Color Color;
+ 
+        public override void SendExtraAI(BinaryWriter writer)
+        {
+            writer.Write(Color.PackedValue);
+        }
+
+        public override void ReceiveExtraAI(BinaryReader reader)
+        {
+            Color.PackedValue = reader.ReadUInt32();
+        }
+ 
         public override void SetDefaults()
         {
             Projectile.width = 600;
@@ -24,13 +41,16 @@ namespace Redemption.Textures
             Projectile.tileCollide = false;
             Projectile.alpha = 255;
         }
-        public Entity entityTarget;
         public override void AI()
         {
-            if (entityTarget != null)
+            // This is only valid on the owner, requires sync
+            if (EntityTarget != null)
             {
-                if (entityTarget.active)
-                    Projectile.Center = entityTarget.Center;
+                if (EntityTarget.active)
+                {
+                    Projectile.Center = EntityTarget.Center;
+                    Projectile.netUpdate = true;
+                }
             }
 
             Projectile.timeLeft = 10;
@@ -51,7 +71,6 @@ namespace Redemption.Textures
                 Projectile.Kill();
             }
         }
-        public Color color;
         public override bool PreDraw(ref Color lightColor)
         {
             Texture2D texture = TextureAssets.Projectile[Projectile.type].Value;
@@ -59,10 +78,10 @@ namespace Redemption.Textures
             Rectangle rect = new(0, 0, texture.Width, texture.Height);
             Vector2 origin = new(texture.Width / 2f, texture.Height / 2f);
             Main.spriteBatch.End();
-            Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
-            Main.EntitySpriteDraw(texture, position, new Rectangle?(rect), Projectile.GetAlpha(color), Projectile.rotation, origin, Projectile.scale * Projectile.ai[0], SpriteEffects.None, 0);
+            Main.spriteBatch.BeginAdditive();
+            Main.EntitySpriteDraw(texture, position, new Rectangle?(rect), Projectile.GetAlpha(Color), Projectile.rotation, origin, Projectile.scale * Scale, SpriteEffects.None, 0);
             Main.spriteBatch.End();
-            Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+            Main.spriteBatch.BeginDefault();
             return false;
         }
     }

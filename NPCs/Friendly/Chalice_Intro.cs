@@ -1,15 +1,23 @@
-using Terraria;
-using Terraria.ID;
 using Microsoft.Xna.Framework;
-using Terraria.ModLoader;
-using Redemption.Globals;
-using Terraria.Audio;
-using Redemption.BaseExtension;
 using Microsoft.Xna.Framework.Graphics;
-using ReLogic.Content;
+using Redemption.BaseExtension;
+using Redemption.Buffs.Debuffs;
+using Redemption.Effects;
+using Redemption.Globals;
+using Redemption.Items.Usable;
 using Redemption.UI;
+using Redemption.WorldGeneration;
+using ReLogic.Content;
+using System.Collections.Generic;
+using System.Linq;
+using Terraria;
+using Terraria.Audio;
+using Terraria.Chat;
 using Terraria.GameContent;
+using Terraria.GameContent.Events;
+using Terraria.ID;
 using Terraria.Localization;
+using Terraria.ModLoader;
 
 namespace Redemption.NPCs.Friendly
 {
@@ -22,7 +30,7 @@ namespace Redemption.NPCs.Friendly
         {
             // DisplayName.SetDefault("Chalice of Alignment");
             Main.npcFrameCount[Type] = 4;
-            NPCID.Sets.NPCBestiaryDrawModifiers value = new(0) { Hide = true };
+            NPCID.Sets.NPCBestiaryDrawModifiers value = new() { Hide = true };
             NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, value);
         }
 
@@ -45,12 +53,30 @@ namespace Redemption.NPCs.Friendly
         public float extraAlpha2;
         public float rotSpeed;
 
+        private bool spawned = false;
+        private bool skipIntro = false;
+        private List<Player> askedPlayers;
+
         public override void AI()
         {
+            if (!spawned)
+            {
+                if (!Main.dedServ)
+                    SoundEngine.PlaySound(CustomSounds.Choir with { Pitch = -.9f }, NPC.position);
+
+                if (Main.netMode != NetmodeID.MultiplayerClient)
+                    askedPlayers = Main.player.Where(p => p.active && !p.dead).ToList();
+
+                Main.LocalPlayer.Redemption().yesChoice = false;
+                Main.LocalPlayer.Redemption().noChoice = false;
+                ChaliceAlignmentUI.DisplayDialogue(Language.GetTextValue("Mods.Redemption.Dialogue.Chalice.Dialogue1"), 260, 30, 0, Color.DarkGoldenrod);
+                NPC.velocity.Y = -5;
+                spawned = true;
+            }
+
             if (NPC.target < 0 || NPC.target == 255 || Main.player[NPC.target].dead || !Main.player[NPC.target].active)
                 NPC.TargetClosest();
 
-            Player player = Main.player[NPC.target];
             Lighting.AddLight(NPC.Center, Color.Lime.ToVector3() * 0.6f * Main.essScale);
 
             if (NPC.alpha > 0)
@@ -58,41 +84,45 @@ namespace Redemption.NPCs.Friendly
             switch (TimerRand)
             {
                 case 0:
-                    if (AITimer++ == 0)
-                    {
-                        if (!Main.dedServ)
-                            SoundEngine.PlaySound(CustomSounds.Choir with { Pitch = -.9f }, NPC.position);
-                        player.Redemption().yesChoice = false;
-                        player.Redemption().noChoice = false;
-                        RedeSystem.Instance.ChaliceUIElement.DisplayDialogue(Language.GetTextValue("Mods.Redemption.Dialogue.Chalice.Dialogue1"), 260, 30, 0, Color.DarkGoldenrod);
-                        NPC.velocity.Y = -5;
-                    }
                     NPC.velocity.Y *= 0.97f;
-                    if (AITimer >= 320)
+                    if (AITimer++ >= 320)
                     {
-                        RedeSystem.Instance.ChaliceUIElement.DisplayDialogue(Language.GetTextValue("Mods.Redemption.Dialogue.Chalice.Dialogue2"), 800, 30, 0, Color.DarkGoldenrod);
-                        if (!Main.dedServ)
-                            RedeSystem.Instance.YesNoUIElement.DisplayYesNoButtons(Language.GetTextValue("Mods.Redemption.GenericTerms.Choice.Yes"), Language.GetTextValue("Mods.Redemption.GenericTerms.Choice.No"), new Vector2(0, 28), new Vector2(0, 28), .6f, .6f);
+                        ChaliceAlignmentUI.DisplayDialogue(Language.GetTextValue("Mods.Redemption.Dialogue.Chalice.Dialogue2"), 800, 30, 0, Color.DarkGoldenrod);
+                        YesNoUI.DisplayYesNoButtons(Main.LocalPlayer, Language.GetTextValue("Mods.Redemption.GenericTerms.Choice.Yes"), Language.GetTextValue("Mods.Redemption.GenericTerms.Choice.No"), new Vector2(0, 28), new Vector2(0, 28), .6f, .6f);
                         AITimer = 0;
                         TimerRand = 1;
-                        NPC.netUpdate = true;
                     }
                     break;
                 case 1:
-                    if (player.Redemption().yesChoice)
+                    if (Main.netMode != NetmodeID.Server)
                     {
-                        if (ChaliceAlignmentUI.Visible)
-                            ChaliceAlignmentUI.Visible = false;
-                        rotSpeed = 0.005f;
-                        AITimer = 0;
-                        TimerRand = 2;
+                        if (Main.LocalPlayer.Redemption().noChoice)
+                        {
+                            if (!skipIntro)
+                            {
+                                ChaliceAlignmentUI.DisplayDialogue(Language.GetTextValue("Mods.Redemption.Dialogue.Chalice.Dialogue3"), 60, 30, 0, Color.DarkGoldenrod);
+                                skipIntro = true;
+                            }
+                        }
                     }
-                    else if (player.Redemption().noChoice)
+                    if (Main.netMode != NetmodeID.MultiplayerClient)
                     {
-                        if (ChaliceAlignmentUI.Visible)
-                            ChaliceAlignmentUI.Visible = false;
-                        AITimer = 0;
-                        TimerRand = 3;
+                        if (askedPlayers.All(p => p.Redemption().noChoice || p.Redemption().yesChoice))
+                        {
+                            if (askedPlayers.Any(p => p.Redemption().yesChoice))
+                            {
+                                rotSpeed = 0.005f;
+                                AITimer = 0;
+                                TimerRand = 2;
+                                NPC.netUpdate = true;
+                            }
+                            else
+                            {
+                                AITimer = 0;
+                                TimerRand = 3;
+                                NPC.netUpdate = true;
+                            }
+                        }
                     }
                     break;
                 case 2:
@@ -111,16 +141,20 @@ namespace Redemption.NPCs.Friendly
                     {
                         extraPos[i] = NPC.Center + Vector2.One.RotatedBy(MathHelper.ToRadians((360 / 3 * i) + NPC.localAI[0])) * NPC.localAI[1];
                     }
-                    if (AITimer++ == 30 + 60)
-                        RedeSystem.Instance.ChaliceUIElement.DisplayDialogue(Language.GetTextValue("Mods.Redemption.Dialogue.Chalice.Dialogue4"), 300, 20, 0, Color.DarkGoldenrod);
-                    if (AITimer == 340 + 60)
-                        RedeSystem.Instance.ChaliceUIElement.DisplayDialogue(Language.GetTextValue("Mods.Redemption.Dialogue.Chalice.Dialogue5"), 400, 20, 0, Color.Green);
-                    if (AITimer == 780 + 60)
-                        RedeSystem.Instance.ChaliceUIElement.DisplayDialogue(Language.GetTextValue("Mods.Redemption.Dialogue.Chalice.Dialogue6"), 400, 20, 0, Color.Red);
-                    if (AITimer == 1220 + 60)
-                        RedeSystem.Instance.ChaliceUIElement.DisplayDialogue(Language.GetTextValue("Mods.Redemption.Dialogue.Chalice.Dialogue7"), 300, 20, 0, Color.DarkGoldenrod);
-                    if (AITimer == 1560 + 60)
-                        RedeSystem.Instance.ChaliceUIElement.DisplayDialogue(Language.GetTextValue("Mods.Redemption.Dialogue.Chalice.Dialogue8"), 300, 20, 0, Color.DarkGoldenrod);
+                    AITimer++;
+                    if (!skipIntro)
+                    {
+                        if (AITimer == 30 + 60)
+                            ChaliceAlignmentUI.DisplayDialogue(Language.GetTextValue("Mods.Redemption.Dialogue.Chalice.Dialogue4"), 300, 20, 0, Color.DarkGoldenrod);
+                        if (AITimer == 340 + 60)
+                            ChaliceAlignmentUI.DisplayDialogue(Language.GetTextValue("Mods.Redemption.Dialogue.Chalice.Dialogue5"), 400, 20, 0, Color.Green);
+                        if (AITimer == 780 + 60)
+                            ChaliceAlignmentUI.DisplayDialogue(Language.GetTextValue("Mods.Redemption.Dialogue.Chalice.Dialogue6"), 400, 20, 0, Color.Red);
+                        if (AITimer == 1220 + 60)
+                            ChaliceAlignmentUI.DisplayDialogue(Language.GetTextValue("Mods.Redemption.Dialogue.Chalice.Dialogue7"), 300, 20, 0, Color.DarkGoldenrod);
+                        if (AITimer == 1560 + 60)
+                            ChaliceAlignmentUI.DisplayDialogue(Language.GetTextValue("Mods.Redemption.Dialogue.Chalice.Dialogue8"), 300, 20, 0, Color.DarkGoldenrod);
+                    }
                     if (AITimer >= 1900 + 60)
                     {
                         if (extraAlpha2 < 1)
@@ -128,10 +162,13 @@ namespace Redemption.NPCs.Friendly
 
                         extraPos[3] = NPC.Center + new Vector2(0, -170);
                     }
-                    if (AITimer == 1900 + 120)
-                        RedeSystem.Instance.ChaliceUIElement.DisplayDialogue(Language.GetTextValue("Mods.Redemption.Dialogue.Chalice.Dialogue9"), 300, 20, 0, Color.Goldenrod);
-                    if (AITimer == 2240 + 120)
-                        RedeSystem.Instance.ChaliceUIElement.DisplayDialogue(Language.GetTextValue("Mods.Redemption.Dialogue.Chalice.Dialogue10"), 180, 20, 0, Color.DarkGoldenrod);
+                    if (!skipIntro)
+                    {
+                        if (AITimer == 1900 + 120)
+                            ChaliceAlignmentUI.DisplayDialogue(Language.GetTextValue("Mods.Redemption.Dialogue.Chalice.Dialogue9"), 300, 20, 0, Color.Goldenrod);
+                        if (AITimer == 2240 + 120)
+                            ChaliceAlignmentUI.DisplayDialogue(Language.GetTextValue("Mods.Redemption.Dialogue.Chalice.Dialogue10"), 180, 20, 0, Color.DarkGoldenrod);
+                    }
                     if (AITimer >= 2240 + 120)
                     {
                         extraAlpha -= 0.04f;
@@ -139,43 +176,37 @@ namespace Redemption.NPCs.Friendly
                     }
                     if (AITimer >= 2460 + 120)
                     {
-                        SoundEngine.PlaySound(SoundID.Item68, NPC.position);
-                        RedeDraw.SpawnExplosion(NPC.Center, Color.White, scale: 1, noDust: true, tex: ModContent.Request<Texture2D>("Redemption/Textures/HolyGlow2").Value);
-
-                        if (Main.netMode != NetmodeID.MultiplayerClient)
-                        {
-                            RedeWorld.alignmentGiven = true;
-                            if (Main.netMode == NetmodeID.Server)
-                                NetMessage.SendData(MessageID.WorldData);
-                        }
-
-                        NPC.active = false;
+                        Despawn();
                     }
                     break;
                 case 3:
-                    if (AITimer++ == 2)
-                        RedeSystem.Instance.ChaliceUIElement.DisplayDialogue(Language.GetTextValue("Mods.Redemption.Dialogue.Chalice.Dialogue3"), 60, 30, 0, Color.DarkGoldenrod);
-                    if (AITimer >= 62)
+                    if (AITimer++ >= 62)
                     {
-                        SoundEngine.PlaySound(SoundID.Item68, NPC.position);
-                        RedeDraw.SpawnExplosion(NPC.Center, Color.White, scale: 1, noDust: true, tex: ModContent.Request<Texture2D>("Redemption/Textures/HolyGlow2").Value);
-
-                        if (Main.netMode != NetmodeID.MultiplayerClient)
-                        {
-                            RedeWorld.alignmentGiven = true;
-                            if (Main.netMode == NetmodeID.Server)
-                                NetMessage.SendData(MessageID.WorldData);
-                        }
-
-                        NPC.active = false;
+                        Despawn();
                     }
                     break;
             }
-            if (RedeConfigClient.Instance.CameraLockDisable)
+            if (RedeConfigClient.Instance.CameraLockDisable || skipIntro)
                 return;
-            ScreenPlayer.CutsceneLock(player, NPC, ScreenPlayer.CutscenePriority.Max, 0, 0, 0);
+            ScreenPlayer.CutsceneLock(Main.LocalPlayer, NPC, ScreenPlayer.CutscenePriority.Max, 0, 0, 0);
             Terraria.Graphics.Effects.Filters.Scene["MoR:FogOverlay"]?.GetShader().UseOpacity(2f).UseIntensity(1f).UseColor(Color.Black).UseImage(ModContent.Request<Texture2D>("Redemption/Effects/Vignette", AssetRequestMode.ImmediateLoad).Value);
-            player.ManageSpecialBiomeVisuals("MoR:FogOverlay", true);
+            Main.LocalPlayer.ManageSpecialBiomeVisuals("MoR:FogOverlay", true);
+        }
+
+        private void Despawn()
+        {
+            SoundEngine.PlaySound(SoundID.Item68, NPC.position);
+
+            if (Main.netMode != NetmodeID.MultiplayerClient)
+            {
+                RedeDraw.SpawnExplosion(NPC.Center, Color.White, scale: 1, noDust: true, tex: "Redemption/Textures/HolyGlow2");
+
+                RedeWorld.alignmentGiven = true;
+                RedeWorld.SyncData();
+
+                NPC.active = false;
+                NetMessage.SendData(MessageID.SyncNPC, number: NPC.whoAmI);
+            }
         }
         public override void FindFrame(int frameHeight)
         {
@@ -188,12 +219,30 @@ namespace Redemption.NPCs.Friendly
             }
         }
         private float drawTimer;
+        public float flareOpacity;
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
+            if (flareOpacity > 0)
+            {
+                Main.spriteBatch.End();
+                Main.spriteBatch.BeginAdditive();
+
+                Texture2D bigFlareAni = ModContent.Request<Texture2D>("Redemption/Textures/BigFlare").Value;
+                Vector2 origin2 = new(bigFlareAni.Width / 2f, bigFlareAni.Height / 2f);
+                spriteBatch.Draw(bigFlareAni, NPC.Center - screenPos, null, Color.LightGoldenrodYellow, 0, origin2, flareOpacity, 0, 0);
+                spriteBatch.Draw(bigFlareAni, NPC.Center - screenPos, null, Color.LightGoldenrodYellow * .7f, 0, origin2, flareOpacity * 1.5f, 0, 0);
+                spriteBatch.Draw(bigFlareAni, NPC.Center - screenPos, null, Color.White * .5f, 0, origin2, flareOpacity * 2, 0, 0);
+
+                Main.spriteBatch.End();
+                Main.spriteBatch.BeginDefault();
+            }
+            if (TimerRand >= 4)
+                return false;
+
             Texture2D texture = TextureAssets.Npc[NPC.type].Value;
             Vector2 origin = NPC.frame.Size() / 2;
 
-            RedeDraw.DrawTreasureBagEffect(Main.spriteBatch, texture, ref drawTimer, NPC.Center - screenPos, NPC.frame, NPC.GetAlpha(Color.White), NPC.rotation, origin, NPC.scale, 0);
+            RedeDraw.DrawTreasureBagEffect(Main.spriteBatch, texture, ref drawTimer, NPC.Center - screenPos, NPC.frame, NPC.GetAlpha(Color.White), NPC.rotation, origin, NPC.scale);
             Main.spriteBatch.Draw(texture, NPC.Center - screenPos, NPC.frame, NPC.GetAlpha(Color.White), NPC.rotation, origin, NPC.scale, 0, 0);
 
             Main.spriteBatch.End();

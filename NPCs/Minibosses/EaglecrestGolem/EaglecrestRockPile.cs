@@ -64,7 +64,7 @@ namespace Redemption.NPCs.Minibosses.EaglecrestGolem
             if (TimerRand < 4)
                 NPC.LookAtEntity(player);
 
-            if (AITimer++ == 0)
+            if (AITimer++ == 0 && Main.netMode != NetmodeID.MultiplayerClient)
             {
                 NPC.ai[0] = Main.rand.Next(300, 1200);
                 TimerRand = Main.rand.NextFloat(-0.4f, 0.4f);
@@ -76,15 +76,22 @@ namespace Redemption.NPCs.Minibosses.EaglecrestGolem
                 switch (TimerRand)
                 {
                     default:
-                        if (NPC.ai[0] == 60)
+                        if (NPC.ai[0] == 60 && Main.netMode != NetmodeID.MultiplayerClient)
+                        {
                             NPC.velocity = new Vector2(Main.rand.NextFloat(1, 3) * NPC.spriteDirection, -Main.rand.NextFloat(3, 6));
+                            NPC.netUpdate = true;
+                        }
                         if (NPC.ai[0]++ <= 60)
                             NPC.velocity.X *= .96f;
                         else
                         {
                             if (BaseAI.HitTileOnSide(NPC, 3))
                             {
-                                NPC.velocity = new Vector2(Main.rand.NextFloat(2, 4) * -NPC.spriteDirection, -Main.rand.NextFloat(5, 7));
+                                if (NPC.ai[0] == 60 && Main.netMode != NetmodeID.MultiplayerClient)
+                                {
+                                    NPC.velocity = new Vector2(Main.rand.NextFloat(2, 4) * -NPC.spriteDirection, -Main.rand.NextFloat(5, 7));
+                                    NPC.netUpdate = true;
+                                }
                                 TimerRand = 2;
                             }
                         }

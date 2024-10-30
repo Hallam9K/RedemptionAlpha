@@ -91,7 +91,7 @@ namespace Redemption.NPCs.Bosses.Keeper
             {
                 Projectile.scale = 0.1f;
                 player.RedemptionScreen().Rumble(180, 3);
-                RedeSystem.Instance.DialogueUIElement.DisplayDialogue("Octavia...", 120, 30, 0.6f, null, 2, Color.DarkGray);
+                RedeSystem.Instance.DialogueUIElement?.DisplayDialogue("Octavia...", 120, 30, 0.6f, null, 2, Color.DarkGray);
             }
         }
         private float spiritOpacity;

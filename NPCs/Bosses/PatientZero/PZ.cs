@@ -177,7 +177,7 @@ namespace Redemption.NPCs.Bosses.PatientZero
         public override void ModifyHitByProjectile(Projectile projectile, ref NPC.HitModifiers modifiers)
         {
             if (projectile.type == ProjectileID.LastPrismLaser)
-                modifiers.FinalDamage /= 3;
+                modifiers.FinalDamage /= 2;
             if (projectile.type == ModContent.ProjectileType<LightOrb_Proj>())
                 modifiers.FinalDamage *= .6f;
         }
@@ -326,7 +326,7 @@ namespace Redemption.NPCs.Bosses.PatientZero
                 case ActionState.Begin:
                     if (AITimer++ >= 978 || RedeConfigClient.Instance.NoPZBuildUp || Main.musicVolume <= 0)
                     {
-                        RedeSystem.Instance.TitleCardUIElement.DisplayTitle(Language.GetTextValue("Mods.Redemption.TitleCard.PZ.Name"), 60, 90, 0.8f, 0, Color.Green, Language.GetTextValue("Mods.Redemption.TitleCard.PZ.Modifier")); AITimer = 0;
+                        TitleCard.BroadcastTitle(NetworkText.FromKey("Mods.Redemption.TitleCard.PZ.Name"), 60, 90, 0.8f, Color.Green, NetworkText.FromKey("Mods.Redemption.TitleCard.PZ.Modifier")); AITimer = 0;
                         OpenEye = true;
                         NPC.dontTakeDamage = false;
                         AIState = ActionState.LaserAttacks;
@@ -780,8 +780,14 @@ namespace Redemption.NPCs.Bosses.PatientZero
                             player.ManageSpecialBiomeVisuals("MoR:FogOverlay", true);
 
                             TimerRand *= 0.98f;
-                            NPC.rotation.SlowRotation(NPC.DirectionTo(Main.player[RedeHelper.GetNearestAlivePlayer(NPC)].Center).ToRotation(), (float)Math.PI / 90);
+
+                            int nearPlayer = RedeHelper.GetNearestAlivePlayer(NPC);
+                            if (nearPlayer >= 0)
+                                player = Main.player[nearPlayer];
+
+                            NPC.rotation.SlowRotation(NPC.DirectionTo(player.Center).ToRotation(), (float)Math.PI / 90);
                             NPC.rotation += Main.rand.NextFloat(-TimerRand, TimerRand);
+
                             if (AITimer++ >= 180)
                             {
                                 MoonlordDeathDrama.RequestLight(1f, NPC.Center);
