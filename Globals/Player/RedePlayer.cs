@@ -158,6 +158,7 @@ namespace Redemption.Globals.Player
         {
             if (SubworldSystem.Current != null)
                 return;
+
             if (RedeGen.GoldenGatewayVector.X == -1 || RedeGen.BastionVector.X == -1)
                 Main.NewText(Language.GetTextValue("Mods.Redemption.StatusMessage.Other.Warning1"), Colors.RarityRed);
             if (!LabSearch() || !AnglonPortalSearch() || !GathPortalSearch() || !HallOfHeroesSearch() || !ShipSearch())

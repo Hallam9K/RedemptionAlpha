@@ -1,0 +1,25 @@
+=== 0.8 Beta .4045 === (October Patch)
+- Added custom portrait for Keeper in Boss Checklist
+- Rewrote Tex-To-Gen code to be able to work in multiplayer and cause no lag
+- Friendly Calavia NPC can respawn at the start of day if she somehow despawns
+- Nuclear Warhead detonation instakills anything caught in the blast
+- Wasteland tile conversion happens 3x faster
+- Erhan cannot be hit by NPCs while on the ground after fight
+1575. Corrected text colors for (most) status messages to fit with vanilla's
+1659. Solar Flare armour set bonus has an additional effect, stars from the Celestial bonus don't get absorbed, instead exploding in tiny bursts shortly after appearing, the bursts deal Fire damage based on the user's defense * 2
+1726. Eaglecrest Golem, Eaglecrest Rockpile, and Ancient Gladestone Golem take extra damage to pickaxes
+1741. Fixed (some) multiplayer issues with Erhan, Keeper, Thorn, Skull Digger, World Gen, Boss Title Cards, Chalice of Alignment, World Variables, Nuclear Warhead, Visual effects, Eaglecrest Golem, Seed of Infection, and Chat Box UI (Erhan crashes the server silently though,,,,,,,,,,, so still dont try it for proper playthrough)
+1743. Chalice of Alignment will ask all players if they want an explaination of alignment, if a player says no the cutscene ends only for them
+1744. Yes and No choice UI displays for 1 player, the rest will have text saying "(Chosen Player) must make a choice"
+1759. Buffed Seed of Infection's health expert scaling from .6 -> .75
+1868. Reduced Last Prism damage reduction to Patient Zero and Ancient Deity Duo from 66% -> 50%
+2026. Added terrariums for Anti-John Snail, all Chickens, Grand Larva, Hazmat Bunny, Kabucra, Moonflare Bat, and a Jar of Flies
+2027. Corrected Lab Access Panel sprites
+2028. Added Forret as a snow critter, they can be mean though >:( (Antler Staff uses a Forret in recipe instead of Leather)
+2029. Added Moonflare Caster, skeleton enemy for nighttime Snow biome, casts a forceful spell when a target is close that pushes them back and stuns them, can also appear during a Raveyard
+2035. Fixed Broken Laboratory Door and Sewer Hole spawning enemies while game is paused
+2036. Renamed the Chernobyl yoyo to Rad Throw and resprited it
+2037. Erhan's Scorching Rays take longer to fully charge if spawned close to the player and shorter if spawned far from the player
+2044. Added DAVE painting
+2049. Corpse-Walker Priest's bolts no longer get destroyed upon hitting an undead/skeleton with full health
+===============

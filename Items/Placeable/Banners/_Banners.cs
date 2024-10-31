@@ -239,4 +239,8 @@ namespace Redemption.Items.Placeable.Banners
     {
         protected override int Tile => ModContent.TileType<BloatedFaceMonsterBannerTile>();
     }
+    public class MoonflareSkeletonBanner : BaseBannerItem
+    {
+        protected override int Tile => ModContent.TileType<MoonflareSkeletonBannerTile>();
+    }
 }

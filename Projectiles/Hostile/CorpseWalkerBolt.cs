@@ -133,11 +133,11 @@ namespace Redemption.Projectiles.Hostile
                 {
                     target.life += 3;
                     target.HealEffect(3);
+                    Projectile.Kill();
                 }
                 if (target.life > target.lifeMax)
                     target.life = target.lifeMax;
 
-                Projectile.Kill();
             }
         }
         public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers) => modifiers.FinalDamage *= 4;

@@ -99,7 +99,7 @@ namespace Redemption.NPCs.PreHM
             moveTo = reader.ReadVector2();
             FlowerType = reader.ReadByte();
             BodyType = reader.ReadByte();
-            pettingPlayer = reader.ReadByte();
+            pettingPlayer = reader.ReadInt32();
         }
         public NPC npcTarget;
         public Vector2 moveTo;

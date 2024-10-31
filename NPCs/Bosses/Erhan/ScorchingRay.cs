@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Base;
+using Redemption.BaseExtension;
 using Redemption.Dusts;
 using Redemption.Effects;
 using Redemption.Globals;
@@ -38,13 +39,19 @@ namespace Redemption.NPCs.Bosses.Erhan
             LaserEndSegmentLength = 60;
             MaxLaserLength = 1800;
             StopsOnTiles = false;
+            Projectile.localAI[2] = 80;
         }
 
-        public override bool CanHitPlayer(Player target) => AITimer >= 80;
-        public override bool? CanHitNPC(NPC target) => target.friendly && AITimer >= 80 ? null : false;
+        public override bool CanHitPlayer(Player target) => AITimer >= Projectile.localAI[2];
+        public override bool? CanHitNPC(NPC target) => target.friendly && AITimer >= Projectile.localAI[2] ? null : false;
+
         public override bool ShouldUpdatePosition() => false;
 
         public override void OnHitPlayer(Player target, Player.HurtInfo info)
+        {
+            target.AddBuff(BuffID.OnFire, 300);
+        }
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             target.AddBuff(BuffID.OnFire, 300);
         }
@@ -53,10 +60,24 @@ namespace Redemption.NPCs.Bosses.Erhan
         {
             Projectile.rotation = Projectile.velocity.ToRotation();
             #region Beginning And End Effects
-            if (AITimer == 80 && !Main.dedServ)
+
+            if (AITimer == 0 && Projectile.ai[0] == 0)
+            {
+                int playerWhoAmI = RedeHelper.GetNearestAlivePlayer(Projectile);
+                if (playerWhoAmI > -1)
+                {
+                    float distance = MathHelper.Distance(Main.player[playerWhoAmI].Center.X, Projectile.Center.X);
+                    if (distance <= 200)
+                        Projectile.localAI[2] += MathHelper.Lerp(60, 0, distance / 200);
+                    else if (distance >= 800)
+                        Projectile.localAI[2] -= MathHelper.Lerp(60, 0, (distance - 800) / 600);
+                }
+            }
+
+            if (AITimer == Projectile.localAI[2] && !Main.dedServ)
                 SoundEngine.PlaySound(CustomSounds.Bass1, Projectile.position);
 
-            if (AITimer >= 80)
+            if (AITimer >= Projectile.localAI[2])
             {
                 Projectile.alpha -= 10;
                 Projectile.alpha = (int)MathHelper.Clamp(Projectile.alpha, 0, 255);
@@ -91,7 +112,7 @@ namespace Redemption.NPCs.Bosses.Erhan
 
             ++AITimer;
 
-            if (AITimer >= 80)
+            if (AITimer >= Projectile.localAI[2])
                 CastLights(new Vector3(1f, 0.7f, 0f));
         }
         public void AdditiveCall(SpriteBatch sB, Vector2 screenPos)

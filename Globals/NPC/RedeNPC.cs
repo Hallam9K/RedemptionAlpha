@@ -46,6 +46,7 @@ using Redemption.NPCs.Friendly.TownNPCs;
 using Redemption.Items.Donator.BLT;
 using Redemption.Items.Donator.Spoopy;
 using Redemption.Items.Accessories.PostML;
+using Redemption.Items.Critters;
 
 namespace Redemption.Globals.NPC
 {
@@ -89,6 +90,8 @@ namespace Redemption.Globals.NPC
                 shop.Add<HairyCloak>();
             if (shop.NpcType == NPCID.WitchDoctor)
                 shop.Add<ErleasFlower>();
+            if (shop.NpcType == NPCID.Merchant)
+                shop.Add<DAVEPainting>(Condition.PlayerCarriesItem(ModContent.ItemType<JohnSnailItem>()));
         }
         private static bool TalkedDryad;
         public override void GetChat(Terraria.NPC npc, ref string chat)
@@ -266,11 +269,14 @@ namespace Redemption.Globals.NPC
                 }
                 if (item.HasElement(ElementID.Celestial))
                 {
+                    int type = 0;
+                    if (player.setSolar)
+                        type = 1;
                     int c = 6;
                     if (player.GetModPlayer<WaterfowlEgg_Player>().equipped)
                         c = 12;
                     if (Main.netMode != NetmodeID.MultiplayerClient && Main.rand.NextBool(c) && npc.CanBeChasedBy())
-                        Projectile.NewProjectile(npc.GetSource_OnHurt(player), npc.Center + RedeHelper.Spread(400), Vector2.Zero, ModContent.ProjectileType<CelestialStar>(), 0, 0, player.whoAmI, npc.whoAmI);
+                        Projectile.NewProjectile(npc.GetSource_OnHurt(player), npc.Center + RedeHelper.Spread(400), Vector2.Zero, ModContent.ProjectileType<CelestialStar>(), 0, 0, player.whoAmI, npc.whoAmI, type);
                 }
                 #endregion
             }
@@ -333,11 +339,14 @@ namespace Redemption.Globals.NPC
                 }
                 if (projectile.HasElement(ElementID.Celestial))
                 {
+                    int type = 0;
+                    if (Main.player[projectile.owner].setSolar)
+                        type = 1;
                     int c = 6;
                     if (Main.player[projectile.owner].GetModPlayer<WaterfowlEgg_Player>().equipped)
                         c = 12;
                     if (Main.netMode != NetmodeID.MultiplayerClient && Main.rand.NextBool(c) && npc.CanBeChasedBy())
-                        Projectile.NewProjectile(npc.GetSource_OnHurt(Main.player[projectile.owner]), npc.Center + RedeHelper.Spread(400), Vector2.Zero, ModContent.ProjectileType<CelestialStar>(), 0, 0, Main.player[projectile.owner].whoAmI, npc.whoAmI);
+                        Projectile.NewProjectile(npc.GetSource_OnHurt(Main.player[projectile.owner]), npc.Center + RedeHelper.Spread(400), Vector2.Zero, ModContent.ProjectileType<CelestialStar>(), 0, 0, projectile.owner, npc.whoAmI, type);
                 }
                 #endregion
             }
@@ -371,7 +380,7 @@ namespace Redemption.Globals.NPC
                 else if (npc.type == ModContent.NPCType<EpidotrianSkeleton>() || npc.type == ModContent.NPCType<SkeletonAssassin>() ||
                     npc.type == ModContent.NPCType<SkeletonDuelist>() || npc.type == ModContent.NPCType<SkeletonFlagbearer>() ||
                     npc.type == ModContent.NPCType<SkeletonNoble>() || npc.type == ModContent.NPCType<SkeletonWanderer>() ||
-                    npc.type == ModContent.NPCType<SkeletonWarden>() || npc.type == ModContent.NPCType<RaveyardSkeleton>())
+                    npc.type == ModContent.NPCType<SkeletonWarden>() || npc.type == ModContent.NPCType<RaveyardSkeleton>() || npc.type == ModContent.NPCType<MoonflareSkeleton>())
                     itemType = ModContent.ItemType<EpidotrianSkull>();
                 else if (npc.type is NPCID.RockGolem)
                     itemType = ItemID.RockGolemHead;
@@ -489,6 +498,7 @@ namespace Redemption.Globals.NPC
                 pool.Add(ModContent.NPCType<CavernSkeletonSpawner>(), 5);
                 pool.Add(ModContent.NPCType<SurfaceSkeletonSpawner>(), 2);
                 pool.Add(ModContent.NPCType<CorpseWalkerPriest>(), 0.5f);
+                pool.Add(ModContent.NPCType<MoonflareSkeleton>(), 0.5f);
                 pool.Add(ModContent.NPCType<JollyMadman>(), 0.02f);
             }
             if (FowlMorningWorld.FowlMorningActive && spawnInfo.Player.ZoneOverworldHeight && !spawnInfo.Player.ZoneTowerNebula && !spawnInfo.Player.ZoneTowerSolar && !spawnInfo.Player.ZoneTowerStardust && !spawnInfo.Player.ZoneTowerVortex)

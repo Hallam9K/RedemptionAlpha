@@ -37,7 +37,7 @@ namespace Redemption.Tiles.Furniture.Lab
         public override bool CanExplode(int i, int j) => false;
         public override void NearbyEffects(int i, int j, bool closer)
         {
-            if (Main.tile[i, j].TileFrameX != 0 || Main.tile[i, j].TileFrameY != 0)
+            if (Main.gamePaused || Main.tile[i, j].TileFrameX != 0 || Main.tile[i, j].TileFrameY != 0)
                 return;
             Player player = Main.LocalPlayer;
             float dist = Vector2.Distance(player.Center / 16f, new Vector2(i + 1f, j + 1f));

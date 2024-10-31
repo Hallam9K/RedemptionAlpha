@@ -19,6 +19,8 @@ namespace Redemption.Items.Weapons.HM.Melee
         public override void SetDefaults()
         {
             Item.damage = 40;
+            Item.width = 26;
+            Item.height = 36;
             Item.DamageType = DamageClass.MeleeNoSpeed;
             Item.useTime = 20;
             Item.useAnimation = 25;

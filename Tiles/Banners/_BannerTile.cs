@@ -326,4 +326,9 @@ namespace Redemption.Tiles.Banners
         protected override int NPC => ModContent.NPCType<VagrantSpirit>();
         protected override Color MapColor => Color.LightGreen;
     }
+    public class MoonflareSkeletonBannerTile : BaseBannerTile
+    {
+        protected override int NPC => ModContent.NPCType<MoonflareSkeleton>();
+        protected override Color MapColor => Color.LightGoldenrodYellow;
+    }
 }

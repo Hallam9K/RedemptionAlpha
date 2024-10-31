@@ -95,6 +95,15 @@ namespace Redemption.NPCs.PreHM
             }
         }
 
+        public override void ModifyHitByItem(Player player, Item item, ref NPC.HitModifiers modifiers)
+        {
+            if (item.pick > 0)
+            {
+                if (!Main.dedServ)
+                    SoundEngine.PlaySound(CustomSounds.StoneHit, NPC.position);
+                modifiers.FlatBonusDamage += item.pick / 2;
+            }
+        }
         public override void ModifyIncomingHit(ref NPC.HitModifiers modifiers)
         {
             if (NPC.RedemptionGuard().GuardPoints >= 0)

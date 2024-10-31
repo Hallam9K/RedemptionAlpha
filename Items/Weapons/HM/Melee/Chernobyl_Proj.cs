@@ -1,5 +1,4 @@
 using Microsoft.Xna.Framework;
-using Redemption.Base;
 using Redemption.BaseExtension;
 using Redemption.Buffs.Debuffs;
 using Redemption.Globals;
@@ -70,19 +69,7 @@ namespace Redemption.Items.Weapons.HM.Melee
             if (target.life < 0 && target.lifeMax > 5)
             {
                 Rectangle boom = new((int)Projectile.Center.X - 48, (int)Projectile.Center.Y - 48, 96, 96);
-                for (int i = 0; i < Main.maxNPCs; i++)
-                {
-                    NPC npc = Main.npc[i];
-                    if (!npc.active || !npc.CanBeChasedBy())
-                        continue;
-
-                    if (npc.immune[Projectile.whoAmI] > 0 || !npc.Hitbox.Intersects(boom))
-                        continue;
-
-                    npc.immune[Projectile.whoAmI] = 20;
-                    int hitDirection = target.RightOfDir(Projectile);
-                    BaseAI.DamageNPC(npc, Projectile.damage, Projectile.knockBack, hitDirection, Projectile, crit: Projectile.HeldItemCrit());
-                }
+                RedeHelper.NPCRadiusDamage(boom, Projectile, Projectile.damage, Projectile.knockBack);
 
                 SoundEngine.PlaySound(SoundID.Item14, target.position);
                 if (Main.netMode != NetmodeID.MultiplayerClient)
