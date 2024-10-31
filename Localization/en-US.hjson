@@ -10429,15 +10429,15 @@ Mods: {
 				DisplayName: Red Chicken Cage
 				Tooltip: ""
 			}
-			
+
 			ForretBanner: {
 				DisplayName: Forret Banner
-				Tooltip: ""
+				Tooltip: "{$CommonItemTooltip.BannerBonus}{$Mods.Redemption.NPCs.Forret.DisplayName}"
 			}
 
 			MoonflareSkeletonBanner: {
 				DisplayName: Moonflare Caster Banner
-				Tooltip: ""
+				Tooltip: "{$CommonItemTooltip.BannerBonus}{$Mods.Redemption.NPCs.MoonflareSkeleton.DisplayName}"
 			}
 
 			ForretItem: {
@@ -11139,6 +11139,7 @@ Mods: {
 			HolyHammer.DisplayName: Holy Hammer
 			Egg_Proj.DisplayName: Egg_ Proj
 			WickerManEmberExplosion_Visual.DisplayName: Wicker Man Ember Explosion_ Visual
+			MoonflareForce_Proj.DisplayName: Moonflare Force
 		}
 
 		NPCs: {
