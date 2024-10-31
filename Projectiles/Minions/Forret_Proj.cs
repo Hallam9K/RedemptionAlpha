@@ -11,7 +11,7 @@ using Redemption.Buffs.Debuffs;
 
 namespace Redemption.Projectiles.Minions
 {
-    public class Forret : ModProjectile
+    public class Forret_Proj : ModProjectile
     {
         public override void SetStaticDefaults()
         {

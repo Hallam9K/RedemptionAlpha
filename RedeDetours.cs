@@ -18,7 +18,7 @@ namespace Redemption
             On_Main.DrawCachedProjs += Main_DrawCachedProjs;
             On_Projectile.NewProjectile_IEntitySource_float_float_float_float_int_int_float_int_float_float_float += TrailCheck;
             On_Main.DrawDust += AdditiveCalls;
-            On_Player.CheckForGoodTeleportationSpot += DontTeleport;
+            //On_Player.CheckForGoodTeleportationSpot += DontTeleport;
         }
         public static void Uninitialize()
         {
@@ -26,7 +26,7 @@ namespace Redemption
             On_Main.DrawCachedProjs -= Main_DrawCachedProjs;
             On_Projectile.NewProjectile_IEntitySource_float_float_float_float_int_int_float_int_float_float_float -= TrailCheck;
             On_Main.DrawDust -= AdditiveCalls;
-            On_Player.CheckForGoodTeleportationSpot -= DontTeleport;
+            //On_Player.CheckForGoodTeleportationSpot -= DontTeleport;
         }
 
         private static void AdditiveCalls(On_Main.orig_DrawDust orig, Main self)
@@ -38,7 +38,7 @@ namespace Redemption
         {
             On_Main.DrawProjectiles -= Main_DrawProjectiles;
         }
-        public static bool IsProtected(int x, int y)
+        /*public static bool IsProtected(int x, int y)
         {
             if (!Main.gameMenu || Main.dedServ)
             {
@@ -64,7 +64,7 @@ namespace Redemption
             }
 
             return result;
-        }
+        }*/
         private static void Main_DrawCachedProjs(On_Main.orig_DrawCachedProjs orig, Main self, List<int> projCache, bool startSpriteBatch)
         {
             if (!Main.dedServ && projCache == Main.instance.DrawCacheProjsBehindNPCs)

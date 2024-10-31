@@ -1307,6 +1307,8 @@ namespace Redemption.Globals
             return false;
         }
 
+        public static Vector2 RunAwayVector(Terraria.NPC npc, Entity attacker) => new(npc.Center.X + (100 * npc.RightOfDir(attacker)), npc.Center.Y);
+
         /// <summary>
         ///     Makes this NPC horizontally move towards the Player (Take Fighter AI, as an example)
         /// </summary>

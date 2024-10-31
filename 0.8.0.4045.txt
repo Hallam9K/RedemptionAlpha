@@ -5,6 +5,7 @@
 - Nuclear Warhead detonation instakills anything caught in the blast
 - Wasteland tile conversion happens 3x faster
 - Erhan cannot be hit by NPCs while on the ground after fight
+- Reverted attempt to stop teleporting into the lab that caused crashes
 1575. Corrected text colors for (most) status messages to fit with vanilla's
 1659. Solar Flare armour set bonus has an additional effect, stars from the Celestial bonus don't get absorbed, instead exploding in tiny bursts shortly after appearing, the bursts deal Fire damage based on the user's defense * 2
 1726. Eaglecrest Golem, Eaglecrest Rockpile, and Ancient Gladestone Golem take extra damage to pickaxes

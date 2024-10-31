@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Redemption.Buffs.Minions;
+using Redemption.Items.Critters;
 using Redemption.Items.Materials.PreHM;
 using Redemption.Projectiles.Minions;
 using Terraria;
@@ -36,7 +37,7 @@ namespace Redemption.Items.Weapons.PreHM.Summon
 			Item.UseSound = SoundID.Item44;
 			Item.autoReuse = false;
 			Item.buffType = ModContent.BuffType<ForretBuff>();
-			Item.shoot = ModContent.ProjectileType<Forret>();
+			Item.shoot = ModContent.ProjectileType<Forret_Proj>();
 			Item.mana = 10;
 		}
 
@@ -44,7 +45,7 @@ namespace Redemption.Items.Weapons.PreHM.Summon
         {
 			CreateRecipe()
 				.AddIngredient(ModContent.ItemType<PureIronAlloy>(), 7)
-				.AddIngredient(ItemID.Leather, 4)
+				.AddIngredient<ForretItem>()
 				.AddTile(TileID.Anvils)
 				.Register();
         }

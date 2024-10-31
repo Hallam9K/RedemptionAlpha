@@ -10439,6 +10439,11 @@ Mods: {
 				DisplayName: Moonflare Caster Banner
 				Tooltip: ""
 			}
+
+			ForretItem: {
+				DisplayName: Forret
+				Tooltip: ""
+			}
 		}
 
 		Projectiles: {
@@ -10915,7 +10920,7 @@ Mods: {
 			CorpseWalkerSkull.DisplayName: Corpse-Walker Skull
 			CorpseWalkerSkull_Proj.DisplayName: Redemptive Spark
 			Cystling.DisplayName: Cystling
-			Forret.DisplayName: Forret
+			Forret_Proj.DisplayName: Forret
 			GirusDischarge.DisplayName: Discharge
 			GolemGuardian.DisplayName: Golem Guardian
 			GraniteGuardian.DisplayName: Granite Guardian

@@ -13,7 +13,7 @@ namespace Redemption.Buffs.Minions
 		}
 		public override void Update(Player player, ref int buffIndex)
 		{
-			if (player.ownedProjectileCounts[ModContent.ProjectileType<Forret>()] > 0)
+			if (player.ownedProjectileCounts[ModContent.ProjectileType<Forret_Proj>()] > 0)
 			{
 				player.buffTime[buffIndex] = 18000;
 			}

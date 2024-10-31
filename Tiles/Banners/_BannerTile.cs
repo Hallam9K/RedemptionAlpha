@@ -331,4 +331,9 @@ namespace Redemption.Tiles.Banners
         protected override int NPC => ModContent.NPCType<MoonflareSkeleton>();
         protected override Color MapColor => Color.LightGoldenrodYellow;
     }
+    public class ForretBannerTile : BaseBannerTile
+    {
+        protected override int NPC => ModContent.NPCType<Forret>();
+        protected override Color MapColor => Color.Brown;
+    }
 }
