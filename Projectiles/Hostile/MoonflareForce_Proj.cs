@@ -41,7 +41,7 @@ namespace Redemption.Projectiles.Hostile
         {
             if (target.Redemption().spiritSummon)
                 return null;
-            NPC host = Main.npc[(int)Projectile.ai[0]];
+            NPC host = Main.npc[(int)Projectile.ai[2]];
             return target == host.Redemption().attacker ? null : false;
         }
         public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers) => modifiers.FinalDamage *= 4;

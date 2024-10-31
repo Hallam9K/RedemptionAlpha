@@ -242,7 +242,7 @@ namespace Redemption.NPCs.PreHM
                         DustHelper.DrawCircle(shootPos, DustID.AmberBolt, 12f, dustDensity: 2f, dustSize: 1.6f, nogravity: true);
                         DustHelper.DrawCircle(shootPos, DustID.AmberBolt, 14f, dustDensity: 2f, dustSize: 1.2f, nogravity: true);
                         DustHelper.DrawCircle(shootPos, DustID.AmberBolt, 16f, dustDensity: 2f, dustSize: 1f, nogravity: true);
-                        NPC.Shoot(shootPos, ModContent.ProjectileType<MoonflareForce_Proj>(), NPC.damage, Vector2.Zero, SoundID.DD2_EtherianPortalDryadTouch, knockback: 9);
+                        NPC.Shoot(shootPos, ModContent.ProjectileType<MoonflareForce_Proj>(), NPC.damage, Vector2.Zero, SoundID.DD2_EtherianPortalDryadTouch, knockback: 9, ai2: NPC.whoAmI);
                     }
                     if (AITimer >= 120 - chargeReduce)
                     {

@@ -7926,8 +7926,12 @@ Mods: {
 			}
 
 			Chernobyl: {
-				DisplayName: Chernobyl
-				Tooltip: Enemies slain by this weapon explode into fireballs
+				DisplayName: Rad Throw
+				Tooltip:
+					'''
+					Enemies slain by this weapon explode into fireballs
+					'Totally radical!'
+					'''
 			}
 
 			CrystalGlaive: {
