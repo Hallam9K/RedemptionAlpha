@@ -95,6 +95,7 @@ namespace Redemption.NPCs.Friendly
             NPC.HitSound = SoundID.Dig;
             NPC.DeathSound = SoundID.NPCDeath27;
             NPC.chaseable = false;
+            TownNPCStayingHomeless = true;
         }
         public override void OnKill()
         {

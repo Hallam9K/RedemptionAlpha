@@ -506,6 +506,7 @@ namespace Redemption.NPCs.PreHM
         }
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<MoonflareFragment>(), 1, 4, 8));
             npcLoot.Add(ItemDropRule.Food(ItemID.MilkCarton, 150));
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<EpidotrianSkull>(), 100));
             npcLoot.Add(ItemDropRule.ByCondition(new LostSoulCondition(), ModContent.ItemType<LostSoul>(), 2));

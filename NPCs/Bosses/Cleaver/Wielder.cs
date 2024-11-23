@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Redemption.BaseExtension;
 using Redemption.Globals;
 using Redemption.Globals.NPC;
+using Redemption.Helpers;
 using Redemption.Items.Weapons.HM.Melee;
 using Redemption.Textures;
 using Redemption.UI.ChatUI;
@@ -169,8 +170,16 @@ namespace Redemption.NPCs.Bosses.Cleaver
         public List<int> CopyList = null;
         public int ID { get => (int)NPC.ai[1]; set => NPC.ai[1] = value; }
 
+        bool ANDDONTCOMEBACK;
         public override void AI()
         {
+            if (ANDDONTCOMEBACK && AIState < ActionState.Death)
+            {
+                AIState = ActionState.Death;
+                NPC.netUpdate = true;
+                return;
+            }
+
             if (NPC.DespawnHandler())
                 return;
             Player player = Main.player[NPC.target];
@@ -627,6 +636,7 @@ namespace Redemption.NPCs.Bosses.Cleaver
                     }
                     break;
                 case ActionState.Death:
+                    ANDDONTCOMEBACK = true;
                     NPC.LookAtEntity(player);
                     aniType = 0;
                     NPC.velocity *= .96f;
@@ -638,6 +648,7 @@ namespace Redemption.NPCs.Bosses.Cleaver
                     NPC.netUpdate = true;
                     break;
                 case ActionState.Death2:
+                    ANDDONTCOMEBACK = true;
                     NPC.LookAtEntity(player);
                     if (NPC.ai[2] < 260)
                     {
@@ -659,6 +670,9 @@ namespace Redemption.NPCs.Bosses.Cleaver
                         NPC.velocity.Y -= 1;
                         if (NPC.timeLeft > 10)
                             NPC.timeLeft = 10;
+
+                        if (AITimer > 380 && !Helper.OnScreen(NPC.position - Main.screenPosition, NPC.Hitbox.Size()))
+                            NPC.active = false;
                     }
                     break;
             }

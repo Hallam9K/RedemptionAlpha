@@ -240,7 +240,7 @@ namespace Redemption.Items.Weapons.HM.Magic
 
             int boomOrigin = (int)(120 * Projectile.scale);
             Rectangle boom = new((int)Projectile.Center.X - boomOrigin, (int)Projectile.Center.Y - boomOrigin, boomOrigin * 2, boomOrigin * 2);
-            RedeHelper.NPCRadiusDamage(boom, Projectile, Projectile.damage * 2, Projectile.knockBack);
+            RedeHelper.NPCRadiusDamage(boom, Projectile, Projectile.damage * 2, Projectile.knockBack, 0);
             for (int i = 0; i < 20; i++)
             {
                 int dust = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.OrangeTorch, Scale: 2);
@@ -258,9 +258,10 @@ namespace Redemption.Items.Weapons.HM.Magic
         }
         public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
         {
-            modifiers.FinalDamage *= MathF.Pow(Projectile.scale, 3f);
-            if (Projectile.ai[1] != 2)
-                modifiers.FinalDamage /= 4;
+            if (Projectile.ai[1] == 2)
+                modifiers.FinalDamage *= MathF.Pow(Projectile.scale, 2.5f);
+            else
+                modifiers.FinalDamage *= MathF.Pow(Projectile.scale, 1) / 2;
         }
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {

@@ -50,6 +50,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
             Item.shootSpeed = 5f;
             Item.shoot = ModContent.ProjectileType<Zweihander_SlashProj>();
         }
+        public override bool MeleePrefix() => true;
 
         public override void PostUpdate()
         {
@@ -69,7 +70,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
                 .AddCondition(RedeConditions.RepairedByFallen)
                 .Register();
         }
-        private static readonly int[] unwantedPrefixes = new int[] { PrefixID.Terrible, PrefixID.Dull, PrefixID.Shameful, PrefixID.Annoying, PrefixID.Broken, PrefixID.Damaged, PrefixID.Shoddy, PrefixID.Weak };
+        private static readonly int[] unwantedPrefixes = new int[] { PrefixID.Terrible, PrefixID.Dull, PrefixID.Shameful, PrefixID.Annoying, PrefixID.Broken, PrefixID.Damaged, PrefixID.Shoddy, PrefixID.Weak, PrefixID.Lazy, PrefixID.Small, PrefixID.Slow, PrefixID.Tiny, PrefixID.Sluggish, PrefixID.Unhappy };
         public override bool AllowPrefix(int pre)
         {
             if (Array.IndexOf(unwantedPrefixes, pre) > -1)

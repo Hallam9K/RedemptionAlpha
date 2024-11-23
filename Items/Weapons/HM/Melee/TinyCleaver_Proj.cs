@@ -1,12 +1,15 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Terraria.GameContent;
-using Terraria;
-using Terraria.Audio;
-using Terraria.ID;
-using Terraria.ModLoader;
+using Redemption.BaseExtension;
+using Redemption.Dusts;
 using Redemption.Globals;
 using ReLogic.Content;
+using System;
+using Terraria;
+using Terraria.Audio;
+using Terraria.GameContent;
+using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace Redemption.Items.Weapons.HM.Melee
 {
@@ -16,11 +19,9 @@ namespace Redemption.Items.Weapons.HM.Melee
         private static Asset<Texture2D> chainTexture;
         public override void Load()
         {
+            if (Main.dedServ)
+                return;
             chainTexture = ModContent.Request<Texture2D>("Redemption/Items/Weapons/HM/Melee/TinyCleaver_Chain");
-        }
-        public override void Unload()
-        {
-            chainTexture = null;
         }
 
         public override void SetStaticDefaults()
@@ -59,6 +60,8 @@ namespace Redemption.Items.Weapons.HM.Melee
         public float Timer;
         private float speed;
         private float SwingSpeed;
+        public int pauseTimer;
+        public float progress;
         public override void AI()
         {
             Player player = Main.player[Projectile.owner];
@@ -69,7 +72,9 @@ namespace Redemption.Items.Weapons.HM.Melee
             player.heldProj = Projectile.whoAmI;
             player.itemTime = 2;
             player.itemAnimation = 2;
-            Projectile.Center = player.MountedCenter + vector;
+           
+            Vector2 armCenter = player.RotatedRelativePoint(player.MountedCenter, true) + new Vector2(-player.direction * 4, -4);
+            Projectile.Center = armCenter + vector;
 
             Projectile.spriteDirection = player.direction;
             if (Projectile.spriteDirection == 1)
@@ -77,35 +82,34 @@ namespace Redemption.Items.Weapons.HM.Melee
             else
                 Projectile.rotation = (Projectile.Center - player.Center).ToRotation() - MathHelper.Pi - MathHelper.PiOver4;
 
-            if (Main.myPlayer == Projectile.owner)
+            if (Main.myPlayer == Projectile.owner && --pauseTimer <= 0)
             {
                 switch (Projectile.ai[0])
                 {
                     case 0:
+                        if (Timer == 0)
+                            strike = false;
                         player.SetCompositeArmFront(true, Player.CompositeArmStretchAmount.Full, (player.Center - Projectile.Center).ToRotation() + MathHelper.PiOver2);
                         speed = MathHelper.ToRadians(6);
                         startVector = RedeHelper.PolarVector(1, Projectile.velocity.ToRotation() - ((MathHelper.PiOver2 + 0.6f) * Projectile.spriteDirection));
                         SoundEngine.PlaySound(SoundID.Item1, Projectile.position);
-                        SoundEngine.PlaySound(CustomSounds.ElectricSlash with { Volume = 0.3f, Pitch = 0.4f }, Projectile.position);
+                        if (!Main.dedServ)
+                            SoundEngine.PlaySound(CustomSounds.ElectricSlash with { Volume = 0.3f, Pitch = 0.4f }, Projectile.position);
                         vector = startVector * Length;
                         Projectile.ai[0] = 1;
                         Projectile.netUpdate = true;
                         break;
                     case 1:
                         player.SetCompositeArmFront(true, Player.CompositeArmStretchAmount.Full, (player.Center - Projectile.Center).ToRotation() + MathHelper.PiOver2);
-                        if (Timer++ < 2 * SwingSpeed)
+                        if (Timer++ == 0)
+                            strike = false;
+                        progress = Timer / (18 * SwingSpeed);
+                        if (progress < 1)
                         {
-                            Rot += speed / SwingSpeed * Projectile.spriteDirection;
-                            speed += 0.35f;
+                            Rot = MathHelper.ToRadians(30 + 90f * MathF.Atan(2f * MathHelper.Pi * (progress - 0.1f))) * Projectile.spriteDirection;
                             vector = startVector.RotatedBy(Rot) * Length;
                         }
                         else
-                        {
-                            Rot += speed / SwingSpeed * Projectile.spriteDirection;
-                            speed *= 0.6f;
-                            vector = startVector.RotatedBy(Rot) * Length;
-                        }
-                        if (Timer >= 18 * SwingSpeed)
                         {
                             if (!player.channel)
                             {
@@ -114,31 +118,27 @@ namespace Redemption.Items.Weapons.HM.Melee
                             }
                             Projectile.alpha = 255;
                             speed = MathHelper.ToRadians(6);
-                            startVector = RedeHelper.PolarVector(1, (Main.MouseWorld - player.Center).ToRotation() - ((MathHelper.PiOver2 + MathHelper.PiOver4) * Projectile.spriteDirection));
+                            startVector = vector.SafeNormalize(default);
                             Projectile.ai[0] = 2;
                             SoundEngine.PlaySound(SoundID.Item1, Projectile.position);
-                            SoundEngine.PlaySound(CustomSounds.ElectricSlash with { Volume = 0.3f, Pitch = 0.4f }, Projectile.position);
+                            if (!Main.dedServ)
+                                SoundEngine.PlaySound(CustomSounds.ElectricSlash with { Volume = 0.3f, Pitch = 0.4f }, Projectile.position);
                             Timer = 0;
                             Projectile.netUpdate = true;
                         }
                         break;
                     case 2:
                         player.SetCompositeArmFront(true, Player.CompositeArmStretchAmount.Full, (player.Center - Projectile.Center).ToRotation() + MathHelper.PiOver2);
-                        if (Timer++ < 3 * SwingSpeed)
+                        if (Timer++ == 0)
+                            strike = false;
+                        progress = Timer / (15 * SwingSpeed);
+                        if (progress < 1)
                         {
-                            Rot -= speed / SwingSpeed * Projectile.spriteDirection;
-                            speed += 0.1f;
-                            extendoLength += 2f;
+                            Rot = -MathHelper.ToRadians(30 + 90f * MathF.Atan(2f * MathHelper.Pi * (progress - 0.1f))) * Projectile.spriteDirection;
                             vector = startVector.RotatedBy(Rot) * Length;
+                            extendoLength += 2f / SwingSpeed;
                         }
                         else
-                        {
-                            Rot -= speed / SwingSpeed * Projectile.spriteDirection;
-                            speed *= 0.8f;
-                            extendoLength += 2f;
-                            vector = startVector.RotatedBy(Rot) * Length;
-                        }
-                        if (Timer >= 15 * SwingSpeed)
                         {
                             if (!player.channel)
                             {
@@ -149,32 +149,30 @@ namespace Redemption.Items.Weapons.HM.Melee
                             speed = MathHelper.ToRadians(6);
 
                             Projectile.ai[0] = 3;
-                            startVector = RedeHelper.PolarVector(1, (Main.MouseWorld - player.Center).ToRotation() - ((MathHelper.PiOver2 + MathHelper.PiOver4) * Projectile.spriteDirection));
+                            startVector = vector.SafeNormalize(default);
                             SoundEngine.PlaySound(SoundID.Item1, Projectile.position);
-                            SoundEngine.PlaySound(CustomSounds.ElectricSlash with { Volume = 0.3f, Pitch = 0.4f }, Projectile.position);
+                            if (!Main.dedServ)
+                                SoundEngine.PlaySound(CustomSounds.ElectricSlash with { Volume = 0.3f, Pitch = 0.4f }, Projectile.position);
                             Timer = 0;
                             Projectile.netUpdate = true;
                         }
                         break;
                     case 3:
                         player.SetCompositeArmFront(true, Player.CompositeArmStretchAmount.Full, (player.Center - Projectile.Center).ToRotation() + MathHelper.PiOver2);
-                        if (Timer++ < 3 * SwingSpeed)
+                        if (Timer++ == 0)
+                            strike = false;
+                        progress = Timer / (15 * SwingSpeed);
+                        if (progress < 0.5f)
+                            extendoLength += 3f / SwingSpeed;
+                        else
+                            extendoLength -= 2f / SwingSpeed;
+
+                        if (progress < 1)
                         {
-                            Rot += speed / SwingSpeed * Projectile.spriteDirection;
-                            speed += 0.2f;
-                            extendoLength += 3f;
+                            Rot = MathHelper.ToRadians(30 + 90f * MathF.Atan(2f * MathHelper.Pi * (progress - 0.1f))) * Projectile.spriteDirection;
                             vector = startVector.RotatedBy(Rot) * Length;
                         }
                         else
-                        {
-                            Rot += speed / SwingSpeed * Projectile.spriteDirection;
-                            speed *= 0.6f;
-                            vector = startVector.RotatedBy(Rot) * Length;
-                        }
-                        if (Timer >= 3 && Timer < 12)
-                            extendoLength -= 2f;
-
-                        if (Timer >= 16 * SwingSpeed)
                         {
                             if (!player.channel)
                             {
@@ -185,32 +183,30 @@ namespace Redemption.Items.Weapons.HM.Melee
                             speed = MathHelper.ToRadians(6);
 
                             Projectile.ai[0] = 4;
-                            startVector = RedeHelper.PolarVector(1, (Main.MouseWorld - player.Center).ToRotation() - ((MathHelper.PiOver2 + MathHelper.PiOver4) * Projectile.spriteDirection));
+                            startVector = vector.SafeNormalize(default);
                             SoundEngine.PlaySound(SoundID.Item1, Projectile.position);
-                            SoundEngine.PlaySound(CustomSounds.ElectricSlash with { Volume = 0.3f, Pitch = 0.5f }, Projectile.position);
+                            if (!Main.dedServ)
+                                SoundEngine.PlaySound(CustomSounds.ElectricSlash with { Volume = 0.3f, Pitch = 0.5f }, Projectile.position);
                             Timer = 0;
                             Projectile.netUpdate = true;
                         }
                         break;
                     case 4:
                         player.SetCompositeArmFront(true, Player.CompositeArmStretchAmount.Full, (player.Center - Projectile.Center).ToRotation() + MathHelper.PiOver2);
-                        if (Timer++ < 3 * SwingSpeed)
+                        if (Timer++ == 0)
+                            strike = false;
+                        progress = Timer / (15 * SwingSpeed);
+                        if (progress < 0.2f)
+                            extendoLength += 5f / SwingSpeed;
+                        if (progress > 0.8f && progress < 1)
+                            extendoLength -= 10f / SwingSpeed;
+
+                        if (progress < 1)
                         {
-                            Rot -= speed / SwingSpeed * Projectile.spriteDirection;
-                            speed += 0.15f;
-                            extendoLength += 5f;
+                            Rot = -MathHelper.ToRadians(30 + 90f * MathF.Atan(2f * MathHelper.Pi * (progress - 0.1f))) * Projectile.spriteDirection;
                             vector = startVector.RotatedBy(Rot) * Length;
                         }
                         else
-                        {
-                            Rot -= speed / SwingSpeed * Projectile.spriteDirection;
-                            speed *= 0.8f;
-                            vector = startVector.RotatedBy(Rot) * Length;
-                        }
-                        if (Timer >= 8)
-                            extendoLength -= 10f;
-
-                        if (Timer >= 12 * SwingSpeed)
                         {
                             if (!player.channel)
                             {
@@ -223,28 +219,32 @@ namespace Redemption.Items.Weapons.HM.Melee
                             Projectile.ai[0] = 5;
 
                             SoundEngine.PlaySound(SoundID.Item1, Projectile.position);
-                            SoundEngine.PlaySound(CustomSounds.BallCreate with { Volume = 0.3f, Pitch = 0.1f }, Projectile.position);
+                            if (!Main.dedServ)
+                                SoundEngine.PlaySound(CustomSounds.BallCreate with { Volume = 0.3f, Pitch = 0.1f }, Projectile.position);
                             Timer = 0;
+                            startVector = RedeHelper.PolarVector(1, (Main.MouseWorld - player.Center).ToRotation());
                             Projectile.netUpdate = true;
                         }
                         break;
                     case 5:
                         player.SetCompositeArmFront(true, Player.CompositeArmStretchAmount.Full, (player.Center - Projectile.Center).ToRotation() + MathHelper.PiOver2);
+                        if (Timer == 0)
+                            strike = false;
+
                         if (Main.MouseWorld.X < player.Center.X)
                             player.direction = -1;
                         else
                             player.direction = 1;
-                        startVector = RedeHelper.PolarVector(1, (Main.MouseWorld - player.Center).ToRotation());
                         vector = startVector * Length;
 
                         if (Timer++ < 12 * SwingSpeed)
                         {
-                            extendoLength += speed;
+                            extendoLength += speed / SwingSpeed;
                             speed *= 0.96f;
                         }
                         else
                         {
-                            extendoLength -= speed;
+                            extendoLength -= speed / SwingSpeed;
                             speed *= 1.1f;
                         }
                         if (Timer >= 24 * SwingSpeed)
@@ -261,13 +261,12 @@ namespace Redemption.Items.Weapons.HM.Melee
                             extendoLength = 0;
                             Projectile.velocity = RedeHelper.PolarVector(5, (Main.MouseWorld - player.Center).ToRotation());
                             Projectile.alpha = 255;
-                            speed = MathHelper.ToRadians(6);
-                            Rot = MathHelper.ToRadians(2);
                             startVector = RedeHelper.PolarVector(1, (Main.MouseWorld - player.Center).ToRotation() - ((MathHelper.PiOver2 + 0.6f) * player.direction));
                             vector = startVector * Length;
                             Projectile.ai[0] = 1;
                             SoundEngine.PlaySound(SoundID.Item1, Projectile.position);
-                            SoundEngine.PlaySound(CustomSounds.ElectricSlash with { Volume = 0.3f, Pitch = 0.2f }, Projectile.position);
+                            if (!Main.dedServ)
+                                SoundEngine.PlaySound(CustomSounds.ElectricSlash with { Volume = 0.3f, Pitch = 0.2f }, Projectile.position);
                             Timer = 0;
                             Projectile.netUpdate = true;
                         }
@@ -302,11 +301,25 @@ namespace Redemption.Items.Weapons.HM.Melee
             }
 
         }
+
+        public bool strike;
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
+            Player player = Main.player[Projectile.owner];
+            SoundEngine.PlaySound(CustomSounds.Slice4 with { Volume = .7f, Pitch = .8f }, Projectile.position);
+            if (!strike)
+            {
+                player.RedemptionScreen().ScreenShakeIntensity += 2;
+                strike = true;
+                pauseTimer = 3;
+            }
+            Vector2 directionTo = target.DirectionTo(player.Center);
+            for (int i = 0; i < 16; i++)
+                Dust.NewDustPerfect(target.Center + directionTo * 5 + new Vector2(0, 35) + player.velocity, ModContent.DustType<DustSpark2>(), directionTo.RotatedBy(Main.rand.NextFloat(-0.5f, 0.5f) + 3.14f) * Main.rand.NextFloat(3f, 5f) + (player.velocity / 2), 0, Color.Red * .8f, 1.6f);
+
             RedeProjectile.Decapitation(target, ref damageDone, ref hit.Crit);
 
-            Projectile.localNPCImmunity[target.whoAmI] = 11;
+            Projectile.localNPCImmunity[target.whoAmI] = (int)(11 * SwingSpeed);
             target.immune[Projectile.owner] = 0;
         }
 
@@ -320,21 +333,23 @@ namespace Redemption.Items.Weapons.HM.Melee
             Texture2D segMid = ModContent.Request<Texture2D>("Redemption/Items/Weapons/HM/Melee/TinyCleaver_Proj2").Value;
             Texture2D segEnd = ModContent.Request<Texture2D>("Redemption/Items/Weapons/HM/Melee/TinyCleaver_Proj3").Value;
             Vector2 origin = new(texture.Width / 2f, texture.Height / 2f);
-            Vector2 v = RedeHelper.PolarVector(40, (Projectile.Center - player.Center).ToRotation());
+            Vector2 armCenter = player.RotatedRelativePoint(player.MountedCenter, true) + new Vector2(-player.direction * 4, -4);
+            Vector2 v = RedeHelper.PolarVector(40, (Projectile.Center - armCenter).ToRotation());
 
-            Main.EntitySpriteDraw(texture, Projectile.Center - v - Main.screenPosition + Vector2.UnitY * Projectile.gfxOffY, null, Projectile.GetAlpha(lightColor), Projectile.rotation, origin, Projectile.scale, spriteEffects, 0);
+            Main.EntitySpriteDraw(texture, Projectile.Center - v - Main.screenPosition, null, Projectile.GetAlpha(lightColor), Projectile.rotation, origin, Projectile.scale, spriteEffects, 0);
             for (int i = 0; i < 8; i++)
             {
-                Main.EntitySpriteDraw(i < 7 ? segMid : segEnd, Projectile.Center - v + RedeHelper.PolarVector(extendoLength * extendo[i], (Projectile.Center - player.Center).ToRotation()) - Main.screenPosition + Vector2.UnitY * Projectile.gfxOffY, null, Projectile.GetAlpha(lightColor), Projectile.rotation, origin, Projectile.scale, spriteEffects, 0);
+                Main.EntitySpriteDraw(i < 7 ? segMid : segEnd, Projectile.Center - v + RedeHelper.PolarVector(extendoLength * extendo[i], (Projectile.Center - armCenter).ToRotation()) - Main.screenPosition, null, Projectile.GetAlpha(lightColor), Projectile.rotation, origin, Projectile.scale, spriteEffects, 0);
             }
             return false;
         }
         public override bool PreDrawExtras()
         {
             Player player = Main.player[Projectile.owner];
-            Vector2 v = RedeHelper.PolarVector(40, (Projectile.Center - player.Center).ToRotation());
-            Vector2 handleCenter = Projectile.Center - v + Vector2.UnitY * Projectile.gfxOffY;
-            Vector2 center = Projectile.Center - RedeHelper.PolarVector(30, (Projectile.Center - player.Center).ToRotation()) + RedeHelper.PolarVector(extendoLength * extendo[7], (Projectile.Center - player.Center).ToRotation()) + Vector2.UnitY * Projectile.gfxOffY;
+            Vector2 armCenter = player.RotatedRelativePoint(player.MountedCenter, true) + new Vector2(-player.direction * 4, -4);
+            Vector2 v = RedeHelper.PolarVector(40, (Projectile.Center - armCenter).ToRotation());
+            Vector2 handleCenter = Projectile.Center - v;
+            Vector2 center = Projectile.Center - RedeHelper.PolarVector(30, (Projectile.Center - armCenter).ToRotation()) + RedeHelper.PolarVector(extendoLength * extendo[7], (Projectile.Center - armCenter).ToRotation());
             Vector2 directionToHandle = handleCenter - center;
             float chainRotation = directionToHandle.ToRotation() - MathHelper.PiOver2;
             float distanceToHandle = directionToHandle.Length();

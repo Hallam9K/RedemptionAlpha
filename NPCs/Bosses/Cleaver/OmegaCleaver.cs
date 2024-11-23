@@ -196,10 +196,14 @@ namespace Redemption.NPCs.Bosses.Cleaver
             else
                 NPC.dontTakeDamage = true;
 
+            if (NPC.target < 0 || NPC.target == 255 || Main.player[NPC.target].dead || !Main.player[NPC.target].active)
+                NPC.TargetClosest();
+            Player player = Main.player[NPC.target];
+
             NPC host = Main.npc[(int)NPC.ai[3]];
             if (NPC.DespawnHandler())
                 return;
-            Player player = Main.player[NPC.target];
+
             if (player.active && !player.dead && !Main.dayTime)
                 NPC.DiscourageDespawn(60);
 

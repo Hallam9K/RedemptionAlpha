@@ -1416,6 +1416,8 @@ namespace Redemption.WorldGeneration
 
                         for (int m = -1; m <= 1; m += 2)
                         {
+                            placeY = (int)Main.worldSurface - 160;
+
                             if (attempts2 < Main.maxTilesX / 2)
                                 placeX = Main.spawnTileX + (m * attempts2);
 
@@ -1649,7 +1651,7 @@ namespace Redemption.WorldGeneration
                                 for (int j = 0; j <= 80; j++)
                                 {
                                     Tile whitelistTile = Framing.GetTileSafely(placeX2 + i, placeY2 + j);
-                                    if (whitelistTile.HasTile && whitelistTile.TileType != TileID.Cloud && whitelistTile.TileType != TileID.RainCloud)
+                                    if (whitelistTile.HasTile && whitelistTile.TileType != TileID.Cloud && whitelistTile.TileType != TileID.RainCloud && !TileID.Sets.Ore[whitelistTile.TileType])
                                     {
                                         whitelist2 = true;
                                         break;
@@ -2163,7 +2165,7 @@ namespace Redemption.WorldGeneration
                     if (Main.dungeonX < Main.maxTilesX / 2)
                         origin = new Vector2((int)(Main.maxTilesX * 0.35f), (int)Main.worldSurface - 160);
 
-                    origin.Y = GetTileFloorIgnoreTree((int)origin.X, (int)origin.Y, true);
+                    origin.Y = GetTileFloorIgnoreTreeAndClouds((int)origin.X, (int)origin.Y, true);
                     origin.X -= 60;
                     int attempts = 0;
                     int checkType = 0;
@@ -2180,7 +2182,7 @@ namespace Redemption.WorldGeneration
                                     checkType++;
                                 }
                                 origin.X++;
-                                origin.Y = GetTileFloorIgnoreTree((int)origin.X + 60, (int)Main.worldSurface - 160, true);
+                                origin.Y = GetTileFloorIgnoreTreeAndClouds((int)origin.X + 60, (int)Main.worldSurface - 160, true);
                                 inSpawn = false;
                                 if (origin.X > Main.spawnTileX - 300 && origin.X < Main.spawnTileX + 300)
                                     inSpawn = true;
@@ -2194,7 +2196,7 @@ namespace Redemption.WorldGeneration
                                     checkType++;
                                 }
                                 origin.X--;
-                                origin.Y = GetTileFloorIgnoreTree((int)origin.X + 60, (int)Main.worldSurface - 160, true);
+                                origin.Y = GetTileFloorIgnoreTreeAndClouds((int)origin.X + 60, (int)Main.worldSurface - 160, true);
                                 inSpawn = false;
                                 if (origin.X > Main.spawnTileX - 300 && origin.X < Main.spawnTileX + 300)
                                     inSpawn = true;
@@ -2203,7 +2205,7 @@ namespace Redemption.WorldGeneration
                                 break;
                             case 2:
                                 origin.X = WorldGen.genRand.Next(150, Main.maxTilesX - 150);
-                                origin.Y = GetTileFloorIgnoreTree((int)origin.X + 60, (int)Main.worldSurface - 160, true);
+                                origin.Y = GetTileFloorIgnoreTreeAndClouds((int)origin.X + 60, (int)Main.worldSurface - 160, true);
                                 origin.X -= 60;
                                 inSpawn = false;
                                 if (origin.X > Main.spawnTileX - 300 && origin.X < Main.spawnTileX + 300)
@@ -2222,7 +2224,7 @@ namespace Redemption.WorldGeneration
                         if (Main.dungeonX < Main.maxTilesX / 2)
                             origin = new Vector2((int)(Main.maxTilesX * 0.35f), (int)Main.worldSurface - 160);
 
-                        origin.Y = GetTileFloorIgnoreTree((int)origin.X, (int)origin.Y, true);
+                        origin.Y = GetTileFloorIgnoreTreeAndClouds((int)origin.X, (int)origin.Y, true);
                         origin.X -= 60;
                     }
                     WorldUtils.Gen(origin.ToPoint(), new Shapes.Rectangle(80, 50), Actions.Chain(new GenAction[]
@@ -2462,6 +2464,16 @@ namespace Redemption.WorldGeneration
             {
                 Tile tile = Framing.GetTileSafely(x, y);
                 if (tile is { HasTile: true } && (!solid || Main.tileSolid[tile.TileType]) && tile.TileType != TileID.LivingWood && tile.TileType != TileID.LeafBlock) { return y; }
+            }
+            return Main.maxTilesY - 10;
+        }
+        private static int GetTileFloorIgnoreTreeAndClouds(int x, int startY, bool solid = true)
+        {
+            if (!WorldGen.InWorld(x, startY)) return startY;
+            for (int y = startY; y < Main.maxTilesY - 10; y++)
+            {
+                Tile tile = Framing.GetTileSafely(x, y);
+                if (tile is { HasTile: true } && (!solid || Main.tileSolid[tile.TileType]) && tile.TileType != TileID.LivingWood && tile.TileType != TileID.LeafBlock && tile.TileType != TileID.Cloud && tile.TileType != TileID.RainCloud) { return y; }
             }
             return Main.maxTilesY - 10;
         }

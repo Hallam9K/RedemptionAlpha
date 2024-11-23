@@ -1,12 +1,13 @@
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using Redemption.BaseExtension;
+using Redemption.Globals.Player;
+using Redemption.Items.Materials.HM;
+using Redemption.Projectiles.Magic;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Microsoft.Xna.Framework.Graphics;
-using Redemption.Projectiles.Magic;
-using Redemption.BaseExtension;
-using Redemption.Items.Materials.HM;
-using Microsoft.Xna.Framework;
-using Terraria.DataStructures;
 
 namespace Redemption.Items.Weapons.HM.Magic
 {

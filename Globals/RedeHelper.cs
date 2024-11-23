@@ -817,6 +817,22 @@ namespace Redemption.Globals
                 BaseAI.DamageNPC(target, damage, knockBack, hitDirection, hitter, crit: hitter is Projectile proj3 && proj3.HeldItemCrit());
             }
         }
+        public static void NPCRadiusDamage(Rectangle radius, Entity hitter, int damage, float knockBack, int critChance)
+        {
+            foreach (Terraria.NPC target in Main.ActiveNPCs)
+            {
+                if (!target.CanBeChasedBy() && target.type != NPCID.TargetDummy)
+                    continue;
+
+                if ((hitter is Projectile proj && target.immune[proj.whoAmI] > 0) || !target.Hitbox.Intersects(radius))
+                    continue;
+
+                if (hitter is Projectile proj2)
+                    target.immune[proj2.whoAmI] = 20;
+                int hitDirection = target.RightOfDir(hitter);
+                BaseAI.DamageNPC(target, damage, knockBack, hitDirection, hitter, crit: critChance >= Main.rand.Next(1, 101));
+            }
+        }
         public static void PlayerRadiusDamage(int radius, Entity hitter, int damage, float knockBack)
         {
             for (int p = 0; p < Main.maxPlayers; p++)

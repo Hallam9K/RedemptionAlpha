@@ -44,9 +44,10 @@ namespace Redemption.NPCs.Lab.Janitor
         private static readonly SoundStyle voice = CustomSounds.Voice6 with { Pitch = 0.2f };
         public override void AI()
         {
-            Player player = Main.player[RedeHelper.GetNearestAlivePlayer(NPC)];
-            if (NPC.target < 0 || NPC.target == 255 || player.dead || !player.active)
+            if (NPC.target < 0 || NPC.target == 255 || Main.player[NPC.target].dead || !Main.player[NPC.target].active)
                 NPC.TargetClosest();
+            Player player = Main.player[NPC.target];
+
             switch (State)
             {
                 case 0:

@@ -1,12 +1,15 @@
-using Terraria.ModLoader;
-using Terraria.ID;
-using Terraria;
 using Microsoft.Xna.Framework;
-using Terraria.Audio;
 using Microsoft.Xna.Framework.Graphics;
-using Terraria.GameContent;
-using Redemption.Globals;
+using ParticleLibrary.Core;
 using Redemption.BaseExtension;
+using Redemption.Dusts;
+using Redemption.Globals;
+using Redemption.Particles;
+using Terraria;
+using Terraria.Audio;
+using Terraria.GameContent;
+using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace Redemption.Items.Weapons.PreHM.Melee
 {
@@ -32,6 +35,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
         public float SwingSpeed;
         int directionLock = 0;
         private bool parried;
+        public int pauseTimer;
         public override void AI()
         {
             Player player = Main.player[Projectile.owner];
@@ -57,12 +61,13 @@ namespace Redemption.Items.Weapons.PreHM.Melee
                 if (Projectile.ai[0] >= 1)
                 {
                     player.direction = directionLock;
-                    Projectile.ai[0]++;
+                    if (--pauseTimer <= 0)
+                        Projectile.ai[0]++;
                     if (Projectile.frame > 3)
                         player.itemRotation -= MathHelper.ToRadians(-20f * player.direction);
                     else
                         player.bodyFrame.Y = 5 * player.bodyFrame.Height;
-                    if (++Projectile.frameCounter >= SwingSpeed / 10)
+                    if (pauseTimer <= 0 && ++Projectile.frameCounter >= SwingSpeed / 10)
                     {
                         Projectile.frameCounter = 0;
                         Projectile.frame++;
@@ -73,10 +78,9 @@ namespace Redemption.Items.Weapons.PreHM.Melee
                         }
                         if (Projectile.frame >= 4 && Projectile.frame <= 5)
                         {
-                            for (int i = 0; i < Main.maxProjectiles; i++)
+                            foreach (Projectile target in Main.ActiveProjectiles)
                             {
-                                Projectile target = Main.projectile[i];
-                                if (!target.active || target.whoAmI == Projectile.whoAmI || !target.hostile)
+                                if (target.whoAmI == Projectile.whoAmI || !target.hostile)
                                     continue;
 
                                 if (RedeProjectile.SwordClashFriendly(Projectile, target, player, ref parried, 4))
@@ -97,6 +101,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
                                 }
                                 target.Redemption().ReflectDamageIncrease = 4;
                                 target.velocity.X = -target.velocity.X * 0.8f;
+                                RedeDraw.SpawnExplosion(target.Center, Color.White, shakeAmount: 0, scale: .5f, noDust: true, rot: RedeHelper.RandomRotation(), tex: "Redemption/Textures/SwordClash");
                             }
                         }
                         if (Projectile.frame > 9)
@@ -106,10 +111,9 @@ namespace Redemption.Items.Weapons.PreHM.Melee
                     }
                 }
             }
-
             Projectile.spriteDirection = player.direction;
 
-            Projectile.Center = player.Center;
+            Projectile.Center = player.RotatedRelativePoint(player.MountedCenter, true);
             player.itemTime = 2;
             player.itemAnimation = 2;
         }
@@ -126,8 +130,25 @@ namespace Redemption.Items.Weapons.PreHM.Melee
 
             modifiers.FlatBonusDamage += (int)tipBonus;
         }
+        private bool paused;
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
+            Player player = Main.player[Projectile.owner];
+            SoundEngine.PlaySound(CustomSounds.Slice4, Projectile.position);
+            player.RedemptionScreen().ScreenShakeIntensity += 5;
+            if (!paused)
+            {
+                pauseTimer = 6;
+                paused = true;
+            }
+            Vector2 directionTo = target.DirectionTo(player.Center);
+            for (int i = 0; i < 4; i++)
+                Dust.NewDustPerfect(target.Center + directionTo * 10 + new Vector2(0, 40) + player.velocity, ModContent.DustType<DustSpark2>(), directionTo.RotatedBy(Main.rand.NextFloat(-0.01f, 0.01f) + 3.14f + player.direction * MathHelper.PiOver4) * Main.rand.NextFloat(4f, 5f) + (player.velocity / 2), 0, new Color(214, 239, 243) * .8f, 2f);
+
+            Vector2 dir = target.DirectionTo(player.Center);
+            Vector2 drawPos = Vector2.Lerp(Projectile.Center, target.Center, 0.9f);
+            ParticleSystem.NewParticle(drawPos, dir.RotatedBy(Main.rand.NextFloat(-0.01f, 0.01f) + player.direction * MathHelper.PiOver4) * 50, new SlashParticle(), Color.LightCyan, 1.5f, layer: Layer.BeforePlayers);
+
             RedeProjectile.Decapitation(target, ref damageDone, ref hit.Crit);
         }
         public override bool PreDraw(ref Color lightColor)
@@ -142,7 +163,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
             var effects = Projectile.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
             int offset = Projectile.frame > 3 ? 14 : 0;
 
-            Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition - new Vector2(38 * player.direction, 18 - offset) + Vector2.UnitY * Projectile.gfxOffY,
+            Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition - new Vector2(38 * player.direction, 18 - offset),
                 new Rectangle?(rect), Projectile.GetAlpha(lightColor), Projectile.rotation, drawOrigin, Projectile.scale, effects, 0);
 
             Texture2D slash = ModContent.Request<Texture2D>("Redemption/Items/Weapons/PreHM/Melee/Zweihander_SlashProj2").Value;
@@ -152,7 +173,7 @@ namespace Redemption.Items.Weapons.PreHM.Melee
             Vector2 drawOrigin2 = new(slash.Width / 2, slash.Height / 2);
 
             if (Projectile.frame >= 3 && Projectile.frame <= 6)
-                Main.EntitySpriteDraw(slash, Projectile.Center - Main.screenPosition - new Vector2(11 * player.direction, -192 - offset) + Vector2.UnitY * Projectile.gfxOffY, new Rectangle?(rect2), Projectile.GetAlpha(Color.White), Projectile.rotation, drawOrigin2, Projectile.scale, effects, 0);
+                Main.EntitySpriteDraw(slash, Projectile.Center - Main.screenPosition - new Vector2(11 * player.direction, -192 - offset), new Rectangle?(rect2), Projectile.GetAlpha(Color.White), Projectile.rotation, drawOrigin2, Projectile.scale, effects, 0);
             return false;
         }
     }

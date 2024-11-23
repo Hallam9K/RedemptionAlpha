@@ -1,12 +1,13 @@
 using Microsoft.Xna.Framework;
-using Terraria;
-using Terraria.ModLoader;
+using Microsoft.Xna.Framework.Graphics;
+using Redemption.Dusts;
 using Redemption.Globals;
+using Redemption.Helpers;
+using ReLogic.Content;
+using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
-using Microsoft.Xna.Framework.Graphics;
-using Terraria.GameContent;
-using Redemption.Dusts;
+using Terraria.ModLoader;
 
 namespace Redemption.Projectiles.Magic
 {
@@ -32,6 +33,7 @@ namespace Redemption.Projectiles.Magic
             Projectile.localAI[0] = 10;
         }
         private NPC target;
+        public float Timer;
         public override void AI()
         {
             if (++Projectile.frameCounter >= 5)
@@ -52,7 +54,8 @@ namespace Redemption.Projectiles.Magic
                 Projectile.Move(player.Center, Projectile.localAI[0], 1);
                 if (Projectile.Hitbox.Intersects(player.Hitbox))
                 {
-                    SoundEngine.PlaySound(CustomSounds.ShootChange, player.position);
+                    if (!Main.dedServ)
+                        SoundEngine.PlaySound(CustomSounds.ShootChange, player.position);
                     Projectile.Kill();
                 }
                 return;
@@ -73,7 +76,7 @@ namespace Redemption.Projectiles.Magic
                     Projectile proj = Main.projectile[j];
                     if (!proj.active || proj.type != ModContent.ProjectileType<GigapeiliBolt>() || proj.ai[0] == 1)
                         continue;
-                    if (!Projectile.Hitbox.Intersects(proj.Hitbox))
+                    if (!Helper.CheckCircularCollision(Projectile.Center, 80, proj.Hitbox))
                         continue;
 
                     for (int i = 0; i < 3; i++)
@@ -85,26 +88,95 @@ namespace Redemption.Projectiles.Magic
                         Main.dust[dust].color = dustColor;
                     }
                     SoundEngine.PlaySound(SoundID.NPCHit34, Projectile.position);
-                    proj.velocity = RedeHelper.PolarVector(16, Projectile.rotation - MathHelper.PiOver2);
+                    proj.velocity = -proj.velocity * 2;
                     proj.damage = (int)(proj.damage * 1.5f);
                     proj.timeLeft = 120;
                     proj.ai[0] = 1;
                 }
             }
             Projectile.velocity *= .96f;
+            if (Timer++ > 60)
+                Timer = 0;
         }
-        public override bool PreDraw(ref Color lightColor)
-        {
-            Player player = Main.player[Projectile.owner];
-            Texture2D texture = TextureAssets.Projectile[Projectile.type].Value;
-            var effects = Projectile.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
-            int height = texture.Height / 4;
-            int y = height * Projectile.frame;
-            Rectangle rect = new(0, y, texture.Width, height);
-            Vector2 drawOrigin = new(texture.Width / 2, Projectile.height / 2);
 
-            Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition, new Rectangle?(rect), Projectile.GetAlpha(lightColor), (Projectile.Center - player.Center).ToRotation() - MathHelper.PiOver2, drawOrigin, Projectile.scale, effects, 0);
+        public static float c = 1f / 255f;
+        public Color innerColor = new(150 * c * 0.5f, 20 * c * 0.5f, 54 * c * 0.5f, 1f);
+        public Color borderColor = new(215 * c, 79 * c, 214 * c, 1f);
+
+        public override bool PreDraw(ref Color lightcolor)
+        {
+            //example apply of shader on sprite, not on texture
+            Main.spriteBatch.End();
+            Texture2D texture = ModContent.Request<Texture2D>("Redemption/Textures/PlainCircle").Value;
+            var effects = Projectile.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
+            Rectangle rect = new(0, 0, texture.Width, texture.Height);
+            Vector2 origin = new(texture.Width / 2, texture.Height / 2);
+
+            Effect ShieldEffect = ModContent.Request<Effect>("Redemption/Effects/Shield", AssetRequestMode.ImmediateLoad).Value;
+            Texture2D HexagonTexture = ModContent.Request<Texture2D>("Redemption/Textures/Hexagons", AssetRequestMode.ImmediateLoad).Value;
+            Vector2 pos = Projectile.Center - Main.screenPosition;
+
+            ShieldEffect.Parameters["offset"].SetValue(new Vector2(0.2f, 0f));
+            ShieldEffect.Parameters["sampleTexture"].SetValue(HexagonTexture);
+            ShieldEffect.Parameters["time"].SetValue(Main.GlobalTimeWrappedHourly * 6);
+            ShieldEffect.Parameters["border"].SetValue(Color.Multiply(borderColor, .5f).ToVector4());
+            ShieldEffect.Parameters["inner"].SetValue(Color.Multiply(innerColor, .5f).ToVector4());
+            ShieldEffect.Parameters["sinMult"].SetValue(3f);
+            ShieldEffect.Parameters["spriteRatio"].SetValue(new Vector2(3f, 3f));
+            ShieldEffect.Parameters["conversion"].SetValue(new Vector2(1f / (texture.Width / 2), 1f / (texture.Height / 2)));
+            ShieldEffect.Parameters["frameAmount"].SetValue(1f);
+            Main.spriteBatch.BeginAdditive(true);
+            ShieldEffect.CurrentTechnique.Passes[0].Apply();
+            if (!(Projectile.ai[0] == 1))
+            {
+                Main.EntitySpriteDraw(texture, pos, rect, Color.Red * 0.2f, 0, origin, 0.82f, effects, 0);
+            }
+            Main.spriteBatch.End();
+            Main.spriteBatch.BeginDefault();
             return true;
+        }
+
+        public override void PostDraw(Color lightColor)
+        {
+            Texture2D circle = ModContent.Request<Texture2D>("Redemption/Textures/RadialTelegraph3", AssetRequestMode.ImmediateLoad).Value;
+            Texture2D conical = ModContent.Request<Texture2D>("Redemption/Textures/RadialTelegraph2", AssetRequestMode.ImmediateLoad).Value;
+
+            Rectangle rect = new(0, 0, circle.Width, circle.Height);
+            Vector2 origin = new(circle.Width / 2, circle.Height / 2);
+
+            Color colour = new(255, 0, 0);
+            Vector2 position = Projectile.Center - Main.screenPosition;
+            float scale;
+            float opacity;
+
+            if (Timer <= 30)
+            {
+                scale = Timer / 32;
+                opacity = 1f;
+            }
+            else if (Timer < 60)
+            {
+                opacity = 1f - (Timer - 30) / 30;
+                scale = 0.9375f + (Timer - 30) / 320;
+            }
+            else scale = opacity = 0f;
+
+            Main.spriteBatch.End();
+            Main.spriteBatch.BeginAdditive();
+
+            if (!(Projectile.ai[0] == 1))
+            {
+                Main.EntitySpriteDraw(circle, position, new Rectangle?(rect), colour, Projectile.rotation - MathHelper.PiOver2, origin, 0.36f, 0, 0);
+                Main.EntitySpriteDraw(circle, position, new Rectangle?(rect), colour * opacity, Projectile.rotation - MathHelper.PiOver2, origin, 0.37f * scale, 0, 0);
+            }
+            Main.spriteBatch.End();
+            Main.spriteBatch.BeginDefault();
+            if (!(Projectile.ai[0] == 1))
+            {
+                Main.EntitySpriteDraw(conical, position, new Rectangle?(rect), colour * 0.5f, Projectile.rotation - MathHelper.PiOver2, origin, 0.34f, 0, 0);
+                Main.EntitySpriteDraw(conical, position, new Rectangle?(rect), colour * 0.5f, Projectile.rotation - 3 * MathHelper.PiOver4 + 0.08f, origin, 0.34f, 0, 0);
+                Main.EntitySpriteDraw(conical, position, new Rectangle?(rect), colour * 0.5f, Projectile.rotation - MathHelper.PiOver4 - 0.08f, origin, 0.34f, 0, 0);
+            }
         }
     }
 }

@@ -121,8 +121,9 @@ namespace Redemption.NPCs.Wasteland
         }
         public override void AI()
         {
-            Player player = Main.player[NPC.GetNearestAlivePlayer()];
-            NPC.TargetClosest();
+            if (NPC.target < 0 || NPC.target == 255 || Main.player[NPC.target].dead || !Main.player[NPC.target].active)
+                NPC.TargetClosest();
+            Player player = Main.player[NPC.target];
 
             Lighting.AddLight(NPC.Center, NPC.Opacity * 0.1f, NPC.Opacity, NPC.Opacity * 0.1f);
 

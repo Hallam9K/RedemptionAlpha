@@ -1,10 +1,12 @@
 using Microsoft.Xna.Framework;
-using Terraria;
-using Terraria.ModLoader;
-using Redemption.NPCs.Bosses.Obliterator;
+using ParticleLibrary.Core;
 using Redemption.Globals;
+using Redemption.NPCs.Bosses.Obliterator;
+using Redemption.Particles;
+using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace Redemption.Items.Weapons.PostML.Magic
 {
@@ -20,12 +22,28 @@ namespace Redemption.Items.Weapons.PostML.Magic
         public override void SetDefaults()
         {
             base.SetDefaults();
+            Projectile.width = 12;
+            Projectile.height = 12;
             Projectile.DamageType = DamageClass.Magic;
             Projectile.friendly = true;
             Projectile.hostile = false;
-            Projectile.penetrate = 1;
+            Projectile.penetrate = 2;
             Projectile.timeLeft = 120;
-            Projectile.extraUpdates = 1;
+            Projectile.extraUpdates = 2;
+            Projectile.usesLocalNPCImmunity = true;
+            Projectile.localNPCHitCooldown = 30;
+        }
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
+        {
+            ParticleSystem.NewParticle(Projectile.Center + Projectile.velocity, Projectile.velocity, new SlashParticleAlt(10, 1), Color.IndianRed, 2f, layer: Layer.BeforePlayers);
+            for (int i = 0; i < 3; i++)
+            {
+                float randomRotation = Main.rand.NextFloat(-0.5f, 0.5f);
+                float randomVel = Main.rand.NextFloat(2f, 3f);
+                Vector2 direction = target.Center.DirectionFrom(Main.player[Projectile.owner].Center);
+                Vector2 position = target.Center - direction * 10;
+                ParticleSystem.NewParticle(position, direction.RotatedBy(randomRotation) * randomVel * 12, new SpeedParticle(), Color.IndianRed, 1f);
+            }
         }
     }
     public class OOFingergun_Fingerflash : OO_Fingerflash
@@ -36,7 +54,7 @@ namespace Redemption.Items.Weapons.PostML.Magic
             // DisplayName.SetDefault("Fingerflash");
             Main.projFrames[Projectile.type] = 9;
         }
-        public override void SetDefaults() 
+        public override void SetDefaults()
         {
             base.SetDefaults();
             Projectile.DamageType = DamageClass.Magic;
@@ -61,7 +79,8 @@ namespace Redemption.Items.Weapons.PostML.Magic
                         fingergun.rotOffset = -0.4f;
                     }
 
-                    SoundEngine.PlaySound(CustomSounds.Laser1 with { Pitch = 0.1f, Volume = 0.7f }, Projectile.position);
+                    if (!Main.dedServ)
+                        SoundEngine.PlaySound(CustomSounds.Laser1 with { Pitch = 0.1f, Volume = 0.4f }, Projectile.position);
                     Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, gun.velocity * shootSpeed, ModContent.ProjectileType<OOFingergun_Laser>(), Projectile.damage, Projectile.knockBack, player.whoAmI);
                 }
                 if (++Projectile.frame >= 9)

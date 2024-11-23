@@ -1,11 +1,11 @@
 using Microsoft.Xna.Framework;
+using Redemption.Dusts;
+using Redemption.Effects.PrimitiveTrails;
+using Redemption.Globals;
+using Redemption.NPCs.Bosses.Gigapora;
+using System;
 using Terraria;
 using Terraria.ModLoader;
-using Redemption.Effects.PrimitiveTrails;
-using Redemption.NPCs.Bosses.Gigapora;
-using Redemption.BaseExtension;
-using System;
-using Redemption.Dusts;
 
 namespace Redemption.Projectiles.Magic
 {
@@ -25,42 +25,21 @@ namespace Redemption.Projectiles.Magic
         }
         public new void DoTrailCreation(TrailManager tManager)
         {
-            tManager.CreateTrail(Projectile, new GradientTrail(new Color(255, 236, 100, 100), new Color(0, 0, 0, 0)), new RoundCap(), new DefaultTrailPosition(), 5f, 100f);
-            tManager.CreateTrail(Projectile, new GradientTrail(new Color(255, 29, 29, 0), new Color(106, 16, 16, 0)), new RoundCap(), new DefaultTrailPosition(), 10f, 50f);
+            tManager.CreateTrail(Projectile, new GradientTrail(new Color(255, 236, 100, 100), new Color(0, 0, 0, 0)), new RoundCap(), new DefaultTrailPosition(), 20f, 100f);
+            tManager.CreateTrail(Projectile, new GradientTrail(new Color(255, 29, 29, 0), new Color(106, 16, 16, 0)), new RoundCap(), new DefaultTrailPosition(), 10f, 200f);
         }
+        NPC target;
+        bool targetted;
         public override bool PreAI()
         {
-            float spread = .1f;
+            float spread = .04f;
             if (Projectile.ai[0] is 1)
             {
                 spread = .02f;
-                Projectile.localAI[0]++;
-                if (Projectile.localAI[0] < 10)
+                if (RedeHelper.ClosestNPC(ref target, 2000, Projectile.Center) && !targetted)
                 {
-                    Vector2 move = Vector2.Zero;
-                    float distance = 1000;
-                    bool targetted = false;
-                    for (int i = 0; i < Main.maxNPCs; i++)
-                    {
-                        NPC target = Main.npc[i];
-                        if (!target.CanBeChasedBy() || !Collision.CanHit(Projectile.Center, 0, 0, target.Center, 0, 0) || target.Redemption().invisible)
-                            continue;
-
-                        Vector2 newMove = target.Center - Projectile.Center;
-                        float distanceTo = (float)Math.Sqrt(newMove.X * newMove.X + newMove.Y * newMove.Y);
-                        if (distanceTo < distance)
-                        {
-                            move = newMove;
-                            distance = distanceTo;
-                            targetted = true;
-                        }
-                    }
-                    if (targetted)
-                    {
-                        AdjustMagnitude(ref move);
-                        Projectile.velocity = (10 * Projectile.velocity + move) / 11f;
-                        AdjustMagnitude(ref Projectile.velocity);
-                    }
+                    targetted = true;
+                    Projectile.velocity = Projectile.Center.DirectionTo(target.Center) * 20f;
                 }
             }
             Projectile.velocity = Projectile.velocity.RotatedBy(Main.rand.NextFloat(-spread, spread));

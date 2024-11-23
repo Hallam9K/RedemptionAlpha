@@ -10370,8 +10370,8 @@ Mods: {
 			}
 
 			DAVEPainting: {
-				DisplayName: D A V E Painting
-				Tooltip: ""
+				DisplayName: DAVE
+				Tooltip: "'Adapted by Waasephi'"
 			}
 
 			AntiJohnSnailCage: {
@@ -10446,6 +10446,36 @@ Mods: {
 
 			ForretItem: {
 				DisplayName: Forret
+				Tooltip: ""
+			}
+
+			BoneSpiderCage: {
+				DisplayName: Bone Spider Cage
+				Tooltip: ""
+			}
+
+			CoastScarabCage: {
+				DisplayName: Coast Scarab Cage
+				Tooltip: ""
+			}
+
+			ForretCage: {
+				DisplayName: Forret Cage
+				Tooltip: ""
+			}
+
+			SandskinSpiderCage: {
+				DisplayName: Sandskin Spider Cage
+				Tooltip: ""
+			}
+
+			SpiderSwarmerCage: {
+				DisplayName: Spider Swarmer Cage
+				Tooltip: ""
+			}
+
+			TreeBugCage: {
+				DisplayName: Tree Bug Cage
 				Tooltip: ""
 			}
 		}
@@ -11872,6 +11902,12 @@ Mods: {
 			LeghornChickenCageTile.MapEntry: Leghorn Chicken Cage Tile
 			MoonflareBatCageTile.MapEntry: Moonflare Bat Cage Tile
 			RedChickenCageTile.MapEntry: Red Chicken Cage Tile
+			BoneSpiderCageTile.MapEntry: Bone Spider Cage Tile
+			CoastScarabCageTile.MapEntry: Coast Scarab Cage Tile
+			ForretCageTile.MapEntry: Forret Cage Tile
+			SandskinSpiderCageTile.MapEntry: Sandskin Spider Cage Tile
+			SpiderSwarmerCageTile.MapEntry: Spider Swarmer Cage Tile
+			TreeBugCageTile.MapEntry: Tree Bug Cage Tile
 		}
 
 		Keybinds: {

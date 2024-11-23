@@ -1,0 +1,16 @@
+=== 0.8 Beta .4046 === (November Patch)
+- Fixed an issue that made the Surface Portal's scanning for ground tiles not reset the Y axis when checking opposite side of spawn causing it to not be placed where it could've been why am I trying to explain this basically portal is placed better yahoo
+- Fixed issue with Golden Gateway freezing world gen with Remnants
+- Possibly fixed issue with Wielder Bot restarting the fight somehow
+- Added terrariums for Bone Spider, Coast Scarab, Forret, Tree Bug, Sandskin Spider, and Spider Swarmer
+- Moonflare Casters drop Moonflare Fragments now
+- Slayer's Crashed Ship ignores cloud tiles when scanning for ground to generate
+- Corrected DAVE Painting's name and tooltip
+- Gave Tiny Cleaver, Zweihander, Blade of the Mountain, Noble's Halberd more hit visuals
+- Nerfed Divinity's damage scaling from 3 -> 2.5, and removed chance to crit for the explosion's radius damage
+- Improved Gigapeili Contactor, increased size of bolts, gave drone a radial field for bolts to hit
+- Buffed Omega Finger Gun, doubled laser speed, increased hitbox from 8x8 to 12x12, increased penetration to 1, can fire an extra frame faster at max speed, and gave it a hit visual
+
+
+theres more coming
+===============

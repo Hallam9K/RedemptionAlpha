@@ -45,6 +45,7 @@ namespace Redemption.Items.Weapons.HM.Melee
             Item.shootSpeed = 5f;
             Item.shoot = ModContent.ProjectileType<TinyCleaver_Proj>();
         }
+        public override bool MeleePrefix() => true;
         public override void AddRecipes()
         {
             CreateRecipe()

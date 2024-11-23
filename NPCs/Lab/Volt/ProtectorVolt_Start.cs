@@ -56,11 +56,10 @@ namespace Redemption.NPCs.Lab.Volt
         public readonly Vector2 modifier = new(0, -200);
         public override void AI()
         {
+            if (NPC.target < 0 || NPC.target == 255 || Main.player[NPC.target].dead || !Main.player[NPC.target].active)
+                NPC.TargetClosest();
             Player player = Main.player[NPC.target];
             NPC.LookAtEntity(player);
-
-            if (NPC.target < 0 || NPC.target == 255 || player.dead || !player.active)
-                NPC.TargetClosest();
 
             if (RedeBossDowned.downedVolt)
                 NPC.Transform(ModContent.NPCType<ProtectorVolt_NPC>());

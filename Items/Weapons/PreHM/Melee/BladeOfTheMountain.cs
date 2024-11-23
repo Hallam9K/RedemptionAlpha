@@ -63,7 +63,8 @@ namespace Redemption.Items.Weapons.PreHM.Melee
             Main.dust[sparkle].velocity *= 0;
             Main.dust[sparkle].noGravity = true;
         }
-        private static readonly int[] unwantedPrefixes = new int[] { PrefixID.Terrible, PrefixID.Dull, PrefixID.Shameful, PrefixID.Annoying, PrefixID.Broken, PrefixID.Damaged, PrefixID.Shoddy, PrefixID.Weak };
+        public override bool MeleePrefix() => true;
+        private static readonly int[] unwantedPrefixes = new int[] { PrefixID.Terrible, PrefixID.Dull, PrefixID.Shameful, PrefixID.Annoying, PrefixID.Broken, PrefixID.Damaged, PrefixID.Shoddy, PrefixID.Weak, PrefixID.Lazy, PrefixID.Small, PrefixID.Slow, PrefixID.Tiny, PrefixID.Sluggish, PrefixID.Unhappy };
         public override bool AllowPrefix(int pre)
         {
             if (Array.IndexOf(unwantedPrefixes, pre) > -1)

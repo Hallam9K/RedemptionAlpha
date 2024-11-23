@@ -76,8 +76,10 @@ namespace Redemption.NPCs.Wasteland
         private Vector2 vector;
         public override void AI()
         {
+            if (NPC.target < 0 || NPC.target == 255 || Main.player[NPC.target].dead || !Main.player[NPC.target].active)
+                NPC.TargetClosest();
             Player player = Main.player[NPC.target];
-            NPC.TargetClosest();
+
             NPC.rotation.SlowRotation((player.Center - NPC.Center).ToRotation() + MathHelper.Pi, MathHelper.Pi / 120);
 
             if (NPC.ai[0] is 0)
