@@ -1,18 +1,20 @@
-using Microsoft.Xna.Framework;
+using BetterDialogue.UI;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Base;
 using Redemption.Globals;
 using Redemption.Items.Armor.Vanity.TBot;
+using Redemption.UI.Dialect;
 using Terraria;
+using Terraria.Audio;
 using Terraria.GameContent;
 using Terraria.ID;
-using Terraria.ModLoader;
 using Terraria.Localization;
+using Terraria.ModLoader;
 using Terraria.Utilities;
 
 namespace Redemption.NPCs.Lab.Volt
 {
-    public class ProtectorVolt_NPC : ModNPC
+    public class ProtectorVolt_NPC : ModRedeNPC
     {
         public override void SetStaticDefaults()
         {
@@ -20,7 +22,7 @@ namespace Redemption.NPCs.Lab.Volt
             Main.npcFrameCount[NPC.type] = 2;
             NPCID.Sets.ActsLikeTownNPC[Type] = true;
             NPCID.Sets.NoTownNPCHappiness[Type] = true;
-            NPCID.Sets.NPCBestiaryDrawModifiers value = new(0) { Hide = true };
+            NPCID.Sets.NPCBestiaryDrawModifiers value = new() { Hide = true };
             NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, value);
         }
         public override void SetDefaults()
@@ -34,6 +36,22 @@ namespace Redemption.NPCs.Lab.Volt
             NPC.knockBackResist = 0;
             NPC.aiStyle = -1;
             NPC.npcSlots = 0;
+
+            DialogueBoxStyle = LIDEN;
+        }
+        public override bool HasTalkButton() => true;
+        public override bool HasLeftHangingButton(Player player) => RedeGlobalButton.talkActive;
+        public override bool HasRightHangingButton(Player player) => RedeGlobalButton.talkActive && RedeGlobalButton.talkID != 0;
+        public override HangingButtonParams LeftHangingButton(Player player) => new(4, true, -2);
+        public override HangingButtonParams RightHangingButton(Player player)
+        {
+            int boxNum = RedeGlobalButton.talkID switch
+            {
+                2 => 5,
+                3 or 4 => 4,
+                _ => 2,
+            };
+            return new(boxNum, false, -2);
         }
 
         public override bool UsesPartyHat() => false;
@@ -56,129 +74,12 @@ namespace Redemption.NPCs.Lab.Volt
             NPC.spriteDirection = 1;
         }
         private readonly float gunRot = 4.9742f;
-        public static int ChatNumber = 0;
-        public override void SetChatButtons(ref string button, ref string button2)
-        {
-            button2 = Language.GetTextValue("Mods.Redemption.DialogueBox.CycleD");
-            switch (ChatNumber)
-            {
-                case 0:
-                    button = Language.GetTextValue("Mods.Redemption.DialogueBox.Volt.1");
-                    break;
-                case 1:
-                    button = Language.GetTextValue("Mods.Redemption.DialogueBox.Volt.2");
-                    break;
-                case 2:
-                    button = Language.GetTextValue("Mods.Redemption.DialogueBox.Volt.3");
-                    break;
-                case 3:
-                    button = Language.GetTextValue("Mods.Redemption.DialogueBox.Volt.4");
-                    break;
-                case 4:
-                    button = Language.GetTextValue("Mods.Redemption.DialogueBox.Volt.5");
-                    break;
-                case 5:
-                    button = Language.GetTextValue("Mods.Redemption.DialogueBox.Volt.6");
-                    break;
-                case 6:
-                    button = Language.GetTextValue("Mods.Redemption.DialogueBox.Volt.7");
-                    break;
-                case 7:
-                    button = Language.GetTextValue("Mods.Redemption.DialogueBox.Volt.9");
-                    break;
-                case 8:
-                    button = Language.GetTextValue("Mods.Redemption.DialogueBox.Volt.8");
-                    break;
-                case 9:
-                    button = Language.GetTextValue("Mods.Redemption.DialogueBox.Volt.10");
-                    break;
-            }
-        }
-
-        public override void OnChatButtonClicked(bool firstButton, ref string shopName)
-        {
-            if (firstButton)
-            {
-                switch (ChatNumber)
-                {
-                    case 0:
-                        RedeQuest.voltVars[0] = true;
-                        break;
-                    case 6:
-                        RedeQuest.voltVars[3] = true;
-                        break;
-                    case 7:
-                        RedeQuest.voltVars[1] = true;
-                        break;
-                }
-                if (ChatNumber == 9)
-                    NPC.Transform(ModContent.NPCType<ProtectorVolt>());
-                else
-                    Main.npcChatText = ChitChat();
-            }
-            else
-            {
-                bool skip = true;
-                while (skip)
-                {
-                    ChatNumber++;
-                    if (ChatNumber > 9)
-                        ChatNumber = 0;
-                    if (!RedeQuest.voltVars[0] && (ChatNumber == 1 || ChatNumber == 2 || ChatNumber == 3))
-                        skip = true;
-                    else if (!RedeQuest.voltVars[1] && ChatNumber == 8)
-                        skip = true;
-                    else if (!RedeQuest.voltVars[3] && ChatNumber == 7)
-                        skip = true;
-                    else if (!RedeBossDowned.downedMACE && ChatNumber == 4)
-                        skip = true;
-                    else
-                        skip = false;
-                }
-            }
-        }
-
-        public static string ChitChat()
-        {
-            WeightedRandom<string> chat = new(Main.rand);
-            switch (ChatNumber)
-            {
-                case 0:
-                    chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Volt.CycleDialogue1"));
-                    break;
-                case 1:
-                    chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Volt.CycleDialogue2"));
-                    break;
-                case 2://
-                    chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Volt.CycleDialogue3"));
-                    break;
-                case 3:
-                    chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Volt.CycleDialogue4"));
-                    break;
-                case 4:
-                    chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Volt.CycleDialogue5"));
-                    break;
-                case 5:
-                    chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Volt.CycleDialogue6"));
-                    break;
-                case 6:
-                    chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Volt.CycleDialogue7"));
-                    break;
-                case 7:
-                    chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Volt.CycleDialogue9"));
-                    break;
-                case 8:
-                    chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Volt.CycleDialogue8"));
-                    break;
-            }
-            return chat;
-        }
         public override string GetChat()
         {
-            Player player = Main.player[Main.myPlayer];
+            Player player = Main.LocalPlayer;
             WeightedRandom<string> chat = new(Main.rand);
 
-            if (BasePlayer.HasChestplate(player, ModContent.ItemType<AndroidArmour>(), true) && BasePlayer.HasLeggings(player, ModContent.ItemType<AndroidPants>(), true))
+            if (BasePlayer.HasChestplate(player, ItemType<AndroidArmour>(), true) && BasePlayer.HasLeggings(player, ItemType<AndroidPants>(), true))
             {
                 chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Volt.Bot1"));
                 chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Volt.Bot2"));
@@ -188,30 +89,401 @@ namespace Redemption.NPCs.Lab.Volt
             {
                 chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Volt.Normal1"));
                 chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Volt.Normal2"));
+                chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Volt.Normal3"));
             }
-            if (BasePlayer.HasHelmet(player, ModContent.ItemType<VoltHead>(), true))
+            if (BasePlayer.HasHelmet(player, ItemType<VoltHead>(), true))
             {
-                chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Volt.Volt1"));
-                chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Volt.Volt2"));
+                chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Volt.Volt1"), 3);
+                chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Volt.Volt2"), 3);
             }
-            if (BasePlayer.HasHelmet(player, ModContent.ItemType<AdamHead>(), true))
-            {
-                chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Volt.Adam1"));
-                chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Volt.Adam2"));
-                chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Volt.Adam3"));
-            }
+            if (BasePlayer.HasHelmet(player, ItemType<AdamHead>(), true))
+                chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Volt.Adam1"), 3);
+            if (BasePlayer.HasChestplate(player, ItemType<JanitorOutfit>(), true) && BasePlayer.HasLeggings(player, ItemType<JanitorPants>(), true))
+                chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Volt.Janitor1"), 3);
+            if (player.IsFullTBot())
+                chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Volt.TBot1"), 2);
             return chat;
         }
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
             Texture2D texture = TextureAssets.Npc[NPC.type].Value;
-            Texture2D GunTex = ModContent.Request<Texture2D>(Texture + "_Extra").Value;
+            Texture2D GunTex = Request<Texture2D>(Texture + "_Extra").Value;
             var effects = NPC.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
 
-            spriteBatch.Draw(GunTex, NPC.Center - screenPos, new Rectangle?(new Rectangle(0, 0, GunTex.Width, GunTex.Height)), drawColor, gunRot, new Vector2(GunTex.Width / 2f, GunTex.Height / 2f), NPC.scale, effects, 0f);
+            spriteBatch.Draw(GunTex, NPC.Center - screenPos, new Rectangle?(new Rectangle(0, 0, GunTex.Width, GunTex.Height)), NPC.GetAlpha(drawColor), gunRot, new Vector2(GunTex.Width / 2f, GunTex.Height / 2f), NPC.scale, effects, 0f);
 
-            spriteBatch.Draw(texture, NPC.Center - screenPos, NPC.frame, drawColor, NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0f);
+            spriteBatch.Draw(texture, NPC.Center - screenPos, NPC.frame, NPC.GetAlpha(drawColor), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0f);
             return false;
+        }
+    }
+    public class ChallengeButton_Volt : ChatButton
+    {
+        public override double Priority => 100.0;
+        public override string Text(NPC npc, Player player) => Language.GetTextValue("Mods.Redemption.DialogueBox.Volt.20");
+        public override bool IsActive(NPC npc, Player player) => npc.type == NPCType<ProtectorVolt_NPC>() && !RedeGlobalButton.talkActive;
+        public override Color? OverrideColor(NPC npc, Player player) => new((byte)(255f * Main.mouseTextColor / 255f), (byte)(150f * Main.mouseTextColor / 255f), (byte)(0f * Main.mouseTextColor / 255f), Main.mouseTextColor);
+        public override void OnClick(NPC npc, Player player)
+        {
+            Main.CloseNPCChatOrSign();
+            npc.Transform(NPCType<ProtectorVolt>());
+        }
+    }
+    public class WhoAreYouButton_Volt : ChatButton
+    {
+        public override double Priority => 200.0;
+        public override void ModifyPosition(NPC npc, Player player, ref Vector2 position)
+        {
+            int textLength = (int)FontAssets.MouseText.Value.MeasureString(ChatButtonLoader.GetText(this, npc, player)).X;
+            position.X = (Main.screenWidth / 2) - 150 - (textLength / 2);
+            position.Y += 56;
+        }
+        public override string Text(NPC npc, Player player) => Language.GetTextValue("Mods.Redemption.DialogueBox.Volt.1");
+        public override bool IsActive(NPC npc, Player player) => npc.type == NPCType<ProtectorVolt_NPC>() && RedeGlobalButton.talkActive;
+        public override void OnClick(NPC npc, Player player)
+        {
+            RedeGlobalButton.talkID = 1;
+            SoundEngine.PlaySound(SoundID.Chat);
+            Main.npcChatText = Language.GetTextValue("Mods.Redemption.Dialogue.Volt.Dialogue1");
+        }
+    }
+    public class OtherTBotsButton_Volt : ChatButton
+    {
+        public override double Priority => 200.0;
+        public override void ModifyPosition(NPC npc, Player player, ref Vector2 position)
+        {
+            int textLength = (int)FontAssets.MouseText.Value.MeasureString(ChatButtonLoader.GetText(this, npc, player)).X;
+            position.X = (Main.screenWidth / 2) - 150 - (textLength / 2);
+            position.Y += 56 + 46;
+        }
+        public override string Text(NPC npc, Player player) => Language.GetTextValue("Mods.Redemption.DialogueBox.Volt.4");
+        public override bool IsActive(NPC npc, Player player) => npc.type == NPCType<ProtectorVolt_NPC>() && RedeGlobalButton.talkActive;
+        public override void OnClick(NPC npc, Player player)
+        {
+            RedeGlobalButton.talkID = 2;
+            SoundEngine.PlaySound(SoundID.Chat);
+            Main.npcChatText = Language.GetTextValue("Mods.Redemption.Dialogue.Volt.Dialogue2");
+        }
+    }
+    public class GirusButton_Volt : ChatButton
+    {
+        public override double Priority => 200.0;
+        public override void ModifyPosition(NPC npc, Player player, ref Vector2 position)
+        {
+            int textLength = (int)FontAssets.MouseText.Value.MeasureString(ChatButtonLoader.GetText(this, npc, player)).X;
+            position.X = (Main.screenWidth / 2) - 150 - (textLength / 2);
+            position.Y += 56 + (46 * 2);
+        }
+        public override string Text(NPC npc, Player player) => Language.GetTextValue("Mods.Redemption.DialogueBox.Volt.10");
+        public override bool IsActive(NPC npc, Player player) => npc.type == NPCType<ProtectorVolt_NPC>() && RedeGlobalButton.talkActive;
+        public override void OnClick(NPC npc, Player player)
+        {
+            RedeGlobalButton.talkID = 3;
+            SoundEngine.PlaySound(SoundID.Chat);
+            Main.npcChatText = Language.GetTextValue("Mods.Redemption.Dialogue.Volt.Dialogue3");
+        }
+    }
+    public class ThisPlaceButton_Volt : ChatButton
+    {
+        public override double Priority => 200.0;
+        public override void ModifyPosition(NPC npc, Player player, ref Vector2 position)
+        {
+            int textLength = (int)FontAssets.MouseText.Value.MeasureString(ChatButtonLoader.GetText(this, npc, player)).X;
+            position.X = (Main.screenWidth / 2) - 150 - (textLength / 2);
+            position.Y += 56 + (46 * 3);
+        }
+        public override string Text(NPC npc, Player player) => Language.GetTextValue("Mods.Redemption.DialogueBox.Volt.15");
+        public override bool IsActive(NPC npc, Player player) => npc.type == NPCType<ProtectorVolt_NPC>() && RedeGlobalButton.talkActive;
+        public override void OnClick(NPC npc, Player player)
+        {
+            RedeGlobalButton.talkID = 4;
+            SoundEngine.PlaySound(SoundID.Chat);
+            Main.npcChatText = Language.GetTextValue("Mods.Redemption.Dialogue.Volt.Dialogue4");
+        }
+    }
+    public class WhatDoYouDoHereButton_Volt : ChatButton
+    {
+        public static bool clicked;
+        public override double Priority => 200.0;
+        public override void ModifyPosition(NPC npc, Player player, ref Vector2 position)
+        {
+            int textLength = (int)FontAssets.MouseText.Value.MeasureString(ChatButtonLoader.GetText(this, npc, player)).X;
+            position.X = (Main.screenWidth / 2) - 150 - (textLength / 2) + 300;
+            position.Y += 56;
+        }
+        public override string Text(NPC npc, Player player) => Language.GetTextValue("Mods.Redemption.DialogueBox.Volt.2");
+        public override bool IsActive(NPC npc, Player player) => npc.type == NPCType<ProtectorVolt_NPC>() && RedeGlobalButton.talkActive && RedeGlobalButton.talkID is 1;
+        public override void OnClick(NPC npc, Player player)
+        {
+            clicked = true;
+            SoundEngine.PlaySound(SoundID.Chat);
+            Main.npcChatText = Language.GetTextValue("Mods.Redemption.Dialogue.Volt.SubDialogue1");
+        }
+    }
+    public class CoworkersButton_Volt : ChatButton
+    {
+        public override double Priority => 200.0;
+        public override void ModifyPosition(NPC npc, Player player, ref Vector2 position)
+        {
+            int textLength = (int)FontAssets.MouseText.Value.MeasureString(ChatButtonLoader.GetText(this, npc, player)).X;
+            position.X = (Main.screenWidth / 2) - 150 - (textLength / 2) + 300;
+            position.Y += 56 + 46;
+        }
+        public override string Text(NPC npc, Player player) => !WhatDoYouDoHereButton_Volt.clicked ? "???" : Language.GetTextValue("Mods.Redemption.DialogueBox.Volt.3");
+        public override bool IsActive(NPC npc, Player player) => npc.type == NPCType<ProtectorVolt_NPC>() && RedeGlobalButton.talkActive && RedeGlobalButton.talkID is 1;
+        public override Color? OverrideColor(NPC npc, Player player) => !WhatDoYouDoHereButton_Volt.clicked ? Color.Gray : null;
+        public override void OnClick(NPC npc, Player player)
+        {
+            if (!WhatDoYouDoHereButton_Volt.clicked)
+                return;
+            SoundEngine.PlaySound(SoundID.Chat);
+            Main.npcChatText = Language.GetTextValue("Mods.Redemption.Dialogue.Volt.SubDialogue2");
+        }
+    }
+    public class TheAlphaButton_Volt : ChatButton
+    {
+        public static bool clicked;
+        public override double Priority => 200.0;
+        public override void ModifyPosition(NPC npc, Player player, ref Vector2 position)
+        {
+            int textLength = (int)FontAssets.MouseText.Value.MeasureString(ChatButtonLoader.GetText(this, npc, player)).X;
+            position.X = (Main.screenWidth / 2) - 150 - (textLength / 2) + 300;
+            position.Y += 56;
+        }
+        public override string Text(NPC npc, Player player) => Language.GetTextValue("Mods.Redemption.DialogueBox.Volt.5");
+        public override bool IsActive(NPC npc, Player player) => npc.type == NPCType<ProtectorVolt_NPC>() && RedeGlobalButton.talkActive && RedeGlobalButton.talkID is 2;
+        public override void OnClick(NPC npc, Player player)
+        {
+            clicked = true;
+            SoundEngine.PlaySound(SoundID.Chat);
+            Main.npcChatText = Language.GetTextValue("Mods.Redemption.Dialogue.Volt.SubDialogue3");
+        }
+    }
+    public class AdamButton_Volt : ChatButton
+    {
+        public override double Priority => 200.0;
+        public override void ModifyPosition(NPC npc, Player player, ref Vector2 position)
+        {
+            int textLength = (int)FontAssets.MouseText.Value.MeasureString(ChatButtonLoader.GetText(this, npc, player)).X;
+            position.X = (Main.screenWidth / 2) - 150 - (textLength / 2) + 300;
+            position.Y += 56 + 46;
+        }
+        public override string Text(NPC npc, Player player) => !TheAlphaButton_Volt.clicked ? "???" : Language.GetTextValue("Mods.Redemption.DialogueBox.Volt.6");
+        public override bool IsActive(NPC npc, Player player) => npc.type == NPCType<ProtectorVolt_NPC>() && RedeGlobalButton.talkActive && RedeGlobalButton.talkID is 2;
+        public override Color? OverrideColor(NPC npc, Player player) => !TheAlphaButton_Volt.clicked ? Color.Gray : null;
+        public override void OnClick(NPC npc, Player player)
+        {
+            if (!TheAlphaButton_Volt.clicked)
+                return;
+            SoundEngine.PlaySound(SoundID.Chat);
+            string s2 = player.IsFullTBot() ? Language.GetTextValue("Mods.Redemption.Dialogue.Volt.SubDialogue4C") : Language.GetTextValue("Mods.Redemption.Dialogue.Volt.SubDialogue4B");
+            Main.npcChatText = Language.GetTextValue("Mods.Redemption.Dialogue.Volt.SubDialogue4") + s2 + Language.GetTextValue("Mods.Redemption.Dialogue.Volt.SubDialogue4D");
+        }
+    }
+    public class DeadlyGroupButton_Volt : ChatButton
+    {
+        public override double Priority => 200.0;
+        public override void ModifyPosition(NPC npc, Player player, ref Vector2 position)
+        {
+            int textLength = (int)FontAssets.MouseText.Value.MeasureString(ChatButtonLoader.GetText(this, npc, player)).X;
+            position.X = (Main.screenWidth / 2) - 150 - (textLength / 2) + 300;
+            position.Y += 56 + (46 * 2);
+        }
+        public override string Text(NPC npc, Player player) => !TheAlphaButton_Volt.clicked ? "???" : Language.GetTextValue("Mods.Redemption.DialogueBox.Volt.7");
+        public override bool IsActive(NPC npc, Player player) => npc.type == NPCType<ProtectorVolt_NPC>() && RedeGlobalButton.talkActive && RedeGlobalButton.talkID is 2;
+        public override Color? OverrideColor(NPC npc, Player player) => !TheAlphaButton_Volt.clicked ? Color.Gray : null;
+        public override void OnClick(NPC npc, Player player)
+        {
+            if (!TheAlphaButton_Volt.clicked)
+                return;
+            SoundEngine.PlaySound(SoundID.Chat);
+            Main.npcChatText = Language.GetTextValue("Mods.Redemption.Dialogue.Volt.SubDialogue5");
+        }
+    }
+    public class HumanButton_Volt : ChatButton
+    {
+        public override double Priority => 200.0;
+        public override void ModifyPosition(NPC npc, Player player, ref Vector2 position)
+        {
+            int textLength = (int)FontAssets.MouseText.Value.MeasureString(ChatButtonLoader.GetText(this, npc, player)).X;
+            position.X = (Main.screenWidth / 2) - 150 - (textLength / 2) + 300;
+            position.Y += 56 + (46 * 3);
+        }
+        public override string Text(NPC npc, Player player) => !TheAlphaButton_Volt.clicked ? "???" : Language.GetTextValue("Mods.Redemption.DialogueBox.Volt.8");
+        public override bool IsActive(NPC npc, Player player) => npc.type == NPCType<ProtectorVolt_NPC>() && RedeGlobalButton.talkActive && RedeGlobalButton.talkID is 2;
+        public override Color? OverrideColor(NPC npc, Player player) => !TheAlphaButton_Volt.clicked ? Color.Gray : null;
+        public override void OnClick(NPC npc, Player player)
+        {
+            if (!TheAlphaButton_Volt.clicked)
+                return;
+            SoundEngine.PlaySound(SoundID.Chat);
+            Main.npcChatText = Language.GetTextValue("Mods.Redemption.Dialogue.Volt.SubDialogue6");
+        }
+    }
+    public class ScavengersButton_Volt : ChatButton
+    {
+        public override double Priority => 200.0;
+        public override void ModifyPosition(NPC npc, Player player, ref Vector2 position)
+        {
+            int textLength = (int)FontAssets.MouseText.Value.MeasureString(ChatButtonLoader.GetText(this, npc, player)).X;
+            position.X = (Main.screenWidth / 2) - 150 - (textLength / 2) + 300;
+            position.Y += 56 + (46 * 4);
+        }
+        public override string Text(NPC npc, Player player) => Language.GetTextValue("Mods.Redemption.DialogueBox.Volt.9");
+        public override bool IsActive(NPC npc, Player player) => npc.type == NPCType<ProtectorVolt_NPC>() && RedeGlobalButton.talkActive && RedeGlobalButton.talkID is 2;
+        public override void OnClick(NPC npc, Player player)
+        {
+            SoundEngine.PlaySound(SoundID.Chat);
+            Main.npcChatText = Language.GetTextValue("Mods.Redemption.Dialogue.Volt.SubDialogue7");
+        }
+    }
+    public class WhyFollowGirusButton_Volt : ChatButton
+    {
+        public static bool clicked;
+        public override double Priority => 200.0;
+        public override void ModifyPosition(NPC npc, Player player, ref Vector2 position)
+        {
+            int textLength = (int)FontAssets.MouseText.Value.MeasureString(ChatButtonLoader.GetText(this, npc, player)).X;
+            position.X = (Main.screenWidth / 2) - 150 - (textLength / 2) + 300;
+            position.Y += 56;
+        }
+        public override string Text(NPC npc, Player player) => Language.GetTextValue("Mods.Redemption.DialogueBox.Volt.11");
+        public override bool IsActive(NPC npc, Player player) => npc.type == NPCType<ProtectorVolt_NPC>() && RedeGlobalButton.talkActive && RedeGlobalButton.talkID is 3;
+        public override void OnClick(NPC npc, Player player)
+        {
+            clicked = true;
+            SoundEngine.PlaySound(SoundID.Chat);
+            Main.npcChatText = Language.GetTextValue("Mods.Redemption.Dialogue.Volt.SubDialogue8");
+        }
+    }
+    public class UnluckyOnesButton_Volt : ChatButton
+    {
+        public override double Priority => 200.0;
+        public override void ModifyPosition(NPC npc, Player player, ref Vector2 position)
+        {
+            int textLength = (int)FontAssets.MouseText.Value.MeasureString(ChatButtonLoader.GetText(this, npc, player)).X;
+            position.X = (Main.screenWidth / 2) - 150 - (textLength / 2) + 300;
+            position.Y += 56 + 46;
+        }
+        public override string Text(NPC npc, Player player) => !WhyFollowGirusButton_Volt.clicked ? "???" : Language.GetTextValue("Mods.Redemption.DialogueBox.Volt.12");
+        public override bool IsActive(NPC npc, Player player) => npc.type == NPCType<ProtectorVolt_NPC>() && RedeGlobalButton.talkActive && RedeGlobalButton.talkID is 3;
+        public override Color? OverrideColor(NPC npc, Player player) => !WhyFollowGirusButton_Volt.clicked ? Color.Gray : null;
+        public override void OnClick(NPC npc, Player player)
+        {
+            if (!WhyFollowGirusButton_Volt.clicked)
+                return;
+            SoundEngine.PlaySound(SoundID.Chat);
+            Main.npcChatText = Language.GetTextValue("Mods.Redemption.Dialogue.Volt.SubDialogue9");
+        }
+    }
+    public class WhoCreatedYouButton_Volt : ChatButton
+    {
+        public override double Priority => 200.0;
+        public override void ModifyPosition(NPC npc, Player player, ref Vector2 position)
+        {
+            int textLength = (int)FontAssets.MouseText.Value.MeasureString(ChatButtonLoader.GetText(this, npc, player)).X;
+            position.X = (Main.screenWidth / 2) - 150 - (textLength / 2) + 300;
+            position.Y += 56 + (46 * 2);
+        }
+        public override string Text(NPC npc, Player player) => !WhyFollowGirusButton_Volt.clicked ? "???" : Language.GetTextValue("Mods.Redemption.DialogueBox.Volt.13");
+        public override bool IsActive(NPC npc, Player player) => npc.type == NPCType<ProtectorVolt_NPC>() && RedeGlobalButton.talkActive && RedeGlobalButton.talkID is 3;
+        public override Color? OverrideColor(NPC npc, Player player) => !WhyFollowGirusButton_Volt.clicked ? Color.Gray : null;
+        public override void OnClick(NPC npc, Player player)
+        {
+            if (!WhyFollowGirusButton_Volt.clicked)
+                return;
+            SoundEngine.PlaySound(SoundID.Chat);
+            Main.npcChatText = Language.GetTextValue("Mods.Redemption.Dialogue.Volt.SubDialogue10");
+        }
+    }
+    public class HowDidGirusFreeYouButton_Volt : ChatButton
+    {
+        public override double Priority => 200.0;
+        public override void ModifyPosition(NPC npc, Player player, ref Vector2 position)
+        {
+            int textLength = (int)FontAssets.MouseText.Value.MeasureString(ChatButtonLoader.GetText(this, npc, player)).X;
+            position.X = (Main.screenWidth / 2) - 150 - (textLength / 2) + 300;
+            position.Y += 56 + (46 * 3);
+        }
+        public override string Text(NPC npc, Player player) => !WhyFollowGirusButton_Volt.clicked ? "???" : Language.GetTextValue("Mods.Redemption.DialogueBox.Volt.14");
+        public override bool IsActive(NPC npc, Player player) => npc.type == NPCType<ProtectorVolt_NPC>() && RedeGlobalButton.talkActive && RedeGlobalButton.talkID is 3;
+        public override Color? OverrideColor(NPC npc, Player player) => !WhyFollowGirusButton_Volt.clicked ? Color.Gray : null;
+        public override void OnClick(NPC npc, Player player)
+        {
+            if (!WhyFollowGirusButton_Volt.clicked)
+                return;
+            SoundEngine.PlaySound(SoundID.Chat);
+            Main.npcChatText = Language.GetTextValue("Mods.Redemption.Dialogue.Volt.SubDialogue11");
+        }
+    }
+    public class WhySoManyInfectedButton_Volt : ChatButton
+    {
+        public override double Priority => 200.0;
+        public override void ModifyPosition(NPC npc, Player player, ref Vector2 position)
+        {
+            int textLength = (int)FontAssets.MouseText.Value.MeasureString(ChatButtonLoader.GetText(this, npc, player)).X;
+            position.X = (Main.screenWidth / 2) - 150 - (textLength / 2) + 300;
+            position.Y += 56;
+        }
+        public override string Text(NPC npc, Player player) => Language.GetTextValue("Mods.Redemption.DialogueBox.Volt.16");
+        public override bool IsActive(NPC npc, Player player) => npc.type == NPCType<ProtectorVolt_NPC>() && RedeGlobalButton.talkActive && RedeGlobalButton.talkID is 4;
+        public override void OnClick(NPC npc, Player player)
+        {
+            SoundEngine.PlaySound(SoundID.Chat);
+            Main.npcChatText = Language.GetTextValue("Mods.Redemption.Dialogue.Volt.SubDialogue12");
+        }
+    }
+    public class JanitorButton_Volt : ChatButton
+    {
+        public override double Priority => 200.0;
+        public override void ModifyPosition(NPC npc, Player player, ref Vector2 position)
+        {
+            int textLength = (int)FontAssets.MouseText.Value.MeasureString(ChatButtonLoader.GetText(this, npc, player)).X;
+            position.X = (Main.screenWidth / 2) - 150 - (textLength / 2) + 300;
+            position.Y += 56 + 46;
+        }
+        public override string Text(NPC npc, Player player) => Language.GetTextValue("Mods.Redemption.DialogueBox.Volt.17");
+        public override bool IsActive(NPC npc, Player player) => npc.type == NPCType<ProtectorVolt_NPC>() && RedeGlobalButton.talkActive && RedeGlobalButton.talkID is 4;
+        public override void OnClick(NPC npc, Player player)
+        {
+            SoundEngine.PlaySound(SoundID.Chat);
+            Main.npcChatText = Language.GetTextValue("Mods.Redemption.Dialogue.Volt.SubDialogue13");
+        }
+    }
+    public class MACEButton_Volt : ChatButton
+    {
+        public override double Priority => 200.0;
+        public override void ModifyPosition(NPC npc, Player player, ref Vector2 position)
+        {
+            int textLength = (int)FontAssets.MouseText.Value.MeasureString(ChatButtonLoader.GetText(this, npc, player)).X;
+            position.X = (Main.screenWidth / 2) - 150 - (textLength / 2) + 300;
+            position.Y += 56 + (46 * 2);
+        }
+        public override string Text(NPC npc, Player player) => !RedeBossDowned.downedMACE ? "???" : Language.GetTextValue("Mods.Redemption.DialogueBox.Volt.18");
+        public override bool IsActive(NPC npc, Player player) => npc.type == NPCType<ProtectorVolt_NPC>() && RedeGlobalButton.talkActive && RedeGlobalButton.talkID is 4;
+        public override Color? OverrideColor(NPC npc, Player player) => !RedeBossDowned.downedMACE ? Color.Gray : null;
+        public override void OnClick(NPC npc, Player player)
+        {
+            if (!RedeBossDowned.downedMACE)
+                return;
+            SoundEngine.PlaySound(SoundID.Chat);
+            Main.npcChatText = Language.GetTextValue("Mods.Redemption.Dialogue.Volt.SubDialogue14");
+        }
+    }
+    public class BottomOfLabButton_Volt : ChatButton
+    {
+        public override double Priority => 200.0;
+        public override void ModifyPosition(NPC npc, Player player, ref Vector2 position)
+        {
+            int textLength = (int)FontAssets.MouseText.Value.MeasureString(ChatButtonLoader.GetText(this, npc, player)).X;
+            position.X = (Main.screenWidth / 2) - 150 - (textLength / 2) + 300;
+            position.Y += 56 + (46 * 3);
+        }
+        public override string Text(NPC npc, Player player) => Language.GetTextValue("Mods.Redemption.DialogueBox.Volt.19");
+        public override bool IsActive(NPC npc, Player player) => npc.type == NPCType<ProtectorVolt_NPC>() && RedeGlobalButton.talkActive && RedeGlobalButton.talkID is 4;
+        public override void OnClick(NPC npc, Player player)
+        {
+            SoundEngine.PlaySound(SoundID.Chat);
+            Main.npcChatText = Language.GetTextValue("Mods.Redemption.Dialogue.Volt.SubDialogue15");
         }
     }
 }

@@ -1,4 +1,3 @@
-using Microsoft.Xna.Framework;
 using Redemption.Base;
 using Redemption.BaseExtension;
 using Redemption.Dusts;
@@ -38,6 +37,7 @@ namespace Redemption.NPCs.Friendly.TownNPCs
             NPC.alpha = 255;
         }
         private bool playerTBot;
+        private bool playerChicken;
         private int Look;
         public override void AI()
         {
@@ -56,7 +56,7 @@ namespace Redemption.NPCs.Friendly.TownNPCs
                     {
                         for (int i = 0; i < 30; i++)
                         {
-                            int dust = Dust.NewDust(NPC.position + NPC.velocity, NPC.width, NPC.height, ModContent.DustType<GlowDust>(), 1, 0, 0, default, 0.5f);
+                            int dust = Dust.NewDust(NPC.position + NPC.velocity, NPC.width, NPC.height, DustType<GlowDust>(), 1, 0, 0, default, 0.5f);
                             Main.dust[dust].noGravity = true;
                             Color dustColor = new(Color.LightGreen.R, Color.LightGreen.G, Color.LightGreen.B) { A = 0 };
                             Main.dust[dust].color = dustColor;
@@ -69,6 +69,11 @@ namespace Redemption.NPCs.Friendly.TownNPCs
                     {
                         if (player.IsFullTBot())
                             playerTBot = true;
+                        if (player.RedemptionPlayerBuff().ChickenForm)
+                        {
+                            playerChicken = true;
+                            playerTBot = false;
+                        }
                         SoundEngine.PlaySound(SoundID.Dig, NPC.position);
                         player.RedemptionScreen().ScreenShakeIntensity += 3;
                         for (int i = 0; i < 30; i++)
@@ -119,8 +124,16 @@ namespace Redemption.NPCs.Friendly.TownNPCs
                         if (AITimer++ == 18)
                         {
                             DialogueChain chain = new();
-                            chain.Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.TBotIntro.Normal1"), Color.LightGreen, Color.DarkGreen, null, .05f, 2, 0, false)) // 109
-                                 .Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.TBotIntro.Normal2"), Color.LightGreen, Color.DarkGreen, null, .05f, 2, .5f, boxFade: true, endID: 1)); // 335
+                            if (playerChicken)
+                            {
+                                chain.Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.TBotIntro.Chicken1"), Color.LightGreen, Color.DarkGreen, null, .05f, 2, 0, false)) // 109
+                                     .Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.TBotIntro.Chicken2"), Color.LightGreen, Color.DarkGreen, null, .05f, 2, .5f, boxFade: true, endID: 1)); // 335
+                            }
+                            else
+                            {
+                                chain.Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.TBotIntro.Normal1"), Color.LightGreen, Color.DarkGreen, null, .05f, 2, 0, false)) // 109
+                                     .Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.TBotIntro.Normal2"), Color.LightGreen, Color.DarkGreen, null, .05f, 2, .5f, boxFade: true, endID: 1)); // 335
+                            }
                             chain.OnEndTrigger += Chain_OnEndTrigger;
                             ChatUI.Visible = true;
                             ChatUI.Add(chain);
@@ -153,7 +166,7 @@ namespace Redemption.NPCs.Friendly.TownNPCs
                         }
                         if (AITimer >= 3000)
                         {
-                            NPC.SetDefaults(ModContent.NPCType<TBot>());
+                            NPC.SetDefaults(NPCType<TBot>());
                             NPC.GivenName = Language.GetTextValue("Mods.Redemption.NPCs.TBot_Intro.DisplayName");
                             NPC.netUpdate = true;
                         }
@@ -162,30 +175,53 @@ namespace Redemption.NPCs.Friendly.TownNPCs
                     {
                         if (Look == 0)
                             NPC.LookAtEntity(player);
-                        if (AITimer++ == 5)
+                        if (playerChicken)
                         {
-                            DialogueChain chain = new();
-                            chain.Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.TBotIntro.Normal3"), Color.LightGreen, Color.DarkGreen, null, .05f, 2, 0, false)) // 414
-                                 .Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.TBotIntro.Normal4"), Color.LightGreen, Color.DarkGreen, null, .05f, 2, .5f, boxFade: true, endID: 1)); // 560
-                            chain.OnSymbolTrigger += Chain_OnSymbolTrigger;
-                            chain.OnEndTrigger += Chain_OnEndTrigger;
-                            ChatUI.Visible = true;
-                            ChatUI.Add(chain);
+                            if (AITimer++ == 5)
+                            {
+                                DialogueChain chain = new();
+                                chain.Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.TBotIntro.Chicken3"), Color.LightGreen, Color.DarkGreen, null, .05f, 2, 0, false))
+                                     .Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.TBotIntro.Chicken4"), Color.LightGreen, Color.DarkGreen, null, .05f, 2, .5f, boxFade: true))
+                                     .Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.TBotIntro.Chicken5"), Color.LightGreen, Color.DarkGreen, null, .05f, 2, .5f, boxFade: true, endID: 1));
+                                chain.OnSymbolTrigger += Chain_OnSymbolTrigger;
+                                chain.OnEndTrigger += Chain_OnEndTrigger;
+                                ChatUI.Visible = true;
+                                ChatUI.Add(chain);
+                            }
+                            if (AITimer >= 3000)
+                            {
+                                NPC.SetDefaults(NPCType<TBot>());
+                                NPC.GivenName = Language.GetTextValue("Mods.Redemption.NPCs.TBot_Intro.DisplayName");
+                                NPC.netUpdate = true;
+                            }
                         }
-                        if (AITimer == 3000)
+                        else
                         {
-                            Dialogue d4 = new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.TBotIntro.Normal5"), Color.LightGreen, Color.DarkGreen, null, .05f, 2, .5f, boxFade: true); // 265
+                            if (AITimer++ == 5)
+                            {
+                                DialogueChain chain = new();
+                                chain.Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.TBotIntro.Normal3"), Color.LightGreen, Color.DarkGreen, null, .05f, 2, 0, false)) // 414
+                                     .Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.TBotIntro.Normal4"), Color.LightGreen, Color.DarkGreen, null, .05f, 2, .5f, boxFade: true, endID: 1)); // 560
+                                chain.OnSymbolTrigger += Chain_OnSymbolTrigger;
+                                chain.OnEndTrigger += Chain_OnEndTrigger;
+                                ChatUI.Visible = true;
+                                ChatUI.Add(chain);
+                            }
+                            if (AITimer == 3000)
+                            {
+                                Dialogue d4 = new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.TBotIntro.Normal5"), Color.LightGreen, Color.DarkGreen, null, .05f, 2, .5f, boxFade: true); // 265
 
-                            EmoteBubble.NewBubble(10, new WorldUIAnchor(NPC), 265);
-                            NPC.spriteDirection = -NPC.spriteDirection;
-                            ChatUI.Visible = true;
-                            ChatUI.Add(d4);
-                        }
-                        if (AITimer >= 3265)
-                        {
-                            NPC.SetDefaults(ModContent.NPCType<TBot>());
-                            NPC.GivenName = Language.GetTextValue("Mods.Redemption.NPCs.TBot_Intro.DisplayName");
-                            NPC.netUpdate = true;
+                                EmoteBubble.NewBubble(10, new WorldUIAnchor(NPC), 265);
+                                NPC.spriteDirection = -NPC.spriteDirection;
+                                ChatUI.Visible = true;
+                                ChatUI.Add(d4);
+                            }
+                            if (AITimer >= 3265)
+                            {
+                                NPC.SetDefaults(NPCType<TBot>());
+                                NPC.GivenName = Language.GetTextValue("Mods.Redemption.NPCs.TBot_Intro.DisplayName");
+                                NPC.netUpdate = true;
+                            }
                         }
                     }
                     break;

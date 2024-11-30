@@ -1,17 +1,16 @@
-﻿using Microsoft.Xna.Framework;
-using Terraria;
-using Terraria.ID;
-using Terraria.ModLoader;
-using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework.Graphics;
 using Redemption.Globals;
+using System;
+using Terraria;
 using Terraria.GameContent;
 using Terraria.Graphics.Shaders;
+using Terraria.ID;
 using Terraria.Localization;
-using System;
+using Terraria.ModLoader;
 
 namespace Redemption.NPCs.Friendly
 {
-    public class HazmatCorpse_Ghost : ModNPC
+    public class HazmatCorpse_Ghost : ModRedeNPC
     {
         public ref float AITimer => ref NPC.ai[1];
 
@@ -23,7 +22,7 @@ namespace Redemption.NPCs.Friendly
             NPCID.Sets.NoTownNPCHappiness[Type] = true;
 
             NPCID.Sets.ImmuneToRegularBuffs[Type] = true;
-            NPCID.Sets.NPCBestiaryDrawModifiers value = new(0) { Hide = true };
+            NPCID.Sets.NPCBestiaryDrawModifiers value = new() { Hide = true };
             NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, value);
         }
         public override void SetDefaults()
@@ -38,6 +37,8 @@ namespace Redemption.NPCs.Friendly
             NPC.aiStyle = -1;
             NPC.knockBackResist = 0f;
             NPC.npcSlots = 0;
+
+            DialogueBoxStyle = LIDEN;
         }
 
         public override bool CanHitPlayer(Player target, ref int cooldownSlot) => false;
@@ -45,8 +46,7 @@ namespace Redemption.NPCs.Friendly
 
         public override void AI()
         {
-            Player player = Main.player[RedeHelper.GetNearestAlivePlayer(NPC)];
-            if (NPC.target < 0 || NPC.target == 255 || player.dead || !player.active)
+            if (NPC.target < 0 || NPC.target == 255 || Main.player[NPC.target].dead || !Main.player[NPC.target].active)
                 NPC.TargetClosest();
 
             NPC.velocity *= 0.94f;

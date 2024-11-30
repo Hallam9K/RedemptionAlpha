@@ -1,23 +1,23 @@
-using Microsoft.Xna.Framework;
+using BetterDialogue.UI;
 using Redemption.Base;
 using Redemption.BaseExtension;
-using Redemption.Buffs.Debuffs;
-using Redemption.Buffs.NPCBuffs;
 using Redemption.Globals;
 using Redemption.Globals.NPC;
 using Redemption.Items.Accessories.PreHM;
 using Redemption.Items.Armor.Vanity;
-using Redemption.Items.Materials.PreHM;
 using Redemption.Items.Placeable.Plants;
+using Redemption.Items.Usable.Summons;
 using Redemption.Items.Weapons.PreHM.Melee;
 using Redemption.Items.Weapons.PreHM.Summon;
 using Redemption.NPCs.PreHM;
 using Redemption.Textures.Emotes;
 using Redemption.UI;
+using Redemption.UI.Dialect;
+using ReLogic.Graphics;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.Audio;
-using Terraria.DataStructures;
+using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
@@ -36,7 +36,7 @@ namespace Redemption.NPCs.Friendly.TownNPCs
             Main.npcFrameCount[NPC.type] = 10;
             NPCID.Sets.AllowDoorInteraction[Type] = true;
             NPCID.Sets.NoTownNPCHappiness[Type] = true;
-            NPCID.Sets.FaceEmote[Type] = ModContent.EmoteBubbleType<ForestNymphTownNPCEmote>();
+            NPCID.Sets.FaceEmote[Type] = EmoteBubbleType<ForestNymphTownNPCEmote>();
 
             BuffNPC.NPCTypeImmunity(Type, BuffNPC.NPCDebuffImmuneType.Inorganic);
 
@@ -47,11 +47,21 @@ namespace Redemption.NPCs.Friendly.TownNPCs
         {
             base.SetDefaults();
             NPC.townNPC = true;
-            NPC.friendly = true;
             NPC.rarity = 0;
+            NPC.friendly = true;
             if (RedeQuest.forestNymphVar < 4)
                 TownNPCStayingHomeless = true;
+
+            DialogueBoxStyle = EPIDOTRA;
         }
+        public override bool HasCruxButton(Player player) => RedeQuest.forestNymphVar >= 5 && !player.HasItem(ItemType<CruxCardForestNymph>());
+        public override void CruxButton(Player player)
+        {
+            RequestCruxButton.RequestCrux(NPC, player, ItemType<CruxCardForestNymph>(), "ForestNymph.NoCruxDialogue", "ForestNymph.CruxDialogue");
+        }
+        public override bool HasLeftHangingButton(Player player) => !RedeGlobalButton.talkActive;
+        public override bool HasRightHangingButton(Player player) => !RedeGlobalButton.talkActive;
+
         public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)
         {
             NPC.lifeMax *= 2;
@@ -75,7 +85,7 @@ namespace Redemption.NPCs.Friendly.TownNPCs
             };
         }
         private bool setStats;
-        private int playerFollow;
+        public int playerFollow;
         public override void PostAI()
         {
             if (++NPC.breath <= 0)
@@ -212,7 +222,7 @@ namespace Redemption.NPCs.Friendly.TownNPCs
             NPC.damage = (int)(NPC.defDamage * dmgInc);
             NPC.defense = defenseInc;
         }
-        private static bool IsNpcOnscreen(Vector2 center)
+        public static bool IsNpcOnscreen(Vector2 center)
         {
             int w = NPC.sWidth + NPC.safeRangeX * 2;
             int h = NPC.sHeight + NPC.safeRangeY * 2;
@@ -241,318 +251,8 @@ namespace Redemption.NPCs.Friendly.TownNPCs
 
             return score >= (right - left) * (bottom - top) / 2;
         }
-        public static int ChatNumber = 0;
         public bool following;
-        public override void SetChatButtons(ref string button, ref string button2)
-        {
-            if ((RedeWorld.Alignment < 0 && !RedeBossDowned.downedTreebark) || (RedeWorld.Alignment < 2 && RedeBossDowned.downedTreebark))
-                return;
-            button2 = Language.GetTextValue("Mods.Redemption.DialogueBox.Cycle");
-            switch (ChatNumber)
-            {
-                case 0:
-                    switch (RedeQuest.forestNymphVar)
-                    {
-                        default:
-                            button = Language.GetTextValue("Mods.Redemption.DialogueBox.ForestNymph.1");
-                            break;
-                        case 1:
-                            button = Language.GetTextValue("Mods.Redemption.DialogueBox.ForestNymph.2");
-                            break;
-                        case 2:
-                            button = Language.GetTextValue("Mods.Redemption.DialogueBox.ForestNymph.3");
-                            break;
-                        case 3:
-                            button = Language.GetTextValue("Mods.Redemption.DialogueBox.ForestNymph.4");
-                            break;
-                        case 4:
-                            if (NPC.homeless)
-                                button = Language.GetTextValue("Mods.Redemption.DialogueBox.ForestNymph.HomeRequirements");
-                            else
-                                button = Language.GetTextValue("Mods.Redemption.DialogueBox.ForestNymph.5");
-                            break;
-                        case 5:
-                            button = Language.GetTextValue("Mods.Redemption.DialogueBox.ForestNymph.Talk");
-                            break;
-                    }
-                    break;
-                case 1:
-                    button = Language.GetTextValue("Mods.Redemption.DialogueBox.ForestNymph.Trade");
-                    break;
-                case 2:
-                    button = Language.GetTextValue("Mods.Redemption.DialogueBox.ForestNymph.Blessing");
-                    break;
-                case 3:
-                    if (!following)
-                        button = Language.GetTextValue("Mods.Redemption.DialogueBox.ForestNymph.Follow");
-                    else
-                        button = Language.GetTextValue("Mods.Redemption.DialogueBox.ForestNymph.SFollow");
-                    break;
-                case 4:
-                    button = Language.GetTextValue("Mods.Redemption.DialogueBox.ForestNymph.DHair");
-                    break;
-                case 5:
-                    button = Language.GetTextValue("Mods.Redemption.DialogueBox.ForestNymph.SHair");
-                    break;
-                case 6:
-                    button = Language.GetTextValue("Mods.Redemption.DialogueBox.ForestNymph.Crux");
-                    break;
-            }
-        }
-
-        public override void OnChatButtonClicked(bool firstButton, ref string shopName)
-        {
-            Player player = Main.LocalPlayer;
-            if (firstButton)
-            {
-                switch (ChatNumber)
-                {
-                    case 0:
-                        if (RedeQuest.forestNymphVar == 0)
-                        {
-                            int daerel = NPC.FindFirstNPC(ModContent.NPCType<Daerel>());
-                            if (daerel >= 0)
-                                Main.npc[daerel].GetGlobalNPC<ExclaimMarkNPC>().exclaimationMark[2] = false;
-                            int zephos = NPC.FindFirstNPC(ModContent.NPCType<Zephos>());
-                            if (zephos >= 0)
-                                Main.npc[zephos].GetGlobalNPC<ExclaimMarkNPC>().exclaimationMark[2] = false;
-
-                            SoundEngine.PlaySound(SoundID.MenuTick);
-
-                            int HerbBag = player.FindItem(ItemID.HerbBag);
-                            if (HerbBag >= 0)
-                            {
-                                player.inventory[HerbBag].stack--;
-                                if (player.inventory[HerbBag].stack <= 0)
-                                    player.inventory[HerbBag] = new Item();
-
-                                string line = Personality switch
-                                {
-                                    PersonalityState.Calm => Language.GetTextValue("Mods.Redemption.Dialogue.ForestNymph.HerbBagDialogueCalm"),
-                                    PersonalityState.Shy => Language.GetTextValue("Mods.Redemption.Dialogue.ForestNymph.HerbBagDialogueShy"),
-                                    PersonalityState.Jolly => Language.GetTextValue("Mods.Redemption.Dialogue.ForestNymph.HerbBagDialogueJolly"),
-                                    PersonalityState.Aggressive => Language.GetTextValue("Mods.Redemption.Dialogue.ForestNymph.HerbBagDialogueAggressive"),
-                                    _ => Language.GetTextValue("Mods.Redemption.Dialogue.ForestNymph.HerbBagDialogue"),
-                                };
-                                Main.npcChatText = line;
-
-                                RedeQuest.forestNymphVar++;
-                                RedeWorld.SyncData();
-
-                                player.QuickSpawnItem(NPC.GetSource_Loot(), ModContent.ItemType<ForestCore>());
-                                Main.npcChatCornerItem = ModContent.ItemType<ForestCore>();
-                                SoundEngine.PlaySound(SoundID.Chat);
-                                return;
-                            }
-                            else
-                            {
-                                Main.npcChatCornerItem = ItemID.HerbBag;
-                                SoundEngine.PlaySound(SoundID.MenuTick);
-                            }
-                        }
-                        else if (RedeQuest.forestNymphVar == 1)
-                        {
-                            SoundEngine.PlaySound(SoundID.MenuTick);
-
-                            int Flower = player.FindItem(ModContent.ItemType<AnglonicMysticBlossom>());
-                            if (Flower >= 0)
-                            {
-                                player.inventory[Flower].stack--;
-                                if (player.inventory[Flower].stack <= 0)
-                                    player.inventory[Flower] = new Item();
-
-                                string line = Personality switch
-                                {
-                                    PersonalityState.Calm => Language.GetTextValue("Mods.Redemption.Dialogue.ForestNymph.MysticBlossomDialogueCalm"),
-                                    PersonalityState.Shy => Language.GetTextValue("Mods.Redemption.Dialogue.ForestNymph.MysticBlossomDialogueShy"),
-                                    PersonalityState.Jolly => Language.GetTextValue("Mods.Redemption.Dialogue.ForestNymph.MysticBlossomDialogueJolly"),
-                                    PersonalityState.Aggressive => Language.GetTextValue("Mods.Redemption.Dialogue.ForestNymph.MysticBlossomDialogueAggressive"),
-                                    _ => Language.GetTextValue("Mods.Redemption.Dialogue.ForestNymph.MysticBlossomDialogue"),
-                                };
-                                Main.npcChatText = line + Language.GetTextValue("Mods.Redemption.Dialogue.ForestNymph.MysticBlossomDialogueCont");
-                                NPC.lifeMax += 500;
-                                NPC.life += 500;
-                                RedeQuest.forestNymphVar++;
-                                RedeWorld.SyncData();
-
-                                player.QuickSpawnItem(NPC.GetSource_Loot(), ModContent.ItemType<ForestNymphsSickle>());
-                                Main.npcChatCornerItem = ModContent.ItemType<ForestNymphsSickle>();
-                                SoundEngine.PlaySound(SoundID.Chat);
-                                return;
-                            }
-                            else
-                            {
-                                Main.npcChatCornerItem = ModContent.ItemType<AnglonicMysticBlossom>();
-                                SoundEngine.PlaySound(SoundID.MenuTick);
-                            }
-                        }
-                        else if (RedeQuest.forestNymphVar == 2)
-                        {
-                            SoundEngine.PlaySound(SoundID.Chat);
-                            Main.npcChatText = Language.GetTextValue("Mods.Redemption.Dialogue.ForestNymph.HomeDialogue1");
-                            RedeQuest.forestNymphVar++;
-                            RedeWorld.SyncData();
-                        }
-                        else if (RedeQuest.forestNymphVar >= 3)
-                        {
-                            SoundEngine.PlaySound(SoundID.Chat);
-                            if (RedeQuest.forestNymphVar >= 5)
-                            {
-                                Main.npcChatText = ChitChat();
-                                break;
-                            }
-                            if (RedeQuest.forestNymphVar == 3)
-                            {
-                                Main.npcChatText = Language.GetTextValue("Mods.Redemption.Dialogue.ForestNymph.HomeDialogue2");
-                                RedeQuest.forestNymphVar++;
-                                RedeWorld.SyncData();
-                            }
-                            else if (RedeQuest.forestNymphVar == 4)
-                            {
-                                if (NPC.homeless)
-                                    Main.npcChatText = Language.GetTextValue("Mods.Redemption.Dialogue.ForestNymph.HomeDialogue3");
-                                else
-                                {
-                                    int score = 0;
-                                    for (int x = -40; x <= 40; x++)
-                                    {
-                                        for (int y = -25; y <= 25; y++)
-                                        {
-                                            Tile tile = Framing.GetTileSafely(NPC.homeTileX + x, NPC.homeTileY + y);
-                                            if (tile.LiquidAmount >= 255 && tile.LiquidType == LiquidID.Water)
-                                                score++;
-                                        }
-                                    }
-                                    if (score < 20)
-                                    {
-                                        string line = Personality switch
-                                        {
-                                            PersonalityState.Calm => Language.GetTextValue("Mods.Redemption.Dialogue.ForestNymph.HomeNeedWaterDialogueCalm"),
-                                            PersonalityState.Shy => Language.GetTextValue("Mods.Redemption.Dialogue.ForestNymph.HomeNeedWaterDialogueShy"),
-                                            PersonalityState.Jolly => Language.GetTextValue("Mods.Redemption.Dialogue.ForestNymph.HomeNeedWaterDialogueJolly"),
-                                            PersonalityState.Aggressive => Language.GetTextValue("Mods.Redemption.Dialogue.ForestNymph.HomeNeedWaterDialogueAggressive"),
-                                            _ => Language.GetTextValue("Mods.Redemption.Dialogue.ForestNymph.HomeNeedWaterDialogue"),
-                                        };
-                                        Main.npcChatText = Language.GetTextValue("Mods.Redemption.Dialogue.ForestNymph.HomeNeedWaterDialogueStart") + line + Language.GetTextValue("Mods.Redemption.Dialogue.ForestNymph.NeedWaterRequirement", score.ToString());
-                                    }
-                                    else
-                                    {
-                                        string line = Personality switch
-                                        {
-                                            PersonalityState.Calm => Language.GetTextValue("Mods.Redemption.Dialogue.ForestNymph.HasHomeDialogueCalm"),
-                                            PersonalityState.Shy => Language.GetTextValue("Mods.Redemption.Dialogue.ForestNymph.HasHomeDialogueShy"),
-                                            PersonalityState.Jolly => Language.GetTextValue("Mods.Redemption.Dialogue.ForestNymph.HasHomeDialogueJolly"),
-                                            PersonalityState.Aggressive => Language.GetTextValue("Mods.Redemption.Dialogue.ForestNymph.HasHomeDialogueAggressive"),
-                                            _ => Language.GetTextValue("Mods.Redemption.Dialogue.ForestNymph.HasHomeDialogue"),
-                                        };
-                                        Main.npcChatText = line + Language.GetTextValue("Mods.Redemption.Dialogue.ForestNymph.HasHomeDialogueCont");
-
-                                        if (RedeQuest.forestNymphVar < 5)
-                                        {
-                                            RedeWorld.Alignment++;
-                                            ChaliceAlignmentUI.BroadcastDialogue(NetworkText.FromKey("Mods.Redemption.UI.Chalice.ForestNymphHoused"), 240, 30, 0, Color.DarkGoldenrod);
-
-                                            RedeQuest.forestNymphVar = 5;
-                                            RedeQuest.SyncData();
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                        break;
-                    case 1:
-                        SoundEngine.PlaySound(SoundID.MenuOpen);
-                        TradeUI.Visible = true;
-                        break;
-                    case 2:
-                        for (int i = 0; i < 20; i++)
-                        {
-                            int dustIndex = Dust.NewDust(new Vector2(Main.LocalPlayer.position.X, Main.LocalPlayer.Bottom.Y - 2), Main.LocalPlayer.width, 2, DustID.DryadsWard);
-                            Main.dust[dustIndex].velocity.Y = -Main.rand.Next(3, 7);
-                            Main.dust[dustIndex].velocity.X = 0;
-                            Main.dust[dustIndex].noGravity = true;
-                        }
-                        SoundEngine.PlaySound(SoundID.DD2_DarkMageHealImpact, NPC.position);
-                        Main.LocalPlayer.AddBuff(BuffID.Lucky, 10800 * ((RedeWorld.Alignment / 2) + 1));
-                        break;
-                    case 3:
-                        playerFollow = Main.LocalPlayer.whoAmI;
-                        following = !following;
-                        if (following)
-                        {
-                            string line = Personality switch
-                            {
-                                PersonalityState.Calm => Language.GetTextValue("Mods.Redemption.Dialogue.ForestNymph.FollowDialogueCalm"),
-                                PersonalityState.Shy => Language.GetTextValue("Mods.Redemption.Dialogue.ForestNymph.FollowDialogueShy"),
-                                PersonalityState.Jolly => Language.GetTextValue("Mods.Redemption.Dialogue.ForestNymph.FollowDialogueJolly"),
-                                PersonalityState.Aggressive => Language.GetTextValue("Mods.Redemption.Dialogue.ForestNymph.FollowDialogueAggressive"),
-                                _ => Language.GetTextValue("Mods.Redemption.Dialogue.ForestNymph.FollowDialogue"),
-                            };
-                            Main.npcChatText = line;
-                        }
-                        break;
-                    case 4:
-                        FlowerType++;
-                        if (FlowerType > 5)
-                            FlowerType = 0;
-                        break;
-                    case 5:
-                        HairExtType++;
-                        if (HairExtType > 2)
-                            HairExtType = 0;
-                        break;
-                    case 6:
-                        if (!Main.LocalPlayer.RedemptionAbility().SpiritwalkerActive)
-                        {
-                            Main.npcChatText = Language.GetTextValue("Mods.Redemption.Dialogue.ForestNymph.NoRealmCruxDialogue");
-                            ChatNumber--;
-                            return;
-                        }
-                        int card = Main.LocalPlayer.FindItem(ModContent.ItemType<EmptyCruxCard>());
-                        if (card >= 0)
-                        {
-                            Main.LocalPlayer.inventory[card].stack--;
-                            if (Main.LocalPlayer.inventory[card].stack <= 0)
-                                Main.LocalPlayer.inventory[card] = new Item();
-
-                            Main.LocalPlayer.QuickSpawnItem(NPC.GetSource_Loot(), ModContent.ItemType<CruxCardForestNymph>());
-                            Main.npcChatText = Language.GetTextValue("Mods.Redemption.Dialogue.ForestNymph.CruxDialogue");
-                            Main.npcChatCornerItem = ModContent.ItemType<CruxCardForestNymph>();
-                            SoundEngine.PlaySound(SoundID.Chat);
-                        }
-                        else
-                        {
-                            Main.npcChatText = Language.GetTextValue("Mods.Redemption.Dialogue.ForestNymph.NoCruxDialogue");
-                            Main.npcChatCornerItem = ModContent.ItemType<EmptyCruxCard>();
-                        }
-                        ChatNumber--;
-                        break;
-                }
-            }
-            else
-            {
-                bool skip = true;
-                while (skip)
-                {
-                    ChatNumber++;
-                    if (ChatNumber > 6)
-                        ChatNumber = 0;
-                    if (RedeQuest.forestNymphVar < 1 && (ChatNumber == 4 || ChatNumber == 5))
-                        skip = true;
-                    else if (RedeWorld.Alignment <= 0 && ChatNumber == 2)
-                        skip = true;
-                    else if (RedeQuest.forestNymphVar < 2 && ChatNumber == 3)
-                        skip = true;
-                    else if (RedeQuest.forestNymphVar < 5 && ChatNumber == 1)
-                        skip = true;
-                    else if (ChatNumber == 6 && (RedeQuest.forestNymphVar < 5 || !Main.LocalPlayer.RedemptionAbility().SpiritwalkerActive || Main.LocalPlayer.HasItem(ModContent.ItemType<CruxCardForestNymph>())))
-                        skip = true;
-                    else
-                        skip = false;
-                }
-            }
-        }
-        private string ChitChat()
+        public string ChitChat()
         {
             WeightedRandom<string> chat = new(Main.rand);
             string bothChat = BothChat();
@@ -563,7 +263,7 @@ namespace Redemption.NPCs.Friendly.TownNPCs
             chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.ForestNymph.Dialogue3"));
             string s = "";
             if (NPC.GivenName == "Nyssa")
-                s = Language.GetTextValue("Mods.Redemption.Dialogue.ForestNymph.Dialogue4Const");
+                s = Language.GetTextValue("Mods.Redemption.Dialogue.ForestNymph.Dialogue4Cont");
             chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.ForestNymph.Dialogue4") + s);
             if (RedeWorld.Alignment >= 4)
                 chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.ForestNymph.Dialogue5"));
@@ -574,14 +274,14 @@ namespace Redemption.NPCs.Friendly.TownNPCs
         private string BothChat()
         {
             WeightedRandom<string> chat = new(Main.rand);
-            Player player = Main.player[Main.myPlayer];
+            Player player = Main.LocalPlayer;
             if (RedeBossDowned.downedTreebark)
                 chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.ForestNymph.Dialogue7"));
             if (RedeBossDowned.downedADD)
                 chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.ForestNymph.Dialogue8"));
             if (RedeBossDowned.nukeDropped)
                 chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.ForestNymph.Dialogue9"));
-            if (BasePlayer.HasArmorSet(player, "Common Guard", true) || BasePlayer.HasArmorSet(player, "Common Guard", false))
+            if (BasePlayer.HasArmorSet(Mod, player, "Common Guard", true) || BasePlayer.HasArmorSet(Mod, player, "Common Guard", false))
             {
                 chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.ForestNymph.Dialogue10"));
             }
@@ -607,16 +307,16 @@ namespace Redemption.NPCs.Friendly.TownNPCs
         }
         public override string GetChat()
         {
-            Player player = Main.player[Main.myPlayer];
+            Player player = Main.LocalPlayer;
             WeightedRandom<string> chat = new(Main.rand);
             if ((RedeWorld.Alignment < 0 && !RedeBossDowned.downedTreebark) || (RedeWorld.Alignment < 2 && RedeBossDowned.downedTreebark))
                 return Language.GetTextValue("Mods.Redemption.Dialogue.ForestNymph.DialogueDistrust");
 
             if (Main.LocalPlayer.RedemptionAbility().SpiritwalkerActive)
-                chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.ForestNymph.Dialogue14"), 2);
-            if (BasePlayer.HasHelmet(player, ModContent.ItemType<ThornMask>(), true))
+                chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.ForestNymph.Dialogue14"), 10);
+            if (BasePlayer.HasHelmet(player, ItemType<ThornMask>(), true))
                 chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.ForestNymph.Dialogue15"));
-            if (BasePlayer.HasArmorSet(player, "Living Wood", true) || BasePlayer.HasArmorSet(player, "Living Wood", false))
+            if (BasePlayer.HasArmorSet(Mod, player, "Living Wood", true) || BasePlayer.HasArmorSet(Mod, player, "Living Wood", false))
             {
                 chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.ForestNymph.Dialogue16"));
                 chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.ForestNymph.Dialogue17"));
@@ -661,5 +361,325 @@ namespace Redemption.NPCs.Friendly.TownNPCs
             tag["HasHat"] = HasHat;
         }
         public override float SpawnChance(NPCSpawnInfo spawnInfo) => 0;
+    }
+    public class OfferButton_ForestNymph : ChatButton
+    {
+        public override double Priority => 1.0;
+        public override string Text(NPC npc, Player player)
+        {
+            return RedeQuest.forestNymphVar switch
+            {
+                1 => Language.GetTextValue("Mods.Redemption.DialogueBox.ForestNymph.2"),
+                2 => Language.GetTextValue("Mods.Redemption.DialogueBox.ForestNymph.3"),
+                3 => Language.GetTextValue("Mods.Redemption.DialogueBox.ForestNymph.4"),
+                4 => npc.homeless ? Language.GetTextValue("Mods.Redemption.DialogueBox.HomeRequirements") : Language.GetTextValue("Mods.Redemption.DialogueBox.ForestNymph.5"),
+                5 => Language.GetTextValue("Mods.Redemption.DialogueBox.ForestNymph.Talk"),
+                _ => Language.GetTextValue("Mods.Redemption.DialogueBox.ForestNymph.1"),
+            };
+        }
+        public override bool IsActive(NPC npc, Player player)
+        {
+            if (npc.type == NPCType<ForestNymph_Friendly>())
+                return RedeWorld.Alignment >= (RedeBossDowned.downedTreebark ? 2 : 0);
+            return false;
+        }
+        public override Color? OverrideColor(NPC npc, Player player)
+        {
+            if (RedeQuest.forestNymphVar == 4 && !npc.homeless)
+                return RedeColor.TextPositive;
+            return null;
+        }
+        public override void OnClick(NPC npc, Player player)
+        {
+            if (npc.ModNPC is ForestNymph_Friendly nymph)
+            {
+                if (RedeQuest.forestNymphVar == 0)
+                {
+                    RedeQuest.adviceSeen[(int)RedeQuest.Advice.ForestNymph] = true;
+
+                    SoundEngine.PlaySound(SoundID.MenuTick);
+                    if (player.ConsumeItem(ItemID.HerbBag))
+                    {
+                        string line = nymph.Personality switch
+                        {
+                            ForestNymph.PersonalityState.Calm => Language.GetTextValue("Mods.Redemption.Dialogue.ForestNymph.HerbBagDialogueCalm"),
+                            ForestNymph.PersonalityState.Shy => Language.GetTextValue("Mods.Redemption.Dialogue.ForestNymph.HerbBagDialogueShy"),
+                            ForestNymph.PersonalityState.Jolly => Language.GetTextValue("Mods.Redemption.Dialogue.ForestNymph.HerbBagDialogueJolly"),
+                            ForestNymph.PersonalityState.Aggressive => Language.GetTextValue("Mods.Redemption.Dialogue.ForestNymph.HerbBagDialogueAggressive"),
+                            _ => Language.GetTextValue("Mods.Redemption.Dialogue.ForestNymph.HerbBagDialogue"),
+                        };
+                        Main.npcChatText = line;
+
+                        RedeQuest.forestNymphVar++;
+                        RedeQuest.SyncData();
+
+                        player.QuickSpawnItem(npc.GetSource_Loot(), ItemType<ForestCore>());
+                        Main.npcChatCornerItem = ItemType<ForestCore>();
+                        SoundEngine.PlaySound(SoundID.Chat);
+                        return;
+                    }
+                    else
+                    {
+                        Main.npcChatCornerItem = ItemID.HerbBag;
+                        SoundEngine.PlaySound(SoundID.MenuTick);
+                    }
+                }
+                else if (RedeQuest.forestNymphVar == 1)
+                {
+                    SoundEngine.PlaySound(SoundID.MenuTick);
+
+                    if (player.ConsumeItem(ItemType<AnglonicMysticBlossom>()))
+                    {
+                        string line = nymph.Personality switch
+                        {
+                            ForestNymph.PersonalityState.Calm => Language.GetTextValue("Mods.Redemption.Dialogue.ForestNymph.MysticBlossomDialogueCalm"),
+                            ForestNymph.PersonalityState.Shy => Language.GetTextValue("Mods.Redemption.Dialogue.ForestNymph.MysticBlossomDialogueShy"),
+                            ForestNymph.PersonalityState.Jolly => Language.GetTextValue("Mods.Redemption.Dialogue.ForestNymph.MysticBlossomDialogueJolly"),
+                            ForestNymph.PersonalityState.Aggressive => Language.GetTextValue("Mods.Redemption.Dialogue.ForestNymph.MysticBlossomDialogueAggressive"),
+                            _ => Language.GetTextValue("Mods.Redemption.Dialogue.ForestNymph.MysticBlossomDialogue"),
+                        };
+                        Main.npcChatText = line + Language.GetTextValue("Mods.Redemption.Dialogue.ForestNymph.MysticBlossomDialogueCont");
+                        npc.lifeMax += 500;
+                        npc.life += 500;
+
+                        RedeQuest.forestNymphVar++;
+                        RedeQuest.SyncData();
+
+                        player.QuickSpawnItem(npc.GetSource_Loot(), ItemType<ForestNymphsSickle>());
+                        Main.npcChatCornerItem = ItemType<ForestNymphsSickle>();
+                        SoundEngine.PlaySound(SoundID.Chat);
+                        return;
+                    }
+                    else
+                    {
+                        Main.npcChatCornerItem = ItemType<AnglonicMysticBlossom>();
+                        SoundEngine.PlaySound(SoundID.MenuTick);
+                    }
+                }
+                else if (RedeQuest.forestNymphVar == 2)
+                {
+                    SoundEngine.PlaySound(SoundID.Chat);
+                    Main.npcChatText = Language.GetTextValue("Mods.Redemption.Dialogue.ForestNymph.HomeDialogue1");
+
+                    RedeQuest.forestNymphVar++;
+                    RedeQuest.SyncData();
+                }
+                else if (RedeQuest.forestNymphVar >= 3)
+                {
+                    SoundEngine.PlaySound(SoundID.Chat);
+                    if (RedeQuest.forestNymphVar >= 5)
+                    {
+                        Main.npcChatText = nymph.ChitChat();
+                        return;
+                    }
+                    if (RedeQuest.forestNymphVar == 3)
+                    {
+                        Main.npcChatText = Language.GetTextValue("Mods.Redemption.Dialogue.ForestNymph.HomeDialogue2");
+
+                        RedeQuest.forestNymphVar++;
+                        RedeQuest.SyncData();
+                    }
+                    else if (RedeQuest.forestNymphVar == 4)
+                    {
+                        if (npc.homeless)
+                            Main.npcChatText = Language.GetTextValue("Mods.Redemption.Dialogue.ForestNymph.HomeDialogue3");
+                        else
+                        {
+                            int score = 0;
+                            for (int x = -40; x <= 40; x++)
+                            {
+                                for (int y = -25; y <= 25; y++)
+                                {
+                                    Tile tile = Framing.GetTileSafely(npc.homeTileX + x, npc.homeTileY + y);
+                                    if (tile.LiquidAmount >= 255 && tile.LiquidType == LiquidID.Water)
+                                        score++;
+                                }
+                            }
+                            if (score < 20)
+                            {
+                                string line = nymph.Personality switch
+                                {
+                                    ForestNymph.PersonalityState.Calm => Language.GetTextValue("Mods.Redemption.Dialogue.ForestNymph.HomeNeedWaterDialogueCalm"),
+                                    ForestNymph.PersonalityState.Shy => Language.GetTextValue("Mods.Redemption.Dialogue.ForestNymph.HomeNeedWaterDialogueShy"),
+                                    ForestNymph.PersonalityState.Jolly => Language.GetTextValue("Mods.Redemption.Dialogue.ForestNymph.HomeNeedWaterDialogueJolly"),
+                                    ForestNymph.PersonalityState.Aggressive => Language.GetTextValue("Mods.Redemption.Dialogue.ForestNymph.HomeNeedWaterDialogueAggressive"),
+                                    _ => Language.GetTextValue("Mods.Redemption.Dialogue.ForestNymph.HomeNeedWaterDialogue"),
+                                };
+                                Main.npcChatText = Language.GetTextValue("Mods.Redemption.Dialogue.ForestNymph.HomeNeedWaterDialogueStart") + line + Language.GetTextValue("Mods.Redemption.Dialogue.ForestNymph.NeedWaterRequirement", score.ToString());
+                            }
+                            else
+                            {
+                                string line = nymph.Personality switch
+                                {
+                                    ForestNymph.PersonalityState.Calm => Language.GetTextValue("Mods.Redemption.Dialogue.ForestNymph.HasHomeDialogueCalm"),
+                                    ForestNymph.PersonalityState.Shy => Language.GetTextValue("Mods.Redemption.Dialogue.ForestNymph.HasHomeDialogueShy"),
+                                    ForestNymph.PersonalityState.Jolly => Language.GetTextValue("Mods.Redemption.Dialogue.ForestNymph.HasHomeDialogueJolly"),
+                                    ForestNymph.PersonalityState.Aggressive => Language.GetTextValue("Mods.Redemption.Dialogue.ForestNymph.HasHomeDialogueAggressive"),
+                                    _ => Language.GetTextValue("Mods.Redemption.Dialogue.ForestNymph.HasHomeDialogue"),
+                                };
+                                Main.npcChatText = line + Language.GetTextValue("Mods.Redemption.Dialogue.ForestNymph.HasHomeDialogueCont");
+
+                                if (RedeQuest.forestNymphVar < 5)
+                                {
+                                    RedeWorld.Alignment++;
+                                    ChaliceAlignmentUI.BroadcastDialogue(NetworkText.FromKey("Mods.Redemption.UI.Chalice.ForestNymphHoused"), 240, 30, 0, Color.DarkGoldenrod);
+
+                                    RedeQuest.forestNymphVar = 5;
+                                    RedeQuest.SyncData();
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    public class TradeButton_ForestNymph : ChatButton
+    {
+        public override double Priority => 2.0;
+        public override string Text(NPC npc, Player player) => RedeQuest.forestNymphVar < 5 ? "???" : Language.GetTextValue("Mods.Redemption.DialogueBox.ForestNymph.Trade");
+        public override bool IsActive(NPC npc, Player player)
+        {
+            if (npc.type == NPCType<ForestNymph_Friendly>())
+                return RedeWorld.Alignment >= (RedeBossDowned.downedTreebark ? 2 : 0);
+            return false;
+        }
+        public override Color? OverrideColor(NPC npc, Player player) => RedeQuest.forestNymphVar < 5 ? Color.Gray : null;
+        public override void OnClick(NPC npc, Player player)
+        {
+            if (RedeQuest.forestNymphVar < 5)
+                return;
+            SoundEngine.PlaySound(SoundID.MenuOpen);
+            TradeUI.Visible = true;
+        }
+    }
+    public class BlessingButton_ForestNymph : ChatButton
+    {
+        public override double Priority => 3.0;
+        public override string Text(NPC npc, Player player) => RedeWorld.Alignment <= 0 ? "???" : Language.GetTextValue("Mods.Redemption.DialogueBox.ForestNymph.Blessing");
+        public override bool IsActive(NPC npc, Player player)
+        {
+            if (npc.type == NPCType<ForestNymph_Friendly>())
+                return RedeWorld.Alignment >= (RedeBossDowned.downedTreebark ? 2 : 0);
+            return false;
+        }
+        public override Color? OverrideColor(NPC npc, Player player) => RedeWorld.Alignment <= 0 ? Color.Gray : null;
+        public override void OnClick(NPC npc, Player player)
+        {
+            if (RedeWorld.Alignment <= 0)
+                return;
+            for (int i = 0; i < 20; i++)
+            {
+                int dustIndex = Dust.NewDust(new Vector2(Main.LocalPlayer.position.X, Main.LocalPlayer.Bottom.Y - 2), Main.LocalPlayer.width, 2, DustID.DryadsWard);
+                Main.dust[dustIndex].velocity.Y = -Main.rand.Next(3, 7);
+                Main.dust[dustIndex].velocity.X = 0;
+                Main.dust[dustIndex].noGravity = true;
+            }
+            SoundEngine.PlaySound(SoundID.DD2_DarkMageHealImpact, npc.position);
+            Main.LocalPlayer.AddBuff(BuffID.Lucky, 10800 * ((RedeWorld.Alignment / 2) + 1));
+        }
+    }
+    public class FollowButton_ForestNymph : ChatButton
+    {
+        public override double Priority => 4.0;
+        public override string Text(NPC npc, Player player)
+        {
+            if (RedeQuest.forestNymphVar < 2)
+                return "???";
+            if (npc.ModNPC is ForestNymph_Friendly nymph && !nymph.following)
+                return Language.GetTextValue("Mods.Redemption.DialogueBox.ForestNymph.Follow");
+            return Language.GetTextValue("Mods.Redemption.DialogueBox.ForestNymph.SFollow");
+        }
+        public override bool IsActive(NPC npc, Player player)
+        {
+            if (npc.type == NPCType<ForestNymph_Friendly>())
+                return RedeWorld.Alignment >= (RedeBossDowned.downedTreebark ? 2 : 0);
+            return false;
+        }
+        public override Color? OverrideColor(NPC npc, Player player) => RedeQuest.forestNymphVar < 2 ? Color.Gray : null;
+        public override void OnClick(NPC npc, Player player)
+        {
+            if (RedeQuest.forestNymphVar < 2)
+                return;
+            if (npc.ModNPC is ForestNymph_Friendly nymph)
+            {
+                nymph.playerFollow = Main.LocalPlayer.whoAmI;
+                nymph.following = !nymph.following;
+                if (nymph.following)
+                {
+                    string line = nymph.Personality switch
+                    {
+                        ForestNymph.PersonalityState.Calm => Language.GetTextValue("Mods.Redemption.Dialogue.ForestNymph.FollowDialogueCalm"),
+                        ForestNymph.PersonalityState.Shy => Language.GetTextValue("Mods.Redemption.Dialogue.ForestNymph.FollowDialogueShy"),
+                        ForestNymph.PersonalityState.Jolly => Language.GetTextValue("Mods.Redemption.Dialogue.ForestNymph.FollowDialogueJolly"),
+                        ForestNymph.PersonalityState.Aggressive => Language.GetTextValue("Mods.Redemption.Dialogue.ForestNymph.FollowDialogueAggressive"),
+                        _ => Language.GetTextValue("Mods.Redemption.Dialogue.ForestNymph.FollowDialogue"),
+                    };
+                    Main.npcChatText = line;
+                }
+            }
+        }
+    }
+    public class DHairButton_ForestNymph : ChatButton
+    {
+        public override double Priority => 200.0;
+        public override void ModifyPosition(NPC npc, Player player, ref Vector2 position)
+        {
+            DynamicSpriteFont font = FontAssets.MouseText.Value;
+            int textLength = (int)font.MeasureString(ChatButtonLoader.GetText(this, npc, player)).X;
+
+            position.X = (Main.screenWidth / 2) - 150 - (textLength / 2);
+            position.Y += 56;
+        }
+        public override string Text(NPC npc, Player player) => RedeQuest.forestNymphVar < 1 ? "???" : Language.GetTextValue("Mods.Redemption.DialogueBox.ForestNymph.DHair");
+        public override bool IsActive(NPC npc, Player player)
+        {
+            if (npc.type == NPCType<ForestNymph_Friendly>())
+                return RedeWorld.Alignment >= (RedeBossDowned.downedTreebark ? 2 : 0);
+            return false;
+        }
+        public override Color? OverrideColor(NPC npc, Player player) => RedeQuest.forestNymphVar < 1 ? Color.Gray : null;
+        public override void OnClick(NPC npc, Player player)
+        {
+            if (RedeQuest.forestNymphVar < 1)
+                return;
+            if (npc.ModNPC is ForestNymph_Friendly nymph)
+            {
+                nymph.FlowerType++;
+                if (nymph.FlowerType > 5)
+                    nymph.FlowerType = 0;
+            }
+        }
+    }
+    public class SHairButton_ForestNymph : ChatButton
+    {
+        public override double Priority => 200.0;
+        public override void ModifyPosition(NPC npc, Player player, ref Vector2 position)
+        {
+            DynamicSpriteFont font = FontAssets.MouseText.Value;
+            int textLength = (int)font.MeasureString(ChatButtonLoader.GetText(this, npc, player)).X;
+
+            position.X = (Main.screenWidth / 2) - 150 - (textLength / 2) + 300;
+            position.Y += 56;
+        }
+        public override string Text(NPC npc, Player player) => RedeQuest.forestNymphVar < 1 ? "???" : Language.GetTextValue("Mods.Redemption.DialogueBox.ForestNymph.SHair");
+        public override bool IsActive(NPC npc, Player player)
+        {
+            if (npc.type == NPCType<ForestNymph_Friendly>())
+                return RedeWorld.Alignment >= (RedeBossDowned.downedTreebark ? 2 : 0);
+            return false;
+        }
+        public override Color? OverrideColor(NPC npc, Player player) => RedeQuest.forestNymphVar < 1 ? Color.Gray : null;
+        public override void OnClick(NPC npc, Player player)
+        {
+            if (RedeQuest.forestNymphVar < 1)
+                return;
+            if (npc.ModNPC is ForestNymph_Friendly nymph)
+            {
+                nymph.HairExtType++;
+                if (nymph.HairExtType > 2)
+                    nymph.HairExtType = 0;
+            }
+        }
     }
 }

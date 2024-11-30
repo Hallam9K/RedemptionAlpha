@@ -201,12 +201,7 @@ namespace Redemption.NPCs.Bosses.KSIII
 
             if (!RedeBossDowned.downedSlayer)
             {
-                int daerel = NPC.FindFirstNPC(ModContent.NPCType<Daerel>());
-                if (daerel >= 0)
-                    Main.npc[daerel].GetGlobalNPC<ExclaimMarkNPC>().exclaimationMark[3] = false;
-                int zephos = NPC.FindFirstNPC(ModContent.NPCType<Zephos>());
-                if (zephos >= 0)
-                    Main.npc[zephos].GetGlobalNPC<ExclaimMarkNPC>().exclaimationMark[3] = false;
+                RedeQuest.adviceSeen[(int)RedeQuest.Advice.Androids] = true;
 
                 if (NPC.ai[0] == 11)
                     RedeWorld.Alignment += 0;

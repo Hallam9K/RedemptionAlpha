@@ -1,4 +1,3 @@
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Base;
 using Redemption.BaseExtension;
@@ -28,7 +27,8 @@ using Terraria.Utilities;
 
 namespace Redemption.NPCs.Friendly
 {
-    public class TreebarkDryad : ModNPC
+    [AutoloadHead]
+    public class TreebarkDryad : ModRedeNPC
     {
         private static Asset<Texture2D> HeadIcon1;
         private static Asset<Texture2D> HeadIcon2;
@@ -38,9 +38,9 @@ namespace Redemption.NPCs.Friendly
         {
             if (Main.dedServ)
                 return;
-            HeadIcon1 = ModContent.Request<Texture2D>(Texture + "_Head");
-            HeadIcon2 = ModContent.Request<Texture2D>(Texture + "_Head2");
-            HeadIcon3 = ModContent.Request<Texture2D>(Texture + "_Head3");
+            HeadIcon1 = Request<Texture2D>(Texture + "_Head");
+            HeadIcon2 = Request<Texture2D>(Texture + "_Head2");
+            HeadIcon3 = Request<Texture2D>(Texture + "_Head3");
         }
 
         public enum ActionState
@@ -96,6 +96,8 @@ namespace Redemption.NPCs.Friendly
             NPC.DeathSound = SoundID.NPCDeath27;
             NPC.chaseable = false;
             TownNPCStayingHomeless = true;
+
+            DialogueBoxStyle = EPIDOTRA;
         }
         public override void OnKill()
         {
@@ -151,14 +153,10 @@ namespace Redemption.NPCs.Friendly
         }
         public override void AI()
         {
-            Player player = Main.LocalPlayer;
-            int nearest = RedeHelper.GetNearestAlivePlayer(NPC);
-            if (nearest >= 0 && nearest < Main.maxPlayers)
-            {
-                player = Main.player[RedeHelper.GetNearestAlivePlayer(NPC)];
-                if (NPC.target < 0 || NPC.target == 255 || player.dead || !player.active)
-                    NPC.TargetClosest();
-            }
+            if (NPC.target < 0 || NPC.target == 255 || Main.player[NPC.target].dead || !Main.player[NPC.target].active)
+                NPC.TargetClosest();
+
+            Player player = Main.player[NPC.target];
 
             if (TimerRand == 0)
             {
@@ -194,7 +192,7 @@ namespace Redemption.NPCs.Friendly
                 {
                     if (NPC.life < NPC.lifeMax - 10 && !Main.dedServ)
                     {
-                        Texture2D bubble = !Main.dedServ ? ModContent.Request<Texture2D>("Redemption/UI/TextBubble_Epidotra").Value : null;
+                        Texture2D bubble = !Main.dedServ ? Request<Texture2D>("Redemption/UI/TextBubble_Epidotra").Value : null;
                         SoundStyle voice = CustomSounds.Voice2 with { Pitch = -1f };
 
                         DialogueChain chain = new();
@@ -209,7 +207,7 @@ namespace Redemption.NPCs.Friendly
                 {
                     if (NPC.life < NPC.lifeMax / 2 && !Main.dedServ)
                     {
-                        Texture2D bubble = !Main.dedServ ? ModContent.Request<Texture2D>("Redemption/UI/TextBubble_Epidotra").Value : null;
+                        Texture2D bubble = !Main.dedServ ? Request<Texture2D>("Redemption/UI/TextBubble_Epidotra").Value : null;
                         SoundStyle voice = CustomSounds.Voice2 with { Pitch = -1f };
 
                         string gender = player.Male ? Language.GetTextValue("Mods.Redemption.Cutscene.TreebarkDryad.3") : Language.GetTextValue("Mods.Redemption.Cutscene.TreebarkDryad.4");
@@ -245,11 +243,6 @@ namespace Redemption.NPCs.Friendly
         {
             if (firstButton)
                 shopName = Shop.Name;
-        }
-        public override void SetChatButtons(ref string button, ref string button2)
-        {
-            if (!RedeBossDowned.downedTreebark)
-                button = Language.GetTextValue("LegacyInterface.28");
         }
         public override void OnSpawn(IEntitySource source)
         {
@@ -357,7 +350,7 @@ namespace Redemption.NPCs.Friendly
                     chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.TreebarkDryad.Dialogue2"));
                 else
                     chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.TreebarkDryad.Dialogue3"));
-                if (BasePlayer.HasHelmet(Main.LocalPlayer, ModContent.ItemType<ThornMask>()))
+                if (BasePlayer.HasHelmet(Main.LocalPlayer, ItemType<ThornMask>()))
                     chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.TreebarkDryad.Dialogue4"));
             }
             chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.TreebarkDryad.Dialogue5"));
@@ -411,7 +404,7 @@ namespace Redemption.NPCs.Friendly
 
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
-            Texture2D EyesTex = ModContent.Request<Texture2D>("Redemption/NPCs/Friendly/TreebarkDryad_Eyes").Value;
+            Texture2D EyesTex = Request<Texture2D>("Redemption/NPCs/Friendly/TreebarkDryad_Eyes").Value;
             var effects = NPC.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
 
             spriteBatch.Draw(TextureAssets.Npc[NPC.type].Value, NPC.Center - screenPos, NPC.frame, NPC.GetAlpha(drawColor), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
@@ -464,10 +457,10 @@ namespace Redemption.NPCs.Friendly
                     Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.WoodFurniture, Scale: 2f);
 
                 for (int i = 0; i < 2; i++)
-                    Gore.NewGore(NPC.GetSource_FromThis(), NPC.position + new Vector2(0, 60), NPC.velocity, ModContent.Find<ModGore>("Redemption/TreebarkDryadGoreLeg" + (WoodType + 1)).Type, 1);
-                Gore.NewGore(NPC.GetSource_FromThis(), NPC.position, NPC.velocity, ModContent.Find<ModGore>("Redemption/TreebarkDryadGoreAntler" + (WoodType + 1)).Type, 1);
-                Gore.NewGore(NPC.GetSource_FromThis(), NPC.position + new Vector2(40, 0), NPC.velocity, ModContent.Find<ModGore>("Redemption/TreebarkDryadGoreAntlerB" + (WoodType + 1)).Type, 1);
-                Gore.NewGore(NPC.GetSource_FromThis(), NPC.position + new Vector2(20, 10), NPC.velocity, ModContent.Find<ModGore>("Redemption/TreebarkDryadGoreHead" + (WoodType + 1)).Type, 1);
+                    Gore.NewGore(NPC.GetSource_FromThis(), NPC.position + new Vector2(0, 60), NPC.velocity, Find<ModGore>("Redemption/TreebarkDryadGoreLeg" + (WoodType + 1)).Type, 1);
+                Gore.NewGore(NPC.GetSource_FromThis(), NPC.position, NPC.velocity, Find<ModGore>("Redemption/TreebarkDryadGoreAntler" + (WoodType + 1)).Type, 1);
+                Gore.NewGore(NPC.GetSource_FromThis(), NPC.position + new Vector2(40, 0), NPC.velocity, Find<ModGore>("Redemption/TreebarkDryadGoreAntlerB" + (WoodType + 1)).Type, 1);
+                Gore.NewGore(NPC.GetSource_FromThis(), NPC.position + new Vector2(20, 10), NPC.velocity, Find<ModGore>("Redemption/TreebarkDryadGoreHead" + (WoodType + 1)).Type, 1);
             }
             for (int i = 0; i < 3; i++)
                 Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.WoodFurniture);
@@ -537,7 +530,7 @@ namespace Redemption.NPCs.Friendly
                 return this;
             }
 
-            public Pool Add<T>(params Condition[] conditions) where T : ModItem => Add(ModContent.ItemType<T>(), conditions);
+            public Pool Add<T>(params Condition[] conditions) where T : ModItem => Add(ItemType<T>(), conditions);
             public Pool Add(int item, params Condition[] conditions) => Add(ContentSamples.ItemsByType[item], conditions);
 
             // Picks a number of items (up to Slots) from the entries list, provided conditions are met.
@@ -574,7 +567,7 @@ namespace Redemption.NPCs.Friendly
 
         // Some methods to add a pool with a single item
         public void Add(Item item, params Condition[] conditions) => AddPool(item.ModItem?.FullName ?? $"Terraria/{item.type}", slots: 1).Add(item, conditions);
-        public void Add<T>(params Condition[] conditions) where T : ModItem => Add(ModContent.ItemType<T>(), conditions);
+        public void Add<T>(params Condition[] conditions) where T : ModItem => Add(ItemType<T>(), conditions);
         public void Add(int item, params Condition[] conditions) => Add(ContentSamples.ItemsByType[item], conditions);
 
         // Here is where we actually 'roll' the contents of the shop

@@ -1,33 +1,39 @@
-using Microsoft.Xna.Framework;
+using BetterDialogue.UI;
 using Microsoft.Xna.Framework.Graphics;
+using Redemption.Base;
+using Redemption.BaseExtension;
+using Redemption.Dusts;
+using Redemption.Globals;
+using Redemption.Items.Armor.Vanity;
+using Redemption.Items.Placeable.Furniture.Misc;
+using Redemption.Items.Usable;
+using Redemption.Items.Usable.Summons;
+using Redemption.Textures.Emotes;
+using Redemption.Tiles.Furniture.ElderWood;
+using Redemption.Tiles.Furniture.PetrifiedWood;
+using Redemption.Tiles.Furniture.Shade;
+using ReLogic.Content;
+using System.Collections.Generic;
 using Terraria;
+using Terraria.Audio;
+using Terraria.GameContent;
+using Terraria.GameContent.Bestiary;
+using Terraria.GameContent.Personalities;
+using Terraria.GameContent.UI;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.Utilities;
-using Terraria.Localization;
-using Terraria.GameContent.Bestiary;
-using Terraria.GameContent;
-using Redemption.Globals;
-using Redemption.Dusts;
-using Redemption.Base;
-using Redemption.Items.Armor.Vanity;
-using Terraria.GameContent.Personalities;
-using System.Collections.Generic;
-using Redemption.BaseExtension;
-using Redemption.Items.Usable;
-using ReLogic.Content;
-using Redemption.Textures.Emotes;
-using Terraria.GameContent.UI;
-using System;
 
 namespace Redemption.NPCs.Friendly.TownNPCs
 {
     [AutoloadHead]
-    public class Newb : ModNPC
+    public class Newb : ModRedeNPC
     {
         public static int HeadIndex2;
         public override void Load()
         {
+            // Adds our Shimmer Head to the NPCHeadLoader.
             HeadIndex2 = Mod.AddNPCHeadTexture(Type, Texture + "_Serious_Head");
         }
         public override void SetStaticDefaults()
@@ -41,7 +47,7 @@ namespace Redemption.NPCs.Friendly.TownNPCs
             NPCID.Sets.AttackTime[Type] = 20;
             NPCID.Sets.AttackAverageChance[Type] = 10;
             NPCID.Sets.HatOffsetY[Type] = 4;
-            NPCID.Sets.FaceEmote[Type] = ModContent.EmoteBubbleType<NewbTownNPCEmote>();
+            NPCID.Sets.FaceEmote[Type] = EmoteBubbleType<NewbTownNPCEmote>();
 
             NPC.Happiness.SetBiomeAffection<ForestBiome>(AffectionLevel.Like);
             NPC.Happiness.SetBiomeAffection<UndergroundBiome>(AffectionLevel.Love);
@@ -54,7 +60,7 @@ namespace Redemption.NPCs.Friendly.TownNPCs
             NPC.Happiness.SetNPCAffection(NPCID.Clothier, AffectionLevel.Dislike);
             NPC.Happiness.SetNPCAffection(NPCID.TaxCollector, AffectionLevel.Hate);
 
-            NPCID.Sets.NPCBestiaryDrawModifiers drawModifiers = new(0)
+            NPCID.Sets.NPCBestiaryDrawModifiers drawModifiers = new()
             {
                 Velocity = 1f
             };
@@ -76,6 +82,8 @@ namespace Redemption.NPCs.Friendly.TownNPCs
             NPC.DeathSound = SoundID.NPCDeath1;
             NPC.knockBackResist = 0.5f;
 
+            DialogueBoxStyle = EPIDOTRA;
+
             AnimationType = NPCID.Guide;
         }
 
@@ -87,18 +95,24 @@ namespace Redemption.NPCs.Friendly.TownNPCs
                 new FlavorTextBestiaryInfoElement("..."),
             });
         }
-
         public override void AI()
         {
             if (RedeWorld.newbGone)
+            {
+                for (int i = 0; i < 30; i++)
+                {
+                    int d = Dust.NewDust(NPC.position + NPC.velocity, NPC.width, NPC.height, DustType<SightDust>(), NPC.velocity.X * 0.5f, NPC.velocity.Y * 0.5f, Scale: 4);
+                    Main.dust[d].noGravity = true;
+                }
                 NPC.active = false;
+            }
         }
         public override void HitEffect(NPC.HitInfo hit)
         {
             if (NPC.life <= 0)
             {
                 for (int i = 0; i < 15; i++)
-                    Dust.NewDust(NPC.position + NPC.velocity, NPC.width, NPC.height, ModContent.DustType<SightDust>(), NPC.velocity.X * 0.5f, NPC.velocity.Y * 0.5f, Scale: 4);
+                    Dust.NewDust(NPC.position + NPC.velocity, NPC.width, NPC.height, DustType<SightDust>(), NPC.velocity.X * 0.5f, NPC.velocity.Y * 0.5f, Scale: 4);
             }
             Dust.NewDust(NPC.position + NPC.velocity, NPC.width, NPC.height, DustID.Blood, NPC.velocity.X * 0.5f, NPC.velocity.Y * 0.5f);
 
@@ -108,16 +122,56 @@ namespace Redemption.NPCs.Friendly.TownNPCs
             return RedeBossDowned.foundNewb && !RedeWorld.newbGone;
         }
 
-        public override List<string> SetNPCNameList()
+        private static bool HasPiano;
+        public override bool CheckConditions(int left, int right, int top, int bottom)
         {
-            return new List<string> { "Newb" };
+            bool gem = false;
+            bool RUBIES = false;
+            for (int x = left; x <= right; x++)
+            {
+                for (int y = top; y <= bottom; y++)
+                {
+                    int type = Framing.GetTileSafely(x, y).TileType;
+                    if (type is TileID.Amethyst or TileID.Topaz or TileID.Sapphire or TileID.Emerald or TileID.Diamond or TileID.AmberStoneBlock or TileID.TreeAmethyst or TileID.TreeAmber or TileID.TreeDiamond or TileID.TreeEmerald or TileID.TreeSapphire or TileID.TreeTopaz or TileID.ExposedGems or TileID.Toilets)
+                    {
+                        if (type == TileID.ExposedGems && Framing.GetTileSafely(x, y).TileFrameX == 72)
+                        {
+                            RUBIES = true;
+                            break;
+                        }
+                        if (type == TileID.Toilets && (Framing.GetTileSafely(x, y).TileFrameY < 1238 || Framing.GetTileSafely(x, y).TileFrameY > 1258))
+                        {
+                            RUBIES = true;
+                            break;
+                        }
+                        gem = true;
+                        break;
+                    }
+                }
+            }
+            if (RUBIES)
+                gem = false;
+            HasPiano = false;
+            for (int x = left; x <= right; x++)
+            {
+                for (int y = top; y <= bottom; y++)
+                {
+                    int type = Main.tile[x, y].TileType;
+                    if (type == TileID.Pianos || type == TileType<ElderWoodPianoTile>() || type == TileType<PetrifiedWoodPianoTile>() || type == TileType<ShadestonePianoTile>())
+                    {
+                        HasPiano = true;
+                        return gem;
+                    }
+                }
+            }
+            return gem;
         }
         public override ITownNPCProfile TownNPCProfile() => new NewbProfile();
         public override string GetChat()
         {
             if (RedeBossDowned.downedNebuleus)
                 Main.LocalPlayer.currentShoppingSettings.HappinessReport = "";
-            Player player = Main.player[Main.myPlayer];
+            Player player = Main.LocalPlayer;
             WeightedRandom<string> chat = new(Main.rand);
             if (RedeBossDowned.downedNebuleus)
             {
@@ -131,19 +185,57 @@ namespace Redemption.NPCs.Friendly.TownNPCs
             }
             else
             {
-                if (BasePlayer.HasHelmet(player, ModContent.ItemType<KingSlayerMask>(), true))
+                if (HasPiano)
+                {
+                    chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Fool.PianoDialogue1"), 2);
+                    chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Fool.PianoDialogue2"), 2);
+                }
+                bool rember1 = Main.hardMode;
+                bool rember2 = RedeBossDowned.downedSlayer || NPC.downedPlantBoss;
+                if (!rember2 && BasePlayer.HasHelmet(player, ItemType<KingSlayerMask>(), true))
                     chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Fool.KingSlayerMaskDialogue"));
-                if (player.RedemptionPlayerBuff().ChickenForm)
-                    chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Fool.ChickenDialogue"));
-                else
-                    chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Fool.Dialogue1"));
-                chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Fool.Dialogue2")); // 9.7%
-                chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Fool.Dialogue3"), 0.6); // 5.8%
-                chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Fool.Dialogue4"), 0.4); // 3.9%
-                chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Fool.Dialogue5"), 0.4);
-                chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Fool.Dialogue6"), 0.2); // 1.9%
-                chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Fool.Dialogue7"), 0.2);
-                chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Fool.Dialogue8"), 0.2);
+                if (!rember2)
+                {
+                    if (player.RedemptionPlayerBuff().ChickenForm)
+                        chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Fool.ChickenDialogue"));
+                    else
+                        chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Fool.1"));
+                }
+                if (!rember2 && !rember1)
+                {
+                    chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Fool.2")); // 9.7%
+                    chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Fool.3"), 0.6); // 5.8%
+                    chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Fool.4"), 0.4); // 3.9%
+                    chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Fool.5"), 0.4);
+                    chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Fool.6"), 0.2); // 1.9%
+                    chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Fool.7"), 0.2);
+                    chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Fool.8"), 0.2);
+                }
+                if (rember1 && !rember2)
+                {
+                    chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Fool.5"), 0.4);
+                    chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Fool.8"), 0.2);
+
+                    chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Fool.10"), 0.4);
+                    chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Fool.11"), 0.4);
+                    chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Fool.12"));
+                    chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Fool.13"), 0.4);
+                    chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Fool.14"), 0.4);
+                    chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Fool.15"), 0.6);
+                    chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Fool.16"), 0.6);
+                    chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Fool.17"), 0.8);
+                }
+                if (rember2)
+                {
+                    chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Fool.18"));
+                    chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Fool.19"));
+                    chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Fool.20"));
+                    chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Fool.21"));
+                    chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Fool.22"));
+                    chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Fool.23"));
+                    chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Fool.24"));
+                }
+
                 if (RedeWorld.Alignment < 0)
                     chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Fool.HuhDialogue"), 0.05); // 0.48%
             }
@@ -177,7 +269,6 @@ namespace Redemption.NPCs.Friendly.TownNPCs
                 .Add(ItemID.Diamond, RedeConditions.DownedSkeletronOrSeed)
                 .Add<OreBomb>(Condition.InBelowSurface)
                 .Add<OrePowder>(Condition.InBelowSurface, Condition.Hardmode);
-
             npcShop.Register();
         }
         public override void ModifyActiveShop(string shopName, Item[] items)
@@ -233,14 +324,26 @@ namespace Redemption.NPCs.Friendly.TownNPCs
         public Asset<Texture2D> GetTextureNPCShouldUse(NPC npc)
         {
             if (RedeBossDowned.downedNebuleus)
-                return ModContent.Request<Texture2D>("Redemption/NPCs/Friendly/TownNPCs/Newb_Serious");
-            return ModContent.Request<Texture2D>("Redemption/NPCs/Friendly/TownNPCs/Newb");
+                return Request<Texture2D>("Redemption/NPCs/Friendly/TownNPCs/Newb_Serious");
+            return Request<Texture2D>("Redemption/NPCs/Friendly/TownNPCs/Newb");
         }
         public int GetHeadTextureIndex(NPC npc)
         {
             if (RedeBossDowned.downedNebuleus)
                 return Newb.HeadIndex2;
-            return ModContent.GetModHeadSlot("Redemption/NPCs/Friendly/TownNPCs/Newb_Head");
+            return GetModHeadSlot("Redemption/NPCs/Friendly/TownNPCs/Newb_Head");
+        }
+    }
+    public class NewbHomeButton : ChatButton
+    {
+        public override double Priority => 10;
+        public override string Text(NPC npc, Player player) => Language.GetTextValue("Mods.Redemption.DialogueBox.HomeRequirements");
+        public override string Description(NPC npc, Player player) => string.Empty;
+        public override bool IsActive(NPC npc, Player player) => npc.type == NPCType<Newb>() && npc.homeless && !RedeBossDowned.downedNebuleus;
+        public override void OnClick(NPC npc, Player player)
+        {
+            Main.npcChatText = Language.GetTextValue("Mods.Redemption.Dialogue.Fool.HomeDialogue");
+            SoundEngine.PlaySound(SoundID.MenuTick);
         }
     }
 }

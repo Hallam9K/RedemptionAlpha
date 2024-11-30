@@ -1,24 +1,23 @@
-using Microsoft.Xna.Framework;
-using Terraria;
-using Terraria.ID;
-using Terraria.ModLoader;
 using Microsoft.Xna.Framework.Graphics;
-using Terraria.DataStructures;
+using Redemption.Base;
 using Redemption.Globals;
+using Redemption.Items.Armor.Vanity;
+using Redemption.Items.Materials.PreHM;
+using Redemption.Items.Weapons.PreHM.Summon;
+using Redemption.NPCs.Minibosses.Calavia;
+using Redemption.UI.Dialect;
+using System;
+using Terraria;
+using Terraria.Audio;
 using Terraria.GameContent;
 using Terraria.Graphics.Shaders;
-using Redemption.BaseExtension;
-using Redemption.Items.Weapons.PreHM.Summon;
-using Redemption.Items.Materials.PreHM;
-using Terraria.Audio;
-using Redemption.Items.Armor.Vanity;
-using Redemption.Base;
+using Terraria.ID;
 using Terraria.Localization;
-using Redemption.NPCs.Minibosses.Calavia;
+using Terraria.ModLoader;
 
 namespace Redemption.NPCs.Friendly
 {
-    public class SpiritWalkerMan : ModNPC
+    public class SpiritWalkerMan : ModRedeNPC
     {
         public ref float AITimer => ref NPC.ai[1];
         public override void SetStaticDefaults()
@@ -28,7 +27,7 @@ namespace Redemption.NPCs.Friendly
             NPCID.Sets.ActsLikeTownNPC[Type] = true;
             NPCID.Sets.NoTownNPCHappiness[Type] = true;
             NPCID.Sets.ImmuneToRegularBuffs[Type] = true;
-            NPCID.Sets.NPCBestiaryDrawModifiers value = new(0)
+            NPCID.Sets.NPCBestiaryDrawModifiers value = new()
             {
                 Hide = true
             };
@@ -46,23 +45,53 @@ namespace Redemption.NPCs.Friendly
             NPC.aiStyle = -1;
             NPC.knockBackResist = 0f;
             NPC.npcSlots = 0;
+
+            DialogueBoxStyle = CAVERN;
         }
+        public override bool HasTalkButton() => true;
+        public override bool HasCruxButton(Player player) => !player.HasItem(ItemType<CruxCardSkeleton>()) || player.HasItem(ItemType<OldTophat>());
+        public override string CruxButtonText(Player player)
+        {
+            if (player.HasItem(ItemType<OldTophat>()))
+                return Language.GetTextValue("Mods.Redemption.DialogueBox.SpiritWalkerMan.Tophat");
+            return Language.GetTextValue("Mods.Redemption.DialogueBox.Crux");
+        }
+        public override void CruxButton(Player player)
+        {
+            if (player.HasItem(ItemType<OldTophat>()))
+            {
+                if (player.ConsumeItem(ItemType<EmptyCruxCard>()) && player.ConsumeItem(ItemType<OldTophat>()))
+                {
+                    player.QuickSpawnItem(NPC.GetSource_Loot(), ItemType<CruxCardTied>());
+                    Main.npcChatText = Language.GetTextValue("Mods.Redemption.Dialogue.SpiritWalkerMan.CruxAsherDialogue");
+                    Main.npcChatCornerItem = ItemType<CruxCardTied>();
+                }
+                else
+                {
+                    Main.npcChatText = Language.GetTextValue("Mods.Redemption.Dialogue.SpiritWalkerMan.NoCruxAsherDialogue");
+                    Main.npcChatCornerItem = ItemType<EmptyCruxCard>();
+                }
+                return;
+            }
+            RequestCruxButton.RequestCrux(NPC, player, ItemType<CruxCardSkeleton>(), "SpiritWalkerMan.NoCruxDialogue", "SpiritWalkerMan.CruxDialogue");
+        }
+        public override bool HasLeftHangingButton(Player player) => RedeGlobalButton.talkActive;
+        public override HangingButtonParams LeftHangingButton(Player player) => new(5);
 
         public override bool CanHitPlayer(Player target, ref int cooldownSlot) => false;
         public override bool CanHitNPC(NPC target) => false;
 
-        public bool floatTimer;
         public override void AI()
         {
-            Player player = Main.player[RedeHelper.GetNearestAlivePlayer(NPC)];
-            if (NPC.target < 0 || NPC.target == 255 || player.dead || !player.active)
+            if (NPC.target < 0 || NPC.target == 255 || Main.player[NPC.target].dead || !Main.player[NPC.target].active)
                 NPC.TargetClosest();
+
+            Player player = Main.player[NPC.target];
 
             if (RedeQuest.calaviaVar != 15)
                 NPC.LookAtEntity(player);
 
-            if (AITimer < 60)
-                NPC.velocity *= 0.94f;
+            NPC.velocity *= 0.94f;
 
             if (AITimer++ == 0)
             {
@@ -76,6 +105,7 @@ namespace Redemption.NPCs.Friendly
             }
             NPC.alpha += Main.rand.Next(-10, 11);
             NPC.alpha = (int)MathHelper.Clamp(NPC.alpha, 40, 60);
+            NPC.position.Y += (float)Math.Sin(NPC.localAI[0]++ / 15) / 3;
         }
 
         public override void FindFrame(int frameHeight)
@@ -88,144 +118,11 @@ namespace Redemption.NPCs.Friendly
                 if (NPC.frame.Y >= 4 * frameHeight)
                     NPC.frame.Y = 0;
             }
-            if (!floatTimer)
-            {
-                NPC.velocity.Y += 0.03f;
-                if (NPC.velocity.Y > .5f)
-                {
-                    floatTimer = true;
-                    NPC.netUpdate = true;
-                }
-            }
-            else if (floatTimer)
-            {
-                NPC.velocity.Y -= 0.03f;
-                if (NPC.velocity.Y < -.5f)
-                {
-                    floatTimer = false;
-                    NPC.netUpdate = true;
-                }
-            }
-        }
-        public static int ChatNumber = 0;
-        public override void SetChatButtons(ref string button, ref string button2)
-        {
-            switch (ChatNumber)
-            {
-                case 0:
-                    button = Language.GetTextValue("Mods.Redemption.DialogueBox.SpiritWalkerMan.1");
-                    break;
-                case 1:
-                    button = Language.GetTextValue("Mods.Redemption.DialogueBox.SpiritWalkerMan.2");
-                    break;
-                case 2:
-                    button = Language.GetTextValue("Mods.Redemption.DialogueBox.SpiritWalkerMan.3");
-                    break;
-                case 3:
-                    button = Language.GetTextValue("Mods.Redemption.DialogueBox.SpiritWalkerMan.4");
-                    break;
-                case 4:
-                    button = Language.GetTextValue("Mods.Redemption.DialogueBox.SpiritWalkerMan.5");
-                    break;
-                case 5:
-                    if (Main.LocalPlayer.HasItem(ModContent.ItemType<OldTophat>()))
-                        button = Language.GetTextValue("Mods.Redemption.DialogueBox.SpiritWalkerMan.Tophat");
-                    else
-                        button = Language.GetTextValue("Mods.Redemption.DialogueBox.SpiritWalkerMan.Crux");
-                    break;
-            }
-            button2 = Language.GetTextValue("Mods.Redemption.DialogueBox.CycleD");
-        }
-
-        public override void OnChatButtonClicked(bool firstButton, ref string shopName)
-        {
-            if (firstButton)
-            {
-                Main.npcChatText = ChitChat();
-                if (ChatNumber == 5)
-                {
-                    if (!Main.LocalPlayer.RedemptionAbility().SpiritwalkerActive)
-                    {
-                        Main.npcChatText = Language.GetTextValue("Mods.Redemption.Dialogue.SpiritWalkerMan.NoRealmCruxDialogue");
-                        ChatNumber = 4;
-                        return;
-                    }
-                    int card = Main.LocalPlayer.FindItem(ModContent.ItemType<EmptyCruxCard>());
-                    if (Main.LocalPlayer.HasItem(ModContent.ItemType<OldTophat>()))
-                    {
-                        int oldTophat = Main.LocalPlayer.FindItem(ModContent.ItemType<OldTophat>());
-                        if (card >= 0 && oldTophat >= 0)
-                        {
-                            Main.LocalPlayer.inventory[oldTophat].stack--;
-                            if (Main.LocalPlayer.inventory[oldTophat].stack <= 0)
-                                Main.LocalPlayer.inventory[oldTophat] = new Item();
-
-                            Main.LocalPlayer.QuickSpawnItem(NPC.GetSource_Loot(), ModContent.ItemType<CruxCardTied>());
-                            Main.npcChatText = Language.GetTextValue("Mods.Redemption.Dialogue.SpiritWalkerMan.CruxAsherDialogue");
-                            Main.npcChatCornerItem = ModContent.ItemType<CruxCardTied>();
-                            SoundEngine.PlaySound(SoundID.Chat);
-                        }
-                        else
-                        {
-                            Main.npcChatText = Language.GetTextValue("Mods.Redemption.Dialogue.SpiritWalkerMan.NoCruxAsherDialogue");
-                            Main.npcChatCornerItem = ModContent.ItemType<EmptyCruxCard>();
-                        }
-                        ChatNumber = 4;
-                        return;
-                    }
-                    if (card >= 0)
-                    {
-                        Main.LocalPlayer.inventory[card].stack--;
-                        if (Main.LocalPlayer.inventory[card].stack <= 0)
-                            Main.LocalPlayer.inventory[card] = new Item();
-
-                        Main.LocalPlayer.QuickSpawnItem(NPC.GetSource_Loot(), ModContent.ItemType<CruxCardSkeleton>());
-                        Main.npcChatText = Language.GetTextValue("Mods.Redemption.Dialogue.SpiritWalkerMan.CruxDialogue");
-                        Main.npcChatCornerItem = ModContent.ItemType<CruxCardSkeleton>();
-                        SoundEngine.PlaySound(SoundID.Chat);
-                    }
-                    else
-                    {
-                        Main.npcChatText = Language.GetTextValue("Mods.Redemption.Dialogue.SpiritWalkerMan.NoCruxDialogue");
-                        Main.npcChatCornerItem = ModContent.ItemType<EmptyCruxCard>();
-                    }
-                    ChatNumber = 4;
-                }
-            }
-            else
-            {
-                ChatNumber++;
-                int max = 4;
-                if (Main.LocalPlayer.HasItem(ModContent.ItemType<OldTophat>()))
-                {
-                    if (Main.LocalPlayer.RedemptionAbility().SpiritwalkerActive && !Main.LocalPlayer.HasItem(ModContent.ItemType<CruxCardTied>()))
-                        max = 5;
-                }
-                else
-                {
-                    if (Main.LocalPlayer.RedemptionAbility().SpiritwalkerActive && !Main.LocalPlayer.HasItem(ModContent.ItemType<CruxCardSkeleton>()))
-                        max = 5;
-                }
-                if (ChatNumber > max)
-                    ChatNumber = 0;
-            }
-        }
-        public static string ChitChat()
-        {
-            return ChatNumber switch
-            {
-                0 => Language.GetTextValue("Mods.Redemption.Dialogue.SpiritWalkerMan.Chat1"),
-                1 => Language.GetTextValue("Mods.Redemption.Dialogue.SpiritWalkerMan.Chat2"),
-                2 => Language.GetTextValue("Mods.Redemption.Dialogue.SpiritWalkerMan.Chat3"),
-                3 => !Main.rand.NextBool(8) ? Language.GetTextValue("Mods.Redemption.Dialogue.SpiritWalkerMan.Chat4") : Language.GetTextValue("Mods.Redemption.Dialogue.SpiritWalkerMan.Chat4B"),
-                4 => Language.GetTextValue("Mods.Redemption.Dialogue.SpiritWalkerMan.Chat5"),
-                _ => "...",
-            };
         }
         public override bool CanChat() => RedeQuest.calaviaVar != 15;
         public override string GetChat()
         {
-            if (RedeQuest.calaviaVar >= 11 && RedeQuest.calaviaVar != 20 && NPC.AnyNPCs(ModContent.NPCType<Calavia_NPC>()))
+            if (RedeQuest.calaviaVar >= 11 && RedeQuest.calaviaVar != 20 && NPC.AnyNPCs(NPCType<Calavia_NPC>()))
             {
                 if (RedeQuest.calaviaVar < 12)
                 {
@@ -233,34 +130,72 @@ namespace Redemption.NPCs.Friendly
                     RedeQuest.SyncData();
                 }
 
-                if (!Main.LocalPlayer.HasItem(ModContent.ItemType<CruxCardCalavia>()))
+                if (!Main.LocalPlayer.HasItem(ItemType<CruxCardCalavia>()))
                 {
                     if (RedeQuest.calaviaVar is 16)
                         return Language.GetTextValue("Mods.Redemption.Dialogue.SpiritWalkerMan.CalaviaDialogue2");
                     return Language.GetTextValue("Mods.Redemption.Dialogue.SpiritWalkerMan.CalaviaDialogue1");
                 }
             }
-            bool wearingHat = BasePlayer.HasHelmet(Main.LocalPlayer, ModContent.ItemType<OldTophat>());
+            bool wearingHat = BasePlayer.HasHelmet(Main.LocalPlayer, ItemType<OldTophat>());
             string s = "";
             if (wearingHat)
                 s = Language.GetTextValue("Mods.Redemption.Dialogue.SpiritWalkerMan.Dialogue2Mid");
-            if (Main.LocalPlayer.HasItem(ModContent.ItemType<OldTophat>()) || wearingHat)
+            if (Main.LocalPlayer.HasItem(ItemType<OldTophat>()) || wearingHat)
                 return Language.GetTextValue("Mods.Redemption.Dialogue.SpiritWalkerMan.Dialogue2") + s + Language.GetTextValue("Mods.Redemption.Dialogue.SpiritWalkerMan.Dialogue2Cont");
             return Language.GetTextValue("Mods.Redemption.Dialogue.SpiritWalkerMan.Dialogue1");
         }
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
             var effects = NPC.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
-            int shader = GameShaders.Armor.GetShaderIdFromItemId(ItemID.MirageDye);
-            spriteBatch.End();
-            spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.NonPremultiplied, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
-            GameShaders.Armor.ApplySecondary(shader, Main.player[Main.myPlayer], null);
-
-            spriteBatch.Draw(TextureAssets.Npc[NPC.type].Value, NPC.Center - screenPos, NPC.frame, NPC.GetAlpha(Color.White), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0f);
-
-            spriteBatch.End();
-            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+            spriteBatch.Draw(TextureAssets.Npc[NPC.type].Value, NPC.Center - screenPos, NPC.frame, NPC.GetAlpha(Color.White with { A = 100 }), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0f);
             return false;
+        }
+    }
+    public class AboutButton_SpiritWalkerMan : TalkButtonBase
+    {
+        protected override int YOffset => 0;
+        protected override bool LeftSide => true;
+        protected override string DialogueType => "SpiritWalkerMan.0";
+        protected override bool VisibleRequirement => true;
+        protected override int NPCType => NPCType<SpiritWalkerMan>();
+        public override string Text(NPC npc, Player player) => Language.GetTextValue("Mods.Redemption.DialogueBox.AboutYou");
+    }
+    public class SpiritWalkingButton_SpiritWalkerMan : TalkButtonBase
+    {
+        protected override int YOffset => 1;
+        protected override bool LeftSide => true;
+        protected override string DialogueType => "SpiritWalkerMan.1";
+        protected override bool VisibleRequirement => true;
+        protected override int NPCType => NPCType<SpiritWalkerMan>();
+    }
+    public class DeadRingerButton_SpiritWalkerMan : TalkButtonBase
+    {
+        protected override int YOffset => 2;
+        protected override bool LeftSide => true;
+        protected override string DialogueType => "SpiritWalkerMan.2";
+        protected override bool VisibleRequirement => true;
+        protected override int NPCType => NPCType<SpiritWalkerMan>();
+    }
+    public class LostSoulsButton_SpiritWalkerMan : TalkButtonBase
+    {
+        protected override int YOffset => 3;
+        protected override bool LeftSide => true;
+        protected override string DialogueType => "SpiritWalkerMan.3";
+        protected override bool VisibleRequirement => true;
+        protected override int NPCType => NPCType<SpiritWalkerMan>();
+    }
+    public class RingerUsesButton_SpiritWalkerMan : TalkButtonBase
+    {
+        protected override int YOffset => 4;
+        protected override bool LeftSide => true;
+        protected override string DialogueType => "SpiritWalkerMan.4";
+        protected override bool VisibleRequirement => true;
+        protected override int NPCType => NPCType<SpiritWalkerMan>();
+        public override void OnClick(NPC npc, Player player)
+        {
+            SoundEngine.PlaySound(SoundID.Chat);
+            Main.npcChatText = !Main.rand.NextBool(10) ? Language.GetTextValue("Mods.Redemption.Dialogue." + DialogueType) : Language.GetTextValue("Mods.Redemption.Dialogue.SpiritWalkerMan.4B");
         }
     }
 }

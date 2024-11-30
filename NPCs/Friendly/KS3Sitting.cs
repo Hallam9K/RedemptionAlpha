@@ -1,31 +1,33 @@
-using Microsoft.Xna.Framework;
+using BetterDialogue.UI;
+using Microsoft.Xna.Framework.Graphics;
+using Redemption.Base;
+using Redemption.BaseExtension;
+using Redemption.Biomes;
+using Redemption.Globals;
+using Redemption.Items.Armor.Vanity;
+using Redemption.Items.Donator.Lizzy;
+using Redemption.Items.Lore;
+using Redemption.Items.Materials.HM;
+using Redemption.Items.Quest.KingSlayer;
+using Redemption.NPCs.Bosses.KSIII;
+using Redemption.Tiles.Tiles;
+using Redemption.UI.Dialect;
+using Redemption.Walls;
+using Redemption.WorldGeneration;
+using ReLogic.Content;
+using System.Collections.Generic;
 using Terraria;
+using Terraria.Audio;
+using Terraria.GameContent;
+using Terraria.GameContent.UI;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.Utilities;
-using System.Collections.Generic;
-using Redemption.Walls;
-using Redemption.NPCs.Bosses.KSIII;
-using Redemption.Items.Armor.Vanity;
-using Redemption.Items.Lore;
-using Redemption.Items.Quest.KingSlayer;
-using Redemption.Items.Materials.HM;
-using Redemption.Globals;
-using Terraria.Audio;
-using Redemption.Base;
-using Microsoft.Xna.Framework.Graphics;
-using ReLogic.Content;
-using Redemption.WorldGeneration;
-using Redemption.Tiles.Tiles;
-using Redemption.Biomes;
-using Redemption.BaseExtension;
-using Redemption.Items.Donator.Lizzy;
-using Terraria.GameContent.UI;
-using Terraria.Localization;
 
 namespace Redemption.NPCs.Friendly
 {
-    public class KS3Sitting : ModNPC
+    public class KS3Sitting : ModRedeNPC
     {
         public ref float AITimer => ref NPC.ai[1];
 
@@ -35,7 +37,7 @@ namespace Redemption.NPCs.Friendly
             Main.npcFrameCount[NPC.type] = 7;
             NPCID.Sets.ActsLikeTownNPC[Type] = true;
             NPCID.Sets.NoTownNPCHappiness[Type] = true;
-            NPCID.Sets.NPCBestiaryDrawModifiers value = new(0)
+            NPCID.Sets.NPCBestiaryDrawModifiers value = new()
             {
                 Hide = true
             };
@@ -54,7 +56,14 @@ namespace Redemption.NPCs.Friendly
             NPC.aiStyle = -1;
             NPC.knockBackResist = 0f;
             NPC.npcSlots = 0;
+
+            DialogueBoxStyle = SLAYER;
         }
+        public override bool HasTalkButton() => true;
+        public override bool HasLeftHangingButton(Player player) => RedeGlobalButton.talkActive;
+        public override bool HasRightHangingButton(Player player) => RedeGlobalButton.talkActive;
+        public override HangingButtonParams LeftHangingButton(Player player) => new(4);
+        public override HangingButtonParams RightHangingButton(Player player) => new(4);
 
         public override bool UsesPartyHat() => true;
         public override bool CanTownNPCSpawn(int numTownNPCs) => false;
@@ -65,13 +74,13 @@ namespace Redemption.NPCs.Friendly
         }
         public override void PostDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
-            Texture2D glow = ModContent.Request<Texture2D>(Texture + "_Glow").Value;
+            Texture2D glow = Request<Texture2D>(Texture + "_Glow").Value;
             var effects = NPC.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
             spriteBatch.Draw(glow, NPC.Center - screenPos, NPC.frame, NPC.GetAlpha(Color.White), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
 
             if (Terraria.GameContent.Events.BirthdayParty.PartyIsUp)
             {
-                Asset<Texture2D> hat = ModContent.Request<Texture2D>("Terraria/Images/Item_" + ItemID.PartyHat);
+                Asset<Texture2D> hat = Request<Texture2D>("Terraria/Images/Item_" + ItemID.PartyHat);
                 var offset = (NPC.frame.Y / 88) switch
                 {
                     3 => 2,
@@ -88,7 +97,7 @@ namespace Redemption.NPCs.Friendly
                 NPC.active = false;
 
             NPC.direction = 1;
-            if (NPC.AnyNPCs(ModContent.NPCType<KS3>()))
+            if (NPC.AnyNPCs(NPCType<KS3>()))
             {
                 for (int i = 0; i < 15; i++)
                 {
@@ -100,7 +109,7 @@ namespace Redemption.NPCs.Friendly
             for (int i = 0; i < Main.maxProjectiles; i++)
             {
                 Projectile lizzy = Main.projectile[i];
-                if (!lizzy.active || lizzy.type != ModContent.ProjectileType<LizzyPet>())
+                if (!lizzy.active || lizzy.type != ProjectileType<LizzyPet>())
                     continue;
 
                 if (lizzy.frame != 8)
@@ -116,10 +125,6 @@ namespace Redemption.NPCs.Friendly
                 NPC.homeTileY = -1;
                 NPC.netUpdate = true;
             }
-        }
-
-        public override void FindFrame(int frameHeight)
-        {
             AITimer++;
             if (AITimer >= 300 && AITimer <= 370)
             {
@@ -127,8 +132,8 @@ namespace Redemption.NPCs.Friendly
                 if (NPC.frameCounter >= 10)
                 {
                     NPC.frameCounter = 0;
-                    NPC.frame.Y += frameHeight;
-                    if (NPC.frame.Y > 6 * frameHeight)
+                    NPC.frame.Y += 88;
+                    if (NPC.frame.Y > 6 * 88)
                         NPC.frame.Y = 0;
                 }
                 if (AITimer >= 370)
@@ -137,251 +142,32 @@ namespace Redemption.NPCs.Friendly
                     AITimer = 0;
                 }
                 if (AITimer == 330)
-                    NPC.Shoot(new Vector2(NPC.Center.X - 80, NPC.Center.Y - 50), ModContent.ProjectileType<KS3Sitting_Hologram>(), 0, Vector2.Zero, Main.rand.Next(4));
+                    NPC.Shoot(new Vector2(NPC.Center.X - 80, NPC.Center.Y - 50), ProjectileType<KS3Sitting_Hologram>(), 0, Vector2.Zero, Main.rand.Next(4));
             }
         }
-
-        private static int ChatNumber = 0;
-        public override void SetChatButtons(ref string button, ref string button2)
+        public override void FindFrame(int frameHeight)
         {
-            button2 = Language.GetTextValue("Mods.Redemption.DialogueBox.CycleD");
-
-            switch (ChatNumber)
+            if (NPC.IsABestiaryIconDummy)
             {
-                case 0:
-                    button = Language.GetTextValue("Mods.Redemption.DialogueBox.KS3.0");
-                    break;
-                case 1:
-                    button = Language.GetTextValue("Mods.Redemption.DialogueBox.KS3.1");
-                    break;
-                case 2:
-                    button = Language.GetTextValue("Mods.Redemption.DialogueBox.KS3.2");
-                    break;
-                case 3:
-                    button = Language.GetTextValue("Mods.Redemption.DialogueBox.KS3.3");
-                    break;
-                case 4:
-                    button = Language.GetTextValue("Mods.Redemption.DialogueBox.KS3.4");
-                    break;
-                case 5:
-                    button = Language.GetTextValue("Mods.Redemption.DialogueBox.KS3.5");
-                    break;
-                case 6:
-                    button = Language.GetTextValue("Mods.Redemption.DialogueBox.KS3.6");
-                    break;
-                case 7:
-                    button = Language.GetTextValue("Mods.Redemption.DialogueBox.KS3.7");
-                    break;
-                case 8:
-                    button = Language.GetTextValue("Mods.Redemption.DialogueBox.KS3.8");
-                    break;
-                case 9:
-                    button = Language.GetTextValue("Mods.Redemption.DialogueBox.KS3.9");
-                    break;
-                case 10:
-                    button = Language.GetTextValue("Mods.Redemption.DialogueBox.Quest");
-                    break;
-            }
-        }
-
-        public override void OnChatButtonClicked(bool firstButton, ref string shopName)
-        {
-            Player player = Main.LocalPlayer;
-            Main.npcChatCornerItem = 0;
-            if (firstButton)
-            {
-                if (ChatNumber == 2 && RedeQuest.slayerRep == 0)
+                AITimer++;
+                if (AITimer >= 300 && AITimer <= 370)
                 {
-                    SoundEngine.PlaySound(SoundID.MenuTick);
-
-                    int Urani = player.FindItem(ModContent.ItemType<Uranium>());
-                    if (Urani >= 0)
+                    NPC.frameCounter++;
+                    if (NPC.frameCounter >= 10)
                     {
-                        player.inventory[Urani].stack--;
-                        if (player.inventory[Urani].stack <= 0)
-                            player.inventory[Urani] = new Item();
-
-                        WeightedRandom<string> chat = new(Main.rand);
-                        chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.KingSlayer.UraniumDialogue1"));
-                        chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.KingSlayer.UraniumDialogue2"));
-                        chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.KingSlayer.UraniumDialogue3"));
-                        Main.npcChatText = chat;
-
-                        player.QuickSpawnItem(NPC.GetSource_Loot(), ItemID.SilverCoin, 20);
-                        ChatNumber++;
-
-                        RedeQuest.slayerRep++;
-                        RedeQuest.SyncData();
-
-                        CombatText.NewText(NPC.getRect(), Color.LightCyan, Language.GetTextValue("Mods.Redemption.DialogueBox.New"), true, false);
-
-                        SoundEngine.PlaySound(SoundID.Chat);
-                        return;
+                        NPC.frameCounter = 0;
+                        NPC.frame.Y += 88;
+                        if (NPC.frame.Y > 6 * 88)
+                            NPC.frame.Y = 0;
                     }
-                    else
+                    if (AITimer >= 370)
                     {
-                        Main.npcChatCornerItem = ModContent.ItemType<Uranium>();
-                        Main.npcChatText = Language.GetTextValue("Mods.Redemption.Dialogue.KingSlayer.NoUraniumDialogue3");
-                        SoundEngine.PlaySound(SoundID.MenuTick);
+                        NPC.frame.Y = 0;
+                        AITimer = 0;
                     }
+                    if (AITimer == 330)
+                        NPC.Shoot(new Vector2(NPC.Center.X - 80, NPC.Center.Y - 50), ProjectileType<KS3Sitting_Hologram>(), 0, Vector2.Zero, Main.rand.Next(4));
                 }
-                else if (ChatNumber == 10 && RedeQuest.slayerRep == 1)
-                {
-                    SoundEngine.PlaySound(SoundID.MenuTick);
-
-                    int WiringKit = player.FindItem(ModContent.ItemType<SlayerWiringKit>());
-                    if (WiringKit >= 0)
-                    {
-                        player.inventory[WiringKit].stack--;
-                        if (player.inventory[WiringKit].stack <= 0)
-                            player.inventory[WiringKit] = new Item();
-
-                        Main.npcChatText = Language.GetTextValue("Mods.Redemption.Dialogue.KingSlayer.Quest1CompleteDialogue");
-
-                        player.QuickSpawnItem(NPC.GetSource_Loot(), ItemID.GoldCoin, 4);
-                        RedeQuest.slayerRep++;
-                        RedeQuest.SyncData();
-
-                        CombatText.NewText(NPC.getRect(), Color.LightCyan, Language.GetTextValue("Mods.Redemption.DialogueBox.New"), true, false);
-
-                        SoundEngine.PlaySound(SoundID.Chat);
-
-                        Dictionary<Color, int> colorToTile = new()
-                        {
-                            [new Color(150, 150, 150)] = -2,
-                            [Color.Black] = -1
-                        };
-
-                        TexGenData tex = TexGen.GetTextureForGen("Redemption/WorldGeneration/SlayerShipFix1");
-                        Point origin = RedeGen.slayerShipVector.ToPoint();
-                        TexGen gen = TexGen.GetTexGenerator(tex, colorToTile);
-                        gen.Generate(origin.X, origin.Y, false, true);
-                        return;
-                    }
-                    else
-                    {
-                        Main.npcChatCornerItem = ModContent.ItemType<SlayerWiringKit>();
-                        Main.npcChatText = QuestChat();
-                        SoundEngine.PlaySound(SoundID.MenuTick);
-                    }
-                }
-                else if (ChatNumber == 10 && RedeQuest.slayerRep == 2)
-                {
-                    SoundEngine.PlaySound(SoundID.MenuTick);
-
-                    int HullPlating = player.FindItem(ModContent.ItemType<SlayerHullPlating>());
-                    if (HullPlating >= 0)
-                    {
-                        player.inventory[HullPlating].stack--;
-                        if (player.inventory[HullPlating].stack <= 0)
-                            player.inventory[HullPlating] = new Item();
-
-                        Main.npcChatText = Language.GetTextValue("Mods.Redemption.Dialogue.KingSlayer.Quest2CompleteDialogue");
-
-                        player.QuickSpawnItem(NPC.GetSource_Loot(), ItemID.GoldCoin, 8);
-                        RedeQuest.slayerRep++;
-                        RedeQuest.SyncData();
-
-                        CombatText.NewText(NPC.getRect(), Color.LightCyan, Language.GetTextValue("Mods.Redemption.DialogueBox.New"), true, false);
-
-                        SoundEngine.PlaySound(SoundID.Chat);
-
-                        Dictionary<Color, int> colorToTile = new()
-                        {
-                            [new Color(0, 255, 255)] = ModContent.TileType<SlayerShipPanelTile>(),
-                            [new Color(255, 0, 255)] = ModContent.TileType<ShipGlassTile>(),
-                            [new Color(150, 150, 150)] = -2,
-                            [Color.Black] = -1
-                        };
-
-                        TexGenData tex = TexGen.GetTextureForGen("Redemption/WorldGeneration/SlayerShipFix2");
-                        Point origin = RedeGen.slayerShipVector.ToPoint();
-                        TexGen gen = TexGen.GetTexGenerator(tex, colorToTile);
-                        gen.Generate(origin.X, origin.Y, false, true);
-                        return;
-                    }
-                    else
-                    {
-                        Main.npcChatCornerItem = ModContent.ItemType<SlayerHullPlating>();
-                        Main.npcChatText = QuestChat();
-                        SoundEngine.PlaySound(SoundID.MenuTick);
-                    }
-                }
-                else if (ChatNumber == 10 && RedeQuest.slayerRep == 3)
-                {
-                    SoundEngine.PlaySound(SoundID.MenuTick);
-
-                    int ShipEngine = player.FindItem(ModContent.ItemType<SlayerShipEngine>());
-                    if (ShipEngine >= 0)
-                    {
-                        player.inventory[ShipEngine].stack--;
-                        if (player.inventory[ShipEngine].stack <= 0)
-                            player.inventory[ShipEngine] = new Item();
-
-                        Main.npcChatCornerItem = ModContent.ItemType<MemoryChip>();
-                        Main.npcChatText = Language.GetTextValue("Mods.Redemption.Dialogue.KingSlayer.Quest3CompleteDialogue");
-
-                        player.QuickSpawnItem(NPC.GetSource_Loot(), ItemID.GoldCoin, 12);
-                        player.QuickSpawnItem(NPC.GetSource_Loot(), ModContent.ItemType<MemoryChip>());
-
-                        CombatText.NewText(NPC.getRect(), Color.LightCyan, Language.GetTextValue("Mods.Redemption.DialogueBox.New"), true, false);
-
-                        SoundEngine.PlaySound(SoundID.Chat);
-
-                        Dictionary<Color, int> colorToTile = new()
-                        {
-                            [new Color(0, 255, 255)] = ModContent.TileType<SlayerShipPanelTile>(),
-                            [new Color(255, 0, 255)] = ModContent.TileType<ShipGlassTile>(),
-                            [new Color(150, 150, 150)] = -2,
-                            [Color.Black] = -1
-                        };
-
-                        Dictionary<Color, int> colorToWall = new()
-                        {
-                            [new Color(0, 255, 0)] = ModContent.WallType<SlayerShipPanelWallTile>(),
-                            [Color.Black] = -1
-                        };
-
-                        TexGenData tex = TexGen.GetTextureForGen("Redemption/WorldGeneration/SlayerShipFix2");
-                        TexGenData texWalls = TexGen.GetTextureForGen("Redemption/WorldGeneration/SlayerShipWallsFix");
-                        Point origin = RedeGen.slayerShipVector.ToPoint();
-                        TexGen gen = TexGen.GetTexGenerator(tex, colorToTile, texWalls, colorToWall);
-                        gen.Generate(origin.X, origin.Y, false, true);
-
-                        RedeWorld.Alignment += 2;
-
-                        RedeQuest.slayerRep++;
-                        RedeQuest.SyncData();
-                        return;
-                    }
-                    else
-                    {
-                        Main.npcChatCornerItem = ModContent.ItemType<SlayerShipEngine>();
-                        Main.npcChatText = QuestChat();
-                        SoundEngine.PlaySound(SoundID.MenuTick);
-                    }
-                }
-                else if (ChatNumber == 10 && RedeQuest.slayerRep >= 4)
-                {
-                    Main.npcChatText = QuestChat();
-                    SoundEngine.PlaySound(SoundID.MenuTick);
-                }
-                else if (ChatNumber == 9 && RedeQuest.slayerRep >= 4)
-                    shopName = "Shop";
-                else
-                    Main.npcChatText = ChitChat();
-            }
-            else
-            {
-                ChatNumber++;
-                if (ChatNumber > 10)
-                    ChatNumber = 0;
-                if (RedeQuest.slayerRep == 0 && ChatNumber > 2)
-                    ChatNumber = 0;
-                if (RedeQuest.slayerRep >= 1 && ChatNumber == 2)
-                    ChatNumber++;
-                if (!Main.LocalPlayer.Redemption().foundHall && ChatNumber == 5)
-                    ChatNumber++;
             }
         }
         public override void AddShops()
@@ -418,91 +204,9 @@ namespace Redemption.NPCs.Friendly
             npcShop.Register();
         }
 
-        public static string QuestChat()
-        {
-            return RedeQuest.slayerRep switch
-            {
-                2 => Language.GetTextValue("Mods.Redemption.Dialogue.KingSlayer.Quest2Dialogue"),
-                3 => Language.GetTextValue("Mods.Redemption.Dialogue.KingSlayer.Quest3Dialogue"),
-                4 => Language.GetTextValue("Mods.Redemption.Dialogue.KingSlayer.Quest4Dialogue"),
-                _ => Language.GetTextValue("Mods.Redemption.Dialogue.KingSlayer.Quest1Dialogue"),
-            };
-        }
-        public static string ChitChat()
-        {
-            switch (ChatNumber)
-            {
-                case 0:
-                    if (RedeQuest.slayerRep >= 1 && RedeQuest.slayerRep < 4)
-                        return Language.GetTextValue("Mods.Redemption.Dialogue.KingSlayer.Chat1B");
-                    else if (RedeQuest.slayerRep >= 4)
-                        return Language.GetTextValue("Mods.Redemption.Dialogue.KingSlayer.Chat1C");
-                    else
-                        return Language.GetTextValue("Mods.Redemption.Dialogue.KingSlayer.Chat1");
-                case 1:
-                    if (RedeQuest.slayerRep == 1)
-                        return Language.GetTextValue("Mods.Redemption.Dialogue.KingSlayer.Chat2B");
-                    else if (RedeQuest.slayerRep >= 2 && RedeQuest.slayerRep < 4)
-                        return Language.GetTextValue("Mods.Redemption.Dialogue.KingSlayer.Chat2C");
-                    else if (RedeQuest.slayerRep >= 4)
-                        return Language.GetTextValue("Mods.Redemption.Dialogue.KingSlayer.Chat2D");
-                    else
-                        return Language.GetTextValue("Mods.Redemption.Dialogue.KingSlayer.Chat2");
-                case 3:
-                    if (RedeQuest.slayerRep == 3)
-                        return Language.GetTextValue("Mods.Redemption.Dialogue.KingSlayer.Chat3C");
-                    else if (RedeQuest.slayerRep >= 4)
-                        return Language.GetTextValue("Mods.Redemption.Dialogue.KingSlayer.Chat3D");
-                    else
-                        return Main.rand.NextBool(2) ? Language.GetTextValue("Mods.Redemption.Dialogue.KingSlayer.Chat3") : Language.GetTextValue("Mods.Redemption.Dialogue.KingSlayer.Chat3B");
-                case 4:
-                    if (RedeQuest.slayerRep == 2)
-                        return Language.GetTextValue("Mods.Redemption.Dialogue.KingSlayer.Chat4B");
-                    else if (RedeQuest.slayerRep >= 3)
-                        return Language.GetTextValue("Mods.Redemption.Dialogue.KingSlayer.Chat4C");
-                    else
-                        return Language.GetTextValue("Mods.Redemption.Dialogue.KingSlayer.Chat4");
-                case 5:
-                    if (RedeQuest.slayerRep == 2)
-                        return Language.GetTextValue("Mods.Redemption.Dialogue.KingSlayer.Chat5B");
-                    else if (RedeQuest.slayerRep == 3)
-                        return Language.GetTextValue("Mods.Redemption.Dialogue.KingSlayer.Chat5C");
-                    else if (RedeQuest.slayerRep >= 4)
-                        return Main.rand.NextBool(3) ? Language.GetTextValue("Mods.Redemption.Dialogue.KingSlayer.Chat5E") : Language.GetTextValue("Mods.Redemption.Dialogue.KingSlayer.Chat5D");
-                    else
-                        return Language.GetTextValue("Mods.Redemption.Dialogue.KingSlayer.Chat5");
-                case 6:
-                    if (RedeQuest.slayerRep >= 4)
-                        return Language.GetTextValue("Mods.Redemption.Dialogue.KingSlayer.Chat6B");
-                    else
-                        return Language.GetTextValue("Mods.Redemption.Dialogue.KingSlayer.Chat6");
-                case 7:
-                    if (RedeQuest.slayerRep >= 2 && RedeQuest.slayerRep < 4)
-                        return Language.GetTextValue("Mods.Redemption.Dialogue.KingSlayer.Chat7B");
-                    else if (RedeQuest.slayerRep >= 4)
-                        return Language.GetTextValue("Mods.Redemption.Dialogue.KingSlayer.Chat7C");
-                    else
-                        return Language.GetTextValue("Mods.Redemption.Dialogue.KingSlayer.Chat7");
-                case 8:
-                    if (RedeQuest.slayerRep >= 2 && RedeQuest.slayerRep < 4)
-                        return Language.GetTextValue("Mods.Redemption.Dialogue.KingSlayer.Chat8B");
-                    else if (RedeQuest.slayerRep >= 4)
-                        return Language.GetTextValue("Mods.Redemption.Dialogue.KingSlayer.Chat8C");
-                    else
-                        return Language.GetTextValue("Mods.Redemption.Dialogue.KingSlayer.Chat8");
-                case 9:
-                    if (RedeQuest.slayerRep == 2)
-                        return Language.GetTextValue("Mods.Redemption.Dialogue.KingSlayer.Chat9B");
-                    else if (RedeQuest.slayerRep == 3)
-                        return Language.GetTextValue("Mods.Redemption.Dialogue.KingSlayer.Chat9C");
-                    else
-                        return Language.GetTextValue("Mods.Redemption.Dialogue.KingSlayer.Chat9");
-            }
-            return "...";
-        }
         public override string GetChat()
         {
-            Player player = Main.player[Main.myPlayer];
+            Player player = Main.LocalPlayer;
             WeightedRandom<string> chat = new(Main.rand);
 
             if (RedeBossDowned.downedSlayer && !Main.LocalPlayer.InModBiome<SlayerShipBiome>())
@@ -536,7 +240,7 @@ namespace Redemption.NPCs.Friendly
                 if (NPC.downedMoonlord)
                     chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.KingSlayer.Dialogue12"), 2);
 
-                if (BasePlayer.HasHelmet(player, ModContent.ItemType<KingSlayerMask>(), true))
+                if (BasePlayer.HasHelmet(player, ItemType<KingSlayerMask>(), true))
                     chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.KingSlayer.Dialogue13"));
 
                 if (player.wellFed && RedeQuest.slayerRep < 2)
@@ -545,6 +249,376 @@ namespace Redemption.NPCs.Friendly
                     chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.KingSlayer.Dialogue15"));
             }
             return chat;
+        }
+    }
+    public class WhyAreHereButton_KS3 : ChatButton
+    {
+        public override double Priority => 200.0;
+        public override void ModifyPosition(NPC npc, Player player, ref Vector2 position)
+        {
+            int textLength = (int)FontAssets.MouseText.Value.MeasureString(ChatButtonLoader.GetText(this, npc, player)).X;
+            position.X = (Main.screenWidth / 2) - 150 - (textLength / 2);
+            position.Y += 56;
+        }
+        public override string Text(NPC npc, Player player) => Language.GetTextValue("Mods.Redemption.DialogueBox.KS3.0");
+        public override bool IsActive(NPC npc, Player player) => npc.type == NPCType<KS3Sitting>() && RedeGlobalButton.talkActive;
+        public override void OnClick(NPC npc, Player player)
+        {
+            SoundEngine.PlaySound(SoundID.Chat);
+            if (RedeQuest.slayerRep >= 1 && RedeQuest.slayerRep < 4)
+                Main.npcChatText = Language.GetTextValue("Mods.Redemption.Dialogue.KingSlayer.Chat1B");
+            else if (RedeQuest.slayerRep >= 4)
+                Main.npcChatText = Language.GetTextValue("Mods.Redemption.Dialogue.KingSlayer.Chat1C");
+            else
+                Main.npcChatText = Language.GetTextValue("Mods.Redemption.Dialogue.KingSlayer.Chat1");
+        }
+    }
+    public class CrashedSpaceshipButton_KS3 : ChatButton
+    {
+        public override double Priority => 200.0;
+        public override void ModifyPosition(NPC npc, Player player, ref Vector2 position)
+        {
+            int textLength = (int)FontAssets.MouseText.Value.MeasureString(ChatButtonLoader.GetText(this, npc, player)).X;
+            position.X = (Main.screenWidth / 2) - 150 - (textLength / 2);
+            position.Y += 56 + 46;
+        }
+        public override string Text(NPC npc, Player player) => Language.GetTextValue("Mods.Redemption.DialogueBox.KS3.1");
+        public override bool IsActive(NPC npc, Player player) => npc.type == NPCType<KS3Sitting>() && RedeGlobalButton.talkActive;
+        public override void OnClick(NPC npc, Player player)
+        {
+            SoundEngine.PlaySound(SoundID.Chat);
+            if (RedeQuest.slayerRep == 1)
+                Main.npcChatText = Language.GetTextValue("Mods.Redemption.Dialogue.KingSlayer.Chat2B");
+            else if (RedeQuest.slayerRep >= 2 && RedeQuest.slayerRep < 4)
+                Main.npcChatText = Language.GetTextValue("Mods.Redemption.Dialogue.KingSlayer.Chat2C");
+            else if (RedeQuest.slayerRep >= 4)
+                Main.npcChatText = Language.GetTextValue("Mods.Redemption.Dialogue.KingSlayer.Chat2D");
+            else
+                Main.npcChatText = Language.GetTextValue("Mods.Redemption.Dialogue.KingSlayer.Chat2");
+        }
+    }
+    public class OfferUraniumButton_KS3 : ChatButton
+    {
+        public override double Priority => 8.0;
+        public override string Text(NPC npc, Player player) => Language.GetTextValue("Mods.Redemption.DialogueBox.KS3.2");
+        public override bool IsActive(NPC npc, Player player) => npc.type == NPCType<KS3Sitting>() && !RedeGlobalButton.talkActive && RedeQuest.slayerRep == 0;
+        public override Color? OverrideColor(NPC npc, Player player) => player.HasItem(ItemType<Uranium>()) ? null : Color.Gray;
+        public override void OnClick(NPC npc, Player player)
+        {
+            SoundEngine.PlaySound(SoundID.MenuTick);
+            if (player.ConsumeItem(ItemType<Uranium>()))
+            {
+                WeightedRandom<string> chat = new(Main.rand);
+                chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.KingSlayer.UraniumDialogue1"));
+                chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.KingSlayer.UraniumDialogue2"));
+                chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.KingSlayer.UraniumDialogue3"));
+                Main.npcChatText = chat;
+
+                player.QuickSpawnItem(npc.GetSource_Loot(), ItemID.SilverCoin, 20);
+
+                RedeQuest.slayerRep++;
+                RedeQuest.SyncData();
+
+                CombatText.NewText(npc.getRect(), Color.LightCyan, Language.GetTextValue("Mods.Redemption.DialogueBox.New"), true, false);
+                SoundEngine.PlaySound(SoundID.Chat);
+            }
+            else
+            {
+                Main.npcChatCornerItem = ItemType<Uranium>();
+                Main.npcChatText = Language.GetTextValue("Mods.Redemption.Dialogue.KingSlayer.NoUraniumDialogue3");
+            }
+        }
+    }
+    public class ArentFightingButton_KS3 : ChatButton
+    {
+        public override double Priority => 200.0;
+        public override void ModifyPosition(NPC npc, Player player, ref Vector2 position)
+        {
+            int textLength = (int)FontAssets.MouseText.Value.MeasureString(ChatButtonLoader.GetText(this, npc, player)).X;
+            position.X = (Main.screenWidth / 2) - 150 - (textLength / 2);
+            position.Y += 56 + (46 * 2);
+        }
+        public override string Text(NPC npc, Player player) => RedeQuest.slayerRep == 0 ? "???" : Language.GetTextValue("Mods.Redemption.DialogueBox.KS3.3");
+        public override bool IsActive(NPC npc, Player player) => npc.type == NPCType<KS3Sitting>() && RedeGlobalButton.talkActive;
+        public override Color? OverrideColor(NPC npc, Player player) => RedeQuest.slayerRep != 0 ? null : Color.Gray;
+        public override void OnClick(NPC npc, Player player)
+        {
+            if (RedeQuest.slayerRep == 0)
+                return;
+            SoundEngine.PlaySound(SoundID.Chat);
+            if (RedeQuest.slayerRep == 3)
+                Main.npcChatText = Language.GetTextValue("Mods.Redemption.Dialogue.KingSlayer.Chat3C");
+            else if (RedeQuest.slayerRep >= 4)
+                Main.npcChatText = Language.GetTextValue("Mods.Redemption.Dialogue.KingSlayer.Chat3D");
+            else
+                Main.npcChatText = Main.rand.NextBool(2) ? Language.GetTextValue("Mods.Redemption.Dialogue.KingSlayer.Chat3") : Language.GetTextValue("Mods.Redemption.Dialogue.KingSlayer.Chat3B");
+        }
+    }
+    public class AreYouHumanButton_KS3 : ChatButton
+    {
+        public override double Priority => 200.0;
+        public override void ModifyPosition(NPC npc, Player player, ref Vector2 position)
+        {
+            int textLength = (int)FontAssets.MouseText.Value.MeasureString(ChatButtonLoader.GetText(this, npc, player)).X;
+            position.X = (Main.screenWidth / 2) - 150 - (textLength / 2);
+            position.Y += 56 + (46 * 3);
+        }
+        public override string Text(NPC npc, Player player) => RedeQuest.slayerRep == 0 ? "???" : Language.GetTextValue("Mods.Redemption.DialogueBox.KS3.4");
+        public override bool IsActive(NPC npc, Player player) => npc.type == NPCType<KS3Sitting>() && RedeGlobalButton.talkActive;
+        public override Color? OverrideColor(NPC npc, Player player) => RedeQuest.slayerRep != 0 ? null : Color.Gray;
+        public override void OnClick(NPC npc, Player player)
+        {
+            if (RedeQuest.slayerRep == 0)
+                return;
+            SoundEngine.PlaySound(SoundID.Chat);
+            if (RedeQuest.slayerRep == 2)
+                Main.npcChatText = Language.GetTextValue("Mods.Redemption.Dialogue.KingSlayer.Chat4B");
+            else if (RedeQuest.slayerRep >= 3)
+                Main.npcChatText = Language.GetTextValue("Mods.Redemption.Dialogue.KingSlayer.Chat4C");
+            else
+                Main.npcChatText = Language.GetTextValue("Mods.Redemption.Dialogue.KingSlayer.Chat4");
+        }
+    }
+    public class HallOfHeroesButton_KS3 : ChatButton
+    {
+        public override double Priority => 200.0;
+        public override void ModifyPosition(NPC npc, Player player, ref Vector2 position)
+        {
+            int textLength = (int)FontAssets.MouseText.Value.MeasureString(ChatButtonLoader.GetText(this, npc, player)).X;
+            position.X = (Main.screenWidth / 2) - 150 - (textLength / 2)+300;
+            position.Y += 56;
+        }
+        public override string Text(NPC npc, Player player) => RedeQuest.slayerRep == 0 || !player.Redemption().foundHall ? "???" : Language.GetTextValue("Mods.Redemption.DialogueBox.KS3.5");
+        public override bool IsActive(NPC npc, Player player) => npc.type == NPCType<KS3Sitting>() && RedeGlobalButton.talkActive;
+        public override Color? OverrideColor(NPC npc, Player player) => RedeQuest.slayerRep != 0 && player.Redemption().foundHall ? null : Color.Gray;
+        public override void OnClick(NPC npc, Player player)
+        {
+            if (RedeQuest.slayerRep == 0 || !player.Redemption().foundHall)
+                return;
+            SoundEngine.PlaySound(SoundID.Chat);
+            if (RedeQuest.slayerRep == 2)
+                Main.npcChatText = Language.GetTextValue("Mods.Redemption.Dialogue.KingSlayer.Chat5B");
+            else if (RedeQuest.slayerRep == 3)
+                Main.npcChatText = Language.GetTextValue("Mods.Redemption.Dialogue.KingSlayer.Chat5C");
+            else if (RedeQuest.slayerRep >= 4)
+                Main.npcChatText = Main.rand.NextBool(3) ? Language.GetTextValue("Mods.Redemption.Dialogue.KingSlayer.Chat5E") : Language.GetTextValue("Mods.Redemption.Dialogue.KingSlayer.Chat5D");
+            else
+                Main.npcChatText = Language.GetTextValue("Mods.Redemption.Dialogue.KingSlayer.Chat5");
+        }
+    }
+    public class AbandonedLabButton_KS3 : ChatButton
+    {
+        public override double Priority => 200.0;
+        public override void ModifyPosition(NPC npc, Player player, ref Vector2 position)
+        {
+            int textLength = (int)FontAssets.MouseText.Value.MeasureString(ChatButtonLoader.GetText(this, npc, player)).X;
+            position.X = (Main.screenWidth / 2) - 150 - (textLength / 2)+300;
+            position.Y += 56 + 46;
+        }
+        public override string Text(NPC npc, Player player) => RedeQuest.slayerRep == 0 || !player.Redemption().foundLab ? "???" : Language.GetTextValue("Mods.Redemption.DialogueBox.KS3.6");
+        public override bool IsActive(NPC npc, Player player) => npc.type == NPCType<KS3Sitting>() && RedeGlobalButton.talkActive;
+        public override Color? OverrideColor(NPC npc, Player player) => RedeQuest.slayerRep != 0 && player.Redemption().foundLab ? null : Color.Gray;
+        public override void OnClick(NPC npc, Player player)
+        {
+            if (RedeQuest.slayerRep == 0 || !player.Redemption().foundLab)
+                return;
+            SoundEngine.PlaySound(SoundID.Chat);
+            if (RedeQuest.slayerRep >= 4)
+                Main.npcChatText = Language.GetTextValue("Mods.Redemption.Dialogue.KingSlayer.Chat6B");
+            else
+                Main.npcChatText = Language.GetTextValue("Mods.Redemption.Dialogue.KingSlayer.Chat6");
+        }
+    }
+    public class EpidotraButton_KS3 : ChatButton
+    {
+        public override double Priority => 200.0;
+        public override void ModifyPosition(NPC npc, Player player, ref Vector2 position)
+        {
+            int textLength = (int)FontAssets.MouseText.Value.MeasureString(ChatButtonLoader.GetText(this, npc, player)).X;
+            position.X = (Main.screenWidth / 2) - 150 - (textLength / 2) + 300;
+            position.Y += 56 + (46 * 2);
+        }
+        public override string Text(NPC npc, Player player) => RedeQuest.slayerRep == 0 ? "???" : Language.GetTextValue("Mods.Redemption.DialogueBox.KS3.7");
+        public override bool IsActive(NPC npc, Player player) => npc.type == NPCType<KS3Sitting>() && RedeGlobalButton.talkActive;
+        public override Color? OverrideColor(NPC npc, Player player) => RedeQuest.slayerRep != 0 ? null : Color.Gray;
+        public override void OnClick(NPC npc, Player player)
+        {
+            if (RedeQuest.slayerRep == 0)
+                return;
+            SoundEngine.PlaySound(SoundID.Chat);
+            if (RedeQuest.slayerRep >= 2 && RedeQuest.slayerRep < 4)
+                Main.npcChatText = Language.GetTextValue("Mods.Redemption.Dialogue.KingSlayer.Chat7B");
+            else if (RedeQuest.slayerRep >= 4)
+                Main.npcChatText = Language.GetTextValue("Mods.Redemption.Dialogue.KingSlayer.Chat7C");
+            else
+                Main.npcChatText = Language.GetTextValue("Mods.Redemption.Dialogue.KingSlayer.Chat7");
+        }
+    }
+    public class OtherWorldButton_KS3 : ChatButton
+    {
+        public override double Priority => 200.0;
+        public override void ModifyPosition(NPC npc, Player player, ref Vector2 position)
+        {
+            int textLength = (int)FontAssets.MouseText.Value.MeasureString(ChatButtonLoader.GetText(this, npc, player)).X;
+            position.X = (Main.screenWidth / 2) - 150 - (textLength / 2) + 300;
+            position.Y += 56 + (46 * 3);
+        }
+        public override string Text(NPC npc, Player player) => RedeQuest.slayerRep == 0 || !RedeBossDowned.downedSeed ? "???" : Language.GetTextValue("Mods.Redemption.DialogueBox.KS3.8");
+        public override bool IsActive(NPC npc, Player player) => npc.type == NPCType<KS3Sitting>() && RedeGlobalButton.talkActive;
+        public override Color? OverrideColor(NPC npc, Player player) => RedeQuest.slayerRep != 0 && RedeBossDowned.downedSeed ? null : Color.Gray;
+        public override void OnClick(NPC npc, Player player)
+        {
+            if (RedeQuest.slayerRep == 0 || !RedeBossDowned.downedSeed)
+                return;
+            SoundEngine.PlaySound(SoundID.Chat);
+            if (RedeQuest.slayerRep >= 2 && RedeQuest.slayerRep < 4)
+                Main.npcChatText = Language.GetTextValue("Mods.Redemption.Dialogue.KingSlayer.Chat8B");
+            else if (RedeQuest.slayerRep >= 4)
+                Main.npcChatText = Language.GetTextValue("Mods.Redemption.Dialogue.KingSlayer.Chat8C");
+            else
+                Main.npcChatText = Language.GetTextValue("Mods.Redemption.Dialogue.KingSlayer.Chat8");
+        }
+    }
+    public class QuestButton_KS3 : ChatButton
+    {
+        public override double Priority => 10.0;
+        public override string Text(NPC npc, Player player) => Language.GetTextValue("Mods.Redemption.DialogueBox.Quest");
+        public override Color? OverrideColor(NPC npc, Player player)
+        {
+            if (RedeQuest.slayerRep == 3 && player.HasItem(ItemType<SlayerShipEngine>()))
+                return RedeColor.TextPositive;
+
+            return null;
+        }
+        public override bool IsActive(NPC npc, Player player) => npc.type == NPCType<KS3Sitting>() && !RedeGlobalButton.talkActive && RedeQuest.slayerRep != 0;
+        public override void OnClick(NPC npc, Player player)
+        {
+            switch (RedeQuest.slayerRep)
+            {
+                case 1:
+                    SoundEngine.PlaySound(SoundID.MenuTick);
+                    if (player.ConsumeItem(ItemType<SlayerWiringKit>()))
+                    {
+                        Main.npcChatText = Language.GetTextValue("Mods.Redemption.Dialogue.KingSlayer.Quest1CompleteDialogue");
+
+                        player.QuickSpawnItem(npc.GetSource_Loot(), ItemID.GoldCoin, 4);
+                        CombatText.NewText(npc.getRect(), Color.LightCyan, Language.GetTextValue("Mods.Redemption.DialogueBox.New"), true, false);
+                        SoundEngine.PlaySound(SoundID.Chat);
+
+                        Dictionary<Color, int> colorToTile = new()
+                        {
+                            [new Color(150, 150, 150)] = -2,
+                            [Color.Black] = -1
+                        };
+                        TexGenData tex = TexGen.GetTextureForGen("Redemption/WorldGeneration/SlayerShipFix1");
+                        Point origin = RedeGen.slayerShipVector.ToPoint();
+                        TexGen gen = TexGen.GetTexGenerator(tex, colorToTile);
+                        gen.Generate(origin.X, origin.Y, false, true);
+
+                        RedeQuest.slayerRep++;
+                        RedeQuest.SyncData();
+
+                        return;
+                    }
+                    else
+                    {
+                        Main.npcChatCornerItem = ItemType<SlayerWiringKit>();
+                        Main.npcChatText = QuestChat();
+                    }
+                    break;
+                case 2:
+                    SoundEngine.PlaySound(SoundID.MenuTick);
+                    if (player.ConsumeItem(ItemType<SlayerHullPlating>()))
+                    {
+                        Main.npcChatText = Language.GetTextValue("Mods.Redemption.Dialogue.KingSlayer.Quest2CompleteDialogue");
+
+                        player.QuickSpawnItem(npc.GetSource_Loot(), ItemID.GoldCoin, 8);
+                        CombatText.NewText(npc.getRect(), Color.LightCyan, Language.GetTextValue("Mods.Redemption.DialogueBox.New"), true, false);
+                        SoundEngine.PlaySound(SoundID.Chat);
+
+                        Dictionary<Color, int> colorToTile = new()
+                        {
+                            [new Color(0, 255, 255)] = TileType<SlayerShipPanelTile>(),
+                            [new Color(255, 0, 255)] = TileType<ShipGlassTile>(),
+                            [new Color(150, 150, 150)] = -2,
+                            [Color.Black] = -1
+                        };
+                        TexGenData tex = TexGen.GetTextureForGen("Redemption/WorldGeneration/SlayerShipFix2");
+                        Point origin = RedeGen.slayerShipVector.ToPoint();
+                        TexGen gen = TexGen.GetTexGenerator(tex, colorToTile);
+                        gen.Generate(origin.X, origin.Y, false, true);
+
+                        RedeQuest.slayerRep++;
+                        RedeQuest.SyncData();
+
+                        return;
+                    }
+                    else
+                    {
+                        Main.npcChatCornerItem = ItemType<SlayerHullPlating>();
+                        Main.npcChatText = QuestChat();
+                    }
+                    break;
+                case 3:
+                    SoundEngine.PlaySound(SoundID.MenuTick);
+
+                    if (player.ConsumeItem(ItemType<SlayerShipEngine>()))
+                    {
+                        Main.npcChatCornerItem = ItemType<MemoryChip>();
+                        Main.npcChatText = Language.GetTextValue("Mods.Redemption.Dialogue.KingSlayer.Quest3CompleteDialogue");
+
+                        player.QuickSpawnItem(npc.GetSource_Loot(), ItemID.GoldCoin, 12);
+                        player.QuickSpawnItem(npc.GetSource_Loot(), ItemType<MemoryChip>());
+
+                        CombatText.NewText(npc.getRect(), Color.LightCyan, Language.GetTextValue("Mods.Redemption.DialogueBox.New"), true, false);
+                        SoundEngine.PlaySound(SoundID.Chat);
+
+                        Dictionary<Color, int> colorToTile = new()
+                        {
+                            [new Color(0, 255, 255)] = TileType<SlayerShipPanelTile>(),
+                            [new Color(255, 0, 255)] = TileType<ShipGlassTile>(),
+                            [new Color(150, 150, 150)] = -2,
+                            [Color.Black] = -1
+                        };
+                        Dictionary<Color, int> colorToWall = new()
+                        {
+                            [new Color(0, 255, 0)] = WallType<SlayerShipPanelWallTile>(),
+                            [Color.Black] = -1
+                        };
+
+                        TexGenData tex = TexGen.GetTextureForGen("Redemption/WorldGeneration/SlayerShipFix2");
+                        TexGenData texWalls = TexGen.GetTextureForGen("Redemption/WorldGeneration/SlayerShipWallsFix");
+                        Point origin = RedeGen.slayerShipVector.ToPoint();
+                        TexGen gen = TexGen.GetTexGenerator(tex, colorToTile, texWalls, colorToWall);
+                        gen.Generate(origin.X, origin.Y, false, true);
+
+                        RedeWorld.Alignment += 2;
+
+                        RedeQuest.slayerRep++;
+                        RedeQuest.SyncData();
+                    }
+                    else
+                    {
+                        Main.npcChatCornerItem = ItemType<SlayerShipEngine>();
+                        Main.npcChatText = QuestChat();
+                        SoundEngine.PlaySound(SoundID.MenuTick);
+                    }
+                    break;
+                default:
+                    Main.npcChatText = QuestChat();
+                    SoundEngine.PlaySound(SoundID.Chat);
+                    break;
+            }
+        }
+        public static string QuestChat()
+        {
+            return RedeQuest.slayerRep switch
+            {
+                2 => Language.GetTextValue("Mods.Redemption.Dialogue.KingSlayer.Quest2Dialogue"),
+                3 => Language.GetTextValue("Mods.Redemption.Dialogue.KingSlayer.Quest3Dialogue"),
+                4 => Language.GetTextValue("Mods.Redemption.Dialogue.KingSlayer.Quest4Dialogue"),
+                _ => Language.GetTextValue("Mods.Redemption.Dialogue.KingSlayer.Quest1Dialogue"),
+            };
         }
     }
 }

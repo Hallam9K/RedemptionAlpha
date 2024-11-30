@@ -1,21 +1,21 @@
-using Microsoft.Xna.Framework;
-using Terraria;
-using Terraria.ID;
-using Terraria.ModLoader;
+using BetterDialogue.UI;
 using Microsoft.Xna.Framework.Graphics;
-using Terraria.DataStructures;
 using Redemption.Globals;
+using Redemption.Items.Weapons.PreHM.Melee;
+using Redemption.Items.Weapons.PreHM.Summon;
+using Redemption.UI.Dialect;
+using System;
+using Terraria;
+using Terraria.Audio;
 using Terraria.GameContent;
 using Terraria.Graphics.Shaders;
-using Redemption.BaseExtension;
-using Redemption.Items.Weapons.PreHM.Summon;
-using Redemption.Items.Materials.PreHM;
-using Terraria.Audio;
+using Terraria.ID;
 using Terraria.Localization;
+using Terraria.ModLoader;
 
 namespace Redemption.NPCs.Friendly
 {
-    public class SpiritDruid : ModNPC
+    public class SpiritDruid : ModRedeNPC
     {
         public ref float AITimer => ref NPC.ai[1];
         public override void SetStaticDefaults()
@@ -26,7 +26,7 @@ namespace Redemption.NPCs.Friendly
             NPCID.Sets.NoTownNPCHappiness[Type] = true;
 
             NPCID.Sets.ImmuneToRegularBuffs[Type] = true;
-            NPCID.Sets.NPCBestiaryDrawModifiers value = new(0)
+            NPCID.Sets.NPCBestiaryDrawModifiers value = new()
             {
                 Hide = true
             };
@@ -44,22 +44,34 @@ namespace Redemption.NPCs.Friendly
             NPC.aiStyle = -1;
             NPC.knockBackResist = 0f;
             NPC.npcSlots = 0;
+
+            DialogueBoxStyle = CAVERN;
+        }
+        public override bool HasTalkButton() => true;
+        public override bool HasCruxButton(Player player) => !player.HasItem(ItemType<CruxCardMossyGoliath>());
+        public override string CruxButtonText(Player player)
+        {
+            bool offering = player.HasItem(ItemID.NaturesGift);
+            return request && offering ? Language.GetTextValue("Mods.Redemption.DialogueBox.SpiritDruid.Offer") : Language.GetTextValue("Mods.Redemption.DialogueBox.Crux");
+        }
+        public override void CruxButton(Player player)
+        {
+            RequestCruxButton.RequestCrux(NPC, player, ItemType<CruxCardMossyGoliath>(), "SpiritDruid.NoCruxDialogue", "SpiritDruid.CruxDialogue", "SpiritDruid.OfferCruxDialogue", ref request, ItemID.NaturesGift);
         }
 
         public override bool CanHitPlayer(Player target, ref int cooldownSlot) => false;
         public override bool CanHitNPC(NPC target) => false;
 
-        public bool floatTimer;
         public override void AI()
         {
-            Player player = Main.player[RedeHelper.GetNearestAlivePlayer(NPC)];
-            if (NPC.target < 0 || NPC.target == 255 || player.dead || !player.active)
+            if (NPC.target < 0 || NPC.target == 255 || Main.player[NPC.target].dead || !Main.player[NPC.target].active)
                 NPC.TargetClosest();
+
+            Player player = Main.player[NPC.target];
 
             NPC.LookAtEntity(player);
 
-            if (AITimer < 60)
-                NPC.velocity *= 0.94f;
+            NPC.velocity *= 0.94f;
 
             if (AITimer++ == 0)
             {
@@ -73,6 +85,7 @@ namespace Redemption.NPCs.Friendly
             }
             NPC.alpha += Main.rand.Next(-10, 11);
             NPC.alpha = (int)MathHelper.Clamp(NPC.alpha, 40, 60);
+            NPC.position.Y += (float)Math.Sin(NPC.localAI[0]++ / 15) / 3;
         }
 
         public override void FindFrame(int frameHeight)
@@ -85,116 +98,8 @@ namespace Redemption.NPCs.Friendly
                 if (NPC.frame.Y >= 4 * frameHeight)
                     NPC.frame.Y = 0;
             }
-            if (!floatTimer)
-            {
-                NPC.velocity.Y += 0.03f;
-                if (NPC.velocity.Y > .5f)
-                {
-                    floatTimer = true;
-                    NPC.netUpdate = true;
-                }
-            }
-            else if (floatTimer)
-            {
-                NPC.velocity.Y -= 0.03f;
-                if (NPC.velocity.Y < -.5f)
-                {
-                    floatTimer = false;
-                    NPC.netUpdate = true;
-                }
-            }
         }
-        public static int ChatNumber = 0;
-        public static bool what;
         public static bool request;
-        public override void SetChatButtons(ref string button, ref string button2)
-        {
-            bool offering = Main.LocalPlayer.HasItem(ItemID.NaturesGift);
-            switch (ChatNumber)
-            {
-                case 0:
-                    button = Language.GetTextValue("Mods.Redemption.DialogueBox.SpiritDruid.1");
-                    break;
-                case 1:
-                    button = Language.GetTextValue("Mods.Redemption.DialogueBox.SpiritDruid.2");
-                    break;
-                case 2:
-                    button = Language.GetTextValue("Mods.Redemption.DialogueBox.SpiritDruid.3");
-                    break;
-                case 3:
-                    button = request && offering ? Language.GetTextValue("Mods.Redemption.DialogueBox.SpiritDruid.Offer") : Language.GetTextValue("Mods.Redemption.DialogueBox.SpiritDruid.Crux");
-                    break;
-            }
-            button2 = Language.GetTextValue("Mods.Redemption.DialogueBox.CycleD");
-        }
-
-        public override void OnChatButtonClicked(bool firstButton, ref string shopName)
-        {
-            if (firstButton)
-            {
-                Main.npcChatText = ChitChat();
-                if (ChatNumber == 3)
-                {
-                    int offering = Main.LocalPlayer.FindItem(ItemID.NaturesGift);
-                    if (request && offering >= 0)
-                    {
-                        if (!Main.LocalPlayer.RedemptionAbility().SpiritwalkerActive)
-                        {
-                            Main.npcChatText = Language.GetTextValue("Mods.Redemption.Dialogue.SpiritDruid.NoRealmCruxDialogue");
-                            ChatNumber = 3;
-                            return;
-                        }
-                        int card = Main.LocalPlayer.FindItem(ModContent.ItemType<EmptyCruxCard>());
-                        if (card >= 0)
-                        {
-                            Main.LocalPlayer.inventory[offering].stack--;
-                            if (Main.LocalPlayer.inventory[offering].stack <= 0)
-                                Main.LocalPlayer.inventory[offering] = new Item();
-
-                            Main.LocalPlayer.inventory[card].stack--;
-                            if (Main.LocalPlayer.inventory[card].stack <= 0)
-                                Main.LocalPlayer.inventory[card] = new Item();
-
-                            Main.LocalPlayer.QuickSpawnItem(NPC.GetSource_Loot(), ModContent.ItemType<CruxCardMossyGoliath>());
-                            Main.npcChatText = Language.GetTextValue("Mods.Redemption.Dialogue.SpiritDruid.CruxDialogue");
-                            Main.npcChatCornerItem = ModContent.ItemType<CruxCardMossyGoliath>();
-                            SoundEngine.PlaySound(SoundID.Chat);
-                            ChatNumber = 3;
-                        }
-                        else
-                        {
-                            Main.npcChatText = Language.GetTextValue("Mods.Redemption.Dialogue.SpiritDruid.NoCruxDialogue");
-                            Main.npcChatCornerItem = ModContent.ItemType<EmptyCruxCard>();
-                        }
-                    }
-                    else
-                    {
-                        Main.npcChatText = Language.GetTextValue("Mods.Redemption.Dialogue.SpiritDruid.OfferCruxDialogue");
-                        Main.npcChatCornerItem = ItemID.NaturesGift;
-                    }
-                    request = true;
-                }
-            }
-            else
-            {
-                ChatNumber++;
-                int max = 2;
-                if (Main.LocalPlayer.RedemptionAbility().SpiritwalkerActive && !Main.LocalPlayer.HasItem(ModContent.ItemType<CruxCardMossyGoliath>()))
-                    max = 3;
-                if (ChatNumber > max)
-                    ChatNumber = 0;
-            }
-        }
-        public static string ChitChat()
-        {
-            return ChatNumber switch
-            {
-                0 => Language.GetTextValue("Mods.Redemption.Dialogue.SpiritDruid.Chat1"),
-                1 => Language.GetTextValue("Mods.Redemption.Dialogue.SpiritDruid.Chat2"),
-                2 => Language.GetTextValue("Mods.Redemption.Dialogue.SpiritDruid.Chat3"),
-                _ => "...",
-            };
-        }
         public override bool CanChat() => true;
         public override string GetChat()
         {
@@ -203,16 +108,51 @@ namespace Redemption.NPCs.Friendly
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
             var effects = NPC.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
-            int shader = GameShaders.Armor.GetShaderIdFromItemId(ItemID.MirageDye);
-            spriteBatch.End();
-            spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.NonPremultiplied, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
-            GameShaders.Armor.ApplySecondary(shader, Main.player[Main.myPlayer], null);
-
-            spriteBatch.Draw(TextureAssets.Npc[NPC.type].Value, NPC.Center - screenPos, NPC.frame, NPC.GetAlpha(Color.White), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0f);
-
-            spriteBatch.End();
-            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+            spriteBatch.Draw(TextureAssets.Npc[NPC.type].Value, NPC.Center - screenPos, NPC.frame, NPC.GetAlpha(Color.White with { A = 100 }), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0f);
             return false;
+        }
+    }
+    public class AboutButton_SpiritDruid : ChatButton
+    {
+        public override double Priority => 1.0;
+        public static bool clicked;
+        public override string Text(NPC npc, Player player) => Language.GetTextValue("Mods.Redemption.DialogueBox.AboutYou");
+        public override bool IsActive(NPC npc, Player player) => npc.type == NPCType<SpiritDruid>() && RedeGlobalButton.talkActive;
+        public override void OnClick(NPC npc, Player player)
+        {
+            clicked = true;
+            SoundEngine.PlaySound(SoundID.Chat);
+            Main.npcChatText = Language.GetTextValue("Mods.Redemption.Dialogue.SpiritDruid.Chat1");
+        }
+    }
+    public class ThamorButton_SpiritDruid : ChatButton
+    {
+        public override double Priority => 2.0;
+        public static bool clicked;
+        public override string Text(NPC npc, Player player) => !AboutButton_SpiritDruid.clicked ? "???" : Language.GetTextValue("Mods.Redemption.DialogueBox.SpiritDruid.1");
+        public override bool IsActive(NPC npc, Player player) => npc.type == NPCType<SpiritDruid>() && RedeGlobalButton.talkActive;
+        public override Color? OverrideColor(NPC npc, Player player) => !AboutButton_SpiritDruid.clicked ? Color.Gray : null;
+        public override void OnClick(NPC npc, Player player)
+        {
+            if (!AboutButton_SpiritDruid.clicked)
+                return;
+            clicked = true;
+            SoundEngine.PlaySound(SoundID.Chat);
+            Main.npcChatText = Language.GetTextValue("Mods.Redemption.Dialogue.SpiritDruid.Chat2");
+        }
+    }
+    public class HowDidYouGetHereButton_SpiritDruid : ChatButton
+    {
+        public override double Priority => 3.0;
+        public override string Text(NPC npc, Player player) => !ThamorButton_SpiritDruid.clicked ? "???" : Language.GetTextValue("Mods.Redemption.DialogueBox.SpiritDruid.2");
+        public override bool IsActive(NPC npc, Player player) => npc.type == NPCType<SpiritDruid>() && RedeGlobalButton.talkActive;
+        public override Color? OverrideColor(NPC npc, Player player) => !ThamorButton_SpiritDruid.clicked ? Color.Gray : null;
+        public override void OnClick(NPC npc, Player player)
+        {
+            if (!ThamorButton_SpiritDruid.clicked)
+                return;
+            SoundEngine.PlaySound(SoundID.Chat);
+            Main.npcChatText = Language.GetTextValue("Mods.Redemption.Dialogue.SpiritDruid.Chat3");
         }
     }
 }

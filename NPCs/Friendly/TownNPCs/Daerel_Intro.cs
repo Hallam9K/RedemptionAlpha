@@ -1,4 +1,3 @@
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Base;
 using Redemption.BaseExtension;
@@ -66,7 +65,7 @@ namespace Redemption.NPCs.Friendly.TownNPCs
                         NPC.velocity.Y = -3;
                         for (int i = 0; i < 30; i++)
                         {
-                            int dust = Dust.NewDust(NPC.position + NPC.velocity, NPC.width, NPC.height, ModContent.DustType<GlowDust>(), 1, 0, 0, default, 0.5f);
+                            int dust = Dust.NewDust(NPC.position + NPC.velocity, NPC.width, NPC.height, DustType<GlowDust>(), 1, 0, 0, default, 0.5f);
                             Main.dust[dust].noGravity = true;
                             Color dustColor = new(Color.DarkOliveGreen.R, Color.DarkOliveGreen.G, Color.DarkOliveGreen.B) { A = 0 };
                             Main.dust[dust].color = dustColor;
@@ -126,13 +125,16 @@ namespace Redemption.NPCs.Friendly.TownNPCs
                 case 3:
                     if (AITimer++ == 5 && !Main.dedServ)
                     {
+                        string chicken = "";
+                        if (player.RedemptionPlayerBuff().ChickenForm)
+                            chicken = "Chicken";
                         DialogueChain chain = new();
                         chain.Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.DaerelIntro.3"), Color.White, Color.Gray, voice, .05f, 2f, 0, false, bubble: Bubble)) // 221
                              .Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.DaerelIntro.4"), Color.White, Color.Gray, voice, .05f, 2f, 0, false, bubble: Bubble)) // 166
-                             .Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.DaerelIntro.5"), Color.White, Color.Gray, voice, .05f, 2f, 0, false, bubble: Bubble)) // 206
-                             .Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.DaerelIntro.6"), Color.White, Color.Gray, voice, .05f, 2f, 0, false, bubble: Bubble)) // 257
+                             .Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.DaerelIntro.5" + chicken), Color.White, Color.Gray, voice, .05f, 2f, 0, false, bubble: Bubble)) // 206
+                             .Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.DaerelIntro.6" + chicken), Color.White, Color.Gray, voice, .05f, 2f, 0, false, bubble: Bubble)) // 257
                              .Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.DaerelIntro.7"), Color.White, Color.Gray, voice, .05f, 2f, 0, false, bubble: Bubble)) // 320
-                             .Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.DaerelIntro.8"), Color.White, Color.Gray, voice, .05f, 2, .5f, true, bubble: Bubble, endID: 1)); // 382
+                             .Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.DaerelIntro.8" + chicken), Color.White, Color.Gray, voice, .05f, 2, .5f, true, bubble: Bubble, endID: 1)); // 382
                         chain.OnSymbolTrigger += Chain_OnSymbolTrigger;
                         chain.OnEndTrigger += Chain_OnEndTrigger;
                         ChatUI.Visible = true;
@@ -165,18 +167,18 @@ namespace Redemption.NPCs.Friendly.TownNPCs
                             SoundEngine.PlaySound(SoundID.DD2_EtherianPortalSpawnEnemy, NPC.position);
                             for (int i = 0; i < 30; i++)
                             {
-                                int dust = Dust.NewDust(NPC.position + NPC.velocity, NPC.width, NPC.height, ModContent.DustType<GlowDust>(), 1, 0, 0, default, 0.5f);
+                                int dust = Dust.NewDust(NPC.position + NPC.velocity, NPC.width, NPC.height, DustType<GlowDust>(), 1, 0, 0, default, 0.5f);
                                 Main.dust[dust].noGravity = true;
                                 Color dustColor = new(Color.DarkOliveGreen.R, Color.DarkOliveGreen.G, Color.DarkOliveGreen.B) { A = 0 };
                                 Main.dust[dust].color = dustColor;
                                 Main.dust[dust].velocity *= 3f;
                             }
-                            Item.NewItem(NPC.GetSource_Loot(), NPC.getRect(), ModContent.ItemType<ChaliceFragments>());
+                            Item.NewItem(NPC.GetSource_Loot(), NPC.getRect(), ItemType<ChaliceFragments>());
                             NPC.active = false;
                             if (Main.netMode != NetmodeID.MultiplayerClient)
                             {
                                 RedeQuest.wayfarerVars[0] = 2;
-                                RedeWorld.SyncData();
+                                RedeQuest.SyncData();
                             }
                         }
                     }
@@ -251,8 +253,8 @@ namespace Redemption.NPCs.Friendly.TownNPCs
         }
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
-            Texture2D extra = ModContent.Request<Texture2D>("Redemption/NPCs/Friendly/TownNPCs/Daerel_Extra").Value;
-            Texture2D unconscious = ModContent.Request<Texture2D>("Redemption/NPCs/Friendly/TownNPCs/DaerelUnconscious").Value;
+            Texture2D extra = Request<Texture2D>("Redemption/NPCs/Friendly/TownNPCs/Daerel_Extra").Value;
+            Texture2D unconscious = Request<Texture2D>("Redemption/NPCs/Friendly/TownNPCs/DaerelUnconscious").Value;
             var effects = NPC.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
             switch (ExtraTexs)
             {

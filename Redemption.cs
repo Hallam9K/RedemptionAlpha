@@ -1,4 +1,5 @@
-using Microsoft.Xna.Framework;
+global using Microsoft.Xna.Framework;
+global using static Terraria.ModLoader.ModContent;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Redemption.Backgrounds.Skies;
@@ -45,6 +46,12 @@ using Redemption.Items.Usable.Summons;
 using Redemption.Helpers;
 using Redemption.Items.Donator.BLT;
 using Terraria.GameContent.Shaders;
+using Redemption.NPCs.Friendly.TownNPCs;
+using Redemption.NPCs.Friendly;
+using Redemption.NPCs.Lab.Janitor;
+using Redemption.NPCs.Lab.Volt;
+using Redemption.NPCs.Lab;
+using Redemption.NPCs.Minibosses.Calavia;
 
 namespace Redemption
 {
@@ -105,6 +112,40 @@ namespace Redemption
         public override void Load()
         {
             LoadCache();
+
+            #region Dialect Support
+            BetterDialogue.BetterDialogue.SupportedNPCs.Add(NPCType<Fallen>());
+            BetterDialogue.BetterDialogue.SupportedNPCs.Add(NPCType<Daerel>());
+            BetterDialogue.BetterDialogue.SupportedNPCs.Add(NPCType<Zephos>());
+            BetterDialogue.BetterDialogue.SupportedNPCs.Add(NPCType<TreebarkDryad>());
+            BetterDialogue.BetterDialogue.SupportedNPCs.Add(NPCType<SoullessPortal>());
+            BetterDialogue.BetterDialogue.SupportedNPCs.Add(NPCType<JustANormalToaster>());
+            BetterDialogue.BetterDialogue.SupportedNPCs.Add(NPCType<HazmatCorpse_Ghost>());
+            BetterDialogue.BetterDialogue.SupportedNPCs.Add(NPCType<Noza_NPC>());
+            BetterDialogue.BetterDialogue.SupportedNPCs.Add(NPCType<Newb>());
+            BetterDialogue.BetterDialogue.SupportedNPCs.Add(NPCType<SkullDiggerFriendly>());
+            BetterDialogue.BetterDialogue.SupportedNPCs.Add(NPCType<SkullDiggerFriendly_Spirit>());
+            BetterDialogue.BetterDialogue.SupportedNPCs.Add(NPCType<TBot>());
+            BetterDialogue.BetterDialogue.SupportedNPCs.Add(NPCType<KS3Sitting>());
+            BetterDialogue.BetterDialogue.SupportedNPCs.Add(NPCType<ForestNymph_Friendly>());
+            BetterDialogue.BetterDialogue.SupportedNPCs.Add(NPCType<JanitorBot_NPC>());
+            BetterDialogue.BetterDialogue.SupportedNPCs.Add(NPCType<Calavia_NPC>());
+            BetterDialogue.BetterDialogue.SupportedNPCs.Add(NPCType<SpiritAssassin>());
+            BetterDialogue.BetterDialogue.SupportedNPCs.Add(NPCType<SpiritCommonGuard>());
+            BetterDialogue.BetterDialogue.SupportedNPCs.Add(NPCType<SpiritDruid>());
+            BetterDialogue.BetterDialogue.SupportedNPCs.Add(NPCType<SpiritGathicMan>());
+            BetterDialogue.BetterDialogue.SupportedNPCs.Add(NPCType<SpiritNiricLady>());
+            BetterDialogue.BetterDialogue.SupportedNPCs.Add(NPCType<SpiritWalkerMan>());
+            BetterDialogue.BetterDialogue.SupportedNPCs.Add(NPCType<ProtectorVolt_NPC>());
+            BetterDialogue.BetterDialogue.RegisterShoppableNPC(NPCType<Fallen>());
+            BetterDialogue.BetterDialogue.RegisterShoppableNPC(NPCType<Daerel>());
+            BetterDialogue.BetterDialogue.RegisterShoppableNPC(NPCType<Zephos>());
+            BetterDialogue.BetterDialogue.RegisterShoppableNPC(NPCType<TreebarkDryad>());
+            BetterDialogue.BetterDialogue.RegisterShoppableNPC(NPCType<Newb>());
+            BetterDialogue.BetterDialogue.RegisterShoppableNPC(NPCType<TBot>());
+            BetterDialogue.BetterDialogue.RegisterShoppableNPC(NPCType<KS3Sitting>());
+            BetterDialogue.BetterDialogue.RegisterShoppableNPC(NPCType<JanitorBot_NPC>());
+            #endregion
 
             if (!Main.dedServ)
             {

@@ -12,8 +12,9 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <ItemGroup>
-  </ItemGroup>
-  <ItemGroup>
+    <Reference Include="BetterDialogue">
+      <HintPath>Dependancies\BetterDialogue.dll</HintPath>
+    </Reference>
     <Reference Include="CollisionLib">
       <HintPath>Dependancies\CollisionLib.dll</HintPath>
     </Reference>

@@ -36,7 +36,7 @@ using Terraria.Utilities;
 
 namespace Redemption.NPCs.PreHM
 {
-    public class ForestNymph : ModNPC
+    public class ForestNymph : ModRedeNPC
     {
         public static Asset<Texture2D> hair1;
         public static Asset<Texture2D> hair1b;
@@ -102,7 +102,6 @@ namespace Redemption.NPCs.PreHM
         public Vector2 EyeOffset;
         public int VisionRange;
         public int VisionIncrease;
-        public float SpeedMultiplier = 1f;
 
         public ref float AITimer => ref NPC.ai[1];
         public ref float TimerRand => ref NPC.ai[2];
@@ -178,7 +177,6 @@ namespace Redemption.NPCs.PreHM
         }
         public override bool CheckActive() => false;
 
-        public Vector2 moveTo;
         private int runCooldown;
         public float[] doorVars = new float[3];
         public override void OnSpawn(IEntitySource source)

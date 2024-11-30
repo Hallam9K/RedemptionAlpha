@@ -24,6 +24,18 @@ namespace Redemption.Globals
         public static int forestNymphVar;
         public static int calaviaVar;
         public static int slayerRep;
+
+        public static bool[] adviceUnlocked = new bool[6];
+        public static bool[] adviceSeen = new bool[20];
+
+        // Second row is for the advice not needing unlocking, so adviceUnlocked and adviceSeen can use same enum numbers even though its different sized arrays
+        // Add new unlockable advice before "Elements"
+        public enum Advice : byte
+        {
+            UGPortal, ForestNymph, UkkoEye, EaglecrestGolem, Androids, StarSerpent,
+            Elements, Insects, Invisibility, GuardPoints, DirtyWound, Fool, Chalice, Spirits, Undead, Slimes, Erhan
+        }
+
         public override void PostUpdateWorld()
         {
             if (SubworldSystem.Current != null)
@@ -72,10 +84,10 @@ namespace Redemption.Globals
             {
                 if (Main.time == 1)
                 {
-                    string w = Lang.GetNPCNameValue(ModContent.NPCType<Zephos_Intro>());
+                    string w = Lang.GetNPCNameValue(NPCType<Zephos_Intro>());
                     if (WorldGen.crimson)
-                        w = Lang.GetNPCNameValue(ModContent.NPCType<Daerel_Intro>());
-                    string status = w + Language.GetTextValue("Mods.Redemption.StatusMessage.Progression.WayfarerReturn");
+                        w = Lang.GetNPCNameValue(NPCType<Daerel_Intro>());
+                    string status = Language.GetTextValue("Mods.Redemption.StatusMessage.Progression.Return", w);
                     if (Main.netMode == NetmodeID.Server)
                         ChatHelper.BroadcastChatMessage(NetworkText.FromLiteral(status), new Color(50, 125, 255));
                     else if (Main.netMode == NetmodeID.SinglePlayer)
@@ -106,6 +118,11 @@ namespace Redemption.Globals
             forestNymphVar = 0;
             calaviaVar = 0;
             slayerRep = 0;
+
+            for (int k = 0; k < adviceUnlocked.Length; k++)
+                adviceUnlocked[k] = false;
+            for (int k = 0; k < adviceSeen.Length; k++)
+                adviceSeen[k] = false;
         }
         public override void SaveWorldData(TagCompound tag)
         {
@@ -115,6 +132,16 @@ namespace Redemption.Globals
             {
                 if (voltVars[k])
                     lists.Add("VV" + k);
+            }
+            for (int k = 0; k < adviceUnlocked.Length; k++)
+            {
+                if (adviceUnlocked[k])
+                    lists.Add("AdviceU" + k);
+            }
+            for (int k = 0; k < adviceSeen.Length; k++)
+            {
+                if (adviceSeen[k])
+                    lists.Add("AdviceS" + k);
             }
             tag["lists"] = lists;
 
@@ -130,6 +157,11 @@ namespace Redemption.Globals
             var lists = tag.GetList<string>("lists");
             for (int k = 0; k < voltVars.Length; k++)
                 voltVars[k] = lists.Contains("VV" + k);
+
+            for (int k = 0; k < adviceUnlocked.Length; k++)
+                adviceUnlocked[k] = lists.Contains("AdviceU" + k);
+            for (int k = 0; k < adviceSeen.Length; k++)
+                adviceSeen[k] = lists.Contains("AdviceS" + k);
 
             for (int k = 0; k < wayfarerVars.Length; k++)
                 wayfarerVars[k] = tag.GetInt("WV" + k);
@@ -173,6 +205,30 @@ namespace Redemption.Globals
                 flags[k] = voltVars[k];
             writer.Write(flags);
 
+            BitsByte[] adviceUnlockFlags = new BitsByte[3];
+            int flagID = 0;
+            for (int k = 0; k < adviceUnlocked.Length; k++)
+            {
+                if (k % 8 == 0)
+                    flagID++;
+
+                adviceUnlockFlags[flagID][k] = adviceUnlocked[k];
+            }
+            for (int k = 0; k < adviceUnlockFlags.Length; k++)
+                writer.Write(adviceUnlockFlags[k]);
+
+            BitsByte[] adviceSeenFlags = new BitsByte[3];
+            flagID = 0;
+            for (int k = 0; k < adviceSeen.Length; k++)
+            {
+                if (k % 8 == 0)
+                    flagID++;
+
+                adviceSeenFlags[flagID][k] = adviceSeen[k];
+            }
+            for (int k = 0; k < adviceSeenFlags.Length; k++)
+                writer.Write(adviceSeenFlags[k]);
+
             for (int k = 0; k < wayfarerVars.Length; k++)
                 writer.Write(wayfarerVars[k]);
             writer.Write(forestNymphVar);
@@ -185,6 +241,25 @@ namespace Redemption.Globals
             BitsByte flags = reader.ReadByte();
             for (int k = 0; k < voltVars.Length; k++)
                 voltVars[k] = flags[k];
+
+            BitsByte[] adviceUnlockFlags = new BitsByte[3] { reader.ReadByte(), reader.ReadByte(), reader.ReadByte() };
+            int flagID = 0;
+            for (int k = 0; k < adviceUnlocked.Length; k++)
+            {
+                if (k % 8 == 0)
+                    flagID++;
+
+                adviceUnlocked[k] = adviceUnlockFlags[flagID][k];
+            }
+            BitsByte[] adviceSeenFlags = new BitsByte[3] { reader.ReadByte(), reader.ReadByte(), reader.ReadByte() };
+            flagID = 0;
+            for (int k = 0; k < adviceSeen.Length; k++)
+            {
+                if (k % 8 == 0)
+                    flagID++;
+
+                adviceSeen[k] = adviceSeenFlags[flagID][k];
+            }
 
             for (int k = 0; k < wayfarerVars.Length; k++)
                 wayfarerVars[k] = reader.ReadInt32();

@@ -17,5 +17,9 @@ namespace Redemption
         public static Color RedPulse => BaseUtility.MultiLerpColor(Main.LocalPlayer.miscCounter % 100 / 100f, Color.White, Color.Red * 0.6f, Color.White);
         public static Color EnergyPulse => BaseUtility.MultiLerpColor(Main.LocalPlayer.miscCounter % 100 / 100f, Color.LightBlue, Color.IndianRed, Color.LightGreen, Color.LightGoldenrodYellow, Color.LightBlue);
         public static Color GreenPulse => BaseUtility.MultiLerpColor(Main.LocalPlayer.miscCounter % 100 / 100f, Color.LightGreen, Color.Green, Color.LightGreen, Color.White, Color.LightGreen);
+        public static Color QuestMarkerColour => BaseUtility.MultiLerpColor(Main.LocalPlayer.miscCounter % 100 / 100f, Color.LightGoldenrodYellow, Color.Orange, Color.LightGoldenrodYellow);
+        public static Color TextCaution => new((byte)(255f * Main.mouseTextColor / 255f), (byte)(150f * Main.mouseTextColor / 255f), (byte)(0f * Main.mouseTextColor / 255f), Main.mouseTextColor);
+        public static Color TextPositive => new((byte)(150f * Main.mouseTextColor / 255f), (byte)(255f * Main.mouseTextColor / 255f), (byte)(150f * Main.mouseTextColor / 255f), Main.mouseTextColor);
+        public static Color TextNegative => new((byte)(255f * Main.mouseTextColor / 255f), (byte)(150f * Main.mouseTextColor / 255f), (byte)(150f * Main.mouseTextColor / 255f), Main.mouseTextColor);
     }
 }

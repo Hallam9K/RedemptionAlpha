@@ -1,47 +1,50 @@
-using Microsoft.Xna.Framework;
+using BetterDialogue.UI;
 using Microsoft.Xna.Framework.Graphics;
-using Terraria;
-using Terraria.ID;
-using Terraria.ModLoader;
-using Terraria.Utilities;
-using Redemption.Items.Materials.PreHM;
-using Terraria.GameContent.Bestiary;
-using Terraria.GameContent;
-using Redemption.Globals;
-using Redemption.Items.Tools.PreHM;
-using Redemption.Items.Weapons.PreHM.Melee;
-using Terraria.Audio;
-using Redemption.Items.Weapons.PreHM.Magic;
-using Redemption.Items.Usable.Summons;
 using Redemption.Buffs;
-using Redemption.Items.Usable;
-using Terraria.GameContent.Personalities;
-using System.Collections.Generic;
-using Redemption.Items.Weapons.PostML.Melee;
-using Redemption.Items.Placeable.Furniture.Misc;
+using Redemption.Globals;
 using Redemption.Items.Accessories.PreHM;
 using Redemption.Items.Materials.HM;
-using ReLogic.Content;
-using Redemption.BaseExtension;
-using Terraria.Localization;
+using Redemption.Items.Materials.PreHM;
+using Redemption.Items.Placeable.Furniture.Misc;
+using Redemption.Items.Tools.PreHM;
+using Redemption.Items.Usable;
+using Redemption.Items.Usable.Summons;
+using Redemption.Items.Weapons.PostML.Melee;
+using Redemption.Items.Weapons.PreHM.Magic;
+using Redemption.Items.Weapons.PreHM.Melee;
 using Redemption.Textures.Emotes;
-using Redemption.NPCs.Friendly.TownNPCs;
+using Redemption.UI.Dialect;
+using ReLogic.Content;
+using ReLogic.Graphics;
+using System.Collections.Generic;
+using Terraria;
+using Terraria.Audio;
+using Terraria.GameContent;
+using Terraria.GameContent.Bestiary;
+using Terraria.GameContent.Personalities;
 using Terraria.GameContent.UI;
-using Redemption.Globals.NPC;
-using System;
+using Terraria.ID;
+using Terraria.Localization;
+using Terraria.ModLoader;
+using Terraria.ModLoader.IO;
+using Terraria.Utilities;
 
 namespace Redemption.NPCs.Friendly.TownNPCs
 {
     [AutoloadHead]
-    public class Zephos : ModNPC
+    public class Zephos : ModRedeNPC
     {
         public static int HeadIndex2;
         public static int HeadIndex3;
+        public static Asset<Texture2D> unconsciousTexture;
         public override void Load()
         {
             // Adds our Shimmer Head to the NPCHeadLoader.
             HeadIndex2 = Mod.AddNPCHeadTexture(Type, Texture + "2_Head");
             HeadIndex3 = Mod.AddNPCHeadTexture(Type, Texture + "3_Head");
+            if (Main.dedServ)
+                return;
+            unconsciousTexture = Request<Texture2D>("Redemption/NPCs/Friendly/TownNPCs/ZephosUnconscious");
         }
         public override void SetStaticDefaults()
         {
@@ -55,19 +58,18 @@ namespace Redemption.NPCs.Friendly.TownNPCs
             NPCID.Sets.AttackTime[Type] = 26;
             NPCID.Sets.AttackAverageChance[Type] = 20;
             NPCID.Sets.HatOffsetY[Type] = 6;
-            NPCID.Sets.FaceEmote[Type] = ModContent.EmoteBubbleType<ZephosTownNPCEmote>();
+            NPCID.Sets.FaceEmote[Type] = EmoteBubbleType<ZephosTownNPCEmote>();
 
             NPC.Happiness.
                 SetBiomeAffection<ForestBiome>(AffectionLevel.Like)
                 .SetBiomeAffection<OceanBiome>(AffectionLevel.Love)
-                .SetBiomeAffection<UndergroundBiome>(AffectionLevel.Dislike)
-                .SetBiomeAffection<SnowBiome>(AffectionLevel.Hate)
+                .SetBiomeAffection<SnowBiome>(AffectionLevel.Dislike)
                 .SetNPCAffection<Daerel>(AffectionLevel.Love)
-                .SetNPCAffection(NPCID.Pirate, AffectionLevel.Like)
-                .SetNPCAffection(NPCID.Merchant, AffectionLevel.Dislike)
-                .SetNPCAffection(NPCID.Clothier, AffectionLevel.Hate);
+                .SetNPCAffection(NPCID.Demolitionist, AffectionLevel.Like)
+                .SetNPCAffection(NPCID.Pirate, AffectionLevel.Dislike)
+                .SetNPCAffection(NPCID.TaxCollector, AffectionLevel.Hate);
 
-            NPCID.Sets.NPCBestiaryDrawModifiers drawModifiers = new(0)
+            NPCID.Sets.NPCBestiaryDrawModifiers drawModifiers = new()
             {
                 Velocity = 1f
             };
@@ -88,8 +90,36 @@ namespace Redemption.NPCs.Friendly.TownNPCs
             NPC.HitSound = SoundID.NPCHit1;
             NPC.DeathSound = SoundID.NPCDeath1;
             NPC.knockBackResist = 0.5f;
+            if (Unconscious > 0)
+                NPC.dontTakeDamage = true;
+
+            DialogueBoxStyle = EPIDOTRA;
 
             AnimationType = NPCID.Guide;
+        }
+        public override bool HasReviveButton() => Unconscious > 0;
+        public override bool HasLeftHangingButton(Player player) => RedeQuest.wayfarerVars[0] >= 4 && !Daerel.IsUnconscious(NPC);
+        public override bool HasRightHangingButton(Player player) => RedeQuest.wayfarerVars[0] >= 4 && (RedeGlobalButton.talkID != 0 || !RedeGlobalButton.talkActive) && !Daerel.IsUnconscious(NPC);
+        public override HangingButtonParams LeftHangingButton(Player player)
+        {
+            if (RedeGlobalButton.talkActive)
+                return new HangingButtonParams(4, true, -2);
+            return new HangingButtonParams(1);
+        }
+        public override HangingButtonParams RightHangingButton(Player player)
+        {
+            if (RedeGlobalButton.talkActive)
+            {
+                int boxNum = RedeGlobalButton.talkID switch
+                {
+                    3 or 4 => 4,
+                    2 => 3,
+                    1 => 6,
+                    _ => 7,
+                };
+                return new HangingButtonParams(boxNum, false, -2);
+            }
+            return new HangingButtonParams(1);
         }
 
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
@@ -101,17 +131,85 @@ namespace Redemption.NPCs.Friendly.TownNPCs
             });
         }
 
+        public int Unconscious;
+        public override void LoadData(TagCompound tag)
+        {
+            Unconscious = tag.GetInt("Unconscious");
+        }
+        public override void SaveData(TagCompound tag)
+        {
+            tag["Unconscious"] = Unconscious;
+        }
+        public override bool UsesPartyHat() => Unconscious <= 0;
+        public override bool PreAI()
+        {
+            if (Unconscious > 0)
+            {
+                NPC.velocity.X = 0;
+                if (--Unconscious == 1)
+                {
+                    Revived();
+                    return false;
+                }
+                if (!NPC.dontTakeDamage)
+                    NPC.dontTakeDamage = true;
+                return false;
+            }
+            return true;
+        }
+        public void Revived()
+        {
+            Unconscious = 0;
+            NPC.life = NPC.lifeMax;
+            NPC.dontTakeDamage = false;
+            NPC.netUpdate = true;
+            Main.NewText(Language.GetTextValue("Mods.Redemption.StatusMessage.Other.NPCWokeUp", NPC.FullName), new Color(50, 125, 255));
+        }
         public override bool CheckDead()
         {
-            if (Main.netMode != NetmodeID.MultiplayerClient)
+            if (Unconscious > 0)
             {
-                RedeWorld.zephosDownedTimer = 0;
-                RedeWorld.SyncData();
+                NPC.life = NPC.lifeMax;
+                NPC.netUpdate = true;
+                return true;
             }
-            Main.NewText(Language.GetTextValue("Mods.Redemption.DialogueBox.Zephos.Unconscious"), Color.Red.R, Color.Red.G, Color.Red.B);
-            NPC.SetDefaults(ModContent.NPCType<ZephosUnconscious>());
-            NPC.life = 1;
+            Main.NewText(Language.GetTextValue("Mods.Redemption.StatusMessage.Other.Unconscious", NPC.FullName), Color.Red.R, Color.Red.G, Color.Red.B);
+            RedeGlobalButton.talkActive = false;
+            NPC.life = NPC.lifeMax;
+            NPC.dontTakeDamage = true;
+            Unconscious = 43200;
+            NPC.netUpdate = true;
             return false;
+        }
+        int starsFrame;
+        int starsCounter;
+        public override void FindFrame(int frameHeight)
+        {
+            if (Unconscious > 0)
+            {
+                if (++starsCounter >= 10)
+                {
+                    starsCounter = 0;
+                    if (++starsFrame > 3)
+                    {
+                        starsCounter = 0;
+                        starsFrame = 0;
+                    }
+                }
+            }
+        }
+        public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
+        {
+            var effects = NPC.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
+            if (Unconscious > 0)
+            {
+                Rectangle rect = unconsciousTexture.Frame(3, 4, Level, starsFrame);
+                Vector2 origin = rect.Size() / 2;
+
+                spriteBatch.Draw(unconsciousTexture.Value, NPC.Center + new Vector2(0, 7) - screenPos, rect, NPC.GetAlpha(drawColor), NPC.rotation, origin, NPC.scale, effects, 0);
+                return false;
+            }
+            return base.PreDraw(spriteBatch, screenPos, drawColor);
         }
 
         public static int Level = 0;
@@ -119,7 +217,7 @@ namespace Redemption.NPCs.Friendly.TownNPCs
         {
             if (NPC.ai[0] is 15 && NPC.ai[1] == NPCID.Sets.AttackTime[NPC.type])
             {
-                NPC.Shoot(NPC.Center, ModContent.ProjectileType<Zephos_SwordSlicer_Slash>(), NPC.damage * NPC.GetAttackDamage_ScaledByStrength(11), new Vector2(5 * NPC.direction, 0), 0, NPC.whoAmI, knockback: 5);
+                NPC.Shoot(NPC.Center, ProjectileType<Zephos_SwordSlicer_Slash>(), NPC.damage * NPC.GetAttackDamage_ScaledByStrength(11), new Vector2(5 * NPC.direction, 0), 0, NPC.whoAmI, knockback: 5);
             }
         }
         public override void HitEffect(NPC.HitInfo hit)
@@ -134,17 +232,23 @@ namespace Redemption.NPCs.Friendly.TownNPCs
         }
         public override bool CanTownNPCSpawn(int numTownNPCs)
         {
-            return !WorldGen.crimson && RedeQuest.wayfarerVars[0] >= 2 && !RedeHelper.ZephosActive();
+            return !WorldGen.crimson && (RedeQuest.wayfarerVars[0] >= 2 || Main.hardMode);
         }
 
         public override List<string> SetNPCNameList()
         {
-            return new List<string> { "Zephos" };
+            return new List<string> { Language.GetTextValue("Mods.Redemption.NPCs.Zephos_Intro.DisplayName") };
         }
         public override ITownNPCProfile TownNPCProfile() => new ZephosProfile();
         public override string GetChat()
         {
-            adviceNum = 0;
+            if (Unconscious > 0)
+            {
+                if (Unconscious >= 43200 - 3600)
+                    return Language.GetTextValue("Mods.Redemption.Dialogue.General.UnconsciousStatus1", NPC.FullName);
+                return Language.GetTextValue("Mods.Redemption.Dialogue.General.UnconsciousStatus2", NPC.FullName, (int)MathHelper.Lerp(43200 / 3600, 0, Unconscious / 43200f));
+            }
+
             WeightedRandom<string> chat = new(Main.rand);
             if (RedeQuest.wayfarerVars[0] < 4)
             {
@@ -152,10 +256,8 @@ namespace Redemption.NPCs.Friendly.TownNPCs
             }
             else
             {
-                if (!Main.LocalPlayer.Male)
-                    chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Zephos.FemaleDialogue"));
-                else
-                    chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Zephos.Dialogue1"));
+                string bro = Main.LocalPlayer.Male ? Language.GetTextValue("Mods.Redemption.Dialogue.Zephos.Bro") : Language.GetTextValue("Mods.Redemption.Dialogue.Zephos.Broette");
+                chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Zephos.Dialogue1", bro));
                 chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Zephos.Dialogue2"));
                 chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Zephos.Dialogue3"));
                 chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Zephos.Dialogue4"));
@@ -170,179 +272,7 @@ namespace Redemption.NPCs.Friendly.TownNPCs
             }
             return chat;
         }
-
-        private static int ChatNumber = 0;
-        public override void SetChatButtons(ref string button, ref string button2)
-        {
-            if (RedeQuest.wayfarerVars[0] < 4)
-            {
-                switch (RedeQuest.wayfarerVars[0])
-                {
-                    default:
-                        button = Language.GetTextValue("Mods.Redemption.DialogueBox.Daerel.Stay1");
-                        button2 = Language.GetTextValue("Mods.Redemption.DialogueBox.Daerel.Stay2");
-                        break;
-                    case 3:
-                        button = Language.GetTextValue("Mods.Redemption.DialogueBox.Daerel.Stay1");
-                        button2 = "";
-                        break;
-                }
-            }
-            else
-            {
-                button2 = Language.GetTextValue("Mods.Redemption.DialogueBox.Cycle");
-
-                switch (ChatNumber)
-                {
-                    case 0:
-                        button = Language.GetTextValue("LegacyInterface.28");
-                        break;
-                    case 1:
-                        button = Language.GetTextValue("Mods.Redemption.DialogueBox.Daerel.Advice");
-                        break;
-                    case 2:
-                        button = Language.GetTextValue("Mods.Redemption.DialogueBox.Zephos.Sharpen");
-                        break;
-                    case 3:
-                        button = Language.GetTextValue("Mods.Redemption.DialogueBox.Zephos.ShineArmor");
-                        break;
-                }
-            }
-        }
-
-        public override void OnChatButtonClicked(bool firstButton, ref string shopName)
-        {
-            if (RedeQuest.wayfarerVars[0] < 4)
-            {
-                switch (RedeQuest.wayfarerVars[0])
-                {
-                    default:
-                        if (firstButton)
-                        {
-                            Main.npcChatText = Language.GetTextValue("Mods.Redemption.Dialogue.Zephos.IntroDialogue2");
-                            RedeQuest.wayfarerVars[0] = 4;
-                            if (Main.netMode == NetmodeID.Server)
-                                NetMessage.SendData(MessageID.WorldData);
-                        }
-                        else
-                        {
-                            Main.npcChatText = Language.GetTextValue("Mods.Redemption.Dialogue.Zephos.IntroDialogue3");
-                            RedeQuest.wayfarerVars[0] = 3;
-                            if (Main.netMode == NetmodeID.Server)
-                                NetMessage.SendData(MessageID.WorldData);
-                        }
-                        break;
-                    case 3:
-                        if (firstButton)
-                        {
-                            Main.npcChatText = Language.GetTextValue("Mods.Redemption.Dialogue.Zephos.IntroDialogue4");
-                            RedeQuest.wayfarerVars[0] = 4;
-                            if (Main.netMode == NetmodeID.Server)
-                                NetMessage.SendData(MessageID.WorldData);
-                        }
-                        break;
-                }
-            }
-            else
-            {
-                if (firstButton)
-                {
-                    switch (ChatNumber)
-                    {
-                        case 0:
-                            shopName = "Shop";
-                            break;
-                        case 1:
-                            for (int k = 0; k < 6; k++)
-                                NPC.GetGlobalNPC<ExclaimMarkNPC>().exclaimationMark[k] = false;
-
-                            Main.npcChatText = ChitChat();
-                            adviceNum++;
-                            break;
-                        case 2:
-                            if (Main.LocalPlayer.BuyItem(500))
-                            {
-                                SoundEngine.PlaySound(SoundID.Item37, NPC.position);
-                                Main.LocalPlayer.AddBuff(BuffID.Sharpened, 36000);
-                            }
-                            else
-                            {
-                                Main.npcChatText = NoCoinsChat();
-                                SoundEngine.PlaySound(SoundID.MenuTick);
-                            }
-                            break;
-                        case 3:
-                            if (Main.LocalPlayer.BuyItem(1500))
-                            {
-                                SoundEngine.PlaySound(SoundID.Item37, NPC.position);
-                                Main.LocalPlayer.AddBuff(ModContent.BuffType<ShineArmourBuff>(), 36000);
-                            }
-                            else
-                            {
-                                Main.npcChatText = NoCoinsChat();
-                                SoundEngine.PlaySound(SoundID.MenuTick);
-                            }
-                            break;
-                    }
-                }
-                else
-                {
-                    ChatNumber++;
-                    if (ChatNumber > 3)
-                        ChatNumber = 0;
-                }
-            }
-        }
-
         public override bool CanGoToStatue(bool toKingStatue) => true;
-
-        public static string NoCoinsChat()
-        {
-            WeightedRandom<string> chat = new(Main.rand);
-            chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Zephos.NoMoneyDialogue1"));
-            chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Zephos.NoMoneyDialogue2"));
-            return chat;
-        }
-        private static int adviceNum;
-        public static string ChitChat()
-        {
-            List<string> chat = new();
-            if (RedeBossDowned.downedPZ && !RedeBossDowned.downedNebuleus)
-                chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Zephos.AdviceDialogue1"));
-            int FallenID = NPC.FindFirstNPC(ModContent.NPCType<Fallen>());
-            if (FallenID >= 0 && Main.LocalPlayer.HasItem(ModContent.ItemType<GolemEye>()) && NPC.downedMoonlord && !RedeBossDowned.downedADD)
-                chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Zephos.AdviceDialogue2", Main.npc[FallenID].GivenName));
-            if (Main.hardMode && !RedeBossDowned.downedSlayer)
-                chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Zephos.AdviceDialogue3"));
-            int DryadID = NPC.FindFirstNPC(NPCID.Dryad);
-            if (DryadID >= 0 && RedeQuest.forestNymphVar == 0)
-                chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Zephos.AdviceDialogue4", Main.npc[DryadID].GivenName));
-            if (FallenID >= 0 && !Main.LocalPlayer.RedemptionAbility().Spiritwalker)
-                chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Zephos.AdviceDialogue5", Main.npc[FallenID].GivenName));
-            if (!RedeBossDowned.downedEaglecrestGolem && NPC.downedBoss2)
-                chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Zephos.AdviceDialogue6"));
-            if (!RedeWorld.alignmentGiven)
-                chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Zephos.AdviceDialogue15"));
-            if (!Main.LocalPlayer.RedemptionAbility().Spiritwalker)
-                chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Zephos.AdviceDialogue7", ElementID.ArcaneS, ElementID.HolyS));
-            chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Zephos.AdviceDialogue8", ElementID.HolyS, ElementID.ShadowS));
-            chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Zephos.AdviceDialogue9", Main.LocalPlayer.Male ? "" : " (wink wink)", ElementID.IceS));
-            chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Zephos.AdviceDialogue10"));
-            chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Zephos.AdviceDialogue11"));
-            chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Zephos.AdviceDialogue12"));
-            if (!RedeBossDowned.foundNewb)
-                chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Zephos.AdviceDialogue13"));
-            if (RedeBossDowned.erhanDeath == 0)
-                chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Zephos.AdviceDialogue14"));
-
-            string[] chatStr = chat.ToArray();
-            int maxAdvice = chatStr.Length;
-            if (adviceNum >= maxAdvice)
-                adviceNum = 0;
-
-            string num = "(" + (adviceNum + 1) + "/" + maxAdvice + ") ";
-            return num + chatStr[adviceNum];
-        }
         public override void AddShops()
         {
             var npcShop = new NPCShop(Type)
@@ -385,7 +315,7 @@ namespace Redemption.NPCs.Friendly.TownNPCs
             emoteList.Add(EmoteID.ItemGoldpile);
             emoteList.Add(EmoteID.BiomeBeach);
 
-            if (otherAnchor?.entity is NPC entityNPC && entityNPC.type == ModContent.NPCType<Fallen>())
+            if (otherAnchor?.entity is NPC entityNPC && entityNPC.type == NPCType<Fallen>())
             {
                 emoteList.Add(EmoteID.EmoteFear);
             }
@@ -394,7 +324,7 @@ namespace Redemption.NPCs.Friendly.TownNPCs
             if (NPC.ai[0] == 7f || NPC.ai[0] == 19f)
             {
                 emoteList.Clear();
-                emoteList.Add(ModContent.EmoteBubbleType<DaerelTownNPCEmote>());
+                emoteList.Add(EmoteBubbleType<DaerelTownNPCEmote>());
                 if (!closestPlayer.Male)
                 {
                     emoteList.Add(EmoteID.EmotionLove);
@@ -416,7 +346,7 @@ namespace Redemption.NPCs.Friendly.TownNPCs
         }
         public override void DrawTownAttackSwing(ref Texture2D item, ref Rectangle itemFrame, ref int itemSize, ref float scale, ref Vector2 offset)
         {
-            Main.GetItemDrawFrame(ModContent.ItemType<SwordSlicer>(), out item, out itemFrame);
+            Main.GetItemDrawFrame(ItemType<SwordSlicer>(), out item, out itemFrame);
             itemFrame = Rectangle.Empty;
             itemSize = 0;
         }
@@ -432,8 +362,8 @@ namespace Redemption.NPCs.Friendly.TownNPCs
         public Asset<Texture2D> GetTextureNPCShouldUse(NPC npc)
         {
             if (Zephos.Level > 0)
-                return ModContent.Request<Texture2D>("Redemption/NPCs/Friendly/TownNPCs/Zephos" + (Zephos.Level + 1));
-            return ModContent.Request<Texture2D>("Redemption/NPCs/Friendly/TownNPCs/Zephos");
+                return Request<Texture2D>("Redemption/NPCs/Friendly/TownNPCs/Zephos" + (Zephos.Level + 1));
+            return Request<Texture2D>("Redemption/NPCs/Friendly/TownNPCs/Zephos");
         }
         public int GetHeadTextureIndex(NPC npc)
         {
@@ -441,8 +371,91 @@ namespace Redemption.NPCs.Friendly.TownNPCs
             {
                 1 => Zephos.HeadIndex2,
                 2 => Zephos.HeadIndex3,
-                _ => ModContent.GetModHeadSlot("Redemption/NPCs/Friendly/TownNPCs/Zephos_Head"),
+                _ => GetModHeadSlot("Redemption/NPCs/Friendly/TownNPCs/Zephos_Head"),
             };
+        }
+    }
+    public class SharpenButton : ChatButton
+    {
+        public override double Priority => 200.0;
+        public override void ModifyPosition(NPC npc, Player player, ref Vector2 position)
+        {
+            DynamicSpriteFont font = FontAssets.MouseText.Value;
+            int textLength = (int)font.MeasureString(ChatButtonLoader.GetText(this, npc, player)).X;
+
+            position.X = (Main.screenWidth / 2) - 150 - (textLength / 2);
+            position.Y += 56;
+        }
+        public override string Text(NPC npc, Player player) => Language.GetTextValue("Mods.Redemption.DialogueBox.Zephos.Sharpen.Name");
+        public override string Description(NPC npc, Player player) => Language.GetTextValue("Mods.Redemption.DialogueBox.Zephos.Sharpen.Description");
+        public override bool IsActive(NPC npc, Player player) => RedeQuest.wayfarerVars[0] >= 4 && npc.type == NPCType<Zephos>() && !RedeGlobalButton.talkActive;
+        public override Color? OverrideColor(NPC npc, Player player)
+        {
+            float mouseTextColorFactor = Main.mouseTextColor / 255f;
+            return new Color((byte)(181f * mouseTextColorFactor), (byte)(192f * mouseTextColorFactor), (byte)(193f * mouseTextColorFactor), Main.mouseTextColor);
+        }
+        public override void OnClick(NPC npc, Player player)
+        {
+            if (Main.LocalPlayer.BuyItem(500))
+            {
+                SoundEngine.PlaySound(SoundID.Item37, npc.position);
+                Main.LocalPlayer.AddBuff(BuffID.Sharpened, 36000);
+            }
+            else
+            {
+                WeightedRandom<string> chat = new(Main.rand);
+                chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Zephos.NoMoneyDialogue1"));
+                chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Zephos.NoMoneyDialogue2"));
+                Main.npcChatText = chat;
+                SoundEngine.PlaySound(SoundID.MenuTick);
+            }
+        }
+    }
+    public class ShineArmorButton : ChatButton
+    {
+        public override double Priority => 200.0;
+        public override void ModifyPosition(NPC npc, Player player, ref Vector2 position)
+        {
+            DynamicSpriteFont font = FontAssets.MouseText.Value;
+            int textLength = (int)font.MeasureString(ChatButtonLoader.GetText(this, npc, player)).X;
+
+            position.X = (Main.screenWidth / 2) - 150 - (textLength / 2) + 300;
+            position.Y += 56;
+        }
+        public override string Text(NPC npc, Player player)
+        {
+            if (player.statDefense <= 0 || (player.armor[0] == null && player.armor[1] == null && player.armor[2] == null))
+                return "???";
+            return Language.GetTextValue("Mods.Redemption.DialogueBox.Zephos.ShineArmor.Name");
+        }
+        public override string Description(NPC npc, Player player) => Language.GetTextValue("Mods.Redemption.DialogueBox.Zephos.ShineArmor.Description");
+        public override bool IsActive(NPC npc, Player player) => RedeQuest.wayfarerVars[0] >= 4 && npc.type == NPCType<Zephos>() && !RedeGlobalButton.talkActive;
+        public override Color? OverrideColor(NPC npc, Player player)
+        {
+            if (player.statDefense <= 0 || (player.armor[0] == null && player.armor[1] == null && player.armor[2] == null))
+                return Color.Gray;
+
+            float mouseTextColorFactor = Main.mouseTextColor / 255f;
+            return new Color((byte)(181f * mouseTextColorFactor), (byte)(192f * mouseTextColorFactor), (byte)(193f * mouseTextColorFactor), Main.mouseTextColor);
+
+        }
+        public override void OnClick(NPC npc, Player player)
+        {
+            if (player.statDefense <= 0 || (player.armor[0] == null && player.armor[1] == null && player.armor[2] == null))
+                return;
+            if (Main.LocalPlayer.BuyItem(1500))
+            {
+                SoundEngine.PlaySound(SoundID.Item37, npc.position);
+                Main.LocalPlayer.AddBuff(BuffType<ShineArmourBuff>(), 36000);
+            }
+            else
+            {
+                WeightedRandom<string> chat = new(Main.rand);
+                chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Zephos.NoMoneyDialogue1"));
+                chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Zephos.NoMoneyDialogue2"));
+                Main.npcChatText = chat;
+                SoundEngine.PlaySound(SoundID.MenuTick);
+            }
         }
     }
     public class Zephos_SwordSlicer_Slash : BaseSwordSlicer_Slash

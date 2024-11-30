@@ -39,6 +39,8 @@ namespace Redemption.Tiles.Natural
 
             if (Main.netMode != NetmodeID.MultiplayerClient)
             {
+                RedeQuest.adviceSeen[(int)RedeQuest.Advice.Fool] = true;
+
                 RedeBossDowned.foundNewb = true;
                 if (Main.netMode == NetmodeID.Server)
                     NetMessage.SendData(MessageID.WorldData);

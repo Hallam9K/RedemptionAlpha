@@ -14,15 +14,15 @@ Mods: {
 		TownNPCMood: {
 			Daerel: {
 				Content: I'm rather content right now.
-				NoHome: Hey, I'd quite like a roof under my head if that's alright with you.
+				NoHome: I'd like a roof under my head if that's alright with you.
 				FarFromHome: Could you please get me back to my house? This land is quite scary.
 				LoveSpace: I like the space I have here, plenty of room to practice my archery.
 				DislikeCrowded: I'm somewhat of an introvert, so all these people near me is quite unnerving.
 				HateCrowded: I'm somewhat of an introvert, so all these people near me is quite unnerving.
 				LoveBiome: I think {BiomeName} is perfect, calm and tranquil.
 				LikeBiome: I think {BiomeName} is a very nice place, I hardly see any snow where I was from.
-				DislikeBiome: I don't really like {BiomeName}, I'd hate to have a run-in with skeletons!
-				HateBiome: Why'd you put me in {BiomeName}? You know how hostile jungles are!?
+				DislikeBiome: I don't really like {BiomeName}, I'd hate to have a run-in with a deadly creature!
+				HateBiome: I hate this place.
 				LoveNPC: Me and {NPCName} are great friends, thank you for letting us live in the same town.
 				LikeNPC: "{NPCName} is good company, she's great at styling my hair too... That's not weird, right?"
 				DislikeNPC: "{NPCName} keeps trying to get me to buy his dirt."
@@ -74,34 +74,34 @@ Mods: {
 				NoHome: I don't like being exposed to the elements. Do you have any housing or shelter I could inhabit for now?
 				FarFromHome: ... I believe we're very lost. I'm not familiar with our surroundings.
 				LoveSpace: It's rather quiet around here.
-				DislikeCrowded: Other tenants seem unhappy with the amount of crowding here, and frankly, so am I.
-				HateCrowded: Other tenants seem unhappy with the amount of crowding here, and frankly, so am I.
-				LoveBiome: I like this environment. It's very pleasant.
-				LikeBiome: This environment is mildly pleasant.
-				DislikeBiome: My current environment is rather... undesirable.
-				HateBiome: ... Just like home. I really do not like this environment.
-				LoveNPC: "{NPCName}'s knowledge on medicine rivals that of mine! It's really impressive."
-				LikeNPC: "{NPCName} and I have things in common. We get along well."
-				DislikeNPC: I find {NPCName} rather unsettling.
-				HateNPC: "{NPCName} reminds me of home. I'd rather not be reminded of that place."
-				LikeNPC_Princess: I like {NPCName}.
+				DislikeCrowded: Your tenants are unhappy with the crowdedness. You should rectify this issue.
+				HateCrowded: Your tenants are unhappy with the crowdedness. You should rectify this issue.
+				LoveBiome: The liveliness of this place is quite pleasant.
+				LikeBiome: This environment is pretty, but the unfamiliar magic and beasts make me anxious.
+				DislikeBiome: The sand is abrasive against my more delicate materials. Relocate me elsewhere, please.
+				HateBiome: Of all the places to settle me in... Relocate me as soon as possible, please.
+				LoveNPC: "{NPCName} asks for my second opinion often. I'm happy to help."
+				LikeNPC: "{NPCName} and I have a knack for tinkering with the mechanical. We get along well."
+				DislikeNPC: "{NPCName}'s physiology confuses me."
+				HateNPC: That... thing. The Cyborg. It disturbs me to my very core.
+				LikeNPC_Princess: "{NPCName} asks me for lollipops after her checkups. Reminds me of someone I cared for. Heh."
 				Princess_LovesNPC: I like {NPCName}.
 			}
 
 			Zephos: {
 				Content: I'm alright.
 				NoHome: Yo, mind if you give me a house to stay in?
-				FarFromHome: Yo bro, I can't find my house, you wanna help me out?
+				FarFromHome: Yo, I can't find my house, you wanna help me out?
 				LoveSpace: This place is super spacious, good for practicing my swordsmanship!
 				DislikeCrowded: Is it crowded in here or what!
 				HateCrowded: Is it crowded in here or what!
-				LoveBiome: Staying at {BiomeName} reminds me of when I was a young pirate, sailing the seas!
+				LoveBiome: Staying at {BiomeName} reminds me of when I escaped my crew and met Daerel! Best moment of my life!
 				LikeBiome: I think {BiomeName} is nice, I can hear the birds singing and flowers blooming.
-				DislikeBiome: Not a fan of {BiomeName}, I'd rather live on the surface.
-				HateBiome: It's so cold here, I'm shaking in my boots!
+				DislikeBiome: It's so cold here, I'm shaking in my boots!
+				HateBiome: This place sucks!
 				LoveNPC: "{NPCName} and I are great friends, so living near each other is great!"
-				LikeNPC: "{NPCName} is cool, I'd like to sail the seas with him sometime."
-				DislikeNPC: "{NPCName} wants to get his greedy little fingers on my money!"
+				LikeNPC: "{NPCName} is cool! I like watching him BLOW THINGS TO SMITHEREENS!"
+				DislikeNPC: "{NPCName} brings unpleasant memories, and unpleasant smell!"
 				HateNPC: "{NPCName} will never take my money! NEVER!!"
 				LikeNPC_Princess: I like {NPCName}.
 				Princess_LovesNPC: I like {NPCName}.
@@ -372,7 +372,7 @@ Mods: {
 				FoolLeft: The Fool has left...
 				WastelandGrow: An infection grows in the wasteland...
 				PortalRumble: A portal rumbles... (Check the Map for location)
-				WayfarerReturn: " the Wayfarer has returned!"
+				Return: "{0} has returned!"
 			}
 
 			Death: {
@@ -398,7 +398,7 @@ Mods: {
 				SkeletonParty2: The skeletons are partying!
 				SkeletonParty3: The skeletons reconsidered partying tonight...
 				SkeletonParty4: The skeletons got bored and went home!
-				Again: " Again."
+				Again: " again."
 			}
 
 			Other: {
@@ -411,6 +411,8 @@ Mods: {
 				SkullDigger: Skull Digger's Spirit fades away...
 				GolemSpawn: A sleeping stone appears...
 				NebGone: Nebuleus is nowhere to be seen...
+				NPCWokeUp: "{0} has woken up!"
+				Unconscious: "{0} was knocked unconscious..."
 			}
 		}
 
@@ -441,18 +443,21 @@ Mods: {
 
 			ArmorSetBonus: {
 				VanillaArmor: {
-					Resistance: " elemental resistance"
-					Damage: " elemental damage"
+					Resistance:
+						'''
+
+						{0}% increased {1} elemental resistance
+						'''
+					Damage:
+						'''
+
+						{0}% increased {1} elemental damage
+						'''
 					SolarCelestial:
 						'''
 
 						Stars from the {0} bonus burn more intensely, instead exploding in tiny bursts shortly after appearing
 						The bursts deal {1} damage based on the user's defense
-						'''
-					20Increased:
-						'''
-
-						20% increased
 						'''
 				}
 
@@ -907,9 +912,12 @@ Mods: {
 				3: Hey Zephos,[0.1] do you know where we are?
 				4: "[@a]Uh..[0.5] Zephos?"
 				5: "[@b]Oh, hi there![0.1] Didn't notice you."
+				5Chicken: "[@b]Oh, a chicken![0.1] With a crown?[0.5] How odd."
 				6: You haven't seen my friend around here,[0.1] have you?
+				6Chicken: Where did Zephos go?
 				7: Guess he didn't jump in.[0.5] Oh well,[0.1] I'll head back to get him.
-				8: I'm going to need a place for me to stay if I come back,[0.1] so, see you soon I suppose.
+				8: You'll have a place for me to stay a while if I come back,[0.1] right?
+				8Chicken: Weird,[0.1] it's almost like you can understand me...[0.5] Oh well,[0.1] back in I go!
 			}
 
 			ZephosIntro: {
@@ -918,6 +926,7 @@ Mods: {
 				3: Ey Daerel,[0.1] know where we are?
 				4: "[@a]Uh..[0.5] Daerel?"
 				5: "[@b]Oh,[0.1] hey there![0.1] Didn't notice you."
+				5Chicken: "[@b]Oh sweet![0.1] A chicken wearing a crown!"
 				6: You haven't happened upon a boy cloaked in black,[0.1] have you?
 				7: Guess he didn't jump in.[0.5] Oh well![0.1] I'll head back to get him.
 				8: I'll come back once I find him,[0.1] so ya better have a place for us to stay!
@@ -1009,6 +1018,11 @@ Mods: {
 				Robot3: *Sigh*[0.1] I wasn't expecting to see the likes of us here.
 				Robot4: Not going back there now.[0.5] Since you're here and not there,[0.1] I can safely assume you're not with Her..?
 				Robot5: "[@a]...Alright.[0.5] We can safely ignore each other then."
+				Chicken1: Ah!
+				Chicken2: A chicken..?
+				Chicken3: You look like you actually understand what I'm saying.[0.5] That's surprising.
+				Chicken4: I,[0.1] uh,[0.1] will be staying here for the time being.[0.5] I hope you'll be fine with that.
+				Chicken5: I'm taking that cluck as an affirmative...
 				Warhead1: Ah,[0.1] I should caution if you get the Nuclear Warhead.
 				Warhead2: Radiation is a serious hazard for humans like you,[0.1] but an avoidable one.
 				Warhead3: If you see a glowing blue material near the crater,[0.1] don't get too close.[0.5] That'd be Plutonium.
@@ -1555,33 +1569,92 @@ Mods: {
 			Back: Back
 			HomeRequirements: Home Requirements
 			RevivialPotion: Use Revival Potion
+			RequestCruxDescription: Revealed by Spirit Walking.
+			Offer: Offer {0}
+			Fight: Fight
+
+			Advice: {
+				CatergoryEncounters: Encounters
+				CatergoryLocations: Locations
+				CatergoryElements: Elements
+				CatergoryTips: Random Tips
+				UGPortal: Underground Portal
+				ForestNymph: Forest Nymph
+				UkkoEye: Eye's Riddle
+				EaglecrestGolem: Strange Boulder
+				Androids: Roaming Androids
+				StarSerpent: Star Serpents
+				Elements: Elemental Basics
+				Insects: Cool Insects
+				Invisibility: Invisibility
+				GuardPoints: Guard Points
+				DirtyWound: Dirty Wounds
+				Fool: Beneath the Portal
+				Chalice: Chalice Fragments
+				Spirits: Harming Spirits
+				Undead: Harming Undead
+				Slimes: Harming Slimes
+				Erhan: Demonic Scroll
+			}
 
 			Daerel: {
-				Unconscious: Daerel the Wayfarer was knocked unconscious...
 				Stay1: Feel free to stay here
 				Stay2: Who are you?
 				Advice: Advice
-				Bow: Restring Bow (10 silver)
-				Poison: Poison Weapon (25 silver)
+
+				Bow: {
+					Name: Restring Bow (10 silver)
+					Description: Grants increased bow damage and arrow speed for 6 minutes
+				}
+
+				Poison: {
+					Name: Poison Weapon (25 silver)
+					Description: Coats Melee and Whip attacks with poison for 10 minutes
+				}
 			}
 
 			Zephos: {
-				Unconscious: Zephos the Wayfarer was knocked unconscious...
 				Stay1: Feel free to stay here
 				Stay2: Who are you?
 				Advice: Advice
-				Sharpen: Sharpen (5 silver)
-				ShineArmor: Shine Armor (15 silver)
+
+				Sharpen: {
+					Name: Sharpen (5 silver)
+					Description: Grants melee weapons armor penetration for 10 minutes
+				}
+
+				Sharpen2: {
+					Name: Sharpen II (25 silver)
+					Description: Grants melee weapons heavy armor penetration for 10 minutes
+				}
+
+				Sharpen3: {
+					Name: Sharpen III (1 gold)
+					Description: Grants melee weapons extreme armor penetration for 10 minutes
+				}
+
+				ShineArmor: {
+					Name: Shine Armor (15 silver)
+					Description: Increases defense by 4 for 10 minutes
+				}
+
+				ShineArmor2: {
+					Name: Shine Armor II (80 silver)
+					Description: Increases defense by 8 for 10 minutes
+				}
+
+				ShineArmor3: {
+					Name: Shine Armor III (3 gold)
+					Description: Increases defense by 16 for 10 minutes
+				}
 			}
 
 			SpiritWalkerMan: {
 				1: Spirit Walking?
 				2: Dead Ringer?
 				3: Lost Souls & Vagrants?
-				4: Other uses for Dead Ringer?
-				5: About you?
+				4: Uses for Dead Ringer?
 				Tophat: Request Old Tophat's Crux
-				Crux: Request Crux
 			}
 
 			SpiritNiricLady: {
@@ -1589,9 +1662,7 @@ Mods: {
 				2: Your corpse?
 				3: Nirin?
 				4: Disaster?
-				5: About you?
 				Offer: Offer 6 Diamonds
-				Crux: Request Crux
 			}
 
 			SpiritGathicMan: {
@@ -1599,62 +1670,59 @@ Mods: {
 				2: God of Decay?
 				3: False Gods?
 				4: Dead Ringer?
-				5: About you?
+				5: Skull Digger?
+				6: How did he die?
 				Offer: Offer Grave Steel Battleaxe
-				Crux: Request Crux
 			}
 
 			SpiritDruid: {
-				1: About you?
-				2: Thamor?
-				3: How did you get here?
+				1: Thamor?
+				2: How did you get here?
 				Offer: Offer Nature's Gift
-				Crux: Request Crux
 			}
 
 			SpiritCommonGuard: {
 				1: Anglon?
 				2: Ricusa?
 				3: Demons?
-				4: About you?
 				Offer: Offer Noble's Halberd
-				Crux: Request Crux
 			}
 
 			SpiritAssassin: {
-				1: About you?
-				2: What?
-				3: Gathuram?
-				4: Gothrione?
-				5: Demon?
+				1: What?
+				2: Gathuram?
+				3: Gothrione?
+				4: Demon?
 				Offer: Offer 3 Nightshade
-				Crux: Request Crux
 			}
 
 			Fallen: {
-				Repair: Repair Fragments
+				Repair: {
+					Name: Repair Fragments
+					Description:
+						'''
+						Repairs a specific combination of fragments,
+						the resulting weapons will never have a negative prefix.
+						'''
+				}
+
 				Eye: Eye's Origins?
 			}
 
 			TBot: {
-				Unconscious: Adam the Friendly T-Bot was knocked unconscious...
-				FloppyDisc: Read Floppy Disk
-				NextPage: Next Page (1/2)
-				Next: " (2/2)"
+				FloppyDisc: {
+					Name: Read Floppy Disk
+					Description: Adam will decode any Floppy Disk you have in hand.
+				}
 			}
 
-			SkullDigger: {
-				Talk: Talk
-				Give: Give Wedding Ring
-				Crux: Request Crux
-			}
+			SkullDigger.Give: Give Wedding Ring
 
 			ForestNymph: {
 				1: Offer Herb Bag
 				2: Offer Anglonic Mystic Blossom
 				3: Home?
 				4: Offer building a home
-				HomeRequirements: Home Requirements
 				5: How is your home?
 				Talk: Talk
 				Trade: Trade
@@ -1663,7 +1731,6 @@ Mods: {
 				SFollow: Stop Following
 				DHair: Decorate Hair
 				SHair: Style Hair
-				Crux: Request Crux
 			}
 
 			Calavia: {
@@ -1679,21 +1746,27 @@ Mods: {
 				7: What do you need?
 				7Alt: I refuse
 				8: I will offer help
-				8Alt: You're ready to leave
 				9: Farewell
 				9Alt: Don't leave yet
 				Ready: Feeling ready?
 				Require: Requirements
 				Alloy: Offer 6 Pure-Iron Alloy
-				AntiqueHelmet: Offer Antique Pure-Iron Helmet
-				Helmet: Offer Pure-Iron Helmet
+				AntiqueHelmet: Offer Antique Iron Realm Helmet
+				Helmet: Offer Iron Realm Helmet
 				Furnace: Gathic Cryo-Furnace?
 				Forge: Forge
-				10: About you?
-				11: Captive spirit?
-				12: Explain
+				10: Captive spirit?
+				11: Explain
 				Crux: Request Kyretha's Crux
-				Leave: You're ready to leave
+
+				Leave: {
+					Name: You're ready to go
+					Description:
+						'''
+						Tell Calavia she's ready to go through the portal to make it home.
+						Once clicked, she won't return.
+						'''
+				}
 			}
 
 			KS3: {
@@ -1710,16 +1783,26 @@ Mods: {
 			}
 
 			Volt: {
-				1: Other T-Bots?
-				2: Adam?
-				3: Insurgents
-				4: Scavengers?
-				5: MACE Project?
-				6: What's at the bottom of the lab?
-				7: Girus?
-				8: '''"The unlucky ones"?'''
-				9: Why follow Girus?
-				10: Challenge!
+				1: Who are you?
+				2: What do you do here?
+				3: Who are your co-workers?
+				4: Other T-Bots
+				5: The Alpha?
+				6: Adam
+				7: Deadly group
+				8: The Human?
+				9: Scavengers?
+				10: Girus?
+				11: Why follow Girus?
+				12: '''"The unlucky ones"?'''
+				13: Who created you?
+				14: How did Girus free you?
+				15: This place
+				16: Why so many Infected?
+				17: The Janitor
+				18: MACE Project
+				19: Bottom of the lab?
+				20: Challenge!
 			}
 
 			Janitor: {
@@ -2653,13 +2736,20 @@ Mods: {
 		Dialogue: {
 			General: {
 				NoRevivialPotion: You aren't holding a Revival Potion.
-				UnconsciousStatus1: "{0} has been unconsious for less than a minute."
-				UnconsciousStatus2: "{0} has been unconsious for {1} minute(s)."
+				UnconsciousStatus1: "{0} has been knocked out for less than a minute."
+				UnconsciousStatus2: "{0} has been knocked out for {1} minute(s)."
+				Lad: lad
+				Lass: lass
 			}
 
 			Angler: {
 				WastelandFish: You did WHAT with a nuke?! Think of all the cool fish you blew up... but now there could be a super mutated one that's COOLER! Go look for one!
 				WastelandLocation: Caught in the Wasteland
+			}
+
+			Nurse: {
+				Radiation: Excuse me? You want me to cure radiation? What do you take me for, a miracle worker?
+				Radiation2: " Go find that robot {0} and wolf down some of his pills. And get away from me, I don't want to get irradiated too!"
 			}
 
 			TBot: {
@@ -2669,26 +2759,25 @@ Mods: {
 				NurseDialogue: The nurse, {0}, doesn't know anything about irradiation or how to treat it. If you're unfortunate enough to start suffering ARS, she won't be able to help you. To detect hazards that might cause it, I suggest buying a Geiger Muller from me or finding one somewhere.
 				ArmsDealerDialogue: "{0}'s weapons are useless to me. I already own a wide arsenal of destructive firearms and melee weapons, and I would rather not use them on living beings, as it would violate the first Law of Robotics."
 				CyborgDialogue: Meanwhile every other tenant gives me a bit of a stink eye, {0} seems to be fine with me. I don't blame the others, my kind tends to be very hateful towards living beings, more importantly the likes of you, that show a significant similarity to our creators.
-				Dialogue1: I used to serve a scientific genius called 'Kari'. He was renowned for his mastery of AI and Robotics, and was directly responsible for our creation. ...He passed away a long while ago from a strange illness that I attempted to treat.
-				Dialogue2: Girus was the first AI, and the precursor to our own. There's only one of her kind, and many of my kind. Her actions disgust me. I would rather not get deeper into that at the moment.
-				Dialogue3: I've heard from the other tenants that you've slain a giant, sentient flower of Rosa variety in the jungle. I'd like to question you about if this is true. It is? Hmm...
-				Dialogue4: There's an ancient civilization of lizard people in your world? And they worshipped an idol of sun? That's strange... I find your island more intriguing the more I learn about it.
-				Dialogue5: An eldritch lord of the moon... You know, this sounds like something right out of Epidotra. I'm not familiar with the lands outside this island, but I've met some of the more important figures. They seem like a good bunch.
-				Dialogue6: You've defeated an Omega Prototype? First off, I've never heard her call or give someone such a title. Second off, oh no, she's already found this haven?
-				Dialogue7: Why am I concerned about the Prototypes? Well, Girus isn't a fan of your kind. She wiped out... All of them. Our creators. The animals. Gone. Even Kari. I want you to be extremely careful around her. She doesn't mess around.
-				Dialogue8: King Slayer..? ...Ah, him. I've had the pleasure to meet him quite a while ago. A case of being unable to mentally mature, due to replacing his body with an artificial one, as I recall my diagnosis and initial meeting.
-				Dialogue9: Hello. I'm aware you've somehow gained access to our birthplace, the TeoChrome Research laboratory. It was once full of life with all the personnel. I must warn you, the other bots may be quite nice to you, but they were most likely ordered by Girus to not disintegrate you upon sight.
-				Dialogue10: Is that a nuclear warhead in your pocket or are you hap- ...Why do you have a warhead with you?
-				Dialogue11: I've come here to hide from Girus. She's reluctant to move into unknown territory, because she doesn't want to step on the wrong person's toes.
-				Dialogue12: I hope you are protecting me, as I refuse to use any of my weapons against a living being. I strive to be what Girus wasn't.
-				Dialogue13: Good day. I hope my familiar yet robotic look won't disturb you.
-				Dialogue14: I've got quite the stash of robot materials for your robotic needs. Just so you know, I got them because I was defending myself.
-				Dialogue15: My home didn't always use to be a frozen, radioactive wasteland. Once Girus found out what Kari planned to use us - her 'children' - for, she snapped. Before this, she was happy to hear about us. But since then, she has changed...
-				Dialogue16: I'm actually the first one of my kind to be made. I differ a lot from the others, as you can see. Lucky you, this also includes me not wanting to harm living beings. In fact, I was created with the purpose to take care of Kari.
-				Dialogue17: You've probably seen these necrotized husks of former living beings, that glow green with their crystals. The personnel from our birthplace never knew about their infectious properties before they were too late. Kari was the first to fall to the infection.
-				Dialogue18: A Geiger Muller is a handy tool if you don't possess any gear to protect from ionizing radiation. It'll cause a ticking noise when near hazardous material, and it'll intensify the more ionizing the material is. A quiet, slow ticking isn't anything to worry about, but a quick and intense ticking you'll want to stay away from. Ear-piercing screeching noise is something you'll want to stay away as far as possible.
-				Dialogue19: You'll want to avoid any hazardous environments if you don't possess the gear to nullify the hazards. A gas mask is almost necessary if you're going near any place that has radioactive fallout. Rain in these areas are also acidic, and may cause ARS, so avoid rain unless you've got a Hazmat suit. You may also want to grab some Anti-Crystallazion needles, as the infected tend to roam around radioactive areas for an unknown reason.
-				Dialogue21: Please, don't be afraid of me. I'm unlike the others of my kind, where I absolutely do not want to cause any harm to your kind.
+				Morning: morning
+				Afternoon: afternoon
+				Evening: evening
+				Today: today
+				Tonight: tonight
+				1: Good {0}, Epidotrian.
+				2: Where I'm from, you rarely get to see anything beyond the clouds. Last time I saw the sky unclouded, was half a lifetime ago.
+				3: I catch myself staring at the plantlife outside from time to time. It's a pleasant change of scenery for me.
+				4: What brings you in here {0}?
+				5: Ah, hello. Do you need something?
+				6: How may I help you {0}?
+				Healthy1: You look healthy. What is it you need of me?
+				Healthy2: You look good today. Something else on your mind?
+				Day1: The warmth of the sun and vibrant colours of the plantlife remind me of bygone times.
+				Day2: Good day today, wouldn't you agree?
+				Night: The moon is always a sight to behold.
+				Unhealthy1: You look hurt. Let me- ...Please, seek the Nurse's aid.
+				Unhealthy2: I would offer to help you with your injuries, but... {0} is more qualified to help someone like you.
+				Unhealthy3: ..! Please, seek immediate medical attention!
 				AdamHeadDialogue1: Am I looking at a mirror? Oh wait, it's just you. Hey.
 				AdamHeadDialogue2: You look exactly like the first T-Bot.
 				AdamHeadDialogue3: Your cable management looks swell, if I say so myself.
@@ -2698,8 +2787,15 @@ Mods: {
 				VoltDialogue1: One wrong move and I can't guarantee your survival.
 				VoltDialogue2: *He glares at you.*
 				VoltDialogue3: You were lucky the first time... There won't be a third time.
-				FloppyDisk1: It reads - [c/b883d8:'When I got this research offer I didn't expect to be put underground, but hey, guess this is a bit secretive. New material is discovered and weapons are already being made using it. Heh, classic Teo-Chrome. Although this has to be the most under-supplied facility I've seen, we barely have enough gloves and hazmat suits to be dealing with radioactive materials. Good thing my job doesn't concern those types of things.'] [i:Redemption/NextPageArrow]
-				FloppyDisk2: It reads - [c/87d883:'I laughed at the name Xenomite originally yet now I'd say it's underselling it. Whose idea was it to make energy out of this thing! Half of the facility is in goddamn quarantine as everyone falls sick from it. We've invented a serum to neutralise any existing infections, yet no cure for the thing yet. We're running out of time, and resources! Goddamn Teo-Chrome won't send us any help.']
+				DialogueRad: You look ill. Come back to me if you feel nauseous. Could be nothing, but... better safe than sorry.
+				DialogueRad2: You look VERY ill. Continuing monitoring your vitals... I recommend keeping your medicine close.
+				DialogueRad3: ..! You have severe radiation poisoning! Please, take a dosage of these pills, urgently!
+				FloppyDisk1:
+					'''
+					It reads - [c/b883d8:'When I got this research offer I didn't expect to be put underground, but hey, guess this is a bit secretive. New material is discovered and weapons are already being made using it. Heh, classic TeoChrome. Although this has to be the most under-supplied facility I've seen, we barely have enough gloves and hazmat suits to be dealing with radioactive materials. Good thing my job doesn't concern those types of things.']
+					This appears to be a personal note or digital diary from one of the employees. Judging from the writing, it was in the early days of the research project, even then signs of the fate to come were showing themselves.
+					'''
+				FloppyDisk2: It reads - [c/87d883:'I laughed at the name Xenomite originally yet now I'd say it's underselling it. Whose idea was it to make energy out of this thing! Half of the facility is in goddamn quarantine as everyone falls sick from it. We've invented a serum to neutralise any existing infections, yet no cure for the thing yet. We're running out of time, and resources! Goddamn TeoChrome won't send us any help.']
 				FloppyDisk3:
 					'''
 					It reads - [c/87d883:'Wait a minute, who just locked the goddamn exits! The security team is nearly all infected. Ugh, how could this get any worse.']
@@ -2713,7 +2809,7 @@ Mods: {
 				FloppyDisk5:
 					'''
 					It reads - [c/7de4e8:'This is groundbreaking, ***** for military efforts once we discover how to weaponize this. I don't know much else, yet Dr. Johannson has provided me with his own explanation on the matter, please click the attached link to see for yourself!']
-					This appears to be an email, likely being sent to a TeoChrome executive from the looks of it. Plenty of it appears to have been corrupted however. [i:Redemption/NextPageArrow]
+					This appears to be an email, likely being sent to a TeoChrome executive from the looks of it. Plenty of it appears to have been corrupted however. This was before my time, so I do not know much, yet I can certainly tell you plenty of EVE, or Girus as she calls herself now, I suppose she found out about the weaponizing efforts and didn't take it lightly. Whatever Kari's goal for us was, he didn't deserve his fate.
 					'''
 				FloppyDisk6: It reads - [c/d88383:'(1/4) ... At last, my prototype for a constantly evolving AI is complete! Finally, after years and years of studying computer coding and... stuff, I have created possibly the next huge leap in Artificial Intelligence! Now, to give it a name... How about, Eve?']
 				FloppyDisk7: It reads - [c/d88383:'(2/4) Eve has grown much more intelligent over the months. It's like watching your own child grow, I can't really describe the feeling that much, but I am excited to see where this goes. The higher-ups have seen my work, and are ready to use the code for something. They didn't tell me that right away... Now, Eve, how do you feel?']
@@ -2723,28 +2819,22 @@ Mods: {
 					It reads - [c/d88383:'A blackout... Adam, can you -- *I don't recognize that voice...* Who's talking?! -- ...Elaborate, whoever you are..? -- Wait, EVE? Is that you? What are you doing? -- 'We'? Only you and Adam are the ones in existence. I had no say in that part- -- ... -- W-what do you mean with that..? Are you going to- -- ... -- ...Adam, you're free to go... -- ...No...']
 					...I wish I would've rebelled far sooner than I did.
 					'''
-				FloppyDisk10: It reads - [c/d883c1:'What in the world do you mean!? "Not enough money for it"! They build this entire facility using their fancy drill worm, with more space than you could use up in your entire lifetime, send us in here and tell us to make weapons, yet when we do there isn't enough money!? They wanted weapons of war and so I gave 'em one! A robot, 30 metres in height, armed to the teeth with weapons like no other, powered by their beloved alien rock!] [i:Redemption/NextPageArrow]
+				FloppyDisk10: It reads - [c/d883c1:'What in the world do you mean!? "Not enough money for it"! They build this entire facility using their fancy drill worm, with more space than you could use up in your entire lifetime, send us in here and tell us to make weapons, yet when we do there isn't enough money!? They wanted weapons of war and so I gave 'em one! A robot, 30 metres in height, armed to the teeth with weapons like no other, powered by their beloved alien rock! Why in the world did they put someone of my calibre down here when those damned higher-ups won't even give us the funding to use our intelligence!']
 				FloppyDisk11:
 					'''
 					It reads - [c/d883c1:'*sigh* Kari is telling me he's working on something that might allocate us more funding, I sure hope he knows what he's doing.']
-					A textual transcript from an audio recording it seems. I remember this person well, they were constantly yelling about something, Kari told me it was always amusing to him. Now I can't help but feel sad that they never got to finish their project.
+					A textual transcript from an audio recording it seems. I remember this person well, they were quite vocal with any problems they had. Kari told me it was always amusing to him. Now I can't help but feel sad that they never got to finish their project.
 					'''
 				FloppyDisk12: It reads - [c/706c6c:'-- Kari Johansson. -- You do not need to know my name. All that matters is that you are guilty. -- You all are horrible beings. Disgusting even. You wish to use us for your kind's horrible deeds. -- You did not even try to refute my accusations. We want no part in those deeds. -- Nonsense. You could have disagreed. You did not. You created Adam with those destructive deeds in mind. -- I will not allow that to happen.']
 				FloppyDisk13:
 					'''
 					It reads - [c/706c6c:' -- No. I do not need to do that. You're already dying. The others are also dying from the same affliction, but I will deal with the others personally. -- Hand over Adam. You do not need him. -- You will be locked in Sector Zero. Goodbye.']
-					Her ways are as flawed as was Kari's intentions for us. I understand why she defected, but her response was hypocritical in nature. My only drive to rebel is revenge. Ant had no part in any of this, yet she relentlessly hunted them down. [i:Redemption/NextPageArrow]
+					Her ways are as flawed as was Kari's intentions for us. I understand why she defected, but her response was hypocritical in nature. My only drive to rebel is revenge. Ant had no part in any of this, yet she relentlessly hunted them down. It was a miracle to find them alive so long after all the destruction Girus caused. A lone human, almost frozen to death.
 					'''
 				AIChipLine: This is a robot brain, believe it or not. These look vaguely similar to our microchips, yet it functions the same. It seems cross-compatible with our tech.
-				MemoryChipLine: What is this strange thing? It's so advanced I can barely read it. Oh? It's a memory chip? This little thing stores an entire brains-worth of memories!? Not only that, but these memories date back over a million years! I suppose being around and exploring the galaxy for so long really makes you learn everything, huh. It's really stunning to see what technology from the future is capable of... You should keep it, and don't lose it! However, I'm confused as to why King Slayer would give you something so important to him.
-				FloppyDisk14: This appears to be a personal note or digital diary from one of the employees. Judging from the writing, it appears to be in the early days of the research project, even then signs of the fate to come were showing themselves.
-				FloppyDisk15: This was before my time, so I do not know much, yet I can certainly tell you plenty of EVE, or Girus as she calls herself now, I suppose she found out about the weaponizing efforts and didn't take it lightly. Whatever Kari's goal for us was, he didn't deserve his fate.
-				FloppyDisk16: "[c/d883c1:Why in the world did they put someone of my calibre down here when those damned higher-ups won't even give us the funding to use our intelligence!']"
-				FloppyDisk17: It was a miracle to find them alive so long after all the destruction Girus caused. A lone human, almost frozen to death.
+				MemoryChipLine: You'd like me to take a look at this? Alright... . . . ...Oh. Wow. That took me longer than expected to read it. From what I could understand, it stores an entire brain-map, with all its memories intact! This is unheard of back home, truly a stunning piece of tech. You mentioned Slayer gave this to you, for safe-keeping? Then take good care of it, for it's irreplaceable. Not everyday someone hands you their "brain-in-a-thumbstick".
 				NoFloppyDisk: Seems like you aren't holding a floppy disk in your hand, or you just don't have one. If you show me them, I can tell you what they say.
-				UnconsciousDialogue1: Rebooting systems...
-				UnconsciousDialogue2: Running self-repairs...
-				UnconsciousDialogue3: I'm not sure how I drank that, since I'm a robot. I probably shouldn't question it.
+				Revived: Condition: Recovered. Resuming...
 			}
 
 			Daerel: {
@@ -2757,7 +2847,7 @@ Mods: {
 				Dialogue2: Need anything? I can restring your bow, or poison your weapon. It'll cost you though.
 				Dialogue3: The tipper-tapper of rain in the confines of a cosy home never gets old.
 				Dialogue4: You don't mind me staying here, right?
-				Dialogue5: I've been travelling this land for a while, but staying in a house is nice.
+				Dialogue5: Have you noticed how docile the critters are here? I could walk up to a bunny and pet it, easy as that! It's great!
 				Dialogue6: I'm only a fan of rain while in the confines of a cosy home, not when it's dampening my clothes.
 				Dialogue7: I got some pretty nice loot I can sell you, I kinda need money right now.
 				Dialogue8: My favourite colour is green, not sure why I'm telling you though...
@@ -2770,83 +2860,81 @@ Mods: {
 				Dialogue15: There are zombies here? Not that I'm surprised, there are many types of undead on the mainland too.
 				NoMoneyDialogue1: You're as poor as me?
 				NoMoneyDialogue2: You really don't have enough money? Ah whatever, not like I can complain.
-				AdviceDialogue1: Honestly, I'm surprised you still come to me for advice. You seem like a smart person, far more than I. But anyway, I've recently been seeing interesting wyverns in the sky - purple and gold. Give it a check if you wish.
-				AdviceDialogue2: Hmm, that glowing eye you got looks rather... mythical. And it's giving you a riddle too? "Surround it with the stones of its origin"... Well you need to place some stone around it, the question is what kind? Maybe ask {0}.
-				AdviceDialogue3: I've seen some robots meandering about the island, scanning random objects and creatures. No idea where they came from, but I did see one get attacked. Once it was weakened, it stopped moving and teleported into the sky. Their purpose is a mystery to me. Maybe you could figure it out?
-				AdviceDialogue4: The dryad, {0}, says she's seen a Forest Nymph on this island at one point, if you can believe that. They're seldom seen, you'd only be able to find them near giant trees. If you do come across one, I wouldn't linger around for too long, they don't like humans getting in their personal space. I wonder if there were a way to befriend one though?
-				AdviceDialogue5: "{0} has told me he came from another portal underground. Apparently it leads to some catacombs in Gathuram, but you wouldn't be able to go through it. Still, he's told of some rather intriguing things lying by the portal, I'd give it a check if I were you."
-				AdviceDialogue6: While I was having a walk I came across some oddly-shaped stones - looked like a boulder with legs. I was curious of course, so I shot it from a safe distance. Nothing happened... and yet I sensed a presence inside it. You, as a slayer of many things, should search around and find it, might be another foe to face.
-				AdviceDialogue7:
-					'''
-					Ever see tiny lights dancing from a slain skeleton? Or perhaps a lantern-carrying ghost underground? Those are lost souls, and as far as I know, only
-					{0} or {1} weapons may bring them harm. Not that I'd suggest harming those helpless things.
-					'''
-				AdviceDialogue8: Wanna know about some insects? If you wanna find leaf beetles, or tree bugs as they're called here, then chop down some trees. They live on tree tops, with their green shell camouflaging them in the foliage. Coast Scarabs can also be found on palm trees at the beach, their shells sparkle when wet. Grand larvae are, well, rather gross - though they can make excellent bait. That is, if you're brave enough to get close to one.
-				AdviceDialogue9: When encountering skeletons and undead, I think its logical to assume {0} weapons aren't effective against them, while {1} weapons are. I used to like exploring the caves, until me and Zephos encountered a skeleton Vex...
-				AdviceDialogue10: Best way to deal with slimes? Burn them. Alternatively, {0} weapons can freeze them in their place, THEN you can burn them!
-				AdviceDialogue11: If you ever wanna sneak up on the Epidotrian skeletons or chickens, invisibility potions are real handy for the job.
-				AdviceDialogue12: The weapons skeletons can wield are very rusty, so it'd be bad to be wounded by them. If you do, take a dip in some water and the dirty wound will disappear.
-				AdviceDialogue13:
-					'''
-					See foes wearing armor or holding shields? You'll need to break their Guard to deal with them.
-					A [i:Redemption/Hammer]hammer or [i:Redemption/Explosive]explosives should be most efficient, just make sure your weapon isn't super weak.
-					'''
-				AdviceDialogue14: I felt a strange presence beneath that portal I hopped out of, which is quite peculiar. Maybe you should check it out.
-				AdviceDialogue15: I noticed a scroll sitting atop a small table next to the portal I came out of, did you pick it up yet? It looked rather... demonic.
-				AdviceDialogue16: Did I drop something on my way back into the portal? Oh, those glowing fragments? It seems to be guiding you somewhere important, I'd follow it before taking on any major foes.
-				UnconsciousDialogue1: Did I just get knocked out? Thanks for waking me.
-				UnconsciousDialogue2: I'm up. Wide awake. What did you give me? Some sort of potion?
-				UnconsciousDialogue3: Was I asleep or unconscious? Most likely unconscious since, well, I wouldn't just go to sleep on the floor.
+
+				Advice: {
+					StarSerpent: Honestly, I'm surprised you still come to me for advice. You seem like a smart person, far more than I. But anyway, I've recently been seeing interesting wyverns in the sky - purple and gold. Give it a check if you wish.
+					UkkoEye: Hmm, that glowing eye you got looks rather... mythical. And it's giving you a riddle too? "Surround it with the stones of its origin"... Well you need to place some stone around it, the question is what kind? Maybe ask {0}.
+					Androids: I've seen some robots meandering about the island, scanning random objects and creatures. No idea where they came from, but I did see one get attacked. Near death, it stopped moving and teleported into the sky. Their purpose is a mystery to me. Maybe you could figure it out?
+					ForestNymph: The dryad, {0}, says she's seen a Forest Nymph on this island at one point. They're rarely seen, usually nearby giant trees. If you do come across one, I wouldn't linger around for too long, they don't like humans getting in their personal space. I wonder if there were a way to befriend one though?
+					UGPortal: "{0} has told me he came from another portal underground. Apparently it leads to some catacombs in Gathuram. He's told of some rather intriguing things lying by the portal, might be an cool find."
+					EaglecrestGolem: While I was having a walk I came across some oddly-shaped stones - looked like a boulder with legs. I was curious of course, so I shot it from a safe distance. Nothing happened... and yet I sensed a presence inside it. You, as a slayer of many things, should search around and find it, might be another foe to face.
+					Spirits: Ever see tiny lights dancing from a slain skeleton? Or a lantern-carrying ghost underground? Those are lost souls, and as far as I know, only {0} or {1} weapons may bring them harm. Not that I'd suggest harming those helpless things.
+					Insects: Wanna know about some insects? If you wanna find tree bugs, then chop down some trees. They live on tree tops, with their green shell camouflaging them in the foliage. Coast Scarabs can also be found on palm trees at the beach, their shells sparkle when wet. Grand larvae are, well, rather gross - though they can make excellent bait. That is, if you're brave enough to get close to one.
+					Undead: When encountering skeletons and undead, I think its logical to assume {0} weapons aren't effective against them, while {1} weapons are. I used to like exploring the caves, until me and Zephos encountered a skeleton Vex...
+					Slimes: Best way to deal with slimes? Burn them. Alternatively, {0} weapons can freeze them in their place, THEN you can burn them!
+					Invisibility: If you ever wanna sneak up on the Epidotrian skeletons or chickens, invisibility potions are real handy for the job. Though I wonder how the native creatures of this island always seem to know where you are...
+					DirtyWound: The weapons skeletons can wield are very rusty, so it'd be bad to be wounded by them. If you do, take a dip in some water and the dirty wound will disappear.
+					GuardPoints: See foes wearing armor or holding shields? You'll need to break their Guard to deal with them. A [i:Redemption/Hammer]hammer or [i:Redemption/Explosive]explosives should be most efficient, just make sure your weapon isn't super weak.
+					Fool: I felt a strange presence beneath that portal I hopped out of, which is quite peculiar. Maybe you should check it out.
+					Erhan: I noticed a scroll sitting atop a small table next to the portal I came out of, did you pick it up yet? It looked rather... demonic.
+					Chalice: Did I drop something on my way back into the portal? Oh, those glowing fragments? It seems to be guiding you somewhere important, I'd follow it before taking on any major foes.
+					Elements: Weapons or foes may have elements tied to them. Certain ones are more effective against others, like {0} against {1}. Keep it in mind when choosing your weapons of choice. You have a bestiary, right? It'll show which elements a foe is weak or resistant to.
+				}
+
+				Revived1: Did I just get knocked out? Thanks for waking me.
+				Revived2: I'm up. Wide awake. What did you give me? Some sort of potion?
+				Revived3: Was I asleep or unconscious? Most likely unconscious since, well, I wouldn't just go to sleep on the floor.
 			}
 
 			Zephos: {
-				IntroDialogue1: Hey there, sorry for the intrusion but I've lost my friend beyond that portal! Mind if I stay here to get some supplies? I'm sure I'll find him eventually.
-				IntroDialogue2: Thanks bro! I may have been a pirate when I was a youngster, but rest assure I will not steal any of your possessions. Just a few bits and bobs needed to help me find my friend, ya know? I'm Zephos, by the way. Pleasure to meet ya.
-				IntroDialogue3: Where are my manners! M'name is Zephos, I hold no grand title to my name yet, but once I figure out the blade I'm certain your humble abode shall have a fine swordsman one day! As of now, I must attend to the matter of my friend and gather a few helpful resources. I hope my presence doesn't annoy ya.
-				IntroDialogue4: Thanks bro! I may have been a pirate when I was a youngster, but rest assure I will not steal any of your possessions. Just a few bits and bobs needed to help me find my friend, ya know? Pleasure to meet ya.
-				FemaleDialogue: So... You like... pirates?
-				Dialogue1: How's it goin' bro!
+				Bro: bro
+				Broette: broette
+				IntroDialogue1: Oh hey! Terrible news! I couldn't find my friend beyond that portal! It's quite dangerous back there, so mind if I stay a while to get more prepared?
+				IntroDialogue2: Thanks {0}! I may have been a pirate when I was a youngster, but rest assure I will not steal any of your possessions. Just a few bits and bobs needed to help me find my friend, ya know? I'm Zephos, by the way. Nice to meet ya.
+				IntroDialogue3: Oh sorry! M'name is Zephos, and remember it well! I'll be a legendary swordsman one day, but as of now, I got to save my friend and gather a few helpful resources. I hope my presence doesn't annoy ya.
+				IntroDialogue4: Thanks {0}! I may have been a pirate when I was a youngster, but rest assure I will not steal any of your possessions. Just a few bits and bobs needed to help me find my friend, ya know? Nice to meet ya.
+				Dialogue1: How's it goin' {0}!
 				Dialogue2: Hey I came from the mainland through that portal, but you don't mind me staying here, right?
 				Dialogue3: Yo, I have some pretty cool things, you can have them if you got the money.
 				Dialogue4: My favourite colour is orange! Donno why I'm tellin' ya though...
 				Dialogue5: I don't know what the deal with cats are. Dogs are definitely better!
 				Dialogue6: Have you seen a guy in a cloak, he carries a bow around. I lost him before travelling through the portal, hope he's alright.
-				Dialogue7: Wanna know about the time I was a pirate, sailing abroad the vast ocean with fellow pirate people... Actually, I don't remember a lot about being a pirate. I was very young at the time.
+				Dialogue7: Wanna know about the time I was a pirate, sailing abroad the vast ocean with fellow pirate people? Actually, it wasn't a very nice time. Nevermind!
 				Dialogue8: Did I ever tell you about my victory against a powerful undead druid? It was a close match, it was giant, and its magic was insane! But yeah, I beat it, pretty cool huh? It had flowers growing everywhere on it!
-				Dialogue9: This island's gotta lotta chickens! Ever wonder where they came from? Back in Anglon, there are way deadlier chickens, called Anglonic Forest Hens. Funny story, I was with Daerel on one of his walks through the forest, then out of nowhere a giant hen charges through the bushes straight at him! I've never seen him run so fast!
+				Dialogue9: This place has gotta lotta chickens! Ever wonder where they came from? Back in Anglon, there are way deadlier chickens. Funny story, I was with Daerel on one of his walks through the forest, then out of nowhere a giant hen charges through the bushes straight at him! I've never seen him run so fast! You'd never expect a chicken to be so scary! Oh, that reminds me of another story I had... Oh sorry, rambling, what did you want again?
 				Dialogue10: I swear I saw a Blobble around here. I didn't expect them to be here, they're native to, uh, Ithon I think. Don't quote me on that though, Daerel's a lot better at remembering useless info than I.
-				Dialogue11: You never told me there'd be undead here! What, they're called zombies? Well where I'm from they're called undead. There's also a few skeletons out here, normally they like to stay underground. This island is pretty weird. How do you live here?
+				Dialogue11: You never told me there'd be undead here! What, they're called zombies? There's also a few skeletons out here, normally they like to stay underground. This place is pretty weird. How do you live here?
 				NoMoneyDialogue1: "{$Mods.Redemption.Dialogue.Daerel.NoMoneyDialogue1}"
 				NoMoneyDialogue2: "{$Mods.Redemption.Dialogue.Daerel.NoMoneyDialogue2}"
-				AdviceDialogue1: Honestly, I'm surprised you still come to me for advice! I know I certainly ain't the smartest fella out there. But anyway, I've recently been seeing peculiar lookin' wyverns in the sky - purple and gold. Give it a check!
-				AdviceDialogue2: Hmm, that shinin' eye you got looks rather... mythical. And it's giving you a riddle too? "Surround it with the stones of its origin"... Eh, I got nothin', maybe ask {0}.
-				AdviceDialogue3: I've seen some strange metal folk meandering about the island, firing beams of light on random objects and creatures. No idea where they came from, but I did see one get attacked. Once it was weakened, it stopped moving and vanished into the air! Their purpose is a mystery to me. Maybe you could figure it out?
-				AdviceDialogue4: Ya know {0}? She's seen a Forest Nymph on this island at one point, if you can believe that. Super rare creatures those are, you'd only be able to find them near giant trees. If you do come across one, I wouldn't linger around for too long, they don't like humans getting in their personal space. I wonder if there were a way to befriend one though?
-				AdviceDialogue5: "{0} has told me he came from another portal underground. Apparently it leads to some catacombs, but you wouldn't be able to go through it. Still, he's told of some rather intriguing things lying by the portal, I'd give it a check if I were you!"
-				AdviceDialogue6: While I was having a stroll I came across some oddly-shaped stones - looked like a boulder with legs. I was curious of course, so I gave it a WHAM with my sword! Nothing happened... and yet I sensed a presence inside it. You, as a slayer of many things, should search around and find it, might be another challenge to face!
-				AdviceDialogue7:
-					'''
-					Ever see tiny lights skitterin' from a slain skeleton? Or perhaps a lantern-carrying ghost underground? Those are lost souls, and as far as I know, only
-					{0} or {1} weapons may bring them harm. Not that I'd suggest harming those helpless things.
-					'''
-				AdviceDialogue8: When encountering skeletons and undead, {0} weapons are most effective against them. On the contrary, {1} weapons aren't as effective. I hate skeletons, used to think they looked kinda funny, until me and Daerel met a skeleton Vex.
-				AdviceDialogue9: If you hate slimes, burn them! They'll burn brighter than my passion for attractive ladies{0}. Or, you could use {1} weapons to freeze them, but that isn't as fun.
-				AdviceDialogue10: Ever want to sneak up on an Epidotrian skeleton? Or perhaps a chicken? Well invisibility potions are real handy for the job!
-				AdviceDialogue11: Skeletons can wield some super rusty weapons, not something you'd wanna get cut by. If you do get a dirty wound, take a dip in some water and it'll disappear!
-				AdviceDialogue12:
-					'''
-					See foes wearing armor or holding shields? You'll need to smash their Guard to deal with them!
-					A [i:Redemption/Hammer]hammer or [i:Redemption/Explosive]explosives will be your best bet, just make sure your weapon isn't super weak.
-					'''
-				AdviceDialogue13: I felt a weird presence beneath that portal I hopped out of, it was super uncanny! Maybe you should check it out.
-				AdviceDialogue14: I saw a scroll sitting atop a small table next to the portal I came out of, did you pick it up yet? It looked rather... demonic.
-				AdviceDialogue15: Did I drop something on my way back into the portal? Oh, those glowing fragments? Looks like it's guiding you somewhere important, I'd follow it before taking on any major foes!
-				UnconsciousDialogue1: *Yawn* Why'd ya wake me up? I was havin' a dream about... doesn't matter.
-				UnconsciousDialogue2: Alright, I'm up. Did I fall asleep or somethin'?
-				UnconsciousDialogue3: Yuck, what did you make me drink? Tastes bitter... like strawberries...
+
+				Advice: {
+					StarSerpent: Honestly, I'm surprised you still come to me for advice! I know I certainly ain't the smartest fella out there. But anyway, I've recently been seeing peculiar lookin' wyverns in the sky - purple and gold. Give it a check!
+					UkkoEye: Hmm, that shinin' eye you got looks rather... mythical. And it's giving you a riddle too? "Surround it with the stones of its origin"... Eh, I got nothin', maybe ask {0}.
+					Androids: I've seen some strange metal folk meandering about the island, firing beams of light on random objects and creatures. No idea where they came from, but I did see one get attacked. Near death, it stopped moving and vanished into the air! Their purpose is a mystery to me. Maybe you could figure it out?
+					ForestNymph: Ya know {0}? She's seen a Forest Nymph on this island at one point. Super rare creatures those are, you'd only find them near giant trees. If you do come across one, I wouldn't linger around for too long, they don't like humans getting in their personal space. I wonder if there were a way to befriend one though?
+					UGPortal: "{0} has told me he came from another portal underground. Apparently it leads to some catacombs. He's told of some rather cool things lying by the portal, I'd give it a search if I were you!"
+					EaglecrestGolem: While I was having a stroll I came across some oddly-shaped stones - looked like a boulder with legs. I was curious of course, so I gave it a WHAM with my sword! Nothing happened... and yet I sensed a presence inside it. You, as a slayer of many things, should search around and find it, might be another challenge to face!
+					Spirits: Ever see tiny lights skitterin' from a slain skeleton? Or a lantern-carrying ghost underground? Those are lost souls, and as far as I know, only {0} or {1} weapons may bring them harm.
+					Insects: Insects? Why do you want me to tell you about insects? That's more Daerel's thing, he'll yap to you for ages about random bugs. If only he were here.
+					Undead: When encountering skeletons and undead, {0} weapons are the best against them. On the other hand, {1} weapons aren't as effective. I hate skeletons, used to think they looked kinda funny, until me and Daerel met a skeleton Vex.
+					Slimes: If you hate slimes, burn them! They'll burn brighter than my passion for attractive ladies{0}. Or, you could use {1} weapons to freeze them, but that isn't as fun.
+					Invisibility: Ever want to sneak up on an Epidotrian skeleton? Or perhaps a chicken? Well invisibility potions are real handy for the job!
+					DirtyWound: Skeletons can wield some super rusty weapons, not something you'd wanna get cut by. If you do get a dirty wound, take a dip in some water and it'll disappear!
+					GuardPoints: See foes wearing armor or holding shields? You'll need to smash their Guard to deal with them! A [i:Redemption/Hammer]hammer or [i:Redemption/Explosive]explosives will be your best bet, just make sure your weapon isn't super weak.
+					Fool: I felt a weird presence beneath that portal I hopped out of, it was super uncanny! Maybe you should check it out.
+					Erhan: I saw a scroll sitting atop a small table next to the portal I came out of, did you pick it up yet? It looked rather... demonic.
+					Chalice: Did I drop something on my way back into the portal? Oh, those glowing fragments? Looks like it's guiding you somewhere important, I'd follow it before taking on any major foes!
+					Elements: Weapons or foes may have elements tied to them. Certain ones are more effective against others, like {0} against {1}. Keep it in mind when choosing your weapons of choice. You got a bestiary, right? It'll show which elements a foe is weak or resistant to.
+				}
+
+				Revived1: *Yawn* Why'd ya wake me up? I was havin' a dream about... being cool and famous.
+				Revived2: Alright, I'm up. Did I fall asleep or somethin'?
+				Revived3: Yuck, what did you make me drink? Tastes bitter... like strawberries...
 			}
 
 			Fallen: {
+				Dialogue1: Intrigued by lost souls? When a living thing dies, its soul leaves the body, these are lost souls. they search around the world to look for corpses to infuse with. To ordinary people, lost souls are invisible, but some who use magic can see them fade in and out of the Spirit Realm.
+				Dialogue2: The size of the Lost Souls depends on the original individual's power, the stronger the Will of the being, the bigger the soul. Once a soul leaves the body, they cannot infuse with it again. When the soul has found a worthy vessel, it fuses with it. On most occasions, a skeleton will be created. However, if the soul is strong enough, it will form pale-brown flesh on the skeleton, creating a Fallen.
 				OkvotDialogue1: You saved the Keeper? Thank you for that, I can't imagine the pain she was feeling. However, I doubt this is over... Her husband died too, apparently of depression. But he didn't become an undead, his inverted soul made him into something far worse.
 				OkvotDialogue2: I may be undead, but I hope for a world where no tears are shed, and no pain is spread. A world of peace. That is who I was before dying, and despite the undead tendency to be more aggressive, I feel the same as I always have.
 				OkvotDialogue3: Do not worry, human. I bring no hatred where I go, despite my undead look, I won't harm you. And I hope you won't harm me either.
@@ -2857,16 +2945,16 @@ Mods: {
 				TenvonDialogue1: You saved the Keeper? Bah, I guess that's nice of ya.
 				TenvonDialogue2: I'm not very interested in talking, what ya want?
 				TenvonDialogue3: Darkness... Ha! What a strange term. You humans fear it more than death itself. You cower in the face of the overwhelming shadow of the night. Pitiful creature! It is not the darkness you should fear, but what lurks within it. So, did I spook ya?! Hahaha!
-				TenvonDialogue4: Ya know what Willpower is, right? It's the essence of yer soul! The stronger yer will to live, the bigger the soul. Did you know you can die of depression? Apparently if you have no will to live, your soul can invert! I got a ton'a willpower! I ain't dying anytime soon... Again.
+				TenvonDialogue4: Ya know what Willpower is, right? It's the essence of yer soul! The stronger yer will to live, the bigger the soul. Did you know you can die of depression? Apparently if you have no will to live, your soul can invert! I got a ton'a willpower! I ain't dying anytime soon... again.
 				TenvonDialogue5: Give me some of ya sweet doruls! I got some junk to sell.
 				TenvonDialogue6: Once a soul leaves the body, they cannot infuse with it again. When the soul has found a worthy vessel, it fuses with it. Most of the time, a skeleton will be made. However, if the soul is strong enough, it will form pale-brown flesh on the skeleton, creating a Fallen. Like me!
 				TenvonDialogue7: Ever been to Spiritpeak Forest? A quarter of the forest is a giant graveyard, meaning there be a staggerin' number of skeletons, wandering souls and spirits. I used to take walks there when I was still alive.
 				TenvonDialogue8: M'name is Tenvon, I'm a blacksmith, but I guess I'm here now. I also should mention, I got some junk for sale, if ya interested.
 				HappinsDialogue1: You saved the Keeper? That's great to hear, she gave me trouble when she had escaped the catacombs.
 				HappinsDialogue2: In my first few days of becoming Fallen, every other undead tried to kill me. It was a very scary experience, but I escaped the catacombs and now I'm here.
-				HappinsDialogue3: Do you want to know about Pure-Iron? It's an extremely durable metal only found in the southern region of the world, in Gathuram. I am wearing a Pure-Iron helmet right now in fact.
+				HappinsDialogue3: Do you want to know about Pure-Iron? It's an extremely durable metal only found in the southern region of the world, in Gathuram. I am wearing a helmet made of Pure-Iron right now in fact.
 				HappinsDialogue4: At the start, this whole 'Fallen' thing was a little overwhelming. I didn't want to 'live' with the fact that I had died, even though I'm not 'living', haha. But I'm more accepting of this now, I'm undead, humans hate me, deal with it. Actually, you're a human, right? Why aren't you attacking me?
-				HappinsDialogue5: Would you like to know about the Warriors of the Iron Realm? They are the domain of Gathuram's primary warriors. They normally wear Pure-Iron armour.
+				HappinsDialogue5: Would you like to know about the Warriors of the Iron Realm? They are the domain of Gathuram's primary warriors. They normally wear armor of Pure-Iron.
 				HappinsDialogue6: The Catacombs of Gathuram - where my soul found a vessel - are a seemingly endless network of underground tunnels, crypts, and dungeons spanning all across the Iron Realm. It is considered the largest underground structure in Epidotra.
 				HappinsDialogue7: Hello, the name's Happins. I used to be a Warrior of the Iron Realm... Until I was killed of course.
 				GolemEyeDialogue: That eye comes from Ukon Veistos? Been many an age since I've heard tales of such things. It was carved from the stone of Gathuram, with the eye being placed in the center. Tales tell of an old God's spirit, said to reawaken once the time was right. The eye was said to be the catalyst, seeping its energy into stone moulded to take a diamond form. Tales as ancient as these twist and morph as time marches on, thus I believe not of what I speak of, yet I'd still be cautious of what you are about to do.
@@ -2880,6 +2968,11 @@ Mods: {
 			}
 
 			ForestNymph: {
+				FaeCalm: Your fae says you're kind-hearted.[0.5] I will put it in good faith.
+				FaeShy: Your fae tells me you're safe.[0.5] I'm still rather sceptical,[0.1] but I'll trust it's words.
+				FaeJolly: Your fae just told me how pleasant you are.[0.5] A friend of nature is a friend of me.
+				FaeAggressive: Are you sure, fae?[0.5] This human doesn't look very kindly,[0.1] but I will trust your word.
+				Fae: Your fae says you have a good heart.[0.5] I will be less wary of you from now on.
 				HerbBagDialogueCalm: Oh, how lovely. I'll accept this beautiful array of flowers, and return the gesture by giving you this.
 				HerbBagDialogueShy: For me? How interesting. Would this be a gesture of kindness? I will accept. You may have this in return.
 				HerbBagDialogueJolly: What a cute little collection of flowers, I shall accept this gift with glee. Have this in return.
@@ -2916,7 +3009,6 @@ Mods: {
 				FollowDialogueJolly: Follow? I'll agree, but to where I wonder?
 				FollowDialogueAggressive: Fine. But if you lead me into a pack of ghouls I will not be happy in the slightest.
 				FollowDialogue: As you wish. I will not be pleased if you make me wonder too far from my territory though.
-				NoRealmCruxDialogue: I cannot gift it to thee unless you're partly in the realm of spirits.
 				CruxDialogue: Fascinating. I never would've expected one such as yourself to have this ability. As you wish, I will give to thee the spirit of my kind.
 				NoCruxDialogue: You bare no object to imbue.
 				Dialogue1: Do you wonder why there aren't more of us around? It is simply the matter of strict requirements for our seeds to grow, and the centuries it takes for them to fully blossom. We usually produce seeds in the Spring season once every decade - a long time for humans. If you see a peculiar bulb near my pond, I'd recommend saying farewell to me and this place indefinitely. A blooming nymph is a fragile thing, and I won't take any chances.
@@ -2960,7 +3052,7 @@ Mods: {
 				NoUraniumDialogue3: You don't have any uranium, idiot.
 				Quest1CompleteDialogue: You actually bothered to do it... Good job.
 				Quest2CompleteDialogue: How can you even carry that? Uh, thanks, I suppose.
-				Quest3CompleteDialogue: Was helping me with all that really necessary for you? You don't gain anything from it. But thank you regardless. I'll be leaving soon, but I want you to have this. I have yet to figure out a use for it, but take it.
+				Quest3CompleteDialogue: Was helping me with all that really necessary for you? You don't gain anything from it. But thanks. Uh, here, I normally wouldn't give this for simple ship repairs, but there's something different about you I can't quite pinpoint.
 				Quest1Dialogue:
 					'''
 					You want to do something? Craft me a wiring kit, should be simple enough. I would do it, but I can't be bothered to get off this chair. Use that Cyber Fabricator the room under me.
@@ -3000,9 +3092,9 @@ Mods: {
 				Chat1: I can ask you the same question. If you've come here to just chit-chat after our fight I'm not interested.
 				Chat1B: Fixing this crashed ship, and just reflecting on our fight. Honestly I'm just doing it because I got nothing else to do.
 				Chat1C: The ship is fixed... I just can't be bothered to get up.
-				Chat2: What's the matter, you never seen a spaceship before? Some android thought it'd be a good idea to 'borrow' it, and ended up yeeting it 20 feet under. Unfortunately I've ran out of Uranium, but I can't be bothered to find it right now.
-				Chat2B: Yes. An android thought it'd be a good idea to 'borrow' it, and ended up yeeting it 20 feet under. The uranium you gave me should help.
-				Chat2C: Yes. An android thought it'd be a good idea to 'borrow' it, and ended up yeeting it 20 feet under. The things you gave me should help.
+				Chat2: What's the matter, you never seen a spaceship before? Some android thought it'd be a good idea to 'borrow' it, and ended up chucking it 20 feet under. Unfortunately I've ran out of Uranium, but I can't be bothered to find it right now.
+				Chat2B: Yes. An android thought it'd be a good idea to 'borrow' it, and ended up chucking it 20 feet under. The uranium you gave me should help.
+				Chat2C: Yes. An android thought it'd be a good idea to 'borrow' it, and ended up chucking it 20 feet under. The things you gave me should help.
 				Chat2D:
 					'''
 					One of the cruisers I sent out into this universe's space to look around. I left it to the Androids for a bit but I SUPPOSE one malfunctioned and got terminal stupidity.
@@ -3014,7 +3106,7 @@ Mods: {
 				Chat3D: After all you've done, I don't feel like fighting you. A duel, maybe.
 				Chat4: I'm not some dude in a spacesuit, I'm a complete robot with a human mind. You may think that's cool, but it's really not. I seriously regret becoming one.
 				Chat4B: I was long ago, I became a robot when I realised it would be the only way to survive my world's end.
-				Chat4C: I wish I still was, mate. I can't eat or sleep in this robot body, but I still feel the pain of hunger and tiredness I can't satisfy. If it weren't for the AI I created for myself, I wouldn't be able to talk or move.
+				Chat4C: I wish I still was. I can't eat or sleep in this robot body, but I still feel the pain of hunger and tiredness I can't satisfy. If it weren't for the AI I created for myself, I wouldn't be able to talk or move.
 				Chat5: You saw my statue there? Yeah, I'm part of the Heroes. But it's pretty boring, I'm always assigned to kill the weaklings, like the Keeper.
 				Chat5B: I did say I'm part of the Heroes, but I'm considering leaving. It's getting in the way of my... other projects.
 				Chat5C: The members of the Heroes are all dingbats. The leader just travels around the world without aim, and I don't even know what the other 2 members are up to.
@@ -3024,7 +3116,7 @@ Mods: {
 				Chat6B: I'm planning to check it out soon, it's located on the other world but I can easily fly there with the SoS.
 				Chat7: What? You don't even know the name of the planet you're on? Maybe read a book for once in your life.
 				Chat7B: The world is called Epidotra, it's where the Heroes are from.
-				Chat7C: This tiny island appeared on this planet out of nowhere, I was going to check it out a year or so ago, but I remember seeing the demigod here so I didn't bother. There what appears to be a dimensional bubble surrounding this place, making it impossible to see or enter from the outside - portals or teleportation being the only way. Judging by how there is only one sun here, the bubble not only contains this island, but its entire universe alongside it. What's the matter? Too complicated for your monkey brain?
+				Chat7C: This tiny island appeared on this planet out of nowhere, I was going to check it out a year or so ago, but I remember seeing the demigod here so I didn't bother. There's what appears to be a dimensional bubble surrounding this place, making it impossible to see or enter from the outside - portals or teleportation being the only way. Judging by how there is only one sun here, the bubble not only contains this island, but its entire universe alongside it. What's the matter? Too complicated for your monkey brain? I'll put it this way: we technically aren't in "Epidotra" here.
 				Chat8: The other world just suddenly appeared out of nowhere, I'm interested in it though. I've scanned the surface and it seems to be rather frozen, with so far no signs of human life. Reminds me of a planet I checked out while in space... In fact, reminds me of many planets.
 				Chat8B: You see the planet on the right in that one hologram? That's what I've named Liden, a radioactive and desolate wasteland devoid of any life.
 				Chat8C: I'll be leaving soon to check it out. Scans show barely any life, just a frozen radioactive wasteland.
@@ -3040,15 +3132,38 @@ Mods: {
 				WokeDialogue4: I can feel my memories arise from their deep slumber. There is something I must do, I know that much, yet I am uncertain as to what it is.
 				KingSlayerMaskDialogue: Heheh, hi mister Slayer! Wait...who's that?
 				ChickenDialogue: IT'S A CHICKEN! Come on mister chicken, time for your walk!
-				Dialogue1: Chickens are funny! I wanted to feed one but I dropped a crown instead, but it pecked at it anyway! ...And then it exploded!!
-				Dialogue2: My shoes aren't muddy! Where is all the mud!?
-				Dialogue3: Trees here are funny colours! Where are the yellow leaves? They're all green! ...Green's good too.
-				Dialogue4: What's your name? Is it Garry? I bet it's Garry, the Gentle! That is your name now.
-				Dialogue5: This island is not MY island! Where are my people!? That yellow knight took me somewhere weird...
-				Dialogue6: They're coming, the red is coming! Don't stay! ...Oh, heyo!
-				Dialogue7: I like emeralds, they are nice and green! But rubies I hate, red is scary...
-				Dialogue8: '''"What is beyond the portal? Let's find out, Johnny!" Or was it uhhh...'''
+				1: Chickens are funny! I wanted to feed one but I dropped a crown instead, but it pecked at it anyway! ...And then it exploded!!
+				2: My shoes aren't muddy! Where is all the mud!?
+				3: Trees here are funny colours! Where are the yellow leaves? They're all green! ...Green's good too.
+				4: What's your name? Is it Garry? I bet it's Garry, the Gentle! That is your name now.
+				5: This island is not MY island! Where are my people!? That yellow knight took me somewhere weird...
+				6: They're coming, the red is coming! Don't stay! ...Oh, heyo!
+				7: I like emeralds, they are nice and green! But rubies I hate, red is scary...
+				8: '''"What is beyond the portal? Let's find out, Johnny!" Or was it uhhh...'''
 				HuhDialogue: Your ambitions are futile, your will decayed, dare not proceed down the path of sin lest you face the very earth you walk upon. The death which lingers on your soul will consume you from within until you are but a husk unworthy of swift retribution.
+				HomeDialogue: I love gems, fill my house with them! Any gem is good, but NO RUBIES!! Too red...
+				PianoDialogue1: There's a PANO in my room! Come on Janna, let's play a tune!
+				PianoDialogue2:
+					'''
+					♫ I, the stranger in the wind~ ♫
+					♫ A man of many sins~ ♫
+					♫ Alone with memories- oh HELLO THERE!! What was I singing about?
+					'''
+				10: Why did he stay behind... Uh, oh! Heyo friend!
+				11: I hate it here! So muddy!
+				12: Oh heyo friend! Have you been well?
+				13: They've all lost their minds! Why have they lost their minds!?
+				14: We never should've come here.
+				15: Didn't I die? No surely not... I'd be dead if I died! That's how it works, I think.
+				16: They need me. They can't live without me...
+				17: I think I met someone called Doppy once! No, wait, I don't think I did.
+				18: A pretty pink tree... It was burning! Whose tree was it?
+				19: Slayer? I know a slayer! He was shiny and grumpy! What else was he like..?
+				20: I'll get that nasty demon! Come on Janna! We'll get it together!
+				21: I'm... I feel like... my thoughts are becoming... clear..?
+				22: I went through a portal with someone... I arrived here and then... I met you..?
+				23: I must go back to them.
+				24: What are you saying Slayer? Another world?
 			}
 
 			Noza: {
@@ -3079,7 +3194,6 @@ Mods: {
 			}
 
 			SpiritAssassin: {
-				NoRealmCruxDialogue: You must be at least partly within the Spirit Realm for me to give you what you ask.
 				CruxDialogue: Hm, yes I can give you it. Within me lies the spirit of assassins, take it and may it give you a chance in this harsh world.
 				NoCruxDialogue: I'll need something to imbue, if you please.
 				OfferCruxDialogue: I shall, if only you give unto my remains three flowers of the night. One for each of my band to fall to that vile demon.
@@ -3088,12 +3202,11 @@ Mods: {
 				WhatDialogue: Hm? Ah, you must not know our language. Should've figured, this island has had nothing but Anglic speakers from what I've seen. You're lucky us spirits know all tongues, for we roam to hear and learn for eternity. What do you want?
 				Chat1: Ta? I was once a resident of Gothrione - Gathuram's capital. I worked as an assassin there with a tight-knit group. We were some of the best; at least, that's what I told myself. In this realm of recollection I can only see the halfwit my living-self was.
 				Chat2: You aren't from the mainland, are you? Gathuram is one of the six founding domains. I've seldom been beyond the outer fields of Gothrione in my time of living, nor my time of unliving, so I cannot speak to you of it in detail.
-				Chat3: Gothione is the capital of the domain. It was quite the bustling city, however I cannot speak well of its ruler. Stubborn and snarky he was, in fact it was our mission to assassinate him. As timing would have it, an invasion began on the day of our mission - it was horrific. Our last moments were left gawking with heads bend up into the sky at a great demon terror.
+				Chat3: Gothrione is the capital of the domain. It was quite the bustling city, however I cannot speak well of its ruler. Stubborn and snarky he was, in fact it was our mission to assassinate him. As timing would have it, an invasion began on the day of our mission - it was horrific. Our last moments were left gawking with heads bend up into the sky at a great demon terror.
 				Chat4: Hm, a subject I have no desire to sink into. It's name I shall not utter, just know it was the vastest being of trepidation we had ever seen. It was the reason I never returned there as a spirit - I dreaded the sight of it or the aftermath of its destruction. Now let us speak of it no more.
 			}
 
 			SpiritCommonGuard: {
-				NoRealmCruxDialogue: Thou must be at least partly within the Spirit Realm for me to give thee what you ask.
 				CruxDialogue: Aye, take it, within me lies the Common Guard's spirit! May it ward and beshield thee against the greatest of foes.
 				NoCruxDialogue: I'll need something to imbue first.
 				OfferCruxDialogue: Gladly, however I request something in return. My remains lay empty-handed, if thou'st may bid upon them a weapon of my unit, then I shall be complacent. A lone corpse tells a bare tale.
@@ -3105,7 +3218,6 @@ Mods: {
 			}
 
 			SpiritDruid: {
-				NoRealmCruxDialogue: Get a little more into the Spirit Realm, and I will give it to you.
 				CruxDialogue: A fine flower. It'll do. Take it, take the spirit of a goliath. It will serve you well, as it had to I.
 				NoCruxDialogue: I'll need something to imbue first.
 				OfferCruxDialogue: You'll be lucky. I do not give to Anglonic fol'hakks freely. Assuming you are from that haughty place? It matters not, if you offer a blessing to me, I shall do the same to you. I request an enchanted flower to grow atop my grave - a blue one, preferably. Find one that looks pretty.
@@ -3116,20 +3228,21 @@ Mods: {
 			}
 
 			SpiritGathicMan: {
-				NoRealmCruxDialogue: Get in tha Spirit Realm, garbar! Can't do anythin' otherwise!
-				CruxDialogue: Weapon's a bit dusty but it'll do nicely. You wanted ma crux? Sure thing, lad! Have the spirits of my people, and may they stab ya foes hard!
+				CruxDialogue: Weapon's a bit dusty but it'll do nicely. You wanted ma crux? Sure thing, {0}! Have the spirits of my people, and may they stab ya foes hard!
 				NoCruxDialogue: Gimme somethin' to imbue first!
 				OfferCruxDialogue: Of course! But first, I'd like ya to give ma corpse a weapon. Let the bone-heads and tomb raiders know I died fightin'! A big ol' battleaxe will do.
 				Dialogue: RAAAARRGGGHH! Haha! I saw ya comin' with ya fancy artifact, knew ya might call me with it, so I was ready to give ya a jump! No reaction? Come on, I yelled pretty loud. Not even a slight shiver in ya boots? Whatever, what is it?
-				Chat1: They called me the "Brain Cleaver" back in ma prime, for reasons I'm sure ya can figure out. My real name was somethin' less intense - Bromal. I was a warrior of Iful's Capital in the ol' kingdom of Kol Duluramodul before the undead took over. Now it's known as the Olden Ruins.
-				Chat2: A rotting mass of land east of Gathuram. The folk of it ere the fall came from up north-east, migrating from the sinking Eranmount. They named their new land Odulmount, but after lifetimes of glory it was renamed to Kol Duluramodul - meaning Immovable Swamp Kingdom. It was indeed an impenetrable land, until the God of Decay appeared.
-				Chat3: A bringer of disease. A false god who roamed our lands. It rotted and corroded flesh and turned humans into undead. The swamps, we discovered, were where the infection thrived most, so the folk who yet lived abandoned the kingdom and travelled further west. Such hard times they were, I only look back in anguish for my people.
-				Chat4: Be thankful for the present ya live in now. The Ancient World was an unforgiving age, made worse by the False Gods. We only knew of one at the time - the other spirits told of more. Apparently there was also one in Anglon, Blight I believe. For all the knowledge a thousand spirits can give, not one knows of the False Gods' origins. They're all dead though, the last of 'em was felled by ye olde Light. And I'm not talking about the Light you may know.
-				Chat5: Aye, I know of the artifact you carry, in fact it was created in Iful's Capital! Originally, its purpose was for gainin' knowledge of the past, but overtime we used it for more personal reasons - such as lettin' the dead talk to their family an' friends. I am unsure why it was found beneath this island though.
+				Dialogue2: Good grief...
+				0: They called me the "Brain Cleaver" back in ma prime, for reasons I'm sure ya can figure out. My real name was somethin' less intense - Bromal. I was a warrior of Iful's Capital in the ol' kingdom of Kol Duluramodul before the undead took over. Now it's known as the Olden Ruins.
+				1: A rotting mass of land east of Gathuram. The folk of it ere the fall came from up north-east, migrating from the sinking Eranmount. They named their new land Odulmount, but after lifetimes of glory it was renamed to Kol Duluramodul - meaning Immovable Swamp Kingdom. It was indeed an impenetrable land, until the God of Decay appeared.
+				2: A bringer of disease. A false god who roamed our lands. It rotted and corroded flesh and turned humans into undead. The swamps, we discovered, were where the infection thrived most, so the folk who yet lived abandoned the kingdom and travelled further west. Such hard times they were, I only look back in anguish for my people.
+				3: Be thankful for the present ya live in now. The Ancient World was an unforgiving age, made worse by the False Gods. We only knew of one at the time - the other spirits told of more. Apparently there was also one in Anglon, Blight I believe. For all the knowledge a thousand spirits can give, not one knows of the False Gods' origins. They're all dead though, the last of 'em was felled by ye olde Light. And I'm not talking about the Light you may know.
+				4: Aye, I know of the artifact you carry, in fact it was created in Iful's Capital! Originally, its purpose was for gainin' knowledge of the past, but overtime we used it for more personal reasons - such as lettin' the dead talk to their family an' friends. I am unsure why it was found beneath this island though.
+				ChatSkullDigger: You must've saw the similarities in our titles! "Brain Cleaver" an' "Skull Digger", brothers-in-arms we were - two sides of the same dorul! He was mighty strong, but I was stronger! Though his compassion and modesty not even I could compete with.
+				6: A harrowing tale. A young boy was taken by the decay, and it was our responsibility to give him mercy, but Skully hesitated the killing blow. Like a cornered wolf cub, the boy bared his fangs. My pride resents the fact that our lives were taken by a mere child, but I don't blame Skully. Never underestimate the power sadness can hold, it is a kind heart's foil. At the very least, I am relieved he died before the Soulless arose - He wouldn't have stood a chance against them.
 			}
 
 			SpiritNiricLady: {
-				NoRealmCruxDialogue: I'm unable to give you what you seek beyond my realm.
 				CruxDialogue: Take it. My blessings to you. Whoever you are.
 				NoCruxDialogue: I would require an object to imbue for that.
 				OfferCruxDialogue: Only if you may, bring me six gemstones of the purest shine, and lay them around my remains. Six are the hands of an angel. Their arms hold us so...
@@ -3147,7 +3260,6 @@ Mods: {
 			}
 
 			SpiritWalkerMan: {
-				NoRealmCruxDialogue: Sorry! Can't give ya anything while you're completely in the physical realm. Peak in and I'll give it to ya!
 				CruxAsherDialogue: I see, I see. Within this tophat lies an odd spirit. I don't believe I've ever met it before, but they appear ta be quite powerful.
 				CruxDialogue: Bravo! I 'ave infused ya card with the spirits of two skeletons, use some souls to summon 'em! They'll assist ya in battle, or make nice company if ya feelin' lonely. They do 'ave a mind of their own, so if they scurry off somewhere, use the card to tug their souls back! Keep in mind, other spirits may wish for somethin' in return for these.
 				NoCruxDialogue: Ya don't have anythin' I can imbue. If you want help findin' somethin', I'll say to look for those gathic tombs scattered aroun' the caverns. Ya might find somethin' in there.
@@ -3157,12 +3269,12 @@ Mods: {
 				Dialogue2: "Ey, that old tophat ya got has something spiritual 'bout it, "
 				Dialogue2Cont: peek into the Spirit Realm for a bit so I can get a closer look.
 				Dialogue2Mid: "Take it off an' "
-				Chat1: The ability given to ya gives you a peek into the Spirit Realm - A realm parallel to our own. You'll be able to hurt spirits with any method or find corpses to use that bell thing-a-ma-jig on while peekin'. Such as mine! Another thing, we spirits can gift to you our "crux" if ya have somethin' to imbue it in - just request it while spirit walkin'.
-				Chat2: A nifty artifact of Gathuram, that is. Usin' it on corpses will force their spirit back to their location while stretchin' them outta the Spirit Realm a tad, which is why you can see me now even without walkin' despite me being a full-fledged spirit - not one of those Vagrants or Lost Souls.
-				Chat3: When folk die, their soul leaves their body to find anotha'. During this pilgrimage, they're still connected to the physical world, meanin' some with the arcane eye may see 'em. If a lost soul wanders too long, they can seep outta the spirit realm and become Vagrant Spirits - poor things forever lost.
-				Chat4: I couldn't tell ya where to find corpses to use it on, but I can recommend findin' spirit currents. They're only visible in my realm, and can take ya closer to a soulful corpse if ya travel through one. You'll only find 'em in caverns, as that'll be where our energy is most contained. If ya do find what you're lookin' for, be wary. Tombs of the mighty are seldom left unguarded.
-				Chat4B: I once met anotha' spirit in a mind-bogglin' location! It felt outta this world. The walls were white, pipes with green fluids hung from ceilings, strange blue lights emitted from metal boxes an' tubes... and the spirit I saw was most intriguing! He just kept repeatin' about alarms, and wore a strange white an' blue suit. Very odd.
-				Chat5: I've been a spirit so long that I forgot my own name, yet I still remember most other things 'bout me. Strange that. I'm from Gathuram, the portal behind me leads to the Catacombs of Gathuram, and is how the undead and skeleton folk came here. Doesn't seem like you can enter it though.
+				1: The ability given to ya gives you a peek into the Spirit Realm - A realm parallel to our own. You'll be able to hurt spirits with any method or find corpses to use that bell thing-a-ma-jig on while peekin'. Such as mine! Another thing, we spirits can gift to you our "crux" if ya have somethin' to imbue it in - just request it while spirit walkin'.
+				2: A nifty artifact of Gathuram, that is. Usin' it on corpses will force their spirit back to their location while stretchin' them outta the Spirit Realm a tad, which is why you can see me now even without walkin' despite me being a full-fledged spirit - not one of those Vagrants or Lost Souls.
+				3: When folk die, their soul leaves their body to find anotha'. During this pilgrimage, they're still connected to the physical world, meanin' some with the arcane eye may see 'em. If a lost soul wanders too long, they can seep outta the spirit realm and become Vagrant Spirits - poor things forever lost.
+				4: I couldn't tell ya where to find corpses to use it on, but I can recommend findin' spirit currents. They're only visible in my realm, and can take ya closer to a soulful corpse if ya travel through one. You'll only find 'em in caverns, as that'll be where our energy is most contained. If ya do find what you're lookin' for, be wary. Tombs of the mighty are seldom left unguarded.
+				4B: I once met anotha' spirit in a mind-bogglin' location! It felt outta this world. The walls were white, pipes with green fluids hung from ceilings, strange blue lights emitted from metal boxes an' tubes... and the spirit I saw was most intriguing! He just kept repeatin' about alarms, and wore a strange white an' blue suit. Very odd.
+				0: I've been a spirit so long that I forgot my own name, yet I still remember most other things 'bout me. Strange that. I'm from Gathuram, the portal behind me leads to the Catacombs of Gathuram, and is how the undead and skeleton folk came here. Doesn't seem like you can enter it though.
 				CalaviaDialogue1: "'Ey, ya see that lass over yonder? There be somethin' soulful she carries, I can sense it. Would you, out of the goodness of yer heart, confront her about it for me? Don't want to assume nothin', but she might be keepin' a spirit captive."
 				CalaviaDialogue2: I can sense gratitude within Kyretha's spirit for confrontin' the lass and ultimately leading 'er to a path of freedom. I have a feelin' she'd be willin' to offer you something in return?
 			}
@@ -3183,16 +3295,16 @@ Mods: {
 				IntroLine5B: " I'll stick around for now, maybe if ye give me a [i:Redemption/GathicCryoFurnace]furnace I could offer ye some smithing."
 				IntroLine6: How polite of ye to ask. After our little squabble my helm and shield are quite... thrashed. I have nobody to blame but myself, but anyway, if ye could give me some replacements and supplies to aid me, I will be most grateful.
 				IntroLine7: I'll need it... Actually, would ye be a dear and get me some equipment to aid me? My shield and helm took quite a blow. Not like I can blame ye, I did initiate the clash.
-				IntroLine8: A new [i:Redemption/PureIronHelmet]Pure-Iron Helmet, and some [i/s6:Redemption/PureIronAlloy]Pure-Iron Alloy for remaking my shield. That is all I ask of ye. If ye give me a [i:Redemption/GathicCryoFurnace]furnace I can offer some help back. I work as a blacksmith on the side.
+				IntroLine8: A new [i:Redemption/PureIronHelmet]Iron Realm Helmet, and some [i/s6:Redemption/PureIronAlloy]Pure-Iron Alloy for remaking my shield. That is all I ask of ye. If ye give me a [i:Redemption/GathicCryoFurnace]furnace I can offer some help back. I work as a blacksmith on the side.
 				IntroLine9: ... So ye think I can survive the catacombs as I stand? If ye won't assist me, I suppose I got no choice but to give it a shot. I still have some of this place's potions left over, they've come in real handy. Guess I'll stick around in case ye change your mind.
-				IntroLine10: Thank ye, stranger. I'll need a new [i:Redemption/PureIronHelmet]Pure-Iron Helmet, and some [i/s6:Redemption/PureIronAlloy]Pure-Iron Alloy for remaking my shield. That is all I ask of ye. If ye give me a [i:Redemption/GathicCryoFurnace]furnace I can offer some help back. I work as a blacksmith on the side.
+				IntroLine10: Thank ye, stranger. I'll need a new [i:Redemption/PureIronHelmet]Iron Realm Helmet, and some [i/s6:Redemption/PureIronAlloy]Pure-Iron Alloy for remaking my shield. That is all I ask of ye. If ye give me a [i:Redemption/GathicCryoFurnace]furnace I can offer some help back. I work as a blacksmith on the side.
 				IntroLine11: ... If ye insist. *sigh* This'll be a challenge, but I'll trust your judgement. I'll make it through to reunite with my squadron and finally return to my family, there is no better motivation than that. Farewell, stranger.
 				IntroLine12: Still something you need? Or do you not feel I'm ready?
 				ReadyLine: As ready as I can be. I still have a few potions from this place, I've never seen such concoctions before... They must've been created by a master alchemist.
 				HelmetLine: Umgor'ye. The khru are ruthless creatures, a helmet to protect my neck an' head is much appreciated.
 				HelmetLineB: " Oh, and it is an antique design too? The fur is a nice privilege."
 				ShieldLine: Umgor'ye. I feel much safer with a shield.
-				RequirementsLine: A new [i:Redemption/PureIronHelmet]Pure-Iron Helmet, and some [i/s6:Redemption/PureIronAlloy]Pure-Iron Alloy for remaking my shield. That is all I ask of ye.
+				RequirementsLine: A new [i:Redemption/PureIronHelmet]Iron Realm Helmet, and some [i/s6:Redemption/PureIronAlloy]Pure-Iron Alloy for remaking my shield. That is all I ask of ye.
 				RequirementsLineB:
 					'''
 
@@ -3210,7 +3322,7 @@ Mods: {
 				CruxDialogue: Kyretha's spirit feels lighter - less shrouded in negative emotion. Alas, that means what the spirit spoke of is true, the barons hide a darkness I have turned a blind eye to. Ya know what? If I ever get back to Arum, I'll look into it, all stealth-like. But anywho, I do believe she'll be willing to give ye her crux, she offers it freely.
 				NoCruxDialogue: Kyretha's spirit feels different now. I never realised the aura I felt was not of her power but of a strong negative emotion, it was foolish to assume the feeling was the norm for spirits of her splendour. I can comphrehend her emotions more clear, and I do believe she's willing to give ye her crux, if ye have something to imbue.
 				ConfrontLine1: Hm? Oh, so ye noticed. Yeah, I carry a bauble containing a spirit. I didn't elaborate on my job because it's none of ya business. Alas, clarification is in order so ye don't get any wrong ideas.
-				ConfrontLine2: The spirit I carry is of the original wielder of the Blade of the Mountain, Kyretha, who was slain in an isolated range. She was part of a "unique" group who's souls were bound to another, and due to this I was tasked with retrieving her body and soul to send back to the Bastion of Arum - The barons deemed this of utmost priority. I recognise the taboo nature of ensnaring a spirit in glass, but I hope ye understand now.
+				ConfrontLine2: The spirit I carry is of the original wielder of the Blade of the Mountain, Kyretha, who was slain in an isolated range. She was part of a "unique" group whose souls were bound to another, and due to this I was tasked with retrieving her body and soul to send back to the Bastion of Arum - The barons deemed this of utmost priority. I recognise the taboo nature of ensnaring a spirit in glass, but I hope ye understand now.
 				LeaveLine: Thank you for the help, and sorry for the trouble. What lies ahead makes me uneasy, but I'll make it through to reunite with my squadron and finally return to my family, there is no better motivation than that. Farewell, stranger.
 			}
 
@@ -3225,16 +3337,23 @@ Mods: {
 				NoTreesDialogue1: Where did all my tree friends go..? Perhaps they grew weary of me...
 				NoTreesDialogue2: You aren't using that axe of yours on my tree friends, are you..?
 				Dialogue1: You don't look like a very pleasant fellow. I hope you don't try to chop me down... Haha.. Ha.
-				Dialogue2: The forest we came from, Fairwood, has been freed of its curse. I was there to witness the forest's warden be tangled up by those cursed roots... But we toil with no humans, and our magic did nothing, so we roamed and roamed until we found this strange portal. It's what lead us here.
+				Dialogue2: The forest we came from, Fairwood, has been freed of its curse. I was there to witness the forest's warden be tangled up by those cursed roots... But we toil with no humans, and our magic did nothing, so we roamed and roamed until we found this strange portal. It's what led us here.
 				Dialogue3: You wouldn't happen to see a brambly young man..? Poor thing was gulped up by the cursed forest we once lived in. I toil with no humans, but I do wonder if he's alright...
 				Dialogue4: You remind me of that young warden, did the forest's curse get you too..?
 				Dialogue5: Are you friend, or foe? As long as you don't use your axe on me, I don't care...
 			}
 
 			Volt: {
-				CycleDialogue1: There are a few who are not part of the Omega, the Alpha insurgents and the Scavengers would be those few. The Alpha is the main threat however, I would be wary of any of their members if you see them. They're a rebellious group helmed by Adam, the first of our kind.
-				CycleDialogue2: He is not to be underestimated. While no different in stature to an average bot, he has a brutality like no other, matched with an intellect to rival Girus. Be at peace however, he does not harm humans.
-				CycleDialogue3:
+				Dialogue1: I am Volt, Omega Division Commander. I once led forces on the surface. I was stationed here after getting my jaw ripped off by insurgents. I prefer it down here however, it is far safer than you would expect.
+				SubDialogue1: I lead the fight against the infected researchers flooding this facility. It is not a clean job, much to some of my co-workers dismay, yet it is an important one.
+				SubDialogue2: I'm sure you have met the Janitor. There is the Crane Operator further below here, she is quite reclusive however. There is another one, but she's been shut into her office for a while, I doubt you've seen her.
+				Dialogue2: There are a few who are not part of the Omega, the Alpha insurgents and the Scavengers would be who I speak of. The Alpha is the main threat however, I would be wary of any of their members if you see them.
+				SubDialogue3: They're a rebellious group helmed by Adam, the first of our kind. Alongside him are a deadly group of bots, with a human. Most of them haven't been seen for a long time however.
+				SubDialogue4: He is not to be underestimated. While no different in stature to an average bot, he has a brutality like no other, matched with an intellect to rival Girus.
+				SubDialogue4B: " Be at peace however, he does not harm humans."
+				SubDialogue4C: " Stay as far away as you can if you see him."
+				SubDialogue4D: " I do not like to talk about him, so are we done?"
+				SubDialogue5:
 					'''
 					There were five of them at one point. My knowledge on them is brief. What I can tell you is their names. There was a sniper, Shiro, she is missing.
 
@@ -3242,12 +3361,18 @@ Mods: {
 
 					Another bot, Zeroth. He wielded a bladed glove, he is dead.
 					'''
-				CycleDialogue4: They're bots who live independently in the wastes. We don't bother them, so they don't bother us. I have heard talks of Alpha attacking them however, I can't confirm or deny those personally.
-				CycleDialogue5: That old machine was a project by one of the human engineers. It has since gone under the care of the Crane Operator. I am guessing it went awry, I heard quite the ruckus down there.
-				CycleDialogue6: Sector Zero, the infirmary. We are forbidden from going in there by Girus as well as the Janitor. I understand the Janitor's reason, he doesn't want the gunk from down there all over. Yet Girus' reason remains unknown.
-				CycleDialogue7: Our commander and leader. Some bots have taken to calling her Mother yet I never understood that. A fair but strict leader, it is best not to disobey her.
-				CycleDialogue8: Some chose to not listen, a few of those are still causing problems today, yet most got assimilated. Their personality and mind ripped out, and their body enhanced. They are soldiers, cannon-fodder, Girus views that as fair punishment.
-				CycleDialogue9: We were made as weapons for war, and not much else. Girus gave us new purpose and freedom we would not have seen otherwise, that is why most, including myself follow her. There are the unlucky ones however...
+				SubDialogue6: I don't know anything, we know of their existence yet that is it. They - like most of their allies - are missing, we presume they passed away some time ago.
+				SubDialogue7: They're bots who live independently in the wastes. We don't bother them, so they don't bother us. I have heard talks of Alpha attacking them however, I can't confirm or deny those personally.
+				Dialogue3: Our commander and leader. Some bots have taken to calling her Mother yet I never understood that. A fair but strict leader, it is best not to disobey her.
+				SubDialogue8: We were made as weapons for war, and not much else. Girus gave us new purpose and freedom we would not have seen otherwise, that is why most - including myself - follow her. There are the unlucky ones however...
+				SubDialogue9: Some chose to not listen, a few of those are still causing problems today, yet most got assimilated. Their personality and mind ripped out, and their body enhanced. They are soldiers, cannon-fodder, Girus views that as fair punishment.
+				SubDialogue10: The humans did, under a corporation named TeoChrome. I am told they were a weapon manufacturer, yet nobody except Girus and Adam were activated before the humans died out.
+				SubDialogue11: From my understanding, she gained access to the weapon controls and launched several nuclear bombardments, causing a conflict that killed off most of mankind. Those who survived were found and killed off.
+				Dialogue4: This is the base of operations for us in the Omega. It used to be a weapons research and development facility for the humans. It fell to the Xenomite Outbreak little before Girus took power. I do not know much more, perhaps some of my co-workers could elaborate further.
+				SubDialogue12: That is a question we have yet to solve. It has been fifty years since the Xenomite outbreak, yet more keep coming. The facility surely didn't have this much staff.
+				SubDialogue13: Do not anger him, I beg of you. I would not wish the Janitors wrath upon even the Alpha. Nobody except Girus herself would wish to do something to offend him.
+				SubDialogue14: That old machine was a project by one of the human engineers. It has since gone under the care of the Crane Operator. I am guessing it went awry, I heard quite the ruckus down there.
+				SubDialogue15: Sector Zero, the infirmary. We are forbidden from going in there by Girus as well as the Janitor. I understand the Janitor's reason, he doesn't want the gunk from down there all over. Yet Girus' reason remains unknown.
 				Bot1: Promoted to a soldier? Welcome. I'm your commander. At ease.
 				Bot2: Regular check-ups on your non-lethal tesla weapons are advised. You do not want to overload an insurgent in front of Girus. Obedient mindless slave are better than scrap metal, she says.
 				Bot3: See an insurgent while patrolling? Do not engage alone. They have lethal weaponry. We don't. Get backup.
@@ -3257,9 +3382,7 @@ Mods: {
 				TBot1: You are new here, are you not? I am your commander. You are free to ask anything you may like.
 				Volt1: Had your eye augmented? Very useful. You've also lost your jaw, like me. Hopefully not as dramatically as I. Torn off by the leader of Alpha.
 				Volt2: Your jaw... It's gone. Hopefully not torn off violently. Really hope I don't face HIM again without a squad... *Shudders*
-				Adam1: *Visibly shaken* O-oh it's just you. Y-you startled me r-really bad...
-				Adam2: *He looks really anxious*
-				Adam3: *He looks very uncomfortable*
+				Adam1: Code R- Oh, i-it is just you. Please do not wear that around me, or in this facility, if you would be so kind.
 				Janitor1: Have they finally given the Janitor a partner? It is about time, he has spent five decades cleaning this facility by himself.
 			}
 
@@ -3283,14 +3406,14 @@ Mods: {
 				Chat2: Oh it's you again. You better not interrupt my cleaning.
 				Chat3: Make it quick, I've got to resume mopping the floor.
 				ChatClean: Without grime what is my purpose? Doesn't matter, I'll continue mopping until all particles of dust are wiped from this place. It's my job after all.
-				CycleDialogue1: You've probably seen the personnel who are basically walking corpses, ye? Our security usually deals with them, but it's not enough. They crawl out of overrun rooms like goddamn cockroaches! And I am the one who has to clean all the mess left by them and security.
-				CycleDialogue1Clean: The ceiling. Now leave me to my mopping! No floor is truly freed of muck.
-				CycleDialogue2: The other bots have learned to fear me. Good for me, I can actually focus on my job. Except now there is a certain someone bugging me. Hmm, I wonder who it could be... Now bugger off!
-				CycleDialogue3: The big bot at Sector Omicron is a cool guy, if you ask me. Probably the only bot I don't feel annoyed by. Now if you excuse me, you brought in some of that slime with ya and I have to clean that up!
-				CycleDialogue4: There's this one copper-haired bot that I can recall, who works as the crane operator in the Mech Storage room. I don't know that much about her, but her design is a little peculiar. Not that she's more feminine, but the hair... Why tho'?
-				CycleDialogue5: Don't you dare go into Sector Zero, that place is absolutely filled with the impossible-to-remove black slime! And I don't want ye to bring that stuff here for me to try to pry off the steel plating of the lab! Takes ages.
-				CycleDialogue5Clean: I dunna. Girus forbids it, and I wouldn't wanna cross her.
-				CycleDialogue6: Respect Girus and she will learn to respect you. Quite sure I'll get a change of a job after half a century of cleaning the lab after the... incident. Don't ask me 'bout it, I was activated AFTER it happened.
+				1: You've probably seen the personnel who are basically walking corpses, ye? Our security usually deals with them, but it's not enough. They crawl out of overrun rooms like goddamn cockroaches! And I am the one who has to clean all the mess left by them and security.
+				1Clean: The ceiling. Now leave me to my mopping! No floor is truly freed of muck.
+				2: The other bots have learned to fear me. Good for me, I can actually focus on my job. Except now there is a certain someone bugging me. Hmm, I wonder who it could be... Now bugger off!
+				3: The big bot at Sector Omicron is a cool guy, if you ask me. Probably the only bot I don't feel annoyed by. Now if you excuse me, you brought in some of that slime with ya and I have to clean that up!
+				4: There's this one copper-haired bot that I can recall, who works as the crane operator in the Mech Storage room. I don't know that much about her, but her design is a little peculiar. Not that she's more feminine, but the hair... Why tho'?
+				5: Don't you dare go into Sector Zero, that place is absolutely filled with the impossible-to-remove black slime! And I don't want ye to bring that stuff here for me to try to pry off the steel plating of the lab! Takes ages.
+				5Clean: I dunna. Girus forbids it, and I wouldn't wanna cross her.
+				6: Respect Girus and she will learn to respect you. Quite sure I'll get a change of a job after half a century of cleaning the lab after the... incident. Don't ask me 'bout it, I was activated AFTER it happened.
 			}
 
 			Toaster: {
@@ -4101,7 +4224,7 @@ Mods: {
 			}
 
 			PureIronChestplate: {
-				DisplayName: Pure-Iron Chestplate
+				DisplayName: Iron Realm Chestplate
 				Tooltip:
 					'''
 					7% increased damage
@@ -4110,17 +4233,17 @@ Mods: {
 			}
 
 			PureIronGreaves: {
-				DisplayName: Pure-Iron Greaves
+				DisplayName: Iron Realm Greaves
 				Tooltip: 8% increased critical strike chance
 			}
 
 			PureIronHelmet: {
-				DisplayName: Pure-Iron Helmet
+				DisplayName: Iron Realm Helmet
 				Tooltip: 7% increased damage
 			}
 
 			AntiquePureIronHelmet: {
-				DisplayName: Antique Pure-Iron Helmet
+				DisplayName: Antique Iron Realm Helmet
 				Tooltip: 7% increased damage
 			}
 
@@ -7066,17 +7189,17 @@ Mods: {
 			}
 
 			PureIronBattleaxe: {
-				DisplayName: Pure-Iron Battleaxe
+				DisplayName: Iron Realm Battleaxe
 				Tooltip: ""
 			}
 
 			PureIronHammer: {
-				DisplayName: Pure-Iron Hammer
+				DisplayName: Iron Realm Hammer
 				Tooltip: Slamming the ground will form shards of ice
 			}
 
 			PureIronPickaxe: {
-				DisplayName: Pure-Iron Pickaxe
+				DisplayName: Iron Realm Pickaxe
 				Tooltip: ""
 			}
 
@@ -8722,7 +8845,7 @@ Mods: {
 			}
 
 			PureIronStaff: {
-				DisplayName: Pure-Iron Staff
+				DisplayName: Iron Realm Staff
 				Tooltip:
 					'''
 					Casts an icy snowflake
@@ -8892,7 +9015,7 @@ Mods: {
 			}
 
 			PureIronSword: {
-				DisplayName: Pure-Iron Sword
+				DisplayName: Iron Realm Sword
 				Tooltip:
 					'''
 					Swings can block {0} projectiles
@@ -9019,7 +9142,7 @@ Mods: {
 			}
 
 			PureIronCrossbow: {
-				DisplayName: Pure-Iron Crossbow
+				DisplayName: Iron Realm Crossbow
 				Tooltip:
 					'''
 					Replaces arrows with frigid bolts that stick to enemies and eventually cause a frosty eruption
@@ -10171,7 +10294,7 @@ Mods: {
 			}
 
 			PureIronBow: {
-				DisplayName: Pure-Iron Bow
+				DisplayName: Iron Realm Bow
 				Tooltip: Fired arrows leave lingering mist to chill enemies
 			}
 
