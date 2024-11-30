@@ -41,5 +41,5 @@
 2047. NPC text buttons that result in increasing alignment are light green and ones that decrease alignment are light red
 2052. Sharpen, Shine Armor, Restring Bow, and Poison Weapon buttons have tooltips
 2053. Renamed Calavia's "You're ready to leave" button to "You're ready to go" and added tooltip saying she won't return after leaving
-2072. Fallen sells Ancient Grass Seeds
+2072. Fallen sells Ancient Grass Seeds, and Book of Skulls post-Skeletron
 ===============
