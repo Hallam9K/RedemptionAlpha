@@ -349,8 +349,6 @@ namespace Redemption.NPCs.Bosses.Erhan
 
                                     if (RedeBossDowned.erhanDeath == 0 && Main.netMode != NetmodeID.MultiplayerClient)
                                     {
-                                        RedeQuest.adviceSeen[(int)RedeQuest.Advice.Erhan] = true;
-
                                         RedeBossDowned.erhanDeath = 1;
                                         if (Main.netMode == NetmodeID.Server)
                                             NetMessage.SendData(MessageID.WorldData);

@@ -1,53 +1,48 @@
-using BetterDialogue.UI;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Redemption.BaseExtension;
-using Redemption.Globals;
-using Redemption.Globals.NPC;
-using Redemption.Items;
-using Redemption.Items.Accessories.PostML;
-using Redemption.Items.Armor.Single;
-using Redemption.Items.Armor.Vanity;
-using Redemption.Items.Materials.HM;
-using Redemption.Items.Materials.PostML;
-using Redemption.Items.Materials.PreHM;
-using Redemption.Items.Placeable.Furniture.Misc;
-using Redemption.Items.Placeable.Plants;
-using Redemption.Items.Placeable.Tiles;
-using Redemption.Items.Tools.PreHM;
-using Redemption.Items.Usable;
-using Redemption.Items.Usable.Potions;
-using Redemption.Items.Usable.Summons;
-using Redemption.Items.Weapons.HM.Melee;
-using Redemption.Items.Weapons.PostML.Magic;
-using Redemption.Items.Weapons.PostML.Melee;
-using Redemption.Items.Weapons.PreHM.Magic;
-using Redemption.Items.Weapons.PreHM.Melee;
-using Redemption.Items.Weapons.PreHM.Ranged;
-using Redemption.Textures.Emotes;
-using ReLogic.Content;
-using System.Collections.Generic;
 using Terraria;
-using Terraria.Audio;
-using Terraria.GameContent;
-using Terraria.GameContent.Bestiary;
-using Terraria.GameContent.ItemDropRules;
-using Terraria.GameContent.Personalities;
-using Terraria.GameContent.UI;
 using Terraria.ID;
-using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.Utilities;
+using Terraria.Localization;
+using Redemption.Items.Materials.PreHM;
+using Redemption.Items.Placeable.Tiles;
+using Terraria.GameContent.Bestiary;
+using Terraria.GameContent;
+using Redemption.Globals;
+using Redemption.Items.Weapons.PreHM.Melee;
+using Terraria.Audio;
+using Redemption.Items.Weapons.PreHM.Magic;
+using Redemption.Items.Usable.Summons;
+using Redemption.Items.Tools.PreHM;
+using Terraria.GameContent.ItemDropRules;
+using Redemption.Items.Armor.Single;
+using Terraria.GameContent.Personalities;
+using System.Collections.Generic;
+using Redemption.Items.Usable;
+using Redemption.Items.Placeable.Furniture.Misc;
+using Redemption.Items.Materials.HM;
+using Redemption.Items.Weapons.HM.Melee;
+using Redemption.Items.Weapons.PreHM.Summon;
+using Redemption.Items.Armor.Vanity;
+using ReLogic.Content;
+using Redemption.Textures.Emotes;
+using Redemption.NPCs.Friendly.TownNPCs;
+using Terraria.GameContent.UI;
+using Redemption.BaseExtension;
+using Redemption.Globals.NPC;
+using Redemption.Items.Weapons.PreHM.Ranged;
+using System;
 
 namespace Redemption.NPCs.Friendly.TownNPCs
 {
     [AutoloadHead]
-    public class Fallen : ModRedeNPC
+    public class Fallen : ModNPC
     {
         public static int HeadIndex2;
         public static int HeadIndex3;
         public override void Load()
         {
-            // Adds our Shimmer Head to the NPCHeadLoader.
             HeadIndex2 = Mod.AddNPCHeadTexture(Type, Texture + "2_Head");
             HeadIndex3 = Mod.AddNPCHeadTexture(Type, Texture + "3_Head");
         }
@@ -62,7 +57,7 @@ namespace Redemption.NPCs.Friendly.TownNPCs
             NPCID.Sets.AttackTime[Type] = 40;
             NPCID.Sets.AttackAverageChance[Type] = 20;
             NPCID.Sets.HatOffsetY[Type] = 4;
-            NPCID.Sets.FaceEmote[Type] = EmoteBubbleType<OkvotTownNPCEmote>();
+            NPCID.Sets.FaceEmote[Type] = ModContent.EmoteBubbleType<OkvotTownNPCEmote>();
 
             NPC.Happiness.SetBiomeAffection<UndergroundBiome>(AffectionLevel.Love);
             NPC.Happiness.SetBiomeAffection<SnowBiome>(AffectionLevel.Like);
@@ -74,7 +69,7 @@ namespace Redemption.NPCs.Friendly.TownNPCs
             NPC.Happiness.SetNPCAffection(NPCID.Nurse, AffectionLevel.Hate);
             NPC.Happiness.SetNPCAffection(NPCID.Dryad, AffectionLevel.Dislike);
 
-            NPCID.Sets.NPCBestiaryDrawModifiers drawModifiers = new()
+            NPCID.Sets.NPCBestiaryDrawModifiers drawModifiers = new(0)
             {
                 Velocity = 1f
             };
@@ -96,8 +91,6 @@ namespace Redemption.NPCs.Friendly.TownNPCs
             NPC.DeathSound = SoundID.NPCDeath1;
             NPC.knockBackResist = 0.5f;
 
-            DialogueBoxStyle = CAVERN;
-
             AnimationType = NPCID.Guide;
         }
 
@@ -109,12 +102,11 @@ namespace Redemption.NPCs.Friendly.TownNPCs
                 new FlavorTextBestiaryInfoElement(Language.GetTextValue("Mods.Redemption.FlavorTextBestiary.Fallen")),
             });
         }
-
         public override void AI()
         {
             if (NPC.ai[0] is 15 && NPC.ai[1] == NPCID.Sets.AttackTime[NPC.type])
             {
-                NPC.Shoot(NPC.Center, ProjectileType<Fallen_BeardedHatchet_Proj>(), NPC.damage * NPC.GetAttackDamage_ScaledByStrength(11), new Vector2(5 * NPC.direction, 0), NPC.whoAmI, knockback: 5);
+                NPC.Shoot(NPC.Center, ModContent.ProjectileType<Fallen_BeardedHatchet_Proj>(), NPC.damage * NPC.GetAttackDamage_ScaledByStrength(11), new Vector2(5 * NPC.direction, 0), NPC.whoAmI, knockback: 5);
             }
         }
         public override void HitEffect(NPC.HitInfo hit)
@@ -140,15 +132,18 @@ namespace Redemption.NPCs.Friendly.TownNPCs
         private static bool TalkedOnce;
         public override string GetChat()
         {
-            if (!TalkedOnce)
+            if (!TalkedOnce && !Main.LocalPlayer.RedemptionAbility().Spiritwalker)
             {
-                RedeQuest.adviceUnlocked[(int)RedeQuest.Advice.UGPortal] = true;
-                if (Main.LocalPlayer.RedemptionAbility().Spiritwalker)
-                    RedeQuest.adviceSeen[(int)RedeQuest.Advice.UGPortal] = true;
-
+                int daerel = NPC.FindFirstNPC(ModContent.NPCType<Daerel>());
+                if (daerel >= 0)
+                    Main.npc[daerel].GetGlobalNPC<ExclaimMarkNPC>().exclaimationMark[1] = true;
+                int zephos = NPC.FindFirstNPC(ModContent.NPCType<Zephos>());
+                if (zephos >= 0)
+                    Main.npc[zephos].GetGlobalNPC<ExclaimMarkNPC>().exclaimationMark[1] = true;
                 TalkedOnce = true;
             }
             WeightedRandom<string> chat = new(Main.rand);
+
             var fallenType = NPC.GivenName switch
             {
                 "Tenvon" => 1,
@@ -195,35 +190,108 @@ namespace Redemption.NPCs.Friendly.TownNPCs
             return chat;
         }
 
+        public override void SetChatButtons(ref string button, ref string button2)
+        {
+            button = Language.GetTextValue("LegacyInterface.28");
+
+            button2 = Language.GetTextValue("Mods.Redemption.DialogueBox.Fallen.Repair");
+            if (Main.LocalPlayer.HasItem(ModContent.ItemType<GolemEye>()) && NPC.downedMoonlord && !RedeBossDowned.downedADD)
+                button2 = Language.GetTextValue("Mods.Redemption.DialogueBox.Fallen.Eye");
+        }
+
+        public override void OnChatButtonClicked(bool firstButton, ref string shopName)
+        {
+            Player player = Main.LocalPlayer;
+
+            if (firstButton)
+                shopName = "Shop";
+            else
+            {
+                if (Main.LocalPlayer.HasItem(ModContent.ItemType<GolemEye>()) && NPC.downedMoonlord && !RedeBossDowned.downedADD)
+                {
+                    NPC.GetGlobalNPC<ExclaimMarkNPC>().exclaimationMark[4] = false;
+                    Main.npcChatText = Language.GetTextValue("Mods.Redemption.Dialogue.Fallen.GolemEyeDialogue");
+                    return;
+                }
+                int[] Frag = new int[] {
+                    player.FindItem(ModContent.ItemType<ZweihanderFragment1>()),
+                    player.FindItem(ModContent.ItemType<ZweihanderFragment2>()),
+                    player.FindItem(ModContent.ItemType<ForgottenSword>()),
+                    player.FindItem(ModContent.ItemType<OphosNotes>()) };
+
+                if (Frag[0] >= 0 && Frag[1] >= 0)
+                {
+                    player.inventory[Frag[0]].stack--;
+                    player.inventory[Frag[1]].stack--;
+                    if (player.inventory[Frag[0]].stack <= 0)
+                        player.inventory[Frag[0]] = new Item();
+                    if (player.inventory[Frag[1]].stack <= 0)
+                        player.inventory[Frag[1]] = new Item();
+
+                    Main.npcChatCornerItem = ModContent.ItemType<Zweihander>();
+                    Main.npcChatText = Language.GetTextValue("Mods.Redemption.Dialogue.Fallen.ZweihanderRepairDialogue");
+                    player.QuickSpawnItem(NPC.GetSource_Loot(), ModContent.ItemType<Zweihander>());
+
+                    SoundEngine.PlaySound(SoundID.Item37, NPC.position);
+                    return;
+                }
+                else if (Frag[2] >= 0 && Frag[3] >= 0)
+                {
+                    player.inventory[Frag[2]].stack--;
+                    player.inventory[Frag[3]].stack--;
+                    if (player.inventory[Frag[2]].stack <= 0)
+                        player.inventory[Frag[2]] = new Item();
+                    if (player.inventory[Frag[3]].stack <= 0)
+                        player.inventory[Frag[3]] = new Item();
+
+                    Main.npcChatCornerItem = ModContent.ItemType<ForgottenGreatsword>();
+                    Main.npcChatText = Language.GetTextValue("Mods.Redemption.Dialogue.Fallen.OphosRepairDialogue");
+                    player.QuickSpawnItem(NPC.GetSource_Loot(), ModContent.ItemType<ForgottenGreatsword>());
+
+                    SoundEngine.PlaySound(SoundID.Item37, NPC.position);
+                    return;
+                }
+                else
+                {
+                    Main.npcChatText = Language.GetTextValue("Mods.Redemption.Dialogue.Fallen.NoRepairDialogue");
+                    for (int k = 0; k < Frag.Length; k++)
+                    {
+                        if (Frag[k] >= 0)
+                            Main.npcChatText = Language.GetTextValue("Mods.Redemption.Dialogue.Fallen.NotSameRepairDialogue");
+                    }
+                    SoundEngine.PlaySound(SoundID.MenuTick);
+                }
+
+            }
+        }
+
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
-            npcLoot.Add(ItemDropRule.Common(ItemType<AntiquePureIronHelmet>()));
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<AntiquePureIronHelmet>()));
         }
 
         public override bool CanGoToStatue(bool toKingStatue) => true;
         public override void AddShops()
         {
             var npcShop = new NPCShop(Type)
-                .Add(new Item(ItemType<BronzeWand>()) { shopCustomPrice = 30, shopSpecialCurrency = Redemption.AntiqueDorulCurrencyId })
-                .Add(new Item(ItemType<Earthbind>()) { shopCustomPrice = 15, shopSpecialCurrency = Redemption.AntiqueDorulCurrencyId }, Condition.InBelowSurface)
-                .Add(new Item(ItemType<ElderWoodCrossbow>()) { shopCustomPrice = 20, shopSpecialCurrency = Redemption.AntiqueDorulCurrencyId }, Condition.InBelowSurface)
-                .Add(new Item(ItemType<Mistfall>()) { shopCustomPrice = 15, shopSpecialCurrency = Redemption.AntiqueDorulCurrencyId }, Condition.InSnow)
-                .Add(new Item(ItemID.BookofSkulls) { shopCustomPrice = 40, shopSpecialCurrency = Redemption.AntiqueDorulCurrencyId }, Condition.DownedSkeletron)
-                .Add(new Item(ItemType<AncientGrassSeeds>()) { shopCustomPrice = 1, shopSpecialCurrency = Redemption.AntiqueDorulCurrencyId })
-                .Add(new Item(ItemType<AncientDirt>()) { shopCustomPrice = 1, shopSpecialCurrency = Redemption.AntiqueDorulCurrencyId })
-                .Add(new Item(ItemType<ElderWood>()) { shopCustomPrice = 1, shopSpecialCurrency = Redemption.AntiqueDorulCurrencyId })
-                .Add(new Item(ItemType<GathicStone>()) { shopCustomPrice = 1, shopSpecialCurrency = Redemption.AntiqueDorulCurrencyId })
-                .Add(new Item(ItemType<WeddingRing>()) { shopCustomPrice = 15, shopSpecialCurrency = Redemption.AntiqueDorulCurrencyId })
-                .Add(new Item(ItemType<LostSoul>()) { shopCustomPrice = 4, shopSpecialCurrency = Redemption.AntiqueDorulCurrencyId })
-                .Add(new Item(ItemType<Violin>()) { shopCustomPrice = 20, shopSpecialCurrency = Redemption.AntiqueDorulCurrencyId })
-                .Add(new Item(ItemType<ViisaanKantele>()) { shopCustomPrice = 24, shopSpecialCurrency = Redemption.AntiqueDorulCurrencyId }, RedeConditions.DownedADD)
-                .Add(new Item(ItemType<OldTophat>()) { shopCustomPrice = 20, shopSpecialCurrency = Redemption.AntiqueDorulCurrencyId }, RedeConditions.OldTophat)
-                .Add(new Item(ItemType<ScrunklePainting>()) { shopCustomPrice = 12, shopSpecialCurrency = Redemption.AntiqueDorulCurrencyId })
-                .Add(new Item(ItemType<SkullDiggerPainting>()) { shopCustomPrice = 12, shopSpecialCurrency = Redemption.AntiqueDorulCurrencyId }, RedeConditions.DownedEaglecrestGolem)
-                .Add(new Item(ItemType<SunkenCaptainPainting>()) { shopCustomPrice = 12, shopSpecialCurrency = Redemption.AntiqueDorulCurrencyId }, Condition.DownedPlantera)
+                .Add(new Item(ModContent.ItemType<BronzeWand>()) { shopCustomPrice = 30, shopSpecialCurrency = Redemption.AntiqueDorulCurrencyId })
+                .Add(new Item(ModContent.ItemType<Earthbind>()) { shopCustomPrice = 15, shopSpecialCurrency = Redemption.AntiqueDorulCurrencyId }, Condition.InBelowSurface)
+                .Add(new Item(ModContent.ItemType<ElderWoodCrossbow>()) { shopCustomPrice = 20, shopSpecialCurrency = Redemption.AntiqueDorulCurrencyId }, Condition.InBelowSurface)
+                .Add(new Item(ModContent.ItemType<Mistfall>()) { shopCustomPrice = 15, shopSpecialCurrency = Redemption.AntiqueDorulCurrencyId }, Condition.InSnow)
+                .Add(new Item(ModContent.ItemType<AncientDirt>()) { shopCustomPrice = 1, shopSpecialCurrency = Redemption.AntiqueDorulCurrencyId })
+                .Add(new Item(ModContent.ItemType<ElderWood>()) { shopCustomPrice = 1, shopSpecialCurrency = Redemption.AntiqueDorulCurrencyId })
+                .Add(new Item(ModContent.ItemType<GathicStone>()) { shopCustomPrice = 1, shopSpecialCurrency = Redemption.AntiqueDorulCurrencyId })
+                .Add(new Item(ModContent.ItemType<WeddingRing>()) { shopCustomPrice = 15, shopSpecialCurrency = Redemption.AntiqueDorulCurrencyId })
+                .Add(new Item(ModContent.ItemType<LostSoul>()) { shopCustomPrice = 4, shopSpecialCurrency = Redemption.AntiqueDorulCurrencyId })
+                .Add(new Item(ModContent.ItemType<Violin>()) { shopCustomPrice = 20, shopSpecialCurrency = Redemption.AntiqueDorulCurrencyId })
+                .Add(new Item(ModContent.ItemType<ViisaanKantele>()) { shopCustomPrice = 24, shopSpecialCurrency = Redemption.AntiqueDorulCurrencyId }, RedeConditions.DownedADD)
+                .Add(new Item(ModContent.ItemType<OldTophat>()) { shopCustomPrice = 20, shopSpecialCurrency = Redemption.AntiqueDorulCurrencyId }, Condition.PlayerCarriesItem(ModContent.ItemType<CruxCardTied>()))
+                .Add(new Item(ModContent.ItemType<ScrunklePainting>()) { shopCustomPrice = 12, shopSpecialCurrency = Redemption.AntiqueDorulCurrencyId })
+                .Add(new Item(ModContent.ItemType<SkullDiggerPainting>()) { shopCustomPrice = 12, shopSpecialCurrency = Redemption.AntiqueDorulCurrencyId }, RedeConditions.DownedSkullDigger)
+                .Add(new Item(ModContent.ItemType<SunkenCaptainPainting>()) { shopCustomPrice = 12, shopSpecialCurrency = Redemption.AntiqueDorulCurrencyId }, Condition.DownedPirates)
                 .Add(new Item(ItemID.Ectoplasm) { shopCustomPrice = 10, shopSpecialCurrency = Redemption.AntiqueDorulCurrencyId }, Condition.DownedPlantera)
-                .Add(new Item(ItemType<EmptyCruxCard>()) { shopCustomPrice = 30, shopSpecialCurrency = Redemption.AntiqueDorulCurrencyId }, RedeConditions.HasSpiritWalker)
-                .Add(new Item(ItemType<DeadRinger>()) { shopCustomPrice = 30, shopSpecialCurrency = Redemption.AntiqueDorulCurrencyId }, RedeConditions.DeadRingerGiven);
+                .Add(new Item(ModContent.ItemType<EmptyCruxCard>()) { shopCustomPrice = 30, shopSpecialCurrency = Redemption.AntiqueDorulCurrencyId }, RedeConditions.HasSpiritWalker)
+                .Add(new Item(ModContent.ItemType<DeadRinger>()) { shopCustomPrice = 30, shopSpecialCurrency = Redemption.AntiqueDorulCurrencyId }, RedeConditions.DeadRingerGiven);
 
             npcShop.Register();
         }
@@ -259,7 +327,7 @@ namespace Redemption.NPCs.Friendly.TownNPCs
         }
         public override void DrawTownAttackSwing(ref Texture2D item, ref Rectangle itemFrame, ref int itemSize, ref float scale, ref Vector2 offset)
         {
-            int itemType = ItemType<BeardedHatchet>();
+            int itemType = ModContent.ItemType<BeardedHatchet>();
             Main.GetItemDrawFrame(itemType, out item, out itemFrame);
             itemFrame = Rectangle.Empty;
             itemSize = 0;
@@ -282,8 +350,8 @@ namespace Redemption.NPCs.Friendly.TownNPCs
                 _ => 0,
             };
             if (fallenType > 0)
-                return Request<Texture2D>("Redemption/NPCs/Friendly/TownNPCs/Fallen" + (fallenType + 1));
-            return Request<Texture2D>("Redemption/NPCs/Friendly/TownNPCs/Fallen");
+                return ModContent.Request<Texture2D>("Redemption/NPCs/Friendly/TownNPCs/Fallen" + (fallenType + 1));
+            return ModContent.Request<Texture2D>("Redemption/NPCs/Friendly/TownNPCs/Fallen");
         }
         public int GetHeadTextureIndex(NPC npc)
         {
@@ -291,100 +359,9 @@ namespace Redemption.NPCs.Friendly.TownNPCs
             {
                 "Tenvon" => Fallen.HeadIndex2,
                 "Happins" => Fallen.HeadIndex3,
-                _ => GetModHeadSlot("Redemption/NPCs/Friendly/TownNPCs/Fallen_Head"),
+                _ => ModContent.GetModHeadSlot("Redemption/NPCs/Friendly/TownNPCs/Fallen_Head"),
             };
             return fallenType;
-        }
-    }
-    public class EyeOriginButton : ChatButton
-    {
-        public override double Priority => 10.0;
-        public override string Text(NPC npc, Player player) => Language.GetTextValue("Mods.Redemption.DialogueBox.Fallen.Eye");
-        public override string Description(NPC npc, Player player) => string.Empty;
-        public override bool IsActive(NPC npc, Player player) => npc.type == NPCType<Fallen>() && player.HasItemInAnyInventory(ItemType<GolemEye>()) && NPC.downedMoonlord && !RedeBossDowned.downedADD;
-        public override Color? OverrideColor(NPC npc, Player player)
-        {
-            return RedeColor.AncientColour;
-        }
-        public override void OnClick(NPC npc, Player player)
-        {
-            RedeQuest.adviceSeen[(int)RedeQuest.Advice.UkkoEye] = true;
-            npc.GetGlobalNPC<ExclaimMarkNPC>().exclaimationMark[4] = false;
-            SoundEngine.PlaySound(SoundID.Chat);
-            Main.npcChatText = Language.GetTextValue("Mods.Redemption.Dialogue.Fallen.GolemEyeDialogue");
-        }
-    }
-    public class RepairButton : ChatButton
-    {
-        public override double Priority => 8.0;
-        public override string Text(NPC npc, Player player) => Language.GetTextValue("Mods.Redemption.DialogueBox.Fallen.Repair.Name");
-
-        public override string Description(NPC npc, Player player) => Language.GetTextValue("Mods.Redemption.DialogueBox.Fallen.Repair.Description");
-
-        public override bool IsActive(NPC npc, Player player) => npc.type == NPCType<Fallen>();
-
-        const short ZWEIHANDER = 0, FORGOTTEN = 1;
-        readonly List<int[]> fragments = new()
-        {
-            new int[2] { ItemType<ZweihanderFragment1>(), ItemType<ZweihanderFragment2>() },
-            new int[2] { ItemType<ForgottenSword>(), ItemType<OphosNotes>() },
-        };
-        bool HasFragments(Player player, int id, bool dontConsume = false)
-        {
-            if (player.HasItem(fragments[id][0]) && player.HasItem(fragments[id][1]))
-            {
-                if (!dontConsume)
-                {
-                    player.ConsumeItem(fragments[id][0]);
-                    player.ConsumeItem(fragments[id][1]);
-                }
-                return true;
-            }
-            return false;
-        }
-
-        public override Color? OverrideColor(NPC npc, Player player)
-        {
-            int[][] fragArray = [.. fragments];
-            for (int i = 0; i < fragArray.Length; i++)
-            {
-                if (player.HasItem(fragArray[i][0]) && player.HasItem(fragArray[i][1]))
-                {
-                    return null;
-                }
-            }
-            return Color.Gray;
-        }
-        public override void OnClick(NPC npc, Player player)
-        {
-            SoundEngine.PlaySound(SoundID.MenuTick);
-
-            int[][] Frags = [.. fragments];
-
-            if (HasFragments(player, ZWEIHANDER))
-            {
-                Main.npcChatCornerItem = ItemType<Zweihander>();
-                Main.npcChatText = Language.GetTextValue("Mods.Redemption.Dialogue.Fallen.ZweihanderRepairDialogue");
-                player.QuickSpawnItem(npc.GetSource_Loot(), ItemType<Zweihander>());
-
-                SoundEngine.PlaySound(SoundID.Item37, npc.position);
-                return;
-            }
-            else if (HasFragments(player, FORGOTTEN))
-            {
-                Main.npcChatCornerItem = ItemType<ForgottenGreatsword>();
-                Main.npcChatText = Language.GetTextValue("Mods.Redemption.Dialogue.Fallen.OphosRepairDialogue");
-                player.QuickSpawnItem(npc.GetSource_Loot(), ItemType<ForgottenGreatsword>());
-
-                SoundEngine.PlaySound(SoundID.Item37, npc.position);
-                return;
-            }
-            Main.npcChatText = Language.GetTextValue("Mods.Redemption.Dialogue.Fallen.NoRepairDialogue");
-            for (int k = 0; k < Frags.Length; k++)
-            {
-                if (player.HasItem(Frags[k][0]) || player.HasItem(Frags[k][1]))
-                    Main.npcChatText = Language.GetTextValue("Mods.Redemption.Dialogue.Fallen.NotSameRepairDialogue");
-            }
         }
     }
     public class Fallen_BeardedHatchet_Proj : BaseBeardedHatchet_Proj

@@ -34,6 +34,9 @@ namespace Redemption.Globals
         public static bool SkeletonInvasion;
         public static bool spawnSkeletonInvasion;
         public static bool spawnKeeper;
+        public static int tbotDownedTimer;
+        public static int daerelDownedTimer;
+        public static int zephosDownedTimer;
         public static float RotTime;
         public static bool labSafe;
         public static int labSafeMessageTimer;
@@ -97,6 +100,13 @@ namespace Redemption.Globals
 
         public override void PostUpdateWorld()
         {
+            if (Terraria.NPC.AnyNPCs(ModContent.NPCType<TBotUnconscious>()))
+                tbotDownedTimer++;
+            if (Terraria.NPC.AnyNPCs(ModContent.NPCType<DaerelUnconscious>()))
+                daerelDownedTimer++;
+            if (Terraria.NPC.AnyNPCs(ModContent.NPCType<ZephosUnconscious>()))
+                zephosDownedTimer++;
+
             if (SubworldSystem.Current != null)
                 return;
 
@@ -414,6 +424,9 @@ namespace Redemption.Globals
             SkeletonInvasion = false;
             spawnKeeper = false;
             spawnSkeletonInvasion = false;
+            tbotDownedTimer = 0;
+            daerelDownedTimer = 0;
+            zephosDownedTimer = 0;
             labSafe = false;
             apidroidKilled = false;
             deadRingerGiven = false;
@@ -455,6 +468,9 @@ namespace Redemption.Globals
             tag["lists"] = lists;
             tag["alignment"] = alignment;
             tag["DayNightCount"] = DayNightCount;
+            tag["tbotDownedTimer"] = tbotDownedTimer;
+            tag["daerelDownedTimer"] = daerelDownedTimer;
+            tag["zephosDownedTimer"] = zephosDownedTimer;
         }
 
         public override void LoadWorldData(TagCompound tag)
@@ -472,6 +488,9 @@ namespace Redemption.Globals
             keycardGiven = lists.Contains("keycardGiven");
             alignmentGiven = lists.Contains("alignmentGiven");
             wastelandMessage = lists.Contains("wastelandMessage");
+            tbotDownedTimer = tag.GetInt("tbotDownedTimer");
+            daerelDownedTimer = tag.GetInt("daerelDownedTimer");
+            zephosDownedTimer = tag.GetInt("zephosDownedTimer");
         }
 
         #region Netcode
@@ -520,6 +539,9 @@ namespace Redemption.Globals
             writer.Write(flags2);
 
             writer.Write(DayNightCount);
+            writer.Write(tbotDownedTimer);
+            writer.Write(daerelDownedTimer);
+            writer.Write(zephosDownedTimer);
 
             writer.Write(nukeTimer);
             writer.WriteVector2(nukeGroundZero);
@@ -541,6 +563,9 @@ namespace Redemption.Globals
             nukeCountdownActive = flags2[2];
 
             DayNightCount = reader.ReadInt32();
+            tbotDownedTimer = reader.ReadInt32();
+            daerelDownedTimer = reader.ReadInt32();
+            zephosDownedTimer = reader.ReadInt32();
 
             nukeTimer = reader.ReadInt32();
             nukeGroundZero = reader.ReadVector2();

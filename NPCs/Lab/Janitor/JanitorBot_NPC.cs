@@ -1,15 +1,16 @@
+using Microsoft.Xna.Framework;
 using Redemption.Base;
 using Redemption.Globals;
 using Redemption.Items.Armor.Vanity.TBot;
+using Redemption.Items.Placeable.Containers;
 using Redemption.Items.Placeable.Furniture.Lab;
 using Redemption.Items.Placeable.Tiles;
 using Redemption.Items.Tools.PostML;
 using Redemption.Items.Usable;
 using Redemption.Items.Usable.Summons;
+using Redemption.Tiles.Furniture.Lab;
 using Redemption.Tiles.Tiles;
-using Redemption.UI.Dialect;
 using Terraria;
-using Terraria.Audio;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
@@ -17,7 +18,7 @@ using Terraria.Utilities;
 
 namespace Redemption.NPCs.Lab.Janitor
 {
-    public class JanitorBot_NPC : ModRedeNPC
+    public class JanitorBot_NPC : ModNPC
     {
         public override string Texture => "Redemption/NPCs/Lab/Janitor/JanitorBot_Cleaning";
 
@@ -27,7 +28,7 @@ namespace Redemption.NPCs.Lab.Janitor
             Main.npcFrameCount[NPC.type] = 5;
             NPCID.Sets.ActsLikeTownNPC[Type] = true;
             NPCID.Sets.NoTownNPCHappiness[Type] = true;
-            NPCID.Sets.NPCBestiaryDrawModifiers value = new()
+            NPCID.Sets.NPCBestiaryDrawModifiers value = new(0)
             {
                 Hide = true
             };
@@ -44,12 +45,7 @@ namespace Redemption.NPCs.Lab.Janitor
             NPC.knockBackResist = 0;
             NPC.aiStyle = -1;
             NPC.npcSlots = 0;
-
-            DialogueBoxStyle = LIDEN;
         }
-        public override bool HasTalkButton() => true;
-        public override bool HasLeftHangingButton(Player player) => RedeGlobalButton.talkActive;
-        public override HangingButtonParams LeftHangingButton(Player player) => new(6, false, -2);
 
         public override bool UsesPartyHat() => false;
         public override bool CanChat() => true;
@@ -65,6 +61,57 @@ namespace Redemption.NPCs.Lab.Janitor
         }
         public override bool CanHitPlayer(Player target, ref int cooldownSlot) => false;
         public override bool CanHitNPC(NPC target) => false;
+
+        public static int ChatNumber = 0;
+        public override void SetChatButtons(ref string button, ref string button2)
+        {
+            button2 = Language.GetTextValue("Mods.Redemption.DialogueBox.CycleD");
+            switch (ChatNumber)
+            {
+                case 0:
+                    button = Language.GetTextValue("Mods.Redemption.DialogueBox.Janitor.1");
+                    break;
+                case 1:
+                    button = Language.GetTextValue("Mods.Redemption.DialogueBox.Janitor.2");
+                    break;
+                case 2:
+                    button = Language.GetTextValue("Mods.Redemption.DialogueBox.Janitor.3");
+                    break;
+                case 3:
+                    button = Language.GetTextValue("Mods.Redemption.DialogueBox.Janitor.4");
+                    break;
+                case 4:
+                    button = Language.GetTextValue("Mods.Redemption.DialogueBox.Volt.6");
+                    break;
+                case 5:
+                    button = Language.GetTextValue("Mods.Redemption.DialogueBox.Volt.7");
+                    break;
+                case 6:
+                    button = Language.GetTextValue("LegacyInterface.28");
+                    break;
+            }
+        }
+
+        public override void OnChatButtonClicked(bool firstButton, ref string shopName)
+        {
+            if (firstButton)
+            {
+                if (ChatNumber == 6)
+                    shopName = "Shop";
+                else
+                    Main.npcChatText = ChitChat();
+            }
+            else
+            {
+                ChatNumber++;
+                if (ChatNumber > 6)
+                    ChatNumber = 0;
+                if (!RedeBossDowned.downedVolt && ChatNumber == 2)
+                    ChatNumber++;
+                if (!RedeBossDowned.downedMACE && ChatNumber == 3)
+                    ChatNumber++;
+            }
+        }
         public override void AddShops()
         {
             var npcShop = new NPCShop(Type)
@@ -93,7 +140,6 @@ namespace Redemption.NPCs.Lab.Janitor
                 .Add<LabReceptionDesk>()
                 .Add<LabCeilingLamp>()
                 .Add<LabToilet>()
-                .Add<JanitorEquipment>()
                 .Add<OperatorHead>(RedeConditions.IsTBotHead)
                 .Add<VoltHead>(RedeConditions.IsTBotHead)
                 .Add<JanitorOutfit>(RedeConditions.IsTBotHead)
@@ -108,6 +154,22 @@ namespace Redemption.NPCs.Lab.Janitor
 
             npcShop.Register();
         }
+
+        public static string ChitChat()
+        {
+            string s1 = LabClean ? Language.GetTextValue("Mods.Redemption.Dialogue.Janitor.CycleDialogue1Clean") : Language.GetTextValue("Mods.Redemption.Dialogue.Janitor.CycleDialogue1");
+            string s2 = LabClean ? Language.GetTextValue("Mods.Redemption.Dialogue.Janitor.CycleDialogue5Clean") : Language.GetTextValue("Mods.Redemption.Dialogue.Janitor.CycleDialogue5");
+            return ChatNumber switch
+            {
+                0 => s1,
+                1 => Language.GetTextValue("Mods.Redemption.Dialogue.Janitor.CycleDialogue2"),
+                2 => Language.GetTextValue("Mods.Redemption.Dialogue.Janitor.CycleDialogue3"),
+                3 => Language.GetTextValue("Mods.Redemption.Dialogue.Janitor.CycleDialogue4"),
+                4 => s2,
+                5 => Language.GetTextValue("Mods.Redemption.Dialogue.Janitor.CycleDialogue6"),
+                _ => "...",
+            };
+        }
         public static bool LabClean;
         public override string GetChat()
         {
@@ -118,16 +180,16 @@ namespace Redemption.NPCs.Lab.Janitor
                 {
                     Point tileToNPC = NPC.Center.ToTileCoordinates();
                     int type = Main.tile[tileToNPC.X + x, tileToNPC.Y + y].TileType;
-                    if (type == TileType<LabPlatingTileUnsafe>() || type == TileType<LabPlatingTileUnsafe2>())
+                    if (type == ModContent.TileType<LabPlatingTileUnsafe>())
                     {
                         LabClean = false;
                         break;
                     }
                 }
             }
-            Player player = Main.LocalPlayer;
+            Player player = Main.player[Main.myPlayer];
             WeightedRandom<string> chat = new();
-            if (BasePlayer.HasChestplate(player, ItemType<JanitorOutfit>(), true) && BasePlayer.HasLeggings(player, ItemType<JanitorPants>(), true))
+            if (BasePlayer.HasChestplate(player, ModContent.ItemType<JanitorOutfit>(), true) && BasePlayer.HasLeggings(player, ModContent.ItemType<JanitorPants>(), true))
             {
                 chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Janitor.ChatJanitor1"));
                 chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Janitor.ChatJanitor2"));
@@ -142,65 +204,5 @@ namespace Redemption.NPCs.Lab.Janitor
             }
             return chat;
         }
-    }
-    public class WhatsUpButton_Janitor : TalkButtonBase
-    {
-        protected override int YOffset => 0;
-        protected override bool LeftSide => true;
-        protected override string DialogueType => "Janitor.1";
-        protected override bool VisibleRequirement => true;
-        protected override int NPCType => NPCType<JanitorBot_NPC>();
-        public override void OnClick(NPC npc, Player player)
-        {
-            SoundEngine.PlaySound(SoundID.Chat);
-            Main.npcChatText = JanitorBot_NPC.LabClean ? Language.GetTextValue("Mods.Redemption.Dialogue.Janitor.1Clean") : Language.GetTextValue("Mods.Redemption.Dialogue." + DialogueType);
-        }
-    }
-    public class OtherTBotsButton_Janitor : TalkButtonBase
-    {
-        protected override int YOffset => 1;
-        protected override bool LeftSide => true;
-        protected override string DialogueType => "Janitor.2";
-        protected override bool VisibleRequirement => true;
-        protected override int NPCType => NPCType<JanitorBot_NPC>();
-    }
-    public class VoltButton_Janitor : TalkButtonBase
-    {
-        protected override int YOffset => 2;
-        protected override bool LeftSide => true;
-        protected override string DialogueType => "Janitor.3";
-        protected override bool VisibleRequirement => RedeBossDowned.downedVolt;
-        protected override int NPCType => NPCType<JanitorBot_NPC>();
-    }
-    public class MACEButton_Janitor : TalkButtonBase
-    {
-        protected override int YOffset => 3;
-        protected override bool LeftSide => true;
-        protected override string DialogueType => "Janitor.4";
-        protected override bool VisibleRequirement => RedeBossDowned.downedMACE;
-        protected override int NPCType => NPCType<JanitorBot_NPC>();
-    }
-    public class BottomOfLabButton_Janitor : TalkButtonBase
-    {
-        protected override int YOffset => 4;
-        protected override bool LeftSide => true;
-        protected override string DialogueType => "Janitor.5";
-        protected override bool VisibleRequirement => true;
-        protected override int NPCType => NPCType<JanitorBot_NPC>();
-        public override string Text(NPC npc, Player player) => Language.GetTextValue("Mods.Redemption.DialogueBox.Volt.19");
-        public override void OnClick(NPC npc, Player player)
-        {
-            SoundEngine.PlaySound(SoundID.Chat);
-            Main.npcChatText = JanitorBot_NPC.LabClean ? Language.GetTextValue("Mods.Redemption.Dialogue.Janitor.5Clean") : Language.GetTextValue("Mods.Redemption.Dialogue." + DialogueType);
-        }
-    }
-    public class GirusButton_Janitor : TalkButtonBase
-    {
-        protected override int YOffset => 5;
-        protected override bool LeftSide => true;
-        protected override string DialogueType => "Janitor.6";
-        protected override bool VisibleRequirement => true;
-        protected override int NPCType => NPCType<JanitorBot_NPC>();
-        public override string Text(NPC npc, Player player) => Language.GetTextValue("Mods.Redemption.DialogueBox.Volt.10");
     }
 }

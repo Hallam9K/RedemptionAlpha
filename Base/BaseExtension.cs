@@ -3,7 +3,6 @@ using Microsoft.Xna.Framework.Graphics;
 using Redemption.Globals;
 using Redemption.Globals.NPC;
 using Redemption.Globals.Player;
-using Redemption.NPCs;
 using Terraria;
 
 namespace Redemption.BaseExtension
@@ -32,16 +31,6 @@ namespace Redemption.BaseExtension
         public static ItemUseGlow RedemptionGlow(this Item item) => item.GetGlobalItem<ItemUseGlow>();
         /// <summary>References the RedeProjectile instance.</summary>
         public static RedeProjectile Redemption(this Projectile proj) => proj.GetGlobalProjectile<RedeProjectile>();
-
-        public static bool IsRedeNPC(this NPC npc, ref ModRedeNPC redeNPC)
-        {
-            if (npc.ModNPC != null && npc.ModNPC is ModRedeNPC rNPC)
-            {
-                redeNPC = rNPC;
-                return true;
-            }
-            return false;
-        }
 
         /// <summary>Shorthand for converting degrees of rotation into a radians equivalent.</summary>
         public static float InRadians(this float degrees) => MathHelper.ToRadians(degrees);

@@ -143,7 +143,12 @@ namespace Redemption.NPCs.Bosses.Neb.Phase2
             }
             if (RedeBossDowned.nebDeath < 7)
             {
-                RedeQuest.adviceSeen[(int)RedeQuest.Advice.StarSerpent] = true;
+                int daerel = NPC.FindFirstNPC(ModContent.NPCType<Daerel>());
+                if (daerel >= 0)
+                    Main.npc[daerel].GetGlobalNPC<ExclaimMarkNPC>().exclaimationMark[5] = false;
+                int zephos = NPC.FindFirstNPC(ModContent.NPCType<Zephos>());
+                if (zephos >= 0)
+                    Main.npc[zephos].GetGlobalNPC<ExclaimMarkNPC>().exclaimationMark[5] = false;
 
                 RedeWorld.Alignment -= 6;
                 ChaliceAlignmentUI.BroadcastDialogue(NetworkText.FromLiteral("..."), 120, 30, 0, Color.DarkGoldenrod);

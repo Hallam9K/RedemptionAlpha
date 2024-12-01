@@ -1,4 +1,4 @@
-using BetterDialogue.UI;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Base;
 using Redemption.Globals;
@@ -15,7 +15,7 @@ using Terraria.Utilities;
 
 namespace Redemption.NPCs.Friendly
 {
-    public class Noza_NPC : ModRedeNPC
+    public class Noza_NPC : ModNPC
     {
         public enum EmotionState
         {
@@ -36,7 +36,7 @@ namespace Redemption.NPCs.Friendly
             Main.npcFrameCount[NPC.type] = 10;
             NPCID.Sets.ActsLikeTownNPC[Type] = true;
             NPCID.Sets.NoTownNPCHappiness[Type] = true;
-            NPCID.Sets.NPCBestiaryDrawModifiers value = new() { Hide = true };
+            NPCID.Sets.NPCBestiaryDrawModifiers value = new(0) { Hide = true };
             NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, value);
         }
         public override void SetDefaults()
@@ -51,8 +51,6 @@ namespace Redemption.NPCs.Friendly
             NPC.aiStyle = -1;
             NPC.npcSlots = 0;
             tailChain = new TailScarfPhys();
-
-            DialogueBoxStyle = DEMON;
         }
 
         private static IPhysChain tailChain;
@@ -126,9 +124,44 @@ namespace Redemption.NPCs.Friendly
         }
         public override bool CanHitPlayer(Player target, ref int cooldownSlot) => false;
         public override bool CanHitNPC(NPC target) => false;
+
+        public static int ChatNumber = 0;
+
+        public override void SetChatButtons(ref string button, ref string button2)
+        {
+            switch (ChatNumber)
+            {
+                case 0:
+                    button = "Who are you?";
+                    break;
+            }
+        }
+
+        public override void OnChatButtonClicked(bool firstButton, ref string shopName)
+        {
+            if (firstButton)
+            {
+                EmoteState = EmotionState.Hmm;
+                Main.npcChatText = ChitChat();
+            }
+            else
+            {
+                ChatNumber++;
+                if (ChatNumber > 0)
+                    ChatNumber = 0;
+            }
+        }
+        public static string ChitChat()
+        {
+            return ChatNumber switch
+            {
+                0 => Language.GetTextValue("Mods.Redemption.Dialogue.Noza.Chat1"),
+                _ => "...",
+            };
+        }
         public override string GetChat()
         {
-            Player player = Main.LocalPlayer;
+            Player player = Main.player[Main.myPlayer];
             WeightedRandom<string> chat = new();
             EmoteState = EmotionState.Blah;
             if (BasePlayer.HasHelmet(player, ItemID.DevilHorns, true) || BasePlayer.HasHelmet(player, ItemID.DemonHorns, true))
@@ -136,7 +169,7 @@ namespace Redemption.NPCs.Friendly
                 EmoteState = EmotionState.Laugh;
                 chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Noza.Dialogue1"));
             }
-            if (player.HeldItem.type == ItemType<BlindJustice>())
+            if (player.HeldItem.type == ModContent.ItemType<BlindJustice>())
                 return Language.GetTextValue("Mods.Redemption.Dialogue.Noza.Dialogue2");
             if (BasePlayer.HasAccessory(player, ItemID.AngelHalo, true, true))
                 chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.Noza.Dialogue3"), 2);
@@ -158,7 +191,7 @@ namespace Redemption.NPCs.Friendly
         }
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
-            Texture2D EyesTex = Request<Texture2D>(Texture + "_Blink").Value;
+            Texture2D EyesTex = ModContent.Request<Texture2D>(Texture + "_Blink").Value;
             var effects = NPC.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
 
             spriteBatch.Draw(TextureAssets.Npc[NPC.type].Value, NPC.Center - new Vector2(0, 3) - screenPos, NPC.frame, NPC.GetAlpha(drawColor), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
@@ -179,7 +212,7 @@ namespace Redemption.NPCs.Friendly
     {
         public Texture2D GetTexture(Mod mod)
         {
-            return Request<Texture2D>("Redemption/NPCs/Friendly/Noza_NPC_Tail").Value;
+            return ModContent.Request<Texture2D>("Redemption/NPCs/Friendly/Noza_NPC_Tail").Value;
         }
         public Texture2D GetGlowmaskTexture(Mod mod) => null;
 
@@ -200,28 +233,40 @@ namespace Redemption.NPCs.Friendly
 
         public Vector2 OriginOffset(int index) //padding
         {
-            return index switch
+            switch (index)
             {
-                0 => new Vector2(0, 0),
-                1 => new Vector2(0, 0),
-                2 => new Vector2(-2, 0),
-                3 => new Vector2(-4, 0),
-                4 => new Vector2(-6, 0),
-                _ => new Vector2(-20, 0),
-            };
+                case 0:
+                    return new Vector2(0, 0);
+                case 1:
+                    return new Vector2(0, 0);
+                case 2:
+                    return new Vector2(-2, 0);
+                case 3:
+                    return new Vector2(-4, 0);
+                case 4:
+                    return new Vector2(-6, 0);
+                default:
+                    return new Vector2(-20, 0);
+            }
         }
 
         public int Length(int index)
         {
-            return index switch
+            switch (index)
             {
-                0 => 20,
-                1 => 14,
-                2 => 12,
-                3 => 12,
-                4 => 12,
-                _ => 26,
-            };
+                case 0:
+                    return 20;
+                case 1:
+                    return 14;
+                case 2:
+                    return 12;
+                case 3:
+                    return 12;
+                case 4:
+                    return 12;
+                default:
+                    return 26;
+            }
         }
 
         public Rectangle GetSourceRect(Texture2D texture, int index)
@@ -246,18 +291,6 @@ namespace Redemption.NPCs.Friendly
                 force.Y += (float)(Math.Sin(time * 0.5f * windPower - index * Math.Sign(force.X)) * 0.25f * windPower) * 6f * dir;
             }
             return force;
-        }
-    }
-    public class NozaButton : ChatButton
-    {
-        public override double Priority => 8.0;
-        public override string Text(NPC npc, Player player) => Language.GetTextValue("Mods.Redemption.DialogueBox.Who");
-        public override string Description(NPC npc, Player player) => string.Empty;
-        public override bool IsActive(NPC npc, Player player) => npc.type == NPCType<Noza_NPC>();
-        public override void OnClick(NPC npc, Player player)
-        {
-            npc.ai[0] = 2;
-            Main.npcChatText = Language.GetTextValue("Mods.Redemption.Dialogue.Noza.Chat1");
         }
     }
 }

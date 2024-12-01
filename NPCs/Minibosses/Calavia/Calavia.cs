@@ -795,7 +795,7 @@ namespace Redemption.NPCs.Minibosses.Calavia
                             if (AITimer >= 240)
                             {
                                 if (!RedeBossDowned.downedCalavia && Main.netMode != NetmodeID.MultiplayerClient)
-                                    ChaliceAlignmentUI.BroadcastDialogue(NetworkText.FromKey(Language.GetTextValue("Mods.Redemption.UI.Chalice.CalaviaChoice")), 180, 30, 0, Color.DarkGoldenrod);
+                                    ChaliceAlignmentUI.BroadcastDialogue(NetworkText.FromKey(Language.GetTextValue("Mods.Redemption.UI.Chalice.CalaviaChoice"), 180, 30, 0, Color.DarkGoldenrod));
 
                                 AITimer = 0;
                                 TimerRand = 1;

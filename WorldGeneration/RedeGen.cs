@@ -265,7 +265,7 @@ namespace Redemption.WorldGeneration
                 int guide = NPC.FindFirstNPC(NPCID.Guide);
                 if (guide != -1)
                     Main.npc[guide].active = false;
-                int num = NPC.NewNPC(new EntitySource_WorldGen(), (Main.spawnTileX + 5) * 16, Main.spawnTileY * 16, ModContent.NPCType<TBot>());
+                int num = NPC.NewNPC(new EntitySource_WorldGen(), (Main.spawnTileX + 5) * 16, Main.spawnTileY * 16, ModContent.NPCType<TBotUnconscious>());
                 Main.npc[num].homeTileX = Main.spawnTileX + 5;
                 Main.npc[num].homeTileY = Main.spawnTileY;
                 Main.npc[num].direction = 1;
@@ -1384,7 +1384,7 @@ namespace Redemption.WorldGeneration
                         [new Color(0, 255, 0)] = TileID.Grass,
                         [new Color(0, 0, 255)] = TileID.Emerald,
                         [new Color(0, 255, 255)] = ModContent.TileType<ElderWoodTile>(),
-                        [new Color(255, 0, 255)] = ModContent.TileType<AncientHallBrickTileSafe>(),
+                        [new Color(255, 0, 255)] = ModContent.TileType<AncientHallBrickTile>(),
                         [new Color(150, 150, 150)] = -2,
                         [Color.Black] = -1
                     };

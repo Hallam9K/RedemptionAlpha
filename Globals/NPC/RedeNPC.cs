@@ -47,7 +47,6 @@ using Redemption.Items.Donator.BLT;
 using Redemption.Items.Donator.Spoopy;
 using Redemption.Items.Accessories.PostML;
 using Redemption.Items.Critters;
-using Redemption.UI.Dialect;
 
 namespace Redemption.Globals.NPC
 {
@@ -60,8 +59,6 @@ namespace Redemption.Globals.NPC
         public bool spiritSummon;
         public Entity attacker = Main.LocalPlayer;
         public Terraria.NPC npcTarget;
-
-        public bool HideAllButtons;
 
         public override void ModifyShop(NPCShop shop)
         {
@@ -99,16 +96,16 @@ namespace Redemption.Globals.NPC
         private static bool TalkedDryad;
         public override void GetChat(Terraria.NPC npc, ref string chat)
         {
-            if (npc.type == NPCID.Dryad && !TalkedDryad && RedeBossDowned.downedKeeper)
+            if (npc.type == NPCID.Dryad && !TalkedDryad && RedeQuest.forestNymphVar is 0)
             {
-                RedeQuest.adviceUnlocked[(int)RedeQuest.Advice.ForestNymph] = true;
-                if (RedeQuest.forestNymphVar > 0)
-                    RedeQuest.adviceSeen[(int)RedeQuest.Advice.ForestNymph] = true;
-
+                int daerel = Terraria.NPC.FindFirstNPC(ModContent.NPCType<Daerel>());
+                if (daerel >= 0)
+                    Main.npc[daerel].GetGlobalNPC<ExclaimMarkNPC>().exclaimationMark[2] = true;
+                int zephos = Terraria.NPC.FindFirstNPC(ModContent.NPCType<Zephos>());
+                if (zephos >= 0)
+                    Main.npc[zephos].GetGlobalNPC<ExclaimMarkNPC>().exclaimationMark[2] = true;
                 TalkedDryad = true;
             }
-            RedeGlobalButton.talkActive = false;
-            RedeGlobalButton.talkID = 0;
         }
 
         public override void ResetEffects(Terraria.NPC npc)
@@ -141,26 +138,34 @@ namespace Redemption.Globals.NPC
                 if (apply)
                     Main.player[(int)npc.ai[3]].AddBuff(ModContent.BuffType<CruxCardCooldown>(), 3600);
             }
-            int FallenID = Terraria.NPC.FindFirstNPC(NPCType<Fallen>());
-            if (npc.type is NPCID.EaterofWorldsHead or NPCID.BrainofCthulhu && !Terraria.NPC.downedBoss2)
+            int FallenID = Terraria.NPC.FindFirstNPC(ModContent.NPCType<Fallen>());
+            if (npc.type is NPCID.EaterofWorldsHead or NPCID.BrainofCthulhu && !Terraria.NPC.downedBoss2 && !RedeBossDowned.downedEaglecrestGolem)
             {
-                RedeQuest.adviceUnlocked[(int)RedeQuest.Advice.EaglecrestGolem] = true;
-                if (RedeBossDowned.downedEaglecrestGolem)
-                    RedeQuest.adviceSeen[(int)RedeQuest.Advice.EaglecrestGolem] = true;
+                int daerel = Terraria.NPC.FindFirstNPC(ModContent.NPCType<Daerel>());
+                if (daerel >= 0)
+                    Main.npc[daerel].GetGlobalNPC<ExclaimMarkNPC>().exclaimationMark[0] = true;
+                int zephos = Terraria.NPC.FindFirstNPC(ModContent.NPCType<Zephos>());
+                if (zephos >= 0)
+                    Main.npc[zephos].GetGlobalNPC<ExclaimMarkNPC>().exclaimationMark[0] = true;
             }
-            else if (npc.type is NPCID.WallofFlesh && !Main.hardMode)
+            else if (npc.type is NPCID.WallofFlesh && !Main.hardMode && !RedeBossDowned.downedSlayer)
             {
-                RedeQuest.adviceUnlocked[(int)RedeQuest.Advice.Androids] = true;
-                if (RedeBossDowned.downedSlayer)
-                    RedeQuest.adviceSeen[(int)RedeQuest.Advice.Androids] = true;
+                int daerel = Terraria.NPC.FindFirstNPC(ModContent.NPCType<Daerel>());
+                if (daerel >= 0)
+                    Main.npc[daerel].GetGlobalNPC<ExclaimMarkNPC>().exclaimationMark[3] = true;
+                int zephos = Terraria.NPC.FindFirstNPC(ModContent.NPCType<Zephos>());
+                if (zephos >= 0)
+                    Main.npc[zephos].GetGlobalNPC<ExclaimMarkNPC>().exclaimationMark[3] = true;
             }
-            else if (npc.type is NPCID.MoonLordCore && !Terraria.NPC.downedMoonlord)
+            else if (npc.type is NPCID.MoonLordCore && FallenID >= 0 && Main.LocalPlayer.HasItemInAnyInventory(ModContent.ItemType<GolemEye>()) && !Terraria.NPC.downedMoonlord && !RedeBossDowned.downedADD)
             {
-                RedeQuest.adviceUnlocked[(int)RedeQuest.Advice.UkkoEye] = true;
-                if (FallenID >= 0 && !RedeBossDowned.downedADD)
-                    Main.npc[FallenID].GetGlobalNPC<ExclaimMarkNPC>().exclaimationMark[4] = true;
-                if (RedeBossDowned.downedADD)
-                    RedeQuest.adviceSeen[(int)RedeQuest.Advice.UkkoEye] = true;
+                int daerel = Terraria.NPC.FindFirstNPC(ModContent.NPCType<Daerel>());
+                if (daerel >= 0)
+                    Main.npc[daerel].GetGlobalNPC<ExclaimMarkNPC>().exclaimationMark[4] = true;
+                int zephos = Terraria.NPC.FindFirstNPC(ModContent.NPCType<Zephos>());
+                if (zephos >= 0)
+                    Main.npc[zephos].GetGlobalNPC<ExclaimMarkNPC>().exclaimationMark[4] = true;
+                Main.npc[FallenID].GetGlobalNPC<ExclaimMarkNPC>().exclaimationMark[4] = true;
             }
             return base.PreKill(npc);
         }

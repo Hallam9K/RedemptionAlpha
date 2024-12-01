@@ -126,7 +126,12 @@ namespace Redemption.NPCs.Minibosses.EaglecrestGolem
         {
             if (!RedeBossDowned.downedEaglecrestGolem)
             {
-                RedeQuest.adviceSeen[(int)RedeQuest.Advice.EaglecrestGolem] = true;
+                int daerel = NPC.FindFirstNPC(ModContent.NPCType<Daerel>());
+                if (daerel >= 0)
+                    Main.npc[daerel].GetGlobalNPC<ExclaimMarkNPC>().exclaimationMark[0] = false;
+                int zephos = NPC.FindFirstNPC(ModContent.NPCType<Zephos>());
+                if (zephos >= 0)
+                    Main.npc[zephos].GetGlobalNPC<ExclaimMarkNPC>().exclaimationMark[0] = false;
 
                 RedeWorld.Alignment += 0;
                 ChaliceAlignmentUI.BroadcastDialogue(NetworkText.FromKey("Mods.Redemption.UI.Chalice.EaglecrestDefeat"), 300, 30, 0, Color.DarkGoldenrod);

@@ -1,58 +1,48 @@
-using BetterDialogue.UI;
-using Microsoft.Xna.Framework.Graphics;
-using Redemption.BaseExtension;
-using Redemption.Biomes;
+using Microsoft.Xna.Framework;
+using Terraria;
+using Terraria.ID;
+using Terraria.ModLoader;
+using Terraria.Localization;
+using Terraria.Utilities;
+using Terraria.GameContent.Bestiary;
 using Redemption.Globals;
-using Redemption.Items.Accessories.HM;
-using Redemption.Items.Armor.Vanity.TBot;
-using Redemption.Items.Donator.Lordfunnyman;
-using Redemption.Items.Lore;
 using Redemption.Items.Materials.HM;
-using Redemption.Items.Materials.PostML;
 using Redemption.Items.Placeable.Furniture.Misc;
-using Redemption.Items.Placeable.Plants;
 using Redemption.Items.Placeable.Tiles;
-using Redemption.Items.Quest.KingSlayer;
-using Redemption.Items.Usable;
 using Redemption.Items.Usable.Potions;
 using Redemption.Items.Usable.Summons;
+using Redemption.Items.Accessories.HM;
+using Redemption.Items.Armor.Vanity.TBot;
+using Redemption.Base;
+using Redemption.Biomes;
+using Redemption.Items.Placeable.Plants;
+using Redemption.Items.Usable;
+using Redemption.Items.Quest.KingSlayer;
+using Redemption.Items.Lore;
 using Redemption.NPCs.Bosses.SeedOfInfection;
-using Redemption.Textures.Emotes;
-using Redemption.UI.Dialect;
-using ReLogic.Content;
-using System;
-using System.Collections.Generic;
-using Terraria;
-using Terraria.Audio;
-using Terraria.GameContent;
-using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.Personalities;
+using System.Collections.Generic;
+using Microsoft.Xna.Framework.Graphics;
+using Redemption.Items.Donator.Lordfunnyman;
+using Terraria.GameContent;
+using ReLogic.Content;
+using Redemption.Textures.Emotes;
 using Terraria.GameContent.UI;
-using Terraria.ID;
-using Terraria.Localization;
-using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
-using Terraria.Utilities;
+using Redemption.UI.ChatUI;
 
 namespace Redemption.NPCs.Friendly.TownNPCs
 {
     [AutoloadHead]
-    public class TBot : ModRedeNPC
+    public class TBot : ModNPC
     {
-        public static Asset<Texture2D> unconsciousTexture;
-        public override void Load()
-        {
-            if (Main.dedServ)
-                return;
-            unconsciousTexture = Request<Texture2D>("Redemption/NPCs/Friendly/TownNPCs/TBotUnconscious");
-        }
         public override void SetStaticDefaults()
         {
             // DisplayName.SetDefault("Friendly T-Bot");
             Main.npcFrameCount[NPC.type] = 21;
             NPCID.Sets.HatOffsetY[NPC.type] = -6;
             NPCID.Sets.ExtraFramesCount[Type] = 5;
-            NPCID.Sets.FaceEmote[Type] = EmoteBubbleType<AdamTownNPCEmote>();
+            NPCID.Sets.FaceEmote[Type] = ModContent.EmoteBubbleType<AdamTownNPCEmote>();
 
             NPC.Happiness.SetBiomeAffection<HallowBiome>(AffectionLevel.Like);
             NPC.Happiness.SetBiomeAffection<ForestBiome>(AffectionLevel.Love);
@@ -64,7 +54,7 @@ namespace Redemption.NPCs.Friendly.TownNPCs
             NPC.Happiness.SetNPCAffection(NPCID.Truffle, AffectionLevel.Dislike);
             NPC.Happiness.SetNPCAffection(NPCID.Cyborg, AffectionLevel.Hate);
 
-            NPCID.Sets.NPCBestiaryDrawModifiers drawModifiers = new()
+            NPCID.Sets.NPCBestiaryDrawModifiers drawModifiers = new(0)
             {
                 Velocity = 1f
             };
@@ -84,32 +74,11 @@ namespace Redemption.NPCs.Friendly.TownNPCs
             NPC.DeathSound = SoundID.NPCDeath14;
             NPC.knockBackResist = 0.5f;
             AnimationType = NPCID.Guide;
-            SpawnModBiomes = new int[2] { GetInstance<LidenBiomeAlpha>().Type, GetInstance<LidenBiome>().Type };
-            if (Unconscious > 0)
-                NPC.dontTakeDamage = true;
-
-            DialogueBoxStyle = LIDEN;
+            SpawnModBiomes = new int[2] { ModContent.GetInstance<LidenBiomeAlpha>().Type, ModContent.GetInstance<LidenBiome>().Type };
         }
-        public override bool HasReviveButton() => Unconscious > 0;
-
         private int questCounter;
-        int starsFrame;
-        int starsCounter;
         public override void FindFrame(int frameHeight)
         {
-            if (Unconscious > 0)
-            {
-                if (++starsCounter >= 10)
-                {
-                    starsCounter = 0;
-                    if (++starsFrame > 3)
-                    {
-                        starsCounter = 0;
-                        starsFrame = 0;
-                    }
-                }
-                return;
-            }
             if (++questCounter >= 4)
             {
                 questCounter = 0;
@@ -137,83 +106,39 @@ namespace Redemption.NPCs.Friendly.TownNPCs
             }
             Dust.NewDust(NPC.position + NPC.velocity, NPC.width, NPC.height, DustID.Electric, NPC.velocity.X * 0.5f, NPC.velocity.Y * 0.5f);
         }
-
-        public int Unconscious;
-        public override void LoadData(TagCompound tag)
-        {
-            warheadKnown = tag.GetBool("warheadKnown");
-            Unconscious = tag.GetInt("Unconscious");
-        }
-        public override void SaveData(TagCompound tag)
-        {
-            tag["warheadKnown"] = warheadKnown;
-            tag["Unconscious"] = Unconscious;
-        }
-        public override bool UsesPartyHat() => Unconscious <= 0;
-        public override bool PreAI()
-        {
-            if (Unconscious > 0)
-            {
-                NPC.velocity.X = 0;
-                if (--Unconscious == 1)
-                {
-                    Revived();
-                    return false;
-                }
-                if (!NPC.dontTakeDamage)
-                    NPC.dontTakeDamage = true;
-                return false;
-            }
-            return true;
-        }
-        public void Revived()
-        {
-            Unconscious = 0;
-            NPC.life = NPC.lifeMax;
-            NPC.dontTakeDamage = false;
-            NPC.netUpdate = true;
-            Main.NewText(Language.GetTextValue("Mods.Redemption.StatusMessage.Other.NPCWokeUp", NPC.FullName), new Color(50, 125, 255));
-        }
         public override bool CheckDead()
         {
-            if (Unconscious > 0)
+            if (Main.netMode != NetmodeID.MultiplayerClient)
             {
-                NPC.life = NPC.lifeMax;
-                NPC.netUpdate = true;
-                return true;
+                RedeWorld.tbotDownedTimer = 0;
+                RedeWorld.SyncData();
             }
-            Main.NewText(Language.GetTextValue("Mods.Redemption.StatusMessage.Other.Unconscious", NPC.FullName), Color.Red.R, Color.Red.G, Color.Red.B);
-            RedeGlobalButton.talkActive = false;
-            NPC.life = NPC.lifeMax;
-            NPC.dontTakeDamage = true;
-            Unconscious = 43200;
-            NPC.netUpdate = true;
+            Main.NewText(Language.GetTextValue("Mods.Redemption.DialogueBox.TBot.Unconscious"), Color.Red.R, Color.Red.G, Color.Red.B);
+            NPC.SetDefaults(ModContent.NPCType<TBotUnconscious>());
+            NPC.life = 1;
+
+            if (Main.netMode == NetmodeID.Server)
+                NetMessage.SendData(MessageID.WorldData);
+
             return false;
         }
 
         public override bool CanTownNPCSpawn(int numTownNPCs)
         {
-            return RedeBossDowned.downedSeed && !NPC.AnyNPCs(NPCType<TBot_Intro>()) && !RedeHelper.AnyProjectiles(ProjectileType<AdamPortal>());
+            return RedeBossDowned.downedSeed && !NPC.AnyNPCs(ModContent.NPCType<TBotUnconscious>()) && !NPC.AnyNPCs(ModContent.NPCType<TBot_Intro>()) && !RedeHelper.AnyProjectiles(ModContent.ProjectileType<AdamPortal>());
         }
 
         public override List<string> SetNPCNameList()
         {
-            return new List<string> { Language.GetTextValue("Mods.Redemption.NPCs.TBot_Intro.DisplayName") };
+            return new List<string> { "Adam" };
         }
         public override ITownNPCProfile TownNPCProfile() => new TBotProfile();
         public override string GetChat()
         {
-            FloppyDiskButton.NextPage = false;
-            if (Unconscious > 0)
-            {
-                if (Unconscious >= 43200 - 3600)
-                    return Language.GetTextValue("Mods.Redemption.Dialogue.General.UnconsciousStatus1", NPC.FullName);
-                return Language.GetTextValue("Mods.Redemption.Dialogue.General.UnconsciousStatus2", NPC.FullName, (int)MathHelper.Lerp(43200 / 3600, 0, Unconscious / 43200f));
-            }
-            Player player = Main.LocalPlayer;
+            NextPage = false;
+            Player player = Main.player[Main.myPlayer];
             WeightedRandom<string> chat = new(Main.rand);
 
-            /*
             int GuideID = NPC.FindFirstNPC(NPCID.Guide);
             if (GuideID >= 0)
                 chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.TBot.GuideDialogue", Main.npc[GuideID].GivenName));
@@ -225,9 +150,9 @@ namespace Redemption.NPCs.Friendly.TownNPCs
             int DryadID = NPC.FindFirstNPC(NPCID.Dryad);
             if (DryadID >= 0)
                 chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.TBot.DryadDialogue", Main.npc[DryadID].GivenName));
-            */
+
             int NurseID = NPC.FindFirstNPC(NPCID.Nurse);
-            /*if (NurseID >= 0 && RedeBossDowned.nukeDropped)
+            if (NurseID >= 0 && RedeBossDowned.nukeDropped)
                 chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.TBot.NurseDialogue", Main.npc[NurseID].GivenName));
 
             int ArmsDealerID = NPC.FindFirstNPC(NPCID.ArmsDealer);
@@ -238,6 +163,31 @@ namespace Redemption.NPCs.Friendly.TownNPCs
             if (cyborgID >= 0)
                 chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.TBot.CyborgDialogue", Main.npc[cyborgID].GivenName));
 
+            if (Main.hardMode && NPC.downedMechBoss1 && NPC.downedMechBoss2 && NPC.downedMechBoss3)
+            {
+                chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.TBot.Dialogue1"), 1.5);
+                chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.TBot.Dialogue2"), 1.5);
+            }
+
+            if (NPC.downedPlantBoss)
+                chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.TBot.Dialogue3"), 1.5);
+
+            if (NPC.downedGolemBoss)
+                chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.TBot.Dialogue4"), 1.5);
+
+            if (NPC.downedMoonlord)
+                chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.TBot.Dialogue5"), 1.5);
+
+            if (RedeBossDowned.downedOmega1 || RedeBossDowned.downedOmega2)
+            {
+                chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.TBot.Dialogue6"), 1.5);
+                chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.TBot.Dialogue7"), 1.5);
+            }
+
+            if (RedeBossDowned.downedSlayer)
+                chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.TBot.Dialogue8"), 1.5);
+            if (RedeBossDowned.downedVolt)
+                chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.TBot.Dialogue9"), 2);
             if (BasePlayer.HasHelmet(player, ModContent.ItemType<AdamHead>(), true))
             {
                 chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.TBot.AdamHeadDialogue1"), 3);
@@ -257,74 +207,162 @@ namespace Redemption.NPCs.Friendly.TownNPCs
                     chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.TBot.VoltDialogue3"), 3);
                 }
             }
-            */
-            if (Main.dayTime)
-            {
-                string day = Language.GetTextValue("Mods.Redemption.Dialogue.TBot.Morning");
-                if (Main.time >= 54000 / 2)
-                    day = Language.GetTextValue("Mods.Redemption.Dialogue.TBot.Afternoon");
-                if (Main.time >= 37800)
-                    day = Language.GetTextValue("Mods.Redemption.Dialogue.TBot.Evening");
-                chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.TBot.1", day));
-                chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.TBot.Day1"));
-                chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.TBot.Day2"));
-            }
-            else
-                chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.TBot.Night"));
+            if (BasePlayer.HasItem(player, ModContent.ItemType<NuclearWarhead>()))
+                chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.TBot.Dialogue10"), 1.5);
 
-            chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.TBot.2"));
-            chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.TBot.3"));
-
-            string dayTime = Main.dayTime ? Language.GetTextValue("Mods.Redemption.Dialogue.TBot.Today") : Language.GetTextValue("Mods.Redemption.Dialogue.TBot.Tonight");
-            chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.TBot.4", dayTime));
-            chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.TBot.5"));
-            chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.TBot.6", dayTime));
-
-            bool debuffed = false;
-            for (int i = 0; i < BuffLoader.BuffCount; i++)
-            {
-                if (player.HasBuff(i) && Main.debuff[i])
-                {
-                    debuffed = true;
-                    break;
-                }
-            }
-            if (player.statLife >= player.statLifeMax2 - 20 && !debuffed)
-            {
-                chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.TBot.Healthy1"));
-                chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.TBot.Healthy2"));
-            }
-            if (player.statLife <= player.statLifeMax2 / 2)
-            {
-                if (NurseID >= 0)
-                {
-                    chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.TBot.Unhealthy1"));
-                    chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.TBot.Unhealthy2", Main.npc[NurseID].GivenName));
-                }
-                chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.TBot.Unhealthy3"));
-            }
-
-
-
-            /*if (RedeBossDowned.downedJanitor)
+            chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.TBot.Dialogue11"));
+            chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.TBot.Dialogue12"));
+            chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.TBot.Dialogue13"));
+            chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.TBot.Dialogue14"));
+            chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.TBot.Dialogue15"));
+            chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.TBot.Dialogue16"));
+            if (RedeBossDowned.downedJanitor)
                 chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.TBot.Dialogue17"), 1.5);
             if (RedeBossDowned.nukeDropped || RedeBossDowned.downedJanitor)
             {
                 chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.TBot.Dialogue18"), 1.5);
                 chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.TBot.Dialogue19"), 1.5);
             }
-            chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.TBot.Dialogue20"));*/
-
-            if (player.RedemptionRad().radiationLevel >= .5f)
-            {
-                string rad = Language.GetTextValue("Mods.Redemption.Dialogue.TBot.DialogueRad");
-                if (player.RedemptionRad().radiationLevel is >= 1f and < 1.5f)
-                    rad = Language.GetTextValue("Mods.Redemption.Dialogue.TBot.DialogueRad2");
-                if (player.RedemptionRad().radiationLevel >= 1.5f)
-                    rad = Language.GetTextValue("Mods.Redemption.Dialogue.TBot.DialogueRad3");
-                chat.Add(rad, 100);
-            }
+            chat.Add(Language.GetTextValue("Mods.Redemption.Dialogue.TBot.Dialogue21"));
             return chat;
+        }
+
+        public static bool NextPage;
+        public override void SetChatButtons(ref string button, ref string button2)
+        {
+            button = Language.GetTextValue("LegacyInterface.28");
+
+            button2 = Language.GetTextValue("Mods.Redemption.DialogueBox.TBot.FloppyDisc");
+            if (NextPage)
+                button2 = Language.GetTextValue("Mods.Redemption.DialogueBox.TBot.NextPage");
+            if (FDisk >= 20)
+                button2 += Language.GetTextValue("Mods.Redemption.DialogueBox.TBot.Next");
+        }
+
+        public static int FDisk;
+        public override void OnChatButtonClicked(bool firstButton, ref string shopName)
+        {
+            Player player = Main.player[Main.myPlayer];
+            if (firstButton)
+            {
+                if (Main.hardMode && !warheadKnown && !RedeBossDowned.nukeDropped)
+                {
+                    warheadKnown = true;
+                    DialogueChain chain = new();
+                    chain.Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.TBotIntro.Warhead1"), Color.LightGreen, Color.DarkGreen, null, .05f, 2, 0, false))
+                         .Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.TBotIntro.Warhead2"), Color.LightGreen, Color.DarkGreen, null, .05f, 2, 0, false))
+                         .Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.TBotIntro.Warhead3"), Color.LightGreen, Color.DarkGreen, null, .05f, 2, 0, false))
+                         .Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.TBotIntro.Warhead4"), Color.LightGreen, Color.DarkGreen, null, .05f, 2, 0, false))
+                         .Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.TBotIntro.Warhead5"), Color.LightGreen, Color.DarkGreen, null, .05f, 2, 0, false))
+                         .Add(new(NPC, Language.GetTextValue("Mods.Redemption.Cutscene.TBotIntro.Warhead6"), Color.LightGreen, Color.DarkGreen, null, .05f, 2, .5f, boxFade: true));
+                    ChatUI.Visible = true;
+                    ChatUI.Add(chain);
+
+                    NPC.netUpdate = true;
+                }
+                shopName = "Shop";
+            }
+            else
+            {
+                FDisk = 0;
+                int heldItem = player.HeldItem.type;
+                if (heldItem == ModContent.ItemType<FloppyDisk1>())
+                {
+                    FDisk = 1;//
+                    if (NextPage)
+                    {
+                        FDisk = 21;
+                        NextPage = false;
+                    }
+                    else
+                        NextPage = true;
+                }
+                else if (heldItem == ModContent.ItemType<FloppyDisk2>())
+                    FDisk = 2;
+                else if (heldItem == ModContent.ItemType<FloppyDisk2_1>())
+                    FDisk = 3;
+                else if (heldItem == ModContent.ItemType<FloppyDisk3>())
+                    FDisk = 4;
+                else if (heldItem == ModContent.ItemType<FloppyDisk3_1>())
+                {
+                    FDisk = 5;//
+                    if (NextPage)
+                    {
+                        FDisk = 25;
+                        NextPage = false;
+                    }
+                    else
+                        NextPage = true;
+                }
+                else if (heldItem == ModContent.ItemType<FloppyDisk5>())
+                    FDisk = 6;
+                else if (heldItem == ModContent.ItemType<FloppyDisk5_1>())
+                    FDisk = 7;
+                else if (heldItem == ModContent.ItemType<FloppyDisk5_2>())
+                    FDisk = 8;
+                else if (heldItem == ModContent.ItemType<FloppyDisk5_3>())
+                    FDisk = 9;
+                else if (heldItem == ModContent.ItemType<FloppyDisk6>())
+                {
+                    FDisk = 10;//
+                    if (NextPage)
+                    {
+                        FDisk = 30;
+                        NextPage = false;
+                    }
+                    else
+                        NextPage = true;
+                }
+                else if (heldItem == ModContent.ItemType<FloppyDisk6_1>())
+                    FDisk = 11;
+                else if (heldItem == ModContent.ItemType<FloppyDisk7>())
+                    FDisk = 12;
+                else if (heldItem == ModContent.ItemType<FloppyDisk7_1>())
+                {
+                    FDisk = 13;//
+                    if (NextPage)
+                    {
+                        FDisk = 33;
+                        NextPage = false;
+                    }
+                    else
+                        NextPage = true;
+                }
+                else if (heldItem == ModContent.ItemType<AIChip>())
+                    FDisk = 14;
+                else if (heldItem == ModContent.ItemType<MemoryChip>())
+                    FDisk = 16;
+                if (FDisk != 1 && FDisk != 5 && FDisk != 10 && FDisk != 13)
+                    NextPage = false;
+
+                Main.npcChatText = DiskChat();
+            }
+        }
+        public static string DiskChat()
+        {
+            return FDisk switch
+            {
+                1 => Language.GetTextValue("Mods.Redemption.Dialogue.TBot.FloppyDisk1"),
+                2 => Language.GetTextValue("Mods.Redemption.Dialogue.TBot.FloppyDisk2"),
+                3 => Language.GetTextValue("Mods.Redemption.Dialogue.TBot.FloppyDisk3"),
+                4 => Language.GetTextValue("Mods.Redemption.Dialogue.TBot.FloppyDisk4"),
+                5 => Language.GetTextValue("Mods.Redemption.Dialogue.TBot.FloppyDisk5"),
+                6 => Language.GetTextValue("Mods.Redemption.Dialogue.TBot.FloppyDisk6"),
+                7 => Language.GetTextValue("Mods.Redemption.Dialogue.TBot.FloppyDisk7"),
+                8 => Language.GetTextValue("Mods.Redemption.Dialogue.TBot.FloppyDisk8"),
+                9 => Language.GetTextValue("Mods.Redemption.Dialogue.TBot.FloppyDisk9"),
+                10 => Language.GetTextValue("Mods.Redemption.Dialogue.TBot.FloppyDisk10"),
+                11 => Language.GetTextValue("Mods.Redemption.Dialogue.TBot.FloppyDisk11"),
+                12 => Language.GetTextValue("Mods.Redemption.Dialogue.TBot.FloppyDisk12"),
+                13 => Language.GetTextValue("Mods.Redemption.Dialogue.TBot.FloppyDisk13"),
+                14 => Language.GetTextValue("Mods.Redemption.Dialogue.TBot.AIChipLine"),
+                16 => Language.GetTextValue("Mods.Redemption.Dialogue.TBot.MemoryChipLine"),
+                21 => Language.GetTextValue("Mods.Redemption.Dialogue.TBot.FloppyDisk14"),
+                25 => Language.GetTextValue("Mods.Redemption.Dialogue.TBot.FloppyDisk15"),
+                30 => Language.GetTextValue("Mods.Redemption.Dialogue.TBot.FloppyDisk16"),
+                33 => Language.GetTextValue("Mods.Redemption.Dialogue.TBot.FloppyDisk17"),
+                _ => Language.GetTextValue("Mods.Redemption.Dialogue.TBot.NoFloppyDisk")
+            };
         }
         public override void AddShops()
         {
@@ -367,34 +405,32 @@ namespace Redemption.NPCs.Friendly.TownNPCs
         private int questFrame;
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
-            var effects = NPC.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
-            if (Unconscious > 0)
+            if (Main.hardMode && !warheadKnown && !RedeBossDowned.nukeDropped)
             {
-                Rectangle rect = unconsciousTexture.Frame(1, 4, 0, starsFrame);
-                Vector2 origin = rect.Size() / 2;
-
-                spriteBatch.Draw(unconsciousTexture.Value, NPC.Center + new Vector2(0, 3) - screenPos, rect, NPC.GetAlpha(drawColor), NPC.rotation, origin, NPC.scale, effects, 0);
-                return false;
-            }
-
-            if (!NPC.IsABestiaryIconDummy && Main.hardMode && !warheadKnown && !RedeBossDowned.nukeDropped)
-            {
-                Texture2D questMark = Request<Texture2D>("Redemption/Textures/QuestMark").Value;
+                Texture2D questMark = ModContent.Request<Texture2D>("Redemption/Textures/QuestMark").Value;
                 int Height = questMark.Height / 3;
                 int y = Height * questFrame;
                 Rectangle rect = new(0, y, questMark.Width, Height);
                 Vector2 origin = new(questMark.Width / 2f, Height / 2f);
-                float scaleOffset = (float)Math.Sin(Main.GlobalTimeWrappedHourly * MathHelper.TwoPi * 2f) / 6f;
-                spriteBatch.Draw(questMark, NPC.Center - screenPos - new Vector2(0, 50), new Rectangle?(rect), NPC.GetAlpha(RedeColor.QuestMarkerColour), 0, origin, 1 + scaleOffset, 0, 0);
+                spriteBatch.Draw(questMark, NPC.Center - screenPos - new Vector2(0, 50), new Rectangle?(rect), NPC.GetAlpha(Color.LightGoldenrodYellow), 0, origin, 1, 0, 0);
             }
 
             if (!Redemption.AprilFools || (NPC.frame.Y != 0 && NPC.frame.Y < 19 * 58))
                 return true;
 
-            Texture2D texture = Request<Texture2D>(Texture + "_Drip").Value;
+            Texture2D texture = ModContent.Request<Texture2D>(Texture + "_Drip").Value;
             Vector2 offset = new(0, 4);
+            var effects = NPC.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
             spriteBatch.Draw(texture, NPC.Center - offset - screenPos, null, NPC.GetAlpha(drawColor), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
             return false;
+        }
+        public override void LoadData(TagCompound tag)
+        {
+            warheadKnown = tag.GetBool("warheadKnown");
+        }
+        public override void SaveData(TagCompound tag)
+        {
+            tag["warheadKnown"] = warheadKnown;
         }
         public override int? PickEmote(Player closestPlayer, List<int> emoteList, WorldUIAnchor otherAnchor)
         {
@@ -412,112 +448,7 @@ namespace Redemption.NPCs.Friendly.TownNPCs
     {
         public int RollVariation() => 0;
         public string GetNameForVariant(NPC npc) => npc.getNewNPCName();
-        public Asset<Texture2D> GetTextureNPCShouldUse(NPC npc) => Request<Texture2D>("Redemption/NPCs/Friendly/TownNPCs/TBot");
-        public int GetHeadTextureIndex(NPC npc) => GetModHeadSlot("Redemption/NPCs/Friendly/TownNPCs/TBot_Head");
-    }
-    public class FloppyDiskButton : ChatButton
-    {
-        public override double Priority => 8.0;
-        public override string Text(NPC npc, Player player)
-        {
-            string s = Language.GetTextValue("Mods.Redemption.DialogueBox.TBot.FloppyDisc.Name");
-            if (NextPage)
-                s = Language.GetTextValue("Mods.Redemption.DialogueBox.TBot.NextPage");
-            if (FDisk >= 20)
-                s += Language.GetTextValue("Mods.Redemption.DialogueBox.TBot.Next");
-            return s;
-        }
-        public override string Description(NPC npc, Player player) => Language.GetTextValue("Mods.Redemption.DialogueBox.TBot.FloppyDisc.Description");
-        public override bool IsActive(NPC npc, Player player) => npc.type == NPCType<TBot>();
-        private readonly int[] disk = new int[] {
-                    ItemType<FloppyDisk1>(),
-                    ItemType<FloppyDisk2>(),
-                    ItemType<FloppyDisk2_1>(),
-                    ItemType<FloppyDisk3>(),
-                    ItemType<FloppyDisk3_1>(),
-                    ItemType<FloppyDisk5>(),
-                    ItemType<FloppyDisk5_1>(),
-                    ItemType<FloppyDisk5_2>(),
-                    ItemType<FloppyDisk5_3>(),
-                    ItemType<FloppyDisk6>(),
-                    ItemType<FloppyDisk6_1>(),
-                    ItemType<FloppyDisk7>(),
-                    ItemType<FloppyDisk7_1>(),
-                    ItemType<AIChip>(),
-                    ItemType<MemoryChip>() };
-
-        public override Color? OverrideColor(NPC npc, Player player)
-        {
-            for (int i = 0; i < disk.Length; i++)
-            {
-                if (player.HeldItem.type == disk[i])
-                    return null;
-            }
-            return Color.Gray;
-        }
-        public static bool NextPage;
-        public static int FDisk;
-        public override void OnClick(NPC npc, Player player)
-        {
-            SoundEngine.PlaySound(SoundID.Chat);
-            FDisk = 0;
-            int heldItem = player.HeldItem.type;
-            if (heldItem == disk[0])
-                FDisk = 1;
-            else if (heldItem == disk[1])
-                FDisk = 2;
-            else if (heldItem == disk[2])
-                FDisk = 3;
-            else if (heldItem == disk[3])
-                FDisk = 4;
-            else if (heldItem == disk[4])
-                FDisk = 5;
-            else if (heldItem == disk[5])
-                FDisk = 6;
-            else if (heldItem == disk[6])
-                FDisk = 7;
-            else if (heldItem == disk[7])
-                FDisk = 8;
-            else if (heldItem == disk[8])
-                FDisk = 9;
-            else if (heldItem == disk[9])
-                FDisk = 10;
-            else if (heldItem == disk[10])
-                FDisk = 11;
-            else if (heldItem == disk[11])
-                FDisk = 12;
-            else if (heldItem == disk[12])
-                FDisk = 13;//
-            else if (heldItem == disk[13])
-                FDisk = 14;
-            else if (heldItem == disk[14])
-                FDisk = 16;
-            if (FDisk != 1 && FDisk != 5 && FDisk != 10 && FDisk != 13)
-                NextPage = false;
-
-            Main.npcChatText = DiskChat();
-        }
-        public static string DiskChat()
-        {
-            return FDisk switch
-            {
-                1 => Language.GetTextValue("Mods.Redemption.Dialogue.TBot.FloppyDisk1"),
-                2 => Language.GetTextValue("Mods.Redemption.Dialogue.TBot.FloppyDisk2"),
-                3 => Language.GetTextValue("Mods.Redemption.Dialogue.TBot.FloppyDisk3"),
-                4 => Language.GetTextValue("Mods.Redemption.Dialogue.TBot.FloppyDisk4"),
-                5 => Language.GetTextValue("Mods.Redemption.Dialogue.TBot.FloppyDisk5"),
-                6 => Language.GetTextValue("Mods.Redemption.Dialogue.TBot.FloppyDisk6"),
-                7 => Language.GetTextValue("Mods.Redemption.Dialogue.TBot.FloppyDisk7"),
-                8 => Language.GetTextValue("Mods.Redemption.Dialogue.TBot.FloppyDisk8"),
-                9 => Language.GetTextValue("Mods.Redemption.Dialogue.TBot.FloppyDisk9"),
-                10 => Language.GetTextValue("Mods.Redemption.Dialogue.TBot.FloppyDisk10"),
-                11 => Language.GetTextValue("Mods.Redemption.Dialogue.TBot.FloppyDisk11"),
-                12 => Language.GetTextValue("Mods.Redemption.Dialogue.TBot.FloppyDisk12"),
-                13 => Language.GetTextValue("Mods.Redemption.Dialogue.TBot.FloppyDisk13"),
-                14 => Language.GetTextValue("Mods.Redemption.Dialogue.TBot.AIChipLine"),
-                16 => Language.GetTextValue("Mods.Redemption.Dialogue.TBot.MemoryChipLine"),
-                _ => Language.GetTextValue("Mods.Redemption.Dialogue.TBot.NoFloppyDisk")
-            };
-        }
+        public Asset<Texture2D> GetTextureNPCShouldUse(NPC npc) => ModContent.Request<Texture2D>("Redemption/NPCs/Friendly/TownNPCs/TBot");
+        public int GetHeadTextureIndex(NPC npc) => ModContent.GetModHeadSlot("Redemption/NPCs/Friendly/TownNPCs/TBot_Head");
     }
 }

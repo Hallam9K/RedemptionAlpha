@@ -157,9 +157,12 @@ namespace Redemption.NPCs.Bosses.PatientZero
         {
             if (!RedeBossDowned.downedPZ)
             {
-                RedeQuest.adviceUnlocked[(int)RedeQuest.Advice.StarSerpent] = true;
-                if (RedeBossDowned.downedNebuleus)
-                    RedeQuest.adviceSeen[(int)RedeQuest.Advice.StarSerpent] = true;
+                int daerel = NPC.FindFirstNPC(ModContent.NPCType<Daerel>());
+                if (daerel >= 0)
+                    Main.npc[daerel].GetGlobalNPC<ExclaimMarkNPC>().exclaimationMark[5] = true;
+                int zephos = NPC.FindFirstNPC(ModContent.NPCType<Zephos>());
+                if (zephos >= 0)
+                    Main.npc[zephos].GetGlobalNPC<ExclaimMarkNPC>().exclaimationMark[5] = true;
 
                 Item.NewItem(NPC.GetSource_Loot(), (int)NPC.position.X, (int)NPC.position.Y, NPC.width, NPC.height, ModContent.ItemType<LabHologramDevice>());
             }

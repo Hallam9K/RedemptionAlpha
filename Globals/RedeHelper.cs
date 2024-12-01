@@ -723,15 +723,15 @@ namespace Redemption.Globals
 
         public static bool ZephosActive()
         {
-            return Terraria.NPC.AnyNPCs(ModContent.NPCType<Zephos>());
+            return Terraria.NPC.AnyNPCs(ModContent.NPCType<Zephos>()) || Terraria.NPC.AnyNPCs(ModContent.NPCType<ZephosUnconscious>());
         }
         public static bool DaerelActive()
         {
-            return Terraria.NPC.AnyNPCs(ModContent.NPCType<Daerel>());
+            return Terraria.NPC.AnyNPCs(ModContent.NPCType<Daerel>()) || Terraria.NPC.AnyNPCs(ModContent.NPCType<DaerelUnconscious>());
         }
         public static bool TBotActive()
         {
-            return Terraria.NPC.AnyNPCs(ModContent.NPCType<TBot>());
+            return Terraria.NPC.AnyNPCs(ModContent.NPCType<TBot>()) || Terraria.NPC.AnyNPCs(ModContent.NPCType<TBotUnconscious>());
         }
         public static bool WayfarerActive()
         {

@@ -1,14 +1,15 @@
-using Microsoft.Xna.Framework.Graphics;
-using Redemption.Globals;
 using Terraria;
-using Terraria.GameContent;
-using Terraria.ID;
-using Terraria.Localization;
+using Microsoft.Xna.Framework;
 using Terraria.ModLoader;
+using Microsoft.Xna.Framework.Graphics;
+using Terraria.ID;
+using Redemption.Globals;
+using Terraria.GameContent;
+using Terraria.Localization;
 
 namespace Redemption.NPCs.Lab
 {
-    public class JustANormalToaster : ModRedeNPC
+    public class JustANormalToaster : ModNPC
     {
         public override void SetStaticDefaults()
         {
@@ -17,7 +18,7 @@ namespace Redemption.NPCs.Lab
             NPCID.Sets.ActsLikeTownNPC[Type] = true;
             NPCID.Sets.NoTownNPCHappiness[Type] = true;
 
-            NPCID.Sets.NPCBestiaryDrawModifiers value = new()
+            NPCID.Sets.NPCBestiaryDrawModifiers value = new(0)
             {
                 Hide = true
             };
@@ -39,8 +40,6 @@ namespace Redemption.NPCs.Lab
             NPC.dontTakeDamage = true;
             NPC.hide = true;
             NPC.ShowNameOnHover = true;
-
-            DialogueBoxStyle = LIDEN;
         }
 
         public override void DrawBehind(int index)
@@ -56,7 +55,7 @@ namespace Redemption.NPCs.Lab
             Vector2 offset = Vector2.Zero;
             if (RedeBossDowned.downedOmega3)
             {
-                texture = Request<Texture2D>(Texture + "_OO").Value;
+                texture = ModContent.Request<Texture2D>(Texture + "_OO").Value;
                 int Height = texture.Height / 7;
                 int y = Height * AniFrameY;
                 rect = new(0, y, texture.Width, Height);
@@ -67,12 +66,6 @@ namespace Redemption.NPCs.Lab
 
             spriteBatch.Draw(texture, NPC.Center - offset - screenPos, new Rectangle?(rect), NPC.GetAlpha(drawColor), NPC.rotation, origin, NPC.scale, effects, 0);
             return false;
-        }
-        public override void AI()
-        {
-            if (!RedeBossDowned.downedOmega3)
-                return;
-            DialogueBoxStyle = OMEGA;
         }
         public override bool CanChat() => true;
         public override string GetChat()

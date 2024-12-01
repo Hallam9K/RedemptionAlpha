@@ -107,7 +107,6 @@ namespace Redemption.NPCs.Friendly.TownNPCs
                     {
                         NPC.SetDefaults(ModContent.NPCType<Newb>());
                         NPC.GivenName = Language.GetTextValue("Mods.Redemption.NPCs.Newb_Intro.DisplayName");
-                        NPC.homeless = true;
                         NPC.netUpdate = true;
                     }
                     break;

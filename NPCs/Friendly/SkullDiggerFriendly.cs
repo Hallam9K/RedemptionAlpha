@@ -1,33 +1,28 @@
-using BetterDialogue.UI;
+using Terraria;
+using Terraria.ID;
+using Microsoft.Xna.Framework;
+using Terraria.ModLoader;
 using Microsoft.Xna.Framework.Graphics;
+using Terraria.ModLoader.Utilities;
+using Terraria.DataStructures;
+using Redemption.Globals;
+using Terraria.Graphics.Shaders;
+using Terraria.GameContent;
+using Redemption.Items.Usable.Summons;
 using Redemption.Base;
 using Redemption.BaseExtension;
-using Redemption.Globals;
-using Redemption.Items.Placeable.Trophies;
-using Redemption.Items.Usable;
-using Redemption.Items.Usable.Summons;
-using Redemption.Items.Weapons.HM.Melee;
 using Redemption.Items.Weapons.PreHM.Summon;
-using Redemption.UI.ChatUI;
-using Redemption.UI.Dialect;
-using ReLogic.Content;
-using ReLogic.Graphics;
-using System;
-using Terraria;
+using Redemption.Items.Materials.PreHM;
 using Terraria.Audio;
-using Terraria.DataStructures;
-using Terraria.GameContent;
-using Terraria.Graphics.Shaders;
-using Terraria.ID;
 using Terraria.Localization;
+using Redemption.Items.Usable;
 using Terraria.Map;
-using Terraria.ModLoader;
-using Terraria.ModLoader.Utilities;
 using Terraria.UI;
+using ReLogic.Content;
 
 namespace Redemption.NPCs.Friendly
 {
-    public class SkullDiggerFriendly : ModRedeNPC
+    public class SkullDiggerFriendly : ModNPC
     {
         public override string Texture => "Redemption/NPCs/Minibosses/SkullDigger/SkullDigger";
 
@@ -36,7 +31,7 @@ namespace Redemption.NPCs.Friendly
         {
             if (Main.dedServ)
                 return;
-            HeadIcon = Request<Texture2D>(Texture + "_Head_Boss");
+            HeadIcon = ModContent.Request<Texture2D>(Texture + "_Head_Boss");
         }
 
         public enum ActionState
@@ -52,6 +47,9 @@ namespace Redemption.NPCs.Friendly
         }
 
         public ref float AITimer => ref NPC.ai[1];
+
+        public ref float TimerRand => ref NPC.ai[2];
+
         public float[] oldrot = new float[5];
         public override void SetStaticDefaults()
         {
@@ -63,8 +61,7 @@ namespace Redemption.NPCs.Friendly
             NPCID.Sets.NoTownNPCHappiness[Type] = true;
 
             NPCID.Sets.ImmuneToRegularBuffs[Type] = true;
-
-            NPCID.Sets.NPCBestiaryDrawModifiers value = new()
+            NPCID.Sets.NPCBestiaryDrawModifiers value = new(0)
             {
                 Hide = true
             };
@@ -79,30 +76,41 @@ namespace Redemption.NPCs.Friendly
             NPC.HitSound = SoundID.NPCHit3;
             NPC.DeathSound = SoundID.NPCDeath51;
             NPC.knockBackResist = 0f;
-            NPC.rarity = 1;
             NPC.aiStyle = -1;
+            NPC.rarity = 1;
             NPC.noGravity = true;
             NPC.noTileCollide = true;
             NPC.dontTakeDamage = true;
-
-            DialogueBoxStyle = CAVERN;
         }
 
         public override bool CanHitPlayer(Player target, ref int cooldownSlot) => false;
         public override bool CanHitNPC(NPC target) => false;
         public override bool CheckActive() => !spoken;
+        private bool floatTimer;
         private bool spoken;
         public override void AI()
         {
             if (spoken)
                 NPC.DiscourageDespawn(60);
-            if (NPC.target < 0 || NPC.target == 255 || Main.player[NPC.target].dead || !Main.player[NPC.target].active)
+            Player player = Main.player[RedeHelper.GetNearestAlivePlayer(NPC)];
+            if (NPC.target < 0 || NPC.target == 255 || player.dead || !player.active)
                 NPC.TargetClosest();
 
-            if (!RedeHelper.AnyProjectiles(ProjectileType<SkullDiggerFriendly_FlailBlade>()))
-                NPC.Shoot(NPC.Center, ProjectileType<SkullDiggerFriendly_FlailBlade>(), NPC.damage, Vector2.Zero, NPC.whoAmI);
+            if (!RedeHelper.AnyProjectiles(ModContent.ProjectileType<SkullDiggerFriendly_FlailBlade>()))
+                NPC.Shoot(NPC.Center, ModContent.ProjectileType<SkullDiggerFriendly_FlailBlade>(), NPC.damage, Vector2.Zero, NPC.whoAmI);
 
-            NPC.position.Y += (float)Math.Sin(NPC.localAI[0]++ / 15) / 3;
+            if (!floatTimer)
+            {
+                NPC.velocity.Y += 0.03f;
+                if (NPC.velocity.Y > .5f)
+                    floatTimer = true;
+            }
+            else if (floatTimer)
+            {
+                NPC.velocity.Y -= 0.03f;
+                if (NPC.velocity.Y < -.5f)
+                    floatTimer = false;
+            }
 
             switch (AIState)
             {
@@ -123,15 +131,12 @@ namespace Redemption.NPCs.Friendly
                             CombatText.NewText(NPC.getRect(), Color.GhostWhite, Language.GetTextValue("Mods.Redemption.Cutscene.SkullDigger.2"), true, false);
                         if (NPC.alpha >= 255)
                         {
-                            Item.NewItem(NPC.GetSource_Loot(), (int)NPC.position.X, (int)NPC.position.Y, NPC.width, NPC.height, ItemType<SkullDiggerTrophy>());
-
                             for (int i = 0; i < 50; i++)
                             {
                                 int dustIndex = Dust.NewDust(NPC.position + NPC.velocity, NPC.width, NPC.height, DustID.PurificationPowder, 0f, 0f, 100, default, 2.5f);
                                 Main.dust[dustIndex].velocity *= 2.6f;
                             }
                             Main.NewText(Language.GetTextValue("Mods.Redemption.StatusMessage.Other.SkullDigger"), Colors.RarityPurple.R, Colors.RarityPurple.G, Colors.RarityPurple.B);
-
                             if (!RedeBossDowned.skullDiggerSaved)
                                 RedeWorld.Alignment++;
 
@@ -143,12 +148,43 @@ namespace Redemption.NPCs.Friendly
                     }
                     break;
             }
-            for (int k = NPC.oldPos.Length - 1; k > 0; k--)
-                oldrot[k] = oldrot[k - 1];
-            oldrot[0] = NPC.rotation;
         }
 
         public override bool CanChat() => true;
+        public override void SetChatButtons(ref string button, ref string button2)
+        {
+            button = Language.GetTextValue("Mods.Redemption.DialogueBox.SkullDigger.Talk");
+            if (Main.LocalPlayer.HasItem(ModContent.ItemType<WeddingRing>()))
+                button2 = Language.GetTextValue("Mods.Redemption.DialogueBox.SkullDigger.Give");
+        }
+        public override void OnChatButtonClicked(bool firstButton, ref string shopName)
+        {
+            if (firstButton)
+            {
+                Main.npcChatText = ChitChat();
+            }
+            else
+            {
+                int ring = Main.LocalPlayer.FindItem(ModContent.ItemType<WeddingRing>());
+                if (ring >= 0)
+                {
+                    Main.LocalPlayer.inventory[ring].stack--;
+                    if (Main.LocalPlayer.inventory[ring].stack <= 0)
+                        Main.LocalPlayer.inventory[ring] = new Item();
+                }
+
+                if ((BasePlayer.HasHelmet(Main.LocalPlayer, ItemID.TheBrideHat) && BasePlayer.HasChestplate(Main.LocalPlayer, ItemID.TheBrideDress)) || (BasePlayer.HasHelmet(Main.LocalPlayer, ItemID.TopHat) && BasePlayer.HasChestplate(Main.LocalPlayer, ItemID.TuxedoShirt) && BasePlayer.HasLeggings(Main.LocalPlayer, ItemID.TuxedoPants)))
+                    Main.npcChatText = Language.GetTextValue("Mods.Redemption.Dialogue.SkullDigger.WeddingRingDialogue2");
+                else
+                    Main.npcChatText = Language.GetTextValue("Mods.Redemption.Dialogue.SkullDigger.WeddingRingDialogue1");
+                AIState = ActionState.Saved;
+                NetMessage.SendData(MessageID.SyncNPC, number: NPC.whoAmI);
+            }
+        }
+        public static string ChitChat()
+        {
+            return Language.GetTextValue("Mods.Redemption.Dialogue.SkullDigger.Talk");
+        }
         public override string GetChat()
         {
             spoken = true;
@@ -157,6 +193,10 @@ namespace Redemption.NPCs.Friendly
 
         public override void FindFrame(int frameHeight)
         {
+            for (int k = NPC.oldPos.Length - 1; k > 0; k--)
+                oldrot[k] = oldrot[k - 1];
+            oldrot[0] = NPC.rotation;
+
             if (++NPC.frameCounter >= 10)
             {
                 NPC.frameCounter = 0;
@@ -168,22 +208,22 @@ namespace Redemption.NPCs.Friendly
 
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
-            Texture2D HandsTex = Request<Texture2D>("Redemption/NPCs/Minibosses/SkullDigger/SkullDigger_Hands").Value;
+            Texture2D HandsTex = ModContent.Request<Texture2D>("Redemption/NPCs/Minibosses/SkullDigger/SkullDigger_Hands").Value;
             var effects = NPC.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
             int shader = ContentSamples.CommonlyUsedContentSamples.ColorOnlyShaderIndex;
 
             spriteBatch.End();
-            spriteBatch.BeginAdditive(true);
-            GameShaders.Armor.ApplySecondary(shader, Main.LocalPlayer, null);
+            spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+            GameShaders.Armor.ApplySecondary(shader, Main.player[Main.myPlayer], null);
 
             for (int i = 0; i < NPCID.Sets.TrailCacheLength[NPC.type]; i++)
             {
                 Vector2 oldPos = NPC.oldPos[i];
-                spriteBatch.Draw(TextureAssets.Npc[NPC.type].Value, oldPos + NPC.Size / 2f - screenPos + new Vector2(0, NPC.gfxOffY), NPC.frame, NPC.GetAlpha(Color.LightCyan) * 0.3f, oldrot[i], NPC.frame.Size() / 2, NPC.scale + 0.1f, effects, 0);
+                Main.spriteBatch.Draw(TextureAssets.Npc[NPC.type].Value, oldPos + NPC.Size / 2f - screenPos + new Vector2(0, NPC.gfxOffY), NPC.frame, NPC.GetAlpha(Color.LightCyan) * 0.3f, oldrot[i], NPC.frame.Size() / 2, NPC.scale + 0.1f, effects, 0);
             }
 
             spriteBatch.End();
-            spriteBatch.BeginDefault();
+            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
 
             spriteBatch.Draw(TextureAssets.Npc[NPC.type].Value, NPC.Center - screenPos, NPC.frame, NPC.GetAlpha(drawColor), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
 
@@ -196,7 +236,7 @@ namespace Redemption.NPCs.Friendly
         {
             if (RedeBossDowned.skullDiggerSaved || !RedeBossDowned.keeperSaved || NPC.AnyNPCs(NPC.type))
                 return 0;
-            bool sorrow = spawnInfo.Player.HasItem(ItemType<SorrowfulEssence>());
+            bool sorrow = spawnInfo.Player.HasItem(ModContent.ItemType<SorrowfulEssence>());
             return SpawnCondition.Cavern.Chance * (sorrow ? 0.08f : 0.03f);
         }
 
@@ -224,73 +264,22 @@ namespace Redemption.NPCs.Friendly
             }
         }
     }
-    public class TalkButton_SkullDigger : ChatButton
-    {
-        public override double Priority => 3.0;
-        public override string Text(NPC npc, Player player) => Language.GetTextValue("Mods.Redemption.DialogueBox.Talk");
-        public override string Description(NPC npc, Player player) => string.Empty;
-        public override bool IsActive(NPC npc, Player player) => npc.type == NPCType<SkullDiggerFriendly>() || npc.type == NPCType<SkullDiggerFriendly_Spirit>();
-        public override void OnClick(NPC npc, Player player)
-        {
-            SoundEngine.PlaySound(SoundID.Chat);
-            if (npc.type == NPCType<SkullDiggerFriendly_Spirit>())
-                Main.npcChatText = Language.GetTextValue("Mods.Redemption.Dialogue.SkullDigger.SpiritTalk");
-            else
-                Main.npcChatText = Language.GetTextValue("Mods.Redemption.Dialogue.SkullDigger.Talk");
-        }
-    }
-    public class GiveWeddingRingButton : ChatButton
-    {
-        public override double Priority => 4.0;
-        public override string Text(NPC npc, Player player) => !Main.LocalPlayer.HasItem(ItemType<WeddingRing>()) ? "???" : Language.GetTextValue("Mods.Redemption.DialogueBox.SkullDigger.Give");
-        public override string Description(NPC npc, Player player) => string.Empty;
-        public override bool IsActive(NPC npc, Player player) => npc.type == NPCType<SkullDiggerFriendly>() && npc.ai[0] != 1;
-        public override Color? OverrideColor(NPC npc, Player player)
-        {
-            if (!Main.LocalPlayer.HasItem(ItemType<WeddingRing>()))
-                return Color.Gray;
-            return RedeColor.TextPositive;
-        }
-
-        public override void OnClick(NPC npc, Player player)
-        {
-            if (!Main.LocalPlayer.HasItem(ItemType<WeddingRing>()))
-                return;
-            SoundEngine.PlaySound(SoundID.Chat);
-            int ring = Main.LocalPlayer.FindItem(ItemType<WeddingRing>());
-            if (ring >= 0)
-            {
-                Main.LocalPlayer.inventory[ring].stack--;
-                if (Main.LocalPlayer.inventory[ring].stack <= 0)
-                    Main.LocalPlayer.inventory[ring] = new Item();
-            }
-
-            if ((BasePlayer.HasHelmet(Main.LocalPlayer, ItemID.TheBrideHat) && BasePlayer.HasChestplate(Main.LocalPlayer, ItemID.TheBrideDress)) || (BasePlayer.HasHelmet(Main.LocalPlayer, ItemID.TopHat) && BasePlayer.HasChestplate(Main.LocalPlayer, ItemID.TuxedoShirt) && BasePlayer.HasLeggings(Main.LocalPlayer, ItemID.TuxedoPants)))
-                Main.npcChatText = Language.GetTextValue("Mods.Redemption.Dialogue.SkullDigger.WeddingRingDialogue2");
-            else
-                Main.npcChatText = Language.GetTextValue("Mods.Redemption.Dialogue.SkullDigger.WeddingRingDialogue1");
-            npc.ai[0] = 1;
-            NetMessage.SendData(MessageID.SyncNPC, number: npc.whoAmI);
-        }
-    }
     public class SkullDiggerFriendly_Spirit : SkullDiggerFriendly
     {
-        public override bool HasCruxButton(Player player) => !player.HasItem(ItemType<CruxCardSkullDigger>());
-        public override void CruxButton(Player player)
-        {
-            RequestCruxButton.RequestCrux(NPC, player, ItemType<CruxCardSkullDigger>(), "SkullDigger.NoCruxSpiritDialogue", "SkullDigger.CruxSpiritDialogue");
-        }
-
         public override string Texture => "Redemption/NPCs/Minibosses/SkullDigger/SkullDigger";
+        public override void SetStaticDefaults()
+        {
+            base.SetStaticDefaults();
+            // DisplayName.SetDefault("Skull Digger's Spirit");
+        }
         public override bool CheckActive() => false;
+        private bool floatTimer;
         public override bool PreAI()
         {
-            if (NPC.target < 0 || NPC.target == 255 || Main.player[NPC.target].dead || !Main.player[NPC.target].active)
+            Player player = Main.player[RedeHelper.GetNearestAlivePlayer(NPC)];
+            if (NPC.target < 0 || NPC.target == 255 || player.dead || !player.active)
                 NPC.TargetClosest();
-
-            Player player = Main.player[NPC.target];
-
-            if (!Main.LocalPlayer.RedemptionAbility().SpiritwalkerActive)
+            if (!Main.player[Main.myPlayer].RedemptionAbility().SpiritwalkerActive)
             {
                 NPC.alpha += 10;
                 if (NPC.alpha >= 255)
@@ -299,7 +288,7 @@ namespace Redemption.NPCs.Friendly
                     for (int i = 0; i < Main.maxPlayers; i++)
                     {
                         Player player2 = Main.player[i];
-                        if (!player2.active || player2.dead || !player2.RedemptionAbility().SpiritwalkerActive)
+                        if (!player2.active || player2.dead || !player.RedemptionAbility().SpiritwalkerActive)
                             continue;
 
                         oneActive = true;
@@ -311,20 +300,59 @@ namespace Redemption.NPCs.Friendly
             }
             else
             {
-                if (NPC.alpha > 30)
+                if (NPC.ai[0] >= 2 && NPC.alpha > 0)
                     NPC.alpha -= 10;
             }
 
-            if (!RedeHelper.AnyProjectiles(ProjectileType<SkullDiggerFriendly_FlailBlade>()))
-                NPC.Shoot(NPC.Center, ProjectileType<SkullDiggerFriendly_FlailBlade>(), NPC.damage, Vector2.Zero, NPC.whoAmI, 1);
+            if (!RedeHelper.AnyProjectiles(ModContent.ProjectileType<SkullDiggerFriendly_FlailBlade>()))
+                NPC.Shoot(NPC.Center, ModContent.ProjectileType<SkullDiggerFriendly_FlailBlade>(), NPC.damage, Vector2.Zero, NPC.whoAmI, 1);
 
-            NPC.position.Y += (float)Math.Sin(NPC.localAI[0]++ / 15) / 3;
-            if (NPC.alpha <= 30)
+            if (!floatTimer)
             {
-                NPC.alpha += Main.rand.Next(-10, 11);
-                NPC.alpha = (int)MathHelper.Clamp(NPC.alpha, 0, 30);
+                NPC.velocity.Y += 0.03f;
+                if (NPC.velocity.Y > .5f)
+                    floatTimer = true;
             }
+            else if (floatTimer)
+            {
+                NPC.velocity.Y -= 0.03f;
+                if (NPC.velocity.Y < -.5f)
+                    floatTimer = false;
+            }
+            NPC.alpha += Main.rand.Next(-10, 11);
+            NPC.alpha = (int)MathHelper.Clamp(NPC.alpha, 0, 30);
             return false;
+        }
+        public override void SetChatButtons(ref string button, ref string button2)
+        {
+            button = Language.GetTextValue("Mods.Redemption.DialogueBox.SkullDigger.Talk");
+            if (Main.LocalPlayer.RedemptionAbility().SpiritwalkerActive && !Main.LocalPlayer.HasItem(ModContent.ItemType<CruxCardSkullDigger>()))
+                button2 = Language.GetTextValue("Mods.Redemption.DialogueBox.SkullDigger.Crux");
+        }
+        public override void OnChatButtonClicked(bool firstButton, ref string shopName)
+        {
+            if (firstButton)
+                Main.npcChatText = Language.GetTextValue("Mods.Redemption.Dialogue.SkullDigger.SpiritTalk");
+            else
+            {
+                int card = Main.LocalPlayer.FindItem(ModContent.ItemType<EmptyCruxCard>());
+                if (card >= 0)
+                {
+                    Main.LocalPlayer.inventory[card].stack--;
+                    if (Main.LocalPlayer.inventory[card].stack <= 0)
+                        Main.LocalPlayer.inventory[card] = new Item();
+
+                    Main.LocalPlayer.QuickSpawnItem(NPC.GetSource_Loot(), ModContent.ItemType<CruxCardSkullDigger>());
+                    Main.npcChatText = Language.GetTextValue("Mods.Redemption.Dialogue.SkullDigger.CruxSpiritDialogue");
+                    Main.npcChatCornerItem = ModContent.ItemType<CruxCardSkullDigger>();
+                    SoundEngine.PlaySound(SoundID.Chat);
+                }
+                else
+                {
+                    Main.npcChatText = Language.GetTextValue("Mods.Redemption.Dialogue.SkullDigger.NoCruxSpiritDialogue");
+                    Main.npcChatCornerItem = ModContent.ItemType<EmptyCruxCard>();
+                }
+            }
         }
         public override string GetChat()
         {
@@ -333,12 +361,12 @@ namespace Redemption.NPCs.Friendly
 
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
-            Texture2D HandsTex = Request<Texture2D>("Redemption/NPCs/Minibosses/SkullDigger/SkullDigger_Hands").Value;
+            Texture2D HandsTex = ModContent.Request<Texture2D>("Redemption/NPCs/Minibosses/SkullDigger/SkullDigger_Hands").Value;
             var effects = NPC.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
             int shader = GameShaders.Armor.GetShaderIdFromItemId(ItemID.WispDye);
             spriteBatch.End();
-            spriteBatch.BeginAdditive(true);
-            GameShaders.Armor.ApplySecondary(shader, Main.LocalPlayer, null);
+            spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+            GameShaders.Armor.ApplySecondary(shader, Main.player[Main.myPlayer], null);
 
             for (int i = 0; i < NPCID.Sets.TrailCacheLength[NPC.type]; i++)
             {
@@ -351,7 +379,7 @@ namespace Redemption.NPCs.Friendly
             Rectangle rect = new(0, 0, HandsTex.Width, HandsTex.Height);
             spriteBatch.Draw(HandsTex, NPC.Center - screenPos - new Vector2(14, -32), new Rectangle?(rect), NPC.GetAlpha(Color.White), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
             spriteBatch.End();
-            spriteBatch.BeginDefault();
+            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
             return false;
         }
 
@@ -362,7 +390,7 @@ namespace Redemption.NPCs.Friendly
 
             if (spawnInfo.Player.RedemptionAbility().SpiritwalkerActive && !spawnInfo.Player.ZoneTowerNebula && !spawnInfo.Player.ZoneTowerSolar && !spawnInfo.Player.ZoneTowerStardust && !spawnInfo.Player.ZoneTowerVortex)
             {
-                bool sorrow = spawnInfo.Player.HasItem(ItemType<SorrowfulEssence>());
+                bool sorrow = spawnInfo.Player.HasItem(ModContent.ItemType<SorrowfulEssence>());
                 return sorrow ? 0.8f : 0.4f;
             }
             return 0;

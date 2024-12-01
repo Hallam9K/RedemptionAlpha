@@ -152,7 +152,12 @@ namespace Redemption.NPCs.Bosses.Neb
             }
             if (!RedeBossDowned.downedNebuleus)
             {
-                RedeQuest.adviceSeen[(int)RedeQuest.Advice.StarSerpent] = true;
+                int daerel = NPC.FindFirstNPC(ModContent.NPCType<Daerel>());
+                if (daerel >= 0)
+                    Main.npc[daerel].GetGlobalNPC<ExclaimMarkNPC>().exclaimationMark[5] = false;
+                int zephos = NPC.FindFirstNPC(ModContent.NPCType<Zephos>());
+                if (zephos >= 0)
+                    Main.npc[zephos].GetGlobalNPC<ExclaimMarkNPC>().exclaimationMark[5] = false;
 
                 RedeWorld.Alignment += 0;
                 ChaliceAlignmentUI.BroadcastDialogue(NetworkText.FromLiteral("..."), 120, 30, 0, Color.DarkGoldenrod);
