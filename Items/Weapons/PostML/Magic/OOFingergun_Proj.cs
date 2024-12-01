@@ -85,7 +85,7 @@ namespace Redemption.Items.Weapons.PostML.Magic
                         Projectile.localAI[1] = 0;
                     }
                 }
-                if (firerate > 5 && Projectile.localAI[0]++ >= 60 && Projectile.localAI[0] % 40 == 0)
+                if (firerate > 4 && Projectile.localAI[0]++ >= 60 && Projectile.localAI[0] % 40 == 0)
                     firerate--;
                 if ((!player.channel && Projectile.localAI[0] >= 10) || !player.CheckMana(mana))
                     Projectile.Kill();

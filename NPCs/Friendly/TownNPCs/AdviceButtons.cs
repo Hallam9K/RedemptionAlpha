@@ -157,8 +157,16 @@ namespace Redemption.NPCs.Friendly.TownNPCs
                     arg1 = ElementID.HolyS;
                     break;
                 case 4:
-                    arg0 = ElementID.HolyS;
-                    arg1 = ElementID.ShadowS;
+                    if (isDaerel)
+                    {
+                        arg0 = ElementID.ShadowS;
+                        arg1 = ElementID.HolyS;
+                    }
+                    else
+                    {
+                        arg0 = ElementID.HolyS;
+                        arg1 = ElementID.ShadowS;
+                    }
                     break;
                 case 5:
                     if (isDaerel)
