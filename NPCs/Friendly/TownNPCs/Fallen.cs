@@ -33,6 +33,7 @@ using Redemption.BaseExtension;
 using Redemption.Globals.NPC;
 using Redemption.Items.Weapons.PreHM.Ranged;
 using System;
+using Redemption.Items.Placeable.Plants;
 
 namespace Redemption.NPCs.Friendly.TownNPCs
 {
@@ -278,6 +279,8 @@ namespace Redemption.NPCs.Friendly.TownNPCs
                 .Add(new Item(ModContent.ItemType<Earthbind>()) { shopCustomPrice = 15, shopSpecialCurrency = Redemption.AntiqueDorulCurrencyId }, Condition.InBelowSurface)
                 .Add(new Item(ModContent.ItemType<ElderWoodCrossbow>()) { shopCustomPrice = 20, shopSpecialCurrency = Redemption.AntiqueDorulCurrencyId }, Condition.InBelowSurface)
                 .Add(new Item(ModContent.ItemType<Mistfall>()) { shopCustomPrice = 15, shopSpecialCurrency = Redemption.AntiqueDorulCurrencyId }, Condition.InSnow)
+                .Add(new Item(ItemID.BookofSkulls) { shopCustomPrice = 40, shopSpecialCurrency = Redemption.AntiqueDorulCurrencyId }, Condition.DownedSkeletron)
+                .Add(new Item(ModContent.ItemType<AncientGrassSeeds>()) { shopCustomPrice = 1, shopSpecialCurrency = Redemption.AntiqueDorulCurrencyId })
                 .Add(new Item(ModContent.ItemType<AncientDirt>()) { shopCustomPrice = 1, shopSpecialCurrency = Redemption.AntiqueDorulCurrencyId })
                 .Add(new Item(ModContent.ItemType<ElderWood>()) { shopCustomPrice = 1, shopSpecialCurrency = Redemption.AntiqueDorulCurrencyId })
                 .Add(new Item(ModContent.ItemType<GathicStone>()) { shopCustomPrice = 1, shopSpecialCurrency = Redemption.AntiqueDorulCurrencyId })
@@ -285,7 +288,7 @@ namespace Redemption.NPCs.Friendly.TownNPCs
                 .Add(new Item(ModContent.ItemType<LostSoul>()) { shopCustomPrice = 4, shopSpecialCurrency = Redemption.AntiqueDorulCurrencyId })
                 .Add(new Item(ModContent.ItemType<Violin>()) { shopCustomPrice = 20, shopSpecialCurrency = Redemption.AntiqueDorulCurrencyId })
                 .Add(new Item(ModContent.ItemType<ViisaanKantele>()) { shopCustomPrice = 24, shopSpecialCurrency = Redemption.AntiqueDorulCurrencyId }, RedeConditions.DownedADD)
-                .Add(new Item(ModContent.ItemType<OldTophat>()) { shopCustomPrice = 20, shopSpecialCurrency = Redemption.AntiqueDorulCurrencyId }, Condition.PlayerCarriesItem(ModContent.ItemType<CruxCardTied>()))
+                .Add(new Item(ModContent.ItemType<OldTophat>()) { shopCustomPrice = 20, shopSpecialCurrency = Redemption.AntiqueDorulCurrencyId }, RedeConditions.OldTophat)
                 .Add(new Item(ModContent.ItemType<ScrunklePainting>()) { shopCustomPrice = 12, shopSpecialCurrency = Redemption.AntiqueDorulCurrencyId })
                 .Add(new Item(ModContent.ItemType<SkullDiggerPainting>()) { shopCustomPrice = 12, shopSpecialCurrency = Redemption.AntiqueDorulCurrencyId }, RedeConditions.DownedSkullDigger)
                 .Add(new Item(ModContent.ItemType<SunkenCaptainPainting>()) { shopCustomPrice = 12, shopSpecialCurrency = Redemption.AntiqueDorulCurrencyId }, Condition.DownedPirates)

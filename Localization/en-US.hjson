@@ -441,8 +441,16 @@ Mods: {
 
 			ArmorSetBonus: {
 				VanillaArmor: {
-					Resistance: " elemental resistance"
-					Damage: " elemental damage"
+					Resistance:
+						'''
+
+						{0}% increased {1} elemental resistance
+						'''
+					Damage:
+						'''
+
+						{0}% increased {1} elemental damage
+						'''
 					SolarCelestial:
 						'''
 

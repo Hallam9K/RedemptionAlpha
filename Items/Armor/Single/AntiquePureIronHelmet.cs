@@ -43,9 +43,9 @@ namespace Redemption.Items.Armor.Single
 
         public override void UpdateArmorSet(Player player)
         {
-            player.setBonus = Language.GetTextValue("Mods.Redemption.GenericTooltips.ArmorSetBonus.PureIron.20Increased") + ElementID.FireS + Language.GetTextValue("Mods.Redemption.GenericTooltips.ArmorSetBonus.VanillaArmor.Resistance") +
-                Language.GetTextValue("Mods.Redemption.GenericTooltips.ArmorSetBonus.PureIron.Bonus");
+            player.setBonus = Language.GetTextValue("Mods.Redemption.GenericTooltips.ArmorSetBonus.PureIron.Bonus", ElementID.FireS, ElementID.IceS);
             player.RedemptionPlayerBuff().ElementalResistance[ElementID.Fire] += 0.2f;
+            player.RedemptionPlayerBuff().ElementalDamage[ElementID.Ice] += 0.1f;
             player.RedemptionPlayerBuff().pureIronBonus = true;
             player.RedemptionPlayerBuff().MetalSet = true;
         }

@@ -6,6 +6,8 @@ using Redemption.NPCs.Minibosses.FowlEmperor;
 using Terraria;
 using Redemption.Base;
 using Redemption.Items.Armor.Vanity.TBot;
+using Redemption.Items.Weapons.PreHM.Summon;
+using Redemption.WorldGeneration;
 
 namespace Redemption.Globals
 {
@@ -47,6 +49,7 @@ namespace Redemption.Globals
         public static Condition HasSpiritWalker = new("Mods.Redemption.Conditions.HasSpiritWalker", () => Main.LocalPlayer.RedemptionAbility().Spiritwalker);
         public static Condition DeadRingerGiven = new("Mods.Redemption.Conditions.DeadRingerGiven", () => RedeWorld.deadRingerGiven);
         public static Condition ForestNymphTrust = new("Mods.Redemption.Conditions.ForestNymphTrust", () => RedeQuest.forestNymphVar > 0);
+        public static Condition OldTophat = new("Mods.Redemption.Conditions.OldTophat", () => Main.LocalPlayer.HasItemInAnyInventory(ModContent.ItemType<CruxCardTied>()) || RedeGen.HangingTiedPoint.X == 0);
     }
     public class DecapitationCondition : IItemDropRuleCondition
 	{
