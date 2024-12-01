@@ -2868,9 +2868,15 @@ Mods: {
 					ForestNymph: The dryad, {0}, says she's seen a Forest Nymph on this island at one point. They're rarely seen, usually nearby giant trees. If you do come across one, I wouldn't linger around for too long, they don't like humans getting in their personal space. I wonder if there were a way to befriend one though?
 					UGPortal: "{0} has told me he came from another portal underground. Apparently it leads to some catacombs in Gathuram. He's told of some rather intriguing things lying by the portal, might be an cool find."
 					EaglecrestGolem: While I was having a walk I came across some oddly-shaped stones - looked like a boulder with legs. I was curious of course, so I shot it from a safe distance. Nothing happened... and yet I sensed a presence inside it. You, as a slayer of many things, should search around and find it, might be another foe to face.
-					Spirits: Ever see tiny lights dancing from a slain skeleton? Or a lantern-carrying ghost underground? Those are lost souls, and as far as I know, only {0} or {1} weapons may bring them harm. Not that I'd suggest harming those helpless things.
+					
+					Spirits:
+						'''
+						Ever see tiny lights dancing from a slain skeleton? Or a lantern-carrying ghost underground? Those are lost souls, and as far as I know, only
+						{0} or {1} weapons may bring them harm. Not that I'd suggest harming those helpless things.
+						'''
+					
 					Insects: Wanna know about some insects? If you wanna find tree bugs, then chop down some trees. They live on tree tops, with their green shell camouflaging them in the foliage. Coast Scarabs can also be found on palm trees at the beach, their shells sparkle when wet. Grand larvae are, well, rather gross - though they can make excellent bait. That is, if you're brave enough to get close to one.
-					Undead: When encountering skeletons and undead, I think its logical to assume {0} weapons aren't effective against them, while {1} weapons are. I used to like exploring the caves, until me and Zephos encountered a skeleton Vex...
+					Undead: When encountering skeletons and undead, its logical to assume {0} weapons aren't effective against them, while {1} weapons are. I used to like exploring the caves, until me and Zephos encountered a skeleton Vex...
 					Slimes: Best way to deal with slimes? Burn them. Alternatively, {0} weapons can freeze them in their place, THEN you can burn them!
 					Invisibility: If you ever wanna sneak up on the Epidotrian skeletons or chickens, invisibility potions are real handy for the job. Though I wonder how the native creatures of this island always seem to know where you are...
 					DirtyWound: The weapons skeletons can wield are very rusty, so it'd be bad to be wounded by them. If you do, take a dip in some water and the dirty wound will disappear.
@@ -2914,7 +2920,13 @@ Mods: {
 					ForestNymph: Ya know {0}? She's seen a Forest Nymph on this island at one point. Super rare creatures those are, you'd only find them near giant trees. If you do come across one, I wouldn't linger around for too long, they don't like humans getting in their personal space. I wonder if there were a way to befriend one though?
 					UGPortal: "{0} has told me he came from another portal underground. Apparently it leads to some catacombs. He's told of some rather cool things lying by the portal, I'd give it a search if I were you!"
 					EaglecrestGolem: While I was having a stroll I came across some oddly-shaped stones - looked like a boulder with legs. I was curious of course, so I gave it a WHAM with my sword! Nothing happened... and yet I sensed a presence inside it. You, as a slayer of many things, should search around and find it, might be another challenge to face!
-					Spirits: Ever see tiny lights skitterin' from a slain skeleton? Or a lantern-carrying ghost underground? Those are lost souls, and as far as I know, only {0} or {1} weapons may bring them harm.
+
+					Spirits:
+						'''
+						Ever see tiny lights skitterin' from a slain skeleton? Or a lantern-carrying ghost underground? Those are lost souls, and as far as I know, only
+						{0} or {1} weapons may bring them harm.
+						'''
+
 					Insects: Insects? Why do you want me to tell you about insects? That's more Daerel's thing, he'll yap to you for ages about random bugs. If only he were here.
 					Undead: When encountering skeletons and undead, {0} weapons are the best against them. On the other hand, {1} weapons aren't as effective. I hate skeletons, used to think they looked kinda funny, until me and Daerel met a skeleton Vex.
 					Slimes: If you hate slimes, burn them! They'll burn brighter than my passion for attractive ladies{0}. Or, you could use {1} weapons to freeze them, but that isn't as fun.
